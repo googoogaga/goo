@@ -35,9 +35,11 @@ x CASE-BY with which to define CASE
 x <enum> and <flat-enum>
 x added >>>
 x product types and t*
-added sort?
+x added sort, sort-by, sort!, sort-by!
 x added prop-bound?
 x added ins and ins!
+x repeat, split, join
+x added prefix? suffix?
 
 REMOVED
 
@@ -93,7 +95,7 @@ x make-handler -> fab-handler
 x input to in 
 x output to out
 x locative -> loc
-x change slot -> prop
+x change slot -> dp
 x change dp -> dl
 x remainder to rem
 x renamed char-ready? to ready?
@@ -103,13 +105,13 @@ x peek-char to peek
 x write-char to put
 x write-string to puts
 x fun-val returns return type
-x isa -> fab
+x isa -> new
 x changed CASE -> COND
 x changed SELECT -> CASE
 x changed LAB to ESC
 x prop-init -> <fun>
 x prop-type -> ret <type>
-x pos is (t# <int>)
+x pos is (t? <int>)
 x rename sorted-app-mets ORD-APP-METS
 x ,in instead of in-mod (perhaps :in)
 x false-or to t?

@@ -927,3 +927,48 @@ removed
 
   string-join string-repeat string-split
   isa and %isa
+
+=== 0.127 ===
+
+summary
+
+  fixed backtraces and provided various fixes for installation 
+
+added
+
+  each and <each>
+  post
+  "" to *module-search-path* to allow absolute paths
+
+changed
+
+  turned off g2c-eval for windows
+  filtered backtraces for accurate frame and frame-var
+  changed command names to avoid accidental clashes
+  spread to zipped
+
+removed
+
+  user-patches and system-patches
+
+=== 0.128 ===
+
+summary
+
+   more first release fixes
+
+added
+
+   support for configuring DEFAULT_GOO_ROOT
+   toplevel Make.inc
+
+changed
+
+   lots of itsy changes towards getting real t* checks working
+   got explicit loading of .goo or .gooc files to have preference and work
+   lots of broken tup signatures
+   display to emit
+   better tuple return type printing
+
+
+
