@@ -15,7 +15,7 @@
  (dg cat! (x|<seq!> more|... => <seq!>))
 
  (dg push! (l|<seq!> x|<any> => <seq!>))
- (dg pop! (l|<seq!> => (tup new-col|<seq!> value)))
+ (dg pop! (l|<seq!> => (tup new-col|<seq!> value|<any>)))
 
  ;; replaces subsequence in range between from and below of dst with
  ;; contents of src.
@@ -42,7 +42,7 @@
 (dm rev! (x|<seq!> => <seq!>) (rev x))
 (dm cat! (x|<seq!> more|... => <seq!>) (app cat more))
 (dm push! (l|<seq!> x|<any> => <seq!>) (push l x))
-(dm pop! (l|<seq!> => (tup new-col|<seq!> value)) (pop l))
+(dm pop! (l|<seq!> => (tup new-col|<seq!> value|<any>)) (pop l))
 (dm ins! (x|<seq!> v|<any> before|<int> => <seq!>) (ins x v before))
 (dm del-vals! (x|<seq!> v|<any>  => <seq!>) (del-vals x v))
 (dm del-dups! (x|<seq!> => <seq!>) (del-dups x))

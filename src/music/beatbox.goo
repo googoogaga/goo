@@ -40,7 +40,7 @@
   (mod (+ i j) n))
 
 (dm file-out (port|<port> x|<track-vec>)
-  (display port x))
+  (emit port x))
 
 (dm file-in (port|<port> x|<track-vec>)
   (set (sub x 0 (len x)) (as <str> (read port))))

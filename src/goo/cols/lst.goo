@@ -131,7 +131,7 @@
 (dm push! (c|<lst> x => <lst>)
   (pair x c))
 
-(dm pop! (c|<lst> => (tup new-c|<lst> value))
+(dm pop! (c|<lst> => (tup new-c|<lst> value|<any>))
   (tup (tail c) (head c)))
 
 ;;; TODO: BUBBLE SORT YUCK!

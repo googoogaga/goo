@@ -20,20 +20,20 @@
 (dm as-binding-name (name) 
   (as <str> name))
 
-(dm do-display (port|<out-port> x|<str> d|<int> recur|<fun>)
+(dm do-emit (port|<out-port> x|<str> d|<int> recur|<fun>)
   (puts port x))
 
-(dm do-display (port|<out-port> x|<chr> d|<int> recur|<fun>)
+(dm do-emit (port|<out-port> x|<chr> d|<int> recur|<fun>)
   (put port x))
 
-(dm do-display (port|<out-port> x d|<int> recur|<fun>)
+(dm do-emit (port|<out-port> x d|<int> recur|<fun>)
   (recurring-write port x d recur))
 
-(dm display (port|<out-port> x)
+(dm emit (port|<out-port> x)
   (rep recur ((x x) (d -1))
     (if (>= d *max-print-depth*)
         (puts port "*")
-        (do-display port x (+ d 1) recur))))
+        (do-emit port x (+ d 1) recur))))
 
 (dm write-to-string (x => <str>)
   (with-port (port (open <str-out-port> "")) (write port x)))
@@ -137,7 +137,7 @@
       (puts port "#(")
       (seq
         (puts port "$$")
-        (display port (class-name (object-class x)))
+        (emit port (class-name (object-class x)))
         (puts port "(")))
   (def z (len x))
   (when (> z 0)
@@ -153,7 +153,7 @@
 
 (dm write-map (port|<out-port> x|<map> d|<int> recur|<fun>)
   (puts port "#[")
-  (display port (class-name (object-class x)))
+  (emit port (class-name (object-class x)))
   (esc blow
     (for (((tup key val) x) (i (from 0)))
       (when (>= i *max-print-length*)
@@ -185,7 +185,7 @@
              (put port #\)))))
   (def value (fun-val x))
   (unless (or (not value) (== value <any>))
-    (msg port " => ") (write-type port value))
+    (msg port " => ") (write-value-type port value))
   (put port #\)))
 
 (dm write-fun-guts (port|<out-port> x|<fun> name|<str> recur|<fun>)
@@ -231,6 +231,14 @@
   (do (fun (t) (put port #\space) (write-type port t)) (type-elts x))
   (puts port "}"))
 
+(dm write-value-type (port|<out-port> x|<product>)
+  (puts port "(tup")
+  (do (fun (t) (put port #\space) (write-type port t)) (type-elts x))
+  (puts port ")"))
+
+(dm write-value-type (port|<out-port> x)
+  (write-type port x))
+
 (dm recurring-write-type (port|<out-port> x|<class> d|<int> recur|<fun>)
   (puts port (as <str> (class-name x))))
 
@@ -248,7 +256,7 @@
 
 (dm recurring-write (port|<out-port> x d|<int> recur|<fun>)
   (puts port "#{")
-  (display port (class-name (object-class x)))
+  (emit port (class-name (object-class x)))
   (esc blow
     (without-prop-unbound-errors
       (for ((prop (object-props x)) (i (from 0)))
@@ -256,7 +264,7 @@
           (puts port " ...") (blow #f))
         (def getter (prop-getter prop))
         (put port #\space)
-        (display port (fun-name getter))
+        (emit port (fun-name getter))
         (puts port ": ")
         (recur (getter x) d))))
   (puts port "}"))
@@ -290,7 +298,7 @@
                      ((#\O) (puts port (num-to-str (arg c <int>) 8)))
                      ((#\X) (puts port (num-to-str (arg c <int>) 16)))
                      ((#\C) (put port (arg c <chr>)))
-                     ((#\S) (display port (arg c <any>)))
+                     ((#\S) (emit port (arg c <any>)))
                      ((#\=) (write port (arg c <any>)))
                      ((#\%) (put port #\%))
                      (#t    (error "Invalid msg directive '%s' in \"%s\""
@@ -340,7 +348,7 @@
                         ((#\O) (pack `(puts ,port (num-to-str ,(arg c) 8))))
                         ((#\X) (pack `(puts ,port (num-to-str ,(arg c) 16))))
                         ((#\C) (pack `(put ,port ,(arg c <chr>))))
-                        ((#\S) (pack `(display ,port ,(arg c))))
+                        ((#\S) (pack `(emit ,port ,(arg c))))
                         ((#\=) (pack `(write ,port ,(arg c))))
                         ((#\%) (add! chars #\%))
                         (#t    (error "Invalid msg directive '%s' in \"%s\""
@@ -382,7 +390,7 @@
 (export
   msg pe-msg msg*
   msg-to-str
-  display
+  emit
   write
   writeln
   post

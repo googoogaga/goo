@@ -114,19 +114,25 @@
 (dv *obj-extension*  ".o")
 (dv *exe-extension*  "")
 
-(df goo-filename (name)
-  (cat name *goo-extension*))
+(df goo-filename? (name|<str> => <log>)
+  (suffix? name *goo-extension*))
 
-(df gooc-filename (name)
-  (cat name *gooc-extension*))
+(df goo-filename (name|<str> => <str>)
+  (if (goo-filename? name) name (cat name *goo-extension*)))
 
-(df c-filename (name)
+(df gooc-filename? (name|<str> => <log>)
+  (suffix? name *gooc-extension*))
+
+(df gooc-filename (name|<str> => <str>)
+  (if (gooc-filename? name) name (cat name *gooc-extension*)))
+
+(df c-filename (name|<str> => <str>)
   (cat name *c-extension*))
 
-(df obj-filename (name)
+(df obj-filename (name|<str> => <str>)
   (cat name *obj-extension*))
 
-(df exe-filename (name)
+(df exe-filename (name|<str> => <str>)
   (cat name *exe-extension*))
 
 (export
@@ -339,7 +345,11 @@
   (def gooc-file  (gooc-filename base-file))
   (def goo-found  (file-exists? goo-file))
   (def gooc-found (file-exists? gooc-file))
-  (cond ((and goo-found gooc-found)
+  (cond ((and (goo-filename? base-file) goo-found)
+         goo-file)
+        ((and (gooc-filename? base-file) gooc-found)
+         gooc-file)
+        ((and goo-found gooc-found)
          (if (> (file-mtime goo-file) (file-mtime gooc-file))
              goo-file
              gooc-file))

@@ -926,7 +926,7 @@
 (dl @telt-setter (z x|<tup> i|<int>)
   (set (%telt x (%iu i)) z))
 
-(df @tup (args|...)
+(dl %to-tup (args|<opts>)
   (def l (@olen args))
   (def t (%tup (%iu l) nul))
   (if (@= l 2) ;; MOST FREQUENT CASE AND SPEED CRITICAL
@@ -937,6 +937,8 @@
           (set (@telt t k) (@oelt args k))
           (into (@+ k -1)))))
   t)
+
+(df @tup (args|...) (%to-tup args))
 
 (df @fun-names (x|<fun> => <lst>) (%sig-names (%gen-sig x)))
 
@@ -1081,7 +1083,7 @@
       (@subclass? t1 t2)
       (subtype? t1 t2)))
   
-(df @may-isa? (c|<class> t|<type> => (tup <log> <log>))
+(df @may-isa? (c|<class> t|<type> #/ => (tup <log> <log>) /#)
   (if (@== (%class-of t) <class>)
       (if (@subclass? c t) (@tup #t #t) (@tup #f #f))
       (may-isa? c t)))
@@ -1116,7 +1118,8 @@
                   '<>))))))
 
 (df ord-app-mets-1
-    (mets|<lst> args|<opts> order-mets|<fun> => (tup ordered|<lst> ambig|<lst>))
+    (mets|<lst> args|<opts> order-mets|<fun> 
+      #/ => (tup ordered|<lst> ambig|<lst>) /#)
   (def ohead|<lst> (@pair #f '()))
   (def ahead|<lst> (@pair #f '()))
   (rep loop ((mets|<lst> mets))
@@ -1169,7 +1172,8 @@
                   (loop (@+ i 1))
                   #f))))))
 
-(df ord-app-mets* (gf|<gen> args|<opts> => (tup ordered|<lst> ambig|<lst>))
+(df ord-app-mets* 
+    (gf|<gen> args|<opts> #/ => (tup ordered|<lst> ambig|<lst>) /#)
   (def considered-mets
     (rep col ((ans '()) (ms (@fun-mets gf)))
       (if (@empty? ms)
@@ -1179,7 +1183,7 @@
             (col ans (@tail ms))))))
   (ord-app-mets-1 considered-mets args order-mets))
 
-(df ord-app-mets (gf|<gen> args|... => (tup ordered|<lst> ambig|<lst>))
+(df ord-app-mets (gf|<gen> args|... #/ => (tup ordered|<lst> ambig|<lst>) /#)
   (ord-app-mets* gf args))
 
 ;; (df opt-args (n|<int> args|<opts> => <opts>)
@@ -1816,18 +1820,18 @@
 
 ;;; ORDER-SPECS
 (dg order-specs (t1|<type> t2|<type> arg|<any>
-                 => (tup order|<sym> canonical-type)))
+                 #/ => (tup order|<sym> canonical-type|<type>) /#))
 
 (dm order-specs (t1|<singleton> t2|<singleton> arg
-                 => (tup order|<sym> canonical-type))
+                 #/ => (tup order|<sym> canonical-type|<type>) /#)
   (@tup '= t1))
 
 (dm order-specs (t1|<singleton> t2|<type> arg
-                 => (tup order|<sym> canonical-type))
+                 #/ => (tup order|<sym> canonical-type|<type>) /#)
   (@tup '< t1))
 
-(dm order-specs (t1|<subclass> t2|<subclass> arg
-                 => (tup order|<sym> canonical-type))
+(dm order-specs (t1|<subclass> t2|<subclass> arg 
+                 #/ => (tup order|<sym> canonical-type|<type>) /#)
   (def c1 (%type-class t1))
   (def c2 (%type-class t2))
   (cond
@@ -1835,8 +1839,8 @@
     ((@class< c1 c2 arg) (@tup '< t1))
     (#t                  (@tup '> t2))))
 
-(dm order-specs (t1|<subclass> t2|<class> arg
-                 => (tup order|<sym> canonical-type))
+(dm order-specs (t1|<subclass> t2|<class> arg 
+                 #/ => (tup order|<sym> canonical-type|<type>) /#)
   (@tup (if (@subtype? <class> t2) ;; TODO: THIS SEEMS WRONG
             (if (@== t1 <any>)
                 (order-specs <class> t2 arg)
@@ -1844,8 +1848,8 @@
             '<>)
         t1))
 
-(dm order-specs (t1|<class> t2|<subclass> arg
-                 => (tup order|<sym> canonical-type))
+(dm order-specs (t1|<class> t2|<subclass> arg 
+                 #/ => (tup order|<sym> canonical-type|<type>) /#)
   (@tup (if (@subtype? <class> t1) ;; TODO: THIS SEEMS WRONG
             (if (@== t2 <any>)
                 (order-specs t1 <class> arg)
@@ -1853,12 +1857,12 @@
             '<>)
         t2))
 
-(dm order-specs (t1|<class> t2|<class> arg
-                 => (tup order|<sym> canonical-type))
+(dm order-specs (t1|<class> t2|<class> arg 
+                 #/ => (tup order|<sym> canonical-type|<type>) /#)
   (@order-specs-class t1 t2 arg))
 
-(dm order-specs (t1|<type> t2|<type> arg
-                 => (tup order|<sym> canonical-type))
+(dm order-specs (t1|<type> t2|<type> arg 
+                 #/ => (tup order|<sym> canonical-type|<type>) /#)
   (if (@subtype? t1 t2)
       (@tup (if (@subtype? t2 t1) '= '<) t1)
       (if (@subtype? t2 t1)
@@ -1866,16 +1870,16 @@
           (@tup '<> <any>))))
 
 ;;; MAY-ISA?: class contains => (some? all?) instances of type
-(dg may-isa? (c|<class> t|<type> => (tup <log> <log>)))
+(dg may-isa? (c|<class> t|<type> #/ => (tup <log> <log>) /#))
 
-(dm may-isa? (c|<class> t|<class> => (tup <log> <log>))
+(dm may-isa? (c|<class> t|<class> #/ => (tup <log> <log>) /#)
   (if (@subclass? c t) (@tup #t #t) (@tup #f #f)))
-(dm may-isa? (c|<class> t|<singleton> => (tup <log> <log>))
+(dm may-isa? (c|<class> t|<singleton> #/ => (tup <log> <log>) /#)
   (@tup (@may-isa? (%class-of (%type-object t)) c) #f))
-(dm may-isa? (c|<class> t|<subclass> => (tup <log> <log>))
+(dm may-isa? (c|<class> t|<subclass> #/ => (tup <log> <log>) /#)
   (def class? (@subtype? c <class>))
   (@tup class? (and class? (@== (%type-class c) <any>))))
-(dm may-isa? (c|<class> t|<union> => (tup <log> <log>))
+(dm may-isa? (c|<class> t|<union> #/ => (tup <log> <log>) /#)
   (rep loop ((some? #f) (all? #f) (elts (%type-elts t)))
     (if (@empty? elts)
         (@tup some? all?)
@@ -2107,7 +2111,7 @@
   %snul
   %str
   %su
-  %tup
+  %tup %to-tup
   %telt
   %telt-setter
   %tlen
@@ -2191,6 +2195,7 @@
   @oelt
   @any?
   @olen
+  @telt @tlen
   @+
   @<
   @==

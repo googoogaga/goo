@@ -691,5 +691,4 @@ STATIC_NOT_PRT_C INLINE P YevalSast_evalYPdlvar_setter(P v, P x) {
   return ((((DLVAR)(x))->binding)=(v));
 }
 
-#define DEFAULT_GOO_ROOT                "/usr/lib/goo/"
 #define YgooSsystemYPdefault_goo_root() DEFAULT_GOO_ROOT

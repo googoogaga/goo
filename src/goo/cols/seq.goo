@@ -49,7 +49,7 @@
 
  ;; push/pops elements nondestructively
  (dg push (l|<seq> x|<any> => <seq>))
- (dg pop (l|<seq> => (tup new-col|<seq> value)))
+ (dg pop (l|<seq> => (tup new-col|<seq> value|<any>)))
 
  ;; subsequence of x between from and below.
  (dg sub (x|<seq> from|<int> below|<int> => <seq>))
@@ -209,7 +209,7 @@
 (dm push (l|<seq> x|<any> => <seq>)
   (ins l x 0))
 
-(dm pop (l|<seq> => (tup new-col|<seq> value))
+(dm pop (l|<seq> => (tup new-col|<seq> value|<any>))
   (tup (sub l 1 (len l)) (elt l 0)))
 
 (dm pick (test|<fun> x|<seq> => <seq>)

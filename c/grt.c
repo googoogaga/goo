@@ -1,5 +1,9 @@
 //// Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
+#ifdef __CYGWIN32__
+#define WIN32
+#endif
+
 #define IN_PRT_C
 #include "grt.h"
 #if !defined(MSWIN32)
@@ -357,7 +361,11 @@ INLINE P YPforce_out (P s) {
 }
 
 INLINE P YPput (P s, P x) { 
-  fputc((PCHR)(int)x, (FILE*)YPlu(s)); return YPfalse; 
+  fputc((PCHR)(int)x, (FILE*)YPlu(s)); 
+#ifdef WIN32  
+  if ((FILE*)YPlu(s) == stdout && (((PCHR)(int)x) == '\n')) fflush(stdout);
+#endif
+  return YPfalse; 
 }
 
 INLINE P YPputs (P s, P x) { 
@@ -1136,8 +1144,11 @@ void YPinit_world(int argc, char* argv[]) {
   need_init = 0;
 }
 
-P YPunexec(P name)
-{
+#ifdef WIN32
+#define NO_UNEXEC
+#endif
+
+P YPunexec(P name) {
 #ifdef NO_UNEXEC
   CALL1(1, Yerror, "Cannot unexec.");
 #else
@@ -1146,8 +1157,7 @@ P YPunexec(P name)
   return YPfalse;
 }
 
-P YevalSg2cYPprint_cpu_usage(char *message)
-{
+P YevalSg2cYPprint_cpu_usage(char *message) {
 	return;
 /*  struct rusage usage;
   getrusage(RUSAGE_SELF, &usage);
@@ -1159,8 +1169,7 @@ P YevalSg2cYPprint_cpu_usage(char *message)
 */
 }
 
-struct timeval get_rusage()
-{
+struct timeval get_rusage() {
   struct rusage usage;
   getrusage(RUSAGE_SELF, &usage);
   return usage.ru_utime;

@@ -124,63 +124,17 @@
       (sub signature 0 values-spec-index)
       signature))
 
+(dm sexpr-value-type (x|<lst> => <any>) (2nd x))
+
+(dm sexpr-value-type (x|<any> => <any>) x)
+
 (dm sexpr-signature-value (signature|<lst> => <any>)
   (def values-spec-index (pos signature '=>))
   (and values-spec-index
        (let ((value (elt signature (+ values-spec-index 1))))
          (if (sexpr-tagged-list? value 'tup)
-             '<tup>
+             '<tup> ;; `(t* ,@(map sexpr-value-type (tail value)))
              value))))
-
-;; convert from vertical bar type syntax to list syntax
-;; (dm as-signature ((sig <lst>) => <lst>)
-;;   (if (== (pos sig $vert) nul)
-;;       sig
-;;       (rep loop ((r '()) (p sig))
-;;         (if (empty? p)
-;;             (rev! r)
-;;             (let ((name (head p))
-;;                   (rest (tail p)))
-;;               (if (isa? name <lst>)
-;;                   (loop (pair name r) rest)
-;;                   (if (== (head rest) $vert)
-;;                       (loop (pair (lst name (head (tail rest))) r)
-;;                             (tail (tail rest)))
-;;                       (loop (pair name r) rest))))))))
-              
-;; (dv $vert (as <sym> "|"))
-
-;; (dm vert-sig? (sig|<lst> depth|<int> => <log>)
-;;   (and (< depth 2)
-;;        (rep loop ((sig sig))
-;;          (if (empty? sig)
-;;              #f
-;;              (let ((e (head sig))) 
-;;                (or (== e $vert)
-;;                    (and (sexpr-tagged-list? e 'tup) (vert-sig? e (+ depth 1)))
-;;                    (loop (tail sig))))))))
-;;                 
-;; 
-;; (dm as-sig (sig|<lst> depth|<int> => <lst>)
-;;   (if (> depth 1)
-;;       sig
-;;       (rep loop ((r '()) (p sig))
-;;         (if (empty? p)
-;;             (rev! r)
-;;             (let ((name (head p))
-;;                   (rest (tail p)))
-;;               (if (isa? name <lst>)
-;;                   (let ((e (if (== (head name) 'tup) 
-;;                                (as-sig name (+ depth 1))
-;;                                name)))
-;;                     (loop (pair e r) rest))
-;;                   (if (== (head rest) $vert)
-;;                       (loop (pair (lst name (head (tail rest))) r)
-;;                             (tail (tail rest)))
-;;                       (loop (pair name r) rest))))))))
-;;               
-;; (dm as-signature (sig|<lst> => <lst>)
-;;   (if (vert-sig? sig 0) (as-sig sig 0) sig))
               
 (df as-signature (sig|<lst> => <lst>)
   sig)

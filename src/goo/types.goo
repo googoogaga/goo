@@ -46,7 +46,7 @@
 ;; fix compiler to automatically copy optionals.
 (df t+ (args|...) (new <union> type-elts (as <lst> args)))
 
-(df t* (args|...) (new <product> type-elts (as <tup> args)))
+(df t* (args|...) (new <product> type-elts (%to-tup args)))
 
 (dm isa? (o t|<product> => <log>)
   (and (isa? o <tup>)
@@ -58,13 +58,18 @@
 (dm subtype? (t1|<type> t2|<product> => <log>) #f)
 
 (dm subtype? (t1|<product> t2|<product> => <log>)
-  (and (== (len (type-elts t1)) (len (type-elts t2)))
-       (all2? subtype? (type-elts t1) (type-elts t2))))
+  (def te1 (type-elts t1)) (def te2 (type-elts t2))
+  (and (== (@tlen te1) (@tlen te2))
+       ;; (all2? subtype? (type-elts t1) (type-elts t2))
+       (rep all? ((i (@+ (@tlen te1) -1)))
+         (cond ((== i -1)                              #t)
+               ((subtype? (@telt te1 i) (@telt te2 i)) (all? (@+ i -1)))
+               (#t                                     #f)))))
 
 (dm subtype? (t1|<product> t2|<class> => <log>)
   (subtype? <tup> t2))
 
-(dm may-isa? (c|<class> t|<product> => (tup <log> <log>))
+(dm may-isa? (c|<class> t|<product> #/ => (tup <log> <log>) /#)
   (def tup?  (== c <tup>))
   (def some? (and tup? (any? (fun (t) (2nd (may-isa? <any> t))) (type-elts t))))
   (tup tup? some?))

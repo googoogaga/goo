@@ -420,7 +420,7 @@
 (define-instruction (CALL1-tail) 91 
   (set! *val* (tail *val*)) )
 
-(define-instruction (CALL1-display) 94 
+(define-instruction (CALL1-emit) 94 
   (set! *val* (show *val*)) )
 
 (define-instruction (CALL1-empty?) 96
@@ -618,7 +618,7 @@
   (select address
     ((head)        (lst 90))
     ((tail)        (lst 91))
-    ((display)     (lst 94))
+    ((emit)        (lst 94))
     ((empty?)      (lst 96))
     ((eof-object?) (lst 98))
     (else (static-wrong "Cannot integrate" address)) ) )
@@ -795,7 +795,7 @@
 (define-primitive-2 <= <=)
 (define-primitive-2 >= >=)
 (define-primitive-2 truncate/ truncate/)
-(define-primitive-1 display display)
+(define-primitive-1 emit emit)
 (define-primitive-0 read read)
 (define-primitive-1 isa? isa?)
 (define-primitive-1 empty? empty?)
@@ -902,15 +902,15 @@
   (msg stream "#<Closure(pc=%s)>" (closure-code f)) ) )
 
 (dm show (stream (a <activation-frame>))
-  (display stream "[Frame next=")
+  (emit stream "[Frame next=")
   (show stream (frame-next a))
-  (display stream ", content=" )
+  (emit stream ", content=" )
   (rep loop ((i 0))
     (unless (= i (frame-length a))
       (show stream (frame-argument a i))
-      (display stream " & ") 
+      (emit stream " & ") 
       (loop (+ i 1))))
-  (display stream "]" ) ) )
+  (emit stream "]" ) ) )
 
 ;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 
@@ -923,7 +923,7 @@
 
 (dm chapter7d-interpreter()
   (loc toplevel ()
-    (display ((stand-alone-producer7d (read)) 100))
+    (emit ((stand-alone-producer7d (read)) 100))
     (toplevel) )
   (toplevel) ) 
 
