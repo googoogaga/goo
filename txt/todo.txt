@@ -1,13 +1,26 @@
 NEW
 
-o create new ast for %bb without register
+x make sure inlines are in place
+x lightweight boxes
+o boot classes don't init props correctly using nul instead
+o use pub for all exporteds
+o print out entire system
+o doc d. and dp!
+o d. as dv -- enforce d.
+o tag false and true -- nah -- 00 A 01 I 11 L 10 C 
+o need type checks in loops and no loop conversion unless no return type
+o need packing-as and packing-in must take multiargs
+o report ast-errors with line number
+o def-opts and def-keys would be nice
+o need the equiv of post for say !!!
+o rename object-props to props-of
 o programs as lsts is a terrible representation
-o reduce opt passes
-o reduce reoptimizations
 o split out optimizations from ast-linearize
 o doc or/set
 o perhaps join should have a seq as second arg to make it sym with split
 o stack overflow during recompilation
+o boot: rename low primitives to have two %%'s
+o boot: invent naming convention for compile time things say &...?
 o fix emacs mode for [] and {}
 o rename empty? to nul?
 o macros should be compiled in interpreted
@@ -40,7 +53,7 @@ o fix gensyms to be hidden
 o report warnings as you go
 o split grt functions to appropriate files
 o function printing doesn't include nary arg
-o condition hierarchy
+x condition hierarchy
 o   restarts
 o     unbound variables
 o   import errors (namespace)

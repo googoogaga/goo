@@ -1,3 +1,35 @@
+=== 0.150 ===
+
+summary
+
+  major overhaul reorging files and improving speed also added dp! and d.
+
+fixed
+
+  vm box evaluation 
+  vm dg treatment
+
+changed
+
+  split up grt runtime boot
+  ast-print to work
+  typist coming to life
+  call-analysis moved to optimize
+  removed loop analysis of primitive calls 
+  changed all primitive loop calls to use rep
+  string-hash to use low-elt
+  inlined more of dispatch
+
+added
+
+  files goo/fun goo/class goo/functional goo/loc goo/sym 
+        goo/%system.c goo/%math.c goo/io/%port.c
+  box removal optimization and binding-closed-over? to support it
+  dp! and now dp does NOT define a setter
+  d.
+  special case of ast-walk for programs
+  vm-eval mode
+
 === 0.149 ===
 
 summary
