@@ -81,7 +81,6 @@ extern P Yunknown_function_error;
 
 P YPdo_stack_frames (P fun) {
   int xfp = fp;
-  int num = 0;
   while (xfp > 0) {
     int nfp    = (int)stack_[xfp];
     P   args   = Ynil;
@@ -100,10 +99,8 @@ P YPdo_stack_frames (P fun) {
     } else {
       return CALL1(Yunknown_function_error, f);
     }
-    args = YPpair((P)tag((P)num, int_tag), YPpair(f, args));
-    YPPapply(fun, YPfalse, args);
+    YPPapply(fun, YPfalse, YPpair(f, args));
     xfp = nfp;
-	num++;
   }
   return YPfalse;
 }
@@ -487,8 +484,7 @@ P FUNFAB (P x, int n, ...) {
 
 extern P YLlstG_traits;
 
-inline OBJECT STACK_PAIR(P h, P t)
-{
+INLINE OBJECT STACK_PAIR(P h, P t) {
   OBJECT pair     = (OBJECT)stack_allocate(OBJECT_DATA_SIZE);
   VALUES data     = (VALUES)stack_allocate(VALUES_SIZE(2));
   pair->traits    = YLlstG_traits;
@@ -499,15 +495,19 @@ inline OBJECT STACK_PAIR(P h, P t)
   return pair;
 }
 
-#define CHECK_ARITY(naryp,n,arity) \
-  if (naryp) { \
-    if (n < arity) \
-      CALL2(Ywrong_number_arguments_error, fun, YPib((P)n)); \
-  } else { \
-    if (n != arity) \
-      CALL2(Ywrong_number_arguments_error, fun, YPib((P)n)); \
-  } 
-  
+extern P YPib(P);
+extern P Ywrong_number_arguments_error;
+
+INLINE void CHECK_ARITY (P fun, int naryp, int n, int arity) {
+  if (naryp) { 
+    if (n < arity) 
+      CALL2(Ywrong_number_arguments_error, fun, YPib((P)n)); 
+  } else { 
+    if (n != arity) 
+      CALL2(Ywrong_number_arguments_error, fun, YPib((P)n)); 
+  }
+}
+
 extern P YLanyG;
 extern P Ytype_error;
 extern P YPcheck_typesQ;
@@ -557,8 +557,6 @@ P a[MAX_ARGUMENTS];
 extern P YLmetG;
 extern P YLgenG;
 extern P YPtraits_owner(P);
-extern P Ywrong_number_arguments_error;
-extern P YPib(P);
 
 P CALL0 (P fun) {
   int osp    = sp, ofp = fp;
@@ -571,7 +569,7 @@ P CALL0 (P fun) {
   if (traits == YLmetG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
-    CHECK_ARITY(naryp,0,arity);
+    CHECK_ARITY(fun,naryp,0,arity);
     if (naryp)
       PUSH(Ynil);
     PUSH(fun); 
@@ -579,7 +577,7 @@ P CALL0 (P fun) {
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
-    CHECK_ARITY(naryp,0,arity);
+    CHECK_ARITY(fun,naryp,0,arity);
     PUSH(Ynil);
     LINK_STACK(fun);
     res = (FUNCODE(fun))(fun, YPfalse);
@@ -602,7 +600,7 @@ P CALL1 (P fun, P a1) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
-    CHECK_ARITY(naryp,1,arity);
+    CHECK_ARITY(fun,naryp,1,arity);
     if (arity > 0) {
       CHECK_TYPE(a1, Phead(specs));
       PUSH(a1);
@@ -618,7 +616,7 @@ P CALL1 (P fun, P a1) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
-    CHECK_ARITY(naryp,1,arity);
+    CHECK_ARITY(fun,naryp,1,arity);
     arg = STACK_PAIR(a1, arg);
     PUSH(arg);
     LINK_STACK(fun); 
@@ -642,7 +640,7 @@ P CALL2 (P fun, P a1, P a2) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
-    CHECK_ARITY(naryp,2,arity);
+    CHECK_ARITY(fun,naryp,2,arity);
     if (arity > 0) {
       CHECK_TYPE(a1, Phead(specs)); 
       specs = Ptail(specs);
@@ -664,7 +662,7 @@ P CALL2 (P fun, P a1, P a2) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
-    CHECK_ARITY(naryp,2,arity);
+    CHECK_ARITY(fun,naryp,2,arity);
     arg = STACK_PAIR(a2, arg);
     arg = STACK_PAIR(a1, arg);
     PUSH(arg);
@@ -689,7 +687,7 @@ P CALL3 (P fun, P a1, P a2, P a3) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
-    CHECK_ARITY(naryp,3,arity);
+    CHECK_ARITY(fun,naryp,3,arity);
     if (arity > 0) {
       CHECK_TYPE(a1, Phead(specs)); 
       specs = Ptail(specs);
@@ -717,7 +715,7 @@ P CALL3 (P fun, P a1, P a2, P a3) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
-    CHECK_ARITY(naryp,3,arity);
+    CHECK_ARITY(fun,naryp,3,arity);
     arg = STACK_PAIR(a3, arg);
     arg = STACK_PAIR(a2, arg);
     arg = STACK_PAIR(a1, arg);
@@ -745,8 +743,8 @@ P CALLN (P fun, int n, ...) {
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
     va_list ap;
-    CHECK_ARITY(naryp,n,arity);
-	va_start(ap, n);
+    CHECK_ARITY(fun,naryp,n,arity);
+    va_start(ap, n);
     for (i = 0; i < arity; i++) {
       P arg = va_arg(ap, P);
       CHECK_TYPE(arg, Phead(specs)); 
@@ -770,7 +768,7 @@ P CALLN (P fun, int n, ...) {
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
     va_list ap;
-    CHECK_ARITY(naryp,n,arity);
+    CHECK_ARITY(fun,naryp,n,arity);
     va_start(ap, n);
     for (i = 0; i < n; i++)
       a[i] = va_arg(ap, P);
@@ -862,7 +860,7 @@ P YPPapply (P fun, P next_mets, P args) {
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
     P   ap    = args;
-    CHECK_ARITY(naryp,n,arity);	
+    CHECK_ARITY(fun,naryp,n,arity);	
     for (i = 0; i < arity; i++) {
       P head = Phead(ap);
       CHECK_TYPE(head, Phead(specs)); 
@@ -885,7 +883,7 @@ P YPPapply (P fun, P next_mets, P args) {
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
-    CHECK_ARITY(naryp,n,arity);
+    CHECK_ARITY(fun,naryp,n,arity);
     PUSH(args);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, next_mets);

@@ -267,11 +267,11 @@ extern P YPisaQ(P,P);
 extern void check_fun_val_type(P, P);
 extern P check_type(P, P);
 
-#define RET(x) \
-  { check_fun_val_type(res, Pfun); return res; }
-
 #define QRET(x) \
   { return res; }
+
+#define RET(x) \
+  { check_fun_val_type(res, Pfun); return res; }
 
 /* NON-LOCAL EXITS */
 
@@ -281,6 +281,7 @@ extern P with_cleanup (P body_fun, P cleanup_fun);
 
 /* LITERALS */
 
+#define EXTLIT(x)  extern P x;
 #define DEFLIT(x)  P x = PNUL;
 
 /* GLOBAL VARIABLES */
@@ -288,13 +289,14 @@ extern P with_cleanup (P body_fun, P cleanup_fun);
 extern P unbound ();
 
 #define DEF(x, n)  P x = PNUL;
-#define EXT(x, n)  P x = PNUL;
+#define EXT(x, n)  extern P x;
 #define CHKREF(x)  (((x) == PNUL) ? unbound() : (x))
 
 /* FUNCTIONS */
 
 #define FUNFOR(x)         extern P x; extern P x##I(P, P)
 #define LOCFOR(x)         P x; extern P x##I(P, P)
+#define EXTLOCFOR(x)      extern P x; extern P x##I(P, P)
 
 /* BOXES */
 
@@ -304,6 +306,7 @@ extern P BOXFAB(P x);
 /* FUNCTION CODE */
 
 #define FUNCODEDEF(x)  P x##I (P Pfun, P Pnext_methods)
+#define FUNCODEEXT(x)  extern P x##I (P Pfun, P Pnext_methods)
 #define FUNCODEREF(x)  (&(x##I))
 
 /* LOCATIVES */
