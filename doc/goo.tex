@@ -1,4 +1,4 @@
-\documentclass[twoside,twocolumn,10pt]{article}
+\documentclass[twoside,twocolumn,9pt]{extarticle}
 \usepackage{hyperlatex}
 %\T\usepackage{layout}
 \T\usepackage{longtable}
@@ -8,8 +8,8 @@
 \W\include{latex-index}
 
 \T\addtolength{\topmargin}{-1.0in}
-\T\addtolength{\evensidemargin}{-0.5in}
-\T\addtolength{\oddsidemargin}{-0.5in}
+\T\addtolength{\evensidemargin}{-0.7in}
+\T\addtolength{\oddsidemargin}{-0.2in}
 %\T\oddsidemargin10pt\evensidemargin20pt
 
 %\T\textwidth5.7in
@@ -54,12 +54,11 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\title{ \goo\ Reference Manual v28 \\
- {\large for release \input{version-number}} 
+\title{{\Huge \goo\ Reference Manual v30 } % \\
+% {\large for release \input{version-number}} 
 }
-%         December 25, 1994
-\author{Jonathan Bachrach \\
-        MIT AI Lab
+\author{{\huge Jonathan Bachrach} \\
+        {\Large MIT AI Lab}
 }
 \date{\today}
 %\date{October 31, 1995}
@@ -77,7 +76,9 @@ earlier languages.  In particular, it attempts to be a simpler
 lisp-syntaxed Dylan~\cite{Shalit:1996}, an object-oriented 
 Scheme~\cite{Kelsey:Clinger:Rees:hosc:1998},
 and a lispified Cecil~\cite{Chambers95}.
-
+\goo's main goal is to offer the best of both scripting and
+deliver languages.
+\goo\ is freely available from \kode{www.googaga.org} under LGPL.
 This manual is very preliminary and relies heavily on an understanding
 of Scheme and Dylan.
 
@@ -113,7 +114,7 @@ the notable exceptions being that identifiers can start with numeric digits
 if they are clearly distinguishable from floating point numbers and
 % \item {\bf keywords}: identifiers ending in ':', and
 no syntax is provided for specifying improper lists.
-Vertical bars are tokenized immediately and separately and have
+Furthermore, vertical bars are tokenized immediately and separately and have
 special meaning within lists, providing syntactic sugar for typed
 variables.
 
@@ -191,20 +192,23 @@ Once tokenized, \goo\ evaluates s-expressions in the usual lisp manner:
 \goo\ is a lexically scoped language.  Bindings contain values and are
 looked up by name.  Lexical bindings are
 visible from only particular textual ranges in a program.  Lexical
-bindings shadow bindings of the same name.
+bindings shadow visible bindings of the same name.
 
 At the topmost level, \goo\ provides simple modules that map from
 names to bindings.  Each file introduces a new module with the same
-name as the file.  Modules can import bindings exported by other
-modules.  
+name as the file.  Nested modules are supported by way of slashes in
+module names.  Modules can import bindings exported by other modules,
+but currently there is no way to selectively exclude or rename
+imported bindings.  Furthermore, no cycles can occur in the module use
+heterarchy.
 
 \begin{defs}
 \form{DV}{(DV ,var ,form)}
-  \doc{defines a variable named \kode{(var-name ,var)} with an initial value
-  \kode{,form} (cf. Scheme's \kode{DEFINE}).}
+  \doc{defines a global variable named \kode{(var-name ,var)} with an 
+  initial value \kode{,form} (cf. Scheme's \kode{DEFINE}).}
 \form{DEF}{(DEF ,var ,val)}
-  \doc{binds \kode{,var} to \kode{,val} and evaluates remainder of current
-       body in the context of that binding.}
+  \doc{locally binds \kode{,var} to \kode{,val} and evaluates
+  remainder of current body in the context of that binding.}
 \formcont{(DEF (TUP ,var ...) ,val)}
   \doc{parallel binding can also be specified using \kode{TUP} on the lhs of
        a \kode{DEF} binding. For example
@@ -216,7 +220,8 @@ modules.
 where
 
 \begin{defs}
-\syntax{,var}{,name | ,name '|' ,type}
+\syntax{,var}{,name | (,name ,type)}
+  \doc{with \kode{,name | ,type} $\equiv$ \kode{(,name ,type)} within lists.}
 \end{defs}
 
 \begin{defs}
@@ -263,10 +268,10 @@ function calls, conditional execution, and nonlocal control flow.
   \doc{$\equiv$ \kode{(IF (NOT ,test) (SEQ ,@body))}}
 \form{WHEN}{(WHEN ,test ,@body)}
   \doc{$\equiv$ \kode{(IF ,test (SEQ ,@body))}}
-% \form{COND}{(COND (,test ,@body) ...)}
-%   \doc{evaluates \kode{(SEQ ,@body)} of first clause 
-%   whose \kode{,test} evaluates to
-%   non-false (cf. Dylan's \kode{CASE} and Scheme's \kode{COND}).}
+\form{COND}{(COND (,test ,@body) ...)}
+  \doc{evaluates \kode{(SEQ ,@body)} of first clause 
+  whose \kode{,test} evaluates to
+  non-false (cf. Dylan's \kode{CASE} and Scheme's \kode{COND}).}
 \form{CASE[-BY]}{(CASE[-BY] ,value [ ,test ]\snl ((,@keys) ,@body) \snl ...)}
   \doc{evaluates \kode{,value} and then evaluates \kode{(SEQ ,@body)}
   of first clause for which \kode{(,test ,value ,key)} returns non-false
@@ -283,7 +288,7 @@ function calls, conditional execution, and nonlocal control flow.
 \form{{\it call}}{(,f ,@args)}
   \doc{evaluates \kode{,f} and then \kode{,@args} in left to right
   order and then calls \kode{,f} with the evaluated arguments.}
-\form{REP}{(REP ,name ((,var ,init) ...) \snl ,@body) }
+\form{REP}{(REP ,name ((,var ,init) ...) ,@body) }
   \doc{defines a recursive loop (cf., Dylan's \kode{ITERATE} or Scheme's \kode{(LET ,var ...)}).}
 \form{ESC}{(ESC ,name ,@body)}
   \doc{evaluates \kode{(SEQ ,@body)} with an exit
@@ -379,7 +384,7 @@ situations that involve class arguments that need to be further constrained.
 \subsection{Unions}
 
 Union types represent the disjunction of types.  In conjunction with
-singleton types, they can be used to represent C-style \kode{enum}s.
+singleton types, they can be used to represent C-style \kode{enum}'s.
 
 \begin{defs}
 \class{<union>}{<type>}
@@ -464,11 +469,14 @@ functions are called with a single argument, the object under construction.
   \doc{finds getter method defined on given class.}
 \generic{find-setter}{c|<class> setter|<gen> => <met>} % TODO: T?
   \doc{finds setter method defined on given class.}
+\property{prop-bound?}{x g|<gen> => <log>}
+  \doc{returns true if property with getter \kode{g} is bound in
+  instance \kode{x}.}
 \method{add-prop}{owner getter|<gen> setter|<gen> \snl type|<type> init|<fun>} % TODO: T?
   \doc{where \kode{init} is a one parameter function that returns the initial
   value for the prop and gets called lazily with the new instance as
   the argument.}
-\form{DP}{(DP ,name (,oname|,owner => ,type) \snl [,@init])}
+\form{DP}{(DP ,name (,oname|,owner => ,type) [,@init])}
   \doc{add's a property to \kode{,owner} with getter named
        \kode{,name}, setter named \kode{,name \#\# "-setter"}, 
        % \kode{(fab-setter-name ,name)}, 
@@ -518,23 +526,6 @@ functions are instances of \kode{<gen>} and methods are instances of
   \doc{returns \kode{x}'s number of required arguments.}
 \property{fun-val}{x|<fun> => <type>}
   \doc{returns the return type of \kode{x}.}
-\generic{spread}{x|<fun> => <fun>}
-  \doc{$\equiv$ \kode{(fun (y|...) (app x y))}.}
-\form{OP}{(OP ,op-arg ...)}
-  \doc{creates an anonymous function with implicitly defined
-  arguments, where \kode{,op-arg} is either an implicit parameter
-  \kode{\_} or \kode{...} or an s-expression potentially containing
-  further op-args.  The required parameters \kode{\_}'s are found
-  ordered according to a depth-first walk of the op-args.  
-  The following are typical examples:
-\begin{ex}
-((op \_) 1) ==> 1 \newline
-((op 2) 1) ==> 2 \newline
-((op tail (tail \_)) '(1 2 3)) ==> (3) \newline
-((op + \_ 1) 3) ==> 4 \newline
-((op lst ... 1) 3 2) ==> (3 2 1)
-\end{ex}
-}
 % \generic{identity}{=> <fun>}
 %   \doc{returns a function \kode{(fun (x) x)}.}
 % \generic{compose}{x|<fun> y|<fun> => <fun>}
@@ -545,17 +536,14 @@ functions are instances of \kode{<gen>} and methods are instances of
 %   \doc{$\equiv$ \kode{(fun (args|...) (app f (cat args curried)))}}
 % \generic{always}{x|<any> => <fun>}
 %   \doc{creates a function that always returns \kode{x}.}
-\generic{app}{f|<fun> args|... => <any>}
-%  \doc{$\equiv$ \kode{(f [args 0] [args 1] ... [[args n]])}}
-  \doc{calls \kode{f} with arguments 
-       \kode{(cat (sub args 0 (- (len args) 2)) (elt args (- (len args) 1)))}.}
 \form{FUN}{(FUN ,sig ,@body)}
   \doc{creates an anonymous method with signature \kode{,sig} and when called
        evaluates \kode{,@body} as \kode{(SEQ ,@body)} (cf. Scheme's \kode{LAMBDA}).}
-\form{LOC}{(LOC (,name ,sig ,@body) ...)}
+\form{LOC}{(LOC ((,name ,sig ,@fbody)) ,@body)}
   \doc{$\equiv$\begin{ex}
-       (DEF ,name \#f) ... \newline
-       (SET ,name (fun ,sig ,@body)) ...
+       (LET ((,name \#f) ...) \snl
+       (SET ,name (fun ,sig ,@fbody)) ... \snl
+       ,@body)
        \end{ex}
    \kode{LOC} introduces local functions that can recursively call each other
   (cf. Scheme's \kode{LETREC}).  
@@ -564,11 +552,38 @@ functions are instances of \kode{<gen>} and methods are instances of
   \doc{$\equiv$ \kode{(DV ,name (FUN ,sig ,@body))} followed by
        setting the function's name.}
 \end{defs}
+
 where
 
 \begin{defs}
 \syntax{,sig}{(,@vars) | (,@vars => ,rettype)}
 \syntax{,rettype}{,var | (TUP ,@vars)}
+  \doc{with \kode{TUP} turning into corresponding \kode{t*} 
+  function return type.}
+\end{defs}
+\begin{defs}
+\generic{spread}{x|<fun> => <fun>}
+  \doc{$\equiv$ \kode{(fun (y|...) (app x y))}.}
+\form{OP}{(OP ,op-arg ...)}
+  \doc{creates an anonymous function with implicitly defined
+  arguments, where \kode{,op-arg} is either an implicit required parameter
+  ``\kode{\_}'' or rest parameter ``\kode{...}'' or an s-expression 
+  potentially containing
+  further op-args.  The required parameters are found
+  ordered according to a depth-first walk of the op-args.  
+  The following are typical examples:
+\begin{ex}
+((op \_) 1) ==> 1 \newline
+((op 2) 1) ==> 2 \newline
+((op tail (tail \_)) '(1 2 3)) ==> (3) \newline
+((op + \_ 1) 3) ==> 4 \newline
+((op lst ...\ 1) 3 2) ==> (3 2 1)
+\end{ex}
+}
+\generic{app}{f|<fun> args|... => <any>}
+%  \doc{$\equiv$ \kode{(f [args 0] [args 1] ... [[args n]])}}
+  \doc{calls \kode{f} with arguments 
+       \kode{(cat (sub args 0 (- (len args) 2)) (elt args (- (len args) 1)))}.}
 \end{defs}
 
 
@@ -651,11 +666,8 @@ matching facility.
     and can contain either \kode{UNQUOTE}'d variables
     or \kode{UNQUOTE-SPLICING} variables.  For example,
 \begin{ex}
-(MIF (,a ,b) '(1 2) (lst a b)) \snl $\rightarrow$ (1 2)
-\end{ex}
-  and
-\begin{ex}
-(MIF (,a ,@b) '(1 2) (lst a b)) \snl $\rightarrow$ (1 (2))
+(MIF (,a ,b) '(1 2) (lst a b)) $\rightarrow$ (1 2) \newline
+(MIF (,a ,@b) '(1 2) (lst a b)) $\rightarrow$ (1 (2))
 \end{ex}}
 \form{MATCH}{(MATCH ,exp (,pat ,val) ...)}
   \doc{evaluates \kode{,val} corresponding to first \kode{,pat}
@@ -804,12 +816,12 @@ Locatives are word aligned pointers to memory.
 \class{<num>}{<mag>}
 \generic{+}{x|<num> y|<num> => <num>}
   \doc{returns the sum of its arguments.}
-\generic{1+}{x|<num> => <num>}
-  \doc{$\equiv$ \kode{(+ x 1)}.}
+% \generic{1+}{x|<num> => <num>}
+%   \doc{$\equiv$ \kode{(+ x 1)}.}
 \generic{-}{x|<num> y|<num> => <num>}
   \doc{returns the difference of its arguments.}
-\generic{1-}{x|<num> => <num>}
-  \doc{$\equiv$ \kode{(- x 1)}.}
+% \generic{1-}{x|<num> => <num>}
+%   \doc{$\equiv$ \kode{(- x 1)}.}
 \generic{*}{x|<num> y|<num> => <num>}
   \doc{returns the product of its arguments.}
 \generic{/}{x|<num> y|<num> => <num>}
@@ -860,7 +872,7 @@ Locatives are word aligned pointers to memory.
 \generic{num-to-str-base}{x|<num> b|<int> => <str>}
   \doc{returns string representation of \kode{x} in base \kode{b}.}
 \generic{num-to-str}{x|<num> => <str>}
-  \doc{$equiv$ \kode{(num-to-str x 10)}}
+  \doc{$equiv$ \kode{(num-to-str-base x 10)}}
 \generic{str-to-num}{x|<str> => <num>}
   \doc{returns closest number corresponding to string \kode{x}.}
 \form{INCF}{(INCF ,name)}
@@ -871,6 +883,21 @@ Locatives are word aligned pointers to memory.
   \doc{$\equiv$ \kode{(SET ,name (+ ,name 1))}}
 \formcont{(DECF (,name ,@rest))}
   \doc{$\equiv$ \kode{(SET (,name ,@rest) (+ (,name ,@rest) 1))}}
+\instance{\$e}{<flo>}
+\instance{\$pi}{<flo>}
+\generic{sqrt}{x|<num> => <num>}
+\generic{log}{x|<num> => <num>}
+\generic{logn}{x|<num> b|<num> => <num>}
+\generic{sin}{x|<num> => <num>}
+\generic{cos}{x|<num> => <num>}
+\generic{tan}{x|<num> => <num>}
+\generic{asin}{x|<num> => <num>}
+\generic{acos}{x|<num> => <num>}
+\generic{atan}{x|<num> => <num>}
+\generic{atan2}{y|<num> x|<num> => <num>}
+\generic{sinh}{x|<num> => <num>}
+\generic{cosh}{x|<num> => <num>}
+\generic{tanh}{x|<num> => <num>}
 \end{defs}
 
 \subsubsection{Integers} 
@@ -883,7 +910,7 @@ Locatives are word aligned pointers to memory.
   \doc{returns the logical inclusive or of its arguments.}
 \generic{\&}{x|<int> y|<int> => <int>}
   \doc{returns the logical and or of its arguments.}
-\generic{xor}{x|<int> y|<int> => <int>}
+\generic{\^{}}{(x|<int> y|<int> => <int>)}
   \doc{$\equiv$ \kode{(| (\& x (\~{} y)) (\& (\~{} x) y))}}
 \generic{\~{}}{x|<int> => <int>}
   \doc{returns the logical complement of its argument.}
@@ -930,6 +957,8 @@ Collections can be almost entirely defined in terms of an enumeration class.
 
 \begin{defs}
 \class{<col>}{<any>}
+\class{<col.>}{<col>}
+  \doc{immutable collections.}
 \generic{fab}{t|(t< <col>) n|<int> => <col>}
   \doc{returns a new instance of collection type \kode{t} of len
   \kode{n}.}
@@ -966,9 +995,6 @@ Collections can be almost entirely defined in terms of an enumeration class.
   \kode{k} or default \kode{d} if it doesn't exist.}
 \generic{mem?}{x|<col> y|<any> => <log>}
   \doc{returns true iff \kode{y} is an element of \kode{x}.}
-\generic{elt-setter}{v|<any> x|<col> k|<any>}
-  \doc{sets collection \kode{x}'s element associated with key
-       \kode{k} to \kode{v}.}
 \generic{add}{x|<col> y|<any> => <col>}
   \doc{returns collection with \kode{y} added to \kode{x}.}
 \generic{elts}{x|<col> keys|<seq> => <col>}
@@ -1027,16 +1053,18 @@ Collections can be almost entirely defined in terms of an enumeration class.
 Mutation is seen as a necessary evil and is supported but segregated
 in hopes of trying to isolate and optimize the nondestructive cases.
 Mutation includes the notion of modifying values and adding/removing
-keys~\footnote{Currently value modification has not be completely
-teased out.}.  The hope is that functional (nondestructive)
-programs will be both more succinct, understandable, and efficient
-than an equivalent destructive programs.  Only core collection
-operators are given destructive versions.  All others can be built out
-of nondestructive operators followed by \kode{into}.
+keys.  The hope is that functional (nondestructive) programs will be
+both more succinct, understandable, and efficient than equivalent
+destructive programs.  Only core collection operators are given
+destructive versions.  All others can be built out of nondestructive
+operators followed by \kode{into}.
 
 \begin{defs}
 \class{<col!>}{<any>}
-\generic{into}{x|<col> y|<col> => <col>}
+\generic{elt-setter}{v|<any> x|<col> k|<any>}
+  \doc{sets collection \kode{x}'s element associated with key
+       \kode{k} to \kode{v}.}
+\generic{into}{x|<col!> y|<col> => <col!>}
   \doc{replaces elements of \kode{x} with elements of \kode{y}.}
 \generic{fill!}{x|<col!> y|<any> => <col!>}
   \doc{fills \kode{x} with \kode{y}'s.}
@@ -1054,11 +1082,12 @@ Enumerations are the foundation of collections and are designed to
 provide the convenience of Lisp's list interface (e.g., \kode{null},
 \kode{car}, \kode{cdr}) for all collections.
 In defining a new collection class, a user must implement at minimum
-an enumeration class and the enumeration protocol: \kode{enum},
+an enumerator class and the enumeration protocol: \kode{enum},
 \kode{fin?}, \kode{nxt}, and \kode{now}.
 For efficiency, users might choose to override more methods such as
 \kode{len}, \kode{elt}, \kode{elt-setter}, etc.
-
+Enumeration behavior is undefined if an enumerator is modified during
+enumeration.
 
 \begin{defs}
 \class{<enum>}{<any>}
@@ -1094,7 +1123,7 @@ For efficiency, users might choose to override more methods such as
 where
 
 \begin{defs}
-\syntax{,for-clause}{(,var ,col) \snl | ((tup ,keyvar ,var) ,col)}
+\syntax{,for-clause}{(,var ,col) | ((tup ,keyvar ,var) ,col)}
   \doc{specifies one parallel iteration over a collection \kode{,col}
   binding successive values to \kode{,var} and optionally keys to
   \kode{,keyvar}.}
@@ -1124,18 +1153,18 @@ They can also be used for summing values etc:
 \generic{packer-res}{p|<packer> => <any>}
   \doc{returns result of packings over \kode{p}.}
 \generic{packer}{init add|<fun> res|<fun>}
-  \doc{returns a simple packer with that starts its value out
+  \doc{returns a simple packer that starts its value out
   with \kode{init}, is augmented with \kode{add}, and whose final value
   is computed with \kode{res}.}
 \generic{packer-fab}{t|<type> => <packer>}
   \doc{returns a new type \kode{t} specific packer.}
 \method{packer-fab}{t|(t< <seq>) => <packer>}
-  \doc{$\equiv$ \kode{(packer '() pair (fun (x) (as t (rev! x))))}}
+  \doc{$\equiv$ \kode{(packer '() pair (op as t (rev!\ \_)))}}
 \method{packer-fab}{t|(t= <int>) => <packer>}
-  \doc{$\equiv$ \kode{(packer 0 + identity)}}
+  \doc{$\equiv$ \kode{(packer 0 + (op \_))}}
 \form{PACKING-WITH}{(PACKING-WITH ((,var ,pack) ...) ,@body)}
   \doc{mechanism for packing objects using given packer into \kode{,var}.}
-\form{PACKING-IN}{(PACKING-IN (,name '|' ,type ...) \snl ,@body)}
+\form{PACKING-IN}{(PACKING-IN (,name '|' ,type ...) ,@body)}
   \doc{$\equiv$ \kode{(PACKING-WITH (,name (packer-fab ,type)) ,@body)}.}
 \formcont{(PACKING-IN (,name) ,@body)}
   \doc{$\equiv$ \kode{(PACKING-IN (,name '|' <lst>) ,@body)}.}
@@ -1174,7 +1203,7 @@ Users can define their own tables by subclassing and overriding the
   \doc{GC specific.}
 \generic{tab-gc-state}{x|<tab> => <any>}
   \doc{GC specific.}
-\generic{id-hash}{x|<tab> => (tup hash gc-state)}
+\generic{id-hash}{x|<tab> => (tup hash|<any> gc-state|<any>)}
   \doc{hash function based on pointer.  Susceptible to rehash if
        objects are moved.  The \kode{gc-state} reflects movement.}
 %TODO: CALL THIS SYM-TAB?
@@ -1188,6 +1217,8 @@ Sequences are collections with nonnegative integer keys.
 
 \begin{defs}
 \class{<seq>}{<col>}
+\class{<seq.>}{<seq> <col.>}
+  \doc{immutable sequence.}
 \generic{1st}{x|<seq> => <any>}
   \doc{$\equiv$ \kode{(elt x 0)}}
 \generic{2nd}{x|<seq> => <any>}
@@ -1198,7 +1229,7 @@ Sequences are collections with nonnegative integer keys.
   \doc{$\equiv$ \kode{(elt x (- (len x) 1))}}
 \generic{pos}{x|<seq> v|<any> => (t?\ <int>)}
   \doc{finds position of \kode{v} in \kode{x} else returns false.}
-\generic{find}{x|<seq> y|<seq> => (t?\ <int>)}
+\generic{finds}{x|<seq> y|<seq> => (t?\ <int>)}
   \doc{finds position of \kode{y} in \kode{x} else returns false.}
 \method{add}{x|<seq> y|<any> => <seq>}
   \doc{returns sequence with \kode{y} added to the end of \kode{x}.}
@@ -1207,19 +1238,11 @@ Sequences are collections with nonnegative integer keys.
 \generic{pop}{x|<seq> => (tup <any> <seq>)}
   \doc{returns last pushed element of \kode{x} and new sequence with that
        element removed from \kode{x}. }
-\form{PUSHF}{(PUSHF ,place ,val)}
-  \doc{pushes \kode{,val} onto the sequence stored in \kode{,place},
-  updates \kode{,place} to contain the new sequence, and returns the new
-  sequence.}
-\form{POPF}{(POPF ,place)}
-  \doc{pops a value from the sequence stored in 
-  \kode{,place}, replaces
-  the sequence with an updated sequence, and returns the value.}
 \generic{rev}{x|<seq> => <seq>}
   \doc{returns reversed sequence.}
 \generic{cat}{x|<seq> more|... => <seq>}
   \doc{returns concatenated sequences.}
-\generic{sub}{x|<seq> from|<int> below|<int> \snl => <seq>}
+\generic{sub}{x|<seq> from|<int> below|<int> => <seq>}
   \doc{subsequence of \kode{x} between \kode{from} and \kode{below}.}
 \generic{ins}{x|<seq> val i|<int> => <seq>}
   \doc{returns copy of \kode{x}'s with \kode{val} inserted before \kode{i}.}
@@ -1244,15 +1267,23 @@ Sequences are collections with nonnegative integer keys.
   \doc{returns destructively reversed sequence.}
 \generic{cat!}{x|<seq!> more|... => <seq!>}
   \doc{returns destructively concatenated sequences.}
-\generic{push!}{x|<seq!> y|<any> => <col>}
-  \doc{returns collection with \kode{y} added to the front of \kode{x}.}
-\generic{add!}{x|<seq!> y|<any> => <col>}
+\generic{add!}{x|<seq!> y|<any> => <seq!>}
   \doc{returns collection with \kode{y} added to the end of \kode{x}.}
+\generic{push!}{x|<seq!> y|<any> => <seq!>}
+  \doc{returns collection with \kode{y} added to the front of \kode{x}.}
 \generic{pop!}{x|<seq!> => (tup val|<any> <seq!>)}
   \doc{pops element from front of sequence.}
+\form{PUSHF}{(PUSHF ,place ,val)}
+  \doc{pushes \kode{,val} onto the sequence stored in \kode{,place},
+  updates \kode{,place} to contain the new sequence, and returns the new
+  sequence.}
+\form{POPF}{(POPF ,place)}
+  \doc{pops a value from the sequence stored in 
+  \kode{,place}, replaces
+  the sequence with an updated sequence, and returns the value.}
 \generic{ins!}{x|<seq!> v|<any> i|<int> => <seq!>}
   \doc{inserts \kode{v} before \kode{i} in \kode{x}.}
-\generic{sub-setter}{dst|<seq!> src|<seq!> \snl from|<int> below|<int>}
+\generic{sub-setter}{dst|<seq!> src|<seq> from|<int> below|<int>}
   \doc{replaces subsequence in range between \kode{from} and
   \kode{below} of \kode{dst} with
   contents of \kode{src}.  Provides insertion, deletion, and
@@ -1269,7 +1300,7 @@ Lists are always ``proper'' lists, that is, the tail of a list is always a
 list.  Lists might be deprecated in future releases of \goo.
 
 \begin{defs}
-\class{<lst>}{<seq>}
+\class{<lst>}{<seq!>}
 \alias{<list>}{<lst>} 
 \property{head}{x|<lst> => <any>}
 \propertyinit{tail}{x|<lst> => <lst>}{()}
@@ -1288,8 +1319,8 @@ A zip is a sequence of tuples of sucessive elements of sequences.  A
 zip has the length of its shortest constituent sequence.
 
 \begin{defs}
-\class{<zip>}{<seq>}
-\generic{zip}{cs|(... <seq>) => <zip>}
+\class{<zip>}{<seq.>}
+\generic{zip}{cs|(...\ <seq>) => <zip>}
   \doc{returns a zip over sequences \kode{cs}.}
 \generic{unzip}{z|<zip> => <tup>}
   \doc{returns a tuple of \kode{z}'s constituent sequences.}
@@ -1303,26 +1334,34 @@ an enum implementation of all but \kode{now} and \kode{now-setter}.
 \begin{defs}
 \class{<flat>}{<seq>}
 \class{<flat-enum>}{<enum>}
-\class{<tup>}{<flat>}
+\class{<tup>}{<flat> <seq.>}
   \doc{Tuples are immutable flat sequences and represents multiple values in
   \goo.}
 \generic{tup}{elts|... => <tup>}
   \doc{creates a tuple with elements being \kode{elts}.}
 \class{<opts>}{<flat>}
   \doc{Optionals are used to hold n-ary arguments.  Optionals are immutable.}
-\class{<vec>}{<flat>}
-  \doc{Vectors are nonstretchy, mutable, one dimensional arrays of objects.}
-\generic{vec}{elts|... => <vec>}
-  \doc{returns new vector with elements \kode{elts}.}
-\class{<buf>}{<flat>}
+% \class{<opts>}{<flat>}
+%   \doc{Optionals are used to hold n-ary arguments.  Optionals are immutable.}
+% \class{<vec>}{<flat> <seq.>}
+%   \doc{Vectors are nonstretchy, mutable, one dimensional arrays of objects.}
+% \generic{vec}{elts|... => <vec>}
+%   \doc{returns new vector with elements \kode{elts}.}
+\class{<vec>}{<flat> <seq!>}
   \doc{Stretchy vectors resize when needed.}
-\generic{buf}{elts|... => <sec>}
-  \doc{returns new buf with elements \kode{elts}.}
-\class{<str>}{<flat> <mag>}
-  \doc{\goo\ currently implements ASCII strings.}
+\generic{vec}{elts|... => <sec>}
+  \doc{returns new vector with elements \kode{elts}.}
+\end{defs}
+
+\subsubsubsection{Strings}
+
+\goo\ currently implements ASCII strings.
+
+\begin{defs}
+\class{<str>}{<flat> <mag> <seq.>}
 \generic{str}{elts|... => <str>}
   \doc{returns new string with elements \kode{elts}.}
-\generic{case-insensitive-string-hash}{x|<tab> \snl => (tup hash|<any> gc-state|<any>)}
+\generic{case-insensitive-string-hash}{x|<tab> => (tup hash|<any> gc-state|<any>)}
 \generic{case-insensitive-string-equal}{x|<str> y|<str> => <log>}
 \end{defs}
 
@@ -1334,21 +1373,22 @@ Represents an immutable sequence of numbers specified using a start number
 % which is either \kode{to}, \kode{below}, or \kode{above}.
 
 \begin{defs}
-\class{<range>}{<seq>}
+\class{<range>}{<seq.>}
 \generic{range-by}{from|<num> test|<fun> lim|<num> by|<fun>\snl => <range>}
   \doc{returns a range starting \kode{from}, updated with \kode{by},
   and continuing until \kode{(test x lim)} is false.}
 \generic{range}{from|<num> test|<fun> lim|<fun> => <range>}
-  \doc{$\equiv$ \kode{(range-by from test lim 1+)}}
+  \doc{$\equiv$ \kode{(range-by from test lim (op + \_ 1))}}
 \generic{from}{from|<num> => <range>}
   \doc{$\equiv$ \kode{(range from (always \#t) 0)}}
 \generic{below}{lim|<num> => <range>}
   \doc{$\equiv$ \kode{(range 0 < lim)}}
-\class{<step>}{<seq>}
+\class{<step>}{<seq.>}
   \doc{Steps represent step functions.}
-\generic{first-then}{first|<any> then|<any> => <step>}
-  \doc{returns a new step function.}
-\class{<cycle>}{<seq>}
+\generic{first-then}{first|<fun> then|<fun> => <step>}
+  \doc{returns a new step function, calling thunks \kode{first} to retrieve
+initial value and \kode{then} to retrieve subsequent values.}
+\class{<cycle>}{<seq.>}
   \doc{Cycles provide a mechanism to create infinite sequences repeating
   a certain sequence over and over again.}
 \generic{cycle}{x|... => <cycle>}
@@ -1394,8 +1434,8 @@ See DRM~\cite{Shalit:1996} for more information.
 \generic{default-handler-description}{c|<condition> => <str>}
   \doc{return a string describing an anonymous handler for this type of
   condition.}
-\generic{build-condition-interactively}{cond-type|<condition> in out
-           \snl => <condition>}
+\generic{build-condition-interactively}{type|<condition> in out
+           => <condition>}
   \doc{construct a condition of the specified type and interactively prompt
   the user to fill in any important props.  Called by the debugger.
   Methods should call next-method to build the condition, then set the
@@ -1403,11 +1443,11 @@ See DRM~\cite{Shalit:1996} for more information.
 \generic{sig}{x|<condition> args|...}
   \doc{signals a condition with optional arguments args.}
 \class{<simple-condition>}{<condition>}
-  \doc{a condition consisting of a format message and arguments.}
+  \doc{a condition consisting of a \kode{msg} message and arguments.}
 \property{condition-message}{x|<simple-condition> => <str>}
-  \doc{returns format string.}
+  \doc{returns \kode{msg} string.}
 \property{condition-arguments}{x|<simple-condition> => <lst>}
-  \doc{returns format string arguments.}
+  \doc{returns \kode{msg} string arguments.}
 \class{<serious-condition>}{<condition>}
   \doc{a condition that can not be safely ignored.}
 \class{<error>}{<serious-condition>}
@@ -1417,7 +1457,7 @@ See DRM~\cite{Shalit:1996} for more information.
 \method{error}{x|<str> args|...}
   \doc{signals a simple error.}
 \class{<simple-error>}{<error> <simple-condition>}
-  \doc{an error that consists of a format message and arguments.}
+  \doc{an error that consists of a \kode{msg} message and arguments.}
 \class{<restart>}{<condition>}
   \doc{used for restarting a computation.}
 \class{<handler>}{<any>}
@@ -1465,7 +1505,7 @@ where
 
 \begin{defs}
 \syntax{handler}{(fun (,condition ,resume) ,@body)}
-\syntax{,try-options}{,condition-type-name \snl | ,try-option-list}
+\syntax{,try-options}{,condition-type-name | ,try-option-list}
 \syntax{,try-option-list}{(,try-option* )}
 \syntax{,try-option}{(,option-name ,@option-value)}
 \end{defs}
@@ -1575,7 +1615,7 @@ String ports provide port interface mapped onto strings.
 \generic{writeln}{x|<out-port> y|<any>}
   \doc{$\equiv$ \kode{(seq (write x y) (newline))}}
 % \generic{write-to-str}{x|<any> => <str>}
-\generic{format}{x|<out-port> message|<seq> args|...}
+\generic{msg}{x|<out-port> message|<seq> args|...}
   \doc{formatted output using special commands embedded in message.
   supported commands are:
   \begin{packeditemize}
@@ -1700,7 +1740,7 @@ Functions which load code at runtime require a symbol specifying the
 module name to use.
 
 \begin{defs}
-\generic{load}{filename|<str> modname|<sym> \snl => <any>}
+\generic{load}{filename|<str> modname|<sym> => <any>}
   \doc{returns the result of evaluating the result of reading file
   named \kode{filename} into module \kode{modname}.}
 \generic{eval}{x|<any> modname|<sym> => <any>}
@@ -1708,301 +1748,11 @@ module name to use.
 \generic{top}{modname|<sym>}
   \doc{runs top-level \kode{read-eval-print} loop which reads from 
   in and writes to out.}
-\generic{do-stack-frames}{f|<fun>}
-  \doc{evaluates \kode{(app f f args)} on all stack frames.}
+% \generic{do-stack-frames}{f|<fun>}
+%   \doc{evaluates \kode{(app f f args)} on all stack frames.}
 \generic{save-image}{filename|<str>}
   \doc{saves an image of the current \goo\ process to a file 
        named \kode{filename}.}
-\end{defs}
-
-\section{Installation}
-
-Unpack either a linux or windows version of \goo\ into an appropriate
-installation area.  There are three directories: \kode{DOC},
-\kode{BIN}, \kode{SRC}, and \kode{EMACS}.
-
-Set up your \kode{OS} environment variable named \kode{GOO\_ROOT} to 
-your top level
-\goo\ directory (i.e., containing the subdirectory named \kode{SRC}).  Make
-sure to slash terminate the path.  For example, my \kode{GOO\_ROOT} on linux
-is: 
-
-\begin{exv}
-SET GOO_ROOT=/home/ai/jrb/goo
-\end{exv}
-
-% \begin{exv}
-%   SET GOO\_ROOT=\jrb\goo
-% \end{exv}
-On linux of course you would use forward slashes and environment
-variable setting depends on the shell you're using.
-
-During start up, \goo\ will load two patch files, one from
-
-\begin{exv}
-${GOO_ROOT}/SRC/system-patches.goo
-\end{exv}
-
-% \begin{exv}
-% ${GOO_ROOT}\SRC\system-patches.goo
-% \end{exv}
-
-and one from
-
-% \begin{exv}
-% ${GOO_ROOT}\SRC\user-patches.goo
-% \end{exv}
-\begin{exv}
-${GOO_ROOT}/SRC/user-patches.goo
-\end{exv}
-
-You can customize your \goo\ by adding forms to user-patches.
-
-\section{Usage}
-
-Typing \kode{goo} at your shell will start up a \goo\ read-eval-print
-loop, which accepts sexpressions and top-level commands commencing
-with a comma.  The following is a list of available commands:
-
-\begin{defs}
-\command{,quit}{\mbox{\ }}
-  \doc{exits from \goo.}
-\command{C-c}{\mbox{\ }}
-  \doc{invokes a recursive read-eval-print loop.}
-\command{,g2c-eval}{\mbox{\ }}
-  \doc{to change to dynamic compilation evaluation.}
-\command{,ast-eval}{\mbox{\ }}
-  \doc{to change to ast evaluation.}
-\command{,in}{,name}
-  \doc{changes to module \kode{,name}.}
-\syntax{mod:name}{\mbox{\ }}
-  \doc{accesses an unexported binding from another module.}
-\command{,backtrace}{}
-  \doc{prints out called functions and their arguments.}
-\command{,bt}{}
-  \doc{prints out called functions.}
-\command{,frame}{n|<int>}
-  \doc{prints out \kode{n}{\it th} called function and its arguments.}
-% \generic{frame-var}{n|<int> name|<sym>}
-%   \doc{returns \kode{n}{\it th} called function argument named
-%   \kode{name}.  Can also be called at top-level as a function.}
-\end{defs}
-
-\subsection{Development}
-
-To compile \goo:
-
-\begin{exv}
-goo/user 0<= (use x8r/g2c)
-goo/user 0=> #f
-goo/user 0<= (g2c-top)
-\end{exv}
-
-To run the test suites:
-
-\begin{exv}
-goo/user 0<= (use tests)
-goo/user 0=> #f
-goo/user 0<= (run-all-tests)
-\end{exv}
-
-\subsection{Debugger}
-
-A keyboard interrupt or any error enters the user into the debugger
-which provides a superset of the commands available at top-level.
-The following are debugger specific commands:
-
-\begin{defs}
-\command{,up}{\mbox{\ }}
-  \doc{goes up one level.}
-\command{,top}{\mbox{\ }}
-  \doc{goes to top level.}
-\command{,restarts}{\mbox{\ }}
-  \doc{lists available restarts}
-\command{,restart}{,n}
-  \doc{chooses available restart.}
-\command{,handlers}{,n}
-  \doc{shows available handlers.}
-\end{defs}
-
-% \subsection{Loading Code}
-% 
-% Use the load function to load a file of source into goo:
-% 
-% % \begin{exv}
-% %   (load "\\jrb\\ai\\goo\\interpreters\\basic.goo")
-% % \end{exv}
-% 
-% \begin{exv}
-% (load "/usr/jrb/goo/SRC/demo.goo")
-% \end{exv}
-% 
-% Make sure to use double backslashes on windows in pathnames.  Also you
-% probably need to use an absolute pathname for your file include the
-% \kode{".goo"} suffix if appropriate.
-
-\subsection{Emacs Support}
-
-A rudimentary emacs-based development system is provided.
-
-\subsubsection{Emacs Mode}
-
-Put \kode{EMACS/goo.el} in your emacs lisp directory.  Add the following to
-your \kode{.emacs} file:
-
-\begin{exv}
-(autoload 'goo-mode "goo" 
-  "Major mode for editing Goo source." t)
-(setq auto-mode-alist
-      (cons '("\\.goo\\'" . goo-mode) auto-mode-alist))
-\end{exv}
-
-Useful features include:
-
-\begin{packeditemize}
-\item You can add ``font-lock'' mode by adding the following to your
-\kode{.emacs}:
-\begin{exv}
-(global-font-lock-mode t)
-\end{exv}
-\item In a given buffer, you can toggle font-lock with \kode{M-x font-lock-mode}
-\item Check out the ``Index'' menu item in a goo buffer.
-\end{packeditemize}
-
-Load \kode{EMACS/goo-font-lock.el} for a color coded parenthesis
-nesting aid~\footnote{The original idea was dreamed up and first
-implemented by Andrew Sutherland and then improved by James Knight}.   
-
-\subsubsection{Emacs Shell}
-
-Put \kode{EMACS/goo-shell.el} in your emacs lisp directory.  Add the
-following to your \kode{.emacs}:
-
-\begin{exv}
-(autoload 'run-goo  "goo-shell" 
-          "Run an inferior Goo process." t)
-(setq auto-mode-alist
-      (cons '("\\.goo\\'" . goo-mode) 
-             auto-mode-alist))
-(setq goo-program-name 
-      "/home/ai/jrb/goo/goo") 
-\end{exv}
-
-make sure to set up the goo-program-name to correspond to your
-installation area.
-
-Useful command / key-bindings are:
-
-\begin{exv}
-M-C-x   goo-send-definition
-C-c C-e goo-send-definition
-C-c M-e goo-send-definition-and-go
-C-c C-r goo-send-region
-C-c M-r goo-send-region-and-go
-C-c C-z switch-to-goo
-\end{exv}
-
-Check out \kode{goo-shell.el} for the complete list of command /
-key-bindings. I doubt the compile commands do anything useful cause
-there isn't a compiler.
-
-\subsubsection{TAGS}
-
-Emacs TAGS files can be generated by typing \kode{make all-tags} in
-the \kode{SRC} directory.  Useful tags commands / key-bindings are:
-
-\begin{exv}
-M-.     find-tag
-M-,     tags-loop-continue
-        tags-search
-        tags-query-replace
-\end{exv}
-
-\section{Caveats} 
-
-\goo\ is relatively slow at this point.  There are no compiler
-optimizations in place.  This will improve in coming releases.
-
-This manual is very preliminary.  Please consult the runtime
-libraries in the \kode{SRC} directory.  Also check out Scheme and Dylan's
-manuals for information of their lexical structure and special form
-behavior respectively.
-
-The names of functions will probably change in the near future.
-Please give me feedback on the current names.
-
-Please, please, please send bug reports to \kode{jrb@ai.mit.edu}.  I
-will fix your bugs asap.
-
-% \appendix
-
-\section{History and Acknowledgements} 
-
-\goo\ has greatly benefitted from the help of others.  During the
-winter of 2001, I briefly discussed the early design of Proto, a
-Prototype-based precursor to \goo, with Paul Graham and his feedback
-was very useful.  From there, I bootstrapped the first version of
-Proto for a seminar, called Advanced Topics in Dynamic Object-Oriented
-Language Design and Compilation ($6.894$), that I cotaught with Greg
-Sullivan and Kostas Arkoudas.  The $6.894$ students were very patient
-and gave me many helpful suggestions that greatly improved Proto.
-During and after the seminar, Greg Sullivan reviewed many ideas and
-helped tremendously.  James Knight was one of the $6.894$ students and
-became my MEng student after the course.  He has helped in many many
-ways including the writing of the \kode{save-image} facility and the
-speeding up of the runtime.  Eric Kidd worked with me during the summer
-of 2001 implementing the module system, restarts, and the dependency
-tracking system.  During that summer I decided that a Prototype-based
-object system was inadequate for the type system I was interested in
-supporting and changed over to the present type-based system.  I
-presented my ideas on Proto at LL1 in the Fall of 2001.  Many
-stimulating conversations on the follow on LL1 discussion list inpired
-me.  In fact, during the course of defending Proto's form of
-object-orientation on that list I came up with its current name, \goo,
-and it stuck.  Andrew Sutherland became my MEng student in 
-the winter of 2002, wrote a \goo\ SWIG~\cite{Beaz96a} backend, 
-and has provided useful feedback on \goo's design.
-% Most recently, \goo\ has benefitted from the parallel design effort of
-% Paul Graham's Arc language~\cite{graham01}.  
-
-% \texonly{
-% \begin{myindex}
-% \section{Index}
-% % \addtocounter{chapter}{1}
-% % \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}{Index}}
-% 
-% The principal entry for each term, procedure, or keyword is listed
-% first, separated from the other entries by a semicolon.
-% 
-% \bigskip
-% 
-% \input{index}
-% \end{myindex}
-% }
-
-\bibliographystyle{plain}
-\bibliography{goo}
-
-\appendix
-
-\section{Math}
-
-\begin{defs}
-\instance{\$e}{<flo>}
-\instance{\$pi}{<flo>}
-\generic{sqrt}{x|<num> => <num>}
-\generic{log}{x|<num> => <num>}
-\generic{logn}{x|<num> b|<num> => <num>}
-\generic{sin}{x|<num> => <num>}
-\generic{cos}{x|<num> => <num>}
-\generic{tan}{x|<num> => <num>}
-\generic{asin}{x|<num> => <num>}
-\generic{acos}{x|<num> => <num>}
-\generic{atan}{x|<num> => <num>}
-\generic{atan2}{y|<num> x|<num> => <num>}
-\generic{sinh}{x|<num> => <num>}
-\generic{cosh}{x|<num> => <num>}
-\generic{tanh}{x|<num> => <num>}
 \end{defs}
 
 % \section{Series Protocol}
@@ -2044,6 +1794,269 @@ and has provided useful feedback on \goo's design.
 %   \doc{returns a sequence same as \kode{x} except some values are
 %   replaced based on latching behavior ...}
 % \end{defs}
+
+\section{Installation}
+
+Unpack either a linux or windows version of \goo\ into an appropriate
+installation area.  There are three directories: \kode{doc},
+\kode{bin}, \kode{src}, and \kode{emacs}.
+
+Set up your \kode{OS} environment variable named \kode{GOO\_ROOT} to 
+your top level
+\goo\ directory (i.e., containing the subdirectory named \kode{src}).  Make
+sure to slash terminate the path.  For example, my \kode{GOO\_ROOT} on linux
+is: 
+
+\begin{exv}
+SET GOO_ROOT=/home/ai/jrb/goo
+\end{exv}
+
+% \begin{exv}
+%   SET GOO\_ROOT=\jrb\goo
+% \end{exv}
+On linux of course you would use forward slashes and environment
+variable setting depends on the shell you're using.
+
+During start up, \goo\ will load two patch files, one from
+
+\begin{exv}
+${GOO_ROOT}/src/system-patches.goo
+\end{exv}
+
+% \begin{exv}
+% ${GOO_ROOT}\src\system-patches.goo
+% \end{exv}
+
+and one from
+
+% \begin{exv}
+% ${GOO_ROOT}\src\user-patches.goo
+% \end{exv}
+\begin{exv}
+${GOO_ROOT}/src/user-patches.goo
+\end{exv}
+
+You can customize your \goo\ by adding forms to user-patches.
+
+\section{Usage}
+
+Typing \kode{goo} at your shell will start up a \goo\ read-eval-print
+loop, which accepts sexpressions and top-level commands commencing
+with a comma.  The following is a list of available commands:
+
+\begin{defs}
+\command{,quit}{\mbox{\ }}
+  \doc{exits from \goo.}
+\command{C-c}{\mbox{\ }}
+  \doc{invokes a recursive read-eval-print loop.}
+\command{,g2c-eval}{\mbox{\ }}
+  \doc{to change to dynamic compilation evaluation.}
+\command{,ast-eval}{\mbox{\ }}
+  \doc{to change to ast evaluation.}
+\command{,in}{,name}
+  \doc{changes to module \kode{,name}.}
+\syntax{mod:name}{\mbox{\ }}
+  \doc{accesses an unexported binding from another module.}
+% \generic{frame-var}{n|<int> name|<sym>}
+%   \doc{returns \kode{n}{\it th} called function argument named
+%   \kode{name}.  Can also be called at top-level as a function.}
+\end{defs}
+
+\subsection{Development}
+
+To compile \goo:
+
+\begin{exv}
+goo/user 0<= (use x8r/g2c)
+goo/user 0=> #f
+goo/user 0<= (g2c-top)
+\end{exv}
+
+To run the test suites:
+
+\begin{exv}
+goo/user 0<= (use tests)
+goo/user 0=> #f
+goo/user 0<= (run-all-tests)
+\end{exv}
+
+\subsection{Debugger}
+
+A keyboard interrupt or any error enters the user into the debugger
+which provides a superset of the commands available at top-level.
+The following are debugger specific commands:
+
+\begin{defs}
+\command{,up}{\mbox{\ }}
+  \doc{goes up one level.}
+\command{,top}{\mbox{\ }}
+  \doc{goes to top level.}
+\command{,restarts}{\mbox{\ }}
+  \doc{lists available restarts}
+\command{,restart}{,n}
+  \doc{chooses available restart.}
+\command{,handlers}{,n}
+  \doc{shows available handlers.}
+\command{,backtrace}{\mbox{\ }}
+  \doc{prints out called functions and their arguments.}
+\command{,bt}{\mbox{\ }}
+  \doc{prints out called functions.}
+\command{,frame}{n|<int>}
+  \doc{prints out \kode{n}{\it th} called function and its arguments.}
+\end{defs}
+
+% \subsection{Loading Code}
+% 
+% Use the load function to load a file of source into goo:
+% 
+% % \begin{exv}
+% %   (load "\\jrb\\ai\\goo\\interpreters\\basic.goo")
+% % \end{exv}
+% 
+% \begin{exv}
+% (load "/usr/jrb/goo/src/demo.goo")
+% \end{exv}
+% 
+% Make sure to use double backslashes on windows in pathnames.  Also you
+% probably need to use an absolute pathname for your file include the
+% \kode{".goo"} suffix if appropriate.
+
+\subsection{Emacs Support}
+
+A rudimentary emacs-based development system is provided.
+
+\subsubsection{Emacs Mode}
+
+Put \kode{emacs/goo.el} in your emacs lisp directory.  Add the following to
+your \kode{.emacs} file:
+
+\begin{exv}
+(autoload 'goo-mode "goo" "Major mode for editing Goo source." t)
+(setq auto-mode-alist
+      (cons '("\\.goo\\'" . goo-mode) auto-mode-alist))
+\end{exv}
+
+Useful features include the following.
+You can add ``font-lock'' mode by adding 
+\kode{(global-font-lock-mode t)} to your \kode{.emacs}:
+In a given buffer, you can toggle font-lock with \kode{M-x font-lock-mode}.
+Finally, check out the ``Index'' menu item in a \goo\ buffer for other
+options.
+
+For even more fun, load \kode{emacs/goo-font-lock.el} for a color
+coded parenthesis nesting aid~\footnote{The original idea was dreamed
+up and first implemented by Andrew Sutherland and then improved by
+James Knight}.
+
+\subsubsection{Emacs Shell}
+
+Put \kode{emacs/goo-shell.el} in your emacs lisp directory.  Add the
+following to your \kode{.emacs}:
+
+\begin{exv}
+(autoload 'run-goo  "goo-shell" "Run an inferior Goo process." t)
+(setq auto-mode-alist
+      (cons '("\\.goo\\'" . goo-mode) auto-mode-alist))
+(setq goo-program-name "/home/ai/jrb/goo/goo") 
+\end{exv}
+
+make sure to set up the goo-program-name to correspond to your
+installation area.
+
+Useful command / key-bindings are:
+
+\begin{exv}
+M-C-x   goo-send-definition
+C-c C-e goo-send-definition
+C-c M-e goo-send-definition-and-go
+C-c C-r goo-send-region
+C-c M-r goo-send-region-and-go
+C-c C-z switch-to-goo
+\end{exv}
+
+Check out \kode{goo-shell.el} for the complete list of command /
+key-bindings. I doubt the compile commands do anything useful cause
+there isn't a compiler.
+
+\subsubsection{TAGS}
+
+Emacs TAGS files can be generated by typing \kode{make all-tags} in
+the \kode{src} directory.  Useful tags commands / key-bindings are:
+
+\begin{exv}
+M-.     find-tag
+M-,     tags-loop-continue
+        tags-search
+        tags-query-replace
+\end{exv}
+
+\section{Caveats} 
+
+\goo\ is relatively slow at this point.  There are no compiler
+optimizations in place.  This will improve in coming releases.
+
+This manual is very preliminary.  Please consult the runtime
+libraries in the \kode{src} directory.  Also check out Scheme and Dylan's
+manuals for information of their lexical structure and special form
+behavior respectively.
+
+Please, please, please send bug reports to \kode{jrb@ai.mit.edu}.  I
+will fix your bugs asap.  The \goo\ website \kode{www.jbot.org/goo}
+will have papers, releases, FAQS, etc.
+
+% \appendix
+
+\section{History and Acknowledgements} 
+
+\goo\ has greatly benefitted from the help of others.  During the
+winter of 2001, I briefly discussed the early design of Proto, a
+Prototype-based precursor to \goo, with Paul Graham and his feedback
+was very useful.  From there, I bootstrapped the first version of
+Proto for a seminar, called Advanced Topics in Dynamic Object-Oriented
+Language Design and Compilation ($6.894$), that I cotaught with Greg
+Sullivan and Kostas Arkoudas.  The $6.894$ students were very patient
+and gave me many helpful suggestions that greatly improved Proto.
+During and after the seminar, Greg Sullivan reviewed many ideas and
+helped tremendously.  James Knight was one of the $6.894$ students and
+became my MEng student after the course.  He has helped in many many
+ways including the writing of the \kode{save-image} facility and the
+speeding up of the runtime.  Eric Kidd worked with me during the summer
+of 2001 implementing the module system, restarts, and the dependency
+tracking system.  During that summer I decided that a Prototype-based
+object system was inadequate for the type system I was interested in
+supporting and changed over to the present type-based system.  I
+presented my ideas on Proto at LL1 in the Fall of 2001.  Many
+stimulating conversations on the follow on LL1 discussion list inpired
+me.  In fact, during the course of defending Proto's form of
+object-orientation on that list I came up with its current name, \goo,
+and it stuck.  Andrew Sutherland became my MEng student in 
+the winter of 2002, wrote a \goo\ SWIG~\cite{Beaz96a} backend, 
+and has provided useful feedback on \goo's design.
+Finally, I would like to thank Keith Playford for his continued
+guidance in language design and implementation and for his ever
+present sense of good taste.
+% Most recently, \goo\ has benefitted from the parallel design effort of
+% Paul Graham's Arc language~\cite{graham01}.  
+
+% \texonly{
+% \begin{myindex}
+% \section{Index}
+% % \addtocounter{chapter}{1}
+% % \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}{Index}}
+% 
+% The principal entry for each term, procedure, or keyword is listed
+% first, separated from the other entries by a semicolon.
+% 
+% \bigskip
+% 
+% \input{index}
+% \end{myindex}
+% }
+
+\bibliographystyle{plain}
+\bibliography{goo}
+
+% \appendix
 
 \end{document}
 

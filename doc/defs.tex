@@ -54,21 +54,26 @@
 
 \setlength{\shadowsize}{1pt}
 
-\newcommand{\kind}[1]{\small{$\mathcal #1$}}
+\newcommand{\kind}[1]{\hspace*{0.015in}\hfill\small{$\mathcal #1$}\hfill}
 
 %\newlength{\defnamelength}\setlength{\defnamelength}{1.25in}
 \newlength{\defnamelength}
   \settowidth{\defnamelength}{\kode{insensitive-}} % -factor
 \newlength{\defkindlength}
   \settowidth{\defkindlength}{\kind{M}}
+  \addtolength{\defkindlength}{-0.125in} % fudge
 \newlength{\defsiglength}\setlength{\defsiglength}{\columnwidth}
   \addtolength{\defsiglength}{-1\defnamelength}  
   \addtolength{\defsiglength}{-1\defkindlength}
 %  \addtolength{\defsiglength}{-0.3in} % fudge
 % \addtolength{\defsiglength}{-0.15in} % fudge
-  \addtolength{\defsiglength}{-0.20in} % fudge
+% \addtolength{\defsiglength}{-0.20in} % fudge
+  \addtolength{\defsiglength}{-0.165in} % fudge
 %\newlength{\defsiglength}\settowidth{\defsiglength}{\kode{(owner getter|<gen> setter|<gen> type init|<fun>)}}
 % \newlength{\defsiglength}\setlength{\defsiglength}{3in}
+\newlength{\defcontnamelength}
+  \setlength{\defcontnamelength}{\defnamelength} 
+  \addtolength{\defcontnamelength}{-0.01in} % fudge
 
 \typeout{textwidth  = \the\textwidth}
 \typeout{columnwidth  = \the\columnwidth}
@@ -78,7 +83,7 @@
 
 \parindent 0pt
 
-\newcommand{\dbox}{\shadowbox}
+\newcommand{\dbox}{\shadowbox} %\fbox
 
 \newcommand{\defnoindex}[3]{
   \dbox{
@@ -96,9 +101,9 @@
 \newcommand{\defcontnoindex}[2]{
   {\setlength{\fboxrule}{0pt}
   \framebox{
-  \parbox{\defnamelength}{\setlength{\baselineskip}{0.5\baselineskip}\kode{\hfill}}
+  \parbox{\defcontnamelength}{\setlength{\baselineskip}{0.5\baselineskip}\kode{\hfill}}
   }}
-  \rule{0.25pt}{0mm}
+  \rule{0.1pt}{0mm}
   \dbox{
   \parbox[t]{\defsiglength}{\kode{#1}}
   }
@@ -115,9 +120,11 @@
   \addtolength{\defdoclength}{\defkindlength}
   \addtolength{\defdoclength}{2\defdocindentlength} % column mode
 %  \addtolength{\defdoclength}{-1\defdocindentlength}
-%  \addtolength{\defdoclength}{-0.3in}
+  \addtolength{\defdoclength}{0.0275in}
 
-\newcommand{\doc}[1]{\noindent\makebox[\defdocindentlength]{}\parbox{\defdoclength}{\small\it\setlength{\baselineskip}{0.8\baselineskip} #1}\newline}
+\newcommand{\doc}[1]{\noindent\makebox[\defdocindentlength]{}\fbox{\parbox{\defdoclength}{\small\it #1}}\newline}
+
+% \newcommand{\doc}[1]{\noindent\makebox[\defdocindentlength]{}\parbox{\defdoclength}{\small\it #1}\newline}
 
 %\hbox{\spaceskip=0.5em{{\rm #1}}}}
 
