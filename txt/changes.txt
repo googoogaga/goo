@@ -711,17 +711,13 @@ summary
 
 summary
 
-=== 0.113 ===
-
-summary
-
   tweaks to initial goo
   
 added
 
   accumulators, zip, cycle
 
-=== 0.114 ===
+=== 0.113 ===
 
 summary
 
@@ -739,3 +735,35 @@ added
 
   arity check on dispatch
   type check on props set during new
+
+=== 0.114 ===
+
+summary
+
+  renamed proto to goo and changed directory names
+
+=== 0.115 ===
+
+summary
+
+  changed directory names and did some bug fixing plus 
+  added mutable collection classes
+
+changed
+
+  moved arity check from dispatch to sig_val_type check in CALLx
+  changed from accumulator to packer
+  merged strings into string
+
+added
+
+  added <col!> <seq!> the mutable classes
+  added fun-val congruency checking and fixed failures
+  added/renamed del! in tab/goo
+  change add!/mem? for col/set
+
+removed
+
+=== 0.116 ===
+
+
