@@ -1,0 +1,22 @@
+(use goo/boot)
+(use goo/fun)
+
+(dg to-c (x))
+(dm to-c (x|<int>) (%iu x))
+(dm to-c (x|<flo>) (%fu x))
+(dm to-c (x|<str>) (%su x))
+(dm to-c (x|<chr>) (%cu x))
+(dm to-c (x|<log>) (%bu x))
+(dm to-c (x|<loc>) (%lu x))
+  
+(export
+  %ib
+  %fb
+  %sb
+  %cb
+  %bb
+  %lb
+  to-c
+  c-expr
+  c-ment)
+
