@@ -58,7 +58,9 @@
         %def-regs %sp-reg %sp-reg-setter %fp-reg %fp-reg-setter %unlink-stack
         %new %@class-of %@subclass?
         %fab-dyn-var %dyn-var-val %dyn-var-val-setter
-        %enable-stack-checks
+        %vm-box-fab %vm-box-val %vm-box-val-setter
+        %vm-fun-env-fab %vm-fun-env-elt %vm-fun-env-elt-setter
+        %vm-with-exit %vm-with-cleanup 
         )
 ))
 
@@ -107,7 +109,7 @@
                 (seq ,@body)
                 (cond ,@(tail cases)))
            ;; TODO: NEED SYNTAX ERROR CONDITIONS
-           (error "COND: SYNTAX ERROR BAD CASE" (head cases)))))
+           (syntax-error "COND: SYNTAX ERROR BAD CASE" (head cases)))))
 
 ;;;
 ;;; BOOT OBJECTS
@@ -151,13 +153,13 @@
           (dp sym-name (<sym> => <str>))
         (dc <type> (<any>))
         (dc <class> (<type>))
-          (dp class-prop-len (<class> => <fixnum>)        0)
+          (dp class-prop-len (<class> => <fixnum>)     0)
           (dp class-name (<class> => <sym>))
           (dp class-parents (<class> => <lst>)         nil)
           (dp class-direct-props (<class> => <lst>)    nil)
           (dp class-ancestors (<class> => <lst>)       nil)
           (dp class-props (<class> => <lst>)           nil)
-          (dp class-children (<class> => <lst>)     nil)
+          (dp class-children (<class> => <lst>)        nil)
           ;; ULTIMATELY NEED GENS TO BE FLUSHED DURING CLASS REDEF
           ;; KEEP BOTH GENS/METS CAUSE NO MET->GEN MAP
           ;; WANT TO PRUNE OUT UNNECESSARY GENS BASED ON ACTUAL METS
@@ -165,7 +167,7 @@
           (dp class-mets (<class> => <lst>)            nil)
           (dp class-forward (<class> => <any>)         #f)
           (dp class-type-cache (<class> => <any>)      #f)
-          (dp class-id (<class> => <fixnum>)              -1)
+          (dp class-id (<class> => <fixnum>)           -1)
           (dp class-row (<class> => <tup>)             nul)
         (dc <singleton> (<type>))
           (dp type-object (<singleton> => <any>))
@@ -183,7 +185,7 @@
           (dp prop-init (<prop> =>  <fun>) (fun (x) nul-prop))
         (dc <gen-cache> (<any>))
           (dp gen-cache-missable? (<gen-cache> => <log>)  #f)
-          (dp gen-cache-arg-pos (<gen-cache> => <fixnum>)    0)
+          (dp gen-cache-arg-pos (<gen-cache> => <fixnum>) 0)
           (dp gen-cache-singletons (<gen-cache> => <lst>) nil)
           (dp gen-cache-classes (<gen-cache> => <lst>)    nil)
         (dc <sig> (<any>))
@@ -708,7 +710,7 @@
 ;; DEFINE EARLY GENERIC METHOD FOR ACCESSORS
 
 (dss (%define-accessor ,name (,@sig) ,@body)
-  (let ((params  (sexpr-signature-parameters sig))
+  (let ((params  sig)
         (specs   (&listify (map (always '<any>) params))))
     `(seq (dv ,name 
             (%gen %early-dispatch ',name 
@@ -1078,8 +1080,8 @@
 (df @class< (c1 c2 wrt => <log>)
   (rep find ((ps (%class-ancestors wrt)))
     (if (@empty? ps)
-        (error "can't order specializers - arg/reference object %= is "
-               "neither %= nor %=" wrt c1 c2) 
+        (cpl-error "can't order specializers - arg/reference object %= is "
+                   "neither %= nor %=" wrt c1 c2) 
         (let ((c (@head ps)))
           (if (@== c c1)
               #t
@@ -1453,8 +1455,7 @@
   ;;    (if (@< 0 (@len ambiguous-mets))
   ;;        (error "Ambiguous Method Error when calling %= on %=" gen args)
   (if (@empty? sorted-mets)
-      (error "No applicable methods error when calling %= on %=" 
-             gen (@opts-as-lst args))
+      (no-applicable-methods-error gen args)
       sorted-mets))
 
 ;; FIXME: note the horrible hack in g2c that makes it not generate
@@ -1561,7 +1562,7 @@
               (loc ((del-next (l|<lst>) (if (@== (@head l) next) (@tail l) l)))
                 (merge-lists
                  (@pair next partial-cpl) (@map del-next remaining-lists)))
-              (error "inconsistent precedence graph"))))))
+              (cpl-error "inconsistent precedence graph"))))))
 
 (df @class-direct-props (x) (%class-direct-props x))
 
@@ -1583,9 +1584,9 @@
 
 (df init-class (x)
   (when (@< $max-classes *next-class-id*)
-    (error "Too many classes %=" $max-classes))
+    (internal-error "Too many classes %=" $max-classes))
   (when (@== (@len (%class-parents x)) 0)
-    (error "Need at least one parent in class definition"))
+    (internal-error "Need at least one parent in class definition"))
   (set (%class-id x)   *next-class-id*)
   (set *next-class-id* (@+ *next-class-id* 1))
   (unless (@== x <any>)
@@ -1646,39 +1647,39 @@
 
 (df %prop-unbound-error (x)
   (if *report-prop-unbound-errors?*
-      (error "property unbound")
+      (property-unbound-error x)
       nul))
 
 (df prop-value (object getter|<fun> => <any>)
   (ensure-fresh-object object)
   (def offset (prop-offset object getter))
   (if (@= offset $getter-not-found)
-      (error "prop %s not found in %=" getter object)
+      (property-not-found-error getter object)
       (prop-value-at object offset)))
 
 (df prop-bound? (object getter|<fun> => <log>)
   (ensure-fresh-object object)
   (def offset (prop-offset object getter))
   (if (@= offset $getter-not-found)
-      (error "prop %s not found in %=" getter object)
+      (property-not-found-error getter object)
       (prop-bound-at? object offset)))
 
 (df prop-value-setter (z object getter|<fun>)
   (ensure-fresh-object object)
   (rep loop ((i 0) (props (object-props object)))
     (if (@empty? props)
-        (error "prop %s not found in %=" getter object)
+        (property-not-found-error getter object)
         (let ((prop (@head props)))
           (if (@== (%prop-getter prop) getter)
               (if (@isa? z (%prop-type prop))
                   (set (prop-value-at object i) z)
-                  (error "Prop type error"))
+                  (property-type-error getter z (%prop-type prop)))
               (loop (@+ i 1) (@tail props)))))))
 
 (df find-getter (owner|<class> getter|<gen> => <met>)
   (rep loop ((mets (@fun-mets getter)))
     (if (@empty? mets)
-        (error "COULDN'T FIND GETTER")
+        (property-not-found-error getter owner)
         (let ((met (@head mets)))
           (if (@== (fun-spec met 0) owner)
               met
@@ -1687,7 +1688,7 @@
 (df find-setter (owner|<class> type zetter|<gen> => <met>)
   (rep loop ((mets (@fun-mets zetter)))
     (if (@empty? mets)
-        (error "COULDN'T FIND SETTER")
+        (property-not-found-error zetter owner)
         (let ((met (@head mets)))
           (if (and (@== (fun-spec met 1) owner) 
                    (@type-equal? (fun-spec met 0) type))
@@ -1996,11 +1997,26 @@
 
 (force-names-into-boot-module
   error
+  property-unbound-error
+  property-not-found-error
+  property-type-error
+  cpl-error
   unknown-function-error
+  stack-overflow-error
   file-opening-error
   type-error
-  wrong-number-arguments-error
+  internal-error
+  arity-error narity-error
+  ambiguous-method-error
+  no-applicable-methods-error
+  syntax-error
+  range-error
   keyboard-interrupt
+  file-opening-error
+  no-next-methods-error
+  assert-error
+  as-error
+  arithmetic-error
   tup
   %with-monitor
 )
@@ -2129,12 +2145,17 @@
   %time
   ;;; FOR DECISION TREE CODE
   %gen-refs 
-  %gen-code %gen-code-setter
+  %gen-code %gen-code-setter %dispatch
   %gen-src
   %met-code
   %fun-reg
   %unlink-stack
   @isa?
+  fun-sig
+  %met %met-env-setter
+  %vm-box-fab %vm-box-val %vm-box-val-setter
+  %vm-fun-env-fab %vm-fun-env-elt %vm-fun-env-elt-setter
+  %vm-with-exit %vm-with-cleanup 
 )
 
 ;; Regular exports.
@@ -2291,6 +2312,6 @@
   %class-of @subclass?
   %@class-of %@subclass?
   %fab-dyn-var %dyn-var-val %dyn-var-val-setter
-  %enable-stack-checks
   @not ;; hygiene
+  @opts-as-lst ;; booting
 )

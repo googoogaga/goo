@@ -182,7 +182,7 @@
                 (outer (mod- bucket-index bucket-offset n-buckets)
                        (+ probes 1)))))
         ;; Table totally full???  That's not right
-        (error "The table is totally full this shouldn't happen"))))
+        (internal-error "The table is totally full this shouldn't happen"))))
 
 
 
@@ -243,7 +243,7 @@
                 (outer (mod- bucket-index bucket-offset n-buckets)
                        (+ probes 1)))))
         ;; Table totally full???  That's not right
-        (error "The table is totally full this shouldn't happen"))))
+        (internal-error "The table is totally full this shouldn't happen"))))
 
 (dm del (x|<tab> key => <tab>)
   (del! (dup x) key))
@@ -281,7 +281,7 @@
                 (outer (mod- bucket-index bucket-offset n-buckets)
                        (+ probes 1)))))
         ;; Table totally full???  That's not right
-        (error "The table is totally full this shouldn't happen")))
+        (internal-error "The table is totally full this shouldn't happen")))
   table)
 
 (dm do-keyed (function|<fun> table|<tab>)
@@ -442,7 +442,7 @@
           (when (> p (1st (ceil/ capacity depth)))
             (return (tup (+ p 2) depth))))
         *twin-primes*)
-    (error "Not enough primes to compute new table size")))
+    (internal-error "Not enough primes to compute new table size")))
 
 (dm copy-to-new-vector (table|<tab> new-vector)
   (do-keyed
@@ -475,7 +475,7 @@
                     (mod- new-bucket-index new-bucket-offset new-n-buckets)
                     (+ probes 1)))))
            ;; Table totally full???  That's not right
-           (error "The table is totally full this shouldn't happen"))))
+           (internal-error "The table is totally full this shouldn't happen"))))
    table))
 
 ;;; HASHING FUNCTIONS

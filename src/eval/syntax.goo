@@ -1,11 +1,7 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
+(use goo)
 (use goo/boot)
-(use goo/macros)
-(use goo/runtime)
-(use goo/math)
-(use goo/types)
-(use goo/cols)
 
 ;;  Self-evaluating entities
 (dm sexpr-self-evaluating? (exp => <log>)
@@ -258,7 +254,7 @@
               (sexpr-monitor-test options)
               handler
               (sexpr-monitor-body body)))
-       (error "Malformed TRY expression: ~=" exp)))
+       (syntax-error "Malformed TRY expression: ~=" exp)))
 
 ;;; Find an option.  Given '((foo 1) (bar 2)) and 'foo, return '(1).
 (df find-option (options|<lst> option|<sym> default => <any>)
@@ -271,7 +267,7 @@
   (def type-list (find-option options 'type '(<condition>)))
   (mif ((,type) type-list)
        type
-       (error "Malformed TRY condition type: %=" type-list)))
+       (syntax-error "Malformed TRY condition type: %=" type-list)))
 
 ;; Build an expression which returns an appropriate <handler-info>.
 (dm sexpr-monitor-info (options|<lst> => <any>)
@@ -279,18 +275,18 @@
   (def description (find-option options 'description #f))
   (cond
     ((and info description)
-     (error "TRY may only have one of INFO or DESCRIPTION: %=" options))
+     (syntax-error "TRY may only have one of INFO or DESCRIPTION: %=" options))
     ;; TODO - Do we want to keep the 'info' option?
     (info
      (mif ((,info-expr) info)
           info-expr
-          (error "Malformed TRY info expression: %=" info)))
+          (syntax-error "Malformed TRY info expression: %=" info)))
     (description
      (mif ((,message ,@arguments) description)
           `(new <simple-handler-info>
              handler-info-message ,message
              handler-info-arguments (lst ,@arguments))
-          (error "Malformed TRY description: %=" description)))
+          (syntax-error "Malformed TRY description: %=" description)))
     (#t '$default-handler-info)))
 
 (dm sexpr-monitor-test (options|<lst> => <lst>)
@@ -630,7 +626,7 @@
         ((sexpr-unquote? x)
          (head (tail x)))
         ((sexpr-unquote-splicing? x)
-         (error "UNQUOTE-SPLICING %= AFTER BQ" (head (tail (x)))))
+         (syntax-error "UNQUOTE-SPLICING %= AFTER BQ" (head (tail (x)))))
         (#t
          (esc return
            (rep loop ((p x) (q '()))
@@ -639,12 +635,12 @@
                                (nreconc q (lst (lst *bq-quote* p)))))
                  (seq (when (sexpr-unquote? p)
                         (unless (empty? (tail (tail p)))
-                          (error "Malformed ,%=" p))
+                          (syntax-error "Malformed ,%=" p))
                         (return 
                          (pair *bq-append* 
                                (nreconc q (lst (head (tail p)))))))
                       (when (== (tail p) *comma-atsign*)
-                        (error "Dotted ,@%=" p))
+                        (syntax-error "Dotted ,@%=" p))
                       (loop (tail p) (pair (bracket (head p)) q)))))))))
 
 (dm bracket (x => <any>)
@@ -719,11 +715,12 @@
 
 ;; MACROS
 
+;;; TODO: GENSYM 'EXP
 (dm sexpr-make-macro-function (name exp|<lst> => <any>)
   (def mif  (sexpr-make-syntax-if
              (sexpr-method-parameters exp) 'exp
              (sexpr-sequence->begin (sexpr-method-body exp)) 
-             `(macro-error ',name)))
+             `(macro-error ',name exp)))
   (def func (sexpr-make-anonymous-method (lst 'exp) (lst mif)))
   func)
 

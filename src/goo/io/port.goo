@@ -63,9 +63,6 @@
 (dm open (t|(t= <file-in-port>) filename|<str> => <file-in-port>)
   (new <file-in-port> port-handle (%open-in-file (%su filename))))
 
-(dm file-opening-error (filename|<str>)
-  (error "Cannot open file named %=" filename))
-
 (dm open (t|(t= <file-out-port>) filename|<str> => <file-out-port>)
   (new <file-out-port> port-handle (%open-out-file (%su filename))))
 

@@ -8,15 +8,15 @@
 ;;       apply, as apply is not necessary, and slow.
 (ds (sup ,@args)
   `(let ((next-mets (%next-methods)))
-     (if next-mets
+     (if (and next-mets (@not (@== next-mets '())))
          (napp (head next-mets) (tail next-mets) ,@args '())
-         (error "No next methods"))))
+         (no-next-methods-error (%fun-reg)))))
 
 (ds (app-sup ,@args)
   `(let ((next-mets (%next-methods)))
-     (if next-mets
+     (if (and next-mets (@not (@== next-mets '())))
          (napp (head next-mets) (tail next-mets) ,@args)
-         (error "No next methods"))))
+         (no-next-methods-error (%fun-reg)))))
 
 (ds (app ,f ,@args)
   `(napp ,f #f ,@args))
@@ -133,8 +133,7 @@
            `(if ,cond
                 (seq ,@body)
                 (cond ,@(tail cases)))
-           ;; TODO: NEED SYNTAX ERROR CONDITIONS
-           (error "COND: SYNTAX ERROR BAD CASE" (head cases)))))
+           (syntax-error "bad case %=" (head cases)))))
 
 (ct-also
   (df do-case-by (val tst cases)
@@ -147,8 +146,8 @@
                       `(if (or ,@(map (fun (x) `(,tst ,val ,x)) values))
                            (seq ,@body)
                            ,(do-case-by val tst (tail cases)))
-                      (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))
-             (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))))
+                      (syntax-error "bad case %=" (head cases))))
+             (syntax-error "bad case %=" (head cases))))))
 
 (ds (case-by ,val ,tst ,@cases)
   (let ((val-var (gensym)) (tst-var (gensym)))
@@ -204,7 +203,7 @@
 
 (ds (match ,exp ,@cases)
   (mif (() cases)
-       `(error "Failed to match.")
+       `(syntax-error "failed to match.")
        (mif (((,pat ,@then) ,@rest) cases)
             (if (== pat #t)
                 `(seq ,@then)
@@ -213,10 +212,10 @@
                      (mif (,pat ,var) 
                           (seq ,@then)
                           (match ,var ,@rest)))))
-            (error "Invalid match syntax."))))
+            (syntax-error "invalid match syntax."))))
 
 (ds (assert ,cond ,message ,@args)
-  `(if (not ,cond) (error ,message ,@args)))
+  `(if (not ,cond) (assert-error ,message ,@args)))
 
 (ds (for (,@clauses) ,@body)
   (rep grok ((clauses clauses) (inits '()) (preds '()) (nows '()) (nexts '()))
@@ -256,7 +255,7 @@
             (fin (seq (set ,name ,value)
                       (dlet (,@rest) ,@body))
                  (set ,name ,old-value))))
-       (error "DLET: SYNTAX ERROR BAD BINDINGS" bindings))))
+       (syntax-error "Bad dlet bindings %=" bindings))))
 
 (ds (def-fun-var ,var ,value)
   (let ((nam (var-name var))

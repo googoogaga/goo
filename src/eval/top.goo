@@ -1,19 +1,13 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
+(use goo)
 (use goo/boot)
-(use goo/macros)
-(use goo/runtime)
-(use goo/io/read)
-(use goo/io/write)
+(use goo/system)
+(use goo/conditions)
 (use eval/syntax)
 (use eval/ast)
 (use eval/ast-linearize)
 (use eval/ast-eval)
-(use goo/system)
-(use goo/types)
-(use goo/math)
-(use goo/cols)
-(use goo/io/port)
 
 (df esctst ()
   (esc exit 
@@ -102,7 +96,7 @@
   (def realfile (find-goo-file-in-path name *module-search-path*))
 ;  (msg out "Loading file %s\n" realfile)
   (unless realfile
-    (error "File %s not found" name))
+    (file-opening-error name))
   (load-file realfile modname))
 
 (dm prompt-for-command-expression (env level prompt)
@@ -187,9 +181,11 @@
       (esc continue
         (try <condition>
           (fun (c r)
-            (if (isa? c <keyboard-interrupt>)
-                (msg out "BREAK")
-                (msg out "ERROR: %s" (describe-condition c)))
+            (case-by c isa?
+              ((<keyboard-interrupt>) 
+               (msg out "BREAK"))
+              (#t
+               (msg out "ERROR: %s" (describe-condition c))))
             ;; (backtrace (env))
             (%%top%%top-in (+ level 1) top quit #t ct-env)
             (continue #f))
@@ -202,7 +198,7 @@
               (set restarts (list-handlers <restart> out))
               (set show-restarts? #f))
             (def form (prompt-for-command-expression ct-env level "<= "))
-            (if (= form (eof-object))
+            (if (eof-object? form)
                 (quit #f)
                 (match form
                   ((cmd_quit) 

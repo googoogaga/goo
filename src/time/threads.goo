@@ -3,6 +3,7 @@
 (use goo)
 (use goo/boot)
 (use goo/runtime)
+(use goo/conditions)
 (use time/%threads.c)
 
 (dl %thread-create)

@@ -44,7 +44,7 @@
 
 ;; FIXME: should union-elts really be <lst> instead of <seq> and also
 ;; fix compiler to automatically copy optionals.
-(df t+ (args|...) (new <union> union-elts (as <lst> args)))
+(df t+ (args|...) (new <union> union-elts (@opts-as-lst args)))
 
 (df t= (x) (new <singleton> type-object x))
 

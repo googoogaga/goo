@@ -56,7 +56,7 @@
 ;; Undocumented
  (dg fab-into (x|<col> y|<col> => <col>)) 
  (dg fab-fill! (x|<col> y => <col>)) 
- (dg range-error (x|<col> k))
+
  (dg low-elt (x|<col> k|<any> => <any>))
  (dg fab-elt-setter (v|<any> x|<col> k|<any>))
  (dg col-res (c|<col> x|<col> => <col>))
@@ -145,9 +145,6 @@
     (if (fin? e)
         res
         (red (combine res (now e)) (nxt e)))))
-
-(dm range-error (c|<col> k)
-  (error "RANGE ERROR %= %=" c k))
 
 (dc <elt-default> (<any>))
 (dv $elt-default (new <elt-default>))

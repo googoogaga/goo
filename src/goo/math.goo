@@ -5,14 +5,6 @@
 (use goo/mag)
 (use goo/types)
 
-;;; DYNAMIC BINDING
-
-;;; <any>
-
-;; (dm nyi-error ()
-;;   (nyi) ;; nyi nyi
-;;   )
-
 (dm to-str (x|<any> => <str>)
   (cat "{ obj(" (to-str (class-name (object-class x))) ") }"))
 
@@ -32,9 +24,7 @@
 (dg as (x|<any> y|<any> => <any>))
 
 (dm as (type x => <any>)
-  (if (isa? x type) 
-      x
-      (error "NO AS METHOD FOR %= AND %=" type x)))
+  (if (isa? x type) x (as-error type x)))
 
 ;; TODO: DEAL WITH ==
 
@@ -274,7 +264,7 @@
   (%ib (%i* (%iu x) (%iu y))))
 
 (dm / (x|<int> y|<int> => <int>)
-  (error "No int divide, consider trunc/"))
+  (arithmetic-error "No int divide, consider trunc/"))
 
 (dm floor (x|<int> => <int>) x)
 
@@ -399,7 +389,7 @@
             ,@prefix (%fb (,%fp (%fu ,param)))))))
 
 (def-unary-trans sqrt (x)
-  (when (neg? x) (error "SQRT would produce complex number")))
+  (when (neg? x) (arithmetic-error "SQRT would produce complex number")))
 
 (def-unary-trans log (x))
 (def-unary-trans sin (x))
@@ -409,9 +399,9 @@
 (def-unary-trans cosh (x))
 (def-unary-trans tanh (x))
 (def-unary-trans asin (x)
-  (when (neg? x) (error "SQRT would produce complex number")))
+  (when (neg? x) (arithmetic-error "SQRT would produce complex number")))
 (def-unary-trans acos (x)
-  (when (neg? x) (error "SQRT would produce complex number")))
+  (when (neg? x) (arithmetic-error "SQRT would produce complex number")))
 (def-unary-trans atan (x))
 
 (dg atan2 (y|<num> x|<num> => <num>))
@@ -431,7 +421,6 @@
   fabs)
 
 (export
-  ;; nyi-error
   to-str
   address-of
   <bot>

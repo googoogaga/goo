@@ -14,7 +14,6 @@
 (use goo/cols/tup)
 (use goo/cols/vec)
 (use goo/cols/tab)
-(use goo/io/port)
 
 ;;; APP
 
@@ -37,7 +36,6 @@
 ;               (seq (set (elt out i) (now-elt lelt s))
 ;                    (loop (nxt-state lelt s) (+ i 1)))))
 ;          (%%apply proc nexts out))))
-
 
 ;;; MACRO SUPPORT
 
@@ -109,275 +107,6 @@
 (dm zipped (x => <fun>)
   (fun ((t <tup>)) (app x t)))
 
-;;; CONDITIONS
-
-(dc <condition> (<any>))
-
-(dm default-handler (c|<condition>)
-  #f)
-
-(dm describe-condition (c|<condition> => <str>)
-  (msg-to-str "Anonymous condition %=" c))
-
-(dm default-handler-description (cond-type|(t< <condition>) => <str>)
-  (msg-to-str "Anonymous handler for %s" cond-type))
-
-(dm build-condition-interactively
-    (cond-type|(t< <condition>) in out => <condition>)
-  (new cond-type))
-
-(dc <simple-condition> (<condition>))
-  (dp condition-message (<simple-condition> => <str>)   "")
-  (dp condition-arguments (<simple-condition> => <lst>) '())
-
-(dm describe-condition (c|<simple-condition> => <str>)
-  (app msg-to-str (condition-message c) (condition-arguments c)))
-
-(dm build-condition-interactively
-    (cond-type|(t< <simple-condition>) in out => <condition>)
-  (def cond (sup cond-type in out))
-  (msg out "Condition format string: ")
-  (set (condition-message cond) (read in))
-  (msg out "Condition format arguments: ")
-  (set (condition-arguments cond) (read in))
-  cond)
-
-(dc <serious-condition> (<condition>))
-
-(dm default-handler (c|<serious-condition>)
-  (msg out "%s\n" (describe-condition c))
-  (%invoke-debugger c))
-
-(dc <error> (<serious-condition>))
-
-(dc <simple-error> (<error> <simple-condition>))
-
-(export
-  <condition>
-  default-handler
-  describe-condition
-  condition-message
-  condition-arguments
-  
-  default-handler-description
-  build-condition-interactively
-  <simple-condition>
-  <serious-condition>
-  <error>
-  <simple-error>)
-
-(dc <restart> (<condition>))
-
-(dm default-handler-description (cond-type|(t< <restart>) => <str>)
-  (msg-to-str "Anonymous restart of type %s" cond-type))
-
-(dc <incongruent-method-error> (<error>))
-  (dp incongruent-method-error-generic (<incongruent-method-error> => <gen>))
-  (dp incongruent-method-error-method (<incongruent-method-error> => <met>))
-
-(dm describe-condition (c|<incongruent-method-error> => <str>)
-  (msg-to-str "Method %= incongruent with generic %=.\n"
-              (incongruent-method-error-method c)
-              (incongruent-method-error-generic c)))
-
-(dc <replace-generic-restart> (<restart>))
-
-(dm default-handler-description 
-    (cond-type|(t< <replace-generic-restart>) => <str>)
-  "Replace the generic function with an empty, congruent one")
-
-(export
-  <restart>
-  <replace-generic-restart>
-  default-handler-description
-  build-condition-interactively)
-
-;;;; Handler Info
-;;;; Debugger-level info used for describing handlers and calling them
-;;;; interactively.  This probably doesn't need to be an actual class;
-;;;; a few well-chosen props on <handler> might work better.
-
-(dc <handler-info> (<any>))
-
-(dm describe-handler (info|<handler-info> condition-type => <str>)
-  (default-handler-description condition-type))
-
-(dm build-condition-for-handler-interactively
-    (info|<handler-info> condition-type in out => <condition>)
-  (build-condition-interactively condition-type in out))
-
-(dv $default-handler-info (new <handler-info>))
-
-(dc <simple-handler-info> (<handler-info>))
-  (dp handler-info-message (<simple-handler-info> => <str>))
-  (dp handler-info-arguments (<simple-handler-info> => <lst>) '())
-
-(dm describe-handler (info|<simple-handler-info> condition-type => <str>)
-  (app msg-to-str (handler-info-message info) (handler-info-arguments info)))
-
-(export
-  <handler-info>
-  describe-handler
-  build-condition-for-handler-interactively
-  $default-handler-info
-  <simple-handler-info>
-  handler-info-message
-  handler-info-arguments
-  describe-handler)
-
-;;;; Handlers
-
-(ddv *current-handlers* '())
-
-(dc <handler> (<any>))
-  (dp handler-condition-type (<handler> => (t< <condition>)))
-  (dp handler-info (<handler> => <handler-info>))
-  (dp handler-test (<handler> => <fun>))
-  (dp handler-function (<handler> => <fun>))
-
-(df fab-handler
-    (type|(t< <condition>) info|<handler-info> test|<fun> f|<fun> => <handler>)
-  (new <handler>
-    handler-condition-type type
-    handler-info           info
-    handler-test           test
-    handler-function       f))
-
-(df handler-active? (handler|<handler> => <log>)
-  ((handler-test handler)))
-
-(df handler-matches? (handler|<handler> condition|<condition> => <log>)
-  (and (isa? condition (handler-condition-type handler))
-       (handler-active? handler)))
-
-(df %with-monitor
-    (type|(t< <condition>) info|<handler-info> test-fun|<fun>
-     user-handler|<fun> main-fun|<fun>)
-  (def _original-handlers_ *current-handlers*)
-  (loc ((_handler-function_ (condition _next-handler_)
-          (esc _resume_
-            (user-handler condition _resume_)
-            (_next-handler_))))
-    (pushf *current-handlers*
-           (fab-handler type info test-fun _handler-function_))
-    (fin (main-fun) (set *current-handlers* _original-handlers_))))
-
-;;; Pass a signal to a list of handlers for processing.
-(df signal-handler-list (condition|<condition> handlers|<lst> => <any>)
-  (if (empty? handlers)
-      (default-handler condition)
-      (let ((handler (head handlers))
-            (remaining (tail handlers)))
-        (if (handler-matches? handler condition)
-            ((handler-function handler)
-             condition (fun () (signal-handler-list condition remaining)))
-            (signal-handler-list condition remaining)))))
-
-(dm sig (condition|<condition> args|...)
-  (signal-handler-list condition *current-handlers*))
-
-(dm sig (c|<str> args|...) 
-  (sig (new <simple-condition> 
-         condition-message c condition-arguments (as <lst> args))))
-
-;; (df error (message|<str> args|...)
-;;   (%break (%su message)))
-
-(dm error (c|<error> args|...)
-  (sig c))
-
-(dm error (c|<str> args|...)
-  (error (new <simple-error> 
-           condition-message c condition-arguments (as <lst> args))))
-
-(df wrong-number-arguments-error (fun|<fun> n|<int>)
-  (error "%= CALLED WITH %= ARGUMENTS EXPECTED %=" fun n (fun-arity fun)))
-
-;; (df unknown-function-error (fun|<fun> #/ args|<seq> /#)
-;;   (error "UNKNOWN FUNCTION %= CALLED ON %=" fun args))
-
-(df unknown-function-error (fun|<fun>)
-  (error "UNKNOWN FUNCTION %= CALLED" fun))
-
-(df type-error (arg type)
-  (error "TYPE ERROR %= SHOULD BE A %=" arg type))
-
-(df incongruent-method-error (gen|<gen> met|<met> => #f)
-  (error (new <incongruent-method-error>
-           incongruent-method-error-generic gen
-           incongruent-method-error-method  met)))
-
-(df macro-error (name)
-  (error "Macro %s failed to match" name))
-
-(df stack-overflow-error ()
-  (error "Stack overflow"))
-
-;;; INTERACTIVE HANDLER MUNGING
-
-;;; Apply 'f' to all handlers whose type is a subtype of 'type'.
-(df do-handlers-of-type (type|(t< <condition>) f|<fun> => #f)
-  (rep search ((handlers *current-handlers*))
-    (if (empty? handlers)
-        #f
-        (let ((handler (head handlers))
-              (remaining (tail handlers)))
-          (when (and (subtype? (handler-condition-type handler) type)
-                     (handler-active? handler))
-            (f handler))
-          (search remaining)))))
-
-;;; Print out descriptions all active handlers matching 'type' (numbered
-;;; from 1) and return a sequence of those handlers in the same order
-;;; (indexed from zero).  This allows us to keep track of which handlers
-;;; correspond to which user-visible numbers.
-(df list-handlers (type|(t< <condition>) out => <vec>)
-  (def i          1)
-  (def applicable (fab <vec> 0))
-  (do-handlers-of-type type
-    (fun (handler)
-      (msg out "%d. %s.\n" i
-           (describe-handler 
-            (handler-info handler) (handler-condition-type handler)))
-      (push! applicable handler)
-      (incf i)))
-  applicable)
-
-;;; Attempt to invoke the specified handler directly, bypassing any other
-;;; handlers "in the way". 
-(df invoke-handler-interactively (handler|<handler> in out => <any>)
-  (def condition
-    (build-condition-for-handler-interactively
-     (handler-info handler) (handler-condition-type handler) in out))
-  (unless (handler-matches? handler condition)
-    (error "Handler %= does not match condition %=" handler condition))
-  (rep search ((handlers *current-handlers*))
-    (if (empty? handlers)
-        (error "Handler %= is not installed" handler)
-        (let ((current (head handlers))
-              (remaining (tail handlers)))
-          (if (== handler current)
-              ((handler-function handler)
-               condition (fun () (signal-handler-list condition remaining)))
-              (search remaining))))))
-
-;;; Chose a handler matching 'type', and call it interactively.
-(df choose-handler (type|(t< <condition>) in out => <any>)
-  (def handlers (list-handlers type out))
-  (msg out "Please pick a handler: ")
-  (def n (- (read in) 1))
-  (when (or (< n 0) (>= n (len handlers)))
-    (error "No such handler %d" n))
-  (invoke-handler-interactively (elt handlers n) in out))
-
-;;; Enable some low-level restarts, now that it's safe to do so.
-(set *restarts-ok?* #t)
-
-(export
-  list-handlers
-  invoke-handler-interactively
-  choose-handler)
-
 ;;; LOCATIVES
 
 ;; (dc <loc> (<any>))
@@ -411,11 +140,6 @@
 
 (set fab-sym booted-fab-sym)
 
-(need-implementation
-  read
-  msg
-  msg-to-str)
-
 ;; TODO: TEMPORARY EXPORTS
 (export
   napp
@@ -425,7 +149,6 @@
   match-sublist
   cat-sym
   *gensym-counter*
-  *current-handlers*
   gensym
   fab-setter-name
   var-name
@@ -440,14 +163,5 @@
   loc-val-setter
   app-filename
   app-args
-  sig
-  error
-  macro-error
-  stack-overflow-error
-  <handler>
-  handler-function
-  fab-handler
-  handler-matches?
-  %with-monitor
   )
 

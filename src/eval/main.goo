@@ -6,13 +6,16 @@
 (use eval/ast)
 (use eval/top)
 (use eval/g2c)
-;; (use eval/g2m)
+(use eval/g2m)
+(use eval/vm)
 
+#/
 (use time/threads)
 (use time/lock)
 (use time/event)
 (use cols/pipe)
 (use goo/random)
+/#
 
 ;; (use eval/decision-trees)
 ;; (use tests)

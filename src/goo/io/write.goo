@@ -10,6 +10,7 @@
 (use goo/io/port)
 (use goo/cols)
 (use goo/runtime)
+(use goo/conditions)
 (use goo/io/read)
 (use goo/packer)
 

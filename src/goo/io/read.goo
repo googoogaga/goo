@@ -14,6 +14,7 @@
 (use goo/boot)
 (use goo/macros)
 (use goo/runtime)
+(use goo/conditions)
 (use goo/types)
 (use goo/math)
 (use goo/io/port)
@@ -54,7 +55,8 @@
 (dm reader-token? (form => <log>)
   (isa? form <reader-token>))
 
-(dv $close-paren (make-reader-token "unexpected right parenthesis"))
+(dv $close-paren   (make-reader-token "unexpected right parenthesis"))
+(dv $close-bracket (make-reader-token "unexpected right bracket"))
 
 (dv $dot (make-reader-token "unexpected \" . \""))
 
@@ -147,15 +149,14 @@
                  (#t
                   (pair prev (read-next c form (sub-read port)))))))))
 
-;; (dm sub-read-list (c|<chr> port|<port> => <any>)
-;;   ;; (put out #\d) (newline out)
-;;   (let ((form (sub-read port)))
-;;     (if (eof-object? form)
-;;      (reading-error 
-;;       port "end of file inside list -- unbalanced parentheses")
-;;      (if (== form $close-paren)
-;;          '()
-;;          (pair form (sub-read-list c port))))))
+(dm sub-read-seq (c|<chr> e port|<port> => <any>)
+  (def form (sub-read port))
+  (if (eof-object? form)
+      (reading-error 
+       port "end of file inside list -- unbalanced parentheses")
+      (if (== form e)
+          '()
+          (pair form (sub-read-seq c e port)))))
 
 (set-standard-read-macro! #\( #t sub-read-list)
 
@@ -285,6 +286,14 @@
   (fun (c port)
     (get port)
     (as <tup> (sub-read-list c port))))
+
+(set-standard-read-macro! #\] #t (fun (c port) $close-bracket))
+
+(define-sharp-macro
+  #\[
+  (fun (c port)
+    (get port)
+    (as <vec> (sub-read-seq c $close-bracket port))))
 
 (let ((number-sharp-macro
         (fun (c port)

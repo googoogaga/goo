@@ -66,7 +66,7 @@
                       (seq ,@body)
                       ,(do-type-case val (tail cases))))
                 (#t
-                 (error "CASE: SYNTAX ERROR BAD CASE" (head cases)))))))
+                 (syntax-error "bad type-case %=" (head cases)))))))
     (let ((val-var (gensym)))
       `(let ((,val-var (%@class-of ,val)))
          ,(do-type-case val-var cases)))))

@@ -2,6 +2,7 @@
 
 (use goo)
 (use goo/runtime)
+(use goo/conditions)
 
 (dc <priority-queue> (<col>))
   (dp queue-data (<priority-queue> => <vec>) (fab <vec> 0))

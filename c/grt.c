@@ -562,6 +562,8 @@ INLINE P ENVFAB (int n) {
   return env;
 }
 
+P YPvm_fun_env_fab (P n) { return ENVFAB((int)n); }
+
 P FABENV (int size, ...) {
   int i;
   ENV env = ENVFAB(size);
@@ -625,15 +627,16 @@ P FUNFAB (P x, int n, ...) {
 // }
 
 extern P YPib(P);
-extern P Ywrong_number_arguments_error;
+extern P Yarity_error;
+extern P Ynarity_error;
 
 INLINE void CHECK_ARITY (P fun, PLOG naryp, PINT n, PINT arity) {
   if (naryp) { 
     if (n < arity) 
-      XXCALL2(1, Ywrong_number_arguments_error, fun, YPib((P)n)); 
+      XXCALL2(1, Ynarity_error, fun, YPib((P)n)); 
   } else { 
     if (n != arity) 
-      XXCALL2(1, Ywrong_number_arguments_error, fun, YPib((P)n)); 
+      XXCALL2(1, Yarity_error, fun, YPib((P)n)); 
   }
 }
 
@@ -670,24 +673,30 @@ extern P YLgenG;
 extern P YPtraits_owner(P);
 extern P YPvnul;
 
-#define MIN_STACK_PAD_SIZE 32
+#define MIN_STACK_PAD_SIZE 1000
 #define STACK_OVERFLOW     (MAX_STACK_SIZE - MIN_STACK_PAD_SIZE)
-int check_stack_overflowp = 1;
-
-P YPenable_stack_checks () { check_stack_overflowp = 1; return PNUL; }
 
 extern P Ystack_overflow_error;
+
+INLINE void stack_check (REGS regs) {
+  int stack_overflowp;
+  stack_overflowp = (int)(REG(sp) - REG(stack)) > STACK_OVERFLOW;
+
+  if (stack_overflowp) {
+    if (REG(stack_checkp)) {
+      REGSET(stack_checkp, 0);
+      CALL0(1, Ystack_overflow_error);
+    }
+  } else if (!REG(stack_checkp))
+    REGSET(stack_checkp, 1);
+}
 
 P _YPcheck_call_types(REGS regs) {
   P fun    = REG(sp)[-1];
   P traits = PNUL;
+  stack_check(regs);
   if(fun != 0 && (tag_bits(fun)) == adr_tag)
     traits = YPobject_class(fun);
-  // if ((int)(REG(sp) - REG(stack)) > STACK_OVERFLOW && check_stack_overflowp) {
-  //   check_stack_overflowp = 0;
-  //   CALL0(1, Ystack_overflow_error);
-  // }
-  
   if (traits == YLmetG) {
     PINT n     = (int)REG(sp)[-2];
     PINT arity = FUNARITY(fun);
@@ -858,9 +867,6 @@ INLINE P BOXFAB(P x) {
   return box;
 }
 
-
-
-
 /* SYMBOL TABLE */
 
 extern P YPclass_name(P);
@@ -1005,7 +1011,8 @@ void print_kind (P adr, int prettyp, int depth) {
     printf("(MET ");
 	print_kind((P)YPmet_name(adr), 0, depth + 1);
     print_kind(FUNSPECS(adr), 0, depth + 1);
-/*    env = (ENV)YPprop_elt(adr, (P)FUNENVOFFSET);
+    /*
+    env = (ENV)YPprop_elt(adr, (P)FUNENVOFFSET);
     n   = env->size;
     if (n > 0) {
       printf(" [");
@@ -1023,7 +1030,7 @@ void print_kind (P adr, int prettyp, int depth) {
       }
       printf("]");
     }
-*/
+    */
     printf(" 0x%lx)", adr);
   } else if (strcmp(typename, "<gen>") == 0) {
     printf("(GEN ");
@@ -1226,6 +1233,7 @@ P YPPlist(int num, ...) {
     return lst;
   }
 }
+
 /* CURSES */
 
 /* #include <curses.h> */
@@ -1486,6 +1494,7 @@ REGS YPfab_regs() {
   REGSET(top_unwind_protect_frame, allocate(sizeof(UNWIND_PROTECT_FRAME_DATA)));
   REGSET(current_unwind_protect_frame, REG(top_unwind_protect_frame));
   REGSET(stack_allocp, 0);
+  REGSET(stack_checkp, 1);
   REGSET(dynvars, YPPtfab((P)MAX_DYNVARS, YPfalse));
   if (main_regs != (REGS)0) {
     int i;

@@ -266,10 +266,6 @@
 (dm keys (d|<seq> => <seq>)
   (below (len d)))
 
-;; (df range-error (x|<seq> i|<int>)
-;;   ;; TODO: REAL CONDITION
-;;   (error "RANGE ERROR %= %=" x i))
-
 (df range-check (x|<seq> i|<int>)
   (when (or (< i 0) (>= i (len x)))
     (range-error x i)))

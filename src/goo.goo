@@ -6,11 +6,11 @@
 (use goo/types)
 (use goo/math)
 (use goo/runtime)
+(use goo/conditions)
 (use goo/cols)
 (use goo/packer)
 (use goo/io/write)
 (use goo/io/read)
-(use eval/syntax)
 (use goo/io/port)
 
 (export
@@ -70,10 +70,11 @@
  ;; Section 3.7: Collections.
  <col> <col.> len elt elt-or elts low-elt dup col-res col-res-type
  empty? empty elt-default elt-type key-type key-test fab fabs fill any?
- all? fold fold+ find find-or del zap do do2 map map2 do-keyed
+ all? fold fold+ find find-or del zap do do2 do3 map map2 do-keyed
  map-keyed mem? keys items zap find find-or 
  <col!> del! add! zap! fill! into
  elt-setter low-elt-setter len-setter len/fill-setter 
+ <range-error> range-error-collection range-error-key
  ;; 3.7.1: Iteration protocol.
  <enum> enum fin? nxt now now-setter now-key
  ;; 3.7.2: Maps.
@@ -122,13 +123,31 @@
  condition-arguments <serious-condition> <error> error <simple-error>
  <handler> handler-function fab-handler handler-matches?
  <restart>
+ <call-error> call-error-function
+ <call-arguments-error> call-error-arguments
+ <arity-error> <narity-error> narity-error arity-error call-error-arity
+ <ambiguous-method-error> <no-applicable-methods-error>
+ <type-error> type-error-value type-error-type
+ <unknown-function-error>
+ <compiler-error> <syntax-error>
+ <unbound-error> 
+ <unbound-variable-error> unbound-variable-error-variable
+ <macro-error> macro-error-name macro-error-arguments
+ <stack-overflow> <internal-error> internal-error
+ <assert-error> assert-error
+ <property-error> <property-unbound-error>
+ <property-not-found-error> <property-type-error>
+ property-error-generic property-error-owner
+ <no-next-methods-error> no-next-methods-error
+ <as-error> as-error-type as-error-value
+ <arithmetic-error>
 
  ;; Section 3.12: Ports.
  <port> <in-port> get gets peek ready? port-line
  in out open close with-port
  <out-port> newline force-out put puts
- <file-port> <file-in-port> 
- <file-out-port> 
+ <file-port> <file-in-port> <file-out-port> 
+ <io-error> <file-opening-error> file-opening-error-filename
  <str-port> port-contents <str-in-port> port-index
  <str-out-port>
 
@@ -137,7 +156,8 @@
  ;; TODO - Defined in top, where we can't export it: read-file
 
  ;; Section 3.14: Output.
- write emit writeln write-to-string msg post say
+ write emit writeln write-to-string msg post say msg-to-str
+ *max-print-length* *max-print-depth*
 
  ;; Section 3.15: System.
  app-filename app-args
@@ -148,7 +168,6 @@
  ;; Undocumented stuff.  This was all found by a process of trial and
  ;; error, but it needs to be here.
  match-atom match-empty-list match-unquote match-sublist
- sexpr-signature-parameters
  %pair %next-methods %define-method %prop %prop-unbound-error
  <handler-info>
  $default-handler-info
@@ -172,4 +191,6 @@
   fab-class
   macro-error
   %prop
+  %fun-reg
+  @not @==
   )

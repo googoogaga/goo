@@ -222,6 +222,7 @@ typedef struct {
   P*  fp;
   P   next_methods;
   int stack_allocp;
+  int stack_checkp;
   UNWIND_PROTECT_FRAME current_unwind_protect_frame;
   UNWIND_PROTECT_FRAME top_unwind_protect_frame;
   P   dynvars;
@@ -336,7 +337,7 @@ EXTTVAR(goo_thread);
 #define CREG(x)      (REGSCREF()->x)
 #define REGSET(x, v) (regs->x = (v))
 
-#define MAX_STACK_SIZE 100000
+#define MAX_STACK_SIZE 30000
 
 #define YPfun_reg()            (Pfun)
 #define YPnext_methods_reg()   (Pnext_methods)
@@ -347,10 +348,15 @@ EXTTVAR(goo_thread);
 
 #define FREEREF(x) (FUNENVGET(Pfun, (x)))
 
+#define YPvm_fun_env_elt(x, i)           (FUNENVGET((x), (i)))
+#define YPvm_fun_env_elt_setter(v, x, i) (FUNENVPUT((v), (x), (i)))
+
 extern P FABENV (int size, ...);
 extern P FUNINIT (P fun, int n, ...);
 extern P FUNSHELL (int d, P x, int n);
 extern P FUNFAB (P x, int n, ...);
+
+extern P YPvm_fun_env_fab (P n);
 
 extern P YPenable_stack_checks ();
 
@@ -575,6 +581,9 @@ extern P do_exit (REGS regs );
 extern P with_exit (P fun);
 extern P with_cleanup (P body_fun, P cleanup_fun);
 
+#define YPvm_with_exit with_exit
+#define YPvm_with_cleanup with_cleanup
+
 /* LITERALS */
 
 #define DEFLIT(x)  static P x = PNUL;
@@ -647,6 +656,10 @@ extern P YPmet (P,P,P,P,P,P);
 
 #define BOXVAL(x)  (*((P*)(x)))
 extern P BOXFAB(P x);
+
+#define YPvm_box_fab              BOXFAB
+#define YPvm_box_val              BOXVAL
+#define YPvm_box_val_setter(v, x) (BOXVAL(x) = (v))
 
 /* FUNCTION CODE */
 

@@ -6,6 +6,14 @@
 (use eval/ast)
 (use eval/top)
 (use eval/ast-linearize)
+(use eval/vm)
+
+;;;; TODO
+;;;; 
+;;;; less consing on emission
+;;;; perhaps do framing on the fly
+;;;; print vars module by module
+;;;; 
 
 (dm frame! (o)
   (frame-mets! o #f 1))
@@ -14,7 +22,7 @@
   (ast-walk frame-mets! o met index))
 
 (dm frame-mets! (o|<ast-method> met index)
-  (set (function-frame-len o) 0)
+  (set (function-frame-len o) 1)
   (frame-mets! (function-body o) o 1))
 
 (dm frame-mets! (o|<fix-let> met index)
@@ -76,7 +84,7 @@
 
 (dm asm-exp (e)
   (def g2m (new <g2m>))
-  (def env (runtime-environment 'goo/user))
+  (def env (runtime-environment 'eval/vm))
   (def ast (asm-compute-program e env))
   (asm-all g2m ast))
 
@@ -96,9 +104,10 @@
          ops)))
 
 (dm out-code (out code)
-  (msg out "(%=\n" (head code))
-  (do (fun (e) (msg out "  %=\n" e)) (tail code))
-  (msg out ")\n"))
+  (msg out "(%=\n" (1st code))
+  (msg out " %=\n (" (2nd code))
+  (do (fun (e) (msg out "  %=\n" e)) (3rd code))
+  (msg out "))\n"))
 
 ;;; EMISSION
 
@@ -119,7 +128,7 @@
 (dm asm (x|<g2m> e|<passive-program> need?|<log>) '())
 
 (dm asm (x|<g2m> e|<free-reference> need?|<log>)
-  (asm-if need? `((VM-ENV-GET (+ ,(reference-offset e) 1)))))
+  (asm-if need? `((VM-ENV-GET ,(+ (reference-offset e) 1)))))
 
 (dv tack cat)
 
@@ -144,11 +153,11 @@
 
 (dm asm (x|<g2m> e|<global-assignment> need?|<log>)
   (def idx (get-var-ref x (assignment-binding e)))
-  (tack+need need? (asm x (assignment-form e)) `((VM-VAR-PUT ,idx))))
+  (tack+need need? (asm x (assignment-form e) #t) `((VM-VAR-PUT ,idx))))
 
 (dm asm (x|<g2m> e|<definition> need?|<log>)
-  (def idx (get-var-ref x e))
-  (tack+need need? `((VM-VAR-FAB ,idx)) (sup x e)))
+  (def idx (get-var-ref x (assignment-binding e)))
+  (tack `((VM-VAR-FAB ,idx)) (sup x e need?)))
 
 (dm asm (x|<g2m> e|<bound?> need?|<log>)
   (def idx (get-var-ref x (reference-binding (bound?-reference e))))
@@ -199,7 +208,9 @@
 (dm asm (x|<g2m> e|<regular-application> need?|<log>)
   (tack (asm x (application-function e) #t)
         (asm x (application-arguments e) #t)
-        (asm-need need? `((VM-APP ,(len (application-arguments e)))))))
+        (asm-need need? 
+          `((,(if (application-tail? e) 'VM-APP-JMP 'VM-APP)
+             ,(len (application-arguments e)))))))
 
 (dm asm (x|<g2m> e|<fix-let> need?|<log>)
   (tack (flatten
@@ -232,6 +243,8 @@
         (asm-need need? `((VM-TRY)))))
 
 (dm asm-fun (x|<g2m> e|<ast-method> fab-op|<sym> need?|<log>)
+  (for ((bnd (function-bindings e)) (i (from 1)))
+    (set (binding-index bnd) (neg i)))
   (def l1 (nxt-lab x))
   (def l2 (nxt-lab x))
   (def n  (len (function-free e)))
@@ -239,7 +252,11 @@
         `((,fab-op ,n ,l1))
         `((VM-JMP ,l2))
         `(,l1)
-        (asm-code x e)
+        `((VM-ENV-LNK ,(- (function-frame-len e) 1)) ;; TODO: MAX INDEX 
+          ,@(asm x (function-body e) #t)
+          ,@(if (unconstrained-type? (function-value e)) 
+                `((VM-RET))
+                `((VM-RET-CHK))))
         `(,l2)))
 
 (dm asm-fun-shell (x|<g2m> e|<ast-function> need?|<log>)
@@ -275,15 +292,6 @@
                                (asm-fun x f 'VM-FUN-INI #t)))
                        (locals-bindings e) (locals-functions e)))
         (asm x (locals-body e) need?)))
-
-(dm asm-code (x|<g2m> def|<ast-function>)
-  (for ((bnd (function-bindings def)) (i (from 1)))
-    (set (binding-index bnd) (neg i)))
-  `((VM-ENV-LNK ,(function-frame-len def)) 
-    ,@(asm x (function-body def) #t)
-    ,@(if (unconstrained-type? (function-value def)) 
-          `((VM-RET))
-          `((VM-RET-CHK)))))
 
 ;; TODO: BINDING-NAME ... PERHAPS TWO STEPS
 (dm asm (x|<g2m> e|<ast-macro-definition> need?|<log>)

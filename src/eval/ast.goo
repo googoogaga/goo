@@ -2,19 +2,10 @@
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 ;;;; with many many changes
 
+(use goo)
 (use goo/boot)
-(use goo/macros)
-(use goo/packer)
-(use goo/runtime)
-(use goo/io/write)
+(use goo/system)
 (use eval/syntax)
-(use goo/cols/str)
-(use goo/system) ; Needed by runtime module loader.
-(use goo/io/write)
-(use goo/types)
-(use goo/math)
-(use goo/cols)
-(use goo/io/port)
 (use eval/dependency)
 
 ;;; TODO: MOVE TYPE OUT OF SIGNATURE
@@ -35,8 +26,19 @@
          (seq ,@body)
          (set *current-dependent* ,saved-dependent)))))
 
-(dm objectify-error (message|<str> arguments|...)
-  (app error message arguments))
+(dc <ast-error> (<compiler-error>))
+
+(dc <simple-ast-error> (<ast-error> <simple-error>))
+
+(dm ast-error (message|<str> arguments|...)
+  (sig (new <simple-ast-error> 
+         condition-message message|<str> condition-arguments arguments)))
+
+(dc <namespace-error> (<simple-ast-error>))
+
+(dm namespace-error (message|<str> arguments|...)
+  (sig (new <namespace-error> 
+         condition-message message|<str> condition-arguments arguments)))
 
 ;;; programs
 
@@ -553,7 +555,7 @@
             fix-let-types     (function-specs f)
             fix-let-arguments e*
             fix-let-body      (function-body f))
-          (objectify-error "incorrect regular arity" f e*))))
+          (ast-error "incorrect regular arity" f e*))))
 
 (dm process-nary-closed-application (f e* r tail? => <fix-let>)
   (loc ((pack-nary-args (e*) ;; TODO: COULD BE SHARED WITH PAIRIZE
@@ -570,7 +572,7 @@
                 (arguments 
                  (objectify (pack-nary-args e*) r #f) (empty <arguments>)))
               (if (empty? e*)
-                  (objectify-error "incorrect dotted arity" f e*)
+                  (ast-error "incorrect dotted arity" f e*)
                   (arguments 
                    (head e*) (pack-args (tail e*) (tail v*) (tail t*)))))))
    (def v* (function-bindings f))
@@ -598,7 +600,7 @@
         (objectify (sexpr-fab-setter-name op) r #f) 
         (pair e (sexpr-operands binding)))
        r tail?)
-      (objectify-error "Unsupported Set!: %=" e)))
+      (syntax-error "Unsupported Set!: %=" e)))
 
 (dm objectify-assignment (binding|<sym> e r tail? => <assignment>)
   (def ref (objectify binding r #f))
@@ -632,7 +634,8 @@
 
 (dm objectify-assignment-using 
     (ref|<static-module-binding-reference> val|<program> => <any>)
-  (error "Unable to assign to static module binding %=" (reference-binding ref)))
+  (namespace-error "Unable to assign to static module binding %="
+                   (reference-binding ref)))
 
 ;;; TODO - Attempt to change the binding kind on the fly.  This
 ;;; only works up to a point.  To fix this, make 'runtime and 'global
@@ -648,8 +651,8 @@
       (cond
         ((== new-kind 'runtime) #t) ; We're already the correct type.
         ((== new-kind 'global) #t)  ; We're an acceptably close type.
-        (#t (error "Cannot set type of runtime binding %s to %s.\n"
-                   (binding-name binding) new-kind)))))
+        (#t (namespace-error "Cannot set type of runtime binding %s to %s.\n"
+                             (binding-name binding) new-kind)))))
 
 (dm ast-define-binding (r name defining-method? kind => <any>)
   (def existing-binding (find-binding name r))
@@ -897,7 +900,8 @@
              (if (== (head bindings) binding)
                  (tup i j)
                  (find (+ j 1) (tail bindings)))))
-       (error "DIDN'T FIND LOCAL BINDING %= IN %=" (binding-name binding) r))))
+       (namespace-error "didn't find local binding %= in %="
+                        (binding-name binding) r))))
 
 (dm objectify-binding (n b|<local-binding> r => <local-reference>)
   (def (tup i j) (compute-local-reference-offsets b r))
@@ -919,7 +923,7 @@
     (('dynamic)    <dynamic-reference>)
     (('macro)      <macro-reference>)
     (('magic)      <magic-reference>)
-    (#t            (error "Unknown binding-kind %=" (binding-kind b)))))
+    (#t            (ast-error "Unknown binding-kind %=" (binding-kind b)))))
 
 (dm objectify-binding (n b|<module-binding> r => <any>)
   (def <ref> (binding-reference-class b))
@@ -964,7 +968,7 @@
   (def modname (sub namestr 0 break))
   (def varname (sub namestr (+ 1 break) (len namestr)))
   (unless (and (> (len modname) 0) (> (len varname) 0))
-    (error "Malformed foreign name %s.\n" name))
+    (syntax-error "Malformed foreign name %s.\n" name))
   (def gr      (find-static-global-environment r))
   (def loader  (environment-module-loader gr))
   (def mod     (probe-module loader (as <sym> modname)))
@@ -973,7 +977,7 @@
   ;; TODO: THIS MIGHT BE SUSPECT BUT IT MAKES DYN-CMP HAPPY
   (insert-global! binding gr)
   (unless binding
-    (error "No binding %s in %s.\n" varname modname))
+    (namespace-error "No binding %s in %s.\n" varname modname))
   (objectify-binding name binding r))
 
 (dm objectify-symbol (name r => <any>)
@@ -1034,7 +1038,7 @@
   (unless (== env (module-target-environment module))
     ;; The user tried to export bindings from a syntax environment.
     ;; (This shouldn't happen, because we don't provide 'export'.)
-    (error "Can only export bindings from target environment.\n"))
+    (namespace-error "Can only export bindings from target environment.\n"))
   (do (fun (name)
         (def binding (find-binding name env))
         (if (== binding #f)
@@ -1042,7 +1046,7 @@
               (try ((type <restart>)
                     (description "Continue without exporting %s" name))
                 (fun (c r) (exit #f))
-                (error "Can't export undefined binding %s.\n" name)))
+                (namespace-error "Can't export undefined binding %s.\n" name)))
             (export-binding! module name binding)))
       names)
   (new <constant> constant-value #f))
@@ -1135,7 +1139,7 @@
   (new <constant> constant-value #f))
 
 (dm expand-bind-list (pat var fail => <any>)
-  (error "Expected Pattern List %=\n" pat))
+  (syntax-error "Expected Pattern List %=\n" pat))
 
 (dm expand-bind-list ((pat (t= '())) var fail => <lst>)
   `(match-empty-list ,var ,fail))
@@ -1143,9 +1147,9 @@
 (dm expand-bind-list (pat|<lst> var fail => <lst>)
   (cond
     ((sexpr-unquote? pat)
-      (error "Unquote Unexpected Here %=\n" pat))
+      (syntax-error "Unquote Unexpected Here %=\n" pat))
     ((sexpr-unquote-splicing? pat)
-     (error "Unquote Splicing Unexpected Here %=\n" pat))
+     (syntax-error "Unquote Splicing Unexpected Here %=\n" pat))
     (#t
      (expand-bind-list* pat var fail))))
 
@@ -1501,12 +1505,13 @@
 
 (df transaction-register-implemented-binding (b|<binding>)
   (unless *current-subtransaction*
-    (error "Can't register implemented foreign binding (no subtransaction)"))
+    (ast-error
+     "Can't register implemented foreign binding (no subtransaction)"))
   (set (elt (transaction-implemented-bindings *current-subtransaction*) b) #t))
 
 (df transaction-register-dependent (d|<dependent>)
   (unless *current-subtransaction*
-    (error "Can't register dependent (no subtransaction)"))
+    (ast-error "Can't register dependent (no subtransaction)"))
   (set (elt (transaction-dependents *current-subtransaction*) d) #t))
 
 (df transaction-empty? (t|<transaction> => <log>)
@@ -1659,7 +1664,8 @@
   
   ;; First, make sure we aren't already loading this module.
   (when (mem? stack name)
-    (error "%s: error: Circular use of %s not allowed" (head stack) name))
+    (namespace-error "%s: error: Circular use of %s not allowed"
+                     (head stack) name))
 
   ;; Load the module, using a FIN form to manage the load stack.
   ;; XXX - If an error occurs, we currently neglect to mark
@@ -1691,8 +1697,8 @@
   (def exports (module-exports module))
   (def existing (elt-or exports name #f))
   (unless (or (== existing #f) (== existing binding))
-    (error "Tried to export %= and %= from %= as %="
-           existing binding module name))
+    (namespace-error "Tried to export %= and %= from %= as %="
+                     existing binding module name))
   (set (elt exports name) binding)
   #f)
 
@@ -1856,7 +1862,7 @@
   (def file       (find-goo-file-in-path modpath *module-search-path*))
   (set-module-environments module env env)
   (if (not file)
-      (error "Unable to find module %s" modpath))
+      (namespace-error "Unable to find module %s" modpath))
   (fin
     (seq
       (install-initial-bindings env loader)
@@ -1917,8 +1923,8 @@
   (def binding  (find-binding (as <sym> original-name) home-env))
   ;; TODO - Add support for using 'name'.
   (when (not binding)
-    (error "Can't find %s from %s for %s\n"
-           original-name (module-name from-mod) (module-name mod)))
+    (namespace-error "Can't find %s from %s for %s\n"
+                     original-name (module-name from-mod) (module-name mod)))
   (insert-global! binding (module-target-environment mod)))
 
 (df process-module-data (module|<module>)
@@ -1966,7 +1972,7 @@
   (def binding (find-binding (as <sym> name) (module-target-environment mod)))
   (if binding
       (export-binding! mod (as <sym> as-name) binding)
-      (error "Can't find %s in %s\n" name (module-name mod))))
+      (namespace-error "Can't find %s in %s\n" name (module-name mod))))
 
 
 (df reload-modules ()
@@ -2276,5 +2282,6 @@
   <unwind-protect>
   unwind-protect-cleanup-thunk
   unwind-protect-protected-thunk
-  ast-walk ast-walk!)
+  ast-walk ast-walk!
+  ast-error)
 

@@ -243,9 +243,15 @@
 ;;; Please port this code to other platforms as needed.
 ;;; TODO - Unix version should handle '//' in the middle of pathnames
 ;;; by reducing it to a single slash, as does the kernel.
+(dc <pathname-error> (<simple-error>))
+
+(df pathname-error (msg|<str> args|...)
+  (sig (new <pathname-error> 
+         condition-message msg condition-arguments (as <lst> args))))
+
 (df pathname-to-components (pathname|<str> => <lst>)
   (when (empty? pathname)
-    (error "Can't convert empty an pathname to components.\n"))
+    (pathname-error "Can't convert empty an pathname to components."))
   (when (== (last pathname) (elt *path-separator* 0))
     (set pathname (sub pathname 0 (- (len pathname) 1))))
   (map (fun (component)
@@ -259,7 +265,7 @@
 ;;; Reassemble components created by the above function.
 (df components-to-pathname (components|<lst> => <str>)
   (when (empty? components)
-    (error "Can't convert empty components to a pathname.\n"))
+    (pathname-error "Can't convert empty components to a pathname."))
   (join (map (fun (component)
                (cond
                  ((== component 'root)    "")
@@ -281,14 +287,14 @@
                   (tail components)
                   components))
   (when (empty? result)
-    (error "Hierarchical portion of %= must not be empty.\n" components))
+    (pathname-error "Hierarchical portion of %= must not be empty." components))
   result)
 
 ;;; Return the last item in a list of components.
 (df components-last (components|<lst> => <any>)
   (def last (elt components (- (len components) 1)))
   (when (isa? last <lst>)
-    (error "No filename in %=.\n" components))
+    (pathname-error "No filename in %=." components))
   last)
 
 ;;; Return all but the last item of a bunch of components.
@@ -302,7 +308,7 @@
   (def count (len hier))
   (def last  (components-last hier))
   (unless (isa? last <str>)
-    (error "Can't compute basename of %=\n." components))
+    (pathname-error "Can't compute basename of %=." components))
   (if (== count 1)
       (cat label '(current))
       (cat label (sub hier 0 (- count 1)))))
@@ -311,11 +317,15 @@
 (df components-parent-directory (components|<lst> => <lst>)
   (def last (components-last components))
   (cond
-    ((isa? last <str>) (components-basename components))
-    ((== last 'root) (error "Can't calculate parent of root directory"))
-    (#t (cat components '(up)))))
+    ((isa? last <str>) 
+     (components-basename components))
+    ((== last 'root)
+     (pathname-error "Can't calculate parent of root directory."))
+    (#t 
+     (cat components '(up)))))
 
 (export
+  <pathname-error>
   pathname-to-components
   components-to-pathname
   label-components
@@ -335,6 +345,14 @@
   (def components (pathname-to-components name))
   (components-to-pathname (components-parent-directory components)))
 
+(dc <directory-error> (<file-opening-error> <simple-error>))
+
+(df directory-error (msg|<str> name|<str>)
+  (sig (new <directory-error>
+         file-opening-error-filename name
+         condition-message           msg
+         condition-arguments         (lst name))))
+
 ;;; Make sure that the named directory exists.
 (df probe-directory (name|<str>)
   (def components (pathname-to-components name))
@@ -345,15 +363,16 @@
     (cond
       ((file-exists? n)
        (unless (== (file-type n) 'directory)
-         (error "%s is not a directory.\n" n)))
+         (directory-error "%s is not a directory.\n" n)))
       ((isa? (components-last c) <str>)
        (ensure (components-basename c))
        (create-directory n))
       (#t
-       (error "Don't know how to create the directory %s.\n" n))))
+       (directory-error "Don't know how to create the directory %s.\n" n))))
   #f)
 
 (export
+  <directory-error>
   parent-directory
   probe-directory)
 

@@ -7,7 +7,6 @@
 
 (use goo)
 
-
 ;;;;=======================================================================
 ;;;;  Types of Dependencies
 ;;;;=======================================================================
@@ -141,11 +140,14 @@
   (do-keyed
    (fun (dependable junk)
      (unless (del! (dependents dependable) dependent)
-       (error "Cannot remove %= from %=.\n" dependent dependable)))
+       (ast-error "Cannot remove %= from %=.\n" dependent dependable)))
    (depends-on dependent))
   (set (depends-on dependent) (fab <tab> 0)))
 
+(dg ast-error (msg args|...))
+
 (export
+  ast-error
   <dependable>
   <dependent>
   log-dependency

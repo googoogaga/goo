@@ -1,0 +1,508 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
+(use goo/boot)
+(use goo/macros)
+(use goo/math)
+(use goo/types)
+(use goo/app)
+(use goo/cols/col)
+(use goo/cols/colx)
+(use goo/cols/seq)
+(use goo/cols/seqx)
+(use goo/cols/opts)
+(use goo/cols/lst)
+(use goo/cols/tup)
+(use goo/cols/vec)
+(use goo/cols/tab)
+(use goo/io/port)
+
+(dc <condition> (<any>))
+
+(dm default-handler (c|<condition>)
+  #f)
+
+(dm describe-condition (c|<condition> => <str>)
+  (msg-to-str "Anonymous condition %=" c))
+
+(dm default-handler-description (cond-type|(t< <condition>) => <str>)
+  (msg-to-str "Anonymous handler for %s" cond-type))
+
+(dm build-condition-interactively
+    (cond-type|(t< <condition>) in out => <condition>)
+  (new cond-type))
+
+(dc <simple-condition> (<condition>))
+  (dp condition-message (<simple-condition> => <str>)   "")
+  (dp condition-arguments (<simple-condition> => <lst>) '())
+
+(dm describe-condition (c|<simple-condition> => <str>)
+  (app msg-to-str (condition-message c) (condition-arguments c)))
+
+(dm build-condition-interactively
+    (cond-type|(t< <simple-condition>) in out => <condition>)
+  (def cond (sup cond-type in out))
+  (msg out "Condition format string: ")
+  (set (condition-message cond) (read in))
+  (msg out "Condition format arguments: ")
+  (set (condition-arguments cond) (read in))
+  cond)
+
+(dc <serious-condition> (<condition>))
+
+(dm default-handler (c|<serious-condition>)
+  (msg out "%s\n" (describe-condition c))
+  (%invoke-debugger c))
+
+(dc <error> (<serious-condition>))
+
+(dc <simple-error> (<error> <simple-condition>))
+
+(export
+  <condition>
+  default-handler
+  describe-condition
+  condition-message
+  condition-arguments
+  
+  default-handler-description
+  build-condition-interactively
+  <simple-condition>
+  <serious-condition>
+  <error>
+  <simple-error>)
+
+(dc <restart> (<condition>))
+
+(dm default-handler-description (cond-type|(t< <restart>) => <str>)
+  (msg-to-str "Anonymous restart of type %s" cond-type))
+
+(dc <incongruent-method-error> (<error>))
+  (dp incongruent-method-error-generic (<incongruent-method-error> => <gen>))
+  (dp incongruent-method-error-method (<incongruent-method-error> => <met>))
+
+(dm describe-condition (c|<incongruent-method-error> => <str>)
+  (msg-to-str "Method %= incongruent with generic %=."
+              (incongruent-method-error-method c)
+              (incongruent-method-error-generic c)))
+
+(dc <replace-generic-restart> (<restart>))
+
+(dm default-handler-description 
+    (cond-type|(t< <replace-generic-restart>) => <str>)
+  "Replace the generic function with an empty, congruent one")
+
+(export
+  <restart>
+  <replace-generic-restart>
+  default-handler-description
+  build-condition-interactively)
+
+;;;; Handler Info
+;;;; Debugger-level info used for describing handlers and calling them
+;;;; interactively.  This probably doesn't need to be an actual class;
+;;;; a few well-chosen props on <handler> might work better.
+
+(dc <handler-info> (<any>))
+
+(dm describe-handler (info|<handler-info> condition-type => <str>)
+  (default-handler-description condition-type))
+
+(dm build-condition-for-handler-interactively
+    (info|<handler-info> condition-type in out => <condition>)
+  (build-condition-interactively condition-type in out))
+
+(dv $default-handler-info (new <handler-info>))
+
+(dc <simple-handler-info> (<handler-info>))
+  (dp handler-info-message (<simple-handler-info> => <str>))
+  (dp handler-info-arguments (<simple-handler-info> => <lst>) '())
+
+(dm describe-handler (info|<simple-handler-info> condition-type => <str>)
+  (app msg-to-str (handler-info-message info) (handler-info-arguments info)))
+
+(export
+  <handler-info>
+  describe-handler
+  build-condition-for-handler-interactively
+  $default-handler-info
+  <simple-handler-info>
+  handler-info-message
+  handler-info-arguments
+  describe-handler)
+
+;;;; Handlers
+
+(ddv *current-handlers* '())
+
+(dc <handler> (<any>))
+  (dp handler-condition-type (<handler> => (t< <condition>)))
+  (dp handler-info (<handler> => <handler-info>))
+  (dp handler-test (<handler> => <fun>))
+  (dp handler-function (<handler> => <fun>))
+
+(df fab-handler
+    (type|(t< <condition>) info|<handler-info> test|<fun> f|<fun> => <handler>)
+  (new <handler>
+    handler-condition-type type
+    handler-info           info
+    handler-test           test
+    handler-function       f))
+
+(df handler-active? (handler|<handler> => <log>)
+  ((handler-test handler)))
+
+(df handler-matches? (handler|<handler> condition|<condition> => <log>)
+  (and (isa? condition (handler-condition-type handler))
+       (handler-active? handler)))
+
+(df %with-monitor
+    (type|(t< <condition>) info|<handler-info> test-fun|<fun>
+     user-handler|<fun> main-fun|<fun>)
+  (def _original-handlers_ *current-handlers*)
+  (loc ((_handler-function_ (condition _next-handler_)
+          (esc _resume_
+            (user-handler condition _resume_)
+            (_next-handler_))))
+    (pushf *current-handlers*
+           (fab-handler type info test-fun _handler-function_))
+    (fin (main-fun) (set *current-handlers* _original-handlers_))))
+
+;;; Pass a signal to a list of handlers for processing.
+(df signal-handler-list (condition|<condition> handlers|<lst> => <any>)
+  (if (empty? handlers)
+      (default-handler condition)
+      (let ((handler (head handlers))
+            (remaining (tail handlers)))
+        (if (handler-matches? handler condition)
+            ((handler-function handler)
+             condition (fun () (signal-handler-list condition remaining)))
+            (signal-handler-list condition remaining)))))
+
+(dm sig (condition|<condition> args|...)
+  (signal-handler-list condition *current-handlers*))
+
+(dm sig (c|<str> args|...) 
+  (sig (new <simple-condition> 
+         condition-message c condition-arguments (as <lst> args))))
+
+;; (df error (message|<str> args|...)
+;;   (%break (%su message)))
+
+(dm error (c|<error> args|...)
+  (sig c))
+
+(dm error (c|<str> args|...)
+  (error (new <simple-error> 
+           condition-message c condition-arguments (as <lst> args))))
+
+(df incongruent-method-error (gen|<gen> met|<met>)
+  (error (new <incongruent-method-error>
+           incongruent-method-error-generic gen
+           incongruent-method-error-method  met)))
+
+(dc <call-error> (<error>))
+  (dp call-error-function (<call-error> => <fun>))
+
+(dc <arity-error> (<call-error>))
+  (dp call-error-arity (<arity-error> => <int>))
+
+(dm describe-condition (c|<arity-error> => <str>)
+  (msg-to-str "Function %= called with wrong number arguments %=."
+              (call-error-function c) (call-error-arity c)))
+
+(df arity-error (fun|<fun> n|<int>)
+  (sig (new <arity-error> call-error-function fun call-error-arity n)))
+
+(dc <narity-error> (<arity-error>))
+
+(df narity-error (fun|<fun> n|<int>)
+  (sig (new <narity-error> call-error-function fun call-error-arity n)))
+
+(dm describe-condition (c|<narity-error> => <str>)
+  (msg-to-str "Nary function %= called with too few arguments %=."
+              (call-error-function c) (call-error-arity c)))
+
+(dc <type-error> (<error>))
+  (dp type-error-value (<type-error> => <any>))
+  (dp type-error-type  (<type-error> => <type>))
+
+(df type-error (arg type)
+  (sig (new <type-error> type-error-value arg type-error-type type)))
+
+(dm describe-condition (c|<type-error> => <str>)
+  (msg-to-str "Type check failure on %= expected %=."
+              (type-error-value c) (type-error-type c)))
+
+(dc <unknown-function-error> (<type-error>))
+
+(df unknown-function-error (f)
+  (sig (new <unknown-function-error> 
+         type-error-value f type-error-type <fun>)))
+
+(dm describe-condition (c|<unknown-function-error> => <str>)
+  (msg-to-str "Unknown function %=." (type-error-value c)))
+
+(dc <call-arguments-error> (<call-error>))
+  (dp call-error-arguments (<call-arguments-error> => <seq>))
+
+(dc <ambiguous-method-error> (<call-error>))
+
+(df ambiguous-method-error (gen|<gen> args|<opts>)
+  (sig (new <ambiguous-method-error>
+         call-error-function  gen
+         call-error-arguments (as <lst> args))))
+
+(dm describe-condition (c|<ambiguous-method-error> => <str>)
+  (msg-to-str "Ambiguous methods on %= when called with %=."
+              (call-error-function c) (call-error-arguments c)))
+
+(dc <no-applicable-methods-error> (<call-arguments-error>))
+
+(df no-applicable-methods-error (gen|<gen> args|<opts>)
+  (sig (new <no-applicable-methods-error>
+         call-error-function  gen
+         call-error-arguments (as <lst> args))))
+
+(dm describe-condition (c|<no-applicable-methods-error> => <str>)
+  (msg-to-str "No applicable methods on %= when called with %=."
+              (call-error-function c) (call-error-arguments c)))
+
+(dc <no-next-methods-error> (<call-error>))
+
+(df no-next-methods-error (met)
+  (sig (new <no-next-methods-error> call-error-function met)))
+
+(dm describe-condition (c|<no-next-methods-error> => <str>)
+  (msg-to-str "No next-methods on %= when called with %=."
+              (call-error-function c) (call-error-arguments c)))
+
+(dc <cpl-error> (<simple-error>))
+
+(df cpl-error (msg|<str> args|...)
+  (sig (new <cpl-error> condition-message msg (as <lst> args))))
+
+(dc <compiler-error> (<error>))
+
+(dc <syntax-error> (<compiler-error> <simple-error>))
+
+(df syntax-error (msg|<str> args|...)
+  (sig (new <syntax-error> 
+         condition-message msg condition-arguments (as <lst> args))))
+
+(dc <macro-error> (<syntax-error>))
+  (dp macro-error-name (<macro-error> => <sym>))
+  (dp macro-error-arguments (<macro-error> => <lst>))
+
+(df macro-error (name args)
+  (sig (new <macro-error> macro-error-name name macro-error-arguments args)))
+
+(dm describe-condition (c|<macro-error> => <str>)
+  (msg-to-str "Macro expansion failure for %s when called with %=."
+              (macro-error-name c) (macro-error-arguments c)))
+
+(dc <stack-overflow> (<error>))
+
+(df stack-overflow-error ()
+  (error (new <stack-overflow>)))
+
+(dc <internal-error> (<simple-error>))
+
+(df internal-error (msg|<str> args|...)
+  (sig (new <internal-error> 
+         condition-message msg condition-arguments (as <lst> args))))
+
+(dc <assert-error> (<simple-error>))
+
+(df assert-error (msg|<str> args|...)
+  (sig (new <assert-error> 
+         condition-message msg condition-arguments (as <lst> args))))
+
+(dm describe-condition (c|<assert-error> => <str>)
+  (cat "Assert failure " (sup c)))
+
+(dc <range-error> (<error>))
+  (dp range-error-collection (<range-error> => <col>))
+  (dp range-error-key (<range-error> => <any>))
+
+(dm range-error (c|<col> k)
+  (sig (new <range-error> range-error-collection c range-error-key k)))
+
+(dm describe-condition (c|<range-error> => <str>)
+  (msg-to-str "Nonexistent key %= in %="
+              (range-error-key c) (range-error-collection c)))
+
+(dc <io-error> (<error>))
+
+(dc <file-opening-error> (<io-error>))
+  (dp file-opening-error-filename (<file-opening-error> => <str>))
+
+(dm file-opening-error (filename|<str>)
+  (sig (new <file-opening-error> file-opening-error-filename filename)))
+
+(dm describe-condition (c|<file-opening-error> => <str>)
+  (msg-to-str "Failed to open %s." (file-opening-error-filename c)))
+
+(dc <unbound-error> (<error>))
+
+(dc <unbound-variable-error> (<unbound-error>))
+  (dp unbound-variable-error-variable (<unbound-variable-error> => <any>))
+
+(dm describe-condition (c|<unbound-variable-error> => <str>)
+  (msg-to-str "Unbound variable %s." (unbound-variable-error-variable c)))
+
+(dc <low-property-error> (<error>))
+
+(dc <property-unbound-error> (<low-property-error> <unbound-error>))
+  (dp property-error-owner (<property-unbound-error> => <any>))
+
+(df property-unbound-error (owner)
+  (sig (new <property-unbound-error> property-error-owner owner)))
+
+(dm describe-condition (c|<property-unbound-error> => <str>)
+  (msg-to-str "Unbound property on %=." (property-error-owner c)))
+
+(dc <property-error> (<low-property-error>))
+  (dp property-error-generic (<property-error> => <gen>))
+
+(dc <property-not-found-error> (<property-error>))
+  (dp property-error-generic (<property-not-found-error> => <any>))
+
+(df property-not-found-error (generic owner)
+  (sig (new <property-not-found-error> 
+         property-error-generic generic
+         property-error-owner   owner)))
+
+(dm describe-condition (c|<property-not-found-error> => <str>)
+  (msg-to-str "Property %s not found in %s." 
+              (property-error-generic c) (property-error-owner c)))
+
+(dc <property-type-error> (<property-error> <type-error>))
+
+(df property-type-error (generic value type)
+  (sig (new <property-type-error> 
+         property-error-generic generic
+         type-error-value       value
+         type-error-type        type)))
+
+(dm describe-condition (c|<property-type-error> => <str>)
+  (cat (msg-to-str "Property %s " (property-error-generic c)) (sup c)))
+
+(dc <as-error> (<error>))
+  (dp as-error-type (<as-error> => <any>))
+  (dp as-error-value (<as-error> => <any>))
+
+(df as-error (type value)
+  (sig (new <as-error> as-error-type type as-error-value value)))
+
+(dm describe-condition (c|<as-error> => <str>)
+  (msg-to-str "No AS method for type %= and value %=."
+              (as-error-type c) (as-error-value c)))
+
+(dc <arithmetic-error> (<simple-error>))
+
+(df arithmetic-error (msg|<str> args|...)
+  (sig (new <arithmetic-error> 
+         condition-message msg condition-arguments (as <lst> args))))
+
+(export <call-error> call-error-function
+        <call-arguments-error> call-error-arguments
+        <no-next-methods-error> no-next-methods-error
+        <ambiguous-method-error> <no-applicable-methods-error>
+        <arity-error> <narity-error> narity-error arity-error call-error-arity
+        <type-error> type-error-value type-error-type
+        <unknown-function-error>
+        <compiler-error> <syntax-error>
+        <macro-error> macro-error-name macro-error-arguments
+        <stack-overflow>
+        <internal-error> internal-error
+        <assert-error> assert-error
+        <range-error> range-error range-error-collection range-error-key
+        <io-error> <file-opening-error> file-opening-error-filename
+        <unbound-error> 
+        <unbound-variable-error> unbound-variable-error-variable
+        <property-error> <property-unbound-error>
+        <property-not-found-error> <property-type-error>
+        property-error-generic property-error-owner
+        <as-error> as-error-type as-error-value as-error
+        <arithmetic-error> arithmetic-error)
+
+;;; INTERACTIVE HANDLER MUNGING
+
+;;; Apply 'f' to all handlers whose type is a subtype of 'type'.
+(df do-handlers-of-type (type|(t< <condition>) f|<fun>)
+  (rep search ((handlers *current-handlers*))
+    (if (empty? handlers)
+        #f
+        (let ((handler (head handlers))
+              (remaining (tail handlers)))
+          (when (and (subtype? (handler-condition-type handler) type)
+                     (handler-active? handler))
+            (f handler))
+          (search remaining)))))
+
+;;; Print out descriptions all active handlers matching 'type' (numbered
+;;; from 1) and return a sequence of those handlers in the same order
+;;; (indexed from zero).  This allows us to keep track of which handlers
+;;; correspond to which user-visible numbers.
+(df list-handlers (type|(t< <condition>) out => <vec>)
+  (def i          1)
+  (def applicable (fab <vec> 0))
+  (do-handlers-of-type type
+    (fun (handler)
+      (msg out "%d. %s.\n" i
+           (describe-handler 
+            (handler-info handler) (handler-condition-type handler)))
+      (push! applicable handler)
+      (incf i)))
+  applicable)
+
+;;; Attempt to invoke the specified handler directly, bypassing any other
+;;; handlers "in the way". 
+(df invoke-handler-interactively (handler|<handler> in out => <any>)
+  (def condition
+    (build-condition-for-handler-interactively
+     (handler-info handler) (handler-condition-type handler) in out))
+  (unless (handler-matches? handler condition)
+    (error "Handler %= does not match condition %=" handler condition))
+  (rep search ((handlers *current-handlers*))
+    (if (empty? handlers)
+        (error "Handler %= is not installed" handler)
+        (let ((current (head handlers))
+              (remaining (tail handlers)))
+          (if (== handler current)
+              ((handler-function handler)
+               condition (fun () (signal-handler-list condition remaining)))
+              (search remaining))))))
+
+;;; Chose a handler matching 'type', and call it interactively.
+(df choose-handler (type|(t< <condition>) in out => <any>)
+  (def handlers (list-handlers type out))
+  (msg out "Please pick a handler: ")
+  (def n (- (read in) 1))
+  (when (or (< n 0) (>= n (len handlers)))
+    (error "No such handler %d" n))
+  (invoke-handler-interactively (elt handlers n) in out))
+
+;;; Enable some low-level restarts, now that it's safe to do so.
+(set *restarts-ok?* #t)
+
+(need-implementation
+  read
+  msg
+  msg-to-str)
+
+(export
+  list-handlers
+  invoke-handler-interactively
+  choose-handler
+  sig
+  error
+  macro-error
+  stack-overflow-error
+  <handler>
+  handler-function
+  fab-handler
+  handler-matches?
+  *current-handlers*
+  %with-monitor)
+
