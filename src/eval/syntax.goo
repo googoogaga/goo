@@ -474,11 +474,8 @@
 (dm sexpr-isa? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-isa-tag))
 
-(dm sexpr-isa-parents ((exp <lst>) => <any>)
-  (let ((parents (2nd exp)))
-    (if (isa? parents <lst>)
-	parents
-	(lst parents))))
+(dm sexpr-isa-parent ((exp <lst>) => <any>)
+  (2nd exp))
 
 (dm sexpr-isa-slot-inits ((exp <lst>) => <lst>)
   (tail (tail exp)))
@@ -718,7 +715,7 @@
   sexpr-if-then
   sexpr-isa-init-slots
   sexpr-isa-init-values
-  sexpr-isa-parents
+  sexpr-isa-parent
   sexpr-isa-slot-inits
   $sexpr-isa-tag
   sexpr-iterate->loc

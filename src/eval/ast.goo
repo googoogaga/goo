@@ -1141,7 +1141,7 @@
     (objectify
      (sexpr-make-application
        '%isa
-       (lst (pairize (sexpr-isa-parents x))
+       (lst (sexpr-isa-parent x)
 	    (pairize (sexpr-isa-init-slots slot-inits))
 	    (pairize (sexpr-isa-init-values slot-inits))))
      r tail?)))

@@ -1509,9 +1509,8 @@
 	(error "slot %s not found in %=" getter object)
 	(set (slot-value-at object offset) z))))
 
-(df %isa ((parents <lst>) (getters <lst>) (vals <lst>) => <any>)
-  (let ((parent (%head parents))
-        (object (%object-of parent (%iu (%class-slot-len parent)))))
+(df %isa ((parent <class>) (getters <lst>) (vals <lst>) => <any>)
+  (let ((object (%object-of parent (%iu (%class-slot-len parent)))))
     ;; SET SLOT-VALUES FROM ISA ARGUMENTS
     ;; TODO: FASTER WITH GEN CACHE?
     (rep loop ((getters getters) (vals vals))
