@@ -521,13 +521,22 @@ extern P YPcheck_typesQ;
   if (YPcheck_typesQ == YPtrue) \
     DO_CHECK_TYPE(a,t);
 
-void check_type (P res, P fun) {
+void check_fun_val_type (P res, P fun) {
   if (YPcheck_typesQ == YPtrue) {
     P t = FUNVALUE(fun); 
     YPcheck_typesQ = YPfalse;
     DO_CHECK_TYPE(res, t);
     YPcheck_typesQ = YPtrue; 
   }
+}
+
+P check_type (P res, P type) {
+  if (YPcheck_typesQ == YPtrue) {
+    YPcheck_typesQ = YPfalse;
+    DO_CHECK_TYPE(res, type);
+    YPcheck_typesQ = YPtrue; 
+  }
+  return(res);
 }
 
 extern P YLanyG;
@@ -750,6 +759,60 @@ P CALLN (P fun, int n, ...) {
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
+  UNLINK_STACK(osp, ofp);
+  return res;
+}
+
+/* KNOWN LOCAL CALLS FIXARITY */
+
+P KCALL0 (P fun) {
+  int osp = sp, ofp = fp;
+  P   res;
+  LINK_STACK(fun);
+  res = (FUNCODE(fun))(fun);
+  UNLINK_STACK(osp, ofp);
+  return res;
+}
+
+P KCALL1 (P fun, P a1) {
+  int osp = sp, ofp = fp;
+  P   res;
+  PUSH(a1);
+  LINK_STACK(fun); 
+  res = (FUNCODE(fun))(fun);
+  UNLINK_STACK(osp, ofp);
+  return res;
+}
+
+P KCALL2 (P fun, P a1, P a2) {
+  int osp = sp, ofp = fp;
+  P   res;
+  PUSH(a1); PUSH(a2);
+  LINK_STACK(fun); 
+  res = (FUNCODE(fun))(fun);
+  UNLINK_STACK(osp, ofp);
+  return res;
+}
+
+P KCALL3 (P fun, P a1, P a2, P a3) {
+  int osp = sp, ofp = fp;
+  P   res;
+  PUSH(a1); PUSH(a2); PUSH(a3);
+  LINK_STACK(fun); 
+  res = (FUNCODE(fun))(fun);
+  UNLINK_STACK(osp, ofp);
+  return res;
+}
+
+P KCALLN (P fun, int n, ...) {
+  int i, osp = sp, ofp = fp;
+  P   res;
+  va_list ap; va_start(ap, n);
+  for (i = 0; i < n; i++)
+    PUSH(va_arg(ap, P));
+  va_end(ap);
+  LINK_STACK(fun); 
+  res = (FUNCODE(fun))(fun);
   UNLINK_STACK(osp, ofp);
   return res;
 }

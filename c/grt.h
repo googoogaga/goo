@@ -25,10 +25,6 @@ typedef union {
   PFLO f;
 } INTFLO;
 
-extern P CALL0(P);
-extern P CALL1(P, P);
-extern P CALL2(P, P, P);
-
 extern P YPsb(P);
 
 extern P YPinvoke_debugger(P condition);
@@ -242,16 +238,25 @@ extern P CALL2 (P fun, P a1, P a2);
 extern P CALL3 (P fun, P a1, P a2, P a3);
 extern P CALLN (P fun, int n, ...);
 
+extern P KCALL0 (P fun);
+extern P KCALL1 (P fun, P a1);
+extern P KCALL2 (P fun, P a1, P a2);
+extern P KCALL3 (P fun, P a1, P a2, P a3);
+extern P KCALLN (P fun, int n, ...);
+
 extern P YPPapply (P fun, P args);
 extern P YPPmep_apply (P fun, P args);
 extern P YPfapply (P fproc, P args);
 
 extern P YPisaQ(P,P);
-
-extern void check_type(P, P);
+extern void check_fun_val_type(P, P);
+extern P check_type(P, P);
 
 #define RET(x) \
-  { check_type(res, Pfun); return res; }
+  { check_fun_val_type(res, Pfun); return res; }
+
+#define QRET(x) \
+  { return res; }
 
 /* NON-LOCAL EXITS */
 
