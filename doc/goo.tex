@@ -54,7 +54,7 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\title{{\Huge \goo\ Reference Manual v30 } % \\
+\title{{\Huge \goo\ Reference Manual v32 } % \\
 % {\large for release \input{version-number}} 
 }
 \author{{\huge Jonathan Bachrach} \\
@@ -73,9 +73,9 @@
 designed to be simple, productive, powerful, extensible, dynamic,
 efficient and real-time.  It heavily leverages features from many
 earlier languages.  In particular, it attempts to be a simpler
-lisp-syntaxed Dylan~\cite{Shalit:1996}, an object-oriented 
-Scheme~\cite{Kelsey:Clinger:Rees:hosc:1998},
-and a lispified Cecil~\cite{Chambers95}.
+lisp-syntaxed Dylan~\cite{Shalit:1996} and an object-oriented 
+Scheme~\cite{Kelsey:Clinger:Rees:hosc:1998}.
+% and a lispified Cecil~\cite{Chambers95}.
 \goo's main goal is to offer the best of both scripting and
 deliver languages.
 \goo\ is freely available from \kode{www.googaga.org} under LGPL.
@@ -123,8 +123,8 @@ of how characters are tokenized into s-expressions, where
 s-expressions are either tokens or lists of s-expressions:
 
 \begin{defs}
-\notation{/* */}{Nested comment}
-\notation{// }{Line comment}
+\notation{;}{Line comment}
+\notation{\#/ /\#}{Nested comment}
 \notation{.\ + - [0-9]+}{Number}
 \notation{\#e \#i \#b \newline \#o \#d \#x}{Special number}
 \notation{\#t \#f}{Logical}
@@ -568,16 +568,15 @@ where
   \doc{creates an anonymous function with implicitly defined
   arguments, where \kode{,op-arg} is either an implicit required parameter
   ``\kode{\_}'' or rest parameter ``\kode{...}'' or an s-expression 
-  potentially containing
-  further op-args.  The required parameters are found
+  potentially containing further op-args.  The required parameters are found
   ordered according to a depth-first walk of the op-args.  
   The following are typical examples:
 \begin{ex}
 ((op \_) 1) ==> 1 \newline
 ((op 2) 1) ==> 2 \newline
-((op tail (tail \_)) '(1 2 3)) ==> (3) \newline
 ((op + \_ 1) 3) ==> 4 \newline
-((op lst ...\ 1) 3 2) ==> (3 2 1)
+((op lst ...\ 1) 3 2) ==> (3 2 1) \newline
+((op tail (tail \_)) '(1 2 3)) ==> (3) 
 \end{ex}
 }
 \generic{app}{f|<fun> args|... => <any>}
@@ -613,7 +612,7 @@ specific method is called and the next methods are established.
   \doc{returns \kode{x}'s methods.}
 \generic{gen-add-met}{x|<gen> y|<met> => <gen>}
   \doc{adds method \kode{y} to generic \kode{x}.}
-\generic{ord-app-mets}{x|<gen> args|<lst> \snl => (tup ord|<lst> amb|<lst>)}
+\generic{ord-app-mets}{x|<gen> args|... \snl => (tup ord|<lst> amb|<lst>)}
   \doc{returns both the list of sorted applicable methods and any ambiguous
   methods when generic \kode{x} is called with arguments args.}
 \form{DG}{(DG ,name ,sig)}
@@ -658,20 +657,26 @@ matching facility.
 \form{SPLICING-UNQUOTE}{(SPLICING-UNQUOTE ,form)}
   \doc{evaluates \kode{,form} in the midst of a \kode{QUASIQUOTE}
        expression and splices it in, abbreviated ``\kode{,@}''.}
-\form{MIF}{(MIF ,pat ,val ,then [ ,else ])}
-  \doc{is the ``matching if'', evaluating \kode{,then} with pattern 
-    variables bound to matched 
-    parts of value if matching succeeds and otherwise evaluates
-    \kode{,else}.  The pattern is much the same as \kode{QUASIQUOTE} 
-    and can contain either \kode{UNQUOTE}'d variables
-    or \kode{UNQUOTE-SPLICING} variables.  For example,
-\begin{ex}
-(MIF (,a ,b) '(1 2) (lst a b)) $\rightarrow$ (1 2) \newline
-(MIF (,a ,@b) '(1 2) (lst a b)) $\rightarrow$ (1 (2))
-\end{ex}}
+% \form{MIF}{(MIF (,pat ,val) ,then [ ,else ])}
+%   \doc{is the ``matching if'', evaluating \kode{,then} with pattern 
+%     variables bound to matched 
+%     parts of value if matching succeeds and otherwise evaluates
+%     \kode{,else}.  The pattern is much the same as \kode{QUASIQUOTE} 
+%     and can contain either \kode{UNQUOTE}'d variables
+%     or \kode{UNQUOTE-SPLICING} variables.  For example,
+% \begin{ex}
+% (MIF ((,a ,b) '(1 2)) (lst a b)) $\rightarrow$ (1 2) \newline
+% (MIF ((,a ,@b) '(1 2)) (lst a b)) $\rightarrow$ (1 (2))
+% \end{ex}}
 \form{MATCH}{(MATCH ,exp (,pat ,val) ...)}
   \doc{evaluates \kode{,val} corresponding to first \kode{,pat}
-  matching \kode{,exp}.}
+  matching \kode{,exp}.  The pattern is much the same as \kode{QUASIQUOTE} 
+  and can contain either \kode{UNQUOTE}'d variables
+  or \kode{UNQUOTE-SPLICING} variables.  For example,
+\begin{ex}
+(MATCH '(1 2) ((,a ,b) (lst a b))) $\rightarrow$ (1 2) \newline
+(MATCH '(1 2) ((,a ,@b) (lst a b))) $\rightarrow$ (1 (2))
+\end{ex}}
 \form{DS}{(DS ,pattern ,@body)}
   \doc{defines a macro matching pattern ,pattern and expanding according to
   \kode{,@body}. The pattern matching occurs as in \kode{MIF} and makes available
@@ -968,12 +973,9 @@ Collections can be almost entirely defined in terms of an enumeration class.
        the values with the keys being implicit.}
 \generic{len}{x|<col> => <int>}
   \doc{returns number of collection elements.}
-\generic{as-copy}{t|<col> x|<col> => <col>}
-  \doc{defaults methods for nondestructively collection operations
-  call \kode{as-copy} on input collection \kode{t} and new collection 
-  \kode{x}.}
-\method{as-copy}{t|<col> x|<col> => <col>}
-  \doc{$\equiv$ \kode{(as (object-class t) x)}.}
+\generic{col-res-type}{t|<col> x|<col> => <col>}
+  \doc{appropriate instantiable type for creating collection results,
+       where the default is their own type.}
 \generic{empty?}{x|<col> => <log>}
   \doc{$\equiv$ \kode{(= (len x) 0)}}
 \generic{empty}{x|<col> => <col>}
@@ -984,9 +986,9 @@ Collections can be almost entirely defined in terms of an enumeration class.
   \doc{returns collection's key equality function.}
 \methodcont{x|<col> => (t= ==)}
   \doc{default key-test is identity function.}
-\generic{key-type}{x|<col> => <any>}
+\generic{key-type}{x|<col> => <type>}
   \doc{returns collection \kode{x}'s key type.}
-\generic{elt-type}{x|<col> => <any>}
+\generic{elt-type}{x|<col> => <type>}
   \doc{returns collection \kode{x}'s element type.}
 \generic{elt}{x|<col> k|<any> => <any>}
   \doc{returns collection \kode{x}'s element associated with key \kode{k}.}
@@ -1025,13 +1027,10 @@ Collections can be almost entirely defined in terms of an enumeration class.
 \generic{all?}{f|<fun> x|<col> => <log>}
   \doc{returns true iff all of \kode{x}'s elements satisfies 
        given predicate \kode{f}.}
-% \generic{fold}{f|<fun> init|<any> x|<col> \snl => <col>}
-%   \doc{$\equiv$ \kode{(f (f ... (f init (elt x 0)) (elt x (- n 2)))
-%                          (elt x (- n 1)))}}
-% \generic{fold+}{f|<fun> x|<col> => <col>}
-%   \doc{$\equiv$ \kode{(f (f ... (f (elt x 0) (elt x 1)) (elt x (- n 2)))
-%   (elt x (- n 1)))}}
-\generic{fold}{f|<fun> x|<col> => <col>}
+\generic{fold}{f|<fun> init|<any> x|<col> \snl => <col>}
+  \doc{$\equiv$ \kode{(f (f ... (f init (elt x 0)) (elt x (- n 2)))
+                         (elt x (- n 1)))}}
+\generic{fold+}{f|<fun> x|<col> => <any>}
   \doc{$\equiv$ \kode{(f (f ... (f (elt x 0) (elt x 1)) (elt x (- n 2)))
   (elt x (- n 1)))}}
 % TODO pass key if fun accepts >1 one arg
@@ -1057,7 +1056,8 @@ keys.  The hope is that functional (nondestructive) programs will be
 both more succinct, understandable, and efficient than equivalent
 destructive programs.  Only core collection operators are given
 destructive versions.  All others can be built out of nondestructive
-operators followed by \kode{into}.
+operators followed by \kode{into}.  The \kode{!} suffixed functions
+might be deprecated in the future.
 
 \begin{defs}
 \class{<col!>}{<any>}
@@ -1147,9 +1147,9 @@ They can also be used for summing values etc:
 \end{ex}
 
 \begin{defs}
-\alias{<packer>}{<any>}
+\class{<packer>}{<any>}
 \generic{packer-add}{p|<packer> x => <packer>}
-  \doc{returns a packer \kode{a} augmented with element \kode{x}.}
+  \doc{returns a copy packer \kode{p} augmented with element \kode{x}.}
 \generic{packer-res}{p|<packer> => <any>}
   \doc{returns result of packings over \kode{p}.}
 \generic{packer}{init add|<fun> res|<fun>}
@@ -1195,17 +1195,19 @@ Users can define their own tables by subclassing and overriding the
 \propertyinit{tab-shrink-threshold}{x|<tab> => <flo>}{0.5}
   \doc{when to shrink based on proportion of total table capacity.}
 % TODO should this go away and be replaced with tab-hash and tab-test?
-\generic{tab-hash}{x|<tab> => hash|<fun>}
-  \doc{returns key equality and hash function.}
+\generic{tab-hash}{x|<tab> => <fun>}
+  \doc{returns hash function.}
 % \generic{table-protocol}{x|<tab> \snl => (tup test|<fun> hash|<fun>)}
 %   \doc{returns key equality and hash functions.}
-\instance{\$permanent-hash-state}{<any>}
-  \doc{GC specific.}
-\generic{tab-gc-state}{x|<tab> => <any>}
-  \doc{GC specific.}
-\generic{id-hash}{x|<tab> => (tup hash|<any> gc-state|<any>)}
-  \doc{hash function based on pointer.  Susceptible to rehash if
-       objects are moved.  The \kode{gc-state} reflects movement.}
+% \instance{\$permanent-hash-state}{<any>}
+%   \doc{GC specific.}
+% \generic{tab-gc-state}{x|<tab> => <any>}
+%   \doc{GC specific.}
+% \generic{id-hash}{x|<tab> => (tup hash|<any> gc-state|<any>)}
+%   \doc{hash function based on pointer.  Susceptible to rehash if
+%        objects are moved.  The \kode{gc-state} reflects movement.}
+\generic{id-hash}{x|<tab> => <int>}
+  \doc{hash function based on identity.}
 %TODO: CALL THIS SYM-TAB?
 % \class{<str-tab>}{<tab>}
 %   \doc{case insensitive string hash table used for symbol tables.}
@@ -1250,12 +1252,27 @@ Sequences are collections with nonnegative integer keys.
   \doc{returns sequence with all duplicates removed.}
 \generic{del-vals}{s|<seq> val => <seq>}
   \doc{returns sequence with all copies of \kode{val} removed.}
+\generic{sort-by}{s|<seq> f|<fun> => <seq>}
+  \doc{returns a sorted copy of \kode{s} using \kode{f} as a comparator.}
+\generic{sort}{s|<seq> => <seq>}
+  \doc{$\equiv$ \kode{(sort-by s <)}}
 % \generic{reject}{f|<fun> x|<seq>  => <seq>}
 %   \doc{returns sequence without elements corresponding to
 %   non-false results when calling predicate \kode{f}.}
 \generic{pick}{f|<fun> x|<seq> => <seq>}
   \doc{returns new sequence with elements corresponding to 
   non-false results when calling predicate \kode{f}.}
+\generic{prefix?}{x|<seq> prefix|<seq> => <log>}
+  \doc{returns true iff sequence \kode{x} starts with sequence \kode{prefix}.}
+\generic{suffix?}{x|<seq> suffix|<seq> => <log>}
+  \doc{returns true iff sequence \kode{x} ends with sequence \kode{suffix}.}
+\generic{repeat}{x|<seq> n|<int> => <seq>}
+  \doc{returns sequence with \kode{n} concatenated copies of \kode{x}.}
+\generic{split}{x|<seq> sep => <seq>}
+  \doc{returns sequence of subsequences of \kode{x} separated by \kode{sep}.}
+\generic{join}{xs|<seq> sep|<seq> => <seq>}
+  \doc{returns sequence composed of sequences in \kode{xs} joined with
+  \kode{sep}.}
 \end{defs}
 
 \subsubsection{Mutable Sequences}
@@ -1292,6 +1309,10 @@ Sequences are collections with nonnegative integer keys.
   \doc{removes all \kode{v}'s from \kode{x}.}
 \generic{del-dups!}{x|<seq!> => <seq!>}
   \doc{removes all duplicates from \kode{x}.}
+\generic{sort-by!}{s|<seq> f|<fun> => <seq>}
+  \doc{destructively sorts \kode{s} using \kode{f} as a comparator.}
+\generic{sort!}{s|<seq> => <seq>}
+  \doc{$\equiv$ \kode{(sort-by! s <)}}
 \end{defs} 
 
 \subsubsection{Lists}
@@ -1339,8 +1360,8 @@ an enum implementation of all but \kode{now} and \kode{now-setter}.
   \goo.}
 \generic{tup}{elts|... => <tup>}
   \doc{creates a tuple with elements being \kode{elts}.}
-\class{<opts>}{<flat>}
-  \doc{Optionals are used to hold n-ary arguments.  Optionals are immutable.}
+% \class{<opts>}{<flat>}
+%   \doc{Optionals are used to hold n-ary arguments.  Optionals are immutable.}
 % \class{<opts>}{<flat>}
 %   \doc{Optionals are used to hold n-ary arguments.  Optionals are immutable.}
 % \class{<vec>}{<flat> <seq.>}
@@ -1648,6 +1669,12 @@ operating system.
   \doc{sets OS environment variable value.}
 \method{process-id}{=> <int>}
   \doc{returns the process id of the current \goo\ process.}
+% \instance{*goo-root*}{=> <str>}
+%   \doc{top of installation directory structure.}
+% \instance{*module-search-path*}{=> <seq>}
+%   \doc{path from which to find goo files.}
+% \instance{*goo-build-root*}{=> <str>}
+%   \doc{top of build directory structure.}
 \end{defs}
 
 \subsection{Files and Directories}
@@ -1716,7 +1743,7 @@ a reasonably portable fashion.
 \section{Compiler}
 
 \goo's compiler, {\em g2c}, compiles \goo\ source code to C.  It lives
-within the \kode{x8r} module.  During a given session, g2c recompiles
+within the \kode{eval} module.  During a given session, \kode{g2c} recompiles
 only used modules that are either modified or use modified modules.
 
 \begin{defs}
@@ -1727,8 +1754,8 @@ only used modules that are either modified or use modified modules.
 \method{g2c-build-app}{loader|<g2c-module-loader>}
   \doc{translates \goo\ app into C in subdirectory of \goo's toplevel C
        directory named after loader's top modname.}
-\method{g2c-top}{}
-  \doc{builds entire g2c application.}
+\method{g2c-goo}{}
+  \doc{builds entire goo world.}
 \method{g2c-test}{name}
   \doc{changes destination directory to be \kode{(cat "g2c-" (to-str
   name))}.  This is useful for bootstrapping.}
@@ -1797,46 +1824,37 @@ module name to use.
 
 \section{Installation}
 
-Unpack either a linux or windows version of \goo\ into an appropriate
-installation area.  There are three directories: \kode{doc},
-\kode{bin}, \kode{src}, and \kode{emacs}.
+Unpack % either a linux or windows version of \goo\ into an
+appropriate installation area.  There are four directories:
+\kode{doc}, \kode{bin}, \kode{src}, and \kode{emacs}.  Edit the
+\kode{Makefile} in the top level directory, to configure the
+installation directory root using the \kode{PREFIX} if \kode{/usr}
+is inapproriate.  Executing \kode{make} will rebuild \goo\ with the
+proper roots, creating \kode{lib} and \kode{mods} directories, and
+installing \goo\ in \kode{bin} and setting up \kode{doc}.
 
-Set up your \kode{OS} environment variable named \kode{GOO\_ROOT} to 
-your top level
-\goo\ directory (i.e., containing the subdirectory named \kode{src}).  Make
-sure to slash terminate the path.  For example, my \kode{GOO\_ROOT} on linux
-is: 
+You can override the default \kode{GOO\_ROOT} by
+setting up your \kode{OS} environment variable.  
+For example, my \kode{GOO\_ROOT} on linux is: 
 
 \begin{exv}
-SET GOO_ROOT=/home/ai/jrb/goo
+setenv GOO_ROOT /home/ai/jrb/goo
 \end{exv}
 
 % \begin{exv}
 %   SET GOO\_ROOT=\jrb\goo
 % \end{exv}
-On linux of course you would use forward slashes and environment
-variable setting depends on the shell you're using.
+% On linux of course you would use forward slashes and 
+Environment variable setting depends on the shell you're using.
 
-During start up, \goo\ will load two patch files, one from
+During start up, \goo\ will load two patch files:
 
 \begin{exv}
-${GOO_ROOT}/src/system-patches.goo
+${GOO_ROOT}/init.goo
+${HOME}/.goo/init.goo
 \end{exv}
 
-% \begin{exv}
-% ${GOO_ROOT}\src\system-patches.goo
-% \end{exv}
-
-and one from
-
-% \begin{exv}
-% ${GOO_ROOT}\src\user-patches.goo
-% \end{exv}
-\begin{exv}
-${GOO_ROOT}/src/user-patches.goo
-\end{exv}
-
-You can customize your \goo\ by adding forms to user-patches.
+You can customize your \goo\ by adding forms to these files.
 
 \section{Usage}
 
@@ -1864,12 +1882,19 @@ with a comma.  The following is a list of available commands:
 
 \subsection{Development}
 
-To compile \goo:
+To batch compile \goo\ to C:
 
 \begin{exv}
-goo/user 0<= (use x8r/g2c)
+goo/user 0<= (use eval/g2c)
 goo/user 0=> #f
-goo/user 0<= (g2c-top)
+goo/user 0<= (g2c-goo)
+\end{exv}
+
+To then compile the C:
+
+\begin{exv}
+cd ${GOO_ROOT}/c
+make
 \end{exv}
 
 To run the test suites:
@@ -1901,7 +1926,7 @@ The following are debugger specific commands:
   \doc{prints out called functions and their arguments.}
 \command{,bt}{\mbox{\ }}
   \doc{prints out called functions.}
-\command{,frame}{n|<int>}
+\command{,frame}{,n}
   \doc{prints out \kode{n}{\it th} called function and its arguments.}
 \end{defs}
 
@@ -1946,7 +1971,7 @@ options.
 For even more fun, load \kode{emacs/goo-font-lock.el} for a color
 coded parenthesis nesting aid~\footnote{The original idea was dreamed
 up and first implemented by Andrew Sutherland and then improved by
-James Knight}.
+James Knight.}.
 
 \subsubsection{Emacs Shell}
 
@@ -1992,16 +2017,17 @@ M-,     tags-loop-continue
 
 \section{Caveats} 
 
+This is the first release of \goo.
 \goo\ is relatively slow at this point.  There are no compiler
 optimizations in place.  This will improve in coming releases.
 
 This manual is very preliminary.  Please consult the runtime
 libraries in the \kode{src} directory.  Also check out Scheme and Dylan's
-manuals for information of their lexical structure and special form
+manuals for information on their lexical structure and special form
 behavior respectively.
 
-Please, please, please send bug reports to \kode{jrb@ai.mit.edu}.  I
-will fix your bugs asap.  The \goo\ website \kode{www.jbot.org/goo}
+Please, please, please send bug reports to \kode{jrb@googaga.org}.  I
+will fix your bugs asap.  The \goo\ website \kode{www.googaga.org}
 will have papers, releases, FAQS, etc.
 
 % \appendix
@@ -2019,22 +2045,22 @@ and gave me many helpful suggestions that greatly improved Proto.
 During and after the seminar, Greg Sullivan reviewed many ideas and
 helped tremendously.  James Knight was one of the $6.894$ students and
 became my MEng student after the course.  He has helped in many many
-ways including the writing of the \kode{save-image} facility and the
-speeding up of the runtime.  Eric Kidd worked with me during the summer
-of 2001 implementing the module system, restarts, and the dependency
-tracking system.  During that summer I decided that a Prototype-based
-object system was inadequate for the type system I was interested in
+ways including the writing of the \kode{save-image} facility, the
+speeding up of the runtime, and the improving of the non local exit
+facility.  Eric Kidd worked with me during the summer of 2001
+implementing the module system, restarts, and the dependency tracking
+system.  During that summer I decided that a Prototype-based object
+system was inadequate for the type system I was interested in
 supporting and changed over to the present type-based system.  I
 presented my ideas on Proto at LL1 in the Fall of 2001.  Many
 stimulating conversations on the follow on LL1 discussion list inpired
 me.  In fact, during the course of defending Proto's form of
 object-orientation on that list I came up with its current name, \goo,
-and it stuck.  Andrew Sutherland became my MEng student in 
-the winter of 2002, wrote a \goo\ SWIG~\cite{Beaz96a} backend, 
-and has provided useful feedback on \goo's design.
-Finally, I would like to thank Keith Playford for his continued
-guidance in language design and implementation and for his ever
-present sense of good taste.
+and it stuck.  Andrew Sutherland became my MEng student in the winter
+of 2002, wrote a \goo\ SWIG~\cite{Beaz96a} backend, and has provided
+useful feedback on \goo's design.  Finally, I would like to thank
+Keith Playford for his continued guidance in language design and
+implementation and for his ever present and rare sense of good taste.
 % Most recently, \goo\ has benefitted from the parallel design effort of
 % Paul Graham's Arc language~\cite{graham01}.  
 
