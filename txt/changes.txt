@@ -813,3 +813,29 @@ changed
 removed
 
   push/pop-last!
+
+=== 0.120 ===
+
+summary
+
+  more speed fixes (>15%) and more cleanups
+
+changed
+
+  made <mag> superclass of various classes
+  format to msg
+  format-to-string msg-to-str
+  used profiling to guide inlining more primitives
+  change ast-eval frames to use <rep>
+  rewrote tables to minimize esc's, tups, and cells
+  made tables use key-test instead of tab-test
+  renamed msg macro to msg*
+
+added
+
+  fab-elt-setter for fab-time setting of elts of immutable collections
+    used by fab-into and fab-fill
+
+removed
+
+  assoc
