@@ -1289,17 +1289,23 @@ P YPbuild_runtime_modules(
 typedef P (*PLD)();
 extern P YprotoSsystemYTproto_rootT;
 
-P Yp2cYPcompile_load (P name) {
+P Yp2cYPcompile (P name) {
   char  buf[256];
-  void* mod;
-  PLD   load;
-  P     res;
+
   sprintf(buf, CGEN_CC, YPsu(YprotoSsystemYTproto_rootT), name, name);
   // printf("EXECUTING %s\n", buf);
   system(buf);
   sprintf(buf, CGEN_LD, name, name);
   // printf("EXECUTING %s\n", buf);
   system(buf);
+}
+
+P Yp2cYPload(P name) {
+  void* mod;
+  char  buf[256];
+  PLD   load;
+  P     res;
+
   sprintf(buf, "%s.so", name);
   // printf("LOADING   %s\n", buf);
   mod = dlopen(buf, RTLD_NOW);
