@@ -12,6 +12,9 @@
  ;; returns destructively concatenated sequences.
  (dg cat! (x|<seq!> more|... => <seq!>))
 
+ (dg push! (l|<seq!> x|<any> => <seq!>))
+ (dg pop! (l|<seq!> => (tup new-col|<seq!> value)))
+
  ;; replaces subsequence in range between from and below of dst with
  ;; contents of src.
  (dg sub-setter (dst|<seq!> src|<seq> from|<int> below|<int>))

@@ -455,9 +455,23 @@ STATIC_NOT_PRT_C  INLINE P CALL3 (int check, P fun, P a1, P a2, P a3) {
   return res;
 }
 
+STATIC_NOT_PRT_C  INLINE P CALL4 (int check, P fun, P a1, P a2, P a3, P a4) {
+  P   res;
+  PUSH(a4);
+  PUSH(a3);
+  PUSH(a2);
+  PUSH(a1);
+  PUSH((P)4);
+  PUSH(fun);
+  if(check)
+    YPcheck_call_types();
+  res = (FUNCODE(fun))(fun, YPfalse);
+  DEC_STACK(6);
+  return res;
+}
 
-STATIC_NOT_PRT_C  INLINE P YPraw_call(P fun, P next_mets)
-{
+
+STATIC_NOT_PRT_C  INLINE P YPraw_call(P fun, P next_mets) {
   return (FUNCODE(fun))(fun, next_mets);
 }
 

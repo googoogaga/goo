@@ -221,7 +221,7 @@
 (dc <song> (<any>))
   ;; TODO: MOVE TO TRACK 
   ;; TODO: BUILD INVERTIBLE MAP
-  (dp song-tracks (x|<song> => <buf>)          (fab <buf> 0))
+  (dp song-tracks (x|<song> => <vec>) (fab <vec> 0))
   (dp %song-len (x|<song> => <int>))
 
 (dm file-out (port|<port> x|<song>)
@@ -284,7 +284,7 @@
   (dp player-timer (x|<player> => <timer>))
   (dp player-state (x|<player> => <sym>) 'stopped)
   (dp player-mode (x|<player> => <sym>) 'demo)
-  (dp player-update-times (x|<player> => <buf>) (fab <buf> 0))
+  (dp player-update-times (x|<player> => <vec>) (fab <vec> 0))
 
 (dm player-track (x|<player> => <track>)
   (elt (song-tracks (player-song x)) (player-track-num x)))
@@ -377,7 +377,7 @@
   (open-midi-out-device (player-out-device x))
   (def callback (fab-recorder-callback x))
   (do (fun (d) (open-midi-in-device d callback)) (player-in-devices x))
-  (set (player-update-times x) (fab <buf> (len (song-tracks (player-song x)))))
+  (set (player-update-times x) (fab <vec> (len (song-tracks (player-song x)))))
   (def nt (len (player-update-times x)))
   (for ((i (below nt)))
     (set (elt (player-update-times x) i)

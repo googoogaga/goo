@@ -85,7 +85,7 @@
 (ds (pushf ,place ,value)
   (let (((tup g-decls g-place) (lift-place-subforms place)))
     `(let (,@g-decls)
-       (set ,g-place (push ,g-place ,value)))))
+       (set ,g-place (push! ,g-place ,value)))))
 
 (ds (swapf ,x ,y)
   (let (((tup xg-decls xg-place) (lift-place-subforms x))
@@ -100,7 +100,7 @@
         (new-col (gensym))
         (val (gensym)))
     `(let (,@g-decls
-           ((tup ,new-col ,val) (pop ,g-place)))
+           ((tup ,new-col ,val) (pop! ,g-place)))
        (set ,g-place ,new-col)
        ,val)))
 

@@ -4,48 +4,48 @@ C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 	$(CC) -I.. -c -g -O -o $@ $<
 
 OBJS = \
-	goo/cols/cycle.o \
-	goo/packer.o \
-	goo/cols/opts.o \
-	goo/cols/seq.o \
-	goo/cols/zip.o \
-	x8r/ast-eval.o \
-	goo/cols/col.o \
-	goo/types.o \
-	goo/cols.o \
-	goo/io/read.o \
+	goo/io/write.o \
+	x8r/g2c.o \
 	goo/cols/seqx.o \
-	goo/cols/lst.o \
-	goo/app.o \
-	x8r/dependency.o \
-	x8r/main.o \
-	goo/eval.o \
-	goo/io/port.o \
-	x8r/ast-linearize.o \
+	goo/cols/tab.o \
+	goo/cols/range.o \
+	goo/mag.o \
+	goo/macros.o \
 	goo/runtime.o \
 	goo/cols/rep.o \
-	goo.o \
-	goo/cols/vec.o \
-	goo/cols/tab.o \
-	goo/user.o \
-	goo/cols/colx.o \
 	goo/cols/tup.o \
-	goo/cols/str.o \
-	goo/system.o \
-	x8r/g2c.o \
-	x8r/top.o \
-	goo/macros.o \
-	goo/cols/step.o \
-	goo/cols/map.o \
+	goo/packer.o \
+	goo/types.o \
+	goo/cols/colx.o \
 	goo/boot.o \
-	goo/cols/flat.o \
-	goo/io/write.o \
-	x8r/syntax.o \
-	x8r/ast.o \
-	goo/cols/range.o \
-	goo/cols/assoc.o \
+	x8r/main.o \
+	goo/cols/cycle.o \
+	x8r/dependency.o \
+	goo/system.o \
+	goo/cols/str.o \
 	goo/math.o \
-	goo/mag.o \
+	goo/eval.o \
+	goo/app.o \
+	goo/cols/lst.o \
+	goo/cols/map.o \
+	goo/io/port.o \
+	goo.o \
+	goo/io/read.o \
+	goo/cols/assoc.o \
+	goo/cols/col.o \
+	goo/cols/step.o \
+	goo/cols.o \
+	x8r/ast-linearize.o \
+	x8r/ast.o \
+	goo/cols/vec.o \
+	goo/cols/flat.o \
+	goo/cols/seq.o \
+	x8r/syntax.o \
+	goo/cols/zip.o \
+	x8r/top.o \
+	goo/user.o \
+	goo/cols/opts.o \
+	x8r/ast-eval.o \
 	g2c-init.o
 
 g2c: $(C_OBJS_DD) $(OBJS)

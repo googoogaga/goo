@@ -29,7 +29,7 @@
 (dm elt-type (x|<col> => <type>) <chr>)
 
 (dm fab ((x (t= <str>)) s|<int> => <str>)
-  (%str (%iu s)))
+  (%str (%iu s) (%cu #\space)))
 
 (dm str (objects|...)
   (fabs <str> objects))

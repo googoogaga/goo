@@ -966,7 +966,7 @@
   (def module (find-environment-module r))
   (def loader (environment-module-loader env))
   (def used-module (probe-module loader name))
-  (push-last! (environment-uses-modules env) used-module)
+  (push! (environment-uses-modules env) used-module)
   (do (fun (b)
         (import-global! b env)
         (export-binding! module (binding-name b) b))
@@ -977,7 +977,7 @@
   (def env (find-static-global-environment r))
   (def loader (environment-module-loader env))
   (def used-module (probe-module loader name))
-  (push-last! (environment-uses-modules env) used-module)
+  (push! (environment-uses-modules env) used-module)
   (do (fun (b) (import-global! b env)) (module-exports used-module))
   (new <constant> constant-value #f))
 
@@ -1737,8 +1737,7 @@
   mod)
 
 (df reloader-do-use-module (mod|<module> uses|<module>)
-  (push-last! (environment-uses-modules (module-target-environment mod))
-              uses))
+  (push! (environment-uses-modules (module-target-environment mod)) uses))
 
 (df reloader-do-import (mod|<module> name|<str>
                         from-mod|<module> original-name|<str>)

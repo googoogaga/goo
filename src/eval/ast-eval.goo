@@ -140,9 +140,9 @@
        (env-frame! ;; TODO: SLOW HACK
         ,env ,f (cat2 ,names (lst '%next-methods))
         (cat2 args (lst nms))))
-     ;; (push-last! *stack* frame)
+     ;; (push! *stack* frame)
      (,body frame)
-     ;; (pop-last! *stack*)
+     ;; (pop! *stack*)
      ))
 
 ;; TODO -- CLEAN UP BELOW

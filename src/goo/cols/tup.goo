@@ -11,14 +11,12 @@
 (exported
  ;; Defined in boot
  <tup>
- (df tup (args|...))
+ tup
 )
 
 ;;;;!! Implementation
 
 (dm as ((_ (t= <tup>)) x|<tup> => <tup>) x)
-
-(df tup (objects|...) (as <tup> objects))
 
 ;;;; Collection protocol
 (dm len (x|<tup> => <int>)
@@ -37,7 +35,7 @@
   %tnul)
 
 (dm fab (x|(t= <tup>) s|<int> => <tup>)
-  (if (== s 0) %tnul (%tup (%iu s))))
+  (%tup (%iu s) #f))
 
 
 ;;;; Misc stuff

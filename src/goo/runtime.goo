@@ -8,6 +8,7 @@
 (use goo/cols/col)
 (use goo/cols/colx)
 (use goo/cols/seq)
+(use goo/cols/seqx)
 (use goo/cols/opts)
 (use goo/cols/lst)
 (use goo/cols/tup)
@@ -333,7 +334,7 @@
       (format out "%d. %s.\n" i
               (describe-handler (handler-info handler)
                                 (handler-condition-type handler)))
-      (push-last! applicable handler)
+      (push! applicable handler)
       (incf i)))
   applicable)
 
@@ -445,118 +446,3 @@
   %with-monitor
   )
 
-;(export
-"  always
-  app-args app-filename
-  as
-  ascii-limit ascii-whitespaces
-  ceil ceiling/
-  describe-condition
-  port-contents
-  case-insensitive-string-hash
-  case-insensitive-string-equal
-  cat cat2 cat!
-  char->ascii
-  ready?
-  compose
-  <condition> condition-arguments condition-message
-  current-gc-state
-  curry
-  default
-  default-handler
-  del-vals
-  del-dups
-  del zap
-  do do2 do3 do-keyed
-  elt elt-setter elt-or low-elt low-elt-setter
-  empty empty?
-  eof-object eof-object?
-  error <error> <simple-error>
-  even?
-  fab fabs
-  <file-port> <file-in-port> 
-  <file-out-port> 
-  fill
-  fin-state?
-  first-then
-  find
-  flo-bits
-  floor floor/
-  force-out
-  from from-below from-to from-by from-to-by from-below-by from-above
-  from-above from-above-by
-  gensym
-  <handler> handler-function fab-handler handler-matches?
-  id-hash
-  identity
-  in
-  <incongruent-method-error>
-  ini-state copy-state
-  <in-port> port-line 
-  keys
-  last
-  len len-setter len/fill-setter
-  list <list>
-  loc-val loc-val-setter
-  | ^ & ~ bit?
-  lower? upper?
-  lst
-  fab-setter-name
-  cat-sym
-  map map2 map-keyed
-  <map>
-  fab-map
-  match-atom match-empty-list match-sublist match-unquote
-  max min 
-  modulo remainder
-  mem?
-  napp
-  neg neg?
-  newline
-  now-elt now-elt-setter
-  now-key
-  nul?
-  num-to-str
-  digit?
-  nxt-state
-  odd?
-  out
-  <out-port>
-  pair
-  pick
-  peek
-  $permanent-hash-state
-  <port> port-index
-  pos pos?
-  pop pop-last! push push-last!
-  *print-base*
-  <range>
-  rcurry
-  get
-  fold fold+
-  rev!
-  rev
-  round round/
-  <serious-condition>
-  sig
-  <simple-condition>
-  <step>
-  str
-  <str-tab>
-  str-to-num
-  <str-port> <str-in-port> <str-out-port>
-  sub sub-setter
-  <tab>
-  tab-growth-factor tab-growth-threshold tab-shrink-threshold tab-test tab-hash
-  to-digit
-  to-str
-  trunc
-  trunc/
-  tup
-  t+ t= t< t?
-  var-name var-type
-  %with-monitor
-  put puts
-  zero?
-  )
-"

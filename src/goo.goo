@@ -85,11 +85,11 @@
  ;; 3.7.4 Tuples.
  <tup> tup
  ;; 3.7.5 (the first one): Lists.
- <lst> <list> head head-setter tail tail-setter lst list pair nil push pop
+ <lst> <list> head head-setter tail tail-setter lst list pair nil push! pop!
  ;; 3.7.5 (the second one): Optionals.
  <opts>
  ;; 3.7.6 (the first one): Flat sequences.
- <flat> <str> str to-str <vec> vec push-last! pop-last!
+ <flat> <str> str to-str <vec> vec 
  low-elt low-elt-setter
  ;; 3.7.6 (the second one):  Ranges.
  <range> range range-by from below

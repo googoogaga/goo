@@ -311,8 +311,10 @@
   (def buffer-size|<int> (len buffer))
   (def string|<str>      (fab <str> buffer-size))
   ;; without-bounds-checks
-  (for (((i <int>) (below buffer-size)))
-    (set (low-elt string i) (elt buffer i)))
+  (rep loop ((i 0)) 
+    (when (< i buffer-size)
+      (set (low-elt string i) (low-elt buffer i))
+      (loop (+ i 1))))
   ;; end without-bounds-checks
   string)
 
@@ -690,7 +692,7 @@
   (with-statement (d code-out)
     (puts code-out "goto loop")))
 
-(dv $number-call-templates 3)
+(dv $number-call-templates 4)
 
 (dm to-c (e|<regular-application> f d code-out)
   (def function (application-function e))
@@ -991,6 +993,7 @@
           @== @= @+ @<
           %gen-cache-arg-pos %gen-cache-singletons
           %gen-cache-classes %gen-cache-missable?
+          @telt @telt-setter
           @oelt @oelt-setter @olen
         
           prop-value-at prop-value-at-setter

@@ -43,7 +43,7 @@
   d)
 
 (df rep-fab (s|<int> fill => <rep>)
-  (rep-fill! (if (== s 0) %rnul (%rep (%iu s))) fill))
+  (%rep (%iu s) fill))
 
 (df rep-elt (x|<rep> i|<int> => <any>)
   (%relt x (%iu i)))

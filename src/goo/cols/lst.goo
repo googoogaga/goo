@@ -23,9 +23,6 @@
 
  (dg pair (x|<any> y|<lst> => <lst>))
 
- (dg push (l|<lst> x|<any> => <lst>))
- (dg pop (l|<lst> => (tup new-col|<lst> value)))
-
 ;; undocumented
  (dg assqn (x l|<lst> pos|<int> => <any>))
  (dg assq (x l|<lst> => <any>))
@@ -134,10 +131,10 @@
 (dm pair (h t|<lst> => <lst>)
   (new <lst> head h tail t))
 
-(dm push (c|<lst> x => <lst>)
+(dm push! (c|<lst> x => <lst>)
   (pair x c))
 
-(dm pop (c|<lst> => (tup new-c|<lst> value))
+(dm pop! (c|<lst> => (tup new-c|<lst> value))
   (tup (tail c) (head c)))
 
 ;;;; Misc other stuff

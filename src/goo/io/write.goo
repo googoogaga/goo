@@ -175,7 +175,7 @@
   (def names (fun-names x))
   (put port #\()
   (def names (fun-names x))
-  (for ((i (from 0)) (spec (fun-specs x)) (first? (first-then #t #f)))
+  (for ((i (from 0)) (spec (fun-specs x)) (first? (first-then (op #t) (op #f))))
     (unless first? (put port #\space))
     (if (empty? names)
         (write-type port spec)
@@ -346,11 +346,11 @@
           "Incomplete format directive in \"%s\"" message)
   `(let ((,port ,port-expr)) ,@exprs))))
 
-;; (ds (msg ,port ,message ,@args)
-;;   (pe-format port message args))
-
 (ds (msg ,port ,message ,@args)
-  `(format ,port ,message ,@args))
+  (pe-format port message args))
+
+;; (ds (msg ,port ,message ,@args)
+;;   `(format ,port ,message ,@args))
 
 (df format-to-string (message|<str> arguments|... => <str>)
   (with-port (port (open <str-out-port> "")) 

@@ -463,9 +463,9 @@
         (fab        (cat-sym "%"  name))
         (fab!       (cat-sym "%"  name "!"))
         (raw-fab    (cat-sym "%%" code "fab")))
-    `(seq (dl ,fab! (len) (,raw-fab len ,init))
-          (dv ,nul (,fab! (%raw 0)))
-          (dl ,fab (len) (if (%bb (%i= len (%raw 0))) ,nul (,fab! len))))))
+    `(seq (dl ,fab! (len e) (,raw-fab len e))
+          (dv ,nul (,fab! (%raw 0) ,init))
+          (dl ,fab (len e) (if (%bb (%i= len (%raw 0))) ,nul (,fab! len e))))))
 
 (%define-repeated-structure str <chr> s (%cu #\Space))
 
@@ -899,19 +899,23 @@
 
 (df @lst (objects|...) (@lst-helper objects (@+ (@olen objects) -1) '()))
 
-(df @telt (x|<tup> i|<int> => <any>)
+(dl @telt (x|<tup> i|<int> => <any>)
   (%telt x (%iu i)))
 
-(df @telt-setter (z x|<tup> i|<int>)
+(dl @telt-setter (z x|<tup> i|<int>)
   (set (%telt x (%iu i)) z))
 
-(df @tup (objects|...)
-  (def v (%tup (%iu (@olen objects))))
-  (rep copy ((k (@+ (@olen objects) -1)))
-    (if (@= k -1)
-        v
-        (seq (set (@telt v k) (@oelt objects k))
-             (copy (@+ k -1))))))
+(df @tup (args|...)
+  (def l (@olen args))
+  (def t (%tup (%iu l) nul))
+  (if (@= l 2) ;; MOST FREQUENT CASE AND SPEED CRITICAL
+      (seq (set (@telt t 0) (@oelt args 0))
+           (set (@telt t 1) (@oelt args 1)))
+      (rep into ((k (@+ l -1)))
+        (unless (@= k -1)
+          (set (@telt t k) (@oelt args k))
+          (into (@+ k -1)))))
+  t)
 
 (df @fun-names (x|<fun> => <lst>) (%sig-names (%gen-sig x)))
 
@@ -1031,7 +1035,7 @@
                   #f
                   (find (@tail ps))))))))
 
-(dv tup   @tup)
+(dv tup @tup)
 
 ;; TODO: DEF SUBTYPE METHODS
 
@@ -1230,7 +1234,7 @@
 
 ;;; copy args with arg as i'th elt into a opts.
 (df @specd-args (args|<opts> i|<int> arg|<any> => <opts>)
-  (def v (%tup (%iu (@olen args))))
+  (def v (%tup (%iu (@olen args)) nul))
   (def r (%opts-tup (%lb (%prop-dat-at v (%tlen v))) (%ib (%tlen v)) v))
   (rep copy ((k 0))
     (if (@== (@olen args) k)

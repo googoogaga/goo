@@ -15,13 +15,7 @@
 ;;;;!! Interface
 (exported
  (dc <vec> (<flat> <seq!>))
- 
  (dg vec (elts|... => <vec>))
- ;; pushes element onto end of stretchy vector
- (dg push-last! (c|<vec> x|<any> => <vec>))
- 
- ;; pops element from end of stretchy vector
- (dg pop-last! (c|<vec> => <any>))
  )
  
 
@@ -61,15 +55,14 @@
 (dm vec (elts|... => <vec>)
   (app fabs <vec> elts))
 
-(dm push-last! (c|<vec> x => <vec>)
+(dm push! (c|<vec> x => <vec>)
   (add! c x))
 
-(dm pop-last! (c|<vec> => <any>)
+(dm pop! (c|<vec> => (tup <vec> <any>))
   (def new-len (- (len c) 1))
   (def x       (low-elt c new-len))
   (set (len c) new-len)
-  x)
-
+  (tup c x))
 
 ;; TODO: QUESTIONABLE SYNTAX
 (dm to-str (x|<vec> => <str>) 
