@@ -33,6 +33,7 @@ define class <local-binding> (<binding>)
   slot binding-mutable?        = #f;
   slot binding-dynamic-extent? = #t, init-keyword: dynamic-extent?:;
   slot binding-dotted?         = #f, init-keyword: dotted?:;
+  slot binding-value           = #f;
 end class;
 
 /// descriptions
@@ -199,6 +200,7 @@ end class;
 
 define class <regular-application> (<application>) 
   slot application-function, required-init-keyword: function:;
+  slot application-known? = #f;
 end class;
 
 define class <predefined-application> (<application>) 
@@ -790,7 +792,8 @@ define method objectify-locals
     = map(sexpr-make-anonymous-method, sigs, bodies);
   let functions
     = map(rcurry(objectify, new-r, #f), function-forms);
-  do (method (x, n) function-name(x) := n; end, functions, bindings);
+  do (method (x, n) function-name(x) := n; binding-value(n) := x; end, 
+      functions, bindings);
   make(<locals>,
        bindings:  bindings,
        functions: functions,

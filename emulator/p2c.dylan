@@ -1,16 +1,5 @@
 module: proto
 
-/// TODO:
-/// 
-/// LOC
-/// METHOD-DEFINITION
-/// GENERIC
-/// MON
-/// SIF
-/// 
-/// 
-/// 
-
 // str-p2c("(head '())");
 // str-p2c("(loc ((f (x) x)) (f 1))");
 // str-p2c("(fun (x) x)");
@@ -738,6 +727,8 @@ define method generate-self-recursive-call (e :: <application>, f, out)
   end between-parentheses;
 end method;
 
+define constant $number-call-templates = 3;
+
 define method to-c (e :: <regular-application>, f, out)
   let function = application-function(e);
   if (application-tail?(e) 
@@ -748,10 +739,12 @@ define method to-c (e :: <regular-application>, f, out)
     generate-self-recursive-call(e, f, out);
   else
     let n = number-of(application-arguments(e));
-    format(out, "CALL%s", if (n > 3) "N" else n end);
+    format(out, "%sCALL%s", 
+	   if (application-known?(e)) "K" else "" end,
+	   if (n > $number-call-templates) "N" else n end);
     between-parentheses (out)
       to-c(application-function(e), f, out);
-      when (n > 3) format(out, ",%s", n); end;
+      when (n > $number-call-templates) format(out, ",%s", n); end;
       to-c(application-arguments(e), f, out);
     end between-parentheses;
   end if;
@@ -775,7 +768,8 @@ end method;
 define method to-c (e :: <locals>, f, out)
   between-parentheses (out)
     bindings->c
-      (locals-bindings(e), locals-functions(e), out, to-c: funshell-to-c);
+      (locals-bindings(e), locals-functions(e), out, 
+       to-c: funshell-to-c, check-type?: #f);
     do(rcurry(funinit-to-c, f, out), locals-bindings(e), locals-functions(e));
     to-c(locals-body(e), f, out);
   end between-parentheses;
@@ -811,28 +805,57 @@ define method to-c-ignore-binding (b, e, f, o)
 end method;
 
 define method bindings->c
-    (bindings, e :: <argument-list>, out, #key to-c = to-c-ignore-binding)
-  if (empty-argument-list?(e))
-    format(out, "");
-  else
-    binding->c(head(bindings), out);
-    format(out, "=");
-    to-c(head(bindings), arguments-head(e), #f, out);
-    format(out, ",");
-    bindings->c(tail(bindings), arguments-tail(e), out, to-c: to-c);
-  end if;
+    (bindings, e :: <argument-list>, out, 
+     #key to-c = to-c-ignore-binding, check-type? = #t)
+  iterate loop (bindings = bindings, e = e)
+    if (empty-argument-list?(e))
+      format(out, "");
+    else
+      let binding = head(bindings);
+      binding->c(binding, out);
+      format(out, "=");
+      let type? = ~unconstrained-type?(binding-type(binding));
+      if (check-type? & type?)
+	format(out, "check_type");
+	between-parentheses (out)
+	  to-c(binding, arguments-head(e), #f, out);
+	  format(out, ",");
+	  to-c(binding, binding-type(binding), #f, out);
+	end between-parentheses;
+      else
+	to-c(binding, arguments-head(e), #f, out);
+      end if;
+      format(out, ",");
+      loop(tail(bindings), arguments-tail(e));
+    end if;
+  end iterate;
 end method;
 
-define method bindings->c (bindings, e :: <list>, out, #key to-c = to-c-ignore-binding)
-  if (empty?(e))
-    format(out, "");
-  else
-    binding->c(head(bindings), out);
-    format(out, "=");
-    to-c(head(bindings), head(e), #f, out);
-    format(out, ",");
-    bindings->c(tail(bindings), tail(e), out, to-c: to-c);
-  end if;
+define method bindings->c
+    (bindings, e :: <list>, out, 
+     #key to-c = to-c-ignore-binding, check-type? = #t)
+  iterate loop (bindings = bindings, e = e)
+    if (empty?(e))
+      format(out, "");
+    else
+      let binding = head(bindings);
+      binding->c(binding, out);
+      format(out, "=");
+      let type? = ~unconstrained-type?(binding-type(binding));
+      if (check-type? & type?)
+	format(out, "check_type");
+	between-parentheses (out)
+	  to-c(binding, head(e), #f, out);
+	  format(out, ",");
+	  to-c(binding, binding-type(binding), #f, out);
+	end between-parentheses;
+      else
+	to-c(binding, head(e), #f, out);
+      end if;
+      format(out, ",");
+      loop(tail(bindings), tail(e));
+    end if;
+  end iterate;
 end method;
 
 define method to-c (e :: <predefined-application>, f, out)
@@ -1104,7 +1127,11 @@ define method generate-actual-return (definition :: <primitive-definition>, out)
 end method;
 
 define method generate-actual-return (definition, out)
-  format(out, "RET(res)");
+  if (unconstrained-type?(function-value(definition)))
+    format(out, "QRET(res)");
+  else
+    format(out, "RET(res)");
+  end if;
 end method;
 
 define method generate-return (definition, out)

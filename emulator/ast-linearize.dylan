@@ -5,7 +5,7 @@ module: proto
 define method update-walk! (g, o, #rest args)
   for (sd in slot-descriptors(object-class(o)))
     let x = dylan-slot-value(o, sd);
-    if (instance?(x, <program>))
+    if (instance?(x, <program>) & dylan-slot-getter(sd) ~== binding-value)
       let v = apply(g, x, args);
       // format-out("APPLYING %= GOT %=\n", x, v);
       dylan-slot-value(o, sd) := v;
@@ -153,6 +153,59 @@ define method analyze-dynamic-extent (o)
   // format-out("---\nEND DYNAMIC EXTENT ANALYSIS\n---\n");
   res
 end method;
+
+/// CALL UPGRADES
+
+define method do-call-upgrades! (o :: <program>)
+  update-walk!(do-call-upgrades!, o)
+end method;
+
+define method unconstrained-type? (o :: <program>) => (well?)
+  // format-out("TYPE %=\n", o);
+  instance?(o, <global-reference>) 
+    & binding-name(reference-binding(o)) == #"<any>"
+end method;
+
+define method do-call-upgrades! (o :: <regular-application>)
+  // format-out("FOUND %=\n", o);
+  next-method();
+  if (instance?(application-function(o), <local-reference>))
+    let met = binding-value(reference-binding(application-function(o)));
+    if (instance?(met, <ast-function>))
+      format-out("CALL %= UTB? %= UTV? %= LENA %= LENB %=",
+	  binding-name(reference-binding(application-function(o))),
+	  every?(compose(unconstrained-type?, binding-type), 
+		 function-bindings(met)),
+	  unconstrained-type?(function-value(met)),
+	  number-of(application-arguments(o)),
+	  size(function-bindings(met)));
+      if (every?(compose(unconstrained-type?, binding-type), 
+		 function-bindings(met))
+	   & unconstrained-type?(function-value(met))
+	   & ~function-nary?(met)
+	   & number-of(application-arguments(o))
+	       == size(function-bindings(met))) 
+	format-out(" K\n");
+	application-known?(o) := #t;
+      else
+	format-out(" U\n");
+      end if;
+    end if;
+  end if;
+  o
+end method;
+
+define method do-call-upgrades! (o :: <locals>)
+  next-method();
+  do(do-call-upgrades!, locals-functions(o));
+  o
+end method;
+
+define method analyze-calls (o)
+  do-call-upgrades!(o)
+end method;
+
+
 
 /// FLATTENING
 
@@ -502,7 +555,7 @@ define method closurize-main!
   let index
     = size(program-definitions(o));
   let name
-    = #"---MAIN---"; // TODO: MAKE THIS HIDDEN
+    = #"--MAIN--";
   let binding
     = ast-define-binding(r, name, <predefined-binding>);
   let defn
