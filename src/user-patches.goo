@@ -1,2 +1,0 @@
-(df load-curse () (load "/home/ai/jrb/proto/SRC/curse.proto"))
-(df load-grid  () (load "/home/ai/jrb/proto/SRC/grid.proto"))
