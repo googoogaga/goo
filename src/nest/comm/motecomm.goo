@@ -17,19 +17,52 @@
       (to-str da-str))
   num)
 
+
+(dv *7e* (hex "7e"))
+(dv *7d* (hex "7d"))
+(dv *ff* (hex "ff"))
+(dv *3f* (hex "3f"))
+(dv *ffff* (hex "ffff"))
+(dv *8000* (hex "8000"))
+(dv *1021* (hex "1021"))
+
+
+(dv *server-flood-message-id* 12)
+(dv *climb-message-id* 11)
+(dv *gradient-message-id* 10)
+(dv *hear-report-message-id* 9)
+
+;; THEWAY
+(df update-crc (cur|<int> byte|<int> => <int>)
+  (rep loop ((i 8) (up-crc (^ cur (<< byte 8))))
+    (if (> i 0)
+        (loop (- i 1)
+              (if (~= 0 (& up-crc *8000*))
+                  (^ (<< up-crc 1)
+                     *1021*)
+                  (<< up-crc 1)))
+        (& up-crc *ffff*)
+        )
+    )
+  )
+
 (dc <mote-comm-channel> (<any>))
  (dp handle (<mote-comm-channel> => <loc>))
+
+(dv *default-comm-channel* #f)
 
 (dm init-mote-comm (=> <mote-comm-channel>)
   (def mcc (new <mote-comm-channel>))
   (def port-handle (v24OpenPort "/dev/ttyS0" (| 0 V24_NO_DELAY)))
   (set (handle mcc) port-handle)
   (v24SetParameters port-handle V24_B19200 V24_8BIT V24_NONE)
+  (set *default-comm-channel* mcc)
   mcc
   )
 
 (dm v24-free (mcc|<mote-comm-channel>)
   (v24ClosePort (handle mcc))
+  (set *default-comm-channel* #f)
   )
 
 ; Guaranteed to return something! despite the weird bug running rampant in serial comm
@@ -57,46 +90,92 @@
   )
 
 (dc <tiny-message> (<any>))
- (dp destination-id (<tiny-message> => <int>)) ;; short
- (dp handler-id (<tiny-message> => <int>)) ;; char
- (dp group-id (<tiny-message> => <int>)) ;; char
+ (dp destination-id (<tiny-message> => <int>) *ffff*) ;; short
+ (dp handler-id (<tiny-message> => <int>) 0) ;; char
+ (dp group-id (<tiny-message> => <int>) *7d*) ;; char
  (dp payload (<tiny-message> => <col>) (vec)) ;; array of 'bytes'
 
 (dm write-message (mcc|<mote-comm-channel> msg|<tiny-message>)
+  (def cur-crc 0)
   ;; Destination-id
+  (set cur-crc (update-crc cur-crc (& (destination-id msg) 255)))
   (write-byte mcc (& (destination-id msg) 255))
+  (set cur-crc (update-crc cur-crc (& (>> (destination-id msg) 8) 255)))
   (write-byte mcc (& (>> (destination-id msg) 8) 255))
   ;; Handler
+  (set cur-crc (update-crc cur-crc (& (handler-id msg) 255)))
   (write-byte mcc (& (handler-id msg) 255))
   ;; Group
+  (set cur-crc (update-crc cur-crc (& (group-id msg) 255)))
   (write-byte mcc (& (group-id msg) 255))
   ;; Payload
   (do (fun (x)
+        (set cur-crc (update-crc cur-crc (& x 255)))
         (write-byte mcc x))
-      (payload mcc))
-  (unless (= 32 (len (payload mcc)))
-    (def need-to-write (- 32 (len (payload mcc))))
+      (payload msg))
+  (unless (= 30 (len (payload msg)))
+    (def need-to-write (- 30 (len (payload msg))))
     (rep loop ((i 0))
       (when (< i need-to-write)
         (seq
+          (set cur-crc (update-crc cur-crc 0))
           (write-byte mcc 0)
           (loop (+ i 1)))))
     )
+  ;; Write out the CRC
+  (write-byte mcc (& cur-crc 255))
+  (write-byte mcc (& (>> cur-crc 8) 255))
   )
 
-(dv *7e* (hex "7e"))
-(dv *ff* (hex "ff"))
-(dv *3f* (hex "3f"))
+(dm write-message-to-default (da-msg|<tiny-message>)
+  (if *default-comm-channel*
+    (write-message *default-comm-channel* da-msg)
+    (msg out "Communications channel is not open; unable to write message.\n")
+    )
+  )
+
+(dm resync-comm (mcc|<mote-comm-channel>)
+  (def last-byte #f)
+  (def cur-byte #f)
+
+  (esc synced 
+    (while (set cur-byte (read-byte mcc))
+
+           (when (and (= cur-byte 0)
+                      (= last-byte *7e*))
+             (synced #t)
+             )
+
+           (set last-byte cur-byte)
+           )
+    )
+  )
 
 (dm read-message-loop (mcc|<mote-comm-channel> func-on-message|<fun>)
   (def cur-message #f)
   (def cur-byte #f)
   (def byte-idx #f)
+  (def cur-crc #f)
+  (def alt-crc #f)
+  (def packets-crc #f)
   (while (set cur-byte (read-byte mcc))
          (unless cur-message
            (set cur-message (new <tiny-message>))
-           (set byte-idx 0))
-         
+           (set byte-idx 0)
+           (set cur-crc 0)
+           (set alt-crc (update-crc (update-crc 0 255) 255))
+           (set dlog (vec))
+           (set dlog2 (vec))
+           )
+
+         ;; Update the CRC unless 
+         (when (< byte-idx 34)
+           (set cur-crc (update-crc cur-crc cur-byte))
+           (when (>= byte-idx 2)
+             (set alt-crc (update-crc alt-crc cur-byte))
+             )
+           )
+
          (cond 
            ((= byte-idx 0)
             (set (destination-id cur-message) cur-byte)
@@ -120,12 +199,33 @@
             (set (group-id cur-message) cur-byte)
             )
 
+           ((= byte-idx 34)
+            (set packets-crc cur-byte)
+            )
+
            ;; Last byte. Finalize packet.
            ((= byte-idx 35)
-            (add! (payload cur-message) cur-byte)
-            (func-on-message cur-message)
-            (set cur-message #f)
-            (set byte-idx #f)
+            (set packets-crc (| packets-crc (<< cur-byte 8)))
+            (if (or (= packets-crc cur-crc)
+                    (= packets-crc alt-crc))
+              (seq
+                (func-on-message cur-message)
+                (set cur-message #f)
+                (set byte-idx #f)
+                )
+              (seq
+                (msg out "CRC's do not match; resyncing: %= != %= or %= \n" packets-crc cur-crc alt-crc)
+                (resync-comm mcc)
+                (msg out "Resynced ---\n")
+                (set cur-message (new <tiny-message>))
+                (set byte-idx 1)
+                (set cur-crc (update-crc (update-crc 0 *7e*) 0))
+                (set alt-crc (update-crc (update-crc 0 255) 255))
+                (set dlog (vec))
+                (set dlog2 (vec))
+                (set (destination-id cur-message) *7e*)
+                )
+              )
             )
 
            ;; Payload
@@ -183,7 +283,7 @@
   )
 
 (dm spew-byte (msg|<tiny-message> b|<int>)
-  (add! (payload msg))
+  (add! (payload msg) b)
   #t
   )
 
@@ -211,7 +311,7 @@
  (dp grad-dists (<climb-message> => <col>) (vec))
 
 (dm process-climb-message (msg|<tiny-message> => <climb-message>)
-  (dm cm (new <climb-message>))
+  (def cm (new <climb-message>))
   ;; sid
   (set (source cm) (eat-short msg))
   ;; i_can_hear
@@ -222,42 +322,58 @@
                        )
                      ))
   ;; skip symid
+  (eat-byte msg)
   ;; skip dist
+  (eat-byte msg)
   ;; radio_power
   (set (radio-power cm) (eat-byte msg))
   ;; light_status
   (set (light-status cm) (eat-byte msg))
   ;; gd0-gd3
-  (eat-multi-byte 4 (fun (val) (add! (grad-dists cm) val)))
+  (eat-multi-byte msg 4 (fun (val) 
+                          (add! (grad-dists cm)
+                                (if (>= val 125)
+                                    "!"
+                                    val))))
+
+  cm
   )
 
 (dv *server-unique-id* 0)
 (df server-unique-id ()
   (def res *server-unique-id*)
   (incf *server-unique-id*)
-  (when (> *server-unique-id* 127)
+  (when (> *server-unique-id* 32000)
     (set *server-unique-id* 0))
   res
   )
 
+(dv *server-message-status* 0)
+(dv *server-message-control-leds* 1)
+(dv *server-message-control-sounder* 2)
+(dv *server-message-emit-gradient* 3)
+(dv *server-message-reset-gradients* 4)
+
 (dc <server-message> (<tiny-abstract-message>))
- (dp target-mote-id (<server-message> => <int>))
+ (dp target-mote-id (<server-message> => <int>) 0)
  (dp unique-id (<server-message> => <int>) (server-unique-id))
- (dp action-id (<server-message> => <int>))
- (dp param0 (<server-message> => <int>))
- (dp param1 (<server-message> => <int>))
- (dp param2 (<server-message> => <int>))
- (dp param3 (<server-message> => <int>))
+ (dp action-id (<server-message> => <int>) 0)
+ (dp param0 (<server-message> => <int>) 0)
+ (dp param1 (<server-message> => <int>) 0)
+ (dp param2 (<server-message> => <int>) 0)
+ (dp param3 (<server-message> => <int>) 0)
 
 (dm process-server-message (sm|<server-message> => <tiny-message>)
-  (dm msg (new <tiny-message>))
+  (def msg (new <tiny-message>))
+  (set (handler-id msg) *server-flood-message-id*)
   (spew-short msg (target-mote-id sm))
-  (spew-byte msg (unique-id sm))
+  (spew-short msg (unique-id sm))
   (spew-byte msg (action-id sm))
   (spew-byte msg (param0 sm))
   (spew-byte msg (param1 sm))
   (spew-byte msg (param2 sm))
   (spew-byte msg (param3 sm))
+  msg
   )
 
 (dc <hear-report-message> (<tiny-abstract-message>))
@@ -279,6 +395,18 @@
   hm
   )
 
+(dc <gradient-message> (<tiny-abstract-message>))
+ (dp grad-symid (<gradient-message> => <int>) 0)
+ (dp grad-dist (<gradient-message> => <int>) 0)
+
+(dm process-gradient-message (gm|<gradient-message> => <tiny-message>)
+  (def da-msg (new <tiny-message>))
+  (set (handler-id da-msg) *gradient-message-id*)
+  (spew-byte da-msg (grad-symid gm))
+  (spew-byte da-msg (grad-dist gm))
+  da-msg
+  )
+
 (export
   <mote-comm-channel>
   <tiny-message>
@@ -286,6 +414,7 @@
   <climb-message>
   <server-message>
   <hear-report-message>
+  <gradient-message>
   )
 
 (export
@@ -303,6 +432,7 @@
   payload
   payload-setter
   write-message
+  write-message-to-default
   read-message-loop
   eat-byte
   eat-multi-short
@@ -341,4 +471,24 @@
   process-hear-report-message
   heard
   heard-setter
+  process-gradient-message
+  grad-symid
+  grad-symid-setter
+  grad-dist
+  grad-dist-setter
+  )
+
+(export 
+  *server-message-status*
+  *server-message-control-leds*
+  *server-message-control-sounder*
+  *server-message-emit-gradient*
+  *server-message-reset-gradients*
+  )
+
+(export 
+  *server-flood-message-id*
+  *climb-message-id*
+  *hear-report-message-id*
+  *server-unique-id*
   )

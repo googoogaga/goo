@@ -1,22 +1,106 @@
 (use goo)
 
 (use samurui/samurui)
+(use samurui/graph)
+(use samurui/badge)
+
+(use nest/comm/motecomm)
+
+;; forward
+(dc <mote-ensemble> (<visi-col>))
 
 (dc <mote> (<any>))
  (dp can-hear (<mote> => <col>) (vec))
  (dp heard-by (<mote> => <col>) (vec))
  (dp mote-id (<mote> => <int>))
- (dp mote-thinks-x (<mote> => <int>))
- (dp mote-thinks-y (<mote> => <int>))
+ (dp mote-grads (<mote> => <col>) (vec "!" "!" "!" "!"))
+ (dp mote-radio-power (<mote> => (t? <int>)) 10)
+ (dp mote-light-status (<mote> => (t? <int>)) #f)
+ (dp mote-actual-x (<mote> => <flo>) 0.0)
+ (dp mote-actual-y (<mote> => <flo>) 0.0)
+ (dp mote-thought-x (<mote> => <flo>) 0.0)
+ (dp mote-thought-y (<mote> => <flo>) 0.0)
+ (dp mote-member-of (<mote> => <mote-ensemble>))
 
-(iaction <mote> blink m "Blink"
-         (msg out "I would blink now if I could...\n")
+(iaction <mote> mote-leds-on m "LEDs on"
+         (def sm (new <server-message>))
+         (msg out "Sending LEDs ON to mote %=\n" (mote-id m))
+         (set (target-mote-id sm) (mote-id m))
+         (set (action-id sm) *server-message-control-leds*)
+         (set (param1 sm) 1)
+         (set (param2 sm) 1)
+         (set (param3 sm) 1)
+         (write-message-to-default (process-server-message sm))
          )
  
-(dc <mote-ensemble> (<visi-col>))
+(iaction <mote> mote-leds-off m "LEDs off"
+         (def sm (new <server-message>))
+         (msg out "Sending LEDs OFF to mote %=\n" (mote-id m))
+         (set (target-mote-id sm) (mote-id m))
+         (set (action-id sm) *server-message-control-leds*)
+         (set (param1 sm) 2)
+         (set (param2 sm) 2)
+         (set (param3 sm) 2)
+         (write-message-to-default (process-server-message sm))
+         )
+
+(iaction <mote> mote-get-info m "Get Info"
+         (def sm (new <server-message>))
+         (msg out "Asking mote %= for A/S/L\n" (mote-id m))
+         (set (target-mote-id sm) (mote-id m))
+         (set (action-id sm) *server-message-status*)
+         (write-message-to-default (process-server-message sm))
+         )
+
+(iaction <mote> mote-grad-a m "Gradient A"
+         (def sm (new <server-message>))
+         (msg out "Asking mote %= to emit gradient A\n" (mote-id m))
+         (set (target-mote-id sm) (mote-id m))
+         (set (action-id sm) *server-message-emit-gradient*)
+         (set (param1 sm) 1)
+         (write-message-to-default (process-server-message sm))
+         )
+
+(iaction <mote> mote-grad-b m "Gradient B"
+         (def sm (new <server-message>))
+         (msg out "Asking mote %= to emit gradient B\n" (mote-id m))
+         (set (target-mote-id sm) (mote-id m))
+         (set (action-id sm) *server-message-emit-gradient*)
+         (set (param1 sm) 2)
+         (write-message-to-default (process-server-message sm))
+         )
+
+(iaction <mote> mote-grad-c m "Gradient C"
+         (def sm (new <server-message>))
+         (msg out "Asking mote %= to emit gradient C\n" (mote-id m))
+         (set (target-mote-id sm) (mote-id m))
+         (set (action-id sm) *server-message-emit-gradient*)
+         (set (param1 sm) 3)
+         (write-message-to-default (process-server-message sm))
+         )
+
+(iaction <mote> mote-fix-location m "Fix Location"
+         (graph-control-fix-node (ensemble-graph (mote-member-of m))
+                                 m)
+         )
+
+;; FORWARDED (dc <mote-ensemble> (<visi-col>))
  (dp motes (<mote-ensemble> => <tab>) (fab <tab> 0))
+ (dp ensemble-graph (<mote-ensemble> => <any>) #f)
  (dp add-node-listeners (<mote-ensemble> => <col>) (vec)) ;; (fun (new-node))
  (dp add-edge-listeners (<mote-ensemble> => <col>) (vec)) ;; (fun (from to))
+
+(dm graph-control-is (me|<mote-ensemble> g)
+  (set (ensemble-graph me) g)
+  )
+
+(dv *mote-believed-location-line-color* (color 192 96 96))
+
+(df draw-line-to-thought (widget mote)
+  (def l (line (point (mote-actual-x mote) (mote-actual-y mote))
+               (point (mote-thought-x mote) (mote-thought-y mote))))
+  (graph-control-draw-line widget l *mote-believed-location-line-color*)
+  )
 
 ;; Mote-ensemble specific API -----
 
@@ -24,6 +108,7 @@
   ;; Create mote and init
   (def m (new <mote>))
   (set (mote-id m) id)
+  (set (mote-member-of m) me)
 
   ;; Put in our table
   (set (elt (motes me) id) m)
@@ -52,11 +137,53 @@
   #t
   )
 
+(dm get-mote-by-id (me|<mote-ensemble> id|<int> => <mote>)
+  (or (elt-or (motes me) id #f)
+      (new-mote me id))
+  )
+
 (dm mote-id-can-hear-ids (me|<mote-ensemble> id-a|<int> ids|<col>)
   (mote-can-hear-ids me 
                      (or (elt-or (motes me) id-a #f)
                          (new-mote me id-a)) 
                      ids)
+  )
+
+(dm suggest-badge (me|<mote-ensemble>)
+  (def badge (new <badge>))
+  (set (badge-color badge) (color 96 96 96))
+  (set (badge-offset-y badge) 32)
+
+  (def bar (new <bar-badge-line>))
+  (set (bar-axis-source bar) "radio")
+  (set (bar-color bar) (color 192 192 255))
+
+  (def lab (label-badge "!grads!" (color 255 200 255)))
+  
+  (add! (badge-lines badge) bar)
+  (add! (badge-lines badge) lab)
+
+  badge
+  )
+
+(dm find-mote-with-grad-val (me|<mote-ensemble> grad-idx|<int> => <mote>)
+  (esc found-it
+    (do (fun (m)
+          (when (== (elt (mote-grads m) grad-idx) 0)
+            (found-it m))
+          )
+        (motes me))
+    )
+  )
+
+(dm update-mote-positions (me|<mote-ensemble>)
+  (do (fun (mote)
+        (def p (graph-control-get-node-pos (ensemble-graph me) mote))
+        (set (mote-actual-x mote) (point-x p))
+        (set (mote-actual-y mote) (point-y p))
+        )
+      (motes me)
+      )
   )
 
 ;; Collection Abstraction -----
@@ -65,11 +192,20 @@
   )
 
 (dm node-axes (me|<mote-ensemble> => <col>)
-  (vec "can-hear")
+  (vec "can-hear" "radio" "grads")
   )
 
 (dm node-out-edges (me|<mote-ensemble> axis node => <col>)
-  (can-hear node)
+  (case-by axis =
+    (("can-hear")
+     (can-hear node))
+    (("radio")
+     (vec (mote-radio-power node))
+     )
+    (("grads")
+     (mote-grads node)
+     )
+    )
   )
 
 (dm node-in-edges (me|<mote-ensemble> axis node => <col>)
@@ -108,14 +244,30 @@
   heard-by-setter
   mote-id
   mote-id-setter
-  mote-thinks-x
-  mote-thinks-x-setter
-  mote-thinks-y
-  mote-thinks-y-setter
+  mote-grads
+  mote-grads-setter
+  mote-radio-power
+  mote-radio-power-setter
+  mote-light-status
+  mote-light-status-setter
+  mote-actual-x
+  mote-actual-x-setter
+  mote-actual-y
+  mote-actual-y-setter
+  mote-thought-x
+  mote-thought-x-setter
+  mote-thought-y
+  mote-thought-y-setter
   motes
   motes-setter
   new-mote
   mote-can-hear
   mote-can-hear-ids
   mote-id-can-hear-ids
+  get-mote-by-id
+  find-mote-with-grad-val
+  draw-line-to-thought
+  ensemble-graph
+  ensemble-graph-setter
+  update-mote-positions
   )

@@ -21,15 +21,257 @@
 ;; Need GTK
 (use samurui/gtkbinding)
 
+(dv *gradient-fudge-factor* 1.0)
+
+;; Thought Done
+;; - Add right-click menus to initiate the 3 gradients
+;; - Add a right-click menu to 'fix' the position of a mote
+;; - Add button to calculate locations 
+;; - Add a button to re-inquire everyone's state (after gradients propagated, etc.)
+;; - Create a queue of nodes to inquire after.
+;;   - Periodically send off a command to ask about one of those nodes
+;;   - When we hear from a climb_report from a node, flag them as having been heard
+;;   - When we find out about a node (either via spying, or neighbors climb_reports), 
+;;      add that node to the inquiry list unless we've already heard from them.
+;; - Add overlay to draw a line to the location the node thinks it is at.
+
+;; TO-DO
+
+;; = Reset Edges of Graph
+;; = Darken line color
+
+;; = Pick point that minimizes total error to all 3...
+
+;; = Boost power a little bit more on restore
+
+;; - Add right-click menus to toggle chirper
+
+;; - Add a button that completely resets the graph.  eg, mote-ensemble is cleared, out, but the request queue
+;;   is fully inited.  This allows for changes in the graph.
+
+;; - Have base-station gradient emit tell the people who the base-station knows it can hear to propagate the zero gradient!
+
+
+;; MAYBE (generally with regards to lighting)
+
+;; - Create lighting mode that supports the following:
+;;  - Move the badges down (outside of the circle)
+;;  - Put a big black circle over each mote so as not to mess with the light thing
+;; [ Have mote send out a climb message when it gets a major change in its light state ] 
+
 ; =================================================================
+
 ;; --- Define demo app class
 (dc <nest-demo-app> (<any>))
 
 (iprop <nest-demo-app> motes <mote-ensemble> "Motes")
 
+(iaction <nest-demo-app> app-base-grad app "Emit Base Grad"
+         ;; Send emit gradient message to each guy we can hear
+         (do (fun (id)
+               (def sm (new <server-message>))
+               (msg out "Asking mote %= to emit base-station gradient\n" id)
+               (set (target-mote-id sm) id)
+               (set (action-id sm) *server-message-emit-gradient*)
+               (set (param1 sm) 0) ;; server
+               (add! *messages-to-send* (process-server-message sm))
+               )
+             *motes-directly-heard*)
+         )
+
+(iaction <nest-demo-app> app-clear-grads app "Reset Grads"
+         (def sm (new <server-message>))
+         (set (target-mote-id sm) #xffff) ;; everybody loves this message!
+         (set (action-id sm) *server-message-reset-gradients*)
+         (set (param0 sm) 1)
+         (set (param1 sm) 1)
+         (set (param2 sm) 1)
+         (set (param3 sm) 1)
+         (write-message-to-default (process-server-message sm))
+         )
+
+(dv *show-locs* #f)
+
+(iaction <nest-demo-app> app-show-locs app "Show Locs"
+         (set *show-locs* (not *show-locs*))
+         (if *show-locs*
+             (graph-control-add-post-draw (ensemble-graph (motes app)) draw-line-to-thought)
+             (graph-control-remove-post-draw (ensemble-graph (motes app)) draw-line-to-thought))
+         )
+
+(dm mote-dist (ma|<mote> mb|<mote> => <flo>)
+  (def dx (- (mote-actual-x mb) (mote-actual-x ma)))
+  (def dy (- (mote-actual-y mb) (mote-actual-y ma)))
+  (sqrt (+ (* dx dx) (* dy dy)))
+  )
+
+(iaction <nest-demo-app> app-calc-locs app "Calc Locs"
+         ;; Update mote positions.
+         (update-mote-positions (motes app))
+
+         (msg out "Updated mote positions...\n")
+
+         ;; Find the motes who emitted the 3 gradients
+         (def me (motes app))
+         (def source-a (find-mote-with-grad-val me 1))
+         (def source-b (find-mote-with-grad-val me 2))
+         (def source-c (find-mote-with-grad-val me 3))
+
+         ;; Attempt to normalize the scale factors...
+         (def scale-a (/ (+ (/ (mote-dist source-b source-a)
+                               (elt (mote-grads source-b) 1))
+                            (/ (mote-dist source-c source-a)
+                               (elt (mote-grads source-c) 1)))
+                         2))
+         (def scale-b (/ (+ (/ (mote-dist source-c source-b)
+                               (elt (mote-grads source-c) 2))
+                            (/ (mote-dist source-a source-b)
+                               (elt (mote-grads source-a) 2)))
+                         2))
+         (def scale-c (/ (+ (/ (mote-dist source-a source-c)
+                               (elt (mote-grads source-a) 3))
+                            (/ (mote-dist source-b source-c)
+                               (elt (mote-grads source-b) 3)))
+                         2))
+         
+         (msg out "Scale factors calculated...\n")
+
+         ;; Iterate over all nodes, calculating their supposed location
+         (do (fun (mote)
+               ;; Don't bother calculating it for the corners...
+               (if (or (or (== mote source-a)
+                           (== mote source-b))
+                       (== mote source-c))
+                   (seq
+                     (set (mote-thought-x mote) (mote-actual-x mote))
+                     (set (mote-thought-y mote) (mote-actual-y mote))
+                     )
+
+                   (seq
+               
+                     (def c1 (circle (mote-actual-x source-a)
+                                     (mote-actual-y source-a)
+                                     (* scale-a (elt (mote-grads mote) 1))))
+                     (def c2 (circle (mote-actual-x source-b)
+                                     (mote-actual-y source-b)
+                                     (* scale-b (elt (mote-grads mote) 2))))
+                     (def c3 (circle (mote-actual-x source-c)
+                                     (mote-actual-y source-c)
+                                     (* scale-c (elt (mote-grads mote) 3))))
+                     
+                     (def l1 (intersect c1 c2))
+                     (def intersection-points (intersect c3 l1))
+                     
+                     (if (empty? intersection-points)
+                         (msg out "No intersection points on mote id: %=\n" (mote-id mote))
+                         (seq
+                           
+                           (def p-closest (elt intersection-points 0))
+                           ;; NotFunctional -- fix someday
+                           (when (> (len intersection-points) 1)
+                             (if (< (+ (+ (sqdist (elt intersection-points 1)
+                                                  (circle-p c1))
+                                          (sqdist (elt intersection-points 1)
+                                                  (circle-p c2)))
+                                       (sqdist (elt intersection-points 1)
+                                               (circle-p c3)))
+                                    (+ (+ (sqdist p-closest
+                                                  (circle-p c1))
+                                          (sqdist p-closest
+                                                  (circle-p c2)))
+                                       (sqdist p-closest
+                                               (circle-p c3))))
+                                 (set p-closest (elt intersection-points 1)))
+                             )
+                           
+                           ;; Now p-closest should be the coordinates of the guy in graph-space (not draw space)
+                           (set (mote-thought-x mote) (point-x p-closest))
+                           (set (mote-thought-y mote) (point-y p-closest))
+                           )
+                         )
+                     )
+                   )
+               )
+             (motes (motes app))
+             )
+
+         (msg out "Locations estimated.\n")
+         )
+
+(iaction <nest-demo-app> app-reset-info app "Reset Info"
+         (do (fun (x)
+               (add! *motes-to-call* x)
+               )
+             *motes-heard-from*)
+         (set *motes-heard-from* (fab <tab> 0))
+         )
+
+(iaction <nest-demo-app> app-reset-neighbors app "Reset Neighbors"
+         (set *motes-directly-heard* (fab <tab> 0))
+         )
+
+(iaction <nest-demo-app> app-reset-graph app "!!Reset Graph!!"
+         ;; First, put everyone on the inquiry thing.
+         ;;(app-reset-info app)
+         (set *motes-heard-from* (fab <tab> 0))
+         (set *motes-to-call* (vec))
+         ;; Now, reset the graph state
+         (graph-control-clear-graph (ensemble-graph (motes app)))
+         ;; Now, reset the mote ensemble
+         (set (motes (motes app)) (fab <tab> 0))
+         )
+
+(iaction <nest-demo-app> app-reset-edges app "!!Reset Edges!!"
+         ;; First, put everyone on the inquiry thing.
+         (app-reset-info app)
+         ;; Now, reset the graph state
+         (graph-control-clear-edges (ensemble-graph (motes app)))
+         ;; Now, reset the mote ensemble
+         (do (fun (mote)
+               (set (can-hear mote) (vec))
+               (set (heard-by mote) (vec))
+               )
+             (motes (motes app))
+             )
+         )
+
+(iaction <nest-demo-app> app-boost-unique app "Boost Unique"
+         (set *server-unique-id* (+ *server-unique-id* 1000))
+         )
+
+(iaction <nest-demo-app> app-all-leds-on app "All LEDs On"
+         (def sm (new <server-message>))
+         (msg out "Sending LEDs ON to ALL\n")
+         (set (target-mote-id sm) #xffff)
+         (set (action-id sm) *server-message-control-leds*)
+         (set (param1 sm) 1)
+         (set (param2 sm) 1)
+         (set (param3 sm) 1)
+         (write-message-to-default (process-server-message sm))
+         )
+
+(dv *anim-enabled* #t)
+
+(iaction <nest-demo-app> app-toggle-anim app "Toggle Anim"
+         (set *anim-enabled* (not *anim-enabled*))
+         (graph-control-enable-anim (ensemble-graph (motes app)) *anim-enabled*)
+         )
+
 (imodel <nest-demo-app>
-        "Motes"
         (attr motes fill)
+        (columns
+         ;;app-base-grad
+         app-boost-unique
+         app-clear-grads
+         app-calc-locs
+         app-show-locs
+         app-reset-info
+         ;; app-reset-neighbors
+         app-reset-edges
+         app-reset-graph
+         app-all-leds-on
+         app-toggle-anim
+         )
         )
 
 ;; --- Instantiate Demo App
@@ -39,27 +281,103 @@
 
 ;; ------ Communications Related ------
 
+(dv *motes-directly-heard* (fab <tab> 0))
+
+(dv *motes-heard-from* (fab <tab> 0))
+(dv *motes-to-call* (vec))
+
+(dv *messages-to-send* (vec))
+
+(dm possibly-inquire-about (id|<int>)
+  (unless (elt-or *motes-heard-from* id #f)
+    (add! *motes-to-call* id)
+    )
+  )
+
+(dm possibly-inquire-about (ids|<col>)
+  (do possibly-inquire-about ids)
+  )
+
+(dm gimme-mote-to-call ()
+  (if (empty? *motes-to-call*)
+      #f
+      (seq
+        (def mote-to-call (1st *motes-to-call*))
+        (set *motes-to-call* (del-vals *motes-to-call* mote-to-call))
+        ;; Put it at the end of the list, just in case we don't hear from them
+        (add! *motes-to-call* mote-to-call)
+        mote-to-call
+        )
+      )
+  )
+
+(dm heard-from-mote (id|<int>)
+  ;; Note that we heard from them
+  (set (elt *motes-heard-from* id) id)
+  ;; Take them out of the list to bother
+  (set *motes-to-call* (del-vals *motes-to-call* id))
+  )
+
 ;; --- Periodically check our shared pipe
 
-(dv *server-flood-message-id* 12)
-(dv *climb-message-id* 11)
-(dv *hear-report-message-id* 9)
+(dv *probe-every* 8)
+(dv probe-tick 0)
 
 (df tick-poll-pipe (da-pipe)
+  ;; Process Incoming Messages
   (while (> (len da-pipe) 0)
     (def da-msg (dequeue! da-pipe))
     ;; (post "<---- Dequeued message: %=\n" da-msg)
     (case (handler-id da-msg)
       ((*climb-message-id*)
        (def cm (process-climb-message da-msg))
+       (def m (get-mote-by-id (motes *nest-demo-app*) (source cm)))
+       (msg out "Got climb-message from mote %d\n" (mote-id m))
+       (msg out " He can hear: %= and has radio power: %=\n" (msg-can-hear cm) (radio-power cm))
+       ;; Update Graph
+       (mote-can-hear-ids (motes *nest-demo-app*) m (msg-can-hear cm))
+       ;; Ask about
+       (heard-from-mote (source cm))
+       (possibly-inquire-about (msg-can-hear cm))
+       (set (mote-radio-power m) (radio-power cm))
+       (set (mote-light-status m) (light-status cm))
+       (set (mote-grads m) (grad-dists cm))
        )
 
       ((*hear-report-message-id*)
        (def hm (process-hear-report-message da-msg))
-       (msg out "%= can hear %=\n" (source hm) (heard hm))
+       ;;(msg out "%= can hear %=\n" (source hm) (heard hm))
+       ;; Update graph
        (mote-id-can-hear-ids (motes *nest-demo-app*) (source hm) (heard hm))
+       ;; Ask about
+       (set (elt *motes-directly-heard* (source hm)) (source hm))
+       (possibly-inquire-about (source hm))
+       (possibly-inquire-about (heard hm))
        )
       )
+    )
+
+  ;; Send an outgoing message to someone
+  (incf probe-tick)
+  (when (== probe-tick *probe-every*)
+    (set probe-tick 0)
+    (if (empty? *messages-to-send*)
+        (seq
+          (def mote-to-call (gimme-mote-to-call))
+          (when mote-to-call
+            (def sm (new <server-message>))
+            (msg out "Asking mote %= for A/S/L\n" mote-to-call)
+            (set (target-mote-id sm) mote-to-call)
+            (set (action-id sm) *server-message-status*)
+            (write-message-to-default (process-server-message sm))
+            )
+          )
+        (seq
+          (def message-to-send (1st *messages-to-send*))
+          (set *messages-to-send* (del! *messages-to-send* 0))
+          (write-message-to-default message-to-send)
+          )
+        )
     )
   )
 
