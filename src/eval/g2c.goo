@@ -236,7 +236,7 @@
      loader)
     (msg* code-out "\t%s\n\n" (obj-filename init-name))
     (msg* code-out "%s: $(C_OBJS_DD) $(OBJS)\n" exe-name)
-    (msg* code-out "\t$(CC) $(LD_OPTS) -o %s $(C_OBJS_DD) $(LIBS) $(OBJS)\n\n"
+    (msg* code-out "\t$(CC) $(LD_OPTS) -o %s $(C_OBJS_DD) $(OBJS) $(LIBS)\n\n"
          exe-name sep sep)
     (msg* code-out "clean:\n\trm -f %s $(OBJS)\n" exe-name sep)))
 
