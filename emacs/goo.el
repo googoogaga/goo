@@ -75,7 +75,7 @@ All commands in `lisp-mode-shared-map' are inherited by this map.")
   (let ((map (make-sparse-keymap "Goo")))
     (setq goo-mode-map (make-sparse-keymap))
 	(set-keymap-parent goo-mode-map 
-					   (if (< emacs-major-version 21)
+					   (if (or (< emacs-major-version 21) (featurep 'xemacs))
 						   shared-lisp-mode-map
 						   lisp-mode-shared-map))
     (define-key goo-mode-map [menu-bar] (make-sparse-keymap))
