@@ -54,16 +54,16 @@
   (dg neg? (<num> => <log>))
   (dg neg (<num> => <num>))
   (dg abs (<num> => <num>))
-  (dg #| (<fixnum> <fixnum> => <int>))
-  (dg ^ (<fixnum> <fixnum> => <int>))
-  (dg & (<fixnum> <fixnum> => <int>))
-  (dg ~ (<fixnum> => <fixnum>))
-  (dg bit? (<fixnum> <fixnum> => <fixnum>))
-  (dg >> (<fixnum> <fixnum> => <fixnum>))
-  (dg even? (<fixnum> => <log>))
-  (dg odd? (<fixnum> => <log>))
-  (dg >>> (<fixnum> <fixnum> => <fixnum>))
-  (dg << (<fixnum> <fixnum> => <fixnum>))
+  (dg #| (<int> <int> => <int>))
+  (dg ^ (<int> <int> => <int>))
+  (dg & (<int> <int> => <int>))
+  (dg ~ (<int> => <int>))
+  (dg bit? (<int> <int> => <log>))
+  (dg >> (<int> <int> => <int>))
+  (dg even? (<int> => <log>))
+  (dg odd? (<int> => <log>))
+  (dg >>> (<int> <int> => <int>))
+  (dg << (<int> <int> => <int>))
   (dg isqrt (<int> => <int>))
   (dg power-of-two-ceil (<int> => <int>))
   (dg flo-bits (<flo> => <int>))
@@ -222,13 +222,13 @@
 (dm (< inline) (x|<fixnum> y|<fixnum> => <log>)
   (%bb (%i< (%iu x) (%iu y))))
 
-(dm (+ inline) (x|<fixnum> y|<fixnum> => <fixnum>)
+(dm (+ inline) (x|<fixnum> y|<fixnum> => <int>)
   (%ib (%i+ (%iu x) (%iu y))))
 
-(dm (- inline) (x|<fixnum> y|<fixnum> => <fixnum>)
+(dm (- inline) (x|<fixnum> y|<fixnum> => <int>)
   (%ib (%i- (%iu x) (%iu y))))
 
-(dm (* inline) (x|<fixnum> y|<fixnum> => <fixnum>)
+(dm (* inline) (x|<fixnum> y|<fixnum> => <int>)
   (%ib (%i* (%iu x) (%iu y))))
 
 (dm (/ inline) (x|<int> y|<int> => <int>)
@@ -242,7 +242,7 @@
 
 (dm (trunc inline) (x|<int> => <int>) x)
 
-(dm trunc/ (x|<fixnum> y|<fixnum> => (tup x|<fixnum> rem|<fixnum>))
+(dm trunc/ (x|<fixnum> y|<fixnum> => (tup quo|<fixnum> rem|<fixnum>))
   (def result (%ib (%it/ (%iu x) (%iu y))))
   (tup result (- x (* result y))))
 
@@ -269,20 +269,20 @@
                  (>> p 1)
                  (if (odd? p) (* x y) y)))))))
 
-(dm (#| inline) (x|<fixnum> y|<fixnum> => <int>)
+(dm (#| inline) (x|<fixnum> y|<fixnum> => <fixnum>)
   (%ib (%iv (%iu x) (%iu y))))
 
-(dm (^ inline) (x|<fixnum> y|<fixnum> => <int>)
+(dm (^ inline) (x|<fixnum> y|<fixnum> => <fixnum>)
   (%ib (%i^ (%iu x) (%iu y))))
 
-(dm (& inline) (x|<fixnum> y|<fixnum> => <int>)
+(dm (& inline) (x|<fixnum> y|<fixnum> => <fixnum>)
   (%ib (%i& (%iu x) (%iu y))))
 
 (dm (~ inline) (x|<fixnum> => <fixnum>)
   (%ib (%i! (%iu x))))
 
-(dm (bit? inline) (o|<fixnum> x|<fixnum> => <fixnum>)
-  (%ib (%i? (%iu o) (%iu x))))
+(dm (bit? inline) (o|<fixnum> x|<fixnum> => <log>)
+  (%bb (%i? (%iu o) (%iu x))))
 
 (dm (even? inline) (x|<fixnum> => <log>)
   (zero? (& x 1)))
@@ -296,7 +296,7 @@
 (dm (>>> inline) (x|<fixnum> a|<fixnum> => <fixnum>)
   (%ib (%i>>> (%iu x) (%iu a))))
 
-(dm (<< inline) (x|<fixnum> a|<fixnum> => <fixnum>)
+(dm (<< inline) (x|<fixnum> a|<fixnum> => <int>)
   (%ib (%i<< (%iu x) (%iu a))))
 
 (dm power-of-two-ceil (x|<int> => <int>)
