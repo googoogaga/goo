@@ -46,7 +46,7 @@
   (df lift-place-subforms (place => (tup (g-decls <lst>) (g-place <lst>)))
     (loc ((munch ((subforms <lst>) => (tup (g-decls <lst>) (g-args <lst>)))
             (if (empty? subforms)
-                '()
+                (tup '() '())
                 (let (((tup g-decls g-args) (munch (tail subforms))))
                   (let ((g (gensym)))
                     (tup (pair `(,g ,(head subforms)) g-decls)
@@ -215,6 +215,7 @@
 (need-implementation
   ==
   cat
+  elt
   empty?
   error
   gensym

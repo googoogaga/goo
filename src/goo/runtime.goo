@@ -1017,10 +1017,6 @@
 
 (dm copy-state ((_ <lst>) (state <lst>) => <lst>) state)
 
-;;; TUPLE
-
-(dv tup lst)
-
 ;;; <FLAT>
 
 (dm ini-state ((c <flat>) => <int>) 0)
@@ -1084,6 +1080,10 @@
 
 (dm to-str ((x <vec>) => <str>)
   (cat "#(" (vals-to-str x) ")"))
+
+;;; TUPLE
+(dv tup vec)
+
 
 ;;; STRETCHY-VECTOR
 

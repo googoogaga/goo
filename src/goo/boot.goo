@@ -866,6 +866,22 @@
 
 (df @lst ((objects ...)) (@lst-helper objects (@+ (@olen objects) -1) '()))
 
+(df @velt ((x <vec>) (i <int>) => <any>)
+  (%velt x (%iu i)))
+
+(df @velt-setter (z (x <vec>) (i <int>))
+  (set (%velt x (%iu i)) z))
+
+(df @vec ((objects ...))
+  (let ((v (%vec (%iu (@olen objects)))))
+    (rep copy ((k (@+ (@olen objects) -1)))
+      (if (@= k -1)
+          v
+          (seq
+            (set (@velt v k) (@oelt objects k))
+            (copy (@+ k -1)))))))
+
+
 (df @fun-names ((x <fun>) => <lst>) (%sig-names (%gen-sig x)))
 
 (df @fun-specs ((x <fun>) => <lst>) (%sig-specs (%gen-sig x)))
@@ -983,8 +999,9 @@
                   #f
                   (find (@tail ps))))))))
 
-(dv <tup> <lst>)
-(dv @tup  @lst)
+(dv <tup> <vec>)
+(dv @tup  @vec)
+(dv @telt @velt)
 
 ;; TODO: DEF SUBTYPE METHODS
 
@@ -1023,7 +1040,7 @@
           (let ((m1spec (fun-spec m1 idx))
                 (m2spec (fun-spec m2 idx))
                 ((cmp+typ <tup>) (@order-specs m1spec m2spec (@oelt args idx)))
-                ((cmp <sym>) (@elt cmp+typ 0))
+                ((cmp <sym>) (@telt cmp+typ 0))
                 ((idx <int>) (@+ idx 1)))
             (if (@== cmp '=)
                 (loop state idx)
@@ -1319,8 +1336,8 @@
 
 (df choose-methods ((gen <gen>) (args <opts>) => <lst>)
   (let ((ord-amb-mets   (sorted-app-mets gen args))
-        (sorted-mets    (@elt ord-amb-mets 0))
-        (ambiguous-mets (@elt ord-amb-mets 1)))
+        (sorted-mets    (@telt ord-amb-mets 0))
+        (ambiguous-mets (@telt ord-amb-mets 1)))
 ;    (if (@< 0 (@len ambiguous-mets))
 ;        (error "Ambiguous Method Error when calling %= on %=" gen args)
         (if (@empty? sorted-mets)
@@ -1729,7 +1746,9 @@
   (rep loop ((some? #f) (all? #f) (elts (%type-elts t)))
     (if (@empty? elts)
         (@tup some? all?)
-        (let (((tup elt-some? elt-all?) (@may-isa? c (@head elts))))
+        (let ((elt-some-all? (@may-isa? c (@head elts)))
+              (elt-some? (@telt elt-some-all? 0))
+              (elt-all? (@telt elt-some-all? 1)))
           (loop (or elt-some? some?) (or elt-all? all?) (@tail elts))))))
 
 ;;; 
