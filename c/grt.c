@@ -147,7 +147,7 @@ INLINE P YPraw_alloc (P size) {
   return allocate((unsigned long)size*(sizeof(P)));
 }
 
-P YPmake_object_values (P size) {
+INLINE P YPmake_object_values (P size) {
   int i;
   VALUES vs
     = (VALUES)allocate(VALUES_SIZE(size));
@@ -164,7 +164,7 @@ INLINE P YPinstall_object_values (P dst, P size) {
   return PNUL;
 }
 
-P YPadjust_object_values_size (P dst, P new_size, P src) {
+INLINE P YPadjust_object_values_size (P dst, P new_size, P src) {
   int i;
   VALUES ovs = YPobject_values(src);
   VALUES nvs = YPmake_object_values(new_size);
@@ -176,7 +176,7 @@ P YPadjust_object_values_size (P dst, P new_size, P src) {
   return PNUL;
 }
 
-P YPclone (P x) {
+INLINE P YPclone (P x) {
   P y = YPmake_object();
   YPobject_traits_setter(YPobject_traits(x), y);
   YPadjust_object_values_size(y, (P)YPobject_values_size(YPobject_values(x)), x);
@@ -498,11 +498,31 @@ extern P YLlstG_traits;
       CALL2(Ywrong_number_arguments_error, fun, YPib((P)n)); \
   } 
   
-#define CHECK_TYPE(a,t) \
-  { int osp = sp, ofp = fp; \
-    if (YPcheck_typesQ == YPtrue && YPisaQ(a, t) == YPfalse) \
+extern P YLanyG;
+extern P Ytype_error;
+extern P YPcheck_typesQ;
+
+#define DO_CHECK_TYPE(a,t) \
+  if (t != YLanyG) { \
+    int osp = sp, ofp = fp; \
+    if (YPisaQ(a, t) == YPfalse) \
       CALL2(Ytype_error, a, t); \
     sp = osp; fp = ofp; }
+
+#define CHECK_TYPE(a,t) \
+  if (YPcheck_typesQ == YPtrue) \
+    DO_CHECK_TYPE(a,t);
+
+void check_type (P res, P fun) {
+  if (YPcheck_typesQ == YPtrue) {
+    P t = FUNVALUE(fun); 
+    YPcheck_typesQ = YPfalse;
+    DO_CHECK_TYPE(res, t);
+    YPcheck_typesQ = YPtrue; 
+  }
+}
+
+extern P YLanyG;
 
 P   Pfunction_;
 int Pargument_count_;
@@ -519,9 +539,6 @@ extern P YLgenG;
 extern P YPtraits_owner(P);
 extern P Ywrong_number_arguments_error;
 extern P YPib(P);
-extern P Ytype_error;
-extern P YPisaQ(P,P);
-extern P YPcheck_typesQ;
 
 P CALL0 (P fun) {
   int osp    = sp, ofp = fp;
@@ -934,8 +951,6 @@ P do_exit (P fun) {
   return(PNUL); /* NEVER RETURNS BUT KEEPS COMPILER HAPPY */
 }
 
-extern P YLanyG;
-
 P with_exit (P fun) {
   BIND_EXIT_FRAME frame;
   P               exit;
@@ -1274,6 +1289,7 @@ extern P YPlb(P);
 
 P YPdo_runtime_bindings (P fun) {
   int i, formatp = 0, evalp = 0;
+  /* printf("RTBS"); */
   for (i = 0; i < nsyms; i++) {
     char* n = symstrs[i];
     /*
@@ -1285,10 +1301,11 @@ P YPdo_runtime_bindings (P fun) {
     if (!formatp || evalp) {
       P name     = YPsb((P)n);
       P locative = YPlb((P)untag((P)symadrs[i]));
-      /* printf("RTB %s\n", n); */
+      /* printf(" %s", n); */
       CALL2(fun, name, locative);
     }
   }
+  /* printf("\n"); */
   return YPfalse;
 }
 
@@ -1332,7 +1349,10 @@ P YPapp_args () {
 
 /* OVERALL INITIALIZATION */
 
+void* _DYNAMIC;
+
 void YPinit_world(int argc, char* argv[]) {
+  /* GC_enable_incremental(); */
   Pargc   = argc;
   Pargv   = argv;
   stack_  = (P*)allocate(MAX_STACK_SIZE * sizeof(P));

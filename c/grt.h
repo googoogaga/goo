@@ -246,6 +246,13 @@ extern P YPPapply (P fun, P args);
 extern P YPPmep_apply (P fun, P args);
 extern P YPfapply (P fproc, P args);
 
+extern P YPisaQ(P,P);
+
+extern void check_type(P, P);
+
+#define RET(x) \
+  { /* check_type(res, Pfun); */ return res; }
+
 /* NON-LOCAL EXITS */
 
 extern P do_exit (P fun);
