@@ -2,7 +2,7 @@
 
 (use goo)
 (use goo/boot)
-(use goo/runtime)
+(use goo/loc)
 (use goo/conditions)
 (use time/%threads.c)
 

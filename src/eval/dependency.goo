@@ -97,7 +97,7 @@
 
 ;;; May depend upon a <dependable>.
 (dc <dependent> (<any>))
-  (dp depends-on (<dependent> => <tab>) (fab <tab> 20))
+  (dp! depends-on (<dependent> => <tab>) (fab <tab> 20))
 
 ;;; Log a dependency, together with any type information.
 (df log-dependency (dependable|<dependable>

@@ -2,8 +2,9 @@
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 
 (use goo/boot)
+(use goo/fun)
 (use goo/macros)
-(use goo/runtime)
+(use goo/loc)
 (use goo)
 (use goo/cols/rep)
 (use eval/ast)
@@ -412,14 +413,6 @@
            (%ensure-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar)))
       b))
 
-;; TODO: DEPRECATE
-
-(dl (%binding-bound-of? inline-c) (b)
-  (and b (binding-info b)))
-
-(dl %binding-bound? (dlvar)
-  (%binding-bound-of? (%lookup-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar))))
-
 (dl (%binding-value-of inline-c) (binding)
   (case (binding-kind binding)
     (('runtime) (env-runtime-value (binding-locative binding)))
@@ -448,7 +441,6 @@
    (%lookup-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar)) default))
 
 (export
-  %binding-bound?       %binding-bound-of?    ;; TODO: DEPRECATE
   %binding-value-or     %binding-value-or-of
   %binding-value        %binding-value-of
   %binding-value-setter %binding-value-of-setter)

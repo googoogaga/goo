@@ -6,6 +6,8 @@
 (use eval/ast)
 (use eval/top)
 (use eval/ast-linearize)
+(use eval/optimize)
+(use eval/typist)
 (use eval/vm)
 
 ;;;; TODO
@@ -39,9 +41,9 @@
              (assign (nxt bindings) (+ index 1))))))
 
 (dm frame-mets! (o|<locals> met index)
-  (rep assign ((bindings (enum (locals-bindings o)))
+  (rep assign ((bindings  (enum (locals-bindings o)))
                (functions (enum (locals-functions o)))
-               (index index))
+               (index     index))
     (if (fin? bindings)
         (seq (when (> index (function-frame-len met))
                (set (function-frame-len met) index))
@@ -84,11 +86,12 @@
   (dp g2m-lits    (<g2m> => <ord-tab>) (fab <ord-tab> 0))
   (dp g2m-nxt-lab (<g2m> => <int>)     -1)
 
-(dm asm-exp (e)
+(dm asm-exp-in (e env)
   (def g2m (new <g2m>))
-  (def env (runtime-environment 'eval/vm))
-  (def ast (asm-compute-program e env))
-  (asm-all g2m ast))
+  (asm-all g2m (asm-compute-program e env)))
+
+(dm asm-exp (e)
+  (asm-exp-in e (runtime-environment 'eval/vm)))
 
 (dm nxt-lab (x|<g2m> => <sym>)
   (cat-sym "L" (incf (g2m-nxt-lab x))))
@@ -165,23 +168,34 @@
   (def idx (get-var-ref x (reference-binding (bound?-reference e))))
   (tack+need need? 
     (asm x (bound?-default e) #t)
-    (asm x `((VM-VAR-GET-OR ,idx)))))
+    `((VM-VAR-GET-OR ,idx))))
 
 (dm asm (x|<g2m> e|<reference> need?|<log>)
   (asm-if need? `((VM-LOC-GET ,(binding-index (reference-binding e))))))
 
 (dm asm (x|<g2m> e|<box-read> need?|<log>)
-  (asm-if need?
-   `((VM-BOX-GET ,(binding-index (reference-binding (box-reference e)))))))
+  (def ref (box-reference e))
+  (tack+need need?
+   (asm x ref #t)
+   (if (binding-closed-over? (reference-binding ref)) `((VM-BOX-GET)) '())))
 
 (dm asm (x|<g2m> e|<box-write> need?|<log>)
-  (tack+need need?
-   (asm x (box-form e) #t)
-   `((VM-BOX-PUT ,(binding-index (reference-binding (box-reference e)))))))
+  (def ref (box-reference e))
+  (def var (reference-binding ref))
+  (if (binding-closed-over? var)
+      (tack+need need?
+        (asm x ref #t)
+        (asm x (box-form e) #t)
+        `((VM-BOX-PUT)))
+      (tack+need need?
+        (asm x (box-form e) #t)
+        `((VM-LOC-PUT ,(binding-index var))))))
 
 (dm asm (x|<g2m> e|<box-creation> need?|<log>)
   (def binding (reference-binding (box-reference (box-reference e))))
-  (asm-if need? `(VM-BOX-FAB ,(binding-index binding))))
+  (if (binding-closed-over? binding)
+      `((VM-BOX-FAB ,(binding-index binding)))
+      '()))
 
 (dm asm (x|<g2m> e|<alternative> need?|<log>)
   (def l1 (nxt-lab x))
@@ -317,13 +331,14 @@
                        (locals-bindings e) (locals-functions e)))
         (asm x (locals-body e) need?)))
 
-;; TODO: BINDING-NAME ... PERHAPS TWO STEPS
 (dm asm (x|<g2m> e|<ast-macro-definition> need?|<log>)
+  (def idx (get-var-ref x (assignment-binding e)))
   (tack (asm x (assignment-form e) #f)
-        `((VM-MAC-FAB ,(binding-name (assignment-binding e))))))
+        `((VM-MAC-FAB ,idx))))
 
 (export
   asm-exp
+  asm-exp-in
   )
 
 #/

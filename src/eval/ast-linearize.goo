@@ -8,14 +8,14 @@
 ;;; BOXING
 
 (dc <box-read> (<computed-program>))
-  (dp box-reference (x|<box-read> => <any>))
+  (dp! box-reference (x|<box-read> => <any>))
 
 (dc <box-write> (<computed-program>))
-  (dp box-reference (x|<box-write> => <any>))
-  (dp box-form (x|<box-write> => <any>))
+  (dp! box-reference (x|<box-write> => <any>))
+  (dp! box-form (x|<box-write> => <any>))
 
 (dc <box-creation> (<computed-program>))
-  (dp box-reference (x|<box-creation> => <any>))
+  (dp! box-reference (x|<box-creation> => <any>))
 
 (dm insert-box! (o|<program>)
   (ast-walk! insert-box! o))
@@ -69,124 +69,15 @@
                 (let ((creator 
                         (new <box-creation>
                           box-reference
-                          (new <local-reference>
-                            reference-binding binding))))
+                           (new <local-reference> reference-binding binding))))
                   (loop (pair creator res) (tail bindings)))
                 (loop res (tail bindings))))))))
-
-;;; DYNAMIC-EXTENT AND CALL UPGRADE ANALYSIS
-
-(dm unconstrained-type? (b|<program> => <log>)
-  #f)
-
-(dm unconstrained-type? (b|<module-binding> => <log>)
-  (and (== (binding-module-name b) 'goo/boot) (== (binding-name b) '<any>)))
-
-(dm unconstrained-type? (o|<module-binding-reference> => <log>)
-  (unconstrained-type? (reference-binding o)))
-
-(dm do-do-call-analysis! (o|<program> r t f s funs)
-  (ast-walk! do-call-analysis! o r t f s funs))
-
-(dm do-call-analysis! (o|<program> r t f s funs)
-  (do-do-call-analysis! o r t f s funs))
-
-(df reopt-top! (s t)
-  (unless (or (not t) (mem? s t)) (add! s t)))
-
-(dm do-call-analysis! (o|<local-reference> r t f s funs)
-  (unless (reference-called-function? o)
-    (set (binding-dynamic-extent? (reference-binding o)) #f))
-  (def fun? (binding-value (reference-binding o)))
-  (if (and fun? (mem? funs fun?)) 
-      (if (= (function-ref-count fun?) 1)
-          (seq (reopt-top! s t) 
-               (decf (function-ref-count fun?))
-               fun?)
-          o)
-      o))
-
-(dm do-call-analysis! (o|<ast-embodied-function> r t f s funs)
-  (do-call-analysis! (function-signature o) r t f s funs)
-  (do-call-analysis! (function-body o) r t o s funs)
-  o)
-
-(dm ensure-loop (f|<ast-embodied-function> => <loop>)
-  (def loop (or/set (function-loop f)
-              (new <loop> 
-                loop-bindings (function-bindings f)
-                loop-body     (function-body f))))
-  (set (function-body f) loop)
-  loop)
-
-(dm do-call-analysis! (o|<predefined-application> r t f s funs)
-  (do-do-call-analysis! o r t f s funs)
-  (def var (application-binding o))
-  (if (and (isa? f <ast-primitive>)
-           (application-tail? o)
-           (== var (function-binding f)))
-      (let ((loop (ensure-loop f)))
-        (new <loop-application>
-          application-loop      loop
-          application-arguments (application-arguments o)))
-      o))
-
-(dm do-call-analysis! (o|<regular-application> r t f s funs)
-  (do-do-call-analysis! o r t f s funs)
-  (def ref (application-function o))
-  (case-by ref isa?
-    ((<local-reference>)
-     (let ((callee (binding-value (reference-binding ref))))
-       (if (and (== callee f) (application-tail? o) (not (function-nary? f)))
-           (let ((loop (ensure-loop f)))
-             (decf (function-ref-count f))
-             (reopt-top! s t) 
-             (new <loop-application>
-               application-loop      loop
-               application-arguments (application-arguments o)))
-           (if (and (isa? f <ast-function>)
-                    (all? (fun (x) (unconstrained-type? (binding-type x)))
-                          (function-bindings f))
-                    (unconstrained-type? (function-value f))
-                    (not (function-nary? f))
-                    (= (len (application-arguments o))
-                       (len (function-bindings f))))
-               (seq (set (application-known? o) #t) o)
-               o))))
-    ((<ast-embodied-function>)
-     (reopt-top! s t) 
-     (process-closed-application
-      ref (application-arguments o) r (application-tail? o)))
-    (#t o)))
-
-(dm do-call-analysis! (o|<locals> r t f s funs)
-  (def single?  (= (len (locals-functions o)) 1))
-  (def new-funs (if single? (pair (1st (locals-functions o)) funs) funs))
-  (def res      (do-do-call-analysis! o r t f s new-funs))
-  (if single?
-      (if (= (function-ref-count (1st new-funs)) 0)
-          (seq (reopt-top! s t) 
-               (set (locals-functions o) (empty <functions>))
-               (set (locals-bindings o)  '())
-               (locals-body o))
-          res)
-      res))
-
-(dm analyze-calls (o r)
-  (def s (fab <vec> 0)) ;; reopts
-  (def res 
-    (if (isa? o <sequential>)
-        (map (fun (x) (do-call-analysis! x r x #f s '())) o)
-        (do-call-analysis! o r #f #f s '())))
-  (if (empty? s) ;; no more reopts
-      res
-      (seq (do (fun (e) (analyze-calls e r)) s) res)))
 
 ;;; FLATTENING ENVIRONMENTS
 
 (dc <free-reference> (<real-reference>))
-  (dp reference-offset (x|<free-reference> => (t? <int>))) 
-  (dp reference-self? (x|<free-reference> => <log>))
+  (dp! reference-offset (x|<free-reference> => (t? <int>))) 
+  (dp! reference-self? (x|<free-reference> => <log>))
 
 (dm lift! (o)
   (lift-procedures! o #f '()))
@@ -199,6 +90,7 @@
   (if (mem? bindings b)
       o
       (let ((offset (adjoin-free-binding! flat-fun o)))
+        (set (binding-closed-over? b) #t)
         (new <free-reference> 
           reference-binding b
           reference-offset  offset
@@ -257,19 +149,19 @@
 ;;; COLLECTING QUOTATIONS AND FUNCTIONS
 
 (dc <flattened-program> (<computed-program>))
-  (dp program-form (x|<flattened-program> => (t? <program>)))
-  (dp program-quotations (x|<flattened-program> => <any>) (fab <tab> 40))
-  (dp program-bindings (x|<flattened-program> => <any>) (fab <tab> 40))
-  (dp program-definitions (x|<flattened-program> => <any>) '())
+  (dp! program-form (x|<flattened-program> => (t? <program>)))
+  (dp! program-quotations (x|<flattened-program> => <any>) (fab <tab> 40))
+  (dp! program-bindings (x|<flattened-program> => <any>) (fab <tab> 40))
+  (dp! program-definitions (x|<flattened-program> => <any>) '())
 
 (dc <top-level-form> (<computed-program>))
-  (dp form-program (x|<top-level-form> => <program>))
-  (dp form-quotations (x|<top-level-form> => <any>) '())
-  (dp form-definitions (x|<top-level-form> => <any>) '())
+  (dp! form-program (x|<top-level-form> => <program>))
+  (dp! form-quotations (x|<top-level-form> => <any>) '())
+  (dp! form-definitions (x|<top-level-form> => <any>) '())
 
 (dc <closure-creation> (<computed-program>))
-  (dp closure-creation-index (x|<closure-creation> => <any>))
-  (dp closure-creation-free (x|<closure-creation> => <any>))
+  (dp! closure-creation-index (x|<closure-creation> => <any>))
+  (dp! closure-creation-free (x|<closure-creation> => <any>))
 
 (dm flatten-seqs (o)
   (lst o))
@@ -398,8 +290,8 @@
 ;;;   FLAT-FUN IS ENCLOSING FUN AND R IS ENVIRONMENT FOR NEW AST
 
 (dc <assoc> (<any>))
-  (dp assoc-key (x|<assoc> => <any>))
-  (dp assoc-value (x|<assoc> => <any>))
+  (dp! assoc-key (x|<assoc> => <any>))
+  (dp! assoc-value (x|<assoc> => <any>))
 (df assoc (x y => <assoc>)
   (new <assoc> assoc-key x assoc-value y))
 
@@ -474,7 +366,7 @@
             (adjoin (pair (head bindings) temps) (tail bindings))))))
 
 (dc <renamed-local-binding> (<local-binding>))
-  (dp binding-index (x|<renamed-local-binding> => <any>))
+  (dp! binding-index (x|<renamed-local-binding> => <any>))
 
 (ddv *renaming-bindings-counter* 0)
 
@@ -484,6 +376,7 @@
     binding-name            (binding-name binding)
     binding-type            (binding-type binding)
     binding-dynamic-extent? (binding-dynamic-extent? binding)
+    binding-closed-over?    (binding-closed-over? binding)
     binding-index           *renaming-bindings-counter*))
 
 ;;; REGISTER ALLOCATION
@@ -526,7 +419,6 @@
 (dm collect-registers! (o|<ast-method> f val?)
   (allocate-register o f val?)
   (collect-registers! (function-signature o) f #t)
-  (do (rcurry collect-registers! f #t) (function-data-refs o))
   (collect-registers! (function-debug-name o) o #t)
   (collect-registers! (function-body o) o #t))
 
@@ -544,20 +436,7 @@
 (dm collect-registers! (o|<loop> f val?)
   (collect-registers! (loop-body o) f #t))
 
-;;; MISC
-
-(dm ast-contains-fun? (x|<ast-method> => <log>) 
-  #t)
-
-(dm ast-contains-fun? (x => <log>)
-  (esc return
-    (loc ((walk (y) (if (isa? y <ast-method>) (return #t) (ast-walk walk y))))
-      (ast-walk walk x))
-    #f))
-
 (export
-  analyze-calls
-  ;; analyze-dynamic-extent
   <box-creation>
   box-form
   <box-read>
@@ -584,8 +463,6 @@
   reference-self?
   <renamed-local-binding>
   <top-level-form>
-  unconstrained-type?
   flatten-seqs
   *register-passive?*
-  ast-contains-fun?
 )

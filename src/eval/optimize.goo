@@ -1,16 +1,12 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo)
-(use goo/runtime)
+(use goo/loc)
 (use eval/ast)
+(use eval/typist)
 
 (dv <arg-seq> <lst>)
 (dv <met-seq> <lst>)
-
-(dv <type> <any>)
-
-(dm subtype? (x|<type> y|<type> => <log>)
-  (isa? x y))
 
 (dm sorted-applicable-methods-using-types
     (methods|<met-seq> arg-types|<arg-seq> 
@@ -87,3 +83,92 @@
   (or (subtype? t1 t2) (subtype? t2 t1)))
 
 
+;;; DYNAMIC-EXTENT AND CALL UPGRADE ANALYSIS
+
+(dm do-do-call-analysis! (o|<program> r t f s funs)
+  (ast-walk! do-call-analysis! o r t f s funs))
+
+(dm do-call-analysis! (o|<program> r t f s funs)
+  (do-do-call-analysis! o r t f s funs))
+
+(df reopt-top! (s t)
+  (unless (or (not t) (mem? s t)) (add! s t)))
+
+(dm do-call-analysis! (o|<local-reference> r t f s funs)
+  (unless (reference-called-function? o)
+    (set (binding-dynamic-extent? (reference-binding o)) #f))
+  (def fun? (binding-value (reference-binding o)))
+  (if (and fun? (mem? funs fun?)) 
+      (if (= (function-ref-count fun?) 1)
+          { (reopt-top! s t) 
+            (decf (function-ref-count fun?))
+            fun? }
+          o)
+      o))
+
+(dm do-call-analysis! (o|<ast-embodied-function> r t f s funs)
+  (do-call-analysis! (function-signature o) r t f s funs)
+  (def body (do-call-analysis! (function-body o) r t o s funs))
+  (when (and (function-loop o) (not (isa? body <loop>)))
+    (set (loop-body (function-loop o)) body)
+    (set (function-body o)             (function-loop o)))
+  o)
+
+(dm ensure-loop (f|<ast-embodied-function> => <loop>)
+  (or/set (function-loop f)
+    (new <loop> loop-bindings (function-bindings f))))
+
+(dm do-call-analysis! (o|<regular-application> r t f s funs)
+  (do-do-call-analysis! o r t f s funs)
+  (def ref (application-function o))
+  (case-by ref isa?
+    ((<local-reference>)
+     (let ((callee (binding-value (reference-binding ref))))
+       (if (and (== callee f) (application-tail? o) (not (function-nary? f)))
+           (let ((loop (ensure-loop f)))
+             (decf (function-ref-count f))
+             (reopt-top! s t) 
+             (new <loop-application>
+               application-loop      loop
+               application-arguments (application-arguments o)))
+           (if (and (isa? f <ast-function>)
+                    (all? (fun (x) (unconstrained-type? (binding-type x)))
+                          (function-bindings f))
+                    (unconstrained-type? (function-value f))
+                    (not (function-nary? f))
+                    (= (len (application-arguments o))
+                       (len (function-bindings f))))
+               (seq (set (application-known? o) #t) o)
+               o))))
+    ((<ast-embodied-function>)
+     (reopt-top! s t) 
+     (process-closed-application
+      ref (application-arguments o) r (application-tail? o)))
+    (#t o)))
+
+(dm do-call-analysis! (o|<locals> r t f s funs)
+  (def single?  (= (len (locals-functions o)) 1))
+  (def new-funs (if single? (pair (1st (locals-functions o)) funs) funs))
+  (def res      (do-do-call-analysis! o r t f s new-funs))
+  (if single?
+      (if (= (function-ref-count (1st new-funs)) 0)
+          { (reopt-top! s t) 
+            (set (locals-functions o) (empty <functions>))
+            (set (locals-bindings o)  '())
+            (locals-body o) }
+          res)
+      res))
+
+(dm analyze-calls (o r)
+  (def s (fab <vec> 0)) ;; reopts
+  (def res 
+    (if (isa? o <sequential>)
+        (map (fun (x) (do-call-analysis! x r x #f s '())) o)
+        (do-call-analysis! o r o #f s '())))
+  (if (empty? s) ;; no more reopts
+      res
+      { (do (fun (e) (analyze-calls e r)) s) res }))
+
+(export analyze-calls
+        ;; analyze-dynamic-extent
+        )

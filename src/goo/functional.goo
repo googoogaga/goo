@@ -1,0 +1,37 @@
+(use goo/boot)
+(use goo/fun)
+(use goo/class)
+(use goo/macros)
+(use goo/app)
+(use goo/math)
+
+(dm identity (x) x)
+
+(dm compose (fx|<fun> fy|<fun> => <fun>)
+  (fun ((args ...)) (fx (app fy args))))
+
+;;FIXME:
+;; the let is to work around compiler bug:
+;;   it doens't do extent analysis of restargs like it should.
+
+(dm rcurry (f|<fun> curried|... => <fun>)
+  (def savedcurried (as <tup> curried))
+  (fun ((args ...)) (app f (cat '() args savedcurried))))
+
+(dm curry (f|<fun> curried|... => <fun>)
+  (def savedcurried (as <tup> curried))
+  (fun ((args ...)) (app f (cat '() savedcurried args))))
+
+(dm always (x => <fun>)
+  (fun ((args ...)) x))
+
+(dm zipped (x => <fun>)
+  (fun ((t <tup>)) (app x t)))
+
+(export
+  identity
+  compose
+  rcurry
+  curry
+  always
+  zipped)

@@ -5,7 +5,17 @@
 (use eval/ast)
 (use eval/ast-linearize)
 
-(dv <out-port> <out-port>)
+(dm type-out (out|<out-port> x))
+
+(dm type-out (out|<out-port> x|<type>)
+  (unless (== x <any>)
+    (msg out "|%t" x)))
+
+(dm type-out (out|<out-port> x|<binding>)
+  (type-out out (binding-type x)))
+
+(dm type-out (out|<out-port> x|<program>)
+  (type-out out (program-type x)))
 
 (dm write-binding (out|<out-port> x|<module-binding> k|<sym>)
   (msg out "MB_%s" (binding-name x)))
@@ -16,28 +26,35 @@
 (dm write-binding (out|<out-port> x|<module-binding> k|(t= 'predefined))
   (msg out "PB_%s" (binding-name x)))
 
+(dm write-binding (out|<out-port> x|<module-binding> k|(t= 'dynamic))
+  (msg out "DB_%s" (binding-name x)))
+
 (dm write-binding (out|<out-port> x|<module-binding> k|(t= 'quotation))
   (msg out "QB(%= %=)" (binding-name x) (binding-value x)))
 
 (dm ast-write (out|<out-port> x|<any> d|<int>)
-  (write out x))
+  (emit out x))
 
 (dm ast-write (out|<out-port> x|<module-binding> d|<int>)
-  (write-binding out x (binding-kind x)))
+  (write-binding out x (binding-kind x)) (type-out out x))
 
 (dm ast-write (out|<out-port> x|<local-binding> d|<int>)
-  (write out "LB")
+  (puts out "LB")
   (when (binding-mutable? x)
-    (write out "M"))
+    (puts out "M"))
   ;; (when (binding-dotted? x)
   ;;   (write out "D"))
-  (msg out "_%s" (binding-name x)))
+  (msg out "_%s" (binding-name x))
+  (type-out out x))
 
 (dm ast-write (out|<out-port> x|<local-reference> d|<int>)
-  (msg out "LR^%s" (reference-binding x)))
+  (msg out "LR^%s" (binding-name (reference-binding x))))
 
 (dm ast-write (out|<out-port> x|<global-reference> d|<int>)
   (msg out "GR^%s" (reference-binding x)))
+
+(dm ast-write (out|<out-port> x|<runtime-reference> d|<int>)
+  (msg out "RR^%s" (reference-binding x)))
 
 ;; (dm ast-write (out|<out-port> x|<predefined-reference> d|<int>)
 ;;   (msg out "PR^%s" (reference-binding x)))
@@ -46,22 +63,24 @@
   (let ((out-var (gensym)) (depth-var (gensym)))
     `(let ((,out-var ,out-val) (,depth-var (+ ,depth-val 1)))
        (put ,out-var #\() 
-       ,@(rep loop ((forms '()) (body body) (first? #t))
-           (if (empty? body)
-               (rev! forms)
-               (loop (pair `(ast-write ,out-var ,(head body) ,depth-var)
-                           (pair (or first? `(put ,out-var #\space)) 
-                                 forms))
-                     (tail body) 
-                     #f)))
+       ,@(packing 
+           (rep loop ((body body) (first? #t))
+             (unless (empty? body)
+               (unless first? (pack `(put ,out-var #\space)))
+               (pack `(ast-write ,out-var ,(head body) ,depth-var))
+               (loop (tail body) #f))))
        (put ,out-var #\)))))
 
+(ds (ast-between-parentheses-spaced+typed (,out ,depth ,x) ,@body)
+  `(seq (ast-between-parentheses-spaced (,out ,depth) ,@body) 
+        (type-out ,out ,x)))
+
 (dm ast-write (out|<out-port> x|<local-assignment> d|<int>)
-  (ast-between-parentheses-spaced (out d)
+  (ast-between-parentheses-spaced+typed (out d x)
     "SET" (assignment-reference x) (assignment-form x)))
 
 (dm ast-write (out|<out-port> x|<global-assignment> d|<int>)
-  (ast-between-parentheses-spaced (out d)
+  (ast-between-parentheses-spaced+typed (out d x)
     "SET" (assignment-binding x) (assignment-form x)))
 
 (dm ast-write (out|<out-port> x|<definition> d|<int>)
@@ -70,19 +89,19 @@
 
 (dm do-ast-write-list 
     (out|<out-port> x prefix|<str> suffix|<str> d|<int> do-first? print)
-  (write out prefix)
+  (puts out prefix)
   (rep loop ((x x) (first? #t))
     (unless (empty? x)
-      (when (or (not do-first?) (not first?)) (write out " "))
-      (ast-write out (head x) d)
+      (when (or (not do-first?) (not first?)) (puts out " "))
+      (print out (head x) d)
       (loop (tail x) #f)))
-  (write out suffix))
+  (puts out suffix))
 
 (dm ast-write-list (out|<out-port> x|<list> d|<int>)
   (do-ast-write-list out x "(" ")" d #t ast-write))
 
 (dm ast-write (out|<out-port> x|<list> d|<int>)
-  (ast-write-list out x "(" ")" d))
+  (ast-write-list out x d))
 
 (dm ast-write (out|<out-port> x|<ast-function> d|<int>)
   (ast-between-parentheses-spaced (out d)
@@ -90,47 +109,56 @@
     (function-body x)))
 
 (dm ast-write (out|<out-port> x|<alternative> d|<int>)
-  (ast-between-parentheses-spaced (out d)
+  (ast-between-parentheses-spaced+typed (out d x)
     "IF" (alternative-condition x) 
     (alternative-consequent x) (alternative-alternant x)))
 
 (dm ast-write (out|<out-port> x|<sequential> d|<int>)
-  (do-ast-write-list out x "(SEQ" ")" d #f ast-write))
+  (do-ast-write-list out x "(SEQ" ")" d #f ast-write)
+  (type-out out (last x)))
 
 (dm ast-write (out|<out-port> x|<constant> d|<int>)
   (msg out "C(%=)" (constant-value x)))
 
 (dm ast-write (out|<out-port> x|<regular-application> d|<int>)
-  (ast-between-parentheses-spaced (out d)
+  (ast-between-parentheses-spaced+typed (out d x)
     (application-function x) (application-arguments x)))
 
 (dm ast-write (out|<out-port> x|<predefined-application> d|<int>)
   (ast-between-parentheses-spaced (out d)
     (application-binding x) (application-arguments x)))
 
-(dm ast-write (out|<out-port> x|<fix-let> d|<int>)
+(dm ast-write (out|<out-port> x|<loop-application> d|<int>)
   (ast-between-parentheses-spaced (out d)
-    "LET" (map list (fix-let-bindings x) (fix-let-arguments x))
+    "GOTO" (application-arguments x)))
+
+(dm ast-write (out|<out-port> x|<fix-let> d|<int>)
+  (ast-between-parentheses-spaced+typed (out d x)
+    "LET" (map2 list (fix-let-bindings x) (fix-let-arguments x))
     (fix-let-body x)))
 
 (dm ast-write (out|<out-port> x|<arguments> d|<int>)
-  (ast-write-list out x "" "" #f d))
+  (do-ast-write-list out x "" "" d #t ast-write))
 
 (dm ast-write (out|<out-port> x|<locals> d|<int>)
-  (ast-between-parentheses-spaced (out d)
-    "LOC" (map list (locals-bindings x) (locals-functions x))
+  (ast-between-parentheses-spaced+typed (out d x)
+    "LOC" (map2 list (locals-bindings x) (locals-functions x))
     (locals-body x)))
 
+(dm ast-write (out|<out-port> x|<loop> d|<int>)
+  (ast-between-parentheses-spaced+typed (out d x)
+    "LOOP" (LOOP-bindings x) (loop-body x)))
+
 (dm ast-write (out|<out-port> x|<bind-exit> d|<int>)
-  (ast-between-parentheses-spaced (out d)
+  (ast-between-parentheses-spaced+typed (out d x)
     "ESC" (bind-exit-main-fun x)))
 
 (dm ast-write (out|<out-port> x|<unwind-protect> d|<int>)
-  (ast-between-parentheses-spaced (out d)
+  (ast-between-parentheses-spaced+typed (out d x)
     "FIN" (unwind-protect-protected-thunk x) (unwind-protect-cleanup-thunk x)))
 
 (dm ast-write (out|<out-port> x|<monitor> d|<int>)
-  (ast-between-parentheses-spaced (out d)
+  (ast-between-parentheses-spaced+typed (out d x)
     "MON" (monitor-handler x) (monitor-main-thunk x)))
 
 (dm ast-write (out|<out-port> x|<closure-creation> d|<int>)
@@ -138,7 +166,7 @@
           (closure-creation-index x) (closure-creation-free x)))
 
 (dm ast-write (out|<out-port> x|<free-reference> d|<int>)
-  (msg out "FR^%s" (reference-binding x)))
+  (msg out "FR^%s" (binding-name (reference-binding x))))
 
 (dm ast-write (out|<out-port> x|<box-creation> d|<int>)
   (msg out "BC(%=)" (box-reference x)))
@@ -169,3 +197,7 @@
 ;;   (msg out "PG(FM %=\n   QS %=\n   DS %=)" 
 ;;        (program-form x) (program-quotations x) (program-definitions x)))
 
+(dm recurring-write (port|<out-port> x|<program> d|<int> recur|<fun>)
+  (ast-write port x d))
+
+(export ast-write)

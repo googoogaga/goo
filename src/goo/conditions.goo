@@ -1,6 +1,8 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/math)
 (use goo/types)
@@ -32,8 +34,8 @@
   (new cond-type))
 
 (dc <simple-condition> (<condition>))
-  (dp condition-message (<simple-condition> => <str>)   "")
-  (dp condition-arguments (<simple-condition> => <lst>) '())
+  (dp! condition-message (<simple-condition> => <str>)   "")
+  (dp! condition-arguments (<simple-condition> => <lst>) '())
 
 (dm describe-condition (c|<simple-condition> => <str>)
   (app msg-to-str (condition-message c) (condition-arguments c)))

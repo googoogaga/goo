@@ -1,6 +1,8 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/math)
 (use goo/types)
@@ -15,150 +17,11 @@
 (use goo/cols/vec)
 (use goo/cols/tab)
 
-;;; APP
-
-; (df napp (proc|<fun> nexts args|...)
-;   (if (== (len args) 1)
-;       (%%apply proc nexts (as <tup> (elt args 0)))
-;       (let ((ilen|<int> (- (len args) 1))
-;             (lelt|<seq> (elt args ilen))
-;             (tlen|<int> (+ ilen (len lelt)))
-;             (out|<tup>  (fab <tup> tlen)))
-;         (rep loop ((i 0))
-;           (if (== i ilen)
-;               #f
-;               (seq
-;                 (set (elt out i) (elt args i))
-;                 (loop (+ i 1)))))
-;         (rep loop ((s (ini-state lelt)) (i ilen))
-;           (if (fin-state? lelt s)
-;               #f
-;               (seq (set (elt out i) (now-elt lelt s))
-;                    (loop (nxt-state lelt s) (+ i 1)))))
-;          (%%apply proc nexts out))))
-
-;;; MACRO SUPPORT
-
-(df match-empty-list (x|<lst> fail|<fun>)
-  (if (empty? x)
-      x
-      (fail "Match Empty Failure of %=" x)))
-
-(df match-unquote (x|<lst> fail|<fun>)
-  (if (empty? x)
-      (fail "Match Failure Empty List on Unquote")
-      (head x)))
-
-(df match-atom (x|<lst> pat fail|<fun>)
-  (if (empty? x)
-      (fail "Match Failure Empty List on %=" pat)
-      (let ((exp (head x)))
-        (if (== exp pat)
-            (tail x)
-            (fail "Match Failure of %= on %=" exp pat)))))
-
-(df match-sublist (x|<lst> fail|<fun>)
-  (def x (head x))
-  (if (isa? x <lst>)
-      x
-      (fail "Match Failure on Sub List on %=" x)))
-
-(dm cat-sym (x|...  => <sym>)
-  (as <sym> (fold (fun (r e) (cat r (to-str e))) "" x)))
-
-(dv *gensym-counter* 1000)
-
-(dm gensym (=> <sym>)
-  (cat-sym "x-" (incf *gensym-counter*)))
-
-(dm fab-setter-name (x|<sym> => <sym>)
-  (cat-sym x "-setter"))
-
-(dm var-name (x|<sym>) x)
-
-(dm var-name (x|<lst>) (elt x 0))
-
-(dm var-type (x|<sym>) '<any>)
-
-(dm var-type (x|<lst>) (elt x 1))
-
-;;; FUNCTIONAL 
-
-(dm identity (x) x)
-
-(dm compose (fx|<fun> fy|<fun> => <fun>)
-  (fun ((args ...)) (fx (app fy args))))
-
-;;FIXME:
-;; the let is to work around compiler bug:
-;;   it doens't do extent analysis of restargs like it should.
-
-(dm rcurry (f|<fun> curried|... => <fun>)
-  (def savedcurried (as <tup> curried))
-  (fun ((args ...)) (app f (cat '() args savedcurried))))
-
-(dm curry (f|<fun> curried|... => <fun>)
-  (def savedcurried (as <tup> curried))
-  (fun ((args ...)) (app f (cat '() savedcurried args))))
-
-(dm always (x => <fun>)
-  (fun ((args ...)) x))
-
-(dm zipped (x => <fun>)
-  (fun ((t <tup>)) (app x t)))
-
-;;; LOCATIVES
-
-;; (dc <loc> (<any>))
-;;   (dp loc-dat (<loc> => <any>))
-
-(df loc-val (x|<loc> => <any>)
-  (%loc-val x))
-
-(df loc-val-setter (z x|<loc> => <any>)
-  (set (%loc-val x) z))
-
 ;;; APPLICATION INPUT
-
-(df app-filename () (%app-filename))
-
-(df app-args () (%app-args))
-
-(dv symbols (fab <str-tab> 10000))
-
-(df booted-fab-sym (name)
-  (or (elt-or symbols name #f)
-      (set (elt symbols name) (new <sym> sym-name name))))
-
-(df boot-symbols ()
-  (rep boot ((syms %symbols))
-    (unless (empty? syms)
-      (def sym (head syms)) (set (elt symbols (sym-name sym)) sym)
-      (boot (tail syms)))))
-
-(boot-symbols)
-
-(set fab-sym booted-fab-sym)
 
 ;; TODO: TEMPORARY EXPORTS
 (export
   napp
-  match-empty-list
-  match-unquote
-  match-atom
-  match-sublist
-  cat-sym
-  *gensym-counter*
-  gensym
-  fab-setter-name
-  var-name
-  var-type
-  identity
-  compose
-  rcurry
-  curry
-  always
-  zipped
   loc-val
   loc-val-setter
   app-filename

@@ -1,0 +1,557 @@
+(use goo/boot)
+
+;;; Temporary, compile-time-only macros.  These are used by this file only--
+;;; we never export them.  The real definitions live in macros.goo.
+
+(dss (unless ,test ,@body) `(if (@not ,test) (seq ,@body)))
+
+(dss (when ,test ,@body) `(if ,test (seq ,@body)))
+
+(dss (or ,@rest)
+  (mif ((,x ,@rest) rest)
+       (mif (() rest) x `(let ((tmp ,x)) (if tmp tmp (or ,@rest))))
+       #f))
+
+(dss (and ,@rest)
+  (mif ((,x ,@rest) rest)
+       (mif (() rest) x `(if ,x (and ,@rest) #f))
+       #t))
+
+(df @fun-names (x|<fun> => <lst>) (%sig-names (%gen-sig x)))
+
+(df @fun-specs (x|<fun> => <lst>) (%sig-specs (%gen-sig x)))
+
+(df @fun-nary? (x|<fun> => <log>) (%sig-nary? (%gen-sig x)))
+
+(df @fun-arity (x|<fun> => <fixnum>) (%sig-arity (%gen-sig x)))
+
+(df @fun-val   (x|<fun> => <any>) (%sig-val (%gen-sig x)))
+
+(df @fun-unification-vars (x|<fun> => <lst>) (%sig-unification-vars (%gen-sig x)))
+
+(df @fun-mets (x|<fun> => <lst>) (%gen-mets x))
+
+(df @fun-mets-setter (z|<lst> x|<fun>) (set (%gen-mets x) z))
+
+(dv <env>   <any>)
+(dv <specs> <lst>)
+(dv <body>  <any>)
+
+(df fun-spec (x|<met> i|<fixnum> => <any>)
+  (@elt (@fun-specs x) i))
+
+(dv <mets> <lst>)
+
+(df fun-same-met? (x|<met> y|<met> => <log>)
+  (@all2? @@== (@fun-specs x) (@fun-specs y)))
+
+(df fun-congruent? (x|<fun> y|<fun> => <log>)
+  (and (@=  (@fun-arity x) (@fun-arity y))
+       (@== (@fun-nary? x) (@fun-nary? y))
+       (@all2? @subtype? (@fun-specs x) (@fun-specs y))
+       (@subtype? (@fun-val x) (@fun-val y))))
+
+;;; Add a method to a generic function.  Note that this function might
+;;; *create* a new generic function, and add the method to that instead.
+;;; Return the generic function to which the method was added.
+(df gen-add-met (g|<gen> m|<met> => <gen>)
+  (set (%fun-cache g) #f)
+  (if (not (fun-congruent? m g))
+      ;; Raise a method congruency error.  If restarts have been set up,
+      ;; install an appropriate restart handler.  Note that we don't install
+      ;; the handler until *after* the error for performance reasons.
+      (if *restarts-ok?*
+          (esc return
+            (try ((type <replace-generic-restart>)
+                  (description
+                   "Replace %= with an empty generic congruent with %=" g m))
+              (fun (c r)
+                (return (gen-add-met (gen-from-met m) m)))
+              (incongruent-method-error g m)))
+          (incongruent-method-error g m))
+      
+      ;; DEP TRACK MET/GEN IN ALL REAL SPECS -- USED FOR REDEFINITION
+      (seq
+        (rep lop ((specs (@fun-specs m)))
+          (unless (@empty? specs)
+            (def spec (@head specs))
+            ;; TODO: CHANGE TO REFLECT NEW SETUP -- DEP-CLASSES
+            (unless (or (@singleton-spec? spec) (@== spec <any>))
+              (def spec-class (%object-class spec))
+              (set (%class-gens spec-class)
+                   (@add-new (%class-gens spec-class) g))
+              (set (%class-mets spec-class)
+                   (@add-new (%class-mets spec-class) m))
+              (lop (@tail specs)))))
+        ;; ACTUALLY PERFORM ADDITION KEEPING TRACK OF IT BEING A REPLACEMENT
+        ;; OR NOT
+        (rep col ((mets '()) (same? #f) ((gms <mets>) (@fun-mets g)))
+          (if (@empty? gms)
+              (set (%gen-mets g) (@rev! (if same? mets (@add mets m))))
+              (let ((gm         (@head gms))
+                    (now-same?  (fun-same-met? gm m)))
+                (col (@add mets (if now-same? m gm)) 
+                     (or now-same? same?) (@tail gms)))))
+        g)))
+
+;;; BACK TO TYPE PROTOCOL
+
+(df @class< (c1 c2 wrt => <log>)
+  (rep find ((ps (%class-ancestors wrt)))
+    (if (@empty? ps)
+        (cpl-error "can't order specializers - arg/reference object %= is "
+                   "neither %= nor %=" wrt c1 c2) 
+        (let ((c (@head ps)))
+          (if (@== c c1)
+              #t
+              (if (@== c c2)
+                  #f
+                  (find (@tail ps))))))))
+
+(df @order-specs-class (t1 t2 arg)
+  (if (@== t1 t2)
+      (@tup '= t1)
+      (if (@class< t1 t2 (%class-of arg))
+          (@tup '< t1)
+          (@tup '> t2))))
+
+(df @order-specs (t1 t2 arg)
+  (if (and (@== (%class-of t1) <class>) (@== (%class-of t2) <class>))
+      (@order-specs-class t1 t2 arg)
+      (order-specs t1 t2 arg)))
+
+(df order-mets (m1|<met> m2|<met> args|<opts> => <sym>)
+  (def arity|<fixnum> (@fun-arity m1))
+  (rep loop ((state|<sym> '=) (idx|<fixnum> 0))
+    (if (@= idx arity)
+        state
+        (let ((m1spec (fun-spec m1 idx))
+              (m2spec (fun-spec m2 idx))
+              (cmp+typ|<tup> (@order-specs m1spec m2spec (@oelt args idx)))
+              (cmp|<sym> (@telt cmp+typ 0))
+              (idx|<fixnum> (@+ idx 1)))
+          (if (@== cmp '=)
+              (loop state idx)
+              (if (and (not (@== cmp '<>))
+                       (or (@== state '=) (@== cmp state)))
+                  (loop cmp idx)
+                  '<>))))))
+
+(df ord-app-mets-1
+    (mets|<lst> args|<opts> order-mets|<fun> 
+      => <tup> #/(tup ordered|<lst> ambig|<lst>)/#)
+  (def ohead|<lst> (@pair #f '()))
+  (def ahead|<lst> (@pair #f '()))
+  (rep loop ((mets|<lst> mets))
+    (unless (@== mets '())
+      (def met|<met> (@head mets))
+      (loc ((make-ambiguous ((headed-list <lst>))
+              (rep loop ((l|<lst> (@tail headed-list)))
+                (or (@== l '())
+                    (let ((t1 (@tail l)))
+                      (set (@tail l) (@tail ahead))
+                      (set (@tail ahead) l)
+                      (loop t1))))
+              (set (@tail headed-list) '())
+              (set (@tail ahead) (@pair met (@tail ahead))))
+            (precedes-all? ((l <lst>))
+              (rep loop ((l|<lst> l))
+                (if (@== l '())
+                    #t
+                    (if (@== (order-mets met (@head l) args) '<)
+                        (loop (@tail l))
+                        #f))))
+            (check-subsequent-ambiguities ((oprev <lst>))
+              (if (or (not (precedes-all? (@tail oprev)))
+                      (not (precedes-all? (@tail ahead))))
+                  (make-ambiguous oprev)
+                  (set (@tail oprev) (@pair met (@tail oprev)))))
+            (insert ((oprev <lst>) (osub <lst>))
+              (if (@empty? osub)
+                  (check-subsequent-ambiguities oprev)
+                  (let ((indic (order-mets met (@head osub) args)))
+                    (if (@== indic '<);; comes before current one.
+                        (check-subsequent-ambiguities oprev)
+                        (if (@== indic '>);; comes after, check further.
+                            (insert osub (@tail osub))
+                            (make-ambiguous oprev)))))))
+        (insert ohead (@tail ohead))
+        (loop (@tail mets)))))
+  (@tup (@tail ohead) (@tail ahead)))
+
+(dv met-app-unify (fun (x y) #f))
+
+(df met-app? (met|<met> args|<opts> => <log>)
+  (if (not (@empty? (@fun-unification-vars met)))
+      (met-app-unify met args)
+      (let ((n|<fixnum> (@fun-arity met)))
+        (rep loop ((i|<fixnum> 0))
+          (if (@= i n)
+              #t
+              (if (@isa? (@oelt args i) (fun-spec met i))
+                  (loop (@+ i 1))
+                  #f))))))
+
+(df ord-app-mets* 
+    (gf|<gen> args|<opts> => <tup> #/(tup ordered|<lst> ambig|<lst>)/#)
+  (def considered-mets
+    (rep col ((ans '()) (ms (@fun-mets gf)))
+      (if (@empty? ms)
+          ans
+          (let ((m (@head ms))
+                (ans (if (met-app? m args) (@pair m ans) ans)))
+            (col ans (@tail ms))))))
+  (ord-app-mets-1 considered-mets args order-mets))
+
+(df ord-app-mets (gf|<gen> args|... => (tup ordered|<lst> ambig|<lst>))
+  (ord-app-mets* gf args))
+
+;; (df opt-args (n|<fixnum> args|<opts> => <opts>)
+;;   (rep col ((i|<fixnum> 0) (l|<opts> '()) (p|<opts> args))
+;;     (if (@= i n)
+;;       (if (@empty? l)
+;;           (@lst p)
+;;           (seq (set (@tail l) (@lst p)) args))
+;;       (col (@+ i 1) p (@tail p)))))
+
+(df @gen-cache-arg-pos (x)             (%gen-cache-arg-pos x))
+(df @gen-cache-arg-pos-setter (z x)    (set (%gen-cache-arg-pos x) z))
+(df @gen-cache-singletons (x)          (%gen-cache-singletons x))
+(df @gen-cache-singletons-setter (z x) (set (%gen-cache-singletons x) z))
+(df @gen-cache-classes (x)             (%gen-cache-classes x))
+(df @gen-cache-classes-setter (z x)    (set (%gen-cache-classes x) z))
+
+;; GIVEN MET/GEN AND ARGS FIND PROP-OFFSET -- USING PROP IN MET ENV
+
+(df method-accessor-offset (gen|<gen> met|<met> args|<opts>)
+  (def prop  (%met-env met)) ;; TODO: THIS NEEDS TO BE IMPROVED
+  (def prop? (and prop (@== (%class-of prop) <prop>)))
+  (def n     (@olen args))
+  (and prop?
+       (if (@= n 1);; getter?
+           (prop-offset (@oelt args 0) gen)
+           (prop-offset (@oelt args 1) (%prop-getter prop)))))
+
+(df @singleton-spec? (x)
+  (@class-isa? x <singleton>))
+
+(df @subclass-spec? (x)
+  (@class-isa? x <subclass>))
+
+(df @union-spec? (x)
+  (@class-isa? x <union>))
+
+(df @precise-spec? (x)
+  (or (@singleton-spec? x) (@subclass-spec? x) 
+      (and (@union-spec? x) (@any? @precise-spec? (%union-elts x)))))
+
+(df @mets-unspecialized-at? (mets|<lst> pos|<fixnum> => <log>)
+  (@all? (fun (met) (@= (fun-spec met pos) <any>)) mets))
+
+(df @prune-mets-by-type-at
+    (mets|<lst> type|<type> pos|<fixnum> => <mets>)
+  (@pick (fun (met) (@subtype? type (fun-spec met pos))) mets))
+
+(df @mets-specs-at (mets|<lst> pos|<fixnum> => <lst>)
+  (@map (fun (met) (fun-spec met pos)) mets))
+
+;; TODO: GROVEL THROUGH UNIONS
+
+(df @mets-singletons-at (mets|<lst> pos|<fixnum> => <lst>)
+  (@pick (fun (spec) (@singleton-spec? spec)) (@mets-specs-at mets pos)))
+
+(df @mets-subclasses-at (mets|<lst> pos|<fixnum> => <lst>)
+  (@pick (fun (spec) (@subclass-spec? spec)) (@mets-specs-at mets pos)))
+
+(dv $nul-assocs %tnul)
+
+(df @cache-add (t|<tup> k v)
+  (def olen (@tlen t))
+  (def res  (%tup (%iu (@+ olen 2)) nul))
+  (rep copy ((i 0))
+    (unless (@= i olen)
+      (set (@telt res i) (@telt t i))
+      (def i (@+ i 1))
+      (set (@telt res i) (@telt t i))
+      (copy (@+ i 1))))
+  (set (@telt res olen)        k)
+  (set (@telt res (@+ olen 1)) v)
+  res)
+
+(df gen-lookup-miss-1-using
+  (key instance all-assocs|<fun> all-assocs-setter|<fun> 
+   gen|<gen> cache mets|<lst> sorted-mets|<lst> i|<fixnum> args|<opts>)
+  ;; (if (or (and cache (@< i (%gen-cache-arg-pos cache)))
+  ;;         (@mets-unspecialized-at? mets i))
+  ;;     (gen-lookup-miss-1 gen cache mets sorted-mets (@+ i 1) args)
+  (def cache  (or cache (%gen-cache #t i $nul-assocs $nul-assocs (%raw 0))))
+  (def assocs (all-assocs cache))
+  (rep loop ((j 0))
+    (if (@= j (@tlen assocs)) ;; miss
+        ;; could be a stale object
+        (if (and (@== all-assocs @gen-cache-classes)
+                 (%class-forward key))
+            (seq (update-instance-for-changed-class instance)
+                 (set key (%class-of instance)) ; reset key to new class
+                 (loop (all-assocs cache)))     ; restart search cause might hit
+            (let ((val (gen-lookup-miss-1 gen #f mets sorted-mets (@+ i 1) args)))
+              (set (all-assocs cache) (@cache-add assocs key val))))
+        (if (@== (@telt assocs j) key)
+            (let ((v (@telt assocs (@+ j 1))))
+              (gen-lookup-miss-1 gen v mets sorted-mets (@+ i 1) args))
+            (loop (@+ j 2)))))
+  cache)
+
+;;; copy args with arg as i'th elt into a opts.
+(df @specd-args (args|<opts> i|<fixnum> arg|<any> => <opts>)
+  (def v (%tup (%iu (@olen args)) nul))
+  (def r (%opts-tup (%lb (%prop-dat-at v (%tlen v))) (%ib (%tlen v)) v))
+  (rep copy ((k 0))
+    (if (@== (@olen args) k)
+        r
+        (seq (set (@oelt r k) (if (@== k i) arg (@oelt args k)))
+             (copy (@+ k 1))))))
+
+;; does the specified position require singleton precision always?
+(df requires-singleton-prec (mets pos)
+  (not (@empty? (@mets-subclasses-at mets pos))))
+
+;; TODO: SHOULD BE USING @MAY-ISA? 
+;;
+;;   (not (@empty?
+;;         (@pick
+;;          (fun (spec)
+;;            (not (or (@class-isa? spec <class>) 
+;;                     (and (@class-isa? spec <singleton>)
+;;                          (or 
+;;                           (not (@class-isa? (%type-object spec) <type>))
+;;                           (@class-isa? (%type-object spec) <class>))))))
+;;          (@mets-specs-at mets pos)))))
+
+(df ensure-singleton-cache
+    (gen|<gen> cache mets|<lst> sorted-mets|<lst> i|<fixnum> args|<opts>)
+  (or cache 
+      ;; prefill with singletons
+      (if (requires-singleton-prec mets i)
+          (%gen-cache #f i $nul-assocs $nul-assocs (%raw 0))
+          (let ((singletons (@mets-singletons-at mets i)))
+            (if (@empty? singletons)
+                #f ;; no prefilling needed and no cache supplied
+                (let ((cache (%gen-cache #t i $nul-assocs $nul-assocs (%raw 0))))
+                  (rep loop ((singletons singletons))
+                    (if (@empty? singletons)
+                        cache
+                        (let ((sing     (@head singletons))
+                              (arg      (%type-object sing))
+                              (args     (@specd-args args i arg))
+                              (smets    (choose-methods gen args))
+                              (app-mets (@prune-mets-by-type-at mets sing i)))
+                          (gen-lookup-miss-1-using arg arg
+                           @gen-cache-singletons @gen-cache-singletons-setter 
+                           gen cache mets smets i args)
+                          (loop (@tail singletons)))))))))))
+
+(df gen-lookup-miss-1
+    (gen|<gen> ocache mets|<lst> sorted-mets|<lst> i|<fixnum> args|<opts>)
+  (if (@= i (@fun-arity gen))
+      (or (method-accessor-offset gen (@head sorted-mets) args) sorted-mets)
+    (if (or (and ocache (@< i (%gen-cache-arg-pos ocache)))
+            (@mets-unspecialized-at? mets i))
+        (gen-lookup-miss-1 gen ocache mets sorted-mets (@+ i 1) args)
+        (let ((arg (@oelt args i))
+              (cache (ensure-singleton-cache gen ocache mets sorted-mets i args))
+              (sing? (@singleton-spec? (fun-spec (@head sorted-mets) i))))
+          (if (or (and sing? (@== ocache cache)) ;; sing args not seen?
+                  (and cache (not (%gen-cache-missable? cache)))) ;; force sng?
+              (let ((mets (@prune-mets-by-type-at mets (%singleton arg) i)))
+                (gen-lookup-miss-1-using
+                 arg arg @gen-cache-singletons @gen-cache-singletons-setter
+                 gen cache mets sorted-mets i args))
+              (if sing? ;; sing arg doesn't belong in this cache
+                  cache ;; already in cache by way of ensure-singleton-cache?
+                  (let ((class (%class-of arg))
+                        (app-mets (@prune-mets-by-type-at mets class i)))
+                    (gen-lookup-miss-1-using
+                     class arg @gen-cache-classes @gen-cache-classes-setter
+                     gen cache app-mets sorted-mets i args))))))))
+
+(df gen-lookup-miss (gen|<gen> args|<opts> => <any>) 
+  (def mets (choose-methods gen args)) ;; TODO: => (or <met> <gen-cache>)
+  (gen-lookup-miss-1 gen (%fun-cache gen) (%gen-mets gen) mets 0 args))
+
+(dl (prop-value-at inline-c) (object offset|<fixnum> => <any>)
+  (def val (%prop-elt object (%iu offset)))
+  (if (@== val nul-prop)
+      (let ((props (object-props object)))
+        (set (%prop-elt object (%iu offset))
+             ((%prop-init (@elt props offset)) object)))
+      val))
+
+(dl prop-bound-at? (object offset|<fixnum> => <log>)
+  (def val (%prop-elt object (%iu offset)))
+  (if (@== val nul-prop)
+      (let ((props (object-props object)))
+        (not (@== (%prop-init (@elt props offset)) %prop-unbound-error)))
+      #t))
+
+(dl (prop-value-at-setter inline-c) (z object offset|<fixnum>)
+  (set (%prop-elt object (%iu offset)) z))
+
+(dl gen-lookup-1) ;; FORWARD DECL
+
+(dss (or-set ,place ,value)
+  `(or ,place (set ,place ,value)))
+
+;; TODO: KEEP IN CHECK WITH GEN-LOOKUP-I THE INLINED BROTHER
+
+(dl (gen-lookup inline-c) (gen|<gen> args|<opts>)
+  (gen-lookup-1 gen (or-set(%fun-cache gen) (gen-lookup-miss gen args)) args))
+
+(dv $missed-dispatch (%pair nil nil))
+
+;; MAIN DISPATCH ARG STEP (FOR SINGLETONS AND CLASSES) RESULTING IN HIT OR MISS
+;; HIT RETURNS ASSOCD VALUE AND REORDERS ASSOCS PUT KEY AT FRONT REFLECTIN FREQS
+;; MISS ADDS KEYS (UNLESS MISSABLE) AND THEN RERUNS LOOKUP FROM BEGINNING
+
+(dl (gen-lookup-1-using inline-c)
+    (key i len assocs|<tup> missable? gen|<gen> args|<opts>)
+  (rep loop ((i i))
+    (if (%bb (%i= i len))
+        (if missable?
+            $missed-dispatch
+            (seq (set (%fun-cache gen) (gen-lookup-miss gen args))
+                 (gen-lookup gen args))) ;; restart lookup
+        (if (@== (%telt assocs i) key)
+            (gen-lookup-1 gen (%telt assocs (%i+ i (%raw 1))) args)
+            (loop (%i+ i (%raw 2)))))))
+
+;; DISPATCH ARG STEP RUNNING BOTH SINGLETON AND CLASS DISPATCH
+;; IF HIT THEN 
+;;   IF LAST ARG THEN LEAF WITH INT MEANING PROP-OFFSET ELSE METHOD
+;;               ELSE RECURSE WITH NEXT ARG
+
+(dl (gen-lookup-1i inline-c) (gen|<gen> cache args|<opts>)
+  (if (@== (%class-of cache) <gen-cache>)
+      (let ((arg (@oelt args (%gen-cache-arg-pos cache)))
+            (val (let ((assocs (%gen-cache-singletons cache)))
+                   ;; first look in singleton cache
+                   (gen-lookup-1-using
+                    arg (%raw 0) (%tlen assocs) assocs 
+                    (%gen-cache-missable? cache) gen args))))
+        (if (@== val $missed-dispatch)
+            (let ((assocs (%gen-cache-classes cache)))
+              ;; otherwise look in class cache
+              (gen-lookup-1-using
+               (%class-of arg) (%raw 0) (%tlen assocs) assocs #f gen args))
+            val))
+      cache))
+
+(dl gen-lookup-1 (gen|<gen> cache args|<opts>)
+  (gen-lookup-1i gen cache args))
+
+;; TODO: CONDITIONS FOR THESE ERRORS
+
+(df choose-methods (gen|<gen> args|<opts> => <lst>)
+  (def ord-amb-mets   (ord-app-mets* gen args))
+  (def sorted-mets    (@telt ord-amb-mets 0))
+  (def ambiguous-mets (@telt ord-amb-mets 1))
+  ;;    (if (@< 0 (@len ambiguous-mets))
+  ;;        (error "Ambiguous Method Error when calling %= on %=" gen args)
+  (if (@empty? sorted-mets)
+      (no-applicable-methods-error gen args)
+      sorted-mets))
+
+;; TODO: KEEP IN CHECK WITH GEN-LOOKUP
+(dl (gen-lookup-i inline-c) (gen|<gen> args|<opts>)
+  (gen-lookup-1i gen (or-set(%fun-cache gen) (gen-lookup-miss gen args)) args))
+
+;; FIXME: note the horrible hack in g2c that makes it not generate
+;; an UNLINK_STACK at the end of this function.
+;; The way this works right now is not a long term solution.
+
+(df %dispatch (args|...)
+  (let ((result (gen-lookup-i (%fun-reg) args)))
+    (if (@int? result)
+        (let ((res (if (@= (@olen args) 1) ;; getter?
+                       (prop-value-at (@oelt args 0) result)
+                       (set (prop-value-at (@oelt args 1) result)
+                            (@oelt args 0)))))
+          (%unlink-stack)
+          res)
+        (%raw-met-call (%head result) (%tail result)))))
+
+;; READY TO REPLACE EARLY DISPATCHER WITH REAL DISPATCHER IN EARLY GEN'S
+
+(%patch-early-generics)
+
+;; SIG TRAMPOLINES THROUGH FUN'S
+
+(dss (def-fun/sig-accessor ,name)
+  `(seq (df ,(cat-sym "fun-" name) (x)
+          (,(cat-sym "sig-" name) (fun-sig x)))
+        (df ,(cat-sym "fun-" name "-setter") (z x) 
+          (set (,(cat-sym "sig-" name) (fun-sig x)) z))))
+
+(def-fun/sig-accessor names)
+(def-fun/sig-accessor specs)
+(def-fun/sig-accessor nary?)
+(def-fun/sig-accessor arity)
+(def-fun/sig-accessor val)
+(def-fun/sig-accessor unification-vars)
+
+;; USED FROM INTERPRETER TO BUILD GEN'S
+
+(df fab-gen
+    (name names|<lst> specs|<lst> nary?|<log> val|<type> mets|<lst> => <gen>)
+  (def g (@new <gen>
+            fun-name name
+            fun-sig  (@new <sig>
+                        sig-names names
+                        sig-specs specs
+                        sig-nary? nary?
+                        sig-arity (@len specs)
+                        sig-val   val)
+            fun-mets mets))
+  (set (%gen-code g) (%met-code %dispatch))
+  g)
+
+(df gen-from-met (x|<met> => <gen>)
+  (def specs (@map (fun (x) <any>) (@fun-specs x)))
+  (fab-gen (fun-name x) '() specs (@fun-nary? x) <any> '()))
+
+;; CALLED FROM COMPILER/INTERPRETER
+
+(df %define-method (gen met|<met> => <gen>)
+  (gen-add-met (or gen (gen-from-met met)) met))
+
+(export 
+  fun-arity
+  fun-names
+  fun-nary?
+  fun-specs
+  fun-val
+  gen-add-met
+  met-app?
+  ord-app-mets
+  %define-method                
+  fab-gen
+  fun-spec
+  %dispatch
+  @fun-mets
+  prop-value-at
+  prop-bound-at?
+  prop-value-at-setter
+  @class<
+  @order-specs-class
+)
+
+(export
+  incongruent-method-error
+
+  ;; Required for the incongruent-method-error restart.
+  <replace-generic-restart>
+  <simple-handler-info>
+  handler-info-message
+  handler-info-arguments
+  )
+

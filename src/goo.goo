@@ -1,11 +1,15 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/mag)
 (use goo/types)
 (use goo/math)
-(use goo/runtime)
+(use goo/functional)
+(use goo/loc)
+(use goo/sym)
 (use goo/conditions)
 (use goo/cols)
 (use goo/packer)
@@ -16,10 +20,9 @@
 
 (export
  ;; Section 1.1/2.1: Special forms.
- IF SEQ SET FUN LET DEF LOC ESC FIN DV DM DG DP DC MACRO-EXPAND
+ IF SEQ SET FUN LET DEF LOC ESC FIN D. DV DDV DM DG DP DP! DC MACRO-EXPAND
  SUP APP-SUP QUOTE
  CT CT-ALSO DS USE USE/MANGLE USE/EXPORT USE/INCLUDE USE/LIBRARY EXPORT 
- DDV
 
  ;; Section 1.2/2.2: Macros.
  DF TRY REP MIF AND OR CASE CASE-BY COND MATCH UNLESS WHEN ASSERT
@@ -152,7 +155,7 @@
  <file-port> <file-in-port> <file-out-port> 
  <io-error> <file-opening-error> file-opening-error-filename
  <str-port> port-contents <str-in-port> port-index
- <str-out-port>
+ <str-out-port> port-to-str
 
  ;; Section 3.13: In.
  read read-from-string

@@ -1,0 +1,14 @@
+(use goo/boot)
+(use goo/fun)
+(use goo/class)
+
+;; (dc <loc> (<any>))
+;;   (dp loc-dat (<loc> => <any>))
+
+(df loc-val (x|<loc> => <any>)
+  (%loc-val x))
+
+(df loc-val-setter (z x|<loc> => <any>)
+  (set (%loc-val x) z))
+
+(export loc-val loc-val-setter)

@@ -1,6 +1,8 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/types)
 (use goo/math)
@@ -26,7 +28,7 @@
 
 (dc <zip-enum> (<enum>))
 
-(dp %enums (<zip-enum> => <zip>))
+(dp! %enums (<zip-enum> => <zip>))
 
 (dm enum (x|<zip> => <zip-enum>)
   (new <zip-enum> %enums (map enum x)))

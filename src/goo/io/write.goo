@@ -3,13 +3,14 @@
 ;;  See file COPYING.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/packer)
 (use goo/types)
 (use goo/math)
 (use goo/io/port)
 (use goo/cols)
-(use goo/runtime)
 (use goo/conditions)
 (use goo/io/read)
 (use goo/packer)
@@ -169,9 +170,11 @@
       (recur val d)))
   (put port #\>))
 
-(dm recurring-write (port|<out-port> x|<file-port> d|<int> recur|<fun>)
-  (msg port "#{File-%s-port %s %d}" 
-       (if (isa? port <in-port>) "in" "out") (port-filename x) (port-line x)))
+(dm recurring-write (port|<out-port> x|<file-in-port> d|<int> recur|<fun>)
+  (msg port "#{File-in-port %s %d}" (port-filename x) (port-line x)))
+
+(dm recurring-write (port|<out-port> x|<file-out-port> d|<int> recur|<fun>)
+  (msg port "#{File-out-port %s}" (port-filename x)))
 
 (dm recurring-write (port|<out-port> x|<in-port> d|<int> recur|<fun>)
   (puts port "#{In-port}"))

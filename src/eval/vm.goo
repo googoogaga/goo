@@ -2,12 +2,15 @@
 
 (use goo)
 (use goo/boot)
+(use goo/fun)
 (use goo/io/write)
 (use eval/ast)
 (use eval/ast-eval)
+(use eval/top)
 
 ;;;; TODO
 ;;;; 
+;;;; module loading
 ;;;; dynamic variables
 ;;;; ---
 ;;;; stack per thread
@@ -136,23 +139,25 @@
 (def-vm-push-op VM-VAR-GET-OR (x) 23
   (%binding-value-or-of x (vm-pop)))
 
+(def-vm-op VM-MAC-FAB (x) 24
+  (%%%macro x (vm-pop)))
+
 (def-vm-push-op VM-LOC-GET (x) 30
   [*stk* (+ (%vfp) x)])
 
 (def-vm-op VM-LOC-PUT (x) 31
   (set [*stk* (+ (%vfp) x)] (vm-pop)))
 
-(def-vm-push-op VM-BOX-GET (x) 40
-  (def box [*stk* (+ (%vfp) x)])
-  (%vm-box-val box))
+(def-vm-push-op VM-BOX-GET () 40
+  (%vm-box-val (vm-pop)))
 
-(def-vm-push-op VM-BOX-PUT (x) 41
-  (def box [*stk* (+ (%vfp) x)])
-  (set (%vm-box-val box) (vm-pop)))
+(def-vm-push-op VM-BOX-PUT () 41
+  (def val (vm-pop))
+  (set (%vm-box-val (vm-pop)) val))
 
-(def-vm-push-op VM-BOX-FAB (x) 42
-  (def val [*stk* (+ (%vfp) x)])
-  (%vm-box-fab val))
+(def-vm-op VM-BOX-FAB (x) 42
+  (def idx (+ (%vfp) x))              
+  (set [*stk* idx] (%vm-box-fab [*stk* idx])))
 
 (def-vm-push-op VM-ENV-GET (x) 50
   (%vm-fun-env-elt (%vfn) (%iu x)))
@@ -245,7 +250,7 @@
     sig-unification-vars '()))
 
 (df %vm-gen-fab (name sig => <gen>)
-  (def g (new <gen> fun-name name fun-sig sig))
+  (def g (new <gen> fun-name name fun-sig sig fun-mets '()))
   (set (%gen-code g) (%met-code %dispatch))
   g)
 
@@ -258,7 +263,7 @@
   (def fn (%fun-reg))
   (set (%vfn) fn)
   (set (%vnm) (%next-methods))
-  (for ((e args) (i (below (fun-arity fn)))) (vm-push e))
+  (for ((e (rev args)) (i (below (fun-arity fn)))) (vm-push e))
   (when (fun-nary? fn) (vm-push [args (fun-arity fn) *]))
   (vm-run (%vm-fun-env-elt fn (%iu 0)))
   (def res (vm-pop))
@@ -333,7 +338,8 @@
               (scan res (tail ops) (pair (lst op pc) labels) patches pc)
               (let ((ins (head op)))
                 (case ins ;; TODO: SHOULD BE PART OF OP DEFN
-                  (('vm-var-get 'vm-var-put 'vm-var-fab 'vm-var-get-or) 
+                  (('vm-var-get 'vm-var-put 'vm-var-fab 'vm-var-get-or 
+                    'vm-mac-fab) 
                    (scan (pair [vars [op 1]]
                                (pair (vm-gen-op ins) res))
                          (tail ops) labels patches (+ pc 2)))
@@ -388,14 +394,23 @@
         (op)
         (run)))))
 
-(dm vm-top-run (pc|<int> => <any>)
+(ddv *vm-running?* #f)
+
+(dm do-vm-top-run (pc|<int> => <any>)
   (set (%vfn) #f)
   (set (%vnm) #f)
   (set (%vsp) 0)
   (set (%vfp) 0)
-  (esc exit
-    (set *exit* exit)
-    (vm-run pc)))
+  (dlet ((*vm-running?* #t))
+    (esc exit
+      (set *exit* exit)
+      (vm-run pc))))
+
+(dm vm-top-run (pc|<int> => <any>)
+  (if *vm-running?* (vm-run pc) (do-vm-top-run pc)))
+
+(dm vm-evaluate (exp env)
+  (vm-top-run (vm-install (vm-load (asm-exp-in exp env)))))
 
 (dm vm-eval (exp)
   (vm-top-run (vm-install (vm-load (asm-exp exp)))))
@@ -423,12 +438,15 @@
 
 (dg asm-exp (x))
 
+(dg asm-ast (x))
+
 (dg out-code (o c))
 
 (dm ppc (c) (out-code out c))
 
 (export
   asm-exp
+  asm-exp-in
   out-code
   vm-install
   vm-load

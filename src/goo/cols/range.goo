@@ -1,8 +1,10 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
-(use goo/runtime)
+(use goo/functional)
 (use goo/types)
 (use goo/math)
 (use goo/cols/col)
@@ -46,8 +48,8 @@
 
 (dc <range-enum> (<enum>))
 (dp %dat (<range-enum> => <range>))
-(dp %val (<range-enum> => <num>))
-(dp %key (<range-enum> => <int>))
+(dp! %val (<range-enum> => <num>))
+(dp! %key (<range-enum> => <int>))
 
 (dm enum (x|<range> => <range-enum>) 
   (new <range-enum> %dat x %val (range-from x) %key 0))

@@ -1,6 +1,8 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/types)
 (use goo/math)
@@ -19,7 +21,7 @@
 
 (dc <flat-enum> (<enum>))
 (dp %dat (<flat-enum> => <flat>))
-(dp %key (<flat-enum> => <int>) 0)
+(dp! %key (<flat-enum> => <int>) 0)
 (dm enum (x|<flat> => <flat-enum>) 
   (new <flat-enum> %dat x))
 (dm fin? (e|<flat-enum> => <log>)       

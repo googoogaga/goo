@@ -2,8 +2,6 @@
 
 (use goo)
 
-(use goo/runtime)
-
 ;; IPC
 (use time/threads)
 (use cols/pipe)

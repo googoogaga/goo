@@ -150,121 +150,6 @@ INLINE P YPclone (P x) {
   return y;
 }
 
-/* ARITHMETIC */
-
-INLINE P YPfE(P x, P y) {
-  INTFLO ix, iy; ix.i = (PINT)x; iy.i = (PINT)y;
-  return (P)(PLOG)(ix.f == iy.f);
-}
-INLINE P YPfL(P x, P y) {
-  INTFLO ix, iy, iz; ix.i = (PINT)x; iy.i = (PINT)y;
-  return (P)(PLOG)(ix.f < iy.f);
-}
-INLINE P YPfA(P x, P y) {
-  INTFLO ix, iy, iz; ix.i = (PINT)x; iy.i = (PINT)y;
-  iz.f = ix.f + iy.f;
-  return (P)iz.i;
-}
-INLINE P YPf_(P x, P y) {
-  INTFLO ix, iy, iz; ix.i = (PINT)x; iy.i = (PINT)y;
-  iz.f = ix.f - iy.f;
-  return (P)iz.i;
-}
-INLINE P YPfT(P x, P y) {
-  INTFLO ix, iy, iz; ix.i = (PINT)x; iy.i = (PINT)y;
-  iz.f = ix.f * iy.f;
-  return (P)iz.i;
-}
-INLINE P YPfS(P x, P y) {
-  INTFLO ix, iy, iz; ix.i = (PINT)x; iy.i = (PINT)y;
-  iz.f = ix.f / iy.f;
-  return (P)iz.i;
-}
-INLINE P YPfi2f(P x) {
-  INTFLO ix; 
-  ix.f = (float)(PINT)x;
-  return (P)ix.i;
-}
-INLINE P YPft(P x) {
-  PINT z; INTFLO ix; ix.i = (PINT)x; 
-  z = (PINT)ix.f;
-  return (P)z;
-}
-INLINE P YPfpow(P x, P n) {
-  INTFLO iz, ix, in; ix.i = (PINT)x; in.i = (PINT)n; 
-  iz.f = (float)pow((double)ix.f, (double)in.f);
-  return (P)iz.i;
-}
-INLINE P YPflog(P x) {
-  INTFLO iz, ix; ix.i = (PINT)x; 
-  iz.f = (float)log((double)ix.f);
-  return (P)iz.i;
-}
-INLINE P YPfsqrt(P x) {
-  INTFLO iz, ix; ix.i = (PINT)x; 
-  iz.f = (float)sqrt((double)ix.f);
-  return (P)iz.i;
-}
-INLINE P YPfsin(P x) {
-  INTFLO iz, ix; ix.i = (PINT)x; 
-  iz.f = (float)sin((double)ix.f);
-  return (P)iz.i;
-}
-INLINE P YPfcos(P x) {
-  INTFLO iz, ix; ix.i = (PINT)x; 
-  iz.f = (float)cos((double)ix.f);
-  return (P)iz.i;
-}
-INLINE P YPftan(P x) {
-  INTFLO iz, ix; ix.i = (PINT)x; 
-  iz.f = (float)tan((double)ix.f);
-  return (P)iz.i;
-}
-INLINE P YPfsinh(P x) {
-  INTFLO iz, ix; ix.i = (PINT)x; 
-  iz.f = (float)sinh((double)ix.f);
-  return (P)iz.i;
-}
-INLINE P YPfcosh(P x) {
-  INTFLO iz, ix; ix.i = (PINT)x; 
-  iz.f = (float)cosh((double)ix.f);
-  return (P)iz.i;
-}
-INLINE P YPftanh(P x) {
-  INTFLO iz, ix; ix.i = (PINT)x; 
-  iz.f = (float)tanh((double)ix.f);
-  return (P)iz.i;
-}
-INLINE P YPfasin(P x) {
-  INTFLO iz, ix; ix.i = (PINT)x; 
-  iz.f = (float)asin((double)ix.f);
-  return (P)iz.i;
-}
-INLINE P YPfacos(P x) {
-  INTFLO iz, ix; ix.i = (PINT)x; 
-  iz.f = (float)acos((double)ix.f);
-  return (P)iz.i;
-}
-INLINE P YPfatan(P x) {
-  INTFLO iz, ix; ix.i = (PINT)x; 
-  iz.f = (float)atan((double)ix.f);
-  return (P)iz.i;
-}
-INLINE P YPfatan2(P y, P x) {
-  INTFLO iz, ix, iy; ix.i = (PINT)x; iy.i = (PINT)y; 
-  iz.f = (float)atan2((double)iy.f, (double)ix.f);
-  return (P)iz.i;
-}
-
-INLINE P FLOINT (PFLO x) {
-  INTFLO ix; ix.f = x;
-  return (P)ix.i;
-}
-
-INLINE P YPflo_bits (P x) {
-  return x;
-}
-
 /* DEBUG */
 
 P YPPROP_ELT (P x, P i) {
@@ -353,227 +238,6 @@ static P cstr_to_pstr (char *cstr) {
   return YPsb(raw_pstr);
 }
 
-/* IO */
-
-P YPopen_in_file (P name) { 
-  FILE* fd = fopen((PSTR)name, "r"); 
-  if (fd == NULL)
-    XXCALL1(1, Yfile_opening_error, YPsb((PSTR)name));
-  return (P)YPlb(fd);
-}
-
-P YPopen_out_file (P name) { 
-  FILE* fd = fopen((PSTR)name, "w"); 
-  if (fd == NULL)
-    XXCALL1(1, Yfile_opening_error, YPsb((PSTR)name));
-  return (P)YPlb(fd);
-}
-
-INLINE P YPclose_in_port (P s) { 
-  fclose((FILE*)YPlu(s)); return YPfalse; 
-}
-
-INLINE P YPclose_out_port (P s) { 
-  fclose((FILE*)YPlu(s)); return YPfalse; 
-}
-
-INLINE P YPnewline (P s) { 
-  fputc('\n', (FILE*)YPlu(s)); 
-#ifdef WIN32  
-  if ((FILE*)YPlu(s) == stdout) fflush(stdout);
-#endif
-  return YPfalse; 
-}
-
-INLINE P YPforce_out (P s) { 
-  fflush((FILE*)YPlu(s)); return YPfalse; 
-}
-
-INLINE P YPput (P s, P x) { 
-  fputc((PCHR)(PINT)x, (FILE*)YPlu(s)); 
-#ifdef WIN32  
-  if ((FILE*)YPlu(s) == stdout && (((PCHR)(PINT)x) == '\n')) fflush(stdout);
-#endif
-  return YPfalse; 
-}
-
-INLINE P YPputs (P s, P x) { 
-  if(x==NULL)
-    fputs("NULL", (FILE*)YPlu(s));
-  else
-    fputs((PSTR)x, (FILE*)YPlu(s));
-#ifdef WIN32  
-  if ((FILE*)YPlu(s) == stdout) fflush(stdout);
-#endif
-  return YPfalse; 
-}
-
-INLINE P YPget (P s) { 
-  return (P)(PINT)fgetc((FILE*)YPlu(s)); 
-}
-
-INLINE P YPpeek (P s) { 
-  PCHR c = fgetc((FILE*)YPlu(s)); ungetc((int)c, (FILE*)YPlu(s)); return (P)(PINT)c; 
-}
-
-INLINE P YPreadyQ (P s) { 
-  int    res;
-#ifdef WIN32
-  fd_set rfds;
-  FD_ZERO(&rfds);
-  FD_SET(fileno((FILE*)YPlu(s)), &rfds);
-  res = select(1, &rfds, NULL, NULL, NULL);
-#else
-  res = 1;
-#endif
-  return((P)(PINT)res);
-} 
-
-#define MAXSTRSIZ 1000
-char strbuf[MAXSTRSIZ];
-
-PSTR YPgets (FILE* s) { 
-  char *str;
-  fgets(strbuf, MAXSTRSIZ, (FILE*)YPlu(s)); 
-  str = (char*)allocate_atomic(strlen(strbuf) + 1);
-  strcpy(str, strbuf);
-  return str;
-}
-
-INLINE P YPeof_objectQ (P x) { return (P)(PLOG)((PINT)x == EOF); }
-
-INLINE P YPeof_object () { return (P)EOF; }
-
-INLINE PPORT YPcurrent_in_port (void) { return (PPORT)YPlb(stdin); }
-
-INLINE PPORT YPcurrent_out_port (void) { return (PPORT)YPlb(stdout); }
-
-/* TODO - Need Windows versions of the following functions. */
-
-#include <sys/stat.h>
-#if !defined(_MSC_VER)
-#include <unistd.h>
-#endif
-#include <errno.h>
-
-extern P Yfab_sym;
-extern P Yerror;
-
-static void unix_error (char *command, char *filename) {
-  XXCALL4(1, Yerror,
-	  YPsb("%s: %s failed: %s.\n"),
-	  YPsb(command),
-	  YPsb(filename),
-	  YPsb(strerror(errno)));
-}
-
-/* TODO - Resolution is crummy because we use single floats. */
-#define GOO_EPOCH (978307200) /* January 01, 2001 00:00:00 GMT */
-P YPfile_mtime (P name) {
-  struct stat buf;
-  int res;
-  INTFLO flo;
-  
-  res = stat((PSTR) name, &buf);
-  if (res == 0) {
-    flo.f = (PFLO) buf.st_mtime - GOO_EPOCH;
-  } else {
-    unix_error("stat", name);
-    /* Not executed. */
-    flo.f = 0.0;
-  }
-  return (P) flo.i;
-}
-
-P YPfile_existsQ (P name) {
-  struct stat buf;
-  int res;
-  res = stat((PSTR) name, &buf);
-  if (res == 0)
-    return YPtrue;
-  else if (errno == ENOENT)
-    return YPfalse;
-  else
-    unix_error("stat", name);
-  /* Not executed. */
-  return YPfalse;
-}
-
-#if defined(_MSC_VER)
-#define S_ISREG(x) ((x) & _S_IFREG)
-#define S_ISDIR(x) ((x) & _S_IFDIR)
-#endif
-
-P YPfile_type (P name) {
-  struct stat buf;
-  int res;
-  res = stat((PSTR) name, &buf);
-  if (res == 0) {
-    if (S_ISREG(buf.st_mode))
-      return XXCALL1(1, Yfab_sym, YPsb("file"));
-    else if (S_ISDIR(buf.st_mode))
-      return XXCALL1(1, Yfab_sym, YPsb("directory"));
-    else
-      return XXCALL1(1, Yfab_sym, YPsb("unknown"));
-  } else {
-    unix_error("stat", name);
-    /* Not executed. */
-    return XXCALL1(1, Yfab_sym, YPsb("unknown"));
-  }
-}
-
-/* mkdir is available on Linux and GNU systems.  Other systems may not
-** bother to supply it!  I think you can find N different semi-portable
-** implementations in the GNU tar source code.  Yes, some Unix systems
-** really require you to invoke the 'mkdir' *program* to create a
-** directory. */
-P YPcreate_directory (P name) {
-  int res;
-  /* Rely on umask to set privileges. */
-#if defined(_MSC_VER)
-  res = mkdir(name);
-#else
-  res = mkdir(name, S_IRWXU|S_IRWXG|S_IRWXO);
-#endif
-  if (res != 0)
-    unix_error("mkdir", name);
-  return YPfalse;
-}
-
-/* OS */
-
-P YPos_name () {
-#if defined(_WIN32) || defined(WIN32) || defined(WINNT)
-  return (P)"win32";
-#else
-#ifdef linux
-  return (P)"linux";
-#else
-  return (P)"unix";
-#endif
-#endif
-}
-
-P YPos_val (P name) {
-  PSTR value = (PSTR)getenv((char *)name);
-  if (value == NULL)
-    return (P)"";
-  else
-    return (P)value;
-}
-
-P YPos_val_setter (P value, P name) {
-#if defined(_MSC_VER)
-  static char buffer[1024];
-  sprintf(buffer, "%s=%s", (PSTR)name, (PSTR)value);
-  putenv(buffer);
-  return (P)value;
-#else
-  setenv((PSTR)name, (PSTR)value, 1);
-  return (P)value;
-#endif
-}
-
 /* CLOSURES */
 
 ENV envnul = (ENV)PNUL;
@@ -652,128 +316,6 @@ P FUNFAB (P x, int n, ...) {
 //   return pair;
 // }
 
-extern P YPib(P);
-extern P Yarity_error;
-extern P Ynarity_error;
-
-P cons_args (REGS regs) {
-  PINT n   = (int)REG(sp)[-2];
-  P    res = Ynil;
-  int  i;
-  for (i=0; i<n; i++)
-    res = YPpair(REG(sp)[- 3 - (n - i - 1)], res);
-  return res;
-}
-
-INLINE void CHECK_ARITY (REGS regs, P fun, PLOG naryp, PINT n, PINT arity) {
-  if (naryp) { 
-    if (n < arity) 
-      CALL2(1, Ynarity_error, fun, cons_args(regs)); 
-  } else { 
-    if (n != arity) 
-      CALL2(1, Yarity_error, fun, cons_args(regs)); 
-  }
-}
-
-extern P YLanyG;
-extern P YLclassG;
-extern P Ytype_error;
-extern P Yreturn_type_error;
-extern P Yargument_type_error;
-extern P YOclass_isaQ(P, P);
-extern P YisaQ;
-extern P YPclasses_readyQ;
-
-INLINE int CHECK_TYPEP(REGS regs, P res, P type) {
-  if (type != YLanyG && YPclasses_readyQ != YPfalse) {
-    if ((YPobject_class(type) == YLclassG
-	 ? YOclass_isaQ(res, type) : CALL2(0, YisaQ, res, type))
-	== YPfalse)
-      return 0;
-  }
-  return 1;
-}
-
-INLINE void CHECK_TYPE(REGS regs, P res, P type) {
-  if (!CHECK_TYPEP(regs, res, type))
-    CALL2(1, Ytype_error, res, type);
-}
-
-INLINE void ARG_CHECK_TYPE(REGS regs, P res, P type, P fun) {
-  if (!CHECK_TYPEP(regs, res, type))
-    CALL4(1, Yargument_type_error, fun, res, type, cons_args(regs));
-}
-
-void check_fun_val_type (REGS regs, P res, P fun) {
-  if (!CHECK_TYPEP(regs, res, FUNVALUE(fun)))
-    CALL4(1, Yreturn_type_error, fun, res, FUNVALUE(fun), cons_args(regs));
-}
-
-P _check_type (REGS regs, P res, P type) {
-  CHECK_TYPE(regs, res, type);
-  return(res);
-}
-
-extern P YLanyG;
-
-extern P YLmetG;
-extern P YLgenG;
-extern P YPtraits_owner(P);
-extern P YPvnul;
-
-#define MIN_STACK_PAD_SIZE 1000
-#define STACK_OVERFLOW     (MAX_STACK_SIZE - MIN_STACK_PAD_SIZE)
-
-extern P Ystack_overflow_error;
-
-INLINE void stack_check (REGS regs) {
-  int stack_overflowp;
-  stack_overflowp = (int)(REG(sp) - REG(stack)) > STACK_OVERFLOW;
-
-  if (stack_overflowp) {
-    if (REG(stack_checkp)) {
-      REGSET(stack_checkp, 0);
-      CALL0(1, Ystack_overflow_error);
-    }
-  } else if (!REG(stack_checkp))
-    REGSET(stack_checkp, 1);
-}
-
-P _YPcheck_call_types(REGS regs) {
-  P fun    = REG(sp)[-1];
-  P traits = PNUL;
-  stack_check(regs);
-  if(fun != 0 && (tag_bits(fun)) == adr_tag)
-    traits = YPobject_class(fun);
-  if (traits == YLmetG) {
-    PINT n     = (int)REG(sp)[-2];
-    PINT arity = FUNARITY(fun);
-    PLOG naryp = FUNNARYP(fun);
-    P    specs = FUNSPECS(fun);
-    int i;
-    
-    CHECK_ARITY(regs,fun,naryp,n,arity);
-    for(i = 0; specs != Ynil; i++, specs = Ptail(specs)) {
-      ARG_CHECK_TYPE(regs, REG(sp)[- 3 - i], Phead(specs), fun);
-    }
-  } else if (traits == YLgenG) {
-    PINT n     = (int)REG(sp)[- 2];
-    PINT arity = FUNARITY(fun);
-    PLOG naryp = FUNNARYP(fun);
-    CHECK_ARITY(regs,fun,naryp,n,arity);
-  } else if (fun == 0) {
-    if(Yunknown_function_error != 0)
-      CALL2(0, Yunknown_function_error, Ynil, cons_args(regs));
-    else {
-      YPbreak("Tried to call an unbound function, but the function error\nhandler is itself unbound. Exiting.");
-      exit(1);
-    }
-  } else {
-    CALL2(0, Yunknown_function_error, fun, cons_args(regs));
-  }
-  return Ynil;
-}
-
 P _CALLN (REGS regs, int check, P fun, int n, ...) {
   int i;
   P   res;
@@ -792,26 +334,6 @@ P _CALLN (REGS regs, int check, P fun, int n, ...) {
   DEC_STACK(n+2);
   return res;
 }
-
-/*
-P YPPapply (P fun, P nextmets, P cvec) {
-  int i;
-  P   res;
-  P vec = ((OBJECT)cvec)->values;
-  P *arr = ((PVEC)vec)->values;
-  int n = YPPvlen(vec);
-  INC_STACK(n);
-  
-  for (i = 0; i < n; i++)
-    REG(sp)[- i - 1] = arr[i];
-
-  PUSH((P)n);
-  PUSH(fun);
-  res = (FUNCODE(fun))(fun, nextmets);
-  DEC_STACK(n+2);
-  return res;
-}
-*/
 
 /* NLX */
 
@@ -871,6 +393,7 @@ P MAKE_BIND_EXIT_FRAME () {
   return((P)frame);
 }
 
+extern P YLanyG;
 
 // creates non-local exit label
 P with_exit (P fun) {
@@ -915,11 +438,14 @@ P with_cleanup (P body_fun, P cleanup_fun) {
 
 unsigned long box_nallocd = 0;
 
+extern P YLboxG;
+
 INLINE P BOXFAB(P x) {  
   unsigned long snallocd = nallocd;
-  P* box = (P*)allocate(sizeof(P));
+  P* box = (P*)allocate(2 * sizeof(P));
   box_nallocd += nallocd - snallocd;
-  BOXVAL(box) = x;
+  YPobject_class_setter(YLboxG, box);
+  BOXPUT(x, box);
   return box;
 }
 
@@ -1056,7 +582,7 @@ void print_kind (P adr, int prettyp, int depth) {
     for (j = 0; j < n; j++) {
       if (j != 0) printf(" ");
       if (j < max_length) {
-	print_kind(v[j], 0, depth + 1); 
+	print_kind(v[-j], 0, depth + 1); 
       } else {
 	printf("..."); break;
       }
@@ -1222,12 +748,13 @@ char** Pargv;
 
 P YPapp_filename () {
   char* filename = Pargv[0];
-  if (strcmp(YPos_name(), "win32") == 0) {
-    int i;
+#if defined(_WIN32) || defined(WIN32) || defined(WINNT)
+  { int i;
     for (i = 0; i < strlen(filename); i++) 
       if (filename[i] == '/')
 	filename[i] = '\\';
   }
+#endif
   return YPsb(filename);
 }
 
@@ -1243,6 +770,8 @@ P YPapp_args () {
 #if defined(WIN32) || defined(_MSC_VER)
 #define NO_UNEXEC
 #endif
+
+extern P Yerror;
 
 P YPunexec(P name) {
 #if defined(_MSC_VER)
@@ -1296,48 +825,6 @@ P YPPlist(int num, ...) {
     }
     return lst;
   }
-}
-
-/* CURSES */
-
-/* #include <curses.h> */
-
-P YPgrid_open () { 
-#ifdef CURSES
-  initscr(); cbreak(); noecho(); 
-#endif
-  return YPfalse; 
-}
-P YPgrid_close () { 
-#ifdef CURSES
-  nocbreak(); echo(); endwin();
-#endif
-  return YPfalse; 
-}
-P YPgrid_move (P x, P y) { 
-#ifdef CURSES
-  move((int)y, (int)x); 
-#endif
-  return YPfalse; 
-}
-P YPgrid_read () { 
-#ifdef CURSES
-  return (P)getch(); 
-#else
-  return YPfalse; 
-#endif
-}
-P YPgrid_write (P c) { 
-#ifdef CURSES
-  addch((char)(long)c); 
-#endif
-  return YPfalse; 
-}
-P YPgrid_refresh () { 
-#ifdef CURSES
-  refresh(); 
-#endif
-  return YPfalse; 
 }
 
 P YPprocess_module(
@@ -1456,102 +943,6 @@ P YPfab_dyn_var() {
   return (P)key;
 }
 
-#if !defined(_MSC_VER)
-#include <dlfcn.h>
-
-typedef P (*PLD)();
-extern P YgooSsystemYTgoo_rootT;
-#endif
-
-P YgooSsystemYPcompile (P cfile, P sofile) {
-#if defined(_MSC_VER)
-  char* command = (char*)allocate(1024);
-  strcpy(command, "cl /O2 /D MSVC_THREAD /D WITH_THREADS /D BUILD_DLL");
-  strcat(command, " /I../c /I.");
-  strcat(command, " /Fe");
-  strcat(command, (char*)sofile);
-  strcat(command, " ");
-  strcat(command, (char*)cfile);
-  strcat(command, " dllentry.c /LD /link ./gc.lib ./goovc.lib kernel32.lib");
-  printf("Executing %s\n", command);
-  system(command);
-  return YPtrue;
-#else
-  char  buf[4096];
-  int pid;
-  char *v[] = {"cc", "-shared",  "-g", "-O", "-fPIC",  buf, "-o", sofile, cfile, NULL};
-
-  sprintf(buf, "-I%s/lib", YPsu(YgooSsystemYTgoo_rootT));
-  //  printf("EXECUTING %s\n", buf);
-  pid = fork();
-  if (pid == 0) // child
-    execvp("cc", v);
-  else if (pid < 0)
-    XXCALL1(1, Yerror, YPsb("Cannot exec compiler."));
-  else {
-    int status;
-    // parent
-    do {
-      if (waitpid(pid, &status, 0) == -1) {
-	if (errno != EINTR)
-	  return YPfalse;
-      } else
-	return YPtrue;
-    } while(1);
-    return YPfalse;
-  }
-#endif
-}
-
-#if defined(_MSC_VER)
-#undef PINT
-#include <windows.h>
-#undef PINT
-#define PINT long
-#endif
-
-P YgooSsystemYPload(P name) {
-#if defined(_MSC_VER)
-  HANDLE module = 0;
-  printf("Loading %s\n", (char*)name);
-  module = LoadLibrary(name);
-  if(module == NULL)
-	printf("Failed to load library %s\n", (char*)name);
-  else
-	{
-	  FARPROC load = GetProcAddress(module, "LoadModuleDl");
-	  return (P)load();
-	}
-  return YPfalse;
-#else
-  void* mod;
-  PLD   load;
-  P     res;
-
-  // printf("LOADING   %s\n", name);
-  mod = dlopen(name, RTLD_NOW | RTLD_GLOBAL);
-  if (mod == NULL)
-    printf("FAILED TO LOAD %s BECAUSE %s\n", name, dlerror());
-  else {
-    load = (PLD)dlsym(mod, "load_module_dl");
-    res = load();
-    // dlclose(mod);
-  }
-  return res;
-#endif
-}
-
-/*
-P YevalSg2cYPcompile (P name) {
-	return YgooSsystemYPcompile(name);
-}
-
-
-P YevalSg2cYPload(P name) {
-	return YgooSsystemYPload(name);
-}
-*/
-
 /* TODO: GET THIS WORKING ON WINDOWS */
 P YgooSsystemYPpid () {
   return (P)(PINT)getpid();
@@ -1649,11 +1040,4 @@ void YPinit_world(int argc, char* argv[]) {
   need_init = 0;
 }
 
-extern time_t time(time_t *t);
-
-P YPtime () {
-  time_t tv;
-  tv = time(NULL);
-  return((P)(tv - GOO_EPOCH));
-}
 

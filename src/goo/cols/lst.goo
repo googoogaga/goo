@@ -1,6 +1,8 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/types)
 (use goo/math)
@@ -73,8 +75,8 @@
 
 ;;;; Iteration protocol for lists
 (dc <lst-enum> (<enum>))
-(dp %dat (<lst-enum> => <lst>))
-(dp %key (<lst-enum> => <int>) 0)
+(dp! %dat (<lst-enum> => <lst>))
+(dp! %key (<lst-enum> => <int>) 0)
 (dm enum (x|<lst> => <lst-enum>)
   (new <lst-enum> %dat x))
 (dm fin? (e|<lst-enum> => <log>)

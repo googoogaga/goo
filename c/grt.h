@@ -29,10 +29,10 @@
 #define INLINE inline 
 #endif
 
-#ifdef IN_PRT_C
-#define STATIC_NOT_PRT_C 
+#ifdef IN_GRT_C
+#define STATIC_NOT_GRT_C 
 #else
-#define STATIC_NOT_PRT_C static
+#define STATIC_NOT_GRT_C static
 #endif
 
 #if defined(_MSC_VER)
@@ -182,36 +182,8 @@ IMPORTEXPORT extern P YPsb (P str);
 #define YPselt(x, i)           ((P)(PINT)(((PSTR)(YPsu(x)))[((PINT)(i))]))
 #define YPselt_setter(z, x, i) ((P)(PINT)(((PSTR)(YPsu(x)))[((PINT)(i))] = ((PCHR)(PINT)(z))))
 
-/* IO */
-
-IMPORTEXPORT extern P Yerror;
-IMPORTEXPORT extern P Yfile_opening_error;
-IMPORTEXPORT extern P YPopen_in_file (P name);
-IMPORTEXPORT extern P YPopen_out_file (P name);
-IMPORTEXPORT extern P YPclose_in_port (P s);
-IMPORTEXPORT extern P YPclose_out_port (P s);
-IMPORTEXPORT extern P YPnewline (P s);
-IMPORTEXPORT extern P YPforce_out (P s);
-IMPORTEXPORT extern P YPput (P s, P x);
-IMPORTEXPORT extern P YPputs (P s, P x);
-IMPORTEXPORT extern P YPget (P s);
-IMPORTEXPORT extern P YPpeek (P s);
-IMPORTEXPORT extern P YPreadyQ (P s); 
-IMPORTEXPORT extern PSTR YPgets (FILE* s);
-IMPORTEXPORT extern P YPeof_objectQ (P x);
-IMPORTEXPORT extern P YPeof_object ();
-IMPORTEXPORT extern PPORT YPcurrent_in_port (void);
-IMPORTEXPORT extern PPORT YPcurrent_out_port (void);
-IMPORTEXPORT extern P YPfile_mtime (P x);
-IMPORTEXPORT extern P YPfile_existsQ (P name);
-IMPORTEXPORT extern P YPfile_type (P name);
-IMPORTEXPORT extern P YPcreate_directory (P name);
-
 /* OS */
 
-IMPORTEXPORT extern P YPos_name ();
-IMPORTEXPORT extern P YPos_val (P name);
-IMPORTEXPORT extern P YPos_val_setter (P value, P name);
 P YgooSsystemYPpid ();
 
 #define timeval_diff(a, b, result)                                            \
@@ -317,11 +289,11 @@ typedef P (*PFUN)(REGS);
 #define FUNSPECS(x) SIGSPECS(FUNSIG(x))
 #define FUNNARYP(x) SIGNARYP(FUNSIG(x))
 
-STATIC_NOT_PRT_C INLINE P* FUNENV (P fun) {
+STATIC_NOT_GRT_C INLINE P* FUNENV (P fun) {
   return (P*)YPprop_elt(fun, (P)FUNENVOFFSET);
 }
 
-STATIC_NOT_PRT_C INLINE P* FUNENVSETTER (P* env, P fun) {
+STATIC_NOT_GRT_C INLINE P* FUNENVSETTER (P* env, P fun) {
   return (P*)YPprop_elt_setter(env, fun, (P)FUNENVOFFSET);
 }
 
@@ -375,26 +347,32 @@ extern REGS YPfab_regs();
 IMPORTEXPORT EXTTVAR(tregs);
 EXTTVAR(goo_thread);
 
-#define Pregs()      TREF(tregs)
-#define REGSREF()    ((REGS)(TREF(tregs)))
-#define REGSCREF()   (regs?regs:(regs=REGSREF()))
-#define REGSSET(v)   TSET(tregs, (P)(v))
-#define DEFREGS()    REGS regs = REGSREF()
-#define DEFCREGS()   REGS regs = (REGS)0
-#define YPdef_regs() regs = REGSREF()
+#define Pregs()       TREF(tregs)
+#define REGSREF()     ((REGS)(TREF(tregs)))
+#define REGSCREF()    (regs?regs:(regs=REGSREF()))
+#define REGSSET(v)    TSET(tregs, (P)(v))
+#define DEFREGS()     REGS regs = REGSREF()
+#define DEFCREGS()    REGS regs = (REGS)0
+#define YPdef_regs()  regs = REGSREF()
+#define YPset_regs(x) regs = (REGS)(x)
 
 #define REG(x)       (regs->x)
 #define CREG(x)      (REGSCREF()->x)
 #define REGSET(x, v) (regs->x = (v))
 
-#define MAX_STACK_SIZE 70000
+#define MAX_STACK_SIZE         70000
+#define YPmax_stack_len()      (MAX_STACK_SIZE)
 
 #define YPfun_reg()            (Pfun)
 #define YPnext_methods_reg()   (Pnext_methods)
 #define YPsp_reg()             (REG(sp))
+#define YPsp_elt(i)            (REG(sp)[(int)i])
 #define YPfp_reg()             (REG(fp))
 #define YPsp_reg_setter(value) (REGSET(sp, value))
 #define YPfp_reg_setter(value) (REGSET(fp, value))
+#define YPstack_reg()          (REG(stack))
+#define YPstack_check_regQ()          (P)(REG(stack_checkp))
+#define YPstack_check_regQ_setter(x)  (REGSET(stack_checkp, (int)x))
 
 #define YPvpc()             (REG(vpc))
 #define YPvfn()             (REG(vfn))
@@ -423,23 +401,23 @@ extern P YPenable_stack_checks ();
 
 /* TAG */
 
-STATIC_NOT_PRT_C INLINE int tag_bits (P adr) {
+STATIC_NOT_GRT_C INLINE int tag_bits (P adr) {
   return (PADR)adr & tag_mask;
 }
 
-STATIC_NOT_PRT_C  INLINE long untag (P adr) {
+STATIC_NOT_GRT_C  INLINE long untag (P adr) {
   return (PADR)adr >> 2;
 }
 
-STATIC_NOT_PRT_C  INLINE long tag (P adr, int tag) {
+STATIC_NOT_GRT_C  INLINE long tag (P adr, int tag) {
   return (PADR)adr << 2 | tag;
 }
 
-STATIC_NOT_PRT_C INLINE P YPelt (P v, P i) {
+STATIC_NOT_GRT_C INLINE P YPelt (P v, P i) {
   return ((P*)v)[(PINT)i];
 }
 
-STATIC_NOT_PRT_C INLINE P YPelt_setter (P x, P v, P i) {
+STATIC_NOT_GRT_C INLINE P YPelt_setter (P x, P v, P i) {
   return ((P*)v)[(PINT)i] = x;
 }
 
@@ -480,10 +458,12 @@ fp->  prev fp
 
 IMPORTEXPORT extern P YLoptsG;
 IMPORTEXPORT extern P _YPcheck_call_types(REGS);
+IMPORTEXPORT extern P YPPcheck_call_types(P);
 
-#define YPcheck_call_types() _YPcheck_call_types(regs)
+#define YPcheck_call_types() YPPcheck_call_types(regs)
+// #define YPcheck_call_types() _YPcheck_call_types(regs)
 
-STATIC_NOT_PRT_C  INLINE P opts_stackalloc(REGS regs, P loc, P len)
+STATIC_NOT_GRT_C  INLINE P opts_stackalloc(REGS regs, P loc, P len)
 {
   OBJECT opts;
   opts            = (OBJECT)(REG(sp));
@@ -494,7 +474,7 @@ STATIC_NOT_PRT_C  INLINE P opts_stackalloc(REGS regs, P loc, P len)
   return opts;
 }
 
-STATIC_NOT_PRT_C  INLINE P _CALL0 (REGS regs, int check, P fun) {
+STATIC_NOT_GRT_C  INLINE P _CALL0 (REGS regs, int check, P fun) {
   P   res;
   PUSH(0);
   PUSH(fun);
@@ -505,7 +485,7 @@ STATIC_NOT_PRT_C  INLINE P _CALL0 (REGS regs, int check, P fun) {
   return res;
 }
 
-STATIC_NOT_PRT_C  INLINE P _CALL1 (REGS regs, int check, P fun, P a1) {
+STATIC_NOT_GRT_C  INLINE P _CALL1 (REGS regs, int check, P fun, P a1) {
   P   res;
   PUSH(a1);
   PUSH((P)1);
@@ -517,7 +497,7 @@ STATIC_NOT_PRT_C  INLINE P _CALL1 (REGS regs, int check, P fun, P a1) {
   return res;
 }
 
-STATIC_NOT_PRT_C  INLINE P _CALL2 (REGS regs, int check, P fun, P a1, P a2) {
+STATIC_NOT_GRT_C  INLINE P _CALL2 (REGS regs, int check, P fun, P a1, P a2) {
   P   res;
   PUSH(a2);
   PUSH(a1);
@@ -530,7 +510,7 @@ STATIC_NOT_PRT_C  INLINE P _CALL2 (REGS regs, int check, P fun, P a1, P a2) {
   return res;
 }
 
-STATIC_NOT_PRT_C  INLINE P _CALL3
+STATIC_NOT_GRT_C  INLINE P _CALL3
     (REGS regs, int check, P fun, P a1, P a2, P a3) {
   P   res;
   PUSH(a3);
@@ -545,7 +525,7 @@ STATIC_NOT_PRT_C  INLINE P _CALL3
   return res;
 }
 
-STATIC_NOT_PRT_C  INLINE P _CALL4
+STATIC_NOT_GRT_C  INLINE P _CALL4
     (REGS regs, int check, P fun, P a1, P a2, P a3, P a4) {
   P   res;
   PUSH(a4);
@@ -561,7 +541,7 @@ STATIC_NOT_PRT_C  INLINE P _CALL4
   return res;
 }
 
-STATIC_NOT_PRT_C INLINE P _CALL5
+STATIC_NOT_GRT_C INLINE P _CALL5
     (REGS regs, int check, P fun, P a1, P a2, P a3, P a4, P a5) {
   P   res;
   PUSH(a5);
@@ -579,12 +559,12 @@ STATIC_NOT_PRT_C INLINE P _CALL5
 }
 
 
-STATIC_NOT_PRT_C  INLINE P _YPraw_call(REGS regs, P fun, P next_mets) {
+STATIC_NOT_GRT_C  INLINE P _YPraw_call(REGS regs, P fun, P next_mets) {
   REGSET(next_methods, next_mets);
   return (FUNCODE(fun))(regs);
 }
 
-STATIC_NOT_PRT_C  INLINE P _YPraw_met_call(REGS regs, P fun, P next_mets) {
+STATIC_NOT_GRT_C  INLINE P _YPraw_met_call(REGS regs, P fun, P next_mets) {
   YPunlink_stack(); 
   *(REG(sp)-1) = fun;
   return _YPraw_call(regs, fun, next_mets);
@@ -626,10 +606,11 @@ IMPORTEXPORT extern P _CALLN (REGS regs, int check, P fun, int n, ...);
 #define XXCALLN(...) _CALLN(REGSREF(), __VA_ARGS__)
 #endif
 
-IMPORTEXPORT extern P _check_type(REGS, P,P);
-IMPORTEXPORT extern void check_fun_val_type(REGS, P, P);
+IMPORTEXPORT extern P YPcheck_type(P,P,P);
+IMPORTEXPORT extern P YPfun_val_check_type(P, P, P);
+IMPORTEXPORT extern P _YPfun_val_check_type(REGS, P, P);
 
-#define check_type(x, t) _check_type(regs, x, t)
+#define check_type(x, t) YPcheck_type(regs, x, t)
 
 #define YPnext_methods() Pnext_methods
 
@@ -637,7 +618,7 @@ IMPORTEXPORT extern void check_fun_val_type(REGS, P, P);
   { return (x); }
 
 #define RET(x) \
-  { check_fun_val_type(regs, (x), Pfun); return (x); }
+  { YPfun_val_check_type(regs, (x), Pfun); return (x); }
 
 /* NON-LOCAL EXITS */
 
@@ -701,7 +682,8 @@ EXT(YPdispatch,"boot","%dispatch");
 
 IMPORTEXPORT extern P YPpair (P,P);
 IMPORTEXPORT extern P YPPlist(int num, ...);
-IMPORTEXPORT extern P YPint (P);
+// IMPORTEXPORT extern P YPint (P);
+#define YPint(x) ((P)((((int)x)<<2)|1))   // TODO: KEEP IN SYNC WITH BOOT.GOO!!!
 IMPORTEXPORT extern P YPchr (P);
 IMPORTEXPORT extern P YPflo (P);
 IMPORTEXPORT extern P YPsb (P);
@@ -719,12 +701,14 @@ IMPORTEXPORT extern P YPsrc_loc (P,P);
 
 /* BOXES */
 
-#define BOXVAL(x)  (*((P*)(x)))
+#define BOXVALOFFSET 0
+#define BOXGET(x)    (YPprop_elt(x, (P)BOXVALOFFSET))
+#define BOXPUT(v,x)  (YPprop_elt_setter(v, x, (P)BOXVALOFFSET))
 IMPORTEXPORT extern P BOXFAB(P x);
 
 #define YPvm_box_fab              BOXFAB
-#define YPvm_box_val              BOXVAL
-#define YPvm_box_val_setter(v, x) (BOXVAL(x) = (v))
+#define YPvm_box_val(x)           BOXGET(x)
+#define YPvm_box_val_setter(v, x) BOXPUT(v, x)
 
 /* FUNCTION CODE */
 
@@ -736,14 +720,24 @@ IMPORTEXPORT extern P BOXFAB(P x);
 IMPORTEXPORT extern P regsym (P* adr, char *modstr, char *namestr);
 IMPORTEXPORT extern P YPdo_runtime_bindings (P fun);
 
+/* EOF OBJECT */
+
+STATIC_NOT_GRT_C INLINE P YPeof_objectQ (P x) { 
+  return (P)(PLOG)((PINT)x == EOF); 
+}
+
+STATIC_NOT_GRT_C INLINE P YPeof_object () { 
+  return (P)EOF; 
+}
+
 /* LOCATIVES */
 
-STATIC_NOT_PRT_C  INLINE P YPloc_val (P loc) {
+STATIC_NOT_GRT_C  INLINE P YPloc_val (P loc) {
   P* ptr = (P*)((PADR)loc & ~tag_mask);
   return *ptr;
 }
 
-STATIC_NOT_PRT_C  INLINE P YPloc_val_setter (P val, P loc) {
+STATIC_NOT_GRT_C  INLINE P YPloc_val_setter (P val, P loc) {
   P* ptr = (P*)((PADR)loc & ~tag_mask);
   return *ptr = val;
 }
@@ -844,16 +838,16 @@ typedef struct {
   P     binding;    
 } DLVAR_DAT, *DLVAR;
 
-STATIC_NOT_PRT_C INLINE P YevalSast_evalYPdlvar_nam(P x) { 
+STATIC_NOT_GRT_C INLINE P YevalSast_evalYPdlvar_nam(P x) { 
   return (((DLVAR)(x))->var_name); 
 }
-STATIC_NOT_PRT_C INLINE P YevalSast_evalYPdlvar_mod(P x) {
+STATIC_NOT_GRT_C INLINE P YevalSast_evalYPdlvar_mod(P x) {
   return (((DLVAR)(x))->mod_name);
 }
-STATIC_NOT_PRT_C INLINE P YevalSast_evalYPdlvar(P x) {
+STATIC_NOT_GRT_C INLINE P YevalSast_evalYPdlvar(P x) {
   return (((DLVAR)(x))->binding);
 }
-STATIC_NOT_PRT_C INLINE P YevalSast_evalYPdlvar_setter(P v, P x) {
+STATIC_NOT_GRT_C INLINE P YevalSast_evalYPdlvar_setter(P v, P x) {
   return ((((DLVAR)(x))->binding)=(v));
 }
 

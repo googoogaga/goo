@@ -1,6 +1,8 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 
 ;;; TYPE PROTOCOL
@@ -53,3 +55,150 @@
 (df t? (x) (t+ x (t= #f)))
 
 (need-implementation as len 2nd any? all2?)
+
+;;; TYPE PROTOCOL
+
+;;; SUBTYPE?
+(dg subtype? (t1|<type> t2|<type> => <log>))
+
+(dm subtype? (t1|<union> t2|<type> => <log>)
+  (@all? (fun (t) (@subtype? t t2)) (%union-elts t1)))
+(dm subtype? (t1|<type> t2|<union> => <log>)
+  (@any? (fun (t) (@subtype? t1 t)) (%union-elts t2)))
+;; disambiguate the case where there are two unions.
+(dm subtype? (t1|<union> t2|<union> => <log>)
+  (@all? (fun (t) (@subtype? t t2)) (%union-elts t1)))
+
+(dm subtype? (t1|<class> t2|<class> => <log>)
+  (@subclass? t1 t2))
+(dm subtype? (t1|<singleton> t2|<class> => <log>)
+  (@isa? (%type-object t1) t2))
+(dm subtype? (t1|<subclass> t2|<class> => <log>)
+  (@subclass? <class> t2)) ;    ????????
+
+(dm subtype? (t1|<class> t2|<singleton> => <log>)
+  #f)
+(dm subtype? (t1|<singleton> t2|<singleton> => <log>)
+  (@singleton-isa? (%type-object t1) t2))
+(dm subtype? (t1|<subclass> t2|<singleton> => <log>)
+  #f)
+
+(dm subtype? (t1|<class> t2|<subclass> => <log>)
+  (and (@== t1 <class>) (@== (%type-class t2) <class>)))
+(dm subtype? (t1|<subclass> t2|<subclass> => <log>)
+  (@subclass? (%type-class t1) (%type-class t2)))
+(dm subtype? (t1|<singleton> t2|<subclass> => <log>)
+  (and (@isa? (%type-object t1) <class>)
+       (@subclass? (%type-object t1) (%type-class t2))))
+(dm subtype? (t1|<product> t2|<type> => <log>) #f)
+
+(dm subtype? (t1|<type> t2|<product> => <log>) #f)
+
+(dm subtype? (t1|<product> t2|<product> => <log>)
+  (def te*1 (%product-elts t1)) (def te*2 (%product-elts t2))
+  (and (@== (@tlen te*1) (@tlen te*2))
+       (@tall2? subtype? te*1 te*2)))
+
+(dm subtype? (t1|<product> t2|<class> => <log>)
+  (subtype? <tup> t2))
+
+;;; ISA?
+
+(dg isa? (x t|<type> => <log>))
+
+(dm isa? (o t|<class> => <log>)
+  (@class-isa? o t))
+(dm isa? (o t|<singleton> => <log>)
+  (@singleton-isa? o t))
+(dm isa? (o t|<subclass> => <log>)
+  (and (@isa? o <class>)
+       (@subclass? o (%type-class t))))
+(dm isa? (o u|<union> => <log>)
+  (@any? (fun (t) (@isa? o t)) (%union-elts u)))
+(dm isa? (o t|<product> => <log>)
+  (def te* (%product-elts t))
+  (and (isa? o <tup>)
+       (@== (@tlen o) (@tlen te*))
+       (@tall2? isa? o te*)))
+
+;;; ORDER-SPECS
+(dg order-specs (t1|<type> t2|<type> arg|<any>
+                 => (tup order|<sym> canonical-type|<type>)))
+
+(dm order-specs (t1|<singleton> t2|<singleton> arg
+                 => (tup order|<sym> canonical-type|<type>))
+  (@tup '= t1))
+
+(dm order-specs (t1|<singleton> t2|<type> arg
+                 => (tup order|<sym> canonical-type|<type>))
+  (@tup '< t1))
+
+(dm order-specs (t1|<subclass> t2|<subclass> arg 
+                 => (tup order|<sym> canonical-type|<type>))
+  (def c1 (%type-class t1))
+  (def c2 (%type-class t2))
+  (cond
+    ((@== c1 c2)         (@tup '= t1))
+    ((@class< c1 c2 arg) (@tup '< t1))
+    (#t                  (@tup '> t2))))
+
+(dm order-specs (t1|<subclass> t2|<class> arg 
+                 => (tup order|<sym> canonical-type|<type>))
+  (@tup (if (@subtype? <class> t2) ;; TODO: THIS SEEMS WRONG
+            (if (@== t1 <any>)
+                (order-specs <class> t2 arg)
+                '<)
+            '<>)
+        t1))
+
+(dm order-specs (t1|<class> t2|<subclass> arg 
+                 => (tup order|<sym> canonical-type|<type>))
+  (@tup (if (@subtype? <class> t1) ;; TODO: THIS SEEMS WRONG
+            (if (@== t2 <any>)
+                (order-specs t1 <class> arg)
+                '>)
+            '<>)
+        t2))
+
+(dm order-specs (t1|<class> t2|<class> arg 
+                 => (tup order|<sym> canonical-type|<type>))
+  (@order-specs-class t1 t2 arg))
+
+(dm order-specs (t1|<type> t2|<type> arg 
+                 => (tup order|<sym> canonical-type|<type>))
+  (if (@subtype? t1 t2)
+      (@tup (if (@subtype? t2 t1) '= '<) t1)
+      (if (@subtype? t2 t1)
+          (@tup '>  t2)
+          (@tup '<> <any>))))
+
+;;; MAY-ISA?: class contains => (some? all?) instances of type
+(dg may-isa? (c|<class> t|<type> => (tup some?|<log> all?|<log>)))
+
+(dm may-isa? (c|<class> t|<class> => (tup some?|<log> all?|<log>))
+  (if (@subclass? c t) (@tup #t #t) (@tup #f #f)))
+(dm may-isa? (c|<class> t|<singleton> => (tup some?|<log> all?|<log>))
+  (@tup (@may-isa? (%class-of (%type-object t)) c) #f))
+(dm may-isa? (c|<class> t|<subclass> => (tup some?|<log> all?|<log>))
+  (def class? (@subtype? c <class>))
+  (@tup class? (and class? (@== (%type-class c) <any>))))
+(dm may-isa? (c|<class> t|<union> => (tup some?|<log> all?|<log>))
+  (rep loop ((some? #f) (all? #f) (elts (%union-elts t)))
+    (if (@empty? elts)
+        (@tup some? all?)
+        (let ((elt-some-all? (@may-isa? c (@head elts)))
+              (elt-some?     (@telt elt-some-all? 0))
+              (elt-all?      (@telt elt-some-all? 1)))
+          (loop (or elt-some? some?) (or elt-all? all?) (@tail elts))))))
+(dm may-isa? (c|<class> t|<product> => (tup some?|<log> all?|<log>))
+  (def tup?  (@== c <tup>))
+  (def some? (and tup? (@tany? (fun (t) (@telt (may-isa? <any> t) 1))
+                               (%product-elts t))))
+  (tup tup? some?))
+
+(export
+  isa?
+  subtype?
+  may-isa?
+  order-specs
+)

@@ -2,7 +2,7 @@
 
 (use goo/boot)
 (use goo)
-(use goo/runtime)
+(use goo/loc)
 (use cols/priority-queue)
 (use eval/ast)
 (use eval/top)

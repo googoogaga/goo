@@ -1,0 +1,292 @@
+(use goo/boot)
+(use goo/fun)
+
+;;; Temporary, compile-time-only macros.  These are used by this file only--
+;;; we never export them.  The real definitions live in macros.goo.
+
+(dss (unless ,test ,@body) `(if (@not ,test) (seq ,@body)))
+
+(dss (when ,test ,@body) `(if ,test (seq ,@body)))
+
+(dss (or ,@rest)
+  (mif ((,x ,@rest) rest)
+       (mif (() rest) x `(let ((tmp ,x)) (if tmp tmp (or ,@rest))))
+       #f))
+
+(dss (and ,@rest)
+  (mif ((,x ,@rest) rest)
+       (mif (() rest) x `(if ,x (and ,@rest) #f))
+       #t))
+
+(dv <parents> <lst>)
+(dv <props>   <lst>)
+
+(df object-class (x) (%class-of x))
+(dv class-of object-class)
+(df @class-ancestors (x) (%class-ancestors x))
+
+(df class-ordered-ancestors (c|<class> => <parents>)
+  (def parents (%class-parents c))
+  (rep merge-lists 
+        ((partial-cpl|<lst>     (@lst c)) 
+         (remaining-lists|<lst> (@add (@map @class-ancestors parents) parents)))
+    ;; the partial-cpl is in reverse order at this point.
+    (if (@all? @@empty? remaining-lists)
+        (@rev! partial-cpl)
+        (loc ((candidate (c) ;; return c if it can go in result now, else false
+                (loc ((tail? (l|<lst>) (@mem? (@tail l) c)))
+                  (and (not (@any? tail? remaining-lists)) c)))
+              (candidate-at-head (l|<lst>)
+                (and (not (@empty? l)) (candidate (@head l)))))
+          (def next (@any? candidate-at-head remaining-lists))
+          (if next
+              (loc ((del-next (l|<lst>) (if (@== (@head l) next) (@tail l) l)))
+                (merge-lists
+                 (@pair next partial-cpl) (@map del-next remaining-lists)))
+              (cpl-error "inconsistent precedence graph"))))))
+
+(df @class-direct-props (x) (%class-direct-props x))
+
+(df class-ordered-props (x|<class> => <props>)
+  (def props
+    (@del-dups
+     (@fold @cat2 '() (@map @class-direct-props (@rev (%class-ancestors x))))))
+  (set (%class-prop-len x) (@len props))
+  props)
+
+(df del-class (class|<class>)
+  ;; TODO: DEL ALL DIRECT-PROPS
+  ;; TODO: FLUSH ALL GEN'S ON ALL PROPS
+  ;; TODO: DEL SELF FROM ALL DIRECT-PARENTS
+  )
+
+(dv *next-class-id* 0)
+(dv $max-classes    500)
+
+(df init-class (x)
+  (when (@< $max-classes *next-class-id*)
+    (internal-error "Too many classes %=" $max-classes))
+  (when (@== (@len (%class-parents x)) 0)
+    (internal-error "Need at least one parent in class definition"))
+  (set (%class-id x)   *next-class-id*)
+  (set *next-class-id* (@+ *next-class-id* 1))
+  (unless (@== x <any>)
+    (@do (fun (parent) 
+           (set (%class-children parent)
+                (@add-new (%class-children parent) x)))
+         (%class-parents x))
+    (set (%class-ancestors x) (class-ordered-ancestors x)))
+  (def row (%str (%iu $max-classes) (%iu 0)))
+  (set (%class-row x)       row)
+  (@do (fun (ancestor) (set (%selt row (%iu (%class-id ancestor))) (%iu 1)))
+       (%class-ancestors x))
+  (set (%class-props x)     (class-ordered-props x))
+  x)
+
+(df fab-class (name|<sym> parents|<parents> => <class>)
+  (def x (%class 0 name parents '() '() '() '() '() '() #f #f -1 nul))
+  (init-class x)
+  x)
+
+(df refab-class (old-class|<class> parents|<parents> => <class>)
+  ;; TODO: WHAT TO DO WITH OLD PROPS? -- REUSE THEM FOR NOW
+  ;;       EXCEPT ALL OLD METS ARE SPEC'D ON OLD-CLASS
+  ;; TODO: NEED CONCRETE-CLASS CLASS FOR THIS
+  (def new-class (fab-class parents (%class-direct-props old-class)))
+  (set (%class-forward old-class) new-class)
+  new-class)
+
+;; TRAMPOLINE META METHODS
+;; TODO: OBSOLETE
+
+(dss (def-object-class-accessor ,name)
+  `(df ,(cat-sym "object-" name) (x) 
+     (,(cat-sym "%class-" name) (%class-of x))))
+
+(def-object-class-accessor props)
+(def-object-class-accessor parents)
+
+;;;
+;;; PROPS
+;;;
+
+(dv $getter-not-found -1)
+
+(df ensure-fresh-object (x)
+  (when (%class-forward (%class-of x)) ;; stale object?
+    (update-instance-for-changed-class x)))
+
+(df prop-offset (object getter|<fun> => <fixnum>)
+  (rep loop ((i 0) (props (object-props object)))
+    (if (@empty? props)
+        $getter-not-found
+        (if (@== (%prop-getter (@head props)) getter)
+            i
+            (loop (@+ i 1) (@tail props))))))
+
+(dv *report-prop-unbound-errors?* #t) ;; TODO: SHOULD BE DDV
+
+(df %prop-unbound-error (x)
+  (if *report-prop-unbound-errors?*
+      (property-unbound-error x)
+      nul))
+
+(df prop-value (object getter|<fun> => <any>)
+  (ensure-fresh-object object)
+  (def offset (prop-offset object getter))
+  (if (@= offset $getter-not-found)
+      (property-not-found-error getter object)
+      (prop-value-at object offset)))
+
+(df prop-bound? (object getter|<fun> => <log>)
+  (ensure-fresh-object object)
+  (def offset (prop-offset object getter))
+  (if (@= offset $getter-not-found)
+      (property-not-found-error getter object)
+      (prop-bound-at? object offset)))
+
+(df prop-value-setter (z object getter|<fun>)
+  (ensure-fresh-object object)
+  (rep loop ((i 0) (props (object-props object)))
+    (if (@empty? props)
+        (property-not-found-error getter object)
+        (let ((prop (@head props)))
+          (if (@== (%prop-getter prop) getter)
+              (if (@isa? z (%prop-type prop))
+                  (set (prop-value-at object i) z)
+                  (property-type-error getter z (%prop-type prop)))
+              (loop (@+ i 1) (@tail props)))))))
+
+(df find-getter (owner|<class> getter|<gen> => <met>)
+  (rep loop ((mets (@fun-mets getter)))
+    (if (@empty? mets)
+        (property-not-found-error getter owner)
+        (let ((met (@head mets)))
+          (if (@== (fun-spec met 0) owner)
+              met
+              (loop (@tail mets)))))))
+
+(df find-setter (owner|<class> type zetter|<gen> => <met>)
+  (rep loop ((mets (@fun-mets zetter)))
+    (if (@empty? mets)
+        (property-not-found-error zetter owner)
+        (let ((met (@head mets)))
+          (if (and (@== (fun-spec met 1) owner) 
+                   (@type-equal? (fun-spec met 0) type))
+              met
+              (loop (@tail mets)))))))
+
+;; CREATE CLONE OF CLASS AND MARK THEM AS FORWARDED CLONE OF ORIGINAL CLASS
+;; ALSO CLEAR ALL ASSOC'D GENERIC DISPATCH CACHES SO THAT THEY TRAP NEXT TIME
+
+(df forward-class (old-class)
+  (def new-class (%clone old-class))
+  (@do (fun (g) (set (%fun-cache g) #f)) (%class-gens old-class))
+  (set (%class-forward old-class) new-class))
+
+(df clone (x) (%clone x))
+
+(df @do-descendents (f x)
+  (def visited '())
+  (rep visit ((x x))
+    (unless (@mem? visited x)
+      (set visited (@add visited x))
+      (f x) 
+      (@do visit (%class-children x)))))
+
+(df finalize-props (class|<class>)
+  (set (%class-props class) (class-ordered-props class))
+  ;; FLUSH ACCESSOR GENERIC CACHES CAUSE THEY HOLD POTENTIALLY 
+  ;; OUTDATED PROP OFFSETS 
+  (@do (fun (prop) (set (%fun-cache (%prop-getter prop)) #f))
+       (%class-props class)))
+
+(df %prop (owner|<class> getter|<gen> setter|<any> type|<type> init|<fun>)
+  ;; TODO: FORWARD CONDITIONALLY
+  ;; (@do-descendents forward-class owner)
+  (def class      owner)
+  (def prop       (@new <prop>         prop-owner  owner
+                    prop-getter getter prop-setter setter
+                    prop-type   type   prop-init   init))
+  ;; ACCESSORS STORE PROP IN THEIR ENVIRONMENT
+  (def getter-met (find-getter owner getter))
+  (set (%met-env getter-met) prop)
+  (when setter
+    (def setter-met (find-setter owner type setter))
+    (set (%met-env setter-met) prop))
+  (set (%class-direct-props class)
+       (@cat2 (%class-direct-props class) (@lst prop)))
+  (@do-descendents finalize-props owner)
+  prop)
+
+(dl %update-instance-for-changed-class (new-object)
+;;  (def old-class (%class-of new-object))
+;;  (def new-class (%class-forward old-class))
+;;  (def old-object (%make-object))
+;;    ;; capture old values in temporary container
+;;    (set (%object-values old-object) (%object-values new-object))
+;;    ;; allocate new values in existing object and set new class
+;;    (%install-object-values new-object (%%len (%class-props new-class)))
+;;    (set (%object-class new-object) new-class)
+;;    ;; copy correlated prop values from old to new
+;;    (rep loop-old-props ((old-props (%class-props old-class)) (old-offset 0))
+;;      (unless (@empty? old-props)
+;;        (let ((old-prop   (@head old-props))
+;;            (getter     (%prop-getter old-prop))
+;;            (new-offset (prop-offset new-object getter)))
+;;        (unless (@= new-offset $getter-not-found)
+;;          (set (prop-value-at new-object new-offset) 
+;;               (prop-value-at old-object old-offset))
+;;          (loop-old-props (@tail old-props) (@+ old-offset 1))))))
+    new-object) ;; )
+
+(df update-instance-for-changed-class (object)
+  (%update-instance-for-changed-class object))
+
+(dv add-prop %prop)
+
+;; PATCH EARLY CLASSES FOR MULTIPLE-INHERITANCE
+(df patch-early-classes ()
+  (set *early-classes* (@rev! *early-classes*))
+  (@do init-class *early-classes*)
+  (set %classes-ready? #t))
+
+(patch-early-classes)
+
+(dg new (parent|<type> inits|... => <any>))
+
+(dl (%new inline-c) (parent|<class> inits|<opts> => <any>)
+  (def object (%object-of parent (%iu (%class-prop-len parent))))
+  (def num    (@olen inits))
+  (rep loop ((i 0))
+    (when (@< i num)
+      (def getter (@oelt inits i)) (def val (@oelt inits (@+ i 1)))
+      (set (prop-value object getter) val)
+      (loop (@+ i 2))))
+  object)
+
+(df @new (parent|<class> inits|... => <any>)
+  (%new parent inits))
+
+(dm new (parent|<class> inits|... => <any>)
+  (%new parent inits))
+
+(export
+  fab-class
+  class-of
+  object-class class-of
+  prop-value        ;; TODO: remove these when they can be called directly 
+  prop-value-setter ;; TODO: w/o being exported
+  prop-bound?       ;; TODO: w/o being exported
+  find-getter
+  find-setter
+  clone
+  object-parents
+  object-props
+  %prop %prop-unbound-error
+  add-prop
+  new
+  *report-prop-unbound-errors?*
+  prop-offset
+)
+

@@ -66,6 +66,11 @@
 
 ;; DEFINITIONS -- (DEFINE foo ...)
 
+(dv $sexpr-define-constant-tag 'd.)
+
+(dm sexpr-define-constant? (exp => <log>)
+  (sexpr-tagged-list? exp $sexpr-define-constant-tag))
+
 (dv $sexpr-define-tag 'dv)
 
 (dm sexpr-definition? (exp => <log>)
@@ -533,6 +538,11 @@
 
 (dv $sexpr-prop-tag 'dp)
 
+(dv $sexpr-prop!-tag 'dp!)
+
+(dm sexpr-prop!? (exp => <log>)
+  (sexpr-tagged-list? exp $sexpr-prop!-tag))
+
 (dm sexpr-prop? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-prop-tag))
 
@@ -748,6 +758,7 @@
   sexpr-define-class?
   sexpr-define-class-parents
   $sexpr-define-tag
+  $sexpr-define-constant-tag
   sexpr-definition-value
   sexpr-definition-variable
   sexpr-expand-backquote
@@ -808,6 +819,7 @@
   sexpr-prop-owner
   sexpr-prop-type
   $sexpr-prop-tag
+  $sexpr-prop!-tag
   sexpr-syntax-definition-value
   sexpr-syntax-definition-variable
   sexpr-syntax-if-else

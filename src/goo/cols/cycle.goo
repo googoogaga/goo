@@ -1,6 +1,8 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/types)
 (use goo/math)
@@ -18,7 +20,7 @@
   (new <cycle> cycle-elts (as <tup> e)))
  
 (dc <cycle-enum> (<enum>))
-(dp %key (<cycle-enum> => <int>) 0)
+(dp! %key (<cycle-enum> => <int>) 0)
 (dp %len (<cycle-enum> => <int>))
 (dp %dat (<cycle-enum> => <cycle>))
 (dm enum (x|<cycle> => <cycle-enum>) 

@@ -1,6 +1,8 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/types)
 (use goo/math)
@@ -16,7 +18,7 @@
   packing-with packing-in packing pack-in pack packed)
 
 (dc <sim-packer> (<packer>))
-(dp packer-value (<sim-packer> => <any>))
+(dp! packer-value (<sim-packer> => <any>))
 (dp packer-adder (<sim-packer> => <fun>))
 (dp packer-reser (<sim-packer> => <fun>) (fun (x) x))
 

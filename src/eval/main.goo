@@ -7,14 +7,20 @@
 (use eval/top)
 (use eval/g2c)
 
-;; (use eval/g2m)
-;; (use eval/vm)
+#/
+(use eval/ast-print)
+(use eval/typist)
+(use eval/g2m)
+(use eval/vm)
+/#
 
+#/
 (use time/threads)
 (use time/lock)
 (use time/event)
 (use cols/pipe)
 (use goo/random)
+/#
 
 ;; (use samurui/samurui)
 
@@ -22,16 +28,12 @@
 ;; (use tests)
 ;; (use tests)
 ;; (use beatbox)
-;; (use eval/g2m)
-;; (use eval/typist)
-;; (use eval/optimize)
-;; (use eval/ast-print)
 
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.149")
-(dv *goo-date*    "SEP 07, 2002")
+(dv *goo-version* "0.150")
+(dv *goo-date*    "SEP 11, 2002")
 
 (post ";;; GOO\n")
 (post ";;; JONATHAN BACHRACH\n")

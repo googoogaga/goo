@@ -246,11 +246,17 @@
 
 (ds (pub ,@def)
   (let ((defs (match def
+                ;; ((dp ,name ,@rest)
+                ;;  `(,def (export ,name) (export ,(fab-setter-name name))))
                 ((dp ,name ,@rest)
-                 `(,def (export ,name) (export ,(fab-setter-name name))))
+                  `(,def (export ,name)))
+                ((dp! ,name ,@rest)
+                  `(,def (export ,name) (export ,(fab-setter-name name))))
                 ((df ,name ,@rest)
                  `(,name (export ,name)))
                 ((dv ,name ,@rest)
+                 `(,def (export ,name)))
+                ((d. ,name ,@rest)
                  `(,def (export ,name)))
                 ((dg ,name ,@rest)
                  `(,def (export ,name)))
@@ -280,7 +286,6 @@
   empty?
   error
   gensym
-  lst
   fab-setter-name
   cat-sym
   map map2
@@ -324,7 +329,8 @@
   pub exported
   lift-place-subforms
   without-prop-unbound-errors
-  *report-prop-unbound-errors?*)
+)
 
 (export ;; hygiene
-  @checked-next-methods)
+  @checked-next-methods
+  )

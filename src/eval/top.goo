@@ -6,7 +6,6 @@
 (use goo/conditions)
 (use eval/syntax)
 (use eval/ast)
-(use eval/ast-linearize)
 (use eval/ast-eval)
 
 (df esctst ()
@@ -30,6 +29,11 @@
 
 (dm str-parse (s|<str> modname|<sym>)
   (str-parse-in s (runtime-environment modname)))
+
+(dg vm-evaluate (ast env))
+
+(df %%bottom%%vm-run (ast ct-env)
+  (vm-evaluate ast ct-env))
 
 (df %%bottom%%ast-run (ast ct-env)
   (ast-evaluate ast))
@@ -94,7 +98,6 @@
 
 (dm load (name modname|<sym>)
   (def realfile (find-goo-file-in-path name *module-search-path*))
-;  (msg out "Loading file %s\n" realfile)
   (unless realfile
     (file-opening-error name))
   (load-file realfile modname))
@@ -222,6 +225,8 @@
                    (when $g2c-eval? (set run %%bottom%%g2c-run)))
                   ((cmd_ast-eval)
                    (set run %%bottom%%ast-run))
+                  ((cmd_vm-eval)
+                   (set run %%bottom%%vm-run))
                   ((cmd_auto-eval)
                    (when $g2c-eval? (set run auto-run)))
                   ((cmd_bt)
@@ -265,5 +270,6 @@
   backtrace bt frame frame-var
   save-image
   g2c-eval
+  vm-evaluate
   esctst
   $ $$ $$$)

@@ -1,9 +1,12 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/mag)
 (use goo/types)
+(use goo/%math.c)
 
 (dm to-str (x|<any> => <str>)
   (cat "{ obj(" (to-str (class-name (class-of x))) ") }"))
@@ -338,6 +341,32 @@
         (search (+ po2 po2)))))
 
 ;;; FLO
+
+(dl %fi2f)
+(dl %f=)
+(dl %f<)
+(dl %f+)
+(dl %f*)
+(dl %f-)
+(dl %f/)
+(dl %ft)
+(dl %ft/)
+(dl %ff)
+(dl %fc)
+(dl %flo-bits)
+(dl %fpow)
+(dl %flog)
+(dl %fsqrt)
+(dl %fsin)
+(dl %fcos)
+(dl %ftan)
+(dl %fasin)
+(dl %facos)
+(dl %fatan)
+(dl %fatan2)
+(dl %fsinh)
+(dl %fcosh)
+(dl %ftanh)
 
 (df flo-bits (x|<flo> => <int>)
   (%ib (%flo-bits (%fu x))))

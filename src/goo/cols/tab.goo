@@ -1,6 +1,8 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/types)
 (use goo/math)
@@ -35,7 +37,7 @@
 )
 (dc <tab-vec> (<seq!>))
   ;; Number of filled and vacant elements
-  (dp %vacated (<tab-vec> => <int>) 0)
+  (dp! %vacated (<tab-vec> => <int>) 0)
   ;; Modulus values for primary and secondary hash
   (dp %primary-modulus (<tab-vec> => <int>))
   (dp %secondary-modulus (<tab-vec> => <int>))
@@ -43,12 +45,12 @@
   (dp %n-buckets (<tab-vec> => <int>))
   (dp %bucket-depth (<tab-vec> => <int>))
   ;; The actual table data representation
-  (dp %data (<tab-vec> => <rep>))
+  (dp! %data (<tab-vec> => <rep>))
   ;; GC state
   ;; (dp %gc-state (<tab-vec> => <any>))
 
-(dp %count (<tab> => <int>) 0)
-(dp %vector (<tab> => <tab-vec>))
+(dp! %count (<tab> => <int>) 0)
+(dp! %vector (<tab> => <tab-vec>))
 
 (exported
  (dg tab-hash (x|<tab> => <fun>))
@@ -111,13 +113,13 @@
 (df @fill! (x|<tab-vec> fill)
   (rep-fill! (%data x) fill))
 
-;; (dl (@elt inline) (vector|<tab-vec> index|<int> => <any>) ;; TODO: DM
-(dl @elt (vector|<tab-vec> index|<int> => <any>) ;; TODO: DM
+;; (dl (@velt inline) (vector|<tab-vec> index|<int> => <any>) ;; TODO: DM
+(dl @velt (vector|<tab-vec> index|<int> => <any>) ;; TODO: DM
   ;; (elt (%data vector) index)
   (%relt (%data vector) (%iu index)))
 
-;; (dl (@elt-setter inline) (new-value vector|<tab-vec> index|<int> => <any>) 
-(dl @elt-setter (new-value vector|<tab-vec> index|<int> => <any>) 
+;; (dl (@velt-setter inline) (new-value vector|<tab-vec> index|<int> => <any>) 
+(dl @velt-setter (new-value vector|<tab-vec> index|<int> => <any>) 
   ;; (set (elt (%data vector) index) new-value)
   (set (%relt (%data vector) (%iu index)) new-value))
 
@@ -171,11 +173,11 @@
         (let ((index (* bucket-index (* bucket-depth 2))))
           (rep inner ((i 0) (raw-index index))
             (if (< i bucket-depth)
-                (let ((this-key (@elt vector raw-index)))
+                (let ((this-key (@velt vector raw-index)))
                   (cond ((== this-key $empty-cell-marker)
                          default)
                         ((test-function key this-key)
-                         (@elt vector (+ raw-index bucket-depth)))
+                         (@velt vector (+ raw-index bucket-depth)))
                         (#t
                          (inner (+ i 1) (+ raw-index 1)))))
                 ;; Not in this bucket try the next one
@@ -212,7 +214,7 @@
           ;; (trace out "LOOKING AT %=\n" index)
           (rep inner ((vacancy-index #f) (i|<int> 0) (raw-index|<int> index))
             (if (< i bucket-depth)
-                (let ((this-key (@elt vector raw-index)))
+                (let ((this-key (@velt vector raw-index)))
                   (cond
                     ;; end of chain and not found
                     ((== this-key $empty-cell-marker)
@@ -224,8 +226,8 @@
                            raw-index))
                      ;; (trace out "FOUND EMPTY CELL @ %d\n"
                      ;;        raw-index)
-                     (set (@elt vector index) key)
-                     (set (@elt vector (+ index bucket-depth)) value)
+                     (set (@velt vector index) key)
+                     (set (@velt vector (+ index bucket-depth)) value)
                      (incf (%count table))
                      value)
                     ((== this-key $vacated-cell-marker) ;; remember vacancy
@@ -234,7 +236,7 @@
                       (or vacancy-index raw-index) (+ i 1) (+ raw-index 1)))
                     ;; key already in table update value
                     ((test-function key this-key)
-                     (set (@elt vector (+ raw-index bucket-depth)) value)
+                     (set (@velt vector (+ raw-index bucket-depth)) value)
                      ;; (trace out "FOUND KEY @ %d\n" raw-index)
                      value)
                     (#t
@@ -263,14 +265,14 @@
           ;; (trace out "LOOKING AT %=\n" index)
           (rep inner ((i|<int> 0) (raw-index|<int> index))
             (if (< i bucket-depth)
-                (let ((this-key (@elt vector raw-index)))
+                (let ((this-key (@velt vector raw-index)))
                   (cond ((== this-key $empty-cell-marker) 
                          #f)
                         ;; N.B. Don't look at already vacated cells along
                         ;;      the collision chain 
                         ((and (~== this-key $vacated-cell-marker)
                               (test-function key this-key))
-                         (set (@elt vector raw-index) $vacated-cell-marker)
+                         (set (@velt vector raw-index) $vacated-cell-marker)
                          ;; In a GC-ed environment clear the value cell too!
                          (decf (%count table))
                          (incf (%vacated vector))
@@ -292,12 +294,12 @@
     (when (< b n-buckets)
       (rep inner ((i|<int> 0))
         (when (< i depth)
-          (def key (@elt vector (+ i (* b (* depth 2)))))
+          (def key (@velt vector (+ i (* b (* depth 2)))))
           (unless (or (== key $empty-cell-marker) 
                       (== key $vacated-cell-marker))
             ;; (trace out "B %= I %=\n" b i)
             (def index (+ i (+ (* b (* depth 2)) depth)))
-            (function key (@elt vector index)))
+            (function key (@velt vector index)))
           (inner (+ i 1))))
       (outer (+ b 1)))))
 
@@ -309,11 +311,11 @@
     (when (< b n-buckets)
       (rep inner ((i|<int> 0))
         (when (< i depth)
-          (def key (@elt vector (+ i (* b (* depth 2)))))
+          (def key (@velt vector (+ i (* b (* depth 2)))))
           (unless (or (== key $empty-cell-marker) 
                       (== key $vacated-cell-marker))
             (def index (+ i (+ (* b (* depth 2)) depth)))
-            (function (@elt vector index)))
+            (function (@velt vector index)))
           (inner (+ i 1))))
       (outer (+ b 1)))))
 
@@ -326,9 +328,9 @@
   (%count table))
 
 (dc <tab-enum> (<enum>))
-(dp @vec  (<tab-enum> => <tab-vec>))
-(dp @buc  (<tab-enum> => <int>))
-(dp @idx  (<tab-enum> => <int>))
+(dp! @vec  (<tab-enum> => <tab-vec>))
+(dp! @buc  (<tab-enum> => <int>))
+(dp! @idx  (<tab-enum> => <int>))
 (dp @fin? (<tab-enum> => <log>) #f)
 (dv $fin-enum (new <tab-enum> @fin? #t))
 
@@ -342,7 +344,7 @@
           (if (< b n-buckets)
               (rep inner ((i|<int> 0))
                 (if (< i depth)
-                    (let ((key (@elt vector (+ i (* b (* depth 2))))))
+                    (let ((key (@velt vector (+ i (* b (* depth 2))))))
                       (if (or (== key $empty-cell-marker)
                               (== key $vacated-cell-marker))
                           (inner (+ i 1))
@@ -360,7 +362,7 @@
     (if (< b n-buckets)
       (rep inner ((i|<int> (if first? (+ index 1) 0)))
         (if (< i depth)
-            (let ((key (@elt vector (+ i (* b (* depth 2))))))
+            (let ((key (@velt vector (+ i (* b (* depth 2))))))
               (if (or (== key $empty-cell-marker)
                       (== key $vacated-cell-marker))
                   (inner (+ i 1))
@@ -374,18 +376,18 @@
 (dm now-key (e|<tab-enum> => <any>)
   (def vector (@vec e))
   (def depth  (%bucket-depth vector))
-  (@elt vector (+ (@idx e) (* (@buc e) (* depth 2)))))
+  (@velt vector (+ (@idx e) (* (@buc e) (* depth 2)))))
 
 (dm now (e|<tab-enum> => <any>)
   (def vector (@vec e))
   (def depth  (%bucket-depth vector))
-  (@elt vector (+ (@idx e) (+ depth (* (@buc e) (* depth 2))))))
+  (@velt vector (+ (@idx e) (+ depth (* (@buc e) (* depth 2))))))
 
 (dm now-setter (value e|<tab-enum>)
   (def vector (@vec e))
   (def index  (@idx e))
   (def depth  (%bucket-depth vector))
-  (set (@elt vector (+ index (+ depth (* (@buc e) (* depth 2))))) value))
+  (set (@velt vector (+ index (+ depth (* (@buc e) (* depth 2))))) value))
 
 ;;; Internal functions
 
@@ -463,12 +465,12 @@
                   (* new-bucket-index (* new-bucket-depth 2))))
              (rep inner ((i|<int> 0) (index|<int> bucket-start))
                (if (< i new-bucket-depth)
-                   (let ((this-key (@elt new-vector index)))
+                   (let ((this-key (@velt new-vector index)))
                      (if (== this-key $empty-cell-marker)
                          ;; (trace out "COPYING TO (%= %=) %=\n" k v index)
                          (seq
-                           (set (@elt new-vector index) k)
-                           (set (@elt new-vector (+ index new-bucket-depth)) v))
+                           (set (@velt new-vector index) k)
+                           (set (@velt new-vector (+ index new-bucket-depth)) v))
                          (inner (+ i 1) (+ index 1))))
                    ;; No room in this bucket try the next one
                    (outer
@@ -515,11 +517,11 @@
 (dm elt-type (x|<str-tab> => <type>) <sym>)
 
 (df case-insensitive-string-hash (x|<str> => <int>)
-  (def s 0) (def e (len x))
-  (rep loop ((i|<int> s) (hash|<int> 0))
+  (def e (len x))
+  (rep loop ((i|<int> 0) (hash|<int> 0))
     (if (< i e)
-        (loop (+ i 1);; #x9f
-              (mod (+ (<< hash 6) (& (as <int> (elt x i)) 159)) 970747))
+        (loop (+ i 1)
+              (mod (+ (<< hash 6) (& (as <int> (low-elt x i)) #x9f)) 970747))
         hash)))
 
 (df case-insensitive-string-equal (x|<str> y|<str> => <log>)
@@ -527,8 +529,8 @@
   (when (== (len x) (- ey sy))
     (rep loop ((i|<int> sy))
       (or (== i ey)
-          (let ((cx|<chr> (elt x (- i sy)))
-                 (cy|<chr> (elt y i)))
+          (let ((cx|<chr> (low-elt x (- i sy)))
+                (cy|<chr> (low-elt y i)))
             (and (or (== cx cy) (== (to-lower cx) (to-lower cy)))
                  (loop (+ i 1))))))))
 

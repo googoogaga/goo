@@ -1,6 +1,8 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/math)
 (use goo/types)
@@ -22,8 +24,8 @@
  
 
 ;;;;!! Implementation
-  (dp vec-len (<vec> => <int>) 0)
-  (dp vec-dat (<vec> => <rep>) (rep-nul))
+  (dp! vec-len (<vec> => <int>) 0)
+  (dp! vec-dat (<vec> => <rep>) (rep-nul))
 
 ;;;; Collection protocol
 

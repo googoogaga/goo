@@ -14,6 +14,8 @@
 (use eval/ast)
 (use eval/top)
 (use eval/ast-linearize)
+(use eval/typist)
+(use eval/optimize)
 
 (ddv *definitions*      #f)
 (ddv *dynamic-linking?* #f)
@@ -29,8 +31,8 @@
   (dp module-loader-app-modname (<g2c-module-loader> => <sym>))
 
 (dc <g2c-module> (<module>))
-  (dp module-src-file (<g2c-module> => <str>))
-  (dp module-mtime (<g2c-module> => <flo>))
+  (dp! module-src-file (<g2c-module> => <str>))
+  (dp! module-mtime (<g2c-module> => <flo>))
 
 (dm module-loader-module-type (loader|<g2c-module-loader> => <type>)
   <g2c-module>)
@@ -181,7 +183,7 @@
   (def prg (extract-things! lft))
   (%print-cpu-usage (%su "EXT"))
   ;; (msg* out "EXT %=\n" prg)
-  (def flt (closurize-main! prg env 64))
+  (def flt (closurize-main! prg env 50))
   (%print-cpu-usage (%su "CLO"))
   ;; (msg* out "FLT %=\n" flt)
   (gather-temporaries! flt)
@@ -624,21 +626,6 @@
 (df binding->c (binding out)
   (puts out (mangle-binding binding)))
 
-;; (dm binding->c (binding|<module-binding> out)
-;;   (if (== (binding-kind binding) 'quotation)
-;;       (msg* out "lit_%s" (binding-name binding))
-;;       (puts out (mangle-module-binding binding))))
-;; 
-;; (dm binding->c (binding|<local-binding> out)
-;;   (puts out (mangle-local-name (binding-name binding))))
-;; 
-;; (dm binding->c (binding|<renamed-local-binding> out)
-;;   (puts out
-;;     (mangle-local-marked-name (binding-name binding) (binding-index binding))))
-;; 
-;; (dm binding->c (binding|<local-binding> out)
-;;   (puts out (mangle-local-binding binding)))
-
 ;;; WORKS FOR LOCAL- GLOBAL- PREDEFINED- REFERENCES EXCEPT FOR FREE-REFERENCES.
 
 (dg reference->c (v|<binding> out))
@@ -722,26 +709,31 @@
 ;; TODO: DOES REF NEED TO BE TO-C'D
 
 (dm to-c (e|<box-read> f d out)
-  (to-c (box-reference e) f d out)
+  (def ref (box-reference e))
   (with-used-expression (e d out)
-    (puts out "BOXVAL")
-    (between-parentheses (out) 
-      (gen-ref (box-reference e) out))))
+    (if (binding-closed-over? (reference-binding ref))
+        { (puts out "BOXGET")
+          (between-parentheses (out) (gen-ref ref out)) }
+        (gen-ref ref out))))
 
 (dm to-c (e|<box-write> f d out)
+  (def ref (box-reference e))
   (to-c (box-form e) f d out)
   (with-expression (e d out)
-    (puts out "BOXVAL")
-    (between-parentheses (out) 
-      (gen-ref (box-reference e) out))
-    (puts out " = ") (gen-ref (box-form e) out)))
+    (if (binding-closed-over? (reference-binding ref))
+        { (puts out "BOXPUT")
+          (between-parentheses-comma-separated (out) 
+            (gen-ref (box-form e) out)
+            (gen-ref ref out)) }
+        { (gen-ref ref out) (puts out " = ") (gen-ref (box-form e) out) })))
 
 (dm to-c (e|<box-creation> f d out)
-  (with-expression (e d out)
-    (def binding (reference-binding (box-reference (box-reference e))))
-    (binding->c binding out)
-    (puts out " = BOXFAB")
-    (between-parentheses (out) (binding->c binding out))))
+  (def binding (reference-binding (box-reference (box-reference e))))
+  (when (binding-closed-over? binding)
+    (with-expression (e d out)
+      (binding->c binding out)
+      (puts out " = BOXFAB")
+      (between-parentheses (out) (binding->c binding out)))))
 
 (dm bb? (x) #f)
 
@@ -777,17 +769,14 @@
 
 (dm to-c (e|<loop> f d out)
   (def n (set (loop-continue e) (incf *loop-arg-counter*)))
-  (gen-depth d out) (msg* out "for (;;) {\n")
+  (gen-depth d out) (msg* out "LOOP_%d: {\n" n)
   (def bindings (loop-bindings e))
   (unless (empty? bindings)
     (with-statement ((+ d 1) out)
       (puts out "P ")
       (for-commas out ((b bindings) (i (from 0)))
         (msg* out "a%d_%d" n i))))
-  (gen-depth d out) (msg* out "loop%d:\n" n)
   (to-c (loop-body e) f (+ d 1) out)
-  (with-statement ((+ d 1) out)
-    (msg* out "break"))
   (gen-depth d out)
   (msg* out "}\n"))
 
@@ -805,7 +794,7 @@
       (binding->c binding out)
       (msg* out " = a%d_%d" n i)))
   (with-statement (d out)
-    (msg* out "goto loop%d" n)))
+    (msg* out "goto LOOP_%d" n)))
 
 (dv $number-call-templates 5)
 

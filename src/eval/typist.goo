@@ -4,39 +4,33 @@
 (use goo/boot)
 (use eval/ast)
 
-(dc <type>       (<any>))
+(dv <bot> #f) ;; TODO:
 
-(dc <prototype>  (<type>))
-  (dp prototype-value (<prototype> => <any>))
+(dm unconstrained-type? (b|<program> => <log>)
+  #f)
 
-(dc <type-union> (<lst> <type>))
+(dm unconstrained-type? (b|<module-binding> => <log>)
+  (and (== (binding-module-name b) 'goo/boot) (== (binding-name b) '<any>)))
 
-(df prototype (x) (new <prototype> prototype-value x))
+(dm unconstrained-type? (o|<module-binding-reference> => <log>)
+  (unconstrained-type? (reference-binding o)))
 
-(dm subtype? (x|<prototype> y|<prototype>)
-  (isa? x y))
-
-(dm subtype? (x|<prototype> y|<type-union>)
-  (any? (fun (t) (isa? x t)) y))
-
-(dm subtype? (x|<type-union> y|<prototype>)
-  (any? (fun (t) (isa? t y)) x))
-
-(dm subtype? (x|<type-union> y|<type-union>)
-  (any? (fun (t) (subtype? t y)) x))
-
-(dm type-union (x|<type> y|<type> => <type-union>)
+(dm type-union (x|<type> y|<type> => <union>)
   (cond
     ((subtype? x y) y)
     ((subtype? y x) x)
-    ((isa? x <type-union>) 
-     (if (isa? y <type-union>)
-         (cat x y)
-         (pair y x)))
+    ((isa? x <union>) 
+     (new <union> 
+       union-elts 
+         (if (isa? y <union>)
+             (cat x y)
+             (pair y x))))
     (#t 
-     (if (isa? y <type-union>)
-         (pair x y)
-         (lst x y)))))
+     (new <union> 
+       union-elts 
+         (if (isa? y <union>)
+             (pair x y)
+             (lst x y))))))
 
 (dm type-infer-check (inferred-type type)
   ;; (msg out "IT %= T %=\n" inferred-type type)
@@ -53,23 +47,20 @@
 (dm do-type-infer (x|<program>)
   (error "NYI"))
 
-(df class-of (x)
-  (traits-owner (object-traits x)))
-
 (dm do-type-infer (x|<constant>)
-  (prototype (class-of (constant-value x))))
+  (class-of (constant-value x)))
 
 (dm do-type-infer (x|<assignment>)
   (type-infer (assignment-form x)))
 
 (dm type-infer-binding (x|<binding>)
   ;; TODO: PRETTY LIMITED
-  (prototype <any>))
+  <any>)
 
 (dm type-infer-binding (x|<local-binding>)
   ;; (msg out "LB %=" x)
   (if (binding-mutable? x)
-      (prototype <any>)
+      <any>
       (type-infer-check (type-infer (binding-type x))
                         (binding-inferred-type x))))
 
@@ -77,18 +68,18 @@
   (type-infer-binding (reference-binding x)))
 
 (dm do-type-infer (x|<bound?>)
-  (prototype <log>))
+  <log>)
 
 (dm do-type-infer (x|<definition>)
-  (prototype #f))
+  (t= #f))
 
 (dm do-type-infer (x|<ast-method>)
   (type-infer (function-body x))
   ;; TODO: TIGHTEN UP
-  (prototype <met>))
+  <met>)
 
 (dm do-type-infer (x|<ast-generic>)
-  (prototype <gen>))
+  <gen>)
 
 (dm do-type-infer (x|<alternative>)
   (type-union (type-infer (alternative-consequent x))
@@ -105,21 +96,26 @@
       (set (binding-inferred-type binding) (type-infer arg))))
   (type-infer (fix-let-body x)))
 
-(dm do-type-infer (x|<locals>)
-  (type-infer (locals-body x)))
-
 ;; TODO: the following are incomplete
 
+(dm do-type-infer (x|<locals>)
+  (do type-infer (locals-functions x))
+  (type-infer (locals-body x)))
+
+(dm do-type-infer (x|<loop>)
+  (type-infer (loop-body x)))
+
 (dm do-type-infer (x|<regular-application>)
-  (prototype <any>))
+  <any>)
 
 (dm do-type-infer (x|<bind-exit>)
-  (prototype <any>))
+  <any>)
 
 (dm do-type-infer (x|<unwind-protect>)
-  (prototype <any>))
+  <any>)
 
 (dm do-type-infer (x|<monitor>)
-  (prototype <any>))
+  <any>)
 
-(export type-infer)
+(export type-infer
+        unconstrained-type?)

@@ -1,6 +1,8 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
 (use goo/math)
 (use goo/types)
@@ -9,6 +11,22 @@
 (use goo/cols/seq)
 (use goo/cols/seqx)
 (use goo/cols/vec)
+(use goo/io/%port.c)
+
+(dl %current-out-port)
+(dl %current-in-port)
+(dl %open-in-file)
+(dl %open-out-file )
+(dl %close-out-port)
+(dl %close-in-port)
+(dl %put)
+(dl %puts)
+(dl %force-out)
+(dl %ready?)
+(dl %get)
+(dl %newline)
+(dl %peek)
+(dl %ready)
 
 (exported
  (dc <port> (<any>))
@@ -17,7 +35,7 @@
  (dg close (x|<port>))
  with-port
  (dc <in-port> (<port>))
- (dp port-line (<in-port> => <int>) 1)
+ (dp! port-line (<in-port> => <int>) 1)
  (dg get (port|<in-port> => <chr>))
  (dg gets (port|<in-port>) => <str>)
  (dg peek (port|<in-port> => <chr>))
@@ -46,12 +64,12 @@
 
  (dc <str-port> (<port>)))
 
-(dp port-guts (<str-port> => <seq>) "")
+(dp! port-guts (<str-port> => <seq>) "")
 
 (exported
  (dg port-contents (port|<str-port> => <str>))
  (dc <str-in-port> (<str-port> <in-port>))
- (dp port-index (<str-in-port> => <int>) 0)
+ (dp! port-index (<str-in-port> => <int>) 0)
  (dc <str-out-port> (<str-port> <out-port>))
  port-to-str)
 

@@ -1,0 +1,35 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
+(use goo/boot)
+(use goo/fun)
+(use goo/class)
+(use goo/macros)
+(use goo/math)
+(use goo/types)
+(use goo/app)
+(use goo/cols/col)
+(use goo/cols/colx)
+(use goo/cols/seq)
+(use goo/cols/seqx)
+(use goo/cols/opts)
+(use goo/cols/lst)
+(use goo/cols/tup)
+(use goo/cols/vec)
+(use goo/cols/tab)
+
+(dv symbols (fab <str-tab> 10000))
+
+(df booted-fab-sym (name)
+  (or (elt-or symbols name #f)
+      (set (elt symbols name) (new <sym> sym-name name))))
+
+(df boot-symbols ()
+  (rep boot ((syms %symbols))
+    (unless (empty? syms)
+      (def sym (head syms)) (set (elt symbols (sym-name sym)) sym)
+      (boot (tail syms)))))
+
+(boot-symbols)
+
+(set fab-sym booted-fab-sym)
+

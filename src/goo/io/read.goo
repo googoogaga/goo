@@ -12,8 +12,9 @@
 ;;   signal (only for use by reading-error; easily excised)
 
 (use goo/boot)
+(use goo/fun)
+(use goo/class)
 (use goo/macros)
-(use goo/runtime)
 (use goo/conditions)
 (use goo/types)
 (use goo/math)
