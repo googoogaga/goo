@@ -1,3 +1,12 @@
+=== 0.92 BUGS ===
+0<= (ds (bar x) (list + 2 2))      
+0=> #f
+0<= (bar 2)
+0=> #f
+0<= (bar x)
+0=> 4
+Expected behavior: An error message or something like that.
+
 === 0.90cvs BUGS ===
 
 0<= (map (fun (c) "-") "abc")
