@@ -12,12 +12,13 @@
   ;; (format out "WALKING %=\n" o)
   (for ((slot (object-slots o)))
     ;; (format out "  SLOT %=\n" slot)
-    (let ((getter (slot-getter slot)))
+    (let ((getter (slot-getter slot))
+          (setter (slot-setter slot)))
       (unless (== getter binding-value) ;; TODO: HACK
-	(let ((x (slot-value o getter)))
+	(let ((x (getter o)))
 	  (when (isa? x <program>)
 	    ;; (format out "    UPDATING %=\n" x)
-	    (set (slot-value o getter) (apply g (pair x args))))))))
+	    (setter (apply g (pair x args)) o))))))
   o)
 
 ;;; BOXING

@@ -147,11 +147,13 @@
 	   ((8) (ifun (env f names a1 a2 a3 a4 a5 a6 a7 a8) body))
 	   ((9) (ifun (env f names a1 a2 a3 a4 a5 a6 a7 a8 a9) body)))))
     ;; TODO: HANDLE MORE THAN 7 CASE
-    (set (fun-name  efun) (as-fun-name f)) 
-    (set (fun-sig efun) ;; TODO: USE ISA
-	 (%sig names (ast-eval-specs specs nary? env) nary?
-	       (- (fun-arity efun) (if nary? 1 0))
-	       (if value (ast-eval value env) <any>)))
+    (set (fun-name  efun) (as-fun-name f))
+    (set (fun-sig efun) (isa <sig>
+                          (set sig-names names)
+                          (set sig-specs (ast-eval-specs specs nary? env))
+                          (set sig-nary? nary?)
+                          (set sig-arity (- (fun-arity efun) (if nary? 1 0)))
+                          (set sig-value (if value (ast-eval value env) <any>))))
     efun))
 
 (dm ast-eval ((e <ast-method>) (env <loc-env>))

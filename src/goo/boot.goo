@@ -12,7 +12,12 @@
 ;;; o INVENT NAMING CONVENTION FOR COMPILE TIME THINGS SAY &...?
 ;;; 
 
-(dv %false (%raw 0)) ;; EARLY DEFINITION
+;; Early definitions, so we at least know false != true
+(dv %false (%raw 0)) 
+(dv %true (%raw 1))
+(dv %check-types? (%raw 0))
+
+(dv %*used-symbols-too-early* (%raw 0))
 
 ;;;
 ;;; BOOT OBJECTS
@@ -140,9 +145,12 @@
 
 (dss (%object-shells)
   `(seq ,@(%map-boot-protos 
-	    (fun (name parent) `(dv ,name (%object-shell))))))
+	    (fun (name parent)
+              `(dv ,name (%object-shell))))))
 
 (%object-shells)
+
+;; now false and true have their permanent values.
 
 (dv %check-types?   #f) ;; READY FOR TYPE-CHECKING?
 (dv %symbols-ready? #f) ;; READY TO BUILD SYMBOLS?
@@ -167,17 +175,17 @@
 
 (dss (%define-structure-accessors ,@slot-names)
   (loc ((getter (name offset) 
-	  `(dp ,(make-sym "%" name) (x)
-	     (%slot-elt x (%raw ,offset))))
-	(setter (name offset)
-	  `(dp ,(make-sym "%" name "-setter") (z x)
-	     (set (%slot-elt x (%raw ,offset)) z))))
+          `(dp ,(make-sym "%" name) (x)
+             (%slot-elt x (%raw ,offset))))
+        (setter (name offset)
+          `(dp ,(make-sym "%" name "-setter") (z x)
+             (set (%slot-elt x (%raw ,offset)) z))))
     (rep loop ((res '()) (i 0) (names slot-names))
       (if (== names '())
-	  `(seq ,@(rev! res))
-	  (let ((name (head names)))
-  	    (loop (pair (getter name i) (pair (setter name i) res))
-		  (+ i 1) (tail names)))))))
+          `(seq ,@(rev! res))
+          (let ((name (head names)))
+            (loop (pair (getter name i) (pair (setter name i) res))
+                  (+ i 1) (tail names)))))))
 
 ;; DEFINE STRUCTURE BASE WITH PREFIX FOR CONSTRUCTOR NAME
 
@@ -238,10 +246,6 @@
         (%pair (%traits-owner traits) 
 	       (%compute-parents (%head (%traits-direct-parents traits)))))))
 
-;; EARLY PROTOTYPES -- USED TO PATCH THEM UP LATER
-
-(dv *protos* nil) 
-
 ;; DEFINE CHILD / PARENT RELATIONSHIP
 ;; INSTALL REAL TRAITS OBJECTS WITH INHERITANCE INFO ONLY
 
@@ -249,7 +253,6 @@
   (let ((direct-parents (%pair direct-parent nil))
 	(parents        (%pair owner (%compute-parents direct-parent)))
 	(parent-traits  (%object-traits direct-parent)))
-    (set *protos* (%pair owner *protos*))
     (set (%traits-direct-children parent-traits)
 	 (%pair owner (%traits-direct-children parent-traits)))
     (set (%object-traits owner)
@@ -274,27 +277,22 @@
 
 (dv <traits>-traits (%object-traits <traits>))
 
-(dp %patch-parents (protos)
-  (if (%empty? protos) #f
-    (let ((traits (%object-traits (%head protos))))
-      (set (%object-traits traits) 
-           <traits>-traits)
-      (set (%traits-parents traits)
-	   (%copy (%traits-parents traits)))
-      (set (%traits-direct-children traits)
-	   (%copy (%traits-direct-children traits)))
-      (set (%traits-direct-parents traits) 
-	   (%copy (%traits-direct-parents traits)))
-      (%patch-parents (%tail protos)))))
+(dp %patch-parent (obj)
+  (let ((traits (%object-traits obj)))
+    (set (%object-traits traits) 
+         <traits>-traits)
+    (set (%traits-parents traits)
+         (%copy (%traits-parents traits)))
+    (set (%traits-direct-children traits)
+         (%copy (%traits-direct-children traits)))
+    (set (%traits-direct-parents traits) 
+         (%copy (%traits-direct-parents traits)))))
 
-(%patch-parents *protos*)
+(dss (%patch-parents)
+  `(seq ,@(%map-boot-protos 
+	    (fun (name parent) `(%patch-parent ,name)))))
 
-;; TRAITS RECORDED FOR FAST ISA? IN RUNTIME
-;; TODO: SHOULD USE FAST ISA? ALGORITHM AS THIS DOESN'T ALLOW SUBCLASSING
-
-(dv <gen>-traits (%object-traits <gen>))
-(dv <met>-traits (%object-traits <met>))
-(dv <lst>-traits (%object-traits <lst>))
+(%patch-parents)
 
 ;;; 
 ;;; 4. TAGGED OBJECTS
@@ -326,8 +324,6 @@
         (%object-traits x)
         (%elt $direct-object-traits tag))))
 
-(df object-traits (x) (%traits-of x))
-
 ;; DEFINE EARLY TAGGED PROTO 
 ;;   WHERE CODE IS ABBREVIATION PREFIX FOR OPS
 ;;   DEFINES TAG/FAB AND UNTAG OPS
@@ -351,8 +347,115 @@
 
 (%define-tagged-structure loc l 3) ;; LOCATIVES
 
-;; N.B. CREATING FUNCTIONS SO MUST APPEAR AFTER FUNCTION TRAITS ARE REAL
-;; NOW METHODS CAN BE BUILT
+;;; 
+;;;  REPEATED OBJECTS
+;;; 
+
+;; DEF STRUCT'S WITH INDEXED ELEMENTS W/ DATA STORED IN DATA SLOT
+;;   DEFINING CONSTRUCTORS,ACCESSORS,LEN,BOX/UNBOX'ERS(FOR FFI),
+
+(dss (%define-repeated-structure ,name ,elt ,code ,init)
+  (let ((proto-name (make-sym "<"  name ">"))
+	(nul        (make-sym "%"  code "nul"))
+	(base-dat   (make-sym name "-dat"))
+	(dat        (make-sym "%"  base-dat))
+	(raw-elt    (make-sym "%%" code "elt"))
+	(elt        (make-sym "%"  code "elt"))
+	(elt-setter (make-sym "%"  code "elt-setter"))
+	(raw-len    (make-sym "%%" code "len"))
+	(len        (make-sym "%"  code "len"))
+	(box        (make-sym "%"  code "b"))
+	(unbox      (make-sym "%"  code "u"))
+	(fab        (make-sym "%"  name))
+	(fab!       (make-sym "%"  name "!"))
+	(raw-fab    (make-sym "%%" code "fab")))
+    `(seq (%define-structure-accessors ,base-dat)
+          (dp ,fab! (len)
+            (let ((proto (%object-of ,proto-name (%raw 1))))
+	      (set (,dat proto) (,raw-fab len ,init)) proto))
+	  (dv ,nul (,fab! (%raw 0)))
+	  (dp ,fab (len) 
+	    (if (%bb (%i= len (%raw 0))) ,nul (,fab! len)))
+	  (dp ,box (x) 
+            (let ((proto (%object-of ,proto-name (%raw 1))))
+	      (set (,dat proto) x) proto))
+	  (dp ,unbox (x) (,dat x))
+	  (dp ,len (x) (,raw-len (,dat x)))
+	  (dp ,elt (x i) (,raw-elt (,dat x) i))
+	  (dp ,elt-setter (z x i) (set (,raw-elt (,dat x) i) z)))))
+
+(%define-repeated-structure str <chr> s (%cu #\Space))
+
+(%define-repeated-structure vec <any> v nul) 
+
+;; can't use rep yet because symbols aren't real
+(dp %str-eq?-loop (s1 s2 len i)
+  (or (%bb (%i= i len))
+      (let ((c1 (%selt s1 i)) (c2 (%selt s2 i)))
+        (and (%bb (%c= c1 c2))
+             (%str-eq?-loop s1 s2 len (%i+ i (%raw 1)))))))
+
+(dp %str-eq? (s1 s2)
+  (let ((len (%slen s1)))
+    (and (%bb (%i= len (%slen s2)))
+         (%str-eq?-loop s1 s2 len (%raw 0)))))
+
+;;
+;;  SYMBOLS
+;;
+
+;; Get symbol fab up ASAP so we don't have to patch the names of
+;; a bunch of objects.
+
+(dp %%sym (raw-str)      ;; Called in code generated by compiler
+  (if %symbols-ready?
+     (fab-sym (%sb raw-str))
+     (set %*used-symbols-too-early* #t)
+     #f))
+
+(%define-structure % sym sym-nam)
+
+(dv %symbols nil)
+
+;; EARLY VERSION (PRE TAB) OF SYM CONSING USING LST SET
+(if (%bb (%eq? %*used-symbols-too-early* #t))
+    (%write-string (%current-output-port) (%su
+	"Warning: symbols were created in the boot image before the symbol-creation was setup. (Probably from a df or rep)\n")))
+
+
+;; this first version doesn't have proper symbols, but it works..
+(dv fab-sym
+  (fun (name)
+    (rep lookup ((s %symbols))
+      (if (%empty? s)
+          (let ((sym (%sym name)))
+            (set %symbols (%pair sym %symbols))
+            sym)
+          (let ((sym (%head s)))
+            (if (%str-eq? (%sym-nam sym) name)
+                sym
+                (lookup (%tail s))))))))
+
+(set %symbols-ready? #t) ;; READY TO CONS SYMBOLS
+
+;; do the same thing, this time the symbols will be filled in
+(df fab-sym (name)
+  (rep lookup ((s %symbols))
+    (if (%empty? s)
+        (let ((sym (%sym name)))
+          (set %symbols (%pair sym %symbols))
+          sym)
+        (let ((sym (%head s)))
+          (if (%str-eq? (%sym-nam sym) name)
+              sym
+              (lookup (%tail s)))))))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;; !!! Below here we can use functions !!! ;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 ;; MORE LST UTILITIES BUT NOW USING LOCAL METHODS
 
 (dp %rev! (c)
@@ -371,7 +474,8 @@
 	      (%rev! lxy)
 	      (coly (%pair (%head y) lxy) (%tail y))))
 	(colx (%pair (%head x) lx) (%tail x)))))
-	
+
+
 ;;; 
 ;;; 5. BOXED OBJECTS
 ;;; 
@@ -416,7 +520,7 @@
 (dv $gen-cache-classes-offset    2)
 
 ;;; DEF GENERIC'S
-
+ 
 (%define-structure % gen 
    gen-code gen-name gen-sig gen-mets fun-cache)
 
@@ -436,18 +540,14 @@
 	  'nil
 	  `(%pair ,(head args) ,(&pairize (tail args))))))
 
-;; EARLY DISPATCH JUST CHOOSES FIRST METHOD
+;; EARLY DISPATCH ERRORS OUT
 
 (df %early-dispatch ((args ...))
   (let ((gen (%fun-reg)))
-    (%%apply (%head (%gen-mets gen)) #f args)))
-
-;; RECORD EARLY GENERICS FOR LATER PATCHING OF CODE SLOT (DISPATCHER)
-
-(dv *early-generics* '())
-
-(df %register-early-generic ((x <gen>))
-  (set *early-generics* (%pair x *early-generics*)))
+    (%write-string (%current-output-port)
+                   (%su "ERROR: Generic function dispatch called before it existed."))
+    ;; die (is there a better way?)
+    ((%raw 0))))
 
 (df %add-met (gen met)
   (set (%gen-mets gen) (%pair met (%gen-mets gen))))
@@ -462,7 +562,6 @@
 	          (%sig '() ,specs #f ,(len params) <any>) '() #f))
 	  (let ((accessor (fun (,@sig) ,@body)))
 	    (%add-met ,name accessor)
-	    (%register-early-generic ,name)
 	    accessor))))
 
 (dss (%define-getter ,name ,owner ,type)
@@ -490,7 +589,7 @@
 		     (setter (%define-setter ,name ,owner ,type))
 		     ;; TODO: X FROM OWNER VAR
 		     (slot   (%%slot ,owner ,name ,(make-sym name "-setter") 
-				     ,type (fun (x) ,init))))
+                                     ,type (fun (x) ,init))))
 		 (set (%met-env getter) slot)
 		 (set (%met-env setter) slot)
 		 (%add-slot ,owner slot))))))
@@ -534,84 +633,6 @@
 
 (%patch-lst '())
 (%patch-lst <lst>)
-
-;;; 
-;;; 9. REPEATED OBJECTS
-;;; 
-
-;; DEF STRUCT'S WITH INDEXED ELEMENTS W/ DATA STORED IN DATA SLOT
-;;   DEFINING CONSTRUCTORS,ACCESSORS,LEN,BOX/UNBOX'ERS(FOR FFI),
-
-(dss (%define-repeated-structure ,name ,elt ,code ,init)
-  (let ((proto-name (make-sym "<"  name ">"))
-	(nul        (make-sym "%"  code "nul"))
-	(base-dat   (make-sym name "-dat"))
-	(dat        (make-sym "%"  base-dat))
-	(raw-elt    (make-sym "%%" code "elt"))
-	(elt        (make-sym "%"  code "elt"))
-	(elt-setter (make-sym "%"  code "elt-setter"))
-	(raw-len    (make-sym "%%" code "len"))
-	(len        (make-sym "%"  code "len"))
-	(box        (make-sym "%"  code "b"))
-	(unbox      (make-sym "%"  code "u"))
-	(fab        (make-sym "%"  name))
-	(fab!       (make-sym "%"  name "!"))
-	(raw-fab    (make-sym "%%" code "fab")))
-    `(seq (%define-structure-accessors ,base-dat)
-          (dp ,fab! (len)
-            (let ((proto (%object-of ,proto-name (%raw 1))))
-	      (set (,dat proto) (,raw-fab len ,init)) proto))
-	  (dv ,nul (,fab! (%raw 0)))
-	  (dp ,fab (len) 
-	    (if (%bb (%i= len (%raw 0))) ,nul (,fab! len)))
-	  (dp ,box (x) 
-            (let ((proto (%object-of ,proto-name (%raw 1))))
-	      (set (,dat proto) x) proto))
-	  (dp ,unbox (x) (,dat x))
-	  (dp ,len (x) (,raw-len (,dat x)))
-	  (dp ,elt (x i) (,raw-elt (,dat x) i))
-	  (dp ,elt-setter (z x i) (set (,raw-elt (,dat x) i) z)))))
-
-(%define-repeated-structure str <chr> s (%cu #\Space))
-
-(%define-repeated-structure vec <any> v nul) 
-
-(df %str-eq? (s1 s2)
-  (let ((len (%slen s1)))
-    (and (%bb (%i= len (%slen s2)))
-	 (rep loop ((i (%raw 0)))
-	   (or (%bb (%i= i len))
-	       (let ((c1 (%selt s1 i)) (c2 (%selt s2 i)))
-		 (and (%bb (%c= c1 c2))
-		      (loop (%i+ i (%raw 1))))))))))
-
-;;; 
-;;; 10. SYMBOLS
-;;; 
-
-(%define-structure % sym sym-nam)
-
-(dv %symbols nil)
-
-;; EARLY VERSION (PRE TAB) OF SYM CONSING USING LST SET
-
-(df fab-sym (name)
-  (rep lookup ((s %symbols))
-    (if (%empty? s)
-	(let ((sym (%sym name)))
-	  (set %symbols (%pair sym %symbols))
-	  sym)
-	(let ((sym (%head s)))
-	  (if (%str-eq? (%sym-nam sym) name)
-	      sym
-	      (lookup (%tail s)))))))
-
-(set %symbols-ready? #t) ;; READY TO CONS SYMBOLS
-
-(dp %%sym (raw-str)      ;; FOR COMPILER
-  (if %symbols-ready?
-     (fab-sym (%sb raw-str))
-     #f))
 
 ;;;
 ;;; 11. FUNCTION PREP
@@ -682,12 +703,12 @@
   (rep fnd ((p c))
     (if (@empty? p) #f (or (test (@head p)) (fnd (@tail p))))))
 
-(dp @pair ((x <any>) (y <lst>) => <lst>) (%pair x y))
+(dp @pair ((h <any>) (t <lst>) => <lst>) (isa <lst> (set head h) (set tail t)))
 
-(dp @add ((c <lst>) (e <any>) => <lst>) (%pair e c))
+(dp @add ((c <lst>) (e <any>) => <lst>) (@pair e c))
 
 (dp @add-new ((c <lst>) (e <any>) => <lst>) 
-  (unless (@mem? c e) (@add c e)) c)
+  (if (@mem? c e) c (@pair e c)))
 
 (df @map ((f <fun>) (x <lst>) => <lst>)
   (rep do ((x x) (res '()))
@@ -763,15 +784,6 @@
   (@elt (@fun-specs x) i))
 
 (dv <mets> <lst>)
-
-;; USED FROM COMPILER TO BUILD GEN'S
-;; TODO: NEED FUN-VALUE AS WELL
-
-(df fab-gen
-    ((name <sym>) (names <lst>) (specs <lst>) (nary? <log>) (mets <lst>) 
-     => <gen>)
-  (%gen (%gen-code %dispatch) name
-	(%sig names specs nary? (len specs) <any>) mets #f))
 
 (df fun-same-met? ((x <met>) (y <met>) => <log>)
   (@all2? @@== (@fun-specs x) (@fun-specs y)))
@@ -1135,29 +1147,19 @@
 (df %dispatch ((args ...))
   (gen-lookup (%fun-reg) args))
 
-(df gen-from-met ((x <met>) => <gen>)
-  (let ((specs (@map (fun (x) <any>) (@fun-specs x))))
-    (%gen (%gen-code %dispatch) (%met-name x) 
-	  (%sig '() specs (@fun-nary? x) (@len specs) <any>) 
-	  '() #f)))
-
-;; CALLED FROM COMPILER/INTERPRETER
-
-(df %define-method (gen (met <met>) => <gen>)
-  (let ((gen (or gen (gen-from-met met))))
-    (gen-add-met gen met)
-    gen))
-
 ;; READY TO REPLACE EARLY DISPATCHER WITH REAL DISPATCHER IN EARLY GEN'S
 
-(df %patch-early-generics ()
-  (set (%gen-code <gen>) %dispatch)
-  (rep loop ((gens *early-generics*))
-    (unless (@empty? gens)
-      (set (%gen-code (@head gens)) (%gen-code %dispatch))
-      (loop (@tail gens))))
-  (set *early-generics* '()))
+(df %patch-early-generic ((generic <gen>))
+  (set (%gen-code generic) (%met-code %dispatch)))
 
+(dss (%patch-early-generics)
+  `(seq ,@(%map-boot-slots 
+	    (fun (owner name type init) 
+	      `(seq 
+                 (%patch-early-generic ,name)
+                 (%patch-early-generic ,(make-sym name "-setter")))))))
+
+(%patch-early-generic <gen>)
 (%patch-early-generics)
 
 (dv <opts> <lst>)
@@ -1198,6 +1200,8 @@
 
 (dv <parents> <lst>)
 (dv <slots>   <lst>)
+
+(df object-traits (x) (%traits-of x))
 
 (df traits-ordered-parents ((o <traits>) => <parents>)
   (loc ((merge-lists ((partial-cpl <lst>) (remaining-lists <lst>))
@@ -1360,11 +1364,11 @@
 
 (df forward-traits (x)
   (let ((old-traits (%object-traits x))
-	(new-traits (%clone old-traits))) ;; TODO: %CLONE
-    (set (%traits-forward old-traits) new-traits)
-    (set (%object-traits x) new-traits)
+        (new-traits (%clone old-traits))) ;; TODO: %CLONE
     (@do (fun (g) (set (%fun-cache g) #f))
-	 (%traits-gens old-traits))))
+         (%traits-gens old-traits))
+    (set (%traits-forward old-traits) new-traits)
+    (set (%object-traits x) new-traits)))
 
 (df @do-children (f x)
   (let ((visited '()))
@@ -1398,7 +1402,7 @@
     (%adjust-object-values-size owner (%%len (object-slots owner)) owner)
     slot))
 
-(df update-instance-for-changed-prototype (new-object)
+(dp %update-instance-for-changed-prototype (new-object)
   (let ((old-traits (%traits-of new-object))
 	(new-traits (%traits-forward old-traits))
 	(old-object (%make-object)))
@@ -1419,9 +1423,42 @@
 	    (loop-old-slots (@tail old-slots) (@+ old-offset 1))))))
     new-object))
 
+(df update-instance-for-changed-prototype (object)
+  (%update-instance-for-changed-prototype object))
+
 (dv add-slot %slot)
 
 (set %check-types? #t)
+
+;; USED FROM COMPILER TO BUILD GEN'S
+;; TODO: NEED FUN-VALUE AS WELL
+
+(df fab-gen
+  ((name <sym>) (names <lst>) (specs <lst>) (nary? <log>) (mets <lst>) 
+   => <gen>)
+  (isa <gen>
+    (set fun-code (fun-code %dispatch))
+    (set fun-name name)
+    (set fun-sig (isa <sig>
+                   (set sig-names names)
+                   (set sig-specs specs)
+                   (set sig-nary? nary?)
+                   (set sig-arity (@len specs))
+                   (set sig-value <any>)))
+    (set fun-mets mets)))
+
+(df gen-from-met ((x <met>) => <gen>)
+  (let ((specs (@map (fun (x) <any>) (@fun-specs x))))
+    (fab-gen (fun-name x) '() specs (@fun-nary? x) '())))
+
+;; CALLED FROM COMPILER/INTERPRETER
+
+(df %define-method (gen (met <met>) => <gen>)
+  (let ((gen (or gen (gen-from-met met))))
+    (gen-add-met gen met)
+    gen))
+
+
 
 ;;; 
 ;;; 14. MACROS
@@ -1467,8 +1504,7 @@
 ;; haven't defined that yet.
 (export
   %%macro
-  error
-  len)
+  error)
 
 ;; Compiler magic.
 (export
@@ -1561,24 +1597,59 @@
 
 ;; Regular exports.
 (export
-  @@==
   <any>
-  apply
   <bag>
-  *boot-macro-expanders*
-  *boot-macro-names*
-  %cb
   <chr>
   <col>
-  %cu
-  %define-method
-  fab-gen
-  fab-sym
-  %fb
   <flat>
   <flo>
-  %fu
   <fun>
+  <gen>
+  <int>
+  <loc>
+  <log>
+  <lst>
+  <met>
+  <num>
+  <opts>
+  <traits>
+  <seq>
+  <sig>
+  <slot>
+  <str>
+  <sym>
+  <tup>
+  <vec>
+
+;; tagged structures
+  %cb
+  %cu
+  %fb
+  %fu
+  %ib
+  %iu
+  %lu
+
+;; repeated structures
+  %sb
+  %selt
+  %selt-setter
+  %slen
+  %snul
+  %str
+  %su
+  %vec
+  %velt
+  %velt-setter
+  %vlen
+  %vnul
+
+  apply				;; %%apply
+  *boot-macro-expanders*	;;var
+  *boot-macro-names*		;;var
+  %define-method		
+  fab-gen
+  fab-sym
   fun-arity
   fun-name
   fun-name-setter
@@ -1586,52 +1657,27 @@
   fun-sig-setter
   fun-specs
   fun-value
-  <gen>
   head
   head-setter
-  %ib
-  <int>
   %isa
   isa?
-  %iu
-  <loc>
-  <log>
-  <lst>
-  %lu
   *macros-ok?*
-  <met>
   not
   nul
-  <num>
   object-parents
   object-slots
-  <opts>
-  %sb
-  %selt
-  %selt-setter
-  <seq>
-  %sig
-  %slen
   %slot
-  <slot>
+  slot-value ;; TODO remove this when it can be called directly w/o being exported
+  slot-value-setter ;; me too
   slot-getter
-  slot-value
-  slot-value-setter
-  %snul
-  %str
-  <str>
-  %su
-  %sym
-  <sym>
-  %sym-nam
+  slot-setter
+  sig-names
+  sig-specs
+  sig-nary?
+  sig-arity
+  sig-value
   sym-name
   %symbols
   tail
   tail-setter
-  <tup>
-  %vec
-  <vec>
-  %velt
-  %velt-setter
-  %vlen
-  %vnul)
+)

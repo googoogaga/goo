@@ -120,7 +120,7 @@
 
 ;;  Initialization and driver loop
 ;;  The prompt is handled a bit differently than in the notes
-(dm top-in (level quit ct-env)
+(dm top-in (level top quit ct-env)
   (lab blow
     (rep loop ()
       (lab continue
@@ -133,23 +133,28 @@
 		       (apply (curry format out (condition-message c))
 			      (condition-arguments c)))))
 	       ;; (backtrace (env))
-	       (top-in (+ level 1) quit ct-env)
+	       (top-in (+ level 1) top quit ct-env)
 	       (continue #f))
 	  (newline out)
 	  (let ((form (prompt-for-command-expression level "<= ")))
-	    (if (= form '(quit))
+	    (if (or (= form '(quit)) (= form (eof-object)))
 		(quit #f)
 		(if (= form '(up))
 		    (blow #f)
-		    (let ((ast    (objectify form ct-env #f))
-			  (result (ast-evaluate ast)))
-		      (format out "%==> " level) 
-		      (write out result)))))))
-      (loop))))
+		    (if (= form '(top))
+			(top #f) 
+			(let ((ast    (objectify form ct-env #f))
+			      (result (ast-evaluate ast)))
+			  (format out "%==> " level) 
+			  (write out result))))))))
+	(loop))))
 
 (dm top ()
   (lab quit
-    (top-in 0 quit (runtime-environment))))
+    (rep loop ()
+      (lab top
+        (top-in 0 top quit (runtime-environment)))
+      (loop))))
 
 (export
   c-filename

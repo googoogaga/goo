@@ -487,8 +487,9 @@
 (dm empty? ((c <col>) => <log>)
   (= (len c) 0))
 
-(dm empty ((c <col>) => <col>)
-  (isa c))
+;; This is no longer correct, now that isa copies slot values.
+;;(dm empty ((c <col>) => <col>)
+;;  (isa c))
 
 (dm default ((c <col>) => <col>)
   #f)
@@ -1245,9 +1246,6 @@
 (dv ascii-whitespaces '(32 10 9 12 13))
 
 ;;; SYMBOL
-
-(dm sym-name ((x <sym>) => <str>) 
-  (%sym-nam x))
 
 (dm as ((_ <str>) (s <sym>) => <str>)
   (sym-name s))
@@ -2035,7 +2033,7 @@
 (dp booted-fab-sym-using (name given-sym)
   (let ((sym (elt symbols name)))
     (if (== sym nul)
-	(set (elt symbols name) (or given-sym (%sym name)))
+	(set (elt symbols name) (or given-sym (isa <sym> (set sym-name name))))
 	sym)))
 
 (df booted-fab-sym (name)
@@ -2044,7 +2042,7 @@
 (df boot-symbols ()
   (rep boot ((syms %symbols))
     (unless (empty? syms)
-      (let ((sym (head syms))) (booted-fab-sym-using (%sym-nam sym) sym))
+      (let ((sym (head syms))) (booted-fab-sym-using (sym-name sym) sym))
       (boot (tail syms)))))
 
 (boot-symbols)

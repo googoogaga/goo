@@ -77,7 +77,7 @@
     (num-to-str (%ib (%lu x)) 16)))
 
 (dm recurring-write ((port <output-port>) (x <num>) (d <int>) (recur <fun>))
-  (if (@@== x <num>)
+  (if (== x <num>)
       (write-string port (as-binding-name "<num>"))
       (write-number port x)))
 
@@ -106,7 +106,7 @@
 	(write-char port x))))
 
 (dm character-name ((char <chr>) => <any>)
-    (1st (assqn char $char-long-names 1)))
+  (1st (assqn char $char-long-names 1)))
 
 (dm write-string-literal ((port <output-port>) x)
   (write-char port #\")
@@ -240,7 +240,7 @@
 		(write-char port #\space)
 		(display port (fun-name getter))
 		(write-string port ": ")
-		(recur (slot-value x getter) d))))
+		(recur (getter x) d))))
 	  (write-string port "}")))))
 
 (dm recurring-write
