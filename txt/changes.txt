@@ -674,3 +674,30 @@ fixes
 
   treatment of BOUNDP in dynamic compilation mode.
   printing of nul.
+
+=== 0.109 ===
+
+summary
+
+  split into separate modules
+
+added
+
+  use/export
+  exported
+
+=== 0.110 ===
+
+summary 
+
+  dependency tracking framework with compiler transactions
+
+removed
+ 
+  objectify
+
+added
+ 
+  objectify-with-subtransaction
+
+
