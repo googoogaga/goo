@@ -1,0 +1,135 @@
+(use proto)
+(use random)
+
+(dc <pattern> (<any>))
+  (slot <pattern> (pattern-time <int>))
+  (slot <pattern> (pattern-rhythm <sym>))
+  (slot <pattern> (pattern-kind <sym>))
+  (slot <pattern> (pattern-part <int>))
+  (slot <pattern> (pattern-instrument <sym>))
+  (slot <pattern> (pattern-value <str>))
+
+(dv $patterns (fab <buf> 0))
+
+(dm register-pattern (time rhythm kind part instrument value)
+  (let ((pat (isa <pattern>
+               (set pattern-time       time)
+               (set pattern-rhythm     rhythm)
+               (set pattern-kind       kind)
+               (set pattern-part       part)
+               (set pattern-instrument instrument)
+               (set pattern-value      value))))
+    (add! $patterns pat)))
+
+(ds (def-rhythm ,time ,name ,@patterns)
+  (let ((pattern-inits
+         (map (fun (pat)
+                (mif ((,kind ,part ,instrument ,value) pat) 
+                     `(lst ,time ',name ',kind ',part ',instrument ,value)))
+              patterns)))
+    `(do (fun (pat-inits) (apply register-pattern pat-inits))
+         (lst ,@pattern-inits))))
+
+(def-rhythm 4 cassa
+  (acc    1 djembe   "B+TT++STT+SSB+ST")
+  (acc    2 djembe   "S++SS+TTS++SS+TT")
+  (acc    3 djembe   "++TT++S+++TT++S+")
+  (bass   1 djundjun "T++BB+++T+T+++++")
+  (signal 1 djembe   "F+TT+T+TT+TTT+++"))
+
+(def-rhythm 4 clave
+  (clave 1 clave "T++T++T+++T+T+++")
+  (clave 2 clave "T+++T+++T+++T+++")
+  (clave 3 clave "T+++++++T+++T+++"))
+
+(def-rhythm 4 dalah
+  (acc 1 djembe "B+TT++SSB+TT++SS")
+  (acc 2 djembe "S++SS+TTS++SS+TT"))
+
+(def-rhythm 4 dennadon
+  (acc  1 djembe   "SS+BT+T+SS+BT+T+")
+  (acc  2 djembe   "S++SS+TTS++SS+TT")
+  (bass 1 djundjun "S+++S+++S+++S+++")
+  (bass 2 djundjun "+++T++T+++TT++T+")
+  (bass 3 djundjun "BB++B+++B+B+B+++"))
+
+(def-rhythm 4 sounou
+  (bass   1 djundjun "B++++BBBB++++++B")
+  (acc    1 djembe   "TT+SS+BSTT+SS+BS")
+  (acc    2 djembe   "S++SS+TTS++SS+TT")
+  (acc    3 djembe   "TT+SS+BSTT+SSBBS")
+  (signal 1 djembe   "F+TT+T+TT+SSS+++"))
+
+(def-rhythm 4 diansa
+  (bass   1 djundjun "B++B++B+++T+++B+")
+  (bass   2 djundjun "B++B++B+++T+++B+")
+  (acc    1 djembe   "S++SS+TTS++SS+TT")
+  (acc    2 djembe   "TTSS++SSTTSS++SS")
+  (acc    3 djembe   "TT+TT+TTS+B+SBTT")
+  (signal 1 djembe   "TTSTTSTTS+SSS+++"))
+
+(def-rhythm 4 koukou
+  (bass   1 djundjun "T++B++T+T+++++T+")
+  (acc    1 djembe   "B+TT++S+B+TT++S+")
+  (acc    2 djembe   "TT+STTS+TT+STTS+")
+  (acc    3 djembe   "B++S+BS+B+TTT+S+")
+  (acc    4 djembe   "S++SS+TTS++SS+TT"))
+
+(def-rhythm 4 pulse
+  (pulse 1 metronome "B+++B+++B+++B+++"))
+
+(def-rhythm 6 clave
+  (clave 1 clave "BB++BB+B+B++"))
+
+(def-rhythm 4 empty
+  (pulse 1 metronome "++++++++++++++++"))
+
+(dm num-patterns (=> <int>)
+  (len $patterns))
+
+(df match-pattern?
+    ((pattern <pattern>) (rhythm (false-or <sym>)) (time (false-or <int>)) 
+     (kind (false-or <sym>)) (inst (false-or <sym>)) 
+     => <log>)
+  (and (or (not rhythm) (== (pattern-rhythm pattern)     rhythm))
+       (or (not time)   (== (pattern-time pattern)       time))
+       (or (not kind)   (== (pattern-kind pattern)       kind))
+       (or (not inst)   (== (pattern-instrument pattern) inst))))
+
+
+(dm choose-pattern
+    ((rhythm (false-or <sym>)) (time (false-or <int>)) 
+     (kind (false-or <sym>)) (inst (false-or <sym>)) 
+     => (false-or <pattern>))
+  (let ((n (num-patterns) ))
+    (rep loop ((i (random n)) (tries 0))
+      (if #f ;; (== tries n)
+          #f
+          (let ((pattern (elt $patterns i)))
+            (if (match-pattern? pattern rhythm time kind inst)
+                pattern
+                (loop (random n) (+ tries 1))))))))
+
+(dm choose-1st-pattern
+    ((rhythm (false-or <sym>)) (time (false-or <int>)) 
+     (kind (false-or <sym>)) (inst (false-or <sym>)) 
+     => (false-or <pattern>))
+  (let ((n (num-patterns)))
+    (rep loop ((i 0))
+      (if (< i n)
+          (let ((pattern (elt $patterns i)))
+            (if (match-pattern? pattern rhythm time kind inst)
+                pattern
+                (loop (+ i 1))))
+          #f))))
+
+(export
+  <pattern>
+  pattern-time
+  pattern-rhythm
+  pattern-kind
+  pattern-part
+  pattern-instrument
+  pattern-value
+  choose-pattern
+  choose-1st-pattern)
