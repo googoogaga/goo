@@ -1,0 +1,123 @@
+ADDED
+
+x DEF
+x without-prop-unbound-errors
+x prop-bound?
+x bt
+x frame
+x range, range-by and below
+x spread
+x added elt-or
+x added elt-type
+x added key-type
+x added key-test --> 
+x added dup
+x added round-to
+x key-vals
+x T?
+x added unzip, zip and <zip>
+x <cycle> and cycle
+x added ins
+o mag for comparables
+o accums
+x added math?
+x added pow
+x   added sqrt
+x use key-test everywhere
+x added find
+x added num-to-str-base
+x added trunc as one res
+x added ceil as one res
+x added floor as one res
+x added MATCH
+x added col
+x CASE-BY with which to define CASE
+x <enum> and <flat-enum>
+x added >>>
+x product types and t*
+added sort?
+x added prop-bound?
+x added ins and ins!
+
+REMOVED
+
+x removed tab-protocol
+x removed from-below from-above from-below-by from-above-by
+x removed loc-val-setter -- is this used?
+removed default
+remove newline -- use (put #\n)
+removed map-keyed and do-keyed
+remove object-parents and object-prop
+floor/ ceiling/ round/ truncate/ floor ceiling truncate
+map2
+do2
+cat2
+deprecated mutational protocol
+push-last! and pop-last!
+removed rev!
+removed cat!
+removed fold+?
+
+CHANGED
+
+x renamed truncate to trunc
+x renamed ceiling to ceil
+x close-input-port and close-output-port to close
+x tup's are flats
+x reduce to fold
+x modulo to mod
+% change ini-state 1st-state and copy-state to dup-state
+x replaced ash with << and >>
+x change from call-with to with-port etc
+x logior to |
+x logxor to ^
+x logand to &
+x lognot to ~
+x logbit? to bit?
+x alter -> into
+x changed numeric? to digit?
+x changed alphabetic? to alpha?
+x lower/uppercase => lower/upper
+x as-lowercase => to-lower
+x changed INC/DEC to INCF/DECF
+x renamed table-* functions to tab-*
+x renamed current-gc-state to tab-gc-state
+x make-sym -> fab-sym
+x make-setter-name -> fab-setter-name
+x class-parents -> class-ancestors
+x class-direct-parents -> class-parents
+x class-direct-children -> class-children
+x class-children -> class-descendents
+x case-insensitive-string-equal takes two strings
+x make-handler -> fab-handler
+x input to in 
+x output to out
+x locative -> loc
+x change slot -> prop
+x change dp -> dl
+x remainder to rem
+x renamed char-ready? to ready?
+x change os-binding-value to os-val
+x read-char to get
+x peek-char to peek
+x write-char to put
+x write-string to puts
+x fun-val returns return type
+x isa -> fab
+x changed CASE -> COND
+x changed SELECT -> CASE
+x changed LAB to ESC
+x prop-init -> <fun>
+x prop-type -> ret <type>
+x pos is (t# <int>)
+x rename sorted-app-mets ORD-APP-METS
+x ,in instead of in-mod (perhaps :in)
+x false-or to t?
+x changed del-keys to zap
+x rename apply APP
+x next-method SUP and apply-next-method APP-SUP
+x TYPE syntax
+x find-getter and find-setter operate on classes instead of objects
+x renamed del to del-vals
+x renamed del-key to del
+x changed from and from-to to range and range-by and from and below
