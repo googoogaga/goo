@@ -35,7 +35,6 @@ OBJS = \
 	time/%lock.o \
 	goo/cols/flat.o \
 	goo/cols/zip.o \
-	gl.o \
 	goo/cols/rep.o \
 	eval/syntax.o \
 	goo/cols/step.o \
@@ -70,7 +69,7 @@ OBJS = \
 	g2c-init.o
 
 g2c: $(C_OBJS_DD) $(OBJS)
-	$(CC) $(LDFLAGS) -o g2c $(C_OBJS_DD) $(OBJS) $(LIBS) -lglut
+	$(CC) $(LDFLAGS) -o g2c $(C_OBJS_DD) $(OBJS) $(LIBS)
 
 clean:
 	rm -f g2c $(OBJS)

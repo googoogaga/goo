@@ -826,16 +826,16 @@ EXT(YgooScolsScolYadd,"goo/cols/col","add");
 /* FORWARD QUOTATIONS: */
 
 DEFLIT(lit_9);
-DEFLIT(lit_5);
-DEFLIT(lit_10);
-DEFLIT(lit_2);
-DEFLIT(lit_3);
-DEFLIT(lit_0);
 DEFLIT(lit_7);
 DEFLIT(lit_4);
+DEFLIT(lit_10);
 DEFLIT(lit_1);
-DEFLIT(lit_11);
 DEFLIT(lit_8);
+DEFLIT(lit_0);
+DEFLIT(lit_5);
+DEFLIT(lit_2);
+DEFLIT(lit_11);
+DEFLIT(lit_3);
 DEFLIT(lit_6);
 
 /* FUNCTIONS: */
@@ -854,7 +854,7 @@ P YevalSmainY___main_0___() {
 DEFCREGS();
   lit_0 = YPsb((P)"0.154");
   VARSET(YevalSmainYTgoo_versionT,LITREF(lit_0));
-  lit_1 = YPsb((P)"OCT 09, 2003");
+  lit_1 = YPsb((P)"OCT 20, 2003");
   VARSET(YevalSmainYTgoo_dateT,LITREF(lit_1));
   lit_2 = YPsb((P)";;; GOO\n");
   XCALL1(1,VARREF(YgooSioSwriteYpost),LITREF(lit_2));
@@ -903,7 +903,6 @@ extern MODULE_INFO module_info_gooSsystem;
 extern MODULE_INFO module_info_evalSast;
 extern MODULE_INFO module_info_evalStop;
 extern MODULE_INFO module_info_evalSg2c;
-extern MODULE_INFO module_info_gl;
 extern MODULE_INFO module_info_timeSthreads;
 extern MODULE_INFO module_info_timeSlock;
 extern MODULE_INFO module_info_timeSevent;
@@ -951,7 +950,6 @@ static USE_INFO use_infos[] = {
   {&module_info_evalSast},
   {&module_info_evalStop},
   {&module_info_evalSg2c},
-  {&module_info_gl},
   {&module_info_timeSthreads},
   {&module_info_timeSlock},
   {&module_info_timeSevent},
@@ -1888,7 +1886,6 @@ extern void load_module_gooSsystem (void);
 extern void load_module_evalSast (void);
 extern void load_module_evalStop (void);
 extern void load_module_evalSg2c (void);
-extern void load_module_gl (void);
 extern void load_module_timeSthreads (void);
 extern void load_module_timeSlock (void);
 extern void load_module_timeSevent (void);
@@ -1910,7 +1907,6 @@ void load_module_evalSmain (void) {
   load_module_evalSast();
   load_module_evalStop();
   load_module_evalSg2c();
-  load_module_gl();
   load_module_timeSthreads();
   load_module_timeSlock();
   load_module_timeSevent();

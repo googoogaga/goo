@@ -623,34 +623,34 @@ EXT(YgooScolsScolYadd,"goo/cols/col","add");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_16);
-DEFLIT(lit_12);
-DEFLIT(lit_21);
+DEFLIT(lit_24);
 DEFLIT(lit_22);
-DEFLIT(lit_17);
+DEFLIT(lit_4);
 DEFLIT(lit_26);
+DEFLIT(lit_12);
+DEFLIT(lit_19);
 DEFLIT(lit_15);
-DEFLIT(lit_11);
+DEFLIT(lit_21);
+DEFLIT(lit_28);
 DEFLIT(lit_8);
-DEFLIT(lit_14);
+DEFLIT(lit_23);
+DEFLIT(lit_16);
 DEFLIT(lit_0);
 DEFLIT(lit_3);
+DEFLIT(lit_6);
 DEFLIT(lit_13);
-DEFLIT(lit_18);
 DEFLIT(lit_27);
-DEFLIT(lit_7);
 DEFLIT(lit_10);
 DEFLIT(lit_1);
-DEFLIT(lit_25);
+DEFLIT(lit_17);
 DEFLIT(lit_5);
-DEFLIT(lit_24);
-DEFLIT(lit_23);
-DEFLIT(lit_19);
+DEFLIT(lit_14);
+DEFLIT(lit_7);
 DEFLIT(lit_9);
 DEFLIT(lit_2);
-DEFLIT(lit_4);
-DEFLIT(lit_28);
-DEFLIT(lit_6);
+DEFLIT(lit_25);
+DEFLIT(lit_11);
+DEFLIT(lit_18);
 DEFLIT(lit_20);
 
 /* FUNCTIONS: */
@@ -761,45 +761,45 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_fab_random_from_8) {
   P seed_;
-  P jF5281;
-  P x_1891F5280;
-  P v2F5279;
-  P v1F5278;
-  P prevF5277;
   P jF5276;
-  P aF5275;
-  P rF5274;
+  P x_1891F5275;
+  P v2F5274;
+  P v1F5273;
+  P prevF5272;
+  P jF5271;
+  P aF5270;
+  P rF5269;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22;
 LINK_STACK();
   ARG(seed_, 0);
   T22 = CALL1(1,VARREF(Ynew),VARREF(YgooSrandomYLrandomG));
-  rF5274 = T22;
-  T21 = CALL1(1,VARREF(YgooSrandomYrecent),rF5274);
-  aF5275 = T21;
-  CALL3(1,VARREF(YgooScolsScolxYelt_setter),VARREF(YDmax_int),aF5275,YPint((P)0));
-  jF5276 = YPint((P)1);
+  rF5269 = T22;
+  T21 = CALL1(1,VARREF(YgooSrandomYrecent),rF5269);
+  aF5270 = T21;
+  CALL3(1,VARREF(YgooScolsScolxYelt_setter),VARREF(YDmax_int),aF5270,YPint((P)0));
+  jF5271 = YPint((P)1);
   T11 = CALL1(1,VARREF(YgooSmathYabs),seed_);
   T10 = CALL2(1,VARREF(YgooSmathYmod),T11,YPint((P)32768));
-  prevF5277 = T10;
+  prevF5272 = T10;
   LOOP_261: {
     P a261_0,a261_1;
-    T1 = CALL2(1,VARREF(YgooSmagYL),jF5276,VARREF(YgooSrandomYDrecent_size));
+    T1 = CALL2(1,VARREF(YgooSmagYL),jF5271,VARREF(YgooSrandomYDrecent_size));
     if (T1 != YPfalse) {
-      T9 = CALL1(1,VARREF(YgooSrandomYlcg_rand),prevF5277);
-      v1F5278 = T9;
-      T8 = CALL1(1,VARREF(YgooSrandomYlcg_rand),v1F5278);
-      v2F5279 = T8;
-      T3 = CALL2(1,VARREF(YgooSmathYmod),v1F5278,YPint((P)32768));
-      T5 = CALL2(1,VARREF(YgooSmathYmod),v2F5279,YPint((P)16384));
+      T9 = CALL1(1,VARREF(YgooSrandomYlcg_rand),prevF5272);
+      v1F5273 = T9;
+      T8 = CALL1(1,VARREF(YgooSrandomYlcg_rand),v1F5273);
+      v2F5274 = T8;
+      T3 = CALL2(1,VARREF(YgooSmathYmod),v1F5273,YPint((P)32768));
+      T5 = CALL2(1,VARREF(YgooSmathYmod),v2F5274,YPint((P)16384));
       T4 = CALL2(1,VARREF(YgooSmathYT),T5,YPint((P)32768));
       T2 = CALL2(1,VARREF(YgooSmathYA),T3,T4);
-      CALL3(1,VARREF(YgooScolsScolxYelt_setter),T2,aF5275,jF5276);
-      T7 = CALL2(1,VARREF(YgooSmathYA),jF5276,YPint((P)1));
+      CALL3(1,VARREF(YgooScolsScolxYelt_setter),T2,aF5270,jF5271);
+      T7 = CALL2(1,VARREF(YgooSmathYA),jF5271,YPint((P)1));
       a261_0 = T7;
-      a261_1 = v2F5279;
-      jF5276 = a261_0;
-      prevF5277 = a261_1;
+      a261_1 = v2F5274;
+      jF5271 = a261_0;
+      prevF5272 = a261_1;
       goto LOOP_261;
       T0 = T6;
     } else {
@@ -809,18 +809,18 @@ LINK_STACK();
   T20 = CALL2(1,VARREF(YgooSmathYT),YPint((P)4),VARREF(YgooSrandomYDrecent_size));
   T19 = CALL3(1,VARREF(YgooScolsSrangeYrange),YPint((P)0),VARREF(YgooSmagYLE),T20);
   T18 = CALL1(1,VARREF(YgooScolsScolYenum),T19);
-  x_1891F5280 = T18;
+  x_1891F5275 = T18;
   LOOP_262: {
     P a262_0;
-    T14 = CALL1(1,VARREF(YgooScolsScolYfinQ),x_1891F5280);
+    T14 = CALL1(1,VARREF(YgooScolsScolYfinQ),x_1891F5275);
     T13 = CALL1(1,VARREF(Ynot),T14);
     if (T13 != YPfalse) {
-      T17 = CALL1(1,VARREF(YgooScolsScolYnow),x_1891F5280);
-      jF5281 = T17;
-      CALL1(1,VARREF(YgooSrandomYrandom_29),rF5274);
-      T16 = CALL1(1,VARREF(YgooScolsScolYnxt),x_1891F5280);
+      T17 = CALL1(1,VARREF(YgooScolsScolYnow),x_1891F5275);
+      jF5276 = T17;
+      CALL1(1,VARREF(YgooSrandomYrandom_29),rF5269);
+      T16 = CALL1(1,VARREF(YgooScolsScolYnxt),x_1891F5275);
       a262_0 = T16;
-      x_1891F5280 = a262_0;
+      x_1891F5275 = a262_0;
       goto LOOP_262;
       T12 = T15;
     } else {
@@ -828,7 +828,7 @@ LINK_STACK();
     }
   }
 UNLINK_STACK();
-  RET(rF5274);
+  RET(rF5269);
 }
 
 LOCCODEDEF(fun_fab_random_9) {
@@ -855,9 +855,9 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSrandomYrandom_29) {
   P r_;
-  P tapF5284;
-  P aF5283;
-  P riF5282;
+  P tapF5279;
+  P aF5278;
+  P riF5277;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12;
 LINK_STACK();
   ARG(r_, 0);
@@ -865,21 +865,21 @@ LINK_STACK();
   T11 = CALL2(1,VARREF(YgooSmathYA),T12,YPint((P)1));
   T10 = CALL2(1,VARREF(YgooSmathYmod),T11,VARREF(YgooSrandomYDrecent_size));
   check_type(T10,VARREF(YLintG));
-  riF5282 = T10;
+  riF5277 = T10;
   T9 = CALL1(1,VARREF(YgooSrandomYrecent),r_);
-  aF5283 = T9;
-  CALL2(1,VARREF(YgooSrandomYrecent_index_setter),riF5282,r_);
+  aF5278 = T9;
+  CALL2(1,VARREF(YgooSrandomYrecent_index_setter),riF5277,r_);
   T8 = FUNSHELL(1,fun_tap_10,2);
-  tapF5284 = T8;
-  FUNINIT(tapF5284, 2,aF5283,riF5282);
-  T3 = CALL1(1,tapF5284,YPint((P)54));
-  T4 = CALL1(1,tapF5284,YPint((P)8));
+  tapF5279 = T8;
+  FUNINIT(tapF5279, 2,aF5278,riF5277);
+  T3 = CALL1(1,tapF5279,YPint((P)54));
+  T4 = CALL1(1,tapF5279,YPint((P)8));
   T2 = CALL2(1,VARREF(YgooSmathYC),T3,T4);
-  T6 = CALL1(1,tapF5284,YPint((P)6));
-  T7 = CALL1(1,tapF5284,YPint((P)3));
+  T6 = CALL1(1,tapF5279,YPint((P)6));
+  T7 = CALL1(1,tapF5279,YPint((P)3));
   T5 = CALL2(1,VARREF(YgooSmathYC),T6,T7);
   T1 = CALL2(1,VARREF(YgooSmathYC),T2,T5);
-  T0 = CALL3(1,VARREF(YgooScolsScolxYelt_setter),T1,aF5283,riF5282);
+  T0 = CALL3(1,VARREF(YgooScolsScolxYelt_setter),T1,aF5278,riF5277);
 UNLINK_STACK();
   RET(T0);
 }
@@ -896,9 +896,9 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_random_using_13) {
   P range_,r_;
-  P valueF5287;
-  P limitF5286;
-  P mF5285;
+  P valueF5282;
+  P limitF5281;
+  P mF5280;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
 LINK_STACK();
   ARG(range_, 0);
@@ -907,18 +907,18 @@ LINK_STACK();
   if (T1 != YPfalse) {
     T0 = YPint((P)0);
   } else {
-    mF5285 = VARREF(YDmax_int);
-    T10 = CALL2(1,VARREF(YgooSmathY_),mF5285,range_);
+    mF5280 = VARREF(YDmax_int);
+    T10 = CALL2(1,VARREF(YgooSmathY_),mF5280,range_);
     T9 = CALL2(1,VARREF(YgooSmathYA),T10,YPint((P)1));
     T8 = CALL2(1,VARREF(YgooSmathYmod),T9,range_);
-    T7 = CALL2(1,VARREF(YgooSmathY_),mF5285,T8);
-    limitF5286 = T7;
+    T7 = CALL2(1,VARREF(YgooSmathY_),mF5280,T8);
+    limitF5281 = T7;
     LOOP_263: {
       T6 = CALL1(1,VARREF(YgooSrandomYrandom_29),r_);
-      valueF5287 = T6;
-      T4 = CALL2(1,VARREF(YgooSmagYLE),valueF5287,limitF5286);
+      valueF5282 = T6;
+      T4 = CALL2(1,VARREF(YgooSmagYLE),valueF5282,limitF5281);
       if (T4 != YPfalse) {
-        T3 = valueF5287;
+        T3 = valueF5282;
       } else {
         goto LOOP_263;
         T3 = T5;
@@ -941,15 +941,15 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_random_unit_using_15) {
   P r_;
-  P maxF5288;
+  P maxF5283;
   P T0,T1,T2,T3,T4;
 LINK_STACK();
   ARG(r_, 0);
-  maxF5288 = YPint((P)1000000);
-  T3 = CALL2(1,VARREF(YgooSmathYA),maxF5288,YPint((P)1));
+  maxF5283 = YPint((P)1000000);
+  T3 = CALL2(1,VARREF(YgooSmathYA),maxF5283,YPint((P)1));
   T2 = CALL2(1,VARREF(YgooSrandomYrandom_using),T3,r_);
   T1 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLfloG),T2);
-  T4 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLfloG),maxF5288);
+  T4 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLfloG),maxF5283);
   T0 = CALL2(1,VARREF(YgooSmathYS),T1,T4);
 UNLINK_STACK();
   RET(T0);

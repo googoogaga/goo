@@ -246,14 +246,14 @@ EXT(Yfun_info_src_setter,"goo/boot","fun-info-src-setter");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_2);
 DEFLIT(lit_4);
+DEFLIT(lit_6);
 DEFLIT(lit_0);
-DEFLIT(lit_5);
 DEFLIT(lit_7);
 DEFLIT(lit_1);
-DEFLIT(lit_6);
+DEFLIT(lit_5);
 DEFLIT(lit_3);
+DEFLIT(lit_2);
 
 /* FUNCTIONS: */
 
@@ -272,14 +272,14 @@ extern P YgooSxY___main_0___ ();
 
 LOCCODEDEF(fun_to_c_0) {
   P x_;
-  P xF5225;
-  P xF5224;
+  P xF5285;
+  P xF5284;
   P T0;
 LINK_STACK();
   ARG(x_, 0);
-  xF5224 = x_;
-  xF5225 = xF5224;
-  T0 = (P)YPiGG(xF5225,(P)2);
+  xF5284 = x_;
+  xF5285 = xF5284;
+  T0 = (P)YPiGG(xF5285,(P)2);
 UNLINK_STACK();
   QRET(T0);
 }
@@ -306,14 +306,14 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_to_c_3) {
   P x_;
-  P xF5227;
-  P xF5226;
+  P xF5287;
+  P xF5286;
   P T0;
 LINK_STACK();
   ARG(x_, 0);
-  xF5226 = x_;
-  xF5227 = xF5226;
-  T0 = (P)YPiGG(xF5227,(P)2);
+  xF5286 = x_;
+  xF5287 = xF5286;
+  T0 = (P)YPiGG(xF5287,(P)2);
 UNLINK_STACK();
   QRET(T0);
 }
@@ -330,12 +330,12 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_to_c_5) {
   P x_;
-  P xF5228;
+  P xF5288;
   P T0;
 LINK_STACK();
   ARG(x_, 0);
-  xF5228 = x_;
-  T0 = (P)YPuntag_into(xF5228);
+  xF5288 = x_;
+  T0 = (P)YPuntag_into(xF5288);
 UNLINK_STACK();
   QRET(T0);
 }

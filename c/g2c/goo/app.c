@@ -288,8 +288,8 @@ EXT(YgooScolsScolYadd,"goo/cols/col","add");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_0);
 DEFLIT(lit_1);
+DEFLIT(lit_0);
 
 /* FUNCTIONS: */
 

@@ -589,25 +589,25 @@ EXT(YgooScolsScolYadd,"goo/cols/col","add");
 /* FORWARD QUOTATIONS: */
 
 DEFLIT(lit_12);
-DEFLIT(lit_17);
-DEFLIT(lit_15);
 DEFLIT(lit_5);
 DEFLIT(lit_14);
-DEFLIT(lit_9);
-DEFLIT(lit_0);
-DEFLIT(lit_20);
-DEFLIT(lit_2);
-DEFLIT(lit_11);
-DEFLIT(lit_13);
-DEFLIT(lit_10);
-DEFLIT(lit_18);
+DEFLIT(lit_16);
+DEFLIT(lit_15);
 DEFLIT(lit_7);
 DEFLIT(lit_19);
-DEFLIT(lit_16);
+DEFLIT(lit_0);
+DEFLIT(lit_17);
+DEFLIT(lit_9);
+DEFLIT(lit_11);
+DEFLIT(lit_18);
+DEFLIT(lit_13);
+DEFLIT(lit_10);
+DEFLIT(lit_3);
+DEFLIT(lit_2);
 DEFLIT(lit_4);
 DEFLIT(lit_6);
-DEFLIT(lit_3);
 DEFLIT(lit_8);
+DEFLIT(lit_20);
 DEFLIT(lit_1);
 
 /* FUNCTIONS: */
@@ -670,10 +670,10 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_new_4) {
   P c_,args_;
-  P xF5266;
-  P tmpF5265;
-  P eventF5264;
-  P next_metsF5263;
+  P xF5261;
+  P tmpF5260;
+  P eventF5259;
+  P next_metsF5258;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
 LINK_STACK();
   ARG(c_, 0);
@@ -681,37 +681,37 @@ LINK_STACK();
   T10 = (P)YPfun_reg();
   T11 = (P)YPnext_methods();
   T9 = CALL4(1,VARREF(YgooSmacrosYOchecked_next_methods),T10,T11,c_,args_);
-  next_metsF5263 = T9;
-  T7 = CALL1(1,VARREF(Yhead),next_metsF5263);
-  T8 = CALL1(1,VARREF(Ytail),next_metsF5263);
+  next_metsF5258 = T9;
+  T7 = CALL1(1,VARREF(Yhead),next_metsF5258);
+  T8 = CALL1(1,VARREF(Ytail),next_metsF5258);
   T6 = CALL4(1,VARREF(YgooSmacrosYnapp),T7,T8,c_,args_);
-  eventF5264 = T6;
-  T5 = CALL1(1,VARREF(YtimeSeventYevent_name),eventF5264);
-  tmpF5265 = T5;
-  if (tmpF5265 != YPfalse) {
-    T4 = tmpF5265;
+  eventF5259 = T6;
+  T5 = CALL1(1,VARREF(YtimeSeventYevent_name),eventF5259);
+  tmpF5260 = T5;
+  if (tmpF5260 != YPfalse) {
+    T4 = tmpF5260;
   } else {
     T4 = LITREF(lit_10);
   }
   T3 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLstrG),T4);
   T2 = (P)YPsu(T3);
   T1 = (P)YtimeSeventYPevent_create(T2);
-  xF5266 = T1;
-  T0 = (P)YPtag_into(xF5266,(P)3);
-  CALL2(1,VARREF(YtimeSeventYevent_handle_setter),T0,eventF5264);
+  xF5261 = T1;
+  T0 = (P)YPtag_into(xF5261,(P)3);
+  CALL2(1,VARREF(YtimeSeventYevent_handle_setter),T0,eventF5259);
 UNLINK_STACK();
-  RET(eventF5264);
+  RET(eventF5259);
 }
 
 LOCCODEDEF(fun_event_signal_5) {
   P e_;
-  P xF5267;
+  P xF5262;
   P T0,T1;
 LINK_STACK();
   ARG(e_, 0);
   T1 = CALL1(1,VARREF(YtimeSeventYevent_handle),e_);
-  xF5267 = T1;
-  T0 = (P)YPuntag_into(xF5267);
+  xF5262 = T1;
+  T0 = (P)YPuntag_into(xF5262);
   (P)YtimeSeventYPevent_signal(T0);
 UNLINK_STACK();
   QRET(YPtrue);
@@ -719,13 +719,13 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_event_broadcast_6) {
   P e_;
-  P xF5268;
+  P xF5263;
   P T0,T1;
 LINK_STACK();
   ARG(e_, 0);
   T1 = CALL1(1,VARREF(YtimeSeventYevent_handle),e_);
-  xF5268 = T1;
-  T0 = (P)YPuntag_into(xF5268);
+  xF5263 = T1;
+  T0 = (P)YPuntag_into(xF5263);
   (P)YtimeSeventYPevent_broadcast(T0);
 UNLINK_STACK();
   QRET(YPtrue);
@@ -733,13 +733,13 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_event_reset_7) {
   P e_;
-  P xF5269;
+  P xF5264;
   P T0,T1;
 LINK_STACK();
   ARG(e_, 0);
   T1 = CALL1(1,VARREF(YtimeSeventYevent_handle),e_);
-  xF5269 = T1;
-  T0 = (P)YPuntag_into(xF5269);
+  xF5264 = T1;
+  T0 = (P)YPuntag_into(xF5264);
   (P)YtimeSeventYPevent_reset(T0);
 UNLINK_STACK();
   QRET(YPtrue);
@@ -747,18 +747,18 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_event_wait_8) {
   P e_,l_;
-  P xF5271;
-  P xF5270;
+  P xF5266;
+  P xF5265;
   P T0,T1,T2,T3,T4,T5;
 LINK_STACK();
   ARG(e_, 0);
   ARG(l_, 1);
   T3 = CALL1(1,VARREF(YtimeSeventYevent_handle),e_);
-  xF5270 = T3;
-  T2 = (P)YPuntag_into(xF5270);
+  xF5265 = T3;
+  T2 = (P)YPuntag_into(xF5265);
   T5 = CALL1(1,VARREF(YtimeSlockYlock_handle),l_);
-  xF5271 = T5;
-  T4 = (P)YPuntag_into(xF5271);
+  xF5266 = T5;
+  T4 = (P)YPuntag_into(xF5266);
   T1 = (P)YtimeSeventYPevent_wait(T2,T4);
   T0 = (P)YPbb(T1);
 UNLINK_STACK();
@@ -767,19 +767,19 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_event_wait_timed_9) {
   P e_,l_,secs_;
-  P xF5273;
-  P xF5272;
+  P xF5268;
+  P xF5267;
   P T0,T1,T2,T3,T4,T5,T6;
 LINK_STACK();
   ARG(e_, 0);
   ARG(l_, 1);
   ARG(secs_, 2);
   T3 = CALL1(1,VARREF(YtimeSeventYevent_handle),e_);
-  xF5272 = T3;
-  T2 = (P)YPuntag_into(xF5272);
+  xF5267 = T3;
+  T2 = (P)YPuntag_into(xF5267);
   T5 = CALL1(1,VARREF(YtimeSlockYlock_handle),l_);
-  xF5273 = T5;
-  T4 = (P)YPuntag_into(xF5273);
+  xF5268 = T5;
+  T4 = (P)YPuntag_into(xF5268);
   T6 = (P)YPfu(secs_);
   T1 = (P)YtimeSeventYPevent_wait_timed(T2,T4,T6);
   T0 = (P)YPbb(T1);

@@ -423,17 +423,17 @@ EXT(YgooScolsScolYadd,"goo/cols/col","add");
 /* FORWARD QUOTATIONS: */
 
 DEFLIT(lit_10);
-DEFLIT(lit_7);
+DEFLIT(lit_9);
 DEFLIT(lit_5);
-DEFLIT(lit_11);
+DEFLIT(lit_8);
+DEFLIT(lit_3);
+DEFLIT(lit_7);
 DEFLIT(lit_2);
 DEFLIT(lit_1);
-DEFLIT(lit_8);
-DEFLIT(lit_9);
 DEFLIT(lit_0);
 DEFLIT(lit_4);
 DEFLIT(lit_6);
-DEFLIT(lit_3);
+DEFLIT(lit_11);
 
 /* FUNCTIONS: */
 

@@ -9,7 +9,7 @@
 
 ;; (use tgx)
 
-(use gl)
+;; (use gl)
 
 #/
 (use goo/io/pretty)
@@ -40,7 +40,7 @@
 (use goo/user)
 
 (dv *goo-version* "0.154")
-(dv *goo-date*    "OCT 09, 2003")
+(dv *goo-date*    "OCT 20, 2003")
 
 (post ";;; GOO\n")
 (post ";;; JONATHAN BACHRACH\n")

@@ -430,37 +430,37 @@ EXT(YgooScolsScolYadd,"goo/cols/col","add");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_2);
+DEFLIT(lit_8);
 DEFLIT(lit_12);
-DEFLIT(lit_28);
-DEFLIT(lit_11);
-DEFLIT(lit_26);
+DEFLIT(lit_24);
+DEFLIT(lit_2);
+DEFLIT(lit_27);
 DEFLIT(lit_1);
 DEFLIT(lit_3);
-DEFLIT(lit_9);
-DEFLIT(lit_29);
-DEFLIT(lit_25);
-DEFLIT(lit_10);
 DEFLIT(lit_4);
-DEFLIT(lit_13);
-DEFLIT(lit_18);
-DEFLIT(lit_6);
-DEFLIT(lit_30);
-DEFLIT(lit_21);
-DEFLIT(lit_16);
-DEFLIT(lit_0);
+DEFLIT(lit_29);
+DEFLIT(lit_9);
+DEFLIT(lit_25);
 DEFLIT(lit_19);
-DEFLIT(lit_22);
-DEFLIT(lit_23);
-DEFLIT(lit_27);
-DEFLIT(lit_24);
-DEFLIT(lit_5);
-DEFLIT(lit_7);
-DEFLIT(lit_15);
+DEFLIT(lit_10);
 DEFLIT(lit_20);
+DEFLIT(lit_26);
+DEFLIT(lit_23);
+DEFLIT(lit_6);
+DEFLIT(lit_16);
+DEFLIT(lit_21);
+DEFLIT(lit_28);
+DEFLIT(lit_0);
+DEFLIT(lit_13);
+DEFLIT(lit_22);
+DEFLIT(lit_18);
+DEFLIT(lit_30);
 DEFLIT(lit_17);
+DEFLIT(lit_5);
+DEFLIT(lit_15);
+DEFLIT(lit_7);
+DEFLIT(lit_11);
 DEFLIT(lit_14);
-DEFLIT(lit_8);
 
 /* FUNCTIONS: */
 
