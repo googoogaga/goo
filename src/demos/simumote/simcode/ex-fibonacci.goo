@@ -1,0 +1,71 @@
+;; Fibonacci calculation. 
+;; Application-level
+
+(use demos/simumote/vm/instructions)
+(use demos/simumote/vm/vmsysfunctions)
+(use demos/simumote/vm/vm)
+(use demos/simumote/simcode/round)
+
+(use demos/simumote/motes)
+(use demos/simumote/simumote)
+
+(use samurui/samurui)
+(use samurui/intrinsic)
+
+;; (use demos/simumote/simcode/ex-fibonacci)
+;; then (go-simumote)
+
+(parsevm 
+ (defconst SEND_DELAY_LOW 1)
+ (defconst SEND_DELAY_HIGH 1)
+
+ (block fibonacci #f
+        ;; State
+        (
+         )
+
+        (init
+         )
+
+        (tick
+         )
+
+        (collide
+         )
+
+        (packup
+         )
+        )
+ )
+
+;; Distribute code blocks!
+;; We'll let the gradient propagation propagate itself...
+(give-random-mote-instance (cur-round *app*) (motes (motes *app*)) (elt $vm-blocks 'gradient))
+
+(dv $grad-color-map #f)
+(dv $num-colors 24)
+(dv $capsule-not-present-index (- $num-colors 1))
+
+(df init-colors ()
+  (unless $grad-color-map
+    (set $grad-color-map 
+         (map (fun (index)
+                (def shade (max 0 (- (div (* 256 index) $num-colors) 1)))
+                (color shade shade shade)
+                )
+              (range 0 < (- $num-colors 1)))
+         )
+    (set $grad-color-map (cat $grad-color-map (tup (color 255 0 0))))
+    )
+  )
+
+(dm map-color (renderer|<visi-intrinsic> mote|<mote> => <gui-color>)
+  (init-colors)
+  (def rblock (mote-find-block-instance mote (elt $vm-blocks 'gradient)))
+  (or (and rblock (elt $grad-color-map (min (unwrap (env-lookup (run-state rblock) 'grad-val)) (- $num-colors 1))))
+      (elt $grad-color-map $capsule-not-present-index))
+  )
+
+(export
+  go-simumote
+  )

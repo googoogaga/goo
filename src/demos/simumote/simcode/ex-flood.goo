@@ -1,0 +1,70 @@
+(use goo)
+(use goo/random)
+
+(use demos/simumote/vm/instructions)
+(use demos/simumote/vm/vmsysfunctions)
+(use demos/simumote/vm/vm)
+(use demos/simumote/simcode/round)
+
+(use demos/simumote/motes)
+(use demos/simumote/simumote)
+
+(use samurui/samurui)
+(use samurui/intrinsic)
+
+;; (use demos/simumote/simcode/ex-flood)
+
+;; LOAD THIS GUY, then type (go-simumote) to run!
+
+(parsevm 
+ (defconst REBROADCAST_LOW  1)
+ (defconst REBROADCAST_HIGH 1)
+
+ (block flood #f
+        ;; No state
+        (
+         )
+        
+        ;; init
+        (init
+         (schedule-me (random-range REBROADCAST_LOW 
+                                    REBROADCAST_HIGH))
+         )
+        
+        ;; per-tick
+        (tick
+         (broadcast-me)
+         )
+        
+        (collide
+         ;; If we're already present, favor the other guy to stop 
+         ;;  the flood.
+         other
+         )
+        )
+ )
+
+;; Distribute code blocks!
+(give-random-mote-instance (cur-round *app*) (motes (motes *app*)) (elt $vm-blocks 'flood))
+
+(dv $flood-present #f)
+(dv $flood-not-present #f)
+
+(df init-colors ()
+  (unless $flood-present
+    (set $flood-present (color 0 255 0))
+    (set $flood-not-present (color 255 0 0))
+    )
+  )
+
+(dm map-color (renderer|<visi-intrinsic> mote|<mote> => <gui-color>)
+  (init-colors)
+  (def rblock (mote-find-block-instance mote (elt $vm-blocks 'flood)))
+  (if rblock
+      $flood-present
+      $flood-not-present)
+  )
+
+(export
+  go-simumote
+  )

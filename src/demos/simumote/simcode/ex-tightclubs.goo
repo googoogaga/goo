@@ -1,0 +1,90 @@
+;; Tightclubs example!  Eg, use and then simulate the sucker.
+
+(use goo)
+(use goo/random)
+
+(use demos/simumote/vm/instructions)
+(use demos/simumote/vm/vmsysfunctions)
+(use demos/simumote/vm/vm)
+(use demos/simumote/simcode/round)
+
+(use demos/simumote/motes)
+(use demos/simumote/simumote)
+
+(use samurui/samurui)
+(use samurui/intrinsic)
+
+;; Load tightclubs
+(use demos/simumote/simcode/tightclubs)
+
+;; (use demos/simumote/simcode/ex-tightclubs)
+;; LOAD THIS GUY, then type (go-simumote) to run!
+
+(parsevm
+ (block run-tight-clubs #f
+        ()
+        
+        (init
+         (schedule-me 2)
+         )
+
+        (tick
+         (call-other 'tight-clubs 'activate)
+         )
+        )
+ )
+
+(give-all (tup 'run-tight-clubs
+               'tight-clubs
+               'recruit-response
+               'recruit-message
+               'inactive
+               'i-am-your-neighbor
+               ))
+
+(dv $state-color-map #f)
+
+(df gimme-spaced-colors (num-colors|<int> => <col>)
+  (def spaced-colors (vec))
+  (def num-per-ring (div (+ num-colors 4) 5))
+  ;; By Ring
+  (for ((i (range 1 < 6)))
+    (for ((j (range 0 < num-per-ring)))
+      (add! spaced-colors
+            (color-hsb (/ (as <flo> j) (as <flo> num-per-ring))
+                       (* 0.2 i)
+                       1.0))
+      )
+    )
+
+  spaced-colors
+  )
+
+(df init-colors ()
+  (unless $state-color-map
+    (set $state-color-map (gimme-spaced-colors $num-motes))
+    )
+  )
+
+(set $main-rblock-name 'tight-clubs)
+
+(dm map-color (renderer|<visi-intrinsic> mote|<mote> => <gui-color>)
+  (init-colors)
+  (def rblock (gimme-main-rblock mote))
+  (elt $state-color-map (lookup-var rblock 'my-leader 0))
+  )
+
+(dm map-shape (renderer|<visi-intrinsic> mote|<mote> => <shape>)
+  (def rblock (gimme-main-rblock mote))
+  (def recruited (lookup-var rblock 'recruited #f))
+  (def leader    (lookup-var rblock 'leader    #f))
+  (if leader
+      $shape-square
+      (if recruited
+          $shape-circle
+          $shape-triangle))
+  )
+
+(export
+  go-simumote
+  )

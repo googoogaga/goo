@@ -1,0 +1,93 @@
+
+(use goo)
+(use goo/random)
+
+(use demos/simumote/vm/instructions)
+(use demos/simumote/vm/vmsysfunctions)
+(use demos/simumote/vm/vm)
+(use demos/simumote/simcode/round)
+
+(use demos/simumote/motes)
+(use demos/simumote/simumote)
+
+(use samurui/samurui)
+(use samurui/intrinsic)
+
+;; Load codecast
+(use demos/simumote/simcode/codecast)
+
+;; (use demos/simumote/simcode/ex-codecast)
+;; LOAD THIS GUY, then type (go-simumote) to run!
+
+(parsevm
+ 
+ (block dummy1 #f
+        ;; State
+        ()
+        ;; Init
+        ()
+        ;; Tick
+        ()
+        ;; Collide
+        ()
+        ;; Pack
+        ()        
+        )
+
+ (block dummy2 #f
+        ;; State
+        ()
+        ;; Init
+        ()
+        ;; Tick
+        ()
+        ;; Collide
+        ()
+        ;; Pack
+        ()        
+        )
+
+ (block dummycast codecast
+        (
+         (payload (dummy1 dummy2))
+         (checklist (#t #t))
+         )
+        )
+ 
+ )
+
+;; --- Distribute code blocks!
+
+
+;; --- Color / Shape mapping
+
+(dv $state-color-map #f)
+
+(df init-colors ()
+  (unless $state-color-map
+    (set $state-color-map (tup (color 255 64 64)
+                               (color 64 255 64)
+                               (color 64 64 255))
+         )
+    )
+  )
+
+(set $main-rblock-name 'tight-clubs)
+
+(dm map-color (renderer|<visi-intrinsic> mote|<mote> => <gui-color>)
+  (init-colors)
+  (def rblock (gimme-main-rblock mote))
+  (elt $state-color-map (lookup-var rblock 'my-leader 0))
+  )
+
+(dm map-shape (renderer|<visi-intrinsic> mote|<mote> => <shape>)
+  (def rblock (gimme-main-rblock mote))
+  (if (lookup-var rblock 'recruited #f)
+      $shape-circle
+      $shape-triangle)
+  )
+
+
+(export
+  go-simumote
+  )

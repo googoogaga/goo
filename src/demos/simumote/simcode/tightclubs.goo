@@ -1,0 +1,263 @@
+;; Tight clubs algorithm implementation.  Implementation derived from the
+;;  source listing from Figure 11 in AIM-1614.
+(use goo)
+
+(use demos/simumote/vm/instructions)
+(use demos/simumote/vm/vmsysfunctions)
+(use demos/simumote/vm/vm)
+(use demos/simumote/simcode/round)
+
+;; problems:
+;; - intersection logic isn't apparently working correctly, as it's acting like standard leader election
+;; - people aren't going back to check_id when they hear someone go inactive.  perhaps some kind of race condition with another state?
+
+(parsevm
+
+ (defconst DELAY_MIN 1)
+ (defconst DELAY_MAX 1)
+ (defconst LISTEN_DELAY 2)
+ (defconst TICK_SPACE 1)
+
+ ;; States
+ (defconst INACTIVE                0)
+ (defconst SAYING_HI_TO_NEIGHBORS  1)
+ (defconst GATHERING_NEIGHBOR_LIST 2)
+ (defconst CHECK_ID                3)
+ (defconst RECRUITING              4)
+ (defconst RECRUIT_WAITING         5)
+ (defconst LISTENING_FOR_MSGS      6)
+ (defconst DONE                    7)
+
+ (block tight-clubs #f
+        ;; State
+        (
+         (i-am-active #f)
+         (state SAYING_HI_TO_NEIGHBORS)
+         (recruited #f)
+         (leader #f)
+         (my-leader 0)
+         (neighbors ())
+         (active-neighbors ())
+         (potential ())
+         (i-am-recruiting 0)
+         (wait-count 0)
+         )
+        
+        (init
+         (schedule-me (random-range DELAY_MIN DELAY_MAX))
+         )
+        
+        (tick
+         (when i-am-active
+           (case state
+             ;; Say hi, transition to wait-state.
+             (SAYING_HI_TO_NEIGHBORS
+              (broadcast 'i-am-your-neighbor)
+              (set state GATHERING_NEIGHBOR_LIST)
+              
+              ;; Wait a bit longer than usual for us to hear from everyone.
+              (schedule-me LISTEN_DELAY)
+              )
+             
+             (GATHERING_NEIGHBOR_LIST
+              (set active-neighbors neighbors)
+              (set state CHECK_ID)
+              )
+             
+             (CHECK_ID
+              ;; Am I the lowest number I know of?
+              (if (or (empty? neighbors)
+                      (< (mote-id) (min-elt neighbors)))
+                  ;; I am the lowest => leader
+                  (seq
+                    (set leader #t)
+                    (set recruited #t)
+                    (set my-leader (mote-id))
+                    
+                    ;; Initially all neighbors are potential members
+                    (set potential neighbors)
+                    
+                    (set state RECRUITING)
+                    )
+                  ;; not a leader => listen
+                  (seq
+                    (set state LISTENING_FOR_MSGS)
+                    ))
+              )
+             
+             (RECRUITING
+              (if (not (empty? potential))
+                  (seq
+                    (set i-am-recruiting (min-elt potential))
+                    (broadcast 'recruit-message)
+                    (set state RECRUIT_WAITING)
+                    (set wait-count 2)
+                    )
+                  (seq
+                    (broadcast 'inactive)
+                    (set state DONE)
+                    )
+                  )
+              )
+             
+             (RECRUIT_WAITING
+              ;; nop. give up after a suitable time in a resilient implementation.
+              (set wait-count (- wait-count 1))
+              (when (= wait-count 0)
+                (set state RECRUITING))
+              )
+             
+             (LISTENING_FOR_MSGS
+              ;; we may have been recruited when we weren't paying attention. send.
+              (when recruited
+                (broadcast 'inactive)
+                (set state DONE))
+              )
+             
+             (DONE
+              )
+             )
+
+           ;; Queue me up once more!
+           (unless (me-scheduled?)
+             (schedule-me TICK_SPACE))
+           )
+         )
+        
+        (activate
+         (set i-am-active #t)
+         (schedule-me 1)
+         )
+
+        )
+
+ (block recruit-response tight-clubs
+        ;; State
+        (
+         (already-recruited #f)
+         (recruitee-neighbors ())
+         (response-to 0)
+         (response-from 0)
+         )
+
+        (init
+         ;; Only process if we're arriving at the desired node.
+         (when (and i-am-active
+                    (= (mote-id) response-to))
+           (unless already-recruited
+             (intersect! potential recruitee-neighbors)
+             )
+
+           (del! potential response-from)
+
+           ;; Let parent know we're done => ask next person or be done
+           (set state RECRUITING)
+           )
+         )
+        
+        ;; We want to be executed. We have no concerns about overwriting
+        ;;  an existing instance.  All that is required is that we exist.
+        (collide 
+         (if (= (mote-id) response-to)
+             me
+             other)
+         )
+
+        (packup
+         (set already-recruited recruited)
+         (set recruitee-neighbors neighbors)
+         (set response-from (mote-id))
+         )
+        )
+
+ (block recruit-message recruit-response
+        ;; State
+        (
+         (recruit-from 0)
+         (recruit-to 0)
+         )
+
+        (init
+         ;; Only process and tick if we're arriving at the desired node.
+         (when (and i-am-active
+                    (= (mote-id) recruit-to))
+           (schedule-me (random-range DELAY_MIN DELAY_MAX))
+           )
+         )
+        
+        (tick
+         ;; We're responding to the person we heard from (uses the fact
+         ;;  that we're the kid of the response packet.)
+         (set response-to recruit-from)
+         (broadcast 'recruit-response)
+
+         ;; Mark ourselves recruited
+         (set recruited #t)
+         (set my-leader recruit-from)
+         ;; The listening_for_msgs state which we are presumably in 
+         ;;  will take care of sending inactive and switching to DONE.
+         )
+
+        (packup
+         (set recruit-from (mote-id))
+         (set recruit-to   i-am-recruiting)
+         )
+        
+        (collide
+         ;; Only overwrite if:
+         ;;  - We're intended for the current node.
+         ;;  - We don't have a tick in the pipeline.
+         ;; (This means someone might not get a response if they try and 
+         ;;  recruit us when another guy already has won the request.)
+         (if (and (= me:recruit-to (mote-id))
+                  (not (me-scheduled?)))
+             me
+             other)
+         )
+        )
+
+ ;; This block is sent by a node to remove it from its neighbors' active lists.
+ (block inactive tight-clubs
+        ;; State
+        (
+         (inactive-from 0)
+         )
+        
+        (init
+         (when i-am-active
+           (del! active-neighbors inactive-from)
+
+           (when (= state LISTENING_FOR_MSGS)
+             (set state CHECK_ID))
+           )
+         )
+
+        (packup
+         (set inactive-from (mote-id))
+         )
+
+        (collide
+         me
+         )
+        )
+
+ (block i-am-your-neighbor tight-clubs
+        ;; State
+        (
+         (neighbor-from 0)
+         )
+
+        (init
+         (when i-am-active
+           (add! neighbors neighbor-from))
+         )
+
+        (packup
+         (set neighbor-from (mote-id))
+         )
+        
+        (collide
+         me
+         )
+        )
+ )

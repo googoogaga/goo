@@ -1,0 +1,4 @@
+;; This moduel is responsible for cell-aware codecasts...
+;; In other words, targeted codecasting of selected code.
+;; Because, in a hiearchical implementation, we don't want the same code
+;;  spread EVERYWHERE.

@@ -1,0 +1,25 @@
+;; Promise shite
+
+(parsevm
+
+ (block promise #f
+
+        (init
+         )
+
+        (tick
+         )
+
+        (launch
+         ;; Do we already have a 'connection' established?
+         )
+
+        
+        (search
+         ;; First, make sure we don't have a local copy of whatever
+
+         ;; Next,
+         )
+
+        )
+ )

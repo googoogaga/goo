@@ -1,0 +1,16 @@
+;; Promise example...
+
+(parsevm
+ 
+ )
+
+
+;; ------------------------
+;; Bogus pseudocode follows:
+
+(def remote-function (find-capsule "add1"))
+(def my-promise (promise remote-function))
+
+(my-promise 1)
+
+;; Such pcode clearly indicates the need to be able to use capsules functionally.  Eg, they must have an input and an output.

@@ -1,0 +1,96 @@
+;; Routed message.
+(use goo)
+(use goo/random)
+
+(use demos/simumote/vm/instructions)
+(use demos/simumote/vm/vmsysfunctions)
+(use demos/simumote/vm/vm)
+(use demos/simumote/simcode/round)
+
+(use demos/simumote/motes)
+(use demos/simumote/simumote)
+
+(use samurui/samurui)
+(use samurui/intrinsic)
+
+;; A routed message is comprised of the following mini-tasks:
+;; - Source/Target A
+;; - Search -- leaves breadcrumbs
+;; - Breadcrumbs -- left behind by search
+;; - Message payload -- traverses breadcrumbs (the routed message itself)
+;; - Source/Target B
+
+;; Pathfinding is relatively simple.
+;; - Emit a gradient... gradient locates node in question.
+;; - Target node sends a message that climbs back up the gradient, leaving breadcrumbs.
+;;    (Some form of redundancy elimination is required...)
+
+
+;; Our functor takes the following parameters:
+;; - A payload to execute on arrival
+;; - A function to execute to check if we've arrived?
+;;   OR perhaps just a capsule to check for to determine arrival.
+;; - A function/capsule to determine arrival at original location.
+;;   (Alternatively we can just check for an id-match...)
+;; - A callback mechanism?  (Call-on-other, with named other?)
+
+(parsevm 
+ (defconst SEND_DELAY_LOW 1)
+ (defconst SEND_DELAY_HIGH 1)
+
+ (defconst STATE_INACTIVE      0)
+ (defconst STATE_INITIALGRAD   1)
+ (defconst STATE_CLIMB_BACK_UP 2)
+ (defconst STATE_BREADCRUMB    3)
+
+ (block pathfinder #f
+        ;; State
+        (
+         (state STATE_INACTIVE)
+         (grad-val 0)
+         )
+        
+        (init
+         (case state
+           (STATE_INITIALGRAD
+            ;; Are we at the target?
+            )
+
+           (STATE_CLIMB_BACK_UP
+            ;; Are we back to the source?
+            )
+           )
+         )
+
+        (collide
+         ;; As this is may be a gradient, we must include some logic
+         
+         )
+
+        )
+
+ (block routedmessage pathfinder
+        ;; State
+        (
+         (last-grad-val 0)
+         )
+        
+        ;; If we are executing, a pathfinder is resident
+        (init
+         ;; Are we at our destination?  Invoke the payload.
+
+         ;; Make sure we are moving in the right direction
+         
+         ;; Purge us; we're going in the wrong direction.
+
+         ;; Queue ourselves to be relayed
+         )
+
+        (tick
+         ;; Retransmit.
+
+         ;; Purge.
+         )
+
+        )
+ )

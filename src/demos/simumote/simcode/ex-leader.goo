@@ -1,0 +1,89 @@
+(use goo)
+(use goo/random)
+
+(use demos/simumote/vm/instructions)
+(use demos/simumote/vm/vmsysfunctions)
+(use demos/simumote/vm/vm)
+(use demos/simumote/simcode/round)
+
+(use demos/simumote/motes)
+(use demos/simumote/simumote)
+
+(use samurui/samurui)
+(use samurui/intrinsic)
+
+;; (use demos/simumote/simcode/ex-leader)
+
+;; LOAD THIS GUY, then type (go-simumote) to run!
+
+(parsevm 
+ (defconst STATE_UNKNOWN  0)
+ (defconst STATE_LEADER   1)
+ (defconst STATE_FOLLOWER 2)
+
+ (block leader-main #f
+        ;; State
+        (
+         (state STATE_UNKNOWN)
+         )
+        
+        ;; init
+        (init
+         (schedule-me (random-range 1 10))
+         )
+        
+        ;; per-tick
+        (tick
+         ;; Become a leader if we are not yet a follower.
+         (when (= state STATE_UNKNOWN)
+           (set state STATE_LEADER)
+           (broadcast 'leader-announce)
+           )
+         )
+        )
+
+ (block leader-announce leader-main
+        ;; State
+        ((active #f))
+
+        ;; Init
+        (init
+         (when active
+           (when (= state STATE_UNKNOWN)
+             (set state STATE_FOLLOWER))
+           (set active #f)
+           )
+         )
+
+        ;; Pack
+        (packup
+         (set active #t)
+         )
+        )
+ )
+
+;; Distribute code blocks!
+(give-all-motes-instance (cur-round *app*) (motes (motes *app*)) (elt $vm-blocks 'leader-main))
+(give-all-motes-instance (cur-round *app*) (motes (motes *app*)) (elt $vm-blocks 'leader-announce))
+
+(dv $state-color-map #f)
+
+(df init-colors ()
+  (unless $state-color-map
+    (set $state-color-map (tup (color 255 64 64)
+                               (color 64 255 64)
+                               (color 64 64 255))
+         )
+    )
+  )
+
+(dm map-color (renderer|<visi-intrinsic> mote|<mote> => <gui-color>)
+  (init-colors)
+  (def rblock (mote-find-block-instance mote (elt $vm-blocks 'leader-main)))
+  (or (and rblock (elt $state-color-map (unwrap (env-lookup (run-state rblock) 'state))))
+      (1st $state-color-map))
+  )
+
+(export
+  go-simumote
+  )
