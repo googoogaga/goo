@@ -1,30 +1,35 @@
 NEW
 
-x make sure inlines are in place
-x lightweight boxes
-o boot classes don't init props correctly using nul instead
+x low-level compilation driver
+x   compile from text
+x   compile from right module
+x   do early optimizations
+x   type-inference
+x   optimize
+x   replace method using lit ref
+o   zap registered bindings -- perhaps have macro do it
+o typist
+o   type checks + insertion
+x   arity checks
+o   call folding
+o   call inlining
+o   type esc
+x   type loop
+x   type loc
+o dynamic compilation
+o   function counters
+o   compiler server
+o dependency tracking
+o   simple binding-based
+o     what about parents dependency?
+o trampoline function
+o replace
+---
 o use pub for all exporteds
-o print out entire system
-o doc d. and dp!
 o d. as dv -- enforce d.
-o tag false and true -- nah -- 00 A 01 I 11 L 10 C 
 o need type checks in loops and no loop conversion unless no return type
-o need packing-as and packing-in must take multiargs
-o report ast-errors with line number
-o def-opts and def-keys would be nice
 o need the equiv of post for say !!!
-o rename object-props to props-of
-o programs as lsts is a terrible representation
-o split out optimizations from ast-linearize
-o doc or/set
-o perhaps join should have a seq as second arg to make it sym with split
-o stack overflow during recompilation
-o boot: rename low primitives to have two %%'s
-o boot: invent naming convention for compile time things say &...?
 o fix emacs mode for [] and {}
-o rename empty? to nul?
-o macros should be compiled in interpreted
-o automate release and build and test
 o redo collection hierarchy
 o   fix del-keys! and add protocol to enum for col!'s
 o   no cat! met for vec
@@ -35,6 +40,32 @@ o   more tests
 o   conform manual to test suite wrt collections
 o send new version of shapes
 o fix strutil
+o   publish 
+    name ops
+o doc or/set
+---
+o source as file pointers with timestamps
+x slim down bindings to those actually used during dynamic compilation
+o change from programs lst to vec subclass
+o programs as lsts is a terrible representation
+x literal strategy for dynamic compilation
+o boot classes don't init props correctly using nul instead
+o print out entire system
+x doc d. and dp!
+o tag false and true -- nah -- 00 A 01 I 11 L 10 C 
+o report ast-errors with line number
+o def-opts and def-keys would be nice
+x rename object-props to props-of
+x split out optimizations from ast-linearize
+o perhaps join should have a seq as second arg to make it sym with split
+o stack overflow during recompilation
+o boot: rename low primitives to have two %%'s
+o boot: invent naming convention for compile time things say &...?
+x rename empty? to nul?
+o macros should be compiled in interpreted
+o automate release and build and test
+x make sure inlines are in place
+x lightweight boxes
 o customize wiki
 o should [v *] == last?
 o should [v 0 * 1] == [v 0 (- (len v) 1)]?
@@ -44,8 +75,9 @@ o   XCALL patches
 o interfaces
 o perhaps change ... to *
 o publish reasons
-o lighter weight c initialization %met etc
+x lighter weight c initialization %met etc
 x line numbers
+o   in errors
 x read www.archub.org/arcsug.txt
 o redo syntax to work declaratively
 o add hygiene

@@ -1,3 +1,8 @@
+=== 0.151 BUGS ===
+
+unbound vars in dync stay unbound in code unless recompiled
+(use tests) is in dyn mode
+
 === 0.143 BUGS ===
 
 *-setter too long

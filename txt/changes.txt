@@ -1,3 +1,44 @@
+=== 0.151 ===
+
+summary
+
+  lots of changes towards dynamic compilation and a reorg towards more
+  understandable and cleaner code
+
+added
+
+  binding ref tracking for slimmer dynamically generated code
+  lots more of the typist including loops
+  method-application ast for real
+  split out module any log chr mag
+  arbitrary lit mechanism for ref'ing methods next-method lists etc
+  recursive error aborting mechanism
+  fun-counting mechanism and profiler
+  support for dletting arbitrary settable lhs'
+  packing-as
+  <bot> and $bot to types
+
+fixed
+
+  decision-tree code working again
+  lots of bugs in vm to get test suite through
+  definition in ast-eval to return value as is done with other backends
+
+removed
+
+  class-type-cache
+  uses of %pair from ast generated code 
+  make-immutable from read
+
+changed
+
+  empty? and empty to nul? and nul resp.
+  split out fun-info into separate object
+  created stable stubs for fun/class creation
+  changed nary fix-let conversion to create tup's for opts
+  auto-export boot bindings
+  primitives to use rep earlier
+
 === 0.150 ===
 
 summary
