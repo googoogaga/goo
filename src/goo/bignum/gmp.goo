@@ -1,0 +1,144 @@
+(use goo)
+(use goo/math)
+(use goo/boot)
+(use goo/bignum/%gmp.c)
+(use/library gmp)
+
+(dl %add-b-b)
+(dl %add-b-i)
+(dl %sub-b-b)
+(dl %sub-b-i)
+(dl %sub-i-b)
+(dl %mul-b-b)
+(dl %mul-b-i)
+(dl %rsh-b-i)
+(dl %lsh-b-i)
+(dl %sgn-b)
+(dl %cmp-b-b)
+(dl %ior-b-b)
+(dl %xor-b-b)
+(dl %and-b-b)
+(dl %com-b)
+(dl %bit?-b-i)
+(dl %oddp-b)
+(dl %tdiv-qr-b-b)
+(dl %tdiv-qr-b-i)
+(dl %pow-b-i)
+
+(dm (+ inline) (x|<bignum> y|<bignum> => <int>)
+  (%add-b-b x y))
+
+(dm (+ inline) (x|<bignum> y|<fixnum> => <int>)
+  (%add-b-i x y))
+
+(dm (+ inline) (x|<fixnum> y|<bignum> => <int>)
+  (%add-b-i y x))
+
+(dm (- inline) (x|<bignum> y|<bignum> => <int>)
+  (%sub-b-b x y))
+
+(dm (- inline) (x|<bignum> y|<fixnum> => <int>)
+  (%sub-b-i x y))
+
+(dm (- inline) (x|<fixnum> y|<bignum> => <int>)
+  (%sub-i-b x y))
+
+(dm (* inline) (x|<bignum> y|<bignum> => <int>)
+  (%mul-b-b x y))
+
+(dm (* inline) (x|<bignum> y|<fixnum> => <int>)
+  (%mul-b-i x y))
+
+(dm (* inline) (x|<fixnum> y|<bignum> => <int>)
+  (%mul-b-i y x))
+
+(dm (>> inline) (x|<bignum> a|<fixnum> => <int>)
+  (if (> a 0)
+      (%rsh-b-i x a)
+      (%lsh-b-i x (- 0 a))))
+
+;;does >>> even make sense?
+;;(dm (>>> inline) (x|<bignum> a|<fixnum> => <int>)
+;;  (%ib (%i>>> (%iu x) (%iu a))))
+
+(dm (<< inline) (x|<bignum> a|<fixnum> => <int>)
+  (if (> a 0)
+      (%lsh-b-i x a)
+      (%rsh-b-i x (- 0 a))))
+
+;; can use this shortcut because bignums always have greater
+;; magnitude than fixnums, so y > 0 => x < y
+(dm (< inline) (x|<fixnum> y|<bignum> => <log>)
+  (%eq? (%sgn-b y) 1))
+
+(dm (< inline) (x|<bignum> y|<fixnum> => <log>)
+  (%eq? (%sgn-b x) -1))
+
+(dm (< inline) (x|<bignum> y|<bignum> => <log>)
+  (%eq? (%cmp-b-b x y) -1))
+
+(dm (== inline) (x|<bignum> y|<bignum> => <log>)
+  (%eq? (%cmp-b-b x y) 0))
+
+(dm (#| inline) (x|<bignum> y|<bignum> => <int>)
+  (%ior-b-b x y))
+
+(dm (#| inline) (x|<fixnum> y|<bignum> => <int>)
+  (%ior-b-b (%fixnum-to-bignum x) y))
+
+(dm (#| inline) (x|<bignum> y|<fixnum> => <int>)
+  (%ior-b-b x (%fixnum-to-bignum y)))
+
+(dm (^ inline) (x|<bignum> y|<bignum> => <int>)
+  (%xor-b-b x y))
+
+(dm (^ inline) (x|<fixnum> y|<bignum> => <int>)
+  (%xor-b-b (%fixnum-to-bignum x) y))
+
+(dm (^ inline) (x|<bignum> y|<fixnum> => <int>)
+  (%xor-b-b x (%fixnum-to-bignum y)))
+
+(dm (& inline) (x|<bignum> y|<bignum> => <int>)
+  (%and-b-b x y))
+
+(dm (& inline) (x|<fixnum> y|<bignum> => <int>)
+  (%and-b-b (%fixnum-to-bignum x) y))
+
+(dm (& inline) (x|<bignum> y|<fixnum> => <int>)
+  (%and-b-b x (%fixnum-to-bignum y)))
+
+(dm (~ inline) (x|<bignum> => <bignum>)
+  (%com-b x))
+
+(dm (bit? inline) (o|<bignum> x|<fixnum> => <log>)
+  (%bit?-b-i o x))
+
+(dm (even? inline) (x|<bignum> => <log>)
+  (not (odd? x)))
+
+(dm (odd? inline) (x|<bignum> => <log>)
+  (%oddp_b x))
+
+;;(dm (/ inline) (x|<bignum> y|<bignum> => <int>)
+;;  (arithmetic-error "No int divide, consider trunc/"))
+
+(dm trunc/ (x|<bignum> y|<bignum> => (tup quo|<int> rem|<int>))
+  (%tdiv-qr-b-b x y))
+
+(dm trunc/ (x|<bignum> y|<fixnum> => (tup quo|<int> rem|<int>))
+  (%tdiv-qr-b-i x y))
+
+(dm trunc/ (x|<fixnum> y|<bignum> => (tup quo|<int> rem|<int>))
+  (tup 0 x))
+
+;; (dm mod (x|<bignum> y|<bignum> => <bignum>)
+
+(dm pow (x|<bignum> n|<fixnum> => <num>)
+  (if (< n 0)
+      (/ 1 (%pow-b-i x (neg n)))
+      (%pow-b-i x n)))
+
+;; this overrides the method in math.goo
+(dm pow (x|<fixnum> n|<fixnum> => <num>)
+  (%pow-b-i (as <bignum> x) n))
+
