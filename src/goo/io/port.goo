@@ -1,10 +1,10 @@
-(use boot)
-(use macros)
-(use proto/math)
-(use proto/types)
-(use proto/collections/collection)
-(use proto/collections/sequence)
-(use proto/collections/buffer)
+(use runtime/boot)
+(use goo/macros)
+(use goo/math)
+(use goo/type)
+(use goo/collections/collection)
+(use goo/collections/sequence)
+(use goo/collections/buffer)
 
 (exported
 ;;; PORTS

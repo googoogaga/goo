@@ -1,5 +1,5 @@
-(use boot)
-(use macros)
+(use runtime/boot)
+(use goo/macros)
 
 ;;; TYPE PROTOCOL
 (exported

@@ -1,19 +1,19 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(use boot)
-(use macros)
-(use runtime)
-(use read)
-(use write)
-(use syntax)
-(use ast)
-(use ast-linearize)
-(use ast-eval)
-(use proto/system)
-(use proto/types)
-(use proto/math)
-(use proto/collections)
-(use proto/ports)
+(use runtime/boot)
+(use goo/macros)
+(use runtime/runtime)
+(use goo/io/read)
+(use goo/io/write)
+(use compiler/syntax)
+(use compiler/ast)
+(use compiler/ast-linearize)
+(use compiler/ast-eval)
+(use goo/system)
+(use goo/type)
+(use goo/math)
+(use goo/collections)
+(use goo/port)
 
 (df esctst ()
   (esc exit 
@@ -217,7 +217,7 @@
         (loop)))))
 
 (df save-image (image-name|<str>)
-  (unexec image-name (fun () (top 'proto/user))))
+  (unexec image-name (fun () (top 'goo/user))))
 
 (export
   eval

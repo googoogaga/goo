@@ -2,27 +2,27 @@
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 ;;;; with many many changes
 
-(use boot)
-(use macros)
-(use runtime)
-(use write)
-(use syntax)
-(use strings)
-(use proto/system) ; Needed by runtime module loader.
-(use write)
-(use proto/types)
-(use proto/math)
-(use proto/collections)
-(use proto/ports)
-(use dependency)
+(use runtime/boot)
+(use goo/macros)
+(use runtime/runtime)
+(use goo/io/write)
+(use compiler/syntax)
+(use goo/collections/strings)
+(use goo/system) ; Needed by runtime module loader.
+(use goo/io/write)
+(use goo/type)
+(use goo/math)
+(use goo/collections)
+(use goo/port)
+(use compiler/dependency)
 
 ;;; TODO: MOVE TYPE OUT OF SIGNATURE
 
 ;;; The name of the module which contains all of goo's primitives,
 ;;; magic bindings, and core code.
-(dv $goo-boot-module-name 'boot)
+(dv $goo-boot-module-name    'runtime/boot)
 ;;; The name of the runtime module, which contains a few items used by p2c.
-(dv $goo-runtime-module-name 'runtime)
+(dv $goo-runtime-module-name 'runtime/runtime)
 
 ;;; The <dependent> object we're currently compiling.  Any dependencies we
 ;;; encounter will automatically be assumed to be the resposibility of this
@@ -350,7 +350,7 @@
                   (binding-global-box binding)
                   (== x (global-box-value (binding-global-box binding))))
          (return (binding-name binding))))
-     (runtime-environment 'boot))
+     (runtime-environment 'runtime/boot))
     #f))
 
 
@@ -1842,7 +1842,7 @@
 ;; Create a new syntax environment for processing macros.
 (df fab-syntax-environment (module|<module> => <static-global-environment>)
   (fab-subset-environment module
-                          (runtime-module 'proto)
+                          (runtime-module 'goo)
                           syntax-environment-excluded-bindings))
 
 (df fab-g2c-module (loader|<module-loader> name|<sym> => <module>)

@@ -1,6 +1,6 @@
-(use boot)
-(use macros)
-;; (use proto/types)
+(use runtime/boot)
+(use goo/macros)
+;; (use goo/type)
 
 (exported
  ;;  represents infinite repeating series

@@ -163,7 +163,7 @@
 (def-op RET (x)
   )
 
-;;; PROTO OPS
+;;; GOO OPS
 
 (def-op TYP-CHK (x type)
   )

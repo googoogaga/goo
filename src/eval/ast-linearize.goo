@@ -1,16 +1,16 @@
 ;;; Copyright (c) 2001 Jonathan Bachrach
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 
-(use boot)
-(use macros)
-(use runtime)
-(use ast)
-(use proto/types)
-(use proto/math)
-(use proto/collections)
+(use runtime/boot)
+(use goo/macros)
+(use runtime/runtime)
+(use compiler/ast)
+(use goo/type)
+(use goo/math)
+(use goo/collections)
 
 ;;; this is moved from runtime
-;;; this doesn't deserve to be part of proto AFAICT, but its used here.
+;;; this doesn't deserve to be part of goo AFAICT, but its used here.
 
 ;;; ASSOC
 

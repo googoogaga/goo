@@ -1,11 +1,11 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 
-(use boot)
-(use macros)
-(use runtime)
-(use proto)
-(use ast)
+(use runtime/boot)
+(use goo/macros)
+(use runtime/runtime)
+(use goo)
+(use compiler/ast)
 
 ;;; ENV
 

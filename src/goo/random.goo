@@ -1,9 +1,9 @@
 ;;;; Originally by Kevin Mitchell and Seth LaForge
 ;;;; A 29-bit parallel LFSR seeded by simple LCG, based on Sedgewick.
 
-(use proto)
-(use boot)
-(use timer)
+(use goo)
+(use runtime/boot)
+(use time/timer)
 
 (df default-random-seed (=> <int>)
   (%ib (%timer-system-time)))

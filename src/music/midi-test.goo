@@ -1,7 +1,7 @@
-(use proto)
-(use midi)
-(use win32-midi)
-(use threads)
+(use goo)
+(use music/midi)
+(use music/win32-midi)
+(use goo/threads)
 
 (df do-test-midi-out (md)
   (def mc (fab-midi-channel 0))

@@ -1,7 +1,7 @@
-(use proto)
-(use top)
+(use goo)
+(use compiler/top)
 
-;;; This list of symbols should match those in proto/user.
+;;; This list of symbols should match those in goo/user.
 (export
   ;; Section 3.16: Top level.
   load eval top

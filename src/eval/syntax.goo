@@ -1,11 +1,11 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(use boot)
-(use macros)
-(use runtime)
-(use proto/math)
-(use proto/types)
-(use proto/collections)
+(use runtime/boot)
+(use goo/macros)
+(use runtime/runtime)
+(use goo/math)
+(use goo/type)
+(use goo/collections)
 
 ;;  Self-evaluating entities
 (dm sexpr-self-evaluating? (exp => <log>)
@@ -634,7 +634,7 @@
 (dv *bq-quote*       'bq-quote)
 
 (df sexpr-expand-backquote (x|<lst> => <lst>)
-  (eval (sexpr-build-backquote-expander x) 'proto))
+  (eval (sexpr-build-backquote-expander x) 'goo))
 
 (dm sexpr-build-backquote-expander (x|<lst> => <lst>)
   (def raw-result (bq-process x))

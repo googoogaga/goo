@@ -2,14 +2,14 @@
 ;;  See file COPYING.
 ;;  Copyright (c) 2001 Jonathan Bachrach
 
-(use boot)
-(use macros)
-(use proto/types)
-(use proto/math)
-(use proto/ports)
-(use proto/collections)
-(use runtime)
-(use read)
+(use runtime/boot)
+(use goo/macros)
+(use goo/type)
+(use goo/math)
+(use goo/port)
+(use goo/collections)
+(use runtime/runtime)
+(use goo/io/read)
 
 (ddv *max-print-depth*  4)
 

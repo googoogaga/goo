@@ -12,13 +12,13 @@
 ;;     (define (make-immutable! x) x)
 ;;   signal (only for use by reading-error; easily excised)
 
-(use boot)
-(use macros)
-(use runtime)
-(use proto/types)
-(use proto/math)
-(use proto/ports)
-(use proto/collections)
+(use runtime/boot)
+(use goo/macros)
+(use runtime/runtime)
+(use goo/type)
+(use goo/math)
+(use goo/port)
+(use goo/collections)
 
 ;; READ
 

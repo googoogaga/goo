@@ -1,12 +1,12 @@
-(use boot)
-(use macros)
-(use proto/math)
-(use proto/types)
-(use proto/collections/collection)
-(use proto/collections/sequence)
-(use proto/collections/list)
-(use proto/collections/flat)
-(use proto/collections/vector)
+(use runtime/boot)
+(use goo/macros)
+(use goo/math)
+(use goo/type)
+(use goo/collections/collection)
+(use goo/collections/sequence)
+(use goo/collections/list)
+(use goo/collections/flat)
+(use goo/collections/vector)
 
 ;; 3.7.6.3 STRETCHY-VECTOR
 

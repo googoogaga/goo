@@ -70,7 +70,7 @@
 (dv %*used-symbols-too-early* (%raw 0))
 
 ;;; Temporary, compile-time-only macros.  These are used by this file only--
-;;; we never export them.  The real definitions live in macros.proto.
+;;; we never export them.  The real definitions live in macros.goo.
 
 (dss (unless ,test ,@body)
   `(if (not ,test) (seq ,@body)))

@@ -1,11 +1,11 @@
-(use boot)
-(use macros)
-(use runtime)
-(use write)
-(use syntax)
-(use ast)
-(use top)
-(use ast-linearize)
+(use runtime/boot)
+(use goo/macros)
+(use runtime/runtime)
+(use goo/io/write)
+(use compiler/syntax)
+(use compiler/ast)
+(use compiler/top)
+(use compiler/ast-linearize)
 
 ;;; TODO
 ;;; --- NOW ---

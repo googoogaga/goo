@@ -1,5 +1,5 @@
-(use proto)
-(use random)
+(use goo)
+(use goo/random)
 
 (dc <pattern> (<any>))
   (dp pattern-time (x|<pattern> => <int>))

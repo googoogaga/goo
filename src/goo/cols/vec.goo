@@ -1,9 +1,9 @@
-(use boot)
-(use macros)
-(use proto/types)
-(use proto/collections/collection)
-(use proto/collections/sequence)
-(use proto/collections/flat)
+(use runtime/boot)
+(use goo/macros)
+(use goo/type)
+(use goo/collections/collection)
+(use goo/collections/sequence)
+(use goo/collections/flat)
 
 ;; 3.7.6.1 VECTORS
 

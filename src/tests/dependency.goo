@@ -1,4 +1,4 @@
-(use proto)
+(use goo)
 (use tests/driver)
 
 (use dependency)

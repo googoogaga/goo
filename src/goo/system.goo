@@ -6,9 +6,9 @@
 ;;;;;  Dylan 'system' library or the less complicated parts of Common
 ;;;;;  LISP.
 
-(use proto)
-(use strings)
-(use boot) ; Need filesystem primitives.
+(use goo)
+(use goo/collections/strings)
+(use runtime/boot) ; Need filesystem primitives.
 
 
 ;;;;=======================================================================
@@ -66,7 +66,7 @@
 	    (loop (- i 1))))))
 
 (dv *goo-root*
-  (let ((env-root (os-val "PROTO_ROOT")))
+  (let ((env-root (os-val "GOO_ROOT")))
     (if (empty? env-root)
         ;; Defaults to a path relative to the current working directory.
         (cat (base-path (app-filename)) ".." *path-separator* "..")
@@ -83,8 +83,8 @@
   (cat *goo-root* *path-separator* "C" *path-separator*
        builddir *path-separator* relpath))
 
-(dv *goo-extension* ".proto")
-(dv *c-extension* ".c")
+(dv *goo-extension* ".goo")
+(dv *c-extension*   ".c")
 (dv *obj-extension* ".o")
 (dv *exe-extension* "")
 
@@ -126,7 +126,7 @@
 ;;;;  These functions all rely on C primitives in prt.c.
 
 ;;; Return the last modification time of a file in seconds (relative to the
-;;; Proto epoch) as a floating point number.
+;;; Goo epoch) as a floating point number.
 (dm file-mtime (filename|<str> => <flo>)
   (%fb (%file-mtime (%su filename))))
 

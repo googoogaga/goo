@@ -1,9 +1,9 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(use proto)
-(use write)
-(use ast)
-(use ast-linearize)
+(use goo)
+(use goo/io/write)
+(use compiler/ast)
+(use compiler/ast-linearize)
 
 (dv <out-port> <out-port>)
 

@@ -7,9 +7,9 @@ all:
 tags: local-tags
 
 local-tags:
-	$(ETAGS) *.proto
+	$(ETAGS) *.goo
 
 all-tags:
-	find . -name \*.proto | $(ETAGS) -
+	find . -name \*.goo | $(ETAGS) -
 
 .PHONY: all tags local-tags all-tags

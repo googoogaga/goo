@@ -1,4 +1,4 @@
-;;; Test code for the Proto language.
+;;; Test code for the Goo language.
 ;;;
 ;;; See the bug list at the top of tests/driver; some things there might
 ;;; apply to this file instead.
@@ -7,7 +7,7 @@
 ;;; You may want to refactor it into tests/driver if it seems general
 ;;; enough.
 
-(use proto)
+(use goo)
 (use tests/driver)
 
 (test-group slf

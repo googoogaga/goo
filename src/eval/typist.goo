@@ -1,6 +1,6 @@
-(use proto)
-(use boot)
-(use ast)
+(use goo)
+(use runtime/boot)
+(use compiler/ast)
 
 (dc <type>       (<any>))
 

@@ -1,8 +1,8 @@
-(use proto)
+(use goo)
 
 ;;; general strategy
 ;;; 
-;;; map athena lambdas to proto funs returning themselves
+;;; map athena lambdas to goo funs returning themselves
 ;;; will pattern matching work?
 ;;; 
 

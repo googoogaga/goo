@@ -1,6 +1,6 @@
-(use boot)
-(use macros)
-(use proto/collections/collection)
+(use runtime/boot)
+(use goo/macros)
+(use goo/collections/collection)
 
 (df napp (proc|<fun> nexts args|...)
   (def ilen       (@+ (@olen args) -1))

@@ -1,6 +1,6 @@
-(use proto)
-(use runtime)
-(use ast)
+(use goo)
+(use runtime/runtime)
+(use compiler/ast)
 
 (dv <arg-seq> <lst>)
 (dv <met-seq> <lst>)

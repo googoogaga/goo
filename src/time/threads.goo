@@ -1,5 +1,5 @@
-(use proto)
-(use boot)
+(use goo)
+(use runtime/boot)
 
 (dl %thread-create)
 (dl %thread-yield)

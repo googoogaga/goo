@@ -1,17 +1,17 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(use boot)
-(use macros)
-(use proto/math)
-(use proto/types)
-(use runtime1)
-(use proto/collections/collection)
-(use proto/collections/sequence)
-(use proto/collections/opts)
-(use proto/collections/list)
-(use proto/collections/buffer)
-(use proto/collections/table)
-(use proto/ports)
+(use runtime/boot)
+(use goo/macros)
+(use goo/math)
+(use goo/type)
+(use runtime/apply)
+(use goo/collections/collection)
+(use goo/collections/sequence)
+(use goo/collections/opts)
+(use goo/collections/list)
+(use goo/collections/buffer)
+(use goo/collections/table)
+(use goo/port)
 
 ;;; APP
 

@@ -1,7 +1,7 @@
-(use boot)
-(use macros)
-(use proto/magnitudes)
-(use proto/types)
+(use runtime/boot)
+(use goo/macros)
+(use goo/magnitude)
+(use goo/type)
 
 ;;; DYNAMIC BINDING
 
@@ -396,7 +396,7 @@
 (dm logn (x|<num> b|<num> => <num>) 
   (/ (log x) (log b)))
 
-;; from strings.proto
+;; from strings.goo
 (need-implementation
   num-to-str
   char->ascii

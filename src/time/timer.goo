@@ -1,7 +1,7 @@
-(use proto)
-(use boot)
-(use event)
-(use threads)
+(use goo)
+(use runtime/boot)
+(use time/event)
+(use goo/threads)
 
 (dl %timer-create)
 (dl %timer-kill)

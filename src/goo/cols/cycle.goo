@@ -1,9 +1,9 @@
-(use boot)
-(use macros)
-(use proto/types)
-(use proto/math)
-(use proto/collections/collection)
-(use proto/collections/sequence)
+(use runtime/boot)
+(use goo/macros)
+(use goo/type)
+(use goo/math)
+(use goo/collections/collection)
+(use goo/collections/sequence)
 
 (exported
  ;;  represents infinite repeating series

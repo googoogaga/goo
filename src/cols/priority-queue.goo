@@ -1,5 +1,5 @@
-(use proto)
-(use runtime)
+(use goo)
+(use runtime/runtime)
 
 (dc <priority-queue> (<col>))
   (dp queue-data (x|<priority-queue> => <buf>) (fab <buf> 0))

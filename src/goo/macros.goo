@@ -1,6 +1,6 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(use boot)
+(use runtime/boot)
 
 ;; (ct (seq (dv fab-setter-name make-setter-name) (dv cat-sym make-sym)))
 

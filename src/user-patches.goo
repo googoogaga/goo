@@ -1,9 +1,1 @@
-;(df test () (set p2c:*p2c-app* (p2c:p2c-def-app "p2c-test" 'main)))
-;(df make-app (sym) (set p2c:*p2c-app* (p2c:p2c-def-app "test" sym)))
-;; (set *max-print-depth*  7)
-;; (set *max-print-length* 32)
-;; (dv *p2m-app* (p2c-def-app "p2m" 'main))
-;; (dm p2c-p2m () (p2c-build-app *p2m-app*))
-;; (df test (n) (set p2c:*p2c-app* (p2c:p2c-def-app (cat "p2c-" (to-str n)) 'main)))
-;; (df test (n) (set *p2c-app* (p2c-def-app (cat "p2c-" (to-str n)) 'main)))
 

@@ -1,5 +1,5 @@
-(use proto)
-(use midi)
+(use goo)
+(use music/midi)
 
 ;;; TONE
 

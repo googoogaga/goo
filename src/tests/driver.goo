@@ -12,7 +12,7 @@
 ;;; 4. need way to debug object system and retest with undef?
 ;;; 5. need split to debug <map>'s
 
-(use proto)
+(use goo)
 
 (dv *tests* '())
 

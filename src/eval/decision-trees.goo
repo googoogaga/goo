@@ -1,9 +1,9 @@
-(use boot)
-(use proto)
-(use runtime)
-(use priority-queue)
-(use ast)
-(use top)
+(use runtime/boot)
+(use goo)
+(use runtime/runtime)
+(use goo/collections/priority-queue)
+(use compiler/ast)
+(use compiler/top)
 
 ;;; TODO:
 ;;; x WALK ALL BINDINGS
@@ -91,6 +91,6 @@
 
 (dv d (build-decision-tree foo))
 
-;;; (auto-eval d (runtime-environment 'proto/user))
+;;; (auto-eval d (runtime-environment 'goo/user))
     
 

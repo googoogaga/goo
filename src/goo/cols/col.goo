@@ -1,7 +1,7 @@
-(use boot)
-(use macros)
-(use proto/types)
-(use proto/math)
+(use runtime/boot)
+(use goo/macros)
+(use goo/type)
+(use goo/math)
 
 ;; 3.7 COLLECTIONS
 
@@ -34,7 +34,7 @@
  (dg find (f|<fun> x|<col> => <any>))
  (dg del (x|<col> key|<any> => <col>))
  (dg zap (x|<col> => <col>))
- (dg do (f|<fun> x|<col> => (tup)))
+ (dg do (f|<fun> x|<col>))
  (dg mem? (x|<col> y|<any> => <log>))
  (dg keys (c|<col> => <seq>))
  (dg items (c|<col> => <seq>))
@@ -253,6 +253,6 @@
   (def val (elt-or c key $elt-default))
   (if (== val $elt-default) (range-error) val))
 
-;; get this from list.proto
+;; get this from list.goo
 (need-implementation add <tab>)
 

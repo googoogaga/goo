@@ -1,14 +1,14 @@
-(use boot)
-(use macros)
-(use proto/types)
-(use proto/math)
-(use runtime)
-(use proto/collections)
-(use proto/accumulators)
-(use write)
-(use read)
-(use syntax)
-(use proto/ports)
+(use runtime/boot)
+(use goo/macros)
+(use goo/type)
+(use goo/math)
+(use runtime/runtime)
+(use goo/collections)
+(use goo/accumulator)
+(use goo/io/write)
+(use goo/io/read)
+(use compiler/syntax)
+(use goo/port)
 
 (export
  ;; Section 1.1/2.1: Special forms.
@@ -127,7 +127,7 @@
  app-filename app-args
 
  ;; Section 3.16: Top level.
- ;; See proto/eval.
+ ;; See goo/eval.
 
  ;; Undocumented stuff.  This was all found by a process of trial and
  ;; error, but it needs to be here.

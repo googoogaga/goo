@@ -1,8 +1,8 @@
-(use boot)
-(use macros)
-(use proto/math)
-(use proto/types)
-(use proto/collections/collection)
+(use runtime/boot)
+(use goo/macros)
+(use goo/math)
+(use goo/type)
+(use goo/collections/collection)
 
 ;; 3.7.3 SEQUENCES
 
@@ -252,5 +252,5 @@
       (def val  (and (not (fin? e)) (now e)))
       (fn key val) (rep (nxt e)))))
 
-;; from range.proto
+;; from range.goo
 (need-implementation below)
