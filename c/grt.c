@@ -51,7 +51,7 @@ extern P YLlstG;
 extern P YPpair (P, P);
 extern P Yunknown_function_error;
 
-// FIXME: gives args backwards. Rewrite in proto.
+// FIXME: gives args backwards. Rewrite in goo.
 P YPdo_stack_frames (P fun) {
   int xfp = fp;
   while (xfp > 0) {
@@ -415,7 +415,7 @@ static void unix_error (char *command, char *filename) {
 }
 
 /* TODO - Resolution is crummy because we use single floats. */
-#define PROTO_EPOCH (978307200) /* January 01, 2001 00:00:00 GMT */
+#define GOO_EPOCH (978307200) /* January 01, 2001 00:00:00 GMT */
 P YPfile_mtime (P name) {
   struct stat buf;
   int res;
@@ -423,7 +423,7 @@ P YPfile_mtime (P name) {
   
   res = stat((PSTR) name, &buf);
   if (res == 0) {
-    flo.f = (PFLO) buf.st_mtime - PROTO_EPOCH;
+    flo.f = (PFLO) buf.st_mtime - GOO_EPOCH;
   } else {
     unix_error("stat", name);
     /* Not executed. */
@@ -599,7 +599,7 @@ extern P Ytype_error;
 extern P YOclass_isaQ(P, P);
 extern P YOisaQ;
 
-INLINE void CHECK_TYPE(P res, P type)
+/* INLINE */ void CHECK_TYPE(P res, P type)
 {
   if (type != YLanyG) {
     if (((YPobject_class(type) == YLclassG) ?
@@ -1352,11 +1352,11 @@ P YPbuild_runtime_modules(
 #define CGEN_LD "cc -shared -o '%s.so' '%s.o'"
 
 typedef P (*PLD)();
-extern P YprotoSsystemYTgoo_rootT;
+extern P YgooSsystemYTgoo_rootT;
 
-P Yp2cYPcompile (P name) {
+P YcompilerSp2cYPcompile (P name) {
   char  buf[256];
-  sprintf(buf, CGEN_CC, YPsu(YprotoSsystemYTgoo_rootT), name, name);
+  sprintf(buf, CGEN_CC, YPsu(YgooSsystemYTgoo_rootT), name, name);
   // printf("EXECUTING %s\n", buf);
   system(buf);
   sprintf(buf, CGEN_LD, name, name);
@@ -1364,7 +1364,7 @@ P Yp2cYPcompile (P name) {
   system(buf);
 }
 
-P Yp2cYPload(P name) {
+P YcompilerSp2cYPload(P name) {
   void* mod;
   char  buf[256];
   PLD   load;
@@ -1384,6 +1384,6 @@ P Yp2cYPload(P name) {
 }
 
 /* TODO: GET THIS WORKING ON WINDOWS */
-P YprotoSsystemYPpid () {
+P YgooSsystemYPpid () {
   return (P)getpid();
 }

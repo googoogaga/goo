@@ -332,6 +332,62 @@ STATIC_NOT_PRT_C  inline P opts_stackalloc(P loc, P len)
   return opts;
 }
 
+/*
+#define CALL0(check, zfun) ({\
+  P zz_res, zz_fun = zfun; \
+  PUSH(0); \
+  PUSH(zz_fun); \
+  if(check) \
+   YPcheck_call_types(); \
+  zz_res = (FUNCODE(zz_fun))(zz_fun, YPfalse); \
+  DEC_STACK(2); \
+  zz_res; \
+})
+
+#define CALL1(check, zfun, za1) ({\
+  P zz_res, zz_fun=zfun, zz_a1 = za1; \
+  PUSH(zz_a1); \
+  PUSH((P)1); \
+  PUSH(zz_fun); \
+  if(check) \
+   YPcheck_call_types(); \
+  zz_res = (FUNCODE(zz_fun))(zz_fun, YPfalse); \
+  DEC_STACK(3); \
+  zz_res; \
+})
+
+#define CALL2(check, zfun, za1, za2) ({\
+  P zz_res, zz_fun=zfun, zz_a1=za1, zz_a2=za2; \
+  PUSH(zz_a2); \
+  PUSH(zz_a1); \
+  PUSH((P)2); \
+  PUSH(zz_fun); \
+  if(check) \
+   YPcheck_call_types(); \
+  zz_res = (FUNCODE(zz_fun))(zz_fun, YPfalse); \
+  DEC_STACK(4); \
+  zz_res; \
+})
+
+#define CALL3(check, zfun, za1, za2, za3) ({\
+  P zz_res, zz_fun=zfun, zz_a1=za1, zz_a2=za2, zz_a3=za3; \
+  PUSH(zz_a3); \
+  PUSH(zz_a2); \
+  PUSH(zz_a1); \
+  PUSH((P)3); \
+  PUSH(zz_fun); \
+  if(check) \
+   YPcheck_call_types(); \
+  zz_res = (FUNCODE(zz_fun))(zz_fun, YPfalse); \
+  DEC_STACK(5); \
+  zz_res; \
+})
+
+#define YPraw_call(zfun, znext_mets) ({ \
+  P zz_fun=zfun, zz_next_mets = znext_mets; \
+  (FUNCODE(zz_fun))(zz_fun, zz_next_mets); \
+})
+*/
 
 STATIC_NOT_PRT_C  INLINE P CALL0 (int check, P fun) {
   P   res;
@@ -575,16 +631,16 @@ typedef struct {
   P     binding;    
 } DLVAR_DAT, *DLVAR;
 
-STATIC_NOT_PRT_C INLINE P Yast_evalYPdlvar_nam(P x) { 
+STATIC_NOT_PRT_C INLINE P YcompilerSast_evalYPdlvar_nam(P x) { 
   return (((DLVAR)(x))->var_name); 
 }
-STATIC_NOT_PRT_C INLINE P Yast_evalYPdlvar_mod(P x) {
+STATIC_NOT_PRT_C INLINE P YcompilerSast_evalYPdlvar_mod(P x) {
   return (((DLVAR)(x))->mod_name);
 }
-STATIC_NOT_PRT_C INLINE P Yast_evalYPdlvar(P x) {
+STATIC_NOT_PRT_C INLINE P YcompilerSast_evalYPdlvar(P x) {
   return (((DLVAR)(x))->binding);
 }
-STATIC_NOT_PRT_C INLINE P Yast_evalYPdlvar_setter(P v, P x) {
+STATIC_NOT_PRT_C INLINE P YcompilerSast_evalYPdlvar_setter(P v, P x) {
   return ((((DLVAR)(x))->binding)=(v));
 }
 
