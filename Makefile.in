@@ -35,7 +35,6 @@ install: all
 	  || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
 	done && test -z "$$fail"
 clean:
-	/bin/rm -f *~
 	@for dir in ${subdirs}; do \
 	  (cd $$dir && $(MAKE) clean) \
 	  || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \

@@ -5,8 +5,8 @@ AC_DEFUN(GOO_CHECK_EXE_SUFFIX,
 [AC_MSG_CHECKING(name suffix of executables)
 AC_CACHE_VAL(goo_cv_exe_suffix,
 [goo_cv_exe_suffix=""
-AC_TRY_RUN_NATIVE(
-  [int main(void) {return 0;}],
+AC_TRY_COMPILE([],
+  [;],
   [if test -f conftest.exe; then goo_cv_exe_suffix=.exe; fi])
 ])dnl
 if test -z "$goo_cv_exe_suffix"; then
@@ -25,15 +25,14 @@ dnl library, or is present in subdirectory gc/
 AC_DEFUN(GOO_CHECK_GC_LIB, 
 [AC_MSG_CHECKING([for local copy of Boehm GC libraries])
 if test -f gc/Makefile; then
-  AC_DEFINE(HAVE_GC,1)
   build_gc=yes
   AC_MSG_RESULT(yes)
 else
   AC_MSG_RESULT(no)
   AC_CHECK_LIB(gc, GC_malloc, have_libgc=yes, have_libgc=no)
   if test "$have_libgc" = yes; then
-    AC_DEFINE(HAVE_GC,1)
     build_gc=no
+    LIBS="-lgc $LIBS"
   else
   AC_MSG_ERROR([
 

@@ -1,6 +1,6 @@
 # Process this file with autoconf to produce a configure script.
 AC_INIT([src/goo], [.3])
-AC_CONFIG_HEADER([config.h])
+AC_CONFIG_HEADER([c/config.h])
 
 # Checks for programs.
 AC_PROG_CC
@@ -28,5 +28,29 @@ AC_FUNC_ALLOCA
 AC_FUNC_MMAP
 AC_TYPE_SIGNAL
 AC_CHECK_FUNCS([ftruncate memset mkdir munmap pow putenv select setenv sqrt strerror])
+
+
+THREADKIND=no
+AC_MSG_CHECKING(for --with-threads)
+AC_ARG_WITH(threads, [--with-threads[=DIRECTORY] Compile GOO to support threads], [
+AC_MSG_RESULT($withval)
+if test -d "$withval"
+then LDFLAGS="$LDFLAGS -L$withval"
+fi
+AC_DEFINE(_REENTRANT)
+AC_MSG_CHECKING([whether the compiler supports thread-local variables])
+AC_TRY_COMPILE([],
+[__thread int testvar;], [
+AC_DEFINE(HAVE_THREAD_LOCAL_VARIABLE)
+AC_MSG_RESULT([yes])], AC_MSG_RESULT([no]))
+AC_SEARCH_LIBS(pthread_create, [pthread pthreads], [
+AC_DEFINE(WITH_THREADS)
+AC_DEFINE(HAVE_POSIX_THREAD)
+THREADKIND=posix
+], [
+AC_MSG_ERROR([Unable to find thread library])
+])
+], AC_MSG_RESULT([no]))
+AC_SUBST(THREADKIND)
 
 AC_OUTPUT(Makefile c/Makefile src/Makefile doc/Makefile emacs/Makefile)
