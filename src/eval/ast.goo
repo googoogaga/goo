@@ -478,7 +478,7 @@
 ;;; transform a 'runtime binding into a 'global binding, and thereby
 ;;; confuse the compiler about where binding values are stored.
 (df update-binding-kind (binding new-kind)
-  (if (~== (binding-kind binding) 'runtime)
+  (if (or (~== (binding-kind binding) 'runtime) (== new-kind 'magic))
       (set (binding-kind binding) new-kind)
       (case
         ((== new-kind 'runtime) #t) ; We're already the correct type.
@@ -1098,6 +1098,10 @@
 	    (pairize (sexpr-isa-init-values slot-inits))))
      r tail?)))
 
+(define-magic-binding define-class (x r tail?)
+  (objectify-definition
+    (sexpr-definition-variable x) `(isa ,(sexpr-define-class-parents x)) r))
+ 
 (define-magic-binding slot (x r tail?)
   (let ((var         (sexpr-slot-variable x))
 	(name        (sexpr-variable-name var))

@@ -492,6 +492,16 @@
 (dm sexpr-isa-init-values ((exp <lst>) => <lst>)
   (map 3rd exp))
 
+;;  DC
+
+(dv $sexpr-define-class-tag 'dc)
+
+(dm sexpr-define-class? (exp => <log>)
+  (sexpr-tagged-list? exp $sexpr-define-class-tag))
+
+(dm sexpr-define-class-parents ((exp <lst>) => <lst>)
+  (3rd exp))
+
 ;;  SLOT
 
 (dv $sexpr-slot-tag 'slot)
@@ -693,6 +703,9 @@
   $sexpr-define-generic-tag
   $sexpr-define-method-tag
   $sexpr-define-syntax-tag
+  $sexpr-define-class-tag
+  sexpr-define-class?
+  sexpr-define-class-parents
   $sexpr-define-tag
   sexpr-definition-value
   sexpr-definition-variable

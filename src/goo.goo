@@ -7,7 +7,7 @@
 
 (export
  ;; Section 1.1/2.1: Special forms.
- IF SEQ SET FUN LET LOC LAB FIN DV DM DG ISA SLOT MACRO-EXPAND
+ IF SEQ SET FUN LET LOC LAB FIN DV DM DG SLOT DC ISA MACRO-EXPAND
  NEXT-METHOD QUOTE
  CT CT-ALSO DS USE EXPORT 
 
@@ -126,5 +126,5 @@
  handler-info-arguments
 
  ;; Stuff which should be documented.
- need-implementation bound? dlet
+ need-implementation bound? dlet type-or tor t= t<
  )

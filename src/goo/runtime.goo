@@ -50,7 +50,13 @@
 
 ;;; DYNAMIC BINDING
 
-(df type-or ((args ...)) <any>) ;; TODO: FOR REAL
+(df tor ((args ...)) <any>) ;; TODO: FOR REAL -- WANT T|
+
+(dv type-or tor)            ;; TODO: DEPRECATE
+
+(df t= (x) x)               ;; TODO: FOR REAL
+
+(df t< (x) x)               ;; TODO: FOR REAL
 
 ;;; nul
 
@@ -2380,6 +2386,7 @@
   truncate/
   tup
   type-or
+  tor t= t<
   var-name var-type
   vec
   %with-monitor

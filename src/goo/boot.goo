@@ -1592,6 +1592,7 @@
             (force-names-into-boot-module ,@(tail names)))))
 
 (force-names-into-boot-module
+  dc
   error
   unknown-function-error
   file-opening-error
@@ -1640,6 +1641,7 @@
   dss
   ds
   dv
+  dc
   set
   quote
   %raw
