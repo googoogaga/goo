@@ -128,7 +128,6 @@ extern P YPPsfab (P size, P fill);
 #define YPPselt(x, i)           ((P)(PINT)(((PSTR)(x))[((PINT)(i))]))
 #define YPPselt_setter(z, x, i) ((P)(PINT)(((PSTR)(x))[((PINT)(i))] = ((PCHR)(PINT)(z))))
 
-
 /* IO */
 
 extern P Yfile_opening_error;
@@ -166,7 +165,7 @@ typedef struct _env {
 } *ENV, ENV_DATA;
 
 extern ENV envnul;
-#define ENVNUL     (&envnul)
+#define ENVNUL     (envnul)
 
 typedef P (*PFUN)(P);
 
@@ -174,7 +173,8 @@ typedef P (*PFUN)(P);
 #define FUNSPECSOFFSET 1
 #define FUNNARYPOFFSET 2
 #define FUNARITYOFFSET 3
-#define FUNENVOFFSET   4
+#define FUNVALUEOFFSET 4
+#define FUNENVOFFSET   5
 
 #define FUNCODE(fun) ((PFUN)YPslot_elt(fun, (P)FUNCODEOFFSET))
 
@@ -185,8 +185,6 @@ typedef P (*PFUN)(P);
 #define Ptail(x) (YPslot_elt((x), (P)PAIRTAILOFFSET))
 #define Phead_setter(z, x) (YPslot_elt_setter((z), (x), (P)PAIRHEADOFFSET))
 #define Ptail_setter(z, x) (YPslot_elt_setter((z), (x), (P)PAIRTAILOFFSET))
-
-extern P Ynil;
 
 #define tag_mask 3
 #define adr_tag  0
@@ -202,6 +200,7 @@ extern long tag (P adr, int tag);
 #define IU(x) (untag(x))
 
 #define FUNARITY(x) (PINT)(IU(YPslot_elt((x), (P)FUNARITYOFFSET)))
+#define FUNVALUE(x) YPslot_elt((x), (P)FUNVALUEOFFSET)
 #define FUNSPECS(x) (P)(YPslot_elt((x), (P)FUNSPECSOFFSET))
 #define FUNNARYP(fun) ((PLOG)(YPslot_elt((fun), (P)FUNNARYPOFFSET) != YPfalse))
 
@@ -219,7 +218,7 @@ extern P* FUNENVSETTER (P* env, P fun);
 
 extern P FABENV (int size, ...);
 extern P FUNINIT (P fun, int n, ...);
-extern P FUNSHELL (P x, int n);
+extern P FUNSHELL (int d, P x, int n);
 extern P FUNFAB (P x, int n, ...);
 
 /* CALLS */
@@ -229,13 +228,13 @@ extern int Pargument_count_;
 extern P   Pnext_methods_;
 
 extern P* stack_;
-extern int sp;
+extern int sp, fp;
 
 #define PUSH(x)    (stack_[sp++] = (x))
 #define POP()      (stack_[--sp])
 
 /* #define ARG(x)         P x = POP() */
-#define ARG(x, n)         P x = (stack_[sp - (n) - 2])
+#define ARG(x, n)         P x = (stack_[fp - (n) - 2])
 
 extern P CALL0 (P fun);
 extern P CALL1 (P fun, P a1);

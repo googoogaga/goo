@@ -2,6 +2,8 @@
 
 #include "prt.h"
 
+extern P Ynil;
+
 /* DEBUGGING */
 
 P YPbreak(char* message) {
@@ -40,16 +42,100 @@ INLINE long tag (P adr, int tag) {
   return (PADR)adr << 2 | tag;
 }
 
+/* STACK */
+
+#define MAX_STACK_SIZE 100000
+
+P* stack_;
+int sp = 0;
+int fp = 0;
+
+/*
+void PUSH(P x) { 
+  if (sp >= MAX_STACK_SIZE)
+    YPbreak("CALL: STACK OVERFLOW");
+  (stack_[sp++] = (x));
+}
+P POP() {
+  return (stack_[--sp]);
+}
+*/
+#define LINK_STACK(f)          { PUSH(fun); fp = sp; PUSH((P)fp); }
+#define UNLINK_STACK(osp, ofp) { sp = osp; fp = ofp; }
+
+/*
+int inited_fun_traitsp = 0;
+P YLmetG_traits = PNUL;
+P YLgenG_traits = PNUL;
+*/
+
+extern P YLmetG_traits;
+extern P YLgenG_traits;
+extern P YPpair (P, P);
+extern P Yunknown_function_error;
+
+P YPdo_stack_frames (P fun) {
+  int xfp = fp;
+  while (xfp > 0) {
+    int nfp    = (int)stack_[--xfp];
+    P   args   = Ynil;
+    P   f      = stack_[--xfp];
+    P   traits = YPobject_traits(f);
+    if (traits == YLmetG_traits) {
+      int i;
+      int arity = FUNARITY(f);
+      int naryp = FUNNARYP(f);
+      for (i = 0; i < arity; i++)
+        args = YPpair(stack_[--xfp], args);
+      if (naryp)
+        args = YPpair(stack_[--xfp], args);
+    } else if (traits == YLgenG_traits) {
+      args = stack_[--xfp];
+    } else {
+      return CALL1(Yunknown_function_error, f);
+    }
+    args = YPpair(f, args);
+    YPPapply(fun, args);
+    xfp = nfp;
+  }
+  return YPfalse;
+}
+
 /* OBJECT */
 
-unsigned long nallocd = 0;
+int stack_allocp = 0;
+unsigned long nallocd  = 0; /* BYTES TOTAL ALLOCATED */
+unsigned long nsallocd = 0; /* BYTES STACK ALLOCATED */
 
 INLINE P allocate (unsigned long size) {
   nallocd += size;
   if (size > 100000000)
     YPbreak("ALLOCATE: BAD SIZE");
-  return((P)GC_malloc((size_t)size));
+  if (stack_allocp) {
+    P res;
+    int nwords = (size / sizeof(P)) + 1; /* TODO: BETTER ROUNDING */
+    int osp    = sp;
+    nsallocd  += size;
+    sp        += nwords;
+    /*
+    printf("SALLOC (0x%lx) %3d BYTES %3d WORDS %3d OSP %3d SP %3d FP\n", 
+	   &stack_[osp], size, nwords, osp, sp, fp);
+    */
+    res = &stack_[osp];
+    /* bzero(res, size); */
+    return res;
+  } else {
+    return((P)GC_malloc((size_t)size));
+  }
 }  
+
+INLINE P stack_allocate (unsigned long size) {
+  P res;
+  int old_stack_allocp = stack_allocp; stack_allocp = 1;
+  res = allocate(size);
+  stack_allocp = old_stack_allocp;
+  return res;
+}
 
 #define OBJECT_DATA_SIZE (sizeof(OBJECT_DATA))
 
@@ -317,7 +403,7 @@ P YPos_binding_value (P name) {
 }
 
 P YPos_binding_value_setter (P value, P name) {
-  setenv((PSTR)name, (PSTR)value, 1);
+  putenv((PSTR)name, (PSTR)value, 1);
   return (P)value;
 }
 
@@ -333,8 +419,12 @@ INLINE P* FUNENVSETTER (P* env, P fun) {
   return (P*)YPslot_elt_setter(env, fun, (P)FUNENVOFFSET);
 }
 
+unsigned long env_nallocd = 0;
+
 INLINE P ENVFAB (int n) {
+  int snallocd = nallocd;
   ENV env = allocate(sizeof(ENV_DATA) + ((n - 1) * sizeof(P)));
+  env_nallocd += nallocd - snallocd;
   env->mark = 0x0f0f0f0f;
   env->size = n;
   return env;
@@ -358,17 +448,26 @@ P FUNINIT (P fun, int n, ...) {
   return fun;
 }
 
-INLINE P FUNSHELL (P x, int n) {
-  P fun = YPclone(x);
+unsigned long fun_nallocd = 0;
+
+INLINE P FUNSHELL (int d, P x, int n) {
+  P   fun;
+  int snallocd = nallocd;
+  int old_stack_allocp = stack_allocp; stack_allocp = d;
+  fun = YPclone(x);
+  fun_nallocd += nallocd - snallocd;
   FUNENVSETTER(ENVFAB(n), fun);
+  stack_allocp = old_stack_allocp;
   return fun;
 }
 
 P FUNFAB (P x, int n, ...) {
   int i;
   va_list ap; 
+  int snallocd = nallocd;
   P fun = YPclone(x);
   FUNENVSETTER(ENVFAB(n), fun);
+  fun_nallocd += nallocd - snallocd;
   va_start(ap, n);
   for (i = 0; i < n; i++)
     FUNENVGET(fun, i) = va_arg(ap, P);
@@ -378,14 +477,6 @@ P FUNFAB (P x, int n, ...) {
 
 /* CALLS */
 
-/*
-int inited_fun_traitsp = 0;
-P YLmetG_traits = PNUL;
-P YLgenG_traits = PNUL;
-*/
-
-extern P YLmetG_traits;
-extern P YLgenG_traits;
 extern P YLlstG_traits;
 
 #define STACK_PAIR_SET(l,h,t) \
@@ -408,8 +499,10 @@ extern P YLlstG_traits;
   } 
   
 #define CHECK_TYPE(a,t) \
-  if (YPcheck_typesQ == YPtrue && YPisaQ(a, t) == YPfalse) \
-    CALL2(Ytype_error, a, t);
+  { int osp = sp, ofp = fp; \
+    if (YPcheck_typesQ == YPtrue && YPisaQ(a, t) == YPfalse) \
+      CALL2(Ytype_error, a, t); \
+    sp = osp; fp = ofp; }
 
 P   Pfunction_;
 int Pargument_count_;
@@ -417,54 +510,9 @@ P   Pnext_methods_;
 
 #define MAX_ARGUMENTS 256
 
-#define MAX_STACK_SIZE 100000
-
 P arguments[MAX_ARGUMENTS];
 P new_arguments[MAX_ARGUMENTS];
 P a[MAX_ARGUMENTS];
-
-P* stack_;
-int sp = 0;
-int fp = 0;
-
-/*
-void PUSH(P x) { 
-  if (sp >= MAX_STACK_SIZE)
-    YPbreak("CALL: STACK OVERFLOW");
-  (stack_[sp++] = (x));
-}
-P POP() {
-  return (stack_[--sp]);
-}
-*/
-
-extern P YPpair (P, P);
-extern P Yunknown_function_error;
-
-P YPdo_stack_frames (P fun) {
-  int xsp = sp;
-  while (xsp > 0) {
-    P   args   = Ynil;
-    P   f      = stack_[--xsp];
-    P   traits = YPobject_traits(f);
-    if (traits == YLmetG_traits) {
-      int i;
-      int arity = FUNARITY(f);
-      int naryp = FUNNARYP(f);
-      for (i = 0; i < arity; i++)
-        args = YPpair(stack_[--xsp], args);
-      if (naryp)
-        args = YPpair(stack_[--xsp], args);
-    } else if (traits == YLgenG_traits) {
-      args = stack_[--xsp];
-    } else {
-      return CALL1(Yunknown_function_error, f);
-    }
-    args = YPpair(f, args);
-    YPPapply(fun, args);
-  }
-  return YPfalse;
-}
 
 extern P YLmetG;
 extern P YLgenG;
@@ -476,7 +524,7 @@ extern P YPisaQ(P,P);
 extern P YPcheck_typesQ;
 
 P CALL0 (P fun) {
-  int ssp    = sp;
+  int osp    = sp, ofp = fp;
   P   res    = YPfalse;
   P   traits = YPobject_traits(fun);
   if (traits == YLmetG_traits) {
@@ -492,17 +540,17 @@ P CALL0 (P fun) {
     int naryp = FUNNARYP(fun);
     PUSH(Ynil);
     CHECK_ARITY(naryp,0,arity);
-    PUSH(fun); 
+    LINK_STACK(fun);
     res = (FUNCODE(fun))(fun);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
-  sp = ssp;
+  UNLINK_STACK(osp, ofp);
   return res;
 }
 
 P CALL1 (P fun, P a1) {
-  int ssp    = sp;
+  int osp    = sp, ofp = fp;
   P   res    = YPfalse;
   P   traits = YPobject_traits(fun);
   if (traits == YLmetG_traits) {
@@ -519,7 +567,7 @@ P CALL1 (P fun, P a1) {
       PUSH(opts);
     }
     CHECK_ARITY(naryp,1,arity);
-    PUSH(fun); 
+    LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
@@ -528,17 +576,17 @@ P CALL1 (P fun, P a1) {
     { STACK_PAIR_SET(arg, a1, arg); }
     PUSH(arg);
     CHECK_ARITY(naryp,1,arity);
-    PUSH(fun); 
+    LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
-  sp = ssp;
+  UNLINK_STACK(osp, ofp);
   return res;
 }
 
 P CALL2 (P fun, P a1, P a2) {
-  int ssp    = sp;
+  int osp    = sp, ofp = fp;
   P   res    = YPfalse;
   P   traits = YPobject_traits(fun);
   if (traits == YLmetG_traits) {
@@ -561,7 +609,7 @@ P CALL2 (P fun, P a1, P a2) {
       PUSH(opts);
     }
     CHECK_ARITY(naryp,2,arity);
-    PUSH(fun); 
+    LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
@@ -571,17 +619,17 @@ P CALL2 (P fun, P a1, P a2) {
     { STACK_PAIR_SET(arg, a1, arg); }
     PUSH(arg);
     CHECK_ARITY(naryp,2,arity);
-    PUSH(fun); 
+    LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
-  sp = ssp;
+  UNLINK_STACK(osp, ofp);
   return res;
 }
 
 P CALL3 (P fun, P a1, P a2, P a3) {
-  int ssp    = sp;
+  int osp    = sp, ofp = fp;
   P   res    = YPfalse;
   P   traits = YPobject_traits(fun);
   if (traits == YLmetG_traits) {
@@ -610,7 +658,7 @@ P CALL3 (P fun, P a1, P a2, P a3) {
       PUSH(opts);
     }
     CHECK_ARITY(naryp,3,arity);
-    PUSH(fun); 
+    LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
@@ -621,18 +669,18 @@ P CALL3 (P fun, P a1, P a2, P a3) {
     { STACK_PAIR_SET(arg, a1, arg); }
     PUSH(arg);
     CHECK_ARITY(naryp,3,arity);
-    PUSH(fun); 
+    LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
-  sp = ssp;
+  UNLINK_STACK(osp, ofp);
   return res;
 }
 
 P CALLN (P fun, int n, ...) {
   int i, j;
-  int ssp    = sp;
+  int osp    = sp, ofp = fp;
   P   res    = YPfalse;
   P   traits = YPobject_traits(fun);
   if (traits == YLmetG_traits) {
@@ -657,7 +705,7 @@ P CALLN (P fun, int n, ...) {
     }
     CHECK_ARITY(naryp,n,arity);
     va_end(ap);
-    PUSH(fun); 
+    LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
@@ -672,12 +720,12 @@ P CALLN (P fun, int n, ...) {
     }
     PUSH(arg);
     CHECK_ARITY(naryp,n,arity);
-    PUSH(fun); 
+    LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
-  sp = ssp;
+  UNLINK_STACK(osp, ofp);
   return res;
 }
 
@@ -688,8 +736,8 @@ extern P YPPlen(P);
 
 P YPPapply (P fun, P args) {
   int i, j;
+  int osp    = sp, ofp = fp;
   int n      = (int)YPPlen(args);
-  int ssp    = sp;
   P   res    = YPfalse;
   P   traits = YPobject_traits(fun);
   if (traits == YLmetG_traits) {
@@ -714,7 +762,7 @@ P YPPapply (P fun, P args) {
 	opts = YPpair(a[j], opts);
       PUSH(opts);
     } 
-    PUSH(fun); 
+    LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
@@ -727,22 +775,22 @@ P YPPapply (P fun, P args) {
 	CALL2(Ywrong_number_arguments_error, fun, YPib((P)n));
     }
     PUSH(args);
-    PUSH(fun); 
+    LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
-  sp = ssp;
+  UNLINK_STACK(osp, ofp);
   return res;
 }
 
 P YPPmep_apply (P fun, P args) {
   int i, j;
+  int osp    = sp, ofp = fp;
   int arity = FUNARITY(fun);
   P   specs = FUNSPECS(fun);
   int naryp = FUNNARYP(fun);
   P   ap    = args;
-  int ssp   = sp;
   P   res   = YPfalse;
   for (i = 0; i < arity; i++) {
     PUSH(Phead(ap));
@@ -758,9 +806,9 @@ P YPPmep_apply (P fun, P args) {
       opts = YPpair(a[j], opts);
     PUSH(opts);
   } 
-  PUSH(fun); 
+  LINK_STACK(fun); 
   res = (FUNCODE(fun))(fun);
-  sp  = ssp;
+  UNLINK_STACK(osp, ofp);
   return res;
 }
 
@@ -772,13 +820,13 @@ P YPfapply (P fproc, P args) {
 typedef struct _bind_exit_frame {
   jmp_buf		        destination;
   int                           sp;
+  int                           fp;
   P			        value;
   struct _unwind_protect_frame* present_unwind_protect_frame;
 } *BIND_EXIT_FRAME, BIND_EXIT_FRAME_DATA;
 
 typedef struct _unwind_protect_frame {
   jmp_buf                       destination;
-  int                           sp;
   P	                        value;
   struct _bind_exit_frame*      ultimate_destination;
   struct _unwind_protect_frame* previous_unwind_protect_frame;
@@ -796,6 +844,7 @@ void nlx_step (BIND_EXIT_FRAME ultimate_destination) {
     /* invalidate current frame */
     Pcurrent_unwind_protect_frame->ultimate_destination = NULL;
     sp = ultimate_destination->sp;    
+    fp = ultimate_destination->fp;    
     longjmp(ultimate_destination->destination, 1);
   } else {
     UNWIND_PROTECT_FRAME next_frame = Pcurrent_unwind_protect_frame;
@@ -804,6 +853,7 @@ void nlx_step (BIND_EXIT_FRAME ultimate_destination) {
     /* register ultimate destination of non-local exit in cupf */
     Pcurrent_unwind_protect_frame->ultimate_destination = ultimate_destination;
     sp = ultimate_destination->sp;    
+    fp = ultimate_destination->fp;    
     /* do cleanup step in next unwind protect frame */
     longjmp(next_frame->destination, 1);
   }
@@ -842,16 +892,25 @@ P NLX (BIND_EXIT_FRAME target, P argument) {
   return(PNUL);	/* Keeps some compilers happy -- Won't actually get here */
 }
 
+unsigned long nlx_nallocd = 0;
+
 P MAKE_BIND_EXIT_FRAME () {
+  int snallocd = nallocd;
+  int osp = sp, ofp = fp;
   BIND_EXIT_FRAME frame 
-    = (BIND_EXIT_FRAME)allocate(sizeof(BIND_EXIT_FRAME_DATA));
+    = (BIND_EXIT_FRAME)stack_allocate(sizeof(BIND_EXIT_FRAME_DATA));
+  nlx_nallocd += nallocd - snallocd;
+  frame->sp = osp;
+  frame->fp = ofp;
   frame->present_unwind_protect_frame = Pcurrent_unwind_protect_frame;
   return((P)frame);
 }
 
 P MAKE_UNWIND_FRAME () {
+  int snallocd = nallocd;
   UNWIND_PROTECT_FRAME frame 
-    = (UNWIND_PROTECT_FRAME)allocate(sizeof(UNWIND_PROTECT_FRAME_DATA));
+    = (UNWIND_PROTECT_FRAME)stack_allocate(sizeof(UNWIND_PROTECT_FRAME_DATA));
+  nlx_nallocd += nallocd - snallocd;
   /* print_frame_count(); */
   frame->previous_unwind_protect_frame = Pcurrent_unwind_protect_frame;
   Pcurrent_unwind_protect_frame = frame;
@@ -865,7 +924,7 @@ P FRAME_DEST (P frame)
 P FRAME_RETVAL (P frame)
   { return (((BIND_EXIT_FRAME) frame)->value); }
 
-extern P YPmet (P, P, P, P, P);
+extern P YPmet (P, P, P, P, P, P);
 
 P do_exit (P fun) {
   ARG(value, 0);
@@ -878,8 +937,12 @@ P do_exit (P fun) {
 extern P YLanyG;
 
 P with_exit (P fun) {
-  BIND_EXIT_FRAME frame = MAKE_BIND_EXIT_FRAME();
-  P exit = YPmet(&do_exit, YPpair(YLanyG, Ynil), YPfalse, YPib((P)1), FABENV(1, frame));
+  BIND_EXIT_FRAME frame;
+  P               exit;
+  int old_stack_allocp = stack_allocp; stack_allocp = 1;
+  frame = MAKE_BIND_EXIT_FRAME();
+  exit  = YPmet(&do_exit, YPpair(YLanyG, Ynil), YPfalse, YPib((P)1), YPfalse, FABENV(1, frame));
+  stack_allocp = old_stack_allocp;
   if (!setjmp(frame->destination))
     return CALL1(fun, exit);
   else
@@ -900,8 +963,12 @@ P with_cleanup (P body_fun, P cleanup_fun) {
 
 /* BOXES */
 
+unsigned long box_nallocd = 0;
+
 INLINE P BOXFAB(P x) {  
+  int snallocd = nallocd;
   P* box = (P*)allocate(sizeof(P));
+  box_nallocd += nallocd - snallocd;
   BOXVAL(box) = x;
   return box;
 }
