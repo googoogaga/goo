@@ -118,28 +118,28 @@
 (ds (or ,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest)
-	    x
-	    `(let ((tmp ,x))
-	       (if tmp tmp (or ,@rest))))
+            x
+            `(let ((tmp ,x))
+               (if tmp tmp (or ,@rest))))
        #f))
 
 (ds (and ,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest)
-	    x
-	    `(let ((tmp ,x))
-	       (if tmp (and ,@rest) #f)))
+            x
+            `(let ((tmp ,x))
+               (if tmp (and ,@rest) #f)))
        #t))
 
 (ds (cond ,@cases)
   (if (empty? cases)
       #f
       (mif ((,cond ,@body) (head cases))
-	   `(if ,cond
-		(seq ,@body)
-		(cond ,@(tail cases)))
-	   ;; TODO: NEED SYNTAX ERROR CONDITIONS
-	   (error "COND: SYNTAX ERROR BAD CASE" (head cases)))))
+           `(if ,cond
+                (seq ,@body)
+                (cond ,@(tail cases)))
+           ;; TODO: NEED SYNTAX ERROR CONDITIONS
+           (error "COND: SYNTAX ERROR BAD CASE" (head cases)))))
 
 (ct-also
   (df do-case-by (val tst cases)
@@ -226,22 +226,22 @@
 (ds (for (,@clauses) ,@body)
   (rep grok ((clauses clauses) (inits '()) (preds '()) (nows '()) (nexts '()))
     (if (empty? clauses)
-	(let ((loop (gensym)))
-	  `(rep ,loop ,inits
-	     (unless (or ,@preds)
+        (let ((loop (gensym)))
+          `(rep ,loop ,inits
+             (unless (or ,@preds)
                (let ,nows ,@body (,loop ,@nexts)))))
         (let ((clause (head clauses)))
-	  (mif ((,var ,exp) clause)
-	    (let ((state (gensym)))
-	      (grok (tail clauses)
-		    (pair `(,state (enum ,exp)) inits)
-		    (pair `(fin? ,state) preds)
-		    (pair (mif ((tup ,key ,val) var)
-		    	       `((tup ,key ,val) 
-		    		 (tup (now-key ,state) (now ,state))) 
-		    	       `(,var (now ,state)))
-		    	  nows)
-		    (pair `(nxt ,state) nexts))))))))
+          (mif ((,var ,exp) clause)
+            (let ((state (gensym)))
+              (grok (tail clauses)
+                    (pair `(,state (enum ,exp)) inits)
+                    (pair `(fin? ,state) preds)
+                    (pair (mif ((tup ,key ,val) var)
+                               `((tup ,key ,val) 
+                                 (tup (now-key ,state) (now ,state))) 
+                               `(,var (now ,state)))
+                          nows)
+                    (pair `(nxt ,state) nexts))))))))
 
 (ds (while ,test ,@body)
   `(rep _loop ()
@@ -259,11 +259,11 @@
     `(seq ,@body)
      (mif (((,var ,value) ,@rest) bindings)
        (let ((name (var-name var))
-	     (old-value (gensym)))
+             (old-value (gensym)))
          `(let ((,old-value ,name))
-	    (fin (seq (set ,name ,value)
-		      (dlet (,@rest) ,@body))
-		 (set ,name ,old-value))))
+            (fin (seq (set ,name ,value)
+                      (dlet (,@rest) ,@body))
+                 (set ,name ,old-value))))
        (error "DLET: SYNTAX ERROR BAD BINDINGS" bindings))))
 
 (ds (def-fun-var ,var ,value)
@@ -271,8 +271,8 @@
         (typ (var-type var))
         (vnam (cat-sym "*" nam "*")))
     `(seq (dv ,vnam ,value)
-	  (dm ,nam (=> ,typ) ,vnam)
- 	  (dm ,(fab-setter-name nam) ((z ,typ)) (set ,vnam z)))))
+          (dm ,nam (=> ,typ) ,vnam)
+          (dm ,(fab-setter-name nam) ((z ,typ)) (set ,vnam z)))))
 
 (ds (without-prop-unbound-errors ,@body)
   `(dlet ((*report-prop-unbound-errors?* #f))

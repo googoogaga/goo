@@ -98,13 +98,13 @@
 
 (dm FIX-CLOSURE (m+ arity)
   (let* ((the-function (cat (ARITY=? (+ arity 1)) (EXTEND-ENV)
-			    m+  (RETURN) ))
+                            m+  (RETURN) ))
          (the-goto (GOTO (len the-function))) )
     (cat (CREATE-CLOSURE (len the-goto)) the-goto the-function) ) )
 
 (dm NARY-CLOSURE (m+ arity)
   (let* ((the-function (cat (ARITY>=? (+ arity 1)) (PACK-FRAME! arity)
-			    (EXTEND-ENV) m+ (RETURN) ))
+                            (EXTEND-ENV) m+ (RETURN) ))
          (the-goto (GOTO (len the-function))) )
     (cat (CREATE-CLOSURE (len the-goto)) the-goto the-function) ) )
 
@@ -132,9 +132,9 @@
 
 (dm instruction-decode (code pc)
   (loc ((fetch-byte ()
-	  (let ((byte (elt code pc)))
-	    (set! pc (+ pc 1))
-	    byte )))
+          (let ((byte (elt code pc)))
+            (set! pc (+ pc 1))
+            byte )))
     (instruction-decode-op (fetch-byte))))
 
 (ds (define-instruction ,name (,@args) ,n ,@body)
@@ -152,28 +152,28 @@
   (mif (() clauses)
        `(,iname)
        (mif ((,a) clauses)
-	    `(let ((,a (fetch-byte))) (lst ',iname a))
-	    (mif ((,a ,b) clauses)
-		 `(let ((,a (fetch-byte)) (,b (fetch-byte))) (lst ',iname ,a ,b))
-		 #f))))
+            `(let ((,a (fetch-byte))) (lst ',iname a))
+            (mif ((,a ,b) clauses)
+                 `(let ((,a (fetch-byte)) (,b (fetch-byte))) (lst ',iname ,a ,b))
+                 #f))))
 
 (ds (run-clause (,@clauses) ,@body)
   (mif (() clauses)
        `(seq ,@body)
        (mif ((,a) clauses)
-	    `(let ((,a (fetch-byte))) ,@body)
-	    (mif ((,a ,b) clauses)
-		 `(let ((,a (fetch-byte)) (,b (fetch-byte))) ,@body)
-		 #f))))
+            `(let ((,a (fetch-byte))) ,@body)
+            (mif ((,a ,b) clauses)
+                 `(let ((,a (fetch-byte)) (,b (fetch-byte))) ,@body)
+                 #f))))
 
 (ds (size-clause ,@clauses)
   (mif (() clauses)
        1
        (mif ((,a) clauses)
-	    2
-	    (mif ((,a ,b) clauses)
-		 3
-		 #f))))
+            2
+            (mif ((,a ,b) clauses)
+                 3
+                 #f))))
        
 ;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 ;;; Instruction-set. 
@@ -744,11 +744,11 @@
   `(definitial name
      (loc ((arity+1 (+ 1 0))
              (behavior
-	      (fun ()
-		(if (= arity+1 (frame-length *val*))
-		    (seq (set *val* (value))
+              (fun ()
+                (if (= arity+1 (frame-length *val*))
+                    (seq (set *val* (value))
                          (set *pc* (stack-pop)) )
-		    (signal-exception #t (lst "Incorrect arity" 'name))))))
+                    (signal-exception #t (lst "Incorrect arity" 'name))))))
          (description-extend! ',name `(function ,value))
          (make-primitive behavior) ) ) ) ) )
   
@@ -756,12 +756,12 @@
   `(definitial name
      (loc ((arity+1 (+ 1 1))
              (behavior
-	      (fun ()
-		(if (= arity+1 (frame-length *val*))
-		    (let ((arg1 (frame-argument *val* 0)))
-		      (set *val* (value arg1))
-		      (set *pc* (stack-pop)) )
-		    (signal-exception #t (lst "Incorrect arity" 'name)) ) ) ) )
+              (fun ()
+                (if (= arity+1 (frame-length *val*))
+                    (let ((arg1 (frame-argument *val* 0)))
+                      (set *val* (value arg1))
+                      (set *pc* (stack-pop)) )
+                    (signal-exception #t (lst "Incorrect arity" 'name)) ) ) ) )
          (description-extend! 'name `(function value a))
          (make-primitive behavior) ) ) ) ) )
   
@@ -769,13 +769,13 @@
   `(definitial name
      (loc ((arity+1 (+ 2 1))
              (behavior
-	      (fun ()
-		(if (= arity+1 (frame-length *val*))
-		    (let ((arg1 (frame-argument *val* 0))
-			  (arg2 (frame-argument *val* 1)) )
-		      (set! *val* (value arg1 arg2))
-		      (set! *pc* (stack-pop)) )
-		    (signal-exception #t (lst "Incorrect arity" 'name)) ) ) ) )
+              (fun ()
+                (if (= arity+1 (frame-length *val*))
+                    (let ((arg1 (frame-argument *val* 0))
+                          (arg2 (frame-argument *val* 1)) )
+                      (set! *val* (value arg1 arg2))
+                      (set! *pc* (stack-pop)) )
+                    (signal-exception #t (lst "Incorrect arity" 'name)) ) ) ) )
          (description-extend! 'name `(function ,value a b))
          (make-primitive behavior) ) ) ) ) )
 
@@ -834,7 +834,7 @@
              (do ((i 1 (+ i 1)))
                  ((= i last-arg-index))
                (set (frame-argument frame (- i 1))
-		    (frame-argument *val* i) ) )
+                    (frame-argument *val* i) ) )
              (do ((i (- last-arg-index 1) (+ i 1))
                   (last-arg last-arg (cdr last-arg)) )
                  ((null? last-arg))
@@ -862,7 +862,7 @@
   `(define-initial name
      (make-primitive
       (fun ()
-	(signal-exception #f (lst "Not yet implemented" 'name))))))
+        (signal-exception #f (lst "Not yet implemented" 'name))))))
 
 (define-reserved global-value)
 (define-reserved load)
@@ -895,7 +895,7 @@
   (let ((n (len stack)))
     (rep loop ((i 0))
       (unless (= i n)
-	(format out "\nSTK[%s]= " i) (show (elt *stack* i)) (loop (+ i 1))))))
+        (format out "\nSTK[%s]= " i) (show (elt *stack* i)) (loop (+ i 1))))))
 
 (dm show ((f closure) stream)
   (format stream "#<Closure(pc=%s)>" (closure-code f)) ) )
@@ -958,14 +958,14 @@
 
 (let ((native-run run))
   (set run (fun ()
-	     (when *debug* (show-registers ""))
-	     (native-run) )) )
+             (when *debug* (show-registers ""))
+             (native-run) )) )
 (let ((native-run-machine run-machine))
   (set run-machine
        (fun (stack-size pc code constants global-names)
-	 (when *debug*                     ; DEBUG
-	   (format out "Code= %s\n" (disassemble code)) )         
-	 (native-run-machine stack-size pc code constants global-names) ) ) )
+         (when *debug*                     ; DEBUG
+           (format out "Code= %s\n" (disassemble code)) )         
+         (native-run-machine stack-size pc code constants global-names) ) ) )
 
 ;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 ;;; Tests
@@ -998,13 +998,13 @@
   (set signal-exception (fun (c (args ...)) (apply error args)))
   (set wrong (fun ((args ...))
                 (format out "
-		>>>>>>>>>>>>>>>>>>RunTime PANIC<<<<<<<<<<<<<<<<<<<<<<<<<
-		%s\n" (activation-frame-argument *val* 1) )
+                >>>>>>>>>>>>>>>>>>RunTime PANIC<<<<<<<<<<<<<<<<<<<<<<<<<
+                %s\n" (activation-frame-argument *val* 1) )
                 (apply error args) ))
   (set static-wrong (fun args
                        (format out "
-		>>>>>>>>>>>>>>>>>>Static WARNING<<<<<<<<<<<<<<<<<<<<<<<<<
-		%s\n" args )
+                >>>>>>>>>>>>>>>>>>Static WARNING<<<<<<<<<<<<<<<<<<<<<<<<<
+                %s\n" args )
                        (apply error args) )) )
 
 ;;; Missing global variables

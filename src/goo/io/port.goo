@@ -75,7 +75,7 @@
 (ds (with-port (,name ,port) ,@body)
   `(let ((,name #f))
      (fin (seq (set ,name ,port) ,@body)
-	  (and ,name (close ,name)))))
+          (and ,name (close ,name)))))
 
 (dv in (new <file-in-port> port-handle (%current-in-port)))
 
@@ -128,8 +128,8 @@
   (if (>= (port-index port) (len (port-guts port)))
       (eof-object)
       (let ((res (elt (port-guts port) (port-index port))))
-	(incf (port-index port))
-	res)))
+        (incf (port-index port))
+        res)))
 
 (dm ready? (port|<str-in-port> => <log>)
   #t)

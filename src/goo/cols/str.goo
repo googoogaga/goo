@@ -62,13 +62,13 @@
 
 (dv (ascii-chars <vec>)
   (let ((ascii-chars
-	 (fill (fab <vec> ascii-limit) #f))
-	(init
-	 (fun (i s)
-	   (rep loop ((i i) (j 0))
-	     (unless (= j (len s))
-	       (set (elt ascii-chars i) (elt s j))
-	       (loop (+ i 1) (+ j 1)))))))
+         (fill (fab <vec> ascii-limit) #f))
+        (init
+         (fun (i s)
+           (rep loop ((i i) (j 0))
+             (unless (= j (len s))
+               (set (elt ascii-chars i) (elt s j))
+               (loop (+ i 1) (+ j 1)))))))
     (init 9 "\t")  ;; tab
     (init 10 "\n") ;; newline
     (init 12 "\f") ;; page
@@ -92,23 +92,23 @@
   (let ((end259 (len ascii-chars)))
     (rep loop ((i 0) (least #f) (greatest #f))
       (if (= i end259)
-	  (let ((v (fill (fab <vec> (+ (- greatest least) 1)) #f)))
-	    (rep loop ((i 0))
-	      (if (= i end259)
-		  (lst least v)
-		  (let ((c (elt ascii-chars i)))
-		    (if c (set (elt v (- (char->integer c) least)) i))
-		    (loop (+ i 1))))))
-	  (let ((c (elt ascii-chars i)))
-	    (if c
-		(let ((n (char->integer c)))
-		  (loop (+ i 1) (if least (min least n) n)
-			(if greatest (max greatest n) n)))
-		(loop (+ i 1) least greatest)))))))
+          (let ((v (fill (fab <vec> (+ (- greatest least) 1)) #f)))
+            (rep loop ((i 0))
+              (if (= i end259)
+                  (lst least v)
+                  (let ((c (elt ascii-chars i)))
+                    (if c (set (elt v (- (char->integer c) least)) i))
+                    (loop (+ i 1))))))
+          (let ((c (elt ascii-chars i)))
+            (if c
+                (let ((n (char->integer c)))
+                  (loop (+ i 1) (if least (min least n) n)
+                        (if greatest (max greatest n) n)))
+                (loop (+ i 1) least greatest)))))))
 
 (dm char->ascii (char|<chr> => <int>)
   (or (elt (head (tail native-chars))
-	   (- (char->integer char) (head native-chars)))
+           (- (char->integer char) (head native-chars)))
       (error "not a standard character: %=" char)))
 
 (dv ascii-whitespaces '(32 10 9 12 13))

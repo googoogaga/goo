@@ -81,28 +81,28 @@
 (dss (or ,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest)
-	    x
-	    `(let ((tmp ,x))
-	       (if tmp tmp (or ,@rest))))
+            x
+            `(let ((tmp ,x))
+               (if tmp tmp (or ,@rest))))
        #f))
 
 (dss (and ,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest)
-	    x
-	    `(let ((tmp ,x))
-	       (if tmp (and ,@rest) #f)))
+            x
+            `(let ((tmp ,x))
+               (if tmp (and ,@rest) #f)))
        #t))
 
 (dss (cond ,@cases)
   (if (empty? cases)
       #f
       (mif ((,cond ,@body) (head cases))
-	   `(if ,cond
-		(seq ,@body)
-		(cond ,@(tail cases)))
-	   ;; TODO: NEED SYNTAX ERROR CONDITIONS
-	   (error "COND: SYNTAX ERROR BAD CASE" (head cases)))))
+           `(if ,cond
+                (seq ,@body)
+                (cond ,@(tail cases)))
+           ;; TODO: NEED SYNTAX ERROR CONDITIONS
+           (error "COND: SYNTAX ERROR BAD CASE" (head cases)))))
 
 ;;;
 ;;; BOOT OBJECTS
@@ -113,83 +113,83 @@
 
 (ct (df %boot-defs ()
       '((dc <any>    (<any>))
-	(dv nul      (new <any>))
-	(dv nul-prop (new <any>))
-	(dc <log>    (<any>))
-	(dv %true    (new <log>))
-	(dv %false   (new <log>))
-	(dc <chr> (<any>))
-	(dc <num> (<any>))
-	(dc <int> (<num>))
-	(dc <flo> (<num>))
-	(dc <loc> (<any>))
-	(dc <col> (<any>))
-	(dc <col!> (<col>))
-	(dc <seq> (<col>))
-	(dc <seq!> (<seq> <col!>))
-	(dc <lst> (<seq!>))
-	(dv nil (new <lst>))
-	  (dp head (x|<lst> => <any>) nil)
-	  (dp tail (x|<lst> => <lst>) nil)
-	(dc <flat> (<seq>))
-	(dc <vec> (<flat>))
-	(dc <str> (<flat>))
-	(dc <sym> (<any>))
-	  (dp sym-name (x|<sym> => <str>))
-	(dc <type> (<any>))
-	(dc <class> (<type>))
-	  (dp class-prop-len (x|<class> => <int>)        0)
-	  (dp class-name (x|<class> => <sym>))
-	  (dp class-parents (x|<class> => <lst>)         nil)
-	  (dp class-direct-props (x|<class> => <lst>)    nil)
-	  (dp class-ancestors (x|<class> => <lst>)       nil)
-	  (dp class-props (x|<class> => <lst>)           nil)
-	  (dp class-descendents (x|<class> => <lst>)     nil)
-	  ;; ULTIMATELY NEED GENS TO BE FLUSHED DURING CLASS REDEF
-	  ;; KEEP BOTH GENS/METS CAUSE NO MET->GEN MAP
-	  ;; WANT TO PRUNE OUT UNNECESSARY GENS BASED ON ACTUAL METS
-	  (dp class-gens (x|<class> => <lst>)            nil)
-	  (dp class-mets (x|<class> => <lst>)            nil)
-	  (dp class-forward (x|<class> => <any>)         #f)
-	  (dp class-id (x|<class> => <int>)              -1)
-	  (dp class-row (x|<class> => <vec>)             nul)
-	(dc <singleton> (<type>))
+        (dv nul      (new <any>))
+        (dv nul-prop (new <any>))
+        (dc <log>    (<any>))
+        (dv %true    (new <log>))
+        (dv %false   (new <log>))
+        (dc <chr> (<any>))
+        (dc <num> (<any>))
+        (dc <int> (<num>))
+        (dc <flo> (<num>))
+        (dc <loc> (<any>))
+        (dc <col> (<any>))
+        (dc <col!> (<col>))
+        (dc <seq> (<col>))
+        (dc <seq!> (<seq> <col!>))
+        (dc <lst> (<seq!>))
+        (dv nil (new <lst>))
+          (dp head (x|<lst> => <any>) nil)
+          (dp tail (x|<lst> => <lst>) nil)
+        (dc <flat> (<seq>))
+        (dc <vec> (<flat>))
+        (dc <str> (<flat>))
+        (dc <sym> (<any>))
+          (dp sym-name (x|<sym> => <str>))
+        (dc <type> (<any>))
+        (dc <class> (<type>))
+          (dp class-prop-len (x|<class> => <int>)        0)
+          (dp class-name (x|<class> => <sym>))
+          (dp class-parents (x|<class> => <lst>)         nil)
+          (dp class-direct-props (x|<class> => <lst>)    nil)
+          (dp class-ancestors (x|<class> => <lst>)       nil)
+          (dp class-props (x|<class> => <lst>)           nil)
+          (dp class-descendents (x|<class> => <lst>)     nil)
+          ;; ULTIMATELY NEED GENS TO BE FLUSHED DURING CLASS REDEF
+          ;; KEEP BOTH GENS/METS CAUSE NO MET->GEN MAP
+          ;; WANT TO PRUNE OUT UNNECESSARY GENS BASED ON ACTUAL METS
+          (dp class-gens (x|<class> => <lst>)            nil)
+          (dp class-mets (x|<class> => <lst>)            nil)
+          (dp class-forward (x|<class> => <any>)         #f)
+          (dp class-id (x|<class> => <int>)              -1)
+          (dp class-row (x|<class> => <vec>)             nul)
+        (dc <singleton> (<type>))
           (dp type-object (x|<singleton> => <any>))
-	(dc <subclass> (<type>))
+        (dc <subclass> (<type>))
           (dp type-class (x|<subclass> => <class>))
-	(dc <union> (<type>))
+        (dc <union> (<type>))
           (dp type-elts (x|<union> => <lst>)             nil)
-	(dc <prop> (<any>))
-	  (dp prop-owner (x|<prop> => <any>))
-	  (dp prop-getter (x|<prop> => <fun>))
-	  (dp prop-setter (x|<prop> => <fun>))
-	  (dp prop-type (x|<prop> =>  <type>))
-	  (dp prop-init (x|<prop> =>  <fun>) (fun (x) nul-prop))
-	(dc <gen-cache> (<any>))
-	  (dp gen-cache-missable? (x|<gen-cache> => <log>)  #f)
-	  (dp gen-cache-arg-pos (x|<gen-cache> => <int>)    0)
-	  (dp gen-cache-singletons (x|<gen-cache> => <lst>) nil)
-	  (dp gen-cache-classes (x|<gen-cache> => <lst>)    nil)
-	(dc <sig> (<any>))
-	  (dp sig-names (x|<sig> => <lst>) nil)
-	  (dp sig-specs (x|<sig> => <lst>) nil)
-	  (dp sig-nary? (x|<sig> => <log>) %false)
-	  (dp sig-arity (x|<sig> => <int>) 0)
-	  (dp sig-val   (x|<sig> => <any>) <any>)
-	  (dp sig-unification-vars (x|<sig> => <lst>) nil)
-	(dc <fun> (<any>))
-	  (dp fun-code (x|<fun> => <any>)  %false)
-	  (dp fun-name (x|<fun> => <any>)  %false)
-	  (dp fun-sig (x|<fun> => <sig>))
-	(dc <met> (<fun>))
-	  (dp fun-env (x|<met> => <any>)   %false)
-	  (dp fun-refs (x|<met> => <any>)  %false)
-	  (dp fun-src (x|<met> => <any>)   %false)
-	(dc <gen> (<fun>))
-	  (dp fun-mets (x|<gen> => <lst>)  nil)
-	  (dp fun-cache (x|<gen> => <any>) %false)
-	  (dp gen-refs (x|<gen> => <vec>)  nul)
-	  (dp gen-src (x|<gen> => <any>)   %false)
+        (dc <prop> (<any>))
+          (dp prop-owner (x|<prop> => <any>))
+          (dp prop-getter (x|<prop> => <fun>))
+          (dp prop-setter (x|<prop> => <fun>))
+          (dp prop-type (x|<prop> =>  <type>))
+          (dp prop-init (x|<prop> =>  <fun>) (fun (x) nul-prop))
+        (dc <gen-cache> (<any>))
+          (dp gen-cache-missable? (x|<gen-cache> => <log>)  #f)
+          (dp gen-cache-arg-pos (x|<gen-cache> => <int>)    0)
+          (dp gen-cache-singletons (x|<gen-cache> => <lst>) nil)
+          (dp gen-cache-classes (x|<gen-cache> => <lst>)    nil)
+        (dc <sig> (<any>))
+          (dp sig-names (x|<sig> => <lst>) nil)
+          (dp sig-specs (x|<sig> => <lst>) nil)
+          (dp sig-nary? (x|<sig> => <log>) %false)
+          (dp sig-arity (x|<sig> => <int>) 0)
+          (dp sig-val   (x|<sig> => <any>) <any>)
+          (dp sig-unification-vars (x|<sig> => <lst>) nil)
+        (dc <fun> (<any>))
+          (dp fun-code (x|<fun> => <any>)  %false)
+          (dp fun-name (x|<fun> => <any>)  %false)
+          (dp fun-sig (x|<fun> => <sig>))
+        (dc <met> (<fun>))
+          (dp fun-env (x|<met> => <any>)   %false)
+          (dp fun-refs (x|<met> => <any>)  %false)
+          (dp fun-src (x|<met> => <any>)   %false)
+        (dc <gen> (<fun>))
+          (dp fun-mets (x|<gen> => <lst>)  nil)
+          (dp fun-cache (x|<gen> => <any>) %false)
+          (dp gen-refs (x|<gen> => <vec>)  nul)
+          (dp gen-src (x|<gen> => <any>)   %false)
     (dc <opts> (<flat>))
       (dp opts-location (x|<opts> => <loc>) 0)
       (dp opts-count (x|<opts> => <int>) 0)
@@ -202,37 +202,37 @@
 (ct (df %map-boot-classes (f)
       (rep loop ((res '()) (defs (%boot-defs)))
         (if (empty? defs)
-	    (rev! res)
-	    (loop (mif ((dc ,name (,@parents)) (head defs))
+            (rev! res)
+            (loop (mif ((dc ,name (,@parents)) (head defs))
                        (pair (f name parents) res)
                        res)
-		  (tail defs))))))
+                  (tail defs))))))
 
 ;; RETURN OBJECTS DEFS FROM BOOT DEFS
 
 (ct (df %map-boot-objects (f)
       (rep loop ((res '()) (defs (%boot-defs)))
         (if (empty? defs)
-	    (rev! res)
-	    (loop (mif ((dv ,name (new ,class)) (head defs))
-		       (pair (f name class) res)
+            (rev! res)
+            (loop (mif ((dv ,name (new ,class)) (head defs))
+                       (pair (f name class) res)
                        res)
-		  (tail defs))))))
+                  (tail defs))))))
 
 ;; RETURN PROP DEFS FROM BOOT DEFS
 
 (ct (df %map-boot-props (f)
       (rep loop ((res '()) (defs (%boot-defs)))
         (if (empty? defs)
-	    (rev! res)
-	    (loop (mif ((dp ,name ((x ,owner) => ,type) ,@maybe-init)
+            (rev! res)
+            (loop (mif ((dp ,name ((x ,owner) => ,type) ,@maybe-init)
                         (head defs))
-		       (let ((init (if (empty? maybe-init) 
-	                               'nul-prop 
-	                               (head maybe-init))))
-			 (pair (f owner name type init) res)) 
-		       res)
-		  (tail defs))))))
+                       (let ((init (if (empty? maybe-init) 
+                                       'nul-prop 
+                                       (head maybe-init))))
+                         (pair (f owner name type init) res)) 
+                       res)
+                  (tail defs))))))
 
 ;;;
 ;;; 1. CONSTRUCTION MACHINERY FOR BUILDING EARLY OBJECTS
@@ -267,18 +267,18 @@
 
 (dss (%define-structure ,prefix ,class-base-name ,@prop-names)
   (loc ((constructor (name inits)
-	  (def class-name (cat-sym "<" name ">"))
+          (def class-name (cat-sym "<" name ">"))
           `(dl ,(cat-sym prefix name) (,@prop-names) 
              (def class (%object-of ,class-name (%raw ,(len prop-names))))
              ,@inits
              class)))
     (rep loop ((inits '()) (i 0) (names prop-names))
       (if (== names '())
-	  `(seq (%define-structure-accessors ,@prop-names)
-		,(constructor class-base-name inits))
-	  (let ((name (head names)))
-	    (loop (pair `(set (%prop-elt class (%raw ,i)) ,name) inits)
-		  (+ i 1) (tail names)))))))
+          `(seq (%define-structure-accessors ,@prop-names)
+                ,(constructor class-base-name inits))
+          (let ((name (head names)))
+            (loop (pair `(set (%prop-elt class (%raw ,i)) ,name) inits)
+                  (+ i 1) (tail names)))))))
 
 ;;;
 ;;; 2. SETUP EARLY CLASS
@@ -315,7 +315,7 @@
 
 (dss (%class-shells)
   `(seq ,@(%map-boot-classes
-	    (fun (name parents)
+            (fun (name parents)
               `(dv ,name
                  (%class nil nil nil nil nil nil nil nil nil nil -1 nil))))))
 
@@ -325,7 +325,7 @@
 
 (dss (%reparent-class-shells)
   `(seq ,@(%map-boot-classes
-	    (fun (name parents)
+            (fun (name parents)
               `(set (%object-class ,name) <class>)))))
 
 (%reparent-class-shells)
@@ -343,7 +343,7 @@
 
 (dss (%object-shells)
   `(seq ,@(%map-boot-objects 
-	    (fun (name class)
+            (fun (name class)
               `(dv ,name (%object-of ,class (%raw 0)))))))
 
 (%object-shells)
@@ -426,13 +426,13 @@
 
 (dss (%define-tagged-structure ,name ,ptag ,puntag ,code ,tag)
   (let ((class-name (cat-sym "<" name ">"))
-	(fab-name   (cat-sym "%" name))
-	(tag-name   (cat-sym "%" code "b"))
-	(untag-name (cat-sym "%" code "u")))
+        (fab-name   (cat-sym "%" name))
+        (tag-name   (cat-sym "%" code "b"))
+        (untag-name (cat-sym "%" code "u")))
     `(seq (dl ,tag-name (x) (,ptag x (%raw ,tag)))
-	  (dl ,fab-name (x) (,tag-name x))
-	  (dl ,untag-name (x) (,puntag x))
-	  (set (%elt $direct-object-class (%raw ,tag)) ,class-name))))
+          (dl ,fab-name (x) (,tag-name x))
+          (dl ,untag-name (x) (,puntag x))
+          (set (%elt $direct-object-class (%raw ,tag)) ,class-name))))
 
 (%define-tagged-structure int %tag %untag           i 1) ;; INTEGERS
 
@@ -460,8 +460,8 @@
         (fab!       (cat-sym "%"  name "!"))
         (raw-fab    (cat-sym "%%" code "fab")))
     `(seq (dl ,fab! (len) (,raw-fab len ,init))
-	  (dv ,nul (,fab! (%raw 0)))
-	  (dl ,fab (len) (if (%bb (%i= len (%raw 0))) ,nul (,fab! len))))))
+          (dv ,nul (,fab! (%raw 0)))
+          (dl ,fab (len) (if (%bb (%i= len (%raw 0))) ,nul (,fab! len))))))
 
 (%define-repeated-structure str <chr> s (%cu #\Space))
 
@@ -514,7 +514,7 @@
 
 (dss (%define-hierarchy)
   `(seq ,@(%map-boot-classes
-	    (fun (name parents) 
+            (fun (name parents) 
               `(%define-parents ,name (%pairize ,@parents))))))
 
 (%define-hierarchy)
@@ -543,7 +543,7 @@
 ;; EARLY VERSION (PRE TAB) OF SYM CONSING USING LST SET
 (if (%bb (%eq? %*used-symbols-too-early* #t))
     (%puts (%current-out-port) (%su
-	"Warning: symbols were created in the boot image before the symbol-creation was setup. (Probably from a df or rep)\n")))
+        "Warning: symbols were created in the boot image before the symbol-creation was setup. (Probably from a df or rep)\n")))
 
 
 ;; this first version doesn't have proper symbols, but it works..
@@ -585,19 +585,19 @@
 (dl %rev! (c)
   (rep loop ((l c) (r '()))
     (if (%empty? l)
-	r
-	(let ((t (%tail l)))
-	  (set (%tail l) r)
-	  (loop t l)))))
+        r
+        (let ((t (%tail l)))
+          (set (%tail l) r)
+          (loop t l)))))
 
 (dl %cat2 (x y) 
   (rep colx ((lx nil) (x x))
     (if (%empty? x)
-	(rep coly ((lxy lx) (y y))
-	  (if (%empty? y)
-	      (%rev! lxy)
-	      (coly (%pair (%head y) lxy) (%tail y))))
-	(colx (%pair (%head x) lx) (%tail x)))))
+        (rep coly ((lxy lx) (y y))
+          (if (%empty? y)
+              (%rev! lxy)
+              (coly (%pair (%head y) lxy) (%tail y))))
+        (colx (%pair (%head x) lx) (%tail x)))))
 
 
 ;;; 
@@ -606,14 +606,14 @@
 
 (dss (%define-boxed-structure ,name ,code)
   (let ((class-name (cat-sym "<" name ">"))
-	(dat-name   (cat-sym name "-dat"))
-	(fab-name   (cat-sym "%" name))
-	(box-name   (cat-sym "%" code "b"))
-	(unbox-name (cat-sym "%" code "u")))
+        (dat-name   (cat-sym name "-dat"))
+        (fab-name   (cat-sym "%" name))
+        (box-name   (cat-sym "%" code "b"))
+        (unbox-name (cat-sym "%" code "u")))
     `(seq (%define-structure % ,name ,dat-name)
-	  (dl ,box-name (x) (,fab-name x))
-	  (dl ,unbox-name (x) (%prop-elt x (%raw 0)))
-	  )))
+          (dl ,box-name (x) (,fab-name x))
+          (dl ,unbox-name (x) (%prop-elt x (%raw 0)))
+          )))
 
 (%define-boxed-structure flo f)
 
@@ -655,18 +655,18 @@
 (df %prop-offset (owner getter)
   (rep loop ((i (%raw 0)) (props (%class-props (%object-class owner))))
     (if (%empty? props)
-	(%iu -1)
-	(let ((prop (%head props)))
-	  (if (%bb (%eq? (%prop-getter prop) getter))
-	      i
-	      (loop (%i+ i (%raw 1)) (%tail props)))))))
+        (%iu -1)
+        (let ((prop (%head props)))
+          (if (%bb (%eq? (%prop-getter prop) getter))
+              i
+              (loop (%i+ i (%raw 1)) (%tail props)))))))
 
 ;; &LISTIFY CONSTRUCTS CODE THAT BUILDS A LIST OF GIVEN ARGS WITH CALLS TO %PAIR
 
 (ct (df &listify (args)
       (if (empty? args)
-	  'nil
-	  `(%pair ,(head args) ,(&listify (tail args))))))
+          'nil
+          `(%pair ,(head args) ,(&listify (tail args))))))
 
 ;; EARLY DISPATCH ERRORS OUT
 
@@ -687,12 +687,12 @@
   (let ((params  (sexpr-signature-parameters sig))
         (specs   (&listify (map (always '<any>) params))))
     `(seq (dv ,name 
-	    (%gen %early-dispatch ',name 
-	          (%sig '() ,specs #f ,(len params) <any> '()) '() #f #f #f))
-	  (let ((accessor (fun (,@sig) ,@body)))
-	    (%add-met ,name accessor)
+            (%gen %early-dispatch ',name 
+                  (%sig '() ,specs #f ,(len params) <any> '()) '() #f #f #f))
+          (let ((accessor (fun (,@sig) ,@body)))
+            (%add-met ,name accessor)
         (set (%met-name accessor) ,name)
-	    accessor))))
+            accessor))))
 
 (dss (%define-getter ,name ,owner ,type)
   `(%define-accessor ,name ((x ,owner))
@@ -713,15 +713,15 @@
 
 (dss (%define-props)
   `(seq ,@(%map-boot-props 
-	    (fun (owner name type init) 
-	      `(let ((getter (%define-getter ,name ,owner ,type))
+            (fun (owner name type init) 
+              `(let ((getter (%define-getter ,name ,owner ,type))
                      (setter (%define-setter ,name ,owner ,type))
                      ;; TODO: X FROM OWNER VAR
                      (prop   (%%prop ,owner ,name ,(cat-sym name "-setter") 
                                      ,type (fun (x) ,init))))
-		 (set (%met-env getter) prop)
-		 (set (%met-env setter) prop)
-		 (%add-prop ,owner prop))))))
+                 (set (%met-env getter) prop)
+                 (set (%met-env setter) prop)
+                 (%add-prop ,owner prop))))))
 
 (%define-props)
 
@@ -804,12 +804,12 @@
 (df @all2? (test|<fun> x|<lst> y|<lst> => <log>)
   (rep fnd ((px x) (py y))
     (if (@empty? px) 
-	(@empty? py)
-	(if (@empty? py)
-	    #f
-	    (if (test (@head px) (@head py)) 
-		(fnd (@tail px) (@tail py))
-		#f)))))
+        (@empty? py)
+        (if (@empty? py)
+            #f
+            (if (test (@head px) (@head py)) 
+                (fnd (@tail px) (@tail py))
+                #f)))))
 
 (df @elt (x|<lst> key|<int> => <any>)
   (rep fnd ((count|<int> 0) (x|<lst> x))
@@ -835,20 +835,20 @@
 (df @map (f|<fun> x|<lst> => <lst>)
   (rep do ((x x) (res '()))
     (if (@empty? x)
-	(@rev! res)
-	(do (@tail x) (@pair (f (@head x)) res)))))
+        (@rev! res)
+        (do (@tail x) (@pair (f (@head x)) res)))))
 
 (df @pick (f|<fun> x|<lst> => <lst>)
   (rep do ((x x) (res '()))
     (if (@empty? x)
-	(@rev! res)
+        (@rev! res)
         (let ((h (@head x))) (do (@tail x) (if (f h) (@pair h res) res))))))
 
 (df @do (f|<fun> x|<lst>)
   (rep do ((x x))
     (if (@empty? x)
-	#f
-	(seq (f (@head x)) (do (@tail x))))))
+        #f
+        (seq (f (@head x)) (do (@tail x))))))
 
 (df @alter (dst|<lst> src|<lst> => <lst>)
   (rep in ((ds dst) (ss src))
@@ -873,10 +873,10 @@
 (df @find (f|<fun> c|<lst> => <any>) ;; TODO: => <int>
   (rep fnd ((c c) (i 0))
     (if (@empty? c)
-	nul
-	(if (f (@head c))
-	    i
-	    (fnd (@tail c) (@+ i 1))))))
+        nul
+        (if (f (@head c))
+            i
+            (fnd (@tail c) (@+ i 1))))))
 
 (df @mem? (c|<lst> x|<any> => <log>)
   (not (@== (@find (fun (y) (@== x y)) c) nul)))
@@ -996,8 +996,8 @@
   (if (%empty? cs)
       #f
       (if (@== (%head cs) c)
-	  #t
-	  (@class-in? c (%tail cs)))))
+          #t
+          (@class-in? c (%tail cs)))))
 
 (dl @subclass? (c1 c2 => <log>)
   (or (@== c2 <any>) (@== c1 c2)
@@ -1146,10 +1146,10 @@
 ; (df opt-args (n|<int> args|<opts> => <opts>)
 ;   (rep col ((i|<int> 0) (l|<opts> '()) (p|<opts> args))
 ;     (if (@= i n)
-; 	(if (@empty? l)
-; 	    (@lst p)
-; 	    (seq (set (@tail l) (@lst p)) args))
-; 	(col (@+ i 1) p (@tail p)))))
+;       (if (@empty? l)
+;           (@lst p)
+;           (seq (set (@tail l) (@lst p)) args))
+;       (col (@+ i 1) p (@tail p)))))
 
 (df @gen-cache-arg-pos (x)             (%gen-cache-arg-pos x))
 (df @gen-cache-arg-pos-setter (z x)    (set (%gen-cache-arg-pos x) z))
@@ -1270,7 +1270,7 @@
       (let ((arg   (@oelt args i))
             (cache (ensure-singleton-cache gen ocache mets sorted-mets i args))
             (sing? (@singleton-spec? (fun-spec (@head sorted-mets) i))))
-	(if (or (and sing? (@== ocache cache));; sing args not seen?
+        (if (or (and sing? (@== ocache cache));; sing args not seen?
                 (and cache (not (%gen-cache-missable? cache))));; force sing?
             (let ((mets (@prune-mets-by-type-at mets (%singleton arg) i)))
               (gen-lookup-miss-1-using
@@ -1403,8 +1403,8 @@
 
 (dss (%patch-early-generics)
   `(seq ,@(%map-boot-props 
-	    (fun (owner name type init) 
-	      `(seq 
+            (fun (owner name type init) 
+              `(seq 
                  (%patch-early-generic ,name)
                  (%patch-early-generic ,(cat-sym name "-setter")))))))
 
@@ -1414,9 +1414,9 @@
 
 (dss (def-fun/sig-accessor ,name)
   `(seq (df ,(cat-sym "fun-" name) (x)
-	  (,(cat-sym "sig-" name) (fun-sig x)))
-	(df ,(cat-sym "fun-" name "-setter") (z x) 
-	  (set (,(cat-sym "sig-" name) (fun-sig x)) z))))
+          (,(cat-sym "sig-" name) (fun-sig x)))
+        (df ,(cat-sym "fun-" name "-setter") (z x) 
+          (set (,(cat-sym "sig-" name) (fun-sig x)) z))))
 
 (def-fun/sig-accessor names)
 (def-fun/sig-accessor specs)
@@ -1438,29 +1438,29 @@
 (df class-ordered-ancestors (c|<class> => <parents>)
   (loc ((merge-lists ((partial-cpl <lst>) (remaining-lists <lst>))
           ;; the partial-cpl is in reverse order at this point.
-	 (if (@all? @@empty? remaining-lists)
-	     (@rev! partial-cpl)
-	     (loc ((unconstrained-class (p)
-		    (loc ((p-in-and-unconstrained-in? ((l <lst>))
-			   (@== (@head l) p))
-			  (p-unconstrained-in? ((l <lst>))
-  		           (or (@== (@head l) p) (not (@mem? (@tail l) p)))))
-		      (and (@any? p-in-and-unconstrained-in? remaining-lists)
-			   (@all? p-unconstrained-in? remaining-lists)
-			   p)))
-		   (unconstrained-class-in-parents ((c <class>))
-		     (@any? unconstrained-class (%class-parents c))))
-	       (let ((next (@any? unconstrained-class-in-parents partial-cpl)))
-		 (if next
-		      (loc ((remove-next ((l <lst>))
-			      (if (@== (@head l) next) (@tail l) l)))
-			(merge-lists 
-			 (@pair next partial-cpl)
-			 ;; (@alter remaining-lists 
-			   (@map remove-next remaining-lists)
-			 ;; )
-			 ))
-		      (error "inconsistent precedence graph")))))))
+         (if (@all? @@empty? remaining-lists)
+             (@rev! partial-cpl)
+             (loc ((unconstrained-class (p)
+                    (loc ((p-in-and-unconstrained-in? ((l <lst>))
+                           (@== (@head l) p))
+                          (p-unconstrained-in? ((l <lst>))
+                           (or (@== (@head l) p) (not (@mem? (@tail l) p)))))
+                      (and (@any? p-in-and-unconstrained-in? remaining-lists)
+                           (@all? p-unconstrained-in? remaining-lists)
+                           p)))
+                   (unconstrained-class-in-parents ((c <class>))
+                     (@any? unconstrained-class (%class-parents c))))
+               (let ((next (@any? unconstrained-class-in-parents partial-cpl)))
+                 (if next
+                      (loc ((remove-next ((l <lst>))
+                              (if (@== (@head l) next) (@tail l) l)))
+                        (merge-lists 
+                         (@pair next partial-cpl)
+                         ;; (@alter remaining-lists 
+                           (@map remove-next remaining-lists)
+                         ;; )
+                         ))
+                      (error "inconsistent precedence graph")))))))
      (def parents (%class-parents c))
      (merge-lists (@lst c)
                   (@add (@map @class-ancestors parents) parents))))
@@ -1523,10 +1523,10 @@
 (df prop-offset (object getter|<fun> => <int>)
   (rep loop ((i 0) (props (object-props object)))
     (if (@empty? props)
-	$getter-not-found
-	(if (@== (%prop-getter (@head props)) getter)
-	    i
-	    (loop (@+ i 1) (@tail props))))))
+        $getter-not-found
+        (if (@== (%prop-getter (@head props)) getter)
+            i
+            (loop (@+ i 1) (@tail props))))))
 
 (dv *report-prop-unbound-errors?* #t) ;; TODO: SHOULD BE DDV
 
@@ -1553,7 +1553,7 @@
   (ensure-fresh-object object)
   (rep loop ((i 0) (props (object-props object)))
     (if (@empty? props)
-	(error "prop %s not found in %=" getter object)
+        (error "prop %s not found in %=" getter object)
         (let ((prop (@head props)))
           (if (@== (%prop-getter prop) getter)
               (if (@isa? z (%prop-type prop))
@@ -1574,21 +1574,21 @@
 (df find-getter (owner|<class> getter|<gen> => <met>)
   (rep loop ((mets (@fun-mets getter)))
     (if (@empty? mets)
-	(error "COULDN'T FIND GETTER")
-	(let ((met (@head mets)))
-	  (if (@== (fun-spec met 0) owner)
-	      met
-	      (loop (@tail mets)))))))
+        (error "COULDN'T FIND GETTER")
+        (let ((met (@head mets)))
+          (if (@== (fun-spec met 0) owner)
+              met
+              (loop (@tail mets)))))))
 
 (df find-setter (owner|<class> type zetter|<gen> => <met>)
   (rep loop ((mets (@fun-mets zetter)))
     (if (@empty? mets)
-	(error "COULDN'T FIND SETTER")
-	(let ((met (@head mets)))
-	  (if (and (@== (fun-spec met 1) owner) 
+        (error "COULDN'T FIND SETTER")
+        (let ((met (@head mets)))
+          (if (and (@== (fun-spec met 1) owner) 
                    (@type-equal? (fun-spec met 0) type))
-	      met
-	      (loop (@tail mets)))))))
+              met
+              (loop (@tail mets)))))))
 
 ;; CREATE CLONE OF CLASS AND MARK THEM AS FORWARDED CLONE OF ORIGINAL CLASS
 ;; ALSO CLEAR ALL ASSOC'D GENERIC DISPATCH CACHES SO THAT THEY TRAP NEXT TIME
@@ -1641,12 +1641,12 @@
 ;;    (rep loop-old-props ((old-props (%class-props old-class)) (old-offset 0))
 ;;      (unless (@empty? old-props)
 ;;        (let ((old-prop   (@head old-props))
-;;	      (getter     (%prop-getter old-prop))
-;;	      (new-offset (prop-offset new-object getter)))
-;;	  (unless (@= new-offset $getter-not-found)
-;;	    (set (prop-value-at new-object new-offset) 
-;;		 (prop-value-at old-object old-offset))
-;;	    (loop-old-props (@tail old-props) (@+ old-offset 1))))))
+;;            (getter     (%prop-getter old-prop))
+;;            (new-offset (prop-offset new-object getter)))
+;;        (unless (@= new-offset $getter-not-found)
+;;          (set (prop-value-at new-object new-offset) 
+;;               (prop-value-at old-object old-offset))
+;;          (loop-old-props (@tail old-props) (@+ old-offset 1))))))
     new-object) ;; )
 
 (df update-instance-for-changed-class (object)
@@ -1839,10 +1839,10 @@
   (if *macros-ok?*
       (%%macro modname name expander #f) ;; DEFINED IN AST
       (seq ;; REMEMBER NAMES/EXPANDERS FOR LATER INSTALLATION
-	(set *boot-macro-module-names*
+        (set *boot-macro-module-names*
              (@pair modname *boot-macro-module-names*))
-	(set *boot-macro-names*     (@pair name     *boot-macro-names*))
-	(set *boot-macro-expanders* (@pair expander *boot-macro-expanders*)))))
+        (set *boot-macro-names*     (@pair name     *boot-macro-names*))
+        (set *boot-macro-expanders* (@pair expander *boot-macro-expanders*)))))
 
 ;;;
 ;;; 15. EXPORTS
@@ -2062,10 +2062,10 @@
 
   add-prop
   %allocate-stack
-  *boot-macro-expanders*	;;var
-  *boot-macro-names*		;;var
+  *boot-macro-expanders*        ;;var
+  *boot-macro-names*            ;;var
   *boot-macro-module-names*
-  %define-method		
+  %define-method                
   fab-gen
   fab-sym
   find-getter

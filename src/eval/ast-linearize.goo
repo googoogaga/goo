@@ -24,8 +24,8 @@
   (if (empty? l)
       #f
       (if (== x (assoc-key (head l)))
-	  (head l)
-	  (assocq x (tail l)))))
+          (head l)
+          (assocq x (tail l)))))
 ;;; END code from runtime
 
 ;;; WALKER
@@ -82,7 +82,7 @@
 (dm insert-box! (o|<ast-method>)
   (set (function-body o)
        (insert-box! (boxify-mutable-bindings
-		     (function-body o) (function-bindings o))))
+                     (function-body o) (function-bindings o))))
   o)
 
 (dm insert-box! (o|<fix-let>)
@@ -90,7 +90,7 @@
        (insert-box! (fix-let-arguments o)))
   (set (fix-let-body o)
        (insert-box! 
-	(boxify-mutable-bindings (fix-let-body o) (fix-let-bindings o))))
+        (boxify-mutable-bindings (fix-let-body o) (fix-let-bindings o))))
   o)
 
 (dm insert-box! (o|<locals>)
@@ -98,15 +98,15 @@
        (map insert-box! (locals-functions o)))
   (set (locals-body o)
        (insert-box!
-	(boxify-mutable-bindings (locals-body o) (locals-bindings o))))
+        (boxify-mutable-bindings (locals-body o) (locals-bindings o))))
   o)
 
 (dm boxify-mutable-bindings (form bindings|<lst>)
   (sequentialize
     (rep loop ((res '()) (bindings bindings))
       (if (empty? bindings)
-	  (rev! (pair form res))
-	  (let ((binding (head bindings)))
+          (rev! (pair form res))
+          (let ((binding (head bindings)))
             (if (binding-mutable? binding)
                 (let ((creator 
                         (new <box-creation>
@@ -170,14 +170,14 @@
   (do-do-call-upgrades! o)
   (if (isa? (application-function o) <local-reference>)
       (let ((met (binding-value (reference-binding (application-function o)))))
-	(if (and (isa? met <ast-function>)
-		 (all? (fun (x) (unconstrained-type? (binding-type x)))
-		       (function-bindings met))
-		 (unconstrained-type? (function-value met))
-		 (not (function-nary? met))
-		 (= (len (application-arguments o))
-		    (len (function-bindings met))))
-	    (set (application-known? o) #t))))
+        (if (and (isa? met <ast-function>)
+                 (all? (fun (x) (unconstrained-type? (binding-type x)))
+                       (function-bindings met))
+                 (unconstrained-type? (function-value met))
+                 (not (function-nary? met))
+                 (= (len (application-arguments o))
+                    (len (function-bindings met))))
+            (set (application-known? o) #t))))
   o)
 
 (dm analyze-calls (o)
@@ -209,19 +209,19 @@
 (dm adjoin-free-binding! (flat-fun|<ast-method> ref => <int>)
   (rep check ((i|<int> 0) (free* (function-free flat-fun)))
     (if (empty? free*)
-	(let ((new-env (free-environment ref (empty <free-environment>))))
-	  (if (empty? (function-free flat-fun))
-	      (set (function-free flat-fun) new-env)
-	      (rep add ((free* (function-free flat-fun)))
-		(def tail (tail free*))
+        (let ((new-env (free-environment ref (empty <free-environment>))))
+          (if (empty? (function-free flat-fun))
+              (set (function-free flat-fun) new-env)
+              (rep add ((free* (function-free flat-fun)))
+                (def tail (tail free*))
                 (if (empty? tail)
                     (set (tail free*) new-env)
                     (add tail))))
-	  i)
-	(if (== (reference-binding ref)
-		(reference-binding (head free*)))
-	    i
-	    (check (+ i 1) (tail free*))))))
+          i)
+        (if (== (reference-binding ref)
+                (reference-binding (head free*)))
+            i
+            (check (+ i 1) (tail free*))))))
 
 (dm lift-procedures! (o|<fix-let> flat-fun bindings)
   (set (fix-let-arguments o)
@@ -277,11 +277,11 @@
 (dm flatten-seqs (o|<sequential>)
   (rep loop ((s o) (r '()))
      (if (empty? s)
-	 (rev! r)
-	 (rep inner ((ss (flatten-seqs (head s))) (r r))
+         (rev! r)
+         (rep inner ((ss (flatten-seqs (head s))) (r r))
            (if (empty? ss)
-	       (loop (tail s) r)
-	       (inner (tail ss) (pair (head ss) r)))))))
+               (loop (tail s) r)
+               (inner (tail ss) (pair (head ss) r)))))))
 
 (dm as-top-level-forms (programs)
   (map (fun (x) (new <top-level-form> form-program x)) programs))
@@ -358,11 +358,11 @@
   (rep loop ((forms '()) (s o))
     (rep inner ((res '()) (es s) (count 0))
       (cond ((empty? es)
-	     (rev! (pair (sequentialize (rev! res)) forms)))
-	    ((= count max-count)
-	     (loop (pair (sequentialize (rev! res)) forms) es))
-	    (#T 
-	      (inner (pair (head es) res) (tail es) (+ count 1)))))))
+             (rev! (pair (sequentialize (rev! res)) forms)))
+            ((= count max-count)
+             (loop (pair (sequentialize (rev! res)) forms) es))
+            (#T 
+              (inner (pair (head es) res) (tail es) (+ count 1)))))))
 
 (dm closurize-main! (o|<flattened-program> r max-count => <flattened-program>)
   (def forms      (split-program (program-form o) max-count))
@@ -400,7 +400,7 @@
 (dm gather-temporaries! (o|<program>)
   (set (program-definitions o)
        (map (fun (def) (collect-temporaries! def def '()))
-	    (program-definitions o)))
+            (program-definitions o)))
   o)
 
 (dm collect-temporaries! (o|<program> flat-fun r)
@@ -439,10 +439,10 @@
   (rep adjoin 
       ((temps (function-temporaries flat-fun)) (bindings new-bindings))
     (if (empty? bindings)
-	(set (function-temporaries flat-fun) temps)
-	(if (mem? temps (head bindings))
-	    (adjoin temps (tail bindings))
-	    (adjoin (pair (head bindings) temps) (tail bindings))))))
+        (set (function-temporaries flat-fun) temps)
+        (if (mem? temps (head bindings))
+            (adjoin temps (tail bindings))
+            (adjoin (pair (head bindings) temps) (tail bindings))))))
 
 (dc <renamed-local-binding> (<local-binding>))
   (dp binding-index (x|<renamed-local-binding> => <any>))

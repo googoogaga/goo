@@ -62,8 +62,8 @@
 
 (dm CALL3 (address m1 m2 m3)
   (fun () (let ((v1 (m1))
-		(v2 (m2)) )
-	    (address v1 v2 (m3)) )) )
+                (v2 (m2)) )
+            (address v1 v2 (m3)) )) )
 
 (dm FIX-CLOSURE (m+ arity)
   (let ((arity+1 (+ arity 1)))
@@ -78,12 +78,12 @@
   (let ((arity+1 (+ arity 1)))
     (fun ()
       (loc ((the-function (v* sr)
-	      (if (>= (frame-length v*) arity+1)
-		  (seq (listify! v* arity)
-		       (set *env* (sr-extend* sr v*))
-		       (m+) )
-		  (wrong "Incorrect arity") ) )
-	(make-closure the-function *env*) ) ) )))
+              (if (>= (frame-length v*) arity+1)
+                  (seq (listify! v* arity)
+                       (set *env* (sr-extend* sr v*))
+                       (m+) )
+                  (wrong "Incorrect arity") ) )
+        (make-closure the-function *env*) ) ) )))
 
 (dm TR-REGULAR-CALL (m m*) 
   (fun ()
@@ -93,9 +93,9 @@
 (dm REGULAR-CALL (m m*)
   (fun ()
     (let ((f (m))
-	  (v* (m*))
-	  (sr *env*)
-	  (result (invoke f v*)) )
+          (v* (m*))
+          (sr *env*)
+          (result (invoke f v*)) )
       (set *env* sr)
       result ) ) )
 
@@ -111,7 +111,7 @@
     (let ((v (m))
           (v* (m*)) )
       (set (frame-argument v* arity)
-	   (pair v (frame-argument v* arity)) )
+           (pair v (frame-argument v* arity)) )
       v* ) ) )
 
 (dm ALLOCATE-FRAME (size)
@@ -136,8 +136,8 @@
 (dm meaning (e r t?)
   (if (atom? e)
       (if (isa? e <sym>)
-	  (meaning-reference e r t?)
-	  e)
+          (meaning-reference e r t?)
+          e)
       (meaning-list (head e) e r t?)))
 
 (dm meaning-list ((_ 'quote) (e <lst>) r t?)
@@ -155,10 +155,10 @@
 
 (dm meaning-reference-of ((var <loc-ref>) n r t?)
   (let ((i (var-offset var))
-	(j (var-frame-offset var)))
+        (j (var-frame-offset var)))
     (if (= i 0)
-	(SHALLOW-ARGUMENT-REF j)
-	(DEEP-ARGUMENT-REF i j) ) ) )
+        (SHALLOW-ARGUMENT-REF j)
+        (DEEP-ARGUMENT-REF i j) ) ) )
 
 (dm meaning-reference-of ((var <glo-ref>) n r t?)
   (CHECKED-GLOBAL-REF (var-offset var) ) )
@@ -172,10 +172,10 @@
 
 (dm meaning-assignment-of ((var <loc-ref>) n m r t?)
   (let ((i (var-offset var))
-	(j (var-frame-offset var)))
+        (j (var-frame-offset var)))
     (if (= i 0)
-	(SHALLOW-ARGUMENT-SET j m)
-	(DEEP-ARGUMENT-SET i j m) ) ) )
+        (SHALLOW-ARGUMENT-SET j m)
+        (DEEP-ARGUMENT-SET i j m) ) ) )
 
 (dm meaning-assignment-of ((var <glo-ref>) n m r t?)
   (GLOBAL-SET (var-offset var) m) )
@@ -199,9 +199,9 @@
   (rep parse ((n* nn*)
               (regular '()) )
     (if (empty? n*) (meaning-fix-abstraction nn* e+ r tail?)
-	(if (isa? n* <lst>) (parse (tail n*) (pair (head n*) regular))
-	    (meaning-dotted-abstraction 
-	     (rev regular) n* e+ r tail? )) ) ) )
+        (if (isa? n* <lst>) (parse (tail n*) (pair (head n*) regular))
+            (meaning-dotted-abstraction 
+             (rev regular) n* e+ r tail? )) ) ) )
 
 (dm meaning-fix-abstraction (n* e+ r tail?)
   (let* ((arity (len n*))
@@ -232,7 +232,7 @@
               (== 'fun (head e)) )
          (meaning-closed-application e e* r t?) )
         (else 
-	 (meaning-regular-application e e* r t?)) ) )
+         (meaning-regular-application e e* r t?)) ) )
 
 ;;; Parse the variable list to check the arity and detect wether the
 ;;; abstraction is dotted or not.
@@ -275,9 +275,9 @@
 
 (dm meaning-primitive-application (e e* r tail?)
   (let ((desc (get-description e))
-	;; desc = (function address . variables-list)
+        ;; desc = (function address . variables-list)
         (address (cadr desc))
-	(size (length e*)) )
+        (size (length e*)) )
     (select size
       ((0) (CALL0 address))
       ((1) 
@@ -323,7 +323,7 @@
         (m* (meaning-dotted* e* r size arity t?))
         (rank (- size (+ (len e*) 1))) )
     (if (< rank arity) 
-	(STORE-ARGUMENT m m* rank)
+        (STORE-ARGUMENT m m* rank)
         (CONS-ARGUMENT m m* arity) ) ) )
 
 (dm meaning-no-argument (r size t?)

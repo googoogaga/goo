@@ -27,12 +27,12 @@
   (rep loop ()
     (def form (sub-read port))
     (if (not (reader-token? form))
-	form
-	(if (== form $close-paren)
-	    (warn "discarding extraneous right parenthesis")
-	    (loop))
-	;; (reading-error port (tail form))
-	)))
+        form
+        (if (== form $close-paren)
+            (warn "discarding extraneous right parenthesis")
+            (loop))
+        ;; (reading-error port (tail form))
+        )))
 
 (dm read-from-string (x|<str> => <any>)
   (with-port (port (open <str-in-port> x)) (read port)))
@@ -43,8 +43,8 @@
   (if (eof-object? form)
       (reading-error port "unexpected end of file")
       (if (reader-token? form)
-	  (reading-error port (tail form))
-	  form)))
+          (reading-error port (tail form))
+          form)))
 
 (dc <reader-token> (<any>))
   (dp token-message (x|<reader-token> => <str>))
@@ -72,7 +72,7 @@
 
 (dv *read-dispatch-vector* 
   (fill (fab <vec> ascii-limit)
-	(fun (c port) (reading-error port "illegal character read" c))))
+        (fun (c port) (reading-error port "illegal character read" c))))
 
 (dv *read-terminating?-vector* (fill (fab <vec> ascii-limit) #t))
 
@@ -90,7 +90,7 @@
 
 (let ((str10496
        (cat "!$%&*+-./0123456789:<=>?@^_~ABCDEFGHIJKLM"
-	    "NOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")))
+            "NOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")))
   (do (fun (c) (set-standard-syntax! c #f sub-read-constituent))
       str10496))
 
@@ -114,29 +114,29 @@
   ;; (put out #\d) (newline out)
   (def form (sub-read port))
   (cond ((eof-object? form)     (sub-read-list-eof-error port))
-	((== form $close-paren) '())
-	(#t
-	 (rep read-next ((c|<chr> c) (prev form) (form (sub-read port)))
-	   (def prev (if (== prev $vert-proxy) $vert-sym prev))
-	   (cond ((eof-object? form)
-		  (sub-read-list-eof-error port))
-		 ((== form $close-paren) 
-		  (lst prev))
-		 ((== form $vert-sym)    
-		  (let ((next (sub-read-carefully port)))
-		    (pair (lst prev next) (sub-read-list c port))))
-		 (#t
-		  (pair prev (read-next c form (sub-read port)))))))))
+        ((== form $close-paren) '())
+        (#t
+         (rep read-next ((c|<chr> c) (prev form) (form (sub-read port)))
+           (def prev (if (== prev $vert-proxy) $vert-sym prev))
+           (cond ((eof-object? form)
+                  (sub-read-list-eof-error port))
+                 ((== form $close-paren) 
+                  (lst prev))
+                 ((== form $vert-sym)    
+                  (let ((next (sub-read-carefully port)))
+                    (pair (lst prev next) (sub-read-list c port))))
+                 (#t
+                  (pair prev (read-next c form (sub-read port)))))))))
 
 ;; (dm sub-read-list (c|<chr> port|<port> => <any>)
 ;;   ;; (put out #\d) (newline out)
 ;;   (let ((form (sub-read port)))
 ;;     (if (eof-object? form)
-;; 	(reading-error 
-;; 	 port "end of file inside list -- unbalanced parentheses")
-;; 	(if (== form $close-paren)
-;; 	    '()
-;; 	    (pair form (sub-read-list c port))))))
+;;      (reading-error 
+;;       port "end of file inside list -- unbalanced parentheses")
+;;      (if (== form $close-paren)
+;;          '()
+;;          (pair form (sub-read-list c port))))))
 
 (set-standard-read-macro! #\( #t sub-read-list)
 
@@ -153,11 +153,11 @@
   (fun (c port)
     (def next    (peek port))
     (def keyword (if (eof-object? next)
-		     (reading-error port "end of file after ,")
-		     (if (= next #\@)
-			 (seq (get port)
-			      'unquote-splicing)
-			 'unquote)))
+                     (reading-error port "end of file after ,")
+                     (if (= next #\@)
+                         (seq (get port)
+                              'unquote-splicing)
+                         'unquote)))
     (lst keyword (sub-read-carefully port))))
 
 (dv $string-escape-chars
@@ -173,22 +173,22 @@
   (rep loop ((l '()) (i 0))
     (def c (get port))
     (if (eof-object? c)
-	  (reading-error port "end of file within a string")
-	  (if (= c #\\)
-	      (let ((c (get port)))
-		(if (eof-object? c)
-		    (reading-error port "end of file within a string")
-		    (if (or (= c #\\) (= c #\"))
-			(loop (pair c l) (+ i 1))
-			(let ((ec (elt $string-escape-chars (as <int> c))))
-			  (if ec
-			      (loop (pair ec l) (+ i 1))
-			      (reading-error
-			       port "invalid escaped character in string" 
-			       c))))))
-	      (if (= c #\")
-		  (reverse-list->string l i)
-		  (loop (pair c l) (+ i 1)))))))
+          (reading-error port "end of file within a string")
+          (if (= c #\\)
+              (let ((c (get port)))
+                (if (eof-object? c)
+                    (reading-error port "end of file within a string")
+                    (if (or (= c #\\) (= c #\"))
+                        (loop (pair c l) (+ i 1))
+                        (let ((ec (elt $string-escape-chars (as <int> c))))
+                          (if ec
+                              (loop (pair ec l) (+ i 1))
+                              (reading-error
+                               port "invalid escaped character in string" 
+                               c))))))
+              (if (= c #\")
+                  (reverse-list->string l i)
+                  (loop (pair c l) (+ i 1)))))))
 
 (set-standard-read-macro!
   #\" #t read-string-literal)
@@ -211,12 +211,12 @@
   (fun (c port)
     (def c (peek port))
     (def c (if (eof-object? c)
-	       (reading-error port "end of file after #")
-	       (to-lower c)))
+               (reading-error port "end of file after #")
+               (to-lower c)))
     (def probe (assq c *sharp-macros*))
     (if probe
-	((head (tail probe)) c port)
-	(reading-error port "unknown # syntax" c))))
+        ((head (tail probe)) c port)
+        (reading-error port "unknown # syntax" c))))
 
 (define-sharp-macro #\f (fun (c port) (get port) #f))
 
@@ -237,16 +237,16 @@
     (get port)
     (def c (peek port))
     (if (eof-object? c)
-	(reading-error port "end of file after #\\")
-	(if (alpha? c)
-	    (let ((name (sub-read-carefully port)))
-	      (if (= (len (as <str> name)) 1)
-		  c
-		  (let ((temp (assq name $char-long-names)))
-		    (if temp
-			(head (tail temp));; Goo => syntax
-			(reading-error port "unknown #\\ name" name)))))
-	    (get port)))))
+        (reading-error port "end of file after #\\")
+        (if (alpha? c)
+            (let ((name (sub-read-carefully port)))
+              (if (= (len (as <str> name)) 1)
+                  c
+                  (let ((temp (assq name $char-long-names)))
+                    (if temp
+                        (head (tail temp));; Goo => syntax
+                        (reading-error port "unknown #\\ name" name)))))
+            (get port)))))
 
 (define-sharp-macro
   #\(
@@ -255,10 +255,10 @@
     (as <vec> (sub-read-list c port))))
 
 (let ((number-sharp-macro
-	(fun (c port)
-	  (def string (sub-read-token #\# port))
-	  (or (str-to-num string)
-	      (reading-error port "unsupported number syntax" string)))))
+        (fun (c port)
+          (def string (sub-read-token #\# port))
+          (or (str-to-num string)
+              (reading-error port "unsupported number syntax" string)))))
   (do (fun (c) (define-sharp-macro c number-sharp-macro))
       '(#\b #\o #\d #\x #\i #\e)))
 
@@ -269,37 +269,37 @@
   (rep loop ((l (lst (preferred-case c))) (n 1))
     (def c (peek port))
     (if (or (eof-object? c)
-	    (elt *read-terminating?-vector* (char->ascii c)))
-	(reverse-list->string l n)
-	(loop (pair (preferred-case (get port)) l) (+ n 1)))))
+            (elt *read-terminating?-vector* (char->ascii c)))
+        (reverse-list->string l n)
+        (loop (pair (preferred-case (get port)) l) (+ n 1)))))
 
 ;; TODO: MEM? WITH TEST
 
 (dm parse-token (string|<str> port|<port> => <any>)
   ;; (put out #\f) (newline out)
   (if (let ((c (elt string 0)))
-	(or (digit? c)
-	    (= c #\+)
-	    (= c #\-)
-	    (= c #\.)))
+        (or (digit? c)
+            (= c #\+)
+            (= c #\-)
+            (= c #\.)))
       (let ((maybe-number (str-to-num string)))
-	(if maybe-number
-	    maybe-number
-	    (if (any? (fun (x) (= string x)) $strange-symbol-names)
-		(as <sym> (make-immutable! string))
-		(if (= string ".")
-		    $dot
-		    (reading-error port "unsupported number syntax" string)))))
+        (if maybe-number
+            maybe-number
+            (if (any? (fun (x) (= string x)) $strange-symbol-names)
+                (as <sym> (make-immutable! string))
+                (if (= string ".")
+                    $dot
+                    (reading-error port "unsupported number syntax" string)))))
       (seq ;; (put out #\n) (newline out)
        (as <sym> (make-immutable! string)))))
 ;;       (let ((vert-pos (pos string #\|)))
-;; 	(if (and vert-pos (> (len string) 1)) ;; typed variable?
-;; 	    (if (= vert-pos 0)
-;; 		(reading-error port "Vertical bar at beginning of symbol" string)
-;; 		`(,(as <sym> (sub string 0 vert-pos)) 
-;; 		  ,(as <sym> (sub string (+ vert-pos 1) (len string)))))
-;; 	    (seq ;; (put out #\n) (newline out)
-;; 	     (as <sym> (make-immutable! string)))))
+;;      (if (and vert-pos (> (len string) 1)) ;; typed variable?
+;;          (if (= vert-pos 0)
+;;              (reading-error port "Vertical bar at beginning of symbol" string)
+;;              `(,(as <sym> (sub string 0 vert-pos)) 
+;;                ,(as <sym> (sub string (+ vert-pos 1) (len string)))))
+;;          (seq ;; (put out #\n) (newline out)
+;;           (as <sym> (make-immutable! string)))))
 
 (dv $strange-symbol-names 
   '("+" "-" "..."
@@ -314,7 +314,7 @@
 
 (dm reading-error (port|<port> message|<str> irritants|...)
   (error (cat message ": %=")  ;; was: app(...)
-	 (cat irritants (lst port))))
+         (cat irritants (lst port))))
 
 (dm warn (string|<str> irritants-and-port|...)
   ;; TODO: TURN BACK ON

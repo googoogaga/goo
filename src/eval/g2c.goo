@@ -279,9 +279,9 @@
 
 (dv $module-separator               "Y")
 (dv $local-suffix                   "_")
-(dv $hygiene-marker	            "F")
+(dv $hygiene-marker                 "F")
 (dv $escape-separator               "Z")
-(dv $iep-suffix 	            "I")
+(dv $iep-suffix                     "I")
 (dv $method-mangled-marker-string   "M")
 
 ;; Note that the following must be characters rather than strings since
@@ -419,7 +419,7 @@
 
 (dm mangle-module-binding (binding|<module-binding> => <str>)
   (mangle-global-name (binding-module-name binding)
-		      (binding-name binding)))
+                      (binding-name binding)))
 
 (dm mangle-local-marked-name (name|<str> marker|<int> => <str>)
   (mangler-reset *mangle-buffer*)
@@ -468,8 +468,8 @@
 
 (ds (with-statement (,d ,code-out) ,@body)
   `(seq (gen-depth ,d ,code-out)
-	,@body
-	(puts ,code-out ";\n")))
+        ,@body
+        (puts ,code-out ";\n")))
 
 (ds (with-expression (,e ,d ,code-out) ,@body)
   `(with-statement (,d ,code-out)
@@ -517,14 +517,14 @@
   (esc done
     (rep loop ((i (- (len s) 1)))
       (if (> i (neg 1)) ;; TODO: -1
-	  (case (elt s i)
-	    ;;---*** Should be #\f but GCC complains!
-	    ((#\s) (set (elt s i) #\e) (done #f)) 
-	    ((#\d) (set (elt s i) #\e) (done #f)) 
-	    ;;---*** Should be #\l but GCC complains!
-	    ((#\x) (set (elt s i) #\e) (done #f)) 
-	    (#t    (loop (- i 1))))
-	  s))))
+          (case (elt s i)
+            ;;---*** Should be #\f but GCC complains!
+            ((#\s) (set (elt s i) #\e) (done #f)) 
+            ((#\d) (set (elt s i) #\e) (done #f)) 
+            ;;---*** Should be #\l but GCC complains!
+            ((#\x) (set (elt s i) #\e) (done #f)) 
+            (#t    (loop (- i 1))))
+          s))))
 
 (dm generate-quotation (code-out x|<flo>)
   (msg code-out "%s(FLOINT(%s))" 
@@ -920,13 +920,13 @@
 (dm generate-function-bodies (code-out definitions)
   (puts code-out "\n/* FUNCTION CODES: */\n")
   (do (fun (def) 
-	(generate-function-code code-out def))
+        (generate-function-code code-out def))
       definitions))
 
 (dm generate-functions (definitions f d code-out)
   (do (fun (def) 
-	(unless (isa? def <ast-primitive>)
-	  (generate-closure-structure def f d code-out)))
+        (unless (isa? def <ast-primitive>)
+          (generate-closure-structure def f d code-out)))
       (rev definitions)))
 
 (dm generate-closure-structure (definition f d code-out)

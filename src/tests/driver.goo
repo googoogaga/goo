@@ -28,8 +28,8 @@
   (mif ((,name disabled) name)
     `(del-test ',name)
     `(seq (add-test ',name) 
-	(dm run-tests (group-name|(t= ',name))
-	  ,@tests))))
+        (dm run-tests (group-name|(t= ',name))
+          ,@tests))))
 
 (export
   add-test
@@ -93,28 +93,28 @@
 
 (ds (test ,input)
   `(do-test group-name 
-	    ,(to-str input)
-	    (fun () ,input)))
+            ,(to-str input)
+            (fun () ,input)))
 
 (ds (test= ,input ,output)
   `(do-test-eqv group-name
-		,(to-str input)
-		(fun () ,input) (fun () ,output)))
+                ,(to-str input)
+                (fun () ,input) (fun () ,output)))
 
 (ds (test== ,input ,output)
   `(do-test-eq group-name
-	       ,(to-str input)
-	       (fun () ,input) (fun () ,output)))
+               ,(to-str input)
+               (fun () ,input) (fun () ,output)))
 
 (ds (test~= ,input ,output)
   `(do-test-neqv group-name
-		,(to-str input)
-		(fun () ,input) (fun () ,output)))
+                ,(to-str input)
+                (fun () ,input) (fun () ,output)))
 
 (ds (test~== ,input ,output)
   `(do-test-neq group-name
-	       ,(to-str input)
-	       (fun () ,input) (fun () ,output)))
+               ,(to-str input)
+               (fun () ,input) (fun () ,output)))
 
 (export
   test

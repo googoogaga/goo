@@ -132,9 +132,9 @@
   (if (== x '())
       (fail "Match Failure Empty List on %=" pat)
       (let ((exp (head x)))
-	(if (== exp pat)
-	    (tail x)
-	    (fail "Match Failure of %= on %=" exp pat)))))
+        (if (== exp pat)
+            (tail x)
+            (fail "Match Failure of %= on %=" exp pat)))))
 
 (df a-match-sublist (x|<lst> fail|<fun>)
   (def x (head x))
@@ -187,8 +187,8 @@
      `(seq (set ,(2nd pat) ,var) '()))
     (#t
      `(seq (let ((,var (a-match-sublist ,var ,fail)))
-	     ,(expand-bind-list pat var fail))
-	   (tail ,var)))))
+             ,(expand-bind-list pat var fail))
+           (tail ,var)))))
 
 (dm expand-pattern (pat var fail => <any>)
   (if (pattern-variable? pat)
@@ -221,11 +221,11 @@
   (del-dups
     (rep col ((pat pat))
       (if (or (not (isa? pat <lst>)) (empty? pat))
-	  '()
-	  (let ((x (head pat)))
-	    (if (sexpr-pattern-variable? x)
-		(pair (sexpr-pattern-variable-name x) (col (tail pat)))
-		(cat (col (head pat)) (col (tail pat)))))))))
+          '()
+          (let ((x (head pat)))
+            (if (sexpr-pattern-variable? x)
+                (pair (sexpr-pattern-variable-name x) (col (tail pat)))
+                (cat (col (head pat)) (col (tail pat)))))))))
 
 (dm expand-match-if (pat exp then else  => <lst>)
   (def vars  (sexpr-bind-pattern-variables pat))
@@ -248,7 +248,7 @@
        (let ((expvar (gensym)))
          (mif (((,pat ,cons) ,@more-rules) rules)
               `(let ((,expvar ,exp))
-		 (match-if (,pat ,expvar) ,cons
-			   (match ,expvar ,@more-rules)))
+                 (match-if (,pat ,expvar) ,cons
+                           (match ,expvar ,@more-rules)))
               (error "Invalid match syntax")))))
 

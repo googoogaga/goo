@@ -3,8 +3,8 @@
 (dm match-error (message|<str> args|...)
   ;; (format-out "MATCH ERROR %=\n" message)
   (sig (isa <pattern-match-failure>
-	 (set condition-format-string message)
-	 (set condition-format-arguments args))))
+         (set condition-format-string message)
+         (set condition-format-arguments args))))
 
 (dm ast-eval-match (match|<match-empty-list> v e|<environment>)
   (unless (== v '())
@@ -13,16 +13,16 @@
 (dm ast-eval-match (match|<match-list> v e|<environment>)
   (if (isa?(v <lst>))
       (itr loop ((v v) (elts (match-elements match)))
-	(unless (empty? elts)
-	  (ast-eval-match (head elts) v e)
-	  (loop (tail v) (tail elts))))
+        (unless (empty? elts)
+          (ast-eval-match (head elts) v e)
+          (loop (tail v) (tail elts))))
       (match-error "Match Failure of %= on %= Expected List\n" v match)))
 
 (dm ast-eval-match (match|<match-atom> v e|<environment>)
   (if (== v '())
       (match-error "Match Failure Empty List on %=\n" match)
       (unless (== v (match-value match))
-	(match-error "Match Failure of %= on %=\n" v match))))
+        (match-error "Match Failure of %= on %=\n" v match))))
 
 (dm ast-eval-match (match|<match-unquote> v e|<environment>)
   (if (== v '())
@@ -36,7 +36,7 @@
   (if (and (isa? v <lst>) (~== v '()))
       (ast-eval-match (match-element match) (head v) e)
       (match-error "Match Failure of %= on %= Expected List\n" 
-		   v match)))
+                   v match)))
 
 (dm ast-eval (x|<syntax-if> env|<environment> => <any>)
   (def value (ast-eval (sif-value x) env))

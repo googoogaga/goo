@@ -18,7 +18,7 @@
     (loc ((_handler-function_ (condition _next-handler_)
              (set *current-handlers* _original-handlers_)
              (blk _resume_
-	       (handler condition _resume_)
+               (handler condition _resume_)
                (_next-handler_))))
       (set *current-handlers*
            (pair (fab-handler _handler-function_) *current-handlers*))
@@ -27,11 +27,11 @@
 (df %sig (condition)
   (itr search ((handlers *current-handlers*))
     (if (empty? handlers)
-	(default-handler condition)
-	(let ((handler (head handlers))
+        (default-handler condition)
+        (let ((handler (head handlers))
               (remaining (tail handlers)))
-	  (if (handler-matches? handler condition)
-	      ((handler-function handler)
-	       condition (fun () (search remaining)))
-	      (search remaining))))))
+          (if (handler-matches? handler condition)
+              ((handler-function handler)
+               condition (fun () (search remaining)))
+              (search remaining))))))
 

@@ -1,54 +1,54 @@
 (def `(for (,@clauses) ,@body)
   (loc ((from-pred (clause more name)
-	  (sif (() more)
-	       #t
-	       (sif ((by ,next) more)
-		    #t
-		     (sif ((below ,lim ,@rest) more)
-			  `(< ,name ,lim)
-			   (sif ((to ,lim ,@rest) more)
-				`(~= ,name ,lim)
-				 (sif ((above ,lim ,@rest) more)
-				      `(> ,name ,lim)
-				       (error "FOR: INVALID CLAUSE" clause)))))))
-	(from-next (clause more name)
-	  (sif ((by ,next) more)
-	       `(+ ,name ,next)
-		(sif ((,mumble ,exp by ,next))
-		     `(+ ,name ,next)
-		      `(+ ,name 1))))
-	(clause (clauses exps inits preds nows nexts)
-	  (let ((clause (head clauses)))
-	    (sif ((,var in ,exp) clause)
-		 (let ((state (gensym))
-		       (exp-tmp (gensym)))
-		   (loop (tail clauses)
-			 (pair `(,exp-tmp ,exp) exps)
-			 (pair `(,state (ini-state ,exp-tmp)) inits)
-			 (pair `(,var (now-elt ,exp-tmp ,state)) nows)
-			 (pair `(nxt-state ,exp-tmp ,state) nexts)))
-		 (sif ((,var from ,init ,@more) clause)
-		      (loop (tail clauses)
-			    exps
-			    (pair `(,var ,init) inits)
-			    (pair ... preds)
-			    nows
-			    (pair ... nexts))
-		      (sif ((,var = ,init then ,next) clause)
-			   (loop (tail clauses)
-				 exps
-				 (pair `(,var ,init) inits)
-				 preds
-				 nows
-				 (pair next nexts))
-			   (error "FOR: INVALID CLAUSE " clause))))))
-	(loop (clauses exps inits preds nows nexts)
-	  (if (empty? clauses)
-	      `(let ,exps
-		 (itr loop ,inits
-		   (if (and ,@preds)
-		       (let ,nows
-			 ,@body (loop ,@nexts))
-		       #f)))
-	      (clause clauses exps inits preds nows nexts)))
+          (sif (() more)
+               #t
+               (sif ((by ,next) more)
+                    #t
+                     (sif ((below ,lim ,@rest) more)
+                          `(< ,name ,lim)
+                           (sif ((to ,lim ,@rest) more)
+                                `(~= ,name ,lim)
+                                 (sif ((above ,lim ,@rest) more)
+                                      `(> ,name ,lim)
+                                       (error "FOR: INVALID CLAUSE" clause)))))))
+        (from-next (clause more name)
+          (sif ((by ,next) more)
+               `(+ ,name ,next)
+                (sif ((,mumble ,exp by ,next))
+                     `(+ ,name ,next)
+                      `(+ ,name 1))))
+        (clause (clauses exps inits preds nows nexts)
+          (let ((clause (head clauses)))
+            (sif ((,var in ,exp) clause)
+                 (let ((state (gensym))
+                       (exp-tmp (gensym)))
+                   (loop (tail clauses)
+                         (pair `(,exp-tmp ,exp) exps)
+                         (pair `(,state (ini-state ,exp-tmp)) inits)
+                         (pair `(,var (now-elt ,exp-tmp ,state)) nows)
+                         (pair `(nxt-state ,exp-tmp ,state) nexts)))
+                 (sif ((,var from ,init ,@more) clause)
+                      (loop (tail clauses)
+                            exps
+                            (pair `(,var ,init) inits)
+                            (pair ... preds)
+                            nows
+                            (pair ... nexts))
+                      (sif ((,var = ,init then ,next) clause)
+                           (loop (tail clauses)
+                                 exps
+                                 (pair `(,var ,init) inits)
+                                 preds
+                                 nows
+                                 (pair next nexts))
+                           (error "FOR: INVALID CLAUSE " clause))))))
+        (loop (clauses exps inits preds nows nexts)
+          (if (empty? clauses)
+              `(let ,exps
+                 (itr loop ,inits
+                   (if (and ,@preds)
+                       (let ,nows
+                         ,@body (loop ,@nexts))
+                       #f)))
+              (clause clauses exps inits preds nows nexts)))
 

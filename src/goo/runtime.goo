@@ -52,9 +52,9 @@
   (if (== x '())
       (fail "Match Failure Empty List on %=" pat)
       (let ((exp (head x)))
-	(if (== exp pat)
-	    (tail x)
-	    (fail "Match Failure of %= on %=" exp pat)))))
+        (if (== exp pat)
+            (tail x)
+            (fail "Match Failure of %= on %=" exp pat)))))
 
 (df match-sublist (x|<lst> fail|<fun>)
   (def x (head x))
@@ -256,7 +256,7 @@
   (esc _unwind-exception_
     (def _original-handlers_ *current-handlers*)
     (loc ((_handler-function_ (condition _next-handler_)
-	    (esc _resume_
+            (esc _resume_
               (user-handler condition _resume_)
               (_next-handler_))))
       (pushf *current-handlers*

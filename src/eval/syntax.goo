@@ -93,7 +93,7 @@
 
 (dm sexpr-syntax-definition-value (defn => <any>)
   (pair $sexpr-macro-tag  ;; (DEFINE (foo p ...) b...)
-	(pair (2nd defn) (tail (tail defn)))))
+        (pair (2nd defn) (tail (tail defn)))))
 
 (dv $sexpr-define-function-tag 'df)
 
@@ -201,7 +201,7 @@
 ;; (df foo (x ...) form ...)
 (dm sexpr-function-definition-value (defn => <any>)
   (pair $sexpr-method-tag 
-	(pair (3rd defn) (tail (tail (tail defn))))))
+        (pair (3rd defn) (tail (tail (tail defn))))))
 
 ;;  METHOD -- (METHOD (p...) b...)
 
@@ -358,8 +358,8 @@
   (if (empty? seq)
       seq
       (if (sexpr-last-exp? seq)
-	  (sexpr-first-exp seq)
-	  (sexpr-make-begin seq))))
+          (sexpr-first-exp seq)
+          (sexpr-make-begin seq))))
 
 (dm sexpr-make-begin (exp|<lst> => <lst>)
   (pair $sexpr-begin-tag exp))
@@ -397,7 +397,7 @@
 
 (dm sexpr-unique-name (prefix|<name> => <sym>)
   (as <sym> (cat (as <str> prefix)
-		 (num-to-str (sexpr-new-unique-name-counter!)))))
+                 (num-to-str (sexpr-new-unique-name-counter!)))))
 
 ;;  LET -- (let ((var value) ...) form ...)
 ;;         var:        simple-var | (tup tup-var ...)
@@ -431,35 +431,35 @@
     (names|<lst> vals|<lst> => (tup names|<lst> values|<lst>))
   (rep loop ((rnames '()) (rvalues '()) (names names) (vals vals))
     (if (empty? names)
-	(tup (rev! rnames) (rev! rvalues))
-	(let ((name  (head names))
+        (tup (rev! rnames) (rev! rvalues))
+        (let ((name  (head names))
               (value (head vals)))
-	  (if (and (isa? name <lst>) (== (head name) 'tup))
-	      (let ((tupname
-		     (sexpr-unique-name "tup"))
-		    ((tup rtnames rtvalues)
-		     (rep inner
-		         ((rtnames (lst tupname)) (rtvalues (lst value))
-			  (index 0) (tnames (tail name)))
-		       (if (empty? tnames)
-			   (tup rtnames rtvalues)
-			   (let ((name (head tnames)))
-			     (if (and (isa? name <lst>) 
-				      (== (head (tail name)) '...))
-				 (inner (pair (lst (head name) '<lst>)
-					      rtnames)
-					(pair (lst 'sub tupname index 
+          (if (and (isa? name <lst>) (== (head name) 'tup))
+              (let ((tupname
+                     (sexpr-unique-name "tup"))
+                    ((tup rtnames rtvalues)
+                     (rep inner
+                         ((rtnames (lst tupname)) (rtvalues (lst value))
+                          (index 0) (tnames (tail name)))
+                       (if (empty? tnames)
+                           (tup rtnames rtvalues)
+                           (let ((name (head tnames)))
+                             (if (and (isa? name <lst>) 
+                                      (== (head (tail name)) '...))
+                                 (inner (pair (lst (head name) '<lst>)
+                                              rtnames)
+                                        (pair (lst 'sub tupname index 
                                                    (lst 'len tupname)) 
                                               rtvalues)
-					(+ index 1) (tail tnames))
-				 (inner (pair name rtnames)
+                                        (+ index 1) (tail tnames))
+                                 (inner (pair name rtnames)
                                         (pair (lst 'elt tupname index)
                                               rtvalues)
-					(+ index 1) (tail tnames))))))))
-		(loop (cat rtnames rnames) (cat rtvalues rvalues)
-		      (tail names) (tail vals)))
-	      (loop (pair name rnames) (pair value rvalues)
-		    (tail names) (tail vals)))))))
+                                        (+ index 1) (tail tnames))))))))
+                (loop (cat rtnames rnames) (cat rtvalues rvalues)
+                      (tail names) (tail vals)))
+              (loop (pair name rnames) (pair value rvalues)
+                    (tail names) (tail vals)))))))
 
 (dm sexpr-let->combination (let-exp|<lst> => <any>)
   (def onames             (sexpr-let-bound-variables let-exp))
@@ -659,63 +659,63 @@
 
 (dm bq-process (x => <any>)
   (cond ((sexpr-atom? x)
-	 (lst *bq-quote* x))
+         (lst *bq-quote* x))
         ((sexpr-backquote? x)
-	 (bq-process (sexpr-build-backquote-expander (head (tail x)))))
-	((sexpr-unquote? x)
-	 (head (tail x)))
-	((sexpr-unquote-splicing? x)
-	 (error "UNQUOTE-SPLICING %= AFTER BQ" (head (tail (x)))))
-	(#t
-	 (esc return
-	   (rep loop ((p x) (q '()))
-	     (if (sexpr-atom? p)
-		 (return (pair *bq-append*
-			       (nreconc q (lst (lst *bq-quote* p)))))
-		 (seq (when (sexpr-unquote? p)
-		        (unless (empty? (tail (tail p)))
-			  (error "Malformed ,%=" p))
-			(return 
-			 (pair *bq-append* 
-			       (nreconc q (lst (head (tail p)))))))
-		      (when (== (tail p) *comma-atsign*)
-			(error "Dotted ,@%=" p))
-		      (loop (tail p) (pair (bracket (head p)) q)))))))))
+         (bq-process (sexpr-build-backquote-expander (head (tail x)))))
+        ((sexpr-unquote? x)
+         (head (tail x)))
+        ((sexpr-unquote-splicing? x)
+         (error "UNQUOTE-SPLICING %= AFTER BQ" (head (tail (x)))))
+        (#t
+         (esc return
+           (rep loop ((p x) (q '()))
+             (if (sexpr-atom? p)
+                 (return (pair *bq-append*
+                               (nreconc q (lst (lst *bq-quote* p)))))
+                 (seq (when (sexpr-unquote? p)
+                        (unless (empty? (tail (tail p)))
+                          (error "Malformed ,%=" p))
+                        (return 
+                         (pair *bq-append* 
+                               (nreconc q (lst (head (tail p)))))))
+                      (when (== (tail p) *comma-atsign*)
+                        (error "Dotted ,@%=" p))
+                      (loop (tail p) (pair (bracket (head p)) q)))))))))
 
 (dm bracket (x => <any>)
   (cond ((sexpr-atom? x)
-	 (lst *bq-list* (bq-process x)))
+         (lst *bq-list* (bq-process x)))
         ((sexpr-unquote? x)
-	 (lst *bq-list* (head (tail x))))
-	((sexpr-unquote-splicing? x)
-	 (lst *bq-clobberable* (head (tail x))))
-	(#t
-	 (lst *bq-list* (bq-process x)))))
+         (lst *bq-list* (head (tail x))))
+        ((sexpr-unquote-splicing? x)
+         (lst *bq-clobberable* (head (tail x))))
+        (#t
+         (lst *bq-list* (bq-process x)))))
 
 (dm map-tree (fn|<fun> x => <any>)
   (if (sexpr-atom? x)
       (fn x)
       (let ((a (fn (head x)))
             (d (map-tree fn (tail x))))
-	(if (and (= a (head x)) (= d (tail x)))
-	    x
-	    (pair a d)))))
+        (if (and (= a (head x)) (= d (tail x)))
+            x
+            (pair a d)))))
 
 (dm bq-remove-tokens (x)
   (cond ((== x *bq-list*)   'lst)
         ((== x *bq-append*) 'cat)
-	((== x *bq-nconc*)  'cat!)
-	((== x *bq-list**)  'list*)
-	((== x *bq-quote*)  'quote)
-	((sexpr-atom? x)    x)
-	((== (head x) *bq-clobberable*)
-	 (bq-remove-tokens (head (tail x))))
-	((and (== (head x) *bq-list**)
-	      (not (empty? (tail (tail x))))
-	      (empty? (tail (tail (tail x)))))
-	 (pair 'pair (map-tree bq-remove-tokens (tail x))))
-	(#t
-	 (map-tree bq-remove-tokens x))))
+        ((== x *bq-nconc*)  'cat!)
+        ((== x *bq-list**)  'list*)
+        ((== x *bq-quote*)  'quote)
+        ((sexpr-atom? x)    x)
+        ((== (head x) *bq-clobberable*)
+         (bq-remove-tokens (head (tail x))))
+        ((and (== (head x) *bq-list**)
+              (not (empty? (tail (tail x))))
+              (empty? (tail (tail (tail x)))))
+         (pair 'pair (map-tree bq-remove-tokens (tail x))))
+        (#t
+         (map-tree bq-remove-tokens x))))
 
 ;;/ SEXPR-IF -- (sexpr-if (pattern expression) then [ else ])
 
@@ -746,11 +746,11 @@
   (del-dups
     (rep col ((pat pat))
       (if (or (not (isa? pat <lst>)) (empty? pat))
-	  '()
-	  (let ((x (head pat)))
-	    (if (sexpr-pattern-variable? x)
-		(pair (sexpr-pattern-variable-name x) (col (tail pat)))
-		(cat (col (head pat)) (col (tail pat)))))))))
+          '()
+          (let ((x (head pat)))
+            (if (sexpr-pattern-variable? x)
+                (pair (sexpr-pattern-variable-name x) (col (tail pat)))
+                (cat (col (head pat)) (col (tail pat)))))))))
 
 ;; MACROS
 

@@ -12,16 +12,16 @@
 
 (dm evol-list ((first 'if) (e <lst>) env k)
   (evol (sexpr-if-test e) env
-	(fun (e)
-	  (if e
-	      (evol (sexpr-if-then e) env k)
-	      (evol (sexpr-if-else e) env k)))))
+        (fun (e)
+          (if e
+              (evol (sexpr-if-then e) env k)
+              (evol (sexpr-if-else e) env k)))))
 
 (dm evol-seq+ ((e+ <lst>) env k)
   (if (empty? (tail e*))
       (evol (head e*) env k)
       (evol (head e*) env
-	    (fun (e) (evol-seq+ (tail e*) env k)))))
+            (fun (e) (evol-seq+ (tail e*) env k)))))
 
 (dm evol-seq ((e* <lst>) env k)
   (if (empty? e*)
@@ -33,15 +33,15 @@
 
 (dm evol-list ((_ 'dv) (e <lst>) env k)
   (evol (sexpr-definition-value e) env
-	(fun (v) 
-	  (k (env-define-binding! 
-	      env (sexpr-variable-name (sexpr-definition-variable e)) v)))))
+        (fun (v) 
+          (k (env-define-binding! 
+              env (sexpr-variable-name (sexpr-definition-variable e)) v)))))
 
 (dm evol-list ((_ 'set) (e <lst>) env k)
   (evol (sexpr-assignment-value e) env
-	(fun (v) 
-	  (k (set (env-binding-value env (sexpr-assignment-variable e))
-		  v)))))
+        (fun (v) 
+          (k (set (env-binding-value env (sexpr-assignment-variable e))
+                  v)))))
 
 (dm evol-list ((_ 'let) (e <lst>) env k)
   (evol (sexpr-let->combination e) env k))
@@ -49,8 +49,8 @@
 (dm evol-list ((_ 'lab) (e <lst>) env k)
   (let ((exit (make-function '(x) `(,k x) env)))
     (evol-seq (sexpr-block-body e)
-	      (env-extend! env (lst (sexpr-block-name e)) (lst exit))
-	      k)))
+              (env-extend! env (lst (sexpr-block-name e)) (lst exit))
+              k)))
 
 (dm evol-list ((_ 'fin) (e <lst>) env)
   (fin (evol (sexpr-unwind-protect-protected-form e) env)
@@ -75,8 +75,8 @@
 (dm evol* ((e* <lst>) env)
   (rep loop (((r <lst>) '()) ((e* <lst>) e*))
     (if (empty? e*)
-	(rev! r)
-	(loop (pair (evol (head e*) env) r) (tail e*)))))
+        (rev! r)
+        (loop (pair (evol (head e*) env) r) (tail e*)))))
 
 (dm evol-list ((first <lst>) (e <lst>) env)
   (invoke (evol fist env) (evol* (tail e) env)))

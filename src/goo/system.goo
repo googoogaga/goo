@@ -60,10 +60,10 @@
 (dm base-path (filename|<str> => <str>)
   (rep loop ((i (- (len filename) 1)))
     (if (< i 0)
-	""
-	(if (= (elt filename i) (elt *path-separator* 0))
-	    (sub filename 0 (+ i 1))
-	    (loop (- i 1))))))
+        ""
+        (if (= (elt filename i) (elt *path-separator* 0))
+            (sub filename 0 (+ i 1))
+            (loop (- i 1))))))
 
 (dv *goo-root*
   (let ((env-root (os-val "GOO_ROOT")))

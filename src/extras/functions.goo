@@ -31,10 +31,10 @@
 (df gen-add-met (g|<gen> m|<met> => <gen>)
   (itr col ((mets '()) (same? #f) ((gms <mets>) (fun-mets g)))
     (if (empty? gms)
-	(set (fun-mets g) (rev! (if same? mets (add mets m))))
-	(let ((gm    (head gms))
+        (set (fun-mets g) (rev! (if same? mets (add mets m))))
+        (let ((gm    (head gms))
               (same? (fun-same-met? gm m)))
-	  (col (add (if same? m gm) mets) same? (tail gms)))))
+          (col (add (if same? m gm) mets) same? (tail gms)))))
   g)
 
 (def <args> <lst>)
@@ -42,28 +42,28 @@
 (df isa? (o1 o2 => <log>)
   (or (== o1 o2)
       (itr find ((ps (proto-ordered-parents o1)))
-	(if (empty? ps)
-	    #f
-	    (let ((o (head ps)))
-	      (if (== o o2)
-		  #t
-		  (find (tail ps))))))))
+        (if (empty? ps)
+            #f
+            (let ((o (head ps)))
+              (if (== o o2)
+                  #t
+                  (find (tail ps))))))))
 
 (df proto< (o1 o2 wrt => <log>)
   (if (== wrt o1)
       #t
       (if (== wrt o2)
-	  #f
-	  (itr find ((ps (proto-ordered-parents wrt)))
-	    (if (empty? ps)
-		(error "can't order specializers - arg/reference object %= is "
-		       "neither %= nor %=" wrt o1 o2) 
-		(let ((o (head ps)))
-		  (if (== o o1)
-		      #t
-		      (if (== o o2)
-			  #f
-			  (find (tail ps))))))))))
+          #f
+          (itr find ((ps (proto-ordered-parents wrt)))
+            (if (empty? ps)
+                (error "can't order specializers - arg/reference object %= is "
+                       "neither %= nor %=" wrt o1 o2) 
+                (let ((o (head ps)))
+                  (if (== o o1)
+                      #t
+                      (if (== o o2)
+                          #f
+                          (find (tail ps))))))))))
 
 (def <tup> <lst>)
 (def tup  lst)
@@ -72,8 +72,8 @@
   (if (== t1 t2) 
       (tup '= t1)
       (if (proto< t1 t2 arg)
-	  (tup '< t1)
-	  (tup '> t2))))
+          (tup '< t1)
+          (tup '> t2))))
 
 (df order-mets (m1|<met> m2|<met> args|<args> => order|<sym>)
   (def nreq|<int> (fun-nreq m1))
@@ -108,14 +108,14 @@
                           (loop t1))))
                                   (set (tail headed-list) '())
                                   (set (tail ahead) (pair met (tail ahead))))
-		(precedes-all? ((l <lst>))
+                (precedes-all? ((l <lst>))
                   (itr loop (((l <lst>) l))
                     (if (== l '())
                         #t
                         (if (~== (order-mets met (head l) args) '<)
                             #f
                             (loop (tail l))))))
-		(check-subsequent-ambiguities ((oprev <lst>))
+                (check-subsequent-ambiguities ((oprev <lst>))
                   (if (or (not (precedes-all? (tail oprev)))
                           (not (precedes-all? (tail ahead))))
                       (make-ambiguous oprev)
@@ -156,10 +156,10 @@
 (df opt-args (n|<int> args|<args> => <args>)
   (itr col (((i <int>) 0) ((l <args>) '()) ((p <args>) args))
     (if (= i n)
-	(if (empty? l)
-	    (lst p)
-	    (seq (set (tail l) (lst p)) args))
-	(col (+ i 1) p (tail p)))))
+        (if (empty? l)
+            (lst p)
+            (seq (set (tail l) (lst p)) args))
+        (col (+ i 1) p (tail p)))))
 
 ;; (dm app (proc|<met> args|<opts>)
 ;;   (def reg-args (if (fun-opts? proc) (opt-args args) args))
@@ -171,10 +171,10 @@
 ;;   (def ambiguous-mets (elt ord-amb-mets 1))
 ;;   (if (> (len ambiguous-mets) 0)
 ;;       (error "Ambiguous Method Error when calling %= on %=" proc args)
-;; 	 (if (empty? sorted-mets)
-;; 	     (error "No Applicable Methods Error when calling %= on %="
-;; 		    proc args)
-;; 	     (app (elt sorted-mets 0) args))))
+;;       (if (empty? sorted-mets)
+;;           (error "No Applicable Methods Error when calling %= on %="
+;;                  proc args)
+;;           (app (elt sorted-mets 0) args))))
 
 ;; (dm fun-add-met (o|<met> n|<met> => <gen>)
 ;;   (def g (fab-gen (fun-nreq n) (lst n)))

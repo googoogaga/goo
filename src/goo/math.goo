@@ -319,8 +319,8 @@
 (dm power-of-two-ceiling (x|<int> => <int>)
   (rep search ((po2|<int> 1))
     (if (> po2 x)
-	po2
-	(search (+ po2 po2)))))
+        po2
+        (search (+ po2 po2)))))
 
 ;;; FLO
 

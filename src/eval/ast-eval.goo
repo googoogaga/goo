@@ -70,19 +70,19 @@
   (if (== env $nul-loc-env)
       nul
       (rep loop ((names (env-names env)) (i 0))
-	(if (empty? names)
-	    (env-binding-value (env-parent env) name)
-	    (if (== name (head names))
-		(elt (env-values env) i)
-		(loop (tail names) (+ i 1)))))))
+        (if (empty? names)
+            (env-binding-value (env-parent env) name)
+            (if (== name (head names))
+                (elt (env-values env) i)
+                (loop (tail names) (+ i 1)))))))
 
 (dm env-binding-value-setter (v env|<loc-env> name|<sym>)
   (rep loop ((names (env-names env)) (i 0))
     (if (empty? names)
-	(set (env-binding-value (env-parent env) name) v)
-	(if (== name (head names))
-	    (set (elt (env-values env) i) v)
-	    (loop (tail names) (+ i 1))))))
+        (set (env-binding-value (env-parent env) name) v)
+        (if (== name (head names))
+            (set (elt (env-values env) i) v)
+            (loop (tail names) (+ i 1))))))
 
 ;;; EVAL
 
@@ -198,7 +198,7 @@
 
 (dm env-local-reference-value-setter (val env|<loc-env> ref|<local-reference>)
   (set (env-local-value 
-	env (reference-frame-number ref) (reference-frame-offset ref)) 
+        env (reference-frame-number ref) (reference-frame-offset ref)) 
        val))
 
 (dm ast-eval (e|<local-reference> env|<loc-env>)
@@ -278,8 +278,8 @@
 (dm ast-eval (e|<arguments> env|<loc-env>)
   (rep eval ((res '()) (args e))
     (if (empty? args)
-	(rev! res)
-	(eval (pair (ast-eval (head args) env) res) (tail args)))))
+        (rev! res)
+        (eval (pair (ast-eval (head args) env) res) (tail args)))))
 
 (dm ast-eval (e|<regular-application> env|<loc-env>)
   (def f    (ast-eval (application-function e) env))

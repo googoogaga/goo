@@ -5,8 +5,8 @@
 (dm meaning (e r)
   (if (atom? e)
       (if (isa? e <sym>)
-	  (meaning-reference e r)
-	  e)
+          (meaning-reference e r)
+          e)
       (meaning-list (head e) e r)))
 
 (dm meaning-list ((first 'quote) (e <lst>) r)
@@ -14,20 +14,20 @@
 
 (dm meaning-list ((first 'if) (e <lst>) r)
   (let ((pm (meaning (sexpr-if-predicate e) r))
-	(cm (meaning (sexpr-if-consequent e) r))
-	(am (meaning (sexpr-if-alternative e) r)))
+        (cm (meaning (sexpr-if-consequent e) r))
+        (am (meaning (sexpr-if-alternative e) r)))
     (fun (sr k) (pm sr (fun (v) ((if v m2 m3) sr k))))))
 
 (dm meaning-sequence ((e+ <lst>) r)
   (if (empty? e+)
       (static-wrong "Illegal syntax: (seq)")
       (if (empty? (tail e+))
-	  (meaning (head e+) r)
-	  (meaning*-multiple-sequence (head e+) (tail e+) r))))
+          (meaning (head e+) r)
+          (meaning*-multiple-sequence (head e+) (tail e+) r))))
 
 (dm meaning*-multiple-sequence (e e+ r)
   (let ((m1 (meaning e r))
-	(m+ (meaning-sequence e+ r)))
+        (m+ (meaning-sequence e+ r)))
     (fun (sr k) (m1 sr (fun (v) (m+ sr k))))))
 
 (dm meaning-list ((first 'seq) (e <lst>) r)
@@ -38,23 +38,23 @@
 
 (dm meaning-reference-of ((var <loc-ref>) n r)
   (let ((i (var-offset var))
-	(j (var-frame-offset var)))
+        (j (var-frame-offset var)))
     (if (= i 0)
-	(fun (sr k) (k (frame-argument sr j)))
-	(fun (sr k) (k (deep-value sr i j))))))
+        (fun (sr k) (k (frame-argument sr j)))
+        (fun (sr k) (k (deep-value sr i j))))))
 
 (dm meaning-reference-of ((var <glo-ref>) n r)
   (let ((i (var-offset var)))
     (if (== (global-value i) undefined-value)
-	(fun (sr k) (let ((v (global-value i)))
-		      (if (== v undefined-value)
-			  (wrong "Unitialized variable" n)
-			  (k v))))
-	(fun (sr k) (k (global-value i))))))
+        (fun (sr k) (let ((v (global-value i)))
+                      (if (== v undefined-value)
+                          (wrong "Unitialized variable" n)
+                          (k v))))
+        (fun (sr k) (k (global-value i))))))
 
 (dm meaning-reference-of ((var <pre-ref>) n r)
   (let ((i (var-offset var))
-	(v (predefined-value i)))
+        (v (predefined-value i)))
     (fun (sr k) (k v))))
 
 (dm meaning-reference-of (var n r)
@@ -66,10 +66,10 @@
 
 (dm meaning-assignment-of ((var <loc-ref>) n e r)
   (let ((i (var-offset var))
-	(j (var-frame-offset var)))
+        (j (var-frame-offset var)))
     (if (= i 0)
-	(fun (sr k) (k (set (frame-argument sr j) e)))
-	(fun (sr k) (k (set (deep-value sr i j) e))))))
+        (fun (sr k) (k (set (frame-argument sr j) e)))
+        (fun (sr k) (k (set (deep-value sr i j) e))))))
 
 (dm meaning-assignment-of ((var <glo-ref>) n e r)
   (let ((i (var-offset var)))
@@ -80,7 +80,7 @@
 
 (dm meaning-list ((first 'dv) (e <lst>) r)
   (let ((name (sexpr-variable-name (sexpr-definition-variable e)))
-	(var (compute-variable name r)))
+        (var (compute-variable name r)))
     (meaning-assignment-of var name (sexpr-definition-value e) r)))
 
 (dm meaning-list ((first 'set) (e <lst>) r)
@@ -93,7 +93,7 @@
   (lab return
     (let ((exit (make-function '(x) `(,return x) env)))
       (meaning-seq (sexpr-block-body e)
-		(env-extend! env #f (lst (sexpr-block-name e)) (lst exit))))))
+                (env-extend! env #f (lst (sexpr-block-name e)) (lst exit))))))
 
 (dm meaning-list ((first 'fin) (e <lst>) env)
   (fin (meaning (sexpr-unwind-protect-protected-form e) env)
@@ -109,13 +109,13 @@
 
 (dm meaning-application (e (e* <lst>) r)
   (let ((m (meaning e r))
-	(m* (meaning* e* r (len e*))))
+        (m* (meaning* e* r (len e*))))
     (fun (sr k) 
       (m sr (fun (f) 
-	      (if (isa? f <fun>)
-		  (m* sr (fun (v*) (f v* k)))
-		  (wrong "Not a function" f)))))))
-			 
+              (if (isa? f <fun>)
+                  (m* sr (fun (v*) (f v* k)))
+                  (wrong "Not a function" f)))))))
+                         
 (dm meaning* ((e* <lst>) r size)
   (if (empty? e*)
       (meaning-no-argument r size)
@@ -127,11 +127,11 @@
 
 (dm meaning-some-arguments (e e* r size)
   (let ((m (meaning e r))
-	(m* (meaning* e* r size))
-	(rank (- size (+ (len e*) 1))))
+        (m* (meaning* e* r size))
+        (rank (- size (+ (len e*) 1))))
     (fun (sr k)
       (m sr (fun (v)
-	      (m* sr (fun (v*) (set (frame-argument v* rank) v) (k v*))))))))
+              (m* sr (fun (v*) (set (frame-argument v* rank) v) (k v*))))))))
 
 (dm meaning-list ((first <lst>) (e <lst>) r)
   (meaning-application first (tail e) r))
@@ -146,14 +146,14 @@
 
 (dm meaning-fix-abstraction ((n* <lst>) (e+ <lst>) r)
   (let ((arity (len n*))
-	(arity+1 (+ arity 1))
-	(r2 (r-extend* r n*))
-	(m+ (meaning-sequence e+ r2)))
+        (arity+1 (+ arity 1))
+        (r2 (r-extend* r n*))
+        (m+ (meaning-sequence e+ r2)))
     (fun (sr k)
       (k (fun (v* k1)
-	   (if (= (len (frame-arguments v*)) arity+1)
-	       (m+ (sr-extend* sr v*) k1)
-	       (wrong "Incorrect arity")))))))
+           (if (= (len (frame-arguments v*)) arity+1)
+               (m+ (sr-extend* sr v*) k1)
+               (wrong "Incorrect arity")))))))
 
 (dm meaning-list ((first 'fun) (e <lst>) r)
   (meaning-fix-abstraction 
@@ -220,14 +220,14 @@
                 (local-variable? (tail r) (+ i 1) n) )
                ((isa? names <lst>) 
                 (if (== n (head names))
-		    (isa <loc-var>
-		      (set var-name n) 
-		      (set var-offset i) (set var-frame-offset j))
+                    (isa <loc-var>
+                      (set var-name n) 
+                      (set var-offset i) (set var-frame-offset j))
                     (scan (tail names) (+ 1 j)) ) )
                ((== n names) 
-		(isa <loc-var>
-		      (set var-name n) 
-		      (set var-offset i) (set var-frame-offset j)))))))
+                (isa <loc-var>
+                      (set var-name n) 
+                      (set var-offset i) (set var-frame-offset j)))))))
 
 (dm compute-variable (r n)
   (or (local-variable? r 0 n)
@@ -263,20 +263,20 @@
 (dm g.current-initialize! (name)
   (let ((kind (compute-kind r.init name)))
     (if kind
-	(if (== (head kind) 'global)
-	    (set (elt sg.current (tail kind) undefined-value))
-	    (static-wrong "Wrong redefinition" name))
-	(let ((index (g.current-extend! name)))
-	  (set (elt sg.current i undefined-value))))))
+        (if (== (head kind) 'global)
+            (set (elt sg.current (tail kind) undefined-value))
+            (static-wrong "Wrong redefinition" name))
+        (let ((index (g.current-extend! name)))
+          (set (elt sg.current i undefined-value))))))
 
 (dm g.init-initialize! (name)
   (let ((kind (compute-kind r.init name)))
     (if kind
-	(if (== (head kind) 'predefined)
-	    (set (elt sg.init (tail kind) undefined-value))
-	    (static-wrong "Wrong redefinition" name))
-	(let ((index (g.init-extend! name)))
-	  (set (elt sg.init i undefined-value))))))
+        (if (== (head kind) 'predefined)
+            (set (elt sg.init (tail kind) undefined-value))
+            (static-wrong "Wrong redefinition" name))
+        (let ((index (g.init-extend! name)))
+          (set (elt sg.init i undefined-value))))))
 
 (dv *e* $the-empty-environment)
 
