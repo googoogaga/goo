@@ -877,6 +877,8 @@
   (def mod     (probe-module loader (as <sym> modname)))
   (def binding (find-binding (as <sym> varname)
                              (module-target-environment mod)))
+  ;; TODO: THIS MIGHT BE SUSPECT BUT IT MAKES DYN-CMP HAPPY
+  (insert-global! binding gr)
   (unless binding
     (error "No binding %s in %s.\n" varname modname))
   (objectify-binding name binding r))

@@ -1,0 +1,202 @@
+\newcommand{\xsubsection}[1]{%
+\texonly{\subsection{#1}}%
+\htmlonly{\strong{#1}\\}%
+}
+
+\newcommand{\evalsto}{%
+\texonly{$\rightarrow$}%
+\htmlonly{\code{->}}%
+}
+
+\newcommand{\cvar}[1]{%
+\texonly{{\rm\em{#1}}}%
+\htmlonly{\code{\var{#1}}}%
+}
+
+%%%%%%%%%%%%%%%% Latex prototypes
+\texonly{
+
+% \newenvironment{ex}%
+%   {\scriptsize\setlength{\parskip}{0pt}
+%    \verbatim}
+%   {\endverbatim\vspace*{-0.1in}}
+
+\newenvironment{ex}{\small\begin{example}}{\end{example}}
+\newenvironment{exv}{\scriptsize\verbatim}{\endverbatim}
+
+% \newenvironment{exv}%
+%   {\scriptsize
+%    \begin{center}
+%    \begin{Sbox}
+%    \begin{minipage}{3.25in}
+%    \verbatim}
+%   {\endverbatim
+%    \end{minipage}
+%    \end{Sbox}
+%    \end{center}
+%    \shadowbox{\TheSbox}}
+
+\newenvironment{packeditemize}
+	{\begin{list}{$\bullet$}{
+	  \setlength{\topsep}{0pt}
+	  \setlength{\parsep}{0pt}
+	  \setlength{\parskip}{0pt}
+	  \setlength{\itemsep}{0pt}}}
+	{\end{list}}
+
+\newenvironment{defs}{}{}
+%\newcommand{\kode}[1]{\scriptsize\verbatim#1\endverbatim}
+\newcommand{\kode}[1]{{\scriptsize\tt #1}}
+\newlength{\parenlength}
+  \settowidth{\parenlength}{\kode{(}} % -factor
+  
+\newcommand{\snl}{\newline\hspace*{\parenlength}}
+
+\setlength{\shadowsize}{1pt}
+
+\newcommand{\kind}[1]{\small{$\mathcal #1$}}
+
+%\newlength{\defnamelength}\setlength{\defnamelength}{1.25in}
+\newlength{\defnamelength}
+  \settowidth{\defnamelength}{\kode{insensitive-}} % -factor
+\newlength{\defkindlength}
+  \settowidth{\defkindlength}{\kind{M}}
+\newlength{\defsiglength}\setlength{\defsiglength}{\columnwidth}
+  \addtolength{\defsiglength}{-1\defnamelength}  
+  \addtolength{\defsiglength}{-1\defkindlength}
+%  \addtolength{\defsiglength}{-0.3in} % fudge
+% \addtolength{\defsiglength}{-0.15in} % fudge
+  \addtolength{\defsiglength}{-0.20in} % fudge
+%\newlength{\defsiglength}\settowidth{\defsiglength}{\kode{(owner getter|<gen> setter|<gen> type init|<fun>)}}
+% \newlength{\defsiglength}\setlength{\defsiglength}{3in}
+
+\typeout{textwidth  = \the\textwidth}
+\typeout{columnwidth  = \the\columnwidth}
+\typeout{namelength = \the\defnamelength}
+\typeout{kindlength = \the\defkindlength}
+\typeout{siglength  = \the\defsiglength}
+
+\parindent 0pt
+
+\newcommand{\dbox}{\shadowbox}
+
+\newcommand{\defnoindex}[3]{
+  \dbox{
+  \parbox[t]{\defnamelength}{\setlength{\baselineskip}{0.5\baselineskip}\kode{#1}}
+  }
+  \dbox{
+  \parbox[t]{\defsiglength}{\kode{#2}}
+  }
+  \hfill\penalty 0
+  \dbox{
+  \makebox[\defkindlength][c]{\kind{#3}}
+  }
+  \newline}
+
+\newcommand{\defcontnoindex}[2]{
+  {\setlength{\fboxrule}{0pt}
+  \framebox{
+  \parbox{\defnamelength}{\setlength{\baselineskip}{0.5\baselineskip}\kode{\hfill}}
+  }}
+  \rule{0.25pt}{0mm}
+  \dbox{
+  \parbox[t]{\defsiglength}{\kode{#1}}
+  }
+  \hfill\penalty 0
+  \dbox{
+  \makebox[\defkindlength][c]{\kind{#2}}
+  }
+  \newline}
+
+\newlength{\defdocindentlength}\setlength{\defdocindentlength}{0.25\defnamelength}
+\newlength{\defdoclength}\setlength{\defdoclength}{0in}
+  \addtolength{\defdoclength}{\defnamelength}
+  \addtolength{\defdoclength}{\defsiglength}
+  \addtolength{\defdoclength}{\defkindlength}
+  \addtolength{\defdoclength}{2\defdocindentlength} % column mode
+%  \addtolength{\defdoclength}{-1\defdocindentlength}
+%  \addtolength{\defdoclength}{-0.3in}
+
+\newcommand{\doc}[1]{\noindent\makebox[\defdocindentlength]{}\parbox{\defdoclength}{\small\it\setlength{\baselineskip}{0.8\baselineskip} #1}\newline}
+
+%\hbox{\spaceskip=0.5em{{\rm #1}}}}
+
+\newcommand{\define}[3]{\defnoindex{{#1}}{{#2}}{{#3}}} % \mainschindex{{#1}}}}
+% \newcommand{\def}[3]{\defnoindex{{#1}}{{#2}}{{#3}}\mainschindex{{#1}}}
+
+\newcommand{\subsubsubsection}[1]{\subsubsection*{#1}}
+
+\newcommand{\form}[2]{\define{{#1}}{{#2}}{S}}
+\newcommand{\formcont}[1]{\defcontnoindex{{#1}}{S}}
+\newcommand{\syntax}[2]{\define{{#1}}{$\equiv$ {#2}}{L}}
+\newcommand{\notation}[2]{\define{{#1}}{{\it #2}}{N}}
+\newcommand{\alias}[2]{\define{{#1}}{{#2}}{A}}
+\newcommand{\generic}[2]{\define{{#1}}{({#2})}{G}}
+\newcommand{\method}[2]{\define{{#1}}{({#2})}{M}}
+\newcommand{\methodcont}[1]{\defcontnoindex{({#1})}{M}}
+\newcommand{\function}[2]{\define{{#1}}{({#2})}{F}}
+\newcommand{\class}[2]{\define{{#1}}{({#2})}{C}}
+\newcommand{\property}[2]{\define{{#1}}{({#2})}{P}}
+\newcommand{\propertyinit}[3]{\define{{#1}}{({#2})}{P}}
+\newcommand{\instance}[2]{\define{{#1}}{{#2}}{I}}
+\newcommand{\command}[2]{\define{{#1}}{{#2}}{K}}
+}
+%%%%%%%%%%%%%%%% end of Latex def definitions
+
+%%%%%%%%%%%%%%%% HTML deftypes
+\htmlonly{
+\newenvironment{defs}{\begin{itemize}}{\end{itemize}}
+
+% The following is for deftypes that have return types.
+%    (foo int int) -> int
+
+\newcommand{\defnoindex}[3]{%
+%\cindex{\code{#1}}%
+\item\noindent\code{({#1}{\var{#2}\/})~-->~{\var{#3}}}}
+
+\newcommand{\def}[3]{%
+\defnoindex{{#1}}{{#2}}{{#3}}%
+\mainschindex{{#1}}}%
+
+\newcommand{\defnoresultnoindex}[2]{%
+%\cindex{\code{#1}}%
+\item\noindent\code{({#1}{\var{#2}\/})}}
+
+\newcommand{\defnoresult}[2]{%
+\defnoresultnoindex{{#1}}{{#2}}%
+\mainschindex{{#1}}}%
+
+\newcommand{\pconstdef}[2]{%
+\item\noindent\deftagstart\code{{#1}}\deftag{{#2}}}
+
+% Variable deftype
+\newcommand{\constdef}[2]{\pconstdef{{#1}}{{#2}}\mainschindex{{#1}}}
+
+\newcommand{\constdefnoindex}[2]{\pconstdef{{#1}}{{#2}}}
+
+\newcommand{\cdef}[1]{%
+\item\noindent\code{{#1}}}
+
+\newcommand{\cgcdef}[1]{%
+\item\noindent\deftagstart\code{{#1}}\deftag{(may GC)}}
+
+\newcommand{\syntaxdefnoresult}[2]{%
+\item\noindent\deftagstart\code{({#1}{#2})}\deftag{syntax}}
+
+\newcommand{\defresult}[1]{%
+\\{}\noindent\code{\ \ \ \ -->~{\it{#1}}}}
+
+\newcommand{\syntaxdef}[3]{%
+\item\noindent\deftagstart\code{({#1}{#2})~-->~{\var{#3}}}\deftag{syntax}}
+
+\newcommand{\deftagstart}{%
+\begin{rawhtml}<table border=0 cellspacing=0 cellpadding=0 width=80%>
+<tr> <td>\end{rawhtml}}
+
+\newcommand{\deftag}[1]{%
+\begin{rawhtml}</td> <td align=right>\end{rawhtml}%
+{#1}%
+\begin{rawhtml}</td></tr></table>\end{rawhtml}}
+
+}
+%%%%%%%%%%%%%%%% end of HTML def definitions

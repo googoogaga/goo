@@ -2,6 +2,17 @@ OVERALL
 
 NOW
 
+o x8r to eval
+o lowercase filenames
+o report warnings as you go
+o add load path
+o how to make vec/tup/str imm
+o a bit more intro and status
+x refer to talks
+x finish converting talks
+x put up goo website and update proto page
+x export talks as pdf
+x make x:y work during compilation mode
 x <col!> <seq!>
 x packer
 x shorten dir names
@@ -10,9 +21,9 @@ x add fun-val congruency checking
 x add/rename del! in tab/goo
 x change add/mem? for col/set
 x move arity check to sig_val_type check
+x port2str macro
 use op
-get rid of format
-port2str macro
+x get rid of format
 exported -> pub
 str port
 split out boot and runtime
@@ -22,7 +33,7 @@ seq -> do
 do  -> each or all
 get rid of collecting
 report undefined bindings immediately after each module
-change printing to avoid extra ]'s
+x change printing to avoid extra ]'s
 
 PROTO2GOO
 

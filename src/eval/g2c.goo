@@ -261,9 +261,8 @@
   (msg code-out "\n/* MODULE ENVIRONMENT: %s */\n\n" (module-name mod))
   (do-static-global-bindings
    (fun (binding)
-     (generate-global-binding code-out
-                              (not (binding-native-to? binding mod))
-                              binding))
+     (generate-global-binding
+      code-out (not (binding-native-to? binding mod)) binding))
    (module-target-environment mod)))
 
 (dm generate-global-binding (code-out imported? gb)

@@ -73,14 +73,14 @@
         env-root)))
 
 (dm add-src-path (relpath => <str>)
-  (cat *goo-root* *path-separator* "SRC" *path-separator* relpath))
+  (cat *goo-root* *path-separator* "src" *path-separator* relpath))
 
 ;; TODO: GET THIS RIGHT ON WIN32
 (dm add-tmp-path (relpath => <str>)
   (cat *path-separator* "tmp" *path-separator* relpath))
 
 (dm add-build-path (builddir relpath => <str>)
-  (cat *goo-root* *path-separator* "C" *path-separator*
+  (cat *goo-root* *path-separator* "c" *path-separator*
        builddir *path-separator* relpath))
 
 (dv *goo-extension* ".goo")

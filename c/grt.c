@@ -1350,7 +1350,7 @@ P YPbuild_runtime_modules(
 
 #include <dlfcn.h>
 
-#define CGEN_CC "cc -c -g -fPIC -I'%s/C' -o '%s.o' '%s.c'"
+#define CGEN_CC "cc -c -g -fPIC -I'%s/c' -o '%s.o' '%s.c'"
 #define CGEN_LD "cc -shared -o '%s.so' '%s.o'"
 
 typedef P (*PLD)();
