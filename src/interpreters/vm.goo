@@ -1,0 +1,1016 @@
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; The runtime machine
+
+;(dv *env* #f) ; already appears in chap6d
+(dv *val* #f)
+(dv *fun* #f)
+(dv *arg1* #f)
+(dv *arg2* #f)
+
+(dv *pc* 0)
+(dv *code* (fab <vec> 20))
+
+(dv *constants* (vec))
+
+(dv <stk> <vec>)
+
+;;; Some tests depend on 100 being the depth of the stack.
+(dv *stack* (fab <stk> 100))
+(dv *stack-index* 0)
+
+(dm stack-push ((v <stk>))
+  (set (elt *stack* *stack-index*) v)
+  (incf *stack-index*))
+
+(dm stack-pop ()
+  (decf *stack-index*)
+  (elt *stack* *stack-index*) )
+
+(dm save-stack ()
+  (let ((copy (fab <stk> *stack-index*)))
+    (into *stack* copy 0 *stack-index*)
+    copy ) )
+
+(dm restore-stack ((copy <stk>))
+  (set *stack-index* (len copy))
+  (into copy *stack* 0 *stack-index*))
+
+(dv quotation-fetch ((i <int>))
+  (elt *constants* i) )
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; make them inherit from invokable.
+
+(dv <primitive> (isa <any>))
+  (slot <primitive> (primitive-address <int>))
+
+(dv <continuation> (isa <any>))
+  (slot <continuation> (continuation-stack <stk>))
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; This global variable holds at preparation time all the interesting
+;;; quotations. It will be converted into *constants* for run-time.
+;;; Quotations are not compressed and can appear multiply.
+
+(dv *quotations* '())
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; Combinators that just expand into instructions.
+
+(dm SHALLOW-ARGUMENT-SET! (j m)
+  (cat m (SET-SHALLOW-ARGUMENT! j)) )
+
+(dm DEEP-ARGUMENT-SET! (i j m)
+  (cat m (SET-DEEP-ARGUMENT! i j)) )
+
+(dm GLOBAL-SET! (i m)
+  (cat m (SET-GLOBAL! i)) )
+
+;;; GOTO is not necessary if m2 is a tail-call but don't care.
+;;; This one changed since chap7c.scm
+
+(dm ALTERNATIVE (m1 m2 m3)
+  (let ((mm2 (cat m2 (GOTO (len m3)))))
+    (cat m1 (JUMP-FALSE (len mm2)) mm2 m3) ) )
+
+(dm SEQUENCE (m m+)
+  (cat m m+) )
+
+(dm TR-FIX-LET (m* m+)
+  (cat m* (EXTEND-ENV) m+) )
+
+(dm FIX-LET (m* m+)
+  (cat m* (EXTEND-ENV) m+ (UNLINK-ENV)) )
+
+(dm CALL0 (address)
+  (INVOKE0 address) )
+
+(dm CALL1 (address m1)
+  (cat m1 (INVOKE1 address) ) )
+
+(dm CALL2 (address m1 m2)
+  (cat m1 (PUSH-VALUE) m2 (POP-ARG1) (INVOKE2 address)) )
+
+(dm CALL3 (address m1 m2 m3)
+  (cat m1 (PUSH-VALUE) 
+          m2 (PUSH-VALUE) 
+          m3 (POP-ARG2) (POP-ARG1) (INVOKE3 address) ) )
+
+(dm FIX-CLOSURE (m+ arity)
+  (let* ((the-function (cat (ARITY=? (+ arity 1)) (EXTEND-ENV)
+			    m+  (RETURN) ))
+         (the-goto (GOTO (len the-function))) )
+    (cat (CREATE-CLOSURE (len the-goto)) the-goto the-function) ) )
+
+(dm NARY-CLOSURE (m+ arity)
+  (let* ((the-function (cat (ARITY>=? (+ arity 1)) (PACK-FRAME! arity)
+			    (EXTEND-ENV) m+ (RETURN) ))
+         (the-goto (GOTO (len the-function))) )
+    (cat (CREATE-CLOSURE (len the-goto)) the-goto the-function) ) )
+
+(dm TR-REGULAR-CALL (m m*)
+  (cat m (PUSH-VALUE) m* (POP-FUNCTION) (FUNCTION-GOTO)) )
+
+(dm REGULAR-CALL (m m*)
+  (cat m (PUSH-VALUE) m* (POP-FUNCTION) 
+       (PRESERVE-ENV) (FUNCTION-INVOKE) (RESTORE-ENV) ) )
+
+(dm STORE-ARGUMENT (m m* rank)
+  (cat m (PUSH-VALUE) m* (POP-FRAME! rank)) )
+
+(dm CONS-ARGUMENT (m m* arity)
+  (cat m (PUSH-VALUE) m* (POP-CONS-FRAME! arity)) )
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; Instructions definers
+
+(dm run ()
+  (run-op (fetch-byte)))
+
+(dm instruction-size (code pc)
+  (instruction-size-op (elt code pc)))
+
+(dm instruction-decode (code pc)
+  (loc ((fetch-byte ()
+	  (let ((byte (elt code pc)))
+	    (set! pc (+ pc 1))
+	    byte )))
+    (instruction-decode-op (fetch-byte))))
+
+(ds (define-instruction ,name (,@args) ,n ,@body)
+  `(seq
+    (dm run-op ((opcode ,n))
+      (run-clause ,@args ,@body))
+    (dm instruction-size-op ((opcode ,n) code pc)
+      (size-clause ,@args))
+    (dm instruction-decode-op ((opcode ,n) code pc)
+      (decode-clause ,name ,@args))))
+
+;;; This uses the global fetch-byte function that increments *pc*.
+
+(ds (decode-clause ,iname (,@clauses))
+  (mif (() clauses)
+       `(,iname)
+       (mif ((,a) clauses)
+	    `(let ((,a (fetch-byte))) (lst ',iname a))
+	    (mif ((,a ,b) clauses)
+		 `(let ((,a (fetch-byte)) (,b (fetch-byte))) (lst ',iname ,a ,b))
+		 #f))))
+
+(ds (run-clause (,@clauses) ,@body)
+  (mif (() clauses)
+       `(seq ,@body)
+       (mif ((,a) clauses)
+	    `(let ((,a (fetch-byte))) ,@body)
+	    (mif ((,a ,b) clauses)
+		 `(let ((,a (fetch-byte)) (,b (fetch-byte))) ,@body)
+		 #f))))
+
+(ds (size-clause ,@clauses)
+  (mif (() clauses)
+       1
+       (mif ((,a) clauses)
+	    2
+	    (mif ((,a ,b) clauses)
+		 3
+		 #f))))
+       
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; Instruction-set. 
+;;; The instructions are kept in a separate file (to be read by
+;;; LiSP2TeX), the following macro reads them and generates a
+;;; (dv-instruction-set...) call.                       HACK!
+;;; You can replace this paragraphe by:
+;;;  (dv-instruction-set <content of "src/chap7f.scm" file>...)
+
+(define-instruction (SHALLOW-ARGUMENT-REF0) 1 
+  (set! *val* (activation-frame-argument *env* 0)) )
+
+(define-instruction (SHALLOW-ARGUMENT-REF1) 2 
+  (set! *val* (activation-frame-argument *env* 1)) )
+
+(define-instruction (SHALLOW-ARGUMENT-REF2) 3 
+  (set! *val* (activation-frame-argument *env* 2)) )
+
+(define-instruction (SHALLOW-ARGUMENT-REF3) 4 
+  (set! *val* (activation-frame-argument *env* 3)) )
+
+(define-instruction (SHALLOW-ARGUMENT-REF j) 5 
+  (set! *val* (activation-frame-argument *env* j)) )
+
+(define-instruction (DEEP-ARGUMENT-REF i j) 6 
+  (set! *val* (deep-fetch *env* i j)) )
+
+(define-instruction (GLOBAL-REF i) 7 
+  (set! *val* (global-fetch i)) )
+
+;(define-instruction (CHECKED-GLOBAL-REF i) 8 
+;  (set! *val* (global-fetch i))
+;  (if (eq? *val* undefined-value)
+;    (signal-exception #t (list "Uninitialized global variable" i))
+;    (vector-set! *code* (- *pc* 2) 7) ) ) 
+
+(define-instruction (CHECKED-GLOBAL-REF i) 8 
+  (set! *val* (global-fetch i))
+  (when (eq? *val* undefined-value)
+    (signal-exception #t (list "Uninitialized global variable" i)) ) )
+
+(define-instruction (CONSTANT i) 9 
+  (set! *val* (quotation-fetch i)) )
+
+(define-instruction (PREDEFINED0) 10   ; \#T 
+  (set! *val* #t) )
+
+(define-instruction (PREDEFINED1) 11   ; \#F 
+  (set! *val* #f) )
+
+(define-instruction (PREDEFINED2) 12   ; () 
+  (set! *val* '()) )
+
+(define-instruction (PREDEFINED3) 13   ; cons 
+  (set! *val* (predefined-fetch 3)) )
+
+(define-instruction (PREDEFINED4) 14   ; head
+  (set! *val* (predefined-fetch 4)) )
+
+(define-instruction (PREDEFINED5) 15   ; tail
+  (set! *val* (predefined-fetch 5)) )
+
+(define-instruction (PREDEFINED6) 16   ; isa?
+  (set! *val* (predefined-fetch 6)) )
+
+(define-instruction (PREDEFINED8) 18   ; eq? 
+  (set! *val* (predefined-fetch 8)) )
+
+(define-instruction (PREDEFINED i) 19 
+  (set! *val* (predefined-fetch i)) )
+
+(define-instruction (FINISH) 20 
+  (*exit* *val*) )
+
+(define-instruction (SET-SHALLOW-ARGUMENT!0) 21 
+  (set-activation-frame-argument! *env* 0 *val*) )
+
+(define-instruction (SET-SHALLOW-ARGUMENT!1) 22 
+  (set-activation-frame-argument! *env* 1 *val*) )
+
+(define-instruction (SET-SHALLOW-ARGUMENT!2) 23 
+  (set-activation-frame-argument! *env* 2 *val*) )
+
+(define-instruction (SET-SHALLOW-ARGUMENT!3) 24 
+  (set-activation-frame-argument! *env* 3 *val*) )
+
+(define-instruction (SET-SHALLOW-ARGUMENT! j) 25 
+  (set-activation-frame-argument! *env* j *val*) )
+
+(define-instruction (SET-DEEP-ARGUMENT! i j) 26 
+  (deep-update! *env* i j *val*) )
+
+(define-instruction (SET-GLOBAL! i) 27 
+  (global-update! i *val*) )
+
+(define-instruction (LONG-GOTO offset1 offset2) 28 
+  (let ((offset (+ offset1 (* 256 offset2))) )
+    (set! *pc* (+ *pc* offset)) ) )
+
+(define-instruction (LONG-JUMP-FALSE offset1 offset2) 29 
+  (let ((offset (+ offset1 (* 256 offset2))) )
+    (if (not *val*) (set! *pc* (+ *pc* offset))) ) )
+
+(define-instruction (SHORT-GOTO offset) 30 
+  (set! *pc* (+ *pc* offset)) )
+
+(define-instruction (SHORT-JUMP-FALSE offset) 31 
+  (if (not *val*) (set! *pc* (+ *pc* offset))) )
+
+(define-instruction (EXTEND-ENV) 32 
+  (set! *env* (sr-extend* *env* *val*)) )
+
+(define-instruction (UNLINK-ENV) 33 
+  (set! *env* (activation-frame-next *env*)) )
+
+(define-instruction (PUSH-VALUE) 34 
+  (stack-push *val*) )
+
+(define-instruction (POP-ARG1) 35 
+  (set! *arg1* (stack-pop)) )
+
+(define-instruction (POP-ARG2) 36 
+  (set! *arg2* (stack-pop)) )
+
+(define-instruction (PRESERVE-ENV) 37 
+  (preserve-environment) )
+
+(define-instruction (RESTORE-ENV) 38 
+  (restore-environment) )
+
+(define-instruction (POP-FUNCTION) 39 
+  (set! *fun* (stack-pop)) )
+
+(define-instruction (CREATE-CLOSURE offset) 40 
+  (set! *val* (make-closure (+ *pc* offset) *env*)) )
+
+(define-instruction (RETURN) 43 
+  (set! *pc* (stack-pop)) )
+
+(define-instruction (PACK-FRAME! arity) 44 
+  (listify! *val* arity) )
+
+(define-instruction (FUNCTION-INVOKE) 45 
+  (invoke *fun* #f) )
+
+(define-instruction (FUNCTION-GOTO) 46 
+  (invoke *fun* #t) )
+
+(define-instruction (POP-CONS-FRAME! arity) 47 
+  (set-activation-frame-argument! 
+   *val* arity (cons (stack-pop)
+                     (activation-frame-argument *val* arity) ) ) )
+
+(define-instruction (ALLOCATE-FRAME1) 50 
+  (set! *val* (allocate-activation-frame 1)) )
+
+(define-instruction (ALLOCATE-FRAME2) 51 
+  (set! *val* (allocate-activation-frame 2)) )
+
+(define-instruction (ALLOCATE-FRAME3) 52 
+  (set! *val* (allocate-activation-frame 3)) )
+
+(define-instruction (ALLOCATE-FRAME4) 53 
+  (set! *val* (allocate-activation-frame 4)) )
+
+(define-instruction (ALLOCATE-FRAME5) 54
+  (set! *val* (allocate-activation-frame 5)) )
+
+(define-instruction (ALLOCATE-FRAME size+1) 55
+  (set! *val* (allocate-activation-frame size+1)) )
+
+(define-instruction (ALLOCATE-DOTTED-FRAME arity) 56 
+  (let ((v* (allocate-activation-frame arity)))
+    (set-activation-frame-argument! v* (- arity 1) '())
+    (set! *val* v*) ) )
+
+(define-instruction (POP-FRAME!0) 60 
+  (set-activation-frame-argument! *val* 0 (stack-pop)) )
+
+(define-instruction (POP-FRAME!1) 61 
+  (set-activation-frame-argument! *val* 1 (stack-pop)) )
+
+(define-instruction (POP-FRAME!2) 62 
+  (set-activation-frame-argument! *val* 2 (stack-pop)) )
+
+(define-instruction (POP-FRAME!3) 63 
+  (set-activation-frame-argument! *val* 3 (stack-pop)) )
+
+(define-instruction (POP-FRAME! rank) 64 
+  (set-activation-frame-argument! *val* rank (stack-pop)) )
+
+(define-instruction (ARITY=?1) 71 
+  (unless (= (activation-frame-argument-length *val*) 1)
+    (signal-exception #f (list "Too much arguments for a thunk")) ) )
+
+(define-instruction (ARITY=?2) 72 
+  (unless (= (activation-frame-argument-length *val*) 2)
+    (signal-exception #f (list "Incorrect arity for unary function")) ) )
+
+(define-instruction (ARITY=?3) 73 
+  (unless (= (activation-frame-argument-length *val*) 3)
+    (signal-exception #f (list "Incorrect arity for binary function")) ) )
+
+(define-instruction (ARITY=?4) 74 
+  (unless (= (activation-frame-argument-length *val*) 4)
+    (signal-exception #f (list "Incorrect arity for ternary function")) ) )
+
+(define-instruction (ARITY=? arity+1) 75 
+  (unless (= (activation-frame-argument-length *val*) arity+1)
+    (signal-exception #f (list "Incorrect arity")) ) )
+
+(define-instruction (ARITY>=? arity+1) 78 
+  (unless (>= (activation-frame-argument-length *val*) arity+1)
+    (signal-exception #f (list "Too less arguments for a nary function")) ) )
+
+(define-instruction (SHORT-NUMBER value) 79 
+  (set! *val* value) )
+
+(define-instruction (CONSTANT-1)  80 
+  (set! *val* -1) )
+ 
+(define-instruction (CONSTANT0) 81 
+  (set! *val* 0) )
+
+(define-instruction (CONSTANT1) 82 
+  (set! *val* 1) )
+
+(define-instruction (CONSTANT2) 83 
+  (set! *val* 2) )
+
+(define-instruction (CONSTANT4) 84 
+  (set! *val* 4) )
+
+(define-instruction (CALL0-newline) 88
+  (set! *val* (newline)) )
+
+(define-instruction (CALL0-read) 89
+  (set! *val* (read)) )
+
+(define-instruction (CALL1-head) 90 
+  (set! *val* (head *val*)) )
+
+(define-instruction (CALL1-tail) 91 
+  (set! *val* (tail *val*)) )
+
+(define-instruction (CALL1-display) 94 
+  (set! *val* (show *val*)) )
+
+(define-instruction (CALL1-empty?) 96
+  (set! *val* (empty? *val*)) )
+
+(define-instruction (CALL1-eof-object?) 98
+  (set! *val* (eof-object? *val*)) )
+
+(define-instruction (CALL2-pair) 100 
+  (set! *val* (pair *arg1* *val*)) )
+
+(define-instruction (CALL2-eq?) 101 
+  (set! *val* (== *arg1* *val*)) )
+
+(define-instruction (CALL2-head-setter) 102 
+  (set! *val* (set (head *arg1*) *val*)) )
+
+(define-instruction (CALL2-tail-setter) 103 
+  (set! *val* (set (tail *arg1*) *val*)) )
+
+(define-instruction (CALL2-+) 104 
+  (set! *val* (+ *arg1* *val*)) )
+
+(define-instruction (CALL2--) 105 
+  (set! *val* (- *arg1* *val*)) )
+
+(define-instruction (CALL2-=) 106 
+  (set! *val* (= *arg1* *val*)) )
+
+(define-instruction (CALL2-<) 107 
+  (set! *val* (< *arg1* *val*)) )
+
+(define-instruction (CALL2->) 108 
+  (set! *val* (> *arg1* *val*)) )
+
+(define-instruction (CALL2-*) 109 
+  (set! *val* (* *arg1* *val*)) )
+
+(define-instruction (CALL2-<=) 110 
+  (set! *val* (<= *arg1* *val*)) )
+
+(define-instruction (CALL2->=) 111 
+  (set! *val* (>= *arg1* *val*)) )
+
+(define-instruction (CALL2-truncate/) 112 
+  (set! *val* (truncate/ *arg1* *val*)) )
+
+(define-instruction (CALL2-isa?) 113
+  (set! *val* (isa? *arg1* *val*)) )
+
+(define-instruction (DYNAMIC-REF index) 240
+  (set! *val* (find-dynamic-value index)) )
+
+(define-instruction (DYNAMIC-POP) 241 
+  (pop-dynamic-binding) )
+
+(define-instruction (DYNAMIC-PUSH index) 242 
+  (push-dynamic-binding index *val*) )
+
+(define-instruction (NON-CONT-ERR) 245 
+  (signal-exception #f (list "Non continuable exception continued")) )
+
+(define-instruction (PUSH-HANDLER) 246 
+  (push-exception-handler) )
+
+(define-instruction (POP-HANDLER) 247 
+  (pop-exception-handler) )
+
+(define-instruction (POP-ESCAPER) 250 
+  (let* ((tag (stack-pop))
+         (escape (stack-pop)) )
+    (restore-environment) ) )
+
+(define-instruction (PUSH-ESCAPER offset) 251 
+  (preserve-environment)
+  (let* ((escape (make-escape (+ *stack-index* 3)))
+         (frame (allocate-frame 1)) )
+    (set-activation-frame-argument! frame 0 escape)
+    (set! *env* (sr-extend* *env* frame))
+    (stack-push escape)
+    (stack-push escape-tag)
+    (stack-push (+ *pc* offset)) ) )
+
+;;; Used by chap8d.scm (eval as a special form)
+
+(define-instruction (COMPILE-RUN) 255
+  (let ((v *val*)
+        (r (stack-pop)) )
+    (if (program? v)
+        (compile-and-run v r #f)
+        (signal-exception #t (list "Illegal program" v)) ) ) )
+
+;;; Used by chap8h.scm (export special form)
+
+(define-instruction (CREATE-1ST-CLASS-ENV) 254
+  (create-first-class-environment *val* *env*) )
+
+(define-instruction (CHECKED-DEEP-REF i j) 253
+  (set! *val* (deep-fetch *env* i j))
+  (when (eq? *val* undefined-value)
+    (signal-exception #t (list "Uninitialized local variable")) ) )
+
+(define-instruction (CREATE-PSEUDO-ENV) 252
+  (create-pseudo-environment (stack-pop) *val* *env*) )
+
+(define-instruction (SHADOW-REF i j) 231
+  (shadowable-fetch *env* i j) )
+
+(define-instruction (SET-SHADOW! i j) 232
+  (shadowable-update! *env* i j *val*) )
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; Combinators
+
+(dm check-byte ((j <int>))
+  (unless (and (<= 0 j) (<= j 255))
+    (static-wrong "Cannot pack this number within a byte" j) ) )
+  
+(dm SHALLOW-ARGUMENT-REF ((j <int>))
+  (check-byte j)
+  (select j
+    ((0 1 2 3) (lst (+ 1 j)))
+    (else      (lst 5 j)) ) )
+
+(dm PREDEFINED ((i <int>))
+  (check-byte i)
+  (select i
+    ;; 0=\#t, 1=\#f, 2=(), 3=cons, 4=car, 5=cdr, 6=pair?, 7=symbol?, 8=eq?
+    ((0 1 2 3 4 5 6 7 8) (lst (+ 10 i)))
+    (else                (lst 19 i)) ) )
+
+(dm DEEP-ARGUMENT-REF (i j) (lst 6 i j))
+
+(dm SET-SHALLOW-ARGUMENT! (j)
+  (case j
+    ((0 1 2 3) (lst (+ 21 j)))
+    (else      (lst 25 j)) ) )
+
+(dm SET-DEEP-ARGUMENT! (i j) (lst 26 i j))
+
+(dm GLOBAL-REF (i) (lst 7 i))
+
+(dm CHECKED-GLOBAL-REF (i) (lst 8 i))
+
+(dm SET-GLOBAL!( i) (lst 27 i))
+
+(dm CONSTANT (value)
+  (case ((== value #t)  (lst 10))
+        ((== value #f)  (lst 11))
+        ((== value '()) (lst 12))
+        ((= value -1)   (lst 80))
+        ((= value 0)    (lst 81))
+        ((= value 1)    (lst 82))
+        ((= value 2)    (lst 83))
+        ((= value 4)    (lst 84))
+        ((and (isa? value <int>)  ; immediate value
+              (<= 0 value)
+              (< value 255) )
+         (lst 79 value) )
+        (else (EXPLICIT-CONSTANT value)) ) )
+
+(dm EXPLICIT-CONSTANT (value)
+  (set *quotations* (cat *quotations* (lst value)))
+  (lst 9 (- (len *quotations*) 1)) )
+
+;;; All gotos have positive offsets (due to the generation)
+
+(dm GOTO (offset)
+  (case ((< offset 255) (lst 30 offset))
+        ((< offset (+ 255 (* 255 256))) 
+         (let ((offset1 (modulo offset 256))
+               (offset2 (quotient offset 256)) )
+           (lst 28 offset1 offset2) ) )
+        (else (static-wrong "too long jump" offset)) ) )
+
+(dm JUMP-FALSE (offset)
+  (case ((< offset 255) (lst 31 offset))
+        ((< offset (+ 255 (* 255 256))) 
+         (let ((offset1 (modulo offset 256))
+               (offset2 (truncate/ offset 256)) )
+           (lst 29 offset1 offset2) ) )
+        (else (static-wrong "too long jump" offset)) ) )
+
+(dm EXTEND-ENV () (lst 32))
+
+(dm UNLINK-ENV () (lst 33))
+
+(dm INVOKE0 (address)
+  (select address
+    ((read)    (lst 89))
+    ((newline) (lst 88))
+    (else (static-wrong "Cannot integrate" address)) ) )
+
+(dm INVOKE1 (address)
+  (select address
+    ((head)        (lst 90))
+    ((tail)        (lst 91))
+    ((display)     (lst 94))
+    ((empty?)      (lst 96))
+    ((eof-object?) (lst 98))
+    (else (static-wrong "Cannot integrate" address)) ) )
+
+(dm PUSH-VALUE () (lst 34)) 
+
+(dm POP-ARG1 () (lst 35))
+
+(dm INVOKE2 (address)
+  (select address
+    ((pair)        (lst 100))
+    ((==)          (lst 101))
+    ((head-setter) (lst 102))
+    ((tail-setter) (lst 103))
+    ((+)           (lst 104))
+    ((-)           (lst 105))
+    ((=)           (lst 106))
+    ((<)           (lst 107))
+    ((>)           (lst 108))
+    ((*)           (lst 109))
+    ((<=)          (lst 110))
+    ((>=)          (lst 111))
+    ((truncate/)   (lst 112))
+    (else (static-wrong "Cannot integrate" address)) ) )
+
+(dm POP-ARG2 () (lst 36))
+
+(dm INVOKE3 (address)
+  (static-wrong "No ternary integrated procedure" address) )
+
+(dm CREATE-CLOSURE (offset) (lst 40 offset))
+
+(dm ARITY=? (arity+1)
+  (select arity+1
+    ((1 2 3 4) (lst (+ 70 arity+1)))
+    (else      (lst 75 arity+1)) ) )
+
+(dm RETURN () (lst 43))
+
+(dm PACK-FRAME! (arity) (lst 44 arity))
+
+(dm ARITY>=? (arity+1) (lst 78 arity+1))
+
+(dm FUNCTION-GOTO () (lst 46))
+
+(dm POP-FUNCTION () (lst 39))
+
+(dm FUNCTION-INVOKE () (lst 45))
+
+(dm PRESERVE-ENV () (lst 37))
+
+(dm RESTORE-ENV () (lst 38))
+
+(dm POP-FRAME! (rank)
+  (select rank
+    ((0 1 2 3) (lst (+ 60 rank)))
+    (else      (lst 64 rank)) ) )
+
+(dm POP-CONS-FRAME! (arity) (lst 47 arity))
+
+(dm ALLOCATE-FRAME (size)
+  (select size
+    ((0 1 2 3 4) (lst (+ 50 size)))
+    (else        (lst 55 (+ size 1))) ) )
+
+(dm ALLOCATE-DOTTED-FRAME (arity) (lst 56 (+ arity 1)))
+
+(dm FINISH () (lst 20))
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; Preserve the state of the machine ie the three environments.
+
+(dm preserve-environment ()
+  (stack-push *env*) )
+
+(dm restore-environment ()
+  (set! *env* (stack-pop)) )
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+
+(dm fetch-byte ()
+  (let ((byte (vector-ref *code* *pc*)))
+    (set! *pc* (+ *pc* 1))
+    byte ) )
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; Disassemble code
+
+(dm disassemble (code)
+  (rep loop ((result '())
+             (pc 0) )
+    (if (>= pc (vector-len code))
+        (rev! result)
+        (loop (pair (instruction-decode code pc) result)
+              (+ pc (instruction-size code pc)) ) ) ) )
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; If tail? is #t then the return address is on top of stack so no
+;;; need to push another one.
+
+(dg invoke (f tail?)
+  (signal-exception #f (lst "Not a function" f)) )
+
+(dm invoke ((f <closure>) tail?)
+  (unless tail? (stack-push *pc*))
+  (set! *env* (closure-closed-environment f))
+  (set! *pc* (closure-code f)) )
+
+(dm invoke ((f <primitive>) tail?)
+  (unless tail? (stack-push *pc*))
+  ((primitive-address f)) )
+
+(dm invoke ((f <continuation>) tail?)
+  (if (= (+ 1 1) (frame-length *val*))
+      (begin
+        (restore-stack (continuation-stack f))
+        (set! *val* (frame-argument *val* 0))
+        (set! *pc* (stack-pop)) )
+      (signal-exception #f (lst "Incorrect arity" 'continuation)) ) )
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+
+(ds (define-primitive-0 ,name ,value)
+  `(definitial name
+     (loc ((arity+1 (+ 1 0))
+             (behavior
+	      (fun ()
+		(if (= arity+1 (frame-length *val*))
+		    (seq (set *val* (value))
+                         (set *pc* (stack-pop)) )
+		    (signal-exception #t (lst "Incorrect arity" 'name))))))
+         (description-extend! ',name `(function ,value))
+         (make-primitive behavior) ) ) ) ) )
+  
+(ds (define-primitive-1 ,name ,value)
+  `(definitial name
+     (loc ((arity+1 (+ 1 1))
+             (behavior
+	      (fun ()
+		(if (= arity+1 (frame-length *val*))
+		    (let ((arg1 (frame-argument *val* 0)))
+		      (set *val* (value arg1))
+		      (set *pc* (stack-pop)) )
+		    (signal-exception #t (lst "Incorrect arity" 'name)) ) ) ) )
+         (description-extend! 'name `(function value a))
+         (make-primitive behavior) ) ) ) ) )
+  
+(ds (define-primitive-2 ,name ,value)
+  `(definitial name
+     (loc ((arity+1 (+ 2 1))
+             (behavior
+	      (fun ()
+		(if (= arity+1 (frame-length *val*))
+		    (let ((arg1 (frame-argument *val* 0))
+			  (arg2 (frame-argument *val* 1)) )
+		      (set! *val* (value arg1 arg2))
+		      (set! *pc* (stack-pop)) )
+		    (signal-exception #t (lst "Incorrect arity" 'name)) ) ) ) )
+         (description-extend! 'name `(function ,value a b))
+         (make-primitive behavior) ) ) ) ) )
+
+(define-primitive-2 pair pair)
+(define-primitive-1 head head)
+(define-primitive-1 tail tail)
+(define-primitive-2 == ==)
+(define-primitive-2 head-setter head-setter)
+(define-primitive-2 tail-setter tail-setter)
+(define-primitive-2 + +)
+(define-primitive-2 - -)
+(define-primitive-2 = =)
+(define-primitive-2 < <)
+(define-primitive-2 > >)
+(define-primitive-2 * *)
+(define-primitive-2 <= <=)
+(define-primitive-2 >= >=)
+(define-primitive-2 truncate/ truncate/)
+(define-primitive-1 display display)
+(define-primitive-0 read read)
+(define-primitive-1 isa? isa?)
+(define-primitive-1 empty? empty?)
+(define-primitive-0 newline newline)
+(define-primitive-1 eof-object? eof-object?)
+
+;;; The function which is invoked by call/cc always waits for an
+;;; activation frame. 
+
+(define-initial call/cc
+  (let* ((arity 1)
+         (arity+1 (+ arity 1)) )
+    (make-primitive
+     (fun ()
+       (if (= arity+1 (frame-length *val*))
+           (let ((f (frame-argument *val* 0))
+                 (frame (allocate-frame (+ 1 1))) )
+             (set (frame-argument frame 0) (make-continuation (save-stack)) )
+             (set! *val* frame)
+             (set! *fun* f)             ; useful for debug
+             (invoke f #t) )
+           (signal-exception #t (lst "Incorrect arity" 
+                                      'call/cc )) ) ) ) ) )
+
+(define-initial apply
+  (let* ((arity 2)
+         (arity+1 (+ arity 1)) )
+    (make-primitive
+     (fun ()
+       (if (>= (frame-argument-length *val*) arity+1)
+           (let* ((proc (frame-argument *val* 0))
+                  (args-number (frame-length *val*))
+                  (last-arg-index (- args-number 2))
+                  (last-arg (frame-argument *val* last-arg-index))
+                  (size (+ last-arg-index (length last-arg)))
+                  (frame (allocate-frame size)) )
+             (do ((i 1 (+ i 1)))
+                 ((= i last-arg-index))
+               (set (frame-argument frame (- i 1))
+		    (frame-argument *val* i) ) )
+             (do ((i (- last-arg-index 1) (+ i 1))
+                  (last-arg last-arg (cdr last-arg)) )
+                 ((null? last-arg))
+               (set (frame-argument frame i) (head last-arg)) )
+             (set! *val* frame)
+             (set! *fun* proc)  ; useful for debug
+             (invoke proc #t) )
+           (signal-exception #f (lst "Incorrect arity" 'apply)) ) ) ) ) )
+
+(define-initial lst
+  (make-primitive
+   (fun ()
+     (let ((args-number (- (activation-frame-argument-length *val*) 1))
+           (result '()) )
+       (do ((i args-number (- i 1)))
+           ((= i 0))
+         (set! result (cons (activation-frame-argument *val* (- i 1)) 
+                            result )) ) 
+       (set! *val* result)
+       (set! *pc* (stack-pop)) ) ) ) )
+
+;;; Reserve some variables for future use in future chapters.
+
+(ds (define-reserved ,name)
+  `(define-initial name
+     (make-primitive
+      (fun ()
+	(signal-exception #f (lst "Not yet implemented" 'name))))))
+
+(define-reserved global-value)
+(define-reserved load)
+(define-reserved eval)
+(define-reserved eval/at)
+(define-reserved eval/b)
+(define-reserved enrich)
+(define-reserved procedure->environment)
+(define-reserved procedure->definition)
+(define-reserved variable-value)
+(define-reserved set-variable-value!)
+(define-reserved variable-defined?)
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; Use Meroon show functions to describe the inner working.
+
+(dv *debug* #f)
+
+(dm show-registers (message)
+  (when *debug* 
+    (format out "\n----------------%s" message)
+    (format out "\nENV  = ") (show *env*)
+    (format out"\nVAL  = ") (show *val*)
+    (format out "\nFUN  = ") (show *fun*)
+    (show-stack (save-stack))
+    (format out "\n(PC  = %s), next INSTR to be executed = %s\n" 
+            *pc* (instruction-decode *code* *pc*) ) ) )
+
+(dm show-stack (stack)
+  (let ((n (len stack)))
+    (rep loop ((i 0))
+      (unless (= i n)
+	(format out "\nSTK[%s]= " i) (show (elt *stack* i)) (loop (+ i 1))))))
+
+(dm show ((f closure) stream)
+  (format stream "#<Closure(pc=%s)>" (closure-code f)) ) )
+
+(dm show (stream (a <activation-frame>))
+  (display stream "[Frame next=")
+  (show stream (frame-next a))
+  (display stream ", content=" )
+  (rep loop ((i 0))
+    (unless (= i (frame-length a))
+      (show stream (frame-argument a i))
+      (display stream " & ") 
+      (loop (+ i 1))))
+  (display stream "]" ) ) )
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+
+(dm code-prologue ()
+  (set finish-pc 0)
+  (FINISH) )
+
+(dm make-code-segment (m)
+  (apply vector (cat (code-prologue) m (RETURN))) )
+
+(dm chapter7d-interpreter()
+  (loc toplevel ()
+    (display ((stand-alone-producer7d (read)) 100))
+    (toplevel) )
+  (toplevel) ) 
+
+(dm stand-alone-producer7d (e)
+  (set g.current (original.g.current))
+  (set *quotations* '())
+  (let* ((code (make-code-segment (meaning e r.init #t)))
+         (start-pc (len (code-prologue)))
+         (global-names (map car (reverse g.current)))
+         (constants (apply vector *quotations*)) )
+    (fun (stack-size)
+      (run-machine stack-size start-pc code constants global-names) ) ) )
+
+(dm run-machine (stack-size pc code constants global-names)
+  (set sg.current (make-vector (len global-names) undefined-value))
+  (set sg.current.names global-names)
+  (set *constants*   constants)
+  (set *code*        code)
+  (set *env*         sr.init)
+  (set *stack*       (make-vector stack-size))
+  (set *stack-index* 0)
+  (set *val*         'anything)
+  (set *fun*         'anything)
+  (set *arg1*        'anything)
+  (set *arg2*        'anything)
+  (stack-push finish-pc)                ;  pc for FINISH
+  (set *pc*          pc)
+  (call/cc (fun (exit)
+             (set *exit* exit)
+             (run) )) )
+
+;;; Patch run to show registers in debug mode.
+
+(let ((native-run run))
+  (set run (fun ()
+	     (when *debug* (show-registers ""))
+	     (native-run) )) )
+(let ((native-run-machine run-machine))
+  (set run-machine
+       (fun (stack-size pc code constants global-names)
+	 (when *debug*                     ; DEBUG
+	   (format out "Code= %s\n" (disassemble code)) )         
+	 (native-run-machine stack-size pc code constants global-names) ) ) )
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; Tests
+
+(dm scheme7d ()
+  (interpreter
+   "Scheme? "  
+   "Scheme= " 
+   #t
+   (fun (read print error)
+     (setup-wrong-functions error)
+     (fun ()
+       ((stand-alone-producer7d (read)) 100)
+       (print *val*) ) ) ) )
+
+(dm test-scheme7d (file)
+  (suite-test 
+   file 
+   "Scheme? " 
+   "Scheme= "
+   #t
+   (fun (read check error)
+     (setup-wrong-functions error)
+     (fun ()
+       ((stand-alone-producer7d (read)) 100)
+       (check *val*) ) )
+   = ) )
+
+(dm setup-wrong-functions (error)
+  (set signal-exception (fun (c (args ...)) (apply error args)))
+  (set wrong (fun ((args ...))
+                (format out "
+		>>>>>>>>>>>>>>>>>>RunTime PANIC<<<<<<<<<<<<<<<<<<<<<<<<<
+		%s\n" (activation-frame-argument *val* 1) )
+                (apply error args) ))
+  (set static-wrong (fun args
+                       (format out "
+		>>>>>>>>>>>>>>>>>>Static WARNING<<<<<<<<<<<<<<<<<<<<<<<<<
+		%s\n" args )
+                       (apply error args) )) )
+
+;;; Missing global variables
+
+(dv signal-exception 'wait)
+(dv finish-pc 'wait)
+(dv *exit* 'wait)
+
+;;; end of chap7d.scm

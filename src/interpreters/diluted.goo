@@ -1,0 +1,344 @@
+(dm SHALLOW-ARGUMENT-REF (j)
+  (fun () (frame-argument *env* j)) )
+
+(dm PREDEFINED (i)
+  (fun () (predefined-value i)) )
+
+(dm DEEP-ARGUMENT-REF (i j)
+  (fun () (deep-value *env* i j)) )
+
+(dm SHALLOW-ARGUMENT-SET (j m)
+  (fun () (set (frame-argument *env* j) (m))) )
+
+(dm DEEP-ARGUMENT-SET (i j m)
+  (fun () (set (deep-value *env* i j) (m))) )
+
+(dm GLOBAL-REF (i)
+  (fun () (global-value i)) )
+
+;;; Note that we lost the name of the variable, it must be retrieved
+;;; from elsewhere.   TOBEDONE
+
+(dm CHECKED-GLOBAL-REF (i)
+  (fun () 
+    (let ((v (global-value i)))
+      (if (== v undefined-value)
+          (wrong "Uninitialized variable")
+          v ) ) ) )
+
+(dm GLOBAL-SET (i m)
+  (fun () (set (global-value i) (m))))
+
+(dm CONSTANT (value)
+  (fun () value) )
+
+(dm ALTERNATIVE (m1 m2 m3)
+  (fun () (if (m1) (m2) (m3))) )
+
+(dm SEQUENCE (m m+)
+  (fun () (m) (m+)) )
+
+(dm TR-FIX-LET (m* m+)
+  (fun ()
+    (set *env* (sr-extend* *env* (m*)))
+    (m+) ) )
+
+(dm FIX-LET (m* m+)
+  (fun ()
+    (set *env* (sr-extend* *env* (m*)))
+    (let ((result (m+)))
+      (set *env* (environment-next *env*))
+      result ) ) )
+
+(dm CALL0 (address)
+  (fun () (address)) )
+
+(dm CALL1 (address m1)
+  (fun () (address (m1))) )
+
+(dm CALL2 (address m1 m2)
+  (fun () (let ((v1 (m1))) 
+               (address v1 (m2)) )) )
+
+(dm CALL3 (address m1 m2 m3)
+  (fun () (let ((v1 (m1))
+		(v2 (m2)) )
+	    (address v1 v2 (m3)) )) )
+
+(dm FIX-CLOSURE (m+ arity)
+  (let ((arity+1 (+ arity 1)))
+    (fun ()
+      (loc ((the-function (v* sr)
+              (if (= (frame-length v*) arity+1)
+                  (seq (set *env* (sr-extend* sr v*)) (m+) )
+                  (wrong "Incorrect arity") ) )
+      (make-closure the-function *env*) ) ) )
+
+(dm NARY-CLOSURE (m+ arity)
+  (let ((arity+1 (+ arity 1)))
+    (fun ()
+      (loc ((the-function (v* sr)
+	      (if (>= (frame-length v*) arity+1)
+		  (seq (listify! v* arity)
+		       (set *env* (sr-extend* sr v*))
+		       (m+) )
+		  (wrong "Incorrect arity") ) )
+	(make-closure the-function *env*) ) ) )))
+
+(dm TR-REGULAR-CALL (m m*) 
+  (fun ()
+    (let ((f (m)))
+      (invoke f (m*)) ) ) )
+
+(dm REGULAR-CALL (m m*)
+  (fun ()
+    (let ((f (m))
+	  (v* (m*))
+	  (sr *env*)
+	  (result (invoke f v*)) )
+      (set *env* sr)
+      result ) ) )
+
+(dm STORE-ARGUMENT (m m* rank)
+  (fun ()
+    (let* ((v (m))
+           (v* (m*)) )
+      (set (frame-argument v* rank) v)
+      v* ) ) )
+
+(dm CONS-ARGUMENT (m m* arity)
+  (fun ()
+    (let ((v (m))
+          (v* (m*)) )
+      (set (frame-argument v* arity)
+	   (pair v (frame-argument v* arity)) )
+      v* ) ) )
+
+(dm ALLOCATE-FRAME (size)
+  (let ((size+1 (+ size 1)))
+    (fun ()
+      (allocate-frame size+1) ) ) )
+
+(dm ALLOCATE-DOTTED-FRAME (arity)
+  (let ((arity+1 (+ arity 1)))
+    (fun ()
+      (let ((v* (allocate-frame arity+1)))
+        (set (frame-argument! v* arity) '())
+        v* ) ) ) )
+
+;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; The threaded interpreter.
+;;; E is the expression to evaluate
+;;; SR is the representation of the local lexical environment
+;;; TAIL? is a boolean that indicates if E is a terminal call (also
+;;; means whether the *env* register should be restored or not).
+
+(dm meaning (e r t?)
+  (if (atom? e)
+      (if (isa? e <sym>)
+	  (meaning-reference e r t?)
+	  e)
+      (meaning-list (head e) e r t?)))
+
+(dm meaning-list ((_ 'quote) (e <lst>) r t?)
+  (fun () 
+    (CONSTANT (sexpr-text-of-quotation e)) ))
+
+(dm meaning-list ((_ 'if) (e <lst>) r t?)
+  (let ((m1 (meaning e1 r #f))
+        (m2 (meaning e2 r t?))
+        (m3 (meaning e3 r t?)) )
+    (ALTERNATIVE m1 m2 m3) ) )
+
+(dm meaning-reference ((n <sym>) r t?)
+  (meaning-reference-of (compute-variable r n) n r t?))
+
+(dm meaning-reference-of ((var <loc-ref>) n r t?)
+  (let ((i (var-offset var))
+	(j (var-frame-offset var)))
+    (if (= i 0)
+	(SHALLOW-ARGUMENT-REF j)
+	(DEEP-ARGUMENT-REF i j) ) ) )
+
+(dm meaning-reference-of ((var <glo-ref>) n r t?)
+  (CHECKED-GLOBAL-REF (var-offset var) ) )
+
+(dm meaning-reference-of ((var <pre-ref>) n r t?)
+  (PREDEFINED (var-offset var) ) ) 
+
+(dm meaning-assignment ((n <sym>) e r t?)
+  (let ((m (meaning e r #f)))
+    (meaning-assignment-of (compute-variable r n) n m r t?)))
+
+(dm meaning-assignment-of ((var <loc-ref>) n m r t?)
+  (let ((i (var-offset var))
+	(j (var-frame-offset var)))
+    (if (= i 0)
+	(SHALLOW-ARGUMENT-SET j m)
+	(DEEP-ARGUMENT-SET i j m) ) ) )
+
+(dm meaning-assignment-of ((var <glo-ref>) n m r t?)
+  (GLOBAL-SET (var-offset var) m) )
+
+(dm meaning-list ((_ 'seq) (e <lst>) r)
+  (meaning-sequence (sexpr-begin-actions e) r))
+
+(dm meaning-sequence (e+ r t?)
+  (if (empty? e+)
+      (static-wrong "Illegal syntax: (seq)")
+      (if (empty? (tail e+))
+          (meaning (head e+) r t?)
+          (meaning*-multiple-sequence (head e+) (tail e+) r t?))))
+
+(dm meaning*-multiple-sequence (e e+ r t?)
+  (let ((m1 (meaning e r #f))
+        (m+ (meaning-sequence e+ r t?)) )
+    (SEQUENCE m1 m+) ) )
+
+(dm meaning-abstraction (nn* e+ r t?)
+  (rep parse ((n* nn*)
+              (regular '()) )
+    (if (empty? n*) (meaning-fix-abstraction nn* e+ r tail?)
+	(if (isa? n* <lst>) (parse (tail n*) (pair (head n*) regular))
+	    (meaning-dotted-abstraction 
+	     (rev regular) n* e+ r tail? )) ) ) )
+
+(dm meaning-fix-abstraction (n* e+ r tail?)
+  (let* ((arity (len n*))
+         (r2 (r-extend* r n*))
+         (m+ (meaning-sequence e+ r2 #t)) )
+    (FIX-CLOSURE m+ arity) ) )
+
+(dm meaning-dotted-abstraction (n* n e+ r tail?)
+  (let* ((arity (len n*))
+         (r2 (r-extend* r (cat n* (list n))))
+         (m+ (meaning-sequence e+ r2 #t)) )
+    (NARY-CLOSURE m+ arity) ) )
+
+;;; Application meaning.
+
+(dm meaning-application (e e* r t?)
+  (case ((and (isa? e <sym>)
+              (let ((var (compute-variable r e)))
+                (and (isa? var <pre-var>)
+                     (let ((desc (get-description e)))
+                       (and desc
+                            (== 'function (car desc))
+                            (or (= (length (cddr desc)) (length e*))
+                                (static-wrong 
+                                 "Incorrect arity for primitive" e ))))))))
+         (meaning-primitive-application e e* r tail?) )
+        ((and (isa? e <lst>)
+              (== 'fun (head e)) )
+         (meaning-closed-application e e* r t?) )
+        (else 
+	 (meaning-regular-application e e* r t?)) ) )
+
+;;; Parse the variable list to check the arity and detect wether the
+;;; abstraction is dotted or not.
+
+(dm meaning-closed-application (e ee* r tail?)
+  (let ((nn* (cadr e)))
+    (let parse ((n* nn*)
+                (e* ee*)
+                (regular '()) )
+      (cond
+       ((pair? n*) 
+        (if (pair? e*)
+            (parse (cdr n*) (cdr e*) (cons (car n*) regular))
+            (static-wrong "Too less arguments" e ee*) ) )
+       ((null? n*)
+        (if (null? e*)
+            (meaning-fix-closed-application 
+             nn* (cddr e) ee* r tail? )
+            (static-wrong "Too much arguments" e ee*) ) )
+       (else (meaning-dotted-closed-application 
+              (reverse regular) n* (cddr e) ee* r tail? )) ) ) ) )
+
+(dm meaning-fix-closed-application (n* body e* r tail?)
+  (let* ((m* (meaning* e* r (length e*) #f))
+         (r2 (r-extend* r n*))
+         (m+ (meaning-sequence body r2 tail?)) )
+    (if tail? (TR-FIX-LET m* m+) 
+        (FIX-LET m* m+) ) ) )
+
+(dm meaning-dotted-closed-application (n* n body e* r tail?)
+  (let* ((m* (meaning-dotted* e* r (length e*) (length n*) #f))
+         (r2 (r-extend* r (append n* (list n))))
+         (m+ (meaning-sequence body r2 tail?)) )
+    (if tail? (TR-FIX-LET m* m+)
+        (FIX-LET m* m+) ) ) )
+
+;;; Handles a call to a predefined primitive. The arity is already checked.
+;;; The optimization is to avoid the allocation of the activation frame.
+;;; These primitives never change the *env* register nor have control effect.
+
+(dm meaning-primitive-application (e e* r tail?)
+  (let ((desc (get-description e))
+	;; desc = (function address . variables-list)
+        (address (cadr desc))
+	(size (length e*)) )
+    (select size
+      ((0) (CALL0 address))
+      ((1) 
+       (let ((m1 (meaning (car e*) r #f)))
+         (CALL1 address m1) ) )
+      ((2) 
+       (let ((m1 (meaning (car e*) r #f))
+             (m2 (meaning (cadr e*) r #f)) )
+         (CALL2 address m1 m2) ) )
+      ((3) 
+       (let ((m1 (meaning (car e*) r #f))
+             (m2 (meaning (cadr e*) r #f))
+             (m3 (meaning (caddr e*) r #f)) )
+         (CALL3 address m1 m2 m3) ) )
+      (else (meaning-regular-application e e* r tail?)) ) ) )
+
+;;; In a regular application, the invocation protocol is to call the
+;;; function with an activation frame and a continuation: (f v* k).
+
+(dm meaning-regular-application (e e* r tail?)
+  (let* ((m (meaning e r #f))
+         (m* (meaning* e* r (length e*) #f)) )
+    (if tail? (TR-REGULAR-CALL m m*) (REGULAR-CALL m m*)) ) )
+
+(dm meaning* (e* r size tail?)
+  (if (pair? e*)
+      (meaning-some-arguments (car e*) (cdr e*) r size tail?)
+      (meaning-no-argument r size tail?) ) )
+
+(dm meaning-dotted* (e* r size arity tail?)
+  (if (pair? e*)
+      (meaning-some-dotted-arguments (car e*) (cdr e*) r size arity tail?)
+      (meaning-no-dotted-argument r size arity tail?) ) )
+
+(dm meaning-some-arguments (e e* r size t?)
+  (let ((m (meaning e r #f))
+        (m* (meaning* e* r size t?))
+        (rank (- size (+ (len e*) 1))) )
+    (STORE-ARGUMENT m m* rank) ) )
+
+(dm meaning-some-dotted-arguments (e e* r size arity t?)
+  (let ((m (meaning e r #f))
+        (m* (meaning-dotted* e* r size arity t?))
+        (rank (- size (+ (len e*) 1))) )
+    (if (< rank arity) 
+	(STORE-ARGUMENT m m* rank)
+        (CONS-ARGUMENT m m* arity) ) ) )
+
+(dm meaning-no-argument (r size t?)
+  (ALLOCATE-FRAME size) )
+
+(dm meaning-no-dotted-argument (r size arity t?)
+  (ALLOCATE-DOTTED-FRAME arity) )
+
+;;; Gather into a list all arguments from arity+1 to the end of the
+;;; activation frame and store this list into the arity+1th slot.
+
+(dm listify! (v* arity)
+  (rep loop ((index (- (frame-length v*) 1))
+             (result '()) )
+    (if (= arity index)
+        (set (frame-argument v* arity) result)
+        (loop (- index 1) (pair (frame-argument v* (- index 1)) result)))))
+

@@ -1,0 +1,295 @@
+(dm atom? ((e <lst>) => <log>) #f)
+(dm atom? ((e '())   => <log>) #t)
+(dm atom? ((e <any>) => <log>) #t)
+
+(dm meaning (e r)
+  (if (atom? e)
+      (if (isa? e <sym>)
+	  (meaning-reference e r)
+	  e)
+      (meaning-list (head e) e r)))
+
+(dm meaning-list ((first 'quote) (e <lst>) r)
+  (fun (sr k) (k (sexpr-text-of-quotation e))))
+
+(dm meaning-list ((first 'if) (e <lst>) r)
+  (let ((pm (meaning (sexpr-if-predicate e) r))
+	(cm (meaning (sexpr-if-consequent e) r))
+	(am (meaning (sexpr-if-alternative e) r)))
+    (fun (sr k) (pm sr (fun (v) ((if v m2 m3) sr k))))))
+
+(dm meaning-sequence ((e+ <lst>) r)
+  (if (empty? e+)
+      (static-wrong "Illegal syntax: (seq)")
+      (if (empty? (tail e+))
+	  (meaning (head e+) r)
+	  (meaning*-multiple-sequence (head e+) (tail e+) r))))
+
+(dm meaning*-multiple-sequence (e e+ r)
+  (let ((m1 (meaning e r))
+	(m+ (meaning-sequence e+ r)))
+    (fun (sr k) (m1 sr (fun (v) (m+ sr k))))))
+
+(dm meaning-list ((first 'seq) (e <lst>) r)
+  (meaning-sequence (sexpr-begin-actions e) r))
+
+(dm meaning-reference ((n <sym>) r)
+  (meaning-reference-of (compute-variable r n) n r))
+
+(dm meaning-reference-of ((var <loc-ref>) n r)
+  (let ((i (var-offset var))
+	(j (var-frame-offset var)))
+    (if (= i 0)
+	(fun (sr k) (k (frame-argument sr j)))
+	(fun (sr k) (k (deep-value sr i j))))))
+
+(dm meaning-reference-of ((var <glo-ref>) n r)
+  (let ((i (var-offset var)))
+    (if (== (global-value i) undefined-value)
+	(fun (sr k) (let ((v (global-value i)))
+		      (if (== v undefined-value)
+			  (wrong "Unitialized variable" n)
+			  (k v))))
+	(fun (sr k) (k (global-value i))))))
+
+(dm meaning-reference-of ((var <pre-ref>) n r)
+  (let ((i (var-offset var))
+	(v (predefined-value i)))
+    (fun (sr k) (k v))))
+
+(dm meaning-reference-of (var n r)
+  (static-wrong "No such variable" n))
+
+(dm meaning-assignment ((n <sym>) e r)
+  (let ((m (meaning e r)))
+    (meaning-assignment-of (compute-variable r n) n e r))
+
+(dm meaning-assignment-of ((var <loc-ref>) n e r)
+  (let ((i (var-offset var))
+	(j (var-frame-offset var)))
+    (if (= i 0)
+	(fun (sr k) (k (set (frame-argument sr j) e)))
+	(fun (sr k) (k (set (deep-value sr i j) e))))))
+
+(dm meaning-assignment-of ((var <glo-ref>) n e r)
+  (let ((i (var-offset var)))
+    (fun (sr k) (k (set (global-value i) e)))))
+
+(dm meaning-assignment-of (var n r)
+  (static-wrong "No such variable" n))))
+
+(dm meaning-list ((first 'dv) (e <lst>) r)
+  (let ((name (sexpr-variable-name (sexpr-definition-variable e)))
+	(var (compute-variable name r)))
+    (meaning-assignment-of var name (sexpr-definition-value e) r)))
+
+(dm meaning-list ((first 'set) (e <lst>) r)
+  (meaning-assignment (sexpr-assignment-variable e) (sexpr-assignment-value e)))
+
+(dm meaning-list ((first 'let) (e <lst>) r)
+  (meaning (sexpr-let->combination e) r))
+
+(dm meaning-list ((first 'lab) (e <lst>) env)
+  (lab return
+    (let ((exit (make-function '(x) `(,return x) env)))
+      (meaning-seq (sexpr-block-body e)
+		(env-extend! env #f (lst (sexpr-block-name e)) (lst exit))))))
+
+(dm meaning-list ((first 'fin) (e <lst>) env)
+  (fin (meaning (sexpr-unwind-protect-protected-form e) env)
+       (meaning-seq (sexpr-unwind-protect-cleanup-forms e) env)))
+
+(dm meaning-list ((first 'try) (e <lst>) env)
+  (let ((handler (meaning (sexpr-monitor-handler e) env)))
+    (try ((condition resume) (invoke handler (lst condition resume)))
+      (meaning-seq (sexpr-monitor-body e) env))))
+
+(dm make-function (variables body env)
+  (fun ((args ...)) (meaning-seq body (env-extend! env #f variables args))))
+
+(dm meaning-application (e (e* <lst>) r)
+  (let ((m (meaning e r))
+	(m* (meaning* e* r (len e*))))
+    (fun (sr k) 
+      (m sr (fun (f) 
+	      (if (isa? f <fun>)
+		  (m* sr (fun (v*) (f v* k)))
+		  (wrong "Not a function" f)))))))
+			 
+(dm meaning* ((e* <lst>) r size)
+  (if (empty? e*)
+      (meaning-no-argument r size)
+      (meaning-some-arguments (head e*) (tail e*) r size)))
+
+(dm meaning-no-argument (r size)
+  (let ((size+1 (+ size 1)))
+    (fun (sr k) (let ((v* (allocate-frame size+1))) (k v*)))))
+
+(dm meaning-some-arguments (e e* r size)
+  (let ((m (meaning e r))
+	(m* (meaning* e* r size))
+	(rank (- size (+ (len e*) 1))))
+    (fun (sr k)
+      (m sr (fun (v)
+	      (m* sr (fun (v*) (set (frame-argument v* rank) v) (k v*))))))))
+
+(dm meaning-list ((first <lst>) (e <lst>) r)
+  (meaning-application first (tail e) r))
+
+(dm meaning-list ((first <sym>) (e <lst>) env)
+  (meaning-application first (tail e) r))
+
+(dm invoke (f args)
+  (if (isa? f <fun>)
+      (apply f args)
+      (error "Not a function %=" f)))
+
+(dm meaning-fix-abstraction ((n* <lst>) (e+ <lst>) r)
+  (let ((arity (len n*))
+	(arity+1 (+ arity 1))
+	(r2 (r-extend* r n*))
+	(m+ (meaning-sequence e+ r2)))
+    (fun (sr k)
+      (k (fun (v* k1)
+	   (if (= (len (frame-arguments v*)) arity+1)
+	       (m+ (sr-extend* sr v*) k1)
+	       (wrong "Incorrect arity")))))))
+
+(dm meaning-list ((first 'fun) (e <lst>) r)
+  (meaning-fix-abstraction 
+   (map variable-name (sexpr-function-parameters e))
+   (sexpr-function-body e)))
+
+;;; WORLD
+
+(dv <env> (isa <any>))
+  (slot <env> (env-next <env>))
+
+(dv <frame> (isa <env>))
+  (slot <frame> (env-arguments <vec>))
+
+(dm allocate-frame ((size <int>) => <frame>)
+  (isa <frame> (set env-arguments (fab <vec> size))))
+
+(dm frame-length ((frame <frame>) => <int>)
+  (len (env-arguments frame)))
+
+(dm frame-argument ((frame <frame>) (offset <int>) => <any>)
+  (elt (env-arguments frame) offset))
+
+(dm frame-argument-setter (arg (frame <frame>) (offset <int>))
+  (set (elt (env-arguments frame) offset) arg))
+
+(dm deep-value ((sr <env>) (i <int>) (j <int>))
+  (if (= i 0)
+      (frame-argument sr j)
+      (deep-value (env-next sr) (- i 1) j)))
+
+(dm deep-value-setter (z (sr <env>) (i <int>) (j <int>))
+  (if (= i 0)
+      (set (frame-argument sr j) z)
+      (set (deep-value (env-next sr) (- i 1) j) z)))
+
+(dm sr-extend* (sr v*)
+  (set (env-next v*) sr)
+  v*)
+
+(define sr.init '())
+
+(dv <var> (isa <any>))
+  (slot <var> (var-name <sym>))
+  (slot <var> (var-offset <int>))
+
+(dv <glo-var> (isa <var>))
+
+(dv <pre-var> (isa <var>))
+
+(dv <loc-var> (isa <var>))
+  (slot <loc-var> (var-frame-offset <int>))
+
+(dm global-variable? ((g <assocs>) (n <sym>))
+  (elt-or g n #f))
+
+(dm r-extend* ((r <lst>) (n* <lst>) => <lst>)
+  (pair n* r))
+
+(dm local-variable? ((r <lst>) (i <int>) (n <sym>))
+  (and (not (empty? r))
+       (rep scan ((names (head r)) (j 0))
+         (case ((empty? names)
+                (local-variable? (tail r) (+ i 1) n) )
+               ((isa? names <lst>) 
+                (if (== n (head names))
+		    (isa <loc-var>
+		      (set var-name n) 
+		      (set var-offset i) (set var-frame-offset j))
+                    (scan (tail names) (+ 1 j)) ) )
+               ((== n names) 
+		(isa <loc-var>
+		      (set var-name n) 
+		      (set var-offset i) (set var-frame-offset j)))))))
+
+(dm compute-variable (r n)
+  (or (local-variable? r 0 n)
+      (global-variable? g.current n)
+      (global-variable? g.init n)
+      (adjoin-global-variable! n)))
+
+(dm adjoin-global-variable! (n)
+  (let ((index (g.current-extend! name)))
+    (set (elt sg.current index) undefined-value)
+    (elt g.current n)))
+
+(dm g.env-extend! (r n type)
+  (let ((level (len r)))
+    (set (elt r n) (isa type (set var-name n) (set var-offset level)))
+    level))
+
+(dm g.current-extend! (n)
+  (g.env-extend! g.current n <glo-var>))
+
+(dm g.init-extend! (n)
+  (g.env-extend! g.init n <pre-var>))
+
+(dv sg.current (fab <vec> 100))
+(dv sg.init    (fab <vec> 100))
+(dm global-value ((i <int>))
+  (elt sg.current i))
+(dm global-value-setter (z (i <int>))
+  (set (elt sg.current i) v))
+(dm predefined-value ((i <int>))
+  (elt sg.init i))
+
+(dm g.current-initialize! (name)
+  (let ((kind (compute-kind r.init name)))
+    (if kind
+	(if (== (head kind) 'global)
+	    (set (elt sg.current (tail kind) undefined-value))
+	    (static-wrong "Wrong redefinition" name))
+	(let ((index (g.current-extend! name)))
+	  (set (elt sg.current i undefined-value))))))
+
+(dm g.init-initialize! (name)
+  (let ((kind (compute-kind r.init name)))
+    (if kind
+	(if (== (head kind) 'predefined)
+	    (set (elt sg.init (tail kind) undefined-value))
+	    (static-wrong "Wrong redefinition" name))
+	(let ((index (g.init-extend! name)))
+	  (set (elt sg.init i undefined-value))))))
+
+(dv *e* $the-empty-environment)
+
+(dm initialize-world ()
+  (let ((env (env-extend! $the-empty-environment '() '() 'global)))
+    (env-define-binding! env 'sig  sig)
+    (env-define-binding! env 'pair pair)
+    (env-define-binding! env 'head head)
+    (env-define-binding! env 'tail tail)
+    (env-define-binding! env 'empty? empty?)
+    (env-define-binding! env '+ +)
+    (env-define-binding! env '< <)
+    (env-define-binding! env '= =)
+    (env-define-binding! env '== ==)
+    (set *e* env)
+    #f))

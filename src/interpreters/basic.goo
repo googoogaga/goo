@@ -1,0 +1,122 @@
+(dm evol (e env) e) 
+
+(dm evol ((e '()) env) e)
+
+(dm evol ((e <sym>) env)
+  (env-binding-value env e))
+
+(dm evol ((e <lst>) env)
+  (evol-list (head e) e env))
+
+(dm evol-list ((_ 'quote) (e <lst>) env)
+  (2nd e))
+
+(dm evol-list ((_ 'if) (e <lst>) env)
+  (if (evol (sexpr-if-test e) env)
+      (evol (sexpr-if-then e) env)
+      (evol (sexpr-if-else e) env)))
+
+(dm evol-seq ((e* <lst>) env)
+  (if (empty? e*)
+      #f
+      (rep loop (((e* <lst>) e*))
+        (let ((er (evol (head e*) env)))
+          (if (empty? (tail e*))
+              er
+              (loop (tail e*)))))))
+
+(dm evol-list ((_ 'seq) (e <lst>) env)
+  (evol-seq (sexpr-begin-actions e) env))
+
+(dm evol-list ((_ 'dv) (e <lst>) env)
+  (env-define-binding! 
+   env (sexpr-variable-name (sexpr-definition-variable e))
+   (evol (sexpr-definition-value e) env)))
+
+(dm evol-list ((_ 'set) (e <lst>) env)
+  (set (env-binding-value env (sexpr-assignment-variable e))
+       (evol (sexpr-assignment-value e) env)))
+
+(dm sexpr-sequence->begin ((seq <lst>) => <any>)
+  (if (empty? seq)
+      seq
+      (if (sexpr-last-exp? seq)
+          (sexpr-first-exp seq)
+          (sexpr-make-begin seq))))
+
+(dm sexpr-let-body->begin ((let-exp <lst>) => <any>)
+  (sexpr-sequence->begin (sexpr-let-body let-exp)))
+
+(dm sexpr-let->combination ((let-exp <lst>) => <any>)
+  (let ((names  (sexpr-let-bound-variables let-exp))
+        (values (sexpr-let-values let-exp))
+        (body   (sexpr-let-body->begin let-exp)))
+    (rep col ((names names) (values values))
+      (if (empty? names)
+          body
+          (pair (lst $sexpr-method-tag (lst (head names))
+                     (col (tail names) (tail values)))
+                (lst (head values)))))))
+
+(dm evol-list ((_ 'let) (e <lst>) env)
+  (evol (sexpr-let->combination e) env))
+
+(dm evol-list ((_ 'lab) (e <lst>) env)
+  (lab return
+    (let ((exit (make-function '(x) `((,return x)) env)))
+      (evol-seq (sexpr-lab-body e)
+                (env-extend! env (lst (sexpr-lab-name e)) (lst exit))))))
+
+(dm evol-list ((_ 'fin) (e <lst>) env)
+  (fin (evol (sexpr-fin-protected-form e) env)
+       (evol-seq (sexpr-fin-cleanup-forms e) env)))
+
+(dm evol-list ((_ 'try) (e <lst>) env)
+  (let ((handler (evol (sexpr-try-handler e) env)))
+    (try ((condition resume) (invoke handler (lst condition resume)))
+      (evol-seq (sexpr-try-body e) env))))
+
+(dm make-function (vars body env)
+  (fun ((args ...)) 
+    (evol-seq body (env-extend! env vars args))))
+
+(dm evol-list ((_ 'fun) (e <lst>) env)
+  (make-function
+   (sexpr-anonymous-function-parameters e)
+   (sexpr-anonymous-function-body e) env))
+
+(dm invoke (f args)
+  (if (isa? f <fun>)
+      (apply f args)
+      (error "Not a function %=" f)))
+
+(dm evol* ((e* <lst>) env)
+  (rep loop (((r <lst>) '()) ((e* <lst>) e*))
+    (if (empty? e*)
+        (rev! r)
+        (loop (pair (evol (head e*) env) r) (tail e*)))))
+
+(dm evol-list ((first <lst>) (e <lst>) env)
+  (invoke (evol first env) (evol* (tail e) env)))
+
+(dm evol-list ((first <sym>) (e <lst>) env)
+  (invoke (evol first env) (evol* (tail e) env)))
+
+(dm evol-list ((first <fun>) (e <lst>) env)
+  (invoke first (evol* (tail e) env)))
+
+(dv *e* $empty-env)
+
+(dm initialize-world ()
+  (let ((env (env-extend! $empty-env '() '())))
+    (env-define-binding! env 'pair pair)
+    (env-define-binding! env 'head head)
+    (env-define-binding! env 'tail tail)
+    (env-define-binding! env 'empty? empty?)
+    (env-define-binding! env '+ +)
+    (env-define-binding! env '- -)
+    (env-define-binding! env '< <)
+    (env-define-binding! env '= =)
+    (env-define-binding! env '== ==)
+    (set *e* env)
+    #f))

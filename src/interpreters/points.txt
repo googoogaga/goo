@@ -1,0 +1,21 @@
+multimethod dispatch with singletons
+
+  (dm evol-list ((_ 'if)   (e <lst>) env) ...)
+  (dm evol-list ((_ 'seq)  (e <lst>) env) ...)
+  (dm evol-list ((f <lst>) (e <lst>) env) ...)
+
+abstraction interoperation using 
+
+  (dm make-function (vars body env)
+    (fun ((args ...)) 
+      (evol-seq body (env-extend! env vars args))))
+
+initializing world
+
+  (dv *e* $empty-env)
+
+  (dm initialize-world ()
+    (let ((env (env-extend! $empty-env '() '())))
+      (env-define-binding! env 'pair pair)
+      ...
+      (set *e* env)))

@@ -1,0 +1,101 @@
+(dm evol ((e <sym>) env k)
+  (k (env-binding-value env e)))
+
+(dm evol ((e <sym>) env k)
+  (k e))
+
+(dm evol ((e <lst>) env k)
+  (evol-list (head e) e env k))
+
+(dm evol-list ((first 'quote) (e <lst>) env k)
+  (k (2nd e)))
+
+(dm evol-list ((first 'if) (e <lst>) env k)
+  (evol (sexpr-if-test e) env
+	(fun (e)
+	  (if e
+	      (evol (sexpr-if-then e) env k)
+	      (evol (sexpr-if-else e) env k)))))
+
+(dm evol-seq+ ((e+ <lst>) env k)
+  (if (empty? (tail e*))
+      (evol (head e*) env k)
+      (evol (head e*) env
+	    (fun (e) (evol-seq+ (tail e*) env k)))))
+
+(dm evol-seq ((e* <lst>) env k)
+  (if (empty? e*)
+      (k #f)
+      (evol-seq+ e* env k)))
+
+(dm evol-list ((_ 'seq) (e <lst>) env k)
+  (evol-seq (sexpr-begin-actions e) env k))
+
+(dm evol-list ((_ 'dv) (e <lst>) env k)
+  (evol (sexpr-definition-value e) env
+	(fun (v) 
+	  (k (env-define-binding! 
+	      env (sexpr-variable-name (sexpr-definition-variable e)) v)))))
+
+(dm evol-list ((_ 'set) (e <lst>) env k)
+  (evol (sexpr-assignment-value e) env
+	(fun (v) 
+	  (k (set (env-binding-value env (sexpr-assignment-variable e))
+		  v)))))
+
+(dm evol-list ((_ 'let) (e <lst>) env k)
+  (evol (sexpr-let->combination e) env k))
+
+(dm evol-list ((_ 'lab) (e <lst>) env k)
+  (let ((exit (make-function '(x) `(,k x) env)))
+    (evol-seq (sexpr-block-body e)
+	      (env-extend! env (lst (sexpr-block-name e)) (lst exit))
+	      k)))
+
+(dm evol-list ((_ 'fin) (e <lst>) env)
+  (fin (evol (sexpr-unwind-protect-protected-form e) env)
+       (evol-seq (sexpr-unwind-protect-cleanup-forms e) env)))
+
+(dm evol-list ((_ 'try) (e <lst>) env)
+  (let ((handler (evol (sexpr-monitor-handler e) env)))
+    (try ((condition resume) (invoke handler (lst condition resume)))
+      (evol-seq (sexpr-monitor-body e) env))))
+
+(dm make-function (variables body env)
+  (fun ((args ...)) (evol-seq body (env-extend! env #f variables args))))
+
+(dm evol-list ((_ 'fun) (e <lst>) env)
+  (make-function (sexpr-function-parameters e) (sexpr-function-body e) env))
+
+(dm invoke (f args)
+  (if (isa? f <fun>)
+      (apply f args)
+      (error "Not a function %=" f)))
+
+(dm evol* ((e* <lst>) env)
+  (rep loop (((r <lst>) '()) ((e* <lst>) e*))
+    (if (empty? e*)
+	(rev! r)
+	(loop (pair (evol (head e*) env) r) (tail e*)))))
+
+(dm evol-list ((first <lst>) (e <lst>) env)
+  (invoke (evol fist env) (evol* (tail e) env)))
+
+(dm evol-list ((first <sym>) (e <lst>) env)
+  (invoke (evol first env) (evol* (tail e) env)))
+
+(dv *e* $the-empty-environment)
+
+(dm initialize-world ()
+  (let ((env (env-extend! $the-empty-environment '() '() 'global)))
+    (env-define-binding! env 'sig  sig)
+    (env-define-binding! env 'pair pair)
+    (env-define-binding! env 'head head)
+    (env-define-binding! env 'tail tail)
+    (env-define-binding! env 'empty? empty?)
+    (env-define-binding! env '+ +)
+    (env-define-binding! env '< <)
+    (env-define-binding! env '= =)
+    (env-define-binding! env '== ==)
+    (set *e* env)
+    #f))

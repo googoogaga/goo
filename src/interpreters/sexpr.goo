@@ -1,0 +1,84 @@
+(dm sexpr-if-test ((exp <lst>) => <any>)
+  (2nd exp))
+
+(dm sexpr-if-then ((exp <lst>) => <any>)
+  (3rd exp))
+
+(dm sexpr-if-else ((exp <lst>) => <any>)
+  (if (empty? (tail (tail (tail exp)))) ;;cdddr
+      #f
+      (head (tail (tail (tail exp)))))) ;;cadddr
+
+(dm sexpr-begin-actions (begin-exp => <lst>)
+  (tail begin-exp))
+
+(dm sexpr-variable-name ((exp <lst>) => <any>)
+  (1st exp))
+
+(dm sexpr-variable-name (exp => <any>)
+  exp)
+
+(dm sexpr-definition-variable ((defn <lst>) => <any>)
+  (2nd defn))
+
+(dm sexpr-definition-value (defn => <any>)
+  (3rd defn))
+
+(dm sexpr-assignment-variable ((assn <lst>) => <any>)
+  (2nd assn))
+
+(dm sexpr-assignment-value ((assn <lst>) => <any>)
+  (3rd assn))
+
+(dm sexpr-let-bound-variables ((let-exp <lst>) => <lst>)
+  (map head (2nd let-exp)))
+
+(dm sexpr-let-values ((let-exp <lst>) => <lst>)
+  (map 2nd (2nd let-exp)))
+
+(dv $sexpr-begin-tag 'seq)
+
+(dm sexpr-last-exp? ((seq <lst>) => <log>)
+  (empty? (tail seq)))
+
+(dm sexpr-first-exp ((seq <lst>) => <any>)
+  (head seq))
+
+(dm sexpr-rest-exps ((seq <lst>) => <lst>)
+  (tail seq))
+
+(dm sexpr-let-values ((let-exp <lst>) => <lst>)
+  (map 2nd (2nd let-exp)))
+
+(dm sexpr-let-body ((let-exp <lst>) => <any>)
+  (tail (tail let-exp)))
+
+(dv $sexpr-method-tag 'fun)
+
+(dm sexpr-make-begin ((exp <lst>) => <lst>)
+  (pair $sexpr-begin-tag exp))
+
+(dm sexpr-lab-name ((exp <lst>) => <any>)
+  (2nd exp))
+
+(dm sexpr-lab-body ((exp <lst>) => <lst>)
+  (tail (tail exp)))
+
+(dm sexpr-fin-protected-form ((exp <lst>) => <any>)
+  (2nd exp))
+
+(dm sexpr-fin-cleanup-forms ((exp <lst>) => <any>)
+  (tail (tail exp)))
+
+(dm sexpr-function-parameters (defn => <lst>)
+  (3rd defn))
+
+(dm sexpr-function-body (defn => <any>)
+  (tail (tail (tail defn))))
+
+(dm sexpr-anonymous-function-parameters (defn => <lst>)
+  (2nd defn))
+
+(dm sexpr-anonymous-function-body (defn => <any>)
+  (tail (tail defn)))
+
