@@ -1,0 +1,181 @@
+(use goo)
+
+(use samurui/samurui)
+(use samurui/gtk.swig)
+(use samurui/hobar)
+
+(use demos/electrobeep/music/notes)
+(use demos/electrobeep/music/patches)
+(use demos/electrobeep/music/alsamidi)
+
+(use demos/electrobeep/music/midigm)
+
+(use demos/electrobeep/notebar)
+
+;; INVOKE:
+;; (use demos/electrobeep/electrobeep)
+
+;; ELECTRO-BEEP!
+
+;; Songs fire off patterns.
+;; Patterns are made up of tracks, consisting of samples that are triggered on beats.
+
+;; -- Tracks --
+(dc <electro-track> (<any>))
+(iprop <electro-track> patch <midi-patch> "Patch")
+
+(dc <electro-drum-track> (<electro-track>))
+(iprop <electro-drum-track> beats <col> "Beats")
+
+(dc <electro-piano-track> (<electro-track>))
+(iprop <electro-piano-track> notes <col> "Notes")
+
+;; -- Pattern --
+(dc <electro-pattern> (<any>))
+(iprop <electro-pattern> tracks <col> "Tracks")
+(iprop <electro-pattern> name <str> "Track Name")
+
+(dm to-str (pat|<electro-pattern> => <str>)
+  (name pat)
+  )
+
+;; -- Song --
+(dc <electro-song> (<any>))
+(iprop <electro-song> patterns <col> "Patterns")
+(iprop <electro-song> pattern-triggerings <col> "Pattern Triggerings")
+
+(dm hobar-item-payload (track|<electro-drum-track>)
+  (beats track)
+  )
+
+(dm hobar-item-payload (track|<electro-piano-track>)
+  (notes track)
+  )
+
+(dm get-notes (track|<electro-drum-track>)
+  (map {beat . (if beat (fab-note "C" 3) (fab-empty-note))}
+       (beats track))
+  )
+
+(dm get-notes (track|<electro-piano-track>)
+  (notes track)
+  )
+
+;; ============ APP ============
+;;            =======
+
+;; Musings on the playback engine:
+;; 
+;; Since I seem to be viewing patterns as atomic, it seems to make sense that they would
+;;  be the level of dispatch to the lowest level.  However, we still presumably need to 
+;;  have some higher-level driving mechanism for the song, either via push or pull.  Presumably
+;;  we want to go with maximal GUI feedback, which suggests that we will track progress in song-land
+;;  as well as pattern-land.
+;; It's a tricky issue to figure out how to do it, because ideally we want decoupling, but there is
+;;  an obvious control-flow here.  We want the data to be serialized into midi data for the sequencer
+;;  only a short while before it is played.  Treating patterns as atomic units is sufficient for that...
+;;  we get a balance of speed and efficiency without having to do a really specialized processing 
+;;  daemon.  In terms of decoupling, it seems stupid to have mutliple orthogonal timer processes 
+;;  going on, because it's both redundant and potentially failure-prone.  A good technique seems like
+;;  having the pattern consumer also allowing you to request a wake-up call to be delivered *in time*
+;;  to throw in additional data at a given rel-index.
+;; Then the question is, why not likewise do this with patterns.  The callback mechanism allows us
+;;  to have the double-benefit of scheduling plus GUI updating.  Presumably, we still want the 
+;;  ability to update the pattern status as we play as well.  The problem of breaking things down
+;;  to the note level ourselves is that then we have to deal with non-trivial scheduling issues
+;;  (well, they are trivial in our fixed-duration schema, but otherwise...) 
+
+;; (play-song :rel-index 0)
+;; (consume-pattern :rel-index 100)
+;; (consume-pattern :rel-index 150)
+
+;; <<< APP >>>
+
+(dc <electro-beep> (<any>)) ;; App Singleton
+(iprop <electro-beep> cur-song <electro-song> "Current Song")
+
+(iaction <electro-beep> play-current-pattern app "Play Cur Pattern"
+         (init-midi-layer)
+         (do (fun (track)
+               (def notes (get-notes track))
+               (when notes
+                 (play-notes notes)
+                 )
+               )
+             (hack app))
+         )
+
+(imodel <electro-beep>
+        "Song:"
+        (attr cur-song fill)
+        )
+
+;; <<< Song >>>
+
+(iaction <electro-song> add-pattern song "Add Pattern"
+         (def new-pattern (new <electro-pattern>))
+         (set (name new-pattern) (cat "Pattern " (+ 1 (len patterns song))))
+         (add! (patterns song) new-pattern)
+         )
+
+(imodel <electro-song>
+        (attr (columns
+               (master bob (attr ((attr patterns fill) add-pattern) fill))
+               (attr (slave bob) fill)
+               )
+              fill)
+        )
+
+;; <<< Pattern >>>
+
+(imodel <electro-pattern>
+        "Tracks"
+        (attr tracks fill hobar)
+        (columns add-piano-track add-drum-track)
+        )
+
+(iaction <electro-pattern> add-piano-track pat "Add Piano Track"
+         (def new-track (new <electro-piano-track>))
+         (set (notes new-track) (vec
+                                 (fab-empty-note) (fab-empty-note) (fab-empty-note) (fab-empty-note)
+                                 (fab-empty-note) (fab-empty-note) (fab-empty-note) (fab-empty-note)
+                                 (fab-empty-note) (fab-empty-note) (fab-empty-note) (fab-empty-note)
+                                 (fab-empty-note) (fab-empty-note) (fab-empty-note) (fab-empty-note)))
+         (add! (tracks pat) new-track)
+         )
+
+(iaction <electro-pattern> add-drum-track pat "Add Drum Track"
+         (def new-track (new <electro-drum-track>))
+         (set (beats new-track) (vec #f #f #f #f
+                                     #f #f #f #f
+                                     #f #f #f #f
+                                     #f #f #f #f))
+         (add! (tracks pat) new-track)
+         )
+
+;; === Instantiate
+
+(dv beep (new <electro-beep>))
+(dv pat1 (new <electro-pattern>))
+(dv pat2 (new <electro-pattern>))
+(dv song (new <electro-song>))
+
+(set (name pat1) "Pattern 1")
+(set (tracks pat1) (vec))
+
+(set (name pat2) "Pattern 2")
+(set (tracks pat2) (vec))
+
+(set (patterns song) (vec pat1 pat2))
+
+(set (cur-song beep) song)
+
+
+;;(set (pattern beep) pat)
+
+(gtk_init_easy)
+
+(present beep)
+
+(gtk_main)
+

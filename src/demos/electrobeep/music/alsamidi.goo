@@ -1,0 +1,63 @@
+(use goo)
+(use goo/boot)
+
+(use demos/electrobeep/music/notes)
+(use demos/electrobeep/music/patches)
+(use demos/electrobeep/music/%alsamidi.c)
+
+(use/library asound)
+
+(dl %midi-open-seq)
+(dl %midi-get-tick)
+(dl %midi-init-queue)
+(dl %midi-send-note)
+(dl %midi-send-program-change)
+(dl %midi-start-queue)
+(dl %midi-drain-output)
+
+(dv *default-channel* 1)
+
+(dv hSeq #f)
+(dv hQueue #f)
+(dv current-channel *default-channel*)
+
+(df init-midi-layer ()
+  (unless hSeq
+    (set hSeq (%midi-open-seq))
+    (set hQueue (%midi-init-queue hSeq))
+    (%midi-start-queue hSeq hQueue)
+    (%midi-drain-output hSeq)
+    )
+  )
+
+(dm play-note (note|<midi-note>)
+  (def now-tick (%midi-get-tick hSeq hQueue))
+  (when (note-num note)
+    (%midi-send-note hSeq hQueue current-channel
+                     (note-num note) (velocity note) (duration note) now-tick)
+    )
+  )
+
+(dm play-notes (notes|<col>)
+  (rep loop ((notes-enum (enum notes)) (cur-tick (%midi-get-tick hSeq hQueue)))
+    (unless (fin? notes-enum)
+      (def cur-note (now notes-enum))
+      (when (note-num cur-note)
+        (%midi-send-note hSeq hQueue current-channel
+                         (note-num cur-note) (velocity cur-note) (duration cur-note) cur-tick)
+        )
+      (loop (nxt notes-enum) (+ cur-tick (duration cur-note)))
+      )
+    )
+  )
+
+(dm change-patch (new-patch|<midi-patch>)
+  (def now-tick (%midi-get-tick hSeq hQueue))
+  (%midi-send-program-change hSeq hQueue current-channel (patch-num new-patch) now-tick)
+  )
+
+(export
+  init-midi-layer
+  play-note
+  play-notes
+  )

@@ -1,0 +1,118 @@
+(use goo)
+
+(use samurui/samurui)
+(use samurui/hobar)
+
+(use demos/electrobeep/music/notes)
+
+(dv note-size 6)
+(dv num-note-lines 7)
+(dv top-visible-note 77)
+
+(dc <hobar-notebar> (<hobar>))
+
+(dm fab-ho (pimp|<hobar-pimp> item|<any> example-item|<midi-note> => <hobar-notebar>)
+  (def ho (new <hobar-notebar>))
+  (set (pimp ho) pimp)
+  (set (item ho) item)
+  (set (height ho) (* note-size num-note-lines))
+  ho
+  )
+
+(dv c_line (color 0 0 0))
+(dv c_break_line (color 5 5 5))
+(dv c_note (color 64 64 64))
+(dv c_note_line (color 32 32 32))
+(dv c_background (color 192 216 216))
+
+(dm hobar-draw (notebar|<hobar-notebar> widget|<gui-drawable> scale|<int> scroll|<int> clip|<gui-rect>)
+  ;; Clear the background
+  (draw-rect widget clip #t c_background)
+    
+  ;; Draw the lines
+  (do (fun (line-num)
+        (def my-y (+ (+ (rect-y clip)
+                        (div note-size 2))
+                     (* note-size line-num)))
+        (draw-line widget
+                   (rect-x clip)
+                   my-y
+                   (+ (rect-x clip) (rect-w clip))
+                   my-y
+                   c_line)
+        )
+      (vec 1 2 3 4 5))
+  
+  ;; Draw the notes
+  (def start-idx (div scroll scale))
+  (def n-notes (len (hobar-item-payload (item notebar))))
+  (def end-idx (min n-notes (+ start-idx (div (rect-w clip) scale))))
+  (def pix-per-box scale)
+  (def x-offset (div (- pix-per-box note-size) 2))
+  (rep loop ((i-note start-idx))
+    (when (< i-note end-idx)
+      (def cur-note-val (elt (hobar-item-payload (item notebar)) i-note))
+
+      ;; note-num may be #f if the note is just a placeholder...
+      (when (note-num cur-note-val)
+        (def idx-from-top (- 12 (- (note-to-pos cur-note-val) 35)))
+        (def note-rect (rect (+ (+ (rect-x clip) x-offset) 
+                                (* pix-per-box i-note))
+                             (+ (rect-y clip) (* (div note-size 2) idx-from-top))
+                             note-size
+                             note-size))
+        
+        (draw-arc widget note-rect 0 (* 64 360) #t c_note)
+        (draw-arc widget note-rect 0 (* 64 360) #f c_note_line)        
+        )
+
+      (draw-line widget
+                 (+ (rect-x clip) (* pix-per-box (+ i-note 1)))
+                 (rect-y clip)
+                 (+ (rect-x clip) (* pix-per-box (+ i-note 1)))
+                 (+ (rect-y clip) (rect-h clip))
+                 c_break_line)
+
+      (loop (+ i-note 1))
+      )
+    )  
+  )
+
+(dm hobar-mouse-press (notebar|<hobar-notebar> x|<int> y|<int> button|<int>)
+  (def start-idx (div (scroll-offset (pimp notebar))
+                      (scale (pimp notebar))))
+  (def n-notes (len (hobar-item-payload (item notebar))))
+  (def pix-per-box (scale (pimp notebar)))
+  (def cur-idx (+ start-idx (div x pix-per-box)))
+  (def end-idx (min n-notes (+ start-idx (div (- (gui-width (pimp notebar)) 
+                                                 (badge-space (pimp notebar)))
+                                              (scale (pimp notebar))))))
+
+  (when (<= cur-idx end-idx)
+    (def cur-val (elt (hobar-item-payload (item notebar)) cur-idx))
+
+    (def idx-from-top (div y (div note-size 2)))
+
+    (def note-pos (+ (- 12 idx-from-top) 35))
+    (def calc-note-num (pos-to-note-num note-pos))
+
+    (set (note-num cur-val)
+         (if (= (note-num cur-val) calc-note-num)
+             #f
+             calc-note-num))
+
+    (repaint-widget (pimp notebar))
+    (hobar-invalidate notebar)
+    )
+  )
+
+(dm hobar-mouse-release (notebar|<hobar-notebar> x|<int> y|<int> button|<int>)
+  )
+
+(dm hobar-mouse-move (notebar|<hobar-notebar> x|<int> y|<int> state|<int>)
+  )
+
+(dm hobar-report-scale (notebar|<hobar-notebar> => (tup <int> <int>))
+  (tup (len (hobar-item-payload (item notebar))) ;; how many items?
+       (+ 1 note-size)) ;; note-size pixels wide plus divider
+  )

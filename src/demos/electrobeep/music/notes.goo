@@ -1,0 +1,92 @@
+(use goo)
+
+(dc <midi-note> (<any>))
+(dp note-num (<midi-note> => (t? <int>)) 60)
+(dp velocity (<midi-note> => <int>) 64)
+(dp duration (<midi-note> => <int>) 32)
+
+(dm to-str (note|<midi-note>)
+  (cat 
+   (case (mod (note-num note) 12)
+     ((0) "C")
+     ((1) "C#")
+     ((2) "D")
+     ((3) "D#")
+     ((4) "E")
+     ((5) "F")
+     ((6) "F#")
+     ((7) "G")
+     ((8) "G#")
+     ((9) "A")
+     ((10) "A#")
+     ((11) "B"))
+   (to-str (div (note-num note) 12))
+   )
+  )
+
+(dm note-to-pos (note|<midi-note> => <int>)
+  (def note-idx
+    (case (mod (note-num note) 12)
+      ((0 1) 0)
+      ((2 3) 1)
+      ((4) 2)
+      ((5 6) 3)
+      ((7 8) 4)
+      ((9 10) 5)
+      ((11) 6)))
+   (def octave (div (note-num note) 12))
+   (+ (* octave 7) note-idx)
+  )
+
+(dm pos-to-note-num (position|<int> => <int>)
+  (def note-idx
+    (case (mod position 7)
+      ((0) 0)
+      ((1) 2)
+      ((2) 4)
+      ((3) 5)
+      ((4) 7)
+      ((5) 9)
+      ((6) 11)))
+   (def octave (div position 7))
+   (+ (* octave 12) note-idx)
+  )
+
+(dm fab-empty-note (=> <midi-note>)
+  (def note (new <midi-note>))
+  (set (note-num note) #f)
+  note
+  )
+
+(dm fab-note (name|<str> octave|<int> => <midi-note>)
+  (def note-low-order (case-by name =
+                        (("C") 0)
+                        (("C#") 1)
+                        (("D") 2)
+                        (("D#") 3)
+                        (("E") 4)
+                        (("F") 5)
+                        (("F#") 6)
+                        (("G") 7)
+                        (("G#") 8)
+                        (("A") 9)
+                        (("A#") 10)
+                        (("B") 11)))
+  (def note (new <midi-note>))
+  (set (note-num note) (+ (* octave 12) note-low-order))
+  note
+  )
+
+(export
+  <midi-note>
+  fab-note
+  fab-empty-note
+  note-to-pos
+  pos-to-note-num
+  note-num
+  note-num-setter
+  velocity
+  velocity-setter
+  duration
+  duration-setter
+  )
