@@ -9,6 +9,10 @@
 (use strings)
 (use proto/system) ; Needed by runtime module loader.
 (use write)
+(use proto/types)
+(use proto/math)
+(use proto/collections)
+(use proto/ports)
 
 ;;; TODO: MOVE TYPE OUT OF SIGNATURE
 
@@ -23,7 +27,7 @@
 
 ;;; programs
 
-(dv <bot> (lst 'bot))
+(dv ast-<bot> (lst 'bot))
 
 (dc <program> (<any>))
   (slot <program> program-type)
@@ -41,7 +45,7 @@
 (dc <binding> (<any>))
   (slot <binding> (binding-name <binding-name>))
   (slot <binding> (binding-type <program>))
-  (slot <binding> binding-inferred-type <bot>)
+  (slot <binding> binding-inferred-type ast-<bot>)
 
 ;; Global boxes are used by the interpreter to store the values of
 ;; global variables.
@@ -904,12 +908,24 @@
   (insert-global! b env)
   #f)
 
+(dm objectify-use/export-module (name r tail? => <program>)
+  (let ((env (find-static-global-environment r))
+        (module (find-environment-module r))
+        (loader (environment-module-loader env))
+        (used-module (probe-module loader name)))
+    (push-last! (environment-uses-modules env) used-module)
+    (do (fun (b)
+          (import-global! b env)
+          (export-binding! module (binding-name b) b))
+        (module-exports used-module)))
+  (isa <constant> (set constant-value #f)))
+
 (dm objectify-use-module (name r tail? => <program>)
   (let ((env (find-static-global-environment r))
         (loader (environment-module-loader env))
         (used-module (probe-module loader name)))
     (push-last! (environment-uses-modules env) used-module)
-    (do (rcurry import-global! env) (module-exports used-module)))
+    (do (fun (b) (import-global! b env)) (module-exports used-module)))
   (isa <constant> (set constant-value #f)))
 
 (dm expand-bind-list (pat var fail => <any>)
@@ -1222,6 +1238,10 @@
 (define-magic-binding use-module (x r tail?)
   (objectify-use-module (2nd x) r tail?))
 
+(dv $sexpr-use/export-module-tag 'use/export)
+
+(define-magic-binding use/export-module (x r tail?)
+  (objectify-use/export-module (2nd x) r tail?))
 
 ;;;;=======================================================================
 ;;;;  Module Loaders & Modules
@@ -1885,7 +1905,6 @@
   objectify-quotation
   objectify-signature
   <predefined-application>
-  <bot>
   <program>
   program-type
   program-type-setter

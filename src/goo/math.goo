@@ -1,0 +1,394 @@
+(use boot)
+(use macros)
+(use proto/types)
+
+;;; DYNAMIC BINDING
+
+;;; nul
+
+(df nul? (x => <log>)
+  (== x nul))
+
+;;; <any>
+
+(dm nyi-error ()
+  (nyi) ;; nyi nyi
+  )
+
+(dm to-str ((x <any>) => <str>)
+  (cat "{ obj(" (to-str (class-name (object-class x))) ") }"))
+
+(df address-of (x => <int>)
+  ;; treat pointer as integer
+  (%ib x))
+
+;;; BOTTOM
+
+(dc <bot> (<any>)) ;; todo: should be disjoint from <any>
+
+;;; BOOLEAN
+
+(dm to-str ((x (t= #t)) => <str>) "#t")
+(dm to-str ((x (t= #f)) => <str>) "#f")
+
+(dm as (type x => <any>)
+  (if (isa? x type) 
+      x
+      (error "NO AS METHOD FOR %= AND %=" type x)))
+
+;; TODO: DEAL WITH ==
+
+(df as-log (x => <log>) (and x #t))
+
+(dm == (x y => <log>) (%bb (%eq? x y)))
+
+(dm = (x y => <log>) (== x y))
+
+(dm ~= (x y => <log>)
+  (not (= x y)))
+
+(dm ~== (x y => <log>)
+  (not (== x y)))
+
+(dm > (x y => <log>)
+  (< y x))
+
+(dm <= (x y => <log>)
+  (not (< y x)))
+
+(dm >= (x y => <log>)
+  (not (< x y)))
+
+(dm min (x y => <num>)
+  (if (< x y) x y))
+
+(dm max (x y => <num>)
+  (if (> x y) x y))
+
+;;; character
+
+(dm as ((_ (t= <chr>)) (i <int>) => <chr>)
+  (%cb (%iu i)))
+
+(dm as ((_ (t= <int>)) (c <chr>) => <int>)
+  (%ib (%cu c)))
+
+(dm < ((x <chr>) (y <chr>) => <log>)
+  (%bb (%c< (%cu x) (%cu y))))
+
+(dm == ((x <chr>) (y <chr>) => <log>)
+  (%bb (%c= (%cu x) (%cu y))))
+
+(dm lowercase? ((x <chr>) => <log>)
+  (let ((code (as <int> x)))
+    (if (>= code (as <int> #\a))
+        (<= code (as <int> #\z))
+        #f)))
+
+(dm uppercase? ((x <chr>) => <log>)
+  (let ((code (as <int> x)))
+    (if (>= code (as <int> #\A))
+        (<= code (as <int> #\Z))
+        #f)))
+
+(dm as-lowercase ((x <chr>) => <chr>)
+  (if (uppercase? x)
+      (as <chr> (+ (as <int> x) (- (as <int> #\a) (as <int> #\A))))
+      x))
+
+(dm as-uppercase ((x <chr>) => <chr>)
+  (if (lowercase? x)
+      (as <chr> (+ (as <int> x) (- (as <int> #\A) (as <int> #\a))))
+      x))
+
+(dm to-str ((x <chr>) => <str>)
+  (fabs <str> x))
+
+(dm alphabetic? ((x <chr>) => <log>)
+  (or (and (<= #\a x) (<= x #\z))
+      (and (<= #\A x) (<= x #\Z))))
+
+(dm numeric? ((x <chr>) => <log>)
+  (and (<= #\0 x) (<= x #\9)))
+
+(dm to-digit ((digit <chr>) => <int>)
+  (- (char->ascii digit) (char->ascii #\0)))
+
+(dm eof-object? (x => <log>) 
+  #f)
+
+(dm eof-object? ((x <chr>) => <log>)
+  (%bb (%eq? (%cu x) (%eof-object))))
+
+(dm eof-object (=> <chr>)
+  (%cb (%eof-object)))
+
+;;; NUMBER
+
+(dg contagious-type ((x <num>) (y <num>) => (t< <num>)))
+
+(dg contagious-call ((f <fun>) (x <num>) (y <num>) => <any>))
+
+(dm contagious-call ((f <fun>) (x <num>) (y <num>) => <any>)
+  (let ((type (contagious-type x y)))
+    (f (as type x) (as type y))))
+
+(dm < ((x <num>) (y <num>) => <log>)
+  (contagious-call < x y))
+
+(dm + ((x <num>) (y <num>) => <num>)
+  (contagious-call + x y))
+
+(dm - ((x <num>) (y <num>) => <num>)
+  (contagious-call - x y))
+
+(dm * ((x <num>) (y <num>) => <num>)
+  (contagious-call * x y))
+
+(dm floor ((x <num>) => (tup <int> (rem <num>)))
+  (contagious-call floor/ x 1))
+
+(dm ceiling ((x <num>) => (tup <int> (rem <num>)))
+  (contagious-call ceiling/ x 1))
+
+(dm round ((x <num>) => (tup <int> (rem <num>)))
+  (contagious-call round/ x 1))
+
+(dm truncate ((x <num>) => (tup <int> (rem <num>)))
+  (contagious-call truncate/ x 1))
+
+(dm floor/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
+  (let (((tup (integer <int>) (remainder <num>)) (truncate/ real divisor)))
+    (if (and (not (zero? remainder))
+	     (if (neg? divisor)
+		 (pos? real)
+		 (neg? real)))
+	(tup (- integer 1) (+ remainder divisor))
+	(tup integer remainder))))
+
+(dm ceiling/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
+  (let (((tup (integer <int>) (remainder <num>)) (truncate/ real divisor)))
+    (if (and (not (zero? remainder))
+	     (if (neg? divisor)
+		 (neg? real)
+		 (pos? real)))
+	(tup (+ integer 1) (- remainder divisor))
+	(tup integer remainder))))
+
+(dm round/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
+  (let (((tup (integer <int>) (remainder <num>)) (truncate/ real divisor))
+	((threshold <num>) (/ (abs divisor) 2.0)))
+    (if (or (> remainder threshold) 
+	   (and (= remainder threshold) (odd? integer)))
+	(if (neg? divisor)
+	    (tup (- integer 1) (+ remainder divisor))
+	    (tup (+ integer 1) (- remainder divisor)))
+	(if (let ((minus-threshold (neg threshold)))
+	      (or (< remainder minus-threshold)
+		  (and (= remainder minus-threshold) (odd? integer))))
+	    (if (neg? divisor)
+		(tup (+ integer 1) (- remainder divisor))
+		(tup (- integer 1) (+ remainder divisor)))
+	    (tup integer remainder)))))
+
+(dm truncate/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
+  (contagious-call truncate/ real divisor))
+
+(dm modulo ((real <num>) (divisor <num>) => <num>)
+  (let (((tup _ (remainder <num>)) (floor/ real divisor)))
+    remainder))
+
+(dm remainder ((real <num>) (divisor <num>) => <num>)
+  (let (((tup _ (remainder <num>)) (truncate/ real divisor)))
+    remainder))
+
+(dm pos? ((x <num>) => <log>)
+  (> x 0))
+
+(dm zero? ((x <num>) => <log>)
+  (contagious-call = x 0))
+
+(dm neg? ((x <num>) => <log>)
+  (< x 0))
+
+(dm neg ((x <num>) => <num>)
+  (- 0 x))
+
+(dm abs ((x <num>) => <num>)
+  (if (neg? x) (neg x) x))
+
+(dm to-str ((x <num>) => <str>)
+  (num-to-str x))
+
+;;; <INT>
+
+(dm contagious-type ((x <int>) (y <int>) => <type>)
+  <int>)
+
+(dm contagious-type ((x <flo>) (y <flo>) => <type>)
+  <flo>)
+
+(dm contagious-type ((x <int>) (y <flo>) => <type>)
+  <flo>)
+
+(dm contagious-type ((x <flo>) (y <int>) => <type>)
+  <flo>)
+
+(dm == ((x <int>) (y <int>) => <log>)
+  (%bb (%i= (%iu x) (%iu y))))
+
+(dm < ((x <int>) (y <int>) => <log>)
+  (%bb (%i< (%iu x) (%iu y))))
+
+(dm + ((x <int>) (y <int>) => <int>)
+  (%ib (%i+ (%iu x) (%iu y))))
+
+(dm - ((x <int>) (y <int>) => <int>)
+  (%ib (%i- (%iu x) (%iu y))))
+
+(dm * ((x <int>) (y <int>) => <int>)
+  (%ib (%i* (%iu x) (%iu y))))
+
+(dm floor ((x <int>) => (tup <int> (remainder <int>)))
+  (tup x 0))
+
+(dm ceiling ((x <int>) => (tup <int> (remainder <int>)))
+  (tup x 0))
+
+(dm round ((x <int>) => (tup <int> (remainder <int>)))
+  (tup x 0))
+
+(dm truncate ((x <int>) => (tup <int> (remainder <int>)))
+  (tup x 0))
+
+(dm truncate/ ((x <int>) (y <int>) => (tup <int> (remainder <int>)))
+  (let ((result (%ib (%it/ (%iu x) (%iu y)))))
+    (tup result (- x (* result y)))))
+
+(dm modulo ((x <int>) (y <int>) => <int>)
+  (let ((res (%ib (%im (%iu x) (%iu y)))))
+    (if (< res 0)
+        (if (> y 0)
+            (+ res y)
+            (- res y))
+            res)))
+
+(dm logior ((x <int>) (y <int>) => <int>)
+  (%ib (%iv (%iu x) (%iu y))))
+
+(dm logxor ((x <int>) (y <int>) => <int>)
+  (%ib (%i^ (%iu x) (%iu y))))
+
+(dm logand ((x <int>) (y <int>) => <int>)
+  (%ib (%i& (%iu x) (%iu y))))
+
+(dm lognot ((x <int>) => <int>)
+  (%ib (%i! (%iu x))))
+
+(dm logbit? ((o <int>) (x <int>) => <int>)
+  (%ib (%i? (%iu o) (%iu x))))
+
+(dm even? ((x <int>) => <log>)
+  (zero? (logand x 1)))
+
+(dm odd? ((x <int>) => <log>)
+  (not (even? x)))
+
+(dm ash ((x <int>) (a <int>) => <int>)
+  (if (neg? a)
+      (%ib (%i>> (%iu x) (%iu a)))
+      (%ib (%i<< (%iu x) (%iu a)))))
+
+(dm lsh ((x <int>) (a <int>) => <int>)
+  (if (neg? a)
+      (%ib (%i>>> (%iu x) (%iu a)))
+      (%ib (%i<<< (%iu x) (%iu a)))))
+
+(dm power-of-two-ceiling ((x <int>) => <int>)
+  (rep search (((po2 <int>) 1))
+    (if (> po2 x)
+	po2
+	(search (+ po2 po2)))))
+
+;;; FLO
+
+(df flo-bits ((x <flo>) => <int>)
+  (%ib (%flo-bits (%fu x))))
+
+(dm as ((_ (t= <flo>)) (x <int>) => <flo>)
+  (%fb (%fi2f (%iu x))))
+
+(dm == ((x <flo>) (y <flo>) => <log>)
+  (%bb (%f= (%fu x) (%fu y))))
+
+(dm < ((x <flo>) (y <flo>) => <log>)
+  (%bb (%f< (%fu x) (%fu y))))
+
+(dm + ((x <flo>) (y <flo>) => <flo>)
+  (%fb (%f+ (%fu x) (%fu y))))
+
+(dm - ((x <flo>) (y <flo>) => <flo>)
+  (%fb (%f- (%fu x) (%fu y))))
+
+(dm * ((x <flo>) (y <flo>) => <flo>)
+  (%fb (%f* (%fu x) (%fu y))))
+
+(dm / ((x <flo>) (y <flo>) => <flo>)
+  (%fb (%f/ (%fu x) (%fu y))))
+
+(dm truncate/ ((x <flo>) (y <flo>) => (tup <int> (remainder <flo>)))
+  (let ((divided (/ x y))
+	(result  (%ib (%ft (%fu divided)))))
+    (tup result (* y (- divided (as <flo> result))))))
+
+;; from strings.proto
+(need-implementation
+  num-to-str
+  char->ascii
+  fabs)
+
+(export
+  nul?
+  nyi-error
+  to-str
+  address-of
+  <bot>
+  as
+  as-log
+  ==
+  =
+  ~=
+  ~==
+  >
+  <
+  <=
+  >=
+  min
+  max
+  lowercase?
+  uppercase?
+  as-lowercase
+  as-uppercase
+  alphabetic?
+  numeric?
+  to-digit
+  eof-object?
+  eof-object
+  contagious-type
+  contagious-call
+  + - * / floor ceiling round truncate
+  floor/ ceiling/ round/ truncate/
+  modulo remainder
+  pos? zero? neg? neg abs
+  logior
+  logxor
+  logand
+  lognot
+  logbit?
+  even?
+  odd?
+  ash
+  lsh
+  power-of-two-ceiling
+  flo-bits
+  )

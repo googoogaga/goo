@@ -1,0 +1,56 @@
+(use boot)
+(use macros)
+(use proto/types)
+(use proto/collections/collection)
+(use proto/collections/sequence)
+(use proto/collections/flat)
+
+;; 3.7.6.1 VECTORS
+
+;;;;!! Interface
+(exported
+ ;; Defined in boot
+ <vec>
+ 
+ (df vec ((objects ...)))
+
+)
+
+;;;;!! Implementation
+
+(dm as ((_ (t= <vec>)) (x <vec>) => <vec>) x)
+
+(df vec ((objects ...))
+  (as <vec> objects))
+
+;;;; Collection protocol
+(dm len ((x <vec>) => <int>)
+  (%ib (%vlen x)))
+
+(dm elt ((x <vec>) (i <int>) => <any>)
+  (if (range-check? x i)
+      (%velt x (%iu i)) ;; TODO: LOW-ELT
+      nul))
+
+(dm elt-setter (z (x <vec>) (i <int>))
+  (range-check x i)
+  (set (%velt x (%iu i)) z)) ;; TODO: LOW-ELT
+
+(dm empty ((c (t= <vec>)) => <vec>)
+  %vnul)
+
+(dm fab ((x (t= <vec>)) (s <int>) => <vec>)
+  (%vec (%iu s)))
+
+
+;;;; Misc stuff
+
+(dm to-str ((x <vec>) => <str>)
+  (cat "#(" (vals-to-str x) ")"))
+
+;;;; Undocumented
+(dm low-elt ((x <vec>) (i <int>) => <any>)
+  (%velt x (%iu i)))
+
+(dm low-elt-setter (z (x <vec>) (i <int>))
+  (set (%velt x (%iu i)) z))

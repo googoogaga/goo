@@ -4,6 +4,7 @@
 (use boot)
 (use macros)
 (use runtime)
+(use proto)
 (use ast)
 
 ;;; ENV

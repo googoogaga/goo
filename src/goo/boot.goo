@@ -1001,6 +1001,7 @@
 
 (dv <tup> <vec>)
 (dv @tup  @vec)
+(dv tup  @vec)
 (dv @telt @velt)
 
 ;; TODO: DEF SUBTYPE METHODS
@@ -1791,7 +1792,10 @@
   file-opening-error
   type-error
   wrong-number-arguments-error
-  keyboard-interrupt)  
+  keyboard-interrupt
+  vec
+  %with-monitor
+)
 
 ;; Forward references.
 ;; TODO - These would normally be defined using need-implementation, but we
@@ -1811,6 +1815,7 @@
 ;; Compiler magic.
 (export
   use
+  use/export
   export
   mif
   macro-expand
@@ -2035,4 +2040,5 @@
   %check-call-types
   %loc-off %loc-off-setter
   %sp-reg-setter %sp-reg
+  tup
 )

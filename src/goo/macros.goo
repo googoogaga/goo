@@ -206,6 +206,24 @@
             (export ,(head names))
             (need-implementation ,@(tail names)))))
 
+(ds (exported ,@defs)
+  (pair
+   'seq 
+   (collecting ()
+     (for ((d defs))
+       (case
+         ((isa? d <sym>)             (seq (collect d) (collect `(export ,d))))
+         ((mif ((df ,name ,@rest) d) (seq (collect name) (collect `(export ,name)))) #f)
+         ((mif ((dg ,name ,@rest) d) (seq (collect d) (collect `(export ,name)))) #f)
+         ((mif ((dc ,name ,@rest) d) (seq (collect d) (collect `(export ,name)))) #f)
+         ((mif ((dv ,name ,@rest) d) (seq (collect d) (collect `(export ,name)))) #f)
+         ((mif ((slot ,slot (,name ,type) ,default) d)
+               (seq
+                 (collect d)
+                 (collect `(export ,name))
+                 (collect `(export ,(make-setter-name name))))) #f)
+          (#t                         5))))))
+
 
 ;;;;=======================================================================
 ;;;;  Public API
@@ -214,6 +232,11 @@
 ;;; These bindings are defined in the runtime module.
 (need-implementation
   ==
+  ini-state
+  fin-state?
+  now-elt
+  nxt-state
+  rev!
   cat
   elt
   empty?
@@ -257,4 +280,5 @@
   ddv
   dlet
   def-fun-var
-  need-implementation)
+  need-implementation
+  exported)

@@ -1,0 +1,30 @@
+(use boot)
+(use macros)
+(use proto/types)
+(use proto/math)
+(use proto/collections/collection)
+(use proto/collections/sequence)
+
+;; 3.7.6 FLAT SEQUENCES
+
+;;;;!! Interface
+(exported
+ <flat> ;; (dc <flat> (<seq>))
+)
+
+;;;;!! Implementation
+
+(dm ini-state ((c <flat>) => <int>) 0)
+
+(dm fin-state? ((c <flat>) (state <int>) => <log>) (== state (len c)))
+
+(dm nxt-state ((_ <flat>) (state <int>) => <int>) (+ state 1))
+
+(dm now-elt ((c <flat>) (state <int>) => <any>) (low-elt c state))
+
+(dm now-elt-setter (z (c <flat>) (state <int>)) (set (low-elt c state) z))
+
+(dm now-key ((_ <flat>) (state <int>) => <int>) state)
+
+(dm copy-state ((_ <flat>) (state <int>) => <int>) state)
+

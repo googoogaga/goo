@@ -1,0 +1,37 @@
+(use boot)
+(use macros)
+(use proto/math)
+(use proto/collections/collection)
+(use proto/collections/sequence)
+;; 3.7.7 STEP (really should be "Impulse" or something..)
+
+;;;;!! Interface
+(exported
+ (dc <step> (<seq>))
+ (dg first-then ((first <any>) (then <any>)))
+)
+
+;;;;!! Implementation
+
+  (slot <step> step-first)
+  (slot <step> step-then)
+
+;;;; Collection iteration protocol
+(dm first-then (first then => <step>)
+  (isa <step> (set step-first first) (set step-then then)))
+
+(dm ini-state ((c <step>) => <log>)
+  #t)
+
+(dm fin-state? ((c <step>) (state <log>) => <log>)
+  #f)
+
+(dm nxt-state ((c <step>) (state <log>) => <log>)
+  #f)
+
+(dm now-elt ((c <step>) (state <log>) => <any>)
+  (if state (step-first c) (step-then c)))
+
+(dm copy-state ((_ <step>) (state <log>) => <log>)
+  state)
+

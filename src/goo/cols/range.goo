@@ -1,0 +1,81 @@
+(use boot)
+(use macros)
+(use proto/types)
+(use proto/math)
+(use proto/collections/collection)
+(use proto/collections/sequence)
+;; 3.7.6 RANGES
+
+;;;;!! Interface
+(exported
+ ;;  represents series of numbers
+ (dc <range> (<seq>))
+ 
+ (dg from ((from <num>) => <range>))
+ (dg from-by ((from <num>) (by <num>) => <range>))
+ (dg from-to ((from <num>) (to <num>) => <range>))
+ (dg from-to-by ((from <num>) (to <num>) (by <num>) => <range>))
+ (dg from-below ((from <num>) (below <num>) => <range>))
+ (dg from-below-by ((from <num>) (below <num>) (by <num>) => <range>))
+ (dg from-above ((from <num>) (above <num>) => <range>))
+ (dg from-above-by ((from <num>) (above <num>) (by <num>) => <range>))
+)
+
+;; TODO: FEWER SLOTS
+  (slot <range> (range-from  <num>) 0)
+  (slot <range> (range-to    <num>))
+  (slot <range> (range-below <num>))
+  (slot <range> (range-above <num>))
+  (slot <range> (range-by    <num>) 1)
+
+(dm fab ((c (t= <range>)) (s <int>) => <range>)
+  (from-below 0 s))
+
+(dm from ((from <num>) => <range>)
+  (isa <range> (set range-from from)))
+
+(dm from-by ((from <num>) (by <num>) => <range>)
+  (isa <range> (set range-from from)  (set range-by by)))
+
+(dm from-to ((from <num>) (to <num>) => <range>)
+  (isa <range> (set range-from from) (set range-to to)))
+
+(dm from-to-by ((from <num>) (to <num>) (by <num>) => <range>)
+  (isa <range> (set range-from from) (set range-to to)  (set range-by by)))
+
+(dm from-below ((from <num>) (below <num>) => <range>)
+  (isa <range> (set range-from from) (set range-below below)))
+
+(dm from-below-by ((from <num>) (below <num>) (by <num>) => <range>)
+  (isa <range> (set range-from from) (set range-below below) (set range-by by)))
+
+(dm from-above ((from <num>) (above <num>) => <range>)
+  (isa <range> (set range-from from) (set range-above above)))
+
+(dm from-above-by ((from <num>) (above <num>) (by <num>) => <range>)
+  (isa <range> (set range-from from) (set range-above above) (set range-by by)))
+
+(dm ini-state ((c <range>) => <num>)
+  (range-from c))
+
+(dm fin-state? ((c <range>) (state <num>) => <log>)
+  (if (neg? (range-by c))
+      (if (== (range-to c) nul) 
+          (if (== (range-above c) nul)
+              #f
+              (<= state (range-above c)))
+          (< state (range-to c)))
+      (if (== (range-to c) nul) 
+          (if (== (range-below c) nul)
+              #f
+              (>= state (range-below c)))
+          (> state (range-to c)))))
+
+(dm nxt-state ((c <range>) (state <num>) => <num>)
+  (+ state (range-by c)))
+
+(dm now-elt ((c <range>) (state <num>) => <any>)
+  state)
+
+(dm copy-state ((_ <range>) (state <num>) => <num>)
+  state)

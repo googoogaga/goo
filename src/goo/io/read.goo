@@ -15,6 +15,10 @@
 (use boot)
 (use macros)
 (use runtime)
+(use proto/types)
+(use proto/math)
+(use proto/ports)
+(use proto/collections)
 
 ;; READ
 

@@ -1,0 +1,163 @@
+(use boot)
+(use macros)
+(use proto/types)
+(use proto/math)
+(use proto/collections/collection)
+(use proto/collections/sequence)
+
+;; 3.7.5 LISTS
+
+;;;;!! Interface
+
+(exported
+ ;; defined in boot
+ <lst> head head-setter tail tail-setter nil
+ ;; Alias for <lst>
+ (dv <list> <lst>)
+ (dg lst ((elts ...) => <lst>))
+ 
+ ;; Alias for list
+ (dv list lst)
+
+ (dg pair ((x <any>) (y <lst>) => <lst>))
+
+ (dg push ((l <lst>) (x <any>) => <lst>))
+ (dg pop ((l <lst>) => (tup (new-col <lst>) value)))
+
+;; undocumented
+ (dg assqn (x (l <lst>) (pos <int>) => <any>))
+ (dg assq (x (l <lst>) => <any>))
+
+)
+
+;;;;!! Implementation
+
+;;;; Creation protocol
+
+;; TODO: DO THIS IN GENERAL FOR AS
+(dm as ((p (t= <lst>)) (x <lst>) => <lst>) x)
+
+;;;; Collection protocol
+(dm len ((x <lst>) => <int>)
+  (rep sum (((count <int>) 0) ((x <lst>) x))
+    (if (empty? x) count (sum (+ count 1) (tail x)))))
+
+(dm elt ((x <lst>) (key <int>) => <any>)
+  (rep fnd (((count <int>) 0) ((x <lst>) x))
+    (if (empty? x)
+        nul ;; TODO: RANGE ERROR
+        (if (== count key)
+            (head x)
+            (fnd (+ count 1) (tail x))))))
+
+(dm elt-setter (z (x <lst>) (key <int>))
+  (rep fnd (((count <int>) 0) ((x <lst>) x))
+    (if (empty? x)
+        nul ;; TODO: RANGE ERROR
+        (if (== count key)
+            (set (head x) z)
+            (fnd (+ count 1) (tail x))))))
+
+(dm empty? ((c <lst>) => <log>) (== c (empty (object-class c))))
+
+(dm empty ((c (t= <lst>)) => <lst>) '())
+
+(dm fab ((t (t= <lst>)) (s <int>) => <lst>)
+  (rep fab (((i <int>) s) ((res <lst>) (empty t)))
+    (if (> i 0)
+        (fab (- i 1) (isa t (set tail res)))
+        res)))
+
+(dm fabs ((c (t< <lst>)) (objects ...))
+  (rep build (((index <int>) (- (len objects) 1)) ((result <lst>) (empty c)))
+    (if (< index 0)
+        result
+        (build (- index 1) 
+               (isa c (set head (elt objects index)) (set tail result))))))
+
+;;;; Iteration protocol for lists
+(dm ini-state ((c <lst>) => <lst>) c)
+
+(dm fin-state? ((_ <lst>) (state <lst>) => <log>) (empty? state))
+
+(dm nxt-state ((_ <lst>) (state <lst>) => <lst>) (tail state))
+
+(dm now-elt ((_ <lst>) (state <lst>) => <any>) (head state))
+
+(dm now-elt-setter (z (_ <lst>) (state <lst>)) (set (head state) z))
+
+(dm now-key ((c <lst>) (state <lst>) => <int>)
+  (rep fnd (((key <int>) 0) ((c <lst>) c))
+    (if (== c state) key (fnd (+ key 1) (tail c)))))
+
+(dm copy-state ((_ <lst>) (state <lst>) => <lst>) state)
+
+;;;; Sequence protocol
+(dm add ((c <lst>) x => <lst>)
+  (pair x c))
+
+(dm last ((x <lst>) => <any>)
+  (rep fnd ((x x) (px x))
+    (if (empty? x) (head px) (fnd (tail x) x))))
+
+(dm rev! ((c <lst>) => <lst>)
+  (rep loop ((l c) (r (empty (object-class c))))
+    (if (empty? l)
+        r
+        (let ((t (tail l)))
+          (set (tail l) r)
+          (loop t l)))))
+
+(dm cat! ((x <lst>) (more ...) => <lst>)
+  (let ((connect
+         (fun ((x <lst>) (y <lst>) => <lst>)
+           ;; connect x to y and return the last elem of the list
+           (if (empty? y)
+               x
+               (seq (set (tail x) y)
+                    (rep find-tail (((p <lst>) y))
+                      (if (empty? (tail p))
+                          p
+                          (find-tail (tail p))))))))
+        (result (lst #f))
+        (cur result))
+    (set cur (connect cur (as <lst> x)))
+    (for ((x more))
+      (set cur (connect cur (as <lst> x))))
+    (tail result)))
+
+;;;; List protocol
+(dm lst ((objects ...))
+  (apply fabs <lst> objects))
+
+(dm pair (h (t <lst>))
+  (isa <lst> (set head h) (set tail t)))
+
+(dm push ((c <lst>) x => <lst>)
+  (pair x c))
+
+(dm pop ((c <lst>) => (tup (new-c <lst>) value))
+  (tup (tail c) (head c)))
+
+;;;; Misc other stuff
+(dm to-str ((x <lst>) => <str>)
+  (cat "(" (vals-to-str x) ")"))
+
+
+
+;;;; Not documented
+;; TODO: CHANGE ORDER OF ARGS LIKE MEM?
+(dm assq (x (l <lst>) => <any>)
+  (if (empty? l)
+      #f
+      (if (== x (head (head l)))
+          (head l)
+          (assq x (tail l)))))
+
+(dm assqn (x (l <lst>) (pos <int>) => <any>)
+  (if (empty? l)
+      #f
+      (if (== x (elt (head l) pos))
+          (head l)
+          (assqn x (tail l) pos))))
+

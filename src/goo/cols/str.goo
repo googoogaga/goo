@@ -1,0 +1,240 @@
+(use boot)
+(use macros)
+(use proto/types)
+(use proto/math)
+(use proto/collections/collection)
+(use proto/collections/sequence)
+(use proto/collections/list)
+
+(exported
+ (dg str ((objects ...)))
+ (dg char->ascii ((char <chr>) => <int>))
+ (dv ascii-whitespaces #f)
+ (dv ascii-limit #f)
+ (dg str-to-num ((string <str>) => <any>)) ;; (false-or <num>) ;; S48
+ (dg num-to-str ((num <num>) (radix-option ...) => <str>))
+ (dv *print-base* 10)
+ )
+;;; STRING
+
+(dm empty ((c (t= <str>)) => <str>)
+  %snul)
+
+(dm default ((c (t= <str>)) => <any>)
+  #\space)
+
+(dm fab ((x (t= <str>)) (s <int>) => <str>)
+  (%str (%iu s)))
+
+(dm str ((objects ...))
+  (fabs <str> objects))
+
+(dm len ((x <str>) => <int>)
+  (%ib (%slen x)))
+
+(dm low-elt ((x <str>) (i <int>) => <chr>)
+  (%cb (%selt x (%iu i))))
+
+(dm low-elt-setter ((z <chr>) (x <str>) (i <int>))
+  (set (%selt x (%iu i)) (%cu z)))
+
+(dm elt ((x <str>) (i <int>) => <any>) ;; TODO: TIGHTEN RET TYPE
+  (if (range-check? x i)
+      (%cb (%selt x (%iu i))) ;; TODO: USE LOW-ELT
+      nul)) 
+
+(dm elt-setter ((z <chr>) (x <str>) (i <int>))
+  (range-check x i)
+  (set (%selt x (%iu i)) (%cu z))) ;; TODO: USE LOW-ELT
+
+(dm to-str ((x <str>) => <str>)
+  x)
+
+(dm add ((s <str>) (c <chr>) => <str>)
+  (cat s (to-str c)))
+
+;;; ASCII -- S48
+
+(dv ascii-limit 128)
+
+(dv (ascii-chars <vec>)
+  (let ((ascii-chars
+	 (fill (fab <vec> ascii-limit) #f))
+	(init
+	 (fun (i s)
+	   (rep loop ((i i) (j 0))
+	     (unless (= j (len s))
+	       (set (elt ascii-chars i) (elt s j))
+	       (loop (+ i 1) (+ j 1)))))))
+    (init 9 "\t")  ;; tab
+    (init 10 "\n") ;; newline
+    (init 12 "\f") ;; page
+    (init 13 "\r") ;; carriage return
+    (init 32 " !\"#$%&'()*+,-./0123456789:;<=>?")
+    (init 64 "@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_")
+    (init 96 "`abcdefghijklmnopqrstuvwxyz{|}~")
+    ascii-chars))
+
+(dm ascii->char ((n <int>) => <chr>)
+  (or (elt ascii-chars n)
+      (error "not a standard character's ASCII code: %=" n)))
+
+(dm char->integer ((char <chr>) => <int>)
+  (as <int> char))
+
+(dm integer->char ((n <int>) => <chr>)
+  (as <chr> n))
+
+(dv (native-chars <lst>)
+  (let ((end259 (len ascii-chars)))
+    (rep loop ((i 0) (least #f) (greatest #f))
+      (if (= i end259)
+	  (let ((v (fill (fab <vec> (+ (- greatest least) 1)) #f)))
+	    (rep loop ((i 0))
+	      (if (= i end259)
+		  (lst least v)
+		  (let ((c (elt ascii-chars i)))
+		    (if c (set (elt v (- (char->integer c) least)) i))
+		    (loop (+ i 1))))))
+	  (let ((c (elt ascii-chars i)))
+	    (if c
+		(let ((n (char->integer c)))
+		  (loop (+ i 1) (if least (min least n) n)
+			(if greatest (max greatest n) n)))
+		(loop (+ i 1) least greatest)))))))
+
+(dm char->ascii ((char <chr>) => <int>)
+  (or (elt (head (tail native-chars))
+	   (- (char->integer char) (head native-chars)))
+      (error "not a standard character: %=" char)))
+
+(dv ascii-whitespaces '(32 10 9 12 13))
+
+(dm str-to-num ((string <str>) => <any>) ;; (false-or <num>) ;; S48
+  (let ((s 1)
+	(d 0)
+	(n 0)
+	(i 0)
+	(scale 1)
+	(length (len string))
+	(seen-decimal-point? #f)
+	(radix 10))
+    (loc ((match (char)
+	    (if (and (< i length) (= (elt string i) char))
+		(seq (set i (+ i 1)) #t)
+		#f))
+	  (match-digit! (_)
+	    (lab return
+	      (loc ((fail!! () (return #f)))
+		(if (>= i length) (fail!!))
+		(let ((char (elt string i)))
+		  (if (= char #\.)
+		      (if seen-decimal-point?
+			  (error "string->number: Two decimal points: %="
+				 string)
+			  (seq
+			   (set seen-decimal-point? #t)
+			   (set i (+ i 1))
+			   (if (>= i length) (fail!!))
+			   (set char (elt string i)))))
+		  (if (not (numeric? char)) (fail!!))
+		  (set d (to-digit (elt string i)))
+		  (set i (+ i 1))
+		  (if seen-decimal-point?
+		      (set scale (* scale radix)))
+		  #t))))
+	  (looking-at-alphabetic? ()
+	    (if (and (< i length) 
+		     (alphabetic? (elt string i)))
+		#t
+		#f)))
+  ;; Now we get to use all this matching machinery
+  (and (or (match #\+)
+	   (and (match #\-) (set s -1))
+	   #t)
+       (and (match-digit! d) (set n d))
+       (rep loop ()
+	 (if (and (match-digit! d) (set n (+ (* n radix) d)))
+	     (loop)
+	     #t))
+       (= i length) ;; consumed all chars
+       (let ((f (* (as <flo> s) (/ (as <flo> n) (as <flo> scale)))))
+	 (if seen-decimal-point? f (1st (truncate f))))))))
+
+(dv $digit-to-char "0123456789abcdefghijklmnopqrstuvwxyz")
+
+(dv *print-base* 10)
+
+(dv epsilon 0.000001)
+
+(dm decode-radix-option ((rest <opts>) (default <int>) caller-name => <int>)
+  (if (empty? rest)
+      default
+      (if (= (len rest) 1)
+	  (1st rest)
+	  (error "too many arguments: %=, %=" caller-name rest))))
+
+;;  (mif (() rest)
+;;       default
+;;       (mif ((,radix) rest)
+;;            radix
+;;            (error "too many arguments: %=, %=" caller-name rest)))
+
+(dm num-to-str ((num <int>) (radix-option ...) => <str>)
+  (let ((radix
+	 (decode-radix-option radix-option *print-base* 'num-to-str))
+        (s (if (< num 0) -1 1))
+        (digit-list
+         (rep loop ((digit-list '()) (num (* num s)))
+           (if (= num 0)
+               digit-list
+	       (let ((digit (elt $digit-to-char (remainder num radix))))
+		 (loop (pair digit digit-list)
+		       (1st (truncate/ num radix))))))))
+    (as <str> (if (< s 0)
+		  (pair #\- digit-list)
+		  (if (= num 0) "0" digit-list)))))
+
+(dm num-to-str ((num <flo>) (radix-option ...) => <str>)
+  (let ((radix
+	 (decode-radix-option radix-option *print-base* 'num-to-str))
+        (s (if (< num 0) -1 +1))
+        (p (* num s))
+        (string "")
+        (e (rep loop ((p p) (e 0))
+             (let (((tup i) (truncate p)))
+               (if (< (- p i) epsilon)
+                   (seq (set string (num-to-str i radix)) e)
+                   (loop (* p radix) (+ e 1))))))
+        (length (len string)))
+    (set string
+         (if (= e 0)
+             (cat string ".0")
+             (if (= e length)
+                 (cat "0." string)
+                 (if (< e length)
+                     (cat (sub string 0 (- length e)) "." 
+			  (sub string (- length e) length))
+                     (cat (sub "0.0000000000000" 0 (+ (- e length) 2))
+			  string)))))
+    (if (< s 0) (cat "-" string) string)))
+
+;;; SYMBOL
+
+(dm as ((_ (t= <str>)) (s <sym>) => <str>)
+  (sym-name s))
+
+(dm as ((_ (t= <sym>)) (s <str>) => <sym>)
+  (fab-sym s)
+  ;; (let ((sym (elt symbols s)))
+  ;;   (if (== sym nul)
+  ;;       (set (elt symbols s) sym)
+  ;;       sym))
+  )
+
+(dm < ((x <sym>) (y <sym>))
+  (< (sym-name x) (sym-name y)))
+
+(dm to-str ((x <sym>) => <str>)
+  (sym-name x))
+

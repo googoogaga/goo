@@ -1,0 +1,50 @@
+(use boot)
+(use macros)
+
+;;; TYPE PROTOCOL
+(exported
+ ;; 3.9 TYPES
+ <type>        ;; (dc <type> (<any>))
+ isa?          ;; (dg isa?     ((x <any>) (t <type>) => <log>))
+ subtype?      ;; (dg subtype? ((t1 <type>) (t2 <type>) => <log>))
+ 
+ ;; 3.9.1 SINGLETONS
+ <singleton>   ;; (dc <singleton> (<type>))
+ type-object   ;; (dg type-object ((x <singleton>) => <any>))
+ (df t= (x))
+
+ ;; 3.9.2 SUBCLASS
+ <subclass>    ;; (dc <subclass> (<type>))
+ type-class    ;; (dg type-class ((x <subclass>) => <class>))
+ (df t< (x))
+ 
+ ;; 3.9.3 UNION
+ <union>       ;; (dc <union> (<type>))
+ type-elts     ;; (dg type-elts ((x <union>) => <seq>))
+ (df t+ ((args ...)))
+
+ ;; 3.9.4 CLASSES
+ <class>               ;; (dc <class> (<type>))
+ class-name            ;; (dg class-name ((x <class>) => <sym>))
+ class-direct-parents  ;; (dg class-direct-parents ((x <class>) => <lst>))
+ class-parents         ;; (dg class-parents ((x <class>) => <lst>))
+ class-direct-slots    ;; (dg class-direct-slots ((x <class>) => <lst>))
+ class-slots           ;; (dg class-slots ((x <class>) => <lst>))
+ class-direct-children ;; (dg class-direct-children ((x <class>) => <lst>))
+
+ (df false-or (x))
+
+;; Doesn't belong here probably:
+ (dg as ((x <any>) (y <any>) => <any>))
+)
+
+;; FIXME: should type-elts really be <lst> instead of <seq> and also
+;; fix compiler to automatically copy optionals.
+(df t+ ((args ...)) (isa <union> (set type-elts (as <lst> args))))
+
+(df t= (x) (isa <singleton> (set type-object x)))
+
+(df t< (x) (isa <subclass>  (set type-class x)))
+
+(df false-or (x) (t+ x (t= #f)))
+

@@ -1,0 +1,149 @@
+(use boot)
+(use macros)
+(use proto/math)
+(use proto/types)
+(use proto/collections/collection)
+(use proto/collections/sequence)
+(exported
+;;; PORTS
+
+ (dc <port> (<any>))
+ 
+ (dc <input-port> (<port>))
+ (slot <input-port> (port-line <int>) 0)
+ (dg read-char ((port <input-port>) => <chr>))
+ (dg peek-char ((port <input-port>) => <chr>))
+ (dg char-ready? ((port <input-port>) => <log>))
+
+ (dc <output-port> (<port>))
+ (dg newline ((port <output-port>)))
+ (dg force-output ((port <output-port>)))
+ (dg write-char ((port <output-port>) (c <chr>)))
+ (dg write-string ((port <output-port>) (s <str>)))
+ 
+;;; FILE PORTS
+
+ (dc <file-port> (<port>)))
+(slot <port> port-handle)
+
+(exported
+ (dc <file-input-port> (<file-port> <input-port>))
+ (dg open-input-file ((filename <str>) => <file-input-port>))
+ (dg close-input-port ((x <file-input-port>)))
+ (dg call-with-input-file ((filename <str>) (f <fun>)))
+ 
+ (dc <file-output-port> (<file-port> <output-port>))
+ (dg open-output-file ((filename <str>) => <file-output-port>))
+ (dg close-output-port ((x <file-output-port>)))
+ (dg call-with-output-file ((filename <str>) (f <fun>)))
+ 
+ (dv in #f)
+ (dv out #f)
+
+ (dc <string-port> (<port>)))
+(slot <string-port> (port-guts <seq>) "")
+
+(exported
+ (dg port-contents ((port <string-port>) => <str>))
+  
+ (dc <string-input-port> (<string-port> <input-port>))
+ (slot <string-input-port> (port-index <int>) 0)
+ (dg call-with-string-input-port ((string <str>) (proc <fun>)))
+ 
+ (dc <string-output-port> (<string-port> <output-port>))
+ (dg call-with-string-output-port ((proc <fun>)))
+)
+
+(dm open-input-file ((filename <str>) => <file-input-port>)
+  (isa <file-input-port>
+       (set port-handle (%open-input-file (%su filename)))))
+
+(dm file-opening-error ((filename <str>))
+  (error "Cannot open file named %=" filename))
+
+(dm open-output-file ((filename <str>) => <file-output-port>)
+  (isa <file-output-port>
+       (set port-handle (%open-output-file (%su filename)))))
+
+(dm close-input-port ((port <file-input-port>))
+  (%close-input-port (port-handle port)))
+
+(dm close-output-port ((port <file-output-port>))
+  (%close-output-port (port-handle port)))
+
+(dm call-with-input-file ((string <str>) (proc <fun>))
+  (let ((port #f))
+    (fin (seq (set port (open-input-file string))
+	      (proc port))
+	 (and port (close-input-port port)))))
+       
+
+(dm call-with-output-file ((string <str>) (proc <fun>))
+  (let ((port #f))
+    (fin (seq (set port (open-output-file string))
+	      (proc port))
+	 (and port (close-output-port port)))))
+
+(dv in (isa <file-input-port> (set port-handle (%current-input-port))))
+
+(dv out (isa <file-output-port> (set port-handle (%current-output-port))))
+
+(dm read-char ((port <file-input-port>) => <chr>)
+  (let ((c (%cb (%read-char (port-handle port)))))
+    (when (== c #\newline) (inc (port-line port)))
+    c))
+
+(dm peek-char ((port <file-input-port>) => <chr>)
+  (%cb (%peek-char (port-handle port))))
+
+(dm char-ready? ((port <file-input-port>) => <log>)
+  (%bb (%char-ready? (port-handle port))))
+
+(dm newline ((port <output-port>)) 
+  (write-char port #\newline))
+
+(dm force-output ((port <file-output-port>))
+  (%force-output (port-handle port)))
+
+(dm write-char ((port <file-output-port>) (c <chr>))
+  (%write-char (port-handle port) (%cu c)))
+
+(dm write-string ((port <file-output-port>) (s <str>))
+  (%write-string (port-handle port) (%su s)))
+
+;;; STRING-PORT IMPLEMENTATION
+
+(dm port-contents ((port <string-port>) => <str>)
+  (as <str> (port-guts port)))
+
+(dm call-with-string-input-port ((string <str>) (proc <fun>))
+  (proc (isa <string-input-port> (set port-guts string))))
+
+;; VERY INEFFICIENT
+
+(dm call-with-string-output-port ((proc <fun>))
+  (proc (isa <string-output-port>)))
+
+;; TODO: EOF OBJECT MUST BE A CHR
+
+(dm peek-char ((port <string-input-port>) => <chr>)
+  (if (>= (port-index port) (len (port-guts port)))
+      (eof-object)
+      (elt (port-guts port) (port-index port))))
+
+(dm read-char ((port <string-input-port>) => <chr>)
+  (if (>= (port-index port) (len (port-guts port)))
+      (eof-object)
+      (let ((res (elt (port-guts port) (port-index port))))
+	(inc (port-index port))
+	res)))
+
+(dm char-ready? ((port <string-input-port>) => <log>)
+  #t)
+
+(dm write-char ((port <string-output-port>) (c <chr>))
+  (set (port-guts port) (add (port-guts port) c)))
+
+(dm write-string ((port <string-output-port>) (s <str>))
+  (set (port-guts port) (cat (port-guts port) s)))
+

@@ -1,9 +1,13 @@
 (use boot)
 (use macros)
+(use proto/types)
+(use proto/math)
 (use runtime)
+(use proto/collections)
 (use write)
 (use read)
 (use syntax)
+(use proto/ports)
 
 (export
  ;; Section 1.1/2.1: Special forms.

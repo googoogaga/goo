@@ -10,6 +10,10 @@
 (use ast-linearize)
 (use ast-eval)
 (use proto/system)
+(use proto/types)
+(use proto/math)
+(use proto/collections)
+(use proto/ports)
 
 (dg p2c-eval (exp ct-env))
 

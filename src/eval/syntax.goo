@@ -3,6 +3,9 @@
 (use boot)
 (use macros)
 (use runtime)
+(use proto/math)
+(use proto/types)
+(use proto/collections)
 
 ;;  Self-evaluating entities
 (dm sexpr-self-evaluating? (exp => <log>)

@@ -1,0 +1,47 @@
+(use boot)
+(use macros)
+(use proto/types)
+(use proto/math)
+(use proto/collections/collection)
+(use proto/collections/map)
+(use proto/collections/sequence)
+(use proto/collections/list)
+
+;; 3.7.2.1 ASSOCIATIONS
+
+;;;;!! Interface
+(exported
+ (dc <assocs> (<map>))
+   (slot <assocs> (assocs-test <fun>) ==)
+)
+
+;;;;!! Implementation
+  (slot <assocs> (assocs-keys <lst>) '())
+  (slot <assocs> (assocs-vals <lst>) '())
+
+;;;; Collection protocol
+(dm len ((x <assocs>) => <int>)
+  (len (assocs-keys x)))
+
+(dm elt ((x <assocs>) key => <any>)
+  (rep fnd (((keys <lst>) (assocs-keys x)) ((vals <lst>) (assocs-vals x)))
+    (if (== keys '())
+        nul
+        (if ((assocs-test x) key (head keys))
+            (head vals)
+            (fnd (tail keys) (tail vals))))))
+
+(dm elt-setter (val (x <assocs>) key)
+  (rep fnd (((keys <lst>) (assocs-keys x)) ((vals <lst>) (assocs-vals x)))
+    (if (== keys '())
+        (seq (set (assocs-keys x) (pair key (assocs-keys x)))
+             (set (assocs-vals x) (pair val (assocs-vals x)))
+          val)
+        (if ((assocs-test x) key (head keys))
+            (set (head vals) val)
+            (fnd (tail keys) (tail vals))))))
+
+(dm fab ((c (t= <assocs>)) (s <int>) => <assocs>)
+  (isa <assocs>))
+
+

@@ -5,6 +5,28 @@
 (use macros)
 (use runtime)
 (use ast)
+(use proto/types)
+(use proto/math)
+(use proto/collections)
+
+;;; this is moved from runtime.proto
+;;; this doesn't deserve to be part of proto AFAICT, but its used here.
+
+;;; ASSOC
+
+(dc <assoc> (<any>))
+  (slot <assoc> assoc-key)
+  (slot <assoc> assoc-value)
+(df assoc (x y => <assoc>)
+  (isa <assoc> (set assoc-key x) (set assoc-value y)))
+
+(dm assocq (x (l <lst>) => <any>)
+  (if (empty? l)
+      #f
+      (if (== x (assoc-key (head l)))
+	  (head l)
+	  (assocq x (tail l)))))
+;;; END code from runtime.proto
 
 ;;; WALKER
 

@@ -20,6 +20,10 @@
 (use ast-linearize)
 (use strings)
 (use proto/system)
+(use proto/types)
+(use proto/math)
+(use proto/collections)
+(use proto/ports)
 
 (ddv *definitions*      #f)
 (ddv *dynamic-linking?* #f)
@@ -426,11 +430,6 @@
 (dm mangle-boot-name (name => <str>)
   (mangle-global-name $proto-boot-module-name name))
 
-;; Mangle a name which is defined in runtime.proto.
-;; Be sure to provide a matching EXT declaration in prt.h.
-(dm mangle-runtime-name (name => <str>)
-  (mangle-global-name $proto-runtime-module-name name))
-
 (dm mangle-module-binding ((binding <module-binding>) => <str>)
   (mangle-global-name (binding-module-name binding)
 		      (binding-name binding)))
@@ -551,7 +550,7 @@
 
 (dm generate-quotation (code-out (x <vec>))
   ;; TODO: TIE TOGETHER
-  (format code-out "CALLN(1, %s, %s" (mangle-runtime-name "vec") (len x))
+  (format code-out "CALLN(1, %s, %s" (mangle-boot-name "vec") (len x))
   (for ((e x))
     (write-string code-out ", ")
     (generate-quotation code-out e))
@@ -776,7 +775,7 @@
     (write-string code-out "CALLN")
     (between-parentheses-comma-separated (code-out)
       (write-string code-out "1")
-      (write-string code-out (mangle-runtime-name "%with-monitor"))
+      (write-string code-out (mangle-boot-name "%with-monitor"))
       (write-string code-out "5")
       (gen-ref (monitor-type e) code-out)
       (gen-ref (monitor-info e) code-out)
