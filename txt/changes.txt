@@ -1,3 +1,70 @@
+=== 0.149 ===
+
+summary
+
+  added next experimental version of {} syntax, improved g2c code gen
+  and reg allocation, merged call and loop analysis, 
+
+changed
+
+  locals, fix-let, and loops no longer have their own registers
+  and macro to not use a let tmp
+  collect-registers to use non-side-effecting ast-walk
+  {} syntax to mainly mean seq 
+    '{' ,@forms '}' == (seq ,@forms)
+  but with a \ means fun
+    '{' ,@vars \ ,@body '}' == (fun (,@vars) ,@body)
+
+added
+
+  added g2c if optimization to avoid redundant false checks which
+    can't be optimized by gcc
+  port-filename to file-ports 
+  improved write method for file-ports
+
+=== 0.148 ===
+
+summary
+
+  added <loop> and <loop-application> and inlining of loops.  this
+  adds nested loops to goo and greatly improved emitted code.
+
+changed
+
+  changed dispatch to use faster int test for prop access
+  specialized napp for opts last elt
+
+added
+
+  ast-eval's for <loop> and <loop-application>
+  or/set macro
+
+=== 0.147 ===
+
+summary
+
+  vm working with low level support and improved initialization
+
+changed
+
+  added vm state to lowlevel runtime grt so that it will mesh with nlx
+  better vm tracing
+  next-methods support to vm
+  nary support to vm
+  bound? to take a default value
+  made pe-msg be a non ct-also fun so that it would be faster to expand msg*
+  sup and app-sup to use @checked-next-methods to make their expansions smaller
+
+added
+
+  support for multiple runs of vm-eval
+  req-sig-specs
+  more num and col tests
+
+fixed
+
+  add method for str's
+
 === 0.146 ===
 
 summary

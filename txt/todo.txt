@@ -1,7 +1,16 @@
 NEW
 
-o merge in win32 patches
-o   XCALL patches
+o create new ast for %bb without register
+o programs as lsts is a terrible representation
+o reduce opt passes
+o reduce reoptimizations
+o split out optimizations from ast-linearize
+o doc or/set
+o perhaps join should have a seq as second arg to make it sym with split
+o stack overflow during recompilation
+o fix emacs mode for [] and {}
+o rename empty? to nul?
+o macros should be compiled in interpreted
 o automate release and build and test
 o redo collection hierarchy
 o   fix del-keys! and add protocol to enum for col!'s
@@ -10,6 +19,15 @@ o   col doesn't work for <col.>'s
 o   change do-keyed and map-keyed to use items instead of keyed
 o   perhaps *-or's should use thunks for default values
 o   more tests
+o   conform manual to test suite wrt collections
+o send new version of shapes
+o fix strutil
+o customize wiki
+o should [v *] == last?
+o should [v 0 * 1] == [v 0 (- (len v) 1)]?
+x don't deprecate 1st, 2nd, 3rd in favor of [] syntax ???
+x merge in win32 patches
+o   XCALL patches
 o interfaces
 o perhaps change ... to *
 o publish reasons
