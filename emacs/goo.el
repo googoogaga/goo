@@ -143,7 +143,9 @@ See `run-hooks'."
 	       "fin" "try" "sig" "isa" "slot" "ct" "expand"
 	       "quote" "rep" "ifm" "and" "or" "unless" "when"
 	       "inc" "dec" "case" "select" "for" "let") t)
-	"\\>") 1))))
+	"\\>") 1)
+      ;; David Fox <fox@graphics.cs.nyu.edu> for SOS/STklos class specifiers.
+      '("\\<<\\sw+>\\>" . font-lock-type-face))))
   "Gaudy expressions to highlight in Proto modes.")
 
 (defvar proto-font-lock-keywords proto-font-lock-keywords-1
