@@ -13,7 +13,8 @@
   (isa? x y))
 
 (dm sorted-applicable-methods-using-types
-    (methods|<met-seq> arg-types|<arg-seq> => (tup <met-seq> <met-seq>))
+    (methods|<met-seq> arg-types|<arg-seq> 
+      => (tup sorted|<met-seq> others|<met-seq>))
   (def leading-sorted '())
   (def others         '())
   (loc ((merge-method (m sorted)

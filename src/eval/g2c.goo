@@ -153,6 +153,7 @@
 ;;; Backwards compatibility for users: Build g2c itself.
 (dv *g2c-app* (g2c-def-app "g2c" 'eval/main))
 (dm g2c-top () (g2c-build-app *g2c-app*))
+(dv g2c-goo g2c-top)
 (dm g2c-clean ()
   (set *g2c-app* (g2c-def-app "g2c" 'eval/main))
   #f)
@@ -1265,7 +1266,7 @@
 (export
   g2c-def-app
   g2c-build-app
-  g2c-top
+  g2c-top g2c-goo
   g2c-clean
   g2c-exp
   g2c-ast

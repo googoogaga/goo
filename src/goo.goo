@@ -39,7 +39,8 @@
              class-name
  <singleton> type-object
  <subclass>  type-class
- <union>     type-elts
+ <union>     union-elts
+ <product>   product-elts
 
  ;; Section 3.2: Comparables.
  == = < ~= ~== > <= >= min max subtype? isa? may-isa? 
@@ -74,7 +75,7 @@
  ;; 3.7.1: Iteration protocol.
  <enum> enum fin? nxt now now-setter now-key
  ;; 3.7.2: Maps.
- <map> fab-map ;; <assocs> assocs-test
+ <map> col ;; <assocs> assocs-test
  <tab> tab-growth-factor tab-growth-threshold tab-shrink-threshold
  tab-hash id-hash ;; $permanent-hash-state tab-gc-state 
  <str-tab> case-insensitive-string-hash case-insensitive-string-equal

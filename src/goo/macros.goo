@@ -40,8 +40,8 @@
   ;;   '(foo x y z) =>
   ;;       (tup '((g1 x) (g2 y) (g3 z)) '(foo g1 g2 g3))
   ;;   'bar => (tup '() 'bar)
-  (df lift-place-subforms (place #/ => (tup g-decls|<lst> g-place|<lst>) /#)
-    (loc ((munch ((subforms <lst>) #/ => (tup g-decls|<lst> g-args|<lst>) /#)
+  (df lift-place-subforms (place => (tup g-decls|<lst> g-place|<any>))
+    (loc ((munch ((subforms <lst>) => (tup g-decls|<lst> g-args|<lst>))
             (if (empty? subforms)
                 (tup '() '())
                 (let (((tup g-decls g-args) (munch (tail subforms)))

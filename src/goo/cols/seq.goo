@@ -7,7 +7,7 @@
 (use goo/cols/col)
 
 (df @t? (x|<type> => <union>) 
-  (new <union> type-elts (@lst x (new <singleton> type-object #f))))
+  (new <union> union-elts (@lst x (new <singleton> type-object #f))))
 
 ;;;;!! Interface
 (exported
@@ -290,6 +290,11 @@
       (def nxts (nxt e))
       (def val  (and (not (fin? e)) (now e)))
       (fn key val) (rep (nxt e)))))
+
+(dm col (t|(t< <col>) key-vals|...)
+  (def x (fab t (1st (trunc/ (len key-vals) 2))))
+  (do-key-vals (fun (key val) (set (fab-elt x key) val)) key-vals)
+  x)
 
 (dm suffix? (s|<seq> end|<seq> => <log>)
   (= (sub s (- (len s) (len end)) (len s)) end))

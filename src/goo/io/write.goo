@@ -223,17 +223,17 @@
 
 (dm recurring-write (port|<out-port> x|<union> d|<int> recur|<fun>)
   (puts port "#{T+")
-  (do (fun (t) (put port #\space) (write-type port t)) (type-elts x))
+  (do (fun (t) (put port #\space) (write-type port t)) (union-elts x))
   (puts port "}"))
 
 (dm recurring-write (port|<out-port> x|<product> d|<int> recur|<fun>)
   (puts port "#{T*")
-  (do (fun (t) (put port #\space) (write-type port t)) (type-elts x))
+  (do (fun (t) (put port #\space) (write-type port t)) (product-elts x))
   (puts port "}"))
 
 (dm write-value-type (port|<out-port> x|<product>)
   (puts port "(tup")
-  (do (fun (t) (put port #\space) (write-type port t)) (type-elts x))
+  (do (fun (t) (put port #\space) (write-type port t)) (product-elts x))
   (puts port ")"))
 
 (dm write-value-type (port|<out-port> x)

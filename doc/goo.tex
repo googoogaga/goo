@@ -7,7 +7,7 @@
 \T\usepackage{fancybox}
 \W\include{latex-index}
 
-\T\addtolength{\topmargin}{-1.1in}
+\T\addtolength{\topmargin}{-1.2in}
 \T\addtolength{\evensidemargin}{-0.7in}
 \T\addtolength{\oddsidemargin}{-0.2in}
 %\T\oddsidemargin10pt\evensidemargin20pt
@@ -54,7 +54,7 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\title{{\Huge \goo\ Reference Manual v35 } % \\
+\title{{\Huge \goo\ Reference Manual v37 } % \\
 % {\large for release \input{version-number}} 
 }
 \author{{\huge Jonathan Bachrach} \\
@@ -79,7 +79,7 @@ Scheme~\cite{Kelsey:Clinger:Rees:hosc:1998}.
 \goo's main goal is to offer the best of both scripting and
 deliver languages while at the same time 
 incorporating an extreme back-to-basics philosophy.
-\goo\ is freely available from \kode{www.googaga.org} under GPL.
+\goo\ is freely available from \kode{www.googoogaga.org} under GPL.
 This manual is preliminary and relies on an understanding
 of Scheme and Dylan.
 
@@ -390,7 +390,7 @@ singleton types, they can be used to represent C-style \kode{enum}'s.
 \class{<union>}{<type>}
 \generic{t+}{types|... => <union>}
   \doc{returns union type representing disjunction of \kode{types}.}
-\generic{type-elts}{x|<union> => <seq>}
+\generic{union-elts}{x|<union> => <seq>}
   \doc{types that union type matches.}
 \function{t?}{type|<type> => <union>}
   \doc{$\equiv$ \kode{(t+ (t= \#f) type)} (cf., Dylan's
@@ -407,7 +407,7 @@ types.  They are often used to describe multiple value return types.
 \class{<product>}{<type>}
 \generic{t*}{types|... => <product>}
   \doc{returns product type specifying the cross product of \kode{types}.}
-\generic{type-elts}{x|<product> => <seq>}
+\generic{product-elts}{x|<product> => <seq>}
   \doc{types that product type matches.}
 \end{defs}
 
@@ -561,9 +561,10 @@ where
 \syntax{,params}{(,@vars [(,name '...')])}
   \doc{where parameter lists can include an optional nary parameter which
   binds to all arguments beyond required arguments.}
-\syntax{,ret}{,var | (TUP ,@vars)}
+\syntax{,ret}{,var | (TUP ,@ret-vars)}
   \doc{with \kode{TUP} turning into corresponding \kode{t*} 
   function return type.}
+\syntax{,ret-var}{(,name ,type)}
 \end{defs}
 \begin{defs}
 \form{LOC}{(LOC ((,name ,sig ,@fbody)) ,@body)}
@@ -987,10 +988,12 @@ Collections can be almost entirely defined in terms of an enumeration class.
 \generic{fab}{t|(t< <col>) n|<int> => <col>}
   \doc{returns a new instance of collection type \kode{t} of len
   \kode{n}.}
-\generic{col}{t|(t< <col>) elts|... => <col>}
+\generic{col}{t|(t< <col>) key-vals|... => <col>}
   \doc{returns new collection of type \kode{t} with initial key values
-       \kode{elts}.  In the case of sequences, \kode{elts} are just
-       the values with the keys being implicit.}
+       \kode{key-vals}.}
+\generic{fabs}{t|(t< <col>) elts|... => <col>}
+  \doc{returns new collection of type \kode{t} with initial values
+       \kode{elts} and keys \kode{(below (len elts))}.}
 \generic{len}{x|<col> => <int>}
   \doc{returns number of collection elements.}
 \generic{col-res-type}{x|<col> => <type>}
@@ -1850,30 +1853,30 @@ module name to use.
 
 \section{Installation}
 
-Unpack % either a linux or windows version of \goo\ into an
-appropriate installation area.  There are five directories:
-\kode{doc}, \kode{bin}, \kode{c}, \kode{src}, and \kode{emacs}.  Edit
-the \kode{Make.inc} file in the top level directory, to configure the
+Unpack either a linux or windows version of \goo\ into an appropriate
+installation area.  There are five directories: \kode{doc},
+\kode{bin}, \kode{c}, \kode{src}, and \kode{emacs}.  Edit the
+\kode{Make.inc} file in the top level directory, to configure the
 installation directory root using the \kode{PREFIX} if \kode{/usr} is
 inapproriate.  Executing \kode{make install} will rebuild \goo\ with
 the proper roots, creating \kode{lib} and \kode{mods} directories, and
 installing \goo\ in \kode{bin} and setting up \kode{doc}.  For the
 simplest installation, just set \kode{GOO\_ROOT} to your desired
-installation location and type \kode{make simple-install}.
+installation location and type \kode{make simple-install}.  On
+windows, it is necessary to add \kode{GOO\_BIN} to your \kode{PATH}.
 
 You can override the default \kode{GOO\_ROOT} by
 setting up your \kode{OS} environment variable.  
 For example, my \kode{GOO\_ROOT} on linux is: 
-
-\begin{exv}
-setenv GOO_ROOT /home/ai/jrb/goo
-\end{exv}
-
+\kode{setenv GOO\_ROOT /home/ai/jrb/goo}.
 % \begin{exv}
 %   SET GOO\_ROOT=\jrb\goo
 % \end{exv}
 % On linux of course you would use forward slashes and 
 Environment variable setting depends on the shell you're using.
+In order to run \kode{g2c-goo} you need to
+set \kode{GOO\_BUILD\_ROOT} to the directory which includes the \kode{src}
+directory.  
 
 During start up, \goo\ will load two patch files:
 
@@ -2053,15 +2056,15 @@ This is the first release of \goo.
 \goo\ is relatively slow at this point.  There are no compiler
 optimizations in place.  The error reporting is minimal and no source
 locations are tracked.  Also hygiene is not implemented and there are
-some potential hygiene leaks.  Finally, tuple return types are not checked.
+some potential hygiene leaks.  
 
 This manual is preliminary.  Please consult the runtime
 libraries in the \kode{src} directory.  Also check out Scheme and Dylan's
 manuals for information on their lexical structure and special form
 behavior respectively.
 
-Please, please, please send bug reports to \kode{jrb@googaga.org}.  I
-will fix your bugs asap.  The \goo\ website \kode{www.googaga.org}
+Please, please, please send bug reports to \kode{jrb@googoogaga.org}.  I
+will fix your bugs asap.  The \goo\ website \kode{www.googoogaga.org}
 will have papers, releases, FAQS, etc.
 
 \section{Future}
@@ -2101,7 +2104,8 @@ Language Design and Compilation ($6.894$), that I cotaught with Greg
 Sullivan and Kostas Arkoudas.  The $6.894$ students were very patient
 and gave me many helpful suggestions that greatly improved Proto.
 During and after the seminar, Greg Sullivan reviewed many ideas and
-helped tremendously.  James Knight was one of the $6.894$ students and
+helped tremendously, including by writing the Emacs \kode{goo-mode}.  
+James Knight was one of the $6.894$ students and
 became my MEng student after the course.  He has helped in many many
 ways including the writing of the \kode{save-image} facility, the
 speeding up of the runtime, and the improving of the non local exit
@@ -2116,7 +2120,9 @@ me.  In fact, during the course of defending Proto's form of
 object-orientation on that list I came up with its current name, \goo,
 and it stuck.  Andrew Sutherland became my MEng student in the winter
 of 2002, wrote a \goo\ SWIG~\cite{Beaz96a} backend, and has provided
-useful feedback on \goo's design.  Finally, I would like to thank
+useful feedback on \goo's design.  I also wish to thank Boehm, Demers,
+and Weiser for writing the conservative GC, upon which this initial
+version of \goo\ is based.  Finally, I would like to thank
 Keith Playford for his continued guidance in language design and
 implementation and for his ever present and rare sense of good taste.
 % Most recently, \goo\ has benefitted from the parallel design effort of

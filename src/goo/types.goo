@@ -22,13 +22,13 @@
  
  ;; 3.9.3 UNION
  <union>       ;; (dc <union> (<type>))
- type-elts     ;; (dg type-elts (x|<type> => <seq>))
+ union-elts    ;; (dp union-elts (x|<union> => <lst>))
  (df t+ (args|...))
 
  ;; 3.9.3 PRODUCT
- (dc <product> (<type>))
- (dp type-elts (<product> => <tup>))
- (df t* (args|...))
+ <product>    ;; (dc <product> (<type>))
+ product-elts ;; (dp product-elts (<product> => <tup>))
+ t*           ;; (df t* (args|...))
 
  ;; 3.9.4 CLASSES
  <class>               ;; (dc <class> (<type>))
@@ -42,37 +42,9 @@
  (df t? (x))
 )
 
-;; FIXME: should type-elts really be <lst> instead of <seq> and also
+;; FIXME: should union-elts really be <lst> instead of <seq> and also
 ;; fix compiler to automatically copy optionals.
-(df t+ (args|...) (new <union> type-elts (as <lst> args)))
-
-(df t* (args|...) (new <product> type-elts (%to-tup args)))
-
-(dm isa? (o t|<product> => <log>)
-  (and (isa? o <tup>)
-       (== (len o) (len (type-elts t)))
-       (all2? isa? o (type-elts t))))
-
-(dm subtype? (t1|<product> t2|<type> => <log>) #f)
-
-(dm subtype? (t1|<type> t2|<product> => <log>) #f)
-
-(dm subtype? (t1|<product> t2|<product> => <log>)
-  (def te1 (type-elts t1)) (def te2 (type-elts t2))
-  (and (== (@tlen te1) (@tlen te2))
-       ;; (all2? subtype? (type-elts t1) (type-elts t2))
-       (rep all? ((i (@+ (@tlen te1) -1)))
-         (cond ((== i -1)                              #t)
-               ((subtype? (@telt te1 i) (@telt te2 i)) (all? (@+ i -1)))
-               (#t                                     #f)))))
-
-(dm subtype? (t1|<product> t2|<class> => <log>)
-  (subtype? <tup> t2))
-
-(dm may-isa? (c|<class> t|<product> #/ => (tup <log> <log>) /#)
-  (def tup?  (== c <tup>))
-  (def some? (and tup? (any? (fun (t) (2nd (may-isa? <any> t))) (type-elts t))))
-  (tup tup? some?))
+(df t+ (args|...) (new <union> union-elts (as <lst> args)))
 
 (df t= (x) (new <singleton> type-object x))
 

@@ -970,5 +970,22 @@ changed
    display to emit
    better tuple return type printing
 
+=== 0.129 - 0.131 ===
 
+summary
 
+  tup type checks working and lots of tiny tweaks towards first release
+
+added
+
+  Make.inc.linux and Make.inc.win32
+  g2c-goo alias for g2c-top
+
+changed
+
+  type-elts split into union-elts and product-elts
+  fab-map to col
+  some incorrect tup ret types
+  made tup ret var names required because of ambiguity
+  bit neg tests
+  Makefile configs

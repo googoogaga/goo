@@ -1159,7 +1159,8 @@ P YPunexec(P name) {
 
 P YevalSg2cYPprint_cpu_usage(char *message) {
 	return;
-/*  struct rusage usage;
+/*
+  struct rusage usage;
   getrusage(RUSAGE_SELF, &usage);
   printf("%20s %d.%06.6d %d.%06.6d\n", message,
 	 usage.ru_utime.tv_sec, usage.ru_utime.tv_usec,
@@ -1327,31 +1328,29 @@ typedef P (*PLD)();
 extern P YgooSsystemYTgoo_rootT;
 
 P YgooSsystemYPcompile (P cfile, P sofile) {
-	char  buf[4096];
-	int pid;
-	char *v[] = {"cc", "-shared",  "-g", "-fPIC",  buf, "-o", sofile, cfile, NULL};
+  char  buf[4096];
+  int pid;
+  char *v[] = {"cc", "-shared",  "-g", "-fPIC",  buf, "-o", sofile, cfile, NULL};
 
-	sprintf(buf, "-I%s/lib", YPsu(YgooSsystemYTgoo_rootT));
-//	printf("EXECUTING %s\n", buf);
-	pid = fork();
-	if (pid == 0) // child
-		execvp("cc", v);
-	else if (pid < 0)
-		CALL1(1, Yerror, "Cannot exec compiler.");
-	else
-	{
-		int status;
-		// parent
-		do {
-			if (waitpid(pid, &status, 0) == -1) {
-				if (errno != EINTR)
-					return YPfalse;
-			} else
-				return YPtrue;
-		} while(1);
-		
-		return YPfalse;
-	}
+  sprintf(buf, "-I%s/lib", YPsu(YgooSsystemYTgoo_rootT));
+  //  printf("EXECUTING %s\n", buf);
+  pid = fork();
+  if (pid == 0) // child
+    execvp("cc", v);
+  else if (pid < 0)
+    CALL1(1, Yerror, "Cannot exec compiler.");
+  else {
+    int status;
+    // parent
+    do {
+      if (waitpid(pid, &status, 0) == -1) {
+	if (errno != EINTR)
+	  return YPfalse;
+      } else
+	return YPtrue;
+    } while(1);
+    return YPfalse;
+  }
 }
 
 P YgooSsystemYPload(P name) {
@@ -1371,7 +1370,8 @@ P YgooSsystemYPload(P name) {
   return res;
 }
 
-/*P YevalSg2cYPcompile (P name) {
+/*
+P YevalSg2cYPcompile (P name) {
 	return YgooSsystemYPcompile(name);
 }
 

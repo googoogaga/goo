@@ -190,7 +190,7 @@
             (fun (c r) (continue #f))
             (newline out)
             (when show-restarts?
-              (msg out "Type (restart N) to restart execution:\n")
+              (msg out "Type \",restart N\" to restart execution:\n")
               (set restarts (list-handlers <restart> out))
               (set show-restarts? #f))
             (def form (prompt-for-command-expression ct-env level "<= "))

@@ -60,7 +60,7 @@
 (dm push! (c|<vec> x => <vec>)
   (add! c x))
 
-(dm pop! (c|<vec> => (tup <vec> <any>))
+(dm pop! (c|<vec> => (tup seq|<vec> val|<any>))
   (def new-len (- (len c) 1))
   (def x       (low-elt c new-len))
   (set (len c) new-len)

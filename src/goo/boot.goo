@@ -168,7 +168,9 @@
         (dc <subclass> (<type>))
           (dp type-class (<subclass> => <class>))
         (dc <union> (<type>))
-          (dp type-elts (<union> => <lst>)             nil)
+          (dp union-elts (<union> => <lst>)            nil)
+        (dc <product> (<type>))
+          (dp product-elts (<product> => <tup>))
         (dc <prop> (<any>))
           (dp prop-owner (<prop> => <any>))
           (dp prop-getter (<prop> => <fun>))
@@ -303,7 +305,8 @@
 
 (%define-structure % singleton type-object)
 (%define-structure % subclass  type-class)
-(%define-structure % union     type-elts)
+(%define-structure % union     union-elts)
+(%define-structure % product   product-elts)
 
 (dv <class> (%object-of (%raw 0) (%raw 10)))
 
@@ -926,6 +929,15 @@
 (dl @telt-setter (z x|<tup> i|<int>)
   (set (%telt x (%iu i)) z))
 
+(df @tany? (test|<fun> c|<tup> => <log>)
+  (rep fnd ((i (@+ (@tlen c) -1)))
+    (if (@< i 0) #f (or (test (@telt c i)) (fnd (@+ i -1))))))
+
+(df @tall2? (test|<fun> c1|<tup> c2|<tup> => <log>)
+  (and (@== (@tlen c1) (@tlen c2))
+       (rep fnd ((i (@+ (@tlen c1) -1)))
+         (or (@< i 0) (and (test (@telt c1 i) (@telt c2 i)) (fnd (@+ i -1)))))))
+
 (dl %to-tup (args|<opts>)
   (def l (@olen args))
   (def t (%tup (%iu l) nul))
@@ -1071,6 +1083,8 @@
 
 (dv tup @tup)
 
+(df t* (args|...) (%product (%to-tup args)))
+
 ;; TODO: DEF SUBTYPE METHODS
 
 (df @type-equal? (t1 t2 => <log>)
@@ -1083,7 +1097,7 @@
       (@subclass? t1 t2)
       (subtype? t1 t2)))
   
-(df @may-isa? (c|<class> t|<type> #/ => (tup <log> <log>) /#)
+(df @may-isa? (c|<class> t|<type> => (tup some?|<log> all?|<log>))
   (if (@== (%class-of t) <class>)
       (if (@subclass? c t) (@tup #t #t) (@tup #f #f))
       (may-isa? c t)))
@@ -1119,7 +1133,7 @@
 
 (df ord-app-mets-1
     (mets|<lst> args|<opts> order-mets|<fun> 
-      #/ => (tup ordered|<lst> ambig|<lst>) /#)
+      => <tup> #/(tup ordered|<lst> ambig|<lst>)/#)
   (def ohead|<lst> (@pair #f '()))
   (def ahead|<lst> (@pair #f '()))
   (rep loop ((mets|<lst> mets))
@@ -1173,7 +1187,7 @@
                   #f))))))
 
 (df ord-app-mets* 
-    (gf|<gen> args|<opts> #/ => (tup ordered|<lst> ambig|<lst>) /#)
+    (gf|<gen> args|<opts> => <tup> #/(tup ordered|<lst> ambig|<lst>)/#)
   (def considered-mets
     (rep col ((ans '()) (ms (@fun-mets gf)))
       (if (@empty? ms)
@@ -1183,7 +1197,7 @@
             (col ans (@tail ms))))))
   (ord-app-mets-1 considered-mets args order-mets))
 
-(df ord-app-mets (gf|<gen> args|... #/ => (tup ordered|<lst> ambig|<lst>) /#)
+(df ord-app-mets (gf|<gen> args|... => (tup ordered|<lst> ambig|<lst>))
   (ord-app-mets* gf args))
 
 ;; (df opt-args (n|<int> args|<opts> => <opts>)
@@ -1223,7 +1237,7 @@
 
 (df @precise-spec? (x)
   (or (@singleton-spec? x) (@subclass-spec? x) 
-      (and (@union-spec? x) (@any? @precise-spec? (%type-elts x)))))
+      (and (@union-spec? x) (@any? @precise-spec? (%union-elts x)))))
 
 (df @mets-unspecialized-at? (mets|<lst> pos|<int> => <log>)
   (@all? (fun (met) (@= (fun-spec met pos) <any>)) mets))
@@ -1775,12 +1789,12 @@
 (dg subtype? (t1|<type> t2|<type> => <log>))
 
 (dm subtype? (t1|<union> t2|<type> => <log>)
-  (@all? (fun (t) (@subtype? t t2)) (%type-elts t1)))
+  (@all? (fun (t) (@subtype? t t2)) (%union-elts t1)))
 (dm subtype? (t1|<type> t2|<union> => <log>)
-  (@any? (fun (t) (@subtype? t1 t)) (%type-elts t2)))
+  (@any? (fun (t) (@subtype? t1 t)) (%union-elts t2)))
 ;; disambiguate the case where there are two unions.
 (dm subtype? (t1|<union> t2|<union> => <log>)
-  (@all? (fun (t) (@subtype? t t2)) (%type-elts t1)))
+  (@all? (fun (t) (@subtype? t t2)) (%union-elts t1)))
 
 (dm subtype? (t1|<class> t2|<class> => <log>)
   (@subclass? t1 t2))
@@ -1803,6 +1817,17 @@
 (dm subtype? (t1|<singleton> t2|<subclass> => <log>)
   (and (@isa? (%type-object t1) <class>)
        (@subclass? (%type-object t1) (%type-class t2))))
+(dm subtype? (t1|<product> t2|<type> => <log>) #f)
+
+(dm subtype? (t1|<type> t2|<product> => <log>) #f)
+
+(dm subtype? (t1|<product> t2|<product> => <log>)
+  (def te*1 (%product-elts t1)) (def te*2 (%product-elts t2))
+  (and (@== (@tlen te*1) (@tlen te*2))
+       (@tall2? subtype? te*1 te*2)))
+
+(dm subtype? (t1|<product> t2|<class> => <log>)
+  (subtype? <tup> t2))
 
 ;;; ISA?
 
@@ -1816,22 +1841,27 @@
   (and (@isa? o <class>)
        (@subclass? o (%type-class t))))
 (dm isa? (o u|<union> => <log>)
-  (@any? (fun (t) (@isa? o t)) (%type-elts u)))
+  (@any? (fun (t) (@isa? o t)) (%union-elts u)))
+(dm isa? (o t|<product> => <log>)
+  (def te* (%product-elts t))
+  (and (isa? o <tup>)
+       (@== (@tlen o) (@tlen te*))
+       (@tall2? isa? o te*)))
 
 ;;; ORDER-SPECS
 (dg order-specs (t1|<type> t2|<type> arg|<any>
-                 #/ => (tup order|<sym> canonical-type|<type>) /#))
+                 => (tup order|<sym> canonical-type|<type>)))
 
 (dm order-specs (t1|<singleton> t2|<singleton> arg
-                 #/ => (tup order|<sym> canonical-type|<type>) /#)
+                 => (tup order|<sym> canonical-type|<type>))
   (@tup '= t1))
 
 (dm order-specs (t1|<singleton> t2|<type> arg
-                 #/ => (tup order|<sym> canonical-type|<type>) /#)
+                 => (tup order|<sym> canonical-type|<type>))
   (@tup '< t1))
 
 (dm order-specs (t1|<subclass> t2|<subclass> arg 
-                 #/ => (tup order|<sym> canonical-type|<type>) /#)
+                 => (tup order|<sym> canonical-type|<type>))
   (def c1 (%type-class t1))
   (def c2 (%type-class t2))
   (cond
@@ -1840,7 +1870,7 @@
     (#t                  (@tup '> t2))))
 
 (dm order-specs (t1|<subclass> t2|<class> arg 
-                 #/ => (tup order|<sym> canonical-type|<type>) /#)
+                 => (tup order|<sym> canonical-type|<type>))
   (@tup (if (@subtype? <class> t2) ;; TODO: THIS SEEMS WRONG
             (if (@== t1 <any>)
                 (order-specs <class> t2 arg)
@@ -1849,7 +1879,7 @@
         t1))
 
 (dm order-specs (t1|<class> t2|<subclass> arg 
-                 #/ => (tup order|<sym> canonical-type|<type>) /#)
+                 => (tup order|<sym> canonical-type|<type>))
   (@tup (if (@subtype? <class> t1) ;; TODO: THIS SEEMS WRONG
             (if (@== t2 <any>)
                 (order-specs t1 <class> arg)
@@ -1858,11 +1888,11 @@
         t2))
 
 (dm order-specs (t1|<class> t2|<class> arg 
-                 #/ => (tup order|<sym> canonical-type|<type>) /#)
+                 => (tup order|<sym> canonical-type|<type>))
   (@order-specs-class t1 t2 arg))
 
 (dm order-specs (t1|<type> t2|<type> arg 
-                 #/ => (tup order|<sym> canonical-type|<type>) /#)
+                 => (tup order|<sym> canonical-type|<type>))
   (if (@subtype? t1 t2)
       (@tup (if (@subtype? t2 t1) '= '<) t1)
       (if (@subtype? t2 t1)
@@ -1870,23 +1900,29 @@
           (@tup '<> <any>))))
 
 ;;; MAY-ISA?: class contains => (some? all?) instances of type
-(dg may-isa? (c|<class> t|<type> #/ => (tup <log> <log>) /#))
+(dg may-isa? (c|<class> t|<type> => (tup some?|<log> all?|<log>)))
 
-(dm may-isa? (c|<class> t|<class> #/ => (tup <log> <log>) /#)
+(dm may-isa? (c|<class> t|<class> => (tup some?|<log> all?|<log>))
   (if (@subclass? c t) (@tup #t #t) (@tup #f #f)))
-(dm may-isa? (c|<class> t|<singleton> #/ => (tup <log> <log>) /#)
+(dm may-isa? (c|<class> t|<singleton> => (tup some?|<log> all?|<log>))
   (@tup (@may-isa? (%class-of (%type-object t)) c) #f))
-(dm may-isa? (c|<class> t|<subclass> #/ => (tup <log> <log>) /#)
+(dm may-isa? (c|<class> t|<subclass> => (tup some?|<log> all?|<log>))
   (def class? (@subtype? c <class>))
   (@tup class? (and class? (@== (%type-class c) <any>))))
-(dm may-isa? (c|<class> t|<union> #/ => (tup <log> <log>) /#)
-  (rep loop ((some? #f) (all? #f) (elts (%type-elts t)))
+(dm may-isa? (c|<class> t|<union> => (tup some?|<log> all?|<log>))
+  (rep loop ((some? #f) (all? #f) (elts (%union-elts t)))
     (if (@empty? elts)
         (@tup some? all?)
         (let ((elt-some-all? (@may-isa? c (@head elts)))
               (elt-some?     (@telt elt-some-all? 0))
               (elt-all?      (@telt elt-some-all? 1)))
           (loop (or elt-some? some?) (or elt-all? all?) (@tail elts))))))
+(dm may-isa? (c|<class> t|<product> => (tup some?|<log> all?|<log>))
+  (def tup?  (@== c <tup>))
+  (def some? (and tup? (@tany? (fun (t) (@telt (may-isa? <any> t) 1))
+                               (%product-elts t))))
+  (tup tup? some?))
+
 
 ;;; 
 ;;; 14. MACROS
@@ -2082,6 +2118,7 @@
   <subclass>
   <singleton>
   <union>
+  t* <product>
   <seq> <seq.> <seq!>
   <sig>
   <prop>
@@ -2158,7 +2195,8 @@
   object-class
   type-object
   type-class
-  type-elts
+  union-elts
+  product-elts
   class-name
   class-parents
   class-descendents

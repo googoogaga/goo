@@ -197,9 +197,9 @@
   (test= (& 1 2)  0)
   (test= (& 1 1)  1)
   (test= (& 1 0)  0)
-  (test= (~ 1)    0)
-  (test= (~ 0)    1)
-  (test= (~ 2)    0)
+  (test= (~ 1)    -2)
+  (test= (~ 0)    -1)
+  (test= (~ 2)    -3)
   (test= (bit? 5 0) 1)
   (test= (bit? 5 1) 0)
   (test= (bit? 5 2) 1)
@@ -297,7 +297,7 @@
 (def-protocol-tests (x|<map>)
   (sup x)
   ;; elts of non pos int keys
-  ;; fab-map
+  ;; col
   ;; zap
   )
 

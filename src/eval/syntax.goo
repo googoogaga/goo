@@ -133,7 +133,7 @@
   (and values-spec-index
        (let ((value (elt signature (+ values-spec-index 1))))
          (if (sexpr-tagged-list? value 'tup)
-             '<tup> ;; `(t* ,@(map sexpr-value-type (tail value)))
+             `(t* ,@(map sexpr-value-type (tail value)))
              value))))
               
 (df as-signature (sig|<lst> => <lst>)

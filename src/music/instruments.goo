@@ -19,7 +19,7 @@
 
 (dv $zero-tone-key #\+)
 (dv $std-tone-map
-  (fab-map <tone-map> $zero-tone-key 0))
+  (col <tone-map> $zero-tone-key 0))
 
 ;;; INSTRUMENT
 

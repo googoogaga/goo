@@ -153,7 +153,7 @@ See `run-hooks'."
 	       "fin" "try" "sig" "isa" "slot" "ct" "expand"
 	       "quote" "rep" "mif" "and" "or" "unless" "when"
 	       "incf" "decf" "inc" "dec" "case" "select" "for" "let"
-	       "collecting" "collect" "use" "export" "need-implementation"
+	       "packing" "pack" "use" "export" "need-implementation"
 	       "ct-also" "pushf" "popf" "dlet") t)
 	"\\>") 1)
       '("\\(#t\\|#f\\|=>\\)" . font-lock-keyword-face)
@@ -254,7 +254,7 @@ See `run-hooks'."
 (put 'lab 'goo-indent-function 1)
 (put 'esc 'goo-indent-function 1)
 (put 'rep 'goo-indent-function 2)
-(put 'collecting 'goo-indent-function 1)
+(put 'packing 'goo-indent-function 1)
 (put 'use 'goo-indent-function 1)
 (put 'export 'goo-indent-function 0)
 (put 'need-implementation 'goo-indent-function 0)

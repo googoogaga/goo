@@ -21,6 +21,7 @@
  (dg add (x|<col> y|<any> => <col>))
  (dg dup (x|<col> => <col>))
  (dg fab ((t (t< <col>)) s|<int> => <col>))
+ (dg col ((t (t< <col>)) key-vals|...))
  (dg fabs ((x (t< <col>)) elts|... => <col>))
  (dg fill (x|<col> val|<any> => <col>))
 

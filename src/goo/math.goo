@@ -163,7 +163,7 @@
 (dm trunc (x|<num> => <int>)
   (elt (contagious-call trunc/ x 1) 0))
 
-(dm floor/ (real|<num> divisor|<num> => (tup <int> rem|<num>))
+(dm floor/ (real|<num> divisor|<num> => (tup x|<int> rem|<num>))
   (def (tup (integer <int>) (remainder <num>)) (trunc/ real divisor))
   (if (and (not (zero? remainder))
            (if (neg? divisor)
@@ -172,7 +172,7 @@
       (tup (- integer 1) (+ remainder divisor))
       (tup integer remainder)))
 
-(dm ceiling/ (real|<num> divisor|<num> => (tup <int> rem|<num>))
+(dm ceiling/ (real|<num> divisor|<num> => (tup x|<int> rem|<num>))
   (def (tup (integer <int>) (remainder <num>)) (trunc/ real divisor))
   (if (and (not (zero? remainder))
            (if (neg? divisor)
@@ -181,7 +181,7 @@
       (tup (+ integer 1) (- remainder divisor))
       (tup integer remainder)))
 
-(dm round/ (real|<num> divisor|<num> => (tup <int> rem|<num>))
+(dm round/ (real|<num> divisor|<num> => (tup x|<int> rem|<num>))
   (def (tup (integer <int>) (remainder <num>)) (trunc/ real divisor))
   (def threshold|<num> (/ (abs divisor) 2.0))
   (if (or (> remainder threshold) 
@@ -197,7 +197,7 @@
               (tup (- integer 1) (+ remainder divisor)))
           (tup integer remainder))))
 
-(dm trunc/ (real|<num> divisor|<num> => (tup <int> rem|<num>))
+(dm trunc/ (real|<num> divisor|<num> => (tup x|<int> rem|<num>))
   (contagious-call trunc/ real divisor))
 
 (dm mod (real|<num> divisor|<num> => <num>)
@@ -263,7 +263,7 @@
 
 (dm trunc (x|<int> => <int>) x)
 
-(dm trunc/ (x|<int> y|<int> => (tup <int> rem|<int>))
+(dm trunc/ (x|<int> y|<int> => (tup x|<int> rem|<int>))
   (def result (%ib (%it/ (%iu x) (%iu y))))
   (tup result (- x (* result y))))
 
@@ -352,7 +352,7 @@
 (dm / (x|<flo> y|<flo> => <flo>)
   (%fb (%f/ (%fu x) (%fu y))))
 
-(dm trunc/ (x|<flo> y|<flo> => (tup <int> rem|<flo>))
+(dm trunc/ (x|<flo> y|<flo> => (tup z|<int> rem|<flo>))
   (def divided (/ x y))
   (def result  (%ib (%ft (%fu divided))))
   (tup result (* y (- divided (as <flo> result)))))

@@ -129,7 +129,7 @@
 
 (dv *catch-test-errors* #t)
 
-(dm run-tests-in (tst => (tup <lst> <lst>))
+(dm run-tests-in (tst => (tup errors|<lst> warnings|<lst>))
   (def errors '())
   (def warnings '())
   (if *catch-test-errors*
