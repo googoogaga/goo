@@ -31,7 +31,7 @@
 (dm packer-fab (t|(t< <seq>) => <packer>)
   (packer '() pair (fun (x) (as t (rev! x)))))
 
-(dm packer-fab (t|(t= <int>) => <packer>)
+(dm packer-fab (t|(t< <int>) => <packer>)
   (packer 0 + (op _)))
 
 (ds (packing-with (,@decls) ,@body)

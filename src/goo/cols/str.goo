@@ -30,22 +30,22 @@
 
 (dm elt-type (x|<col> => <type>) <chr>)
 
-(dm fab ((x (t= <str>)) s|<int> => <str>)
+(dm fab ((x (t= <str>)) s|<prim-int> => <str>)
   (%str (%iu s) (%cu #\space)))
 
 (dm str (objects|...)
   (fabs <str> objects))
 
-(dm len (x|<str> => <int>)
+(dm len (x|<str> => <prim-int>)
   (%ib (%slen x)))
 
-(dm low-elt (x|<str> i|<int> => <chr>)
+(dm low-elt (x|<str> i|<prim-int> => <chr>)
   (%cb (%selt x (%iu i))))
 
-(dm fab-elt-setter (z|<chr> x|<str> i|<int>)
+(dm fab-elt-setter (z|<chr> x|<str> i|<prim-int>)
   (set (%selt x (%iu i)) (%cu z)))
 
-(dm elt-or (x|<str> i|<int> default => <any>) ;; TODO: TIGHTEN RET TYPE
+(dm elt-or (x|<str> i|<prim-int> default => <any>) ;; TODO: TIGHTEN RET TYPE
   (if (range-check? x i)
       (%cb (%selt x (%iu i))) ;; TODO: USE LOW-ELT
       default)) 
