@@ -1,15 +1,18 @@
 COMPILER = gcc
-COPTIONS = -g -O
+COPTIONS = -g
 SRC_DIR  = C:/jrb/ai/proto/C
 
 # OBJECTS = $(SRC_DIR)/proto.obj
 
 all:  proto.exe
 
-proto.exe: proto.obj
-	gcc $(COPTIONS) -o proto.exe proto.obj gc.a
+proto.exe: prt.obj proto.obj
+	gcc $(COPTIONS) -o proto.exe prt.obj proto.obj gc.a
 
-proto.obj: proto.h proto.c
+prt.obj: prt.h prt.c
+	gcc -c $(COPTIONS) -o prt.obj prt.c
+
+proto.obj: prt.h proto.c
 	gcc -c $(COPTIONS) -o proto.obj proto.c
 
 # Remove all class files from the project directory. 
