@@ -97,7 +97,7 @@
   (%do-stack-frames fun))
 
 (dm backtrace ()
-  (do-stack-frames (fun (f (args ...)) (format out "%= %=\n" f args))))
+  (do-stack-frames (fun (num f (args ...)) (format out "[%=]   %= %=\n" num f args))))
 
 (dv <keyboard-interrupt> (isa <condition>))
 

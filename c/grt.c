@@ -81,6 +81,7 @@ extern P Yunknown_function_error;
 
 P YPdo_stack_frames (P fun) {
   int xfp = fp;
+  int num = 0;
   while (xfp > 0) {
     int nfp    = (int)stack_[xfp];
     P   args   = Ynil;
@@ -99,9 +100,10 @@ P YPdo_stack_frames (P fun) {
     } else {
       return CALL1(Yunknown_function_error, f);
     }
-    args = YPpair(f, args);
+    args = YPpair((P)tag((P)num, int_tag), YPpair(f, args));
     YPPapply(fun, YPfalse, args);
     xfp = nfp;
+	num++;
   }
   return YPfalse;
 }
@@ -485,15 +487,17 @@ P FUNFAB (P x, int n, ...) {
 
 extern P YLlstG_traits;
 
-#define STACK_PAIR_SET(l,h,t) \
-  OBJECT pair     = (OBJECT)alloca(OBJECT_DATA_SIZE); \
-  VALUES data     = (VALUES)alloca(VALUES_SIZE(2)); \
-  pair->traits    = YLlstG_traits; \
-  pair->values    = data; \
-  data->size      = 2; \
-  data->values[0] = (h); \
-  data->values[1] = (t); \
-  l = pair
+inline OBJECT STACK_PAIR(P h, P t)
+{
+  OBJECT pair     = (OBJECT)stack_allocate(OBJECT_DATA_SIZE);
+  VALUES data     = (VALUES)stack_allocate(VALUES_SIZE(2));
+  pair->traits    = YLlstG_traits;
+  pair->values    = data;
+  data->size      = 2;
+  data->values[0] = (h);
+  data->values[1] = (t);
+  return pair;
+}
 
 #define CHECK_ARITY(naryp,n,arity) \
   if (naryp) { \
@@ -559,20 +563,24 @@ extern P YPib(P);
 P CALL0 (P fun) {
   int osp    = sp, ofp = fp;
   P   res    = YPfalse;
-  P   traits = YPobject_traits(fun);
+  P   traits = PNUL;
+  /* don't get traits of non-object types.. */
+  if((tag_bits(fun)) == adr_tag)
+      traits = YPobject_traits(fun);
+  
   if (traits == YLmetG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
+    CHECK_ARITY(naryp,0,arity);
     if (naryp)
       PUSH(Ynil);
-    CHECK_ARITY(naryp,0,arity);
     PUSH(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
-    PUSH(Ynil);
     CHECK_ARITY(naryp,0,arity);
+    PUSH(Ynil);
     LINK_STACK(fun);
     res = (FUNCODE(fun))(fun, YPfalse);
   } else {
@@ -585,7 +593,11 @@ P CALL0 (P fun) {
 P CALL1 (P fun, P a1) {
   int osp    = sp, ofp = fp;
   P   res    = YPfalse;
-  P   traits = YPobject_traits(fun);
+  P   traits = PNUL;
+  /* don't get traits of non-object types.. */
+  if((tag_bits(fun)) == adr_tag)
+      traits = YPobject_traits(fun);
+
   if (traits == YLmetG_traits) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
@@ -606,9 +618,9 @@ P CALL1 (P fun, P a1) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
-    { STACK_PAIR_SET(arg, a1, arg); }
-    PUSH(arg);
     CHECK_ARITY(naryp,1,arity);
+    arg = STACK_PAIR(a1, arg);
+    PUSH(arg);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
   } else {
@@ -621,7 +633,11 @@ P CALL1 (P fun, P a1) {
 P CALL2 (P fun, P a1, P a2) {
   int osp    = sp, ofp = fp;
   P   res    = YPfalse;
-  P   traits = YPobject_traits(fun);
+  P   traits = PNUL;
+  /* don't get traits of non-object types.. */
+  if((tag_bits(fun)) == adr_tag)
+      traits = YPobject_traits(fun);
+  
   if (traits == YLmetG_traits) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
@@ -648,10 +664,10 @@ P CALL2 (P fun, P a1, P a2) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
-    { STACK_PAIR_SET(arg, a2, arg); }
-    { STACK_PAIR_SET(arg, a1, arg); }
-    PUSH(arg);
     CHECK_ARITY(naryp,2,arity);
+    arg = STACK_PAIR(a2, arg);
+    arg = STACK_PAIR(a1, arg);
+    PUSH(arg);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
   } else {
@@ -664,7 +680,11 @@ P CALL2 (P fun, P a1, P a2) {
 P CALL3 (P fun, P a1, P a2, P a3) {
   int osp    = sp, ofp = fp;
   P   res    = YPfalse;
-  P   traits = YPobject_traits(fun);
+  P   traits = PNUL;
+  /* don't get traits of non-object types.. */
+  if((tag_bits(fun)) == adr_tag)
+      traits = YPobject_traits(fun);
+  
   if (traits == YLmetG_traits) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
@@ -697,11 +717,11 @@ P CALL3 (P fun, P a1, P a2, P a3) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
-    { STACK_PAIR_SET(arg, a3, arg); }
-    { STACK_PAIR_SET(arg, a2, arg); }
-    { STACK_PAIR_SET(arg, a1, arg); }
-    PUSH(arg);
     CHECK_ARITY(naryp,3,arity);
+    arg = STACK_PAIR(a3, arg);
+    arg = STACK_PAIR(a2, arg);
+    arg = STACK_PAIR(a1, arg);
+    PUSH(arg);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
   } else {
@@ -715,13 +735,18 @@ P CALLN (P fun, int n, ...) {
   int i, j;
   int osp    = sp, ofp = fp;
   P   res    = YPfalse;
-  P   traits = YPobject_traits(fun);
+  P   traits = PNUL;
+  /* don't get traits of non-object types.. */
+  if((tag_bits(fun)) == adr_tag)
+      traits = YPobject_traits(fun);
+  
   if (traits == YLmetG_traits) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
-    va_list ap; va_start(ap, n);
+    va_list ap;
     CHECK_ARITY(naryp,n,arity);
+	va_start(ap, n);
     for (i = 0; i < arity; i++) {
       P arg = va_arg(ap, P);
       CHECK_TYPE(arg, Phead(specs)); 
@@ -744,13 +769,14 @@ P CALLN (P fun, int n, ...) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
-    va_list ap; va_start(ap, n);
+    va_list ap;
     CHECK_ARITY(naryp,n,arity);
+    va_start(ap, n);
     for (i = 0; i < n; i++)
       a[i] = va_arg(ap, P);
     va_end(ap);
     for (j = i - 1; j >= 0; j--) {
-      STACK_PAIR_SET(arg, a[j], arg);
+	arg = STACK_PAIR(a[j], arg);
     }
     PUSH(arg);
     LINK_STACK(fun); 
@@ -826,7 +852,11 @@ P YPPapply (P fun, P next_mets, P args) {
   int osp    = sp, ofp = fp;
   int n      = (int)YPPlen(args);
   P   res    = YPfalse;
-  P   traits = YPobject_traits(fun);
+  P   traits = PNUL;
+  /* don't get traits of non-object types.. */
+  if((tag_bits(fun)) == adr_tag)
+      traits = YPobject_traits(fun);
+  
   if (traits == YLmetG_traits) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
@@ -1114,6 +1144,8 @@ char* type (P adr) {
       traits = YPobject_traits(adr);
       if (traits == PNUL)
 	return "UNBOUND";
+      else if (tag_bits(traits) != adr_tag)
+	  return "BOGUS";
       else {
 	char* owner_name = sym(YPtraits_owner(traits));
 	if (owner_name == NULL)
@@ -1140,7 +1172,7 @@ int is_class (P adr) {
       return 0;
     else {
       P traits = YPobject_traits(adr);
-      if (traits == PNUL)
+      if (traits == PNUL || tag_bits(traits) != adr_tag)
 	return 0;
       else 
 	return YPtraits_owner(traits) == adr;
