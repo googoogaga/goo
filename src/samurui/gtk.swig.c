@@ -38595,6 +38595,25 @@ FUNCODEDEF(YsamuruiSgtkYgtkUinitUeasy)
 }
 
 
+EXT(YsamuruiSgtkYgtkUeventsUpending,"samurui/gtk","gtk_events_pending");
+FUNFOR(YsamuruiSgtkYgtkUeventsUpending);
+
+FUNCODEDEF(YsamuruiSgtkYgtkUeventsUpending)
+{
+    gint result;
+    P retval = (P)YPib((P)0);
+    
+    LINK_STACK();
+    result = (gint )gtk_events_pending();
+    
+    {
+        retval = (P)YPib((P)((int)result));
+    }
+    UNLINK_STACK();
+    QRET(retval);
+}
+
+
 EXT(YsamuruiSgtkYgtkUmain,"samurui/gtk","gtk_main");
 FUNFOR(YsamuruiSgtkYgtkUmain);
 
@@ -70130,6 +70149,13 @@ load_module_dl (void)
         methodSig = YPfab_sig(YPPlist(0 ), YPfalse, YPint((P)0), VARREF(YLanyG), Ynil);
         methodDef = YPfab_met(FUNCODEREF(YsamuruiSgtkYgtkUinitUeasy), methodSig, LITREF(methodName), YPPlist(0 ), YPfalse, YPfalse);
         VARSET(YsamuruiSgtkYgtkUinitUeasy, methodDef);
+    }
+    {
+        P methodSig, methodDef;
+        P methodName = YPPsym((P)"gtk_events_pending");
+        methodSig = YPfab_sig(YPPlist(0 ), YPfalse, YPint((P)0), VARREF(YLintG), Ynil);
+        methodDef = YPfab_met(FUNCODEREF(YsamuruiSgtkYgtkUeventsUpending), methodSig, LITREF(methodName), YPPlist(0 ), YPfalse, YPfalse);
+        VARSET(YsamuruiSgtkYgtkUeventsUpending, methodDef);
     }
     {
         P methodSig, methodDef;

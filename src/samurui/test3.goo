@@ -20,8 +20,8 @@
   )
 
 (idrawmodel <happy-dummy> <happy-draw>
-            (gtk_idle_add (gtk_getGtkFunctionCallback)
-                          (goo_safeCreateCallback tick-dummy imagebox))
+;;            (gtk_idle_add (gtk_getGtkFunctionCallback)
+;;                          (goo_safeCreateCallback tick-dummy imagebox))
             )
 
 (dc <simapp> (<any>))
@@ -47,6 +47,7 @@
 (dm mouse-move ((widget <happy-draw>) (x <int>) (y <int>) (state <int>))
   (set cur-x x)
   (set cur-y y)
+  (repaint-widget widget)
   )
 
 (dm transform-points-by-point (points|<tup> mod-point|<point> => <tup>)
@@ -79,4 +80,13 @@
 (set (scribble simhat) (new <happy-dummy>))
 
 (present simhat)
-(samurui-go)
+
+;;(samurui-go)
+(df moo ()
+  (while (~= (gtk_events_pending) 0)
+         (gtk_main_iteration_do 0))
+  )
+
+(export
+  moo
+  )

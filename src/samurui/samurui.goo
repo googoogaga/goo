@@ -211,6 +211,17 @@
 ; Given the design of everything, it makes sense for bindings to exist on a property-level
 ;  granularity. 
 
+(dg drawmodel-model (widget|<any> => <any>))
+(dg drawmodel-model-setter (obj|<any> widget|<any>))
+
+(dm bind (widget|<interface-drawing-area> info|<interface-info> => (tup <fun> <fun> <fun>))
+  (tup
+   (fun (new-obj) (set (drawmodel-model widget) ((getter info) new-obj)))
+   (fun ())
+   (fun ())
+   )
+  )
+
 ; Constructs a binding
 (dm bind ((textbox <gui-textbox>) (info <interface-info>) => (tup <fun> <fun> <fun>))
   (let ((cur-obj #f)
@@ -671,6 +682,11 @@
   font-lucida
   )
 
+
+(export
+  drawmodel-model
+  drawmodel-model-setter
+  )
 
 (export
   <interface-constraint>

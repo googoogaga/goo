@@ -90,6 +90,7 @@
 (ds (idrawmodel-ext ,assoc-class ,class (,@body-a) (,@body-b))
   `(seq
      (dc ,class (<interface-drawing-area>))
+     (dp! drawmodel-model (,class => (t? ,assoc-class)) #f)
      (register-interface-model ,assoc-class (interface-model 
                                              (fun (item attribs) ,@body-a)
                                              (fun (info parent-class updaters)

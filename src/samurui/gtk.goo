@@ -5459,6 +5459,9 @@
 (dv gtk_init_easy #f)
 (export gtk_init_easy)
 
+(dv gtk_events_pending #f)
+(export gtk_events_pending)
+
 (dv gtk_main #f)
 (export gtk_main)
 
@@ -5504,12 +5507,12 @@
 (dv gtk_timeout_add #f)
 (export gtk_timeout_add)
 
-(dv gtk_timeout_add_full #f)
-(export gtk_timeout_add_full)
-
 )
 
 (seq
+(dv gtk_timeout_add_full #f)
+(export gtk_timeout_add_full)
+
 (dv gtk_timeout_remove #f)
 (export gtk_timeout_remove)
 
@@ -5657,12 +5660,12 @@
 (dv gtk_menu_shell_deactivate #f)
 (export gtk_menu_shell_deactivate)
 
-(dv gtk_menu_shell_select_item #f)
-(export gtk_menu_shell_select_item)
-
 )
 
 (seq
+(dv gtk_menu_shell_select_item #f)
+(export gtk_menu_shell_select_item)
+
 (dv gtk_menu_shell_deselect #f)
 (export gtk_menu_shell_deselect)
 
@@ -5810,12 +5813,12 @@
 (dv gtk_option_menu_set_menu #f)
 (export gtk_option_menu_set_menu)
 
-(dv gtk_option_menu_remove_menu #f)
-(export gtk_option_menu_remove_menu)
-
 )
 
 (seq
+(dv gtk_option_menu_remove_menu #f)
+(export gtk_option_menu_remove_menu)
+
 (dv gtk_option_menu_get_history #f)
 (export gtk_option_menu_get_history)
 
@@ -5963,12 +5966,12 @@
 (dv gtk_progress_bar_set_fraction #f)
 (export gtk_progress_bar_set_fraction)
 
-(dv gtk_progress_bar_set_pulse_step #f)
-(export gtk_progress_bar_set_pulse_step)
-
 )
 
 (seq
+(dv gtk_progress_bar_set_pulse_step #f)
+(export gtk_progress_bar_set_pulse_step)
+
 (dv gtk_progress_bar_set_orientation #f)
 (export gtk_progress_bar_set_orientation)
 
@@ -6116,12 +6119,12 @@
 (dv gtk_scrolled_window_get_policy #f)
 (export gtk_scrolled_window_get_policy)
 
-(dv gtk_scrolled_window_set_placement #f)
-(export gtk_scrolled_window_set_placement)
-
 )
 
 (seq
+(dv gtk_scrolled_window_set_placement #f)
+(export gtk_scrolled_window_set_placement)
+
 (dv gtk_scrolled_window_get_placement #f)
 (export gtk_scrolled_window_get_placement)
 
@@ -6269,12 +6272,12 @@
 (dv _GtkStyle_parent_instance_get #f)
 (export _GtkStyle_parent_instance_get)
 
-(dv _GtkStyle_fg_get #f)
-(export _GtkStyle_fg_get)
-
 )
 
 (seq
+(dv _GtkStyle_fg_get #f)
+(export _GtkStyle_fg_get)
+
 (dv _GtkStyle_bg_get #f)
 (export _GtkStyle_bg_get)
 
@@ -6422,12 +6425,12 @@
 (dv gtk_paint_check #f)
 (export gtk_paint_check)
 
-(dv gtk_paint_option #f)
-(export gtk_paint_option)
-
 )
 
 (seq
+(dv gtk_paint_option #f)
+(export gtk_paint_option)
+
 (dv gtk_paint_tab #f)
 (export gtk_paint_tab)
 
@@ -6575,12 +6578,12 @@
 (dv gtk_text_buffer_delete_mark #f)
 (export gtk_text_buffer_delete_mark)
 
-(dv gtk_text_buffer_get_mark #f)
-(export gtk_text_buffer_get_mark)
-
 )
 
 (seq
+(dv gtk_text_buffer_get_mark #f)
+(export gtk_text_buffer_get_mark)
+
 (dv gtk_text_buffer_move_mark_by_name #f)
 (export gtk_text_buffer_move_mark_by_name)
 
@@ -6728,12 +6731,12 @@
 (dv gtk_text_view_set_cursor_visible #f)
 (export gtk_text_view_set_cursor_visible)
 
-(dv gtk_text_view_get_cursor_visible #f)
-(export gtk_text_view_get_cursor_visible)
-
 )
 
 (seq
+(dv gtk_text_view_get_cursor_visible #f)
+(export gtk_text_view_get_cursor_visible)
+
 (dv gtk_text_view_get_iter_location #f)
 (export gtk_text_view_get_iter_location)
 
@@ -6881,12 +6884,12 @@
 (dv gtk_toggle_button_set_mode #f)
 (export gtk_toggle_button_set_mode)
 
-(dv gtk_toggle_button_get_mode #f)
-(export gtk_toggle_button_get_mode)
-
 )
 
 (seq
+(dv gtk_toggle_button_get_mode #f)
+(export gtk_toggle_button_get_mode)
+
 (dv gtk_toggle_button_set_active #f)
 (export gtk_toggle_button_set_active)
 
@@ -7034,12 +7037,12 @@
 (dv gtk_tree_insert #f)
 (export gtk_tree_insert)
 
-(dv gtk_tree_remove_items #f)
-(export gtk_tree_remove_items)
-
 )
 
 (seq
+(dv gtk_tree_remove_items #f)
+(export gtk_tree_remove_items)
+
 (dv gtk_tree_clear_items #f)
 (export gtk_tree_clear_items)
 
@@ -7187,12 +7190,12 @@
 (dv gtk_tree_view_get_headers_visible #f)
 (export gtk_tree_view_get_headers_visible)
 
-(dv gtk_tree_view_set_headers_visible #f)
-(export gtk_tree_view_set_headers_visible)
-
 )
 
 (seq
+(dv gtk_tree_view_set_headers_visible #f)
+(export gtk_tree_view_set_headers_visible)
+
 (dv gtk_tree_view_columns_autosize #f)
 (export gtk_tree_view_columns_autosize)
 
@@ -7340,12 +7343,12 @@
 (dv gtk_tree_view_column_set_spacing #f)
 (export gtk_tree_view_column_set_spacing)
 
-(dv gtk_tree_view_column_get_spacing #f)
-(export gtk_tree_view_column_get_spacing)
-
 )
 
 (seq
+(dv gtk_tree_view_column_get_spacing #f)
+(export gtk_tree_view_column_get_spacing)
+
 (dv gtk_tree_view_column_set_visible #f)
 (export gtk_tree_view_column_set_visible)
 
