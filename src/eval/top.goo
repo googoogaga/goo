@@ -77,13 +77,13 @@
 (dm load ((filename <str>)) 
   (load-in filename (rt-env) (ct-env)))
 
-(dv *base-path* "\\jrb\\ai\\proto\\src\\")
+(dv *base-path* "/home/ai/jrb/proto/SRC/")
 
 (df proto-filename (name)
   (cat *base-path* name ".proto"))
 
 (df c-filename (name)
-  (cat *base-path* "..\\c\\" name ".c"))
+  (cat *base-path* "../C/" name ".c"))
 
 (dm load-from (name)
   (load (proto-filename name)))
@@ -97,7 +97,11 @@
   (%do-stack-frames fun))
 
 (dm backtrace ()
-  (do-stack-frames (fun (num f (args ...)) (format out "[%=]   %= %=\n" num f args))))
+  (let ((num 0))
+    (do-stack-frames
+      (fun (f (args ...))
+	(unless (isa? f <gen>) 
+	  (format out "[%=] %= %=\n" num f args) (inc num))))))
 
 (dv <keyboard-interrupt> (isa <condition>))
 

@@ -523,9 +523,6 @@
 (dm nreconc ((x <lst>) (y <lst>) => <lst>)
   (cat! (rev! x) y))
 
-;; TODO: FOR
-;; TODO: CASE
-
 (dm bq-process (x => <any>)
   (case ((sexpr-atom? x)
 	 (lst *bq-quote* x))

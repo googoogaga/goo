@@ -51,7 +51,7 @@
   (p2c-files-in filenames (rt-env) (ct-env) #f))
 
 (dv $boot-files
-  '("boot" "macros" "runtime" "runtime-native"
+  '("boot" "macros" "runtime"
     "read" "write" "syntax" 
     "ast" "ast-eval" "ast-linearize" "p2c" 
     "top" "main"))
@@ -751,8 +751,9 @@
 (dm generate-debug-name (out (name <binding>))
   (generate-debug-name out (binding-name name)))
 
-(dm generate-debug-name (out (name <global-binding>))
-  (binding->c name out))
+;; TODO: USE THIS WHEN CAN DIFF BETWEEN DM's AND DF's
+;; (dm generate-debug-name (out (name <global-binding>))
+;;   (binding->c name out))
 
 (dm to-c ((e <ast-generic>) f out)
   (format out "%s" (mangle-global-name "%gen"))

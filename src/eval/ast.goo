@@ -600,7 +600,7 @@
 	     (if (== (head bindings) binding)
 		 (tup i j)
 		 (find (+ j 1) (tail bindings)))))
-       (error "DIDN'T FIND LOCAL BINDING %= IN %=" name r))))
+       (error "DIDN'T FIND LOCAL BINDING %= IN %=" (binding-name binding) r))))
 
 (dm objectify-binding (n (b <local-binding>) r => <local-reference>)
   (let (((tup i j) (compute-local-reference-offsets b r)))
@@ -1060,6 +1060,7 @@
 (define-primitive %object-values-setter ())
 (define-primitive %raw-alloc ())
 (define-primitive %make-object ())
+(define-primitive %clone ())
 (define-primitive %slot-elt ())
 (define-primitive %slot-elt-setter ())
 (define-primitive %make-object-values ())

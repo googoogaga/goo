@@ -410,7 +410,8 @@
 		   (set function-name     binding)
 		   (set function-bindings '())
 		   (set function-body     (head forms))
-		   (set function-index    (+ base-index i))))
+		   ;; (set function-index    (+ base-index i))
+		   ))
 		(call
 		 (isa <predefined-application> 
 		   (set application-binding   binding)

@@ -1,12 +1,14 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
+;; TODO: TEMPORARY SOLUTION
+
 (ds (next-method ,@args)
   `(%call-next-method (%next-methods) ,@args))
 
 (ds (apply-next-method ,args)
   `(%apply-next-method (%next-methods) ,args))
 
-;; TODO: GENERALIZED VERSION
+;; TODO: GENERALIZED VERSION -- PROTOCOL + MULTIPLES
 
 (ds (collecting () ,@body)
   (let ((name 'collector-))
