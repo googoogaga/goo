@@ -1,0 +1,278 @@
+(use goo)
+
+(use samurui/samurui)
+
+;; A HoBar display is made up of multiple HoBars stacked vertically which share a common
+;;  semantic dimension which is expressed across the x-axis.  In some cases HoBars will be
+;;  used individually, in which case everything reduces to just a GUI widget that has a lot
+;;  of unused functionality.
+;; One core example is that of a synthesizer supporting both drum beats and notes.  The drum
+;;  HoBar can be represented as a series of boolean boxes.  The 'piano' parts can be
+;;  represented as a staff (or a piano roll).  When the two are combined together, they will share
+;;  a common scaling along the x-dimension so everything is synched up.  In the case that one
+;;  scrolls, they all scroll.
+;; Note that in case of scrolling, we aren't actually assuming a 1:1 mapping,  My previous 
+;;  experience in visualizations has led me to believe that visualization is sometimes most 
+;;  useful in those cases where we don't have absolute information, but at least have some 
+;;  information.  In those cases, we want things to scroll appropriately.
+
+;; In terms of the SamurUI model, we can think of the use of HoBars to be the parallel 
+;;  visualizations of multiple items in a single collection.
+
+;; Potential Uses:
+;;  - Drum Machine
+;;    - Pattern Editor
+;;    - Song Editor (Pattern Composition)
+;;  - E-mail Client
+;;    - Thread history navigation
+
+(idrawmodel <col> <hobar-pimp>)
+
+(dp wrapped (<hobar-pimp> => <col>))
+(dp bars (<hobar-pimp> => <col>) (vec))
+(dp scale (<hobar-pimp> => <int>) 16)
+(dp badge-space (<hobar-pimp> => <int>) 0)
+(dp scroll-offset (<hobar-pimp> => <int>) 0)
+
+(dc <hobar> (<any>))
+(dp pimp   (<hobar> => <hobar-pimp>))
+(dp height (<hobar> => <int>) 32)
+(dp item   (<hobar> => <any>))
+
+(dg fab-ho (pimp|<hobar-pimp> item|<any> example-item|<any> => <hobar>))
+
+;; x,y are non-local coordinates. transform appropriately yourself
+(dg hobar-draw (hobar|<hobar> widget|<gui-drawable> scale|<int> scroll|<int> clip|<gui-rect>))
+
+;; x,y are local coordinates.  no need to transform.
+(dg hobar-mouse-press (hobar|<hobar> x|<int> y|<int> button|<int>))
+(dg hobar-mouse-release (hobar|<hobar> x|<int> y|<int> button|<int>))
+(dg hobar-mouse-move (hobar|<hobar> x|<int> y|<int> state|<int>))
+
+(dg hobar-item-payload (item|<any> => <any>))
+
+;; Returns:
+;;  - Number of items there are to display
+;;  - The minimum number of pixels per item required.
+(dg hobar-report-scale (hobar|<hobar> => (tup <int> <int>)))
+
+;; ......:::::: Pimp
+
+(dm bind (pimp|<hobar-pimp> getter|<fun> setter|<fun> => (tup <fun> <fun> <fun>))
+  (tup
+   ;; -- Rebinder --
+   (fun (new-obj)
+     ;; Detach from current if applicable
+     (when (wrapped pimp)
+       ;; um... nop for now
+       )
+     
+     ;; 
+     (set (wrapped pimp) (getter new-obj))
+     
+     ;; Fab the bars
+     (do (fun (item)
+           (add! (bars pimp) (fab-ho pimp item (1st (hobar-item-payload item))))
+           )
+         (wrapped pimp))
+     )
+   
+   ;; -- Refresher --
+   (fun ()
+     )
+
+   ;; -- Free / Cleanup --
+   (fun ()
+     )
+   )
+  )
+
+(dm rescale (pimp|<hobar-pimp>)
+  (def avail-width (- (gui-width pimp) (badge-space pimp)))
+  (rep loop ((ho-enum (enum (bars pimp))) (max-items 0) (min-pix avail-width))
+    (if (not (fin? ho-enum))
+        (seq
+          (def cur-ho (now ho-enum))
+          
+          (def answer (hobar-report-scale cur-ho))
+
+          (loop (nxt ho-enum) (max max-items (1st answer)) (min min-pix (2nd answer)))
+          )
+        
+        (seq
+          (def min-req-pix (* max-items min-pix))
+          (set (scale pimp)
+               (if (> min-req-pix avail-width)
+                   min-pix
+                   (div avail-width max-items)
+                   )
+               )
+          )
+        )
+    )
+  )
+
+(dm repaint-widget (pimp|<hobar-pimp>)
+  ;; Rescale
+  (rescale pimp)
+
+  ;; Paint
+  (rep loop ((ho-enum (enum (bars pimp))) (cur-x (badge-space pimp)) (cur-y 0))
+    (when (not (fin? ho-enum))
+      (def cur-ho (now ho-enum))
+      
+      (hobar-draw cur-ho pimp (scale pimp) 0 (rect cur-x cur-y (gui-width pimp) (height cur-ho)))
+
+      (loop (nxt ho-enum) cur-x (+ cur-y (height cur-ho)))
+      )
+    )
+  )
+
+(dm pimp-find-ho (pimp|<hobar-pimp> x|<int> y|<int>)
+  (rep loop ((ho-enum (enum (bars pimp))) (cur-x x) (cur-y y))
+    (when (not (fin? ho-enum))
+      (def cur-ho (now ho-enum))
+      (if (< cur-y (height cur-ho))
+          cur-ho
+          (loop (nxt ho-enum) cur-x (- cur-y (height cur-ho))))
+      )
+    )
+  )
+
+(dm get-ho-vert-offset (hobar|<hobar>)
+  (rep loop ((ho-enum (enum (bars (pimp hobar)))) (cur-y 0))
+    (when (not (fin? ho-enum))
+      (def cur-ho (now ho-enum))
+      (if (== cur-ho hobar)
+          cur-y
+          (loop (nxt ho-enum) (+ cur-y (height cur-ho))))
+      )
+    )
+  )
+
+(dm mouse-press (pimp|<hobar-pimp> x|<int> y|<int> button|<int> time|<int>)
+  (def ho (pimp-find-ho pimp x y))
+  (when ho
+    (hobar-mouse-press ho x (- y (get-ho-vert-offset ho)) button)
+    )
+  )
+
+(dm mouse-release (pimp|<hobar-pimp> x|<int> y|<int> button|<int> time|<int>)
+  (def ho (pimp-find-ho pimp x y))
+  (when ho
+    (hobar-mouse-release ho x (- y (get-ho-vert-offset ho)) button)
+    )
+  )
+
+(dm mouse-move (pimp|<hobar-pimp> x|<int> y|<int> state|<int>)
+  (def ho (pimp-find-ho pimp x y))
+  (when ho
+    (hobar-mouse-move ho x (- y (get-ho-vert-offset ho)) state)
+    )
+  )
+
+(dm hobar-invalidate (hobar|<hobar>)
+  (invalidate (pimp hobar) (rect 0
+                                 (get-ho-vert-offset hobar)
+                                 (gui-width (pimp hobar))
+                                 (height hobar)))
+  )
+
+;; ......:::::: BoolBox
+
+(dv c_line (color 5 5 5))
+(dv c_true (color 128 192 128))
+(dv c_false (color 64 96 64))
+
+(dc <hobar-boolbox> (<hobar>))
+
+(dm fab-ho (pimp|<hobar-pimp> item|<any> example-item|<log> => <hobar-boolbox>)
+  (def ho (new <hobar-boolbox>))
+  (set (pimp ho) pimp)
+  (set (item ho) item)
+  ho
+  )
+
+(dm hobar-draw (boolbox|<hobar-boolbox> widget|<gui-drawable> scale|<int> scroll|<int> clip|<gui-rect>)
+  (def start-idx (div scroll scale))
+  (def n-boxes (len (hobar-item-payload (item boolbox))))
+  (def end-idx (min n-boxes (+ start-idx (div (rect-w clip) scale))))
+  (def pix-per-box scale)
+  (rep loop ((i-box start-idx))
+    (when (< i-box end-idx)
+      (def cur-box-val (elt (hobar-item-payload (item boolbox)) i-box))
+      (def box-rect (rect (+ (rect-x clip) (* pix-per-box i-box))
+                          (rect-y clip)
+                          pix-per-box
+                          (height boolbox)))
+      (draw-rect widget
+                 box-rect
+                 #t
+                 (if cur-box-val c_true c_false))
+      (draw-rect widget
+                 box-rect
+                 #f
+                 c_line)
+      (loop (+ i-box 1))
+      )
+    )
+  )
+
+(dm hobar-mouse-press (boolbox|<hobar-boolbox> x|<int> y|<int> button|<int>)
+  (def start-idx (div (scroll-offset (pimp boolbox))
+                      (scale (pimp boolbox))))
+  (def n-boxes (len (hobar-item-payload (item boolbox))))
+  (def pix-per-box (scale (pimp boolbox)))
+  (def cur-idx (+ start-idx (div x pix-per-box)))
+  (def end-idx (min n-boxes (+ start-idx (div (- (gui-width (pimp boolbox)) 
+                                                 (badge-space (pimp boolbox)))
+                                              (scale (pimp boolbox))))))
+  (when (<= cur-idx end-idx)
+    (def cur-val (elt (hobar-item-payload (item boolbox)) cur-idx))
+    (set (elt (hobar-item-payload (item boolbox)) cur-idx) (not cur-val))
+    (repaint-widget (pimp boolbox))
+    (hobar-invalidate boolbox)
+    )
+  )
+
+(dm hobar-mouse-release (boolbox|<hobar-boolbox> x|<int> y|<int> button|<int>)
+  )
+
+(dm hobar-mouse-move (boolbox|<hobar-boolbox> x|<int> y|<int> state|<int>)
+  )
+
+(dm hobar-report-scale (boolbox|<hobar-boolbox> => (tup <int> <int>))
+  (tup (len (hobar-item-payload (item boolbox))) ;; how many items?
+       4) ;; Our boxes need to be at least 4 pix wide
+  )
+
+(export 
+  <hobar-pimp>
+  wrapped
+  wrapped-setter
+  bars
+  bars-setter
+  )
+
+(export
+  <hobar>
+  pimp
+  pimp-setter
+  height
+  height-setter
+  item
+  item-setter
+  scale
+  scale-setter
+  scroll-offset
+  scroll-offset-setter
+  badge-space
+  badge-space-setter
+  hobar-draw
+  hobar-invalidate
+  hobar-mouse-press
+  hobar-mouse-release
+  hobar-mouse-move
+  hobar-report-scale
+  fab-ho
+  hobar-item-payload)

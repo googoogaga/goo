@@ -27,6 +27,8 @@
 
 (dc <interface-info> (<any>))
 
+(dc <interface-constraint> (<any>))
+
 (dv root-interface (new <interface-info>))
 
 (dc <interface-action> (<interface-info>))
@@ -49,6 +51,7 @@
   (dp getter (<interface-property> => <any>))
   (dp setter (<interface-property> => <any>))
   (dp description (<interface-property> => <any>))
+  (dp constraint (<interface-property> => (t? <interface-constraint>)) #f)
 
 (dm interface-property (new-name new-type new-getter new-setter new-description => <interface-property>)
   (let ((property (new <interface-property>)))
@@ -100,6 +103,15 @@
   `(seq
      (dp ,binding (,class => ,type))
      (add-property ,class (interface-property ,(as <str> binding) ,type ,binding ,(fab-setter-name binding) ,desc))
+     )
+  )
+
+(ds (ipropc ,class ,binding ,type ,desc ,constraint)
+  `(seq
+     (dp ,binding (,class => ,type))
+     (def da-prop (interface-property ,(as <str> binding) ,type ,binding ,(fab-setter-name binding) ,desc))
+     (set (constraint da-prop) ,constraint)
+     (add-property ,class da-prop)
      )
   )
 
@@ -161,7 +173,7 @@
                                                            ; make the paintbox handle the default handle we use...
                                                            (set (handle imagebox) (handle (paintbox imagebox))) 
                                                            ; Bind it
-                                                           (ad! updaters (bind imagebox (getter info) (setter info)))
+                                                           (ad! updaters (bind imagebox info))
 
                                                            ; User setup-code
                                                            ,@body
@@ -181,7 +193,8 @@
 ; --
 
 (dm register-interface-model ((class <class>) (the-model <interface-model>))
-  (let ((models (or (elt-or interface-models class #f) (set (elt interface-models class) (fab <vec> 0)))))
+  (let ((models (or (elt-or interface-models class #f)
+                    (set (elt interface-models class) (fab <vec> 0)))))
     ; put it in the list
     (ad! models the-model))
   )
@@ -224,7 +237,7 @@
 ;  and then check them each out, but since there is nothing preventing someone from
 ;  copying an interface-model (or models) down from higher in the hierarchy, this seems
 ;  like the optimal solution.
-(dm find-interface-model ((class <class>) (info <interface-info>) => <interface-model>)
+(dm find-interface-model ((class <class>) (info <interface-info>) => (t? <interface-model>))
   (let ((first-class (find-first-class has-interface-model? class)))
     (get-interface-model first-class info)
     )
@@ -345,6 +358,62 @@
   (elt-or (get-all-properties class) name #f)
   )
 
+;; -- GUI Wrapper 
+
+(dc <gui> (<any>))
+  (dp handle (<gui> => <loc>))
+
+; -- 
+; --- Interface Constraints
+; --
+
+(dc <numeric-constraint> (<interface-constraint>))
+
+(dc <int-constraint> (<numeric-constraint>))
+
+(dp lbound (<int-constraint> => <int>))
+(dp ubound (<int-constraint> => <int>))
+(dp small-increment (<int-constraint> => <int>) 1)
+(dp large-increment (<int-constraint> => <int>) 10)
+
+(dc <flo-constraint> (<numeric-constraint>))
+
+(dp lbound (<flo-constraint> => <flo>))
+(dp ubound (<flo-constraint> => <flo>))
+(dp small-increment (<flo-constraint> => <flo>) 1.0)
+(dp large-increment (<flo-constraint> => <flo>) 10.0)
+
+(dm num-constraint (low|<int> high|<int> => <int-constraint>)
+  (def constraint (new <int-constraint>))
+  (set (lbound constraint) low)
+  (set (ubound constraint) high)
+  constraint
+  )
+
+(dm num-constraint (low|<flo> high|<flo> => <flo-constraint>)
+  (def constraint (new <flo-constraint>))
+  (set (lbound constraint) low)
+  (set (ubound constraint) high)
+  constraint
+  )
+  
+(dc <string-constraint> (<interface-constraint>))
+
+(dc <gui-adjustment> (<gui>))
+(dp constraint (<gui-adjustment> => <numeric-constraint>))
+
+(dm to-adjustment (constraint|<numeric-constraint> => <gui-adjustment>)
+  (def adj (new <gui-adjustment>))
+  (set (handle adj) (gtk_adjustment_new (as <flo> (lbound constraint))
+                                        (as <flo> (lbound constraint))
+                                        (as <flo> (ubound constraint))
+                                        (as <flo> (small-increment constraint))
+                                        (as <flo> (large-increment constraint))
+                                        (as <flo> (large-increment constraint))))
+  (set (constraint adj) constraint)
+  adj
+  )
+
 ; --
 ; --- Present (like presentation, not gift or here)
 ; --
@@ -393,9 +462,6 @@
 ; -- Limited GUI Wrappers
 ; -
 
-(dc <gui> (<any>))
-  (dp handle (<gui> => <loc>))
-
 (dc <gui-widget> (<gui>))
  (dp attrs (<gui-widget> => (t? <col>)) #f)
 
@@ -437,9 +503,9 @@
   (zap! (children container))
 
   ;; Kill off our own handle
-  (unless (= (handle gui-obj) NULL)
-    (g_object_unref (handle gui-obj))
-    (set (handle gui-obj) NULL)
+  (unless (= (handle container) NULL)
+    (g_object_unref (handle container))
+    (set (handle container) NULL)
     )
   )
 
@@ -604,6 +670,20 @@
     (set (handle textbox) handle)
     textbox
     )
+  )
+
+;; ;;;;;;;;;; ;;
+;; SpinButton ;;
+;; ;;;;;;;;;; ;;
+
+(dc <gui-spinbutton> (<gui-widget>))
+
+(dm gui-spinbutton (adj|<gui-adjustment> => <gui-spinbutton>)
+  (def spin (new <gui-spinbutton>))
+  (set (handle spin) (gtk_spin_button_new (handle adj)
+                                          (as <flo> (small-increment (constraint adj)))
+                                          0)) ;; number of digits should be a hint or something
+  spin
   )
 
 ;; ;;;; ;;
@@ -1174,7 +1254,7 @@
 ; Font abstraction stuff...
 (dc <gui-font> (<gui>))
 
-//(dv font-lucida "-*-lucida-medium-r-normal-*-14-*-*-*-p-*-*-1")
+;;(dv font-lucida "-*-lucida-medium-r-normal-*-14-*-*-*-p-*-*-1")
 (dv font-lucida "-*-lucida-medium-r-normal-*-16-*-*-*-p-*-*-1")
 
 (dm font (name|<str> => <gui-font>)
@@ -1247,6 +1327,8 @@
                         width
                         height)
     )
+
+  (repaint-widget imagebox)
   )
 
 (dm blank (imagebox|<gui-drawable>)
@@ -1382,7 +1464,10 @@
              (rect-h r)
              )
   )
-             
+
+(dm repaint-widget (imagebox|<gui-imagebox>)
+  #f
+  )
 
 (dm mouse-click ((widget <any>) (x <int>) (y <int>) (button <int>))
   #f)
@@ -1478,6 +1563,15 @@
     )
   )
 
+(dm draw-string-ul (canvas|<gui-drawable> font|<gui-font> x|<int> y|<int> string|<str> color|<gui-color>)
+  (draw-string canvas font x (+ y (font-ascent font)) string color)
+  )
+
+(dm draw-string-center (canvas|<gui-drawable> font|<gui-font> x|<int> y|<int> string|<str> color|<gui-color>)
+  (def w (string-width font string))
+  (draw-string canvas font (- x (div w 2)) (+ y (div (font-ascent font) 2)) string color)
+  )
+
 (dm string-width (font|<gui-font> string|<str> => <int>)
   (gdk_string_width (handle font) string)
   )
@@ -1542,18 +1636,17 @@
 
 (df nop () )
 
-(dm bind ((gui-obj <gui>) (getter <fun>) (setter <fun>) => (tup <fun> <fun> <fun>))
+(dm bind ((gui-obj <gui>) (info <interface-info>) => (tup <fun> <fun> <fun>))
   (tup identity nop identity)
   )
 
 ; Constructs a binding
-(dm bind ((textbox <gui-textbox>) (getter <fun>) (setter <fun>) => (tup <fun> <fun> <fun>))
+(dm bind ((textbox <gui-textbox>) (info <interface-info>) => (tup <fun> <fun> <fun>))
   (let ((cur-obj #f)
         (callback (fun (data widget)
                     ;(msg out "Callback!\n")
-                    (setter (gtk_entry_get_text (handle textbox))
+                    ((setter info) (gtk_entry_get_text (handle textbox))
                             cur-obj)
-                    (msg out "Callback done!\n")
                     )))
 
     ; Establish our hooks into the gui object
@@ -1572,7 +1665,7 @@
                                         ; Establish refresher
      (fun ()
        ;(msg out "Refreshing!\n")
-       (gtk_entry_set_text (handle textbox) (as <str> (getter cur-obj)))
+       (gtk_entry_set_text (handle textbox) (as <str> ((getter info)cur-obj)))
        )
 
                                         ; This is where we would de-bind if memory 
@@ -1588,17 +1681,59 @@
   )
 
 ; Constructs a binding
-(dm bind ((toggle <gui-toggle-button>) (getter <fun>) (setter <fun>) => (tup <fun> <fun> <fun>))
+(dm bind ((spin <gui-spinbutton>) (info <interface-info>) => (tup <fun> <fun> <fun>))
+  (let ((cur-obj #f)
+        (relevant-gtk-getter (if (= (type info) <int>)
+                                 gtk_spin_button_get_value_as_int
+                                 gtk_spin_button_get_value))
+        (callback (fun (data widget)
+                    ((setter info) (relevant-gtk-getter (handle spin))
+                     cur-obj)
+                    )))
+
+    ; Establish our hooks into the gui object
+    (g_signal_connect (handle spin)
+                      "value-changed"
+                      (gtk_getGtkCallback)
+                      (goo_safeCreateCallback callback 0))
+
+    ; Construct the helper functions
+    (tup 
+                                        ; Establish re-binder
+     (fun (new-obj)
+       ;(msg out "Rebinding!\n")
+       (set cur-obj new-obj)
+       )
+                                        ; Establish refresher
+     (fun ()
+       ;(msg out "Refreshing!\n")
+       (gtk_spin_button_set_value (handle spin) (as <flo> ((getter info) cur-obj)))
+       )
+
+                                        ; This is where we would de-bind if memory 
+                                        ; weren't so cheap that we don't need to 
+                                        ; worry about memory leaks.
+                                        ; (ha ha ha, I'm funny.)
+                          ; But really, it would be a good idea to free stuff here.
+     (fun ()
+       ; free your mind!
+       )
+     )
+    )
+  )
+
+; Constructs a binding
+(dm bind ((toggle <gui-toggle-button>) (info <interface-info>) => (tup <fun> <fun> <fun>))
   (let ((cur-obj #f)
         (callback (fun (data widget)
                     ;(msg out "Callback!\n")
-                    (setter (gtk-to-log (gtk_toggle_button_get_active (handle toggle)))
-                            cur-obj)
+                    ((setter info) (gtk-to-log (gtk_toggle_button_get_active (handle toggle)))
+                     cur-obj)
                     ;;(msg out "Callback done!\n")
                     )))
 
     ; Establish our hooks into the gui object
-    (g_signal_connect (handle textbox)
+    (g_signal_connect (handle toggle)
                       "toggled"
                       (gtk_getGtkCallback)
                       (goo_safeCreateCallback callback 0))
@@ -1613,7 +1748,7 @@
                                         ; Establish refresher
      (fun ()
        ;(msg out "Refreshing!\n")
-       (gtk_entry_set_active (handle toggle) (log-to-gtk (getter cur-obj)))
+       (gtk_toggle_button_set_active (handle toggle) (log-to-gtk ((getter info) cur-obj)))
        )
 
                                         ; This is where we would de-bind if memory 
@@ -1689,9 +1824,9 @@
 
 ;;; to-call should be of the form (fun (node) ...)
 ;;; it is assumed you will know what collection we are talking about.
-;;;  (this is a dubious assumption to make, but arguably it is more
+;;;  [this is a dubious assumption to make, but arguably it is more
 ;;;  efficient for the variable to be closed-over than to be passed
-;;;  every damn time.)
+;;;  every damn time.]
 (dm register-node-add-notification(c to-call)
   #f
   )
@@ -1700,11 +1835,11 @@
   #f
 )
 
-;;; to-call should be of the form: (fun (from to) ...)
+;;; to-call should be of the form: (fun (from to axis) ...)
 ;;; it is assumed you will know what collection we are talking about.
-;;;  (this is a dubious assumption to make, but arguably it is more
+;;;  [this is a dubious assumption to make, but arguably it is more
 ;;;  efficient for the variable to be closed-over than to be passed
-;;;  every damn time.)
+;;;  every damn time.]
 (dm register-edge-add-notification(c to-call)
   #f
   )
@@ -1827,7 +1962,7 @@
 ;; Rebind should update the underlying collection in the model
 ;; Refresh should tell the tree-view that it is getting the new / same model
 ;; Um, no freeing yet
-(dm bind ((gtv <gui-treeview>) (getter <fun>) (setter <fun>) => (tup <fun> <fun> <fun>))
+(dm bind ((gtv <gui-treeview>) (info <interface-info>) => (tup <fun> <fun> <fun>))
   (let ((my-gtv gtv)
         ;; Changed callback
         (callback (fun (selection data)
@@ -1846,7 +1981,7 @@
                                         ; Establish re-binder
      (fun (new-obj)
        ;(msg out "Rebinding!\n")
-       (set (collection my-gtv) (visi-wrap-col (getter new-obj)))
+       (set (collection my-gtv) (visi-wrap-col ((getter info) new-obj)))
        )
                                         ; Establish refresher
      (fun ()
@@ -1949,7 +2084,7 @@
   )
 
 (dm gtk-tv-iter-has-parent (gtv|<gui-treeview> node => <log>)
-  (!= 0 (len (node-in-edges (collection gtv) (axis gtv) node)))
+  (~= 0 (len (node-in-edges (collection gtv) (axis gtv) node)))
   )
 
 (dm gtk-tv-node-pos-in-parent (gtv|<gui-treeview> node parent => <int>)
@@ -2101,9 +2236,27 @@
      
      ;; Destroy components
      (rem! (placeholder slave) (active-container slave))
-     ;; ...
+     ;; Do we need to free? or will the remove have implicitly unref'd down to 0 and free?     
+
+     ;; Get us a new interface-model and what not
+     (def model (find-interface-model (object-class new-obj) root-interface))
+     (set (slave-updaters slave) (vec))
+     (set (active-container slave) 
+          (renderize-model model root-interface (object-class new-obj) (slave-updaters slave) (fab <str-tab> 0)))
+     (ad! (placeholder slave) (active-container slave))
+     (show-all (placeholder slave))
+     (set (slave-inited slave) #t)
+     (set (slave-object slave) new-obj)
      
-     ;;
+     ;; Rebind and refresh
+     (do (fun (cur-updater)
+           ;; Rebind
+           ((1st cur-updater) new-obj)
+           ;; Refresh
+           ((2nd cur-updater))
+               )
+         (slave-updaters slave)
+         )
      )
     )
   )
@@ -2220,7 +2373,7 @@
                                  (fun (x) 1)
                                  (fun (info class updaters)
                                    (let ((textbox (gui-textbox))
-                                         (textbox-updater (bind textbox (getter info) (setter info))))
+                                         (textbox-updater (bind textbox info)))
                                      (ad! updaters textbox-updater)
                                      textbox
                                      )
@@ -2228,11 +2381,25 @@
                                  )
                           )
 
+
+(register-interface-model <num> (interface-model 
+                                 (fun (x) 1)
+                                 (fun (info class updaters)
+                                   (let ((spinbox (gui-spinbutton (to-adjustment (constraint info))))
+                                         (spinbox-updater (bind spinbox info)))
+                                     (ad! updaters spinbox-updater)
+                                     spinbox
+                                     )
+                                   )
+                                 )
+                          )
+
+
 (register-interface-model <log> (interface-model 
                                  (fun (x) 1)
                                  (fun (info class updaters)
                                    (let ((checkbox (gui-check-button (description info)))
-                                         (checkbox-updater (bind checkbox (getter info) (setter info))))
+                                         (checkbox-updater (bind checkbox info)))
                                      (ad! updaters checkbox-updater)
                                      checkbox
                                      )
@@ -2244,7 +2411,7 @@
 ;                                 (fun (x) 1)
 ;                                 (fun (info class updaters)
 ;                                   (def my-gtv (gui-treeview))
-;                                   (def gtv-updater (bind my-gtv (getter info) (setter info)))
+;                                   (def gtv-updater (bind my-gtv info)))
 ;                                   (ad! updaters gtv-updater)
 ;                                   my-gtv
 ;                                   )
@@ -2423,6 +2590,7 @@
   get-gc
   hookify
   repaint
+  repaint-widget
   mouse-click
   mouse-move
   drawable-handle
@@ -2431,6 +2599,8 @@
   draw-arc
   draw-line
   draw-string
+  draw-string-ul
+  draw-string-center
   string-width
   string-height
   font-ascent
@@ -2488,6 +2658,8 @@
   getter-setter
   setter
   setter-setter
+  constraint
+  constraint-setter
   properties
   properties-setter
   actions
@@ -2529,6 +2701,7 @@
 (export 
   debugstr
   iprop
+  ipropc
   iaction
   imodel
   idrawmodel
@@ -2536,4 +2709,28 @@
 
 (export
   font-lucida
+  )
+
+
+(export
+  <interface-constraint>
+
+  <numeric-constraint>
+  <int-constraint>
+  <flo-constraint>
+  lbound
+  lbound-setter
+  ubound
+  ubound-setter
+  small-increment
+  small-increment-setter
+  large-increment
+  large-increment-setter
+  
+  num-constraint
+
+  <string-constraint>
+  
+  <gui-adjustment>
+  to-adjustment
   )

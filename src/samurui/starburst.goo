@@ -1,4 +1,3 @@
-
 (use goo)
 (use samurui/samurui)
 (use samurui/gtk.swig)
@@ -7,10 +6,13 @@
 (idrawmodel <visi-col> <visi-sb>)
  (dp wrapped (<visi-sb> => (t? <visi-col>)) #f)
  (dp current-root (<visi-sb> => <any>))
+ (dp navigation-stack (<visi-sb> => <col>) (vec))
  (dp axis (<visi-sb> => <any>) "implicit")
  (dp sb-master (<visi-sb> => (t? <gui-master>)) #f)
 
-(dm bind (sb|<visi-sb> getter|<fun> setter|<fun> => (tup <fun> <fun> <fun>))
+(dv *up-node* (gensym))
+
+(dm bind (sb|<visi-sb> info|<interface-info> => (tup <fun> <fun> <fun>))
   (tup
    ;; -- Rebinder --
    (fun (new-obj)
@@ -20,7 +22,7 @@
        )
      
      ;; 
-     (set (wrapped sb) (getter new-obj))
+     (set (wrapped sb) ((getter info) new-obj))
 
      (set (current-root sb) (get-start-node (wrapped sb)))
      )
@@ -49,6 +51,12 @@
 (df free-starburst-colors ()
   (do free *starburst-colors*)
   (set *starburst-colors* (vec))
+  )
+
+(df gimme-rgb-color (r|<int> g|<int> b|<int>)
+  (def c (color r g b))
+  (add! *starburst-colors* c)
+  c
   )
 
 (df gimme-color (ang0|<flo> ang1|<flo> ring|<int>)
@@ -115,10 +123,14 @@
       (draw-arc sb my-r
                 base-ang my-max-ang
                 #f (gimme-dark-color base-ang my-max-ang cur-depth))
-      (msg out "Arc: Ang(%= %=) Weight: %= Depth: %=\n" base-ang my-max-ang (node-weight (wrapped sb) cur-kid) cur-depth)
+;;      (msg out "Arc: Ang(%= %=) Weight: %= Depth: %=\n" base-ang my-max-ang (node-weight (wrapped sb) cur-kid) cur-depth)
       (loop (nxt kid-enum) my-max-ang)
       )
     )
+  )
+
+(dm repaint-widget (sb|<visi-sb>)
+  (paint-starburst sb)
   )
 
 (dm paint-starburst (sb|<visi-sb>)
@@ -140,7 +152,11 @@
   (def r0 (rect-around center-x center-y unit-radius unit-radius))
 
   (paint-ring sb (current-root sb) 1 (* unit-radius 2) unit-radius 0.0 360.0 3 center-x center-y)
-;;  (draw-arc sb r0 0 360 
+
+  (def black (gimme-rgb-color 0 0 0))
+  (draw-arc sb r0 0.0 360.0 #t (gimme-rgb-color 255 255 255))
+  (draw-arc sb r0 0.0 360.0 #f black)
+  (draw-string-center sb (get-default-samurui-font) center-x center-y "Up" black)
 
   (invalidate-all sb)
   )
@@ -170,16 +186,21 @@
 
   (def ring (floor (/ r unit-radius)))
 
-  (def angle (/ (* 180.0 theta) $pi))
-
-  (msg out "Looking for thing at r: %= angle: %= ring: %=\n" r angle ring)
-
-  (find-node-in-ring sb (current-root sb)
-                     1 (* unit-radius 2)
-                     unit-radius
-                     0.0 360.0
-                     angle
-                     ring)
+  (if (= ring 0)
+      *up-node*
+      (seq
+        (def angle (/ (* 180.0 theta) $pi))
+        
+        ;;(msg out "Looking for thing at r: %= angle: %= ring: %=\n" r angle ring)
+        
+        (find-node-in-ring sb (current-root sb)
+                           1 (* unit-radius 2)
+                           unit-radius
+                           0.0 360.0
+                           angle
+                           ring)
+        )
+      )
 )
 
 (dm find-node-in-ring (sb|<visi-sb> cur-node cur-depth cur-radius unit-radius min-angle max-angle actual-angle actual-ring)
@@ -228,21 +249,41 @@
     )
   )
 
+(df move (sb|<visi-sb> new-node)
+  (if (== *up-node* new-node)
+      (move-up sb)
+      (move-down sb new-node)
+      )
+  )
+
+(df move-down (sb|<visi-sb> new-node)
+  (push! (navigation-stack sb) (current-root sb))
+  (set (current-root sb) new-node)
+  (paint-starburst sb)
+  )
+
+(df move-up (sb|<visi-sb>)
+  (when (not (empty? (navigation-stack sb)))
+    (set (current-root sb) (popf (navigation-stack sb)))
+    (paint-starburst sb)
+    )
+  )
 
 (dm mouse-press ((widget <visi-sb>) (x <int>) (y <int>) (button <int>) (time <int>))
   (case button
     ((1)
      (def da-node (find-node widget x y))
      (msg out "Node is: %=\n" da-node)
-     (when (and (and (sb-master widget)
-                     da-node)
+     (when (and (and (and (sb-master widget)
+                          da-node)
+                     (~= da-node *up-node*))
                 (node-browsable (wrapped widget) da-node))
        (master-update-slaves (sb-master widget) da-node)
        )
      (when (and da-node
-                (not (node-browsable (wrapped widget) da-node)))
-       (set (current-root widget) da-node)
-       (paint-starburst widget)
+                (or (= *up-node* da-node)
+                    (not (node-browsable (wrapped widget) da-node))))
+       (move widget da-node)
        )
      )
     ((2)

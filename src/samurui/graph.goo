@@ -299,6 +299,11 @@
  (dp graph-badge (<visi-fdg> => (t? <badge>)) #f)
  (dp post-node-renderers (<visi-fdg> => <col>) (vec))
  (dp enable-anim (<visi-fdg> => <log>) #t)
+ (dp fdg-master (<visi-fdg> => (t? <gui-master>)) #f)
+
+(dm bind-master (fdg|<visi-fdg> master|<gui-master>)
+  (set (fdg-master fdg) master)
+  )
 
 (dm find-graph-node (fdg|<visi-fdg> node)
   (esc found-it
@@ -354,7 +359,7 @@
              c)
   )
 
-(dm bind (fdg|<visi-fdg> getter|<fun> setter|<fun> => (tup <fun> <fun> <fun>))
+(dm bind (fdg|<visi-fdg> info|<interface-info> => (tup <fun> <fun> <fun>))
   (tup
    ;; -- Rebinder --
    (fun (new-obj)
@@ -364,7 +369,7 @@
        )
      
      ;; 
-     (set (wrapped fdg) (getter new-obj))
+     (set (wrapped fdg) ((getter info) new-obj))
      (register-node-add-notification (wrapped fdg) 
                                      (fun (node)
                                        (def gn (new <graph-node>))
@@ -372,7 +377,7 @@
                                        (add! (graph-nodes fdg) gn)
                                        ))
      (register-edge-add-notification (wrapped fdg)
-                                     (fun (from to)
+                                     (fun (from to axis)
                                        (def ge (new <graph-edge>))
                                        (set (edge-from ge) (find-graph-node fdg from))
                                        (set (edge-to ge)   (find-graph-node fdg to))
@@ -402,6 +407,7 @@
      (graph-control-is (wrapped fdg) fdg)
      
      ;; At some point we should traverse the existing collection...
+     (populate-graph fdg (get-start-node (wrapped fdg)))
      )
 
    ;; -- Refresher --
@@ -413,6 +419,36 @@
    (fun ()
      )
    )
+  )
+
+(dm find-or-create-node (fdg|<visi-fdg> node|<any> => <graph-node>)
+  (or (find-graph-node fdg node)
+      (let ((gnode (new <graph-node>)))
+        (set (node-obj gnode) node)
+        (add! (graph-nodes fdg) gnode)
+        gnode))
+  )
+
+(dm populate-graph (fdg|<visi-fdg> start-node|<any>)
+  ;; Add the current node if it's not there yet
+  (def start-graph-node (find-or-create-node fdg start-node))
+
+  ;; Iterate over its edges
+  (do (fun (new-node)
+        ;; Recurse
+        (populate-graph fdg new-node)
+
+        ;; Add the edge
+        (def ge (new <graph-edge>))
+        (set (edge-from ge) start-graph-node)
+        (set (edge-to ge)   (find-graph-node fdg new-node))
+        ;; Only add it if both nodes are valid
+        (when (and (edge-from ge)
+                   (edge-to ge))
+          (add! (graph-edges fdg) ge))        
+        )
+      (node-out-edges (wrapped fdg) "implicit" start-node)
+      )
   )
 
 (dv c_background (color 255 255 255))
@@ -594,18 +630,6 @@
 (dm node-clicked (node widget)
   )
 
-(dv *node-names* (vec "A-Ha" "Ace of Base" "Depeche Mode" "Erasure" "Pet Shop Boys" "Yaz"))
-(dv *cur-node-idx* 0)
-
-(df gimme-node-name ()
-  (def result (elt *node-names* *cur-node-idx*))
-  (incf *cur-node-idx*)
-  (if (>= *cur-node-idx* (len *node-names*))
-      (set *cur-node-idx* 0))
-  result
-  )
-
-
 (dm mouse-press ((widget <visi-fdg>) (x <int>) (y <int>) (button <int>) (time <int>))
   (case button
     ((1)
@@ -614,33 +638,16 @@
      (when da-node   
        (set (drag-node-off-x widget) (- (floor (node-drawx da-node)) x))
        (set (drag-node-off-y widget) (- (floor (node-drawy da-node)) y))
-       )                                             
+
+
+       (when (and (and (fdg-master widget)
+                       da-node)
+                  (node-browsable (wrapped widget) (node-obj da-node)))
+         (master-update-slaves (fdg-master widget) (node-obj da-node))
+         )
+       )
      )
     ((2)
-;;     (if (selected-node widget)
-;;         (seq
-;;           (def old-node (selected-node widget))
-;;           (def new-node (or (find-node widget x y)
-;;                             (let ((node (new <graph-node>)))
-;;                               (set (node-drawx node) (as <flo> x))
-;;                               (set (node-drawy node) (as <flo> y))
-;;                               (set (node-obj node) (gimme-node-name))
-;;                               (add! (graph-nodes widget) node)
-;;                               node)))
-;;           (def new-edge (new <graph-edge>))
-;;           (set (edge-to new-edge) new-node)
-;;           (set (edge-from new-edge) old-node)
-;;           (add! (graph-edges widget) new-edge)
-;;           (repaint-graph widget))
-;;         (seq
-;;           (let ((node (new <graph-node>)))
-;;             (set (node-drawx node) (as <flo> x))
-;;             (set (node-drawy node) (as <flo> y))
-;;             (set (node-obj node) (gimme-node-name))
-;;             (add! (graph-nodes widget) node)
-;;             (repaint-graph widget))
-;;           )
-;;       )
      )
     ((3)
      (def da-node (find-node widget x y))

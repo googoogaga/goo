@@ -5,6 +5,8 @@
 
 (dc <simple-app> (<any>))
 
+;; There is no need to actually wrap a string.  Just pretend this is a more complicated class that
+;;  does something of value.
 (dc <str-hold> (<any>))
 (iprop <str-hold>  da-str <str> "DaString")
 
@@ -18,6 +20,20 @@
   (da-str h)
   )
 
+;; Ditto on numbers.  No need to wrap, but pretend there's other stuff going on.
+(dc <int-hold> (<any>))
+(ipropc <int-hold> da-int <int> "DaInt" (num-constraint 0 100))
+
+(dm hold (i|<int>)
+  (def o (new <int-hold>))
+  (set (da-int o) i)
+  o
+  )
+
+(dm to-str (h|<int-hold>)
+  (to-str (da-int h))
+  )
+
 (iprop <simple-app> tree-nodes <visi-col> "Tree Nodes")
 
 (dv my-app (new <simple-app>))
@@ -26,9 +42,9 @@
                           (vec (hold "Apples")
                                (hold "Bananas")
                                (hold "Pears" )
-                               (vec (hold "Cows")
-                                    (hold "Pigs")
-                                    (hold "Ducks"))
+                               (vec (hold 1)
+                                    (hold 2)
+                                    (hold 3))
                                (vec (vec (hold "Spaceships")
                                          (hold "Monkeys")
                                          (hold "Dogs")
@@ -43,24 +59,23 @@
                                     (hold "Pawns"))
                               )))
 
+
+(imodel <int-hold>
+        "Current Int"
+        da-int
+        )
+
 (imodel <str-hold>
         "Current String"
         da-str
         )
 
 (imodel <simple-app>
-        "Starburst Hopefully"
-        ;; (attr tree-nodes fill)
         (attr (columns
                (master bob (attr tree-nodes fill))
                (slave bob)
                ) fill)
         )
-
-;;(imodel <str-hold>
-;;        "The String"
-;;        da-str
-;;        )
 
 (gtk_init_easy)
 
