@@ -1,0 +1,421 @@
+;;
+;; Copyright 2002 by Neelakantan Krishnaswami
+;;
+;; Permission is hereby granted, free of charge, to any person obtaining
+;; a copy of this software and associated documentation files (the
+;; "Software"), to deal in the Software without restriction, including
+;; without limitation the rights to use, copy, modify, merge, publish,
+;; distribute, sublicense, and/or sell copies of the Software, and to
+;; permit persons to whom the Software is furnished to do so, subject to
+;; the following conditions:
+;;
+;; The above copyright notice and this permission notice shall be
+;; included in all copies or substantial portions of the Software.
+;;
+;; THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+;; EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+;; MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+;; IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY CLAIM, DAMAGES OR
+;; OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+;; ARISING FROM, OUT OF OR IN CONNECTION WITH THE  SOFTWARE OR THE USE OR
+;; OTHER DEALINGS IN THE SOFTWARE.
+;;
+;; ============
+;; Author: Neel Krishnaswami <neelk@alum.mit.edu>
+;; Date: 7-Aug-2002
+;; Version 0.2
+;;
+;; A randomized treap is just about the simplest balanced binary tree
+;; algorithm there is. Both insertion and deletion routines are a few
+;; dozen lines, and it has excellent performance. Algorithmically,
+;; they offer O(log n) average-case insertion, lookup and deletion.
+;; In practice, they compare favorably even with more sophisticated
+;; data structures like red-black trees or 2-3 trees, because they
+;; have so little code that their constant factors are great.
+;;
+;; The implementation here is based on the algorithm described in
+;; Aragon and Seidel's paper, "Randomized Search Trees". The Citeseer
+;; link is <http://citeseer.nj.nec.com/seidel96randomized.html>.
+
+;; Changes to 0.2 from 0.1
+;;  * Wrote some test routines
+;;  * Found a balance-related bug in add-key and fixed it.
+;;  * Added protocol for custom treaps
+;;  * Added a method for key-test, so it give the right equality function
+;;  * Fixed an argument transposition in remove-tree
+
+;; IMPORTS
+
+(use goo)
+(use random) ;; This is just for testing -- <treap> is deterministic!
+
+;; Usage notes:
+;;
+;; Some performance notes:
+;;
+;; add-key -- O(log n) expected time
+;; del -- O(log n) expected time
+;; elt -- O(log n) expected time
+;; empty? -- O(1)
+;; len -- O(n)
+;; mem? -- O(n)
+;;
+;; The default <treap> uses '<' as the comparison routine. You can
+;; replace it with a custom comparison by subclassing <treap> and
+;; overriding 'treap-cmp'. Eg:
+;;
+;;   (dc <my-treap> (<treap>))
+;;   (dm treap-cmp (t|<my-treap> => <fun>) my-cmp)
+;;
+
+;; Wishlist:
+;;
+;; 1. It would be nice to keep track of the number of successful
+;; insertions in the <treap> record, so that we could offer an O(1)
+;; 'len' method.
+;;
+;; 2. Clean up the error reporting. I just use 'error' to signal
+;; any errors, because I don't what the condition hierarchy looks
+;; like.
+;;
+;; 3. Some tests would be nice. I wrote this in an afternoon and a
+;; bit, testing at the command prompt. Goo is still new enough that
+;; it's possible that things I thought were goo errors are actually
+;; my bugs.
+;;
+
+;; Internal implementation of binary trees. The only unusual one is
+;; the 'pri' field. It holds a bunch of random numbers, and the
+;; insertion/deletion are constrained to make sure that the pri fields
+;; are in heap order. This is what makes randomized treaps balance.
+
+(dc <tree> (<any>))
+
+(dc <tree-nil> (<tree>))
+
+(dc <tree-node> (<tree>))
+(dp lft (<tree-node> => <tree>))
+(dp pri (<tree-node> => <int>))
+(dp key (<tree-node> => <any>))
+(dp val (<tree-node> => <any>))
+(dp rgt (<tree-node> => <tree>))
+
+(df tree-node (l|<tree> n|<int> k|<any> v|<any>  r|<tree> => <tree-node>)
+  (new <tree-node> lft l pri n key k val v rgt r))
+
+(dv tree-nil (new <tree-nil>))
+
+(dc <treap> (<map> <col.>))
+(dp seed (<treap> => <int>))
+(dp tree (<treap> => <tree>))
+
+;; We immediately implement the collection protocol, because goo will
+;; crash if we try to build the empty collection without these methods
+;; existing. That's why they aren't down with the rest of the <col>
+;; protocol implementation.
+
+(dc <treap-enum> (<enum>))
+(dp tree-list (<treap-enum> => <lst>))
+
+(dm enum (x|<treap> => <treap-enum>)
+  (def lst (if (== tree-nil (tree x)) '() (list (tree x))))
+  (new <treap-enum> tree-list lst))
+
+(dm fin? (x|<treap-enum> => <log>)
+  (empty? (tree-list x)))
+
+(dm nxt (x|<treap-enum> => <treap-enum>)
+  (def lst (tree-list x))
+  (def l (lft (head lst)))
+  (def r (rgt (head lst)))
+  (def next-lst (tail lst))
+  (def next-lst (if (== r tree-nil) next-lst (pair r next-lst)))
+  (def next-lst (if (== l tree-nil) next-lst (pair l next-lst)))
+  (new <treap-enum> tree-list next-lst))
+
+(dm now (x|<treap-enum> => <any>)
+  (val (head (tree-list x))))
+
+(dm now-key (x|<treap-enum> => <any>)
+  (key (head (tree-list x))))
+
+;; Here's a small linear congruential rng. The two properties that
+;; make it suitable in this case are a) it's frigging fast, and b) it
+;; doesn't repeat.
+;;
+;; This rng probably isn't all that hot if you have small <treaps>,
+;; because there's a decent chance of getting short increasing runs.
+;; That would reduce the balanced-ness of small collections....
+
+(dv shift (pow 2 26))
+
+(df rand (x|<int> => <int>)
+  (mod (+ 1 (* 5 x)) shift))
+
+;; treap-cmp
+
+;; Now we add a method to get the treap's comparison method. The
+;; default method uses the generic < comparison operator. Subclasses
+;; should override this method.
+
+(dm treap-cmp (t|<treap> => <fun>)
+  <)
+
+;; Now let's define the unique empty treap. Down below it will
+;; get wrapped around the 'empty' method, but internally it
+;; gets used directly.
+
+(dv empty-treap (new <treap> seed 48637761 tree tree-nil))
+
+;; rot-l and rot-r stand for 'rotate left' and 'rotate right'. These
+;; are pretty standard binary tree manipulations, though to truly
+;; understand them, you need a nifty little diagram, which ASCII can't
+;; do.
+
+(df rot-r (t|<tree-node> => <tree-node>)
+  (let ((a  (lft (lft t)))
+        (n  (pri (lft t)))
+        (xk (key (lft t)))
+        (xv (val (lft t)))
+        (b  (rgt (lft t)))
+        (m  (pri t))
+        (yk (key t))
+        (yv (val t))
+        (c  (rgt t)))
+    (tree-node a n xk xv (tree-node b m yk yv c))))
+
+(df rot-l (t|<tree-node> => <tree-node>)
+  (let ((a  (lft t))
+        (n  (pri t))
+        (xk (key t))
+        (xv (val t))
+        (b  (lft (rgt t)))
+        (m  (pri (rgt t)))
+        (yk (key (rgt t)))
+        (yv (val (rgt t)))
+        (c  (rgt (rgt t))))
+    (tree-node (tree-node a n xk xv b) m yk yv c)))
+
+;; Now we can define the heart of this library, the add-tree and
+;; remove-tree methods, which insert and remove elements into a tree
+;; while preserving the balance conditions. The basic idea behind
+;; inserts is to insert the element as for unbalanced trees, and then
+;; take a random number (that's p) for the new node's priority. Then
+;; you do the heap-ordering shuffle (which takes log n time), and you
+;; statistically likely to have a balanced tree. Tres cool.
+
+(dm add-tree (t|<tree-nil> p|<int> k|<any> v|<any> <|<fun> => <tree-node>)
+  (tree-node tree-nil p k v tree-nil))
+
+(dm add-tree (t|<tree-node> p-new|<int> k-new|<any> v-new|<any> <|<fun>
+                            => <tree-node>)
+  (if (< k-new (key t))
+      (let ((l-new (add-tree (lft t) p-new k-new v-new <)))
+        (let ((t* (tree-node l-new (pri t) (key t) (val t) (rgt t))))
+          (if (< (pri t) (pri l-new))
+              (rot-r t*)
+              t*)))
+      (if (< (key t) k-new)
+          (let ((r-new (add-tree (rgt t) p-new k-new v-new <)))
+            (let ((t* (tree-node (lft t) (pri t) (key t) (val t) r-new)))
+              (if (< (pri t) (pri r-new))
+                  (rot-l t*)
+                  t*)))
+;;        (tree-node (lft t) p-new k-new v-new (rgt t)))))
+          (tree-node (lft t) (pri t) k-new v-new (rgt t)))))
+
+;; Deletion routine. It's short, but you should look at Seidel &
+;; Aragon for details. To understand this you really need the picture.
+
+(dm remove-root (t|<tree-nil> => <tree>)
+  (error "remove-tree; key not in tree!"))
+
+(dm remove-root (t|<tree-node> => <tree>)
+  (def l* (lft t))
+  (def k* (key t))
+  (def v* (val t))
+  (def p* (pri t))
+  (def r* (rgt t))
+  (cond
+    ( (== l* tree-nil) r*)
+    ( (== r* tree-nil) l*)
+    ( t
+      (if (< (pri r*) (pri l*))
+          (seq
+            (def t* (rot-r t))
+            (def r** (remove-root (rgt t*)))
+            (tree-node (lft t*) (pri t*) (key t*) (val t*) r**))
+          (seq
+            (def t* (rot-l t))
+            (def l** (remove-root (lft t*)))
+            (tree-node l** (pri t*) (key t*) (val t*) (rgt t*)))))))
+
+(dm remove-tree (t|<tree-nil> k|<any> <|<fun> => <tree>)
+  (error "remove-tree: key not in tree!" ))
+
+(dm remove-tree (t|<tree-node> k|<any> <|<fun> => <tree>)
+  (def l* (lft t))
+  (def k* (key t))
+  (def v* (val t))
+  (def p* (pri t))
+  (def r* (rgt t))
+  (cond
+    ( (< k k*)
+      (tree-node (remove-tree l* k <) p* k* v* r*))
+    ( (< k* k)
+      (tree-node l* p* k* v* (remove-tree r* k <)))
+    ( #t
+      (remove-root t))))
+
+;; The usual accessors.
+
+;; add-key adds a binding to a treap
+
+(dm add-key (t|<treap> k|<any> v|<any> => <treap>)
+  (let ((p (rand (seed t))))
+    (new <treap> tree (add-tree (tree t) p k v (treap-cmp t)) seed p)))
+
+;; del removes a binding.
+
+(dm del (t|<treap> k|<any> => <treap>)
+  (new <treap> tree (remove-tree (tree t) k (treap-cmp t)) seed (seed t)))
+
+;; elt does a lookup, and cow goes moo.
+
+(dm elt (t|<treap> k|<any> => <any>)
+  (let ((< (treap-cmp t)))
+    (loc ((search (t|<tree> => <any>)
+                  (cond
+                    ( (< k (key t))
+                      (search (lft t)))
+                    ( (< (key t) k)
+                      (search (rgt t)))
+                    (#t
+                     (val t)))))
+      (search (tree t)))))
+
+;; empty is the Goo-standard interface, so we'll support that.
+
+(dm empty (t|(t= <treap>) => <treap>)
+  empty-treap)
+
+;; col is the standard collection constructor.
+
+(dm col (t|(t= <treap>) key-vals|... => <treap>)
+  (def n (len key-vals))
+  (unless (even? n)
+    (error "col: unbalanced key/val pairs"))
+  (loc ((loop (i|<int> new-treap|<treap> => <treap>)
+              (if (< i (1st (trunc/ n 2)))
+                  (seq
+                    (def k (elt key-vals (* 2 i)))
+                    (def v (elt key-vals (+ 1 (* 2 i))))
+                    (loop (+ i 1) (add-key new-treap k v)))
+                  new-treap)))
+    (loop 0 empty-treap)))
+
+;; key-test -- we override key-test so that the enumeration methods
+;; will do the right things.
+
+(dm key-test (t|<treap> => <fun>)
+  (let ((< (treap-cmp t)))
+    (fun (a|<any> b|<any> => <log>)
+      (and (< a b) (< b a)))))
+
+;;
+;; Some simple tests to check that the balancing routines work. To use
+;; the tests
+;;
+
+(dm binary-tree? (t|<tree-nil> <|<fun> => <log>)
+  #t)
+
+(dm binary-tree? (t|<tree-node> <|<fun> => <log>)
+  (def l (lft t))
+  (def r (rgt t))
+  (cond
+    ( (and (== l tree-nil) (== r tree-nil))
+      #t)
+    ( (== l tree-nil)
+      (and (< (key t) (key r)) (binary-tree? r <)))
+    ( (== r tree-nil)
+      (and (< (key l) (key t)) (binary-tree? l <)))
+    ( #t
+      (and (< (key l) (key t))
+           (< (key t) (key r))
+           (binary-tree? l <)
+           (binary-tree? r <)))))
+
+(dm heap? (t|<tree-nil> => <log>)
+  #t)
+
+(dm heap? (t|<tree-node> => <log>)
+  (def l (lft t))
+  (def r (rgt t))
+  (cond
+    ( (and (== l tree-nil) (== r tree-nil))
+      #t)
+    ( (== l tree-nil)
+      (and (> (pri t) (pri r)) (heap? r)))
+    ( (== r tree-nil)
+      (and (> (pri t) (pri l)) (heap? l)))
+    ( #t
+      (and (> (pri t) (pri r))
+           (> (pri t) (pri l))
+           (heap? l)
+           (heap? r)))))
+
+(df treap-test (t|<treap> => <log>)
+  (def h?  (heap? (tree t)))
+  (def b? (binary-tree? (tree t) (treap-cmp t)))
+  (if h?
+      (msg out "Passed heap-ness check\n")
+      (msg out "FAILED heap-ness check\n"))
+  (if b?
+      (msg out "Passed binary-tree-ness check\n")
+      (msg out "FAILED binary-tree-ness check\n"))
+  (and h? b?))
+
+;; random-treap builds a treap with randomly chosen keys. This makes
+;; it convenient to write torture tests for insertion.
+
+(df random-treap (n m)
+  (fold (fun (acc i) (add-key acc (random m) #f))
+        (empty <treap>)
+        (below n)))
+
+;; To support printf-style debugging.
+
+(dm print-tree (t|<treap>)
+  (print-tree (tree t)))
+
+(dm print-tree (t|<tree-nil>)
+  (msg out "nil"))
+
+(dm print-tree (t|<tree-node>)
+  (msg out "(")
+  (msg out "lft: ") (print-tree (lft t))
+  (msg out " pri: %=" (pri t))
+  (msg out " key: %=" (key t))
+  (msg out " val: %=" (val t))
+  (msg out " rgt: ")
+  (print-tree (rgt t))
+  (msg out ")"))
+
+;; EXPORTS
+;;
+;; We only export 3 names, because we mostly just override existing
+;; collection protocols. jrb has sure found a comfortable set of
+;; collection routines.
+
+(export <treap>)
+(export add-key) ;;  for <map>s parallel to <add>.
+(export treap-cmp)
+
+;; Exports for testing
+
+(export treap-test)
+(export random-treap)
+(export print-tree)
+
+
