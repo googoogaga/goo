@@ -85,11 +85,13 @@ define method compute-program (e, ct-env, rt-env)
   // format-out("OBJ %=\n", obj);
   let dyn = analyze-dynamic-extent(obj);
   // format-out("DYN %=\n", dyn);
-  let lft = lift!(dyn);
+  let cal = analyze-calls(dyn);
+  // format-out("CAL %=\n", cal);
+  let lft = lift!(cal);
   // format-out("LFT %=\n", lft);
   let prg = extract-things!(lft);
   // format-out("EXT %=\n", prg);
-  let flt = closurize-main!(prg, ct-env);
+  let flt = closurize-main!(prg, ct-env, 64);
   // format-out("FLT %=\n", flt);
   gather-temporaries!(flt);
   // format-out("TMP %=\n", flt);
@@ -1152,8 +1154,9 @@ define method primitive-inlinable? (e :: <primitive-definition>)
 	    #"%chr", #"%cb", #"%cu", 
 	    #"%loc", #"%lb", #"%lu",
 	    #"@==", #"@@==", #"%empty?",
-	    #"not",
+	    #"not", #"%head", #"%tail",
 	    #"@=", #"@+", #"@<", 
+	    #"%gen-cache-arg-pos", #"%gen-cache-singletons", #"%gen-cache-classes",
 	    #"@empty?", #"@head", #"@tail",
 	    #"%isa?", #"%object-parents",
 	    #"slot-value-at", #"slot-value-at-setter", 

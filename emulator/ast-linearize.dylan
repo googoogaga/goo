@@ -172,6 +172,7 @@ define method do-call-upgrades! (o :: <regular-application>)
   if (instance?(application-function(o), <local-reference>))
     let met = binding-value(reference-binding(application-function(o)));
     if (instance?(met, <ast-function>))
+      /*
       format-out("CALL %= UTB? %= UTV? %= LENA %= LENB %=",
 	  binding-name(reference-binding(application-function(o))),
 	  every?(compose(unconstrained-type?, binding-type), 
@@ -179,16 +180,17 @@ define method do-call-upgrades! (o :: <regular-application>)
 	  unconstrained-type?(function-value(met)),
 	  number-of(application-arguments(o)),
 	  size(function-bindings(met)));
+      */
       if (every?(compose(unconstrained-type?, binding-type), 
 		 function-bindings(met))
 	   & unconstrained-type?(function-value(met))
 	   & ~function-nary?(met)
 	   & number-of(application-arguments(o))
 	       == size(function-bindings(met))) 
-	format-out(" K\n");
+	// format-out(" K\n");
 	application-known?(o) := #t;
       else
-	format-out(" U\n");
+	// format-out(" U\n");
       end if;
     end if;
   end if;
@@ -472,7 +474,8 @@ end method;
 define method extract! 
     (o :: <constant>, form :: <top-level-form>, result :: <flattened-program>)
   let value = constant-value(o);
-  if (value == #f | value == #t | value == #())
+  if (value == #f | value == #t | value == #() 
+	| instance?(value, <integer>) | instance?(value, <character>))
     o
   else
     let qb*   = program-quotations(result);
@@ -550,34 +553,60 @@ define method adjoin-definition!
   new-index
 end method;
 
+define method split-program (o, max-count :: <integer>)
+  list(o)
+end method;
+
+define method split-program (o :: <sequential>, max-count :: <integer>)
+  collecting ()
+    iterate loop (s = o)
+      iterate inner (res = #(), es = s, count = 0)
+        if (empty-sequential?(es))
+	  collect(sequentialize(reverse!(res)));
+        elseif (count = max-count)
+	  collect(sequentialize(reverse!(res)));
+          loop(es)
+        else 
+	  inner(pair(sequential-head(es), res), sequential-tail(es), count + 1);
+        end if;
+      end iterate;
+    end iterate;
+  end collecting;
+end method;
+
 define method closurize-main! 
-    (o :: <flattened-program>, r) => (res :: <flattened-program>)
-  let index
-    = size(program-definitions(o));
-  let name
-    = #"--MAIN--";
-  let binding
-    = ast-define-binding(r, name, <predefined-binding>);
-  let defn
-    = make(<primitive-definition>, name: binding,
-           bindings: #(), body: program-form(o), index: index);
-  let call
-    = make(<predefined-application>, 
-           binding:
-             binding,
-	   // function:  
-	     // make(<closure-creation>, 
-             //      index: index, bindings: #(), free: empty-free-environment()),
-	   arguments:
-	     empty-argument-list(),
-           tail?:
-             #f);
-  // TODO: reverse definitions in forms
-  program-definitions(o)
-    := reverse!(pair(defn, program-definitions(o)));
-  program-form(o)
-    := make(<top-level-form>, 
-            program: call, definitions: list(defn));
+    (o :: <flattened-program>, r, max-count) => (res :: <flattened-program>)
+  // format-out("FORMS = %=\n", program-form(o));
+  let forms = split-program(program-form(o), max-count);
+  let index = size(program-definitions(o)); // TODO: SUSPECT INTERFACE
+  iterate loop
+      (calls = #(), defns = program-definitions(o), 
+       index = index, count = 0, forms = forms)
+    if (empty?(forms))
+      program-definitions(o)
+        := reverse!(defns);
+      program-form(o)
+	:= make(<top-level-form>,
+	        program:     sequentialize(reverse!(calls)),
+                definitions: reverse!(defns));
+    else
+      // format-out("FORM = %=\n", head(forms));
+      let name
+	= as(<symbol>, format-to-string("---main-%d---", count));
+      let binding
+	= ast-define-binding(r, name, <predefined-binding>);
+      let defn
+	= make(<primitive-definition>, name: binding,
+	       bindings: #(), body: head(forms), index: index);
+      let call
+	= make(<predefined-application>, 
+	       binding:   binding,
+	       arguments: empty-argument-list(),
+	       tail?:     #f);
+      loop(pair(call, calls), pair(defn, defns), 
+	   index + 1, count + 1, tail(forms));
+    end if;
+  end iterate;
   o
 end method;
 

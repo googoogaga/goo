@@ -310,3 +310,42 @@ adds:
   rewrote list to be subclassable
 
   rewrote all list-like ast classes as list subclasses
+
+0.86
+
+summary:
+
+fixes:
+
+  objectify <lst> passes through <programs> explicitly
+
+adds:
+
+  removes return type checks for any
+
+  type checks fix-lets
+
+  depth and length to C-based printer
+
+  skip unspecialized steps in cache
+
+  start of support for separate compilation
+
+  collecting macro
+
+  split top level initialization in closurize-main!
+
+  int's and chr's as inline constants
+
+0.87
+
+summary:
+
+  adds next-method support
+
+fixes:
+
+adds:
+
+  next-method support through next-method and apply-next-method macros.
+

@@ -695,6 +695,7 @@ define %binding (%os-name)                 = #f;
 define %binding (%os-binding-value)        = #f;
 define %binding (%os-binding-value-setter) = #f;
 define %binding (%%mep-apply)              = #f;
+define %binding (%next-methods)            = #f;
 define %binding (%fapply)                  = #f;
 
 define %function %%apply (fun, args)
