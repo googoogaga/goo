@@ -56,7 +56,7 @@
 ;; Undocumented
  (dg fab-into (x|<col> y|<col> => <col>)) 
  (dg fab-fill! (x|<col> y => <col>)) 
- (dg range-error ())
+ (dg range-error (x|<col> k))
  (dg low-elt (x|<col> k|<any> => <any>))
  (dg fab-elt-setter (v|<any> x|<col> k|<any>))
  (dg col-res (c|<col> x|<col> => <col>))
@@ -146,8 +146,8 @@
         res
         (red (combine res (now e)) (nxt e)))))
 
-(dm range-error ()
-  (error "RANGE ERROR"))
+(dm range-error (c|<col> k)
+  (error "RANGE ERROR %= %=" c k))
 
 (dc <elt-default> (<any>))
 (dv $elt-default (new <elt-default>))
@@ -160,7 +160,7 @@
 
 (dm find (f|<fun> c|<col> => <any>)
   (def val (find-or f c $elt-default))
-  (if (== val $elt-default) (range-error) val))
+  (if (== val $elt-default) (range-error c f) val))
 
 ;;; (dm del (x|<col> key|<any> => <col>) ...)
 
@@ -227,7 +227,7 @@
 
 (dm elt (c|<col> key|<any> => <any>) 
   (def val (elt-or c key $elt-default))
-  (if (== val $elt-default) (range-error) val))
+  (if (== val $elt-default) (range-error c key) val))
 
 ;; get this from list.goo
 (need-implementation add <tab> into)

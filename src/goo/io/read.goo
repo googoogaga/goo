@@ -83,6 +83,23 @@
   (do (fun (c) (set (elt *read-dispatch-vector* c) sub-read-whitespace))
       ascii-whitespaces))
 
+(df flush-whitespace (port|<port>)
+  (def c (peek port))
+  (if (mem? ascii-whitespaces (char->ascii c))
+      (seq
+        (get port)
+        (flush-whitespace port))
+      c))
+
+(df read-delimited-list (endchar|<chr> port|<port>)
+  (def retlist nil)  
+  (rep loop ((c (flush-whitespace port)))    
+    (if (== c endchar)
+        (seq (get port) (rev retlist))
+        (seq
+          (opf retlist (pair (read port) _))
+          (loop (flush-whitespace port))))))
+
 (df sub-read-constituent (c port)
   ;; (put out #\h) (newline out)
   (parse-token (sub-read-token c port) port))
@@ -97,6 +114,9 @@
 
 (dm set-standard-read-macro! (char|<chr> terminating? proc|<fun>)
   (set-standard-syntax! char terminating? proc))
+
+(dm get-standard-read-macro (char|<chr>)
+  (elt *read-dispatch-vector* (char->ascii char)))
 
 (dm sub-read-vertical (c|<chr> port|<port> => <any>)
   (parse-token "|" port))
@@ -342,6 +362,9 @@
 (dm make-immutable! (x) x)
 
 (export
+  read-delimited-list
+  set-standard-read-macro!
+  get-standard-read-macro
   $char-long-names
   read
   read-from-string)

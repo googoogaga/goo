@@ -62,14 +62,14 @@
 
 (dm pop! (c|<vec> => (tup seq|<vec> val|<any>))
   (def new-len (- (len c) 1))
-  (def x       (low-elt c new-len))
+  (when (< new-len 0) (range-error c new-len))
+  (def x (low-elt c new-len))
   (set (len c) new-len)
   (tup c x))
 
 ;; TODO: QUESTIONABLE SYNTAX
 (dm to-str (x|<vec> => <str>) 
   (cat "#[" (vals-to-str x) "]"))
-
 
 (dm add! (c|<vec> x => <vec>)
   (set (low-elt c (len c)) x)
@@ -84,6 +84,7 @@
         (set (vec-dat c) new-data))
       (if (< new-len (len c))
           (let ((old-len (len c)))
+            (when (< new-len 0) (range-error c new-len))
             (set (vec-len c) new-len)
             (rep fill ((i|<int> new-len))
               (and (< i old-len)

@@ -135,6 +135,12 @@
 
 (dc <predefined-reference> (<real-reference>))
 
+(dc <static-module-binding-reference> (<module-binding-reference>))
+
+(dc <macro-reference> (<static-module-binding-reference>))
+
+(dc <magic-reference> (<static-module-binding-reference>))
+
 (dc <bound?> (<computed-program>))
   (dp bound?-reference (<bound?> => <any>))
 
@@ -354,7 +360,6 @@
          (return (binding-name binding))))
      (runtime-environment 'goo/boot))
     #f))
-
 
 ;;;; CONVERT TO AST FORM
 
@@ -364,15 +369,16 @@
       (objectify-list (objectify (head e) r #f) e r tail?)))
 
 (dm objectify-list
-    (f|<any> e|<lst> r|<static-environment> tail? => <any>)
+    (f|<program> e|<lst> r|<static-environment> tail? => <any>)
   (objectify-application f (tail e) r tail?))
 
 (dm objectify-list
-    (f|<module-binding> e|<lst> r|<static-environment> tail? => <any>)
-  (case (binding-kind f)
-    (('magic) ((binding-handler f) e r tail?))
-    (('macro) (objectify ((macro-expander f) e r tail?) r tail?))
-    (#t       (error "Magic or Macro binding expected %=" f))))
+    (f|<magic-reference> e|<lst> r|<static-environment> tail? => <any>)
+  ((binding-handler (reference-binding f)) e r tail?))
+
+(dm objectify-list
+    (f|<macro-reference> e|<lst> r|<static-environment> tail? => <any>)
+  (objectify ((macro-expander (reference-binding f)) e r tail?) r tail?))
 
 (dm objectify (e|<sym> r|<static-environment> tail? => <any>)
   (objectify-symbol e r))
@@ -563,6 +569,10 @@
  (new <runtime-assignment> 
    assignment-binding (reference-binding ref)
    assignment-form    val))
+
+(dm objectify-assignment-using 
+    (ref|<static-module-binding-reference> val|<program> => <any>)
+  (error "Unable to assign to static module binding %=" (reference-binding ref)))
 
 ;;; TODO - Attempt to change the binding kind on the fly.  This
 ;;; only works up to a point.  To fix this, make 'runtime and 'global
@@ -838,13 +848,18 @@
     (('global)     <global-reference>)
     (('predefined) <predefined-reference>)
     (('runtime)    <runtime-reference>)
+    (('macro)      <macro-reference>)
+    (('magic)      <magic-reference>)
     (#t            (error "Unknown binding-kind %=" (binding-kind b)))))
 
 (dm objectify-binding (n b|<module-binding> r => <any>)
-  (case (binding-kind b)
-    (('magic 'macro) b)
-    (#t              (def <ref> (binding-reference-class b))
-                     (new <ref> reference-binding b))))
+  (def <ref> (binding-reference-class b))
+  (new <ref> reference-binding b))
+
+;;  (case (binding-kind b)
+;;     (('magic 'macro) b)
+;;     (#t              (def <ref> (binding-reference-class b))
+;;                      (new <ref> reference-binding b)))
 
 (dm objectify-binding (n b r => <reference>)
   (objectify-free-global-reference n r))
@@ -2030,7 +2045,10 @@
   global-box-value
   global-box-value-setter
   <module-binding-reference>
+  <static-module-binding-reference>
   <global-reference>
+  <magic-reference>
+  <macro-reference>
   init-ast
   <local-assignment>
   <local-binding>

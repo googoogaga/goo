@@ -53,7 +53,14 @@
       (write-list port x d recur)))
 
 (dm recurring-write (port|<out-port> x|<flat> d|<int> recur|<fun>)
-  (write-flat port x d recur))
+  (def prefix (cat "$$" (as <str> (class-name (object-class x))) "("))
+  (write-flat port prefix x ")" d recur))
+
+(dm recurring-write (port|<out-port> x|<tup> d|<int> recur|<fun>)
+  (write-flat port "#(" x ")" d recur))
+
+(dm recurring-write (port|<out-port> x|<vec> d|<int> recur|<fun>)
+  (write-flat port "#[" x "]" d recur))
 
 (dm recurring-write (port|<out-port> x|<map> d|<int> recur|<fun>)
   (write-map port x d recur))
@@ -132,13 +139,9 @@
        (isa? (tail x) <lst>)
        (empty? (tail (tail x)))))
 
-(dm write-flat (port|<out-port> x|<flat> d|<int> recur|<fun>)
-  (if (isa? x <tup>)
-      (puts port "#(")
-      (seq
-        (puts port "$$")
-        (emit port (class-name (object-class x)))
-        (puts port "(")))
+(dm write-flat 
+    (port|<out-port> prefix|<str> x|<flat> suffix|<str> d|<int> recur|<fun>)
+  (puts port prefix)
   (def z (len x))
   (when (> z 0)
     (recur (elt x 0) d)
@@ -149,10 +152,10 @@
             (put port #\space)
             (recur (elt x i) d)
             (loop (+ i 1))))))
-  (put port #\)))
+  (puts port suffix))
 
 (dm write-map (port|<out-port> x|<map> d|<int> recur|<fun>)
-  (puts port "#[")
+  (puts port "#<")
   (emit port (class-name (object-class x)))
   (esc blow
     (for (((tup key val) x) (i (from 0)))
@@ -162,7 +165,7 @@
       (recur key d)
       (puts port ": ")
       (recur val d)))
-  (put port #\]))
+  (put port #\>))
 
 (dm recurring-write (port|<out-port> x|<in-port> d|<int> recur|<fun>)
   (puts port "#{In-port}"))

@@ -30,12 +30,12 @@
  quasiquote
  
  ;; Section 3.1: Any.
- <any> as new
+ <any> as new object-class
  
  ;; Section ?.?: Type.
  <type>
- <class>     class-parents class-descendents class-direct-props
-             class-ancestors                 class-props
+ <class>     class-parents class-children class-direct-props
+             class-ancestors              class-props
              class-name
  <singleton> type-object
  <subclass>  type-class

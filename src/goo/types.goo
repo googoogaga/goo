@@ -37,7 +37,7 @@
  class-ancestors       ;; (dg class-ancestors (x|<class> => <lst>))
  class-direct-props    ;; (dg class-direct-props (x|<class> => <lst>))
  class-props           ;; (dg class-props (x|<class> => <lst>))
- class-descendents     ;; (dg class-descendents (x|<class> => <lst>))
+ class-children        ;; (dg class-children (x|<class> => <lst>))
 
  (df t? (x))
 )

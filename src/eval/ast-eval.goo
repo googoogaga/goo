@@ -202,6 +202,8 @@
         env (reference-frame-number ref) (reference-frame-offset ref)) 
        val))
 
+(dm ast-eval (e|<static-module-binding-reference> env|<loc-env>) #f)
+
 (dm ast-eval (e|<local-reference> env|<loc-env>)
   (env-local-reference-value env e))
 

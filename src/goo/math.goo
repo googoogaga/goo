@@ -208,6 +208,9 @@
   (def (tup _ (remainder <num>)) (trunc/ real divisor))
   remainder)
 
+(dm pow (base|<num> n|<num> => <num>)
+  (contagious-call pow base n))
+
 (dm pos? (x|<num> => <log>)
   (> x 0))
 
@@ -256,7 +259,7 @@
   (%ib (%i* (%iu x) (%iu y))))
 
 (dm / (x|<int> y|<int> => <int>)
-  (%ib (%it/ (%iu x) (%iu y))))
+  (error "No int divide, consider trunc/"))
 
 (dm floor (x|<int> => <int>) x)
 
@@ -361,7 +364,7 @@
   (tup result (* y (- divided (as <flo> result)))))
 
 (dm pow (x|<flo> n|<flo> => <flo>)
-  (def res (%fb (%fpow (%fu (abs x)) (%iu n))))
+  (def res (%fb (%fpow (%fu (abs x)) (%fu n))))
   (if (and (neg? x) (odd? n)) (neg res) res))
 
 (dv $pi 3.14159265)

@@ -167,7 +167,7 @@
   (unless restarts
     (error "No restarts available.\n"))
   (unless (and (> n 0) (<= n (len restarts)))
-    (error "No restart #%d.\n"))
+    (error "No restart #%d.\n" n))
   (invoke-handler-interactively (elt restarts (- n 1)) in out))
 
 ;;  Initialization and driver loop
@@ -201,6 +201,8 @@
                    (quit #f))
                   ((cmd_up)
                    (blow #f))
+                  ((cmd_top)
+                   (top #f))
                   ((cmd_handlers)
                    (list-handlers <condition> out))
                   ((cmd_restarts)

@@ -271,7 +271,7 @@
 
 (df range-check (x|<seq> i|<int>)
   (when (or (< i 0) (>= i (len x)))
-    (range-error)))
+    (range-error x i)))
 
 (df range-check? (x|<seq> i|<int>)
   (and (>= i 0) (< i (len x))))

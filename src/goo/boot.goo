@@ -153,7 +153,7 @@
           (dp class-direct-props (<class> => <lst>)    nil)
           (dp class-ancestors (<class> => <lst>)       nil)
           (dp class-props (<class> => <lst>)           nil)
-          (dp class-descendents (<class> => <lst>)     nil)
+          (dp class-children (<class> => <lst>)     nil)
           ;; ULTIMATELY NEED GENS TO BE FLUSHED DURING CLASS REDEF
           ;; KEEP BOTH GENS/METS CAUSE NO MET->GEN MAP
           ;; WANT TO PRUNE OUT UNNECESSARY GENS BASED ON ACTUAL METS
@@ -299,7 +299,7 @@
 (%define-structure % class
  class-prop-len class-name 
  class-parents class-direct-props
- class-ancestors class-props class-descendents 
+ class-ancestors class-props class-children 
  class-gens class-mets class-forward
  class-type-cache class-id class-row)
 
@@ -518,8 +518,8 @@
   (set (%class-parents class)      parents)
   (set (%class-ancestors class)
        (%pair class (%compute-ancestors (%head parents))))
-  (set (%class-descendents (%head parents))
-       (%pair class (%class-descendents (%head parents)))))
+  (set (%class-children (%head parents))
+       (%pair class (%class-children (%head parents)))))
 
 ;; DEFINES SINGLE INHERITANCE HIERARCHY FROM TOP TO BOTTOM
 
@@ -1505,35 +1505,56 @@
 (df object-class (x) (%class-of x))
 (df @class-ancestors (x) (%class-ancestors x))
 
+;; ;;; dylan cpl algorithm
+;; (df class-ordered-ancestors (c|<class> => <parents>)
+;;   (loc ((merge-lists ((partial-cpl <lst>) (remaining-lists <lst>))
+;;           ;; the partial-cpl is in reverse order at this point.
+;;          (if (@all? @@empty? remaining-lists)
+;;              (@rev! partial-cpl)
+;;              (loc ((unconstrained-class (p)
+;;                     (loc ((p-in-and-unconstrained-in? ((l <lst>))
+;;                            (@== (@head l) p))
+;;                           (p-unconstrained-in? ((l <lst>))
+;;                            (or (@== (@head l) p) (not (@mem? (@tail l) p)))))
+;;                       (and (@any? p-in-and-unconstrained-in? remaining-lists)
+;;                            (@all? p-unconstrained-in? remaining-lists)
+;;                            p)))
+;;                    (unconstrained-class-in-parents ((c <class>))
+;;                      (@any? unconstrained-class (%class-parents c))))
+;;                (let ((next (@any? unconstrained-class-in-parents partial-cpl)))
+;;                  (if next
+;;                       (loc ((remove-next ((l <lst>))
+;;                               (if (@== (@head l) next) (@tail l) l)))
+;;                         (merge-lists 
+;;                          (@pair next partial-cpl)
+;;                          ;; (@alter remaining-lists 
+;;                            (@map remove-next remaining-lists)
+;;                          ;; )
+;;                          ))
+;;                       (error "inconsistent precedence graph")))))))
+;;      (def parents (%class-parents c))
+;;      (merge-lists (@lst c)
+;;                   (@add (@map @class-ancestors parents) parents))))
+
 (df class-ordered-ancestors (c|<class> => <parents>)
-  (loc ((merge-lists ((partial-cpl <lst>) (remaining-lists <lst>))
-          ;; the partial-cpl is in reverse order at this point.
-         (if (@all? @@empty? remaining-lists)
-             (@rev! partial-cpl)
-             (loc ((unconstrained-class (p)
-                    (loc ((p-in-and-unconstrained-in? ((l <lst>))
-                           (@== (@head l) p))
-                          (p-unconstrained-in? ((l <lst>))
-                           (or (@== (@head l) p) (not (@mem? (@tail l) p)))))
-                      (and (@any? p-in-and-unconstrained-in? remaining-lists)
-                           (@all? p-unconstrained-in? remaining-lists)
-                           p)))
-                   (unconstrained-class-in-parents ((c <class>))
-                     (@any? unconstrained-class (%class-parents c))))
-               (let ((next (@any? unconstrained-class-in-parents partial-cpl)))
-                 (if next
-                      (loc ((remove-next ((l <lst>))
-                              (if (@== (@head l) next) (@tail l) l)))
-                        (merge-lists 
-                         (@pair next partial-cpl)
-                         ;; (@alter remaining-lists 
-                           (@map remove-next remaining-lists)
-                         ;; )
-                         ))
-                      (error "inconsistent precedence graph")))))))
-     (def parents (%class-parents c))
-     (merge-lists (@lst c)
-                  (@add (@map @class-ancestors parents) parents))))
+  (def parents (%class-parents c))
+  (rep merge-lists 
+        ((partial-cpl|<lst>     (@lst c)) 
+         (remaining-lists|<lst> (@add (@map @class-ancestors parents) parents)))
+    ;; the partial-cpl is in reverse order at this point.
+    (if (@all? @@empty? remaining-lists)
+        (@rev! partial-cpl)
+        (loc ((candidate (c) ;; return c if it can go in result now, else false
+                (loc ((tail? (l|<lst>) (@mem? (@tail l) c)))
+                  (and (not (@any? tail? remaining-lists)) c)))
+              (candidate-at-head (l|<lst>)
+                (and (not (@empty? l)) (candidate (@head l)))))
+          (def next (@any? candidate-at-head remaining-lists))
+          (if next
+              (loc ((del-next (l|<lst>) (if (@== (@head l) next) (@tail l) l)))
+                (merge-lists
+                 (@pair next partial-cpl) (@map del-next remaining-lists)))
+              (error "inconsistent precedence graph"))))))
 
 (df @class-direct-props (x) (%class-direct-props x))
 
@@ -1555,13 +1576,15 @@
 
 (df init-class (x)
   (when (@< $max-classes *next-class-id*)
-    (error "Too many classes %=\n" $max-classes))
+    (error "Too many classes %=" $max-classes))
+  (when (@== (@len (%class-parents x)) 0)
+    (error "Need at least one parent in class definition"))
   (set (%class-id x)   *next-class-id*)
   (set *next-class-id* (@+ *next-class-id* 1))
   (unless (@== x <any>)
     (@do (fun (parent) 
-           (set (%class-descendents parent)
-                (@add-new (%class-descendents parent) x)))
+           (set (%class-children parent)
+                (@add-new (%class-children parent) x)))
          (%class-parents x))
     (set (%class-ancestors x) (class-ordered-ancestors x)))
   (def row (%str (%iu $max-classes) (%iu 0)))
@@ -1672,17 +1695,24 @@
   (@do (fun (g) (set (%fun-cache g) #f)) (%class-gens old-class))
   (set (%class-forward old-class) new-class))
 
-(df @do-children (f x)
+(df @do-descendents (f x)
   (def visited '())
   (rep visit ((x x))
     (unless (@mem? visited x)
       (set visited (@add visited x))
       (f x) 
-      (@do visit (%class-descendents x)))))
+      (@do visit (%class-children x)))))
+
+(df finalize-props (class|<class>)
+  (set (%class-props class) (class-ordered-props class))
+  ;; FLUSH ACCESSOR GENERIC CACHES CAUSE THEY HOLD POTENTIALLY 
+  ;; OUTDATED PROP OFFSETS 
+  (@do (fun (prop) (set (%fun-cache (%prop-getter prop)) #f))
+       (%class-props class)))
 
 (df %prop (owner|<class> getter|<gen> setter|<gen> type|<type> init|<fun>)
   ;; TODO: FORWARD CONDITIONALLY
-  ;; (@do-children forward-class owner)
+  ;; (@do-descendents forward-class owner)
   (def class      owner)
   (def prop       (@new <prop>         prop-owner  owner
                     prop-getter getter prop-setter setter
@@ -1694,12 +1724,7 @@
   (set (%met-env setter-met) prop)
   (set (%class-direct-props class)
        (@cat2 (%class-direct-props class) (@lst prop)))
-  (set (%class-props class)
-       (class-ordered-props class))
-  ;; FLUSH ACCESSOR GENERIC CACHES CAUSE THEY HOLD POTENTIALLY 
-  ;; OUTDATED PROP OFFSETS 
-  (@do (fun (prop) (set (%fun-cache (%prop-getter prop)) #f))
-       (%class-props class)) 
+  (@do-descendents finalize-props owner)
   prop)
 
 (dl %update-instance-for-changed-class (new-object)
@@ -2199,7 +2224,7 @@
   product-elts
   class-name
   class-parents
-  class-descendents
+  class-children
   class-direct-props
   class-ancestors
   class-props
