@@ -159,3 +159,82 @@ adds:
 
     returns the traits object of a given argument
 
+0.80 6.894 RELEASE 12
+
+summary:
+
+exposes all bindings and takes longer to startup.  
+ast-linearize and p2c mostly working although p2c not quite bootstrapped.
+
+fixes:
+
+  do(<fun>, <tab>) now calls function with only table values
+  iteration protocol on <tab>
+
+adds:
+
+ast enhancements for code generation and typing
+
+  (slot <program> (program-register <int>))
+  (slot <program> program-type)
+
+stretchy-vectors (although i'll probably change their names to <buf>)
+
+  <svec> 
+
+  do-keyed(<fun>, <tab>) 
+
+for loops
+
+  (for ((,name ,value) ...) ,@body)
+
+ranges -- like dylan's range's and from for clause
+
+  <range> from from-to from-below from-above and "-by" versions
+
+  (for ((i (from 0))) ...) 
+  (for ((i (from-below 0 10))) ...) 
+
+steps -- like dylan's first/then for clause
+
+  <step> first-then
+
+  (for ((first? (first-then #t #f))) ...) 
+
+0.81 6.894 RELEASE 13
+
+summary:
+
+closer to bootstrapping.  adds ffi support.
+
+fixes:
+
+  various piddly ast-linearize bugs.
+
+adds:
+
+ffi support
+
+  %fapply primitive to proto.h
+  fapply (fproc (args <opts>)) function to boot.proto
+
+
+0.82 6.894 RELEASE 14
+
+summary:
+
+  p2c bootstrapped.  p2c can now compile itself and produce a compilable
+  C file.  i have not thoroughly tested this, but i've fixed a bunch
+  of bugs and the code in ast-linearize and p2c is now working well.  
+
+fixes:
+
+  clr! ((x <tab>) fill)
+ 
+  eof-object? to be restricted to <chr>'s and otherwise return false.
+
+adds:
+
+  multiple values binding tup to let
+
+  loads "../SRC/patches.proto" now which you can hack
