@@ -387,12 +387,12 @@
   (sup x)
   )
 
-(def-protocol-tests (x|<string-in-port>) ;; TODO: concrete
+(def-protocol-tests (x|<str-in-port>) ;; TODO: concrete
   (sup x)
   ;; port-contents (port|<string-port> => <str>)
   )
 
-(def-protocol-tests (x|<string-out-port>) ;; TODO: concrete
+(def-protocol-tests (x|<str-out-port>) ;; TODO: concrete
   (sup x)
   )
 

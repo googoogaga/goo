@@ -194,7 +194,7 @@
   (def e (rep loop ((p p) (e 0))
            (def i (trunc p))
            (if (< (- p i) epsilon)
-               (seq (set string (num-to-str i radix)) e)
+               (seq (set string (num-to-str-base i radix)) e)
                (loop (* p radix) (+ e 1)))))
   (def length (len string))
   (set string

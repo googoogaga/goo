@@ -218,7 +218,7 @@
   (let ((class  (cat-sym "<" name ">"))
         ($empty (cat-sym "$" name "-empty")))
     `(seq (dc ,class (<lst> ,@supers))
-          (dv ,$empty (new ,class head #f tail #f))
+          (dv ,$empty (new ,class))
           (dm as ((p (t= ,class)) (x ,class) => <lst>) x)
           (dm as ((p (t= <lst>))  (x ,class) => <lst>) (as-lst x))
           (dm as ((p (t= ,class)) x|<lst> => <lst>)
@@ -1269,7 +1269,7 @@
 
 (dm ast-macro-expand (x r tail?)
   (def m (objectify (head x) r tail?))
-  (if (and (isa? m <module-binding>) (== (binding-kind m) 'magic))
+  (if (and (isa? m <module-binding>) (== (binding-kind m) 'macro))
       (let ((res ((binding-handler m) x r tail?)))
         ;; (format out "EXPANSION ") (write out res) (format out "\n")
         res)

@@ -101,7 +101,7 @@
               (and (< i old-len)
                    (set (low-elt dat i) default)
                    (fill (+ i 1)))))
-          (set (buf-len c) new-len)))))
+          (set (buf-len c) new-len))))
 
 (dm len-setter (new-len|<int> c|<buf>)
   (set (len/fill c (elt-default c)) new-len))

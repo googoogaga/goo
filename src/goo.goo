@@ -54,7 +54,7 @@
  ;; Not included: gcd, lcm (which seem to be missing).
  <num> + 1+ - 1- * / floor ceil round trunc floor/ ceiling/ round/
  trunc/ mod rem pos? zero? neg? neg abs *print-base*
- num-to-str str-to-num
+ num-to-str num-to-str-base str-to-num
  <int> #| ^ & ~ bit? even? odd? << >> >>> $max-int $min-int
  <flo> flo-bits
  <loc> loc-val loc-val-setter address-of
@@ -113,8 +113,8 @@
  <out-port> newline force-out put puts
  <file-port> <file-in-port> 
  <file-out-port> 
- <string-port> port-contents <string-in-port> port-index
- <string-out-port>
+ <str-port> port-contents <str-in-port> port-index
+ <str-out-port>
 
  ;; Section 3.13: In.
  read read-from-string

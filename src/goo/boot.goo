@@ -1362,8 +1362,8 @@
   (def ord-amb-mets   (ord-app-mets gen args))
   (def sorted-mets    (@telt ord-amb-mets 0))
   (def ambiguous-mets (@telt ord-amb-mets 1))
-;    (if (@< 0 (@len ambiguous-mets))
-;        (error "Ambiguous Method Error when calling %= on %=" gen args)
+  ;;    (if (@< 0 (@len ambiguous-mets))
+  ;;        (error "Ambiguous Method Error when calling %= on %=" gen args)
   (if (@empty? sorted-mets)
       (error "No Applicable Methods Error when calling %= on %=" gen args)
       sorted-mets))
@@ -1373,19 +1373,23 @@
 ;; The way this works right now is not a long term solution.
 
 (df %dispatch (args|...)
-  (def result (gen-lookup (%fun-reg) args))
-  (if (@== (%class-of result) <int>);; int?
-      (let ((n (@olen args))
-            (res
-             (if (@= n 1);; getter?
-                 (prop-value-at (@oelt args 0) result)
-                 (set (prop-value-at (@oelt args 1) result)
-                      (@oelt args 0)))))
-        (%unlink-stack)
-        res)
-      (seq
-        (%unlink-stack)
-        (%raw-call (%head result) (%tail result))))))
+  (def n     (@olen args))
+  (def f     (%fun-reg))
+  (def arity (@fun-arity f)) 
+  (if (or (@= n arity) (and (@fun-nary? f) (@< arity n)))
+      (let ((result (gen-lookup f args)))
+        (if (@== (%class-of result) <int>) ;; int?
+            (let ((res
+                   (if (@= n 1) ;; getter?
+                       (prop-value-at (@oelt args 0) result)
+                       (set (prop-value-at (@oelt args 1) result)
+                            (@oelt args 0)))))
+              (%unlink-stack)
+              res)
+            (seq
+              (%unlink-stack)
+              (%raw-call (%head result) (%tail result)))))
+      (error "Wrong number of args when calling %= on %=" f args)))
 
 ;; READY TO REPLACE EARLY DISPATCHER WITH REAL DISPATCHER IN EARLY GEN'S
 
@@ -1542,10 +1546,15 @@
 
 (df prop-value-setter (z object getter|<fun>)
   (ensure-fresh-object object)
-  (def offset (prop-offset object getter))
-  (if (@= offset $getter-not-found)
-      (error "prop %s not found in %=" getter object)
-      (set (prop-value-at object offset) z)))
+  (rep loop ((i 0) (props (object-props object)))
+    (if (@empty? props)
+	(error "prop %s not found in %=" getter object)
+        (let ((prop (@head props)))
+          (if (@== (%prop-getter prop) getter)
+              (if (@isa? z (%prop-type prop))
+                  (set (prop-value-at object i) z)
+                  (error "Prop type error"))
+              (loop (@+ i 1) (@tail props)))))))
 
 (df %isa (parent|<class> getters|<lst> vals|<lst> => <any>)
   (def object (%object-of parent (%iu (%class-prop-len parent))))

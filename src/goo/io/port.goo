@@ -4,6 +4,8 @@
 (use proto/types)
 (use proto/collections/collection)
 (use proto/collections/sequence)
+(use proto/collections/buffer)
+
 (exported
 ;;; PORTS
 
@@ -22,8 +24,8 @@
  (dc <out-port> (<port>))
  (dg newline (port|<out-port>))
  (dg force-out (port|<out-port>))
- (dg put ((port <out-port>) (c <chr>)))
- (dg puts ((port <out-port>) (s <str>)))
+ (dg put (port|<out-port> c|<chr>))
+ (dg puts (port|<out-port> s|<str>))
  
 ;;; FILE PORTS
 
@@ -39,15 +41,15 @@
  (dv in #f)
  (dv out #f)
 
- (dc <string-port> (<port>)))
+ (dc <str-port> (<port>)))
 
-(dp port-guts (x|<string-port> => <seq>) "")
+(dp port-guts (x|<str-port> => <seq>) "")
 
 (exported
- (dg port-contents (port|<string-port> => <str>))
- (dc <string-in-port> (<string-port> <in-port>))
- (dp port-index (x|<string-in-port> => <int>) 0)
- (dc <string-out-port> (<string-port> <out-port>)))
+ (dg port-contents (port|<str-port> => <str>))
+ (dc <str-in-port> (<str-port> <in-port>))
+ (dp port-index (x|<str-in-port> => <int>) 0)
+ (dc <str-out-port> (<str-port> <out-port>)))
 
 (dm gets (port|<in-port> => <str>)
   (rep loop ((res '()) (c (get port)))
@@ -55,13 +57,13 @@
         (as <str> (rev! res))
         (loop (pair c res) (get port)))))
 
-(dm open ((t (t= <file-in-port>)) filename|<str> => <file-in-port>)
+(dm open (t|(t= <file-in-port>) filename|<str> => <file-in-port>)
   (new <file-in-port> port-handle (%open-in-file (%su filename))))
 
 (dm file-opening-error (filename|<str>)
   (error "Cannot open file named %=" filename))
 
-(dm open ((t (t= <file-out-port>)) filename|<str> => <file-out-port>)
+(dm open (t|(t= <file-out-port>) filename|<str> => <file-out-port>)
   (new <file-out-port> port-handle (%open-out-file (%su filename))))
 
 (dm close (port|<file-in-port>)
@@ -102,39 +104,38 @@
 (dm puts (port|<file-out-port> s|<str>)
   (%puts (port-handle port) (%su s)))
 
-;;; STRING-PORT IMPLEMENTATION
+;;; STR-PORT IMPLEMENTATION
 
-(dm port-contents (port|<string-port> => <str>)
+(dm port-contents (port|<str-port> => <str>)
   (as <str> (port-guts port)))
 
-(dm open ((t (t= <string-in-port>)) dat|<str> => <string-in-port>)
-  (new <string-in-port> port-guts dat))
+(dm open ((t (t= <str-in-port>)) dat|<str> => <str-in-port>)
+  (new <str-in-port> port-guts dat))
 
 ;; VERY INEFFICIENT
 
-(dm open ((t (t= <string-out-port>)) dat|<str> => <string-out-port>)
-  (new <string-out-port> port-guts dat)) 
+(dm open ((t (t= <str-out-port>)) dat|<str> => <str-out-port>)
+  (new <str-out-port> port-guts (as <buf> dat)))
 
 ;; TODO: EOF OBJECT MUST BE A CHR
 
-(dm peek (port|<string-in-port> => <chr>)
+(dm peek (port|<str-in-port> => <chr>)
   (if (>= (port-index port) (len (port-guts port)))
       (eof-object)
       (elt (port-guts port) (port-index port))))
 
-(dm get (port|<string-in-port> => <chr>)
+(dm get (port|<str-in-port> => <chr>)
   (if (>= (port-index port) (len (port-guts port)))
       (eof-object)
       (let ((res (elt (port-guts port) (port-index port))))
 	(incf (port-index port))
 	res)))
 
-(dm ready? (port|<string-in-port> => <log>)
+(dm ready? (port|<str-in-port> => <log>)
   #t)
 
-(dm put (port|<string-out-port> c|<chr>)
-  (set (port-guts port) (add (port-guts port) c)))
+(dm put (port|<str-out-port> c|<chr>)
+  (set (port-guts port) (add! (port-guts port) c)))
 
-(dm puts (port|<string-out-port> s|<str>)
-  (set (port-guts port) (cat (port-guts port) s)))
-
+(dm puts (port|<str-out-port> s|<str>)
+  (set (port-guts port) (cat! (port-guts port) s)))

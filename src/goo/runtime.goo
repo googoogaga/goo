@@ -4,7 +4,6 @@
 (use macros)
 (use proto/math)
 (use proto/types)
-(use proto/ports)
 (use runtime1)
 (use proto/collections/collection)
 (use proto/collections/sequence)
@@ -12,6 +11,7 @@
 (use proto/collections/list)
 (use proto/collections/buffer)
 (use proto/collections/table)
+(use proto/ports)
 
 ;;; APP
 
@@ -208,7 +208,7 @@
 
 (dc <simple-handler-info> (<handler-info>))
   (dp handler-info-message (x|<simple-handler-info> => <str>))
-  (dp handler-info-arguments (x|<simple-handler-info> => <str>) '())
+  (dp handler-info-arguments (x|<simple-handler-info> => <lst>) '())
 
 (dm describe-handler (info|<simple-handler-info> condition-type => <str>)
   (app format-to-string
@@ -278,7 +278,8 @@
   (signal-handler-list condition *current-handlers*))
 
 (dm sig (c|<str> args|...) 
-  (sig (new <simple-condition> condition-message c condition-arguments args)))
+  (sig (new <simple-condition> 
+         condition-message c condition-arguments (as <lst> args))))
 
 ;; (df error (message|<str> args|...)
 ;;   (%break (%su message)))
@@ -287,7 +288,8 @@
   (sig c))
 
 (dm error (c|<str> args|...)
-  (error (new <simple-error> condition-message c condition-arguments args)))
+  (error (new <simple-error> 
+           condition-message c condition-arguments (as <lst> args))))
 
 (df wrong-number-arguments-error (fun|<fun> n|<int>)
   (error "%= CALLED WITH %= ARGUMENTS EXPECTED %=" fun n (fun-arity fun)))
@@ -541,7 +543,7 @@
   str
   <str-tab>
   str-to-num
-  <string-port> <string-in-port> <string-out-port>
+  <str-port> <str-in-port> <str-out-port>
   sub sub-setter
   <tab>
   tab-growth-factor tab-growth-threshold tab-shrink-threshold tab-test tab-hash

@@ -34,7 +34,7 @@
 	(do-display port x (+ d 1) recur))))
 
 (dm write-to-string (x => <str>)
-  (with-port (port (open <string-out-port> "")) (write port x)))
+  (with-port (port (open <str-out-port> "")) (write port x)))
 
 (dm write (port|<out-port> x)
   (rep recur ((x x) (d -1))
@@ -66,7 +66,7 @@
 
 (dm recurring-write (port|<out-port> x|<loc> d|<int> recur|<fun>)
   (puts port "&0x")
-  (num-to-str (%ib (%lu x)) 16))
+  (num-to-str-base (%ib (%lu x)) 16))
 
 (dm recurring-write (port|<out-port> x|<num> d|<int> recur|<fun>)
   (if (== x <num>)
@@ -84,7 +84,7 @@
   (write port mumble))
 
 (dm write-number (port|<out-port> x|<num>)
-  (puts port (num-to-str x 10)))
+  (puts port (num-to-str x)))
 
 (dm write-char-literal (port|<out-port> x)
   (def probe (character-name x))
@@ -298,7 +298,7 @@
           "Incomplete format directive in \"%s\"" message)))
 
 (df format-to-string (message|<str> arguments|... => <str>)
-  (with-port (port (open <string-out-port> "")) 
+  (with-port (port (open <str-out-port> "")) 
     (app format port message arguments)
     (port-contents port)))
 

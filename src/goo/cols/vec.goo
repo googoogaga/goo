@@ -40,7 +40,7 @@
   %vnul)
 
 (dm fab ((x (t= <vec>)) s|<int> => <vec>)
-  (%vec (%iu s)))
+  (if (== s 0) %vnul (%vec (%iu s))))
 
 
 ;;;; Misc stuff

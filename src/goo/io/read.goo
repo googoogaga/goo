@@ -35,7 +35,7 @@
 	)))
 
 (dm read-from-string (x|<str> => <any>)
-  (with-port (port (open <string-in-port> x)) (read port)))
+  (with-port (port (open <str-in-port> x)) (read port)))
 
 (dm sub-read-carefully (port|<port> => <any>)
   ;; (put out #\b) (newline out)
