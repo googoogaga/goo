@@ -86,7 +86,7 @@ typedef struct _obj {
 #include "gc.h"
 
 extern P Ynul;
-extern P Ynul_slot;
+extern P Ynul_prop;
 
 #define OBJECT_DATA_SIZE (sizeof(OBJECT_DATA))
 
@@ -94,9 +94,9 @@ extern P YPobject_of (P class, P size);
 extern P YPclone (P x);
 extern P YPraw_alloc (P size);
 
-#define YPslot_elt(x, i)           (((OBJECT)(x))->values[(PINT)(i)])
-#define YPslot_elt_setter(z, x, i) (((OBJECT)(x))->values[(PINT)(i)] = (z))
-#define YPslot_dat_at(x, i)        (&(((OBJECT)(x))->values[(PINT)(i)]))
+#define YPprop_elt(x, i)           (((OBJECT)(x))->values[(PINT)(i)])
+#define YPprop_elt_setter(z, x, i) (((OBJECT)(x))->values[(PINT)(i)] = (z))
+#define YPprop_dat_at(x, i)        (&(((OBJECT)(x))->values[(PINT)(i)]))
 
 /* FLO */
 
@@ -108,15 +108,15 @@ extern P YPflo_bits (P x);
 #define REP_LEN_OFF 0
 #define REP_DAT_OFF 1
 
-#define YPrep_dat(x)            (YPslot_dat_at((x), (P)REP_DAT_OFF))
+#define YPrep_dat(x)            (YPprop_dat_at((x), (P)REP_DAT_OFF))
 
 /* VEC */
 
 extern P YPPvfab (P size, P fill);
 #define YPvu(x)                ((P)(YPrep_dat(x)))
-#define YPvlen(x)              ((P)(YPslot_elt((x), (P)REP_LEN_OFF)))
-#define YPvelt(x, i)           ((P)(YPslot_elt((x), (P)(REP_DAT_OFF + (i)))))
-#define YPvelt_setter(z, x, i) ((P)(YPslot_elt_setter((z), (x), (P)(REP_DAT_OFF + (i)))))
+#define YPvlen(x)              ((P)(YPprop_elt((x), (P)REP_LEN_OFF)))
+#define YPvelt(x, i)           ((P)(YPprop_elt((x), (P)(REP_DAT_OFF + (i)))))
+#define YPvelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (P)(REP_DAT_OFF + (i)))))
 
 /* STR */
 
@@ -125,7 +125,7 @@ typedef PCHR* PSTR;
 extern P YPPsfab (P size, P fill);
 extern P YPsb (P str);
 #define YPsu(x)                ((P)(YPrep_dat(x)))
-#define YPslen(x)              ((P)(YPslot_elt((x), (P)REP_LEN_OFF)))
+#define YPslen(x)              ((P)(YPprop_elt((x), (P)REP_LEN_OFF)))
 #define YPselt(x, i)           ((P)(PINT)(((PSTR)(YPsu(x)))[((PINT)(i))]))
 #define YPselt_setter(z, x, i) ((P)(PINT)(((PSTR)(YPsu(x)))[((PINT)(i))] = ((PCHR)(PINT)(z))))
 
@@ -133,23 +133,22 @@ extern P YPsb (P str);
 
 extern P Yerror;
 extern P Yfile_opening_error;
-extern P YPopen_input_file (P name);
-extern P YPopen_output_file (P name);
-extern P YPinput_availableQ (P s);
-extern P YPclose_input_port (P s);
-extern P YPclose_output_port (P s);
+extern P YPopen_in_file (P name);
+extern P YPopen_out_file (P name);
+extern P YPclose_in_port (P s);
+extern P YPclose_out_port (P s);
 extern P YPnewline (P s);
-extern P YPforce_output (P s);
-extern P YPwrite_char (P s, P x);
-extern P YPwrite_string (P s, P x);
-extern P YPread_char (P s);
-extern P YPpeek_char (P s);
-extern P YPchar_readyQ (P s); 
-extern PSTR YPread_string (FILE* s);
+extern P YPforce_out (P s);
+extern P YPput (P s, P x);
+extern P YPputs (P s, P x);
+extern P YPget (P s);
+extern P YPpeek (P s);
+extern P YPreadyQ (P s); 
+extern PSTR YPgets (FILE* s);
 extern P YPeof_objectQ (P x);
 extern P YPeof_object ();
-extern PPORT YPcurrent_input_port (void);
-extern PPORT YPcurrent_output_port (void);
+extern PPORT YPcurrent_in_port (void);
+extern PPORT YPcurrent_out_port (void);
 extern P YPfile_mtime (P x);
 extern P YPfile_existsQ (P name);
 extern P YPfile_type (P name);
@@ -160,8 +159,8 @@ extern P YPcreate_directory (P name);
 extern PSTR getenv(PSTR);
 extern PSTR setenv(PSTR, PSTR, int);
 extern P YPos_name ();
-extern P YPos_binding_value (P name);
-extern P YPos_binding_value_setter (P value, P name);
+extern P YPos_val (P name);
+extern P YPos_val_setter (P value, P name);
 #define timeval_diff(a, b, result)                                            \
   do {                                                                        \
     (result)->tv_sec = (a)->tv_sec - (b)->tv_sec;                             \
@@ -199,10 +198,10 @@ typedef P (*PFUN)(P, P);
 #define PAIRHEADOFFSET 0
 #define PAIRTAILOFFSET 1
 
-#define Phead(x) (YPslot_elt((x), (P)PAIRHEADOFFSET))
-#define Ptail(x) (YPslot_elt((x), (P)PAIRTAILOFFSET))
-#define Phead_setter(z, x) (YPslot_elt_setter((z), (x), (P)PAIRHEADOFFSET))
-#define Ptail_setter(z, x) (YPslot_elt_setter((z), (x), (P)PAIRTAILOFFSET))
+#define Phead(x) (YPprop_elt((x), (P)PAIRHEADOFFSET))
+#define Ptail(x) (YPprop_elt((x), (P)PAIRTAILOFFSET))
+#define Phead_setter(z, x) (YPprop_elt_setter((z), (x), (P)PAIRHEADOFFSET))
+#define Ptail_setter(z, x) (YPprop_elt_setter((z), (x), (P)PAIRTAILOFFSET))
 
 #define tag_mask 3
 #define adr_tag  0
@@ -210,18 +209,18 @@ typedef P (*PFUN)(P, P);
 #define chr_tag  2
 #define loc_tag  3
 
-/* #define IU(x) (YPslot_elt((x), (P)0)) */
+/* #define IU(x) (YPprop_elt((x), (P)0)) */
 #define IU(x) (untag(x))
 
-#define FUNCODE(fun) ((PFUN)YPslot_elt(fun, (P)FUNCODEOFFSET))
-#define FUNNAME(fun) ((PFUN)YPslot_elt(fun, (P)FUNNAMEOFFSET))
-#define FUNSIG(fun)  ((PFUN)YPslot_elt(fun, (P)FUNSIGOFFSET))
+#define FUNCODE(fun) ((PFUN)YPprop_elt(fun, (P)FUNCODEOFFSET))
+#define FUNNAME(fun) ((PFUN)YPprop_elt(fun, (P)FUNNAMEOFFSET))
+#define FUNSIG(fun)  ((PFUN)YPprop_elt(fun, (P)FUNSIGOFFSET))
 
-#define SIGNAMES(x) (P)(YPslot_elt((x), (P)SIGNAMESOFFSET))
-#define SIGARITY(x) (PINT)(IU(YPslot_elt((x), (P)SIGARITYOFFSET)))
-#define SIGVALUE(x) YPslot_elt((x), (P)SIGVALUEOFFSET)
-#define SIGSPECS(x) (P)(YPslot_elt((x), (P)SIGSPECSOFFSET))
-#define SIGNARYP(x) ((PLOG)(YPslot_elt((x), (P)SIGNARYPOFFSET) != YPfalse))
+#define SIGNAMES(x) (P)(YPprop_elt((x), (P)SIGNAMESOFFSET))
+#define SIGARITY(x) (PINT)(IU(YPprop_elt((x), (P)SIGARITYOFFSET)))
+#define SIGVALUE(x) YPprop_elt((x), (P)SIGVALUEOFFSET)
+#define SIGSPECS(x) (P)(YPprop_elt((x), (P)SIGSPECSOFFSET))
+#define SIGNARYP(x) ((PLOG)(YPprop_elt((x), (P)SIGNARYPOFFSET) != YPfalse))
 
 #define FUNNAMES(x) SIGNAMES(FUNSIG(x))
 #define FUNARITY(x) SIGARITY(FUNSIG(x))
@@ -230,11 +229,11 @@ typedef P (*PFUN)(P, P);
 #define FUNNARYP(x) SIGNARYP(FUNSIG(x))
 
 STATIC_NOT_PRT_C INLINE P* FUNENV (P fun) {
-  return (P*)YPslot_elt(fun, (P)FUNENVOFFSET);
+  return (P*)YPprop_elt(fun, (P)FUNENVOFFSET);
 }
 
 STATIC_NOT_PRT_C INLINE P* FUNENVSETTER (P* env, P fun) {
-  return (P*)YPslot_elt_setter(env, fun, (P)FUNENVOFFSET);
+  return (P*)YPprop_elt_setter(env, fun, (P)FUNENVOFFSET);
 }
 
 #define ENVGET(e, i)       (((ENV)(e))->values[((PINT)(i))])
@@ -431,7 +430,7 @@ EXT(YPfalse, "boot", "%false");
 EXT(YPtrue, "boot", "%true");
 EXT(Ynil, "boot", "nil");
 EXT(YruntimeYvec, "runtime", "vec");
-EXT(YruntimeYPwith_monitor, "runtime", "%with-monitor");
+EXT(YPwith_monitor, "runtime", "%with-monitor");
 
 /* It is not clear who is generating code which uses this. */
 EXT(YPdispatch,"boot","%dispatch");
@@ -447,7 +446,7 @@ extern P YPsb (P);
 extern P YPPsym (P);
 extern P YPmacro (P,P,P);
 extern P YPsig (P,P,P,P,P,P);
-extern P YPgen (P,P,P,P,P);
+extern P YPgen (P,P,P,P,P,P,P);
 extern P YPmet (P,P,P,P,P,P);
 
 /* FUNCTIONS */
@@ -465,10 +464,6 @@ extern P BOXFAB(P x);
 #define FUNCODEDEF(x)  P x##I (P Pfun, P Pnext_methods)
 #define FUNCODEREF(x)  (&(x##I))
 
-/* LOCATIVES */
-
-extern P YPlocative;
-
 /* SYMBOL TABLE */
 
 extern P regsym (P* adr, char *modstr, char *namestr);
@@ -476,12 +471,12 @@ extern P YPdo_runtime_bindings (P fun);
 
 /* LOCATIVES */
 
-STATIC_NOT_PRT_C  INLINE P YPlocative_value (P loc) {
+STATIC_NOT_PRT_C  INLINE P YPloc_val (P loc) {
   P* ptr = (P*)((PADR)loc & ~tag_mask);
   return *ptr;
 }
 
-STATIC_NOT_PRT_C  INLINE P YPlocative_value_setter (P val, P loc) {
+STATIC_NOT_PRT_C  INLINE P YPloc_val_setter (P val, P loc) {
   P* ptr = (P*)((PADR)loc & ~tag_mask);
   return *ptr = val;
 }
