@@ -33,6 +33,17 @@
   os-binding-value
   os-binding-value-setter)
 
+;;;;=======================================================================
+;;;;  Process Support
+;;;;=======================================================================
+
+(dp %pid)
+
+(dm process-id ()
+  (%ib (%pid)))
+
+(export
+  process-id)
 
 ;;;;=======================================================================
 ;;;;  Basic Filename Support
@@ -64,6 +75,10 @@
 (dm add-src-path (relpath => <str>)
   (cat *proto-root* *path-separator* "SRC" *path-separator* relpath))
 
+;; TODO: GET THIS RIGHT ON WIN32
+(dm add-tmp-path (relpath => <str>)
+  (cat *path-separator* "tmp" *path-separator* relpath))
+
 (dm add-build-path (builddir relpath => <str>)
   (cat *proto-root* *path-separator* "C" *path-separator*
        builddir *path-separator* relpath))
@@ -91,6 +106,7 @@
 
   add-src-path
   add-build-path
+  add-tmp-path
 
   *proto-extension*
   *c-extension*
@@ -100,7 +116,8 @@
   c-filename
   proto-filename
   exe-filename
-  obj-filename)
+  obj-filename
+  )
 
 
 ;;;;=======================================================================
