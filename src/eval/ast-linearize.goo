@@ -85,7 +85,7 @@
 		(loop res (tail bindings))))))))
 
 (dm sexp->object (exp r)
-  (insert-box! (objectify exp r)))
+  (insert-box! (objectify exp r #f)))
 
 ;;; FLATTENING
 
@@ -367,9 +367,8 @@
 	   ;;        (set closure-creation-free (empty-free-environment))))
 	   (set application-arguments
 		(empty-argument-list))
-	   ;; TODO: tail calls
-           ;; (set application-tail?
-           ;;	   #f)
+	   (set application-tail?
+		#f)
 	   )))
     ;; TODO: reverse definitions in forms
     (set (program-definitions o)

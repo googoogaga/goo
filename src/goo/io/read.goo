@@ -37,13 +37,14 @@
 	    (reading-error port (tail form))
 	    form))))
 
-(dv $reader-token-marker (vec 'reader-token))
+(dv <reader-token> (isa <any>))
+  (slot <reader-token> (token-message <str>))
 
 (dm make-reader-token (message => <any>)
-  (vec $reader-token-marker message))
+  (isa <reader-token> (set token-message message)))
 
 (dm reader-token? (form => <log>)
-  (and (isa? form <vec>) (== (elt form 0) $reader-token-marker)))
+  (isa? form <reader-token>))
 
 (dv $close-paren (make-reader-token "unexpected right parenthesis"))
 
@@ -264,7 +265,7 @@
 (dv $strange-symbol-names 
   '("+" "-" "..."
     "1st" "2nd" "3rd" ;; Seq Support
-    "1+" "1+"        ;; Only for S&ICP support
+    "1+" "1-"        ;; Only for S&ICP support
     "->"))            ;; Only for JAR's thesis
 
 (dv preferred-case 

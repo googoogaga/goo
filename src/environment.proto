@@ -11,6 +11,13 @@
 (dm env-global-value ((env <glo-env>) (i <int>))
   (elt (env-values env) i))
 
+(dm env-global-index ((env <glo-env>) (x <any>) => <any>)
+  (rep loop ((i 0))
+    (and (< i (len (env-values env)))
+ 	 (if (== x (elt (env-values env) i))
+	     i
+	     (loop (+ i 1))))))
+
 (dm env-global-value-setter (v (env <glo-env>) (i <int>))
   (set (elt (env-values env) i) v))
 
@@ -50,7 +57,7 @@
       (set (elt (env-values env) j) v)
       (set (env-local-value (env-parent env) (- i 1) j) v)))
 
-
+;; TODO: SHOULD GO AWAY SOON
 (dm env-binding-value ((env <loc-env>) (name <sym>) => <any>)
   (rep loop ((names (env-names env)) (i 0))
     (if (empty? names)

@@ -144,8 +144,11 @@
 
 ;; TODO: CHANGE C IMPLEMENTATION
 v
+(dv *glo-name?* #f)
+
 (dm object-name (x)
-  (let ((name (%binding-name x))) (and name (as <str> name))))
+  (let ((name (or (%binding-name x) (and *glo-name?* (env-object-name x)))))
+    (and name (as <str> name))))
 
 (dm write-fun-guts ((port <output-port>) (x <fun>) (name <str>) recur)
   (write-string port "#{")

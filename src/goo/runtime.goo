@@ -885,64 +885,64 @@
 
 ;;; stretchy-vector
 
-(dv <svec> (isa <flat>))
-  (slot <svec> (svec-len <int>) 0)
-  (slot <svec> (svec-dat <vec>) #())
+(dv <buf> (isa <flat>))
+  (slot <buf> (buf-len <int>) 0)
+  (slot <buf> (buf-dat <vec>) #())
 
-(dm empty ((c <svec>) => <svec>) (isa <svec>))
+(dm empty ((c <buf>) => <buf>) (isa <buf>))
 
-(dm svec ((elts ...) => <svec>)
-  (alter (fab <svec> (len elts)) elts))
+(dm buf ((elts ...) => <buf>)
+  (alter (fab <buf> (len elts)) elts))
 
-(dm fabs ((c <svec>) (elts ...) => <svec>)
-  (apply svec elts))
+(dm fabs ((c <buf>) (elts ...) => <buf>)
+  (apply buf elts))
 
-(dm fab ((c <svec>) (s <int>) => <svec>)
+(dm fab ((c <buf>) (s <int>) => <buf>)
   (let ((dat (fab <vec> (power-of-two-ceiling s))))
-    (isa <svec> (set svec-len s) (set svec-dat dat))))
+    (isa <buf> (set buf-len s) (set buf-dat dat))))
 
-(dm len ((c <svec>) => <int>)
-  (svec-len c))
+(dm len ((c <buf>) => <int>)
+  (buf-len c))
 
-(dm len-setter ((new-len <int>) (c <svec>))
-  (let ((dat (svec-dat c)))
+(dm len-setter ((new-len <int>) (c <buf>))
+  (let ((dat (buf-dat c)))
     (if (> new-len (len dat))
 	(let ((new-data (fab <vec> (power-of-two-ceiling new-len))))
 	  (alter new-data dat)
-	  (set (svec-len c) new-len)
-	  (set (svec-dat c) new-data))
+	  (set (buf-len c) new-len)
+	  (set (buf-dat c) new-data))
 	(if (< new-len (len c))
 	    (let ((old-len (len c)))
-	      (set (svec-len c) new-len)
+	      (set (buf-len c) new-len)
 	      (rep fill (((i <int>) new-len))
 		(and (< i old-len)
 		     (set (elt dat i) nul)
 		     (fill (+ i 1)))))
-	    (set (svec-len c) new-len)))))
+	    (set (buf-len c) new-len)))))
 
-(dm elt ((c <svec>) (i <int>) => <any>)
-  (elt (svec-dat c) i))
+(dm elt ((c <buf>) (i <int>) => <any>)
+  (elt (buf-dat c) i))
 
-(dm elt-setter (v (c <svec>) (i <int>))
+(dm elt-setter (v (c <buf>) (i <int>))
   (when (>= i (len c))
     (set (len c) (+ i 1)))
-  (set (elt (svec-dat c) i) v))
+  (set (elt (buf-dat c) i) v))
 
-(dm add! ((c <svec>) x => <svec>)
+(dm add! ((c <buf>) x => <buf>)
   (set (elt c (len c)) x)
   c)
 
-(dm push ((c <svec>) x => <svec>)
+(dm push ((c <buf>) x => <buf>)
   (add! c x))
 
-(dm pop ((c <svec>) => <any>)
+(dm pop ((c <buf>) => <any>)
   (let ((new-len (- (len c) 1))
 	(x (elt c new-len)))
     (set (len c) new-len)
     x))
 
 ;; TODO: HAVE THIS FALL OUT OF PROTOCOL
-(dm cat! ((x <svec>) (more ...) => <lst>)
+(dm cat! ((x <buf>) (more ...) => <lst>)
   (rep outer ((more more))
     (if (empty? more)
 	x
@@ -1053,7 +1053,7 @@
 	  (assocq x (tail l)))))
 
 ;; TODO: QUESTIONABLE SYNTAX
-(dm to-str ((x <svec>) => <str>) 
+(dm to-str ((x <buf>) => <str>) 
   (cat "#[" (vals-to-str x) "]"))
 
 ;;; string

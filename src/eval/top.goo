@@ -35,7 +35,7 @@
       (cat *proto-root* "SRC" *path-separator* filename)))
 
 (dm parse-in ((s <str>) ct-env)
-  (objectify (read-from-string s) ct-env))
+  (objectify (read-from-string s) ct-env #f))
 
 (dm parse ((s <str>)) (parse-in s (ct-env)))
 
@@ -45,23 +45,17 @@
 (dm str-parse ((s <str>)) (str-parse-in s (ct-env)))
 
 (dm eval-in ((x <any>) ct-env rt-env)
-  (let ((o (objectify x ct-env))
+  (let ((o (objectify x ct-env #f))
 	(e (ast-eval-in o rt-env)))
     e))
 
 (dm eval ((x <any>)) (eval-in x (ct-env) (rt-env)))
-
-;; (dm boot-eval ((x <str>))
-;;   (eval-in x (ct-boot-env) (boot-env)))
 
 (dm str-eval-in ((x <str>) ct-env rt-env => <any>)
   (write-to-string (eval-in (read-from-string x) ct-env rt-env)))
 
 (dm str-eval ((x <str>))
   (str-eval-in x (ct-env) (rt-env)))
-
-;; (dm str-boot-eval ((x <str>))
-;;   (str-eval-in x (ct-boot-env) (boot-env)))
 
 (dm read-file ((filename <str>) => <any>)
   (call-with-input-file
@@ -75,7 +69,7 @@
 
 (dm load-in ((filename <str>) (rt-env <loc-env>) ct-env) 
   (let ((x (read-file filename))
-	(o (objectify x ct-env)))
+	(o (objectify x ct-env #f)))
     (ast-eval-in o rt-env)
     ;; (report-undefined-global-bindings ct-env)
     ))
@@ -134,6 +128,9 @@
 	      (inner (tail names) (+ i 1)))))
 	(loop (- i 1))))))
 
+(dm do-stack-frames (fun)
+  (%do-stack-frames fun))
+
 (dv <keyboard-interrupt> (isa <condition>))
 
 (df keyboard-interrupt ()
@@ -162,7 +159,7 @@
 		(quit #f)
 		(if (= form '(up))
 		    (blow #f)
-		    (let ((ast    (objectify form ct-env))
+		    (let ((ast    (objectify form ct-env #f))
 			  (result (ast-eval-in ast rt-env)))
 		      (format out "%==> " level) 
 		      (write out result)))))))

@@ -35,7 +35,7 @@
 		(type (if spec (ast-eval spec env) <any>)))
 	    (loop (pair type res) (tail specs) (+ i 1)))))))
 
-(dv *stack* (fab <svec> 0))
+(dv *stack* (fab <buf> 0))
 
 (ds (ifun (,env ,f ,names ,@args) ,body)
   `(fun (,@args)
@@ -151,9 +151,9 @@
     (env-define-binding! (rt-glo-env) (assignment-binding e) value)
     #f))
 
-(dv <box> (isa <any>))
-  (slot <box> box-value)
-
+;; (dv <box> (isa <any>))
+;;   (slot <box> box-value)
+;; 
 ;; (dm ast-eval ((e <box-read>) (env <loc-env>))
 ;;   (box-value (ast-eval (box-reference e) env)))
 ;; 
@@ -303,10 +303,6 @@
 (df rt-env () *rt-env*)
 
 (df rt-env-setter (env) (set *rt-env* env))
-
-(df rt-boot-env () (rt-env))
-
-(df rt-boot-env-setter (env) (set (rt-env) env))
 
 (df ast-read-eval (x) (ast-eval-in (objectify x (ct-env)) (rt-env)))
 

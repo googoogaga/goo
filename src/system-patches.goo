@@ -1,0 +1,6 @@
+(set *base-path* "/home/ai/jrb/proto/SRC/")
+
+(df c-filename (name) (cat *base-path* "../C/" name ".c"))
+
+(set *c-out-name* "p")
+
