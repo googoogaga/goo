@@ -536,7 +536,7 @@ struct _MODULE_INFO {
 };
 
 /* Holds pointer to top-level MODULE_INFO structure. */
-extern MODULE_INFO *proto_toplevel_module_info;
+extern MODULE_INFO *goo_toplevel_module_info;
 
 /* Building the runtime environment. */
 extern P YPprocess_module(

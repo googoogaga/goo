@@ -1341,7 +1341,7 @@ P YPbuild_runtime_modules(
     P other_binding_fun)
 {
   process_runtime_module_shell
-    (proto_toplevel_module_info, create_module_fun, use_module_fun,
+    (goo_toplevel_module_info, create_module_fun, use_module_fun,
      runtime_binding_fun, other_binding_fun);
   return YPfalse;
 }

@@ -1,777 +1,782 @@
-/* PROTO 2 C $REVISION: 0.107 $ 
+/* GOO 2 C $REVISION: 0.111 $ 
   */
 
 #include "prt.h"
 
 /* MODULE ENVIRONMENT: ast-linearize */
 
-EXT(YLnumG,"boot","<num>");
-EXT(YLvecG,"boot","<vec>");
-EXT(YprotoScollectionsScollectionYkey_type,"proto/collections/collection","key-type");
-EXT(Yprop_getter,"boot","prop-getter");
-EXT(YruntimeYchoose_handler,"runtime","choose-handler");
-EXT(YastYfunction_free,"ast","function-free");
-EXT(YprotoScollectionsStableYcase_insensitive_string_equal,"proto/collections/table","case-insensitive-string-equal");
-EXT(YprotoScollectionsStableYcase_insensitive_string_hash,"proto/collections/table","case-insensitive-string-hash");
-EXT(YprotoScollectionsSassocYassocs_test_setter,"proto/collections/assoc","assocs-test-setter");
-EXT(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
-DEF(Yast_linearizeYcollect_temporariesX,"ast-linearize","collect-temporaries!");
-EXT(YprotoScollectionsSsequenceYdel_dups,"proto/collections/sequence","del-dups");
-EXT(YastYbinding_global_box,"ast","binding-global-box");
-EXT(YprotoScollectionsScollectionYfinQ,"proto/collections/collection","fin?");
-EXT(Yunexec,"boot","unexec");
-EXT(Ytype_error,"boot","type-error");
-EXT(YprotoSmathYA,"proto/math","+");
-EXT(YastYenvironment_module,"ast","environment-module");
-EXT(Yclass_direct_props,"boot","class-direct-props");
-EXT(YmacrosYgensym,"macros","gensym");
-EXT(Yvec,"boot","vec");
-EXT(YmacrosYmatch_sublist,"macros","match-sublist");
-EXT(YprotoScollectionsSsequenceYbelow,"proto/collections/sequence","below");
-EXT(YastYsignature_arity_setter,"ast","signature-arity-setter");
-EXT(YastYLconstantG,"ast","<constant>");
-EXT(YastYinstall_initial_bindings,"ast","install-initial-bindings");
-EXT(YastYfix_let_body_setter,"ast","fix-let-body-setter");
-EXT(YLmetG,"boot","<met>");
-EXT(YastYmonitor_test,"ast","monitor-test");
-EXT(YprotoSmathYcontagious_call,"proto/math","contagious-call");
-EXT(YastYmodule_name,"ast","module-name");
-EXT(YastYLmonitorG,"ast","<monitor>");
-EXT(YprotoScollectionsSstringYTprint_baseT,"proto/collections/string","*print-base*");
-EXT(YruntimeYloc_val_setter,"runtime","loc-val-setter");
-EXT(YastYLast_macro_definitionG,"ast","<ast-macro-definition>");
-EXT(YastYsignature_value_setter,"ast","signature-value-setter");
-EXT(YastYglobal_box_value_setter,"ast","global-box-value-setter");
-EXT(YprotoSmathYzeroQ,"proto/math","zero?");
-EXT(YastYapplication_knownQ,"ast","application-known?");
-EXT(Yprop_init,"boot","prop-init");
-EXT(YastYfix_let_bindings_setter,"ast","fix-let-bindings-setter");
-DEF(Yast_linearizeYLrenamed_local_bindingG,"ast-linearize","<renamed-local-binding>");
-EXT(YastYbinding_info,"ast","binding-info");
-EXT(YruntimeYformat_to_string,"runtime","format-to-string");
-DEF(Yast_linearizeYcollect_registersX,"ast-linearize","collect-registers!");
-EXT(YastYprobe_module,"ast","probe-module");
-EXT(YprotoSmathYroundS,"proto/math","round/");
-EXT(YLsubclassG,"boot","<subclass>");
-EXT(YprotoSmathYsin,"proto/math","sin");
-EXT(YprotoStypesYtA,"proto/types","t+");
-EXT(YprotoSmathYeof_object,"proto/math","eof-object");
-EXT(Yfun_naryQ,"boot","fun-nary?");
-EXT(YprotoScollectionsScollectionYenum,"proto/collections/collection","enum");
-EXT(YmacrosYvar_name,"macros","var-name");
-EXT(YastYglobal_box_value,"ast","global-box-value");
-EXT(Yclass_descendents,"boot","class-descendents");
-EXT(YprotoScollectionsScollectionYelt_default,"proto/collections/collection","elt-default");
-EXT(YprotoScollectionsSbufferYbuf,"proto/collections/buffer","buf");
-EXT(YprotoScollectionsScollectionYmap2,"proto/collections/collection","map2");
-EXT(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
-EXT(YprotoScollectionsSrangeYfrom,"proto/collections/range","from");
-EXT(Ygen_refs_setter,"boot","gen-refs-setter");
-EXT(YastYenv_object_name,"ast","env-object-name");
-EXT(YastYbinding_locative,"ast","binding-locative");
-EXT(YprotoSmathYevenQ,"proto/math","even?");
-DEF(Yast_linearizeYdo_do_call_upgradesX,"ast-linearize","do-do-call-upgrades!");
-EXT(YastYmonitor_main_thunk,"ast","monitor-main-thunk");
-DEF(Yast_linearizeYregister_allocateX,"ast-linearize","register-allocate!");
-EXT(YastYfab_g2c_module,"ast","fab-g2c-module");
-DEF(Yast_linearizeYform_program_setter,"ast-linearize","form-program-setter");
-EXT(YruntimeYLhandler_infoG,"runtime","<handler-info>");
-DEF(Yast_linearizeYprogram_definitions_setter,"ast-linearize","program-definitions-setter");
-EXT(YLchrG,"boot","<chr>");
-EXT(YprotoSmathYrem,"proto/math","rem");
-EXT(YLflatG,"boot","<flat>");
-EXT(YprotoScollectionsSsequenceYdel_vals,"proto/collections/sequence","del-vals");
-EXT(YsubtypeQ,"boot","subtype?");
-EXT(Yprop_value_setter,"boot","prop-value-setter");
-EXT(YastYLalternativeG,"ast","<alternative>");
-EXT(YprotoSmathYlog,"proto/math","log");
-DEF(Yast_linearizeYnew_renamed_binding,"ast-linearize","new-renamed-binding");
-EXT(YPdefine_method,"boot","%define-method");
-EXT(Ygen_refs,"boot","gen-refs");
-EXT(Ynot,"boot","not");
-EXT(YprotoSmathY_,"proto/math","-");
-DEF(Yast_linearizeYboxify_mutable_bindings,"ast-linearize","boxify-mutable-bindings");
-EXT(YprotoScollectionsScollectionYdo_keyed,"proto/collections/collection","do-keyed");
-EXT(YastYmodule_name_to_relpath,"ast","module-name-to-relpath");
-DEF(Yast_linearizeYprogram_quotations,"ast-linearize","program-quotations");
-EXT(YprotoScollectionsSsequenceYsub,"proto/collections/sequence","sub");
-EXT(YastYmonitor_type,"ast","monitor-type");
-EXT(YprotoScollectionsSlistYassq,"proto/collections/list","assq");
-EXT(YprotoScollectionsStableYLstr_tabG,"proto/collections/table","<str-tab>");
-EXT(YastYobjectify_signature,"ast","objectify-signature");
-EXT(YprotoScollectionsScollectionYdup,"proto/collections/collection","dup");
-EXT(YastYmonitor_info,"ast","monitor-info");
 EXT(YprotoScollectionsScollectionYelt_type,"proto/collections/collection","elt-type");
-EXT(YruntimeYdefault_handler,"runtime","default-handler");
-EXT(YprotoScollectionsSsequenceYrange_checkQ,"proto/collections/sequence","range-check?");
-EXT(YastYLfix_letG,"ast","<fix-let>");
-EXT(YprotoSmathYtanh,"proto/math","tanh");
-EXT(Yfab_sym,"boot","fab-sym");
-DEF(Yast_linearizeYliftX,"ast-linearize","lift!");
-EXT(Yunknown_function_error,"boot","unknown-function-error");
-DEF(Yast_linearizeYform_quotations_setter,"ast-linearize","form-quotations-setter");
-EXT(YastYLbindingG,"ast","<binding>");
-EXT(Ysig_specs,"boot","sig-specs");
-EXT(YprotoScollectionsSsequenceYpos,"proto/collections/sequence","pos");
-EXT(YastYfunction_registers_setter,"ast","function-registers-setter");
-EXT(YprotoScollectionsScollectionYfold,"proto/collections/collection","fold");
-EXT(YprotoSmathYB,"proto/math","&");
-EXT(YprotoScollectionsStableYtab_shrink_threshold,"proto/collections/table","tab-shrink-threshold");
-EXT(YastYfunction_index,"ast","function-index");
-DEF(Yast_linearizeYassoc_value,"ast-linearize","assoc-value");
-EXT(YprotoScollectionsScollectionYelts,"proto/collections/collection","elts");
-EXT(YLtupG,"boot","<tup>");
-EXT(YastYreport_undefined_global_bindings,"ast","report-undefined-global-bindings");
-EXT(YLsingletonG,"boot","<singleton>");
-EXT(YOlst,"boot","@lst");
-EXT(YPvnul,"boot","%vnul");
-EXT(YastYassignment_form_setter,"ast","assignment-form-setter");
-EXT(YastYfunction_signature_setter,"ast","function-signature-setter");
-DEF(Yast_linearizeYinsert_boxX,"ast-linearize","insert-box!");
-EXT(YastYsignature_bindings,"ast","signature-bindings");
-EXT(YprotoSmathYNEE,"proto/math","~==");
-EXT(YLfunG,"boot","<fun>");
-EXT(YruntimeYrcurry,"runtime","rcurry");
-EXT(YastYfunction_value,"ast","function-value");
-EXT(YruntimeYbuild_condition_for_handler_interactively,"runtime","build-condition-for-handler-interactively");
-EXT(YastYmodule_binding,"ast","module-binding");
-EXT(YastYset_module_environments,"ast","set-module-environments");
-EXT(YmacrosYmap,"macros","map");
-EXT(YprotoSmathYtruncS,"proto/math","trunc/");
-EXT(YTmacros_okQT,"boot","*macros-ok?*");
-EXT(YastYfunction_temporaries_setter,"ast","function-temporaries-setter");
-EXT(YastYbinding_name,"ast","binding-name");
-EXT(YastYenvironment_bindings,"ast","environment-bindings");
-EXT(YastYLprogramG,"ast","<program>");
-EXT(YprotoSmathYNE,"proto/math","~=");
-EXT(YastYbinding_type,"ast","binding-type");
-EXT(YastYbinding_kind,"ast","binding-kind");
-EXT(YprotoStypesYtQ,"proto/types","t?");
-EXT(YprotoStypesYall2Q,"proto/types","all2?");
-EXT(YprotoScollectionsSsequenceYreject,"proto/collections/sequence","reject");
-EXT(YruntimeYLsimple_errorG,"runtime","<simple-error>");
-EXT(YprotoScollectionsSrangeYrange,"proto/collections/range","range");
-EXT(Ysig_val,"boot","sig-val");
-EXT(YastYobjectify_quotation,"ast","objectify-quotation");
-EXT(Yprop_boundQ,"boot","prop-bound?");
-EXT(YastYmodule_target_environment,"ast","module-target-environment");
-EXT(YLlstG,"boot","<lst>");
-EXT(YastYsignature_names_setter,"ast","signature-names-setter");
-EXT(YprotoSmathYtan,"proto/math","tan");
-EXT(YLlogG,"boot","<log>");
-EXT(YprotoScollectionsSrangeYrange_by,"proto/collections/range","range-by");
-EXT(YprotoSmathYneg,"proto/math","neg");
-EXT(YprotoSmathYK,"proto/math","|");
-EXT(YprotoSmathYsqrt,"proto/math","sqrt");
-EXT(Ytype_object,"boot","type-object");
-EXT(Yfun_name_setter,"boot","fun-name-setter");
-DEF(Yast_linearizeYLassocG,"ast-linearize","<assoc>");
-EXT(Yfab_class,"boot","fab-class");
-EXT(YastYload_module,"ast","load-module");
-EXT(YastYfix_let_bindings,"ast","fix-let-bindings");
-EXT(YprotoScollectionsScollectionYallQ,"proto/collections/collection","all?");
 DEF(Yast_linearizeYLtop_level_formG,"ast-linearize","<top-level-form>");
-EXT(Yfun_specs,"boot","fun-specs");
-EXT(YprotoSmathYT,"proto/math","*");
-DEF(Yast_linearizeYform_definitions_setter,"ast-linearize","form-definitions-setter");
-EXT(YastYboundQ_reference,"ast","bound?-reference");
-EXT(YprotoSmathYround,"proto/math","round");
-EXT(YprotoSmathYlogn,"proto/math","logn");
-EXT(Ysym_name,"boot","sym-name");
-EXT(YprotoSmathYas_log,"proto/math","as-log");
-EXT(YastYprogram_type,"ast","program-type");
-EXT(YruntimeYinvoke_handler_interactively,"runtime","invoke-handler-interactively");
-EXT(YLreplace_generic_restartG,"boot","<replace-generic-restart>");
-EXT(YprotoSmathY1A,"proto/math","1+");
-EXT(YprotoSmathYpow,"proto/math","pow");
-EXT(YprotoScollectionsSsequenceYrange_check,"proto/collections/sequence","range-check");
-DEF(Yast_linearizeYsplit_program,"ast-linearize","split-program");
-EXT(YastYreference_binding,"ast","reference-binding");
-EXT(YprotoScollectionsScollectionYfind,"proto/collections/collection","find");
-EXT(Yfun_name,"boot","fun-name");
-EXT(YastYprogram_type_setter,"ast","program-type-setter");
-EXT(YastYunchecked_runtime_environment,"ast","unchecked-runtime-environment");
-EXT(YprotoSmathYdigitQ,"proto/math","digit?");
-EXT(Yprop_owner,"boot","prop-owner");
-EXT(YprotoScollectionsStableYtab_gc_state,"proto/collections/table","tab-gc-state");
-DEF(Yast_linearizeYadjoin_definitionX,"ast-linearize","adjoin-definition!");
-EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
-EXT(YprotoSmathYLbotG,"proto/math","<bot>");
-DEF(Yast_linearizeYLflattened_programG,"ast-linearize","<flattened-program>");
-EXT(YprotoSmathYto_str,"proto/math","to-str");
-EXT(YmacrosYfab_setter_name,"macros","fab-setter-name");
-EXT(YprotoStypesYtL,"proto/types","t<");
-DEF(Yast_linearizeYreference_selfQ,"ast-linearize","reference-self?");
-EXT(YastYfunction_free_setter,"ast","function-free-setter");
-EXT(Yobject_class,"boot","object-class");
-EXT(YprotoSmathYfloorS,"proto/math","floor/");
-EXT(YprotoScollectionsSlistYpush,"proto/collections/list","push");
-EXT(YastYprogram_register,"ast","program-register");
-EXT(YruntimeYLhandlerG,"runtime","<handler>");
-EXT(YastYreference_frame_number,"ast","reference-frame-number");
-EXT(YprotoSmathYatan,"proto/math","atan");
-EXT(YastYsignature_arity,"ast","signature-arity");
-DEF(Yast_linearizeYanalyze_dynamic_extent,"ast-linearize","analyze-dynamic-extent");
-DEF(Yast_linearizeYextract_thingsX,"ast-linearize","extract-things!");
-EXT(Yclass_parents,"boot","class-parents");
-EXT(YastYbinding_mutableQ,"ast","binding-mutable?");
-DEF(Yast_linearizeYclosure_creation_index,"ast-linearize","closure-creation-index");
-DEF(Yast_linearizeYextractX,"ast-linearize","extract!");
-EXT(YTreport_prop_unbound_errorsQT,"boot","*report-prop-unbound-errors?*");
-EXT(YprotoScollectionsSsequenceYcat2,"proto/collections/sequence","cat2");
-EXT(YprotoScollectionsSsequenceYpick,"proto/collections/sequence","pick");
-DEF(Yast_linearizeYupdate_walkX,"ast-linearize","update-walk!");
-EXT(Yprop_value,"boot","prop-value");
-EXT(YruntimeYLrestartG,"runtime","<restart>");
-EXT(YprotoScollectionsStableYtab_growth_threshold,"proto/collections/table","tab-growth-threshold");
-EXT(YastYLcompile_timeG,"ast","<compile-time>");
-EXT(YprotoScollectionsSlistYLlistG,"proto/collections/list","<list>");
-EXT(YmacrosYmatch_atom,"macros","match-atom");
-EXT(YprotoSmagnitudesYG,"proto/magnitudes",">");
-EXT(Ymay_isaQ,"boot","may-isa?");
-EXT(YprotoSmathYchar_Gascii,"proto/math","char->ascii");
-EXT(YastYLboundQG,"ast","<bound?>");
-EXT(YLseqG,"boot","<seq>");
-DEF(Yast_linearizeYast_walk,"ast-linearize","ast-walk");
-DEF(Yast_linearizeYdo_do_call_referencesX,"ast-linearize","do-do-call-references!");
-EXT(YLanyG,"boot","<any>");
-EXT(Yprop_type,"boot","prop-type");
-EXT(YastYprogram_register_setter,"ast","program-register-setter");
-EXT(YprotoScollectionsScollectionYelt_setter,"proto/collections/collection","elt-setter");
-EXT(YruntimeYread,"runtime","read");
-EXT(YastYLunwind_protectG,"ast","<unwind-protect>");
-EXT(YmacrosYvar_type,"macros","var-type");
-EXT(YastYLlocalsG,"ast","<locals>");
-DEF(Yast_linearizeYreference_offset_setter,"ast-linearize","reference-offset-setter");
-EXT(YastYLglobal_boxG,"ast","<global-box>");
-EXT(YastYfix_let_types_setter,"ast","fix-let-types-setter");
-EXT(YprotoStypesYanyQ,"proto/types","any?");
-EXT(YastYbinding_value,"ast","binding-value");
-EXT(YprotoScollectionsSsequenceYcatX,"proto/collections/sequence","cat!");
+EXT(YastYbinding_global_box,"ast","binding-global-box");
+EXT(YprotoScollectionsScollectionYany2Q,"proto/collections/collection","any2?");
+EXT(YastYinit_ast,"ast","init-ast");
+EXT(YprotoSmathYpower_of_two_ceiling,"proto/math","power-of-two-ceiling");
 EXT(YastYbinding_index,"ast","binding-index");
-EXT(Yclass_props,"boot","class-props");
-EXT(YprotoScollectionsScollectionYzap,"proto/collections/collection","zap");
-EXT(YastYlocals_functions,"ast","locals-functions");
-DEF(Yast_linearizeYTregister_passiveQT,"ast-linearize","*register-passive?*");
-EXT(YastYLmodule_loaderG,"ast","<module-loader>");
-EXT(YastYfind_binding,"ast","find-binding");
-EXT(YastYLstatic_global_environmentG,"ast","<static-global-environment>");
-DEF(Yast_linearizeYgather_temporariesX,"ast-linearize","gather-temporaries!");
-EXT(YastYsignature_specs_setter,"ast","signature-specs-setter");
+EXT(YprotoScollectionsSsequenceYpos,"proto/collections/sequence","pos");
+EXT(YprotoScollectionsStableYtab_hash,"proto/collections/table","tab-hash");
+EXT(YprotoScollectionsScollectionYnow_setter,"proto/collections/collection","now-setter");
+EXT(YprotoScollectionsScollectionYelts,"proto/collections/collection","elts");
+EXT(Yfab_sym,"boot","fab-sym");
+EXT(YprotoScollectionsStableYtab_growth_factor,"proto/collections/table","tab-growth-factor");
+EXT(YprotoSmagnitudesYLE,"proto/magnitudes","<=");
+EXT(YprotoSmathYE,"proto/math","=");
+EXT(Ysig_specs,"boot","sig-specs");
+EXT(YprotoSmathYlog,"proto/math","log");
+EXT(YOlst,"boot","@lst");
+EXT(YastYenvironment_bindings,"ast","environment-bindings");
+EXT(YastYsignature_specs,"ast","signature-specs");
+DEF(Yast_linearizeYprogram_quotations,"ast-linearize","program-quotations");
+EXT(Yprop_type,"boot","prop-type");
+EXT(YprotoScollectionsSsequenceYreject,"proto/collections/sequence","reject");
+EXT(YprotoScollectionsSstepYfirst_then,"proto/collections/step","first-then");
+DEF(Yast_linearizeYform_quotations_setter,"ast-linearize","form-quotations-setter");
+EXT(YLsingletonG,"boot","<singleton>");
+EXT(YastYreference_binding,"ast","reference-binding");
+EXT(YprotoScollectionsScollectionYfab,"proto/collections/collection","fab");
+EXT(YastYalternative_alternant,"ast","alternative-alternant");
+EXT(YastYDgoo_runtime_module_name,"ast","$goo-runtime-module-name");
+EXT(YprotoScollectionsSrangeYfrom,"proto/collections/range","from");
+EXT(YastYbinding_value_setter,"ast","binding-value-setter");
+EXT(YLfunG,"boot","<fun>");
+DEF(Yast_linearizeYclosure_creation_free,"ast-linearize","closure-creation-free");
+EXT(YprotoSmathYC,"proto/math","^");
+EXT(Yhandler_info_message,"boot","handler-info-message");
+EXT(YastYreport_undefined_global_bindings,"ast","report-undefined-global-bindings");
+EXT(YastYLast_signatureG,"ast","<ast-signature>");
+EXT(YprotoSmathYtan,"proto/math","tan");
+EXT(YprotoScollectionsSbufferYLbufG,"proto/collections/buffer","<buf>");
+EXT(YastYfunction_temporaries,"ast","function-temporaries");
+EXT(Yprop_boundQ,"boot","prop-bound?");
+EXT(YmacrosYcat_sym,"macros","cat-sym");
+EXT(YastYLalternativeG,"ast","<alternative>");
+EXT(YprotoScollectionsScollectionYallQ,"proto/collections/collection","all?");
+EXT(YprotoScollectionsStableYtab_shrink_threshold_setter,"proto/collections/table","tab-shrink-threshold-setter");
+EXT(YastYlocals_bindings_setter,"ast","locals-bindings-setter");
+EXT(YprotoScollectionsScollectionYitems,"proto/collections/collection","items");
+EXT(Ysig_val,"boot","sig-val");
+EXT(YLlstG,"boot","<lst>");
+EXT(YruntimeYbuild_condition_interactively,"runtime","build-condition-interactively");
+EXT(YprotoScollectionsStableYtab_test,"proto/collections/table","tab-test");
+EXT(Yfab_class,"boot","fab-class");
+EXT(YTboot_macro_module_namesT,"boot","*boot-macro-module-names*");
+EXT(YLlogG,"boot","<log>");
+EXT(YastYfunction_body,"ast","function-body");
+EXT(YprotoSmathYeof_objectQ,"proto/math","eof-object?");
+EXT(YruntimeYloc_val_setter,"runtime","loc-val-setter");
+EXT(Yfun_specs,"boot","fun-specs");
+EXT(Ytype_object,"boot","type-object");
+EXT(YruntimeYlist_handlers,"runtime","list-handlers");
+EXT(Yfun_name_setter,"boot","fun-name-setter");
+EXT(YastYLruntime_assignmentG,"ast","<runtime-assignment>");
+EXT(YprotoScollectionsSstringYstr_to_num,"proto/collections/string","str-to-num");
+EXT(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
+EXT(YprotoStypesYtT,"proto/types","t*");
+EXT(YruntimeYalways,"runtime","always");
+EXT(YastYLast_primitive_definitionG,"ast","<ast-primitive-definition>");
+EXT(YastYinit_environment_for_eval,"ast","init-environment-for-eval");
+EXT(YprotoScollectionsSsequenceYsub,"proto/collections/sequence","sub");
+EXT(YastYfunction_debug_name,"ast","function-debug-name");
+DEF(Yast_linearizeYform_program_setter,"ast-linearize","form-program-setter");
+EXT(YprotoScollectionsSbufferYpop_lastX,"proto/collections/buffer","pop-last!");
+EXT(YprotoSmathYnum_to_str,"proto/math","num-to-str");
+EXT(YastYbinding_info,"ast","binding-info");
 EXT(YprotoScollectionsSlistYassqn,"proto/collections/list","assqn");
-EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
+EXT(Ysym_name,"boot","sym-name");
+EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
+EXT(YprotoSmathYK,"proto/math","|");
+EXT(YprotoScollectionsScollectionYfind,"proto/collections/collection","find");
+EXT(YprotoScollectionsStableYtab_growth_factor_setter,"proto/collections/table","tab-growth-factor-setter");
+EXT(YastYsignature_arity,"ast","signature-arity");
+EXT(YastYbinding_dynamic_extentQ,"ast","binding-dynamic-extent?");
+EXT(YprotoScollectionsScollectionYaddX,"proto/collections/collection","add!");
+EXT(YastYLfab_listG,"ast","<fab-list>");
+EXT(YastYbinding_value,"ast","binding-value");
+EXT(YPwith_monitor,"boot","%with-monitor");
+DEF(Yast_linearizeYadjoin_free_bindingX,"ast-linearize","adjoin-free-binding!");
+EXT(YruntimeYcompose,"runtime","compose");
+EXT(Yfun_name,"boot","fun-name");
+EXT(YprotoScollectionsScollectionYfold,"proto/collections/collection","fold");
+EXT(Yadd_prop,"boot","add-prop");
+EXT(YprotoScollectionsSsequenceYfinds,"proto/collections/sequence","finds");
+EXT(YastYLlocal_bindingG,"ast","<local-binding>");
+EXT(YastYlocals_functions_setter,"ast","locals-functions-setter");
+DEF(Yast_linearizeYflatten_seqs,"ast-linearize","flatten-seqs");
+EXT(Yobject_class,"boot","object-class");
+EXT(YastYLfix_letG,"ast","<fix-let>");
+EXT(Yprop_owner,"boot","prop-owner");
+EXT(YprotoScollectionsSlistYpush,"proto/collections/list","push");
+EXT(YastYbinding_info_setter,"ast","binding-info-setter");
+EXT(YastYfind_binding,"ast","find-binding");
+DEF(Yast_linearizeYassoc,"ast-linearize","assoc");
+EXT(YastYunwind_protect_cleanup_thunk,"ast","unwind-protect-cleanup-thunk");
+EXT(YprotoSmathYzeroQ,"proto/math","zero?");
+EXT(YruntimeYloc_val,"runtime","loc-val");
+EXT(YprotoSmathYeof_object,"proto/math","eof-object");
+EXT(YprotoSmathYoddQ,"proto/math","odd?");
+EXT(YprotoSmathYround,"proto/math","round");
+EXT(YastYfunction_source,"ast","function-source");
+EXT(YastYfix_let_arguments,"ast","fix-let-arguments");
+EXT(YastYglobal_box_value_setter,"ast","global-box-value-setter");
+EXT(Yprop_value,"boot","prop-value");
+DEF(Yast_linearizeYcollect_registersX,"ast-linearize","collect-registers!");
+EXT(YprotoSmathYtanh,"proto/math","tanh");
+DEF(Yast_linearizeYassocq,"ast-linearize","assocq");
+EXT(Yclass_parents,"boot","class-parents");
+EXT(YDmax_int,"boot","$max-int");
+EXT(YmacrosYmatch_sublist,"macros","match-sublist");
+EXT(YprotoSmagnitudesYG,"proto/magnitudes",">");
+EXT(YprotoScollectionsSsequenceYpick,"proto/collections/sequence","pick");
+EXT(Ymay_isaQ,"boot","may-isa?");
+EXT(YastYfab_g2c_module,"ast","fab-g2c-module");
+EXT(YprotoScollectionsSlistYLlistG,"proto/collections/list","<list>");
+EXT(YprotoScollectionsScollectionYelt_setter,"proto/collections/collection","elt-setter");
+EXT(YprotoSmathYmod,"proto/math","mod");
+EXT(YprotoScollectionsSstringYascii_whitespaces,"proto/collections/string","ascii-whitespaces");
+EXT(YprotoScollectionsStableYDpermanent_hash_state,"proto/collections/table","$permanent-hash-state");
+EXT(YastYLcomputed_programG,"ast","<computed-program>");
+EXT(YastYprogram_type,"ast","program-type");
+EXT(YastYLast_primitiveG,"ast","<ast-primitive>");
+EXT(YastYsignature_value_setter,"ast","signature-value-setter");
+EXT(YastYLprogramG,"ast","<program>");
+EXT(YastYruntime_environment,"ast","runtime-environment");
+EXT(YLseqG,"boot","<seq>");
+EXT(YastYconstant_index,"ast","constant-index");
+EXT(YastYLlocal_assignmentG,"ast","<local-assignment>");
+EXT(YprotoStypesYtA,"proto/types","t+");
+EXT(Ynil,"boot","nil");
+EXT(YLanyG,"boot","<any>");
+EXT(YastYenv_object_name,"ast","env-object-name");
+DEF(Yast_linearizeYLbox_writeG,"ast-linearize","<box-write>");
+EXT(YastYLmodule_loaderG,"ast","<module-loader>");
+EXT(YprotoScollectionsSsequenceYdo_key_vals,"proto/collections/sequence","do-key-vals");
+EXT(YastYapplication_knownQ,"ast","application-known?");
+DEF(Yast_linearizeYdo_call_upgradesX,"ast-linearize","do-call-upgrades!");
+EXT(YprotoScollectionsSrangeYLrangeG,"proto/collections/range","<range>");
+DEF(Yast_linearizeYassoc_key,"ast-linearize","assoc-key");
+EXT(YprotoScollectionsScollectionYmemQ,"proto/collections/collection","mem?");
+EXT(YprotoScollectionsSsequenceYcat2,"proto/collections/sequence","cat2");
+EXT(YastYLmonitorG,"ast","<monitor>");
+EXT(Yclass_props,"boot","class-props");
+EXT(Yerror,"boot","error");
+EXT(YmacrosYmap,"macros","map");
+EXT(YprotoSmagnitudesYL,"proto/magnitudes","<");
+EXT(YprotoSmathYnegQ,"proto/math","neg?");
+EXT(YruntimeYspread,"runtime","spread");
+EXT(YastYsequentialize,"ast","sequentialize");
+EXT(YastYapplication_tailQ,"ast","application-tail?");
+EXT(YastYcompile_time_program,"ast","compile-time-program");
+EXT(YPprop_unbound_error,"boot","%prop-unbound-error");
+EXT(YprotoSmathYchar_Gascii,"proto/math","char->ascii");
+DEF(Yast_linearizeYform_quotations,"ast-linearize","form-quotations");
+EXT(YastYconstant_value,"ast","constant-value");
+EXT(YprotoSmathYcontagious_call,"proto/math","contagious-call");
+EXT(YprotoScollectionsSzipYunzip,"proto/collections/zip","unzip");
+DEF(Yast_linearizeYprogram_form,"ast-linearize","program-form");
+EXT(YruntimeYLrestartG,"runtime","<restart>");
+EXT(YprotoSmathYroundS,"proto/math","round/");
+EXT(YLsigG,"boot","<sig>");
+EXT(YastYLcompile_timeG,"ast","<compile-time>");
+EXT(YastYLreal_referenceG,"ast","<real-reference>");
+EXT(YastYfunction_binding,"ast","function-binding");
+EXT(YruntimeYTgensym_counterT,"runtime","*gensym-counter*");
+DEF(Yast_linearizeYliftX,"ast-linearize","lift!");
+EXT(Yfun_names,"boot","fun-names");
+EXT(YastYlocals_bindings,"ast","locals-bindings");
+DEF(Yast_linearizeYassoc_value,"ast-linearize","assoc-value");
+EXT(YprotoScollectionsScollectionYadd,"proto/collections/collection","add");
+EXT(YastYLpassive_programG,"ast","<passive-program>");
+EXT(YastYload_in,"ast","load-in");
+EXT(YastYmodule_binding,"ast","module-binding");
+DEF(Yast_linearizeYbox_form_setter,"ast-linearize","box-form-setter");
+EXT(YruntimeYformat,"runtime","format");
+EXT(YprotoSmathYposQ,"proto/math","pos?");
+EXT(YastYLmodule_binding_referenceG,"ast","<module-binding-reference>");
+EXT(YprotoSmathYGGG,"proto/math",">>>");
+EXT(YastYassignment_form_setter,"ast","assignment-form-setter");
+EXT(YprotoSmathYatan,"proto/math","atan");
+EXT(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
+EXT(YastYbinding_mutableQ,"ast","binding-mutable?");
+EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
+EXT(YastYset_module_environments,"ast","set-module-environments");
+EXT(YOall2Q,"boot","@all2?");
+EXT(YruntimeYcurry,"runtime","curry");
+EXT(YastYapplication_arguments,"ast","application-arguments");
+EXT(YastYfunction_source_setter,"ast","function-source-setter");
+EXT(YastYreference_frame_number,"ast","reference-frame-number");
+EXT(YastYenvironment_module,"ast","environment-module");
+EXT(YruntimeYdefault_handler_description,"runtime","default-handler-description");
+EXT(YastYmodule_name_to_relpath,"ast","module-name-to-relpath");
+EXT(Yfile_opening_error,"boot","file-opening-error");
+EXT(YastYfunction_self_recursiveQ,"ast","function-self-recursive?");
+EXT(YprotoSmathYdigitQ,"proto/math","digit?");
+EXT(YastYLmoduleG,"ast","<module>");
+EXT(YprotoScollectionsStableYtab_growth_threshold_setter,"proto/collections/table","tab-growth-threshold-setter");
+DEF(Yast_linearizeYadjoin_temporary_variablesX,"ast-linearize","adjoin-temporary-variables!");
+EXT(YLcolG,"boot","<col>");
+EXT(Ysig_names,"boot","sig-names");
+EXT(YLclassG,"boot","<class>");
+EXT(YastYLassignmentG,"ast","<assignment>");
+EXT(YprotoSmathYalphaQ,"proto/math","alpha?");
+EXT(YruntimeYLconditionG,"runtime","<condition>");
+EXT(YprotoScollectionsStableYcase_insensitive_string_equal,"proto/collections/table","case-insensitive-string-equal");
+EXT(YastYfunction_value,"ast","function-value");
+EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
+EXT(YprotoSmathYNEE,"proto/math","~==");
+DEF(Yast_linearizeYreference_offset,"ast-linearize","reference-offset");
+EXT(YastYremove_modules_by_nameX,"ast","remove-modules-by-name!");
+EXT(Yfind_setter,"boot","find-setter");
+EXT(YprotoSmathYevenQ,"proto/math","even?");
+EXT(YmacrosYvar_name,"macros","var-name");
+EXT(YastYprobe_module,"ast","probe-module");
+EXT(YprotoScollectionsSzipYLzipG,"proto/collections/zip","<zip>");
+DEF(Yast_linearizeYform_definitions,"ast-linearize","form-definitions");
+EXT(YastYbinding_name,"ast","binding-name");
+DEF(Yast_linearizeYbox_form,"ast-linearize","box-form");
+EXT(YruntimeYchoose_handler,"runtime","choose-handler");
+DEF(Yast_linearizeYreference_selfQ,"ast-linearize","reference-self?");
+EXT(YastYmodule_loader_module_type,"ast","module-loader-module-type");
+EXT(YprotoScollectionsScollectionYinto,"proto/collections/collection","into");
+EXT(YprotoScollectionsSsequenceYrange_check,"proto/collections/sequence","range-check");
+EXT(YprotoSmathYNE,"proto/math","~=");
+EXT(YprotoStypesYtQ,"proto/types","t?");
+EXT(YprotoScollectionsStableYtab_gc_state,"proto/collections/table","tab-gc-state");
+EXT(YprotoStypesYall2Q,"proto/types","all2?");
+EXT(YprotoScollectionsSstringYnum_to_str_base,"proto/collections/string","num-to-str-base");
+EXT(YastYmonitor_main_thunk,"ast","monitor-main-thunk");
+EXT(YastYsignature_bindings_setter,"ast","signature-bindings-setter");
+DEF(Yast_linearizeYextractX,"ast-linearize","extract!");
+EXT(YprotoSmathYN,"proto/math","~");
+DEF(Yast_linearizeYform_definitions_setter,"ast-linearize","form-definitions-setter");
+EXT(YastYapplication_function,"ast","application-function");
+EXT(YastYLsequentialG,"ast","<sequential>");
 EXT(YastYreference_called_functionQ,"ast","reference-called-function?");
-EXT(YprotoSmathYaddress_of,"proto/math","address-of");
+EXT(YLreplace_generic_restartG,"boot","<replace-generic-restart>");
+EXT(YprotoScollectionsScollectionYelt_or,"proto/collections/collection","elt-or");
+DEF(Yast_linearizeYLfree_referenceG,"ast-linearize","<free-reference>");
+EXT(Ytail_setter,"boot","tail-setter");
+EXT(YmacrosYmatch_atom,"macros","match-atom");
+DEF(Yast_linearizeYLflattened_programG,"ast-linearize","<flattened-program>");
+EXT(Ysig_arity,"boot","sig-arity");
+EXT(YastYLbind_exitG,"ast","<bind-exit>");
+EXT(YprotoSmathYcontagious_type,"proto/math","contagious-type");
+DEF(Yast_linearizeYupdate_walkX,"ast-linearize","update-walk!");
+EXT(Yfab_gen,"boot","fab-gen");
+EXT(YprotoScollectionsSsequenceYrange_checkQ,"proto/collections/sequence","range-check?");
+DEF(Yast_linearizeYassoc_value_setter,"ast-linearize","assoc-value-setter");
+EXT(YprotoScollectionsStableYLstr_tabG,"proto/collections/table","<str-tab>");
+EXT(YastYassignment_reference,"ast","assignment-reference");
+EXT(YastYast_define_binding,"ast","ast-define-binding");
+EXT(YprotoScollectionsSsequenceYlast,"proto/collections/sequence","last");
+EXT(YastYLapplicationG,"ast","<application>");
+EXT(YprotoStypesYtype_elts_setter,"proto/types","type-elts-setter");
+EXT(YmacrosYcat,"macros","cat");
+DEF(Yast_linearizeYadjoin_definitionX,"ast-linearize","adjoin-definition!");
+EXT(YastYbinding_inferred_type,"ast","binding-inferred-type");
+EXT(YprotoSmathYacos,"proto/math","acos");
+EXT(YprotoScollectionsSsequenceYcatX,"proto/collections/sequence","cat!");
+DEF(Yast_linearizeYdo_dynamic_extentX,"ast-linearize","do-dynamic-extent!");
+EXT(YLoptsG,"boot","<opts>");
+EXT(YprotoScollectionsSsequenceYinsX,"proto/collections/sequence","ins!");
+EXT(YastYfunction_signature_setter,"ast","function-signature-setter");
+EXT(YprotoSmathYas_log,"proto/math","as-log");
+EXT(YastYmodule_name,"ast","module-name");
+EXT(YmacrosYnapp,"macros","napp");
+DEF(Yast_linearizeYboxify_mutable_bindings,"ast-linearize","boxify-mutable-bindings");
+DEF(Yast_linearizeYreference_offset_setter,"ast-linearize","reference-offset-setter");
+EXT(Ytail,"boot","tail");
+EXT(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
+DEF(Yast_linearizeYast_contains_funQ,"ast-linearize","ast-contains-fun?");
+EXT(YastYLast_genericG,"ast","<ast-generic>");
+DEF(Yast_linearizeYcollect_temporariesX,"ast-linearize","collect-temporaries!");
+EXT(YLtypeG,"boot","<type>");
+DEF(Yast_linearizeYform_program,"ast-linearize","form-program");
+EXT(YastYprogram_type_setter,"ast","program-type-setter");
+EXT(YastYfunction_index_setter,"ast","function-index-setter");
+EXT(Yord_app_mets,"boot","ord-app-mets");
+EXT(YastYfree_environment,"ast","free-environment");
+EXT(YastYlocals_functions,"ast","locals-functions");
+EXT(YprotoSmathYlogn,"proto/math","logn");
+EXT(YprotoSmathYto_str,"proto/math","to-str");
+EXT(YprotoSmathYcos,"proto/math","cos");
+EXT(YastYdo_module_loader_modules,"ast","do-module-loader-modules");
+EXT(YprotoStypesYtL,"proto/types","t<");
+EXT(YLlocG,"boot","<loc>");
+EXT(YprotoScollectionsSstringYTprint_baseT,"proto/collections/string","*print-base*");
+EXT(YprotoScollectionsScollectionYdo3,"proto/collections/collection","do3");
+EXT(YprotoSmathYB,"proto/math","&");
+EXT(YruntimeYLhandler_infoG,"runtime","<handler-info>");
+EXT(YastYmonitor_handler,"ast","monitor-handler");
+EXT(Ytype_elts,"boot","type-elts");
+EXT(YastYobjectify_quotation,"ast","objectify-quotation");
+EXT(YprotoSmathYabs,"proto/math","abs");
+EXT(YprotoScollectionsScycleYcycle,"proto/collections/cycle","cycle");
+DEF(Yast_linearizeYprogram_quotations_setter,"ast-linearize","program-quotations-setter");
+EXT(YruntimeYLsimple_errorG,"runtime","<simple-error>");
+EXT(YruntimeYdescribe_condition,"runtime","describe-condition");
+EXT(YastYsignature_specs_setter,"ast","signature-specs-setter");
+EXT(Yfind_getter,"boot","find-getter");
+EXT(YastYfix_let_bindings_setter,"ast","fix-let-bindings-setter");
+EXT(Yclass_name,"boot","class-name");
+EXT(Yincongruent_method_error,"boot","incongruent-method-error");
+EXT(YruntimeYcondition_message,"runtime","condition-message");
+EXT(YprotoSmathYsqrt,"proto/math","sqrt");
+DEF(Yast_linearizeYprogram_definitions,"ast-linearize","program-definitions");
+EXT(YastYdo_static_global_bindings,"ast","do-static-global-bindings");
+EXT(YastYfunction_registers_setter,"ast","function-registers-setter");
+EXT(YmacrosYmatch_unquote,"macros","match-unquote");
+EXT(YastYbinding_native_toQ,"ast","binding-native-to?");
+EXT(YmacrosYemptyQ,"macros","empty?");
+EXT(YmacrosYfab_setter_name,"macros","fab-setter-name");
+DEF(Yast_linearizeYclosure_creation_index,"ast-linearize","closure-creation-index");
 EXT(YastYLdefinitionG,"ast","<definition>");
 EXT(YprotoScollectionsSmapYfab_map,"proto/collections/map","fab-map");
-EXT(YprotoStypesYtE,"proto/types","t=");
-EXT(Yerror,"boot","error");
-EXT(YastYfree_environment,"ast","free-environment");
-EXT(YprotoSmathYGGG,"proto/math",">>>");
-EXT(YprotoSmagnitudesYL,"proto/magnitudes","<");
-EXT(YTrestarts_okQT,"boot","*restarts-ok?*");
-EXT(YastYLglobal_referenceG,"ast","<global-reference>");
-EXT(YprotoScollectionsStableYtab_test,"proto/collections/table","tab-test");
-EXT(YastYapplication_binding,"ast","application-binding");
-EXT(YastYenvironment_uses_modules,"ast","environment-uses-modules");
-EXT(YLsigG,"boot","<sig>");
-EXT(YPprop_unbound_error,"boot","%prop-unbound-error");
-EXT(YprotoScollectionsSstringYnum_to_str_base,"proto/collections/string","num-to-str-base");
-EXT(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
-EXT(YPsymbols,"boot","%symbols");
-EXT(YastYlocals_body_setter,"ast","locals-body-setter");
-EXT(YprotoScollectionsScollectionYdo3,"proto/collections/collection","do3");
-EXT(YruntimeYLerrorG,"runtime","<error>");
-DEF(Yast_linearizeYflatten_seqs,"ast-linearize","flatten-seqs");
-EXT(YastYlocals_bindings_setter,"ast","locals-bindings-setter");
-DEF(Yast_linearizeYclosurize_mainX,"ast-linearize","closurize-main!");
-EXT(YastYLapplicationG,"ast","<application>");
-EXT(Yhandler_info_message,"boot","handler-info-message");
-DEF(Yast_linearizeYLfree_referenceG,"ast-linearize","<free-reference>");
-EXT(YprotoScollectionsSbufferYlen_setter,"proto/collections/buffer","len-setter");
-EXT(Yfun_names,"boot","fun-names");
-EXT(YastYfunction_naryQ,"ast","function-nary?");
-EXT(YprotoScollectionsScollectionYas_copy,"proto/collections/collection","as-copy");
-EXT(YastYfunction_self_recursiveQ_setter,"ast","function-self-recursive?-setter");
-EXT(YastYLast_methodG,"ast","<ast-method>");
-EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
-EXT(YOall2Q,"boot","@all2?");
-EXT(YastYLsequentialG,"ast","<sequential>");
-EXT(YastYLast_functionG,"ast","<ast-function>");
-EXT(YprotoScollectionsScollectionYadd,"proto/collections/collection","add");
-EXT(YastYdo_static_global_bindings,"ast","do-static-global-bindings");
-EXT(YprotoSmathYto_upper,"proto/math","to-upper");
-EXT(YprotoStypesY2nd,"proto/types","2nd");
-EXT(YmacrosYmatch_unquote,"macros","match-unquote");
-EXT(YprotoSmathYE,"proto/math","=");
-EXT(YprotoSmathYalphaQ,"proto/math","alpha?");
-EXT(YastYLast_primitiveG,"ast","<ast-primitive>");
-EXT(YprotoSmathYceil,"proto/math","ceil");
-EXT(YastYfunction_registers,"ast","function-registers");
-EXT(YastYfix_let_arguments,"ast","fix-let-arguments");
-EXT(YLcolG,"boot","<col>");
-EXT(YLclassG,"boot","<class>");
-EXT(YruntimeYloc_val,"runtime","loc-val");
-EXT(YprotoScollectionsScollectionYkey_test,"proto/collections/collection","key-test");
-EXT(YastYLregular_applicationG,"ast","<regular-application>");
-EXT(YprotoSmathYto_lower,"proto/math","to-lower");
-EXT(YprotoScollectionsScollectionYaddX,"proto/collections/collection","add!");
-EXT(YprotoScollectionsSsequenceYfinds,"proto/collections/sequence","finds");
-EXT(YLmagG,"boot","<mag>");
-EXT(YastYfunction_source_setter,"ast","function-source-setter");
-DEF(Yast_linearizeYassocq,"ast-linearize","assocq");
-EXT(YDmax_int,"boot","$max-int");
-EXT(YastYmodule_loader_module_type,"ast","module-loader-module-type");
-EXT(YprotoScollectionsScollectionYfind_or,"proto/collections/collection","find-or");
-EXT(Yfind_setter,"boot","find-setter");
-EXT(YastYLbind_exitG,"ast","<bind-exit>");
-EXT(YprotoSmathYposQ,"proto/math","pos?");
-EXT(YruntimeYdescribe_handler,"runtime","describe-handler");
-EXT(YruntimeYhandler_function,"runtime","handler-function");
-DEF(Yast_linearizeYbox_reference,"ast-linearize","box-reference");
-EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
-EXT(YastYfunction_signature,"ast","function-signature");
-EXT(YastYfunction_self_recursiveQ,"ast","function-self-recursive?");
-EXT(YastYconstant_index,"ast","constant-index");
-EXT(YprotoScollectionsStableYtab_shrink_threshold_setter,"proto/collections/table","tab-shrink-threshold-setter");
-DEF(Yast_linearizeYassoc_key,"ast-linearize","assoc-key");
-EXT(YastYfunction_binding,"ast","function-binding");
-EXT(YprotoScollectionsScollectionYLtabG,"proto/collections/collection","<tab>");
-DEF(Yast_linearizeYassoc_key_setter,"ast-linearize","assoc-key-setter");
-EXT(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
-EXT(Ytail_setter,"boot","tail-setter");
-EXT(YruntimeYcondition_message,"runtime","condition-message");
-EXT(YastYfunction_source,"ast","function-source");
-DEF(Yast_linearizeYTrenaming_bindings_counterT,"ast-linearize","*renaming-bindings-counter*");
-EXT(YprotoStypesYLproductG,"proto/types","<product>");
-EXT(YPsnul,"boot","%snul");
-EXT(Ysig_arity,"boot","sig-arity");
-EXT(YprotoScollectionsSstringYstr,"proto/collections/string","str");
-EXT(YastYLlocal_bindingG,"ast","<local-binding>");
-EXT(YastYfunction_data_refs_setter,"ast","function-data-refs-setter");
-EXT(YprotoScollectionsSstringYascii_whitespaces,"proto/collections/string","ascii-whitespaces");
-EXT(YastYbinding_inferred_type,"ast","binding-inferred-type");
-EXT(YastYast_define_binding,"ast","ast-define-binding");
-EXT(YprotoScollectionsScollectionYelt_or,"proto/collections/collection","elt-or");
-EXT(YruntimeYformat,"runtime","format");
-DEF(Yast_linearizeYclosure_creation_free_setter,"ast-linearize","closure-creation-free-setter");
-EXT(YmacrosYcat,"macros","cat");
-EXT(YastYLlocal_assignmentG,"ast","<local-assignment>");
-EXT(YprotoSmathYcosh,"proto/math","cosh");
-EXT(YastYsignature_naryQ_setter,"ast","signature-nary?-setter");
-EXT(YastYapplication_function,"ast","application-function");
-EXT(YastYfunction_temporaries,"ast","function-temporaries");
-EXT(YastYbinding_inferred_type_setter,"ast","binding-inferred-type-setter");
-EXT(YprotoScollectionsScollectionYdel,"proto/collections/collection","del");
-EXT(Yadd_prop,"boot","add-prop");
-DEF(Yast_linearizeYanalyze_calls,"ast-linearize","analyze-calls");
-EXT(YprotoScollectionsStableYDpermanent_hash_state,"proto/collections/table","$permanent-hash-state");
-EXT(YastYbinding_dynamic_extentQ,"ast","binding-dynamic-extent?");
-EXT(YastYassignment_binding,"ast","assignment-binding");
-EXT(YprotoStypesYlen,"proto/types","len");
-EXT(YastYlocals_functions_setter,"ast","locals-functions-setter");
-EXT(YprotoStypesYtype_elts_setter,"proto/types","type-elts-setter");
-EXT(Yfab_gen,"boot","fab-gen");
-EXT(YruntimeYbuild_condition_interactively,"runtime","build-condition-interactively");
-EXT(YLoptsG,"boot","<opts>");
-EXT(YastYLreal_referenceG,"ast","<real-reference>");
-EXT(YprotoScollectionsScollectionYLenumG,"proto/collections/collection","<enum>");
-EXT(YprotoSmathYmod,"proto/math","mod");
-EXT(YastYsignature_names,"ast","signature-names");
-EXT(Ytail,"boot","tail");
-DEF(Yast_linearizeYanalyze_call_references,"ast-linearize","analyze-call-references");
-EXT(YprotoScollectionsScollectionYdo2,"proto/collections/collection","do2");
-EXT(YprotoSmagnitudesYmax,"proto/magnitudes","max");
-EXT(YastYLast_genericG,"ast","<ast-generic>");
-DEF(Yast_linearizeYdo_call_referencesX,"ast-linearize","do-call-references!");
-DEF(Yast_linearizeYdo_call_upgradesX,"ast-linearize","do-call-upgrades!");
-EXT(YprotoSmathYacos,"proto/math","acos");
-EXT(YprotoSmathYpower_of_two_ceiling,"proto/math","power-of-two-ceiling");
-EXT(YLtypeG,"boot","<type>");
-EXT(YmacrosYnapp,"macros","napp");
-EXT(YruntimeYapp_args,"runtime","app-args");
-EXT(YprotoScollectionsScollectionYlow_elt_setter,"proto/collections/collection","low-elt-setter");
 EXT(YprotoSmathYflo_bits,"proto/math","flo-bits");
-EXT(YastYfunction_index_setter,"ast","function-index-setter");
-DEF(Yast_linearizeYclosure_creation_free,"ast-linearize","closure-creation-free");
-EXT(YLlocG,"boot","<loc>");
-DEF(Yast_linearizeYast_contains_funQ,"ast-linearize","ast-contains-fun?");
-EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
-EXT(Yord_app_mets,"boot","ord-app-mets");
-EXT(YprotoScollectionsSbufferYLbufG,"proto/collections/buffer","<buf>");
-EXT(YprotoScollectionsScollectionYfab,"proto/collections/collection","fab");
-EXT(Ytype_elts,"boot","type-elts");
-EXT(YprotoSmathYLL,"proto/math","<<");
-EXT(YruntimeYlist_handlers,"runtime","list-handlers");
-EXT(YprotoSmagnitudesYmin,"proto/magnitudes","min");
-EXT(YprotoStypesYtT,"proto/types","t*");
-EXT(YastYmodule_syntax_environment,"ast","module-syntax-environment");
-EXT(YastYreference_called_functionQ_setter,"ast","reference-called-function?-setter");
-EXT(YprotoScollectionsStableYtab_growth_factor,"proto/collections/table","tab-growth-factor");
-EXT(YprotoScollectionsSsequenceYins,"proto/collections/sequence","ins");
-EXT(YruntimeYalways,"runtime","always");
-EXT(YastYLraw_constantG,"ast","<raw-constant>");
-DEF(Yast_linearizeYas_top_level_forms,"ast-linearize","as-top-level-forms");
+EXT(YprotoScollectionsStableYcase_insensitive_string_hash,"proto/collections/table","case-insensitive-string-hash");
+DEF(Yast_linearizeYallocate_register,"ast-linearize","allocate-register");
 EXT(YprotoScollectionsScollectionYfill,"proto/collections/collection","fill");
-EXT(YprotoScollectionsSmapYLmapG,"proto/collections/map","<map>");
-EXT(YastYLmodule_bindingG,"ast","<module-binding>");
-EXT(YprotoSmathYbitQ,"proto/math","bit?");
-EXT(Yclass_name,"boot","class-name");
-EXT(YruntimeYapp_filename,"runtime","app-filename");
-EXT(YprotoScollectionsStableYLsetG,"proto/collections/table","<set>");
-EXT(YruntimeYidentity,"runtime","identity");
-EXT(YprotoSmathYsinh,"proto/math","sinh");
-DEF(Yast_linearizeYprogram_quotations_setter,"ast-linearize","program-quotations-setter");
-EXT(YastYfunction_body_setter,"ast","function-body-setter");
-EXT(YPPmacro,"boot","%%macro");
-EXT(YastYsequentialize,"ast","sequentialize");
-EXT(Yfind_getter,"boot","find-getter");
-EXT(YastYas_lst,"ast","as-lst");
-EXT(YruntimeYsig,"runtime","sig");
-EXT(YprotoSmathYupperQ,"proto/math","upper?");
-EXT(YastYsignature_naryQ,"ast","signature-nary?");
-EXT(YprotoSmathYisqrt,"proto/math","isqrt");
-EXT(YprotoSmathY1_,"proto/math","1-");
-EXT(YastYLlocal_referenceG,"ast","<local-reference>");
-EXT(YprotoSmathYDe,"proto/math","$e");
-EXT(YastYfix_let_types,"ast","fix-let-types");
-EXT(YprotoSmathYeof_objectQ,"proto/math","eof-object?");
-EXT(YprotoScollectionsScollectionYempty,"proto/collections/collection","empty");
-EXT(Yprop_setter,"boot","prop-setter");
-EXT(Ynul,"boot","nul");
-DEF(Yast_linearizeYreference_offset,"ast-linearize","reference-offset");
-EXT(YastYLruntime_referenceG,"ast","<runtime-reference>");
-EXT(YprotoScollectionsSassocYassocs_test,"proto/collections/assoc","assocs-test");
-EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
-EXT(YastYLprogramsG,"ast","<programs>");
-DEF(Yast_linearizeYunconstrained_typeQ,"ast-linearize","unconstrained-type?");
-EXT(YprotoScollectionsSsequenceYlast,"proto/collections/sequence","last");
 EXT(Ygen_add_met,"boot","gen-add-met");
-EXT(YprotoScollectionsScollectionYitems,"proto/collections/collection","items");
-EXT(YprotoScollectionsScollectionYnow,"proto/collections/collection","now");
-EXT(YastYbinding_dottedQ,"ast","binding-dotted?");
-EXT(YastYLimmediate_constantG,"ast","<immediate-constant>");
-EXT(YprotoScollectionsSbufferYlenSfill_setter,"proto/collections/buffer","len/fill-setter");
+EXT(YastYmodule_syntax_environment,"ast","module-syntax-environment");
+EXT(YprotoStypesYanyQ,"proto/types","any?");
+DEF(Yast_linearizeYLbox_readG,"ast-linearize","<box-read>");
+EXT(Yprop_setter,"boot","prop-setter");
+EXT(YprotoScollectionsScollectionYas_copy,"proto/collections/collection","as-copy");
 EXT(Yfun_val,"boot","fun-val");
-EXT(YastYLfab_listG,"ast","<fab-list>");
-EXT(YastYalternative_consequent,"ast","alternative-consequent");
-DEF(Yast_linearizeYadjoin_temporary_variablesX,"ast-linearize","adjoin-temporary-variables!");
-EXT(Yclass_ancestors,"boot","class-ancestors");
-EXT(YprotoSmathYatan2,"proto/math","atan2");
-EXT(YprotoScollectionsScollectionYlow_elt,"proto/collections/collection","low-elt");
-EXT(YastYbinding_index_setter,"ast","binding-index-setter");
-EXT(YprotoScollectionsScollectionYinto,"proto/collections/collection","into");
-DEF(Yast_linearizeYLclosure_creationG,"ast-linearize","<closure-creation>");
-EXT(YprotoScollectionsSsequenceYrev,"proto/collections/sequence","rev");
-EXT(YprotoSmathYnum_to_str,"proto/math","num-to-str");
-EXT(YastYsignature_specs,"ast","signature-specs");
-EXT(YastYfix_let_arguments_setter,"ast","fix-let-arguments-setter");
-DEF(Yast_linearizeYprogram_form,"ast-linearize","program-form");
+EXT(YprotoSmathYasin,"proto/math","asin");
+EXT(YastYfunction_self_recursiveQ_setter,"ast","function-self-recursive?-setter");
+EXT(YastYfix_let_types_setter,"ast","fix-let-types-setter");
 EXT(YDmin_int,"boot","$min-int");
-EXT(YastYfunction_debug_name_setter,"ast","function-debug-name-setter");
-EXT(YprotoScollectionsSstepYLstepG,"proto/collections/step","<step>");
+EXT(YprotoSmathYaddress_of,"proto/math","address-of");
+EXT(YprotoSmathY1_,"proto/math","1-");
+EXT(YprotoScollectionsScollectionYmap2,"proto/collections/collection","map2");
+EXT(YprotoScollectionsScollectionYlow_elt_setter,"proto/collections/collection","low-elt-setter");
+EXT(YprotoStypesYtE,"proto/types","t=");
+EXT(Yclass_ancestors,"boot","class-ancestors");
+DEF(Yast_linearizeYgather_temporariesX,"ast-linearize","gather-temporaries!");
+DEF(Yast_linearizeYLassocG,"ast-linearize","<assoc>");
+EXT(YprotoSmathYceil,"proto/math","ceil");
+EXT(YastYbinding_global_box_setter,"ast","binding-global-box-setter");
+EXT(YprotoScollectionsScollectionYzap,"proto/collections/collection","zap");
+EXT(YmacrosYelt,"macros","elt");
+EXT(YprotoScollectionsSbufferYpush_lastX,"proto/collections/buffer","push-last!");
+DEF(Yast_linearizeYprogram_form_setter,"ast-linearize","program-form-setter");
+EXT(YprotoScollectionsScollectionYdo2,"proto/collections/collection","do2");
+EXT(YastYglobal_box_value,"ast","global-box-value");
+EXT(YastYLfree_environmentG,"ast","<free-environment>");
+EXT(YprotoScollectionsSlistYlist,"proto/collections/list","list");
+DEF(Yast_linearizeYbox_reference,"ast-linearize","box-reference");
 EXT(YastYobjectify_with_subtransaction,"ast","objectify-with-subtransaction");
-EXT(YastYassignment_reference,"ast","assignment-reference");
-DEF(Yast_linearizeYprogram_definitions,"ast-linearize","program-definitions");
-EXT(YastYLast_signatureG,"ast","<ast-signature>");
-EXT(YruntimeYspread,"runtime","spread");
-EXT(YprotoSmathYnegQ,"proto/math","neg?");
-EXT(YastYlocals_body,"ast","locals-body");
-DEF(Yast_linearizeYdo_do_dynamic_extentX,"ast-linearize","do-do-dynamic-extent!");
-EXT(YastYbinding_dynamic_extentQ_setter,"ast","binding-dynamic-extent?-setter");
-EXT(YprotoSmathYabs,"proto/math","abs");
-EXT(YprotoSmathYfloor,"proto/math","floor");
-EXT(YmacrosYpair,"macros","pair");
-EXT(YastYalternative_condition,"ast","alternative-condition");
+EXT(YastYfunction_index,"ast","function-index");
+EXT(YprotoScollectionsScollectionYdel,"proto/collections/collection","del");
+EXT(YTmacros_okQT,"boot","*macros-ok?*");
+EXT(YruntimeYLerrorG,"runtime","<error>");
 EXT(YLfloG,"boot","<flo>");
 EXT(YLsymG,"boot","<sym>");
-DEF(Yast_linearizeYlift_proceduresX,"ast-linearize","lift-procedures!");
-EXT(YprotoSmathYDpi,"proto/math","$pi");
-EXT(YprotoScollectionsSsequenceYinsX,"proto/collections/sequence","ins!");
-EXT(YastYmodule_exports,"ast","module-exports");
-EXT(YastYsignature_bindings_setter,"ast","signature-bindings-setter");
-EXT(YastYbinding_native_toQ,"ast","binding-native-to?");
-EXT(YprotoSmagnitudesYGE,"proto/magnitudes",">=");
-EXT(YastYDgoo_runtime_module_name,"ast","$goo-runtime-module-name");
-EXT(YprotoSmathYceilingS,"proto/math","ceiling/");
-EXT(YprotoSmathYasin,"proto/math","asin");
-EXT(YprotoScollectionsSstepYfirst_then,"proto/collections/step","first-then");
+EXT(YastYsignature_naryQ,"ast","signature-nary?");
+EXT(YprotoScollectionsSrangeYrange_by,"proto/collections/range","range-by");
+EXT(YprotoScollectionsScollectionYempty,"proto/collections/collection","empty");
 EXT(Ymet_appQ,"boot","met-app?");
-EXT(YmacrosYelt,"macros","elt");
-EXT(YprotoStypesYas,"proto/types","as");
-EXT(YprotoScollectionsSstringYascii_limit,"proto/collections/string","ascii-limit");
-EXT(YprotoScollectionsScollectionYnow_setter,"proto/collections/collection","now-setter");
-EXT(YastYLassignmentG,"ast","<assignment>");
-EXT(Yfun_mets,"boot","fun-mets");
-EXT(YprotoScollectionsSlistYlist,"proto/collections/list","list");
-EXT(YprotoSmathYN,"proto/math","~");
+EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
+EXT(YruntimeYinvoke_handler_interactively,"runtime","invoke-handler-interactively");
+EXT(YprotoSmathYcosh,"proto/math","cosh");
+EXT(YprotoScollectionsSsequenceYins,"proto/collections/sequence","ins");
+EXT(YastYfix_let_arguments_setter,"ast","fix-let-arguments-setter");
+EXT(YruntimeYrcurry,"runtime","rcurry");
+EXT(YastYfunction_bindings,"ast","function-bindings");
 EXT(Yobject_parents,"boot","object-parents");
-EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
-EXT(YprotoScollectionsScollectionYnxt,"proto/collections/collection","nxt");
-EXT(Ygen_src_setter,"boot","gen-src-setter");
-DEF(Yast_linearizeYform_quotations,"ast-linearize","form-quotations");
-EXT(YmacrosYdo,"macros","do");
-EXT(YastYbinding_module_name,"ast","binding-module-name");
-EXT(YOisaQ,"boot","@isa?");
-EXT(YprotoScollectionsSsequenceY3rd,"proto/collections/sequence","3rd");
-EXT(YprotoScollectionsScollectionYkeys,"proto/collections/collection","keys");
-EXT(YastYbinding_dottedQ_setter,"ast","binding-dotted?-setter");
-EXT(YruntimeYcompose,"runtime","compose");
-EXT(YruntimeYLconditionG,"runtime","<condition>");
-EXT(YastYload_in,"ast","load-in");
-EXT(YprotoScollectionsScollectionYrange_error,"proto/collections/collection","range-error");
-EXT(YastYsignature_value,"ast","signature-value");
-EXT(YastYunwind_protect_cleanup_thunk,"ast","unwind-protect-cleanup-thunk");
-EXT(YLpropG,"boot","<prop>");
-EXT(YmacrosYemptyQ,"macros","empty?");
-EXT(YprotoScollectionsStableYtab_growth_factor_setter,"proto/collections/table","tab-growth-factor-setter");
-EXT(YprotoSmathYC,"proto/math","^");
-EXT(YprotoScollectionsSsequenceYsub_setter,"proto/collections/sequence","sub-setter");
-DEF(Yast_linearizeYform_definitions,"ast-linearize","form-definitions");
-EXT(YprotoScollectionsSassocYLassocsG,"proto/collections/assoc","<assocs>");
-DEF(Yast_linearizeYbox_reference_setter,"ast-linearize","box-reference-setter");
-EXT(YLgenG,"boot","<gen>");
-EXT(YruntimeYdefault_handler_description,"runtime","default-handler-description");
-EXT(YprotoSmathYtrunc,"proto/math","trunc");
-EXT(Ynil,"boot","nil");
-EXT(YastYbinding_value_setter,"ast","binding-value-setter");
-EXT(Ygen_src,"boot","gen-src");
-EXT(Ynew,"boot","new");
-EXT(YprotoScollectionsStableYtab_growth_threshold_setter,"proto/collections/table","tab-growth-threshold-setter");
-EXT(YastYbinding_global_box_setter,"ast","binding-global-box-setter");
-DEF(Yast_linearizeYadjoin_free_bindingX,"ast-linearize","adjoin-free-binding!");
-EXT(YprotoSmathYfabs,"proto/math","fabs");
-EXT(YastYLfree_environmentG,"ast","<free-environment>");
-DEF(Yast_linearizeYreference_selfQ_setter,"ast-linearize","reference-self?-setter");
-EXT(YprotoSmathYlowerQ,"proto/math","lower?");
-EXT(YprotoScollectionsScollectionYnow_key,"proto/collections/collection","now-key");
-EXT(YprotoSmathYto_digit,"proto/math","to-digit");
-EXT(YastYunwind_protect_protected_thunk,"ast","unwind-protect-protected-thunk");
-EXT(YastYLcomputed_programG,"ast","<computed-program>");
-EXT(YastYdo_module_loader_modules,"ast","do-module-loader-modules");
-EXT(Yobject_props,"boot","object-props");
-DEF(Yast_linearizeYform_program,"ast-linearize","form-program");
-EXT(YastYapplication_tailQ,"ast","application-tail?");
-DEF(Yast_linearizeYassoc,"ast-linearize","assoc");
-EXT(Yincongruent_method_error,"boot","incongruent-method-error");
-EXT(YastYLreferenceG,"ast","<reference>");
-EXT(YruntimeYTgensym_counterT,"runtime","*gensym-counter*");
-EXT(Ysig_naryQ,"boot","sig-nary?");
-EXT(YastYLmoduleG,"ast","<module>");
-EXT(YastYLmodule_binding_referenceG,"ast","<module-binding-reference>");
-EXT(YLintG,"boot","<int>");
-EXT(YprotoScollectionsSrangeYLrangeG,"proto/collections/range","<range>");
-EXT(YLstrG,"boot","<str>");
-EXT(YastYbind_exit_main_fun,"ast","bind-exit-main-fun");
-EXT(Yfile_opening_error,"boot","file-opening-error");
-EXT(YastYfix_let_body,"ast","fix-let-body");
-EXT(YPwith_monitor,"boot","%with-monitor");
-DEF(Yast_linearizeYclosure_creation_index_setter,"ast-linearize","closure-creation-index-setter");
-EXT(YastYfind_environment_module,"ast","find-environment-module");
-DEF(Yast_linearizeYLbox_writeG,"ast-linearize","<box-write>");
-EXT(YprotoScollectionsSsequenceYdo_key_vals,"proto/collections/sequence","do-key-vals");
-EXT(YprotoScollectionsSsequenceY1st,"proto/collections/sequence","1st");
-EXT(YprotoScollectionsSlistYpop,"proto/collections/list","pop");
-EXT(YprotoSmagnitudesYLE,"proto/magnitudes","<=");
-EXT(YprotoScollectionsSstringYstr_to_num,"proto/collections/string","str-to-num");
-EXT(YastYconstant_index_setter,"ast","constant-index-setter");
-EXT(YastYremove_modules_by_nameX,"ast","remove-modules-by-name!");
-EXT(YastYLglobal_assignmentG,"ast","<global-assignment>");
-EXT(Yfun_arity,"boot","fun-arity");
-EXT(YprotoSmathYGG,"proto/math",">>");
+DEF(Yast_linearizeYdo_call_referencesX,"ast-linearize","do-call-references!");
+EXT(YprotoScollectionsSstringYascii_limit,"proto/collections/string","ascii-limit");
+EXT(YastYLlocalsG,"ast","<locals>");
 EXT(YastYast_evaluate,"ast","ast-evaluate");
-EXT(YastYmonitor_handler,"ast","monitor-handler");
-EXT(YmacrosYcat_sym,"macros","cat-sym");
-DEF(Yast_linearizeYallocate_register,"ast-linearize","allocate-register");
-EXT(YprotoSmathYoddQ,"proto/math","odd?");
-EXT(YmacrosYEE,"macros","==");
-EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
-EXT(YruntimeYcurry,"runtime","curry");
-EXT(YastYruntime_environment,"ast","runtime-environment");
-DEF(Yast_linearizeYbox_form,"ast-linearize","box-form");
-EXT(Ysig_names,"boot","sig-names");
-EXT(YprotoScollectionsScollectionYmemQ,"proto/collections/collection","mem?");
-DEF(Yast_linearizeYdo_dynamic_extentX,"ast-linearize","do-dynamic-extent!");
-DEF(Yast_linearizeYbox_form_setter,"ast-linearize","box-form-setter");
-EXT(YastYLargumentsG,"ast","<arguments>");
-EXT(YastYapplication_knownQ_setter,"ast","application-known?-setter");
-EXT(YastYapplication_arguments,"ast","application-arguments");
+EXT(YprotoScollectionsScollectionYnxt,"proto/collections/collection","nxt");
+EXT(Yfun_mets,"boot","fun-mets");
+EXT(YOisaQ,"boot","@isa?");
+EXT(YastYLglobal_boxG,"ast","<global-box>");
+EXT(YastYsignature_value,"ast","signature-value");
+DEF(Yast_linearizeYsplit_program,"ast-linearize","split-program");
+EXT(YastYalternative_consequent,"ast","alternative-consequent");
+EXT(YastYLast_functionG,"ast","<ast-function>");
+EXT(YprotoSmathYfloorS,"proto/math","floor/");
+EXT(YprotoStypesY2nd,"proto/types","2nd");
+EXT(YprotoScollectionsSmapYLmapG,"proto/collections/map","<map>");
+EXT(Ygen_src_setter,"boot","gen-src-setter");
+EXT(YPvnul,"boot","%vnul");
+EXT(YmacrosYdo,"macros","do");
+EXT(YTreport_prop_unbound_errorsQT,"boot","*report-prop-unbound-errors?*");
+DEF(Yast_linearizeYinsert_boxX,"ast-linearize","insert-box!");
+EXT(YprotoScollectionsScollectionYkeys,"proto/collections/collection","keys");
+EXT(YprotoSmathYto_upper,"proto/math","to-upper");
+EXT(YprotoScollectionsScycleYLcycleG,"proto/collections/cycle","<cycle>");
+EXT(YastYfunction_temporaries_setter,"ast","function-temporaries-setter");
+EXT(YastYLconstantG,"ast","<constant>");
+EXT(YastYbinding_kind,"ast","binding-kind");
 EXT(YastYreference_frame_offset,"ast","reference-frame-offset");
-EXT(YastYLast_primitive_definitionG,"ast","<ast-primitive-definition>");
-EXT(YastYfunction_data_refs,"ast","function-data-refs");
-EXT(YprotoScollectionsScollectionYmap_keyed,"proto/collections/collection","map-keyed");
-DEF(Yast_linearizeYprogram_form_setter,"ast-linearize","program-form-setter");
-EXT(YmacrosYrevX,"macros","rev!");
-EXT(Ysig_unification_vars,"boot","sig-unification-vars");
+DEF(Yast_linearizeYTregister_passiveQT,"ast-linearize","*register-passive?*");
+EXT(YLpropG,"boot","<prop>");
+EXT(YastYfix_let_body_setter,"ast","fix-let-body-setter");
+EXT(YastYfunction_registers,"ast","function-registers");
+EXT(YruntimeYdefault_handler,"runtime","default-handler");
+DEF(Yast_linearizeYunconstrained_typeQ,"ast-linearize","unconstrained-type?");
+EXT(YPsymbols,"boot","%symbols");
+EXT(YastYbind_exit_main_fun,"ast","bind-exit-main-fun");
+EXT(Ynew,"boot","new");
+EXT(YprotoSmathYfabs,"proto/math","fabs");
+EXT(YLgenG,"boot","<gen>");
 EXT(YprotoSmathYS,"proto/math","/");
+EXT(YastYbinding_locative,"ast","binding-locative");
+EXT(YTrestarts_okQT,"boot","*restarts-ok?*");
+EXT(YprotoScollectionsStableYtab_shrink_threshold,"proto/collections/table","tab-shrink-threshold");
+EXT(YprotoScollectionsSbufferYbuf,"proto/collections/buffer","buf");
+EXT(Ynul,"boot","nul");
+EXT(YastYsignature_bindings,"ast","signature-bindings");
+EXT(YprotoSmagnitudesYmax,"proto/magnitudes","max");
+EXT(YprotoScollectionsScollectionYnow_key,"proto/collections/collection","now-key");
+EXT(Ygen_src,"boot","gen-src");
+EXT(YastYreference_called_functionQ_setter,"ast","reference-called-function?-setter");
+EXT(YprotoSmathYDpi,"proto/math","$pi");
+DEF(Yast_linearizeYnew_renamed_binding,"ast-linearize","new-renamed-binding");
+EXT(YastYfix_let_types,"ast","fix-let-types");
+EXT(YprotoSmathYLbotG,"proto/math","<bot>");
+EXT(YprotoScollectionsSsequenceYrev,"proto/collections/sequence","rev");
+DEF(Yast_linearizeYas_top_level_forms,"ast-linearize","as-top-level-forms");
+EXT(YastYconstant_index_setter,"ast","constant-index-setter");
+EXT(YprotoSmathYLL,"proto/math","<<");
+EXT(Yobject_props,"boot","object-props");
+EXT(YprotoSmathYsin,"proto/math","sin");
+EXT(YastYLast_methodG,"ast","<ast-method>");
+EXT(YprotoStypesYLproductG,"proto/types","<product>");
+EXT(YprotoSmathYGG,"proto/math",">>");
+EXT(YastYLglobal_assignmentG,"ast","<global-assignment>");
+EXT(YastYboundQ_reference,"ast","bound?-reference");
+DEF(Yast_linearizeYLclosure_creationG,"ast-linearize","<closure-creation>");
+EXT(YruntimeYbuild_condition_for_handler_interactively,"runtime","build-condition-for-handler-interactively");
+EXT(YmacrosYvar_type,"macros","var-type");
+EXT(YruntimeYsig,"runtime","sig");
+DEF(Yast_linearizeYanalyze_dynamic_extent,"ast-linearize","analyze-dynamic-extent");
+EXT(Ytype_error,"boot","type-error");
+EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
+EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
+EXT(YastYbinding_inferred_type_setter,"ast","binding-inferred-type-setter");
+EXT(YprotoScollectionsSassocYassocs_test_setter,"proto/collections/assoc","assocs-test-setter");
+EXT(YastYfunction_body_setter,"ast","function-body-setter");
+EXT(YprotoScollectionsSlistYpop,"proto/collections/list","pop");
+EXT(Ysig_naryQ,"boot","sig-nary?");
+EXT(YprotoSmathYDe,"proto/math","$e");
+EXT(YastYLargumentsG,"ast","<arguments>");
+EXT(YLintG,"boot","<int>");
+EXT(YLstrG,"boot","<str>");
+EXT(YruntimeYLhandlerG,"runtime","<handler>");
+EXT(YprotoStypesYlen,"proto/types","len");
+EXT(YruntimeYapp_args,"runtime","app-args");
+EXT(Yfun_arity,"boot","fun-arity");
+EXT(YastYbinding_index_setter,"ast","binding-index-setter");
+EXT(YastYbinding_dottedQ,"ast","binding-dotted?");
+EXT(YastYLast_macro_definitionG,"ast","<ast-macro-definition>");
+EXT(Yvec,"boot","vec");
+DEF(Yast_linearizeYdo_do_call_referencesX,"ast-linearize","do-do-call-references!");
+EXT(YastYbinding_dynamic_extentQ_setter,"ast","binding-dynamic-extent?-setter");
+DEF(Yast_linearizeYreference_selfQ_setter,"ast-linearize","reference-self?-setter");
+EXT(YastYLstatic_global_environmentG,"ast","<static-global-environment>");
+EXT(Ylst,"boot","lst");
+DEF(Yast_linearizeYast_walk,"ast-linearize","ast-walk");
+EXT(YmacrosYEE,"macros","==");
 EXT(YprotoScollectionsSsequenceYvals_to_str,"proto/collections/sequence","vals-to-str");
-EXT(YastYinit_environment_for_eval,"ast","init-environment-for-eval");
-EXT(YprotoScollectionsScollectionYany2Q,"proto/collections/collection","any2?");
+EXT(YastYfix_let_body,"ast","fix-let-body");
+EXT(YastYLunwind_protectG,"ast","<unwind-protect>");
+DEF(Yast_linearizeYregister_allocateX,"ast-linearize","register-allocate!");
+EXT(YastYmodule_exports,"ast","module-exports");
+EXT(YprotoScollectionsScollectionYmap_keyed,"proto/collections/collection","map-keyed");
+EXT(YastYbinding_type,"ast","binding-type");
+DEF(Yast_linearizeYassoc_key_setter,"ast-linearize","assoc-key-setter");
+EXT(YruntimeYhandler_function,"runtime","handler-function");
+EXT(YmacrosYrevX,"macros","rev!");
+DEF(Yast_linearizeYextract_thingsX,"ast-linearize","extract-things!");
+EXT(YprotoSmathYpow,"proto/math","pow");
+EXT(YprotoScollectionsScollectionYkey_test,"proto/collections/collection","key-test");
+EXT(YLtupG,"boot","<tup>");
+EXT(YastYLraw_constantG,"ast","<raw-constant>");
+EXT(YastYmonitor_type,"ast","monitor-type");
+EXT(YastYas_lst,"ast","as-lst");
+EXT(YruntimeYdescribe_handler,"runtime","describe-handler");
+EXT(YastYprogram_register,"ast","program-register");
+EXT(YastYfunction_debug_name_setter,"ast","function-debug-name-setter");
+EXT(YastYfunction_naryQ,"ast","function-nary?");
+DEF(Yast_linearizeYTrenaming_bindings_counterT,"ast-linearize","*renaming-bindings-counter*");
+EXT(YastYsignature_names,"ast","signature-names");
+EXT(YprotoScollectionsSstepYLstepG,"proto/collections/step","<step>");
+EXT(Ysig_unification_vars,"boot","sig-unification-vars");
+EXT(Ytup,"boot","tup");
+EXT(YastYunwind_protect_protected_thunk,"ast","unwind-protect-protected-thunk");
+DEF(Yast_linearizeYclosure_creation_free_setter,"ast-linearize","closure-creation-free-setter");
+EXT(YisaQ,"boot","isa?");
+EXT(YprotoScollectionsSsequenceY3rd,"proto/collections/sequence","3rd");
+EXT(Yunknown_function_error,"boot","unknown-function-error");
+EXT(YastYfind_environment_module,"ast","find-environment-module");
+EXT(YPsnul,"boot","%snul");
+EXT(YprotoScollectionsScollectionYlow_elt,"proto/collections/collection","low-elt");
+EXT(YruntimeYapp_filename,"runtime","app-filename");
 EXT(Yhead_setter,"boot","head-setter");
 EXT(Ytype_class,"boot","type-class");
 EXT(Yfun_sig_setter,"boot","fun-sig-setter");
-EXT(Ylst,"boot","lst");
-EXT(Ytup,"boot","tup");
-EXT(YastYlocals_bindings,"ast","locals-bindings");
-EXT(YTboot_macro_module_namesT,"boot","*boot-macro-module-names*");
-EXT(YisaQ,"boot","isa?");
-EXT(YLunionG,"boot","<union>");
-EXT(YastYdo_named_static_global_bindings,"ast","do-named-static-global-bindings");
-EXT(YastYcompile_time_program,"ast","compile-time-program");
-EXT(YastYLpredefined_applicationG,"ast","<predefined-application>");
-EXT(YastYinit_ast,"ast","init-ast");
-EXT(YprotoSmathYcontagious_type,"proto/math","contagious-type");
-EXT(YastYassignment_form,"ast","assignment-form");
 EXT(YPprop,"boot","%prop");
-EXT(YastYbinding_type_setter,"ast","binding-type-setter");
-EXT(YprotoSmathYcos,"proto/math","cos");
-EXT(YastYfunction_bindings,"ast","function-bindings");
-EXT(YastYalternative_alternant,"ast","alternative-alternant");
-EXT(YastYDgoo_boot_module_name,"ast","$goo-boot-module-name");
-EXT(YprotoScollectionsStableYtab_hash,"proto/collections/table","tab-hash");
-DEF(Yast_linearizeYLbox_creationG,"ast-linearize","<box-creation>");
-EXT(YruntimeYfab_handler,"runtime","fab-handler");
-EXT(YprotoScollectionsSbufferYpop_lastX,"proto/collections/buffer","pop-last!");
+EXT(YastYalternative_condition,"ast","alternative-condition");
+EXT(YLunionG,"boot","<union>");
+EXT(YastYfunction_signature,"ast","function-signature");
+EXT(YastYmodule_target_environment,"ast","module-target-environment");
+EXT(YprotoScollectionsScollectionYenum,"proto/collections/collection","enum");
+EXT(YprotoScollectionsScollectionYnow,"proto/collections/collection","now");
+EXT(YprotoSmathYsinh,"proto/math","sinh");
+EXT(YastYenvironment_uses_modules,"ast","environment-uses-modules");
+DEF(Yast_linearizeYanalyze_call_references,"ast-linearize","analyze-call-references");
+EXT(YastYmonitor_info,"ast","monitor-info");
 EXT(YPisa,"boot","%isa");
-EXT(YprotoScollectionsStableYid_hash,"proto/collections/table","id-hash");
-EXT(YruntimeYdescribe_condition,"runtime","describe-condition");
-EXT(YprotoScollectionsScollectionYfoldA,"proto/collections/collection","fold+");
-EXT(YprotoScollectionsSbufferYpush_lastX,"proto/collections/buffer","push-last!");
+EXT(YprotoSmathYupperQ,"proto/math","upper?");
+EXT(YprotoScollectionsSbufferYlen_setter,"proto/collections/buffer","len-setter");
+EXT(YruntimeYformat_to_string,"runtime","format-to-string");
+EXT(YprotoSmagnitudesYmin,"proto/magnitudes","min");
+DEF(Yast_linearizeYprogram_definitions_setter,"ast-linearize","program-definitions-setter");
+EXT(YastYLglobal_referenceG,"ast","<global-reference>");
+EXT(YprotoScollectionsSrangeYrange,"proto/collections/range","range");
+EXT(YprotoScollectionsSsequenceYdel_dups,"proto/collections/sequence","del-dups");
+EXT(YastYsignature_names_setter,"ast","signature-names-setter");
+EXT(YastYLmodule_bindingG,"ast","<module-binding>");
+EXT(YprotoScollectionsSassocYLassocsG,"proto/collections/assoc","<assocs>");
+DEF(Yast_linearizeYanalyze_calls,"ast-linearize","analyze-calls");
+EXT(YprotoScollectionsScollectionYrange_error,"proto/collections/collection","range-error");
 EXT(Yhead,"boot","head");
-EXT(YastYconstant_value,"ast","constant-value");
-EXT(YastYfunction_debug_name,"ast","function-debug-name");
-DEF(Yast_linearizeYassoc_value_setter,"ast-linearize","assoc-value-setter");
-DEF(Yast_linearizeYLbox_readG,"ast-linearize","<box-read>");
-EXT(YastYLpassive_programG,"ast","<passive-program>");
-EXT(YastYfunction_body,"ast","function-body");
-EXT(YastYbinding_info_setter,"ast","binding-info-setter");
-EXT(YastYLruntime_assignmentG,"ast","<runtime-assignment>");
+EXT(YprotoSmathYneg,"proto/math","neg");
+EXT(YruntimeYfab_handler,"runtime","fab-handler");
+EXT(YLmagG,"boot","<mag>");
+EXT(YastYsignature_arity_setter,"ast","signature-arity-setter");
+EXT(YprotoScollectionsScollectionYfind_or,"proto/collections/collection","find-or");
+EXT(YastYassignment_binding,"ast","assignment-binding");
+EXT(YprotoScollectionsScollectionYkey_type,"proto/collections/collection","key-type");
+EXT(YLnumG,"boot","<num>");
+EXT(YLvecG,"boot","<vec>");
+EXT(Yprop_getter,"boot","prop-getter");
+EXT(YmacrosYpair,"macros","pair");
+EXT(YprotoScollectionsScollectionYfinQ,"proto/collections/collection","fin?");
+EXT(Yunexec,"boot","unexec");
+DEF(Yast_linearizeYdo_do_call_upgradesX,"ast-linearize","do-do-call-upgrades!");
+EXT(YprotoScollectionsSsequenceYsub_setter,"proto/collections/sequence","sub-setter");
+DEF(Yast_linearizeYbox_reference_setter,"ast-linearize","box-reference-setter");
+EXT(YprotoSmathYA,"proto/math","+");
+EXT(YastYfix_let_bindings,"ast","fix-let-bindings");
+EXT(YprotoSmathYbitQ,"proto/math","bit?");
+EXT(YprotoScollectionsScollectionYdo_keyed,"proto/collections/collection","do-keyed");
+EXT(YprotoSmathYtruncS,"proto/math","trunc/");
+EXT(YprotoScollectionsSbufferYlenSfill_setter,"proto/collections/buffer","len/fill-setter");
+EXT(YastYlocals_body_setter,"ast","locals-body-setter");
+EXT(YastYsignature_naryQ_setter,"ast","signature-nary?-setter");
+EXT(YprotoScollectionsStableYLsetG,"proto/collections/table","<set>");
+EXT(Yclass_direct_props,"boot","class-direct-props");
+EXT(YprotoScollectionsSsequenceY1st,"proto/collections/sequence","1st");
+EXT(YprotoSmathYisqrt,"proto/math","isqrt");
+EXT(YastYprogram_register_setter,"ast","program-register-setter");
+EXT(YastYapplication_binding,"ast","application-binding");
+EXT(YastYassignment_form,"ast","assignment-form");
+EXT(YLmetG,"boot","<met>");
+EXT(YastYLruntime_referenceG,"ast","<runtime-reference>");
+EXT(YastYfunction_data_refs_setter,"ast","function-data-refs-setter");
+EXT(YprotoSmathYtrunc,"proto/math","trunc");
+EXT(YprotoScollectionsSzipYzip,"proto/collections/zip","zip");
+DEF(Yast_linearizeYLbox_creationG,"ast-linearize","<box-creation>");
+EXT(YPPmacro,"boot","%%macro");
+EXT(YprotoScollectionsStableYid_hash,"proto/collections/table","id-hash");
+EXT(Yprop_init,"boot","prop-init");
+EXT(YprotoScollectionsSlistYassq,"proto/collections/list","assq");
+EXT(YprotoStypesYas,"proto/types","as");
+EXT(YprotoSmathYatan2,"proto/math","atan2");
+EXT(YastYmonitor_test,"ast","monitor-test");
+EXT(Yfun_naryQ,"boot","fun-nary?");
+EXT(YastYbinding_dottedQ_setter,"ast","binding-dotted?-setter");
+EXT(YastYfunction_free,"ast","function-free");
+EXT(YprotoScollectionsSstringYstr,"proto/collections/string","str");
+EXT(YastYobjectify_signature,"ast","objectify-signature");
+EXT(YprotoScollectionsScollectionYelt_default,"proto/collections/collection","elt-default");
+EXT(YLsubclassG,"boot","<subclass>");
+EXT(YastYapplication_knownQ_setter,"ast","application-known?-setter");
+EXT(YprotoSmathYto_lower,"proto/math","to-lower");
+EXT(YprotoScollectionsSassocYassocs_test,"proto/collections/assoc","assocs-test");
+EXT(YprotoSmathYT,"proto/math","*");
+EXT(YprotoSmathYfloor,"proto/math","floor");
+EXT(YastYLreferenceG,"ast","<reference>");
+EXT(YprotoScollectionsSsequenceYdel_vals,"proto/collections/sequence","del-vals");
+EXT(YastYLpredefined_applicationG,"ast","<predefined-application>");
+EXT(YastYload_module,"ast","load-module");
+EXT(YprotoSmathYrem,"proto/math","rem");
+EXT(Yclass_descendents,"boot","class-descendents");
+EXT(YprotoSmagnitudesYGE,"proto/magnitudes",">=");
+EXT(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
+EXT(YprotoSmathY1A,"proto/math","1+");
+EXT(YruntimeYread,"runtime","read");
+EXT(YprotoScollectionsScollectionYLtabG,"proto/collections/collection","<tab>");
+EXT(Ygen_refs_setter,"boot","gen-refs-setter");
+EXT(YastYLbindingG,"ast","<binding>");
+EXT(YastYfunction_data_refs,"ast","function-data-refs");
+EXT(YastYlocals_body,"ast","locals-body");
+EXT(YprotoScollectionsScollectionYfoldA,"proto/collections/collection","fold+");
+EXT(YastYLboundQG,"ast","<bound?>");
+EXT(YastYbinding_module_name,"ast","binding-module-name");
+EXT(YastYDgoo_boot_module_name,"ast","$goo-boot-module-name");
+EXT(YastYLimmediate_constantG,"ast","<immediate-constant>");
+EXT(YastYdo_named_static_global_bindings,"ast","do-named-static-global-bindings");
+EXT(YsubtypeQ,"boot","subtype?");
+EXT(YastYfunction_free_setter,"ast","function-free-setter");
+DEF(Yast_linearizeYlift_proceduresX,"ast-linearize","lift-procedures!");
+EXT(YastYLregular_applicationG,"ast","<regular-application>");
+EXT(YastYLlocal_referenceG,"ast","<local-reference>");
+EXT(YastYLprogramsG,"ast","<programs>");
+EXT(YastYunchecked_runtime_environment,"ast","unchecked-runtime-environment");
+EXT(Yprop_value_setter,"boot","prop-value-setter");
+EXT(YastYbinding_type_setter,"ast","binding-type-setter");
+EXT(YastYinstall_initial_bindings,"ast","install-initial-bindings");
+EXT(YLchrG,"boot","<chr>");
+EXT(YLflatG,"boot","<flat>");
+EXT(YprotoScollectionsStableYtab_growth_threshold,"proto/collections/table","tab-growth-threshold");
+EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
+DEF(Yast_linearizeYclosurize_mainX,"ast-linearize","closurize-main!");
+EXT(YPdefine_method,"boot","%define-method");
+EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
+EXT(YprotoSmathY_,"proto/math","-");
+EXT(YprotoScollectionsScollectionYdup,"proto/collections/collection","dup");
+DEF(Yast_linearizeYclosure_creation_index_setter,"ast-linearize","closure-creation-index-setter");
+DEF(Yast_linearizeYLrenamed_local_bindingG,"ast-linearize","<renamed-local-binding>");
+EXT(YprotoSmathYto_digit,"proto/math","to-digit");
+EXT(YprotoSmathYlowerQ,"proto/math","lower?");
+EXT(Ygen_refs,"boot","gen-refs");
+DEF(Yast_linearizeYdo_do_dynamic_extentX,"ast-linearize","do-do-dynamic-extent!");
+EXT(Ynot,"boot","not");
+EXT(YprotoScollectionsScollectionYLenumG,"proto/collections/collection","<enum>");
+EXT(YruntimeYidentity,"runtime","identity");
+EXT(YprotoScollectionsSsequenceYbelow,"proto/collections/sequence","below");
+EXT(YmacrosYgensym,"macros","gensym");
+EXT(YprotoSmathYceilingS,"proto/math","ceiling/");
 
 /* FORWARD QUOTATIONS: */
 
 DEFLIT(lit_109);
-DEFLIT(lit_22);
-DEFLIT(lit_47);
-DEFLIT(lit_43);
-DEFLIT(lit_15);
-DEFLIT(lit_89);
-DEFLIT(lit_34);
-DEFLIT(lit_19);
-DEFLIT(lit_75);
-DEFLIT(lit_33);
-DEFLIT(lit_60);
-DEFLIT(lit_107);
-DEFLIT(lit_14);
-DEFLIT(lit_91);
-DEFLIT(lit_35);
-DEFLIT(lit_53);
-DEFLIT(lit_97);
-DEFLIT(lit_27);
-DEFLIT(lit_11);
-DEFLIT(lit_88);
-DEFLIT(lit_70);
-DEFLIT(lit_3);
-DEFLIT(lit_86);
-DEFLIT(lit_73);
-DEFLIT(lit_105);
-DEFLIT(lit_80);
-DEFLIT(lit_108);
-DEFLIT(lit_96);
-DEFLIT(lit_45);
-DEFLIT(lit_5);
-DEFLIT(lit_90);
-DEFLIT(lit_106);
-DEFLIT(lit_41);
-DEFLIT(lit_40);
-DEFLIT(lit_71);
-DEFLIT(lit_28);
-DEFLIT(lit_24);
-DEFLIT(lit_100);
-DEFLIT(lit_63);
-DEFLIT(lit_84);
-DEFLIT(lit_37);
-DEFLIT(lit_58);
-DEFLIT(lit_85);
-DEFLIT(lit_116);
-DEFLIT(lit_81);
-DEFLIT(lit_120);
-DEFLIT(lit_59);
-DEFLIT(lit_51);
-DEFLIT(lit_113);
-DEFLIT(lit_94);
-DEFLIT(lit_20);
-DEFLIT(lit_32);
-DEFLIT(lit_29);
-DEFLIT(lit_21);
-DEFLIT(lit_87);
-DEFLIT(lit_49);
-DEFLIT(lit_74);
-DEFLIT(lit_56);
-DEFLIT(lit_26);
-DEFLIT(lit_112);
-DEFLIT(lit_115);
-DEFLIT(lit_52);
-DEFLIT(lit_72);
-DEFLIT(lit_6);
-DEFLIT(lit_36);
-DEFLIT(lit_99);
-DEFLIT(lit_38);
-DEFLIT(lit_92);
-DEFLIT(lit_110);
-DEFLIT(lit_68);
-DEFLIT(lit_25);
-DEFLIT(lit_114);
-DEFLIT(lit_57);
-DEFLIT(lit_44);
-DEFLIT(lit_119);
-DEFLIT(lit_4);
-DEFLIT(lit_77);
-DEFLIT(lit_1);
-DEFLIT(lit_2);
-DEFLIT(lit_79);
-DEFLIT(lit_122);
-DEFLIT(lit_12);
-DEFLIT(lit_42);
-DEFLIT(lit_93);
-DEFLIT(lit_117);
-DEFLIT(lit_8);
-DEFLIT(lit_118);
-DEFLIT(lit_39);
-DEFLIT(lit_13);
-DEFLIT(lit_121);
-DEFLIT(lit_101);
-DEFLIT(lit_78);
-DEFLIT(lit_83);
-DEFLIT(lit_95);
 DEFLIT(lit_64);
-DEFLIT(lit_66);
-DEFLIT(lit_10);
-DEFLIT(lit_62);
+DEFLIT(lit_121);
 DEFLIT(lit_7);
-DEFLIT(lit_30);
-DEFLIT(lit_98);
-DEFLIT(lit_46);
-DEFLIT(lit_17);
-DEFLIT(lit_48);
-DEFLIT(lit_104);
-DEFLIT(lit_55);
-DEFLIT(lit_103);
-DEFLIT(lit_16);
-DEFLIT(lit_9);
-DEFLIT(lit_111);
-DEFLIT(lit_23);
-DEFLIT(lit_61);
-DEFLIT(lit_102);
-DEFLIT(lit_54);
-DEFLIT(lit_65);
-DEFLIT(lit_31);
-DEFLIT(lit_18);
-DEFLIT(lit_67);
-DEFLIT(lit_69);
-DEFLIT(lit_50);
 DEFLIT(lit_82);
+DEFLIT(lit_35);
+DEFLIT(lit_89);
+DEFLIT(lit_79);
+DEFLIT(lit_111);
+DEFLIT(lit_104);
+DEFLIT(lit_88);
+DEFLIT(lit_72);
+DEFLIT(lit_27);
+DEFLIT(lit_93);
+DEFLIT(lit_81);
+DEFLIT(lit_46);
+DEFLIT(lit_103);
+DEFLIT(lit_12);
+DEFLIT(lit_101);
+DEFLIT(lit_67);
+DEFLIT(lit_95);
+DEFLIT(lit_86);
+DEFLIT(lit_87);
+DEFLIT(lit_2);
+DEFLIT(lit_53);
+DEFLIT(lit_51);
+DEFLIT(lit_29);
+DEFLIT(lit_60);
+DEFLIT(lit_8);
+DEFLIT(lit_21);
+DEFLIT(lit_98);
+DEFLIT(lit_110);
+DEFLIT(lit_108);
+DEFLIT(lit_97);
+DEFLIT(lit_65);
+DEFLIT(lit_55);
+DEFLIT(lit_80);
+DEFLIT(lit_31);
+DEFLIT(lit_85);
+DEFLIT(lit_54);
+DEFLIT(lit_63);
+DEFLIT(lit_17);
+DEFLIT(lit_41);
+DEFLIT(lit_25);
 DEFLIT(lit_0);
+DEFLIT(lit_23);
+DEFLIT(lit_91);
+DEFLIT(lit_9);
+DEFLIT(lit_16);
+DEFLIT(lit_22);
+DEFLIT(lit_43);
 DEFLIT(lit_76);
+DEFLIT(lit_100);
+DEFLIT(lit_38);
+DEFLIT(lit_20);
+DEFLIT(lit_15);
+DEFLIT(lit_50);
+DEFLIT(lit_83);
+DEFLIT(lit_59);
+DEFLIT(lit_115);
+DEFLIT(lit_1);
+DEFLIT(lit_68);
+DEFLIT(lit_14);
+DEFLIT(lit_40);
+DEFLIT(lit_37);
+DEFLIT(lit_52);
+DEFLIT(lit_33);
+DEFLIT(lit_5);
+DEFLIT(lit_57);
+DEFLIT(lit_47);
+DEFLIT(lit_13);
+DEFLIT(lit_62);
+DEFLIT(lit_120);
+DEFLIT(lit_34);
+DEFLIT(lit_92);
+DEFLIT(lit_39);
+DEFLIT(lit_77);
+DEFLIT(lit_11);
+DEFLIT(lit_119);
+DEFLIT(lit_19);
+DEFLIT(lit_122);
+DEFLIT(lit_10);
+DEFLIT(lit_75);
+DEFLIT(lit_6);
+DEFLIT(lit_45);
+DEFLIT(lit_112);
+DEFLIT(lit_116);
+DEFLIT(lit_106);
+DEFLIT(lit_78);
+DEFLIT(lit_113);
+DEFLIT(lit_117);
+DEFLIT(lit_105);
+DEFLIT(lit_69);
+DEFLIT(lit_36);
+DEFLIT(lit_74);
+DEFLIT(lit_58);
+DEFLIT(lit_66);
+DEFLIT(lit_42);
+DEFLIT(lit_96);
+DEFLIT(lit_26);
+DEFLIT(lit_48);
+DEFLIT(lit_18);
+DEFLIT(lit_99);
+DEFLIT(lit_118);
+DEFLIT(lit_24);
+DEFLIT(lit_49);
+DEFLIT(lit_107);
+DEFLIT(lit_102);
+DEFLIT(lit_28);
+DEFLIT(lit_84);
+DEFLIT(lit_70);
+DEFLIT(lit_32);
+DEFLIT(lit_56);
+DEFLIT(lit_44);
+DEFLIT(lit_61);
+DEFLIT(lit_3);
+DEFLIT(lit_114);
+DEFLIT(lit_71);
+DEFLIT(lit_30);
+DEFLIT(lit_90);
+DEFLIT(lit_94);
+DEFLIT(lit_4);
+DEFLIT(lit_73);
 
 /* FUNCTIONS: */
 
@@ -781,9 +786,9 @@ LOCFOR(fun_assoc_value_2);
 LOCFOR(fun_assoc_value_setter_3);
 FUNFOR(Yast_linearizeYassoc);
 LOCFOR(fun_assocq_5);
-LOCFOR(fun_x_2445_6);
+LOCFOR(fun_x_1416_6);
 LOCFOR(fun_update_walkX_7);
-LOCFOR(fun_x_2447_8);
+LOCFOR(fun_x_1418_8);
 LOCFOR(fun_ast_walk_9);
 LOCFOR(fun_box_reference_10);
 LOCFOR(fun_box_reference_setter_11);
@@ -998,38 +1003,38 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_x_2445_6) {
-  P x_2444_;
-  P xF6081;
-  P setterF6080;
-  P getterF6079;
-  P propF6078;
+FUNCODEDEF(fun_x_1416_6) {
+  P x_1415_;
+  P xF1792;
+  P setterF1791;
+  P getterF1790;
+  P propF1789;
   P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
   P T4,T3,T2,T1,T0;
   P a1;
 LINK_STACK();
-  ARG(x_2444_, 0);
+  ARG(x_1415_, 0);
 loop:
-  T2 = CALL1(1,VARREF(YprotoScollectionsScollectionYfinQ),x_2444_);
+  T2 = CALL1(1,VARREF(YprotoScollectionsScollectionYfinQ),x_1415_);
   T1 = CALL1(1,VARREF(Ynot),T2);
   if (T1 != YPfalse) {
-    T4 = CALL1(1,VARREF(YprotoScollectionsScollectionYnow),x_2444_);
-    propF6078 = T4;
-    T6 = CALL1(1,VARREF(Yprop_getter),propF6078);
-    getterF6079 = T6;
-    T8 = CALL1(1,VARREF(Yprop_setter),propF6078);
-    setterF6080 = T8;
-    T10 = CALL2(1,VARREF(YmacrosYEE),getterF6079,VARREF(YastYbinding_value));
+    T4 = CALL1(1,VARREF(YprotoScollectionsScollectionYnow),x_1415_);
+    propF1789 = T4;
+    T6 = CALL1(1,VARREF(Yprop_getter),propF1789);
+    getterF1790 = T6;
+    T8 = CALL1(1,VARREF(Yprop_setter),propF1789);
+    setterF1791 = T8;
+    T10 = CALL2(1,VARREF(YmacrosYEE),getterF1790,VARREF(YastYbinding_value));
     T9 = CALL1(1,VARREF(Ynot),T10);
     if (T9 != YPfalse) {
-      T12 = CALL2(1,VARREF(Yprop_boundQ),FREEREF(0),getterF6079);
+      T12 = CALL2(1,VARREF(Yprop_boundQ),FREEREF(0),getterF1790);
       if (T12 != YPfalse) {
-        T14 = CALL1(1,getterF6079,FREEREF(0));
-        xF6081 = T14;
-        T16 = CALL2(1,VARREF(YisaQ),xF6081,VARREF(YastYLprogramG));
+        T14 = CALL1(1,getterF1790,FREEREF(0));
+        xF1792 = T14;
+        T16 = CALL2(1,VARREF(YisaQ),xF1792,VARREF(YastYLprogramG));
         if (T16 != YPfalse) {
-          T18 = CALLN(1,VARREF(YmacrosYnapp),4,FREEREF(1),YPfalse,xF6081,FREEREF(2));
-          T17 = CALL2(1,setterF6080,T18,FREEREF(0));
+          T18 = CALLN(1,VARREF(YmacrosYnapp),4,FREEREF(1),YPfalse,xF1792,FREEREF(2));
+          T17 = CALL2(1,setterF1791,T18,FREEREF(0));
           T15 = T17;
         } else {
           T15 = YPfalse;
@@ -1041,9 +1046,9 @@ loop:
       }
     } else {
     }
-    T20 = CALL1(1,VARREF(YprotoScollectionsScollectionYnxt),x_2444_);
+    T20 = CALL1(1,VARREF(YprotoScollectionsScollectionYnxt),x_1415_);
     a1 = T20;
-    x_2444_ = a1;
+    x_1415_ = a1;
     goto loop;
     T7 = T19;
     T5 = T7;
@@ -1058,7 +1063,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_update_walkX_7) {
   P g_,o_,args_;
-  P x_2445F6082;
+  P x_1416F1793;
   P T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -1066,44 +1071,44 @@ LINK_STACK();
   ARG(o_, 1);
   NARGS(args_, 2);
 loop:
-  T0 = FUNSHELL(1,fun_x_2445_6,4);
-  x_2445F6082 = T0;
-  FUNINIT(x_2445F6082, 4,o_,g_,args_,x_2445F6082);
+  T0 = FUNSHELL(1,fun_x_1416_6,4);
+  x_1416F1793 = T0;
+  FUNINIT(x_1416F1793, 4,o_,g_,args_,x_1416F1793);
   T3 = CALL1(1,VARREF(Yobject_props),o_);
   T2 = CALL1(1,VARREF(YprotoScollectionsScollectionYenum),T3);
-  T1 = CALL1(0,x_2445F6082,T2);
+  T1 = CALL1(0,x_1416F1793,T2);
 UNLINK_STACK();
   QRET(o_);
 }
 
-FUNCODEDEF(fun_x_2447_8) {
-  P x_2446_;
-  P xF6085;
-  P getterF6084;
-  P propF6083;
+FUNCODEDEF(fun_x_1418_8) {
+  P x_1417_;
+  P xF1796;
+  P getterF1795;
+  P propF1794;
   P T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2;
   P T1,T0;
   P a1;
 LINK_STACK();
-  ARG(x_2446_, 0);
+  ARG(x_1417_, 0);
 loop:
-  T2 = CALL1(1,VARREF(YprotoScollectionsScollectionYfinQ),x_2446_);
+  T2 = CALL1(1,VARREF(YprotoScollectionsScollectionYfinQ),x_1417_);
   T1 = CALL1(1,VARREF(Ynot),T2);
   if (T1 != YPfalse) {
-    T4 = CALL1(1,VARREF(YprotoScollectionsScollectionYnow),x_2446_);
-    propF6083 = T4;
-    T6 = CALL1(1,VARREF(Yprop_getter),propF6083);
-    getterF6084 = T6;
-    T8 = CALL2(1,VARREF(YmacrosYEE),getterF6084,VARREF(YastYbinding_value));
+    T4 = CALL1(1,VARREF(YprotoScollectionsScollectionYnow),x_1417_);
+    propF1794 = T4;
+    T6 = CALL1(1,VARREF(Yprop_getter),propF1794);
+    getterF1795 = T6;
+    T8 = CALL2(1,VARREF(YmacrosYEE),getterF1795,VARREF(YastYbinding_value));
     T7 = CALL1(1,VARREF(Ynot),T8);
     if (T7 != YPfalse) {
-      T10 = CALL2(1,VARREF(Yprop_boundQ),FREEREF(0),getterF6084);
+      T10 = CALL2(1,VARREF(Yprop_boundQ),FREEREF(0),getterF1795);
       if (T10 != YPfalse) {
-        T12 = CALL1(1,getterF6084,FREEREF(0));
-        xF6085 = T12;
-        T14 = CALL2(1,VARREF(YisaQ),xF6085,VARREF(YastYLprogramG));
+        T12 = CALL1(1,getterF1795,FREEREF(0));
+        xF1796 = T12;
+        T14 = CALL2(1,VARREF(YisaQ),xF1796,VARREF(YastYLprogramG));
         if (T14 != YPfalse) {
-          T15 = CALLN(1,VARREF(YmacrosYnapp),4,FREEREF(1),YPfalse,xF6085,FREEREF(2));
+          T15 = CALLN(1,VARREF(YmacrosYnapp),4,FREEREF(1),YPfalse,xF1796,FREEREF(2));
           T13 = T15;
         } else {
           T13 = YPfalse;
@@ -1115,9 +1120,9 @@ loop:
       }
     } else {
     }
-    T17 = CALL1(1,VARREF(YprotoScollectionsScollectionYnxt),x_2446_);
+    T17 = CALL1(1,VARREF(YprotoScollectionsScollectionYnxt),x_1417_);
     a1 = T17;
-    x_2446_ = a1;
+    x_1417_ = a1;
     goto loop;
     T5 = T16;
     T3 = T5;
@@ -1131,7 +1136,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_walk_9) {
   P g_,o_,args_;
-  P x_2447F6086;
+  P x_1418F1797;
   P T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -1139,12 +1144,12 @@ LINK_STACK();
   ARG(o_, 1);
   NARGS(args_, 2);
 loop:
-  T0 = FUNSHELL(1,fun_x_2447_8,4);
-  x_2447F6086 = T0;
-  FUNINIT(x_2447F6086, 4,o_,g_,args_,x_2447F6086);
+  T0 = FUNSHELL(1,fun_x_1418_8,4);
+  x_1418F1797 = T0;
+  FUNINIT(x_1418F1797, 4,o_,g_,args_,x_1418F1797);
   T3 = CALL1(1,VARREF(Yobject_props),o_);
   T2 = CALL1(1,VARREF(YprotoScollectionsScollectionYenum),T3);
-  T1 = CALL1(0,x_2447F6086,T2);
+  T1 = CALL1(0,x_1418F1797,T2);
 UNLINK_STACK();
   QRET(o_);
 }
@@ -1351,8 +1356,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_24) {
   P res_,bindings_;
-  P creatorF6088;
-  P bindingF6087;
+  P creatorF1799;
+  P bindingF1798;
   P T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -1366,13 +1371,13 @@ loop:
     T0 = T2;
   } else {
     T5 = CALL1(1,VARREF(Yhead),bindings_);
-    bindingF6087 = T5;
-    T7 = CALL1(1,VARREF(YastYbinding_mutableQ),bindingF6087);
+    bindingF1798 = T5;
+    T7 = CALL1(1,VARREF(YastYbinding_mutableQ),bindingF1798);
     if (T7 != YPfalse) {
-      T10 = CALL3(1,VARREF(Ynew),VARREF(YastYLlocal_referenceG),VARREF(YastYreference_binding),bindingF6087);
+      T10 = CALL3(1,VARREF(Ynew),VARREF(YastYLlocal_referenceG),VARREF(YastYreference_binding),bindingF1798);
       T9 = CALL3(1,VARREF(Ynew),VARREF(Yast_linearizeYLbox_creationG),VARREF(Yast_linearizeYbox_reference),T10);
-      creatorF6088 = T9;
-      T12 = CALL2(1,VARREF(YmacrosYpair),creatorF6088,res_);
+      creatorF1799 = T9;
+      T12 = CALL2(1,VARREF(YmacrosYpair),creatorF1799,res_);
       T13 = CALL1(1,VARREF(Ytail),bindings_);
       a1 = T12;
       a2 = T13;
@@ -1399,7 +1404,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_boxify_mutable_bindings_25) {
   P form_,bindings_;
-  P loopF6089;
+  P loopF1800;
   P T3,T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -1407,9 +1412,9 @@ LINK_STACK();
   ARG(bindings_, 1);
 loop:
   T2 = FUNSHELL(1,fun_loop_24,2);
-  loopF6089 = T2;
-  FUNINIT(loopF6089, 2,form_,loopF6089);
-  T3 = CALL2(0,loopF6089,Ynil,bindings_);
+  loopF1800 = T2;
+  FUNINIT(loopF1800, 2,form_,loopF1800);
+  T3 = CALL2(0,loopF1800,Ynil,bindings_);
   T1 = T3;
   T0 = CALL1(1,VARREF(YastYsequentialize),T1);
 UNLINK_STACK();
@@ -1563,7 +1568,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_unconstrained_typeQ_37) {
   P b_;
-  P tmpF6090;
+  P tmpF1801;
   P T5,T4,T3,T2,T1,T0;
   P a1;
 LINK_STACK();
@@ -1571,8 +1576,8 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(YastYbinding_module_name),b_);
   T1 = CALL2(1,VARREF(YmacrosYEE),T2,LITREF(lit_44));
-  tmpF6090 = T1;
-  if (tmpF6090 != YPfalse) {
+  tmpF1801 = T1;
+  if (tmpF1801 != YPfalse) {
     T5 = CALL1(1,VARREF(YastYbinding_name),b_);
     T4 = CALL2(1,VARREF(YmacrosYEE),T5,LITREF(lit_45));
     T3 = T4;
@@ -1599,11 +1604,11 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_do_call_upgradesX_39) {
   P o_;
-  P tmpF6095;
-  P tmpF6094;
-  P tmpF6093;
-  P tmpF6092;
-  P metF6091;
+  P tmpF1806;
+  P tmpF1805;
+  P tmpF1804;
+  P tmpF1803;
+  P metF1802;
   P T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
@@ -1617,26 +1622,26 @@ loop:
     T5 = CALL1(1,VARREF(YastYapplication_function),o_);
     T4 = CALL1(1,VARREF(YastYreference_binding),T5);
     T3 = CALL1(1,VARREF(YastYbinding_value),T4);
-    metF6091 = T3;
-    T8 = CALL2(1,VARREF(YisaQ),metF6091,VARREF(YastYLast_functionG));
-    tmpF6092 = T8;
-    if (tmpF6092 != YPfalse) {
+    metF1802 = T3;
+    T8 = CALL2(1,VARREF(YisaQ),metF1802,VARREF(YastYLast_functionG));
+    tmpF1803 = T8;
+    if (tmpF1803 != YPfalse) {
       T12 = CALL2(1,VARREF(YruntimeYcompose),VARREF(Yast_linearizeYunconstrained_typeQ),VARREF(YastYbinding_type));
-      T13 = CALL1(1,VARREF(YastYfunction_bindings),metF6091);
+      T13 = CALL1(1,VARREF(YastYfunction_bindings),metF1802);
       T11 = CALL2(1,VARREF(YprotoScollectionsScollectionYallQ),T12,T13);
-      tmpF6093 = T11;
-      if (tmpF6093 != YPfalse) {
-        T17 = CALL1(1,VARREF(YastYfunction_value),metF6091);
+      tmpF1804 = T11;
+      if (tmpF1804 != YPfalse) {
+        T17 = CALL1(1,VARREF(YastYfunction_value),metF1802);
         T16 = CALL1(1,VARREF(Yast_linearizeYunconstrained_typeQ),T17);
-        tmpF6094 = T16;
-        if (tmpF6094 != YPfalse) {
-          T21 = CALL1(1,VARREF(YastYfunction_naryQ),metF6091);
+        tmpF1805 = T16;
+        if (tmpF1805 != YPfalse) {
+          T21 = CALL1(1,VARREF(YastYfunction_naryQ),metF1802);
           T20 = CALL1(1,VARREF(Ynot),T21);
-          tmpF6095 = T20;
-          if (tmpF6095 != YPfalse) {
+          tmpF1806 = T20;
+          if (tmpF1806 != YPfalse) {
             T25 = CALL1(1,VARREF(YastYapplication_arguments),o_);
             T24 = CALL1(1,VARREF(YprotoStypesYlen),T25);
-            T27 = CALL1(1,VARREF(YastYfunction_bindings),metF6091);
+            T27 = CALL1(1,VARREF(YastYfunction_bindings),metF1802);
             T26 = CALL1(1,VARREF(YprotoStypesYlen),T27);
             T23 = CALL2(1,VARREF(YprotoSmathYE),T24,T26);
             T22 = T23;
@@ -1762,8 +1767,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_lift_proceduresX_47) {
   P o_,flat_fun_,bindings_;
-  P offsetF6097;
-  P bF6096;
+  P offsetF1808;
+  P bF1807;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -1772,17 +1777,17 @@ LINK_STACK();
   ARG(bindings_, 2);
 loop:
   T1 = CALL1(1,VARREF(YastYreference_binding),o_);
-  bF6096 = T1;
-  T3 = CALL2(1,VARREF(YprotoScollectionsScollectionYmemQ),bindings_,bF6096);
+  bF1807 = T1;
+  T3 = CALL2(1,VARREF(YprotoScollectionsScollectionYmemQ),bindings_,bF1807);
   if (T3 != YPfalse) {
     T2 = o_;
   } else {
     T5 = CALL2(1,VARREF(Yast_linearizeYadjoin_free_bindingX),flat_fun_,o_);
-    offsetF6097 = T5;
+    offsetF1808 = T5;
     T8 = CALL1(1,VARREF(YastYreference_binding),o_);
     T9 = CALL1(1,VARREF(YastYfunction_binding),flat_fun_);
     T7 = CALL2(1,VARREF(YmacrosYEE),T8,T9);
-    T6 = CALLN(1,VARREF(Ynew),7,VARREF(Yast_linearizeYLfree_referenceG),VARREF(YastYreference_binding),bF6096,VARREF(Yast_linearizeYreference_offset),offsetF6097,VARREF(Yast_linearizeYreference_selfQ),T7);
+    T6 = CALLN(1,VARREF(Ynew),7,VARREF(Yast_linearizeYLfree_referenceG),VARREF(YastYreference_binding),bF1807,VARREF(Yast_linearizeYreference_offset),offsetF1808,VARREF(Yast_linearizeYreference_selfQ),T7);
     T4 = T6;
     T2 = T4;
   }
@@ -1793,20 +1798,20 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_add_48) {
   P freeT_;
-  P tailF6098;
+  P tailF1809;
   P T5,T4,T3,T2,T1,T0;
   P a1;
 LINK_STACK();
   ARG(freeT_, 0);
 loop:
   T1 = CALL1(1,VARREF(Ytail),freeT_);
-  tailF6098 = T1;
-  T3 = CALL1(1,VARREF(YmacrosYemptyQ),tailF6098);
+  tailF1809 = T1;
+  T3 = CALL1(1,VARREF(YmacrosYemptyQ),tailF1809);
   if (T3 != YPfalse) {
     T4 = CALL2(1,VARREF(Ytail_setter),FREEREF(0),freeT_);
     T2 = T4;
   } else {
-    a1 = tailF6098;
+    a1 = tailF1809;
     freeT_ = a1;
     goto loop;
     T2 = T5;
@@ -1818,8 +1823,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_check_49) {
   P i_,freeT_;
-  P addF6100;
-  P new_envF6099;
+  P addF1811;
+  P new_envF1810;
   P T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4;
   P T3,T2,T1,T0;
   P a1,a2;
@@ -1831,17 +1836,17 @@ loop:
   if (T1 != YPfalse) {
     T4 = CALL1(1,VARREF(YprotoScollectionsScollectionYempty),VARREF(YastYLfree_environmentG));
     T3 = CALL2(1,VARREF(YastYfree_environment),FREEREF(0),T4);
-    new_envF6099 = T3;
+    new_envF1810 = T3;
     T6 = CALL1(1,VARREF(YastYfunction_free),FREEREF(1));
     T5 = CALL1(1,VARREF(YmacrosYemptyQ),T6);
     if (T5 != YPfalse) {
-      T7 = CALL2(1,VARREF(YastYfunction_free_setter),new_envF6099,FREEREF(1));
+      T7 = CALL2(1,VARREF(YastYfunction_free_setter),new_envF1810,FREEREF(1));
     } else {
       T9 = FUNSHELL(1,fun_add_48,2);
-      addF6100 = T9;
-      FUNINIT(addF6100, 2,new_envF6099,addF6100);
+      addF1811 = T9;
+      FUNINIT(addF1811, 2,new_envF1810,addF1811);
       T11 = CALL1(1,VARREF(YastYfunction_free),FREEREF(1));
-      T10 = CALL1(0,addF6100,T11);
+      T10 = CALL1(0,addF1811,T11);
       T8 = T10;
     }
     T2 = i_;
@@ -1871,7 +1876,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_adjoin_free_bindingX_50) {
   P flat_fun_,ref_;
-  P checkF6101;
+  P checkF1812;
   P T3,T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -1879,10 +1884,10 @@ LINK_STACK();
   ARG(ref_, 1);
 loop:
   T1 = FUNSHELL(1,fun_check_49,3);
-  checkF6101 = T1;
-  FUNINIT(checkF6101, 3,ref_,flat_fun_,checkF6101);
+  checkF1812 = T1;
+  FUNINIT(checkF1812, 3,ref_,flat_fun_,checkF1812);
   T3 = CALL1(1,VARREF(YastYfunction_free),flat_fun_);
-  T2 = CALL2(1,checkF6101,YPint((P)0),T3);
+  T2 = CALL2(1,checkF1812,YPint((P)0),T3);
   T0 = T2;
 UNLINK_STACK();
   RET(T0);
@@ -1890,7 +1895,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_lift_proceduresX_51) {
   P o_,flat_fun_,bindings_;
-  P new_bindingsF6102;
+  P new_bindingsF1813;
   P T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -1903,9 +1908,9 @@ loop:
   CALL2(1,VARREF(YastYfix_let_arguments_setter),T0,o_);
   T4 = CALL1(1,VARREF(YastYfix_let_bindings),o_);
   T3 = CALL2(1,VARREF(YmacrosYcat),T4,bindings_);
-  new_bindingsF6102 = T3;
+  new_bindingsF1813 = T3;
   T6 = CALL1(1,VARREF(YastYfix_let_body),o_);
-  T5 = CALL3(1,VARREF(Yast_linearizeYlift_proceduresX),T6,flat_fun_,new_bindingsF6102);
+  T5 = CALL3(1,VARREF(Yast_linearizeYlift_proceduresX),T6,flat_fun_,new_bindingsF1813);
   CALL2(1,VARREF(YastYfix_let_body_setter),T5,o_);
   T2 = o_;
 UNLINK_STACK();
@@ -1914,7 +1919,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_lift_proceduresX_52) {
   P o_,flat_fun_,bindings_;
-  P new_bindingsF6103;
+  P new_bindingsF1814;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -1924,13 +1929,13 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(YastYlocals_bindings),o_);
   T1 = CALL2(1,VARREF(YmacrosYcat),T2,bindings_);
-  new_bindingsF6103 = T1;
-  T4 = CALL3(1,VARREF(YruntimeYrcurry),VARREF(Yast_linearizeYlift_proceduresX),flat_fun_,new_bindingsF6103);
+  new_bindingsF1814 = T1;
+  T4 = CALL3(1,VARREF(YruntimeYrcurry),VARREF(Yast_linearizeYlift_proceduresX),flat_fun_,new_bindingsF1814);
   T5 = CALL1(1,VARREF(YastYlocals_functions),o_);
   T3 = CALL2(1,VARREF(YmacrosYmap),T4,T5);
   CALL2(1,VARREF(YastYlocals_functions_setter),T3,o_);
   T7 = CALL1(1,VARREF(YastYlocals_body),o_);
-  T6 = CALL3(1,VARREF(Yast_linearizeYlift_proceduresX),T7,flat_fun_,new_bindingsF6103);
+  T6 = CALL3(1,VARREF(Yast_linearizeYlift_proceduresX),T7,flat_fun_,new_bindingsF1814);
   CALL2(1,VARREF(YastYlocals_body_setter),T6,o_);
   T0 = o_;
 UNLINK_STACK();
@@ -2270,7 +2275,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_78) {
   P s_,r_;
-  P innerF6104;
+  P innerF1815;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -2283,11 +2288,11 @@ loop:
     T0 = T2;
   } else {
     T4 = FUNSHELL(1,fun_inner_77,3);
-    innerF6104 = T4;
-    FUNINIT(innerF6104, 3,FREEREF(0),s_,innerF6104);
+    innerF1815 = T4;
+    FUNINIT(innerF1815, 3,FREEREF(0),s_,innerF1815);
     T7 = CALL1(1,VARREF(Yhead),s_);
     T6 = CALL1(1,VARREF(Yast_linearizeYflatten_seqs),T7);
-    T5 = CALL2(0,innerF6104,T6,r_);
+    T5 = CALL2(0,innerF1815,T6,r_);
     T3 = T5;
     T0 = T3;
   }
@@ -2297,16 +2302,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_flatten_seqs_79) {
   P o_;
-  P loopF6105;
+  P loopF1816;
   P T2,T1,T0;
   P a1;
 LINK_STACK();
   ARG(o_, 0);
 loop:
   T1 = FUNSHELL(1,fun_loop_78,1);
-  loopF6105 = T1;
-  FUNINIT(loopF6105, 1,loopF6105);
-  T2 = CALL2(0,loopF6105,o_,Ynil);
+  loopF1816 = T1;
+  FUNINIT(loopF1816, 1,loopF1816);
+  T2 = CALL2(0,loopF1816,o_,Ynil);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -2351,8 +2356,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_extract_thingsX_83) {
   P o_;
-  P resultF6107;
-  P formsF6106;
+  P resultF1818;
+  P formsF1817;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 LINK_STACK();
@@ -2360,14 +2365,14 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(Yast_linearizeYflatten_seqs),o_);
   T1 = CALL1(1,VARREF(Yast_linearizeYas_top_level_forms),T2);
-  formsF6106 = T1;
+  formsF1817 = T1;
   T4 = CALL1(1,VARREF(Ynew),VARREF(Yast_linearizeYLflattened_programG));
-  resultF6107 = T4;
-  T7 = FUNFAB(fun_82,1,resultF6107);
-  T6 = CALL2(1,VARREF(YmacrosYmap),T7,formsF6106);
+  resultF1818 = T4;
+  T7 = FUNFAB(fun_82,1,resultF1818);
+  T6 = CALL2(1,VARREF(YmacrosYmap),T7,formsF1817);
   T5 = CALL1(1,VARREF(YastYsequentialize),T6);
-  CALL2(1,VARREF(Yast_linearizeYprogram_form_setter),T5,resultF6107);
-  T3 = resultF6107;
+  CALL2(1,VARREF(Yast_linearizeYprogram_form_setter),T5,resultF1818);
+  T3 = resultF1818;
   T0 = T3;
 UNLINK_STACK();
   QRET(T0);
@@ -2389,16 +2394,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_extractX_85) {
   P o_,form_,result_;
-  P x_2448F6117;
-  P qbF6116;
-  P probeF6115;
-  P indexF6114;
-  P qbTF6113;
-  P tmpF6112;
-  P tmpF6111;
-  P tmpF6110;
-  P tmpF6109;
-  P valueF6108;
+  P x_1419F1828;
+  P qbF1827;
+  P probeF1826;
+  P indexF1825;
+  P qbTF1824;
+  P tmpF1823;
+  P tmpF1822;
+  P tmpF1821;
+  P tmpF1820;
+  P valueF1819;
   P T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14;
   P T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
@@ -2408,28 +2413,28 @@ LINK_STACK();
   ARG(result_, 2);
 loop:
   T1 = CALL1(1,VARREF(YastYconstant_value),o_);
-  valueF6108 = T1;
-  T4 = CALL2(1,VARREF(YmacrosYEE),valueF6108,YPfalse);
-  tmpF6109 = T4;
-  if (tmpF6109 != YPfalse) {
-    T5 = tmpF6109;
+  valueF1819 = T1;
+  T4 = CALL2(1,VARREF(YmacrosYEE),valueF1819,YPfalse);
+  tmpF1820 = T4;
+  if (tmpF1820 != YPfalse) {
+    T5 = tmpF1820;
   } else {
-    T7 = CALL2(1,VARREF(YmacrosYEE),valueF6108,YPtrue);
-    tmpF6110 = T7;
-    if (tmpF6110 != YPfalse) {
-      T8 = tmpF6110;
+    T7 = CALL2(1,VARREF(YmacrosYEE),valueF1819,YPtrue);
+    tmpF1821 = T7;
+    if (tmpF1821 != YPfalse) {
+      T8 = tmpF1821;
     } else {
-      T10 = CALL2(1,VARREF(YmacrosYEE),valueF6108,Ynil);
-      tmpF6111 = T10;
-      if (tmpF6111 != YPfalse) {
-        T11 = tmpF6111;
+      T10 = CALL2(1,VARREF(YmacrosYEE),valueF1819,Ynil);
+      tmpF1822 = T10;
+      if (tmpF1822 != YPfalse) {
+        T11 = tmpF1822;
       } else {
-        T13 = CALL2(1,VARREF(YisaQ),valueF6108,VARREF(YLintG));
-        tmpF6112 = T13;
-        if (tmpF6112 != YPfalse) {
-          T14 = tmpF6112;
+        T13 = CALL2(1,VARREF(YisaQ),valueF1819,VARREF(YLintG));
+        tmpF1823 = T13;
+        if (tmpF1823 != YPfalse) {
+          T14 = tmpF1823;
         } else {
-          T15 = CALL2(1,VARREF(YisaQ),valueF6108,VARREF(YLchrG));
+          T15 = CALL2(1,VARREF(YisaQ),valueF1819,VARREF(YLchrG));
           T14 = T15;
         }
         T12 = T14;
@@ -2446,23 +2451,23 @@ loop:
     T2 = o_;
   } else {
     T17 = CALL1(1,VARREF(Yast_linearizeYprogram_quotations),result_);
-    qbTF6113 = T17;
-    T19 = CALL1(1,VARREF(YprotoStypesYlen),qbTF6113);
-    indexF6114 = T19;
-    T21 = CALL3(1,VARREF(YprotoScollectionsScollectionYelt_or),qbTF6113,valueF6108,YPfalse);
-    probeF6115 = T21;
-    if (probeF6115 != YPfalse) {
-      T23 = CALL3(1,VARREF(Ynew),VARREF(YastYLglobal_referenceG),VARREF(YastYreference_binding),probeF6115);
+    qbTF1824 = T17;
+    T19 = CALL1(1,VARREF(YprotoStypesYlen),qbTF1824);
+    indexF1825 = T19;
+    T21 = CALL3(1,VARREF(YprotoScollectionsScollectionYelt_or),qbTF1824,valueF1819,YPfalse);
+    probeF1826 = T21;
+    if (probeF1826 != YPfalse) {
+      T23 = CALL3(1,VARREF(Ynew),VARREF(YastYLglobal_referenceG),VARREF(YastYreference_binding),probeF1826);
       T22 = T23;
     } else {
-      T25 = CALLN(1,VARREF(Ynew),7,VARREF(YastYLmodule_bindingG),VARREF(YastYbinding_kind),LITREF(lit_90),VARREF(YastYbinding_name),indexF6114,VARREF(YastYbinding_info),valueF6108);
-      qbF6116 = T25;
-      CALL3(1,VARREF(YprotoScollectionsScollectionYelt_setter),qbF6116,qbTF6113,valueF6108);
-      x_2448F6117 = form_;
-      T28 = CALL1(1,VARREF(Yast_linearizeYform_quotations),x_2448F6117);
-      T27 = CALL2(1,VARREF(YprotoScollectionsSlistYpush),T28,qbF6116);
-      T26 = CALL2(1,VARREF(Yast_linearizeYform_quotations_setter),T27,x_2448F6117);
-      T29 = CALL3(1,VARREF(Ynew),VARREF(YastYLglobal_referenceG),VARREF(YastYreference_binding),qbF6116);
+      T25 = CALLN(1,VARREF(Ynew),7,VARREF(YastYLmodule_bindingG),VARREF(YastYbinding_kind),LITREF(lit_90),VARREF(YastYbinding_name),indexF1825,VARREF(YastYbinding_info),valueF1819);
+      qbF1827 = T25;
+      CALL3(1,VARREF(YprotoScollectionsScollectionYelt_setter),qbF1827,qbTF1824,valueF1819);
+      x_1419F1828 = form_;
+      T28 = CALL1(1,VARREF(Yast_linearizeYform_quotations),x_1419F1828);
+      T27 = CALL2(1,VARREF(YprotoScollectionsSlistYpush),T28,qbF1827);
+      T26 = CALL2(1,VARREF(Yast_linearizeYform_quotations_setter),T27,x_1419F1828);
+      T29 = CALL3(1,VARREF(Ynew),VARREF(YastYLglobal_referenceG),VARREF(YastYreference_binding),qbF1827);
       T24 = T29;
       T22 = T24;
     }
@@ -2504,9 +2509,9 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_extractX_88) {
   P o_,form_,result_;
-  P indexF6120;
-  P free_bindingsF6119;
-  P freeF6118;
+  P indexF1831;
+  P free_bindingsF1830;
+  P freeF1829;
   P T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -2527,14 +2532,14 @@ loop:
   T7 = CALL1(1,VARREF(YastYfunction_bindings),o_);
   CALL2(1,VARREF(YmacrosYdo),T6,T7);
   T9 = CALL1(1,VARREF(YastYfunction_free),o_);
-  freeF6118 = T9;
-  T11 = CALL2(1,VARREF(YmacrosYmap),VARREF(YastYreference_binding),freeF6118);
-  free_bindingsF6119 = T11;
+  freeF1829 = T9;
+  T11 = CALL2(1,VARREF(YmacrosYmap),VARREF(YastYreference_binding),freeF1829);
+  free_bindingsF1830 = T11;
   T13 = CALL3(1,VARREF(Yast_linearizeYadjoin_definitionX),form_,result_,o_);
-  indexF6120 = T13;
-  CALL2(1,VARREF(YastYfunction_index_setter),indexF6120,o_);
-  CALL2(1,VARREF(YastYfunction_free_setter),free_bindingsF6119,o_);
-  T14 = CALLN(1,VARREF(Ynew),5,VARREF(Yast_linearizeYLclosure_creationG),VARREF(Yast_linearizeYclosure_creation_index),indexF6120,VARREF(Yast_linearizeYclosure_creation_free),freeF6118);
+  indexF1831 = T13;
+  CALL2(1,VARREF(YastYfunction_index_setter),indexF1831,o_);
+  CALL2(1,VARREF(YastYfunction_free_setter),free_bindingsF1830,o_);
+  T14 = CALLN(1,VARREF(Ynew),5,VARREF(Yast_linearizeYLclosure_creationG),VARREF(Yast_linearizeYclosure_creation_index),indexF1831,VARREF(Yast_linearizeYclosure_creation_free),freeF1829);
   T12 = T14;
   T10 = T12;
   T8 = T10;
@@ -2544,8 +2549,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_extractX_89) {
   P o_,form_,result_;
-  P x_2449F6122;
-  P primF6121;
+  P x_1420F1833;
+  P primF1832;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -2554,14 +2559,14 @@ LINK_STACK();
   ARG(result_, 2);
 loop:
   T1 = CALL1(1,VARREF(YastYassignment_form),o_);
-  primF6121 = T1;
-  T3 = CALL1(1,VARREF(YastYfunction_body),primF6121);
+  primF1832 = T1;
+  T3 = CALL1(1,VARREF(YastYfunction_body),primF1832);
   T2 = CALL3(1,VARREF(Yast_linearizeYextractX),T3,form_,result_);
-  CALL2(1,VARREF(YastYfunction_body_setter),T2,primF6121);
-  x_2449F6122 = result_;
-  T6 = CALL1(1,VARREF(Yast_linearizeYprogram_definitions),x_2449F6122);
-  T5 = CALL2(1,VARREF(YprotoScollectionsSlistYpush),T6,primF6121);
-  T4 = CALL2(1,VARREF(Yast_linearizeYprogram_definitions_setter),T5,x_2449F6122);
+  CALL2(1,VARREF(YastYfunction_body_setter),T2,primF1832);
+  x_1420F1833 = result_;
+  T6 = CALL1(1,VARREF(Yast_linearizeYprogram_definitions),x_1420F1833);
+  T5 = CALL2(1,VARREF(YprotoScollectionsSlistYpush),T6,primF1832);
+  T4 = CALL2(1,VARREF(Yast_linearizeYprogram_definitions_setter),T5,x_1420F1833);
   T8 = CALL3(1,VARREF(Ynew),VARREF(YastYLconstantG),VARREF(YastYconstant_value),YPfalse);
   T7 = CALL3(1,VARREF(Yast_linearizeYextractX),T8,form_,result_);
   T0 = T7;
@@ -2571,9 +2576,9 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_adjoin_definitionX_90) {
   P form_,result_,x_;
-  P x_2451F6125;
-  P x_2450F6124;
-  P new_indexF6123;
+  P x_1422F1836;
+  P x_1421F1835;
+  P new_indexF1834;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -2583,16 +2588,16 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(Yast_linearizeYprogram_definitions),result_);
   T1 = CALL1(1,VARREF(YprotoStypesYlen),T2);
-  new_indexF6123 = T1;
-  x_2450F6124 = result_;
-  T5 = CALL1(1,VARREF(Yast_linearizeYprogram_definitions),x_2450F6124);
+  new_indexF1834 = T1;
+  x_1421F1835 = result_;
+  T5 = CALL1(1,VARREF(Yast_linearizeYprogram_definitions),x_1421F1835);
   T4 = CALL2(1,VARREF(YprotoScollectionsSlistYpush),T5,x_);
-  T3 = CALL2(1,VARREF(Yast_linearizeYprogram_definitions_setter),T4,x_2450F6124);
-  x_2451F6125 = form_;
-  T8 = CALL1(1,VARREF(Yast_linearizeYform_definitions),x_2451F6125);
+  T3 = CALL2(1,VARREF(Yast_linearizeYprogram_definitions_setter),T4,x_1421F1835);
+  x_1422F1836 = form_;
+  T8 = CALL1(1,VARREF(Yast_linearizeYform_definitions),x_1422F1836);
   T7 = CALL2(1,VARREF(YprotoScollectionsSlistYpush),T8,x_);
-  T6 = CALL2(1,VARREF(Yast_linearizeYform_definitions_setter),T7,x_2451F6125);
-  T0 = new_indexF6123;
+  T6 = CALL2(1,VARREF(Yast_linearizeYform_definitions_setter),T7,x_1422F1836);
+  T0 = new_indexF1834;
 UNLINK_STACK();
   QRET(T0);
 }
@@ -2662,7 +2667,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_93) {
   P forms_,s_;
-  P innerF6126;
+  P innerF1837;
   P T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -2670,9 +2675,9 @@ LINK_STACK();
   ARG(s_, 1);
 loop:
   T1 = FUNSHELL(1,fun_inner_92,4);
-  innerF6126 = T1;
-  FUNINIT(innerF6126, 4,forms_,FREEREF(0),FREEREF(1),innerF6126);
-  T2 = CALL3(0,innerF6126,Ynil,s_,YPint((P)0));
+  innerF1837 = T1;
+  FUNINIT(innerF1837, 4,forms_,FREEREF(0),FREEREF(1),innerF1837);
+  T2 = CALL3(0,innerF1837,Ynil,s_,YPint((P)0));
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -2680,7 +2685,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_split_program_94) {
   P o_,max_count_;
-  P loopF6127;
+  P loopF1838;
   P T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -2688,9 +2693,9 @@ LINK_STACK();
   ARG(max_count_, 1);
 loop:
   T1 = FUNSHELL(1,fun_loop_93,2);
-  loopF6127 = T1;
-  FUNINIT(loopF6127, 2,max_count_,loopF6127);
-  T2 = CALL2(0,loopF6127,Ynil,o_);
+  loopF1838 = T1;
+  FUNINIT(loopF1838, 2,max_count_,loopF1838);
+  T2 = CALL2(0,loopF1838,Ynil,o_);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -2698,10 +2703,10 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_95) {
   P calls_,defns_,i_,forms_;
-  P callF6131;
-  P defnF6130;
-  P bindingF6129;
-  P nameF6128;
+  P callF1842;
+  P defnF1841;
+  P bindingF1840;
+  P nameF1839;
   P T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3,a4;
@@ -2723,19 +2728,19 @@ loop:
     T0 = FREEREF(0);
   } else {
     T8 = CALL3(1,VARREF(YmacrosYcat_sym),LITREF(lit_101),i_,LITREF(lit_102));
-    nameF6128 = T8;
-    T10 = CALLN(1,VARREF(YastYast_define_binding),4,FREEREF(1),nameF6128,YPfalse,LITREF(lit_103));
-    bindingF6129 = T10;
-    T13 = CALL2(1,VARREF(YastYobjectify_quotation),nameF6128,YPint((P)4));
+    nameF1839 = T8;
+    T10 = CALLN(1,VARREF(YastYast_define_binding),4,FREEREF(1),nameF1839,YPfalse,LITREF(lit_103));
+    bindingF1840 = T10;
+    T13 = CALL2(1,VARREF(YastYobjectify_quotation),nameF1839,YPint((P)4));
     T14 = CALL2(1,VARREF(YastYobjectify_signature),Ynil,FREEREF(1));
     T15 = CALL1(1,VARREF(Yhead),forms_);
-    T12 = CALLN(1,VARREF(Ynew),9,VARREF(YastYLast_primitiveG),VARREF(YastYfunction_binding),bindingF6129,VARREF(YastYfunction_debug_name),T13,VARREF(YastYfunction_signature),T14,VARREF(YastYfunction_body),T15);
-    defnF6130 = T12;
+    T12 = CALLN(1,VARREF(Ynew),9,VARREF(YastYLast_primitiveG),VARREF(YastYfunction_binding),bindingF1840,VARREF(YastYfunction_debug_name),T13,VARREF(YastYfunction_signature),T14,VARREF(YastYfunction_body),T15);
+    defnF1841 = T12;
     T18 = CALL1(1,VARREF(YprotoScollectionsScollectionYempty),VARREF(YastYLargumentsG));
-    T17 = CALLN(1,VARREF(Ynew),7,VARREF(YastYLpredefined_applicationG),VARREF(YastYapplication_binding),bindingF6129,VARREF(YastYapplication_arguments),T18,VARREF(YastYapplication_tailQ),YPfalse);
-    callF6131 = T17;
-    T20 = CALL2(1,VARREF(YmacrosYpair),callF6131,calls_);
-    T21 = CALL2(1,VARREF(YmacrosYpair),defnF6130,defns_);
+    T17 = CALLN(1,VARREF(Ynew),7,VARREF(YastYLpredefined_applicationG),VARREF(YastYapplication_binding),bindingF1840,VARREF(YastYapplication_arguments),T18,VARREF(YastYapplication_tailQ),YPfalse);
+    callF1842 = T17;
+    T20 = CALL2(1,VARREF(YmacrosYpair),callF1842,calls_);
+    T21 = CALL2(1,VARREF(YmacrosYpair),defnF1841,defns_);
     T22 = CALL2(1,VARREF(YprotoSmathYA),i_,YPint((P)1));
     T23 = CALL1(1,VARREF(Ytail),forms_);
     a1 = T20;
@@ -2759,9 +2764,9 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_closurize_mainX_96) {
   P o_,r_,max_count_;
-  P loopF6134;
-  P base_indexF6133;
-  P formsF6132;
+  P loopF1845;
+  P base_indexF1844;
+  P formsF1843;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -2771,15 +2776,15 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(Yast_linearizeYprogram_form),o_);
   T1 = CALL2(1,VARREF(Yast_linearizeYsplit_program),T2,max_count_);
-  formsF6132 = T1;
+  formsF1843 = T1;
   T5 = CALL1(1,VARREF(Yast_linearizeYprogram_definitions),o_);
   T4 = CALL1(1,VARREF(YprotoStypesYlen),T5);
-  base_indexF6133 = T4;
+  base_indexF1844 = T4;
   T7 = FUNSHELL(1,fun_loop_95,3);
-  loopF6134 = T7;
-  FUNINIT(loopF6134, 3,o_,r_,loopF6134);
+  loopF1845 = T7;
+  FUNINIT(loopF1845, 3,o_,r_,loopF1845);
   T9 = CALL1(1,VARREF(Yast_linearizeYprogram_definitions),o_);
-  T8 = CALLN(0,loopF6134,4,Ynil,T9,YPint((P)0),formsF6132);
+  T8 = CALLN(0,loopF1845,4,Ynil,T9,YPint((P)0),formsF1843);
   T6 = T8;
   T3 = T6;
   T0 = T3;
@@ -2830,8 +2835,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_collect_temporariesX_100) {
   P o_,flat_fun_,r_;
-  P bF6136;
-  P bindingF6135;
+  P bF1847;
+  P bindingF1846;
   P T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -2840,11 +2845,11 @@ LINK_STACK();
   ARG(r_, 2);
 loop:
   T1 = CALL1(1,VARREF(YastYreference_binding),o_);
-  bindingF6135 = T1;
-  T3 = CALL2(1,VARREF(Yast_linearizeYassocq),bindingF6135,r_);
-  bF6136 = T3;
-  if (bF6136 != YPfalse) {
-    T6 = CALL1(1,VARREF(Yast_linearizeYassoc_value),bF6136);
+  bindingF1846 = T1;
+  T3 = CALL2(1,VARREF(Yast_linearizeYassocq),bindingF1846,r_);
+  bF1847 = T3;
+  if (bF1847 != YPfalse) {
+    T6 = CALL1(1,VARREF(Yast_linearizeYassoc_value),bF1847);
     T5 = CALL3(1,VARREF(Ynew),VARREF(YastYLlocal_referenceG),VARREF(YastYreference_binding),T6);
     T4 = T5;
   } else {
@@ -2858,8 +2863,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_collect_temporariesX_101) {
   P o_,flat_fun_,r_;
-  P new_rF6138;
-  P new_bindingsF6137;
+  P new_rF1849;
+  P new_bindingsF1848;
   P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -2872,15 +2877,15 @@ loop:
   CALL2(1,VARREF(YastYfix_let_arguments_setter),T0,o_);
   T4 = CALL1(1,VARREF(YastYfix_let_bindings),o_);
   T3 = CALL2(1,VARREF(YmacrosYmap),VARREF(Yast_linearizeYnew_renamed_binding),T4);
-  new_bindingsF6137 = T3;
+  new_bindingsF1848 = T3;
   T8 = CALL1(1,VARREF(YastYfix_let_bindings),o_);
-  T7 = CALL3(1,VARREF(YprotoScollectionsScollectionYmap2),VARREF(Yast_linearizeYassoc),T8,new_bindingsF6137);
+  T7 = CALL3(1,VARREF(YprotoScollectionsScollectionYmap2),VARREF(Yast_linearizeYassoc),T8,new_bindingsF1848);
   T6 = CALL2(1,VARREF(YmacrosYcat),T7,r_);
-  new_rF6138 = T6;
-  CALL2(1,VARREF(Yast_linearizeYadjoin_temporary_variablesX),flat_fun_,new_bindingsF6137);
-  CALL2(1,VARREF(YastYfix_let_bindings_setter),new_bindingsF6137,o_);
+  new_rF1849 = T6;
+  CALL2(1,VARREF(Yast_linearizeYadjoin_temporary_variablesX),flat_fun_,new_bindingsF1848);
+  CALL2(1,VARREF(YastYfix_let_bindings_setter),new_bindingsF1848,o_);
   T10 = CALL1(1,VARREF(YastYfix_let_body),o_);
-  T9 = CALL3(1,VARREF(Yast_linearizeYcollect_temporariesX),T10,flat_fun_,new_rF6138);
+  T9 = CALL3(1,VARREF(Yast_linearizeYcollect_temporariesX),T10,flat_fun_,new_rF1849);
   CALL2(1,VARREF(YastYfix_let_body_setter),T9,o_);
   T5 = o_;
   T2 = T5;
@@ -2890,8 +2895,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_collect_temporariesX_102) {
   P o_,flat_fun_,r_;
-  P new_rF6140;
-  P new_bindingsF6139;
+  P new_rF1851;
+  P new_bindingsF1850;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -2901,19 +2906,19 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(YastYlocals_bindings),o_);
   T1 = CALL2(1,VARREF(YmacrosYmap),VARREF(Yast_linearizeYnew_renamed_binding),T2);
-  new_bindingsF6139 = T1;
+  new_bindingsF1850 = T1;
   T6 = CALL1(1,VARREF(YastYlocals_bindings),o_);
-  T5 = CALL3(1,VARREF(YprotoScollectionsScollectionYmap2),VARREF(Yast_linearizeYassoc),T6,new_bindingsF6139);
+  T5 = CALL3(1,VARREF(YprotoScollectionsScollectionYmap2),VARREF(Yast_linearizeYassoc),T6,new_bindingsF1850);
   T4 = CALL2(1,VARREF(YmacrosYcat),T5,r_);
-  new_rF6140 = T4;
-  T8 = CALL3(1,VARREF(YruntimeYrcurry),VARREF(Yast_linearizeYcollect_temporariesX),flat_fun_,new_rF6140);
+  new_rF1851 = T4;
+  T8 = CALL3(1,VARREF(YruntimeYrcurry),VARREF(Yast_linearizeYcollect_temporariesX),flat_fun_,new_rF1851);
   T9 = CALL1(1,VARREF(YastYlocals_functions),o_);
   T7 = CALL2(1,VARREF(YmacrosYmap),T8,T9);
   CALL2(1,VARREF(YastYlocals_functions_setter),T7,o_);
-  CALL2(1,VARREF(Yast_linearizeYadjoin_temporary_variablesX),flat_fun_,new_bindingsF6139);
-  CALL2(1,VARREF(YastYlocals_bindings_setter),new_bindingsF6139,o_);
+  CALL2(1,VARREF(Yast_linearizeYadjoin_temporary_variablesX),flat_fun_,new_bindingsF1850);
+  CALL2(1,VARREF(YastYlocals_bindings_setter),new_bindingsF1850,o_);
   T11 = CALL1(1,VARREF(YastYlocals_body),o_);
-  T10 = CALL3(1,VARREF(Yast_linearizeYcollect_temporariesX),T11,flat_fun_,new_rF6140);
+  T10 = CALL3(1,VARREF(Yast_linearizeYcollect_temporariesX),T11,flat_fun_,new_rF1851);
   CALL2(1,VARREF(YastYlocals_body_setter),T10,o_);
   T3 = o_;
   T0 = T3;
@@ -2963,7 +2968,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_adjoin_temporary_variablesX_104) {
   P flat_fun_,new_bindings_;
-  P adjoinF6141;
+  P adjoinF1852;
   P T3,T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -2971,10 +2976,10 @@ LINK_STACK();
   ARG(new_bindings_, 1);
 loop:
   T1 = FUNSHELL(1,fun_adjoin_103,2);
-  adjoinF6141 = T1;
-  FUNINIT(adjoinF6141, 2,flat_fun_,adjoinF6141);
+  adjoinF1852 = T1;
+  FUNINIT(adjoinF1852, 2,flat_fun_,adjoinF1852);
   T3 = CALL1(1,VARREF(YastYfunction_temporaries),flat_fun_);
-  T2 = CALL2(0,adjoinF6141,T3,new_bindings_);
+  T2 = CALL2(0,adjoinF1852,T3,new_bindings_);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -3057,16 +3062,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_register_allocateX_111) {
   P o_,register_passiveQ_;
-  P x_2452F6142;
+  P x_1423F1853;
   P T2,T1,T0;
   P a1,a2;
 LINK_STACK();
   ARG(o_, 0);
   ARG(register_passiveQ_, 1);
 loop:
-  x_2452F6142 = VARREF(Yast_linearizeYTregister_passiveQT);
+  x_1423F1853 = VARREF(Yast_linearizeYTregister_passiveQT);
   T1 = FUNFAB(fun_109,2,register_passiveQ_,o_);
-  T2 = FUNFAB(fun_110,1,x_2452F6142);
+  T2 = FUNFAB(fun_110,1,x_1423F1853);
   T0 = with_cleanup(T1,T2);
 UNLINK_STACK();
   QRET(o_);
@@ -3074,9 +3079,9 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_allocate_register_112) {
   P o_,flat_fun_,valQ_;
-  P x_2453F6145;
-  P tmpF6144;
-  P tmpF6143;
+  P x_1424F1856;
+  P tmpF1855;
+  P tmpF1854;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -3084,10 +3089,10 @@ LINK_STACK();
   ARG(flat_fun_, 1);
   ARG(valQ_, 2);
 loop:
-  tmpF6143 = valQ_;
-  if (tmpF6143 != YPfalse) {
-    tmpF6144 = flat_fun_;
-    if (tmpF6144 != YPfalse) {
+  tmpF1854 = valQ_;
+  if (tmpF1854 != YPfalse) {
+    tmpF1855 = flat_fun_;
+    if (tmpF1855 != YPfalse) {
       T6 = CALL1(1,VARREF(YastYprogram_register),o_);
       T5 = CALL1(1,VARREF(Ynot),T6);
       T4 = T5;
@@ -3104,10 +3109,10 @@ loop:
     T8 = CALL1(1,VARREF(YastYfunction_registers),flat_fun_);
     T7 = CALL1(1,VARREF(YprotoStypesYlen),T8);
     CALL2(1,VARREF(YastYprogram_register_setter),T7,o_);
-    x_2453F6145 = flat_fun_;
-    T12 = CALL1(1,VARREF(YastYfunction_registers),x_2453F6145);
+    x_1424F1856 = flat_fun_;
+    T12 = CALL1(1,VARREF(YastYfunction_registers),x_1424F1856);
     T11 = CALL2(1,VARREF(YprotoScollectionsSlistYpush),T12,o_);
-    T10 = CALL2(1,VARREF(YastYfunction_registers_setter),T11,x_2453F6145);
+    T10 = CALL2(1,VARREF(YastYfunction_registers_setter),T11,x_1424F1856);
     T9 = T10;
     T0 = T9;
   } else {
@@ -3134,8 +3139,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_114) {
   P x_;
-  P tmpF6147;
-  P next_xF6146;
+  P tmpF1858;
+  P next_xF1857;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 LINK_STACK();
@@ -3146,18 +3151,18 @@ loop:
     T0 = FREEREF(0);
   } else {
     T3 = CALL1(1,VARREF(Ytail),x_);
-    next_xF6146 = T3;
+    next_xF1857 = T3;
     T4 = CALL1(1,VARREF(Yhead),x_);
-    tmpF6147 = FREEREF(2);
-    if (tmpF6147 != YPfalse) {
-      T7 = CALL1(1,VARREF(YmacrosYemptyQ),next_xF6146);
+    tmpF1858 = FREEREF(2);
+    if (tmpF1858 != YPfalse) {
+      T7 = CALL1(1,VARREF(YmacrosYemptyQ),next_xF1857);
       T6 = T7;
     } else {
       T6 = YPfalse;
     }
     T5 = T6;
     CALL3(1,VARREF(Yast_linearizeYcollect_registersX),T4,FREEREF(1),T5);
-    a1 = next_xF6146;
+    a1 = next_xF1857;
     x_ = a1;
     goto loop;
     T2 = T8;
@@ -3169,7 +3174,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_collect_registersX_115) {
   P o_,flat_fun_,valQ_;
-  P loopF6148;
+  P loopF1859;
   P T2,T1,T0;
   P a1,a2,a3;
 LINK_STACK();
@@ -3178,9 +3183,9 @@ LINK_STACK();
   ARG(valQ_, 2);
 loop:
   T1 = FUNSHELL(1,fun_loop_114,4);
-  loopF6148 = T1;
-  FUNINIT(loopF6148, 4,o_,flat_fun_,valQ_,loopF6148);
-  T2 = CALL1(0,loopF6148,o_);
+  loopF1859 = T1;
+  FUNINIT(loopF1859, 4,o_,flat_fun_,valQ_,loopF1859);
+  T2 = CALL1(0,loopF1859,o_);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -3304,16 +3309,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_123) {
   P return_;
-  P walkF6149;
+  P walkF1860;
   P T1,T0;
   P a1;
 LINK_STACK();
   ARG(return_, 0);
 loop:
   T0 = FUNSHELL(0,fun_walk_122,2);
-  walkF6149 = T0;
-  FUNINIT(walkF6149, 2,return_,walkF6149);
-  T1 = CALL2(1,VARREF(Yast_linearizeYast_walk),walkF6149,FREEREF(0));
+  walkF1860 = T0;
+  FUNINIT(walkF1860, 2,return_,walkF1860);
+  T1 = CALL2(1,VARREF(Yast_linearizeYast_walk),walkF1860,FREEREF(0));
 UNLINK_STACK();
   QRET(YPfalse);
 }
@@ -3428,10 +3433,10 @@ loop:
   lit_13 = YPPsym((P)"g");
   lit_14 = YPPsym((P)"o");
   lit_15 = YPPsym((P)"args");
-  lit_16 = YPPsym((P)"x-2445");
-  lit_17 = YPPsym((P)"x-2444");
+  lit_16 = YPPsym((P)"x-1416");
+  lit_17 = YPPsym((P)"x-1415");
   T30 = YPsig(YPPlist(1,LITREF(lit_17)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_2445_6 = YPmet(FUNCODEREF(fun_x_2445_6),LITREF(lit_16),T30,ENVNUL,PNUL,YPfalse);
+  fun_x_1416_6 = YPmet(FUNCODEREF(fun_x_1416_6),LITREF(lit_16),T30,ENVNUL,PNUL,YPfalse);
   T29 = YPsig(YPPlist(3,LITREF(lit_13),LITREF(lit_14),LITREF(lit_15)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPtrue,YPint((P)2),VARREF(YLanyG),Ynil);
   fun_update_walkX_7 = YPmet(FUNCODEREF(fun_update_walkX_7),LITREF(lit_12),T29,ENVNUL,PNUL,YPfalse);
   T33 = BOUNDP(Yast_linearizeYupdate_walkX);
@@ -3444,10 +3449,10 @@ loop:
   T31 = CALL2(1,VARREF(YPdefine_method),T32,T34);
   VARSET(Yast_linearizeYupdate_walkX,T31);
   lit_18 = YPPsym((P)"ast-walk");
-  lit_19 = YPPsym((P)"x-2447");
-  lit_20 = YPPsym((P)"x-2446");
+  lit_19 = YPPsym((P)"x-1418");
+  lit_20 = YPPsym((P)"x-1417");
   T36 = YPsig(YPPlist(1,LITREF(lit_20)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_2447_8 = YPmet(FUNCODEREF(fun_x_2447_8),LITREF(lit_19),T36,ENVNUL,PNUL,YPfalse);
+  fun_x_1418_8 = YPmet(FUNCODEREF(fun_x_1418_8),LITREF(lit_19),T36,ENVNUL,PNUL,YPfalse);
   T35 = YPsig(YPPlist(3,LITREF(lit_13),LITREF(lit_14),LITREF(lit_15)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPtrue,YPint((P)2),VARREF(YLanyG),Ynil);
   fun_ast_walk_9 = YPmet(FUNCODEREF(fun_ast_walk_9),LITREF(lit_18),T35,ENVNUL,PNUL,YPfalse);
   T39 = BOUNDP(Yast_linearizeYast_walk);
@@ -4706,16 +4711,18 @@ extern MODULE_INFO module_info_protoStypes;
 extern MODULE_INFO module_info_protoSmath;
 extern MODULE_INFO module_info_protoScollections;
 extern MODULE_INFO module_info_protoScollectionsScollection;
-extern MODULE_INFO module_info_protoScollectionsStable;
-extern MODULE_INFO module_info_protoScollectionsSassoc;
 extern MODULE_INFO module_info_protoScollectionsSsequence;
-extern MODULE_INFO module_info_protoScollectionsSstring;
-extern MODULE_INFO module_info_protoScollectionsSbuffer;
-extern MODULE_INFO module_info_protoScollectionsSrange;
-extern MODULE_INFO module_info_protoScollectionsSlist;
+extern MODULE_INFO module_info_protoScollectionsStable;
 extern MODULE_INFO module_info_protoSmagnitudes;
-extern MODULE_INFO module_info_protoScollectionsSmap;
 extern MODULE_INFO module_info_protoScollectionsSstep;
+extern MODULE_INFO module_info_protoScollectionsSrange;
+extern MODULE_INFO module_info_protoScollectionsSbuffer;
+extern MODULE_INFO module_info_protoScollectionsSstring;
+extern MODULE_INFO module_info_protoScollectionsSlist;
+extern MODULE_INFO module_info_protoScollectionsSzip;
+extern MODULE_INFO module_info_protoScollectionsScycle;
+extern MODULE_INFO module_info_protoScollectionsSmap;
+extern MODULE_INFO module_info_protoScollectionsSassoc;
 
 static USE_INFO use_infos[] = {
   {&module_info_boot},
@@ -4729,870 +4736,875 @@ static USE_INFO use_infos[] = {
 };
 
 static IMPORT_INFO import_infos[] = {
-  {"<num>", &module_info_boot, "<num>"},
-  {"<vec>", &module_info_boot, "<vec>"},
-  {"key-type", &module_info_protoScollectionsScollection, "key-type"},
-  {"prop-getter", &module_info_boot, "prop-getter"},
-  {"choose-handler", &module_info_runtime, "choose-handler"},
-  {"function-free", &module_info_ast, "function-free"},
-  {"case-insensitive-string-equal", &module_info_protoScollectionsStable, "case-insensitive-string-equal"},
-  {"case-insensitive-string-hash", &module_info_protoScollectionsStable, "case-insensitive-string-hash"},
-  {"assocs-test-setter", &module_info_protoScollectionsSassoc, "assocs-test-setter"},
-  {"%vlen", &module_info_boot, "%vlen"},
-  {"<simple-condition>", &module_info_runtime, "<simple-condition>"},
-  {"and", &module_info_macros, "and"},
-  {"del-dups", &module_info_protoScollectionsSsequence, "del-dups"},
-  {"binding-global-box", &module_info_ast, "binding-global-box"},
-  {"fin?", &module_info_protoScollectionsScollection, "fin?"},
-  {"%unlink-stack", &module_info_boot, "%unlink-stack"},
-  {"unexec", &module_info_boot, "unexec"},
-  {"type-error", &module_info_boot, "type-error"},
-  {"+", &module_info_protoSmath, "+"},
-  {"%fun-reg", &module_info_boot, "%fun-reg"},
-  {"environment-module", &module_info_ast, "environment-module"},
-  {"class-direct-props", &module_info_boot, "class-direct-props"},
-  {"gensym", &module_info_macros, "gensym"},
-  {"vec", &module_info_boot, "vec"},
-  {"or", &module_info_macros, "or"},
-  {"match-sublist", &module_info_macros, "match-sublist"},
-  {"below", &module_info_protoScollectionsSsequence, "below"},
-  {"signature-arity-setter", &module_info_ast, "signature-arity-setter"},
-  {"<constant>", &module_info_ast, "<constant>"},
-  {"install-initial-bindings", &module_info_ast, "install-initial-bindings"},
-  {"fix-let-body-setter", &module_info_ast, "fix-let-body-setter"},
-  {"<met>", &module_info_boot, "<met>"},
-  {"monitor-test", &module_info_ast, "monitor-test"},
-  {"contagious-call", &module_info_protoSmath, "contagious-call"},
-  {"module-name", &module_info_ast, "module-name"},
-  {"<monitor>", &module_info_ast, "<monitor>"},
-  {"*print-base*", &module_info_protoScollectionsSstring, "*print-base*"},
-  {"loc-val-setter", &module_info_runtime, "loc-val-setter"},
-  {"<ast-macro-definition>", &module_info_ast, "<ast-macro-definition>"},
-  {"mif", &module_info_boot, "mif"},
-  {"signature-value-setter", &module_info_ast, "signature-value-setter"},
-  {"global-box-value-setter", &module_info_ast, "global-box-value-setter"},
-  {"use/export", &module_info_boot, "use/export"},
-  {"zero?", &module_info_protoSmath, "zero?"},
-  {"%create-directory", &module_info_boot, "%create-directory"},
-  {"@olen", &module_info_boot, "@olen"},
-  {"until", &module_info_macros, "until"},
-  {"application-known?", &module_info_ast, "application-known?"},
-  {"prop-init", &module_info_boot, "prop-init"},
-  {"fix-let-bindings-setter", &module_info_ast, "fix-let-bindings-setter"},
-  {"binding-info", &module_info_ast, "binding-info"},
-  {"format-to-string", &module_info_runtime, "format-to-string"},
-  {"%i<<", &module_info_boot, "%i<<"},
-  {"%do-stack-frames", &module_info_boot, "%do-stack-frames"},
-  {"probe-module", &module_info_ast, "probe-module"},
-  {"round/", &module_info_protoSmath, "round/"},
-  {"<subclass>", &module_info_boot, "<subclass>"},
-  {"sin", &module_info_protoSmath, "sin"},
-  {"t+", &module_info_protoStypes, "t+"},
-  {"eof-object", &module_info_protoSmath, "eof-object"},
-  {"fun-nary?", &module_info_boot, "fun-nary?"},
-  {"enum", &module_info_protoScollectionsScollection, "enum"},
-  {"var-name", &module_info_macros, "var-name"},
-  {"global-box-value", &module_info_ast, "global-box-value"},
-  {"class-descendents", &module_info_boot, "class-descendents"},
-  {"elt-default", &module_info_protoScollectionsScollection, "elt-default"},
-  {"buf", &module_info_protoScollectionsSbuffer, "buf"},
-  {"map2", &module_info_protoScollectionsScollection, "map2"},
-  {"handler-matches?", &module_info_runtime, "handler-matches?"},
-  {"from", &module_info_protoScollectionsSrange, "from"},
-  {"gen-refs-setter", &module_info_boot, "gen-refs-setter"},
-  {"env-object-name", &module_info_ast, "env-object-name"},
-  {"binding-locative", &module_info_ast, "binding-locative"},
-  {"even?", &module_info_protoSmath, "even?"},
-  {"%fcos", &module_info_boot, "%fcos"},
-  {"monitor-main-thunk", &module_info_ast, "monitor-main-thunk"},
-  {"cond", &module_info_macros, "cond"},
-  {"%loc-val-setter", &module_info_boot, "%loc-val-setter"},
-  {"app", &module_info_macros, "app"},
-  {"fab-g2c-module", &module_info_ast, "fab-g2c-module"},
-  {"isa", &module_info_boot, "isa"},
-  {"<handler-info>", &module_info_runtime, "<handler-info>"},
-  {"@+", &module_info_boot, "@+"},
-  {"%invoke-debugger", &module_info_boot, "%invoke-debugger"},
-  {"<chr>", &module_info_boot, "<chr>"},
-  {"rem", &module_info_protoSmath, "rem"},
-  {"<flat>", &module_info_boot, "<flat>"},
-  {"del-vals", &module_info_protoScollectionsSsequence, "del-vals"},
-  {"subtype?", &module_info_boot, "subtype?"},
-  {"%file-mtime", &module_info_boot, "%file-mtime"},
-  {"dss", &module_info_boot, "dss"},
-  {"prop-value-setter", &module_info_boot, "prop-value-setter"},
-  {"<alternative>", &module_info_ast, "<alternative>"},
-  {"%lu", &module_info_boot, "%lu"},
-  {"log", &module_info_protoSmath, "log"},
-  {"%define-method", &module_info_boot, "%define-method"},
-  {"gen-refs", &module_info_boot, "gen-refs"},
-  {"exported", &module_info_macros, "exported"},
-  {"not", &module_info_boot, "not"},
-  {"-", &module_info_protoSmath, "-"},
-  {"incf", &module_info_macros, "incf"},
-  {"do-keyed", &module_info_protoScollectionsScollection, "do-keyed"},
-  {"module-name-to-relpath", &module_info_ast, "module-name-to-relpath"},
-  {"%get", &module_info_boot, "%get"},
-  {"%i+", &module_info_boot, "%i+"},
-  {"sub", &module_info_protoScollectionsSsequence, "sub"},
-  {"monitor-type", &module_info_ast, "monitor-type"},
-  {"assq", &module_info_protoScollectionsSlist, "assq"},
-  {"%f*", &module_info_boot, "%f*"},
-  {"<str-tab>", &module_info_protoScollectionsStable, "<str-tab>"},
-  {"objectify-signature", &module_info_ast, "objectify-signature"},
-  {"dup", &module_info_protoScollectionsScollection, "dup"},
-  {"monitor-info", &module_info_ast, "monitor-info"},
-  {"%iu", &module_info_boot, "%iu"},
+  {"%fi2f", &module_info_boot, "%fi2f"},
   {"elt-type", &module_info_protoScollectionsScollection, "elt-type"},
-  {"default-handler", &module_info_runtime, "default-handler"},
-  {"range-check?", &module_info_protoScollectionsSsequence, "range-check?"},
-  {"<fix-let>", &module_info_ast, "<fix-let>"},
-  {"tanh", &module_info_protoSmath, "tanh"},
-  {"fab-sym", &module_info_boot, "fab-sym"},
-  {"unknown-function-error", &module_info_boot, "unknown-function-error"},
-  {"%gen-src", &module_info_boot, "%gen-src"},
-  {"<binding>", &module_info_ast, "<binding>"},
-  {"sig-specs", &module_info_boot, "sig-specs"},
-  {"pos", &module_info_protoScollectionsSsequence, "pos"},
-  {"function-registers-setter", &module_info_ast, "function-registers-setter"},
-  {"fold", &module_info_protoScollectionsScollection, "fold"},
-  {"&", &module_info_protoSmath, "&"},
-  {"tab-shrink-threshold", &module_info_protoScollectionsStable, "tab-shrink-threshold"},
-  {"function-index", &module_info_ast, "function-index"},
-  {"%im", &module_info_boot, "%im"},
-  {"elts", &module_info_protoScollectionsScollection, "elts"},
-  {"<tup>", &module_info_boot, "<tup>"},
-  {"%fsinh", &module_info_boot, "%fsinh"},
-  {"%met-code", &module_info_boot, "%met-code"},
-  {"report-undefined-global-bindings", &module_info_ast, "report-undefined-global-bindings"},
-  {"<singleton>", &module_info_boot, "<singleton>"},
-  {"@lst", &module_info_boot, "@lst"},
-  {"%vnul", &module_info_boot, "%vnul"},
-  {"assignment-form-setter", &module_info_ast, "assignment-form-setter"},
-  {"function-signature-setter", &module_info_ast, "function-signature-setter"},
-  {"rep", &module_info_boot, "rep"},
-  {"opf", &module_info_macros, "opf"},
-  {"signature-bindings", &module_info_ast, "signature-bindings"},
-  {"~==", &module_info_protoSmath, "~=="},
-  {"<fun>", &module_info_boot, "<fun>"},
-  {"rcurry", &module_info_runtime, "rcurry"},
-  {"function-value", &module_info_ast, "function-value"},
-  {"build-condition-for-handler-interactively", &module_info_runtime, "build-condition-for-handler-interactively"},
-  {"module-binding", &module_info_ast, "module-binding"},
-  {"%app-args", &module_info_boot, "%app-args"},
-  {"set-module-environments", &module_info_ast, "set-module-environments"},
-  {"%os-val-setter", &module_info_boot, "%os-val-setter"},
-  {"map", &module_info_macros, "map"},
-  {"trunc/", &module_info_protoSmath, "trunc/"},
-  {"*macros-ok?*", &module_info_boot, "*macros-ok?*"},
-  {"function-temporaries-setter", &module_info_ast, "function-temporaries-setter"},
-  {"binding-name", &module_info_ast, "binding-name"},
-  {"environment-bindings", &module_info_ast, "environment-bindings"},
-  {"<program>", &module_info_ast, "<program>"},
-  {"~=", &module_info_protoSmath, "~="},
-  {"binding-type", &module_info_ast, "binding-type"},
-  {"binding-kind", &module_info_ast, "binding-kind"},
-  {"t?", &module_info_protoStypes, "t?"},
-  {"all2?", &module_info_protoStypes, "all2?"},
-  {"reject", &module_info_protoScollectionsSsequence, "reject"},
-  {"match", &module_info_macros, "match"},
-  {"<simple-error>", &module_info_runtime, "<simple-error>"},
-  {"range", &module_info_protoScollectionsSrange, "range"},
-  {"assert", &module_info_macros, "assert"},
-  {"sig-val", &module_info_boot, "sig-val"},
-  {"objectify-quotation", &module_info_ast, "objectify-quotation"},
-  {"prop-bound?", &module_info_boot, "prop-bound?"},
-  {"module-target-environment", &module_info_ast, "module-target-environment"},
-  {"<lst>", &module_info_boot, "<lst>"},
-  {"signature-names-setter", &module_info_ast, "signature-names-setter"},
-  {"tan", &module_info_protoSmath, "tan"},
-  {"<log>", &module_info_boot, "<log>"},
-  {"range-by", &module_info_protoScollectionsSrange, "range-by"},
-  {"%i>>", &module_info_boot, "%i>>"},
-  {"neg", &module_info_protoSmath, "neg"},
-  {"|", &module_info_protoSmath, "|"},
-  {"sqrt", &module_info_protoSmath, "sqrt"},
-  {"type-object", &module_info_boot, "type-object"},
-  {"%open-out-file", &module_info_boot, "%open-out-file"},
-  {"fun-name-setter", &module_info_boot, "fun-name-setter"},
-  {"%c<", &module_info_boot, "%c<"},
-  {"%ftan", &module_info_boot, "%ftan"},
-  {"fab-class", &module_info_boot, "fab-class"},
-  {"load-module", &module_info_ast, "load-module"},
-  {"fix-let-bindings", &module_info_ast, "fix-let-bindings"},
-  {"all?", &module_info_protoScollectionsScollection, "all?"},
-  {"%%sym", &module_info_boot, "%%sym"},
-  {"fun-specs", &module_info_boot, "fun-specs"},
-  {"*", &module_info_protoSmath, "*"},
-  {"renew", &module_info_macros, "renew"},
-  {"bound?-reference", &module_info_ast, "bound?-reference"},
-  {"round", &module_info_protoSmath, "round"},
-  {"decf", &module_info_macros, "decf"},
-  {"%raw", &module_info_boot, "%raw"},
-  {"logn", &module_info_protoSmath, "logn"},
-  {"sym-name", &module_info_boot, "sym-name"},
-  {"as-log", &module_info_protoSmath, "as-log"},
-  {"program-type", &module_info_ast, "program-type"},
-  {"%ready?", &module_info_boot, "%ready?"},
-  {"invoke-handler-interactively", &module_info_runtime, "invoke-handler-interactively"},
-  {"<replace-generic-restart>", &module_info_boot, "<replace-generic-restart>"},
-  {"%f+", &module_info_boot, "%f+"},
-  {"@len", &module_info_boot, "@len"},
-  {"1+", &module_info_protoSmath, "1+"},
-  {"pow", &module_info_protoSmath, "pow"},
-  {"range-check", &module_info_protoScollectionsSsequence, "range-check"},
-  {"%vec", &module_info_boot, "%vec"},
-  {"%facos", &module_info_boot, "%facos"},
-  {"%slen", &module_info_boot, "%slen"},
-  {"reference-binding", &module_info_ast, "reference-binding"},
-  {"find", &module_info_protoScollectionsScollection, "find"},
-  {"fun-name", &module_info_boot, "fun-name"},
-  {"program-type-setter", &module_info_ast, "program-type-setter"},
-  {"unchecked-runtime-environment", &module_info_ast, "unchecked-runtime-environment"},
-  {"digit?", &module_info_protoSmath, "digit?"},
-  {"%file-type", &module_info_boot, "%file-type"},
-  {"prop-owner", &module_info_boot, "prop-owner"},
-  {"tab-gc-state", &module_info_protoScollectionsStable, "tab-gc-state"},
-  {"%binding-name", &module_info_boot, "%binding-name"},
-  {"*boot-macro-expanders*", &module_info_boot, "*boot-macro-expanders*"},
-  {"<bot>", &module_info_protoSmath, "<bot>"},
-  {"to-str", &module_info_protoSmath, "to-str"},
-  {"fab-setter-name", &module_info_macros, "fab-setter-name"},
-  {"%ft", &module_info_boot, "%ft"},
-  {"t<", &module_info_protoStypes, "t<"},
-  {"function-free-setter", &module_info_ast, "function-free-setter"},
-  {"%untag", &module_info_boot, "%untag"},
-  {"object-class", &module_info_boot, "object-class"},
-  {"floor/", &module_info_protoSmath, "floor/"},
-  {"push", &module_info_protoScollectionsSlist, "push"},
-  {"program-register", &module_info_ast, "program-register"},
-  {"<handler>", &module_info_runtime, "<handler>"},
-  {"reference-frame-number", &module_info_ast, "reference-frame-number"},
-  {"atan", &module_info_protoSmath, "atan"},
-  {"signature-arity", &module_info_ast, "signature-arity"},
-  {"%fsin", &module_info_boot, "%fsin"},
-  {"class-parents", &module_info_boot, "class-parents"},
-  {"binding-mutable?", &module_info_ast, "binding-mutable?"},
-  {"try", &module_info_boot, "try"},
-  {"*report-prop-unbound-errors?*", &module_info_boot, "*report-prop-unbound-errors?*"},
-  {"cat2", &module_info_protoScollectionsSsequence, "cat2"},
-  {"pick", &module_info_protoScollectionsSsequence, "pick"},
-  {"prop-value", &module_info_boot, "prop-value"},
-  {"<restart>", &module_info_runtime, "<restart>"},
-  {"collected", &module_info_macros, "collected"},
-  {"tab-growth-threshold", &module_info_protoScollectionsStable, "tab-growth-threshold"},
-  {"<compile-time>", &module_info_ast, "<compile-time>"},
-  {"%i-", &module_info_boot, "%i-"},
-  {"dv", &module_info_boot, "dv"},
-  {"<list>", &module_info_protoScollectionsSlist, "<list>"},
-  {"match-atom", &module_info_macros, "match-atom"},
-  {">", &module_info_protoSmagnitudes, ">"},
-  {"%selt-setter", &module_info_boot, "%selt-setter"},
-  {"may-isa?", &module_info_boot, "may-isa?"},
-  {"char->ascii", &module_info_protoSmath, "char->ascii"},
-  {"<bound?>", &module_info_ast, "<bound?>"},
-  {"<seq>", &module_info_boot, "<seq>"},
-  {"<any>", &module_info_boot, "<any>"},
-  {"prop-type", &module_info_boot, "prop-type"},
-  {"program-register-setter", &module_info_ast, "program-register-setter"},
-  {"elt-setter", &module_info_protoScollectionsScollection, "elt-setter"},
-  {"seq", &module_info_boot, "seq"},
-  {"read", &module_info_runtime, "read"},
-  {"<unwind-protect>", &module_info_ast, "<unwind-protect>"},
-  {"var-type", &module_info_macros, "var-type"},
-  {"<locals>", &module_info_ast, "<locals>"},
-  {"%i<", &module_info_boot, "%i<"},
-  {"<global-box>", &module_info_ast, "<global-box>"},
-  {"fix-let-types-setter", &module_info_ast, "fix-let-types-setter"},
-  {"%selt", &module_info_boot, "%selt"},
-  {"any?", &module_info_protoStypes, "any?"},
-  {"%fatan", &module_info_boot, "%fatan"},
-  {"binding-value", &module_info_ast, "binding-value"},
-  {"cat!", &module_info_protoScollectionsSsequence, "cat!"},
-  {"pushf", &module_info_macros, "pushf"},
+  {"binding-global-box", &module_info_ast, "binding-global-box"},
+  {"%os-name", &module_info_boot, "%os-name"},
+  {"any2?", &module_info_protoScollectionsScollection, "any2?"},
+  {"init-ast", &module_info_ast, "init-ast"},
+  {"dg", &module_info_boot, "dg"},
+  {"power-of-two-ceiling", &module_info_protoSmath, "power-of-two-ceiling"},
   {"binding-index", &module_info_ast, "binding-index"},
-  {"class-props", &module_info_boot, "class-props"},
-  {"zap", &module_info_protoScollectionsScollection, "zap"},
-  {"locals-functions", &module_info_ast, "locals-functions"},
-  {"<module-loader>", &module_info_ast, "<module-loader>"},
-  {"find-binding", &module_info_ast, "find-binding"},
-  {"<static-global-environment>", &module_info_ast, "<static-global-environment>"},
-  {"signature-specs-setter", &module_info_ast, "signature-specs-setter"},
+  {"pos", &module_info_protoScollectionsSsequence, "pos"},
+  {"tab-hash", &module_info_protoScollectionsStable, "tab-hash"},
+  {"now-setter", &module_info_protoScollectionsScollection, "now-setter"},
+  {"%f-", &module_info_boot, "%f-"},
+  {"%ftan", &module_info_boot, "%ftan"},
+  {"elts", &module_info_protoScollectionsScollection, "elts"},
+  {"fab-sym", &module_info_boot, "fab-sym"},
+  {"tab-growth-factor", &module_info_protoScollectionsStable, "tab-growth-factor"},
+  {"<=", &module_info_protoSmagnitudes, "<="},
+  {"dss", &module_info_boot, "dss"},
+  {"=", &module_info_protoSmath, "="},
+  {"sig-specs", &module_info_boot, "sig-specs"},
+  {"log", &module_info_protoSmath, "log"},
+  {"@lst", &module_info_boot, "@lst"},
+  {"environment-bindings", &module_info_ast, "environment-bindings"},
+  {"signature-specs", &module_info_ast, "signature-specs"},
+  {"%loc-val", &module_info_boot, "%loc-val"},
+  {"%f/", &module_info_boot, "%f/"},
+  {"prop-type", &module_info_boot, "prop-type"},
+  {"rep", &module_info_boot, "rep"},
+  {"%app-filename", &module_info_boot, "%app-filename"},
+  {"@<", &module_info_boot, "@<"},
+  {"reject", &module_info_protoScollectionsSsequence, "reject"},
+  {"opf", &module_info_macros, "opf"},
+  {"first-then", &module_info_protoScollectionsSstep, "first-then"},
+  {"%open-out-file", &module_info_boot, "%open-out-file"},
+  {"%build-runtime-modules", &module_info_boot, "%build-runtime-modules"},
+  {"%iu", &module_info_boot, "%iu"},
+  {"<singleton>", &module_info_boot, "<singleton>"},
+  {"%pair", &module_info_boot, "%pair"},
+  {"reference-binding", &module_info_ast, "reference-binding"},
+  {"fab", &module_info_protoScollectionsScollection, "fab"},
+  {"%vlen", &module_info_boot, "%vlen"},
+  {"alternative-alternant", &module_info_ast, "alternative-alternant"},
+  {"$goo-runtime-module-name", &module_info_ast, "$goo-runtime-module-name"},
+  {"%f=", &module_info_boot, "%f="},
+  {"from", &module_info_protoScollectionsSrange, "from"},
+  {"binding-value-setter", &module_info_ast, "binding-value-setter"},
+  {"<fun>", &module_info_boot, "<fun>"},
+  {"^", &module_info_protoSmath, "^"},
+  {"%lu", &module_info_boot, "%lu"},
+  {"handler-info-message", &module_info_boot, "handler-info-message"},
+  {"match", &module_info_macros, "match"},
+  {"report-undefined-global-bindings", &module_info_ast, "report-undefined-global-bindings"},
+  {"<ast-signature>", &module_info_ast, "<ast-signature>"},
+  {"tan", &module_info_protoSmath, "tan"},
+  {"assert", &module_info_macros, "assert"},
+  {"<buf>", &module_info_protoScollectionsSbuffer, "<buf>"},
+  {"function-temporaries", &module_info_ast, "function-temporaries"},
+  {"prop-bound?", &module_info_boot, "prop-bound?"},
+  {"%f<", &module_info_boot, "%f<"},
+  {"%loc-val-setter", &module_info_boot, "%loc-val-setter"},
+  {"@len", &module_info_boot, "@len"},
+  {"cat-sym", &module_info_macros, "cat-sym"},
+  {"<alternative>", &module_info_ast, "<alternative>"},
+  {"all?", &module_info_protoScollectionsScollection, "all?"},
+  {"tab-shrink-threshold-setter", &module_info_protoScollectionsStable, "tab-shrink-threshold-setter"},
+  {"locals-bindings-setter", &module_info_ast, "locals-bindings-setter"},
+  {"items", &module_info_protoScollectionsScollection, "items"},
+  {"sig-val", &module_info_boot, "sig-val"},
+  {"<lst>", &module_info_boot, "<lst>"},
+  {"build-condition-interactively", &module_info_runtime, "build-condition-interactively"},
+  {"tab-test", &module_info_protoScollectionsStable, "tab-test"},
+  {"fab-class", &module_info_boot, "fab-class"},
+  {"*boot-macro-module-names*", &module_info_boot, "*boot-macro-module-names*"},
+  {"<log>", &module_info_boot, "<log>"},
+  {"function-body", &module_info_ast, "function-body"},
+  {"eof-object?", &module_info_protoSmath, "eof-object?"},
+  {"loc-val-setter", &module_info_runtime, "loc-val-setter"},
+  {"fun-specs", &module_info_boot, "fun-specs"},
+  {"type-object", &module_info_boot, "type-object"},
+  {"renew", &module_info_macros, "renew"},
+  {"list-handlers", &module_info_runtime, "list-handlers"},
+  {"fun-name-setter", &module_info_boot, "fun-name-setter"},
+  {"decf", &module_info_macros, "decf"},
+  {"<runtime-assignment>", &module_info_ast, "<runtime-assignment>"},
+  {"str-to-num", &module_info_protoScollectionsSstring, "str-to-num"},
+  {"$default-handler-info", &module_info_runtime, "$default-handler-info"},
+  {"t*", &module_info_protoStypes, "t*"},
+  {"always", &module_info_runtime, "always"},
+  {"%fu", &module_info_boot, "%fu"},
+  {"%f+", &module_info_boot, "%f+"},
+  {"<ast-primitive-definition>", &module_info_ast, "<ast-primitive-definition>"},
+  {"init-environment-for-eval", &module_info_ast, "init-environment-for-eval"},
+  {"sub", &module_info_protoScollectionsSsequence, "sub"},
+  {"function-debug-name", &module_info_ast, "function-debug-name"},
+  {"%current-out-port", &module_info_boot, "%current-out-port"},
+  {"%str", &module_info_boot, "%str"},
+  {"pop-last!", &module_info_protoScollectionsSbuffer, "pop-last!"},
+  {"num-to-str", &module_info_protoSmath, "num-to-str"},
+  {"binding-info", &module_info_ast, "binding-info"},
   {"assqn", &module_info_protoScollectionsSlist, "assqn"},
-  {"wrong-number-arguments-error", &module_info_boot, "wrong-number-arguments-error"},
+  {"sym-name", &module_info_boot, "sym-name"},
+  {"*boot-macro-expanders*", &module_info_boot, "*boot-macro-expanders*"},
+  {"|", &module_info_protoSmath, "|"},
+  {"find", &module_info_protoScollectionsScollection, "find"},
+  {"%i^", &module_info_boot, "%i^"},
+  {"df", &module_info_boot, "df"},
+  {"tab-growth-factor-setter", &module_info_protoScollectionsStable, "tab-growth-factor-setter"},
+  {"signature-arity", &module_info_ast, "signature-arity"},
+  {"binding-dynamic-extent?", &module_info_ast, "binding-dynamic-extent?"},
+  {"add!", &module_info_protoScollectionsScollection, "add!"},
+  {"%allocate-stack", &module_info_boot, "%allocate-stack"},
+  {"<fab-list>", &module_info_ast, "<fab-list>"},
+  {"binding-value", &module_info_ast, "binding-value"},
+  {"%with-monitor", &module_info_boot, "%with-monitor"},
+  {"%file-mtime", &module_info_boot, "%file-mtime"},
+  {"compose", &module_info_runtime, "compose"},
+  {"%fun-reg", &module_info_boot, "%fun-reg"},
+  {"fun-name", &module_info_boot, "fun-name"},
+  {"fold", &module_info_protoScollectionsScollection, "fold"},
+  {"add-prop", &module_info_boot, "add-prop"},
+  {"finds", &module_info_protoScollectionsSsequence, "finds"},
+  {"<local-binding>", &module_info_ast, "<local-binding>"},
+  {"locals-functions-setter", &module_info_ast, "locals-functions-setter"},
+  {"object-class", &module_info_boot, "object-class"},
+  {"<fix-let>", &module_info_ast, "<fix-let>"},
+  {"prop-owner", &module_info_boot, "prop-owner"},
+  {"@==", &module_info_boot, "@=="},
+  {"push", &module_info_protoScollectionsSlist, "push"},
+  {"binding-info-setter", &module_info_ast, "binding-info-setter"},
+  {"find-binding", &module_info_ast, "find-binding"},
+  {"unwind-protect-cleanup-thunk", &module_info_ast, "unwind-protect-cleanup-thunk"},
+  {"zero?", &module_info_protoSmath, "zero?"},
+  {"%fb", &module_info_boot, "%fb"},
+  {"loc-val", &module_info_runtime, "loc-val"},
+  {"eof-object", &module_info_protoSmath, "eof-object"},
+  {"odd?", &module_info_protoSmath, "odd?"},
+  {"%i=", &module_info_boot, "%i="},
+  {"round", &module_info_protoSmath, "round"},
+  {"function-source", &module_info_ast, "function-source"},
+  {"fix-let-arguments", &module_info_ast, "fix-let-arguments"},
+  {"global-box-value-setter", &module_info_ast, "global-box-value-setter"},
+  {"prop-value", &module_info_boot, "prop-value"},
+  {"collected", &module_info_macros, "collected"},
+  {"tanh", &module_info_protoSmath, "tanh"},
+  {"class-parents", &module_info_boot, "class-parents"},
+  {"%i<<<", &module_info_boot, "%i<<<"},
+  {"dv", &module_info_boot, "dv"},
+  {"$max-int", &module_info_boot, "$max-int"},
+  {"match-sublist", &module_info_macros, "match-sublist"},
+  {">", &module_info_protoSmagnitudes, ">"},
+  {"pick", &module_info_protoScollectionsSsequence, "pick"},
+  {"may-isa?", &module_info_boot, "may-isa?"},
+  {"fab-g2c-module", &module_info_ast, "fab-g2c-module"},
+  {"%i<", &module_info_boot, "%i<"},
+  {"<list>", &module_info_protoScollectionsSlist, "<list>"},
+  {"elt-setter", &module_info_protoScollectionsScollection, "elt-setter"},
+  {"mod", &module_info_protoSmath, "mod"},
+  {"ascii-whitespaces", &module_info_protoScollectionsSstring, "ascii-whitespaces"},
+  {"$permanent-hash-state", &module_info_protoScollectionsStable, "$permanent-hash-state"},
+  {"<computed-program>", &module_info_ast, "<computed-program>"},
+  {"seq", &module_info_boot, "seq"},
+  {"program-type", &module_info_ast, "program-type"},
+  {"<ast-primitive>", &module_info_ast, "<ast-primitive>"},
+  {"signature-value-setter", &module_info_ast, "signature-value-setter"},
+  {"<program>", &module_info_ast, "<program>"},
+  {"runtime-environment", &module_info_ast, "runtime-environment"},
+  {"<seq>", &module_info_boot, "<seq>"},
+  {"constant-index", &module_info_ast, "constant-index"},
+  {"<local-assignment>", &module_info_ast, "<local-assignment>"},
+  {"t+", &module_info_protoStypes, "t+"},
+  {"nil", &module_info_boot, "nil"},
+  {"<any>", &module_info_boot, "<any>"},
+  {"env-object-name", &module_info_ast, "env-object-name"},
+  {"@oelt", &module_info_boot, "@oelt"},
+  {"pushf", &module_info_macros, "pushf"},
+  {"<module-loader>", &module_info_ast, "<module-loader>"},
+  {"%get", &module_info_boot, "%get"},
+  {"do-key-vals", &module_info_protoScollectionsSsequence, "do-key-vals"},
+  {"application-known?", &module_info_ast, "application-known?"},
+  {"%put", &module_info_boot, "%put"},
+  {"<range>", &module_info_protoScollectionsSrange, "<range>"},
+  {"mem?", &module_info_protoScollectionsScollection, "mem?"},
+  {"cat2", &module_info_protoScollectionsSsequence, "cat2"},
+  {"<monitor>", &module_info_ast, "<monitor>"},
+  {"%fsinh", &module_info_boot, "%fsinh"},
+  {"class-props", &module_info_boot, "class-props"},
+  {"error", &module_info_boot, "error"},
+  {"map", &module_info_macros, "map"},
+  {"ddv", &module_info_macros, "ddv"},
+  {"<", &module_info_protoSmagnitudes, "<"},
+  {"%raw-call", &module_info_boot, "%raw-call"},
+  {"neg?", &module_info_protoSmath, "neg?"},
+  {"spread", &module_info_runtime, "spread"},
+  {"sequentialize", &module_info_ast, "sequentialize"},
+  {"application-tail?", &module_info_ast, "application-tail?"},
+  {"compile-time-program", &module_info_ast, "compile-time-program"},
+  {"%force-out", &module_info_boot, "%force-out"},
+  {"%prop-unbound-error", &module_info_boot, "%prop-unbound-error"},
+  {"%do-stack-frames", &module_info_boot, "%do-stack-frames"},
+  {"char->ascii", &module_info_protoSmath, "char->ascii"},
+  {"constant-value", &module_info_ast, "constant-value"},
+  {"contagious-call", &module_info_protoSmath, "contagious-call"},
+  {"unzip", &module_info_protoScollectionsSzip, "unzip"},
+  {"<restart>", &module_info_runtime, "<restart>"},
+  {"round/", &module_info_protoSmath, "round/"},
+  {"esc", &module_info_boot, "esc"},
+  {"<sig>", &module_info_boot, "<sig>"},
+  {"<compile-time>", &module_info_ast, "<compile-time>"},
+  {"<real-reference>", &module_info_ast, "<real-reference>"},
+  {"collecting", &module_info_macros, "collecting"},
+  {"function-binding", &module_info_ast, "function-binding"},
+  {"*gensym-counter*", &module_info_runtime, "*gensym-counter*"},
+  {"%gen-code", &module_info_boot, "%gen-code"},
+  {"fun-names", &module_info_boot, "fun-names"},
+  {"locals-bindings", &module_info_ast, "locals-bindings"},
+  {"add", &module_info_protoScollectionsScollection, "add"},
+  {"macro-expand", &module_info_boot, "macro-expand"},
+  {"<passive-program>", &module_info_ast, "<passive-program>"},
+  {"load-in", &module_info_ast, "load-in"},
+  {"module-binding", &module_info_ast, "module-binding"},
+  {"%i*", &module_info_boot, "%i*"},
+  {"unless", &module_info_macros, "unless"},
+  {"format", &module_info_runtime, "format"},
+  {"%eof-object", &module_info_boot, "%eof-object"},
+  {"pos?", &module_info_protoSmath, "pos?"},
+  {"quote", &module_info_boot, "quote"},
+  {"<module-binding-reference>", &module_info_ast, "<module-binding-reference>"},
+  {">>>", &module_info_protoSmath, ">>>"},
+  {"assignment-form-setter", &module_info_ast, "assignment-form-setter"},
+  {"atan", &module_info_protoSmath, "atan"},
+  {"handler-matches?", &module_info_runtime, "handler-matches?"},
+  {"binding-mutable?", &module_info_ast, "binding-mutable?"},
+  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
+  {"set-module-environments", &module_info_ast, "set-module-environments"},
+  {"@all2?", &module_info_boot, "@all2?"},
+  {"curry", &module_info_runtime, "curry"},
+  {"exported", &module_info_macros, "exported"},
+  {"application-arguments", &module_info_ast, "application-arguments"},
+  {"function-source-setter", &module_info_ast, "function-source-setter"},
+  {"reference-frame-number", &module_info_ast, "reference-frame-number"},
+  {"fin", &module_info_boot, "fin"},
+  {"environment-module", &module_info_ast, "environment-module"},
+  {"%eq?", &module_info_boot, "%eq?"},
+  {"default-handler-description", &module_info_runtime, "default-handler-description"},
+  {"module-name-to-relpath", &module_info_ast, "module-name-to-relpath"},
+  {"file-opening-error", &module_info_boot, "file-opening-error"},
+  {"function-self-recursive?", &module_info_ast, "function-self-recursive?"},
+  {"digit?", &module_info_protoSmath, "digit?"},
+  {"<module>", &module_info_ast, "<module>"},
+  {"tab-growth-threshold-setter", &module_info_protoScollectionsStable, "tab-growth-threshold-setter"},
+  {"%os-val", &module_info_boot, "%os-val"},
+  {"<col>", &module_info_boot, "<col>"},
+  {"sig-names", &module_info_boot, "sig-names"},
+  {"<class>", &module_info_boot, "<class>"},
+  {"<assignment>", &module_info_ast, "<assignment>"},
+  {"alpha?", &module_info_protoSmath, "alpha?"},
+  {"<condition>", &module_info_runtime, "<condition>"},
+  {"case-insensitive-string-equal", &module_info_protoScollectionsStable, "case-insensitive-string-equal"},
+  {"function-value", &module_info_ast, "function-value"},
+  {"*boot-macro-names*", &module_info_boot, "*boot-macro-names*"},
+  {"~==", &module_info_protoSmath, "~=="},
+  {"remove-modules-by-name!", &module_info_ast, "remove-modules-by-name!"},
+  {"find-setter", &module_info_boot, "find-setter"},
+  {"even?", &module_info_protoSmath, "even?"},
+  {"var-name", &module_info_macros, "var-name"},
+  {"probe-module", &module_info_ast, "probe-module"},
+  {"<zip>", &module_info_protoScollectionsSzip, "<zip>"},
+  {"binding-name", &module_info_ast, "binding-name"},
+  {"%fasin", &module_info_boot, "%fasin"},
+  {"choose-handler", &module_info_runtime, "choose-handler"},
+  {"module-loader-module-type", &module_info_ast, "module-loader-module-type"},
+  {"into", &module_info_protoScollectionsScollection, "into"},
+  {"range-check", &module_info_protoScollectionsSsequence, "range-check"},
+  {"~=", &module_info_protoSmath, "~="},
+  {"t?", &module_info_protoStypes, "t?"},
+  {"tab-gc-state", &module_info_protoScollectionsStable, "tab-gc-state"},
+  {"all2?", &module_info_protoStypes, "all2?"},
+  {"num-to-str-base", &module_info_protoScollectionsSstring, "num-to-str-base"},
+  {"monitor-main-thunk", &module_info_ast, "monitor-main-thunk"},
+  {"signature-bindings-setter", &module_info_ast, "signature-bindings-setter"},
+  {"%check-call-types", &module_info_boot, "%check-call-types"},
+  {"~", &module_info_protoSmath, "~"},
+  {"application-function", &module_info_ast, "application-function"},
+  {"<sequential>", &module_info_ast, "<sequential>"},
   {"reference-called-function?", &module_info_ast, "reference-called-function?"},
-  {"address-of", &module_info_protoSmath, "address-of"},
+  {"<replace-generic-restart>", &module_info_boot, "<replace-generic-restart>"},
+  {"elt-or", &module_info_protoScollectionsScollection, "elt-or"},
+  {"loc", &module_info_boot, "loc"},
+  {"tail-setter", &module_info_boot, "tail-setter"},
+  {"match-atom", &module_info_macros, "match-atom"},
+  {"%untag", &module_info_boot, "%untag"},
+  {"%current-in-port", &module_info_boot, "%current-in-port"},
+  {"quasiquote", &module_info_boot, "quasiquote"},
+  {"sig-arity", &module_info_boot, "sig-arity"},
+  {"<bind-exit>", &module_info_ast, "<bind-exit>"},
+  {"%i>>", &module_info_boot, "%i>>"},
+  {"contagious-type", &module_info_protoSmath, "contagious-type"},
+  {"fab-gen", &module_info_boot, "fab-gen"},
+  {"range-check?", &module_info_protoScollectionsSsequence, "range-check?"},
+  {"<str-tab>", &module_info_protoScollectionsStable, "<str-tab>"},
+  {"ct", &module_info_boot, "ct"},
+  {"dm", &module_info_boot, "dm"},
+  {"assignment-reference", &module_info_ast, "assignment-reference"},
+  {"ast-define-binding", &module_info_ast, "ast-define-binding"},
+  {"%create-directory", &module_info_boot, "%create-directory"},
+  {"%os-val-setter", &module_info_boot, "%os-val-setter"},
+  {"last", &module_info_protoScollectionsSsequence, "last"},
+  {"<application>", &module_info_ast, "<application>"},
+  {"type-elts-setter", &module_info_protoStypes, "type-elts-setter"},
+  {"cat", &module_info_macros, "cat"},
+  {"binding-inferred-type", &module_info_ast, "binding-inferred-type"},
+  {"acos", &module_info_protoSmath, "acos"},
+  {"cat!", &module_info_protoScollectionsSsequence, "cat!"},
+  {"%ftanh", &module_info_boot, "%ftanh"},
+  {"<opts>", &module_info_boot, "<opts>"},
+  {"ins!", &module_info_protoScollectionsSsequence, "ins!"},
+  {"function-signature-setter", &module_info_ast, "function-signature-setter"},
+  {"%close-out-port", &module_info_boot, "%close-out-port"},
+  {"use", &module_info_boot, "use"},
+  {"as-log", &module_info_protoSmath, "as-log"},
+  {"module-name", &module_info_ast, "module-name"},
+  {"napp", &module_info_macros, "napp"},
+  {"tail", &module_info_boot, "tail"},
+  {"<serious-condition>", &module_info_runtime, "<serious-condition>"},
+  {"%gen-refs", &module_info_boot, "%gen-refs"},
+  {"<ast-generic>", &module_info_ast, "<ast-generic>"},
+  {"<type>", &module_info_boot, "<type>"},
+  {"program-type-setter", &module_info_ast, "program-type-setter"},
+  {"function-index-setter", &module_info_ast, "function-index-setter"},
+  {"ord-app-mets", &module_info_boot, "ord-app-mets"},
+  {"free-environment", &module_info_ast, "free-environment"},
+  {"locals-functions", &module_info_ast, "locals-functions"},
+  {"try", &module_info_boot, "try"},
+  {"logn", &module_info_protoSmath, "logn"},
+  {"%f*", &module_info_boot, "%f*"},
+  {"case-by", &module_info_macros, "case-by"},
+  {"to-str", &module_info_protoSmath, "to-str"},
+  {"cos", &module_info_protoSmath, "cos"},
+  {"do-module-loader-modules", &module_info_ast, "do-module-loader-modules"},
+  {"t<", &module_info_protoStypes, "t<"},
+  {"<loc>", &module_info_boot, "<loc>"},
+  {"*print-base*", &module_info_protoScollectionsSstring, "*print-base*"},
+  {"do3", &module_info_protoScollectionsScollection, "do3"},
+  {"&", &module_info_protoSmath, "&"},
+  {"<handler-info>", &module_info_runtime, "<handler-info>"},
+  {"monitor-handler", &module_info_ast, "monitor-handler"},
+  {"type-elts", &module_info_boot, "type-elts"},
+  {"%i-", &module_info_boot, "%i-"},
+  {"objectify-quotation", &module_info_ast, "objectify-quotation"},
+  {"abs", &module_info_protoSmath, "abs"},
+  {"%unlink-stack", &module_info_boot, "%unlink-stack"},
+  {"set", &module_info_boot, "set"},
+  {"cycle", &module_info_protoScollectionsScycle, "cycle"},
+  {"%fsin", &module_info_boot, "%fsin"},
+  {"<simple-error>", &module_info_runtime, "<simple-error>"},
+  {"swapf", &module_info_macros, "swapf"},
+  {"describe-condition", &module_info_runtime, "describe-condition"},
+  {"%sp-reg-setter", &module_info_boot, "%sp-reg-setter"},
+  {"signature-specs-setter", &module_info_ast, "signature-specs-setter"},
+  {"%bb", &module_info_boot, "%bb"},
+  {"find-getter", &module_info_boot, "find-getter"},
+  {"fix-let-bindings-setter", &module_info_ast, "fix-let-bindings-setter"},
+  {"class-name", &module_info_boot, "class-name"},
+  {"incongruent-method-error", &module_info_boot, "incongruent-method-error"},
+  {"condition-message", &module_info_runtime, "condition-message"},
+  {"sqrt", &module_info_protoSmath, "sqrt"},
+  {"do-static-global-bindings", &module_info_ast, "do-static-global-bindings"},
+  {"function-registers-setter", &module_info_ast, "function-registers-setter"},
+  {"%peek", &module_info_boot, "%peek"},
+  {"match-unquote", &module_info_macros, "match-unquote"},
+  {"def", &module_info_boot, "def"},
+  {"binding-native-to?", &module_info_ast, "binding-native-to?"},
+  {"%fatan2", &module_info_boot, "%fatan2"},
+  {"empty?", &module_info_macros, "empty?"},
+  {"def-fun-var", &module_info_macros, "def-fun-var"},
+  {"fab-setter-name", &module_info_macros, "fab-setter-name"},
+  {"dlet", &module_info_macros, "dlet"},
   {"<definition>", &module_info_ast, "<definition>"},
   {"fab-map", &module_info_protoScollectionsSmap, "fab-map"},
-  {"t=", &module_info_protoStypes, "t="},
-  {"error", &module_info_boot, "error"},
-  {"free-environment", &module_info_ast, "free-environment"},
-  {"macro-expand", &module_info_boot, "macro-expand"},
-  {"ddv", &module_info_macros, "ddv"},
-  {">>>", &module_info_protoSmath, ">>>"},
-  {"%cb", &module_info_boot, "%cb"},
-  {"<", &module_info_protoSmagnitudes, "<"},
-  {"*restarts-ok?*", &module_info_boot, "*restarts-ok?*"},
-  {"<global-reference>", &module_info_ast, "<global-reference>"},
-  {"tab-test", &module_info_protoScollectionsStable, "tab-test"},
-  {"application-binding", &module_info_ast, "application-binding"},
-  {"%force-out", &module_info_boot, "%force-out"},
-  {"environment-uses-modules", &module_info_ast, "environment-uses-modules"},
-  {"%fsqrt", &module_info_boot, "%fsqrt"},
-  {"<sig>", &module_info_boot, "<sig>"},
-  {"%prop-unbound-error", &module_info_boot, "%prop-unbound-error"},
-  {"num-to-str-base", &module_info_protoScollectionsSstring, "num-to-str-base"},
-  {"quasiquote", &module_info_boot, "quasiquote"},
-  {"%iv", &module_info_boot, "%iv"},
-  {"<serious-condition>", &module_info_runtime, "<serious-condition>"},
-  {"%app-filename", &module_info_boot, "%app-filename"},
-  {"%symbols", &module_info_boot, "%symbols"},
-  {"locals-body-setter", &module_info_ast, "locals-body-setter"},
-  {"do3", &module_info_protoScollectionsScollection, "do3"},
-  {"<error>", &module_info_runtime, "<error>"},
-  {"%eq?", &module_info_boot, "%eq?"},
-  {"locals-bindings-setter", &module_info_ast, "locals-bindings-setter"},
-  {"collecting", &module_info_macros, "collecting"},
-  {"<application>", &module_info_ast, "<application>"},
-  {"handler-info-message", &module_info_boot, "handler-info-message"},
-  {"len-setter", &module_info_protoScollectionsSbuffer, "len-setter"},
-  {"fun-names", &module_info_boot, "fun-names"},
-  {"def", &module_info_boot, "def"},
-  {"%gen-code", &module_info_boot, "%gen-code"},
-  {"%puts", &module_info_boot, "%puts"},
-  {"function-nary?", &module_info_ast, "function-nary?"},
-  {"%su", &module_info_boot, "%su"},
-  {"as-copy", &module_info_protoScollectionsScollection, "as-copy"},
-  {"function-self-recursive?-setter", &module_info_ast, "function-self-recursive?-setter"},
-  {"<ast-method>", &module_info_ast, "<ast-method>"},
-  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
-  {"@all2?", &module_info_boot, "@all2?"},
-  {"@==", &module_info_boot, "@=="},
-  {"<sequential>", &module_info_ast, "<sequential>"},
-  {"<ast-function>", &module_info_ast, "<ast-function>"},
-  {"def-list", &module_info_ast, "def-list"},
-  {"add", &module_info_protoScollectionsScollection, "add"},
-  {"quote", &module_info_boot, "quote"},
-  {"do-static-global-bindings", &module_info_ast, "do-static-global-bindings"},
-  {"%str", &module_info_boot, "%str"},
-  {"to-upper", &module_info_protoSmath, "to-upper"},
-  {"2nd", &module_info_protoStypes, "2nd"},
-  {"match-unquote", &module_info_macros, "match-unquote"},
-  {"=", &module_info_protoSmath, "="},
-  {"alpha?", &module_info_protoSmath, "alpha?"},
-  {"<ast-primitive>", &module_info_ast, "<ast-primitive>"},
-  {"ceil", &module_info_protoSmath, "ceil"},
-  {"function-registers", &module_info_ast, "function-registers"},
-  {"fix-let-arguments", &module_info_ast, "fix-let-arguments"},
-  {"fin", &module_info_boot, "fin"},
-  {"<col>", &module_info_boot, "<col>"},
-  {"esc", &module_info_boot, "esc"},
-  {"<class>", &module_info_boot, "<class>"},
-  {"%close-in-port", &module_info_boot, "%close-in-port"},
-  {"loc-val", &module_info_runtime, "loc-val"},
-  {"key-test", &module_info_protoScollectionsScollection, "key-test"},
-  {"<regular-application>", &module_info_ast, "<regular-application>"},
-  {"to-lower", &module_info_protoSmath, "to-lower"},
-  {"add!", &module_info_protoScollectionsScollection, "add!"},
-  {"finds", &module_info_protoScollectionsSsequence, "finds"},
-  {"<mag>", &module_info_boot, "<mag>"},
-  {"function-source-setter", &module_info_ast, "function-source-setter"},
-  {"%i^", &module_info_boot, "%i^"},
-  {"$max-int", &module_info_boot, "$max-int"},
-  {"module-loader-module-type", &module_info_ast, "module-loader-module-type"},
-  {"find-or", &module_info_protoScollectionsScollection, "find-or"},
-  {"find-setter", &module_info_boot, "find-setter"},
-  {"<bind-exit>", &module_info_ast, "<bind-exit>"},
-  {"pos?", &module_info_protoSmath, "pos?"},
-  {"%fatan2", &module_info_boot, "%fatan2"},
-  {"describe-handler", &module_info_runtime, "describe-handler"},
-  {"handler-function", &module_info_runtime, "handler-function"},
-  {"%sp-reg-setter", &module_info_boot, "%sp-reg-setter"},
-  {"%i=", &module_info_boot, "%i="},
-  {"*boot-macro-names*", &module_info_boot, "*boot-macro-names*"},
-  {"function-signature", &module_info_ast, "function-signature"},
-  {"function-self-recursive?", &module_info_ast, "function-self-recursive?"},
-  {"constant-index", &module_info_ast, "constant-index"},
-  {"tab-shrink-threshold-setter", &module_info_protoScollectionsStable, "tab-shrink-threshold-setter"},
-  {"def-programs", &module_info_ast, "def-programs"},
-  {"%loc-off", &module_info_boot, "%loc-off"},
-  {"function-binding", &module_info_ast, "function-binding"},
-  {"%check-call-types", &module_info_boot, "%check-call-types"},
-  {"<tab>", &module_info_protoScollectionsScollection, "<tab>"},
-  {"$default-handler-info", &module_info_runtime, "$default-handler-info"},
-  {"tail-setter", &module_info_boot, "tail-setter"},
-  {"condition-message", &module_info_runtime, "condition-message"},
-  {"function-source", &module_info_ast, "function-source"},
-  {"<product>", &module_info_protoStypes, "<product>"},
-  {"%i?", &module_info_boot, "%i?"},
-  {"%snul", &module_info_boot, "%snul"},
-  {"dp", &module_info_boot, "dp"},
-  {"sig-arity", &module_info_boot, "sig-arity"},
-  {"str", &module_info_protoScollectionsSstring, "str"},
-  {"<local-binding>", &module_info_ast, "<local-binding>"},
-  {"ct-also", &module_info_boot, "ct-also"},
-  {"function-data-refs-setter", &module_info_ast, "function-data-refs-setter"},
-  {"ascii-whitespaces", &module_info_protoScollectionsSstring, "ascii-whitespaces"},
-  {"binding-inferred-type", &module_info_ast, "binding-inferred-type"},
-  {"ast-define-binding", &module_info_ast, "ast-define-binding"},
-  {"elt-or", &module_info_protoScollectionsScollection, "elt-or"},
-  {"format", &module_info_runtime, "format"},
-  {"%ftanh", &module_info_boot, "%ftanh"},
-  {"cat", &module_info_macros, "cat"},
-  {"for", &module_info_macros, "for"},
-  {"%put", &module_info_boot, "%put"},
-  {"<local-assignment>", &module_info_ast, "<local-assignment>"},
-  {"cosh", &module_info_protoSmath, "cosh"},
-  {"signature-nary?-setter", &module_info_ast, "signature-nary?-setter"},
-  {"application-function", &module_info_ast, "application-function"},
-  {"function-temporaries", &module_info_ast, "function-temporaries"},
-  {"%flo-bits", &module_info_boot, "%flo-bits"},
-  {"binding-inferred-type-setter", &module_info_ast, "binding-inferred-type-setter"},
-  {"del", &module_info_protoScollectionsScollection, "del"},
-  {"add-prop", &module_info_boot, "add-prop"},
-  {"bound?", &module_info_boot, "bound?"},
-  {"$permanent-hash-state", &module_info_protoScollectionsStable, "$permanent-hash-state"},
-  {"binding-dynamic-extent?", &module_info_ast, "binding-dynamic-extent?"},
-  {"assignment-binding", &module_info_ast, "assignment-binding"},
-  {"len", &module_info_protoStypes, "len"},
-  {"locals-functions-setter", &module_info_ast, "locals-functions-setter"},
-  {"type-elts-setter", &module_info_protoStypes, "type-elts-setter"},
-  {"fab-gen", &module_info_boot, "fab-gen"},
-  {"build-condition-interactively", &module_info_runtime, "build-condition-interactively"},
-  {"<opts>", &module_info_boot, "<opts>"},
-  {"<real-reference>", &module_info_ast, "<real-reference>"},
-  {"<enum>", &module_info_protoScollectionsScollection, "<enum>"},
-  {"@<", &module_info_boot, "@<"},
-  {"dm", &module_info_boot, "dm"},
-  {"mod", &module_info_protoSmath, "mod"},
-  {"signature-names", &module_info_ast, "signature-names"},
-  {"tail", &module_info_boot, "tail"},
-  {"do2", &module_info_protoScollectionsScollection, "do2"},
-  {"max", &module_info_protoSmagnitudes, "max"},
-  {"<ast-generic>", &module_info_ast, "<ast-generic>"},
-  {"acos", &module_info_protoSmath, "acos"},
-  {"power-of-two-ceiling", &module_info_protoSmath, "power-of-two-ceiling"},
-  {"%gen-code-setter", &module_info_boot, "%gen-code-setter"},
-  {"<type>", &module_info_boot, "<type>"},
-  {"napp", &module_info_macros, "napp"},
-  {"app-args", &module_info_runtime, "app-args"},
-  {"low-elt-setter", &module_info_protoScollectionsScollection, "low-elt-setter"},
   {"flo-bits", &module_info_protoSmath, "flo-bits"},
-  {"function-index-setter", &module_info_ast, "function-index-setter"},
-  {"<loc>", &module_info_boot, "<loc>"},
-  {"condition-arguments", &module_info_runtime, "condition-arguments"},
-  {"ord-app-mets", &module_info_boot, "ord-app-mets"},
-  {"<buf>", &module_info_protoScollectionsSbuffer, "<buf>"},
-  {"fab", &module_info_protoScollectionsScollection, "fab"},
-  {"type-elts", &module_info_boot, "type-elts"},
-  {"<<", &module_info_protoSmath, "<<"},
-  {"case-by", &module_info_macros, "case-by"},
-  {"list-handlers", &module_info_runtime, "list-handlers"},
-  {"min", &module_info_protoSmagnitudes, "min"},
-  {"t*", &module_info_protoStypes, "t*"},
-  {"module-syntax-environment", &module_info_ast, "module-syntax-environment"},
-  {"reference-called-function?-setter", &module_info_ast, "reference-called-function?-setter"},
-  {"tab-growth-factor", &module_info_protoScollectionsStable, "tab-growth-factor"},
-  {"%eof-object", &module_info_boot, "%eof-object"},
-  {"ins", &module_info_protoScollectionsSsequence, "ins"},
-  {"always", &module_info_runtime, "always"},
-  {"<raw-constant>", &module_info_ast, "<raw-constant>"},
-  {"set", &module_info_boot, "set"},
-  {"loc", &module_info_boot, "loc"},
+  {"case-insensitive-string-hash", &module_info_protoScollectionsStable, "case-insensitive-string-hash"},
   {"fill", &module_info_protoScollectionsScollection, "fill"},
-  {"%i&", &module_info_boot, "%i&"},
-  {"<map>", &module_info_protoScollectionsSmap, "<map>"},
-  {"<module-binding>", &module_info_ast, "<module-binding>"},
-  {"bit?", &module_info_protoSmath, "bit?"},
-  {"class-name", &module_info_boot, "class-name"},
-  {"app-filename", &module_info_runtime, "app-filename"},
-  {"<set>", &module_info_protoScollectionsStable, "<set>"},
-  {"identity", &module_info_runtime, "identity"},
-  {"swapf", &module_info_macros, "swapf"},
-  {"sinh", &module_info_protoSmath, "sinh"},
-  {"function-body-setter", &module_info_ast, "function-body-setter"},
-  {"%%macro", &module_info_boot, "%%macro"},
-  {"sequentialize", &module_info_ast, "sequentialize"},
-  {"find-getter", &module_info_boot, "find-getter"},
-  {"%loc-val", &module_info_boot, "%loc-val"},
-  {"as-lst", &module_info_ast, "as-lst"},
-  {"sig", &module_info_runtime, "sig"},
-  {"upper?", &module_info_protoSmath, "upper?"},
-  {"if", &module_info_boot, "if"},
-  {"signature-nary?", &module_info_ast, "signature-nary?"},
-  {"isqrt", &module_info_protoSmath, "isqrt"},
-  {"1-", &module_info_protoSmath, "1-"},
-  {"<local-reference>", &module_info_ast, "<local-reference>"},
-  {"$e", &module_info_protoSmath, "$e"},
-  {"def-fun-var", &module_info_macros, "def-fun-var"},
-  {"fix-let-types", &module_info_ast, "fix-let-types"},
-  {"dlet", &module_info_macros, "dlet"},
-  {"eof-object?", &module_info_protoSmath, "eof-object?"},
-  {"empty", &module_info_protoScollectionsScollection, "empty"},
-  {"%peek", &module_info_boot, "%peek"},
-  {"prop-setter", &module_info_boot, "prop-setter"},
-  {"nul", &module_info_boot, "nul"},
-  {"<runtime-reference>", &module_info_ast, "<runtime-reference>"},
-  {"assocs-test", &module_info_protoScollectionsSassoc, "assocs-test"},
-  {"match-empty-list", &module_info_macros, "match-empty-list"},
-  {"<programs>", &module_info_ast, "<programs>"},
-  {"%file-exists?", &module_info_boot, "%file-exists?"},
-  {"last", &module_info_protoScollectionsSsequence, "last"},
   {"gen-add-met", &module_info_boot, "gen-add-met"},
-  {"items", &module_info_protoScollectionsScollection, "items"},
-  {"now", &module_info_protoScollectionsScollection, "now"},
-  {"binding-dotted?", &module_info_ast, "binding-dotted?"},
-  {"%fasin", &module_info_boot, "%fasin"},
-  {"<immediate-constant>", &module_info_ast, "<immediate-constant>"},
-  {"len/fill-setter", &module_info_protoScollectionsSbuffer, "len/fill-setter"},
+  {"%ft", &module_info_boot, "%ft"},
+  {"module-syntax-environment", &module_info_ast, "module-syntax-environment"},
+  {"%cb", &module_info_boot, "%cb"},
+  {"any?", &module_info_protoStypes, "any?"},
+  {"prop-setter", &module_info_boot, "prop-setter"},
+  {"as-copy", &module_info_protoScollectionsScollection, "as-copy"},
   {"fun-val", &module_info_boot, "fun-val"},
   {"when", &module_info_macros, "when"},
-  {"%it/", &module_info_boot, "%it/"},
-  {"<fab-list>", &module_info_ast, "<fab-list>"},
-  {"alternative-consequent", &module_info_ast, "alternative-consequent"},
-  {"%pair", &module_info_boot, "%pair"},
+  {"asin", &module_info_protoSmath, "asin"},
+  {"%close-in-port", &module_info_boot, "%close-in-port"},
+  {"%fatan", &module_info_boot, "%fatan"},
   {"collect", &module_info_macros, "collect"},
-  {"class-ancestors", &module_info_boot, "class-ancestors"},
-  {"atan2", &module_info_protoSmath, "atan2"},
-  {"low-elt", &module_info_protoScollectionsScollection, "low-elt"},
-  {"binding-index-setter", &module_info_ast, "binding-index-setter"},
-  {"into", &module_info_protoScollectionsScollection, "into"},
-  {"rev", &module_info_protoScollectionsSsequence, "rev"},
-  {"%current-out-port", &module_info_boot, "%current-out-port"},
-  {"num-to-str", &module_info_protoSmath, "num-to-str"},
-  {"%c=", &module_info_boot, "%c="},
-  {"signature-specs", &module_info_ast, "signature-specs"},
-  {"unless", &module_info_macros, "unless"},
-  {"fix-let-arguments-setter", &module_info_ast, "fix-let-arguments-setter"},
+  {"function-self-recursive?-setter", &module_info_ast, "function-self-recursive?-setter"},
+  {"fix-let-types-setter", &module_info_ast, "fix-let-types-setter"},
+  {"bound?", &module_info_boot, "bound?"},
   {"$min-int", &module_info_boot, "$min-int"},
-  {"function-debug-name-setter", &module_info_ast, "function-debug-name-setter"},
+  {"address-of", &module_info_protoSmath, "address-of"},
+  {"%vec", &module_info_boot, "%vec"},
+  {"1-", &module_info_protoSmath, "1-"},
+  {"map2", &module_info_protoScollectionsScollection, "map2"},
+  {"low-elt-setter", &module_info_protoScollectionsScollection, "low-elt-setter"},
+  {"t=", &module_info_protoStypes, "t="},
+  {"class-ancestors", &module_info_boot, "class-ancestors"},
+  {"%i!", &module_info_boot, "%i!"},
+  {"%file-exists?", &module_info_boot, "%file-exists?"},
   {"%next-methods", &module_info_boot, "%next-methods"},
-  {"<step>", &module_info_protoScollectionsSstep, "<step>"},
+  {"%invoke-debugger", &module_info_boot, "%invoke-debugger"},
+  {"ceil", &module_info_protoSmath, "ceil"},
+  {"binding-global-box-setter", &module_info_ast, "binding-global-box-setter"},
+  {"zap", &module_info_protoScollectionsScollection, "zap"},
+  {"elt", &module_info_macros, "elt"},
+  {"push-last!", &module_info_protoScollectionsSbuffer, "push-last!"},
+  {"do2", &module_info_protoScollectionsScollection, "do2"},
+  {"%i+", &module_info_boot, "%i+"},
+  {"global-box-value", &module_info_ast, "global-box-value"},
+  {"<free-environment>", &module_info_ast, "<free-environment>"},
+  {"list", &module_info_protoScollectionsSlist, "list"},
   {"objectify-with-subtransaction", &module_info_ast, "objectify-with-subtransaction"},
-  {"assignment-reference", &module_info_ast, "assignment-reference"},
-  {"%fi2f", &module_info_boot, "%fi2f"},
-  {"<ast-signature>", &module_info_ast, "<ast-signature>"},
-  {"%f=", &module_info_boot, "%f="},
-  {"spread", &module_info_runtime, "spread"},
-  {"neg?", &module_info_protoSmath, "neg?"},
-  {"locals-body", &module_info_ast, "locals-body"},
-  {"binding-dynamic-extent?-setter", &module_info_ast, "binding-dynamic-extent?-setter"},
-  {"dc", &module_info_boot, "dc"},
-  {"abs", &module_info_protoSmath, "abs"},
-  {"floor", &module_info_protoSmath, "floor"},
-  {"pair", &module_info_macros, "pair"},
-  {"alternative-condition", &module_info_ast, "alternative-condition"},
+  {"function-index", &module_info_ast, "function-index"},
+  {"del", &module_info_protoScollectionsScollection, "del"},
+  {"*macros-ok?*", &module_info_boot, "*macros-ok?*"},
+  {"%%sym", &module_info_boot, "%%sym"},
+  {"<error>", &module_info_runtime, "<error>"},
   {"<flo>", &module_info_boot, "<flo>"},
   {"<sym>", &module_info_boot, "<sym>"},
-  {"$pi", &module_info_protoSmath, "$pi"},
-  {"ins!", &module_info_protoScollectionsSsequence, "ins!"},
-  {"module-exports", &module_info_ast, "module-exports"},
-  {"signature-bindings-setter", &module_info_ast, "signature-bindings-setter"},
-  {"%gen-refs", &module_info_boot, "%gen-refs"},
-  {"binding-native-to?", &module_info_ast, "binding-native-to?"},
-  {">=", &module_info_protoSmagnitudes, ">="},
-  {"$goo-runtime-module-name", &module_info_ast, "$goo-runtime-module-name"},
-  {"ceiling/", &module_info_protoSmath, "ceiling/"},
-  {"asin", &module_info_protoSmath, "asin"},
+  {"signature-nary?", &module_info_ast, "signature-nary?"},
+  {"range-by", &module_info_protoScollectionsSrange, "range-by"},
   {"app-sup", &module_info_macros, "app-sup"},
-  {"first-then", &module_info_protoScollectionsSstep, "first-then"},
+  {"empty", &module_info_protoScollectionsScollection, "empty"},
   {"met-app?", &module_info_boot, "met-app?"},
-  {"elt", &module_info_macros, "elt"},
-  {"as", &module_info_protoStypes, "as"},
-  {"ascii-limit", &module_info_protoScollectionsSstring, "ascii-limit"},
-  {"now-setter", &module_info_protoScollectionsScollection, "now-setter"},
-  {"<assignment>", &module_info_ast, "<assignment>"},
-  {"%close-out-port", &module_info_boot, "%close-out-port"},
-  {"fun-mets", &module_info_boot, "fun-mets"},
-  {"list", &module_info_protoScollectionsSlist, "list"},
-  {"~", &module_info_protoSmath, "~"},
-  {"object-parents", &module_info_boot, "object-parents"},
-  {"keyboard-interrupt", &module_info_boot, "keyboard-interrupt"},
-  {"%f/", &module_info_boot, "%f/"},
-  {"nxt", &module_info_protoScollectionsScollection, "nxt"},
-  {"gen-src-setter", &module_info_boot, "gen-src-setter"},
-  {"%raw-call", &module_info_boot, "%raw-call"},
-  {"do", &module_info_macros, "do"},
-  {"binding-module-name", &module_info_ast, "binding-module-name"},
-  {"%fpow", &module_info_boot, "%fpow"},
-  {"@isa?", &module_info_boot, "@isa?"},
-  {"export", &module_info_boot, "export"},
-  {"3rd", &module_info_protoScollectionsSsequence, "3rd"},
-  {"keys", &module_info_protoScollectionsScollection, "keys"},
-  {"binding-dotted?-setter", &module_info_ast, "binding-dotted?-setter"},
-  {"while", &module_info_macros, "while"},
-  {"compose", &module_info_runtime, "compose"},
-  {"%fcosh", &module_info_boot, "%fcosh"},
-  {"ct", &module_info_boot, "ct"},
-  {"<condition>", &module_info_runtime, "<condition>"},
-  {"load-in", &module_info_ast, "load-in"},
-  {"range-error", &module_info_protoScollectionsScollection, "range-error"},
-  {"signature-value", &module_info_ast, "signature-value"},
-  {"unwind-protect-cleanup-thunk", &module_info_ast, "unwind-protect-cleanup-thunk"},
-  {"<prop>", &module_info_boot, "<prop>"},
-  {"empty?", &module_info_macros, "empty?"},
-  {"tab-growth-factor-setter", &module_info_protoScollectionsStable, "tab-growth-factor-setter"},
-  {"^", &module_info_protoSmath, "^"},
-  {"sub-setter", &module_info_protoScollectionsSsequence, "sub-setter"},
-  {"dl", &module_info_boot, "dl"},
-  {"<assocs>", &module_info_protoScollectionsSassoc, "<assocs>"},
-  {"<gen>", &module_info_boot, "<gen>"},
-  {"%loc-off-setter", &module_info_boot, "%loc-off-setter"},
-  {"default-handler-description", &module_info_runtime, "default-handler-description"},
-  {"%ib", &module_info_boot, "%ib"},
-  {"%i*", &module_info_boot, "%i*"},
-  {"trunc", &module_info_protoSmath, "trunc"},
-  {"nil", &module_info_boot, "nil"},
-  {"let", &module_info_boot, "let"},
-  {"%open-in-file", &module_info_boot, "%open-in-file"},
-  {"binding-value-setter", &module_info_ast, "binding-value-setter"},
-  {"gen-src", &module_info_boot, "gen-src"},
-  {"new", &module_info_boot, "new"},
-  {"%f<", &module_info_boot, "%f<"},
-  {"use", &module_info_boot, "use"},
-  {"tab-growth-threshold-setter", &module_info_protoScollectionsStable, "tab-growth-threshold-setter"},
-  {"binding-global-box-setter", &module_info_ast, "binding-global-box-setter"},
-  {"%build-runtime-modules", &module_info_boot, "%build-runtime-modules"},
-  {"fabs", &module_info_protoSmath, "fabs"},
-  {"%i!", &module_info_boot, "%i!"},
-  {"<free-environment>", &module_info_ast, "<free-environment>"},
-  {"lower?", &module_info_protoSmath, "lower?"},
-  {"now-key", &module_info_protoScollectionsScollection, "now-key"},
-  {"to-digit", &module_info_protoSmath, "to-digit"},
+  {"condition-arguments", &module_info_runtime, "condition-arguments"},
+  {"invoke-handler-interactively", &module_info_runtime, "invoke-handler-interactively"},
+  {"%facos", &module_info_boot, "%facos"},
+  {"cosh", &module_info_protoSmath, "cosh"},
+  {"ins", &module_info_protoScollectionsSsequence, "ins"},
   {"%i>>>", &module_info_boot, "%i>>>"},
-  {"unwind-protect-protected-thunk", &module_info_ast, "unwind-protect-protected-thunk"},
-  {"<computed-program>", &module_info_ast, "<computed-program>"},
-  {"need-implementation", &module_info_macros, "need-implementation"},
-  {"do-module-loader-modules", &module_info_ast, "do-module-loader-modules"},
-  {"%velt-setter", &module_info_boot, "%velt-setter"},
-  {"object-props", &module_info_boot, "object-props"},
-  {"application-tail?", &module_info_ast, "application-tail?"},
-  {"incongruent-method-error", &module_info_boot, "incongruent-method-error"},
-  {"<reference>", &module_info_ast, "<reference>"},
-  {"dg", &module_info_boot, "dg"},
-  {"*gensym-counter*", &module_info_runtime, "*gensym-counter*"},
-  {"sig-nary?", &module_info_boot, "sig-nary?"},
-  {"<module>", &module_info_ast, "<module>"},
-  {"<module-binding-reference>", &module_info_ast, "<module-binding-reference>"},
-  {"<int>", &module_info_boot, "<int>"},
-  {"<range>", &module_info_protoScollectionsSrange, "<range>"},
-  {"%lb", &module_info_boot, "%lb"},
-  {"<str>", &module_info_boot, "<str>"},
-  {"bind-exit-main-fun", &module_info_ast, "bind-exit-main-fun"},
-  {"file-opening-error", &module_info_boot, "file-opening-error"},
-  {"fix-let-body", &module_info_ast, "fix-let-body"},
-  {"%with-monitor", &module_info_boot, "%with-monitor"},
-  {"find-environment-module", &module_info_ast, "find-environment-module"},
-  {"%fu", &module_info_boot, "%fu"},
-  {"do-key-vals", &module_info_protoScollectionsSsequence, "do-key-vals"},
-  {"1st", &module_info_protoScollectionsSsequence, "1st"},
-  {"pop", &module_info_protoScollectionsSlist, "pop"},
-  {"<=", &module_info_protoSmagnitudes, "<="},
-  {"str-to-num", &module_info_protoScollectionsSstring, "str-to-num"},
-  {"constant-index-setter", &module_info_ast, "constant-index-setter"},
-  {"sup", &module_info_macros, "sup"},
-  {"remove-modules-by-name!", &module_info_ast, "remove-modules-by-name!"},
-  {"%sb", &module_info_boot, "%sb"},
-  {"<global-assignment>", &module_info_ast, "<global-assignment>"},
-  {"fun-arity", &module_info_boot, "fun-arity"},
-  {"%os-val", &module_info_boot, "%os-val"},
-  {">>", &module_info_protoSmath, ">>"},
-  {"%i<<<", &module_info_boot, "%i<<<"},
-  {"ast-evaluate", &module_info_ast, "ast-evaluate"},
-  {"monitor-handler", &module_info_ast, "monitor-handler"},
-  {"cat-sym", &module_info_macros, "cat-sym"},
-  {"%velt", &module_info_boot, "%velt"},
-  {"odd?", &module_info_protoSmath, "odd?"},
-  {"==", &module_info_macros, "=="},
-  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
-  {"curry", &module_info_runtime, "curry"},
-  {"runtime-environment", &module_info_ast, "runtime-environment"},
-  {"sig-names", &module_info_boot, "sig-names"},
-  {"mem?", &module_info_protoScollectionsScollection, "mem?"},
-  {"<arguments>", &module_info_ast, "<arguments>"},
-  {"application-known?-setter", &module_info_ast, "application-known?-setter"},
-  {"application-arguments", &module_info_ast, "application-arguments"},
-  {"reference-frame-offset", &module_info_ast, "reference-frame-offset"},
-  {"<ast-primitive-definition>", &module_info_ast, "<ast-primitive-definition>"},
-  {"function-data-refs", &module_info_ast, "function-data-refs"},
-  {"%cu", &module_info_boot, "%cu"},
-  {"%current-in-port", &module_info_boot, "%current-in-port"},
-  {"map-keyed", &module_info_protoScollectionsScollection, "map-keyed"},
-  {"rev!", &module_info_macros, "rev!"},
-  {"@oelt", &module_info_boot, "@oelt"},
-  {"sig-unification-vars", &module_info_boot, "sig-unification-vars"},
-  {"/", &module_info_protoSmath, "/"},
-  {"vals-to-str", &module_info_protoScollectionsSsequence, "vals-to-str"},
-  {"%sp-reg", &module_info_boot, "%sp-reg"},
-  {"without-prop-unbound-errors", &module_info_macros, "without-prop-unbound-errors"},
-  {"init-environment-for-eval", &module_info_ast, "init-environment-for-eval"},
-  {"any2?", &module_info_protoScollectionsScollection, "any2?"},
-  {"ds", &module_info_boot, "ds"},
-  {"head-setter", &module_info_boot, "head-setter"},
-  {"type-class", &module_info_boot, "type-class"},
-  {"%flog", &module_info_boot, "%flog"},
-  {"fun-sig-setter", &module_info_boot, "fun-sig-setter"},
-  {"%fb", &module_info_boot, "%fb"},
-  {"lst", &module_info_boot, "lst"},
-  {"tup", &module_info_boot, "tup"},
-  {"locals-bindings", &module_info_ast, "locals-bindings"},
-  {"*boot-macro-module-names*", &module_info_boot, "*boot-macro-module-names*"},
-  {"isa?", &module_info_boot, "isa?"},
-  {"<union>", &module_info_boot, "<union>"},
-  {"do-named-static-global-bindings", &module_info_ast, "do-named-static-global-bindings"},
-  {"compile-time-program", &module_info_ast, "compile-time-program"},
-  {"<predefined-application>", &module_info_ast, "<predefined-application>"},
-  {"init-ast", &module_info_ast, "init-ast"},
-  {"contagious-type", &module_info_protoSmath, "contagious-type"},
-  {"fun", &module_info_boot, "fun"},
-  {"%bb", &module_info_boot, "%bb"},
-  {"assignment-form", &module_info_ast, "assignment-form"},
-  {"%prop", &module_info_boot, "%prop"},
-  {"binding-type-setter", &module_info_ast, "binding-type-setter"},
-  {"cos", &module_info_protoSmath, "cos"},
+  {"fix-let-arguments-setter", &module_info_ast, "fix-let-arguments-setter"},
+  {"rcurry", &module_info_runtime, "rcurry"},
   {"function-bindings", &module_info_ast, "function-bindings"},
-  {"%process-module", &module_info_boot, "%process-module"},
-  {"alternative-alternant", &module_info_ast, "alternative-alternant"},
-  {"$goo-boot-module-name", &module_info_ast, "$goo-boot-module-name"},
-  {"%f-", &module_info_boot, "%f-"},
-  {"tab-hash", &module_info_protoScollectionsStable, "tab-hash"},
+  {"object-parents", &module_info_boot, "object-parents"},
+  {"%open-in-file", &module_info_boot, "%open-in-file"},
+  {"ascii-limit", &module_info_protoScollectionsSstring, "ascii-limit"},
+  {"<locals>", &module_info_ast, "<locals>"},
+  {"ast-evaluate", &module_info_ast, "ast-evaluate"},
+  {"nxt", &module_info_protoScollectionsScollection, "nxt"},
+  {"fun-mets", &module_info_boot, "fun-mets"},
+  {"@isa?", &module_info_boot, "@isa?"},
+  {"<global-box>", &module_info_ast, "<global-box>"},
+  {"signature-value", &module_info_ast, "signature-value"},
+  {"alternative-consequent", &module_info_ast, "alternative-consequent"},
+  {"<ast-function>", &module_info_ast, "<ast-function>"},
+  {"floor/", &module_info_protoSmath, "floor/"},
+  {"while", &module_info_macros, "while"},
+  {"2nd", &module_info_protoStypes, "2nd"},
+  {"<map>", &module_info_protoScollectionsSmap, "<map>"},
+  {"gen-src-setter", &module_info_boot, "gen-src-setter"},
+  {"%vnul", &module_info_boot, "%vnul"},
+  {"do", &module_info_macros, "do"},
+  {"%fcos", &module_info_boot, "%fcos"},
+  {"*report-prop-unbound-errors?*", &module_info_boot, "*report-prop-unbound-errors?*"},
+  {"keys", &module_info_protoScollectionsScollection, "keys"},
+  {"to-upper", &module_info_protoSmath, "to-upper"},
+  {"<cycle>", &module_info_protoScollectionsScycle, "<cycle>"},
+  {"function-temporaries-setter", &module_info_ast, "function-temporaries-setter"},
+  {"<constant>", &module_info_ast, "<constant>"},
+  {"binding-kind", &module_info_ast, "binding-kind"},
+  {"reference-frame-offset", &module_info_ast, "reference-frame-offset"},
+  {"<prop>", &module_info_boot, "<prop>"},
+  {"fix-let-body-setter", &module_info_ast, "fix-let-body-setter"},
+  {"function-registers", &module_info_ast, "function-registers"},
+  {"default-handler", &module_info_runtime, "default-handler"},
+  {"let", &module_info_boot, "let"},
+  {"%symbols", &module_info_boot, "%symbols"},
+  {"bind-exit-main-fun", &module_info_ast, "bind-exit-main-fun"},
+  {"new", &module_info_boot, "new"},
+  {"fabs", &module_info_protoSmath, "fabs"},
+  {"<gen>", &module_info_boot, "<gen>"},
+  {"/", &module_info_protoSmath, "/"},
+  {"binding-locative", &module_info_ast, "binding-locative"},
+  {"*restarts-ok?*", &module_info_boot, "*restarts-ok?*"},
+  {"%flo-bits", &module_info_boot, "%flo-bits"},
+  {"tab-shrink-threshold", &module_info_protoScollectionsStable, "tab-shrink-threshold"},
+  {"buf", &module_info_protoScollectionsSbuffer, "buf"},
+  {"nul", &module_info_boot, "nul"},
+  {"%i<<", &module_info_boot, "%i<<"},
+  {"signature-bindings", &module_info_ast, "signature-bindings"},
+  {"max", &module_info_protoSmagnitudes, "max"},
+  {"now-key", &module_info_protoScollectionsScollection, "now-key"},
+  {"gen-src", &module_info_boot, "gen-src"},
+  {"reference-called-function?-setter", &module_info_ast, "reference-called-function?-setter"},
+  {"$pi", &module_info_protoSmath, "$pi"},
+  {"without-prop-unbound-errors", &module_info_macros, "without-prop-unbound-errors"},
+  {"fix-let-types", &module_info_ast, "fix-let-types"},
+  {"<bot>", &module_info_protoSmath, "<bot>"},
+  {"rev", &module_info_protoScollectionsSsequence, "rev"},
+  {"constant-index-setter", &module_info_ast, "constant-index-setter"},
+  {"<<", &module_info_protoSmath, "<<"},
+  {"object-props", &module_info_boot, "object-props"},
+  {"sin", &module_info_protoSmath, "sin"},
+  {"%selt-setter", &module_info_boot, "%selt-setter"},
+  {"<ast-method>", &module_info_ast, "<ast-method>"},
+  {"isa", &module_info_boot, "isa"},
+  {"<product>", &module_info_protoStypes, "<product>"},
+  {">>", &module_info_protoSmath, ">>"},
+  {"<global-assignment>", &module_info_ast, "<global-assignment>"},
+  {"bound?-reference", &module_info_ast, "bound?-reference"},
+  {"dp", &module_info_boot, "dp"},
+  {"%file-type", &module_info_boot, "%file-type"},
+  {"build-condition-for-handler-interactively", &module_info_runtime, "build-condition-for-handler-interactively"},
+  {"var-type", &module_info_macros, "var-type"},
+  {"sig", &module_info_runtime, "sig"},
+  {"%lb", &module_info_boot, "%lb"},
+  {"type-error", &module_info_boot, "type-error"},
+  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
+  {"match-empty-list", &module_info_macros, "match-empty-list"},
+  {"@olen", &module_info_boot, "@olen"},
+  {"binding-inferred-type-setter", &module_info_ast, "binding-inferred-type-setter"},
+  {"%ready?", &module_info_boot, "%ready?"},
+  {"ct-also", &module_info_boot, "ct-also"},
+  {"assocs-test-setter", &module_info_protoScollectionsSassoc, "assocs-test-setter"},
+  {"function-body-setter", &module_info_ast, "function-body-setter"},
+  {"pop", &module_info_protoScollectionsSlist, "pop"},
+  {"sig-nary?", &module_info_boot, "sig-nary?"},
+  {"$e", &module_info_protoSmath, "$e"},
+  {"<arguments>", &module_info_ast, "<arguments>"},
+  {"<int>", &module_info_boot, "<int>"},
+  {"<str>", &module_info_boot, "<str>"},
+  {"<handler>", &module_info_runtime, "<handler>"},
+  {"sup", &module_info_macros, "sup"},
+  {"len", &module_info_protoStypes, "len"},
+  {"%it/", &module_info_boot, "%it/"},
+  {"%velt-setter", &module_info_boot, "%velt-setter"},
+  {"app-args", &module_info_runtime, "app-args"},
+  {"fun-arity", &module_info_boot, "fun-arity"},
+  {"binding-index-setter", &module_info_ast, "binding-index-setter"},
+  {"binding-dotted?", &module_info_ast, "binding-dotted?"},
+  {"%velt", &module_info_boot, "%velt"},
+  {"<ast-macro-definition>", &module_info_ast, "<ast-macro-definition>"},
+  {"%gen-src", &module_info_boot, "%gen-src"},
+  {"vec", &module_info_boot, "vec"},
+  {"%ib", &module_info_boot, "%ib"},
+  {"use/export", &module_info_boot, "use/export"},
+  {"binding-dynamic-extent?-setter", &module_info_ast, "binding-dynamic-extent?-setter"},
+  {"<static-global-environment>", &module_info_ast, "<static-global-environment>"},
+  {"lst", &module_info_boot, "lst"},
+  {"==", &module_info_macros, "=="},
+  {"vals-to-str", &module_info_protoScollectionsSsequence, "vals-to-str"},
+  {"fix-let-body", &module_info_ast, "fix-let-body"},
+  {"%iv", &module_info_boot, "%iv"},
+  {"<unwind-protect>", &module_info_ast, "<unwind-protect>"},
+  {"module-exports", &module_info_ast, "module-exports"},
+  {"%sb", &module_info_boot, "%sb"},
+  {"%gen-code-setter", &module_info_boot, "%gen-code-setter"},
+  {"map-keyed", &module_info_protoScollectionsScollection, "map-keyed"},
+  {"binding-type", &module_info_ast, "binding-type"},
+  {"handler-function", &module_info_runtime, "handler-function"},
+  {"rev!", &module_info_macros, "rev!"},
+  {"%met-code", &module_info_boot, "%met-code"},
+  {"pow", &module_info_protoSmath, "pow"},
+  {"key-test", &module_info_protoScollectionsScollection, "key-test"},
+  {"<tup>", &module_info_boot, "<tup>"},
+  {"<raw-constant>", &module_info_ast, "<raw-constant>"},
+  {"%su", &module_info_boot, "%su"},
+  {"monitor-type", &module_info_ast, "monitor-type"},
+  {"as-lst", &module_info_ast, "as-lst"},
+  {"describe-handler", &module_info_runtime, "describe-handler"},
+  {"%i?", &module_info_boot, "%i?"},
+  {"program-register", &module_info_ast, "program-register"},
+  {"function-debug-name-setter", &module_info_ast, "function-debug-name-setter"},
+  {"function-nary?", &module_info_ast, "function-nary?"},
+  {"signature-names", &module_info_ast, "signature-names"},
+  {"<step>", &module_info_protoScollectionsSstep, "<step>"},
+  {"sig-unification-vars", &module_info_boot, "sig-unification-vars"},
+  {"tup", &module_info_boot, "tup"},
+  {"unwind-protect-protected-thunk", &module_info_ast, "unwind-protect-protected-thunk"},
+  {"isa?", &module_info_boot, "isa?"},
+  {"3rd", &module_info_protoScollectionsSsequence, "3rd"},
+  {"unknown-function-error", &module_info_boot, "unknown-function-error"},
+  {"find-environment-module", &module_info_ast, "find-environment-module"},
+  {"%snul", &module_info_boot, "%snul"},
+  {"low-elt", &module_info_protoScollectionsScollection, "low-elt"},
+  {"app-filename", &module_info_runtime, "app-filename"},
+  {"head-setter", &module_info_boot, "head-setter"},
+  {"ds", &module_info_boot, "ds"},
+  {"type-class", &module_info_boot, "type-class"},
+  {"@+", &module_info_boot, "@+"},
+  {"fun-sig-setter", &module_info_boot, "fun-sig-setter"},
+  {"%prop", &module_info_boot, "%prop"},
+  {"alternative-condition", &module_info_ast, "alternative-condition"},
+  {"<union>", &module_info_boot, "<union>"},
+  {"function-signature", &module_info_ast, "function-signature"},
+  {"%i&", &module_info_boot, "%i&"},
+  {"module-target-environment", &module_info_ast, "module-target-environment"},
+  {"for", &module_info_macros, "for"},
+  {"enum", &module_info_protoScollectionsScollection, "enum"},
+  {"now", &module_info_protoScollectionsScollection, "now"},
   {"case", &module_info_macros, "case"},
-  {"fab-handler", &module_info_runtime, "fab-handler"},
-  {"%os-name", &module_info_boot, "%os-name"},
-  {"pop-last!", &module_info_protoScollectionsSbuffer, "pop-last!"},
+  {"sinh", &module_info_protoSmath, "sinh"},
+  {"environment-uses-modules", &module_info_ast, "environment-uses-modules"},
+  {"monitor-info", &module_info_ast, "monitor-info"},
   {"%isa", &module_info_boot, "%isa"},
-  {"id-hash", &module_info_protoScollectionsStable, "id-hash"},
-  {"describe-condition", &module_info_runtime, "describe-condition"},
-  {"fold+", &module_info_protoScollectionsScollection, "fold+"},
-  {"push-last!", &module_info_protoScollectionsSbuffer, "push-last!"},
+  {"upper?", &module_info_protoSmath, "upper?"},
+  {"len-setter", &module_info_protoScollectionsSbuffer, "len-setter"},
+  {"format-to-string", &module_info_runtime, "format-to-string"},
+  {"min", &module_info_protoSmagnitudes, "min"},
+  {"<global-reference>", &module_info_ast, "<global-reference>"},
   {"popf", &module_info_macros, "popf"},
+  {"range", &module_info_protoScollectionsSrange, "range"},
+  {"del-dups", &module_info_protoScollectionsSsequence, "del-dups"},
+  {"signature-names-setter", &module_info_ast, "signature-names-setter"},
+  {"%loc-off-setter", &module_info_boot, "%loc-off-setter"},
+  {"<module-binding>", &module_info_ast, "<module-binding>"},
+  {"%fsqrt", &module_info_boot, "%fsqrt"},
+  {"<assocs>", &module_info_protoScollectionsSassoc, "<assocs>"},
+  {"%raw", &module_info_boot, "%raw"},
+  {"range-error", &module_info_protoScollectionsScollection, "range-error"},
   {"head", &module_info_boot, "head"},
-  {"constant-value", &module_info_ast, "constant-value"},
-  {"function-debug-name", &module_info_ast, "function-debug-name"},
-  {"%allocate-stack", &module_info_boot, "%allocate-stack"},
-  {"df", &module_info_boot, "df"},
-  {"<passive-program>", &module_info_ast, "<passive-program>"},
-  {"function-body", &module_info_ast, "function-body"},
-  {"binding-info-setter", &module_info_ast, "binding-info-setter"},
-  {"<runtime-assignment>", &module_info_ast, "<runtime-assignment>"},
+  {"neg", &module_info_protoSmath, "neg"},
+  {"fab-handler", &module_info_runtime, "fab-handler"},
+  {"<mag>", &module_info_boot, "<mag>"},
+  {"signature-arity-setter", &module_info_ast, "signature-arity-setter"},
+  {"find-or", &module_info_protoScollectionsScollection, "find-or"},
+  {"assignment-binding", &module_info_ast, "assignment-binding"},
+  {"key-type", &module_info_protoScollectionsScollection, "key-type"},
+  {"%app-args", &module_info_boot, "%app-args"},
+  {"and", &module_info_macros, "and"},
+  {"<num>", &module_info_boot, "<num>"},
+  {"<vec>", &module_info_boot, "<vec>"},
+  {"prop-getter", &module_info_boot, "prop-getter"},
+  {"pair", &module_info_macros, "pair"},
+  {"fin?", &module_info_protoScollectionsScollection, "fin?"},
+  {"unexec", &module_info_boot, "unexec"},
+  {"sub-setter", &module_info_protoScollectionsSsequence, "sub-setter"},
+  {"%loc-off", &module_info_boot, "%loc-off"},
+  {"+", &module_info_protoSmath, "+"},
+  {"fix-let-bindings", &module_info_ast, "fix-let-bindings"},
+  {"bit?", &module_info_protoSmath, "bit?"},
+  {"or", &module_info_macros, "or"},
+  {"do-keyed", &module_info_protoScollectionsScollection, "do-keyed"},
+  {"trunc/", &module_info_protoSmath, "trunc/"},
+  {"if", &module_info_boot, "if"},
+  {"len/fill-setter", &module_info_protoScollectionsSbuffer, "len/fill-setter"},
+  {"%flog", &module_info_boot, "%flog"},
+  {"%c<", &module_info_boot, "%c<"},
+  {"locals-body-setter", &module_info_ast, "locals-body-setter"},
+  {"signature-nary?-setter", &module_info_ast, "signature-nary?-setter"},
+  {"<set>", &module_info_protoScollectionsStable, "<set>"},
+  {"class-direct-props", &module_info_boot, "class-direct-props"},
+  {"1st", &module_info_protoScollectionsSsequence, "1st"},
+  {"isqrt", &module_info_protoSmath, "isqrt"},
+  {"%slen", &module_info_boot, "%slen"},
+  {"mif", &module_info_boot, "mif"},
+  {"program-register-setter", &module_info_ast, "program-register-setter"},
+  {"application-binding", &module_info_ast, "application-binding"},
+  {"def-list", &module_info_ast, "def-list"},
+  {"%fcosh", &module_info_boot, "%fcosh"},
+  {"dc", &module_info_boot, "dc"},
+  {"assignment-form", &module_info_ast, "assignment-form"},
+  {"%process-module", &module_info_boot, "%process-module"},
+  {"<met>", &module_info_boot, "<met>"},
+  {"%sp-reg", &module_info_boot, "%sp-reg"},
+  {"<runtime-reference>", &module_info_ast, "<runtime-reference>"},
+  {"until", &module_info_macros, "until"},
+  {"function-data-refs-setter", &module_info_ast, "function-data-refs-setter"},
+  {"%fpow", &module_info_boot, "%fpow"},
+  {"trunc", &module_info_protoSmath, "trunc"},
+  {"zip", &module_info_protoScollectionsSzip, "zip"},
+  {"%%macro", &module_info_boot, "%%macro"},
+  {"id-hash", &module_info_protoScollectionsStable, "id-hash"},
+  {"prop-init", &module_info_boot, "prop-init"},
+  {"assq", &module_info_protoScollectionsSlist, "assq"},
+  {"as", &module_info_protoStypes, "as"},
+  {"atan2", &module_info_protoSmath, "atan2"},
+  {"monitor-test", &module_info_ast, "monitor-test"},
+  {"fun-nary?", &module_info_boot, "fun-nary?"},
+  {"binding-dotted?-setter", &module_info_ast, "binding-dotted?-setter"},
+  {"function-free", &module_info_ast, "function-free"},
+  {"str", &module_info_protoScollectionsSstring, "str"},
+  {"objectify-signature", &module_info_ast, "objectify-signature"},
+  {"elt-default", &module_info_protoScollectionsScollection, "elt-default"},
+  {"%cu", &module_info_boot, "%cu"},
+  {"<subclass>", &module_info_boot, "<subclass>"},
+  {"application-known?-setter", &module_info_ast, "application-known?-setter"},
+  {"to-lower", &module_info_protoSmath, "to-lower"},
+  {"assocs-test", &module_info_protoScollectionsSassoc, "assocs-test"},
+  {"*", &module_info_protoSmath, "*"},
+  {"floor", &module_info_protoSmath, "floor"},
+  {"<reference>", &module_info_ast, "<reference>"},
+  {"del-vals", &module_info_protoScollectionsSsequence, "del-vals"},
+  {"export", &module_info_boot, "export"},
+  {"<predefined-application>", &module_info_ast, "<predefined-application>"},
+  {"load-module", &module_info_ast, "load-module"},
+  {"rem", &module_info_protoSmath, "rem"},
+  {"class-descendents", &module_info_boot, "class-descendents"},
+  {"cond", &module_info_macros, "cond"},
+  {"%puts", &module_info_boot, "%puts"},
+  {">=", &module_info_protoSmagnitudes, ">="},
+  {"app", &module_info_macros, "app"},
+  {"<simple-condition>", &module_info_runtime, "<simple-condition>"},
+  {"1+", &module_info_protoSmath, "1+"},
+  {"read", &module_info_runtime, "read"},
+  {"<tab>", &module_info_protoScollectionsScollection, "<tab>"},
+  {"gen-refs-setter", &module_info_boot, "gen-refs-setter"},
+  {"<binding>", &module_info_ast, "<binding>"},
+  {"function-data-refs", &module_info_ast, "function-data-refs"},
+  {"locals-body", &module_info_ast, "locals-body"},
+  {"fold+", &module_info_protoScollectionsScollection, "fold+"},
+  {"%im", &module_info_boot, "%im"},
+  {"<bound?>", &module_info_ast, "<bound?>"},
+  {"binding-module-name", &module_info_ast, "binding-module-name"},
+  {"$goo-boot-module-name", &module_info_ast, "$goo-boot-module-name"},
+  {"<immediate-constant>", &module_info_ast, "<immediate-constant>"},
+  {"do-named-static-global-bindings", &module_info_ast, "do-named-static-global-bindings"},
+  {"subtype?", &module_info_boot, "subtype?"},
+  {"%selt", &module_info_boot, "%selt"},
+  {"function-free-setter", &module_info_ast, "function-free-setter"},
+  {"<regular-application>", &module_info_ast, "<regular-application>"},
+  {"<local-reference>", &module_info_ast, "<local-reference>"},
+  {"<programs>", &module_info_ast, "<programs>"},
+  {"unchecked-runtime-environment", &module_info_ast, "unchecked-runtime-environment"},
+  {"prop-value-setter", &module_info_boot, "prop-value-setter"},
+  {"fun", &module_info_boot, "fun"},
+  {"binding-type-setter", &module_info_ast, "binding-type-setter"},
+  {"def-programs", &module_info_ast, "def-programs"},
+  {"install-initial-bindings", &module_info_ast, "install-initial-bindings"},
+  {"<chr>", &module_info_boot, "<chr>"},
+  {"<flat>", &module_info_boot, "<flat>"},
+  {"tab-growth-threshold", &module_info_protoScollectionsStable, "tab-growth-threshold"},
+  {"wrong-number-arguments-error", &module_info_boot, "wrong-number-arguments-error"},
+  {"%define-method", &module_info_boot, "%define-method"},
+  {"dl", &module_info_boot, "dl"},
+  {"keyboard-interrupt", &module_info_boot, "keyboard-interrupt"},
+  {"-", &module_info_protoSmath, "-"},
+  {"%c=", &module_info_boot, "%c="},
+  {"dup", &module_info_protoScollectionsScollection, "dup"},
+  {"incf", &module_info_macros, "incf"},
+  {"to-digit", &module_info_protoSmath, "to-digit"},
+  {"lower?", &module_info_protoSmath, "lower?"},
+  {"%binding-name", &module_info_boot, "%binding-name"},
+  {"gen-refs", &module_info_boot, "gen-refs"},
+  {"need-implementation", &module_info_macros, "need-implementation"},
+  {"not", &module_info_boot, "not"},
+  {"<enum>", &module_info_protoScollectionsScollection, "<enum>"},
+  {"identity", &module_info_runtime, "identity"},
+  {"below", &module_info_protoScollectionsSsequence, "below"},
+  {"gensym", &module_info_macros, "gensym"},
+  {"ceiling/", &module_info_protoSmath, "ceiling/"},
   {NULL,NULL,NULL}
 };
 
 static BINDING_INFO binding_infos[] = {
-  {"collect-temporaries!", &Yast_linearizeYcollect_temporariesX},
-  {"---main-2---", NULL},
-  {"<renamed-local-binding>", &Yast_linearizeYLrenamed_local_bindingG},
-  {"collect-registers!", &Yast_linearizeYcollect_registersX},
-  {"do-do-call-upgrades!", &Yast_linearizeYdo_do_call_upgradesX},
-  {"register-allocate!", &Yast_linearizeYregister_allocateX},
-  {"form-program-setter", &Yast_linearizeYform_program_setter},
-  {"program-definitions-setter", &Yast_linearizeYprogram_definitions_setter},
-  {"new-renamed-binding", &Yast_linearizeYnew_renamed_binding},
-  {"boxify-mutable-bindings", &Yast_linearizeYboxify_mutable_bindings},
-  {"program-quotations", &Yast_linearizeYprogram_quotations},
-  {"lift!", &Yast_linearizeYliftX},
-  {"form-quotations-setter", &Yast_linearizeYform_quotations_setter},
-  {"assoc-value", &Yast_linearizeYassoc_value},
-  {"insert-box!", &Yast_linearizeYinsert_boxX},
-  {"<assoc>", &Yast_linearizeYLassocG},
   {"<top-level-form>", &Yast_linearizeYLtop_level_formG},
-  {"form-definitions-setter", &Yast_linearizeYform_definitions_setter},
-  {"split-program", &Yast_linearizeYsplit_program},
-  {"adjoin-definition!", &Yast_linearizeYadjoin_definitionX},
-  {"<flattened-program>", &Yast_linearizeYLflattened_programG},
-  {"reference-self?", &Yast_linearizeYreference_selfQ},
-  {"analyze-dynamic-extent", &Yast_linearizeYanalyze_dynamic_extent},
-  {"extract-things!", &Yast_linearizeYextract_thingsX},
-  {"closure-creation-index", &Yast_linearizeYclosure_creation_index},
-  {"extract!", &Yast_linearizeYextractX},
-  {"update-walk!", &Yast_linearizeYupdate_walkX},
-  {"ast-walk", &Yast_linearizeYast_walk},
-  {"do-do-call-references!", &Yast_linearizeYdo_do_call_referencesX},
-  {"reference-offset-setter", &Yast_linearizeYreference_offset_setter},
-  {"*register-passive?*", &Yast_linearizeYTregister_passiveQT},
-  {"gather-temporaries!", &Yast_linearizeYgather_temporariesX},
+  {"program-quotations", &Yast_linearizeYprogram_quotations},
+  {"form-quotations-setter", &Yast_linearizeYform_quotations_setter},
+  {"closure-creation-free", &Yast_linearizeYclosure_creation_free},
+  {"form-program-setter", &Yast_linearizeYform_program_setter},
+  {"adjoin-free-binding!", &Yast_linearizeYadjoin_free_bindingX},
   {"flatten-seqs", &Yast_linearizeYflatten_seqs},
-  {"closurize-main!", &Yast_linearizeYclosurize_mainX},
-  {"<free-reference>", &Yast_linearizeYLfree_referenceG},
+  {"assoc", &Yast_linearizeYassoc},
+  {"collect-registers!", &Yast_linearizeYcollect_registersX},
   {"assocq", &Yast_linearizeYassocq},
-  {"---main-1---", NULL},
-  {"box-reference", &Yast_linearizeYbox_reference},
+  {"<box-write>", &Yast_linearizeYLbox_writeG},
+  {"do-call-upgrades!", &Yast_linearizeYdo_call_upgradesX},
   {"assoc-key", &Yast_linearizeYassoc_key},
+  {"form-quotations", &Yast_linearizeYform_quotations},
+  {"---main-0---", NULL},
+  {"program-form", &Yast_linearizeYprogram_form},
+  {"lift!", &Yast_linearizeYliftX},
+  {"assoc-value", &Yast_linearizeYassoc_value},
+  {"box-form-setter", &Yast_linearizeYbox_form_setter},
+  {"adjoin-temporary-variables!", &Yast_linearizeYadjoin_temporary_variablesX},
+  {"reference-offset", &Yast_linearizeYreference_offset},
+  {"form-definitions", &Yast_linearizeYform_definitions},
+  {"box-form", &Yast_linearizeYbox_form},
+  {"reference-self?", &Yast_linearizeYreference_selfQ},
+  {"extract!", &Yast_linearizeYextractX},
+  {"form-definitions-setter", &Yast_linearizeYform_definitions_setter},
+  {"<free-reference>", &Yast_linearizeYLfree_referenceG},
+  {"<flattened-program>", &Yast_linearizeYLflattened_programG},
+  {"update-walk!", &Yast_linearizeYupdate_walkX},
+  {"assoc-value-setter", &Yast_linearizeYassoc_value_setter},
+  {"adjoin-definition!", &Yast_linearizeYadjoin_definitionX},
+  {"do-dynamic-extent!", &Yast_linearizeYdo_dynamic_extentX},
+  {"boxify-mutable-bindings", &Yast_linearizeYboxify_mutable_bindings},
+  {"reference-offset-setter", &Yast_linearizeYreference_offset_setter},
+  {"ast-contains-fun?", &Yast_linearizeYast_contains_funQ},
+  {"collect-temporaries!", &Yast_linearizeYcollect_temporariesX},
+  {"form-program", &Yast_linearizeYform_program},
+  {"program-quotations-setter", &Yast_linearizeYprogram_quotations_setter},
+  {"program-definitions", &Yast_linearizeYprogram_definitions},
+  {"closure-creation-index", &Yast_linearizeYclosure_creation_index},
+  {"allocate-register", &Yast_linearizeYallocate_register},
+  {"<box-read>", &Yast_linearizeYLbox_readG},
+  {"gather-temporaries!", &Yast_linearizeYgather_temporariesX},
+  {"<assoc>", &Yast_linearizeYLassocG},
+  {"program-form-setter", &Yast_linearizeYprogram_form_setter},
+  {"box-reference", &Yast_linearizeYbox_reference},
+  {"do-call-references!", &Yast_linearizeYdo_call_referencesX},
+  {"---main-2---", NULL},
+  {"split-program", &Yast_linearizeYsplit_program},
+  {"insert-box!", &Yast_linearizeYinsert_boxX},
+  {"*register-passive?*", &Yast_linearizeYTregister_passiveQT},
+  {"unconstrained-type?", &Yast_linearizeYunconstrained_typeQ},
+  {"new-renamed-binding", &Yast_linearizeYnew_renamed_binding},
+  {"as-top-level-forms", &Yast_linearizeYas_top_level_forms},
+  {"<closure-creation>", &Yast_linearizeYLclosure_creationG},
+  {"analyze-dynamic-extent", &Yast_linearizeYanalyze_dynamic_extent},
+  {"do-do-call-references!", &Yast_linearizeYdo_do_call_referencesX},
+  {"---main-1---", NULL},
+  {"reference-self?-setter", &Yast_linearizeYreference_selfQ_setter},
+  {"ast-walk", &Yast_linearizeYast_walk},
+  {"register-allocate!", &Yast_linearizeYregister_allocateX},
   {"assoc-key-setter", &Yast_linearizeYassoc_key_setter},
+  {"extract-things!", &Yast_linearizeYextract_thingsX},
   {"*renaming-bindings-counter*", &Yast_linearizeYTrenaming_bindings_counterT},
   {"closure-creation-free-setter", &Yast_linearizeYclosure_creation_free_setter},
-  {"analyze-calls", &Yast_linearizeYanalyze_calls},
   {"analyze-call-references", &Yast_linearizeYanalyze_call_references},
-  {"do-call-references!", &Yast_linearizeYdo_call_referencesX},
-  {"do-call-upgrades!", &Yast_linearizeYdo_call_upgradesX},
-  {"closure-creation-free", &Yast_linearizeYclosure_creation_free},
-  {"ast-contains-fun?", &Yast_linearizeYast_contains_funQ},
-  {"as-top-level-forms", &Yast_linearizeYas_top_level_forms},
-  {"program-quotations-setter", &Yast_linearizeYprogram_quotations_setter},
-  {"reference-offset", &Yast_linearizeYreference_offset},
-  {"unconstrained-type?", &Yast_linearizeYunconstrained_typeQ},
-  {"adjoin-temporary-variables!", &Yast_linearizeYadjoin_temporary_variablesX},
-  {"<closure-creation>", &Yast_linearizeYLclosure_creationG},
-  {"program-form", &Yast_linearizeYprogram_form},
-  {"program-definitions", &Yast_linearizeYprogram_definitions},
-  {"do-do-dynamic-extent!", &Yast_linearizeYdo_do_dynamic_extentX},
-  {"lift-procedures!", &Yast_linearizeYlift_proceduresX},
-  {"form-quotations", &Yast_linearizeYform_quotations},
-  {"form-definitions", &Yast_linearizeYform_definitions},
+  {"program-definitions-setter", &Yast_linearizeYprogram_definitions_setter},
+  {"analyze-calls", &Yast_linearizeYanalyze_calls},
+  {"do-do-call-upgrades!", &Yast_linearizeYdo_do_call_upgradesX},
   {"box-reference-setter", &Yast_linearizeYbox_reference_setter},
-  {"adjoin-free-binding!", &Yast_linearizeYadjoin_free_bindingX},
-  {"reference-self?-setter", &Yast_linearizeYreference_selfQ_setter},
-  {"form-program", &Yast_linearizeYform_program},
-  {"assoc", &Yast_linearizeYassoc},
-  {"closure-creation-index-setter", &Yast_linearizeYclosure_creation_index_setter},
-  {"<box-write>", &Yast_linearizeYLbox_writeG},
-  {"allocate-register", &Yast_linearizeYallocate_register},
-  {"box-form", &Yast_linearizeYbox_form},
-  {"do-dynamic-extent!", &Yast_linearizeYdo_dynamic_extentX},
-  {"box-form-setter", &Yast_linearizeYbox_form_setter},
-  {"program-form-setter", &Yast_linearizeYprogram_form_setter},
-  {"---main-0---", NULL},
   {"<box-creation>", &Yast_linearizeYLbox_creationG},
-  {"assoc-value-setter", &Yast_linearizeYassoc_value_setter},
-  {"<box-read>", &Yast_linearizeYLbox_readG},
+  {"lift-procedures!", &Yast_linearizeYlift_proceduresX},
+  {"closurize-main!", &Yast_linearizeYclosurize_mainX},
+  {"closure-creation-index-setter", &Yast_linearizeYclosure_creation_index_setter},
+  {"<renamed-local-binding>", &Yast_linearizeYLrenamed_local_bindingG},
+  {"do-do-dynamic-extent!", &Yast_linearizeYdo_do_dynamic_extentX},
   {NULL, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"collect-temporaries!", "collect-temporaries!"},
-  {"box-form", "box-form"},
-  {"lift!", "lift!"},
-  {"insert-box!", "insert-box!"},
   {"<top-level-form>", "<top-level-form>"},
+  {"program-quotations", "program-quotations"},
+  {"closure-creation-free", "closure-creation-free"},
+  {"form-program", "form-program"},
+  {"flatten-seqs", "flatten-seqs"},
+  {"collect-registers!", "collect-registers!"},
+  {"<box-write>", "<box-write>"},
+  {"form-quotations", "form-quotations"},
+  {"program-form", "program-form"},
+  {"lift!", "lift!"},
+  {"ast-contains-fun?", "ast-contains-fun?"},
+  {"reference-offset", "reference-offset"},
+  {"<free-reference>", "<free-reference>"},
+  {"form-definitions", "form-definitions"},
+  {"box-form", "box-form"},
+  {"reference-self?", "reference-self?"},
+  {"update-walk!", "update-walk!"},
+  {"collect-temporaries!", "collect-temporaries!"},
+  {"program-definitions", "program-definitions"},
+  {"closure-creation-index", "closure-creation-index"},
+  {"<box-read>", "<box-read>"},
+  {"gather-temporaries!", "gather-temporaries!"},
+  {"box-reference", "box-reference"},
+  {"*register-passive?*", "*register-passive?*"},
+  {"unconstrained-type?", "unconstrained-type?"},
   {"<renamed-local-binding>", "<renamed-local-binding>"},
   {"analyze-dynamic-extent", "analyze-dynamic-extent"},
-  {"extract-things!", "extract-things!"},
   {"register-allocate!", "register-allocate!"},
-  {"closure-creation-index", "closure-creation-index"},
-  {"update-walk!", "update-walk!"},
-  {"*register-passive?*", "*register-passive?*"},
-  {"gather-temporaries!", "gather-temporaries!"},
-  {"flatten-seqs", "flatten-seqs"},
-  {"closurize-main!", "closurize-main!"},
-  {"<free-reference>", "<free-reference>"},
-  {"form-quotations", "form-quotations"},
-  {"box-reference", "box-reference"},
+  {"extract-things!", "extract-things!"},
   {"analyze-calls", "analyze-calls"},
-  {"form-program", "form-program"},
-  {"closure-creation-free", "closure-creation-free"},
-  {"ast-contains-fun?", "ast-contains-fun?"},
-  {"program-quotations", "program-quotations"},
-  {"reference-offset", "reference-offset"},
-  {"unconstrained-type?", "unconstrained-type?"},
   {"<closure-creation>", "<closure-creation>"},
-  {"program-form", "program-form"},
-  {"program-definitions", "program-definitions"},
-  {"form-definitions", "form-definitions"},
-  {"<box-write>", "<box-write>"},
-  {"collect-registers!", "collect-registers!"},
   {"<box-creation>", "<box-creation>"},
-  {"reference-self?", "reference-self?"},
-  {"<box-read>", "<box-read>"},
+  {"insert-box!", "insert-box!"},
+  {"closurize-main!", "closurize-main!"},
   {NULL, NULL}
 };
 

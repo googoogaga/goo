@@ -1,391 +1,391 @@
-/* PROTO 2 C $REVISION: 0.107 $ 
+/* GOO 2 C $REVISION: 0.111 $ 
   */
 
 #include "prt.h"
 
 /* MODULE ENVIRONMENT: proto/collections/string */
 
-EXT(YLnumG,"boot","<num>");
-EXT(YLvecG,"boot","<vec>");
-EXT(YprotoScollectionsScollectionYkey_type,"proto/collections/collection","key-type");
-EXT(Yprop_getter,"boot","prop-getter");
-EXT(YprotoScollectionsSsequenceYdel_dups,"proto/collections/sequence","del-dups");
-EXT(YprotoScollectionsScollectionYfinQ,"proto/collections/collection","fin?");
-EXT(Yunexec,"boot","unexec");
-EXT(Ytype_error,"boot","type-error");
-EXT(YprotoSmathYA,"proto/math","+");
-EXT(Yclass_direct_props,"boot","class-direct-props");
-EXT(YmacrosYgensym,"macros","gensym");
-EXT(Yvec,"boot","vec");
-EXT(YmacrosYmatch_sublist,"macros","match-sublist");
-EXT(YprotoScollectionsSsequenceYbelow,"proto/collections/sequence","below");
-DEF(YprotoScollectionsSstringYnum_to_str_base,"proto/collections/string","num-to-str-base");
-EXT(YLmetG,"boot","<met>");
-EXT(YprotoSmathYcontagious_call,"proto/math","contagious-call");
-EXT(YprotoScollectionsScollectionYmap_keyed,"proto/collections/collection","map-keyed");
-DEF(YprotoScollectionsSstringYTprint_baseT,"proto/collections/string","*print-base*");
-EXT(YprotoSmathYzeroQ,"proto/math","zero?");
-EXT(Yprop_init,"boot","prop-init");
-EXT(YprotoSmathYroundS,"proto/math","round/");
-EXT(YLsubclassG,"boot","<subclass>");
-EXT(YprotoSmathYsin,"proto/math","sin");
-EXT(YprotoStypesYtA,"proto/types","t+");
-EXT(YprotoSmathYeof_object,"proto/math","eof-object");
-EXT(Yfun_naryQ,"boot","fun-nary?");
-EXT(YprotoScollectionsScollectionYenum,"proto/collections/collection","enum");
-EXT(YmacrosYvar_name,"macros","var-name");
-EXT(Yclass_descendents,"boot","class-descendents");
-EXT(YprotoScollectionsScollectionYelt_default,"proto/collections/collection","elt-default");
-EXT(YprotoScollectionsScollectionYmap2,"proto/collections/collection","map2");
-DEF(YprotoScollectionsSstringYascii_Gchar,"proto/collections/string","ascii->char");
-EXT(Ygen_refs_setter,"boot","gen-refs-setter");
-EXT(YprotoSmathYevenQ,"proto/math","even?");
-EXT(YLchrG,"boot","<chr>");
-EXT(YprotoSmathYrem,"proto/math","rem");
-EXT(YLflatG,"boot","<flat>");
-EXT(YprotoScollectionsSsequenceYdel_vals,"proto/collections/sequence","del-vals");
-EXT(YsubtypeQ,"boot","subtype?");
-EXT(Yprop_value_setter,"boot","prop-value-setter");
-EXT(YprotoSmathYlog,"proto/math","log");
-EXT(YPdefine_method,"boot","%define-method");
-EXT(Ygen_refs,"boot","gen-refs");
-EXT(Ynot,"boot","not");
-EXT(YprotoSmathY_,"proto/math","-");
-EXT(YprotoScollectionsScollectionYdo_keyed,"proto/collections/collection","do-keyed");
-EXT(YprotoScollectionsSsequenceYsub,"proto/collections/sequence","sub");
-EXT(YprotoScollectionsSlistYassq,"proto/collections/list","assq");
-EXT(YprotoScollectionsScollectionYdup,"proto/collections/collection","dup");
 EXT(YprotoScollectionsScollectionYelt_type,"proto/collections/collection","elt-type");
-EXT(YprotoScollectionsSsequenceYrange_checkQ,"proto/collections/sequence","range-check?");
-EXT(YprotoSmathYtanh,"proto/math","tanh");
-EXT(Yfab_sym,"boot","fab-sym");
-EXT(Yunknown_function_error,"boot","unknown-function-error");
-EXT(Ysig_specs,"boot","sig-specs");
+EXT(YprotoScollectionsScollectionYany2Q,"proto/collections/collection","any2?");
+EXT(YprotoSmathYpower_of_two_ceiling,"proto/math","power-of-two-ceiling");
 EXT(YprotoScollectionsSsequenceYpos,"proto/collections/sequence","pos");
-EXT(YprotoScollectionsScollectionYfold,"proto/collections/collection","fold");
-EXT(YprotoSmathYB,"proto/math","&");
-DEF(YprotoScollectionsSstringYepsilon,"proto/collections/string","epsilon");
+EXT(YprotoScollectionsScollectionYnow_setter,"proto/collections/collection","now-setter");
 EXT(YprotoScollectionsScollectionYelts,"proto/collections/collection","elts");
-EXT(YLtupG,"boot","<tup>");
-EXT(YLsingletonG,"boot","<singleton>");
+EXT(Yfab_sym,"boot","fab-sym");
+EXT(YprotoSmagnitudesYLE,"proto/magnitudes","<=");
+EXT(Ysig_specs,"boot","sig-specs");
+EXT(YprotoSmathYlog,"proto/math","log");
 EXT(YOlst,"boot","@lst");
-EXT(YPvnul,"boot","%vnul");
-EXT(YprotoSmathYNEE,"proto/math","~==");
-EXT(YprotoSmathYflo_bits,"proto/math","flo-bits");
+EXT(Yprop_type,"boot","prop-type");
+EXT(YprotoScollectionsSsequenceYreject,"proto/collections/sequence","reject");
+EXT(YLsingletonG,"boot","<singleton>");
 EXT(YLfunG,"boot","<fun>");
+EXT(YprotoSmathYC,"proto/math","^");
+EXT(Yhandler_info_message,"boot","handler-info-message");
+EXT(YprotoSmathYtan,"proto/math","tan");
+EXT(Yprop_boundQ,"boot","prop-bound?");
+DEF(YprotoScollectionsSstringYinteger_Gchar,"proto/collections/string","integer->char");
+EXT(YmacrosYcat_sym,"macros","cat-sym");
+EXT(YprotoScollectionsScollectionYallQ,"proto/collections/collection","all?");
+EXT(YprotoScollectionsScollectionYitems,"proto/collections/collection","items");
+EXT(Ysig_val,"boot","sig-val");
+EXT(YLlstG,"boot","<lst>");
+EXT(Yfab_class,"boot","fab-class");
+EXT(YTboot_macro_module_namesT,"boot","*boot-macro-module-names*");
+EXT(YLlogG,"boot","<log>");
+EXT(YprotoSmathYeof_objectQ,"proto/math","eof-object?");
+EXT(Yfun_specs,"boot","fun-specs");
+EXT(Ytype_object,"boot","type-object");
+EXT(Yfun_name_setter,"boot","fun-name-setter");
+DEF(YprotoScollectionsSstringYstr_to_num,"proto/collections/string","str-to-num");
+EXT(YprotoStypesYtT,"proto/types","t*");
+EXT(YprotoScollectionsSsequenceYsub,"proto/collections/sequence","sub");
+EXT(YprotoSmathYnum_to_str,"proto/math","num-to-str");
+EXT(YprotoScollectionsSlistYassqn,"proto/collections/list","assqn");
+EXT(Ysym_name,"boot","sym-name");
+EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
+EXT(YprotoSmathYK,"proto/math","|");
+EXT(YprotoScollectionsScollectionYfind,"proto/collections/collection","find");
+EXT(YprotoScollectionsScollectionYaddX,"proto/collections/collection","add!");
+EXT(YPwith_monitor,"boot","%with-monitor");
+EXT(Yfun_name,"boot","fun-name");
+EXT(YprotoScollectionsScollectionYfold,"proto/collections/collection","fold");
+EXT(Yadd_prop,"boot","add-prop");
+EXT(YprotoScollectionsSsequenceYfinds,"proto/collections/sequence","finds");
+EXT(Yobject_class,"boot","object-class");
+EXT(Yprop_owner,"boot","prop-owner");
+EXT(YprotoScollectionsSlistYpush,"proto/collections/list","push");
+EXT(YprotoSmathYzeroQ,"proto/math","zero?");
+DEF(YprotoScollectionsSstringYTprint_baseT,"proto/collections/string","*print-base*");
+EXT(YprotoSmathYeof_object,"proto/math","eof-object");
+EXT(YprotoSmathYoddQ,"proto/math","odd?");
+EXT(YprotoSmathYround,"proto/math","round");
+EXT(Yprop_value,"boot","prop-value");
+EXT(YprotoSmathYtanh,"proto/math","tanh");
+EXT(Yclass_parents,"boot","class-parents");
+EXT(YDmax_int,"boot","$max-int");
+EXT(YmacrosYmatch_sublist,"macros","match-sublist");
+EXT(YprotoSmagnitudesYG,"proto/magnitudes",">");
+EXT(YprotoScollectionsSsequenceYpick,"proto/collections/sequence","pick");
+EXT(Ymay_isaQ,"boot","may-isa?");
+EXT(YprotoScollectionsSlistYLlistG,"proto/collections/list","<list>");
+EXT(YprotoScollectionsScollectionYelt_setter,"proto/collections/collection","elt-setter");
+EXT(YprotoSmathYmod,"proto/math","mod");
+DEF(YprotoScollectionsSstringYascii_whitespaces,"proto/collections/string","ascii-whitespaces");
+EXT(YLseqG,"boot","<seq>");
+EXT(YprotoSmathY1A,"proto/math","1+");
+EXT(YprotoStypesYtA,"proto/types","t+");
+EXT(Ynil,"boot","nil");
+EXT(YLanyG,"boot","<any>");
+EXT(YprotoScollectionsSsequenceYdo_key_vals,"proto/collections/sequence","do-key-vals");
+DEF(YprotoScollectionsSstringYchar_Ginteger,"proto/collections/string","char->integer");
+EXT(YprotoScollectionsScollectionYmemQ,"proto/collections/collection","mem?");
+EXT(YprotoScollectionsSsequenceYcat2,"proto/collections/sequence","cat2");
+EXT(Yclass_props,"boot","class-props");
+EXT(Yerror,"boot","error");
 EXT(YmacrosYmap,"macros","map");
-EXT(YprotoSmathYtruncS,"proto/math","trunc/");
-EXT(YTmacros_okQT,"boot","*macros-ok?*");
+EXT(YprotoSmagnitudesYL,"proto/magnitudes","<");
+EXT(YprotoSmathYnegQ,"proto/math","neg?");
+EXT(YPprop_unbound_error,"boot","%prop-unbound-error");
+EXT(YprotoSmathYchar_Gascii,"proto/math","char->ascii");
+EXT(YprotoSmathYcontagious_call,"proto/math","contagious-call");
+EXT(YprotoSmathYroundS,"proto/math","round/");
+EXT(YLsigG,"boot","<sig>");
+EXT(Yfun_names,"boot","fun-names");
+EXT(YprotoScollectionsScollectionYadd,"proto/collections/collection","add");
+EXT(YprotoSmathYposQ,"proto/math","pos?");
+EXT(YprotoSmathYGGG,"proto/math",">>>");
+EXT(YprotoSmathYatan,"proto/math","atan");
+EXT(YprotoSmathYE,"proto/math","=");
+EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
+EXT(YOall2Q,"boot","@all2?");
+EXT(YprotoSmathYT,"proto/math","*");
+EXT(Yfile_opening_error,"boot","file-opening-error");
+EXT(YprotoSmathYdigitQ,"proto/math","digit?");
+EXT(YLcolG,"boot","<col>");
+EXT(Ysig_names,"boot","sig-names");
+EXT(YLclassG,"boot","<class>");
+EXT(YprotoSmathYalphaQ,"proto/math","alpha?");
+EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
+EXT(YprotoSmathYNEE,"proto/math","~==");
+EXT(Yfind_setter,"boot","find-setter");
+EXT(YprotoSmathYevenQ,"proto/math","even?");
+EXT(YmacrosYvar_name,"macros","var-name");
+EXT(YprotoScollectionsScollectionYinto,"proto/collections/collection","into");
 EXT(YprotoSmathYNE,"proto/math","~=");
 EXT(YprotoStypesYtQ,"proto/types","t?");
 EXT(YprotoStypesYall2Q,"proto/types","all2?");
-EXT(YprotoScollectionsSsequenceYreject,"proto/collections/sequence","reject");
-EXT(Ysig_val,"boot","sig-val");
-EXT(Yprop_boundQ,"boot","prop-bound?");
-EXT(YLlstG,"boot","<lst>");
-EXT(YLlogG,"boot","<log>");
-EXT(YprotoSmathYneg,"proto/math","neg");
-EXT(YprotoSmathYK,"proto/math","|");
-EXT(YprotoSmathYsqrt,"proto/math","sqrt");
-EXT(Ytype_object,"boot","type-object");
-EXT(Yfun_name_setter,"boot","fun-name-setter");
-EXT(Yfab_class,"boot","fab-class");
-EXT(Yfun_specs,"boot","fun-specs");
-EXT(YprotoSmathYT,"proto/math","*");
-EXT(YprotoSmathYround,"proto/math","round");
-EXT(YprotoSmathYlogn,"proto/math","logn");
-EXT(Ysym_name,"boot","sym-name");
-EXT(YprotoSmathYas_log,"proto/math","as-log");
-EXT(YprotoScollectionsSsequenceYcat2,"proto/collections/sequence","cat2");
+DEF(YprotoScollectionsSstringYnum_to_str_base,"proto/collections/string","num-to-str-base");
+EXT(YprotoSmathYN,"proto/math","~");
 EXT(YLreplace_generic_restartG,"boot","<replace-generic-restart>");
-EXT(YprotoSmathY1A,"proto/math","1+");
-EXT(YprotoSmathYpow,"proto/math","pow");
-EXT(YprotoScollectionsSsequenceYrange_check,"proto/collections/sequence","range-check");
-EXT(YprotoScollectionsScollectionYfind,"proto/collections/collection","find");
-EXT(Yfun_name,"boot","fun-name");
-EXT(YprotoSmathYdigitQ,"proto/math","digit?");
-EXT(Yprop_owner,"boot","prop-owner");
-EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
-EXT(YprotoSmathYLbotG,"proto/math","<bot>");
-EXT(YprotoSmathYto_str,"proto/math","to-str");
-EXT(YmacrosYfab_setter_name,"macros","fab-setter-name");
-EXT(YprotoStypesYtL,"proto/types","t<");
-EXT(Yobject_class,"boot","object-class");
-EXT(YprotoSmathYfloorS,"proto/math","floor/");
-EXT(YprotoScollectionsSlistYpush,"proto/collections/list","push");
-EXT(YprotoSmathYatan,"proto/math","atan");
-EXT(Yclass_parents,"boot","class-parents");
-EXT(YTreport_prop_unbound_errorsQT,"boot","*report-prop-unbound-errors?*");
-EXT(YprotoScollectionsSsequenceYpick,"proto/collections/sequence","pick");
-EXT(YprotoScollectionsSsequenceYsub_setter,"proto/collections/sequence","sub-setter");
-EXT(Yprop_value,"boot","prop-value");
-EXT(YprotoScollectionsSsequenceYdo_key_vals,"proto/collections/sequence","do-key-vals");
-EXT(YprotoScollectionsSlistYLlistG,"proto/collections/list","<list>");
-EXT(YmacrosYmatch_atom,"macros","match-atom");
-EXT(YprotoSmagnitudesYG,"proto/magnitudes",">");
-EXT(Ymay_isaQ,"boot","may-isa?");
-EXT(YprotoSmathYchar_Gascii,"proto/math","char->ascii");
-EXT(YLseqG,"boot","<seq>");
-EXT(YLanyG,"boot","<any>");
-EXT(Yprop_type,"boot","prop-type");
-EXT(YprotoScollectionsScollectionYelt_setter,"proto/collections/collection","elt-setter");
-EXT(YmacrosYvar_type,"macros","var-type");
-EXT(YprotoSmathYto_upper,"proto/math","to-upper");
-EXT(YprotoStypesYanyQ,"proto/types","any?");
-EXT(YprotoScollectionsSsequenceYcatX,"proto/collections/sequence","cat!");
-EXT(Yclass_props,"boot","class-props");
-EXT(YprotoScollectionsScollectionYzap,"proto/collections/collection","zap");
-EXT(YprotoScollectionsSlistYassqn,"proto/collections/list","assqn");
-DEF(YprotoScollectionsSstringYnative_chars,"proto/collections/string","native-chars");
-EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
-EXT(YprotoSmathYaddress_of,"proto/math","address-of");
-EXT(YprotoStypesYtE,"proto/types","t=");
-EXT(Yerror,"boot","error");
-EXT(YprotoSmathYGGG,"proto/math",">>>");
-EXT(YprotoSmagnitudesYL,"proto/magnitudes","<");
-EXT(YTrestarts_okQT,"boot","*restarts-ok?*");
-EXT(YLsigG,"boot","<sig>");
-EXT(YPprop_unbound_error,"boot","%prop-unbound-error");
-EXT(YPsymbols,"boot","%symbols");
-EXT(YprotoScollectionsScollectionYdo3,"proto/collections/collection","do3");
-EXT(Yhandler_info_message,"boot","handler-info-message");
-EXT(Yfun_names,"boot","fun-names");
-EXT(YprotoScollectionsScollectionYas_copy,"proto/collections/collection","as-copy");
-EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
-EXT(YOall2Q,"boot","@all2?");
-EXT(YprotoScollectionsScollectionYadd,"proto/collections/collection","add");
-EXT(YprotoSmathYtrunc,"proto/math","trunc");
-EXT(YprotoStypesY2nd,"proto/types","2nd");
-EXT(YmacrosYmatch_unquote,"macros","match-unquote");
-EXT(YprotoSmathYE,"proto/math","=");
-EXT(YprotoSmathYalphaQ,"proto/math","alpha?");
-EXT(YprotoSmathYceil,"proto/math","ceil");
-EXT(YLcolG,"boot","<col>");
-EXT(YLclassG,"boot","<class>");
-EXT(YprotoScollectionsScollectionYaddX,"proto/collections/collection","add!");
-EXT(YprotoScollectionsSsequenceYfinds,"proto/collections/sequence","finds");
-EXT(YLmagG,"boot","<mag>");
-EXT(YprotoSmathYto_lower,"proto/math","to-lower");
-EXT(YDmax_int,"boot","$max-int");
-EXT(YprotoScollectionsScollectionYfind_or,"proto/collections/collection","find-or");
-EXT(Yfind_setter,"boot","find-setter");
-EXT(YprotoSmathYposQ,"proto/math","pos?");
-EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
-EXT(YprotoScollectionsScollectionYLtabG,"proto/collections/collection","<tab>");
-EXT(Ytail_setter,"boot","tail-setter");
-EXT(YprotoStypesYLproductG,"proto/types","<product>");
-EXT(YPsnul,"boot","%snul");
-EXT(Ysig_arity,"boot","sig-arity");
-DEF(YprotoScollectionsSstringYstr,"proto/collections/string","str");
-DEF(YprotoScollectionsSstringYascii_whitespaces,"proto/collections/string","ascii-whitespaces");
 EXT(YprotoScollectionsScollectionYelt_or,"proto/collections/collection","elt-or");
-EXT(YmacrosYcat,"macros","cat");
-EXT(YprotoSmathYbitQ,"proto/math","bit?");
-EXT(YprotoSmathYcosh,"proto/math","cosh");
-EXT(YprotoScollectionsScollectionYdel,"proto/collections/collection","del");
-EXT(Yadd_prop,"boot","add-prop");
-EXT(YprotoStypesYlen,"proto/types","len");
-EXT(YprotoStypesYtype_elts_setter,"proto/types","type-elts-setter");
+DEF(YprotoScollectionsSstringYascii_Gchar,"proto/collections/string","ascii->char");
+EXT(Ytail_setter,"boot","tail-setter");
+EXT(YmacrosYmatch_atom,"macros","match-atom");
+DEF(YprotoScollectionsSstringYnative_chars,"proto/collections/string","native-chars");
+EXT(Ysig_arity,"boot","sig-arity");
+EXT(YprotoSmathYcontagious_type,"proto/math","contagious-type");
 EXT(Yfab_gen,"boot","fab-gen");
-EXT(YLoptsG,"boot","<opts>");
-EXT(YprotoScollectionsScollectionYLenumG,"proto/collections/collection","<enum>");
-EXT(YprotoSmathYmod,"proto/math","mod");
-EXT(Ytail,"boot","tail");
-EXT(YprotoScollectionsScollectionYdo2,"proto/collections/collection","do2");
-EXT(YprotoSmagnitudesYmax,"proto/magnitudes","max");
+EXT(YprotoScollectionsSsequenceYrange_checkQ,"proto/collections/sequence","range-check?");
+EXT(YprotoScollectionsSsequenceYlast,"proto/collections/sequence","last");
+EXT(YprotoStypesYtype_elts_setter,"proto/types","type-elts-setter");
+EXT(YmacrosYcat,"macros","cat");
 EXT(YprotoSmathYacos,"proto/math","acos");
-EXT(YprotoSmathYpower_of_two_ceiling,"proto/math","power-of-two-ceiling");
-EXT(YLtypeG,"boot","<type>");
+EXT(YprotoScollectionsSsequenceYcatX,"proto/collections/sequence","cat!");
+EXT(YLoptsG,"boot","<opts>");
+EXT(YprotoScollectionsScollectionYzap,"proto/collections/collection","zap");
+EXT(YprotoSmathYas_log,"proto/math","as-log");
 EXT(YmacrosYnapp,"macros","napp");
-EXT(YprotoScollectionsScollectionYlow_elt_setter,"proto/collections/collection","low-elt-setter");
-EXT(YLlocG,"boot","<loc>");
+EXT(Ytail,"boot","tail");
+DEF(YprotoScollectionsSstringYDdigit_to_char,"proto/collections/string","$digit-to-char");
+EXT(YLtypeG,"boot","<type>");
 EXT(Yord_app_mets,"boot","ord-app-mets");
+EXT(YprotoSmathYcosh,"proto/math","cosh");
+EXT(YprotoSmathYlogn,"proto/math","logn");
+EXT(YprotoSmathYto_str,"proto/math","to-str");
+EXT(YprotoSmathYcos,"proto/math","cos");
+EXT(YprotoStypesYtL,"proto/types","t<");
+EXT(YLlocG,"boot","<loc>");
+EXT(YprotoScollectionsScollectionYdo3,"proto/collections/collection","do3");
+EXT(YprotoSmathYB,"proto/math","&");
+EXT(YprotoSmathYtruncS,"proto/math","trunc/");
 EXT(YprotoScollectionsScollectionYfab,"proto/collections/collection","fab");
 EXT(Ytype_elts,"boot","type-elts");
-EXT(YprotoSmathYLL,"proto/math","<<");
-EXT(YprotoSmagnitudesYmin,"proto/magnitudes","min");
-EXT(YprotoScollectionsSsequenceYins,"proto/collections/sequence","ins");
-EXT(YprotoScollectionsScollectionYfill,"proto/collections/collection","fill");
-EXT(Yclass_name,"boot","class-name");
-EXT(YprotoSmathYsinh,"proto/math","sinh");
-EXT(YPPmacro,"boot","%%macro");
-EXT(Yfind_getter,"boot","find-getter");
-EXT(YprotoSmathYupperQ,"proto/math","upper?");
-EXT(YprotoSmathYisqrt,"proto/math","isqrt");
-EXT(YprotoSmathY1_,"proto/math","1-");
-EXT(YprotoSmathYDe,"proto/math","$e");
-EXT(YprotoSmathYeof_objectQ,"proto/math","eof-object?");
-EXT(YprotoScollectionsScollectionYempty,"proto/collections/collection","empty");
-EXT(Yprop_setter,"boot","prop-setter");
-EXT(Ynul,"boot","nul");
-EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
-EXT(YprotoScollectionsSsequenceYlast,"proto/collections/sequence","last");
-EXT(Ygen_add_met,"boot","gen-add-met");
-EXT(YprotoScollectionsScollectionYitems,"proto/collections/collection","items");
-EXT(YprotoScollectionsScollectionYnow,"proto/collections/collection","now");
-EXT(Yfun_val,"boot","fun-val");
-EXT(Yclass_ancestors,"boot","class-ancestors");
-EXT(YprotoSmathYatan2,"proto/math","atan2");
-EXT(YprotoScollectionsScollectionYlow_elt,"proto/collections/collection","low-elt");
-EXT(YprotoScollectionsScollectionYinto,"proto/collections/collection","into");
-EXT(YprotoScollectionsSsequenceYrev,"proto/collections/sequence","rev");
-EXT(YprotoSmathYnum_to_str,"proto/math","num-to-str");
-EXT(YDmin_int,"boot","$min-int");
-DEF(YprotoScollectionsSstringYinteger_Gchar,"proto/collections/string","integer->char");
-EXT(YprotoSmathYnegQ,"proto/math","neg?");
 EXT(YprotoSmathYabs,"proto/math","abs");
-EXT(YprotoSmathYfloor,"proto/math","floor");
-EXT(YmacrosYpair,"macros","pair");
-EXT(YprotoSmathYcontagious_type,"proto/math","contagious-type");
+EXT(YprotoScollectionsSsequenceYrange_check,"proto/collections/sequence","range-check");
+EXT(Yfind_getter,"boot","find-getter");
+EXT(Yclass_name,"boot","class-name");
+EXT(Yincongruent_method_error,"boot","incongruent-method-error");
+EXT(YprotoSmathYsqrt,"proto/math","sqrt");
+EXT(YmacrosYmatch_unquote,"macros","match-unquote");
+EXT(YmacrosYemptyQ,"macros","empty?");
+EXT(YmacrosYfab_setter_name,"macros","fab-setter-name");
+EXT(YprotoSmathYflo_bits,"proto/math","flo-bits");
+EXT(YprotoScollectionsScollectionYfill,"proto/collections/collection","fill");
+EXT(Ygen_add_met,"boot","gen-add-met");
+EXT(YprotoStypesYanyQ,"proto/types","any?");
+EXT(Yprop_setter,"boot","prop-setter");
+EXT(YprotoScollectionsScollectionYas_copy,"proto/collections/collection","as-copy");
+EXT(Yfun_val,"boot","fun-val");
+EXT(YprotoSmathYasin,"proto/math","asin");
+EXT(YDmin_int,"boot","$min-int");
+EXT(YprotoSmathYaddress_of,"proto/math","address-of");
+EXT(YprotoSmathY1_,"proto/math","1-");
+EXT(YprotoScollectionsScollectionYmap2,"proto/collections/collection","map2");
+EXT(YprotoScollectionsScollectionYlow_elt_setter,"proto/collections/collection","low-elt-setter");
+EXT(YprotoStypesYtE,"proto/types","t=");
+EXT(Yclass_ancestors,"boot","class-ancestors");
+EXT(YprotoSmathYceil,"proto/math","ceil");
+EXT(YmacrosYelt,"macros","elt");
+EXT(YprotoScollectionsScollectionYdo2,"proto/collections/collection","do2");
+EXT(YprotoScollectionsSlistYlist,"proto/collections/list","list");
+EXT(YprotoScollectionsScollectionYdel,"proto/collections/collection","del");
+EXT(YTmacros_okQT,"boot","*macros-ok?*");
+EXT(YprotoScollectionsSsequenceYinsX,"proto/collections/sequence","ins!");
 EXT(YLfloG,"boot","<flo>");
 EXT(YLsymG,"boot","<sym>");
-EXT(YprotoSmathYDpi,"proto/math","$pi");
-EXT(YprotoScollectionsSsequenceYinsX,"proto/collections/sequence","ins!");
-EXT(YprotoScollectionsScollectionYallQ,"proto/collections/collection","all?");
-EXT(YprotoSmagnitudesYGE,"proto/magnitudes",">=");
-EXT(YprotoSmathYceilingS,"proto/math","ceiling/");
-EXT(YprotoSmathYasin,"proto/math","asin");
+EXT(YprotoScollectionsScollectionYempty,"proto/collections/collection","empty");
 EXT(Ymet_appQ,"boot","met-app?");
-EXT(YmacrosYelt,"macros","elt");
-EXT(YprotoStypesYas,"proto/types","as");
-EXT(YprotoScollectionsScollectionYnow_setter,"proto/collections/collection","now-setter");
-DEF(YprotoScollectionsSstringYascii_limit,"proto/collections/string","ascii-limit");
-EXT(Yfun_mets,"boot","fun-mets");
-EXT(YprotoScollectionsSlistYlist,"proto/collections/list","list");
-EXT(YprotoSmathYN,"proto/math","~");
+EXT(YprotoScollectionsSsequenceYins,"proto/collections/sequence","ins");
+DEF(YprotoScollectionsSstringYepsilon,"proto/collections/string","epsilon");
 EXT(Yobject_parents,"boot","object-parents");
-EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
-DEF(YprotoScollectionsSstringYascii_chars,"proto/collections/string","ascii-chars");
+DEF(YprotoScollectionsSstringYascii_limit,"proto/collections/string","ascii-limit");
 EXT(YprotoScollectionsScollectionYnxt,"proto/collections/collection","nxt");
-EXT(Ygen_src_setter,"boot","gen-src-setter");
-EXT(YmacrosYdo,"macros","do");
+EXT(Yfun_mets,"boot","fun-mets");
 EXT(YOisaQ,"boot","@isa?");
-EXT(YprotoScollectionsSsequenceY3rd,"proto/collections/sequence","3rd");
+EXT(YprotoSmathYfloorS,"proto/math","floor/");
+EXT(YprotoStypesY2nd,"proto/types","2nd");
+EXT(Ygen_src_setter,"boot","gen-src-setter");
+EXT(YPvnul,"boot","%vnul");
+EXT(YmacrosYdo,"macros","do");
+EXT(YTreport_prop_unbound_errorsQT,"boot","*report-prop-unbound-errors?*");
 EXT(YprotoScollectionsScollectionYkeys,"proto/collections/collection","keys");
-EXT(YprotoScollectionsScollectionYrange_error,"proto/collections/collection","range-error");
+EXT(YprotoSmathYto_upper,"proto/math","to-upper");
 EXT(YLpropG,"boot","<prop>");
-EXT(YmacrosYemptyQ,"macros","empty?");
-EXT(YprotoSmathYC,"proto/math","^");
-EXT(YLgenG,"boot","<gen>");
-EXT(Ynil,"boot","nil");
-EXT(Ygen_src,"boot","gen-src");
+EXT(YPsymbols,"boot","%symbols");
 EXT(Ynew,"boot","new");
 EXT(YprotoSmathYfabs,"proto/math","fabs");
-EXT(YprotoSmathYlowerQ,"proto/math","lower?");
+EXT(YLgenG,"boot","<gen>");
+EXT(YprotoSmathYS,"proto/math","/");
+EXT(YTrestarts_okQT,"boot","*restarts-ok?*");
+EXT(Ynul,"boot","nul");
+EXT(YprotoSmagnitudesYmax,"proto/magnitudes","max");
 EXT(YprotoScollectionsScollectionYnow_key,"proto/collections/collection","now-key");
-EXT(YprotoSmathYto_digit,"proto/math","to-digit");
-EXT(YprotoSmathYtan,"proto/math","tan");
+EXT(Ygen_src,"boot","gen-src");
+EXT(YprotoSmathYDpi,"proto/math","$pi");
+EXT(YprotoSmathYLbotG,"proto/math","<bot>");
+EXT(YprotoScollectionsSsequenceYrev,"proto/collections/sequence","rev");
+EXT(YprotoSmathYLL,"proto/math","<<");
 EXT(Yobject_props,"boot","object-props");
-EXT(Yincongruent_method_error,"boot","incongruent-method-error");
+EXT(YprotoSmathYsin,"proto/math","sin");
+EXT(YprotoStypesYLproductG,"proto/types","<product>");
+EXT(YmacrosYvar_type,"macros","var-type");
+EXT(Ytype_error,"boot","type-error");
+EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
+EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
+EXT(YprotoScollectionsSlistYpop,"proto/collections/list","pop");
 EXT(Ysig_naryQ,"boot","sig-nary?");
+EXT(YprotoSmathYDe,"proto/math","$e");
 EXT(YLintG,"boot","<int>");
 EXT(YLstrG,"boot","<str>");
-EXT(Yfile_opening_error,"boot","file-opening-error");
-EXT(YPwith_monitor,"boot","%with-monitor");
-EXT(YprotoScollectionsSsequenceY1st,"proto/collections/sequence","1st");
-EXT(YprotoScollectionsSlistYpop,"proto/collections/list","pop");
-EXT(YprotoSmagnitudesYLE,"proto/magnitudes","<=");
+EXT(YprotoStypesYlen,"proto/types","len");
 EXT(Yfun_arity,"boot","fun-arity");
-EXT(YprotoSmathYGG,"proto/math",">>");
-DEF(YprotoScollectionsSstringYchar_Ginteger,"proto/collections/string","char->integer");
-EXT(YmacrosYcat_sym,"macros","cat-sym");
-EXT(YprotoSmathYoddQ,"proto/math","odd?");
+EXT(YprotoScollectionsScollectionYnow,"proto/collections/collection","now");
+EXT(Yvec,"boot","vec");
+EXT(Ylst,"boot","lst");
 EXT(YmacrosYEE,"macros","==");
-EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
-EXT(Ysig_names,"boot","sig-names");
-EXT(YprotoScollectionsScollectionYmemQ,"proto/collections/collection","mem?");
-EXT(YprotoScollectionsScollectionYkey_test,"proto/collections/collection","key-test");
-EXT(YmacrosYrevX,"macros","rev!");
-EXT(Ysig_unification_vars,"boot","sig-unification-vars");
-EXT(YprotoSmathYS,"proto/math","/");
 EXT(YprotoScollectionsSsequenceYvals_to_str,"proto/collections/sequence","vals-to-str");
-EXT(YprotoScollectionsScollectionYany2Q,"proto/collections/collection","any2?");
+EXT(YprotoScollectionsScollectionYmap_keyed,"proto/collections/collection","map-keyed");
+EXT(YmacrosYrevX,"macros","rev!");
+EXT(YprotoSmathYpow,"proto/math","pow");
+EXT(YprotoScollectionsScollectionYkey_test,"proto/collections/collection","key-test");
+EXT(YLtupG,"boot","<tup>");
+EXT(Ysig_unification_vars,"boot","sig-unification-vars");
+EXT(Ytup,"boot","tup");
+EXT(YisaQ,"boot","isa?");
+EXT(YprotoScollectionsSsequenceY3rd,"proto/collections/sequence","3rd");
+EXT(Yunknown_function_error,"boot","unknown-function-error");
+EXT(YPsnul,"boot","%snul");
+EXT(YprotoScollectionsScollectionYlow_elt,"proto/collections/collection","low-elt");
 EXT(Yhead_setter,"boot","head-setter");
 EXT(Ytype_class,"boot","type-class");
 EXT(Yfun_sig_setter,"boot","fun-sig-setter");
-EXT(Ylst,"boot","lst");
-EXT(Ytup,"boot","tup");
-EXT(YTboot_macro_module_namesT,"boot","*boot-macro-module-names*");
-EXT(YisaQ,"boot","isa?");
-EXT(YLunionG,"boot","<union>");
 EXT(YPprop,"boot","%prop");
-EXT(YprotoSmathYcos,"proto/math","cos");
-EXT(YprotoStypesYtT,"proto/types","t*");
-DEF(YprotoScollectionsSstringYDdigit_to_char,"proto/collections/string","$digit-to-char");
+EXT(YLunionG,"boot","<union>");
+EXT(YprotoSmathYsinh,"proto/math","sinh");
 EXT(YPisa,"boot","%isa");
-EXT(YprotoScollectionsScollectionYfoldA,"proto/collections/collection","fold+");
+EXT(YprotoSmathYupperQ,"proto/math","upper?");
+EXT(YprotoSmagnitudesYmin,"proto/magnitudes","min");
+EXT(YprotoScollectionsSsequenceYdel_dups,"proto/collections/sequence","del-dups");
+EXT(YprotoScollectionsScollectionYrange_error,"proto/collections/collection","range-error");
 EXT(Yhead,"boot","head");
-DEF(YprotoScollectionsSstringYstr_to_num,"proto/collections/string","str-to-num");
+EXT(YprotoSmathYneg,"proto/math","neg");
+EXT(YLmagG,"boot","<mag>");
+EXT(YprotoScollectionsScollectionYfind_or,"proto/collections/collection","find-or");
+EXT(YprotoScollectionsScollectionYkey_type,"proto/collections/collection","key-type");
+DEF(YprotoScollectionsSstringYascii_chars,"proto/collections/string","ascii-chars");
+EXT(YLnumG,"boot","<num>");
+EXT(YLvecG,"boot","<vec>");
+EXT(Yprop_getter,"boot","prop-getter");
+EXT(YmacrosYpair,"macros","pair");
+EXT(YprotoScollectionsScollectionYfinQ,"proto/collections/collection","fin?");
+EXT(Yunexec,"boot","unexec");
+EXT(YprotoScollectionsSsequenceYsub_setter,"proto/collections/sequence","sub-setter");
+EXT(YprotoSmathYA,"proto/math","+");
+EXT(YprotoSmathYbitQ,"proto/math","bit?");
+EXT(YprotoScollectionsScollectionYdo_keyed,"proto/collections/collection","do-keyed");
+EXT(Yclass_direct_props,"boot","class-direct-props");
+EXT(YprotoScollectionsSsequenceY1st,"proto/collections/sequence","1st");
+EXT(YprotoSmathYisqrt,"proto/math","isqrt");
+EXT(YLmetG,"boot","<met>");
+EXT(YPPmacro,"boot","%%macro");
+EXT(Yprop_init,"boot","prop-init");
+EXT(YprotoScollectionsSlistYassq,"proto/collections/list","assq");
+EXT(YprotoStypesYas,"proto/types","as");
+EXT(YprotoSmathYatan2,"proto/math","atan2");
+EXT(Yfun_naryQ,"boot","fun-nary?");
+EXT(YprotoScollectionsScollectionYenum,"proto/collections/collection","enum");
+DEF(YprotoScollectionsSstringYstr,"proto/collections/string","str");
+EXT(YprotoScollectionsScollectionYelt_default,"proto/collections/collection","elt-default");
+EXT(YLsubclassG,"boot","<subclass>");
+EXT(YprotoSmathYto_lower,"proto/math","to-lower");
+EXT(YprotoSmathYfloor,"proto/math","floor");
+EXT(YprotoScollectionsSsequenceYdel_vals,"proto/collections/sequence","del-vals");
+EXT(YprotoSmathYrem,"proto/math","rem");
+EXT(Yclass_descendents,"boot","class-descendents");
+EXT(YprotoSmagnitudesYGE,"proto/magnitudes",">=");
+EXT(YprotoScollectionsScollectionYLtabG,"proto/collections/collection","<tab>");
+EXT(Ygen_refs_setter,"boot","gen-refs-setter");
+EXT(YprotoScollectionsScollectionYfoldA,"proto/collections/collection","fold+");
+EXT(YsubtypeQ,"boot","subtype?");
+EXT(YprotoSmathYGG,"proto/math",">>");
+EXT(Yprop_value_setter,"boot","prop-value-setter");
+EXT(YprotoSmathYtrunc,"proto/math","trunc");
+EXT(YLchrG,"boot","<chr>");
+EXT(YLflatG,"boot","<flat>");
+EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
+EXT(YPdefine_method,"boot","%define-method");
+EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
+EXT(YprotoSmathY_,"proto/math","-");
+EXT(YprotoScollectionsScollectionYdup,"proto/collections/collection","dup");
+EXT(YprotoSmathYto_digit,"proto/math","to-digit");
+EXT(YprotoSmathYlowerQ,"proto/math","lower?");
+EXT(Ygen_refs,"boot","gen-refs");
+EXT(Ynot,"boot","not");
+EXT(YprotoScollectionsScollectionYLenumG,"proto/collections/collection","<enum>");
+EXT(YprotoScollectionsSsequenceYbelow,"proto/collections/sequence","below");
+EXT(YmacrosYgensym,"macros","gensym");
+EXT(YprotoSmathYceilingS,"proto/math","ceiling/");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_36);
-DEFLIT(lit_14);
-DEFLIT(lit_18);
-DEFLIT(lit_24);
-DEFLIT(lit_13);
-DEFLIT(lit_7);
-DEFLIT(lit_56);
-DEFLIT(lit_17);
-DEFLIT(lit_57);
-DEFLIT(lit_35);
-DEFLIT(lit_5);
-DEFLIT(lit_48);
-DEFLIT(lit_26);
-DEFLIT(lit_46);
-DEFLIT(lit_10);
-DEFLIT(lit_39);
-DEFLIT(lit_12);
-DEFLIT(lit_60);
-DEFLIT(lit_38);
-DEFLIT(lit_44);
-DEFLIT(lit_40);
-DEFLIT(lit_59);
-DEFLIT(lit_62);
-DEFLIT(lit_37);
-DEFLIT(lit_51);
-DEFLIT(lit_2);
-DEFLIT(lit_30);
-DEFLIT(lit_23);
-DEFLIT(lit_29);
-DEFLIT(lit_3);
-DEFLIT(lit_61);
-DEFLIT(lit_4);
-DEFLIT(lit_58);
-DEFLIT(lit_16);
-DEFLIT(lit_0);
-DEFLIT(lit_15);
-DEFLIT(lit_32);
-DEFLIT(lit_53);
-DEFLIT(lit_52);
-DEFLIT(lit_66);
-DEFLIT(lit_43);
-DEFLIT(lit_19);
-DEFLIT(lit_42);
-DEFLIT(lit_65);
-DEFLIT(lit_6);
 DEFLIT(lit_64);
-DEFLIT(lit_11);
-DEFLIT(lit_55);
-DEFLIT(lit_9);
-DEFLIT(lit_21);
-DEFLIT(lit_27);
-DEFLIT(lit_8);
-DEFLIT(lit_49);
-DEFLIT(lit_54);
-DEFLIT(lit_33);
-DEFLIT(lit_47);
-DEFLIT(lit_34);
-DEFLIT(lit_28);
-DEFLIT(lit_50);
-DEFLIT(lit_22);
-DEFLIT(lit_63);
+DEFLIT(lit_59);
+DEFLIT(lit_4);
 DEFLIT(lit_45);
-DEFLIT(lit_25);
-DEFLIT(lit_31);
-DEFLIT(lit_20);
-DEFLIT(lit_1);
+DEFLIT(lit_51);
+DEFLIT(lit_13);
+DEFLIT(lit_48);
+DEFLIT(lit_7);
+DEFLIT(lit_17);
+DEFLIT(lit_58);
+DEFLIT(lit_53);
 DEFLIT(lit_41);
+DEFLIT(lit_40);
+DEFLIT(lit_9);
+DEFLIT(lit_38);
+DEFLIT(lit_33);
+DEFLIT(lit_61);
+DEFLIT(lit_34);
+DEFLIT(lit_31);
+DEFLIT(lit_32);
+DEFLIT(lit_12);
+DEFLIT(lit_39);
+DEFLIT(lit_49);
+DEFLIT(lit_22);
+DEFLIT(lit_5);
+DEFLIT(lit_21);
+DEFLIT(lit_44);
+DEFLIT(lit_57);
+DEFLIT(lit_42);
+DEFLIT(lit_63);
+DEFLIT(lit_8);
+DEFLIT(lit_14);
+DEFLIT(lit_26);
+DEFLIT(lit_24);
+DEFLIT(lit_65);
+DEFLIT(lit_60);
+DEFLIT(lit_66);
+DEFLIT(lit_56);
+DEFLIT(lit_15);
+DEFLIT(lit_50);
+DEFLIT(lit_46);
+DEFLIT(lit_62);
+DEFLIT(lit_19);
+DEFLIT(lit_0);
+DEFLIT(lit_2);
+DEFLIT(lit_47);
+DEFLIT(lit_11);
+DEFLIT(lit_28);
+DEFLIT(lit_20);
+DEFLIT(lit_6);
+DEFLIT(lit_30);
+DEFLIT(lit_10);
+DEFLIT(lit_54);
+DEFLIT(lit_55);
+DEFLIT(lit_29);
+DEFLIT(lit_27);
+DEFLIT(lit_18);
+DEFLIT(lit_37);
+DEFLIT(lit_1);
+DEFLIT(lit_43);
+DEFLIT(lit_16);
+DEFLIT(lit_36);
+DEFLIT(lit_23);
+DEFLIT(lit_35);
+DEFLIT(lit_3);
+DEFLIT(lit_25);
+DEFLIT(lit_52);
 
 /* FUNCTIONS: */
 
@@ -624,7 +624,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_13) {
   P i_,s_;
-  P loopF5397;
+  P loopF1026;
   P T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -632,9 +632,9 @@ LINK_STACK();
   ARG(s_, 1);
 loop:
   T1 = FUNSHELL(1,fun_loop_12,3);
-  loopF5397 = T1;
-  FUNINIT(loopF5397, 3,s_,FREEREF(0),loopF5397);
-  T2 = CALL2(0,loopF5397,i_,YPint((P)0));
+  loopF1026 = T1;
+  FUNINIT(loopF1026, 3,s_,FREEREF(0),loopF1026);
+  T2 = CALL2(0,loopF1026,i_,YPint((P)0));
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -642,16 +642,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ascii_Gchar_14) {
   P n_;
-  P tmpF5398;
+  P tmpF1027;
   P T3,T2,T1,T0;
   P a1;
 LINK_STACK();
   ARG(n_, 0);
 loop:
   T1 = CALL2(1,VARREF(YmacrosYelt),VARREF(YprotoScollectionsSstringYascii_chars),n_);
-  tmpF5398 = T1;
-  if (tmpF5398 != YPfalse) {
-    T2 = tmpF5398;
+  tmpF1027 = T1;
+  if (tmpF1027 != YPfalse) {
+    T2 = tmpF1027;
   } else {
     T3 = CALL2(1,VARREF(Yerror),LITREF(lit_38),n_);
     T2 = T3;
@@ -687,7 +687,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_17) {
   P i_;
-  P cF5399;
+  P cF1028;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 LINK_STACK();
@@ -699,9 +699,9 @@ loop:
     T0 = T2;
   } else {
     T4 = CALL2(1,VARREF(YmacrosYelt),VARREF(YprotoScollectionsSstringYascii_chars),i_);
-    cF5399 = T4;
-    if (cF5399 != YPfalse) {
-      T7 = CALL1(1,VARREF(YprotoScollectionsSstringYchar_Ginteger),cF5399);
+    cF1028 = T4;
+    if (cF1028 != YPfalse) {
+      T7 = CALL1(1,VARREF(YprotoScollectionsSstringYchar_Ginteger),cF1028);
       T6 = CALL2(1,VARREF(YprotoSmathY_),T7,FREEREF(1));
       T5 = CALL3(1,VARREF(YprotoScollectionsScollectionYelt_setter),i_,FREEREF(2),T6);
     } else {
@@ -719,10 +719,10 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_18) {
   P i_,least_,greatest_;
-  P nF5403;
-  P cF5402;
-  P loopF5401;
-  P vF5400;
+  P nF1032;
+  P cF1031;
+  P loopF1030;
+  P vF1029;
   P T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7;
   P T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
@@ -737,32 +737,32 @@ loop:
     T5 = CALL2(1,VARREF(YprotoSmathYA),T6,YPint((P)1));
     T4 = CALL2(1,VARREF(YprotoScollectionsScollectionYfab),VARREF(YLvecG),T5);
     T3 = CALL2(1,VARREF(YprotoScollectionsScollectionYfill),T4,YPfalse);
-    vF5400 = T3;
+    vF1029 = T3;
     T8 = FUNSHELL(1,fun_loop_17,4);
-    loopF5401 = T8;
-    FUNINIT(loopF5401, 4,FREEREF(0),least_,vF5400,loopF5401);
-    T9 = CALL1(0,loopF5401,YPint((P)0));
+    loopF1030 = T8;
+    FUNINIT(loopF1030, 4,FREEREF(0),least_,vF1029,loopF1030);
+    T9 = CALL1(0,loopF1030,YPint((P)0));
     T7 = T9;
     T2 = T7;
     T0 = T2;
   } else {
     T11 = CALL2(1,VARREF(YmacrosYelt),VARREF(YprotoScollectionsSstringYascii_chars),i_);
-    cF5402 = T11;
-    if (cF5402 != YPfalse) {
-      T14 = CALL1(1,VARREF(YprotoScollectionsSstringYchar_Ginteger),cF5402);
-      nF5403 = T14;
+    cF1031 = T11;
+    if (cF1031 != YPfalse) {
+      T14 = CALL1(1,VARREF(YprotoScollectionsSstringYchar_Ginteger),cF1031);
+      nF1032 = T14;
       T16 = CALL2(1,VARREF(YprotoSmathYA),i_,YPint((P)1));
       if (least_ != YPfalse) {
-        T18 = CALL2(1,VARREF(YprotoSmagnitudesYmin),least_,nF5403);
+        T18 = CALL2(1,VARREF(YprotoSmagnitudesYmin),least_,nF1032);
         T17 = T18;
       } else {
-        T17 = nF5403;
+        T17 = nF1032;
       }
       if (greatest_ != YPfalse) {
-        T20 = CALL2(1,VARREF(YprotoSmagnitudesYmax),greatest_,nF5403);
+        T20 = CALL2(1,VARREF(YprotoSmagnitudesYmax),greatest_,nF1032);
         T19 = T20;
       } else {
-        T19 = nF5403;
+        T19 = nF1032;
       }
       a1 = T16;
       a2 = T17;
@@ -793,7 +793,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_char_Gascii_19) {
   P char_;
-  P tmpF5404;
+  P tmpF1033;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 LINK_STACK();
@@ -805,9 +805,9 @@ loop:
   T6 = CALL1(1,VARREF(Yhead),VARREF(YprotoScollectionsSstringYnative_chars));
   T4 = CALL2(1,VARREF(YprotoSmathY_),T5,T6);
   T1 = CALL2(1,VARREF(YmacrosYelt),T2,T4);
-  tmpF5404 = T1;
-  if (tmpF5404 != YPfalse) {
-    T7 = tmpF5404;
+  tmpF1033 = T1;
+  if (tmpF1033 != YPfalse) {
+    T7 = tmpF1033;
   } else {
     T8 = CALL2(1,VARREF(Yerror),LITREF(lit_43),char_);
     T7 = T8;
@@ -819,7 +819,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_match_20) {
   P char_;
-  P tmpF5405;
+  P tmpF1034;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 LINK_STACK();
@@ -827,8 +827,8 @@ LINK_STACK();
 loop:
   T3 = BOXVAL(FREEREF(0));
   T2 = CALL2(1,VARREF(YprotoSmagnitudesYL),T3,FREEREF(1));
-  tmpF5405 = T2;
-  if (tmpF5405 != YPfalse) {
+  tmpF1034 = T2;
+  if (tmpF1034 != YPfalse) {
     T7 = BOXVAL(FREEREF(0));
     T6 = CALL2(1,VARREF(YmacrosYelt),FREEREF(2),T7);
     T5 = CALL2(1,VARREF(YprotoSmathYE),T6,char_);
@@ -860,8 +860,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_22) {
   P return_;
-  P charF5407;
-  P failXXF5406;
+  P charF1036;
+  P failXXF1035;
   P T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19;
   P T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3;
   P T2,T1,T0;
@@ -870,19 +870,19 @@ LINK_STACK();
   ARG(return_, 0);
 loop:
   T1 = FUNSHELL(1,fun_failXX_21,1);
-  failXXF5406 = T1;
-  FUNINIT(failXXF5406, 1,return_);
+  failXXF1035 = T1;
+  FUNINIT(failXXF1035, 1,return_);
   T3 = BOXVAL(FREEREF(0));
   T2 = CALL2(1,VARREF(YprotoSmagnitudesYGE),T3,FREEREF(1));
   if (T2 != YPfalse) {
-    T4 = CALL0(0,failXXF5406);
+    T4 = CALL0(0,failXXF1035);
   } else {
   }
   T7 = BOXVAL(FREEREF(0));
   T6 = CALL2(1,VARREF(YmacrosYelt),FREEREF(2),T7);
-  charF5407 = T6;
-  charF5407 = BOXFAB(charF5407);
-  T10 = BOXVAL(charF5407);
+  charF1036 = T6;
+  charF1036 = BOXFAB(charF1036);
+  T10 = BOXVAL(charF1036);
   T9 = CALL2(1,VARREF(YprotoSmathYE),T10,YPchr((P)46));
   if (T9 != YPfalse) {
     T12 = BOXVAL(FREEREF(3));
@@ -897,21 +897,21 @@ loop:
       T17 = BOXVAL(FREEREF(0));
       T16 = CALL2(1,VARREF(YprotoSmagnitudesYGE),T17,FREEREF(1));
       if (T16 != YPfalse) {
-        T18 = CALL0(0,failXXF5406);
+        T18 = CALL0(0,failXXF1035);
       } else {
       }
       T21 = BOXVAL(FREEREF(0));
       T20 = CALL2(1,VARREF(YmacrosYelt),FREEREF(2),T21);
-      T19 = BOXVAL(charF5407) = T20;
+      T19 = BOXVAL(charF1036) = T20;
       T11 = T19;
     }
   } else {
   }
-  T24 = BOXVAL(charF5407);
+  T24 = BOXVAL(charF1036);
   T23 = CALL1(1,VARREF(YprotoSmathYdigitQ),T24);
   T22 = CALL1(1,VARREF(Ynot),T23);
   if (T22 != YPfalse) {
-    T25 = CALL0(0,failXXF5406);
+    T25 = CALL0(0,failXXF1035);
   } else {
   }
   T28 = BOXVAL(FREEREF(0));
@@ -948,14 +948,14 @@ UNLINK_STACK();
 }
 
 FUNCODEDEF(fun_looking_at_alphaQ_24) {
-  P tmpF5408;
+  P tmpF1037;
   P T7,T6,T5,T4,T3,T2,T1,T0;
 LINK_STACK();
 loop:
   T3 = BOXVAL(FREEREF(0));
   T2 = CALL2(1,VARREF(YprotoSmagnitudesYL),T3,FREEREF(1));
-  tmpF5408 = T2;
-  if (tmpF5408 != YPfalse) {
+  tmpF1037 = T2;
+  if (tmpF1037 != YPfalse) {
     T7 = BOXVAL(FREEREF(0));
     T6 = CALL2(1,VARREF(YmacrosYelt),FREEREF(2),T7);
     T5 = CALL1(1,VARREF(YprotoSmathYalphaQ),T6);
@@ -974,14 +974,14 @@ UNLINK_STACK();
 }
 
 FUNCODEDEF(fun_loop_25) {
-  P tmpF5409;
+  P tmpF1038;
   P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
 LINK_STACK();
 loop:
   T3 = BOXVAL(FREEREF(1));
   T2 = CALL1(0,FREEREF(0),T3);
-  tmpF5409 = T2;
-  if (tmpF5409 != YPfalse) {
+  tmpF1038 = T2;
+  if (tmpF1038 != YPfalse) {
     T8 = BOXVAL(FREEREF(2));
     T7 = CALL2(1,VARREF(YprotoSmathYT),T8,FREEREF(3));
     T9 = BOXVAL(FREEREF(1));
@@ -1004,27 +1004,27 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_str_to_num_26) {
   P string_;
-  P fF5430;
-  P tmpF5429;
-  P tmpF5428;
-  P loopF5427;
-  P tmpF5426;
-  P tmpF5425;
-  P tmpF5424;
-  P tmpF5423;
-  P tmpF5422;
-  P tmpF5421;
-  P looking_at_alphaQF5420;
-  P match_digitXF5419;
-  P matchF5418;
-  P radixF5417;
-  P seen_decimal_pointQF5416;
-  P lengthF5415;
-  P scaleF5414;
-  P iF5413;
-  P nF5412;
-  P dF5411;
-  P sF5410;
+  P fF1059;
+  P tmpF1058;
+  P tmpF1057;
+  P loopF1056;
+  P tmpF1055;
+  P tmpF1054;
+  P tmpF1053;
+  P tmpF1052;
+  P tmpF1051;
+  P tmpF1050;
+  P looking_at_alphaQF1049;
+  P match_digitXF1048;
+  P matchF1047;
+  P radixF1046;
+  P seen_decimal_pointQF1045;
+  P lengthF1044;
+  P scaleF1043;
+  P iF1042;
+  P nF1041;
+  P dF1040;
+  P sF1039;
   P T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43;
   P T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27;
   P T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11;
@@ -1033,47 +1033,47 @@ FUNCODEDEF(fun_str_to_num_26) {
 LINK_STACK();
   ARG(string_, 0);
 loop:
-  sF5410 = YPint((P)1);
-  sF5410 = BOXFAB(sF5410);
-  dF5411 = YPint((P)0);
-  dF5411 = BOXFAB(dF5411);
-  nF5412 = YPint((P)0);
-  nF5412 = BOXFAB(nF5412);
-  iF5413 = YPint((P)0);
-  iF5413 = BOXFAB(iF5413);
-  scaleF5414 = YPint((P)1);
-  scaleF5414 = BOXFAB(scaleF5414);
+  sF1039 = YPint((P)1);
+  sF1039 = BOXFAB(sF1039);
+  dF1040 = YPint((P)0);
+  dF1040 = BOXFAB(dF1040);
+  nF1041 = YPint((P)0);
+  nF1041 = BOXFAB(nF1041);
+  iF1042 = YPint((P)0);
+  iF1042 = BOXFAB(iF1042);
+  scaleF1043 = YPint((P)1);
+  scaleF1043 = BOXFAB(scaleF1043);
   T11 = CALL1(1,VARREF(YprotoStypesYlen),string_);
-  lengthF5415 = T11;
-  seen_decimal_pointQF5416 = YPfalse;
-  seen_decimal_pointQF5416 = BOXFAB(seen_decimal_pointQF5416);
-  radixF5417 = YPint((P)10);
+  lengthF1044 = T11;
+  seen_decimal_pointQF1045 = YPfalse;
+  seen_decimal_pointQF1045 = BOXFAB(seen_decimal_pointQF1045);
+  radixF1046 = YPint((P)10);
   T16 = FUNSHELL(1,fun_match_20,3);
-  matchF5418 = T16;
+  matchF1047 = T16;
   T17 = FUNSHELL(1,fun_match_digitX_23,7);
-  match_digitXF5419 = T17;
+  match_digitXF1048 = T17;
   T18 = FUNSHELL(1,fun_looking_at_alphaQ_24,3);
-  looking_at_alphaQF5420 = T18;
-  FUNINIT(matchF5418, 3,iF5413,lengthF5415,string_);
-  FUNINIT(match_digitXF5419, 7,iF5413,lengthF5415,string_,seen_decimal_pointQF5416,dF5411,scaleF5414,radixF5417);
-  FUNINIT(looking_at_alphaQF5420, 3,iF5413,lengthF5415,string_);
-  T21 = CALL1(0,matchF5418,YPchr((P)43));
-  tmpF5421 = T21;
-  if (tmpF5421 != YPfalse) {
-    T22 = tmpF5421;
+  looking_at_alphaQF1049 = T18;
+  FUNINIT(matchF1047, 3,iF1042,lengthF1044,string_);
+  FUNINIT(match_digitXF1048, 7,iF1042,lengthF1044,string_,seen_decimal_pointQF1045,dF1040,scaleF1043,radixF1046);
+  FUNINIT(looking_at_alphaQF1049, 3,iF1042,lengthF1044,string_);
+  T21 = CALL1(0,matchF1047,YPchr((P)43));
+  tmpF1050 = T21;
+  if (tmpF1050 != YPfalse) {
+    T22 = tmpF1050;
   } else {
-    T25 = CALL1(0,matchF5418,YPchr((P)45));
-    tmpF5422 = T25;
-    if (tmpF5422 != YPfalse) {
-      T27 = BOXVAL(sF5410) = YPint((P)-1);
+    T25 = CALL1(0,matchF1047,YPchr((P)45));
+    tmpF1051 = T25;
+    if (tmpF1051 != YPfalse) {
+      T27 = BOXVAL(sF1039) = YPint((P)-1);
       T26 = T27;
     } else {
       T26 = YPfalse;
     }
     T24 = T26;
-    tmpF5423 = T24;
-    if (tmpF5423 != YPfalse) {
-      T28 = tmpF5423;
+    tmpF1052 = T24;
+    if (tmpF1052 != YPfalse) {
+      T28 = tmpF1052;
     } else {
       T28 = YPtrue;
     }
@@ -1081,46 +1081,46 @@ loop:
     T22 = T23;
   }
   T20 = T22;
-  tmpF5424 = T20;
-  if (tmpF5424 != YPfalse) {
-    T33 = BOXVAL(dF5411);
-    T32 = CALL1(0,match_digitXF5419,T33);
-    tmpF5425 = T32;
-    if (tmpF5425 != YPfalse) {
-      T36 = BOXVAL(dF5411);
-      T35 = BOXVAL(nF5412) = T36;
+  tmpF1053 = T20;
+  if (tmpF1053 != YPfalse) {
+    T33 = BOXVAL(dF1040);
+    T32 = CALL1(0,match_digitXF1048,T33);
+    tmpF1054 = T32;
+    if (tmpF1054 != YPfalse) {
+      T36 = BOXVAL(dF1040);
+      T35 = BOXVAL(nF1041) = T36;
       T34 = T35;
     } else {
       T34 = YPfalse;
     }
     T31 = T34;
-    tmpF5426 = T31;
-    if (tmpF5426 != YPfalse) {
+    tmpF1055 = T31;
+    if (tmpF1055 != YPfalse) {
       T40 = FUNSHELL(1,fun_loop_25,5);
-      loopF5427 = T40;
-      FUNINIT(loopF5427, 5,match_digitXF5419,dF5411,nF5412,radixF5417,loopF5427);
-      T41 = CALL0(0,loopF5427);
+      loopF1056 = T40;
+      FUNINIT(loopF1056, 5,match_digitXF1048,dF1040,nF1041,radixF1046,loopF1056);
+      T41 = CALL0(0,loopF1056);
       T39 = T41;
-      tmpF5428 = T39;
-      if (tmpF5428 != YPfalse) {
-        T45 = BOXVAL(iF5413);
-        T44 = CALL2(1,VARREF(YprotoSmathYE),T45,lengthF5415);
-        tmpF5429 = T44;
-        if (tmpF5429 != YPfalse) {
-          T50 = BOXVAL(sF5410);
+      tmpF1057 = T39;
+      if (tmpF1057 != YPfalse) {
+        T45 = BOXVAL(iF1042);
+        T44 = CALL2(1,VARREF(YprotoSmathYE),T45,lengthF1044);
+        tmpF1058 = T44;
+        if (tmpF1058 != YPfalse) {
+          T50 = BOXVAL(sF1039);
           T49 = CALL2(1,VARREF(YprotoStypesYas),VARREF(YLfloG),T50);
-          T53 = BOXVAL(nF5412);
+          T53 = BOXVAL(nF1041);
           T52 = CALL2(1,VARREF(YprotoStypesYas),VARREF(YLfloG),T53);
-          T55 = BOXVAL(scaleF5414);
+          T55 = BOXVAL(scaleF1043);
           T54 = CALL2(1,VARREF(YprotoStypesYas),VARREF(YLfloG),T55);
           T51 = CALL2(1,VARREF(YprotoSmathYS),T52,T54);
           T48 = CALL2(1,VARREF(YprotoSmathYT),T49,T51);
-          fF5430 = T48;
-          T57 = BOXVAL(seen_decimal_pointQF5416);
+          fF1059 = T48;
+          T57 = BOXVAL(seen_decimal_pointQF1045);
           if (T57 != YPfalse) {
-            T56 = fF5430;
+            T56 = fF1059;
           } else {
-            T58 = CALL1(1,VARREF(YprotoSmathYtrunc),fF5430);
+            T58 = CALL1(1,VARREF(YprotoSmathYtrunc),fF1059);
             T56 = T58;
           }
           T47 = T56;
@@ -1159,7 +1159,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_27) {
   P digit_list_,num_;
-  P digitF5431;
+  P digitF1060;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -1172,8 +1172,8 @@ loop:
   } else {
     T4 = CALL2(1,VARREF(YprotoSmathYrem),num_,FREEREF(0));
     T3 = CALL2(1,VARREF(YmacrosYelt),VARREF(YprotoScollectionsSstringYDdigit_to_char),T4);
-    digitF5431 = T3;
-    T6 = CALL2(1,VARREF(YmacrosYpair),digitF5431,digit_list_);
+    digitF1060 = T3;
+    T6 = CALL2(1,VARREF(YmacrosYpair),digitF1060,digit_list_);
     T8 = CALL2(1,VARREF(YprotoSmathYtruncS),num_,FREEREF(0));
     T7 = CALL1(1,VARREF(YprotoScollectionsSsequenceY1st),T8);
     a1 = T6;
@@ -1190,9 +1190,9 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_num_to_str_base_28) {
   P num_,radix_;
-  P digit_listF5434;
-  P loopF5433;
-  P sF5432;
+  P digit_listF1063;
+  P loopF1062;
+  P sF1061;
   P T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -1205,24 +1205,24 @@ loop:
   } else {
     T1 = YPint((P)1);
   }
-  sF5432 = T1;
+  sF1061 = T1;
   T5 = FUNSHELL(1,fun_loop_27,2);
-  loopF5433 = T5;
-  FUNINIT(loopF5433, 2,radix_,loopF5433);
-  T7 = CALL2(1,VARREF(YprotoSmathYT),num_,sF5432);
-  T6 = CALL2(0,loopF5433,Ynil,T7);
+  loopF1062 = T5;
+  FUNINIT(loopF1062, 2,radix_,loopF1062);
+  T7 = CALL2(1,VARREF(YprotoSmathYT),num_,sF1061);
+  T6 = CALL2(0,loopF1062,Ynil,T7);
   T4 = T6;
-  digit_listF5434 = T4;
-  T10 = CALL2(1,VARREF(YprotoSmagnitudesYL),sF5432,YPint((P)0));
+  digit_listF1063 = T4;
+  T10 = CALL2(1,VARREF(YprotoSmagnitudesYL),sF1061,YPint((P)0));
   if (T10 != YPfalse) {
-    T11 = CALL2(1,VARREF(YmacrosYpair),YPchr((P)45),digit_listF5434);
+    T11 = CALL2(1,VARREF(YmacrosYpair),YPchr((P)45),digit_listF1063);
     T9 = T11;
   } else {
     T13 = CALL2(1,VARREF(YprotoSmathYE),num_,YPint((P)0));
     if (T13 != YPfalse) {
       T12 = LITREF(lit_55);
     } else {
-      T12 = digit_listF5434;
+      T12 = digit_listF1063;
     }
     T9 = T12;
   }
@@ -1247,7 +1247,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_30) {
   P p_,e_;
-  P iF5435;
+  P iF1064;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -1255,11 +1255,11 @@ LINK_STACK();
   ARG(e_, 1);
 loop:
   T1 = CALL1(1,VARREF(YprotoSmathYtrunc),p_);
-  iF5435 = T1;
-  T4 = CALL2(1,VARREF(YprotoSmathY_),p_,iF5435);
+  iF1064 = T1;
+  T4 = CALL2(1,VARREF(YprotoSmathY_),p_,iF1064);
   T3 = CALL2(1,VARREF(YprotoSmagnitudesYL),T4,VARREF(YprotoScollectionsSstringYepsilon));
   if (T3 != YPfalse) {
-    T5 = CALL2(1,VARREF(YprotoSmathYnum_to_str),iF5435,FREEREF(1));
+    T5 = CALL2(1,VARREF(YprotoSmathYnum_to_str),iF1064,FREEREF(1));
     BOXVAL(FREEREF(0)) = T5;
     T2 = e_;
   } else {
@@ -1279,12 +1279,12 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_num_to_str_base_31) {
   P num_,radix_;
-  P lengthF5441;
-  P eF5440;
-  P loopF5439;
-  P stringF5438;
-  P pF5437;
-  P sF5436;
+  P lengthF1070;
+  P eF1069;
+  P loopF1068;
+  P stringF1067;
+  P pF1066;
+  P sF1065;
   P T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25;
   P T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
@@ -1299,47 +1299,47 @@ loop:
   } else {
     T1 = YPint((P)1);
   }
-  sF5436 = T1;
-  T4 = CALL2(1,VARREF(YprotoSmathYT),num_,sF5436);
-  pF5437 = T4;
-  stringF5438 = LITREF(lit_56);
-  stringF5438 = BOXFAB(stringF5438);
+  sF1065 = T1;
+  T4 = CALL2(1,VARREF(YprotoSmathYT),num_,sF1065);
+  pF1066 = T4;
+  stringF1067 = LITREF(lit_56);
+  stringF1067 = BOXFAB(stringF1067);
   T9 = FUNSHELL(1,fun_loop_30,3);
-  loopF5439 = T9;
-  FUNINIT(loopF5439, 3,stringF5438,radix_,loopF5439);
-  T10 = CALL2(0,loopF5439,pF5437,YPint((P)0));
+  loopF1068 = T9;
+  FUNINIT(loopF1068, 3,stringF1067,radix_,loopF1068);
+  T10 = CALL2(0,loopF1068,pF1066,YPint((P)0));
   T8 = T10;
-  eF5440 = T8;
-  T13 = BOXVAL(stringF5438);
+  eF1069 = T8;
+  T13 = BOXVAL(stringF1067);
   T12 = CALL1(1,VARREF(YprotoStypesYlen),T13);
-  lengthF5441 = T12;
-  T15 = CALL2(1,VARREF(YprotoSmathYE),eF5440,YPint((P)0));
+  lengthF1070 = T12;
+  T15 = CALL2(1,VARREF(YprotoSmathYE),eF1069,YPint((P)0));
   if (T15 != YPfalse) {
-    T17 = BOXVAL(stringF5438);
+    T17 = BOXVAL(stringF1067);
     T16 = CALL2(1,VARREF(YmacrosYcat),T17,LITREF(lit_59));
     T14 = T16;
   } else {
-    T19 = CALL2(1,VARREF(YprotoSmathYE),eF5440,lengthF5441);
+    T19 = CALL2(1,VARREF(YprotoSmathYE),eF1069,lengthF1070);
     if (T19 != YPfalse) {
-      T21 = BOXVAL(stringF5438);
+      T21 = BOXVAL(stringF1067);
       T20 = CALL2(1,VARREF(YmacrosYcat),LITREF(lit_60),T21);
       T18 = T20;
     } else {
-      T23 = CALL2(1,VARREF(YprotoSmagnitudesYL),eF5440,lengthF5441);
+      T23 = CALL2(1,VARREF(YprotoSmagnitudesYL),eF1069,lengthF1070);
       if (T23 != YPfalse) {
-        T26 = BOXVAL(stringF5438);
-        T27 = CALL2(1,VARREF(YprotoSmathY_),lengthF5441,eF5440);
+        T26 = BOXVAL(stringF1067);
+        T27 = CALL2(1,VARREF(YprotoSmathY_),lengthF1070,eF1069);
         T25 = CALL3(1,VARREF(YprotoScollectionsSsequenceYsub),T26,YPint((P)0),T27);
-        T29 = BOXVAL(stringF5438);
-        T30 = CALL2(1,VARREF(YprotoSmathY_),lengthF5441,eF5440);
-        T28 = CALL3(1,VARREF(YprotoScollectionsSsequenceYsub),T29,T30,lengthF5441);
+        T29 = BOXVAL(stringF1067);
+        T30 = CALL2(1,VARREF(YprotoSmathY_),lengthF1070,eF1069);
+        T28 = CALL3(1,VARREF(YprotoScollectionsSsequenceYsub),T29,T30,lengthF1070);
         T24 = CALL3(1,VARREF(YmacrosYcat),T25,LITREF(lit_61),T28);
         T22 = T24;
       } else {
-        T34 = CALL2(1,VARREF(YprotoSmathY_),eF5440,lengthF5441);
+        T34 = CALL2(1,VARREF(YprotoSmathY_),eF1069,lengthF1070);
         T33 = CALL2(1,VARREF(YprotoSmathYA),T34,YPint((P)2));
         T32 = CALL3(1,VARREF(YprotoScollectionsSsequenceYsub),LITREF(lit_62),YPint((P)0),T33);
-        T35 = BOXVAL(stringF5438);
+        T35 = BOXVAL(stringF1067);
         T31 = CALL2(1,VARREF(YmacrosYcat),T32,T35);
         T22 = T31;
       }
@@ -1347,14 +1347,14 @@ loop:
     }
     T14 = T18;
   }
-  BOXVAL(stringF5438) = T14;
-  T37 = CALL2(1,VARREF(YprotoSmagnitudesYL),sF5436,YPint((P)0));
+  BOXVAL(stringF1067) = T14;
+  T37 = CALL2(1,VARREF(YprotoSmagnitudesYL),sF1065,YPint((P)0));
   if (T37 != YPfalse) {
-    T39 = BOXVAL(stringF5438);
+    T39 = BOXVAL(stringF1067);
     T38 = CALL2(1,VARREF(YmacrosYcat),LITREF(lit_63),T39);
     T36 = T38;
   } else {
-    T40 = BOXVAL(stringF5438);
+    T40 = BOXVAL(stringF1067);
     T36 = T40;
   }
   T11 = T36;
@@ -1432,10 +1432,10 @@ UNLINK_STACK();
 }
 
 P YprotoScollectionsSstringY___main_0___() {
-  P loopF5445;
-  P end259F5444;
-  P initF5443;
-  P ascii_charsF5442;
+  P loopF1074;
+  P end259F1073;
+  P initF1072;
+  P ascii_charsF1071;
   P T165,T164,T163,T162,T161,T160,T159,T158,T157,T156,T155,T154,T153,T152,T151,T150;
   P T149,T148,T147,T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136,T135,T134;
   P T133,T132,T131,T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120,T119,T118;
@@ -1644,17 +1644,17 @@ loop:
   fun_13 = YPmet(FUNCODEREF(fun_13),YPfalse,T73,ENVNUL,PNUL,YPfalse);
   T77 = CALL2(1,VARREF(YprotoScollectionsScollectionYfab),VARREF(YLvecG),VARREF(YprotoScollectionsSstringYascii_limit));
   T76 = CALL2(1,VARREF(YprotoScollectionsScollectionYfill),T77,YPfalse);
-  ascii_charsF5442 = T76;
-  T79 = FUNFAB(fun_13,1,ascii_charsF5442);
-  initF5443 = T79;
-  CALL2(1,initF5443,YPint((P)9),LITREF(lit_29));
-  CALL2(1,initF5443,YPint((P)10),LITREF(lit_30));
-  CALL2(1,initF5443,YPint((P)12),LITREF(lit_31));
-  CALL2(1,initF5443,YPint((P)13),LITREF(lit_32));
-  CALL2(1,initF5443,YPint((P)32),LITREF(lit_33));
-  CALL2(1,initF5443,YPint((P)64),LITREF(lit_34));
-  CALL2(1,initF5443,YPint((P)96),LITREF(lit_35));
-  T78 = ascii_charsF5442;
+  ascii_charsF1071 = T76;
+  T79 = FUNFAB(fun_13,1,ascii_charsF1071);
+  initF1072 = T79;
+  CALL2(1,initF1072,YPint((P)9),LITREF(lit_29));
+  CALL2(1,initF1072,YPint((P)10),LITREF(lit_30));
+  CALL2(1,initF1072,YPint((P)12),LITREF(lit_31));
+  CALL2(1,initF1072,YPint((P)13),LITREF(lit_32));
+  CALL2(1,initF1072,YPint((P)32),LITREF(lit_33));
+  CALL2(1,initF1072,YPint((P)64),LITREF(lit_34));
+  CALL2(1,initF1072,YPint((P)96),LITREF(lit_35));
+  T78 = ascii_charsF1071;
   T75 = T78;
   VARSET(YprotoScollectionsSstringYascii_chars,T75);
   lit_36 = YPPsym((P)"ascii->char");
@@ -1702,11 +1702,11 @@ loop:
   T95 = YPsig(YPPlist(3,LITREF(lit_19),LITREF(lit_41),LITREF(lit_42)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
   fun_loop_18 = YPmet(FUNCODEREF(fun_loop_18),LITREF(lit_27),T95,ENVNUL,PNUL,YPfalse);
   T98 = CALL1(1,VARREF(YprotoStypesYlen),VARREF(YprotoScollectionsSstringYascii_chars));
-  end259F5444 = T98;
+  end259F1073 = T98;
   T100 = FUNSHELL(1,fun_loop_18,2);
-  loopF5445 = T100;
-  FUNINIT(loopF5445, 2,end259F5444,loopF5445);
-  T101 = CALL3(0,loopF5445,YPint((P)0),YPfalse,YPfalse);
+  loopF1074 = T100;
+  FUNINIT(loopF1074, 2,end259F1073,loopF1074);
+  T101 = CALL3(0,loopF1074,YPint((P)0),YPfalse,YPfalse);
   T99 = T101;
   T97 = T99;
   VARSET(YprotoScollectionsSstringYnative_chars,T97);
@@ -1894,510 +1894,510 @@ static USE_INFO use_infos[] = {
 };
 
 static IMPORT_INFO import_infos[] = {
-  {"<num>", &module_info_boot, "<num>"},
-  {"<vec>", &module_info_boot, "<vec>"},
-  {"key-type", &module_info_protoScollectionsScollection, "key-type"},
-  {"prop-getter", &module_info_boot, "prop-getter"},
-  {"%vlen", &module_info_boot, "%vlen"},
-  {"and", &module_info_macros, "and"},
-  {"del-dups", &module_info_protoScollectionsSsequence, "del-dups"},
-  {"fin?", &module_info_protoScollectionsScollection, "fin?"},
-  {"%unlink-stack", &module_info_boot, "%unlink-stack"},
-  {"unexec", &module_info_boot, "unexec"},
-  {"type-error", &module_info_boot, "type-error"},
-  {"+", &module_info_protoSmath, "+"},
-  {"%fun-reg", &module_info_boot, "%fun-reg"},
-  {"class-direct-props", &module_info_boot, "class-direct-props"},
-  {"gensym", &module_info_macros, "gensym"},
-  {"vec", &module_info_boot, "vec"},
-  {"or", &module_info_macros, "or"},
-  {"match-sublist", &module_info_macros, "match-sublist"},
-  {"below", &module_info_protoScollectionsSsequence, "below"},
-  {"<met>", &module_info_boot, "<met>"},
-  {"contagious-call", &module_info_protoSmath, "contagious-call"},
-  {"map-keyed", &module_info_protoScollectionsScollection, "map-keyed"},
-  {"mif", &module_info_boot, "mif"},
-  {"use/export", &module_info_boot, "use/export"},
-  {"zero?", &module_info_protoSmath, "zero?"},
-  {"%create-directory", &module_info_boot, "%create-directory"},
-  {"@olen", &module_info_boot, "@olen"},
-  {"until", &module_info_macros, "until"},
-  {"prop-init", &module_info_boot, "prop-init"},
-  {"%i<<", &module_info_boot, "%i<<"},
-  {"%do-stack-frames", &module_info_boot, "%do-stack-frames"},
-  {"round/", &module_info_protoSmath, "round/"},
-  {"<subclass>", &module_info_boot, "<subclass>"},
-  {"sin", &module_info_protoSmath, "sin"},
-  {"t+", &module_info_protoStypes, "t+"},
-  {"eof-object", &module_info_protoSmath, "eof-object"},
-  {"fun-nary?", &module_info_boot, "fun-nary?"},
-  {"enum", &module_info_protoScollectionsScollection, "enum"},
-  {"var-name", &module_info_macros, "var-name"},
-  {"class-descendents", &module_info_boot, "class-descendents"},
-  {"elt-default", &module_info_protoScollectionsScollection, "elt-default"},
-  {"map2", &module_info_protoScollectionsScollection, "map2"},
-  {"gen-refs-setter", &module_info_boot, "gen-refs-setter"},
-  {"even?", &module_info_protoSmath, "even?"},
-  {"%fcos", &module_info_boot, "%fcos"},
-  {"cond", &module_info_macros, "cond"},
-  {"%loc-val-setter", &module_info_boot, "%loc-val-setter"},
-  {"app", &module_info_macros, "app"},
-  {"isa", &module_info_boot, "isa"},
-  {"@+", &module_info_boot, "@+"},
-  {"%invoke-debugger", &module_info_boot, "%invoke-debugger"},
-  {"<chr>", &module_info_boot, "<chr>"},
-  {"rem", &module_info_protoSmath, "rem"},
-  {"<flat>", &module_info_boot, "<flat>"},
-  {"del-vals", &module_info_protoScollectionsSsequence, "del-vals"},
-  {"subtype?", &module_info_boot, "subtype?"},
-  {"%file-mtime", &module_info_boot, "%file-mtime"},
-  {"dss", &module_info_boot, "dss"},
-  {"prop-value-setter", &module_info_boot, "prop-value-setter"},
-  {"%lu", &module_info_boot, "%lu"},
-  {"log", &module_info_protoSmath, "log"},
-  {"%define-method", &module_info_boot, "%define-method"},
-  {"gen-refs", &module_info_boot, "gen-refs"},
-  {"exported", &module_info_macros, "exported"},
-  {"not", &module_info_boot, "not"},
-  {"-", &module_info_protoSmath, "-"},
-  {"incf", &module_info_macros, "incf"},
-  {"do-keyed", &module_info_protoScollectionsScollection, "do-keyed"},
-  {"%get", &module_info_boot, "%get"},
-  {"%i+", &module_info_boot, "%i+"},
-  {"sub", &module_info_protoScollectionsSsequence, "sub"},
-  {"assq", &module_info_protoScollectionsSlist, "assq"},
-  {"%f*", &module_info_boot, "%f*"},
-  {"dup", &module_info_protoScollectionsScollection, "dup"},
-  {"%iu", &module_info_boot, "%iu"},
+  {"%fi2f", &module_info_boot, "%fi2f"},
   {"elt-type", &module_info_protoScollectionsScollection, "elt-type"},
-  {"range-check?", &module_info_protoScollectionsSsequence, "range-check?"},
-  {"tanh", &module_info_protoSmath, "tanh"},
-  {"fab-sym", &module_info_boot, "fab-sym"},
-  {"unknown-function-error", &module_info_boot, "unknown-function-error"},
-  {"%gen-src", &module_info_boot, "%gen-src"},
-  {"sig-specs", &module_info_boot, "sig-specs"},
+  {"%os-name", &module_info_boot, "%os-name"},
+  {"any2?", &module_info_protoScollectionsScollection, "any2?"},
+  {"dg", &module_info_boot, "dg"},
+  {"power-of-two-ceiling", &module_info_protoSmath, "power-of-two-ceiling"},
   {"pos", &module_info_protoScollectionsSsequence, "pos"},
-  {"fold", &module_info_protoScollectionsScollection, "fold"},
-  {"&", &module_info_protoSmath, "&"},
-  {"%im", &module_info_boot, "%im"},
+  {"now-setter", &module_info_protoScollectionsScollection, "now-setter"},
+  {"%f-", &module_info_boot, "%f-"},
+  {"%ftan", &module_info_boot, "%ftan"},
   {"elts", &module_info_protoScollectionsScollection, "elts"},
-  {"<tup>", &module_info_boot, "<tup>"},
-  {"%fsinh", &module_info_boot, "%fsinh"},
-  {"%met-code", &module_info_boot, "%met-code"},
-  {"<singleton>", &module_info_boot, "<singleton>"},
+  {"fab-sym", &module_info_boot, "fab-sym"},
+  {"<=", &module_info_protoSmagnitudes, "<="},
+  {"dss", &module_info_boot, "dss"},
+  {"sig-specs", &module_info_boot, "sig-specs"},
+  {"log", &module_info_protoSmath, "log"},
   {"@lst", &module_info_boot, "@lst"},
-  {"%vnul", &module_info_boot, "%vnul"},
+  {"%loc-val", &module_info_boot, "%loc-val"},
+  {"%f/", &module_info_boot, "%f/"},
+  {"prop-type", &module_info_boot, "prop-type"},
   {"rep", &module_info_boot, "rep"},
+  {"%app-filename", &module_info_boot, "%app-filename"},
+  {"@<", &module_info_boot, "@<"},
+  {"reject", &module_info_protoScollectionsSsequence, "reject"},
   {"opf", &module_info_macros, "opf"},
-  {"~==", &module_info_protoSmath, "~=="},
-  {"flo-bits", &module_info_protoSmath, "flo-bits"},
+  {"%open-out-file", &module_info_boot, "%open-out-file"},
+  {"%build-runtime-modules", &module_info_boot, "%build-runtime-modules"},
+  {"%iu", &module_info_boot, "%iu"},
+  {"<singleton>", &module_info_boot, "<singleton>"},
+  {"%pair", &module_info_boot, "%pair"},
+  {"%vlen", &module_info_boot, "%vlen"},
+  {"%f=", &module_info_boot, "%f="},
   {"<fun>", &module_info_boot, "<fun>"},
-  {"%app-args", &module_info_boot, "%app-args"},
-  {"%os-val-setter", &module_info_boot, "%os-val-setter"},
+  {"^", &module_info_protoSmath, "^"},
+  {"%lu", &module_info_boot, "%lu"},
+  {"handler-info-message", &module_info_boot, "handler-info-message"},
+  {"match", &module_info_macros, "match"},
+  {"tan", &module_info_protoSmath, "tan"},
+  {"assert", &module_info_macros, "assert"},
+  {"prop-bound?", &module_info_boot, "prop-bound?"},
+  {"%f<", &module_info_boot, "%f<"},
+  {"%loc-val-setter", &module_info_boot, "%loc-val-setter"},
+  {"@len", &module_info_boot, "@len"},
+  {"cat-sym", &module_info_macros, "cat-sym"},
+  {"all?", &module_info_protoScollectionsScollection, "all?"},
+  {"items", &module_info_protoScollectionsScollection, "items"},
+  {"sig-val", &module_info_boot, "sig-val"},
+  {"<lst>", &module_info_boot, "<lst>"},
+  {"fab-class", &module_info_boot, "fab-class"},
+  {"*boot-macro-module-names*", &module_info_boot, "*boot-macro-module-names*"},
+  {"<log>", &module_info_boot, "<log>"},
+  {"eof-object?", &module_info_protoSmath, "eof-object?"},
+  {"fun-specs", &module_info_boot, "fun-specs"},
+  {"type-object", &module_info_boot, "type-object"},
+  {"renew", &module_info_macros, "renew"},
+  {"fun-name-setter", &module_info_boot, "fun-name-setter"},
+  {"decf", &module_info_macros, "decf"},
+  {"t*", &module_info_protoStypes, "t*"},
+  {"%fu", &module_info_boot, "%fu"},
+  {"%f+", &module_info_boot, "%f+"},
+  {"sub", &module_info_protoScollectionsSsequence, "sub"},
+  {"%current-out-port", &module_info_boot, "%current-out-port"},
+  {"%str", &module_info_boot, "%str"},
+  {"num-to-str", &module_info_protoSmath, "num-to-str"},
+  {"assqn", &module_info_protoScollectionsSlist, "assqn"},
+  {"sym-name", &module_info_boot, "sym-name"},
+  {"*boot-macro-expanders*", &module_info_boot, "*boot-macro-expanders*"},
+  {"|", &module_info_protoSmath, "|"},
+  {"find", &module_info_protoScollectionsScollection, "find"},
+  {"%i^", &module_info_boot, "%i^"},
+  {"df", &module_info_boot, "df"},
+  {"add!", &module_info_protoScollectionsScollection, "add!"},
+  {"%allocate-stack", &module_info_boot, "%allocate-stack"},
+  {"%with-monitor", &module_info_boot, "%with-monitor"},
+  {"%file-mtime", &module_info_boot, "%file-mtime"},
+  {"%fun-reg", &module_info_boot, "%fun-reg"},
+  {"fun-name", &module_info_boot, "fun-name"},
+  {"fold", &module_info_protoScollectionsScollection, "fold"},
+  {"add-prop", &module_info_boot, "add-prop"},
+  {"finds", &module_info_protoScollectionsSsequence, "finds"},
+  {"object-class", &module_info_boot, "object-class"},
+  {"prop-owner", &module_info_boot, "prop-owner"},
+  {"@==", &module_info_boot, "@=="},
+  {"push", &module_info_protoScollectionsSlist, "push"},
+  {"zero?", &module_info_protoSmath, "zero?"},
+  {"%fb", &module_info_boot, "%fb"},
+  {"eof-object", &module_info_protoSmath, "eof-object"},
+  {"odd?", &module_info_protoSmath, "odd?"},
+  {"%i=", &module_info_boot, "%i="},
+  {"round", &module_info_protoSmath, "round"},
+  {"prop-value", &module_info_boot, "prop-value"},
+  {"collected", &module_info_macros, "collected"},
+  {"tanh", &module_info_protoSmath, "tanh"},
+  {"class-parents", &module_info_boot, "class-parents"},
+  {"%i<<<", &module_info_boot, "%i<<<"},
+  {"dv", &module_info_boot, "dv"},
+  {"$max-int", &module_info_boot, "$max-int"},
+  {"match-sublist", &module_info_macros, "match-sublist"},
+  {">", &module_info_protoSmagnitudes, ">"},
+  {"pick", &module_info_protoScollectionsSsequence, "pick"},
+  {"may-isa?", &module_info_boot, "may-isa?"},
+  {"%i<", &module_info_boot, "%i<"},
+  {"<list>", &module_info_protoScollectionsSlist, "<list>"},
+  {"elt-setter", &module_info_protoScollectionsScollection, "elt-setter"},
+  {"mod", &module_info_protoSmath, "mod"},
+  {"seq", &module_info_boot, "seq"},
+  {"<seq>", &module_info_boot, "<seq>"},
+  {"1+", &module_info_protoSmath, "1+"},
+  {"t+", &module_info_protoStypes, "t+"},
+  {"nil", &module_info_boot, "nil"},
+  {"<any>", &module_info_boot, "<any>"},
+  {"@oelt", &module_info_boot, "@oelt"},
+  {"pushf", &module_info_macros, "pushf"},
+  {"%get", &module_info_boot, "%get"},
+  {"do-key-vals", &module_info_protoScollectionsSsequence, "do-key-vals"},
+  {"%put", &module_info_boot, "%put"},
+  {"mem?", &module_info_protoScollectionsScollection, "mem?"},
+  {"cat2", &module_info_protoScollectionsSsequence, "cat2"},
+  {"%fsinh", &module_info_boot, "%fsinh"},
+  {"class-props", &module_info_boot, "class-props"},
+  {"error", &module_info_boot, "error"},
   {"map", &module_info_macros, "map"},
-  {"trunc/", &module_info_protoSmath, "trunc/"},
-  {"*macros-ok?*", &module_info_boot, "*macros-ok?*"},
+  {"ddv", &module_info_macros, "ddv"},
+  {"<", &module_info_protoSmagnitudes, "<"},
+  {"%raw-call", &module_info_boot, "%raw-call"},
+  {"neg?", &module_info_protoSmath, "neg?"},
+  {"%force-out", &module_info_boot, "%force-out"},
+  {"%prop-unbound-error", &module_info_boot, "%prop-unbound-error"},
+  {"%do-stack-frames", &module_info_boot, "%do-stack-frames"},
+  {"char->ascii", &module_info_protoSmath, "char->ascii"},
+  {"contagious-call", &module_info_protoSmath, "contagious-call"},
+  {"round/", &module_info_protoSmath, "round/"},
+  {"esc", &module_info_boot, "esc"},
+  {"<sig>", &module_info_boot, "<sig>"},
+  {"collecting", &module_info_macros, "collecting"},
+  {"%gen-code", &module_info_boot, "%gen-code"},
+  {"fun-names", &module_info_boot, "fun-names"},
+  {"add", &module_info_protoScollectionsScollection, "add"},
+  {"macro-expand", &module_info_boot, "macro-expand"},
+  {"%i*", &module_info_boot, "%i*"},
+  {"unless", &module_info_macros, "unless"},
+  {"%eof-object", &module_info_boot, "%eof-object"},
+  {"pos?", &module_info_protoSmath, "pos?"},
+  {"quote", &module_info_boot, "quote"},
+  {">>>", &module_info_protoSmath, ">>>"},
+  {"atan", &module_info_protoSmath, "atan"},
+  {"=", &module_info_protoSmath, "="},
+  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
+  {"@all2?", &module_info_boot, "@all2?"},
+  {"*", &module_info_protoSmath, "*"},
+  {"exported", &module_info_macros, "exported"},
+  {"fin", &module_info_boot, "fin"},
+  {"%eq?", &module_info_boot, "%eq?"},
+  {"file-opening-error", &module_info_boot, "file-opening-error"},
+  {"digit?", &module_info_protoSmath, "digit?"},
+  {"%os-val", &module_info_boot, "%os-val"},
+  {"<col>", &module_info_boot, "<col>"},
+  {"sig-names", &module_info_boot, "sig-names"},
+  {"<class>", &module_info_boot, "<class>"},
+  {"alpha?", &module_info_protoSmath, "alpha?"},
+  {"*boot-macro-names*", &module_info_boot, "*boot-macro-names*"},
+  {"~==", &module_info_protoSmath, "~=="},
+  {"find-setter", &module_info_boot, "find-setter"},
+  {"even?", &module_info_protoSmath, "even?"},
+  {"var-name", &module_info_macros, "var-name"},
+  {"%fasin", &module_info_boot, "%fasin"},
+  {"into", &module_info_protoScollectionsScollection, "into"},
   {"~=", &module_info_protoSmath, "~="},
   {"t?", &module_info_protoStypes, "t?"},
   {"all2?", &module_info_protoStypes, "all2?"},
-  {"reject", &module_info_protoScollectionsSsequence, "reject"},
-  {"match", &module_info_macros, "match"},
-  {"assert", &module_info_macros, "assert"},
-  {"sig-val", &module_info_boot, "sig-val"},
-  {"prop-bound?", &module_info_boot, "prop-bound?"},
-  {"<lst>", &module_info_boot, "<lst>"},
-  {"<log>", &module_info_boot, "<log>"},
-  {"%i>>", &module_info_boot, "%i>>"},
-  {"neg", &module_info_protoSmath, "neg"},
-  {"|", &module_info_protoSmath, "|"},
-  {"sqrt", &module_info_protoSmath, "sqrt"},
-  {"type-object", &module_info_boot, "type-object"},
-  {"%open-out-file", &module_info_boot, "%open-out-file"},
-  {"fun-name-setter", &module_info_boot, "fun-name-setter"},
-  {"%c<", &module_info_boot, "%c<"},
-  {"%ftan", &module_info_boot, "%ftan"},
-  {"fab-class", &module_info_boot, "fab-class"},
-  {"%%sym", &module_info_boot, "%%sym"},
-  {"fun-specs", &module_info_boot, "fun-specs"},
-  {"*", &module_info_protoSmath, "*"},
-  {"renew", &module_info_macros, "renew"},
-  {"round", &module_info_protoSmath, "round"},
-  {"decf", &module_info_macros, "decf"},
-  {"%raw", &module_info_boot, "%raw"},
-  {"logn", &module_info_protoSmath, "logn"},
-  {"sym-name", &module_info_boot, "sym-name"},
-  {"as-log", &module_info_protoSmath, "as-log"},
-  {"%ready?", &module_info_boot, "%ready?"},
-  {"cat2", &module_info_protoScollectionsSsequence, "cat2"},
-  {"<replace-generic-restart>", &module_info_boot, "<replace-generic-restart>"},
-  {"%f+", &module_info_boot, "%f+"},
-  {"@len", &module_info_boot, "@len"},
-  {"1+", &module_info_protoSmath, "1+"},
-  {"pow", &module_info_protoSmath, "pow"},
-  {"range-check", &module_info_protoScollectionsSsequence, "range-check"},
-  {"%vec", &module_info_boot, "%vec"},
-  {"%facos", &module_info_boot, "%facos"},
-  {"%slen", &module_info_boot, "%slen"},
-  {"find", &module_info_protoScollectionsScollection, "find"},
-  {"fun-name", &module_info_boot, "fun-name"},
-  {"digit?", &module_info_protoSmath, "digit?"},
-  {"%file-type", &module_info_boot, "%file-type"},
-  {"prop-owner", &module_info_boot, "prop-owner"},
-  {"%binding-name", &module_info_boot, "%binding-name"},
-  {"*boot-macro-expanders*", &module_info_boot, "*boot-macro-expanders*"},
-  {"<bot>", &module_info_protoSmath, "<bot>"},
-  {"to-str", &module_info_protoSmath, "to-str"},
-  {"fab-setter-name", &module_info_macros, "fab-setter-name"},
-  {"%ft", &module_info_boot, "%ft"},
-  {"t<", &module_info_protoStypes, "t<"},
-  {"%untag", &module_info_boot, "%untag"},
-  {"object-class", &module_info_boot, "object-class"},
-  {"floor/", &module_info_protoSmath, "floor/"},
-  {"push", &module_info_protoScollectionsSlist, "push"},
-  {"atan", &module_info_protoSmath, "atan"},
-  {"%fsin", &module_info_boot, "%fsin"},
-  {"class-parents", &module_info_boot, "class-parents"},
-  {"try", &module_info_boot, "try"},
-  {"*report-prop-unbound-errors?*", &module_info_boot, "*report-prop-unbound-errors?*"},
-  {"pick", &module_info_protoScollectionsSsequence, "pick"},
-  {"sub-setter", &module_info_protoScollectionsSsequence, "sub-setter"},
-  {"prop-value", &module_info_boot, "prop-value"},
-  {"do-key-vals", &module_info_protoScollectionsSsequence, "do-key-vals"},
-  {"collected", &module_info_macros, "collected"},
-  {"%i-", &module_info_boot, "%i-"},
-  {"dv", &module_info_boot, "dv"},
-  {"<list>", &module_info_protoScollectionsSlist, "<list>"},
-  {"match-atom", &module_info_macros, "match-atom"},
-  {">", &module_info_protoSmagnitudes, ">"},
-  {"%selt-setter", &module_info_boot, "%selt-setter"},
-  {"may-isa?", &module_info_boot, "may-isa?"},
-  {"char->ascii", &module_info_protoSmath, "char->ascii"},
-  {"<seq>", &module_info_boot, "<seq>"},
-  {"<any>", &module_info_boot, "<any>"},
-  {"prop-type", &module_info_boot, "prop-type"},
-  {"elt-setter", &module_info_protoScollectionsScollection, "elt-setter"},
-  {"seq", &module_info_boot, "seq"},
-  {"var-type", &module_info_macros, "var-type"},
-  {"%i<", &module_info_boot, "%i<"},
-  {"to-upper", &module_info_protoSmath, "to-upper"},
-  {"%selt", &module_info_boot, "%selt"},
-  {"any?", &module_info_protoStypes, "any?"},
-  {"%fatan", &module_info_boot, "%fatan"},
-  {"cat!", &module_info_protoScollectionsSsequence, "cat!"},
-  {"pushf", &module_info_macros, "pushf"},
-  {"class-props", &module_info_boot, "class-props"},
-  {"zap", &module_info_protoScollectionsScollection, "zap"},
-  {"assqn", &module_info_protoScollectionsSlist, "assqn"},
-  {"wrong-number-arguments-error", &module_info_boot, "wrong-number-arguments-error"},
-  {"address-of", &module_info_protoSmath, "address-of"},
-  {"t=", &module_info_protoStypes, "t="},
-  {"error", &module_info_boot, "error"},
-  {"macro-expand", &module_info_boot, "macro-expand"},
-  {"ddv", &module_info_macros, "ddv"},
-  {">>>", &module_info_protoSmath, ">>>"},
-  {"%cb", &module_info_boot, "%cb"},
-  {"<", &module_info_protoSmagnitudes, "<"},
-  {"*restarts-ok?*", &module_info_boot, "*restarts-ok?*"},
-  {"%force-out", &module_info_boot, "%force-out"},
-  {"%fsqrt", &module_info_boot, "%fsqrt"},
-  {"<sig>", &module_info_boot, "<sig>"},
-  {"%prop-unbound-error", &module_info_boot, "%prop-unbound-error"},
-  {"quasiquote", &module_info_boot, "quasiquote"},
-  {"%iv", &module_info_boot, "%iv"},
-  {"%app-filename", &module_info_boot, "%app-filename"},
-  {"%symbols", &module_info_boot, "%symbols"},
-  {"do3", &module_info_protoScollectionsScollection, "do3"},
-  {"%eq?", &module_info_boot, "%eq?"},
-  {"collecting", &module_info_macros, "collecting"},
-  {"handler-info-message", &module_info_boot, "handler-info-message"},
-  {"fun-names", &module_info_boot, "fun-names"},
-  {"def", &module_info_boot, "def"},
-  {"%gen-code", &module_info_boot, "%gen-code"},
-  {"%puts", &module_info_boot, "%puts"},
-  {"%su", &module_info_boot, "%su"},
-  {"as-copy", &module_info_protoScollectionsScollection, "as-copy"},
-  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
-  {"@all2?", &module_info_boot, "@all2?"},
-  {"@==", &module_info_boot, "@=="},
-  {"add", &module_info_protoScollectionsScollection, "add"},
-  {"quote", &module_info_boot, "quote"},
-  {"trunc", &module_info_protoSmath, "trunc"},
-  {"%str", &module_info_boot, "%str"},
-  {"2nd", &module_info_protoStypes, "2nd"},
-  {"match-unquote", &module_info_macros, "match-unquote"},
-  {"=", &module_info_protoSmath, "="},
-  {"alpha?", &module_info_protoSmath, "alpha?"},
-  {"ceil", &module_info_protoSmath, "ceil"},
-  {"fin", &module_info_boot, "fin"},
-  {"<col>", &module_info_boot, "<col>"},
-  {"esc", &module_info_boot, "esc"},
-  {"<class>", &module_info_boot, "<class>"},
-  {"%close-in-port", &module_info_boot, "%close-in-port"},
-  {"add!", &module_info_protoScollectionsScollection, "add!"},
-  {"finds", &module_info_protoScollectionsSsequence, "finds"},
-  {"<mag>", &module_info_boot, "<mag>"},
-  {"to-lower", &module_info_protoSmath, "to-lower"},
-  {"%i^", &module_info_boot, "%i^"},
-  {"$max-int", &module_info_boot, "$max-int"},
-  {"find-or", &module_info_protoScollectionsScollection, "find-or"},
-  {"find-setter", &module_info_boot, "find-setter"},
-  {"pos?", &module_info_protoSmath, "pos?"},
-  {"%fatan2", &module_info_boot, "%fatan2"},
-  {"%sp-reg-setter", &module_info_boot, "%sp-reg-setter"},
-  {"%i=", &module_info_boot, "%i="},
-  {"*boot-macro-names*", &module_info_boot, "*boot-macro-names*"},
-  {"%loc-off", &module_info_boot, "%loc-off"},
   {"%check-call-types", &module_info_boot, "%check-call-types"},
-  {"<tab>", &module_info_protoScollectionsScollection, "<tab>"},
-  {"tail-setter", &module_info_boot, "tail-setter"},
-  {"<product>", &module_info_protoStypes, "<product>"},
-  {"%i?", &module_info_boot, "%i?"},
-  {"%snul", &module_info_boot, "%snul"},
-  {"dp", &module_info_boot, "dp"},
-  {"sig-arity", &module_info_boot, "sig-arity"},
-  {"ct-also", &module_info_boot, "ct-also"},
+  {"~", &module_info_protoSmath, "~"},
+  {"<replace-generic-restart>", &module_info_boot, "<replace-generic-restart>"},
   {"elt-or", &module_info_protoScollectionsScollection, "elt-or"},
-  {"%ftanh", &module_info_boot, "%ftanh"},
-  {"cat", &module_info_macros, "cat"},
-  {"for", &module_info_macros, "for"},
-  {"%put", &module_info_boot, "%put"},
-  {"bit?", &module_info_protoSmath, "bit?"},
-  {"cosh", &module_info_protoSmath, "cosh"},
-  {"%flo-bits", &module_info_boot, "%flo-bits"},
-  {"del", &module_info_protoScollectionsScollection, "del"},
-  {"add-prop", &module_info_boot, "add-prop"},
-  {"bound?", &module_info_boot, "bound?"},
-  {"len", &module_info_protoStypes, "len"},
-  {"type-elts-setter", &module_info_protoStypes, "type-elts-setter"},
+  {"loc", &module_info_boot, "loc"},
+  {"tail-setter", &module_info_boot, "tail-setter"},
+  {"match-atom", &module_info_macros, "match-atom"},
+  {"%untag", &module_info_boot, "%untag"},
+  {"%current-in-port", &module_info_boot, "%current-in-port"},
+  {"quasiquote", &module_info_boot, "quasiquote"},
+  {"sig-arity", &module_info_boot, "sig-arity"},
+  {"%i>>", &module_info_boot, "%i>>"},
+  {"contagious-type", &module_info_protoSmath, "contagious-type"},
   {"fab-gen", &module_info_boot, "fab-gen"},
-  {"<opts>", &module_info_boot, "<opts>"},
-  {"<enum>", &module_info_protoScollectionsScollection, "<enum>"},
-  {"@<", &module_info_boot, "@<"},
+  {"range-check?", &module_info_protoScollectionsSsequence, "range-check?"},
+  {"ct", &module_info_boot, "ct"},
   {"dm", &module_info_boot, "dm"},
-  {"mod", &module_info_protoSmath, "mod"},
-  {"tail", &module_info_boot, "tail"},
-  {"do2", &module_info_protoScollectionsScollection, "do2"},
-  {"max", &module_info_protoSmagnitudes, "max"},
+  {"%create-directory", &module_info_boot, "%create-directory"},
+  {"%os-val-setter", &module_info_boot, "%os-val-setter"},
+  {"last", &module_info_protoScollectionsSsequence, "last"},
+  {"type-elts-setter", &module_info_protoStypes, "type-elts-setter"},
+  {"cat", &module_info_macros, "cat"},
   {"acos", &module_info_protoSmath, "acos"},
-  {"power-of-two-ceiling", &module_info_protoSmath, "power-of-two-ceiling"},
-  {"%gen-code-setter", &module_info_boot, "%gen-code-setter"},
-  {"<type>", &module_info_boot, "<type>"},
+  {"cat!", &module_info_protoScollectionsSsequence, "cat!"},
+  {"%ftanh", &module_info_boot, "%ftanh"},
+  {"<opts>", &module_info_boot, "<opts>"},
+  {"zap", &module_info_protoScollectionsScollection, "zap"},
+  {"%close-out-port", &module_info_boot, "%close-out-port"},
+  {"use", &module_info_boot, "use"},
+  {"as-log", &module_info_protoSmath, "as-log"},
   {"napp", &module_info_macros, "napp"},
-  {"low-elt-setter", &module_info_protoScollectionsScollection, "low-elt-setter"},
-  {"<loc>", &module_info_boot, "<loc>"},
+  {"tail", &module_info_boot, "tail"},
+  {"%gen-refs", &module_info_boot, "%gen-refs"},
+  {"<type>", &module_info_boot, "<type>"},
   {"ord-app-mets", &module_info_boot, "ord-app-mets"},
+  {"cosh", &module_info_protoSmath, "cosh"},
+  {"try", &module_info_boot, "try"},
+  {"logn", &module_info_protoSmath, "logn"},
+  {"%f*", &module_info_boot, "%f*"},
+  {"case-by", &module_info_macros, "case-by"},
+  {"to-str", &module_info_protoSmath, "to-str"},
+  {"cos", &module_info_protoSmath, "cos"},
+  {"t<", &module_info_protoStypes, "t<"},
+  {"<loc>", &module_info_boot, "<loc>"},
+  {"do3", &module_info_protoScollectionsScollection, "do3"},
+  {"&", &module_info_protoSmath, "&"},
+  {"trunc/", &module_info_protoSmath, "trunc/"},
   {"fab", &module_info_protoScollectionsScollection, "fab"},
   {"type-elts", &module_info_boot, "type-elts"},
-  {"<<", &module_info_protoSmath, "<<"},
-  {"case-by", &module_info_macros, "case-by"},
-  {"min", &module_info_protoSmagnitudes, "min"},
-  {"%eof-object", &module_info_boot, "%eof-object"},
-  {"ins", &module_info_protoScollectionsSsequence, "ins"},
+  {"%i-", &module_info_boot, "%i-"},
+  {"abs", &module_info_protoSmath, "abs"},
+  {"%unlink-stack", &module_info_boot, "%unlink-stack"},
   {"set", &module_info_boot, "set"},
-  {"loc", &module_info_boot, "loc"},
-  {"fill", &module_info_protoScollectionsScollection, "fill"},
-  {"%i&", &module_info_boot, "%i&"},
-  {"class-name", &module_info_boot, "class-name"},
+  {"%fsin", &module_info_boot, "%fsin"},
   {"swapf", &module_info_macros, "swapf"},
-  {"sinh", &module_info_protoSmath, "sinh"},
-  {"%%macro", &module_info_boot, "%%macro"},
+  {"range-check", &module_info_protoScollectionsSsequence, "range-check"},
+  {"%sp-reg-setter", &module_info_boot, "%sp-reg-setter"},
+  {"%bb", &module_info_boot, "%bb"},
   {"find-getter", &module_info_boot, "find-getter"},
-  {"%loc-val", &module_info_boot, "%loc-val"},
-  {"upper?", &module_info_protoSmath, "upper?"},
-  {"if", &module_info_boot, "if"},
-  {"isqrt", &module_info_protoSmath, "isqrt"},
-  {"1-", &module_info_protoSmath, "1-"},
-  {"$e", &module_info_protoSmath, "$e"},
-  {"def-fun-var", &module_info_macros, "def-fun-var"},
-  {"dlet", &module_info_macros, "dlet"},
-  {"eof-object?", &module_info_protoSmath, "eof-object?"},
-  {"empty", &module_info_protoScollectionsScollection, "empty"},
+  {"class-name", &module_info_boot, "class-name"},
+  {"incongruent-method-error", &module_info_boot, "incongruent-method-error"},
+  {"sqrt", &module_info_protoSmath, "sqrt"},
   {"%peek", &module_info_boot, "%peek"},
-  {"prop-setter", &module_info_boot, "prop-setter"},
-  {"nul", &module_info_boot, "nul"},
-  {"match-empty-list", &module_info_macros, "match-empty-list"},
-  {"%file-exists?", &module_info_boot, "%file-exists?"},
-  {"last", &module_info_protoScollectionsSsequence, "last"},
+  {"match-unquote", &module_info_macros, "match-unquote"},
+  {"def", &module_info_boot, "def"},
+  {"%fatan2", &module_info_boot, "%fatan2"},
+  {"empty?", &module_info_macros, "empty?"},
+  {"def-fun-var", &module_info_macros, "def-fun-var"},
+  {"fab-setter-name", &module_info_macros, "fab-setter-name"},
+  {"dlet", &module_info_macros, "dlet"},
+  {"flo-bits", &module_info_protoSmath, "flo-bits"},
+  {"fill", &module_info_protoScollectionsScollection, "fill"},
   {"gen-add-met", &module_info_boot, "gen-add-met"},
-  {"items", &module_info_protoScollectionsScollection, "items"},
-  {"now", &module_info_protoScollectionsScollection, "now"},
-  {"%fasin", &module_info_boot, "%fasin"},
+  {"%ft", &module_info_boot, "%ft"},
+  {"%cb", &module_info_boot, "%cb"},
+  {"any?", &module_info_protoStypes, "any?"},
+  {"prop-setter", &module_info_boot, "prop-setter"},
+  {"as-copy", &module_info_protoScollectionsScollection, "as-copy"},
   {"fun-val", &module_info_boot, "fun-val"},
   {"when", &module_info_macros, "when"},
-  {"%it/", &module_info_boot, "%it/"},
-  {"%pair", &module_info_boot, "%pair"},
+  {"asin", &module_info_protoSmath, "asin"},
+  {"%close-in-port", &module_info_boot, "%close-in-port"},
+  {"%fatan", &module_info_boot, "%fatan"},
   {"collect", &module_info_macros, "collect"},
-  {"class-ancestors", &module_info_boot, "class-ancestors"},
-  {"atan2", &module_info_protoSmath, "atan2"},
-  {"low-elt", &module_info_protoScollectionsScollection, "low-elt"},
-  {"into", &module_info_protoScollectionsScollection, "into"},
-  {"rev", &module_info_protoScollectionsSsequence, "rev"},
-  {"%current-out-port", &module_info_boot, "%current-out-port"},
-  {"num-to-str", &module_info_protoSmath, "num-to-str"},
-  {"%c=", &module_info_boot, "%c="},
-  {"unless", &module_info_macros, "unless"},
+  {"bound?", &module_info_boot, "bound?"},
   {"$min-int", &module_info_boot, "$min-int"},
+  {"address-of", &module_info_protoSmath, "address-of"},
+  {"%vec", &module_info_boot, "%vec"},
+  {"1-", &module_info_protoSmath, "1-"},
+  {"map2", &module_info_protoScollectionsScollection, "map2"},
+  {"low-elt-setter", &module_info_protoScollectionsScollection, "low-elt-setter"},
+  {"t=", &module_info_protoStypes, "t="},
+  {"class-ancestors", &module_info_boot, "class-ancestors"},
+  {"%i!", &module_info_boot, "%i!"},
+  {"%file-exists?", &module_info_boot, "%file-exists?"},
   {"%next-methods", &module_info_boot, "%next-methods"},
-  {"%fi2f", &module_info_boot, "%fi2f"},
-  {"%f=", &module_info_boot, "%f="},
-  {"neg?", &module_info_protoSmath, "neg?"},
-  {"dc", &module_info_boot, "dc"},
-  {"abs", &module_info_protoSmath, "abs"},
-  {"floor", &module_info_protoSmath, "floor"},
-  {"pair", &module_info_macros, "pair"},
-  {"contagious-type", &module_info_protoSmath, "contagious-type"},
+  {"%invoke-debugger", &module_info_boot, "%invoke-debugger"},
+  {"ceil", &module_info_protoSmath, "ceil"},
+  {"elt", &module_info_macros, "elt"},
+  {"do2", &module_info_protoScollectionsScollection, "do2"},
+  {"%i+", &module_info_boot, "%i+"},
+  {"list", &module_info_protoScollectionsSlist, "list"},
+  {"del", &module_info_protoScollectionsScollection, "del"},
+  {"*macros-ok?*", &module_info_boot, "*macros-ok?*"},
+  {"%%sym", &module_info_boot, "%%sym"},
+  {"ins!", &module_info_protoScollectionsSsequence, "ins!"},
   {"<flo>", &module_info_boot, "<flo>"},
   {"<sym>", &module_info_boot, "<sym>"},
-  {"$pi", &module_info_protoSmath, "$pi"},
-  {"ins!", &module_info_protoScollectionsSsequence, "ins!"},
-  {"%gen-refs", &module_info_boot, "%gen-refs"},
-  {"all?", &module_info_protoScollectionsScollection, "all?"},
-  {">=", &module_info_protoSmagnitudes, ">="},
-  {"ceiling/", &module_info_protoSmath, "ceiling/"},
-  {"asin", &module_info_protoSmath, "asin"},
   {"app-sup", &module_info_macros, "app-sup"},
+  {"empty", &module_info_protoScollectionsScollection, "empty"},
   {"met-app?", &module_info_boot, "met-app?"},
-  {"elt", &module_info_macros, "elt"},
-  {"as", &module_info_protoStypes, "as"},
-  {"now-setter", &module_info_protoScollectionsScollection, "now-setter"},
-  {"%close-out-port", &module_info_boot, "%close-out-port"},
-  {"fun-mets", &module_info_boot, "fun-mets"},
-  {"list", &module_info_protoScollectionsSlist, "list"},
-  {"~", &module_info_protoSmath, "~"},
-  {"object-parents", &module_info_boot, "object-parents"},
-  {"keyboard-interrupt", &module_info_boot, "keyboard-interrupt"},
-  {"%f/", &module_info_boot, "%f/"},
-  {"nxt", &module_info_protoScollectionsScollection, "nxt"},
-  {"gen-src-setter", &module_info_boot, "gen-src-setter"},
-  {"%raw-call", &module_info_boot, "%raw-call"},
-  {"do", &module_info_macros, "do"},
-  {"%fpow", &module_info_boot, "%fpow"},
-  {"@isa?", &module_info_boot, "@isa?"},
-  {"export", &module_info_boot, "export"},
-  {"3rd", &module_info_protoScollectionsSsequence, "3rd"},
-  {"keys", &module_info_protoScollectionsScollection, "keys"},
-  {"while", &module_info_macros, "while"},
-  {"%fcosh", &module_info_boot, "%fcosh"},
-  {"ct", &module_info_boot, "ct"},
-  {"range-error", &module_info_protoScollectionsScollection, "range-error"},
-  {"<prop>", &module_info_boot, "<prop>"},
-  {"empty?", &module_info_macros, "empty?"},
-  {"^", &module_info_protoSmath, "^"},
-  {"dl", &module_info_boot, "dl"},
-  {"<gen>", &module_info_boot, "<gen>"},
-  {"%loc-off-setter", &module_info_boot, "%loc-off-setter"},
-  {"%ib", &module_info_boot, "%ib"},
-  {"%i*", &module_info_boot, "%i*"},
-  {"nil", &module_info_boot, "nil"},
-  {"let", &module_info_boot, "let"},
-  {"%open-in-file", &module_info_boot, "%open-in-file"},
-  {"gen-src", &module_info_boot, "gen-src"},
-  {"new", &module_info_boot, "new"},
-  {"%f<", &module_info_boot, "%f<"},
-  {"use", &module_info_boot, "use"},
-  {"%build-runtime-modules", &module_info_boot, "%build-runtime-modules"},
-  {"fabs", &module_info_protoSmath, "fabs"},
-  {"%i!", &module_info_boot, "%i!"},
-  {"lower?", &module_info_protoSmath, "lower?"},
-  {"now-key", &module_info_protoScollectionsScollection, "now-key"},
-  {"to-digit", &module_info_protoSmath, "to-digit"},
+  {"%facos", &module_info_boot, "%facos"},
+  {"ins", &module_info_protoScollectionsSsequence, "ins"},
   {"%i>>>", &module_info_boot, "%i>>>"},
-  {"tan", &module_info_protoSmath, "tan"},
-  {"need-implementation", &module_info_macros, "need-implementation"},
-  {"%velt-setter", &module_info_boot, "%velt-setter"},
-  {"object-props", &module_info_boot, "object-props"},
-  {"incongruent-method-error", &module_info_boot, "incongruent-method-error"},
-  {"dg", &module_info_boot, "dg"},
-  {"sig-nary?", &module_info_boot, "sig-nary?"},
-  {"<int>", &module_info_boot, "<int>"},
-  {"%lb", &module_info_boot, "%lb"},
-  {"<str>", &module_info_boot, "<str>"},
-  {"file-opening-error", &module_info_boot, "file-opening-error"},
-  {"%with-monitor", &module_info_boot, "%with-monitor"},
-  {"%fu", &module_info_boot, "%fu"},
-  {"1st", &module_info_protoScollectionsSsequence, "1st"},
-  {"pop", &module_info_protoScollectionsSlist, "pop"},
-  {"<=", &module_info_protoSmagnitudes, "<="},
-  {"sup", &module_info_macros, "sup"},
-  {"%sb", &module_info_boot, "%sb"},
-  {"fun-arity", &module_info_boot, "fun-arity"},
-  {"%os-val", &module_info_boot, "%os-val"},
-  {">>", &module_info_protoSmath, ">>"},
-  {"%i<<<", &module_info_boot, "%i<<<"},
-  {"cat-sym", &module_info_macros, "cat-sym"},
-  {"%velt", &module_info_boot, "%velt"},
-  {"odd?", &module_info_protoSmath, "odd?"},
-  {"==", &module_info_macros, "=="},
-  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
-  {"sig-names", &module_info_boot, "sig-names"},
-  {"mem?", &module_info_protoScollectionsScollection, "mem?"},
-  {"key-test", &module_info_protoScollectionsScollection, "key-test"},
-  {"%cu", &module_info_boot, "%cu"},
-  {"%current-in-port", &module_info_boot, "%current-in-port"},
-  {"rev!", &module_info_macros, "rev!"},
-  {"@oelt", &module_info_boot, "@oelt"},
-  {"sig-unification-vars", &module_info_boot, "sig-unification-vars"},
+  {"object-parents", &module_info_boot, "object-parents"},
+  {"%open-in-file", &module_info_boot, "%open-in-file"},
+  {"nxt", &module_info_protoScollectionsScollection, "nxt"},
+  {"fun-mets", &module_info_boot, "fun-mets"},
+  {"@isa?", &module_info_boot, "@isa?"},
+  {"floor/", &module_info_protoSmath, "floor/"},
+  {"while", &module_info_macros, "while"},
+  {"2nd", &module_info_protoStypes, "2nd"},
+  {"gen-src-setter", &module_info_boot, "gen-src-setter"},
+  {"%vnul", &module_info_boot, "%vnul"},
+  {"do", &module_info_macros, "do"},
+  {"%fcos", &module_info_boot, "%fcos"},
+  {"*report-prop-unbound-errors?*", &module_info_boot, "*report-prop-unbound-errors?*"},
+  {"keys", &module_info_protoScollectionsScollection, "keys"},
+  {"to-upper", &module_info_protoSmath, "to-upper"},
+  {"<prop>", &module_info_boot, "<prop>"},
+  {"let", &module_info_boot, "let"},
+  {"%symbols", &module_info_boot, "%symbols"},
+  {"new", &module_info_boot, "new"},
+  {"fabs", &module_info_protoSmath, "fabs"},
+  {"<gen>", &module_info_boot, "<gen>"},
   {"/", &module_info_protoSmath, "/"},
-  {"vals-to-str", &module_info_protoScollectionsSsequence, "vals-to-str"},
-  {"%sp-reg", &module_info_boot, "%sp-reg"},
+  {"*restarts-ok?*", &module_info_boot, "*restarts-ok?*"},
+  {"%flo-bits", &module_info_boot, "%flo-bits"},
+  {"nul", &module_info_boot, "nul"},
+  {"%i<<", &module_info_boot, "%i<<"},
+  {"max", &module_info_protoSmagnitudes, "max"},
+  {"now-key", &module_info_protoScollectionsScollection, "now-key"},
+  {"gen-src", &module_info_boot, "gen-src"},
+  {"$pi", &module_info_protoSmath, "$pi"},
   {"without-prop-unbound-errors", &module_info_macros, "without-prop-unbound-errors"},
-  {"any2?", &module_info_protoScollectionsScollection, "any2?"},
-  {"ds", &module_info_boot, "ds"},
-  {"head-setter", &module_info_boot, "head-setter"},
-  {"type-class", &module_info_boot, "type-class"},
-  {"%flog", &module_info_boot, "%flog"},
-  {"fun-sig-setter", &module_info_boot, "fun-sig-setter"},
-  {"%fb", &module_info_boot, "%fb"},
+  {"<bot>", &module_info_protoSmath, "<bot>"},
+  {"rev", &module_info_protoScollectionsSsequence, "rev"},
+  {"<<", &module_info_protoSmath, "<<"},
+  {"object-props", &module_info_boot, "object-props"},
+  {"sin", &module_info_protoSmath, "sin"},
+  {"%selt-setter", &module_info_boot, "%selt-setter"},
+  {"isa", &module_info_boot, "isa"},
+  {"<product>", &module_info_protoStypes, "<product>"},
+  {"dp", &module_info_boot, "dp"},
+  {"%file-type", &module_info_boot, "%file-type"},
+  {"var-type", &module_info_macros, "var-type"},
+  {"%lb", &module_info_boot, "%lb"},
+  {"type-error", &module_info_boot, "type-error"},
+  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
+  {"match-empty-list", &module_info_macros, "match-empty-list"},
+  {"@olen", &module_info_boot, "@olen"},
+  {"%ready?", &module_info_boot, "%ready?"},
+  {"ct-also", &module_info_boot, "ct-also"},
+  {"pop", &module_info_protoScollectionsSlist, "pop"},
+  {"sig-nary?", &module_info_boot, "sig-nary?"},
+  {"$e", &module_info_protoSmath, "$e"},
+  {"<int>", &module_info_boot, "<int>"},
+  {"<str>", &module_info_boot, "<str>"},
+  {"sup", &module_info_macros, "sup"},
+  {"len", &module_info_protoStypes, "len"},
+  {"%it/", &module_info_boot, "%it/"},
+  {"%velt-setter", &module_info_boot, "%velt-setter"},
+  {"fun-arity", &module_info_boot, "fun-arity"},
+  {"now", &module_info_protoScollectionsScollection, "now"},
+  {"%velt", &module_info_boot, "%velt"},
+  {"%gen-src", &module_info_boot, "%gen-src"},
+  {"vec", &module_info_boot, "vec"},
+  {"%ib", &module_info_boot, "%ib"},
+  {"use/export", &module_info_boot, "use/export"},
   {"lst", &module_info_boot, "lst"},
+  {"==", &module_info_macros, "=="},
+  {"vals-to-str", &module_info_protoScollectionsSsequence, "vals-to-str"},
+  {"%iv", &module_info_boot, "%iv"},
+  {"%sb", &module_info_boot, "%sb"},
+  {"%gen-code-setter", &module_info_boot, "%gen-code-setter"},
+  {"map-keyed", &module_info_protoScollectionsScollection, "map-keyed"},
+  {"rev!", &module_info_macros, "rev!"},
+  {"%met-code", &module_info_boot, "%met-code"},
+  {"pow", &module_info_protoSmath, "pow"},
+  {"key-test", &module_info_protoScollectionsScollection, "key-test"},
+  {"<tup>", &module_info_boot, "<tup>"},
+  {"%su", &module_info_boot, "%su"},
+  {"%i?", &module_info_boot, "%i?"},
+  {"sig-unification-vars", &module_info_boot, "sig-unification-vars"},
   {"tup", &module_info_boot, "tup"},
-  {"*boot-macro-module-names*", &module_info_boot, "*boot-macro-module-names*"},
   {"isa?", &module_info_boot, "isa?"},
-  {"<union>", &module_info_boot, "<union>"},
-  {"fun", &module_info_boot, "fun"},
-  {"%bb", &module_info_boot, "%bb"},
+  {"3rd", &module_info_protoScollectionsSsequence, "3rd"},
+  {"unknown-function-error", &module_info_boot, "unknown-function-error"},
+  {"%snul", &module_info_boot, "%snul"},
+  {"low-elt", &module_info_protoScollectionsScollection, "low-elt"},
+  {"head-setter", &module_info_boot, "head-setter"},
+  {"ds", &module_info_boot, "ds"},
+  {"type-class", &module_info_boot, "type-class"},
+  {"@+", &module_info_boot, "@+"},
+  {"fun-sig-setter", &module_info_boot, "fun-sig-setter"},
   {"%prop", &module_info_boot, "%prop"},
-  {"cos", &module_info_protoSmath, "cos"},
-  {"%process-module", &module_info_boot, "%process-module"},
-  {"t*", &module_info_protoStypes, "t*"},
-  {"%f-", &module_info_boot, "%f-"},
+  {"<union>", &module_info_boot, "<union>"},
+  {"%i&", &module_info_boot, "%i&"},
+  {"for", &module_info_macros, "for"},
   {"case", &module_info_macros, "case"},
-  {"%os-name", &module_info_boot, "%os-name"},
+  {"sinh", &module_info_protoSmath, "sinh"},
   {"%isa", &module_info_boot, "%isa"},
-  {"fold+", &module_info_protoScollectionsScollection, "fold+"},
+  {"upper?", &module_info_protoSmath, "upper?"},
+  {"min", &module_info_protoSmagnitudes, "min"},
   {"popf", &module_info_macros, "popf"},
+  {"del-dups", &module_info_protoScollectionsSsequence, "del-dups"},
+  {"%loc-off-setter", &module_info_boot, "%loc-off-setter"},
+  {"%fsqrt", &module_info_boot, "%fsqrt"},
+  {"%raw", &module_info_boot, "%raw"},
+  {"range-error", &module_info_protoScollectionsScollection, "range-error"},
   {"head", &module_info_boot, "head"},
-  {"%allocate-stack", &module_info_boot, "%allocate-stack"},
-  {"df", &module_info_boot, "df"},
+  {"neg", &module_info_protoSmath, "neg"},
+  {"<mag>", &module_info_boot, "<mag>"},
+  {"find-or", &module_info_protoScollectionsScollection, "find-or"},
+  {"key-type", &module_info_protoScollectionsScollection, "key-type"},
+  {"%app-args", &module_info_boot, "%app-args"},
+  {"and", &module_info_macros, "and"},
+  {"<num>", &module_info_boot, "<num>"},
+  {"<vec>", &module_info_boot, "<vec>"},
+  {"prop-getter", &module_info_boot, "prop-getter"},
+  {"pair", &module_info_macros, "pair"},
+  {"fin?", &module_info_protoScollectionsScollection, "fin?"},
+  {"unexec", &module_info_boot, "unexec"},
+  {"sub-setter", &module_info_protoScollectionsSsequence, "sub-setter"},
+  {"%loc-off", &module_info_boot, "%loc-off"},
+  {"+", &module_info_protoSmath, "+"},
+  {"bit?", &module_info_protoSmath, "bit?"},
+  {"or", &module_info_macros, "or"},
+  {"do-keyed", &module_info_protoScollectionsScollection, "do-keyed"},
+  {"if", &module_info_boot, "if"},
+  {"%flog", &module_info_boot, "%flog"},
+  {"%c<", &module_info_boot, "%c<"},
+  {"class-direct-props", &module_info_boot, "class-direct-props"},
+  {"1st", &module_info_protoScollectionsSsequence, "1st"},
+  {"isqrt", &module_info_protoSmath, "isqrt"},
+  {"%slen", &module_info_boot, "%slen"},
+  {"mif", &module_info_boot, "mif"},
+  {"%fcosh", &module_info_boot, "%fcosh"},
+  {"dc", &module_info_boot, "dc"},
+  {"%process-module", &module_info_boot, "%process-module"},
+  {"<met>", &module_info_boot, "<met>"},
+  {"%sp-reg", &module_info_boot, "%sp-reg"},
+  {"until", &module_info_macros, "until"},
+  {"%fpow", &module_info_boot, "%fpow"},
+  {"%%macro", &module_info_boot, "%%macro"},
+  {"prop-init", &module_info_boot, "prop-init"},
+  {"assq", &module_info_protoScollectionsSlist, "assq"},
+  {"as", &module_info_protoStypes, "as"},
+  {"atan2", &module_info_protoSmath, "atan2"},
+  {"fun-nary?", &module_info_boot, "fun-nary?"},
+  {"enum", &module_info_protoScollectionsScollection, "enum"},
+  {"elt-default", &module_info_protoScollectionsScollection, "elt-default"},
+  {"%cu", &module_info_boot, "%cu"},
+  {"<subclass>", &module_info_boot, "<subclass>"},
+  {"to-lower", &module_info_protoSmath, "to-lower"},
+  {"floor", &module_info_protoSmath, "floor"},
+  {"del-vals", &module_info_protoScollectionsSsequence, "del-vals"},
+  {"export", &module_info_boot, "export"},
+  {"rem", &module_info_protoSmath, "rem"},
+  {"class-descendents", &module_info_boot, "class-descendents"},
+  {"cond", &module_info_macros, "cond"},
+  {"%puts", &module_info_boot, "%puts"},
+  {">=", &module_info_protoSmagnitudes, ">="},
+  {"app", &module_info_macros, "app"},
+  {"<tab>", &module_info_protoScollectionsScollection, "<tab>"},
+  {"gen-refs-setter", &module_info_boot, "gen-refs-setter"},
+  {"fold+", &module_info_protoScollectionsScollection, "fold+"},
+  {"%im", &module_info_boot, "%im"},
+  {"subtype?", &module_info_boot, "subtype?"},
+  {"%selt", &module_info_boot, "%selt"},
+  {">>", &module_info_protoSmath, ">>"},
+  {"prop-value-setter", &module_info_boot, "prop-value-setter"},
+  {"fun", &module_info_boot, "fun"},
+  {"trunc", &module_info_protoSmath, "trunc"},
+  {"<chr>", &module_info_boot, "<chr>"},
+  {"<flat>", &module_info_boot, "<flat>"},
+  {"wrong-number-arguments-error", &module_info_boot, "wrong-number-arguments-error"},
+  {"%define-method", &module_info_boot, "%define-method"},
+  {"dl", &module_info_boot, "dl"},
+  {"keyboard-interrupt", &module_info_boot, "keyboard-interrupt"},
+  {"-", &module_info_protoSmath, "-"},
+  {"%c=", &module_info_boot, "%c="},
+  {"dup", &module_info_protoScollectionsScollection, "dup"},
+  {"incf", &module_info_macros, "incf"},
+  {"to-digit", &module_info_protoSmath, "to-digit"},
+  {"lower?", &module_info_protoSmath, "lower?"},
+  {"%binding-name", &module_info_boot, "%binding-name"},
+  {"gen-refs", &module_info_boot, "gen-refs"},
+  {"need-implementation", &module_info_macros, "need-implementation"},
+  {"not", &module_info_boot, "not"},
+  {"<enum>", &module_info_protoScollectionsScollection, "<enum>"},
+  {"below", &module_info_protoScollectionsSsequence, "below"},
+  {"gensym", &module_info_macros, "gensym"},
+  {"ceiling/", &module_info_protoSmath, "ceiling/"},
   {NULL,NULL,NULL}
 };
 
 static BINDING_INFO binding_infos[] = {
-  {"num-to-str-base", &YprotoScollectionsSstringYnum_to_str_base},
-  {"*print-base*", &YprotoScollectionsSstringYTprint_baseT},
-  {"ascii->char", &YprotoScollectionsSstringYascii_Gchar},
-  {"epsilon", &YprotoScollectionsSstringYepsilon},
-  {"native-chars", &YprotoScollectionsSstringYnative_chars},
-  {"str", &YprotoScollectionsSstringYstr},
-  {"ascii-whitespaces", &YprotoScollectionsSstringYascii_whitespaces},
   {"integer->char", &YprotoScollectionsSstringYinteger_Gchar},
-  {"ascii-limit", &YprotoScollectionsSstringYascii_limit},
-  {"ascii-chars", &YprotoScollectionsSstringYascii_chars},
+  {"str-to-num", &YprotoScollectionsSstringYstr_to_num},
+  {"*print-base*", &YprotoScollectionsSstringYTprint_baseT},
+  {"ascii-whitespaces", &YprotoScollectionsSstringYascii_whitespaces},
   {"char->integer", &YprotoScollectionsSstringYchar_Ginteger},
   {"---main-0---", NULL},
+  {"num-to-str-base", &YprotoScollectionsSstringYnum_to_str_base},
+  {"ascii->char", &YprotoScollectionsSstringYascii_Gchar},
+  {"native-chars", &YprotoScollectionsSstringYnative_chars},
   {"$digit-to-char", &YprotoScollectionsSstringYDdigit_to_char},
-  {"str-to-num", &YprotoScollectionsSstringYstr_to_num},
+  {"epsilon", &YprotoScollectionsSstringYepsilon},
+  {"ascii-limit", &YprotoScollectionsSstringYascii_limit},
+  {"ascii-chars", &YprotoScollectionsSstringYascii_chars},
+  {"str", &YprotoScollectionsSstringYstr},
   {NULL, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"num-to-str-base", "num-to-str-base"},
+  {"str-to-num", "str-to-num"},
+  {"num-to-str", "num-to-str"},
   {"*print-base*", "*print-base*"},
+  {"ascii-whitespaces", "ascii-whitespaces"},
   {"char->ascii", "char->ascii"},
   {"str", "str"},
-  {"ascii-whitespaces", "ascii-whitespaces"},
-  {"num-to-str", "num-to-str"},
+  {"num-to-str-base", "num-to-str-base"},
   {"ascii-limit", "ascii-limit"},
-  {"str-to-num", "str-to-num"},
   {NULL, NULL}
 };
 

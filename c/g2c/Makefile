@@ -4,47 +4,50 @@ C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 	$(CC) -I.. -c -g -O -o $@ $<
 
 OBJS = \
-	proto/collections.o \
-	proto/magnitudes.o \
+	proto/collections/collection.o \
+	macros.o \
+	proto/collections/sequence.o \
+	proto/collections/buffer.o \
+	proto/collections/range.o \
+	read.o \
+	proto/collections/table.o \
+	boot.o \
 	proto/collections/opts.o \
-	top.o \
-	proto/collections/list.o \
+	write.o \
+	proto/ports.o \
+	proto/system.o \
+	proto/collections/string.o \
+	runtime.o \
+	proto/collections/step.o \
+	proto/magnitudes.o \
 	proto/collections/map.o \
+	ast-linearize.o \
+	ast.o \
+	proto/user.o \
+	proto/collections/list.o \
+	proto/types.o \
+	proto/collections/vector.o \
+	proto/collections/zip.o \
+	runtime1.o \
 	syntax.o \
 	proto/eval.o \
-	ast-linearize.o \
-	boot.o \
-	main.o \
-	proto/user.o \
-	write.o \
-	proto/math.o \
-	proto/collections/assoc.o \
-	runtime1.o \
-	proto/collections/buffer.o \
-	proto.o \
-	proto/collections/flat.o \
-	proto/collections/table.o \
-	ast.o \
-	dependency.o \
-	p2c.o \
-	read.o \
-	proto/collections/string.o \
-	proto/collections/collection.o \
-	proto/collections/range.o \
+	proto/collections/cycle.o \
 	ast-eval.o \
-	proto/collections/vector.o \
-	proto/system.o \
-	macros.o \
+	top.o \
 	strings.o \
-	proto/collections/sequence.o \
-	runtime.o \
-	proto/ports.o \
-	proto/types.o \
-	proto/collections/step.o \
-	p2c-init.o
+	proto/accumulators.o \
+	main.o \
+	proto/collections/flat.o \
+	proto/collections/assoc.o \
+	proto.o \
+	proto/math.o \
+	p2c.o \
+	proto/collections.o \
+	dependency.o \
+	g2c-init.o
 
-p2c: $(C_OBJS_DD) $(OBJS)
-	$(CC) -Wl,--export-dynamic -o p2c $(C_OBJS_DD) $(LIBS) $(OBJS)
+g2c: $(C_OBJS_DD) $(OBJS)
+	$(CC) -Wl,--export-dynamic -o g2c $(C_OBJS_DD) $(LIBS) $(OBJS)
 
 clean:
-	rm -f p2c $(OBJS)
+	rm -f g2c $(OBJS)
