@@ -14,101 +14,102 @@
 (exported
  (dc <buf> (<flat>))
  
- (dg buf ((elts ...) => <buf>))
+ (dg buf (elts|... => <buf>))
  ;; pushes element onto end of stretchy vector
- (dg push-last! ((c <buf>) (x <any>) => <buf>))
+ (dg push-last! (c|<buf> x|<any> => <buf>))
  
  ;; pops element from end of stretchy vector
- (dg pop-last! ((c <buf>) => <any>))
+ (dg pop-last! (c|<buf> => <any>))
 
- (dg len/fill-setter ((new-len <int>) (c <buf>) default))
- (dg len-setter ((new-len <int>) (c <buf>)))
+ (dg len/fill-setter (new-len|<int> c|<buf> default))
+ (dg len-setter (new-len|<int> c|<buf>))
  )
  
 
 ;;;;!! Implementation
-  (slot <buf> (buf-len <int>) 0)
-  (slot <buf> (buf-dat <vec>) #())
+  (dp buf-len (x|<buf> => <int>) 0)
+  (dp buf-dat (x|<buf> => <vec>) #())
 
 ;;;; Collection protocol
 
-(dm len ((c <buf>) => <int>)
+(dm len (c|<buf> => <int>)
   (buf-len c))
 
-(dm elt ((c <buf>) (i <int>) => <any>)
+(dm elt-or (c|<buf> i|<int> default => <any>)
   (if (range-check? c i)
       (low-elt c i)
-      nul))
+      default))
 
-(dm elt-setter (z (c <buf>) (i <int>))
+(dm elt-setter (z c|<buf> i|<int>)
   (when (< i 0) (range-error c i))
   (set (low-elt c i) z))
 
-(dm empty ((c (t= <buf>)) => <buf>) (isa <buf>))
+(dm empty ((c (t= <buf>)) => <buf>) (new <buf>))
 
-(dm fab ((c (t= <buf>)) (s <int>) => <buf>)
-  (let ((dat (fab <vec> (power-of-two-ceiling s))))
-    (isa <buf> (set buf-len s) (set buf-dat dat))))
+(dm fab ((c (t= <buf>)) s|<int> => <buf>)
+  (def dat (fab <vec> (power-of-two-ceiling s)))
+  (new <buf> buf-len s buf-dat dat))
 
 ;;;; Sequence protocol
 
 ;; TODO: HAVE THIS FALL OUT OF PROTOCOL
-(dm cat! ((x <buf>) (more ...) => <buf>)
+(dm cat! (x|<buf> more|... => <buf>)
   (for ((s more))
     (for ((e s))
       (add! x e)))
   x)
 
 ;;;; Buffer protocol
-(dm buf ((elts ...) => <buf>)
-  (apply fabs <buf> elts))
+(dm buf (elts|... => <buf>)
+  (app fabs <buf> elts))
 
-(dm push-last! ((c <buf>) x => <buf>)
+(dm push-last! (c|<buf> x => <buf>)
   (add! c x))
 
-(dm pop-last! ((c <buf>) => <any>)
-  (let ((new-len (- (len c) 1))
-        (x       (low-elt c new-len)))
-    (set (len c) new-len)
-    x))
+(dm pop-last! (c|<buf> => <any>)
+  (def new-len (- (len c) 1))
+  (def x       (low-elt c new-len))
+  (set (len c) new-len)
+  x)
 
 
 ;;;; Misc stuff
 
 ;; TODO: QUESTIONABLE SYNTAX
-(dm to-str ((x <buf>) => <str>) 
+(dm to-str (x|<buf> => <str>) 
   (cat "#[" (vals-to-str x) "]"))
 
 
 ;;;; Undocumented
 
-(dm add! ((c <buf>) x => <buf>)
+(dm add! (c|<buf> x => <buf>)
   (set (low-elt c (len c)) x)
   c)
 
-(dm len/fill-setter ((new-len <int>) (c <buf>) default)
-  (let ((dat (buf-dat c)))
-    (if (> new-len (len dat))
-        (let ((new-data (fill (fab <vec> (power-of-two-ceiling new-len)) default)))
-          (alter new-data dat)
-          (set (buf-len c) new-len)
-          (set (buf-dat c) new-data))
-        (if (< new-len (len c))
-            (let ((old-len (len c)))
-              (set (buf-len c) new-len)
-              (rep fill (((i <int>) new-len))
-                (and (< i old-len)
-                     (set (low-elt dat i) default)
-                     (fill (+ i 1)))))
-            (set (buf-len c) new-len)))))
+(dm len/fill-setter (new-len|<int> c|<buf> default)
+  (def dat (buf-dat c))
+  (if (> new-len (len dat))
+      (let ((new-data
+              (fill (fab <vec> (power-of-two-ceiling new-len)) default)))
+        (into new-data dat)
+        (set (buf-len c) new-len)
+        (set (buf-dat c) new-data))
+      (if (< new-len (len c))
+          (let ((old-len (len c)))
+            (set (buf-len c) new-len)
+            (rep fill ((i|<int> new-len))
+              (and (< i old-len)
+                   (set (low-elt dat i) default)
+                   (fill (+ i 1)))))
+          (set (buf-len c) new-len)))))
 
-(dm len-setter ((new-len <int>) (c <buf>))
-  (set (len/fill c nul) new-len))
+(dm len-setter (new-len|<int> c|<buf>)
+  (set (len/fill c (elt-default c)) new-len))
 
-(dm low-elt ((x <buf>) (i <int>) => <any>)
+(dm low-elt (x|<buf> i|<int> => <any>)
   (low-elt (buf-dat x) i))
 
-(dm low-elt-setter (z (x <buf>) (i <int>))
+(dm low-elt-setter (z x|<buf> i|<int>)
   (when (>= i (len x))
     (set (len x) (+ i 1)))
   (set (low-elt (buf-dat x) i) z))

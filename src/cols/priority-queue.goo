@@ -1,0 +1,70 @@
+(use proto)
+(use runtime)
+
+(dc <priority-queue> (<col>))
+  (dp queue-data (x|<priority-queue> => <buf>) (fab <buf> 0))
+  (dp queue-test (x|<priority-queue> => <fun>) <)
+  (dp queue-key (x|<priority-queue> =>  <fun>) identity)
+
+(dm ref (q|<priority-queue> i|<int> => <any>)
+  (elt (queue-data q) (- i 1)))
+
+(dm ref-setter (v q|<priority-queue> i|<int>)
+  (set (elt (queue-data q) (- i 1)) v))
+
+(dm len (q|<priority-queue> => <int>)
+  (len (queue-data q)))
+
+(dm size-setter (v|<int> q|<priority-queue>)
+  (set (len (queue-data q)) v))
+
+(dm parent (i|<int> => <int>)
+  (1st (trunc/ i 2)))
+
+(dm left (i|<int> => <int>)
+  (* i 2))
+
+(dm right (i|<int> => <int>)
+  (+ (* i 2) 1))
+
+(dm heapify (q|<priority-queue> i|<int>)
+  (def l   (left i))
+  (def r   (right i))
+  (def tst (queue-test q))
+  (def max (if (and (<= l (len q)) (tst (ref q l) (ref q i))) l i))
+  (when (and (<= r (len q)) (tst (ref q r) (ref q max)))
+    (set max r))
+  (unless (= max i)
+    (swapf (ref q i) (ref q max))
+    (heapify q max)))
+
+(dm build-heap (q|<priority-queue>)
+  (for ((i (range (1st (trunc/ (len q) 2) 1) <=)))
+    (heapify q i)))
+
+(dm heap-extract-max (q|<priority-queue> => <any>)
+  (when (< (len q) 1) ;; TODO: RANGE ERROR
+    (error "Heap underflow %=" q))
+  (def max (ref q 1))
+  (set (ref q 1) (ref q (len q)))
+  (set (size q) (- (len q) 1))
+  (heapify q 1)
+  max)
+
+(dm heap-insert (q|<priority-queue> key)
+  (add! (queue-data q) key)
+  (rep loop ((i (len q)))
+    ;; (format out "i = %d\n" i)
+    (if (and (> i 1) ((queue-test q) key (ref q (parent i))))
+        (seq (set (ref q i) (ref q (parent i)))
+             (loop (parent i)))
+        (set (ref q i) key))))
+
+(dm priority-order (test|<fun> keys|<seq> => <seq>)
+  (def q (new <priority-queue> queue-test test))
+  (do (fun (x) (heap-insert q x)) keys)
+  (collecting ()
+    (while (> (len q) 0)
+      (collect (heap-extract-max q)))))
+
+(export priority-order)

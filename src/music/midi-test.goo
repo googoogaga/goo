@@ -4,21 +4,21 @@
 (use threads)
 
 (df do-test-midi-out (md)
-  (let ((mc (fab-midi-channel 0)))
-    (for ((i (from-below 60 70)))
-      (midi-on  md mc i 127)
-      (midi-off md mc i 127)
-      (sleep 100))))
+  (def mc (fab-midi-channel 0))
+  (for ((i (range 60 < 70)))
+    (midi-on  md mc i 127)
+    (midi-off md mc i 127)
+    (sleep 100)))
 
 (df test-midi-out ()
-  (let ((md #f))
-    (fin (seq (set md (open-midi-out-device (default-midi-device)))
-	      (do-test-midi-out md))
-      (and md (close-midi-out-device md)))))
+  (def md #f)
+  (fin (seq (set md (open-midi-out-device (default-midi-device)))
+            (do-test-midi-out md))
+       (and md (close-midi-out-device md))))
 
 (df callback
-    ((dev <midi-device>) (chan <int>) (type <sym>) (kind <sym>)
-     (time <int>) (d1 <int>) (d2 <int>))
+    (dev|<midi-device> chan|<int> type|<sym> kind|<sym>
+     time|<int> d1|<int> d2|<int>)
   (format out "CHAN %d TYPE %s KIND %s TIME %d D1 %d D2 %d\n"
           chan type kind time d1 d2))
 

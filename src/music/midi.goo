@@ -28,32 +28,32 @@
 ;;;; MIDI instruments
 
 (dc <midi-instrument> (<any>))
-  (slot <midi-instrument> (midi-name <str>))
-  (slot <midi-instrument> (midi-number <int>))
+  (dp midi-name (x|<midi-instrument> => <str>))
+  (dp midi-number (x|<midi-instrument> => <int>))
 
 ;;;; MIDI channels
 
 (dc <midi-channel> (<any>))
 
-(dg fab-midi-channel ((num <int>) => <midi-channel>))
+(dg fab-midi-channel (num|<int> => <midi-channel>))
 
 (dm midi-percussion-channel () (fab-midi-channel 9))
 
 (ds (def-midi-family ,family (,start) ,@names)
-  (let ((num-tab (make-sym family "-by-nums"))
-        (nam-tab (make-sym family "-by-nams"))
-        (acc     (make-sym "find-midi-" family)))
+  (let ((num-tab (cat-sym family "-by-nums"))
+         (nam-tab (cat-sym family "-by-nams"))
+         (acc     (cat-sym "find-midi-" family)))
     `(seq (dv ,num-tab (fab <tab> 8))
           (dv ,nam-tab (fab <tab> 8))
           (for ((str '(,@names)) (num (from ,start)))
-            (let ((nam (as <sym> str))
-                  (inst (isa <midi-instrument> 
-                          (set midi-name nam) (set midi-number num))))
-              (set (elt ,nam-tab nam) inst)
-              (set (elt ,num-tab num) inst)))
-          (dm ,acc ((nam <str>)) (,acc (as <sym> nam)))
-          (dm ,acc ((nam <sym>)) (elt-or ,nam-tab nam #f))
-          (dm ,acc ((num <int>)) (elt-or ,num-tab num #f)))))
+            (def nam (as <sym> str))
+            (def inst (new <midi-instrument>
+                        midi-name nam set midi-number num))
+            (set (elt ,nam-tab nam) inst)
+            (set (elt ,num-tab num) inst))
+          (dm ,acc (nam|<str>) (,acc (as <sym> nam)))
+          (dm ,acc (nam|<sym>) (elt-or ,nam-tab nam #f))
+          (dm ,acc (num|<int>) (elt-or ,num-tab num #f)))))
 
 (def-midi-family percussion (35)
   "Acoustic Bass Drum" 
@@ -108,50 +108,49 @@
 
 (dc <midi-device> (<any>))
 
-(dg fab-midi-device ((num <int>) => <midi-device>))
+(dg fab-midi-device (num|<int> => <midi-device>))
 
 (dg default-midi-device (=> <midi-device>))
 
-(dg open-midi-out-device ((md <midi-device>)))
+(dg open-midi-out-device (md|<midi-device>))
 
-(dg reset-midi-out-device ((md <midi-device>)))
+(dg reset-midi-out-device (md|<midi-device>))
 
-(dg close-midi-out-device ((md <midi-device>)))
+(dg close-midi-out-device (md|<midi-device>))
 
-(dm do-with-open-midi-out-device ((md <midi-device>) (f <fun>))
+(dm do-with-open-midi-out-device (md|<midi-device> f|<fun>)
   (fin (seq (open-midi-out-device md) (f)) (close-midi-out-device md)))
        
 (ds (with-open-midi-out-device (?md) ,@body)
   `(do-with-open-midi-out-device ?md (fun () ,@body)))
 
-(dg send-midi-message 
-  ((md <midi-device>) (stat <int>) (chan <int>) (x <int>) (y <int>)))
+(dg send-midi-message (md|<midi-device> stat|<int> chan|<int> x|<int> y|<int>))
 
 (dm midi-on
-    ((md <midi-device>) (mc <midi-channel>) 
-     (pitch <midi-pitch>) (velocity <midi-velocity>))
+    (md|<midi-device> mc|<midi-channel> 
+     pitch|<midi-pitch> velocity|<midi-velocity>)
   (send-midi-message md $midi-on (midi-number mc) pitch velocity))
 
 (dm midi-off
-    ((md <midi-device>) (mc <midi-channel>)
-     (pitch <midi-pitch>) (velocity <midi-velocity>))
+    (md|<midi-device> mc|<midi-channel>
+     pitch|<midi-pitch> velocity|<midi-velocity>)
   (send-midi-message md $midi-off (midi-number mc) pitch 0))
 
 (dm midi-select-instrument
-    ((md <midi-device>) (mc <midi-channel>) (mv <midi-instrument>))
+    (md|<midi-device> mc|<midi-channel> mv|<midi-instrument>)
   (send-midi-message md $midi-patch (midi-number mc) (midi-number mv) 0))
 
 (dg midi-in-devices (=> <seq>))
 
-(dg open-midi-in-device ((md <midi-device>) (callback <fun>)))
+(dg open-midi-in-device (md|<midi-device> callback|<fun>))
 
-(dg start-midi-in-device ((md <midi-device>)))
+(dg start-midi-in-device (md|<midi-device>))
 
-(dg reset-midi-in-device ((md <midi-device>)))
+(dg reset-midi-in-device (md|<midi-device>))
 
-(dg stop-midi-in-device ((md <midi-device>)))
+(dg stop-midi-in-device (md|<midi-device>))
 
-(dg close-midi-in-device ((md <midi-device>)))
+(dg close-midi-in-device (md|<midi-device>))
 
 (export
   $midi-off

@@ -1,38 +1,37 @@
 (use proto)
 (use boot)
 
-(dp %thread-create)
-(dp %thread-yield)
-(dp %thread-priority)
-(dp %thread-priority-setter)
-(dp %thread-detach)
-(dp %thread-current)
-(dp %thread-sleep)
+(dl %thread-create)
+(dl %thread-yield)
+(dl %thread-priority)
+(dl %thread-priority-setter)
+(dl %thread-detach)
+(dl %thread-current)
+(dl %thread-sleep)
 
 (dc <thread> (<any>))
-  (slot <thread> (thread-name (false-or <sym>)) #f)
-  (slot <thread> (thread-function <fun>))
-  (slot <thread> (thread-priority <int>) 0)
-  (slot <thread> thread-handle)
+  (dp thread-name (x|<thread> => (t? <sym>)) #f)
+  (dp thread-function (x|<thread> => <fun>))
+  (dp thread-priority (x|<thread> => <int>) 0)
+  (dp hread-handle (x|<thread> =>)
 
 (dm thread-yield () (%thread-yield))
 
 (dm thread-detatch () (%thread-detach))
 
-(dm fab-thread ((name <sym>) (priority <int>) (function <fun>) => <thread>)
-  (let ((h (%lb (%thread-create function)))
-	(t (isa <thread> 
-             (set thread-handle h)
-	     (set thread-name name) (set thread-priority priority)
-	     (set thread-function function))))
-    (set (%thread-priority h) (%iu priority))
-    t))
+(dm fab-thread (name|<sym> priority|<int> function|<fun> => <thread>)
+  (def h (%lb (%thread-create function)))
+  (def t (new <thread> 
+           thread-handle h thread-name name thread-priority priority
+           thread-function function))
+  (set (%thread-priority h) (%iu priority))
+  t)
 
-(dm sleep ((msecs <int>))
+(dm sleep (msecs|<int>)
   (%thread-sleep (%iu msecs)))
 
 ;; (dg thread-current (=> <thread>))
-;; (dg thread-join ((t <thread>) (ts ...)))
+;; (dg thread-join (t|<thread> ts|...))
 
 (export 
   <thread>

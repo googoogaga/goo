@@ -1,11 +1,11 @@
 (use proto)
 (use boot)
 
-(dp %grid-open)
-(dp %grid-close)
-(dp %grid-move)
-(dp %grid-write)
-(dp %grid-refresh)
+(dl %grid-open)
+(dl %grid-close)
+(dl %grid-move)
+(dl %grid-write)
+(dl %grid-refresh)
 
 (df grid-open () (%grid-open))
 (df grid-close () (%grid-close))

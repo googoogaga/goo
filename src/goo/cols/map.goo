@@ -12,14 +12,14 @@
 (exported
  (dc <map> (<col>))
 ;; undocumented
- (dg fab-map ((p (t< <map>)) (key-vals ...)))
+ (dg fab-map ((p (t< <map>)) key-vals|...))
 )
 
 ;;;;!! Implementation
 
 ;;;; Undocumented
-(dm fab-map ((p (t< <map>)) (key-vals ...))
-  (let ((x (fab p (1st (truncate/ (len key-vals) 2)))))
-    (do-key-vals (fun (key val) (set (elt x key) val)) key-vals)
-    x))
+(dm fab-map ((p (t< <map>)) key-vals|...)
+  (def x (fab p (1st (trunc/ (len key-vals) 2))))
+  (do-key-vals (fun (key val) (set (elt x key) val)) key-vals)
+  x)
 

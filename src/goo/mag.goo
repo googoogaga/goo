@@ -1,0 +1,29 @@
+(use boot)
+(use macros)
+;; (use proto/types)
+
+(exported
+ ;;  represents infinite repeating series
+ <mag>
+ (dg <   (x|<mag> y|<mag> => <log>))
+ (dg >   (x|<mag> y|<mag> => <log>))
+ (dg <=  (x|<mag> y|<mag> => <log>))
+ (dg >=  (x|<mag> y|<mag> => <log>))
+ (dg min (x|<mag> y|<mag> => <mag>))
+ (dg max (x|<mag> y|<mag> => <mag>)))
+
+(dm > (x|<mag> y|<mag> => <log>)
+  (< y x))
+
+(dm <= (x|<mag> y|<mag>  => <log>)
+  (not (< y x)))
+
+(dm >= (x|<mag> y|<mag>  => <log>)
+  (not (< x y)))
+
+(dm min (x|<mag> y|<mag> => <mag>)
+  (if (< x y) x y))
+
+(dm max (x|<mag> y|<mag> => <mag>)
+  (if (> x y) x y))
+

@@ -8,224 +8,251 @@
 ;;;;!! Interface
 (exported
  <col>
- (dg len ((x <col>) => <int>))
- (dg elt ((x <col>) (k <any>) => <any>))
- (dg elt-setter ((v <any>) (x <col>) (k <any>)))
- (dg empty? ((x <col>) => <log>))
+ len ;; (dg len (x|<col> => <int>)) ;; in types
+ (dg elt (x|<col> k|<any> => <any>))
+ (dg elt-or (x|<col> k|<any> default|<any> => <any>))
+ (dg elt-setter (v|<any> x|<col> (k <any>)))
+ (dg elt-type (x|<col> => <type>))
+ (dg elt-default (x|<col> => <any>))
+ (dg key-type (x|<col> => <type>))
+ (dg key-test (x|<col> => <fun>))
+ (dg elts (x|<col> keys|<col> => <col>))
+ (dg empty? (x|<col> => <log>))
  (dg empty ((x (t< <col>)) => <col>))
- (dg default ((x (t< <col>)) => <any>))
- (dg fab ((t (t< <col>)) (s <int>) => <lst>))
- (dg fabs ((x (t< <col>)) (elts ...) => <col>))
- (dg fill ((x <col>) (val <any>) => <col>))
- (dg alter ((x <col>) (y <col>) => <col>))
- (dg any? ((f <fun>) (x <col>) => <log>))
- (dg all? ((f <fun>) (x <col>) => <log>))
- (dg reduce ((combine <fun>) (init <any>) (x <col>) => <col>))
- (dg reduce+ ((combine <fun>) (x <col>) => <col>))
- (dg find-key ((f <fun>) (x <col>) => <any>))
- (dg del-key ((x <col>) (key <any>) => <col>))
- (dg del-keys ((x <col>) => <col>))
- (dg do ((f <fun>) (x <col>) => (tup)))
- (dg do2 ((f <fun>) (x <col>) (y <col>) => (tup)))
- (dg map ((f <fun>) (x <col>) => <col>))
- (dg map2 ((f <fun>) (x <col>) (y <col>) => <col>))
- (dg do-keyed ((f <fun>) (x <col>) => (tup)))
- (dg map-keyed ((f <fun>) (x <col>) => <col>))
- (dg mem? ((x <col>) (y <any>) => <log>))
+ (dg add (x|<col> y|<any> => <col>))
+ (dg add! (c|<col> x => <col>))
+ (dg dup (x|<col> => <col>))
+ (dg fab ((t (t< <col>)) s|<int> => <col>))
+ (dg fabs ((x (t< <col>)) elts|... => <col>))
+ (dg fill (x|<col> val|<any> => <col>))
+ (dg into (x|<col> y|<col> => <col>))
+ any? ;; (dg any? (f|<fun> x|<col> => <log>)) ;; in types
+ (dg all? (f|<fun> x|<col> => <log>))
+ (dg fold (combine|<fun> init|<any> x|<col> => <col>))
+ (dg fold+ (combine|<fun> x|<col> => <col>))
+ (dg find-or (f|<fun> x|<col> default => <any>))
+ (dg find (f|<fun> x|<col> => <any>))
+ (dg del (x|<col> key|<any> => <col>))
+ (dg zap (x|<col> => <col>))
+ (dg do (f|<fun> x|<col> => (tup)))
+ (dg mem? (x|<col> y|<any> => <log>))
+ (dg keys (c|<col> => <seq>))
+ (dg items (c|<col> => <seq>))
 
-;; 3.7.1 ITERATION PROTOCOL
- (dg ini-state ((x <col>) => <any>))
- (dg fin-state? ((x <col>) (state <any>) => <log>))
- (dg nxt-state ((x <col>) (state <any>) => <any>))
- (dg now-elt ((x <col>) (state <any>) => <any>))
- (dg now-elt-setter ((v <any>) (x <col>) (state <any>)))
- (dg now-key ((x <col>) (state <any>) => <any>))
- (dg copy-state ((x <col>) (state <any>) => <any>))
+;; 3.7.1 ENUMERATION PROTOCOL
+ (dc <enum> (<any>))
+ (dg enum (x|<col> => <enum>))
+ (dg fin? (e|<enum> => <log>))
+ (dg nxt (e|<enum> => <enum>))
+ (dg now (e|<enum> => <any>))
+ (dg now-setter (v|<any> e|<enum>))
+ (dg now-key (e|<enum> => <any>))
+
+;; Deprecated
+ (dg do-keyed (f|<fun> x|<col> => (tup)))
+ (dg map-keyed (f|<fun> x|<col> => <col>))
+ (dg do2 (f|<fun> x|<col> y|<col> => (tup)))
+ (dg do3 (f|<fun> x|<col> y|<col> z|<col>))
+ (dg map (f|<fun> x|<col> => <col>))
+ (dg map2 (f|<fun> x|<col> y|<col> => <col>))
+ (dg any2? (test|<fun> x|<col> y|<col> => <log>))
+ all2? ;; (dg all2? (test|<fun> x|<col> y|<col> => <log>)) ;; in types
 
 ;; Undocumented
- (dg low-elt ((x <col>) (k <any>) => <any>))
- (dg low-elt-setter ((v <any>) (x <col>) (k <any>)))
- (dg keys ((c <col>) => <seq>))
- (dg any2? ((test <fun>) (x <col>) (y <col>) => <log>))
- (dg all2? ((test <fun>) (x <col>) (y <col>) => <log>))
- (dg into ((dst <seq>) (src <seq>) (from <int>) (below <int>) => <seq>))
- (dg as-copy ((c <col>) (x <col>) => <col>))
- (dg do3 ((f <fun>) (x <col>) (y <col>) (z <col>)))
+ (dg range-error ())
+ (dg low-elt (x|<col> k|<any> => <any>))
+ (dg low-elt-setter (v|<any> x|<col> k|<any>))
+ (dg as-copy (c|<col> x|<col> => <col>))
 )
 ;;;;!! Implementation
-
 ;;;; Creation protocol
-(dm as ((p (t< <col>)) (x <col>) => <col>)
-  (into (fab p (len x)) x 0 (len x)))
+(dm as ((p (t< <col>)) x|<col> => <col>)
+  (into (fab p (len x)) x))
 
 ;;;; Collection protocol default implementation
 
-(dm len ((x <col>) => <int>)
-  (rep count ((s (ini-state x)) (i 0))
-    (if (fin-state? x s) i (count (nxt-state x s) (+ i 1)))))
+(dm len (x|<col> => <int>)
+  (rep count ((e (enum x)) (i 0))
+    (if (fin? e) i (count (nxt e) (+ i 1)))))
+
+(dm elt-type (x|<col> => <type>) <any>)
+(dm key-type (x|<col> => <type>) <any>)
+(dm key-test (x|<col> => <fun>)  ==)
 
 ;; required: elt
 
 ;; required: elt-setter
 
-(dm empty? ((c <col>) => <log>)
+(dm empty? (c|<col> => <log>)
   (= (len c) 0))
 
 (dm empty ((c (t< <col>)) => <col>)
   (fab c 0))
 
-(dm default ((c (t< <col>)) => <any>)
+(dm elt-default (x|<col> => <any>)
   #f)
 
 ;; required: fab
 
-(dm fabs ((c (t< <col>)) (objects ...))
-  (alter (fab c (len objects)) objects))
+(dm fabs ((c (t< <col>)) objects|...)
+  (into (fab c (len objects)) objects))
 
-(dm fill ((dst <col>) val => <col>)
-  (rep in ((ds (ini-state dst)))
-    (if (fin-state? dst ds)
+(dm fill (dst|<col> val => <col>)
+  (rep in ((ds (enum dst)))
+    (if (fin? ds)
         dst
-        (seq (set (now-elt dst ds)  val)
-             (in (nxt-state dst ds))))))
+        (seq (set (now ds)  val)
+             (in (nxt ds))))))
 
-(dm alter ((dst <col>) (src <col>) => <col>)
-  (rep in ((ss (ini-state src)))
-    (if (fin-state? src ss)
+;; TODO: FLUSH OUT BETTER
+(dm dup (x|<col> => <col>)
+  (as-copy x x))
+
+(dm elts (x|<col> keys|<seq> => <col>)
+  (def res (fab <tab> (len keys)))
+  (do (fun (k) (set (elt res k) (elt x k))) keys)
+  (as-copy x res))
+
+(dm add! (c|<col> x => <col>)
+  (add c x))
+
+(dm into (dst|<col> src|<col> => <col>)
+  (rep in ((ss (enum src)))
+    (if (fin? ss)
         dst
-        (seq (set (elt dst (now-key src ss)) (now-elt src ss))
-             (in (nxt-state src ss))))))
+        (seq (set (elt dst (now ss)) (now ss))
+             (in (nxt ss))))))
 
-(dm any? ((test <fun>) (c <col>) => <log>)
-  (rep fnd ((state (ini-state c)))
-    (if (fin-state? c state)
+(dm any? (test|<fun> c|<col> => <log>)
+  (rep fnd ((e (enum c)))
+    (if (fin? e)
         #f
-        (or (as-log (test (now-elt c state)))
-            (fnd (nxt-state c state))))))
+        (or (as-log (test (now e))) (fnd (nxt e))))))
 
-(dm all? ((test <fun>) (c <col>) => <log>)
-  (rep fnd ((state (ini-state c)))
-    (or (fin-state? c state)
-        (and (test (now-elt c state))
-             (fnd (nxt-state c state))))))
+(dm all? (test|<fun> c|<col> => <log>)
+  (rep fnd ((e (enum c)))
+    (or (fin? e)
+        (and (test (now e)) (fnd (nxt e))))))
 
-(dm reduce ((combine <fun>) init (c <col>) => <any>)
-  (rep red ((res init) (state (ini-state c)))
-    (if (fin-state? c state)
+(dm fold (combine|<fun> init c|<col> => <any>)
+  (rep red ((res init) (e (enum c)))
+    (if (fin? e)
         res
-        (red (combine res (now-elt c state)) (nxt-state c state)))))
+        (red (combine res (now e)) (nxt e)))))
 
-(dm reduce+ ((combine <fun>) (c <col>) => <any>)
-  (let ((state (ini-state c))
-        (init  (now-elt c state)))
-    (rep red ((res init) (state (nxt-state c state)))
-      (if (fin-state? c state)
-          res
-          (red (combine res (now-elt c state)) (nxt-state c state))))))
+(dm fold+ (combine|<fun> c|<col> => <any>)
+  (def e    (enum c))
+  (def init (now e))
+  (rep red ((res init) (e (nxt e)))
+    (if (fin? e)
+        res
+        (red (combine res (now e)) (nxt e)))))
 
-(dm find-key ((f <fun>) (c <col>) => <any>)
-  (rep fnd ((state (ini-state c)))
-    (if (fin-state? c state)
-        nul
-        (if (f (now-elt c state))
-            (now-key c state)
-            (fnd (nxt-state c state))))))
+(dm range-error ()
+  (error "RANGE ERROR"))
 
-;; required: del-key
+(dc <elt-default> (<any>))
+(dv $elt-default (new <elt-default>))
 
-;; required: del-keys
+(dm find-or (f|<fun> c|<col> default => <any>)
+  (rep fnd ((e (enum c)))
+    (if (fin? e)
+        default
+        (if (f (now e)) (now-key e) (fnd (nxt e))))))
 
-(dm do ((f <fun>) (c <col>))
-  (rep lop ((s (ini-state c)))
-    (unless (fin-state? c s)
-      (f (now-elt c s)) (lop (nxt-state c s)))))
+(dm find (f|<fun> c|<col> => <any>)
+  (def val (find-or f c $elt-default))
+  (if (== val $elt-default) (range-error) val))
 
-(dm do2 ((f <fun>) (x <col>) (y <col>))
-  (rep lop ((sx (ini-state x)) (sy (ini-state y)))
-    (unless (or (fin-state? x sx) (fin-state? y sy))
-      (f (now-elt x sx) (now-elt y sy))
-      (lop (nxt-state x sx) (nxt-state y sy)))))
+;; required: del
 
-(dm map ((f <fun>) (c <col>) => <col>)
-  (rep con ((res '()) (s (ini-state c)))
-    (if (fin-state? c s)
+;; required: zap
+
+(dm do (f|<fun> c|<col>)
+  (rep lop ((e (enum c)))
+    (unless (fin? e)
+      (f (now e)) (lop (nxt e)))))
+
+(dm do2 (f|<fun> x|<col> y|<col>)
+  (rep lop ((ex (enum x)) (ey (enum y)))
+    (unless (or (fin? ex) (fin? ey))
+      (f (now ex) (now ey))
+      (lop (nxt ex) (nxt ey)))))
+
+(dm map (f|<fun> c|<col> => <col>)
+  (rep con ((res '()) (e (enum c)))
+    (if (fin? e)
         (as-copy c (rev! res))
-        (con (add res (f (now-elt c s))) (nxt-state c s)))))
+        (con (add res (f (now e))) (nxt e)))))
 
-(dm map2 ((f <fun>) (x <col>) (y <col>) => <col>)
-  (rep con ((res '()) (sx (ini-state x)) (sy (ini-state y)))
-    (if (or (fin-state? x sx) (fin-state? y sy))
+(dm map2 (f|<fun> x|<col> y|<col> => <col>)
+  (rep con ((res '()) (ex (enum x)) (ey (enum y)))
+    (if (or (fin? ex) (fin? ey))
         (as-copy x (rev! res))
-        (con (add res (f (now-elt x sx) (now-elt y sy))) 
-             (nxt-state x sx) (nxt-state y sy)))))
+        (con (add res (f (now ex) (now ey))) 
+             (nxt ex) (nxt ey)))))
 
-(dm do-keyed ((f <fun>) (c <col>))
-  (rep lop ((s (ini-state c)))
-    (unless (fin-state? c s)
-      (f (now-key c s) (now-elt c s)) (lop (nxt-state c s)))))
+(dm do-keyed (f|<fun> c|<col>)
+  (rep lop ((e (enum c)))
+    (unless (fin? e)
+      (f (now-key e) (now e)) (lop (nxt e)))))
 
-(dm map-keyed ((f <fun>) (c <col>) => <col>)
-  (rep con ((res '()) (s (ini-state c)))
-    (if (fin-state? c s)
+(dm map-keyed (f|<fun> c|<col> => <col>)
+  (rep con ((res '()) (e (enum c)))
+    (if (fin? e)
         (as-copy c (rev! res))
-        (con (add res (f (now-key c s) (now-elt c s))) (nxt-state c s)))))
+        (con (add res (f (now-key e) (now e))) (nxt e)))))
 
-(dm mem? ((c <col>) x => <log>)
+(dm keys (c|<col> => <seq>)
+  (rep con ((res '()) (e (enum c)))
+    (if (fin? e)
+        (rev! res)
+        (con (add res (now-key e)) (nxt e)))))
+
+(dm items (c|<col> => <seq>)
+  (rep con ((res '()) (e (enum c)))
+    (if (fin? e)
+        (rev! res)
+        (con (add res (tup (now-key e) (now e))) (nxt e)))))
+
+(dm mem? (c|<col> x => <log>)
   (any? (fun (e) (== e x)) c))
-
-
-
-
 
 ;;;; Undocumented
 
-(dm as-copy ((c <col>) (x <col>) => <col>)
+(dm as-copy (c|<col> x|<col> => <col>)
   (as (object-class c) x))
 
-(dm = ((c1 <col>) (c2 <col>) => <log>)
-  (rep eq ((s1 (ini-state c1)) (s2 (ini-state c2)))
-    (if (fin-state? c1 s1)
-        (fin-state? c2 s2)
-        (and (= (now-elt c1 s1)  (now-elt c2 s2))
-             (eq (nxt-state c1 s1) (nxt-state c2 s2))))))
+(dm = (c1|<col> c2|<col> => <log>)
+  (rep eq ((e1 (enum c1)) (e2 (enum c2)))
+    (if (fin? e1)
+        (fin? e2)
+        (and (= (now e1)  (now e2))
+             (eq (nxt e1) (nxt e2))))))
 
-(dm keys ((c <col>) => <seq>)
-  (rep con ((res '()) (s (ini-state c)))
-    (if (fin-state? c s)
-        (rev! res)
-        (con (add res (now-key c s)) (nxt-state c s)))))
-
-(dm any2? ((test <fun>) (x <col>) (y <col>) => <log>)
-  (rep fnd ((sx (ini-state x)) (sy (ini-state y)))
-    (if (or (fin-state? x sx) (fin-state? y sy))
+(dm any2? (test|<fun> x|<col> y|<col> => <log>)
+  (rep fnd ((ex (enum x)) (ey (enum y)))
+    (if (or (fin? ex) (fin? ey))
         #f
-        (or (as-log (test (now-elt x sx) (now-elt y sy)))
-            (fnd (nxt-state x sx) (nxt-state y sy))))))
+        (or (as-log (test (now ex) (now ey)))
+            (fnd (nxt ex) (nxt ey))))))
 
-(dm all2? ((test <fun>) (x <col>) (y <col>) => <log>)
-  (rep fnd ((sx (ini-state x)) (sy (ini-state y)))
-    (or (fin-state? x sx) (fin-state? y sy)
-        (and (test (now-elt x sx) (now-elt y sy)) 
-             (fnd (nxt-state x sx) (nxt-state y sy))))))
+(dm all2? (test|<fun> x|<col> y|<col> => <log>)
+  (rep fnd ((ex (enum x)) (ey (enum y)))
+    (or (fin? ex) (fin? ey)
+        (and (test (now ex) (now ey)) 
+             (fnd (nxt ex) (nxt ey))))))
 
-(dm do3 ((f <fun>) (x <col>) (y <col>) (z <col>))
-  (rep lop ((sx (ini-state x)) (sy (ini-state y)) (sz (ini-state z)))
-    (unless (or (fin-state? x sx) (fin-state? y sy) (fin-state? z sz))
-      (f (now-elt x sx) (now-elt y sy) (now-elt z sz))
-      (lop (nxt-state x sx) (nxt-state y sy) (nxt-state z sz)))))
+(dm do3 (f|<fun> x|<col> y|<col> z|<col>)
+  (rep lop ((ex (enum x)) (ey (enum y)) (ez (enum z)))
+    (unless (or (fin? ex) (fin? ey) (fin? ez))
+      (f (now ex) (now ey) (now ez))
+      (lop (nxt ex) (nxt ey) (nxt ez)))))
 
-;;; TODO: NEED TEST ARGS AND NOT-FOUND HANDLERS
-
-(dm elt-or ((c <col>) (key <any>) (default <fun>) => <any>)
-  (let ((val (elt c key)))
-    (if (== val nul) (default) val)))
-
-;; TODO: BETTER TO USE DEFAULT
-;; TODO: INVERT THIS WITH ELT SO THAT NUL IS NEVER NEEDED
-(dm elt-or ((c <col>) (key <any>) (default <any>) => <any>) 
-  (let ((val (elt c key)))
-    (if (== val nul) default val)))
+(dm elt (c|<col> key|<any> => <any>) 
+  (def val (elt-or c key $elt-default))
+  (if (== val $elt-default) (range-error) val))
 
 ;; get this from list.proto
-(need-implementation add)
+(need-implementation add <tab>)
 

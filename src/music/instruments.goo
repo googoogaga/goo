@@ -10,10 +10,10 @@
 (dv $percussion-channel 9)
 
 (dc <tone> (<any>))
-  (slot <tone> (tone-name <sym>))
-  (slot <tone> (tone-key <chr>))
-  (slot <tone> (tone-channel <int>) $percussion-channel)
-  (slot <tone> (tone-pitch <int>))
+  (dp tone-name (x|<tone> => <sym>))
+  (dp tone-key (x|<tone> => <chr>))
+  (dp tone-channel (x|<tone> => <int>) $percussion-channel)
+  (dp tone-pitch (x|<tone> => <int>))
 
 (dv $zero-tone-key #\+)
 (dv $std-tone-map
@@ -22,28 +22,25 @@
 ;;; INSTRUMENT
 
 (dc <instrument> (<any>))
-  (slot <instrument> (instrument-name <sym>))
-  (slot <instrument> (instrument-version <int>))
-  (slot <instrument> (instrument-tone-map <tone-map>) $std-tone-map)
+  (dp instrument-name (x|<instrument> => <sym>))
+  (dp instrument-version (x|<instrument> => <int>))
+  (dp instrument-tone-map (x|<instrument> => <tone-map>) $std-tone-map)
 
 ;;; INSTRUMENTS
 
 (dv $instruments (fab <buf> 0))
 
 (dm register-instrument (name version tones)
-  (let ((tone-map (fab <tone-map> (len tones)))
-        (inst     (isa <instrument>
-                    (set instrument-name     name)
-                    (set instrument-version  version)
-                    (set instrument-tone-map tone-map))))
-    (do (fun (t) (set (elt tone-map (tone-key t)) t)) tones)
-    (add! $instruments inst)))
+  (def tone-map (fab <tone-map> (len tones)))
+  (def inst     (new <instrument>
+                  instrument-name     name
+                  instrument-version  version
+                  instrument-tone-map tone-map))
+  (do (fun (t) (set (elt tone-map (tone-key t)) t)) tones)
+  (add! $instruments inst))
 
 (df fab-tone (name key pitch)
-  (isa <tone> 
-    (set tone-name  name)
-    (set tone-key   key)
-    (set tone-pitch pitch)))
+  (new <tone> tone-name name tone-key key tone-pitch pitch))
 
 (dv $zero-tone (fab-tone 'zero $zero-tone-key 0))
 
@@ -54,17 +51,17 @@
                      `(lst ',name ,key ,pitch)))
               tones)))
     `(register-instrument ',inst-name ,version
-       (map (fun (tone-args) (apply fab-tone tone-args)) (lst ,@tone-inits)))))
+       (map (fun (tone-args) (app fab-tone tone-args)) (lst ,@tone-inits)))))
 
-(dm find-instrument ((name <sym>) => (false-or <instrument>))
-  (lab ret
+(dm find-instrument (name|<sym> => (t? <instrument>))
+  (esc ret
     (for ((inst $instruments))
       (when (== (instrument-name inst) name)
         (ret inst)))))
 
-(dm percussion-pitch ((name <str>) => (false-or <int>))
-  (let ((mi (find-midi-percussion name)))
-    (and mi (midi-number mi))))
+(dm percussion-pitch (name|<str> => (t? <int>))
+  (def mi (find-midi-percussion name))
+  (and mi (midi-number mi)))
 
 (def-instrument djembe 1
   (bass #\B (percussion-pitch "Hi Bongo"))

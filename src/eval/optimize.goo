@@ -7,36 +7,36 @@
 
 (dv <type> <any>)
 
-(dm subtype? ((x <type>) (y <type>) => <log>)
+(dm subtype? (x|<type> y|<type> => <log>)
   (isa? x y))
 
 (dm sorted-applicable-methods-using-types
-    ((methods <met-seq>) (arg-types <arg-seq>) => (tup <met-seq> <met-seq>))
-  (let ((leading-sorted '())
-        (others         '()))
-    (loc ((merge-method (m sorted)
-            (if (empty? sorted)
-                (loc ((after-m? (other-m)
-                         (method-precedes? m other-m arg-types)))
-                  (if (all? after-m? others)
-                      (lst m)
-                      (seq (pushf others m) '())))
-                (let ((lead (head sorted)))
-                  (select (method-relationship m lead arg-types)
-                    (($method1-precedes) 
-                     (pair m sorted))
-                    (($method2-precedes)
-                     (pair lead (merge-method m (tail sorted))))
-                    (($methods-unordered)
-                     ;; Unordered methods are no use to us, so abandon 
-                     ;; everything from here on.
-                     (set others (pair m (cat sorted others)))
-                     '()))))))
-      (for ((m methods))
-        (when (arguments-potentially-joint?
-               arg-types (fun-specs m) (fun-arity m))
-          (opf leading-sorted (merge-method m _)))))
-  (tup leading-sorted others)))
+    (methods|<met-seq> arg-types|<arg-seq> => (tup <met-seq> <met-seq>))
+  (def leading-sorted '())
+  (def others         '())
+  (loc ((merge-method (m sorted)
+          (if (empty? sorted)
+              (loc ((after-m? (other-m)
+                      (method-precedes? m other-m arg-types)))
+                (if (all? after-m? others)
+                    (lst m)
+                    (seq (pushf others m) '())))
+              (let ((lead (head sorted)))
+                (case (method-relationship m lead arg-types)
+                  (($method1-precedes) 
+                   (pair m sorted))
+                  (($method2-precedes)
+                   (pair lead (merge-method m (tail sorted))))
+                  (($methods-unordered)
+                   ;; Unordered methods are no use to us, so abandon 
+                   ;; everything from here on.
+                   (set others (pair m (cat sorted others)))
+                   '()))))))
+    (for ((m methods))
+      (when (arguments-potentially-joint?
+             arg-types (fun-specs m) (fun-arity m))
+        (opf leading-sorted (merge-method m _)))))
+  (tup leading-sorted others))
 
 ;; Determine whether there is some guaranteed ordering between the two
 ;; methods for the given argument type estimates.
@@ -45,41 +45,40 @@
 (dv $method1-precedes  'method1)
 (dv $method2-precedes  'method2)
 
-(dm method-precedes? ((m1 <met>) (m2 <met>) (arg-types <arg-seq>))
+(dm method-precedes? (m1|<met> m2|<met> (arg-types <arg-seq>))
   (== (method-relationship m1 m2 arg-types) $method1-precedes))
 
 ;; This is pretty much as per the DRM specification, but using the
 ;; conservative "xxx" predicates.
 
-(dm method-relationship ((m1 <met>) (m2 <met>) (arg-types <arg-seq>) => <sym>)
-  (let ((specs1              (fun-specs m1))
-        (specs2              (fun-specs m2))
-        (precedes-somewhere? #f)
-        (follows-somewhere?  #f))
-    (for ((arg-type arg-types) (spec1 specs1) (spec2 specs2))
-      (case
-        ((== spec1 spec2) #f)
-        ((preceding-specializer? spec1 spec2 arg-type)
-         (unless (subtype? spec2 spec1) (set precedes-somewhere? #t)))
-        ((preceding-specializer? spec2 spec1 arg-type)
-         (set follows-somewhere? #t))
-        (#t #f)))
-    (if precedes-somewhere?
-        (if follows-somewhere? $methods-unordered $method1-precedes)
-        (if follows-somewhere? $method2-precedes  $methods-unordered))))
+(dm method-relationship (m1|<met> m2|<met> arg-types|<arg-seq> => <sym>)
+  (def specs1              (fun-specs m1))
+  (def specs2              (fun-specs m2))
+  (def precedes-somewhere? #f)
+  (def follows-somewhere?  #f)
+  (for ((arg-type arg-types) (spec1 specs1) (spec2 specs2))
+    (cond
+      ((== spec1 spec2) #f)
+      ((preceding-specializer? spec1 spec2 arg-type)
+       (unless (subtype? spec2 spec1) (set precedes-somewhere? #t)))
+      ((preceding-specializer? spec2 spec1 arg-type)
+       (set follows-somewhere? #t))
+      (#t #f)))
+  (if precedes-somewhere?
+      (if follows-somewhere? $methods-unordered $method1-precedes)
+      (if follows-somewhere? $method2-precedes  $methods-unordered)))
 
 (dg preceding-specializer?
-    ((t1 <type>) (t2 <type>) (arg <type>) => <log>))
+    (t1|<type> t2|<type> arg|<type> => <log>))
 
-(dm preceding-specializer?
-    ((t1 <type>) (t2 <type>) (arg <type>) => <log>)
+(dm preceding-specializer? (t1|<type> t2|<type> arg|<type> => <log>)
   (subtype? t1 t2))
 
 (dm arguments-potentially-joint? 
-    ((arg-types <arg-seq>) (domain-types <arg-seq>) (max <int>) => <log>)
+    (arg-types|<arg-seq> domain-types|<arg-seq> max|<int> => <log>)
   (all2? potentially-joint? arg-types domain-types))
 
-(df potentially-joint? ((t1 <type>) (t2 <type>) => <log>)
+(df potentially-joint? (t1|<type> t2|<type> => <log>)
   ;; Not provably DISjoint.
   ;; (not (guaranteed-disjoint? t1 t2))
   (or (subtype? t1 t2) (subtype? t2 t1)))

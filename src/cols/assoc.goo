@@ -12,27 +12,27 @@
 ;;;;!! Interface
 (exported
  (dc <assocs> (<map>))
-   (slot <assocs> (assocs-test <fun>) ==)
+   (dp assocs-test (x|<assocs> => <fun>) ==)
 )
 
 ;;;;!! Implementation
-  (slot <assocs> (assocs-keys <lst>) '())
-  (slot <assocs> (assocs-vals <lst>) '())
+  (dp assocs-keys (x|<assocs> => <lst>) '())
+  (dp assocs-vals (x|<assocs> => <lst>) '())
 
 ;;;; Collection protocol
-(dm len ((x <assocs>) => <int>)
+(dm len (x|<assocs> => <int>)
   (len (assocs-keys x)))
 
-(dm elt ((x <assocs>) key => <any>)
-  (rep fnd (((keys <lst>) (assocs-keys x)) ((vals <lst>) (assocs-vals x)))
+(dm elt-or (x|<assocs> key default => <any>)
+  (rep fnd ((keys|<lst> (assocs-keys x)) (vals|<lst> (assocs-vals x)))
     (if (== keys '())
-        nul
+        default
         (if ((assocs-test x) key (head keys))
             (head vals)
             (fnd (tail keys) (tail vals))))))
 
-(dm elt-setter (val (x <assocs>) key)
-  (rep fnd (((keys <lst>) (assocs-keys x)) ((vals <lst>) (assocs-vals x)))
+(dm elt-setter (val x|<assocs> key)
+  (rep fnd ((keys|<lst> (assocs-keys x)) (vals|<lst> (assocs-vals x)))
     (if (== keys '())
         (seq (set (assocs-keys x) (pair key (assocs-keys x)))
              (set (assocs-vals x) (pair val (assocs-vals x)))
@@ -41,7 +41,7 @@
             (set (head vals) val)
             (fnd (tail keys) (tail vals))))))
 
-(dm fab ((c (t= <assocs>)) (s <int>) => <assocs>)
-  (isa <assocs>))
+(dm fab ((c (t= <assocs>)) s|<int> => <assocs>)
+  (new <assocs>))
 
 

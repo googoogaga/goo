@@ -3,107 +3,104 @@
 (use event)
 (use threads)
 
-(dp %timer-create)
-(dp %timer-kill)
-(dp %timer-system-time)
-(dp %timer-event-time)
+(dl %timer-create)
+(dl %timer-kill)
+(dl %timer-system-time)
+(dl %timer-event-time)
 
 (dv <time> <int>)
 
 (dc <timer> (<any>))
-  (slot <timer> (timer-start-time <time>))
-  (slot <timer> (%timer-period <time>))
-  (slot <timer> (timer-callback <fun>)   identity)
-  (slot <timer> (timer-handle <int>)     -1)
-  (slot <timer> (timer-passive? <log>)   #f)
-  (slot <timer> (timer-last-ticks <int>) -1)
-  (slot <timer> (timer-state <sym>)      'stopped)
-  (slot <timer> (timer-event? <log>)     #f)
-  (slot <timer> (timer-event <event>))
+  (dp timer-start-time (x|<timer> => <time>))
+  (dp %timer-period (x|<timer> => <time>))
+  (dp timer-callback (x|<timer> => <fun>)   identity)
+  (dp timer-handle (x|<timer> => <int>)     -1)
+  (dp timer-passive? (x|<timer> => <log>)   #f)
+  (dp timer-last-ticks (x|<timer> => <int>) -1)
+  (dp timer-state (x|<timer> => <sym>)      'stopped)
+  (dp timer-event? (x|<timer> => <log>)     #f)
+  (dp timer-event (x|<timer> => <event>))
 
-(dm timer-stopped? ((x <timer>) => <log>)
+(dm timer-stopped? (x|<timer> => <log>)
   (== (timer-state x) 'stopped))
 
-(dm timer-running? ((x <timer>) => <log>)
+(dm timer-running? (x|<timer> => <log>)
   (== (timer-state x) 'running))
 
 ;; (dv t (fab-timer 1000 cb))
 ;; (timer-start t)
 
-(df cb ((x <timer>)) (format out "TICK %d\n" (timer-ticks x)))
-(df timer-dispatcher ((x <timer>) (max <int>)) 
-  (for ((i (from-below 0 max))) (timer-poll x)))
+(df cb (x|<timer>) (format out "TICK %d\n" (timer-ticks x)))
+(df timer-dispatcher (x|<timer> max|<int>) 
+  (for ((i (below max))) (timer-poll x)))
 
-(dm fab-timer ((period <int>) (callback <fun>) => <timer>)
-  (isa <timer> (set %timer-period period) (set timer-callback callback)))
+(dm fab-timer (period|<int> callback|<fun> => <timer>)
+  (new <timer> %timer-period period timer-callback callback))
 
-(dm timer-system-time ((x <timer>) => <time>)
+(dm timer-system-time (x|<timer> => <time>)
   (%ib (%timer-system-time)))
 
-(df timer-tick ((x <timer>))
+(df timer-tick (x|<timer>)
   (fun () ((timer-callback x) x)))
 
-(dm timer-value ((x <timer>) => <time>)
+(dm timer-value (x|<timer> => <time>)
   (- (timer-system-time x) (timer-start-time x)))
 
-(dm timer-arm ((x <timer>))
+(dm timer-arm (x|<timer>)
   (unless (timer-passive? x)
     (if (timer-event? x)
         (let ((ev (fab-event 'timer))
-              (id (%ib (%timer-event-create 
-                        (%iu (timer-period x)) (%lu (event-handle ev))))))
+               (id (%ib (%timer-event-create 
+                         (%iu (timer-period x)) (%lu (event-handle ev))))))
           (set (timer-event x)  ev)
           (set (timer-handle x) id))
         (let ((id (%ib (%timer-create (%iu (timer-period x)) (timer-tick x)))))
           (set (timer-handle x) id))))
   (set (timer-state x) 'running))
 
-(dm timer-start ((x <timer>))
+(dm timer-start (x|<timer>)
   (unless (timer-running? x)
     (set (timer-start-time x) (timer-system-time x))
     (set (timer-last-ticks x) 0)
     (timer-arm x)))
 
-(dm timer-stop ((x <timer>))
+(dm timer-stop (x|<timer>)
   (unless (timer-stopped? x)
     (unless (timer-passive? x)
       (%timer-kill (%iu (timer-handle x))))
     (set (timer-state x)  'stopped)
     (set (timer-handle x) -1)))
 
-(dm timer-reset ((x <timer>))
+(dm timer-reset (x|<timer>)
   (timer-stop x)
   (timer-start x))
 
 (dv timer-period %timer-period)
 
-(dm timer-period-setter ((z <int>) (x <timer>))
+(dm timer-period-setter (z|<int> x|<timer>)
   (set (%timer-period x) z)
   (unless (timer-stopped? x)
     (timer-stop x)
     (timer-arm x)))
 
-(dm timer-ticks ((x <timer>) => <int>)
-  (1st (truncate/ (timer-value x) (timer-period x))))
+(dm timer-ticks (x|<timer> => <int>)
+  (1st (trunc/ (timer-value x) (timer-period x))))
 
-(dm timer-phase ((x <timer>) => <int>)
-  (modulo (timer-value x) (timer-period x)))
+(dm timer-phase (x|<timer> => <int>)
+  (mod (timer-value x) (timer-period x)))
 
-(dm timer-poll ((x <timer>) => <log>)
+(dm timer-poll (x|<timer> => <log>)
   (and (timer-running? x)
        (> (timer-ticks x) (timer-last-ticks x))
        (seq (set (timer-last-ticks x) (timer-ticks x))
             ((timer-callback x) x)
             #t)))
 
-(dm wait ((e <timer>) (n <int>) => <log>)
+(dm wait (e|<timer> n|<int> => <log>)
   (wait (timer-event e) n))
 
 (dv test-timer
-  (isa <timer>
-    (set timer-period   1000)
-    (set timer-callback cb)
-    (set timer-passive? #f)))
+  (new <timer> timer-period 1000 timer-callback cb timer-passive? #f))
 
 ;; (timer-start timer)
 

@@ -20,24 +20,24 @@
   (%sb (%os-name)))
 
 ;;; Get the value of an environment variable, or the local equivalent.
-(dm os-binding-value ((s <str>) => <str>)
-  (%sb (%os-binding-value (%su s))))
+(dm os-val (s|<str> => <str>)
+  (%sb (%os-val (%su s))))
 
 ;;; Set the value of an environment variable, or the local equivalent.
-(dm os-binding-value-setter ((v <str>) (s <str>) => <str>)
-  (set (%os-binding-value (%su s)) (%su v))
+(dm os-val-setter (v|<str> s|<str> => <str>)
+  (set (%os-val (%su s)) (%su v))
   v)
 
 (export
   os-name
-  os-binding-value
-  os-binding-value-setter)
+  os-val
+  os-val-setter)
 
 ;;;;=======================================================================
 ;;;;  Process Support
 ;;;;=======================================================================
 
-(dp %pid)
+(dl %pid)
 
 (dm process-id ()
   (%ib (%pid)))
@@ -52,12 +52,12 @@
 ;;;;  and Dylan's locators.
 
 (dv *path-separator*
-  (case
+  (cond
     ((= (os-name) "linux") "/")
     ((= (os-name) "win32") "\\")
     (#t "/")))
 
-(dm base-path ((filename <str>) => <str>)
+(dm base-path (filename|<str> => <str>)
   (rep loop ((i (- (len filename) 1)))
     (if (< i 0)
 	""
@@ -65,31 +65,31 @@
 	    (sub filename 0 (+ i 1))
 	    (loop (- i 1))))))
 
-(dv *proto-root*
-  (let ((env-root (os-binding-value "PROTO_ROOT")))
+(dv *goo-root*
+  (let ((env-root (os-val "PROTO_ROOT")))
     (if (empty? env-root)
         ;; Defaults to a path relative to the current working directory.
         (cat (base-path (app-filename)) ".." *path-separator* "..")
         env-root)))
 
 (dm add-src-path (relpath => <str>)
-  (cat *proto-root* *path-separator* "SRC" *path-separator* relpath))
+  (cat *goo-root* *path-separator* "SRC" *path-separator* relpath))
 
 ;; TODO: GET THIS RIGHT ON WIN32
 (dm add-tmp-path (relpath => <str>)
   (cat *path-separator* "tmp" *path-separator* relpath))
 
 (dm add-build-path (builddir relpath => <str>)
-  (cat *proto-root* *path-separator* "C" *path-separator*
+  (cat *goo-root* *path-separator* "C" *path-separator*
        builddir *path-separator* relpath))
 
-(dv *proto-extension* ".proto")
+(dv *goo-extension* ".proto")
 (dv *c-extension* ".c")
 (dv *obj-extension* ".o")
 (dv *exe-extension* "")
 
-(df proto-filename (name)
-  (cat name *proto-extension*))
+(df goo-filename (name)
+  (cat name *goo-extension*))
 
 (df c-filename (name)
   (cat name *c-extension*))
@@ -102,19 +102,19 @@
 
 (export
   *path-separator*
-  *proto-root*
+  *goo-root*
 
   add-src-path
   add-build-path
   add-tmp-path
 
-  *proto-extension*
+  *goo-extension*
   *c-extension*
   *obj-extension*
   *exe-extension*
 
   c-filename
-  proto-filename
+  goo-filename
   exe-filename
   obj-filename
   )
@@ -127,22 +127,22 @@
 
 ;;; Return the last modification time of a file in seconds (relative to the
 ;;; Proto epoch) as a floating point number.
-(dm file-mtime ((filename <str>) => <flo>)
+(dm file-mtime (filename|<str> => <flo>)
   (%fb (%file-mtime (%su filename))))
 
 ;;; Return true if and only if a file (or a directory, etc.) exists with
 ;;; the given name.
-(df file-exists? ((filename <str>) => <log>)
+(df file-exists? (filename|<str> => <log>)
   (%file-exists? (%su filename)))
 
 ;;; Return 'file, 'directory or some other symbol, depending on the type
 ;;; of the file.
-(df file-type ((filename <str>) => <sym>)
+(df file-type (filename|<str> => <sym>)
   (%file-type (%su filename)))
 
 ;;; Create a directory with the given name.  The parent directory must
 ;;; already exist, and must contain no item with the given name.
-(df create-directory ((filename <str>))
+(df create-directory (filename|<str>)
   (%create-directory (%su filename)))
 
 (export
@@ -174,13 +174,13 @@
 ;;; Please port this code to other platforms as needed.
 ;;; TODO - Unix version should handle '//' in the middle of pathnames
 ;;; by reducing it to a single slash, as does the kernel.
-(df pathname-to-components ((pathname <str>) => <lst>)
+(df pathname-to-components (pathname|<str> => <lst>)
   (when (empty? pathname)
     (error "Can't convert empty an pathname to components.\n"))
   (when (== (last pathname) (elt *path-separator* 0))
     (set pathname (sub pathname 0 (- (len pathname) 1))))
   (map (fun (component)
-         (case
+         (cond
            ((= component "") 'root)
            ((= component "..") 'up)
            ((= component ".") 'current)
@@ -188,11 +188,11 @@
        (string-split pathname (elt *path-separator* 0))))
 
 ;;; Reassemble components created by the above function.
-(df components-to-pathname ((components <lst>) => <str>)
+(df components-to-pathname (components|<lst> => <str>)
   (when (empty? components)
     (error "Can't convert empty components to a pathname.\n"))
   (string-join (map (fun (component)
-                      (case
+                      (cond
                         ((== component 'root) "")
                         ((== component 'up) "..")
                         ((== component 'current) ".")
@@ -201,50 +201,50 @@
                *path-separator*))
 
 ;;; Get any leading directory label.
-(df label-components ((components <lst>) => <lst>)
+(df label-components (components|<lst> => <lst>)
   (if (isa? (head components) <lst>)
       (lst (head components))
       '()))
 
 ;;; Get rid of any leading directory label, etc.
-(df hierarchical-components ((components <lst>) => <lst>)
-  (let ((result (if (isa? (head components) <lst>)
-                    (tail components)
-                    components)))
-    (when (empty? result)
-      (error "Hierarchical portion of %= must not be empty.\n" components))
-    result))
+(df hierarchical-components (components|<lst> => <lst>)
+  (def result (if (isa? (head components) <lst>)
+                  (tail components)
+                  components))
+  (when (empty? result)
+    (error "Hierarchical portion of %= must not be empty.\n" components))
+  result)
 
 ;;; Return the last item in a list of components.
-(df components-last ((components <lst>) => <any>)
-  (let ((last (elt components (- (len components) 1))))
-    (when (isa? last <lst>)
-      (error "No filename in %=.\n" components))
-    last))
+(df components-last (components|<lst> => <any>)
+  (def last (elt components (- (len components) 1)))
+  (when (isa? last <lst>)
+    (error "No filename in %=.\n" components))
+  last)
 
 ;;; Return all but the last item of a bunch of components.
 ;;; Do some magic to handle cases like 'foo.txt' => './'
 ;;; If you call this function enough times, you are eventually
 ;;; guaranteed to get components list ending in root, up or current.
 ;;; Requires the last item to be a string.
-(df components-basename ((components <lst>) => <lst>)
-  (let ((label (label-components components))
-        (hier  (hierarchical-components components))
-        (count (len hier))
-        (last  (components-last hier)))
-    (unless (isa? last <str>)
-      (error "Can't compute basename of %=\n." components))
-    (if (== count 1)
-        (cat label '(current))
-        (cat label (sub hier 0 (- count 1))))))
+(df components-basename (components|<lst> => <lst>)
+  (def label (label-components components))
+  (def hier  (hierarchical-components components))
+  (def count (len hier))
+  (def last  (components-last hier))
+  (unless (isa? last <str>)
+    (error "Can't compute basename of %=\n." components))
+  (if (== count 1)
+      (cat label '(current))
+      (cat label (sub hier 0 (- count 1)))))
 
 ;;; Calculate the parent directory of a pathname.
-(df components-parent-directory ((components <lst>) => <lst>)
-  (let ((last (components-last components)))
-    (case
-      ((isa? last <str>) (components-basename components))
-      ((== last 'root) (error "Can't calculate parent of root directory"))
-      (#t (cat components '(up))))))
+(df components-parent-directory (components|<lst> => <lst>)
+  (def last (components-last components))
+  (cond
+    ((isa? last <str>) (components-basename components))
+    ((== last 'root) (error "Can't calculate parent of root directory"))
+    (#t (cat components '(up)))))
 
 (export
   pathname-to-components
@@ -262,27 +262,27 @@
 ;;;;  These operate directly on filenames.
 
 ;;; Find the parent directory of the current filename.
-(df parent-directory ((name <str>) => <str>)
-  (let ((components (pathname-to-components name)))
-    (components-to-pathname (components-parent-directory components))))
+(df parent-directory (name|<str> => <str>)
+  (def components (pathname-to-components name))
+  (components-to-pathname (components-parent-directory components)))
 
 ;;; Make sure that the named directory exists.
-(df probe-directory ((name <str>))
-  (let ((components (pathname-to-components name))
-        (label      (label-components components))
-        (hier       (hierarchical-components components)))
-    (rep ensure ((c hier))
-      (let ((n (components-to-pathname (cat label c))))
-        (case
-          ((file-exists? n)
-           (unless (== (file-type n) 'directory)
-             (error "%s is not a directory.\n" n)))
-          ((isa? (components-last c) <str>)
-           (ensure (components-basename c))
-           (create-directory n))
-          (#t
-           (error "Don't know how to create the directory %s.\n" n)))))
-    #f))
+(df probe-directory (name|<str>)
+  (def components (pathname-to-components name))
+  (def label      (label-components components))
+  (def hier       (hierarchical-components components))
+  (rep ensure ((c hier))
+    (def n (components-to-pathname (cat label c)))
+    (cond
+      ((file-exists? n)
+       (unless (== (file-type n) 'directory)
+         (error "%s is not a directory.\n" n)))
+      ((isa? (components-last c) <str>)
+       (ensure (components-basename c))
+       (create-directory n))
+      (#t
+       (error "Don't know how to create the directory %s.\n" n))))
+  #f)
 
 (export
   parent-directory

@@ -5,46 +5,78 @@
 (exported
  ;; 3.9 TYPES
  <type>        ;; (dc <type> (<any>))
- isa?          ;; (dg isa?     ((x <any>) (t <type>) => <log>))
- subtype?      ;; (dg subtype? ((t1 <type>) (t2 <type>) => <log>))
+ isa?          ;; (dg isa?     (x|<any> t|<type> => <log>))
+ subtype?      ;; (dg subtype? (t1|<type> t2|<type> => <log>))
  
  ;; 3.9.1 SINGLETONS
  <singleton>   ;; (dc <singleton> (<type>))
- type-object   ;; (dg type-object ((x <singleton>) => <any>))
+ type-object   ;; (dg type-object (x|<singleton> => <any>))
  (df t= (x))
 
  ;; 3.9.2 SUBCLASS
  <subclass>    ;; (dc <subclass> (<type>))
- type-class    ;; (dg type-class ((x <subclass>) => <class>))
+ type-class    ;; (dg type-class (x|<subclass> => <class>))
  (df t< (x))
  
  ;; 3.9.3 UNION
  <union>       ;; (dc <union> (<type>))
- type-elts     ;; (dg type-elts ((x <union>) => <seq>))
+ type-elts     ;; (dg type-elts (x|<type> => <seq>))
  (df t+ ((args ...)))
+
+ ;; 3.9.3 PRODUCT
+ (dc <product> (<type>))
+ (dp type-elts (x|<product> => <tup>))
+ (df t* ((args ...)))
 
  ;; 3.9.4 CLASSES
  <class>               ;; (dc <class> (<type>))
- class-name            ;; (dg class-name ((x <class>) => <sym>))
- class-direct-parents  ;; (dg class-direct-parents ((x <class>) => <lst>))
- class-parents         ;; (dg class-parents ((x <class>) => <lst>))
- class-direct-slots    ;; (dg class-direct-slots ((x <class>) => <lst>))
- class-slots           ;; (dg class-slots ((x <class>) => <lst>))
- class-direct-children ;; (dg class-direct-children ((x <class>) => <lst>))
+ class-name            ;; (dg class-name (x|<class> => <sym>))
+ class-parents         ;; (dg class-parents (x|<class> => <lst>))
+ class-ancestors       ;; (dg class-ancestors (x|<class> => <lst>))
+ class-direct-props    ;; (dg class-direct-props (x|<class> => <lst>))
+ class-props           ;; (dg class-props (x|<class> => <lst>))
+ class-descendents     ;; (dg class-descendents (x|<class> => <lst>))
 
- (df false-or (x))
+ (df t? (x))
 
-;; Doesn't belong here probably:
- (dg as ((x <any>) (y <any>) => <any>))
+ ;; Don't belong here:
+ (dg as (x|<any> y|<any> => <any>))
+ (dg len (x|<col> => <int>))
+ (dg 2nd (x|<seq> => <any>))
+ (dg any? (test|<fun> x|<col> => <log>))
+ (dg all2? (test|<fun> x|<col> y|<col> => <log>))
 )
 
 ;; FIXME: should type-elts really be <lst> instead of <seq> and also
 ;; fix compiler to automatically copy optionals.
-(df t+ ((args ...)) (isa <union> (set type-elts (as <lst> args))))
+(df t+ (args|...) (new <union> type-elts (as <lst> args)))
 
-(df t= (x) (isa <singleton> (set type-object x)))
+(df t* (args|...) (new <product> type-elts (as <tup> args)))
 
-(df t< (x) (isa <subclass>  (set type-class x)))
+(dm isa? (o t|<product> => <log>)
+  (and (isa? o <tup>)
+       (== (len o) (len (type-elts t)))
+       (all2? isa? o (type-elts t))))
 
-(df false-or (x) (t+ x (t= #f)))
+(dm subtype? (t1|<product> t2|<type> => <log>) #f)
+
+(dm subtype? (t1|<type> t2|<product> => <log>) #f)
+
+(dm subtype? (t1|<product> t2|<product> => <log>)
+  (and (== (len (type-elts t1)) (len (type-elts t2)))
+       (all2? subtype? (type-elts t1) (type-elts t2))))
+
+(dm subtype? (t1|<product> t2|<class> => <log>)
+  (subtype? <tup> t2))
+
+(dm may-isa? (c|<class> t|<product> => (tup <log> <log>))
+  (def tup?  (== c <tup>))
+  (def some? (and tup? (any? (fun (t) (2nd (may-isa? <any> t))) (type-elts t))))
+  (tup tup? some?))
+
+(df t= (x) (new <singleton> type-object x))
+
+(df t< (x) (new <subclass>  type-class x))
+
+(df t? (x) (t+ x (t= #f)))
 

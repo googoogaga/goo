@@ -1,0 +1,46 @@
+(use boot)
+(use macros)
+(use proto/types)
+(use proto/math)
+(use proto/collections/collection)
+(use proto/collections/sequence)
+
+(exports
+  <accum>
+  (dg accum (t|<type> => <accum>))
+  (dg accum-add (a|<accum> x => <accum>))
+  (dg accum-res (a|<accum> => <any>))
+  accuming-with accuming-in accuming accum-in accum accumed)
+
+;; (dc <accum> (<any>))
+(dv <accum> <any>)
+
+;;; TODO: EASIER TO USE
+
+(dv <lst-accum> <lst>)
+(dm accum-fab ((t (t= <lst>)) => <lst-accum>)
+  '())
+(dm accum-add (a|<lst-accum> x => <lst-accum>)
+  (pair x a))
+(dm accum-res (a|<lst-accum> => <any>)
+  (rev! a))
+
+(ds (accuming-with (,var ,accum) ,@body)
+  `(let ((,var ,accum)) ,@body))
+ 
+(ds (accuming-in ((,name ,type)) ,@body)
+  `(accuming-with ((,name ,type) (accum-fab ,type))
+     ,@body))
+ 
+(ds (accuming ,@body)
+  `(accuming-in ((accum- <lst>)) (seq ,@body (accumed accum-))))
+ 
+(ds (accum-in ,accum ,value)
+  `(opf ,accum (accum-add _ ,value)))
+  
+(ds (accum ,value)
+  `(accum-in accum- ,value))
+  
+(ds (accumed ,name)
+  `(accum-res ,name))
+

@@ -46,21 +46,21 @@
 (dm sexpr-assignment? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-set-tag))
 
-(dm sexpr-assignment-variable ((assn <lst>) => <any>)
+(dm sexpr-assignment-variable (assn|<lst> => <any>)
   (2nd assn))
 
-(dm sexpr-assignment-value ((assn <lst>) => <any>)
+(dm sexpr-assignment-value (assn|<lst> => <any>)
   (3rd assn))
 
 ;; VARIABLE
 
-(dm sexpr-variable-name ((exp <lst>) => <any>)
+(dm sexpr-variable-name (exp|<lst> => <any>)
   (1st exp))
 
 (dm sexpr-variable-name (exp => <any>)
   exp)
 
-(dm sexpr-variable-type ((exp <lst>) => <any>)
+(dm sexpr-variable-type (exp|<lst> => <any>)
   (2nd exp))
 
 (dm sexpr-variable-type (exp => <any>)
@@ -75,7 +75,7 @@
 
 (dv $sexpr-quasiquote-tag 'quasiquote)
 
-(dm sexpr-definition-variable ((defn <lst>) => <any>)
+(dm sexpr-definition-variable (defn|<lst> => <any>)
   (2nd defn))
 
 (dm sexpr-definition-value (defn => <any>)
@@ -88,7 +88,7 @@
 
 (dv $sexpr-macro-tag 'mac)
 
-(dm sexpr-syntax-definition-variable ((defn <lst>) => <any>)
+(dm sexpr-syntax-definition-variable (defn|<lst> => <any>)
   (1st (head (tail defn))))
 
 (dm sexpr-syntax-definition-value (defn => <any>)
@@ -111,34 +111,86 @@
   (sexpr-tagged-list? exp $sexpr-define-generic-tag))
 
 ;; (df foo (x ...) form ...)
-(dm sexpr-function-definition-variable ((defn <lst>) => <any>)
+(dm sexpr-function-definition-variable (defn|<lst> => <any>)
   (2nd defn))
 
-(dm sexpr-forward-primitive? ((defn <lst>) => <log>)
+(dm sexpr-forward-primitive? (defn|<lst> => <log>)
   (= (len defn) 2))
 
-(dm sexpr-signature-parameters ((signature <lst>) => <lst>)
-  (let ((values-spec-index (pos signature '=>)))
-    (if (== values-spec-index nul)
-	signature
-	(sub signature 0 values-spec-index))))
+(dm sexpr-signature-parameters (signature|<lst> => <lst>)
+  (def values-spec-index (pos signature '=>))
+  (if values-spec-index
+      (sub signature 0 values-spec-index)
+      signature))
 
-(dm sexpr-signature-value ((signature <lst>) => <any>)
-  (let ((values-spec-index (pos signature '=>)))
-    (if (== values-spec-index nul)
-	#f
-        (let ((value (elt signature (+ values-spec-index 1))))
-	  (if (sexpr-tagged-list? value 'tup)
-              '<tup>
-	      value)))))
+(dm sexpr-signature-value (signature|<lst> => <any>)
+  (def values-spec-index (pos signature '=>))
+  (and values-spec-index
+       (let ((value (elt signature (+ values-spec-index 1))))
+         (if (sexpr-tagged-list? value 'tup)
+             '<tup>
+             value))))
 
+;; convert from vertical bar type syntax to list syntax
+;; (dm as-signature ((sig <lst>) => <lst>)
+;;   (if (== (pos sig $vert) nul)
+;;       sig
+;;       (rep loop ((r '()) (p sig))
+;;         (if (empty? p)
+;;             (rev! r)
+;;             (let ((name (head p))
+;;                   (rest (tail p)))
+;;               (if (isa? name <lst>)
+;;                   (loop (pair name r) rest)
+;;                   (if (== (head rest) $vert)
+;;                       (loop (pair (lst name (head (tail rest))) r)
+;;                             (tail (tail rest)))
+;;                       (loop (pair name r) rest))))))))
+              
+;; (dv $vert (as <sym> "|"))
+
+;; (dm vert-sig? (sig|<lst> depth|<int> => <log>)
+;;   (and (< depth 2)
+;;        (rep loop ((sig sig))
+;;          (if (empty? sig)
+;;              #f
+;;              (let ((e (head sig))) 
+;;                (or (== e $vert)
+;;                    (and (sexpr-tagged-list? e 'tup) (vert-sig? e (+ depth 1)))
+;;                    (loop (tail sig))))))))
+;;                 
+;; 
+;; (dm as-sig (sig|<lst> depth|<int> => <lst>)
+;;   (if (> depth 1)
+;;       sig
+;;       (rep loop ((r '()) (p sig))
+;;         (if (empty? p)
+;;             (rev! r)
+;;             (let ((name (head p))
+;;                   (rest (tail p)))
+;;               (if (isa? name <lst>)
+;;                   (let ((e (if (== (head name) 'tup) 
+;;                                (as-sig name (+ depth 1))
+;;                                name)))
+;;                     (loop (pair e r) rest))
+;;                   (if (== (head rest) $vert)
+;;                       (loop (pair (lst name (head (tail rest))) r)
+;;                             (tail (tail rest)))
+;;                       (loop (pair name r) rest))))))))
+;;               
+;; (dm as-signature (sig|<lst> => <lst>)
+;;   (if (vert-sig? sig 0) (as-sig sig 0) sig))
+              
+(df as-signature (sig|<lst> => <lst>)
+  sig)
+              
 (dm sexpr-function-signature (defn => <lst>)
-  (3rd defn))
+  (as-signature (3rd defn)))
 
 (dm sexpr-function-parameters (defn => <lst>)
   (sexpr-signature-parameters (sexpr-function-signature defn)))
 
-(dm sexpr-function-value (defn => <lst>)
+(dm sexpr-function-value (defn => <any>)
   (sexpr-signature-value (sexpr-function-signature defn)))
 
 (dm sexpr-function-body (defn => <any>)
@@ -156,27 +208,25 @@
 (dm sexpr-method? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-method-tag))
 
-;; TODO: POSITION DEFINED BUT NAMED POS
+(dm sexpr-method-signature (method-exp|<lst> => <lst>)
+  (as-signature (2nd method-exp)))
 
-(dm sexpr-method-signature ((method-exp <lst>) => <lst>)
-  (2nd method-exp))
-
-(dm sexpr-method-parameters ((method-exp <lst>) => <lst>)
+(dm sexpr-method-parameters (method-exp|<lst> => <lst>)
   (sexpr-signature-parameters (sexpr-method-signature method-exp)))
 
-(dm sexpr-method-value ((method-exp <lst>) => <any>)
+(dm sexpr-method-value (method-exp|<lst> => <any>)
   (sexpr-signature-value (sexpr-method-signature method-exp)))
 
-(dm sexpr-method-body ((method-exp <lst>) => <lst>)
+(dm sexpr-method-body (method-exp|<lst> => <lst>)
   (tail (tail method-exp)))
 
 ;; TODO: RENAME LIST TO LST
 
 (dm sexpr-make-anonymous-method 
-    ((parameters <lst>) (body <lst>) => <lst>)
+    (parameters|<lst> body|<lst> => <lst>)
   (cat (lst $sexpr-method-tag) (lst parameters) body))
 
-(dm sexpr-make-method (name (parameters <lst>) (body <lst>) => <lst>)
+(dm sexpr-make-method (name parameters|<lst> body|<lst> => <lst>)
   (cat (lst $sexpr-define-method-tag name parameters) body))
 
 ;;  IF CONDITIONALS
@@ -186,13 +236,13 @@
 (dm sexpr-if? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-if-tag))
 
-(dm sexpr-if-test ((exp <lst>) => <any>)
+(dm sexpr-if-test (exp|<lst> => <any>)
   (2nd exp))
 
-(dm sexpr-if-then ((exp <lst>) => <any>)
+(dm sexpr-if-then (exp|<lst> => <any>)
   (3rd exp))
 
-(dm sexpr-if-else ((exp <lst>) => <any>)
+(dm sexpr-if-else (exp|<lst> => <any>)
   (if (empty? (tail (tail (tail exp)))) ;;cdddr
       #f
       (head (tail (tail (tail exp)))))) ;;cadddr
@@ -202,17 +252,17 @@
 
 ;;  BLOCK
 
-(dv $sexpr-bind-exit-tag 'lab)
+(dv $sexpr-bind-exit-tag 'esc)
 
 (dm sexpr-block? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-bind-exit-tag))
 
 ;; TODO: perhaps second should be 2nd
 
-(dm sexpr-block-name ((exp <lst>) => <any>)
+(dm sexpr-block-name (exp|<lst> => <any>)
   (2nd exp))
 
-(dm sexpr-block-body ((exp <lst>) => <lst>)
+(dm sexpr-block-body (exp|<lst> => <lst>)
   (tail (tail exp)))
 
 ;;  UNWIND-PROTECT
@@ -222,10 +272,10 @@
 (dm sexpr-unwind-protect? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-unwind-protect-tag))
 
-(dm sexpr-unwind-protect-protected-form ((exp <lst>) => <any>)
+(dm sexpr-unwind-protect-protected-form (exp|<lst> => <any>)
   (2nd exp))
 
-(dm sexpr-unwind-protect-cleanup-forms ((exp <lst>) => <any>)
+(dm sexpr-unwind-protect-cleanup-forms (exp|<lst> => <any>)
   (tail (tail exp)))
 
 ;;  MONITOR
@@ -235,7 +285,7 @@
 (dm sexpr-monitor? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-monitor-tag))
 
-(dm sexpr-monitor-expand ((exp <lst>))
+(dm sexpr-monitor-expand (exp|<lst>)
   (mif ((TRY ,options ,handler ,@body) exp)
        (let ((options (if (isa? options <sym>) `((type ,options)) options)))
          (tup (sexpr-monitor-type options)
@@ -246,43 +296,43 @@
        (error "Malformed TRY expression: ~=" exp)))
 
 ;;; Find an option.  Given '((foo 1) (bar 2)) and 'foo, return '(1).
-(df find-option ((options <lst>) (option <sym>) default => <any>)
-  (case
+(df find-option (options|<lst> option|<sym> default => <any>)
+  (cond
     ((empty? options) default)
     ((== option (head (1st options))) (tail (1st options)))
     (#t (find-option (tail options) option default))))
 
-(dm sexpr-monitor-type ((options <lst>) => <any>)
-  (let ((type-list (find-option options 'type '(<condition>))))
-    (mif ((,type) type-list)
-         type
-         (error "Malformed TRY condition type: %=" type-list))))
+(dm sexpr-monitor-type (options|<lst> => <any>)
+  (def type-list (find-option options 'type '(<condition>)))
+  (mif ((,type) type-list)
+       type
+       (error "Malformed TRY condition type: %=" type-list)))
 
 ;; Build an expression which returns an appropriate <handler-info>.
-(dm sexpr-monitor-info ((options <lst>) => <any>)
-  (let ((info (find-option options 'info #f))
-        (description (find-option options 'description #f)))
-    (case
-      ((and info description)
-       (error "TRY may only have one of INFO or DESCRIPTION: %=" options))
-      ;; TODO - Do we want to keep the 'info' option?
-      (info
-       (mif ((,info-expr) info)
-            info-expr
-            (error "Malformed TRY info expression: %=" info)))
-      (description
-       (mif ((,message ,@arguments) description)
-            `(isa <simple-handler-info>
-               (set handler-info-message ,message)
-               (set handler-info-arguments (lst ,@arguments)))
-            (error "Malformed TRY description: %=" description)))
-      (#t '$default-handler-info))))
+(dm sexpr-monitor-info (options|<lst> => <any>)
+  (def info        (find-option options 'info #f))
+  (def description (find-option options 'description #f))
+  (cond
+    ((and info description)
+     (error "TRY may only have one of INFO or DESCRIPTION: %=" options))
+    ;; TODO - Do we want to keep the 'info' option?
+    (info
+     (mif ((,info-expr) info)
+          info-expr
+          (error "Malformed TRY info expression: %=" info)))
+    (description
+     (mif ((,message ,@arguments) description)
+          `(new <simple-handler-info>
+             handler-info-message ,message
+             handler-info-arguments (lst ,@arguments))
+          (error "Malformed TRY description: %=" description)))
+    (#t '$default-handler-info)))
 
-(dm sexpr-monitor-test ((options <lst>) => <lst>)
-  (let ((test-body (find-option options 'test '(#t))))
-    (sexpr-make-anonymous-method '() test-body)))
+(dm sexpr-monitor-test (options|<lst> => <lst>)
+  (def test-body (find-option options 'test '(#t)))
+  (sexpr-make-anonymous-method '() test-body))
 
-(dm sexpr-monitor-body ((body <lst>) => <lst>)
+(dm sexpr-monitor-body (body|<lst> => <lst>)
   (sexpr-make-anonymous-method '() body))
 
 ;;  BEGIN expressions (a.k.a. sequences)
@@ -295,45 +345,45 @@
 (dm sexpr-begin-actions (begin-exp => <lst>)
   (tail begin-exp))
 
-(dm sexpr-last-exp? ((seq <lst>) => <log>)
+(dm sexpr-last-exp? (seq|<lst> => <log>)
   (empty? (tail seq)))
 
-(dm sexpr-first-exp ((seq <lst>) => <any>)
+(dm sexpr-first-exp (seq|<lst> => <any>)
   (head seq))
 
-(dm sexpr-rest-exps ((seq <lst>) => <lst>)
+(dm sexpr-rest-exps (seq|<lst> => <lst>)
   (tail seq))
 
-(dm sexpr-sequence->begin ((seq <lst>) => <any>)
+(dm sexpr-sequence->begin (seq|<lst> => <any>)
   (if (empty? seq)
       seq
       (if (sexpr-last-exp? seq)
 	  (sexpr-first-exp seq)
 	  (sexpr-make-begin seq))))
 
-(dm sexpr-make-begin ((exp <lst>) => <lst>)
+(dm sexpr-make-begin (exp|<lst> => <lst>)
   (pair $sexpr-begin-tag exp))
 
 ;;  Procedure applications -- NO-ARGS? and LAST-OPERAND? added
 (dm sexpr-application? (exp => <log>)
   (and (isa? exp <lst>) (not (empty? exp))))
 
-(dm sexpr-operator ((app <lst>) => <any>)
+(dm sexpr-operator (app|<lst> => <any>)
   (head app))
 
-(dm sexpr-operands ((app <lst>) => <lst>)
+(dm sexpr-operands (app|<lst> => <lst>)
   (tail app))
 
-(dm sexpr-no-operands? ((args <lst>) => <log>)
+(dm sexpr-no-operands? (args|<lst> => <log>)
   (empty? args))
 
-(dm sexpr-first-operand ((args <lst>) => <any>)
+(dm sexpr-first-operand (args|<lst> => <any>)
   (head args))
 
-(dm sexpr-rest-operands ((args <lst>) => <lst>)
+(dm sexpr-rest-operands (args|<lst> => <lst>)
   (tail args))
 
-(dm sexpr-make-application (op (operands <lst>) => <lst>)
+(dm sexpr-make-application (op operands|<lst> => <lst>)
   (cat (lst op) operands))
 
 (dv *unique-name-counter* 0)
@@ -345,7 +395,7 @@
 
 (dv <name> <any>) ;; TODO: (union <str> <sym>)
 
-(dm sexpr-unique-name ((prefix <name>) => <sym>)
+(dm sexpr-unique-name (prefix|<name> => <sym>)
   (as <sym> (cat (as <str> prefix)
 		 (num-to-str (sexpr-new-unique-name-counter!)))))
 
@@ -354,27 +404,36 @@
 ;;         tup-var:    simple-var | (name "...")
 ;;         simple-var: name | (name type)
 
+(dv $sexpr-def-tag 'def)
+
+(dm sexpr-def? (exp => <log>)
+  (sexpr-tagged-list? exp $sexpr-def-tag))
+
+(dm sexpr-def-variable (exp|<lst>) (2nd exp))
+
+(dm sexpr-def-value (exp|<lst>) (3rd exp))
+
 (dv $sexpr-let-tag 'let)
 
 (dm sexpr-let? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-let-tag))
 
-(dm sexpr-let-bound-variables ((let-exp <lst>) => <lst>)
-  (map head (2nd let-exp)))
+(dm sexpr-let-bound-variables (let-exp|<lst> => <lst>)
+  (map (fun (x) (1st (as-signature x))) (2nd let-exp))))
 
-(dm sexpr-let-values ((let-exp <lst>) => <lst>)
-  (map 2nd (2nd let-exp)))
+(dm sexpr-let-values (let-exp|<lst> => <lst>)
+  (map (fun (x) (2nd (as-signature x))) (2nd let-exp)))
 
-(dm sexpr-let-body ((let-exp <lst>) => <any>)
+(dm sexpr-let-body (let-exp|<lst> => <any>)
   (sexpr-sequence->begin (tail (tail let-exp))))
 
 (dm sexpr-let-names+values
-    ((names <lst>) (vals <lst>) => (tup (names <lst>) (values <lst>)))
+    (names|<lst> vals|<lst> => (tup names|<lst> values|<lst>))
   (rep loop ((rnames '()) (rvalues '()) (names names) (vals vals))
     (if (empty? names)
 	(tup (rev! rnames) (rev! rvalues))
 	(let ((name  (head names))
-	      (value (head vals)))
+              (value (head vals)))
 	  (if (and (isa? name <lst>) (== (head name) 'tup))
 	      (let ((tupname
 		     (sexpr-unique-name "tup"))
@@ -389,7 +448,9 @@
 				      (== (head (tail name)) '...))
 				 (inner (pair (lst (head name) '<lst>)
 					      rtnames)
-					(pair (lst 'sub tupname index (lst 'len tupname)) rtvalues)
+					(pair (lst 'sub tupname index 
+                                                   (lst 'len tupname)) 
+                                              rtvalues)
 					(+ index 1) (tail tnames))
 				 (inner (pair name rtnames)
                                         (pair (lst 'elt tupname index)
@@ -400,17 +461,17 @@
 	      (loop (pair name rnames) (pair value rvalues)
 		    (tail names) (tail vals)))))))
 
-(dm sexpr-let->combination ((let-exp <lst>) => <any>)
-  (let ((onames             (sexpr-let-bound-variables let-exp))
-	(ovalues            (sexpr-let-values let-exp))
-	(body               (sexpr-let-body let-exp))
-	((tup names values) (sexpr-let-names+values onames ovalues)))
-    (rep col ((names names) (values values))
-      (if (empty? names)
-	  body
-	  (pair (lst $sexpr-method-tag (lst (head names))
-		     (col (tail names) (tail values)))
-		(lst (head values)))))))
+(dm sexpr-let->combination (let-exp|<lst> => <any>)
+  (def onames             (sexpr-let-bound-variables let-exp))
+  (def ovalues            (sexpr-let-values let-exp))
+  (def body               (sexpr-let-body let-exp))
+  (def (tup names values) (sexpr-let-names+values onames ovalues))
+  (rep col ((names names) (values values))
+    (if (empty? names)
+        body
+        (pair (lst $sexpr-method-tag (lst (head names))
+                   (col (tail names) (tail values)))
+              (lst (head values))))))
 
 ;;  LOC -- (loc ((?var (?param ...) ?body) ...) ?body)
 
@@ -419,21 +480,21 @@
 (dm sexpr-loc? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-locals-tag))
 
-(dm sexpr-loc-bound-names ((loc-exp <lst>) => <lst>)
+(dm sexpr-loc-bound-names (loc-exp|<lst> => <lst>)
   (map 1st (2nd loc-exp)))
 
-(dm sexpr-loc-bound-signatures ((loc-exp <lst>) => <lst>)
-  (map 2nd (2nd loc-exp)))
+(dm sexpr-loc-bound-signatures (loc-exp|<lst> => <lst>)
+  (map (fun (x) (as-signature (2nd x))) (2nd loc-exp)))
 
 ;; COMPOSE DEFINED
 
-(dm sexpr-loc-bound-bodies ((loc-exp <lst>) => <lst>)
+(dm sexpr-loc-bound-bodies (loc-exp|<lst> => <lst>)
   (map (compose tail tail) (2nd loc-exp)))
 
-(dm sexpr-loc-raw-body ((loc-exp <lst>) => <lst>)
+(dm sexpr-loc-raw-body (loc-exp|<lst> => <lst>)
   (tail (tail loc-exp)))
 
-(dm sexpr-loc-body ((loc-exp <lst>) => <any>)
+(dm sexpr-loc-body (loc-exp|<lst> => <any>)
   (sexpr-sequence->begin (sexpr-loc-raw-body loc-exp)))
 
 (dv $sexpr-iterate-tag 'rep)
@@ -442,33 +503,34 @@
 (dm sexpr-iterate? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-iterate-tag))
 
-(dm sexpr-iterate-name ((rep-exp <lst>) => <sym>)
+(dm sexpr-iterate-name (rep-exp|<lst> => <sym>)
   (2nd rep-exp))
 
 (dv $sexpr-values-tag '=>)
 
-(dm sexpr-iterate-signature ((rep-exp <lst>) => <lst>)
-  (let ((sig (3rd rep-exp)))
-    (cat (map 1st (sexpr-signature-parameters sig))
-	 (if (sexpr-signature-value sig)
-	     '()
-	     (lst $sexpr-values-tag))
-	 (lst (sexpr-signature-value sig)))))
+(dm sexpr-iterate-signature (rep-exp|<lst> => <lst>)
+  (def sig (3rd rep-exp))
+  (cat (map (fun (x) (1st (as-signature x)))
+            (sexpr-signature-parameters sig))
+       (if (sexpr-signature-value sig)
+           '()
+           (lst $sexpr-values-tag))
+       (lst (sexpr-signature-value sig))))
 
-(dm sexpr-iterate-inits ((rep-exp <lst>) => <lst>)
-  (map 2nd (3rd rep-exp)))
+(dm sexpr-iterate-inits (rep-exp|<lst> => <lst>)
+  (map (fun (x) (2nd (as-signature x))) (3rd rep-exp)))
 
-(dm sexpr-iterate-body ((rep-exp <lst>) => <lst>)
+(dm sexpr-iterate-body (rep-exp|<lst> => <lst>)
   (tail (tail (tail rep-exp))))
 
-(dm sexpr-iterate->loc ((rep-exp <lst>) => <lst>)
-  (let ((name  (sexpr-iterate-name rep-exp))
-	(sig   (sexpr-iterate-signature rep-exp))
-	(body  (sexpr-iterate-body rep-exp))
-	(inits (sexpr-iterate-inits rep-exp)))
-    (lst $sexpr-locals-tag
-	  (lst (cat (lst name sig) body))
-	  (cat (lst name) inits))))
+(dm sexpr-iterate->loc (rep-exp|<lst> => <lst>)
+  (def name  (sexpr-iterate-name rep-exp))
+  (def sig   (sexpr-iterate-signature rep-exp))
+  (def body  (sexpr-iterate-body rep-exp))
+  (def inits (sexpr-iterate-inits rep-exp))
+  (lst $sexpr-locals-tag
+       (lst (cat (lst name sig) body))
+       (cat (lst name) inits)))
 
 ;;  ISA
 
@@ -477,16 +539,16 @@
 (dm sexpr-isa? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-isa-tag))
 
-(dm sexpr-isa-parent ((exp <lst>) => <any>)
+(dm sexpr-isa-parent (exp|<lst> => <any>)
   (2nd exp))
 
-(dm sexpr-isa-slot-inits ((exp <lst>) => <lst>)
+(dm sexpr-isa-prop-inits (exp|<lst> => <lst>)
   (tail (tail exp)))
 
-(dm sexpr-isa-init-slots ((exp <lst>) => <lst>)
+(dm sexpr-isa-init-props (exp|<lst> => <lst>)
   (map 2nd exp))
 
-(dm sexpr-isa-init-values ((exp <lst>) => <lst>)
+(dm sexpr-isa-init-values (exp|<lst> => <lst>)
   (map 3rd exp))
 
 ;;  DC
@@ -496,39 +558,54 @@
 (dm sexpr-define-class? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-define-class-tag))
 
-(dm sexpr-define-class-parents ((exp <lst>) => <lst>)
+(dm sexpr-define-class-parents (exp|<lst> => <lst>)
   (3rd exp))
 
-;;  SLOT
+;;  PROP
 
-(dv $sexpr-slot-tag 'slot)
+;; (dp point-x (x|<point> => <int>) 0)
 
-(dm sexpr-slot? (exp => <log>)
-  (sexpr-tagged-list? exp $sexpr-slot-tag))
+(dv $sexpr-prop-tag 'dp)
 
-(dm sexpr-slot-object ((exp <lst>) => <any>)
+(dm sexpr-prop? (exp => <log>)
+  (sexpr-tagged-list? exp $sexpr-prop-tag))
+
+(dm sexpr-prop-name (exp|<lst> => <sym>)
   (2nd exp))
 
-(dm sexpr-slot-variable ((exp <lst>) => <any>)
-  (3rd exp))
+(dm sexpr-prop-owner (exp|<lst> => <any>)
+  (def param (1st (sexpr-function-parameters exp)))
+  (if (isa? param <lst>)
+      (2nd param)
+      param))
 
-(dm sexpr-slot-init ((exp <lst>) => <any>)
-  (if (= (len exp) 4)
-      (elt exp 3)
-      'Nul)) ;; TODO: INCORRECT -- WILL CAUSE CIRCULARITIES
+(dm sexpr-prop-init-var (exp|<lst> => <any>)
+  (def param (1st (sexpr-function-parameters exp)))
+  (if (isa? param <lst>)
+      (1st param)
+      '_x))
 
-(dm sexpr-make-getter (name type => <lst>)
+(dm sexpr-prop-type (exp|<lst> => <any>)
+  (sexpr-function-value exp))
+
+(dm sexpr-prop-init? (exp|<lst> => <log>)
+  (= (len exp) 4))
+
+(dm sexpr-prop-init (exp|<lst> => <any>)
+  (elt exp 3))
+
+(dm sexpr-fab-getter (name type => <lst>)
   (sexpr-make-method 
    name (lst (lst '_x type)) 
-   (lst (lst 'slot-value '_x name))))
+   (lst (lst 'prop-value '_x name))))
 
-(dm sexpr-make-setter (name type slot-type => <lst>)
+(dm sexpr-fab-setter (name type prop-type => <lst>)
   (sexpr-make-method
-    (sexpr-make-setter-name name)
-    (lst (lst '_z slot-type) (lst '_x type))
-    (lst (lst 'slot-value-setter '_z '_x name))))
+    (sexpr-fab-setter-name name)
+    (lst (lst '_z prop-type) (lst '_x type))
+    (lst (lst 'prop-value-setter '_z '_x name))))
 
-(dm sexpr-make-setter-name (name => <sym>)
+(dm sexpr-fab-setter-name (name => <sym>)
   (as <sym> (cat (as <str> name) "-setter")))
 
 ;; BACKQUOTE
@@ -556,14 +633,14 @@
 (dv *bq-clobberable* 'bq-clobberable)
 (dv *bq-quote*       'bq-quote)
 
-(df sexpr-expand-backquote ((x <lst>) => <lst>)
+(df sexpr-expand-backquote (x|<lst> => <lst>)
   (eval (sexpr-build-backquote-expander x) 'proto))
 
-(dm sexpr-build-backquote-expander ((x <lst>) => <lst>)
-  (let ((raw-result (bq-process x))
-	(res        (bq-remove-tokens raw-result)))
-    ;; (format-out "RES = %=\n" res)
-    res))
+(dm sexpr-build-backquote-expander (x|<lst> => <lst>)
+  (def raw-result (bq-process x))
+  (def res        (bq-remove-tokens raw-result))
+  ;; (format-out "RES = %=\n" res)
+  res)
 
 (dm sexpr-unquote? (x => <log>)
   (sexpr-tagged-list? x 'unquote))
@@ -577,11 +654,11 @@
 (dm sexpr-atom? (x => <log>)
   (or (not (isa? x <lst>)) (== x '())))
 
-(dm nreconc ((x <lst>) (y <lst>) => <lst>)
+(dm nreconc (x|<lst> y|<lst> => <lst>)
   (cat! (rev! x) y))
 
 (dm bq-process (x => <any>)
-  (case ((sexpr-atom? x)
+  (cond ((sexpr-atom? x)
 	 (lst *bq-quote* x))
         ((sexpr-backquote? x)
 	 (bq-process (sexpr-build-backquote-expander (head (tail x)))))
@@ -590,7 +667,7 @@
 	((sexpr-unquote-splicing? x)
 	 (error "UNQUOTE-SPLICING %= AFTER BQ" (head (tail (x)))))
 	(#t
-	 (lab return
+	 (esc return
 	   (rep loop ((p x) (q '()))
 	     (if (sexpr-atom? p)
 		 (return (pair *bq-append*
@@ -606,7 +683,7 @@
 		      (loop (tail p) (pair (bracket (head p)) q)))))))))
 
 (dm bracket (x => <any>)
-  (case ((sexpr-atom? x)
+  (cond ((sexpr-atom? x)
 	 (lst *bq-list* (bq-process x)))
         ((sexpr-unquote? x)
 	 (lst *bq-list* (head (tail x))))
@@ -615,17 +692,17 @@
 	(#t
 	 (lst *bq-list* (bq-process x)))))
 
-(dm map-tree ((fn <fun>) x => <any>)
+(dm map-tree (fn|<fun> x => <any>)
   (if (sexpr-atom? x)
       (fn x)
       (let ((a (fn (head x)))
-	    (d (map-tree fn (tail x))))
+            (d (map-tree fn (tail x))))
 	(if (and (= a (head x)) (= d (tail x)))
 	    x
 	    (pair a d)))))
 
 (dm bq-remove-tokens (x)
-  (case ((== x *bq-list*)   'lst)
+  (cond ((== x *bq-list*)   'lst)
         ((== x *bq-append*) 'cat)
 	((== x *bq-nconc*)  'cat!)
 	((== x *bq-list**)  'list*)
@@ -645,28 +722,27 @@
 (dm sexpr-syntax-if? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-syntax-if-tag))
 
-(dm sexpr-syntax-if-value ((exp <lst>) => <any>)
+(dm sexpr-syntax-if-value (exp|<lst> => <any>)
   (2nd (2nd exp)))
 
-(dm sexpr-syntax-if-pattern ((exp <lst>) => <any>)
+(dm sexpr-syntax-if-pattern (exp|<lst> => <any>)
   (1st (2nd exp)))
 
-(dm sexpr-syntax-if-then ((exp <lst>) => <any>)
+(dm sexpr-syntax-if-then (exp|<lst> => <any>)
   (3rd exp))
 
 ;; TODO: DEFAULT ON ELT
 
-(dm sexpr-syntax-if-else ((exp <lst>) => <any>)
-  (let ((alt (elt exp 3)))
-    (if (== alt nul) #f alt)))
+(dm sexpr-syntax-if-else (exp|<lst> => <any>)
+  (elt-or exp 3 #f))
 
 (dm sexpr-pattern-variable? (pat => <log>)
   (or (sexpr-unquote? pat) (sexpr-unquote-splicing? pat)))
 
-(dm sexpr-pattern-variable-name ((pat <lst>) => <any>)
+(dm sexpr-pattern-variable-name (pat|<lst> => <any>)
   (2nd pat))
 
-(dm sexpr-bind-pattern-variables ((pat <lst>) => <lst>)
+(dm sexpr-bind-pattern-variables (pat|<lst> => <lst>)
   (del-dups
     (rep col ((pat pat))
       (if (or (not (isa? pat <lst>)) (empty? pat))
@@ -678,12 +754,12 @@
 
 ;; MACROS
 
-(dm sexpr-make-macro-function ((exp <lst>) => <any>)
-  (let ((mif  (sexpr-make-syntax-if
-	       (sexpr-method-parameters exp) 'exp
-	       (sexpr-sequence->begin (sexpr-method-body exp)) #f))
-	(func (sexpr-make-anonymous-method (lst 'exp) (lst mif))))
-    func))
+(dm sexpr-make-macro-function (exp|<lst> => <any>)
+  (def mif  (sexpr-make-syntax-if
+             (sexpr-method-parameters exp) 'exp
+             (sexpr-sequence->begin (sexpr-method-body exp)) #f))
+  (def func (sexpr-make-anonymous-method (lst 'exp) (lst mif)))
+  func)
 
 (need-implementation
   eval)
@@ -716,15 +792,19 @@
   $sexpr-if-tag
   sexpr-if-test
   sexpr-if-then
-  sexpr-isa-init-slots
+  sexpr-isa-init-props
   sexpr-isa-init-values
   sexpr-isa-parent
-  sexpr-isa-slot-inits
+  sexpr-isa-prop-inits
   $sexpr-isa-tag
   sexpr-iterate->loc
   $sexpr-iterate-tag
-  sexpr-let->combination
+  $sexpr-def-tag
+  sexpr-def?
+  sexpr-def-variable
+  sexpr-def-value
   $sexpr-let-tag
+  sexpr-let->combination
   sexpr-loc-bound-bodies
   sexpr-loc-bound-names
   sexpr-loc-bound-signatures
@@ -734,10 +814,10 @@
   sexpr-make-anonymous-method
   sexpr-make-application
   sexpr-make-begin
-  sexpr-make-getter
+  sexpr-fab-getter
   sexpr-make-macro-function
-  sexpr-make-setter
-  sexpr-make-setter-name
+  sexpr-fab-setter
+  sexpr-fab-setter-name
   sexpr-method-body
   sexpr-method-signature
   $sexpr-method-tag
@@ -751,10 +831,13 @@
   $sexpr-set-tag
   sexpr-signature-parameters
   sexpr-signature-value
-  sexpr-slot-init
-  sexpr-slot-object
-  $sexpr-slot-tag
-  sexpr-slot-variable
+  sexpr-prop-init-var
+  sexpr-prop-init?
+  sexpr-prop-init
+  sexpr-prop-name
+  sexpr-prop-owner
+  sexpr-prop-type
+  $sexpr-prop-tag
   sexpr-syntax-definition-value
   sexpr-syntax-definition-variable
   sexpr-syntax-if-else

@@ -1,12 +1,12 @@
 (def *current-handlers* '())
 
 (def <handler> (isa <any>))
-  (slot <handler> (handler-function <fun>))
+  (dp handler-function (x|<handler> => <fun>))
 
-(dm default-handler ((c <condition>))
+(dm default-handler (c|<condition>)
   #f)
 
-(df make-handler (f)
+(df fab-handler (f)
   (isa <handler> (set handler-function f)))
 
 (df handler-matches? (handler condition)
@@ -14,22 +14,22 @@
 
 (df %with-exception (handler main-fun)
   (blk _unwind-exception_
-    (let ((_original-handlers_ *current-handlers*))
-      (loc ((_handler-function_ (condition _next-handler_)
-	      (set *current-handlers* _original-handlers_)
-	      (blk _resume_
-		(handler condition _resume_)
-		(_next-handler_))))
-	(set *current-handlers*
-             (pair (make-handler _handler-function_) *current-handlers*))
-	(cln (main-fun) (set *current-handlers* _original-handlers_))))))
+    (def _original-handlers_ *current-handlers*)
+    (loc ((_handler-function_ (condition _next-handler_)
+             (set *current-handlers* _original-handlers_)
+             (blk _resume_
+	       (handler condition _resume_)
+               (_next-handler_))))
+      (set *current-handlers*
+           (pair (fab-handler _handler-function_) *current-handlers*))
+      (cln (main-fun) (set *current-handlers* _original-handlers_)))))
 
 (df %sig (condition)
   (itr search ((handlers *current-handlers*))
     (if (empty? handlers)
 	(default-handler condition)
 	(let ((handler (head handlers))
-	      (remaining (tail handlers)))
+              (remaining (tail handlers)))
 	  (if (handler-matches? handler condition)
 	      ((handler-function handler)
 	       condition (fun () (search remaining)))

@@ -1,16 +1,16 @@
 (def <pattern-match-failure> (isa <simple-condition>))
 
-(dm match-error ((message <str>) (args ...))
+(dm match-error (message|<str> args|...)
   ;; (format-out "MATCH ERROR %=\n" message)
   (sig (isa <pattern-match-failure>
 	 (set condition-format-string message)
 	 (set condition-format-arguments args))))
 
-(dm ast-eval-match ((match <match-empty-list>) v (e <environment>))
+(dm ast-eval-match (match|<match-empty-list> v e|<environment>)
   (unless (== v '())
     (match-error "Match Empty Failure of %= on %=\n" v match)))
 
-(dm ast-eval-match ((match <match-list>) v (e <environment>))
+(dm ast-eval-match (match|<match-list> v e|<environment>)
   (if (isa?(v <lst>))
       (itr loop ((v v) (elts (match-elements match)))
 	(unless (empty? elts)
@@ -18,38 +18,35 @@
 	  (loop (tail v) (tail elts))))
       (match-error "Match Failure of %= on %= Expected List\n" v match)))
 
-(dm ast-eval-match ((match <match-atom>) v (e <environment>))
+(dm ast-eval-match (match|<match-atom> v e|<environment>)
   (if (== v '())
       (match-error "Match Failure Empty List on %=\n" match)
       (unless (== v (match-value match))
 	(match-error "Match Failure of %= on %=\n" v match))))
 
-(dm ast-eval-match ((match <match-unquote>) v (e <environment>))
+(dm ast-eval-match (match|<match-unquote> v e|<environment>)
   (if (== v '())
       (match-error "Match Failure Empty List on %=\n" match)
       (set (env-binding-value e (binding-name (match-binding match))) (head v))))
 
-(dm ast-eval-match ((match <match-unquote-splicing>) v (e <environment>))
+(dm ast-eval-match (match|<match-unquote-splicing> v e|<environment>)
   (set (env-binding-value e (binding-name (match-binding match))) v))
 
-(dm ast-eval-match ((match <match-sublist>) v (e <environment>))
+(dm ast-eval-match (match|<match-sublist> v e|<environment>)
   (if (and (isa? v <lst>) (~== v '()))
       (ast-eval-match (match-element match) (head v) e)
       (match-error "Match Failure of %= on %= Expected List\n" 
 		   v match)))
 
-(dm ast-eval ((x <syntax-if>) (env <environment>) => <any>)
-  (let ((value
-	 (ast-eval (sif-value x) env))
-	(bindings
-	 (sif-bindings x))
-	(new-env  
-	 (env-frame!
-	  env (map binding-name bindings) (map (always nul) bindings))))
-    (blk return
-      (mon (fun ((c <condition>) (resume <fun>))
-	     (when (isa? c <pattern-match-failure>)
-	       (return (ast-eval (sif-alternative x) env))))
-	(ast-eval-match (sif-pattern x) value new-env)
-	(ast-eval (sif-consequent x) new-env)))))
+(dm ast-eval (x|<syntax-if> env|<environment> => <any>)
+  (def value (ast-eval (sif-value x) env))
+  (def bindings (sif-bindings x))
+  (def new-env (env-frame!
+                env (map binding-name bindings) (map (always nul) bindings)))
+  (blk return
+    (mon (fun ((c <condition>) (resume <fun>))
+           (when (isa? c <pattern-match-failure>)
+             (return (ast-eval (sif-alternative x) env))))
+      (ast-eval-match (sif-pattern x) value new-env)
+      (ast-eval (sif-consequent x) new-env))))
 

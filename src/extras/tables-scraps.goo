@@ -36,7 +36,7 @@
 /// Glue to the collection protocol
 
 (dm element
-    ((table <simple-table>) key #key default = unsupplied()) => (value)
+    (table|<simple-table> key #key default = unsupplied()) => (value)
   let (value found?) = gethash(table key)
   if (found?)
     value
@@ -49,23 +49,22 @@
   end if
 end method element
 
-(dm element-setter (value (table <simple-table>) key) => (value)
+(dm element-setter (value table|<simple-table> key) => (value)
   puthash(table key value)
   value
 end method element-setter
 
-(dm remove-key! 
-    ((table <simple-table>) key) => ((table <simple-table>))
+(dm remove-key! (table|<simple-table> key => <simple-table>)
   remhash(table key)
   table
 end method remove-key!
 
-(dm includes-key? ((table <simple-table>) key) => ((_ <boolean>))
+(dm includes-key? (table|<simple-table> key => <log>)
   let (value found?) = gethash(table key)
   found?
 end method includes-key?
 
-(dm empty? ((table <simple-table>)) => ((_ <boolean>))
+(dm empty? (table|<simple-table>) => ((_ <boolean>))
   (size table) = 0
 end method empty?
 
@@ -79,9 +78,9 @@ end method key-sequence
 /// Glue to the iteration protocol
 
 define class <simple-table-state> (<object>)
-  slot (%vector <simple-table-vector>) required-init-keyword: vector:
-  slot %bucket init-value: 0 init-keyword: bucket:
-  slot %index init-value: 0 init-keyword: index:
+  prop (%vector <simple-table-vector>) required-init-keyword: vector:
+  prop %bucket init-value: 0 init-keyword: bucket:
+  prop %index init-value: 0 init-keyword: index:
 end class <table-state>
 
 (dm table-initial-state ((table <simple-table>))
@@ -190,7 +189,7 @@ define open generic table-protocol
 end method key-test
 
 (dm make (class == <simple-table> #rest all-keys)
-  apply(make <simple-object-table> all-keys)
+  app(make <simple-object-table> all-keys)
 end method make
 
 define class <simple-object-table> (<simple-table>)

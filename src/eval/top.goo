@@ -15,76 +15,91 @@
 (use proto/collections)
 (use proto/ports)
 
-(dg p2c-eval (exp ct-env))
+(df esctst ()
+  (esc exit 
+    (fin (exit 'exit) 
+         (format out "CLEANUP\n")
+         'cleanup) 
+    (format out "DO\n")
+    'done))
 
-(dm parse-in ((s <str>) ct-env)
+(dg g2c-eval (exp ct-env))
+
+(dm parse-in (s|<str> ct-env)
   (objectify-with-subtransaction (read-from-string s) ct-env #f))
 
-(dm parse ((s <str>) (modname <sym>))
+(dm parse (s|<str> modname|<sym>)
   (parse-in s (runtime-environment modname)))
 
-(dm str-parse-in ((s <str>) ct-env)
+(dm str-parse-in (s|<str> ct-env)
   (format out "%=\n" (parse-in s ct-env)))
 
-(dm str-parse ((s <str>) (modname <sym>))
+(dm str-parse (s|<str> modname|<sym>)
   (str-parse-in s (runtime-environment modname)))
 
 (df ast-run (ast ct-env)
   (ast-evaluate ast))
 
-(df p2c-run (ast ct-env)
-  (p2c-eval ast ct-env))
+(df g2c-run (ast ct-env)
+  (g2c-eval ast ct-env))
 
 (df auto-run (ast ct-env)
   (if (ast-contains-fun? ast)
-      (p2c-run ast ct-env)
+      (g2c-run ast ct-env)
       (ast-run ast ct-env)))
+
+(df auto-eval (form ct-env)
+  (def ast (objectify-with-subtransaction form ct-env #f))
+  (auto-run ast ct-env))
 
 (ddv run auto-run)
 
-(dm eval-in ((x <any>) ct-env)
-  (let ((o (objectify-with-subtransaction x ct-env #f))
-	(e (ast-evaluate o)))
-    e))
+(dm eval-in (x ct-env)
+  (def o (objectify-with-subtransaction x ct-env #f))
+  (def e (ast-evaluate o))
+  e)
 
-(dm eval ((x <any>) (modname <sym>))
+(dm eval (x modname|<sym>)
   (eval-in x (runtime-environment modname)))
 
-(dm str-eval-in ((x <str>) ct-env => <any>)
+(dm str-eval-in (x|<str> ct-env => <any>)
   (write-to-string (eval-in (read-from-string x) ct-env)))
 
-(dm str-eval ((x <str>) (modname <sym>))
+(dm str-eval (x|<str> modname|<sym>)
   (str-eval-in x (runtime-environment modname)))
 
-(dm read-file ((filename <str>) => <any>)
-  (call-with-input-file
-    filename
-    (fun (port)
-      (rep loop ((forms '()))
-	(let ((x (read port)))
-	  (if (eof-object? x)
-	      (sexpr-sequence->begin (rev! forms))
-	      (loop (pair x forms))))))))
+(dm read-file (filename|<str> => <any>)
+  (with-port (port (open <file-in-port> filename))
+    (rep loop ((forms '()))
+      (def x (read port))
+      (if (eof-object? x)
+          (sexpr-sequence->begin (rev! forms))
+          (loop (pair x forms))))))
 
-(dm load-in ((filename <str>) ct-env) 
-  (let ((x (read-file filename))
-	(o (objectify-with-subtransaction x ct-env #f)))
-    (run o ct-env)
-    ;; TODO - Hook me into the new module loader system in a useful way.
-    ;; (report-undefined-global-bindings ct-env)
-    ))
+(dm load-in (filename|<str> ct-env) 
+  (def x (read-file filename))
+  (def o (objectify-with-subtransaction x ct-env #f))
+  (run o ct-env)
+  ;; TODO - Hook me into the new module loader system in a useful way.
+  ;; (report-undefined-global-bindings ct-env)
+  )
 
-(dm load ((filename <str>) (modname <sym>)) 
+(dm load (filename|<str> modname|<sym>) 
   (load-in filename (runtime-environment modname)))
 
-(dm load-from (name (modname <sym>))
-  (load (proto-filename name) modname))
+(dm load-from (name modname|<sym>)
+  (load (goo-filename name) modname))
 
 (dm prompt-for-command-expression (env level prompt)
   (format out "%s %=%s"
           (module-name (find-environment-module env)) level prompt)
-  (force-output out)
-  (read in))
+  (force-out out)
+  (def form (read in))
+  (if (and (isa? form <lst>) (== (head form) 'unquote))
+      (let ((arg-str (gets in))
+            (args    (read-from-string (cat "(" arg-str ")"))))
+        (pair (2nd form) args))
+      form))
 
 (dm print-result-expression (env level label result)
   (format out "%s %=%s"
@@ -94,16 +109,35 @@
 (dm do-stack-frames (fun)
   (%do-stack-frames fun))
 
+(ds (for-frames (,num ,f ,args) ,@body)
+  `(let ((,num 0))
+     (do-stack-frames
+      (fun (,f _args) (def ,args (rev _args)) ,@body (incf ,num)))))
+
 (dm backtrace ()
-  (let ((num 0))
-    (do-stack-frames
-     (fun (f args)
-       (format out "[%=] %= %=\n" num f (rev args)) (inc num))))))
+  (for-frames (num f args)
+    (format out "[%=] %= %=\n" num f args)))
+
+(dm frame (n|<int>)
+  (for-frames (num f args)
+    (when (== n num)
+      (format out "[%=] %= %=\n" num f args))))
+
+(dm frame-var (n|<int> name|<sym>)
+  (esc ret
+    (for-frames (num f args)
+      (when (== n num) 
+        (ret (elt args (pos (fun-names f) name)))))
+    nul))
+
+(dm bt ()
+  (for-frames (num f args)
+    (format out "[%=] %=\n" num f)))
 
 (dc <keyboard-interrupt> (<condition>))
 
 (df keyboard-interrupt ()
-  (sig (isa <keyboard-interrupt>)))
+  (sig (new <keyboard-interrupt>)))
 
 (df do-restart (restarts n)
   (unless restarts
@@ -115,74 +149,85 @@
 ;;  Initialization and driver loop
 ;;  The prompt is handled a bit differently than in the notes
 (dm top-in (level top quit show-restarts? ct-env)
-  (let ((restarts #f))
-    (lab blow
-      (rep loop ()
-        (lab continue
-          (try <condition>
-            (fun (c r)
-              (if (isa? c <keyboard-interrupt>)
-                  (format out "BREAK")
-                  (format out "ERROR: %s" (describe-condition c)))
-              ;; (backtrace (env))
-              (top-in (+ level 1) top quit #t ct-env)
-              (continue #f))
-            (try ((type <restart>)
-                  (description "Return to interpreter level %d" level))
-              (fun (c r) (continue #f))
-              (newline out)
-              (when show-restarts?
-                (format out "Type (restart N) to restart execution:\n")
-                (set restarts (list-handlers <restart> out))
-                (set show-restarts? #f))
-              (let ((form
-                     (prompt-for-command-expression ct-env level "<= ")))
-                (case
-                  ((or (= form '(quit)) (= form (eof-object)))
+  (def restarts #f)
+  (esc blow
+    (rep loop ()
+      (esc continue
+        (try <condition>
+          (fun (c r)
+            (if (isa? c <keyboard-interrupt>)
+                (format out "BREAK")
+                (format out "ERROR: %s" (describe-condition c)))
+            ;; (backtrace (env))
+            (top-in (+ level 1) top quit #t ct-env)
+            (continue #f))
+          (try ((type <restart>)
+                (description "Return to interpreter level %d" level))
+            (fun (c r) (continue #f))
+            (newline out)
+            (when show-restarts?
+              (format out "Type (restart N) to restart execution:\n")
+              (set restarts (list-handlers <restart> out))
+              (set show-restarts? #f))
+            (def form (prompt-for-command-expression ct-env level "<= "))
+            (if (= form (eof-object))
+                (quit #f)
+                (match form
+                  ((quit) 
                    (quit #f))
-                  ((= form '(up))
+                  ((up)
                    (blow #f))
-                  ((= form '(handlers))
+                  ((handlers)
                    (list-handlers <condition> out))
-                  ((= form '(restarts))
+                  ((restarts)
                    (list-handlers <restart> out))
-                  ((mif ((restart ,n) form) #t #f)
-                   (do-restart restarts (2nd form)))
-                  ((mif ((in-mod ,m) form) #t #f)
-                   (let ((new-env (runtime-environment (2nd form))))
-                     (set ct-env new-env)))
-                  ((= form '(p2c-eval))
-                   (set run p2c-run))
-                  ((= form '(ast-eval))
+                  ((restart ,n)
+                   (do-restart restarts n))
+                  ((in ,m)
+                   (def new-env (runtime-environment m))
+                   (set ct-env new-env))
+                  ((g2c-eval)
+                   (set run g2c-run))
+                  ((ast-eval)
                    (set run ast-run))
-                  ((= form '(auto-eval))
+                  ((auto-eval)
                    (set run auto-run))
-                  (#t
-                   (let ((ast (objectify-with-subtransaction form ct-env #f)))
-                     (print-result-expression
-                      ct-env level "=> " (run ast ct-env)))))))))
-        (loop)))))
+                  ((bt)
+                   (bt))
+                  ((backtrace)
+                   (backtrace))
+                  ((frame ,n)
+                   (frame n))
+                  ((frame-var ,n ,name)
+                   (frame-var n name))
+                  (#t 
+                   (def res (auto-eval form ct-env))
+                   (print-result-expression
+                    ct-env level "=> " res)))))))
+      (loop))))
 
-(dm top ((modname <sym>))
-  (lab quit
+(dm top (modname|<sym>)
+  (esc quit
     (try ((type <restart>)
           (description "Exit the top-level interpreter"))
       (fun (c r) (quit #f))
       (rep loop ()
-        (lab top
+        (esc top
           (top-in 0 top quit #f (runtime-environment modname)))
         (loop)))))
 
-(df save-image ((image-name <str>))
+(df save-image (image-name|<str>)
   (unexec image-name (fun () (top 'proto/user))))
 
 (export
   eval
+  auto-eval
   load
   parse-in
   read-file
   top
   do-stack-frames
-  backtrace
+  backtrace bt frame frame-var
   save-image
-  p2c-eval)
+  g2c-eval
+  esctst)

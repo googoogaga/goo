@@ -14,29 +14,29 @@
 
 (dv <dependency-type> <int>)
 
-(df dependency-or ((dep1 <dependency-type>)
-                   (dep2 <dependency-type>)
+(df dependency-or (dep1|<dependency-type>
+                   dep2|<dependency-type>
                    => <dependency-type>)
-  (logior dep1 dep2))
+  (| dep1 dep2))
 
-(df dependency-and ((dep1 <dependency-type>)
-                    (dep2 <dependency-type>)
+(df dependency-and (dep1|<dependency-type>
+                    dep2|<dependency-type>
                     => <dependency-type>)
-  (logand dep1 dep2))
+  (& dep1 dep2))
 
 (dv $empty-dependency 0)
 (dv $all-dependency-types 65535) ;; XXX - Should be all 1 bits.
 
-(df dependency-empty? ((dep <dependency-type>) => <log>)
+(df dependency-empty? (dep|<dependency-type> => <log>)
   (== dep $empty-dependency))
 
-(df dependency-includes-all? ((main <dependency-type>)
-                              (values <dependency-type>)
+(df dependency-includes-all? (main|<dependency-type>
+                              values|<dependency-type>
                               => <log>)
   (== (dependency-and main values) values))
 
-(df dependency-includes-any? ((main <dependency-type>)
-                              (values <dependency-type>)
+(df dependency-includes-any? (main|<dependency-type>
+                              values|<dependency-type>
                               => <log>)
   (not (dependency-empty? (dependency-and main values))))
 
@@ -92,54 +92,53 @@
 ;;; May be depended-upon by a <dependent>.
 (dc <dependable> (<any>))
   ;; A table keyed by <dependent>, containing <dependency-type> values.
-  (slot <dependable> (dependents <tab>) (fab <tab> 4))
+  (dp dependents (x|<dependable> => <tab>) (fab <tab> 4))
 
 ;;; May depend upon a <dependable>.
 (dc <dependent> (<any>))
-  (slot <dependent> (depends-on <tab>) (fab <tab> 20))
+  (dp depends-on (x|<dependent> => <tab>) (fab <tab> 20))
 
 ;;; Log a dependency, together with any type information.
-(df log-dependency ((dependable <dependable>)
-                    (dependent <dependent>)
-                    (dtype <dependency-type>) => #f)
+(df log-dependency (dependable|<dependable>
+                    dependent|<dependent>
+                    dtype|<dependency-type> => #f)
   (set (elt (depends-on dependent) dependable) #t)
-  (let ((dep-table (dependents dependable))
-        (entry     (elt dep-table dependent)))
-    (set (elt dep-table dependent)
-         (if (nul? entry)
-             dtype
-             (dependency-or entry dtype))))
+  (def dep-table (dependents dependable))
+  (def entry     (elt-or dep-table dependent #f))
+  (set (elt dep-table dependent)
+       (if entry
+           (dependency-or entry dtype)
+           dtype))
   #f)
 
 ;;; Look up a dependecy.  Primarily used for testing.
-(df find-dependency ((dependable <dependable>)
-                     (dependent <dependent>)
-                     => <any>) ; (false-or <dependency-type>)
-  (let ((entry (elt (dependents dependable) dependent)))
-    (if (nul? entry) #f entry)))
+(df find-dependency (dependable|<dependable>
+                     dependent|<dependent>
+                     => (t? <dependency-type>))
+  (elt-or (dependents dependable) dependent #f))
 
 ;;; Clobber a single dependent.  'dtype' says which kinds of dependencies
 ;;; have been invalidated.
-(dg invalidate-dependent ((dependent <dependent>)
-                          (dependable <dependable>)
-                          (dtype <dependency-type>)))
+(dg invalidate-dependent (dependent|<dependent>
+                          dependable|<dependable>
+                          dtype|<dependency-type>))
 
 ;;; Clobber all dependents of 'dependable' which rely on any of the
 ;;; bits in 'invalid-dtype'.
-(df invalidate-dependents ((dependable <dependable>)
-                           (invalid-dtype <dependency-type>) => #f)
+(df invalidate-dependents (dependable|<dependable>
+                           invalid-dtype|<dependency-type> => #f)
   (do-keyed
    (fun (dependent dependendent-dtype)
-     (let ((intersection (dependency-and invalid-dtype dependendent-dtype)))
-       (unless (dependency-empty? intersection)
-         (invalidate-dependent dependent dependable intersection))))
+     (def intersection (dependency-and invalid-dtype dependendent-dtype))
+     (unless (dependency-empty? intersection)
+       (invalidate-dependent dependent dependable intersection)))
    (dependents dependable)))
 
 ;;; Remove a dependent from everything it depends upon.
-(df detach-dependent ((dependent <dependent>) => #f)
+(df detach-dependent (dependent|<dependent> => #f)
   (do-keyed
    (fun (dependable junk)
-     (unless (del-key (dependents dependable) dependent)
+     (unless (del (dependents dependable) dependent)
        (error "Cannot remove %= from %=.\n" dependent dependable)))
    (depends-on dependent))
   (set (depends-on dependent) (fab <tab> 0)))

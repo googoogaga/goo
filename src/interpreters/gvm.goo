@@ -13,21 +13,21 @@
   (op-run (fetch-byte)))
 
 (dm fetch-byte ()
-  (let ((byte (elt *code* *pc*))) (inc *pc*) byte))
+  (def byte (elt *code* *pc*)) (incf *pc*) byte)
 
-(dm fetch-bytes ((n <int>))
+(dm fetch-bytes (n|<int>)
   (collecting ()
-    (for ((from-below 0 n))
+    (for ((below n))
       (collect (fetch-byte)))))
 
-(dm instruction-size ((code <vec>) (pc <int>))
+(dm instruction-size (code|<vec> pc|<int>)
   (op-len (elt code pc)))
 
-(dm instruction-decode ((code <vec>) (pc <int>))
+(dm instruction-decode (code|<vec> pc|<int>)
   (loc ((fetch-byte ()
-          (let ((byte (elt code pc))) (inc pc) byte))
+          (def byte (elt code pc)) (incf pc) byte)
         (fetch-bytes (n) 
-          (collecting () (for ((from-below 0 n)) (collect (fetch-byte))))))
+          (collecting () (for ((below n)) (collect (fetch-byte))))))
     (op-decode (fetch-byte))))
 
 ;; TODO: MCASE
@@ -54,11 +54,11 @@
   (+ (len args) 1))
 
 (ds (def-op ,name (,@args) ,n ,@body)
-  `(seq (dm op-run ((opcode ,n))
+  `(seq (dm op-run (opcode|(t= ,n))
           (run-clause ,args ,@body))
-	(dm op-len ((opcode ,n) (code <vec>) (pc <int>))
+	(dm op-len (opcode|(t= ,n) code|<vec> pc|<int>)
           (len-clause ,@args))
-        (dm op-decode ((opcode ,n) (code <vec>) (pc <int>))
+        (dm op-decode (opcode|(t= ,n) code|<vec> pc|<int>)
           (decode-clause ,name ,args))))
 
 (dm disassemble (code)
@@ -77,10 +77,10 @@
 
 (dm stack-push (v)
   (set (elt *stack* *stack-index*) v)
-  (inc *stack-index*))
+  (incf *stack-index*))
 
 (dm stack-pop ()
-  (dec *stack-index*)
+  (decf *stack-index*)
   (elt *stack* *stack-index*) )
 
 (dv quotation-fetch ((i <int>))
@@ -140,10 +140,10 @@
 ;;; CONTROL FLOW OPS
 
 (def-op JMP (offset)
-  (inc *pc* offset))
+  (incf *pc* offset))
 
 (def-op JMP-NOT (x offset)
-  (unless x (inc *pc* offset)))
+  (unless x (incf *pc* offset)))
 
 (def-op ENV-LNK (len)
   )

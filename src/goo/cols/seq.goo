@@ -6,226 +6,251 @@
 
 ;; 3.7.3 SEQUENCES
 
+(df @t? ((x <type>) => <union>) 
+  (new <union> type-elts (@lst x (new <singleton> type-object #f))))
+
 ;;;;!! Interface
 (exported
  ;; defined in boot
  <seq>
  
- ;; NYI EXCEPT FOR LISTS
- (dg add ((x <seq>) (y <any>) => <seq>))
- 
  ;; == (elt x 0)
- (dg 1st ((x <seq>) => <any>))
+ (dg 1st (x|<seq> => <any>))
 
  ;; == (elt x 1)
- (dg 2nd ((x <seq>) => <any>))
+ 2nd ;; (dg 2nd (x|<seq> => <any>)) ;; in types
 
  ;; == (elt x 2)
- (dg 3rd ((x <seq>) => <any>))
+ (dg 3rd (x|<seq> => <any>))
 
  ;; == (elt x (- (len x) 1))
- (dg last ((x <seq>) => <any>))
+ (dg last (x|<seq> => <any>))
 
- ;; finds position of v in x else returns nul.
- (dg pos ((x <seq>) (v <any>) => <any>)) ;; TODO: (false-or <int>)
+ ;; finds position of v in x else returns false.
+ (dg pos (x|<seq> v|<any> => (@t? <int>)))
+
+ ;; finds position of y in x else returns false.
+ (dg finds (x|<seq> y|<seq> => (@t? <int>)))
 
  ;; returns reversed sequence.
- (dg rev ((x <seq>) => <seq>))
+ (dg rev (x|<seq> => <seq>))
 
  ;; returns destructively reversed sequence.
- (dg rev! ((x <seq>) => <seq>))
+ (dg rev! (x|<seq> => <seq>))
 
  ;; returns concatenated sequences.
- (dg cat ((x <seq>) (more ...) => <seq>))
+ (dg cat (x|<seq> more|... => <seq>))
 
  ;; returns destructively concatenated sequences.
- (dg cat! ((x <seq>) (more ...) => <seq>))
+ (dg cat! (x|<seq> more|... => <seq>))
 
  ;; returns two sequences concatenated.
- (dg cat2 ((x <seq>) (y <seq>) => <seq>))
+ (dg cat2 (x|<seq> y|<seq> => <seq>))
 
  ;; subsequence of x between from and below.
- (dg sub ((x <seq>) (from <int>) (below <int>) => <seq>))
+ (dg sub (x|<seq> from|<int> below|<int> => <seq>))
 
  ;; replaces subsequence in range between from and below of dst with
  ;; contents of src.
- (dg sub-setter ((dst <seq>) (src <seq>) (from <int>) (below <int>)))
+ (dg sub-setter (dst|<seq> src|<seq> from|<int> below|<int>))
+
+ ;; inserts e into x below index before
+ (dg ins (x|<seq> e|<any> before|<int> => <seq>))
+ (dg ins! (x|<seq> e|<any> before|<int> => <seq>))
 
  ;; returns new sequence with elements corresponding to those where test
  ;; returns non-false.
- (dg pick ((test <fun>) (x <seq>) => <seq>))
+ (dg pick (test|<fun> x|<seq> => <seq>))
+
+ ;; returns new sequence with elements corresponding to those where test
+ ;; returns non-false.
+ (dg reject (test|<fun> x|<seq> => <seq>))
 
  ;; returns sequence with all v's deleted from x.
- (dg del ((x <seq>) (v <any>)  => <seq>))
+ (dg del-vals (x|<seq> v|<any>  => <seq>))
 
  ;; returns sequence with all duplicates removed.
- (dg del-dups ((x <seq>) => <seq>))
+ (dg del-dups (x|<seq> => <seq>))
 
 
 ;; UNDOCUMENTED:
- (df range-check ((x <seq>) (i <int>)))
+ (df range-check (x|<seq> i|<int>))
 
- (df range-check? ((x <seq>) (i <int>)))
- (df range-error ((x <seq>) (i <int>)))
- (dg vals-to-str ((s <seq>) => <str>))
- (dg add! ((c <seq>) x => <seq>))
- (dg do-key-vals ((fn <fun>) (key-vals <seq>)))
+ (df range-check? (x|<seq> i|<int>))
+ ;; (df range-error (x|<seq> i|<int>))
+ (dg vals-to-str (s|<seq> => <str>))
+ (dg do-key-vals (fn|<fun> key-vals|<seq>))
 )
 
 ;;;;!! Implementation
 
 ;;;; Creation protocol
-(dm as ((d (t< <seq>)) (s <seq>) => <seq>)
-  (alter (fab d (len s)) s))
+(dm as ((d (t< <seq>)) s|<seq> => <seq>)
+  (into (fab d (len s)) s))
 
 ;;;; Collection protocol
 
-(dm alter ((dst <seq>) (src <seq>) => <seq>)
-  (rep in ((ds (ini-state dst)) (ss (ini-state src)))
-    (if (if (fin-state? dst ds) #t (fin-state? src ss))
+(dm key-type (x|<col> => <type>) <int>)
+
+(dm into (dst|<seq> src|<seq> => <seq>)
+  (rep in ((ed (enum dst)) (es (enum src)))
+    (if (or (fin? es) (fin? ed))
         dst
-        (seq (set (now-elt dst ds)  (now-elt src ss))
-             (in (nxt-state dst ds) (nxt-state src ss))))))
+        (seq (set (now ed) (now es))
+             (in (nxt ed) (nxt es))))))
 
 ;;;; Sequence protocol
 
-(dm 1st ((x <seq>) => <any>) (elt x 0))
+(dm 1st (x|<seq> => <any>) (elt x 0))
 
-(dm 2nd ((x <seq>) => <any>) (elt x 1))
+(dm 2nd (x|<seq> => <any>) (elt x 1))
 
-(dm 3rd ((x <seq>) => <any>) (elt x 2))
+(dm 3rd (x|<seq> => <any>) (elt x 2))
 
 ;; TODO: SHOULD USE BACKWARD ITERATION PROTOCOL???
-(dm last ((x <seq>) => <any>) (elt x (- (len x) 1)))
+(dm last (x|<seq> => <any>) (elt x (- (len x) 1)))
 
-(dm pos ((x <seq>) v => <any>) ;; TODO: (false-or <int>)
-  (find-key (fun (a) (== v a)) x))
+(dm pos (x|<seq> v => (@t? <int>))
+  (find-or (fun (a) (== v a)) x #f))
 
-(dm rev ((x <seq>) => <seq>)
-  (rep con ((seq '()) (sta (ini-state x)))
-    (if (fin-state? x sta)
+(dm finds ((x <seq>) (y <seq>) => (@t? <int>))
+  (rep outer ((xsi 0))
+    (if (< xsi (+ (- (len x) (len y)) 1))
+        (rep inner ((xi xsi) (yi 0))
+          (if (and (< xi (len x)) (< yi (len y)))
+              (if (== (elt x xi) (elt y yi))
+                  (inner (+ xi 1) (+ yi 1))
+                  (outer (+ xsi 1)))
+              xsi))
+        #f)))
+
+(dm rev (x|<seq> => <seq>)
+  (rep con ((seq '()) (e (enum x)))
+    (if (fin? e)
         (as-copy x seq)
-        (con (add seq (now-elt x sta)) (nxt-state x sta)))))
+        (con (add seq (now e)) (nxt e)))))
 
 ;; required: rev!
 
-(dm cat ((x <seq>) (ss ...) => <seq>)
-  (reduce cat2 x ss))
+(dm cat (x|<seq> ss|... => <seq>)
+  (fold cat2 x ss))
 
-(dm cat! ((x <seq>) (more ...) => <seq>)
-  (apply cat x more))
+(dm cat! (x|<seq> more|... => <seq>)
+  (app cat x more))
 
-(dm cat2 ((x <seq>) (y <seq>) => <seq>)
-  (rep con-x ((seq '()) (sta (ini-state x)))
-    (if (fin-state? x sta)
-        (rep con-y ((seq seq) (sta (ini-state y)))
-          (if (fin-state? y sta)
+(dm cat2 (x|<seq> y|<seq> => <seq>)
+  (rep con-x ((seq '()) (ex (enum x)))
+    (if (fin? ex)
+        (rep con-y ((seq seq) (ey (enum y)))
+          (if (fin? ey)
               (as-copy x (rev! seq))
-              (con-y (add seq (now-elt y sta)) (nxt-state y sta))))
-        (con-x (add seq (now-elt x sta)) (nxt-state x sta)))))
+              (con-y (add seq (now ey)) (nxt ey))))
+        (con-x (add seq (now ex)) (nxt ex)))))
 
-(dm sub ((x <seq>) (from <int>) (below <int>) => <seq>)
-  (rep con-x ((seq '()) ((i <int>) 0) (sta (ini-state x)))
-    (if (fin-state? x sta)
+(dm sub (x|<seq> from|<int> below|<int> => <seq>)
+  (rep con-x ((seq '()) ((i <int>) 0) (e (enum x)))
+    (if (fin? e)
         (as-copy x (rev! seq))
-        (con-x (if (if (>= i from) (< i below)) (add seq (now-elt x sta)) seq)
-               (+ i 1) (nxt-state x sta)))))
+        (con-x (if (if (>= i from) (< i below)) (add seq (now e)) seq)
+               (+ i 1) (nxt e)))))
 
-(dm sub-setter
-    ((src <seq>) (dst <seq>) (from <int>) (below <int>) => <seq>)
-  (let (((dst-len <int>) (len dst))
-        ((src-len <int>) (len src))
-        ((del-len <int>) (- below from)))
-    (if (= del-len src-len) ;;  Can modify in place?
-        (rep find ((ds (ini-state dst)) (i 0))
+(dm sub-setter (src|<seq> dst|<seq> from|<int> below|<int> => <seq>)
+  (def dst-len|<int> (len dst))
+  (def src-len|<int> (len src))
+  (def del-len|<int> (- below from))
+  (if (= del-len src-len);;  Can modify in place?
+      (rep find ((d (enum dst)) (i 0))
+        (if (= i from)
+            (rep in ((d d) (s (enum src)))
+              (if (fin? s)
+                  dst
+                  (seq (set (now d) (now s)) (in (nxt d) (nxt s)))))
+            (find (nxt d) (+ i 1))))
+      ;; Don't know if dst is stretchy so we have to create a new one
+      (let ((new-len (+ (- dst-len del-len) src-len))
+            (ndst    (fab (object-class dst) new-len)))
+        (rep copy ((nd (enum ndst)) (d (enum dst)) (i 0))
           (if (= i from)
-              (rep in ((ds ds) (ss (ini-state src)))
-                (if (fin-state? src ss)
-                    dst
-                    (seq (set (now-elt dst ds)  (now-elt src ss))
-                         (in (nxt-state dst ds) (nxt-state src ss)))))
-              (find (nxt-state dst ds) (+ i 1))))
-        ;; Don't know if dst is stretchy so we have to create a new one
-        (let ((new-len (+ (- dst-len del-len) src-len))
-              (ndst    (fab (object-class dst) new-len)))
-          (rep copy ((nds (ini-state ndst)) (ds (ini-state dst)) (i 0))
-            (if (= i from)
-                (rep insert ((nds nds) (ss (ini-state src)))
-                  (if (fin-state? src ss)
-                      (rep skip ((ds ds) (i from))
-                        (if (= i below)
-                            (rep onto ((nds nds) (ds ds) (i below))
-                              (if (= i dst-len)
-                                  ndst
-                                  (seq (set (now-elt ndst nds) (now-elt dst ds))
-                                       (onto (nxt-state ndst nds)
-                                             (nxt-state dst ds) (+ i 1)))))
-                            (skip (nxt-state dst ds) (+ i 1))))
-                      (seq (set (now-elt ndst nds) (now-elt src ss))
-                           (insert (nxt-state ndst nds) (nxt-state src ss)))))
-                (seq (set (now-elt ndst nds) (now-elt dst ds))
-                     (copy (nxt-state ndst nds) (nxt-state dst ds) 
-                           (+ i 1)))))))))
+              (rep insert ((nd nd) (s (enum src)))
+                (if (fin? s)
+                    (rep skip ((d d) (i from))
+                      (if (= i below)
+                          (rep onto ((nd nd) (d d) (i below))
+                            (if (= i dst-len)
+                                ndst
+                                (seq (set (now nd) (now d))
+                                     (onto (nxt nd) (nxt d) (+ i 1)))))
+                          (skip (nxt d) (+ i 1))))
+                    (seq (set (now nd) (now s))
+                         (insert (nxt nd) (nxt s)))))
+              (seq (set (now nd) (now d))
+                   (copy (nxt nd) (nxt d) (+ i 1))))))))
 
-(dm pick ((test <fun>) (x <seq>) => <seq>)
-  (rep con ((seq '()) (sta (ini-state x)))
-    (if (fin-state? x sta)
+(dm pick (test|<fun> x|<seq> => <seq>)
+  (rep con ((seq '()) (e (enum x)))
+    (if (fin? e)
         (as-copy x seq)
-        (let ((e (now-elt x sta)))
-          (con (if (test e) (add seq e) seq) (nxt-state x sta))))))
+        (let ((v (now e)))
+          (con (if (test v) (add seq v) seq) (nxt e))))))
 
-(dm del ((s <seq>) x => <seq>)
-  (pick (fun (e) (~== e x)) s))
+(dm reject (test|<fun> x|<seq> => <seq>)
+  (pick (fun (x) (not (test x))) x))
 
-(dm del-dups ((x <seq>) => <seq>)
-  (as-copy x (rev! (reduce (fun (s e) (if (mem? s e) s (pair e s))) '() x))))
+(dm del-vals (s|<seq> x => <seq>)
+  (reject (fun (e) (== e x)) s))
 
+(dm del-dups (x|<seq> => <seq>)
+  (as-copy x (rev! (fold (fun (s e) (if (mem? s e) s (pair e s))) '() x))))
+
+(dm ins (x|<seq> v|<any> before|<int> => <seq>)
+  (rep copy ((r '()) (i 0) (e (enum x)))
+    (if (fin? e)
+        (as-copy x r)
+        (if (= i before)
+            (copy (pair v r) (+ i 1) e)
+            (copy (pair (now e) r) (+ i 1) (nxt e))))))
+
+(dm ins! (x|<seq> v|<any> before|<int> => <seq>)
+  (ins x v before))
 
 ;;;; Undocumented
 
-(dm keys ((d <seq>) => <seq>)
-  (from-below 0 (len d)))
+(dm keys (d|<seq> => <seq>)
+  (below (len d)))
 
-(df range-error ((x <seq>) (i <int>))
-  ;; TODO: REAL CONDITION
-  (error "RANGE ERROR %= %=" x i))
+;; (df range-error (x|<seq> i|<int>)
+;;   ;; TODO: REAL CONDITION
+;;   (error "RANGE ERROR %= %=" x i))
 
-(df range-check ((x <seq>) (i <int>))
+(df range-check (x|<seq> i|<int>)
   (when (or (< i 0) (>= i (len x)))
-    (range-error x i)))
+    (range-error)))
 
-(df range-check? ((x <seq>) (i <int>))
+(df range-check? (x|<seq> i|<int>)
   (and (>= i 0) (< i (len x))))
 
-(dm add-new ((c <seq>) x => <seq>)
+(dm add-new (c|<seq> x => <seq>)
   (unless (mem? c x) (add c x)) 
   c)
 
-(dm add! ((c <seq>) x => <seq>)
-  (add c x))
-
 ;; TODO: DEPRECATED
-(dm into ((dst <seq>) (src <seq>) (from <int>) (below <int>) => <seq>)
-  (rep in ((ds (ini-state dst)) (ss (ini-state src)))
-    (if (if (fin-state? dst ds) #t (fin-state? src ss))
+(dm alter (dst|<seq> src|<seq> from|<int> below|<int> => <seq>)
+  (rep in ((d (enum dst)) (s (enum src)))
+    (if (or (fin? d) (fin? s))
         dst
-        (seq (set (now-elt dst ds)  (now-elt src ss))
-             (in (nxt-state dst ds) (nxt-state src ss))))))
+        (seq (set (now d)  (now s)) (in (nxt d) (nxt s))))))
 
 
-(dm vals-to-str ((s <seq>) => <str>)
-  (reduce (fun (s e) (cat s (if (empty? s) "" " ") (to-str e))) "" s))
+(dm vals-to-str (s|<seq> => <str>)
+  (fold (fun (s e) (cat s (if (empty? s) "" " ") (to-str e))) "" s))
 
-(dm do-key-vals ((fn <fun>) (key-vals <seq>))
-  (rep rep ((s (ini-state key-vals)))
-    (unless (fin-state? key-vals s)
-      (let ((key (now-elt key-vals s))
-            (nxts (nxt-state key-vals s))
-            (val (if (fin-state? key-vals s)
-                     #f
-                     (now-elt key-vals nxts))))
-        (fn key val)
-        (rep (nxt-state key-vals nxts))))))
+(dm do-key-vals (fn|<fun> key-vals|<seq>)
+  (rep rep ((e (enum key-vals)))
+    (unless (fin? e)
+      (def key  (now e))
+      (def nxts (nxt e))
+      (def val  (and (not (fin? e)) (now e)))
+      (fn key val) (rep (nxt e)))))
 
 ;; from range.proto
-(need-implementation from-below)
+(need-implementation below)

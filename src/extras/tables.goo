@@ -71,17 +71,17 @@
 
 (def <simple-table-vector> (isa <any>))
   ;; Number of filled and vacant elements
-  (slot <simple-table-vector> (%vacated <int>) 0)
+  (dp %vacated (x|<simple-table-vector> => <int>) 0)
   ;; Modulus values for primary and secondary hash
-  (slot <simple-table-vector> (%primary-modulus <int>))
-  (slot <simple-table-vector> (%secondary-modulus <int>))
+  (dp %primary-modulus (x|<simple-table-vector> => <int>))
+  (dp %secondary-modulus (x|<simple-table-vector> => <int>))
   ;; Number of buckets and number of elements in each bucket
-  (slot <simple-table-vector> (%n-buckets <int>))
-  (slot <simple-table-vector> (%bucket-depth <int>))
+  (dp %n-buckets (x|<simple-table-vector> => <int>))
+  (dp %bucket-depth (x|<simple-table-vector> => <int>))
   ;; The actual table data representation
-  (slot <simple-table-vector> (%data <simple-object-vector>))
+  (dp %data (x|<simple-table-vector> => <simple-object-vector>))
   ;; GC state
-  (slot <simple-table-vector> %gc-state)
+  (dp gc-state (x|<simple-table-vector> =>)
 
 ;; TODO: SIZE FILL N-BUCKETS BUCKET-DEPTH PRIMARY-MODULUS SECONDARY-MODULUS
 (def fab-table-vector 
@@ -104,7 +104,7 @@
     (new-value (vector <simple-table-vector>) (index <int>)) => (value)
   (set (elt (%data vector) index) new-value))
 
-(dm clr! ((vector <simple-table-vector>) fill)
+(dm zap! ((vector <simple-table-vector>) fill)
   (fill (%data vector) fill)
   (set (%vacated vector) 0))
 
@@ -114,16 +114,16 @@
 
 (def <simple-table> (isa <col>))
   ;; Factor to grow by
-  (slot <simple-table> (table-growth-factor <flo>) 2.0)
+  (dp table-growth-factor (x|<simple-table> => <flo>) 2.0)
   ;; When to grow or shrink (percentage of table size)
-  (slot <simple-table> (table-growth-threshold <flo>) 0.8)
-  (slot <simple-table> (table-shrink-threshold <flo>) 0.5)
-  (slot <simple-table> (%count <int>) 0)
-  (slot <simple-table> (%vector <simple-table-vector>))
+  (dp table-growth-threshold (x|<simple-table> => <flo>) 0.8)
+  (dp table-shrink-threshold (x|<simple-table> => <flo>) 0.5)
+  (dp %count (x|<simple-table> => <int>) 0)
+  (dp %vector (x|<simple-table> => <simple-table-vector>))
 
-(dg hash-protocol ((x <simple-table>) => (test-fun <fun>) (hash-fun <fun>)))
+(dg hash-protocol (x|<simple-table> => test-fun|<fun> hash-fun|<fun>))
 
-(dm hash-protocol ((x <simple-table>) => (test-fun <fun>) (hash-fun <fun>))
+(dm hash-protocol (x|<simple-table> => test-fun|<fun> hash-fun|<fun>)
   (tup == id-hash))
 
 (def $empty-cell-marker (list "empty cell"))
@@ -131,7 +131,7 @@
 
 (df hash-moduli ((hash <int>) (primary <int>) (secondary <int>)
 		 => (index <int>) (offset <int>))
-   (tup (modulo hash primary) (+ (modulo hash secondary) 1)))
+   (tup (mod hash primary) (+ (mod hash secondary) 1)))
 
 (dm fab ((_ <simple-table>) (size <int>) => ())
   (let (((tup n-buckets bucket-depth) (choose-table-geometry size))
@@ -203,7 +203,7 @@
 		  (if (< _i bucket-depth)
 		      (let ((vacancy-index #f)
 			    (this-key (elt vector this-bucket-raw-index)))
-			(case
+			(cond
 			  ;; end of chain and not found
 			  ((== this-key $empty-cell-marker)
 			   (let ((index 
@@ -253,7 +253,7 @@
       ;; Search each bucket
       (itr outer (((probes <int>) 0))
 	(if (< probes (%n-buckets vector))
-	    (let (((index <int>) (* (* bucket-index bucket-depth) 2)))
+	    (let ((index|<int> (* (* bucket-index bucket-depth) 2)))
 	      (itr inner (((_i <int>) 0) ((this-bucket-raw-index <int>) index))
 		(if (< _i bucket-depth)
 		    (let ((this-key (elt vector this-bucket-raw-index)))
@@ -294,7 +294,7 @@
 	(+ b 1)))))
 
 (dm clrhash ((table <simple-table>) => ())
-  (clr! (%vector table) $empty-cell-marker)
+  (zap! (%vector table) $empty-cell-marker)
   (set (%count table) 0))
 
 (dm size ((table <simple-table>) => <int>)
@@ -338,7 +338,7 @@
    ;;--- These numbers are completely arbitrary and need to be tuned up
    (blk return
      (let ((depth
-	    (case
+	    (cond
 	      ((< capacity 2000)    1)
 	      ((< capacity 5000)    2)
 	      ((< capacity 15000)   4)
@@ -346,7 +346,7 @@
 	      ((< capacity 250000) 16)
 	      (#t                  32))))
        (do (fun (p)
-	     (when (> p (ceiling capacity depth))
+	     (when (> p (ceil capacity depth))
 	       (return (tup (+ p 2) depth))))
 	   *twin-primes*)
        (error "Not enough primes to compute new table size"))))
@@ -367,7 +367,7 @@
 	  (itr outer (((probes <int>) 0))
 	    (if (< i new-n-buckets)
 		(let ((bucket-start (* new-bucket-index (* new-bucket-depth 2))))
-		  (itr inner (((_i <int>) 0) ((index <int>) bucket-start))
+		  (itr inner ((_i|<int> 0) (index|<int> bucket-start))
 		    (if (< _i new-bucket-depth)
 			(let ((this-key (elt new-vector index)))
 			  (when (== this-key $empty-cell-marker)

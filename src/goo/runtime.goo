@@ -13,15 +13,15 @@
 (use proto/collections/buffer)
 (use proto/collections/table)
 
-;;; APPLY
+;;; APP
 
-; (df napply ((proc <fun>) nexts (args ...))
+; (df napp (proc|<fun> nexts args|...)
 ;   (if (== (len args) 1)
 ;       (%%apply proc nexts (as <vec> (elt args 0)))
-;       (let (((ilen <int>) (- (len args) 1))
-;             ((lelt <seq>) (elt args ilen))
-;             ((tlen <int>) (+ ilen (len lelt)))
-;             ((out  <vec>) (fab <vec> tlen)))
+;       (let ((ilen|<int> (- (len args) 1))
+;             (lelt|<seq> (elt args ilen))
+;             (tlen|<int> (+ ilen (len lelt)))
+;             (out|<vec>  (fab <vec> tlen)))
 ;         (rep loop ((i 0))
 ;           (if (== i ilen)
 ;               #f
@@ -38,17 +38,17 @@
 
 ;;; MACRO SUPPORT
 
-(df match-empty-list ((x <lst>) (fail <fun>))
+(df match-empty-list (x|<lst> fail|<fun>)
   (if (== x '())
       '()
       (fail "Match Empty Failure of %=" x)))
 
-(df match-unquote ((x <lst>) (fail <fun>))
+(df match-unquote (x|<lst> fail|<fun>)
   (if (== x '())
       (fail "Match Failure Empty List on Unquote")
       (head x)))
 
-(df match-atom ((x <lst>) pat (fail <fun>))
+(df match-atom (x|<lst> pat fail|<fun>)
   (if (== x '())
       (fail "Match Failure Empty List on %=" pat)
       (let ((exp (head x)))
@@ -56,90 +56,93 @@
 	    (tail x)
 	    (fail "Match Failure of %= on %=" exp pat)))))
 
-(df match-sublist ((x <lst>) (fail <fun>))
-  (let ((x (head x)))
-    (if (isa? x <lst>)
-	x
-        (fail "Match Failure on Sub List on %=" x))))
+(df match-sublist (x|<lst> fail|<fun>)
+  (def x (head x))
+  (if (isa? x <lst>)
+      x
+      (fail "Match Failure on Sub List on %=" x)))
 
-(dm make-sym ((x ...)  => <sym>)
-  (as <sym> (reduce (fun (r e) (cat r (to-str e))) "" x)))
+(dm cat-sym (x|...  => <sym>)
+  (as <sym> (fold (fun (r e) (cat r (to-str e))) "" x)))
 
 (dv *gensym-counter* 1000)
 
 (dm gensym (=> <sym>)
-  (make-sym "x-" (inc *gensym-counter*)))
+  (cat-sym "x-" (incf *gensym-counter*)))
 
-(dm make-setter-name ((x <sym>) => <sym>)
-  (make-sym x "-setter"))
+(dm fab-setter-name (x|<sym> => <sym>)
+  (cat-sym x "-setter"))
 
-(dm var-name ((x <sym>)) x)
+(dm var-name (x|<sym>) x)
 
-(dm var-name ((x <lst>)) (elt x 0))
+(dm var-name (x|<lst>) (elt x 0))
 
-(dm var-type ((x <sym>)) '<any>)
+(dm var-type (x|<sym>) '<any>)
 
-(dm var-type ((x <lst>)) (elt x 1))
+(dm var-type (x|<lst>) (elt x 1))
 
 ;;; FUNCTIONAL 
 
 (dm identity (x) x)
 
-(dm compose ((fx <fun>) (fy <fun>) => <fun>)
-  (fun ((args ...)) (fx (apply fy args))))
+(dm compose (fx|<fun> fy|<fun> => <fun>)
+  (fun ((args ...)) (fx (app fy args))))
 
 ;;FIXME:
 ;; the let is to work around compiler bug:
 ;;   it doens't do extent analysis of restargs like it should.
 
-(dm rcurry ((f <fun>) (curried ...) => <fun>)
-  (let ((savedcurried (as <vec> curried)))
-    (fun ((args ...)) (apply f (cat '() args savedcurried)))))
+(dm rcurry (f|<fun> curried|... => <fun>)
+  (def savedcurried (as <vec> curried))
+  (fun ((args ...)) (app f (cat '() args savedcurried))))
 
-(dm curry ((f <fun>) (curried ...) => <fun>)
-  (let ((savedcurried (as <vec> curried)))
-    (fun ((args ...)) (apply f (cat '() savedcurried args)))))
+(dm curry (f|<fun> curried|... => <fun>)
+  (def savedcurried (as <vec> curried))
+  (fun ((args ...)) (app f (cat '() savedcurried args))))
 
 (dm always (x => <fun>)
   (fun ((args ...)) x))
+
+(dm spread (x => <fun>)
+  (fun ((t <tup>)) (app x t)))
 
 ;;; CONDITIONS
 
 (dc <condition> (<any>))
 
-(dm default-handler ((c <condition>))
+(dm default-handler (c|<condition>)
   #f)
 
-(dm describe-condition ((c <condition>) => <str>)
+(dm describe-condition (c|<condition> => <str>)
   (format-to-string "Anonymous condition %=" c))
 
 (dm default-handler-description ((cond-type (t< <condition>)) => <str>)
   (format-to-string "Anonymous handler for %s" cond-type))
 
 (dm build-condition-interactively
-  ((cond-type (t< <condition>)) in out => <condition>)
-  (isa cond-type))
+    ((cond-type (t< <condition>)) in out => <condition>)
+  (new cond-type))
 
 (dc <simple-condition> (<condition>))
-  (slot <simple-condition> (condition-message <str>)   "")
-  (slot <simple-condition> (condition-arguments <lst>) '())
+  (dp condition-message (x|<simple-condition> => <str>)   "")
+  (dp condition-arguments (x|<simple-condition> => <lst>) '())
 
-(dm describe-condition ((c <simple-condition>) => <str>)
-  (apply format-to-string (condition-message c)
+(dm describe-condition (c|<simple-condition> => <str>)
+  (app format-to-string (condition-message c)
                           (condition-arguments c)))
 
 (dm build-condition-interactively
     ((cond-type (t< <simple-condition>)) in out => <condition>)
-  (let ((cond (next-method cond-type in out)))
-    (format out "Condition format string: ")
-    (set (condition-message cond) (read in))
-    (format out "Condition format arguments: ")
-    (set (condition-arguments cond) (read in))
-    cond))
+  (def cond (sup cond-type in out))
+  (format out "Condition format string: ")
+  (set (condition-message cond) (read in))
+  (format out "Condition format arguments: ")
+  (set (condition-arguments cond) (read in))
+  cond)
 
 (dc <serious-condition> (<condition>))
 
-(dm default-handler ((c <serious-condition>))
+(dm default-handler (c|<serious-condition>)
   (format out "%s\n" (describe-condition c))
   (%invoke-debugger c))
 
@@ -167,10 +170,10 @@
   (format-to-string "Anonymous restart of type %s" cond-type))
 
 (dc <incongruent-method-error> (<error>))
-  (slot <incongruent-method-error> (incongruent-method-error-generic <gen>))
-  (slot <incongruent-method-error> (incongruent-method-error-method <met>))
+  (dp incongruent-method-error-generic (x|<incongruent-method-error> => <gen>))
+  (dp incongruent-method-error-method (x|<incongruent-method-error> => <met>))
 
-(dm describe-condition ((c <incongruent-method-error>) => <str>)
+(dm describe-condition (c|<incongruent-method-error> => <str>)
   (format-to-string "Method %= incongruent with generic %=.\n"
                     (incongruent-method-error-method c)
                     (incongruent-method-error-generic c)))
@@ -190,25 +193,25 @@
 ;;;; Handler Info
 ;;;; Debugger-level info used for describing handlers and calling them
 ;;;; interactively.  This probably doesn't need to be an actual class;
-;;;; a few well-chosen slots on <handler> might work better.
+;;;; a few well-chosen props on <handler> might work better.
 
 (dc <handler-info> (<any>))
 
-(dm describe-handler ((info <handler-info>) condition-type => <str>)
+(dm describe-handler (info|<handler-info> condition-type => <str>)
   (default-handler-description condition-type))
 
 (dm build-condition-for-handler-interactively
-  ((info <handler-info>) condition-type in out => <condition>)
+    (info|<handler-info> condition-type in out => <condition>)
   (build-condition-interactively condition-type in out))
 
-(dv $default-handler-info (isa <handler-info>))
+(dv $default-handler-info (new <handler-info>))
 
 (dc <simple-handler-info> (<handler-info>))
-  (slot <simple-handler-info> (handler-info-message <str>))
-  (slot <simple-handler-info> (handler-info-arguments <str>) '())
+  (dp handler-info-message (x|<simple-handler-info> => <str>))
+  (dp handler-info-arguments (x|<simple-handler-info> => <str>) '())
 
-(dm describe-handler ((info <simple-handler-info>) condition-type => <str>)
-  (apply format-to-string
+(dm describe-handler (info|<simple-handler-info> condition-type => <str>)
+  (app format-to-string
          (handler-info-message info)
          (handler-info-arguments info)))
 
@@ -227,42 +230,41 @@
 (dv *current-handlers* '())
 
 (dc <handler> (<any>))
-  (slot <handler> (handler-condition-type (t< <condition>)))
-  (slot <handler> (handler-info <handler-info>))
-  (slot <handler> (handler-test <fun>))
-  (slot <handler> (handler-function <fun>))
+  (dp handler-condition-type (x|<handler> => (t< <condition>)))
+  (dp handler-info (x|<handler> => <handler-info>))
+  (dp handler-test (x|<handler> => <fun>))
+  (dp handler-function (x|<handler> => <fun>))
 
-(df make-handler
-  ((type (t< <condition>)) (info <handler-info>) (test <fun>) (f <fun>)
-   => <handler>)
-  (isa <handler>
-    (set handler-condition-type type)
-    (set handler-info info)
-    (set handler-test test)
-    (set handler-function f)))
+(df fab-handler
+    ((type (t< <condition>)) info|<handler-info> test|<fun> f|<fun> => <handler>)
+  (new <handler>
+    handler-condition-type type
+    handler-info           info
+    handler-test           test
+    handler-function       f))
 
-(df handler-active? ((handler <handler>) => <log>)
+(df handler-active? (handler|<handler> => <log>)
   ((handler-test handler)))
 
-(df handler-matches? ((handler <handler>) (condition <condition>) => <log>)
+(df handler-matches? (handler|<handler> condition|<condition> => <log>)
   (and (isa? condition (handler-condition-type handler))
        (handler-active? handler)))
 
 (df %with-monitor
-  ((type (t< <condition>)) (info <handler-info>) (test-fun <fun>)
-   (user-handler <fun>) (main-fun <fun>))
-  (lab _unwind-exception_
-    (let ((_original-handlers_ *current-handlers*))
-      (loc ((_handler-function_ (condition _next-handler_)
-	      (lab _resume_
-		(user-handler condition _resume_)
-		(_next-handler_))))
-	(pushf *current-handlers*
-               (make-handler type info test-fun _handler-function_))
-	(fin (main-fun) (set *current-handlers* _original-handlers_))))))
+    ((type (t< <condition>)) info|<handler-info> test-fun|<fun>
+     user-handler|<fun> main-fun|<fun>)
+  (esc _unwind-exception_
+    (def _original-handlers_ *current-handlers*)
+    (loc ((_handler-function_ (condition _next-handler_)
+	    (esc _resume_
+              (user-handler condition _resume_)
+              (_next-handler_))))
+      (pushf *current-handlers*
+             (fab-handler type info test-fun _handler-function_))
+      (fin (main-fun) (set *current-handlers* _original-handlers_)))))
 
 ;;; Pass a signal to a list of handlers for processing.
-(df signal-handler-list ((condition <condition>) (handlers <lst>) => <any>)
+(df signal-handler-list (condition|<condition> handlers|<lst> => <any>)
   (if (empty? handlers)
       (default-handler condition)
       (let ((handler (head handlers))
@@ -272,41 +274,39 @@
              condition (fun () (signal-handler-list condition remaining)))
             (signal-handler-list condition remaining)))))
 
-(dm sig ((condition <condition>) (args ...))
+(dm sig (condition|<condition> args|...)
   (signal-handler-list condition *current-handlers*))
 
-(dm sig ((c <str>) (args ...)) 
-  (sig (isa <simple-condition> 
-	 (set condition-message c) (set condition-arguments args))))
+(dm sig (c|<str> args|...) 
+  (sig (new <simple-condition> condition-message c condition-arguments args)))
 
-;; (df error ((message <str>) (args ...))
+;; (df error (message|<str> args|...)
 ;;   (%break (%su message)))
 
-(dm error ((c <error>) (args ...))
+(dm error (c|<error> args|...)
   (sig c))
 
-(dm error ((c <str>) (args ...))
-  (error (isa <simple-error>
-	   (set condition-message c) (set condition-arguments args))))
+(dm error (c|<str> args|...)
+  (error (new <simple-error> condition-message c condition-arguments args)))
 
-(df wrong-number-arguments-error ((fun <fun>) (n <int>))
+(df wrong-number-arguments-error (fun|<fun> n|<int>)
   (error "%= CALLED WITH %= ARGUMENTS EXPECTED %=" fun n (fun-arity fun)))
 
-(df unknown-function-error ((fun <fun>))
+(df unknown-function-error (fun|<fun>)
   (error "UNKNOWN FUNCTION %= CALLED" fun))
 
 (df type-error (arg type)
   (error "TYPE ERROR %= SHOULD BE A %=" arg type))
 
-(df incongruent-method-error ((gen <gen>) (met <met>) => #f)
-  (error (isa <incongruent-method-error>
-           (set incongruent-method-error-generic gen)
-           (set incongruent-method-error-method met))))
+(df incongruent-method-error (gen|<gen> met|<met> => #f)
+  (error (new <incongruent-method-error>
+           incongruent-method-error-generic gen
+           incongruent-method-error-method  met)))
 
 ;;; INTERACTIVE HANDLER MUNGING
 
 ;;; Apply 'f' to all handlers whose type is a subtype of 'type'.
-(df do-handlers-of-type ((type (t< <condition>)) (f <fun>) => #f)
+(df do-handlers-of-type ((type (t< <condition>)) f|<fun> => #f)
   (rep search ((handlers *current-handlers*))
     (if (empty? handlers)
         #f
@@ -322,43 +322,43 @@
 ;;; (indexed from zero).  This allows us to keep track of which handlers
 ;;; correspond to which user-visible numbers.
 (df list-handlers ((type (t< <condition>)) out => <buf>)
-  (let ((i 1)
-        (applicable (fab <buf> 0)))
-    (do-handlers-of-type type
-      (fun (handler)
-        (format out "%d. %s.\n" i
-                (describe-handler (handler-info handler)
-                                  (handler-condition-type handler)))
-        (push-last! applicable handler)
-        (inc i)))
-    applicable))
+  (def i          1)
+  (def applicable (fab <buf> 0))
+  (do-handlers-of-type type
+    (fun (handler)
+      (format out "%d. %s.\n" i
+              (describe-handler (handler-info handler)
+                                (handler-condition-type handler)))
+      (push-last! applicable handler)
+      (incf i)))
+  applicable)
 
 ;;; Attempt to invoke the specified handler directly, bypassing any other
 ;;; handlers "in the way". 
-(df invoke-handler-interactively ((handler <handler>) in out => <any>)
-  (let ((condition
-         (build-condition-for-handler-interactively
-          (handler-info handler) (handler-condition-type handler) in out)))
-    (unless (handler-matches? handler condition)
-      (error "Handler %= does not match condition %=" handler condition))
-    (rep search ((handlers *current-handlers*))
-      (if (empty? handlers)
-          (error "Handler %= is not installed" handler)
-          (let ((current (head handlers))
-                (remaining (tail handlers)))
-            (if (== handler current)
-                ((handler-function handler)
-                 condition (fun () (signal-handler-list condition remaining)))
-                (search remaining)))))))
+(df invoke-handler-interactively (handler|<handler> in out => <any>)
+  (def condition
+    (build-condition-for-handler-interactively
+     (handler-info handler) (handler-condition-type handler) in out))
+  (unless (handler-matches? handler condition)
+    (error "Handler %= does not match condition %=" handler condition))
+  (rep search ((handlers *current-handlers*))
+    (if (empty? handlers)
+        (error "Handler %= is not installed" handler)
+        (let ((current (head handlers))
+              (remaining (tail handlers)))
+          (if (== handler current)
+              ((handler-function handler)
+               condition (fun () (signal-handler-list condition remaining)))
+              (search remaining))))))
 
 ;;; Chose a handler matching 'type', and call it interactively.
 (df choose-handler ((type (t< <condition>)) in out => <any>)
-  (let ((handlers (list-handlers type out)))
-    (format out "Please pick a handler: ")
-    (let ((n (- (read in) 1)))
-      (when (or (< n 0) (>= n (len handlers)))
-        (error "No such handler %d" n))
-      (invoke-handler-interactively (elt handlers n) in out))))
+  (def handlers (list-handlers type out))
+  (format out "Please pick a handler: ")
+  (def n (- (read in) 1))
+  (when (or (< n 0) (>= n (len handlers)))
+    (error "No such handler %d" n))
+  (invoke-handler-interactively (elt handlers n) in out))
 
 ;;; Enable some low-level restarts, now that it's safe to do so.
 (set *restarts-ok?* #t)
@@ -371,13 +371,13 @@
 ;;; LOCATIVES
 
 ;; (dc <loc> (<any>))
-;;   (slot <loc> locative-dat)
+;;   (dp loc-dat (x|<loc> => <any>))
 
-(df locative-value ((x <loc>) => <any>)
-  (%locative-value x))
+(df loc-val (x|<loc> => <any>)
+  (%loc-val x))
 
-(df locative-value-setter (z (x <loc>) => <any>)
-  (set (%locative-value x) z))
+(df loc-val-setter (z x|<loc> => <any>)
+  (set (%loc-val x) z))
 
 ;;; APPLICATION INPUT
 
@@ -387,11 +387,9 @@
 
 (dv symbols (fab <str-tab> 10000))
 
-(dp booted-fab-sym-using (name given-sym)
-  (let ((sym (elt symbols name)))
-    (if (== sym nul)
-	(set (elt symbols name) (or given-sym (isa <sym> (set sym-name name))))
-	sym)))
+(dl booted-fab-sym-using (name given-sym)
+  (or (elt-or symbols name #f)
+      (set (elt symbols name) (or given-sym (new <sym> sym-name name)))))
 
 (df booted-fab-sym (name)
   (booted-fab-sym-using name #f))
@@ -399,7 +397,7 @@
 (df boot-symbols ()
   (rep boot ((syms %symbols))
     (unless (empty? syms)
-      (let ((sym (head syms))) (booted-fab-sym-using (sym-name sym) sym))
+      (def sym (head syms)) (booted-fab-sym-using (sym-name sym) sym)
       (boot (tail syms)))))
 
 (boot-symbols)
@@ -413,15 +411,15 @@
 
 ;; TODO: TEMPORARY EXPORTS
 (export
-  napply
+  napp
   match-empty-list
   match-unquote
   match-atom
   match-sublist
-  make-sym
+  cat-sym
   *gensym-counter*
   gensym
-  make-setter-name
+  fab-setter-name
   var-name
   var-type
   identity
@@ -429,15 +427,16 @@
   rcurry
   curry
   always
-  locative-value
-  locative-value-setter
+  spread
+  loc-val
+  loc-val-setter
   app-filename
   app-args
   sig
   error
   <handler>
   handler-function
-  make-handler
+  fab-handler
   handler-matches?
   %with-monitor
   )
@@ -448,25 +447,23 @@
   as
   ascii-limit ascii-whitespaces
   buf <buf>
-  call-with-input-file call-with-output-file
-  call-with-string-input-port call-with-string-output-port
-  ceiling ceiling/
+  ceil ceiling/
   describe-condition
   port-contents
   case-insensitive-string-hash
   case-insensitive-string-equal
   cat cat2 cat!
   char->ascii
-  char-ready?
+  ready?
   compose
   <condition> condition-arguments condition-message
   current-gc-state
   curry
   default
   default-handler
-  del
+  del-vals
   del-dups
-  del-key del-keys
+  del zap
   do do2 do3 do-keyed
   elt elt-setter elt-or low-elt low-elt-setter
   empty empty?
@@ -474,35 +471,35 @@
   error <error> <simple-error>
   even?
   fab fabs
-  <file-port> <file-input-port> open-input-file close-input-port
-  <file-output-port> open-output-file close-output-port
+  <file-port> <file-in-port> 
+  <file-out-port> 
   fill
   fin-state?
   first-then
-  find-key
+  find
   flo-bits
   floor floor/
-  force-output
+  force-out
   from from-below from-to from-by from-to-by from-below-by from-above
   from-above from-above-by
   gensym
-  <handler> handler-function make-handler handler-matches?
+  <handler> handler-function fab-handler handler-matches?
   id-hash
   identity
   in
   <incongruent-method-error>
   ini-state copy-state
-  <input-port> port-line 
+  <in-port> port-line 
   keys
   last
   len len-setter len/fill-setter
   list <list>
-  locative-value locative-value-setter
-  logior logxor logand lognot logbit?
-  lowercase? uppercase?
+  loc-val loc-val-setter
+  | ^ & ~ bit?
+  lower? upper?
   lst
-  make-setter-name
-  make-sym
+  fab-setter-name
+  cat-sym
   map map2 map-keyed
   <map>
   fab-map
@@ -510,21 +507,21 @@
   max min 
   modulo remainder
   mem?
-  napply
+  napp
   neg neg?
   newline
   now-elt now-elt-setter
   now-key
   nul?
   num-to-str
-  numeric?
+  digit?
   nxt-state
   odd?
   out
-  <output-port>
+  <out-port>
   pair
   pick
-  peek-char
+  peek
   $permanent-hash-state
   <port> port-index
   pos pos?
@@ -532,8 +529,8 @@
   *print-base*
   <range>
   rcurry
-  read-char
-  reduce reduce+
+  get
+  fold fold+
   rev!
   rev
   round round/
@@ -544,21 +541,20 @@
   str
   <str-tab>
   str-to-num
-  <string-port> <string-input-port> <string-output-port>
+  <string-port> <string-in-port> <string-out-port>
   sub sub-setter
   <tab>
-  table-growth-factor table-growth-threshold table-shrink-threshold
-  table-protocol
+  tab-growth-factor tab-growth-threshold tab-shrink-threshold tab-test tab-hash
   to-digit
   to-str
-  truncate
-  truncate/
+  trunc
+  trunc/
   tup
-  t+ t= t< false-or
+  t+ t= t< t?
   var-name var-type
   vec
   %with-monitor
-  write-char write-string
+  put puts
   zero?
   )
 "

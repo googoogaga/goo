@@ -12,45 +12,45 @@
  ;; Defined in boot
  <vec>
  
- (df vec ((objects ...)))
+ (df vec (objects|...))
 
 )
 
 ;;;;!! Implementation
 
-(dm as ((_ (t= <vec>)) (x <vec>) => <vec>) x)
+(dm as ((_ (t= <vec>)) x|<vec> => <vec>) x)
 
-(df vec ((objects ...))
+(df vec (objects|...)
   (as <vec> objects))
 
 ;;;; Collection protocol
-(dm len ((x <vec>) => <int>)
+(dm len (x|<vec> => <int>)
   (%ib (%vlen x)))
 
-(dm elt ((x <vec>) (i <int>) => <any>)
+(dm elt-or (x|<vec> i|<int> default => <any>)
   (if (range-check? x i)
       (%velt x (%iu i)) ;; TODO: LOW-ELT
-      nul))
+      default))
 
-(dm elt-setter (z (x <vec>) (i <int>))
+(dm elt-setter (z x|<vec> i|<int>)
   (range-check x i)
   (set (%velt x (%iu i)) z)) ;; TODO: LOW-ELT
 
 (dm empty ((c (t= <vec>)) => <vec>)
   %vnul)
 
-(dm fab ((x (t= <vec>)) (s <int>) => <vec>)
+(dm fab ((x (t= <vec>)) s|<int> => <vec>)
   (%vec (%iu s)))
 
 
 ;;;; Misc stuff
 
-(dm to-str ((x <vec>) => <str>)
+(dm to-str (x|<vec> => <str>)
   (cat "#(" (vals-to-str x) ")"))
 
 ;;;; Undocumented
-(dm low-elt ((x <vec>) (i <int>) => <any>)
+(dm low-elt (x|<vec> i|<int> => <any>)
   (%velt x (%iu i)))
 
-(dm low-elt-setter (z (x <vec>) (i <int>))
+(dm low-elt-setter (z x|<vec> i|<int>)
   (set (%velt x (%iu i)) z))

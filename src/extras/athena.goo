@@ -1,0 +1,254 @@
+(use proto)
+
+;;; general strategy
+;;; 
+;;; map athena lambdas to proto funs returning themselves
+;;; will pattern matching work?
+;;; 
+
+(dv *tab* (fab <tab> 100))
+
+(dc <param> (<any>))
+(dp param-name (x|<param> => <sym>))
+(dp param-binding (x|<param> => <sym>))
+
+(dc <sort> (<any>))
+(dp sort-name (x|<sort> => <sym>))
+(dp sort-params (x|<sort> => <lst>) '())
+(dp sort-objs (x|<sort> => <lst>) '())
+(dp sort-lams (x|<sort> => <lst>) '())
+
+(dc <polysort> (<sort>))
+
+(dm reg-sort (sort|<sort>)
+  (set (elt *tab* (sort-name sort)) sort))
+
+(dm fab-sort (name|<sym> params|<lst>)
+  (new <sort> sort-name name sort-params params))
+
+(dm fab-polysort (sort|<sort> params|<lst>)
+  (unless (= (len params) (len (sort-params sort)))
+    (error "Wrong number of sort parameters %= for %=." params sort))
+  (new <sort> sort-name (sort-name sort) sort-params params))
+
+(ds (domain ,spec)
+  (mif ((,name ,@params) spec)
+       (let ((name (cat-name name "-polysort")))
+         ;; TODO: check for param uniqueness
+         `(seq (dv ,polysortname (fab-sort ',name ',params))
+               (reg-sort ,polysortname)
+               (df ,name (,@params) (fab-polysort ,polysortname ,@params))))
+       `(seq (dv ,spec (fab-sort ',spec '()))
+             (reg-sort ,spec))))
+
+(dc <spec> (<any>))
+(dp spec-params (x|<spec> => <lst>))
+(dp spec-polys (x|<spec> => <lst>))
+(dp spec-value (x|<spec> =>  <sort>))
+
+(dm fab-spec (polys|<lst> params|<lst> val|<sort> => <spec>)
+  (new <spec> 
+    spec-polys polys spec-params params spec-value val))
+
+(dc <lam> (<any>))
+(dp lam-name (x|<lam> => <sym>))
+(dp lam-spec (x|<lam> => <spec>))
+
+(dm fab-lam (name|<sym> polys|<lst> params|<lst> val|<sort>)
+  (def spec (fab-spec polys params val))
+  (new <lam> lam-name name lam-spec spec))
+
+(dm reg-lam (lam|<lam>)
+  (set (elt *tab* (lam-name lam)) lam))
+
+(dc <obj> (<any>))
+(dp obj-name (x|<obj> => <sym>))
+(dp obj-sort (x|<obj> => <sort>))
+
+(dm reg-obj (obj|<obj>)
+  (set (elt *tab* (obj-name obj)) obj))
+
+(dm fab-obj (name|<sym> sort|<sort>)
+  (new <obj> obj-name name obj-sort sort))
+
+(dv <term> <any>)
+
+(dv fab-name cat-sym)
+
+(ds (mcase ,exp ,@cases)
+  (mif (() cases)
+       `(error "Failed to match.")
+       (mif (((,pat ,@then) ,@rest) cases)
+            (let ((var (gensym)))
+              `(let ((,var ,exp))
+                 (mif (,pat ,var) 
+                      (seq ,@then)
+                      (mcase ,var ,@rest))))
+            (error "Invalid mcase syntax."))))
+
+(ds (declare ,name ,sig)
+  (loc ((do-declare (polys params val)
+          (def pnames
+                 (collecting () 
+                   (for ((key (keys params)))
+                     (collect (fab-name "x" key)))))
+          (def pparams
+              (map (fun (n) `(,n <term>)) pnames))
+          (def polybindings
+              (map (fun (n) `(,n (new <param> param-name ',n))) polys))
+          `(let (,@polybindings
+                  (lam (fab-lam ',name (lst ,@polys) (lst ,@params) ,val)))
+             (reg-lam lam)
+             (df ,name (,@pparams => <term>) 
+               (lst ',name ,@pnames)))))
+    (mcase sig
+      (((,@polys) -> ,params ,val) (do-declare polys params val))
+      ((-> ,params ,val)           (do-declare '()   params val))
+      ((,name ,value)
+       `(let ((obj (fab-obj ',name ,sig)))
+          (reg-obj obj)
+          (dv ,name obj))))))
+
+(ds (define (,name ,@params) ,@body)
+  `(df ,name ,params ,@body))
+
+;;;
+;;; PATTERN MATCHING
+;;;
+
+;;; PATTERN MATCHING RUNTIME
+
+(df a-match-empty-list (x|<lst> fail|<fun>)
+  (if (== x '())
+      '()
+      (fail "Match Empty Failure of %=" x)))
+
+(df a-match-unquote (x|<lst> fail|<fun>)
+  (if (== x '())
+      (fail "Match Failure Empty List on Unquote")
+      (head x)))
+
+(df a-match-atom (x|<lst> pat fail|<fun>)
+  (if (== x '())
+      (fail "Match Failure Empty List on %=" pat)
+      (let ((exp (head x)))
+	(if (== exp pat)
+	    (tail x)
+	    (fail "Match Failure of %= on %=" exp pat)))))
+
+(df a-match-sublist (x|<lst> fail|<fun>)
+  (def x (head x))
+  (if (isa? x <lst>)
+      x
+      (fail "Match Failure on Sub List on %=" x)))
+
+;;; PATTERN MATCHING MACRO
+
+(dm sexpr-tagged-list? (exp tag => <log>)
+  (and (isa? exp <lst>) (== (head exp) tag)))
+
+(dm sexpr-unquote? (x => <log>)
+  (sexpr-tagged-list? x 'unquote))
+
+(dm sexpr-unquote-splicing? (x => <log>)
+  (sexpr-tagged-list? x 'unquote-splicing))
+
+(dm expand-bind-list (pat var fail => <any>)
+  (error "Expected Pattern List %=\n" pat))
+
+(dm expand-bind-list (pat|(t= '()) var fail => <lst>)
+  `(a-match-empty-list ,var ,fail))
+
+(dm expand-bind-list (pat|<lst> var fail => <lst>)
+  (cond
+    ((sexpr-unquote? pat)
+      (error "Unquote Unexpected Here %=\n" pat))
+    ((sexpr-unquote-splicing? pat)
+     (error "Unquote Splicing Unexpected Here %=\n" pat))
+    (#t
+     (expand-bind-list* pat var fail))))
+
+(dm expand-bind-list* (pat|(t= '()) var fail => <any>)
+  `(a-match-empty-list ,var ,fail))
+
+(dm expand-bind-list* (pat|<lst> var fail => <any>)
+  `(let ((,var ,(expand-bind-element (head pat) var fail)))
+     ,(expand-bind-list* (tail pat) var fail)))
+
+(dm expand-bind-element (pat var fail => <any>)
+  `(a-match-atom ,var ',pat ,fail))
+
+(dm pattern-variable? (var|<sym> => <log>)
+  (not (isa? (elt-or *tab* var #f) <lam>)))
+
+(dm expand-bind-element (pat|<lst> var fail => <any>)
+  (cond
+    ((sexpr-unquote-splicing? pat)
+     `(seq (set ,(2nd pat) ,var) '()))
+    (#t
+     `(seq (let ((,var (a-match-sublist ,var ,fail)))
+	     ,(expand-bind-list pat var fail))
+	   (tail ,var)))))
+
+(dm expand-pattern (pat var fail => <any>)
+  (if (pattern-variable? pat)
+      `(set ,pat ,var)
+      (expand-bind-element pat var fail)))
+
+(dm expand-pattern (pat|<lst> var fail => <any>)
+  `(if (isa? ,var <lst>)
+       ,(expand-bind-list pat var fail)
+       (,fail "Match Pattern Failure" ,var)))
+
+(dm sexpr-pattern-variable? (pat|<sym> => <log>)
+  (pattern-variable? pat))
+
+(dm sexpr-pattern-variable? (pat => <log>)
+  (or (sexpr-unquote-splicing? pat)))
+
+(dm sexpr-pattern-variable-name (pat|<lst> => <any>)
+  (2nd pat))
+
+(dm sexpr-pattern-variable-name (pat|<sym> => <any>)
+  pat)
+
+(dm sexpr-bind-pattern-variables (pat|<sym> => <lst>)
+  (if (sexpr-pattern-variable? pat)
+      (lst pat)
+      '()))
+
+(dm sexpr-bind-pattern-variables (pat|<lst> => <lst>)
+  (del-dups
+    (rep col ((pat pat))
+      (if (or (not (isa? pat <lst>)) (empty? pat))
+	  '()
+	  (let ((x (head pat)))
+	    (if (sexpr-pattern-variable? x)
+		(pair (sexpr-pattern-variable-name x) (col (tail pat)))
+		(cat (col (head pat)) (col (tail pat)))))))))
+
+(dm expand-match-if (pat exp then else  => <lst>)
+  (def vars  (sexpr-bind-pattern-variables pat))
+  (def var   (gensym))
+  (def fail  (gensym))
+  (lete pat  (expand-pattern pat var fail))
+  `(esc return
+     (loc ((,fail ((msg <str>) (args ...)) (return ,else)))
+       (let ((,var ,exp))
+         (let ,(map (fun (x) `(,x #f)) vars)
+           ,epat
+           ,then)))))
+
+(ds (match-if (,pat ,exp) ,then ,else)
+  (expand-match-if pat exp then else))
+
+(ds (match ,exp ,@rules)
+  (mif (() rules)
+       `(error "Match Failure")
+       (let ((expvar (gensym)))
+         (mif (((,pat ,cons) ,@more-rules) rules)
+              `(let ((,expvar ,exp))
+		 (match-if (,pat ,expvar) ,cons
+			   (match ,expvar ,@more-rules)))
+              (error "Invalid match syntax")))))
+

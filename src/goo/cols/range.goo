@@ -1,5 +1,6 @@
 (use boot)
 (use macros)
+(use runtime)
 (use proto/types)
 (use proto/math)
 (use proto/collections/collection)
@@ -10,72 +11,48 @@
 (exported
  ;;  represents series of numbers
  (dc <range> (<seq>))
- 
- (dg from ((from <num>) => <range>))
- (dg from-by ((from <num>) (by <num>) => <range>))
- (dg from-to ((from <num>) (to <num>) => <range>))
- (dg from-to-by ((from <num>) (to <num>) (by <num>) => <range>))
- (dg from-below ((from <num>) (below <num>) => <range>))
- (dg from-below-by ((from <num>) (below <num>) (by <num>) => <range>))
- (dg from-above ((from <num>) (above <num>) => <range>))
- (dg from-above-by ((from <num>) (above <num>) (by <num>) => <range>))
+ (dg range (from|<num> done?|<fun> lim|<num> => <range>))
+ (dg range-by (from|<num> done?|<fun> lim|<num> nxt|<fun> => <range>))
+ (dg from (from|<num> => <range>))
+ (dg below (from|<num> => <range>))
 )
 
-;; TODO: FEWER SLOTS
-  (slot <range> (range-from  <num>) 0)
-  (slot <range> (range-to    <num>))
-  (slot <range> (range-below <num>))
-  (slot <range> (range-above <num>))
-  (slot <range> (range-by    <num>) 1)
+;; TODO: FEWER PROPS
+(dp range-from (x|<range> =>  <num>)     0)
+(dp range-in?  (x|<range> =>  <fun>)     <) 
+(dp range-lim  (x|<range> => (t? <num>)) #f) 
+(dp range-nxt  (x|<range> => <fun>)      1+) 
 
-(dm fab ((c (t= <range>)) (s <int>) => <range>)
-  (from-below 0 s))
+(dm fab ((c (t= <range>)) s|<int> => <range>)
+  (range 0 < s 1+))
 
-(dm from ((from <num>) => <range>)
-  (isa <range> (set range-from from)))
+(dm range (from|<num> in?|<fun> lim|<num> => <range>)
+  (new <range> range-from from range-in? in? range-lim lim))
 
-(dm from-by ((from <num>) (by <num>) => <range>)
-  (isa <range> (set range-from from)  (set range-by by)))
+(dm range-by (from|<num> in?|<fun> lim|<num> nxt|<fun> => <range>)
+  (new <range> range-from from range-in? in? range-lim lim range-nxt nxt))
 
-(dm from-to ((from <num>) (to <num>) => <range>)
-  (isa <range> (set range-from from) (set range-to to)))
+(dm from (from|<num> => <range>)
+  (new <range> range-from from range-in? (always #t)))
 
-(dm from-to-by ((from <num>) (to <num>) (by <num>) => <range>)
-  (isa <range> (set range-from from) (set range-to to)  (set range-by by)))
+(dm below (lim|<num> => <range>)
+  (new <range> range-lim lim))
 
-(dm from-below ((from <num>) (below <num>) => <range>)
-  (isa <range> (set range-from from) (set range-below below)))
+(dm as-copy (c|<range> x|<col> => <col>)
+  (as <lst> x))
 
-(dm from-below-by ((from <num>) (below <num>) (by <num>) => <range>)
-  (isa <range> (set range-from from) (set range-below below) (set range-by by)))
+(dc <range-enum> (<enum>))
+(dp %dat (x|<range-enum> => <range>))
+(dp %val (x|<range-enum> => <num>))
 
-(dm from-above ((from <num>) (above <num>) => <range>)
-  (isa <range> (set range-from from) (set range-above above)))
+(dm enum (x|<range> => <range-enum>) 
+  (new <range-enum> %dat x %val (range-from x)))
+(dm fin? (e|<range-enum> => <log>)       
+  (def c (%dat e))
+  (not ((range-in? c) (%val e) (range-lim c))))
 
-(dm from-above-by ((from <num>) (above <num>) (by <num>) => <range>)
-  (isa <range> (set range-from from) (set range-above above) (set range-by by)))
-
-(dm ini-state ((c <range>) => <num>)
-  (range-from c))
-
-(dm fin-state? ((c <range>) (state <num>) => <log>)
-  (if (neg? (range-by c))
-      (if (== (range-to c) nul) 
-          (if (== (range-above c) nul)
-              #f
-              (<= state (range-above c)))
-          (< state (range-to c)))
-      (if (== (range-to c) nul) 
-          (if (== (range-below c) nul)
-              #f
-              (>= state (range-below c)))
-          (> state (range-to c)))))
-
-(dm nxt-state ((c <range>) (state <num>) => <num>)
-  (+ state (range-by c)))
-
-(dm now-elt ((c <range>) (state <num>) => <any>)
-  state)
-
-(dm copy-state ((_ <range>) (state <num>) => <num>)
-  state)
+(dm nxt (e|<range-enum> => <range-enum>)  
+  (renew e %val ((range-nxt (%dat e)) (%val e))
+         ))
+(dm now (e|<range-enum> => <num>)         
+  (%val e))

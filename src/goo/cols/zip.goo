@@ -1,0 +1,38 @@
+(use boot)
+(use macros)
+(use proto/types)
+(use proto/math)
+(use proto/collections/collection)
+(use proto/collections/sequence)
+
+(exported
+  <zip>
+  (dg zip (e|... => <zip>))
+  (dg unzip (z|<zip> => <tup>)))
+
+(dc <zip> (<seq>))
+(dp zip-dat (x|<zip> => <vec>) #[])
+
+(dm zip (e|... => <zip>)
+  (new <zip> zip-dat (as <tup> e)))
+
+(dm unzip (z|<zip> => <tup>)
+  (zip-dat z))
+
+(dc <zip-state> (<any>))
+(dp zip-states (x|<zip-state> => <tup>))
+
+(dc <zip-enum> (<enum>))
+(dp %enums (x|<zip-enum> => <zip>))
+(dm enum (x|<zip> => <zip-enum>)
+  (new <zip-enum> %enums (map enum x)))
+(dm fin? (e|<zip-enum> => <log>)
+  (any? empty? (%enums e)))
+(dm nxt (e|<zip-enum> => <zip-enum>)    
+  (renew e %enums (map nxt (%enums e))))
+(dm now (e|<zip-enum> => <any>)
+  (map now (%enums e)))
+(dm now-setter (v|<zip> e|<zip-enum>)
+  (for ((ve v) (ee (%enums e))) (set (now ee) (now ve))))
+(dm now-at (e|<zip-enum> => <zip>)
+  (map now-at (%enums e)))

@@ -2,22 +2,24 @@
 
 (use boot)
 
+;; (ct (seq (dv fab-setter-name make-setter-name) (dv cat-sym make-sym)))
+
 ;; TODO: Fix next-method to do a normal call with a next-method instead of
 ;;       apply, as apply is not necessary, and slow.
-(ds (next-method ,@args)
+(ds (sup ,@args)
   `(let ((next-mets (%next-methods)))
      (if next-mets
-         (napply (head next-mets) (tail next-mets) ,@args '())
+         (napp (head next-mets) (tail next-mets) ,@args '())
          (error "No next methods"))))
 
-(ds (apply-next-method ,args)
+(ds (app-sup ,args)
   `(let ((next-mets (%next-methods)))
      (if next-mets
-         (napply (head next-mets) (tail next-mets) ,args)
+         (napp (head next-mets) (tail next-mets) ,args)
          (error "No next methods"))))
 
-(ds (apply ,f ,@args)
-  `(napply ,f #f ,@args))
+(ds (app ,f ,@args)
+  `(napp ,f #f ,@args))
 
 ;; TODO: GENERALIZED VERSION -- PROTOCOL + MULTIPLES
 
@@ -34,6 +36,16 @@
 (ds (collected ,name)
   `(rev! ,name))
 
+(ds (renew ,x ,@prop-inits)
+  (let ((var  (gensym))
+        (sets (rep loop ((sets '()) (inits prop-inits))
+                (if (empty? inits)
+                    (rev! sets)
+                    (let ((val (head (tail inits))))
+                      (loop (pair `(set (,(head inits) ,var) ,val) sets)
+                            (tail (tail inits))))))))
+    `(let ((,var ,x)) ,@sets ,var)))
+
 (ct-also
 
   ;; Lift subforms out of a place form.  Return a series of gensym bindings
@@ -43,14 +55,14 @@
   ;;   '(foo x y z) =>
   ;;       (tup '((g1 x) (g2 y) (g3 z)) '(foo g1 g2 g3))
   ;;   'bar => (tup '() 'bar)
-  (df lift-place-subforms (place => (tup (g-decls <lst>) (g-place <lst>)))
-    (loc ((munch ((subforms <lst>) => (tup (g-decls <lst>) (g-args <lst>)))
+  (df lift-place-subforms (place => (tup g-decls|<lst> g-place|<lst>))
+    (loc ((munch ((subforms <lst>) => (tup g-decls|<lst> g-args|<lst>))
             (if (empty? subforms)
                 (tup '() '())
-                (let (((tup g-decls g-args) (munch (tail subforms))))
-                  (let ((g (gensym)))
-                    (tup (pair `(,g ,(head subforms)) g-decls)
-                         (pair g g-args)))))))
+                (let (((tup g-decls g-args) (munch (tail subforms)))
+                      (g (gensym)))
+                  (tup (pair `(,g ,(head subforms)) g-decls)
+                       (pair g g-args))))))
       (if (isa? place <sym>)
           (tup '() place)
           (let (((tup g-decls g-args) (munch (tail place))))
@@ -58,13 +70,13 @@
 
   )
            
-(ds (inc ,place ,@amount)
+(ds (incf ,place ,@amount)
   (let (((tup g-decls g-place) (lift-place-subforms place))
         (amount (mif ((,amount) amount) amount 1)))
     `(let (,@g-decls)
        (set ,g-place (+ ,g-place ,amount)))))
 
-(ds (dec ,place ,@amount)
+(ds (decf ,place ,@amount)
   (let (((tup g-decls g-place) (lift-place-subforms place))
         (amount (mif ((,amount) amount) amount 1)))
     `(let (,@g-decls)
@@ -119,58 +131,81 @@
 	       (if tmp (and ,@rest) #f)))
        #t))
 
-(ds (case ,@cases)
+(ds (cond ,@cases)
   (if (empty? cases)
       #f
       (mif ((,cond ,@body) (head cases))
 	   `(if ,cond
 		(seq ,@body)
-		(case ,@(tail cases)))
+		(cond ,@(tail cases)))
 	   ;; TODO: NEED SYNTAX ERROR CONDITIONS
-	   (error "CASE: SYNTAX ERROR BAD CASE" (head cases)))))
+	   (error "COND: SYNTAX ERROR BAD CASE" (head cases)))))
 
-(ds (select ,val ,@cases)
-  (if (empty? cases)
-      #f
-      (mif ((,cond ,@body) (head cases))
-	   (if (== cond #t)
-	       `(seq ,@body)
-	       (let ((bv (gensym)))
-		 (mif ((,@values) cond)
-		      `(let ((,bv ,val))
-			 (if (or ,@(map (fun (x) `(== ,bv ,x)) values))
-			     (seq ,@body)
-			     (select ,bv ,@(tail cases))))
-		       (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))
-	       (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))))
+(ct-also
+  (df do-case-by (val tst cases)
+    (if (empty? cases)
+        #f
+        (mif ((,cond ,@body) (head cases))
+             (if (== cond #t)
+                 `(seq ,@body)
+                 (mif ((,@values) cond)
+                      `(if (or ,@(map (fun (x) `(,tst ,val ,x)) values))
+                           (seq ,@body)
+                           ,(do-case-by val tst (tail cases)))
+                      (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))
+             (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))))
+
+(ds (case-by ,val ,tst ,@cases)
+  (let ((val-var (gensym)) (tst-var (gensym)))
+    `(let ((,val-var ,val) (,tst-var ,tst))
+       ,(do-case-by val-var tst-var cases))))
+
+(ds (case ,val ,@cases)
+  `(case-by ,val == ,@cases))
+
+(ds (match ,exp ,@cases)
+  (mif (() cases)
+       `(error "Failed to match.")
+       (mif (((,pat ,@then) ,@rest) cases)
+            (if (== pat #t)
+                `(seq ,@then)
+                (let ((var (gensym)))
+                  `(let ((,var ,exp))
+                     (mif (,pat ,var) 
+                          (seq ,@then)
+                          (match ,var ,@rest)))))
+            (error "Invalid match syntax."))))
 
 (ds (assert ,cond ,message ,@args)
   `(if (not ,cond) (error ,message ,@args)))
 
 (ds (for (,@clauses) ,@body)
-  (rep grok ((clauses clauses) 
-	     (exps '()) (inits '()) (preds '()) (nows '()) (nexts '()))
+  (rep grok ((clauses clauses) (inits '()) (preds '()) (nows '()) (nexts '()))
     (if (empty? clauses)
 	(let ((loop (gensym)))
-	  `(let ,exps
-	     (rep ,loop ,inits
-	       (unless (or ,@preds)
-		 (let ,nows ,@body (,loop ,@nexts))))))
+	  `(rep ,loop ,inits
+	     (unless (or ,@preds)
+               (let ,nows ,@body (,loop ,@nexts)))))
         (let ((clause (head clauses)))
 	  (mif ((,var ,exp) clause)
-	    (let ((state (gensym))
-		  (exp-tmp (gensym)))
+	    (let ((state (gensym)))
 	      (grok (tail clauses)
-		    (pair `(,exp-tmp ,exp) exps)
-		    (pair `(,state (ini-state ,exp-tmp)) inits)
-		    (pair `(fin-state? ,exp-tmp ,state) preds)
+		    (pair `(,state (enum ,exp)) inits)
+		    (pair `(fin? ,state) preds)
 		    (pair (mif ((tup ,key ,val) var)
 		    	       `((tup ,key ,val) 
-		    		 (tup (now-key ,exp-tmp ,state)
-		    		      (now-elt ,exp-tmp ,state))) 
-		    	       `(,var (now-elt ,exp-tmp ,state)))
+		    		 (tup (now-key ,state) (now ,state))) 
+		    	       `(,var (now ,state)))
 		    	  nows)
-		    (pair `(nxt-state ,exp-tmp ,state) nexts))))))))
+		    (pair `(nxt ,state) nexts))))))))
+
+(ds (while ,test ,@body)
+  `(rep _loop ()
+     (when ,test ,@body (_loop))))
+
+(ds (until ,test ,@body)
+  `(rep _loop ()
+     (unless ,test ,@body (_loop))))
 
 (ds (ddv ,binding ,exp)
   `(dv ,binding ,exp))
@@ -190,19 +225,23 @@
 (ds (def-fun-var ,var ,value)
   (let ((nam (var-name var))
         (typ (var-type var))
-        (vnam (make-sym "*" nam "*")))
+        (vnam (cat-sym "*" nam "*")))
     `(seq (dv ,vnam ,value)
 	  (dm ,nam (=> ,typ) ,vnam)
- 	  (dm ,(make-setter-name nam) ((z ,typ)) (set ,vnam z)))))
+ 	  (dm ,(fab-setter-name nam) ((z ,typ)) (set ,vnam z)))))
+
+(ds (without-prop-unbound-errors ,@body)
+  `(dlet ((*report-prop-unbound-errors?* #f))
+     ,@body))
 
 ;; This macro allows you to declare "forward" references between modules.
 ;; It may or may not remain part of the language in the long run, but we
 ;; need it to modularize the existing code base.
-;; TODO - Move this macro into boot.proto along with AND, OR, WHEN, UNLESS.
+;; TODO - Move this macro into boot.goo along with AND, OR, WHEN, UNLESS.
 (ds (need-implementation ,@names)
   (if (empty? names)
       #f
-      `(seq (when #f ,(head names))
+      `(seq (and #f ,(head names))
             (export ,(head names))
             (need-implementation ,@(tail names)))))
 
@@ -210,19 +249,24 @@
   (pair
    'seq 
    (collecting ()
-     (for ((d defs))
-       (case
-         ((isa? d <sym>)             (seq (collect d) (collect `(export ,d))))
-         ((mif ((df ,name ,@rest) d) (seq (collect name) (collect `(export ,name)))) #f)
-         ((mif ((dg ,name ,@rest) d) (seq (collect d) (collect `(export ,name)))) #f)
-         ((mif ((dc ,name ,@rest) d) (seq (collect d) (collect `(export ,name)))) #f)
-         ((mif ((dv ,name ,@rest) d) (seq (collect d) (collect `(export ,name)))) #f)
-         ((mif ((slot ,slot (,name ,type) ,default) d)
-               (seq
-                 (collect d)
-                 (collect `(export ,name))
-                 (collect `(export ,(make-setter-name name))))) #f)
-          (#t                         5))))))
+     (do (fun (d)
+       (cond ((isa? d <sym>)
+              (seq (collect d) (collect `(export ,d))))
+             ((mif ((df ,name ,@rest) d) 
+                   (seq (collect name) (collect `(export ,name)))) #f)
+             ((mif ((dg ,name ,@rest) d)
+                   (seq (collect d) (collect `(export ,name)))) #f)
+             ((mif ((dc ,name ,@rest) d)
+                   (seq (collect d) (collect `(export ,name)))) #f)
+             ((mif ((dv ,name ,@rest) d)
+                   (seq (collect d) (collect `(export ,name)))) #f)
+             ((mif ((dp ,name (,@params) ,@default) d)
+                   (seq
+                     (collect d)
+                     (collect `(export ,name))
+                     (collect `(export ,(fab-setter-name name))))) #f)
+             (#t   5)))
+         defs))))
 
 
 ;;;;=======================================================================
@@ -232,10 +276,7 @@
 ;;; These bindings are defined in the runtime module.
 (need-implementation
   ==
-  ini-state
-  fin-state?
-  now-elt
-  nxt-state
+  do
   rev!
   cat
   elt
@@ -243,8 +284,8 @@
   error
   gensym
   lst
-  make-setter-name
-  make-sym
+  fab-setter-name
+  cat-sym
   map
   match-atom
   match-empty-list
@@ -254,17 +295,18 @@
   tup
   var-name
   var-type
-  napply)
+  napp)
 
 (export
-  apply
-  next-method
-  apply-next-method
+  app
+  sup
+  app-sup
   collecting
   collect
   collected
-  inc
-  dec
+  renew
+  incf
+  decf
   pushf
   popf
   opf
@@ -273,12 +315,16 @@
   when
   or
   and
-  case
-  select
+  cond
+  case case-by
+  match
   assert
   for
+  while until
   ddv
   dlet
   def-fun-var
   need-implementation
-  exported)
+  exported
+  without-prop-unbound-errors
+  *report-prop-unbound-errors?*)

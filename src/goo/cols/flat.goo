@@ -14,17 +14,20 @@
 
 ;;;;!! Implementation
 
-(dm ini-state ((c <flat>) => <int>) 0)
-
-(dm fin-state? ((c <flat>) (state <int>) => <log>) (== state (len c)))
-
-(dm nxt-state ((_ <flat>) (state <int>) => <int>) (+ state 1))
-
-(dm now-elt ((c <flat>) (state <int>) => <any>) (low-elt c state))
-
-(dm now-elt-setter (z (c <flat>) (state <int>)) (set (low-elt c state) z))
-
-(dm now-key ((_ <flat>) (state <int>) => <int>) state)
-
-(dm copy-state ((_ <flat>) (state <int>) => <int>) state)
+(dc <flat-enum> (<enum>))
+(dp %dat (x|<flat-enum> => <flat>))
+(dp %key (x|<flat-enum> => <int>) 0)
+(dm enum (x|<flat> => <flat-enum>) 
+  (new <flat-enum> %dat x))
+(dm fin? (e|<flat-enum> => <log>)       
+  (== (%key e) (len (%dat e))))
+(dm nxt (e|<flat-enum> => <flat-enum>)  
+  (renew e %key (+ (%key e) 1) ;; %dat (%dat e)
+         ))
+(dm now (e|<flat-enum> => <any>)         
+  (low-elt (%dat e) (%key e)))
+(dm now-setter (v|<any> e|<flat-enum>) 
+  (set (low-elt (%dat e) (%key e)) v))
+(dm now-key (e|<flat-enum> => <int>)   
+  (%key e))
 

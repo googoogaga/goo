@@ -16,17 +16,20 @@
 ;;;;!! Implementation
 
 ;;;; Collection protocol
-(dm len ((x <opts>) => <int>)
+(dm as-copy (c|<opts> x|<col> => <col>)
+  (as <lst> x))
+
+(dm len (x|<opts> => <int>)
   (@olen x))
 
-(dm elt ((x <opts>) (i <int>) => <any>)
+(dm elt-or (x|<opts> i|<int> default => <any>)
   (range-check x i)
   (@oelt x i)) ;; TODO: LOW-ELT
 
-(dm to-str ((x <opts>) => <str>)
+(dm to-str (x|<opts> => <str>)
   (cat "$$opts(" (vals-to-str x) ")"))
 
 
 ;;;; Undocumented
-(dm low-elt ((x <opts>) (i <int>) => <any>)
+(dm low-elt (x|<opts> i|<int> => <any>)
   (@oelt x i))

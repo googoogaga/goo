@@ -2,24 +2,24 @@
 (use random)
 
 (dc <pattern> (<any>))
-  (slot <pattern> (pattern-time <int>))
-  (slot <pattern> (pattern-rhythm <sym>))
-  (slot <pattern> (pattern-kind <sym>))
-  (slot <pattern> (pattern-part <int>))
-  (slot <pattern> (pattern-instrument <sym>))
-  (slot <pattern> (pattern-value <str>))
+  (dp pattern-time (x|<pattern> => <int>))
+  (dp pattern-rhythm (x|<pattern> => <sym>))
+  (dp pattern-kind (x|<pattern> => <sym>))
+  (dp pattern-part (x|<pattern> => <int>))
+  (dp pattern-instrument (x|<pattern> => <sym>))
+  (dp pattern-value (x|<pattern> => <str>))
 
 (dv $patterns (fab <buf> 0))
 
 (dm register-pattern (time rhythm kind part instrument value)
-  (let ((pat (isa <pattern>
-               (set pattern-time       time)
-               (set pattern-rhythm     rhythm)
-               (set pattern-kind       kind)
-               (set pattern-part       part)
-               (set pattern-instrument instrument)
-               (set pattern-value      value))))
-    (add! $patterns pat)))
+  (def pat (new <pattern>
+             pattern-time       time
+             pattern-rhythm     rhythm
+             pattern-kind       kind
+             pattern-part       part
+             pattern-instrument instrument
+             pattern-value      value))
+  (add! $patterns pat))
 
 (ds (def-rhythm ,time ,name ,@patterns)
   (let ((pattern-inits
@@ -27,7 +27,7 @@
                 (mif ((,kind ,part ,instrument ,value) pat) 
                      `(lst ,time ',name ',kind ',part ',instrument ,value)))
               patterns)))
-    `(do (fun (pat-inits) (apply register-pattern pat-inits))
+    `(do (fun (pat-inits) (app register-pattern pat-inits))
          (lst ,@pattern-inits))))
 
 (def-rhythm 4 cassa
@@ -88,8 +88,8 @@
   (len $patterns))
 
 (df match-pattern?
-    ((pattern <pattern>) (rhythm (false-or <sym>)) (time (false-or <int>)) 
-     (kind (false-or <sym>)) (inst (false-or <sym>)) 
+    (pattern|<pattern> rhythm|(t? <sym>) time|(t? <int>) 
+     kind|(t? <sym>) inst|(t? <sym>) 
      => <log>)
   (and (or (not rhythm) (== (pattern-rhythm pattern)     rhythm))
        (or (not time)   (== (pattern-time pattern)       time))
@@ -98,30 +98,28 @@
 
 
 (dm choose-pattern
-    ((rhythm (false-or <sym>)) (time (false-or <int>)) 
-     (kind (false-or <sym>)) (inst (false-or <sym>)) 
-     => (false-or <pattern>))
-  (let ((n (num-patterns) ))
-    (rep loop ((i (random n)) (tries 0))
-      (if #f ;; (== tries n)
-          #f
-          (let ((pattern (elt $patterns i)))
-            (if (match-pattern? pattern rhythm time kind inst)
-                pattern
-                (loop (random n) (+ tries 1))))))))
+    (rhythm|(t? <sym>) time|(t? <int>) kind|(t? <sym>) inst|(t? <sym>) 
+     => (t? <pattern>))
+  (def n (num-patterns))
+  (rep loop ((i (random n)) (tries 0))
+    (if #f;; (== tries n)
+        #f
+        (let ((pattern (elt $patterns i)))
+          (if (match-pattern? pattern rhythm time kind inst)
+              pattern
+              (loop (random n) (+ tries 1)))))))
 
 (dm choose-1st-pattern
-    ((rhythm (false-or <sym>)) (time (false-or <int>)) 
-     (kind (false-or <sym>)) (inst (false-or <sym>)) 
-     => (false-or <pattern>))
-  (let ((n (num-patterns)))
-    (rep loop ((i 0))
-      (if (< i n)
-          (let ((pattern (elt $patterns i)))
-            (if (match-pattern? pattern rhythm time kind inst)
-                pattern
-                (loop (+ i 1))))
-          #f))))
+    (rhythm|(t? <sym>) time|(t? <int>) kind|(t? <sym>) inst|(t? <sym>) 
+     => (t? <pattern>))
+  (def n (num-patterns))
+  (rep loop ((i 0))
+    (if (< i n)
+        (let ((pattern (elt $patterns i)))
+          (if (match-pattern? pattern rhythm time kind inst)
+              pattern
+              (loop (+ i 1))))
+        #f)))
 
 (export
   <pattern>

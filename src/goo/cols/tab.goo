@@ -20,41 +20,43 @@
 
 (exported
  (dc <tab> (<map>))
+ (dv <set> <tab>)
  ;; Factor to grow by
- (slot <tab> (table-growth-factor <flo>) 2.0)
+ (dp tab-growth-factor (x|<tab> => <flo>) 2.0)
  ;; When to grow or shrink (percentage of table size)
- (slot <tab> (table-growth-threshold <flo>) 0.8)
- (slot <tab> (table-shrink-threshold <flo>) 0.5)
+ (dp tab-growth-threshold (x|<tab> => <flo>) 0.8)
+ (dp tab-shrink-threshold (x|<tab> => <flo>) 0.5)
 )
-(dc <simple-table-vector> (<col>))
+(dc <tab-vec> (<col>))
   ;; Number of filled and vacant elements
-  (slot <simple-table-vector> (%vacated <int>) 0)
+  (dp %vacated (x|<tab-vec> => <int>) 0)
   ;; Modulus values for primary and secondary hash
-  (slot <simple-table-vector> (%primary-modulus <int>))
-  (slot <simple-table-vector> (%secondary-modulus <int>))
+  (dp %primary-modulus (x|<tab-vec> => <int>))
+  (dp %secondary-modulus (x|<tab-vec> => <int>))
   ;; Number of buckets and number of elements in each bucket
-  (slot <simple-table-vector> (%n-buckets <int>))
-  (slot <simple-table-vector> (%bucket-depth <int>))
+  (dp %n-buckets (x|<tab-vec> => <int>))
+  (dp %bucket-depth (x|<tab-vec> => <int>))
   ;; The actual table data representation
-  (slot <simple-table-vector> (%data <vec>))
+  (dp %data (x|<tab-vec> => <vec>))
   ;; GC state
-  (slot <simple-table-vector> %gc-state)
+  (dp %gc-state (x|<tab-vec> => <any>))
 
-(slot <tab> (%count <int>) 0)
-(slot <tab> (%vector <simple-table-vector>))
+(dp %count (x|<tab> => <int>) 0)
+(dp %vector (x|<tab> => <tab-vec>))
 
 (exported
- (dg table-protocol ((x <tab>) => (tup (test-fun <fun>) (hash-fun <fun>))))
+ (dg tab-test (x|<tab> => <fun>))
+ (dg tab-hash (x|<tab> => <fun>))
  
  (dv $permanent-hash-state #f)
- (df current-gc-state ())
+ (df tab-gc-state ())
  
  (dg id-hash (x))
 
  (dc <str-tab> (<tab>))
  
- (df case-insensitive-string-hash ((x <str>) => (tup (hi <int>) hash-state)))
- (df case-insensitive-string-equal ((x <str>) (y <str>) => <log>))
+ (df case-insensitive-string-hash (x|<str> => (tup hi|<int> hash-state)))
+ (df case-insensitive-string-equal (x|<str> y|<str> => <log>))
  )
 
 
@@ -88,462 +90,461 @@
 
  
 ;; TODO: SIZE FILL N-BUCKETS BUCKET-DEPTH PRIMARY-MODULUS SECONDARY-MODULUS
-(df fab-table-vector
-    ((size <int>) fill-value
-     (n-buckets <int>) (bucket-depth <int>)
-     (primary-modulus <int>) (secondary-modulus <int>)
-     => <simple-table-vector>)
-  (let ((v (isa <simple-table-vector>
-             (set %n-buckets n-buckets)
-             (set %bucket-depth bucket-depth)
-             (set %primary-modulus primary-modulus)
-             (set %secondary-modulus secondary-modulus))))
-    (set (%data v) (fill (fab <vec> size) fill-value))
-    v))
+(df fab-tab-vec
+    (size|<int> fill-value
+     n-buckets|<int> bucket-depth|<int>
+     primary-modulus|<int> secondary-modulus|<int>
+     => <tab-vec>)
+  (def v (new <tab-vec>
+           %n-buckets n-buckets
+           %bucket-depth bucket-depth
+           %primary-modulus primary-modulus
+           %secondary-modulus secondary-modulus))
+  (set (%data v) (fill (fab <vec> size) fill-value))
+  v)
 
-(dm elt ((vector <simple-table-vector>) (index <int>) => <any>)
+(dm @elt (vector|<tab-vec> index|<int> => <any>)
   ;; (elt (%data vector) index)
   (%velt (%data vector) (%iu index)))
 
-(dm elt-setter (new-value (vector <simple-table-vector>) (index <int>) => <any>)
+(dm @elt-setter (new-value vector|<tab-vec> index|<int> => <any>)
   ;; (set (elt (%data vector) index) new-value)
   (set (%velt (%data vector) (%iu index)) new-value)
   )
 
-(dm clr! ((vector <simple-table-vector>) fill-value)
+(dm clr! (vector|<tab-vec> fill-value)
   (fill (%data vector) fill-value)
   (set (%vacated vector) 0))
 
 (dv *debug-tables?* #f)
 
 ;; (df trace (port msg (args ...))
-;;  (and *debug-tables?* (apply format port msg args))))
+;;  (and *debug-tables?* (app format port msg args))))
       
 
-(dm table-protocol ((x <tab>) => (tup (test-fun <fun>) (hash-fun <fun>)))
-  (tup == id-hash))
+(dm tab-test (_|<tab> => <fun>) ==)
+(dm tab-hash (_|<tab> => <fun>) id-hash)
 
 (dv $empty-cell-marker '("empty cell"))
 (dv $vacated-cell-marker '("vacated cell"))
 
-(df hash-moduli ((hash <int>) (primary <int>) (secondary <int>)
-                 => (tup (index <int>) (offset <int>)))
-  (tup (modulo hash primary) (+ (modulo hash secondary) 1)))
+(df hash-moduli
+    (hash|<int> primary|<int> secondary|<int> => (tup index|<int> offset|<int>))
+  (tup (mod hash primary) (+ (mod hash secondary) 1)))
 
-(dm fab ((type (t< <tab>)) (size <int>) => <tab>)
+(dm fab ((type (t< <tab>)) size|<int> => <tab>)
   ;; (trace out "FAB %= SIZE %=\n" type size)
-  (let (((tup n-buckets bucket-depth) (choose-table-geometry size))
-        (table (isa type)))
-    (set (%vector table)
-         (fab-table-vector 
-          (* n-buckets (* bucket-depth 2)) $empty-cell-marker
-          n-buckets bucket-depth
-          n-buckets (- n-buckets 2)))
-    table))
+  (def (tup n-buckets bucket-depth) (choose-table-geometry size))
+  (def table (new type))
+  (set (%vector table)
+       (fab-tab-vec
+        (* n-buckets (* bucket-depth 2)) $empty-cell-marker
+        n-buckets bucket-depth
+        n-buckets (- n-buckets 2)))
+  table)
 
-(ds (with-hash ((tup ,bucket-index ,bucket-offset) (,table ,key)) ,@body)
-  `(let (((tup test-function hash-function) (table-protocol ,table))
-         ((tup (hash <int>) state) (hash-function ,key))
-         (vector (%vector table))
-         ((tup ,bucket-index ,bucket-offset)
-          (hash-moduli 
-           hash (%primary-modulus vector) (%secondary-modulus vector))))
-     ,@body))
+;; (ds (with-hash ((tup ,bucket-index ,bucket-offset) (,table ,key)) ,@body)
+;;   `(let ((test-function (tab-test ,table))
+;;           (hash-function (tab-hash ,table))
+;;           ((tup (hash <int>) state) (hash-function ,key))
+;;           (vector (%vector table))
+;;           ((tup ,bucket-index ,bucket-offset)
+;;            (hash-moduli 
+;;             hash (%primary-modulus vector) (%secondary-modulus vector))))
+;;          ,@body))
 
-(dm elt ((table <tab>) key => <any>)
-  (lab return
-    (let (((tup test-function hash-function) (table-protocol table))
-          ((tup (hash <int>) state) (hash-function key))
-          (vector       (%vector table))
-          (n-buckets    (%n-buckets vector))
-          (bucket-depth (%bucket-depth vector))
-          ((tup bucket-index bucket-offset)
-           (hash-moduli 
-            hash (%primary-modulus vector) (%secondary-modulus vector))))
-      ;; Search each bucket
-      (rep outer ((probes 0))
-        (when (< probes n-buckets)
-          (let ((index (* bucket-index (* bucket-depth 2))))
-            (rep inner ((i 0) (this-bucket-raw-index index))
-              (when (< i bucket-depth)
-                (let ((this-key (elt vector this-bucket-raw-index)))
-                  (when (== this-key $empty-cell-marker)
-                    (return nul))
-                  ;; N.B. Don't look at already vacated cells along
-                  ;; the collision chain 
-                  (when (and ;; (~== this-key $vacated-cell-marker)
-                         (test-function key this-key))
-                    (return
-                     (elt vector (+ this-bucket-raw-index bucket-depth))))
-                  (inner (+ i 1) (+ this-bucket-raw-index 1)))))
-            ;; Not in this bucket try the next one
-            (dec bucket-index bucket-offset)
-            (when (neg? bucket-index)
-              (inc bucket-index n-buckets))
-            (outer (+ probes 1)))))
-      ;; Table totally full???  That's not right
-      (error "The table is totally full this shouldn't happen"))))
+(dm elt-or (table|<tab> key default => <any>)
+  (esc return
+    (def test-function (tab-test table))
+    (def hash-function (tab-hash table))
+    (def vector        (%vector table))
+    (def n-buckets     (%n-buckets vector))
+    (def bucket-depth  (%bucket-depth vector))
+    (def (tup (hash <int>) state) (hash-function key))
+    (def (tup bucket-index bucket-offset)
+      (hash-moduli 
+       hash (%primary-modulus vector) (%secondary-modulus vector)))
+    ;; Search each bucket
+    (rep outer ((probes 0))
+      (when (< probes n-buckets)
+        (def index (* bucket-index (* bucket-depth 2)))
+        (rep inner ((i 0) (this-bucket-raw-index index))
+          (when (< i bucket-depth)
+            (def this-key (@elt vector this-bucket-raw-index))
+            (when (== this-key $empty-cell-marker)
+              (return default))
+            ;; N.B. Don't look at already vacated cells along
+            ;; the collision chain 
+            (when (and;; (~== this-key $vacated-cell-marker)
+                   (test-function key this-key))
+              (return (@elt vector (+ this-bucket-raw-index bucket-depth))))
+            (inner (+ i 1) (+ this-bucket-raw-index 1))))
+        ;; Not in this bucket try the next one
+        (decf bucket-index bucket-offset)
+        (when (neg? bucket-index)
+          (incf bucket-index n-buckets))
+        (outer (+ probes 1))))
+    ;; Table totally full???  That's not right
+    (error "The table is totally full this shouldn't happen")))
 
-(dm elt-setter (value (table <tab>) key => <any>)
+(dm elt-setter (value table|<tab> key => <any>)
   ;; (trace out "PUT COUNT %= val %=\n" (%count table) value)
-  (let ((vector (%vector table)))
-    (if (> (%count table) 
+  (def vector (%vector table))
+  (if (> (%count table)
            (* (* (%n-buckets vector) (%bucket-depth vector))
-              (table-growth-threshold table)))
+              (tab-growth-threshold table)))
         ;; Grow the table if it's too full
         (set vector (%vector (grow-table table)))
         (if (> (+ (%count table) (%vacated vector)) 
                (* (* (%n-buckets vector) (%bucket-depth vector))
-                  (table-growth-threshold table))) 
+                  (tab-growth-threshold table))) 
             ;; Rehash when there are too many vacated elements
             (set vector (%vector (rehash-table table)))))
-    (lab return
-      (let (((tup test-function hash-function) (table-protocol table))
-            ((tup (hash <int>) state) (hash-function key))
-            (bucket-depth (%bucket-depth vector))
-            (n-buckets    (%n-buckets vector))
-            ((tup bucket-index bucket-offset)
-             (hash-moduli 
-              hash (%primary-modulus vector) (%secondary-modulus vector))))
-        ;; Search each bucket
-        (rep outer (((probes <int>) 0))
-          (when (< probes n-buckets)
-            (let ((index (* bucket-index (* bucket-depth 2))))
-              ;; (trace out "LOOKING AT %=\n" index)
-              (rep inner (((i <int>) 0) ((this-bucket-raw-index <int>) index))
-                (when (< i bucket-depth)
-                  (let ((vacancy-index #f)
-                        (this-key (elt vector this-bucket-raw-index)))
-                    (case
-                      ;; end of chain and not found
-                      ((== this-key $empty-cell-marker)
-                       (let ((index 
-                              (if vacancy-index
-                                  ;; use a vacant cell if you found one
-                                  (seq (dec (%vacated vector))
-                                       vacancy-index)
-                                  ;; use this cell
-                                  this-bucket-raw-index)))
-                         ;; (trace out "FOUND EMPTY CELL @ %d\n"
-                         ;;        this-bucket-raw-index)
-                         (set (elt vector index) key)
-                         (set (elt vector (+ index bucket-depth)) value)
-                         (inc (%count table))
-                         (return value)))
-                      ((== this-key $vacated-cell-marker) ;; remember vacancy
-                       ;; N.B. Only record the _first_ vacant cell
-                       (unless vacancy-index 
-                         ;; (trace out "FOUND VACATED CELL @ %d\n" vacancy-index)
-                         (set vacancy-index this-bucket-raw-index)))
-                      ;; key already in table update value
-                      ((test-function key this-key)
-                       (set (elt vector (+ this-bucket-raw-index bucket-depth))
-                            value)
-                       ;; (trace out "FOUND KEY @ %d\n" this-bucket-raw-index)
-                       (return value)))
-                    (inner (+ i 1) (+ this-bucket-raw-index 1)))))
-              ;; Not in this bucket try the next one
-              (dec bucket-index bucket-offset)
-              (when (neg? bucket-index)
-                (inc bucket-index n-buckets))
-              (outer (+ probes 1)))))
-        ;; Table totally full???  That's not right
-        (error "The table is totally full this shouldn't happen")))))
+  (esc return
+    (def test-function (tab-test table))
+    (def hash-function (tab-hash table))
+    (def bucket-depth (%bucket-depth vector))
+    (def n-buckets    (%n-buckets vector))
+    (def (tup (hash <int>) state) (hash-function key))
+    (def (tup bucket-index bucket-offset)
+      (hash-moduli hash (%primary-modulus vector) (%secondary-modulus vector)))
+    ;; Search each bucket
+    (rep outer ((probes|<int> 0))
+      (when (< probes n-buckets)
+        (def index (* bucket-index (* bucket-depth 2)))
+        ;; (trace out "LOOKING AT %=\n" index)
+        (rep inner ((i|<int> 0) (this-bucket-raw-index|<int> index))
+          (when (< i bucket-depth)
+            (def vacancy-index #f)
+            (def this-key      (@elt vector this-bucket-raw-index))
+            (cond
+              ;; end of chain and not found
+              ((== this-key $empty-cell-marker)
+               (def index 
+                 (if vacancy-index
+                     ;; use a vacant cell if you found one
+                     (seq (decf (%vacated vector))
+                          vacancy-index)
+                     ;; use this cell
+                     this-bucket-raw-index))
+               ;; (trace out "FOUND EMPTY CELL @ %d\n"
+               ;;        this-bucket-raw-index)
+               (set (@elt vector index) key)
+               (set (@elt vector (+ index bucket-depth)) value)
+               (incf (%count table))
+               (return value))
+              ((== this-key $vacated-cell-marker);; remember vacancy
+               ;; N.B. Only record the _first_ vacant cell
+               (unless vacancy-index 
+                 ;; (trace out "FOUND VACATED CELL @ %d\n" vacancy-index)
+                 (set vacancy-index this-bucket-raw-index)))
+              ;; key already in table update value
+              ((test-function key this-key)
+               (set (@elt vector (+ this-bucket-raw-index bucket-depth)) value)
+               ;; (trace out "FOUND KEY @ %d\n" this-bucket-raw-index)
+               (return value)))
+            (inner (+ i 1) (+ this-bucket-raw-index 1))))
+        ;; Not in this bucket try the next one
+        (decf bucket-index bucket-offset)
+        (when (neg? bucket-index)
+          (incf bucket-index n-buckets))
+        (outer (+ probes 1))))
+    ;; Table totally full???  That's not right
+    (error "The table is totally full this shouldn't happen")))
 
-(dm del-key ((table <tab>) key => <log>)
-  (lab return
-    (let (((tup test-function hash-function) (table-protocol table))
-          ((tup (hash <int>) state) (hash-function key))
-          (vector       (%vector table))
-          (n-buckets    (%n-buckets vector))
-          (bucket-depth (%bucket-depth vector))
-          ((tup bucket-index bucket-offset)
-           (hash-moduli
-            hash (%primary-modulus vector) (%secondary-modulus vector))))
-      ;; Search each bucket
-      (rep outer (((probes <int>) 0))
-        (when (< probes n-buckets)
-          (let (((index <int>) (* bucket-index (* bucket-depth 2))))
-            ;; (trace out "LOOKING AT %=\n" index)
-            (rep inner (((i <int>) 0) ((this-bucket-raw-index <int>) index))
-              (when (< i bucket-depth)
-                (let ((this-key (elt vector this-bucket-raw-index)))
-                  (when (== this-key $empty-cell-marker)
-                    (return #f))
-                  ;; N.B. Don't look at already vacated cells along
-                  ;;      the collision chain 
-                  (when (and (~== this-key $vacated-cell-marker)
-                             (test-function key this-key))
-                    (set (elt vector this-bucket-raw-index)
-                         $vacated-cell-marker)
-                    ;; In a GC-ed environment clear the value cell too!
-                    (dec (%count table))
-                    (inc (%vacated vector))
-                    (return #t))
-                  (inner (+ i 1) (+ this-bucket-raw-index 1)))))
-            ;; Not in this bucket try the next one
-            (dec bucket-index bucket-offset)
-            (when (neg? bucket-index)
-              (inc bucket-index n-buckets))
-            (outer (+ probes 1)))))
-      ;; Table totally full???  That's not right
-      (error "The table is totally full this shouldn't happen"))))
+(dm del (table|<tab> key => <log>)
+  (esc return
+    (def test-function (tab-test table))
+    (def hash-function (tab-hash table))
+    (def vector        (%vector table))
+    (def n-buckets     (%n-buckets vector))
+    (def bucket-depth  (%bucket-depth vector))
+    (def (tup (hash <int>) state) 
+      (hash-function key))
+    (def (tup bucket-index bucket-offset)
+      (hash-moduli hash (%primary-modulus vector) (%secondary-modulus vector)))
+    ;; Search each bucket
+    (rep outer ((probes|<int> 0))
+      (when (< probes n-buckets)
+        (def index|<int> (* bucket-index (* bucket-depth 2)))
+        ;; (trace out "LOOKING AT %=\n" index)
+        (rep inner ((i|<int> 0) (this-bucket-raw-index|<int> index))
+          (when (< i bucket-depth)
+            (def this-key (@elt vector this-bucket-raw-index))
+            (when (== this-key $empty-cell-marker)
+              (return #f))
+            ;; N.B. Don't look at already vacated cells along
+            ;;      the collision chain 
+            (when (and (~== this-key $vacated-cell-marker)
+                       (test-function key this-key))
+              (set (@elt vector this-bucket-raw-index)
+                   $vacated-cell-marker)
+              ;; In a GC-ed environment clear the value cell too!
+              (decf (%count table))
+              (incf (%vacated vector))
+              (return #t))
+            (inner (+ i 1) (+ this-bucket-raw-index 1))))
+        ;; Not in this bucket try the next one
+        (decf bucket-index bucket-offset)
+        (when (neg? bucket-index)
+          (incf bucket-index n-buckets))
+        (outer (+ probes 1))))
+    ;; Table totally full???  That's not right
+    (error "The table is totally full this shouldn't happen")))
 
-(dm do-keyed ((function <fun>) (table <tab>) => <any>) ;; TODO: => (tup)
-  (let ((vector    (%vector table))
-        (n-buckets (%n-buckets vector))
-        (depth     (%bucket-depth vector)))
-    (rep outer (((b <int>) 0))
-      (when (< b n-buckets)
-        (rep inner (((i <int>) 0))
-          (when (< i depth)
-            (let ((key (elt vector (+ i (* b (* depth 2))))))
-              (unless (or (== key $empty-cell-marker) 
-                          (== key $vacated-cell-marker))
-                ;; (trace out "B %= I %=\n" b i)
-                (let ((index (+ i (+ (* b (* depth 2)) depth))))
-                  (function key (elt vector index)))))
-            (inner (+ i 1))))
-        (outer (+ b 1))))))
+(dm do-keyed (function|<fun> table|<tab> => <any>) ;; TODO: => (tup)
+  (def vector    (%vector table))
+  (def n-buckets (%n-buckets vector))
+  (def depth     (%bucket-depth vector))
+  (rep outer ((b|<int> 0))
+    (when (< b n-buckets)
+      (rep inner ((i|<int> 0))
+        (when (< i depth)
+          (def key (@elt vector (+ i (* b (* depth 2)))))
+          (unless (or (== key $empty-cell-marker) 
+                      (== key $vacated-cell-marker))
+            ;; (trace out "B %= I %=\n" b i)
+            (def index (+ i (+ (* b (* depth 2)) depth)))
+            (function key (@elt vector index)))
+          (inner (+ i 1))))
+      (outer (+ b 1)))))
 
-(dm do ((function <fun>) (table <tab>) => <any>) ;; TODO: => (tup)
-  (let ((vector    (%vector table))
-        (n-buckets (%n-buckets vector))
-        (depth     (%bucket-depth vector)))
-    (rep outer (((b <int>) 0))
-      (when (< b n-buckets)
-        (rep inner (((i <int>) 0))
-          (when (< i depth)
-            (let ((key (elt vector (+ i (* b (* depth 2))))))
-              (unless (or (== key $empty-cell-marker) 
-                          (== key $vacated-cell-marker))
-                (let ((index (+ i (+ (* b (* depth 2)) depth))))
-                  (function (elt vector index)))))
-            (inner (+ i 1))))
-        (outer (+ b 1))))))
+(dm do (function|<fun> table|<tab> => <any>) ;; TODO: => (tup)
+  (def vector    (%vector table))
+  (def n-buckets (%n-buckets vector))
+  (def depth     (%bucket-depth vector))
+  (rep outer ((b|<int> 0))
+    (when (< b n-buckets)
+      (rep inner ((i|<int> 0))
+        (when (< i depth)
+          (def key (@elt vector (+ i (* b (* depth 2)))))
+          (unless (or (== key $empty-cell-marker) 
+                      (== key $vacated-cell-marker))
+            (def index (+ i (+ (* b (* depth 2)) depth)))
+            (function (@elt vector index)))
+          (inner (+ i 1))))
+      (outer (+ b 1)))))
 
-(dm del-keys ((table <tab>) => <any>) ;; TODO: (tup)
+(dm zap (table|<tab> => <any>) ;; TODO: (tup)
   (clr! (%vector table) $empty-cell-marker)
   (set (%count table) 0))
 
-(dm len ((table <tab>) => <int>)
+(dm len (table|<tab> => <int>)
   (%count table))
 
-(dc <tab-state> (<any>))
-  (slot <tab-state> (%vector <simple-table-vector>))
-  (slot <tab-state> (%bucket <int>) 0)
-  (slot <tab-state> (%index <int>) 0)
+(dc <tab-enum> (<enum>))
+(dp @vec  (x|<tab-enum> => <tab-vec>))
+(dp @buc  (x|<tab-enum> => <int>))
+(dp @idx  (x|<tab-enum> => <int>))
+(dp @fin? (x|<tab-enum> => <log>) #f)
+(dv $fin-enum (new <tab-enum> @fin? #t))
 
-(dm ini-state ((table <tab>))
+(dm enum (table|<tab> => <tab-enum>)
   (if (= (len table) 0)
-      #f
-      (lab return
-        (let ((vector    (%vector table))
-              (n-buckets (%n-buckets vector))
-              (depth     (%bucket-depth vector)))
-          (rep outer (((b <int>) 0))
-            (when (< b n-buckets)
-              (rep inner (((i <int>) 0))
-                (when (< i depth)
-                  (let ((key (elt vector (+ i (* b (* depth 2))))))
-                    (unless (or (== key $empty-cell-marker)
-                                (== key $vacated-cell-marker))
-                      (return (isa <tab-state>
-                                (set %vector vector)
-                                (set %bucket b)
-                                (set %index  i))))
-                    (inner (+ i 1)))))
-              (outer (+ b 1))))
-          #f))))
-
-(dm nxt-state ((table <tab>) (state <tab-state>) => <any>)
-  (let ((vector    (%vector state))
-        (n-buckets (%n-buckets vector))
-        (depth     (%bucket-depth vector))
-        (bucket    (%bucket state))
-        (index     (%index state)))
-    ;; (inc index)
-    ;; (when (= index depth)
-    ;;   (inc bucket)
-    ;;   (set index 0))
-    (lab return
-      (rep outer (((b <int>) bucket) (first? #t))
-        (when (< b n-buckets)
-          (rep inner (((i <int>) (if first? (+ index 1) 0)))
-            (when (< i depth)
-              (let ((key (elt vector (+ i (* b (* depth 2))))))
+      $fin-enum
+      (esc return
+        (def vector    (%vector table))
+        (def n-buckets (%n-buckets vector))
+        (def depth     (%bucket-depth vector))
+        (rep outer ((b|<int> 0))
+          (when (< b n-buckets)
+            (rep inner ((i|<int> 0))
+              (when (< i depth)
+                (def key (@elt vector (+ i (* b (* depth 2)))))
                 (unless (or (== key $empty-cell-marker)
                             (== key $vacated-cell-marker))
-                  (set (%bucket state) b)
-                  (set (%index state)  i)
-                  (return state))
-                (inner (+ i 1)))))
-          (outer (+ b 1) #f)))
-      #f)))
+                  (return (new <tab-enum> @vec vector @buc b @idx i)))
+                (inner (+ i 1))))
+            (outer (+ b 1))))
+        $fin-enum)))
 
-(dm fin-state? ((table <tab>) state => <log>)
-  (not state))
+(dm nxt (e|<tab-enum> => <tab-enum>)
+  (def vector    (@vec e))
+  (def n-buckets (%n-buckets vector))
+  (def depth     (%bucket-depth vector))
+  (def bucket    (@buc e))
+  (def index     (@idx e))
+  (esc return
+    (rep outer ((b|<int> bucket) (first? #t))
+      (when (< b n-buckets)
+        (rep inner ((i|<int> (if first? (+ index 1) 0)))
+          (when (< i depth)
+            (def key (@elt vector (+ i (* b (* depth 2)))))
+            (unless (or (== key $empty-cell-marker)
+                        (== key $vacated-cell-marker))
+              (return (renew e @vec vector @buc b @idx i)))
+            (inner (+ i 1))))
+        (outer (+ b 1) #f)))
+    $fin-enum))
 
-(dm now-key ((table <tab>) (state <tab-state>) => <any>)
-  (let ((vector (%vector state))
-        (depth  (%bucket-depth vector)))
-    (elt vector (+ (%index state) (* (%bucket state) (* depth 2))))))
+(dm fin? (e|<tab-enum> => <log>)
+  (@fin? e))
 
-(dm now-elt ((table <tab>) (state <tab-state>) => <any>)
-  (let ((vector (%vector state))
-        (depth  (%bucket-depth vector)))
-    (elt vector (+ (%index state) (+ depth (* (%bucket state) (* depth 2)))))))
+(dm now-key (e|<tab-enum> => <any>)
+  (def vector (@vec e))
+  (def depth  (%bucket-depth vector))
+  (@elt vector (+ (@idx e) (* (@buc e) (* depth 2)))))
 
-(dm now-elt-setter (value (table <tab>) (state <tab-state>) => <any>)
-  (let ((vector (%vector state))
-        (index  (%index state))
-        (depth  (%bucket-depth vector)))
-    (set (elt vector (+ index (+ depth (* (%bucket state) (* depth 2)))))
-         value)))
+(dm now (e|<tab-enum> => <any>)
+  (def vector (@vec e))
+  (def depth  (%bucket-depth vector))
+  (@elt vector (+ (@idx e) (+ depth (* (@buc e) (* depth 2))))))
 
-(dm copy-state ((table <tab>) (state <tab-state>) => <tab-state>)
-  (isa <tab-state>
-    (set %vector (%vector state))
-    (set %bucket (%bucket state))
-    (set %index  (%index state))))  
+(dm now-setter (value e|<tab-enum>)
+  (def vector (@vec e))
+  (def index  (@idx e))
+  (def depth  (%bucket-depth vector))
+  (set (@elt vector (+ index (+ depth (* (@buc e) (* depth 2))))) value))
 
 ;;; Internal functions
 
-(dm tab-keys ((table <tab>) => <lst>)
+(dm tab-keys (table|<tab> => <lst>)
   (collecting () (do-keyed (fun (k v) (collect k)) table)))
 
-(dm grow-table ((table <tab>) => <tab>)
+(dm grow-table (table|<tab> => <tab>)
   ;; (let ((vec (%vector table)))
   ;;   (trace out "GROWING TABLE %= %= OF %=\n" (object-name table)
   ;;        (%count table) (* (%n-buckets vec) (%bucket-depth vec))))
-  (let ((vector (%vector table))
-        ((tup new-n-buckets new-bucket-depth)
-         (choose-table-geometry
-          (1st (floor (* (* (%n-buckets vector) (%bucket-depth vector))
-                         (table-growth-factor table))))))
-        (new-vector
-         (fab-table-vector
-          (* new-n-buckets (* new-bucket-depth 2))
-          $empty-cell-marker
-          new-n-buckets new-bucket-depth new-n-buckets (- new-n-buckets 2))))
-    ;; (trace out "OLD DATA %=\n" (%data (%vector table)))
-    (copy-to-new-vector table new-vector)
-    (set (%vector table) new-vector)
-    ;; (trace out "NEW DATA %=\n" (%data (%vector table)))
-    ;;--- It would be nice to be able to deallocate the old vector
-    table))
+  (def vector (%vector table))
+  (def (tup new-n-buckets new-bucket-depth)
+    (choose-table-geometry
+     (floor (* (* (%n-buckets vector) (%bucket-depth vector))
+               (tab-growth-factor table)))))
+  (def new-vector
+    (fab-tab-vec
+     (* new-n-buckets (* new-bucket-depth 2))
+     $empty-cell-marker
+     new-n-buckets new-bucket-depth new-n-buckets (- new-n-buckets 2)))
+  ;; (trace out "OLD DATA %=\n" (%data (%vector table)))
+  (copy-to-new-vector table new-vector)
+  (set (%vector table) new-vector)
+  ;; (trace out "NEW DATA %=\n" (%data (%vector table)))
+  ;;--- It would be nice to be able to deallocate the old vector
+  table)
 
-(dm rehash-table ((table <tab>) => <tab>)
-  (let ((vector (%vector table))
-        (new-vector
-         (fab-table-vector 
-          (* (%n-buckets vector) (* (%bucket-depth vector) 2))
-          $empty-cell-marker 
-          (%n-buckets vector) (%bucket-depth vector)
-          (%primary-modulus vector) 
-          (%secondary-modulus vector))))
-    (copy-to-new-vector table new-vector)
-    (set (%vector table) new-vector)
-    table))
+(dm rehash-table (table|<tab> => <tab>)
+  (def vector (%vector table))
+  (def new-vector
+    (fab-tab-vec
+     (* (%n-buckets vector) (* (%bucket-depth vector) 2))
+     $empty-cell-marker 
+     (%n-buckets vector) (%bucket-depth vector)
+     (%primary-modulus vector) 
+     (%secondary-modulus vector)))
+  (copy-to-new-vector table new-vector)
+  (set (%vector table) new-vector)
+  table)
 
 (df choose-table-geometry
-    ((capacity <int>) => (tup (n-buckets <int>) (bucket-depth <int>)))
+    (capacity|<int> => (tup n-buckets|<int> bucket-depth|<int>))
   ;;--- These numbers are completely arbitrary and need to be tuned up
-  (lab return
-    (let ((depth
-           (case
-             ((< capacity 2000)    1)
-             ((< capacity 5000)    2)
-             ((< capacity 15000)   4)
-             ((< capacity 50000)   8)
-             ((< capacity 250000) 16)
-             (#t                  32))))
-      (do (fun ((p <int>))
-            (when (> p (1st (ceiling/ capacity depth)))
-              (return (tup (+ p 2) depth))))
-          *twin-primes*)
-      (error "Not enough primes to compute new table size"))))
+  (esc return
+    (def depth
+      (cond
+        ((< capacity 2000)    1)
+        ((< capacity 5000)    2)
+        ((< capacity 15000)   4)
+        ((< capacity 50000)   8)
+        ((< capacity 250000) 16)
+        (#t                  32)))
+    (do (fun ((p <int>))
+          (when (> p (1st (ceiling/ capacity depth)))
+            (return (tup (+ p 2) depth))))
+        *twin-primes*)
+    (error "Not enough primes to compute new table size")))
 
-(dm copy-to-new-vector ((table <tab>) new-vector => <any>) ;; TODO: => (tup)
+(dm copy-to-new-vector (table|<tab> new-vector => <any>) ;; TODO: => (tup)
   (do-keyed
    (fun (k v)
-     (lab return
-       (let (((tup test-function hash-function) (table-protocol table))
-             ((tup (hash <int>) state) (hash-function k))
-             (new-n-buckets         (%n-buckets new-vector))
-             (new-bucket-depth      (%bucket-depth new-vector))
-             (new-primary-modulus   (%primary-modulus new-vector))
-             (new-secondary-modulus (%secondary-modulus new-vector))
-             ((tup new-bucket-index new-bucket-offset)
-              (hash-moduli hash new-primary-modulus new-secondary-modulus)))
-         ;; (trace out "VISITING (%= %=)\n" k v)
-         ;; Search each bucket
-         (rep outer (((probes <int>) 0))
-           (when (< probes new-n-buckets)
-             (let ((bucket-start (* new-bucket-index (* new-bucket-depth 2))))
-               (rep inner (((i <int>) 0) ((index <int>) bucket-start))
-                 (when (< i new-bucket-depth)
-                   (let ((this-key (elt new-vector index)))
-                     (when (== this-key $empty-cell-marker)
-                       ;; (trace out "COPYING TO (%= %=) %=\n" k v index)
-                       (set (elt new-vector index) k)
-                       (set (elt new-vector (+ index new-bucket-depth)) v)
-                       (return #f))
-                     (inner (+ i 1) (+ index 1)))))
-               ;; No room in this bucket try the next one
-               (dec new-bucket-index new-bucket-offset)
-               (when (neg? new-bucket-index)
-                 (inc new-bucket-index new-n-buckets))
-               (outer (+ probes 1)))))
-         ;; Table totally full???  That's not right
-         (error "The table is totally full this shouldn't happen"))))
+     (esc return
+       (def test-function          (tab-test table))
+       (def hash-function          (tab-hash table))
+       (def new-n-buckets          (%n-buckets new-vector))
+       (def new-bucket-depth       (%bucket-depth new-vector))
+       (def new-primary-modulus    (%primary-modulus new-vector))
+       (def new-secondary-modulus  (%secondary-modulus new-vector))
+       (def (tup hash|<int> state) (hash-function k))
+       (def (tup new-bucket-index new-bucket-offset)
+         (hash-moduli hash new-primary-modulus new-secondary-modulus))
+       ;; (trace out "VISITING (%= %=)\n" k v)
+       ;; Search each bucket
+       (rep outer ((probes|<int> 0))
+         (when (< probes new-n-buckets)
+           (def bucket-start (* new-bucket-index (* new-bucket-depth 2)))
+           (rep inner ((i|<int> 0) (index|<int> bucket-start))
+             (when (< i new-bucket-depth)
+               (def this-key (@elt new-vector index))
+               (when (== this-key $empty-cell-marker)
+                 ;; (trace out "COPYING TO (%= %=) %=\n" k v index)
+                 (set (@elt new-vector index) k)
+                 (set (@elt new-vector (+ index new-bucket-depth)) v)
+                 (return #f))
+               (inner (+ i 1) (+ index 1))))
+           ;; No room in this bucket try the next one
+           (decf new-bucket-index new-bucket-offset)
+           (when (neg? new-bucket-index)
+             (incf new-bucket-index new-n-buckets))
+           (outer (+ probes 1))))
+       ;; Table totally full???  That's not right
+       (error "The table is totally full this shouldn't happen")))
    table))
 
 ;;; HASHING FUNCTIONS
 
 ;; TODO: NEED ADDRESS-OF
-(df current-gc-state () $permanent-hash-state)
+(df tab-gc-state () $permanent-hash-state)
 
 (dm id-hash (x)
-  (tup (address-of x) (current-gc-state)))
+  (tup (address-of x) (tab-gc-state)))
 
-(dm id-hash ((x <log>))
+(dm id-hash (x|<log>)
   (tup (if x 131 149) $permanent-hash-state))
 
 ;; TODO: CHECK FOR CORRECTNESS
-(df rot ((x <int>) (a <int>) => <int>)
-  (logior (ash x (neg a)) (ash x a)))
+(df rot (x|<int> a|<int> => <int>)
+  (| (>> x a) (<< x a)))
 
-(dm id-hash ((x <int>))
+(dm id-hash (x|<int>)
   ;; Offset it so that 0 doesn't hash to 0
   (tup (abs (+ (- (rot x 15) x) 31)) $permanent-hash-state))
   
-(dm id-hash ((x <chr>))
+(dm id-hash (x|<chr>)
   (id-hash (as <int> x)))
 
-(dm id-hash ((x <flo>))
+(dm id-hash (x|<flo>)
   (tup (+ (flo-bits x) 89) $permanent-hash-state))
 
-(df case-insensitive-string-hash ((x <str>) => (tup (hi <int>) hash-state))
-  (let ((s 0) (e (len x)))
-    (rep loop (((i <int>) s) ((hash <int>) 0))
-      (if (< i e)
-          (loop (+ i 1)
-                (modulo (+ (ash hash 6) 
-                           (logand (as <int> (elt x i)) 159)) ;; #x9f
-                        970747))
-          (tup hash $permanent-hash-state)))))
+(dm key-type (x|<str-tab> => <type>) <str>)
+(dm elt-type (x|<str-tab> => <type>) <sym>)
 
-(df case-insensitive-string-equal ((x <str>) (y <str>) => <log>)
-  (let ((sy 0) (ey (len y)))
-    (when (== (len x) (- ey sy))
-      (rep loop (((i <int>) sy))
-        (or (== i ey)
-            (let (((cx <chr>) (elt x (- i sy)))
-                  ((cy <chr>) (elt y i)))
-              (and (or (== cx cy) (== (as-lowercase cx) (as-lowercase cy)))
-                   (loop (+ i 1)))))))))
+(df case-insensitive-string-hash (x|<str> => (tup hi|<int> hash-state))
+  (def s 0) (def e (len x))
+  (rep loop ((i|<int> s) (hash|<int> 0))
+    (if (< i e)
+        (loop (+ i 1);; #x9f
+              (mod (+ (<< hash 6) (& (as <int> (elt x i)) 159)) 970747))
+        (tup hash $permanent-hash-state))))
 
-(dm table-protocol ((_ <str-tab>) => (tup (equal-fun <fun>) (hash-fun <fun>)))
-  (tup case-insensitive-string-equal case-insensitive-string-hash))
+(df case-insensitive-string-equal (x|<str> y|<str> => <log>)
+  (def sy 0) (def ey (len y))
+  (when (== (len x) (- ey sy))
+    (rep loop ((i|<int> sy))
+      (or (== i ey)
+          (let ((cx|<chr> (elt x (- i sy)))
+                 (cy|<chr> (elt y i)))
+            (and (or (== cx cy) (== (to-lower cx) (to-lower cy)))
+                 (loop (+ i 1))))))))
+
+(dm tab-test (_|<str-tab> => <fun>) case-insensitive-string-equal)
+(dm tab-hash (_|<str-tab> => <fun>) case-insensitive-string-hash)
+
+;;;;
+;;;; SETS
+;;;;
+
+(dm add (c|<set> x => <set>)
+  (set (elt c x) #t))
+
+(dm mem? (c|<set> x => <log>)
+  (elt-or c x #f))
 

@@ -13,61 +13,60 @@
 ;;; each <module-binding> lazily, and we assume the absence of a box 
 ;;; means the binding is uninitialized.  When we implement a "LISP in
 ;;; Small Pieces"-style fast intepreter, we may want to change this around.
-(dm env-global-binding-value ((b <module-binding>) => <any>)
-  (let ((box (binding-global-box b)))
-    (if box
-	(global-box-value box)
-	(error "Unbound binding: %=" (binding-name b)))))
+(dm env-global-binding-value (b|<module-binding> => <any>)
+  (def box (binding-global-box b))
+  (if box
+      (global-box-value box)
+      (error "Unbound binding: %=" (binding-name b))))
 
-(dm env-global-binding-value-setter (value (b <module-binding>) => <any>)
-  (let ((box (binding-global-box b)))
-    (unless box
-      ;; Lazy box creation.
-      ;; TODO - Should we mark this binding non-free at some point?  Ask jrb.
-      (set box (set (binding-global-box b) (isa <global-box>))))
-    (set (global-box-value box) value)))
+(dm env-global-binding-value-setter (value b|<module-binding> => <any>)
+  (def box (binding-global-box b))
+  (unless box
+    ;; Lazy box creation.
+    ;; TODO - Should we mark this binding non-free at some point?  Ask jrb.
+    (set box (set (binding-global-box b) (new <global-box>))))
+  (set (global-box-value box) value))
 
-(dm env-global-binding-bound? ((b <module-binding>) => <log>)
-  (let ((box (binding-global-box b)))
-    (if box #t #f)))
+(dm env-global-binding-bound? (b|<module-binding> => <log>)
+  (def box (binding-global-box b))
+  (if box #t #f))
 
 ;;; <runtime-binding>s don't need boxes--they already have storage space
 ;;; allocated in the C runtime.
-(dm env-runtime-value ((x <loc>))
-  (locative-value x))
+(dm env-runtime-value (x|<loc>)
+  (loc-val x))
 
-(dm env-runtime-value-setter (v (x <loc>))
-  (set (locative-value x) v))
+(dm env-runtime-value-setter (v x|<loc>)
+  (set (loc-val x) v))
 
 (dc <loc-env> (<any>))
-  (slot <loc-env> env-parent         #f)
-  (slot <loc-env> env-function       #f)
-  (slot <loc-env> (env-names  <lst>) '())
-  (slot <loc-env> (env-values <vec>) '())
+  (dp env-parent (x|<loc-env> => <any>)   #f)
+  (dp env-function (x|<loc-env> => <any>) #f)
+  (dp env-names (x|<loc-env> =>  <lst>)   '())
+  (dp env-values (x|<loc-env> => <vec>)   '())
 
-(dv $nul-loc-env (isa <loc-env>))
+(dv $nul-loc-env (new <loc-env>))
 
-(dm env-frame! 
-    ((env <loc-env>) function (names <lst>) (args <lst>) => <loc-env>)
-  (let ((values (as <vec> args)))
-    (isa <loc-env>
-      (set env-parent   env)
-      (set env-function function)
-      (set env-values   values)
-      (set env-names    names))))
+(dm env-frame! (env|<loc-env> function names|<lst> args|<lst> => <loc-env>)
+  (def values (as <vec> args))
+  (new <loc-env>
+    env-parent   env
+    env-function function
+    env-values   values
+    env-names    names))
 
-(dm env-local-value ((env <loc-env>) (i <int>) (j <int>))
+(dm env-local-value (env|<loc-env> i|<int> j|<int>)
   (if (= i 0)
       (elt (env-values env) j)
       (env-local-value (env-parent env) (- i 1) j)))
 
-(dm env-local-value-setter (v (env <loc-env>) (i <int>) (j <int>))
+(dm env-local-value-setter (v env|<loc-env> i|<int> j|<int>)
   (if (= i 0)
       (set (elt (env-values env) j) v)
       (set (env-local-value (env-parent env) (- i 1) j) v)))
 
 ;; TODO: SHOULD GO AWAY SOON
-(dm env-binding-value ((env <loc-env>) (name <sym>) => <any>)
+(dm env-binding-value (env|<loc-env> name|<sym> => <any>)
   (if (== env $nul-loc-env)
       nul
       (rep loop ((names (env-names env)) (i 0))
@@ -77,7 +76,7 @@
 		(elt (env-values env) i)
 		(loop (tail names) (+ i 1)))))))
 
-(dm env-binding-value-setter (v (env <loc-env>) (name <sym>))
+(dm env-binding-value-setter (v env|<loc-env> name|<sym>)
   (rep loop ((names (env-names env)) (i 0))
     (if (empty? names)
 	(set (env-binding-value (env-parent env) name) v)
@@ -89,29 +88,28 @@
 
 ;; TODO - Rename ast-eval to ast-eval-(in|env) and ast-evalutate to ast-eval.
 ;; Or something like that.
-(dm ast-evaluate ((e <program>))
+(dm ast-evaluate (e|<program>)
   (ast-eval e $nul-loc-env))
 
-(dg ast-eval ((e <program>) (env <loc-env>)))
+(dg ast-eval (e|<program> env|<loc-env>))
 
-(dm ast-eval ((e <constant>) (env <loc-env>))
+(dm ast-eval (e|<constant> env|<loc-env>)
   (constant-value e))
 
-(dm ast-eval ((e <raw-constant>) (env <loc-env>))
+(dm ast-eval (e|<raw-constant> env|<loc-env>)
   (constant-value e))
 
-(dm ast-eval ((e <compile-time>) (ee <loc-env>))
+(dm ast-eval (e|<compile-time> ee|<loc-env>)
   (ast-evaluate (compile-time-program e)))
 
-(dm ast-eval-specs 
-    ((specs <lst>) (nary? <log>) (env <loc-env>) => <any>)
-  (let ((nreq (if nary? (- (len specs) 1) (len specs))))
-    (rep loop ((res '()) (specs specs) (i 0))
-      (if (= i nreq)
-	  (rev! res)
-	  (let ((spec (head specs))
-		(type (if spec (ast-eval spec env) <any>)))
-	    (loop (pair type res) (tail specs) (+ i 1)))))))
+(dm ast-eval-specs (specs|<lst> nary?|<log> env|<loc-env> => <any>)
+  (def nreq (if nary? (- (len specs) 1) (len specs)))
+  (rep loop ((res '()) (specs specs) (i 0))
+    (if (= i nreq)
+        (rev! res)
+        (let ((spec (head specs))
+              (type (if spec (ast-eval spec env) <any>)))
+          (loop (pair type res) (tail specs) (+ i 1))))))
 
 (dv *stack* (fab <buf> 0))
 
@@ -121,220 +119,214 @@
 ;;; in the compiler or runtime.  Look for it, and see if we can use it instead
 ;;; of this code.
 ;;; TODO - Add function name argument for better error messages.
-(df arrange-arguments (f (nary? <log>) (arity <int>) (args <lst>)
-                       => <lst>)
-  (let ((count (len args)))
-    (if nary?
-        (if (< count arity)
-            (error "%= called with %=; needs at least %d arguments"
-                   (as-fun-name f) args arity)
-            (cat2 (sub args 0 arity) (lst (sub args arity count))))
-        (if (~== count arity)
-            (error "%= called with %=; needs %d arguments"
-                   (as-fun-name f) args arity)
-            args))))
+(df arrange-arguments (f nary?|<log> arity|<int> args|<lst> => <lst>)
+  (def count (len args))
+  (if nary?
+      (if (< count arity)
+          (error "%= called with %=; needs at least %d arguments"
+                 (as-fun-name f) args arity)
+          (cat2 (sub args 0 arity) (lst (sub args arity count))))
+      (if (~== count arity)
+          (error "%= called with %=; needs %d arguments"
+                 (as-fun-name f) args arity)
+          args)))
 
 (ds (ifun ,env ,f ,nary? ,arity ,names ,body)
   `(fun ((arg-vector ...))
-     (let ((args (arrange-arguments f nary? arity (as <lst> arg-vector)))
-           (nms
-	    (%next-methods))
-	   (frame 
-	    (env-frame! ;; TODO: SLOW HACK
-	     ,env ,f (cat2 ,names (lst '%next-methods))
-             (cat2 args (lst nms)))))
-       ;; (push-last! *stack* frame)
-       (,body frame)
-       ;; (pop-last! *stack*)
-       )))
+     (def args (arrange-arguments f nary? arity (as <lst> arg-vector)))
+     (def nms
+       (%next-methods))
+     (def frame 
+       (env-frame! ;; TODO: SLOW HACK
+        ,env ,f (cat2 ,names (lst '%next-methods))
+        (cat2 args (lst nms))))
+     ;; (push-last! *stack* frame)
+     (,body frame)
+     ;; (pop-last! *stack*)
+     ))
 
 ;; TODO -- CLEAN UP BELOW
-(dm as-fun-name ((x <fun>) => <any>)            
+(dm as-fun-name (x|<fun> => <any>)            
   (fun-name x))
-(dm as-fun-name ((x <ast-function>) => <any>)   
+(dm as-fun-name (x|<ast-function> => <any>)   
   (as-fun-name (function-debug-name x)))
-(dm as-fun-name ((x <module-binding>) => <any>) 
+(dm as-fun-name (x|<module-binding> => <any>) 
   (binding-name x))
-(dm as-fun-name ((x <constant>) => <any>)
+(dm as-fun-name (x|<constant> => <any>)
   (as-fun-name (constant-value x)))
-(dm as-fun-name ((x <sym>) => <sym>)            
+(dm as-fun-name (x|<sym> => <sym>)            
   x)
-(dm as-fun-name ((x <any>) => <any>)
+(dm as-fun-name (x|<any> => <any>)
   #f)
 
-(dm export-proto-method (f names specs nary? value body env)
-  (let ((arity (if nary? (- (len specs) 1) (len specs)))
-        (efun  (ifun env f nary? arity names body)))
-    (set (fun-name  efun) (as-fun-name f))
-    (set (fun-sig efun)
-         (isa <sig>
-           (set sig-names names)
-           (set sig-specs (ast-eval-specs specs nary? env))
-           (set sig-nary? nary?)
-           (set sig-arity arity)
-           (set sig-value (if value (ast-eval value env) <any>))
-           (set sig-unification-vars '())))
-    efun))
+(dm export-goo-method (f names specs nary? value body env)
+  (def arity (if nary? (- (len specs) 1) (len specs)))
+  (def efun  (ifun env f nary? arity names body))
+  (set (fun-name  efun) (as-fun-name f))
+  (set (fun-sig efun)
+       (new <sig>
+         sig-names names
+         sig-specs (ast-eval-specs specs nary? env)
+         sig-nary? nary?
+         sig-arity arity
+         sig-val   (if value (ast-eval value env) <any>)
+         sig-unification-vars '()))
+  efun)
 
-(dm ast-eval ((e <ast-method>) (env <loc-env>))
-  (let ((params (function-bindings e))
-	(eval   (fun ((env <loc-env>)) (ast-eval (function-body e) env))))
-    (export-proto-method
-     e (map binding-name params) (map binding-type params) 
-     (function-nary? e) (function-value e) eval env)))
+(dm ast-eval (e|<ast-method> env|<loc-env>)
+  (def params (function-bindings e))
+  (def eval   (fun ((env <loc-env>)) (ast-eval (function-body e) env)))
+  (export-goo-method
+   e (map binding-name params) (map binding-type params) 
+   (function-nary? e) (function-value e) eval env))
 
-;; (dm ast-eval ((e <ast-primitive>) (env <loc-env>))
-;;   (let ((params (function-bindings e))
-;; 	   (eval   (fun ((env <loc-env>)) (ast-eval (function-body e) env))))
-;;     (make-primitive (map binding-name params) (function-nary? e) eval env)))
+;; (dm ast-eval (e|<ast-primitive> env|<loc-env>)
+;;   (def params (function-bindings e))
+;;   (def eval   (fun ((env <loc-env>)) (ast-eval (function-body e) env)))
+;;   (make-primitive (map binding-name params) (function-nary? e) eval env))
 
-(dm ast-eval ((e <ast-generic>) (env <loc-env>))
-  (let ((params (function-bindings e))
-	(nary?  (function-nary? e))
-	(names  (map binding-name params))
-	(specs  (ast-eval-specs (map binding-type params) nary? env)))
-    (fab-gen (as-fun-name e) names specs nary? '())))
+(dm ast-eval (e|<ast-generic> env|<loc-env>)
+  (def params (function-bindings e))
+  (def nary?  (function-nary? e))
+  (def names  (map binding-name params))
+  (def specs  (ast-eval-specs (map binding-type params) nary? env))
+  (fab-gen (as-fun-name e) names specs nary? '()))
 
-(dm env-local-reference-value ((env <loc-env>) (ref <local-reference>) => <any>)
+(dm env-local-reference-value (env|<loc-env> ref|<local-reference> => <any>)
   (env-local-value
    env (reference-frame-number ref) (reference-frame-offset ref)))
 
-(dm env-local-reference-value-setter 
-    (val (env <loc-env>) (ref <local-reference>))
+(dm env-local-reference-value-setter (val env|<loc-env> ref|<local-reference>)
   (set (env-local-value 
 	env (reference-frame-number ref) (reference-frame-offset ref)) 
        val))
 
-(dm ast-eval ((e <local-reference>) (env <loc-env>))
+(dm ast-eval (e|<local-reference> env|<loc-env>)
   (env-local-reference-value env e))
 
-(dm ast-eval ((e <global-reference>) (env <loc-env>))
+(dm ast-eval (e|<global-reference> env|<loc-env>)
   (env-global-binding-value (reference-binding e)))
 
-(dm ast-eval ((e <runtime-reference>) (env <loc-env>))
+(dm ast-eval (e|<runtime-reference> env|<loc-env>)
   (env-runtime-value (binding-locative (reference-binding e))))
 
-(dm ast-eval ((e <bound?>) (env <loc-env>))
+(dm ast-eval (e|<bound?> env|<loc-env>)
   (ast-eval-bound? e (reference-binding (bound?-reference e)) env))
 
-(dm ast-eval-bound? ((e <bound?>) (binding <module-binding>) (env <loc-env>))
-  (select (binding-kind binding)
+(dm ast-eval-bound? (e|<bound?> binding|<module-binding> env|<loc-env>)
+  (case (binding-kind binding)
     (('global) (env-global-binding-bound? binding))
     (#t        #t)))
 
-(dm ast-eval-bound? ((e <bound?>) (binding <local-binding>) (env <loc-env>))
+(dm ast-eval-bound? (e|<bound?> binding|<local-binding> env|<loc-env>)
   #t)
 
-(dm ast-eval ((e <global-assignment>) (env <loc-env>))
-  (let ((value (ast-eval (assignment-form e) env)))
-    (set (env-global-binding-value (assignment-binding e)) value)))
+(dm ast-eval (e|<global-assignment> env|<loc-env>)
+  (def value (ast-eval (assignment-form e) env))
+  (set (env-global-binding-value (assignment-binding e)) value))
 
-(dm ast-eval ((e <ast-macro-definition>) (env <loc-env>))
+(dm ast-eval (e|<ast-macro-definition> env|<loc-env>)
   #f) ;; PERFORMED DURING OBJECTIFICATION
 
-(dm ast-eval ((e <runtime-assignment>) (env <loc-env>))
-  (let ((value (ast-eval (assignment-form e) env)))
-    (set (env-runtime-value (binding-locative (assignment-binding e)))
-	 value)))
+(dm ast-eval (e|<runtime-assignment> env|<loc-env>)
+  (def value (ast-eval (assignment-form e) env))
+  (set (env-runtime-value (binding-locative (assignment-binding e))) value))
 
-(dm ast-eval ((e <local-assignment>) (env <loc-env>))
-  (let ((value (ast-eval (assignment-form e) env)))
-    (set (env-local-reference-value env (assignment-reference e)) value)))
+(dm ast-eval (e|<local-assignment> env|<loc-env>)
+  (def value (ast-eval (assignment-form e) env))
+  (set (env-local-reference-value env (assignment-reference e)) value))
 
-(dm env-define-binding! ((b <module-binding>) v)
-  (select (binding-kind b)
+(dm env-define-binding! (b|<module-binding> v)
+  (case (binding-kind b)
     (('runtime) (set (env-runtime-value (binding-locative b)) v))
     (('global)  (set (env-global-binding-value b) v))
     (#t         (error "Defining invalid binding kind %=" (binding-kind b)))))
 
-(dm ast-eval ((e <definition>) (env <loc-env>))
-  (let ((value (ast-eval (assignment-form e) env)))
-    (env-define-binding! (assignment-binding e) value)
-    #f))
+(dm ast-eval (e|<definition> env|<loc-env>)
+  (def value (ast-eval (assignment-form e) env))
+  (env-define-binding! (assignment-binding e) value)
+  #f)
 
 ;; (dc <box> (<any>))
-;;   (slot <box> box-value)
+;;   (dp box-value (x|<box> => <any>))
 ;; 
-;; (dm ast-eval ((e <box-read>) (env <loc-env>))
+;; (dm ast-eval (e|<box-read> env|<loc-env>)
 ;;   (box-value (ast-eval (box-reference e) env)))
 ;; 
-;; (dm ast-eval ((e <box-write>) (env <loc-env>))
+;; (dm ast-eval (e|<box-write> env|<loc-env>)
 ;;   (set (box-value (ast-eval (box-reference e) env))
 ;;        (ast-eval (box-form e) env)))
 ;; 
-;; (dm ast-eval ((e <box-creation>) (env <loc-env>))
+;; (dm ast-eval (e|<box-creation> env|<loc-env>)
 ;;   (set (env-binding-value 
 ;;          env (binding-name (reference-binding (box-reference e))))
-;;        (isa <box>)))
+;;        (new <box>)))
 
-(dm ast-eval ((e <alternative>) (env <loc-env>))
+(dm ast-eval (e|<alternative> env|<loc-env>)
   (if (ast-eval (alternative-condition e) env)
       (ast-eval (alternative-consequent e) env)
       (ast-eval (alternative-alternant e) env)))
 
-(dm ast-eval ((e <sequential>) (env <loc-env>))
+(dm ast-eval (e|<sequential> env|<loc-env>)
   (rep eval ((e e))
-    (let ((nxt (tail e))
-	  (val (ast-eval (head e) env)))
-      (if (empty? nxt)
-	  val
-	  (eval nxt)))))
+    (def nxt (tail e))
+    (def val (ast-eval (head e) env))
+    (if (empty? nxt)
+        val
+        (eval nxt))))
 
-(dm ast-eval ((e <arguments>) (env <loc-env>))
+(dm ast-eval (e|<arguments> env|<loc-env>)
   (rep eval ((res '()) (args e))
     (if (empty? args)
 	(rev! res)
 	(eval (pair (ast-eval (head args) env) res) (tail args)))))
 
-(dm ast-eval ((e <regular-application>) (env <loc-env>))
-  (let ((f    (ast-eval (application-function e) env))
-	(args (ast-eval (application-arguments e) env)))
-    (apply f args)))
+(dm ast-eval (e|<regular-application> env|<loc-env>)
+  (def f    (ast-eval (application-function e) env))
+  (def args (ast-eval (application-arguments e) env))
+  (app f args))
 
-(dm ast-eval ((e <predefined-application>) (env <loc-env>))
-  (let ((b (application-binding e)))
-    (if (== (binding-name b) '%next-methods)
-	(let ((nms (env-binding-value env '%next-methods)))
-	  (if (== nms nul) #f nms))
-	(let ((f    (binding-info b))
-	      (args (ast-eval (application-arguments e) env)))
-	  (apply f args)))))
+(dm ast-eval (e|<predefined-application> env|<loc-env>)
+  (def b (application-binding e))
+  (if (== (binding-name b) '%next-methods)
+      (let ((nms (env-binding-value env '%next-methods)))
+        (if (== nms nul) #f nms))
+      (let ((f    (binding-info b))
+            (args (ast-eval (application-arguments e) env)))
+        (app f args))))
 
-(dm ast-eval ((e <fix-let>) (env <loc-env>))
-  (let ((args (ast-eval (fix-let-arguments e) env))
-	(nenv (env-frame! env #f (map binding-name (fix-let-bindings e)) args)))
-    (ast-eval (fix-let-body e) nenv)))
+(dm ast-eval (e|<fix-let> env|<loc-env>)
+  (def args (ast-eval (fix-let-arguments e) env))
+  (def nenv (env-frame! env #f (map binding-name (fix-let-bindings e)) args))
+  (ast-eval (fix-let-body e) nenv))
 
-(dm ast-eval ((e <locals>) (env <loc-env>))
-  (let ((bindings
-	 (locals-bindings e))
-	(new-env 
-	 (env-frame!
-	  env #f (map binding-name bindings) (map (always nul) bindings))))
-    (do2 (fun (name value) 
-	   (set (env-binding-value new-env name) value))
-	 (map binding-name bindings)
-	 (map (rcurry ast-eval new-env) (locals-functions e)))
-    ;; (rep loop ((funs (locals-functions e)) (i 0))
-    ;;   (unless (empty? funs)
-    ;;     (set (env-local-value new-env 0 i) 
-    ;;          (ast-eval (head funs) new-env))
-    ;;     (loop (tail funs) (+ i 1))))
-    (ast-eval (locals-body e) new-env)))
+(dm ast-eval (e|<locals> env|<loc-env>)
+  (def bindings
+    (locals-bindings e))
+  (def new-env 
+    (env-frame! env #f (map binding-name bindings) (map (always nul) bindings)))
+  (do2 (fun (name value)
+         (set (env-binding-value new-env name) value))
+       (map binding-name bindings)
+       (map (rcurry ast-eval new-env) (locals-functions e)))
+  ;; (rep loop ((funs (locals-functions e)) (i 0))
+  ;;   (unless (empty? funs)
+  ;;     (set (env-local-value new-env 0 i) 
+  ;;          (ast-eval (head funs) new-env))
+  ;;     (loop (tail funs) (+ i 1))))
+  (ast-eval (locals-body e) new-env))
 
-(dm ast-eval ((e <bind-exit>) (env <loc-env>))
-  (lab return
-    (let ((rproc (fun ((env <loc-env>)) 
-		   (return (env-binding-value env 'x))))
-	  (exit  (export-proto-method 
-                  rproc (lst 'x) (lst #f) #f #f rproc env)))
-      ((ast-eval (bind-exit-main-fun e) env) exit))))
+(dm ast-eval (e|<bind-exit> env|<loc-env>)
+  (esc return
+    (def rproc (fun ((env <loc-env>)) (return (env-binding-value env 'x))))
+    (def exit  (export-goo-method rproc (lst 'x) (lst #f) #f #f rproc env))
+    ((ast-eval (bind-exit-main-fun e) env) exit)))
 
-(dm ast-eval ((e <unwind-protect>) (env <loc-env>))
+(dm ast-eval (e|<unwind-protect> env|<loc-env>)
   (fin ((ast-eval (unwind-protect-protected-thunk e) env))
        ((ast-eval (unwind-protect-cleanup-thunk e) env))))
 
-(dm ast-eval ((e <monitor>) (env <loc-env>))
+(dm ast-eval (e|<monitor> env|<loc-env>)
   (%with-monitor
    (ast-eval (monitor-type e) env)
    (ast-eval (monitor-info e) env)
@@ -349,10 +341,10 @@
 ;; objectifier inserts it into some of the code it generates, so we need
 ;; to add a run-time shadow.
 ;; TODO - This function smells bad.
-(df init-environment-for-eval ((env <static-global-environment>))
+(df init-environment-for-eval (env|<static-global-environment>)
   (ast-define-binding env '%next-methods #f 'predefined)
-  (let ((b (ast-define-binding env '%pair #f 'global)))
-    (set (env-global-binding-value b) pair)))
+  (def b (ast-define-binding env '%pair #f 'global))
+  (set (env-global-binding-value b) pair))
 
 (export
   ast-evaluate
@@ -360,45 +352,45 @@
 
 ;;; DYNAMIC LOADING SUPPORT
 
-(dp %dlvar-nam)
-(dp %dlvar-mod)
-(dp %dlvar)
-(dp %dlvar-setter)
+(dl %dlvar-nam)
+(dl %dlvar-mod)
+(dl %dlvar)
+(dl %dlvar-setter)
 
-(dp %define-binding (raw-mod raw-nam)
-  (let ((e (unchecked-runtime-environment (%%sym raw-mod))))
-    (ast-define-binding e (%%sym raw-nam) #f 'global)))
+(dl %define-binding (raw-mod raw-nam)
+  (def e (unchecked-runtime-environment (%%sym raw-mod)))
+  (ast-define-binding e (%%sym raw-nam) #f 'global))
 
-(dp %lookup-binding (raw-mod raw-nam)
-  (let ((e (unchecked-runtime-environment (%%sym raw-mod))))
-    (find-binding (%%sym raw-nam) e)))
+(dl %lookup-binding (raw-mod raw-nam)
+  (def e (unchecked-runtime-environment (%%sym raw-mod)))
+  (find-binding (%%sym raw-nam) e))
 
-(dp %ensure-binding (raw-mod raw-nam)
+(dl %ensure-binding (raw-mod raw-nam)
   (or (%lookup-binding raw-mod raw-nam)
       (%define-binding raw-mod raw-nam)))
 
-(dp %dlvar-binding (dlvar)
-  (let ((b (%dlvar dlvar))) 
-    (if (@== b (%iu 0))
-        (set (%dlvar dlvar) 
-             (%ensure-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar)))
-        b)))
+(dl %dlvar-binding (dlvar)
+  (def b (%dlvar dlvar))
+  (if (@== b (%iu 0))
+      (set (%dlvar dlvar) 
+           (%ensure-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar)))
+      b))
 
-(dp %binding-bound? (dlvar)
-  (let ((b (%lookup-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar))))
-    (and b (binding-info b))))
+(dl %binding-bound? (dlvar)
+  (def b (%lookup-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar)))
+  (and b (binding-info b)))
 
-(dp %binding-value (dlvar)
-  (let ((binding (%dlvar-binding dlvar)))
-    (if (== (binding-kind binding) 'runtime)
-        (env-runtime-value (binding-locative binding))
-        (env-global-binding-value binding))))
+(dl %binding-value (dlvar)
+  (def binding (%dlvar-binding dlvar))
+  (if (== (binding-kind binding) 'runtime)
+      (env-runtime-value (binding-locative binding))
+      (env-global-binding-value binding)))
 
-(dp %binding-value-setter (val dlvar)
-  (let ((binding (%dlvar-binding dlvar)))
-    (if (== (binding-kind binding) 'runtime)
-        (set (env-runtime-value (binding-locative binding)) val)
-        (set (env-global-binding-value binding) val))))
+(dl %binding-value-setter (val dlvar)
+  (def binding (%dlvar-binding dlvar))
+  (if (== (binding-kind binding) 'runtime)
+      (set (env-runtime-value (binding-locative binding)) val)
+      (set (env-global-binding-value binding) val)))
 
 (export
   %binding-bound?

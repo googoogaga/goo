@@ -2,32 +2,32 @@
 (use boot)
 (use threads)
 
-(dp %event-create)
-(dp %event-signal)
-(dp %event-pulse)
-(dp %event-reset)
-(dp %event-kill)
-(dp %event-wait)
+(dl %event-create)
+(dl %event-signal)
+(dl %event-pulse)
+(dl %event-reset)
+(dl %event-kill)
+(dl %event-wait)
 
 (dc <event> (<any>))
-  (slot <event> (event-name (false-or <sym>)) #f)
-  (slot <event> event-handle)
+  (dp event-name (x|<event> => (t? <sym>)) #f)
+  (dp vent-handle (x|<event> =>)
 
-(df fab-event ((name <sym>))
-  (let ((event (isa <event> (set event-name name))))
-    (set (event-handle event) (%lb (%event-create (%su (as <str> name)))))
-    event))
+(df fab-event (name|<sym>)
+  (def event (new <event> event-name name))
+  (set (event-handle event) (%lb (%event-create (%su (as <str> name)))))
+  event)
 
-(dm event-signal ((e <event>))
+(dm event-signal (e|<event>)
   (%event-signal (%lu (event-handle e))))
 
-(dm event-kill ((e <event>))
+(dm event-kill (e|<event>)
   (%event-kill (%lu (event-handle e))))
 
-(dm event-reset ((e <event>))
+(dm event-reset (e|<event>)
   (%event-reset (%lu (event-handle e))))
 
-(dm wait ((e <event>) (n <int>) => <log>)
+(dm wait (e|<event> n|<int> => <log>)
   (%bb (%event-wait (%lu (event-handle e)) (%iu n))))
 
 (export
