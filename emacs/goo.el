@@ -144,7 +144,8 @@ See `run-hooks'."
 	     '("if" "seq" "set" "fun" "loc" "lab"
 	       "fin" "try" "sig" "isa" "slot" "ct" "expand"
 	       "quote" "rep" "ifm" "and" "or" "unless" "when"
-	       "inc" "dec" "case" "select" "for" "let") t)
+	       "inc" "dec" "case" "select" "for" "let"
+	       "collecting" "collect" "use" "export" "need-implementation") t)
 	"\\>") 1)
       '("\\(#t\\|#f\\|=>\\)" . font-lock-keyword-face)
       ;; David Fox <fox@graphics.cs.nyu.edu> for SOS/STklos class specifiers.
@@ -240,6 +241,11 @@ See `run-hooks'."
 (put 'seq 'proto-indent-function 0)
 (put 'for 'proto-indent-function 1)
 (put 'lab 'proto-indent-function 1)
+(put 'rep 'proto-indent-function 1)
+(put 'collecting 'proto-indent-function 1)
+(put 'use 'proto-indent-function 1)
+(put 'export 'proto-indent-function 0)
+(put 'need-implementation 'proto-indent-function 0)
 
 ;; defining forms:
 (put 'def 'proto-indent-function "define")
@@ -248,6 +254,7 @@ See `run-hooks'."
 (put 'dm 'proto-indent-function "define")
 (put 'dg 'proto-indent-function "define")
 (put 'ds 'proto-indent-function "define")
+(put 'dss 'proto-indent-function "define")
 
 (setq auto-mode-alist
       (cons '("\\.proto\\'" . proto-mode)
