@@ -2,6 +2,8 @@
 #include <signal.h>
 #include "grt.h"
 
+#ifdef HAVE_POSIX_THREAD
+
 void* do_thread (P info) {
   sigset_t  new;
   REGS regs; 
@@ -61,3 +63,26 @@ P YtimeSthreadsYPthread_detach () {
   return (P)pthread_detach(pthread_self());
 }
 
+#else
+
+/* STUBS */
+
+P YtimeSthreadsYPthread_goo_thread () { return YPfalse; }
+
+P YtimeSthreadsYPthread_create (P function) { return PNUL; }
+
+P YtimeSthreadsYPthread_yield () { return PNUL; }
+
+P YtimeSthreadsYPthread_join (P thread) { return PNUL; }
+
+P YtimeSthreadsYPthread_priority (P thread) { return PNUL; }
+
+P YtimeSthreadsYPthread_current () { return PNUL; }
+
+P YtimeSthreadsYPthread_sleep (P secs) { return PNUL; }
+
+P YtimeSthreadsYPthread_priority_setter (P thread) { return PNUL; }
+
+P YtimeSthreadsYPthread_detach () { return PNUL; }
+
+#endif

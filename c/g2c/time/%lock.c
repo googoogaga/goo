@@ -2,6 +2,8 @@
 
 #include "grt.h"
 
+#ifdef HAVE_POSIX_THREAD
+
 P YtimeSlockYPlock_create (P name) {
   pthread_mutex_t *mutex = (pthread_mutex_t *)allocate(sizeof(pthread_mutex_t));
   pthread_mutex_init(mutex, NULL);
@@ -24,3 +26,16 @@ P YtimeSlockYPlock_destroy (P handle) {
   return (P)pthread_mutex_destroy((pthread_mutex_t *)handle);
 }
 
+#else
+
+P YtimeSlockYPlock_create (P name) { return PNUL; }
+
+P YtimeSlockYPlock_lock (P handle) { return PNUL; }
+
+P YtimeSlockYPlock_try_lock (P handle) { return PNUL; }
+
+P YtimeSlockYPlock_unlock (P handle) { return PNUL; }
+
+P YtimeSlockYPlock_destroy (P handle) { return PNUL; }
+
+#endif

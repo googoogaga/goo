@@ -3,6 +3,8 @@
 #include "grt.h"
 #include <time.h>
 
+#ifdef HAVE_POSIX_THREAD
+
 P YtimeSeventYPevent_create (P name) {
   pthread_cond_t *cond = (pthread_cond_t *)allocate(sizeof(pthread_cond_t));
   pthread_cond_init(cond, NULL);
@@ -44,3 +46,22 @@ P YtimeSeventYPevent_wait_timed (P event, P lock, P timeout) {
     ((pthread_cond_t *)event, (pthread_mutex_t *)lock, &time);
 }
 
+#else
+
+P YtimeSeventYPevent_create (P name) { return PNUL; }
+
+P YtimeSeventYPevent_reset (P handle) { return PNUL; }
+
+P YtimeSeventYPevent_pulse (P handle) { return PNUL; }
+
+P YtimeSeventYPevent_signal (P handle) { return PNUL; }
+
+P YtimeSeventYPevent_broadcast (P handle) { return PNUL; }
+
+P YtimeSeventYPevent_destroy (P handle) { return PNUL; }
+
+P YtimeSeventYPevent_wait (P event, P lock) { return PNUL; }
+
+P YtimeSeventYPevent_wait_timed (P event, P lock, P timeout) { return PNUL; }
+
+#endif
