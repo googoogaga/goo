@@ -189,7 +189,9 @@
                (loop)
                #t))
          (= i length) ;; consumed all chars
-         (let ((f (* (as <flo> s) (/ (as <flo> n) (as <flo> scale)))))
+         (let ((f (if (== 1 scale)
+                      (* s n)
+                      (* (as <flo> s) (/ (as <flo> n) (as <flo> scale))))))
            (if seen-decimal-point? f (trunc f))))))
 
 (dv $digit-to-char "0123456789abcdefghijklmnopqrstuvwxyz")
