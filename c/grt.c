@@ -65,7 +65,7 @@ P POP() {
   return (stack_[--sp]);
 }
 */
-#define LINK_STACK(f)          { PUSH(fun); fp = sp; PUSH((P)fp); }
+#define LINK_STACK(f)          { PUSH(fun); ofp = fp; fp = sp; PUSH((P)ofp); }
 #define UNLINK_STACK(osp, ofp) { sp = osp; fp = ofp; }
 
 /*
@@ -82,7 +82,7 @@ extern P Yunknown_function_error;
 P YPdo_stack_frames (P fun) {
   int xfp = fp;
   while (xfp > 0) {
-    int nfp    = (int)stack_[--xfp];
+    int nfp    = (int)stack_[xfp];
     P   args   = Ynil;
     P   f      = stack_[--xfp];
     P   traits = YPobject_traits(f);
