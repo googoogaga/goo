@@ -304,6 +304,22 @@ FOR     (FOR ((,var ,val) ...) ,@body)
 
   parallel iteration over collections using collection iteration protocol.
 
+COLLECTING 
+
+        (COLLECTING () ,@body)
+        (COLLECT ,x)
+    
+  mechanism for accumulating lists of objects.   COLLECTING returns
+  list all COLLECT'd objects in body.
+
+NEXT-METHOD
+
+        (NEXT-METHOD ,@args)
+        (APPLY-NEXT-METHOD ,args)
+
+  calls next most applicable method either as call or apply.  N.B., all
+  arguments must be supplied.
+
 2.3 READ MACROS
 
 QQ	(QUASIQUOTE ...) 
