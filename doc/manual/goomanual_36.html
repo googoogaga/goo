@@ -2,150 +2,20 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Fri Aug 16 18:42:29 2002 -->
+ -- on Emacs 21.2.1, Fri Aug 23 17:44:53 2002 -->
 <head>
-<title><i>GOO&#32;Manual -- Ports</title>
+<title><i>GOO&#32;Manual -- Input / Output</title>
 
 </head><body>
 <table width="100%" cellpadding=0 cellspacing=2><tr>
-  <td bgcolor="#99ccff"><a HREF="goomanual_37.html"><img alt="Formatted I/O" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_35.html"><img alt="Input / Output" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td align="center" bgcolor="#99ccff" width="100%"><b>Ports</b></td></tr></table>
-<h2>Ports</h2>
-<p>Ports represent character-oriented input/output devices.
-<table border><tr><td colspan="1" align="LEFT">
-
-<A NAME="1">&nbsp;</A><tt>&lt;port&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="2">&nbsp;</A><tt>open</tt> </td><td colspan="1" align="LEFT"> <tt>(t|(t&lt; &lt;port&gt;) x|&lt;str&gt; =&gt; &lt;port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>creates port given port specific spec <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="3">&nbsp;</A><tt>close</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>closes and cleanups port.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <tt>(x|&lt;port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>noop default.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="4">&nbsp;</A><tt>WITH-PORT</tt> </td><td colspan="1" align="LEFT"> <tt>(WITH-PORT (,name ,port) ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>binds <tt>,name</tt> to the value of <tt>,port</tt> 
-       during the evaluation of <tt>(seq ,@body)</tt> and finally
-       ensures that the port is closed at the end of evaluation.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="5">&nbsp;</A><tt>eof-object?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;chr&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="6">&nbsp;</A><tt>&lt;in-port&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>input port.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="7">&nbsp;</A><tt>in</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;in-port&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>I</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>standard input.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="8">&nbsp;</A><tt>get</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;in-port&gt; =&gt; &lt;chr&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>returns next available character or eof-object.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="9">&nbsp;</A><tt>gets</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;in-port&gt; =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>returns a line until either reading a newline or eof-object.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="10">&nbsp;</A><tt>peek</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;in-port&gt; =&gt; &lt;chr&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>returns next available character if any without advancing 
-  pointer or eof-object.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="11">&nbsp;</A><tt>ready?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;in-port&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>returns true iff a character is available.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="12">&nbsp;</A><tt>&lt;out-port&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>output port.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="13">&nbsp;</A><tt>out</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;out-port&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>I</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>standard output.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="14">&nbsp;</A><tt>force-out</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;out-port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>ensures that buffers are forced and pending output is completed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="15">&nbsp;</A><tt>put</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;out-port&gt; e|&lt;chr&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>outputs a single character.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="16">&nbsp;</A><tt>puts</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;out-port&gt; e|&lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>outputs string.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="17">&nbsp;</A><tt>newline</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;out-port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>outputs a newline sequence.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="18">&nbsp;</A><tt>say</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;out-port&gt; args|...)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(do (op say x &#95;) args)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td></tr></table>
-
-<h3><A NAME="19">File Ports</a></h3>
-<p>File ports are ports which map to files.
-<table border><tr><td colspan="1" align="LEFT">
-
-<A NAME="20">&nbsp;</A><tt>&lt;file-port&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="21">&nbsp;</A><tt>close</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;file-port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>closes port and finishes pending output.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="22">&nbsp;</A><tt>&lt;file-in-port&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;file-port&gt; &lt;in-port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="23">&nbsp;</A><tt>open</tt> </td><td colspan="1" align="LEFT"> <tt>(t|(t= &lt;file-in-port&gt;) name|&lt;str&gt; =&gt; &lt;file-in-port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>creates file in port mapped to a file with filename <tt>name</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="24">&nbsp;</A><tt>&lt;file-out-port&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;file-port&gt; &lt;out-port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="25">&nbsp;</A><tt>open</tt> </td><td colspan="1" align="LEFT"> <tt>(t|(t= &lt;file-out-port&gt;) name|&lt;str&gt; =&gt; &lt;file-out-port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>creates file out port mapped to a file with filename <tt>name</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td></tr></table>
-
-<h3><A NAME="26">String Ports</a></h3>
-<p>String ports provide port interface mapped onto strings.
-<table border><tr><td colspan="1" align="LEFT">
-
-<A NAME="27">&nbsp;</A><tt>&lt;str-port&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="28">&nbsp;</A><tt>port-contents</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;str-port&gt; =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>returns underlying string.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="29">&nbsp;</A><tt>&lt;str-in-port&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;str-port&gt; &lt;out-port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="30">&nbsp;</A><tt>open</tt> </td><td colspan="1" align="LEFT"> <tt>(t|(t= &lt;str-in-port&gt;) dat|&lt;str&gt; =&gt; &lt;str-in-port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>creates string in port mapped to string <tt>dat</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="31">&nbsp;</A><tt>port-index</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;str-port&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>returns index from which next character will be read.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="32">&nbsp;</A><tt>&lt;str-out-port&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;str-port&gt; &lt;in-port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="33">&nbsp;</A><tt>open</tt> </td><td colspan="1" align="LEFT"> <tt>(t|(t= &lt;str-out-port&gt;) dat|&lt;str&gt; =&gt; &lt;str-out-port&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>creates string out port mapped to string <tt>dat</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="34">&nbsp;</A><tt>PORT2STR</tt> </td><td colspan="1" align="LEFT"> <tt>(PORT2STR ,name ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(let ((,name (open &lt;str-out-port&gt; ""))) ,@body (port-contents ,name))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td></tr></table>
-
+  <td bgcolor="#99ccff"><a HREF="goomanual_39.html"><img alt="System" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_34.html"><img alt="Conditions" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Input / Output</b></td></tr></table>
+<h1>Input / Output</h1>
+<p>This is a very preliminary I/O system and is mostly just enough with
+which to write a compiler.
+<menu>
+<li><a HREF="goomanual_37.html">Ports</a>
+<li><a HREF="goomanual_38.html">Formatted I/O</a>
+</menu>
 <HR >
 <table width="100%" cellpadding=0 cellspacing=2><tr>
-  <td bgcolor="#99ccff"><a HREF="goomanual_37.html"><img alt="Formatted I/O" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_35.html"><img alt="Input / Output" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td align="center" bgcolor="#99ccff" width="100%"><b>Ports</b></td></tr></table></body></html>
+  <td bgcolor="#99ccff"><a HREF="goomanual_39.html"><img alt="System" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_34.html"><img alt="Conditions" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Input / Output</b></td></tr></table></body></html>

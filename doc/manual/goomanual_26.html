@@ -2,7 +2,7 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Fri Aug 16 18:42:28 2002 -->
+ -- on Emacs 21.2.1, Fri Aug 23 17:44:52 2002 -->
 <head>
 <title><i>GOO&#32;Manual -- Collections</title>
 
@@ -72,82 +72,86 @@ Collections can be almost entirely defined in terms of an enumeration class.
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns collection <tt>x</tt>'s element associated with key <tt>k</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="14">&nbsp;</A><tt>elt-or</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; k d =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="14">&nbsp;</A><tt>'[' ... ']'</tt> </td><td colspan="1" align="LEFT"> <tt>'[' ,x ,k ']'</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(elt ,x ,k)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="15">&nbsp;</A><tt>elt-or</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; k d =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns collection <tt>x</tt>'s element associated with key
   <tt>k</tt> or default <tt>d</tt> if it doesn't exist.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="15">&nbsp;</A><tt>mem?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; y|&lt;any&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="16">&nbsp;</A><tt>mem?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; y|&lt;any&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns true iff <tt>y</tt> is an element of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="16">&nbsp;</A><tt>add</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; y|&lt;any&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="17">&nbsp;</A><tt>add</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; y|&lt;any&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns collection with <tt>y</tt> added to <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="17">&nbsp;</A><tt>elts</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; keys|&lt;seq&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="18">&nbsp;</A><tt>elts</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; keys|&lt;seq&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>subset of elements of <tt>x</tt> corresponding to keys <tt>keys</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="18">&nbsp;</A><tt>dup</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="19">&nbsp;</A><tt>dup</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns shallow copy of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="19">&nbsp;</A><tt>keys</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="20">&nbsp;</A><tt>keys</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns <tt>x</tt>'s keys.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="20">&nbsp;</A><tt>items</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="21">&nbsp;</A><tt>items</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns a sequence of <tt>x</tt>'s key/val tuples.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="21">&nbsp;</A><tt>del</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; key|&lt;any&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="22">&nbsp;</A><tt>del</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; key|&lt;any&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns copy of <tt>x</tt>'s without element corresponding to <tt>key</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="22">&nbsp;</A><tt>zap</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="23">&nbsp;</A><tt>zap</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns empty copy of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="23">&nbsp;</A><tt>fill</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; y|&lt;any&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="24">&nbsp;</A><tt>fill</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col&gt; y|&lt;any&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns copy of <tt>x</tt> with all values being <tt>y</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="24">&nbsp;</A><tt>any?</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="25">&nbsp;</A><tt>any?</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns true iff any of <tt>x</tt>'s element satisfies 
        given predicate <tt>f</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="25">&nbsp;</A><tt>find</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="26">&nbsp;</A><tt>find</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns key associated with first of <tt>x</tt>'s values to
        satisfy predicate <tt>f</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="26">&nbsp;</A><tt>find-or</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; default =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="27">&nbsp;</A><tt>find-or</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; default =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns key associated with first of <tt>x</tt>'s values to
        satisfy predicate <tt>f</tt> or <tt>default</tt> if not found.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="27">&nbsp;</A><tt>all?</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="28">&nbsp;</A><tt>all?</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns true iff all of <tt>x</tt>'s elements satisfies 
        given predicate <tt>f</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="28">&nbsp;</A><tt>fold</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; init|&lt;any&gt; x|&lt;col&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="29">&nbsp;</A><tt>fold</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; init|&lt;any&gt; x|&lt;col&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(f (f ... (f init (elt x 0)) (elt x (- n 2)))
                          (elt x (- n 1)))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="29">&nbsp;</A><tt>fold+</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="30">&nbsp;</A><tt>fold+</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(f (f ... (f (elt x 0) (elt x 1)) (elt x (- n 2)))
   (elt x (- n 1)))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="30">&nbsp;</A><tt>do</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="31">&nbsp;</A><tt>do</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>iterates function <tt>f</tt> over values of <tt>x</tt> for side-effect.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="31">&nbsp;</A><tt>map</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="32">&nbsp;</A><tt>map</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;col&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>iterates function <tt>f</tt> over values of given 
        collections and collects the results.</i> </td><td colspan="1" align="RIGHT"> </td></tr>

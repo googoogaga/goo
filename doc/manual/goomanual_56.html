@@ -2,23 +2,50 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Fri Aug 16 18:42:31 2002 -->
+ -- on Emacs 21.2.1, Fri Aug 23 17:44:55 2002 -->
 <head>
-<title><i>GOO&#32;Manual -- Footnotes</title>
+<title><i>GOO&#32;Manual -- Subtyping Rules</title>
 
 </head><body>
 <table width="100%" cellpadding=0 cellspacing=2><tr>
-  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_55.html"><img alt="Subtyping Rules" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Footnotes</b></td></tr></table>
-<h1>Footnotes</h1>
-<dl>
-<dt><b><A NAME="footnote-1">&nbsp;</A>(1)</b><dd>When optimization is in
-place, the <tt>!</tt> suffixed functions will be deprecated.
-  
-<dt><b><A NAME="footnote-2">&nbsp;</A>(2)</b><dd>The original idea was dreamed
-up and first implemented by Andrew Sutherland and then improved by
-James Knight.
-  
-</dl>
+  <td bgcolor="#99ccff"><a HREF="goomanual_57.html"><img alt="Footnotes" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_55.html"><img alt="Class Precedence List" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Subtyping Rules</b></td></tr></table>
+<h1>Subtyping Rules</h1>
+
+<p>This section defines the subtyping rules for <i>GOO&#32;in terms of subtype
+methods.  
+<pre>
+(dm subtype? (t1|&lt;union&gt; t2|&lt;type&gt; =&gt; &lt;log&gt;)
+  (all? (op subtype? _ t2) (type-elts t1)))
+(dm subtype? (t1|&lt;type&gt; t2|&lt;union&gt; =&gt; &lt;log&gt;)
+  (any? (op subtype? t1 _)) (type-elts t2)))
+(dm subtype? (t1|&lt;union&gt; t2|&lt;union&gt; =&gt; &lt;log&gt;)
+  (all? (op subtype? _ t2)) (type-elts t1)))
+(dm subtype? (t1|&lt;class&gt; t2|&lt;class&gt; =&gt; &lt;log&gt;)
+  (subclass? t1 t2))
+(dm subtype? (t1|&lt;singleton&gt; t2|&lt;class&gt; =&gt; &lt;log&gt;)
+  (isa? (type-object t1) t2))
+(dm subtype? (t1|&lt;subclass&gt; t2|&lt;class&gt; =&gt; &lt;log&gt;)
+  (subclass? &lt;class&gt; t2))
+(dm subtype? (t1|&lt;class&gt; t2|&lt;singleton&gt; =&gt; &lt;log&gt;) #f)
+(dm subtype? (t1|&lt;singleton&gt; t2|&lt;singleton&gt; =&gt; &lt;log&gt;)
+  (== (type-object t1) t2))
+(dm subtype? (t1|&lt;subclass&gt; t2|&lt;singleton&gt; =&gt; &lt;log&gt;) #f)
+(dm subtype? (t1|&lt;class&gt; t2|&lt;subclass&gt; =&gt; &lt;log&gt;)
+  (and (== t1 &lt;class&gt;) (== (type-class t2) &lt;class&gt;)))
+(dm subtype? (t1|&lt;subclass&gt; t2|&lt;subclass&gt; =&gt; &lt;log&gt;)
+  (subclass? (type-class t1) (type-class t2)))
+(dm subtype? (t1|&lt;singleton&gt; t2|&lt;subclass&gt; =&gt; &lt;log&gt;)
+  (and (isa? (type-object t1) &lt;class&gt;)
+       (subclass? (type-object t1) (type-class t2))))
+(dm subtype? (t1|&lt;product&gt; t2|&lt;type&gt; =&gt; &lt;log&gt;) #f)
+(dm subtype? (t1|&lt;type&gt; t2|&lt;product&gt; =&gt; &lt;log&gt;) #f)
+(dm subtype? (t1|&lt;product&gt; t2|&lt;product&gt; =&gt; &lt;log&gt;)
+  (and (== (len (type-elts t1)) (len (type-elts t2)))
+       (all? (zipped subtype?) (zip (type-elts t1) (type-elts t2)))))
+(dm subtype? (t1|&lt;product&gt; t2|&lt;class&gt; =&gt; &lt;log&gt;)
+  (subtype? &lt;tup&gt; t2))
+</pre>
+<p></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i></i>
 <HR >
 <table width="100%" cellpadding=0 cellspacing=2><tr>
-  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_55.html"><img alt="Subtyping Rules" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Footnotes</b></td></tr></table></body></html>
+  <td bgcolor="#99ccff"><a HREF="goomanual_57.html"><img alt="Footnotes" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_55.html"><img alt="Class Precedence List" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Subtyping Rules</b></td></tr></table></body></html>

@@ -2,20 +2,177 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Fri Aug 16 18:42:29 2002 -->
+ -- on Emacs 21.2.1, Fri Aug 23 17:44:53 2002 -->
 <head>
-<title><i>GOO&#32;Manual -- Input / Output</title>
+<title><i>GOO&#32;Manual -- Conditions Hierarchy</title>
 
 </head><body>
 <table width="100%" cellpadding=0 cellspacing=2><tr>
-  <td bgcolor="#99ccff"><a HREF="goomanual_38.html"><img alt="System" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_34.html"><img alt="Conditions" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Input / Output</b></td></tr></table>
-<h1>Input / Output</h1>
-<p>This is a very preliminary I/O system and is mostly just enough with
-which to write a compiler.
-<menu>
-<li><a HREF="goomanual_36.html">Ports</a>
-<li><a HREF="goomanual_37.html">Formatted I/O</a>
-</menu>
+  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="goomanual_34.html"><img alt="Conditions" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td align="center" bgcolor="#99ccff" width="100%"><b>Conditions Hierarchy</b></td></tr></table>
+<h2>Conditions Hierarchy</h2>
+<p><i>GOO&#32;has a builtin hierarchy of conditions.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;arithmetic-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>&lt;stack-overflow-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>&lt;keyboard-interrupt&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>user hit interrupt key.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>&lt;internal-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;simple-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>a system fault was detected.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>&lt;assert-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;simple-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>an assertion failure occurred.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>&lt;unbound-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>an binding or property was found to be unbound.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="7">&nbsp;</A><tt>&lt;unbound-variable-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;unbound-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>a binding was found to be unbound.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="8">&nbsp;</A><tt>unbound-variable-error-variable</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;unbound-variable-error&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="9">&nbsp;</A><tt>&lt;property-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="10">&nbsp;</A><tt>property-error-generic</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;property-error&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>property accessor if available.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="11">&nbsp;</A><tt>property-error-owner</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;property-error&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>property owner if available.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="12">&nbsp;</A><tt>&lt;property-unbound-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;property-error&gt; &lt;unbound-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>unbound property was discovered.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="13">&nbsp;</A><tt>&lt;property-type-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;property-error&gt; &lt;type-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>attempt was made to store an invalid object in a property.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="14">&nbsp;</A><tt>&lt;property-not-found-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;property-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>attempt was made to find a missing property, most likely during
+  a call to <tt>new</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="15">&nbsp;</A><tt>&lt;as-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;type-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>no <tt>as</tt> method was found.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="16">&nbsp;</A><tt>&lt;range-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>a key lookup on a collection failed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="17">&nbsp;</A><tt>range-error-collection</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;range-error&gt; =&gt; &lt;col&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="18">&nbsp;</A><tt>range-error-key</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;range-error&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="19">&nbsp;</A><tt>&lt;type-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>a type check has failed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="20">&nbsp;</A><tt>type-error-value</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;type-error&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns value on which type check failed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="21">&nbsp;</A><tt>type-error-type</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;type-error&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns type on which type check failed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="22">&nbsp;</A><tt>&lt;call-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>an function call failed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="23">&nbsp;</A><tt>call-error-function</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;call-error&gt; =&gt; &lt;fun&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns function on which call failed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="24">&nbsp;</A><tt>call-error-arguments</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;call-error&gt; =&gt; &lt;fun&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns arguments on which call failed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="25">&nbsp;</A><tt>&lt;arity-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;call-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>wrong number of arguments supplied in function call.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="26">&nbsp;</A><tt>&lt;narity-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;arity-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>too few arguments supplied in nary function call.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="27">&nbsp;</A><tt>&lt;unknown-function-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;call-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>too few arguments supplied in nary function call.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="28">&nbsp;</A><tt>&lt;argument-type-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;type-error&gt; &lt;call-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>invalid argument used function call.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="29">&nbsp;</A><tt>&lt;return-type-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;type-error&gt; &lt;call-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>invalid result returned from function call.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="30">&nbsp;</A><tt>&lt;ambiguous-method-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;call-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>unable to sort applicable methods.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="31">&nbsp;</A><tt>&lt;no-applicable-methods-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;call-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>no methods were applicable.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="32">&nbsp;</A><tt>&lt;no-next-methods-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;call-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>no next-methods were found during a <tt>sup</tt> or
+  <tt>app-sup</tt> call.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="33">&nbsp;</A><tt>&lt;incongruent-method-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>a method is incongruent with a generic.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="34">&nbsp;</A><tt>incongruent-method-error-generic</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;incongruent-method-error&gt; =&gt; &lt;gen&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="35">&nbsp;</A><tt>incongruent-method-error-method</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;incongruent-method-error&gt; =&gt; &lt;met&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="36">&nbsp;</A><tt>&lt;cpl-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>unable to find a consistent class precedence list.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="37">&nbsp;</A><tt>&lt;io-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>an input/output operation failure.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="38">&nbsp;</A><tt>&lt;file-opening-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;io-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>unable to open a file.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="39">&nbsp;</A><tt>file-opening-error-filename</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;file-opening-error&gt; =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="40">&nbsp;</A><tt>&lt;directory-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;file-opening-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="41">&nbsp;</A><tt>&lt;compiler-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="42">&nbsp;</A><tt>&lt;syntax-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;compiler-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="43">&nbsp;</A><tt>&lt;macro-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;syntax-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>a macro expansion failure.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="44">&nbsp;</A><tt>&lt;ast-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;compiler-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>an ast conversion failure.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="45">&nbsp;</A><tt>&lt;namespace-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;compiler-error&gt; &lt;simple-error&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>a namespace form failure.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
 <HR >
 <table width="100%" cellpadding=0 cellspacing=2><tr>
-  <td bgcolor="#99ccff"><a HREF="goomanual_38.html"><img alt="System" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_34.html"><img alt="Conditions" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Input / Output</b></td></tr></table></body></html>
+  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="goomanual_34.html"><img alt="Conditions" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td align="center" bgcolor="#99ccff" width="100%"><b>Conditions Hierarchy</b></td></tr></table></body></html>

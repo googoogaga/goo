@@ -2,44 +2,43 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Fri Aug 16 18:42:30 2002 -->
+ -- on Emacs 21.2.1, Fri Aug 23 17:44:54 2002 -->
 <head>
-<title><i>GOO&#32;Manual -- Top Level</title>
+<title><i>GOO&#32;Manual -- Compiler</title>
 
 </head><body>
 <table width="100%" cellpadding=0 cellspacing=2><tr>
-  <td bgcolor="#99ccff"><a HREF="goomanual_44.html"><img alt="Installation" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_42.html"><img alt="Compiler" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Top Level</b></td></tr></table>
-<h1>Top Level</h1>
-<p>Functions which load code at runtime require a symbol specifying the
-module name to use.
+  <td bgcolor="#99ccff"><a HREF="goomanual_44.html"><img alt="Top Level" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_42.html"><img alt="Threads" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Compiler</b></td></tr></table>
+<h1>Compiler</h1>
+<p><i>GOO's compiler, <em>g2c</em>, compiles <i>GOO&#32;source code to C.  It lives
+within the <tt>eval</tt> module.  During a given session, <tt>g2c</tt> recompiles
+only used modules that are either modified or use modified modules.
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="1">&nbsp;</A><tt>load</tt> </td><td colspan="1" align="LEFT"> <tt>(filename|&lt;str&gt; modname|&lt;sym&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="1">&nbsp;</A><tt>&lt;g2c-module-loader&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;module-loader&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>returns the result of evaluating the result of reading file
-  named <tt>filename</tt> into module <tt>modname</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+</td><td colspan="1" align="LEFT"> <i>a g2c module loader used in g2c builds.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="2">&nbsp;</A><tt>eval</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;any&gt; modname|&lt;sym&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="2">&nbsp;</A><tt>g2c-def-app</tt> </td><td colspan="1" align="LEFT"> <tt>(appname|&lt;str&gt; modname|&lt;str&gt; =&gt; &lt;g2c-module-loader&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>return's result of evaluating <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+</td><td colspan="1" align="LEFT"> <i>constructs a g2c module loader to be used in future g2c builds.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="3">&nbsp;</A><tt>top</tt> </td><td colspan="1" align="LEFT"> <tt>(modname|&lt;sym&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="3">&nbsp;</A><tt>g2c-build-app</tt> </td><td colspan="1" align="LEFT"> <tt>(loader|&lt;g2c-module-loader&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>runs top-level <tt>read-eval-print</tt> loop which reads from 
-  in and writes to out.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+</td><td colspan="1" align="LEFT"> <i>translates <i>GOO&#32;app into C in subdirectory of <i>GOO's toplevel C
+       directory named after loader's top modname.</i></i></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="4">&nbsp;</A><tt>save-image</tt> </td><td colspan="1" align="LEFT"> <tt>(filename|&lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="4">&nbsp;</A><tt>g2c-goo</tt> </td><td colspan="1" align="LEFT"> <tt>()</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>saves an image of the current <i>GOO&#32;process to a file 
-       named <tt>filename</tt>.</i></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+</td><td colspan="1" align="LEFT"> <i>builds entire goo world.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="5">&nbsp;</A><tt>&#36; &#36;&#36; &#36;&#36;&#36;</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;any&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>I</tt> </td></tr>
+<A NAME="5">&nbsp;</A><tt>g2c-test</tt> </td><td colspan="1" align="LEFT"> <tt>(name)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>refers respectively to last, second to last, and third to last
-       values returned in top-level listener.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+</td><td colspan="1" align="LEFT"> <i>changes destination directory to be <tt>(cat "g2c-" (to-str
+  name))</tt>.  This is useful for bootstrapping.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 
 <HR >
 <table width="100%" cellpadding=0 cellspacing=2><tr>
-  <td bgcolor="#99ccff"><a HREF="goomanual_44.html"><img alt="Installation" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_42.html"><img alt="Compiler" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Top Level</b></td></tr></table></body></html>
+  <td bgcolor="#99ccff"><a HREF="goomanual_44.html"><img alt="Top Level" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_42.html"><img alt="Threads" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Compiler</b></td></tr></table></body></html>

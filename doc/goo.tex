@@ -53,9 +53,9 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\T\title{{\Huge \goo\ Reference Manual v41 }}
+\T\title{{\Huge \goo\ Reference Manual v42 }}
 \T\author{{\huge Jonathan Bachrach} \\ {\Large MIT AI Lab}}
-\W\title{{\huge \goo\ Reference Manual v41 }}
+\W\title{{\huge \goo\ Reference Manual v42 }}
 \W\author{{\Large Jonathan Bachrach} \\ {\Large MIT AI Lab}}
 \date{\today}
 %\date{October 31, 1995}
@@ -131,11 +131,14 @@ s-expressions are either tokens or lists of s-expressions:
 \notation{[a-zA-Z0-9]+}{Identifier}
 % \notation{{\it Identifier}:}{Keyword}
 \notation{( ... )}{List}
-\notation{\#( ... )}{Vector}
+\notation{\#( ... )}{Tuple}
+\notation{\#[ ... ]}{Vector}
 \notation{" ... "}{String}
 \notation{$\backslash${\it c} }{Special character's within strings}
 \notation{x|t}{Typed variable within list $\equiv$ \kode{(x t)}.}
 \notation{\#|}{Escaped vertical bar.}
+\notation{\{ ... \}}{Lightweight function syntax.}
+\notation{'[' ... ']'}{Collection indexing and slicing.}
 \end{defs}
 
 \subsection{Meta Syntax}
@@ -554,6 +557,11 @@ functions are instances of \kode{<gen>} and methods are instances of
 \end{ex}
 }
 }
+\form{\{ ... \}}{\{ [ ,sig '.' ] ,@body\}}
+  \doc{\kode{FUN} abbreviation $\equiv$ \kode{(fun ,sig ,@body)} where
+  \kode{,sig} defaults to \kode{()}.  
+  This is particularly useful for lightweight thunks
+  (e.g., \kode{\{(+ x 1)\}} $\equiv$ \kode{(fun () (+ x 1))}).}
 \end{defs}
 
 where
@@ -1022,6 +1030,8 @@ Collections can be almost entirely defined in terms of an enumeration class.
   \doc{returns collection \kode{x}'s element type.}
 \generic{elt}{x|<col> k|<any> => <any>}
   \doc{returns collection \kode{x}'s element associated with key \kode{k}.}
+\form{'[' ... ']'}{'[' ,x ,k ']'}
+  \doc{$\equiv$ \kode{(elt ,x ,k)}} 
 \generic{elt-or}{x|<col> k d => <any>}
   \doc{returns collection \kode{x}'s element associated with key
   \kode{k} or default \kode{d} if it doesn't exist.}
@@ -1276,6 +1286,12 @@ Sequences are collections with nonnegative integer keys.
   \doc{returns concatenated sequences.}
 \generic{sub}{x|<seq> from|<int> below|<int> => <seq>}
   \doc{subsequence of \kode{x} between \kode{from} and \kode{below}.}
+\form{'[' ... ']'}{'[' ,x ,from ,below ']'}
+  \doc{$\equiv$ \kode{(sub ,x ,from ,below)}} 
+\generic{sub*}{x|<seq> from|<int> => <seq>}
+  \doc{$\equiv$ \kode{(sub x from (len x))}}
+\form{'[' ... ']'}{'[' ,x ,from * ']'}
+  \doc{$\equiv$ \kode{(sub* ,x ,from)}} 
 \generic{ins}{x|<seq> val i|<int> => <seq>}
   \doc{returns copy of \kode{x}'s with \kode{val} inserted before \kode{i}.}
 \generic{del-dups}{x|<seq> => <seq>}
@@ -1335,6 +1351,8 @@ Sequences are collections with nonnegative integer keys.
   \kode{below} of \kode{dst} with
   contents of \kode{src}.  Provides insertion, deletion, and
   replacement operations rolled into one. }
+\generic{sub*-setter}{dst|<seq!> src|<seq> from|<int>}
+  \doc{$\equiv$ \kode{(sub-setter dst src from (len dst))}}
 \generic{del-vals!}{x|<seq!> v|<any>  => <seq!>}
   \doc{removes all \kode{v}'s from \kode{x}.}
 \generic{del-dups!}{x|<seq!> => <seq!>}
@@ -1565,6 +1583,93 @@ where
 \syntax{,try-option}{(,option-name ,@option-value)}
 \end{defs}
 
+\subsection{Conditions Hierarchy}
+
+\goo\ has a builtin hierarchy of conditions.
+
+\begin{defs}
+\class{<arithmetic-error>}{<error>}
+\class{<stack-overflow-error>}{<error>}
+\class{<keyboard-interrupt>}{<error>}
+  \doc{user hit interrupt key.}
+\class{<internal-error>}{<simple-error>}
+  \doc{a system fault was detected.}
+\class{<assert-error>}{<simple-error>}
+  \doc{an assertion failure occurred.}
+\class{<unbound-error>}{<error>}
+  \doc{an binding or property was found to be unbound.}
+\class{<unbound-variable-error>}{<unbound-error>}
+  \doc{a binding was found to be unbound.}
+\property{unbound-variable-error-variable}{<unbound-variable-error> => <any>}
+\class{<property-error>}{<error>}
+\propertyinit{property-error-generic}{<property-error> => <any>}{\#f}
+  \doc{property accessor if available.}
+\propertyinit{property-error-owner}{<property-error> => <any>}{\#f}
+  \doc{property owner if available.}
+\class{<property-unbound-error>}{<property-error> <unbound-error>}
+  \doc{unbound property was discovered.}
+\class{<property-type-error>}{<property-error> <type-error>}
+  \doc{attempt was made to store an invalid object in a property.}
+\class{<property-not-found-error>}{<property-error>}
+  \doc{attempt was made to find a missing property, most likely during
+  a call to \kode{new}.}
+\class{<as-error>}{<type-error>}
+  \doc{no \kode{as} method was found.}
+\class{<range-error>}{<error>}
+  \doc{a key lookup on a collection failed.}
+\property{range-error-collection}{<range-error> => <col>}
+\property{range-error-key}{<range-error> => <any>}
+\class{<type-error>}{<error>}
+  \doc{a type check has failed.}
+\property{type-error-value}{<type-error> => <any>}
+  \doc{returns value on which type check failed.}
+\property{type-error-type}{<type-error> => <any>}
+  \doc{returns type on which type check failed.}
+\class{<call-error>}{<error>}
+  \doc{an function call failed.}
+\property{call-error-function}{<call-error> => <fun>}
+  \doc{returns function on which call failed.}
+\property{call-error-arguments}{<call-error> => <fun>}
+  \doc{returns arguments on which call failed.}
+\class{<arity-error>}{<call-error>}
+  \doc{wrong number of arguments supplied in function call.}
+\class{<narity-error>}{<arity-error>}
+  \doc{too few arguments supplied in nary function call.}
+\class{<unknown-function-error>}{<call-error>}
+  \doc{too few arguments supplied in nary function call.}
+\class{<argument-type-error>}{<type-error> <call-error>}
+  \doc{invalid argument used function call.}
+\class{<return-type-error>}{<type-error> <call-error>}
+  \doc{invalid result returned from function call.}
+\class{<ambiguous-method-error>}{<call-error>}
+  \doc{unable to sort applicable methods.}
+\class{<no-applicable-methods-error>}{<call-error>}
+  \doc{no methods were applicable.}
+\class{<no-next-methods-error>}{<call-error>}
+  \doc{no next-methods were found during a \kode{sup} or
+  \kode{app-sup} call.}
+\class{<incongruent-method-error>}{<error>}
+  \doc{a method is incongruent with a generic.}
+\property{incongruent-method-error-generic}{<incongruent-method-error> => <gen>}
+\property{incongruent-method-error-method}{<incongruent-method-error> => <met>}
+\class{<cpl-error>}{<error>}
+  \doc{unable to find a consistent class precedence list.}
+\class{<io-error>}{<error>}
+  \doc{an input/output operation failure.}
+\class{<file-opening-error>}{<io-error>}
+  \doc{unable to open a file.}
+\property{file-opening-error-filename}{<file-opening-error> => <str>}
+\class{<directory-error>}{<file-opening-error>}
+\class{<compiler-error>}{<error>}
+\class{<syntax-error>}{<compiler-error>}
+\class{<macro-error>}{<syntax-error>}
+  \doc{a macro expansion failure.}
+\class{<ast-error>}{<compiler-error>}
+  \doc{an ast conversion failure.}
+\class{<namespace-error>}{<compiler-error> <simple-error>}
+  \doc{a namespace form failure.}
+\end{defs}
+
 \section{Input / Output}
 
 This is a very preliminary I/O system and is mostly just enough with
@@ -1774,6 +1879,7 @@ a reasonably portable fashion.
        Requires the last item to be a string.}
 \method{components-parent-directory}{components|<lst> => <lst>}
   \doc{calculate the parent directory of a pathname.}
+\class{<pathname-error>}{<simple-error>}
 \end{defs}
 
 \section{Threads}

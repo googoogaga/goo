@@ -2,7 +2,7 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Fri Aug 16 18:42:29 2002 -->
+ -- on Emacs 21.2.1, Fri Aug 23 17:44:53 2002 -->
 <head>
 <title><i>GOO&#32;Manual -- Sequences</title>
 
@@ -68,208 +68,224 @@
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>subsequence of <tt>x</tt> between <tt>from</tt> and <tt>below</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="15">&nbsp;</A><tt>ins</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; val i|&lt;int&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="15">&nbsp;</A><tt>'[' ... ']'</tt> </td><td colspan="1" align="LEFT"> <tt>'[' ,x ,from ,below ']'</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(sub ,x ,from ,below)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="16">&nbsp;</A><tt>sub*</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; from|&lt;int&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(sub x from (len x))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="17">&nbsp;</A><tt>'[' ... ']'</tt> </td><td colspan="1" align="LEFT"> <tt>'[' ,x ,from * ']'</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(sub* ,x ,from)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="18">&nbsp;</A><tt>ins</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; val i|&lt;int&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns copy of <tt>x</tt>'s with <tt>val</tt> inserted before <tt>i</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="16">&nbsp;</A><tt>del-dups</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="19">&nbsp;</A><tt>del-dups</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns sequence with all duplicates removed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="17">&nbsp;</A><tt>del-vals</tt> </td><td colspan="1" align="LEFT"> <tt>(s|&lt;seq&gt; val =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="20">&nbsp;</A><tt>del-vals</tt> </td><td colspan="1" align="LEFT"> <tt>(s|&lt;seq&gt; val =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns sequence with all copies of <tt>val</tt> removed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="18">&nbsp;</A><tt>sort-by</tt> </td><td colspan="1" align="LEFT"> <tt>(s|&lt;seq&gt; f|&lt;fun&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="21">&nbsp;</A><tt>sort-by</tt> </td><td colspan="1" align="LEFT"> <tt>(s|&lt;seq&gt; f|&lt;fun&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns a sorted copy of <tt>s</tt> using <tt>f</tt> as a comparator.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="19">&nbsp;</A><tt>sort</tt> </td><td colspan="1" align="LEFT"> <tt>(s|&lt;seq&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="22">&nbsp;</A><tt>sort</tt> </td><td colspan="1" align="LEFT"> <tt>(s|&lt;seq&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(sort-by s &lt;)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="20">&nbsp;</A><tt>pick</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;seq&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="23">&nbsp;</A><tt>pick</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; x|&lt;seq&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns new sequence with elements corresponding to 
   non-false results when calling predicate <tt>f</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="21">&nbsp;</A><tt>prefix?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; prefix|&lt;seq&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="24">&nbsp;</A><tt>prefix?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; prefix|&lt;seq&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns true iff sequence <tt>x</tt> starts with sequence <tt>prefix</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="22">&nbsp;</A><tt>suffix?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; suffix|&lt;seq&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="25">&nbsp;</A><tt>suffix?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; suffix|&lt;seq&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns true iff sequence <tt>x</tt> ends with sequence <tt>suffix</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="23">&nbsp;</A><tt>repeat</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; n|&lt;int&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="26">&nbsp;</A><tt>repeat</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; n|&lt;int&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns sequence with <tt>n</tt> concatenated copies of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="24">&nbsp;</A><tt>split</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; sep =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="27">&nbsp;</A><tt>split</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq&gt; sep =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns sequence of subsequences of <tt>x</tt> separated by <tt>sep</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="25">&nbsp;</A><tt>join</tt> </td><td colspan="1" align="LEFT"> <tt>(xs|&lt;seq&gt; sep|&lt;seq&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="28">&nbsp;</A><tt>join</tt> </td><td colspan="1" align="LEFT"> <tt>(xs|&lt;seq&gt; sep|&lt;seq&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns sequence composed of sequences in <tt>xs</tt> joined with
   <tt>sep</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 
-<h3><A NAME="26">Mutable Sequences</a></h3>
+<h3><A NAME="29">Mutable Sequences</a></h3>
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="27">&nbsp;</A><tt>&lt;seq!&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq&gt; &lt;col!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="30">&nbsp;</A><tt>&lt;seq!&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq&gt; &lt;col!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="28">&nbsp;</A><tt>rev!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="31">&nbsp;</A><tt>rev!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns destructively reversed sequence.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="29">&nbsp;</A><tt>cat!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; more|... =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="32">&nbsp;</A><tt>cat!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; more|... =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns destructively concatenated sequences.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="30">&nbsp;</A><tt>add!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; y|&lt;any&gt; =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="33">&nbsp;</A><tt>add!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; y|&lt;any&gt; =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns collection with <tt>y</tt> added to the end of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="31">&nbsp;</A><tt>push!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; y|&lt;any&gt; =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="34">&nbsp;</A><tt>push!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; y|&lt;any&gt; =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns collection with <tt>y</tt> added to the front of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="32">&nbsp;</A><tt>pop!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; =&gt; (tup val|&lt;any&gt; &lt;seq!&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="35">&nbsp;</A><tt>pop!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; =&gt; (tup val|&lt;any&gt; &lt;seq!&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>pops element from front of sequence.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="33">&nbsp;</A><tt>PUSHF</tt> </td><td colspan="1" align="LEFT"> <tt>(PUSHF ,place ,val)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="36">&nbsp;</A><tt>PUSHF</tt> </td><td colspan="1" align="LEFT"> <tt>(PUSHF ,place ,val)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>pushes <tt>,val</tt> onto the sequence stored in <tt>,place</tt>,
   updates <tt>,place</tt> to contain the new sequence, and returns the new
   sequence.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="34">&nbsp;</A><tt>POPF</tt> </td><td colspan="1" align="LEFT"> <tt>(POPF ,place)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="37">&nbsp;</A><tt>POPF</tt> </td><td colspan="1" align="LEFT"> <tt>(POPF ,place)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>pops a value from the sequence stored in 
   <tt>,place</tt>, replaces
   the sequence with an updated sequence, and returns the value.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="35">&nbsp;</A><tt>ins!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; v|&lt;any&gt; i|&lt;int&gt; =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="38">&nbsp;</A><tt>ins!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; v|&lt;any&gt; i|&lt;int&gt; =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>inserts <tt>v</tt> before <tt>i</tt> in <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="36">&nbsp;</A><tt>sub-setter</tt> </td><td colspan="1" align="LEFT"> <tt>(dst|&lt;seq!&gt; src|&lt;seq&gt; from|&lt;int&gt; below|&lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="39">&nbsp;</A><tt>sub-setter</tt> </td><td colspan="1" align="LEFT"> <tt>(dst|&lt;seq!&gt; src|&lt;seq&gt; from|&lt;int&gt; below|&lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>replaces subsequence in range between <tt>from</tt> and
   <tt>below</tt> of <tt>dst</tt> with
   contents of <tt>src</tt>.  Provides insertion, deletion, and
   replacement operations rolled into one. </i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="37">&nbsp;</A><tt>del-vals!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; v|&lt;any&gt;  =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="40">&nbsp;</A><tt>sub*-setter</tt> </td><td colspan="1" align="LEFT"> <tt>(dst|&lt;seq!&gt; src|&lt;seq&gt; from|&lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(sub-setter dst src from (len dst))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="41">&nbsp;</A><tt>del-vals!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; v|&lt;any&gt;  =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>removes all <tt>v</tt>'s from <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="38">&nbsp;</A><tt>del-dups!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="42">&nbsp;</A><tt>del-dups!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;seq!&gt; =&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>removes all duplicates from <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="39">&nbsp;</A><tt>sort-by!</tt> </td><td colspan="1" align="LEFT"> <tt>(s|&lt;seq&gt; f|&lt;fun&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="43">&nbsp;</A><tt>sort-by!</tt> </td><td colspan="1" align="LEFT"> <tt>(s|&lt;seq&gt; f|&lt;fun&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>destructively sorts <tt>s</tt> using <tt>f</tt> as a comparator.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="40">&nbsp;</A><tt>sort!</tt> </td><td colspan="1" align="LEFT"> <tt>(s|&lt;seq&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="44">&nbsp;</A><tt>sort!</tt> </td><td colspan="1" align="LEFT"> <tt>(s|&lt;seq&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(sort-by! s &lt;)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
  
-<h3><A NAME="41">Lists</a></h3>
+<h3><A NAME="45">Lists</a></h3>
 <p>Lists are always "proper" lists, that is, the tail of a list is always a
 list.  Lists might be deprecated in future releases of <i>GOO.
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="42">&nbsp;</A><tt>&lt;lst&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="46">&nbsp;</A><tt>&lt;lst&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="43">&nbsp;</A><tt>&lt;list&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;lst&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>A</tt> </td></tr>
+<A NAME="47">&nbsp;</A><tt>&lt;list&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;lst&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>A</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="44">&nbsp;</A><tt>head</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;lst&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<A NAME="48">&nbsp;</A><tt>head</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;lst&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="45">&nbsp;</A><tt>tail</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;lst&gt; =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<A NAME="49">&nbsp;</A><tt>tail</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;lst&gt; =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="46">&nbsp;</A><tt>lst</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="50">&nbsp;</A><tt>lst</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns list of arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="47">&nbsp;</A><tt>list</tt> </td><td colspan="1" align="LEFT"> <tt>lst</tt> </td><td colspan="1" align="RIGHT"> <tt>A</tt> </td></tr>
+<A NAME="51">&nbsp;</A><tt>list</tt> </td><td colspan="1" align="LEFT"> <tt>lst</tt> </td><td colspan="1" align="RIGHT"> <tt>A</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="48">&nbsp;</A><tt>nil</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;lst&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>I</tt> </td></tr>
+<A NAME="52">&nbsp;</A><tt>nil</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;lst&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>I</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>aka <tt>()</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="49">&nbsp;</A><tt>pair</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;any&gt; y|&lt;lst&gt; =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="53">&nbsp;</A><tt>pair</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;any&gt; y|&lt;lst&gt; =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns new list with <tt>x</tt> as head and <tt>y</tt> as tail.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 
-<h3><A NAME="50">Zips</a></h3>
+<h3><A NAME="54">Zips</a></h3>
 <p>A zip is a sequence of tuples of sucessive elements of sequences.  A
 zip has the length of its shortest constituent sequence.
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="51">&nbsp;</A><tt>&lt;zip&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="55">&nbsp;</A><tt>&lt;zip&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="52">&nbsp;</A><tt>zip</tt> </td><td colspan="1" align="LEFT"> <tt>(cs|(...&#32;&lt;seq&gt;) =&gt; &lt;zip&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="56">&nbsp;</A><tt>zip</tt> </td><td colspan="1" align="LEFT"> <tt>(cs|(...&#32;&lt;seq&gt;) =&gt; &lt;zip&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns a zip over sequences <tt>cs</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="53">&nbsp;</A><tt>unzip</tt> </td><td colspan="1" align="LEFT"> <tt>(z|&lt;zip&gt; =&gt; &lt;tup&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="57">&nbsp;</A><tt>unzip</tt> </td><td colspan="1" align="LEFT"> <tt>(z|&lt;zip&gt; =&gt; &lt;tup&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns a tuple of <tt>z</tt>'s constituent sequences.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 
-<h3><A NAME="54">Flat Sequences</a></h3>
+<h3><A NAME="58">Flat Sequences</a></h3>
 <p>Flats represents sequences with constant access time.  Flat enum provides
 an enum implementation of all but <tt>now</tt> and <tt>now-setter</tt>.
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="55">&nbsp;</A><tt>&lt;flat&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="59">&nbsp;</A><tt>&lt;flat&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="56">&nbsp;</A><tt>&lt;flat-enum&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;enum&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="60">&nbsp;</A><tt>&lt;flat-enum&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;enum&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="57">&nbsp;</A><tt>&lt;tup&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="61">&nbsp;</A><tt>&lt;tup&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>Tuples are immutable flat sequences and represents multiple values in
   <i>GOO.</i></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="58">&nbsp;</A><tt>tup</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;tup&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="62">&nbsp;</A><tt>tup</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;tup&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>creates a tuple with elements being <tt>elts</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="59">&nbsp;</A><tt>&lt;vec&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="63">&nbsp;</A><tt>&lt;vec&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>Stretchy vectors resize when needed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="60">&nbsp;</A><tt>vec</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;sec&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="64">&nbsp;</A><tt>vec</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;sec&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns new vector with elements <tt>elts</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 
-<h3><A NAME="61">Strings</a></h3>
+<h3><A NAME="65">Strings</a></h3>
 
 <p><i>GOO&#32;currently implements ASCII strings.
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="62">&nbsp;</A><tt>&lt;str&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;mag&gt; &lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="66">&nbsp;</A><tt>&lt;str&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;mag&gt; &lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="63">&nbsp;</A><tt>str</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="67">&nbsp;</A><tt>str</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns new string with elements <tt>elts</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="64">&nbsp;</A><tt>case-insensitive-string-hash</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;tab&gt; =&gt; (tup hash|&lt;any&gt; gc-state|&lt;any&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="68">&nbsp;</A><tt>case-insensitive-string-hash</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;tab&gt; =&gt; (tup hash|&lt;any&gt; gc-state|&lt;any&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="65">&nbsp;</A><tt>case-insensitive-string-equal</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;str&gt; y|&lt;str&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="69">&nbsp;</A><tt>case-insensitive-string-equal</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;str&gt; y|&lt;str&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 
