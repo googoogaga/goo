@@ -1316,31 +1316,44 @@ P YPbuild_runtime_modules(
 
 #include <dlfcn.h>
 
-#define CGEN_CC "cc -c -g -fPIC -I'%s/c' -o '%s.o' '%s.c'"
-#define CGEN_LD "cc -shared -o '%s.so' '%s.o'"
-
 typedef P (*PLD)();
 extern P YgooSsystemYTgoo_rootT;
 
-P YevalSg2cYPcompile (P name) {
-  char  buf[256];
-  sprintf(buf, CGEN_CC, YPsu(YgooSsystemYTgoo_rootT), name, name);
-  // printf("EXECUTING %s\n", buf);
-  system(buf);
-  sprintf(buf, CGEN_LD, name, name);
-  // printf("EXECUTING %s\n", buf);
-  system(buf);
+P YgooSsystemYPcompile (P cfile, P sofile) {
+	char  buf[4096];
+	int pid;
+	char *v[] = {"cc", "-shared",  "-g", "-fPIC",  buf, "-o", sofile, cfile, NULL};
+
+	sprintf(buf, "-I%s/lib", YPsu(YgooSsystemYTgoo_rootT));
+//	printf("EXECUTING %s\n", buf);
+	pid = fork();
+	if (pid == 0) // child
+		execvp("cc", v);
+	else if (pid < 0)
+		CALL1(1, Yerror, "Cannot exec compiler.");
+	else
+	{
+		int status;
+		// parent
+		do {
+			if (waitpid(pid, &status, 0) == -1) {
+				if (errno != EINTR)
+					return YPfalse;
+			} else
+				return YPtrue;
+		} while(1);
+		
+		return YPfalse;
+	}
 }
 
-P YevalSg2cYPload(P name) {
+P YgooSsystemYPload(P name) {
   void* mod;
-  char  buf[256];
   PLD   load;
   P     res;
 
-  sprintf(buf, "%s.so", name);
-  // printf("LOADING   %s\n", buf);
-  mod = dlopen(buf, RTLD_NOW);
+  // printf("LOADING   %s\n", name);
+  mod = dlopen(name, RTLD_NOW);
   if (mod == NULL)
     printf("FAILED TO LOAD %s BECAUSE %s\n", name, dlerror());
   else {
@@ -1350,6 +1363,16 @@ P YevalSg2cYPload(P name) {
   }
   return res;
 }
+
+/*P YevalSg2cYPcompile (P name) {
+	return YgooSsystemYPcompile(name);
+}
+
+
+P YevalSg2cYPload(P name) {
+	return YgooSsystemYPload(name);
+}
+*/
 
 /* TODO: GET THIS WORKING ON WINDOWS */
 P YgooSsystemYPpid () {
