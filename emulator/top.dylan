@@ -51,8 +51,10 @@ define method load-file
   report-undefined-global-bindings(ct-env);
 end method;
 
-define variable *base-path* = "\\jrb\\ai\\proto\\src\\";
-define variable *c-base-path* = concatenate(*base-path*, "..\\c\\");
+// define variable *base-path* = "\\jrb\\ai\\proto\\src\\";
+// define variable *c-base-path* = concatenate(*base-path*, "..\\c\\");
+define variable *base-path* = "E:\\proto\\SRC\\";
+define variable *c-base-path* = concatenate(*base-path*, "..\\C\\");
 // define variable *base-path* = "d:\\gregs\\proto\\";
 
 define function proto-filename (name)

@@ -597,6 +597,7 @@ define method ast-define-binding
         end if;
         existing-binding
       else
+	format-out("DEF %s\n", name);
         let binding = apply(make, type, name: name, free?: #f, args);
         insert-global!(binding, r);
         binding

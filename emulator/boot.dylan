@@ -616,6 +616,8 @@ define %function %sym (x) => (res)
   %%sym(%str-dat(x))
 end %function;
 
+define %binding %do-stack-frames = #f;
+
 /// OBJECT SYSTEM PRIMITIVES
 
 define variable *fun-reg* = #f;
@@ -693,6 +695,7 @@ define %binding (%os-name)                 = #f;
 define %binding (%os-binding-value)        = #f;
 define %binding (%os-binding-value-setter) = #f;
 define %binding (%%mep-apply)              = #f;
+define %binding (%fapply)                  = #f;
 
 define %function %%apply (fun, args)
   let env

@@ -68,7 +68,9 @@ define method p2c-top ()
   p2c-boot-files
     (#("macros", "runtime", "runtime-native", "tables",
        "ascii", "io", "read", "write", "syntax", 
-       "environment", "ast", "ast-eval", "top", "main"));
+       "environment", "ast", "ast-eval", 
+       "ast-linearize", "p2c",
+       "top", "main"));
 end method;
 
 define method p2c-boot (#key prg = #f)
@@ -134,9 +136,9 @@ define method pp (e, out)
 end method;
 
 define method generate-header (out, e)
-  format(out, "/* PROTO 2 C $REVISION: 0.1 $ \n");
+  format(out, "/* EMULATED PROTO 2 C $REVISION: 0.2E $ \n");
   // pp(e, out);
-  format(out, "  */\n\n#include \"proto.h\"\n");
+  format(out, "  */\n\n#include \"prt.h\"\n");
 end method;
 
 define method generate-trailer (out)
@@ -1137,11 +1139,13 @@ define method generate-function-code (out, definition)
   generate-function-name(out, definition);
   format(out, ") {\n");
   let bindings = function-bindings(definition);
+  let offset   = 0;
   do(method (b)
        if (instance?(b, <binding>))
 	 format(out, "  ARG(");
 	 binding->c(b, out);
-	 format(out, ");\n");
+	 format(out, ", %=);\n", offset);
+	 offset := offset + 1;
        end if;
      end method,
      reverse(bindings));
