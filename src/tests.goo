@@ -30,8 +30,9 @@
 	     ,@tests))))
 
 (dv *test-trace?* #t)
-
 (dv *test-doc*    #f)
+
+(export *test-trace?*)
 
 (dm do-test (group-name doc input-thunk)
   (dlet ((*test-doc* doc))
@@ -84,12 +85,13 @@
 (dm run-tests-in (tst => (tup <lst> <lst>))
   (let ((errors '()) (warnings '()))
     (lab break
-      (try ((condition resume)
-	    (if (isa? condition <test-warning>)
-		(seq (pushf warnings (lst condition *test-doc*))
-		     (resume #f))
-		(seq (pushf errors (lst condition *test-doc*))
-		     (break #f))))
+      (try <condition>
+        (fun (condition resume)
+          (if (isa? condition <test-warning>)
+              (seq (pushf warnings (lst condition *test-doc*))
+                   (resume #f))
+              (seq (pushf errors (lst condition *test-doc*))
+                   (break #f))))
 	(tst)))
       (tup errors warnings)))
 
