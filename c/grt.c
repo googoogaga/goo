@@ -1092,7 +1092,7 @@ void des (P adr) {
 extern P Ykeyboard_interrupt;
 void setup_keyboard_interrupts (void);
 
-#ifdef PTHREADS
+#ifdef HAVE_POSIX_THREAD
 extern pthread_t main_thread;
 #endif
 
@@ -1102,11 +1102,11 @@ void keyboard_interrupt (int value) {
   sigaddset(&set, SIGINT);
   sigprocmask(SIG_UNBLOCK, &set, NULL);
 
-#ifdef PTHREADS
+#ifdef HAVE_POSIX_THREAD
   if (pthread_self() == main_thread)
 #endif 
     XXCALL0(1, Ykeyboard_interrupt);
-#ifdef PTHREADS
+#ifdef HAVE_POSIX_THREAD
   else
     pthread_kill(main_thread, SIGINT);
 #endif 
@@ -1138,6 +1138,7 @@ P YPapp_args () {
   return args;
 }
 
+#define NO_UNEXEC
 #ifdef WIN32
 #define NO_UNEXEC
 #endif
@@ -1419,7 +1420,7 @@ extern P YPTstart_running_atT;
 DEFTVAR(goo_thread);
 DEFTVAR(tregs);
 REGS main_regs = (REGS)0;
-#ifdef PTHREADS
+#ifdef HAVE_POSIX_THREAD
 pthread_t main_thread = (pthread_t)0;
 #endif
 
@@ -1480,14 +1481,14 @@ void YPinit_world(int argc, char* argv[]) {
   // GC_enable_incremental();
 
   GC_init();
-#ifdef PTHREADS_SPECIFIC
+#if defined(HAVE_POSIX_THREAD) && !defined(HAVE_THREAD_LOCAL_VARIABLE)
   pthread_key_create(&tregs, NULL);
   pthread_key_create(&goo_thread, NULL);
 #endif
   main_regs = YPfab_regs();
   REGSSET(main_regs);
   envnul  = ENVFAB(0);
-#ifdef PTHREADS
+#ifdef HAVE_POSIX_THREAD
   main_thread = pthread_self();
 #endif
   setup_keyboard_interrupts();

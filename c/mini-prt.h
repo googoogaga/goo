@@ -1,4 +1,5 @@
 //// Copyright 2002, Jonathan Bachrach.  See file TERMS.
+#include "config.h"
 
 typedef void*          P;
 #define PNUL (P)0

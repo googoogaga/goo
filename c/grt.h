@@ -2,22 +2,16 @@
 
 #ifndef IN_GRT
 #define IN_GRT
-
-#define PTHREADS          1
-#ifdef PTHREADS
-#define PTHREADS_SPECIFIC 1
-// #define TLC
-#endif
-
+#include "config.h"
 #include <time.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <setjmp.h>
 #include <math.h>
-#ifdef PTHREADS
+#ifdef HAVE_POSIX_THREAD
 #include <pthread.h>
-#include "gc.h"
+#include "gc_pthread_redirects.h"
 #endif
 
 #define INLINE inline
@@ -303,21 +297,30 @@ STATIC_NOT_PRT_C INLINE P* FUNENVSETTER (P* env, P fun) {
 
 // THREAD LOCAL VARIABLE SUPPORT
 
-#ifdef PTHREADS_SPECIFIC
+#ifdef WITH_THREADS
+
+#if defined(HAVE_THREAD_LOCAL_VARIABLE)
+#define THREAD __thread
+typedef P* T;
+#define TREF(x)    (x)
+#define TSET(x, v) (x = (v))
+#elif defined(HAVE_POSIX_THREAD)
 #define THREAD 
 typedef pthread_key_t T;
 #define TREF(x)    ((P*)pthread_getspecific(x))
 #define TSET(x, v) pthread_setspecific(x, v)
 #else
-#ifdef TLC
-#define THREAD __thread
-#else
-#define THREAD 
+#error Unknown threading type
 #endif
+
+#else /* WITH_THREADS */
+
+#define THREAD 
 typedef P* T;
 #define TREF(x)    (x)
 #define TSET(x, v) (x = (v))
-#endif
+
+#endif /* WITH_THREADS */
 
 #define DEFTVAR(v)   THREAD T v
 #define EXTTVAR(v)   extern THREAD T v

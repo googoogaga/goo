@@ -28,7 +28,9 @@ INSTALL_SCRIPT=@INSTALL_PROGRAM@
 INSTALL_DATA=@INSTALL_DATA@
 
 ## end generic stuff
+THREADKIND=@THREADKIND@
 
+GOO_ROOT=$(libdir)
 GOO_LIB = $(libdir)/lib
 GOO_MODS = $(libdir)/mods
 
@@ -48,9 +50,10 @@ LD_FLAGS  += -Wl,--export-dynamic
 
 default: all
 
-gc: Makefile
+gc-stamp: Makefile
+	touch gc-stamp
 ifeq ($(build_gc), yes)
-	cd $(top_srcdir)/gc && $(MAKE) libgc.la
+	cd $(top_srcdir)/gc && $(MAKE) clean && ./configure --enable-threads=$(THREADKIND) && $(MAKE) libgc.la
 	rm -f gc
 	ln -s -f $(top_srcdir)/gc/include gc
 	ln -s -f $(top_srcdir)/gc/.libs/libgc.a gc.a;
@@ -58,7 +61,7 @@ else
 	rm -f gc gc.a;
 endif
 
-all: gc
+all: gc-stamp
 	(cd $(sub); $(MAKE))
 
 # Create installation
@@ -71,11 +74,11 @@ install: all
 	$(INSTALL_DATA) dlgrt.h $(GOO_LIB)
 
 clean:
-	rm -f grt.o unexelf.o gc gc.a
+	rm -f grt.o unexelf.o gc gc.a gc-stamp
 	(cd $(sub); $(MAKE) clean)
 
 distclean: clean
-	rm -f Makefile
+	rm -f Makefile config.h
 
-.PHONY: all install clean distclean gc
+.PHONY: all install clean distclean
 
