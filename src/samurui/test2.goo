@@ -1,0 +1,59 @@
+; (load "/home/ai2/sombrero/cvs/goo/src/goouitest2.goo" 'goo/user)
+
+(dc <simple-app> (<any>))
+
+(dc <str-hold> (<any>))
+(iprop <str-hold>  da-str <str> "DaString")
+
+(dm hold (s|<str>)
+  (def o (new <str-hold>))
+  (set (da-str o) s)
+  o
+  )
+
+(dm to-str (h|<str-hold>)
+  (da-str h)
+  )
+
+(iprop <simple-app> tree-nodes <col> "Tree Nodes")
+
+(dv my-app (new <simple-app>))
+
+(set (tree-nodes my-app) (vec (hold "Apples")
+                              (hold "Bananas")
+                              (hold "Pears" )
+                              (vec (hold "Cows")
+                                   (hold "Pigs")
+                                   (hold "Ducks"))
+                              (vec (vec (hold "Spaceships")
+                                        (hold "Monkeys")
+                                        (hold "Dogs")
+                                        (vec (hold "Enterprise")
+                                             (hold "Endeavor")
+                                             (hold "Challenger"))
+                                        (vec (hold "Soup")
+                                             (hold "Crackers"))
+                                        (hold "Zoos"))
+                                   (hold "Kings")
+                                   (hold "Queens")
+                                   (hold "Pawns"))
+                              ))
+
+(imodel <simple-app>
+        "Tree View Hopefully"
+        tree-nodes
+        ;;(columns
+        ;; (master bob tree-nodes)
+        ;; (slave bob)
+        ;; )
+)
+
+;;(imodel <str-hold>
+;;        "The String"
+;;        da-str
+;;        )
+
+(gtk_init_easy)
+
+(present my-app)
+(gtk_main)
