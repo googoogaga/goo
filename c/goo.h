@@ -1,3 +1,5 @@
+/* Copyright (c) 2001 Jonathan Bachrach */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
@@ -867,6 +869,9 @@ P YPPmep_apply (P fun, P args) {
   return (FUNCODE(fun))(fun);
 }
 
+P YPfapply (P fproc, P args) {
+}
+
 /* NON-LOCAL EXITS */
 
 typedef struct _bind_exit_frame {
@@ -1317,10 +1322,12 @@ P YPdo_runtime_bindings (P fun) {
   int i, formatp = 0, evalp = 0;
   for (i = 0; i < nsyms; i++) {
     char* n = symstrs[i];
+    /*
     if (strcmp(n, "sexpr-self-evaluating?") == 0)
       formatp = 1;
     if (strcmp(n, "os-name") == 0)
       evalp = 1;
+    */
     if (!formatp || evalp) {
       P name     = YPsb((P)n);
       P locative = YPlb((P)untag((P)symadrs[i]));

@@ -1,5 +1,5 @@
 COMPILER = gcc
-COPTIONS = -g 
+COPTIONS = -g -O
 SRC_DIR  = C:/jrb/ai/proto/C
 
 # OBJECTS = $(SRC_DIR)/proto.obj
