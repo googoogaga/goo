@@ -1,0 +1,317 @@
+(use goo)
+(use goo/boot)
+(use/library gmp)
+
+#{
+#include <gmp.h>
+#include <values.h>
+
+static mp_limb_t dummy_limb;
+
+static inline PINT iu (P x) { return (PINT)IU(x); }
+static inline P    ib (PINT x) { return (P)tag((P)x, int_tag); }
+
+static inline mpz_init_zero(mpz_ptr z) {
+  z->_mp_size  = 0;
+  z->_mp_alloc = 0;
+  z->_mp_d     = &dummy_limb;
+}
+
+// workaround for the lack of long long handling functions in the mpz library
+void mpz_init_set_si64(mpz_ptr result, long long src) {
+  int negp = src < 0;
+  if (negp) src = -src;
+  mpz_init_set_si(result, src>>32);
+  mpz_mul_2exp(result, result, 32);
+  mpz_add_ui(result, result, (long)src);
+  if (negp) mpz_neg(result, result);
+}
+
+// checks if the mpz will fit in a GOO fixnum (long - 2 tag bits)
+static inline int mpz_fits_fixnum(mpz_ptr z) {
+  mp_size_t size = z->_mp_size;
+  mp_limb_t data = z->_mp_d[0];
+  return (size == 0
+	  || (size == 1  && data <= MAX_GOO_FIXNUM)
+	  || (size == -1 && data <= - (mp_limb_t) MIN_GOO_FIXNUM));
+}
+
+static inline int rawint_fits_fixnum(PINT x) {
+  return (x <= MAX_GOO_FIXNUM && x >= MIN_GOO_FIXNUM);
+}
+
+// returns a GOO integer -- assumes you already checked that it fits
+static inline P mpz_to_fixnum(mpz_ptr z) {
+  mp_size_t size     = z->_mp_size;
+  mp_limb_t low_limb = z->_mp_d[0];
+  if (size > 0)
+    return ib((PINT)low_limb);
+  else if (size < 0)
+    return ib((PINT)-(long)low_limb);
+  else
+    return ib(0);
+}
+
+static P mpz_to_bignum(mpz_ptr p) {
+  P* obj       = (P*)allocate(sizeof(P)+sizeof(__mpz_struct));
+  mpz_ptr newp = (mpz_ptr)(obj+1);
+  *newp        = *p;
+  YPobject_class_setter(YLbignumG, obj);
+  return obj;
+}
+
+static inline mpz_ptr bignum_to_mpz(P obj) {
+  return (mpz_ptr)(((P*)obj)+1);
+}
+
+// this should only be used internally, as most functions assume
+// bignums cannot be in the range of fixnums
+static inline P fixnum_to_bignum (P num) {
+  mpz_t mpz;
+  mpz_init_set_si(mpz, (long)iu(num));
+  return mpz_to_bignum(mpz);
+}
+
+static inline P rawint_to_goo (PINT num) {
+  if(rawint_fits_fixnum(num))
+    return YPib((P)num);
+  else {
+    mpz_t mpz;
+    mpz_init_set_si(mpz, num);
+    return mpz_to_bignum(mpz);
+  }
+}
+
+static inline P mpz_to_goo(mpz_ptr result) {
+  if(mpz_fits_fixnum(result))
+    return mpz_to_fixnum(result);
+  else 
+    return mpz_to_bignum(result);
+}
+
+static P rawint64_to_goo (long long num) {
+  if(num > LONG_MAX || num < LONG_MIN) {
+    // if it has an upper 32 bits
+    mpz_t mpz;
+    mpz_init_set_si64(mpz, num);
+    return mpz_to_bignum(mpz);
+  }
+  return rawint_to_goo((PINT)num);
+}
+
+
+static void *gmp_realloc(void *ptr, size_t old, size_t new) {
+  if(ptr == &dummy_limb)
+    return GC_realloc(NULL, new);
+  else
+    return GC_realloc(ptr, new);
+}
+
+static void do_nothing_free(void *ptr, size_t size) { }
+
+P gmp_initialize () {
+  mp_set_memory_functions(GC_malloc, gmp_realloc, do_nothing_free);
+}
+
+}
+
+(df gmp-initialize () #{ gmp_initialize(); })
+
+(gmp-initialize)
+
+(ds with-returning (,res ,@body)
+  `(let ((,res #f)) ,@body ,res)))
+
+;; (ds def-b-b (,name ,c-fun)
+;;   `(dm (,name inline) (x|<bignum> y|<bignum> => <int>)
+;;      (with-returning res
+;;        #{ mpz_t z;
+;;           mpz_init_zero(z);
+;;           $,c-fun(z, bignum_to_mpz($x), bignum_to_mpz($y));
+;;           $res = mpz_to_goo(z); })))
+
+(ds with-gmp-returning (,z ,body)
+  (let ((res (gensym))
+        (zc  (to-str z)))
+    `(with-returning ,res
+       #{ mpz_t $,zc; mpz_init_zero(z); $,body $,res = mpz_to_goo($,zc); })))
+
+(ds def-b-b (,name ,c-fun)
+  `(dm (,name inline) (x|<bignum> y|<bignum> => <int>)
+     (with-gmp-returning z
+       #{ $,c-fun(z, bignum_to_mpz($x), bignum_to_mpz($y)); })))
+
+(ds def-b-i (,name ,c-fun)
+  `(dm (,name inline) (x|<bignum> y|<fixnum> => <int>)
+     (with-gmp-returning z
+       #{ $,c-fun(z, bignum_to_mpz($x), iu($y)); })))
+
+(ds def-i-b (,name ,c-fun)
+  `(dm (,name inline) (x|<fixnum> y|<bignum> => <int>)
+     (with-gmp-returning z
+       #{ $,c-fun(z, iu($x), bignum_to_mpz($y)); })))
+
+(ds def-b (,name ,c-fun)
+  `(dm (,name inline) (x|<bignum> => <int>)
+     (with-gmp-returning z
+       #{ $,c-fun(z, bignum_to_mpz($x)); })))
+
+(def-b-b + "mpz_add")
+
+(dm (+ inline) (x|<bignum> y|<fixnum> => <int>)
+  (with-gmp-returning z
+    #{ if ($y >= 0) 
+         mpz_add_ui(z, bignum_to_mpz($x),  iu($y));
+       else
+         mpz_sub_ui(z, bignum_to_mpz($x), -iu($y)); }))
+
+(dm (+ inline) (x|<fixnum> y|<bignum> => <int>) 
+  (+ y x))
+
+(def-b-b - "mpz_sub")
+
+(dm (- inline) (x|<bignum> y|<fixnum> => <int>)
+  (with-gmp-returning z
+    #{ if ($y >= 0) 
+         mpz_sub_ui(z, bignum_to_mpz($x),  iu($y));
+       else
+         mpz_add_ui(z, bignum_to_mpz($x), -iu($y)); }))
+
+(dm (- inline) (x|<fixnum> y|<bignum> => <int>)
+  (neg (- y x)))
+
+(def-b-b *   "mpz_mul")
+(def-b-i *   "mpz_mul_si")
+(dm (* inline) (x|<fixnum> y|<bignum> => <int>) (* y x))
+(def-b   neg "mpz_neg")
+(def-b-i >>  "mpz_fdiv_q_2exp")
+(def-b-i <<  "mpz_mul_2exp")
+
+;;does >>> even make sense?
+;;(dm (>>> inline) (x|<bignum> a|<fixnum> => <int>)
+;;  (%ib (%i>>> (%iu x) (%iu a))))
+
+;; can use this shortcut because bignums always have greater
+;; magnitude than fixnums, so y > 0 => x < y
+(dm (< inline) (x|<fixnum> y|<bignum> => <log>)
+  (= #ei{ mpz_sgn(bignum_to_mpz($y)) } 1))
+
+(dm (< inline) (x|<bignum> y|<fixnum> => <log>)
+  (= #ei{ mpz_sgn(bignum_to_mpz($x)) } -1))
+
+(dm (< inline) (x|<bignum> y|<bignum> => <log>)
+  (= #ei{ mpz_cmp(bignum_to_mpz($x), bignum_to_mpz($y)) } -1))
+
+(dm (== inline) (x|<bignum> y|<bignum> => <log>)
+  (= #ei{ mpz_cmp(bignum_to_mpz($x), bignum_to_mpz($y)) } 0))
+
+(df (to-bignum inline) (x|<fixnum> => <bignum>)
+  #eg{ fixnum_to_bignum($x) })
+
+(ds def-log-ops (,name ,c-fun)
+  `(seq (def-b-b ,name ,c-fun)
+        (dm (,name inline) (x|<fixnum> y|<bignum> => <int>)
+          (,name (to-bignum x) y))
+        (dm (,name inline) (x|<bignum> y|<fixnum> => <int>)
+          (,name x (to-bignum y)))))
+
+(def-log-ops #| "mpz_ior")
+(def-log-ops ^  "mpz_xor")
+(def-log-ops &  "mpz_and")
+
+(def-b       ~  "mpz_com")
+
+(dm (bit? inline) (x|<bignum> y|<fixnum> => <log>)
+  #eb{ mpz_tstbit(bignum_to_mpz($x), iu($y)) })
+
+(dm (even? inline) (x|<bignum> => <log>)
+  (not (odd? x)))
+
+(dm (odd? inline) (x|<bignum> => <log>)
+  #eb{ mpz_odd_p(bignum_to_mpz($x)) })
+
+;;(dm (/ inline) (x|<bignum> y|<bignum> => <int>)
+;;  (arithmetic-error "No int divide, consider trunc/"))
+
+(dm trunc/ (x|<bignum> y|<bignum> => (tup quo|<int> rem|<int>))
+  (let ((q 0) (r 0))
+    #{ mpz_t q, r;
+       mpz_init_zero(q);
+       mpz_init_zero(r);
+       mpz_tdiv_qr(q, r, bignum_to_mpz($x), bignum_to_mpz($y));
+       $q = mpz_to_goo(q);
+       $r = mpz_to_goo(r); }
+    (tup q r)))
+
+(dm trunc/ (x|<bignum> y|<fixnum> => (tup quo|<int> rem|<int>))
+  (let ((q 0) (r 0))
+    #{ mpz_t   q;
+       long    r;
+       PINT    y  = iu($y);
+       PINT    d  = (y > 0) ? y : -y;
+       mpz_ptr xm = bignum_to_mpz($x);
+       mpz_init_zero(q);
+       r = mpz_tdiv_q_ui(q, xm, d);
+       if(mpz_sgn(xm) < 0)
+         r = -r;
+       if(y < 0)
+         mpz_neg(q,q);
+       $q = mpz_to_goo(q);
+       $r = YPib((P)r); }
+     (tup q r)))
+
+(dm trunc/ (x|<fixnum> y|<bignum> => (tup quo|<int> rem|<int>))
+  (tup 0 x))
+
+;; (dm mod (x|<bignum> y|<bignum> => <bignum>)
+
+(def-b-i pow-pos "mpz_pow_ui")
+
+(dm pow (x|<bignum> n|<fixnum> => <bignum>)
+  (if (< n 0) (/ 1 (pow-pos x (neg n))) (pow-pos x n)))
+
+;; these override the methods in math.goo
+
+(dm (+ inline) (x|<fixnum> y|<fixnum> => <int>)
+  #eg{ rawint_to_goo((PINT)$(%i+ (%iu x) (%iu y))) })
+
+(dm (- inline) (x|<fixnum> y|<fixnum> => <int>)
+  #eg{ rawint_to_goo((PINT)$(%i- (%iu x) (%iu y))) })
+
+;; This takes advantage of GCC being smart and realizing that this
+;; 64bit multiplication is really only to a 32bit multiplication
+;; with a 64bit output, and using a single instruction to do so.
+;; (hopefully it will do so reliably)
+(dm (* inline) (x|<fixnum> y|<fixnum> => <int>)
+  #eg{ rawint64_to_goo(((long long)YPiu($x))*((long long)YPiu($y))) })
+
+;; TODO: check for overflow first then try bignum version
+(dm pow (x|<fixnum> n|<fixnum> => <num>)
+  (pow (to-bignum x) n))
+
+;; TODO: check for overflow first then try bignum version
+(dm (<< inline) (x|<fixnum> a|<fixnum> => <int>)
+  (<< (to-bignum x) a))
+
+(dm as (t|(t= <flo>) x|<bignum>)
+  (with-returning res
+    #{ INTFLO iz;
+       iz.f = mpz_get_d(bignum_to_mpz($x));
+       $res = (P)YPfb((P)iz.i); }))
+
+(dm trunc/ (x|<flo> y|<flo> => (tup z|<int> rem|<flo>))
+  (def divided (/ x y))
+  (def result  0)
+  #{ INTFLO iz;  iz.i = $(%fu x);
+     if (rawint_fits_fixnum((PINT)iz.f))
+       $result = ib((PINT)iz.f);
+     else { 
+       mpz_t z;
+       mpz_init_set_d(z, iz.f);
+       $result = mpz_to_goo(z); } }
+  (tup result (* y (- divided (as <flo> result)))))
+
+(df mpz_print (num)
+  #{ mpz_out_str(stdout, 10, bignum_to_mpz($num)); })
+
+(export mpz_print)

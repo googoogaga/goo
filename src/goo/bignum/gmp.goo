@@ -2,67 +2,343 @@
 (use goo/fun)
 (use goo/mag)
 (use goo/math)
-(use goo/bignum/%gmp.c)
 (use/library gmp)
 
-(dl %add-b-b)
-(dl %add-b-i)
-(dl %sub-b-b)
-(dl %sub-b-i)
-(dl %sub-i-b)
-(dl %mul-b-b)
-(dl %mul-b-i)
-(dl %rsh-b-i)
-(dl %lsh-b-i)
-(dl %sgn-b)
-(dl %cmp-b-b)
-(dl %ior-b-b)
-(dl %xor-b-b)
-(dl %and-b-b)
-(dl %com-b)
-(dl %bit?-b-i)
-(dl %oddp-b)
-(dl %tdiv-qr-b-b)
-(dl %tdiv-qr-b-i)
-(dl %pow-b-i)
-(dl %rawint-to-goo)
-(dl %fixnum-to-bignum)
-(dl %gmp-initialize)
+#{
+#include <gmp.h>
+#include <values.h>
+#include "grt.h"
+
+#define iu(tint) (((PINT)(tint)) >> TAG_BITS)
+EXT(Ytup,"goo/boot","tup");
+EXT(YLbignumG,"goo/bignum/gmp","<bignum>");
+
+
+static mp_limb_t dummy_limb;
+
+static inline mpz_init_zero(mpz_ptr z)
+{
+	z->_mp_size = 0;
+	z->_mp_alloc = 0;
+	z->_mp_d = &dummy_limb;
+}
+
+// checks if the mpz will fit in a GOO fixnum (long - 2 tag bits)
+static inline int mpz_fits_fixnum(mpz_ptr z)
+{
+	mp_size_t size = z->_mp_size;
+	mp_limb_t data = z->_mp_d[0];
+
+	return (size == 0
+			|| (size == 1  && data <= MAX_GOO_FIXNUM)
+			|| (size == -1 && data <= - (mp_limb_t) MIN_GOO_FIXNUM));
+
+}
+
+static inline int rawint_fits_fixnum(PINT x) {
+	return (x <= MAX_GOO_FIXNUM && x >= MIN_GOO_FIXNUM);
+}
+
+// returns a GOO integer
+// assumes you already checked that it fits
+static inline P mpz_to_fixnum(mpz_ptr z)
+{
+	mp_size_t size = z->_mp_size;
+	mp_limb_t low_limb = z->_mp_d[0];
+
+	if (size > 0)
+		return (P)tag((P)(PINT)low_limb, int_tag);
+	else if (size < 0)
+		return (P)tag((P)(PINT)-(long)low_limb, int_tag);
+	else
+		return (P)tag(0, int_tag);
+
+}
+
+static inline P mpz_to_bignum(mpz_ptr p)
+{
+	P* obj = (P*)allocate(sizeof(P)+sizeof(__mpz_struct));
+	YPobject_class_setter(YLbignumG, obj);
+	mpz_ptr newp = (mpz_ptr)(obj+1);
+	*newp = *p;
+	return obj;
+}
+
+static inline mpz_ptr bignum_to_mpz(P obj)
+{
+	return (mpz_ptr)(((P*)obj)+1);
+}
+
+// this should only be used internally, as most functions assume bignums
+// cannot be in the range of fixnums
+static inline P fixnum_to_bignum (P num)
+{
+	mpz_t mpz;
+	mpz_init_set_si(mpz, (long)iu(num));
+	return mpz_to_bignum(mpz);
+}
+
+static inline P rawint_to_goo (PINT num)
+{
+	if(rawint_fits_fixnum(num))
+		return YPib((P)num);
+	else
+	{
+		mpz_t mpz;
+		mpz_init_zero(mpz);
+		mpz_init_set_si(mpz, num);
+		return mpz_to_bignum(mpz);
+	}
+}
+
+static inline P mpz_to_goo(mpz_ptr result)
+{
+	if(mpz_fits_fixnum(result))
+		return mpz_to_fixnum(result);
+	else 
+		return mpz_to_bignum(result);
+}
+
+#define DEFINE_B_B(name, fun) \
+static inline P name (P op1, P op2) \
+{ \
+	mpz_t z; \
+	mpz_init_zero(z); \
+	fun (z, bignum_to_mpz(op1), bignum_to_mpz(op2)); \
+	return mpz_to_goo(z); \
+}
+
+#define DEFINE_B_I(name, fun) \
+static inline P name (P op1, P op2) \
+{ \
+	mpz_t z; \
+	mpz_init_zero(z); \
+	fun (z, bignum_to_mpz(op1), (long)iu(op2)); \
+	return mpz_to_goo(z); \
+}
+
+#define DEFINE_B(name, fun) \
+static inline P name (P op) \
+{ \
+	mpz_t z; \
+	mpz_init_zero(z); \
+	fun (z, bignum_to_mpz(op)); \
+	return mpz_to_goo(z); \
+}
+
+/*
+  Addition, subtraction, multiplication
+*/
+
+// define the functions
+DEFINE_B_B(add_b_b, mpz_add)
+
+// special case necessary for add and subtract as there is no function
+// which operates on signed ints.
+static inline P add_b_i (P op1, P op2)
+{
+	mpz_t z;
+	mpz_init_zero(z);
+	if (op2 >= 0)
+		mpz_add_ui(z, bignum_to_mpz(op1), iu(op2));
+	else
+		mpz_sub_ui(z, bignum_to_mpz(op1), -iu(op2));
+	return mpz_to_goo(z);
+}
+
+DEFINE_B_B(sub_b_b, mpz_sub)
+
+static inline P sub_b_i (P op1, P op2)
+{
+	mpz_t z;
+	mpz_init_zero(z);
+	if (op2 >= 0)
+		mpz_sub_ui(z, bignum_to_mpz(op1), iu(op2));
+	else
+		mpz_add_ui(z, bignum_to_mpz(op1), -iu(op2));
+	return mpz_to_goo(z);
+}
+
+static inline P sub_i_b (P op1, P op2)
+{
+	mpz_t z;
+	mpz_init_zero(z);
+	if (op1 >= 0)
+		mpz_sub_ui(z, bignum_to_mpz(op2), iu(op1));
+	else
+		mpz_add_ui(z, bignum_to_mpz(op2), -iu(op1));
+	mpz_neg(z, z);
+	return mpz_to_goo(z);
+}
+
+DEFINE_B_B(mul_b_b, mpz_mul)
+DEFINE_B_I(mul_b_i, mpz_mul_si)
+
+DEFINE_B(neg_b, mpz_neg)
+
+// cannot call these with negative shifts
+DEFINE_B_I(rsh_b_i, mpz_fdiv_q_2exp)
+//DEFINE_B_I(lsh_b_i, mpz_mul_2exp)
+P lsh_b_i (P op1, P op2) 
+{ 
+	mpz_t z; 
+	mpz_init_zero(z);
+	mpz_mul_2exp (z, bignum_to_mpz(op1), iu(op2)); 
+	return mpz_to_goo(z); 
+}
+
+/*
+  comparison
+*/
+
+P cmp_b_b (P op1, P op2)
+{
+	return YPib((P)mpz_cmp(bignum_to_mpz(op1), bignum_to_mpz(op2)));
+}
+
+P sgn_b (P op)
+{
+	return YPib((P)mpz_sgn(bignum_to_mpz(op)));
+}
+
+P oddp_b (P op)
+{
+	return YPbb((P)mpz_odd_p(bignum_to_mpz(op)));
+}
+
+/*
+  bit fiddling
+*/
+DEFINE_B_B(and_b_b, mpz_and)
+DEFINE_B_B(ior_b_b, mpz_ior)
+DEFINE_B_B(xor_b_b, mpz_xor)
+DEFINE_B(com_b, mpz_com)
+
+P bitQ_b_i (P op, P index)
+{
+	return YPbb(mpz_tstbit(bignum_to_mpz(op), iu(index)));
+}
+
+/*
+   division
+*/
+DEFINE_B_B(tdiv_q_b_b, mpz_tdiv_q)
+DEFINE_B_B(tdiv_r_b_b, mpz_tdiv_r)
+
+P tdiv_qr_b_b (P op1, P op2)
+{
+	mpz_t q, r;
+	mpz_init_zero(q);
+	mpz_init_zero(r);
+	mpz_tdiv_qr(q, r, bignum_to_mpz(op1), bignum_to_mpz(op2));
+	return XXCALLN(1, Ytup, 2, mpz_to_goo(q), mpz_to_goo(r));
+}
+
+// the remainder will always be smaller than the divisor, and that fits
+// in a goo-int, so the result must fit in a goo-int
+P tdiv_r_b_i (P op1, P op2)
+{
+	long r;
+	mpz_ptr op1m = bignum_to_mpz(op1);
+	PINT d = (op2 > 0)?iu(op2):-iu(op2);
+	r = mpz_tdiv_ui(op1m, d);
+	if(mpz_sgn(op1m) < 0)
+		r = -r;
+	return (P)tag((P)r, int_tag);
+	
+}
+
+P tdiv_q_b_i (P op1, P op2)
+{
+	mpz_t q;
+	mpz_init_zero(q);
+	PINT d = (op2 > 0)?iu(op2):-iu(op2);
+	mpz_tdiv_q_ui(q, bignum_to_mpz(op1), d);
+	if(op2<0)
+		mpz_neg(q,q);
+	return mpz_to_goo(q);
+}
+
+P tdiv_qr_b_i (P op1, P op2)
+{
+	mpz_t q;
+	long r;
+	mpz_ptr op1m = bignum_to_mpz(op1);
+	mpz_init_zero(q);
+
+	PINT d = (op2 > 0)?iu(op2):-iu(op2);
+	r = mpz_tdiv_q_ui(q, op1m, d);
+	if(mpz_sgn(op1m) < 0)
+		r = -r;
+	if(op2<0)
+		mpz_neg(q,q);
+    return XXCALLN(1, Ytup, 2, mpz_to_goo(q), tag((P)r, int_tag));
+}
+
+/*
+  powers
+*/
+
+// only works with positive exponent
+DEFINE_B_I(pow_b_i, mpz_pow_ui)
+
+
+static void *gmp_realloc(void *ptr, size_t old, size_t new)
+{
+	if(ptr == &dummy_limb)
+		return GC_realloc(NULL, new);
+	else
+		return GC_realloc(ptr, new);
+}
+
+static void do_nothing_free(void *ptr, size_t size)
+{
+	//...do nothing
+}
+
+P gmp_initialize ()
+{
+	mp_set_memory_functions(GC_malloc, gmp_realloc, do_nothing_free);
+}
+
+}
 
 ;; setup the memory allocation stuff for the gmp library
-(%gmp-initialize)
+(df gmp-initialize () #{ gmp_initialize(); })
+
+(gmp-initialize)
 
 (dm (+ inline) (x|<bignum> y|<bignum> => <int>)
-  (%add-b-b x y))
+  #eg{ add_b_b(x, y); })
 
 (dm (+ inline) (x|<bignum> y|<fixnum> => <int>)
-  (%add-b-i x y))
+  #eg{ add_b_i x y); })
 
 (dm (+ inline) (x|<fixnum> y|<bignum> => <int>)
-  (%add-b-i y x))
+  #eg{ add_b_i y x); })
 
 (dm (- inline) (x|<bignum> y|<bignum> => <int>)
-  (%sub-b-b x y))
+  #eg{ sub_b_b x y); })
 
 (dm (- inline) (x|<bignum> y|<fixnum> => <int>)
-  (%sub-b-i x y))
+  #eg{ sub_b_i x y); })
 
 (dm (- inline) (x|<fixnum> y|<bignum> => <int>)
-  (%sub-i-b x y))
+  #eg{ sub_i_b x y); })
 
 (dm (* inline) (x|<bignum> y|<bignum> => <int>)
-  (%mul-b-b x y))
+  #eg{ mul_b_b x y); })
 
 (dm (* inline) (x|<bignum> y|<fixnum> => <int>)
-  (%mul-b-i x y))
+  #eg{ mul_b_i x y); })
 
 (dm (* inline) (x|<fixnum> y|<bignum> => <int>)
-  (%mul-b-i y x))
+  #eg{ mul_b_i y x); })
 
 (dm (>> inline) (x|<bignum> a|<fixnum> => <int>)
   (if (> a 0)
-      (%rsh-b-i x a)
-      (%lsh-b-i x (- 0 a))))
+      #eg{ rsh_b_i x a); }
+      #eg{ lsh_b_i x (- 0 a); })))
 
 ;;does >>> even make sense?
 ;;(dm (>>> inline) (x|<bignum> a|<fixnum> => <int>)
@@ -70,70 +346,70 @@
 
 (dm (<< inline) (x|<bignum> a|<fixnum> => <int>)
   (if (> a 0)
-      (%lsh-b-i x a)
-      (%rsh-b-i x (- 0 a))))
+      #eg{ lsh_b_i x a); }
+      #eg{ rsh_b_i x (- 0 a); })))
 
 ;; can use this shortcut because bignums always have greater
 ;; magnitude than fixnums, so y > 0 => x < y
 (dm (< inline) (x|<fixnum> y|<bignum> => <log>)
-  (%eq? (%sgn-b y) 1))
+  (%eq? #eg{ sgn_b y); } 1))
 
 (dm (< inline) (x|<bignum> y|<fixnum> => <log>)
-  (%bb (%eq? (%sgn-b x) -1)))
+  (%bb (%eq? #eg{ sgn_b x); } -1)))
 
 (dm (< inline) (x|<bignum> y|<bignum> => <log>)
-  (%bb (%eq? (%cmp-b-b x y) -1)))
+  (%bb (%eq? #eg{ cmp_b_b x y); } -1)))
 
 (dm (== inline) (x|<bignum> y|<bignum> => <log>)
-  (%bb (%eq? (%cmp-b-b x y) 0)))
+  (%bb (%eq? #eg{ cmp_b_b x y); } 0)))
 
 (dm (#| inline) (x|<bignum> y|<bignum> => <int>)
-  (%ior-b-b x y))
+  #eg{ ior_b_b x y); })
 
 (dm (#| inline) (x|<fixnum> y|<bignum> => <int>)
-  (%ior-b-b (%fixnum-to-bignum x) y))
+  #eg{ ior_b_b (%fixnum_to_bignum x); } y))
 
 (dm (#| inline) (x|<bignum> y|<fixnum> => <int>)
-  (%ior-b-b x (%fixnum-to-bignum y)))
+  #eg{ ior_b_b x (%fixnum_to_bignum y); }))
 
 (dm (^ inline) (x|<bignum> y|<bignum> => <int>)
-  (%xor-b-b x y))
+  #eg{ xor_b_b x y); })
 
 (dm (^ inline) (x|<fixnum> y|<bignum> => <int>)
-  (%xor-b-b (%fixnum-to-bignum x) y))
+  #eg{ xor_b_b (%fixnum_to_bignum x); } y))
 
 (dm (^ inline) (x|<bignum> y|<fixnum> => <int>)
-  (%xor-b-b x (%fixnum-to-bignum y)))
+  #eg{ xor_b_b x (%fixnum_to_bignum y); }))
 
 (dm (& inline) (x|<bignum> y|<bignum> => <int>)
-  (%and-b-b x y))
+  #eg{ and_b_b x y); })
 
 (dm (& inline) (x|<fixnum> y|<bignum> => <int>)
-  (%and-b-b (%fixnum-to-bignum x) y))
+  #eg{ and_b_b (%fixnum_to_bignum x); } y))
 
 (dm (& inline) (x|<bignum> y|<fixnum> => <int>)
-  (%and-b-b x (%fixnum-to-bignum y)))
+  #eg{ and_b_b x (%fixnum_to_bignum y); }))
 
 (dm (~ inline) (x|<bignum> => <bignum>)
-  (%com-b x))
+  #eg{ com_b x); })
 
 (dm (bit? inline) (o|<bignum> x|<fixnum> => <log>)
-  (%bit?-b-i o x))
+  #eg{ bit?_b_i o x); })
 
 (dm (even? inline) (x|<bignum> => <log>)
   (not (odd? x)))
 
 (dm (odd? inline) (x|<bignum> => <log>)
-  (%oddp-b x))
+  #eg{ oddp_b x); })
 
 ;;(dm (/ inline) (x|<bignum> y|<bignum> => <int>)
 ;;  (arithmetic-error "No int divide, consider trunc/"))
 
 (dm trunc/ (x|<bignum> y|<bignum> => (tup quo|<int> rem|<int>))
-  (%tdiv-qr-b-b x y))
+  #eg{ tdiv_qr_b_b x y); })
 
 (dm trunc/ (x|<bignum> y|<fixnum> => (tup quo|<int> rem|<int>))
-  (%tdiv-qr-b-i x y))
+  #eg{ tdiv_qr_b_i x y); })
 
 (dm trunc/ (x|<fixnum> y|<bignum> => (tup quo|<int> rem|<int>))
   (tup 0 x))
@@ -142,25 +418,25 @@
 
 (dm pow (x|<bignum> n|<fixnum> => <num>)
   (if (< n 0)
-      (/ 1 (%pow-b-i x (neg n)))
-      (%pow-b-i x n)))
+      (/ 1 #eg{ pow_b_i x (neg n); }))
+      #eg{ pow_b_i x n); }))
 
 ;; these override the methods in math.goo
 
 (dm (+ inline) (x|<fixnum> y|<fixnum> => <int>)
-  (%rawint-to-goo (%i+ (%iu x) (%iu y))))
+  #eg{ rawint_to_goo (%i+ (%iu x); } (%iu y))))
 
 (dm (- inline) (x|<fixnum> y|<fixnum> => <int>)
-  (%rawint-to-goo (%i- (%iu x) (%iu y))))
+  #eg{ rawint_to_goo (%i- (%iu x); } (%iu y))))
 
 (dm (* inline) (x|<fixnum> y|<fixnum> => <int>)
-  (%mul-b-i (%fixnum-to-bignum x) y))
+  #eg{ mul_b_i (%fixnum_to_bignum x); } y))
 
 (dm pow (x|<fixnum> n|<fixnum> => <num>)
-  (%pow-b-i (%fixnum-to-bignum x) n))
+  #eg{ pow_b_i (%fixnum_to_bignum x); } n))
 
 (dm (<< inline) (x|<fixnum> a|<fixnum> => <int>)
-  (def bx (%fixnum-to-bignum x))
+  (def bx #eg{ fixnum_to_bignum x); })
   (if (> a 0)
-      (%lsh-b-i bx a)
-      (%rsh-b-i bx (- 0 a))))
+      #eg{ lsh_b_i bx a); }
+      #eg{ rsh_b_i bx (- 0 a); })))

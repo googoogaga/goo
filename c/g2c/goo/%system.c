@@ -141,14 +141,14 @@ static int split_args (char *s, int i, char** a) {
   for (;;) {
     // find beginning of arg
     for (;;) {
-      if (*s == NULL)   return i;
+      if (!(*s))        return i;
       if (!isspace(*s)) break;
-      *s++ = NULL; // terminate arg
+      *s++ = 0;  // terminate arg
     }
     a[i++] = s;
     // find end of arg
     for (;;) {
-      if (*s == NULL)   return i;
+      if (!(*s))   return i;
       if (isspace(*s))  break;
       s++;
     }

@@ -1,13 +1,17 @@
 NOW
 
+o INTFLO needed for $x in to-c result
+o (%lb +) crashes system
+o tests for bignums
+o bignum c literals
 o fix gen sigs without varnames like +
 o fix ddv in listener
 x get vm to work with test suite
 x get pp to work with opts
 o fix reuse
-o integrate win32 patches
+x integrate win32 patches
 o change over to to-doc and add pretty
-o finish arc essay
+x finish arc essay
 o faster/smaller vm
 o compiler driver for vm and core
 o   perhaps c code and vm string calling vm-loader

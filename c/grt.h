@@ -282,7 +282,7 @@ typedef P (*PFUN)(REGS);
 #define loc_tag  3
 
 /* #define IU(x) (YPprop_elt((x), (P)0)) */
-#define IU(x) (untag(x))
+#define IU(x) ((PINT)(x)>>TAG_BITS)
 
 #define FUNCODE(fun)  ((PFUN)YPprop_elt(fun, (P)FUNCODEOFFSET))
 #define FUNSIG(fun)   ((PFUN)YPprop_elt(fun, (P)FUNSIGOFFSET))
@@ -429,6 +429,9 @@ STATIC_NOT_GRT_C  INLINE long untag (P adr) {
 STATIC_NOT_GRT_C  INLINE long tag (P adr, int tag) {
   return (PADR)adr << TAG_BITS | tag;
 }
+
+// STATIC_NOT_GRT_C INLINE P YPiu (P x) { return (P)untag(x); }
+// STATIC_NOT_GRT_C INLINE P YPib (P x) { return (P)tag(x, int_tag); }
 
 STATIC_NOT_GRT_C INLINE P YPelt (P v, P i) {
   return ((P*)v)[(PINT)i];

@@ -1,3 +1,41 @@
+=== 0.155 ===
+
+summary
+
+  changes to support bignums including support for macro friendly c-ments
+
+added
+
+  bignum support through gmp library
+
+fixed
+
+  IU to do signed shift
+
+changed
+
+
+=== 0.154 ===
+
+summary
+
+  changes to support lightweight cffi
+
+added
+
+  c-ment and c-expr
+  #" "# reader syntax
+  to-c protocol
+  #{} reader syntax
+
+fixed
+
+changed
+
+  %compile to take include directories and libraries
+  g2c to allow optional expression oriented emission for cffi  
+
+
 === 0.153 ===
 
 summary
@@ -11,6 +49,7 @@ added
 fixed
 
   peek to correctly return EOF when appropriate
+  bit? tests to return boolean
 
 changed
 

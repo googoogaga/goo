@@ -1016,18 +1016,28 @@
       (nul <inline-refs>)
       (inline-refs (objectify (head e*) r #f) (objectify-refs (tail e*) r))))
 
+;; (dm split-c-inline-vals (vals|<lst>)
+;;   (rep loop ((vals (tail vals)) (strs (lst (1st vals))) (refs '()))
+;;     (if (nul? vals)
+;;         (tup (rev! strs) (rev! refs))
+;;         (loop (tail (tail vals)) 
+;;               (add strs (2nd vals)) (add refs (1st vals))))))
+
 (dm split-c-inline-vals (vals|<lst>)
-  (rep loop ((vals (tail vals)) (strs (lst (1st vals))) (refs '()))
+  (rep loop ((vals vals) (strs '()) (refs '()))
     (if (nul? vals)
         (tup (rev! strs) (rev! refs))
-        (loop (tail (tail vals)) 
-              (add strs (2nd vals)) (add refs (1st vals))))))
+        (let ((val (head vals)))
+          (if (isa? val <str>)
+              (loop (tail vals) (add strs val) refs)
+              (loop (tail vals) (add strs #f)  (add refs val)))))))
 
 (dm objectify-c-expr (x expr? r tail? => <program>)
   (let (((tup strs ref-strs) (split-c-inline-vals x))
 	(refs                (objectify-refs ref-strs r)))
      (new <c-inline> 
        c-inline-refs refs c-inline-strs strs c-inline-expr? expr?)))
+
 
 (dm objectify-c-inline (x r tail? => <program>)
   (def res (objectify-c-expr x #f r tail?))

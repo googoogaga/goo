@@ -7,6 +7,8 @@
 (use eval/top)
 (use eval/g2c)
 
+(use goo/bignum)
+
 ;; (use tgx)
 
 ;; (use gl)
@@ -39,8 +41,8 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.154")
-(dv *goo-date*    "OCT 20, 2003")
+(dv *goo-version* "0.155")
+(dv *goo-date*    "NOV 17, 2003")
 
 (post ";;; GOO\n")
 (post ";;; JONATHAN BACHRACH\n")

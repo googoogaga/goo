@@ -53,9 +53,9 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\T\title{{\Huge \goo\ Reference Manual v45 }}
+\T\title{{\Huge \goo\ Reference Manual v46 }}
 \T\author{{\huge Jonathan Bachrach} \\ {\Large MIT AI Lab}}
-\W\title{{\huge \goo\ Reference Manual v45 }}
+\W\title{{\huge \goo\ Reference Manual v46 }}
 \W\author{{\Large Jonathan Bachrach} \\ {\Large MIT AI Lab}}
 \date{\today}
 %\date{October 31, 1995}
@@ -1995,9 +1995,10 @@ and errors can occur during C compilation.
 \form{\#" ... "\#}{Liberal String}
   \doc{Allows for the easy specification of strings (especially C code
   snippets) with special character escaping turned off.}
-\form{C-MENT}{(C-MENT ,c-snippet [,goo-form ,c-snippet]*)}
+\form{C-MENT}{(C-MENT [,c-snippet ,goo-form]*)}
   \doc{Specifies a C statement formed as the
-  concatenation of c-snippets and \goo\ forms~\footnote{Currently,
+  concatenation of c-snippets (goo strings) and
+  \goo\ forms~\footnote{Currently,
   embedded \goo\ loops are unsupported}.  
   The \goo\ forms are evaluated at runtime as embedded C expressions in the
   lexical context of the \kode{c-ment} expression.
@@ -2005,7 +2006,7 @@ and errors can occur during C compilation.
   will be evaluated prior to the
   evaluation of non \kode{c-ment} top level forms.
 }
-\form{C-EXPR}{(C-EXPR ,c-snippet [,goo-form ,c-snippet]*)}
+\form{C-EXPR}{(C-EXPR [,c-snippet ,goo-form]*)}
   \doc{Same as \kode{c-ment} but specifies a value producing C
   expression instead.}
 \generic{to-c}{x}
@@ -2016,12 +2017,12 @@ and errors can occur during C compilation.
   \doc{Shorthand for \kode{c-ment} allowing \goo\ forms to be
   specified with a \kode{\$} prefix and the conversion of \goo\
   objects into C values specified with an
-  \kode{@} prefix, with \kode{@x} $\equiv$ \kode{(to-c \$x)}.
+  \kode{@} prefix, with \kode{@x} $\equiv$ \kode{\$(to-c x)}.
 For example,
 \begin{ex}
 (df f (x) \#\{ printf("Got \%lx", \$x); \})
 \end{ex}
-prints out the \goo\ value \kode{\$x}.  
+prints out the \goo\ value \kode{x}.  
 A callback can be defined at top level as follows:
 \begin{ex}
 \#\{ int gl\_idle(int x) \{ \$(gl-idle); \} \}

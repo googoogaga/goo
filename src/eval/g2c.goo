@@ -926,14 +926,14 @@
   (puts oot lps)
   (dlet ((*gen-statements?* #f))
     (rep loop ((strs (c-inline-strs e)) (refs (c-inline-refs e)))
-      (if (nul? refs)
-          (seq
-            (emit oot (head strs))
-            (puts oot rps))
-          (seq
-            (emit oot (head strs))
-            (to-c (head refs) f d oot)
-            (loop (tail strs) (tail refs)))))))
+      (if (nul? strs)
+          (puts oot rps)
+          (let ((str (head strs)))
+            (if str
+                (seq (emit oot str) 
+                     (loop (tail strs) refs))
+                (seq (to-c (head refs) f d oot)
+                     (loop (tail strs) (tail refs)))))))))
 
 (dm to-c (e|<fix-let> f d out)
   (maybe-between-parentheses (out)
