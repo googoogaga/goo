@@ -7,7 +7,7 @@
 \T\usepackage{fancybox}
 \W\include{latex-index}
 
-\T\addtolength{\topmargin}{-1.0in}
+\T\addtolength{\topmargin}{-1.1in}
 \T\addtolength{\evensidemargin}{-0.7in}
 \T\addtolength{\oddsidemargin}{-0.2in}
 %\T\oddsidemargin10pt\evensidemargin20pt
@@ -15,7 +15,7 @@
 %\T\textwidth5.7in
 \T\textwidth7.3in
 %\T\textheight8.9in
-\T\textheight9.5in
+\T\textheight9.6in
 %\T\advance\textwidth by 4em
 
 \makeindex
@@ -54,7 +54,7 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\title{{\Huge \goo\ Reference Manual v32 } % \\
+\title{{\Huge \goo\ Reference Manual v35 } % \\
 % {\large for release \input{version-number}} 
 }
 \author{{\huge Jonathan Bachrach} \\
@@ -72,14 +72,15 @@
 \goo\ is a dynamic type-based object-oriented language.  It is
 designed to be simple, productive, powerful, extensible, dynamic,
 efficient and real-time.  It heavily leverages features from many
-earlier languages.  In particular, it attempts to be a simpler
-lisp-syntaxed Dylan~\cite{Shalit:1996} and an object-oriented 
+earlier languages.  In particular, it attempts to be a simpler,
+more dynamic, lisp-syntaxed Dylan~\cite{Shalit:1996} and an object-oriented 
 Scheme~\cite{Kelsey:Clinger:Rees:hosc:1998}.
 % and a lispified Cecil~\cite{Chambers95}.
 \goo's main goal is to offer the best of both scripting and
-deliver languages.
-\goo\ is freely available from \kode{www.googaga.org} under LGPL.
-This manual is very preliminary and relies heavily on an understanding
+deliver languages while at the same time 
+incorporating an extreme back-to-basics philosophy.
+\goo\ is freely available from \kode{www.googaga.org} under GPL.
+This manual is preliminary and relies on an understanding
 of Scheme and Dylan.
 
 \subsection{Notation}
@@ -123,8 +124,8 @@ of how characters are tokenized into s-expressions, where
 s-expressions are either tokens or lists of s-expressions:
 
 \begin{defs}
-\notation{;}{Line comment}
-\notation{\#/ /\#}{Nested comment}
+\notation{; ...}{Line comment}
+\notation{\#/ ... /\#}{Nested comment}
 \notation{.\ + - [0-9]+}{Number}
 \notation{\#e \#i \#b \newline \#o \#d \#x}{Special number}
 \notation{\#t \#f}{Logical}
@@ -317,8 +318,7 @@ to annotate bindings.  Binding types restrict the type of objects
 bindable to associated bindings.
 
 \goo\ supports the following types in order of specificity 
-%(with the exact ordering defined in Appendix~\ref{type-details}
-:
+(with the exact ordering defined in Appendix~\ref{subtyping}):
 \begin{packeditemize}
 \item {\it Singleton} types specify a unique instance,
 \item {\it Classes} and {\it properties} specify the structure, 
@@ -423,7 +423,8 @@ have associated structured data through properties.
 \generic{class-parents}{x|<class> => <seq>}
   \doc{direct superclasses.}
 \generic{class-ancestors}{x|<class> => <seq>}
-  \doc{class precedence list including this class.}
+  \doc{class precedence list including this class.  See
+  Appendix~\ref{cpl} for details.}
 \generic{class-direct-props}{x|<class> => <seq>}
   \doc{properties defined directly on this class.}
 \generic{class-props}{x|<class> => <seq>}
@@ -538,7 +539,33 @@ functions are instances of \kode{<gen>} and methods are instances of
 %   \doc{creates a function that always returns \kode{x}.}
 \form{FUN}{(FUN ,sig ,@body)}
   \doc{creates an anonymous method with signature \kode{,sig} and when called
-       evaluates \kode{,@body} as \kode{(SEQ ,@body)} (cf. Scheme's \kode{LAMBDA}).}
+       evaluates \kode{,@body} as \kode{(SEQ ,@body)} (cf. Scheme's
+  \kode{LAMBDA}).  The following a few example functions and their application:
+
+{\scriptsize
+\begin{ex}
+((fun (x) x) 1) ==> 1 \newline
+((fun (x|<int> => <int>) x) 2) ==> 2 \newline
+((fun (x|...) x) 1 2 3) ==> (1 2 3) \newline
+((fun (x y|...) y) 1 2 3) ==> (2 3) \newline
+((fun (x => (tup <int>))) (tup x)) 1) \inl $\equiv$ (tup 1)
+\end{ex}
+}
+}
+\end{defs}
+
+where
+
+\begin{defs}
+\syntax{,sig}{(,@params) | (,@params => ,ret)}
+\syntax{,params}{(,@vars [(,name '...')])}
+  \doc{where parameter lists can include an optional nary parameter which
+  binds to all arguments beyond required arguments.}
+\syntax{,ret}{,var | (TUP ,@vars)}
+  \doc{with \kode{TUP} turning into corresponding \kode{t*} 
+  function return type.}
+\end{defs}
+\begin{defs}
 \form{LOC}{(LOC ((,name ,sig ,@fbody)) ,@body)}
   \doc{$\equiv$\begin{ex}
        (LET ((,name \#f) ...) \snl
@@ -551,19 +578,10 @@ functions are instances of \kode{<gen>} and methods are instances of
 \form{DF}{(DF ,name ,sig ,@body)}
   \doc{$\equiv$ \kode{(DV ,name (FUN ,sig ,@body))} followed by
        setting the function's name.}
-\end{defs}
-
-where
-
-\begin{defs}
-\syntax{,sig}{(,@vars) | (,@vars => ,rettype)}
-\syntax{,rettype}{,var | (TUP ,@vars)}
-  \doc{with \kode{TUP} turning into corresponding \kode{t*} 
-  function return type.}
-\end{defs}
-\begin{defs}
-\generic{spread}{x|<fun> => <fun>}
-  \doc{$\equiv$ \kode{(fun (y|...) (app x y))}.}
+\generic{zipped}{x|<fun> => <fun>}
+  \doc{$\equiv$ \kode{(fun (y|...) (app x y))}.  This is useful when
+  mapping over zipped multiple sequences (e.g., \kode{(map (zipped +)
+  (zip '(1 2) '(2 3)))}.}
 \form{OP}{(OP ,op-arg ...)}
   \doc{creates an anonymous function with implicitly defined
   arguments, where \kode{,op-arg} is either an implicit required parameter
@@ -778,7 +796,9 @@ implement \kode{<} and \kode{=}.
 
 \subsection{Locatives}
 
-Locatives are word aligned pointers to memory.
+Locatives are word aligned pointers to memory.  They are meant to be
+used to represent pointers to foreign data and not to point to
+interior \goo\ object data.
 
 \begin{defs}
 \class{<loc>}{<mag>}
@@ -973,9 +993,9 @@ Collections can be almost entirely defined in terms of an enumeration class.
        the values with the keys being implicit.}
 \generic{len}{x|<col> => <int>}
   \doc{returns number of collection elements.}
-\generic{col-res-type}{t|<col> x|<col> => <col>}
+\generic{col-res-type}{x|<col> => <type>}
   \doc{appropriate instantiable type for creating collection results,
-       where the default is their own type.}
+       where the default is \kode{(object-class x)}.}
 \generic{empty?}{x|<col> => <log>}
   \doc{$\equiv$ \kode{(= (len x) 0)}}
 \generic{empty}{x|<col> => <col>}
@@ -1056,8 +1076,8 @@ keys.  The hope is that functional (nondestructive) programs will be
 both more succinct, understandable, and efficient than equivalent
 destructive programs.  Only core collection operators are given
 destructive versions.  All others can be built out of nondestructive
-operators followed by \kode{into}.  The \kode{!} suffixed functions
-might be deprecated in the future.
+operators followed by \kode{into}~\footnote{When optimization is in
+place, the \kode{!} suffixed functions will be deprecated.}.
 
 \begin{defs}
 \class{<col!>}{<any>}
@@ -1407,8 +1427,11 @@ Represents an immutable sequence of numbers specified using a start number
 \class{<step>}{<seq.>}
   \doc{Steps represent step functions.}
 \generic{first-then}{first|<fun> then|<fun> => <step>}
-  \doc{returns a new step function, calling thunks \kode{first} to retrieve
+  \doc{returns a new step object, calling thunks \kode{first} to retrieve
 initial value and \kode{then} to retrieve subsequent values.}
+\generic{each}{f|<fun> => <each>}
+  \doc{returns a new each object, calling \kode{f} thunk to retrieve
+  each value.}
 \class{<cycle>}{<seq.>}
   \doc{Cycles provide a mechanism to create infinite sequences repeating
   a certain sequence over and over again.}
@@ -1519,7 +1542,8 @@ See DRM~\cite{Shalit:1996} for more information.
   it can choose not to handle the condition by just falling through to the
   end of the handler (cf., Dylan's \kode{BLOCK}/\kode{EXCEPTION} 
   and \kode{LET HANDLER}) and the next available handler will be invoked.
-  Note that \goo\ {\bf does not unwind the stack} before calling handlers!}
+  Note that \goo\ {\bf does not unwind the stack} before calling
+  handlers!}
 \end{defs}
 
 where
@@ -1631,10 +1655,10 @@ String ports provide port interface mapped onto strings.
 %   \doc{$\equiv$ \kode{(with-port (x (open-in-file filename)) (read x))}}
 \generic{write}{x|<out-port> y|<any>}
   \doc{verbose printing.  prints strings with double quotes etc.}
-\generic{display}{x|<out-port> y|<any>}
-  \doc{non verbose printing.  prints strings without double quotes etc.}
 \generic{writeln}{x|<out-port> y|<any>}
-  \doc{$\equiv$ \kode{(seq (write x y) (newline))}}
+  \doc{$\equiv$ \kode{(seq (write x y) (newline x))}}
+\generic{emit}{x|<out-port> y|<any>}
+  \doc{concise printing (e.g., prints strings without double quotes).}
 % \generic{write-to-str}{x|<any> => <str>}
 \generic{msg}{x|<out-port> message|<seq> args|...}
   \doc{formatted output using special commands embedded in message.
@@ -1648,6 +1672,8 @@ String ports provide port interface mapped onto strings.
   which consume one argument at a time.  otherwise subsequent message
   characters are printed to port \kode{x} 
   (cf. Dylan's and CL's \kode{format}).}
+\generic{post}{message|<seq> args|...}
+  \doc{$\equiv$ \kode{(app msg out message args)}}
 \end{defs}
 
 \section{System}
@@ -1825,13 +1851,15 @@ module name to use.
 \section{Installation}
 
 Unpack % either a linux or windows version of \goo\ into an
-appropriate installation area.  There are four directories:
-\kode{doc}, \kode{bin}, \kode{src}, and \kode{emacs}.  Edit the
-\kode{Makefile} in the top level directory, to configure the
-installation directory root using the \kode{PREFIX} if \kode{/usr}
-is inapproriate.  Executing \kode{make} will rebuild \goo\ with the
-proper roots, creating \kode{lib} and \kode{mods} directories, and
-installing \goo\ in \kode{bin} and setting up \kode{doc}.
+appropriate installation area.  There are five directories:
+\kode{doc}, \kode{bin}, \kode{c}, \kode{src}, and \kode{emacs}.  Edit
+the \kode{Make.inc} file in the top level directory, to configure the
+installation directory root using the \kode{PREFIX} if \kode{/usr} is
+inapproriate.  Executing \kode{make install} will rebuild \goo\ with
+the proper roots, creating \kode{lib} and \kode{mods} directories, and
+installing \goo\ in \kode{bin} and setting up \kode{doc}.  For the
+simplest installation, just set \kode{GOO\_ROOT} to your desired
+installation location and type \kode{make simple-install}.
 
 You can override the default \kode{GOO\_ROOT} by
 setting up your \kode{OS} environment variable.  
@@ -1928,6 +1956,10 @@ The following are debugger specific commands:
   \doc{prints out called functions.}
 \command{,frame}{,n}
   \doc{prints out \kode{n}{\it th} called function and its arguments.}
+\command{,frame-var}{,n ,name}
+  \doc{prints out \kode{n}{\it th} called function's parameter \kode{name}.}
+\function{frame-var}{n|<int> name|<sym>}
+  \doc{returns \kode{n}{\it th} called function's parameter \kode{name}.}
 \end{defs}
 
 % \subsection{Loading Code}
@@ -2019,9 +2051,11 @@ M-,     tags-loop-continue
 
 This is the first release of \goo.
 \goo\ is relatively slow at this point.  There are no compiler
-optimizations in place.  This will improve in coming releases.
+optimizations in place.  The error reporting is minimal and no source
+locations are tracked.  Also hygiene is not implemented and there are
+some potential hygiene leaks.  Finally, tuple return types are not checked.
 
-This manual is very preliminary.  Please consult the runtime
+This manual is preliminary.  Please consult the runtime
 libraries in the \kode{src} directory.  Also check out Scheme and Dylan's
 manuals for information on their lexical structure and special form
 behavior respectively.
@@ -2030,7 +2064,31 @@ Please, please, please send bug reports to \kode{jrb@googaga.org}.  I
 will fix your bugs asap.  The \goo\ website \kode{www.googaga.org}
 will have papers, releases, FAQS, etc.
 
-% \appendix
+\section{Future}
+
+The plan is for \goo\ to evolve in a number of dimensions.  First of
+all, \goo's design is incomplete.  Parameter lists and dispatch will
+be improved to allow methods of differing numbers of required
+parameters and named parameters.  Lisp lists will most likely be
+deprecated and program fragments will be represented by a richer data
+structure which can capture source locations and hygiene information.
+This will be accomplished with minimal impact on macro definitions and
+WYSIWYG program construction and destructuring facilities.  The module
+system will be improved to include in the very least renaming and selective
+imports. Finally, \goo\ will support a more complete loopless
+programming protocol inspired by Waters'
+series~\cite{Waters:1991:ATS}.
+
+Secondly, the overall mission is to crank the implementation until its
+performance is competitive with Java while at the same time
+maintaining low-latency interactivity.  The basic approach involves
+incremental whole program optimization using simple dynamic
+compilation combined with partial evaluation.  One important
+optimization will be side effect analysis combined with a generalized
+box/unbox optimization to remove unnecessary creation of immutable
+enumerators and packers for instance.  Similar analyses and
+optimizations will be employed to optimize loopless programming
+patterns involving \kode{map} and \kode{fold}.
 
 \section{History and Acknowledgements} 
 
@@ -2082,7 +2140,99 @@ implementation and for his ever present and rare sense of good taste.
 \bibliographystyle{plain}
 \bibliography{goo}
 
-% \appendix
+\appendix
+
+\section{Class Precedence List}
+\label{cpl}
+
+This section defines the algorithm for computing a class's linearized
+ancesters from its parents, its parent's parents, etc.  \goo\ uses
+dylan's class linearization rule~\cite{dylan-cpl}.  The following is
+the \goo\ implementation of this algorithm:
+
+\begin{exv}
+(dm class-ordered-ancestors (c|<class> => <lst>)
+  (def parents (class-parents c))
+  (rep merge-lists
+      ((partial-cpl|<lst>     
+         (lst c)) 
+       (remaining-lists|<lst> 
+         (add (map class-ancestors parents) parents)))
+    (if (all? empty? remaining-lists)
+        (rev! partial-cpl)
+        (loc ((free-class? (c)
+                (loc ((class-in-and-free-in? (l|<lst>)
+                        (== (head l) c))
+                      (class-free-in? (l|<lst>)
+                        (or (== (head l) c) (not (mem? (tail l) c)))))
+                  (and (any? class-in-and-free-in? remaining-lists)
+                       (all? class-free-in? remaining-lists)
+                       c)))
+              (free-class-in-parents? (c|<class>)
+                (any? free-class? (class-parents c))))
+          (def next (any? free-class-in-parents? partial-cpl))
+          (if next
+              (loc ((remove-next (l|<lst>)
+                      (if (== (head l) next) (tail l) l)))
+                (merge-lists 
+                  (pair next partial-cpl)
+                   (map remove-next remaining-lists)))
+              (error "inconsistent precedence graph"))))))
+\end{exv}
+
+\section{Subtyping Rules}
+\label{subtyping}
+
+This section defines the subtyping rules for \goo\ in terms of subtype
+methods.  
+
+\begin{exv}
+(dm subtype? (t1|<union> t2|<type> => <log>)
+  (all? (op subtype? _ t2) (type-elts t1)))
+
+(dm subtype? (t1|<type> t2|<union> => <log>)
+  (any? (op subtype? t1 _)) (type-elts t2)))
+
+(dm subtype? (t1|<union> t2|<union> => <log>)
+  (all? (op subtype? _ t2)) (type-elts t1)))
+
+(dm subtype? (t1|<class> t2|<class> => <log>)
+  (subclass? t1 t2))
+
+(dm subtype? (t1|<singleton> t2|<class> => <log>)
+  (isa? (type-object t1) t2))
+
+(dm subtype? (t1|<subclass> t2|<class> => <log>)
+  (subclass? <class> t2))
+
+(dm subtype? (t1|<class> t2|<singleton> => <log>) #f)
+
+(dm subtype? (t1|<singleton> t2|<singleton> => <log>)
+  (== (type-object t1) t2))
+
+(dm subtype? (t1|<subclass> t2|<singleton> => <log>) #f)
+
+(dm subtype? (t1|<class> t2|<subclass> => <log>)
+  (and (== t1 <class>) (== (type-class t2) <class>)))
+
+(dm subtype? (t1|<subclass> t2|<subclass> => <log>)
+  (subclass? (type-class t1) (type-class t2)))
+
+(dm subtype? (t1|<singleton> t2|<subclass> => <log>)
+  (and (isa? (type-object t1) <class>)
+       (subclass? (type-object t1) (type-class t2))))
+
+(dm subtype? (t1|<product> t2|<type> => <log>) #f)
+
+(dm subtype? (t1|<type> t2|<product> => <log>) #f)
+
+(dm subtype? (t1|<product> t2|<product> => <log>)
+  (and (== (len (type-elts t1)) (len (type-elts t2)))
+       (all? (zipped subtype?) (zip (type-elts t1) (type-elts t2)))))
+
+(dm subtype? (t1|<product> t2|<class> => <log>)
+  (subtype? <tup> t2))
+\end{exv}
 
 \end{document}
 
