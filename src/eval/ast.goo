@@ -339,7 +339,7 @@
 
 (dc <bind-exit> (<computed-program>))
   (dp bind-exit-main-fun (<bind-exit> => <any>))
-  (dp bind-exit-light? (<bind-exit> => <log>) #f)
+  (dp bind-exit-light? (<bind-exit> => <log>) #t)
 
 (dc <unwind-protect> (<computed-program>))
   (dp unwind-protect-protected-thunk (<unwind-protect> => <any>))
@@ -2321,6 +2321,7 @@
   <runtime-reference>
   <sequential>
   sequentialize
+  <functions>
   <static-global-environment>
   environment-module
   <unwind-protect>

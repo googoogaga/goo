@@ -30,8 +30,8 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.148")
-(dv *goo-date*    "SEP 06, 2002")
+(dv *goo-version* "0.149")
+(dv *goo-date*    "SEP 07, 2002")
 
 (post ";;; GOO\n")
 (post ";;; JONATHAN BACHRACH\n")

@@ -18,7 +18,7 @@
 (dc <sim-packer> (<packer>))
 (dp packer-value (<sim-packer> => <any>))
 (dp packer-adder (<sim-packer> => <fun>))
-(dp packer-reser (<sim-packer> => <fun>) {x . x})
+(dp packer-reser (<sim-packer> => <fun>) (fun (x) x))
 
 (dm packer (init add|<fun> res|<fun> => <sim-packer>)
   (new <sim-packer> packer-value init packer-adder add packer-reser res))
@@ -32,7 +32,7 @@
   (packer '() pair (fun (x) (as t (rev! x)))))
 
 (dm packer-fab (t|(t< <int>) => <packer>)
-  (packer 0 + {x . x}))
+  (packer 0 + (fun (x) x)))
 
 (ds (packing-with (,@decls) ,@body)
   (match decls

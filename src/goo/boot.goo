@@ -98,8 +98,7 @@
   (mif ((,x ,@rest) rest)
        (mif (() rest)
             x
-            `(let ((tmp ,x))
-               (if tmp (and ,@rest) #f)))
+            `(if ,x (and ,@rest) #f))
        #t))
 
 (dss (cond ,@cases)
@@ -384,7 +383,7 @@
 
 (dl %pair (head tail) (%lst head tail))
 
-(dl (%empty? inline-c) (x) (%bb (%eq? x nil)))
+(dl (%empty? inline) (x) (%bb (%eq? x nil)))
 
 (dl %%len (x) 
   (if (%empty? x) (%raw 0) (%i+ (%%len (%tail x)) (%raw 1))))
@@ -817,7 +816,7 @@
 
 (dl (@not inline) (x|<any> => <log>) (%bb (%eq? x #f)))
 
-(dl (@empty? inline-c) (x|<lst> => <log>) (%empty? x))
+(dl (@empty? inline) (x|<lst> => <log>) (%empty? x))
 
 (df @@empty? (x|<lst> => <log>) (%empty? x))
 

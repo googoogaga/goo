@@ -70,9 +70,9 @@
 
 (dm asm-compute-program (exp env)
   (def ast (objectify-with-subtransaction exp env #f))
-  (def box (insert-box! ast))
-  (def dyn (analyze-ast box))
-  (def lft (lift! dyn))
+  (def ana (analyze-calls ast env))
+  (def box (insert-box! ana))
+  (def lft (lift! box))
   (def top (asm-closurize-main! lft env))
   (frame! top)
   top)
@@ -215,10 +215,10 @@
   (tack `(,lab)
         (asm x (loop-body e) need?)))
 
-(dm asm (x|<g2m> e|<loop-call> need?|<log>)
+(dm asm (x|<g2m> e|<loop-application> need?|<log>)
   (def loop (application-loop e))
   (tack (asm x (application-arguments e) #t)
-        (map (fun (b) `(VM-STO ,(binding-index b))) 
+        (map (fun (b) `(VM-LOC-PUT ,(binding-index b))) 
              (rev (loop-bindings loop)))
         `((VM-JMP ,(loop-continue loop)))))
 

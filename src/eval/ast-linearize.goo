@@ -166,7 +166,7 @@
   (if single?
       (if (= (function-ref-count (1st new-funs)) 0)
           (seq (reopt-top! s t) 
-               (set (locals-functions o) '())
+               (set (locals-functions o) (empty <functions>))
                (set (locals-bindings o)  '())
                (locals-body o))
           res)
@@ -495,46 +495,54 @@
     (do (fun (def) (collect-registers! def #f #t)) (program-definitions o)))
   o)
 
-(df allocate-register (o|<program> flat-fun val?)
-  (when (and val? flat-fun (not (program-register o)))
+(df allocate-register (o|<program> f val?)
+  (when (and val? f (not (program-register o)))
     ;; TODO: INEFFICIENT
-    (set (program-register o) (len (function-registers flat-fun)))
-    (add! (function-registers flat-fun) o)))
+    (set (program-register o) (len (function-registers f)))
+    (add! (function-registers f) o)))
 
-(dm collect-registers! (o|<computed-program> flat-fun val?)
-  (allocate-register o flat-fun val?)
-  (ast-walk! collect-registers! o flat-fun #t))
+(dm collect-registers! (o|<computed-program> f val?)
+  (allocate-register o f val?)
+  (ast-walk collect-registers! o f #t))
 
-(dm collect-registers! (o|<sequential> flat-fun val?)
+(dm collect-registers! (o|<sequential> f val?)
   (rep loop ((x o))
     (if (empty? x)
         o
         (let ((next-x (tail x))) ;; ONLY LAST FORM IN SEQ CONSUMES VALUE
-          (collect-registers! (head x) flat-fun (and val? (empty? next-x)))
+          (collect-registers! (head x) f (and val? (empty? next-x)))
           (loop next-x)))))
 
-(dm collect-registers! (o|<passive-program> flat-fun val?)
+(dm collect-registers! (o|<passive-program> f val?)
   (when *register-passive?* 
-    (allocate-register o flat-fun val?))
-  (ast-walk! collect-registers! o flat-fun #t))
+    (allocate-register o f val?))
+  (ast-walk collect-registers! o f #t))
 
-(dm collect-registers! (o|<top-level-form> flat-fun val?)
-  (allocate-register o flat-fun val?)
-  (do (fun (def) (collect-registers! def flat-fun val?)) (form-definitions o))
-  (collect-registers! (form-program o) flat-fun val?)
-  o)
+(dm collect-registers! (o|<top-level-form> f val?)
+  (allocate-register o f val?)
+  (do (fun (def) (collect-registers! def f val?)) (form-definitions o))
+  (collect-registers! (form-program o) f val?))
 
-(dm collect-registers! (o|<ast-method> flat-fun val?)
-  (allocate-register o flat-fun val?)
-  (collect-registers! (function-signature o) flat-fun #t)
-  (do (rcurry collect-registers! flat-fun #t) (function-data-refs o))
+(dm collect-registers! (o|<ast-method> f val?)
+  (allocate-register o f val?)
+  (collect-registers! (function-signature o) f #t)
+  (do (rcurry collect-registers! f #t) (function-data-refs o))
   (collect-registers! (function-debug-name o) o #t)
-  (collect-registers! (function-body o) o #t)
-  o)
+  (collect-registers! (function-body o) o #t))
 
-(dm collect-registers! (o|<ast-primitive> flat-fun val?)
-  (collect-registers! (function-body o) o #t)
-  o)
+(dm collect-registers! (o|<ast-primitive> f val?)
+  (collect-registers! (function-body o) o #t))
+
+(dm collect-registers! (o|<locals> f val?)
+  (collect-registers! (locals-body o) f #t)
+  (collect-registers! (locals-functions o) f #t))
+
+(dm collect-registers! (o|<fix-let> f val?)
+  (collect-registers! (fix-let-body o) f #t)
+  (collect-registers! (fix-let-arguments o) f #t))
+
+(dm collect-registers! (o|<loop> f val?)
+  (collect-registers! (loop-body o) f #t))
 
 ;;; MISC
 

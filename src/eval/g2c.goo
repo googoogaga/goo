@@ -687,6 +687,15 @@
 (dm gen-ref (e|<sequential> out)
   (gen-ref (last e) out))
 
+(dm gen-ref (e|<locals> out)
+  (gen-ref (locals-body e) out))
+
+(dm gen-ref (e|<fix-let> out)
+  (gen-ref (fix-let-body e) out))
+
+(dm gen-ref (e|<loop> out)
+  (gen-ref (loop-body e) out))
+
 (dm to-c (e|<global-assignment> f d out)
   (to-c (assignment-form e) f d out)
   (with-expression (e d out)
@@ -734,11 +743,24 @@
     (puts out " = BOXFAB")
     (between-parentheses (out) (binding->c binding out))))
 
+(dm bb? (x) #f)
+
+(dm bb? (x|<predefined-application>)
+  (and (== (binding-name (application-binding x)) '%bb)
+       (1st (application-arguments x))))
+
+(dm bb? (x|<fix-let>)
+  (bb? (fix-let-body x)))
+
 (dm to-c (e|<alternative> f d out)
+  ;;; gcc can't optimize if with %bb tests
+  (def bb-tst (bb? (alternative-condition e)))
+  (def tst    (or bb-tst (alternative-condition e)))
   (to-c (alternative-condition e) f d out)
-  (gen-depth d out)
-  (puts out "if (") (gen-ref (alternative-condition e) out)
-  (msg* out " != %s) {\n" (false-name))
+  (gen-depth d out) (puts out "if (") (gen-ref tst out)
+  (if bb-tst 
+      (puts out ") {\n")
+      (msg* out " != %s) {\n" (false-name)))
   (to-c (alternative-consequent e) f (+ d 1) out)
   (with-used-expression (e (+ d 1) out)
     (gen-ref (alternative-consequent e) out))
@@ -767,9 +789,7 @@
   (with-statement ((+ d 1) out)
     (msg* out "break"))
   (gen-depth d out)
-  (msg* out "}\n")
-  (with-used-expression (e d out)
-    (gen-ref (loop-body e) out)))
+  (msg* out "}\n"))
 
 (dm to-c (e|<loop-application> f d out)
   (def loop (application-loop e))
@@ -825,8 +845,7 @@
     (with-statement (d out)
       (binding->c binding out)
       (puts out " = ") (gen-ref init out)))
-  (to-c (fix-let-body e) f d out)
-  (with-used-expression (e d out) (gen-ref (fix-let-body e) out)))
+  (to-c (fix-let-body e) f d out))
 
 (dm to-c (e|<locals> f d out)
   (for ((binding (locals-bindings e)) (init (locals-functions e)))
@@ -836,8 +855,7 @@
       (puts out " = ") (gen-ref init out)))
   (do2 (rcurry funinit-to-c f d out)
        (locals-bindings e) (locals-functions e))
-  (to-c (locals-body e) f d out)
-  (with-used-expression (e d out) (gen-ref (locals-body e) out)))
+  (to-c (locals-body e) f d out))
 
 (dm to-c (e|<bind-exit> f d out)
   (to-c (bind-exit-main-fun e) f d out)

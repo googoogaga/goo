@@ -13,6 +13,7 @@
 (use goo/conditions)
 (use goo/io/read)
 (use goo/packer)
+(use goo/late-macros)
 
 (ddv *max-print-depth*  4)
 
@@ -168,6 +169,10 @@
       (recur val d)))
   (put port #\>))
 
+(dm recurring-write (port|<out-port> x|<file-port> d|<int> recur|<fun>)
+  (msg port "#{File-%s-port %s %d}" 
+       (if (isa? port <in-port>) "in" "out") (port-filename x) (port-line x)))
+
 (dm recurring-write (port|<out-port> x|<in-port> d|<int> recur|<fun>)
   (puts port "#{In-port}"))
 
@@ -180,7 +185,7 @@
   (def names (fun-names x))
   (put port #\()
   (def names (fun-names x))
-  (for ((i (from 0)) (spec (fun-specs x)) (first? (first-then {#t} {#f})))
+  (for ((i (from 0)) (spec (fun-specs x)) (first? (first-then (op #t) (op #f))))
     (unless first? (put port #\space))
     (if (empty? names)
         (write-type port spec)

@@ -31,7 +31,8 @@
  
  (dc <file-port> (<port>))
 
- (dp port-handle (<port> => <any>))
+ (dp port-filename (<file-port> => <str>) "")
+ (dp port-handle (<file-port> => <any>))
  )
 
 (dm close (port|<port>) #f)
@@ -61,10 +62,14 @@
         (loop (pair c res) (get port)))))
 
 (dm open (t|(t= <file-in-port>) filename|<str> => <file-in-port>)
-  (new <file-in-port> port-handle (%open-in-file (%su filename))))
+  (new <file-in-port> 
+    port-filename filename
+    port-handle   (%open-in-file (%su filename))))
 
 (dm open (t|(t= <file-out-port>) filename|<str> => <file-out-port>)
-  (new <file-out-port> port-handle (%open-out-file (%su filename))))
+  (new <file-out-port> 
+    port-filename filename
+    port-handle   (%open-out-file (%su filename))))
 
 (dm close (port|<file-in-port>)
   (%close-in-port (port-handle port)))
@@ -77,9 +82,13 @@
      (fin (seq (set ,name ,port) ,@body)
           (and ,name (close ,name)))))
 
-(dv in (new <file-in-port> port-handle (%current-in-port)))
+(dv in (new <file-in-port> 
+         port-filename "in"
+         port-handle   (%current-in-port)))
 
-(dv out (new <file-out-port> port-handle (%current-out-port)))
+(dv out (new <file-out-port>
+          port-filename "out"
+          port-handle   (%current-out-port)))
 
 (dm get (port|<file-in-port> => <chr>)
   (def c (%cb (%get (port-handle port))))

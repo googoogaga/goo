@@ -124,6 +124,11 @@
 
 (set-standard-read-macro! #\| #t sub-read-vertical)
 
+(dm sub-read-backslash (c|<chr> port|<port> => <any>)
+  (parse-token "\\" port))
+
+(set-standard-read-macro! #\\ #t sub-read-backslash)
+
 (dv $vert-sym   (as <sym> "|"))
 (dv $vert-proxy (lst "vert-proxy"))
 
@@ -172,12 +177,14 @@
              `(sub ,(1st form) ,(2nd form) ,(3rd form))))
     (#t (reading-error port "invalid [ ... ] form"))))
 
+(dv bs-sym (as <sym> "\\"))
+
 (dm sub-read-curlies (c|<chr> port|<port> => <any>)
-  (def form      (sub-read-seq c $close-curly port))
-  (def dot-index (pos form '.))
-  (if dot-index
-      `(fun ,(sub form 0 dot-index) ,@(sub* form (+ dot-index 1)))
-      `(fun () ,@form)))
+  (def forms       (sub-read-seq c $close-curly port))
+  (def slash-index (pos forms bs-sym))
+  (if slash-index
+      `(fun ,(sub forms 0 slash-index) ,@(sub* forms (+ slash-index 1)))
+      `(seq ,@forms)))
 
 (set-standard-read-macro! #\( #t sub-read-list)
 

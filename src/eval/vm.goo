@@ -134,7 +134,7 @@
   (set (%binding-value-of x) (vm-pop)))
 
 (def-vm-push-op VM-VAR-GET-OR (x) 23
-  (%binding-value-of-or x (vm-pop)))
+  (%binding-value-or-of x (vm-pop)))
 
 (def-vm-push-op VM-LOC-GET (x) 30
   [*stk* (+ (%vfp) x)])
