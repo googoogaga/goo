@@ -2,10 +2,10 @@
 
 (use samurui/gtk.swig)
 
-(use samurui/coreutil)
-(use samurui/coremetadata)
-(use samurui/coregeom)
-(use samurui/coreconstraints)
+(use samurui/core/util)
+(use samurui/core/metadata)
+(use samurui/core/geom)
+(use samurui/core/constraints)
 
 (use samurui/gtkcallbacks)
 

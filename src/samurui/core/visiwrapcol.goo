@@ -1,6 +1,6 @@
 (use goo)
 
-(use samurui/corevisicol)
+(use samurui/core/visicol)
 
 ;; visi-wrap
 

@@ -1,7 +1,7 @@
 (use goo)
 
 (use samurui/gtk.swig)
-(use samurui/coremetadata)
+(use samurui/core/metadata)
 
 ; -- 
 ; --- Interface Constraints

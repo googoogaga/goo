@@ -8,23 +8,23 @@
 
 (use samurui/gtkcallbacks)
 
-(use samurui/coremetadata)
-(use samurui/coremacros)
-(use samurui/coregeom)
-(use samurui/coregtkwrapping)
-(use samurui/coreutil)
-(use samurui/coregraphics)
-(use samurui/coremasterslave)
+(use samurui/core/metadata)
+(use samurui/core/macros)
+(use samurui/core/geom)
+(use samurui/core/gtkwrapping)
+(use samurui/core/util)
+(use samurui/core/graphics)
+(use samurui/core/masterslave)
 
-(use samurui/corerenderize)
+(use samurui/core/renderize)
 
-(use samurui/coreconstraints)
+(use samurui/core/constraints)
 
-(use samurui/coremenus)
-(use samurui/corevisicol)
+(use samurui/core/menus)
+(use samurui/core/visicol)
 
-(use samurui/visiwrapcol)
-(use samurui/treeview)
+(use samurui/core/visiwrapcol)
+(use samurui/core/treeview)
 
 
 ; ----

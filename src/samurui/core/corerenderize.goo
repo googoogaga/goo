@@ -1,9 +1,9 @@
 (use goo)
 
-(use samurui/coreutil)
-(use samurui/coremetadata)
-(use samurui/coregtkwrapping)
-(use samurui/coremasterslave)
+(use samurui/core/util)
+(use samurui/core/metadata)
+(use samurui/core/gtkwrapping)
+(use samurui/core/masterslave)
 
 
 ; ----                ----

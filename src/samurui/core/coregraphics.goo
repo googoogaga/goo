@@ -2,10 +2,10 @@
 
 (use samurui/gtk.swig)
 
-(use samurui/coreutil)
-(use samurui/coremetadata)
-(use samurui/coregeom)
-(use samurui/coregtkwrapping)
+(use samurui/core/util)
+(use samurui/core/metadata)
+(use samurui/core/geom)
+(use samurui/core/gtkwrapping)
 
 ; In the GDK, a drawable area is generally going to be implemented as:
 ;  - A GTK Drawing Area (gtk_drawing_area_new)

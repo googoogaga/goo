@@ -1,8 +1,8 @@
 (use goo)
 
-(use samurui/coreutil)
-(use samurui/coremetadata)
-(use samurui/coregtkwrapping)
+(use samurui/core/util)
+(use samurui/core/metadata)
+(use samurui/core/gtkwrapping)
 
 ; ----           ----
 ; ------ Menus ------

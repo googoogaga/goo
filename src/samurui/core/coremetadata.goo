@@ -5,7 +5,7 @@
 
 (use samurui/gtk.swig)
 
-(use samurui/coreutil)
+(use samurui/core/util)
 
 (dc <interface-info> (<any>))
 

@@ -1,6 +1,6 @@
 (use goo)
 
-(use samurui/coreutil)
+(use samurui/core/util)
 
 ;;; ----                     ----
 ;;; ------ VisiCollections ------
