@@ -525,9 +525,9 @@ P YPos_name () {
 }
 
 P YPos_val (P name) {
-  PSTR value = getenv((char *)name);
+  PSTR value = (PSTR)getenv((char *)name);
   if (value == NULL)
-    return "";
+    return (P)"";
   else
     return (P)value;
 }
@@ -1408,7 +1408,7 @@ P YevalSg2cYPload(P name) {
 
 /* TODO: GET THIS WORKING ON WINDOWS */
 P YgooSsystemYPpid () {
-  return (PINT)getpid();
+  return (P)(PINT)getpid();
 }
 
 /* OVERALL INITIALIZATION */

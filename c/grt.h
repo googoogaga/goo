@@ -334,7 +334,7 @@ EXTTVAR(goo_thread);
 #define Pregs()      TREF(tregs)
 #define REGSREF()    ((REGS)(TREF(tregs)))
 #define REGSCREF()   (regs?regs:regs=REGSREF())
-#define REGSSET(v)   TSET(tregs, (v))
+#define REGSSET(v)   TSET(tregs, (P)(v))
 #define DEFREGS()    REGS regs = REGSREF()
 #define DEFCREGS()   REGS regs = (REGS)0
 #define YPdef_regs() regs = REGSREF()

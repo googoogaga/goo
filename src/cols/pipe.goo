@@ -46,10 +46,10 @@
     (modincf (pipe-put-idx c) (rep-len (pipe-data c)))
     c))
 
-(dm enqueue! (c|<pipe> x => <pipe>)
+(dm enq! (c|<pipe> x => <pipe>)
   (add! c x))
 
-(dm dequeue! (c|<pipe> => <any>)
+(dm deq! (c|<pipe> => <any>)
   (with-lock (pipe-lock c)
     (when (= (@len c) 0)
       (event-wait (pipe-available c) (pipe-lock c)))
@@ -78,4 +78,4 @@
       (low-elt c i)
       default))
 
-(export <pipe> enqueue! dequeue!)
+(export <pipe> enq! deq!)

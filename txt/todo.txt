@@ -3,7 +3,7 @@ OVERALL
 NOW
 
 o report warnings as you go
-o a bit more intro and status
+x a bit more intro and status
 x how to make vec/tup/str imm
 x add load path
 x x8r to eval
@@ -37,7 +37,40 @@ x change printing to avoid extra ]'s
 
 PROTO2GOO
 
+THREADS
 
+o handle dynamic variable overflows
+o keyboard interrupts working
+o handle any destroys necessary
+o more thread control functions
+x implement my own thread local storage (regs)
+x   pass tlp in calling convention
+x     allocate sp, fp, stack, stack_allocatep in tls
+x   fix allocate, clone, FUNSHELL, NLX etc to take tlp
+x   perhaps move next_methods register to tls as well
+x access %fun through stack 
+x changes
+x   DEFREGS(); in all primitives
+
+DISPATCH-TREES
+
+o TEST
+o   7sec with i+ inlined
+o   8sec with + dec tree
+o  10sec with + regular cache
+o ground out dynamic compilation varref's
+o MANUAL
+o   add gen counters -- perhaps floating point
+o   counting gen's during runtime (g2c execution)
+o   compile 90 percentile
+o PROFILE-GUIDED
+o   gen counter overflow triggers compilation
+o SAVE-IMAGE and then FIRST-CALLED
+o   produce giant all dispatcher file compiled, loaded, saved
+o   arrange for generic to compile its dispatcher when first called
+o OPTIMIZATIONS
+o   cse refs
+o   pe  isa?
 
 TYPE-INFERENCE
 

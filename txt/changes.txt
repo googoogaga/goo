@@ -1015,3 +1015,46 @@ changed
   use c3 algorithm
   descendents works like children
   adding a property after the fact crashes goo
+
+=== 0.135 ===
+
+summary
+
+  first threads release
+
+=== 0.136 ===
+
+summary
+
+  sped up for threads
+
+=== 0.137 ===
+
+summary
+
+  lots of additions and fixes
+
+added 
+
+  div                        -- for (op 1st (trunc/ _ _))
+  #xnnn, #onnn, #bnnn        -- for hex, oct, and bin literals
+  mod+ mod- modincf moddecf  -- for modulo arithmetic
+  (use file.c)               -- for easy c file integration
+  file-copy                  -- ya know
+  
+sped up
+
+  dispatch with unspecialization simplification
+  atomic allocation of strings
+
+fixed
+
+  checked df redef.
+  dynamic var access
+
+changed
+
+  changed app-sup to allow any number of args.
+  ceiling/ to ceil/
+
+

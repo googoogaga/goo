@@ -53,9 +53,9 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\T\title{{\Huge \goo\ Reference Manual v39 }}
+\T\title{{\Huge \goo\ Reference Manual v40 }}
 \T\author{{\huge Jonathan Bachrach} \\ {\Large MIT AI Lab}}
-\W\title{{\huge \goo\ Reference Manual v39 }}
+\W\title{{\huge \goo\ Reference Manual v40 }}
 \W\author{{\Large Jonathan Bachrach} \\ {\Large MIT AI Lab}}
 \date{\today}
 %\date{October 31, 1995}
@@ -100,6 +100,7 @@ where the rightmost kind field has a one letter code as follows:
 \notation{M}{Method}
 \notation{F}{Function}
 \notation{C}{Class}
+\notation{P}{Property}
 \notation{I}{Instance}
 \notation{K}{Command}
 \end{defs}
@@ -651,7 +652,7 @@ generics.
 \form{SUP}{(SUP ,@args)}
   \doc{calls next most applicable method.  N.B., all
   arguments must be supplied.}
-\formcont{(APP-SUP ,args)}
+\formcont{(APP-SUP ,@args)}
   \doc{applies next most applicable method.  N.B., all
   arguments must be supplied.}
 \end{defs}
@@ -1711,7 +1712,7 @@ A preliminary set of file and directory facilities are provided.
 \begin{defs}
 \method{file-mtime}{filename|<str> => <flo>}
   \doc{return the last modification time of a file in seconds (relative to the
-       \goo epoch) as a floating point number.}
+n       \goo epoch) as a floating point number.}
 \method{file-exists?}{filename|<str> => <log>}
   \doc{return true if and only if a file (or a directory, etc.) exists with
        the given name.}
@@ -1765,6 +1766,89 @@ a reasonably portable fashion.
        Requires the last item to be a string.}
 \method{components-parent-directory}{components|<lst> => <lst>}
   \doc{calculate the parent directory of a pathname.}
+\end{defs}
+
+\section{Threads}
+
+Threads allow for expressing concurrent programs.  The assumed model
+is shared memory with explicit synchronization and symmetric
+multiprocessing and is based heavily upon pthreads %~\cite{pthreads}
+.
+This section is preliminary and might change in the future.  There are
+several limitations in the current implementation.  It
+represents a rudimentary but usable subset of typical thread
+operations.
+
+\begin{defs}
+\class{<thread>}{<any>}
+  \doc{Represents a thread of executation schedulable across 
+  multiple processors.  Upon creation executes \code{thread-function}
+  in separate thread.} 
+\propertyinit{thread-name}{thread|<thread> => (t? <sym>)}{#f}
+\propertyinit{thread-priority}{thread|<thread> => <int>}{0}
+\propertyinit{thread-function}{thread|<thread> => <fun>}{(fun ())}
+\method{new}{x|(t< <thread>) inits|... => <thread>}
+  \doc{Creates thread and runs \code{thread-function} of created
+  thread in separate OS thread.}
+\form{SPAWN}{(SPAWN ,@body)}
+  \doc{$\equiv$ \kode{(FAB <thread> thread-function (fun () ,@body))}}
+\method{thread-yield}{}
+  \doc{Surrenders processor to another thread.}
+% \method{thread-detach}{}
+\method{thread-join}{t|<thread>}
+  \doc{Causes current thread to wait for the termination of \code{t}.}
+\method{thread-current}{=> <thread>}
+\method{all-threads}{=> <tup>}
+\method{sleep}{secs|<flo>}
+  \doc{Pauses current thread for \code{secs} seconds.}
+\class{<lock>}{<any>}
+  \doc{Represents a mutex.}
+\property{lock-name}{lock|<lock> => (t? <sym>)}
+\method{new}{x|(t< <lock>) inits|... => <lock>}
+\method{lock-lock}{lock|<lock>}
+  \doc{Obtain exclusive access to \kode{lock} waiting if necessary.}
+\method{lock-unlock}{lock|<lock>}
+  \doc{Free up exclusive access to \kode{lock} potentially allowing 
+  another thread access.}
+% \method{lock-destroy}{lock|<lock>}
+\form{WITH-LOCK}{(WITH-LOCK ,lock ,@body)}
+  \doc{$\equiv$ \kode{(FIN (SEQ (lock-lock ,lock) ,@body) (lock-unlock ,lock))}}
+\class{<event>}{<any>}
+  \doc{Represents a condition variable used for interthread notification.}
+\propertyinit{event-name}{event|<event> => (t? <sym>)}{#f}
+\method{new}{x|(t< <event>) inits|... => <event>}
+\method{event-signal}{event|<event> lock|<lock>}
+  \doc{Unblocks at least one thread waiting on \code{event}.}
+\method{event-broadcast}{event|<event> lock|<lock>}
+  \doc{Unblocks all threads waiting on \code{event}.}
+% \method{event-destroy}{event|<event>}
+% \method{event-reset}{event|<event>}
+\method{event-wait}{event|<event> lock|<lock> => <log>}
+  \doc{Unlocks \code{lock} and places thread in waiting state to be
+  resumed when \code{event} is signaled or broadcasted upon which time
+  \code{lock} is reacquired and thread resumed.}
+\method{event-wait-timed}{event|<event> lock|<lock> secs|<flo> => <log>}
+  \doc{Unlocks \code{lock} and places thread in waiting state to be
+  resumed when \code{event} is signaled or broadcasted or timeout
+  \code{secs} is reached upon which time \code{lock} is reacquired 
+  and thread resumed.}
+\form{DDV}{(DDV ,var ,form)}
+  \doc{Defines a thread local variable named \kode{(var-name ,var)} with an 
+  initial value \kode{,form}.}
+\form{DLET}{(DLET ((,var ,val) ...) ,@body)}
+  \doc{$\equiv$ \kode{(LET ((,old-var ,var) ...) (FIN (SEQ (SET ,var
+  ,val) ... ,@body) (SET ,var ,old-var) ...))}}
+\class{<pipe>}{<flat!>}
+  \doc{Represents a synchronized FIFO queue allowing multiple readers
+  and writers in separate threads.}
+\method{enqueue!}{pipe|<pipe> x => <pipe>}
+  \doc{Adds \code{x} to \code{pipe}.} 
+\method{dequeue!}{pipe|<pipe> => <any>}
+  \doc{Removes and returns element from \code{pipe} or waits for one
+  to be available.} 
+% \method{dequeue-or!}{pipe|<pipe> default => <any>}
+%   \doc{Removes and returns element from \code{pipe} or returns
+%   \code{default} if \kode{pipe} is empty.}
 \end{defs}
 
 \section{Compiler}

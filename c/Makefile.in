@@ -46,7 +46,7 @@ ifeq ($(build_gc), yes)
   C_OBJS += gc.a
 endif
 
-LD_FLAGS  += -Wl,--export-dynamic
+LDFLAGS  += -Wl,--export-dynamic
 
 default: all
 
@@ -69,8 +69,13 @@ install: all
 	$(top_srcdir)/mkinstalldirs $(bindir)
 	$(top_srcdir)/mkinstalldirs $(GOO_LIB)
 	$(top_srcdir)/mkinstalldirs $(GOO_MODS)
-	$(INSTALL_PROGRAM) $(sub)/$(sub) $(bindir)
+ifeq ($(sub), g2c)
+	$(INSTALL_PROGRAM) $(sub)/$(sub)$(exe_suffix) $(bindir)/goo$(exe_suffix)
+else
+	$(INSTALL_PROGRAM) $(sub)/$(sub)$(exe_suffix) $(bindir)
+endif
 	$(INSTALL_DATA) grt.h $(GOO_LIB)
+	$(INSTALL_DATA) config.h $(GOO_LIB)
 	$(INSTALL_DATA) dlgrt.h $(GOO_LIB)
 
 clean:
