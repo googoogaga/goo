@@ -581,8 +581,16 @@ P YPcheck_call_types()
       CHECK_TYPE(stack_[sp - 3 - i], Phead(specs));
     }
   } else if (traits == YLgenG) {
+  } else if (fun == 0) {
+	  if(Yunknown_function_error != 0)
+		  CALL1(0, Yunknown_function_error, Ynil);
+	  else
+	  {
+		  YPbreak("Tried to call an unbound function, but the function error\nhandler is itself unbound. Exiting.");
+		  exit(1);
+	  }
   } else {
-    CALL1(1, Yunknown_function_error, fun);
+	  CALL1(0, Yunknown_function_error, fun);
   }
   return Ynil;
 }
@@ -1270,20 +1278,21 @@ P YPbuild_runtime_modules(
 
 #include <dlfcn.h>
 
-#define CGEN_CC "cc -c -g -fPIC -I.. -o "
-#define CGEN_LD "cc -shared -o "
+#define CGEN_CC "cc -c -g -fPIC -I'%s/C' -o '%s.o' '%s.c'"
+#define CGEN_LD "cc -shared -o '%s.so' '%s.o'"
 
 typedef P (*PLD)();
+extern P YprotoSsystemYTproto_rootT;
 
 P Yp2cYPcompile_load (P name) {
   char  buf[256];
   void* mod;
   PLD   load;
   P     res;
-  sprintf(buf, "%s %s.o %s.c", CGEN_CC, name, name);
+  sprintf(buf, CGEN_CC, YPsu(YprotoSsystemYTproto_rootT), name, name);
   // printf("EXECUTING %s\n", buf);
   system(buf);
-  sprintf(buf, "%s %s.so %s.o", CGEN_LD, name, name);
+  sprintf(buf, CGEN_LD, name, name);
   // printf("EXECUTING %s\n", buf);
   system(buf);
   sprintf(buf, "%s.so", name);
