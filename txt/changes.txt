@@ -512,3 +512,38 @@ fixes
   next-method to work in interpreter
   got rid of description's from ast
   bug in process-nary-closed-application to correctly fab a fix-let
+
+=== 0.101 ===
+
+summary
+
+first step towards type-based proto.  put in place holders for define
+class, named dc, and type creation functions, named t=, t+, t<.
+
+changes
+
+adds
+
+fixes
+
+=== 0.102 ===
+
+summary
+
+  big change that establishes a real type-based proto.  many types and a
+  type algebra is in place including dispatch to support them.
+
+changes
+
+  type-based proto
+  removed regsym
+  flattened object representation of regular and repeated instances 
+
+adds
+
+  <class> etc
+  class-name
+
+fixes
+
+  methods have names again in c output
