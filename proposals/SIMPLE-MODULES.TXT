@@ -1,0 +1,85 @@
+ISSUE: MODULE SYSTEM
+
+REVISION HISTORY:
+
+STATUS: OPEN
+
+RELATED ISSUES:
+
+CATEGORY: addition
+
+PROBLEM DESCRIPTION:
+
+Proto has a flat namespace.  We'd like to have a reasonably useful module
+system instead.
+
+PRINCIPLES:
+
+  * Keep it simple.
+  * One file per module, one module per file.
+  * Programs which use only the standard module shouldn't need to
+    do anything to import it--i.e., the module system should have
+    reasonable default behavior.
+
+PROPOSAL:
+
+Add two special forms to the language:
+
+  (export ,binding)
+
+    Export 'binding' from the current module.  (Should we allow exports
+    of currently undefined bindings?)  'binding' must be a top-level
+    binding, not a local variable.
+
+  (use ,module)
+
+    If 'module' has not been loaded yet, load it.  (Dependencies between
+    modules must form a directed, acyclic graph.)  Import all bindings
+    currently exported by 'module' into the current module.
+
+  (use ,module ...)
+
+    Room for extension: Renaming, prefixing, filtering, whatever.
+
+Modules names are hierarchic in form.  All modules names beginning with a
+first component of 'proto' are reserved:
+
+  proto      - The core proto library.
+  proto.user - The module associated with the listener.
+  proto.boot - The magic internal bootstrapping module.
+
+Module names have a one-to-one mapping with (relative) file names:
+
+  proto      => "proto.py"
+  proto.user => "proto/user.py"
+
+Modules are found by searching the directories found in the environment
+variable PROTO_PATH.
+
+By default, all modules except 'proto' and 'proto.boot' are treated as if
+they began with the form '(use proto)'.  'proto' is treated as if it began
+with the form '(use proto.boot)', and 'proto.boot' is probably magic.
+
+EXAMPLES:
+
+  (export foo)
+
+  (use p2c.syntax)
+  (use p2c)
+
+QUESTIONS:
+
+RATIONALE:
+
+COST TO IMPLEMENTORS:
+
+COST TO USERS:
+
+PERFORMANCE IMPACT:
+
+DOCUMENTATION IMPACT:
+
+IMPLEMENTATION NOTES:
+
+FUTURE FEATURES:
+
