@@ -33,7 +33,7 @@ all:
 
 install: all
 	$(top_srcdir)/mkinstalldirs $(GOO_MODS)
-	cp -r src/* $(GOO_MODS)/ ## should possibly use install?
+	find . -name \*.goo -exec $(INSTALL_DATA) -D {} $(GOO_MODS)/{} \;
 
 clean:
 

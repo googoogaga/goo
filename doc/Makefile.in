@@ -20,6 +20,7 @@ INSTALL_SCRIPT=@INSTALL_PROGRAM@
 INSTALL_DATA=@INSTALL_DATA@
 
 ## end autoconf
+GOO_DOC=$(datadir)/doc/goo/
 
 all:
 
