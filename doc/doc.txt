@@ -1036,15 +1036,18 @@ Method      app-args (=> <lst>)
 
 3.16 TOP LEVEL
 
-Generic     load ((filename <str>) => <any>)
+Functions which load code at runtime require a symbol specifying the module
+name to use.
+
+Generic     load ((filename <str>) (modname <sym>) => <any>)
 
   returns the result of evaluating the result of reading file named filename.
 
-Generic     eval ((x <any>) => <any>)
+Generic     eval ((x <any>) (modname <sym>) => <any>)
 
   return's result of evaluating x.
 
-Generic     top ()
+Generic     top ((modname <sym>))
 
   runs top-level read-eval-print loop which reads from in and writes to out.
 
