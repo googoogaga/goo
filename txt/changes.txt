@@ -447,3 +447,40 @@ additions
   *max-print-depth* and *max-print-length*
   %clone primitive
   redefinition support for changed prototypes
+
+=== 0.93 ===
+
+summary
+
+  ???
+
+=== 0.94 ===
+
+summary
+
+  compile-time modules implementing use and export
+
+=== 0.95 ===
+
+summary
+
+  statement oriented c backend staged for native code emission plus
+  fixes to get test-suite to pass most tests
+
+fixes
+
+  fixed write-character to behave correctly when character-name didn't exist
+  added %call-next-method to boot's exports
+  fixed zero to use contagious call
+  fixed a bunch of collection methods shown up by test-suite including 
+    alter fab and fabs
+
+adds
+
+  introduced notion of computed and passive programs
+  reflected runtime signatures in ast so that signature creation would
+    be modeled correctly 
+  added registers to functions and registers to programs
+    and added simple-minded register allocation pass to analysis
+  overhauled p2c to output in statement oriented fashion
+    now perhaps a few dead-code eliminations during output
