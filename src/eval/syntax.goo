@@ -502,7 +502,10 @@
 (dv *bq-clobberable* 'bq-clobberable)
 (dv *bq-quote*       'bq-quote)
 
-(dm sexpr-expand-backquote ((x <lst>) => <lst>)
+(df sexpr-expand-backquote ((x <lst>) => <lst>)
+  (eval (sexpr-build-backquote-expander x)))
+
+(dm sexpr-build-backquote-expander ((x <lst>) => <lst>)
   (let ((raw-result (bq-process x))
 	(res        (bq-remove-tokens raw-result)))
     ;; (format-out "RES = %=\n" res)
@@ -527,7 +530,7 @@
   (case ((sexpr-atom? x)
 	 (lst *bq-quote* x))
         ((sexpr-backquote? x)
-	 (bq-process (sexpr-expand-backquote (head (tail x)))))
+	 (bq-process (sexpr-build-backquote-expander (head (tail x)))))
 	((sexpr-unquote? x)
 	 (head (tail x)))
 	((sexpr-unquote-splicing? x)

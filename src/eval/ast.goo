@@ -10,6 +10,14 @@
   (slot <program> (program-register <int>))
   (slot <program> program-type)
 
+;;; Placeholders for world & module stuff.
+;;; TODO - This is seriously broken.  It's just a starting point.
+(dv <module-name> <sym>)
+(df module-name-string ((name <module-name>) => <str>)
+  (sym-name name))
+(dv $internal-module-name 'proto/internal)
+(df module-name (mod) $internal-module-name)
+
 ;;; bindings are not programs! they represent bindings.
 
 (dv <binding-name> <any>) ;; (type-union <sym> <int>)
@@ -26,15 +34,17 @@
 (dm binding-free?-setter ((_ <log>) (x <binding>))
   _)
 
-(dm binding-index-setter ((_ <int>) (x <binding>))
-  _)
-
 (dv <module-binding> (isa <binding>))
   (slot <module-binding> binding-module #f)
 
+;; Global boxes are used by the interpreter to store the values of
+;; global variables.
+(dv <global-box> (isa <any>))
+  (slot <global-box> global-box-value nul)
+
 (dv <global-binding> (isa <module-binding>))
   (slot <global-binding> (binding-free? <log>) #t)
-  (slot <global-binding> (binding-index <int>))
+  (slot <global-binding> binding-global-box #f) ; TODO false-or <global-box>
 
 (dv <runtime-binding> (isa <module-binding>))
   (slot <runtime-binding> (binding-locative <loc>))
@@ -224,11 +234,9 @@
   (slot <static-environment> (environment-bindings <col>))
 
 (dv <static-global-environment> (isa <static-environment>))
-  (slot <static-global-environment> environment-next-index -1)
-  (slot <static-global-environment> environment-redefinitions (fab <tab> 100))
-  (slot <static-global-environment> environment-imports (fab <tab> 100))
-
-(dv <static-predefined-global-environment> (isa <static-global-environment>))
+  ;; The environment in which CT and DS forms should be run.
+  (slot <static-global-environment>
+	(environment-syntax-environment <static-global-environment>))
 
 (dv <static-empty-environment> (isa <static-environment>))
 
@@ -236,14 +244,28 @@
 
 (dv <static-local-environment> (isa <static-environment>))
 
+;; Return true iff an environment is its own syntax environment.  This is
+;; typically true for various eval'd environments, and false for compiled
+;; environments.
+(df environment-is-own-syntax-environment? ((env <static-global-environment>)
+					    => <log>)
+  (== env (environment-syntax-environment env)))
+
+;; Given an object, try to find a global binding which contains it.
+;; Used by the writer.
+;; TODO - This will only work in the runtime environment, not any of the
+;; various syntax environments.
 (dm env-object-name (x => <any>)
-  (let ((index (env-global-index (rt-glo-env) x))
-	(ct-env (find-static-global-environment (ct-env))))
-    (and index
-	 (lab return
-	   (for ((binding (environment-bindings ct-env)))
-	     (when (== (binding-index binding) index)
-	       (return (binding-name binding))))))))
+  (lab return
+    (do-static-global-bindings
+     (fun (binding)
+       (when (and (isa? binding <global-binding>)
+                  (binding-global-box binding)
+		  (== x (global-box-value (binding-global-box binding))))
+	 (return (binding-name binding))))
+     (runtime-environment))
+    #f))
+
 
 ;;;; CONVERT TO AST FORM
 
@@ -290,8 +312,9 @@
     (isa <bound?> (set bound?-reference ref))))
 
 (dm objectify-compile-time (program r tail? => <constant>)
-  (let ((program (objectify program r tail?)))
-    (ast-eval program (rt-env)) ;; TODO: IS THIS THE RIGHT ENV?
+  (let ((syntax-env (find-syntax-environment r))
+	(program (objectify program syntax-env tail?)))
+    (ast-evaluate program)
     (isa <constant> (set constant-value #f))))
 
 (dm objectify-alternative (t c a r tail? => <alternative>)
@@ -431,14 +454,11 @@
 		      (set (binding-free? existing-binding) #f)
 		      ;; (format out "REDEF %s\n" name)
 		      )
-		  (set (elt (environment-redefinitions gr) name) 
-		       existing-binding)
 		  existing-binding)
 	     (let ((binding (make-binding)))
 	       (set (binding-name binding)   name)
 	       (set (binding-free? binding)  #f)
 	       (set (binding-module binding) gr)
-	       (set (binding-index binding)  (inc (environment-next-index gr)))
 	       (insert-global! binding gr)
 	       binding))))
     binding))
@@ -474,17 +494,44 @@
       (set (binding-handler binding) expand)
       binding)))
 
+;; Process a macro definition.  This is somewhat ugly, because a single
+;; macro definition may need to appear in as many as three places:
+;;  1) The target environment, so it may be used by the program itself.
+;;  2) The syntax environment, so it can be used to write other macros.
+;;  3) The runtime environment *of the image we're building*.  This
+;;     means that once our program has been compiled and run, macros
+;;     should remain available in the listener.  This requires some magic,
+;;     which is handled by <ast-macro-definition>.
+;; XXX - This function has very ugly semantics, and I don't like it.
 (dm objectify-syntax-definition (name e r rt? => <any>)
   (let ((sep-expander (sexpr-make-macro-function e))
-	(ast-expander (objectify sep-expander r #f))
-	(expander     (ast-eval ast-expander (rt-env))) ;; TODO: CT AGREE
-	(binding      (%%macro name expander r)))
+
+	;; Build a version of the macro for use in the target and syntax
+	;; environments.
+	(syntax-env   (find-syntax-environment r))
+	(ast-expander (objectify sep-expander syntax-env #f))
+	(expander     (ast-evaluate ast-expander))
+
+	;; Install it into the target environment.
+	(binding (%%macro name expander r)))
+
+    ;; If the syntax and runtime environments are different (i.e., we're
+    ;; compiling code), then install it in the syntax environment, too.
+    (when (not (environment-is-own-syntax-environment? r))
+      (insert-global! binding syntax-env))
+    
+    ;; If the macro should be available in the runtime of the image we're
+    ;; building, work some magic.  Otherwise, just return false.
     (if rt?
 	(isa <ast-macro-definition> 
 	  (set assignment-binding binding)
-	  (set assignment-form    ast-expander))
+	  (set assignment-form
+	       ;; Re-objectify the expander, this time using bindings from
+	       ;; the target environment.  This should allow it to be run
+	       ;; in the image (if we're reasonably lucky).
+	       (objectify sep-expander r #f)))
 	(objectify-quotation #f r))))
-
+  
 (dm objectify-function-definition (name e r => <ast-function-definition>)
   (let ((binding (ast-define-binding r name #f (fun () (isa <global-binding>))))
 	(f       (objectify e r #f)))
@@ -630,8 +677,7 @@
 (dm objectify-free-global-reference (name r => <global-reference>)
   (let ((gr (find-static-global-environment r))
 	(b (isa <global-binding>
-	     (set binding-name name)
-	     (set binding-index (inc (environment-next-index gr))))))
+	     (set binding-name name))))
     (insert-global! b gr)
     (isa <global-reference> (set reference-binding b))))
 
@@ -772,6 +818,10 @@
     ((r <static-global-environment>) => <static-global-environment>)
   r)
 
+(dm find-syntax-environment ((r <static-environment>)
+			     => <static-global-environment>)
+  (environment-syntax-environment (find-static-global-environment r)))
+
 (dm find-binding (name (r <static-local-environment>) => <any>)
   (rep loop ((bindings (environment-bindings r))) ;; TODO: => (or <binding> #f)
     (if (empty? bindings)
@@ -782,23 +832,13 @@
 
 ;; TODO: => FALSE-OR <BINDING>
 
-(dm find-parent-binding (name (r <static-empty-environment>) => <any>)
-  #f)
-
-(dm find-parent-binding (name (r <static-global-environment>) => <any>) 
-  (let ((binding (elt (environment-bindings r) name)))
-    (if (== binding nul)
-	(find-parent-binding name (environment-next r))
-	binding)))
-
 (dm find-binding (name (r <static-empty-environment>) => <any>)
   #f)
 
 (dm find-binding (name (r <static-global-environment>) => <any>) 
   (let ((binding (elt (environment-bindings r) name)))
     (if (== binding nul)
-	(let ((binding (find-parent-binding name (environment-next r))))
-	  (and binding (set (elt (environment-imports r) name) binding)))
+	(find-binding name (environment-next r))
 	binding)))
 
 ;; TODO: CLEANUP
@@ -967,9 +1007,7 @@
        (sexpr-function-signature x) (sexpr-function-body x) r)))
 
 (define-magic-binding quasiquote (x r tail?)
-  (let ((bq-ast    (objectify (sexpr-expand-backquote x) r tail?))
-	(expansion (ast-eval bq-ast (rt-env))))
-    (objectify expansion r tail?)))
+  (objectify (sexpr-expand-backquote x) r tail?)))
 
 (dm ast-macro-expand (x r tail?)
   (let ((m (objectify (head x) r tail?)))
@@ -1105,62 +1143,270 @@
 
 (define-primitive %pair ())
 
-;;; SETUP INITIAL CT ENVIRONMENT
 
-;; TODO: UPDATE RETURN VALUES
+;;;========================================================================
+;;;  Set Up Initial Environments for Objectification
+;;;========================================================================
+;;;  To objectify code, we need to look up variables in a global
+;;;  environment.  Right now, there are three possible environments:
+;;;   
+;;;    1) The runtime environment.  This is the environment is used by the
+;;;       listener.  It corresponds to the currently running program.
+;;;       There is only one runtime environment per image.
+;;;
+;;;    2) A syntax environment.  This is a stripped down version of the
+;;;       runtime environment.  The compiler uses this environment to
+;;;       process CT and DS forms.  It contains most of the bindings in
+;;;       core proto, but not much else.
+;;;
+;;;       (Some environments are their own syntax environments--including
+;;;       the runtime environment and syntax environments themselves--so
+;;;       they evaluate their own CT and DS forms.  Other environments--
+;;;       including target environments--have a separate syntax
+;;;       environment.)
+;;;
+;;;    3) A target environment.  The compiler uses this environment to
+;;;       compile code.  Initially, it contains only a few bindings:
+;;;       the various <primitive-bindings>s and a few magic bindings
+;;;       like IF.  There is one target environment per program
+;;;       compiled.
 
-(df init-rt-environment (rt-env)
-  (%do-runtime-bindings
-   (fun (name loc)
-     (let ((sym (as <sym> name))
-  	   (binding
-	    (isa <runtime-binding>
-	      (set binding-name     sym)
-	      (set binding-locative loc))))
-       (insert-global! binding rt-env)))))
+;;; ENVIRONMENT CREATION 
 
+;; Create a new global environment of the specified type.  This environment
+;; will be chained to 'next-env' (which may be $empty-static-environment
+;; if you so desire).  If you specify a 'syntax-env', it will be used to
+;; evaluate DS and CT forms.  If you *don't* specify a syntax-environment,
+;; then these forms will be evaluated in the newly-created environment
+;; itself.
 (df fab-static-global-environment 
-    ((type <static-environment>) (next <static-environment>)
-     => <static-global-environment>)
-  (isa type 
-    (set environment-next next)
-    (set environment-bindings (fab <tab> 2000))))
+  ((next-env <static-environment>)
+   syntax-env ; TODO - (false-or <static-global-environment>)
+   => <static-global-environment>)
+  (assert (or (not syntax-env) (environment-is-own-syntax-environment? env)))
+  (let ((new-env (isa <static-global-environment>
+		   (set environment-next next-env)
+		   (set environment-bindings (fab <tab> 2000)))))
+    (set (environment-syntax-environment new-env)
+	 (if syntax-env syntax-env new-env))
+    new-env))
 
-(df init-static-global-environment 
-    ( => (tup (sys-env <static-environment>) (user-env <static-environment>)))
-  (let ((rt-env
-	 (fab-static-global-environment
-	  <static-predefined-global-environment> $empty-static-environment))
-	(sys-env
-	 (fab-static-global-environment
-	  <static-predefined-global-environment> rt-env))
-	(user-env  
-	 (fab-static-global-environment
-	  <static-global-environment> sys-env)))
-    (init-rt-environment rt-env)
-    (insert-globals! (cat (magic-bindings) (primitives)) sys-env)
-    (tup sys-env user-env)))
+;; Copy the bindings specified by 'names' from 'src-env' to 'dst-env'.
+(df copy-environment-bindings ((dst-env <static-global-environment>)
+			       (src-env <static-global-environment>)
+			       (names <col>)
+			       => <static-global-environment>)
+  (for ((name names))
+    (let ((binding (find-binding name src-env)))
+      (if binding
+	  (insert-global! binding dst-env)
+	  (error "Can't find binding '%=' for copy.\n" name))))
+  dst-env)
 
-(df reset-static-global-environment
-    ((env <static-global-environment>) => <static-global-environment>)
-  (del-keys (environment-bindings env))
-  (del-keys (environment-redefinitions env))
-  env)
+;; Given an environment and a list of symbols, return a new environment
+;; containing only those bindings in the original environment named by
+;; the symbols.
+(dm fab-subset-environment ((old-env <static-global-environment>)
+			    (subset <col>)
+			    syntax-env ; TODO - (false-or <static-environment>)
+			    => <static-global-environment>)
+  (let ((new-env
+	 (fab-static-global-environment $empty-static-environment syntax-env)))
+    (copy-environment-bindings new-env old-env subset)
+    new-env))
 
-(dv *static-predefined-global-environment*      $empty-static-environment)
-(dv *static-global-environment*                 $empty-static-environment)
+;;; RUNTIME ENVIRONMENT
+
+(dv *runtime-environment* $empty-static-environment)
+
+(df runtime-environment () *runtime-environment*)
+
+;; Create the runtime environment for the current image.  This is used
+;; to run code typed into the listener, to process 'eval' calls, and so on.
+(df init-runtime-environment ()
+  (let ((rt-env (fab-static-global-environment $empty-static-environment #f)))
+
+    ;; First, we need to get all the bindings which were built into our
+    ;; image by the compiler, and copy them into our new environment.
+    (%do-runtime-bindings
+     (fun (name loc)
+       (let ((sym (as <sym> name))
+	     (binding
+	      (isa <runtime-binding>
+		(set binding-name     sym)
+		(set binding-locative loc))))
+	 (insert-global! binding rt-env))))
+
+    ;; Next, we need to copy all our magic bindings into this environment.
+    (insert-globals! (magic-bindings) rt-env)
+    
+    ;; Ask the interpreter to do any setup it will require.
+    (init-environment-for-eval rt-env)
+
+    ;; Up until this point, we haven't been able to define any macros in our
+    ;; image.  Process the backlog now.
+    (do2 (rcurry %%macro rt-env)
+	 *boot-macro-names* *boot-macro-expanders*)
+    (set *macros-ok?* #t)
+
+    (set *runtime-environment* rt-env)
+    #f))
+
+;;; SYNTAX ENVIRONMENT
+
+;; These bindings are initially available in CT and DS forms.
+;; The section numbers refer to DOC/DOC.TXT.
+(dv syntax-environment-bindings
+  '(;; Section 1.1/2.1: Special forms.
+    ;; Not included: CT, DS
+    IF SEQ SET FUN LET LOC LAB FIN DV DM DG ISA SLOT MACRO-EXPAND
+    NEXT-METHOD QUOTE
+
+    ;; Section 1.2/2.2: Macros.
+    DF TRY REP MIF AND OR SELECT CASE INC DEC UNLESS WHEN ASSERT
+    FOR COLLECTING
+
+    ;; Section 1.3: Read macros.
+    quasiquote
+
+    ;; Section 3.1: Any.
+    <any> as
+
+    ;; Section 3.2: Comparables.
+    == = < ~= ~== > <= >= min max isa? object< object-direct-slots
+    object-direct-parents object-slots object-parents object-name
+
+    ;; Section 3.3: Null.
+    nul
+
+    ;; Section 3.4: Booleans.
+    <log> not
+
+    ;; Section 3.5: Characters.
+    <chr> lowercase? uppercase? as-lowercase as-uppercase alphabetic?
+    numeric? to-digit eof-object?
+
+    ;; Section 3.6: Numbers.
+    ;; Not included: gcd, lcm (which seem to be missing).
+    <num> + - * / floor ceiling round truncate floor/ ceiling/ round/
+    truncate/ modulo remainder pos? zero? neg? neg abs *print-base*
+    num-to-str str-to-num
+    <int> logior logxor logand lognot logbit? even? odd? ash lsh
+    <flo> flo-bits
+    <loc> locative-value locative-value-setter address-of
+
+    ;; Section 3.7: Collections.
+    <col> len elt elt-setter empty? empty default fab fabs fill alter any?
+    all? reduce reduce+ find-key del-key del-keys do do2 map map2 do-keyed
+    map-keyed mem?
+    ;; 3.7.1: Iteration protocol.
+    ini-state fin-state? nxt-state now-elt now-elt-setter now-key copy-state
+    ;; 3.7.2: Maps.
+    <map> <assocs> assocs-test
+    <tab> table-growth-factor table-growth-threshold table-shrink-threshold
+    table-protocol $permanent-hash-state current-gc-state id-hash
+    <str-tab> case-insensitive-string-hash case-insensitive-string-equal
+    ;; 3.7.3: Sequences.
+    <seq> add 1st 2nd 3rd last pos rev rev! cat cat! cat2 sub sub-setter
+    pick del del-dups
+    ;; 3.7.4 Tuples.
+    <tup> tup
+    ;; 3.7.5 (the first one): Lists.
+    <lst> <list> head tail lst list pair nil
+    ;; 3.7.5 (the second one): Optionals.
+    <opts>
+    ;; 3.7.6 (the first one): Flat sequences.
+    <flat> <vec> vec <str> str to-str <buf> buf push pop
+    ;; 3.7.6 (the second one):  Ranges.
+    <range> from from-by from-to from-to-by from-below from-below-by
+    from-above from-above-by
+    ;; 3.7.7: Steps.
+    <step> first-then
+
+    ;; Section 3.8: Symbols.
+    <sym> as make-sym gensym make-setter-name var-name var-type
+
+    ;; Section 3.9: Slots.
+    <slot> slot-owner slot-getter slot-setter slot-type slot-init
+    slot-value slot-value-setter find-getter find-setter add-slot
+
+    ;; Section 3.10: Functions.
+    <fun> fun-name fun-names fun-specs fun-nary? fun-arity fun-value
+    identity compose curry rcurry always apply
+    <gen> fun-mets gen-add-met sorted-app-mets
+    <met> met-app?
+
+    ;; Section 3.11: Conditions.
+    <condition> default-handler sig <simple-condition> condition-message
+    condition-arguments <serious-condition> <error> error <simple-error>
+    <handler> handler-function make-handler handler-matches?
+
+    ;; Section 3.12: Ports.
+    <port> <input-port> read-char peek-char char-ready?
+    <output-port> newline force-output write-char write-string
+    <file-port> <file-input-port> open-input-file close-input-port
+    call-with-input-file in
+    <file-output-port> open-output-file close-output-port
+    call-with-output-file out
+    <string-port> port-contents <string-input-port> port-index
+    call-with-string-input-port <string-output-port>
+    call-with-string-output-port
+
+    ;; Section 3.13: Input.
+    read read-from-string read-file
+
+    ;; Section 3.14: Output.
+    write display writeln write-to-string format 
+
+    ;; Section 3.15: System.
+    app-filename app-args
+
+    ;; Section 3.16: Top level.
+    ;; Not included: load eval top.
+    ;; Most of these functions have built-in assumptions about which
+    ;; environment to use.  Rather than make them work in syntax
+    ;; environments, we simply disallow them.
+    do-stack-frames backtrace
+
+    ;; Undocumented stuff.  This was all found by a process of trial and
+    ;; error, but it needs to be here.
+    match-atom match-empty-list match-unquote match-sublist
+    sexpr-signature-parameters
+    ))
+
+;; Create a new syntax environment for processing macros.
+(df fab-syntax-environment (=> <static-global-environment>)
+  (let ((syn-env (fab-subset-environment (runtime-environment)
+					 syntax-environment-bindings #f)))
+    (init-environment-for-eval syn-env)
+    syn-env))
+
+;;; TARGET ENVIRONMENT
+
+(df fab-target-environment (=> <static-global-environment>)
+  (let ((syntax-env (fab-syntax-environment))
+	(target-env (fab-static-global-environment $empty-static-environment
+						   syntax-env)))
+
+    ;; Copy in just our macros and our primitives, since everything else
+    ;; must be defined by the program being compiled.  And don't bother
+    ;; to call 'init-environment-for-eval'--this is a compile-only environment.
+    (insert-globals! (cat (magic-bindings) (primitives)) target-env)
+
+    ;; boot.proto uses these macros *before* defining them, so we'll
+    ;; need to install temporary copies in the boot environment.
+    ;; TODO - Clean up this mess.
+    (copy-environment-bindings target-env syntax-env '(UNLESS WHEN OR AND))
+    target-env))
+
+;;; OTHER ENVIRONMENT CODE
 
 (df init-ast ()
-  (let (((tup sys-env  usr-env) (init-static-global-environment)))
-    (set *static-predefined-global-environment* sys-env)
-    (set *static-global-environment*            usr-env)
-    (do2 (rcurry %%macro sys-env) *boot-macro-names* *boot-macro-expanders*)
-    (set *macros-ok?* #t)))
+  (init-runtime-environment))
 
-(df ct-env ()      *static-global-environment*)
-
+;; Given a static global environment 'env', apply 'f' to all the bindings.
 (df do-static-global-bindings ((f <fun>) env)
   (rep loop ((env env))
-    (unless (isa? env <static-predefined-global-environment>)
+    (unless (isa? env <static-empty-environment>)
       (do f (frame-bindings env))
       (loop (environment-next env)))))

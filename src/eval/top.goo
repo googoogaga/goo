@@ -37,25 +37,25 @@
 (dm parse-in ((s <str>) ct-env)
   (objectify (read-from-string s) ct-env #f))
 
-(dm parse ((s <str>)) (parse-in s (ct-env)))
+(dm parse ((s <str>)) (parse-in s (runtime-environment)))
 
 (dm str-parse-in ((s <str>) ct-env)
   (format out "%=\n" (parse-in s ct-env)))
 
-(dm str-parse ((s <str>)) (str-parse-in s (ct-env)))
+(dm str-parse ((s <str>)) (str-parse-in s (runtime-environment)))
 
-(dm eval-in ((x <any>) ct-env rt-env)
+(dm eval-in ((x <any>) ct-env)
   (let ((o (objectify x ct-env #f))
-	(e (ast-eval-in o rt-env)))
+	(e (ast-evaluate o)))
     e))
 
-(dm eval ((x <any>)) (eval-in x (ct-env) (rt-env)))
+(dm eval ((x <any>)) (eval-in x (runtime-environment)))
 
-(dm str-eval-in ((x <str>) ct-env rt-env => <any>)
-  (write-to-string (eval-in (read-from-string x) ct-env rt-env)))
+(dm str-eval-in ((x <str>) ct-env => <any>)
+  (write-to-string (eval-in (read-from-string x) ct-env)))
 
 (dm str-eval ((x <str>))
-  (str-eval-in x (ct-env) (rt-env)))
+  (str-eval-in x (runtime-environment)))
 
 (dm read-file ((filename <str>) => <any>)
   (call-with-input-file
@@ -67,15 +67,15 @@
 	      (sexpr-sequence->begin (rev! forms))
 	      (loop (pair x forms))))))))
 
-(dm load-in ((filename <str>) (rt-env <loc-env>) ct-env) 
+(dm load-in ((filename <str>) ct-env) 
   (let ((x (read-file filename))
 	(o (objectify x ct-env #f)))
-    (ast-eval-in o rt-env)
+    (ast-evaluate o)
     ;; (report-undefined-global-bindings ct-env)
     ))
 
 (dm load ((filename <str>)) 
-  (load-in filename (rt-env) (ct-env)))
+  (load-in filename (runtime-environment)))
 
 (dv *base-path* "/home/ai/jrb/proto/SRC/")
 
@@ -110,7 +110,7 @@
 
 ;;  Initialization and driver loop
 ;;  The prompt is handled a bit differently than in the notes
-(dm top-in (level quit ct-env rt-env)
+(dm top-in (level quit ct-env)
   (lab blow
     (rep loop ()
       (lab continue
@@ -123,7 +123,7 @@
 		       (apply (curry format out (condition-message c))
 			      (condition-arguments c)))))
 	       ;; (backtrace (env))
-	       (top-in (+ level 1) quit ct-env rt-env)
+	       (top-in (+ level 1) quit ct-env)
 	       (continue #f))
 	  (newline out)
 	  (let ((form (prompt-for-command-expression level "<= ")))
@@ -132,12 +132,12 @@
 		(if (= form '(up))
 		    (blow #f)
 		    (let ((ast    (objectify form ct-env #f))
-			  (result (ast-eval-in ast rt-env)))
+			  (result (ast-evaluate ast)))
 		      (format out "%==> " level) 
 		      (write out result)))))))
       (loop))))
 
 (dm top ()
   (lab quit
-    (top-in 0 quit (ct-env) (rt-env))))
+    (top-in 0 quit (runtime-environment))))
 

@@ -1,2 +1,4 @@
+(set *base-path* "/home/ai2/emk/proto/SRC/")
+
 (set *c-out-name* "p")
 

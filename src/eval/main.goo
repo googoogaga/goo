@@ -14,7 +14,6 @@
 (format out ";;; \n")
 (format out ";;; Loading Runtime Bindings...\n")
 (init-ast)
-(init-ast-eval)
 (format out ";;; Loading System Patches...\n")
 (load (src-filename "system-patches.proto"))
 (format out ";;; Loading User Patches...\n")

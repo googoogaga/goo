@@ -3,32 +3,30 @@
 
 ;;; ENV
 
-(dv <glo-env> (isa <any>))
-  ;; (slot <glo-env> (env-names  <vec>) #())
-  (slot <glo-env> (env-values <vec>))
+;;; Global binding box support.  Right now, we allocate storage boxes for
+;;; each <global-binding> lazily, and we assume the absence of a box 
+;;; means the binding is uninitialized.  When we implement a "LISP in
+;;; Small Pieces"-style fast intepreter, we may want to change this around.
+(dm env-global-binding-value ((b <global-binding>) => <any>)
+  (let ((box (binding-global-box b)))
+    (if box
+	(global-box-value box)
+	(error "Unbound binding: %=" (binding-name b)))))
 
-(dv $min-glo-env-size 10000)
+(dm env-global-binding-value-setter (value (b <global-binding>) => <any>)
+  (let ((box (binding-global-box b)))
+    (unless box
+      ;; Lazy box creation.
+      ;; TODO - Should we mark this binding non-free at some point?  Ask jrb.
+      (set box (set (binding-global-box b) (isa <global-box>))))
+    (set (global-box-value box) value)))
 
-(dm fab-glo-env ()
-  (isa <glo-env>
-    (set env-values (fill (fab <vec> $min-glo-env-size) nul))))
+(dm env-global-binding-bound? ((b <global-binding>) => <log>)
+  (let ((box (binding-global-box b)))
+    (if box #t #f)))
 
-(dm env-global-value ((env <glo-env>) (i <int>))
-  (elt (env-values env) i))
-
-(dm env-global-index ((env <glo-env>) (x <any>) => <any>)
-  (rep loop ((i 0))
-    (and (< i (len (env-values env)))
- 	 (if (== x (elt (env-values env) i))
-	     i
-	     (loop (+ i 1))))))
-
-(dm env-global-value-setter (v (env <glo-env>) (i <int>))
-  (set (elt (env-values env) i) v))
-
-(dm env-define-global-binding! ((env <glo-env>) (i <int>) v)
-  (set (elt (env-values env) i) v))
-
+;;; <runtime-binding>s don't need boxes--they already have storage space
+;;; allocated in the C runtime.
 (dm env-runtime-value ((x <loc>))
   (locative-value x))
 
@@ -83,8 +81,10 @@
 
 ;;; EVAL
 
-(dm ast-eval-in ((e <program>) (env <loc-env>))
-  (ast-eval e env))
+;; TODO - Rename ast-eval to ast-eval-(in|env) and ast-evalutate to ast-eval.
+;; Or something like that.
+(dm ast-evaluate ((e <program>))
+  (ast-eval e $nul-loc-env))
 
 (dg ast-eval ((e <program>) (env <loc-env>)))
 
@@ -95,7 +95,7 @@
   (constant-value e))
 
 (dm ast-eval ((e <compile-time>) (ee <loc-env>))
-  (ast-eval (compile-time-program e) (rt-env)))
+  (ast-evaluate (compile-time-program e)))
 
 (dm ast-eval-specs 
     ((specs <lst>) (nary? <log>) (env <loc-env>) => <any>)
@@ -181,21 +181,8 @@
 (dm ast-eval ((e <local-reference>) (env <loc-env>))
   (env-local-reference-value env e))
 
-(dm env-global-binding-value-or ((env <glo-env>) (b <global-binding>) default)
-  (let ((value (env-global-value env (binding-index b))))
-    (if (== value nul) default value)))
-
-(dm env-global-binding-value ((env <glo-env>) (b <global-binding>))
-  (let ((value (env-global-value env (binding-index b))))
-    (if (== value nul)
-	(error "Unbound binding: %=" (binding-name b) value)
-	value)))
-
-(dm env-global-binding-value-setter (value (env <glo-env>) (b <global-binding>))
-  (set (env-global-value env (binding-index b)) value))
-
 (dm ast-eval ((e <global-reference>) (env <loc-env>))
-  (env-global-binding-value (rt-glo-env) (reference-binding e)))
+  (env-global-binding-value (reference-binding e)))
 
 (dm ast-eval ((e <runtime-reference>) (env <loc-env>))
   (env-runtime-value (binding-locative (reference-binding e))))
@@ -204,7 +191,7 @@
   (ast-eval-bound? e (reference-binding (bound?-reference e)) env))
 
 (dm ast-eval-bound? ((e <bound?>) (binding <global-binding>) (env <loc-env>))
-  (~== (env-global-binding-value-or (rt-glo-env) binding nul) nul))
+  (env-global-binding-bound? binding))
 
 (dm ast-eval-bound? ((e <bound?>) (binding <runtime-binding>) (env <loc-env>))
   #t)
@@ -214,7 +201,7 @@
 
 (dm ast-eval ((e <global-assignment>) (env <loc-env>))
   (let ((value (ast-eval (assignment-form e) env)))
-    (set (env-global-binding-value (rt-glo-env) (assignment-binding e)) value)))
+    (set (env-global-binding-value (assignment-binding e)) value)))
 
 (dm ast-eval ((e <ast-macro-definition>) (env <loc-env>))
   #f) ;; PERFORMED DURING OBJECTIFICATION
@@ -228,15 +215,15 @@
   (let ((value (ast-eval (assignment-form e) env)))
     (set (env-local-reference-value env (assignment-reference e)) value)))
 
-(dm env-define-binding! ((env <glo-env>) (b <runtime-binding>) v)
+(dm env-define-binding! ((b <runtime-binding>) v)
   (set (env-runtime-value (binding-locative b)) v))
 
-(dm env-define-binding! ((env <glo-env>) (b <global-binding>) v)
-  (set (env-global-value env (binding-index b)) v))
+(dm env-define-binding! ((b <global-binding>) v)
+  (set (env-global-binding-value b) v))
 
 (dm ast-eval ((e <definition>) (env <loc-env>))
   (let ((value (ast-eval (assignment-form e) env)))
-    (env-define-binding! (rt-glo-env) (assignment-binding e) value)
+    (env-define-binding! (assignment-binding e) value)
     #f))
 
 ;; (dv <box> (isa <any>))
@@ -327,22 +314,11 @@
 
 ;;; ENVIRONMENT
 
-(dv *rt-glo-env* #f)
-
-(df rt-glo-env () *rt-glo-env*)
-
-(df rt-glo-env-setter (env) (set *rt-glo-env* env))
-
-(dv *rt-env* $nul-loc-env)
-
-(df rt-env () *rt-env*)
-
-(df rt-env-setter (env) (set *rt-env* env))
-
-(df ast-read-eval (x) (ast-eval-in (objectify x (ct-env)) (rt-env)))
-
-(df init-ast-eval ()
-  (let ((binding (find-binding '%pair (ct-env))))
-    (set (binding-value binding) pair))
-  (set *rt-glo-env* (fab-glo-env)))
-
+;; Add any bindings required by the interpreter to an environment.
+;; The function '%pair' is a compile-time primitive.  Unfortunately, the
+;; objectifier inserts it into some of the code it generates, so we need
+;; to add a run-time shadow.
+;; TODO - This function smells bad.
+(df init-environment-for-eval ((env <static-global-environment>))
+  (let ((b (ast-define-binding env '%pair #f (fun () (isa <global-binding>)))))
+    (set (env-global-binding-value b) pair)))

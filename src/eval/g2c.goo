@@ -18,24 +18,19 @@
 	(x       (read-file in-name)))
     (with-native (objectify x ct-env #f))))
 
-(dm fab-ct-env (ct-env)
-  (fab-static-global-environment <static-global-environment> ct-env))
-
-(dm p2c-file-in (in-filename out-filename rt-env ct-env prg)
-  (let ((ct-env   (fab-ct-env ct-env))
-        (out-name (c-filename out-filename)) 
+(dm p2c-file-in (in-filename out-filename ct-env prg)
+  (let ((out-name (c-filename out-filename)) 
 	(ast      (or prg (compute-ast in-filename ct-env))))
     (call-with-output-file
      out-name
-     (fun (out-port) (compile->c-in ast ct-env rt-env out-port)))
+     (fun (out-port) (compile->c-in ast ct-env out-port)))
     #f))
 
 (dm p2c-file (filename)
-  (p2c-file-in filename filename (rt-env) (ct-env) #f))
+  (p2c-file-in filename filename (fab-target-environment) #f))
 
-(dm p2c-files-in (filenames rt-env ct-env prg)
-  (let ((out-name (c-filename *c-out-name*)) ;; filename
-        (ct-env   (fab-ct-env ct-env)))
+(dm p2c-files-in (filenames ct-env prg)
+  (let ((out-name (c-filename *c-out-name*))) ;; filename
     (call-with-output-file
      out-name
      (fun (out-port)
@@ -44,11 +39,11 @@
                         (collecting ()
  		          (for ((filename filenames))
 		            (collect (compute-ast filename ct-env))))))))
-	 (compile->c-in ast ct-env rt-env out-port))))
+	 (compile->c-in ast ct-env out-port))))
     #f))
 
 (dm p2c-files (filenames)
-  (p2c-files-in filenames (rt-env) (ct-env) #f))
+  (p2c-files-in filenames (fab-target-environment) #f))
 
 (dv $boot-files
   '("boot" "macros" "runtime"
@@ -61,19 +56,18 @@
 (dm p2c-top-sep () 
   (do (fun (filename) (p2c-file filename)) $boot-files))
 
-(dm p2c-str-in (s rt-env ct-env)
-  (let ((ct-env (fab-ct-env ct-env))
-        (ast    (parse-in s ct-env)))
+(dm p2c-str-in (s ct-env)
+  (let ((ast    (parse-in s ct-env)))
     ;; format-out("SXP %=\n" sxp)
-    (compile->c ast ct-env rt-env)
+    (compile->c ast ct-env)
     #f))
 
 (dm p2c-str (s)
-  (p2c-str-in s (rt-env) (ct-env)))
+  (p2c-str-in s (fab-target-environment)))
 
 (dv *definitions* #f) ;; TODO: thread variable
 
-(dm compute-program (e ct-env rt-env)
+(dm compute-program (e ct-env)
   (let ((obj (sexp->object e ct-env))
 	;; (format out "OBJ %=\n" obj)
 	(dyn (analyze-dynamic-extent obj))
@@ -92,13 +86,13 @@
     (report-undefined-global-bindings ct-env)
     prg)))
 
-(dm compile->c-in (e ct-env rt-env out)
-  (let ((prg (compute-program e ct-env rt-env)))
+(dm compile->c-in (e ct-env out)
+  (let ((prg (compute-program e ct-env)))
     (dlet ((*definitions* (program-definitions prg))) 
       (generate-c-program out e prg ct-env))))
 
-(dm compile->c (e ct-env rt-env)
-  (compile->c-in e ct-env rt-env out))
+(dm compile->c (e ct-env)
+  (compile->c-in e ct-env out))
 
 (dm generate-c-program (out e prg ct-env)
   (generate-header out e)
@@ -135,23 +129,16 @@
 ;;; gb* is a list of instances of global-binding.
 
 (dm generate-global-environment (out env)
-  (format out "\n/* IMPORT ENVIRONMENT: */\n\n")
-  (for ((binding (environment-imports env)))
-    (when (== (elt (environment-redefinitions env) (binding-name binding)) nul)
-      (generate-global-binding out #t binding)))
   (format out "\n/* GLOBAL ENVIRONMENT: */\n\n")
   ;; TODO: TAKE ENV AS ARG
-  (do-static-global-bindings (curry generate-global-binding out #f) env)
-  (format out "\n/* RUNTIME ENVIRONMENT: */\n\n")
-  (for ((binding (environment-redefinitions env)))
-    (when (isa? binding <runtime-binding>)
-      (generate-global-binding out #f binding))))
+  (do-static-global-bindings (curry generate-global-binding out #f) env))
 
 (dm generate-global-binding (out imported? gb)
   (let ((name (binding-name gb)))
     (format out "%s(%s,\"%s\");\n" 
 	    (if imported? "EXT" "DEF")
-	    (mangle-global-name name) (mangle-string-literal (as <str> name)))))
+	    (mangle-module-binding gb)
+	    (mangle-string-literal (as <str> name)))))
 
 (dm generate-global-binding (out imported? (gb <predefined-binding>)))
 (dm generate-global-binding (out imported? (gb <magic-binding>)))
@@ -312,8 +299,12 @@
   (mangle-raw-into mangler $local-suffix)
   (mangler-as-string mangler))
  
-(dm mangle-name-globally ((mangler <mangler>) name => <str>)
+(dm mangle-name-globally ((mangler <mangler>) (modname <module-name>) name
+			  => <str>)
   (mangler-reset mangler)
+  ;; Keep internal names as short as possible.
+  (unless (== modname $internal-module-name)
+      (mangle-name-into (module-name-string modname)))
   (mangle-raw-into mangler $module-marker)
   (mangle-name-into mangler name)
   (mangler-as-string mangler))
@@ -326,11 +317,19 @@
 ;; TODO: would like initialization to happen more invisibly
 (dv *mangler* (initialize-mangler-table (isa <simple-mangler>)))
 
-(dm mangle-global-name ((name <str>) => <str>)
-  (mangle-name-globally *mangler* name))
+(dm mangle-global-name ((modname <module-name>) (name <str>) => <str>)
+  (mangle-name-globally *mangler* modname name))
 
-(dm mangle-global-name ((name <sym>) => <str>)
-  (mangle-global-name (as <str> name)))
+(dm mangle-global-name ((modname <module-name>) (name <sym>) => <str>)
+  (mangle-global-name modname (as <str> name)))
+
+;; Internal names go into the module proto/internal.
+(dm mangle-internal-name (name => <str>)
+  (mangle-global-name $internal-module-name name))
+
+(dm mangle-module-binding ((binding <module-binding>) => <str>)
+  (mangle-global-name (module-name (binding-module binding))
+		      (binding-name binding)))
 
 (dm mangle-local-name ((name <str>) => <str>)
   (mangle-name-locally *mangler* name))
@@ -377,26 +376,26 @@
     (format out ";\n  ")))
 
 (dm false-name ()
-  (mangle-global-name "%false"))
+  (mangle-internal-name "%false"))
 
 (dm generate-quotation (out (qb <log>))
-  (format out "%s" (mangle-global-name (if qb "%true" "%false"))))
+  (format out "%s" (mangle-internal-name (if qb "%true" "%false"))))
 
 (dm generate-quotation (out (qb '()))
-  (format out (mangle-global-name "nil")))
+  (format out (mangle-internal-name "nil")))
 
 (dm generate-quotation (out (qb <lst>))
-  (format out "%s(" (mangle-global-name "%pair"))
+  (format out "%s(" (mangle-internal-name "%pair"))
   (generate-quotation out (head qb))
   (format out ", ")
   (generate-quotation out (tail qb))
   (format out ")"))
 
 (dm generate-quotation (out (x <int>))
-  (format out "%s((P)%d)" (mangle-global-name "%int") x))
+  (format out "%s((P)%d)" (mangle-internal-name "%int") x))
 
 (dm generate-quotation (out (x <chr>))
-  (format out "%s((P)%d)" (mangle-global-name "%chr") (as <int> x)))
+  (format out "%s((P)%d)" (mangle-internal-name "%chr") (as <int> x)))
 
 (dm float-to-c-string ((o <flo>) => <str>)
   (let ((s (num-to-str o)))
@@ -415,21 +414,25 @@
 
 (dm generate-quotation (out (x <flo>))
   (format out "%s(FLOINT(%s))" 
-	  (mangle-global-name "%flo") (float-to-c-string x)))
+	  (mangle-internal-name "%flo") (float-to-c-string x)))
 
 (dm generate-quotation (out (x <str>))
-  (format out "%s((P)\"%s\")" (mangle-global-name "%sb") (mangle-string-literal x)))
+  (format out "%s((P)\"%s\")"
+	  (mangle-internal-name "%sb")
+	  (mangle-string-literal x)))
 
 (dm generate-quotation (out (x <vec>))
   ;; TODO: TIE TOGETHER
-  (format out "CALLN(%s, %s" (mangle-global-name "vec") (len x))
+  (format out "CALLN(%s, %s" (mangle-internal-name "vec") (len x))
   (for ((e x))
     (format out ", ")
     (generate-quotation out e))
   (format out ")"))
 
 (dm generate-quotation (out (x <sym>))
-  (format out "%s((P)\"%s\")" (mangle-global-name "%%sym") (mangle-string-literal (as <str> x))))
+  (format out "%s((P)\"%s\")"
+	  (mangle-internal-name "%%sym")
+	  (mangle-string-literal (as <str> x))))
 
 
 ;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
@@ -454,8 +457,8 @@
 
 (dg binding->c (binding out))
 
-(dm binding->c ((binding <binding>) out)
-  (format out (mangle-global-name (binding-name binding))))
+(dm binding->c ((binding <module-binding>) out)
+  (format out (mangle-module-binding binding)))
 
 (dm binding->c ((binding <local-binding>) out)
   (format out (mangle-local-name (binding-name binding))))
@@ -626,7 +629,7 @@
     (to-c (unwind-protect-cleanup-thunk e) f out)))
 
 (dm to-c ((e <monitor>) f out)
-  (format out (mangle-global-name "%with-monitor"))
+  (format out (mangle-internal-name "%with-monitor"))
   (between-parentheses (out)
     (to-c (monitor-handler e) f out)
     (format out ", ")
@@ -664,7 +667,7 @@
 	(generate-self-recursive-call e f out)
 	(let ((n (len (application-arguments e))))
 	  (format out "(P)%s" 
-		  (mangle-global-name (binding-name (application-binding e))))
+		  (mangle-module-binding (application-binding e)))
 	  (between-parentheses (out)
 	    (predefined-arguments-to-c (application-arguments e) out))))))
 
@@ -726,14 +729,14 @@
     (if (function-nary? e) (- (len specs) 1) (len specs))))
 
 (dm to-c ((e <ast-macro-definition>) f out)
-  (format out "%s" (mangle-global-name "%macro"))
+  (format out "%s" (mangle-internal-name "%macro"))
   (between-parentheses (out)
     (generate-quotation out (binding-name (assignment-binding e)))
     (format out ",")
     (to-c (assignment-form e) #f out)))
 
 (dm generate-signature (out e)
-  (format out "%s" (mangle-global-name "%sig"))
+  (format out "%s" (mangle-internal-name "%sig"))
   (between-parentheses (out)
     (generate-function-names out e)
     (format out ",")
@@ -756,7 +759,7 @@
 ;;   (binding->c name out))
 
 (dm to-c ((e <ast-generic>) f out)
-  (format out "%s" (mangle-global-name "%gen"))
+  (format out "%s" (mangle-internal-name "%gen"))
   (between-parentheses (out)
     (format out "(P)YPgen_code((P)CHKREF(YPdispatch))") ;; TODO: HACK!!!
     (format out ",")
@@ -764,9 +767,9 @@
     (format out ",")
     (generate-signature out e)
     (format out ",")
-    (format out (mangle-global-name "nil"))
+    (format out (mangle-internal-name "nil"))
     (format out ",")
-    (format out (mangle-global-name "%false"))))
+    (format out (mangle-internal-name "%false"))))
 
 (dm to-c ((e <free-environment>) f out)
   (unless (empty? e)
@@ -785,7 +788,7 @@
 
 (dm generate-function-forward (out (defn <primitive-definition>))
   (format out "extern P %s (" 
-	  (mangle-global-name (binding-name (function-name defn))))
+	  (mangle-module-binding (function-name defn)))
   (for ((i (from-below 0 (len (function-bindings defn))))
 	(first? (first-then #t #f)))
     (unless first? (format out ","))
@@ -795,7 +798,7 @@
 (dm generate-function-name (out defn)
   (let ((name (function-name defn)))
     (if (or (isa? name <global-binding>) (isa? name <runtime-binding>))
-	(format out "%s" (mangle-global-name (binding-name name)))
+	(format out "%s" (mangle-module-binding name))
 	;; (format-out "UNNAMED %=\n" defn)
 	(if (== name #f)
 	    (format out "fun_%s" (function-index defn))
@@ -826,7 +829,7 @@
 
 (dm generate-closure-structure (out definition)
   (generate-function-name out definition)
-  (format out " = %s" (mangle-global-name "%met"))
+  (format out " = %s" (mangle-internal-name "%met"))
   (between-parentheses (out)
     (generate-function-body-reference out definition)
     (format out ",")
@@ -843,8 +846,8 @@
 
 (dm out-list-builder ((f <fun>) out (elts <lst>))
   (if (empty? elts)
-      (format out "%s" (mangle-global-name "nil"))
-      (seq (format out "%s" (mangle-global-name "%pair"))
+      (format out "%s" (mangle-internal-name "nil"))
+      (seq (format out "%s" (mangle-internal-name "%pair"))
 	   (between-parentheses (out)
 	     (f (head elts))
 	     (format out ",")
@@ -982,8 +985,8 @@
 
 (dm generate-main (out form)
   (format out "\n/* EXPRESSION: */\nint main(int argc, char* argv[]) {\n")
-  (format out "  %s(argc, argv);\n" (mangle-global-name "%init-world"))
-  ;; (format out "  %s" (mangle-global-name "print-out"))
+  (format out "  %s(argc, argv);\n" (mangle-internal-name "%init-world"))
+  ;; (format out "  %s" (mangle-internal-name "print-out"))
   (format out "  ")
   (between-parentheses (out)
     (to-c form #f out))
