@@ -630,35 +630,57 @@ extern P YPib(P);
 extern P Yarity_error;
 extern P Ynarity_error;
 
-INLINE void CHECK_ARITY (P fun, PLOG naryp, PINT n, PINT arity) {
+P cons_args (REGS regs) {
+  PINT n   = (int)REG(sp)[-2];
+  P    res = Ynil;
+  int  i;
+  for (i=0; i<n; i++)
+    res = YPpair(REG(sp)[- 3 - (n - i - 1)], res);
+  return res;
+}
+
+INLINE void CHECK_ARITY (REGS regs, P fun, PLOG naryp, PINT n, PINT arity) {
   if (naryp) { 
     if (n < arity) 
-      XXCALL2(1, Ynarity_error, fun, YPib((P)n)); 
+      CALL2(1, Ynarity_error, fun, cons_args(regs)); 
   } else { 
     if (n != arity) 
-      XXCALL2(1, Yarity_error, fun, YPib((P)n)); 
+      CALL2(1, Yarity_error, fun, cons_args(regs)); 
   }
 }
 
 extern P YLanyG;
 extern P YLclassG;
 extern P Ytype_error;
+extern P Yreturn_type_error;
+extern P Yargument_type_error;
 extern P YOclass_isaQ(P, P);
 extern P YisaQ;
 extern P YPclasses_readyQ;
 
-INLINE void CHECK_TYPE(REGS regs, P res, P type) {
+INLINE int CHECK_TYPEP(REGS regs, P res, P type) {
   if (type != YLanyG && YPclasses_readyQ != YPfalse) {
     if ((YPobject_class(type) == YLclassG
 	 ? YOclass_isaQ(res, type) : CALL2(0, YisaQ, res, type))
 	== YPfalse)
-      CALL2(1, Ytype_error, res, type);
+      return 0;
   }
+  return 1;
+}
+
+INLINE void CHECK_TYPE(REGS regs, P res, P type) {
+  if (!CHECK_TYPEP(regs, res, type))
+    CALL2(1, Ytype_error, res, type);
+}
+
+INLINE void ARG_CHECK_TYPE(REGS regs, P res, P type, P fun) {
+  if (!CHECK_TYPEP(regs, res, type))
+    CALL4(1, Yargument_type_error, fun, res, type, cons_args(regs));
 }
 
 void check_fun_val_type (REGS regs, P res, P fun) {
-  P t = FUNVALUE(fun); 
-  CHECK_TYPE(regs, res, t);
+  if (!CHECK_TYPEP(regs, res, FUNVALUE(fun)))
+    CALL4(1, Yreturn_type_error, fun, res, FUNVALUE(fun), cons_args(regs));
 }
 
 P _check_type (REGS regs, P res, P type) {
@@ -704,24 +726,24 @@ P _YPcheck_call_types(REGS regs) {
     P    specs = FUNSPECS(fun);
     int i;
     
-    CHECK_ARITY(fun,naryp,n,arity);
+    CHECK_ARITY(regs,fun,naryp,n,arity);
     for(i = 0; specs != Ynil; i++, specs = Ptail(specs)) {
-      CHECK_TYPE(regs, REG(sp)[- 3 - i], Phead(specs));
+      ARG_CHECK_TYPE(regs, REG(sp)[- 3 - i], Phead(specs), fun);
     }
   } else if (traits == YLgenG) {
     PINT n     = (int)REG(sp)[- 2];
     PINT arity = FUNARITY(fun);
     PLOG naryp = FUNNARYP(fun);
-    CHECK_ARITY(fun,naryp,n,arity);
+    CHECK_ARITY(regs,fun,naryp,n,arity);
   } else if (fun == 0) {
     if(Yunknown_function_error != 0)
-      CALL1(0, Yunknown_function_error, Ynil);
+      CALL2(0, Yunknown_function_error, Ynil, cons_args(regs));
     else {
       YPbreak("Tried to call an unbound function, but the function error\nhandler is itself unbound. Exiting.");
       exit(1);
     }
   } else {
-    CALL1(0, Yunknown_function_error, fun);
+    CALL2(0, Yunknown_function_error, fun, cons_args(regs));
   }
   return Ynil;
 }

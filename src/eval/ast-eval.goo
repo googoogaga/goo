@@ -131,10 +131,10 @@
   (def count (len args))
   (if nary?
       (if (< count arity)
-          (narity-error f arity)
+          (narity-error f args)
           (cat2 (sub args 0 arity) (lst (sub args arity count))))
       (if (~== count arity)
-          (arity-error f arity)
+          (arity-error f args)
           args)))
 
 (ds (ifun ,env ,f ,nary? ,arity ,names ,body)

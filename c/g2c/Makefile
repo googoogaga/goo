@@ -3,55 +3,58 @@ C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 	$(CC) -I.. $(CFLAGS) -DDEFAULT_GOO_ROOT=\"$(GOO_ROOT)\" -c -o $@ $<
 
 OBJS = \
-	goo/cols/tup.o \
-	eval/g2c.o \
-	goo/cols/rep.o \
-	goo/cols/seqx.o \
-	goo/user.o \
 	eval/ast.o \
-	goo/io/port.o \
-	goo/cols/step.o \
-	cols/pipe.o \
-	goo/cols/str.o \
-	goo/cols/cycle.o \
-	goo/eval.o \
+	goo/cols/vec.o \
 	time/event.o \
 	time/%event.o \
-	goo/app.o \
-	goo/cols/colx.o \
-	goo.o \
-	goo/random.o \
-	goo/math.o \
-	goo/macros.o \
-	goo/cols/flat.o \
-	eval/ast-linearize.o \
-	goo/system.o \
-	goo/runtime.o \
-	goo/boot.o \
-	goo/cols/vec.o \
-	time/lock.o \
-	time/%lock.o \
-	goo/cols/tab.o \
-	goo/cols/range.o \
-	eval/dependency.o \
+	cols/pipe.o \
 	goo/cols/opts.o \
-	goo/types.o \
-	eval/syntax.o \
-	goo/mag.o \
+	goo/cols/rep.o \
+	eval/main.o \
+	goo/system.o \
+	goo/conditions.o \
+	goo/cols/map.o \
+	goo/boot.o \
+	goo/cols.o \
 	time/threads.o \
 	time/%threads.o \
-	eval/ast-eval.o \
-	goo/cols/map.o \
+	eval/ast-linearize.o \
+	goo/user.o \
+	goo/cols/flat.o \
+	goo/runtime.o \
+	eval/g2m.o \
+	goo/cols/cycle.o \
+	eval/vm.o \
+	goo/io/port.o \
+	eval/dependency.o \
+	goo/cols/tup.o \
+	goo/random.o \
 	goo/cols/col.o \
 	goo/io/write.o \
-	eval/main.o \
-	eval/top.o \
-	goo/cols.o \
-	goo/cols/zip.o \
-	goo/cols/seq.o \
+	goo/cols/step.o \
+	goo/cols/str.o \
+	goo.o \
+	goo/mag.o \
+	goo/eval.o \
+	goo/types.o \
+	goo/cols/range.o \
 	goo/io/read.o \
-	goo/cols/lst.o \
+	goo/cols/seqx.o \
+	goo/math.o \
+	eval/syntax.o \
+	goo/cols/tab.o \
+	eval/ast-eval.o \
+	time/lock.o \
+	time/%lock.o \
+	eval/g2c.o \
 	goo/packer.o \
+	goo/cols/seq.o \
+	eval/top.o \
+	goo/app.o \
+	goo/cols/lst.o \
+	goo/cols/colx.o \
+	goo/cols/zip.o \
+	goo/macros.o \
 	g2c-init.o
 
 g2c: $(C_OBJS_DD) $(OBJS)

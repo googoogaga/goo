@@ -10,13 +10,13 @@
   `(let ((next-mets (%next-methods)))
      (if (and next-mets (@not (@== next-mets '())))
          (napp (head next-mets) (tail next-mets) ,@args '())
-         (no-next-methods-error (%fun-reg)))))
+         (no-next-methods-error (%fun-reg) (lst ,@args)))))
 
 (ds (app-sup ,@args)
   `(let ((next-mets (%next-methods)))
      (if (and next-mets (@not (@== next-mets '())))
          (napp (head next-mets) (tail next-mets) ,@args)
-         (no-next-methods-error (%fun-reg)))))
+         (no-next-methods-error (%fun-reg) (lst ,@args)))))
 
 (ds (app ,f ,@args)
   `(napp ,f #f ,@args))

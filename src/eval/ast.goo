@@ -36,9 +36,9 @@
 
 (dc <namespace-error> (<simple-ast-error>))
 
-(dm namespace-error (message|<str> arguments|...)
+(dm namespace-error (msg|<str> args|...)
   (sig (new <namespace-error> 
-         condition-message message|<str> condition-arguments arguments)))
+         condition-message msg condition-arguments (as <lst> args))))
 
 ;;; programs
 

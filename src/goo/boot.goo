@@ -2005,6 +2005,8 @@
   stack-overflow-error
   file-opening-error
   type-error
+  argument-type-error
+  return-type-error
   internal-error
   arity-error narity-error
   ambiguous-method-error

@@ -123,24 +123,25 @@
  condition-arguments <serious-condition> <error> error <simple-error>
  <handler> handler-function fab-handler handler-matches?
  <restart>
- <call-error> call-error-function
- <call-arguments-error> call-error-arguments
- <arity-error> <narity-error> narity-error arity-error call-error-arity
+ <type-error> type-error-value type-error-type 
+ <as-error>
+ <call-error> call-error-function call-error-arguments
+ <return-type-error> <argument-type-error>
+ <arity-error> <narity-error> narity-error arity-error 
  <ambiguous-method-error> <no-applicable-methods-error>
- <type-error> type-error-value type-error-type
+ <no-next-methods-error> no-next-methods-error
  <unknown-function-error>
- <compiler-error> <syntax-error>
  <unbound-error> 
  <unbound-variable-error> unbound-variable-error-variable
+ <compiler-error> <syntax-error>
  <macro-error> macro-error-name macro-error-arguments
  <stack-overflow> <internal-error> internal-error
  <assert-error> assert-error
  <property-error> <property-unbound-error>
  <property-not-found-error> <property-type-error>
  property-error-generic property-error-owner
- <no-next-methods-error> no-next-methods-error
- <as-error> as-error-type as-error-value
  <arithmetic-error>
+ <keyboard-interrupt>
 
  ;; Section 3.12: Ports.
  <port> <in-port> get gets peek ready? port-line
