@@ -11,7 +11,7 @@
 #include <math.h>
 #ifdef HAVE_POSIX_THREAD
 #include <pthread.h>
-#include "gc_pthread_redirects.h"
+#include <gc/gc_pthread_redirects.h>
 #endif
 
 #define INLINE inline
