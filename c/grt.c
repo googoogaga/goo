@@ -716,7 +716,7 @@ INLINE void stack_check (REGS regs) {
 P _YPcheck_call_types(REGS regs) {
   P fun    = REG(sp)[-1];
   P traits = PNUL;
-  stack_check(regs);
+  // stack_check(regs);
   if(fun != 0 && (tag_bits(fun)) == adr_tag)
     traits = YPobject_class(fun);
   if (traits == YLmetG) {

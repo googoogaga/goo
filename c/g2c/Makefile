@@ -5,9 +5,8 @@ C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 OBJS = \
 	eval/ast.o \
 	goo/cols/vec.o \
-	time/event.o \
-	time/%event.o \
-	cols/pipe.o \
+	time/threads.o \
+	time/%threads.o \
 	goo/cols/opts.o \
 	goo/cols/rep.o \
 	goo/system.o \
@@ -15,19 +14,18 @@ OBJS = \
 	goo/cols/map.o \
 	goo/boot.o \
 	goo/cols.o \
-	time/threads.o \
-	time/%threads.o \
+	time/event.o \
+	time/%event.o \
 	eval/ast-linearize.o \
 	goo/user.o \
 	goo/cols/flat.o \
 	goo/runtime.o \
-	eval/g2m.o \
+	goo/random.o \
 	goo/cols/cycle.o \
-	eval/vm.o \
+	eval/main.o \
 	goo/io/port.o \
 	eval/dependency.o \
 	goo/cols/tup.o \
-	goo/random.o \
 	goo/cols/col.o \
 	goo/io/write.o \
 	goo/cols/step.o \
@@ -36,6 +34,8 @@ OBJS = \
 	goo/mag.o \
 	goo/eval.o \
 	goo/types.o \
+	time/lock.o \
+	time/%lock.o \
 	goo/cols/range.o \
 	goo/io/read.o \
 	goo/cols/seqx.o \
@@ -43,13 +43,11 @@ OBJS = \
 	eval/syntax.o \
 	goo/cols/tab.o \
 	eval/ast-eval.o \
-	time/lock.o \
-	time/%lock.o \
+	cols/pipe.o \
 	eval/g2c.o \
 	goo/packer.o \
 	goo/cols/seq.o \
 	eval/top.o \
-	eval/main.o \
 	goo/app.o \
 	goo/cols/lst.o \
 	goo/cols/colx.o \

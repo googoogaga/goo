@@ -1100,7 +1100,7 @@
           (unless (mem? (module-uses-c-files mod) name)
             (push! (module-uses-c-files mod) name))))
     (case-by (as <str> name) suffix?
-      ((".c")  
+      ((".c" ".h")  
        (use-c-mod mod (as <sym> name)))
       ((".swig")
        (def swig-mod (use-mod (as <sym> (1st (split (as <str> name) #\.)))))

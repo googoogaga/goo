@@ -84,10 +84,11 @@
  <str-tab> case-insensitive-string-hash case-insensitive-string-equal
  <set>
  ;; 3.7.3: Sequences.
- <seq> <seq.> add 1st 2nd 3rd last pos rev cat cat2 sub push pop
+ <seq> <seq.> add 1st 2nd 3rd last pos rev cat cat2 sub sub* push pop
  pick reject ins del-vals del-dups finds sort sort-by 
  prefix? suffix? repeat split join
- <seq!>  add! rev! cat! sub-setter push! pop! del-vals! del-dups! sort! sort-by!
+ <seq!>  add! rev! cat! sub-setter sub*-setter 
+ push! pop! del-vals! del-dups! sort! sort-by!
  ;; 3.7.4 Tuples.
  <tup> tup
  ;; 3.7.5 (the first one): Lists.

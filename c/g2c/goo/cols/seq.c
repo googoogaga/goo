@@ -312,6 +312,7 @@ EXT(Yfun_name_setter,"goo/boot","fun-name-setter");
 EXT(Ysig_names,"goo/boot","sig-names");
 DEF(YgooScolsSseqYsub,"goo/cols/seq","sub");
 EXT(YLlstG,"goo/boot","<lst>");
+DEF(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(Yfun_name,"goo/boot","fun-name");
 EXT(YOanyQ,"goo/boot","@any?");
@@ -346,162 +347,165 @@ EXT(YgooSmathYtan,"goo/math","tan");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_155);
-DEFLIT(lit_58);
-DEFLIT(lit_6);
-DEFLIT(lit_39);
-DEFLIT(lit_68);
-DEFLIT(lit_15);
-DEFLIT(lit_98);
-DEFLIT(lit_103);
-DEFLIT(lit_71);
-DEFLIT(lit_62);
-DEFLIT(lit_38);
-DEFLIT(lit_133);
-DEFLIT(lit_145);
-DEFLIT(lit_88);
-DEFLIT(lit_93);
-DEFLIT(lit_77);
-DEFLIT(lit_149);
 DEFLIT(lit_27);
-DEFLIT(lit_94);
-DEFLIT(lit_18);
-DEFLIT(lit_30);
-DEFLIT(lit_47);
-DEFLIT(lit_131);
-DEFLIT(lit_139);
-DEFLIT(lit_92);
-DEFLIT(lit_28);
-DEFLIT(lit_143);
-DEFLIT(lit_51);
-DEFLIT(lit_126);
-DEFLIT(lit_8);
+DEFLIT(lit_60);
+DEFLIT(lit_6);
+DEFLIT(lit_104);
 DEFLIT(lit_134);
-DEFLIT(lit_91);
-DEFLIT(lit_22);
-DEFLIT(lit_148);
-DEFLIT(lit_111);
-DEFLIT(lit_90);
-DEFLIT(lit_127);
-DEFLIT(lit_81);
-DEFLIT(lit_89);
-DEFLIT(lit_83);
-DEFLIT(lit_70);
-DEFLIT(lit_46);
-DEFLIT(lit_80);
-DEFLIT(lit_135);
-DEFLIT(lit_154);
-DEFLIT(lit_73);
-DEFLIT(lit_78);
-DEFLIT(lit_35);
-DEFLIT(lit_25);
-DEFLIT(lit_125);
-DEFLIT(lit_142);
-DEFLIT(lit_123);
-DEFLIT(lit_153);
-DEFLIT(lit_20);
-DEFLIT(lit_96);
-DEFLIT(lit_86);
-DEFLIT(lit_24);
-DEFLIT(lit_122);
-DEFLIT(lit_61);
-DEFLIT(lit_19);
-DEFLIT(lit_132);
-DEFLIT(lit_113);
-DEFLIT(lit_124);
-DEFLIT(lit_53);
-DEFLIT(lit_4);
-DEFLIT(lit_141);
-DEFLIT(lit_67);
-DEFLIT(lit_118);
-DEFLIT(lit_75);
-DEFLIT(lit_21);
-DEFLIT(lit_109);
-DEFLIT(lit_140);
-DEFLIT(lit_79);
-DEFLIT(lit_9);
+DEFLIT(lit_115);
+DEFLIT(lit_15);
+DEFLIT(lit_157);
 DEFLIT(lit_49);
 DEFLIT(lit_64);
-DEFLIT(lit_151);
-DEFLIT(lit_33);
-DEFLIT(lit_95);
-DEFLIT(lit_106);
-DEFLIT(lit_23);
-DEFLIT(lit_99);
-DEFLIT(lit_32);
-DEFLIT(lit_48);
-DEFLIT(lit_37);
-DEFLIT(lit_44);
-DEFLIT(lit_87);
 DEFLIT(lit_40);
-DEFLIT(lit_144);
-DEFLIT(lit_43);
-DEFLIT(lit_52);
-DEFLIT(lit_128);
-DEFLIT(lit_26);
-DEFLIT(lit_5);
+DEFLIT(lit_113);
+DEFLIT(lit_92);
+DEFLIT(lit_155);
+DEFLIT(lit_90);
 DEFLIT(lit_100);
-DEFLIT(lit_56);
-DEFLIT(lit_150);
-DEFLIT(lit_104);
-DEFLIT(lit_29);
-DEFLIT(lit_45);
-DEFLIT(lit_1);
-DEFLIT(lit_138);
-DEFLIT(lit_102);
-DEFLIT(lit_147);
-DEFLIT(lit_82);
-DEFLIT(lit_129);
-DEFLIT(lit_16);
-DEFLIT(lit_85);
+DEFLIT(lit_79);
+DEFLIT(lit_141);
+DEFLIT(lit_88);
 DEFLIT(lit_41);
-DEFLIT(lit_60);
-DEFLIT(lit_105);
-DEFLIT(lit_84);
-DEFLIT(lit_59);
-DEFLIT(lit_11);
-DEFLIT(lit_7);
-DEFLIT(lit_117);
-DEFLIT(lit_146);
-DEFLIT(lit_119);
-DEFLIT(lit_120);
-DEFLIT(lit_101);
-DEFLIT(lit_112);
+DEFLIT(lit_18);
+DEFLIT(lit_30);
 DEFLIT(lit_55);
-DEFLIT(lit_97);
-DEFLIT(lit_12);
-DEFLIT(lit_136);
+DEFLIT(lit_144);
+DEFLIT(lit_158);
+DEFLIT(lit_82);
+DEFLIT(lit_28);
+DEFLIT(lit_61);
+DEFLIT(lit_8);
+DEFLIT(lit_29);
+DEFLIT(lit_22);
+DEFLIT(lit_45);
+DEFLIT(lit_67);
+DEFLIT(lit_73);
+DEFLIT(lit_116);
+DEFLIT(lit_103);
+DEFLIT(lit_37);
 DEFLIT(lit_110);
-DEFLIT(lit_13);
-DEFLIT(lit_69);
-DEFLIT(lit_57);
+DEFLIT(lit_70);
+DEFLIT(lit_48);
+DEFLIT(lit_83);
+DEFLIT(lit_75);
 DEFLIT(lit_36);
-DEFLIT(lit_76);
-DEFLIT(lit_115);
-DEFLIT(lit_17);
-DEFLIT(lit_152);
+DEFLIT(lit_128);
+DEFLIT(lit_145);
+DEFLIT(lit_156);
+DEFLIT(lit_31);
+DEFLIT(lit_20);
+DEFLIT(lit_98);
+DEFLIT(lit_123);
+DEFLIT(lit_24);
+DEFLIT(lit_127);
+DEFLIT(lit_25);
+DEFLIT(lit_33);
+DEFLIT(lit_135);
+DEFLIT(lit_126);
+DEFLIT(lit_35);
+DEFLIT(lit_19);
+DEFLIT(lit_4);
+DEFLIT(lit_153);
+DEFLIT(lit_5);
+DEFLIT(lit_124);
+DEFLIT(lit_107);
+DEFLIT(lit_120);
+DEFLIT(lit_78);
+DEFLIT(lit_13);
+DEFLIT(lit_66);
+DEFLIT(lit_151);
 DEFLIT(lit_108);
-DEFLIT(lit_130);
-DEFLIT(lit_65);
+DEFLIT(lit_3);
+DEFLIT(lit_112);
+DEFLIT(lit_51);
+DEFLIT(lit_71);
+DEFLIT(lit_77);
+DEFLIT(lit_57);
+DEFLIT(lit_50);
+DEFLIT(lit_146);
+DEFLIT(lit_46);
+DEFLIT(lit_101);
+DEFLIT(lit_42);
+DEFLIT(lit_129);
+DEFLIT(lit_17);
+DEFLIT(lit_54);
+DEFLIT(lit_139);
+DEFLIT(lit_26);
+DEFLIT(lit_152);
+DEFLIT(lit_96);
+DEFLIT(lit_58);
+DEFLIT(lit_93);
+DEFLIT(lit_132);
+DEFLIT(lit_76);
+DEFLIT(lit_68);
+DEFLIT(lit_85);
+DEFLIT(lit_106);
+DEFLIT(lit_9);
+DEFLIT(lit_117);
+DEFLIT(lit_21);
+DEFLIT(lit_147);
+DEFLIT(lit_97);
+DEFLIT(lit_87);
+DEFLIT(lit_143);
+DEFLIT(lit_16);
+DEFLIT(lit_2);
+DEFLIT(lit_149);
+DEFLIT(lit_7);
+DEFLIT(lit_11);
+DEFLIT(lit_89);
+DEFLIT(lit_154);
+DEFLIT(lit_131);
+DEFLIT(lit_86);
+DEFLIT(lit_111);
+DEFLIT(lit_32);
+DEFLIT(lit_109);
+DEFLIT(lit_138);
+DEFLIT(lit_118);
+DEFLIT(lit_74);
+DEFLIT(lit_119);
+DEFLIT(lit_39);
+DEFLIT(lit_12);
+DEFLIT(lit_122);
+DEFLIT(lit_99);
+DEFLIT(lit_23);
+DEFLIT(lit_121);
+DEFLIT(lit_102);
+DEFLIT(lit_150);
+DEFLIT(lit_91);
+DEFLIT(lit_38);
+DEFLIT(lit_148);
+DEFLIT(lit_142);
+DEFLIT(lit_136);
+DEFLIT(lit_53);
+DEFLIT(lit_105);
+DEFLIT(lit_80);
+DEFLIT(lit_133);
 DEFLIT(lit_10);
 DEFLIT(lit_34);
-DEFLIT(lit_66);
-DEFLIT(lit_0);
-DEFLIT(lit_3);
-DEFLIT(lit_2);
-DEFLIT(lit_137);
-DEFLIT(lit_50);
-DEFLIT(lit_74);
-DEFLIT(lit_31);
-DEFLIT(lit_42);
-DEFLIT(lit_14);
-DEFLIT(lit_107);
-DEFLIT(lit_116);
+DEFLIT(lit_52);
 DEFLIT(lit_63);
+DEFLIT(lit_125);
+DEFLIT(lit_81);
 DEFLIT(lit_114);
-DEFLIT(lit_54);
+DEFLIT(lit_59);
+DEFLIT(lit_84);
+DEFLIT(lit_137);
+DEFLIT(lit_130);
+DEFLIT(lit_44);
+DEFLIT(lit_14);
+DEFLIT(lit_1);
+DEFLIT(lit_56);
+DEFLIT(lit_47);
+DEFLIT(lit_43);
+DEFLIT(lit_0);
+DEFLIT(lit_95);
+DEFLIT(lit_62);
+DEFLIT(lit_65);
+DEFLIT(lit_69);
 DEFLIT(lit_72);
-DEFLIT(lit_121);
+DEFLIT(lit_94);
+DEFLIT(lit_140);
 
 /* FUNCTIONS: */
 
@@ -540,40 +544,41 @@ LOCFOR(fun_con_x_31);
 LOCFOR(fun_cat2_32);
 LOCFOR(fun_con_x_33);
 LOCFOR(fun_sub_34);
-LOCFOR(fun_push_35);
-LOCFOR(fun_pop_36);
-LOCFOR(fun_con_37);
-LOCFOR(fun_pick_38);
-LOCFOR(fun_39);
-LOCFOR(fun_reject_40);
-LOCFOR(fun_del_41);
-LOCFOR(fun_42);
-LOCFOR(fun_del_vals_43);
-LOCFOR(fun_44);
-LOCFOR(fun_del_dups_45);
-LOCFOR(fun_copy_46);
-LOCFOR(fun_ins_47);
-LOCFOR(fun_copy_48);
-LOCFOR(fun_elts_49);
-LOCFOR(fun_sort_50);
-LOCFOR(fun_sort_by_51);
-LOCFOR(fun_keys_52);
+LOCFOR(fun_subT_35);
+LOCFOR(fun_push_36);
+LOCFOR(fun_pop_37);
+LOCFOR(fun_con_38);
+LOCFOR(fun_pick_39);
+LOCFOR(fun_40);
+LOCFOR(fun_reject_41);
+LOCFOR(fun_del_42);
+LOCFOR(fun_43);
+LOCFOR(fun_del_vals_44);
+LOCFOR(fun_45);
+LOCFOR(fun_del_dups_46);
+LOCFOR(fun_copy_47);
+LOCFOR(fun_ins_48);
+LOCFOR(fun_copy_49);
+LOCFOR(fun_elts_50);
+LOCFOR(fun_sort_51);
+LOCFOR(fun_sort_by_52);
+LOCFOR(fun_keys_53);
 FUNFOR(YgooScolsSseqYrange_check);
 FUNFOR(YgooScolsSseqYrange_checkQ);
-LOCFOR(fun_add_55);
-LOCFOR(fun_add_new_56);
-LOCFOR(fun_57);
-LOCFOR(fun_vals_to_str_58);
-LOCFOR(fun_rep_59);
-LOCFOR(fun_do_key_vals_60);
-LOCFOR(fun_61);
-LOCFOR(fun_col_62);
-LOCFOR(fun_suffixQ_63);
-LOCFOR(fun_prefixQ_64);
-LOCFOR(fun_repeat_65);
-LOCFOR(fun_split_66);
-LOCFOR(fun_67);
-LOCFOR(fun_join_68);
+LOCFOR(fun_add_56);
+LOCFOR(fun_add_new_57);
+LOCFOR(fun_58);
+LOCFOR(fun_vals_to_str_59);
+LOCFOR(fun_rep_60);
+LOCFOR(fun_do_key_vals_61);
+LOCFOR(fun_62);
+LOCFOR(fun_col_63);
+LOCFOR(fun_suffixQ_64);
+LOCFOR(fun_prefixQ_65);
+LOCFOR(fun_repeat_66);
+LOCFOR(fun_split_67);
+LOCFOR(fun_68);
+LOCFOR(fun_join_69);
 extern P YgooScolsSseqY___main_0___ ();
 extern P YgooScolsSseqY___main_1___ ();
 
@@ -1460,7 +1465,21 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_push_35) {
+FUNCODEDEF(fun_subT_35) {
+  P x_,from_;
+  P T0,T1;
+  P a1,a2;
+LINK_STACK();
+  ARG(x_, 0);
+  ARG(from_, 1);
+loop:
+  T1 = CALL1(1,VARREF(YgooStypesYlen),x_);
+  T0 = CALL3(1,VARREF(YgooScolsSseqYsub),x_,from_,T1);
+UNLINK_STACK();
+  RET(T0);
+}
+
+FUNCODEDEF(fun_push_36) {
   P l_,x_;
   P T0;
   P a1,a2;
@@ -1473,7 +1492,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_pop_36) {
+FUNCODEDEF(fun_pop_37) {
   P l_;
   P T0,T1,T2,T3;
   P a1;
@@ -1488,7 +1507,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_con_37) {
+FUNCODEDEF(fun_con_38) {
   P seq_,e_;
   P vF1678;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
@@ -1525,7 +1544,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_pick_38) {
+FUNCODEDEF(fun_pick_39) {
   P test_,x_;
   P conF1679;
   P T0,T1,T2,T3;
@@ -1534,7 +1553,7 @@ LINK_STACK();
   ARG(test_, 0);
   ARG(x_, 1);
 loop:
-  T1 = FUNSHELL(1,fun_con_37,3);
+  T1 = FUNSHELL(1,fun_con_38,3);
   conF1679 = T1;
   FUNINIT(conF1679, 3,x_,test_,conF1679);
   T3 = CALL1(1,VARREF(YgooScolsScolYenum),x_);
@@ -1544,7 +1563,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_39) {
+FUNCODEDEF(fun_40) {
   P x_;
   P T0,T1;
   P a1;
@@ -1557,7 +1576,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_reject_40) {
+FUNCODEDEF(fun_reject_41) {
   P test_,x_;
   P T0,T1;
   P a1,a2;
@@ -1565,13 +1584,13 @@ LINK_STACK();
   ARG(test_, 0);
   ARG(x_, 1);
 loop:
-  T1 = FUNFAB(fun_39,1,test_);
+  T1 = FUNFAB(fun_40,1,test_);
   T0 = CALL2(1,VARREF(YgooScolsSseqYpick),T1,x_);
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_del_41) {
+FUNCODEDEF(fun_del_42) {
   P x_,key_;
   P T0,T1,T2,T3,T4;
   P a1,a2;
@@ -1588,7 +1607,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_42) {
+FUNCODEDEF(fun_43) {
   P e_;
   P T0;
   P a1;
@@ -1600,7 +1619,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_del_vals_43) {
+FUNCODEDEF(fun_del_vals_44) {
   P s_,x_;
   P T0,T1;
   P a1,a2;
@@ -1608,13 +1627,13 @@ LINK_STACK();
   ARG(s_, 0);
   ARG(x_, 1);
 loop:
-  T1 = FUNFAB(fun_42,1,x_);
+  T1 = FUNFAB(fun_43,1,x_);
   T0 = CALL2(1,VARREF(YgooScolsSseqYreject),T1,s_);
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_44) {
+FUNCODEDEF(fun_45) {
   P s_,e_;
   P T0,T1,T2;
   P a1,a2;
@@ -1633,14 +1652,14 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_del_dups_45) {
+FUNCODEDEF(fun_del_dups_46) {
   P x_;
   P T0,T1,T2,T3;
   P a1;
 LINK_STACK();
   ARG(x_, 0);
 loop:
-  T3 = fun_44;
+  T3 = fun_45;
   T2 = CALL3(1,VARREF(YgooScolsScolYfold),T3,Ynil,x_);
   T1 = CALL1(1,VARREF(YgooSmacrosYrevX),T2);
   T0 = CALL2(1,VARREF(YgooScolsScolYcol_res),x_,T1);
@@ -1648,7 +1667,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_copy_46) {
+FUNCODEDEF(fun_copy_47) {
   P r_,i_,e_;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
   P a1,a2,a3;
@@ -1695,7 +1714,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_ins_47) {
+FUNCODEDEF(fun_ins_48) {
   P x_,v_,before_;
   P copyF1680;
   P T0,T1,T2,T3;
@@ -1705,7 +1724,7 @@ LINK_STACK();
   ARG(v_, 1);
   ARG(before_, 2);
 loop:
-  T1 = FUNSHELL(1,fun_copy_46,4);
+  T1 = FUNSHELL(1,fun_copy_47,4);
   copyF1680 = T1;
   FUNINIT(copyF1680, 4,before_,v_,copyF1680,x_);
   T3 = CALL1(1,VARREF(YgooScolsScolYenum),x_);
@@ -1715,7 +1734,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_copy_48) {
+FUNCODEDEF(fun_copy_49) {
   P r_,e_,i_,keys_;
   P keyF1681;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
@@ -1797,7 +1816,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_elts_49) {
+FUNCODEDEF(fun_elts_50) {
   P x_,keys_;
   P copyF1682;
   P T0,T1,T2,T3,T4,T5;
@@ -1806,7 +1825,7 @@ LINK_STACK();
   ARG(x_, 0);
   ARG(keys_, 1);
 loop:
-  T1 = FUNSHELL(1,fun_copy_48,2);
+  T1 = FUNSHELL(1,fun_copy_49,2);
   copyF1682 = T1;
   FUNINIT(copyF1682, 2,x_,copyF1682);
   T3 = CALL1(1,VARREF(YgooScolsScolYenum),x_);
@@ -1818,7 +1837,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_sort_50) {
+FUNCODEDEF(fun_sort_51) {
   P x_;
   P T0;
   P a1;
@@ -1830,7 +1849,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_sort_by_51) {
+FUNCODEDEF(fun_sort_by_52) {
   P a_,test_;
   P T0,T1;
   P a1,a2;
@@ -1844,7 +1863,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_keys_52) {
+FUNCODEDEF(fun_keys_53) {
   P d_;
   P T0,T1;
   P a1;
@@ -1909,7 +1928,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_add_55) {
+FUNCODEDEF(fun_add_56) {
   P x_,e_;
   P T0;
   P a1,a2;
@@ -1922,7 +1941,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_add_new_56) {
+FUNCODEDEF(fun_add_new_57) {
   P c_,x_;
   P T0,T1,T2;
   P a1,a2;
@@ -1940,7 +1959,7 @@ UNLINK_STACK();
   RET(c_);
 }
 
-FUNCODEDEF(fun_57) {
+FUNCODEDEF(fun_58) {
   P s_,e_;
   P T0,T1,T2,T3;
   P a1,a2;
@@ -1950,9 +1969,9 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(YgooSmacrosYemptyQ),s_);
   if (T2 != YPfalse) {
-    T1 = LITREF(lit_142);
+    T1 = LITREF(lit_145);
   } else {
-    T1 = LITREF(lit_143);
+    T1 = LITREF(lit_146);
   }
   T3 = CALL1(1,VARREF(YgooSmathYto_str),e_);
   T0 = CALL3(1,VARREF(YgooSmacrosYcat),s_,T1,T3);
@@ -1960,20 +1979,20 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_vals_to_str_58) {
+FUNCODEDEF(fun_vals_to_str_59) {
   P s_;
   P T0,T1;
   P a1;
 LINK_STACK();
   ARG(s_, 0);
 loop:
-  T1 = fun_57;
-  T0 = CALL3(1,VARREF(YgooScolsScolYfold),T1,LITREF(lit_142),s_);
+  T1 = fun_58;
+  T0 = CALL3(1,VARREF(YgooScolsScolYfold),T1,LITREF(lit_145),s_);
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_rep_59) {
+FUNCODEDEF(fun_rep_60) {
   P e_;
   P valF1688;
   P tmpF1687;
@@ -2018,7 +2037,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_do_key_vals_60) {
+FUNCODEDEF(fun_do_key_vals_61) {
   P fn_,key_vals_;
   P repF1689;
   P T0,T1,T2,T3;
@@ -2027,7 +2046,7 @@ LINK_STACK();
   ARG(fn_, 0);
   ARG(key_vals_, 1);
 loop:
-  T1 = FUNSHELL(1,fun_rep_59,2);
+  T1 = FUNSHELL(1,fun_rep_60,2);
   repF1689 = T1;
   FUNINIT(repF1689, 2,fn_,repF1689);
   T3 = CALL1(1,VARREF(YgooScolsScolYenum),key_vals_);
@@ -2037,7 +2056,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_61) {
+FUNCODEDEF(fun_62) {
   P key_,val_;
   P T0;
   P a1,a2;
@@ -2050,7 +2069,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_col_62) {
+FUNCODEDEF(fun_col_63) {
   P t_,key_vals_;
   P xF1690;
   P T0,T1,T2,T3,T4,T5;
@@ -2064,14 +2083,14 @@ loop:
   T2 = CALL1(1,VARREF(YgooSmacrosY1st),T3);
   T1 = CALL2(1,VARREF(YgooScolsScolYfab),t_,T2);
   xF1690 = T1;
-  T5 = FUNFAB(fun_61,1,xF1690);
+  T5 = FUNFAB(fun_62,1,xF1690);
   CALL2(1,VARREF(YgooScolsSseqYdo_key_vals),T5,key_vals_);
   T0 = xF1690;
 UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_suffixQ_63) {
+FUNCODEDEF(fun_suffixQ_64) {
   P s_,end_;
   P T0,T1,T2,T3,T4,T5;
   P a1,a2;
@@ -2089,7 +2108,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_prefixQ_64) {
+FUNCODEDEF(fun_prefixQ_65) {
   P s_,begin_;
   P T0,T1,T2;
   P a1,a2;
@@ -2104,7 +2123,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_repeat_65) {
+FUNCODEDEF(fun_repeat_66) {
   P s_,n_;
   P T0,T1,T2,T3,T4,T5,T6;
   P a1,a2;
@@ -2127,7 +2146,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_split_66) {
+FUNCODEDEF(fun_split_67) {
   P s_,sep_;
   P matchF1691;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
@@ -2156,7 +2175,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_67) {
+FUNCODEDEF(fun_68) {
   P x_,y_;
   P T0;
   P a1,a2;
@@ -2169,7 +2188,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_join_68) {
+FUNCODEDEF(fun_join_69) {
   P ss_,sep_;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8;
   P a1,a2;
@@ -2183,7 +2202,7 @@ loop:
     T2 = CALL1(1,VARREF(YgooScolsScolYempty),T3);
     T0 = T2;
   } else {
-    T5 = FUNFAB(fun_67,1,sep_);
+    T5 = FUNFAB(fun_68,1,sep_);
     T6 = CALL2(1,VARREF(YgooSmacrosYelt),ss_,YPint((P)0));
     T8 = CALL1(1,VARREF(YgooStypesYlen),ss_);
     T7 = CALL3(1,VARREF(YgooScolsSseqYsub),ss_,YPint((P)1),T8);
@@ -2295,56 +2314,56 @@ loop:
   T38 = YPsig(LITREF(lit_35),YPPlist(3,VARREF(YLseqG),VARREF(YLintG),VARREF(YLintG)),YPfalse,YPint((P)3),VARREF(YLseqG),Ynil);
   T37 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_34),T38,Ynil,YPfalse,YPfalse,YPfalse);
   VARSET(YgooScolsSseqYsub,T37);
-  lit_36 = YPPsym((P)"ins");
-  lit_37 = YPPlist(3,YPPsym((P)"x"),YPPsym((P)"e"),YPPsym((P)"before"));
-  T40 = YPsig(LITREF(lit_37),YPPlist(3,VARREF(YLseqG),VARREF(YLanyG),VARREF(YLintG)),YPfalse,YPint((P)3),VARREF(YLseqG),Ynil);
+  lit_36 = YPPsym((P)"sub*");
+  lit_37 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"from"));
+  T40 = YPsig(LITREF(lit_37),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
   T39 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_36),T40,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYins,T39);
-  lit_38 = YPPsym((P)"pick");
-  lit_39 = YPPlist(2,YPPsym((P)"test"),YPPsym((P)"x"));
-  T42 = YPsig(LITREF(lit_39),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  VARSET(YgooScolsSseqYsubT,T39);
+  lit_38 = YPPsym((P)"ins");
+  lit_39 = YPPlist(3,YPPsym((P)"x"),YPPsym((P)"e"),YPPsym((P)"before"));
+  T42 = YPsig(LITREF(lit_39),YPPlist(3,VARREF(YLseqG),VARREF(YLanyG),VARREF(YLintG)),YPfalse,YPint((P)3),VARREF(YLseqG),Ynil);
   T41 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_38),T42,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYpick,T41);
-  lit_40 = YPPsym((P)"reject");
+  VARSET(YgooScolsSseqYins,T41);
+  lit_40 = YPPsym((P)"pick");
   lit_41 = YPPlist(2,YPPsym((P)"test"),YPPsym((P)"x"));
   T44 = YPsig(LITREF(lit_41),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
   T43 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_40),T44,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYreject,T43);
-  lit_42 = YPPsym((P)"del-vals");
-  lit_43 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"v"));
-  T46 = YPsig(LITREF(lit_43),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  VARSET(YgooScolsSseqYpick,T43);
+  lit_42 = YPPsym((P)"reject");
+  lit_43 = YPPlist(2,YPPsym((P)"test"),YPPsym((P)"x"));
+  T46 = YPsig(LITREF(lit_43),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
   T45 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_42),T46,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYdel_vals,T45);
-  lit_44 = YPPsym((P)"del-dups");
-  lit_45 = YPPlist(1,YPPsym((P)"x"));
-  T48 = YPsig(LITREF(lit_45),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLseqG),Ynil);
+  VARSET(YgooScolsSseqYreject,T45);
+  lit_44 = YPPsym((P)"del-vals");
+  lit_45 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"v"));
+  T48 = YPsig(LITREF(lit_45),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
   T47 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_44),T48,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYdel_dups,T47);
-  lit_46 = YPPsym((P)"sort");
+  VARSET(YgooScolsSseqYdel_vals,T47);
+  lit_46 = YPPsym((P)"del-dups");
   lit_47 = YPPlist(1,YPPsym((P)"x"));
   T50 = YPsig(LITREF(lit_47),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLseqG),Ynil);
   T49 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_46),T50,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYsort,T49);
-  lit_48 = YPPsym((P)"sort-by");
-  lit_49 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"test"));
-  T52 = YPsig(LITREF(lit_49),YPPlist(2,VARREF(YLseqG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  VARSET(YgooScolsSseqYdel_dups,T49);
+  lit_48 = YPPsym((P)"sort");
+  lit_49 = YPPlist(1,YPPsym((P)"x"));
+  T52 = YPsig(LITREF(lit_49),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLseqG),Ynil);
   T51 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_48),T52,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYsort_by,T51);
-  lit_50 = YPPsym((P)"suffix?");
-  lit_51 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"suffix"));
-  T54 = YPsig(LITREF(lit_51),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  VARSET(YgooScolsSseqYsort,T51);
+  lit_50 = YPPsym((P)"sort-by");
+  lit_51 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"test"));
+  T54 = YPsig(LITREF(lit_51),YPPlist(2,VARREF(YLseqG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
   T53 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_50),T54,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYsuffixQ,T53);
-  lit_52 = YPPsym((P)"prefix?");
-  lit_53 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"prefix"));
+  VARSET(YgooScolsSseqYsort_by,T53);
+  lit_52 = YPPsym((P)"suffix?");
+  lit_53 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"suffix"));
   T56 = YPsig(LITREF(lit_53),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
   T55 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_52),T56,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYprefixQ,T55);
-  lit_54 = YPPsym((P)"repeat");
-  lit_55 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"n"));
-  T58 = YPsig(LITREF(lit_55),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  VARSET(YgooScolsSseqYsuffixQ,T55);
+  lit_54 = YPPsym((P)"prefix?");
+  lit_55 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"prefix"));
+  T58 = YPsig(LITREF(lit_55),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
   T57 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_54),T58,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYrepeat,T57);
+  VARSET(YgooScolsSseqYprefixQ,T57);
   T59 = YPfalse;
   return T59;
 }
@@ -2367,648 +2386,665 @@ P YgooScolsSseqY___main_1___() {
   P T192,T193,T194,T195,T196,T197,T198,T199,T200,T201,T202,T203,T204,T205,T206,T207;
   P T208,T209,T210,T211,T212,T213,T214,T215,T216,T217,T218,T219,T220,T221,T222,T223;
   P T224,T225,T226,T227,T228,T229,T230,T231,T232,T233,T234,T235,T236,T237,T238,T239;
-  P T240,T241,T242,T243,T244,T245,T246,T247,T248;
+  P T240,T241,T242,T243,T244,T245,T246,T247,T248,T249,T250,T251,T252,T253,T254,T255;
 DEFCREGS();
 loop:
-  lit_56 = YPPsym((P)"split");
-  lit_57 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"sep"));
-  T1 = YPsig(LITREF(lit_57),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  lit_56 = YPPsym((P)"repeat");
+  lit_57 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"n"));
+  T1 = YPsig(LITREF(lit_57),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
   T0 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_56),T1,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYsplit,T0);
-  lit_58 = YPPsym((P)"join");
-  lit_59 = YPPlist(2,YPPsym((P)"ss"),YPPsym((P)"sep"));
-  T3 = YPsig(LITREF(lit_59),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  VARSET(YgooScolsSseqYrepeat,T0);
+  lit_58 = YPPsym((P)"split");
+  lit_59 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"sep"));
+  T3 = YPsig(LITREF(lit_59),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
   T2 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_58),T3,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYjoin,T2);
-  lit_60 = YPPsym((P)"vals-to-str");
-  lit_61 = YPPlist(1,YPPsym((P)"s"));
-  T5 = YPsig(LITREF(lit_61),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
+  VARSET(YgooScolsSseqYsplit,T2);
+  lit_60 = YPPsym((P)"join");
+  lit_61 = YPPlist(2,YPPsym((P)"ss"),YPPsym((P)"sep"));
+  T5 = YPsig(LITREF(lit_61),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
   T4 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_60),T5,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYvals_to_str,T4);
-  lit_62 = YPPsym((P)"do-key-vals");
-  lit_63 = YPPlist(2,YPPsym((P)"fn"),YPPsym((P)"key-vals"));
-  T7 = YPsig(LITREF(lit_63),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  VARSET(YgooScolsSseqYjoin,T4);
+  lit_62 = YPPsym((P)"vals-to-str");
+  lit_63 = YPPlist(1,YPPsym((P)"s"));
+  T7 = YPsig(LITREF(lit_63),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
   T6 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_62),T7,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooScolsSseqYdo_key_vals,T6);
-  lit_64 = YPPsym((P)"key-type");
-  lit_65 = YPPlist(1,YPPsym((P)"x"));
-  T8 = YPsig(LITREF(lit_65),YPPlist(1,VARREF(YLcolG)),YPfalse,YPint((P)1),VARREF(YLtypeG),Ynil);
-  fun_key_type_1 = YPmet(FUNCODEREF(fun_key_type_1),LITREF(lit_64),T8,ENVNUL,PNUL,YPfalse);
-  T11 = BOUNDP(YgooScolsScolYkey_type);
-  if (T11 != YPfalse) {
-    T10 = VARREF(YgooScolsScolYkey_type);
-  } else {
-    T10 = YPfalse;
-  }
-  T12 = fun_key_type_1;
-  T9 = XCALL2(1,VARREF(YPdefine_method),T10,T12);
-  VARSET(YgooScolsScolYkey_type,T9);
-  lit_66 = YPPlist(1,YPPsym((P)"x"));
-  T13 = YPsig(LITREF(lit_66),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_1st_2 = YPmet(FUNCODEREF(fun_1st_2),LITREF(lit_2),T13,ENVNUL,PNUL,YPfalse);
-  T16 = BOUNDP(YgooSmacrosY1st);
-  if (T16 != YPfalse) {
-    T15 = VARREF(YgooSmacrosY1st);
-  } else {
-    T15 = YPfalse;
-  }
-  T17 = fun_1st_2;
-  T14 = XCALL2(1,VARREF(YPdefine_method),T15,T17);
-  VARSET(YgooSmacrosY1st,T14);
+  VARSET(YgooScolsSseqYvals_to_str,T6);
+  lit_64 = YPPsym((P)"do-key-vals");
+  lit_65 = YPPlist(2,YPPsym((P)"fn"),YPPsym((P)"key-vals"));
+  T9 = YPsig(LITREF(lit_65),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T8 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_64),T9,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(YgooScolsSseqYdo_key_vals,T8);
+  lit_66 = YPPsym((P)"key-type");
   lit_67 = YPPlist(1,YPPsym((P)"x"));
-  T18 = YPsig(LITREF(lit_67),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_2nd_3 = YPmet(FUNCODEREF(fun_2nd_3),LITREF(lit_4),T18,ENVNUL,PNUL,YPfalse);
-  T21 = BOUNDP(YgooSmacrosY2nd);
-  if (T21 != YPfalse) {
-    T20 = VARREF(YgooSmacrosY2nd);
+  T10 = YPsig(LITREF(lit_67),YPPlist(1,VARREF(YLcolG)),YPfalse,YPint((P)1),VARREF(YLtypeG),Ynil);
+  fun_key_type_1 = YPmet(FUNCODEREF(fun_key_type_1),LITREF(lit_66),T10,ENVNUL,PNUL,YPfalse);
+  T13 = BOUNDP(YgooScolsScolYkey_type);
+  if (T13 != YPfalse) {
+    T12 = VARREF(YgooScolsScolYkey_type);
   } else {
-    T20 = YPfalse;
+    T12 = YPfalse;
   }
-  T22 = fun_2nd_3;
-  T19 = XCALL2(1,VARREF(YPdefine_method),T20,T22);
-  VARSET(YgooSmacrosY2nd,T19);
+  T14 = fun_key_type_1;
+  T11 = XCALL2(1,VARREF(YPdefine_method),T12,T14);
+  VARSET(YgooScolsScolYkey_type,T11);
   lit_68 = YPPlist(1,YPPsym((P)"x"));
-  T23 = YPsig(LITREF(lit_68),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_3rd_4 = YPmet(FUNCODEREF(fun_3rd_4),LITREF(lit_6),T23,ENVNUL,PNUL,YPfalse);
-  T26 = BOUNDP(YgooScolsSseqY3rd);
-  if (T26 != YPfalse) {
-    T25 = VARREF(YgooScolsSseqY3rd);
+  T15 = YPsig(LITREF(lit_68),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_1st_2 = YPmet(FUNCODEREF(fun_1st_2),LITREF(lit_2),T15,ENVNUL,PNUL,YPfalse);
+  T18 = BOUNDP(YgooSmacrosY1st);
+  if (T18 != YPfalse) {
+    T17 = VARREF(YgooSmacrosY1st);
   } else {
-    T25 = YPfalse;
+    T17 = YPfalse;
   }
-  T27 = fun_3rd_4;
-  T24 = XCALL2(1,VARREF(YPdefine_method),T25,T27);
-  VARSET(YgooScolsSseqY3rd,T24);
-  lit_69 = YPPsym((P)"map");
-  lit_70 = YPPlist(2,YPPsym((P)"f"),YPPsym((P)"c"));
-  lit_71 = YPPsym((P)"con");
-  lit_72 = YPPlist(2,YPPsym((P)"res"),YPPsym((P)"e"));
-  T29 = YPsig(LITREF(lit_72),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_con_5 = YPmet(FUNCODEREF(fun_con_5),LITREF(lit_71),T29,ENVNUL,PNUL,YPfalse);
-  T28 = YPsig(LITREF(lit_70),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_map_6 = YPmet(FUNCODEREF(fun_map_6),LITREF(lit_69),T28,ENVNUL,PNUL,YPfalse);
-  T32 = BOUNDP(YgooSmacrosYmap);
-  if (T32 != YPfalse) {
-    T31 = VARREF(YgooSmacrosYmap);
+  T19 = fun_1st_2;
+  T16 = XCALL2(1,VARREF(YPdefine_method),T17,T19);
+  VARSET(YgooSmacrosY1st,T16);
+  lit_69 = YPPlist(1,YPPsym((P)"x"));
+  T20 = YPsig(LITREF(lit_69),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_2nd_3 = YPmet(FUNCODEREF(fun_2nd_3),LITREF(lit_4),T20,ENVNUL,PNUL,YPfalse);
+  T23 = BOUNDP(YgooSmacrosY2nd);
+  if (T23 != YPfalse) {
+    T22 = VARREF(YgooSmacrosY2nd);
   } else {
-    T31 = YPfalse;
+    T22 = YPfalse;
   }
-  T33 = fun_map_6;
-  T30 = XCALL2(1,VARREF(YPdefine_method),T31,T33);
-  VARSET(YgooSmacrosYmap,T30);
-  lit_73 = YPPsym((P)"map-keyed");
-  lit_74 = YPPlist(2,YPPsym((P)"f"),YPPsym((P)"c"));
-  lit_75 = YPPlist(2,YPPsym((P)"res"),YPPsym((P)"e"));
-  T35 = YPsig(LITREF(lit_75),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_con_7 = YPmet(FUNCODEREF(fun_con_7),LITREF(lit_71),T35,ENVNUL,PNUL,YPfalse);
-  T34 = YPsig(LITREF(lit_74),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_map_keyed_8 = YPmet(FUNCODEREF(fun_map_keyed_8),LITREF(lit_73),T34,ENVNUL,PNUL,YPfalse);
-  T38 = BOUNDP(YgooScolsScolYmap_keyed);
-  if (T38 != YPfalse) {
-    T37 = VARREF(YgooScolsScolYmap_keyed);
+  T24 = fun_2nd_3;
+  T21 = XCALL2(1,VARREF(YPdefine_method),T22,T24);
+  VARSET(YgooSmacrosY2nd,T21);
+  lit_70 = YPPlist(1,YPPsym((P)"x"));
+  T25 = YPsig(LITREF(lit_70),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_3rd_4 = YPmet(FUNCODEREF(fun_3rd_4),LITREF(lit_6),T25,ENVNUL,PNUL,YPfalse);
+  T28 = BOUNDP(YgooScolsSseqY3rd);
+  if (T28 != YPfalse) {
+    T27 = VARREF(YgooScolsSseqY3rd);
   } else {
-    T37 = YPfalse;
+    T27 = YPfalse;
   }
-  T39 = fun_map_keyed_8;
-  T36 = XCALL2(1,VARREF(YPdefine_method),T37,T39);
-  VARSET(YgooScolsScolYmap_keyed,T36);
-  lit_76 = YPPlist(3,YPPsym((P)"f"),YPPsym((P)"x"),YPPsym((P)"y"));
-  lit_77 = YPPsym((P)"lop");
-  lit_78 = YPPlist(2,YPPsym((P)"ex"),YPPsym((P)"ey"));
-  T41 = YPsig(LITREF(lit_78),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_lop_9 = YPmet(FUNCODEREF(fun_lop_9),LITREF(lit_77),T41,ENVNUL,PNUL,YPfalse);
-  T40 = YPsig(LITREF(lit_76),YPPlist(3,VARREF(YLfunG),VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  fun_do2_10 = YPmet(FUNCODEREF(fun_do2_10),LITREF(lit_14),T40,ENVNUL,PNUL,YPfalse);
-  T44 = BOUNDP(YgooScolsSseqYdo2);
-  if (T44 != YPfalse) {
-    T43 = VARREF(YgooScolsSseqYdo2);
+  T29 = fun_3rd_4;
+  T26 = XCALL2(1,VARREF(YPdefine_method),T27,T29);
+  VARSET(YgooScolsSseqY3rd,T26);
+  lit_71 = YPPsym((P)"map");
+  lit_72 = YPPlist(2,YPPsym((P)"f"),YPPsym((P)"c"));
+  lit_73 = YPPsym((P)"con");
+  lit_74 = YPPlist(2,YPPsym((P)"res"),YPPsym((P)"e"));
+  T31 = YPsig(LITREF(lit_74),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_con_5 = YPmet(FUNCODEREF(fun_con_5),LITREF(lit_73),T31,ENVNUL,PNUL,YPfalse);
+  T30 = YPsig(LITREF(lit_72),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_map_6 = YPmet(FUNCODEREF(fun_map_6),LITREF(lit_71),T30,ENVNUL,PNUL,YPfalse);
+  T34 = BOUNDP(YgooSmacrosYmap);
+  if (T34 != YPfalse) {
+    T33 = VARREF(YgooSmacrosYmap);
   } else {
-    T43 = YPfalse;
+    T33 = YPfalse;
   }
-  T45 = fun_do2_10;
-  T42 = XCALL2(1,VARREF(YPdefine_method),T43,T45);
-  VARSET(YgooScolsSseqYdo2,T42);
-  lit_79 = YPPlist(4,YPPsym((P)"f"),YPPsym((P)"x"),YPPsym((P)"y"),YPPsym((P)"z"));
-  lit_80 = YPPlist(3,YPPsym((P)"ex"),YPPsym((P)"ey"),YPPsym((P)"ez"));
-  T47 = YPsig(LITREF(lit_80),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  fun_lop_11 = YPmet(FUNCODEREF(fun_lop_11),LITREF(lit_77),T47,ENVNUL,PNUL,YPfalse);
-  T46 = YPsig(LITREF(lit_79),YPPlist(4,VARREF(YLfunG),VARREF(YLseqG),VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)4),VARREF(YLanyG),Ynil);
-  fun_do3_12 = YPmet(FUNCODEREF(fun_do3_12),LITREF(lit_16),T46,ENVNUL,PNUL,YPfalse);
-  T50 = BOUNDP(YgooScolsSseqYdo3);
-  if (T50 != YPfalse) {
-    T49 = VARREF(YgooScolsSseqYdo3);
+  T35 = fun_map_6;
+  T32 = XCALL2(1,VARREF(YPdefine_method),T33,T35);
+  VARSET(YgooSmacrosYmap,T32);
+  lit_75 = YPPsym((P)"map-keyed");
+  lit_76 = YPPlist(2,YPPsym((P)"f"),YPPsym((P)"c"));
+  lit_77 = YPPlist(2,YPPsym((P)"res"),YPPsym((P)"e"));
+  T37 = YPsig(LITREF(lit_77),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_con_7 = YPmet(FUNCODEREF(fun_con_7),LITREF(lit_73),T37,ENVNUL,PNUL,YPfalse);
+  T36 = YPsig(LITREF(lit_76),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_map_keyed_8 = YPmet(FUNCODEREF(fun_map_keyed_8),LITREF(lit_75),T36,ENVNUL,PNUL,YPfalse);
+  T40 = BOUNDP(YgooScolsScolYmap_keyed);
+  if (T40 != YPfalse) {
+    T39 = VARREF(YgooScolsScolYmap_keyed);
   } else {
-    T49 = YPfalse;
+    T39 = YPfalse;
   }
-  T51 = fun_do3_12;
-  T48 = XCALL2(1,VARREF(YPdefine_method),T49,T51);
-  VARSET(YgooScolsSseqYdo3,T48);
-  lit_81 = YPPlist(3,YPPsym((P)"f"),YPPsym((P)"x"),YPPsym((P)"y"));
-  lit_82 = YPPlist(3,YPPsym((P)"res"),YPPsym((P)"ex"),YPPsym((P)"ey"));
-  T53 = YPsig(LITREF(lit_82),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  fun_con_13 = YPmet(FUNCODEREF(fun_con_13),LITREF(lit_71),T53,ENVNUL,PNUL,YPfalse);
-  T52 = YPsig(LITREF(lit_81),YPPlist(3,VARREF(YLfunG),VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)3),VARREF(YLseqG),Ynil);
-  fun_map2_14 = YPmet(FUNCODEREF(fun_map2_14),LITREF(lit_18),T52,ENVNUL,PNUL,YPfalse);
-  T56 = BOUNDP(YgooSmacrosYmap2);
-  if (T56 != YPfalse) {
-    T55 = VARREF(YgooSmacrosYmap2);
+  T41 = fun_map_keyed_8;
+  T38 = XCALL2(1,VARREF(YPdefine_method),T39,T41);
+  VARSET(YgooScolsScolYmap_keyed,T38);
+  lit_78 = YPPlist(3,YPPsym((P)"f"),YPPsym((P)"x"),YPPsym((P)"y"));
+  lit_79 = YPPsym((P)"lop");
+  lit_80 = YPPlist(2,YPPsym((P)"ex"),YPPsym((P)"ey"));
+  T43 = YPsig(LITREF(lit_80),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_lop_9 = YPmet(FUNCODEREF(fun_lop_9),LITREF(lit_79),T43,ENVNUL,PNUL,YPfalse);
+  T42 = YPsig(LITREF(lit_78),YPPlist(3,VARREF(YLfunG),VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  fun_do2_10 = YPmet(FUNCODEREF(fun_do2_10),LITREF(lit_14),T42,ENVNUL,PNUL,YPfalse);
+  T46 = BOUNDP(YgooScolsSseqYdo2);
+  if (T46 != YPfalse) {
+    T45 = VARREF(YgooScolsSseqYdo2);
   } else {
-    T55 = YPfalse;
+    T45 = YPfalse;
   }
-  T57 = fun_map2_14;
-  T54 = XCALL2(1,VARREF(YPdefine_method),T55,T57);
-  VARSET(YgooSmacrosYmap2,T54);
-  lit_83 = YPPlist(3,YPPsym((P)"test"),YPPsym((P)"x"),YPPsym((P)"y"));
-  lit_84 = YPPsym((P)"fnd");
-  lit_85 = YPPlist(2,YPPsym((P)"ex"),YPPsym((P)"ey"));
-  T59 = YPsig(LITREF(lit_85),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_fnd_15 = YPmet(FUNCODEREF(fun_fnd_15),LITREF(lit_84),T59,ENVNUL,PNUL,YPfalse);
-  T58 = YPsig(LITREF(lit_83),YPPlist(3,VARREF(YLfunG),VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)3),VARREF(YLlogG),Ynil);
-  fun_any2Q_16 = YPmet(FUNCODEREF(fun_any2Q_16),LITREF(lit_20),T58,ENVNUL,PNUL,YPfalse);
-  T62 = BOUNDP(YgooScolsSseqYany2Q);
-  if (T62 != YPfalse) {
-    T61 = VARREF(YgooScolsSseqYany2Q);
+  T47 = fun_do2_10;
+  T44 = XCALL2(1,VARREF(YPdefine_method),T45,T47);
+  VARSET(YgooScolsSseqYdo2,T44);
+  lit_81 = YPPlist(4,YPPsym((P)"f"),YPPsym((P)"x"),YPPsym((P)"y"),YPPsym((P)"z"));
+  lit_82 = YPPlist(3,YPPsym((P)"ex"),YPPsym((P)"ey"),YPPsym((P)"ez"));
+  T49 = YPsig(LITREF(lit_82),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  fun_lop_11 = YPmet(FUNCODEREF(fun_lop_11),LITREF(lit_79),T49,ENVNUL,PNUL,YPfalse);
+  T48 = YPsig(LITREF(lit_81),YPPlist(4,VARREF(YLfunG),VARREF(YLseqG),VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)4),VARREF(YLanyG),Ynil);
+  fun_do3_12 = YPmet(FUNCODEREF(fun_do3_12),LITREF(lit_16),T48,ENVNUL,PNUL,YPfalse);
+  T52 = BOUNDP(YgooScolsSseqYdo3);
+  if (T52 != YPfalse) {
+    T51 = VARREF(YgooScolsSseqYdo3);
   } else {
-    T61 = YPfalse;
+    T51 = YPfalse;
   }
-  T63 = fun_any2Q_16;
-  T60 = XCALL2(1,VARREF(YPdefine_method),T61,T63);
-  VARSET(YgooScolsSseqYany2Q,T60);
-  lit_86 = YPPlist(3,YPPsym((P)"test"),YPPsym((P)"x"),YPPsym((P)"y"));
+  T53 = fun_do3_12;
+  T50 = XCALL2(1,VARREF(YPdefine_method),T51,T53);
+  VARSET(YgooScolsSseqYdo3,T50);
+  lit_83 = YPPlist(3,YPPsym((P)"f"),YPPsym((P)"x"),YPPsym((P)"y"));
+  lit_84 = YPPlist(3,YPPsym((P)"res"),YPPsym((P)"ex"),YPPsym((P)"ey"));
+  T55 = YPsig(LITREF(lit_84),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  fun_con_13 = YPmet(FUNCODEREF(fun_con_13),LITREF(lit_73),T55,ENVNUL,PNUL,YPfalse);
+  T54 = YPsig(LITREF(lit_83),YPPlist(3,VARREF(YLfunG),VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)3),VARREF(YLseqG),Ynil);
+  fun_map2_14 = YPmet(FUNCODEREF(fun_map2_14),LITREF(lit_18),T54,ENVNUL,PNUL,YPfalse);
+  T58 = BOUNDP(YgooSmacrosYmap2);
+  if (T58 != YPfalse) {
+    T57 = VARREF(YgooSmacrosYmap2);
+  } else {
+    T57 = YPfalse;
+  }
+  T59 = fun_map2_14;
+  T56 = XCALL2(1,VARREF(YPdefine_method),T57,T59);
+  VARSET(YgooSmacrosYmap2,T56);
+  lit_85 = YPPlist(3,YPPsym((P)"test"),YPPsym((P)"x"),YPPsym((P)"y"));
+  lit_86 = YPPsym((P)"fnd");
   lit_87 = YPPlist(2,YPPsym((P)"ex"),YPPsym((P)"ey"));
-  T65 = YPsig(LITREF(lit_87),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_fnd_17 = YPmet(FUNCODEREF(fun_fnd_17),LITREF(lit_84),T65,ENVNUL,PNUL,YPfalse);
-  T64 = YPsig(LITREF(lit_86),YPPlist(3,VARREF(YLfunG),VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)3),VARREF(YLlogG),Ynil);
-  fun_all2Q_18 = YPmet(FUNCODEREF(fun_all2Q_18),LITREF(lit_22),T64,ENVNUL,PNUL,YPfalse);
-  T68 = BOUNDP(YgooStypesYall2Q);
-  if (T68 != YPfalse) {
-    T67 = VARREF(YgooStypesYall2Q);
+  T61 = YPsig(LITREF(lit_87),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_fnd_15 = YPmet(FUNCODEREF(fun_fnd_15),LITREF(lit_86),T61,ENVNUL,PNUL,YPfalse);
+  T60 = YPsig(LITREF(lit_85),YPPlist(3,VARREF(YLfunG),VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)3),VARREF(YLlogG),Ynil);
+  fun_any2Q_16 = YPmet(FUNCODEREF(fun_any2Q_16),LITREF(lit_20),T60,ENVNUL,PNUL,YPfalse);
+  T64 = BOUNDP(YgooScolsSseqYany2Q);
+  if (T64 != YPfalse) {
+    T63 = VARREF(YgooScolsSseqYany2Q);
   } else {
-    T67 = YPfalse;
+    T63 = YPfalse;
   }
-  T69 = fun_all2Q_18;
-  T66 = XCALL2(1,VARREF(YPdefine_method),T67,T69);
-  VARSET(YgooStypesYall2Q,T66);
-  lit_88 = YPPsym((P)"=");
-  lit_89 = YPPlist(2,YPPsym((P)"c1"),YPPsym((P)"c2"));
-  lit_90 = YPPsym((P)"eq");
-  lit_91 = YPPlist(2,YPPsym((P)"e1"),YPPsym((P)"e2"));
-  T71 = YPsig(LITREF(lit_91),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_eq_19 = YPmet(FUNCODEREF(fun_eq_19),LITREF(lit_90),T71,ENVNUL,PNUL,YPfalse);
-  T70 = YPsig(LITREF(lit_89),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_E_20 = YPmet(FUNCODEREF(fun_E_20),LITREF(lit_88),T70,ENVNUL,PNUL,YPfalse);
-  T74 = BOUNDP(YgooSmathYE);
-  if (T74 != YPfalse) {
-    T73 = VARREF(YgooSmathYE);
+  T65 = fun_any2Q_16;
+  T62 = XCALL2(1,VARREF(YPdefine_method),T63,T65);
+  VARSET(YgooScolsSseqYany2Q,T62);
+  lit_88 = YPPlist(3,YPPsym((P)"test"),YPPsym((P)"x"),YPPsym((P)"y"));
+  lit_89 = YPPlist(2,YPPsym((P)"ex"),YPPsym((P)"ey"));
+  T67 = YPsig(LITREF(lit_89),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_fnd_17 = YPmet(FUNCODEREF(fun_fnd_17),LITREF(lit_86),T67,ENVNUL,PNUL,YPfalse);
+  T66 = YPsig(LITREF(lit_88),YPPlist(3,VARREF(YLfunG),VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)3),VARREF(YLlogG),Ynil);
+  fun_all2Q_18 = YPmet(FUNCODEREF(fun_all2Q_18),LITREF(lit_22),T66,ENVNUL,PNUL,YPfalse);
+  T70 = BOUNDP(YgooStypesYall2Q);
+  if (T70 != YPfalse) {
+    T69 = VARREF(YgooStypesYall2Q);
   } else {
-    T73 = YPfalse;
+    T69 = YPfalse;
   }
-  T75 = fun_E_20;
-  T72 = XCALL2(1,VARREF(YPdefine_method),T73,T75);
-  VARSET(YgooSmathYE,T72);
-  lit_92 = YPPlist(1,YPPsym((P)"x"));
-  T76 = YPsig(LITREF(lit_92),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_last_21 = YPmet(FUNCODEREF(fun_last_21),LITREF(lit_8),T76,ENVNUL,PNUL,YPfalse);
-  T79 = BOUNDP(YgooSmacrosYlast);
-  if (T79 != YPfalse) {
-    T78 = VARREF(YgooSmacrosYlast);
+  T71 = fun_all2Q_18;
+  T68 = XCALL2(1,VARREF(YPdefine_method),T69,T71);
+  VARSET(YgooStypesYall2Q,T68);
+  lit_90 = YPPsym((P)"=");
+  lit_91 = YPPlist(2,YPPsym((P)"c1"),YPPsym((P)"c2"));
+  lit_92 = YPPsym((P)"eq");
+  lit_93 = YPPlist(2,YPPsym((P)"e1"),YPPsym((P)"e2"));
+  T73 = YPsig(LITREF(lit_93),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_eq_19 = YPmet(FUNCODEREF(fun_eq_19),LITREF(lit_92),T73,ENVNUL,PNUL,YPfalse);
+  T72 = YPsig(LITREF(lit_91),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_E_20 = YPmet(FUNCODEREF(fun_E_20),LITREF(lit_90),T72,ENVNUL,PNUL,YPfalse);
+  T76 = BOUNDP(YgooSmathYE);
+  if (T76 != YPfalse) {
+    T75 = VARREF(YgooSmathYE);
   } else {
-    T78 = YPfalse;
+    T75 = YPfalse;
   }
-  T80 = fun_last_21;
-  T77 = XCALL2(1,VARREF(YPdefine_method),T78,T80);
-  VARSET(YgooSmacrosYlast,T77);
-  lit_93 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"v"));
-  lit_94 = YPPlist(1,YPPsym((P)"a"));
-  T83 = YPsig(LITREF(lit_94),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_22 = YPmet(FUNCODEREF(fun_22),YPfalse,T83,ENVNUL,PNUL,YPfalse);
-  T82 = XCALL1(1,VARREF(YgooScolsSseqYOtQ),VARREF(YLintG));
-  T81 = YPsig(LITREF(lit_93),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),T82,Ynil);
-  fun_pos_23 = YPmet(FUNCODEREF(fun_pos_23),LITREF(lit_10),T81,ENVNUL,PNUL,YPfalse);
-  T86 = BOUNDP(YgooScolsSseqYpos);
-  if (T86 != YPfalse) {
-    T85 = VARREF(YgooScolsSseqYpos);
+  T77 = fun_E_20;
+  T74 = XCALL2(1,VARREF(YPdefine_method),T75,T77);
+  VARSET(YgooSmathYE,T74);
+  lit_94 = YPPlist(1,YPPsym((P)"x"));
+  T78 = YPsig(LITREF(lit_94),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_last_21 = YPmet(FUNCODEREF(fun_last_21),LITREF(lit_8),T78,ENVNUL,PNUL,YPfalse);
+  T81 = BOUNDP(YgooSmacrosYlast);
+  if (T81 != YPfalse) {
+    T80 = VARREF(YgooSmacrosYlast);
   } else {
-    T85 = YPfalse;
+    T80 = YPfalse;
   }
-  T87 = fun_pos_23;
-  T84 = XCALL2(1,VARREF(YPdefine_method),T85,T87);
-  VARSET(YgooScolsSseqYpos,T84);
-  lit_95 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"y"));
-  lit_96 = YPPsym((P)"outer");
-  lit_97 = YPPlist(1,YPPsym((P)"xsi"));
-  lit_98 = YPPsym((P)"inner");
-  lit_99 = YPPlist(2,YPPsym((P)"xi"),YPPsym((P)"yi"));
-  T91 = YPsig(LITREF(lit_99),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_inner_24 = YPmet(FUNCODEREF(fun_inner_24),LITREF(lit_98),T91,ENVNUL,PNUL,YPfalse);
-  T90 = YPsig(LITREF(lit_97),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_outer_25 = YPmet(FUNCODEREF(fun_outer_25),LITREF(lit_96),T90,ENVNUL,PNUL,YPfalse);
-  T89 = XCALL1(1,VARREF(YgooScolsSseqYOtQ),VARREF(YLintG));
-  T88 = YPsig(LITREF(lit_95),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),T89,Ynil);
-  fun_finds_26 = YPmet(FUNCODEREF(fun_finds_26),LITREF(lit_12),T88,ENVNUL,PNUL,YPfalse);
-  T94 = BOUNDP(YgooScolsSseqYfinds);
-  if (T94 != YPfalse) {
-    T93 = VARREF(YgooScolsSseqYfinds);
+  T82 = fun_last_21;
+  T79 = XCALL2(1,VARREF(YPdefine_method),T80,T82);
+  VARSET(YgooSmacrosYlast,T79);
+  lit_95 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"v"));
+  lit_96 = YPPlist(1,YPPsym((P)"a"));
+  T85 = YPsig(LITREF(lit_96),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_22 = YPmet(FUNCODEREF(fun_22),YPfalse,T85,ENVNUL,PNUL,YPfalse);
+  T84 = XCALL1(1,VARREF(YgooScolsSseqYOtQ),VARREF(YLintG));
+  T83 = YPsig(LITREF(lit_95),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),T84,Ynil);
+  fun_pos_23 = YPmet(FUNCODEREF(fun_pos_23),LITREF(lit_10),T83,ENVNUL,PNUL,YPfalse);
+  T88 = BOUNDP(YgooScolsSseqYpos);
+  if (T88 != YPfalse) {
+    T87 = VARREF(YgooScolsSseqYpos);
   } else {
-    T93 = YPfalse;
+    T87 = YPfalse;
   }
-  T95 = fun_finds_26;
-  T92 = XCALL2(1,VARREF(YPdefine_method),T93,T95);
-  VARSET(YgooScolsSseqYfinds,T92);
-  lit_100 = YPPlist(1,YPPsym((P)"x"));
-  lit_101 = YPPlist(2,YPPsym((P)"seq"),YPPsym((P)"e"));
-  T97 = YPsig(LITREF(lit_101),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_con_27 = YPmet(FUNCODEREF(fun_con_27),LITREF(lit_71),T97,ENVNUL,PNUL,YPfalse);
-  T96 = YPsig(LITREF(lit_100),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLseqG),Ynil);
-  fun_rev_28 = YPmet(FUNCODEREF(fun_rev_28),LITREF(lit_24),T96,ENVNUL,PNUL,YPfalse);
-  T100 = BOUNDP(YgooScolsSseqYrev);
-  if (T100 != YPfalse) {
-    T99 = VARREF(YgooScolsSseqYrev);
+  T89 = fun_pos_23;
+  T86 = XCALL2(1,VARREF(YPdefine_method),T87,T89);
+  VARSET(YgooScolsSseqYpos,T86);
+  lit_97 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"y"));
+  lit_98 = YPPsym((P)"outer");
+  lit_99 = YPPlist(1,YPPsym((P)"xsi"));
+  lit_100 = YPPsym((P)"inner");
+  lit_101 = YPPlist(2,YPPsym((P)"xi"),YPPsym((P)"yi"));
+  T93 = YPsig(LITREF(lit_101),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_inner_24 = YPmet(FUNCODEREF(fun_inner_24),LITREF(lit_100),T93,ENVNUL,PNUL,YPfalse);
+  T92 = YPsig(LITREF(lit_99),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_outer_25 = YPmet(FUNCODEREF(fun_outer_25),LITREF(lit_98),T92,ENVNUL,PNUL,YPfalse);
+  T91 = XCALL1(1,VARREF(YgooScolsSseqYOtQ),VARREF(YLintG));
+  T90 = YPsig(LITREF(lit_97),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),T91,Ynil);
+  fun_finds_26 = YPmet(FUNCODEREF(fun_finds_26),LITREF(lit_12),T90,ENVNUL,PNUL,YPfalse);
+  T96 = BOUNDP(YgooScolsSseqYfinds);
+  if (T96 != YPfalse) {
+    T95 = VARREF(YgooScolsSseqYfinds);
   } else {
-    T99 = YPfalse;
+    T95 = YPfalse;
   }
-  T101 = fun_rev_28;
-  T98 = XCALL2(1,VARREF(YPdefine_method),T99,T101);
-  VARSET(YgooScolsSseqYrev,T98);
-  lit_102 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"ss"));
-  T102 = YPsig(LITREF(lit_102),YPPlist(1,VARREF(YLseqG)),YPtrue,YPint((P)1),VARREF(YLseqG),Ynil);
-  fun_cat_29 = YPmet(FUNCODEREF(fun_cat_29),LITREF(lit_26),T102,ENVNUL,PNUL,YPfalse);
-  T105 = BOUNDP(YgooSmacrosYcat);
-  if (T105 != YPfalse) {
-    T104 = VARREF(YgooSmacrosYcat);
+  T97 = fun_finds_26;
+  T94 = XCALL2(1,VARREF(YPdefine_method),T95,T97);
+  VARSET(YgooScolsSseqYfinds,T94);
+  lit_102 = YPPlist(1,YPPsym((P)"x"));
+  lit_103 = YPPlist(2,YPPsym((P)"seq"),YPPsym((P)"e"));
+  T99 = YPsig(LITREF(lit_103),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_con_27 = YPmet(FUNCODEREF(fun_con_27),LITREF(lit_73),T99,ENVNUL,PNUL,YPfalse);
+  T98 = YPsig(LITREF(lit_102),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLseqG),Ynil);
+  fun_rev_28 = YPmet(FUNCODEREF(fun_rev_28),LITREF(lit_24),T98,ENVNUL,PNUL,YPfalse);
+  T102 = BOUNDP(YgooScolsSseqYrev);
+  if (T102 != YPfalse) {
+    T101 = VARREF(YgooScolsSseqYrev);
   } else {
-    T104 = YPfalse;
+    T101 = YPfalse;
   }
-  T106 = fun_cat_29;
-  T103 = XCALL2(1,VARREF(YPdefine_method),T104,T106);
-  VARSET(YgooSmacrosYcat,T103);
-  lit_103 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"y"));
-  lit_104 = YPPsym((P)"con-x");
-  lit_105 = YPPlist(2,YPPsym((P)"seq"),YPPsym((P)"ex"));
-  lit_106 = YPPsym((P)"con-y");
-  lit_107 = YPPlist(2,YPPsym((P)"seq"),YPPsym((P)"ey"));
-  T109 = YPsig(LITREF(lit_107),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_con_y_30 = YPmet(FUNCODEREF(fun_con_y_30),LITREF(lit_106),T109,ENVNUL,PNUL,YPfalse);
-  T108 = YPsig(LITREF(lit_105),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_con_x_31 = YPmet(FUNCODEREF(fun_con_x_31),LITREF(lit_104),T108,ENVNUL,PNUL,YPfalse);
-  T107 = YPsig(LITREF(lit_103),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_cat2_32 = YPmet(FUNCODEREF(fun_cat2_32),LITREF(lit_28),T107,ENVNUL,PNUL,YPfalse);
-  T112 = BOUNDP(YgooScolsSseqYcat2);
-  if (T112 != YPfalse) {
-    T111 = VARREF(YgooScolsSseqYcat2);
+  T103 = fun_rev_28;
+  T100 = XCALL2(1,VARREF(YPdefine_method),T101,T103);
+  VARSET(YgooScolsSseqYrev,T100);
+  lit_104 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"ss"));
+  T104 = YPsig(LITREF(lit_104),YPPlist(1,VARREF(YLseqG)),YPtrue,YPint((P)1),VARREF(YLseqG),Ynil);
+  fun_cat_29 = YPmet(FUNCODEREF(fun_cat_29),LITREF(lit_26),T104,ENVNUL,PNUL,YPfalse);
+  T107 = BOUNDP(YgooSmacrosYcat);
+  if (T107 != YPfalse) {
+    T106 = VARREF(YgooSmacrosYcat);
   } else {
-    T111 = YPfalse;
+    T106 = YPfalse;
   }
-  T113 = fun_cat2_32;
-  T110 = XCALL2(1,VARREF(YPdefine_method),T111,T113);
-  VARSET(YgooScolsSseqYcat2,T110);
-  lit_108 = YPPlist(3,YPPsym((P)"x"),YPPsym((P)"from"),YPPsym((P)"below"));
-  lit_109 = YPPlist(3,YPPsym((P)"seq"),YPPsym((P)"i"),YPPsym((P)"e"));
-  T115 = YPsig(LITREF(lit_109),YPPlist(3,VARREF(YLanyG),VARREF(YLintG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  fun_con_x_33 = YPmet(FUNCODEREF(fun_con_x_33),LITREF(lit_104),T115,ENVNUL,PNUL,YPfalse);
-  T114 = YPsig(LITREF(lit_108),YPPlist(3,VARREF(YLseqG),VARREF(YLintG),VARREF(YLintG)),YPfalse,YPint((P)3),VARREF(YLseqG),Ynil);
-  fun_sub_34 = YPmet(FUNCODEREF(fun_sub_34),LITREF(lit_34),T114,ENVNUL,PNUL,YPfalse);
-  T118 = BOUNDP(YgooScolsSseqYsub);
-  if (T118 != YPfalse) {
-    T117 = VARREF(YgooScolsSseqYsub);
+  T108 = fun_cat_29;
+  T105 = XCALL2(1,VARREF(YPdefine_method),T106,T108);
+  VARSET(YgooSmacrosYcat,T105);
+  lit_105 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"y"));
+  lit_106 = YPPsym((P)"con-x");
+  lit_107 = YPPlist(2,YPPsym((P)"seq"),YPPsym((P)"ex"));
+  lit_108 = YPPsym((P)"con-y");
+  lit_109 = YPPlist(2,YPPsym((P)"seq"),YPPsym((P)"ey"));
+  T111 = YPsig(LITREF(lit_109),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_con_y_30 = YPmet(FUNCODEREF(fun_con_y_30),LITREF(lit_108),T111,ENVNUL,PNUL,YPfalse);
+  T110 = YPsig(LITREF(lit_107),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_con_x_31 = YPmet(FUNCODEREF(fun_con_x_31),LITREF(lit_106),T110,ENVNUL,PNUL,YPfalse);
+  T109 = YPsig(LITREF(lit_105),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_cat2_32 = YPmet(FUNCODEREF(fun_cat2_32),LITREF(lit_28),T109,ENVNUL,PNUL,YPfalse);
+  T114 = BOUNDP(YgooScolsSseqYcat2);
+  if (T114 != YPfalse) {
+    T113 = VARREF(YgooScolsSseqYcat2);
   } else {
-    T117 = YPfalse;
+    T113 = YPfalse;
   }
-  T119 = fun_sub_34;
-  T116 = XCALL2(1,VARREF(YPdefine_method),T117,T119);
-  VARSET(YgooScolsSseqYsub,T116);
-  lit_110 = YPPlist(2,YPPsym((P)"l"),YPPsym((P)"x"));
-  T120 = YPsig(LITREF(lit_110),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_push_35 = YPmet(FUNCODEREF(fun_push_35),LITREF(lit_30),T120,ENVNUL,PNUL,YPfalse);
-  T123 = BOUNDP(YgooScolsSseqYpush);
-  if (T123 != YPfalse) {
-    T122 = VARREF(YgooScolsSseqYpush);
+  T115 = fun_cat2_32;
+  T112 = XCALL2(1,VARREF(YPdefine_method),T113,T115);
+  VARSET(YgooScolsSseqYcat2,T112);
+  lit_110 = YPPlist(3,YPPsym((P)"x"),YPPsym((P)"from"),YPPsym((P)"below"));
+  lit_111 = YPPlist(3,YPPsym((P)"seq"),YPPsym((P)"i"),YPPsym((P)"e"));
+  T117 = YPsig(LITREF(lit_111),YPPlist(3,VARREF(YLanyG),VARREF(YLintG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  fun_con_x_33 = YPmet(FUNCODEREF(fun_con_x_33),LITREF(lit_106),T117,ENVNUL,PNUL,YPfalse);
+  T116 = YPsig(LITREF(lit_110),YPPlist(3,VARREF(YLseqG),VARREF(YLintG),VARREF(YLintG)),YPfalse,YPint((P)3),VARREF(YLseqG),Ynil);
+  fun_sub_34 = YPmet(FUNCODEREF(fun_sub_34),LITREF(lit_34),T116,ENVNUL,PNUL,YPfalse);
+  T120 = BOUNDP(YgooScolsSseqYsub);
+  if (T120 != YPfalse) {
+    T119 = VARREF(YgooScolsSseqYsub);
   } else {
-    T122 = YPfalse;
+    T119 = YPfalse;
   }
-  T124 = fun_push_35;
-  T121 = XCALL2(1,VARREF(YPdefine_method),T122,T124);
-  VARSET(YgooScolsSseqYpush,T121);
-  lit_111 = YPPlist(1,YPPsym((P)"l"));
-  T126 = XCALL2(1,VARREF(YtT),VARREF(YLseqG),VARREF(YLanyG));
-  T125 = YPsig(LITREF(lit_111),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),T126,Ynil);
-  fun_pop_36 = YPmet(FUNCODEREF(fun_pop_36),LITREF(lit_32),T125,ENVNUL,PNUL,YPfalse);
-  T129 = BOUNDP(YgooScolsSseqYpop);
-  if (T129 != YPfalse) {
-    T128 = VARREF(YgooScolsSseqYpop);
+  T121 = fun_sub_34;
+  T118 = XCALL2(1,VARREF(YPdefine_method),T119,T121);
+  VARSET(YgooScolsSseqYsub,T118);
+  lit_112 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"from"));
+  T122 = YPsig(LITREF(lit_112),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_subT_35 = YPmet(FUNCODEREF(fun_subT_35),LITREF(lit_36),T122,ENVNUL,PNUL,YPfalse);
+  T125 = BOUNDP(YgooScolsSseqYsubT);
+  if (T125 != YPfalse) {
+    T124 = VARREF(YgooScolsSseqYsubT);
   } else {
-    T128 = YPfalse;
+    T124 = YPfalse;
   }
-  T130 = fun_pop_36;
-  T127 = XCALL2(1,VARREF(YPdefine_method),T128,T130);
-  VARSET(YgooScolsSseqYpop,T127);
-  lit_112 = YPPlist(2,YPPsym((P)"test"),YPPsym((P)"x"));
-  lit_113 = YPPlist(2,YPPsym((P)"seq"),YPPsym((P)"e"));
-  T132 = YPsig(LITREF(lit_113),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_con_37 = YPmet(FUNCODEREF(fun_con_37),LITREF(lit_71),T132,ENVNUL,PNUL,YPfalse);
-  T131 = YPsig(LITREF(lit_112),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_pick_38 = YPmet(FUNCODEREF(fun_pick_38),LITREF(lit_38),T131,ENVNUL,PNUL,YPfalse);
-  T135 = BOUNDP(YgooScolsSseqYpick);
-  if (T135 != YPfalse) {
-    T134 = VARREF(YgooScolsSseqYpick);
+  T126 = fun_subT_35;
+  T123 = XCALL2(1,VARREF(YPdefine_method),T124,T126);
+  VARSET(YgooScolsSseqYsubT,T123);
+  lit_113 = YPPlist(2,YPPsym((P)"l"),YPPsym((P)"x"));
+  T127 = YPsig(LITREF(lit_113),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_push_36 = YPmet(FUNCODEREF(fun_push_36),LITREF(lit_30),T127,ENVNUL,PNUL,YPfalse);
+  T130 = BOUNDP(YgooScolsSseqYpush);
+  if (T130 != YPfalse) {
+    T129 = VARREF(YgooScolsSseqYpush);
   } else {
-    T134 = YPfalse;
+    T129 = YPfalse;
   }
-  T136 = fun_pick_38;
-  T133 = XCALL2(1,VARREF(YPdefine_method),T134,T136);
-  VARSET(YgooScolsSseqYpick,T133);
-  lit_114 = YPPlist(2,YPPsym((P)"test"),YPPsym((P)"x"));
-  lit_115 = YPPlist(1,YPPsym((P)"x"));
-  T138 = YPsig(LITREF(lit_115),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_39 = YPmet(FUNCODEREF(fun_39),YPfalse,T138,ENVNUL,PNUL,YPfalse);
-  T137 = YPsig(LITREF(lit_114),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_reject_40 = YPmet(FUNCODEREF(fun_reject_40),LITREF(lit_40),T137,ENVNUL,PNUL,YPfalse);
-  T141 = BOUNDP(YgooScolsSseqYreject);
-  if (T141 != YPfalse) {
-    T140 = VARREF(YgooScolsSseqYreject);
+  T131 = fun_push_36;
+  T128 = XCALL2(1,VARREF(YPdefine_method),T129,T131);
+  VARSET(YgooScolsSseqYpush,T128);
+  lit_114 = YPPlist(1,YPPsym((P)"l"));
+  T133 = XCALL2(1,VARREF(YtT),VARREF(YLseqG),VARREF(YLanyG));
+  T132 = YPsig(LITREF(lit_114),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),T133,Ynil);
+  fun_pop_37 = YPmet(FUNCODEREF(fun_pop_37),LITREF(lit_32),T132,ENVNUL,PNUL,YPfalse);
+  T136 = BOUNDP(YgooScolsSseqYpop);
+  if (T136 != YPfalse) {
+    T135 = VARREF(YgooScolsSseqYpop);
   } else {
-    T140 = YPfalse;
+    T135 = YPfalse;
   }
-  T142 = fun_reject_40;
-  T139 = XCALL2(1,VARREF(YPdefine_method),T140,T142);
-  VARSET(YgooScolsSseqYreject,T139);
-  lit_116 = YPPsym((P)"del");
-  lit_117 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"key"));
-  T143 = YPsig(LITREF(lit_117),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_del_41 = YPmet(FUNCODEREF(fun_del_41),LITREF(lit_116),T143,ENVNUL,PNUL,YPfalse);
-  T146 = BOUNDP(YgooScolsScolYdel);
-  if (T146 != YPfalse) {
-    T145 = VARREF(YgooScolsScolYdel);
+  T137 = fun_pop_37;
+  T134 = XCALL2(1,VARREF(YPdefine_method),T135,T137);
+  VARSET(YgooScolsSseqYpop,T134);
+  lit_115 = YPPlist(2,YPPsym((P)"test"),YPPsym((P)"x"));
+  lit_116 = YPPlist(2,YPPsym((P)"seq"),YPPsym((P)"e"));
+  T139 = YPsig(LITREF(lit_116),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_con_38 = YPmet(FUNCODEREF(fun_con_38),LITREF(lit_73),T139,ENVNUL,PNUL,YPfalse);
+  T138 = YPsig(LITREF(lit_115),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_pick_39 = YPmet(FUNCODEREF(fun_pick_39),LITREF(lit_40),T138,ENVNUL,PNUL,YPfalse);
+  T142 = BOUNDP(YgooScolsSseqYpick);
+  if (T142 != YPfalse) {
+    T141 = VARREF(YgooScolsSseqYpick);
   } else {
-    T145 = YPfalse;
+    T141 = YPfalse;
   }
-  T147 = fun_del_41;
-  T144 = XCALL2(1,VARREF(YPdefine_method),T145,T147);
-  VARSET(YgooScolsScolYdel,T144);
-  lit_118 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"x"));
-  lit_119 = YPPlist(1,YPPsym((P)"e"));
-  T149 = YPsig(LITREF(lit_119),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_42 = YPmet(FUNCODEREF(fun_42),YPfalse,T149,ENVNUL,PNUL,YPfalse);
-  T148 = YPsig(LITREF(lit_118),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_del_vals_43 = YPmet(FUNCODEREF(fun_del_vals_43),LITREF(lit_42),T148,ENVNUL,PNUL,YPfalse);
-  T152 = BOUNDP(YgooScolsSseqYdel_vals);
-  if (T152 != YPfalse) {
-    T151 = VARREF(YgooScolsSseqYdel_vals);
+  T143 = fun_pick_39;
+  T140 = XCALL2(1,VARREF(YPdefine_method),T141,T143);
+  VARSET(YgooScolsSseqYpick,T140);
+  lit_117 = YPPlist(2,YPPsym((P)"test"),YPPsym((P)"x"));
+  lit_118 = YPPlist(1,YPPsym((P)"x"));
+  T145 = YPsig(LITREF(lit_118),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_40 = YPmet(FUNCODEREF(fun_40),YPfalse,T145,ENVNUL,PNUL,YPfalse);
+  T144 = YPsig(LITREF(lit_117),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_reject_41 = YPmet(FUNCODEREF(fun_reject_41),LITREF(lit_42),T144,ENVNUL,PNUL,YPfalse);
+  T148 = BOUNDP(YgooScolsSseqYreject);
+  if (T148 != YPfalse) {
+    T147 = VARREF(YgooScolsSseqYreject);
   } else {
-    T151 = YPfalse;
+    T147 = YPfalse;
   }
-  T153 = fun_del_vals_43;
-  T150 = XCALL2(1,VARREF(YPdefine_method),T151,T153);
-  VARSET(YgooScolsSseqYdel_vals,T150);
-  lit_120 = YPPlist(1,YPPsym((P)"x"));
-  lit_121 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"e"));
-  T155 = YPsig(LITREF(lit_121),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_44 = YPmet(FUNCODEREF(fun_44),YPfalse,T155,ENVNUL,PNUL,YPfalse);
-  T154 = YPsig(LITREF(lit_120),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLseqG),Ynil);
-  fun_del_dups_45 = YPmet(FUNCODEREF(fun_del_dups_45),LITREF(lit_44),T154,ENVNUL,PNUL,YPfalse);
-  T158 = BOUNDP(YgooScolsSseqYdel_dups);
-  if (T158 != YPfalse) {
-    T157 = VARREF(YgooScolsSseqYdel_dups);
+  T149 = fun_reject_41;
+  T146 = XCALL2(1,VARREF(YPdefine_method),T147,T149);
+  VARSET(YgooScolsSseqYreject,T146);
+  lit_119 = YPPsym((P)"del");
+  lit_120 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"key"));
+  T150 = YPsig(LITREF(lit_120),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_del_42 = YPmet(FUNCODEREF(fun_del_42),LITREF(lit_119),T150,ENVNUL,PNUL,YPfalse);
+  T153 = BOUNDP(YgooScolsScolYdel);
+  if (T153 != YPfalse) {
+    T152 = VARREF(YgooScolsScolYdel);
   } else {
-    T157 = YPfalse;
+    T152 = YPfalse;
   }
-  T159 = fun_del_dups_45;
-  T156 = XCALL2(1,VARREF(YPdefine_method),T157,T159);
-  VARSET(YgooScolsSseqYdel_dups,T156);
-  lit_122 = YPPlist(3,YPPsym((P)"x"),YPPsym((P)"v"),YPPsym((P)"before"));
-  lit_123 = YPPsym((P)"copy");
-  lit_124 = YPPlist(3,YPPsym((P)"r"),YPPsym((P)"i"),YPPsym((P)"e"));
-  T161 = YPsig(LITREF(lit_124),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  fun_copy_46 = YPmet(FUNCODEREF(fun_copy_46),LITREF(lit_123),T161,ENVNUL,PNUL,YPfalse);
-  T160 = YPsig(LITREF(lit_122),YPPlist(3,VARREF(YLseqG),VARREF(YLanyG),VARREF(YLintG)),YPfalse,YPint((P)3),VARREF(YLseqG),Ynil);
-  fun_ins_47 = YPmet(FUNCODEREF(fun_ins_47),LITREF(lit_36),T160,ENVNUL,PNUL,YPfalse);
-  T164 = BOUNDP(YgooScolsSseqYins);
-  if (T164 != YPfalse) {
-    T163 = VARREF(YgooScolsSseqYins);
+  T154 = fun_del_42;
+  T151 = XCALL2(1,VARREF(YPdefine_method),T152,T154);
+  VARSET(YgooScolsScolYdel,T151);
+  lit_121 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"x"));
+  lit_122 = YPPlist(1,YPPsym((P)"e"));
+  T156 = YPsig(LITREF(lit_122),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_43 = YPmet(FUNCODEREF(fun_43),YPfalse,T156,ENVNUL,PNUL,YPfalse);
+  T155 = YPsig(LITREF(lit_121),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_del_vals_44 = YPmet(FUNCODEREF(fun_del_vals_44),LITREF(lit_44),T155,ENVNUL,PNUL,YPfalse);
+  T159 = BOUNDP(YgooScolsSseqYdel_vals);
+  if (T159 != YPfalse) {
+    T158 = VARREF(YgooScolsSseqYdel_vals);
   } else {
-    T163 = YPfalse;
+    T158 = YPfalse;
   }
-  T165 = fun_ins_47;
-  T162 = XCALL2(1,VARREF(YPdefine_method),T163,T165);
-  VARSET(YgooScolsSseqYins,T162);
-  lit_125 = YPPsym((P)"elts");
-  lit_126 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"keys"));
-  lit_127 = YPPlist(4,YPPsym((P)"r"),YPPsym((P)"e"),YPPsym((P)"i"),YPPsym((P)"keys"));
-  T167 = YPsig(LITREF(lit_127),YPPlist(4,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)4),VARREF(YLanyG),Ynil);
-  fun_copy_48 = YPmet(FUNCODEREF(fun_copy_48),LITREF(lit_123),T167,ENVNUL,PNUL,YPfalse);
-  T166 = YPsig(LITREF(lit_126),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_elts_49 = YPmet(FUNCODEREF(fun_elts_49),LITREF(lit_125),T166,ENVNUL,PNUL,YPfalse);
-  T170 = BOUNDP(YgooScolsScolYelts);
-  if (T170 != YPfalse) {
-    T169 = VARREF(YgooScolsScolYelts);
+  T160 = fun_del_vals_44;
+  T157 = XCALL2(1,VARREF(YPdefine_method),T158,T160);
+  VARSET(YgooScolsSseqYdel_vals,T157);
+  lit_123 = YPPlist(1,YPPsym((P)"x"));
+  lit_124 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"e"));
+  T162 = YPsig(LITREF(lit_124),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_45 = YPmet(FUNCODEREF(fun_45),YPfalse,T162,ENVNUL,PNUL,YPfalse);
+  T161 = YPsig(LITREF(lit_123),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLseqG),Ynil);
+  fun_del_dups_46 = YPmet(FUNCODEREF(fun_del_dups_46),LITREF(lit_46),T161,ENVNUL,PNUL,YPfalse);
+  T165 = BOUNDP(YgooScolsSseqYdel_dups);
+  if (T165 != YPfalse) {
+    T164 = VARREF(YgooScolsSseqYdel_dups);
   } else {
-    T169 = YPfalse;
+    T164 = YPfalse;
   }
-  T171 = fun_elts_49;
-  T168 = XCALL2(1,VARREF(YPdefine_method),T169,T171);
-  VARSET(YgooScolsScolYelts,T168);
-  lit_128 = YPPlist(1,YPPsym((P)"x"));
-  T172 = YPsig(LITREF(lit_128),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLseqG),Ynil);
-  fun_sort_50 = YPmet(FUNCODEREF(fun_sort_50),LITREF(lit_46),T172,ENVNUL,PNUL,YPfalse);
-  T175 = BOUNDP(YgooScolsSseqYsort);
-  if (T175 != YPfalse) {
-    T174 = VARREF(YgooScolsSseqYsort);
+  T166 = fun_del_dups_46;
+  T163 = XCALL2(1,VARREF(YPdefine_method),T164,T166);
+  VARSET(YgooScolsSseqYdel_dups,T163);
+  lit_125 = YPPlist(3,YPPsym((P)"x"),YPPsym((P)"v"),YPPsym((P)"before"));
+  lit_126 = YPPsym((P)"copy");
+  lit_127 = YPPlist(3,YPPsym((P)"r"),YPPsym((P)"i"),YPPsym((P)"e"));
+  T168 = YPsig(LITREF(lit_127),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  fun_copy_47 = YPmet(FUNCODEREF(fun_copy_47),LITREF(lit_126),T168,ENVNUL,PNUL,YPfalse);
+  T167 = YPsig(LITREF(lit_125),YPPlist(3,VARREF(YLseqG),VARREF(YLanyG),VARREF(YLintG)),YPfalse,YPint((P)3),VARREF(YLseqG),Ynil);
+  fun_ins_48 = YPmet(FUNCODEREF(fun_ins_48),LITREF(lit_38),T167,ENVNUL,PNUL,YPfalse);
+  T171 = BOUNDP(YgooScolsSseqYins);
+  if (T171 != YPfalse) {
+    T170 = VARREF(YgooScolsSseqYins);
   } else {
-    T174 = YPfalse;
+    T170 = YPfalse;
   }
-  T176 = fun_sort_50;
-  T173 = XCALL2(1,VARREF(YPdefine_method),T174,T176);
-  VARSET(YgooScolsSseqYsort,T173);
-  lit_129 = YPPlist(2,YPPsym((P)"a"),YPPsym((P)"test"));
-  T177 = YPsig(LITREF(lit_129),YPPlist(2,VARREF(YLseqXG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLseqXG),Ynil);
-  fun_sort_by_51 = YPmet(FUNCODEREF(fun_sort_by_51),LITREF(lit_48),T177,ENVNUL,PNUL,YPfalse);
-  T180 = BOUNDP(YgooScolsSseqYsort_by);
-  if (T180 != YPfalse) {
-    T179 = VARREF(YgooScolsSseqYsort_by);
+  T172 = fun_ins_48;
+  T169 = XCALL2(1,VARREF(YPdefine_method),T170,T172);
+  VARSET(YgooScolsSseqYins,T169);
+  lit_128 = YPPsym((P)"elts");
+  lit_129 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"keys"));
+  lit_130 = YPPlist(4,YPPsym((P)"r"),YPPsym((P)"e"),YPPsym((P)"i"),YPPsym((P)"keys"));
+  T174 = YPsig(LITREF(lit_130),YPPlist(4,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)4),VARREF(YLanyG),Ynil);
+  fun_copy_49 = YPmet(FUNCODEREF(fun_copy_49),LITREF(lit_126),T174,ENVNUL,PNUL,YPfalse);
+  T173 = YPsig(LITREF(lit_129),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_elts_50 = YPmet(FUNCODEREF(fun_elts_50),LITREF(lit_128),T173,ENVNUL,PNUL,YPfalse);
+  T177 = BOUNDP(YgooScolsScolYelts);
+  if (T177 != YPfalse) {
+    T176 = VARREF(YgooScolsScolYelts);
   } else {
-    T179 = YPfalse;
+    T176 = YPfalse;
   }
-  T181 = fun_sort_by_51;
-  T178 = XCALL2(1,VARREF(YPdefine_method),T179,T181);
-  VARSET(YgooScolsSseqYsort_by,T178);
-  lit_130 = YPPsym((P)"keys");
-  lit_131 = YPPlist(1,YPPsym((P)"d"));
-  T182 = YPsig(LITREF(lit_131),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLseqG),Ynil);
-  fun_keys_52 = YPmet(FUNCODEREF(fun_keys_52),LITREF(lit_130),T182,ENVNUL,PNUL,YPfalse);
-  T185 = BOUNDP(YgooScolsScolYkeys);
-  if (T185 != YPfalse) {
-    T184 = VARREF(YgooScolsScolYkeys);
+  T178 = fun_elts_50;
+  T175 = XCALL2(1,VARREF(YPdefine_method),T176,T178);
+  VARSET(YgooScolsScolYelts,T175);
+  lit_131 = YPPlist(1,YPPsym((P)"x"));
+  T179 = YPsig(LITREF(lit_131),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLseqG),Ynil);
+  fun_sort_51 = YPmet(FUNCODEREF(fun_sort_51),LITREF(lit_48),T179,ENVNUL,PNUL,YPfalse);
+  T182 = BOUNDP(YgooScolsSseqYsort);
+  if (T182 != YPfalse) {
+    T181 = VARREF(YgooScolsSseqYsort);
   } else {
-    T184 = YPfalse;
+    T181 = YPfalse;
   }
-  T186 = fun_keys_52;
-  T183 = XCALL2(1,VARREF(YPdefine_method),T184,T186);
-  VARSET(YgooScolsScolYkeys,T183);
-  lit_132 = YPPsym((P)"range-check");
-  lit_133 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"i"));
-  T187 = YPsig(LITREF(lit_133),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YgooScolsSseqYrange_check = YPmet(FUNCODEREF(YgooScolsSseqYrange_check),LITREF(lit_132),T187,ENVNUL,PNUL,YPfalse);
-  T188 = YgooScolsSseqYrange_check;
-  VARSET(YgooScolsSseqYrange_check,T188);
-  lit_134 = YPPsym((P)"range-check?");
-  lit_135 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"i"));
-  T189 = YPsig(LITREF(lit_135),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YgooScolsSseqYrange_checkQ = YPmet(FUNCODEREF(YgooScolsSseqYrange_checkQ),LITREF(lit_134),T189,ENVNUL,PNUL,YPfalse);
-  T190 = YgooScolsSseqYrange_checkQ;
-  VARSET(YgooScolsSseqYrange_checkQ,T190);
-  lit_136 = YPPsym((P)"add");
-  lit_137 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"e"));
-  T191 = YPsig(LITREF(lit_137),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_add_55 = YPmet(FUNCODEREF(fun_add_55),LITREF(lit_136),T191,ENVNUL,PNUL,YPfalse);
-  T194 = BOUNDP(YgooScolsScolYadd);
-  if (T194 != YPfalse) {
-    T193 = VARREF(YgooScolsScolYadd);
+  T183 = fun_sort_51;
+  T180 = XCALL2(1,VARREF(YPdefine_method),T181,T183);
+  VARSET(YgooScolsSseqYsort,T180);
+  lit_132 = YPPlist(2,YPPsym((P)"a"),YPPsym((P)"test"));
+  T184 = YPsig(LITREF(lit_132),YPPlist(2,VARREF(YLseqXG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLseqXG),Ynil);
+  fun_sort_by_52 = YPmet(FUNCODEREF(fun_sort_by_52),LITREF(lit_50),T184,ENVNUL,PNUL,YPfalse);
+  T187 = BOUNDP(YgooScolsSseqYsort_by);
+  if (T187 != YPfalse) {
+    T186 = VARREF(YgooScolsSseqYsort_by);
   } else {
-    T193 = YPfalse;
+    T186 = YPfalse;
   }
-  T195 = fun_add_55;
-  T192 = XCALL2(1,VARREF(YPdefine_method),T193,T195);
-  VARSET(YgooScolsScolYadd,T192);
-  lit_138 = YPPsym((P)"add-new");
-  lit_139 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"x"));
-  T196 = YPsig(LITREF(lit_139),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_add_new_56 = YPmet(FUNCODEREF(fun_add_new_56),LITREF(lit_138),T196,ENVNUL,PNUL,YPfalse);
-  T199 = BOUNDP(YgooScolsSseqYadd_new);
-  if (T199 != YPfalse) {
-    T198 = VARREF(YgooScolsSseqYadd_new);
+  T188 = fun_sort_by_52;
+  T185 = XCALL2(1,VARREF(YPdefine_method),T186,T188);
+  VARSET(YgooScolsSseqYsort_by,T185);
+  lit_133 = YPPsym((P)"keys");
+  lit_134 = YPPlist(1,YPPsym((P)"d"));
+  T189 = YPsig(LITREF(lit_134),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLseqG),Ynil);
+  fun_keys_53 = YPmet(FUNCODEREF(fun_keys_53),LITREF(lit_133),T189,ENVNUL,PNUL,YPfalse);
+  T192 = BOUNDP(YgooScolsScolYkeys);
+  if (T192 != YPfalse) {
+    T191 = VARREF(YgooScolsScolYkeys);
   } else {
-    T198 = YPfalse;
+    T191 = YPfalse;
   }
-  T200 = fun_add_new_56;
-  T197 = XCALL2(1,VARREF(YPdefine_method),T198,T200);
-  VARSET(YgooScolsSseqYadd_new,T197);
-  lit_140 = YPPlist(1,YPPsym((P)"s"));
-  lit_141 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"e"));
-  lit_142 = YPsb((P)"");
-  lit_143 = YPsb((P)" ");
-  T202 = YPsig(LITREF(lit_141),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_57 = YPmet(FUNCODEREF(fun_57),YPfalse,T202,ENVNUL,PNUL,YPfalse);
-  T201 = YPsig(LITREF(lit_140),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_vals_to_str_58 = YPmet(FUNCODEREF(fun_vals_to_str_58),LITREF(lit_60),T201,ENVNUL,PNUL,YPfalse);
-  T205 = BOUNDP(YgooScolsSseqYvals_to_str);
-  if (T205 != YPfalse) {
-    T204 = VARREF(YgooScolsSseqYvals_to_str);
+  T193 = fun_keys_53;
+  T190 = XCALL2(1,VARREF(YPdefine_method),T191,T193);
+  VARSET(YgooScolsScolYkeys,T190);
+  lit_135 = YPPsym((P)"range-check");
+  lit_136 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"i"));
+  T194 = YPsig(LITREF(lit_136),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YgooScolsSseqYrange_check = YPmet(FUNCODEREF(YgooScolsSseqYrange_check),LITREF(lit_135),T194,ENVNUL,PNUL,YPfalse);
+  T195 = YgooScolsSseqYrange_check;
+  VARSET(YgooScolsSseqYrange_check,T195);
+  lit_137 = YPPsym((P)"range-check?");
+  lit_138 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"i"));
+  T196 = YPsig(LITREF(lit_138),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YgooScolsSseqYrange_checkQ = YPmet(FUNCODEREF(YgooScolsSseqYrange_checkQ),LITREF(lit_137),T196,ENVNUL,PNUL,YPfalse);
+  T197 = YgooScolsSseqYrange_checkQ;
+  VARSET(YgooScolsSseqYrange_checkQ,T197);
+  lit_139 = YPPsym((P)"add");
+  lit_140 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"e"));
+  T198 = YPsig(LITREF(lit_140),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_add_56 = YPmet(FUNCODEREF(fun_add_56),LITREF(lit_139),T198,ENVNUL,PNUL,YPfalse);
+  T201 = BOUNDP(YgooScolsScolYadd);
+  if (T201 != YPfalse) {
+    T200 = VARREF(YgooScolsScolYadd);
   } else {
-    T204 = YPfalse;
+    T200 = YPfalse;
   }
-  T206 = fun_vals_to_str_58;
-  T203 = XCALL2(1,VARREF(YPdefine_method),T204,T206);
-  VARSET(YgooScolsSseqYvals_to_str,T203);
-  lit_144 = YPPlist(2,YPPsym((P)"fn"),YPPsym((P)"key-vals"));
-  lit_145 = YPPsym((P)"rep");
-  lit_146 = YPPlist(1,YPPsym((P)"e"));
-  T208 = YPsig(LITREF(lit_146),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_rep_59 = YPmet(FUNCODEREF(fun_rep_59),LITREF(lit_145),T208,ENVNUL,PNUL,YPfalse);
-  T207 = YPsig(LITREF(lit_144),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_do_key_vals_60 = YPmet(FUNCODEREF(fun_do_key_vals_60),LITREF(lit_62),T207,ENVNUL,PNUL,YPfalse);
-  T211 = BOUNDP(YgooScolsSseqYdo_key_vals);
-  if (T211 != YPfalse) {
-    T210 = VARREF(YgooScolsSseqYdo_key_vals);
+  T202 = fun_add_56;
+  T199 = XCALL2(1,VARREF(YPdefine_method),T200,T202);
+  VARSET(YgooScolsScolYadd,T199);
+  lit_141 = YPPsym((P)"add-new");
+  lit_142 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"x"));
+  T203 = YPsig(LITREF(lit_142),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_add_new_57 = YPmet(FUNCODEREF(fun_add_new_57),LITREF(lit_141),T203,ENVNUL,PNUL,YPfalse);
+  T206 = BOUNDP(YgooScolsSseqYadd_new);
+  if (T206 != YPfalse) {
+    T205 = VARREF(YgooScolsSseqYadd_new);
   } else {
-    T210 = YPfalse;
+    T205 = YPfalse;
   }
-  T212 = fun_do_key_vals_60;
-  T209 = XCALL2(1,VARREF(YPdefine_method),T210,T212);
-  VARSET(YgooScolsSseqYdo_key_vals,T209);
-  lit_147 = YPPsym((P)"col");
-  lit_148 = YPPlist(2,YPPsym((P)"t"),YPPsym((P)"key-vals"));
-  lit_149 = YPPlist(2,YPPsym((P)"key"),YPPsym((P)"val"));
-  T215 = YPsig(LITREF(lit_149),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_61 = YPmet(FUNCODEREF(fun_61),YPfalse,T215,ENVNUL,PNUL,YPfalse);
-  T214 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YLcolG));
-  T213 = YPsig(LITREF(lit_148),YPPlist(1,T214),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_col_62 = YPmet(FUNCODEREF(fun_col_62),LITREF(lit_147),T213,ENVNUL,PNUL,YPfalse);
-  T218 = BOUNDP(YgooScolsScolYcol);
+  T207 = fun_add_new_57;
+  T204 = XCALL2(1,VARREF(YPdefine_method),T205,T207);
+  VARSET(YgooScolsSseqYadd_new,T204);
+  lit_143 = YPPlist(1,YPPsym((P)"s"));
+  lit_144 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"e"));
+  lit_145 = YPsb((P)"");
+  lit_146 = YPsb((P)" ");
+  T209 = YPsig(LITREF(lit_144),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_58 = YPmet(FUNCODEREF(fun_58),YPfalse,T209,ENVNUL,PNUL,YPfalse);
+  T208 = YPsig(LITREF(lit_143),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
+  fun_vals_to_str_59 = YPmet(FUNCODEREF(fun_vals_to_str_59),LITREF(lit_62),T208,ENVNUL,PNUL,YPfalse);
+  T212 = BOUNDP(YgooScolsSseqYvals_to_str);
+  if (T212 != YPfalse) {
+    T211 = VARREF(YgooScolsSseqYvals_to_str);
+  } else {
+    T211 = YPfalse;
+  }
+  T213 = fun_vals_to_str_59;
+  T210 = XCALL2(1,VARREF(YPdefine_method),T211,T213);
+  VARSET(YgooScolsSseqYvals_to_str,T210);
+  lit_147 = YPPlist(2,YPPsym((P)"fn"),YPPsym((P)"key-vals"));
+  lit_148 = YPPsym((P)"rep");
+  lit_149 = YPPlist(1,YPPsym((P)"e"));
+  T215 = YPsig(LITREF(lit_149),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_rep_60 = YPmet(FUNCODEREF(fun_rep_60),LITREF(lit_148),T215,ENVNUL,PNUL,YPfalse);
+  T214 = YPsig(LITREF(lit_147),YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_do_key_vals_61 = YPmet(FUNCODEREF(fun_do_key_vals_61),LITREF(lit_64),T214,ENVNUL,PNUL,YPfalse);
+  T218 = BOUNDP(YgooScolsSseqYdo_key_vals);
   if (T218 != YPfalse) {
-    T217 = VARREF(YgooScolsScolYcol);
+    T217 = VARREF(YgooScolsSseqYdo_key_vals);
   } else {
     T217 = YPfalse;
   }
-  T219 = fun_col_62;
+  T219 = fun_do_key_vals_61;
   T216 = XCALL2(1,VARREF(YPdefine_method),T217,T219);
-  VARSET(YgooScolsScolYcol,T216);
-  lit_150 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"end"));
-  T220 = YPsig(LITREF(lit_150),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_suffixQ_63 = YPmet(FUNCODEREF(fun_suffixQ_63),LITREF(lit_50),T220,ENVNUL,PNUL,YPfalse);
-  T223 = BOUNDP(YgooScolsSseqYsuffixQ);
-  if (T223 != YPfalse) {
-    T222 = VARREF(YgooScolsSseqYsuffixQ);
+  VARSET(YgooScolsSseqYdo_key_vals,T216);
+  lit_150 = YPPsym((P)"col");
+  lit_151 = YPPlist(2,YPPsym((P)"t"),YPPsym((P)"key-vals"));
+  lit_152 = YPPlist(2,YPPsym((P)"key"),YPPsym((P)"val"));
+  T222 = YPsig(LITREF(lit_152),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_62 = YPmet(FUNCODEREF(fun_62),YPfalse,T222,ENVNUL,PNUL,YPfalse);
+  T221 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YLcolG));
+  T220 = YPsig(LITREF(lit_151),YPPlist(1,T221),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_col_63 = YPmet(FUNCODEREF(fun_col_63),LITREF(lit_150),T220,ENVNUL,PNUL,YPfalse);
+  T225 = BOUNDP(YgooScolsScolYcol);
+  if (T225 != YPfalse) {
+    T224 = VARREF(YgooScolsScolYcol);
   } else {
-    T222 = YPfalse;
+    T224 = YPfalse;
   }
-  T224 = fun_suffixQ_63;
-  T221 = XCALL2(1,VARREF(YPdefine_method),T222,T224);
-  VARSET(YgooScolsSseqYsuffixQ,T221);
-  lit_151 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"begin"));
-  T225 = YPsig(LITREF(lit_151),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_prefixQ_64 = YPmet(FUNCODEREF(fun_prefixQ_64),LITREF(lit_52),T225,ENVNUL,PNUL,YPfalse);
-  T228 = BOUNDP(YgooScolsSseqYprefixQ);
-  if (T228 != YPfalse) {
-    T227 = VARREF(YgooScolsSseqYprefixQ);
+  T226 = fun_col_63;
+  T223 = XCALL2(1,VARREF(YPdefine_method),T224,T226);
+  VARSET(YgooScolsScolYcol,T223);
+  lit_153 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"end"));
+  T227 = YPsig(LITREF(lit_153),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_suffixQ_64 = YPmet(FUNCODEREF(fun_suffixQ_64),LITREF(lit_52),T227,ENVNUL,PNUL,YPfalse);
+  T230 = BOUNDP(YgooScolsSseqYsuffixQ);
+  if (T230 != YPfalse) {
+    T229 = VARREF(YgooScolsSseqYsuffixQ);
   } else {
-    T227 = YPfalse;
+    T229 = YPfalse;
   }
-  T229 = fun_prefixQ_64;
-  T226 = XCALL2(1,VARREF(YPdefine_method),T227,T229);
-  VARSET(YgooScolsSseqYprefixQ,T226);
-  lit_152 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"n"));
-  T230 = YPsig(LITREF(lit_152),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_repeat_65 = YPmet(FUNCODEREF(fun_repeat_65),LITREF(lit_54),T230,ENVNUL,PNUL,YPfalse);
-  T233 = BOUNDP(YgooScolsSseqYrepeat);
-  if (T233 != YPfalse) {
-    T232 = VARREF(YgooScolsSseqYrepeat);
+  T231 = fun_suffixQ_64;
+  T228 = XCALL2(1,VARREF(YPdefine_method),T229,T231);
+  VARSET(YgooScolsSseqYsuffixQ,T228);
+  lit_154 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"begin"));
+  T232 = YPsig(LITREF(lit_154),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_prefixQ_65 = YPmet(FUNCODEREF(fun_prefixQ_65),LITREF(lit_54),T232,ENVNUL,PNUL,YPfalse);
+  T235 = BOUNDP(YgooScolsSseqYprefixQ);
+  if (T235 != YPfalse) {
+    T234 = VARREF(YgooScolsSseqYprefixQ);
   } else {
-    T232 = YPfalse;
+    T234 = YPfalse;
   }
-  T234 = fun_repeat_65;
-  T231 = XCALL2(1,VARREF(YPdefine_method),T232,T234);
-  VARSET(YgooScolsSseqYrepeat,T231);
-  lit_153 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"sep"));
-  T235 = YPsig(LITREF(lit_153),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
-  fun_split_66 = YPmet(FUNCODEREF(fun_split_66),LITREF(lit_56),T235,ENVNUL,PNUL,YPfalse);
-  T238 = BOUNDP(YgooScolsSseqYsplit);
-  if (T238 != YPfalse) {
-    T237 = VARREF(YgooScolsSseqYsplit);
+  T236 = fun_prefixQ_65;
+  T233 = XCALL2(1,VARREF(YPdefine_method),T234,T236);
+  VARSET(YgooScolsSseqYprefixQ,T233);
+  lit_155 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"n"));
+  T237 = YPsig(LITREF(lit_155),YPPlist(2,VARREF(YLseqG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_repeat_66 = YPmet(FUNCODEREF(fun_repeat_66),LITREF(lit_56),T237,ENVNUL,PNUL,YPfalse);
+  T240 = BOUNDP(YgooScolsSseqYrepeat);
+  if (T240 != YPfalse) {
+    T239 = VARREF(YgooScolsSseqYrepeat);
   } else {
-    T237 = YPfalse;
+    T239 = YPfalse;
   }
-  T239 = fun_split_66;
-  T236 = XCALL2(1,VARREF(YPdefine_method),T237,T239);
-  VARSET(YgooScolsSseqYsplit,T236);
-  lit_154 = YPPlist(2,YPPsym((P)"ss"),YPPsym((P)"sep"));
-  lit_155 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"y"));
-  T241 = YPsig(LITREF(lit_155),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_67 = YPmet(FUNCODEREF(fun_67),YPfalse,T241,ENVNUL,PNUL,YPfalse);
-  T240 = YPsig(LITREF(lit_154),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
-  fun_join_68 = YPmet(FUNCODEREF(fun_join_68),LITREF(lit_58),T240,ENVNUL,PNUL,YPfalse);
-  T244 = BOUNDP(YgooScolsSseqYjoin);
-  if (T244 != YPfalse) {
-    T243 = VARREF(YgooScolsSseqYjoin);
+  T241 = fun_repeat_66;
+  T238 = XCALL2(1,VARREF(YPdefine_method),T239,T241);
+  VARSET(YgooScolsSseqYrepeat,T238);
+  lit_156 = YPPlist(2,YPPsym((P)"s"),YPPsym((P)"sep"));
+  T242 = YPsig(LITREF(lit_156),YPPlist(2,VARREF(YLseqG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
+  fun_split_67 = YPmet(FUNCODEREF(fun_split_67),LITREF(lit_58),T242,ENVNUL,PNUL,YPfalse);
+  T245 = BOUNDP(YgooScolsSseqYsplit);
+  if (T245 != YPfalse) {
+    T244 = VARREF(YgooScolsSseqYsplit);
   } else {
-    T243 = YPfalse;
+    T244 = YPfalse;
   }
-  T245 = fun_join_68;
-  T242 = XCALL2(1,VARREF(YPdefine_method),T243,T245);
-  VARSET(YgooScolsSseqYjoin,T242);
+  T246 = fun_split_67;
+  T243 = XCALL2(1,VARREF(YPdefine_method),T244,T246);
+  VARSET(YgooScolsSseqYsplit,T243);
+  lit_157 = YPPlist(2,YPPsym((P)"ss"),YPPsym((P)"sep"));
+  lit_158 = YPPlist(2,YPPsym((P)"x"),YPPsym((P)"y"));
+  T248 = YPsig(LITREF(lit_158),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_68 = YPmet(FUNCODEREF(fun_68),YPfalse,T248,ENVNUL,PNUL,YPfalse);
+  T247 = YPsig(LITREF(lit_157),YPPlist(2,VARREF(YLseqG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLseqG),Ynil);
+  fun_join_69 = YPmet(FUNCODEREF(fun_join_69),LITREF(lit_60),T247,ENVNUL,PNUL,YPfalse);
+  T251 = BOUNDP(YgooScolsSseqYjoin);
+  if (T251 != YPfalse) {
+    T250 = VARREF(YgooScolsSseqYjoin);
+  } else {
+    T250 = YPfalse;
+  }
+  T252 = fun_join_69;
+  T249 = XCALL2(1,VARREF(YPdefine_method),T250,T252);
+  VARSET(YgooScolsSseqYjoin,T249);
   tmpF1692 = YPfalse;
   if (tmpF1692 != YPfalse) {
-    T246 = VARREF(YgooScolsSseqYbelow);
+    T253 = VARREF(YgooScolsSseqYbelow);
   } else {
-    T246 = YPfalse;
+    T253 = YPfalse;
   }
   tmpF1693 = YPfalse;
   if (tmpF1693 != YPfalse) {
-    T247 = VARREF(YgooScolsSseqYsort_byX);
+    T254 = VARREF(YgooScolsSseqYsort_byX);
   } else {
-    T247 = YPfalse;
+    T254 = YPfalse;
   }
-  T248 = YPfalse;
-  return T248;
+  T255 = YPfalse;
+  return T255;
 }
 
 /* MODULE ENVIRONMENT INFORMATION */
@@ -3579,6 +3615,7 @@ static BINDING_INFO binding_infos[] = {
   {"repeat", CVAR, &YgooScolsSseqYrepeat},
   {"---main-0---", PVAR, NULL},
   {"sub", CVAR, &YgooScolsSseqYsub},
+  {"sub*", CVAR, &YgooScolsSseqYsubT},
   {"suffix?", CVAR, &YgooScolsSseqYsuffixQ},
   {"prefix?", CVAR, &YgooScolsSseqYprefixQ},
   {NULL, NVAR, NULL}
@@ -3618,6 +3655,7 @@ static EXPORT_INFO export_infos[] = {
   {"repeat", "repeat"},
   {"last", "last"},
   {"sub", "sub"},
+  {"sub*", "sub*"},
   {"suffix?", "suffix?"},
   {"cat", "cat"},
   {"prefix?", "prefix?"},

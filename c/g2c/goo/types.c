@@ -196,14 +196,14 @@ EXT(Yunexec,"goo/boot","unexec");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_4);
-DEFLIT(lit_7);
-DEFLIT(lit_3);
 DEFLIT(lit_5);
+DEFLIT(lit_1);
+DEFLIT(lit_7);
+DEFLIT(lit_4);
+DEFLIT(lit_3);
 DEFLIT(lit_2);
 DEFLIT(lit_6);
 DEFLIT(lit_0);
-DEFLIT(lit_1);
 
 /* FUNCTIONS: */
 

@@ -20,6 +20,7 @@
  ;; replaces subsequence in range between from and below of dst with
  ;; contents of src.
  (dg sub-setter (dst|<seq!> src|<seq> from|<int> below|<int>))
+ (dg sub*-setter (dst|<seq!> src|<seq> from|<int>))
 
  ;; inserts e into x below index before
  (dg ins! (x|<seq!> e|<any> before|<int> => <seq!>))
@@ -85,6 +86,9 @@
                          (insert (nxt nd) (nxt s)))))
               (seq (set (now nd) (now d))
                    (copy (nxt nd) (nxt d) (+ i 1))))))))
+
+(dm sub*-setter (src|<seq!> dst|<seq> from|<int> => <seq!>)
+  (set (sub dst from (len dst)) src))
 
 (dm sort! (items|<seq!> => <seq!>)
   (sort-by! items <))

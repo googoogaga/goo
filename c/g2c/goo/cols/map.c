@@ -323,6 +323,7 @@ EXT(Ysig_names,"goo/boot","sig-names");
 EXT(YgooScolsScolxYlenSfill_setter,"goo/cols/colx","len/fill-setter");
 EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
 EXT(YLlstG,"goo/boot","<lst>");
+EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(Yfun_name,"goo/boot","fun-name");
 EXT(YOanyQ,"goo/boot","@any?");
@@ -909,6 +910,7 @@ static IMPORT_INFO import_infos[] = {
   {"%c=", &module_info_gooSboot, "%c="},
   {"sub", &module_info_gooScolsSseq, "sub"},
   {"<lst>", &module_info_gooSboot, "<lst>"},
+  {"sub*", &module_info_gooScolsSseq, "sub*"},
   {"elt-or", &module_info_gooScolsScol, "elt-or"},
   {"fun-name", &module_info_gooSboot, "fun-name"},
   {"%i?", &module_info_gooSboot, "%i?"},

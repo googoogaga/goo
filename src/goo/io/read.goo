@@ -57,8 +57,7 @@
 
 (dv $close-paren   (make-reader-token "unexpected right parenthesis"))
 (dv $close-bracket (make-reader-token "unexpected right bracket"))
-
-(dv $dot (make-reader-token "unexpected \" . \""))
+(dv $close-curly   (make-reader-token "unexpected right curly"))
 
 ;;  Main dispatch
 
@@ -158,9 +157,33 @@
           '()
           (pair form (sub-read-seq c e port)))))
 
+(dm sub-read-brackets (c|<chr> port|<port> => <any>)
+  (def form (sub-read-seq c $close-bracket port))
+  (case (len form)
+    ((2) `(elt ,(1st form) ,(2nd form)))
+    ((3) (if (== (3rd form) '*)
+             `(sub* ,(1st form) ,(2nd form))
+             `(sub ,(1st form) ,(2nd form) ,(3rd form))))
+    (#t (reading-error port "invalid [ ... ] form"))))
+
+(dm sub-read-curlies (c|<chr> port|<port> => <any>)
+  (def form      (sub-read-seq c $close-curly port))
+  (def dot-index (pos form '.))
+  (if dot-index
+      `(fun ,(sub form 0 dot-index) ,@(sub* form (+ dot-index 1)))
+      `(fun () ,@form)))
+
 (set-standard-read-macro! #\( #t sub-read-list)
 
 (set-standard-read-macro! #\) #t (fun (c port) $close-paren))
+
+(set-standard-read-macro! #\{ #t sub-read-curlies)
+
+(set-standard-read-macro! #\} #t (fun (c port) $close-curly))
+
+(set-standard-read-macro! #\[ #t sub-read-brackets)
+
+(set-standard-read-macro! #\] #t (fun (c port) $close-bracket))
 
 (set-standard-read-macro!
   #\' #t (fun (c port) (lst 'quote (sub-read-carefully port))))
@@ -287,8 +310,6 @@
     (get port)
     (as <tup> (sub-read-list c port))))
 
-(set-standard-read-macro! #\] #t (fun (c port) $close-bracket))
-
 (define-sharp-macro
   #\[
   (fun (c port)
@@ -329,7 +350,7 @@
             (if (any? (fun (x) (= string x)) $strange-symbol-names)
                 (as <sym> (make-immutable! string))
                 (if (= string ".")
-                    $dot
+                    (as <sym> (make-immutable! string))
                     (reading-error port "unsupported number syntax" string)))))
       (seq ;; (put out #\n) (newline out)
        (as <sym> (make-immutable! string)))))

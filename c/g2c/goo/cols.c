@@ -98,6 +98,7 @@ EXT(YLproductG,"goo/boot","<product>");
 EXT(YgooScolsScolYfold,"goo/cols/col","fold");
 EXT(YgooSmacrosY1st,"goo/macros","1st");
 EXT(Yfun_naryQ,"goo/boot","fun-nary?");
+EXT(YgooScolsSseqxYsubT_setter,"goo/cols/seqx","sub*-setter");
 EXT(YLchrG,"goo/boot","<chr>");
 EXT(Yclass_direct_props,"goo/boot","class-direct-props");
 EXT(YgooScolsSseqxYsub_setter,"goo/cols/seqx","sub-setter");
@@ -295,6 +296,7 @@ EXT(YgooScolsSrepYrep_elt_setter,"goo/cols/rep","rep-elt-setter");
 EXT(YgooScolsScolxYlenSfill_setter,"goo/cols/colx","len/fill-setter");
 EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
 EXT(YLlstG,"goo/boot","<lst>");
+EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(Yfun_name,"goo/boot","fun-name");
 EXT(YOanyQ,"goo/boot","@any?");
@@ -545,6 +547,7 @@ static IMPORT_INFO import_infos[] = {
   {"%fsinh", &module_info_gooSboot, "%fsinh"},
   {"%unlink-stack", &module_info_gooSboot, "%unlink-stack"},
   {"fun-nary?", &module_info_gooSboot, "fun-nary?"},
+  {"sub*-setter", &module_info_gooScolsSseqx, "sub*-setter"},
   {"@not", &module_info_gooSboot, "@not"},
   {"<chr>", &module_info_gooSboot, "<chr>"},
   {"class-direct-props", &module_info_gooSboot, "class-direct-props"},
@@ -866,6 +869,7 @@ static IMPORT_INFO import_infos[] = {
   {"%c=", &module_info_gooSboot, "%c="},
   {"sub", &module_info_gooScolsSseq, "sub"},
   {"<lst>", &module_info_gooSboot, "<lst>"},
+  {"sub*", &module_info_gooScolsSseq, "sub*"},
   {"elt-or", &module_info_gooScolsScol, "elt-or"},
   {"fun-name", &module_info_gooSboot, "fun-name"},
   {"%i?", &module_info_gooSboot, "%i?"},
@@ -970,6 +974,7 @@ static EXPORT_INFO export_infos[] = {
   {"tup", "tup"},
   {"fold", "fold"},
   {"1st", "1st"},
+  {"sub*-setter", "sub*-setter"},
   {"sub-setter", "sub-setter"},
   {"vals-to-str", "vals-to-str"},
   {"<map>", "<map>"},
@@ -1070,6 +1075,7 @@ static EXPORT_INFO export_infos[] = {
   {"len/fill-setter", "len/fill-setter"},
   {"sub", "sub"},
   {"<lst>", "<lst>"},
+  {"sub*", "sub*"},
   {"elt-or", "elt-or"},
   {"range", "range"},
   {"suffix?", "suffix?"},

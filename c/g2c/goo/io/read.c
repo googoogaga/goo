@@ -39,6 +39,7 @@ EXT(YgooScolsScolYfab_fillX,"goo/cols/col","fab-fill!");
 EXT(YLcolIG,"goo/boot","<col.>");
 EXT(YgooSioSportYLfile_in_portG,"goo/io/port","<file-in-port>");
 EXT(Yfun_refs,"goo/boot","fun-refs");
+DEF(YgooSioSreadYsub_read_brackets,"goo/io/read","sub-read-brackets");
 EXT(YgooSruntimeYloc_val_setter,"goo/runtime","loc-val-setter");
 EXT(Yproperty_unbound_error,"goo/boot","property-unbound-error");
 EXT(YgooSmathYtanh,"goo/math","tanh");
@@ -68,6 +69,7 @@ EXT(YgooSmathYalphaQ,"goo/math","alpha?");
 EXT(YgooSmathYrem,"goo/math","rem");
 EXT(YgooStypesYas,"goo/types","as");
 EXT(YgooScolsSseqxYpushX,"goo/cols/seqx","push!");
+DEF(YgooSioSreadYsub_read_curlies,"goo/io/read","sub-read-curlies");
 EXT(YgooSmacrosYlift_place_subforms,"goo/macros","lift-place-subforms");
 EXT(YgooSmathYC,"goo/math","^");
 EXT(Ylst,"goo/boot","lst");
@@ -114,6 +116,7 @@ EXT(YgooStypesYlen,"goo/types","len");
 EXT(YgooSmacrosYmatch_sublist,"goo/macros","match-sublist");
 DEF(YgooSioSreadYDstrange_symbol_names,"goo/io/read","$strange-symbol-names");
 EXT(YgooSmathYatan,"goo/math","atan");
+DEF(YgooSioSreadYDclose_curly,"goo/io/read","$close-curly");
 EXT(YgooSconditionsYproperty_error_owner,"goo/conditions","property-error-owner");
 EXT(YgooSioSportYLout_portG,"goo/io/port","<out-port>");
 EXT(YgooSmathYT,"goo/math","*");
@@ -121,7 +124,6 @@ EXT(YgooScolsScolYelts,"goo/cols/col","elts");
 EXT(YgooScolsSzipYLzipG,"goo/cols/zip","<zip>");
 EXT(YgooScolsScolxYdelX,"goo/cols/colx","del!");
 EXT(YgooSioSportYLin_portG,"goo/io/port","<in-port>");
-DEF(YgooSioSreadYDdot,"goo/io/read","$dot");
 EXT(YgooSmacrosYnapp,"goo/macros","napp");
 EXT(YgooSconditionsYLassert_errorG,"goo/conditions","<assert-error>");
 EXT(YLfixnumG,"goo/boot","<fixnum>");
@@ -166,6 +168,7 @@ EXT(YgooSmathYto_str,"goo/math","to-str");
 EXT(YgooScolsScolYfold,"goo/cols/col","fold");
 EXT(YgooSmacrosY1st,"goo/macros","1st");
 EXT(Yfun_naryQ,"goo/boot","fun-nary?");
+EXT(YgooScolsSseqxYsubT_setter,"goo/cols/seqx","sub*-setter");
 EXT(YLchrG,"goo/boot","<chr>");
 EXT(Yclass_direct_props,"goo/boot","class-direct-props");
 EXT(YgooScolsSseqxYsub_setter,"goo/cols/seqx","sub-setter");
@@ -511,6 +514,7 @@ DEF(YgooSioSreadYTread_dispatch_vectorT,"goo/io/read","*read-dispatch-vector*");
 EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
 EXT(YLlstG,"goo/boot","<lst>");
 EXT(YgooSmagYL,"goo/mag","<");
+EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(Yfun_name,"goo/boot","fun-name");
 EXT(YgooSconditionsYdefault_handler_description,"goo/conditions","default-handler-description");
@@ -553,125 +557,137 @@ EXT(YgooSmathYtan,"goo/math","tan");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_118);
-DEFLIT(lit_60);
-DEFLIT(lit_66);
-DEFLIT(lit_61);
-DEFLIT(lit_47);
+DEFLIT(lit_63);
+DEFLIT(lit_12);
+DEFLIT(lit_79);
+DEFLIT(lit_74);
 DEFLIT(lit_26);
 DEFLIT(lit_5);
-DEFLIT(lit_9);
 DEFLIT(lit_17);
-DEFLIT(lit_91);
-DEFLIT(lit_45);
-DEFLIT(lit_62);
-DEFLIT(lit_79);
-DEFLIT(lit_76);
-DEFLIT(lit_18);
-DEFLIT(lit_107);
+DEFLIT(lit_69);
 DEFLIT(lit_95);
-DEFLIT(lit_85);
-DEFLIT(lit_82);
-DEFLIT(lit_113);
+DEFLIT(lit_128);
+DEFLIT(lit_75);
+DEFLIT(lit_45);
+DEFLIT(lit_36);
+DEFLIT(lit_38);
 DEFLIT(lit_86);
-DEFLIT(lit_115);
-DEFLIT(lit_67);
-DEFLIT(lit_24);
-DEFLIT(lit_117);
-DEFLIT(lit_14);
-DEFLIT(lit_55);
-DEFLIT(lit_43);
-DEFLIT(lit_12);
-DEFLIT(lit_74);
-DEFLIT(lit_52);
+DEFLIT(lit_34);
+DEFLIT(lit_61);
+DEFLIT(lit_6);
 DEFLIT(lit_104);
+DEFLIT(lit_125);
+DEFLIT(lit_51);
+DEFLIT(lit_97);
+DEFLIT(lit_27);
+DEFLIT(lit_80);
+DEFLIT(lit_72);
+DEFLIT(lit_129);
+DEFLIT(lit_83);
+DEFLIT(lit_117);
+DEFLIT(lit_30);
+DEFLIT(lit_52);
 DEFLIT(lit_54);
 DEFLIT(lit_13);
-DEFLIT(lit_90);
-DEFLIT(lit_16);
-DEFLIT(lit_58);
-DEFLIT(lit_110);
-DEFLIT(lit_28);
-DEFLIT(lit_59);
+DEFLIT(lit_47);
+DEFLIT(lit_122);
+DEFLIT(lit_96);
+DEFLIT(lit_1);
+DEFLIT(lit_98);
+DEFLIT(lit_112);
+DEFLIT(lit_31);
+DEFLIT(lit_24);
+DEFLIT(lit_18);
+DEFLIT(lit_25);
+DEFLIT(lit_120);
+DEFLIT(lit_105);
 DEFLIT(lit_102);
-DEFLIT(lit_99);
-DEFLIT(lit_50);
-DEFLIT(lit_81);
-DEFLIT(lit_72);
-DEFLIT(lit_39);
-DEFLIT(lit_70);
-DEFLIT(lit_36);
-DEFLIT(lit_21);
-DEFLIT(lit_29);
+DEFLIT(lit_118);
+DEFLIT(lit_67);
+DEFLIT(lit_41);
 DEFLIT(lit_11);
 DEFLIT(lit_32);
-DEFLIT(lit_56);
-DEFLIT(lit_100);
-DEFLIT(lit_23);
-DEFLIT(lit_103);
-DEFLIT(lit_40);
-DEFLIT(lit_33);
-DEFLIT(lit_105);
-DEFLIT(lit_46);
-DEFLIT(lit_19);
-DEFLIT(lit_27);
-DEFLIT(lit_97);
-DEFLIT(lit_80);
-DEFLIT(lit_51);
-DEFLIT(lit_38);
-DEFLIT(lit_20);
-DEFLIT(lit_96);
+DEFLIT(lit_21);
+DEFLIT(lit_114);
 DEFLIT(lit_78);
-DEFLIT(lit_71);
-DEFLIT(lit_48);
-DEFLIT(lit_93);
-DEFLIT(lit_53);
-DEFLIT(lit_112);
-DEFLIT(lit_57);
-DEFLIT(lit_44);
-DEFLIT(lit_111);
-DEFLIT(lit_94);
-DEFLIT(lit_64);
-DEFLIT(lit_68);
-DEFLIT(lit_87);
-DEFLIT(lit_83);
-DEFLIT(lit_88);
-DEFLIT(lit_7);
-DEFLIT(lit_77);
-DEFLIT(lit_92);
-DEFLIT(lit_10);
-DEFLIT(lit_15);
-DEFLIT(lit_106);
-DEFLIT(lit_89);
-DEFLIT(lit_109);
-DEFLIT(lit_31);
 DEFLIT(lit_65);
-DEFLIT(lit_108);
+DEFLIT(lit_40);
+DEFLIT(lit_66);
+DEFLIT(lit_119);
+DEFLIT(lit_93);
+DEFLIT(lit_9);
+DEFLIT(lit_16);
+DEFLIT(lit_3);
+DEFLIT(lit_59);
+DEFLIT(lit_10);
+DEFLIT(lit_111);
+DEFLIT(lit_64);
+DEFLIT(lit_85);
+DEFLIT(lit_92);
+DEFLIT(lit_123);
+DEFLIT(lit_121);
+DEFLIT(lit_37);
+DEFLIT(lit_68);
+DEFLIT(lit_8);
+DEFLIT(lit_82);
+DEFLIT(lit_89);
+DEFLIT(lit_87);
+DEFLIT(lit_44);
+DEFLIT(lit_29);
+DEFLIT(lit_55);
+DEFLIT(lit_81);
+DEFLIT(lit_103);
+DEFLIT(lit_113);
+DEFLIT(lit_116);
+DEFLIT(lit_48);
+DEFLIT(lit_14);
+DEFLIT(lit_62);
+DEFLIT(lit_46);
+DEFLIT(lit_99);
+DEFLIT(lit_7);
+DEFLIT(lit_90);
+DEFLIT(lit_110);
+DEFLIT(lit_91);
+DEFLIT(lit_100);
+DEFLIT(lit_15);
+DEFLIT(lit_84);
+DEFLIT(lit_127);
+DEFLIT(lit_71);
+DEFLIT(lit_28);
+DEFLIT(lit_70);
+DEFLIT(lit_94);
+DEFLIT(lit_126);
+DEFLIT(lit_0);
+DEFLIT(lit_60);
 DEFLIT(lit_42);
 DEFLIT(lit_22);
-DEFLIT(lit_0);
-DEFLIT(lit_98);
-DEFLIT(lit_8);
 DEFLIT(lit_101);
-DEFLIT(lit_34);
-DEFLIT(lit_75);
-DEFLIT(lit_6);
-DEFLIT(lit_2);
-DEFLIT(lit_41);
-DEFLIT(lit_30);
-DEFLIT(lit_116);
-DEFLIT(lit_63);
-DEFLIT(lit_49);
-DEFLIT(lit_84);
-DEFLIT(lit_35);
-DEFLIT(lit_25);
-DEFLIT(lit_73);
-DEFLIT(lit_69);
 DEFLIT(lit_4);
-DEFLIT(lit_37);
-DEFLIT(lit_3);
-DEFLIT(lit_114);
-DEFLIT(lit_1);
+DEFLIT(lit_57);
+DEFLIT(lit_108);
+DEFLIT(lit_109);
+DEFLIT(lit_106);
+DEFLIT(lit_50);
+DEFLIT(lit_20);
+DEFLIT(lit_88);
+DEFLIT(lit_39);
+DEFLIT(lit_107);
+DEFLIT(lit_77);
+DEFLIT(lit_2);
+DEFLIT(lit_56);
+DEFLIT(lit_58);
+DEFLIT(lit_53);
+DEFLIT(lit_33);
+DEFLIT(lit_115);
+DEFLIT(lit_73);
+DEFLIT(lit_76);
+DEFLIT(lit_49);
+DEFLIT(lit_35);
+DEFLIT(lit_43);
+DEFLIT(lit_124);
+DEFLIT(lit_130);
+DEFLIT(lit_23);
+DEFLIT(lit_19);
 
 /* FUNCTIONS: */
 
@@ -702,55 +718,58 @@ FUNFOR(YgooSioSreadYsub_read_list_eof_error);
 LOCFOR(fun_read_next_24);
 LOCFOR(fun_sub_read_list_25);
 LOCFOR(fun_sub_read_seq_26);
-LOCFOR(fun_27);
-LOCFOR(fun_28);
+LOCFOR(fun_sub_read_brackets_27);
+LOCFOR(fun_sub_read_curlies_28);
 LOCFOR(fun_29);
 LOCFOR(fun_30);
-LOCFOR(fun_loop_31);
-FUNFOR(YgooSioSreadYread_string_literal);
+LOCFOR(fun_31);
+LOCFOR(fun_32);
 LOCFOR(fun_33);
-LOCFOR(fun_loop_34);
-LOCFOR(fun_gobble_line_35);
-LOCFOR(fun_define_sharp_macro_36);
+LOCFOR(fun_34);
+LOCFOR(fun_loop_35);
+FUNFOR(YgooSioSreadYread_string_literal);
 LOCFOR(fun_37);
-LOCFOR(fun_38);
-LOCFOR(fun_39);
-LOCFOR(fun_40);
-LOCFOR(fun_loop_41);
-FUNFOR(YgooSioSreadYgobble_nested_comment);
+LOCFOR(fun_loop_38);
+LOCFOR(fun_gobble_line_39);
+LOCFOR(fun_define_sharp_macro_40);
+LOCFOR(fun_41);
+LOCFOR(fun_42);
 LOCFOR(fun_43);
 LOCFOR(fun_44);
-LOCFOR(fun_45);
-LOCFOR(fun_46);
+LOCFOR(fun_loop_45);
+FUNFOR(YgooSioSreadYgobble_nested_comment);
 LOCFOR(fun_47);
 LOCFOR(fun_48);
 LOCFOR(fun_49);
-LOCFOR(fun_loop_50);
-LOCFOR(fun_sub_read_token_51);
+LOCFOR(fun_50);
+LOCFOR(fun_51);
 LOCFOR(fun_52);
-LOCFOR(fun_parse_token_53);
-LOCFOR(fun_reading_error_54);
-LOCFOR(fun_warn_55);
-LOCFOR(fun_reverse_list_Gstring_56);
-LOCFOR(fun_make_immutableX_57);
+LOCFOR(fun_loop_53);
+LOCFOR(fun_sub_read_token_54);
+LOCFOR(fun_55);
+LOCFOR(fun_parse_token_56);
+LOCFOR(fun_reading_error_57);
+LOCFOR(fun_warn_58);
+LOCFOR(fun_reverse_list_Gstring_59);
+LOCFOR(fun_make_immutableX_60);
 extern P YgooSioSreadY___main_0___ ();
 extern P YgooSioSreadY___main_1___ ();
 
 /* FUNCTION CODES: */
 
 FUNCODEDEF(fun_loop_0) {
-  P formF2170;
+  P formF2175;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8;
 LINK_STACK();
 loop:
   T1 = CALL1(1,VARREF(YgooSioSreadYsub_read),FREEREF(0));
-  formF2170 = T1;
-  T4 = CALL1(1,VARREF(YgooSioSreadYreader_tokenQ),formF2170);
+  formF2175 = T1;
+  T4 = CALL1(1,VARREF(YgooSioSreadYreader_tokenQ),formF2175);
   T3 = CALL1(1,VARREF(Ynot),T4);
   if (T3 != YPfalse) {
-    T2 = formF2170;
+    T2 = formF2175;
   } else {
-    T6 = CALL2(1,VARREF(YgooSmacrosYEE),formF2170,VARREF(YgooSioSreadYDclose_paren));
+    T6 = CALL2(1,VARREF(YgooSmacrosYEE),formF2175,VARREF(YgooSioSreadYDclose_paren));
     if (T6 != YPfalse) {
       T7 = CALL1(1,VARREF(YgooSioSreadYwarn),LITREF(lit_4));
       T5 = T7;
@@ -767,16 +786,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_read_1) {
   P port_;
-  P loopF2171;
+  P loopF2176;
   P T0,T1,T2;
   P a1;
 LINK_STACK();
   ARG(port_, 0);
 loop:
   T1 = FUNSHELL(1,fun_loop_0,2);
-  loopF2171 = T1;
-  FUNINIT(loopF2171, 2,port_,loopF2171);
-  T2 = CALL0(0,loopF2171);
+  loopF2176 = T1;
+  FUNINIT(loopF2176, 2,port_,loopF2176);
+  T2 = CALL0(0,loopF2176);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -795,13 +814,13 @@ UNLINK_STACK();
 }
 
 FUNCODEDEF(fun_3) {
-  P tmpF2172;
+  P tmpF2177;
   P T0,T1,T2,T3,T4;
 LINK_STACK();
 loop:
   T1 = BOXVAL(FREEREF(0));
-  tmpF2172 = T1;
-  if (tmpF2172 != YPfalse) {
+  tmpF2177 = T1;
+  if (tmpF2177 != YPfalse) {
     T4 = BOXVAL(FREEREF(0));
     T3 = CALL1(1,VARREF(YgooSioSportYclose),T4);
     T2 = T3;
@@ -815,16 +834,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_read_from_string_4) {
   P x_;
-  P portF2173;
+  P portF2178;
   P T0,T1,T2,T3,T4;
   P a1;
 LINK_STACK();
   ARG(x_, 0);
 loop:
-  portF2173 = YPfalse;
-  portF2173 = BOXFAB(portF2173);
-  T3 = FUNFAB(fun_2,2,portF2173,x_);
-  T4 = FUNFAB(fun_3,1,portF2173);
+  portF2178 = YPfalse;
+  portF2178 = BOXFAB(portF2178);
+  T3 = FUNFAB(fun_2,2,portF2178,x_);
+  T4 = FUNFAB(fun_3,1,portF2178);
   T2 = with_cleanup(T3,T4);
   T0 = T2;
 UNLINK_STACK();
@@ -833,26 +852,26 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sub_read_carefully_5) {
   P port_;
-  P formF2174;
+  P formF2179;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8;
   P a1;
 LINK_STACK();
   ARG(port_, 0);
 loop:
   T1 = CALL1(1,VARREF(YgooSioSreadYsub_read),port_);
-  formF2174 = T1;
-  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),formF2174);
+  formF2179 = T1;
+  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),formF2179);
   if (T3 != YPfalse) {
     T4 = CALL2(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_9));
     T2 = T4;
   } else {
-    T6 = CALL1(1,VARREF(YgooSioSreadYreader_tokenQ),formF2174);
+    T6 = CALL1(1,VARREF(YgooSioSreadYreader_tokenQ),formF2179);
     if (T6 != YPfalse) {
-      T8 = CALL1(1,VARREF(Ytail),formF2174);
+      T8 = CALL1(1,VARREF(Ytail),formF2179);
       T7 = CALL2(1,VARREF(YgooSioSreadYreading_error),port_,T8);
       T5 = T7;
     } else {
-      T5 = formF2174;
+      T5 = formF2179;
     }
     T2 = T5;
   }
@@ -912,21 +931,21 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sub_read_10) {
   P port_;
-  P cF2175;
+  P cF2180;
   P T0,T1,T2,T3,T4,T5,T6;
   P a1;
 LINK_STACK();
   ARG(port_, 0);
 loop:
   T1 = CALL1(1,VARREF(YgooSioSportYget),port_);
-  cF2175 = T1;
-  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2175);
+  cF2180 = T1;
+  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2180);
   if (T3 != YPfalse) {
-    T2 = cF2175;
+    T2 = cF2180;
   } else {
-    T6 = CALL1(1,VARREF(YgooSmathYchar_Gascii),cF2175);
+    T6 = CALL1(1,VARREF(YgooSmathYchar_Gascii),cF2180);
     T5 = CALL2(1,VARREF(YgooSmacrosYelt),VARREF(YgooSioSreadYTread_dispatch_vectorT),T6);
-    T4 = CALL2(1,T5,cF2175,port_);
+    T4 = CALL2(1,T5,cF2180,port_);
     T2 = T4;
   }
   T0 = T2;
@@ -991,22 +1010,22 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSioSreadYflush_whitespace) {
   P port_;
-  P cF2176;
+  P cF2181;
   P T0,T1,T2,T3,T4,T5;
   P a1;
 LINK_STACK();
   ARG(port_, 0);
 loop:
   T1 = CALL1(1,VARREF(YgooSioSportYpeek),port_);
-  cF2176 = T1;
-  T4 = CALL1(1,VARREF(YgooSmathYchar_Gascii),cF2176);
+  cF2181 = T1;
+  T4 = CALL1(1,VARREF(YgooSmathYchar_Gascii),cF2181);
   T3 = CALL2(1,VARREF(YgooScolsScolYmemQ),VARREF(YgooScolsSstrYascii_whitespaces),T4);
   if (T3 != YPfalse) {
     CALL1(1,VARREF(YgooSioSportYget),port_);
     T5 = CALL1(1,VARREF(YgooSioSreadYflush_whitespace),port_);
     T2 = T5;
   } else {
-    T2 = cF2176;
+    T2 = cF2181;
   }
   T0 = T2;
 UNLINK_STACK();
@@ -1015,7 +1034,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_16) {
   P c_;
-  P UF2177;
+  P UF2182;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9;
   P a1;
 LINK_STACK();
@@ -1029,9 +1048,9 @@ loop:
     T0 = T2;
   } else {
     T4 = BOXVAL(FREEREF(2));
-    UF2177 = T4;
+    UF2182 = T4;
     T7 = CALL1(1,VARREF(YgooSconditionsYread),FREEREF(1));
-    T6 = CALL2(1,VARREF(YgooSmacrosYpair),T7,UF2177);
+    T6 = CALL2(1,VARREF(YgooSmacrosYpair),T7,UF2182);
     T5 = BOXVAL(FREEREF(2)) = T6;
     T9 = CALL1(1,VARREF(YgooSioSreadYflush_whitespace),FREEREF(1));
     a1 = T9;
@@ -1045,21 +1064,21 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSioSreadYread_delimited_list) {
   P endchar_,port_;
-  P loopF2179;
-  P retlistF2178;
+  P loopF2184;
+  P retlistF2183;
   P T0,T1,T2,T3,T4,T5;
   P a1,a2;
 LINK_STACK();
   ARG(endchar_, 0);
   ARG(port_, 1);
 loop:
-  retlistF2178 = VARREF(Ynil);
-  retlistF2178 = BOXFAB(retlistF2178);
+  retlistF2183 = VARREF(Ynil);
+  retlistF2183 = BOXFAB(retlistF2183);
   T3 = FUNSHELL(1,fun_loop_16,4);
-  loopF2179 = T3;
-  FUNINIT(loopF2179, 4,endchar_,port_,retlistF2178,loopF2179);
+  loopF2184 = T3;
+  FUNINIT(loopF2184, 4,endchar_,port_,retlistF2183,loopF2184);
   T5 = CALL1(1,VARREF(YgooSioSreadYflush_whitespace),port_);
-  T4 = CALL1(0,loopF2179,T5);
+  T4 = CALL1(0,loopF2184,T5);
   T2 = T4;
   T0 = T2;
 UNLINK_STACK();
@@ -1146,8 +1165,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_read_next_24) {
   P c_,prev_,form_;
-  P nextF2181;
-  P prevF2180;
+  P nextF2186;
+  P prevF2185;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19;
   P a1,a2,a3;
@@ -1162,7 +1181,7 @@ loop:
   } else {
     T1 = prev_;
   }
-  prevF2180 = T1;
+  prevF2185 = T1;
   T4 = CALL1(1,VARREF(YgooSmathYeof_objectQ),form_);
   if (T4 != YPfalse) {
     T5 = CALL1(1,VARREF(YgooSioSreadYsub_read_list_eof_error),FREEREF(0));
@@ -1170,14 +1189,14 @@ loop:
   } else {
     T7 = CALL2(1,VARREF(YgooSmacrosYEE),form_,VARREF(YgooSioSreadYDclose_paren));
     if (T7 != YPfalse) {
-      T8 = CALL1(1,VARREF(Ylst),prevF2180);
+      T8 = CALL1(1,VARREF(Ylst),prevF2185);
       T6 = T8;
     } else {
       T10 = CALL2(1,VARREF(YgooSmacrosYEE),form_,VARREF(YgooSioSreadYDvert_sym));
       if (T10 != YPfalse) {
         T12 = CALL1(1,VARREF(YgooSioSreadYsub_read_carefully),FREEREF(0));
-        nextF2181 = T12;
-        T14 = CALL2(1,VARREF(Ylst),prevF2180,nextF2181);
+        nextF2186 = T12;
+        T14 = CALL2(1,VARREF(Ylst),prevF2185,nextF2186);
         T15 = CALL2(1,VARREF(YgooSioSreadYsub_read_list),c_,FREEREF(0));
         T13 = CALL2(1,VARREF(YgooSmacrosYpair),T14,T15);
         T11 = T13;
@@ -1186,7 +1205,7 @@ loop:
         if (YPtrue != YPfalse) {
           T19 = CALL1(1,VARREF(YgooSioSreadYsub_read),FREEREF(0));
           T18 = CALL3(1,FREEREF(1),c_,form_,T19);
-          T17 = CALL2(1,VARREF(YgooSmacrosYpair),prevF2180,T18);
+          T17 = CALL2(1,VARREF(YgooSmacrosYpair),prevF2185,T18);
           T16 = T17;
         } else {
           T16 = YPfalse;
@@ -1204,8 +1223,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sub_read_list_25) {
   P c_,port_;
-  P read_nextF2183;
-  P formF2182;
+  P read_nextF2188;
+  P formF2187;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
   P a1,a2;
 LINK_STACK();
@@ -1213,22 +1232,22 @@ LINK_STACK();
   ARG(port_, 1);
 loop:
   T1 = CALL1(1,VARREF(YgooSioSreadYsub_read),port_);
-  formF2182 = T1;
-  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),formF2182);
+  formF2187 = T1;
+  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),formF2187);
   if (T3 != YPfalse) {
     T4 = CALL1(1,VARREF(YgooSioSreadYsub_read_list_eof_error),port_);
     T2 = T4;
   } else {
-    T6 = CALL2(1,VARREF(YgooSmacrosYEE),formF2182,VARREF(YgooSioSreadYDclose_paren));
+    T6 = CALL2(1,VARREF(YgooSmacrosYEE),formF2187,VARREF(YgooSioSreadYDclose_paren));
     if (T6 != YPfalse) {
       T5 = Ynil;
     } else {
       if (YPtrue != YPfalse) {
         T9 = FUNSHELL(1,fun_read_next_24,2);
-        read_nextF2183 = T9;
-        FUNINIT(read_nextF2183, 2,port_,read_nextF2183);
+        read_nextF2188 = T9;
+        FUNINIT(read_nextF2188, 2,port_,read_nextF2188);
         T11 = CALL1(1,VARREF(YgooSioSreadYsub_read),port_);
-        T10 = CALL3(1,read_nextF2183,c_,formF2182,T11);
+        T10 = CALL3(1,read_nextF2188,c_,formF2187,T11);
         T8 = T10;
         T7 = T8;
       } else {
@@ -1245,7 +1264,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sub_read_seq_26) {
   P c_,e_,port_;
-  P formF2184;
+  P formF2189;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8;
   P a1,a2,a3;
 LINK_STACK();
@@ -1254,18 +1273,18 @@ LINK_STACK();
   ARG(port_, 2);
 loop:
   T1 = CALL1(1,VARREF(YgooSioSreadYsub_read),port_);
-  formF2184 = T1;
-  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),formF2184);
+  formF2189 = T1;
+  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),formF2189);
   if (T3 != YPfalse) {
     T4 = CALL2(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_58));
     T2 = T4;
   } else {
-    T6 = CALL2(1,VARREF(YgooSmacrosYEE),formF2184,e_);
+    T6 = CALL2(1,VARREF(YgooSmacrosYEE),formF2189,e_);
     if (T6 != YPfalse) {
       T5 = Ynil;
     } else {
       T8 = CALL3(1,VARREF(YgooSioSreadYsub_read_seq),c_,e_,port_);
-      T7 = CALL2(1,VARREF(YgooSmacrosYpair),formF2184,T8);
+      T7 = CALL2(1,VARREF(YgooSmacrosYpair),formF2189,T8);
       T5 = T7;
     }
     T2 = T5;
@@ -1275,7 +1294,106 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_27) {
+FUNCODEDEF(fun_sub_read_brackets_27) {
+  P c_,port_;
+  P x_1392F2192;
+  P x_1391F2191;
+  P formF2190;
+  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
+  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
+  P T32;
+  P a1,a2;
+LINK_STACK();
+  ARG(c_, 0);
+  ARG(port_, 1);
+loop:
+  T1 = CALL3(1,VARREF(YgooSioSreadYsub_read_seq),c_,VARREF(YgooSioSreadYDclose_bracket),port_);
+  formF2190 = T1;
+  T3 = CALL1(1,VARREF(YgooStypesYlen),formF2190);
+  x_1391F2191 = T3;
+  x_1392F2192 = VARREF(YgooSmacrosYEE);
+  T6 = CALL2(1,x_1392F2192,x_1391F2191,YPint((P)2));
+  if (T6 != YPfalse) {
+    T8 = CALL1(1,VARREF(Ylst),LITREF(lit_61));
+    T10 = CALL1(1,VARREF(YgooSmacrosY1st),formF2190);
+    T9 = CALL1(1,VARREF(Ylst),T10);
+    T12 = CALL1(1,VARREF(YgooSmacrosY2nd),formF2190);
+    T11 = CALL1(1,VARREF(Ylst),T12);
+    T7 = CALL4(1,VARREF(YgooSmacrosYcat),T8,T9,T11,Ynil);
+    T5 = T7;
+  } else {
+    T14 = CALL2(1,x_1392F2192,x_1391F2191,YPint((P)3));
+    if (T14 != YPfalse) {
+      T17 = CALL1(1,VARREF(YgooScolsSseqY3rd),formF2190);
+      T16 = CALL2(1,VARREF(YgooSmacrosYEE),T17,LITREF(lit_62));
+      if (T16 != YPfalse) {
+        T19 = CALL1(1,VARREF(Ylst),LITREF(lit_63));
+        T21 = CALL1(1,VARREF(YgooSmacrosY1st),formF2190);
+        T20 = CALL1(1,VARREF(Ylst),T21);
+        T23 = CALL1(1,VARREF(YgooSmacrosY2nd),formF2190);
+        T22 = CALL1(1,VARREF(Ylst),T23);
+        T18 = CALL4(1,VARREF(YgooSmacrosYcat),T19,T20,T22,Ynil);
+        T15 = T18;
+      } else {
+        T25 = CALL1(1,VARREF(Ylst),LITREF(lit_64));
+        T27 = CALL1(1,VARREF(YgooSmacrosY1st),formF2190);
+        T26 = CALL1(1,VARREF(Ylst),T27);
+        T29 = CALL1(1,VARREF(YgooSmacrosY2nd),formF2190);
+        T28 = CALL1(1,VARREF(Ylst),T29);
+        T31 = CALL1(1,VARREF(YgooScolsSseqY3rd),formF2190);
+        T30 = CALL1(1,VARREF(Ylst),T31);
+        T24 = CALL5(1,VARREF(YgooSmacrosYcat),T25,T26,T28,T30,Ynil);
+        T15 = T24;
+      }
+      T13 = T15;
+    } else {
+      T32 = CALL2(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_65));
+      T13 = T32;
+    }
+    T5 = T13;
+  }
+  T4 = T5;
+  T2 = T4;
+  T0 = T2;
+UNLINK_STACK();
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_sub_read_curlies_28) {
+  P c_,port_;
+  P dot_indexF2194;
+  P formF2193;
+  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
+  P a1,a2;
+LINK_STACK();
+  ARG(c_, 0);
+  ARG(port_, 1);
+loop:
+  T1 = CALL3(1,VARREF(YgooSioSreadYsub_read_seq),c_,VARREF(YgooSioSreadYDclose_curly),port_);
+  formF2193 = T1;
+  T3 = CALL2(1,VARREF(YgooScolsSseqYpos),formF2193,LITREF(lit_68));
+  dot_indexF2194 = T3;
+  if (dot_indexF2194 != YPfalse) {
+    T6 = CALL1(1,VARREF(Ylst),LITREF(lit_69));
+    T8 = CALL3(1,VARREF(YgooScolsSseqYsub),formF2193,YPint((P)0),dot_indexF2194);
+    T7 = CALL1(1,VARREF(Ylst),T8);
+    T10 = CALL2(1,VARREF(YgooSmathYA),dot_indexF2194,YPint((P)1));
+    T9 = CALL2(1,VARREF(YgooScolsSseqYsubT),formF2193,T10);
+    T5 = CALL4(1,VARREF(YgooSmacrosYcat),T6,T7,T9,Ynil);
+    T4 = T5;
+  } else {
+    T12 = CALL1(1,VARREF(Ylst),LITREF(lit_69));
+    T13 = CALL1(1,VARREF(Ylst),Ynil);
+    T11 = CALL4(1,VARREF(YgooSmacrosYcat),T12,T13,formF2193,Ynil);
+    T4 = T11;
+  }
+  T2 = T4;
+  T0 = T2;
+UNLINK_STACK();
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_29) {
   P c_,port_;
   P a1,a2;
 LINK_STACK();
@@ -1286,38 +1404,60 @@ UNLINK_STACK();
   QRET(VARREF(YgooSioSreadYDclose_paren));
 }
 
-FUNCODEDEF(fun_28) {
-  P c_,port_;
-  P T0,T1;
-  P a1,a2;
-LINK_STACK();
-  ARG(c_, 0);
-  ARG(port_, 1);
-loop:
-  T1 = CALL1(1,VARREF(YgooSioSreadYsub_read_carefully),port_);
-  T0 = CALL2(1,VARREF(Ylst),LITREF(lit_61),T1);
-UNLINK_STACK();
-  QRET(T0);
-}
-
-FUNCODEDEF(fun_29) {
-  P c_,port_;
-  P T0,T1;
-  P a1,a2;
-LINK_STACK();
-  ARG(c_, 0);
-  ARG(port_, 1);
-loop:
-  T1 = CALL1(1,VARREF(YgooSioSreadYsub_read_carefully),port_);
-  T0 = CALL2(1,VARREF(Ylst),LITREF(lit_63),T1);
-UNLINK_STACK();
-  QRET(T0);
-}
-
 FUNCODEDEF(fun_30) {
   P c_,port_;
-  P keywordF2186;
-  P nextF2185;
+  P a1,a2;
+LINK_STACK();
+  ARG(c_, 0);
+  ARG(port_, 1);
+loop:
+UNLINK_STACK();
+  QRET(VARREF(YgooSioSreadYDclose_curly));
+}
+
+FUNCODEDEF(fun_31) {
+  P c_,port_;
+  P a1,a2;
+LINK_STACK();
+  ARG(c_, 0);
+  ARG(port_, 1);
+loop:
+UNLINK_STACK();
+  QRET(VARREF(YgooSioSreadYDclose_bracket));
+}
+
+FUNCODEDEF(fun_32) {
+  P c_,port_;
+  P T0,T1;
+  P a1,a2;
+LINK_STACK();
+  ARG(c_, 0);
+  ARG(port_, 1);
+loop:
+  T1 = CALL1(1,VARREF(YgooSioSreadYsub_read_carefully),port_);
+  T0 = CALL2(1,VARREF(Ylst),LITREF(lit_74),T1);
+UNLINK_STACK();
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_33) {
+  P c_,port_;
+  P T0,T1;
+  P a1,a2;
+LINK_STACK();
+  ARG(c_, 0);
+  ARG(port_, 1);
+loop:
+  T1 = CALL1(1,VARREF(YgooSioSreadYsub_read_carefully),port_);
+  T0 = CALL2(1,VARREF(Ylst),LITREF(lit_76),T1);
+UNLINK_STACK();
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_34) {
+  P c_,port_;
+  P keywordF2196;
+  P nextF2195;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9;
   P a1,a2;
 LINK_STACK();
@@ -1325,36 +1465,36 @@ LINK_STACK();
   ARG(port_, 1);
 loop:
   T1 = CALL1(1,VARREF(YgooSioSportYpeek),port_);
-  nextF2185 = T1;
-  T4 = CALL1(1,VARREF(YgooSmathYeof_objectQ),nextF2185);
+  nextF2195 = T1;
+  T4 = CALL1(1,VARREF(YgooSmathYeof_objectQ),nextF2195);
   if (T4 != YPfalse) {
-    T5 = CALL2(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_65));
+    T5 = CALL2(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_78));
     T3 = T5;
   } else {
-    T7 = CALL2(1,VARREF(YgooSmathYE),nextF2185,YPchr((P)64));
+    T7 = CALL2(1,VARREF(YgooSmathYE),nextF2195,YPchr((P)64));
     if (T7 != YPfalse) {
       CALL1(1,VARREF(YgooSioSportYget),port_);
-      T6 = LITREF(lit_66);
+      T6 = LITREF(lit_79);
     } else {
-      T6 = LITREF(lit_67);
+      T6 = LITREF(lit_80);
     }
     T3 = T6;
   }
-  keywordF2186 = T3;
+  keywordF2196 = T3;
   T9 = CALL1(1,VARREF(YgooSioSreadYsub_read_carefully),port_);
-  T8 = CALL2(1,VARREF(Ylst),keywordF2186,T9);
+  T8 = CALL2(1,VARREF(Ylst),keywordF2196,T9);
   T2 = T8;
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_loop_31) {
+FUNCODEDEF(fun_loop_35) {
   P l_,i_;
-  P ecF2190;
-  P tmpF2189;
-  P cF2188;
-  P cF2187;
+  P ecF2200;
+  P tmpF2199;
+  P cF2198;
+  P cF2197;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33;
@@ -1364,32 +1504,32 @@ LINK_STACK();
   ARG(i_, 1);
 loop:
   T1 = CALL1(1,VARREF(YgooSioSportYget),FREEREF(0));
-  cF2187 = T1;
-  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2187);
+  cF2197 = T1;
+  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2197);
   if (T3 != YPfalse) {
-    T4 = CALL2(1,VARREF(YgooSioSreadYreading_error),FREEREF(0),LITREF(lit_71));
+    T4 = CALL2(1,VARREF(YgooSioSreadYreading_error),FREEREF(0),LITREF(lit_84));
     T2 = T4;
   } else {
-    T6 = CALL2(1,VARREF(YgooSmathYE),cF2187,YPchr((P)92));
+    T6 = CALL2(1,VARREF(YgooSmathYE),cF2197,YPchr((P)92));
     if (T6 != YPfalse) {
       T8 = CALL1(1,VARREF(YgooSioSportYget),FREEREF(0));
-      cF2188 = T8;
-      T10 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2188);
+      cF2198 = T8;
+      T10 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2198);
       if (T10 != YPfalse) {
-        T11 = CALL2(1,VARREF(YgooSioSreadYreading_error),FREEREF(0),LITREF(lit_72));
+        T11 = CALL2(1,VARREF(YgooSioSreadYreading_error),FREEREF(0),LITREF(lit_85));
         T9 = T11;
       } else {
-        T14 = CALL2(1,VARREF(YgooSmathYE),cF2188,YPchr((P)92));
-        tmpF2189 = T14;
-        if (tmpF2189 != YPfalse) {
-          T15 = tmpF2189;
+        T14 = CALL2(1,VARREF(YgooSmathYE),cF2198,YPchr((P)92));
+        tmpF2199 = T14;
+        if (tmpF2199 != YPfalse) {
+          T15 = tmpF2199;
         } else {
-          T16 = CALL2(1,VARREF(YgooSmathYE),cF2188,YPchr((P)34));
+          T16 = CALL2(1,VARREF(YgooSmathYE),cF2198,YPchr((P)34));
           T15 = T16;
         }
         T13 = T15;
         if (T13 != YPfalse) {
-          T18 = CALL2(1,VARREF(YgooSmacrosYpair),cF2188,l_);
+          T18 = CALL2(1,VARREF(YgooSmacrosYpair),cF2198,l_);
           T19 = CALL2(1,VARREF(YgooSmathYA),i_,YPint((P)1));
           a1 = T18;
           a2 = T19;
@@ -1398,11 +1538,11 @@ loop:
           goto loop;
           T12 = T17;
         } else {
-          T22 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLintG),cF2188);
+          T22 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLintG),cF2198);
           T21 = CALL2(1,VARREF(YgooSmacrosYelt),VARREF(YgooSioSreadYDstring_escape_chars),T22);
-          ecF2190 = T21;
-          if (ecF2190 != YPfalse) {
-            T25 = CALL2(1,VARREF(YgooSmacrosYpair),ecF2190,l_);
+          ecF2200 = T21;
+          if (ecF2200 != YPfalse) {
+            T25 = CALL2(1,VARREF(YgooSmacrosYpair),ecF2200,l_);
             T26 = CALL2(1,VARREF(YgooSmathYA),i_,YPint((P)1));
             a1 = T25;
             a2 = T26;
@@ -1411,7 +1551,7 @@ loop:
             goto loop;
             T23 = T24;
           } else {
-            T27 = CALL3(1,VARREF(YgooSioSreadYreading_error),FREEREF(0),LITREF(lit_73),cF2188);
+            T27 = CALL3(1,VARREF(YgooSioSreadYreading_error),FREEREF(0),LITREF(lit_86),cF2198);
             T23 = T27;
           }
           T20 = T23;
@@ -1422,12 +1562,12 @@ loop:
       T7 = T9;
       T5 = T7;
     } else {
-      T29 = CALL2(1,VARREF(YgooSmathYE),cF2187,YPchr((P)34));
+      T29 = CALL2(1,VARREF(YgooSmathYE),cF2197,YPchr((P)34));
       if (T29 != YPfalse) {
         T30 = CALL2(1,VARREF(YgooSioSreadYreverse_list_Gstring),l_,i_);
         T28 = T30;
       } else {
-        T32 = CALL2(1,VARREF(YgooSmacrosYpair),cF2187,l_);
+        T32 = CALL2(1,VARREF(YgooSmacrosYpair),cF2197,l_);
         T33 = CALL2(1,VARREF(YgooSmathYA),i_,YPint((P)1));
         a1 = T32;
         a2 = T33;
@@ -1447,23 +1587,23 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSioSreadYread_string_literal) {
   P c_,port_;
-  P loopF2191;
+  P loopF2201;
   P T0,T1,T2;
   P a1,a2;
 LINK_STACK();
   ARG(c_, 0);
   ARG(port_, 1);
 loop:
-  T1 = FUNSHELL(1,fun_loop_31,2);
-  loopF2191 = T1;
-  FUNINIT(loopF2191, 2,port_,loopF2191);
-  T2 = CALL2(0,loopF2191,Ynil,YPint((P)0));
+  T1 = FUNSHELL(1,fun_loop_35,2);
+  loopF2201 = T1;
+  FUNINIT(loopF2201, 2,port_,loopF2201);
+  T2 = CALL2(0,loopF2201,Ynil,YPint((P)0));
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_33) {
+FUNCODEDEF(fun_37) {
   P c_,port_;
   P T0;
   P a1,a2;
@@ -1477,18 +1617,18 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_loop_34) {
-  P cF2192;
+FUNCODEDEF(fun_loop_38) {
+  P cF2202;
   P T0,T1,T2,T3,T4,T5,T6;
 LINK_STACK();
 loop:
   T1 = CALL1(1,VARREF(YgooSioSportYget),FREEREF(0));
-  cF2192 = T1;
-  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2192);
+  cF2202 = T1;
+  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2202);
   if (T3 != YPfalse) {
-    T2 = cF2192;
+    T2 = cF2202;
   } else {
-    T5 = CALL2(1,VARREF(YgooSmathYE),cF2192,YPchr((P)10));
+    T5 = CALL2(1,VARREF(YgooSmathYE),cF2202,YPchr((P)10));
     if (T5 != YPfalse) {
       T4 = YPfalse;
     } else {
@@ -1502,24 +1642,24 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_gobble_line_35) {
+FUNCODEDEF(fun_gobble_line_39) {
   P port_;
-  P loopF2193;
+  P loopF2203;
   P T0,T1,T2;
   P a1;
 LINK_STACK();
   ARG(port_, 0);
 loop:
-  T1 = FUNSHELL(1,fun_loop_34,2);
-  loopF2193 = T1;
-  FUNINIT(loopF2193, 2,port_,loopF2193);
-  T2 = CALL0(0,loopF2193);
+  T1 = FUNSHELL(1,fun_loop_38,2);
+  loopF2203 = T1;
+  FUNINIT(loopF2203, 2,port_,loopF2203);
+  T2 = CALL0(0,loopF2203);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_define_sharp_macro_36) {
+FUNCODEDEF(fun_define_sharp_macro_40) {
   P c_,proc_;
   P T0,T1,T2;
   P a1,a2;
@@ -1534,11 +1674,11 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_37) {
+FUNCODEDEF(fun_41) {
   P c_,port_;
-  P probeF2196;
-  P cF2195;
-  P cF2194;
+  P probeF2206;
+  P cF2205;
+  P cF2204;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
   P a1,a2;
 LINK_STACK();
@@ -1546,25 +1686,25 @@ LINK_STACK();
   ARG(port_, 1);
 loop:
   T1 = CALL1(1,VARREF(YgooSioSportYpeek),port_);
-  cF2194 = T1;
-  T4 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2194);
+  cF2204 = T1;
+  T4 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2204);
   if (T4 != YPfalse) {
-    T5 = CALL2(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_80));
+    T5 = CALL2(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_93));
     T3 = T5;
   } else {
-    T6 = CALL1(1,VARREF(YgooSmathYto_lower),cF2194);
+    T6 = CALL1(1,VARREF(YgooSmathYto_lower),cF2204);
     T3 = T6;
   }
-  cF2195 = T3;
-  T8 = CALL2(1,VARREF(YgooScolsSlstYassq),cF2195,VARREF(YgooSioSreadYTsharp_macrosT));
-  probeF2196 = T8;
-  if (probeF2196 != YPfalse) {
-    T12 = CALL1(1,VARREF(Ytail),probeF2196);
+  cF2205 = T3;
+  T8 = CALL2(1,VARREF(YgooScolsSlstYassq),cF2205,VARREF(YgooSioSreadYTsharp_macrosT));
+  probeF2206 = T8;
+  if (probeF2206 != YPfalse) {
+    T12 = CALL1(1,VARREF(Ytail),probeF2206);
     T11 = CALL1(1,VARREF(Yhead),T12);
-    T10 = CALL2(1,T11,cF2195,port_);
+    T10 = CALL2(1,T11,cF2205,port_);
     T9 = T10;
   } else {
-    T13 = CALL3(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_81),cF2195);
+    T13 = CALL3(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_94),cF2205);
     T9 = T13;
   }
   T7 = T9;
@@ -1574,7 +1714,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_38) {
+FUNCODEDEF(fun_42) {
   P c_,port_;
   P a1,a2;
 LINK_STACK();
@@ -1586,7 +1726,7 @@ UNLINK_STACK();
   QRET(YPfalse);
 }
 
-FUNCODEDEF(fun_39) {
+FUNCODEDEF(fun_43) {
   P c_,port_;
   P a1,a2;
 LINK_STACK();
@@ -1598,7 +1738,7 @@ UNLINK_STACK();
   QRET(YPtrue);
 }
 
-FUNCODEDEF(fun_40) {
+FUNCODEDEF(fun_44) {
   P c_,port_;
   P a1,a2;
 LINK_STACK();
@@ -1610,32 +1750,32 @@ UNLINK_STACK();
   QRET(VARREF(YgooSioSreadYDvert_proxy));
 }
 
-FUNCODEDEF(fun_loop_41) {
+FUNCODEDEF(fun_loop_45) {
   P found_slashQ_;
-  P x_1392F2199;
-  P x_1391F2198;
-  P cF2197;
+  P x_1394F2209;
+  P x_1393F2208;
+  P cF2207;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
   P a1;
 LINK_STACK();
   ARG(found_slashQ_, 0);
 loop:
   T1 = CALL1(1,VARREF(YgooSioSportYget),FREEREF(0));
-  cF2197 = T1;
-  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2197);
+  cF2207 = T1;
+  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2207);
   if (T3 != YPfalse) {
-    T2 = cF2197;
+    T2 = cF2207;
   } else {
-    x_1391F2198 = cF2197;
-    x_1392F2199 = VARREF(YgooSmacrosYEE);
-    T7 = CALL2(1,x_1392F2199,x_1391F2198,YPchr((P)47));
+    x_1393F2208 = cF2207;
+    x_1394F2209 = VARREF(YgooSmacrosYEE);
+    T7 = CALL2(1,x_1394F2209,x_1393F2208,YPchr((P)47));
     if (T7 != YPfalse) {
       a1 = YPtrue;
       found_slashQ_ = a1;
       goto loop;
       T6 = T8;
     } else {
-      T10 = CALL2(1,x_1392F2199,x_1391F2198,YPchr((P)35));
+      T10 = CALL2(1,x_1394F2209,x_1393F2208,YPchr((P)35));
       if (T10 != YPfalse) {
         if (found_slashQ_ != YPfalse) {
           T11 = YPfalse;
@@ -1665,22 +1805,22 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSioSreadYgobble_nested_comment) {
   P port_;
-  P loopF2200;
+  P loopF2210;
   P T0,T1,T2;
   P a1;
 LINK_STACK();
   ARG(port_, 0);
 loop:
-  T1 = FUNSHELL(1,fun_loop_41,2);
-  loopF2200 = T1;
-  FUNINIT(loopF2200, 2,port_,loopF2200);
-  T2 = CALL1(0,loopF2200,YPfalse);
+  T1 = FUNSHELL(1,fun_loop_45,2);
+  loopF2210 = T1;
+  FUNINIT(loopF2210, 2,port_,loopF2210);
+  T2 = CALL1(0,loopF2210,YPfalse);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_43) {
+FUNCODEDEF(fun_47) {
   P c_,port_;
   P T0;
   P a1,a2;
@@ -1694,11 +1834,11 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_44) {
+FUNCODEDEF(fun_48) {
   P c_,port_;
-  P tempF2203;
-  P nameF2202;
-  P cF2201;
+  P tempF2213;
+  P nameF2212;
+  P cF2211;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19;
   P a1,a2;
@@ -1708,30 +1848,30 @@ LINK_STACK();
 loop:
   CALL1(1,VARREF(YgooSioSportYget),port_);
   T1 = CALL1(1,VARREF(YgooSioSportYpeek),port_);
-  cF2201 = T1;
-  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2201);
+  cF2211 = T1;
+  T3 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2211);
   if (T3 != YPfalse) {
-    T4 = CALL2(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_91));
+    T4 = CALL2(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_104));
     T2 = T4;
   } else {
-    T6 = CALL1(1,VARREF(YgooSmathYalphaQ),cF2201);
+    T6 = CALL1(1,VARREF(YgooSmathYalphaQ),cF2211);
     if (T6 != YPfalse) {
       T8 = CALL1(1,VARREF(YgooSioSreadYsub_read_carefully),port_);
-      nameF2202 = T8;
-      T12 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLstrG),nameF2202);
+      nameF2212 = T8;
+      T12 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLstrG),nameF2212);
       T11 = CALL1(1,VARREF(YgooStypesYlen),T12);
       T10 = CALL2(1,VARREF(YgooSmathYE),T11,YPint((P)1));
       if (T10 != YPfalse) {
-        T9 = cF2201;
+        T9 = cF2211;
       } else {
-        T14 = CALL2(1,VARREF(YgooScolsSlstYassq),nameF2202,VARREF(YgooSioSreadYDchar_long_names));
-        tempF2203 = T14;
-        if (tempF2203 != YPfalse) {
-          T17 = CALL1(1,VARREF(Ytail),tempF2203);
+        T14 = CALL2(1,VARREF(YgooScolsSlstYassq),nameF2212,VARREF(YgooSioSreadYDchar_long_names));
+        tempF2213 = T14;
+        if (tempF2213 != YPfalse) {
+          T17 = CALL1(1,VARREF(Ytail),tempF2213);
           T16 = CALL1(1,VARREF(Yhead),T17);
           T15 = T16;
         } else {
-          T18 = CALL3(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_92),nameF2202);
+          T18 = CALL3(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_105),nameF2212);
           T15 = T18;
         }
         T13 = T15;
@@ -1750,7 +1890,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_45) {
+FUNCODEDEF(fun_49) {
   P c_,port_;
   P T0,T1;
   P a1,a2;
@@ -1765,18 +1905,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_46) {
-  P c_,port_;
-  P a1,a2;
-LINK_STACK();
-  ARG(c_, 0);
-  ARG(port_, 1);
-loop:
-UNLINK_STACK();
-  QRET(VARREF(YgooSioSreadYDclose_bracket));
-}
-
-FUNCODEDEF(fun_47) {
+FUNCODEDEF(fun_50) {
   P c_,port_;
   P T0,T1;
   P a1,a2;
@@ -1791,10 +1920,10 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_48) {
+FUNCODEDEF(fun_51) {
   P c_,port_;
-  P tmpF2205;
-  P stringF2204;
+  P tmpF2215;
+  P stringF2214;
   P T0,T1,T2,T3,T4,T5;
   P a1,a2;
 LINK_STACK();
@@ -1802,13 +1931,13 @@ LINK_STACK();
   ARG(port_, 1);
 loop:
   T1 = CALL2(1,VARREF(YgooSioSreadYsub_read_token),YPchr((P)35),port_);
-  stringF2204 = T1;
-  T3 = CALL1(1,VARREF(YgooScolsSstrYstr_to_num),stringF2204);
-  tmpF2205 = T3;
-  if (tmpF2205 != YPfalse) {
-    T4 = tmpF2205;
+  stringF2214 = T1;
+  T3 = CALL1(1,VARREF(YgooScolsSstrYstr_to_num),stringF2214);
+  tmpF2215 = T3;
+  if (tmpF2215 != YPfalse) {
+    T4 = tmpF2215;
   } else {
-    T5 = CALL3(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_97),stringF2204);
+    T5 = CALL3(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_109),stringF2214);
     T4 = T5;
   }
   T2 = T4;
@@ -1817,7 +1946,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_49) {
+FUNCODEDEF(fun_52) {
   P c_;
   P T0;
   P a1;
@@ -1829,10 +1958,10 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_loop_50) {
+FUNCODEDEF(fun_loop_53) {
   P l_,n_;
-  P tmpF2207;
-  P cF2206;
+  P tmpF2217;
+  P cF2216;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
   P a1,a2;
 LINK_STACK();
@@ -1840,13 +1969,13 @@ LINK_STACK();
   ARG(n_, 1);
 loop:
   T1 = CALL1(1,VARREF(YgooSioSportYpeek),FREEREF(0));
-  cF2206 = T1;
-  T4 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2206);
-  tmpF2207 = T4;
-  if (tmpF2207 != YPfalse) {
-    T5 = tmpF2207;
+  cF2216 = T1;
+  T4 = CALL1(1,VARREF(YgooSmathYeof_objectQ),cF2216);
+  tmpF2217 = T4;
+  if (tmpF2217 != YPfalse) {
+    T5 = tmpF2217;
   } else {
-    T7 = CALL1(1,VARREF(YgooSmathYchar_Gascii),cF2206);
+    T7 = CALL1(1,VARREF(YgooSmathYchar_Gascii),cF2216);
     T6 = CALL2(1,VARREF(YgooSmacrosYelt),VARREF(YgooSioSreadYTread_terminatingQ_vectorT),T7);
     T5 = T6;
   }
@@ -1871,27 +2000,27 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sub_read_token_51) {
+FUNCODEDEF(fun_sub_read_token_54) {
   P c_,port_;
-  P loopF2208;
+  P loopF2218;
   P T0,T1,T2,T3,T4;
   P a1,a2;
 LINK_STACK();
   ARG(c_, 0);
   ARG(port_, 1);
 loop:
-  T1 = FUNSHELL(1,fun_loop_50,2);
-  loopF2208 = T1;
-  FUNINIT(loopF2208, 2,port_,loopF2208);
+  T1 = FUNSHELL(1,fun_loop_53,2);
+  loopF2218 = T1;
+  FUNINIT(loopF2218, 2,port_,loopF2218);
   T4 = CALL1(1,VARREF(YgooSioSreadYpreferred_case),c_);
   T3 = CALL1(1,VARREF(Ylst),T4);
-  T2 = CALL2(0,loopF2208,T3,YPint((P)1));
+  T2 = CALL2(0,loopF2218,T3,YPint((P)1));
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_52) {
+FUNCODEDEF(fun_55) {
   P x_;
   P T0;
   P a1;
@@ -1903,38 +2032,38 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_parse_token_53) {
+FUNCODEDEF(fun_parse_token_56) {
   P string_,port_;
-  P maybe_numberF2213;
-  P tmpF2212;
-  P tmpF2211;
-  P tmpF2210;
-  P cF2209;
+  P maybe_numberF2223;
+  P tmpF2222;
+  P tmpF2221;
+  P tmpF2220;
+  P cF2219;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25;
+  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27;
   P a1,a2;
 LINK_STACK();
   ARG(string_, 0);
   ARG(port_, 1);
 loop:
   T2 = CALL2(1,VARREF(YgooSmacrosYelt),string_,YPint((P)0));
-  cF2209 = T2;
-  T4 = CALL1(1,VARREF(YgooSmathYdigitQ),cF2209);
-  tmpF2210 = T4;
-  if (tmpF2210 != YPfalse) {
-    T5 = tmpF2210;
+  cF2219 = T2;
+  T4 = CALL1(1,VARREF(YgooSmathYdigitQ),cF2219);
+  tmpF2220 = T4;
+  if (tmpF2220 != YPfalse) {
+    T5 = tmpF2220;
   } else {
-    T7 = CALL2(1,VARREF(YgooSmathYE),cF2209,YPchr((P)43));
-    tmpF2211 = T7;
-    if (tmpF2211 != YPfalse) {
-      T8 = tmpF2211;
+    T7 = CALL2(1,VARREF(YgooSmathYE),cF2219,YPchr((P)43));
+    tmpF2221 = T7;
+    if (tmpF2221 != YPfalse) {
+      T8 = tmpF2221;
     } else {
-      T10 = CALL2(1,VARREF(YgooSmathYE),cF2209,YPchr((P)45));
-      tmpF2212 = T10;
-      if (tmpF2212 != YPfalse) {
-        T11 = tmpF2212;
+      T10 = CALL2(1,VARREF(YgooSmathYE),cF2219,YPchr((P)45));
+      tmpF2222 = T10;
+      if (tmpF2222 != YPfalse) {
+        T11 = tmpF2222;
       } else {
-        T12 = CALL2(1,VARREF(YgooSmathYE),cF2209,YPchr((P)46));
+        T12 = CALL2(1,VARREF(YgooSmathYE),cF2219,YPchr((P)46));
         T11 = T12;
       }
       T9 = T11;
@@ -1947,23 +2076,25 @@ loop:
   T1 = T3;
   if (T1 != YPfalse) {
     T14 = CALL1(1,VARREF(YgooScolsSstrYstr_to_num),string_);
-    maybe_numberF2213 = T14;
-    if (maybe_numberF2213 != YPfalse) {
-      T15 = maybe_numberF2213;
+    maybe_numberF2223 = T14;
+    if (maybe_numberF2223 != YPfalse) {
+      T15 = maybe_numberF2223;
     } else {
-      T18 = FUNFAB(fun_52,1,string_);
+      T18 = FUNFAB(fun_55,1,string_);
       T17 = CALL2(1,VARREF(YgooStypesYanyQ),T18,VARREF(YgooSioSreadYDstrange_symbol_names));
       if (T17 != YPfalse) {
         T20 = CALL1(1,VARREF(YgooSioSreadYmake_immutableX),string_);
         T19 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLsymG),T20);
         T16 = T19;
       } else {
-        T22 = CALL2(1,VARREF(YgooSmathYE),string_,LITREF(lit_106));
+        T22 = CALL2(1,VARREF(YgooSmathYE),string_,LITREF(lit_118));
         if (T22 != YPfalse) {
-          T21 = VARREF(YgooSioSreadYDdot);
-        } else {
-          T23 = CALL3(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_107),string_);
+          T24 = CALL1(1,VARREF(YgooSioSreadYmake_immutableX),string_);
+          T23 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLsymG),T24);
           T21 = T23;
+        } else {
+          T25 = CALL3(1,VARREF(YgooSioSreadYreading_error),port_,LITREF(lit_119),string_);
+          T21 = T25;
         }
         T16 = T21;
       }
@@ -1972,15 +2103,15 @@ loop:
     T13 = T15;
     T0 = T13;
   } else {
-    T25 = CALL1(1,VARREF(YgooSioSreadYmake_immutableX),string_);
-    T24 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLsymG),T25);
-    T0 = T24;
+    T27 = CALL1(1,VARREF(YgooSioSreadYmake_immutableX),string_);
+    T26 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLsymG),T27);
+    T0 = T26;
   }
 UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_reading_error_54) {
+FUNCODEDEF(fun_reading_error_57) {
   P port_,message_,irritants_;
   P T0,T1,T2,T3;
   P a1,a2,a3;
@@ -1989,7 +2120,7 @@ LINK_STACK();
   ARG(message_, 1);
   NARGS(irritants_, 2);
 loop:
-  T1 = CALL2(1,VARREF(YgooSmacrosYcat),message_,LITREF(lit_112));
+  T1 = CALL2(1,VARREF(YgooSmacrosYcat),message_,LITREF(lit_124));
   T3 = CALL1(1,VARREF(Ylst),port_);
   T2 = CALL2(1,VARREF(YgooSmacrosYcat),irritants_,T3);
   T0 = CALL2(1,VARREF(Yerror),T1,T2);
@@ -1997,7 +2128,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_warn_55) {
+FUNCODEDEF(fun_warn_58) {
   P string_,irritants_and_port_;
   P a1,a2;
 LINK_STACK();
@@ -2008,7 +2139,7 @@ UNLINK_STACK();
   QRET(YPfalse);
 }
 
-FUNCODEDEF(fun_reverse_list_Gstring_56) {
+FUNCODEDEF(fun_reverse_list_Gstring_59) {
   P l_,n_;
   P T0,T1;
   P a1,a2;
@@ -2022,7 +2153,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_make_immutableX_57) {
+FUNCODEDEF(fun_make_immutableX_60) {
   P x_;
   P a1;
 LINK_STACK();
@@ -2033,10 +2164,9 @@ UNLINK_STACK();
 }
 
 P YgooSioSreadY___main_0___() {
-  P number_sharp_macroF2217;
-  P vecF2216;
-  P str10496F2215;
-  P sub_read_whitespaceF2214;
+  P vecF2226;
+  P str10496F2225;
+  P sub_read_whitespaceF2224;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33,T34,T35,T36,T37,T38,T39,T40,T41,T42,T43,T44,T45,T46,T47;
@@ -2047,8 +2177,7 @@ P YgooSioSreadY___main_0___() {
   P T112,T113,T114,T115,T116,T117,T118,T119,T120,T121,T122,T123,T124,T125,T126,T127;
   P T128,T129,T130,T131,T132,T133,T134,T135,T136,T137,T138,T139,T140,T141,T142,T143;
   P T144,T145,T146,T147,T148,T149,T150,T151,T152,T153,T154,T155,T156,T157,T158,T159;
-  P T160,T161,T162,T163,T164,T165,T166,T167,T168,T169,T170,T171,T172,T173,T174,T175;
-  P T176,T177,T178;
+  P T160,T161,T162,T163,T164,T165,T166,T167,T168;
 DEFCREGS();
 loop:
   lit_0 = YPPsym((P)"read");
@@ -2163,9 +2292,9 @@ loop:
   lit_20 = YPsb((P)"unexpected right bracket");
   T41 = XCALL1(1,VARREF(YgooSioSreadYmake_reader_token),LITREF(lit_20));
   VARSET(YgooSioSreadYDclose_bracket,T41);
-  lit_21 = YPsb((P)"unexpected \" . \"");
+  lit_21 = YPsb((P)"unexpected right curly");
   T42 = XCALL1(1,VARREF(YgooSioSreadYmake_reader_token),LITREF(lit_21));
-  VARSET(YgooSioSreadYDdot,T42);
+  VARSET(YgooSioSreadYDclose_curly,T42);
   lit_22 = YPPsym((P)"sub-read");
   lit_23 = YPPlist(1,YPPsym((P)"port"));
   T43 = YPsig(LITREF(lit_23),YPPlist(1,VARREF(YgooSioSportYLportG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
@@ -2210,8 +2339,8 @@ loop:
   T59 = YPsig(LITREF(lit_29),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   fun_14 = YPmet(FUNCODEREF(fun_14),YPfalse,T59,ENVNUL,PNUL,YPfalse);
   T61 = fun_13;
-  sub_read_whitespaceF2214 = T61;
-  T63 = FUNFAB(fun_14,1,sub_read_whitespaceF2214);
+  sub_read_whitespaceF2224 = T61;
+  T63 = FUNFAB(fun_14,1,sub_read_whitespaceF2224);
   T62 = XCALL2(1,VARREF(YgooSmacrosYdo),T63,VARREF(YgooScolsSstrYascii_whitespaces));
   lit_30 = YPPsym((P)"flush-whitespace");
   lit_31 = YPPlist(1,YPPsym((P)"port"));
@@ -2240,9 +2369,9 @@ loop:
   T71 = YPsig(LITREF(lit_39),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   fun_19 = YPmet(FUNCODEREF(fun_19),YPfalse,T71,ENVNUL,PNUL,YPfalse);
   T72 = XCALL2(1,VARREF(YgooSmacrosYcat),LITREF(lit_37),LITREF(lit_38));
-  str10496F2215 = T72;
+  str10496F2225 = T72;
   T74 = fun_19;
-  T73 = XCALL2(1,VARREF(YgooSmacrosYdo),T74,str10496F2215);
+  T73 = XCALL2(1,VARREF(YgooSmacrosYdo),T74,str10496F2225);
   lit_40 = YPPsym((P)"set-standard-read-macro!");
   lit_41 = YPPlist(3,YPPsym((P)"char"),YPPsym((P)"terminating?"),YPPsym((P)"proc"));
   T75 = YPsig(LITREF(lit_41),YPPlist(3,VARREF(YLchrG),VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
@@ -2328,275 +2457,317 @@ loop:
   T104 = fun_sub_read_seq_26;
   T101 = XCALL2(1,VARREF(YPdefine_method),T102,T104);
   VARSET(YgooSioSreadYsub_read_seq,T101);
-  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)40),YPtrue,VARREF(YgooSioSreadYsub_read_list));
-  lit_59 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  T105 = YPsig(LITREF(lit_59),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_27 = YPmet(FUNCODEREF(fun_27),YPfalse,T105,ENVNUL,PNUL,YPfalse);
-  T106 = fun_27;
-  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)41),YPtrue,T106);
+  lit_59 = YPPsym((P)"sub-read-brackets");
   lit_60 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  lit_61 = YPPsym((P)"quote");
-  T107 = YPsig(LITREF(lit_60),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_28 = YPmet(FUNCODEREF(fun_28),YPfalse,T107,ENVNUL,PNUL,YPfalse);
-  T108 = fun_28;
-  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)39),YPtrue,T108);
-  lit_62 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  lit_63 = YPPsym((P)"quasiquote");
-  T109 = YPsig(LITREF(lit_62),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_29 = YPmet(FUNCODEREF(fun_29),YPfalse,T109,ENVNUL,PNUL,YPfalse);
-  T110 = fun_29;
-  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)96),YPtrue,T110);
-  lit_64 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  lit_65 = YPsb((P)"end of file after ,");
-  lit_66 = YPPsym((P)"unquote-splicing");
-  lit_67 = YPPsym((P)"unquote");
-  T111 = YPsig(LITREF(lit_64),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_30 = YPmet(FUNCODEREF(fun_30),YPfalse,T111,ENVNUL,PNUL,YPfalse);
-  T112 = fun_30;
-  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)44),YPtrue,T112);
-  T115 = XCALL2(1,VARREF(YgooScolsScolYfab),VARREF(YgooScolsSvecYLvecG),VARREF(YgooScolsSstrYascii_limit));
-  T114 = XCALL2(1,VARREF(YgooScolsScolxYfillX),T115,YPfalse);
-  vecF2216 = T114;
-  T116 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLintG),YPchr((P)116));
-  XCALL3(1,VARREF(YgooScolsScolxYelt_setter),YPchr((P)9),vecF2216,T116);
-  T117 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLintG),YPchr((P)102));
-  XCALL3(1,VARREF(YgooScolsScolxYelt_setter),YPchr((P)12),vecF2216,T117);
-  T118 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLintG),YPchr((P)114));
-  XCALL3(1,VARREF(YgooScolsScolxYelt_setter),YPchr((P)13),vecF2216,T118);
-  T119 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLintG),YPchr((P)110));
-  XCALL3(1,VARREF(YgooScolsScolxYelt_setter),YPchr((P)10),vecF2216,T119);
-  T120 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLtupG),vecF2216);
-  T113 = T120;
-  VARSET(YgooSioSreadYDstring_escape_chars,T113);
-  lit_68 = YPPsym((P)"read-string-literal");
-  lit_69 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  lit_70 = YPPlist(2,YPPsym((P)"l"),YPPsym((P)"i"));
-  lit_71 = YPsb((P)"end of file within a string");
-  lit_72 = YPsb((P)"end of file within a string");
-  lit_73 = YPsb((P)"invalid escaped character in string");
-  T122 = YPsig(LITREF(lit_70),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_loop_31 = YPmet(FUNCODEREF(fun_loop_31),LITREF(lit_2),T122,ENVNUL,PNUL,YPfalse);
-  T121 = YPsig(LITREF(lit_69),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YgooSioSreadYread_string_literal = YPmet(FUNCODEREF(YgooSioSreadYread_string_literal),LITREF(lit_68),T121,ENVNUL,PNUL,YPfalse);
-  T123 = YgooSioSreadYread_string_literal;
-  VARSET(YgooSioSreadYread_string_literal,T123);
-  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)34),YPtrue,VARREF(YgooSioSreadYread_string_literal));
-  lit_74 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  T124 = YPsig(LITREF(lit_74),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_33 = YPmet(FUNCODEREF(fun_33),YPfalse,T124,ENVNUL,PNUL,YPfalse);
-  T125 = fun_33;
-  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)59),YPtrue,T125);
-  lit_75 = YPPsym((P)"gobble-line");
-  lit_76 = YPPlist(1,YPPsym((P)"port"));
-  T127 = YPsig(LITREF(lit_3),Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
-  fun_loop_34 = YPmet(FUNCODEREF(fun_loop_34),LITREF(lit_2),T127,ENVNUL,PNUL,YPfalse);
-  T126 = YPsig(LITREF(lit_76),YPPlist(1,VARREF(YgooSioSportYLportG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_gobble_line_35 = YPmet(FUNCODEREF(fun_gobble_line_35),LITREF(lit_75),T126,ENVNUL,PNUL,YPfalse);
-  T130 = BOUNDP(YgooSioSreadYgobble_line);
-  if (T130 != YPfalse) {
-    T129 = VARREF(YgooSioSreadYgobble_line);
+  lit_61 = YPPsym((P)"elt");
+  lit_62 = YPPsym((P)"*");
+  lit_63 = YPPsym((P)"sub*");
+  lit_64 = YPPsym((P)"sub");
+  lit_65 = YPsb((P)"invalid [ ... ] form");
+  T105 = YPsig(LITREF(lit_60),YPPlist(2,VARREF(YLchrG),VARREF(YgooSioSportYLportG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_sub_read_brackets_27 = YPmet(FUNCODEREF(fun_sub_read_brackets_27),LITREF(lit_59),T105,ENVNUL,PNUL,YPfalse);
+  T108 = BOUNDP(YgooSioSreadYsub_read_brackets);
+  if (T108 != YPfalse) {
+    T107 = VARREF(YgooSioSreadYsub_read_brackets);
   } else {
-    T129 = YPfalse;
+    T107 = YPfalse;
   }
-  T131 = fun_gobble_line_35;
-  T128 = XCALL2(1,VARREF(YPdefine_method),T129,T131);
-  VARSET(YgooSioSreadYgobble_line,T128);
-  VARSET(YgooSioSreadYTsharp_macrosT,Ynil);
-  lit_77 = YPPsym((P)"define-sharp-macro");
-  lit_78 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"proc"));
-  T132 = YPsig(LITREF(lit_78),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_define_sharp_macro_36 = YPmet(FUNCODEREF(fun_define_sharp_macro_36),LITREF(lit_77),T132,ENVNUL,PNUL,YPfalse);
-  T135 = BOUNDP(YgooSioSreadYdefine_sharp_macro);
-  if (T135 != YPfalse) {
-    T134 = VARREF(YgooSioSreadYdefine_sharp_macro);
+  T109 = fun_sub_read_brackets_27;
+  T106 = XCALL2(1,VARREF(YPdefine_method),T107,T109);
+  VARSET(YgooSioSreadYsub_read_brackets,T106);
+  lit_66 = YPPsym((P)"sub-read-curlies");
+  lit_67 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  lit_68 = YPPsym((P)".");
+  lit_69 = YPPsym((P)"fun");
+  T110 = YPsig(LITREF(lit_67),YPPlist(2,VARREF(YLchrG),VARREF(YgooSioSportYLportG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_sub_read_curlies_28 = YPmet(FUNCODEREF(fun_sub_read_curlies_28),LITREF(lit_66),T110,ENVNUL,PNUL,YPfalse);
+  T113 = BOUNDP(YgooSioSreadYsub_read_curlies);
+  if (T113 != YPfalse) {
+    T112 = VARREF(YgooSioSreadYsub_read_curlies);
   } else {
-    T134 = YPfalse;
+    T112 = YPfalse;
   }
-  T136 = fun_define_sharp_macro_36;
-  T133 = XCALL2(1,VARREF(YPdefine_method),T134,T136);
-  VARSET(YgooSioSreadYdefine_sharp_macro,T133);
-  lit_79 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  lit_80 = YPsb((P)"end of file after #");
-  lit_81 = YPsb((P)"unknown # syntax");
-  T137 = YPsig(LITREF(lit_79),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_37 = YPmet(FUNCODEREF(fun_37),YPfalse,T137,ENVNUL,PNUL,YPfalse);
-  T138 = fun_37;
-  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)35),YPfalse,T138);
+  T114 = fun_sub_read_curlies_28;
+  T111 = XCALL2(1,VARREF(YPdefine_method),T112,T114);
+  VARSET(YgooSioSreadYsub_read_curlies,T111);
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)40),YPtrue,VARREF(YgooSioSreadYsub_read_list));
+  lit_70 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  T115 = YPsig(LITREF(lit_70),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_29 = YPmet(FUNCODEREF(fun_29),YPfalse,T115,ENVNUL,PNUL,YPfalse);
+  T116 = fun_29;
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)41),YPtrue,T116);
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)123),YPtrue,VARREF(YgooSioSreadYsub_read_curlies));
+  lit_71 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  T117 = YPsig(LITREF(lit_71),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_30 = YPmet(FUNCODEREF(fun_30),YPfalse,T117,ENVNUL,PNUL,YPfalse);
+  T118 = fun_30;
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)125),YPtrue,T118);
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)91),YPtrue,VARREF(YgooSioSreadYsub_read_brackets));
+  lit_72 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  T119 = YPsig(LITREF(lit_72),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_31 = YPmet(FUNCODEREF(fun_31),YPfalse,T119,ENVNUL,PNUL,YPfalse);
+  T120 = fun_31;
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)93),YPtrue,T120);
+  lit_73 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  lit_74 = YPPsym((P)"quote");
+  T121 = YPsig(LITREF(lit_73),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_32 = YPmet(FUNCODEREF(fun_32),YPfalse,T121,ENVNUL,PNUL,YPfalse);
+  T122 = fun_32;
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)39),YPtrue,T122);
+  lit_75 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  lit_76 = YPPsym((P)"quasiquote");
+  T123 = YPsig(LITREF(lit_75),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_33 = YPmet(FUNCODEREF(fun_33),YPfalse,T123,ENVNUL,PNUL,YPfalse);
+  T124 = fun_33;
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)96),YPtrue,T124);
+  lit_77 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  lit_78 = YPsb((P)"end of file after ,");
+  lit_79 = YPPsym((P)"unquote-splicing");
+  lit_80 = YPPsym((P)"unquote");
+  T125 = YPsig(LITREF(lit_77),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_34 = YPmet(FUNCODEREF(fun_34),YPfalse,T125,ENVNUL,PNUL,YPfalse);
+  T126 = fun_34;
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)44),YPtrue,T126);
+  T129 = XCALL2(1,VARREF(YgooScolsScolYfab),VARREF(YgooScolsSvecYLvecG),VARREF(YgooScolsSstrYascii_limit));
+  T128 = XCALL2(1,VARREF(YgooScolsScolxYfillX),T129,YPfalse);
+  vecF2226 = T128;
+  T130 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLintG),YPchr((P)116));
+  XCALL3(1,VARREF(YgooScolsScolxYelt_setter),YPchr((P)9),vecF2226,T130);
+  T131 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLintG),YPchr((P)102));
+  XCALL3(1,VARREF(YgooScolsScolxYelt_setter),YPchr((P)12),vecF2226,T131);
+  T132 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLintG),YPchr((P)114));
+  XCALL3(1,VARREF(YgooScolsScolxYelt_setter),YPchr((P)13),vecF2226,T132);
+  T133 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLintG),YPchr((P)110));
+  XCALL3(1,VARREF(YgooScolsScolxYelt_setter),YPchr((P)10),vecF2226,T133);
+  T134 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLtupG),vecF2226);
+  T127 = T134;
+  VARSET(YgooSioSreadYDstring_escape_chars,T127);
+  lit_81 = YPPsym((P)"read-string-literal");
   lit_82 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  T139 = YPsig(LITREF(lit_82),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_38 = YPmet(FUNCODEREF(fun_38),YPfalse,T139,ENVNUL,PNUL,YPfalse);
-  T140 = fun_38;
-  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)102),T140);
-  lit_83 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  T141 = YPsig(LITREF(lit_83),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_39 = YPmet(FUNCODEREF(fun_39),YPfalse,T141,ENVNUL,PNUL,YPfalse);
-  T142 = fun_39;
-  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)116),T142);
-  lit_84 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  T143 = YPsig(LITREF(lit_84),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_40 = YPmet(FUNCODEREF(fun_40),YPfalse,T143,ENVNUL,PNUL,YPfalse);
-  T144 = fun_40;
-  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)124),T144);
-  lit_85 = YPPsym((P)"gobble-nested-comment");
-  lit_86 = YPPlist(1,YPPsym((P)"port"));
-  lit_87 = YPPlist(1,YPPsym((P)"found-slash?"));
-  T146 = YPsig(LITREF(lit_87),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_loop_41 = YPmet(FUNCODEREF(fun_loop_41),LITREF(lit_2),T146,ENVNUL,PNUL,YPfalse);
-  T145 = YPsig(LITREF(lit_86),YPPlist(1,VARREF(YgooSioSportYLportG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YgooSioSreadYgobble_nested_comment = YPmet(FUNCODEREF(YgooSioSreadYgobble_nested_comment),LITREF(lit_85),T145,ENVNUL,PNUL,YPfalse);
-  T147 = YgooSioSreadYgobble_nested_comment;
-  VARSET(YgooSioSreadYgobble_nested_comment,T147);
-  lit_88 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  T148 = YPsig(LITREF(lit_88),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_43 = YPmet(FUNCODEREF(fun_43),YPfalse,T148,ENVNUL,PNUL,YPfalse);
-  T149 = fun_43;
-  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)47),T149);
-  lit_89 = YPPlist(5,YPPlist(2,YPPsym((P)"tab"),YPchr((P)9)),YPPlist(2,YPPsym((P)"page"),YPchr((P)12)),YPPlist(2,YPPsym((P)"return"),YPchr((P)13)),YPPlist(2,YPPsym((P)"newline"),YPchr((P)10)),YPPlist(2,YPPsym((P)"space"),YPchr((P)32)));
-  VARSET(YgooSioSreadYDchar_long_names,LITREF(lit_89));
-  lit_90 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  lit_91 = YPsb((P)"end of file after #\\");
-  lit_92 = YPsb((P)"unknown #\\ name");
-  T150 = YPsig(LITREF(lit_90),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_44 = YPmet(FUNCODEREF(fun_44),YPfalse,T150,ENVNUL,PNUL,YPfalse);
-  T151 = fun_44;
-  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)92),T151);
-  lit_93 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  T152 = YPsig(LITREF(lit_93),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_45 = YPmet(FUNCODEREF(fun_45),YPfalse,T152,ENVNUL,PNUL,YPfalse);
-  T153 = fun_45;
-  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)40),T153);
-  lit_94 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  T154 = YPsig(LITREF(lit_94),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_46 = YPmet(FUNCODEREF(fun_46),YPfalse,T154,ENVNUL,PNUL,YPfalse);
-  T155 = fun_46;
-  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)93),YPtrue,T155);
+  lit_83 = YPPlist(2,YPPsym((P)"l"),YPPsym((P)"i"));
+  lit_84 = YPsb((P)"end of file within a string");
+  lit_85 = YPsb((P)"end of file within a string");
+  lit_86 = YPsb((P)"invalid escaped character in string");
+  T136 = YPsig(LITREF(lit_83),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_loop_35 = YPmet(FUNCODEREF(fun_loop_35),LITREF(lit_2),T136,ENVNUL,PNUL,YPfalse);
+  T135 = YPsig(LITREF(lit_82),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YgooSioSreadYread_string_literal = YPmet(FUNCODEREF(YgooSioSreadYread_string_literal),LITREF(lit_81),T135,ENVNUL,PNUL,YPfalse);
+  T137 = YgooSioSreadYread_string_literal;
+  VARSET(YgooSioSreadYread_string_literal,T137);
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)34),YPtrue,VARREF(YgooSioSreadYread_string_literal));
+  lit_87 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  T138 = YPsig(LITREF(lit_87),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_37 = YPmet(FUNCODEREF(fun_37),YPfalse,T138,ENVNUL,PNUL,YPfalse);
+  T139 = fun_37;
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)59),YPtrue,T139);
+  lit_88 = YPPsym((P)"gobble-line");
+  lit_89 = YPPlist(1,YPPsym((P)"port"));
+  T141 = YPsig(LITREF(lit_3),Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
+  fun_loop_38 = YPmet(FUNCODEREF(fun_loop_38),LITREF(lit_2),T141,ENVNUL,PNUL,YPfalse);
+  T140 = YPsig(LITREF(lit_89),YPPlist(1,VARREF(YgooSioSportYLportG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_gobble_line_39 = YPmet(FUNCODEREF(fun_gobble_line_39),LITREF(lit_88),T140,ENVNUL,PNUL,YPfalse);
+  T144 = BOUNDP(YgooSioSreadYgobble_line);
+  if (T144 != YPfalse) {
+    T143 = VARREF(YgooSioSreadYgobble_line);
+  } else {
+    T143 = YPfalse;
+  }
+  T145 = fun_gobble_line_39;
+  T142 = XCALL2(1,VARREF(YPdefine_method),T143,T145);
+  VARSET(YgooSioSreadYgobble_line,T142);
+  VARSET(YgooSioSreadYTsharp_macrosT,Ynil);
+  lit_90 = YPPsym((P)"define-sharp-macro");
+  lit_91 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"proc"));
+  T146 = YPsig(LITREF(lit_91),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_define_sharp_macro_40 = YPmet(FUNCODEREF(fun_define_sharp_macro_40),LITREF(lit_90),T146,ENVNUL,PNUL,YPfalse);
+  T149 = BOUNDP(YgooSioSreadYdefine_sharp_macro);
+  if (T149 != YPfalse) {
+    T148 = VARREF(YgooSioSreadYdefine_sharp_macro);
+  } else {
+    T148 = YPfalse;
+  }
+  T150 = fun_define_sharp_macro_40;
+  T147 = XCALL2(1,VARREF(YPdefine_method),T148,T150);
+  VARSET(YgooSioSreadYdefine_sharp_macro,T147);
+  lit_92 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  lit_93 = YPsb((P)"end of file after #");
+  lit_94 = YPsb((P)"unknown # syntax");
+  T151 = YPsig(LITREF(lit_92),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_41 = YPmet(FUNCODEREF(fun_41),YPfalse,T151,ENVNUL,PNUL,YPfalse);
+  T152 = fun_41;
+  XCALL3(1,VARREF(YgooSioSreadYset_standard_read_macroX),YPchr((P)35),YPfalse,T152);
   lit_95 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  T156 = YPsig(LITREF(lit_95),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_47 = YPmet(FUNCODEREF(fun_47),YPfalse,T156,ENVNUL,PNUL,YPfalse);
-  T157 = fun_47;
-  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)91),T157);
+  T153 = YPsig(LITREF(lit_95),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_42 = YPmet(FUNCODEREF(fun_42),YPfalse,T153,ENVNUL,PNUL,YPfalse);
+  T154 = fun_42;
+  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)102),T154);
   lit_96 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  lit_97 = YPsb((P)"unsupported number syntax");
-  lit_98 = YPPlist(1,YPPsym((P)"c"));
-  lit_99 = YPPlist(4,YPchr((P)98),YPchr((P)111),YPchr((P)100),YPchr((P)120));
-  T159 = YPsig(LITREF(lit_96),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_48 = YPmet(FUNCODEREF(fun_48),YPfalse,T159,ENVNUL,PNUL,YPfalse);
-  T158 = YPsig(LITREF(lit_98),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_49 = YPmet(FUNCODEREF(fun_49),YPfalse,T158,ENVNUL,PNUL,YPfalse);
-  T160 = fun_48;
-  number_sharp_macroF2217 = T160;
-  T162 = FUNFAB(fun_49,1,number_sharp_macroF2217);
-  T161 = XCALL2(1,VARREF(YgooSmacrosYdo),T162,LITREF(lit_99));
-  lit_100 = YPPsym((P)"sub-read-token");
+  T155 = YPsig(LITREF(lit_96),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_43 = YPmet(FUNCODEREF(fun_43),YPfalse,T155,ENVNUL,PNUL,YPfalse);
+  T156 = fun_43;
+  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)116),T156);
+  lit_97 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  T157 = YPsig(LITREF(lit_97),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_44 = YPmet(FUNCODEREF(fun_44),YPfalse,T157,ENVNUL,PNUL,YPfalse);
+  T158 = fun_44;
+  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)124),T158);
+  lit_98 = YPPsym((P)"gobble-nested-comment");
+  lit_99 = YPPlist(1,YPPsym((P)"port"));
+  lit_100 = YPPlist(1,YPPsym((P)"found-slash?"));
+  T160 = YPsig(LITREF(lit_100),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_loop_45 = YPmet(FUNCODEREF(fun_loop_45),LITREF(lit_2),T160,ENVNUL,PNUL,YPfalse);
+  T159 = YPsig(LITREF(lit_99),YPPlist(1,VARREF(YgooSioSportYLportG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YgooSioSreadYgobble_nested_comment = YPmet(FUNCODEREF(YgooSioSreadYgobble_nested_comment),LITREF(lit_98),T159,ENVNUL,PNUL,YPfalse);
+  T161 = YgooSioSreadYgobble_nested_comment;
+  VARSET(YgooSioSreadYgobble_nested_comment,T161);
   lit_101 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
-  lit_102 = YPPlist(2,YPPsym((P)"l"),YPPsym((P)"n"));
-  T164 = YPsig(LITREF(lit_102),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_loop_50 = YPmet(FUNCODEREF(fun_loop_50),LITREF(lit_2),T164,ENVNUL,PNUL,YPfalse);
-  T163 = YPsig(LITREF(lit_101),YPPlist(2,VARREF(YLchrG),VARREF(YgooSioSportYLportG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_sub_read_token_51 = YPmet(FUNCODEREF(fun_sub_read_token_51),LITREF(lit_100),T163,ENVNUL,PNUL,YPfalse);
-  T167 = BOUNDP(YgooSioSreadYsub_read_token);
-  if (T167 != YPfalse) {
-    T166 = VARREF(YgooSioSreadYsub_read_token);
-  } else {
-    T166 = YPfalse;
-  }
-  T168 = fun_sub_read_token_51;
-  T165 = XCALL2(1,VARREF(YPdefine_method),T166,T168);
-  VARSET(YgooSioSreadYsub_read_token,T165);
-  lit_103 = YPPsym((P)"parse-token");
-  lit_104 = YPPlist(2,YPPsym((P)"string"),YPPsym((P)"port"));
-  lit_105 = YPPlist(1,YPPsym((P)"x"));
-  lit_106 = YPsb((P)".");
-  lit_107 = YPsb((P)"unsupported number syntax");
-  T173 = YPsig(LITREF(lit_105),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T172 = fun_52 = YPmet(FUNCODEREF(fun_52),YPfalse,T173,ENVNUL,PNUL,YPfalse);
-  T171 = YPsig(LITREF(lit_104),YPPlist(2,VARREF(YLstrG),VARREF(YgooSioSportYLportG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T170 = fun_parse_token_53 = YPmet(FUNCODEREF(fun_parse_token_53),LITREF(lit_103),T171,ENVNUL,PNUL,YPfalse);
-  T177 = BOUNDP(YgooSioSreadYparse_token);
-  if (T177 != YPfalse) {
-    T176 = VARREF(YgooSioSreadYparse_token);
-  } else {
-    T176 = YPfalse;
-  }
-  T178 = fun_parse_token_53;
-  T175 = XCALL2(1,VARREF(YPdefine_method),T176,T178);
-  T174 = VARSET(YgooSioSreadYparse_token,T175);
-  T169 = T174;
-  return T169;
+  T162 = YPsig(LITREF(lit_101),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_47 = YPmet(FUNCODEREF(fun_47),YPfalse,T162,ENVNUL,PNUL,YPfalse);
+  T163 = fun_47;
+  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)47),T163);
+  lit_102 = YPPlist(5,YPPlist(2,YPPsym((P)"tab"),YPchr((P)9)),YPPlist(2,YPPsym((P)"page"),YPchr((P)12)),YPPlist(2,YPPsym((P)"return"),YPchr((P)13)),YPPlist(2,YPPsym((P)"newline"),YPchr((P)10)),YPPlist(2,YPPsym((P)"space"),YPchr((P)32)));
+  VARSET(YgooSioSreadYDchar_long_names,LITREF(lit_102));
+  lit_103 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  lit_104 = YPsb((P)"end of file after #\\");
+  lit_105 = YPsb((P)"unknown #\\ name");
+  T166 = YPsig(LITREF(lit_103),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T165 = fun_48 = YPmet(FUNCODEREF(fun_48),YPfalse,T166,ENVNUL,PNUL,YPfalse);
+  T168 = fun_48;
+  T167 = XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)92),T168);
+  T164 = T167;
+  return T164;
 }
 
 P YgooSioSreadY___main_1___() {
+  P number_sharp_macroF2227;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22,T23,T24;
+  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
+  P T32,T33,T34,T35,T36,T37,T38,T39,T40,T41,T42,T43,T44,T45;
 DEFCREGS();
 loop:
-  lit_108 = YPPlist(9,YPsb((P)"+"),YPsb((P)"-"),YPsb((P)"..."),YPsb((P)"1st"),YPsb((P)"2nd"),YPsb((P)"3rd"),YPsb((P)"1+"),YPsb((P)"1-"),YPsb((P)"->"));
-  VARSET(YgooSioSreadYDstrange_symbol_names,LITREF(lit_108));
-  lit_109 = YPPsym((P)"t");
-  T3 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLstrG),LITREF(lit_109));
-  T2 = XCALL2(1,VARREF(YgooSmacrosYelt),T3,YPint((P)0));
-  T1 = XCALL2(1,VARREF(YgooSmathYE),T2,YPchr((P)84));
-  if (T1 != YPfalse) {
-    T0 = VARREF(YgooSmathYto_upper);
+  lit_106 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  T0 = YPsig(LITREF(lit_106),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_49 = YPmet(FUNCODEREF(fun_49),YPfalse,T0,ENVNUL,PNUL,YPfalse);
+  T1 = fun_49;
+  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)40),T1);
+  lit_107 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  T2 = YPsig(LITREF(lit_107),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_50 = YPmet(FUNCODEREF(fun_50),YPfalse,T2,ENVNUL,PNUL,YPfalse);
+  T3 = fun_50;
+  XCALL2(1,VARREF(YgooSioSreadYdefine_sharp_macro),YPchr((P)91),T3);
+  lit_108 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  lit_109 = YPsb((P)"unsupported number syntax");
+  lit_110 = YPPlist(1,YPPsym((P)"c"));
+  lit_111 = YPPlist(4,YPchr((P)98),YPchr((P)111),YPchr((P)100),YPchr((P)120));
+  T5 = YPsig(LITREF(lit_108),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_51 = YPmet(FUNCODEREF(fun_51),YPfalse,T5,ENVNUL,PNUL,YPfalse);
+  T4 = YPsig(LITREF(lit_110),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_52 = YPmet(FUNCODEREF(fun_52),YPfalse,T4,ENVNUL,PNUL,YPfalse);
+  T6 = fun_51;
+  number_sharp_macroF2227 = T6;
+  T8 = FUNFAB(fun_52,1,number_sharp_macroF2227);
+  T7 = XCALL2(1,VARREF(YgooSmacrosYdo),T8,LITREF(lit_111));
+  lit_112 = YPPsym((P)"sub-read-token");
+  lit_113 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"port"));
+  lit_114 = YPPlist(2,YPPsym((P)"l"),YPPsym((P)"n"));
+  T10 = YPsig(LITREF(lit_114),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_loop_53 = YPmet(FUNCODEREF(fun_loop_53),LITREF(lit_2),T10,ENVNUL,PNUL,YPfalse);
+  T9 = YPsig(LITREF(lit_113),YPPlist(2,VARREF(YLchrG),VARREF(YgooSioSportYLportG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_sub_read_token_54 = YPmet(FUNCODEREF(fun_sub_read_token_54),LITREF(lit_112),T9,ENVNUL,PNUL,YPfalse);
+  T13 = BOUNDP(YgooSioSreadYsub_read_token);
+  if (T13 != YPfalse) {
+    T12 = VARREF(YgooSioSreadYsub_read_token);
   } else {
-    T0 = VARREF(YgooSmathYto_lower);
+    T12 = YPfalse;
   }
-  VARSET(YgooSioSreadYpreferred_case,T0);
-  lit_110 = YPPsym((P)"reading-error");
-  lit_111 = YPPlist(3,YPPsym((P)"port"),YPPsym((P)"message"),YPPsym((P)"irritants"));
-  lit_112 = YPsb((P)": %=");
-  T4 = YPsig(LITREF(lit_111),YPPlist(2,VARREF(YgooSioSportYLportG),VARREF(YLstrG)),YPtrue,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_reading_error_54 = YPmet(FUNCODEREF(fun_reading_error_54),LITREF(lit_110),T4,ENVNUL,PNUL,YPfalse);
-  T7 = BOUNDP(YgooSioSreadYreading_error);
-  if (T7 != YPfalse) {
-    T6 = VARREF(YgooSioSreadYreading_error);
+  T14 = fun_sub_read_token_54;
+  T11 = XCALL2(1,VARREF(YPdefine_method),T12,T14);
+  VARSET(YgooSioSreadYsub_read_token,T11);
+  lit_115 = YPPsym((P)"parse-token");
+  lit_116 = YPPlist(2,YPPsym((P)"string"),YPPsym((P)"port"));
+  lit_117 = YPPlist(1,YPPsym((P)"x"));
+  lit_118 = YPsb((P)".");
+  lit_119 = YPsb((P)"unsupported number syntax");
+  T16 = YPsig(LITREF(lit_117),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_55 = YPmet(FUNCODEREF(fun_55),YPfalse,T16,ENVNUL,PNUL,YPfalse);
+  T15 = YPsig(LITREF(lit_116),YPPlist(2,VARREF(YLstrG),VARREF(YgooSioSportYLportG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_parse_token_56 = YPmet(FUNCODEREF(fun_parse_token_56),LITREF(lit_115),T15,ENVNUL,PNUL,YPfalse);
+  T19 = BOUNDP(YgooSioSreadYparse_token);
+  if (T19 != YPfalse) {
+    T18 = VARREF(YgooSioSreadYparse_token);
   } else {
-    T6 = YPfalse;
+    T18 = YPfalse;
   }
-  T8 = fun_reading_error_54;
-  T5 = XCALL2(1,VARREF(YPdefine_method),T6,T8);
-  VARSET(YgooSioSreadYreading_error,T5);
-  lit_113 = YPPsym((P)"warn");
-  lit_114 = YPPlist(2,YPPsym((P)"string"),YPPsym((P)"irritants-and-port"));
-  T9 = YPsig(LITREF(lit_114),YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_warn_55 = YPmet(FUNCODEREF(fun_warn_55),LITREF(lit_113),T9,ENVNUL,PNUL,YPfalse);
-  T12 = BOUNDP(YgooSioSreadYwarn);
-  if (T12 != YPfalse) {
-    T11 = VARREF(YgooSioSreadYwarn);
-  } else {
-    T11 = YPfalse;
-  }
-  T13 = fun_warn_55;
-  T10 = XCALL2(1,VARREF(YPdefine_method),T11,T13);
-  VARSET(YgooSioSreadYwarn,T10);
-  lit_115 = YPPsym((P)"reverse-list->string");
-  lit_116 = YPPlist(2,YPPsym((P)"l"),YPPsym((P)"n"));
-  T14 = YPsig(LITREF(lit_116),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLstrG),Ynil);
-  fun_reverse_list_Gstring_56 = YPmet(FUNCODEREF(fun_reverse_list_Gstring_56),LITREF(lit_115),T14,ENVNUL,PNUL,YPfalse);
-  T17 = BOUNDP(YgooSioSreadYreverse_list_Gstring);
-  if (T17 != YPfalse) {
-    T16 = VARREF(YgooSioSreadYreverse_list_Gstring);
-  } else {
-    T16 = YPfalse;
-  }
-  T18 = fun_reverse_list_Gstring_56;
-  T15 = XCALL2(1,VARREF(YPdefine_method),T16,T18);
-  VARSET(YgooSioSreadYreverse_list_Gstring,T15);
-  lit_117 = YPPsym((P)"make-immutable!");
-  lit_118 = YPPlist(1,YPPsym((P)"x"));
-  T19 = YPsig(LITREF(lit_118),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_make_immutableX_57 = YPmet(FUNCODEREF(fun_make_immutableX_57),LITREF(lit_117),T19,ENVNUL,PNUL,YPfalse);
-  T22 = BOUNDP(YgooSioSreadYmake_immutableX);
+  T20 = fun_parse_token_56;
+  T17 = XCALL2(1,VARREF(YPdefine_method),T18,T20);
+  VARSET(YgooSioSreadYparse_token,T17);
+  lit_120 = YPPlist(9,YPsb((P)"+"),YPsb((P)"-"),YPsb((P)"..."),YPsb((P)"1st"),YPsb((P)"2nd"),YPsb((P)"3rd"),YPsb((P)"1+"),YPsb((P)"1-"),YPsb((P)"->"));
+  VARSET(YgooSioSreadYDstrange_symbol_names,LITREF(lit_120));
+  lit_121 = YPPsym((P)"t");
+  T24 = XCALL2(1,VARREF(YgooStypesYas),VARREF(YLstrG),LITREF(lit_121));
+  T23 = XCALL2(1,VARREF(YgooSmacrosYelt),T24,YPint((P)0));
+  T22 = XCALL2(1,VARREF(YgooSmathYE),T23,YPchr((P)84));
   if (T22 != YPfalse) {
-    T21 = VARREF(YgooSioSreadYmake_immutableX);
+    T21 = VARREF(YgooSmathYto_upper);
   } else {
-    T21 = YPfalse;
+    T21 = VARREF(YgooSmathYto_lower);
   }
-  T23 = fun_make_immutableX_57;
-  T20 = XCALL2(1,VARREF(YPdefine_method),T21,T23);
-  VARSET(YgooSioSreadYmake_immutableX,T20);
-  T24 = YPfalse;
-  return T24;
+  VARSET(YgooSioSreadYpreferred_case,T21);
+  lit_122 = YPPsym((P)"reading-error");
+  lit_123 = YPPlist(3,YPPsym((P)"port"),YPPsym((P)"message"),YPPsym((P)"irritants"));
+  lit_124 = YPsb((P)": %=");
+  T25 = YPsig(LITREF(lit_123),YPPlist(2,VARREF(YgooSioSportYLportG),VARREF(YLstrG)),YPtrue,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_reading_error_57 = YPmet(FUNCODEREF(fun_reading_error_57),LITREF(lit_122),T25,ENVNUL,PNUL,YPfalse);
+  T28 = BOUNDP(YgooSioSreadYreading_error);
+  if (T28 != YPfalse) {
+    T27 = VARREF(YgooSioSreadYreading_error);
+  } else {
+    T27 = YPfalse;
+  }
+  T29 = fun_reading_error_57;
+  T26 = XCALL2(1,VARREF(YPdefine_method),T27,T29);
+  VARSET(YgooSioSreadYreading_error,T26);
+  lit_125 = YPPsym((P)"warn");
+  lit_126 = YPPlist(2,YPPsym((P)"string"),YPPsym((P)"irritants-and-port"));
+  T30 = YPsig(LITREF(lit_126),YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_warn_58 = YPmet(FUNCODEREF(fun_warn_58),LITREF(lit_125),T30,ENVNUL,PNUL,YPfalse);
+  T33 = BOUNDP(YgooSioSreadYwarn);
+  if (T33 != YPfalse) {
+    T32 = VARREF(YgooSioSreadYwarn);
+  } else {
+    T32 = YPfalse;
+  }
+  T34 = fun_warn_58;
+  T31 = XCALL2(1,VARREF(YPdefine_method),T32,T34);
+  VARSET(YgooSioSreadYwarn,T31);
+  lit_127 = YPPsym((P)"reverse-list->string");
+  lit_128 = YPPlist(2,YPPsym((P)"l"),YPPsym((P)"n"));
+  T35 = YPsig(LITREF(lit_128),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLstrG),Ynil);
+  fun_reverse_list_Gstring_59 = YPmet(FUNCODEREF(fun_reverse_list_Gstring_59),LITREF(lit_127),T35,ENVNUL,PNUL,YPfalse);
+  T38 = BOUNDP(YgooSioSreadYreverse_list_Gstring);
+  if (T38 != YPfalse) {
+    T37 = VARREF(YgooSioSreadYreverse_list_Gstring);
+  } else {
+    T37 = YPfalse;
+  }
+  T39 = fun_reverse_list_Gstring_59;
+  T36 = XCALL2(1,VARREF(YPdefine_method),T37,T39);
+  VARSET(YgooSioSreadYreverse_list_Gstring,T36);
+  lit_129 = YPPsym((P)"make-immutable!");
+  lit_130 = YPPlist(1,YPPsym((P)"x"));
+  T40 = YPsig(LITREF(lit_130),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_make_immutableX_60 = YPmet(FUNCODEREF(fun_make_immutableX_60),LITREF(lit_129),T40,ENVNUL,PNUL,YPfalse);
+  T43 = BOUNDP(YgooSioSreadYmake_immutableX);
+  if (T43 != YPfalse) {
+    T42 = VARREF(YgooSioSreadYmake_immutableX);
+  } else {
+    T42 = YPfalse;
+  }
+  T44 = fun_make_immutableX_60;
+  T41 = XCALL2(1,VARREF(YPdefine_method),T42,T44);
+  VARSET(YgooSioSreadYmake_immutableX,T41);
+  T45 = YPfalse;
+  return T45;
 }
 
 /* MODULE ENVIRONMENT INFORMATION */
@@ -2851,6 +3022,7 @@ static IMPORT_INFO import_infos[] = {
   {"%fsinh", &module_info_gooSboot, "%fsinh"},
   {"%unlink-stack", &module_info_gooSboot, "%unlink-stack"},
   {"fun-nary?", &module_info_gooSboot, "fun-nary?"},
+  {"sub*-setter", &module_info_gooScolsSseqx, "sub*-setter"},
   {"@not", &module_info_gooSboot, "@not"},
   {"<chr>", &module_info_gooSboot, "<chr>"},
   {"class-direct-props", &module_info_gooSboot, "class-direct-props"},
@@ -3297,6 +3469,7 @@ static IMPORT_INFO import_infos[] = {
   {"sub", &module_info_gooScolsSseq, "sub"},
   {"<lst>", &module_info_gooSboot, "<lst>"},
   {"<", &module_info_gooSmag, "<"},
+  {"sub*", &module_info_gooScolsSseq, "sub*"},
   {"elt-or", &module_info_gooScolsScol, "elt-or"},
   {"fun-name", &module_info_gooSboot, "fun-name"},
   {"default-handler-description", &module_info_gooSconditions, "default-handler-description"},
@@ -3360,15 +3533,17 @@ static BINDING_INFO binding_infos[] = {
   {"set-standard-read-macro!", CVAR, &YgooSioSreadYset_standard_read_macroX},
   {"gobble-nested-comment", CVAR, &YgooSioSreadYgobble_nested_comment},
   {"---main-1---", PVAR, NULL},
+  {"sub-read-brackets", CVAR, &YgooSioSreadYsub_read_brackets},
   {"$vert-proxy", CVAR, &YgooSioSreadYDvert_proxy},
   {"token-message-setter", CVAR, &YgooSioSreadYtoken_message_setter},
+  {"sub-read-curlies", CVAR, &YgooSioSreadYsub_read_curlies},
   {"reverse-list->string", CVAR, &YgooSioSreadYreverse_list_Gstring},
   {"$close-paren", CVAR, &YgooSioSreadYDclose_paren},
   {"sub-read-carefully", CVAR, &YgooSioSreadYsub_read_carefully},
   {"reading-error", CVAR, &YgooSioSreadYreading_error},
   {"reader-token?", CVAR, &YgooSioSreadYreader_tokenQ},
   {"$strange-symbol-names", CVAR, &YgooSioSreadYDstrange_symbol_names},
-  {"$dot", CVAR, &YgooSioSreadYDdot},
+  {"$close-curly", CVAR, &YgooSioSreadYDclose_curly},
   {"gobble-line", CVAR, &YgooSioSreadYgobble_line},
   {"$string-escape-chars", CVAR, &YgooSioSreadYDstring_escape_chars},
   {"token-message", CVAR, &YgooSioSreadYtoken_message},

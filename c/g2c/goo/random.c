@@ -13,6 +13,7 @@ EXT(YgooSpackerYLpackerG,"goo/packer","<packer>");
 EXT(YgooSioSportYLfile_portG,"goo/io/port","<file-port>");
 EXT(Yfun_val,"goo/boot","fun-val");
 EXT(YgooSsystemYcomponents_last,"goo/system","components-last");
+DEF(YgooSrandomYlcg_rand,"goo/random","lcg-rand");
 EXT(YLseqG,"goo/boot","<seq>");
 EXT(YgooScolsScolYdup,"goo/cols/col","dup");
 EXT(YgooScolsSseqxYcatX,"goo/cols/seqx","cat!");
@@ -26,6 +27,7 @@ EXT(YgooSmathYaddress_of,"goo/math","address-of");
 EXT(Yclass_ancestors,"goo/boot","class-ancestors");
 EXT(YLcolXG,"goo/boot","<col!>");
 EXT(YgooScolsSseqxYdel_valsX,"goo/cols/seqx","del-vals!");
+DEF(YgooSrandomYrecent,"goo/random","recent");
 EXT(Yfun_refs_setter,"goo/boot","fun-refs-setter");
 EXT(Yhead,"goo/boot","head");
 EXT(Yargument_type_error,"goo/boot","argument-type-error");
@@ -36,11 +38,11 @@ EXT(YTboot_macro_module_namesT,"goo/boot","*boot-macro-module-names*");
 EXT(YgooScolsScolYfind_or,"goo/cols/col","find-or");
 EXT(YgooSruntimeYapp_args,"goo/runtime","app-args");
 EXT(YgooScolsSseqY3rd,"goo/cols/seq","3rd");
-DEF(YgooSrandomYrandom_unit_using,"goo/random","random-unit-using");
 EXT(YLcolIG,"goo/boot","<col.>");
 EXT(YgooSioSportYLfile_in_portG,"goo/io/port","<file-in-port>");
 EXT(Yfun_refs,"goo/boot","fun-refs");
 EXT(Yproperty_unbound_error,"goo/boot","property-unbound-error");
+DEF(YgooSrandomYDdefault_random,"goo/random","$default-random");
 EXT(YgooSmathYtanh,"goo/math","tanh");
 EXT(YgooScolsSseqYsort_by,"goo/cols/seq","sort-by");
 EXT(YgooSmathYceil,"goo/math","ceil");
@@ -49,10 +51,12 @@ EXT(YPdefine_method,"goo/boot","%define-method");
 EXT(YgooSmathYposQ,"goo/math","pos?");
 EXT(YgooSruntimeYapp_filename,"goo/runtime","app-filename");
 EXT(YPprop_unbound_error,"goo/boot","%prop-unbound-error");
+DEF(YgooSrandomYfab_random_from,"goo/random","fab-random-from");
 EXT(YgooSmathYlowerQ,"goo/math","lower?");
 EXT(YgooSconditionsYLunbound_errorG,"goo/conditions","<unbound-error>");
 EXT(YgooScolsSseqYsort,"goo/cols/seq","sort");
 EXT(YgooSconditionsYLproperty_errorG,"goo/conditions","<property-error>");
+DEF(YgooSrandomYdefault_random_seed,"goo/random","default-random-seed");
 EXT(YgooScolsSseqYpop,"goo/cols/seq","pop");
 EXT(YLcolG,"goo/boot","<col>");
 EXT(YgooScolsScolYadd,"goo/cols/col","add");
@@ -104,7 +108,6 @@ EXT(YgooSconditionsYhandler_function,"goo/conditions","handler-function");
 EXT(YgooSruntimeYcompose,"goo/runtime","compose");
 EXT(YgooStypesYlen,"goo/types","len");
 EXT(YgooSmacrosYmatch_sublist,"goo/macros","match-sublist");
-DEF(YgooSrandomYrecent_index_setter,"goo/random","recent-index-setter");
 EXT(YgooSmathYatan,"goo/math","atan");
 EXT(YgooSsystemYadd_src_path,"goo/system","add-src-path");
 EXT(YgooSconditionsYproperty_error_owner,"goo/conditions","property-error-owner");
@@ -162,8 +165,8 @@ EXT(YgooScolsScolYfold,"goo/cols/col","fold");
 EXT(YgooSsystemYTgoo_build_rootT,"goo/system","*goo-build-root*");
 EXT(YgooSmacrosY1st,"goo/macros","1st");
 EXT(Yfun_naryQ,"goo/boot","fun-nary?");
+EXT(YgooScolsSseqxYsubT_setter,"goo/cols/seqx","sub*-setter");
 EXT(YgooSsystemYprobe_directory,"goo/system","probe-directory");
-DEF(YgooSrandomYrecent,"goo/random","recent");
 EXT(Yclass_direct_props,"goo/boot","class-direct-props");
 EXT(YLchrG,"goo/boot","<chr>");
 EXT(YgooScolsSseqxYsub_setter,"goo/cols/seqx","sub-setter");
@@ -189,7 +192,6 @@ EXT(YgooSioSwriteYwrite,"goo/io/write","write");
 EXT(YgooSmacrosYmatch_atom,"goo/macros","match-atom");
 EXT(YgooSmathYNEE,"goo/math","~==");
 EXT(YgooSioSportYclose,"goo/io/port","close");
-DEF(YgooSrandomYrandom,"goo/random","random");
 EXT(YgooScolsScolYnxt,"goo/cols/col","nxt");
 EXT(YgooStypesYtQ,"goo/types","t?");
 EXT(YgooScolsScolYcol_res_type,"goo/cols/col","col-res-type");
@@ -223,7 +225,6 @@ EXT(YgooSconditionsYLambiguous_method_errorG,"goo/conditions","<ambiguous-method
 EXT(YgooSconditionsYLmacro_errorG,"goo/conditions","<macro-error>");
 EXT(YLanyG,"goo/boot","<any>");
 EXT(YgooSioSreadYread_from_string,"goo/io/read","read-from-string");
-DEF(YgooSrandomYDdefault_random,"goo/random","$default-random");
 DYNEXT(YgooSioSwriteYTmax_print_lengthT,"goo/io/write","*max-print-length*");
 EXT(YDmin_int,"goo/boot","$min-int");
 EXT(YgooScolsScolYnow,"goo/cols/col","now");
@@ -249,8 +250,8 @@ EXT(Yincongruent_method_error,"goo/boot","incongruent-method-error");
 EXT(YgooSpackerYpacker_add,"goo/packer","packer-add");
 EXT(YgooSmathYto_digit,"goo/math","to-digit");
 EXT(YgooScolsSrangeYrange_by,"goo/cols/range","range-by");
+DEF(YgooSrandomYrandom,"goo/random","random");
 EXT(Yfun_specs,"goo/boot","fun-specs");
-DEF(YgooSrandomYlcg_rand,"goo/random","lcg-rand");
 EXT(Yclass_children,"goo/boot","class-children");
 EXT(YgooSconditionsYproperty_error_generic,"goo/conditions","property-error-generic");
 EXT(YgooSioSportYout,"goo/io/port","out");
@@ -271,8 +272,8 @@ EXT(YgooSmagYmax,"goo/mag","max");
 EXT(YgooSmathYroundS,"goo/math","round/");
 EXT(YgooSconditionsYfile_opening_error_filename,"goo/conditions","file-opening-error-filename");
 EXT(YgooSmathYNE,"goo/math","~=");
-DEF(YgooSrandomYrandom_using,"goo/random","random-using");
 EXT(YgooScolsSseqYpick,"goo/cols/seq","pick");
+DEF(YgooSrandomYrecent_setter,"goo/random","recent-setter");
 EXT(YPwith_monitor,"goo/boot","%with-monitor");
 EXT(YgooSmathYlogn,"goo/math","logn");
 EXT(YgooSconditionsYLrange_errorG,"goo/conditions","<range-error>");
@@ -300,11 +301,11 @@ EXT(YgooScolsSstrYnum_to_str_base,"goo/cols/str","num-to-str-base");
 EXT(Yfun_mets,"goo/boot","fun-mets");
 EXT(YPrnul,"goo/boot","%rnul");
 EXT(YTboot_macro_namesT,"goo/boot","*boot-macro-names*");
-DEF(YgooSrandomYrecent_index,"goo/random","recent-index");
 EXT(YTreport_prop_unbound_errorsQT,"goo/boot","*report-prop-unbound-errors?*");
 EXT(YgooSioSportYopen,"goo/io/port","open");
 EXT(YgooSconditionsYLfile_opening_errorG,"goo/conditions","<file-opening-error>");
 EXT(YgooSconditionsYcondition_message,"goo/conditions","condition-message");
+DEF(YgooSrandomYrecent_index_setter,"goo/random","recent-index-setter");
 EXT(YgooSconditionsYLas_errorG,"goo/conditions","<as-error>");
 EXT(YOall2Q,"goo/boot","@all2?");
 EXT(YgooScolsSseqYfinds,"goo/cols/seq","finds");
@@ -317,10 +318,12 @@ EXT(YgooSsystemYfind_goo_file_at,"goo/system","find-goo-file-at");
 EXT(YgooScolsScolYdo_keyed,"goo/cols/col","do-keyed");
 EXT(YgooSconditionsYLhandler_infoG,"goo/conditions","<handler-info>");
 EXT(YLfunG,"goo/boot","<fun>");
+DEF(YgooSrandomYLrandomG,"goo/random","<random>");
 EXT(YgooSconditionsYLproperty_not_found_errorG,"goo/conditions","<property-not-found-error>");
 EXT(YgooSmacrosYmatch_empty_list,"goo/macros","match-empty-list");
 EXT(YgooScolsScolxYelt_setter,"goo/cols/colx","elt-setter");
 EXT(YgooSsystemYcomponents_basename,"goo/system","components-basename");
+DEF(YgooSrandomYrandom_unit,"goo/random","random-unit");
 EXT(Yprop_type,"goo/boot","prop-type");
 EXT(YgooSmathYdiv,"goo/math","div");
 EXT(YgooScolsScolYfill,"goo/cols/col","fill");
@@ -344,6 +347,7 @@ EXT(YgooSconditionsYLserious_conditionG,"goo/conditions","<serious-condition>");
 EXT(YgooScolsSseqYjoin,"goo/cols/seq","join");
 EXT(YgooSioSportYnewline,"goo/io/port","newline");
 EXT(YgooScolsScolxYzapX,"goo/cols/colx","zap!");
+DEF(YgooSrandomYrandom_using,"goo/random","random-using");
 EXT(Yfun_sig,"goo/boot","fun-sig");
 EXT(YOlst,"goo/boot","@lst");
 EXT(YgooScolsSlstYlist,"goo/cols/lst","list");
@@ -359,6 +363,7 @@ EXT(YgooSmathYneg,"goo/math","neg");
 EXT(YgooSconditionsYLproperty_unbound_errorG,"goo/conditions","<property-unbound-error>");
 DYNEXT(YgooSioSwriteYTmax_print_depthT,"goo/io/write","*max-print-depth*");
 EXT(YgooScolsStabYid_hash,"goo/cols/tab","id-hash");
+DEF(YgooSrandomYrandom_29,"goo/random","random-29");
 EXT(YgooSioSportYLstr_portG,"goo/io/port","<str-port>");
 EXT(YgooSruntimeYcurry,"goo/runtime","curry");
 EXT(YgooScolsScolYelt_type,"goo/cols/col","elt-type");
@@ -384,7 +389,6 @@ EXT(YgooScolsSstrYstr_to_num,"goo/cols/str","str-to-num");
 EXT(YOopts_as_lst,"goo/boot","@opts-as-lst");
 EXT(YgooScolsScycleYLcycleG,"goo/cols/cycle","<cycle>");
 EXT(YgooScolsSseqYany2Q,"goo/cols/seq","any2?");
-DEF(YgooSrandomYrandom_unit,"goo/random","random-unit");
 EXT(YLtypeG,"goo/boot","<type>");
 EXT(Yproduct_elts,"goo/boot","product-elts");
 EXT(Yfab_class,"goo/boot","fab-class");
@@ -434,7 +438,6 @@ EXT(Yfun_src_setter,"goo/boot","fun-src-setter");
 EXT(YgooSconditionsYrange_error_key,"goo/conditions","range-error-key");
 EXT(Ykeyboard_interrupt,"goo/boot","keyboard-interrupt");
 EXT(YgooSmathYeof_objectQ,"goo/math","eof-object?");
-DEF(YgooSrandomYrandom_29,"goo/random","random-29");
 EXT(Yerror,"goo/boot","error");
 EXT(YgooSmathYGG,"goo/math",">>");
 EXT(YgooSmathYA,"goo/math","+");
@@ -444,11 +447,8 @@ EXT(YgooScolsSseqYbelow,"goo/cols/seq","below");
 EXT(YgooSconditionsYLrestartG,"goo/conditions","<restart>");
 EXT(YLtupG,"goo/boot","<tup>");
 EXT(YgooScolsSseqYsort_byX,"goo/cols/seq","sort-by!");
-DEF(YgooSrandomYfab_random_from,"goo/random","fab-random-from");
 EXT(YgooSconditionsYLarithmetic_errorG,"goo/conditions","<arithmetic-error>");
 EXT(YgooSmagYL,"goo/mag","<");
-DEF(YgooSrandomYDrecent_size,"goo/random","$recent-size");
-DEF(YgooSrandomYLrandomG,"goo/random","<random>");
 EXT(YgooScolsStabYLsetG,"goo/cols/tab","<set>");
 EXT(YgooSsystemYadd_build_path,"goo/system","add-build-path");
 EXT(YgooSmacrosYvar_name,"goo/macros","var-name");
@@ -457,7 +457,6 @@ EXT(Yfun_src,"goo/boot","fun-src");
 EXT(YgooSmacrosYpair,"goo/macros","pair");
 EXT(YgooSsystemYso_load,"goo/system","so-load");
 EXT(Yprop_value_setter,"goo/boot","prop-value-setter");
-DEF(YgooSrandomYfab_random,"goo/random","fab-random");
 EXT(YgooSioSportYLfile_out_portG,"goo/io/port","<file-out-port>");
 EXT(YgooScolsSstrYstr,"goo/cols/str","str");
 EXT(YgooSconditionsYDdefault_handler_info,"goo/conditions","$default-handler-info");
@@ -477,7 +476,6 @@ EXT(Ynew,"goo/boot","new");
 EXT(Yprop_setter,"goo/boot","prop-setter");
 EXT(Yreturn_type_error,"goo/boot","return-type-error");
 EXT(YgooSmacrosYlast,"goo/macros","last");
-DEF(YgooSrandomYdefault_random_seed,"goo/random","default-random-seed");
 EXT(Yfun_names,"goo/boot","fun-names");
 EXT(YgooSmathYB,"goo/math","&");
 EXT(Yobject_props,"goo/boot","object-props");
@@ -490,10 +488,12 @@ EXT(YgooSconditionsYLproperty_type_errorG,"goo/conditions","<property-type-error
 EXT(Yfun_name_setter,"goo/boot","fun-name-setter");
 EXT(Ymet_appQ,"goo/boot","met-app?");
 EXT(Ysig_names,"goo/boot","sig-names");
+DEF(YgooSrandomYfab_random,"goo/random","fab-random");
 EXT(YgooSsystemYcomponents_to_pathname,"goo/system","components-to-pathname");
 EXT(YgooScolsScolxYlenSfill_setter,"goo/cols/colx","len/fill-setter");
 EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
 EXT(YLlstG,"goo/boot","<lst>");
+EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(YgooSsystemYcreate_directory,"goo/system","create-directory");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(YgooSsystemYTgoo_extensionT,"goo/system","*goo-extension*");
@@ -508,7 +508,6 @@ EXT(Yprop_boundQ,"goo/boot","prop-bound?");
 EXT(YgooSconditionsYLerrorG,"goo/conditions","<error>");
 EXT(YgooSmathYupperQ,"goo/math","upper?");
 EXT(YgooSmacrosYfab_setter_name,"goo/macros","fab-setter-name");
-DEF(YgooSrandomYrecent_setter,"goo/random","recent-setter");
 EXT(YgooScolsSrangeYrange,"goo/cols/range","range");
 EXT(YgooScolsSseqYsuffixQ,"goo/cols/seq","suffix?");
 EXT(YLseqXG,"goo/boot","<seq!>");
@@ -517,6 +516,7 @@ EXT(YTrestarts_okQT,"goo/boot","*restarts-ok?*");
 EXT(Ygen_refs_setter,"goo/boot","gen-refs-setter");
 EXT(YisaQ,"goo/boot","isa?");
 EXT(YgooScolsScolYfab,"goo/cols/col","fab");
+DEF(YgooSrandomYrandom_unit_using,"goo/random","random-unit-using");
 EXT(YgooSsystemYgooc_filename,"goo/system","gooc-filename");
 EXT(YgooSmacrosYcat,"goo/macros","cat");
 EXT(YgooSmathYdigitQ,"goo/math","digit?");
@@ -524,10 +524,12 @@ EXT(Ymay_isaQ,"goo/boot","may-isa?");
 EXT(YgooSioSwriteYwriteln,"goo/io/write","writeln");
 EXT(YgooScolsSseqYprefixQ,"goo/cols/seq","prefix?");
 EXT(YgooSioSportYLportG,"goo/io/port","<port>");
+DEF(YgooSrandomYDrecent_size,"goo/random","$recent-size");
 EXT(YgooScolsScolYlow_elt,"goo/cols/col","low-elt");
 EXT(Yhandler_info_arguments,"goo/boot","handler-info-arguments");
 EXT(YLseqIG,"goo/boot","<seq.>");
 EXT(YgooSmathYS,"goo/math","/");
+DEF(YgooSrandomYrecent_index,"goo/random","recent-index");
 EXT(Ynarity_error,"goo/boot","narity-error");
 EXT(Yfab_sym,"goo/boot","fab-sym");
 EXT(Ygen_refs,"goo/boot","gen-refs");
@@ -540,40 +542,40 @@ EXT(Yunexec,"goo/boot","unexec");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_23);
-DEFLIT(lit_25);
-DEFLIT(lit_29);
-DEFLIT(lit_5);
-DEFLIT(lit_27);
-DEFLIT(lit_2);
-DEFLIT(lit_13);
-DEFLIT(lit_7);
 DEFLIT(lit_15);
+DEFLIT(lit_2);
+DEFLIT(lit_30);
+DEFLIT(lit_25);
+DEFLIT(lit_4);
+DEFLIT(lit_8);
+DEFLIT(lit_13);
+DEFLIT(lit_6);
+DEFLIT(lit_23);
+DEFLIT(lit_12);
 DEFLIT(lit_17);
-DEFLIT(lit_0);
+DEFLIT(lit_19);
 DEFLIT(lit_1);
-DEFLIT(lit_9);
+DEFLIT(lit_0);
+DEFLIT(lit_5);
+DEFLIT(lit_3);
+DEFLIT(lit_7);
+DEFLIT(lit_18);
+DEFLIT(lit_28);
+DEFLIT(lit_33);
+DEFLIT(lit_31);
+DEFLIT(lit_27);
+DEFLIT(lit_10);
+DEFLIT(lit_24);
+DEFLIT(lit_16);
 DEFLIT(lit_14);
 DEFLIT(lit_20);
-DEFLIT(lit_32);
-DEFLIT(lit_11);
-DEFLIT(lit_10);
-DEFLIT(lit_16);
-DEFLIT(lit_24);
-DEFLIT(lit_12);
-DEFLIT(lit_19);
-DEFLIT(lit_33);
-DEFLIT(lit_8);
-DEFLIT(lit_18);
-DEFLIT(lit_3);
+DEFLIT(lit_9);
+DEFLIT(lit_29);
 DEFLIT(lit_21);
-DEFLIT(lit_4);
-DEFLIT(lit_31);
-DEFLIT(lit_28);
-DEFLIT(lit_26);
+DEFLIT(lit_32);
 DEFLIT(lit_22);
-DEFLIT(lit_30);
-DEFLIT(lit_6);
+DEFLIT(lit_11);
+DEFLIT(lit_26);
 
 /* FUNCTIONS: */
 
@@ -586,7 +588,7 @@ LOCFOR(fun_recent_index_setter_5);
 LOCFOR(fun_6);
 FUNFOR(YgooSrandomYlcg_rand);
 LOCFOR(fun_loop_8);
-LOCFOR(fun_x_1808_9);
+LOCFOR(fun_x_1777_9);
 LOCFOR(fun_fab_random_from_10);
 LOCFOR(fun_fab_random_11);
 LOCFOR(fun_tap_12);
@@ -698,8 +700,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_8) {
   P j_,prev_;
-  P v2F3780;
-  P v1F3779;
+  P v2F3531;
+  P v1F3530;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
   P a1,a2;
 LINK_STACK();
@@ -709,17 +711,17 @@ loop:
   T1 = CALL2(1,VARREF(YgooSmagYL),j_,VARREF(YgooSrandomYDrecent_size));
   if (T1 != YPfalse) {
     T3 = CALL1(1,VARREF(YgooSrandomYlcg_rand),prev_);
-    v1F3779 = T3;
-    T5 = CALL1(1,VARREF(YgooSrandomYlcg_rand),v1F3779);
-    v2F3780 = T5;
-    T7 = CALL2(1,VARREF(YgooSmathYmod),v1F3779,YPint((P)32768));
-    T9 = CALL2(1,VARREF(YgooSmathYmod),v2F3780,YPint((P)16384));
+    v1F3530 = T3;
+    T5 = CALL1(1,VARREF(YgooSrandomYlcg_rand),v1F3530);
+    v2F3531 = T5;
+    T7 = CALL2(1,VARREF(YgooSmathYmod),v1F3530,YPint((P)32768));
+    T9 = CALL2(1,VARREF(YgooSmathYmod),v2F3531,YPint((P)16384));
     T8 = CALL2(1,VARREF(YgooSmathYT),T9,YPint((P)32768));
     T6 = CALL2(1,VARREF(YgooSmathYA),T7,T8);
     CALL3(1,VARREF(YgooScolsScolxYelt_setter),T6,FREEREF(0),j_);
     T11 = CALL2(1,VARREF(YgooSmathYA),j_,YPint((P)1));
     a1 = T11;
-    a2 = v2F3780;
+    a2 = v2F3531;
     j_ = a1;
     prev_ = a2;
     goto loop;
@@ -733,23 +735,23 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_x_1808_9) {
-  P x_1807_;
-  P jF3781;
+FUNCODEDEF(fun_x_1777_9) {
+  P x_1776_;
+  P jF3532;
   P T0,T1,T2,T3,T4,T5,T6;
   P a1;
 LINK_STACK();
-  ARG(x_1807_, 0);
+  ARG(x_1776_, 0);
 loop:
-  T2 = CALL1(1,VARREF(YgooScolsScolYfinQ),x_1807_);
+  T2 = CALL1(1,VARREF(YgooScolsScolYfinQ),x_1776_);
   T1 = CALL1(1,VARREF(Ynot),T2);
   if (T1 != YPfalse) {
-    T4 = CALL1(1,VARREF(YgooScolsScolYnow),x_1807_);
-    jF3781 = T4;
+    T4 = CALL1(1,VARREF(YgooScolsScolYnow),x_1776_);
+    jF3532 = T4;
     CALL1(1,VARREF(YgooSrandomYrandom_29),FREEREF(0));
-    T6 = CALL1(1,VARREF(YgooScolsScolYnxt),x_1807_);
+    T6 = CALL1(1,VARREF(YgooScolsScolYnxt),x_1776_);
     a1 = T6;
-    x_1807_ = a1;
+    x_1776_ = a1;
     goto loop;
     T3 = T5;
     T0 = T3;
@@ -762,34 +764,34 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_fab_random_from_10) {
   P seed_;
-  P x_1808F3785;
-  P loopF3784;
-  P aF3783;
-  P rF3782;
+  P x_1777F3536;
+  P loopF3535;
+  P aF3534;
+  P rF3533;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12;
   P a1;
 LINK_STACK();
   ARG(seed_, 0);
 loop:
   T1 = CALL1(1,VARREF(Ynew),VARREF(YgooSrandomYLrandomG));
-  rF3782 = T1;
-  T3 = CALL1(1,VARREF(YgooSrandomYrecent),rF3782);
-  aF3783 = T3;
-  CALL3(1,VARREF(YgooScolsScolxYelt_setter),VARREF(YDmax_int),aF3783,YPint((P)0));
+  rF3533 = T1;
+  T3 = CALL1(1,VARREF(YgooSrandomYrecent),rF3533);
+  aF3534 = T3;
+  CALL3(1,VARREF(YgooScolsScolxYelt_setter),VARREF(YDmax_int),aF3534,YPint((P)0));
   T4 = FUNSHELL(1,fun_loop_8,2);
-  loopF3784 = T4;
-  FUNINIT(loopF3784, 2,aF3783,loopF3784);
+  loopF3535 = T4;
+  FUNINIT(loopF3535, 2,aF3534,loopF3535);
   T7 = CALL1(1,VARREF(YgooSmathYabs),seed_);
   T6 = CALL2(1,VARREF(YgooSmathYmod),T7,YPint((P)32768));
-  T5 = CALL2(0,loopF3784,YPint((P)1),T6);
-  T8 = FUNSHELL(1,fun_x_1808_9,2);
-  x_1808F3785 = T8;
-  FUNINIT(x_1808F3785, 2,rF3782,x_1808F3785);
+  T5 = CALL2(0,loopF3535,YPint((P)1),T6);
+  T8 = FUNSHELL(1,fun_x_1777_9,2);
+  x_1777F3536 = T8;
+  FUNINIT(x_1777F3536, 2,rF3533,x_1777F3536);
   T12 = CALL2(1,VARREF(YgooSmathYT),YPint((P)4),VARREF(YgooSrandomYDrecent_size));
   T11 = CALL3(1,VARREF(YgooScolsSrangeYrange),YPint((P)0),VARREF(YgooSmagYLE),T12);
   T10 = CALL1(1,VARREF(YgooScolsScolYenum),T11);
-  T9 = CALL1(0,x_1808F3785,T10);
-  T2 = rF3782;
+  T9 = CALL1(0,x_1777F3536,T10);
+  T2 = rF3533;
   T0 = T2;
 UNLINK_STACK();
   RET(T0);
@@ -822,9 +824,9 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSrandomYrandom_29) {
   P r_;
-  P tapF3788;
-  P aF3787;
-  P riF3786;
+  P tapF3539;
+  P aF3538;
+  P riF3537;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P a1;
 LINK_STACK();
@@ -834,21 +836,21 @@ loop:
   T2 = CALL2(1,VARREF(YgooSmathYA),T3,YPint((P)1));
   T1 = CALL2(1,VARREF(YgooSmathYmod),T2,VARREF(YgooSrandomYDrecent_size));
   check_type(T1,VARREF(YLintG));
-  riF3786 = T1;
+  riF3537 = T1;
   T5 = CALL1(1,VARREF(YgooSrandomYrecent),r_);
-  aF3787 = T5;
-  CALL2(1,VARREF(YgooSrandomYrecent_index_setter),riF3786,r_);
+  aF3538 = T5;
+  CALL2(1,VARREF(YgooSrandomYrecent_index_setter),riF3537,r_);
   T7 = FUNSHELL(1,fun_tap_12,2);
-  tapF3788 = T7;
-  FUNINIT(tapF3788, 2,aF3787,riF3786);
-  T11 = CALL1(1,tapF3788,YPint((P)54));
-  T12 = CALL1(1,tapF3788,YPint((P)8));
+  tapF3539 = T7;
+  FUNINIT(tapF3539, 2,aF3538,riF3537);
+  T11 = CALL1(1,tapF3539,YPint((P)54));
+  T12 = CALL1(1,tapF3539,YPint((P)8));
   T10 = CALL2(1,VARREF(YgooSmathYC),T11,T12);
-  T14 = CALL1(1,tapF3788,YPint((P)6));
-  T15 = CALL1(1,tapF3788,YPint((P)3));
+  T14 = CALL1(1,tapF3539,YPint((P)6));
+  T15 = CALL1(1,tapF3539,YPint((P)3));
   T13 = CALL2(1,VARREF(YgooSmathYC),T14,T15);
   T9 = CALL2(1,VARREF(YgooSmathYC),T10,T13);
-  T8 = CALL3(1,VARREF(YgooScolsScolxYelt_setter),T9,aF3787,riF3786);
+  T8 = CALL3(1,VARREF(YgooScolsScolxYelt_setter),T9,aF3538,riF3537);
   T6 = T8;
   T4 = T6;
   T0 = T4;
@@ -869,15 +871,15 @@ UNLINK_STACK();
 }
 
 FUNCODEDEF(fun_find_good_value_15) {
-  P valueF3789;
+  P valueF3540;
   P T0,T1,T2,T3,T4;
 LINK_STACK();
 loop:
   T1 = CALL1(1,VARREF(YgooSrandomYrandom_29),FREEREF(0));
-  valueF3789 = T1;
-  T3 = CALL2(1,VARREF(YgooSmagYLE),valueF3789,FREEREF(1));
+  valueF3540 = T1;
+  T3 = CALL2(1,VARREF(YgooSmagYLE),valueF3540,FREEREF(1));
   if (T3 != YPfalse) {
-    T2 = valueF3789;
+    T2 = valueF3540;
   } else {
     goto loop;
     T2 = T4;
@@ -889,9 +891,9 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_random_using_16) {
   P range_,r_;
-  P find_good_valueF3792;
-  P limitF3791;
-  P mF3790;
+  P find_good_valueF3543;
+  P limitF3542;
+  P mF3541;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
   P a1,a2;
 LINK_STACK();
@@ -902,16 +904,16 @@ loop:
   if (T1 != YPfalse) {
     T0 = YPint((P)0);
   } else {
-    mF3790 = VARREF(YDmax_int);
-    T7 = CALL2(1,VARREF(YgooSmathY_),mF3790,range_);
+    mF3541 = VARREF(YDmax_int);
+    T7 = CALL2(1,VARREF(YgooSmathY_),mF3541,range_);
     T6 = CALL2(1,VARREF(YgooSmathYA),T7,YPint((P)1));
     T5 = CALL2(1,VARREF(YgooSmathYmod),T6,range_);
-    T4 = CALL2(1,VARREF(YgooSmathY_),mF3790,T5);
-    limitF3791 = T4;
+    T4 = CALL2(1,VARREF(YgooSmathY_),mF3541,T5);
+    limitF3542 = T4;
     T9 = FUNSHELL(1,fun_find_good_value_15,3);
-    find_good_valueF3792 = T9;
-    FUNINIT(find_good_valueF3792, 3,r_,limitF3791,find_good_valueF3792);
-    T11 = CALL0(1,find_good_valueF3792);
+    find_good_valueF3543 = T9;
+    FUNINIT(find_good_valueF3543, 3,r_,limitF3542,find_good_valueF3543);
+    T11 = CALL0(1,find_good_valueF3543);
     T10 = CALL2(1,VARREF(YgooSmathYmod),T11,range_);
     T8 = T10;
     T3 = T8;
@@ -933,17 +935,17 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_random_unit_using_18) {
   P r_;
-  P maxF3793;
+  P maxF3544;
   P T0,T1,T2,T3,T4,T5;
   P a1;
 LINK_STACK();
   ARG(r_, 0);
 loop:
-  maxF3793 = YPint((P)1000000);
-  T4 = CALL2(1,VARREF(YgooSmathYA),maxF3793,YPint((P)1));
+  maxF3544 = YPint((P)1000000);
+  T4 = CALL2(1,VARREF(YgooSmathYA),maxF3544,YPint((P)1));
   T3 = CALL2(1,VARREF(YgooSrandomYrandom_using),T4,r_);
   T2 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLfloG),T3);
-  T5 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLfloG),maxF3793);
+  T5 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLfloG),maxF3544);
   T1 = CALL2(1,VARREF(YgooSmathYS),T2,T5);
   T0 = T1;
 UNLINK_STACK();
@@ -1041,12 +1043,12 @@ loop:
   lit_16 = YPPlist(1,YPPsym((P)"seed"));
   lit_17 = YPPsym((P)"loop");
   lit_18 = YPPlist(2,YPPsym((P)"j"),YPPsym((P)"prev"));
-  lit_19 = YPPsym((P)"x-1808");
-  lit_20 = YPPlist(1,YPPsym((P)"x-1807"));
+  lit_19 = YPPsym((P)"x-1777");
+  lit_20 = YPPlist(1,YPPsym((P)"x-1776"));
   T32 = YPsig(LITREF(lit_18),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
   fun_loop_8 = YPmet(FUNCODEREF(fun_loop_8),LITREF(lit_17),T32,ENVNUL,PNUL,YPfalse);
   T31 = YPsig(LITREF(lit_20),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_1808_9 = YPmet(FUNCODEREF(fun_x_1808_9),LITREF(lit_19),T31,ENVNUL,PNUL,YPfalse);
+  fun_x_1777_9 = YPmet(FUNCODEREF(fun_x_1777_9),LITREF(lit_19),T31,ENVNUL,PNUL,YPfalse);
   T30 = YPsig(LITREF(lit_16),YPPlist(1,VARREF(YLintG)),YPfalse,YPint((P)1),VARREF(YgooSrandomYLrandomG),Ynil);
   fun_fab_random_from_10 = YPmet(FUNCODEREF(fun_fab_random_from_10),LITREF(lit_15),T30,ENVNUL,PNUL,YPfalse);
   T35 = BOUNDP(YgooSrandomYfab_random_from);
@@ -1405,6 +1407,7 @@ static IMPORT_INFO import_infos[] = {
   {"%fsinh", &module_info_gooSboot, "%fsinh"},
   {"fun-nary?", &module_info_gooSboot, "fun-nary?"},
   {"%unlink-stack", &module_info_gooSboot, "%unlink-stack"},
+  {"sub*-setter", &module_info_gooScolsSseqx, "sub*-setter"},
   {"probe-directory", &module_info_gooSsystem, "probe-directory"},
   {"@not", &module_info_gooSboot, "@not"},
   {"class-direct-props", &module_info_gooSboot, "class-direct-props"},
@@ -1846,6 +1849,7 @@ static IMPORT_INFO import_infos[] = {
   {"%c=", &module_info_gooSboot, "%c="},
   {"sub", &module_info_gooScolsSseq, "sub"},
   {"<lst>", &module_info_gooSboot, "<lst>"},
+  {"sub*", &module_info_gooScolsSseq, "sub*"},
   {"create-directory", &module_info_gooSsystem, "create-directory"},
   {"elt-or", &module_info_gooScolsScol, "elt-or"},
   {"*goo-extension*", &module_info_gooSsystem, "*goo-extension*"},
@@ -1910,32 +1914,32 @@ static IMPORT_INFO import_infos[] = {
 };
 
 static BINDING_INFO binding_infos[] = {
-  {"random-unit-using", CVAR, &YgooSrandomYrandom_unit_using},
-  {"recent-index-setter", CVAR, &YgooSrandomYrecent_index_setter},
-  {"recent", CVAR, &YgooSrandomYrecent},
-  {"random", CVAR, &YgooSrandomYrandom},
-  {"$default-random", CVAR, &YgooSrandomYDdefault_random},
   {"lcg-rand", CVAR, &YgooSrandomYlcg_rand},
-  {"random-using", CVAR, &YgooSrandomYrandom_using},
-  {"recent-index", CVAR, &YgooSrandomYrecent_index},
-  {"random-unit", CVAR, &YgooSrandomYrandom_unit},
-  {"random-29", CVAR, &YgooSrandomYrandom_29},
+  {"recent", CVAR, &YgooSrandomYrecent},
+  {"$default-random", CVAR, &YgooSrandomYDdefault_random},
   {"fab-random-from", CVAR, &YgooSrandomYfab_random_from},
-  {"$recent-size", CVAR, &YgooSrandomYDrecent_size},
-  {"<random>", CVAR, &YgooSrandomYLrandomG},
-  {"fab-random", CVAR, &YgooSrandomYfab_random},
-  {"---main-0---", PVAR, NULL},
   {"default-random-seed", CVAR, &YgooSrandomYdefault_random_seed},
+  {"random", CVAR, &YgooSrandomYrandom},
   {"recent-setter", CVAR, &YgooSrandomYrecent_setter},
+  {"recent-index-setter", CVAR, &YgooSrandomYrecent_index_setter},
+  {"<random>", CVAR, &YgooSrandomYLrandomG},
+  {"random-unit", CVAR, &YgooSrandomYrandom_unit},
+  {"random-using", CVAR, &YgooSrandomYrandom_using},
+  {"random-29", CVAR, &YgooSrandomYrandom_29},
+  {"---main-0---", PVAR, NULL},
+  {"fab-random", CVAR, &YgooSrandomYfab_random},
+  {"random-unit-using", CVAR, &YgooSrandomYrandom_unit_using},
+  {"$recent-size", CVAR, &YgooSrandomYDrecent_size},
+  {"recent-index", CVAR, &YgooSrandomYrecent_index},
   {NULL, NVAR, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"random-unit-using", "random-unit-using"},
   {"random", "random"},
-  {"random-using", "random-using"},
   {"random-unit", "random-unit"},
+  {"random-using", "random-using"},
   {"fab-random", "fab-random"},
+  {"random-unit-using", "random-unit-using"},
   {NULL, NULL}
 };
 

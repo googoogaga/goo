@@ -124,6 +124,7 @@ EXT(YgooSmathYto_str,"goo/math","to-str");
 EXT(YgooScolsScolYfold,"goo/cols/col","fold");
 EXT(YgooSmacrosY1st,"goo/macros","1st");
 EXT(Yfun_naryQ,"goo/boot","fun-nary?");
+EXT(YgooScolsSseqxYsubT_setter,"goo/cols/seqx","sub*-setter");
 EXT(YLchrG,"goo/boot","<chr>");
 EXT(Yclass_direct_props,"goo/boot","class-direct-props");
 EXT(YgooScolsSseqxYsub_setter,"goo/cols/seqx","sub-setter");
@@ -358,6 +359,7 @@ EXT(Ysig_names,"goo/boot","sig-names");
 EXT(YgooScolsScolxYlenSfill_setter,"goo/cols/colx","len/fill-setter");
 EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
 EXT(YLlstG,"goo/boot","<lst>");
+EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(Yfun_name,"goo/boot","fun-name");
 EXT(YOanyQ,"goo/boot","@any?");
@@ -393,63 +395,63 @@ EXT(YgooSmathYtan,"goo/math","tan");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_27);
-DEFLIT(lit_41);
-DEFLIT(lit_14);
+DEFLIT(lit_54);
+DEFLIT(lit_9);
+DEFLIT(lit_22);
 DEFLIT(lit_13);
-DEFLIT(lit_51);
+DEFLIT(lit_24);
+DEFLIT(lit_29);
+DEFLIT(lit_31);
+DEFLIT(lit_1);
+DEFLIT(lit_14);
+DEFLIT(lit_47);
+DEFLIT(lit_16);
 DEFLIT(lit_40);
 DEFLIT(lit_25);
-DEFLIT(lit_7);
-DEFLIT(lit_16);
-DEFLIT(lit_2);
-DEFLIT(lit_26);
 DEFLIT(lit_50);
+DEFLIT(lit_45);
 DEFLIT(lit_19);
-DEFLIT(lit_43);
-DEFLIT(lit_39);
-DEFLIT(lit_29);
 DEFLIT(lit_52);
 DEFLIT(lit_20);
-DEFLIT(lit_11);
-DEFLIT(lit_8);
+DEFLIT(lit_2);
+DEFLIT(lit_12);
 DEFLIT(lit_56);
-DEFLIT(lit_15);
-DEFLIT(lit_42);
+DEFLIT(lit_30);
 DEFLIT(lit_44);
-DEFLIT(lit_1);
+DEFLIT(lit_42);
 DEFLIT(lit_3);
-DEFLIT(lit_45);
-DEFLIT(lit_31);
+DEFLIT(lit_41);
+DEFLIT(lit_39);
+DEFLIT(lit_43);
 DEFLIT(lit_6);
 DEFLIT(lit_49);
 DEFLIT(lit_18);
-DEFLIT(lit_30);
-DEFLIT(lit_55);
-DEFLIT(lit_21);
-DEFLIT(lit_53);
-DEFLIT(lit_32);
-DEFLIT(lit_37);
-DEFLIT(lit_34);
-DEFLIT(lit_0);
-DEFLIT(lit_5);
-DEFLIT(lit_24);
-DEFLIT(lit_4);
-DEFLIT(lit_57);
-DEFLIT(lit_47);
-DEFLIT(lit_28);
-DEFLIT(lit_54);
-DEFLIT(lit_36);
-DEFLIT(lit_48);
-DEFLIT(lit_23);
-DEFLIT(lit_33);
-DEFLIT(lit_22);
-DEFLIT(lit_12);
-DEFLIT(lit_17);
-DEFLIT(lit_46);
-DEFLIT(lit_35);
 DEFLIT(lit_38);
-DEFLIT(lit_9);
+DEFLIT(lit_8);
+DEFLIT(lit_57);
+DEFLIT(lit_51);
+DEFLIT(lit_53);
+DEFLIT(lit_15);
+DEFLIT(lit_7);
+DEFLIT(lit_55);
+DEFLIT(lit_36);
+DEFLIT(lit_33);
+DEFLIT(lit_0);
+DEFLIT(lit_27);
+DEFLIT(lit_28);
+DEFLIT(lit_26);
+DEFLIT(lit_17);
+DEFLIT(lit_5);
+DEFLIT(lit_46);
+DEFLIT(lit_21);
+DEFLIT(lit_23);
+DEFLIT(lit_32);
+DEFLIT(lit_34);
+DEFLIT(lit_48);
+DEFLIT(lit_35);
+DEFLIT(lit_11);
+DEFLIT(lit_4);
+DEFLIT(lit_37);
 DEFLIT(lit_10);
 
 /* FUNCTIONS: */
@@ -1411,6 +1413,7 @@ static IMPORT_INFO import_infos[] = {
   {"%fsinh", &module_info_gooSboot, "%fsinh"},
   {"%unlink-stack", &module_info_gooSboot, "%unlink-stack"},
   {"fun-nary?", &module_info_gooSboot, "fun-nary?"},
+  {"sub*-setter", &module_info_gooScolsSseqx, "sub*-setter"},
   {"@not", &module_info_gooSboot, "@not"},
   {"<chr>", &module_info_gooSboot, "<chr>"},
   {"class-direct-props", &module_info_gooSboot, "class-direct-props"},
@@ -1765,6 +1768,7 @@ static IMPORT_INFO import_infos[] = {
   {"%c=", &module_info_gooSboot, "%c="},
   {"sub", &module_info_gooScolsSseq, "sub"},
   {"<lst>", &module_info_gooSboot, "<lst>"},
+  {"sub*", &module_info_gooScolsSseq, "sub*"},
   {"elt-or", &module_info_gooScolsScol, "elt-or"},
   {"fun-name", &module_info_gooSboot, "fun-name"},
   {"%i?", &module_info_gooSboot, "%i?"},

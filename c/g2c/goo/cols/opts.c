@@ -310,6 +310,7 @@ EXT(Yfun_name_setter,"goo/boot","fun-name-setter");
 EXT(Ysig_names,"goo/boot","sig-names");
 EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
 EXT(YLlstG,"goo/boot","<lst>");
+EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(Yfun_name,"goo/boot","fun-name");
 EXT(YOanyQ,"goo/boot","@any?");
@@ -344,18 +345,18 @@ EXT(YgooSmathYtan,"goo/math","tan");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_9);
 DEFLIT(lit_5);
+DEFLIT(lit_3);
+DEFLIT(lit_7);
+DEFLIT(lit_8);
 DEFLIT(lit_4);
 DEFLIT(lit_11);
 DEFLIT(lit_10);
+DEFLIT(lit_9);
 DEFLIT(lit_0);
 DEFLIT(lit_6);
-DEFLIT(lit_8);
-DEFLIT(lit_3);
-DEFLIT(lit_2);
-DEFLIT(lit_7);
 DEFLIT(lit_1);
+DEFLIT(lit_2);
 
 /* FUNCTIONS: */
 
@@ -1056,6 +1057,7 @@ static IMPORT_INFO import_infos[] = {
   {"%c=", &module_info_gooSboot, "%c="},
   {"sub", &module_info_gooScolsSseq, "sub"},
   {"<lst>", &module_info_gooSboot, "<lst>"},
+  {"sub*", &module_info_gooScolsSseq, "sub*"},
   {"elt-or", &module_info_gooScolsScol, "elt-or"},
   {"fun-name", &module_info_gooSboot, "fun-name"},
   {"%i?", &module_info_gooSboot, "%i?"},

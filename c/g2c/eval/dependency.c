@@ -139,6 +139,7 @@ EXT(YgooSmathYto_str,"goo/math","to-str");
 EXT(YgooScolsScolYfold,"goo/cols/col","fold");
 EXT(YgooSmacrosY1st,"goo/macros","1st");
 EXT(Yfun_naryQ,"goo/boot","fun-nary?");
+EXT(YgooScolsSseqxYsubT_setter,"goo/cols/seqx","sub*-setter");
 EXT(Yclass_direct_props,"goo/boot","class-direct-props");
 EXT(YLchrG,"goo/boot","<chr>");
 EXT(YgooScolsSseqxYsub_setter,"goo/cols/seqx","sub-setter");
@@ -403,6 +404,7 @@ EXT(YgooScolsScolxYlenSfill_setter,"goo/cols/colx","len/fill-setter");
 DEF(YevalSdependencyYdependents_setter,"eval/dependency","dependents-setter");
 EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
 EXT(YLlstG,"goo/boot","<lst>");
+EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(Yfun_name,"goo/boot","fun-name");
 EXT(YgooSioSwriteYemit,"goo/io/write","emit");
@@ -441,42 +443,42 @@ DEF(YevalSdependencyYdependency_emptyQ,"eval/dependency","dependency-empty?");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_25);
+DEFLIT(lit_31);
+DEFLIT(lit_23);
 DEFLIT(lit_24);
 DEFLIT(lit_16);
-DEFLIT(lit_0);
-DEFLIT(lit_18);
-DEFLIT(lit_14);
+DEFLIT(lit_7);
 DEFLIT(lit_22);
-DEFLIT(lit_31);
-DEFLIT(lit_21);
-DEFLIT(lit_29);
-DEFLIT(lit_26);
-DEFLIT(lit_33);
-DEFLIT(lit_13);
 DEFLIT(lit_15);
-DEFLIT(lit_23);
+DEFLIT(lit_13);
+DEFLIT(lit_34);
+DEFLIT(lit_18);
 DEFLIT(lit_4);
 DEFLIT(lit_6);
 DEFLIT(lit_2);
+DEFLIT(lit_8);
 DEFLIT(lit_10);
 DEFLIT(lit_19);
-DEFLIT(lit_30);
-DEFLIT(lit_3);
-DEFLIT(lit_1);
-DEFLIT(lit_28);
-DEFLIT(lit_9);
-DEFLIT(lit_7);
-DEFLIT(lit_5);
-DEFLIT(lit_32);
-DEFLIT(lit_35);
+DEFLIT(lit_0);
 DEFLIT(lit_27);
-DEFLIT(lit_12);
+DEFLIT(lit_21);
+DEFLIT(lit_32);
+DEFLIT(lit_28);
+DEFLIT(lit_20);
+DEFLIT(lit_30);
+DEFLIT(lit_26);
+DEFLIT(lit_3);
+DEFLIT(lit_35);
+DEFLIT(lit_25);
 DEFLIT(lit_11);
 DEFLIT(lit_17);
-DEFLIT(lit_20);
-DEFLIT(lit_34);
-DEFLIT(lit_8);
+DEFLIT(lit_1);
+DEFLIT(lit_12);
+DEFLIT(lit_9);
+DEFLIT(lit_5);
+DEFLIT(lit_29);
+DEFLIT(lit_14);
+DEFLIT(lit_33);
 DEFLIT(lit_36);
 
 /* FUNCTIONS: */
@@ -645,8 +647,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(YevalSdependencyYlog_dependency) {
   P dependable_,dependent_,dtype_;
-  P entryF2431;
-  P dep_tableF2430;
+  P entryF2441;
+  P dep_tableF2440;
   P T0,T1,T2,T3,T4,T5,T6;
   P a1,a2,a3;
 LINK_STACK();
@@ -657,16 +659,16 @@ loop:
   T0 = CALL1(1,VARREF(YevalSdependencyYdepends_on),dependent_);
   CALL3(1,VARREF(YgooScolsScolxYelt_setter),YPtrue,T0,dependable_);
   T2 = CALL1(1,VARREF(YevalSdependencyYdependents),dependable_);
-  dep_tableF2430 = T2;
-  T4 = CALL3(1,VARREF(YgooScolsScolYelt_or),dep_tableF2430,dependent_,YPfalse);
-  entryF2431 = T4;
-  if (entryF2431 != YPfalse) {
-    T6 = CALL2(1,VARREF(YevalSdependencyYdependency_or),entryF2431,dtype_);
+  dep_tableF2440 = T2;
+  T4 = CALL3(1,VARREF(YgooScolsScolYelt_or),dep_tableF2440,dependent_,YPfalse);
+  entryF2441 = T4;
+  if (entryF2441 != YPfalse) {
+    T6 = CALL2(1,VARREF(YevalSdependencyYdependency_or),entryF2441,dtype_);
     T5 = T6;
   } else {
     T5 = dtype_;
   }
-  CALL3(1,VARREF(YgooScolsScolxYelt_setter),T5,dep_tableF2430,dependent_);
+  CALL3(1,VARREF(YgooScolsScolxYelt_setter),T5,dep_tableF2440,dependent_);
   T3 = YPfalse;
   T1 = T3;
 UNLINK_STACK();
@@ -689,7 +691,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_13) {
   P dependent_,dependendent_dtype_;
-  P intersectionF2432;
+  P intersectionF2442;
   P T0,T1,T2,T3,T4,T5;
   P a1,a2;
 LINK_STACK();
@@ -697,11 +699,11 @@ LINK_STACK();
   ARG(dependendent_dtype_, 1);
 loop:
   T1 = CALL2(1,VARREF(YevalSdependencyYdependency_and),FREEREF(0),dependendent_dtype_);
-  intersectionF2432 = T1;
-  T4 = CALL1(1,VARREF(YevalSdependencyYdependency_emptyQ),intersectionF2432);
+  intersectionF2442 = T1;
+  T4 = CALL1(1,VARREF(YevalSdependencyYdependency_emptyQ),intersectionF2442);
   T3 = CALL1(1,VARREF(Ynot),T4);
   if (T3 != YPfalse) {
-    T5 = CALL3(1,VARREF(YevalSdependencyYinvalidate_dependent),dependent_,FREEREF(1),intersectionF2432);
+    T5 = CALL3(1,VARREF(YevalSdependencyYinvalidate_dependent),dependent_,FREEREF(1),intersectionF2442);
     T2 = T5;
   } else {
     T2 = YPfalse;
@@ -1104,6 +1106,7 @@ static IMPORT_INFO import_infos[] = {
   {"fold", &module_info_gooScolsScol, "fold"},
   {"1st", &module_info_gooSmacros, "1st"},
   {"fun-nary?", &module_info_gooSboot, "fun-nary?"},
+  {"sub*-setter", &module_info_gooScolsSseqx, "sub*-setter"},
   {"@not", &module_info_gooSboot, "@not"},
   {"class-direct-props", &module_info_gooSboot, "class-direct-props"},
   {"<chr>", &module_info_gooSboot, "<chr>"},
@@ -1402,6 +1405,7 @@ static IMPORT_INFO import_infos[] = {
   {"len/fill-setter", &module_info_gooScolsScolx, "len/fill-setter"},
   {"sub", &module_info_gooScolsSseq, "sub"},
   {"<lst>", &module_info_gooSboot, "<lst>"},
+  {"sub*", &module_info_gooScolsSseq, "sub*"},
   {"elt-or", &module_info_gooScolsScol, "elt-or"},
   {"fun-name", &module_info_gooSboot, "fun-name"},
   {"emit", &module_info_gooSioSwrite, "emit"},

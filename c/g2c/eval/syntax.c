@@ -204,6 +204,7 @@ EXT(YgooScolsScolYfold,"goo/cols/col","fold");
 EXT(YgooSmacrosY1st,"goo/macros","1st");
 DEF(YevalSsyntaxYsexpr_unwind_protect_protected_form,"eval/syntax","sexpr-unwind-protect-protected-form");
 EXT(Yfun_naryQ,"goo/boot","fun-nary?");
+EXT(YgooScolsSseqxYsubT_setter,"goo/cols/seqx","sub*-setter");
 DEF(YevalSsyntaxYsexpr_ifQ,"eval/syntax","sexpr-if?");
 EXT(Yclass_direct_props,"goo/boot","class-direct-props");
 EXT(YLchrG,"goo/boot","<chr>");
@@ -596,6 +597,7 @@ DEF(YevalSsyntaxYsexpr_expand_backquote,"eval/syntax","sexpr-expand-backquote");
 EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
 EXT(YLlstG,"goo/boot","<lst>");
 DEF(YevalSsyntaxYsexpr_make_application,"eval/syntax","sexpr-make-application");
+EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(Yfun_name,"goo/boot","fun-name");
 EXT(YgooSioSwriteYemit,"goo/io/write","emit");
@@ -652,377 +654,377 @@ EXT(Yunexec,"goo/boot","unexec");
 
 DEFLIT(lit_70);
 DEFLIT(lit_54);
-DEFLIT(lit_274);
-DEFLIT(lit_229);
-DEFLIT(lit_138);
-DEFLIT(lit_135);
-DEFLIT(lit_307);
-DEFLIT(lit_141);
+DEFLIT(lit_45);
+DEFLIT(lit_93);
 DEFLIT(lit_349);
-DEFLIT(lit_193);
-DEFLIT(lit_332);
-DEFLIT(lit_281);
-DEFLIT(lit_212);
+DEFLIT(lit_317);
+DEFLIT(lit_343);
 DEFLIT(lit_295);
 DEFLIT(lit_61);
-DEFLIT(lit_80);
-DEFLIT(lit_271);
-DEFLIT(lit_142);
-DEFLIT(lit_220);
-DEFLIT(lit_25);
+DEFLIT(lit_44);
+DEFLIT(lit_320);
+DEFLIT(lit_92);
+DEFLIT(lit_306);
+DEFLIT(lit_50);
 DEFLIT(lit_76);
-DEFLIT(lit_162);
-DEFLIT(lit_115);
+DEFLIT(lit_152);
+DEFLIT(lit_327);
+DEFLIT(lit_42);
 DEFLIT(lit_130);
-DEFLIT(lit_8);
-DEFLIT(lit_177);
-DEFLIT(lit_363);
+DEFLIT(lit_20);
+DEFLIT(lit_136);
+DEFLIT(lit_245);
+DEFLIT(lit_138);
 DEFLIT(lit_232);
-DEFLIT(lit_285);
 DEFLIT(lit_239);
-DEFLIT(lit_57);
 DEFLIT(lit_214);
 DEFLIT(lit_199);
+DEFLIT(lit_134);
 DEFLIT(lit_113);
-DEFLIT(lit_164);
+DEFLIT(lit_32);
 DEFLIT(lit_91);
-DEFLIT(lit_119);
-DEFLIT(lit_65);
-DEFLIT(lit_258);
+DEFLIT(lit_263);
+DEFLIT(lit_279);
+DEFLIT(lit_86);
 DEFLIT(lit_296);
+DEFLIT(lit_332);
 DEFLIT(lit_227);
+DEFLIT(lit_37);
 DEFLIT(lit_289);
+DEFLIT(lit_330);
 DEFLIT(lit_369);
-DEFLIT(lit_240);
+DEFLIT(lit_119);
 DEFLIT(lit_182);
-DEFLIT(lit_127);
+DEFLIT(lit_24);
 DEFLIT(lit_316);
 DEFLIT(lit_157);
+DEFLIT(lit_132);
 DEFLIT(lit_129);
 DEFLIT(lit_230);
-DEFLIT(lit_63);
-DEFLIT(lit_353);
+DEFLIT(lit_307);
+DEFLIT(lit_183);
 DEFLIT(lit_33);
 DEFLIT(lit_118);
-DEFLIT(lit_122);
+DEFLIT(lit_34);
+DEFLIT(lit_305);
 DEFLIT(lit_346);
-DEFLIT(lit_17);
-DEFLIT(lit_273);
-DEFLIT(lit_355);
+DEFLIT(lit_223);
+DEFLIT(lit_337);
+DEFLIT(lit_193);
 DEFLIT(lit_323);
 DEFLIT(lit_102);
-DEFLIT(lit_45);
+DEFLIT(lit_253);
+DEFLIT(lit_128);
 DEFLIT(lit_143);
-DEFLIT(lit_145);
 DEFLIT(lit_203);
-DEFLIT(lit_359);
+DEFLIT(lit_366);
 DEFLIT(lit_282);
-DEFLIT(lit_209);
 DEFLIT(lit_11);
+DEFLIT(lit_331);
+DEFLIT(lit_19);
 DEFLIT(lit_21);
-DEFLIT(lit_207);
-DEFLIT(lit_197);
 DEFLIT(lit_249);
 DEFLIT(lit_226);
+DEFLIT(lit_101);
 DEFLIT(lit_309);
 DEFLIT(lit_221);
-DEFLIT(lit_131);
-DEFLIT(lit_317);
-DEFLIT(lit_294);
-DEFLIT(lit_292);
-DEFLIT(lit_269);
+DEFLIT(lit_85);
+DEFLIT(lit_273);
+DEFLIT(lit_212);
+DEFLIT(lit_127);
+DEFLIT(lit_162);
+DEFLIT(lit_304);
+DEFLIT(lit_103);
+DEFLIT(lit_117);
+DEFLIT(lit_55);
+DEFLIT(lit_244);
 DEFLIT(lit_251);
-DEFLIT(lit_262);
+DEFLIT(lit_370);
 DEFLIT(lit_261);
+DEFLIT(lit_345);
+DEFLIT(lit_262);
+DEFLIT(lit_112);
 DEFLIT(lit_98);
 DEFLIT(lit_172);
 DEFLIT(lit_362);
-DEFLIT(lit_83);
+DEFLIT(lit_209);
+DEFLIT(lit_235);
+DEFLIT(lit_240);
 DEFLIT(lit_6);
-DEFLIT(lit_305);
+DEFLIT(lit_108);
+DEFLIT(lit_269);
 DEFLIT(lit_111);
-DEFLIT(lit_319);
-DEFLIT(lit_338);
 DEFLIT(lit_198);
+DEFLIT(lit_84);
+DEFLIT(lit_314);
+DEFLIT(lit_190);
 DEFLIT(lit_39);
-DEFLIT(lit_53);
+DEFLIT(lit_208);
 DEFLIT(lit_154);
-DEFLIT(lit_367);
 DEFLIT(lit_47);
-DEFLIT(lit_215);
-DEFLIT(lit_133);
-DEFLIT(lit_163);
-DEFLIT(lit_152);
-DEFLIT(lit_260);
+DEFLIT(lit_131);
+DEFLIT(lit_334);
+DEFLIT(lit_159);
+DEFLIT(lit_238);
+DEFLIT(lit_168);
+DEFLIT(lit_174);
 DEFLIT(lit_180);
+DEFLIT(lit_365);
 DEFLIT(lit_140);
+DEFLIT(lit_38);
 DEFLIT(lit_66);
-DEFLIT(lit_107);
 DEFLIT(lit_109);
-DEFLIT(lit_116);
-DEFLIT(lit_337);
-DEFLIT(lit_236);
-DEFLIT(lit_134);
+DEFLIT(lit_200);
+DEFLIT(lit_120);
+DEFLIT(lit_3);
+DEFLIT(lit_234);
+DEFLIT(lit_202);
 DEFLIT(lit_303);
 DEFLIT(lit_67);
 DEFLIT(lit_293);
-DEFLIT(lit_112);
-DEFLIT(lit_151);
-DEFLIT(lit_85);
-DEFLIT(lit_331);
-DEFLIT(lit_126);
-DEFLIT(lit_327);
+DEFLIT(lit_255);
+DEFLIT(lit_258);
+DEFLIT(lit_322);
+DEFLIT(lit_17);
+DEFLIT(lit_82);
 DEFLIT(lit_287);
 DEFLIT(lit_16);
-DEFLIT(lit_24);
-DEFLIT(lit_79);
-DEFLIT(lit_347);
-DEFLIT(lit_128);
-DEFLIT(lit_44);
-DEFLIT(lit_50);
-DEFLIT(lit_298);
-DEFLIT(lit_62);
-DEFLIT(lit_264);
+DEFLIT(lit_115);
+DEFLIT(lit_75);
+DEFLIT(lit_74);
+DEFLIT(lit_83);
+DEFLIT(lit_163);
+DEFLIT(lit_94);
+DEFLIT(lit_22);
+DEFLIT(lit_65);
+DEFLIT(lit_13);
 DEFLIT(lit_211);
+DEFLIT(lit_204);
 DEFLIT(lit_0);
 DEFLIT(lit_372);
-DEFLIT(lit_190);
 DEFLIT(lit_247);
-DEFLIT(lit_272);
-DEFLIT(lit_38);
-DEFLIT(lit_321);
-DEFLIT(lit_181);
-DEFLIT(lit_77);
-DEFLIT(lit_187);
-DEFLIT(lit_188);
-DEFLIT(lit_310);
-DEFLIT(lit_58);
-DEFLIT(lit_59);
-DEFLIT(lit_213);
+DEFLIT(lit_319);
 DEFLIT(lit_110);
-DEFLIT(lit_20);
+DEFLIT(lit_135);
+DEFLIT(lit_321);
+DEFLIT(lit_116);
+DEFLIT(lit_188);
+DEFLIT(lit_25);
+DEFLIT(lit_58);
 DEFLIT(lit_201);
 DEFLIT(lit_26);
+DEFLIT(lit_15);
 DEFLIT(lit_270);
-DEFLIT(lit_322);
-DEFLIT(lit_279);
+DEFLIT(lit_141);
+DEFLIT(lit_90);
 DEFLIT(lit_308);
 DEFLIT(lit_237);
 DEFLIT(lit_354);
-DEFLIT(lit_365);
-DEFLIT(lit_304);
+DEFLIT(lit_69);
+DEFLIT(lit_105);
 DEFLIT(lit_196);
-DEFLIT(lit_3);
 DEFLIT(lit_68);
 DEFLIT(lit_280);
-DEFLIT(lit_159);
-DEFLIT(lit_301);
-DEFLIT(lit_255);
-DEFLIT(lit_146);
-DEFLIT(lit_325);
-DEFLIT(lit_366);
-DEFLIT(lit_202);
-DEFLIT(lit_204);
-DEFLIT(lit_97);
-DEFLIT(lit_144);
+DEFLIT(lit_324);
+DEFLIT(lit_126);
+DEFLIT(lit_12);
+DEFLIT(lit_298);
+DEFLIT(lit_30);
+DEFLIT(lit_177);
+DEFLIT(lit_99);
 DEFLIT(lit_205);
-DEFLIT(lit_86);
-DEFLIT(lit_267);
-DEFLIT(lit_238);
-DEFLIT(lit_82);
 DEFLIT(lit_170);
 DEFLIT(lit_360);
+DEFLIT(lit_207);
 DEFLIT(lit_315);
-DEFLIT(lit_51);
-DEFLIT(lit_283);
 DEFLIT(lit_137);
-DEFLIT(lit_175);
-DEFLIT(lit_185);
+DEFLIT(lit_250);
+DEFLIT(lit_292);
+DEFLIT(lit_189);
+DEFLIT(lit_243);
 DEFLIT(lit_96);
-DEFLIT(lit_183);
+DEFLIT(lit_169);
 DEFLIT(lit_228);
+DEFLIT(lit_97);
 DEFLIT(lit_329);
-DEFLIT(lit_330);
-DEFLIT(lit_156);
+DEFLIT(lit_222);
+DEFLIT(lit_57);
 DEFLIT(lit_254);
 DEFLIT(lit_52);
 DEFLIT(lit_178);
-DEFLIT(lit_290);
-DEFLIT(lit_306);
-DEFLIT(lit_94);
+DEFLIT(lit_145);
 DEFLIT(lit_233);
-DEFLIT(lit_42);
-DEFLIT(lit_101);
+DEFLIT(lit_294);
+DEFLIT(lit_338);
+DEFLIT(lit_142);
+DEFLIT(lit_310);
 DEFLIT(lit_311);
-DEFLIT(lit_173);
+DEFLIT(lit_125);
 DEFLIT(lit_286);
 DEFLIT(lit_335);
-DEFLIT(lit_147);
 DEFLIT(lit_266);
-DEFLIT(lit_320);
+DEFLIT(lit_363);
+DEFLIT(lit_167);
+DEFLIT(lit_248);
 DEFLIT(lit_194);
 DEFLIT(lit_18);
-DEFLIT(lit_169);
-DEFLIT(lit_37);
+DEFLIT(lit_80);
 DEFLIT(lit_87);
-DEFLIT(lit_243);
-DEFLIT(lit_74);
-DEFLIT(lit_103);
+DEFLIT(lit_325);
+DEFLIT(lit_246);
 DEFLIT(lit_195);
+DEFLIT(lit_353);
+DEFLIT(lit_191);
+DEFLIT(lit_197);
+DEFLIT(lit_29);
 DEFLIT(lit_4);
-DEFLIT(lit_22);
 DEFLIT(lit_371);
-DEFLIT(lit_370);
-DEFLIT(lit_368);
-DEFLIT(lit_265);
-DEFLIT(lit_124);
-DEFLIT(lit_231);
-DEFLIT(lit_125);
-DEFLIT(lit_117);
+DEFLIT(lit_355);
+DEFLIT(lit_48);
+DEFLIT(lit_301);
 DEFLIT(lit_123);
-DEFLIT(lit_206);
-DEFLIT(lit_324);
-DEFLIT(lit_75);
 DEFLIT(lit_14);
-DEFLIT(lit_1);
+DEFLIT(lit_357);
 DEFLIT(lit_104);
 DEFLIT(lit_81);
+DEFLIT(lit_8);
 DEFLIT(lit_259);
-DEFLIT(lit_171);
-DEFLIT(lit_48);
-DEFLIT(lit_244);
-DEFLIT(lit_288);
-DEFLIT(lit_234);
-DEFLIT(lit_357);
+DEFLIT(lit_341);
+DEFLIT(lit_150);
+DEFLIT(lit_10);
+DEFLIT(lit_361);
+DEFLIT(lit_272);
 DEFLIT(lit_186);
 DEFLIT(lit_278);
-DEFLIT(lit_361);
-DEFLIT(lit_71);
-DEFLIT(lit_73);
 DEFLIT(lit_56);
+DEFLIT(lit_187);
+DEFLIT(lit_285);
 DEFLIT(lit_268);
 DEFLIT(lit_36);
 DEFLIT(lit_46);
-DEFLIT(lit_189);
-DEFLIT(lit_19);
-DEFLIT(lit_93);
-DEFLIT(lit_336);
 DEFLIT(lit_326);
-DEFLIT(lit_88);
+DEFLIT(lit_179);
+DEFLIT(lit_181);
+DEFLIT(lit_213);
 DEFLIT(lit_64);
 DEFLIT(lit_9);
-DEFLIT(lit_132);
-DEFLIT(lit_223);
-DEFLIT(lit_256);
 DEFLIT(lit_95);
-DEFLIT(lit_13);
-DEFLIT(lit_84);
-DEFLIT(lit_160);
+DEFLIT(lit_124);
+DEFLIT(lit_71);
 DEFLIT(lit_344);
 DEFLIT(lit_358);
-DEFLIT(lit_167);
+DEFLIT(lit_290);
+DEFLIT(lit_274);
+DEFLIT(lit_236);
+DEFLIT(lit_53);
 DEFLIT(lit_31);
 DEFLIT(lit_155);
-DEFLIT(lit_15);
-DEFLIT(lit_314);
-DEFLIT(lit_241);
-DEFLIT(lit_108);
+DEFLIT(lit_149);
+DEFLIT(lit_122);
+DEFLIT(lit_40);
+DEFLIT(lit_146);
 DEFLIT(lit_176);
-DEFLIT(lit_263);
-DEFLIT(lit_208);
-DEFLIT(lit_105);
+DEFLIT(lit_215);
+DEFLIT(lit_88);
+DEFLIT(lit_77);
+DEFLIT(lit_164);
+DEFLIT(lit_281);
+DEFLIT(lit_283);
 DEFLIT(lit_72);
 DEFLIT(lit_352);
-DEFLIT(lit_210);
-DEFLIT(lit_34);
-DEFLIT(lit_341);
-DEFLIT(lit_69);
-DEFLIT(lit_99);
-DEFLIT(lit_250);
+DEFLIT(lit_271);
 DEFLIT(lit_165);
+DEFLIT(lit_1);
 DEFLIT(lit_328);
-DEFLIT(lit_252);
 DEFLIT(lit_161);
-DEFLIT(lit_253);
-DEFLIT(lit_168);
+DEFLIT(lit_340);
 DEFLIT(lit_364);
-DEFLIT(lit_136);
+DEFLIT(lit_175);
+DEFLIT(lit_185);
+DEFLIT(lit_133);
 DEFLIT(lit_313);
 DEFLIT(lit_121);
-DEFLIT(lit_245);
-DEFLIT(lit_248);
-DEFLIT(lit_235);
-DEFLIT(lit_92);
-DEFLIT(lit_200);
+DEFLIT(lit_267);
+DEFLIT(lit_62);
 DEFLIT(lit_60);
 DEFLIT(lit_2);
 DEFLIT(lit_100);
-DEFLIT(lit_55);
+DEFLIT(lit_302);
 DEFLIT(lit_277);
-DEFLIT(lit_90);
+DEFLIT(lit_276);
+DEFLIT(lit_264);
+DEFLIT(lit_73);
 DEFLIT(lit_114);
 DEFLIT(lit_41);
-DEFLIT(lit_345);
 DEFLIT(lit_351);
 DEFLIT(lit_218);
-DEFLIT(lit_10);
+DEFLIT(lit_220);
+DEFLIT(lit_217);
 DEFLIT(lit_299);
 DEFLIT(lit_300);
 DEFLIT(lit_43);
 DEFLIT(lit_158);
 DEFLIT(lit_216);
-DEFLIT(lit_276);
-DEFLIT(lit_179);
-DEFLIT(lit_246);
+DEFLIT(lit_210);
+DEFLIT(lit_160);
+DEFLIT(lit_28);
+DEFLIT(lit_107);
 DEFLIT(lit_27);
+DEFLIT(lit_241);
 DEFLIT(lit_153);
 DEFLIT(lit_257);
 DEFLIT(lit_242);
+DEFLIT(lit_265);
 DEFLIT(lit_49);
 DEFLIT(lit_333);
-DEFLIT(lit_340);
+DEFLIT(lit_148);
+DEFLIT(lit_79);
 DEFLIT(lit_291);
-DEFLIT(lit_12);
-DEFLIT(lit_343);
+DEFLIT(lit_368);
+DEFLIT(lit_339);
 DEFLIT(lit_184);
 DEFLIT(lit_342);
-DEFLIT(lit_29);
-DEFLIT(lit_120);
-DEFLIT(lit_148);
+DEFLIT(lit_359);
+DEFLIT(lit_231);
+DEFLIT(lit_219);
+DEFLIT(lit_260);
 DEFLIT(lit_23);
-DEFLIT(lit_222);
+DEFLIT(lit_144);
 DEFLIT(lit_7);
-DEFLIT(lit_302);
 DEFLIT(lit_318);
 DEFLIT(lit_312);
 DEFLIT(lit_225);
 DEFLIT(lit_224);
 DEFLIT(lit_192);
-DEFLIT(lit_149);
-DEFLIT(lit_32);
-DEFLIT(lit_5);
-DEFLIT(lit_191);
+DEFLIT(lit_288);
+DEFLIT(lit_252);
+DEFLIT(lit_206);
+DEFLIT(lit_59);
+DEFLIT(lit_139);
 DEFLIT(lit_35);
-DEFLIT(lit_28);
+DEFLIT(lit_256);
 DEFLIT(lit_284);
 DEFLIT(lit_350);
+DEFLIT(lit_336);
 DEFLIT(lit_297);
-DEFLIT(lit_334);
-DEFLIT(lit_217);
-DEFLIT(lit_139);
-DEFLIT(lit_219);
-DEFLIT(lit_40);
+DEFLIT(lit_151);
+DEFLIT(lit_63);
+DEFLIT(lit_171);
 DEFLIT(lit_356);
 DEFLIT(lit_89);
+DEFLIT(lit_173);
 DEFLIT(lit_78);
-DEFLIT(lit_150);
+DEFLIT(lit_51);
 DEFLIT(lit_348);
-DEFLIT(lit_339);
 DEFLIT(lit_275);
 DEFLIT(lit_166);
 DEFLIT(lit_106);
-DEFLIT(lit_30);
-DEFLIT(lit_174);
+DEFLIT(lit_5);
+DEFLIT(lit_156);
+DEFLIT(lit_347);
+DEFLIT(lit_229);
+DEFLIT(lit_147);
+DEFLIT(lit_367);
 
 /* FUNCTIONS: */
 
@@ -1080,16 +1082,16 @@ LOCFOR(fun_sexpr_unwind_protectQ_50);
 LOCFOR(fun_sexpr_unwind_protect_protected_form_51);
 LOCFOR(fun_sexpr_unwind_protect_cleanup_forms_52);
 LOCFOR(fun_sexpr_monitorQ_53);
-LOCFOR(fun_x_1417_54);
+LOCFOR(fun_x_1419_54);
 LOCFOR(fun_55);
 LOCFOR(fun_sexpr_monitor_expand_56);
 FUNFOR(YevalSsyntaxYfind_option);
-LOCFOR(fun_x_1419_58);
+LOCFOR(fun_x_1421_58);
 LOCFOR(fun_59);
 LOCFOR(fun_sexpr_monitor_type_60);
-LOCFOR(fun_x_1421_61);
+LOCFOR(fun_x_1423_61);
 LOCFOR(fun_62);
-LOCFOR(fun_x_1423_63);
+LOCFOR(fun_x_1425_63);
 LOCFOR(fun_64);
 LOCFOR(fun_sexpr_monitor_info_65);
 LOCFOR(fun_sexpr_monitor_test_66);
@@ -1190,12 +1192,12 @@ extern P YevalSsyntaxY___main_2___ ();
 
 FUNCODEDEF(fun_sexpr_self_evaluatingQ_0) {
   P exp_;
-  P tmpF2351;
-  P tmpF2350;
-  P tmpF2349;
-  P tmpF2348;
-  P tmpF2347;
-  P tmpF2346;
+  P tmpF2361;
+  P tmpF2360;
+  P tmpF2359;
+  P tmpF2358;
+  P tmpF2357;
+  P tmpF2356;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18;
   P a1;
@@ -1203,34 +1205,34 @@ LINK_STACK();
   ARG(exp_, 0);
 loop:
   T1 = CALL2(1,VARREF(YisaQ),exp_,VARREF(YLnumG));
-  tmpF2346 = T1;
-  if (tmpF2346 != YPfalse) {
-    T2 = tmpF2346;
+  tmpF2356 = T1;
+  if (tmpF2356 != YPfalse) {
+    T2 = tmpF2356;
   } else {
     T4 = CALL2(1,VARREF(YisaQ),exp_,VARREF(YLchrG));
-    tmpF2347 = T4;
-    if (tmpF2347 != YPfalse) {
-      T5 = tmpF2347;
+    tmpF2357 = T4;
+    if (tmpF2357 != YPfalse) {
+      T5 = tmpF2357;
     } else {
       T7 = CALL2(1,VARREF(YgooSmacrosYEE),exp_,YPtrue);
-      tmpF2348 = T7;
-      if (tmpF2348 != YPfalse) {
-        T8 = tmpF2348;
+      tmpF2358 = T7;
+      if (tmpF2358 != YPfalse) {
+        T8 = tmpF2358;
       } else {
         T10 = CALL2(1,VARREF(YgooSmacrosYEE),exp_,YPfalse);
-        tmpF2349 = T10;
-        if (tmpF2349 != YPfalse) {
-          T11 = tmpF2349;
+        tmpF2359 = T10;
+        if (tmpF2359 != YPfalse) {
+          T11 = tmpF2359;
         } else {
           T13 = CALL2(1,VARREF(YisaQ),exp_,VARREF(YLstrG));
-          tmpF2350 = T13;
-          if (tmpF2350 != YPfalse) {
-            T14 = tmpF2350;
+          tmpF2360 = T13;
+          if (tmpF2360 != YPfalse) {
+            T14 = tmpF2360;
           } else {
             T16 = CALL2(1,VARREF(YisaQ),exp_,VARREF(YgooScolsSvecYLvecG));
-            tmpF2351 = T16;
-            if (tmpF2351 != YPfalse) {
-              T17 = tmpF2351;
+            tmpF2361 = T16;
+            if (tmpF2361 != YPfalse) {
+              T17 = tmpF2361;
             } else {
               T18 = CALL2(1,VARREF(YisaQ),exp_,VARREF(YLtupG));
               T17 = T18;
@@ -1269,7 +1271,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_tagged_listQ_2) {
   P exp_,tag_;
-  P tmpF2352;
+  P tmpF2362;
   P T0,T1,T2,T3,T4;
   P a1,a2;
 LINK_STACK();
@@ -1277,8 +1279,8 @@ LINK_STACK();
   ARG(tag_, 1);
 loop:
   T1 = CALL2(1,VARREF(YisaQ),exp_,VARREF(YLlstG));
-  tmpF2352 = T1;
-  if (tmpF2352 != YPfalse) {
+  tmpF2362 = T1;
+  if (tmpF2362 != YPfalse) {
     T4 = CALL1(1,VARREF(Yhead),exp_);
     T3 = CALL2(1,VARREF(YgooSmacrosYEE),T4,tag_);
     T2 = T3;
@@ -1522,20 +1524,20 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_function_definition_variable_22) {
   P defn_;
-  P varF2353;
+  P varF2363;
   P T0,T1,T2,T3,T4;
   P a1;
 LINK_STACK();
   ARG(defn_, 0);
 loop:
   T1 = CALL1(1,VARREF(YgooSmacrosY2nd),defn_);
-  varF2353 = T1;
-  T3 = CALL2(1,VARREF(YisaQ),varF2353,VARREF(YLlstG));
+  varF2363 = T1;
+  T3 = CALL2(1,VARREF(YisaQ),varF2363,VARREF(YLlstG));
   if (T3 != YPfalse) {
-    T4 = CALL1(1,VARREF(Yhead),varF2353);
+    T4 = CALL1(1,VARREF(Yhead),varF2363);
     T2 = T4;
   } else {
-    T2 = varF2353;
+    T2 = varF2363;
   }
   T0 = T2;
 UNLINK_STACK();
@@ -1544,17 +1546,17 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_function_definition_adjectives_23) {
   P defn_;
-  P varF2354;
+  P varF2364;
   P T0,T1,T2,T3,T4;
   P a1;
 LINK_STACK();
   ARG(defn_, 0);
 loop:
   T1 = CALL1(1,VARREF(YgooSmacrosY2nd),defn_);
-  varF2354 = T1;
-  T3 = CALL2(1,VARREF(YisaQ),varF2354,VARREF(YLlstG));
+  varF2364 = T1;
+  T3 = CALL2(1,VARREF(YisaQ),varF2364,VARREF(YLlstG));
   if (T3 != YPfalse) {
-    T4 = CALL1(1,VARREF(Ytail),varF2354);
+    T4 = CALL1(1,VARREF(Ytail),varF2364);
     T2 = T4;
   } else {
     T2 = Ynil;
@@ -1579,16 +1581,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_signature_parameters_25) {
   P signature_;
-  P values_spec_indexF2355;
+  P values_spec_indexF2365;
   P T0,T1,T2,T3;
   P a1;
 LINK_STACK();
   ARG(signature_, 0);
 loop:
   T1 = CALL2(1,VARREF(YgooScolsSseqYpos),signature_,LITREF(lit_60));
-  values_spec_indexF2355 = T1;
-  if (values_spec_indexF2355 != YPfalse) {
-    T3 = CALL3(1,VARREF(YgooScolsSseqYsub),signature_,YPint((P)0),values_spec_indexF2355);
+  values_spec_indexF2365 = T1;
+  if (values_spec_indexF2365 != YPfalse) {
+    T3 = CALL3(1,VARREF(YgooScolsSseqYsub),signature_,YPint((P)0),values_spec_indexF2365);
     T2 = T3;
   } else {
     T2 = signature_;
@@ -1622,30 +1624,30 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_signature_value_28) {
   P signature_;
-  P valueF2358;
-  P tmpF2357;
-  P values_spec_indexF2356;
+  P valueF2368;
+  P tmpF2367;
+  P values_spec_indexF2366;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12;
   P a1;
 LINK_STACK();
   ARG(signature_, 0);
 loop:
   T1 = CALL2(1,VARREF(YgooScolsSseqYpos),signature_,LITREF(lit_60));
-  values_spec_indexF2356 = T1;
-  tmpF2357 = values_spec_indexF2356;
-  if (tmpF2357 != YPfalse) {
-    T6 = CALL2(1,VARREF(YgooSmathYA),values_spec_indexF2356,YPint((P)1));
+  values_spec_indexF2366 = T1;
+  tmpF2367 = values_spec_indexF2366;
+  if (tmpF2367 != YPfalse) {
+    T6 = CALL2(1,VARREF(YgooSmathYA),values_spec_indexF2366,YPint((P)1));
     T5 = CALL2(1,VARREF(YgooSmacrosYelt),signature_,T6);
-    valueF2358 = T5;
-    T8 = CALL2(1,VARREF(YevalSsyntaxYsexpr_tagged_listQ),valueF2358,LITREF(lit_66));
+    valueF2368 = T5;
+    T8 = CALL2(1,VARREF(YevalSsyntaxYsexpr_tagged_listQ),valueF2368,LITREF(lit_66));
     if (T8 != YPfalse) {
       T10 = CALL1(1,VARREF(Ylst),LITREF(lit_67));
-      T12 = CALL1(1,VARREF(Ytail),valueF2358);
+      T12 = CALL1(1,VARREF(Ytail),valueF2368);
       T11 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSsyntaxYsexpr_value_type),T12);
       T9 = CALL3(1,VARREF(YgooSmacrosYcat),T10,T11,Ynil);
       T7 = T9;
     } else {
-      T7 = valueF2358;
+      T7 = valueF2368;
     }
     T4 = T7;
     T3 = T4;
@@ -1992,7 +1994,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_x_1417_54) {
+FUNCODEDEF(fun_x_1419_54) {
   P msg_,args_;
   P T0,T1;
   P a1,a2;
@@ -2008,16 +2010,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_55) {
   P return_;
-  P optionsF2368;
-  P x_1416F2367;
-  P x_1416F2366;
-  P x_1416F2365;
-  P x_1416F2364;
-  P bodyF2363;
-  P handlerF2362;
-  P optionsF2361;
-  P x_1416F2360;
-  P x_1417F2359;
+  P optionsF2378;
+  P x_1418F2377;
+  P x_1418F2376;
+  P x_1418F2375;
+  P x_1418F2374;
+  P bodyF2373;
+  P handlerF2372;
+  P optionsF2371;
+  P x_1418F2370;
+  P x_1419F2369;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33,T34,T35,T36,T37,T38;
@@ -2025,58 +2027,58 @@ FUNCODEDEF(fun_55) {
 LINK_STACK();
   ARG(return_, 0);
 loop:
-  T1 = FUNSHELL(0,fun_x_1417_54,2);
-  x_1417F2359 = T1;
-  FUNINIT(x_1417F2359, 2,FREEREF(0),return_);
-  x_1416F2360 = FREEREF(0);
-  optionsF2361 = YPfalse;
-  optionsF2361 = BOXFAB(optionsF2361);
-  handlerF2362 = YPfalse;
-  handlerF2362 = BOXFAB(handlerF2362);
-  bodyF2363 = YPfalse;
-  bodyF2363 = BOXFAB(bodyF2363);
-  T9 = CALL2(1,VARREF(YisaQ),x_1416F2360,VARREF(YLlstG));
+  T1 = FUNSHELL(0,fun_x_1419_54,2);
+  x_1419F2369 = T1;
+  FUNINIT(x_1419F2369, 2,FREEREF(0),return_);
+  x_1418F2370 = FREEREF(0);
+  optionsF2371 = YPfalse;
+  optionsF2371 = BOXFAB(optionsF2371);
+  handlerF2372 = YPfalse;
+  handlerF2372 = BOXFAB(handlerF2372);
+  bodyF2373 = YPfalse;
+  bodyF2373 = BOXFAB(bodyF2373);
+  T9 = CALL2(1,VARREF(YisaQ),x_1418F2370,VARREF(YLlstG));
   if (T9 != YPfalse) {
-    T11 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1416F2360,LITREF(lit_120),x_1417F2359);
-    x_1416F2364 = T11;
-    T13 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1416F2364,x_1417F2359);
-    BOXVAL(optionsF2361) = T13;
-    T14 = CALL1(1,VARREF(Ytail),x_1416F2364);
-    x_1416F2365 = T14;
-    T16 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1416F2365,x_1417F2359);
-    BOXVAL(handlerF2362) = T16;
-    T17 = CALL1(1,VARREF(Ytail),x_1416F2365);
-    x_1416F2366 = T17;
-    BOXVAL(bodyF2363) = x_1416F2366;
-    x_1416F2367 = Ynil;
-    T19 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1416F2367,x_1417F2359);
+    T11 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1418F2370,LITREF(lit_120),x_1419F2369);
+    x_1418F2374 = T11;
+    T13 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1418F2374,x_1419F2369);
+    BOXVAL(optionsF2371) = T13;
+    T14 = CALL1(1,VARREF(Ytail),x_1418F2374);
+    x_1418F2375 = T14;
+    T16 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1418F2375,x_1419F2369);
+    BOXVAL(handlerF2372) = T16;
+    T17 = CALL1(1,VARREF(Ytail),x_1418F2375);
+    x_1418F2376 = T17;
+    BOXVAL(bodyF2373) = x_1418F2376;
+    x_1418F2377 = Ynil;
+    T19 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1418F2377,x_1419F2369);
     T18 = T19;
     T15 = T18;
     T12 = T15;
     T10 = T12;
   } else {
-    T20 = CALL2(1,x_1417F2359,LITREF(lit_129),x_1416F2360);
+    T20 = CALL2(1,x_1419F2369,LITREF(lit_129),x_1418F2370);
   }
-  T24 = BOXVAL(optionsF2361);
+  T24 = BOXVAL(optionsF2371);
   T23 = CALL2(1,VARREF(YisaQ),T24,VARREF(YLsymG));
   if (T23 != YPfalse) {
     T28 = CALL1(1,VARREF(Ylst),LITREF(lit_130));
-    T30 = BOXVAL(optionsF2361);
+    T30 = BOXVAL(optionsF2371);
     T29 = CALL1(1,VARREF(Ylst),T30);
     T27 = CALL3(1,VARREF(YgooSmacrosYcat),T28,T29,Ynil);
     T26 = CALL1(1,VARREF(Ylst),T27);
     T25 = CALL2(1,VARREF(YgooSmacrosYcat),T26,Ynil);
     T22 = T25;
   } else {
-    T31 = BOXVAL(optionsF2361);
+    T31 = BOXVAL(optionsF2371);
     T22 = T31;
   }
-  optionsF2368 = T22;
-  T33 = CALL1(1,VARREF(YevalSsyntaxYsexpr_monitor_type),optionsF2368);
-  T34 = CALL1(1,VARREF(YevalSsyntaxYsexpr_monitor_info),optionsF2368);
-  T35 = CALL1(1,VARREF(YevalSsyntaxYsexpr_monitor_test),optionsF2368);
-  T36 = BOXVAL(handlerF2362);
-  T38 = BOXVAL(bodyF2363);
+  optionsF2378 = T22;
+  T33 = CALL1(1,VARREF(YevalSsyntaxYsexpr_monitor_type),optionsF2378);
+  T34 = CALL1(1,VARREF(YevalSsyntaxYsexpr_monitor_info),optionsF2378);
+  T35 = CALL1(1,VARREF(YevalSsyntaxYsexpr_monitor_test),optionsF2378);
+  T36 = BOXVAL(handlerF2372);
+  T38 = BOXVAL(bodyF2373);
   T37 = CALL1(1,VARREF(YevalSsyntaxYsexpr_monitor_body),T38);
   T32 = CALL5(1,VARREF(Ytup),T33,T34,T35,T36,T37);
   T21 = T32;
@@ -2138,7 +2140,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_x_1419_58) {
+FUNCODEDEF(fun_x_1421_58) {
   P msg_,args_;
   P T0,T1;
   P a1,a2;
@@ -2154,33 +2156,33 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_59) {
   P return_;
-  P x_1418F2372;
-  P typeF2371;
-  P x_1418F2370;
-  P x_1419F2369;
+  P x_1420F2382;
+  P typeF2381;
+  P x_1420F2380;
+  P x_1421F2379;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
   P a1;
 LINK_STACK();
   ARG(return_, 0);
 loop:
-  T1 = FUNSHELL(0,fun_x_1419_58,2);
-  x_1419F2369 = T1;
-  FUNINIT(x_1419F2369, 2,FREEREF(0),return_);
-  x_1418F2370 = FREEREF(0);
-  typeF2371 = YPfalse;
-  typeF2371 = BOXFAB(typeF2371);
-  T5 = CALL2(1,VARREF(YisaQ),x_1418F2370,VARREF(YLlstG));
+  T1 = FUNSHELL(0,fun_x_1421_58,2);
+  x_1421F2379 = T1;
+  FUNINIT(x_1421F2379, 2,FREEREF(0),return_);
+  x_1420F2380 = FREEREF(0);
+  typeF2381 = YPfalse;
+  typeF2381 = BOXFAB(typeF2381);
+  T5 = CALL2(1,VARREF(YisaQ),x_1420F2380,VARREF(YLlstG));
   if (T5 != YPfalse) {
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1418F2370,x_1419F2369);
-    BOXVAL(typeF2371) = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1418F2370);
-    x_1418F2372 = T8;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1418F2372,x_1419F2369);
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1420F2380,x_1421F2379);
+    BOXVAL(typeF2381) = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1420F2380);
+    x_1420F2382 = T8;
+    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1420F2382,x_1421F2379);
     T6 = T9;
   } else {
-    T10 = CALL2(1,x_1419F2369,LITREF(lit_129),x_1418F2370);
+    T10 = CALL2(1,x_1421F2379,LITREF(lit_129),x_1420F2380);
   }
-  T11 = BOXVAL(typeF2371);
+  T11 = BOXVAL(typeF2381);
   T3 = T11;
   T2 = T3;
   T0 = T2;
@@ -2190,22 +2192,22 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_monitor_type_60) {
   P options_;
-  P type_listF2373;
+  P type_listF2383;
   P T0,T1,T2,T3;
   P a1;
 LINK_STACK();
   ARG(options_, 0);
 loop:
   T1 = CALL3(1,VARREF(YevalSsyntaxYfind_option),options_,LITREF(lit_130),LITREF(lit_135));
-  type_listF2373 = T1;
-  T3 = FUNFAB(fun_59,1,type_listF2373);
+  type_listF2383 = T1;
+  T3 = FUNFAB(fun_59,1,type_listF2383);
   T2 = with_exit(T3);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_x_1421_61) {
+FUNCODEDEF(fun_x_1423_61) {
   P msg_,args_;
   P T0,T1;
   P a1,a2;
@@ -2221,33 +2223,33 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_62) {
   P return_;
-  P x_1420F2377;
-  P info_exprF2376;
-  P x_1420F2375;
-  P x_1421F2374;
+  P x_1422F2387;
+  P info_exprF2386;
+  P x_1422F2385;
+  P x_1423F2384;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
   P a1;
 LINK_STACK();
   ARG(return_, 0);
 loop:
-  T1 = FUNSHELL(0,fun_x_1421_61,2);
-  x_1421F2374 = T1;
-  FUNINIT(x_1421F2374, 2,FREEREF(0),return_);
-  x_1420F2375 = FREEREF(0);
-  info_exprF2376 = YPfalse;
-  info_exprF2376 = BOXFAB(info_exprF2376);
-  T5 = CALL2(1,VARREF(YisaQ),x_1420F2375,VARREF(YLlstG));
+  T1 = FUNSHELL(0,fun_x_1423_61,2);
+  x_1423F2384 = T1;
+  FUNINIT(x_1423F2384, 2,FREEREF(0),return_);
+  x_1422F2385 = FREEREF(0);
+  info_exprF2386 = YPfalse;
+  info_exprF2386 = BOXFAB(info_exprF2386);
+  T5 = CALL2(1,VARREF(YisaQ),x_1422F2385,VARREF(YLlstG));
   if (T5 != YPfalse) {
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1420F2375,x_1421F2374);
-    BOXVAL(info_exprF2376) = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1420F2375);
-    x_1420F2377 = T8;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1420F2377,x_1421F2374);
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1422F2385,x_1423F2384);
+    BOXVAL(info_exprF2386) = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1422F2385);
+    x_1422F2387 = T8;
+    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1422F2387,x_1423F2384);
     T6 = T9;
   } else {
-    T10 = CALL2(1,x_1421F2374,LITREF(lit_129),x_1420F2375);
+    T10 = CALL2(1,x_1423F2384,LITREF(lit_129),x_1422F2385);
   }
-  T11 = BOXVAL(info_exprF2376);
+  T11 = BOXVAL(info_exprF2386);
   T3 = T11;
   T2 = T3;
   T0 = T2;
@@ -2255,7 +2257,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_x_1423_63) {
+FUNCODEDEF(fun_x_1425_63) {
   P msg_,args_;
   P T0,T1;
   P a1,a2;
@@ -2271,48 +2273,48 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_64) {
   P return_;
-  P x_1422F2383;
-  P x_1422F2382;
-  P argumentsF2381;
-  P messageF2380;
-  P x_1422F2379;
-  P x_1423F2378;
+  P x_1424F2393;
+  P x_1424F2392;
+  P argumentsF2391;
+  P messageF2390;
+  P x_1424F2389;
+  P x_1425F2388;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24;
   P a1;
 LINK_STACK();
   ARG(return_, 0);
 loop:
-  T1 = FUNSHELL(0,fun_x_1423_63,2);
-  x_1423F2378 = T1;
-  FUNINIT(x_1423F2378, 2,FREEREF(0),return_);
-  x_1422F2379 = FREEREF(0);
-  messageF2380 = YPfalse;
-  messageF2380 = BOXFAB(messageF2380);
-  argumentsF2381 = YPfalse;
-  argumentsF2381 = BOXFAB(argumentsF2381);
-  T7 = CALL2(1,VARREF(YisaQ),x_1422F2379,VARREF(YLlstG));
+  T1 = FUNSHELL(0,fun_x_1425_63,2);
+  x_1425F2388 = T1;
+  FUNINIT(x_1425F2388, 2,FREEREF(0),return_);
+  x_1424F2389 = FREEREF(0);
+  messageF2390 = YPfalse;
+  messageF2390 = BOXFAB(messageF2390);
+  argumentsF2391 = YPfalse;
+  argumentsF2391 = BOXFAB(argumentsF2391);
+  T7 = CALL2(1,VARREF(YisaQ),x_1424F2389,VARREF(YLlstG));
   if (T7 != YPfalse) {
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1422F2379,x_1423F2378);
-    BOXVAL(messageF2380) = T9;
-    T10 = CALL1(1,VARREF(Ytail),x_1422F2379);
-    x_1422F2382 = T10;
-    BOXVAL(argumentsF2381) = x_1422F2382;
-    x_1422F2383 = Ynil;
-    T12 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1422F2383,x_1423F2378);
+    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1424F2389,x_1425F2388);
+    BOXVAL(messageF2390) = T9;
+    T10 = CALL1(1,VARREF(Ytail),x_1424F2389);
+    x_1424F2392 = T10;
+    BOXVAL(argumentsF2391) = x_1424F2392;
+    x_1424F2393 = Ynil;
+    T12 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1424F2393,x_1425F2388);
     T11 = T12;
     T8 = T11;
   } else {
-    T13 = CALL2(1,x_1423F2378,LITREF(lit_129),x_1422F2379);
+    T13 = CALL2(1,x_1425F2388,LITREF(lit_129),x_1424F2389);
   }
   T15 = CALL1(1,VARREF(Ylst),LITREF(lit_153));
   T16 = CALL1(1,VARREF(Ylst),LITREF(lit_154));
   T17 = CALL1(1,VARREF(Ylst),LITREF(lit_155));
-  T19 = BOXVAL(messageF2380);
+  T19 = BOXVAL(messageF2390);
   T18 = CALL1(1,VARREF(Ylst),T19);
   T20 = CALL1(1,VARREF(Ylst),LITREF(lit_156));
   T23 = CALL1(1,VARREF(Ylst),LITREF(lit_157));
-  T24 = BOXVAL(argumentsF2381);
+  T24 = BOXVAL(argumentsF2391);
   T22 = CALL3(1,VARREF(YgooSmacrosYcat),T23,T24,Ynil);
   T21 = CALL1(1,VARREF(Ylst),T22);
   T14 = CALLN(1,VARREF(YgooSmacrosYcat),7,T15,T16,T17,T18,T20,T21,Ynil);
@@ -2326,21 +2328,21 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_monitor_info_65) {
   P options_;
-  P tmpF2386;
-  P descriptionF2385;
-  P infoF2384;
+  P tmpF2396;
+  P descriptionF2395;
+  P infoF2394;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14;
   P a1;
 LINK_STACK();
   ARG(options_, 0);
 loop:
   T1 = CALL3(1,VARREF(YevalSsyntaxYfind_option),options_,LITREF(lit_142),YPfalse);
-  infoF2384 = T1;
+  infoF2394 = T1;
   T3 = CALL3(1,VARREF(YevalSsyntaxYfind_option),options_,LITREF(lit_143),YPfalse);
-  descriptionF2385 = T3;
-  tmpF2386 = infoF2384;
-  if (tmpF2386 != YPfalse) {
-    T6 = descriptionF2385;
+  descriptionF2395 = T3;
+  tmpF2396 = infoF2394;
+  if (tmpF2396 != YPfalse) {
+    T6 = descriptionF2395;
   } else {
     T6 = YPfalse;
   }
@@ -2349,13 +2351,13 @@ loop:
     T7 = CALL2(1,VARREF(Ysyntax_error),LITREF(lit_144),options_);
     T4 = T7;
   } else {
-    if (infoF2384 != YPfalse) {
-      T10 = FUNFAB(fun_62,1,infoF2384);
+    if (infoF2394 != YPfalse) {
+      T10 = FUNFAB(fun_62,1,infoF2394);
       T9 = with_exit(T10);
       T8 = T9;
     } else {
-      if (descriptionF2385 != YPfalse) {
-        T13 = FUNFAB(fun_64,1,descriptionF2385);
+      if (descriptionF2395 != YPfalse) {
+        T13 = FUNFAB(fun_64,1,descriptionF2395);
         T12 = with_exit(T13);
         T11 = T12;
       } else {
@@ -2378,15 +2380,15 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_monitor_test_66) {
   P options_;
-  P test_bodyF2387;
+  P test_bodyF2397;
   P T0,T1,T2;
   P a1;
 LINK_STACK();
   ARG(options_, 0);
 loop:
   T1 = CALL3(1,VARREF(YevalSsyntaxYfind_option),options_,LITREF(lit_161),LITREF(lit_162));
-  test_bodyF2387 = T1;
-  T2 = CALL2(1,VARREF(YevalSsyntaxYsexpr_make_anonymous_method),Ynil,test_bodyF2387);
+  test_bodyF2397 = T1;
+  T2 = CALL2(1,VARREF(YevalSsyntaxYsexpr_make_anonymous_method),Ynil,test_bodyF2397);
   T0 = T2;
 UNLINK_STACK();
   RET(T0);
@@ -2504,15 +2506,15 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_applicationQ_75) {
   P exp_;
-  P tmpF2388;
+  P tmpF2398;
   P T0,T1,T2,T3,T4;
   P a1;
 LINK_STACK();
   ARG(exp_, 0);
 loop:
   T1 = CALL2(1,VARREF(YisaQ),exp_,VARREF(YLlstG));
-  tmpF2388 = T1;
-  if (tmpF2388 != YPfalse) {
+  tmpF2398 = T1;
+  if (tmpF2398 != YPfalse) {
     T4 = CALL1(1,VARREF(YgooSmacrosYemptyQ),exp_);
     T3 = CALL1(1,VARREF(Ynot),T4);
     T2 = T3;
@@ -2742,8 +2744,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_inner_93) {
   P rtnames_,rtvalues_,index_,tnames_;
-  P tmpF2390;
-  P nameF2389;
+  P tmpF2400;
+  P nameF2399;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26;
   P a1,a2,a3,a4;
@@ -2759,11 +2761,11 @@ loop:
     T0 = T2;
   } else {
     T4 = CALL1(1,VARREF(Yhead),tnames_);
-    nameF2389 = T4;
-    T7 = CALL2(1,VARREF(YisaQ),nameF2389,VARREF(YLlstG));
-    tmpF2390 = T7;
-    if (tmpF2390 != YPfalse) {
-      T11 = CALL1(1,VARREF(Ytail),nameF2389);
+    nameF2399 = T4;
+    T7 = CALL2(1,VARREF(YisaQ),nameF2399,VARREF(YLlstG));
+    tmpF2400 = T7;
+    if (tmpF2400 != YPfalse) {
+      T11 = CALL1(1,VARREF(Ytail),nameF2399);
       T10 = CALL1(1,VARREF(Yhead),T11);
       T9 = CALL2(1,VARREF(YgooSmacrosYEE),T10,LITREF(lit_223));
       T8 = T9;
@@ -2772,7 +2774,7 @@ loop:
     }
     T6 = T8;
     if (T6 != YPfalse) {
-      T15 = CALL1(1,VARREF(Yhead),nameF2389);
+      T15 = CALL1(1,VARREF(Yhead),nameF2399);
       T14 = CALL2(1,VARREF(Ylst),T15,LITREF(lit_224));
       T13 = CALL2(1,VARREF(YgooSmacrosYpair),T14,rtnames_);
       T18 = CALL2(1,VARREF(Ylst),LITREF(lit_226),FREEREF(0));
@@ -2791,7 +2793,7 @@ loop:
       goto loop;
       T5 = T12;
     } else {
-      T22 = CALL2(1,VARREF(YgooSmacrosYpair),nameF2389,rtnames_);
+      T22 = CALL2(1,VARREF(YgooSmacrosYpair),nameF2399,rtnames_);
       T24 = CALL3(1,VARREF(Ylst),LITREF(lit_227),FREEREF(0),index_);
       T23 = CALL2(1,VARREF(YgooSmacrosYpair),T24,rtvalues_);
       T25 = CALL2(1,VARREF(YgooSmathYA),index_,YPint((P)1));
@@ -2816,14 +2818,14 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_94) {
   P rnames_,rvalues_,names_,vals_;
-  P rtvaluesF2398;
-  P rtnamesF2397;
-  P tup27F2396;
-  P innerF2395;
-  P tupnameF2394;
-  P tmpF2393;
-  P valueF2392;
-  P nameF2391;
+  P rtvaluesF2408;
+  P rtnamesF2407;
+  P tup27F2406;
+  P innerF2405;
+  P tupnameF2404;
+  P tmpF2403;
+  P valueF2402;
+  P nameF2401;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33,T34,T35,T36,T37;
@@ -2842,13 +2844,13 @@ loop:
     T0 = T2;
   } else {
     T6 = CALL1(1,VARREF(Yhead),names_);
-    nameF2391 = T6;
+    nameF2401 = T6;
     T8 = CALL1(1,VARREF(Yhead),vals_);
-    valueF2392 = T8;
-    T11 = CALL2(1,VARREF(YisaQ),nameF2391,VARREF(YLlstG));
-    tmpF2393 = T11;
-    if (tmpF2393 != YPfalse) {
-      T14 = CALL1(1,VARREF(Yhead),nameF2391);
+    valueF2402 = T8;
+    T11 = CALL2(1,VARREF(YisaQ),nameF2401,VARREF(YLlstG));
+    tmpF2403 = T11;
+    if (tmpF2403 != YPfalse) {
+      T14 = CALL1(1,VARREF(Yhead),nameF2401);
       T13 = CALL2(1,VARREF(YgooSmacrosYEE),T14,LITREF(lit_66));
       T12 = T13;
     } else {
@@ -2857,22 +2859,22 @@ loop:
     T10 = T12;
     if (T10 != YPfalse) {
       T16 = CALL1(1,VARREF(YevalSsyntaxYsexpr_unique_name),LITREF(lit_220));
-      tupnameF2394 = T16;
+      tupnameF2404 = T16;
       T19 = FUNSHELL(1,fun_inner_93,2);
-      innerF2395 = T19;
-      FUNINIT(innerF2395, 2,tupnameF2394,innerF2395);
-      T21 = CALL1(1,VARREF(Ylst),tupnameF2394);
-      T22 = CALL1(1,VARREF(Ylst),valueF2392);
-      T23 = CALL1(1,VARREF(Ytail),nameF2391);
-      T20 = CALL4(0,innerF2395,T21,T22,YPint((P)0),T23);
+      innerF2405 = T19;
+      FUNINIT(innerF2405, 2,tupnameF2404,innerF2405);
+      T21 = CALL1(1,VARREF(Ylst),tupnameF2404);
+      T22 = CALL1(1,VARREF(Ylst),valueF2402);
+      T23 = CALL1(1,VARREF(Ytail),nameF2401);
+      T20 = CALL4(0,innerF2405,T21,T22,YPint((P)0),T23);
       T18 = T20;
-      tup27F2396 = T18;
-      T25 = CALL2(1,VARREF(YgooSmacrosYelt),tup27F2396,YPint((P)0));
-      rtnamesF2397 = T25;
-      T27 = CALL2(1,VARREF(YgooSmacrosYelt),tup27F2396,YPint((P)1));
-      rtvaluesF2398 = T27;
-      T29 = CALL2(1,VARREF(YgooSmacrosYcat),rtnamesF2397,rnames_);
-      T30 = CALL2(1,VARREF(YgooSmacrosYcat),rtvaluesF2398,rvalues_);
+      tup27F2406 = T18;
+      T25 = CALL2(1,VARREF(YgooSmacrosYelt),tup27F2406,YPint((P)0));
+      rtnamesF2407 = T25;
+      T27 = CALL2(1,VARREF(YgooSmacrosYelt),tup27F2406,YPint((P)1));
+      rtvaluesF2408 = T27;
+      T29 = CALL2(1,VARREF(YgooSmacrosYcat),rtnamesF2407,rnames_);
+      T30 = CALL2(1,VARREF(YgooSmacrosYcat),rtvaluesF2408,rvalues_);
       T31 = CALL1(1,VARREF(Ytail),names_);
       T32 = CALL1(1,VARREF(Ytail),vals_);
       a1 = T29;
@@ -2890,8 +2892,8 @@ loop:
       T15 = T17;
       T9 = T15;
     } else {
-      T34 = CALL2(1,VARREF(YgooSmacrosYpair),nameF2391,rnames_);
-      T35 = CALL2(1,VARREF(YgooSmacrosYpair),valueF2392,rvalues_);
+      T34 = CALL2(1,VARREF(YgooSmacrosYpair),nameF2401,rnames_);
+      T35 = CALL2(1,VARREF(YgooSmacrosYpair),valueF2402,rvalues_);
       T36 = CALL1(1,VARREF(Ytail),names_);
       T37 = CALL1(1,VARREF(Ytail),vals_);
       a1 = T34;
@@ -2915,7 +2917,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_let_namesAvalues_95) {
   P names_,vals_;
-  P loopF2399;
+  P loopF2409;
   P T0,T1,T2;
   P a1,a2;
 LINK_STACK();
@@ -2923,9 +2925,9 @@ LINK_STACK();
   ARG(vals_, 1);
 loop:
   T1 = FUNSHELL(1,fun_loop_94,1);
-  loopF2399 = T1;
-  FUNINIT(loopF2399, 1,loopF2399);
-  T2 = CALL4(0,loopF2399,Ynil,Ynil,names_,vals_);
+  loopF2409 = T1;
+  FUNINIT(loopF2409, 1,loopF2409);
+  T2 = CALL4(0,loopF2409,Ynil,Ynil,names_,vals_);
   T0 = T2;
 UNLINK_STACK();
   RET(T0);
@@ -2960,34 +2962,34 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_let_Gcombination_97) {
   P let_exp_;
-  P colF2406;
-  P valuesF2405;
-  P namesF2404;
-  P tup28F2403;
-  P bodyF2402;
-  P ovaluesF2401;
-  P onamesF2400;
+  P colF2416;
+  P valuesF2415;
+  P namesF2414;
+  P tup28F2413;
+  P bodyF2412;
+  P ovaluesF2411;
+  P onamesF2410;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14;
   P a1;
 LINK_STACK();
   ARG(let_exp_, 0);
 loop:
   T1 = CALL1(1,VARREF(YevalSsyntaxYsexpr_let_bound_variables),let_exp_);
-  onamesF2400 = T1;
+  onamesF2410 = T1;
   T3 = CALL1(1,VARREF(YevalSsyntaxYsexpr_let_values),let_exp_);
-  ovaluesF2401 = T3;
+  ovaluesF2411 = T3;
   T5 = CALL1(1,VARREF(YevalSsyntaxYsexpr_let_body),let_exp_);
-  bodyF2402 = T5;
-  T7 = CALL2(1,VARREF(YevalSsyntaxYsexpr_let_namesAvalues),onamesF2400,ovaluesF2401);
-  tup28F2403 = T7;
-  T9 = CALL2(1,VARREF(YgooSmacrosYelt),tup28F2403,YPint((P)0));
-  namesF2404 = T9;
-  T11 = CALL2(1,VARREF(YgooSmacrosYelt),tup28F2403,YPint((P)1));
-  valuesF2405 = T11;
+  bodyF2412 = T5;
+  T7 = CALL2(1,VARREF(YevalSsyntaxYsexpr_let_namesAvalues),onamesF2410,ovaluesF2411);
+  tup28F2413 = T7;
+  T9 = CALL2(1,VARREF(YgooSmacrosYelt),tup28F2413,YPint((P)0));
+  namesF2414 = T9;
+  T11 = CALL2(1,VARREF(YgooSmacrosYelt),tup28F2413,YPint((P)1));
+  valuesF2415 = T11;
   T13 = FUNSHELL(1,fun_col_96,2);
-  colF2406 = T13;
-  FUNINIT(colF2406, 2,bodyF2402,colF2406);
-  T14 = CALL2(0,colF2406,namesF2404,valuesF2405);
+  colF2416 = T13;
+  FUNINIT(colF2416, 2,bodyF2412,colF2416);
+  T14 = CALL2(0,colF2416,namesF2414,valuesF2415);
   T12 = T14;
   T10 = T12;
   T8 = T10;
@@ -3130,25 +3132,25 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_iterate_signature_108) {
   P rep_exp_;
-  P sigF2407;
+  P sigF2417;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
   P a1;
 LINK_STACK();
   ARG(rep_exp_, 0);
 loop:
   T1 = CALL1(1,VARREF(YgooScolsSseqY3rd),rep_exp_);
-  sigF2407 = T1;
+  sigF2417 = T1;
   T4 = fun_107;
-  T5 = CALL1(1,VARREF(YevalSsyntaxYsexpr_signature_parameters),sigF2407);
+  T5 = CALL1(1,VARREF(YevalSsyntaxYsexpr_signature_parameters),sigF2417);
   T3 = CALL2(1,VARREF(YgooSmacrosYmap),T4,T5);
-  T7 = CALL1(1,VARREF(YevalSsyntaxYsexpr_signature_value),sigF2407);
+  T7 = CALL1(1,VARREF(YevalSsyntaxYsexpr_signature_value),sigF2417);
   if (T7 != YPfalse) {
     T6 = Ynil;
   } else {
     T8 = CALL1(1,VARREF(Ylst),VARREF(YevalSsyntaxYDsexpr_values_tag));
     T6 = T8;
   }
-  T10 = CALL1(1,VARREF(YevalSsyntaxYsexpr_signature_value),sigF2407);
+  T10 = CALL1(1,VARREF(YevalSsyntaxYsexpr_signature_value),sigF2417);
   T9 = CALL1(1,VARREF(Ylst),T10);
   T2 = CALL3(1,VARREF(YgooSmacrosYcat),T3,T6,T9);
   T0 = T2;
@@ -3199,28 +3201,28 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_iterate_Gloc_112) {
   P rep_exp_;
-  P initsF2411;
-  P bodyF2410;
-  P sigF2409;
-  P nameF2408;
+  P initsF2421;
+  P bodyF2420;
+  P sigF2419;
+  P nameF2418;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
   P a1;
 LINK_STACK();
   ARG(rep_exp_, 0);
 loop:
   T1 = CALL1(1,VARREF(YevalSsyntaxYsexpr_iterate_name),rep_exp_);
-  nameF2408 = T1;
+  nameF2418 = T1;
   T3 = CALL1(1,VARREF(YevalSsyntaxYsexpr_iterate_signature),rep_exp_);
-  sigF2409 = T3;
+  sigF2419 = T3;
   T5 = CALL1(1,VARREF(YevalSsyntaxYsexpr_iterate_body),rep_exp_);
-  bodyF2410 = T5;
+  bodyF2420 = T5;
   T7 = CALL1(1,VARREF(YevalSsyntaxYsexpr_iterate_inits),rep_exp_);
-  initsF2411 = T7;
-  T11 = CALL2(1,VARREF(Ylst),nameF2408,sigF2409);
-  T10 = CALL2(1,VARREF(YgooSmacrosYcat),T11,bodyF2410);
+  initsF2421 = T7;
+  T11 = CALL2(1,VARREF(Ylst),nameF2418,sigF2419);
+  T10 = CALL2(1,VARREF(YgooSmacrosYcat),T11,bodyF2420);
   T9 = CALL1(1,VARREF(Ylst),T10);
-  T13 = CALL1(1,VARREF(Ylst),nameF2408);
-  T12 = CALL2(1,VARREF(YgooSmacrosYcat),T13,initsF2411);
+  T13 = CALL1(1,VARREF(Ylst),nameF2418);
+  T12 = CALL2(1,VARREF(YgooSmacrosYcat),T13,initsF2421);
   T8 = CALL3(1,VARREF(Ylst),VARREF(YevalSsyntaxYDsexpr_locals_tag),T9,T12);
   T6 = T8;
   T4 = T6;
@@ -3341,7 +3343,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_prop_owner_122) {
   P exp_;
-  P paramF2412;
+  P paramF2422;
   P T0,T1,T2,T3,T4,T5;
   P a1;
 LINK_STACK();
@@ -3349,13 +3351,13 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(YevalSsyntaxYsexpr_function_parameters),exp_);
   T1 = CALL1(1,VARREF(YgooSmacrosY1st),T2);
-  paramF2412 = T1;
-  T4 = CALL2(1,VARREF(YisaQ),paramF2412,VARREF(YLlstG));
+  paramF2422 = T1;
+  T4 = CALL2(1,VARREF(YisaQ),paramF2422,VARREF(YLlstG));
   if (T4 != YPfalse) {
-    T5 = CALL1(1,VARREF(YgooSmacrosY2nd),paramF2412);
+    T5 = CALL1(1,VARREF(YgooSmacrosY2nd),paramF2422);
     T3 = T5;
   } else {
-    T3 = paramF2412;
+    T3 = paramF2422;
   }
   T0 = T3;
 UNLINK_STACK();
@@ -3364,7 +3366,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_prop_init_var_123) {
   P exp_;
-  P paramF2413;
+  P paramF2423;
   P T0,T1,T2,T3,T4,T5;
   P a1;
 LINK_STACK();
@@ -3372,10 +3374,10 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(YevalSsyntaxYsexpr_function_parameters),exp_);
   T1 = CALL1(1,VARREF(YgooSmacrosY1st),T2);
-  paramF2413 = T1;
-  T4 = CALL2(1,VARREF(YisaQ),paramF2413,VARREF(YLlstG));
+  paramF2423 = T1;
+  T4 = CALL2(1,VARREF(YisaQ),paramF2423,VARREF(YLlstG));
   if (T4 != YPfalse) {
-    T5 = CALL1(1,VARREF(YgooSmacrosY1st),paramF2413);
+    T5 = CALL1(1,VARREF(YgooSmacrosY1st),paramF2423);
     T3 = T5;
   } else {
     T3 = LITREF(lit_286);
@@ -3528,18 +3530,18 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_build_backquote_expander_134) {
   P x_;
-  P resF2415;
-  P raw_resultF2414;
+  P resF2425;
+  P raw_resultF2424;
   P T0,T1,T2,T3;
   P a1;
 LINK_STACK();
   ARG(x_, 0);
 loop:
   T1 = CALL1(1,VARREF(YevalSsyntaxYbq_process),x_);
-  raw_resultF2414 = T1;
-  T3 = CALL1(1,VARREF(YevalSsyntaxYbq_remove_tokens),raw_resultF2414);
-  resF2415 = T3;
-  T2 = resF2415;
+  raw_resultF2424 = T1;
+  T3 = CALL1(1,VARREF(YevalSsyntaxYbq_remove_tokens),raw_resultF2424);
+  resF2425 = T3;
+  T2 = resF2425;
   T0 = T2;
 UNLINK_STACK();
   RET(T0);
@@ -3583,7 +3585,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_atomQ_138) {
   P x_;
-  P tmpF2416;
+  P tmpF2426;
   P T0,T1,T2,T3,T4;
   P a1;
 LINK_STACK();
@@ -3591,9 +3593,9 @@ LINK_STACK();
 loop:
   T2 = CALL2(1,VARREF(YisaQ),x_,VARREF(YLlstG));
   T1 = CALL1(1,VARREF(Ynot),T2);
-  tmpF2416 = T1;
-  if (tmpF2416 != YPfalse) {
-    T3 = tmpF2416;
+  tmpF2426 = T1;
+  if (tmpF2426 != YPfalse) {
+    T3 = tmpF2426;
   } else {
     T4 = CALL2(1,VARREF(YgooSmacrosYEE),x_,Ynil);
     T3 = T4;
@@ -3676,16 +3678,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_141) {
   P return_;
-  P loopF2417;
+  P loopF2427;
   P T0,T1,T2;
   P a1;
 LINK_STACK();
   ARG(return_, 0);
 loop:
   T1 = FUNSHELL(1,fun_loop_140,2);
-  loopF2417 = T1;
-  FUNINIT(loopF2417, 2,return_,loopF2417);
-  T2 = CALL2(0,loopF2417,FREEREF(0),Ynil);
+  loopF2427 = T1;
+  FUNINIT(loopF2427, 2,return_,loopF2427);
+  T2 = CALL2(0,loopF2427,FREEREF(0),Ynil);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -3792,9 +3794,9 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_map_tree_144) {
   P fn_,x_;
-  P tmpF2420;
-  P dF2419;
-  P aF2418;
+  P tmpF2430;
+  P dF2429;
+  P aF2428;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16;
   P a1,a2;
@@ -3809,16 +3811,16 @@ loop:
   } else {
     T5 = CALL1(1,VARREF(Yhead),x_);
     T4 = CALL1(1,fn_,T5);
-    aF2418 = T4;
+    aF2428 = T4;
     T8 = CALL1(1,VARREF(Ytail),x_);
     T7 = CALL2(1,VARREF(YevalSsyntaxYmap_tree),fn_,T8);
-    dF2419 = T7;
+    dF2429 = T7;
     T12 = CALL1(1,VARREF(Yhead),x_);
-    T11 = CALL2(1,VARREF(YgooSmathYE),aF2418,T12);
-    tmpF2420 = T11;
-    if (tmpF2420 != YPfalse) {
+    T11 = CALL2(1,VARREF(YgooSmathYE),aF2428,T12);
+    tmpF2430 = T11;
+    if (tmpF2430 != YPfalse) {
       T15 = CALL1(1,VARREF(Ytail),x_);
-      T14 = CALL2(1,VARREF(YgooSmathYE),dF2419,T15);
+      T14 = CALL2(1,VARREF(YgooSmathYE),dF2429,T15);
       T13 = T14;
     } else {
       T13 = YPfalse;
@@ -3827,7 +3829,7 @@ loop:
     if (T10 != YPfalse) {
       T9 = x_;
     } else {
-      T16 = CALL2(1,VARREF(YgooSmacrosYpair),aF2418,dF2419);
+      T16 = CALL2(1,VARREF(YgooSmacrosYpair),aF2428,dF2429);
       T9 = T16;
     }
     T6 = T9;
@@ -3840,8 +3842,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_bq_remove_tokens_145) {
   P x_;
-  P tmpF2422;
-  P tmpF2421;
+  P tmpF2432;
+  P tmpF2431;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33,T34,T35,T36,T37;
@@ -3883,14 +3885,14 @@ loop:
               } else {
                 T21 = CALL1(1,VARREF(Yhead),x_);
                 T20 = CALL2(1,VARREF(YgooSmacrosYEE),T21,VARREF(YevalSsyntaxYTbq_listTT));
-                tmpF2421 = T20;
-                if (tmpF2421 != YPfalse) {
+                tmpF2431 = T20;
+                if (tmpF2431 != YPfalse) {
                   T27 = CALL1(1,VARREF(Ytail),x_);
                   T26 = CALL1(1,VARREF(Ytail),T27);
                   T25 = CALL1(1,VARREF(YgooSmacrosYemptyQ),T26);
                   T24 = CALL1(1,VARREF(Ynot),T25);
-                  tmpF2422 = T24;
-                  if (tmpF2422 != YPfalse) {
+                  tmpF2432 = T24;
+                  if (tmpF2432 != YPfalse) {
                     T32 = CALL1(1,VARREF(Ytail),x_);
                     T31 = CALL1(1,VARREF(Ytail),T32);
                     T30 = CALL1(1,VARREF(Ytail),T31);
@@ -4001,16 +4003,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_pattern_variableQ_151) {
   P pat_;
-  P tmpF2423;
+  P tmpF2433;
   P T0,T1,T2,T3;
   P a1;
 LINK_STACK();
   ARG(pat_, 0);
 loop:
   T1 = CALL1(1,VARREF(YevalSsyntaxYsexpr_unquoteQ),pat_);
-  tmpF2423 = T1;
-  if (tmpF2423 != YPfalse) {
-    T2 = tmpF2423;
+  tmpF2433 = T1;
+  if (tmpF2433 != YPfalse) {
+    T2 = tmpF2433;
   } else {
     T3 = CALL1(1,VARREF(YevalSsyntaxYsexpr_unquote_splicingQ),pat_);
     T2 = T3;
@@ -4034,8 +4036,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_col_153) {
   P pat_;
-  P xF2425;
-  P tmpF2424;
+  P xF2435;
+  P tmpF2434;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18;
   P a1;
@@ -4044,9 +4046,9 @@ LINK_STACK();
 loop:
   T3 = CALL2(1,VARREF(YisaQ),pat_,VARREF(YLlstG));
   T2 = CALL1(1,VARREF(Ynot),T3);
-  tmpF2424 = T2;
-  if (tmpF2424 != YPfalse) {
-    T4 = tmpF2424;
+  tmpF2434 = T2;
+  if (tmpF2434 != YPfalse) {
+    T4 = tmpF2434;
   } else {
     T5 = CALL1(1,VARREF(YgooSmacrosYemptyQ),pat_);
     T4 = T5;
@@ -4056,10 +4058,10 @@ loop:
     T0 = Ynil;
   } else {
     T7 = CALL1(1,VARREF(Yhead),pat_);
-    xF2425 = T7;
-    T9 = CALL1(1,VARREF(YevalSsyntaxYsexpr_pattern_variableQ),xF2425);
+    xF2435 = T7;
+    T9 = CALL1(1,VARREF(YevalSsyntaxYsexpr_pattern_variableQ),xF2435);
     if (T9 != YPfalse) {
-      T11 = CALL1(1,VARREF(YevalSsyntaxYsexpr_pattern_variable_name),xF2425);
+      T11 = CALL1(1,VARREF(YevalSsyntaxYsexpr_pattern_variable_name),xF2435);
       T13 = CALL1(1,VARREF(Ytail),pat_);
       T12 = CALL1(0,FREEREF(0),T13);
       T10 = CALL2(1,VARREF(YgooSmacrosYpair),T11,T12);
@@ -4081,16 +4083,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_bind_pattern_variables_154) {
   P pat_;
-  P colF2426;
+  P colF2436;
   P T0,T1,T2,T3;
   P a1;
 LINK_STACK();
   ARG(pat_, 0);
 loop:
   T2 = FUNSHELL(1,fun_col_153,1);
-  colF2426 = T2;
-  FUNINIT(colF2426, 1,colF2426);
-  T3 = CALL1(0,colF2426,pat_);
+  colF2436 = T2;
+  FUNINIT(colF2436, 1,colF2436);
+  T3 = CALL1(0,colF2436,pat_);
   T1 = T3;
   T0 = CALL1(1,VARREF(YgooScolsSseqYdel_dups),T1);
 UNLINK_STACK();
@@ -4099,8 +4101,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_sexpr_make_macro_function_155) {
   P name_,exp_;
-  P funcF2428;
-  P mifF2427;
+  P funcF2438;
+  P mifF2437;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P a1,a2;
 LINK_STACK();
@@ -4118,12 +4120,12 @@ loop:
   T11 = CALL1(1,VARREF(Ylst),LITREF(lit_371));
   T5 = CALL4(1,VARREF(YgooSmacrosYcat),T6,T7,T11,Ynil);
   T1 = CALL4(1,VARREF(YevalSsyntaxYsexpr_make_syntax_if),T2,LITREF(lit_371),T3,T5);
-  mifF2427 = T1;
+  mifF2437 = T1;
   T14 = CALL1(1,VARREF(Ylst),LITREF(lit_371));
-  T15 = CALL1(1,VARREF(Ylst),mifF2427);
+  T15 = CALL1(1,VARREF(Ylst),mifF2437);
   T13 = CALL2(1,VARREF(YevalSsyntaxYsexpr_make_anonymous_method),T14,T15);
-  funcF2428 = T13;
-  T12 = funcF2428;
+  funcF2438 = T13;
+  T12 = funcF2438;
   T0 = T12;
 UNLINK_STACK();
   QRET(T0);
@@ -4900,13 +4902,13 @@ loop:
   lit_123 = YPPsym((P)"sexpr-monitor-expand");
   lit_124 = YPPlist(1,YPPsym((P)"exp"));
   lit_125 = YPPlist(1,YPPsym((P)"return"));
-  lit_126 = YPPsym((P)"x-1417");
+  lit_126 = YPPsym((P)"x-1419");
   lit_127 = YPPlist(2,YPPsym((P)"msg"),YPPsym((P)"args"));
   lit_128 = YPsb((P)"Malformed TRY expression: ~=");
   lit_129 = YPsb((P)"Match Pattern Failure");
   lit_130 = YPPsym((P)"type");
   T22 = YPsig(LITREF(lit_127),YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_1417_54 = YPmet(FUNCODEREF(fun_x_1417_54),LITREF(lit_126),T22,ENVNUL,PNUL,YPfalse);
+  fun_x_1419_54 = YPmet(FUNCODEREF(fun_x_1419_54),LITREF(lit_126),T22,ENVNUL,PNUL,YPfalse);
   T21 = YPsig(LITREF(lit_125),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   fun_55 = YPmet(FUNCODEREF(fun_55),YPfalse,T21,ENVNUL,PNUL,YPfalse);
   T20 = YPsig(LITREF(lit_124),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
@@ -4930,11 +4932,11 @@ loop:
   lit_134 = YPPlist(1,YPPsym((P)"options"));
   lit_135 = YPPlist(1,YPPsym((P)"<condition>"));
   lit_136 = YPPlist(1,YPPsym((P)"return"));
-  lit_137 = YPPsym((P)"x-1419");
+  lit_137 = YPPsym((P)"x-1421");
   lit_138 = YPPlist(2,YPPsym((P)"msg"),YPPsym((P)"args"));
   lit_139 = YPsb((P)"Malformed TRY condition type: %=");
   T31 = YPsig(LITREF(lit_138),YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_1419_58 = YPmet(FUNCODEREF(fun_x_1419_58),LITREF(lit_137),T31,ENVNUL,PNUL,YPfalse);
+  fun_x_1421_58 = YPmet(FUNCODEREF(fun_x_1421_58),LITREF(lit_137),T31,ENVNUL,PNUL,YPfalse);
   T30 = YPsig(LITREF(lit_136),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   fun_59 = YPmet(FUNCODEREF(fun_59),YPfalse,T30,ENVNUL,PNUL,YPfalse);
   T29 = YPsig(LITREF(lit_134),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
@@ -4954,11 +4956,11 @@ loop:
   lit_143 = YPPsym((P)"description");
   lit_144 = YPsb((P)"TRY may only have one of INFO or DESCRIPTION: %=");
   lit_145 = YPPlist(1,YPPsym((P)"return"));
-  lit_146 = YPPsym((P)"x-1421");
+  lit_146 = YPPsym((P)"x-1423");
   lit_147 = YPPlist(2,YPPsym((P)"msg"),YPPsym((P)"args"));
   lit_148 = YPsb((P)"Malformed TRY info expression: %=");
   lit_149 = YPPlist(1,YPPsym((P)"return"));
-  lit_150 = YPPsym((P)"x-1423");
+  lit_150 = YPPsym((P)"x-1425");
   lit_151 = YPPlist(2,YPPsym((P)"msg"),YPPsym((P)"args"));
   lit_152 = YPsb((P)"Malformed TRY description: %=");
   lit_153 = YPPsym((P)"new");
@@ -4968,11 +4970,11 @@ loop:
   lit_157 = YPPsym((P)"lst");
   lit_158 = YPPsym((P)"$default-handler-info");
   T40 = YPsig(LITREF(lit_147),YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_1421_61 = YPmet(FUNCODEREF(fun_x_1421_61),LITREF(lit_146),T40,ENVNUL,PNUL,YPfalse);
+  fun_x_1423_61 = YPmet(FUNCODEREF(fun_x_1423_61),LITREF(lit_146),T40,ENVNUL,PNUL,YPfalse);
   T39 = YPsig(LITREF(lit_145),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   fun_62 = YPmet(FUNCODEREF(fun_62),YPfalse,T39,ENVNUL,PNUL,YPfalse);
   T38 = YPsig(LITREF(lit_151),YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_1423_63 = YPmet(FUNCODEREF(fun_x_1423_63),LITREF(lit_150),T38,ENVNUL,PNUL,YPfalse);
+  fun_x_1425_63 = YPmet(FUNCODEREF(fun_x_1425_63),LITREF(lit_150),T38,ENVNUL,PNUL,YPfalse);
   T37 = YPsig(LITREF(lit_149),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   fun_64 = YPmet(FUNCODEREF(fun_64),YPfalse,T37,ENVNUL,PNUL,YPfalse);
   T36 = YPsig(LITREF(lit_141),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
@@ -5614,7 +5616,7 @@ loop:
 }
 
 P YevalSsyntaxY___main_2___() {
-  P tmpF2429;
+  P tmpF2439;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33,T34,T35,T36,T37,T38,T39,T40,T41,T42,T43,T44,T45,T46,T47;
@@ -6125,8 +6127,8 @@ loop:
   T174 = fun_sexpr_make_macro_function_155;
   T171 = XCALL2(1,VARREF(YPdefine_method),T172,T174);
   VARSET(YevalSsyntaxYsexpr_make_macro_function,T171);
-  tmpF2429 = YPfalse;
-  if (tmpF2429 != YPfalse) {
+  tmpF2439 = YPfalse;
+  if (tmpF2439 != YPfalse) {
     T175 = VARREF(YevalSsyntaxYeval);
   } else {
     T175 = YPfalse;
@@ -6384,6 +6386,7 @@ static IMPORT_INFO import_infos[] = {
   {"%fsinh", &module_info_gooSboot, "%fsinh"},
   {"fun-nary?", &module_info_gooSboot, "fun-nary?"},
   {"%unlink-stack", &module_info_gooSboot, "%unlink-stack"},
+  {"sub*-setter", &module_info_gooScolsSseqx, "sub*-setter"},
   {"@not", &module_info_gooSboot, "@not"},
   {"class-direct-props", &module_info_gooSboot, "class-direct-props"},
   {"<chr>", &module_info_gooSboot, "<chr>"},
@@ -6798,6 +6801,7 @@ static IMPORT_INFO import_infos[] = {
   {"%c=", &module_info_gooSboot, "%c="},
   {"sub", &module_info_gooScolsSseq, "sub"},
   {"<lst>", &module_info_gooSboot, "<lst>"},
+  {"sub*", &module_info_gooScolsSseq, "sub*"},
   {"elt-or", &module_info_gooScolsScol, "elt-or"},
   {"fun-name", &module_info_gooSboot, "fun-name"},
   {"emit", &module_info_gooSioSwrite, "emit"},

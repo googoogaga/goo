@@ -159,6 +159,7 @@ EXT(YgooScolsScolYfold,"goo/cols/col","fold");
 EXT(YgooSmacrosY1st,"goo/macros","1st");
 EXT(YgooSconditionsYLarithmetic_errorG,"goo/conditions","<arithmetic-error>");
 EXT(Yfun_naryQ,"goo/boot","fun-nary?");
+EXT(YgooScolsSseqxYsubT_setter,"goo/cols/seqx","sub*-setter");
 EXT(YLchrG,"goo/boot","<chr>");
 EXT(Yclass_direct_props,"goo/boot","class-direct-props");
 EXT(YgooScolsSseqxYsub_setter,"goo/cols/seqx","sub-setter");
@@ -491,6 +492,7 @@ EXT(YgooScolsSrepYrep_elt_setter,"goo/cols/rep","rep-elt-setter");
 EXT(YgooScolsScolxYlenSfill_setter,"goo/cols/colx","len/fill-setter");
 EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
 EXT(YLlstG,"goo/boot","<lst>");
+EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(Yfun_name,"goo/boot","fun-name");
 EXT(YgooSconditionsYdefault_handler_description,"goo/conditions","default-handler-description");
@@ -817,6 +819,7 @@ static IMPORT_INFO import_infos[] = {
   {"<arithmetic-error>", &module_info_gooSconditions, "<arithmetic-error>"},
   {"%unlink-stack", &module_info_gooSboot, "%unlink-stack"},
   {"fun-nary?", &module_info_gooSboot, "fun-nary?"},
+  {"sub*-setter", &module_info_gooScolsSseqx, "sub*-setter"},
   {"@not", &module_info_gooSboot, "@not"},
   {"<chr>", &module_info_gooSboot, "<chr>"},
   {"class-direct-props", &module_info_gooSboot, "class-direct-props"},
@@ -1279,6 +1282,7 @@ static IMPORT_INFO import_infos[] = {
   {"%c=", &module_info_gooSboot, "%c="},
   {"sub", &module_info_gooScolsSseq, "sub"},
   {"<lst>", &module_info_gooSboot, "<lst>"},
+  {"sub*", &module_info_gooScolsSseq, "sub*"},
   {"elt-or", &module_info_gooScolsScol, "elt-or"},
   {"fun-name", &module_info_gooSboot, "fun-name"},
   {"default-handler-description", &module_info_gooSconditions, "default-handler-description"},
@@ -1483,6 +1487,7 @@ static EXPORT_INFO export_infos[] = {
   {"1st", "1st"},
   {"<arithmetic-error>", "<arithmetic-error>"},
   {"fun-nary?", "fun-nary?"},
+  {"sub*-setter", "sub*-setter"},
   {"handler-info-message", "handler-info-message"},
   {"@not", "@not"},
   {"class-direct-props", "class-direct-props"},
@@ -1787,6 +1792,7 @@ static EXPORT_INFO export_infos[] = {
   {"len/fill-setter", "len/fill-setter"},
   {"sub", "sub"},
   {"<lst>", "<lst>"},
+  {"sub*", "sub*"},
   {"elt-or", "elt-or"},
   {"fun-name", "fun-name"},
   {"emit", "emit"},

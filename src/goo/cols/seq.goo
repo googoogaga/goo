@@ -53,6 +53,7 @@
 
  ;; subsequence of x between from and below.
  (dg sub (x|<seq> from|<int> below|<int> => <seq>))
+ (dg sub* (x|<seq> from|<int> => <seq>))
 
  ;; inserts e into x below index before
  (dg ins (x|<seq> e|<any> before|<int> => <seq>))
@@ -205,6 +206,9 @@
         (col-res x (rev! seq))
         (con-x (if (if (>= i from) (< i below)) (add seq (now e)) seq)
                (+ i 1) (nxt e)))))
+
+(dm sub* (x|<seq> from|<int> => <seq>)
+  (sub x from (len x)))
 
 (dm push (l|<seq> x|<any> => <seq>)
   (ins l x 0))

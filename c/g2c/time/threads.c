@@ -74,14 +74,12 @@ EXT(YgooSmathYDpi,"goo/math","$pi");
 EXT(YgooScolsSzipYunzip,"goo/cols/zip","unzip");
 EXT(Yprop_getter,"goo/boot","prop-getter");
 EXT(Yproperty_type_error,"goo/boot","property-type-error");
-DEF(YtimeSthreadsYthread_handle_setter,"time/threads","thread-handle-setter");
 EXT(Yfun_arity,"goo/boot","fun-arity");
 EXT(YgooSconditionsYdescribe_condition,"goo/conditions","describe-condition");
 EXT(YgooScolsSseqYdel_dups,"goo/cols/seq","del-dups");
 EXT(YLlocG,"goo/boot","<loc>");
 EXT(YgooScolsScolYfoldA,"goo/cols/col","fold+");
 EXT(YgooSioSportYputs,"goo/io/port","puts");
-DEF(YtimeSthreadsYthread_name_setter,"time/threads","thread-name-setter");
 EXT(YgooSmathYevenQ,"goo/math","even?");
 EXT(YgooSioSportYport_contents,"goo/io/port","port-contents");
 EXT(YgooSioSwriteYpost,"goo/io/write","post");
@@ -118,7 +116,6 @@ EXT(YgooSmacrosYmacro_error,"goo/macros","macro-error");
 EXT(YgooSmathYtruncS,"goo/math","trunc/");
 EXT(YgooSmathYmodA,"goo/math","mod+");
 EXT(YgooSmathYfloor,"goo/math","floor");
-DEF(YtimeSthreadsYthread_current,"time/threads","thread-current");
 EXT(Yclone,"goo/boot","clone");
 EXT(YgooSruntimeYloc_val,"goo/runtime","loc-val");
 EXT(YgooScolsScolYallQ,"goo/cols/col","all?");
@@ -151,9 +148,9 @@ EXT(Ytup,"goo/boot","tup");
 EXT(YLproductG,"goo/boot","<product>");
 EXT(YgooSmathYto_str,"goo/math","to-str");
 EXT(YgooScolsScolYfold,"goo/cols/col","fold");
-DEF(YtimeSthreadsYtest_thread_1,"time/threads","test-thread-1");
 EXT(YgooSmacrosY1st,"goo/macros","1st");
 EXT(Yfun_naryQ,"goo/boot","fun-nary?");
+EXT(YgooScolsSseqxYsubT_setter,"goo/cols/seqx","sub*-setter");
 EXT(Yclass_direct_props,"goo/boot","class-direct-props");
 EXT(YLchrG,"goo/boot","<chr>");
 EXT(YgooScolsSseqxYsub_setter,"goo/cols/seqx","sub-setter");
@@ -162,7 +159,6 @@ EXT(Ygen_add_met,"goo/boot","gen-add-met");
 EXT(YgooSmathYfloorS,"goo/math","floor/");
 EXT(Ysig_naryQ,"goo/boot","sig-nary?");
 EXT(YgooSmathYcos,"goo/math","cos");
-DEF(YtimeSthreadsYthread_function_setter,"time/threads","thread-function-setter");
 EXT(YgooSconditionsYLnarity_errorG,"goo/conditions","<narity-error>");
 EXT(YgooScolsSmapYLmapG,"goo/cols/map","<map>");
 EXT(YgooSioSportYput,"goo/io/port","put");
@@ -214,6 +210,8 @@ EXT(YgooScolsScolYnow,"goo/cols/col","now");
 EXT(YgooStypesYtL,"goo/types","t<");
 EXT(Yprop_owner,"goo/boot","prop-owner");
 EXT(YgooSmacrosYEE,"goo/macros","==");
+DEF(YtimeSthreadsYthread_name_setter,"time/threads","thread-name-setter");
+DEF(YtimeSthreadsYsleep,"time/threads","sleep");
 EXT(Yproperty_not_found_error,"goo/boot","property-not-found-error");
 EXT(YgooScolsScolxYlen_setter,"goo/cols/colx","len-setter");
 EXT(YgooScolsStabYcase_insensitive_string_equal,"goo/cols/tab","case-insensitive-string-equal");
@@ -227,13 +225,13 @@ EXT(YLreplace_generic_restartG,"goo/boot","<replace-generic-restart>");
 EXT(YgooSconditionsYmacro_error_arguments,"goo/conditions","macro-error-arguments");
 EXT(YgooSmacrosYmatch_unquote,"goo/macros","match-unquote");
 EXT(YgooSmathY_,"goo/math","-");
-DEF(YtimeSthreadsYLthreadG,"time/threads","<thread>");
 EXT(YgooScolsScolYmap_keyed,"goo/cols/col","map-keyed");
 EXT(Yincongruent_method_error,"goo/boot","incongruent-method-error");
 EXT(YgooSpackerYpacker_add,"goo/packer","packer-add");
 EXT(YgooSmathYto_digit,"goo/math","to-digit");
 EXT(YgooScolsSrangeYrange_by,"goo/cols/range","range-by");
 EXT(Yfun_specs,"goo/boot","fun-specs");
+DEF(YtimeSthreadsYthread_handle,"time/threads","thread-handle");
 EXT(Yclass_children,"goo/boot","class-children");
 EXT(YgooSconditionsYlist_handlers,"goo/conditions","list-handlers");
 EXT(YgooSconditionsYproperty_error_generic,"goo/conditions","property-error-generic");
@@ -246,6 +244,7 @@ EXT(YgooSmathYabs,"goo/math","abs");
 EXT(YgooSmathYtrunc,"goo/math","trunc");
 EXT(YgooSioSportYpeek,"goo/io/port","peek");
 EXT(YgooScolsScolYfinQ,"goo/cols/col","fin?");
+DEF(YtimeSthreadsYthread_function,"time/threads","thread-function");
 EXT(YgooStypesYtE,"goo/types","t=");
 EXT(Yfab_gen,"goo/boot","fab-gen");
 EXT(YgooScolsScolYitems,"goo/cols/col","items");
@@ -260,6 +259,7 @@ EXT(YgooSmathYlogn,"goo/math","logn");
 EXT(YgooSconditionsYLrange_errorG,"goo/conditions","<range-error>");
 EXT(YTboot_macro_expandersT,"goo/boot","*boot-macro-expanders*");
 EXT(YgooSmathYzeroQ,"goo/math","zero?");
+DEF(YtimeSthreadsYtest_thread_1,"time/threads","test-thread-1");
 EXT(YgooScolsScolYfind,"goo/cols/col","find");
 EXT(Yarity_error,"goo/boot","arity-error");
 EXT(YgooSmathYGGG,"goo/math",">>>");
@@ -270,10 +270,12 @@ EXT(Yfind_setter,"goo/boot","find-setter");
 EXT(YgooScolsScolYkey_type,"goo/cols/col","key-type");
 EXT(YgooSpackerYpacker_fab,"goo/packer","packer-fab");
 EXT(YTmacros_okQT,"goo/boot","*macros-ok?*");
+DEF(YtimeSthreadsYthread_current,"time/threads","thread-current");
 EXT(YgooSconditionsYmsg,"goo/conditions","msg");
 EXT(YPsnul,"goo/boot","%snul");
 EXT(YgooStypesYtA,"goo/types","t+");
 EXT(YgooSmacrosYrevX,"goo/macros","rev!");
+DEF(YtimeSthreadsYthread_function_setter,"time/threads","thread-function-setter");
 EXT(YgooSconditionsYdescribe_handler,"goo/conditions","describe-handler");
 EXT(YgooScolsSstrYnum_to_str_base,"goo/cols/str","num-to-str-base");
 EXT(Yfun_mets,"goo/boot","fun-mets");
@@ -290,7 +292,6 @@ EXT(Yarithmetic_error,"goo/boot","arithmetic-error");
 EXT(Ytype_object,"goo/boot","type-object");
 EXT(YgooSmacrosYvar_type,"goo/macros","var-type");
 EXT(YgooSioSwriteYwrite_to_string,"goo/io/write","write-to-string");
-DEF(YtimeSthreadsYtest_thread_2,"time/threads","test-thread-2");
 EXT(YgooScolsScolYdo_keyed,"goo/cols/col","do-keyed");
 EXT(YgooSconditionsYLhandler_infoG,"goo/conditions","<handler-info>");
 EXT(YLfunG,"goo/boot","<fun>");
@@ -301,6 +302,7 @@ EXT(Yprop_type,"goo/boot","prop-type");
 EXT(YgooSmathYdiv,"goo/math","div");
 EXT(YgooSconditionsYbuild_condition_interactively,"goo/conditions","build-condition-interactively");
 EXT(YgooScolsScolYfill,"goo/cols/col","fill");
+DEF(YtimeSthreadsYthread_yield,"time/threads","thread-yield");
 EXT(YgooSmagYmin,"goo/mag","min");
 EXT(YgooScolsScolYelt_default,"goo/cols/col","elt-default");
 EXT(YgooScolsStabYcase_insensitive_string_hash,"goo/cols/tab","case-insensitive-string-hash");
@@ -310,7 +312,6 @@ EXT(YgooSmathYpow,"goo/math","pow");
 EXT(YgooSioSportYgets,"goo/io/port","gets");
 EXT(YgooSconditionsYLreturn_type_errorG,"goo/conditions","<return-type-error>");
 EXT(Yfun_sig_setter,"goo/boot","fun-sig-setter");
-DEF(YtimeSthreadsYmain_thread_key,"time/threads","main-thread-key");
 EXT(YgooSmathYN,"goo/math","~");
 EXT(Ysig_specs,"goo/boot","sig-specs");
 EXT(YgooSconditionsYrange_error_collection,"goo/conditions","range-error-collection");
@@ -322,7 +323,6 @@ EXT(YgooSconditionsYLserious_conditionG,"goo/conditions","<serious-condition>");
 EXT(YgooScolsSseqYjoin,"goo/cols/seq","join");
 EXT(YgooSioSportYnewline,"goo/io/port","newline");
 EXT(YgooScolsScolxYzapX,"goo/cols/colx","zap!");
-DEF(YtimeSthreadsYthread_handle,"time/threads","thread-handle");
 EXT(Yfun_sig,"goo/boot","fun-sig");
 EXT(YOlst,"goo/boot","@lst");
 EXT(YgooScolsSlstYlist,"goo/cols/lst","list");
@@ -336,7 +336,6 @@ EXT(YgooSconditionsYread,"goo/conditions","read");
 EXT(YgooSpackerYpacker,"goo/packer","packer");
 EXT(Yfile_opening_error,"goo/boot","file-opening-error");
 EXT(YgooSmathYneg,"goo/math","neg");
-DEF(YtimeSthreadsYsleep,"time/threads","sleep");
 EXT(YgooSconditionsYLproperty_unbound_errorG,"goo/conditions","<property-unbound-error>");
 DYNEXT(YgooSioSwriteYTmax_print_depthT,"goo/io/write","*max-print-depth*");
 EXT(YgooScolsStabYid_hash,"goo/cols/tab","id-hash");
@@ -352,6 +351,7 @@ EXT(YgooSmathYsinh,"goo/math","sinh");
 EXT(YLclassG,"goo/boot","<class>");
 EXT(Yno_applicable_methods_error,"goo/boot","no-applicable-methods-error");
 EXT(Yadd_prop,"goo/boot","add-prop");
+DEF(YtimeSthreadsYthread_priority,"time/threads","thread-priority");
 EXT(YgooSmagYGE,"goo/mag",">=");
 EXT(Yobject_class,"goo/boot","object-class");
 EXT(YgooScolsScolxYlow_elt_setter,"goo/cols/colx","low-elt-setter");
@@ -363,12 +363,12 @@ EXT(Ygen_src,"goo/boot","gen-src");
 EXT(YgooScolsSstrYstr_to_num,"goo/cols/str","str-to-num");
 EXT(YOopts_as_lst,"goo/boot","@opts-as-lst");
 EXT(YgooScolsScycleYLcycleG,"goo/cols/cycle","<cycle>");
-DEF(YtimeSthreadsYthread_join,"time/threads","thread-join");
 EXT(YgooScolsSseqYany2Q,"goo/cols/seq","any2?");
 EXT(YLtypeG,"goo/boot","<type>");
 EXT(Yproduct_elts,"goo/boot","product-elts");
 EXT(Yfab_class,"goo/boot","fab-class");
 EXT(YgooSmathYflo_bits,"goo/math","flo-bits");
+DEF(YtimeSthreadsYthread_name,"time/threads","thread-name");
 EXT(YgooScolsSstepYeach,"goo/cols/step","each");
 EXT(Yhandler_info_message,"goo/boot","handler-info-message");
 EXT(YgooScolsStabYtab_hash,"goo/cols/tab","tab-hash");
@@ -376,16 +376,16 @@ EXT(YgooSmathY1A,"goo/math","1+");
 EXT(Ytail,"goo/boot","tail");
 EXT(YOisaQ,"goo/boot","@isa?");
 EXT(YPdispatch,"goo/boot","%dispatch");
-DEF(YtimeSthreadsYthread_yield,"time/threads","thread-yield");
-DEF(YtimeSthreadsYthread_priority_setter,"time/threads","thread-priority-setter");
 EXT(YgooStypesYall2Q,"goo/types","all2?");
 EXT(YgooSmathYatan2,"goo/math","atan2");
 EXT(YgooScolsSseqYdo3,"goo/cols/seq","do3");
+DEF(YtimeSthreadsYmain_thread_key,"time/threads","main-thread-key");
 EXT(YgooSmathYisqrt,"goo/math","isqrt");
 EXT(YgooSconditionsYLargument_type_errorG,"goo/conditions","<argument-type-error>");
 EXT(YgooScolsSseqYsplit,"goo/cols/seq","split");
 EXT(YgooSmathYceilS,"goo/math","ceil/");
 EXT(YgooScolsSrangeYLrangeG,"goo/cols/range","<range>");
+DEF(YtimeSthreadsYtest_thread_2,"time/threads","test-thread-2");
 EXT(YgooSioSportYport_index,"goo/io/port","port-index");
 EXT(YLsymG,"goo/boot","<sym>");
 EXT(Yclass_props,"goo/boot","class-props");
@@ -396,6 +396,7 @@ EXT(YgooSconditionsYcondition_arguments,"goo/conditions","condition-arguments");
 EXT(Ynul,"goo/boot","nul");
 EXT(YgooSmacrosYdo,"goo/macros","do");
 EXT(YgooScolsSvecYLvecG,"goo/cols/vec","<vec>");
+DEF(YtimeSthreadsYLthreadG,"time/threads","<thread>");
 EXT(YgooSconditionsYLinternal_errorG,"goo/conditions","<internal-error>");
 EXT(YgooScolsStabYtab_shrink_threshold,"goo/cols/tab","tab-shrink-threshold");
 EXT(YgooSmagYLE,"goo/mag","<=");
@@ -439,9 +440,7 @@ EXT(YgooScolsScolYdel,"goo/cols/col","del");
 EXT(YgooScolsStabYtab_growth_factor,"goo/cols/tab","tab-growth-factor");
 EXT(YgooSconditionsYLno_applicable_methods_errorG,"goo/conditions","<no-applicable-methods-error>");
 EXT(YgooSmathYE,"goo/math","=");
-DEF(YtimeSthreadsYthread_priority,"time/threads","thread-priority");
 EXT(YgooSioSportYget,"goo/io/port","get");
-DEF(YtimeSthreadsYthread_function,"time/threads","thread-function");
 EXT(YgooScolsStabYtab_growth_threshold,"goo/cols/tab","tab-growth-threshold");
 EXT(Ynew,"goo/boot","new");
 EXT(Yprop_setter,"goo/boot","prop-setter");
@@ -454,7 +453,6 @@ EXT(Yobject_props,"goo/boot","object-props");
 EXT(Yobject_parents,"goo/boot","object-parents");
 EXT(YgooScolsSseqxYsortX,"goo/cols/seqx","sort!");
 EXT(Yclass_name,"goo/boot","class-name");
-DEF(YtimeSthreadsYthread_name,"time/threads","thread-name");
 EXT(YgooSruntimeYrcurry,"goo/runtime","rcurry");
 EXT(YgooScolsSstepYfirst_then,"goo/cols/step","first-then");
 EXT(YgooSconditionsYLproperty_type_errorG,"goo/conditions","<property-type-error>");
@@ -464,11 +462,13 @@ EXT(Ysig_names,"goo/boot","sig-names");
 EXT(YgooScolsScolxYlenSfill_setter,"goo/cols/colx","len/fill-setter");
 EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
 EXT(YLlstG,"goo/boot","<lst>");
+EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(Yfun_name,"goo/boot","fun-name");
 EXT(YgooSioSwriteYemit,"goo/io/write","emit");
 EXT(YgooSconditionsYdefault_handler_description,"goo/conditions","default-handler-description");
 EXT(YLgenG,"goo/boot","<gen>");
+DEF(YtimeSthreadsYthread_handle_setter,"time/threads","thread-handle-setter");
 EXT(YgooSmathYround,"goo/math","round");
 EXT(YOanyQ,"goo/boot","@any?");
 EXT(YPprop,"goo/boot","%prop");
@@ -483,8 +483,10 @@ EXT(YLseqXG,"goo/boot","<seq!>");
 EXT(YgooScolsSseqxYdel_dupsX,"goo/cols/seqx","del-dups!");
 EXT(YTrestarts_okQT,"goo/boot","*restarts-ok?*");
 EXT(Ygen_refs_setter,"goo/boot","gen-refs-setter");
+DEF(YtimeSthreadsYthread_join,"time/threads","thread-join");
 EXT(YisaQ,"goo/boot","isa?");
 EXT(YgooScolsScolYfab,"goo/cols/col","fab");
+DEF(YtimeSthreadsYthread_priority_setter,"time/threads","thread-priority-setter");
 EXT(YgooSmacrosYcat,"goo/macros","cat");
 EXT(YgooSmathYdigitQ,"goo/math","digit?");
 EXT(Ymay_isaQ,"goo/boot","may-isa?");
@@ -507,55 +509,55 @@ EXT(Yunexec,"goo/boot","unexec");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_1);
-DEFLIT(lit_11);
-DEFLIT(lit_8);
-DEFLIT(lit_22);
-DEFLIT(lit_0);
-DEFLIT(lit_40);
-DEFLIT(lit_5);
-DEFLIT(lit_28);
-DEFLIT(lit_10);
 DEFLIT(lit_19);
-DEFLIT(lit_34);
-DEFLIT(lit_18);
-DEFLIT(lit_20);
-DEFLIT(lit_23);
-DEFLIT(lit_44);
-DEFLIT(lit_29);
-DEFLIT(lit_12);
-DEFLIT(lit_42);
-DEFLIT(lit_15);
-DEFLIT(lit_39);
-DEFLIT(lit_30);
-DEFLIT(lit_43);
-DEFLIT(lit_31);
-DEFLIT(lit_26);
-DEFLIT(lit_41);
-DEFLIT(lit_7);
-DEFLIT(lit_14);
-DEFLIT(lit_16);
 DEFLIT(lit_38);
 DEFLIT(lit_25);
-DEFLIT(lit_36);
-DEFLIT(lit_4);
-DEFLIT(lit_46);
-DEFLIT(lit_3);
-DEFLIT(lit_2);
 DEFLIT(lit_48);
-DEFLIT(lit_35);
+DEFLIT(lit_40);
+DEFLIT(lit_0);
+DEFLIT(lit_42);
+DEFLIT(lit_39);
+DEFLIT(lit_3);
+DEFLIT(lit_8);
+DEFLIT(lit_20);
+DEFLIT(lit_2);
+DEFLIT(lit_34);
+DEFLIT(lit_10);
+DEFLIT(lit_23);
+DEFLIT(lit_14);
+DEFLIT(lit_30);
 DEFLIT(lit_17);
-DEFLIT(lit_37);
+DEFLIT(lit_35);
+DEFLIT(lit_7);
 DEFLIT(lit_13);
-DEFLIT(lit_6);
-DEFLIT(lit_24);
 DEFLIT(lit_9);
-DEFLIT(lit_47);
-DEFLIT(lit_21);
+DEFLIT(lit_46);
+DEFLIT(lit_44);
+DEFLIT(lit_11);
+DEFLIT(lit_28);
+DEFLIT(lit_6);
+DEFLIT(lit_1);
+DEFLIT(lit_29);
+DEFLIT(lit_16);
+DEFLIT(lit_22);
+DEFLIT(lit_31);
+DEFLIT(lit_43);
 DEFLIT(lit_45);
+DEFLIT(lit_37);
+DEFLIT(lit_12);
+DEFLIT(lit_4);
+DEFLIT(lit_32);
+DEFLIT(lit_15);
+DEFLIT(lit_24);
+DEFLIT(lit_36);
+DEFLIT(lit_21);
+DEFLIT(lit_47);
+DEFLIT(lit_41);
+DEFLIT(lit_5);
+DEFLIT(lit_26);
 DEFLIT(lit_33);
 DEFLIT(lit_27);
-DEFLIT(lit_32);
+DEFLIT(lit_18);
 
 /* FUNCTIONS: */
 
@@ -578,16 +580,16 @@ LOCFOR(fun_15);
 LOCFOR(fun_16);
 LOCFOR(fun_17);
 LOCFOR(fun_new_18);
-LOCFOR(fun_x_1791_19);
+LOCFOR(fun_x_1760_19);
 LOCFOR(fun_20);
 LOCFOR(fun_21);
 LOCFOR(fun_sleep_22);
 LOCFOR(fun_thread_current_23);
 LOCFOR(fun_thread_join_24);
-LOCFOR(fun_x_1793_25);
+LOCFOR(fun_x_1762_25);
 LOCFOR(fun_26);
 FUNFOR(YtimeSthreadsYtest_thread_1);
-LOCFOR(fun_x_1795_28);
+LOCFOR(fun_x_1764_28);
 LOCFOR(fun_29);
 FUNFOR(YtimeSthreadsYtest_thread_2);
 extern P YtimeSthreadsY___main_0___ ();
@@ -795,17 +797,17 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_new_18) {
   P x_,args_;
-  P xF3716;
-  P xF3715;
-  P hF3714;
-  P xF3713;
-  P fF3712;
-  P tF3711;
-  P xF3710;
-  P yF3709;
-  P xF3708;
-  P tmpF3707;
-  P next_metsF3706;
+  P xF3467;
+  P xF3466;
+  P hF3465;
+  P xF3464;
+  P fF3463;
+  P tF3462;
+  P xF3461;
+  P yF3460;
+  P xF3459;
+  P tmpF3458;
+  P next_metsF3457;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32;
@@ -815,16 +817,16 @@ LINK_STACK();
   NARGS(args_, 1);
 loop:
   T2 = (P)YPnext_methods();
-  next_metsF3706 = T2;
-  tmpF3707 = next_metsF3706;
-  if (tmpF3707 != YPfalse) {
-    xF3708 = next_metsF3706;
-    yF3709 = Ynil;
-    T9 = (P)YPeqQ(xF3708,yF3709);
+  next_metsF3457 = T2;
+  tmpF3458 = next_metsF3457;
+  if (tmpF3458 != YPfalse) {
+    xF3459 = next_metsF3457;
+    yF3460 = Ynil;
+    T9 = (P)YPeqQ(xF3459,yF3460);
     T8 = (P)YPbb(T9);
     T7 = T8;
-    xF3710 = T7;
-    T11 = (P)YPeqQ(xF3710,YPfalse);
+    xF3461 = T7;
+    T11 = (P)YPeqQ(xF3461,YPfalse);
     T10 = (P)YPbb(T11);
     T6 = T10;
     T5 = T6;
@@ -833,8 +835,8 @@ loop:
   }
   T4 = T5;
   if (T4 != YPfalse) {
-    T13 = CALL1(1,VARREF(Yhead),next_metsF3706);
-    T14 = CALL1(1,VARREF(Ytail),next_metsF3706);
+    T13 = CALL1(1,VARREF(Yhead),next_metsF3457);
+    T14 = CALL1(1,VARREF(Ytail),next_metsF3457);
     T12 = CALL4(1,VARREF(YgooSmacrosYnapp),T13,T14,x_,args_);
     T3 = T12;
   } else {
@@ -844,37 +846,37 @@ loop:
     T3 = T15;
   }
   T1 = T3;
-  tF3711 = T1;
-  T20 = CALL1(1,VARREF(YtimeSthreadsYthread_function),tF3711);
+  tF3462 = T1;
+  T20 = CALL1(1,VARREF(YtimeSthreadsYthread_function),tF3462);
   T19 = CALL2(1,VARREF(YgooSmacrosYEE),T20,VARREF(YtimeSthreadsYmain_thread_key));
   T18 = CALL1(1,VARREF(Ynot),T19);
   if (T18 != YPfalse) {
-    T22 = FUNFAB(fun_17,1,tF3711);
-    fF3712 = T22;
-    T26 = CALL2(1,VARREF(Ytup),fF3712,tF3711);
+    T22 = FUNFAB(fun_17,1,tF3462);
+    fF3463 = T22;
+    T26 = CALL2(1,VARREF(Ytup),fF3463,tF3462);
     T25 = (P)YtimeSthreadsYPthread_create(T26);
-    xF3713 = T25;
-    T27 = (P)YPtag_into(xF3713,(P)3);
+    xF3464 = T25;
+    T27 = (P)YPtag_into(xF3464,(P)3);
     T24 = T27;
-    hF3714 = T24;
-    CALL2(1,VARREF(YtimeSthreadsYthread_handle_setter),hF3714,tF3711);
-    T30 = CALL1(1,VARREF(YtimeSthreadsYthread_priority),tF3711);
-    xF3715 = T30;
-    xF3716 = xF3715;
-    T32 = (P)YPiGG(xF3716,(P)2);
+    hF3465 = T24;
+    CALL2(1,VARREF(YtimeSthreadsYthread_handle_setter),hF3465,tF3462);
+    T30 = CALL1(1,VARREF(YtimeSthreadsYthread_priority),tF3462);
+    xF3466 = T30;
+    xF3467 = xF3466;
+    T32 = (P)YPiGG(xF3467,(P)2);
     T31 = T32;
     T29 = T31;
-    T28 = (P)YtimeSthreadsYPthread_priority_setter(T29,hF3714);
+    T28 = (P)YtimeSthreadsYPthread_priority_setter(T29,hF3465);
     T23 = T28;
     T21 = T23;
   } else {
   }
-  T0 = tF3711;
+  T0 = tF3462;
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_x_1791_19) {
+FUNCODEDEF(fun_x_1760_19) {
   P msg_,args_;
   P T0,T1;
   P a1,a2;
@@ -890,41 +892,41 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_20) {
   P return_;
-  P x_1790F3721;
-  P x_1790F3720;
-  P bodyF3719;
-  P x_1790F3718;
-  P x_1791F3717;
+  P x_1759F3472;
+  P x_1759F3471;
+  P bodyF3470;
+  P x_1759F3469;
+  P x_1760F3468;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19;
   P a1;
 LINK_STACK();
   ARG(return_, 0);
 loop:
-  T1 = FUNSHELL(0,fun_x_1791_19,2);
-  x_1791F3717 = T1;
-  FUNINIT(x_1791F3717, 2,FREEREF(0),return_);
-  x_1790F3718 = FREEREF(0);
-  bodyF3719 = YPfalse;
-  bodyF3719 = BOXFAB(bodyF3719);
-  T5 = CALL2(1,VARREF(YisaQ),x_1790F3718,VARREF(YLlstG));
+  T1 = FUNSHELL(0,fun_x_1760_19,2);
+  x_1760F3468 = T1;
+  FUNINIT(x_1760F3468, 2,FREEREF(0),return_);
+  x_1759F3469 = FREEREF(0);
+  bodyF3470 = YPfalse;
+  bodyF3470 = BOXFAB(bodyF3470);
+  T5 = CALL2(1,VARREF(YisaQ),x_1759F3469,VARREF(YLlstG));
   if (T5 != YPfalse) {
-    T7 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1790F3718,LITREF(lit_32),x_1791F3717);
-    x_1790F3720 = T7;
-    BOXVAL(bodyF3719) = x_1790F3720;
-    x_1790F3721 = Ynil;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1790F3721,x_1791F3717);
+    T7 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1759F3469,LITREF(lit_32),x_1760F3468);
+    x_1759F3471 = T7;
+    BOXVAL(bodyF3470) = x_1759F3471;
+    x_1759F3472 = Ynil;
+    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1759F3472,x_1760F3468);
     T8 = T9;
     T6 = T8;
   } else {
-    T10 = CALL2(1,x_1791F3717,LITREF(lit_33),x_1790F3718);
+    T10 = CALL2(1,x_1760F3468,LITREF(lit_33),x_1759F3469);
   }
   T12 = CALL1(1,VARREF(Ylst),LITREF(lit_23));
   T13 = CALL1(1,VARREF(Ylst),LITREF(lit_0));
   T14 = CALL1(1,VARREF(Ylst),LITREF(lit_11));
   T17 = CALL1(1,VARREF(Ylst),LITREF(lit_34));
   T18 = CALL1(1,VARREF(Ylst),Ynil);
-  T19 = BOXVAL(bodyF3719);
+  T19 = BOXVAL(bodyF3470);
   T16 = CALL4(1,VARREF(YgooSmacrosYcat),T17,T18,T19,Ynil);
   T15 = CALL1(1,VARREF(Ylst),T16);
   T11 = CALL5(1,VARREF(YgooSmacrosYcat),T12,T13,T14,T15,Ynil);
@@ -962,13 +964,13 @@ UNLINK_STACK();
 }
 
 FUNCODEDEF(fun_thread_current_23) {
-  P xF3722;
+  P xF3473;
   P T0,T1,T2,T3;
 LINK_STACK();
 loop:
   T2 = (P)YtimeSthreadsYPthread_current();
-  xF3722 = T2;
-  T3 = (P)YPtag_into(xF3722,(P)3);
+  xF3473 = T2;
+  T3 = (P)YPtag_into(xF3473,(P)3);
   T1 = T3;
   T0 = (P)YtimeSthreadsYPthread_goo_thread(T1);
 UNLINK_STACK();
@@ -977,38 +979,38 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_thread_join_24) {
   P t_;
-  P xF3723;
+  P xF3474;
   P T0,T1,T2,T3;
   P a1;
 LINK_STACK();
   ARG(t_, 0);
 loop:
   T2 = CALL1(1,VARREF(YtimeSthreadsYthread_handle),t_);
-  xF3723 = T2;
-  T3 = (P)YPuntag_into(xF3723);
+  xF3474 = T2;
+  T3 = (P)YPuntag_into(xF3474);
   T1 = T3;
   T0 = (P)YtimeSthreadsYPthread_join(T1);
 UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_x_1793_25) {
-  P x_1792_;
-  P iF3724;
+FUNCODEDEF(fun_x_1762_25) {
+  P x_1761_;
+  P iF3475;
   P T0,T1,T2,T3,T4,T5,T6;
   P a1;
 LINK_STACK();
-  ARG(x_1792_, 0);
+  ARG(x_1761_, 0);
 loop:
-  T2 = CALL1(1,VARREF(YgooScolsScolYfinQ),x_1792_);
+  T2 = CALL1(1,VARREF(YgooScolsScolYfinQ),x_1761_);
   T1 = CALL1(1,VARREF(Ynot),T2);
   if (T1 != YPfalse) {
-    T4 = CALL1(1,VARREF(YgooScolsScolYnow),x_1792_);
-    iF3724 = T4;
-    CALL2(1,VARREF(YgooSioSwriteYpost),LITREF(lit_43),iF3724);
-    T6 = CALL1(1,VARREF(YgooScolsScolYnxt),x_1792_);
+    T4 = CALL1(1,VARREF(YgooScolsScolYnow),x_1761_);
+    iF3475 = T4;
+    CALL2(1,VARREF(YgooSioSwriteYpost),LITREF(lit_43),iF3475);
+    T6 = CALL1(1,VARREF(YgooScolsScolYnxt),x_1761_);
     a1 = T6;
-    x_1792_ = a1;
+    x_1761_ = a1;
     goto loop;
     T3 = T5;
     T0 = T3;
@@ -1020,16 +1022,16 @@ UNLINK_STACK();
 }
 
 FUNCODEDEF(fun_26) {
-  P x_1793F3725;
+  P x_1762F3476;
   P T0,T1,T2,T3,T4;
 LINK_STACK();
 loop:
-  T1 = FUNSHELL(1,fun_x_1793_25,1);
-  x_1793F3725 = T1;
-  FUNINIT(x_1793F3725, 1,x_1793F3725);
+  T1 = FUNSHELL(1,fun_x_1762_25,1);
+  x_1762F3476 = T1;
+  FUNINIT(x_1762F3476, 1,x_1762F3476);
   T4 = CALL1(1,VARREF(YgooScolsSseqYbelow),YPint((P)3000));
   T3 = CALL1(1,VARREF(YgooScolsScolYenum),T4);
-  T2 = CALL1(0,x_1793F3725,T3);
+  T2 = CALL1(0,x_1762F3476,T3);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -1045,24 +1047,24 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_x_1795_28) {
-  P x_1794_;
-  P iF3726;
+FUNCODEDEF(fun_x_1764_28) {
+  P x_1763_;
+  P iF3477;
   P T0,T1,T2,T3,T4,T5,T6;
   P a1;
 LINK_STACK();
-  ARG(x_1794_, 0);
+  ARG(x_1763_, 0);
 loop:
-  T2 = CALL1(1,VARREF(YgooScolsScolYfinQ),x_1794_);
+  T2 = CALL1(1,VARREF(YgooScolsScolYfinQ),x_1763_);
   T1 = CALL1(1,VARREF(Ynot),T2);
   if (T1 != YPfalse) {
-    T4 = CALL1(1,VARREF(YgooScolsScolYnow),x_1794_);
-    iF3726 = T4;
-    CALL2(1,VARREF(YgooSioSwriteYpost),LITREF(lit_47),iF3726);
+    T4 = CALL1(1,VARREF(YgooScolsScolYnow),x_1763_);
+    iF3477 = T4;
+    CALL2(1,VARREF(YgooSioSwriteYpost),LITREF(lit_47),iF3477);
     CALL1(1,VARREF(YtimeSthreadsYsleep),LITREF(lit_48));
-    T6 = CALL1(1,VARREF(YgooScolsScolYnxt),x_1794_);
+    T6 = CALL1(1,VARREF(YgooScolsScolYnxt),x_1763_);
     a1 = T6;
-    x_1794_ = a1;
+    x_1763_ = a1;
     goto loop;
     T3 = T5;
     T0 = T3;
@@ -1074,16 +1076,16 @@ UNLINK_STACK();
 }
 
 FUNCODEDEF(fun_29) {
-  P x_1795F3727;
+  P x_1764F3478;
   P T0,T1,T2,T3,T4;
 LINK_STACK();
 loop:
-  T1 = FUNSHELL(1,fun_x_1795_28,1);
-  x_1795F3727 = T1;
-  FUNINIT(x_1795F3727, 1,x_1795F3727);
+  T1 = FUNSHELL(1,fun_x_1764_28,1);
+  x_1764F3478 = T1;
+  FUNINIT(x_1764F3478, 1,x_1764F3478);
   T4 = CALL1(1,VARREF(YgooScolsSseqYbelow),YPint((P)100));
   T3 = CALL1(1,VARREF(YgooScolsScolYenum),T4);
-  T2 = CALL1(0,x_1795F3727,T3);
+  T2 = CALL1(0,x_1764F3478,T3);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -1100,7 +1102,7 @@ UNLINK_STACK();
 }
 
 P YtimeSthreadsY___main_0___() {
-  P xF3728;
+  P xF3479;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33,T34,T35,T36,T37,T38,T39,T40,T41,T42,T43,T44,T45,T46,T47;
@@ -1282,19 +1284,19 @@ loop:
   VARSET(Ynew,T64);
   lit_27 = YPPsym((P)"main");
   T69 = (P)YtimeSthreadsYPthread_current();
-  xF3728 = T69;
-  T70 = (P)YPtag_into(xF3728,(P)3);
+  xF3479 = T69;
+  T70 = (P)YPtag_into(xF3479,(P)3);
   T68 = T70;
   XCALLN(1,VARREF(Ynew),7,VARREF(YtimeSthreadsYLthreadG),VARREF(YtimeSthreadsYthread_name),LITREF(lit_27),VARREF(YtimeSthreadsYthread_function),VARREF(YtimeSthreadsYmain_thread_key),VARREF(YtimeSthreadsYthread_handle),T68);
   lit_28 = YPPlist(1,YPPsym((P)"exp"));
   lit_29 = YPPlist(1,YPPsym((P)"return"));
-  lit_30 = YPPsym((P)"x-1791");
+  lit_30 = YPPsym((P)"x-1760");
   lit_31 = YPPlist(2,YPPsym((P)"msg"),YPPsym((P)"args"));
   lit_32 = YPPsym((P)"spawn");
   lit_33 = YPsb((P)"Match Pattern Failure");
   lit_34 = YPPsym((P)"fun");
   T73 = YPsig(LITREF(lit_31),YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_1791_19 = YPmet(FUNCODEREF(fun_x_1791_19),LITREF(lit_30),T73,ENVNUL,PNUL,YPfalse);
+  fun_x_1760_19 = YPmet(FUNCODEREF(fun_x_1760_19),LITREF(lit_30),T73,ENVNUL,PNUL,YPfalse);
   T72 = YPsig(LITREF(lit_29),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   fun_20 = YPmet(FUNCODEREF(fun_20),YPfalse,T72,ENVNUL,PNUL,YPfalse);
   T71 = YPsig(LITREF(lit_28),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
@@ -1340,11 +1342,11 @@ loop:
   T86 = XCALL2(1,VARREF(YPdefine_method),T87,T89);
   VARSET(YtimeSthreadsYthread_join,T86);
   lit_40 = YPPsym((P)"test-thread-1");
-  lit_41 = YPPsym((P)"x-1793");
-  lit_42 = YPPlist(1,YPPsym((P)"x-1792"));
+  lit_41 = YPPsym((P)"x-1762");
+  lit_42 = YPPlist(1,YPPsym((P)"x-1761"));
   lit_43 = YPsb((P)"%d\n");
   T92 = YPsig(LITREF(lit_42),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_1793_25 = YPmet(FUNCODEREF(fun_x_1793_25),LITREF(lit_41),T92,ENVNUL,PNUL,YPfalse);
+  fun_x_1762_25 = YPmet(FUNCODEREF(fun_x_1762_25),LITREF(lit_41),T92,ENVNUL,PNUL,YPfalse);
   T91 = YPsig(LITREF(lit_16),Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
   fun_26 = YPmet(FUNCODEREF(fun_26),YPfalse,T91,ENVNUL,PNUL,YPfalse);
   T90 = YPsig(LITREF(lit_16),Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
@@ -1352,12 +1354,12 @@ loop:
   T93 = YtimeSthreadsYtest_thread_1;
   VARSET(YtimeSthreadsYtest_thread_1,T93);
   lit_44 = YPPsym((P)"test-thread-2");
-  lit_45 = YPPsym((P)"x-1795");
-  lit_46 = YPPlist(1,YPPsym((P)"x-1794"));
+  lit_45 = YPPsym((P)"x-1764");
+  lit_46 = YPPlist(1,YPPsym((P)"x-1763"));
   lit_47 = YPsb((P)"%d\n");
   lit_48 = YPflo(FLOINT(1.0));
   T96 = YPsig(LITREF(lit_46),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_1795_28 = YPmet(FUNCODEREF(fun_x_1795_28),LITREF(lit_45),T96,ENVNUL,PNUL,YPfalse);
+  fun_x_1764_28 = YPmet(FUNCODEREF(fun_x_1764_28),LITREF(lit_45),T96,ENVNUL,PNUL,YPfalse);
   T95 = YPsig(LITREF(lit_16),Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
   fun_29 = YPmet(FUNCODEREF(fun_29),YPfalse,T95,ENVNUL,PNUL,YPfalse);
   T94 = YPsig(LITREF(lit_16),Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
@@ -1622,6 +1624,7 @@ static IMPORT_INFO import_infos[] = {
   {"%fsinh", &module_info_gooSboot, "%fsinh"},
   {"fun-nary?", &module_info_gooSboot, "fun-nary?"},
   {"%unlink-stack", &module_info_gooSboot, "%unlink-stack"},
+  {"sub*-setter", &module_info_gooScolsSseqx, "sub*-setter"},
   {"@not", &module_info_gooSboot, "@not"},
   {"class-direct-props", &module_info_gooSboot, "class-direct-props"},
   {"<chr>", &module_info_gooSboot, "<chr>"},
@@ -2041,6 +2044,7 @@ static IMPORT_INFO import_infos[] = {
   {"%c=", &module_info_gooSboot, "%c="},
   {"sub", &module_info_gooScolsSseq, "sub"},
   {"<lst>", &module_info_gooSboot, "<lst>"},
+  {"sub*", &module_info_gooScolsSseq, "sub*"},
   {"elt-or", &module_info_gooScolsScol, "elt-or"},
   {"fun-name", &module_info_gooSboot, "fun-name"},
   {"emit", &module_info_gooSioSwrite, "emit"},
@@ -2103,47 +2107,47 @@ static IMPORT_INFO import_infos[] = {
 };
 
 static BINDING_INFO binding_infos[] = {
-  {"spawn", PVAR, NULL},
-  {"thread-handle-setter", CVAR, &YtimeSthreadsYthread_handle_setter},
-  {"thread-name-setter", CVAR, &YtimeSthreadsYthread_name_setter},
-  {"%thread-priority-setter", PVAR, NULL},
-  {"thread-current", CVAR, &YtimeSthreadsYthread_current},
-  {"test-thread-1", CVAR, &YtimeSthreadsYtest_thread_1},
-  {"%thread-goo-thread", PVAR, NULL},
-  {"thread-function-setter", CVAR, &YtimeSthreadsYthread_function_setter},
   {"%thread-join", PVAR, NULL},
+  {"%thread-priority-setter", PVAR, NULL},
   {"%thread-yield", PVAR, NULL},
-  {"<thread>", CVAR, &YtimeSthreadsYLthreadG},
-  {"test-thread-2", CVAR, &YtimeSthreadsYtest_thread_2},
-  {"main-thread-key", CVAR, &YtimeSthreadsYmain_thread_key},
-  {"thread-handle", CVAR, &YtimeSthreadsYthread_handle},
+  {"spawn", PVAR, NULL},
+  {"thread-name-setter", CVAR, &YtimeSthreadsYthread_name_setter},
   {"sleep", CVAR, &YtimeSthreadsYsleep},
-  {"thread-join", CVAR, &YtimeSthreadsYthread_join},
-  {"thread-yield", CVAR, &YtimeSthreadsYthread_yield},
-  {"thread-priority-setter", CVAR, &YtimeSthreadsYthread_priority_setter},
-  {"%thread-detach", PVAR, NULL},
-  {"%thread-sleep", PVAR, NULL},
-  {"---main-0---", PVAR, NULL},
-  {"thread-priority", CVAR, &YtimeSthreadsYthread_priority},
+  {"thread-handle", CVAR, &YtimeSthreadsYthread_handle},
   {"thread-function", CVAR, &YtimeSthreadsYthread_function},
-  {"%thread-priority", PVAR, NULL},
-  {"%thread-current", PVAR, NULL},
+  {"test-thread-1", CVAR, &YtimeSthreadsYtest_thread_1},
+  {"thread-current", CVAR, &YtimeSthreadsYthread_current},
+  {"thread-function-setter", CVAR, &YtimeSthreadsYthread_function_setter},
+  {"thread-yield", CVAR, &YtimeSthreadsYthread_yield},
+  {"thread-priority", CVAR, &YtimeSthreadsYthread_priority},
   {"thread-name", CVAR, &YtimeSthreadsYthread_name},
+  {"%thread-detach", PVAR, NULL},
+  {"main-thread-key", CVAR, &YtimeSthreadsYmain_thread_key},
+  {"test-thread-2", CVAR, &YtimeSthreadsYtest_thread_2},
+  {"%thread-current", PVAR, NULL},
+  {"%thread-goo-thread", PVAR, NULL},
+  {"%thread-sleep", PVAR, NULL},
+  {"<thread>", CVAR, &YtimeSthreadsYLthreadG},
   {"%thread-create", PVAR, NULL},
+  {"%thread-priority", PVAR, NULL},
+  {"---main-0---", PVAR, NULL},
+  {"thread-handle-setter", CVAR, &YtimeSthreadsYthread_handle_setter},
+  {"thread-join", CVAR, &YtimeSthreadsYthread_join},
+  {"thread-priority-setter", CVAR, &YtimeSthreadsYthread_priority_setter},
   {NULL, NVAR, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"spawn", "spawn"},
-  {"thread-current", "thread-current"},
-  {"test-thread-1", "test-thread-1"},
   {"<thread>", "<thread>"},
+  {"spawn", "spawn"},
+  {"thread-function", "thread-function"},
+  {"test-thread-1", "test-thread-1"},
+  {"thread-current", "thread-current"},
+  {"thread-yield", "thread-yield"},
+  {"thread-priority", "thread-priority"},
+  {"thread-name", "thread-name"},
   {"test-thread-2", "test-thread-2"},
   {"sleep", "sleep"},
-  {"thread-function", "thread-function"},
-  {"thread-yield", "thread-yield"},
-  {"thread-name", "thread-name"},
-  {"thread-priority", "thread-priority"},
   {NULL, NULL}
 };
 
