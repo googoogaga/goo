@@ -150,6 +150,8 @@ P YtimeSthreadsYPthread_detach () {
 
 P YtimeSthreadsYPthread_goo_thread () { return YPfalse; }
 
+P YtimeSthreadsYPthread_goo_thread_setter (P value) { return PNUL; }
+
 P YtimeSthreadsYPthread_create (P function) { return PNUL; }
 
 P YtimeSthreadsYPthread_yield () { return PNUL; }

@@ -1,9 +1,20 @@
 NEW
 
-o line numbers
+o merge in win32 patches
+o   XCALL patches
+o automate release and build and test
+o redo collection hierarchy
+o   fix del-keys! and add protocol to enum for col!'s
+o   no cat! met for vec
+o   col doesn't work for <col.>'s 
+o   change do-keyed and map-keyed to use items instead of keyed
+o   perhaps *-or's should use thunks for default values
+o   more tests
+o interfaces
 o perhaps change ... to *
 o publish reasons
 o lighter weight c initialization %met etc
+x line numbers
 x read www.archub.org/arcsug.txt
 o redo syntax to work declaratively
 o add hygiene
@@ -11,12 +22,6 @@ o fix gensyms to be hidden
 o report warnings as you go
 o split grt functions to appropriate files
 o function printing doesn't include nary arg
-o more tests
-o fix del-keys! and add protocol to enum for col!'s
-o no cat! met for vec
-o col doesn't work for <col.>'s 
-o change do-keyed and map-keyed to use items instead of keyed
-o perhaps *-or's should use thunks for default values
 o condition hierarchy
 o   restarts
 o     unbound variables

@@ -1,3 +1,28 @@
+=== 0.146 ===
+
+summary
+
+  visual c patches
+
+changed
+
+  patched to mostly get to vc compatibility (didn't check in XCALL hacks)
+  fixed use/lib to add -l to output
+
+=== 0.145 ===
+
+summary
+
+  fixed test-suite
+
+added
+
+  late-macros 
+
+changed
+
+  made module output more efficient
+
 === 0.144 ===
 
 summary
