@@ -68,14 +68,9 @@ P POP() {
 #define LINK_STACK(f)          { PUSH(fun); ofp = fp; fp = sp; PUSH((P)ofp); }
 #define UNLINK_STACK(osp, ofp) { sp = osp; fp = ofp; }
 
-/*
-int inited_fun_traitsp = 0;
-P YLmetG_traits = PNUL;
-P YLgenG_traits = PNUL;
-*/
-
-extern P YLmetG_traits;
-extern P YLgenG_traits;
+extern P YLmetG;
+extern P YLgenG;
+extern P YLlstG;
 extern P YPpair (P, P);
 extern P Yunknown_function_error;
 
@@ -86,7 +81,7 @@ P YPdo_stack_frames (P fun) {
     P   args   = Ynil;
     P   f      = stack_[--xfp];
     P   traits = YPobject_traits(f);
-    if (traits == YLmetG_traits) {
+    if (traits == YPobject_traits(YLmetG)) {
       int i;
       int arity = FUNARITY(f);
       int naryp = FUNNARYP(f);
@@ -94,7 +89,7 @@ P YPdo_stack_frames (P fun) {
         args = YPpair(stack_[--xfp], args);
       if (naryp)
         args = YPpair(stack_[--xfp], args);
-    } else if (traits == YLgenG_traits) {
+    } else if (traits == YPobject_traits(YLgenG)) {
       args = stack_[--xfp];
     } else {
       return CALL1(Yunknown_function_error, f);
@@ -352,7 +347,11 @@ INLINE P YPwrite_char (P s, P x) {
 }
 
 INLINE P YPwrite_string (P s, P x) { 
-  fputs((PSTR)x, (FILE*)s); return YPfalse; 
+  if(x==NULL)
+    fputs("NULL", (FILE*)s);
+  else
+    fputs((PSTR)x, (FILE*)s);
+  return YPfalse; 
 }
 
 INLINE P YPread_char (P s) { 
@@ -482,12 +481,10 @@ P FUNFAB (P x, int n, ...) {
 
 /* CALLS */
 
-extern P YLlstG_traits;
-
 INLINE OBJECT STACK_PAIR(P h, P t) {
   OBJECT pair     = (OBJECT)stack_allocate(OBJECT_DATA_SIZE);
   VALUES data     = (VALUES)stack_allocate(VALUES_SIZE(2));
-  pair->traits    = YLlstG_traits;
+  pair->traits    = YPobject_traits(YLlstG);
   pair->values    = data;
   data->size      = 2;
   data->values[0] = (h);
@@ -566,7 +563,7 @@ P CALL0 (P fun) {
   if((tag_bits(fun)) == adr_tag)
       traits = YPobject_traits(fun);
   
-  if (traits == YLmetG_traits) {
+  if (traits == YPobject_traits(YLmetG)) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     CHECK_ARITY(fun,naryp,0,arity);
@@ -574,7 +571,7 @@ P CALL0 (P fun) {
       PUSH(Ynil);
     PUSH(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
-  } else if (traits == YLgenG_traits) {
+  } else if (traits == YPobject_traits(YLgenG)) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     CHECK_ARITY(fun,naryp,0,arity);
@@ -596,7 +593,7 @@ P CALL1 (P fun, P a1) {
   if((tag_bits(fun)) == adr_tag)
       traits = YPobject_traits(fun);
 
-  if (traits == YLmetG_traits) {
+  if (traits == YPobject_traits(YLmetG)) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
@@ -612,7 +609,7 @@ P CALL1 (P fun, P a1) {
     }
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
-  } else if (traits == YLgenG_traits) {
+  } else if (traits == YPobject_traits(YLgenG)) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
@@ -636,7 +633,7 @@ P CALL2 (P fun, P a1, P a2) {
   if((tag_bits(fun)) == adr_tag)
       traits = YPobject_traits(fun);
   
-  if (traits == YLmetG_traits) {
+  if (traits == YPobject_traits(YLmetG)) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
@@ -658,7 +655,7 @@ P CALL2 (P fun, P a1, P a2) {
     }
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
-  } else if (traits == YLgenG_traits) {
+  } else if (traits == YPobject_traits(YLgenG)) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
@@ -683,7 +680,7 @@ P CALL3 (P fun, P a1, P a2, P a3) {
   if((tag_bits(fun)) == adr_tag)
       traits = YPobject_traits(fun);
   
-  if (traits == YLmetG_traits) {
+  if (traits == YPobject_traits(YLmetG)) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
@@ -711,7 +708,7 @@ P CALL3 (P fun, P a1, P a2, P a3) {
     }
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
-  } else if (traits == YLgenG_traits) {
+  } else if (traits == YPobject_traits(YLgenG)) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
@@ -738,7 +735,7 @@ P CALLN (P fun, int n, ...) {
   if((tag_bits(fun)) == adr_tag)
       traits = YPobject_traits(fun);
   
-  if (traits == YLmetG_traits) {
+  if (traits == YPobject_traits(YLmetG)) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
@@ -763,7 +760,7 @@ P CALLN (P fun, int n, ...) {
     va_end(ap);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
-  } else if (traits == YLgenG_traits) {
+  } else if (traits == YPobject_traits(YLgenG)) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
@@ -855,7 +852,7 @@ P YPPapply (P fun, P next_mets, P args) {
   if((tag_bits(fun)) == adr_tag)
       traits = YPobject_traits(fun);
   
-  if (traits == YLmetG_traits) {
+  if (traits == YPobject_traits(YLmetG)) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
@@ -880,7 +877,7 @@ P YPPapply (P fun, P next_mets, P args) {
     } 
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, next_mets);
-  } else if (traits == YLgenG_traits) {
+  } else if (traits == YPobject_traits(YLgenG)) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     CHECK_ARITY(fun,naryp,n,arity);
@@ -1448,8 +1445,11 @@ extern P Ykeyboard_interrupt;
 void setup_keyboard_interrupts (void);
 
 void keyboard_interrupt (int value) {
+  sigset_t set;
+  sigaddset(&set, SIGINT);
+  sigprocmask(SIG_UNBLOCK, &set, NULL);
+
   CALL0(Ykeyboard_interrupt);
-  setup_keyboard_interrupts();
 }
 
 void setup_keyboard_interrupts (void) {
