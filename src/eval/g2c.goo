@@ -11,14 +11,14 @@
 ;;;; All mentions of %= have been excised, %d seems relatively harmless and
 ;;;; remains at the moment.
 
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
-(use runtime/runtime)
+(use goo/runtime)
 (use goo/io/write)
 (use compiler/ast)
 (use compiler/top)
 (use compiler/ast-linearize)
-(use goo/collections/strings)
+(use goo/collections/string)
 (use goo/system)
 (use goo/types)
 (use goo/math)
@@ -736,7 +736,8 @@
     (with-statement (d code-out)
       (binding->c binding code-out)
       (puts code-out " = ") (gen-ref init code-out)))
-  (do2 (rcurry funinit-to-c f d code-out) (locals-bindings e) (locals-functions e))
+  (do2 (rcurry funinit-to-c f d code-out)
+       (locals-bindings e) (locals-functions e))
   (to-c (locals-body e) f d code-out)
   (with-used-expression (e d code-out) (gen-ref (locals-body e) code-out)))
 

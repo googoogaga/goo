@@ -1,5 +1,5 @@
 (use goo)
-(use runtime/boot)
+(use goo/boot)
 (use music/midi)
 (use music/win32-midi)
 (use goo/threads)

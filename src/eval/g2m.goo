@@ -1,6 +1,6 @@
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
-(use runtime/runtime)
+(use goo/runtime)
 (use goo/io/write)
 (use compiler/syntax)
 (use compiler/ast)

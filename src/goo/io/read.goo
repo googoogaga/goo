@@ -12,9 +12,9 @@
 ;;     (define (make-immutable! x) x)
 ;;   signal (only for use by reading-error; easily excised)
 
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
-(use runtime/runtime)
+(use goo/runtime)
 (use goo/types)
 (use goo/math)
 (use goo/io/port)

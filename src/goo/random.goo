@@ -2,7 +2,7 @@
 ;;;; A 29-bit parallel LFSR seeded by simple LCG, based on Sedgewick.
 
 (use goo)
-(use runtime/boot)
+(use goo/boot)
 (use time/timer)
 
 (df default-random-seed (=> <int>)

@@ -1,5 +1,5 @@
 (use goo)
-(use runtime/boot)
+(use goo/boot)
 (use time/event)
 (use goo/threads)
 

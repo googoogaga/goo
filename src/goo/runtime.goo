@@ -1,6 +1,6 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
 (use goo/math)
 (use goo/types)

@@ -1,5 +1,5 @@
 (use goo)
-(use runtime/runtime)
+(use goo/runtime)
 (use compiler/ast)
 
 (dv <arg-seq> <lst>)

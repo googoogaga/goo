@@ -1,4 +1,4 @@
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
 
 ;;; COLLECTION
@@ -6,11 +6,13 @@
 (use/export goo/collections/assoc)
 (use/export goo/collections/buffer)
 (use/export goo/collections/collection)
+(use/export goo/collections/collectionx)
 (use/export goo/collections/flat)
 (use/export goo/collections/list)
 (use/export goo/collections/map)
 (use/export goo/collections/range)
 (use/export goo/collections/sequence)
+(use/export goo/collections/sequencex)
 (use/export goo/collections/step)
 (use/export goo/collections/string)
 (use/export goo/collections/table)

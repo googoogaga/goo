@@ -1,9 +1,9 @@
 ;;; Copyright (c) 2001 Jonathan Bachrach
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
-(use runtime/runtime)
+(use goo/runtime)
 (use compiler/ast)
 (use goo/types)
 (use goo/math)
@@ -161,7 +161,7 @@
   #f)
 
 (dm unconstrained-type? (b|<module-binding> => <log>)
-  (and (== (binding-module-name b) 'runtime/boot) (== (binding-name b) '<any>)))
+  (and (== (binding-module-name b) 'goo/boot) (== (binding-name b) '<any>)))
 
 (dm unconstrained-type? (o|<module-binding-reference> => <log>)
   (unconstrained-type? (reference-binding o)))
@@ -171,7 +171,7 @@
   (if (isa? (application-function o) <local-reference>)
       (let ((met (binding-value (reference-binding (application-function o)))))
 	(if (and (isa? met <ast-function>)
-		 (all? (compose unconstrained-type? binding-type)
+		 (all? (fun (x) (unconstrained-type? (binding-type x)))
 		       (function-bindings met))
 		 (unconstrained-type? (function-value met))
 		 (not (function-nary? met))

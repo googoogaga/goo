@@ -1,0 +1,76 @@
+(use goo/boot)
+(use goo/macros)
+(use goo/math)
+(use goo/types)
+(use goo/collections/collection)
+(use goo/collections/collectionx)
+(use goo/collections/sequence)
+
+(exported
+ ;; returns destructively reversed sequence.
+ (dg rev! (x|<seq> => <seq>))
+ ;; returns destructively concatenated sequences.
+ (dg cat! (x|<seq> more|... => <seq>))
+
+ ;; replaces subsequence in range between from and below of dst with
+ ;; contents of src.
+ (dg sub-setter (dst|<seq> src|<seq> from|<int> below|<int>))
+
+ ;; inserts e into x below index before
+ (dg ins! (x|<seq> e|<any> before|<int> => <seq>))
+
+ (dg alter (dst|<seq> src|<seq> from|<int> below|<int> => <seq>)))
+
+(dm cat! (x|<seq> more|... => <seq>)
+  (app cat x more))
+
+(dm ins! (x|<seq> v|<any> before|<int> => <seq>)
+  (ins x v before))
+
+(dm into (dst|<seq> src|<seq> => <seq>)
+  (rep in ((ed (enum dst)) (es (enum src)))
+    (if (or (fin? es) (fin? ed))
+        dst
+        (seq (set (now ed) (now es))
+             (in (nxt ed) (nxt es))))))
+
+(dm sub-setter (src|<seq> dst|<seq> from|<int> below|<int> => <seq>)
+  (def dst-len|<int> (len dst))
+  (def src-len|<int> (len src))
+  (def del-len|<int> (- below from))
+  (if (= del-len src-len);;  Can modify in place?
+      (rep find ((d (enum dst)) (i 0))
+        (if (= i from)
+            (rep in ((d d) (s (enum src)))
+              (if (fin? s)
+                  dst
+                  (seq (set (now d) (now s)) (in (nxt d) (nxt s)))))
+            (find (nxt d) (+ i 1))))
+      ;; Don't know if dst is stretchy so we have to create a new one
+      (let ((new-len (+ (- dst-len del-len) src-len))
+            (ndst    (fab (object-class dst) new-len)))
+        (rep copy ((nd (enum ndst)) (d (enum dst)) (i 0))
+          (if (= i from)
+              (rep insert ((nd nd) (s (enum src)))
+                (if (fin? s)
+                    (rep skip ((d d) (i from))
+                      (if (= i below)
+                          (rep onto ((nd nd) (d d) (i below))
+                            (if (= i dst-len)
+                                ndst
+                                (seq (set (now nd) (now d))
+                                     (onto (nxt nd) (nxt d) (+ i 1)))))
+                          (skip (nxt d) (+ i 1))))
+                    (seq (set (now nd) (now s))
+                         (insert (nxt nd) (nxt s)))))
+              (seq (set (now nd) (now d))
+                   (copy (nxt nd) (nxt d) (+ i 1))))))))
+
+;; TODO: DEPRECATED
+(dm alter (dst|<seq> src|<seq> from|<int> below|<int> => <seq>)
+  (rep in ((d (enum dst)) (s (enum src)))
+    (if (or (fin? d) (fin? s))
+        dst
+        (seq (set (now d)  (now s)) (in (nxt d) (nxt s))))))
+
+

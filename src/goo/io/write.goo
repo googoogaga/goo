@@ -2,13 +2,13 @@
 ;;  See file COPYING.
 ;;  Copyright (c) 2001 Jonathan Bachrach
 
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
 (use goo/types)
 (use goo/math)
 (use goo/io/port)
 (use goo/collections)
-(use runtime/runtime)
+(use goo/runtime)
 (use goo/io/read)
 
 (ddv *max-print-depth*  4)
@@ -302,6 +302,17 @@
     (app format port message arguments)
     (port-contents port)))
 
+(df say (port|<out-port> args|...)
+  ;; (puts port (fold cat "" (map to-str args)))
+  ;; (for ((arg args))
+  ;;   (puts port (to-str arg)))
+  ;; TODO: MOVE UPWARD WHEN COMPILER SMARTER
+  (def lim (len args))
+  (rep loop ((i 0))
+    (unless (== i lim)
+      (puts port (to-str (low-elt args i)))
+      (loop (+ i 1)))))
+
 ;; (set *debug-tables?* #t)
 
 (export
@@ -313,4 +324,5 @@
   write-to-string
   recurring-write
   *max-print-length*
-  *max-print-depth*)
+  *max-print-depth*
+  say)

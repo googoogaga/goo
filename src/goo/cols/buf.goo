@@ -1,9 +1,11 @@
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
 (use goo/math)
 (use goo/types)
 (use goo/collections/collection)
+(use goo/collections/collectionx)
 (use goo/collections/sequence)
+(use goo/collections/sequencex)
 (use goo/collections/list)
 (use goo/collections/flat)
 (use goo/collections/vector)
@@ -12,7 +14,7 @@
 
 ;;;;!! Interface
 (exported
- (dc <buf> (<flat>))
+ (dc <buf> (<flat> <seq!>))
  
  (dg buf (elts|... => <buf>))
  ;; pushes element onto end of stretchy vector
@@ -73,14 +75,10 @@
   x)
 
 
-;;;; Misc stuff
-
 ;; TODO: QUESTIONABLE SYNTAX
 (dm to-str (x|<buf> => <str>) 
   (cat "#[" (vals-to-str x) "]"))
 
-
-;;;; Undocumented
 
 (dm add! (c|<buf> x => <buf>)
   (set (low-elt c (len c)) x)

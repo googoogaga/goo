@@ -1,4 +1,4 @@
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
 (use goo/types)
 (use goo/collections/collection)
@@ -11,17 +11,14 @@
 (exported
  ;; Defined in boot
  <vec>
- 
- (df vec (objects|...))
-
+ (df vec (args|...))
 )
 
 ;;;;!! Implementation
 
 (dm as ((_ (t= <vec>)) x|<vec> => <vec>) x)
 
-(df vec (objects|...)
-  (as <vec> objects))
+(df vec (objects|...) (as <vec> objects))
 
 ;;;; Collection protocol
 (dm len (x|<vec> => <int>)

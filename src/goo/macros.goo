@@ -1,6 +1,6 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(use runtime/boot)
+(use goo/boot)
 
 ;; (ct (seq (dv fab-setter-name make-setter-name) (dv cat-sym make-sym)))
 
@@ -163,6 +163,50 @@
 (ds (case ,val ,@cases)
   `(case-by ,val == ,@cases))
 
+;; (ct-also 
+;;   (df splice (y|<lst>)
+;;     (map (fun (x) (if (== x '...) `(as <lst> _*) `(lst ,x))) y)))
+;; (ct-also
+;;   (df rest-op? (x => <log>)
+;;     (or (and (isa? x <lst>) (any? rest-op? x)) (== x '...))))
+;; (ct-also
+;;   (df walk-op (vars|<lst> x)
+;;     (cond ((== x '_)
+;;            (def var (cat-sym "_" (len vars)))
+;;            (set (tail vars) (pair var (tail vars)))
+;;            var)
+;;           ((isa? x <lst>)
+;;            (def splice? (any? (fun (y) (== y '...)) x))
+;;            (def y       (map (fun (y) (walk-op vars y)) x))
+;;            (if splice? `(app ,(head y) (cat! ,@(splice (tail y)))) y))
+;;           (#t
+;;            x))))
+
+(ds (op ,f ,@args)
+  (loc ((splice (y|<lst>)
+          (map (fun (x) (if (== x '...) `(as <lst> _*) `(lst ,x))) y))
+        (rest-op? (x => <log>)
+          (or (and (isa? x <lst>) (@any? rest-op? x)) (== x '...)))
+        (walk-op (vars|<lst> x)
+          (cond ((== x '_)
+                 (def var (cat-sym "_" (@len vars)))
+                 (set (tail vars) (pair var (tail vars)))
+                 var)
+                ((isa? x <lst>)
+                 (def splice? (@any? (fun (y) (== y '...)) x))
+                 (def y       (map (fun (y) (walk-op vars y)) x))
+                 (if splice? `(app ,(head y) (cat! ,@(splice (tail y)))) y))
+                (#t
+                 x))))
+    (if (empty? args)
+      (if (== f '_)
+          `(fun (x) x)
+          `(fun (x|...) ,f))
+      (let ((vars  (pair #f '()))
+            (expr  (walk-op vars `(,f ,@args)))
+            (args `(,@(rev! (tail vars)) ,@(if (rest-op? args) '(_*|...) '()))))
+        `(fun ,args ,expr)))))
+
 (ds (match ,exp ,@cases)
   (mif (() cases)
        `(error "Failed to match.")
@@ -245,28 +289,26 @@
             (export ,(head names))
             (need-implementation ,@(tail names)))))
 
+(ds (pub ,@def)
+  (let ((defs (match def
+                ((dp ,name ,@rest)
+                 `(,def (export ,name) (export ,(fab-setter-name name))))
+                ((df ,name ,@rest)
+                 `(,name (export ,name)))
+                ((dv ,name ,@rest)
+                 `(,def (export ,name)))
+                ((dg ,name ,@rest)
+                 `(,def (export ,name)))
+                ((dc ,name ,@rest)
+                 `(,def (export ,name)))
+                ((,name)
+                 (if (isa? name <sym>)
+                     `(,name (export ,name))
+                     '())))))
+    `(seq ,@defs)))
+
 (ds (exported ,@defs)
-  (pair
-   'seq 
-   (collecting ()
-     (do (fun (d)
-       (cond ((isa? d <sym>)
-              (seq (collect d) (collect `(export ,d))))
-             ((mif ((df ,name ,@rest) d) 
-                   (seq (collect name) (collect `(export ,name)))) #f)
-             ((mif ((dg ,name ,@rest) d)
-                   (seq (collect d) (collect `(export ,name)))) #f)
-             ((mif ((dc ,name ,@rest) d)
-                   (seq (collect d) (collect `(export ,name)))) #f)
-             ((mif ((dv ,name ,@rest) d)
-                   (seq (collect d) (collect `(export ,name)))) #f)
-             ((mif ((dp ,name (,@params) ,@default) d)
-                   (seq
-                     (collect d)
-                     (collect `(export ,name))
-                     (collect `(export ,(fab-setter-name name))))) #f)
-             (#t   5)))
-         defs))))
+  `(seq ,@(map (fun (x) (def x (if (isa? x <lst>) x (lst x))) `(pub ,@x)) defs)))
 
 
 ;;;;=======================================================================
@@ -311,6 +353,7 @@
   popf
   opf
   swapf
+  op 
   unless
   when
   or
@@ -325,6 +368,6 @@
   dlet
   def-fun-var
   need-implementation
-  exported
+  pub exported
   without-prop-unbound-errors
   *report-prop-unbound-errors?*)

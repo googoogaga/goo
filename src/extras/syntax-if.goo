@@ -42,7 +42,7 @@
   (def value (ast-eval (sif-value x) env))
   (def bindings (sif-bindings x))
   (def new-env (env-frame!
-                env (map binding-name bindings) (map (always nul) bindings)))
+                env (map binding-name bindings) (map (op nul) bindings)))
   (blk return
     (mon (fun ((c <condition>) (resume <fun>))
            (when (isa? c <pattern-match-failure>)

@@ -1,11 +1,8 @@
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
 (use goo/types)
 (use goo/math)
 
-;; 3.7 COLLECTIONS
-
-;;;;!! Interface
 (exported
  <col>
  len ;; (dg len (x|<col> => <int>)) ;; in types
@@ -20,12 +17,10 @@
  (dg empty? (x|<col> => <log>))
  (dg empty ((x (t< <col>)) => <col>))
  (dg add (x|<col> y|<any> => <col>))
- (dg add! (c|<col> x => <col>))
  (dg dup (x|<col> => <col>))
  (dg fab ((t (t< <col>)) s|<int> => <col>))
  (dg fabs ((x (t< <col>)) elts|... => <col>))
  (dg fill (x|<col> val|<any> => <col>))
- (dg into (x|<col> y|<col> => <col>))
  any? ;; (dg any? (f|<fun> x|<col> => <log>)) ;; in types
  (dg all? (f|<fun> x|<col> => <log>))
  (dg fold (combine|<fun> init|<any> x|<col> => <col>))
@@ -112,16 +107,6 @@
   (def res (fab <tab> (len keys)))
   (do (fun (k) (set (elt res k) (elt x k))) keys)
   (as-copy x res))
-
-(dm add! (c|<col> x => <col>)
-  (add c x))
-
-(dm into (dst|<col> src|<col> => <col>)
-  (rep in ((ss (enum src)))
-    (if (fin? ss)
-        dst
-        (seq (set (elt dst (now ss)) (now ss))
-             (in (nxt ss))))))
 
 (dm any? (test|<fun> c|<col> => <log>)
   (rep fnd ((e (enum c)))
@@ -254,5 +239,5 @@
   (if (== val $elt-default) (range-error) val))
 
 ;; get this from list.goo
-(need-implementation add <tab>)
+(need-implementation add <tab> into)
 

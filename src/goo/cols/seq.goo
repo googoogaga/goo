@@ -1,10 +1,8 @@
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
 (use goo/math)
 (use goo/types)
 (use goo/collections/collection)
-
-;; 3.7.3 SEQUENCES
 
 (df @t? ((x <type>) => <union>) 
   (new <union> type-elts (@lst x (new <singleton> type-object #f))))
@@ -35,14 +33,8 @@
  ;; returns reversed sequence.
  (dg rev (x|<seq> => <seq>))
 
- ;; returns destructively reversed sequence.
- (dg rev! (x|<seq> => <seq>))
-
  ;; returns concatenated sequences.
  (dg cat (x|<seq> more|... => <seq>))
-
- ;; returns destructively concatenated sequences.
- (dg cat! (x|<seq> more|... => <seq>))
 
  ;; returns two sequences concatenated.
  (dg cat2 (x|<seq> y|<seq> => <seq>))
@@ -50,13 +42,8 @@
  ;; subsequence of x between from and below.
  (dg sub (x|<seq> from|<int> below|<int> => <seq>))
 
- ;; replaces subsequence in range between from and below of dst with
- ;; contents of src.
- (dg sub-setter (dst|<seq> src|<seq> from|<int> below|<int>))
-
  ;; inserts e into x below index before
  (dg ins (x|<seq> e|<any> before|<int> => <seq>))
- (dg ins! (x|<seq> e|<any> before|<int> => <seq>))
 
  ;; returns new sequence with elements corresponding to those where test
  ;; returns non-false.
@@ -91,13 +78,6 @@
 ;;;; Collection protocol
 
 (dm key-type (x|<col> => <type>) <int>)
-
-(dm into (dst|<seq> src|<seq> => <seq>)
-  (rep in ((ed (enum dst)) (es (enum src)))
-    (if (or (fin? es) (fin? ed))
-        dst
-        (seq (set (now ed) (now es))
-             (in (nxt ed) (nxt es))))))
 
 ;;;; Sequence protocol
 
@@ -135,9 +115,6 @@
 (dm cat (x|<seq> ss|... => <seq>)
   (fold cat2 x ss))
 
-(dm cat! (x|<seq> more|... => <seq>)
-  (app cat x more))
-
 (dm cat2 (x|<seq> y|<seq> => <seq>)
   (rep con-x ((seq '()) (ex (enum x)))
     (if (fin? ex)
@@ -154,37 +131,6 @@
         (con-x (if (if (>= i from) (< i below)) (add seq (now e)) seq)
                (+ i 1) (nxt e)))))
 
-(dm sub-setter (src|<seq> dst|<seq> from|<int> below|<int> => <seq>)
-  (def dst-len|<int> (len dst))
-  (def src-len|<int> (len src))
-  (def del-len|<int> (- below from))
-  (if (= del-len src-len);;  Can modify in place?
-      (rep find ((d (enum dst)) (i 0))
-        (if (= i from)
-            (rep in ((d d) (s (enum src)))
-              (if (fin? s)
-                  dst
-                  (seq (set (now d) (now s)) (in (nxt d) (nxt s)))))
-            (find (nxt d) (+ i 1))))
-      ;; Don't know if dst is stretchy so we have to create a new one
-      (let ((new-len (+ (- dst-len del-len) src-len))
-            (ndst    (fab (object-class dst) new-len)))
-        (rep copy ((nd (enum ndst)) (d (enum dst)) (i 0))
-          (if (= i from)
-              (rep insert ((nd nd) (s (enum src)))
-                (if (fin? s)
-                    (rep skip ((d d) (i from))
-                      (if (= i below)
-                          (rep onto ((nd nd) (d d) (i below))
-                            (if (= i dst-len)
-                                ndst
-                                (seq (set (now nd) (now d))
-                                     (onto (nxt nd) (nxt d) (+ i 1)))))
-                          (skip (nxt d) (+ i 1))))
-                    (seq (set (now nd) (now s))
-                         (insert (nxt nd) (nxt s)))))
-              (seq (set (now nd) (now d))
-                   (copy (nxt nd) (nxt d) (+ i 1))))))))
 
 (dm pick (test|<fun> x|<seq> => <seq>)
   (rep con ((seq '()) (e (enum x)))
@@ -210,9 +156,6 @@
             (copy (pair v r) (+ i 1) e)
             (copy (pair (now e) r) (+ i 1) (nxt e))))))
 
-(dm ins! (x|<seq> v|<any> before|<int> => <seq>)
-  (ins x v before))
-
 ;;;; Undocumented
 
 (dm keys (d|<seq> => <seq>)
@@ -232,14 +175,6 @@
 (dm add-new (c|<seq> x => <seq>)
   (unless (mem? c x) (add c x)) 
   c)
-
-;; TODO: DEPRECATED
-(dm alter (dst|<seq> src|<seq> from|<int> below|<int> => <seq>)
-  (rep in ((d (enum dst)) (s (enum src)))
-    (if (or (fin? d) (fin? s))
-        dst
-        (seq (set (now d)  (now s)) (in (nxt d) (nxt s))))))
-
 
 (dm vals-to-str (s|<seq> => <str>)
   (fold (fun (s e) (cat s (if (empty? s) "" " ") (to-str e))) "" s))

@@ -2,12 +2,12 @@
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 ;;;; with many many changes
 
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
-(use runtime/runtime)
+(use goo/runtime)
 (use goo/io/write)
 (use compiler/syntax)
-(use goo/collections/strings)
+(use goo/collections/string)
 (use goo/system) ; Needed by runtime module loader.
 (use goo/io/write)
 (use goo/types)
@@ -20,9 +20,7 @@
 
 ;;; The name of the module which contains all of goo's primitives,
 ;;; magic bindings, and core code.
-(dv $goo-boot-module-name    'runtime/boot)
-;;; The name of the runtime module, which contains a few items used by p2c.
-(dv $goo-runtime-module-name 'runtime/runtime)
+(dv $goo-boot-module-name    'goo/boot)
 
 ;;; The <dependent> object we're currently compiling.  Any dependencies we
 ;;; encounter will automatically be assumed to be the resposibility of this
@@ -350,7 +348,7 @@
                   (binding-global-box binding)
                   (== x (global-box-value (binding-global-box binding))))
          (return (binding-name binding))))
-     (runtime-environment 'runtime/boot))
+     (runtime-environment 'goo/boot))
     #f))
 
 
@@ -627,19 +625,19 @@
   defn)
 
 (df %%macro (modname name expander env-or-false => <module-binding>)
-  ;; (format out "DEFMACRO ") (writeln out sep-expander)
-  (loc ((expand (x r tail?)
-          (when *macro-tracing?*
-            (format out "MACRO ") (write out x) (format out "\n"))
-          (def exp (app expander (lst x)))
-          (when *macro-tracing?*
-            (format out "  => ") (write out exp) (format out "\n"))
-          exp))
-    ;; (format out "DEFMAC %=\n" name)
-    (def env     (or env-or-false (unchecked-runtime-environment modname)))
-    (def binding (ast-define-binding env name #f 'macro))
-    (set (binding-handler binding) expand)
-    binding))
+    ;; (format out "DEFMACRO ") (writeln out sep-expander)
+    (loc ((expand (x r tail?)
+                  (when *macro-tracing?*
+                    (format out "MACRO ") (write out x) (format out "\n"))
+                  (def exp (app expander (lst x)))
+                  (when *macro-tracing?*
+                    (format out "  => ") (write out exp) (format out "\n"))
+                  exp))
+      ;; (format out "DEFMAC %=\n" name)
+      (def env     (or env-or-false (unchecked-runtime-environment modname)))
+      (def binding (ast-define-binding env name #f 'macro))
+      (set (binding-handler binding) expand)
+      binding))
 
 ;; Process a macro definition.  This is somewhat ugly, because a single
 ;; macro definition may need to appear in as many as three places:
@@ -1579,7 +1577,7 @@
 ;;; Convert a module name to a relative path name.
 ;;;   foo/bar => "foo/bar" or "foo\\bar", etc.
 (df module-name-to-relpath (name|<sym> => <str>)
-  (def namestr (map-str to-lower (sym-name name)))
+  (def namestr (map to-lower (sym-name name)))
   (string-join (string-split namestr #\/) *path-separator*))
 
 ;;; Copy the binding for 'use' into the module, so it can ask for more
@@ -2058,7 +2056,6 @@
   <programs>
   as-lst
   $goo-boot-module-name
-  $goo-runtime-module-name
   <raw-constant>
   <real-reference>
   <reference>

@@ -1,0 +1,19 @@
+(use goo/boot)
+(use goo/macros)
+(use goo/types)
+(use goo/math)
+(use goo/collections/collection)
+
+(pub dg add! (c|<col> x => <col>))
+(pub dg into (x|<col> y|<col> => <col>))
+
+(dm add! (c|<col> x => <col>)
+  (add c x))
+
+(dm into (dst|<col> src|<col> => <col>)
+  (rep in ((ss (enum src)))
+    (if (fin? ss)
+        dst
+        (seq (set (elt dst (now ss)) (now ss))
+             (in (nxt ss))))))
+

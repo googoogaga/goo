@@ -124,8 +124,10 @@
 	(dc <flo> (<num>))
 	(dc <loc> (<any>))
 	(dc <col> (<any>))
+	(dc <col!> (<col>))
 	(dc <seq> (<col>))
-	(dc <lst> (<seq>))
+	(dc <seq!> (<seq> <col!>))
+	(dc <lst> (<seq!>))
 	(dv nil (new <lst>))
 	  (dp head (x|<lst> => <any>) nil)
 	  (dp tail (x|<lst> => <lst>) nil)
@@ -201,8 +203,8 @@
       (rep loop ((res '()) (defs (%boot-defs)))
         (if (empty? defs)
 	    (rev! res)
-	    (loop (mif ((dc ,name (,parent)) (head defs))
-                       (pair (f name parent) res)
+	    (loop (mif ((dc ,name (,@parents)) (head defs))
+                       (pair (f name parents) res)
                        res)
 		  (tail defs))))))
 
@@ -212,8 +214,8 @@
       (rep loop ((res '()) (defs (%boot-defs)))
         (if (empty? defs)
 	    (rev! res)
-	    (loop (mif ((dv ,name (new ,parent)) (head defs))
-		       (pair (f name parent) res)
+	    (loop (mif ((dv ,name (new ,class)) (head defs))
+		       (pair (f name class) res)
                        res)
 		  (tail defs))))))
 
@@ -313,7 +315,7 @@
 
 (dss (%class-shells)
   `(seq ,@(%map-boot-classes
-	    (fun (name parent)
+	    (fun (name parents)
               `(dv ,name
                  (%class nil nil nil nil nil nil nil nil nil nil -1 nil))))))
 
@@ -323,7 +325,7 @@
 
 (dss (%reparent-class-shells)
   `(seq ,@(%map-boot-classes
-	    (fun (name parent)
+	    (fun (name parents)
               `(set (%object-class ,name) <class>)))))
 
 (%reparent-class-shells)
@@ -341,8 +343,8 @@
 
 (dss (%object-shells)
   `(seq ,@(%map-boot-objects 
-	    (fun (name parent)
-              `(dv ,name (%object-of ,parent (%raw 0)))))))
+	    (fun (name class)
+              `(dv ,name (%object-of ,class (%raw 0)))))))
 
 (%object-shells)
 
@@ -481,31 +483,39 @@
 ;;; 7. SETUP HIERARCHY
 ;;;
 
-;; COMPUTE ALL PARENTS FROM DIRECT PARENTS ASSUMING SINGLE INHERITANCE
+;; COMPUTE ALL PARENTS FROM DIRECT PARENTS ASSUMING SIMPLE INHERITANCE
 
-(dl %compute-parents (parent)
+(dl %compute-ancestors (parent)
   (if (%bb (%eq? parent <any>))
       (%pair <any> nil)
-      (%pair parent
-             (%compute-parents (%head (%class-parents parent))))))
+      (%pair parent (%compute-ancestors (%head (%class-parents parent))))))
 
 ;; DEFINE CHILD / PARENT RELATIONSHIP
 
-(dl %define-parent (class direct-parent)
-  (set (%class-prop-len class) 0)    ;; NOW INT'S ARE DEFINED
-  (set (%class-forward class)  #f)   ;; NOW #F    IS  DEFINED
-  (set (%class-parents class) 
-       (%pair direct-parent nil))
-  (set (%class-ancestors class) 
-       (%pair class (%compute-parents direct-parent)))
-  (set (%class-descendents direct-parent)
-       (%pair class (%class-descendents direct-parent))))
+(dv *early-classes* nil)
+
+(dl %define-parents (class parents)
+  (set *early-classes* (%pair class *early-classes*))
+  (set (%class-prop-len class)     0)    ;; NOW INT'S ARE DEFINED
+  (set (%class-forward class)      #f)   ;; NOW #F    IS  DEFINED
+  (set (%class-parents class)      parents)
+  (set (%class-ancestors class)
+       (%pair class (%compute-ancestors (%head parents))))
+  (set (%class-descendents (%head parents))
+       (%pair class (%class-descendents (%head parents)))))
 
 ;; DEFINES SINGLE INHERITANCE HIERARCHY FROM TOP TO BOTTOM
 
+(dss (%pairize ,@elts)
+  (rep pairize ((elts elts))
+    (if (empty? elts)
+        '()
+        `(%pair ,(head elts) ,(pairize (tail elts))))))
+
 (dss (%define-hierarchy)
   `(seq ,@(%map-boot-classes
-	    (fun (name parent) `(%define-parent ,name ,parent)))))
+	    (fun (name parents) 
+              `(%define-parents ,name (%pairize ,@parents))))))
 
 (%define-hierarchy)
 
@@ -834,7 +844,7 @@
 	(@rev! res)
         (let ((h (@head x))) (do (@tail x) (if (f h) (@pair h res) res))))))
 
-(df @do (f|<fun> x|<lst> => <any>) ;; TODO: => (tup)
+(df @do (f|<fun> x|<lst>)
   (rep do ((x x))
     (if (@empty? x)
 	#f
@@ -1430,7 +1440,7 @@
 (df object-class (x) (%class-of x))
 (df @class-ancestors (x) (%class-ancestors x))
 
-(df class-ordered-parents (c|<class> => <parents>)
+(df class-ordered-ancestors (c|<class> => <parents>)
   (loc ((merge-lists ((partial-cpl <lst>) (remaining-lists <lst>))
           ;; the partial-cpl is in reverse order at this point.
 	 (if (@all? @@empty? remaining-lists)
@@ -1483,8 +1493,8 @@
          (set (%class-descendents parent)
               (@add-new (%class-descendents parent) x)))
        (%class-parents x))
-  (set (%class-ancestors x)  (class-ordered-parents x))
-  (set (%class-props x)    (class-ordered-props x))
+  (set (%class-ancestors x) (class-ordered-ancestors x))
+  (set (%class-props x)     (class-ordered-props x))
   x)
 
 (df refab-class (old-class|<class> parents|<parents> => <class>)
@@ -1648,6 +1658,19 @@
   (%update-instance-for-changed-class object))
 
 (dv add-prop %prop)
+
+;; PATCH EARLY CLASSES FOR MULTIPLE-INHERITANCE
+(df patch-early-classes ()
+  (set *early-classes* (@rev! *early-classes*))
+  (@do (fun (x)
+         (set (%class-ancestors x) (class-ordered-ancestors x))
+         (@do (fun (parent)
+                (set (%class-descendents parent)
+                     (@add-new (%class-descendents parent) x)))
+              (%class-parents x)))
+       (@tail *early-classes*)))
+
+(patch-early-classes)
 
 ;; USED FROM COMPILER TO BUILD GEN'S
 ;; TODO: NEED FUN-VAL AS WELL
@@ -1989,6 +2012,7 @@
   <mag>
   <chr>
   <col>
+  <col!>
   <flat>
   <flo>
   <fun>
@@ -2006,6 +2030,7 @@
   <singleton>
   <union>
   <seq>
+  <seq!>
   <sig>
   <prop>
   <str>
@@ -2112,6 +2137,7 @@
   @len
   @all2?
   @oelt
+  @any?
   @olen
   @+
   @<

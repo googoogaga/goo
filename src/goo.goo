@@ -1,8 +1,8 @@
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
 (use goo/types)
 (use goo/math)
-(use runtime/runtime)
+(use goo/runtime)
 (use goo/collections)
 (use goo/accumulator)
 (use goo/io/write)
@@ -19,6 +19,7 @@
  ;; Section 1.2/2.2: Macros.
  DF TRY REP MIF AND OR CASE CASE-BY COND MATCH UNLESS WHEN ASSERT
  FOR WHILE UNTIL COLLECTING COLLECT OPF PUSHF POPF INCF DECF SWAPF
+ OP PUB EXPORTED
  COLLECTED ;; TODO: HYGIENE
  RENEW     ;; TODO: TEMPORARY
 
@@ -60,11 +61,12 @@
  <loc> loc-val loc-val-setter address-of
  
  ;; Section 3.7: Collections.
- <col> len len-setter len/fill-setter 
- elt elt-or elt-setter elts low-elt low-elt-setter
+ <col> len elt elt-or  elts low-elt
  empty? empty elt-default elt-type key-type key-test fab fabs fill into any?
  all? fold fold+ find find-or del zap do do2 map map2 do-keyed
  map-keyed mem? keys items
+ <col!> ;; del! 
+ elt-setter low-elt-setter len-setter len/fill-setter 
  ;; 3.7.1: Iteration protocol.
  <enum> enum fin? nxt now now-setter now-key
  ;; 3.7.2: Maps.
@@ -72,9 +74,11 @@
  <tab> tab-growth-factor tab-growth-threshold tab-shrink-threshold
  tab-test tab-hash $permanent-hash-state tab-gc-state id-hash
  <str-tab> case-insensitive-string-hash case-insensitive-string-equal
+ <set>
  ;; 3.7.3: Sequences.
- <seq> add add! 1st 2nd 3rd last pos find rev rev! cat cat! cat2 sub sub-setter
+ <seq> add 1st 2nd 3rd last pos find rev cat cat2 sub 
  pick reject del-vals del-dups
+ <seq!>  add! rev! cat! sub-setter
  ;; 3.7.4 Tuples.
  <tup> tup
  ;; 3.7.5 (the first one): Lists.
@@ -121,7 +125,7 @@
  ;; TODO - Defined in top, where we can't export it: read-file
 
  ;; Section 3.14: Output.
- write display writeln write-to-string format 
+ write display writeln write-to-string format say
 
  ;; Section 3.15: System.
  app-filename app-args

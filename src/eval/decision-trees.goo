@@ -1,6 +1,6 @@
-(use runtime/boot)
+(use goo/boot)
 (use goo)
-(use runtime/runtime)
+(use goo/runtime)
 (use collections/priority-queue)
 (use compiler/ast)
 (use compiler/top)

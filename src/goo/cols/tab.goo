@@ -1,10 +1,12 @@
-(use runtime/boot)
+(use goo/boot)
 (use goo/macros)
 (use goo/types)
 (use goo/math)
 (use goo/collections/collection)
+(use goo/collections/collectionx)
 (use goo/collections/map)
 (use goo/collections/sequence)
+(use goo/collections/sequencex)
 (use goo/collections/flat)
 (use goo/collections/vector)
 (use goo/collections/list)
@@ -19,7 +21,7 @@
 ;; (dv *twin-primes* (compute-twin-primes *max-prime-for-table*))
 
 (exported
- (dc <tab> (<map>))
+ (dc <tab> (<map> <col!>))
  (dv <set> <tab>)
  ;; Factor to grow by
  (dp tab-growth-factor (x|<tab> => <flo>) 2.0)

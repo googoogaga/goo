@@ -1,5 +1,5 @@
 (use goo)
-(use runtime/boot)
+(use goo/boot)
 
 (dl %grid-open)
 (dl %grid-close)
