@@ -408,3 +408,42 @@ adds:
   <module-binding> with binding-home slot
      superclass of global, runtime and predefined bindings
   potential to shadow bindings in ast-define-binding
+
+=== 0.91 ===
+
+summary:
+
+  bug fixed 0.90 and added return type checking on interpreted functions.
+
+fixes:
+
+  slot creation and p2c problems from 0.90.
+
+adds:
+
+  return type checking on interpreted functions.
+  symbolic information for both arg and fun names
+
+=== 0.92 ===
+
+summary
+
+  more commented boot, redefinition support, proper cloning, and
+  more manageable printing
+
+fixes
+
+  clone inherited values in objects created with isa
+  removed lots of cruft from bootstrap unneeded
+  removed emulator remnants
+  increased size of initial symbol table
+  undef'd p in boot and x z in runtime and name in ast
+  don't dump bindings as debug-name for functions
+  CHECK_ARITY is now an inlined function
+
+additions
+
+  lots more boot comments 
+  *max-print-depth* and *max-print-length*
+  %clone primitive
+  redefinition support for changed prototypes
