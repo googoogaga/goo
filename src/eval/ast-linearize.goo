@@ -242,7 +242,7 @@
 
 (dv <flattened-program> (isa <computed-program>))
   (slot <flattened-program> (program-form (type-or <program> #f)))
-  (slot <flattened-program> program-quotations '())
+  (slot <flattened-program> program-quotations (fab <tab> 40))
   (slot <flattened-program> program-definitions '())
 
 (dv <top-level-form> (isa <computed-program>))
@@ -301,12 +301,15 @@
 	o
 	(let ((qb*   (program-quotations result))
 	      (index (len qb*))
-	      (qb    (isa <module-binding> 
-                       (set binding-kind 'quotation)
-		       (set binding-name index) (set binding-info value))))
-	  (set (program-quotations result) (pair qb qb*))
-	  (set (form-quotations form)      (pair qb (form-quotations form)))
-	  (isa <global-reference> (set reference-binding qb))))))
+              (probe (elt qb* value)))
+          (if (~== probe nul)
+              (isa <global-reference> (set reference-binding probe))
+              (let ((qb (isa <module-binding> 
+                          (set binding-kind 'quotation)
+                          (set binding-name index) (set binding-info value))))
+                (set (elt qb* value) qb)
+                (set (form-quotations form) (pair qb (form-quotations form)))
+                (isa <global-reference> (set reference-binding qb))))))))
 
 (dm extract! 
     ((o <raw-constant>) (form <top-level-form>) (result <flattened-program>))
@@ -317,17 +320,13 @@
      (form <top-level-form>) (result <flattened-program>))
   (let ((new-body  (extract! (function-body o) form result))
 	(name      (function-name o))
-        (signature (function-signature o)))
+        (signature (function-signature o) form result))
     (do (fun (binding)
 	  (set (binding-type binding) 
 	       (extract! (binding-type binding) form result)))
 	(function-bindings o))
     (let ((free-bindings 
-	   (rep extract ((free (function-free o)))
-	     (if (empty? free)
-		 '()
-		  (pair (reference-binding (head free))
-			(extract (tail free))))))
+           (map reference-binding (function-free o)))
 	  (index
 	   (adjoin-definition!
 	    form result name signature new-body free-bindings)))
@@ -335,8 +334,6 @@
 	(set closure-creation-index    index)
 	(set closure-creation-bindings (function-bindings o))
 	(set closure-creation-free     (function-free o))
-	;; TODO: WHY THE FOLLOWING?
-	;; (set closure-creation-body     new-body)
 	))))
 
 (dm extract! 
@@ -352,8 +349,6 @@
     ;; (assert (function-name p) "NO NAME FOR %=" p)
     (set (program-definitions result)
 	 (pair definition (program-definitions result)))
-    (set (form-definitions form)
-	 (pair definition (form-definitions form)))
     (extract! (isa <constant> (set constant-value #f)) form result)))
 
 (dm adjoin-definition! 

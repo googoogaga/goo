@@ -12,6 +12,46 @@
 ;;; o INVENT NAMING CONVENTION FOR COMPILE TIME THINGS SAY &...?
 ;;; 
 
+;; Define the primitives whose code is in prt.c
+(dss (%define-primitives)
+  `(seq ,@(map (fun (name) `(dp ,name)) primitive-names)))
+
+(ct (dv primitive-names
+      '(
+        %eq? %bb
+        %i= %i< %i+ %i- %i* %im %ir %it/ %iv %i^ %i& %i! %i?
+        %i<< %i>> %i<<< %i>>>
+        %fi2f %f= %f< %f+ %f* %f- %f/ %ft %ft/ %ff %fc %flo-bits
+        %c= %c<
+        %current-output-port %current-input-port
+        %open-input-file %open-output-file
+        %close-output-port %close-input-port
+        %write-char %write-string %file-mtime
+        %force-output %char-ready?
+        %read-char %newline %eof-object %eof-object
+        %peek-char %char-ready
+        %object-traits %object-traits-setter
+        %object-values %object-values-setter
+        %raw-alloc %make-object %clone
+        %slot-elt %slot-elt-setter
+        %make-object-values %install-object-values %adjust-object-values-size
+        %elt %elt-setter %%slen %%selt %%selt-setter %%sfab
+        %%vlen %%velt %%velt-setter %%vfab
+        %app-filename %app-args
+        %locative-value %locative-value-setter %invoke-debugger
+        %os-name %os-binding-value %os-binding-value-setter
+        %break %binding-name %fun-reg
+        %trace-on %trace-off
+        %%apply %%mep-apply %next-methods %fapply
+        %do-runtime-bindings %do-stack-frames
+	%unexec
+
+        %grid-open %grid-close %grid-move %grid-read %grid-write %grid-refresh
+        )
+))
+
+(%define-primitives)
+
 ;; Early definitions, so we at least know false != true
 (dv %false (%raw 0)) 
 (dv %true (%raw 1))
@@ -43,7 +83,6 @@
 	(dv <loc> (isa <any>))
 	  (slot <loc> (%loc-val <any>))
 	(dv <col> (isa <any>))
-	(dv <bag> (isa <col>)) ;; TODO: Gets redefined in runtime.proto???
 	(dv <seq> (isa <col>))
 	(dv <lst> (isa <seq>))
 	(dv nil (isa <lst>))
@@ -154,6 +193,7 @@
 
 (dv %check-types?   #f) ;; READY FOR TYPE-CHECKING?
 (dv %symbols-ready? #f) ;; READY TO BUILD SYMBOLS?
+(dv %*start-running-at* nil)
 
 ;;;
 ;;; 2. SETUP LST BASICS
@@ -1459,6 +1499,9 @@
     gen))
 
 
+(df unexec ((name <str>) (fun <fun>))
+  (set %*start-running-at* fun)
+  (%unexec (%su name)))
 
 ;;; 
 ;;; 14. MACROS
@@ -1619,7 +1662,6 @@
 ;; Regular exports.
 (export
   <any>
-  <bag>
   <chr>
   <col>
   <flat>

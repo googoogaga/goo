@@ -1,0 +1,1 @@
+(df test () (set *p2c-app* (p2c-def-app "p2c-test" 'main)))

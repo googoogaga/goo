@@ -168,6 +168,8 @@
     (call-with-output-file
      (add-build-path appname "Makefile")
      (fun (out)
+       (format out "include ..%sMake.inc\n" sep)
+       (format out "C_OBJS_DD = $(patsubst %%,..%s%%,$(C_OBJS))\n" sep)
        (format out "%s%s: ..%sprt.h\n" *c-extension* *obj-extension* sep)
        (format out "\tcc -I.. -c -g -O -o $@ $<\n\n")
        (format out "OBJS = \\\n")
@@ -177,10 +179,10 @@
                   (obj-filename (module-name-to-relpath (module-name mod)))))
         loader)
        (format out "\t%s\n\n" (obj-filename init-name))
-       (format out "%s: ..%sprt.o $(OBJS)\n" exe-name sep)
-       (format out "\tcc -o %s ..%sprt.o $(OBJS) ..%sgc.a\n\n"
+       (format out "%s: $(C_OBJS_DD) $(OBJS)\n" exe-name)
+       (format out "\tcc -o %s $(C_OBJS_DD) $(LIBS) $(OBJS)\n\n"
                exe-name sep sep)
-       (format out "clean:\n\trm -f %s ..%sprt.o $(OBJS)\n"
+       (format out "clean:\n\trm -f %s $(OBJS)\n"
                exe-name sep)))))
 
 
@@ -489,7 +491,7 @@
 
 ;;; QUOTATION EMISSION
 
-(dm generate-quotation-forwards (out (qb* <lst>))
+(dm generate-quotation-forwards (out (qb* <col>))
   (format out "\n/* FORWARD QUOTATIONS: */\n\n")
   (for ((qb qb*))
     (format out "DEFLIT(lit_%s);\n" (binding-name qb))))
@@ -510,11 +512,7 @@
   (format out (mangle-boot-name "nil")))
 
 (dm generate-quotation (out (qb <lst>))
-  (format out "%s(" (mangle-boot-name "%pair"))
-  (generate-quotation out (head qb))
-  (format out ", ")
-  (generate-quotation out (tail qb))
-  (format out ")"))
+  (out-list-builder (fun (x) (generate-quotation out x)) out qb))
 
 (dm generate-quotation (out (x <int>))
   (format out "%s((P)%d)" (mangle-boot-name "%int") x))
@@ -684,7 +682,7 @@
   (with-used-expression (e (+ d 1) out)
     (gen-ref (alternative-alternant e) out))
   (gen-depth d out) (format out "}\n"))
-    
+
 (dm to-c ((e <sequential>) f d out)
   (do (fun (x) (to-c x f d out)) e))
 
@@ -859,10 +857,14 @@
 (dm out-list-builder ((f <fun>) out (elts <lst>))
   (if (empty? elts)
       (format out "%s" (mangle-boot-name "nil"))
-      (seq (format out "%s" (mangle-boot-name "%pair"))
-	   (between-parentheses-comma-separated (out)
-	     (f (head elts))
-	     (out-list-builder f out (tail elts))))))
+      (seq
+        (format out "%s" (mangle-boot-name "%%list"))
+        (between-parentheses (out)
+          (format out "%d" (len elts))
+          (for ((e elts))
+            (write-char out #\,)
+            (f e))))))
+
 
 (dm generate-function-specs (out sig)
   ;; TODO: HACK -- THIS SHOULD BE CORRECTED EARLIER
@@ -918,7 +920,7 @@
     (generate-function-forward out def)))
 
 (dm generate-function-forward (out (defn <primitive-definition>))
-  (format out "extern P %s (" 
+  (format out "P %s (" 
 	  (mangle-module-binding (function-name defn)))
   (for-commas out ((i (from-below 0 (len (function-bindings defn)))))
     (format out "P"))
@@ -1087,12 +1089,13 @@
     (format out "%s {\n" init-decl)
     (format out "  static int need_init = 1;\n")
     (format out "  if (!need_init) return;\n\n")
+    (format out "  need_init = 0;\n")
     (for ((n uses-names))
       (format out "  %s();\n" (module-init-name n)))
     (format out "\n")
     (to-c form #f 1 out)
     (format out "\n")    
-    (format out "  need_init = 0;\n")
+    (format out "  YPprint_cpu_usage(__FILE__);\n");
     (format out "}\n")))
 
 (dm generate-main (out mod)
