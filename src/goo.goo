@@ -72,7 +72,7 @@
  ;; 3.7.4 Tuples.
  <tup> tup
  ;; 3.7.5 (the first one): Lists.
- <lst> <list> head tail lst list pair nil push pop
+ <lst> <list> head head-setter tail tail-setter lst list pair nil push pop
  ;; 3.7.5 (the second one): Optionals.
  <opts>
  ;; 3.7.6 (the first one): Flat sequences.

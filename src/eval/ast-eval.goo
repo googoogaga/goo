@@ -383,6 +383,10 @@
              (%ensure-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar)))
         b)))
 
+(dp %binding-bound? (dlvar)
+  (let ((b (%lookup-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar))))
+    (and b (binding-info b))))
+
 (dp %binding-value (dlvar)
   (let ((binding (%dlvar-binding dlvar)))
     (if (== (binding-kind binding) 'runtime)
@@ -396,5 +400,6 @@
         (set (env-global-binding-value binding) val))))
 
 (export
+  %binding-bound?
   %binding-value
   %binding-value-setter)

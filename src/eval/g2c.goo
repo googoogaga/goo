@@ -118,14 +118,12 @@
 
 (dv *tmp-file-counter* -1)
 
-(dm p2c-exp (exp modnam)
-  (let ((env      (runtime-environment modnam))
-        (mod      (environment-module env))
+(dm p2c-ast (ast env)
+  (let ((mod      (environment-module env))
         (name     (format-to-string 
                    "exp-%d-%d" (process-id) (inc *tmp-file-counter*)))
         (file     (add-tmp-path name))
         (out-file (c-filename file))
-        (ast      (objectify exp env #f))
         (prg      (compute-program ast env)))
     (call-with-output-file
      out-file
@@ -135,13 +133,20 @@
          (generate-c-module out-port ast prg mod))))
     file))
 
+(dm p2c-exp (exp env)
+  (p2c-ast (objectify exp env #f) env))
+
 (dp %compile-load)
 
 (dm compile-load (name)
   (%compile-load (%su name)))
 
-(dm p2c-eval (exp modnam)
-  (let ((name (p2c-exp exp modnam)))
+(dm p2c-eval (exp env)
+  (let ((name (p2c-exp exp env)))
+    (compile-load name)))
+
+(dm p2c-eval ((ast <program>) env)
+  (let ((name (p2c-ast ast env)))
     (compile-load name)))
 
 ;;; Backwards compatibility for users: Build p2c itself.
@@ -1209,4 +1214,5 @@
   p2c-top
   p2c-clean
   p2c-exp
+  p2c-ast
   p2c-eval)

@@ -138,6 +138,8 @@
 
 ;; TODO: DEAL WITH ==
 
+(df as-log (x => <log>) (and x #t))
+
 (dm == (x y => <log>) (%bb (%eq? x y)))
 
 (dm = (x y => <log>) (== x y))
@@ -620,14 +622,14 @@
   (rep fnd ((state (ini-state c)))
     (if (fin-state? c state)
         #f
-        (or (test (now-elt c state))
+        (or (as-log (test (now-elt c state)))
             (fnd (nxt-state c state))))))
   
 (dm any2? ((test <fun>) (x <col>) (y <col>) => <log>)
   (rep fnd ((sx (ini-state x)) (sy (ini-state y)))
     (if (or (fin-state? x sx) (fin-state? y sy))
 	#f
-        (or (test (now-elt x sx) (now-elt y sy)) 
+        (or (as-log (test (now-elt x sx) (now-elt y sy)))
 	    (fnd (nxt-state x sx) (nxt-state y sy))))))
 
 (dm all? ((test <fun>) (c <col>) => <log>)

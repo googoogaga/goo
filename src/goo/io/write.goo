@@ -258,6 +258,10 @@
     ((port <output-port>) (x (t= (eof-object))) (d <int>) (recur <fun>))
   (write-string port "#{End-of-file}"))
 
+(dm recurring-write
+    ((port <output-port>) (x (t= nul)) (d <int>) (recur <fun>))
+  (write-string port "nul"))
+
 (dm format ((port <output-port>) (message <str>) (arguments ...))
   (let ((found-percent?         #f)
 	((argument-index <int>) 0)
@@ -310,5 +314,6 @@
   write
   writeln
   write-to-string
+  recurring-write
   *max-print-length*
   *max-print-depth*)

@@ -21,6 +21,15 @@
 	    (setter (apply g x args) o))))))
   o)
 
+(dm ast-walk (g o (args ...))
+  (for ((slot (object-slots o)))
+    (let ((getter (slot-getter slot)))
+      (unless (== getter binding-value) ;; TODO: HACK
+	(let ((x (getter o)))
+	  (when (isa? x <program>)
+	    (apply g x args))))))
+  o)
+
 ;;; BOXING
 
 (dc <box-read> (<computed-program>))
@@ -485,6 +494,15 @@
   (collect-registers! (function-body o) o #t)
   o)
 
+(dm ast-contains-fun? ((x <ast-method>) => <log>) 
+  #t)
+
+(dm ast-contains-fun? (x => <log>)
+  (lab return
+    (loc ((walk (y) (if (isa? y <ast-method>) (return #t) (ast-walk walk y))))
+      (ast-walk walk x))
+    #f))
+
 (export
   analyze-calls
   analyze-dynamic-extent
@@ -519,4 +537,5 @@
   *register-passive?*
   collect-temporaries!
   collect-registers!
+  ast-contains-fun?
 )
