@@ -67,7 +67,7 @@
 (dm char->ascii ((char <chr>) => <int>)
   (or (elt (head (tail native-chars))
 	   (- (char->integer char) (head native-chars)))
-      (error "not a standard character: %=" char)))
+	(error "not a standard character: %= (%D)" char (char->integer char))))
 
 (dv ascii-whitespaces '(32 10 9 12 13))
 

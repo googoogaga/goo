@@ -876,6 +876,13 @@
 	  (head l)
 	  (assq x (tail l)))))
 
+(dm assqn (x (l <lst>) (pos <int>) => <any>)
+  (if (empty? l)
+      #f
+      (if (== x (elt (head l) pos))
+        (head l)
+        (assqn x (tail l) pos))))
+
 (dm last ((x <lst>) => <any>)
   (rep fnd ((x x) (px x))
     (if (empty? x) (head px) (fnd (tail x) x))))

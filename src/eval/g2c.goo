@@ -1,6 +1,13 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 
+;; It is unlikely that the any format specifier other than %s should ever
+;; be used to output C code. There is no guarantee that the proto formatted
+;; output is equivilent to C formatted output.
+
+;; All mentions of %= have been excised, %d seems relatively harmless and
+;; remains at the moment.
+
 (ds (with-native ,@body) ;; TODO: TEMPORARY
   `(seq ,@body))
 
@@ -144,7 +151,7 @@
   (let ((name (binding-name gb)))
     (format out "%s(%s,\"%s\");\n" 
 	    (if imported? "EXT" "DEF")
-	    (mangle-global-name name) name)))
+	    (mangle-global-name name) (mangle-string-literal (as <str> name)))))
 
 (dm generate-global-binding (out imported? (gb <predefined-binding>)))
 (dm generate-global-binding (out imported? (gb <magic-binding>)))
@@ -208,6 +215,27 @@
     (for ((i (from-to (as <int> #\0) (as <int> #\9))))
       (set (elt table i) (as <chr> i))))
   mangler)
+
+(dv $c-escapes
+  (let ((vec (fill (fab <vec> ascii-limit) #f)))
+    (set (elt vec (as <int> #\tab)) "\\t")
+    (set (elt vec (as <int> #\page)) "\\f")
+    (set (elt vec (as <int> #\return)) "\\r")
+    (set (elt vec (as <int> #\newline)) "\\n")
+    (set (elt vec (as <int> #\")) "\\\"")
+    (set (elt vec (as <int> #\\)) "\\\\")
+    vec))
+
+(dm mangle-string-literal ((str <str>) => <str>)
+  (let ((len (len str)))
+    (rep loop ((out "") (i 0))
+	 (if (= i len)
+	     out
+	     (let ((c (elt str i))
+		   (enc (elt $c-escapes (as <int> c))))
+		 (if (= enc #f)
+		     (loop (cat out (to-str c)) (+ i 1))
+		     (loop (cat out enc) (+ i 1))))))))
 
 (dv ($number-characters <str>) "0123456789")
 
@@ -390,7 +418,7 @@
 	  (mangle-global-name "%flo") (float-to-c-string x)))
 
 (dm generate-quotation (out (x <str>))
-  (format out "%s((P)%=)" (mangle-global-name "%sb") x))
+  (format out "%s((P)\"%s\")" (mangle-global-name "%sb") (mangle-string-literal x)))
 
 (dm generate-quotation (out (x <vec>))
   ;; TODO: TIE TOGETHER
@@ -401,7 +429,7 @@
   (format out ")"))
 
 (dm generate-quotation (out (x <sym>))
-  (format out "%s((P)%=)" (mangle-global-name "%%sym") (as <str> x)))
+  (format out "%s((P)\"%s\")" (mangle-global-name "%%sym") (mangle-string-literal (as <str> x))))
 
 
 ;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
@@ -474,8 +502,8 @@
       (between-parentheses (out)
 	(format out "regsym(&")
 	(binding->c (assignment-binding e) out)
-	(format out ",%=)"
-		(as <str> (binding-name (assignment-binding e))))))))
+	(format out ", \"%s\")"
+		(mangle-string-literal (as <str> (binding-name (assignment-binding e)))))))))
 
 (dm to-c ((e <raw-constant>) f out)
   (format out "(P)%s" (constant-value e)))
@@ -679,7 +707,7 @@
 	;; (format out "fun_%s" (closure-creation-index e))
 	(seq (format out "FUNSHELL")
 	     (between-parentheses (out)
-               (format out "%=," (if (binding-dynamic-extent? b) 1 0))				  
+               (format out "%d," (if (binding-dynamic-extent? b) 1 0))				  
 	       (generate-function-name out f)
 	       (format out ",%s" n))))))
 
@@ -914,7 +942,7 @@
 	  (when (isa? b <binding>)
 	    (format out "  ARG(")
 	    (binding->c b out)
-	    (format out ", %=);\n" offset)
+	    (format out ", %d);\n" offset)
 	    (set offset (+ offset 1))))
 	(rev bindings))
     (let ((temps (function-temporaries definition)))

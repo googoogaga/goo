@@ -86,11 +86,7 @@
 	(write-char port x))))
 
 (dm character-name ((char <chr>) => <any>)
-  (if (= char #\space)
-      'space
-      (if (= char #\newline)
-	  'newline
-	  #f)))
+    (1st (assqn char $char-long-names 1)))
 
 (dm write-string-literal ((port <output-port>) x)
   (write-char port #\")
