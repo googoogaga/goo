@@ -1016,11 +1016,11 @@
 ;;; STEP
 
 (dv <step> (isa <seq>))
-  (slot <step> step-from)
+  (slot <step> step-first)
   (slot <step> step-then)
 
-(dm first-then (from then => <step>)
-  (isa <step> (set step-from from) (set step-then then)))
+(dm first-then (first then => <step>)
+  (isa <step> (set step-first first) (set step-then then)))
 
 (dm ini-state ((c <step>) => <log>)
   #t)
@@ -1032,7 +1032,7 @@
   #f)
 
 (dm now-elt ((c <step>) (state <log>) => _)
-  (if state (step-from c) (step-then c)))
+  (if state (step-first c) (step-then c)))
 
 (dm copy-state ((_ <step>) (state <log>) => <log>)
   state)

@@ -38,6 +38,7 @@
 
 (dv <predefined-binding> (isa <binding>))
   (slot <predefined-binding> binding-description #f)
+  (slot <predefined-binding> binding-value       #f)
 
 (dv <local-binding> (isa <binding>))
   (slot <local-binding> binding-mutable? #f)
@@ -351,7 +352,7 @@
 	       (isa <constant> (set constant-value '()))
 	       (isa <regular-application> ;; <predefined-application>
 		    (set application-function
-			 (objectify-symbol 'pair r))
+			 (objectify-symbol '%pair r))
 		    (set application-arguments
 			 (isa <argument-list>
 			      (set arguments-head
@@ -890,7 +891,7 @@
 (dm pairize ((args <lst>) => <any>)
   (if (empty? args)
       (lst 'quote '())
-      (lst 'pair (head args) (pairize (tail args)))))
+      (lst '%pair (head args) (pairize (tail args)))))
 
 (define-magic-binding isa (x r)
   (let ((slot-inits (sexpr-isa-slot-inits x)))
@@ -1076,8 +1077,8 @@
 (define-primitive %fapply ())
 
 (define-primitive %do-runtime-bindings ())
-(define-primitive %slot-value ())
-(define-primitive %slot-value-setter ())
+
+(define-primitive %pair ())
 
 (dv *boot-bindings* '())
 

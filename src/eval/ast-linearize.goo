@@ -71,9 +71,9 @@
 
 (dm boxify-mutable-bindings (form (bindings <lst>))
   (sequentialize
-    (rep loop ((res (lst form)) (bindings bindings))
+    (rep loop ((res '()) (bindings bindings))
       (if (empty? bindings)
-	  (rev! res)
+	  (rev! (pair form res))
 	  (let ((binding (head bindings)))
 	    (if (binding-mutable? binding)
 		(let ((creator 

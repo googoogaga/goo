@@ -192,7 +192,7 @@
     (apply f args)))
 
 (dm ast-eval ((e <predefined-application>) (env <loc-env>))
-  (let ((f    (env-binding-value env (binding-name (application-binding e))))
+  (let ((f    (binding-value (application-binding e)))
 	(args (ast-eval (application-arguments e) env)))
     (apply f args)))
 
@@ -311,5 +311,7 @@
 (df ast-read-eval (x) (ast-eval-in (objectify x (ct-env)) (rt-env)))
 
 (df init-ast-eval ()
+  (let ((binding (find-binding '%pair (ct-env))))
+    (set (binding-value binding) pair))
   (set *rt-glo-env* (fab-glo-env)))
 

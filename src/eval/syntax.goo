@@ -457,13 +457,13 @@
 (dm sexpr-make-getter (name type => <lst>)
   (sexpr-make-method 
    name (lst (lst '_x type)) 
-   (lst (lst '%slot-value '_x name))))
+   (lst (lst 'slot-value '_x name))))
 
 (dm sexpr-make-setter (name type slot-type => <lst>)
   (sexpr-make-method
     (sexpr-make-setter-name name)
     (lst (lst '_z slot-type) (lst '_x type))
-    (lst (lst '%slot-value-setter '_z '_x name))))
+    (lst (lst 'slot-value-setter '_z '_x name))))
 
 (dm sexpr-make-setter-name (name => <sym>)
   (as <sym> (cat (as <str> name) "-setter")))
