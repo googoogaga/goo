@@ -2,3 +2,31 @@
 
 (df not ((x <any>) => <log>) (%bb (%eq? x #f)))
 
+;;; NEEDED FOR MACRO EXPANSION IN RUNTIME.PROTO
+
+(dm == (x y => <log>) (%bb (%eq? x y)))
+
+(df match-empty-list ((x <lst>) (fail <fun>))
+  (if (== x '())
+      '()
+      (fail "Match Empty Failure of %=" x)))
+
+(df match-unquote ((x <lst>) (fail <fun>))
+  (if (== x '())
+      (fail "Match Failure Empty List on Unquote")
+      (head x)))
+
+(df match-atom ((x <lst>) pat (fail <fun>))
+  (if (== x '())
+      (fail "Match Failure Empty List on %=" pat)
+      (let ((exp (head x)))
+	(if (== exp pat)
+	    (tail x)
+	    (fail "Match Failure of %= on %=" exp pat)))))
+
+(df match-sublist ((x <lst>) (fail <fun>))
+  (let ((x (head x)))
+    (if (isa? x <lst>)
+	x
+        (fail "Match Failure on Sub List on %=" x))))
+

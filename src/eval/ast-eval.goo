@@ -207,6 +207,9 @@
   (let ((value (ast-eval (assignment-form e) env)))
     (set (env-global-binding-value (rt-glo-env) (assignment-binding e)) value)))
 
+(dm ast-eval ((e <ast-macro-definition>) (env <loc-env>))
+  #f) ;; PERFORMED DURING OBJECTIFICATION
+
 (dm ast-eval ((e <runtime-assignment>) (env <loc-env>))
   (let ((value (ast-eval (assignment-form e) env)))
     (set (env-runtime-value (binding-locative (assignment-binding e)))
@@ -312,62 +315,6 @@
   (%with-monitor
    (ast-eval (monitor-handler e) env)
    (ast-eval (monitor-main-thunk e) env)))
-
-(dv <pattern-match-failure> (isa <simple-condition>))
-
-(dm match-error ((message <str>) (args ...))
-  (sig (isa <pattern-match-failure>
-	 (set condition-message message)
-	 (set condition-arguments args))))
-
-(dm ast-eval-match ((match <match-empty-list>) v (e <loc-env>))
-  (unless (== v '())
-    (match-error "Match Empty Failure of %= on %=" v match)))
-
-(dm ast-eval-match ((match <match-list>) v (e <loc-env>))
-  (if (isa? v <lst>)
-      (rep loop ((v v) (elts (match-elements match)))
-	(unless (empty? elts)
-	  (ast-eval-match (head elts) v e)
-	  (loop (tail v) (tail elts))))
-      (match-error "Match Failure of %= on %= Expected List" v match)))
-
-(dm ast-eval-match ((match <match-atom>) v (e <loc-env>))
-  (if (== v '())
-      (match-error "Match Failure Empty List on %=" match)
-      (let ((exp (head v)))
-	(unless (== exp (match-value match))
-	  (match-error "Match Failure of %= on %=" exp match)))))
-
-(dm ast-eval-match ((match <match-unquote>) v (e <loc-env>))
-  (if (== v '())
-      (match-error "Match Failure Empty List on %=" match)
-      (set (env-binding-value e (binding-name (match-binding match))) 
-	   (head v))))
-
-(dm ast-eval-match
-    ((match <match-unquote-splicing>) v (e <loc-env>))
-  (set (env-binding-value e (binding-name (match-binding match))) v))
-
-(dm ast-eval-match
-    ((match <match-sublist>) v (e <loc-env>))
-  (if (and (isa? v <lst>) (not (== v '())))
-      (ast-eval-match (match-element match) (head v) e)
-      (match-error "Match Failure of %= on %= Expected List" v match)))
-
-(dm ast-eval ((x <syntax-if>) (env <loc-env>))
-  (let ((value
-	 (ast-eval (sif-value x) env))
-	(bindings
-	 (sif-bindings x))
-	(new-env  
-	 (env-frame!
-	  env #f (map binding-name bindings) (map (always nul) bindings))))
-    (lab return
-      (try (((condition <pattern-match-failure>) (resume <fun>))
-	       (return (ast-eval (sif-else x) env)))
-	(ast-eval-match (sif-pattern x) value new-env))
-      (ast-eval (sif-then x) new-env))))
 
 ;;; ENVIRONMENT
 

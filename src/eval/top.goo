@@ -96,40 +96,11 @@
 ;; TODO: BROKEN CAUSE ENV DOESN'T MODEL STACK
 ;; TODO: FUNCTION PRINTING IS WAY TOO VERBOSE
 
-;; (dm backtrace ((env <loc-env>))
-;;   (rep loop ((env env) (i 0))
-;;     (unless (== env $nul-loc-env)
-;;       (let ((names    (env-names env))
-;; 	    (values   (env-values env))
-;; 	    (function (env-function env)))
-;; 	(format out "FRAME %=" i)
-;; 	(and function (format out " FUN %=" function))
-;; 	(newline out)
-;; 	(rep inner ((names names) (i 0))
-;; 	  (unless (empty? names)
-;; 	    (format out "  %= %=\n" (head names) (elt values i))
-;; 	    (inner (tail names) (+ i 1)))))
-;;       (loop (env-parent env) (+ i 1)))))
-
-(dm backtrace ()
-  (let ((stack-len (len *stack*)))
-    (rep loop ((i (- stack-len 1)))
-      (unless (< i 0)
-	(let ((env      (elt *stack* i))
-	      (names    (env-names env))
-	      (values   (env-values env))
-	      (function (env-function env)))
-	  (format out "FRAME %=" (- stack-len i))
-	  (and function (format out " FUN %=" function))
-	  (newline out)
-	  (rep inner ((names names) (i 0))
-	    (unless (empty? names)
-	      (format out "  %= %=\n" (head names) (elt values i))
-	      (inner (tail names) (+ i 1)))))
-	(loop (- i 1))))))
-
 (dm do-stack-frames (fun)
   (%do-stack-frames fun))
+
+(dm backtrace ()
+  (do-stack-frames (fun (f (args ...)) (format out "%= %=\n" f args))))
 
 (dv <keyboard-interrupt> (isa <condition>))
 

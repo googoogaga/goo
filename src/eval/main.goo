@@ -1,7 +1,7 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(dv *proto-version* "0.87")
-(dv *proto-date*    "JUN 11, 2001")
+(dv *proto-version* "0.88")
+(dv *proto-date*    "JUN 13, 2001")
 
 (format out ";;; \n")
 (format out ";;; PROTO\n")
@@ -15,8 +15,6 @@
 (format out ";;; Loading Runtime Bindings...\n")
 (init-ast)
 (init-ast-eval)
-(format out ";;; Loading Macros...\n")
-(load (src-filename "macros.proto"))
 (format out ";;; Loading System Patches...\n")
 (load (src-filename "system-patches.proto"))
 (format out ";;; Loading User Patches...\n")

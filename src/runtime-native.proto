@@ -2,6 +2,9 @@
 ;;; NATIVE RUNTIME ONLY
 ;;;
 
+(dv %list list) ;; QUASIQUOTE SUPPORT -- FOR EMULATOR P2C
+(dv %cat  cat)
+
 (dm sym-name ((x <sym>) => <str>) 
   (%sym-nam x))
 
@@ -599,16 +602,19 @@
 
 (dv symbols (fab <str-tab> 2000))
 
-(df booted-fab-sym (name)
+(dp booted-fab-sym-using (name given-sym)
   (let ((sym (elt symbols name)))
     (if (== sym nul)
-	(set (elt symbols name) (%sym name))
+	(set (elt symbols name) (or given-sym (%sym name)))
 	sym)))
+
+(df booted-fab-sym (name)
+  (booted-fab-sym-using name #f))
 
 (df boot-symbols ()
   (rep boot ((syms %symbols))
     (unless (empty? syms)
-      (booted-fab-sym (%sym-nam (head syms)))
+      (let ((sym (head syms))) (booted-fab-sym-using (%sym-nam sym) sym))
       (boot (tail syms)))))
 
 (boot-symbols)

@@ -123,6 +123,8 @@
 
 (dv <ast-primitive-definition> (isa <definition>))
 
+(dv <ast-macro-definition> (isa <definition>))
+
 (dv <ast-function> (isa <program>))
   (slot <ast-function> function-name #f)
   (slot <ast-function> function-bindings)
@@ -211,35 +213,6 @@
 (dv <monitor> (isa <program>))
   (slot <monitor> monitor-handler)
   (slot <monitor> monitor-main-thunk)
-
-(dv <syntax-if> (isa <program>))
-  (slot <syntax-if> sif-pattern)
-  (slot <syntax-if> sif-bindings)
-  (slot <syntax-if> sif-value)
-  (slot <syntax-if> sif-then)
-  (slot <syntax-if> sif-else)
-
-(dv <match> (isa <any>))
-
-(dv <match-structure> (isa <match>))
-
-(dv <match-atom> (isa <match-structure>))
-  (slot <match-structure> match-value)
-
-(dv <match-list> (isa <match-structure>))
-  (slot <match-structure> match-elements)
-
-(dv <match-sublist> (isa <match-structure>))
-  (slot <match-sublist> match-element)
-
-(dv <match-empty-list> (isa <match-structure>))
-
-(dv <match-binding> (isa <match>))
-  (slot <match-binding> match-binding)
-
-(dv <match-unquote> (isa <match-binding>))
-
-(dv <match-unquote-splicing> (isa <match-binding>))
 
 ;;; ENVIRONMENT
 
@@ -478,25 +451,30 @@
 	   (set assignment-form (objectify e r #f)))))
     defn))
 
-(dm objectify-syntax-definition (name e r => <any>)
+(df %%macro (name expander r => <macro-binding>)
+  ;; (format out "DEFMACRO ") (writeln out sep-expander)
+  (loc ((expand (x r tail?)
+	  (when *macro-tracing?*
+	    (format out "MACRO ") (write out x) (format out "\n"))
+	  (let ((exp (apply expander (lst x))))
+	    (when *macro-tracing?*
+	      (format out "  => ") (write out exp) (format out "\n"))
+	    exp)))
+    ;; (format out "DEFMAC %=\n" name)
+    (let ((binding (ast-define-binding r name (fun () (isa <macro-binding>)))))
+      (set (binding-handler binding) expand)
+      binding)))
+
+(dm objectify-syntax-definition (name e r rt? => <any>)
   (let ((sep-expander (sexpr-make-macro-function e))
 	(ast-expander (objectify sep-expander r #f))
-	(expander     (ast-eval ast-expander (rt-env)))) ;; TODO: CT AGREE
-    ;; (format out "DEFMACRO ") (writeln out sep-expander)
-    (loc ((expand (x r tail?)
-	    (when *macro-tracing?*
-	      (format out "MACRO ") (write out x) (format out "\n"))
-	    (let ((exp (apply expander (lst x))))
-	      (when *macro-tracing?*
-		(format out "  => ") (write out exp) (format out "\n"))
-	      exp)))
-      ;; (format out "DEFMAC %=\n" name)
-      (let ((binding 
-	     (ast-define-binding 
-	      r name
-	      (fun () (isa <macro-binding>)))))
-	(set (binding-handler binding) expand)
-	(isa <constant> (set constant-value #f))))))
+	(expander     (ast-eval ast-expander (rt-env))) ;; TODO: CT AGREE
+	(binding      (%%macro name expander r)))
+    (if rt?
+	(isa <ast-macro-definition> 
+	  (set assignment-binding binding)
+	  (set assignment-form    ast-expander))
+	(objectify-quotation #f r))))
 
 (dm objectify-function-definition (name e r => <ast-function-definition>)
   (let ((binding (ast-define-binding r name (fun () (isa <global-binding>))))
@@ -700,59 +678,60 @@
        (set monitor-main-thunk
 	    (objectify (sexpr-make-anonymous-method '() body) r #f))))
 
-(dm objectify-bind-list (pat => <any>)
+(dm expand-bind-list (pat var fail => <any>)
   (error "Expected Pattern List %=\n" pat))
 
-(dm objectify-bind-list ((pat '()) => <any>)
-  (isa <match-empty-list>))
+(dm expand-bind-list ((pat '()) var fail => <lst>)
+  `(match-empty-list ,var ,fail))
 
-(dm objectify-bind-list ((pat <lst>) => <any>)
+(dm expand-bind-list ((pat <lst>) var fail => <lst>)
   (case
     ((sexpr-unquote? pat)
       (error "Unquote Unexpected Here %=\n" pat))
     ((sexpr-unquote-splicing? pat)
      (error "Unquote Splicing Unexpected Here %=\n" pat))
     (#t
-     (objectify-bind-list* pat))))
+     (expand-bind-list* pat var fail))))
 
-(dm objectify-bind-list* ((pat <lst>) => <any>)
-  (let ((matchers (map objectify-bind-element pat)))
-    (isa <match-list> (set match-elements matchers))))
+(dm expand-bind-list* ((pat '()) var fail => <any>)
+  `(match-empty-list ,var ,fail))
 
-(dm objectify-bind-element (pat => <any>)
-  (isa <match-atom> (set match-value pat)))
+(dm expand-bind-list* ((pat <lst>) var fail => <any>)
+  `(let ((,var ,(expand-bind-element (head pat) var fail)))
+     ,(expand-bind-list* (tail pat) var fail)))
 
-(dm objectify-bind-element ((pat <lst>) => <any>)
+(dm expand-bind-element (pat var fail => <any>)
+  `(match-atom ,var ',pat ,fail))
+
+(dm expand-bind-element ((pat <lst>) var fail => <any>)
   (case
     ((sexpr-unquote? pat)
-     (objectify-bind-unquote pat))
+     `(seq (set ,(2nd pat) (match-unquote ,var ,fail)) (tail ,var)))
     ((sexpr-unquote-splicing? pat)
-     (objectify-bind-unquote-splicing pat))
+     `(seq (set ,(2nd pat) ,var) '()))
     (#t
-     (let ((matcher (objectify-bind-list pat)))
-       (isa <match-sublist> (set match-element matcher))))))
+     `(seq (let ((,var (match-sublist ,var ,fail)))
+	     ,(expand-bind-list pat var fail))
+	   (tail ,var)))))
 
-(dm objectify-bind-unquote ((pat <lst>) => <any>)
-  (let ((binding (isa <local-binding> (set binding-name (2nd pat)))))
-    (isa <match-unquote> (set match-binding binding))))
+(dm expand-pattern ((pat <lst>) var fail => <any>)
+  (expand-bind-list pat var fail))
 
-(dm objectify-bind-unquote-splicing ((pat <lst>) => <any>)
-  (let ((binding (isa <local-binding> (set binding-name (2nd pat)))))
-    (isa <match-unquote-splicing> (set match-binding binding))))
-
-(dm objectify-pattern (pattern => <match>)
-  (objectify-bind-list pattern))
-
-(dm objectify-syntax-if 
-    (pattern bindings value then else r => <syntax-if>)
-  (let ((bindings
-	 (map (fun (n) (isa <local-binding> (set binding-name n))) bindings)))
-    (isa <syntax-if>
-	 (set sif-pattern  (objectify-pattern pattern))
-	 (set sif-bindings bindings)
-	 (set sif-value    (objectify value r #f))
-	 (set sif-then     (objectify then (r-extend* r bindings) #f))
-	 (set sif-else     (objectify else r #f)))))
+(dm expand-syntax-if ((x <lst>) => <lst>)
+  (let ((pat   (sexpr-syntax-if-pattern x))
+	(vars  (sexpr-bind-pattern-variables pat))
+	(value (sexpr-syntax-if-value x))
+	(then  (sexpr-syntax-if-then x))
+	(else  (sexpr-syntax-if-else x))
+	(var   (gensym))
+	(fail  (gensym))
+	(epat  (expand-pattern pat var fail)))
+    `(lab return
+       (loc ((,fail ((msg <str>) (args ...)) (return ,else)))
+	 (let ((,var ,value))
+	   (let ,(map (fun (x) `(,x #f)) vars)
+	     ,epat
+	     ,then))))))
 
 ;;; AST ENVIRONMENT
 
@@ -842,9 +821,9 @@
 	(sexpr-name   (make-sym "$sexpr-" name "-tag")))
     `(seq (dv ,special-name
 	       (isa <magic-binding>
-		    (set binding-name ,sexpr-name)
+		    (set binding-name    ,sexpr-name)
 		    (set binding-handler (fun (,@params) ,@body))
-		    (set binding-free? #f)))
+		    (set binding-free?   #f)))
 	  (register-magic-binding ',name ,special-name))))
 
 (define-magic-binding if (x r tail?)
@@ -872,7 +851,13 @@
 
 (define-magic-binding define-syntax (x r tail?)
   (objectify-syntax-definition
-    (sexpr-syntax-definition-variable x) (sexpr-syntax-definition-value x) r))
+    (sexpr-syntax-definition-variable x) (sexpr-syntax-definition-value x) r #t))
+
+(dv $sexpr-define-static-syntax-tag 'dss)
+
+(define-magic-binding define-static-syntax (x r tail?)
+  (objectify-syntax-definition
+    (sexpr-syntax-definition-variable x) (sexpr-syntax-definition-value x) r #f))
 
 (define-magic-binding define-method (x r tail?)
   (objectify-method-definition
@@ -993,13 +978,7 @@
   ;; x  => binds x to an sexpr
   ;; @x => binds x to a series of sexprs
   ;; TODO: make this deals with multiple bindings
-  (let ((pat (sexpr-syntax-if-pattern x)))
-    (objectify-syntax-if
-     pat (sexpr-bind-pattern-variables pat)
-     (sexpr-syntax-if-value x)
-     (sexpr-syntax-if-then x)
-     (sexpr-syntax-if-else x)
-     r)))
+  (objectify (expand-syntax-if x) r tail?))
 
 (dv *primitives* '())
 
@@ -1162,7 +1141,9 @@
 (df init-ast ()
   (let (((tup sys-env  usr-env) (init-static-global-environment)))
     (set *static-predefined-global-environment* sys-env)
-    (set *static-global-environment*            usr-env)))
+    (set *static-global-environment*            usr-env)
+    (do2 (rcurry %%macro sys-env) *boot-macro-names* *boot-macro-expanders*)
+    (set *macros-ok?* #t)))
 
 (df ct-env ()      *static-global-environment*)
 

@@ -11,27 +11,27 @@
 
 ;; TODO: GENERALIZED VERSION
 
-(ds (inc ,x ,@amount)
+(dss (inc ,x ,@amount)
   (let ((amount (mif ((,amount) amount) amount 1)))
     `(set ,x (+ ,x ,amount))))
 
-(ds (dec ,x ,@amount)
+(dss (dec ,x ,@amount)
   (let ((amount (mif ((,amount) amount) amount 1)))
     `(set ,x (- ,x ,amount))))
 
-(ds (unless ,test ,@body)
+(dss (unless ,test ,@body)
   `(if (not ,test) (seq ,@body)))
 
-(ds (when ,test ,@body)
+(dss (when ,test ,@body)
   `(if ,test (seq ,@body)))
 
-(ds (or ,x ,@rest)
+(dss (or ,x ,@rest)
   (mif (() rest)
        x
        `(let ((tmp ,x))
           (if tmp tmp (or ,@rest)))))
 
-(ds (and ,x ,@rest)
+(dss (and ,x ,@rest)
   (mif (() rest)
        x
        `(let ((tmp ,x))
@@ -134,7 +134,7 @@
     (set (%object-traits proto) (%%traits proto))
     proto))
 
-(ds (%object-shells)
+(dss (%object-shells)
   `(seq ,@(%map-boot-protos 
 	    (fun (name parent) `(dv ,name (%object-shell))))))
 
@@ -159,7 +159,7 @@
 (ct (df %fab-sym3 (x y z) 
       (as <sym> (cat2 (to-str x) (cat2 (to-str y) (to-str z))))))
 
-(ds (%define-structure-accessors ,@slot-names)
+(dss (%define-structure-accessors ,@slot-names)
   (loc ((getter (name offset) 
 	  `(dp ,(%fab-sym2 "%" name) (x)
 	     (%slot-elt x (%raw ,offset))))
@@ -173,7 +173,7 @@
   	    (loop (pair (getter name i) (pair (setter name i) res))
 		  (+ i 1) (tail names)))))))
 
-(ds (%define-structure ,prefix ,proto-base-name ,@slot-names)
+(dss (%define-structure ,prefix ,proto-base-name ,@slot-names)
   (loc ((constructor (name inits)
 	  (let ((proto-name (%fab-sym3 "<" name ">")))
 	    `(dp ,(%fab-sym2 prefix name) (,@slot-names) 
@@ -247,7 +247,7 @@
     (set (%object-traits owner)
 	 (%traits owner direct-parents nil parents nil))))
 
-(ds (%define-hierarchy)
+(dss (%define-hierarchy)
   `(seq ,@(%map-boot-protos 
 	    (fun (name parent) `(%define-parent ,name ,parent)))))
 
@@ -296,7 +296,7 @@
 
 (dp %untag (x) (%i>> x $tag-len))
 
-(ds ($adr-tag) `(%raw 0))
+(dss ($adr-tag) `(%raw 0))
 
 (dp %indirect-object? (x) (%i= (%tag-bits x) ($adr-tag)))
 
@@ -308,7 +308,7 @@
 
 (df object-traits (x) (%traits-of x))
 
-(ds (%define-tagged-structure ,name ,code ,tag)
+(dss (%define-tagged-structure ,name ,code ,tag)
   (let ((proto-name (%fab-sym3 "<" name ">"))
 	(fab-name   (%fab-sym2 "%" name))
 	(tag-name   (%fab-sym3 "%" code "b"))
@@ -349,7 +349,7 @@
 ;;; 5. BOXED OBJECTS
 ;;; 
 
-(ds (%define-boxed-structure ,name ,code)
+(dss (%define-boxed-structure ,name ,code)
   (let ((proto-name (%fab-sym3 "<" name ">"))
 	(dat-name   (%fab-sym2 name "-dat"))
 	(fab-name   (%fab-sym2 "%" name))
@@ -418,7 +418,7 @@
 (df %add-met (gen met)
   (set (%gen-mets gen) (%pair met (%gen-mets gen))))
 
-(ds (%define-accessor ,name (,@sig) ,@body)
+(dss (%define-accessor ,name (,@sig) ,@body)
   (let ((params  (sexpr-signature-parameters sig))
 	(gen-sig (&pairize (map (always '<any>) params)))
 	(arity   (len params)))
@@ -428,11 +428,11 @@
 	    (%register-early-generic ,name)
 	    accessor))))
 
-(ds (%define-getter ,name ,owner ,type)
+(dss (%define-getter ,name ,owner ,type)
   `(%define-accessor ,name ((x ,owner))
       (%slot-elt x (%slot-offset ,owner ,name))))
 
-(ds (%define-setter ,name ,owner ,type)
+(dss (%define-setter ,name ,owner ,type)
   `(%define-accessor ,(%fab-sym2 name "-setter") ((z ,type) (x ,owner))
      (set (%slot-elt x (%slot-offset ,owner ,name)) z)))
 
@@ -445,7 +445,7 @@
     (set (%traits-direct-slots traits)
 	 (%pair slot (%traits-direct-slots traits)))))
 
-(ds (%define-slots)
+(dss (%define-slots)
   `(seq ,@(%map-boot-slots 
 	    (fun (owner name type init) 
 	      `(let ((getter (%define-getter ,name ,owner ,type))
@@ -477,7 +477,7 @@
     (%adjust-object-values-size owner (%%len (%traits-slots traits)) owner)
     owner))
 
-(ds (%finalize-slots)
+(dss (%finalize-slots)
   `(seq ,@(%map-boot-protos (fun (name parent) `(%finalize-slots! ,name)))))
 
 (%finalize-slots)
@@ -497,7 +497,7 @@
 ;;; 9. REPEATED OBJECTS
 ;;; 
 
-(ds (%define-repeated-structure ,name ,elt ,code ,init)
+(dss (%define-repeated-structure ,name ,elt ,code ,init)
   (let ((proto-name (%fab-sym3 "<" name ">"))
 	(nul        (%fab-sym3 "%" code "nul"))
 	(base-dat   (%fab-sym2 name "-dat"))
@@ -1221,3 +1221,18 @@
 (dv add-slot %slot)
 
 (set %check-types? #t)
+
+;;; 
+;;; 14. MACROS
+;;; 
+
+(dv *boot-macro-names*     '())
+(dv *boot-macro-expanders* '())
+(dv *macros-ok?*           #f)
+
+(dp %macro (name expander)
+  (if *macros-ok?*
+      (%%macro name expander) ;; DEFINED IN AST.PROTO
+      (seq (set *boot-macro-names*     (@pair name     *boot-macro-names*))
+	   (set *boot-macro-expanders* (@pair expander *boot-macro-expanders*)))))
+
