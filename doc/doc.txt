@@ -621,15 +621,15 @@ Generic     to-str ((x <any>) => <str>)
 
 3.7.6.3 STRETCHY VECTORS
 
-Prototype   <svec> (isa <flat>)
+Prototype   <buf> (isa <flat>)
 
-Generic     svec ((elts ...) => <sec>)
+Generic     buf ((elts ...) => <sec>)
 
-Generic     push ((c <svec>) (x <any>) => <svec>)
+Generic     push ((c <buf>) (x <any>) => <buf>)
 
   pushes element onto end of stretchy vector
 
-Generic     pop ((c <svec>) => <any>)
+Generic     pop ((c <buf>) => <any>)
 
   pops element from end of stretchy vector
 
@@ -956,6 +956,12 @@ variable setting depends on the shell you're using.
 4.1 STARTING
 
 Typing proto at your shell will start up a proto read-eval-print loop.
+
+4.1.1 PATCHES FILE
+
+During start up, Proto will load a patch file from
+
+  ${PROTO_ROOT}\SRC\patches.proto
 
 4.2 STOPPING
 
