@@ -7,6 +7,8 @@
 (use write)
 (use syntax)
 
+;;; TODO: MOVE TYPE OUT OF SIGNATURE
+
 ;;; The name of the module which contains all of proto's primitives,
 ;;; magic bindings, and core code.
 (dv $proto-boot-module-name 'boot)
@@ -19,8 +21,14 @@
 ;;; programs
 
 (dv <program> (isa <any>))
-  (slot <program> (program-register <int>))
   (slot <program> program-type)
+
+(dm program-register ((x <program>)) #f) ;; TODO: REMOVE
+
+(dv <computed-program> (isa <program>))
+  (slot <computed-program> (program-register <any>) #f) ;; TODO: FALSE-OR INT
+
+(dv <passive-program> (isa <program>))
 
 ;;; bindings are not programs! they represent bindings.
 
@@ -80,12 +88,12 @@
 
 ;;; compile-time
 
-(dv <compile-time> (isa <program>))
+(dv <compile-time> (isa <computed-program>))
   (slot <compile-time> compile-time-program)
 
 ;;; references are programs.
 
-(dv <reference> (isa <program>))
+(dv <reference> (isa <passive-program>))
 
 ;;; special category of bindings
 
@@ -115,10 +123,10 @@
 
 (dv <predefined-reference> (isa <real-reference>))
 
-(dv <bound?> (isa <program>))
+(dv <bound?> (isa <computed-program>))
   (slot <bound?> bound?-reference)
 
-(dv <assignment> (isa <program>))
+(dv <assignment> (isa <computed-program>))
   (slot <assignment> assignment-form)
 
 (dv <local-assignment> (isa <assignment>))
@@ -143,12 +151,27 @@
 
 (dv <ast-macro-definition> (isa <definition>))
 
-(dv <ast-function> (isa <program>))
+(dv <ast-signature> (isa <computed-program>))
+  (slot <ast-signature> signature-names '())
+  (slot <ast-signature> signature-specs '())
+  (slot <ast-signature> signature-nary? #f)
+  (slot <ast-signature> signature-value #f)
+
+(dv signature-bindings signature-names)
+
+(dv <ast-function> (isa <computed-program>))
   (slot <ast-function> function-name #f)
-  (slot <ast-function> function-bindings)
-;;  (slot <ast-function> function-next-methods-binding)
-  (slot <ast-function> function-nary? #f)
-  (slot <ast-function> function-value #f)
+  ;;  (slot <ast-function> function-next-methods-binding)
+  (slot <ast-function> function-signature)
+
+(df function-bindings ((x <ast-function>)) 
+  (signature-names (function-signature x)))
+(df function-specs ((x <ast-function>)) 
+  (signature-specs (function-signature x)))
+(df function-nary? ((x <ast-function>))
+  (signature-nary? (function-signature x)))
+(df function-value ((x <ast-function>))
+  (signature-value (function-signature x)))
 
 (dm function-kind ((x <ast-function>)) "FUN")
 
@@ -165,12 +188,12 @@
 
 (dm function-kind ((x <ast-generic>)) "GEN")
 
-(dv <alternative> (isa <program>))
+(dv <alternative> (isa <computed-program>))
   (slot <alternative> alternative-condition)
   (slot <alternative> alternative-consequent)
   (slot <alternative> alternative-alternant)
 
-(dv <programs> (isa <program>))
+(dv <programs> (isa <passive-program>))
 
 (ds (def-list ,name (,@supers))
   (let ((class  (make-sym "<" name ">"))
@@ -187,12 +210,12 @@
 
 (def-programs sequential)
 
-(dv <constant> (isa <program>))
+(dv <constant> (isa <passive-program>))
   (slot <constant> constant-value)
 
 (dv <raw-constant> (isa <constant>))
 
-(dv <application> (isa <program>))
+(dv <application> (isa <computed-program>))
   (slot <application> application-arguments)
   (slot <application> application-tail? #f)
 
@@ -203,10 +226,13 @@
 (dv <predefined-application> (isa <application>))
   (slot <predefined-application> application-binding)
 
-(dv <fix-let> (isa <program>))
+(dv <fix-let> (isa <computed-program>))
   (slot <fix-let> fix-let-bindings)
+  (slot <fix-let> fix-let-types)
   (slot <fix-let> fix-let-arguments)
   (slot <fix-let> fix-let-body)
+
+(def-programs types)
 
 (def-programs arguments)
 
@@ -216,19 +242,19 @@
 	(rev! res)
 	(loop (arguments res e)))))
 
-(dv <locals> (isa <program>))
+(dv <locals> (isa <computed-program>))
   (slot <locals> locals-bindings)
   (slot <locals> locals-functions)
   (slot <locals> locals-body)
 
-(dv <bind-exit> (isa <program>))
+(dv <bind-exit> (isa <computed-program>))
   (slot <bind-exit> bind-exit-main-fun)
 
-(dv <unwind-protect> (isa <program>))
+(dv <unwind-protect> (isa <computed-program>))
   (slot <unwind-protect> unwind-protect-protected-thunk)
   (slot <unwind-protect> unwind-protect-cleanup-thunk)
 
-(dv <monitor> (isa <program>))
+(dv <monitor> (isa <computed-program>))
   (slot <monitor> monitor-handler)
   (slot <monitor> monitor-main-thunk)
 
@@ -373,6 +399,7 @@
 	(if (= (len e*) (len (function-bindings f)))
 	    (isa <fix-let> 
 		 (set fix-let-bindings  (function-bindings f))
+                 (set fix-let-types     (function-specs f))
 		 (set fix-let-arguments e*)
 		 (set fix-let-body      (function-body f)))
 	    (objectify-error "incorrect regular arity" f e*)))))
@@ -391,11 +418,11 @@
 		  (arguments 
 		   (head e*) (gather-arguments (tail e*) (tail v*)))))))
    (let ((v* (function-bindings f))
-	 (b  (function-body f))
 	 (o  (isa <fix-let> 
 		  (set fix-let-bindings  v*)
+		  (set fix-let-bindings  (function-specs f))
 		  (set fix-let-arguments (gather-arguments e* v*))
-		  (set fix-let-body      b))))
+		  (set fix-let-body      (function-body f)))))
      (set (binding-dotted? (last v*)) #f)
      o)))
  
@@ -549,42 +576,30 @@
 
 (dm objectify-primitive-definition 
     (name sig body r => <ast-primitive-definition>)
-  (let ((binding
-	 (ast-define-binding r name #f (fun () (isa <predefined-binding>))))
-	;; TODO: MULTIPLE VALUES
-	((tup bindings nary? value)
-	 (objectify-signature sig r))
-	(body
-	 (objectify-sequential body (r-extend* r bindings) #t))
-	(form
-	 (isa <ast-primitive> 
-	      (set function-name binding)
-	      (set function-bindings bindings)
-	      (set function-nary? nary?)
-	      (set function-value value)
-	      (set function-body body))))
+  (let ((binding   (ast-define-binding 
+                    r name #f (fun () (isa <predefined-binding>))))
+	(signature (objectify-signature sig r))
+        (new-r     (r-extend* r (signature-bindings signature)))
+	(body      (objectify-sequential body new-r #t))
+	(form      (isa <ast-primitive> 
+                     (set function-name binding)
+                     (set function-signature signature)
+                     (set function-body body))))
     (set (binding-description binding) form)
-    (let ((defn
-	   (isa <ast-primitive-definition>
-		(set assignment-binding binding)
-		(set assignment-form form))))
+    (let ((defn (isa <ast-primitive-definition>
+                  (set assignment-binding binding)
+                  (set assignment-form form))))
       defn)))
 
 (dm objectify-generic-definition (name sig r => <ast-generic-definition>)
-  (let ((binding
-	 (ast-define-binding r name #f (fun () (isa <global-binding>))))
-	((tup bindings nary? value)
-	 (objectify-signature sig r))
-	(form
-	 (isa <ast-generic>
-	      (set function-name binding)
-	      (set function-bindings bindings)
-	      (set function-nary? nary?)
-	      (set function-value value)))
-	(defn
-	  (isa <ast-generic-definition>
-	       (set assignment-binding binding)
-	       (set assignment-form form))))
+  (let ((binding   (ast-define-binding r name #f (fun () (isa <global-binding>))))
+	(signature (objectify-signature sig r))
+	(form      (isa <ast-generic>
+                     (set function-name binding)
+                     (set function-signature signature)))
+	(defn      (isa <ast-generic-definition>
+                     (set assignment-binding binding)
+                     (set assignment-form form))))
     defn))
 
 (dm objectify-method-definition (name e r => <ast-method-definition>)
@@ -606,38 +621,42 @@
 ;;; all bindings are considered immutable at the beginning.
 
 (dm objectify-function (sig body r tail? => <ast-method>)
-  (let (((tup bindings nary? value) (objectify-signature sig r))
-	(b (objectify-sequential body (r-extend* r bindings) #t)))
+  (let ((signature (objectify-signature sig r))
+        (new-r     (r-extend* r (signature-bindings signature)))
+	(b         (objectify-sequential body new-r #t)))
     (isa <ast-method> 
-	 (set function-bindings bindings)
-	 (set function-nary? nary?)
-	 (set function-value value)
+	 (set function-signature signature)
 	 (set function-body b))))
 
 (dv $sexpr-optionals-tag       '...)
 (dv $sexpr-optionals-type-name '<opts>)
 
-;; TODO: MULTIPLE VALUES
-
-(dm objectify-signature
-    (sig r => (tup (bindings <lst>) (nary? <log>) (value <any>)))
-  (rep col ((params (sexpr-signature-parameters sig)) (nary? #f) (bindings '()))
-    (if (empty? params)
-	(let ((sexpr-value (sexpr-signature-value sig))
-	      (value (objectify (or sexpr-value (default-type r)) r #f)))
-	  (tup (rev! bindings) nary? value))
-	(let ((param   (head params))
-	      (sname   (sexpr-variable-name param))
-	      (stype   (sexpr-variable-type param))
-	      (dotted? (== stype $sexpr-optionals-tag))
-	      (stype   (if dotted? $sexpr-optionals-type-name stype))
-	      (type    (objectify stype r #f))
-	      (binding
-	       (isa <local-binding>
-		    (set binding-name sname)
-		    (set binding-type type)
-		    (set binding-dotted? dotted?))))
-	  (col (tail params) dotted? (pair binding bindings))))))
+(dm objectify-signature (sig r => <ast-signature>)
+  (let ((sexpr-params (sexpr-signature-parameters sig)))
+    (rep col ((params sexpr-params) (nary? #f) (bindings '()) 
+              (types (empty <types>)))
+      (if (empty? params)
+          (let ((sexpr-value (sexpr-signature-value sig))
+                (value (objectify (or sexpr-value (default-type r)) r #f)))
+            (isa <ast-signature>
+              (set signature-names (rev! bindings))
+              (set signature-specs (rev! types))
+              (set signature-nary? nary?)
+              (set signature-value value)))
+          (let ((param   (head params))
+                (sname   (sexpr-variable-name param))
+                (stype   (sexpr-variable-type param))
+                (dotted? (== stype $sexpr-optionals-tag))
+                (stype   (if dotted? $sexpr-optionals-type-name stype))
+                (type    (objectify stype r #f))
+                (binding
+                 (isa <local-binding>
+                      (set binding-name sname)
+                      (set binding-type type)
+                      (set binding-dotted? dotted?))))
+            (col (tail params) dotted? 
+                 (pair binding bindings)
+                 (isa <types> (set head type) (set tail types))))))))
 
 (dm objectify-binding (n (b <magic-binding>) r => <magic-binding>)
   b)
@@ -1653,10 +1672,18 @@
   <fix-let>
   fix-let-arguments
   fix-let-arguments-setter
+  fix-let-types
+  fix-let-types-setter
   fix-let-bindings
   fix-let-bindings-setter
   fix-let-body
   fix-let-body-setter
+  <ast-signature>
+  signature-names
+  signature-specs
+  signature-nary?
+  signature-value
+  function-signature
   function-bindings
   function-body
   function-body-setter
@@ -1692,6 +1719,9 @@
   <predefined-application>
   <predefined-binding>
   <program>
+  <computed-program>
+  <passive-program>
+  program-register program-register-setter
   <programs>
   $proto-boot-module-name
   $proto-runtime-module-name

@@ -106,7 +106,8 @@
 	(write-char port x))))
 
 (dm character-name ((char <chr>) => <any>)
-  (1st (assqn char $char-long-names 1)))
+  (let ((assoc (assqn char $char-long-names 1)))
+    (and assoc (1st assoc))))
 
 (dm write-string-literal ((port <output-port>) x)
   (write-char port #\")
@@ -291,5 +292,7 @@
 
 (export
   format
+  display
   write
+  writeln
   write-to-string)

@@ -1645,6 +1645,7 @@
   %vnul
 
   apply				;; %%apply
+  %call-next-method
   *boot-macro-expanders*	;;var
   *boot-macro-names*		;;var
   %define-method		
@@ -1667,7 +1668,7 @@
   object-parents
   object-slots
   %slot
-  slot-value ;; TODO remove this when it can be called directly w/o being exported
+  slot-value        ;; TODO: remove this when it can be called directly w/o being exported
   slot-value-setter ;; me too
   slot-getter
   slot-setter

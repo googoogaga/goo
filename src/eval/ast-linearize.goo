@@ -23,14 +23,14 @@
 
 ;;; BOXING
 
-(dv <box-read> (isa <program>))
+(dv <box-read> (isa <computed-program>))
   (slot <box-read> box-reference)
 
-(dv <box-write> (isa <program>))
+(dv <box-write> (isa <computed-program>))
   (slot <box-write> box-reference)
   (slot <box-write> box-form)
 
-(dv <box-creation> (isa <program>))
+(dv <box-creation> (isa <computed-program>))
   (slot <box-creation> box-reference)
 
 (dm insert-box! ((o <program>))
@@ -227,12 +227,10 @@
 	 (function-body o))
 	(new-fun        
 	 (isa <flat-function> 
-	   (set function-name     (function-name o))
-	   (set function-bindings local-bindings)
-	   (set function-nary?    (function-nary? o))
-	   (set function-value    (function-value o))
-	   (set function-body     body)
-	   (set function-free     (empty <free-environment>)))))
+	   (set function-name      (function-name o))
+           (set function-signature (function-signature o))
+	   (set function-body      body)
+	   (set function-free      (empty <free-environment>)))))
     (set (function-body new-fun)
 	 (lift-procedures! body new-fun local-bindings))
     (let ((free* (function-free new-fun)))
@@ -242,12 +240,12 @@
 
 ;;; COLLECTING QUOTATIONS AND FUNCTIONS
 
-(dv <flattened-program> (isa <program>))
+(dv <flattened-program> (isa <computed-program>))
   (slot <flattened-program> (program-form (type-or <program> #f)))
   (slot <flattened-program> program-quotations '())
   (slot <flattened-program> program-definitions '())
 
-(dv <top-level-form> (isa <program>))
+(dv <top-level-form> (isa <computed-program>))
   (slot <top-level-form> (form-program <program>))
   (slot <top-level-form> form-quotations '())
   (slot <top-level-form> form-definitions '())
@@ -258,13 +256,15 @@
 (dv <function-definition> (isa <flat-function>))
   (slot <function-definition> function-index)
   (slot <function-definition> function-temporaries '())
+  (slot <function-definition> function-registers '())
   (slot <function-definition> function-self-recursive? #f)
 
 (dv <primitive-definition> (isa <ast-primitive>))
   (slot <primitive-definition> function-temporaries '())
+  (slot <primitive-definition> function-registers '())
   (slot <primitive-definition> function-self-recursive? #f)
 
-(dv <closure-creation> (isa <program>))
+(dv <closure-creation> (isa <computed-program>))
   (slot <closure-creation> closure-creation-index)
   (slot <closure-creation> closure-creation-bindings)
   (slot <closure-creation> closure-creation-free)
@@ -317,15 +317,13 @@
 (dm extract! 
     ((o <flat-function>) 
      (form <top-level-form>) (result <flattened-program>))
-  (let ((new-body (extract! (function-body o) form result))
-	(name     (function-name o))
-	(bindings (function-bindings o))
-	(nary?    (function-nary? o))
-	(value    (function-value o)))
+  (let ((new-body  (extract! (function-body o) form result))
+	(name      (function-name o))
+        (signature (function-signature o)))
     (do (fun (binding)
 	  (set (binding-type binding) 
 	       (extract! (binding-type binding) form result)))
-	bindings)
+	(function-bindings o))
     (let ((free-bindings 
 	   (rep extract ((free (function-free o)))
 	     (if (empty? free)
@@ -334,10 +332,10 @@
 			(extract (tail free))))))
 	  (index
 	   (adjoin-definition!
-	    form result name bindings nary? value new-body free-bindings)))
+	    form result name signature new-body free-bindings)))
       (isa <closure-creation> 
 	(set closure-creation-index    index)
-	(set closure-creation-bindings bindings)
+	(set closure-creation-bindings (function-bindings o))
 	(set closure-creation-free     (function-free o))
 	;; TODO: WHY THE FOLLOWING?
 	;; (set closure-creation-body     new-body)
@@ -350,10 +348,9 @@
 	(body (extract! (function-body p) form result))
 	(definition
 	 (isa <primitive-definition> 
-	   (set function-name     (function-name p))
-	   (set function-bindings (function-bindings p))
-	   (set function-value    (function-value p))
-	   (set function-body     body))))
+	   (set function-name      (function-name p))
+           (set function-signature (function-signature p))
+	   (set function-body      body))))
     ;; (assert (function-name p) "NO NAME FOR %=" p)
     (set (program-definitions result)
 	 (pair definition (program-definitions result)))
@@ -362,21 +359,19 @@
     (extract! (isa <constant> (set constant-value #f)) form result)))
 
 (dm adjoin-definition! 
-    ((form <top-level-form>) (result <flattened-program>) 
-     name bindings nary? value body free)
+    ((form <top-level-form>) (result <flattened-program>)
+     name signature body free)
   (let ((definitions
 	 (program-definitions result))
 	(new-index
 	 (len definitions))
 	(definition
 	 (isa <function-definition> 
-	   (set function-name     name)
-	   (set function-bindings bindings)
-	   (set function-nary?    nary?)
-	   (set function-value    value)
-           (set function-body     body)
-	   (set function-free     free)
-	   (set function-index    new-index))))
+	   (set function-name      name)
+           (set function-signature signature)
+           (set function-body      body)
+	   (set function-free      free)
+	   (set function-index     new-index))))
     (set (program-definitions result) (pair definition definitions))
     (set (form-definitions form)      (pair definition (form-definitions form)))
     new-index))
@@ -413,9 +408,9 @@
 		  r name #f (fun () (isa <predefined-binding>))))
 		(defn
 		 (isa <primitive-definition>
-		   (set function-name     binding)
-		   (set function-bindings '())
-		   (set function-body     (head forms))
+		   (set function-name      binding)
+                   (set function-signature (isa <ast-signature>))
+		   (set function-body      (head forms))
 		   ;; (set function-index    (+ base-index i))
 		   ))
 		(call
@@ -429,8 +424,7 @@
 
 (dm gather-temporaries! ((o <program>))
   (set (program-definitions o)
-       (map (fun (def)
-	      (collect-temporaries! def def '()))
+       (map (fun (def) (collect-temporaries! def def '()))
 	    (program-definitions o)))
   o)
 
@@ -464,7 +458,8 @@
 	(new-r
 	 (cat (map2 assoc (locals-bindings o) new-bindings) r)))
     (set (locals-functions o)
-	 (map (rcurry collect-temporaries! flat-fun new-r) (locals-functions o)))
+	 (map (rcurry collect-temporaries! flat-fun new-r) 
+              (locals-functions o)))
     (adjoin-temporary-variables! flat-fun new-bindings)
     (set (locals-bindings o) new-bindings)
     (set (locals-body o)
@@ -493,6 +488,51 @@
        (set binding-dynamic-extent? (binding-dynamic-extent? binding))
        (set binding-index           *renaming-bindings-counter*)))
 
+;;; REGISTER ALLOCATION
+
+(dm register-allocate! ((o <program>))
+  (do (fun (def) (collect-registers! def #f #t)) (program-definitions o))
+  o)
+
+(dm allocate-register ((o <computed-program>) flat-fun val?)
+  (when (and val? flat-fun (not (program-register o)))
+    ;; TODO: INEFFICIENT
+    (set (program-register o) 
+         (len (function-registers flat-fun)))
+    (set (function-registers flat-fun)
+         (pair o (function-registers flat-fun)))))
+
+(dm collect-registers! ((o <computed-program>) flat-fun val?)
+  (allocate-register o flat-fun val?)
+  (update-walk! collect-registers! o flat-fun #t))
+
+(dm collect-registers! ((o <sequential>) flat-fun val?)
+  (rep loop ((x o))
+    (if (empty? x)
+        o
+        (let ((next-x (tail x))) ;; ONLY LAST FORM IN SEQ CONSUMES VALUE
+          (collect-registers! (head x) flat-fun (and val? (empty? next-x)))
+          (loop next-x)))))
+
+(dm collect-registers! ((o <passive-program>) flat-fun val?)
+  (update-walk! collect-registers! o flat-fun #t))
+
+(dm collect-registers! ((o <top-level-form>) flat-fun val?)
+  (allocate-register o flat-fun val?)
+  (do (fun (def) (collect-registers! def flat-fun val?)) (form-definitions o))
+  (collect-registers! (form-program o) flat-fun val?)
+  o)
+
+(dm collect-registers! ((o <flat-function>) flat-fun val?)
+  (allocate-register o flat-fun val?)
+  (collect-registers! (function-signature o) flat-fun #t)
+  (collect-registers! (function-body o) o #t)
+  o)
+
+(dm collect-registers! ((o <primitive-definition>) flat-fun val?)
+  (collect-registers! (function-body o) o #t)
+  o)
+
 (export
   analyze-calls
   analyze-dynamic-extent
@@ -517,7 +557,9 @@
   function-self-recursive?
   function-self-recursive?-setter
   function-temporaries
+  function-registers
   gather-temporaries!
+  register-allocate!
   lift!
   <primitive-definition>
   program-definitions

@@ -241,7 +241,7 @@
   (> x 0))
 
 (dm zero? ((x <num>) => <log>)
-  (= x 0))
+  (contagious-call = x 0))
 
 (dm neg? ((x <num>) => <log>)
   (< x 0))
@@ -484,6 +484,9 @@
 
 ;;; TODO: NEED TEST ARGS AND NOT-FOUND HANDLERS
 
+(dm fabs ((c <col>) (objects ...))
+  (alter (fab c (len objects)) objects))
+
 (dm empty? ((c <col>) => <log>)
   (= (len c) 0))
 
@@ -513,22 +516,16 @@
       (fn (head key-vals) (head (tail key-vals)))
       (rep (tail (tail key-vals))))))
 
-(dm fabs ((p <col>) (key-vals ...))
-  (let ((x (isa p)))
-    (do-key-vals (fun (key val) (set (elt x key) val)) key-vals)
-    x))
-
 (dm len ((x <col>) => <int>)
   (rep count ((s (ini-state x)) (i 0))
     (if (fin-state? x s) i (count (nxt-state x s) (+ i 1)))))
 
-;; TODO: ALIGN COL'S
 (dm alter ((dst <col>) (src <col>) => <col>)
-  (rep in ((ds (ini-state dst)) (ss (ini-state src)))
-    (if (if (fin-state? dst ds) #t (fin-state? src ss))
+  (rep in ((ss (ini-state src)))
+    (if (fin-state? src ss)
         dst
-        (seq (set (now-elt dst ds)  (now-elt src ss))
-             (in (nxt-state dst ds) (nxt-state src ss))))))
+        (seq (set (elt dst (now-key src ss)) (now-elt src ss))
+             (in (nxt-state src ss))))))
 
 (dm fill ((dst <col>) val => <col>)
   (rep in ((ds (ini-state dst)))
@@ -631,6 +628,11 @@
 
 (dv <map> (isa <col>))
 
+(dm fab-map ((p <map>) (key-vals ...))
+  (let ((x (isa p)))
+    (do-key-vals (fun (key val) (set (elt x key) val)) key-vals)
+    x))
+
 ;;; ASSOCS
 
 (dv <assocs> (isa <map>))
@@ -666,6 +668,13 @@
 
 (dm as ((d <seq>) (s <seq>) => <seq>)
   (alter (fab d (len s)) s))
+
+(dm alter ((dst <seq>) (src <seq>) => <seq>)
+  (rep in ((ds (ini-state dst)) (ss (ini-state src)))
+    (if (if (fin-state? dst ds) #t (fin-state? src ss))
+        dst
+        (seq (set (now-elt dst ds)  (now-elt src ss))
+             (in (nxt-state dst ds) (nxt-state src ss))))))
 
 (df range-error ((x <seq>) (i <int>))
   ;; TODO: REAL CONDITION
@@ -944,9 +953,6 @@
 (df vec ((objects ...))
   (as <vec> objects))
 
-(dm fabs ((c <vec>) (objects ...))
-  (apply vec objects))
-
 (dm fab ((x <vec>) (s <int>) => <vec>)
   (%vec (%iu s)))
 
@@ -978,15 +984,12 @@
 
 (dm empty ((c <buf>) => <buf>) (isa <buf>))
 
-(dm buf ((elts ...) => <buf>)
-  (alter (fab <buf> (len elts)) elts))
-
-(dm fabs ((c <buf>) (elts ...) => <buf>)
-  (apply buf elts))
-
 (dm fab ((c <buf>) (s <int>) => <buf>)
   (let ((dat (fab <vec> (power-of-two-ceiling s))))
     (isa <buf> (set buf-len s) (set buf-dat dat))))
+
+(dm buf ((elts ...) => <buf>)
+  (apply fabs (pair <buf> elts)))
 
 (dm len ((c <buf>) => <int>)
   (buf-len c))
@@ -1058,6 +1061,9 @@
   (slot <range> (range-below <num>))
   (slot <range> (range-above <num>))
   (slot <range> (range-by    <num>) 1)
+
+(dm fab ((c <range>) (s <int>) => <range>)
+  (from-below 0 s))
 
 (dm from ((from <num>) => <range>)
   (isa <range> (set range-from from)))
@@ -1163,10 +1169,7 @@
   (%str (%iu s)))
 
 (dm str ((objects ...))
-  (alter (fab <str> (len objects)) objects))
-
-(dm fabs ((c <str>) (objects ...))
-  (apply str objects))
+  (fabs <str> objects))
 
 (dm len ((x <str>) => <int>)
   (%ib (%slen x)))
@@ -1317,7 +1320,6 @@
   (lab _unwind-exception_
     (let ((_original-handlers_ *current-handlers*))
       (loc ((_handler-function_ (condition _next-handler_)
-	      (set *current-handlers* _original-handlers_)
 	      (lab _resume_
 		(user-handler condition _resume_)
 		(_next-handler_))))
