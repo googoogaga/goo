@@ -288,9 +288,9 @@ extern P with_cleanup (P body_fun, P cleanup_fun);
 
 extern P unbound ();
 
-#define DEF(x, n)  P x = PNUL;
-#define EXT(x, n)  extern P x;
-#define CHKREF(x)  (((x) == PNUL) ? unbound() : (x))
+#define DEF(x, m, n)  P x = PNUL;
+#define EXT(x, m, n)  extern P x;
+#define CHKREF(x)     (((x) == PNUL) ? unbound() : (x))
 
 /* FUNCTIONS */
 
@@ -316,7 +316,7 @@ extern P YPlb(P);
 
 /* SYMBOL TABLE */
 
-extern P regsym (P* adr, char *str);
+extern P regsym (P* adr, char *modstr, char *namestr);
 extern P YPdo_runtime_bindings (P fun);
 
 /* LOCATIVES */

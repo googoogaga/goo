@@ -1100,7 +1100,8 @@ INLINE P YPlocative_value_setter (P val, P loc) {
 /* SYMBOL TABLE */
 
 P**    symadrs;
-char** symstrs;
+char** symmods;
+char** symnames;
 int    nsyms = 0;
 
 #define MAX_SYMS 10000
@@ -1116,7 +1117,7 @@ int symoff (P adr) {
 char* sym (P adr) {
   int i = symoff(adr);
   if (i > 0)
-    return symstrs[i];
+    return symnames[i];
   else
     return (char*)0;
 }
@@ -1394,14 +1395,21 @@ void des (P adr) {
     desobj(adr);
 }
 
-P regsym (P* adr, char *str) {
-  int i = symoff(*adr);
-  if (i == -1 || (strcmp(symstrs[i],str) != 0)) 
-    i = nsyms++;
+P regsym (P* adr, char *modstr, char *namestr) {
+  /* Find out if we've already registered this symbol.
+  ** Symbol registration is O(N^2), thanks to this probe. */
+  int i;
+  for (i = 0; i < nsyms; i++)
+    if (symadrs[i] == adr)
+      break;
+  if (i == nsyms)
+    /* We didn't find it, so allocate a new space at the end. */
+    nsyms++;
   if (nsyms > MAX_SYMS)
     YPbreak("REGSYM: SYM OVERFLOW");
-  symstrs[i] = str;
-  symadrs[i] = adr;
+  symmods[i]  = modstr;
+  symnames[i] = namestr;
+  symadrs[i]  = adr;
   return PNUL;
 }
 
@@ -1412,7 +1420,8 @@ P YPdo_runtime_bindings (P fun) {
   int i, formatp = 0, evalp = 0;
   /* printf("RTBS"); */
   for (i = 0; i < nsyms; i++) {
-    char* n = symstrs[i];
+    char* m = symmods[i];
+    char* n = symnames[i];
     /*
     if (strcmp(n, "sexpr-self-evaluating?") == 0)
       formatp = 1;
@@ -1420,10 +1429,11 @@ P YPdo_runtime_bindings (P fun) {
       evalp = 1;
     */
     if (!formatp || evalp) {
+      P mod      = YPsb((P)m);
       P name     = YPsb((P)n);
       P locative = YPlb((P)untag((P)symadrs[i]));
       /* printf(" %s", n); */
-      CALL2(fun, name, locative);
+      CALL3(fun, mod, name, locative);
     }
   }
   /* printf("\n"); */
@@ -1477,7 +1487,8 @@ void YPinit_world(int argc, char* argv[]) {
   Pargc   = argc;
   Pargv   = argv;
   stack_  = (P*)allocate(MAX_STACK_SIZE * sizeof(P));
-  symstrs = (char**)allocate(MAX_SYMS * sizeof(char*));
+  symnames = (char**)allocate(MAX_SYMS * sizeof(char*));
+  symmods = (char**)allocate(MAX_SYMS * sizeof(char*));
   symadrs = (P**)allocate(MAX_SYMS * sizeof(P));
   envnul  = ENVFAB(0);
   Pcurrent_unwind_protect_frame = Ptop_unwind_protect_frame;
