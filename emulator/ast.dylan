@@ -30,8 +30,9 @@ define method binding-free?
 end method;
 
 define class <local-binding> (<binding>) 
-  slot binding-mutable? = #f;
-  slot binding-dotted?  = #f, init-keyword: dotted?:;
+  slot binding-mutable?        = #f;
+  slot binding-dynamic-extent? = #t, init-keyword: dynamic-extent?:;
+  slot binding-dotted?         = #f, init-keyword: dotted?:;
 end class;
 
 /// descriptions
@@ -86,6 +87,7 @@ define class <real-reference> (<reference>)
 end class;
 
 define class <local-reference> (<real-reference>) 
+  slot reference-called-function? = #f;
 end class;
 
 define class <global-reference> (<real-reference>) 
@@ -132,6 +134,7 @@ define class <ast-function> (<program>)
   slot function-name = #f,  init-keyword: name:;
   slot function-bindings,   required-init-keyword: bindings:;
   slot function-nary? = #f, init-keyword: nary?:;
+  slot function-value = #f, init-keyword: value:;
 end class;
 
 define method function-kind (x :: <ast-function>)

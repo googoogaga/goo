@@ -99,6 +99,61 @@ define method sexp->object (exp, r)
   insert-box!(objectify(exp, r, #f))
 end method;
 
+/// DYNAMIC-EXTENT ANALYSIS
+
+define method do-call-references! (o :: <program>)
+  update-walk!(do-call-references!, o)
+end method;
+
+define method do-call-references! (o :: <regular-application>)
+  // format-out("FOUND %=\n", o);
+  next-method();
+  if (instance?(application-function(o), <local-reference>))
+    // format-out("  MARKED CALLED\n");
+    reference-called-function?(application-function(o)) := #t;
+  end if;
+  o
+end method;
+
+define method do-call-references! (o :: <locals>)
+  next-method();
+  do(do-call-references!, locals-functions(o));
+  o
+end method;
+
+define method analyze-call-references (o)
+  do-call-references!(o)
+end method;
+
+define method do-dynamic-extent! (o :: <program>)
+  update-walk!(do-dynamic-extent!, o)
+end method;
+
+define method do-dynamic-extent! (o :: <local-reference>)
+  // format-out("REF %= CALLED? %=\n", o, reference-called-function?(o));
+  next-method();
+  unless (reference-called-function?(o))
+    binding-dynamic-extent?(reference-binding(o)) := #f;
+    // format-out("  NOT DYN %= %=\n", reference-binding(o), binding-dynamic-extent?(reference-binding(o)));
+  end unless;
+  o
+end method;
+
+define method do-dynamic-extent! (o :: <locals>)
+  next-method();
+  do(do-dynamic-extent!, locals-functions(o));
+  o
+end method;
+
+define method analyze-dynamic-extent (o)
+  // format-out("\n---\nBEG DYNAMIC EXTENT ANALYSIS\n---\n");
+  analyze-call-references(o);
+  // format-out("---\nDO  DYNAMIC EXTENT ANALYSIS\n---\n");
+  let res = do-dynamic-extent!(o);
+  // format-out("---\nEND DYNAMIC EXTENT ANALYSIS\n---\n");
+  res
+end method;
+
 /// FLATTENING
 
 define class <free-environment> (<program>) 
@@ -243,6 +298,7 @@ define method lift-procedures! (o :: <ast-function>, flat-fun, bindings)
                             name:        function-name(o),
 			    bindings:    local-bindings,
 			    nary?:       function-nary?(o),
+	                    value:       function-value(o),
 			    body:        body,
 			    environment: empty-free-environment());
   function-body(new-fun)
@@ -309,6 +365,7 @@ define class <closure-creation> (<program>)
   slot closure-creation-index,    required-init-keyword: index:;
   slot closure-creation-bindings, required-init-keyword: bindings:;
   slot closure-creation-free,     required-init-keyword: free:;
+  slot closure-dynamic-extent? = #f;
 end class;
 
 define method print-object (x :: <closure-creation>, s :: <stream>) => ()
@@ -544,8 +601,9 @@ define variable *renaming-bindings-counter* = 0;
 define method new-renamed-binding (binding :: <local-binding>)
   *renaming-bindings-counter* := *renaming-bindings-counter* + 1;
   make(<renamed-local-binding>, 
-       name:  binding-name(binding),
-       type:  binding-type(binding),
-       index: *renaming-bindings-counter*)
+       name:            binding-name(binding),
+       dynamic-extent?: binding-dynamic-extent?(binding),
+       type:            binding-type(binding),
+       index:           *renaming-bindings-counter*)
 end method;
 

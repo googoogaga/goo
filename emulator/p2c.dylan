@@ -66,9 +66,9 @@ end method;
 
 define method p2c-top ()
   p2c-boot-files
-    (#("macros", "runtime", "runtime-native", "tables",
-       "ascii", "io", "read", "write", "syntax", 
-       "environment", "ast", "ast-eval", 
+    (#("macros", "runtime", "runtime-native",
+       "read", "write", "syntax", 
+       "ast", "ast-eval", 
        "ast-linearize", "p2c",
        "top", "main"));
 end method;
@@ -94,7 +94,9 @@ define method compute-program (e, ct-env, rt-env)
   init-static-global-environment(rt-env);
   let obj = sexp->object(e, ct-env);
   // format-out("OBJ %=\n", obj);
-  let lft = lift!(obj);
+  let dyn = analyze-dynamic-extent(obj);
+  // format-out("DYN %=\n", dyn);
+  let lft = lift!(dyn);
   // format-out("LFT %=\n", lft);
   let prg = extract-things!(lft);
   // format-out("EXT %=\n", prg);
@@ -804,25 +806,30 @@ define method to-c (e :: <monitor>, f, out)
   end between-parentheses;
 end method;
 
-define method bindings->c (bindings, e :: <argument-list>, out, #key to-c = to-c)
+define method to-c-ignore-binding (b, e, f, o)
+  to-c(e, f, o)
+end method;
+
+define method bindings->c
+    (bindings, e :: <argument-list>, out, #key to-c = to-c-ignore-binding)
   if (empty-argument-list?(e))
     format(out, "");
   else
     binding->c(head(bindings), out);
     format(out, "=");
-    to-c(arguments-head(e), #f, out);
+    to-c(head(bindings), arguments-head(e), #f, out);
     format(out, ",");
     bindings->c(tail(bindings), arguments-tail(e), out, to-c: to-c);
   end if;
 end method;
 
-define method bindings->c (bindings, e :: <list>, out, #key to-c = to-c)
+define method bindings->c (bindings, e :: <list>, out, #key to-c = to-c-ignore-binding)
   if (empty?(e))
     format(out, "");
   else
     binding->c(head(bindings), out);
     format(out, "=");
-    to-c(head(e), #f, out);
+    to-c(head(bindings), head(e), #f, out);
     format(out, ",");
     bindings->c(tail(bindings), tail(e), out, to-c: to-c);
   end if;
@@ -886,7 +893,7 @@ define method to-c (e :: <closure-creation>, f, out)
   end if;
 end method;
 
-define method funshell-to-c (e :: <closure-creation>, f, out)
+define method funshell-to-c (b :: <binding>, e :: <closure-creation>, f, out)
   let n = number-of(closure-creation-free(e));
   let f = *definitions*[closure-creation-index(e)];
   if (n == 0)
@@ -895,8 +902,9 @@ define method funshell-to-c (e :: <closure-creation>, f, out)
   else
     format(out, "FUNSHELL");
     between-parentheses (out)
+      format(out, "%=,", if (binding-dynamic-extent?(b)) 1 else 0 end);
       generate-function-name(out, f);
-      format(out, ", %s", n);
+      format(out, ",%s", n);
     end between-parentheses;
   end if;
 end method;
@@ -929,6 +937,8 @@ define method to-c (e :: <ast-generic>, f, out)
     generate-quotation(out, function-nary?(e));
     format(out, ",");
     generate-quotation(out, ast-function-arity(e));
+    format(out, ",");
+    generate-quotation(out, function-value(e));
     format(out, ",");
     format(out, mangle-global-name("nil"));
     format(out, ",");
@@ -1016,6 +1026,8 @@ define method generate-closure-structure (out, definition)
     generate-quotation(out, function-nary?(definition));
     format(out, ",");
     generate-quotation(out, ast-function-arity(definition));
+    format(out, ",");
+    generate-quotation(out, function-value(definition));
     format(out, ",");
     format(out, "ENVNUL");
   end between-parentheses;
