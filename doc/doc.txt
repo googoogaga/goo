@@ -66,7 +66,7 @@ handler         (fun (,condition ,resume) ,@body)
 1.2 MACROS
 
 DF	(DF ,name ,sig ,@body)
-TRY	(TRY ((,condition:var ,resume:var) ,@body) ,@body)
+TRY	(TRY ,try-options ,handler-function ,@body)
 REP	(REP ,name ((,var ,init) ...) ,@body) 
 	  == (LOC ((,name (,var ...) ,@body)) (,name ,init ...))
 MIF	(MIF (,pattern ,value) ,then ,else)
@@ -84,6 +84,12 @@ ASSERT  (ASSERT ,test ,message ,@args)
 
 PUSHF   (PUSHF ,place ,expression)
 POPF    (POPF ,place)
+
+where
+
+,try-options       ,condition-type-name | ,try-option-list
+,try-option-list   (,try-option* )
+,try-option        (,option-name ,@option-value)
 
 1.3 READ MACROS
 
@@ -245,21 +251,33 @@ DF	(DF ,name ,sig ,@body)
 
         == (DV ,name (FUN ,sig ,@body))
 
-TRY	(TRY ((,condition:var ,resume:var) ,@body) ,@body)
+TRY	(TRY ,try-options ,handler-function ,@body)
 
-  establishes a handler matching condition ,condition and corresponding
-  handler function with parameters ,condition and ,resume and body
-  ,@body.  the handler is established during the evaluation of (SEQ
-  ,@body). if a matching condition is signaled then the handler function
-  is called with the signaled condition and a resume function to be
-  called if the handler wants to return a value to be used as the result
-  of the signaling SIG call.  the handler has three possibilities: (1)
-  it can handle the condition by taking an exit using LAB, (2) it can
-  resume to the original SIG call using the resume function called with
-  the value to be returned, or (3) it can do neither, that is, it can
-  choose not to handle the condition by just falling through to the end
-  of the handler (cf., Dylan's BLOCK/EXCEPTION and LET HANDLER) and the
+  installs ,handler-function as a condition handler for the
+  duration of (SEQ ,@body), using the instructions provided by ,try-options.
+  ,try-options should either be the name of the condition type to
+  handle, or a ,try-option-list with zero or more of the following options:
+
+    (TYPE ,expr) => An expression returning the type of condition to handle.
+    (TEST ,@body) => Code which returns #t if the condition is applicable,
+      and #f otherwise.  This may be called at arbitrary times by the runtime,
+      so it shouldn't do anything too alarming.
+    (DESCRIPTION ,message ,@arguments) => A human-readable description
+      of this handler.  Used by the debugger.
+
+  The handler function should take two arguments: the ,condition to be
+  handled, and a ,resume function.  if a matching condition is signaled
+  then the handler function is called with the signaled condition and a
+  resume function to be called if the handler wants to return a value to be
+  used as the result of the signaling SIG call.  the handler has three
+  possibilities: (1) it can handle the condition by taking an exit using
+  LAB, (2) it can resume to the original SIG call using the resume function
+  called with the value to be returned, or (3) it can do neither, that is,
+  it can choose not to handle the condition by just falling through to the
+  end of the handler (cf., Dylan's BLOCK/EXCEPTION and LET HANDLER) and the
   next available handler will be invoked.
+
+  Note that Proto DOES NOT UNWIND THE STACK before calling handlers!
 
 REP	(REP ,name ((,var ,init) ...) ,@body) 
 
@@ -849,6 +867,19 @@ Prototype   <condition> (isa <any>)
 
 Generic     default-handler ((x <condition>) => <fun>)
 
+Generic     default-handler-description ((c <condition>) => <str>)
+
+  Return a string describing an anonymous handler for this type of
+  condition.
+
+Generic     build-condition-interactively
+              ((cond-type <condition>) in out => <condition>)
+
+  Construct a condition of the specified type and interactively prompt
+  the user to fill in any important slots.  Called by the debugger.
+  Methods should call next-method to build the condition, then set the
+  slots for their own class.
+
 Generic     sig ((x <condition>) (args ...))
 
   signals a condition with optional arguments args.
@@ -865,6 +896,8 @@ Prototype   <error> (isa <serious-condition>)
 Generic     error ((x <any>) (args ...))
 
 Prototype   <simple-error> (isa <error> <simple-condition>)
+
+Prototype   <restart> (isa <condition>)
 
 Prototype   <handler> (isa <any>)
 
