@@ -38,6 +38,7 @@
 
 (defun proto-mode-variables ()
   (lisp-mode-variables nil)		; use lisp to start with
+  (set-syntax-table proto-mode-syntax-table)
   (make-local-variable 'imenu-generic-expression)
   (setq imenu-generic-expression proto-imenu-generic-expression)
   (make-local-variable 'imenu-syntax-alist)
