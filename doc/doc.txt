@@ -44,10 +44,14 @@ SLOT	     (SLOT ,owner ,var ,init)
 
 DS	     (DS ,pattern ,@body)
 CT	     (CT ,@body)
+CT-ALSO	     (CT-ALSO ,@body)
 MACRO-EXPAND (MACRO-EXPAND ,form)
 NEXT-METHOD  (NEXT-METHOD ,@args) | (APPLY-NEXT-METHOD ,args)
 
 QUOTE        (QUOTE ,form) with ',form == (QUOTE ,form)
+
+USE          (USE ,name)
+EXPORT       (EXPORT ,@names)
 
 where
 
@@ -77,6 +81,9 @@ DEC	(DEC ,name) | (DEC (,name ,@rest))
 UNLESS	(UNLESS ,test ,@body)
 WHEN	(WHEN ,test ,@body)
 ASSERT  (ASSERT ,test ,message ,@args)
+
+PUSHF   (PUSHF ,place ,expression)
+POPF    (POPF ,place)
 
 1.3 READ MACROS
 
@@ -202,6 +209,12 @@ CT	(CT ,@body)
   evaluates (SEQ ,@body) at compile-time allowing a user to make
   available computations for the purpose of macro-expansion.
 
+CT-ALSO	(CT-ALSO ,@body)
+
+  equivalent to CT, but also includes a copy of ,@body in compiled
+  images.  Similar to '(eval-when (:compile-toplevel :execute) ...)'
+  in Common LISP.  The return value of CT-ALSO is undefined.
+
 MACRO-EXPAND	
  
         (MACRO-EXPAND ,form)
@@ -215,6 +228,16 @@ NEXT-METHOD
 
   calls next most applicable method either as call or apply.  N.B., all
   arguments must be supplied.
+
+USE	(USE ,name)
+
+  Loads the module ,name (if it hasn't been loaded already) and aliases
+  all the exported bindings into the current namespace.
+
+EXPORT	(EXPORT ,name)
+
+  Makes the binding ,name available to code which uses this module in
+  the future.
 
 2.2 MACROS
 
@@ -317,6 +340,17 @@ FOR     (FOR (for-clause ...) ,@body)
 
   parallel iteration over collections using collection iteration protocol.
 
+PUSHF   (PUSHF ,place ,expression)
+
+  pushes ,expression onto the front of the collection stored in ,place,
+  updates ,place to contain the new collection, and returns the new
+  collection.
+
+POPF    (POPF ,place)
+
+  pops a value from the front of the collection stored in ,place, replaces
+  the collection with an updated collection, and returns the value.
+
 COLLECTING 
 
         (COLLECTING () ,@body)
@@ -371,6 +405,7 @@ Generic	    object-name ((x <any>) => (union <sym> #f))
 3.3 NULL
 
 Instance    nul	(isa <any>)
+Function    nul? (x => <log>)
 
 3.4 BOOLEANS
 
@@ -621,6 +656,10 @@ Alias       list
 
 Generic     pair ((x <any>) (y <lst>) => <lst>)
 
+Generic     push ((l <lst>) (x <any>) => <lst>)
+
+Generic     pop ((l <lst>) => (tup (new-col <lst>) value))
+
 Instance    nil (isa <lst>)
 
   aka ().
@@ -659,11 +698,11 @@ Prototype   <buf> (isa <flat>)
 
 Generic     buf ((elts ...) => <sec>)
 
-Generic     push ((c <buf>) (x <any>) => <buf>)
+Generic     push-last! ((c <buf>) (x <any>) => <buf>)
 
   pushes element onto end of stretchy vector
 
-Generic     pop ((c <buf>) => <any>)
+Generic     pop-last! ((c <buf>) => <any>)
 
   pops element from end of stretchy vector
 
