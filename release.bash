@@ -48,6 +48,7 @@ cd ..
 mkdir SRC
 cd SRC
 cp -p ../../SRC/macros.proto .
+cp -p ../../SRC/boot.proto .
 cp -p ../../SRC/runtime.proto .
 cp -p ../../SRC/runtime-native.proto .
 cp -p ../../SRC/read.proto .
