@@ -774,9 +774,9 @@ P YevalSmainY___main_0___() {
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9;
 DEFCREGS();
 loop:
-  lit_0 = YPsb((P)"0.143");
+  lit_0 = YPsb((P)"0.144");
   VARSET(YevalSmainYTgoo_versionT,LITREF(lit_0));
-  lit_1 = YPsb((P)"AUG 23, 2002");
+  lit_1 = YPsb((P)"AUG 29, 2002");
   VARSET(YevalSmainYTgoo_dateT,LITREF(lit_1));
   lit_2 = YPsb((P)";;; GOO\n");
   XCALL2(1,VARREF(YgooSconditionsYmsg),VARREF(YgooSioSportYout),LITREF(lit_2));

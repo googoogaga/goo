@@ -1,80 +1,1017 @@
-=== 0.40 Keith RELEASE 1 ===
+=== 0.144 ===
 
-=== 0.50 Keith RELEASE 2 ===
+summary
 
-=== 0.60 6.894 RELEASE 1 ===
+  line numbers in backtraces and a few other changes
 
-=== 0.61 6.894 RELEASE 2 ===
+added
 
-fixed gen-add-met problem whereby methods might not be properly
-replaced
+  line numbers to backtraces, ast
+  <line-list> 
+  stack overflow printing
 
-added initialization string
-added file-opening-error
+changed
 
-=== 0.62 6.894 RELEASE 3 ===
+  object-class to class-of
+  port2str to port-to-str
+
+fixed
+
+  added %t printing for types and exported write-type
+
+=== 0.143 ===
+
+summary
+
+  condition hierarchy and [] and {} syntax
+
+added
+
+  #[] syntax for vecs
+  condition hierarchy
+  stack overflow check
+  [] syntax
+  {} syntax
+  use *.h 
+  elt!
+  treap
+
+fixed
+
+  try works at top level
+  macro-error again.
+
+=== 0.142 ===
+
+summary
+
+  lots of bug fixes
+
+fixed
+
+  exported <restart>
+  ins to work properly
+  cleaned up %threads.c
+  documented object-class
+  rep-into! to not bomb on 
+  df's are redefineable in g2c-eval
+  use *.swig to only include .c once
+  ds now doesn't return the module binding
+  macros failing to match cause macro-error
+  pick now no longer reverses order of sequences
+
+added
+
+  rotf
+  $ $$ $$$
+  use/include
+  use/library
+  default add method
+  grt.c printing case for <rep>'s
+  GOO_EVAL_MODE environment variable
+  inlining adjectives and inlining for primitives
+  <fixnum>'s as separate class setting stage for <bignum>'s 
+
+fixed
+
+  PCHR to be unsigned char
+  <prim-int> to <fixnum>
+
+=== 0.140 ===
+
+summary
+
+  swig support 
+
+added
+
+  swig hook to module loader
+
+=== 0.139 ===
+
+summary
+
+  more threads patches and configuration changes
+
+fixed
+
+  setup handlers for new threads
+
+=== 0.138 ===
+
+summary
+
+  lots of additions and fixes
 
 added 
 
-  os-name
-  os-binding-value os-binding-value-setter
-  *proto-root*
-  src-filename
-  *path-separator*
-  *proto-version*
-  *proto-date*
+  div                        -- for (op 1st (trunc/ _ _))
+  #xnnn, #onnn, #bnnn        -- for hex, oct, and bin literals
+  mod+ mod- modincf moddecf  -- for modulo arithmetic
+  (use file.c)               -- for easy c file integration
+  file-copy                  -- ya know
+  
+sped up
 
-fixed file-opening-error
+  dispatch with unspecialization simplification
+  atomic allocation of strings
 
-require that users now setenv PROTO_ROOT which in my case would be:
+fixed
 
-  \jrb\ai\proto\
+  checked df redef.
+  dynamic var access
 
-must be slash terminated.
+changed
 
-=== 0.63 6.894 RELEASE 4 ===
+  changed app-sup to allow any number of args.
+  ceiling/ to ceil/
 
-fixed AND and OR macros and native pattern matching mechanism.
+=== 0.136 ===
 
-=== 0.64 6.894 RELEASE 5 ===
+summary
+
+  sped up for threads
+
+=== 0.135 ===
+
+summary
+
+  first threads release
+
+=== 0.133 ===
+
+summary
+
+  lots of bug fixes from first public release
+
+added
+
+changed
+
+  freebsd patches
+  ,top doesn't work
+  missing object-class
+  document that macros are unhygienic at present
+  add missing reader macro support
+  vec should print with #[] syntax
+  special forms produce a rather odd error when evaluated:
+  goo segfaults when attempting to instantiate a class with no superclasses.
+  pop! range-error for vec
+  len-setter range-error
+  pow should use contagious-call
+  flo pow returns 1.0
+  use c3 algorithm
+  descendents works like children
+  adding a property after the fact crashes goo
+
+=== 0.129 - 0.131 ===
+
+summary
+
+  tup type checks working and lots of tiny tweaks towards first release
+
+added
+
+  Make.inc.linux and Make.inc.win32
+  g2c-goo alias for g2c-top
+
+changed
+
+  type-elts split into union-elts and product-elts
+  fab-map to col
+  some incorrect tup ret types
+  made tup ret var names required because of ambiguity
+  bit neg tests
+  Makefile configs
+
+=== 0.128 ===
+
+summary
+
+   more first release fixes
+
+added
+
+   support for configuring DEFAULT_GOO_ROOT
+   toplevel Make.inc
+
+changed
+
+   lots of itsy changes towards getting real t* checks working
+   got explicit loading of .goo or .gooc files to have preference and work
+   lots of broken tup signatures
+   display to emit
+   better tuple return type printing
+
+=== 0.127 ===
+
+summary
+
+  fixed backtraces and provided various fixes for installation 
+
+added
+
+  each and <each>
+  post
+  "" to *module-search-path* to allow absolute paths
+
+changed
+
+  turned off g2c-eval for windows
+  filtered backtraces for accurate frame and frame-var
+  changed command names to avoid accidental clashes
+  spread to zipped
+
+removed
+
+  user-patches and system-patches
+
+=== 0.126 ===
+
+summary 
+
+  many speed and clean ups and test suite works 100%
+
+added
+
+  repeat join split
+  col-res-type
+  sort sort-by sort! sort-by!
+  fast and constant time subtype byte matrix including adding class-id
+  nested comment #/ /#
+
+changed
+
+  ends-with to suffix?
+  begins-with to prefix?
+  as-copy col-res
+  fab-gen to take fun-val arg
+  ast-linearize to merge various passes and to put 
+    dynamic extent analysis info into ast conversion
+  as on <col> to check for same type and return unchanged
+  dup to always dup
+  function-registers to be a vec
+  $number-call-templates to 5
+  changed user-patches.goo and system-patches.goo to init.goo's
+  to use tup's for dispatch cache
+  moved multicollection arg funs to seq (e.g., map2 ...)
+  = to work with two maps
+  set to be subclass of tab to get mem? to work properly
+
+removed
+
+  string-join string-repeat string-split
+  isa and %isa
+
+=== 0.125 ===
+
+summary 
+
+  >10% speed increases due to mangling caches
+  conformance to and improvement of test suite
+
+added
+
+  more col tests from manual
+  namespace mangling caches
+  sort sort-by sort! sort-by!
+  lots of goo exports
+  push pop del elts
+
+changed
+
+  fixed test suite 
+  removed over eager requires singleton precision
+  nary fix-let conversion corrected
+  opts-to-lst conversion of no applicable methods condition args
+  ord-app-mets takes args|... instead of args|<opts>
+
+removed
+
+  extraneous dp object variables
+
+=== 0.124 ===
+
+added
+
+  path searching code for loading modules
+  - preliminary support for precompiled modules.
+  better backtracing support
+
+changed
+
+  a bunch of signatures to | form which were missed before
+  the singleton-precision stuff to work nicely with paratype code
+
+=== 0.121 ===
+
+summary
+
+  more name changes towards release
+
+changed
+
+  lowercased txt/ filenames 
+  change dir x8r to eval
+
+=== 0.120 ===
+
+summary
+
+  more speed fixes (>15%) and more cleanups
+
+changed
+
+  made <mag> superclass of various classes
+  format to msg
+  format-to-string msg-to-str
+  used profiling to guide inlining more primitives
+  change ast-eval frames to use <rep>
+  rewrote tables to minimize esc's, tups, and cells
+  made tables use key-test instead of tab-test
+  renamed msg macro to msg*
+
+added
+
+  fab-elt-setter for fab-time setting of elts of immutable collections
+    used by fab-into and fab-fill
+
+removed
+
+  assoc
+
+=== 0.119 ===
+
+summary
+
+  speed fix (>10%) and more cleanups
+
+changed
+
+  @tup to be much faster
+  repeated fab to take fill for speed
+  push/popf to call push/pop!
+  first-then to use thunks
+
+removed
+
+  push/pop-last!
+
+=== 0.117 ===
+
+summary
+
+  split mutable/immutable
+
+added
+
+  low-into!
+
+changed
+
+  made mutability interface real
+  fixed all incorrect uses of it
+
+=== 0.116 ===
+
+summary
+
+  minor cleanups towards first goo release
+
+added
+
+  exported and checked/fixed packer
+  created partial evaluated format called msg speeding up compiler
+  port2str macro for doing str-out-ports
+
+changed
+
+  mucked around with mutable class exports to reflect manual
+  fixed dlgrt to have correct module name for dlsym functions
+
+
+=== 0.115 ===
+
+summary
+
+  changed directory names and did some bug fixing plus 
+  added mutable collection classes
+
+changed
+
+  moved arity check from dispatch to sig_val_type check in CALLx
+  changed from accumulator to packer
+  merged strings into string
+
+added
+
+  added <col!> <seq!> the mutable classes
+  added fun-val congruency checking and fixed failures
+  added/renamed del! in tab/goo
+  change add!/mem? for col/set
+
+removed
+
+=== 0.114 ===
+
+summary
+
+  renamed proto to goo and changed directory names
+
+=== 0.113 ===
+
+summary
+
+  basic bug fixes getting ready for a release
+
+changes
+
+  fixed macro-expand
+  fixed failed checks from below
+  changed from string-*-port to str-*-port
+
+removed
+
+added
+
+  arity check on dispatch
+  type check on props set during new
+
+=== 0.112 ===
+
+summary
+
+  tweaks to initial goo
+  
+added
+
+  accumulators, zip, cycle
+
+=== 0.111 ===
+
+summary
+
+  first version of goo
+
+=== 0.110 ===
+
+summary 
+
+  dependency tracking framework with compiler transactions
+
+removed
+ 
+  objectify
+
+added
+ 
+  objectify-with-subtransaction
+
+
+=== 0.109 ===
+
+summary
+
+  split into separate modules
+
+added
+
+  use/export
+  exported
+
+=== 0.108 ===
+
+summary
+
+  some general improvements for dynamic compilation including auto mode.
+
+adds
+
+  (auto-eval) for turning on automatic dynamic compilation
+
+changes
+
+  top comes up in auto mode detecting when dynamic compilation would
+  be beneficial (by looking for <ast-method>'s in ast).
 
 fixes
 
-  1.  nul/nul-slot  confusion  which  would  manifest  itself  in very
-  strange ways such as ((fun (x) x) nul) returning the empty list.
+  treatment of BOUNDP in dynamic compilation mode.
+  printing of nul.
 
-  2. () typed into proto's toplevel crashes proto
+=== 0.107 ===
 
-  3.   printing   prototypes   can   crash   proto,   in   particular,
-  (object-parents <lst>) at toplevel
+summary
 
+disabled ambiguous method errors
+split subtype/isa? into methods
 
-=== 0.65 6.894 RELEASE 6 ===
+=== 0.106 ===
+
+summary
+
+  this is a major new release moving in the direction of compilation
+  to machine code, whole program optimization, and introducing a
+  dynamic compilation based interpreter mode.  interpreter can be
+  switched from ast interpretation to dynamic p2c evaluation by using
+  (p2c-eval) and (ast-eval) top-level commands.  the default is
+  (ast-eval). 
+
+changes
+
+  made %lb/%lu correctly tag/untag locatives without previous
+  gyrations.
+  merged a bunch of classes into ast from ast-linearize to reduce
+  consing and generally streamline ast construction.
+
+adds
+
+  elt-or
+  dynamic evaluation support with p2c-exp
+  simple type inference module: typist.proto
+  simple compile time dispatch mechanism: optimize.proto
+  start of a vm: pvm.proto
+  start of compilation to machine code: p2m.proto
+  <immediate-constant>
+  <method-application>
+  ability to store source with function: ast:*record-source?*
+  ability to record function references for p2m
+  process-id
+  swapf
+  ddv
+
+fixes
+
+  improved ast-print to really work
+  signature slots are now properly converted to programs
+
+=== 0.105 ===
+
+summary
+
+  sped up p2c by replacing calls to format by calls to write-string
+
+=== 0.104 ===
+
+summary
+
+  lazy module loading
+
+changes
+
+  runtime modules are now lazily loaded
+  loc now tags and untags correctly
+  split out library specific primitives into their respective source files
+  increased symbol table initial size to 10000
+
+adds
+
+  opf 
+  $max-int $min-int
+  elt-or for specifying defaults to elt access
+  more support for win32 esp stdout flushing and gc-init
+
+fixes
+
+  corrected return values of do-key-vals, reduce, reduce+
+  made class printing terse during signatures and nested types
+
+=== 0.103 ===
+
+summary
+
+  james' faster calling convention
+
+=== 0.102 ===
+
+summary
+
+  big change that establishes a real type-based proto.  many types and a
+  type algebra is in place including dispatch to support them.
+
+changes
+
+  type-based proto
+  removed regsym
+  flattened object representation of regular and repeated instances 
+
+adds
+
+  <class> etc
+  class-name
+
+fixes
+
+  methods have names again in c output
+
+=== 0.101 ===
+
+summary
+
+first step towards type-based proto.  put in place holders for define
+class, named dc, and type creation functions, named t=, t+, t<.
+
+changes
+
+adds
+
+fixes
+
+=== 0.99 ===
+
+summary
+ 
+  p2m
+
+fixes
+
+  fab-map to use fab
+  empty to use fab
+  quotation extractor now scans debug-names and signatures
+  
+adds
+
+  keys
+  refs to symbols in functions and their signatures
+=======
+
+=== 0.98 ===
+
+summary
+
+  restarts.
+
+=== 0.97 ===
+
+summary
+ 
+  one class of binding.  use binding-kind to distinguish different types.
+
+changes
+
+  changed ast-define-binding to take a kind argument used for fabbing
+  binding obviating need for fab thunk
+
+adds
+
+  defaults to <simple-condition>'s condition-string and condition-arguments
+  curses primitives
+
+fixes
+ 
+  next-method to work in interpreter
+  got rid of description's from ast
+  bug in process-nary-closed-application to correctly fab a fix-let
+
+=== 0.96 ===
+
+summary
+
+  new compiler driver with dependency tracking and separate files.
+
+=== 0.95 ===
+
+summary
+
+  statement oriented c backend staged for native code emission plus
+  fixes to get test-suite to pass most tests
+
+fixes
+
+  fixed write-character to behave correctly when character-name didn't exist
+  added %call-next-method to boot's exports
+  fixed zero to use contagious call
+  fixed a bunch of collection methods shown up by test-suite including 
+    alter fab and fabs
+
+adds
+
+  introduced notion of computed and passive programs
+  reflected runtime signatures in ast so that signature creation would
+    be modeled correctly 
+  added registers to functions and registers to programs
+    and added simple-minded register allocation pass to analysis
+  overhauled p2c to output in statement oriented fashion
+    now perhaps a few dead-code eliminations during output
+
+=== 0.94 ===
+
+summary
+
+  compile-time modules implementing use and export
+
+=== 0.93 ===
+
+summary
+
+  ???
+
+=== 0.92 ===
+
+summary
+
+  more commented boot, redefinition support, proper cloning, and
+  more manageable printing
+
+fixes
+
+  clone inherited values in objects created with isa
+  removed lots of cruft from bootstrap unneeded
+  removed emulator remnants
+  increased size of initial symbol table
+  undef'd p in boot and x z in runtime and name in ast
+  don't dump bindings as debug-name for functions
+  CHECK_ARITY is now an inlined function
+
+additions
+
+  lots more boot comments 
+  *max-print-depth* and *max-print-length*
+  %clone primitive
+  redefinition support for changed prototypes
+
+=== 0.91 ===
+
+summary:
+
+  bug fixed 0.90 and added return type checking on interpreted functions.
 
 fixes:
 
-  singleton specializer problem: whereby methods dispatching on
-  singletons would infinitely loop if they returned false
-
-  incomplete printing of errors in top-level: where
-  <simple-condition>'s weren't being formatted
+  slot creation and p2c problems from 0.90.
 
 adds:
 
-  keyboard interrupt handling: which means that C-C will stop your
-  program and put you in a next level of the listener
+  return type checking on interpreted functions.
+  symbolic information for both arg and fun names
 
-=== 0.66 6.894 RELEASE 7 ===
+=== 0.90 ===
+
+summary:
+
+  more debuggability.  splits out function signature slots into
+  signature object.
 
 fixes:
 
-  fixed singleton dispatch cache problem
-
-  fixed DG to create working generics
+  flush getter caches when slot added.
 
 adds:
 
-  fab-gen (used in assignment 3)
+  signature object <sig>.
+  fun-name and sig-names for debuggability.
+  improved fun writing
+    to use fun-name instead of object-name.
+    optionally print return type
+    print fun-names when available
+  remove mark from closures to decrease size
+  <module-binding> with binding-home slot
+     superclass of global, runtime and predefined bindings
+  potential to shadow bindings in ast-define-binding
+
+=== 0.89 ===
+
+summary:
+
+  compiler bootstrapped.
+
+fixes:
+
+  got table iteration protocol working for larger tables.
+
+adds:
+
+  for loop support for collection keys:  (for (((tup key val) tab)) ...)
+
+=== 0.88 ===
+
+summary:
+
+  adds compileable macros and mif.  gets rid of need for loading
+  macros file, reducing startup time and forgotten macros.  gets
+  backtrace working.
+
+fixes:
+
+  makes mif a macro and not a special form
+
+  makes macros compileable
+
+  boot-symbol to recycle booted symbols
+
+  backtrace substrate
+
+adds:
+
+  backtrace function
+
+=== 0.87 ===
+
+summary:
+
+  adds next-method support
+
+fixes:
+
+adds:
+
+  next-method support through next-method and apply-next-method macros.
+
+=== 0.86 ===
+
+summary:
+
+fixes:
+
+  objectify <lst> passes through <programs> explicitly
+
+adds:
+
+  removes return type checks for any
+
+  type checks fix-lets
+
+  depth and length to C-based printer
+
+  skip unspecialized steps in cache
+
+  start of support for separate compilation
+
+  collecting macro
+
+  split top level initialization in closurize-main!
+
+  int's and chr's as inline constants
+
+=== 0.85 ===
+
+summary:
+
+fixes:
+
+adds:
+
+  sub-setter
+
+  <list> and list
+ 
+  rewrote list to be subclassable
+
+  rewrote all list-like ast classes as list subclasses
+
+=== 0.84 ===
+
+summary:
+
+fixes:
+
+  minimizes number of files
+
+  ENVNUL
+
+  make simple-table-vector use faster vector ops
+
+  inlines @empty?
+
+  slot ordering
+
+  duplicated <any> in object-parents
+
+  del-dups reversed answer
+
+  table growth
+
+  nary fixed-let
+
+adds:
+
+  split proto.c into prt.c and prt.h
+
+  stack allocation
+  
+  data stack
+
+  backtrace
+
+  return type checking
+
+  range checking on sequences
+
+=== 0.83 6.894 RELEASE 15 ===
+
+summary:
+
+fixes:
+
+  svec -> buf
+
+  #() now reads
+
+  redefinition of macros works
+
+  inverse symbol looking now works for interpreter defined bindings
+
+adds:
+
+  tail call analysis in ast
+
+=== 0.82 6.894 RELEASE 14 ===
+
+summary:
+
+  p2c bootstrapped.  p2c can now compile itself and produce a compilable
+  C file.  i have not thoroughly tested this, but i've fixed a bunch
+  of bugs and the code in ast-linearize and p2c is now working well.  
+
+fixes:
+
+  clr! ((x <tab>) fill)
+ 
+  eof-object? to be restricted to <chr>'s and otherwise return false.
+
+adds:
+
+  multiple values binding tup to let
+
+  loads "../SRC/patches.proto" now which you can hack
+
+=== 0.81 6.894 RELEASE 13 ===
+
+summary:
+
+closer to bootstrapping.  adds ffi support.
+
+fixes:
+
+  various piddly ast-linearize bugs.
+
+adds:
+
+ffi support
+
+  %fapply primitive to proto.h
+  fapply (fproc (args <opts>)) function to boot.proto
+
+
+=== 0.80 6.894 RELEASE 12 ===
+
+summary:
+
+exposes all bindings and takes longer to startup.  
+ast-linearize and p2c mostly working although p2c not quite bootstrapped.
+
+fixes:
+
+  do(<fun>, <tab>) now calls function with only table values
+  iteration protocol on <tab>
+
+adds:
+
+ast enhancements for code generation and typing
+
+  (slot <program> (program-register <int>))
+  (slot <program> program-type)
+
+stretchy-vectors (although i'll probably change their names to <buf>)
+
+  <svec> 
+
+  do-keyed(<fun>, <tab>) 
+
+for loops
+
+  (for ((,name ,value) ...) ,@body)
+
+ranges -- like dylan's range's and from for clause
+
+  <range> from from-to from-below from-above and "-by" versions
+
+  (for ((i (from 0))) ...) 
+  (for ((i (from-below 0 10))) ...) 
+
+steps -- like dylan's first/then for clause
+
+  <step> first-then
+
+  (for ((first? (first-then #t #f))) ...) 
+
+=== 0.72 6.894 RELEASE 10 ===
+
+fixes: 
+
+  (re)defining method on a runtime defined generic
+
+adds:
+
+  Method object-traits (x => <traits>)
+
+    returns the traits object of a given argument
+
+=== 0.71 6.894 RELEASE 9 ===
+
+fixes: 
+
+  redefining a runtime binding
 
 === 0.70 6.894 RELEASE 8 ===
 
@@ -141,994 +1078,81 @@ changes:
 
   tagged <int>'s <chr>'s and <loc>'s
 
-=== 0.71 6.894 RELEASE 9 ===
-
-fixes: 
-
-  redefining a runtime binding
-
-=== 0.72 6.894 RELEASE 10 ===
-
-fixes: 
-
-  (re)defining method on a runtime defined generic
-
-adds:
-
-  Method object-traits (x => <traits>)
-
-    returns the traits object of a given argument
-
-=== 0.80 6.894 RELEASE 12 ===
-
-summary:
-
-exposes all bindings and takes longer to startup.  
-ast-linearize and p2c mostly working although p2c not quite bootstrapped.
+=== 0.66 6.894 RELEASE 7 ===
 
 fixes:
 
-  do(<fun>, <tab>) now calls function with only table values
-  iteration protocol on <tab>
+  fixed singleton dispatch cache problem
+
+  fixed DG to create working generics
 
 adds:
 
-ast enhancements for code generation and typing
+  fab-gen (used in assignment 3)
 
-  (slot <program> (program-register <int>))
-  (slot <program> program-type)
-
-stretchy-vectors (although i'll probably change their names to <buf>)
-
-  <svec> 
-
-  do-keyed(<fun>, <tab>) 
-
-for loops
-
-  (for ((,name ,value) ...) ,@body)
-
-ranges -- like dylan's range's and from for clause
-
-  <range> from from-to from-below from-above and "-by" versions
-
-  (for ((i (from 0))) ...) 
-  (for ((i (from-below 0 10))) ...) 
-
-steps -- like dylan's first/then for clause
-
-  <step> first-then
-
-  (for ((first? (first-then #t #f))) ...) 
-
-=== 0.81 6.894 RELEASE 13 ===
-
-summary:
-
-closer to bootstrapping.  adds ffi support.
+=== 0.65 6.894 RELEASE 6 ===
 
 fixes:
 
-  various piddly ast-linearize bugs.
+  singleton specializer problem: whereby methods dispatching on
+  singletons would infinitely loop if they returned false
+
+  incomplete printing of errors in top-level: where
+  <simple-condition>'s weren't being formatted
 
 adds:
 
-ffi support
+  keyboard interrupt handling: which means that C-C will stop your
+  program and put you in a next level of the listener
 
-  %fapply primitive to proto.h
-  fapply (fproc (args <opts>)) function to boot.proto
-
-
-=== 0.82 6.894 RELEASE 14 ===
-
-summary:
-
-  p2c bootstrapped.  p2c can now compile itself and produce a compilable
-  C file.  i have not thoroughly tested this, but i've fixed a bunch
-  of bugs and the code in ast-linearize and p2c is now working well.  
-
-fixes:
-
-  clr! ((x <tab>) fill)
- 
-  eof-object? to be restricted to <chr>'s and otherwise return false.
-
-adds:
-
-  multiple values binding tup to let
-
-  loads "../SRC/patches.proto" now which you can hack
-
-=== 0.83 6.894 RELEASE 15 ===
-
-summary:
-
-fixes:
-
-  svec -> buf
-
-  #() now reads
-
-  redefinition of macros works
-
-  inverse symbol looking now works for interpreter defined bindings
-
-adds:
-
-  tail call analysis in ast
-
-=== 0.84 ===
-
-summary:
-
-fixes:
-
-  minimizes number of files
-
-  ENVNUL
-
-  make simple-table-vector use faster vector ops
-
-  inlines @empty?
-
-  slot ordering
-
-  duplicated <any> in object-parents
-
-  del-dups reversed answer
-
-  table growth
-
-  nary fixed-let
-
-adds:
-
-  split proto.c into prt.c and prt.h
-
-  stack allocation
-  
-  data stack
-
-  backtrace
-
-  return type checking
-
-  range checking on sequences
-
-=== 0.85 ===
-
-summary:
-
-fixes:
-
-adds:
-
-  sub-setter
-
-  <list> and list
- 
-  rewrote list to be subclassable
-
-  rewrote all list-like ast classes as list subclasses
-
-=== 0.86 ===
-
-summary:
-
-fixes:
-
-  objectify <lst> passes through <programs> explicitly
-
-adds:
-
-  removes return type checks for any
-
-  type checks fix-lets
-
-  depth and length to C-based printer
-
-  skip unspecialized steps in cache
-
-  start of support for separate compilation
-
-  collecting macro
-
-  split top level initialization in closurize-main!
-
-  int's and chr's as inline constants
-
-=== 0.87 ===
-
-summary:
-
-  adds next-method support
-
-fixes:
-
-adds:
-
-  next-method support through next-method and apply-next-method macros.
-
-=== 0.88 ===
-
-summary:
-
-  adds compileable macros and mif.  gets rid of need for loading
-  macros file, reducing startup time and forgotten macros.  gets
-  backtrace working.
-
-fixes:
-
-  makes mif a macro and not a special form
-
-  makes macros compileable
-
-  boot-symbol to recycle booted symbols
-
-  backtrace substrate
-
-adds:
-
-  backtrace function
-
-=== 0.89 ===
-
-summary:
-
-  compiler bootstrapped.
-
-fixes:
-
-  got table iteration protocol working for larger tables.
-
-adds:
-
-  for loop support for collection keys:  (for (((tup key val) tab)) ...)
-
-=== 0.90 ===
-
-summary:
-
-  more debuggability.  splits out function signature slots into
-  signature object.
-
-fixes:
-
-  flush getter caches when slot added.
-
-adds:
-
-  signature object <sig>.
-  fun-name and sig-names for debuggability.
-  improved fun writing
-    to use fun-name instead of object-name.
-    optionally print return type
-    print fun-names when available
-  remove mark from closures to decrease size
-  <module-binding> with binding-home slot
-     superclass of global, runtime and predefined bindings
-  potential to shadow bindings in ast-define-binding
-
-=== 0.91 ===
-
-summary:
-
-  bug fixed 0.90 and added return type checking on interpreted functions.
-
-fixes:
-
-  slot creation and p2c problems from 0.90.
-
-adds:
-
-  return type checking on interpreted functions.
-  symbolic information for both arg and fun names
-
-=== 0.92 ===
-
-summary
-
-  more commented boot, redefinition support, proper cloning, and
-  more manageable printing
+=== 0.64 6.894 RELEASE 5 ===
 
 fixes
 
-  clone inherited values in objects created with isa
-  removed lots of cruft from bootstrap unneeded
-  removed emulator remnants
-  increased size of initial symbol table
-  undef'd p in boot and x z in runtime and name in ast
-  don't dump bindings as debug-name for functions
-  CHECK_ARITY is now an inlined function
+  1.  nul/nul-slot  confusion  which  would  manifest  itself  in very
+  strange ways such as ((fun (x) x) nul) returning the empty list.
 
-additions
+  2. () typed into proto's toplevel crashes proto
 
-  lots more boot comments 
-  *max-print-depth* and *max-print-length*
-  %clone primitive
-  redefinition support for changed prototypes
+  3.   printing   prototypes   can   crash   proto,   in   particular,
+  (object-parents <lst>) at toplevel
 
-=== 0.93 ===
 
-summary
+=== 0.63 6.894 RELEASE 4 ===
 
-  ???
+fixed AND and OR macros and native pattern matching mechanism.
 
-=== 0.94 ===
-
-summary
-
-  compile-time modules implementing use and export
-
-=== 0.95 ===
-
-summary
-
-  statement oriented c backend staged for native code emission plus
-  fixes to get test-suite to pass most tests
-
-fixes
-
-  fixed write-character to behave correctly when character-name didn't exist
-  added %call-next-method to boot's exports
-  fixed zero to use contagious call
-  fixed a bunch of collection methods shown up by test-suite including 
-    alter fab and fabs
-
-adds
-
-  introduced notion of computed and passive programs
-  reflected runtime signatures in ast so that signature creation would
-    be modeled correctly 
-  added registers to functions and registers to programs
-    and added simple-minded register allocation pass to analysis
-  overhauled p2c to output in statement oriented fashion
-    now perhaps a few dead-code eliminations during output
-
-=== 0.96 ===
-
-summary
-
-  new compiler driver with dependency tracking and separate files.
-
-=== 0.97 ===
-
-summary
- 
-  one class of binding.  use binding-kind to distinguish different types.
-
-changes
-
-  changed ast-define-binding to take a kind argument used for fabbing
-  binding obviating need for fab thunk
-
-adds
-
-  defaults to <simple-condition>'s condition-string and condition-arguments
-  curses primitives
-
-fixes
- 
-  next-method to work in interpreter
-  got rid of description's from ast
-  bug in process-nary-closed-application to correctly fab a fix-let
-
-=== 0.98 ===
-
-summary
-
-  restarts.
-
-=== 0.99 ===
-
-summary
- 
-  p2m
-
-fixes
-
-  fab-map to use fab
-  empty to use fab
-  quotation extractor now scans debug-names and signatures
-  
-adds
-
-  keys
-  refs to symbols in functions and their signatures
-=======
-
-=== 0.101 ===
-
-summary
-
-first step towards type-based proto.  put in place holders for define
-class, named dc, and type creation functions, named t=, t+, t<.
-
-changes
-
-adds
-
-fixes
-
-=== 0.102 ===
-
-summary
-
-  big change that establishes a real type-based proto.  many types and a
-  type algebra is in place including dispatch to support them.
-
-changes
-
-  type-based proto
-  removed regsym
-  flattened object representation of regular and repeated instances 
-
-adds
-
-  <class> etc
-  class-name
-
-fixes
-
-  methods have names again in c output
-
-=== 0.103 ===
-
-summary
-
-  james' faster calling convention
-
-=== 0.104 ===
-
-summary
-
-  lazy module loading
-
-changes
-
-  runtime modules are now lazily loaded
-  loc now tags and untags correctly
-  split out library specific primitives into their respective source files
-  increased symbol table initial size to 10000
-
-adds
-
-  opf 
-  $max-int $min-int
-  elt-or for specifying defaults to elt access
-  more support for win32 esp stdout flushing and gc-init
-
-fixes
-
-  corrected return values of do-key-vals, reduce, reduce+
-  made class printing terse during signatures and nested types
-
-=== 0.105 ===
-
-summary
-
-  sped up p2c by replacing calls to format by calls to write-string
-
-=== 0.106 ===
-
-summary
-
-  this is a major new release moving in the direction of compilation
-  to machine code, whole program optimization, and introducing a
-  dynamic compilation based interpreter mode.  interpreter can be
-  switched from ast interpretation to dynamic p2c evaluation by using
-  (p2c-eval) and (ast-eval) top-level commands.  the default is
-  (ast-eval). 
-
-changes
-
-  made %lb/%lu correctly tag/untag locatives without previous
-  gyrations.
-  merged a bunch of classes into ast from ast-linearize to reduce
-  consing and generally streamline ast construction.
-
-adds
-
-  elt-or
-  dynamic evaluation support with p2c-exp
-  simple type inference module: typist.proto
-  simple compile time dispatch mechanism: optimize.proto
-  start of a vm: pvm.proto
-  start of compilation to machine code: p2m.proto
-  <immediate-constant>
-  <method-application>
-  ability to store source with function: ast:*record-source?*
-  ability to record function references for p2m
-  process-id
-  swapf
-  ddv
-
-fixes
-
-  improved ast-print to really work
-  signature slots are now properly converted to programs
-
-=== 0.107 ===
-
-summary
-
-disabled ambiguous method errors
-split subtype/isa? into methods
-
-=== 0.108 ===
-
-summary
-
-  some general improvements for dynamic compilation including auto mode.
-
-adds
-
-  (auto-eval) for turning on automatic dynamic compilation
-
-changes
-
-  top comes up in auto mode detecting when dynamic compilation would
-  be beneficial (by looking for <ast-method>'s in ast).
-
-fixes
-
-  treatment of BOUNDP in dynamic compilation mode.
-  printing of nul.
-
-=== 0.109 ===
-
-summary
-
-  split into separate modules
-
-added
-
-  use/export
-  exported
-
-=== 0.110 ===
-
-summary 
-
-  dependency tracking framework with compiler transactions
-
-removed
- 
-  objectify
-
-added
- 
-  objectify-with-subtransaction
-
-
-=== 0.111 ===
-
-summary
-
-  first version of goo
-
-=== 0.112 ===
-
-summary
-
-  tweaks to initial goo
-  
-added
-
-  accumulators, zip, cycle
-
-=== 0.113 ===
-
-summary
-
-  basic bug fixes getting ready for a release
-
-changes
-
-  fixed macro-expand
-  fixed failed checks from below
-  changed from string-*-port to str-*-port
-
-removed
-
-added
-
-  arity check on dispatch
-  type check on props set during new
-
-=== 0.114 ===
-
-summary
-
-  renamed proto to goo and changed directory names
-
-=== 0.115 ===
-
-summary
-
-  changed directory names and did some bug fixing plus 
-  added mutable collection classes
-
-changed
-
-  moved arity check from dispatch to sig_val_type check in CALLx
-  changed from accumulator to packer
-  merged strings into string
-
-added
-
-  added <col!> <seq!> the mutable classes
-  added fun-val congruency checking and fixed failures
-  added/renamed del! in tab/goo
-  change add!/mem? for col/set
-
-removed
-
-=== 0.116 ===
-
-summary
-
-  minor cleanups towards first goo release
-
-added
-
-  exported and checked/fixed packer
-  created partial evaluated format called msg speeding up compiler
-  port2str macro for doing str-out-ports
-
-changed
-
-  mucked around with mutable class exports to reflect manual
-  fixed dlgrt to have correct module name for dlsym functions
-
-
-=== 0.117 ===
-
-summary
-
-  split mutable/immutable
-
-added
-
-  low-into!
-
-changed
-
-  made mutability interface real
-  fixed all incorrect uses of it
-
-=== 0.119 ===
-
-summary
-
-  speed fix (>10%) and more cleanups
-
-changed
-
-  @tup to be much faster
-  repeated fab to take fill for speed
-  push/popf to call push/pop!
-  first-then to use thunks
-
-removed
-
-  push/pop-last!
-
-=== 0.120 ===
-
-summary
-
-  more speed fixes (>15%) and more cleanups
-
-changed
-
-  made <mag> superclass of various classes
-  format to msg
-  format-to-string msg-to-str
-  used profiling to guide inlining more primitives
-  change ast-eval frames to use <rep>
-  rewrote tables to minimize esc's, tups, and cells
-  made tables use key-test instead of tab-test
-  renamed msg macro to msg*
-
-added
-
-  fab-elt-setter for fab-time setting of elts of immutable collections
-    used by fab-into and fab-fill
-
-removed
-
-  assoc
-
-=== 0.121 ===
-
-summary
-
-  more name changes towards release
-
-changed
-
-  lowercased txt/ filenames 
-  change dir x8r to eval
-
-=== 0.124 ===
-
-added
-
-  path searching code for loading modules
-  - preliminary support for precompiled modules.
-  better backtracing support
-
-changed
-
-  a bunch of signatures to | form which were missed before
-  the singleton-precision stuff to work nicely with paratype code
-
-=== 0.125 ===
-
-summary 
-
-  >10% speed increases due to mangling caches
-  conformance to and improvement of test suite
-
-added
-
-  more col tests from manual
-  namespace mangling caches
-  sort sort-by sort! sort-by!
-  lots of goo exports
-  push pop del elts
-
-changed
-
-  fixed test suite 
-  removed over eager requires singleton precision
-  nary fix-let conversion corrected
-  opts-to-lst conversion of no applicable methods condition args
-  ord-app-mets takes args|... instead of args|<opts>
-
-removed
-
-  extraneous dp object variables
-
-=== 0.126 ===
-
-summary 
-
-  many speed and clean ups and test suite works 100%
-
-added
-
-  repeat join split
-  col-res-type
-  sort sort-by sort! sort-by!
-  fast and constant time subtype byte matrix including adding class-id
-  nested comment #/ /#
-
-changed
-
-  ends-with to suffix?
-  begins-with to prefix?
-  as-copy col-res
-  fab-gen to take fun-val arg
-  ast-linearize to merge various passes and to put 
-    dynamic extent analysis info into ast conversion
-  as on <col> to check for same type and return unchanged
-  dup to always dup
-  function-registers to be a vec
-  $number-call-templates to 5
-  changed user-patches.goo and system-patches.goo to init.goo's
-  to use tup's for dispatch cache
-  moved multicollection arg funs to seq (e.g., map2 ...)
-  = to work with two maps
-  set to be subclass of tab to get mem? to work properly
-
-removed
-
-  string-join string-repeat string-split
-  isa and %isa
-
-=== 0.127 ===
-
-summary
-
-  fixed backtraces and provided various fixes for installation 
-
-added
-
-  each and <each>
-  post
-  "" to *module-search-path* to allow absolute paths
-
-changed
-
-  turned off g2c-eval for windows
-  filtered backtraces for accurate frame and frame-var
-  changed command names to avoid accidental clashes
-  spread to zipped
-
-removed
-
-  user-patches and system-patches
-
-=== 0.128 ===
-
-summary
-
-   more first release fixes
-
-added
-
-   support for configuring DEFAULT_GOO_ROOT
-   toplevel Make.inc
-
-changed
-
-   lots of itsy changes towards getting real t* checks working
-   got explicit loading of .goo or .gooc files to have preference and work
-   lots of broken tup signatures
-   display to emit
-   better tuple return type printing
-
-=== 0.129 - 0.131 ===
-
-summary
-
-  tup type checks working and lots of tiny tweaks towards first release
-
-added
-
-  Make.inc.linux and Make.inc.win32
-  g2c-goo alias for g2c-top
-
-changed
-
-  type-elts split into union-elts and product-elts
-  fab-map to col
-  some incorrect tup ret types
-  made tup ret var names required because of ambiguity
-  bit neg tests
-  Makefile configs
-
-=== 0.133 ===
-
-summary
-
-  lots of bug fixes from first public release
-
-added
-
-changed
-
-  freebsd patches
-  ,top doesn't work
-  missing object-class
-  document that macros are unhygienic at present
-  add missing reader macro support
-  vec should print with #[] syntax
-  special forms produce a rather odd error when evaluated:
-  goo segfaults when attempting to instantiate a class with no superclasses.
-  pop! range-error for vec
-  len-setter range-error
-  pow should use contagious-call
-  flo pow returns 1.0
-  use c3 algorithm
-  descendents works like children
-  adding a property after the fact crashes goo
-
-=== 0.135 ===
-
-summary
-
-  first threads release
-
-=== 0.136 ===
-
-summary
-
-  sped up for threads
-
-=== 0.138 ===
-
-summary
-
-  lots of additions and fixes
+=== 0.62 6.894 RELEASE 3 ===
 
 added 
 
-  div                        -- for (op 1st (trunc/ _ _))
-  #xnnn, #onnn, #bnnn        -- for hex, oct, and bin literals
-  mod+ mod- modincf moddecf  -- for modulo arithmetic
-  (use file.c)               -- for easy c file integration
-  file-copy                  -- ya know
-  
-sped up
+  os-name
+  os-binding-value os-binding-value-setter
+  *proto-root*
+  src-filename
+  *path-separator*
+  *proto-version*
+  *proto-date*
 
-  dispatch with unspecialization simplification
-  atomic allocation of strings
+fixed file-opening-error
 
-fixed
+require that users now setenv PROTO_ROOT which in my case would be:
 
-  checked df redef.
-  dynamic var access
+  \jrb\ai\proto\
 
-changed
+must be slash terminated.
 
-  changed app-sup to allow any number of args.
-  ceiling/ to ceil/
+=== 0.61 6.894 RELEASE 2 ===
 
-=== 0.139 ===
+fixed gen-add-met problem whereby methods might not be properly
+replaced
 
-summary
+added initialization string
+added file-opening-error
 
-  more threads patches and configuration changes
+=== 0.60 6.894 RELEASE 1 ===
 
-fixed
+=== 0.50 Keith RELEASE 2 ===
 
-  setup handlers for new threads
+=== 0.40 Keith RELEASE 1 ===
 
-=== 0.140 ===
-
-summary
-
-  swig support 
-
-added
-
-  swig hook to module loader
-
-=== 0.142 ===
-
-summary
-
-  lots of bug fixes
-
-fixed
-
-  exported <restart>
-  ins to work properly
-  cleaned up %threads.c
-  documented object-class
-  rep-into! to not bomb on 
-  df's are redefineable in g2c-eval
-  use *.swig to only include .c once
-  ds now doesn't return the module binding
-  macros failing to match cause macro-error
-  pick now no longer reverses order of sequences
-
-added
-
-  rotf
-  $ $$ $$$
-  use/include
-  use/library
-  default add method
-  grt.c printing case for <rep>'s
-  GOO_EVAL_MODE environment variable
-  inlining adjectives and inlining for primitives
-  <fixnum>'s as separate class setting stage for <bignum>'s 
-
-fixed
-
-  PCHR to be unsigned char
-  <prim-int> to <fixnum>
-
-==== 0.143 ===
-
-summary
-
-  condition hierarchy and [] and {} syntax
-
-added
-
-  #[] syntax for vecs
-  condition hierarchy
-  stack overflow check
-  [] syntax
-  {} syntax
-  use *.h 
-
-fixed
-
-  try works at top level
-  macro-error again.

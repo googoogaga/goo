@@ -53,9 +53,9 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\T\title{{\Huge \goo\ Reference Manual v42 }}
+\T\title{{\Huge \goo\ Reference Manual v43 }}
 \T\author{{\huge Jonathan Bachrach} \\ {\Large MIT AI Lab}}
-\W\title{{\huge \goo\ Reference Manual v42 }}
+\W\title{{\huge \goo\ Reference Manual v43 }}
 \W\author{{\Large Jonathan Bachrach} \\ {\Large MIT AI Lab}}
 \date{\today}
 %\date{October 31, 1995}
@@ -750,7 +750,7 @@ All objects are derived from \kode{<any>}.
   \doc{coerces y to an instance of x.}
 % \generic{object-parents}{x|<any> => <lst>}
 % \generic{object-prop}{x|<any> => <lst>}
-\generic{object-class}{x|<any> => <class>}
+\generic{class-of}{x|<any> => <class>}
   \doc{returns concrete class of \kode{x}.}
 \generic{==}{x|<any> y|<any> => <log>}
   \doc{returns true iff \kode{x} and \kode{y} are computationally
@@ -1013,7 +1013,7 @@ Collections can be almost entirely defined in terms of an enumeration class.
   \doc{returns number of collection elements.}
 \generic{col-res-type}{x|<col> => <type>}
   \doc{appropriate instantiable type for creating collection results,
-       where the default is \kode{(object-class x)}.}
+       where the default is \kode{(class-of x)}.}
 \generic{empty?}{x|<col> => <log>}
   \doc{$\equiv$ \kode{(= (len x) 0)}}
 \generic{empty}{x|(t< <col>) => <col>}
@@ -1110,6 +1110,9 @@ place, the \kode{!} suffixed functions will be deprecated.}.
   \doc{fills \kode{x} with \kode{y}'s.}
 \generic{add!}{x|<col!> y|<any => <col!>}
   \doc{adds \kode{y} to \kode{x}.}
+\generic{elt!}{x|<col!> y|<any default|<fun> => <any>}
+  \doc{$\equiv$ \kode{(or (elt-or c k \#f) (set (elt c k) (default)))} but
+  uses unique default key for \kode{elt-or} instead of false.}
 \generic{del!}{x|<col!> key|<any> => <col!>}
   \doc{removes \kode{key} from \kode{x}.}
 \generic{zap!}{x|<col!> => <col!>}
@@ -1664,7 +1667,7 @@ where
 \class{<syntax-error>}{<compiler-error>}
 \class{<macro-error>}{<syntax-error>}
   \doc{a macro expansion failure.}
-\class{<ast-error>}{<compiler-error>}
+\class{<ast-error>}{<compiler-error> <simple-error>}
   \doc{an ast conversion failure.}
 \class{<namespace-error>}{<compiler-error> <simple-error>}
   \doc{a namespace form failure.}
@@ -1753,7 +1756,7 @@ String ports provide port interface mapped onto strings.
 \class{<str-out-port>}{<str-port> <in-port>}
 \method{open}{t|(t= <str-out-port>) dat|<str> \snl => <str-out-port>}
   \doc{creates string out port mapped to string \kode{dat}.}
-\form{PORT2STR}{(PORT2STR ,name ,@body)}
+\form{PORT-TO-STR}{(PORT-TO-STR ,name ,@body)}
   \doc{$\equiv$ \kode{(let ((,name (open <str-out-port> ""))) ,@body (port-contents ,name))}}
 \end{defs}
 

@@ -1,24 +1,31 @@
 NEW
 
-o report warnings as you go
-o source lines
-o change port2str to port-to-str
-o add [] syntax?
+o line numbers
+o perhaps change ... to *
+o publish reasons
 o lighter weight c initialization %met etc
+x read www.archub.org/arcsug.txt
+o redo syntax to work declaratively
+o add hygiene
+o fix gensyms to be hidden
+o report warnings as you go
+o split grt functions to appropriate files
+o function printing doesn't include nary arg
+o more tests
+o fix del-keys! and add protocol to enum for col!'s
 o no cat! met for vec
 o col doesn't work for <col.>'s 
+o change do-keyed and map-keyed to use items instead of keyed
+o perhaps *-or's should use thunks for default values
 o condition hierarchy
 o   restarts
 o     unbound variables
 o   import errors (namespace)
 o   arithmetic errors
 o   <name-error> ???
-o   condition-describe methods
-o split grt functions to appropriate files
-o split out runtime condition system
-o function printing doesn't include nary arg
-o more tests
-o fix del-keys! and add protocol to enum for col!'s
+x split out runtime condition system
+x add [] syntax?
+x change port2str to port-to-str
 
 OVERALL
 
