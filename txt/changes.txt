@@ -294,3 +294,17 @@ adds:
   return type checking
 
   range checking on sequences
+
+0.85
+
+summary:
+
+fixes:
+
+adds:
+
+  sub-setter
+
+  <list> and list
+ 
+  rewrote list to be subclassable
