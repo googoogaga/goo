@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (rev! (add '() 1))
 (dm f (x|<int>) (+ x x))
 (f 2)

@@ -1,3 +1,5 @@
+//// Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 #include "mini-prt.h"
 #include <w32api/windows.h>
 #include <w32api/mmsystem.h>

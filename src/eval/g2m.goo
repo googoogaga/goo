@@ -1,5 +1,8 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (use goo/boot)
 (use goo/macros)
+(use goo/packer)
 (use goo/runtime)
 (use goo/io/write)
 (use eval/syntax)
@@ -382,14 +385,14 @@
 
 (dm asm (e|<fix-let>)
   (cat! (flatten
-          (collecting ()
+          (packing ()
             (for ((binding (fix-let-bindings e)) (type (fix-let-types e))
                   (init (fix-let-arguments e)))
-              (collect (asm init))
+              (pack (asm init))
               (unless (or (not type) (unconstrained-type? type))
-                (collect (asm type))
-                (collect `((VM-TYP-CHK ,(asm-ref init) ,(asm-ref type)))))
-              (collect `((VM-STO ,(binding-index binding) ,(asm-ref init)))))))
+                (pack (asm type))
+                (pack `((VM-TYP-CHK ,(asm-ref init) ,(asm-ref type)))))
+              (pack `((VM-STO ,(binding-index binding) ,(asm-ref init)))))))
         (asm (fix-let-body e))
         (asm-used-rhs (dst e) `(VM-STO ,dst ,(asm-ref (fix-let-body e))))))
 
@@ -497,10 +500,10 @@
 
 (dm asm-functions (definitions)
   (flatten 
-   (rev! (collecting ()
+   (rev! (packing ()
            (do (fun (def) 
                  (unless (isa? def <ast-primitive>)
-                   (collect (asm-closure-structure def))))
+                   (pack (asm-closure-structure def))))
                definitions)))))
 
 (dm asm-frame-len (defn|<ast-function>)

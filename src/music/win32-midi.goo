@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (use goo)
 (use goo/boot)
 (use music/midi)
@@ -128,9 +130,7 @@
 
 (dm midi-in-devices (=> <lst>)
   (def max-device (%ib (%midi-in-find-max-device-id)))
-  (collecting ()
-    (do (fun (id) (collect (fab-midi-device id)))
-        (below max-device))))
+  (packing () (do (fun (id) (pack (fab-midi-device id))) (below max-device))))
 
 (dm start-midi-in-device (md|<win32-midi-device>)
   (ensure-midi-in-device-open md)

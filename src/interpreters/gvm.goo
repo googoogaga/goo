@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 ;;; TODO
 ;;; 
 ;;; SUPPORT PRIMITIVES
@@ -16,9 +18,9 @@
   (def byte (elt *code* *pc*)) (incf *pc*) byte)
 
 (dm fetch-bytes (n|<int>)
-  (collecting ()
+  (packing ()
     (for ((below n))
-      (collect (fetch-byte)))))
+      (pack (fetch-byte)))))
 
 (dm instruction-size (code|<vec> pc|<int>)
   (op-len (elt code pc)))
@@ -27,7 +29,7 @@
   (loc ((fetch-byte ()
           (def byte (elt code pc)) (incf pc) byte)
         (fetch-bytes (n) 
-          (collecting () (for ((below n)) (collect (fetch-byte))))))
+          (packing () (for ((below n)) (pack (fetch-byte))))))
     (op-decode (fetch-byte))))
 
 ;; TODO: MCASE
@@ -62,10 +64,10 @@
           (decode-clause ,name ,args))))
 
 (dm disassemble (code)
-  (collecting ()
+  (packing ()
     (rep loop ((pc 0))
       (unless (>= pc (len code))
-        (collect (instruction-decode code pc))
+        (pack (instruction-decode code pc))
         (loop (+ pc (instruction-size code pc)))))))
 
 (ddv *fun*  #f)

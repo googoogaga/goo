@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (use goo/boot)
 (use goo)
 (use goo/runtime)
@@ -72,10 +74,10 @@
                       ,(build-decision-tree*
                         g (+ i 1) n refs (filter mets type i))))
                   (code-gen-cases (mets)
-                    (collecting ()
+                    (packing ()
                       (rep loop ((mets mets))
                         (unless (empty? mets)
-                          (collect (code-gen-case (head mets) mets))
+                          (pack (code-gen-case (head mets) mets))
                           (loop (tail mets)))))))
               `(case-by (@oelt args ,i) @isa?
                  ,@(code-gen-cases ordered-mets)

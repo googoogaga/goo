@@ -1,4 +1,4 @@
-/* Copyright (c) 2001 Jonathan Bachrach */
+//// Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 #define IN_PRT_C
 #include "grt.h"

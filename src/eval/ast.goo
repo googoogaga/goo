@@ -4,6 +4,7 @@
 
 (use goo/boot)
 (use goo/macros)
+(use goo/packer)
 (use goo/runtime)
 (use goo/io/write)
 (use eval/syntax)
@@ -1558,7 +1559,7 @@
                 (environment-uses-modules (module-target-environment mod))))
              loader))))
     (do add-user modnames)
-    (collecting () (do (fun (v) (collect v)) users))))
+    (packing () (do (fun (v) (pack v)) users))))
 
 ;;; Remove a single module object from the loader.
 ;;; This should not be called externally, because it does not bother to

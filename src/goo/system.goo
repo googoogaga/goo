@@ -1,10 +1,11 @@
-;;;;;======================================================================
-;;;;;  System Interface
-;;;;;======================================================================
-;;;;;  Basic routines for manipulating the operating system and file
-;;;;;  system.  For inspiration as to what should go in here, consider the
-;;;;;  Dylan 'system' library or the less complicated parts of Common
-;;;;;  LISP.
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+;;;;======================================================================
+;;;;  System Interface
+;;;;======================================================================
+;;;;  Basic routines for manipulating the operating system and file
+;;;;  system.  For inspiration as to what should go in here, consider the
+;;;;  Dylan 'system' library or the less complicated parts of Common
+;;;;  LISP.
 
 (use goo)
 (use goo/cols/str)

@@ -1,4 +1,4 @@
-;;;; Copyright (c) 2001 Jonathan Bachrach
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo/boot)
 
@@ -20,21 +20,6 @@
 
 (ds (app ,f ,@args)
   `(napp ,f #f ,@args))
-
-;; TODO: GENERALIZED VERSION -- PROTOCOL + MULTIPLES
-
-(ds (collecting () ,@body)
-  (let ((name 'collector-))
-    `(let ((,name '()))
-       ,@body
-       (collected ,name))))
-
-(ds (collect ,value)
-  (let ((name 'collector-))
-    `(set ,name (pair ,value ,name))))
-  
-(ds (collected ,name)
-  `(rev! ,name))
 
 (ds (renew ,x ,@prop-inits)
   (let ((var  (gensym))
@@ -343,9 +328,6 @@
   app
   sup
   app-sup
-  collecting
-  collect
-  collected
   renew
   incf
   decf

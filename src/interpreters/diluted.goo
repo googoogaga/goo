@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (dm SHALLOW-ARGUMENT-REF (j)
   (fun () (frame-argument *env* j)) )
 

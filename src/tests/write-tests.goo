@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (writeln out 1)
 (writeln out 'a)
 (writeln out '(a))

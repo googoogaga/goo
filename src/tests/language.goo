@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 ;;; Test code for the Goo language.
 ;;;
 ;;; See the bug list at the top of tests/driver; some things there might

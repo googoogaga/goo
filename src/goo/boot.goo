@@ -1,16 +1,16 @@
-;;; Copyright (c) 2001 Jonathan Bachrach
-
-;;; GOALS
-;;;
-;;; SIMPLEST POSSIBLE
-;;; DYNAMIC ORDER FORM BY FORM
-;;; MINIMIZE OBJECT SYSTEM BOOT OBFUSCATION
-;;;
-;;; TODO
-;;; 
-;;; o RENAME LOW PRIMITIVES TO HAVE TWO %%'s
-;;; o INVENT NAMING CONVENTION FOR COMPILE TIME THINGS SAY &...?
-;;; 
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+;;;;
+;;;; GOALS
+;;;;
+;;;; SIMPLEST POSSIBLE
+;;;; DYNAMIC ORDER FORM BY FORM
+;;;; MINIMIZE OBJECT SYSTEM BOOT OBFUSCATION
+;;;;
+;;;; TODO
+;;;; 
+;;;; o RENAME LOW PRIMITIVES TO HAVE TWO %%'s
+;;;; o INVENT NAMING CONVENTION FOR COMPILE TIME THINGS SAY &...?
+;;;; 
 
 ;; Define the primitives whose code is in prt.c
 (dss (%define-primitives)
@@ -1240,9 +1240,8 @@
   (rep copy ((k 0))
     (if (@== (@olen args) k)
         r
-        (seq
-          (set (@oelt r k) (if (@== k i) arg (@oelt args k)))
-          (copy (@+ k 1))))))
+        (seq (set (@oelt r k) (if (@== k i) arg (@oelt args k)))
+             (copy (@+ k 1))))))
 
 (df ensure-singleton-cache
     (gen|<gen> cache mets|<lst> sorted-mets|<lst> i|<int> args|<opts>)
@@ -1382,7 +1381,7 @@
   ;;    (if (@< 0 (@len ambiguous-mets))
   ;;        (error "Ambiguous Method Error when calling %= on %=" gen args)
   (if (@empty? sorted-mets)
-      (error "No Applicable Methods Error when calling %= on %=" gen args)
+      (error "No applicable methods error when calling %= on %=" gen args)
       sorted-mets))
 
 ;; FIXME: note the horrible hack in g2c that makes it not generate

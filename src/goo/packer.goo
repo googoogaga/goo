@@ -1,6 +1,7 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (use goo/boot)
 (use goo/macros)
-(use goo/runtime)
 (use goo/types)
 (use goo/math)
 (use goo/cols/col)
@@ -17,7 +18,7 @@
 (dc <sim-packer> (<packer>))
 (dp packer-value (<sim-packer> => <any>))
 (dp packer-adder (<sim-packer> => <fun>))
-(dp packer-reser (<sim-packer> => <fun>) identity)
+(dp packer-reser (<sim-packer> => <fun>) (op _))
 
 (dm packer (init add|<fun> res|<fun> => <sim-packer>)
   (new <sim-packer> packer-value init packer-adder add packer-reser res))
@@ -31,7 +32,7 @@
   (packer '() pair (fun (x) (as t (rev! x)))))
 
 (dm packer-fab ((t (t= <int>)) => <packer>)
-  (packer 0 + identity))
+  (packer 0 + (op _)))
 
 (ds (packing-with (,@decls) ,@body)
   (match decls

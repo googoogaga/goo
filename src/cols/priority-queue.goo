@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (use goo)
 (use goo/runtime)
 
@@ -63,8 +65,8 @@
 (dm priority-order (test|<fun> keys|<seq> => <seq>)
   (def q (new <priority-queue> queue-test test))
   (do (fun (x) (heap-insert q x)) keys)
-  (collecting ()
+  (packing ()
     (while (> (len q) 0)
-      (collect (heap-extract-max q)))))
+      (pack (heap-extract-max q)))))
 
 (export priority-order)

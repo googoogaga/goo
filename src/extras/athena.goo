@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (use goo)
 
 ;;; general strategy
@@ -89,9 +91,9 @@
 (ds (declare ,name ,sig)
   (loc ((do-declare (polys params val)
           (def pnames
-                 (collecting () 
+                 (packing () 
                    (for ((key (keys params)))
-                     (collect (fab-name "x" key)))))
+                     (pack (fab-name "x" key)))))
           (def pparams
               (map (fun (n) `(,n <term>)) pnames))
           (def polybindings

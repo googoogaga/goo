@@ -1,7 +1,10 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (use goo/boot)
 (use goo/macros)
 (use goo/types)
 (use goo/math)
+(use goo/packer)
 (use goo/cols/col)
 (use goo/cols/colx)
 (use goo/cols/map)
@@ -384,7 +387,7 @@
 ;;; Internal functions
 
 (dm tab-keys (table|<tab> => <lst>)
-  (collecting () (do-keyed (fun (k v) (collect k)) table)))
+  (packing () (do-keyed (fun (k v) (pack k)) table)))
 
 (dm grow-table (table|<tab> => <tab>)
   ;; (let ((vec (%vector table)))

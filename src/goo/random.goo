@@ -1,3 +1,4 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 ;;;; Originally by Kevin Mitchell and Seth LaForge
 ;;;; A 29-bit parallel LFSR seeded by simple LCG, based on Sedgewick.
 

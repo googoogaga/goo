@@ -1,8 +1,9 @@
-;;; Copyright (c) 2001 Jonathan Bachrach
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 
 (use goo/boot)
 (use goo/macros)
+(use goo/packer)
 (use goo/runtime)
 (use eval/ast)
 (use goo/types)

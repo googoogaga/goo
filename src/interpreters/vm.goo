@@ -1,5 +1,6 @@
-;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
-;;; The runtime machine
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+;;;; ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;;; The runtime machine
 
 ;(dv *env* #f) ; already appears in chap6d
 (dv *val* #f)

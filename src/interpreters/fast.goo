@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (dm atom? ((e <lst>) => <log>) #f)
 (dm atom? ((e '())   => <log>) #t)
 (dm atom? ((e <any>) => <log>) #t)

@@ -1,6 +1,5 @@
-;;  -*- Mode: Scheme; Syntax: Scheme; Package: Scheme; -*-
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 ;;  Copyright (c) 1993, 1994 Richard Kelsey and Jonathan Rees.  See file COPYING.
-;;  Copyright (c) 2001 Jonathan Bachrach
 ;;  A little Scheme reader.
 ;;  Nonstandard things used:
 ;;   Ascii stuff: char->ascii, ascii->char, ascii-whitespaces, ascii-limit

@@ -1,6 +1,7 @@
-;;;; g2c - Goo-to-C compiler
-;;;; Copyright (c) 2001 Jonathan Bachrach
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
+;;;;
+;;;; g2c - Goo-to-C compiler
 ;;;;
 ;;;; General notes on this file:
 ;;;;

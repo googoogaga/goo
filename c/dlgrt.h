@@ -1,3 +1,5 @@
+//// Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 #undef EXT
 #undef DEF
 #undef VARREF

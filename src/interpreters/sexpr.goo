@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (dm sexpr-if-test ((exp <lst>) => <any>)
   (2nd exp))
 

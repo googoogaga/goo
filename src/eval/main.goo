@@ -1,4 +1,4 @@
-;;;; Copyright (c) 2001 Jonathan Bachrach
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 (use goo)
 (use goo/eval)
@@ -17,7 +17,7 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.121")
+(dv *goo-version* "0.122")
 (dv *goo-date*    "MAR 24, 2002")
 
 (msg out ";;; GOO\n")
