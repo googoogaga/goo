@@ -235,14 +235,14 @@
               (msg* code-out "\t%s \\\n" 
                     (obj-filename (module-name-to-relpath name)))))
         (put-obj (module-name mod)) 
-        (do (fun (name) (put-obj (as <sym> (sub name 0 (- (len name) 2))))) 
+        (do (fun (name) (when (suffix? name ".c") (put-obj (as <sym> (sub name 0 (- (len name) 2))))))
             (map (fun (n) (as <str> n)) (module-uses-c-files mod)))))
     (msg* code-out "\t%s\n\n" (obj-filename init-name))
     (msg* code-out "%s: $(C_OBJS_DD) $(OBJS)\n" exe-name)
     (msg* code-out "\t$(CC) $(LDFLAGS) -o %s $(C_OBJS_DD) $(OBJS) $(LIBS)"
          exe-name sep sep)
     (for-mods (mod loader)
-      (do (fun (l) (msg* code-out " %s" l)) (module-uses-c-libraries mod)))
+      (do (fun (l) (msg* code-out " -l%s" l)) (module-uses-c-libraries mod)))
     (msg* code-out "\n\nclean:\n\trm -f %s $(OBJS)\n" exe-name sep)))
 
 

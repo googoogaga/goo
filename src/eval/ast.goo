@@ -1098,7 +1098,8 @@
       ((".c" ".h")  
        (use-c-mod mod (as <sym> name)))
       ((".swig")
-       (def swig-mod (use-mod (as <sym> (1st (split (as <str> name) #\.)))))
+       (def swig-mod-name (as <sym> (1st (split (as <str> name) #\.))))
+       (def swig-mod (use-mod swig-mod-name))
        (use-c-mod swig-mod (cat-sym name ".c")))
       (#t
        (use-mod name))))
