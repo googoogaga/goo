@@ -254,7 +254,7 @@
     ;; Table totally full???  That's not right
     (error "The table is totally full this shouldn't happen")))
 
-(dm del (table|<tab> key => <log>)
+(dm del! (table|<tab> key => <col>)
   (esc return
     (def test-function (tab-test table))
     (def hash-function (tab-hash table))
@@ -292,9 +292,10 @@
           (incf bucket-index n-buckets))
         (outer (+ probes 1))))
     ;; Table totally full???  That's not right
-    (error "The table is totally full this shouldn't happen")))
+    (error "The table is totally full this shouldn't happen"))
+  table)
 
-(dm do-keyed (function|<fun> table|<tab> => <any>) ;; TODO: => (tup)
+(dm do-keyed (function|<fun> table|<tab>)
   (def vector    (%vector table))
   (def n-buckets (%n-buckets vector))
   (def depth     (%bucket-depth vector))
@@ -327,9 +328,10 @@
           (inner (+ i 1))))
       (outer (+ b 1)))))
 
-(dm zap (table|<tab> => <any>) ;; TODO: (tup)
+(dm zap! (table|<tab> => <tab>)
   (clr! (%vector table) $empty-cell-marker)
-  (set (%count table) 0))
+  (set (%count table) 0)
+  table)
 
 (dm len (table|<tab> => <int>)
   (%count table))
@@ -544,7 +546,7 @@
 ;;;; SETS
 ;;;;
 
-(dm add (c|<set> x => <set>)
+(dm add! (c|<set> x => <set>)
   (set (elt c x) #t))
 
 (dm mem? (c|<set> x => <log>)

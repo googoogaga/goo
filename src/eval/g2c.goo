@@ -106,7 +106,7 @@
 (df g2c-build-app (loader|<g2c-module-loader> => #f)
   (purge-outdated-modules loader)
   (def mod (probe-module loader (module-loader-app-modname loader)))
-  (puts out "Searching for undefined global bindings.\n")
+  (puts out "\nSearching for undefined global bindings.\n")
   (do-module-loader-modules report-undefined-global-bindings loader)
   (generate-c-application loader mod)
   (generate-makefile loader)

@@ -46,7 +46,7 @@
 ;; Deprecated
  (dg do-keyed (f|<fun> x|<col>))
  (dg map-keyed (f|<fun> x|<col> => <col>))
- (dg do2 (f|<fun> x|<col> y|<col> => (tup)))
+ (dg do2 (f|<fun> x|<col> y|<col>))
  (dg do3 (f|<fun> x|<col> y|<col> z|<col>))
  (dg map (f|<fun> x|<col> => <col>))
  (dg map2 (f|<fun> x|<col> y|<col> => <col>))
@@ -89,7 +89,7 @@
 
 ;; required: fab
 
-(dm fabs ((c (t< <col>)) objects|...)
+(dm fabs ((c (t< <col>)) objects|... => <col>)
   (into (fab c (len objects)) objects))
 
 (dm fill (dst|<col> val => <col>)
@@ -119,13 +119,13 @@
     (or (fin? e)
         (and (test (now e)) (fnd (nxt e))))))
 
-(dm fold (combine|<fun> init c|<col> => <any>)
+(dm fold (combine|<fun> init c|<col> => <col>)
   (rep red ((res init) (e (enum c)))
     (if (fin? e)
         res
         (red (combine res (now e)) (nxt e)))))
 
-(dm fold+ (combine|<fun> c|<col> => <any>)
+(dm fold+ (combine|<fun> c|<col> => <col>)
   (def e    (enum c))
   (def init (now e))
   (rep red ((res init) (e (nxt e)))

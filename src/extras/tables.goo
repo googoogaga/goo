@@ -104,7 +104,7 @@
     (new-value (vector <simple-table-vector>) (index <int>)) => (value)
   (set (elt (%data vector) index) new-value))
 
-(dm zap! ((vector <simple-table-vector>) fill)
+(dm clr! ((vector <simple-table-vector>) fill)
   (fill (%data vector) fill)
   (set (%vacated vector) 0))
 
@@ -293,9 +293,10 @@
 	    (inner (+ i 1))))
 	(+ b 1)))))
 
-(dm clrhash ((table <simple-table>) => ())
+(dm del! ((table <simple-table>) => <tab>)
   (zap! (%vector table) $empty-cell-marker)
-  (set (%count table) 0))
+  (set (%count table) 0)
+  table)
 
 (dm size ((table <simple-table>) => <int>)
   (%count table))

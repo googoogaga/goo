@@ -634,26 +634,28 @@ P YPcheck_call_types()
     traits = YPobject_class(fun);
   
   if (traits == YLmetG) {
-    int n = (int)stack_[sp - 2];
+    int n     = (int)stack_[sp - 2];
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P   specs = FUNSPECS(fun);
     int i;
     
     CHECK_ARITY(fun,naryp,n,arity);
-    for(i = 0; specs != Ynil; i++, specs = Ptail(specs))
-    {
+    for(i = 0; specs != Ynil; i++, specs = Ptail(specs)) {
       CHECK_TYPE(stack_[sp - 3 - i], Phead(specs));
     }
   } else if (traits == YLgenG) {
+    int n     = (int)stack_[sp - 2];
+    int arity = FUNARITY(fun);
+    int naryp = FUNNARYP(fun);
+    CHECK_ARITY(fun,naryp,n,arity);
   } else if (fun == 0) {
-	  if(Yunknown_function_error != 0)
-		  CALL1(0, Yunknown_function_error, Ynil);
-	  else
-	  {
-		  YPbreak("Tried to call an unbound function, but the function error\nhandler is itself unbound. Exiting.");
-		  exit(1);
-	  }
+    if(Yunknown_function_error != 0)
+      CALL1(0, Yunknown_function_error, Ynil);
+    else {
+      YPbreak("Tried to call an unbound function, but the function error\nhandler is itself unbound. Exiting.");
+      exit(1);
+    }
   } else {
 	  CALL1(0, Yunknown_function_error, fun);
   }

@@ -944,7 +944,8 @@
 (df fun-congruent? (x|<fun> y|<fun> => <log>)
   (and (@=  (@fun-arity x) (@fun-arity y))
        (@== (@fun-nary? x) (@fun-nary? y))
-       (@all2? @subtype? (@fun-specs x) (@fun-specs y))))
+       (@all2? @subtype? (@fun-specs x) (@fun-specs y))
+       (@subtype? (@fun-val x) (@fun-val y))))
 
 (dv *restarts-ok?* #f)
 
@@ -1383,23 +1384,17 @@
 ;; The way this works right now is not a long term solution.
 
 (df %dispatch (args|...)
-  (def n     (@olen args))
-  (def f     (%fun-reg))
-  (def arity (@fun-arity f)) 
-  (if (or (@= n arity) (and (@fun-nary? f) (@< arity n)))
-      (let ((result (gen-lookup f args)))
-        (if (@== (%class-of result) <int>) ;; int?
-            (let ((res
-                   (if (@= n 1) ;; getter?
-                       (prop-value-at (@oelt args 0) result)
-                       (set (prop-value-at (@oelt args 1) result)
-                            (@oelt args 0)))))
-              (%unlink-stack)
-              res)
-            (seq
-              (%unlink-stack)
-              (%raw-call (%head result) (%tail result)))))
-      (error "Wrong number of args when calling %= on %=" f args)))
+  (let ((result (gen-lookup (%fun-reg) args)))
+    (if (@== (%class-of result) <int>) ;; int?
+        (let ((res
+               (if (@= (@olen args) 1) ;; getter?
+                   (prop-value-at (@oelt args 0) result)
+                   (set (prop-value-at (@oelt args 1) result)
+                        (@oelt args 0)))))
+          (%unlink-stack)
+          res)
+        (seq (%unlink-stack)
+             (%raw-call (%head result) (%tail result))))))
 
 ;; READY TO REPLACE EARLY DISPATCHER WITH REAL DISPATCHER IN EARLY GEN'S
 

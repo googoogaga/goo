@@ -138,7 +138,7 @@
 (df detach-dependent (dependent|<dependent>)
   (do-keyed
    (fun (dependable junk)
-     (unless (del (dependents dependable) dependent)
+     (unless (del! (dependents dependable) dependent)
        (error "Cannot remove %= from %=.\n" dependent dependable)))
    (depends-on dependent))
   (set (depends-on dependent) (fab <tab> 0)))

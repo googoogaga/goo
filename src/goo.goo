@@ -65,7 +65,7 @@
  empty? empty elt-default elt-type key-type key-test fab fabs fill into any?
  all? fold fold+ find find-or del zap do do2 map map2 do-keyed
  map-keyed mem? keys items
- <col!> ;; del! 
+ <col!> del! add!
  elt-setter low-elt-setter len-setter len/fill-setter 
  ;; 3.7.1: Iteration protocol.
  <enum> enum fin? nxt now now-setter now-key

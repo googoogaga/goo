@@ -225,7 +225,7 @@
   ;;     sym)
   )
 
-(dm < (x|<sym> y|<sym>)
+(dm < (x|<sym> y|<sym> => <log>)
   (< (sym-name x) (sym-name y)))
 
 (dm to-str (x|<sym> => <str>)

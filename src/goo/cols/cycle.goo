@@ -7,10 +7,9 @@
 
 (exported
  ;;  represents infinite repeating series
- <cycle>
+ (dc <cycle> (<seq>))
  (dg cycle (e|... => <cycle>)))
 
-(dc <cycle> (<seq>))
 (dp cycle-elts (x|<cycle> => <vec>))
 
 (dm cycle (e|... => <cycle>)

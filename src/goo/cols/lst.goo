@@ -70,7 +70,7 @@
         (fab (- i 1) (new t tail res))
         res)))
 
-(dm fabs ((c (t< <lst>)) objects|...)
+(dm fabs ((c (t< <lst>)) objects|... => <lst>)
   (rep build ((index|<int> (- (len objects) 1)) (result|<lst> (empty c)))
     (if (< index 0)
         result
@@ -128,10 +128,10 @@
     (tail result)))
 
 ;;;; List protocol
-(dm lst (objects|...)
+(dm lst (objects|... => <lst>)
   (app fabs <lst> objects))
 
-(dm pair (h t|<lst>)
+(dm pair (h t|<lst> => <lst>)
   (new <lst> head h tail t))
 
 (dm push (c|<lst> x => <lst>)

@@ -132,6 +132,9 @@
 (dm * (x|<num> y|<num> => <num>)
   (contagious-call * x y))
 
+(dm / (x|<num> y|<num> => <num>)
+  (contagious-call / x y))
+
 (dm atan2 (y|<num> x|<num> => <num>)
   (contagious-call atan2 y x))
 
@@ -221,16 +224,16 @@
 
 ;;; <INT>
 
-(dm contagious-type (x|<int> y|<int> => <type>)
+(dm contagious-type (x|<int> y|<int> => (t= <int>))
   <int>)
 
-(dm contagious-type (x|<flo> y|<flo> => <type>)
+(dm contagious-type (x|<flo> y|<flo> => (t= <flo>))
   <flo>)
 
-(dm contagious-type (x|<int> y|<flo> => <type>)
+(dm contagious-type (x|<int> y|<flo> => (t= <flo>))
   <flo>)
 
-(dm contagious-type (x|<flo> y|<int> => <type>)
+(dm contagious-type (x|<flo> y|<int> => (t= <flo>))
   <flo>)
 
 (dm == (x|<int> y|<int> => <log>)

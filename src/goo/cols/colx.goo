@@ -5,6 +5,8 @@
 (use goo/cols/col)
 
 (pub dg add! (c|<col> x => <col>))
+(pub dg del! (c|<col> x => <col>))
+(pub dg zap! (c|<col> => <col>))
 (pub dg into (x|<col> y|<col> => <col>))
 
 (dm add! (c|<col> x => <col>)

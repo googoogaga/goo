@@ -142,3 +142,7 @@
 
 (dm puts (port|<str-out-port> s|<str>)
   (set (port-guts port) (cat! (port-guts port) s)))
+
+(ds (with-port-to-string (,name) ,@body)
+  `(let ((,name (open <str-out-port> "")))
+     ,@body (port-contents ,name)))
