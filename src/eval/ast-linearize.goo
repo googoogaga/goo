@@ -113,6 +113,35 @@
   (analyze-call-references o)
   (do-dynamic-extent! o))
 
+;;; CALL ANALYSIS
+
+(dm do-do-call-upgrades! ((o <program>))
+  (update-walk! do-call-upgrades! o))
+
+(dm do-call-upgrades! ((o <program>))
+  (do-do-call-upgrades! o))
+
+(dm unconstrained-type? ((o <program>) => <log>)
+  (and (isa? o <global-reference>) 
+       (== (binding-name (reference-binding o)) '<any>)))
+
+(dm do-call-upgrades! ((o <regular-application>))
+  (do-do-call-upgrades! o)
+  (if (isa? (application-function o) <local-reference>)
+      (let ((met (binding-value (reference-binding (application-function o)))))
+	(if (and (isa? met <ast-function>)
+		 (all? (compose unconstrained-type? binding-type)
+		       (function-bindings met))
+		 (unconstrained-type? (function-value met))
+		 (not (function-nary? met))
+		 (= (len (application-arguments o))
+		    (len (function-bindings met))))
+	    (set (application-known? o) #t))))
+  o)
+
+(dm analyze-calls (o)
+  (do-call-upgrades! o))
+
 ;;; FLATTENING
 
 (def-programs free-environment)

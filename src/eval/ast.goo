@@ -173,6 +173,7 @@
 
 (dv <regular-application> (isa <application>))
   (slot <regular-application> application-function)
+  (slot <regular-application> application-known? #f)
 
 (dv <predefined-application> (isa <application>))
   (slot <predefined-application> application-binding)

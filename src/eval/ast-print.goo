@@ -1,148 +1,145 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(dm recurring-write ((s <output-port>) (x <global-binding>) recur)
-  (format s "GB_%s" (binding-name x)))
+(dm write ((out <output-port>) (x <global-binding>))
+  (format out "GB_%s" (binding-name x)))
 
-(dm recurring-write ((s <output-port>) (x <predefined-binding>) recur)
-  (format s "PB_%s" (binding-name x)))
+(dm write ((out <output-port>) (x <predefined-binding>))
+  (format out "PB_%s" (binding-name x)))
 
-(dm recurring-write ((s <output-port>) (x <local-binding>) recur)
-  (format s "LB");
+(dm write ((out <output-port>) (x <local-binding>))
+  (format out "LB");
   (when (binding-mutable? x)
-    (format s "M"))
+    (format out "M"))
   (when (binding-dotted? x)
-    (format s "D"))
-  (format s "_%s" (binding-name x)))
+    (format out "D"))
+  (format out "_%s" (binding-name x)))
 
-(dm recurring-write ((s <output-port>) (x <magic-binding>) recur)
-  (format s "MK_%s" (binding-name x)))
+(dm write ((out <output-port>) (x <magic-binding>))
+  (format out "MK_%s" (binding-name x)))
 
-(dm recurring-write ((s <output-port>) (x <local-reference>) recur)
-  (format s "LR^%s" (reference-binding x)))
+(dm write ((out <output-port>) (x <local-reference>))
+  (format out "LR^%s" (reference-binding x)))
 
-(dm recurring-write ((s <output-port>) (x <global-reference>) recur)
-  (format s "GR^%s" (reference-binding x)))
+(dm write ((out <output-port>) (x <global-reference>))
+  (format out "GR^%s" (reference-binding x)))
 
-(dm recurring-write ((s <output-port>) (x <predefined-reference>) recur)
-  (format s "PR_%s" (reference-binding x)))
+(dm write ((out <output-port>) (x <predefined-reference>))
+  (format out "PR_%s" (reference-binding x)))
 
-(dm recurring-write ((s <output-port>) (x <local-assignment>) recur)
-  (format s "(SET %= %=)" (assignment-reference x) (assignment-form x)))
+(dm write ((out <output-port>) (x <local-assignment>))
+  (format out "(SET %= %=)" (assignment-reference x) (assignment-form x)))
 
-(dm recurring-write ((s <output-port>) (x <global-assignment>) recur)
-  (format s "(SET %= %=)" (assignment-binding x) (assignment-form x)))
+(dm write ((out <output-port>) (x <global-assignment>))
+  (format out "(SET %= %=)" (assignment-binding x) (assignment-form x)))
 
-(dm recurring-write ((s <output-port>) (x <definition>) recur)
-  (format s "(DEF %= %=)" (assignment-binding x) (assignment-form x)))
+(dm write ((out <output-port>) (x <definition>))
+  (format out "(DEF %= %=)" (assignment-binding x) (assignment-form x)))
 
-(dm recurring-write ((s <output-port>) (x <ast-function>) recur)
-  (format s "(%s " (function-kind x))
-  (print-list (function-bindings x) s)
-  (format s " %=)" (function-body x)))
+(dm write ((out <output-port>) (x <ast-function>))
+  (format out "(%s " (function-kind x))
+  (print-list (function-bindings x) out)
+  (format out " %=)" (function-body x)))
 
-(dm recurring-write ((s <output-port>) (x <alternative>) recur)
-  (format s "(IF %= %= %=)" 
+(dm write ((out <output-port>) (x <alternative>))
+  (format out "(IF %= %= %=)" 
 	  (alternative-condition x) 
 	  (alternative-consequent x) 
 	  (alternative-alternant x)))
 
-(dm recurring-write-list 
-    ((s <output-port>) x (prefix <string>) (suffix <string>) do-first?
-     #key print = recurring-write recur)
-  (format s prefix)
+(dm do-write-list 
+    ((out <output-port>) x (prefix <str>) (suffix <str>) do-first? print)
+  (format out prefix)
   (rep loop ((x x) (first? #t))
     (unless (empty? x)
-      (when (or (not do-first?) (not first?)) (format s " "))
-      (print (head x) s)
+      (when (or (not do-first?) (not first?)) (format out " "))
+      (print out (head x))
       (loop (tail x) #f)))
-  (format s suffix))
+  (format out suffix))
 
-(dm recurring-write ((s <output-port>) (x <sequential>) recur)
-  (recurring-write-list  recurx s "(SEQ" ")" #f))
+(dm write ((out <output-port>) (x <sequential>))
+  (write-list out "(SEQ" ")" #f write))
 
-(dm recurring-write ((s <output-port>) (x <constant>) recur)
-  (format s "C(%=)" (constant-value x)))
+(dm write ((out <output-port>) (x <constant>))
+  (format out "C(%=)" (constant-value x)))
 
-(dm recurring-write ((s <output-port>) (x <regular-application>) recur)
-  (format s "(%=%=)" (application-function x) (application-arguments x)))
+(dm write ((out <output-port>) (x <regular-application>))
+  (format out "(%=%=)" (application-function x) (application-arguments x)))
 
-(dm recurring-write ((s <output-port>) (x <predefined-application>) recur)
-  (format s "(%=%=)" (application-binding x) (application-arguments x)))
+(dm write ((out <output-port>) (x <predefined-application>))
+  (format out "(%=%=)" (application-binding x) (application-arguments x)))
 
-(dm recurring-write ((s <output-port>) (x <fix-let>) recur)
-  (format s "(LET ")
-  (print-list
-    (map list (fix-let-bindings x) (fix-let-arguments x) s print: print-list))
+(dm write ((out <output-port>) (x <fix-let>))
+  (format out "(LET ")
+  (write-list out (map list (fix-let-bindings x) (fix-let-arguments x)) write))
   (format s " %s)" (fix-let-body x)))
 
-(dm recurring-write ((s <output-port>) (x <argument-list>) recur)
-  (recurring-write-list  recurx s "" "" #f))
+(dm write ((out <output-port>) (x <argument-list>))
+  (write-list out x "" "" #f))
 
-(dm print-list 
-    ((s <output-port>) (x <list>) #key print = recurring-write)
-  (recurring-write-list x s "(" ")" #t print: print))
+(dm write-list ((out <output-port>) (x <list>) write)
+  (do-write-list out x "(" ")" #t write))
 
-(dm recurring-write ((s <output-port>) (x <locals>) recur)
-  (format s "(LOC ")
-  (print-list 
-    (map list (locals-bindings x) (locals-functions x)) s print: print-list)
-  (format s " %=)" (locals-body x)))
+(dm write ((out <output-port>) (x <locals>))
+  (format out "(LOC ")
+  (write-list 
+    out (map list (locals-bindings x) (locals-functions x)) write-list)
+  (format out " %=)" (locals-body x)))
 
-(dm recurring-write ((s <output-port>) (x <bind-exit>) recur)
-  (format s "(BLK %=)" (bind-exit-main-fun x)))
+(dm write ((out <output-port>) (x <bind-exit>))
+  (format out "(BLK %=)" (bind-exit-main-fun x)))
 
-(dm recurring-write ((s <output-port>) (x <unwind-protect>) recur)
-  (format s "(UNWIND-PROTECT %= %=)" 
+(dm write ((out <output-port>) (x <unwind-protect>))
+  (format out "(UNWIND-PROTECT %= %=)" 
 	  (unwind-protect-protected-thunk x) (unwind-protect-cleanup-thunk x)))
 
-(dm recurring-write ((s <output-port>) (x <monitor>) recur)
-  (format s "(MON %= %=)" (monitor-handler x) (monitor-main-thunk x)))
+(dm write ((out <output-port>) (x <monitor>))
+  (format out "(MON %= %=)" (monitor-handler x) (monitor-main-thunk x)))
 
-(dm recurring-write ((s <output-port>) (x <static-environment>) recur)
-  (format s "(ENV LOCS: (")
+(dm write ((out <output-port>) (x <static-environment>))
+  (format out "(ENV LOCS: (")
   (rep loc-loop ((x x) (first? #t))
     (if (isa? x <static-global-environment>)
-        (seq (format s ") GLOS: (")
+        (seq (format out ") GLOS: (")
 	     (rep glo-loop ((x (environment-next x)) (first? #t))
                (if (or (== x #f) (isa? x <static-empty-environment>))
-                   (format s "))")
-	           (seq (unless first? (format s " "))
-                        (format s "%=" (environment-binding x))
+                   (format out "))")
+	           (seq (unless first? (format out " "))
+                        (format out "%=" (environment-binding x))
                         (glo-loop (environment-next x) #f)))))
-        (seq (unless first? (format s " "))
-             (format s "%=" (environment-binding x))
+        (seq (unless first? (format out " "))
+             (format out "%=" (environment-binding x))
              (loc-loop (environment-next x) #f)))))
 
-(dm recurring-write ((s <output-port>) (x <free-environment>) recur)
-  (recurring-write-list  recurx s "(" ")" #t))
+(dm write ((out <output-port>) (x <free-environment>))
+  (write-list out x "(" ")" #t))
 
-(dm recurring-write ((s <output-port>) (x <closure-creation>) recur)
-  (format s "CC-%=(B %= F %=)" 
+(dm write ((out <output-port>) (x <closure-creation>))
+  (format out "CC-%=(B %= F %=)" 
           (closure-creation-index x) (closure-creation-bindings x)
           (closure-creation-free x)))
 
-(dm recurring-write ((s <output-port>) (x <quotation-binding>) recur)
-  (format s "QB(%= %=)" (binding-name x) (binding-value x)))
+(dm write ((out <output-port>) (x <quotation-binding>))
+  (format out "QB(%= %=)" (binding-name x) (binding-value x)))
 
-(dm recurring-write ((s <output-port>) (x <top-level-form>) recur)
-  (format s "FRM(PG %= QS %= DS %=)" 
+(dm write ((out <output-port>) (x <top-level-form>))
+  (format out "FRM(PG %= QS %= DS %=)" 
           (form-program x) (form-quotations x) (form-definitions x)))
 
-(dm recurring-write ((s <output-port>) (x <flattened-program>) recur)
-  (format s "PG(FM %=\n   QS %=\n   DS %=)" 
+(dm write ((out <output-port>) (x <flattened-program>))
+  (format out "PG(FM %=\n   QS %=\n   DS %=)" 
           (program-form x) (program-quotations x) (program-definitions x)))
 
-(dm recurring-write ((s <output-port>) (x <free-reference>) recur)
-  (format s "FR^%s" (reference-binding x)))
+(dm write ((out <output-port>) (x <free-reference>))
+  (format out "FR^%s" (reference-binding x)))
 
-(dm recurring-write ((s <output-port>) (x <box-creation>) recur)
-  (format s "BC(%=)" (box-reference x)))
+(dm write ((out <output-port>) (x <box-creation>))
+  (format out "BC(%=)" (box-reference x)))
 
-(dm recurring-write ((s <output-port>) (x <box-read>) recur)
-  (format s "BR(%=)" (box-reference x)))
+(dm write ((out <output-port>) (x <box-read>))
+  (format out "BR(%=)" (box-reference x)))
 
-(dm recurring-write ((s <output-port>) (x <box-write>) recur)
-  (format s "BW(%= %=)" (box-reference x) (box-form x)))
+(dm write ((out <output-port>) (x <box-write>))
+  (format out "BW(%= %=)" (box-reference x) (box-form x)))
 
 (dm function-kind ((x <function-definition>))
   (format-to-string "FD-%=" (function-index x)))
