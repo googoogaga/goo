@@ -11,8 +11,8 @@
 (dv $recent-size 54)
 
 (dc <random> (<any>))
-  (dp recent (<random> => <vec>) (fill (fab <vec> $recent-size) 0))
-  (dp recent-index (<random> => <int>) 0)
+  (dp! recent (<random> => <vec>) (fill (fab <vec> $recent-size) 0))
+  (dp! recent-index (<random> => <int>) 0)
 
 ;; 16 bits (almost) of lame-o pseudo-randomness
 ;; Taken from Table 16.1, Applied Cryptography 2nd ed.
