@@ -1112,3 +1112,23 @@ fixed
 
   PCHR to be unsigned char
   <prim-int> to <fixnum>
+
+==== 0.143 ===
+
+summary
+
+  condition hierarchy and [] and {} syntax
+
+added
+
+  #[] syntax for vecs
+  condition hierarchy
+  stack overflow check
+  [] syntax
+  {} syntax
+  use *.h 
+
+fixed
+
+  try works at top level
+  macro-error again.
