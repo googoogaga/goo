@@ -1,7 +1,7 @@
 /* Copyright (c) 2001 Jonathan Bachrach */
 
 #define IN_PRT_C
-#include "prt.h"
+#include "grt.h"
 #if !defined(MSWIN32)
 #include <sys/resource.h>
 #endif
@@ -599,9 +599,9 @@ extern P Ytype_error;
 extern P YOclass_isaQ(P, P);
 extern P YOisaQ;
 
-/* INLINE */ void CHECK_TYPE(P res, P type)
+INLINE void CHECK_TYPE(P res, P type)
 {
-  if (type != YLanyG) {
+  if (0 && type != YLanyG) {
     if (((YPobject_class(type) == YLclassG) ?
          YOclass_isaQ(res, type) :
          CALL2(0, YOisaQ, res, type)) == YPfalse)
@@ -610,8 +610,10 @@ extern P YOisaQ;
 }
 
 void check_fun_val_type (P res, P fun) {
+  /*  
   P t = FUNVALUE(fun); 
   CHECK_TYPE(res, t);
+  */
 }
 
 P check_type (P res, P type) {
@@ -1354,7 +1356,7 @@ P YPbuild_runtime_modules(
 typedef P (*PLD)();
 extern P YgooSsystemYTgoo_rootT;
 
-P YcompilerSp2cYPcompile (P name) {
+P YcompilerSg2cYPcompile (P name) {
   char  buf[256];
   sprintf(buf, CGEN_CC, YPsu(YgooSsystemYTgoo_rootT), name, name);
   // printf("EXECUTING %s\n", buf);
@@ -1364,7 +1366,7 @@ P YcompilerSp2cYPcompile (P name) {
   system(buf);
 }
 
-P YcompilerSp2cYPload(P name) {
+P YcompilerSg2cYPload(P name) {
   void* mod;
   char  buf[256];
   PLD   load;

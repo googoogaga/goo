@@ -1,199 +1,199 @@
 /* GOO 2 C $REVISION: 0.111 $ 
   */
 
-#include "prt.h"
+#include "grt.h"
 
-/* MODULE ENVIRONMENT: goo/type */
+/* MODULE ENVIRONMENT: goo/types */
 
-EXT(Ylst,"runtime/boot","lst");
-EXT(YPisa,"runtime/boot","%isa");
-EXT(Ysig_unification_vars,"runtime/boot","sig-unification-vars");
-EXT(YgooSmacrosYmatch_empty_list,"goo/macros","match-empty-list");
-EXT(Yhead_setter,"runtime/boot","head-setter");
-EXT(Ytype_class,"runtime/boot","type-class");
-EXT(Yunexec,"runtime/boot","unexec");
-EXT(Yfun_sig_setter,"runtime/boot","fun-sig-setter");
-EXT(YLunionG,"runtime/boot","<union>");
-EXT(Yunknown_function_error,"runtime/boot","unknown-function-error");
-EXT(Yhead,"runtime/boot","head");
-EXT(YLnumG,"runtime/boot","<num>");
-EXT(YLvecG,"runtime/boot","<vec>");
-EXT(YTboot_macro_module_namesT,"runtime/boot","*boot-macro-module-names*");
-EXT(YTboot_macro_expandersT,"runtime/boot","*boot-macro-expanders*");
-DEF(YgooStypeYanyQ,"goo/type","any?");
-EXT(Yclass_direct_props,"runtime/boot","class-direct-props");
-EXT(YLmetG,"runtime/boot","<met>");
-EXT(YgooSmacrosYfab_setter_name,"goo/macros","fab-setter-name");
-EXT(YTrestarts_okQT,"runtime/boot","*restarts-ok?*");
-EXT(Yprop_init,"runtime/boot","prop-init");
-EXT(Yfun_naryQ,"runtime/boot","fun-nary?");
-EXT(YPdefine_method,"runtime/boot","%define-method");
-EXT(YLsubclassG,"runtime/boot","<subclass>");
-EXT(Yclass_descendents,"runtime/boot","class-descendents");
-EXT(YPPmacro,"runtime/boot","%%macro");
-EXT(Ygen_refs_setter,"runtime/boot","gen-refs-setter");
-DEF(YgooStypeY2nd,"goo/type","2nd");
-EXT(YPsymbols,"runtime/boot","%symbols");
-EXT(YLmagG,"runtime/boot","<mag>");
-EXT(Yprop_value_setter,"runtime/boot","prop-value-setter");
-EXT(YLchrG,"runtime/boot","<chr>");
-EXT(YLflatG,"runtime/boot","<flat>");
-EXT(YgooSmacrosYvar_name,"goo/macros","var-name");
-EXT(YsubtypeQ,"runtime/boot","subtype?");
-EXT(YLtupG,"runtime/boot","<tup>");
-EXT(Ygen_refs,"runtime/boot","gen-refs");
-EXT(Ynot,"runtime/boot","not");
-DEF(YgooStypeYtQ,"goo/type","t?");
-EXT(Yfab_sym,"runtime/boot","fab-sym");
-EXT(YgooSmacrosYrevX,"goo/macros","rev!");
-EXT(Ysig_specs,"runtime/boot","sig-specs");
-EXT(Ytype_error,"runtime/boot","type-error");
-EXT(YOlst,"runtime/boot","@lst");
-EXT(YTreport_prop_unbound_errorsQT,"runtime/boot","*report-prop-unbound-errors?*");
-EXT(Yerror,"runtime/boot","error");
-EXT(YLsingletonG,"runtime/boot","<singleton>");
-DEF(YgooStypeYlen,"goo/type","len");
-EXT(Ynil,"runtime/boot","nil");
-EXT(Ywrong_number_arguments_error,"runtime/boot","wrong-number-arguments-error");
-EXT(YLfunG,"runtime/boot","<fun>");
-DEF(YgooStypeYtL,"goo/type","t<");
-EXT(Yprop_boundQ,"runtime/boot","prop-bound?");
-EXT(Ysig_val,"runtime/boot","sig-val");
-EXT(YLlstG,"runtime/boot","<lst>");
-EXT(Yfab_class,"runtime/boot","fab-class");
-EXT(YLlogG,"runtime/boot","<log>");
-EXT(Yfun_specs,"runtime/boot","fun-specs");
-EXT(Ytype_object,"runtime/boot","type-object");
-EXT(Yfun_name_setter,"runtime/boot","fun-name-setter");
-EXT(Yhandler_info_message,"runtime/boot","handler-info-message");
-EXT(YLsimple_handler_infoG,"runtime/boot","<simple-handler-info>");
-EXT(Ysym_name,"runtime/boot","sym-name");
-EXT(Ynul,"runtime/boot","nul");
-EXT(YgooSmacrosYcat_sym,"goo/macros","cat-sym");
-EXT(Yfun_name,"runtime/boot","fun-name");
-EXT(Yobject_class,"runtime/boot","object-class");
-EXT(Yprop_owner,"runtime/boot","prop-owner");
-DEF(YgooStypeYtE,"goo/type","t=");
-EXT(Yprop_value,"runtime/boot","prop-value");
-EXT(Yclass_parents,"runtime/boot","class-parents");
-EXT(YLseqG,"runtime/boot","<seq>");
-EXT(YLanyG,"runtime/boot","<any>");
-EXT(Yprop_type,"runtime/boot","prop-type");
-EXT(Yvec,"runtime/boot","vec");
-EXT(YgooSmacrosYnapp,"goo/macros","napp");
-DEF(YgooStypeYas,"goo/type","as");
-EXT(Yclass_props,"runtime/boot","class-props");
-EXT(YgooSmacrosYmatch_sublist,"goo/macros","match-sublist");
-EXT(YPprop_unbound_error,"runtime/boot","%prop-unbound-error");
-EXT(YLsigG,"runtime/boot","<sig>");
-EXT(YgooSmacrosYelt,"goo/macros","elt");
-EXT(Yfind_setter,"runtime/boot","find-setter");
-EXT(YOall2Q,"runtime/boot","@all2?");
-EXT(YgooSmacrosYEE,"goo/macros","==");
-EXT(YDmin_int,"runtime/boot","$min-int");
-EXT(YLcolG,"runtime/boot","<col>");
-EXT(YLclassG,"runtime/boot","<class>");
-EXT(Ysig_names,"runtime/boot","sig-names");
-EXT(Yfab_gen,"runtime/boot","fab-gen");
-EXT(YDmax_int,"runtime/boot","$max-int");
-DEF(YgooStypeYLproductG,"goo/type","<product>");
-EXT(Ytail_setter,"runtime/boot","tail-setter");
-EXT(YgooSmacrosYcat,"goo/macros","cat");
-EXT(YPwith_monitor,"runtime/boot","%with-monitor");
-EXT(Ysig_arity,"runtime/boot","sig-arity");
-EXT(YLreplace_generic_restartG,"runtime/boot","<replace-generic-restart>");
-EXT(YgooSmacrosYemptyQ,"goo/macros","empty?");
-EXT(YPvnul,"runtime/boot","%vnul");
-EXT(YTboot_macro_namesT,"runtime/boot","*boot-macro-names*");
-DEF(YgooStypeYtype_elts_setter,"goo/type","type-elts-setter");
-EXT(YLoptsG,"runtime/boot","<opts>");
-EXT(Yfind_getter,"runtime/boot","find-getter");
-EXT(YgooSmacrosYgensym,"goo/macros","gensym");
-DEF(YgooStypeYtT,"goo/type","t*");
-EXT(Ytail,"runtime/boot","tail");
-EXT(YLtypeG,"runtime/boot","<type>");
-EXT(Yord_app_mets,"runtime/boot","ord-app-mets");
-EXT(YLlocG,"runtime/boot","<loc>");
-EXT(YgooSmacrosYmatch_atom,"goo/macros","match-atom");
-EXT(Ytype_elts,"runtime/boot","type-elts");
-EXT(YgooSmacrosYmap,"goo/macros","map");
-EXT(Yclass_name,"runtime/boot","class-name");
 EXT(Ymay_isaQ,"runtime/boot","may-isa?");
-EXT(Yhandler_info_arguments,"runtime/boot","handler-info-arguments");
-EXT(YPsnul,"runtime/boot","%snul");
+EXT(YDmin_int,"runtime/boot","$min-int");
 EXT(Ygen_add_met,"runtime/boot","gen-add-met");
 EXT(Yprop_setter,"runtime/boot","prop-setter");
 EXT(Yfun_val,"runtime/boot","fun-val");
-DEF(YgooStypeYtA,"goo/type","t+");
-EXT(Yfun_names,"runtime/boot","fun-names");
-EXT(Yfile_opening_error,"runtime/boot","file-opening-error");
+DEF(YgooStypesYlen,"goo/types","len");
+DEF(YgooStypesYtL,"goo/types","t<");
 EXT(Yclass_ancestors,"runtime/boot","class-ancestors");
-EXT(Yincongruent_method_error,"runtime/boot","incongruent-method-error");
-EXT(YgooSmacrosYvar_type,"goo/macros","var-type");
+EXT(YPsnul,"runtime/boot","%snul");
 EXT(YgooSmacrosYmatch_unquote,"goo/macros","match-unquote");
-EXT(Ytup,"runtime/boot","tup");
-EXT(YgooSmacrosYpair,"goo/macros","pair");
 EXT(YLfloG,"runtime/boot","<flo>");
 EXT(YLsymG,"runtime/boot","<sym>");
 EXT(Ymet_appQ,"runtime/boot","met-app?");
 EXT(Ynew,"runtime/boot","new");
-EXT(Yprop_getter,"runtime/boot","prop-getter");
 EXT(Yobject_parents,"runtime/boot","object-parents");
-EXT(Yfun_mets,"runtime/boot","fun-mets");
 EXT(YOisaQ,"runtime/boot","@isa?");
+EXT(Yfun_mets,"runtime/boot","fun-mets");
 EXT(Ygen_src_setter,"runtime/boot","gen-src-setter");
+EXT(YgooSmacrosYEE,"goo/macros","==");
 EXT(YgooSmacrosYdo,"goo/macros","do");
+EXT(Yadd_prop,"runtime/boot","add-prop");
+DEF(YgooStypesYtE,"goo/types","t=");
+EXT(YgooSmacrosYpair,"goo/macros","pair");
 EXT(YLpropG,"runtime/boot","<prop>");
 EXT(YLgenG,"runtime/boot","<gen>");
-EXT(Ykeyboard_interrupt,"runtime/boot","keyboard-interrupt");
 EXT(Ygen_src,"runtime/boot","gen-src");
-EXT(YisaQ,"runtime/boot","isa?");
 EXT(Yobject_props,"runtime/boot","object-props");
-DEF(YgooStypeYall2Q,"goo/type","all2?");
-EXT(YTmacros_okQT,"runtime/boot","*macros-ok?*");
+EXT(YisaQ,"runtime/boot","isa?");
+EXT(YPsymbols,"runtime/boot","%symbols");
 EXT(Ysig_naryQ,"runtime/boot","sig-nary?");
+EXT(YPwith_monitor,"runtime/boot","%with-monitor");
 EXT(YLintG,"runtime/boot","<int>");
 EXT(YLstrG,"runtime/boot","<str>");
 EXT(Yfun_arity,"runtime/boot","fun-arity");
 EXT(YPprop,"runtime/boot","%prop");
-EXT(Yadd_prop,"runtime/boot","add-prop");
+DEF(YgooStypesYas,"goo/types","as");
+EXT(YgooSmacrosYemptyQ,"goo/macros","empty?");
+EXT(YPisa,"runtime/boot","%isa");
+EXT(Ytup,"runtime/boot","tup");
+EXT(YTmacros_okQT,"runtime/boot","*macros-ok?*");
+EXT(Yhandler_info_message,"runtime/boot","handler-info-message");
+EXT(YgooSmacrosYfab_setter_name,"goo/macros","fab-setter-name");
+EXT(YLreplace_generic_restartG,"runtime/boot","<replace-generic-restart>");
+EXT(Ysig_unification_vars,"runtime/boot","sig-unification-vars");
+EXT(Yhead_setter,"runtime/boot","head-setter");
+EXT(Ytype_class,"runtime/boot","type-class");
+EXT(Yunexec,"runtime/boot","unexec");
+EXT(Yfun_sig_setter,"runtime/boot","fun-sig-setter");
+EXT(Yincongruent_method_error,"runtime/boot","incongruent-method-error");
+EXT(YLunionG,"runtime/boot","<union>");
+EXT(YLtupG,"runtime/boot","<tup>");
+EXT(Yhead,"runtime/boot","head");
+EXT(YgooSmacrosYvar_name,"goo/macros","var-name");
+EXT(Ykeyboard_interrupt,"runtime/boot","keyboard-interrupt");
+EXT(YLnumG,"runtime/boot","<num>");
+EXT(YLvecG,"runtime/boot","<vec>");
+EXT(Yprop_getter,"runtime/boot","prop-getter");
+EXT(YTboot_macro_namesT,"runtime/boot","*boot-macro-names*");
+EXT(Yclass_direct_props,"runtime/boot","class-direct-props");
+DEF(YgooStypesYLproductG,"goo/types","<product>");
+EXT(YLmetG,"runtime/boot","<met>");
+DEF(YgooStypesYtA,"goo/types","t+");
+EXT(Yprop_init,"runtime/boot","prop-init");
+EXT(Yfun_naryQ,"runtime/boot","fun-nary?");
+EXT(YLsubclassG,"runtime/boot","<subclass>");
+EXT(Yclass_descendents,"runtime/boot","class-descendents");
+DEF(YgooStypesYtT,"goo/types","t*");
+EXT(Ygen_refs_setter,"runtime/boot","gen-refs-setter");
+EXT(YgooSmacrosYcat,"goo/macros","cat");
+EXT(YgooSmacrosYmatch_empty_list,"goo/macros","match-empty-list");
+EXT(Yprop_value_setter,"runtime/boot","prop-value-setter");
+EXT(YLchrG,"runtime/boot","<chr>");
+EXT(YLflatG,"runtime/boot","<flat>");
+EXT(Yhandler_info_arguments,"runtime/boot","handler-info-arguments");
+EXT(Ytype_error,"runtime/boot","type-error");
+EXT(YsubtypeQ,"runtime/boot","subtype?");
+EXT(Ygen_refs,"runtime/boot","gen-refs");
+EXT(Ynot,"runtime/boot","not");
+EXT(Yfab_sym,"runtime/boot","fab-sym");
+EXT(YgooSmacrosYelt,"goo/macros","elt");
+EXT(Ylst,"runtime/boot","lst");
+EXT(Ysig_specs,"runtime/boot","sig-specs");
+EXT(YOlst,"runtime/boot","@lst");
+EXT(YgooSmacrosYmap,"goo/macros","map");
+EXT(Ynul,"runtime/boot","nul");
+EXT(Yerror,"runtime/boot","error");
+EXT(YLsingletonG,"runtime/boot","<singleton>");
+EXT(YLfunG,"runtime/boot","<fun>");
+EXT(YTboot_macro_expandersT,"runtime/boot","*boot-macro-expanders*");
+EXT(Yprop_boundQ,"runtime/boot","prop-bound?");
+EXT(Yfile_opening_error,"runtime/boot","file-opening-error");
+EXT(YPPmacro,"runtime/boot","%%macro");
+EXT(Ysig_val,"runtime/boot","sig-val");
+EXT(YgooSmacrosYcat_sym,"goo/macros","cat-sym");
+EXT(YLlstG,"runtime/boot","<lst>");
+EXT(Yfab_class,"runtime/boot","fab-class");
+EXT(YLlogG,"runtime/boot","<log>");
+EXT(YLsimple_handler_infoG,"runtime/boot","<simple-handler-info>");
+EXT(Yfun_specs,"runtime/boot","fun-specs");
+EXT(Ytype_object,"runtime/boot","type-object");
+EXT(Yfun_name_setter,"runtime/boot","fun-name-setter");
+EXT(YgooSmacrosYrevX,"goo/macros","rev!");
+EXT(Yunknown_function_error,"runtime/boot","unknown-function-error");
+EXT(YPvnul,"runtime/boot","%vnul");
+EXT(Ysym_name,"runtime/boot","sym-name");
+EXT(YPdefine_method,"runtime/boot","%define-method");
+EXT(Yfun_name,"runtime/boot","fun-name");
+EXT(Yobject_class,"runtime/boot","object-class");
+EXT(Yprop_owner,"runtime/boot","prop-owner");
+EXT(Yprop_value,"runtime/boot","prop-value");
+EXT(Yclass_parents,"runtime/boot","class-parents");
+DEF(YgooStypesYall2Q,"goo/types","all2?");
+EXT(YgooSmacrosYmatch_sublist,"goo/macros","match-sublist");
+EXT(YLseqG,"runtime/boot","<seq>");
+EXT(Yprop_type,"runtime/boot","prop-type");
+EXT(YLanyG,"runtime/boot","<any>");
+EXT(YgooSmacrosYnapp,"goo/macros","napp");
+EXT(YTrestarts_okQT,"runtime/boot","*restarts-ok?*");
+EXT(Yclass_props,"runtime/boot","class-props");
+EXT(YDmax_int,"runtime/boot","$max-int");
+EXT(YPprop_unbound_error,"runtime/boot","%prop-unbound-error");
+EXT(Yvec,"runtime/boot","vec");
+EXT(YTboot_macro_module_namesT,"runtime/boot","*boot-macro-module-names*");
+EXT(YLsigG,"runtime/boot","<sig>");
+EXT(Yfun_names,"runtime/boot","fun-names");
+EXT(Yfind_setter,"runtime/boot","find-setter");
+EXT(YOall2Q,"runtime/boot","@all2?");
+EXT(YgooSmacrosYgensym,"goo/macros","gensym");
+EXT(Ynil,"runtime/boot","nil");
+EXT(YLcolG,"runtime/boot","<col>");
+EXT(Ysig_names,"runtime/boot","sig-names");
+EXT(YLclassG,"runtime/boot","<class>");
+EXT(Yfab_gen,"runtime/boot","fab-gen");
+DEF(YgooStypesYanyQ,"goo/types","any?");
+EXT(YgooSmacrosYvar_type,"goo/macros","var-type");
+EXT(Ytail_setter,"runtime/boot","tail-setter");
+EXT(Ysig_arity,"runtime/boot","sig-arity");
+EXT(YLmagG,"runtime/boot","<mag>");
+DEF(YgooStypesYtype_elts_setter,"goo/types","type-elts-setter");
+EXT(YLoptsG,"runtime/boot","<opts>");
+EXT(Yfind_getter,"runtime/boot","find-getter");
+EXT(Ytail,"runtime/boot","tail");
+EXT(Ywrong_number_arguments_error,"runtime/boot","wrong-number-arguments-error");
+EXT(YgooSmacrosYmatch_atom,"goo/macros","match-atom");
+DEF(YgooStypesY2nd,"goo/types","2nd");
+EXT(YLtypeG,"runtime/boot","<type>");
+EXT(Yord_app_mets,"runtime/boot","ord-app-mets");
+DEF(YgooStypesYtQ,"goo/types","t?");
+EXT(YLlocG,"runtime/boot","<loc>");
+EXT(Ytype_elts,"runtime/boot","type-elts");
+EXT(YTreport_prop_unbound_errorsQT,"runtime/boot","*report-prop-unbound-errors?*");
+EXT(Yclass_name,"runtime/boot","class-name");
 
 /* FORWARD QUOTATIONS: */
 
+DEFLIT(lit_2);
+DEFLIT(lit_10);
+DEFLIT(lit_3);
 DEFLIT(lit_16);
-DEFLIT(lit_26);
+DEFLIT(lit_25);
+DEFLIT(lit_1);
+DEFLIT(lit_9);
+DEFLIT(lit_21);
+DEFLIT(lit_7);
+DEFLIT(lit_24);
+DEFLIT(lit_18);
+DEFLIT(lit_11);
+DEFLIT(lit_19);
+DEFLIT(lit_8);
+DEFLIT(lit_22);
+DEFLIT(lit_23);
+DEFLIT(lit_12);
+DEFLIT(lit_13);
+DEFLIT(lit_14);
 DEFLIT(lit_0);
 DEFLIT(lit_15);
-DEFLIT(lit_1);
-DEFLIT(lit_10);
-DEFLIT(lit_21);
-DEFLIT(lit_4);
-DEFLIT(lit_18);
-DEFLIT(lit_2);
-DEFLIT(lit_9);
-DEFLIT(lit_11);
-DEFLIT(lit_12);
-DEFLIT(lit_23);
-DEFLIT(lit_22);
-DEFLIT(lit_25);
-DEFLIT(lit_14);
-DEFLIT(lit_8);
 DEFLIT(lit_20);
 DEFLIT(lit_6);
-DEFLIT(lit_13);
-DEFLIT(lit_24);
+DEFLIT(lit_4);
 DEFLIT(lit_17);
-DEFLIT(lit_19);
+DEFLIT(lit_26);
 DEFLIT(lit_5);
-DEFLIT(lit_7);
-DEFLIT(lit_3);
 
 /* FUNCTIONS: */
 
 LOCFOR(fun_type_elts_0);
 LOCFOR(fun_type_elts_setter_1);
-FUNFOR(YgooStypeYtA);
-FUNFOR(YgooStypeYtT);
+FUNFOR(YgooStypesYtA);
+FUNFOR(YgooStypesYtT);
 LOCFOR(fun_isaQ_4);
 LOCFOR(fun_subtypeQ_5);
 LOCFOR(fun_subtypeQ_6);
@@ -201,11 +201,11 @@ LOCFOR(fun_subtypeQ_7);
 LOCFOR(fun_subtypeQ_8);
 LOCFOR(fun_9);
 LOCFOR(fun_may_isaQ_10);
-FUNFOR(YgooStypeYtE);
-FUNFOR(YgooStypeYtL);
-FUNFOR(YgooStypeYtQ);
-extern P YgooStypeY___main_0___ ();
-extern P YgooStypeY___main_1___ ();
+FUNFOR(YgooStypesYtE);
+FUNFOR(YgooStypesYtL);
+FUNFOR(YgooStypesYtQ);
+extern P YgooStypesY___main_0___ ();
+extern P YgooStypesY___main_1___ ();
 
 /* FUNCTION CODES: */
 
@@ -218,7 +218,7 @@ LINK_STACK();
 loop:
   T0 = CALL2(1,VARREF(Yprop_value),Ux_,VARREF(Ytype_elts));
 UNLINK_STACK();
-  RET(T0);
+  QRET(T0);
 }
 
 FUNCODEDEF(fun_type_elts_setter_1) {
@@ -231,33 +231,33 @@ LINK_STACK();
 loop:
   T0 = CALL3(1,VARREF(Yprop_value_setter),Uz_,Ux_,VARREF(Ytype_elts));
 UNLINK_STACK();
-  RET(T0);
+  QRET(T0);
 }
 
-FUNCODEDEF(YgooStypeYtA) {
+FUNCODEDEF(YgooStypesYtA) {
   P args_;
   P T1,T0;
   P a1;
 LINK_STACK();
   NARGS(args_, 0);
 loop:
-  T1 = CALL2(1,VARREF(YgooStypeYas),VARREF(YLlstG),args_);
+  T1 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLlstG),args_);
   T0 = CALL3(1,VARREF(Ynew),VARREF(YLunionG),VARREF(Ytype_elts),T1);
 UNLINK_STACK();
-  RET(T0);
+  QRET(T0);
 }
 
-FUNCODEDEF(YgooStypeYtT) {
+FUNCODEDEF(YgooStypesYtT) {
   P args_;
   P T1,T0;
   P a1;
 LINK_STACK();
   NARGS(args_, 0);
 loop:
-  T1 = CALL2(1,VARREF(YgooStypeYas),VARREF(YLtupG),args_);
-  T0 = CALL3(1,VARREF(Ynew),VARREF(YgooStypeYLproductG),VARREF(Ytype_elts),T1);
+  T1 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLtupG),args_);
+  T0 = CALL3(1,VARREF(Ynew),VARREF(YgooStypesYLproductG),VARREF(Ytype_elts),T1);
 UNLINK_STACK();
-  RET(T0);
+  QRET(T0);
 }
 
 FUNCODEDEF(fun_isaQ_4) {
@@ -271,18 +271,16 @@ LINK_STACK();
   ARG(t_, 1);
 loop:
   T1 = CALL2(1,VARREF(YisaQ),o_,VARREF(YLtupG));
-  check_type(T1,VARREF(YLanyG));
   tmpF842 = T1;
   if (tmpF842 != YPfalse) {
-    T5 = CALL1(1,VARREF(YgooStypeYlen),o_);
+    T5 = CALL1(1,VARREF(YgooStypesYlen),o_);
     T7 = CALL1(1,VARREF(Ytype_elts),t_);
-    T6 = CALL1(1,VARREF(YgooStypeYlen),T7);
+    T6 = CALL1(1,VARREF(YgooStypesYlen),T7);
     T4 = CALL2(1,VARREF(YgooSmacrosYEE),T5,T6);
-    check_type(T4,VARREF(YLanyG));
     tmpF843 = T4;
     if (tmpF843 != YPfalse) {
       T10 = CALL1(1,VARREF(Ytype_elts),t_);
-      T9 = CALL3(1,VARREF(YgooStypeYall2Q),VARREF(YisaQ),o_,T10);
+      T9 = CALL3(1,VARREF(YgooStypesYall2Q),VARREF(YisaQ),o_,T10);
       T8 = T9;
     } else {
       T8 = YPfalse;
@@ -329,16 +327,15 @@ LINK_STACK();
   ARG(t2_, 1);
 loop:
   T3 = CALL1(1,VARREF(Ytype_elts),t1_);
-  T2 = CALL1(1,VARREF(YgooStypeYlen),T3);
+  T2 = CALL1(1,VARREF(YgooStypesYlen),T3);
   T5 = CALL1(1,VARREF(Ytype_elts),t2_);
-  T4 = CALL1(1,VARREF(YgooStypeYlen),T5);
+  T4 = CALL1(1,VARREF(YgooStypesYlen),T5);
   T1 = CALL2(1,VARREF(YgooSmacrosYEE),T2,T4);
-  check_type(T1,VARREF(YLanyG));
   tmpF844 = T1;
   if (tmpF844 != YPfalse) {
     T8 = CALL1(1,VARREF(Ytype_elts),t1_);
     T9 = CALL1(1,VARREF(Ytype_elts),t2_);
-    T7 = CALL3(1,VARREF(YgooStypeYall2Q),VARREF(YsubtypeQ),T8,T9);
+    T7 = CALL3(1,VARREF(YgooStypesYall2Q),VARREF(YsubtypeQ),T8,T9);
     T6 = T7;
   } else {
     T6 = YPfalse;
@@ -369,9 +366,9 @@ LINK_STACK();
   ARG(t_, 0);
 loop:
   T1 = CALL2(1,VARREF(Ymay_isaQ),VARREF(YLanyG),t_);
-  T0 = CALL1(1,VARREF(YgooStypeY2nd),T1);
+  T0 = CALL1(1,VARREF(YgooStypesY2nd),T1);
 UNLINK_STACK();
-  RET(T0);
+  QRET(T0);
 }
 
 FUNCODEDEF(fun_may_isaQ_10) {
@@ -386,20 +383,17 @@ LINK_STACK();
   ARG(t_, 1);
 loop:
   T1 = CALL2(1,VARREF(YgooSmacrosYEE),c_,VARREF(YLtupG));
-  check_type(T1,VARREF(YLanyG));
   tupQF845 = T1;
-  check_type(tupQF845,VARREF(YLanyG));
   tmpF846 = tupQF845;
   if (tmpF846 != YPfalse) {
     T6 = fun_9;
     T7 = CALL1(1,VARREF(Ytype_elts),t_);
-    T5 = CALL2(1,VARREF(YgooStypeYanyQ),T6,T7);
+    T5 = CALL2(1,VARREF(YgooStypesYanyQ),T6,T7);
     T4 = T5;
   } else {
     T4 = YPfalse;
   }
   T3 = T4;
-  check_type(T3,VARREF(YLanyG));
   someQF847 = T3;
   T8 = CALL2(1,VARREF(Ytup),tupQF845,someQF847);
   T2 = T8;
@@ -408,7 +402,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(YgooStypeYtE) {
+FUNCODEDEF(YgooStypesYtE) {
   P x_;
   P T0;
   P a1;
@@ -417,10 +411,10 @@ LINK_STACK();
 loop:
   T0 = CALL3(1,VARREF(Ynew),VARREF(YLsingletonG),VARREF(Ytype_object),x_);
 UNLINK_STACK();
-  RET(T0);
+  QRET(T0);
 }
 
-FUNCODEDEF(YgooStypeYtL) {
+FUNCODEDEF(YgooStypesYtL) {
   P x_;
   P T0;
   P a1;
@@ -429,23 +423,23 @@ LINK_STACK();
 loop:
   T0 = CALL3(1,VARREF(Ynew),VARREF(YLsubclassG),VARREF(Ytype_class),x_);
 UNLINK_STACK();
-  RET(T0);
+  QRET(T0);
 }
 
-FUNCODEDEF(YgooStypeYtQ) {
+FUNCODEDEF(YgooStypesYtQ) {
   P x_;
   P T1,T0;
   P a1;
 LINK_STACK();
   ARG(x_, 0);
 loop:
-  T1 = CALL1(1,VARREF(YgooStypeYtE),YPfalse);
-  T0 = CALL2(1,VARREF(YgooStypeYtA),x_,T1);
+  T1 = CALL1(1,VARREF(YgooStypesYtE),YPfalse);
+  T0 = CALL2(1,VARREF(YgooStypesYtA),x_,T1);
 UNLINK_STACK();
-  RET(T0);
+  QRET(T0);
 }
 
-P YgooStypeY___main_0___() {
+P YgooStypesY___main_0___() {
   P T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18;
   P T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2;
   P T1,T0;
@@ -453,10 +447,10 @@ loop:
   lit_0 = YPPsym((P)"<product>");
   T1 = (P)YPpair(VARREF(YLtypeG),Ynil);
   T0 = CALL2(1,VARREF(Yfab_class),LITREF(lit_0),T1);
-  VARSET(YgooStypeYLproductG,T0);
+  VARSET(YgooStypesYLproductG,T0);
   lit_1 = YPPsym((P)"type-elts");
   lit_2 = YPPsym((P)"_x");
-  T2 = YPsig(YPPlist(1,LITREF(lit_2)),YPPlist(1,VARREF(YgooStypeYLproductG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T2 = YPsig(YPPlist(1,LITREF(lit_2)),YPPlist(1,VARREF(YgooStypesYLproductG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   fun_type_elts_0 = YPmet(FUNCODEREF(fun_type_elts_0),LITREF(lit_1),T2,ENVNUL,PNUL,YPfalse);
   T5 = BOUNDP(Ytype_elts);
   if (T5 != YPfalse) {
@@ -469,56 +463,56 @@ loop:
   VARSET(Ytype_elts,T3);
   lit_3 = YPPsym((P)"type-elts-setter");
   lit_4 = YPPsym((P)"_z");
-  T7 = YPsig(YPPlist(2,LITREF(lit_4),LITREF(lit_2)),YPPlist(2,VARREF(YLtupG),VARREF(YgooStypeYLproductG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T7 = YPsig(YPPlist(2,LITREF(lit_4),LITREF(lit_2)),YPPlist(2,VARREF(YLtupG),VARREF(YgooStypesYLproductG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
   fun_type_elts_setter_1 = YPmet(FUNCODEREF(fun_type_elts_setter_1),LITREF(lit_3),T7,ENVNUL,PNUL,YPfalse);
-  T10 = BOUNDP(YgooStypeYtype_elts_setter);
+  T10 = BOUNDP(YgooStypesYtype_elts_setter);
   if (T10 != YPfalse) {
-    T9 = VARREF(YgooStypeYtype_elts_setter);
+    T9 = VARREF(YgooStypesYtype_elts_setter);
   } else {
     T9 = YPfalse;
   }
   T11 = fun_type_elts_setter_1;
   T8 = CALL2(1,VARREF(YPdefine_method),T9,T11);
-  VARSET(YgooStypeYtype_elts_setter,T8);
-  CALLN(1,VARREF(YPprop),5,VARREF(YgooStypeYLproductG),VARREF(Ytype_elts),VARREF(YgooStypeYtype_elts_setter),VARREF(YLtupG),VARREF(YPprop_unbound_error));
+  VARSET(YgooStypesYtype_elts_setter,T8);
+  CALLN(1,VARREF(YPprop),5,VARREF(YgooStypesYLproductG),VARREF(Ytype_elts),VARREF(YgooStypesYtype_elts_setter),VARREF(YLtupG),VARREF(YPprop_unbound_error));
   lit_5 = YPPsym((P)"as");
   lit_6 = YPPsym((P)"x");
   lit_7 = YPPsym((P)"y");
   T13 = YPsig(YPPlist(2,LITREF(lit_6),LITREF(lit_7)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
   T12 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_5),T13,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooStypeYas,T12);
+  VARSET(YgooStypesYas,T12);
   lit_8 = YPPsym((P)"len");
   T15 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLcolG)),YPfalse,YPint((P)1),VARREF(YLintG),Ynil);
   T14 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_8),T15,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooStypeYlen,T14);
+  VARSET(YgooStypesYlen,T14);
   lit_9 = YPPsym((P)"2nd");
   T17 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLseqG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   T16 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_9),T17,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooStypeY2nd,T16);
+  VARSET(YgooStypesY2nd,T16);
   lit_10 = YPPsym((P)"any?");
   lit_11 = YPPsym((P)"test");
   T19 = YPsig(YPPlist(2,LITREF(lit_11),LITREF(lit_6)),YPPlist(2,VARREF(YLfunG),VARREF(YLcolG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
   T18 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_10),T19,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooStypeYanyQ,T18);
+  VARSET(YgooStypesYanyQ,T18);
   lit_12 = YPPsym((P)"all2?");
   T21 = YPsig(YPPlist(3,LITREF(lit_11),LITREF(lit_6),LITREF(lit_7)),YPPlist(3,VARREF(YLfunG),VARREF(YLcolG),VARREF(YLcolG)),YPfalse,YPint((P)3),VARREF(YLlogG),Ynil);
   T20 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_12),T21,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YgooStypeYall2Q,T20);
+  VARSET(YgooStypesYall2Q,T20);
   lit_13 = YPPsym((P)"t+");
   lit_14 = YPPsym((P)"args");
   T22 = YPsig(YPPlist(1,LITREF(lit_14)),Ynil,YPtrue,YPint((P)0),VARREF(YLanyG),Ynil);
-  YgooStypeYtA = YPmet(FUNCODEREF(YgooStypeYtA),LITREF(lit_13),T22,ENVNUL,PNUL,YPfalse);
-  T23 = YgooStypeYtA;
-  VARSET(YgooStypeYtA,T23);
+  YgooStypesYtA = YPmet(FUNCODEREF(YgooStypesYtA),LITREF(lit_13),T22,ENVNUL,PNUL,YPfalse);
+  T23 = YgooStypesYtA;
+  VARSET(YgooStypesYtA,T23);
   lit_15 = YPPsym((P)"t*");
   T24 = YPsig(YPPlist(1,LITREF(lit_14)),Ynil,YPtrue,YPint((P)0),VARREF(YLanyG),Ynil);
-  YgooStypeYtT = YPmet(FUNCODEREF(YgooStypeYtT),LITREF(lit_15),T24,ENVNUL,PNUL,YPfalse);
-  T25 = YgooStypeYtT;
-  VARSET(YgooStypeYtT,T25);
+  YgooStypesYtT = YPmet(FUNCODEREF(YgooStypesYtT),LITREF(lit_15),T24,ENVNUL,PNUL,YPfalse);
+  T25 = YgooStypesYtT;
+  VARSET(YgooStypesYtT,T25);
   lit_16 = YPPsym((P)"isa?");
   lit_17 = YPPsym((P)"o");
   lit_18 = YPPsym((P)"t");
-  T28 = YPsig(YPPlist(2,LITREF(lit_17),LITREF(lit_18)),YPPlist(2,VARREF(YLanyG),VARREF(YgooStypeYLproductG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  T28 = YPsig(YPPlist(2,LITREF(lit_17),LITREF(lit_18)),YPPlist(2,VARREF(YLanyG),VARREF(YgooStypesYLproductG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
   T27 = fun_isaQ_4 = YPmet(FUNCODEREF(fun_isaQ_4),LITREF(lit_16),T28,ENVNUL,PNUL,YPfalse);
   T32 = BOUNDP(YisaQ);
   if (T32 != YPfalse) {
@@ -533,7 +527,7 @@ loop:
   return T26;
 }
 
-P YgooStypeY___main_1___() {
+P YgooStypesY___main_1___() {
   P T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19;
   P T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3;
   P T2,T1,T0;
@@ -541,7 +535,7 @@ loop:
   lit_19 = YPPsym((P)"subtype?");
   lit_20 = YPPsym((P)"t1");
   lit_21 = YPPsym((P)"t2");
-  T0 = YPsig(YPPlist(2,LITREF(lit_20),LITREF(lit_21)),YPPlist(2,VARREF(YgooStypeYLproductG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  T0 = YPsig(YPPlist(2,LITREF(lit_20),LITREF(lit_21)),YPPlist(2,VARREF(YgooStypesYLproductG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
   fun_subtypeQ_5 = YPmet(FUNCODEREF(fun_subtypeQ_5),LITREF(lit_19),T0,ENVNUL,PNUL,YPfalse);
   T3 = BOUNDP(YsubtypeQ);
   if (T3 != YPfalse) {
@@ -552,7 +546,7 @@ loop:
   T4 = fun_subtypeQ_5;
   T1 = CALL2(1,VARREF(YPdefine_method),T2,T4);
   VARSET(YsubtypeQ,T1);
-  T5 = YPsig(YPPlist(2,LITREF(lit_20),LITREF(lit_21)),YPPlist(2,VARREF(YLtypeG),VARREF(YgooStypeYLproductG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  T5 = YPsig(YPPlist(2,LITREF(lit_20),LITREF(lit_21)),YPPlist(2,VARREF(YLtypeG),VARREF(YgooStypesYLproductG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
   fun_subtypeQ_6 = YPmet(FUNCODEREF(fun_subtypeQ_6),LITREF(lit_19),T5,ENVNUL,PNUL,YPfalse);
   T8 = BOUNDP(YsubtypeQ);
   if (T8 != YPfalse) {
@@ -563,7 +557,7 @@ loop:
   T9 = fun_subtypeQ_6;
   T6 = CALL2(1,VARREF(YPdefine_method),T7,T9);
   VARSET(YsubtypeQ,T6);
-  T10 = YPsig(YPPlist(2,LITREF(lit_20),LITREF(lit_21)),YPPlist(2,VARREF(YgooStypeYLproductG),VARREF(YgooStypeYLproductG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  T10 = YPsig(YPPlist(2,LITREF(lit_20),LITREF(lit_21)),YPPlist(2,VARREF(YgooStypesYLproductG),VARREF(YgooStypesYLproductG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
   fun_subtypeQ_7 = YPmet(FUNCODEREF(fun_subtypeQ_7),LITREF(lit_19),T10,ENVNUL,PNUL,YPfalse);
   T13 = BOUNDP(YsubtypeQ);
   if (T13 != YPfalse) {
@@ -574,7 +568,7 @@ loop:
   T14 = fun_subtypeQ_7;
   T11 = CALL2(1,VARREF(YPdefine_method),T12,T14);
   VARSET(YsubtypeQ,T11);
-  T15 = YPsig(YPPlist(2,LITREF(lit_20),LITREF(lit_21)),YPPlist(2,VARREF(YgooStypeYLproductG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  T15 = YPsig(YPPlist(2,LITREF(lit_20),LITREF(lit_21)),YPPlist(2,VARREF(YgooStypesYLproductG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
   fun_subtypeQ_8 = YPmet(FUNCODEREF(fun_subtypeQ_8),LITREF(lit_19),T15,ENVNUL,PNUL,YPfalse);
   T18 = BOUNDP(YsubtypeQ);
   if (T18 != YPfalse) {
@@ -589,7 +583,7 @@ loop:
   lit_23 = YPPsym((P)"c");
   T21 = YPsig(YPPlist(1,LITREF(lit_18)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   fun_9 = YPmet(FUNCODEREF(fun_9),YPfalse,T21,ENVNUL,PNUL,YPfalse);
-  T20 = YPsig(YPPlist(2,LITREF(lit_23),LITREF(lit_18)),YPPlist(2,VARREF(YLclassG),VARREF(YgooStypeYLproductG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
+  T20 = YPsig(YPPlist(2,LITREF(lit_23),LITREF(lit_18)),YPPlist(2,VARREF(YLclassG),VARREF(YgooStypesYLproductG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
   fun_may_isaQ_10 = YPmet(FUNCODEREF(fun_may_isaQ_10),LITREF(lit_22),T20,ENVNUL,PNUL,YPfalse);
   T24 = BOUNDP(Ymay_isaQ);
   if (T24 != YPfalse) {
@@ -602,19 +596,19 @@ loop:
   VARSET(Ymay_isaQ,T22);
   lit_24 = YPPsym((P)"t=");
   T26 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YgooStypeYtE = YPmet(FUNCODEREF(YgooStypeYtE),LITREF(lit_24),T26,ENVNUL,PNUL,YPfalse);
-  T27 = YgooStypeYtE;
-  VARSET(YgooStypeYtE,T27);
+  YgooStypesYtE = YPmet(FUNCODEREF(YgooStypesYtE),LITREF(lit_24),T26,ENVNUL,PNUL,YPfalse);
+  T27 = YgooStypesYtE;
+  VARSET(YgooStypesYtE,T27);
   lit_25 = YPPsym((P)"t<");
   T28 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YgooStypeYtL = YPmet(FUNCODEREF(YgooStypeYtL),LITREF(lit_25),T28,ENVNUL,PNUL,YPfalse);
-  T29 = YgooStypeYtL;
-  VARSET(YgooStypeYtL,T29);
+  YgooStypesYtL = YPmet(FUNCODEREF(YgooStypesYtL),LITREF(lit_25),T28,ENVNUL,PNUL,YPfalse);
+  T29 = YgooStypesYtL;
+  VARSET(YgooStypesYtL,T29);
   lit_26 = YPPsym((P)"t?");
   T32 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T31 = YgooStypeYtQ = YPmet(FUNCODEREF(YgooStypeYtQ),LITREF(lit_26),T32,ENVNUL,PNUL,YPfalse);
-  T34 = YgooStypeYtQ;
-  T33 = VARSET(YgooStypeYtQ,T34);
+  T31 = YgooStypesYtQ = YPmet(FUNCODEREF(YgooStypesYtQ),LITREF(lit_26),T32,ENVNUL,PNUL,YPfalse);
+  T34 = YgooStypesYtQ;
+  T33 = VARSET(YgooStypesYtQ,T34);
   T30 = T33;
   return T30;
 }
@@ -623,7 +617,6 @@ loop:
 
 extern MODULE_INFO module_info_runtimeSboot;
 extern MODULE_INFO module_info_gooSmacros;
-extern MODULE_INFO module_info_runtimeSboot;
 
 static USE_INFO use_infos[] = {
   {&module_info_runtimeSboot},
@@ -632,378 +625,378 @@ static USE_INFO use_infos[] = {
 };
 
 static IMPORT_INFO import_infos[] = {
-  {"lst", &module_info_runtimeSboot, "lst"},
-  {"@len", &module_info_runtimeSboot, "@len"},
-  {"df", &module_info_runtimeSboot, "df"},
-  {"%i&", &module_info_runtimeSboot, "%i&"},
-  {"%f/", &module_info_runtimeSboot, "%f/"},
-  {"%iv", &module_info_runtimeSboot, "%iv"},
-  {"%isa", &module_info_runtimeSboot, "%isa"},
-  {"match", &module_info_gooSmacros, "match"},
+  {"loc", &module_info_runtimeSboot, "loc"},
+  {"may-isa?", &module_info_runtimeSboot, "may-isa?"},
+  {"%open-out-file", &module_info_runtimeSboot, "%open-out-file"},
+  {"sup", &module_info_gooSmacros, "sup"},
+  {"incf", &module_info_gooSmacros, "incf"},
+  {"$min-int", &module_info_runtimeSboot, "$min-int"},
+  {"without-prop-unbound-errors", &module_info_gooSmacros, "without-prop-unbound-errors"},
+  {"gen-add-met", &module_info_runtimeSboot, "gen-add-met"},
+  {"%vec", &module_info_runtimeSboot, "%vec"},
+  {"%raw-call", &module_info_runtimeSboot, "%raw-call"},
+  {"prop-setter", &module_info_runtimeSboot, "prop-setter"},
+  {"fun-val", &module_info_runtimeSboot, "fun-val"},
+  {"def", &module_info_runtimeSboot, "def"},
+  {"%fasin", &module_info_runtimeSboot, "%fasin"},
+  {"%cb", &module_info_runtimeSboot, "%cb"},
+  {"%met-code", &module_info_runtimeSboot, "%met-code"},
+  {"renew", &module_info_gooSmacros, "renew"},
+  {"isa", &module_info_runtimeSboot, "isa"},
+  {"class-ancestors", &module_info_runtimeSboot, "class-ancestors"},
+  {"cond", &module_info_gooSmacros, "cond"},
+  {"%snul", &module_info_runtimeSboot, "%snul"},
+  {"%velt-setter", &module_info_runtimeSboot, "%velt-setter"},
+  {"match-unquote", &module_info_gooSmacros, "match-unquote"},
+  {"<flo>", &module_info_runtimeSboot, "<flo>"},
+  {"<sym>", &module_info_runtimeSboot, "<sym>"},
+  {"for", &module_info_gooSmacros, "for"},
   {"%gen-src", &module_info_runtimeSboot, "%gen-src"},
-  {"sig-unification-vars", &module_info_runtimeSboot, "sig-unification-vars"},
+  {"met-app?", &module_info_runtimeSboot, "met-app?"},
+  {"new", &module_info_runtimeSboot, "new"},
+  {"object-parents", &module_info_runtimeSboot, "object-parents"},
+  {"@isa?", &module_info_runtimeSboot, "@isa?"},
+  {"fun-mets", &module_info_runtimeSboot, "fun-mets"},
+  {"%gen-code", &module_info_runtimeSboot, "%gen-code"},
+  {"%pair", &module_info_runtimeSboot, "%pair"},
+  {"gen-src-setter", &module_info_runtimeSboot, "gen-src-setter"},
+  {"==", &module_info_gooSmacros, "=="},
+  {"do", &module_info_gooSmacros, "do"},
+  {"add-prop", &module_info_runtimeSboot, "add-prop"},
+  {"%i^", &module_info_runtimeSboot, "%i^"},
+  {"%c<", &module_info_runtimeSboot, "%c<"},
+  {"%su", &module_info_runtimeSboot, "%su"},
+  {"pair", &module_info_gooSmacros, "pair"},
+  {"<prop>", &module_info_runtimeSboot, "<prop>"},
+  {"%binding-name", &module_info_runtimeSboot, "%binding-name"},
+  {"%file-type", &module_info_runtimeSboot, "%file-type"},
+  {"%current-out-port", &module_info_runtimeSboot, "%current-out-port"},
+  {"<gen>", &module_info_runtimeSboot, "<gen>"},
+  {"%f=", &module_info_runtimeSboot, "%f="},
+  {"gen-src", &module_info_runtimeSboot, "gen-src"},
+  {"%iv", &module_info_runtimeSboot, "%iv"},
+  {"object-props", &module_info_runtimeSboot, "object-props"},
+  {"isa?", &module_info_runtimeSboot, "isa?"},
+  {"%symbols", &module_info_runtimeSboot, "%symbols"},
+  {"case", &module_info_gooSmacros, "case"},
+  {"macro-expand", &module_info_runtimeSboot, "macro-expand"},
+  {"%fun-reg", &module_info_runtimeSboot, "%fun-reg"},
+  {"dv", &module_info_runtimeSboot, "dv"},
+  {"%slen", &module_info_runtimeSboot, "%slen"},
+  {"set", &module_info_runtimeSboot, "set"},
+  {"sig-nary?", &module_info_runtimeSboot, "sig-nary?"},
+  {"%with-monitor", &module_info_runtimeSboot, "%with-monitor"},
+  {"%sp-reg-setter", &module_info_runtimeSboot, "%sp-reg-setter"},
+  {"<int>", &module_info_runtimeSboot, "<int>"},
+  {"<str>", &module_info_runtimeSboot, "<str>"},
+  {"fun-arity", &module_info_runtimeSboot, "fun-arity"},
+  {"fun", &module_info_runtimeSboot, "fun"},
   {"%iu", &module_info_runtimeSboot, "%iu"},
-  {"match-empty-list", &module_info_gooSmacros, "match-empty-list"},
+  {"%prop", &module_info_runtimeSboot, "%prop"},
+  {"%sb", &module_info_runtimeSboot, "%sb"},
+  {"bound?", &module_info_runtimeSboot, "bound?"},
+  {"%str", &module_info_runtimeSboot, "%str"},
+  {"empty?", &module_info_gooSmacros, "empty?"},
+  {"%isa", &module_info_runtimeSboot, "%isa"},
+  {"tup", &module_info_runtimeSboot, "tup"},
+  {"*macros-ok?*", &module_info_runtimeSboot, "*macros-ok?*"},
+  {"%invoke-debugger", &module_info_runtimeSboot, "%invoke-debugger"},
+  {"%puts", &module_info_runtimeSboot, "%puts"},
+  {"handler-info-message", &module_info_runtimeSboot, "handler-info-message"},
+  {"ddv", &module_info_gooSmacros, "ddv"},
+  {"dp", &module_info_runtimeSboot, "dp"},
+  {"fab-setter-name", &module_info_gooSmacros, "fab-setter-name"},
+  {"%f*", &module_info_runtimeSboot, "%f*"},
+  {"<replace-generic-restart>", &module_info_runtimeSboot, "<replace-generic-restart>"},
+  {"sig-unification-vars", &module_info_runtimeSboot, "sig-unification-vars"},
+  {"collect", &module_info_gooSmacros, "collect"},
   {"ds", &module_info_runtimeSboot, "ds"},
   {"head-setter", &module_info_runtimeSboot, "head-setter"},
   {"type-class", &module_info_runtimeSboot, "type-class"},
   {"unexec", &module_info_runtimeSboot, "unexec"},
   {"fun-sig-setter", &module_info_runtimeSboot, "fun-sig-setter"},
-  {"%close-in-port", &module_info_runtimeSboot, "%close-in-port"},
-  {"<union>", &module_info_runtimeSboot, "<union>"},
-  {"@==", &module_info_runtimeSboot, "@=="},
-  {"unknown-function-error", &module_info_runtimeSboot, "unknown-function-error"},
-  {"def-fun-var", &module_info_gooSmacros, "def-fun-var"},
+  {"use", &module_info_runtimeSboot, "use"},
   {"%vlen", &module_info_runtimeSboot, "%vlen"},
-  {"dss", &module_info_runtimeSboot, "dss"},
-  {"assert", &module_info_gooSmacros, "assert"},
+  {"incongruent-method-error", &module_info_runtimeSboot, "incongruent-method-error"},
+  {"@<", &module_info_runtimeSboot, "@<"},
+  {"<union>", &module_info_runtimeSboot, "<union>"},
+  {"%i<<", &module_info_runtimeSboot, "%i<<"},
+  {"<tup>", &module_info_runtimeSboot, "<tup>"},
+  {"%close-out-port", &module_info_runtimeSboot, "%close-out-port"},
+  {"popf", &module_info_gooSmacros, "popf"},
+  {"%i*", &module_info_runtimeSboot, "%i*"},
+  {"ct-also", &module_info_runtimeSboot, "ct-also"},
+  {"%f/", &module_info_runtimeSboot, "%f/"},
   {"head", &module_info_runtimeSboot, "head"},
-  {"%os-val", &module_info_runtimeSboot, "%os-val"},
-  {"%fsin", &module_info_runtimeSboot, "%fsin"},
-  {"<num>", &module_info_runtimeSboot, "<num>"},
-  {"<vec>", &module_info_runtimeSboot, "<vec>"},
-  {"*boot-macro-module-names*", &module_info_runtimeSboot, "*boot-macro-module-names*"},
-  {"%i-", &module_info_runtimeSboot, "%i-"},
-  {"%os-name", &module_info_runtimeSboot, "%os-name"},
-  {"%file-type", &module_info_runtimeSboot, "%file-type"},
-  {"%untag", &module_info_runtimeSboot, "%untag"},
-  {"*boot-macro-expanders*", &module_info_runtimeSboot, "*boot-macro-expanders*"},
-  {"%su", &module_info_runtimeSboot, "%su"},
-  {"pushf", &module_info_gooSmacros, "pushf"},
-  {"%slen", &module_info_runtimeSboot, "%slen"},
-  {"class-direct-props", &module_info_runtimeSboot, "class-direct-props"},
-  {"@oelt", &module_info_runtimeSboot, "@oelt"},
-  {"<met>", &module_info_runtimeSboot, "<met>"},
-  {"app", &module_info_gooSmacros, "app"},
-  {"fab-setter-name", &module_info_gooSmacros, "fab-setter-name"},
-  {"isa", &module_info_runtimeSboot, "isa"},
-  {"rep", &module_info_runtimeSboot, "rep"},
-  {"*restarts-ok?*", &module_info_runtimeSboot, "*restarts-ok?*"},
-  {"%lb", &module_info_runtimeSboot, "%lb"},
-  {"try", &module_info_runtimeSboot, "try"},
-  {"%fcos", &module_info_runtimeSboot, "%fcos"},
-  {"prop-init", &module_info_runtimeSboot, "prop-init"},
-  {"%i^", &module_info_runtimeSboot, "%i^"},
-  {"fun-nary?", &module_info_runtimeSboot, "fun-nary?"},
-  {"%define-method", &module_info_runtimeSboot, "%define-method"},
-  {"%sb", &module_info_runtimeSboot, "%sb"},
-  {"%fasin", &module_info_runtimeSboot, "%fasin"},
-  {"<subclass>", &module_info_runtimeSboot, "<subclass>"},
-  {"case-by", &module_info_gooSmacros, "case-by"},
-  {"exported", &module_info_gooSmacros, "exported"},
-  {"%invoke-debugger", &module_info_runtimeSboot, "%invoke-debugger"},
-  {"class-descendents", &module_info_runtimeSboot, "class-descendents"},
-  {"%i?", &module_info_runtimeSboot, "%i?"},
-  {"opf", &module_info_gooSmacros, "opf"},
-  {"%gen-refs", &module_info_runtimeSboot, "%gen-refs"},
-  {"%%macro", &module_info_runtimeSboot, "%%macro"},
-  {"gen-refs-setter", &module_info_runtimeSboot, "gen-refs-setter"},
-  {"%sp-reg", &module_info_runtimeSboot, "%sp-reg"},
-  {"until", &module_info_gooSmacros, "until"},
+  {"var-name", &module_info_gooSmacros, "var-name"},
+  {"%fatan", &module_info_runtimeSboot, "%fatan"},
+  {"keyboard-interrupt", &module_info_runtimeSboot, "keyboard-interrupt"},
   {"%eq?", &module_info_runtimeSboot, "%eq?"},
-  {"%symbols", &module_info_runtimeSboot, "%symbols"},
-  {"<mag>", &module_info_runtimeSboot, "<mag>"},
+  {"when", &module_info_gooSmacros, "when"},
+  {"<num>", &module_info_runtimeSboot, "<num>"},
+  {"%app-args", &module_info_runtimeSboot, "%app-args"},
+  {"<vec>", &module_info_runtimeSboot, "<vec>"},
+  {"prop-getter", &module_info_runtimeSboot, "prop-getter"},
+  {"%ftanh", &module_info_runtimeSboot, "%ftanh"},
+  {"*boot-macro-names*", &module_info_runtimeSboot, "*boot-macro-names*"},
+  {"%sp-reg", &module_info_runtimeSboot, "%sp-reg"},
+  {"%selt-setter", &module_info_runtimeSboot, "%selt-setter"},
+  {"class-direct-props", &module_info_runtimeSboot, "class-direct-props"},
+  {"%untag", &module_info_runtimeSboot, "%untag"},
+  {"mif", &module_info_runtimeSboot, "mif"},
+  {"export", &module_info_runtimeSboot, "export"},
+  {"<met>", &module_info_runtimeSboot, "<met>"},
+  {"%fsinh", &module_info_runtimeSboot, "%fsinh"},
+  {"%build-runtime-modules", &module_info_runtimeSboot, "%build-runtime-modules"},
+  {"prop-init", &module_info_runtimeSboot, "prop-init"},
+  {"%os-val-setter", &module_info_runtimeSboot, "%os-val-setter"},
+  {"fun-nary?", &module_info_runtimeSboot, "fun-nary?"},
+  {"%os-name", &module_info_runtimeSboot, "%os-name"},
+  {"%fsin", &module_info_runtimeSboot, "%fsin"},
+  {"%lu", &module_info_runtimeSboot, "%lu"},
+  {"@==", &module_info_runtimeSboot, "@=="},
+  {"app", &module_info_gooSmacros, "app"},
+  {"%fu", &module_info_runtimeSboot, "%fu"},
+  {"<subclass>", &module_info_runtimeSboot, "<subclass>"},
+  {"%i!", &module_info_runtimeSboot, "%i!"},
+  {"while", &module_info_gooSmacros, "while"},
+  {"class-descendents", &module_info_runtimeSboot, "class-descendents"},
+  {"%put", &module_info_runtimeSboot, "%put"},
+  {"%i-", &module_info_runtimeSboot, "%i-"},
+  {"gen-refs-setter", &module_info_runtimeSboot, "gen-refs-setter"},
+  {"need-implementation", &module_info_gooSmacros, "need-implementation"},
+  {"cat", &module_info_gooSmacros, "cat"},
+  {"fin", &module_info_runtimeSboot, "fin"},
+  {"match-empty-list", &module_info_gooSmacros, "match-empty-list"},
+  {"dc", &module_info_runtimeSboot, "dc"},
+  {"%bb", &module_info_runtimeSboot, "%bb"},
+  {"%i<", &module_info_runtimeSboot, "%i<"},
+  {"%flog", &module_info_runtimeSboot, "%flog"},
   {"prop-value-setter", &module_info_runtimeSboot, "prop-value-setter"},
   {"<chr>", &module_info_runtimeSboot, "<chr>"},
   {"<flat>", &module_info_runtimeSboot, "<flat>"},
-  {"%ftanh", &module_info_runtimeSboot, "%ftanh"},
-  {"%unlink-stack", &module_info_runtimeSboot, "%unlink-stack"},
-  {"var-name", &module_info_gooSmacros, "var-name"},
+  {"quasiquote", &module_info_runtimeSboot, "quasiquote"},
+  {"%app-filename", &module_info_runtimeSboot, "%app-filename"},
+  {"handler-info-arguments", &module_info_runtimeSboot, "handler-info-arguments"},
+  {"%current-in-port", &module_info_runtimeSboot, "%current-in-port"},
+  {"type-error", &module_info_runtimeSboot, "type-error"},
+  {"%fb", &module_info_runtimeSboot, "%fb"},
   {"subtype?", &module_info_runtimeSboot, "subtype?"},
-  {"%i<", &module_info_runtimeSboot, "%i<"},
-  {"<tup>", &module_info_runtimeSboot, "<tup>"},
   {"gen-refs", &module_info_runtimeSboot, "gen-refs"},
   {"not", &module_info_runtimeSboot, "not"},
-  {"%open-out-file", &module_info_runtimeSboot, "%open-out-file"},
-  {"%met-code", &module_info_runtimeSboot, "%met-code"},
-  {"use", &module_info_runtimeSboot, "use"},
-  {"quasiquote", &module_info_runtimeSboot, "quasiquote"},
+  {"%process-module", &module_info_runtimeSboot, "%process-module"},
+  {"%f-", &module_info_runtimeSboot, "%f-"},
+  {"decf", &module_info_gooSmacros, "decf"},
+  {"opf", &module_info_gooSmacros, "opf"},
+  {"pushf", &module_info_gooSmacros, "pushf"},
+  {"%peek", &module_info_runtimeSboot, "%peek"},
   {"fab-sym", &module_info_runtimeSboot, "fab-sym"},
-  {"rev!", &module_info_gooSmacros, "rev!"},
+  {"elt", &module_info_gooSmacros, "elt"},
+  {"lst", &module_info_runtimeSboot, "lst"},
+  {"%gen-refs", &module_info_runtimeSboot, "%gen-refs"},
+  {"%%sym", &module_info_runtimeSboot, "%%sym"},
   {"sig-specs", &module_info_runtimeSboot, "sig-specs"},
-  {"type-error", &module_info_runtimeSboot, "type-error"},
   {"@lst", &module_info_runtimeSboot, "@lst"},
-  {"*report-prop-unbound-errors?*", &module_info_runtimeSboot, "*report-prop-unbound-errors?*"},
-  {"dl", &module_info_runtimeSboot, "dl"},
+  {"map", &module_info_gooSmacros, "map"},
+  {"%loc-val-setter", &module_info_runtimeSboot, "%loc-val-setter"},
+  {"nul", &module_info_runtimeSboot, "nul"},
   {"error", &module_info_runtimeSboot, "error"},
   {"<singleton>", &module_info_runtimeSboot, "<singleton>"},
-  {"nil", &module_info_runtimeSboot, "nil"},
-  {"wrong-number-arguments-error", &module_info_runtimeSboot, "wrong-number-arguments-error"},
+  {"%open-in-file", &module_info_runtimeSboot, "%open-in-file"},
   {"<fun>", &module_info_runtimeSboot, "<fun>"},
+  {"%flo-bits", &module_info_runtimeSboot, "%flo-bits"},
+  {"%fi2f", &module_info_runtimeSboot, "%fi2f"},
+  {"match", &module_info_gooSmacros, "match"},
+  {"*boot-macro-expanders*", &module_info_runtimeSboot, "*boot-macro-expanders*"},
+  {"%fpow", &module_info_runtimeSboot, "%fpow"},
   {"prop-bound?", &module_info_runtimeSboot, "prop-bound?"},
-  {"%i+", &module_info_runtimeSboot, "%i+"},
-  {"without-prop-unbound-errors", &module_info_gooSmacros, "without-prop-unbound-errors"},
+  {"%cu", &module_info_runtimeSboot, "%cu"},
+  {"dg", &module_info_runtimeSboot, "dg"},
+  {"file-opening-error", &module_info_runtimeSboot, "file-opening-error"},
+  {"%%macro", &module_info_runtimeSboot, "%%macro"},
   {"sig-val", &module_info_runtimeSboot, "sig-val"},
-  {"%i>>", &module_info_runtimeSboot, "%i>>"},
-  {"or", &module_info_gooSmacros, "or"},
+  {"cat-sym", &module_info_gooSmacros, "cat-sym"},
   {"<lst>", &module_info_runtimeSboot, "<lst>"},
   {"fab-class", &module_info_runtimeSboot, "fab-class"},
   {"<log>", &module_info_runtimeSboot, "<log>"},
-  {"%loc-val-setter", &module_info_runtimeSboot, "%loc-val-setter"},
+  {"@oelt", &module_info_runtimeSboot, "@oelt"},
+  {"<simple-handler-info>", &module_info_runtimeSboot, "<simple-handler-info>"},
   {"fun-specs", &module_info_runtimeSboot, "fun-specs"},
   {"type-object", &module_info_runtimeSboot, "type-object"},
-  {"%fatan2", &module_info_runtimeSboot, "%fatan2"},
+  {"try", &module_info_runtimeSboot, "try"},
   {"fun-name-setter", &module_info_runtimeSboot, "fun-name-setter"},
+  {"rev!", &module_info_gooSmacros, "rev!"},
+  {"%ftan", &module_info_runtimeSboot, "%ftan"},
   {"quote", &module_info_runtimeSboot, "quote"},
-  {"%facos", &module_info_runtimeSboot, "%facos"},
-  {"%i!", &module_info_runtimeSboot, "%i!"},
-  {"%lu", &module_info_runtimeSboot, "%lu"},
-  {"handler-info-message", &module_info_runtimeSboot, "handler-info-message"},
-  {"%eof-object", &module_info_runtimeSboot, "%eof-object"},
-  {"<simple-handler-info>", &module_info_runtimeSboot, "<simple-handler-info>"},
+  {"%file-exists?", &module_info_runtimeSboot, "%file-exists?"},
+  {"unknown-function-error", &module_info_runtimeSboot, "unknown-function-error"},
+  {"%velt", &module_info_runtimeSboot, "%velt"},
+  {"%vnul", &module_info_runtimeSboot, "%vnul"},
   {"sym-name", &module_info_runtimeSboot, "sym-name"},
-  {"nul", &module_info_runtimeSboot, "nul"},
-  {"cat-sym", &module_info_gooSmacros, "cat-sym"},
+  {"%i>>", &module_info_runtimeSboot, "%i>>"},
+  {"dlet", &module_info_gooSmacros, "dlet"},
+  {"%i+", &module_info_runtimeSboot, "%i+"},
+  {"%define-method", &module_info_runtimeSboot, "%define-method"},
   {"fun-name", &module_info_runtimeSboot, "fun-name"},
-  {"%gen-code", &module_info_runtimeSboot, "%gen-code"},
-  {"%check-call-types", &module_info_runtimeSboot, "%check-call-types"},
-  {"%pair", &module_info_runtimeSboot, "%pair"},
+  {"dm", &module_info_runtimeSboot, "dm"},
+  {"assert", &module_info_gooSmacros, "assert"},
   {"object-class", &module_info_runtimeSboot, "object-class"},
-  {"%fsinh", &module_info_runtimeSboot, "%fsinh"},
   {"prop-owner", &module_info_runtimeSboot, "prop-owner"},
-  {"%c=", &module_info_runtimeSboot, "%c="},
-  {"%raw", &module_info_runtimeSboot, "%raw"},
-  {"and", &module_info_gooSmacros, "and"},
-  {"%app-args", &module_info_runtimeSboot, "%app-args"},
-  {"bound?", &module_info_runtimeSboot, "bound?"},
-  {"%open-in-file", &module_info_runtimeSboot, "%open-in-file"},
+  {"%fcos", &module_info_runtimeSboot, "%fcos"},
+  {"%gen-code-setter", &module_info_runtimeSboot, "%gen-code-setter"},
   {"prop-value", &module_info_runtimeSboot, "prop-value"},
-  {"%selt-setter", &module_info_runtimeSboot, "%selt-setter"},
-  {"%loc-off-setter", &module_info_runtimeSboot, "%loc-off-setter"},
   {"class-parents", &module_info_runtimeSboot, "class-parents"},
-  {"%bb", &module_info_runtimeSboot, "%bb"},
-  {"%f<", &module_info_runtimeSboot, "%f<"},
-  {"seq", &module_info_runtimeSboot, "seq"},
-  {"%fun-reg", &module_info_runtimeSboot, "%fun-reg"},
-  {"%flo-bits", &module_info_runtimeSboot, "%flo-bits"},
-  {"<seq>", &module_info_runtimeSboot, "<seq>"},
-  {"<any>", &module_info_runtimeSboot, "<any>"},
-  {"prop-type", &module_info_runtimeSboot, "prop-type"},
-  {"swapf", &module_info_gooSmacros, "swapf"},
-  {"vec", &module_info_runtimeSboot, "vec"},
-  {"napp", &module_info_gooSmacros, "napp"},
-  {"%i=", &module_info_runtimeSboot, "%i="},
-  {"%file-mtime", &module_info_runtimeSboot, "%file-mtime"},
-  {"%fatan", &module_info_runtimeSboot, "%fatan"},
-  {"class-props", &module_info_runtimeSboot, "class-props"},
-  {"for", &module_info_gooSmacros, "for"},
+  {"@olen", &module_info_runtimeSboot, "@olen"},
+  {"%fatan2", &module_info_runtimeSboot, "%fatan2"},
+  {"case-by", &module_info_gooSmacros, "case-by"},
+  {"df", &module_info_runtimeSboot, "df"},
   {"match-sublist", &module_info_gooSmacros, "match-sublist"},
-  {"%ready?", &module_info_runtimeSboot, "%ready?"},
-  {"%fpow", &module_info_runtimeSboot, "%fpow"},
+  {"<seq>", &module_info_runtimeSboot, "<seq>"},
+  {"%fcosh", &module_info_runtimeSboot, "%fcosh"},
+  {"prop-type", &module_info_runtimeSboot, "prop-type"},
+  {"<any>", &module_info_runtimeSboot, "<any>"},
+  {"%do-stack-frames", &module_info_runtimeSboot, "%do-stack-frames"},
+  {"%i=", &module_info_runtimeSboot, "%i="},
+  {"%loc-off-setter", &module_info_runtimeSboot, "%loc-off-setter"},
+  {"%raw", &module_info_runtimeSboot, "%raw"},
+  {"rep", &module_info_runtimeSboot, "rep"},
+  {"napp", &module_info_gooSmacros, "napp"},
+  {"*restarts-ok?*", &module_info_runtimeSboot, "*restarts-ok?*"},
+  {"@len", &module_info_runtimeSboot, "@len"},
+  {"def-fun-var", &module_info_gooSmacros, "def-fun-var"},
+  {"class-props", &module_info_runtimeSboot, "class-props"},
+  {"@+", &module_info_runtimeSboot, "@+"},
+  {"$max-int", &module_info_runtimeSboot, "$max-int"},
+  {"%allocate-stack", &module_info_runtimeSboot, "%allocate-stack"},
   {"%prop-unbound-error", &module_info_runtimeSboot, "%prop-unbound-error"},
-  {"collected", &module_info_gooSmacros, "collected"},
-  {"use/export", &module_info_runtimeSboot, "use/export"},
-  {"%cb", &module_info_runtimeSboot, "%cb"},
+  {"%unlink-stack", &module_info_runtimeSboot, "%unlink-stack"},
+  {"vec", &module_info_runtimeSboot, "vec"},
+  {"%i&", &module_info_runtimeSboot, "%i&"},
+  {"dss", &module_info_runtimeSboot, "dss"},
+  {"*boot-macro-module-names*", &module_info_runtimeSboot, "*boot-macro-module-names*"},
+  {"%i>>>", &module_info_runtimeSboot, "%i>>>"},
+  {"%facos", &module_info_runtimeSboot, "%facos"},
   {"<sig>", &module_info_runtimeSboot, "<sig>"},
-  {"elt", &module_info_gooSmacros, "elt"},
-  {"ct", &module_info_runtimeSboot, "ct"},
-  {"def", &module_info_runtimeSboot, "def"},
-  {"%i*", &module_info_runtimeSboot, "%i*"},
-  {"%process-module", &module_info_runtimeSboot, "%process-module"},
-  {"macro-expand", &module_info_runtimeSboot, "macro-expand"},
+  {"fun-names", &module_info_runtimeSboot, "fun-names"},
+  {"%create-directory", &module_info_runtimeSboot, "%create-directory"},
   {"find-setter", &module_info_runtimeSboot, "find-setter"},
   {"if", &module_info_runtimeSboot, "if"},
-  {"unless", &module_info_gooSmacros, "unless"},
-  {"dp", &module_info_runtimeSboot, "dp"},
-  {"cond", &module_info_gooSmacros, "cond"},
-  {"%raw-call", &module_info_runtimeSboot, "%raw-call"},
-  {"%fu", &module_info_runtimeSboot, "%fu"},
-  {"dv", &module_info_runtimeSboot, "dv"},
-  {"@all2?", &module_info_runtimeSboot, "@all2?"},
-  {"%os-val-setter", &module_info_runtimeSboot, "%os-val-setter"},
-  {"%get", &module_info_runtimeSboot, "%get"},
-  {"%vec", &module_info_runtimeSboot, "%vec"},
-  {"@olen", &module_info_runtimeSboot, "@olen"},
-  {"%binding-name", &module_info_runtimeSboot, "%binding-name"},
-  {"==", &module_info_gooSmacros, "=="},
-  {"$min-int", &module_info_runtimeSboot, "$min-int"},
-  {"<col>", &module_info_runtimeSboot, "<col>"},
-  {"<class>", &module_info_runtimeSboot, "<class>"},
-  {"sig-names", &module_info_runtimeSboot, "sig-names"},
-  {"%i<<<", &module_info_runtimeSboot, "%i<<<"},
-  {"fab-gen", &module_info_runtimeSboot, "fab-gen"},
-  {"collecting", &module_info_gooSmacros, "collecting"},
-  {"%next-methods", &module_info_runtimeSboot, "%next-methods"},
-  {"%f*", &module_info_runtimeSboot, "%f*"},
-  {"esc", &module_info_runtimeSboot, "esc"},
-  {"$max-int", &module_info_runtimeSboot, "$max-int"},
-  {"%force-out", &module_info_runtimeSboot, "%force-out"},
-  {"ddv", &module_info_gooSmacros, "ddv"},
+  {"dl", &module_info_runtimeSboot, "dl"},
   {"%f+", &module_info_runtimeSboot, "%f+"},
-  {"%str", &module_info_runtimeSboot, "%str"},
-  {"%velt", &module_info_runtimeSboot, "%velt"},
-  {"%fb", &module_info_runtimeSboot, "%fb"},
-  {"tail-setter", &module_info_runtimeSboot, "tail-setter"},
-  {"%c<", &module_info_runtimeSboot, "%c<"},
-  {"case", &module_info_gooSmacros, "case"},
-  {"%gen-code-setter", &module_info_runtimeSboot, "%gen-code-setter"},
-  {"cat", &module_info_gooSmacros, "cat"},
-  {"%with-monitor", &module_info_runtimeSboot, "%with-monitor"},
-  {"sig-arity", &module_info_runtimeSboot, "sig-arity"},
-  {"<replace-generic-restart>", &module_info_runtimeSboot, "<replace-generic-restart>"},
-  {"incf", &module_info_gooSmacros, "incf"},
-  {"empty?", &module_info_gooSmacros, "empty?"},
-  {"%vnul", &module_info_runtimeSboot, "%vnul"},
-  {"*boot-macro-names*", &module_info_runtimeSboot, "*boot-macro-names*"},
-  {"%ftan", &module_info_runtimeSboot, "%ftan"},
+  {"ct", &module_info_runtimeSboot, "ct"},
+  {"%ib", &module_info_runtimeSboot, "%ib"},
+  {"use/export", &module_info_runtimeSboot, "use/export"},
+  {"collected", &module_info_gooSmacros, "collected"},
   {"%selt", &module_info_runtimeSboot, "%selt"},
+  {"@all2?", &module_info_runtimeSboot, "@all2?"},
+  {"gensym", &module_info_gooSmacros, "gensym"},
+  {"or", &module_info_gooSmacros, "or"},
+  {"%f<", &module_info_runtimeSboot, "%f<"},
+  {"until", &module_info_gooSmacros, "until"},
+  {"%i?", &module_info_runtimeSboot, "%i?"},
+  {"nil", &module_info_runtimeSboot, "nil"},
+  {"<col>", &module_info_runtimeSboot, "<col>"},
+  {"sig-names", &module_info_runtimeSboot, "sig-names"},
+  {"<class>", &module_info_runtimeSboot, "<class>"},
   {"%ft", &module_info_runtimeSboot, "%ft"},
+  {"fab-gen", &module_info_runtimeSboot, "fab-gen"},
+  {"%c=", &module_info_runtimeSboot, "%c="},
+  {"%next-methods", &module_info_runtimeSboot, "%next-methods"},
+  {"%get", &module_info_runtimeSboot, "%get"},
+  {"%eof-object", &module_info_runtimeSboot, "%eof-object"},
+  {"var-type", &module_info_gooSmacros, "var-type"},
+  {"swapf", &module_info_gooSmacros, "swapf"},
+  {"%lb", &module_info_runtimeSboot, "%lb"},
+  {"%i<<<", &module_info_runtimeSboot, "%i<<<"},
+  {"tail-setter", &module_info_runtimeSboot, "tail-setter"},
+  {"exported", &module_info_gooSmacros, "exported"},
+  {"sig-arity", &module_info_runtimeSboot, "sig-arity"},
+  {"collecting", &module_info_gooSmacros, "collecting"},
+  {"seq", &module_info_runtimeSboot, "seq"},
+  {"%loc-val", &module_info_runtimeSboot, "%loc-val"},
+  {"<mag>", &module_info_runtimeSboot, "<mag>"},
+  {"and", &module_info_gooSmacros, "and"},
+  {"%im", &module_info_runtimeSboot, "%im"},
+  {"esc", &module_info_runtimeSboot, "esc"},
+  {"%check-call-types", &module_info_runtimeSboot, "%check-call-types"},
   {"<opts>", &module_info_runtimeSboot, "<opts>"},
   {"find-getter", &module_info_runtimeSboot, "find-getter"},
-  {"gensym", &module_info_gooSmacros, "gensym"},
   {"tail", &module_info_runtimeSboot, "tail"},
-  {"app-sup", &module_info_gooSmacros, "app-sup"},
-  {"let", &module_info_runtimeSboot, "let"},
-  {"<type>", &module_info_runtimeSboot, "<type>"},
-  {"ord-app-mets", &module_info_runtimeSboot, "ord-app-mets"},
-  {"renew", &module_info_gooSmacros, "renew"},
-  {"%im", &module_info_runtimeSboot, "%im"},
-  {"<loc>", &module_info_runtimeSboot, "<loc>"},
-  {"match-atom", &module_info_gooSmacros, "match-atom"},
-  {"%i>>>", &module_info_runtimeSboot, "%i>>>"},
-  {"%cu", &module_info_runtimeSboot, "%cu"},
-  {"type-elts", &module_info_runtimeSboot, "type-elts"},
-  {"export", &module_info_runtimeSboot, "export"},
-  {"%create-directory", &module_info_runtimeSboot, "%create-directory"},
-  {"%close-out-port", &module_info_runtimeSboot, "%close-out-port"},
-  {"dc", &module_info_runtimeSboot, "dc"},
-  {"@+", &module_info_runtimeSboot, "@+"},
-  {"map", &module_info_gooSmacros, "map"},
-  {"%puts", &module_info_runtimeSboot, "%puts"},
-  {"%current-out-port", &module_info_runtimeSboot, "%current-out-port"},
-  {"class-name", &module_info_runtimeSboot, "class-name"},
-  {"may-isa?", &module_info_runtimeSboot, "may-isa?"},
-  {"handler-info-arguments", &module_info_runtimeSboot, "handler-info-arguments"},
-  {"%file-exists?", &module_info_runtimeSboot, "%file-exists?"},
-  {"%put", &module_info_runtimeSboot, "%put"},
-  {"sup", &module_info_gooSmacros, "sup"},
-  {"%snul", &module_info_runtimeSboot, "%snul"},
-  {"%f=", &module_info_runtimeSboot, "%f="},
-  {"loc", &module_info_runtimeSboot, "loc"},
-  {"gen-add-met", &module_info_runtimeSboot, "gen-add-met"},
-  {"%fcosh", &module_info_runtimeSboot, "%fcosh"},
-  {"prop-setter", &module_info_runtimeSboot, "prop-setter"},
-  {"%loc-val", &module_info_runtimeSboot, "%loc-val"},
-  {"fun-val", &module_info_runtimeSboot, "fun-val"},
-  {"%f-", &module_info_runtimeSboot, "%f-"},
-  {"need-implementation", &module_info_gooSmacros, "need-implementation"},
-  {"fin", &module_info_runtimeSboot, "fin"},
-  {"fun-names", &module_info_runtimeSboot, "fun-names"},
-  {"%flog", &module_info_runtimeSboot, "%flog"},
-  {"file-opening-error", &module_info_runtimeSboot, "file-opening-error"},
-  {"class-ancestors", &module_info_runtimeSboot, "class-ancestors"},
-  {"%ib", &module_info_runtimeSboot, "%ib"},
-  {"mif", &module_info_runtimeSboot, "mif"},
-  {"incongruent-method-error", &module_info_runtimeSboot, "incongruent-method-error"},
-  {"var-type", &module_info_gooSmacros, "var-type"},
-  {"match-unquote", &module_info_gooSmacros, "match-unquote"},
-  {"tup", &module_info_runtimeSboot, "tup"},
-  {"%velt-setter", &module_info_runtimeSboot, "%velt-setter"},
-  {"pair", &module_info_gooSmacros, "pair"},
-  {"<flo>", &module_info_runtimeSboot, "<flo>"},
-  {"%fi2f", &module_info_runtimeSboot, "%fi2f"},
-  {"<sym>", &module_info_runtimeSboot, "<sym>"},
-  {"while", &module_info_gooSmacros, "while"},
-  {"met-app?", &module_info_runtimeSboot, "met-app?"},
-  {"%i<<", &module_info_runtimeSboot, "%i<<"},
-  {"new", &module_info_runtimeSboot, "new"},
+  {"%file-mtime", &module_info_runtimeSboot, "%file-mtime"},
   {"%loc-off", &module_info_runtimeSboot, "%loc-off"},
-  {"%allocate-stack", &module_info_runtimeSboot, "%allocate-stack"},
-  {"prop-getter", &module_info_runtimeSboot, "prop-getter"},
-  {"object-parents", &module_info_runtimeSboot, "object-parents"},
-  {"dg", &module_info_runtimeSboot, "dg"},
-  {"fun-mets", &module_info_runtimeSboot, "fun-mets"},
-  {"@isa?", &module_info_runtimeSboot, "@isa?"},
-  {"gen-src-setter", &module_info_runtimeSboot, "gen-src-setter"},
-  {"do", &module_info_gooSmacros, "do"},
-  {"%do-stack-frames", &module_info_runtimeSboot, "%do-stack-frames"},
-  {"%build-runtime-modules", &module_info_runtimeSboot, "%build-runtime-modules"},
-  {"popf", &module_info_gooSmacros, "popf"},
-  {"decf", &module_info_gooSmacros, "decf"},
-  {"set", &module_info_runtimeSboot, "set"},
-  {"<prop>", &module_info_runtimeSboot, "<prop>"},
-  {"%app-filename", &module_info_runtimeSboot, "%app-filename"},
-  {"<gen>", &module_info_runtimeSboot, "<gen>"},
-  {"keyboard-interrupt", &module_info_runtimeSboot, "keyboard-interrupt"},
-  {"when", &module_info_gooSmacros, "when"},
-  {"gen-src", &module_info_runtimeSboot, "gen-src"},
-  {"%current-in-port", &module_info_runtimeSboot, "%current-in-port"},
-  {"isa?", &module_info_runtimeSboot, "isa?"},
-  {"object-props", &module_info_runtimeSboot, "object-props"},
-  {"%peek", &module_info_runtimeSboot, "%peek"},
-  {"%%sym", &module_info_runtimeSboot, "%%sym"},
-  {"%sp-reg-setter", &module_info_runtimeSboot, "%sp-reg-setter"},
-  {"ct-also", &module_info_runtimeSboot, "ct-also"},
-  {"%fsqrt", &module_info_runtimeSboot, "%fsqrt"},
-  {"collect", &module_info_gooSmacros, "collect"},
-  {"*macros-ok?*", &module_info_runtimeSboot, "*macros-ok?*"},
-  {"sig-nary?", &module_info_runtimeSboot, "sig-nary?"},
-  {"<int>", &module_info_runtimeSboot, "<int>"},
-  {"<str>", &module_info_runtimeSboot, "<str>"},
-  {"fun-arity", &module_info_runtimeSboot, "fun-arity"},
-  {"@<", &module_info_runtimeSboot, "@<"},
-  {"fun", &module_info_runtimeSboot, "fun"},
-  {"%prop", &module_info_runtimeSboot, "%prop"},
+  {"wrong-number-arguments-error", &module_info_runtimeSboot, "wrong-number-arguments-error"},
+  {"match-atom", &module_info_gooSmacros, "match-atom"},
+  {"<type>", &module_info_runtimeSboot, "<type>"},
+  {"let", &module_info_runtimeSboot, "let"},
+  {"ord-app-mets", &module_info_runtimeSboot, "ord-app-mets"},
+  {"app-sup", &module_info_gooSmacros, "app-sup"},
+  {"%force-out", &module_info_runtimeSboot, "%force-out"},
+  {"<loc>", &module_info_runtimeSboot, "<loc>"},
+  {"%ready?", &module_info_runtimeSboot, "%ready?"},
+  {"%close-in-port", &module_info_runtimeSboot, "%close-in-port"},
   {"%it/", &module_info_runtimeSboot, "%it/"},
-  {"dm", &module_info_runtimeSboot, "dm"},
-  {"add-prop", &module_info_runtimeSboot, "add-prop"},
-  {"dlet", &module_info_gooSmacros, "dlet"},
+  {"type-elts", &module_info_runtimeSboot, "type-elts"},
+  {"*report-prop-unbound-errors?*", &module_info_runtimeSboot, "*report-prop-unbound-errors?*"},
+  {"%os-val", &module_info_runtimeSboot, "%os-val"},
+  {"%fsqrt", &module_info_runtimeSboot, "%fsqrt"},
+  {"class-name", &module_info_runtimeSboot, "class-name"},
+  {"unless", &module_info_gooSmacros, "unless"},
   {NULL,NULL,NULL}
 };
 
 static BINDING_INFO binding_infos[] = {
+  {"len", &YgooStypesYlen},
+  {"t<", &YgooStypesYtL},
+  {"t=", &YgooStypesYtE},
+  {"as", &YgooStypesYas},
   {"---main-1---", NULL},
-  {"any?", &YgooStypeYanyQ},
-  {"2nd", &YgooStypeY2nd},
-  {"t?", &YgooStypeYtQ},
-  {"len", &YgooStypeYlen},
-  {"t<", &YgooStypeYtL},
-  {"t=", &YgooStypeYtE},
-  {"as", &YgooStypeYas},
-  {"<product>", &YgooStypeYLproductG},
-  {"type-elts-setter", &YgooStypeYtype_elts_setter},
-  {"t*", &YgooStypeYtT},
+  {"<product>", &YgooStypesYLproductG},
+  {"t+", &YgooStypesYtA},
+  {"t*", &YgooStypesYtT},
+  {"all2?", &YgooStypesYall2Q},
+  {"any?", &YgooStypesYanyQ},
+  {"type-elts-setter", &YgooStypesYtype_elts_setter},
+  {"2nd", &YgooStypesY2nd},
+  {"t?", &YgooStypesYtQ},
   {"---main-0---", NULL},
-  {"t+", &YgooStypeYtA},
-  {"all2?", &YgooStypeYall2Q},
   {NULL, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"type-class", "type-class"},
-  {"<union>", "<union>"},
-  {"any?", "any?"},
-  {"class-direct-props", "class-direct-props"},
-  {"<subclass>", "<subclass>"},
-  {"class-descendents", "class-descendents"},
-  {"2nd", "2nd"},
-  {"subtype?", "subtype?"},
-  {"t?", "t?"},
-  {"<singleton>", "<singleton>"},
   {"len", "len"},
   {"t<", "t<"},
-  {"type-object", "type-object"},
+  {"class-ancestors", "class-ancestors"},
   {"t=", "t="},
-  {"class-parents", "class-parents"},
+  {"isa?", "isa?"},
   {"as", "as"},
+  {"type-class", "type-class"},
+  {"<union>", "<union>"},
+  {"class-direct-props", "class-direct-props"},
+  {"<product>", "<product>"},
+  {"<subclass>", "<subclass>"},
+  {"class-descendents", "class-descendents"},
+  {"t*", "t*"},
+  {"subtype?", "subtype?"},
+  {"t+", "t+"},
+  {"<singleton>", "<singleton>"},
+  {"type-object", "type-object"},
+  {"class-parents", "class-parents"},
+  {"all2?", "all2?"},
   {"class-props", "class-props"},
   {"<class>", "<class>"},
-  {"<product>", "<product>"},
+  {"any?", "any?"},
   {"type-elts-setter", "type-elts-setter"},
-  {"t*", "t*"},
+  {"2nd", "2nd"},
   {"<type>", "<type>"},
+  {"t?", "t?"},
   {"type-elts", "type-elts"},
   {"class-name", "class-name"},
-  {"t+", "t+"},
-  {"class-ancestors", "class-ancestors"},
-  {"isa?", "isa?"},
-  {"all2?", "all2?"},
   {NULL, NULL}
 };
 
-extern MODULE_INFO module_info_gooStype;
-MODULE_INFO module_info_gooStype = {
-  "goo/type",
+extern MODULE_INFO module_info_gooStypes;
+MODULE_INFO module_info_gooStypes = {
+  "goo/types",
   NULL,
   use_infos,
   import_infos,
@@ -1018,9 +1011,9 @@ extern void load_module_gooSmacros (void);
 
 /* EXPRESSION: */
 
-extern void load_module_gooStype (void);
+extern void load_module_gooStypes (void);
 
-void load_module_gooStype (void) {
+void load_module_gooStypes (void) {
   static int need_init = 1;
   if (!need_init) return;
 
@@ -1028,8 +1021,8 @@ void load_module_gooStype (void) {
   load_module_runtimeSboot();
   load_module_gooSmacros();
 
-  (P)YgooStypeY___main_0___();
-  (P)YgooStypeY___main_1___();
+  (P)YgooStypesY___main_0___();
+  (P)YgooStypesY___main_1___();
 
 }
 

@@ -1,49 +1,49 @@
 include ../Make.inc
 C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
-.c.o: ../prt.h
+.c.o: ../grt.h
 	$(CC) -I.. -c -g -O -o $@ $<
 
 OBJS = \
-	goo/collections/table.o \
-	runtime/runtime.o \
-	goo/collections/opts.o \
-	goo/collections/map.o \
-	goo/collections/collection.o \
-	goo/collections.o \
-	compiler/main.o \
-	goo/collections/list.o \
-	goo/collections/flat.o \
-	compiler/dependency.o \
-	goo/user.o \
-	goo.o \
-	goo/collections/strings.o \
-	goo/macros.o \
-	goo/math.o \
-	goo/collections/vector.o \
-	goo/collections/range.o \
-	goo/type.o \
-	compiler/top.o \
-	goo/collections/step.o \
-	compiler/syntax.o \
-	goo/eval.o \
+	goo/system.o \
 	goo/io/read.o \
-	runtime/apply.o \
-	goo/collections/string.o \
-	goo/collections/buffer.o \
+	goo/collections/strings.o \
+	goo/collections.o \
+	goo/collections/zip.o \
 	goo/io/write.o \
-	goo/port.o \
-	compiler/ast.o \
-	goo/collections/sequence.o \
-	goo/magnitude.o \
-	goo/collections/cycle.o \
+	compiler/top.o \
+	goo/collections/flat.o \
+	goo/collections/buffer.o \
+	goo/collections/map.o \
+	compiler/ast-linearize.o \
+	goo/math.o \
 	compiler/ast-eval.o \
 	goo/accumulator.o \
-	compiler/ast-linearize.o \
-	compiler/p2c.o \
-	goo/system.o \
-	runtime/boot.o \
-	goo/collections/zip.o \
+	goo.o \
+	goo/collections/sequence.o \
+	compiler/syntax.o \
+	goo/collections/string.o \
+	goo/macros.o \
 	goo/collections/assoc.o \
+	goo/collections/vector.o \
+	goo/collections/range.o \
+	goo/types.o \
+	runtime/boot.o \
+	goo/collections/cycle.o \
+	goo/collections/table.o \
+	runtime/runtime.o \
+	runtime/apply.o \
+	goo/collections/opts.o \
+	compiler/main.o \
+	goo/collections/step.o \
+	goo/collections/list.o \
+	goo/eval.o \
+	compiler/g2c.o \
+	compiler/dependency.o \
+	goo/magnitude.o \
+	compiler/ast.o \
+	goo/io/port.o \
+	goo/collections/collection.o \
+	goo/user.o \
 	g2c-init.o
 
 g2c: $(C_OBJS_DD) $(OBJS)

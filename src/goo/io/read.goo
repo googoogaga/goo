@@ -15,9 +15,9 @@
 (use runtime/boot)
 (use goo/macros)
 (use runtime/runtime)
-(use goo/type)
+(use goo/types)
 (use goo/math)
-(use goo/port)
+(use goo/io/port)
 (use goo/collections)
 
 ;; READ

@@ -10,10 +10,10 @@
 (use compiler/ast-linearize)
 (use compiler/ast-eval)
 (use goo/system)
-(use goo/type)
+(use goo/types)
 (use goo/math)
 (use goo/collections)
-(use goo/port)
+(use goo/io/port)
 
 (df esctst ()
   (esc exit 

@@ -1,7 +1,7 @@
 /* GOO 2 C $REVISION: 0.111 $ 
   */
 
-#include "prt.h"
+#include "grt.h"
 
 /* APPLICATION: */
 

@@ -1,7 +1,7 @@
 (use runtime/boot)
 (use goo/macros)
 (use goo/math)
-(use goo/type)
+(use goo/types)
 (use goo/collections/collection)
 (use goo/collections/sequence)
 (use goo/collections/buffer)

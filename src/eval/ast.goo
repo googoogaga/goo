@@ -10,10 +10,10 @@
 (use goo/collections/strings)
 (use goo/system) ; Needed by runtime module loader.
 (use goo/io/write)
-(use goo/type)
+(use goo/types)
 (use goo/math)
 (use goo/collections)
-(use goo/port)
+(use goo/io/port)
 (use compiler/dependency)
 
 ;;; TODO: MOVE TYPE OUT OF SIGNATURE

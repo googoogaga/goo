@@ -5,7 +5,7 @@
 (use goo/system)
 (use compiler/ast)
 (use compiler/top)
-(use compiler/p2c)
+(use compiler/g2c)
 ;; (use compiler/decision-trees)
 ;; (use tests)
 ;; (use beatbox)
@@ -17,7 +17,7 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.113")
+(dv *goo-version* "0.114")
 (dv *goo-date*    "MAR 14, 2002")
 
 (format out ";;; GOO\n")

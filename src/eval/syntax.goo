@@ -4,7 +4,7 @@
 (use goo/macros)
 (use runtime/runtime)
 (use goo/math)
-(use goo/type)
+(use goo/types)
 (use goo/collections)
 
 ;;  Self-evaluating entities

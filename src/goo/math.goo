@@ -1,7 +1,7 @@
 (use runtime/boot)
 (use goo/macros)
 (use goo/magnitude)
-(use goo/type)
+(use goo/types)
 
 ;;; DYNAMIC BINDING
 

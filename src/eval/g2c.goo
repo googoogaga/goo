@@ -20,10 +20,10 @@
 (use compiler/ast-linearize)
 (use goo/collections/strings)
 (use goo/system)
-(use goo/type)
+(use goo/types)
 (use goo/math)
 (use goo/collections)
-(use goo/port)
+(use goo/io/port)
 
 (ddv *definitions*      #f)
 (ddv *dynamic-linking?* #f)
@@ -112,7 +112,8 @@
   (generate-makefile loader)
   #f)
 
-(df g2c-test (x) (set *g2c-app* (g2c-def-app (cat "g2c-" (to-str x)) 'main)))
+(df g2c-test (x)
+  (set *g2c-app* (g2c-def-app (cat "g2c-" (to-str x)) 'compiler/main)))
 
 (dv *tmp-file-counter* -1)
 
@@ -151,10 +152,10 @@
   (compile-load name))
 
 ;;; Backwards compatibility for users: Build g2c itself.
-(dv *g2c-app* (g2c-def-app "g2c" 'main))
+(dv *g2c-app* (g2c-def-app "g2c" 'compiler/main))
 (dm g2c-top () (g2c-build-app *g2c-app*))
 (dm g2c-clean ()
-  (set *g2c-app* (g2c-def-app "g2c" 'main))
+  (set *g2c-app* (g2c-def-app "g2c" 'compiler/main))
   #f)
 
 ;;; Given a file name and an environment, compute an ast in that
@@ -215,7 +216,7 @@
   (with-port (code-out (open <file-out-port> out-name))
     (format code-out "include ..%sMake.inc\n" sep)
     (format code-out "C_OBJS_DD = $(patsubst %%,..%s%%,$(C_OBJS))\n" sep)
-    (format code-out "%s%s: ..%sprt.h\n" *c-extension* *obj-extension* sep)
+    (format code-out "%s%s: ..%sgrt.h\n" *c-extension* *obj-extension* sep)
     (format code-out "\t$(CC) -I.. -c -g -O -o $@ $<\n\n")
     (format code-out "OBJS = \\\n")
     (do-module-loader-modules
@@ -243,9 +244,9 @@
 (dm generate-header (code-out e)
   (format code-out "/* GOO 2 C $REVISION: 0.111 $ \n")
   ;; (when pp (pp e code-out))
-  (format code-out "  */\n\n#include \"prt.h\"\n")
+  (format code-out "  */\n\n#include \"grt.h\"\n")
   (when *dynamic-linking?*
-    (format code-out "#include \"dlprt.h\"\n")))
+    (format code-out "#include \"dlgrt.h\"\n")))
 
 (dm generate-trailer (code-out)
   (format code-out "\n/* END OF GENERATED CODE. */\n"))
@@ -414,7 +415,7 @@
   (mangle-global-name modname (as <str> name)))
 
 ;; Mangle a name which is defined in boot.goo.
-;; Be sure to provide a matching EXT declaration in prt.h.
+;; Be sure to provide a matching EXT declaration in grt.h.
 (dm mangle-boot-name (name => <str>)
   (mangle-global-name $goo-boot-module-name name))
 

@@ -1,6 +1,6 @@
 (use runtime/boot)
 (use goo/macros)
-(use goo/type)
+(use goo/types)
 (use goo/math)
 (use runtime/runtime)
 (use goo/collections)
@@ -8,7 +8,7 @@
 (use goo/io/write)
 (use goo/io/read)
 (use compiler/syntax)
-(use goo/port)
+(use goo/io/port)
 
 (export
  ;; Section 1.1/2.1: Special forms.

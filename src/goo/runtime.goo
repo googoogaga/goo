@@ -3,7 +3,7 @@
 (use runtime/boot)
 (use goo/macros)
 (use goo/math)
-(use goo/type)
+(use goo/types)
 (use runtime/apply)
 (use goo/collections/collection)
 (use goo/collections/sequence)
@@ -11,7 +11,7 @@
 (use goo/collections/list)
 (use goo/collections/buffer)
 (use goo/collections/table)
-(use goo/port)
+(use goo/io/port)
 
 ;;; APP
 

@@ -5,7 +5,7 @@
 (use goo/macros)
 (use runtime/runtime)
 (use compiler/ast)
-(use goo/type)
+(use goo/types)
 (use goo/math)
 (use goo/collections)
 
@@ -161,7 +161,7 @@
   #f)
 
 (dm unconstrained-type? (b|<module-binding> => <log>)
-  (and (== (binding-module-name b) 'boot) (== (binding-name b) '<any>)))
+  (and (== (binding-module-name b) 'runtime/boot) (== (binding-name b) '<any>)))
 
 (dm unconstrained-type? (o|<module-binding-reference> => <log>)
   (unconstrained-type? (reference-binding o)))
