@@ -2,7 +2,7 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Fri Jul 19 10:44:21 2002 -->
+ -- on Emacs 21.2.1, Fri Aug 16 18:42:27 2002 -->
 <head>
 <title><i>GOO&#32;Manual -- Program Control</title>
 
@@ -78,16 +78,22 @@ function calls, conditional execution, and nonlocal control flow.
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SEQ (DEF tmp ,x) (SET ,x ,y) (SET ,y tmp))</tt>,
   where <tt>,x</tt> and <tt>,y</tt> are evaluated only once.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="11">&nbsp;</A><tt><i>call</i></tt> </td><td colspan="1" align="LEFT"> <tt>(,f ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="11">&nbsp;</A><tt>ROTF</tt> </td><td colspan="1" align="LEFT"> <tt>(ROTF ,x ,y ,@places)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SET (TUP ,x ,y ,@places) (TUP ,y ,@places ,x))</tt>
+  where <tt>,x</tt>, <tt>,y</tt>, and <tt>,@places)</tt> are evaluated only
+  once and <tt>(SET (TUP ...) val)</tt> stands for parallel assignment.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="12">&nbsp;</A><tt><i>call</i></tt> </td><td colspan="1" align="LEFT"> <tt>(,f ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>evaluates <tt>,f</tt> and then <tt>,@args</tt> in left to right
   order and then calls <tt>,f</tt> with the evaluated arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="12">&nbsp;</A><tt>REP</tt> </td><td colspan="1" align="LEFT"> <tt>(REP ,name ((,var ,init) ...) ,@body) </tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="13">&nbsp;</A><tt>REP</tt> </td><td colspan="1" align="LEFT"> <tt>(REP ,name ((,var ,init) ...) ,@body) </tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>defines a recursive loop (cf., Dylan's <tt>ITERATE</tt> or Scheme's <tt>(LET ,var ...)</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="13">&nbsp;</A><tt>ESC</tt> </td><td colspan="1" align="LEFT"> <tt>(ESC ,name ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="14">&nbsp;</A><tt>ESC</tt> </td><td colspan="1" align="LEFT"> <tt>(ESC ,name ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>evaluates <tt>(SEQ ,@body)</tt> with an exit
   function of a single parameter, <tt>x</tt>, bound to
@@ -98,7 +104,7 @@ function calls, conditional execution, and nonlocal control flow.
   after the execution of the creating <tt>ESC</tt> form (i.e., no upward
   continuations).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="14">&nbsp;</A><tt>FIN</tt> </td><td colspan="1" align="LEFT"> <tt>(FIN ,protected ,@cleanups)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="15">&nbsp;</A><tt>FIN</tt> </td><td colspan="1" align="LEFT"> <tt>(FIN ,protected ,@cleanups)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>ensures that <tt>(SEQ ,@cleanups)</tt> is evaluated whether
   or not an <tt>ESC</tt> upwards exit is taken
@@ -107,7 +113,7 @@ function calls, conditional execution, and nonlocal control flow.
   <tt>UNWIND-PROTECT</tt>).  The result of a <tt>FIN</tt> form is the
   result of evaluating its protected form.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="15">&nbsp;</A><tt>ASSERT</tt> </td><td colspan="1" align="LEFT"> <tt>(ASSERT ,test ,message ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="16">&nbsp;</A><tt>ASSERT</tt> </td><td colspan="1" align="LEFT"> <tt>(ASSERT ,test ,message ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(UNLESS ,test (ERROR ,message ,@args))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">

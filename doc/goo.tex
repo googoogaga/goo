@@ -53,9 +53,9 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\T\title{{\Huge \goo\ Reference Manual v40 }}
+\T\title{{\Huge \goo\ Reference Manual v41 }}
 \T\author{{\huge Jonathan Bachrach} \\ {\Large MIT AI Lab}}
-\W\title{{\huge \goo\ Reference Manual v40 }}
+\W\title{{\huge \goo\ Reference Manual v41 }}
 \W\author{{\Large Jonathan Bachrach} \\ {\Large MIT AI Lab}}
 \date{\today}
 %\date{October 31, 1995}
@@ -284,6 +284,10 @@ function calls, conditional execution, and nonlocal control flow.
 \form{SWAPF}{(SWAPF ,x ,y)}
   \doc{$\equiv$ \kode{(SEQ (DEF tmp ,x) (SET ,x ,y) (SET ,y tmp))},
   where \kode{,x} and \kode{,y} are evaluated only once.}
+\form{ROTF}{(ROTF ,x ,y ,@places)}
+  \doc{$\equiv$ \kode{(SET (TUP ,x ,y ,@places) (TUP ,y ,@places ,x))}
+  where \kode{,x}, \kode{,y}, and \kode{,@places)} are evaluated only
+  once and \kode{(SET (TUP ...) val)} stands for parallel assignment.}
 \form{{\it call}}{(,f ,@args)}
   \doc{evaluates \kode{,f} and then \kode{,@args} in left to right
   order and then calls \kode{,f} with the evaluated arguments.}
@@ -700,7 +704,7 @@ required to use \kode{gensym} to avoid name collisions.
   \kode{,@body}. The pattern matching occurs as in \kode{MIF} and makes available
   pattern variables during the evaluation of \kode{(SEQ ,@body)}.  For example,
 \begin{ex}
-(DS (when ,test ,@body)\snl 
+(DS (unless ,test ,@body)\snl 
   `(if (not ,test) (seq ,@body)))
 \end{ex}
   defines the \kode{when} macro in \goo.}
@@ -738,6 +742,8 @@ All objects are derived from \kode{<any>}.
   \doc{coerces y to an instance of x.}
 % \generic{object-parents}{x|<any> => <lst>}
 % \generic{object-prop}{x|<any> => <lst>}
+\generic{object-class}{x|<any> => <class>}
+  \doc{returns concrete class of \kode{x}.}
 \generic{==}{x|<any> y|<any> => <log>}
   \doc{returns true iff \kode{x} and \kode{y} are computationally
   equivalent.}
@@ -878,6 +884,8 @@ interior \goo\ object data.
 \generic{mod}{x|<num> y|<num> => <num>}
   \doc{returns the remainder after taking the floor of the quotient of
     \kode{x} and \kode{y}.}
+\generic{div}{x|<num> y|<num> => <num>}
+  \doc{returns the trunc of the quotient of \kode{x} and \kode{y}.}
 \generic{rem}{x|<num> y|<num> => <num>}
   \doc{returns remainder after dividing \kode{x} by \kode{y}.}
 \generic{pow}{x|<num> e|<num> => <num>}
@@ -1000,7 +1008,7 @@ Collections can be almost entirely defined in terms of an enumeration class.
        where the default is \kode{(object-class x)}.}
 \generic{empty?}{x|<col> => <log>}
   \doc{$\equiv$ \kode{(= (len x) 0)}}
-\generic{empty}{x|<col> => <col>}
+\generic{empty}{x|(t< <col>) => <col>}
   \doc{returns collection specific unique empty value.}
 % \generic{default}{x|<col> => <any>}
 %   \doc{return default element value.}
@@ -1893,6 +1901,9 @@ module name to use.
 \generic{save-image}{filename|<str>}
   \doc{saves an image of the current \goo\ process to a file 
        named \kode{filename}.}
+\instance{\$ \$\$ \$\$\$}{<any>}
+  \doc{refers respectively to last, second to last, and third to last
+       values returned in top-level listener.}
 \end{defs}
 
 % \section{Series Protocol}
@@ -1997,6 +2008,9 @@ with a comma.  The following is a list of available commands:
   \doc{to change to dynamic compilation evaluation.}
 \command{,ast-eval}{\emptybox}
   \doc{to change to ast evaluation.}
+\instance{GOO\_EVAL\_MODE}{<str>}
+  \doc{environment variable for setting goo's evaluation mode.  Valid
+  settings are ``ast'' or ``g2c''.}
 \command{,in}{,name}
   \doc{changes to module \kode{,name}.}
 \syntax{mod:name}{\emptybox}
