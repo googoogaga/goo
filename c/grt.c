@@ -46,8 +46,8 @@ P YPinvoke_debugger(P condition) {
 #define MAX_STACK_SIZE 100000
 
 P* stack_;
-int sp = 0;
-int fp = 0;
+PINT sp = 0;
+PINT fp = 0;
 
 extern P YLmetG;
 extern P YLgenG;
@@ -57,13 +57,13 @@ extern P Yunknown_function_error;
 
 // FIXME: gives args backwards. Rewrite in goo.
 P YPdo_stack_frames (P fun) {
-  int xfp = fp;
+  PINT xfp = fp;
   while (xfp > 0) {
-    int nfp    = (int)stack_[xfp];
+    PINT nfp    = (PINT)stack_[xfp];
     P   args   = Ynil;
     P   f      = stack_[--xfp];
-    int numargs= (int)stack_[--xfp];
-    int i;
+    PINT numargs= (PINT)stack_[--xfp];
+    PINT i;
     for (i = 0; i < numargs; i++)
       args = YPpair(stack_[--xfp], args);
     CALL2(1, fun, f, args);
@@ -86,7 +86,7 @@ INLINE P allocate (unsigned long size) {
     YPbreak("ALLOCATE: BAD SIZE");
   if (any_stack_allocp && stack_allocp) {
     P res = &stack_[sp];
-    int nwords = ((size - 1) / sizeof(P)) + 1;
+    PINT nwords = ((size - 1) / sizeof(P)) + 1;
     nsallocd  += size;
     sp        += nwords;
     /* bzero(res, size); */
@@ -111,9 +111,9 @@ INLINE P YPraw_alloc (P size) {
 }
 
 INLINE P YPobject_of (P class, P size) {
-  int i;
-  P obj = allocate(((int)size + 1) * sizeof(P));
-  for (i = 0; i < (int)size; i++)
+  PINT i;
+  P obj = allocate(((PINT)size + 1) * sizeof(P));
+  for (i = 0; i < (PINT)size; i++)
     YPprop_elt_setter(Ynul_prop, obj, (P)i);
   YPobject_class_setter(class, obj);
   return obj;
@@ -122,12 +122,12 @@ INLINE P YPobject_of (P class, P size) {
 extern P YPclass_prop_len(P);
 
 INLINE P YPclone (P x) {
-  int i, size;
+  PINT i, size;
   P   c, y;
   c    = YPobject_class(x);
   size = YPiu(YPclass_prop_len(c));
   y    = YPobject_of(c, (P)size);
-  for (i = 0; i < (int)size; i++)
+  for (i = 0; i < (PINT)size; i++)
     YPprop_elt_setter(YPprop_elt(x, (P)i), y, (P)i);
   return y;
 }
@@ -136,11 +136,11 @@ INLINE P YPclone (P x) {
 
 INLINE P YPfE(P x, P y) {
   INTFLO ix, iy; ix.i = (PINT)x; iy.i = (PINT)y;
-  return (P)(ix.f == iy.f);
+  return (P)(PLOG)(ix.f == iy.f);
 }
 INLINE P YPfL(P x, P y) {
   INTFLO ix, iy, iz; ix.i = (PINT)x; iy.i = (PINT)y;
-  return (P)(ix.f < iy.f);
+  return (P)(PLOG)(ix.f < iy.f);
 }
 INLINE P YPfA(P x, P y) {
   INTFLO ix, iy, iz; ix.i = (PINT)x; iy.i = (PINT)y;
@@ -262,10 +262,10 @@ P YPPROP_ELT_SETTER (P z, P x, P i) {
 extern P YLrepG;
 
 P YPPrfab (P len, P fill) {
-  int i;
-  P obj = allocate(((int)len + 2) * sizeof(P));
+  PINT i;
+  P obj = allocate(((PINT)len + 2) * sizeof(P));
   YPprop_elt_setter(len, obj, (P)REP_LEN_OFF);
-  for (i = 0; i < (int)len; i++)
+  for (i = 0; i < (PINT)len; i++)
     YPprop_elt_setter(fill, obj, (P)(i + REP_DAT_OFF));
   YPobject_class_setter(YLrepG, obj);
   return obj;
@@ -276,10 +276,10 @@ P YPPrfab (P len, P fill) {
 extern P YLtupG;
 
 P YPPtfab (P len, P fill) {
-  int i;
-  P obj = allocate(((int)len + 2) * sizeof(P));
+  PINT i;
+  P obj = allocate(((PINT)len + 2) * sizeof(P));
   YPprop_elt_setter(len, obj, (P)REP_LEN_OFF);
-  for (i = 0; i < (int)len; i++)
+  for (i = 0; i < (PINT)len; i++)
     YPprop_elt_setter(fill, obj, (P)(i + REP_DAT_OFF));
   YPobject_class_setter(YLtupG, obj);
   return obj;
@@ -290,22 +290,21 @@ P YPPtfab (P len, P fill) {
 extern P YLstrG;
 
 P YPPsfab (P len, P fill) {
-  int i;
+  PINT i;
   P obj = allocate((2) * sizeof(P) + ((PINT)len + 1)*sizeof(PCHR));
   PSTR str = (PSTR)YPrep_dat(obj);
   YPprop_elt_setter(len, obj, (P)REP_LEN_OFF);
-  for (i = 0; i < (int)len; i++)
-    str[i] = (PCHR)(int)fill;
-  str[(int)len] = (PCHR)0;
+  for (i = 0; i < (PINT)len; i++)
+    str[i] = (PCHR)(PINT)fill;
+  str[(PINT)len] = (PCHR)0;
   YPobject_class_setter(YLstrG, obj);
   return obj;
 }
   
 P YPsb (P pstr) {
   PSTR str = (PSTR)pstr;
-  int i;
-  int len = strlen(str);
-  P obj   = allocate((2) * sizeof(P) + ((PINT)len + 1)*sizeof(PCHR));
+  PINT len = strlen(str);
+  P obj   = allocate((2) * sizeof(P) + (len + 1)*sizeof(PCHR));
   PSTR dat = (PSTR)YPrep_dat(obj);
   YPprop_elt_setter((P)len, obj, (P)REP_LEN_OFF);
   strcpy(dat, str);
@@ -361,9 +360,9 @@ INLINE P YPforce_out (P s) {
 }
 
 INLINE P YPput (P s, P x) { 
-  fputc((PCHR)(int)x, (FILE*)YPlu(s)); 
+  fputc((PCHR)(PINT)x, (FILE*)YPlu(s)); 
 #ifdef WIN32  
-  if ((FILE*)YPlu(s) == stdout && (((PCHR)(int)x) == '\n')) fflush(stdout);
+  if ((FILE*)YPlu(s) == stdout && (((PCHR)(PINT)x) == '\n')) fflush(stdout);
 #endif
   return YPfalse; 
 }
@@ -380,7 +379,7 @@ INLINE P YPputs (P s, P x) {
 }
 
 INLINE P YPget (P s) { 
-  return (P)fgetc((FILE*)YPlu(s)); 
+  return (P)(PINT)fgetc((FILE*)YPlu(s)); 
 }
 
 INLINE P YPpeek (P s) { 
@@ -397,7 +396,7 @@ INLINE P YPreadyQ (P s) {
 #else
   res = 1;
 #endif
-  return((P)res);
+  return((P)(PINT)res);
 } 
 
 #define MAXSTRSIZ 1000
@@ -411,7 +410,7 @@ PSTR YPgets (FILE* s) {
   return str;
 }
 
-INLINE P YPeof_objectQ (P x) { return (P)((PCHR)(PINT)x == EOF); }
+INLINE P YPeof_objectQ (P x) { return (P)(PLOG)((PCHR)(PINT)x == EOF); }
 
 INLINE P YPeof_object () { return (P)EOF; }
 
@@ -515,7 +514,7 @@ P YPos_name () {
 }
 
 P YPos_val (P name) {
-  PSTR value = getenv((PSTR)name);
+  PSTR value = getenv((char *)name);
   if (value == NULL)
     return "";
   else
@@ -523,7 +522,7 @@ P YPos_val (P name) {
 }
 
 P YPos_val_setter (P value, P name) {
-  putenv((PSTR)name, (PSTR)value, 1);
+  setenv((PSTR)name, (PSTR)value, 1);
   return (P)value;
 }
 
@@ -534,7 +533,7 @@ ENV envnul = (ENV)PNUL;
 unsigned long env_nallocd = 0;
 
 INLINE P ENVFAB (int n) {
-  int snallocd = nallocd;
+  unsigned long snallocd = nallocd;
   ENV env = allocate(sizeof(ENV_DATA) + ((n - 1) * sizeof(P)));
   env_nallocd += nallocd - snallocd;
   env->size = n;
@@ -566,7 +565,7 @@ extern P YPclass_prop_len_setter(P, P); /* TODO: TEMP */
 
 INLINE P FUNSHELL (int d, P x, int n) {
   P   fun;
-  int snallocd = nallocd;
+  unsigned long snallocd = nallocd;
   int old_stack_allocp = stack_allocp; stack_allocp = d;
   YPclass_prop_len_setter(YPib((P)4), YLmetG);
   fun = YPclone(x);
@@ -579,7 +578,7 @@ INLINE P FUNSHELL (int d, P x, int n) {
 P FUNFAB (P x, int n, ...) {
   int i;
   va_list ap; 
-  int snallocd = nallocd;
+  unsigned long snallocd = nallocd;
   P   fun;
   YPclass_prop_len_setter(YPib((P)4), YLmetG);
   fun = YPclone(x);
@@ -605,7 +604,7 @@ INLINE OBJECT STACK_PAIR(P h, P t) {
 extern P YPib(P);
 extern P Ywrong_number_arguments_error;
 
-INLINE void CHECK_ARITY (P fun, int naryp, int n, int arity) {
+INLINE void CHECK_ARITY (P fun, PLOG naryp, PINT n, PINT arity) {
   if (naryp) { 
     if (n < arity) 
       CALL2(1, Ywrong_number_arguments_error, fun, YPib((P)n)); 
@@ -655,20 +654,20 @@ P YPcheck_call_types() {
     traits = YPobject_class(fun);
   
   if (traits == YLmetG) {
-    int n     = (int)stack_[sp - 2];
-    int arity = FUNARITY(fun);
-    int naryp = FUNNARYP(fun);
-    P   specs = FUNSPECS(fun);
-    int i;
+    PINT n    = (PINT)stack_[sp - 2];
+    PINT arity = FUNARITY(fun);
+    PLOG naryp = FUNNARYP(fun);
+    P    specs = FUNSPECS(fun);
+    int  i;
     
     CHECK_ARITY(fun,naryp,n,arity);
     for(i = 0; specs != Ynil; i++, specs = Ptail(specs)) {
       CHECK_TYPE(stack_[sp - 3 - i], Phead(specs));
     }
   } else if (traits == YLgenG) {
-    int n     = (int)stack_[sp - 2];
-    int arity = FUNARITY(fun);
-    int naryp = FUNNARYP(fun);
+    PINT n     = (PINT)stack_[sp - 2];
+    PINT arity = FUNARITY(fun);
+    PLOG naryp = FUNNARYP(fun);
     CHECK_ARITY(fun,naryp,n,arity);
   } else if (fun == 0) {
     if(Yunknown_function_error != 0)
@@ -693,7 +692,7 @@ P CALLN (int check, P fun, int n, ...) {
     stack_[sp - i - 1] = va_arg(ap, P);
 
   va_end(ap);
-  PUSH((P)n);
+  PUSH((P)(PINT)n);
   PUSH(fun);
   if(check)
     YPcheck_call_types();
@@ -779,7 +778,7 @@ P do_exit (P fun) {
 
 
 P MAKE_BIND_EXIT_FRAME () {
-  int osp = sp, ofp = fp;
+  PINT osp = sp, ofp = fp;
   BIND_EXIT_FRAME frame
     = (BIND_EXIT_FRAME)stack_allocate(sizeof(BIND_EXIT_FRAME_DATA));
   frame->sp = osp;
@@ -831,7 +830,7 @@ P with_cleanup (P body_fun, P cleanup_fun) {
 unsigned long box_nallocd = 0;
 
 INLINE P BOXFAB(P x) {  
-  int snallocd = nallocd;
+  unsigned long snallocd = nallocd;
   P* box = (P*)allocate(sizeof(P));
   box_nallocd += nallocd - snallocd;
   BOXVAL(box) = x;
@@ -844,6 +843,8 @@ INLINE P BOXFAB(P x) {
 /* SYMBOL TABLE */
 
 extern P YPclass_name(P);
+extern P YPsym_nam(P);
+extern P YPmet_name(P);
 
 char* type (P adr) {
   if (adr == PNUL)
@@ -910,9 +911,9 @@ void print_kind (P adr, int prettyp, int depth) {
     break;
   }
   if (strcmp(typename, "<int>") == 0) {
-    printf("%d", (int)YPprop_elt(adr, (P)0));
+    printf("%ld", (PINT)YPprop_elt(adr, (P)0));
   } else if (strcmp(typename, "<chr>") == 0) {
-    printf("%c", (int)YPprop_elt(adr, (P)0));
+    printf("%c", (char)(PINT)YPprop_elt(adr, (P)0));
   } else if (strcmp(typename, "<loc>") == 0) {
     printf("&0x%lx", YPprop_elt(adr, (P)0));
   } else if (strcmp(typename, "<flo>") == 0) {
@@ -993,7 +994,7 @@ void print_kind (P adr, int prettyp, int depth) {
     for (i = 0; i < below; i++) {
       printf(" "); 
       if (i < max_length) {
-	print_kind(YPprop_elt(adr, (P)i), 0, depth + 1);
+	print_kind(YPprop_elt(adr, (PINT)i), 0, depth + 1);
       } else {
 	printf("..."); break;
       }
@@ -1047,7 +1048,7 @@ void desobj (P adr) {
       int from  = funp ? 1 : 0;
       int below = MIN(metp ? size - 1 : size, 10);
       for (i = from; i < below; i++)
-	desprop(i, YPprop_elt(adr, (P)i));
+	desprop(i, YPprop_elt(adr, (PINT)i));
       if (metp) {
 	int j;
 	ENV env = (ENV)YPprop_elt(adr, (P)FUNENVOFFSET);
@@ -1136,7 +1137,7 @@ void YPinit_world(int argc, char* argv[]) {
   }
   /* GC_enable_incremental(); */
 
-  GC_init();
+  GC_INIT();
   stack_  = (P*)allocate(MAX_STACK_SIZE * sizeof(P));
   envnul  = ENVFAB(0);
   Pcurrent_unwind_protect_frame = Ptop_unwind_protect_frame;
@@ -1383,5 +1384,5 @@ P YevalSg2cYPload(P name) {
 
 /* TODO: GET THIS WORKING ON WINDOWS */
 P YgooSsystemYPpid () {
-  return (P)getpid();
+  return (PINT)getpid();
 }

@@ -1,9 +1,9 @@
 //// Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
 #include <time.h>
+#include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
-#include <stdarg.h>
 #include <setjmp.h>
 
 #include <math.h>
@@ -32,6 +32,8 @@ typedef union {
 } INTFLO;
 
 extern P YPsb(P);
+extern P YPlb(P);
+extern P YPlu(P);
 
 extern P YPinvoke_debugger(P condition);
 extern P YPbreak(char*);
@@ -83,7 +85,7 @@ typedef struct _obj {
 #define YPobject_class(x)            (((OBJECT)(x))->class)
 #define YPobject_class_setter(z, x)  (((OBJECT)(x))->class = (z))
 
-#include "gc.h"
+#include <gc/gc.h>
 
 extern P Ynul;
 extern P Ynul_prop;
@@ -122,17 +124,17 @@ extern P YPPrfab (P size, P fill);
 
 extern P YPPvfab (P size, P fill);
 #define YPvu(x)                ((P)(YPrep_dat(x)))
-#define YPvlen(x)              ((P)(YPprop_elt((x), (P)REP_LEN_OFF)))
-#define YPvelt(x, i)           ((P)(YPprop_elt((x), (P)(REP_DAT_OFF + (i)))))
-#define YPvelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (P)(REP_DAT_OFF + (i)))))
+#define YPvlen(x)              ((P)(YPprop_elt((x), (PINT)REP_LEN_OFF)))
+#define YPvelt(x, i)           ((P)(YPprop_elt((x), (PINT)(REP_DAT_OFF + (i)))))
+#define YPvelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (PINT)(REP_DAT_OFF + (i)))))
 
 /* TUP */
 
 extern P YPPtfab (P size, P fill);
 #define YPtu(x)                ((P)(YPrep_dat(x)))
-#define YPtlen(x)              ((P)(YPprop_elt((x), (P)REP_LEN_OFF)))
-#define YPtelt(x, i)           ((P)(YPprop_elt((x), (P)(REP_DAT_OFF + (i)))))
-#define YPtelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (P)(REP_DAT_OFF + (i)))))
+#define YPtlen(x)              ((P)(YPprop_elt((x), (PINT)REP_LEN_OFF)))
+#define YPtelt(x, i)           ((P)(YPprop_elt((x), (PINT)(REP_DAT_OFF + (i)))))
+#define YPtelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (PINT)(REP_DAT_OFF + (i)))))
 
 /* STR */
 
@@ -141,7 +143,7 @@ typedef PCHR* PSTR;
 extern P YPPsfab (P size, P fill);
 extern P YPsb (P str);
 #define YPsu(x)                ((P)(YPrep_dat(x)))
-#define YPslen(x)              ((P)(YPprop_elt((x), (P)REP_LEN_OFF)))
+#define YPslen(x)              ((P)(YPprop_elt((x), (PINT)REP_LEN_OFF)))
 #define YPselt(x, i)           ((P)(PINT)(((PSTR)(YPsu(x)))[((PINT)(i))]))
 #define YPselt_setter(z, x, i) ((P)(PINT)(((PSTR)(YPsu(x)))[((PINT)(i))] = ((PCHR)(PINT)(z))))
 
@@ -172,11 +174,11 @@ extern P YPcreate_directory (P name);
 
 /* OS */
 
-extern PSTR getenv(PSTR);
-extern PSTR setenv(PSTR, PSTR, int);
 extern P YPos_name ();
 extern P YPos_val (P name);
 extern P YPos_val_setter (P value, P name);
+P YgooSsystemYPpid ();
+
 #define timeval_diff(a, b, result)                                            \
   do {                                                                        \
     (result)->tv_sec = (a)->tv_sec - (b)->tv_sec;                             \
@@ -286,11 +288,11 @@ STATIC_NOT_PRT_C  INLINE long tag (P adr, int tag) {
 }
 
 STATIC_NOT_PRT_C INLINE P YPelt (P v, P i) {
-  return ((P*)v)[(int)i];
+  return ((P*)v)[(PINT)i];
 }
 
 STATIC_NOT_PRT_C INLINE P YPelt_setter (P x, P v, P i) {
-  return ((P*)v)[(int)i] = x;
+  return ((P*)v)[(PINT)i] = x;
 }
 
 
@@ -308,7 +310,7 @@ extern P   Pnext_methods_;
 } while(0)
 
 extern P* stack_;
-extern int sp, fp;
+extern PINT sp, fp;
 
 #define PUSH(x)    (stack_[sp++] = (x))
 #define POP()      (stack_[--sp])
@@ -327,7 +329,7 @@ fp->  prev fp
 */
 
 #define LINK_STACK()      {stack_[sp] = (P)fp; fp = sp; sp++; }
-#define UNLINK_STACK()    {sp = fp; fp = (int)stack_[sp]; }
+#define UNLINK_STACK()    {sp = fp; fp = (PINT)stack_[sp]; }
 #define YPunlink_stack (0);UNLINK_STACK
 #define ARGLEN()          (stack_[fp - 2])
 #define ARG(x, n)         x = (stack_[fp - (n) - 3])
