@@ -142,7 +142,7 @@ See `run-hooks'."
 	     '("if" "seq" "set" "fun" "loc" "lab"
 	       "fin" "try" "sig" "isa" "slot" "ct" "expand"
 	       "quote" "rep" "ifm" "and" "or" "unless" "when"
-	       "inc" "dec" "case" "select") t)
+	       "inc" "dec" "case" "select" "for" "let") t)
 	"\\>") 1))))
   "Gaudy expressions to highlight in Proto modes.")
 
@@ -233,6 +233,7 @@ See `run-hooks'."
 (put 'case 'proto-indent-function 0)
 (put 'select 'proto-indent-function 1)
 (put 'seq 'proto-indent-function 0)
+(put 'for 'proto-indent-function 1)
 
 ;; defining forms:
 (put 'def 'proto-indent-function "define")
