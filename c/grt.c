@@ -601,7 +601,7 @@ extern P YOisaQ;
 
 INLINE void CHECK_TYPE(P res, P type)
 {
-  if (0 && type != YLanyG) {
+  if (type != YLanyG) {
     if (((YPobject_class(type) == YLclassG) ?
          YOclass_isaQ(res, type) :
          CALL2(0, YOisaQ, res, type)) == YPfalse)
@@ -610,10 +610,8 @@ INLINE void CHECK_TYPE(P res, P type)
 }
 
 void check_fun_val_type (P res, P fun) {
-  /*  
   P t = FUNVALUE(fun); 
   CHECK_TYPE(res, t);
-  */
 }
 
 P check_type (P res, P type) {
