@@ -35,6 +35,10 @@
 (use/include /usr/include/glib-2.0)
 (use/include /usr/lig/glib-2.0/include)
 
+;; Todo:
+;;  Allow sizing hints for canvases.
+
+
 ; ----
 
 ; --
@@ -454,6 +458,7 @@
 
   <visi-col>
   <visi-wrap-col>
+  <visi-reversablize>
 
   <gui-treeview-model>
   <gui-treeview>
@@ -588,6 +593,7 @@
   invalidate
   bind
   visi-wrap-col
+  visi-reversablize
   get-start-node
   node-label
   node-weight

@@ -37,6 +37,12 @@
   (rect 0 0 8 8)
   )
 
+(dm point-in-lightweight (renderer|<visi-intrinsic> item|<any> object-point|<point> test-point|<point> => <log>)
+  (def dx (- (point-x test-point) (point-x object-point)))
+  (def dy (- (point-y test-point) (point-y object-point)))
+  (> 16 (+ (* dx dx) (* dy dy)))
+  )
+
 ;; Mapping Techniques:
 
 ;; Explicit set mapping -- each unique value mapped to a unique shape/color
@@ -54,4 +60,7 @@
 
   draw-lightweight
   get-lightweight-dimensions
+  point-in-lightweight
+
+  map-color
   )

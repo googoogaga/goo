@@ -10,7 +10,14 @@
 
 ;; Extrinsic gets a rendering surface.
 
-(idrawmodel <visi-col> <visi-extrinsic>)
+(idrawmodel-ext <visi-col> <visi-extrinsic>
+                (
+                  (if (mem? attribs 'extrinsic)
+                      1000
+                      1)
+                  )
+                ()
+                )
 
 (dp! ext-fundamental-axis (<visi-extrinsic> => <any>) #f)
 (dp! ext-root-node (<visi-extrinsic> => <any>) #f)
@@ -46,9 +53,9 @@
   (def scale-x (/ (as <flo> (gui-width ext)) (as <flo> (- (ext-x-max ext) (ext-x-min ext)))))
   (def scale-y (/ (as <flo> (gui-height ext)) (as <flo> (- (ext-y-max ext) (ext-y-min ext)))))
 
-  (post "Scales x: %= y: %=\n" scale-x scale-y)
-  (post "Fundamental axis is: %=\n" (ext-fundamental-axis ext))
-  (post "Painting with nodes: %=\n"       (node-out-edges (ext-wrapped ext) (ext-fundamental-axis ext) (ext-root-node ext)))
+;;  (post "Scales x: %= y: %=\n" scale-x scale-y)
+;;  (post "Fundamental axis is: %=\n" (ext-fundamental-axis ext))
+;;  (post "Painting with nodes: %=\n"       (node-out-edges (ext-wrapped ext) (ext-fundamental-axis ext) (ext-root-node ext)))
 
   (do (fun (item)
         ;; Get the point from the visi-col
@@ -67,8 +74,38 @@
         )
       (node-out-edges (ext-wrapped ext) (ext-fundamental-axis ext) (ext-root-node ext))
       )
+
+  (invalidate-all ext)
   )
 
+(dm find-node (ext|<visi-extrinsic> test-point|<point>)
+  (def found-node #f)
+  (def renderer (ext-item-renderer ext))
+
+  (def scale-x (/ (as <flo> (gui-width ext)) (as <flo> (- (ext-x-max ext) (ext-x-min ext)))))
+  (def scale-y (/ (as <flo> (gui-height ext)) (as <flo> (- (ext-y-max ext) (ext-y-min ext)))))
+
+  (do (fun (item)
+        ;; Get the point from the visi-col
+        (def init-point (point (* scale-x (1st (node-out-edges (ext-wrapped ext) 
+                                                               (ext-x-axis ext)
+                                                               item)))
+                               (* scale-y (1st (node-out-edges (ext-wrapped ext)
+                                                               (ext-y-axis ext)
+                                                               item)))))
+
+        ;; Transform with global lenses
+        (def actual-point (method-fold (ext-lenses ext) init-point))
+
+        (when (point-in-lightweight renderer item actual-point test-point)
+          (set found-node item)
+          )
+        )
+      (node-out-edges (ext-wrapped ext) (ext-fundamental-axis ext) (ext-root-node ext))
+      )
+  
+  found-node
+  )
 
 (dm bind (ext|<visi-extrinsic> info|<interface-info> => (tup <fun> <fun> <fun>))
   (tup
@@ -87,14 +124,14 @@
      (do (fun (attr)
            (when (isa? attr <col>)
              (post "Processing attribute pair: %=\n" attr)
-             (case-by (as <str> (1st attr)) =
-               (("fundamental")
+             (case-by (1st attr) =
+               (('fundamental)
                 (set (ext-fundamental-axis ext) (as <str> (2nd attr)))
                 )
-               (("x")
+               (('x)
                 (set (ext-x-axis ext) (as <str> (2nd attr)))
                 )
-               (("y")
+               (('y)
                 (set (ext-y-axis ext) (as <str> (2nd attr)))
                 )
                )
@@ -106,6 +143,7 @@
 
    ;; -- Refresher --
    (fun ()
+     (repaint-widget ext)
      )
 
    ;; -- Free / Cleanup --
@@ -115,13 +153,19 @@
   )
 
 (dm bind-master (ext|<visi-extrinsic> master|<gui-master> => <log>)
-  (set (ext-master sb) master)
+  (set (ext-master ext) master)
   #t
   )
 
 (dm mouse-press (widget|<visi-extrinsic> x|<int> y|<int> button|<int> time|<int>)
+  (def clicked-node (find-node widget (point x y)))
+  (when (and (ext-master widget)
+             clicked-node
+             (node-browsable (ext-wrapped widget) clicked-node))
+    (master-update-slaves (ext-master widget) clicked-node)
+    )
+
   (repaint-widget widget)
-  (invalidate-all widget)
   )
 
 (dm mouse-release (widget|<visi-extrinsic> x|<int> y|<int> button|<int> time|<int>)
