@@ -7,10 +7,10 @@
 
 ;;;; TODO
 ;;;; 
+;;;; run multiple vm-evals with persistence
 ;;;; get esc to work
 ;;;; next methods
 ;;;; rest variables
-;;;; run multiple vm-evals with persistence
 ;;;; dynamic variables
 ;;;; ---
 ;;;; use underlying g2c stack
@@ -67,7 +67,7 @@
   (set *sp* *fp*)
   (trace "UL[%d/%d]" *sp* *fp*))
 
-;;;; INSTRUCTIONS
+;;;; INSTRUCTION DEFINITION MACHINERY
 
 (dv *opcodes* (fab <tab> 0))
 (dv *codes*   (fab <vec> 256))

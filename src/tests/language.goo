@@ -274,7 +274,7 @@
   (test== (all? (fun (e) (= e (as-elt x 1))) (fabsex x 1 2 3)) #f)
   (test== (all? (fun (e) (= e (as-elt x 1))) (fabsex x 3 2 4)) #f)
   (test   (seq (do (fun (e) e) (fabsex x 1 2)) #t))
-  (test   (map (fun (e) (+ e 1)) (fabsex x 1 2)) (fabsex x 2 3))
+  (test=  (map (fun (e) (+ e 1)) (fabsex x 1 2)) (fabsex x 2 3))
   (test=  (find (fun (x) (odd? (as <int> x))) (fabsex x 2 3)) 1)
   (test=  (find-or (fun (x) (odd? (as <int> x))) (fabsex x 2 4) 0) 0)
   (test=  (fold int-plus 0 (empty x))   0)

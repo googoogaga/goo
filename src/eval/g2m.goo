@@ -13,6 +13,7 @@
 ;;;; less consing on emission
 ;;;; perhaps do framing on the fly
 ;;;; print vars module by module
+;;;; source locations
 ;;;; 
 
 (dm frame! (o)

@@ -295,7 +295,7 @@
   (when (or (== kind 'global) (== kind 'runtime)  (== kind 'dynamic))
     (def name (binding-name gb))
     (puts code-out (case kind (('runtime)  "RTV") (('dynamic) "DYN") (#t "")))
-    (msg* code-out "%s(%s,\"%s\",\"%s\");\n" 
+    (msg* code-out "%s(%s,%s,%s);\n" 
           (if imported? "EXT" "DEF")
           (mangle-binding gb)
           (mangle-string-literal (binding-module-name gb))
@@ -357,9 +357,11 @@
 (dm mangle-string-literal (str|<str> => <str>)
   (set (len *mangle-buffer*) 0)
   (def len (len str))
+  (add! *mangle-buffer* #\")
   (rep loop ((i 0))
     (if (= i len)
-        (char-buffer-as-string *mangle-buffer*)
+        (seq (add! *mangle-buffer* #\")
+             (char-buffer-as-string *mangle-buffer*))
         (let ((c   (elt str i))
               (enc (elt $c-escapes (as <int> c))))
           (if (= enc #f)
@@ -595,7 +597,7 @@
        (mangle-boot-name "%flo") (float-to-c-string x)))
 
 (dm generate-quotation (code-out x|<str>)
-  (msg* code-out "%s((P)\"%s\")" 
+  (msg* code-out "%s((P)%s)" 
         (mangle-boot-name "%sb") (mangle-string-literal x)))
 
 (dm generate-quotation (code-out x|<vec>)
@@ -615,7 +617,7 @@
   (puts code-out ")"))
 
 (dm generate-quotation (code-out x|<sym>)
-  (msg* code-out "%s((P)\"%s\")" 
+  (msg* code-out "%s((P)%s)" 
         (mangle-boot-name "%%sym") (mangle-string-literal x)))
 
 ;;;
@@ -1192,10 +1194,12 @@
   (do-named-static-global-bindings
    (fun (local-name binding)
      (unless (binding-native-to? binding mod)
-       (msg* code-out "  {\"%s\", &%s, \"%s\"},\n"
-            (mangle-string-literal (binding-name binding))
-               (module-info-name (binding-module-name binding))
-               (mangle-string-literal local-name))))
+       (msg* code-out "  {%s, &%s, %s},\n"
+             (mangle-string-literal (binding-name binding))
+             (module-info-name (binding-module-name binding))
+             (if (== (binding-name binding) local-name)
+                 "NULL"
+                 (mangle-string-literal local-name)))))
    (module-target-environment mod))
   (puts code-out "  {NULL,NULL,NULL}\n};\n")
 
@@ -1204,7 +1208,7 @@
   (do-static-global-bindings
    (fun (binding)
      (when (binding-native-to? binding mod)
-       (msg* code-out "  {\"%s\", "
+       (msg* code-out "  {%s, "
              (mangle-string-literal (binding-name binding)))
        (case (binding-kind binding)
          (('global)  (msg* code-out "CVAR, &%s},\n" (mangle-binding binding)))
@@ -1216,14 +1220,16 @@
   ;;(msg* out "Dumping exports...\n")
   (puts code-out "\nstatic EXPORT_INFO export_infos[] = {\n")
   (for (((tup exported-as binding) (module-exports mod)))
-    (msg* code-out "  {\"%s\", \"%s\"},\n"
+    (msg* code-out "  {%s, %s},\n"
           (mangle-string-literal (binding-name binding))
-          (mangle-string-literal exported-as)))
+          (if (== (binding-name binding) exported-as)
+              "NULL"
+              (mangle-string-literal exported-as))))
   (puts code-out "  {NULL, NULL}\n};\n")
 
   (msg* code-out "\nextern MODULE_INFO %s;\n" info-name)
   (msg* code-out "MODULE_INFO %s = {\n" info-name)
-  (msg* code-out "  \"%s\",\n" (mangle-string-literal name))
+  (msg* code-out "  %s,\n" (mangle-string-literal name))
   (puts code-out "  NULL,\n")
   (puts code-out "  use_infos,\n")
   (puts code-out "  import_infos,\n")

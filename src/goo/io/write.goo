@@ -180,7 +180,7 @@
   (def names (fun-names x))
   (put port #\()
   (def names (fun-names x))
-  (for ((i (from 0)) (spec (fun-specs x)) (first? (first-then (op #t) (op #f))))
+  (for ((i (from 0)) (spec (fun-specs x)) (first? (first-then {#t} {#f})))
     (unless first? (put port #\space))
     (if (empty? names)
         (write-type port spec)

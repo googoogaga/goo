@@ -1,0 +1,32 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
+(use goo/boot)
+(use goo/macros)
+(use goo/cols)
+
+(ds (op ,f ,@args)
+  (loc ((splice (y|<lst>)
+          (map (fun (x) (if (== x '...) `(as <lst> _*) `(lst ,x))) y))
+        (rest-op? (x => <log>)
+          (or (and (isa? x <lst>) (any? rest-op? x)) (== x '...)))
+        (walk-op (vars|<lst> x)
+          (cond ((== x '_)
+                 (def var (cat-sym "_" (len vars)))
+                 (set (tail vars) (pair var (tail vars)))
+                 var)
+                ((isa? x <lst>)
+                 (def splice? (any? (fun (y) (== y '...)) x))
+                 (def y       (map (fun (y) (walk-op vars y)) x))
+                 (if splice? `(app ,(head y) (cat! ,@(splice (tail y)))) y))
+                (#t
+                 x))))
+    (if (empty? args)
+      (if (== f '_)
+          `(fun (x) x)
+          `(fun (x|...) ,f))
+      (let ((vars  (pair #f '()))
+            (expr  (walk-op vars `(,f ,@args)))
+            (args `(,@(rev! (tail vars)) ,@(if (rest-op? args) '(_*|...) '()))))
+        `(fun ,args ,expr)))))
+
+(export op)

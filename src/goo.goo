@@ -12,6 +12,7 @@
 (use goo/io/write)
 (use goo/io/read)
 (use goo/io/port)
+(use goo/late-macros)
 
 (export
  ;; Section 1.1/2.1: Special forms.
