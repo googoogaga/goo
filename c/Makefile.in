@@ -1,0 +1,81 @@
+
+export
+
+## generic autoconf stuff
+SHELL = /bin/sh
+VPATH = @srcdir@
+
+subdirs = @subdirs@
+top_srcdir = @top_srcdir@
+srcdir = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+datadir = @datadir@
+bindir = $(exec_prefix)/bin
+infodir = $(prefix)/info
+libdir = $(prefix)/lib/goo/
+mandir = $(prefix)/man/man1
+exe_suffix=@exe_suffix@
+
+CC = @CC@
+CPPFLAGS = @CPPFLAGS@
+CFLAGS = $(CPPFLAGS) @CFLAGS@
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+INSTALL = @INSTALL@
+INSTALL_PROGRAM=@INSTALL_PROGRAM@
+INSTALL_SCRIPT=@INSTALL_PROGRAM@
+INSTALL_DATA=@INSTALL_DATA@
+
+## end generic stuff
+
+GOO_LIB = $(libdir)/lib
+GOO_MODS = $(libdir)/mods
+
+build_gc = @build_gc@
+
+ifeq ($(sub), )
+  sub = g2c
+endif
+
+C_OBJS   = grt.o # unexelf.o midi.o threads.o timer.o 
+
+ifeq ($(build_gc), yes)
+  C_OBJS += gc.a
+endif
+
+LD_FLAGS  += -Wl,--export-dynamic
+
+default: all
+
+gc: Makefile
+	ifeq ($(build_gc), yes)
+	  cd $(top_srcdir)/gc && $(MAKE) libgc.la
+	  rm -f gc
+	  ln -s -f $(top_srcdir)/gc/include gc
+	  ln -s -f $(top_srcdir)/gc/.libs/libgc.a gc.a;
+	else
+	  rm -f gc gc.a;
+	endif
+
+all: gc
+	(cd $(sub); $(MAKE))
+
+# Create installation
+install: all
+	$(top_srcdir)/mkinstalldirs $(bindir)
+	$(top_srcdir)/mkinstalldirs $(GOO_LIB)
+	$(top_srcdir)/mkinstalldirs $(GOO_MODS)
+	$(INSTALL_PROGRAM) $(sub)/$(sub) $(bindir)
+	$(INSTALL_DATA) grt.h $(GOO_LIB)
+	$(INSTALL_DATA) dlgrt.h $(GOO_LIB)
+
+clean:
+	rm -f grt.o unexelf.o gc gc.a
+	(cd $(sub); $(MAKE) clean)
+
+distclean: clean
+	rm -f Makefile
+
+.PHONY: all install clean distclean gc
+
