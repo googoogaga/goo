@@ -192,8 +192,10 @@
 ;; TODO: HYGIENE
 (export
   fab-class
+  pe-msg
   macro-error
   %prop
   %fun-reg
   @not @==
+  @checked-next-methods
   )

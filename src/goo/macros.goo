@@ -6,17 +6,23 @@
 
 ;; TODO: Fix next-method to do a normal call with a next-method instead of
 ;;       apply, as apply is not necessary, and slow.
+
+;; (ct-also
+(df @checked-next-methods (met nxt-mets args|...)
+  (if nxt-mets 
+      (if (@== nxt-mets '())
+          (no-next-methods-error met args)
+          nxt-mets)
+      (no-next-methods-error met args)))
+;; )
+
 (ds (sup ,@args)
-  `(let ((next-mets (%next-methods)))
-     (if (and next-mets (@not (@== next-mets '())))
-         (napp (head next-mets) (tail next-mets) ,@args '())
-         (no-next-methods-error (%fun-reg) (lst ,@args)))))
+  `(let ((next-mets (@checked-next-methods (%fun-reg) (%next-methods) ,@args)))
+     (napp (head next-mets) (tail next-mets) ,@args '())))
 
 (ds (app-sup ,@args)
-  `(let ((next-mets (%next-methods)))
-     (if (and next-mets (@not (@== next-mets '())))
-         (napp (head next-mets) (tail next-mets) ,@args)
-         (no-next-methods-error (%fun-reg) (lst ,@args)))))
+  `(let ((next-mets (@checked-next-methods (%fun-reg) (%next-methods) ,@args)))
+     (napp (head next-mets) (tail next-mets) ,@args)))
 
 (ds (app ,f ,@args)
   `(napp ,f #f ,@args))
@@ -289,7 +295,7 @@
 
 (export
   app
-  sup
+  sup 
   app-sup
   renew
   incf
@@ -316,3 +322,6 @@
   lift-place-subforms
   without-prop-unbound-errors
   *report-prop-unbound-errors?*)
+
+(export ;; hygiene
+  @checked-next-methods)

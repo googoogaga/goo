@@ -706,11 +706,13 @@
     (puts code-out ")")))
 
 (dm to-c (e|<bound?> f d code-out)
+  (to-c (bound?-default e) f d code-out)
   (with-used-expression (e d code-out) ;; TODO: FIX FOR DYN
     (when (isa? (bound?-reference e) <runtime-reference>) (puts code-out "RTV"))
-    (puts code-out "BOUNDP")
-    (between-parentheses (code-out)
-      (binding->c (reference-binding (bound?-reference e)) code-out))))
+    (puts code-out "VARREF_OR")
+    (between-parentheses-comma-separated (code-out)
+      (binding->c (reference-binding (bound?-reference e)) code-out)
+      (gen-ref (bound?-default e) code-out))))
 
 ;; TODO: DOES REF NEED TO BE TO-C'D
 
@@ -938,12 +940,7 @@
   (out-list-builder (fun (x) (gen-ref x code-out)) code-out refs))
 
 (dm generate-function-specs (code-out sig)
-  ;; TODO: HACK -- THIS SHOULD BE CORRECTED EARLIER
-  (def types (signature-specs sig))
-  (def specs (if (constant-value (signature-nary? sig))
-                 (sub types 0 (- (len types) 1))
-                 types))
-  (gen-fab-list code-out specs))
+  (gen-fab-list code-out (req-sig-specs sig)))
 
 (dm to-c (e|<ast-signature> f d code-out)
   (do (fun (x) (to-c x f d code-out)) (signature-specs e))

@@ -2,16 +2,17 @@
 
 (use goo)
 (use goo/boot)
+(use goo/io/write)
 (use eval/ast)
 (use eval/ast-eval)
 
 ;;;; TODO
 ;;;; 
-;;;; run multiple vm-evals with persistence
-;;;; get esc to work
-;;;; next methods
-;;;; rest variables
 ;;;; dynamic variables
+;;;; ---
+;;;; stack per thread
+;;;; preconvert code to have functions OR use bytes
+;;;; code vec per met
 ;;;; ---
 ;;;; use underlying g2c stack
 ;;;; customize instructions
@@ -30,25 +31,38 @@
 
 (dv $max-stk-len 1000)
 (dv *stk*        (fab <vec> $max-stk-len))
-(dv *sp*         0)
-(dv *fp*         0)
-(dv *fun*        #f)
-(dv *pc*         0)
 (dv *code*       (fab <vec> 0))
 (dv *exit*       #f) ;; USE FOR VM-TOP-RUN ESC'S
 
+;;;; THE VM STATE
+
+;; NOW STORED IN LOW-LEVEL MACHINE-STATE
+;; (dv *sp*         0)
+;; (dv *fp*         0)
+;; (dv *fn*         #f)
+;; (dv *pc*         0)
+
 ;;;; STACK
 
+(df trace-stk (msg|<str>)
+  (when *trace?* 
+    (post "[%s" msg)
+    (for ((i (range-by (- (%vsp) 1) >= 0 1-)))
+      (when (= i (%vfp))
+        (post " FP>"))
+      (post " %=" [*stk* i]))
+    (post "]")))
+
 (dm vm-push (x) 
-  (trace "PU[%d/%d: %=]" *sp* *fp* x)
-  (set (elt *stk* *sp*) x)
-  (incf *sp*)
+  (set [*stk* (%vsp)] x)
+  (incf (%vsp))
+  (trace-stk "PU")
   x)
 
 (dm vm-pop (=> <any>) 
-  (decf *sp*)
-  (def x (elt *stk* *sp*))
-  (trace "PO[%d/%d: %=]" *sp* *fp* x)
+  (trace-stk "PO")
+  (decf (%vsp))
+  (def x [*stk* (%vsp)])
   x)
 
 (dm vm-n-pop (n|<int> => <lst>) 
@@ -58,14 +72,14 @@
         (pop (pair (vm-pop) res) (+ i 1)))))
 
 (df vm-env-lnk (n)
-  (vm-push *fp*)
-  (set *fp* (- *sp* 1))
-  (incf *sp* n))
+  (vm-push (%vfp))
+  (set (%vfp) (- (%vsp) 1))
+  (incf (%vsp) n))
 
 (df vm-env-unlnk ()
-  (set *fp* (elt *stk* *fp*))
-  (set *sp* *fp*)
-  (trace "UL[%d/%d]" *sp* *fp*))
+  (set (%vsp) (%vfp))
+  (set (%vfp) [*stk* (%vfp)])
+  (trace-stk "UL"))
 
 ;;;; INSTRUCTION DEFINITION MACHINERY
 
@@ -77,8 +91,8 @@
 (dv $vm-ret  0)
 
 (df vm-nxt-op () 
-  (def op (elt *code* *pc*))
-  (incf *pc*)
+  (def op [*code* (%vpc)])
+  (incf (%vpc))
   op)
 
 (ds (def-vm-op ,name (,@args) ,opcode ,@body)
@@ -88,10 +102,10 @@
             (def _val_ (seq ,@body))
             (trace "-> %=\n" _val_)
             _val_))
-       (set (elt *opcodes* ',name)  ,opcode)
-       (set (elt *codes*   ,opcode) op)
-       (set (elt *oplens*  ,opcode) ,(len args))
-       (set (elt *opnames* ,opcode) ',name))))
+       (set [*opcodes* ',name]  ,opcode)
+       (set [*codes*   ,opcode] op)
+       (set [*oplens*  ,opcode] ,(len args))
+       (set [*opnames* ,opcode] ',name))))
 
 (ds (def-vm-push-op ,name (,@args) ,opcode ,@body)
   `(def-vm-op ,name (,@args) ,opcode (vm-push (seq ,@body))))
@@ -99,7 +113,7 @@
 ;;;; INSTRUCTIONS
 
 (def-vm-push-op VM-DUP () 0
-  (elt *stk* *sp*))
+  [*stk* (%vsp)])
 
 (def-vm-op VM-POP () 1
   (vm-pop))
@@ -119,29 +133,35 @@
 (def-vm-push-op VM-VAR-PUT (x) 22
   (set (%binding-value-of x) (vm-pop)))
 
-(def-vm-push-op VM-VAR-GET? (x) 23
-  (%binding-bound-of? x))
+(def-vm-push-op VM-VAR-GET-OR (x) 23
+  (%binding-value-of-or x (vm-pop)))
 
 (def-vm-push-op VM-LOC-GET (x) 30
-  (elt *stk* (+ *fp* x)))
+  [*stk* (+ (%vfp) x)])
 
 (def-vm-op VM-LOC-PUT (x) 31
-  (set (elt *stk* (+ *fp* x)) (vm-pop)))
+  (set [*stk* (+ (%vfp) x)] (vm-pop)))
 
 (def-vm-push-op VM-BOX-GET (x) 40
-  (def box (elt *stk* (+ *fp* x)))
+  (def box [*stk* (+ (%vfp) x)])
   (%vm-box-val box))
 
 (def-vm-push-op VM-BOX-PUT (x) 41
-  (def box (elt *stk* (+ *fp* x)))
+  (def box [*stk* (+ (%vfp) x)])
   (set (%vm-box-val box) (vm-pop)))
 
 (def-vm-push-op VM-BOX-FAB (x) 42
-  (def val (elt *stk* (+ *fp* x)))
+  (def val [*stk* (+ (%vfp) x)])
   (%vm-box-fab val))
 
 (def-vm-push-op VM-ENV-GET (x) 50
-  (%vm-fun-env-elt *fun* (%iu x)))
+  (%vm-fun-env-elt (%vfn) (%iu x)))
+
+(def-vm-push-op VM-NXT-METS () 51
+  (%vnm))
+
+(def-vm-push-op VM-FUN () 52
+  (%vfn))
 
 (def-vm-push-op VM-TYP-CHK () 60
   (def t (vm-pop))
@@ -149,40 +169,48 @@
   (if (isa? x t) x (error "STACK ERROR")))
 
 (def-vm-op VM-JMP (n) 70
-  (incf *pc* n))
+  (incf (%vpc) n))
 
 (def-vm-op VM-JMP-NOT (n) 71
-  (unless (vm-pop) (incf *pc* n)))
+  (unless (vm-pop) (incf (%vpc) n)))
 
-(def-vm-push-op VM-APP (n) 80
+(df vm-app-imp (n)
   (def args (vm-n-pop n))
-  (def nfun (vm-pop))
+  (def nfn  (vm-pop))
   (def val  #f)
-  (def opc  *pc*)
-  (def ofun *fun*)
-  (trace "SAVING @ %=\n" *pc*) 
+  (def opc  (%vpc))
+  (def ofn  (%vfn))
+  (def onm  (%vnm))
+  (trace "SAVING @ %=\n" (%vpc)) 
   (dlet ((*depth* (+ *depth* 1)))
-    (set val (app nfun args)))
-  (set *fun* ofun)
-  (trace "RESUMING @ %=\n" *pc*) 
-  (set *pc*  opc)
+    (set val (app nfn args)))
+  (set (%vfn) ofn)
+  (set (%vnm) onm)
+  (trace "RESUMING @ %=\n" (%vpc)) 
+  (set (%vpc) opc)
   val)
 
+(def-vm-push-op VM-APP (n) 80
+  (vm-app-imp n))
+                
 (def-vm-push-op VM-APP-JMP (n) 81
-  (def args (vm-n-pop n))
-  (def nfun (vm-pop))
-  (vm-env-unlnk)
-  (dlet ((*depth* (+ *depth* 1)))
-    (app nfun args)))
+  (vm-app-imp n))
+
+;; TODO: NATIVE INTEROPERABILITY IS A BITCH
+;;   (def args (vm-n-pop n))
+;;   (def nfun (vm-pop))
+;;   (vm-env-unlnk)
+;;   (dlet ((*depth* (+ *depth* 1)))
+;;     (app nfun args)))
 
 (def-vm-op VM-ENV-LNK (n) 90
   (vm-env-lnk n))              
 
 (dm vm-ret (chk?)
   (def val  (vm-pop))
-  (def typ  (fun-val *fun*))
+  (def typ  (fun-val (%vfn)))
   (vm-env-unlnk)
-  (set *pc* 0)
+  (set (%vpc) 0)
   (if (or (not chk?) (isa? val typ))
       val
       (error "RETURN TYPE FAILURE")))
@@ -197,9 +225,9 @@
   ;; (%vm-with-exit (vm-pop))
   (esc ret ((vm-pop) ret))) ;; TODO: ONLY WORKS IF EXIT FRAMES SAVE VM STATE
 
-
 (def-vm-push-op VM-FIN () 101
-  (fin ((vm-pop)) ((vm-pop))))
+  (def cleanup (vm-pop))
+  (fin ((vm-pop)) (cleanup)))
 
 (def-vm-push-op VM-TRY () 102
   (%with-monitor (vm-pop) (vm-pop) (vm-pop) (vm-pop) (vm-pop)))
@@ -213,7 +241,8 @@
     sig-specs specs
     sig-nary? (= nary? 1)
     sig-arity arity
-    sig-val   value))
+    sig-val   value
+    sig-unification-vars '()))
 
 (df %vm-gen-fab (name sig => <gen>)
   (def g (new <gen> fun-name name fun-sig sig))
@@ -226,11 +255,15 @@
   (%vm-gen-fab nam sig))
 
 (df %vm-met (args|...)
-  (set *fun* (%fun-reg))
-  (for ((e args)) (vm-push e))
-  (vm-run (%vm-fun-env-elt (%fun-reg) (%iu 0)))
-  ;; (decf *sp* (len args))
-  (vm-pop))
+  (def fn (%fun-reg))
+  (set (%vfn) fn)
+  (set (%vnm) (%next-methods))
+  (for ((e args) (i (below (fun-arity fn)))) (vm-push e))
+  (when (fun-nary? fn) (vm-push [args (fun-arity fn) *]))
+  (vm-run (%vm-fun-env-elt fn (%iu 0)))
+  (def res (vm-pop))
+  (decf (%vsp) (len args))
+  res)
 
 (df %vm-met-fab (name sig dyn? => <met>)
   (%met (%met-code %vm-met) name sig #f #f #f))
@@ -256,12 +289,12 @@
   (%vm-met-fab nam sig #f))
 
 (def-vm-op VM-FUN-INI (n l) 114
-  (def env (pair (+ l *pc*) (vm-n-pop n)))
+  (def env (pair (+ l (%vpc)) (vm-n-pop n)))
   (def met (vm-pop))
   (%vm-met-ini met env))
 
 (def-vm-push-op VM-FUN-FAB+INI (n l) 115
-  (def env (pair (+ l *pc*) (vm-n-pop n)))
+  (def env (pair (+ l (%vpc)) (vm-n-pop n)))
   (def sig (vm-pop))
   (def nam (vm-pop))
   (%vm-met-fab+ini nam sig env))
@@ -269,23 +302,23 @@
 ;;;; LINKING/LOADING
 
 (dm vm-get-var (var|<lst>)
-  (def e (unchecked-runtime-environment (1st var)))
-  (find-binding (2nd var) e))
+  (def e (unchecked-runtime-environment [var 0]))
+  (find-binding [var 1] e))
 
 (dm vm-get-vars (vars|<lst> => <tup>)
   (as <tup> (map vm-get-var vars)))
 
 (dm vm-gen-op (op => <int>)
-  (elt *opcodes* op))
+  [*opcodes* op])
 
 (dm vm-patch (code|<lst> labels|<lst> patches|<lst> => <vec>)
   (def ops  (as <vec> code))
   (def labs (fab <tab> 0))
   (for ((label labels))
-    (set (elt labs (1st label)) (2nd label)))
+    (set [labs [label 0]] [label 1]))
   (for ((patch patches))
-    (set (elt ops (2nd patch)) 
-         (- (- (elt labs (1st patch)) (2nd patch)) 1)))
+    (set [ops [patch 1]] 
+         (- (- [labs [patch 0]] [patch 1]) 1)))
   ops)
 
 (dm vm-label? (op) (isa? op <sym>))
@@ -299,13 +332,13 @@
           (if (vm-label? op) 
               (scan res (tail ops) (pair (lst op pc) labels) patches pc)
               (let ((ins (head op)))
-                (case ins
-                  (('vm-var-get 'vm-var-put 'vm-var-fab 'vm-var-get?) 
-                   (scan (pair (elt vars (2nd op))
+                (case ins ;; TODO: SHOULD BE PART OF OP DEFN
+                  (('vm-var-get 'vm-var-put 'vm-var-fab 'vm-var-get-or) 
+                   (scan (pair [vars [op 1]]
                                (pair (vm-gen-op ins) res))
                          (tail ops) labels patches (+ pc 2)))
                   (('vm-lit) 
-                   (scan (pair (elt lits (2nd op)) (pair (vm-gen-op ins) res))
+                   (scan (pair [lits [op 1]] (pair (vm-gen-op ins) res))
                          (tail ops) labels patches (+ pc 2)))
                   (#t
                    (rep loop ((res (pair (vm-gen-op ins) res)) 
@@ -319,22 +352,24 @@
                                      patches)))))))))))))
 
 (dm vm-load (x)
-  (def lits (as <tup> (1st x)))
-  (def vars (vm-get-vars (2nd x)))
-  (def code (3rd x))
+  (def lits (as <tup> [x 0]))
+  (def vars (vm-get-vars [x 1]))
+  (def code [x 2])
   (def ops  (vm-link code lits vars))
   ops)
+
+(dv vm-init? #f)
 
 (dm vm-init ()
   (set (len *code*) 0)
   (add! *code* (vm-gen-op 'vm-exit))
-  (set *pc* 1)
-  (set *sp* 0)
-  (set *fp* 0)
+  (set (%vpc) 1)
+  (set (%vsp) 0)
+  (set (%vfp) 0)
   )
 
 (dm vm-install (ops)
-  (vm-init)
+  (unless vm-init? (vm-init) (set vm-init? #t))
   (def pc (len *code*))
   (for ((op ops))
     (add! *code* op))
@@ -344,16 +379,20 @@
 ;;;; RUNNING
 
 (dm vm-run (pc|<int>)
-  (set *pc* pc)
+  (set (%vpc) pc)
   (rep run ()
-    (unless (= *pc* $vm-ret) ;; value on top of stack
-      (trace "%s%d: " (repeat "  " *depth*) *pc*) 
+    (unless (= (%vpc) $vm-ret) ;; value on top of stack
+      (trace "%s%d: " (repeat "  " *depth*) (%vpc)) 
       (let ((opcode (vm-nxt-op))
-            (op     (elt *codes* opcode)))
+            (op     [*codes* opcode]))
         (op)
         (run)))))
 
 (dm vm-top-run (pc|<int> => <any>)
+  (set (%vfn) #f)
+  (set (%vnm) #f)
+  (set (%vsp) 0)
+  (set (%vfp) 0)
   (esc exit
     (set *exit* exit)
     (vm-run pc)))
@@ -366,18 +405,21 @@
 (dm vm-disasm (pc|<int> code|<seq>)
   (rep disasm ((res '()) (pc pc))
     (if (< pc (len code))
-        (let ((op   (elt code pc))
-              (name (elt *opnames* op))
-              (len  (elt *oplens* op)))
+        (let ((op   [code pc])
+              (name [*opnames* op])
+              (len  [*oplens* op]))
           (trace "%d: %=\n" pc name)
           (rep garg ((args (lst name)) (pc (+ pc 1)) (i 0))
             (if (= i len)
                 (disasm (pair (rev! args) res) pc)
-                (garg (pair (elt code pc) args) (+ pc 1) (+ i 1)))))
+                (garg (pair [code pc] args) (+ pc 1) (+ i 1)))))
         (rev! res))))
 
 (dm recurring-write (port|<out-port> x|<module-binding> d|<int> recur|<fun>)
   (msg port "%s:%s" (binding-module-name x) (binding-name x)))
+
+(dm recurring-write (port|<out-port> x|<sig> d|<int> recur|<fun>)
+  (msg port "<Sig %=>" (sig-names x)))
 
 (dg asm-exp (x))
 

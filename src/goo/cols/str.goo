@@ -58,7 +58,7 @@
   x)
 
 (dm add (s|<str> c|<chr> => <str>)
-  (cat s (to-str c)))
+  (cat (to-str c) s))
 
 ;;; ASCII -- S48
 

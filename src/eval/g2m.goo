@@ -10,6 +10,7 @@
 
 ;;;; TODO
 ;;;; 
+;;;; module dumping
 ;;;; less consing on emission
 ;;;; perhaps do framing on the fly
 ;;;; print vars module by module
@@ -106,7 +107,7 @@
 
 (dm out-code (out code)
   (msg out "(%=\n" (1st code))
-  (msg out " %=\n (" (2nd code))
+  (msg out " %=\n (\n" (2nd code))
   (do (fun (e) (msg out "  %=\n" e)) (3rd code))
   (msg out "))\n"))
 
@@ -162,7 +163,9 @@
 
 (dm asm (x|<g2m> e|<bound?> need?|<log>)
   (def idx (get-var-ref x (reference-binding (bound?-reference e))))
-  (asm-if need? `((VM-VAR-GET? ,idx))))
+  (tack+need need? 
+    (asm x (bound?-default e) #t)
+    (asm x `((VM-VAR-GET-OR ,idx)))))
 
 (dm asm (x|<g2m> e|<reference> need?|<log>)
   (asm-if need? `((VM-LOC-GET ,(binding-index (reference-binding e))))))
@@ -212,6 +215,13 @@
         (asm-need need? 
           `((,(if (application-tail? e) 'VM-APP-JMP 'VM-APP)
              ,(len (application-arguments e)))))))
+
+(dm asm (x|<g2m> e|<predefined-application> need?|<log>)
+  (def b (application-binding e))
+  (case (binding-name b) 
+    (('%next-methods) `((VM-NXT-METS)))
+    (('%fun-reg)      `((VM-FUN)))
+    (#t                (error "UNKNOWN PREDEFINED %= IN VM" (binding-name b)))))
 
 (dm asm (x|<g2m> e|<fix-let> need?|<log>)
   (tack (flatten
@@ -269,7 +279,7 @@
         (asm-fun x e 'VM-FUN-FAB+INI need?)))
 
 (dm asm (x|<g2m> e|<ast-signature> need?|<log>)
-  (tack (flatten (map (fun (y) (asm x y #t)) (signature-specs e)))
+  (tack (flatten (map (fun (y) (asm x y #t)) (req-sig-specs e)))
         (asm x (signature-value e) #t)
         (asm x (signature-names e) #t)
         (asm-need need?

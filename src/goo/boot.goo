@@ -16,53 +16,54 @@
 (dss (%define-primitives)
   `(seq ,@(map (fun (name) `(dl ,name)) primitive-names)))
 
-(ct (dv primitive-names
-      '(
-        %eq? %bb
-        %i= %i< %i+ %i- %i* %im %ir %it/ %iv %i^ %i& %i! %i?
-        %i<< %i>> %i<<< %i>>>
-        %fi2f %f= %f< %f+ %f* %f- %f/ %ft %ft/ %ff %fc %flo-bits
-        %fpow %flog %fsqrt 
-        %fsin %fcos %ftan 
-        %fasin %facos %fatan %fatan2
-        %fsinh %fcosh %ftanh
-        %c= %c<
-        %create-directory
-        %current-out-port %current-in-port
-        %open-in-file %open-out-file 
-        %close-out-port %close-in-port
-        %put %puts %file-mtime
-        %file-type %file-exists?
-        %time
-        %force-out %ready?
-        %get %newline %eof-object %eof-object
-        %peek %ready
-        %object-class %object-class-setter
-        %raw-alloc %object-of %clone
-        %prop-elt %prop-elt-setter %prop-dat-at
-        %elt %elt-setter
-        %slen %selt %selt-setter %%sfab %su %sb
-        %rlen %relt %relt-setter %%rfab %ru
-        %tlen %telt %telt-setter %%tfab %tu
-        %fab-code-refs %code-ref
-        %app-filename %app-args
-        %loc-val %loc-val-setter %invoke-debugger
-        %os-name %os-val %os-val-setter        
-        %break %binding-name %fun-reg
-        %trace-on %trace-off
-        %%apply %%mep-apply %next-methods %fapply
-        %do-stack-frames 
-        %unexec
-        %build-runtime-modules %process-module
-        %loc-off %loc-off-setter %raw-call %raw-met-call %check-call-types
-        %def-regs %sp-reg %sp-reg-setter %fp-reg %fp-reg-setter %unlink-stack
-        %new %@class-of %@subclass?
-        %fab-dyn-var %dyn-var-val %dyn-var-val-setter
-        %vm-box-fab %vm-box-val %vm-box-val-setter
-        %vm-fun-env-fab %vm-fun-env-elt %vm-fun-env-elt-setter
-        %vm-with-exit %vm-with-cleanup 
-        )
-))
+(ct 
+  (dv primitive-names
+    '(%eq? %bb
+      %i= %i< %i+ %i- %i* %im %ir %it/ %iv %i^ %i& %i! %i?
+      %i<< %i>> %i<<< %i>>>
+      %fi2f %f= %f< %f+ %f* %f- %f/ %ft %ft/ %ff %fc %flo-bits
+      %fpow %flog %fsqrt 
+      %fsin %fcos %ftan 
+      %fasin %facos %fatan %fatan2
+      %fsinh %fcosh %ftanh
+      %c= %c<
+      %create-directory
+      %current-out-port %current-in-port
+      %open-in-file %open-out-file 
+      %close-out-port %close-in-port
+      %put %puts %file-mtime
+      %file-type %file-exists?
+      %time
+      %force-out %ready?
+      %get %newline %eof-object %eof-object
+      %peek %ready
+      %object-class %object-class-setter
+      %raw-alloc %object-of %clone
+      %prop-elt %prop-elt-setter %prop-dat-at
+      %elt %elt-setter
+      %slen %selt %selt-setter %%sfab %su %sb
+      %rlen %relt %relt-setter %%rfab %ru
+      %tlen %telt %telt-setter %%tfab %tu
+      %fab-code-refs %code-ref
+      %app-filename %app-args
+      %loc-val %loc-val-setter %invoke-debugger
+      %os-name %os-val %os-val-setter        
+      %break %binding-name %fun-reg
+      %trace-on %trace-off
+      %%apply %%mep-apply %next-methods %fapply
+      %do-stack-frames 
+      %unexec
+      %build-runtime-modules %process-module
+      %loc-off %loc-off-setter %raw-call %raw-met-call %check-call-types
+      %def-regs %sp-reg %sp-reg-setter %fp-reg %fp-reg-setter %unlink-stack
+      %new %@class-of %@subclass?
+      %fab-dyn-var %dyn-var-val %dyn-var-val-setter
+      %vsp %vsp-setter %vfp %vfp-setter 
+      %vfn %vfn-setter %vnm %vnm-setter %vpc %vpc-setter
+      %vm-box-fab %vm-box-val %vm-box-val-setter
+      %vm-fun-env-fab %vm-fun-env-elt %vm-fun-env-elt-setter
+      %vm-with-exit %vm-with-cleanup 
+      )))
 
 (%define-primitives)
 
@@ -2162,6 +2163,8 @@
   fun-sig
   %src-loc
   %met %met-env-setter
+  %vsp %vsp-setter %vfp %vfp-setter %vpc %vpc-setter 
+  %vfn %vfn-setter %vnm %vnm-setter 
   %vm-box-fab %vm-box-val %vm-box-val-setter
   %vm-fun-env-fab %vm-fun-env-elt %vm-fun-env-elt-setter
   %vm-with-exit %vm-with-cleanup 

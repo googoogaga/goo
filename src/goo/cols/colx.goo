@@ -41,7 +41,7 @@
   (rep in ((ds (enum dst)))
     (if (fin? ds)
         dst
-        (seq (set (now ds)  val)
+        (seq (set (now ds) val)
              (in (nxt ds))))))
 
 (dm into (dst|<col!> src|<col> => <col!>)

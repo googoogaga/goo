@@ -151,6 +151,7 @@
 
 (dc <bound?> (<computed-program>))
   (dp bound?-reference (<bound?> => <any>))
+  (dp bound?-default (<bound?> => <any>))
 
 (dc <assignment> (<computed-program>))
   (dp assignment-form (<assignment> => <any>))
@@ -190,6 +191,13 @@
   (dp signature-nary? (<ast-signature> => <any>)    #f)
   (dp signature-arity (<ast-signature> => <any>)    #f)
   (dp signature-value (<ast-signature> => <any>)    #f)
+
+;;; required only specializers
+(dm req-sig-specs (sig|<ast-signature> => <any>)
+  (def types (signature-specs sig))
+  (if (constant-value (signature-nary? sig))
+      (sub types 0 (- (len types) 1))
+      types))
 
 (dc <ast-function> (<computed-program> <dependent>))
   (dp function-binding (<ast-function> => <any>)    #f)
@@ -452,9 +460,10 @@
 (dm objectify-raw (value r => <raw-constant>)
   (new <raw-constant> constant-value value))
 
-(dm objectify-bound? (e|<sym> r|<static-environment> tail? => <any>)
-  (def ref (objectify-symbol e r))
-  (new <bound?> bound?-reference ref))
+(dm objectify-bound? (e|<sym> default r|<static-environment> tail? => <any>)
+  (new <bound?> 
+    bound?-reference (objectify-symbol e r)
+    bound?-default   (objectify default r #f)))
 
 ;;; This routine always produces a version of 'program' which is accessible
 ;;; in the syntax environment.  If 'rt?' is true, it will make sure that
@@ -805,7 +814,7 @@
 
 (dm objectify-method-definition (name e r => <ast-method-definition>)
   (def binding (ast-define-binding r name #t 'global))
-  (def gen     (lst 'if (lst 'bound? name) name #f))
+  (def gen    `(bound? ,name #f))
   (def met     (objectify e r #f))
   ;; TODO: NAME AND MARK AS GENERIC METHOD
   (def call    (lst '%define-method gen met))
@@ -1330,7 +1339,7 @@
 (dv $sexpr-bound?-tag 'bound?)
 
 (define-magic-binding bound? (x r tail?)
-  (objectify-bound? (2nd x) r tail?))
+  (objectify-bound? (2nd x) (3rd x) r tail?))
 
 (define-magic-binding let (x r tail?)
   (objectify (sexpr-let->combination x) r tail?))
@@ -2161,6 +2170,7 @@
   binding-dotted?-setter
   <bound?>
   bound?-reference
+  bound?-default
   <compile-time>
   compile-time-program
   <constant>
@@ -2193,6 +2203,7 @@
   signature-bindings-setter
   signature-specs
   signature-specs-setter
+  req-sig-specs
   signature-nary?
   signature-nary?-setter
   signature-arity

@@ -219,13 +219,18 @@
 (dm ast-eval (e|<bound?> env|<loc-env>)
   (ast-eval-bound? e (reference-binding (bound?-reference e)) env))
 
+(dm env-global-binding-value-or (b|<module-binding> default env|<loc-env>)
+  (if (env-global-binding-bound? b) 
+      (env-global-binding-value b)
+      (ast-eval default env)))
+
 (dm ast-eval-bound? (e|<bound?> binding|<module-binding> env|<loc-env>)
   (case (binding-kind binding)
-    (('global) (env-global-binding-bound? binding))
-    (#t        #t)))
+    (('global) (env-global-binding-value-or binding (bound?-default e) env))
+    (#t        (ast-eval (bound?-reference e) env))))
 
 (dm ast-eval-bound? (e|<bound?> binding|<local-binding> env|<loc-env>)
-  #t)
+  (ast-eval (bound?-reference e) env))
 
 (dm ast-eval (e|<global-assignment> env|<loc-env>)
   (def value (ast-eval (assignment-form e) env))
@@ -392,6 +397,8 @@
            (%ensure-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar)))
       b))
 
+;; TODO: DEPRECATE
+
 (dl (%binding-bound-of? inline-c) (b)
   (and b (binding-info b)))
 
@@ -416,7 +423,17 @@
 (dl %binding-value-setter (val dlvar)
   (set (%binding-value-of (%dlvar-binding dlvar)) val))
 
+(dl (%binding-value-or-of inline-c) (b default)
+  (if (and b (binding-info b))
+      (%binding-value-of b)
+      default))
+
+(dl %binding-value-or (dlvar default)
+  (%binding-value-or-of 
+   (%lookup-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar)) default))
+
 (export
-  %binding-bound?       %binding-bound-of?
+  %binding-bound?       %binding-bound-of?    ;; TODO: DEPRECATE
+  %binding-value-or     %binding-value-or-of
   %binding-value        %binding-value-of
   %binding-value-setter %binding-value-of-setter)

@@ -323,13 +323,10 @@
   (app msg out message arguments))
 
 ;;; PARTIAL EVALUATOR FOR MSG 
-;;; TODO: SHOULD GO AWAY WHEN REAL PARTIAL EVALUATION IS WORKING
+;;; TODO: SHOULD GO AWAY WHEN REAL PARTIAL EVALUATION IS WORKING 
+;;; TODO: SHOULD PROBABLY BE CT-ALSO BUT THEN AST-EVAL KICKS IN
 
-(ct-also (seq
-(dm pe-msg (port-expr message args|<lst>)
-  `(msg ,port-expr ,message ,@args))
-
-(dm pe-msg (port-expr message|<str> args|<lst>)
+(df pe-msg (port-expr message|<str> args|<lst>)
   (def found-percent?  #f)
   (def arg-index|<int> 0)
   (def num-args        (len args))
@@ -370,10 +367,12 @@
        (maybe-pack-chars))))
   (assert (not found-percent?) 
           "Incomplete msg directive in \"%s\"" message)
-  `(let ((,port ,port-expr)) ,@exprs))))
+  `(let ((,port ,port-expr)) ,@exprs))
 
 (ds (msg* ,port ,message ,@args)
-  (pe-msg port message args))
+  (if (isa? message <str>)
+      (pe-msg port message args)
+      `(msg ,port ,message ,@args)))
 
 ;; (ds (msg* ,port ,message ,@args)
 ;;   `(msg ,port ,message ,@args))
