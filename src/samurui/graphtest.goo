@@ -1,0 +1,28 @@
+; (load "/home/ai2/sombrero/cvs/goo/src/samurui/graphtest.goo" 'goo/user)
+
+(dc <simple-app> (<any>))
+
+(iprop <simple-app> tree-nodes <col> "Tree Nodes")
+
+(dv my-app (new <simple-app>))
+
+(set (tree-nodes my-app) (vec "A" "B" "C"))
+
+(imodel <simple-app>
+        "Graph Hopefully"
+        tree-nodes
+        ;;(columns
+        ;; (master bob tree-nodes)
+        ;; (slave bob)
+        ;; )
+)
+
+;;(imodel <str-hold>
+;;        "The String"
+;;        da-str
+;;        )
+
+(gtk_init_easy)
+
+(present my-app)
+(gtk_main)
