@@ -37,6 +37,9 @@ Add two special forms to the language:
     modules must form a directed, acyclic graph.)  Import all bindings
     currently exported by 'module' into the current module.
 
+    This form may also bind the module name to some sort of first-class
+    module object for the purposes of introspection.
+
   (use ,module ...)
 
     Room for extension: Renaming, prefixing, filtering, whatever.
