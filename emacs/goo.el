@@ -18,6 +18,8 @@
       ;; let's just use Lisp's syntax for now...
       (setq goo-mode-syntax-table table)
       (modify-syntax-entry ?| "_   " table)
+      (modify-syntax-entry ?\{ "(}  " table)
+      (modify-syntax-entry ?\} "){  " table)
       ;; (modify-syntax-entry ?- "w   " goo-mode-syntax-table)
       ))
 
@@ -26,17 +28,17 @@
 
 (defvar goo-imenu-generic-expression
   '((nil
-     "^\\s-*(def\\s-+\\(\\sw+\\)" 1)
+     "^\\s-*(def\\s-+(?\\(\\sw+\\)" 1)
     ("Variables"
-     "^\\s-*(dv\\s-+\\(\\sw+\\)" 1)
+     "^\\s-*(dv\\s-+(?\\(\\sw+\\)" 1)
     ("Functions"
-     "^\\s-*(df\\s-+\\(\\sw+\\)" 1)
+     "^\\s-*(df\\s-+(?\\(\\sw+\\)" 1)
     ("Methods"
-     "^\\s-*(dm\\s-+\\(\\sw+\\)" 1)
+     "^\\s-*(dm\\s-+(?\\(\\sw+\\)" 1)
     ("Generics"
-     "^\\s-*(dg\\s-+\\(\\sw+\\)" 1)
+     "^\\s-*(dg\\s-+(?\\(\\sw+\\)" 1)
     ("Syntax"
-     "^\\s-*(ds\\s-+\\(\\sw+\\)" 1))
+     "^\\s-*(ds\\s-+(?\\(\\sw+\\)" 1))
   "Imenu generic expression for Goo mode.  See `imenu-generic-expression'.")
 
 (defun goo-mode-variables ()
@@ -136,7 +138,7 @@ See `run-hooks'."
 (defconst goo-font-lock-keywords-1
   (eval-when-compile
     (list
-     '("(\\(dv\\|df\\|def\\sw*\\|dm\\|dg\\|dp\\|dc\\|dl\\)\\s-+\\(\\sw+\\)"
+     '("(\\(dv\\|df\\|def\\sw*\\|dm\\|dg\\|dp\\|dc\\|dl\\)\\s-+(?\\(\\sw+\\)"
        (1 font-lock-keyword-face)
        (2 font-lock-function-name-face nil t))
      '("^\\s-*(\\(dss?\\)" . 1)))
@@ -149,7 +151,7 @@ See `run-hooks'."
       (cons
        (concat
 	"(" (regexp-opt
-	     '("if" "seq" "set" "fun" "loc" "lab"
+	     '("if" "seq" "set" "fun" "loc" "lab" "esc"
 	       "fin" "try" "sig" "isa" "slot" "ct" "expand"
 	       "quote" "rep" "mif" "and" "or" "unless" "when"
 	       "incf" "decf" "inc" "dec" "case" "select" "for" "let"
