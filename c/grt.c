@@ -1,15 +1,23 @@
 //// Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
-#ifdef __CYGWIN32__
+#ifdef _CYGWIN32__
 #define WIN32
 #endif
 
 #define IN_GRT_C
 #include "grt.h"
-#if !defined(MSWIN32)
+#if !defined(MSWIN32) && !defined(_MSC_VER)
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#endif
+
+#if defined(_MSC_VER)
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <direct.h>
+#include <signal.h>
+#include <process.h>
 #endif
 
 extern P Ynil;
@@ -443,7 +451,9 @@ INLINE PPORT YPcurrent_out_port (void) { return (PPORT)YPlb(stdout); }
 /* TODO - Need Windows versions of the following functions. */
 
 #include <sys/stat.h>
+#if !defined(_MSC_VER)
 #include <unistd.h>
+#endif
 #include <errno.h>
 
 extern P Yfab_sym;
@@ -489,6 +499,11 @@ P YPfile_existsQ (P name) {
   return YPfalse;
 }
 
+#if defined(_MSC_VER)
+#define S_ISREG(x) ((x) & _S_IFREG)
+#define S_ISDIR(x) ((x) & _S_IFDIR)
+#endif
+
 P YPfile_type (P name) {
   struct stat buf;
   int res;
@@ -515,7 +530,11 @@ P YPfile_type (P name) {
 P YPcreate_directory (P name) {
   int res;
   /* Rely on umask to set privileges. */
+#if defined(_MSC_VER)
+  res = mkdir(name);
+#else
   res = mkdir(name, S_IRWXU|S_IRWXG|S_IRWXO);
+#endif
   if (res != 0)
     unix_error("mkdir", name);
   return YPfalse;
@@ -544,8 +563,15 @@ P YPos_val (P name) {
 }
 
 P YPos_val_setter (P value, P name) {
+#if defined(_MSC_VER)
+  static char buffer[1024];
+  sprintf(buffer, "%s=%s", (PSTR)name, (PSTR)value);
+  putenv(buffer);
+  return (P)value;
+#else
   setenv((PSTR)name, (PSTR)value, 1);
   return (P)value;
+#endif
 }
 
 /* CLOSURES */
@@ -1157,15 +1183,17 @@ void des (P adr) {
 extern P Ykeyboard_interrupt;
 void setup_keyboard_interrupts (void);
 
-#ifdef HAVE_POSIX_THREAD
+#if defined(HAVE_POSIX_THREAD)
 extern pthread_t main_thread;
 #endif
 
 void keyboard_interrupt (int value) {
+#if !defined(_MSC_VER)
   sigset_t set;
   sigemptyset(&set);
   sigaddset(&set, SIGINT);
   sigprocmask(SIG_UNBLOCK, &set, NULL);
+#endif
 
 #ifdef HAVE_POSIX_THREAD
   if (pthread_self() == main_thread)
@@ -1204,15 +1232,19 @@ P YPapp_args () {
 }
 
 #define NO_UNEXEC
-#ifdef WIN32
+#if defined(WIN32) || defined(_MSC_VER)
 #define NO_UNEXEC
 #endif
 
 P YPunexec(P name) {
+#if defined(_MSC_VER)
+  _CALL1(REGSREF(),1, Yerror, YPsb("Cannot unexec."));
+#else
 #ifdef NO_UNEXEC
   XXCALL1(1, Yerror, YPsb("Cannot unexec."));
 #else
   unexec((char *)name, YPsu(YPapp_filename()), 0, 0, 0);
+#endif
 #endif
   return YPfalse;
 }
@@ -1230,11 +1262,13 @@ P YevalSg2cYPprint_cpu_usage(char *message) {
 */
 }
 
+#if !defined(_MSC_VER)
 struct timeval get_rusage() {
   struct rusage usage;
   getrusage(RUSAGE_SELF, &usage);
   return usage.ru_utime;
 }
+#endif
 
 P YPPlist(int num, ...) {
   if (num == 0)
@@ -1414,12 +1448,27 @@ P YPfab_dyn_var() {
   return (P)key;
 }
 
+#if !defined(_MSC_VER)
 #include <dlfcn.h>
 
 typedef P (*PLD)();
 extern P YgooSsystemYTgoo_rootT;
+#endif
 
 P YgooSsystemYPcompile (P cfile, P sofile) {
+#if defined(_MSC_VER)
+  char* command = (char*)allocate(1024);
+  strcpy(command, "cl /O2 /D MSVC_THREAD /D WITH_THREADS /D BUILD_DLL");
+  strcat(command, " /I../c /I.");
+  strcat(command, " /Fe");
+  strcat(command, (char*)sofile);
+  strcat(command, " ");
+  strcat(command, (char*)cfile);
+  strcat(command, " dllentry.c /LD /link ./gc.lib ./goovc.lib kernel32.lib");
+  printf("Executing %s\n", command);
+  system(command);
+  return YPtrue;
+#else
   char  buf[4096];
   int pid;
   char *v[] = {"cc", "-shared",  "-g", "-O", "-fPIC",  buf, "-o", sofile, cfile, NULL};
@@ -1443,9 +1492,30 @@ P YgooSsystemYPcompile (P cfile, P sofile) {
     } while(1);
     return YPfalse;
   }
+#endif
 }
 
+#if defined(_MSC_VER)
+#undef PINT
+#include <windows.h>
+#undef PINT
+#define PINT long
+#endif
+
 P YgooSsystemYPload(P name) {
+#if defined(_MSC_VER)
+  HANDLE module = 0;
+  printf("Loading %s\n", (char*)name);
+  module = LoadLibrary(name);
+  if(module == NULL)
+	printf("Failed to load library %s\n", (char*)name);
+  else
+	{
+	  FARPROC load = GetProcAddress(module, "LoadModuleDl");
+	  return (P)load();
+	}
+  return YPfalse;
+#else
   void* mod;
   PLD   load;
   P     res;
@@ -1460,6 +1530,7 @@ P YgooSsystemYPload(P name) {
     // dlclose(mod);
   }
   return res;
+#endif
 }
 
 /*
@@ -1549,9 +1620,14 @@ void YPinit_world(int argc, char* argv[]) {
   // GC_enable_incremental();
 
   GC_init();
-#if defined(HAVE_POSIX_THREAD) && !defined(HAVE_THREAD_LOCAL_VARIABLE)
+#if !defined(HAVE_THREAD_LOCAL_VARIABLE)
+#if defined(HAVE_POSIX_THREAD)
   pthread_key_create(&tregs, NULL);
   pthread_key_create(&goo_thread, NULL);
+#elif defined(MSVC_THREAD)
+  tregs = TlsAlloc();
+  goo_thread = TlsAlloc();
+#endif
 #endif
   main_regs = YPfab_regs();
   REGSSET(main_regs);

@@ -1,10 +1,11 @@
 //// Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
-#include <pthread.h>
-#include <signal.h>
 #include "grt.h"
 
-#ifdef HAVE_POSIX_THREAD
+#if defined(HAVE_POSIX_THREAD)
+
+#include <pthread.h>
+#include <signal.h>
 
 void* do_thread (P info) {
   sigset_t  new;
@@ -19,6 +20,11 @@ void* do_thread (P info) {
 
 P YtimeSthreadsYPthread_goo_thread () {
   return TREF(goo_thread);
+}
+
+P YtimeSthreadsYPthread_goo_thread_setter (P value) {
+  TSET(goo_thread, value);
+  return value;
 }
 
 P YtimeSthreadsYPthread_create (P function) {
@@ -57,12 +63,85 @@ P YtimeSthreadsYPthread_sleep (P secs) {
   return (P)res;
 }
 
-P YtimeSthreadsYPthread_priority_setter (P thread) {
+P YtimeSthreadsYPthread_priority_setter (P x, P thread) {
   return PNUL;
 }
 
 P YtimeSthreadsYPthread_detach () {
   return (P)pthread_detach(pthread_self());
+}
+
+#elif defined(MSVC_THREAD)
+
+#undef PINT
+#include <windows.h>
+#undef PINT
+#define PINT long
+
+DWORD WINAPI do_thread (void* xinfo) {
+  /*
+  sigset_t  new;
+  sigaddset(&new, SIGINT);
+  pthread_sigmask(SIG_BLOCK, &new, NULL);
+  */
+  P info = (P)xinfo;
+  REGS regs; 
+  regs = YPfab_regs();
+  TSET(goo_thread, YPtelt(info, 1));
+  REGSSET(regs);
+  return CALL0(1, YPtelt(info, 0));
+}
+
+P YtimeSthreadsYPthread_goo_thread () {
+  return TREF(goo_thread);
+}
+
+P YtimeSthreadsYPthread_goo_thread_setter( P value) {
+  TSET(goo_thread, value);
+  return value;
+}
+
+P YtimeSthreadsYPthread_create (P function) {
+  long threadId = 0;
+  long h = CreateThread(0, 0, do_thread, function, 0, &threadId);
+  return (P)h;
+}
+
+P YtimeSthreadsYPthread_yield () {
+  Sleep(0);
+  return YPfalse;
+}
+
+P YtimeSthreadsYPthread_join (P thread) {
+  WaitForSingleObject(thread, INFINITE);
+  return YPfalse;
+}
+
+P YtimeSthreadsYPthread_priority (P thread) {
+  return PNUL;
+}
+
+P YtimeSthreadsYPthread_current () {
+  return (P)GetCurrentThread();
+}
+
+extern float truncf(float);
+
+P YtimeSthreadsYPthread_sleep (P secs) {  
+  INTFLO x;
+  // struct timespec time, rem;
+  x.i = (PINT)secs;
+  Sleep((unsigned long)(x.f * 1000));
+  return YPfalse;
+}
+
+P YtimeSthreadsYPthread_priority_setter (P thread) {
+  return PNUL;
+}
+
+P YtimeSthreadsYPthread_detach () {
+  return (P)0;
+  //  return (P)pthread_detach(pthread_self());
 }
 
 #else
@@ -83,7 +162,7 @@ P YtimeSthreadsYPthread_current () { return PNUL; }
 
 P YtimeSthreadsYPthread_sleep (P secs) { return PNUL; }
 
-P YtimeSthreadsYPthread_priority_setter (P thread) { return PNUL; }
+P YtimeSthreadsYPthread_priority_setter (P x, P thread) { return PNUL; }
 
 P YtimeSthreadsYPthread_detach () { return PNUL; }
 

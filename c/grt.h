@@ -2,7 +2,16 @@
 
 #ifndef IN_GRT
 #define IN_GRT
+#if !defined(_MSC_VER)
 #include "config.h"
+#else
+#undef PINT
+#define NOGDI
+#define NOUSER
+#include <windows.h>
+#undef PINT
+#undef WIN32
+#endif
 #include <time.h>
 #include <stdarg.h>
 #include <stdio.h>
@@ -14,18 +23,37 @@
 #include <gc/gc_pthread_redirects.h>
 #endif
 
-#define INLINE inline
+#if defined(_MSC_VER)
+#define INLINE
+#else
+#define INLINE inline 
+#endif
+
 #ifdef IN_PRT_C
 #define STATIC_NOT_PRT_C 
 #else
 #define STATIC_NOT_PRT_C static
 #endif
 
+#if defined(_MSC_VER)
+#if defined(BUILD_DLL)
+#define IMPORTEXPORT __declspec(dllimport)
+#else
+#define IMPORTEXPORT __declspec(dllexport)
+#endif
+#else
+#define IMPORTEXPORT
+#endif
+
 /* LOW LEVEL */
 
 typedef FILE*          PPORT;
 typedef float          PFLO;
+#if defined(_MSC_VER)
+#define PINT long
+#else
 typedef long           PINT;
+#endif
 typedef unsigned long  PADR;
 typedef unsigned char  PCHR;
 typedef unsigned long  PLOG;
@@ -37,18 +65,18 @@ typedef union {
   PFLO f;
 } INTFLO;
 
-extern P YPsb(P);
-extern P YPsb_with_len(P, PINT);
-extern P YPlb(P);
-extern P YPlu(P);
+IMPORTEXPORT extern P YPsb(P);
+IMPORTEXPORT extern P YPsb_with_len(P, PINT);
+IMPORTEXPORT extern P YPlb(P);
+IMPORTEXPORT extern P YPlu(P);
 
-extern P YPinvoke_debugger(P condition);
-extern P YPbreak(char*);
+IMPORTEXPORT extern P YPinvoke_debugger(P condition);
+IMPORTEXPORT extern P YPbreak(char*);
 
-extern P YPfalse;
-extern P YPtrue;
-extern P YPopts(P loc, P len);
-extern P YPib(P i);
+IMPORTEXPORT extern P YPfalse;
+IMPORTEXPORT extern P YPtrue;
+IMPORTEXPORT extern P YPopts(P loc, P len);
+IMPORTEXPORT extern P YPib(P i);
 
 /*
   Not used yet.
@@ -94,16 +122,20 @@ typedef struct _obj {
 #define YPobject_class(x)            (((OBJECT)(x))->class)
 #define YPobject_class_setter(z, x)  (((OBJECT)(x))->class = (z))
 
+#if defined(_MSC_VER)
+#include "gc/gc.h"
+#else
 #include <gc/gc.h>
+#endif
 
-extern P Ynul;
-extern P Ynul_prop;
+IMPORTEXPORT extern P Ynul;
+IMPORTEXPORT extern P Ynul_prop;
 
 #define OBJECT_DATA_SIZE (sizeof(OBJECT_DATA))
 
-extern P YPobject_of (P class, P size);
-extern P YPclone (P x);
-extern P YPraw_alloc (P size);
+IMPORTEXPORT extern P YPobject_of (P class, P size);
+IMPORTEXPORT extern P YPclone (P x);
+IMPORTEXPORT extern P YPraw_alloc (P size);
 
 #define YPprop_elt(x, i)           (((OBJECT)(x))->values[(PINT)(i)])
 #define YPprop_elt_setter(z, x, i) (((OBJECT)(x))->values[(PINT)(i)] = (z))
@@ -111,8 +143,8 @@ extern P YPraw_alloc (P size);
 
 /* FLO */
 
-extern P FLOINT (PFLO x);
-extern P YPflo_bits (P x);
+IMPORTEXPORT extern P FLOINT (PFLO x);
+IMPORTEXPORT extern P YPflo_bits (P x);
 
 /* REP */
 
@@ -123,26 +155,26 @@ extern P YPflo_bits (P x);
 
 /* REP */
 
-extern P YPPrfab (P size, P fill);
+IMPORTEXPORT extern P YPPrfab (P size, P fill);
 #define YPru(x)                ((P)(YPrep_dat(x)))
 #define YPrlen(x)              ((P)(YPprop_elt((x), (P)REP_LEN_OFF)))
-#define YPrelt(x, i)           ((P)(YPprop_elt((x), (P)(REP_DAT_OFF + (i)))))
-#define YPrelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (P)(REP_DAT_OFF + (i)))))
+#define YPrelt(x, i)           ((P)(YPprop_elt((x), (P)((char*)REP_DAT_OFF + (long)(i)))))
+#define YPrelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (P)((char*)REP_DAT_OFF + (long)(i)))))
 
 /* TUP */
 
-extern P YPPtfab (P size, P fill);
+IMPORTEXPORT extern P YPPtfab (P size, P fill);
 #define YPtu(x)                ((P)(YPrep_dat(x)))
 #define YPtlen(x)              ((P)(YPprop_elt((x), (PINT)REP_LEN_OFF)))
-#define YPtelt(x, i)           ((P)(YPprop_elt((x), (PINT)(REP_DAT_OFF + (i)))))
-#define YPtelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (PINT)(REP_DAT_OFF + (i)))))
+#define YPtelt(x, i)           ((P)(YPprop_elt((x), (PINT)((char*)REP_DAT_OFF + (long)(i)))))
+#define YPtelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (PINT)((char*)REP_DAT_OFF + (long)(i)))))
 
 /* STR */
 
 typedef PCHR* PSTR;
 
-extern P YPPsfab (P size, P fill);
-extern P YPsb (P str);
+IMPORTEXPORT extern P YPPsfab (P size, P fill);
+IMPORTEXPORT extern P YPsb (P str);
 #define YPsu(x)                ((P)(YPrep_dat(x)))
 #define YPslen(x)              ((P)(YPprop_elt((x), (PINT)REP_LEN_OFF)))
 #define YPselt(x, i)           ((P)(PINT)(((PSTR)(YPsu(x)))[((PINT)(i))]))
@@ -150,34 +182,34 @@ extern P YPsb (P str);
 
 /* IO */
 
-extern P Yerror;
-extern P Yfile_opening_error;
-extern P YPopen_in_file (P name);
-extern P YPopen_out_file (P name);
-extern P YPclose_in_port (P s);
-extern P YPclose_out_port (P s);
-extern P YPnewline (P s);
-extern P YPforce_out (P s);
-extern P YPput (P s, P x);
-extern P YPputs (P s, P x);
-extern P YPget (P s);
-extern P YPpeek (P s);
-extern P YPreadyQ (P s); 
-extern PSTR YPgets (FILE* s);
-extern P YPeof_objectQ (P x);
-extern P YPeof_object ();
-extern PPORT YPcurrent_in_port (void);
-extern PPORT YPcurrent_out_port (void);
-extern P YPfile_mtime (P x);
-extern P YPfile_existsQ (P name);
-extern P YPfile_type (P name);
-extern P YPcreate_directory (P name);
+IMPORTEXPORT extern P Yerror;
+IMPORTEXPORT extern P Yfile_opening_error;
+IMPORTEXPORT extern P YPopen_in_file (P name);
+IMPORTEXPORT extern P YPopen_out_file (P name);
+IMPORTEXPORT extern P YPclose_in_port (P s);
+IMPORTEXPORT extern P YPclose_out_port (P s);
+IMPORTEXPORT extern P YPnewline (P s);
+IMPORTEXPORT extern P YPforce_out (P s);
+IMPORTEXPORT extern P YPput (P s, P x);
+IMPORTEXPORT extern P YPputs (P s, P x);
+IMPORTEXPORT extern P YPget (P s);
+IMPORTEXPORT extern P YPpeek (P s);
+IMPORTEXPORT extern P YPreadyQ (P s); 
+IMPORTEXPORT extern PSTR YPgets (FILE* s);
+IMPORTEXPORT extern P YPeof_objectQ (P x);
+IMPORTEXPORT extern P YPeof_object ();
+IMPORTEXPORT extern PPORT YPcurrent_in_port (void);
+IMPORTEXPORT extern PPORT YPcurrent_out_port (void);
+IMPORTEXPORT extern P YPfile_mtime (P x);
+IMPORTEXPORT extern P YPfile_existsQ (P name);
+IMPORTEXPORT extern P YPfile_type (P name);
+IMPORTEXPORT extern P YPcreate_directory (P name);
 
 /* OS */
 
-extern P YPos_name ();
-extern P YPos_val (P name);
-extern P YPos_val_setter (P value, P name);
+IMPORTEXPORT extern P YPos_name ();
+IMPORTEXPORT extern P YPos_val (P name);
+IMPORTEXPORT extern P YPos_val_setter (P value, P name);
 P YgooSsystemYPpid ();
 
 #define timeval_diff(a, b, result)                                            \
@@ -198,7 +230,7 @@ typedef struct _env {
   P    values[1];
 } *ENV, ENV_DATA;
 
-extern ENV envnul;
+IMPORTEXPORT extern ENV envnul;
 #define ENVNUL     (envnul)
 
 typedef struct _bind_exit_frame {
@@ -294,7 +326,11 @@ STATIC_NOT_PRT_C INLINE P* FUNENVSETTER (P* env, P fun) {
 #ifdef WITH_THREADS
 
 #if defined(HAVE_THREAD_LOCAL_VARIABLE)
+#if defined(MSVC_THREAD)
+#define THREAD __declspec(thread)
+#else /* MSVC_THREAD */
 #define THREAD __thread
+#endif /* !MSVC_THREAD */
 typedef P* T;
 #define TREF(x)    (x)
 #define TSET(x, v) (x = (v))
@@ -303,6 +339,11 @@ typedef P* T;
 typedef pthread_key_t T;
 #define TREF(x)    ((P*)pthread_getspecific(x))
 #define TSET(x, v) pthread_setspecific(x, v)
+#elif defined(MSVC_THREAD)
+#define THREAD 
+typedef unsigned long T;
+#define TREF(x)    ((P*)TlsGetValue(x))
+#define TSET(x, v) TlsSetValue(x, v)
 #else
 #error Unknown threading type
 #endif
@@ -322,12 +363,12 @@ typedef P* T;
 // GOO REGISTERS
 
 extern REGS YPfab_regs();
-EXTTVAR(tregs);
+IMPORTEXPORT EXTTVAR(tregs);
 EXTTVAR(goo_thread);
 
 #define Pregs()      TREF(tregs)
 #define REGSREF()    ((REGS)(TREF(tregs)))
-#define REGSCREF()   (regs?regs:regs=REGSREF())
+#define REGSCREF()   (regs?regs:(regs=REGSREF()))
 #define REGSSET(v)   TSET(tregs, (P)(v))
 #define DEFREGS()    REGS regs = REGSREF()
 #define DEFCREGS()   REGS regs = (REGS)0
@@ -351,10 +392,10 @@ EXTTVAR(goo_thread);
 #define YPvm_fun_env_elt(x, i)           (FUNENVGET((x), (i)))
 #define YPvm_fun_env_elt_setter(v, x, i) (FUNENVPUT((v), (x), (i)))
 
-extern P FABENV (int size, ...);
-extern P FUNINIT (P fun, int n, ...);
-extern P FUNSHELL (int d, P x, int n);
-extern P FUNFAB (P x, int n, ...);
+IMPORTEXPORT extern P FABENV (int size, ...);
+IMPORTEXPORT extern P FUNINIT (P fun, int n, ...);
+IMPORTEXPORT extern P FUNSHELL (int d, P x, int n);
+IMPORTEXPORT extern P FUNFAB (P x, int n, ...);
 
 extern P YPvm_fun_env_fab (P n);
 
@@ -415,14 +456,14 @@ fp->  prev fp
 #define ARGLEN()          (REG(fp)[-2])
 #define ARG(x, n)         x = (REG(fp)[- (n) - 3])
 #define NARGS(x, n)       x = (opts_stackalloc(regs, (P)tag((P)untag(REG(fp) - (n) - 3), loc_tag), \
-				      YPib((P)ARGLEN() - (n))))
+				      YPib((char*)ARGLEN() - (n))))
 
-extern P YLoptsG;
-extern P _YPcheck_call_types(REGS);
+IMPORTEXPORT extern P YLoptsG;
+IMPORTEXPORT extern P _YPcheck_call_types(REGS);
 
 #define YPcheck_call_types() _YPcheck_call_types(regs)
 
-STATIC_NOT_PRT_C  inline P opts_stackalloc(REGS regs, P loc, P len)
+STATIC_NOT_PRT_C  INLINE P opts_stackalloc(REGS regs, P loc, P len)
 {
   OBJECT opts;
   opts            = (OBJECT)(REG(sp));
@@ -531,7 +572,7 @@ STATIC_NOT_PRT_C  INLINE P _YPraw_met_call(REGS regs, P fun, P next_mets) {
 
 #define YPraw_met_call(_fun, _next_mets) _YPraw_met_call(regs, _fun, _next_mets)
 
-extern P _CALLN (REGS regs, int check, P fun, int n, ...);
+IMPORTEXPORT extern P _CALLN (REGS regs, int check, P fun, int n, ...);
 
 #define CALL0(_chk, _fun) \
   _CALL0(regs, _chk, _fun)
@@ -546,6 +587,8 @@ extern P _CALLN (REGS regs, int check, P fun, int n, ...);
 #define CALL5(_chk, _fun, _a0, _a1, _a2, _a3, _a4) \
   _CALL5(regs, _chk, _fun, _a0, _a1, _a2, _a3, _a4)
 #define YPraw_call(_fun, _next_mets) _YPraw_call(regs, _fun, _next_mets)
+
+#if !defined(_MSC_VER)
 #define CALLN(...) _CALLN(regs, __VA_ARGS__)
 #define XCALL0(...) _CALL0(REGSCREF(), __VA_ARGS__)
 #define XCALL1(...) _CALL1(REGSCREF(), __VA_ARGS__)
@@ -561,9 +604,10 @@ extern P _CALLN (REGS regs, int check, P fun, int n, ...);
 #define XXCALL4(...) _CALL4(REGSREF(), __VA_ARGS__)
 #define XXCALL5(...) _CALL5(REGSREF(), __VA_ARGS__)
 #define XXCALLN(...) _CALLN(REGSREF(), __VA_ARGS__)
+#endif
 
-extern P _check_type(REGS, P,P);
-extern void check_fun_val_type(REGS, P, P);
+IMPORTEXPORT extern P _check_type(REGS, P,P);
+IMPORTEXPORT extern void check_fun_val_type(REGS, P, P);
 
 #define check_type(x, t) _check_type(regs, x, t)
 
@@ -577,9 +621,9 @@ extern void check_fun_val_type(REGS, P, P);
 
 /* NON-LOCAL EXITS */
 
-extern P do_exit (REGS regs );
-extern P with_exit (P fun);
-extern P with_cleanup (P body_fun, P cleanup_fun);
+IMPORTEXPORT extern P do_exit (REGS regs );
+IMPORTEXPORT extern P with_exit (P fun);
+IMPORTEXPORT extern P with_cleanup (P body_fun, P cleanup_fun);
 
 #define YPvm_with_exit with_exit
 #define YPvm_with_cleanup with_cleanup
@@ -590,29 +634,29 @@ extern P with_cleanup (P body_fun, P cleanup_fun);
 
 /* GLOBAL VARIABLES */
 
-extern P unbound ();
+IMPORTEXPORT extern P unbound ();
 
 #define LITREF(x) x
 
 // RTV'S ARE RUNTIME VARIABLES IMPLEMENTED IN TERMS OF C VARIABLES
 
-#define RTVDEF(x, m, n)  extern P x; P x = PNUL;
-#define RTVEXT(x, m, n)  extern P x;
+#define RTVDEF(x, m, n)  IMPORTEXPORT extern P x; P x = PNUL;
+#define RTVEXT(x, m, n)  IMPORTEXPORT extern P x;
 #define RTVREF(x)        x
 #define RTVSET(x, v)     x = v
 #define RTVCHKREF        RTVVARREF
 //#define RTVCHKREF(x)     (((x) == PNUL) ? unbound() : (x))
 
-extern P DYNFAB(P v);
-#define DYNDEF(x, m, n)     extern P x; P x = PNUL;
-#define DYNEXT(x, m, n)     extern P x;
+IMPORTEXPORT extern P DYNFAB(P v);
+#define DYNDEF(x, m, n)     IMPORTEXPORT extern P x; P x = PNUL;
+#define DYNEXT(x, m, n)     IMPORTEXPORT extern P x;
 #define DYNREF(x)           YPtelt(CREG(dynvars), x)
 #define DYNSET(x, v)        YPtelt_setter(v, CREG(dynvars), x)
 #define DYNDEFSET(x, v)     DYNFAB(&x); DYNSET(x, v);
 #define YPdyn_var_val(x)           DYNREF(x)
 #define YPdyn_var_val_setter(v, x) DYNSET(x, v)
 
-extern P YPfab_dyn_var();
+IMPORTEXPORT extern P YPfab_dyn_var();
 
 // RTV'S ARE THE DEFAULT EXCEPT IN DYNAMIC COMPILATION ALA dlgrt.h
 
@@ -635,28 +679,28 @@ EXT(YPdispatch,"boot","%dispatch");
 
 /* PRIVATE MODULE PRIMITIVES USED DIRECTLY BY THE C BACK END */
 
-extern P YPpair (P,P);
-extern P YPPlist(int num, ...);
-extern P YPint (P);
-extern P YPchr (P);
-extern P YPflo (P);
-extern P YPsb (P);
-extern P YPPsym (P);
-extern P YPmacro (P,P,P);
-extern P YPsig (P,P,P,P,P,P);
-extern P YPgen (P,P,P,P,P,P,P);
-extern P YPmet (P,P,P,P,P,P);
-extern P YPsrc_loc (P,P);
+IMPORTEXPORT extern P YPpair (P,P);
+IMPORTEXPORT extern P YPPlist(int num, ...);
+IMPORTEXPORT extern P YPint (P);
+IMPORTEXPORT extern P YPchr (P);
+IMPORTEXPORT extern P YPflo (P);
+IMPORTEXPORT extern P YPsb (P);
+IMPORTEXPORT extern P YPPsym (P);
+IMPORTEXPORT extern P YPmacro (P,P,P);
+IMPORTEXPORT extern P YPsig (P,P,P,P,P,P);
+IMPORTEXPORT extern P YPgen (P,P,P,P,P,P,P);
+IMPORTEXPORT extern P YPmet (P,P,P,P,P,P);
+IMPORTEXPORT extern P YPsrc_loc (P,P);
 
 /* FUNCTIONS */
 
-#define FUNFOR(x)         extern P x; extern P x##I(REGS)
+#define FUNFOR(x)         IMPORTEXPORT extern P x; extern P x##I(REGS)
 #define LOCFOR(x)         static P x; static P x##I(REGS)
 
 /* BOXES */
 
 #define BOXVAL(x)  (*((P*)(x)))
-extern P BOXFAB(P x);
+IMPORTEXPORT extern P BOXFAB(P x);
 
 #define YPvm_box_fab              BOXFAB
 #define YPvm_box_val              BOXVAL
@@ -669,8 +713,8 @@ extern P BOXFAB(P x);
 
 /* SYMBOL TABLE */
 
-extern P regsym (P* adr, char *modstr, char *namestr);
-extern P YPdo_runtime_bindings (P fun);
+IMPORTEXPORT extern P regsym (P* adr, char *modstr, char *namestr);
+IMPORTEXPORT extern P YPdo_runtime_bindings (P fun);
 
 /* LOCATIVES */
 
@@ -689,8 +733,8 @@ STATIC_NOT_PRT_C  INLINE P YPloc_val_setter (P val, P loc) {
 
 /* APPS */
 
-extern P YPapp_filename ();
-extern P YPapp_args ();
+IMPORTEXPORT extern P YPapp_filename ();
+IMPORTEXPORT extern P YPapp_args ();
 
 /* OVERALL INITIALIZATION */
 
@@ -741,7 +785,7 @@ struct _MODULE_INFO {
 extern MODULE_INFO *goo_toplevel_module_info;
 
 /* Building the runtime environment. */
-extern P YPprocess_module(
+IMPORTEXPORT extern P YPprocess_module(
   /* (mod_info <loc>) */
   P mod_info,
 
@@ -753,7 +797,7 @@ extern P YPprocess_module(
   P export_fun
 );
 
-extern P YPbuild_runtime_modules(
+IMPORTEXPORT extern P YPbuild_runtime_modules(
   /* ((modname <str>) => <module>) */
   P create_module_fun,
 
@@ -771,8 +815,8 @@ extern P YPbuild_runtime_modules(
 
 );
 
-extern P YevalSast_evalYPbinding_value(P x);
-extern P YevalSast_evalYPbinding_value_setter(P v, P x);
+IMPORTEXPORT extern P YevalSast_evalYPbinding_value(P x);
+IMPORTEXPORT extern P YevalSast_evalYPbinding_value_setter(P v, P x);
 
 typedef struct {
   PSTR  var_name;    
@@ -793,8 +837,11 @@ STATIC_NOT_PRT_C INLINE P YevalSast_evalYPdlvar_setter(P v, P x) {
   return ((((DLVAR)(x))->binding)=(v));
 }
 
+#if defined(_MSC_VER)
+#define DEFAULT_GOO_ROOT "."
+#endif
 #define YgooSsystemYPdefault_goo_root() DEFAULT_GOO_ROOT
 
-extern P YPtime ();
+IMPORTEXPORT extern P YPtime ();
 
 #endif

@@ -2,7 +2,7 @@
 
 #include "grt.h"
 
-#ifdef HAVE_POSIX_THREAD
+#if defined(HAVE_POSIX_THREAD)
 
 P YtimeSlockYPlock_create (P name) {
   pthread_mutex_t *mutex = (pthread_mutex_t *)allocate(sizeof(pthread_mutex_t));
@@ -24,6 +24,38 @@ P YtimeSlockYPlock_unlock (P handle) {
 
 P YtimeSlockYPlock_destroy (P handle) {
   return (P)pthread_mutex_destroy((pthread_mutex_t *)handle);
+}
+
+#elif defined(MSVC_THREAD)
+#undef PINT
+#include <windows.h>
+#undef PINT
+#define PINT long
+
+P YtimeSlockYPlock_create (P name) {
+  CRITICAL_SECTION* cs = (CRITICAL_SECTION*)allocate(sizeof(CRITICAL_SECTION));
+  InitializeCriticalSection(cs);
+  return (P)cs;
+}
+
+P YtimeSlockYPlock_lock (P handle) {
+  EnterCriticalSection((CRITICAL_SECTION*)handle);
+  return YPtrue;
+}
+
+P YtimeSlockYPlock_try_lock (P handle) {
+  // Not yet implemented
+  return (P)0;
+}
+
+P YtimeSlockYPlock_unlock (P handle) {
+  LeaveCriticalSection((CRITICAL_SECTION*)handle);
+  return YPtrue;
+}
+
+P YtimeSlockYPlock_destroy (P handle) {
+  DeleteCriticalSection((CRITICAL_SECTION*)handle);
+  return YPtrue;
 }
 
 #else
