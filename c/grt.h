@@ -270,6 +270,7 @@ typedef P (*PFUN)(REGS);
 #define Ptail_setter(z, x) (YPprop_elt_setter((z), (x), (P)PAIRTAILOFFSET))
 
 #define tag_mask 3
+#define TAG_BITS 2
 #define adr_tag  0
 #define int_tag  1
 #define chr_tag  2
@@ -408,16 +409,20 @@ extern P YPenable_stack_checks ();
 
 /* TAG */
 
+#define MAX_GOO_FIXNUM LONG_MAX >> TAG_BITS
+#define MIN_GOO_FIXNUM LONG_MIN >> TAG_BITS
+
+
 STATIC_NOT_GRT_C INLINE int tag_bits (P adr) {
   return (PADR)adr & tag_mask;
 }
 
 STATIC_NOT_GRT_C  INLINE long untag (P adr) {
-  return (PADR)adr >> 2;
+  return (PADR)adr >> TAG_BITS;
 }
 
 STATIC_NOT_GRT_C  INLINE long tag (P adr, int tag) {
-  return (PADR)adr << 2 | tag;
+  return (PADR)adr << TAG_BITS | tag;
 }
 
 STATIC_NOT_GRT_C INLINE P YPelt (P v, P i) {
