@@ -64,13 +64,16 @@
 
 (defvar proto-mode-map nil
   "Keymap for Proto mode.
-All commands in `shared-lisp-mode-map' are inherited by this map.")
+All commands in `lisp-mode-shared-map' are inherited by this map.")
 
 (if proto-mode-map
     ()
   (let ((map (make-sparse-keymap "Proto")))
     (setq proto-mode-map (make-sparse-keymap))
-    (set-keymap-parent proto-mode-map shared-lisp-mode-map)
+	(set-keymap-parent proto-mode-map 
+					   (if (< emacs-major-version 21)
+						   shared-lisp-mode-map
+						   lisp-mode-shared-map))
     (define-key proto-mode-map [menu-bar] (make-sparse-keymap))
     (define-key proto-mode-map [menu-bar proto]	; map is for menu
       (cons "Proto" map))
