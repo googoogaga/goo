@@ -234,12 +234,55 @@
 (dm sexpr-monitor? (exp => <log>)
   (sexpr-tagged-list? exp $sexpr-monitor-tag))
 
-(dm sexpr-monitor-handler ((exp <lst>) => <any>)
-  (let ((handler-expr (2nd exp)))
-    (sexpr-make-anonymous-method (head handler-expr) (tail handler-expr))))
+(dm sexpr-monitor-expand ((exp <lst>))
+  (mif ((TRY ,options ,handler ,@body) exp)
+       (let ((options (if (isa? options <sym>) `((type ,options)) options)))
+         (tup (sexpr-monitor-type options)
+              (sexpr-monitor-info options)
+              (sexpr-monitor-test options)
+              handler
+              (sexpr-monitor-body body)))
+       (error "Malformed TRY expression: ~=" exp)))
 
-(dm sexpr-monitor-body ((exp <lst>) => <lst>)
-  (tail (tail exp)))
+;;; Find an option.  Given '((foo 1) (bar 2)) and 'foo, return '(1).
+(df find-option ((options <lst>) (option <sym>) default => <any>)
+  (case
+    ((empty? options) default)
+    ((== option (head (1st options))) (tail (1st options)))
+    (#t (find-option (tail options) option default))))
+
+(dm sexpr-monitor-type ((options <lst>) => <any>)
+  (let ((type-list (find-option options 'type '(<condition>))))
+    (mif ((,type) type-list)
+         type
+         (error "Malformed TRY condition type: %=" type-list))))
+
+;; Build an expression which returns an appropriate <handler-info>.
+(dm sexpr-monitor-info ((options <lst>) => <any>)
+  (let ((info (find-option options 'info #f))
+        (description (find-option options 'description #f)))
+    (case
+      ((and info description)
+       (error "TRY may only have one of INFO or DESCRIPTION: %=" options))
+      ;; TODO - Do we want to keep the 'info' option?
+      (info
+       (mif ((,info-expr) info)
+            info-expr
+            (error "Malformed TRY info expression: %=" info)))
+      (description
+       (mif ((,message ,@arguments) description)
+            `(isa <simple-handler-info>
+               (set handler-info-message ,message)
+               (set handler-info-arguments (lst ,@arguments)))
+            (error "Malformed TRY description: %=" description)))
+      (#t '$default-handler-info))))
+
+(dm sexpr-monitor-test ((options <lst>) => <lst>)
+  (let ((test-body (find-option options 'test '(#t))))
+    (sexpr-make-anonymous-method '() test-body)))
+
+(dm sexpr-monitor-body ((body <lst>) => <lst>)
+  (sexpr-make-anonymous-method '() body))
 
 ;;  BEGIN expressions (a.k.a. sequences)
 
@@ -688,8 +731,7 @@
   sexpr-method-body
   sexpr-method-signature
   $sexpr-method-tag
-  sexpr-monitor-body
-  sexpr-monitor-handler
+  sexpr-monitor-expand
   $sexpr-monitor-tag
   sexpr-operands
   sexpr-operator

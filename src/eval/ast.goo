@@ -229,6 +229,9 @@
   (slot <unwind-protect> unwind-protect-cleanup-thunk)
 
 (dv <monitor> (isa <computed-program>))
+  (slot <monitor> monitor-type)
+  (slot <monitor> monitor-info)
+  (slot <monitor> monitor-test)
   (slot <monitor> monitor-handler)
   (slot <monitor> monitor-main-thunk)
 
@@ -752,12 +755,13 @@
 	    (objectify
 	     (sexpr-make-anonymous-method '() cleanup-forms) r #f))))
 
-(dm objectify-monitor (handler body r tail? => <monitor>)
+(dm objectify-monitor (type info test handler body r tail? => <monitor>)
   (isa <monitor>
-       (set monitor-handler    
-	    (objectify handler r #f))
-       (set monitor-main-thunk
-	    (objectify (sexpr-make-anonymous-method '() body) r #f))))
+    (set monitor-type       (objectify type r #f))
+    (set monitor-info       (objectify info r #f))
+    (set monitor-test       (objectify test r #f))
+    (set monitor-handler    (objectify handler r #f))
+    (set monitor-main-thunk (objectify body r #f))))
 
 (dm objectify-export (names r tail? => <program>)
   (let ((env (find-static-global-environment r))
@@ -1006,8 +1010,8 @@
     r tail?))
 
 (define-magic-binding monitor (x r tail?)
-  (objectify-monitor
-   (sexpr-monitor-handler x) (sexpr-monitor-body x) r tail?))
+  (let (((tup type info test handler body) (sexpr-monitor-expand x)))
+    (objectify-monitor type info test handler body r tail?)))
 
 (dm pairize ((args <lst>) => <any>)
   (if (empty? args)
@@ -1305,6 +1309,9 @@
       (error "%s: error: Circular use of %s not allowed" (head stack) name))
 
     ;; Load the module, using a FIN form to manage the load stack.
+    ;; XXX - If an error occurs, we currently neglect to mark
+    ;; the environment-implements bindings of the half-created
+    ;; module as free.
     (format out "%s[Loading module %s...\n" indent name)
     (let ((mod (seq (pushf (module-loader-stack loader) name)
                     (fin
@@ -1804,7 +1811,10 @@
   module-name
   <monitor>
   monitor-handler
+  monitor-info
   monitor-main-thunk
+  monitor-test
+  monitor-type
   objectify
   <predefined-application>
   <program>

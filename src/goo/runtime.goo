@@ -1199,6 +1199,9 @@
 (dm to-str ((x <str>) => <str>)
   x)
 
+(dm add ((s <str>) (c <chr>) => <str>)
+  (cat s (to-str c)))
+
 ;;; ASCII -- S48
 
 (dv ascii-limit 128)
@@ -1298,9 +1301,25 @@
 (dm default-handler ((c <condition>))
   #f)
 
+(dm default-handler-description ((cond-type <condition>) => <str>)
+  (format-to-string "Anonymous handler for %s" cond-type))
+
+(dm build-condition-interactively
+  ((cond-type <condition>) in out => <condition>)
+  (isa cond-type))
+
 (dv <simple-condition> (isa <condition>))
   (slot <simple-condition> (condition-message <str>)   "")
   (slot <simple-condition> (condition-arguments <lst>) '())
+
+(dm build-condition-interactively
+  ((cond-type <simple-condition>) in out => <condition>)
+  (let ((cond (next-method cond-type in out)))
+    (format out "Condition format string: ")
+    (set (condition-message cond) (read in))
+    (format out "Condition format arguments: ")
+    (set (condition-arguments cond) (read in))
+    cond))
 
 (dv <serious-condition> (isa <condition>))
 
@@ -1313,38 +1332,102 @@
 
 (dv <simple-error> (isa (<error> <simple-condition>)))
 
+(dv <restart> (isa <condition>))
+
+(dm default-handler-description ((cond-type <restart>) => <str>)
+  (format-to-string "Anonymous restart of type %s" cond-type))
+
+(export
+  <restart>
+  default-handler-description
+  build-condition-interactively)
+
+;;;; Handler Info
+;;;; Debugger-level info used for describing handlers and calling them
+;;;; interactively.  This probably doesn't need to be an actual class;
+;;;; a few well-chosen slots on <handler> might work better.
+
+(dv <handler-info> (isa <any>))
+
+(dm describe-handler ((info <handler-info>) condition-type => <str>)
+  (default-handler-description condition-type))
+
+(dm build-condition-for-handler-interactively
+  ((info <handler-info>) condition-type in out => <condition>)
+  (build-condition-interactively condition-type in out))
+
+(dv $default-handler-info (isa <handler-info>))
+
+(dv <simple-handler-info> (isa <handler-info>))
+  (slot <simple-handler-info> (handler-info-message <str>))
+  (slot <simple-handler-info> (handler-info-arguments <str>) '())
+
+(dm describe-handler ((info <simple-handler-info>) condition-type => <str>)
+  (apply format-to-string (pair (handler-info-message info)
+                                (handler-info-arguments info))))
+
+(export
+  <handler-info>
+  describe-handler
+  build-condition-for-handler-interactively
+  $default-handler-info
+  <simple-handler-info>
+  handler-info-message
+  handler-info-arguments
+  describe-handler)
+
+;;;; Handlers
+
 (dv *current-handlers* '())
 
 (dv <handler> (isa <any>))
+  (slot <handler> (handler-condition-type <condition>))
+  (slot <handler> (handler-info <handler-info>))
+  (slot <handler> (handler-test <fun>))
   (slot <handler> (handler-function <fun>))
 
-(df make-handler ((f <fun>) => <handler>)
-  (isa <handler> (set handler-function f)))
+(df make-handler
+  ((type <condition>) (info <handler-info>) (test <fun>) (f <fun>)
+   => <handler>)
+  (isa <handler>
+    (set handler-condition-type type)
+    (set handler-info info)
+    (set handler-test test)
+    (set handler-function f)))
+
+(df handler-active? ((handler <handler>) => <log>)
+  ((handler-test handler)))
 
 (df handler-matches? ((handler <handler>) (condition <condition>) => <log>)
-  #t)
+  (and (isa? condition (handler-condition-type handler))
+       (handler-active? handler)))
 
-(dp %with-monitor ((user-handler <fun>) (main-fun <fun>))
+(df %with-monitor
+  ((type <condition>) (info <handler-info>) (test-fun <fun>)
+   (user-handler <fun>) (main-fun <fun>))
   (lab _unwind-exception_
     (let ((_original-handlers_ *current-handlers*))
       (loc ((_handler-function_ (condition _next-handler_)
 	      (lab _resume_
 		(user-handler condition _resume_)
 		(_next-handler_))))
-	(set *current-handlers*
-             (pair (make-handler _handler-function_) *current-handlers*))
+	(pushf *current-handlers*
+               (make-handler type info test-fun _handler-function_))
 	(fin (main-fun) (set *current-handlers* _original-handlers_))))))
 
+;;; Pass a signal to a list of handlers for processing.
+(df signal-handler-list ((condition <condition>) (handlers <lst>) => <any>)
+  (if (empty? handlers)
+      (default-handler condition)
+      (let ((handler (head handlers))
+            (remaining (tail handlers)))
+        (if (handler-matches? handler condition)
+            ((handler-function handler)
+             condition (fun () (signal-handler-list condition remaining)))
+            (signal-handler-list condition remaining)))))
+
 (dm sig ((condition <condition>) (args ...))
-  (rep search ((handlers *current-handlers*))
-    (if (empty? handlers)
-	(default-handler condition)
-	(let ((handler (head handlers))
-	      (remaining (tail handlers)))
-	  (if (handler-matches? handler condition)
-	      ((handler-function handler)
-	       condition (fun () (search remaining)))
-	      (search remaining))))))
+  (signal-handler-list condition *current-handlers*))
 
 (dm sig ((c <str>) (args ...)) 
   (sig (isa <simple-condition> 
@@ -1368,6 +1451,71 @@
 
 (df type-error (arg type)
   (error "TYPE ERROR %= SHOULD BE A %=" arg type))
+
+;;; INTERACTIVE HANDLER MUNGING
+
+;;; Apply 'f' to all handlers whose type is a subtype of 'type'.
+(df do-handlers-of-type ((type <condition>) (f <fun>) => #f)
+  (rep search ((handlers *current-handlers*))
+    (if (empty? handlers)
+        #f
+        (let ((handler (head handlers))
+              (remaining (tail handlers)))
+          (when (and (isa? (handler-condition-type handler) type)
+                     (handler-active? handler))
+            (f handler))
+          (search remaining)))))
+
+;;; Print out descriptions all active handlers matching 'type' (numbered
+;;; from 1) and return a sequence of those handlers in the same order
+;;; (indexed from zero).  This allows us to keep track of which handlers
+;;; correspond to which user-visible numbers.
+(df list-handlers ((type <condition>) out => <buf>)
+  (let ((i 1)
+        (applicable (fab <buf> 0)))
+    (do-handlers-of-type type
+      (fun (handler)
+        (format out "%d. %s.\n" i
+                (describe-handler (handler-info handler)
+                                  (handler-condition-type handler)))
+        (push-last! applicable handler)
+        (inc i)))
+    applicable))
+
+;;; Attempt to invoke the specified handler directly, bypassing any other
+;;; handlers "in the way". 
+(df invoke-handler-interactively ((handler <handler>) in out => <any>)
+  (let ((condition
+         (build-condition-for-handler-interactively
+          (handler-info handler) (handler-condition-type handler) in out)))
+    (unless (handler-matches? handler condition)
+      (error "Handler %= does not match condition %=" handler condition))
+    (rep search ((handlers *current-handlers*))
+      (if (empty? handlers)
+          (error "Handler %= is not installed" handler)
+          (let ((current (head handlers))
+                (remaining (tail handlers)))
+            (if (== handler current)
+                ((handler-function handler)
+                 condition (fun () (signal-handler-list condition remaining)))
+                (search remaining)))))))
+
+;;; Chose a handler matching 'type', and call it interactively.
+(df choose-handler ((type <condition>) in out => <any>)
+  (lab return
+    (try ((type <restart>)
+          (description "Exit CHOOSE-HANDLER"))
+      (fun (c r) (return #f))
+      (let ((handlers (list-handlers type out)))
+        (format out "Please pick a handler: ")
+        (let ((n (- (read in) 1)))
+          (when (or (< n 0) (>= n (len handlers)))
+            (error "No such handler %d" n))
+          (invoke-handler-interactively (elt handlers n) in out))))))
+
+(export
+  list-handlers
+  choose-handler)
 
 ;;; LOCATIVES
 
@@ -2065,7 +2213,9 @@
 (set fab-sym booted-fab-sym)
 
 (need-implementation
-  format)
+  read
+  format
+  format-to-string)
 
 (export
   1st 2nd 3rd
@@ -2083,6 +2233,7 @@
   <buf>
   call-with-input-file call-with-output-file
   call-with-string-input-port call-with-string-output-port
+  port-contents
   cat cat2 cat!
   char->ascii
   compose

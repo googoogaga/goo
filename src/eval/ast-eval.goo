@@ -317,6 +317,9 @@
 
 (dm ast-eval ((e <monitor>) (env <loc-env>))
   (%with-monitor
+   (ast-eval (monitor-type e) env)
+   (ast-eval (monitor-info e) env)
+   (ast-eval (monitor-test e) env)
    (ast-eval (monitor-handler e) env)
    (ast-eval (monitor-main-thunk e) env)))
 
