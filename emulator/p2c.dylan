@@ -952,6 +952,15 @@ define method ast-function-arity (e :: <ast-function>)
   if (function-nary?(e)) size(specs) - 1 else size(specs) end;
 end method;
 
+define method to-c (e :: <ast-macro-definition>, f, out)
+  format(out, "%s", mangle-global-name("%macro"));
+  between-parentheses (out)
+    generate-quotation(out, binding-name(assignment-binding(e)));
+    format(out, ",");
+    to-c(assignment-form(e), #f, out);
+  end between-parentheses;
+end method;
+
 define method to-c (e :: <ast-generic>, f, out)
   format(out, "%s", mangle-global-name("%gen"));
   between-parentheses (out)

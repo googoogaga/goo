@@ -207,8 +207,6 @@ define method analyze-calls (o)
   do-call-upgrades!(o)
 end method;
 
-
-
 /// FLATTENING
 
 define class <free-environment> (<program>) 

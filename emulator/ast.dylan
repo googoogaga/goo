@@ -131,6 +131,9 @@ end class;
 define class <ast-primitive-definition> (<definition>)
 end class;
 
+define class <ast-macro-definition> (<definition>)
+end class;
+
 define class <ast-function> (<program>) 
   slot function-name = #f,  init-keyword: name:;
   slot function-bindings,   required-init-keyword: bindings:;
@@ -257,45 +260,6 @@ define class <monitor> (<program>)
   slot monitor-handler,    required-init-keyword: handler:;
   slot monitor-main-thunk, required-init-keyword: main:;
 end class;
-
-define class <syntax-if> (<program>)
-  slot sif-pattern,     required-init-keyword: pattern:;
-  slot sif-bindings,    required-init-keyword: bindings:;
-  slot sif-value,       required-init-keyword: value:;
-  slot sif-consequent,  required-init-keyword: consequent:;
-  slot sif-alternative, required-init-keyword: alternative:;
-end class;
-
-define class <match> (<object>)
-end class;
-
-define class <match-structure> (<match>)
-end class;
-
-define class <match-atom> (<match-structure>)
-  slot match-value, required-init-keyword: value:;
-end class;  
-
-define class <match-list> (<match-structure>)
-  slot match-elements, required-init-keyword: elements:;
-end class;  
-
-define class <match-sublist> (<match-structure>)
-  slot match-element, required-init-keyword: element:;
-end class;  
-
-define class <match-empty-list> (<match-structure>)
-end class;  
-
-define class <match-binding> (<match>)
-  slot match-binding, required-init-keyword: binding:;
-end class;
-
-define class <match-unquote> (<match-binding>)
-end class;  
-
-define class <match-unquote-splicing> (<match-binding>)
-end class;  
 
 /// ENVIRONMENT
 
@@ -596,6 +560,7 @@ define method ast-define-binding
   let binding
     = if (existing-binding)
         if (binding-free?(existing-binding))
+          format-out("FREEDEF %s\n", name);
           binding-free?(existing-binding) := #f;
         else
           format-out("REDEF %s\n", name);
@@ -624,10 +589,10 @@ define method objectify-definition
 end method;
 
 define method objectify-syntax-definition 
-    (name, e, r) => (res :: type-union(<constant>, <definition>))
+    (name, e, r, rt?) => (res :: type-union(<constant>, <definition>))
   // let expander = analyze-macro-function(e);
   let sep-expander = sexpr-make-macro-function(e);
-  // format-out("DEFMACRO "); proto-write(sep-expander); format-out("\n");
+  format-out("DEFMACRO "); proto-write(sep-expander); format-out("\n");
   let ast-expander = with-emulated objectify(sep-expander, r, #f) end;
   let expander     = ast-eval(ast-expander, env());
   local method expand (x, r, tail?)
@@ -643,7 +608,11 @@ define method objectify-syntax-definition
 	end method;
   format-out("DEFMAC %=\n", name);
   let binding = ast-define-binding(r, name, <magic-binding>, handler: expand);
-  make(<constant>, value: #f);
+  if (rt?)
+    make(<ast-macro-definition>, binding: binding, form: ast-expander);
+  else
+    make(<constant>, value: #f);
+  end if;
 end method;
 
 define method objectify-function-definition 
@@ -820,69 +789,73 @@ define method objectify-monitor (handler, body, r, tail?) => (res :: <monitor>)
        main:    objectify(sexpr-make-anonymous-method(#(), body), r, #f))
 end method;
 
-define method objectify-bind-list (pat) => (res)
+define method expand-bind-list (pat)
   error("Expected Pattern List %=\n", pat);
 end method;
 
-define method objectify-bind-list (pat :: <empty-list>) => (res)
-  make(<match-empty-list>)
+define method expand-bind-list (pat :: <empty-list>)
+  list(#"match-empty-list", #"xxx_", #"fail_")
 end method;
 
-define method objectify-bind-list (pat :: <list>) => (res)
+define method expand-bind-list (pat :: <list>)
   case
     sexpr-unquote?(pat)
       => error("Unquote Unexpected Here %=\n", pat);
     sexpr-unquote-splicing?(pat)
       => error("Unquote Splicing Unexpected Here %=\n", pat);
     otherwise
-      => objectify-bind-list*(pat);
+      => expand-bind-list*(pat);
   end case;
 end method;
 
-define method objectify-bind-list* (pat :: <list>) => (res)
-  let matchers = map(objectify-bind-element, pat);
-  make(<match-list>, elements: matchers)
+define method expand-bind-list* (pat :: <empty-list>)
+  list(#"match-empty-list", #"xxx_", #"fail_");
 end method;
 
-define method objectify-bind-element (pat) => (res)
-  make(<match-atom>, value: pat)
+define method expand-bind-list* (pat :: <list>)
+  list(#"let", list(list(#"xxx_", expand-bind-element(head(pat)))),
+               expand-bind-list*(tail(pat)));
 end method;
 
-define method objectify-bind-element (pat :: <list>) => (res)
+define method expand-bind-element (pat)
+  list(#"match-atom", #"xxx_", list(#"quote", pat), #"fail_");
+end method;
+
+define method expand-bind-element (pat :: <list>)
   case
     sexpr-unquote?(pat)
-      => objectify-bind-unquote(pat);
+      => list(#"seq", list(#"set", second(pat), 
+                                   list(#"match-unquote", #"xxx_", #"fail_")),
+	              list(#"tail", #"xxx_"));
     sexpr-unquote-splicing?(pat)
-      => objectify-bind-unquote-splicing(pat);
+      => list(#"seq", list(#"set", second(pat), #"xxx_"),
+	              list(#"quote", #()));
     otherwise
-      => let matcher = objectify-bind-list(pat);
-         make(<match-sublist>, element: matcher)
+      => list(#"seq",
+	      list(#"let", 
+	           list(list(#"xxx_", list(#"match-sublist", #"xxx_", #"fail_"))),
+	           expand-bind-list(pat)),
+ 	      list(#"tail", #"xxx_"));
   end case;
 end method;
 
-define method objectify-bind-unquote (pat :: <list>) => (res)
-  let binding = make(<local-binding>, name: second(pat));
-  make(<match-unquote>, binding: binding)
+define method expand-pattern (pat :: <list>)
+  expand-bind-list(pat);
 end method;
 
-define method objectify-bind-unquote-splicing (pat :: <list>) => (res)
-  let binding = make(<local-binding>, name: second(pat));
-  make(<match-unquote-splicing>, binding: binding)
-end method;
-
-define method objectify-pattern (pattern) => (res :: <match>)
-  objectify-bind-list(pattern)
-end method;
-
-define method objectify-syntax-if 
-    (pattern, bindings, value, consequent, alternative, r) => (res :: <syntax-if>)
-  let bindings = map(method (n) make(<local-binding>, name: n) end, bindings);
-  make(<syntax-if>,
-       pattern:     objectify-pattern(pattern),
-       bindings:    bindings,
-       value:       objectify(value, r, #f),
-       consequent:  objectify(consequent, r-extend*(r, bindings), #f),
-       alternative: objectify(alternative, r, #f))
+define method expand-syntax-if (x :: <list>)
+  let pat   = sexpr-syntax-if-pattern(x);
+  let vars  = sexpr-bind-pattern-variables(pat);
+  let value = sexpr-syntax-if-value(x);
+  let cons  = sexpr-syntax-if-consequent(x);
+  let alt   = sexpr-syntax-if-alternative(x);
+  let epat  = expand-pattern(pat);
+  list(#"lab", #"return",
+       list(#"loc", list(list(#"fail_", list(list(#"args", #"...")), 
+                              list(#"return", alt))),
+	            list(#"let", list(list(#"xxx_", value)),
+                         list(#"let", map(rcurry(list, #f), vars), 
+                              epat, cons))));
 end method;
 
 /// AST ENVIRONMENT
@@ -1023,7 +996,16 @@ end magic-binding;
 
 define magic-binding define-syntax (x, r, tail?)
   objectify-syntax-definition
-    (sexpr-syntax-definition-variable(x), sexpr-syntax-definition-value(x), r);
+    (sexpr-syntax-definition-variable(x), sexpr-syntax-definition-value(x), 
+     r, #t);
+end magic-binding;
+
+define constant $sexpr-define-static-syntax-tag = #"dss";
+
+define magic-binding define-static-syntax (x, r, tail?)
+  objectify-syntax-definition
+    (sexpr-syntax-definition-variable(x), sexpr-syntax-definition-value(x), 
+     r, #f);
 end magic-binding;
 
 define magic-binding define-method (x, r, tail?)
@@ -1198,15 +1180,9 @@ define magic-binding syntax-if (x, r, tail?)
   // ,x  => binds x to an sexpr
   // ,@x => binds x to a series of sexprs
   // TODO: make this deals with multiple bindings
-  let pat = sexpr-syntax-if-pattern(x);
-  objectify-syntax-if
-    (pat, sexpr-bind-pattern-variables(pat),
-     sexpr-syntax-if-value(x),
-     sexpr-syntax-if-consequent(x),
-     sexpr-syntax-if-alternative(x),
-     r);
+  objectify(expand-syntax-if(x), r, tail?)
 end magic-binding;
-
+	
 /// SETUP INITIAL CT ENVIRONMENT
 
 define function init-static-global-environment 
