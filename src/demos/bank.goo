@@ -1,0 +1,203 @@
+(use goo)
+
+;; Er, so this is supposed to be a slightly larger example of how you can do
+;;  things in Goo.  Please ignore obvious flaws in the object model and rep
+;;  exposure.  For example, the model assumes customers belong to at most one
+;;  bank, along with other things.
+
+;; ----- Define Classes -----
+
+(dc <bank> (<any>))
+ (dp name (<bank> => <str>))
+ (dp customers (<bank> => <col>) (vec)) ;; A vector of customers, although a map might be more useful.
+
+(dc <customer> (<any>))
+ (dp accounts (<customer> => <col>) (vec))
+ (dp first-name (<customer> => <str>))
+ (dp last-name (<customer> => <str>))
+
+(dc <account> (<any>))
+ (dp balance (<account> => <int>) 0) ;; The balance should start at 0!
+
+(dc <checking-account> (<account>))
+(dc <savings-account> (<account>))
+
+(dv *minimum-balance* 100) ;; 100 Smackers, or you're in trouble.
+(dv *minimum-balance-for-no-fee* 1000)
+(dv *monthly-fee* 10)
+(dv *monthly-interest* 0.02)
+
+;; ----- Methods -----
+
+;; --- Account Methods
+
+(dm credit (account|<account> amount|<int>)
+  ;; Fancy syntax
+  (opf (balance account) (+ _ amount))
+  ;; Can also be written as: 
+  ;;   (set (balance account) (+ (balance account) amount))
+  #t)
+
+(dm debit (account|<account> amount|<int> => <log>)
+  (opf (balance account) (- _ amount))
+  #t)
+
+;; See if a debit will succeed, potentially including extended logic.
+;;  (Eg, overdraft protection, auto-transfers, etc.)
+(dm can-handle-debit? (account|<account> amount|<int> => <log>)
+  ;; Er, don't check if they meet minimum balance though... just 0 as low end.
+  (>= (balance account) amount))
+
+(dm transfer (from-account|<account> to-account|<account> amount|<int> => <log>)
+  (when (and (> amount 0)
+             (can-handle-debit? from-account amount))
+    (debit from-account amount)
+    (credit to-account amount)))
+
+(dm charge-monthly-fee (account|<account>)
+  (when (< (balance account) *minimum-balance-for-no-fee*)
+    (debit account *monthly-fee*)))
+
+;; By default, all accounts earn interest
+(dm earn-interest (account|<account>)
+  (credit account (floor (* (balance account) *monthly-interest*))))
+
+
+;; But checking accounts don't earn interest. Muahahaha!
+(dm earn-interest (account|<checking-account>)
+  ;; Do nothing
+  )
+
+(dm to-str (account|<account> => <str>)
+  (cat (if (isa? account <checking-account>)
+           "Checking "
+           "Savings ")
+       "Account: "
+       (to-str (balance account))))
+
+;; --- Customer Methods
+
+(dm new-customer (first-name|<str> last-name|<str> => <customer>)
+  (def customer (new <customer>))
+  ;; We don't have to worry about binding masking here because the setter names
+  ;;  are transformed into first-name-setter, last-name-setter, etc.
+  (set (first-name customer) first-name)
+  (set (last-name customer) last-name)
+  ;; Note that there is an alternative syntax where we specify the property
+  ;;  names and values in the 'new' clause, but the specific syntax for that
+  ;;  may change sometime soon (relative to the writing of this file), so 
+  ;;  I'm avoiding it.
+
+  ;; Don't forget to return the customer!
+  customer)
+
+;; Find a customer using a user-specified propery-getter, ex: first-name or
+;;  last-name.  
+;; The t? syntax indicates that the return type is either <customer> or #f.
+(dm find-customer (customer-list|<col> prop-getter match-val|<any> => (t? <customer>))
+  (esc found-it
+    (do (fun (current-customer)
+          (when (= (prop-getter current-customer) match-val)
+            (found-it current-customer)))
+        customer-list)))
+
+(dm to-str (customer|<customer> => <str>)
+  (def cat-pair-with-newline (fun (str1 str2)
+                               (cat str1 "\n" str2)))
+  (def prepend-spaces (fun (str)
+                        (cat "  " str)))
+  (cat (last-name customer)
+       ", "
+       (first-name customer)
+       "\n"
+       ;; Some list-fun worthy of scheme:
+       ;;  - First, map over the list of accounts applying to-str, resulting in a list of strings
+       ;;  - Next, map over the strings with prepend-spaces, returning a new list of strings
+       ;;  - Finally, use fold+ to concatenate all the strings together (with newlines)
+       ;;   (fold+ operates like accumulate in SICP... (func z (func y (func w x))) for (w x y z))
+       (fold+ cat-pair-with-newline (map prepend-spaces (map to-str (accounts customer))))))
+
+;; --- Bank Methods
+(dm new-bank (bank-name|<str> => <bank>)
+  (def bank (new <bank>))
+  (set (name bank) bank-name)
+  bank)
+
+(dm get-all-accounts (bank|<bank> => <col>)
+  (def all-accounts-in-list-of-lists-form (map accounts (customers bank)))
+  (def all-accounts-flat (fold+ cat all-accounts-in-list-of-lists-form))
+
+  all-accounts-flat)
+
+(dm charge-monthly-fees (bank|<bank>)
+  (do charge-monthly-fee
+      (get-all-accounts bank)))
+
+(dm earn-monthly-interest (bank|<bank>)
+  (do earn-interest
+      (get-all-accounts bank)))
+
+(dm add-customer (bank|<bank> customer|<customer>)
+  (add! (customers bank) customer))
+
+(dm new-customer-account (bank|<bank> customer|<customer> type|(t< <account>) => (t? <account>))
+  ;; The customer must actually be a customer of the bank
+  (when (mem? (customers bank) customer)
+    (def account (new type))
+    (add! (accounts customer) account)
+    account))
+
+(dm to-str (bank|<bank>)
+  (def cat-pair-with-newline (fun (str1 str2)
+                               (cat str1 "\n" str2)))
+
+  (cat (name bank)
+       "\n"
+       "-------------\n"
+       (fold+ cat-pair-with-newline (map to-str (customers bank)))))
+
+;; --- Demonstration Methods
+;; (Actually do something)
+
+(df do-banking-stuff ()
+  ;; Create the bank
+  (def bank (new-bank "Charges'r'us"))
+  
+  ;; Create the customers
+  (def alice (new-customer "Alice" "Hax0r"))
+  (def ben   (new-customer "Ben"   "Bitdiddle"))
+  (def beef  (new-customer "0x"    "deadbeef"))
+
+  (add-customer bank alice)
+  (add-customer bank ben)
+  (add-customer bank beef)
+
+  ;; Create the accounts
+  (def alice-savings  (new-customer-account bank alice <savings-account>))
+  (def alice-checking (new-customer-account bank alice <checking-account>))
+  
+  (def ben-savings  (new-customer-account bank ben <savings-account>))
+  (def ben-checking (new-customer-account bank ben <checking-account>))
+
+  (def beef-savings  (new-customer-account bank beef <savings-account>))
+  (def beef-checking (new-customer-account bank beef <checking-account>))
+
+  ;; Payday!
+  (credit alice-savings 100) ;; ouch, being an RA sure sucks!
+  (credit ben-savings 10000) ;; hooray for industry!
+  (credit beef-savings 20)   ;; the lunch-money stealing racket ain't what it used to be
+
+  ;; Put some money in your checking accounts you fools!
+  (transfer alice-savings alice-checking 40)
+  (transfer ben-savings ben-checking 1000)
+  (transfer beef-savings beef-checking 10)
+
+  ;; Always take before giving! It's the american way!
+  (charge-monthly-fees bank)
+  (earn-monthly-interest bank)
+
+  ;; Print out the way things be.
+  (msg out "%s\n" (to-str bank)))
+
+(export
+  do-banking-stuff)
