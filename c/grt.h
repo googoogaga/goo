@@ -356,3 +356,11 @@ extern P YPapp_args ();
 
 extern void YPinit_world(int argc, char* argv[]);
 
+/* CURSES */
+
+extern P YPgrid_open ();
+extern P YPgrid_close ();
+extern P YPgrid_move (P x, P y);
+extern P YPgrid_read ();
+extern P YPgrid_write (P c);
+extern P YPgrid_refresh ();

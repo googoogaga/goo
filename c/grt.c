@@ -1535,4 +1535,44 @@ void YPinit_world(int argc, char* argv[]) {
   setup_keyboard_interrupts();
 }
 
+/* CURSES */
 
+/* #include <curses.h> */
+
+P YPgrid_open () { 
+#ifdef CURSES
+  initscr(); cbreak(); noecho(); 
+#endif
+  return YPfalse; 
+}
+P YPgrid_close () { 
+#ifdef CURSES
+  nocbreak(); echo(); endwin();
+#endif
+  return YPfalse; 
+}
+P YPgrid_move (P x, P y) { 
+#ifdef CURSES
+  move((int)y, (int)x); 
+#endif
+  return YPfalse; 
+}
+P YPgrid_read () { 
+#ifdef CURSES
+  return (P)getch(); 
+#else
+  return YPfalse; 
+#endif
+}
+P YPgrid_write (P c) { 
+#ifdef CURSES
+  addch((char)(long)c); 
+#endif
+  return YPfalse; 
+}
+P YPgrid_refresh () { 
+#ifdef CURSES
+  refresh(); 
+#endif
+  return YPfalse; 
+}
