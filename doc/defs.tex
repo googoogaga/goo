@@ -13,120 +13,61 @@
 \htmlonly{\code{\var{#1}}}%
 }
 
-%%%%%%%%%%%%%%%% Latex prototypes
-\texonly{
+%%%%%%%%%%%%%%%% HTML deftypes
+\htmlonly{
+\newcommand{\goo}{\it{GOO}}
 
-% \newenvironment{ex}%
-%   {\scriptsize\setlength{\parskip}{0pt}
-%    \verbatim}
-%   {\endverbatim\vspace*{-0.1in}}
+% \newenvironment{defs}{\begin{itemize}}{\end{itemize}}
 
-\newenvironment{ex}{\small\begin{example}}{\end{example}}
-\newenvironment{exv}{\scriptsize\verbatim}{\endverbatim}
+% \newcommand{\defnoindex}[3]{%
+% \item\noindent\code{({#1}{\var{#2}\/})~-->~{\var{#3}}}}
 
-% \newenvironment{exv}%
-%   {\scriptsize
-%    \begin{center}
-%    \begin{Sbox}
-%    \begin{minipage}{3.25in}
-%    \verbatim}
-%   {\endverbatim
-%    \end{minipage}
-%    \end{Sbox}
-%    \end{center}
-%    \shadowbox{\TheSbox}}
+% \newcommand{\defcontnoindex}[2]{%
+% \item\noindent\code{({#1}{\var{#2}\/})}}
 
-\newenvironment{packeditemize}
-	{\begin{list}{$\bullet$}{
-	  \setlength{\topsep}{0pt}
-	  \setlength{\parsep}{0pt}
-	  \setlength{\parskip}{0pt}
-	  \setlength{\itemsep}{0pt}}}
-	{\end{list}}
+% \newcommand{\doc}[1]{%
+% \item {\it #1}}
 
-\newenvironment{defs}{}{}
-%\newcommand{\kode}[1]{\scriptsize\verbatim#1\endverbatim}
-\newcommand{\kode}[1]{{\scriptsize\tt #1}}
-\newlength{\parenlength}
-  \settowidth{\parenlength}{\kode{(}} % -factor
-  
-\newcommand{\snl}{\newline\hspace*{\parenlength}}
+% \newenvironment{defs}{\begin{html}<table>\end{html}}{\begin{html} <\table> \end{html}}
 
-\setlength{\shadowsize}{1pt}
+% \newcommand{\defnoindex}[3]{\begin{html} <tr> <td> #1 </td> <td> #2 </td> <td> #3 </td> </tr> \end{html}}
 
-\newcommand{\kind}[1]{\hspace*{0.015in}\hfill\small{$\mathcal #1$}\hfill}
+% \newcommand{\defcontnoindex}[2]{\begin{html} <tr> <td> </td> <td> #1 </td> <td> #2 </td> </tr> \end{html}}
 
-%\newlength{\defnamelength}\setlength{\defnamelength}{1.25in}
-\newlength{\defnamelength}
-  \settowidth{\defnamelength}{\kode{insensitive-}} % -factor
-\newlength{\defkindlength}
-  \settowidth{\defkindlength}{\kind{M}}
-  \addtolength{\defkindlength}{-0.125in} % fudge
-\newlength{\defsiglength}\setlength{\defsiglength}{\columnwidth}
-  \addtolength{\defsiglength}{-1\defnamelength}  
-  \addtolength{\defsiglength}{-1\defkindlength}
-%  \addtolength{\defsiglength}{-0.3in} % fudge
-% \addtolength{\defsiglength}{-0.15in} % fudge
-% \addtolength{\defsiglength}{-0.20in} % fudge
-  \addtolength{\defsiglength}{-0.165in} % fudge
-%\newlength{\defsiglength}\settowidth{\defsiglength}{\kode{(owner getter|<gen> setter|<gen> type init|<fun>)}}
-% \newlength{\defsiglength}\setlength{\defsiglength}{3in}
-\newlength{\defcontnamelength}
-  \setlength{\defcontnamelength}{\defnamelength} 
-  \addtolength{\defcontnamelength}{-0.01in} % fudge
+% \newcommand{\doc}[1]{\begin{html} <tr> <td> </td> <td> #2 </td> <td> </td> </tr> \end{html}}
 
-\typeout{textwidth  = \the\textwidth}
-\typeout{columnwidth  = \the\columnwidth}
-\typeout{namelength = \the\defnamelength}
-\typeout{kindlength = \the\defkindlength}
-\typeout{siglength  = \the\defsiglength}
+\newenvironment{defs}{\begin{tabular}{llr}}{\end{tabular}}
+\newcommand{\defnoindex}[3]{\cindex[#1]{{\tt #1}}\kode{#1} & \kode{#2} & \kode{#3} \\}
+\newcommand{\defcontnoindex}[2]{& \kode{#1} & \kode{#2} \\}
+\newcommand{\doc}[1]{& {\it #1} & \\}
 
-\parindent 0pt
+% \newenvironment{defs}{\begin{tabular}{lll}}{\hline\end{tabular}}
+% \newcommand{\defnoindex}[3]{{\bf \kode{#3}} & \hline\kode{#1} & \kode{#2} \\}
+% \newcommand{\defcontnoindex}[2]{{\bf \kode{#2}} & & \kode{#1} \\}
+% \newcommand{\doc}[1]{& & {\it #1} \\}
 
-\newcommand{\dbox}{\shadowbox} %\fbox
+% \newenvironment{defs}{\begin{tabular}{lllr}}{\hline\end{tabular}}
+% \newcommand{\defnoindex}[3]{\hline\multicolumn{2}{l}{\kode{#1}} & \kode{#2} & \kode{#3} \\}
+% \newcommand{\defcontnoindex}[2]{\multicolumn{2}{l}{} & \kode{#1} & \kode{#2} \\}
+% \newcommand{\doc}[1]{& \multicolumn{2}{l}{\it #1} & \\}
 
-\newcommand{\defnoindex}[3]{
-  \dbox{
-  \parbox[t]{\defnamelength}{\setlength{\baselineskip}{0.5\baselineskip}\kode{#1}}
-  }
-  \dbox{
-  \parbox[t]{\defsiglength}{\kode{#2}}
-  }
-  \hfill\penalty 0
-  \dbox{
-  \makebox[\defkindlength][c]{\kind{#3}}
-  }
-  \newline}
+% \newcommand{\deftagstart}{%
+% \begin{rawhtml}<table border=0 cellspacing=0 cellpadding=0 width=80%>
+% <tr> <td>\end{rawhtml}}
 
-\newcommand{\defcontnoindex}[2]{
-  {\setlength{\fboxrule}{0pt}
-  \framebox{
-  \parbox{\defcontnamelength}{\setlength{\baselineskip}{0.5\baselineskip}\kode{\hfill}}
-  }}
-  \rule{0.1pt}{0mm}
-  \dbox{
-  \parbox[t]{\defsiglength}{\kode{#1}}
-  }
-  \hfill\penalty 0
-  \dbox{
-  \makebox[\defkindlength][c]{\kind{#2}}
-  }
-  \newline}
+\newcommand{\newline}{}
+\newcommand{\snl}{}
+\newcommand{\inl}{}
+\newcommand{\emptybox}{}
 
-\newlength{\defdocindentlength}\setlength{\defdocindentlength}{0.25\defnamelength}
-\newlength{\defdoclength}\setlength{\defdoclength}{0in}
-  \addtolength{\defdoclength}{\defnamelength}
-  \addtolength{\defdoclength}{\defsiglength}
-  \addtolength{\defdoclength}{\defkindlength}
-  \addtolength{\defdoclength}{2\defdocindentlength} % column mode
-%  \addtolength{\defdoclength}{-1\defdocindentlength}
-  \addtolength{\defdoclength}{0.0275in}
+\newenvironment{packeditemize}{\begin{itemize}}{\end{itemize}}
+\newenvironment{ex}{\begin{example}}{\end{example}}
+\newenvironment{exv}{\verbatim}{\endverbatim}
+\newcommand{\kode}[1]{{\tt #1}}
+\xmlattributes{table}{border}
 
-\newcommand{\doc}[1]{\noindent\makebox[\defdocindentlength]{}\fbox{\parbox{\defdoclength}{\small\it #1}}\newline}
-
-% \newcommand{\doc}[1]{\noindent\makebox[\defdocindentlength]{}\parbox{\defdoclength}{\small\it #1}\newline}
-
-%\hbox{\spaceskip=0.5em{{\rm #1}}}}
+}
+%%%%%%%%%%%%%%%% end of HTML def definitions
 
 \newcommand{\define}[3]{\defnoindex{{#1}}{{#2}}{{#3}}} % \mainschindex{{#1}}}}
 % \newcommand{\def}[3]{\defnoindex{{#1}}{{#2}}{{#3}}\mainschindex{{#1}}}
@@ -147,63 +88,3 @@
 \newcommand{\propertyinit}[3]{\define{{#1}}{({#2})}{P}}
 \newcommand{\instance}[2]{\define{{#1}}{{#2}}{I}}
 \newcommand{\command}[2]{\define{{#1}}{{#2}}{K}}
-}
-%%%%%%%%%%%%%%%% end of Latex def definitions
-
-%%%%%%%%%%%%%%%% HTML deftypes
-\htmlonly{
-\newenvironment{defs}{\begin{itemize}}{\end{itemize}}
-
-% The following is for deftypes that have return types.
-%    (foo int int) -> int
-
-\newcommand{\defnoindex}[3]{%
-%\cindex{\code{#1}}%
-\item\noindent\code{({#1}{\var{#2}\/})~-->~{\var{#3}}}}
-
-\newcommand{\def}[3]{%
-\defnoindex{{#1}}{{#2}}{{#3}}%
-\mainschindex{{#1}}}%
-
-\newcommand{\defnoresultnoindex}[2]{%
-%\cindex{\code{#1}}%
-\item\noindent\code{({#1}{\var{#2}\/})}}
-
-\newcommand{\defnoresult}[2]{%
-\defnoresultnoindex{{#1}}{{#2}}%
-\mainschindex{{#1}}}%
-
-\newcommand{\pconstdef}[2]{%
-\item\noindent\deftagstart\code{{#1}}\deftag{{#2}}}
-
-% Variable deftype
-\newcommand{\constdef}[2]{\pconstdef{{#1}}{{#2}}\mainschindex{{#1}}}
-
-\newcommand{\constdefnoindex}[2]{\pconstdef{{#1}}{{#2}}}
-
-\newcommand{\cdef}[1]{%
-\item\noindent\code{{#1}}}
-
-\newcommand{\cgcdef}[1]{%
-\item\noindent\deftagstart\code{{#1}}\deftag{(may GC)}}
-
-\newcommand{\syntaxdefnoresult}[2]{%
-\item\noindent\deftagstart\code{({#1}{#2})}\deftag{syntax}}
-
-\newcommand{\defresult}[1]{%
-\\{}\noindent\code{\ \ \ \ -->~{\it{#1}}}}
-
-\newcommand{\syntaxdef}[3]{%
-\item\noindent\deftagstart\code{({#1}{#2})~-->~{\var{#3}}}\deftag{syntax}}
-
-\newcommand{\deftagstart}{%
-\begin{rawhtml}<table border=0 cellspacing=0 cellpadding=0 width=80%>
-<tr> <td>\end{rawhtml}}
-
-\newcommand{\deftag}[1]{%
-\begin{rawhtml}</td> <td align=right>\end{rawhtml}%
-{#1}%
-\begin{rawhtml}</td></tr></table>\end{rawhtml}}
-
-}
-%%%%%%%%%%%%%%%% end of HTML def definitions

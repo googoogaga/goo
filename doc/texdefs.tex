@@ -1,0 +1,118 @@
+\newcommand{\goo}{$\mathcal{GOO}$}
+\newcommand{\emptybox}{\mbox{\ }}
+\newcommand{\kode}[1]{{\scriptsize\tt #1}}
+
+% \newenvironment{ex}%
+%   {\scriptsize\setlength{\parskip}{0pt}
+%    \verbatim}
+%   {\endverbatim\vspace*{-0.1in}}
+
+\newenvironment{ex}{\small\begin{example}}{\end{example}}
+\newenvironment{exv}{\scriptsize\verbatim}{\endverbatim}
+
+% \newenvironment{exv}%
+%   {\scriptsize
+%    \begin{center}
+%    \begin{Sbox}
+%    \begin{minipage}{3.25in}
+%    \verbatim}
+%   {\endverbatim
+%    \end{minipage}
+%    \end{Sbox}
+%    \end{center}
+%    \shadowbox{\TheSbox}}
+
+\newenvironment{packeditemize}
+	{\begin{list}{$\bullet$}{
+	  \setlength{\topsep}{0pt}
+	  \setlength{\parsep}{0pt}
+	  \setlength{\parskip}{0pt}
+	  \setlength{\itemsep}{0pt}}}
+	{\end{list}}
+
+\newenvironment{defs}{}{}
+%\newcommand{\kode}[1]{\scriptsize\verbatim#1\endverbatim}
+\newlength{\parenlength}
+%  \settowidth{\parenlength}{\kode{(}} % -factor
+\newlength{\twospacelength}
+%  \settowidth{\twospacelength}{\kode{xx}} % -factor
+  
+\newcommand{\snl}{\newline\hspace*{\parenlength}}
+\newcommand{\inl}{\newline\hspace*{\twospacelength}}
+
+\setlength{\shadowsize}{1pt}
+
+\newcommand{\kind}[1]{\hspace*{0.015in}\hfill\small{$\mathcal #1$}\hfill}
+
+%\newlength{\defnamelength}\setlength{\defnamelength}{1.25in}
+\newlength{\defnamelength}
+  \settowidth{\defnamelength}{\kode{insensitive-}} % -factor
+\newlength{\defkindlength}
+  \settowidth{\defkindlength}{\kind{M}}
+  \addtolength{\defkindlength}{-0.125in} % fudge
+\newlength{\defsiglength}\setlength{\defsiglength}{\columnwidth}
+  \addtolength{\defsiglength}{-1\defnamelength}  
+  \addtolength{\defsiglength}{-1\defkindlength}
+%  \addtolength{\defsiglength}{-0.3in} % fudge
+% \addtolength{\defsiglength}{-0.15in} % fudge
+% \addtolength{\defsiglength}{-0.20in} % fudge
+  \addtolength{\defsiglength}{-0.165in} % fudge
+%\newlength{\defsiglength}\settowidth{\defsiglength}{\kode{(owner getter|<gen> setter|<gen> type init|<fun>)}}
+% \newlength{\defsiglength}\setlength{\defsiglength}{3in}
+\newlength{\defcontnamelength}
+  \setlength{\defcontnamelength}{\defnamelength} 
+  \addtolength{\defcontnamelength}{-0.01in} % fudge
+
+\typeout{textwidth  = \the\textwidth}
+\typeout{columnwidth  = \the\columnwidth}
+\typeout{namelength = \the\defnamelength}
+\typeout{kindlength = \the\defkindlength}
+\typeout{siglength  = \the\defsiglength}
+
+\parindent 0pt
+
+\newcommand{\dbox}{\shadowbox} %\fbox
+
+\newcommand{\defnoindex}[3]{
+  \dbox{
+  \parbox[t]{\defnamelength}{\setlength{\baselineskip}{0.5\baselineskip}\kode{#1}}
+  }
+  \dbox{
+  \parbox[t]{\defsiglength}{\kode{#2}}
+  }
+  \hfill\penalty 0
+  \dbox{
+  \makebox[\defkindlength][c]{\kind{#3}}
+  }
+  \newline}
+
+\newcommand{\defcontnoindex}[2]{
+  {\setlength{\fboxrule}{0pt}
+  \framebox{
+  \parbox{\defcontnamelength}{\setlength{\baselineskip}{0.5\baselineskip}\kode{\hfill}}
+  }}
+  \rule{0.1pt}{0mm}
+  \dbox{
+  \parbox[t]{\defsiglength}{\kode{#1}}
+  }
+  \hfill\penalty 0
+  \dbox{
+  \makebox[\defkindlength][c]{\kind{#2}}
+  }
+  \newline}
+
+\newlength{\defdocindentlength}\setlength{\defdocindentlength}{0.25\defnamelength}
+\newlength{\defdoclength}\setlength{\defdoclength}{0in}
+  \addtolength{\defdoclength}{\defnamelength}
+  \addtolength{\defdoclength}{\defsiglength}
+  \addtolength{\defdoclength}{\defkindlength}
+  \addtolength{\defdoclength}{2\defdocindentlength} % column mode
+%  \addtolength{\defdoclength}{-1\defdocindentlength}
+  \addtolength{\defdoclength}{0.0275in}
+
+\newcommand{\doc}[1]{\noindent\makebox[\defdocindentlength]{}\fbox{\parbox{\defdoclength}{\small\it #1}}\newline}
+
+% \newcommand{\doc}[1]{\noindent\makebox[\defdocindentlength]{}\parbox{\defdoclength}{\small\it #1}\newline}
+
+% \hbox{\spaceskip=0.5em{{\rm #1}}}
+ 

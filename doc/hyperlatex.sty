@@ -1,16 +1,14 @@
 %%
-%% LaTeX style to handle hyperlatex files, version 2.3
+%% LaTeX style to handle hyperlatex files, version 2.4
 %%
-%%   $Modified: Fri May  9 13:40:27 1997 by otfried $
-%%
-%% This code has GNU copyleft, 1994-1998 Otfried Cheong
+%% This code has GNU copyleft, 1994-2000 Otfried Cheong
 %%
 \NeedsTeXFormat{LaTeX2e}
 
 \ProvidesPackage{hyperlatex}
-[1998/09/08 v2.3 LaTeX2e package for Hyperlatex mode]
+[2000/03/29 v2.5 LaTeX2e package for Hyperlatex mode]
 
-\typeout{Package: 'hyperlatex' v2.3  Otfried Cheong}
+\typeout{Package: 'hyperlatex' v2.5  Otfried Cheong}
 
 \RequirePackage{verbatim}
 \chardef\other=12
@@ -27,9 +25,6 @@
 \newenvironment{latexonly}{}{}
 \newcommand{\texonly}[1]{#1}
 \newcommand{\T}{}
-
-\lefthyphenmin=2
-\righthyphenmin=3
 
 %%
 %% Treatment of special characters
@@ -78,25 +73,24 @@
 \newcounter{htmldepth}
 \newcommand{\htmltitle}[1]{}
 \newcommand{\htmladdress}[1]{}
-\newcommand{\html}{\Hlx@pass\@html}
+\newcommand{\xml}{\Hlx@pass\@html}
 \def\@html#1{\endgroup}
+\let\html\xml
 
-\newcommand{\htmlsym}[1]{}
-\def\htmlrule{\@ifnextchar [{\@htmlrule}{\@htmlrule[]}}
-\def\@htmlrule{\Hlx@pass\@@htmlrule}
-\def\@@htmlrule[#1]{\endgroup}
+\newcommand{\xmlsym}[1]{}
+\newcommand{\htmlrule}{}
 
-\newcommand{\htmllevel}[1]{}
 \newcommand{\htmlmenu}[1]{}
 \newcommand{\htmlautomenu}[1]{}
 \newcounter{htmlautomenu}
 \newcommand{\htmlprintindex}{}
 \newcommand{\htmlfootnotes}{}
 \newcommand{\htmlmathitalic}[1]{}
+\newcommand{\htmlpanelfield}[2]{}
+\newcommand{\htmlcharset}[1]{}
+\newcommand{\htmlcss}[1]{}
 
-\def\htmlimage{\@ifnextchar [{\@htmlimage}{\@htmlimage[]}}
-\def\@htmlimage{\Hlx@pass\@@htmlimage}
-\def\@@htmlimage[#1]#2{\endgroup}
+\newcommand{\htmlimg}[2]{}
 
 \newcommand{\xname}{\Hlx@pass\Hlx@ignore}
 \def\Hlx@ignore#1{\endgroup}
@@ -107,9 +101,10 @@
 
 \newcommand{\htmlcaption}[1]{}
 
-\def\htmlattributes{\@ifstar{\@htmlattributes}{\@htmlattributes}}
-\def\@htmlattributes{\Hlx@pass\@@htmlattributes}
-\def\@@htmlattributes#1#2{\endgroup}
+\def\xmlattributes{\@ifstar{\@xmlattributes}{\@xmlattributes}}
+\def\@xmlattributes{\Hlx@pass\@@xmlattributes}
+\def\@@xmlattributes#1#2{\endgroup}
+\let\htmlattributes\xmlattributes
 
 %%
 %% GIF environment,
@@ -136,7 +131,8 @@
 \def\endgif{\egroup
   {\global\advance\@gifcount by 1\count0=\@gifcount
     \immediate\write\@makegifcmds{dvips\space -f\space -p\space
-      \the\@gifcount\space -n\space 1\space -E\space -D\space \gif@dpi\space
+      \the\@gifcount\space -n\space 1\space -D\space \gif@dpi\space
+      -T\the\wd\@gifbox,\the\ht\@gifbox\space-O-72bp,-72bp\space
       \jobname.dvi\space>\space\gif@name.ps^^J%
       ps2gif\space -res\space \gif@resolution\space \gif@name.ps^^J%
       mv\space \gif@name.gif\space \Hlx@directory^^J}
@@ -161,17 +157,13 @@
 %%
 %% \begin{example} ... \end{example} obeys spaces and lines
 %%
-%% the indent can be controlled by \exampleindent
-%%
-\newdimen\exampleindent
-\setlength{\exampleindent}{7mm}
 \def\Hlx@example{\do\$\do\&\do\#\do\^\do\_\do\~}
 {\obeyspaces
   \gdef\turnon@spaces{\let =\ \obeyspaces\catcode``=\active\@noligs}}
 {\obeylines%
   \gdef\turnon@lines{\obeylines\def^^M{\par\def^^M{\leavevmode\par}}}}
 
-\def\example{\list{}{\leftmargin\exampleindent
+\def\example{\list{}{\leftmargin\z@
     \itemindent\z@ \rightmargin\z@ \parsep \z@ plus\p@}\item[]\tt
   \turnon@spaces\turnon@lines\let\do\@makeother\Hlx@example}
 \let\endexample=\endlist
@@ -184,12 +176,12 @@
 
 \newenvironment{menu}{\list{$\bullet$}{\itemsep0pt\parsep0pt}}{\endlist}
 \newenvironment{ifhtml}{\comment}{\endcomment}
-\newenvironment{rawhtml}{\comment}{\endcomment}
+\newenvironment{rawxml}{\comment}{\endcomment}
 
-\def\htmlinclude#1{}
+\def\xmlinclude#1{}
 
-\def\Hlx@empty{}
-\def\Hlx@zero{0}
+\newcommand{\Hlx@empty}{}
+\newcommand{\Hlx@zero}{0}
 \newif\if@Hlx
 
 \def\Hlx@setclear#1{\@ifundefined{#1}{\@Hlxfalse}{%
@@ -199,19 +191,19 @@
 
 \def\ifclear#1{\Hlx@setclear{#1}
   \if@Hlx
-  %% arg empty -> skip
+  %% arg true -> skip
   \let\endifset\endcomment\let\Hlx@comment\comment
   \else
-  %% arg set -> ignore begin and end
+  %% arg false -> ignore begin and end
   \let\endifset\relax\let\Hlx@comment\relax
   \fi\Hlx@comment}
 
 \def\ifset#1{\Hlx@setclear{#1}
   \if@Hlx
-  % arg empty -> ignore begin and end
+  % arg true -> ignore begin and end
   \let\endifclear\relax\let\Hlx@comment\relax
   \else
-  % arg set  -> skip environment
+  % arg false -> skip environment
   \let\endifclear\endcomment\let\Hlx@comment\comment
   \fi\Hlx@comment}
 

@@ -5,7 +5,8 @@
 \T\usepackage{myindex}
 \T\usepackage{palatino}
 \T\usepackage{fancybox}
-\W\include{latex-index}
+% \W\usepackage{makeidx}
+% \W\include{latex-index}
 
 \T\addtolength{\topmargin}{-1.2in}
 \T\addtolength{\evensidemargin}{-0.7in}
@@ -18,12 +19,10 @@
 \T\textheight9.6in
 %\T\advance\textwidth by 4em
 
-\makeindex
+% \makeindex
 
 \include{defs}
-
-% \newcommand{\goo}{\textsl{goo}}
-\newcommand{\goo}{$\mathcal{GOO}$}
+\T\include{texdefs}
 
 \typeout{columnwidth  = \the\columnwidth}
 
@@ -34,10 +33,10 @@
 \htmldirectory{manual}
 
 % Set the html base name.
-\htmlname{gooomanual}
+\htmlname{goomanual}
 
 % Add sections to main menu
-\setcounter{htmlautomenu}{2}
+% \setcounter{htmlautomenu}{2}
 
 % White background
 \htmlattributes{BODY}{BGCOLOR="#ffffff"}
@@ -45,7 +44,7 @@
 \htmltitle{\goo\ Manual}
 
 % Suppress navigation panel for first page.
-\htmlpanel{0}
+% \htmlpanel{0}
 
 %%% End preamble
 
@@ -54,12 +53,10 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\title{{\Huge \goo\ Reference Manual v38 } % \\
-% {\large for release \input{version-number}} 
-}
-\author{{\huge Jonathan Bachrach} \\
-        {\Large MIT AI Lab}
-}
+\T\title{{\Huge \goo\ Reference Manual v39 }}
+\T\author{{\huge Jonathan Bachrach} \\ {\Large MIT AI Lab}}
+\W\title{{\huge \goo\ Reference Manual v39 }}
+\W\author{{\Large Jonathan Bachrach} \\ {\Large MIT AI Lab}}
 \date{\today}
 %\date{October 31, 1995}
 
@@ -77,7 +74,7 @@ more dynamic, lisp-syntaxed Dylan~\cite{Shalit:1996} and an object-oriented
 Scheme~\cite{Kelsey:Clinger:Rees:hosc:1998}.
 % and a lispified Cecil~\cite{Chambers95}.
 \goo's main goal is to offer the best of both scripting and
-deliver languages while at the same time 
+delivery languages while at the same time 
 incorporating an extreme back-to-basics philosophy.
 \goo\ is freely available from \kode{www.googoogaga.org} under GPL.
 This manual is preliminary and relies on an understanding
@@ -663,7 +660,8 @@ generics.
 
 Macros provide a facility for extending the base syntax of \goo.  The
 design is based on quasiquote code templates and a simple list pattern
-matching facility.
+matching facility.  Macros are currently unhygienic, and users are
+required to use \kode{gensym} to avoid name collisions.
 
 \begin{defs}
 \form{QUASIQUOTE}{(QUASIQUOTE ,@qq-forms)}
@@ -1900,17 +1898,17 @@ loop, which accepts sexpressions and top-level commands commencing
 with a comma.  The following is a list of available commands:
 
 \begin{defs}
-\command{,quit}{\mbox{\ }}
+\command{,quit}{\emptybox}
   \doc{exits from \goo.}
-\command{C-c}{\mbox{\ }}
+\command{C-c}{\emptybox}
   \doc{invokes a recursive read-eval-print loop.}
-\command{,g2c-eval}{\mbox{\ }}
+\command{,g2c-eval}{\emptybox}
   \doc{to change to dynamic compilation evaluation.}
-\command{,ast-eval}{\mbox{\ }}
+\command{,ast-eval}{\emptybox}
   \doc{to change to ast evaluation.}
 \command{,in}{,name}
   \doc{changes to module \kode{,name}.}
-\syntax{mod:name}{\mbox{\ }}
+\syntax{mod:name}{\emptybox}
   \doc{accesses an unexported binding from another module.}
 % \generic{frame-var}{n|<int> name|<sym>}
 %   \doc{returns \kode{n}{\it th} called function argument named
@@ -1949,19 +1947,19 @@ which provides a superset of the commands available at top-level.
 The following are debugger specific commands:
 
 \begin{defs}
-\command{,up}{\mbox{\ }}
+\command{,up}{\emptybox}
   \doc{goes up one level.}
-\command{,top}{\mbox{\ }}
+\command{,top}{\emptybox}
   \doc{goes to top level.}
-\command{,restarts}{\mbox{\ }}
+\command{,restarts}{\emptybox}
   \doc{lists available restarts}
 \command{,restart}{,n}
   \doc{chooses available restart.}
 \command{,handlers}{,n}
   \doc{shows available handlers.}
-\command{,backtrace}{\mbox{\ }}
+\command{,backtrace}{\emptybox}
   \doc{prints out called functions and their arguments.}
-\command{,bt}{\mbox{\ }}
+\command{,bt}{\emptybox}
   \doc{prints out called functions.}
 \command{,frame}{,n}
   \doc{prints out \kode{n}{\it th} called function and its arguments.}
@@ -2128,7 +2126,7 @@ object-orientation on that list I came up with its current name, \goo,
 and it stuck.  Andrew Sutherland became my MEng student in the winter
 of 2002, wrote a \goo\ SWIG~\cite{Beaz96a} backend, and has provided
 useful feedback on \goo's design.  I also wish to thank Boehm, Demers,
-and Weiser for writing the conservative GC, upon which this initial
+and Weiser for writing the conservative GC upon which this initial
 version of \goo\ is based.  Finally, I would like to thank
 Keith Playford for his continued guidance in language design and
 implementation and for his ever present and rare sense of good taste.
@@ -2150,17 +2148,23 @@ implementation and for his ever present and rare sense of good taste.
 % \end{myindex}
 % }
 
+\W\section*{Index}
+\W\htmlprintindex
+% \T\input{hyperlatex.ind}
+
 \bibliographystyle{plain}
 \bibliography{goo}
 
+\texonly{
 \appendix
+}
 
 \section{Class Precedence List}
 \label{cpl}
 
 This section defines the algorithm for computing a class's linearized
 ancesters from its parents, its parent's parents, etc.  \goo\ uses
-dylan's class linearization rule~\cite{dylan-cpl}.  The following is
+the C3 class linearization rule~\cite{dylan-cpl}.  The following is
 the \goo\ implementation of this algorithm:
 
 \begin{exv}
@@ -2173,23 +2177,18 @@ the \goo\ implementation of this algorithm:
          (add (map class-ancestors parents) parents)))
     (if (all? empty? remaining-lists)
         (rev! partial-cpl)
-        (loc ((free-class? (c)
-                (loc ((class-in-and-free-in? (l|<lst>)
-                        (== (head l) c))
-                      (class-free-in? (l|<lst>)
-                        (or (== (head l) c) (not (mem? (tail l) c)))))
-                  (and (any? class-in-and-free-in? remaining-lists)
-                       (all? class-free-in? remaining-lists)
-                       c)))
-              (free-class-in-parents? (c|<class>)
-                (any? free-class? (class-parents c))))
-          (def next (any? free-class-in-parents? partial-cpl))
+        (loc ((candidate (c) 
+                (loc ((tail? (l|<lst>) (mem? (tail l) c)))
+                  (and (not (any? tail? remaining-lists)) c)))
+              (candidate-at-head (l|<lst>)
+                (and (not (empty? l)) (candidate (head l)))))
+          (def next (any? candidate-at-head remaining-lists))
           (if next
-              (loc ((remove-next (l|<lst>)
+              (loc ((del-next (l|<lst>)
                       (if (== (head l) next) (tail l) l)))
-                (merge-lists 
-                  (pair next partial-cpl)
-                   (map remove-next remaining-lists)))
+                (merge-lists
+                 (pair next partial-cpl) 
+                 (map del-next remaining-lists)))
               (error "inconsistent precedence graph"))))))
 \end{exv}
 
