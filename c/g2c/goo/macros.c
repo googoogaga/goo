@@ -12,525 +12,526 @@ static P sloc (int line) {
 
 /* MODULE ENVIRONMENT: goo/macros */
 
-EXT(Ytup,"goo/boot","tup");
-EXT(YLmetG,"goo/boot","<met>");
-EXT(YLsymG,"goo/boot","<sym>");
-EXT(Yclass_gens_setter,"goo/boot","class-gens-setter");
-EXT(YOelt,"goo/boot","@elt");
-EXT(YLstrG,"goo/boot","<str>");
-EXT(Yno_next_methods_error,"goo/boot","no-next-methods-error");
-DEF(YgooSmacrosYcat,"goo/macros","cat");
-EXT(Yprop_owner,"goo/boot","prop-owner");
-EXT(YPclasses_readyQ,"goo/boot","%classes-ready?");
-EXT(Yorder_specs,"goo/boot","order-specs");
-DEF(YgooSmacrosYmatch_sublist,"goo/macros","match-sublist");
-EXT(YOsubtypeQ,"goo/boot","@subtype?");
-EXT(YLtupG,"goo/boot","<tup>");
-EXT(Yclass_gens,"goo/boot","class-gens");
-EXT(YLfunG,"goo/boot","<fun>");
-EXT(Yclass_id,"goo/boot","class-id");
-EXT(Yclass_prop_len_setter,"goo/boot","class-prop-len-setter");
-EXT(Yproperty_type_error,"goo/boot","property-type-error");
-EXT(Yprop_type,"goo/boot","prop-type");
-EXT(Ygen_cache_classes,"goo/boot","gen-cache-classes");
-EXT(Yupdate_instance_for_changed_class,"goo/boot","update-instance-for-changed-class");
-EXT(YDmin_int,"goo/boot","$min-int");
-EXT(YLflatG,"goo/boot","<flat>");
-EXT(YTmacros_okQT,"goo/boot","*macros-ok?*");
-EXT(Yargument_type_error,"goo/boot","argument-type-error");
-EXT(Yproperty_unbound_error,"goo/boot","property-unbound-error");
-DEF(YgooSmacrosYlast,"goo/macros","last");
-EXT(Yerror,"goo/boot","error");
-EXT(Yopts_tup_storage,"goo/boot","opts-tup-storage");
-EXT(Yclass_prop_len,"goo/boot","class-prop-len");
-EXT(Ysrc_loc_file,"goo/boot","src-loc-file");
-EXT(Ygen_cache_missableQ,"goo/boot","gen-cache-missable?");
-EXT(Ystack_overflow_error,"goo/boot","stack-overflow-error");
-EXT(Yfun_env,"goo/boot","fun-env");
-EXT(YLlstG,"goo/boot","<lst>");
-EXT(YOdel_dups,"goo/boot","@del-dups");
-EXT(YOall2Q,"goo/boot","@all2?");
-DEF(YgooSmacrosYnulQ,"goo/macros","nul?");
-EXT(Ycpl_error,"goo/boot","cpl-error");
-DEF(YgooSmacrosYnapp,"goo/macros","napp");
-EXT(Ysig_naryQ_setter,"goo/boot","sig-nary?-setter");
-EXT(Ysig_unification_vars_setter,"goo/boot","sig-unification-vars-setter");
-EXT(YLseqXG,"goo/boot","<seq!>");
-EXT(Ynul_prop,"goo/boot","nul-prop");
-EXT(Yfun_info_src_loc_setter,"goo/boot","fun-info-src-loc-setter");
-EXT(YLfun_infoG,"goo/boot","<fun-info>");
-EXT(Yunknown_function_error,"goo/boot","unknown-function-error");
-EXT(Yfun_info_inlineableQ_setter,"goo/boot","fun-info-inlineable?-setter");
-EXT(Yproduct_elts,"goo/boot","product-elts");
-EXT(YLseqIG,"goo/boot","<seq.>");
-EXT(Ysig_naryQ,"goo/boot","sig-nary?");
-EXT(Yarity_error,"goo/boot","arity-error");
-EXT(YOtype_equalQ,"goo/boot","@type-equal?");
-DEF(YgooSmacrosY2nd,"goo/macros","2nd");
-EXT(Ysig_unification_vars,"goo/boot","sig-unification-vars");
-EXT(YOdo,"goo/boot","@do");
-DEF(YgooSmacrosYOchecked_next_methods,"goo/macros","@checked-next-methods");
-EXT(Yfile_opening_error,"goo/boot","file-opening-error");
-EXT(Yfun_info_src_loc,"goo/boot","fun-info-src-loc");
-EXT(YLseqG,"goo/boot","<seq>");
-EXT(Yclass_direct_props_setter,"goo/boot","class-direct-props-setter");
-EXT(Yambiguous_method_error,"goo/boot","ambiguous-method-error");
-EXT(Yfun_info_inlineableQ,"goo/boot","fun-info-inlineable?");
-EXT(Yas_error,"goo/boot","as-error");
-EXT(Yarithmetic_error,"goo/boot","arithmetic-error");
-EXT(YLcolXG,"goo/boot","<col!>");
-DEF(YgooSmacrosYvar_name,"goo/macros","var-name");
-DEF(YgooSmacrosY1st,"goo/macros","1st");
-EXT(YOanyQ,"goo/boot","@any?");
-EXT(Yclass_direct_props,"goo/boot","class-direct-props");
-EXT(Yopts_count,"goo/boot","opts-count");
-EXT(Ysym_name,"goo/boot","sym-name");
-EXT(Ysrc_loc_line,"goo/boot","src-loc-line");
-EXT(YLsigG,"goo/boot","<sig>");
-EXT(YTboot_macro_module_namesT,"goo/boot","*boot-macro-module-names*");
 EXT(Yclass_children,"goo/boot","class-children");
-EXT(Yinternal_error,"goo/boot","internal-error");
-EXT(YOmemQ,"goo/boot","@mem?");
-EXT(YLcolIG,"goo/boot","<col.>");
-EXT(Ytype_error,"goo/boot","type-error");
-EXT(Yopts_location,"goo/boot","opts-location");
-EXT(YOallQ,"goo/boot","@all?");
-EXT(YtT,"goo/boot","t*");
-EXT(YLcolG,"goo/boot","<col>");
-EXT(YDmax_int,"goo/boot","$max-int");
-EXT(YOpick,"goo/boot","@pick");
-EXT(Yclass_children_setter,"goo/boot","class-children-setter");
-EXT(Yprop_init,"goo/boot","prop-init");
-EXT(YPrnul,"goo/boot","%rnul");
-EXT(Ymay_isaQ,"goo/boot","may-isa?");
-EXT(Yclass_forward_setter,"goo/boot","class-forward-setter");
-EXT(YDdirect_object_class,"goo/boot","$direct-object-class");
-EXT(Yrange_error,"goo/boot","range-error");
-DEF(YgooSmacrosYrevX,"goo/macros","rev!");
-EXT(YLrepG,"goo/boot","<rep>");
-DEF(YgooSmacrosYmatch_atom,"goo/macros","match-atom");
-EXT(Yproperty_not_found_error,"goo/boot","property-not-found-error");
-EXT(Yunion_elts,"goo/boot","union-elts");
-EXT(YPPmacro,"goo/boot","%%macro");
-EXT(Ysig_specs_setter,"goo/boot","sig-specs-setter");
-EXT(YPfalse,"goo/boot","%false");
-EXT(YLgen_cacheG,"goo/boot","<gen-cache>");
-EXT(YLlocG,"goo/boot","<loc>");
-EXT(Yclass_forward,"goo/boot","class-forward");
-EXT(YOrevX,"goo/boot","@rev!");
-EXT(Yfun_info_setter,"goo/boot","fun-info-setter");
 EXT(YLfloG,"goo/boot","<flo>");
-EXT(Ysig_specs,"goo/boot","sig-specs");
-EXT(YOmap,"goo/boot","@map");
-EXT(Ysyntax_error,"goo/boot","syntax-error");
-EXT(YOlit,"goo/boot","@lit");
-EXT(YLfixnumG,"goo/boot","<fixnum>");
-EXT(YPmet_prop_len,"goo/boot","%met-prop-len");
-EXT(YOnew,"goo/boot","@new");
-EXT(Yfun_info,"goo/boot","fun-info");
-DEF(YgooSmacrosYmap2,"goo/macros","map2");
-EXT(Ykeyboard_interrupt,"goo/boot","keyboard-interrupt");
-EXT(YOOnulQ,"goo/boot","@@nul?");
-EXT(YLintG,"goo/boot","<int>");
-EXT(Ynot,"goo/boot","not");
-EXT(Yfab_sym,"goo/boot","fab-sym");
-EXT(YLpropG,"goo/boot","<prop>");
-EXT(YOtup,"goo/boot","@tup");
-EXT(Ysig_val_setter,"goo/boot","sig-val-setter");
-DEF(YgooSmacrosYmacro_error,"goo/macros","macro-error");
-EXT(Yapp_args,"goo/boot","app-args");
-EXT(YPsnul,"goo/boot","%snul");
-EXT(Yfun_info_names_setter,"goo/boot","fun-info-names-setter");
-EXT(YPprop_unbound_error,"goo/boot","%prop-unbound-error");
-EXT(YOcat2,"goo/boot","@cat2");
-EXT(YLnumG,"goo/boot","<num>");
+DEF(YgooSmacrosYvar_type,"goo/macros","var-type");
+EXT(Yclass_forward,"goo/boot","class-forward");
+EXT(Yfun_info_setter,"goo/boot","fun-info-setter");
 DEF(YgooSmacrosYfab_setter_name,"goo/macros","fab-setter-name");
-DEF(YgooSmacrosYmap,"goo/macros","map");
+EXT(YOOnulQ,"goo/boot","@@nul?");
+EXT(YLbignumG,"goo/boot","<bignum>");
+DEF(YgooSmacrosYOchecked_next_methods,"goo/macros","@checked-next-methods");
+EXT(Ysig_specs_setter,"goo/boot","sig-specs-setter");
+EXT(Ysig_val_setter,"goo/boot","sig-val-setter");
+EXT(YOtup,"goo/boot","@tup");
+EXT(Yassert_error,"goo/boot","assert-error");
+EXT(YLfixnumG,"goo/boot","<fixnum>");
+EXT(Yfun_info_names_setter,"goo/boot","fun-info-names-setter");
+EXT(Yopts_location,"goo/boot","opts-location");
+EXT(Yfun_info,"goo/boot","fun-info");
+EXT(YOcat2,"goo/boot","@cat2");
+EXT(YLpropG,"goo/boot","<prop>");
 EXT(Yfun_info_count_setter,"goo/boot","fun-info-count-setter");
-EXT(Ytype_class,"goo/boot","type-class");
-EXT(YLproductG,"goo/boot","<product>");
+DEF(YgooSmacrosYmacro_error,"goo/macros","macro-error");
+EXT(Ysig_specs,"goo/boot","sig-specs");
+EXT(YPclasses_readyQ,"goo/boot","%classes-ready?");
+EXT(YLintG,"goo/boot","<int>");
 EXT(Ysig_val,"goo/boot","sig-val");
+EXT(Yprop_offset,"goo/boot","prop-offset");
 DEF(YgooSmacrosYmatch_unquote,"goo/macros","match-unquote");
-EXT(Yapp_filename,"goo/boot","app-filename");
+EXT(Ynot,"goo/boot","not");
 EXT(Yfun_info_names,"goo/boot","fun-info-names");
-EXT(Yclass_parents_setter,"goo/boot","class-parents-setter");
-EXT(Ynew,"goo/boot","new");
-EXT(Ytail_setter,"goo/boot","tail-setter");
+EXT(Yapp_args,"goo/boot","app-args");
+DEF(YgooSmacrosYmap,"goo/macros","map");
+EXT(Ymay_isaQ,"goo/boot","may-isa?");
+EXT(YLproductG,"goo/boot","<product>");
 EXT(Yfun_info_count,"goo/boot","fun-info-count");
-EXT(YTrestarts_okQT,"goo/boot","*restarts-ok?*");
-EXT(Yclass_props_setter,"goo/boot","class-props-setter");
-EXT(YLsrc_locG,"goo/boot","<src-loc>");
-EXT(YLunionG,"goo/boot","<union>");
+EXT(YLnumG,"goo/boot","<num>");
+EXT(Ykeyboard_interrupt,"goo/boot","keyboard-interrupt");
+EXT(YPtnul,"goo/boot","%tnul");
+EXT(Yprop_type,"goo/boot","prop-type");
+EXT(Yfab_sym,"goo/boot","fab-sym");
 EXT(YOrev,"goo/boot","@rev");
-EXT(YTearly_classesT,"goo/boot","*early-classes*");
-EXT(Ybox_value_setter,"goo/boot","box-value-setter");
-EXT(YLchrG,"goo/boot","<chr>");
-DEF(YgooSmacrosYdo_case_by,"goo/macros","do-case-by");
-EXT(Yclass_parents,"goo/boot","class-parents");
-EXT(Yfab_pair,"goo/boot","fab-pair");
+EXT(Ylst,"goo/boot","lst");
+EXT(Yapp_filename,"goo/boot","app-filename");
+EXT(Ytype_class,"goo/boot","type-class");
 DEF(YgooSmacrosYgensym,"goo/macros","gensym");
-EXT(Ytail,"goo/boot","tail");
-EXT(Yclass_props,"goo/boot","class-props");
-EXT(Yno_applicable_methods_error,"goo/boot","no-applicable-methods-error");
-EXT(Yfun_cache,"goo/boot","fun-cache");
+EXT(Yfab_pair,"goo/boot","fab-pair");
+EXT(YLunionG,"goo/boot","<union>");
+EXT(Yprops_of,"goo/boot","props-of");
+EXT(YPdispatch,"goo/boot","%dispatch");
+EXT(YLsrc_locG,"goo/boot","<src-loc>");
+EXT(Yclass_parents_setter,"goo/boot","class-parents-setter");
+EXT(Ytail_setter,"goo/boot","tail-setter");
+EXT(Ynarity_error,"goo/boot","narity-error");
+EXT(Yclass_props_setter,"goo/boot","class-props-setter");
 EXT(YOOEE,"goo/boot","@@==");
 EXT(YLsubclassG,"goo/boot","<subclass>");
-EXT(YLmagG,"goo/boot","<mag>");
-DEF(YgooSmacrosYdo,"goo/macros","do");
-EXT(Yprop_offset,"goo/boot","prop-offset");
-EXT(Ynarity_error,"goo/boot","narity-error");
-EXT(Yclass_mets_setter,"goo/boot","class-mets-setter");
-EXT(Ybox_value,"goo/boot","box-value");
-EXT(Yprop_setter,"goo/boot","prop-setter");
-EXT(YLsingletonG,"goo/boot","<singleton>");
-EXT(YLboxG,"goo/boot","<box>");
+EXT(YLchrG,"goo/boot","<chr>");
+EXT(Yno_applicable_methods_error,"goo/boot","no-applicable-methods-error");
+EXT(Ygen_cache_classes,"goo/boot","gen-cache-classes");
+EXT(Ynul_prop,"goo/boot","nul-prop");
+EXT(Ybox_value_setter,"goo/boot","box-value-setter");
+EXT(Yfun_cache,"goo/boot","fun-cache");
+EXT(Yclass_parents,"goo/boot","class-parents");
 EXT(Yfun_sig_setter,"goo/boot","fun-sig-setter");
+DEF(YgooSmacrosYdo,"goo/macros","do");
+EXT(Ytail,"goo/boot","tail");
+EXT(YLmagG,"goo/boot","<mag>");
 EXT(YOtall2Q,"goo/boot","@tall2?");
-DEF(YgooSmacrosYpair,"goo/macros","pair");
-EXT(YPdispatch,"goo/boot","%dispatch");
+EXT(Yclass_props,"goo/boot","class-props");
+EXT(YLsingletonG,"goo/boot","<singleton>");
+EXT(YTboot_macro_module_namesT,"goo/boot","*boot-macro-module-names*");
+EXT(YOnew,"goo/boot","@new");
+EXT(YOanyQ,"goo/boot","@any?");
 EXT(YLopts_tupG,"goo/boot","<opts-tup>");
+EXT(Yfun_sig,"goo/boot","fun-sig");
+EXT(YPPmacro,"goo/boot","%%macro");
+EXT(Yclass_mets_setter,"goo/boot","class-mets-setter");
+EXT(YLboxG,"goo/boot","<box>");
+EXT(Yprop_setter,"goo/boot","prop-setter");
+EXT(Ybox_value,"goo/boot","box-value");
+EXT(YLlogG,"goo/boot","<log>");
+DEF(YgooSmacrosYelt,"goo/macros","elt");
 EXT(Ytype_object,"goo/boot","type-object");
 EXT(Yclass_mets,"goo/boot","class-mets");
-EXT(YLlogG,"goo/boot","<log>");
-EXT(Ynil,"goo/boot","nil");
-EXT(Yprops_of,"goo/boot","props-of");
-EXT(Yfun_sig,"goo/boot","fun-sig");
-DEF(YgooSmacrosYelt,"goo/macros","elt");
-EXT(YTboot_macro_namesT,"goo/boot","*boot-macro-names*");
-EXT(YLanyG,"goo/boot","<any>");
-EXT(Ylst,"goo/boot","lst");
-EXT(YPtnul,"goo/boot","%tnul");
-EXT(Ygen_cache_singletons,"goo/boot","gen-cache-singletons");
-EXT(YLoptsG,"goo/boot","<opts>");
-EXT(Yclass_name,"goo/boot","class-name");
+EXT(Ystack_overflow_error,"goo/boot","stack-overflow-error");
 EXT(YOfold,"goo/boot","@fold");
+EXT(YLoptsG,"goo/boot","<opts>");
+EXT(YLanyG,"goo/boot","<any>");
 EXT(Yunexec,"goo/boot","unexec");
 EXT(YOtanyQ,"goo/boot","@tany?");
+EXT(Ysyntax_error,"goo/boot","syntax-error");
+EXT(Ynew,"goo/boot","new");
 EXT(Ysig_arity_setter,"goo/boot","sig-arity-setter");
-EXT(Yassert_error,"goo/boot","assert-error");
 EXT(Yfun_info_name_setter,"goo/boot","fun-info-name-setter");
+EXT(Ygen_cache_singletons,"goo/boot","gen-cache-singletons");
 DEF(YgooSmacrosYcat_sym,"goo/macros","cat-sym");
 DEF(YgooSmacrosYmatch_nul_list,"goo/macros","match-nul-list");
-EXT(YPsymbols,"goo/boot","%symbols");
 EXT(Yfun_info_src_setter,"goo/boot","fun-info-src-setter");
-EXT(Yprop_getter,"goo/boot","prop-getter");
-EXT(YTboot_macro_expandersT,"goo/boot","*boot-macro-expanders*");
-EXT(YsubtypeQ,"goo/boot","subtype?");
-EXT(YisaQ,"goo/boot","isa?");
-EXT(YPtrue,"goo/boot","%true");
-EXT(YOlst,"goo/boot","@lst");
-DEF(YgooSmacrosYlift_place_subforms,"goo/macros","lift-place-subforms");
+EXT(Yclass_name,"goo/boot","class-name");
 EXT(Ysig_arity,"goo/boot","sig-arity");
-EXT(Yreturn_type_error,"goo/boot","return-type-error");
-DEF(YgooSmacrosYEE,"goo/macros","==");
-EXT(YLgenG,"goo/boot","<gen>");
+EXT(YOlst,"goo/boot","@lst");
 EXT(Yfun_info_name,"goo/boot","fun-info-name");
-EXT(Yclass_row,"goo/boot","class-row");
-DEF(YgooSmacrosYvar_type,"goo/macros","var-type");
-EXT(Yhead_setter,"goo/boot","head-setter");
+EXT(YPtrue,"goo/boot","%true");
 EXT(Yfun_info_src,"goo/boot","fun-info-src");
+EXT(Yreturn_type_error,"goo/boot","return-type-error");
+EXT(YLgenG,"goo/boot","<gen>");
+EXT(Yfun_code,"goo/boot","fun-code");
+EXT(Yprop_getter,"goo/boot","prop-getter");
 EXT(YPwith_monitor,"goo/boot","%with-monitor");
 EXT(YLclassG,"goo/boot","<class>");
-EXT(Yclass_ancestors_setter,"goo/boot","class-ancestors-setter");
-EXT(Yfun_mets_setter,"goo/boot","fun-mets-setter");
-EXT(Yfun_code,"goo/boot","fun-code");
 EXT(YOmay_isaQ,"goo/boot","@may-isa?");
-EXT(YLtypeG,"goo/boot","<type>");
-EXT(Yhead,"goo/boot","head");
-EXT(Ygen_cache_arg_pos,"goo/boot","gen-cache-arg-pos");
+EXT(YTboot_macro_expandersT,"goo/boot","*boot-macro-expanders*");
 EXT(YOopts_as_lst,"goo/boot","@opts-as-lst");
-EXT(Yclass_ancestors,"goo/boot","class-ancestors");
+DEF(YgooSmacrosYcat,"goo/macros","cat");
+EXT(Yclass_row,"goo/boot","class-row");
+EXT(YLtypeG,"goo/boot","<type>");
+DEF(YgooSmacrosYEE,"goo/macros","==");
+EXT(Yhead_setter,"goo/boot","head-setter");
+DEF(YgooSmacrosYnapp,"goo/macros","napp");
+EXT(Yupdate_instance_for_changed_class,"goo/boot","update-instance-for-changed-class");
+EXT(Yclass_ancestors_setter,"goo/boot","class-ancestors-setter");
+EXT(YPsymbols,"goo/boot","%symbols");
+EXT(YLmetG,"goo/boot","<met>");
+EXT(YOelt,"goo/boot","@elt");
+EXT(YLsymG,"goo/boot","<sym>");
 EXT(Yfun_mets,"goo/boot","fun-mets");
+EXT(Ygen_cache_arg_pos,"goo/boot","gen-cache-arg-pos");
+DEF(YgooSmacrosYlast,"goo/macros","last");
+EXT(Yhead,"goo/boot","head");
+DEF(YgooSmacrosYdo_case_by,"goo/macros","do-case-by");
+EXT(YPrnul,"goo/boot","%rnul");
+EXT(Yclass_ancestors,"goo/boot","class-ancestors");
+DEF(YgooSmacrosYmatch_sublist,"goo/macros","match-sublist");
+EXT(Yno_next_methods_error,"goo/boot","no-next-methods-error");
+EXT(YLstrG,"goo/boot","<str>");
+EXT(YOsubtypeQ,"goo/boot","@subtype?");
+EXT(Ynil,"goo/boot","nil");
+EXT(Yargument_type_error,"goo/boot","argument-type-error");
+EXT(Yclass_gens_setter,"goo/boot","class-gens-setter");
+EXT(YLtupG,"goo/boot","<tup>");
+EXT(YPsnul,"goo/boot","%snul");
+EXT(YDmax_int,"goo/boot","$max-int");
+EXT(YisaQ,"goo/boot","isa?");
+EXT(Yunion_elts,"goo/boot","union-elts");
+EXT(Yerror,"goo/boot","error");
+EXT(Yproperty_type_error,"goo/boot","property-type-error");
+EXT(Yprop_owner,"goo/boot","prop-owner");
+EXT(YLflatG,"goo/boot","<flat>");
+EXT(Yclass_gens,"goo/boot","class-gens");
+EXT(Yproperty_unbound_error,"goo/boot","property-unbound-error");
+EXT(Yclass_id,"goo/boot","class-id");
+DEF(YgooSmacrosYlift_place_subforms,"goo/macros","lift-place-subforms");
+EXT(YOdel_dups,"goo/boot","@del-dups");
+EXT(YDmin_int,"goo/boot","$min-int");
+EXT(Yclass_prop_len_setter,"goo/boot","class-prop-len-setter");
+EXT(YOall2Q,"goo/boot","@all2?");
+DEF(YgooSmacrosY2nd,"goo/macros","2nd");
+EXT(Ysig_naryQ_setter,"goo/boot","sig-nary?-setter");
+EXT(YLlstG,"goo/boot","<lst>");
+EXT(Yopts_tup_storage,"goo/boot","opts-tup-storage");
+EXT(Ysig_unification_vars_setter,"goo/boot","sig-unification-vars-setter");
+EXT(Ycpl_error,"goo/boot","cpl-error");
+EXT(Yarity_error,"goo/boot","arity-error");
+EXT(YsubtypeQ,"goo/boot","subtype?");
+EXT(YTmacros_okQT,"goo/boot","*macros-ok?*");
+EXT(Yfun_info_src_loc_setter,"goo/boot","fun-info-src-loc-setter");
+DEF(YgooSmacrosYrevX,"goo/macros","rev!");
+EXT(Ygen_cache_missableQ,"goo/boot","gen-cache-missable?");
+EXT(Yclass_prop_len,"goo/boot","class-prop-len");
+EXT(Yfun_info_inlineableQ_setter,"goo/boot","fun-info-inlineable?-setter");
+EXT(Ysrc_loc_file,"goo/boot","src-loc-file");
+DEF(YgooSmacrosYnulQ,"goo/macros","nul?");
+EXT(Yunknown_function_error,"goo/boot","unknown-function-error");
+EXT(Ysig_naryQ,"goo/boot","sig-nary?");
+EXT(YLfun_infoG,"goo/boot","<fun-info>");
+DEF(YgooSmacrosY1st,"goo/macros","1st");
+EXT(YPfalse,"goo/boot","%false");
+EXT(Ysig_unification_vars,"goo/boot","sig-unification-vars");
+EXT(YOtype_equalQ,"goo/boot","@type-equal?");
+DEF(YgooSmacrosYvar_name,"goo/macros","var-name");
+EXT(YOdo,"goo/boot","@do");
+EXT(YTearly_classesT,"goo/boot","*early-classes*");
+EXT(YLseqIG,"goo/boot","<seq.>");
+EXT(Yfun_info_src_loc,"goo/boot","fun-info-src-loc");
+EXT(Yfun_info_inlineableQ,"goo/boot","fun-info-inlineable?");
+EXT(Yambiguous_method_error,"goo/boot","ambiguous-method-error");
+EXT(Yorder_specs,"goo/boot","order-specs");
+EXT(Yproduct_elts,"goo/boot","product-elts");
+EXT(Ytype_error,"goo/boot","type-error");
+EXT(Yfile_opening_error,"goo/boot","file-opening-error");
+EXT(Yarithmetic_error,"goo/boot","arithmetic-error");
+EXT(YLcolXG,"goo/boot","<col!>");
+EXT(YOmemQ,"goo/boot","@mem?");
+EXT(YOlit,"goo/boot","@lit");
+EXT(Yas_error,"goo/boot","as-error");
+EXT(Yclass_direct_props_setter,"goo/boot","class-direct-props-setter");
+EXT(YLsigG,"goo/boot","<sig>");
+EXT(YOallQ,"goo/boot","@all?");
+EXT(YLcolIG,"goo/boot","<col.>");
+EXT(YtT,"goo/boot","t*");
+EXT(YOpick,"goo/boot","@pick");
+EXT(Yopts_count,"goo/boot","opts-count");
+EXT(Yfun_mets_setter,"goo/boot","fun-mets-setter");
+EXT(Yfun_env,"goo/boot","fun-env");
+EXT(YLseqXG,"goo/boot","<seq!>");
+EXT(YLseqG,"goo/boot","<seq>");
+EXT(Yinternal_error,"goo/boot","internal-error");
+EXT(YLfunG,"goo/boot","<fun>");
+EXT(YLcolG,"goo/boot","<col>");
+EXT(YTrestarts_okQT,"goo/boot","*restarts-ok?*");
+EXT(Yclass_direct_props,"goo/boot","class-direct-props");
+DEF(YgooSmacrosYmatch_atom,"goo/macros","match-atom");
+EXT(Ysym_name,"goo/boot","sym-name");
+EXT(Ysrc_loc_line,"goo/boot","src-loc-line");
+EXT(YTboot_macro_namesT,"goo/boot","*boot-macro-names*");
+EXT(YLrepG,"goo/boot","<rep>");
+EXT(Ytup,"goo/boot","tup");
+EXT(YDdirect_object_class,"goo/boot","$direct-object-class");
+DEF(YgooSmacrosYmap2,"goo/macros","map2");
+EXT(YOrevX,"goo/boot","@rev!");
+EXT(Yclass_children_setter,"goo/boot","class-children-setter");
+EXT(Yrange_error,"goo/boot","range-error");
+EXT(Yprop_init,"goo/boot","prop-init");
+EXT(YPprop_unbound_error,"goo/boot","%prop-unbound-error");
+EXT(Yclass_forward_setter,"goo/boot","class-forward-setter");
+EXT(YLgen_cacheG,"goo/boot","<gen-cache>");
+EXT(YLlocG,"goo/boot","<loc>");
+EXT(Yproperty_not_found_error,"goo/boot","property-not-found-error");
+EXT(YPmet_prop_len,"goo/boot","%met-prop-len");
+EXT(YOmap,"goo/boot","@map");
+DEF(YgooSmacrosYpair,"goo/macros","pair");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_230);
-DEFLIT(lit_232);
-DEFLIT(lit_274);
-DEFLIT(lit_24);
-DEFLIT(lit_83);
-DEFLIT(lit_0);
-DEFLIT(lit_177);
-DEFLIT(lit_96);
-DEFLIT(lit_7);
-DEFLIT(lit_128);
-DEFLIT(lit_45);
-DEFLIT(lit_33);
-DEFLIT(lit_10);
-DEFLIT(lit_63);
-DEFLIT(lit_242);
-DEFLIT(lit_186);
-DEFLIT(lit_67);
-DEFLIT(lit_151);
-DEFLIT(lit_163);
-DEFLIT(lit_231);
-DEFLIT(lit_139);
-DEFLIT(lit_187);
-DEFLIT(lit_282);
-DEFLIT(lit_176);
-DEFLIT(lit_152);
-DEFLIT(lit_222);
-DEFLIT(lit_14);
-DEFLIT(lit_11);
-DEFLIT(lit_133);
-DEFLIT(lit_46);
-DEFLIT(lit_261);
-DEFLIT(lit_258);
-DEFLIT(lit_198);
-DEFLIT(lit_167);
-DEFLIT(lit_9);
-DEFLIT(lit_221);
-DEFLIT(lit_158);
-DEFLIT(lit_22);
-DEFLIT(lit_18);
-DEFLIT(lit_213);
-DEFLIT(lit_28);
-DEFLIT(lit_156);
-DEFLIT(lit_216);
-DEFLIT(lit_150);
-DEFLIT(lit_102);
-DEFLIT(lit_147);
-DEFLIT(lit_105);
-DEFLIT(lit_208);
-DEFLIT(lit_269);
-DEFLIT(lit_61);
-DEFLIT(lit_259);
-DEFLIT(lit_42);
-DEFLIT(lit_115);
-DEFLIT(lit_180);
-DEFLIT(lit_202);
-DEFLIT(lit_77);
-DEFLIT(lit_197);
-DEFLIT(lit_43);
-DEFLIT(lit_161);
-DEFLIT(lit_8);
-DEFLIT(lit_109);
-DEFLIT(lit_268);
-DEFLIT(lit_227);
 DEFLIT(lit_204);
-DEFLIT(lit_137);
+DEFLIT(lit_214);
+DEFLIT(lit_243);
+DEFLIT(lit_63);
 DEFLIT(lit_250);
-DEFLIT(lit_200);
-DEFLIT(lit_244);
-DEFLIT(lit_118);
-DEFLIT(lit_58);
-DEFLIT(lit_271);
-DEFLIT(lit_106);
-DEFLIT(lit_64);
-DEFLIT(lit_196);
-DEFLIT(lit_54);
-DEFLIT(lit_141);
-DEFLIT(lit_92);
-DEFLIT(lit_6);
-DEFLIT(lit_170);
-DEFLIT(lit_199);
-DEFLIT(lit_114);
-DEFLIT(lit_117);
-DEFLIT(lit_123);
-DEFLIT(lit_203);
-DEFLIT(lit_134);
-DEFLIT(lit_25);
-DEFLIT(lit_41);
-DEFLIT(lit_103);
-DEFLIT(lit_15);
-DEFLIT(lit_224);
-DEFLIT(lit_131);
-DEFLIT(lit_245);
-DEFLIT(lit_279);
-DEFLIT(lit_275);
-DEFLIT(lit_5);
-DEFLIT(lit_264);
-DEFLIT(lit_185);
-DEFLIT(lit_116);
-DEFLIT(lit_32);
-DEFLIT(lit_91);
-DEFLIT(lit_173);
-DEFLIT(lit_283);
-DEFLIT(lit_247);
-DEFLIT(lit_220);
-DEFLIT(lit_190);
-DEFLIT(lit_225);
-DEFLIT(lit_112);
-DEFLIT(lit_138);
-DEFLIT(lit_21);
-DEFLIT(lit_80);
-DEFLIT(lit_51);
-DEFLIT(lit_159);
-DEFLIT(lit_162);
-DEFLIT(lit_94);
-DEFLIT(lit_212);
-DEFLIT(lit_239);
-DEFLIT(lit_194);
-DEFLIT(lit_52);
-DEFLIT(lit_34);
-DEFLIT(lit_31);
-DEFLIT(lit_193);
-DEFLIT(lit_62);
-DEFLIT(lit_60);
-DEFLIT(lit_87);
-DEFLIT(lit_93);
-DEFLIT(lit_49);
-DEFLIT(lit_272);
-DEFLIT(lit_201);
-DEFLIT(lit_126);
-DEFLIT(lit_39);
-DEFLIT(lit_205);
-DEFLIT(lit_79);
-DEFLIT(lit_70);
+DEFLIT(lit_8);
+DEFLIT(lit_28);
 DEFLIT(lit_20);
-DEFLIT(lit_82);
-DEFLIT(lit_277);
-DEFLIT(lit_88);
-DEFLIT(lit_267);
-DEFLIT(lit_189);
-DEFLIT(lit_215);
-DEFLIT(lit_53);
-DEFLIT(lit_89);
-DEFLIT(lit_4);
-DEFLIT(lit_59);
-DEFLIT(lit_233);
-DEFLIT(lit_211);
-DEFLIT(lit_3);
-DEFLIT(lit_154);
-DEFLIT(lit_241);
-DEFLIT(lit_192);
-DEFLIT(lit_142);
-DEFLIT(lit_19);
-DEFLIT(lit_78);
-DEFLIT(lit_257);
-DEFLIT(lit_276);
-DEFLIT(lit_175);
-DEFLIT(lit_113);
-DEFLIT(lit_238);
-DEFLIT(lit_145);
-DEFLIT(lit_75);
-DEFLIT(lit_36);
-DEFLIT(lit_182);
-DEFLIT(lit_29);
-DEFLIT(lit_286);
-DEFLIT(lit_278);
-DEFLIT(lit_260);
-DEFLIT(lit_266);
-DEFLIT(lit_66);
-DEFLIT(lit_228);
-DEFLIT(lit_217);
-DEFLIT(lit_226);
-DEFLIT(lit_50);
-DEFLIT(lit_172);
-DEFLIT(lit_27);
-DEFLIT(lit_68);
-DEFLIT(lit_252);
-DEFLIT(lit_40);
-DEFLIT(lit_56);
-DEFLIT(lit_120);
-DEFLIT(lit_191);
-DEFLIT(lit_127);
-DEFLIT(lit_146);
-DEFLIT(lit_129);
-DEFLIT(lit_157);
-DEFLIT(lit_166);
-DEFLIT(lit_160);
-DEFLIT(lit_57);
-DEFLIT(lit_99);
-DEFLIT(lit_253);
-DEFLIT(lit_149);
+DEFLIT(lit_190);
+DEFLIT(lit_138);
+DEFLIT(lit_150);
+DEFLIT(lit_7);
+DEFLIT(lit_143);
+DEFLIT(lit_137);
+DEFLIT(lit_199);
+DEFLIT(lit_106);
 DEFLIT(lit_48);
-DEFLIT(lit_111);
-DEFLIT(lit_100);
-DEFLIT(lit_256);
-DEFLIT(lit_76);
-DEFLIT(lit_71);
-DEFLIT(lit_248);
-DEFLIT(lit_90);
-DEFLIT(lit_236);
-DEFLIT(lit_206);
+DEFLIT(lit_194);
+DEFLIT(lit_108);
+DEFLIT(lit_241);
+DEFLIT(lit_68);
+DEFLIT(lit_126);
+DEFLIT(lit_54);
+DEFLIT(lit_102);
+DEFLIT(lit_283);
+DEFLIT(lit_6);
+DEFLIT(lit_175);
+DEFLIT(lit_92);
+DEFLIT(lit_153);
+DEFLIT(lit_149);
+DEFLIT(lit_229);
 DEFLIT(lit_234);
-DEFLIT(lit_210);
+DEFLIT(lit_285);
+DEFLIT(lit_19);
+DEFLIT(lit_217);
+DEFLIT(lit_38);
+DEFLIT(lit_41);
+DEFLIT(lit_42);
+DEFLIT(lit_222);
+DEFLIT(lit_134);
+DEFLIT(lit_274);
+DEFLIT(lit_118);
+DEFLIT(lit_73);
+DEFLIT(lit_77);
+DEFLIT(lit_47);
+DEFLIT(lit_32);
+DEFLIT(lit_116);
 DEFLIT(lit_107);
-DEFLIT(lit_246);
+DEFLIT(lit_91);
+DEFLIT(lit_179);
+DEFLIT(lit_22);
+DEFLIT(lit_21);
+DEFLIT(lit_119);
+DEFLIT(lit_80);
+DEFLIT(lit_281);
+DEFLIT(lit_1);
+DEFLIT(lit_228);
+DEFLIT(lit_259);
+DEFLIT(lit_215);
+DEFLIT(lit_76);
+DEFLIT(lit_111);
+DEFLIT(lit_31);
+DEFLIT(lit_177);
+DEFLIT(lit_218);
+DEFLIT(lit_109);
+DEFLIT(lit_262);
+DEFLIT(lit_178);
+DEFLIT(lit_189);
+DEFLIT(lit_61);
+DEFLIT(lit_135);
 DEFLIT(lit_240);
-DEFLIT(lit_188);
 DEFLIT(lit_144);
-DEFLIT(lit_169);
+DEFLIT(lit_151);
+DEFLIT(lit_79);
+DEFLIT(lit_139);
+DEFLIT(lit_282);
+DEFLIT(lit_64);
+DEFLIT(lit_191);
+DEFLIT(lit_200);
+DEFLIT(lit_202);
+DEFLIT(lit_165);
+DEFLIT(lit_158);
+DEFLIT(lit_193);
+DEFLIT(lit_136);
+DEFLIT(lit_195);
+DEFLIT(lit_232);
+DEFLIT(lit_120);
+DEFLIT(lit_224);
+DEFLIT(lit_252);
+DEFLIT(lit_278);
+DEFLIT(lit_167);
+DEFLIT(lit_36);
+DEFLIT(lit_142);
+DEFLIT(lit_225);
+DEFLIT(lit_50);
+DEFLIT(lit_212);
+DEFLIT(lit_128);
+DEFLIT(lit_43);
+DEFLIT(lit_264);
+DEFLIT(lit_93);
+DEFLIT(lit_78);
+DEFLIT(lit_220);
+DEFLIT(lit_163);
+DEFLIT(lit_117);
+DEFLIT(lit_82);
+DEFLIT(lit_157);
+DEFLIT(lit_52);
+DEFLIT(lit_231);
+DEFLIT(lit_27);
+DEFLIT(lit_188);
+DEFLIT(lit_201);
+DEFLIT(lit_66);
+DEFLIT(lit_56);
+DEFLIT(lit_279);
+DEFLIT(lit_2);
+DEFLIT(lit_75);
+DEFLIT(lit_207);
+DEFLIT(lit_156);
+DEFLIT(lit_95);
+DEFLIT(lit_53);
+DEFLIT(lit_238);
+DEFLIT(lit_112);
+DEFLIT(lit_148);
+DEFLIT(lit_129);
+DEFLIT(lit_88);
+DEFLIT(lit_101);
+DEFLIT(lit_268);
+DEFLIT(lit_39);
+DEFLIT(lit_230);
+DEFLIT(lit_280);
+DEFLIT(lit_255);
+DEFLIT(lit_11);
+DEFLIT(lit_60);
+DEFLIT(lit_29);
+DEFLIT(lit_84);
+DEFLIT(lit_155);
+DEFLIT(lit_130);
+DEFLIT(lit_100);
+DEFLIT(lit_166);
+DEFLIT(lit_103);
+DEFLIT(lit_182);
+DEFLIT(lit_221);
+DEFLIT(lit_247);
+DEFLIT(lit_236);
+DEFLIT(lit_176);
+DEFLIT(lit_127);
+DEFLIT(lit_227);
+DEFLIT(lit_113);
+DEFLIT(lit_18);
+DEFLIT(lit_284);
+DEFLIT(lit_254);
+DEFLIT(lit_219);
+DEFLIT(lit_197);
+DEFLIT(lit_216);
+DEFLIT(lit_59);
+DEFLIT(lit_161);
+DEFLIT(lit_251);
 DEFLIT(lit_121);
 DEFLIT(lit_98);
-DEFLIT(lit_174);
+DEFLIT(lit_196);
 DEFLIT(lit_69);
-DEFLIT(lit_243);
-DEFLIT(lit_209);
-DEFLIT(lit_132);
-DEFLIT(lit_155);
-DEFLIT(lit_37);
-DEFLIT(lit_38);
-DEFLIT(lit_255);
-DEFLIT(lit_135);
-DEFLIT(lit_184);
-DEFLIT(lit_47);
-DEFLIT(lit_273);
-DEFLIT(lit_285);
-DEFLIT(lit_265);
-DEFLIT(lit_1);
-DEFLIT(lit_168);
-DEFLIT(lit_97);
-DEFLIT(lit_237);
-DEFLIT(lit_281);
-DEFLIT(lit_23);
-DEFLIT(lit_81);
-DEFLIT(lit_183);
-DEFLIT(lit_30);
-DEFLIT(lit_125);
-DEFLIT(lit_104);
-DEFLIT(lit_171);
-DEFLIT(lit_108);
-DEFLIT(lit_86);
-DEFLIT(lit_280);
-DEFLIT(lit_44);
-DEFLIT(lit_181);
-DEFLIT(lit_2);
-DEFLIT(lit_153);
-DEFLIT(lit_262);
-DEFLIT(lit_229);
-DEFLIT(lit_119);
-DEFLIT(lit_110);
-DEFLIT(lit_195);
-DEFLIT(lit_16);
+DEFLIT(lit_239);
+DEFLIT(lit_275);
 DEFLIT(lit_263);
-DEFLIT(lit_101);
-DEFLIT(lit_143);
-DEFLIT(lit_207);
-DEFLIT(lit_140);
-DEFLIT(lit_130);
-DEFLIT(lit_179);
+DEFLIT(lit_46);
+DEFLIT(lit_132);
+DEFLIT(lit_253);
+DEFLIT(lit_174);
+DEFLIT(lit_203);
+DEFLIT(lit_14);
+DEFLIT(lit_213);
+DEFLIT(lit_198);
+DEFLIT(lit_205);
+DEFLIT(lit_237);
+DEFLIT(lit_256);
+DEFLIT(lit_49);
+DEFLIT(lit_277);
+DEFLIT(lit_97);
+DEFLIT(lit_124);
+DEFLIT(lit_265);
+DEFLIT(lit_185);
+DEFLIT(lit_246);
+DEFLIT(lit_123);
+DEFLIT(lit_170);
+DEFLIT(lit_273);
+DEFLIT(lit_115);
+DEFLIT(lit_58);
+DEFLIT(lit_261);
+DEFLIT(lit_183);
+DEFLIT(lit_96);
+DEFLIT(lit_86);
+DEFLIT(lit_223);
+DEFLIT(lit_208);
+DEFLIT(lit_248);
+DEFLIT(lit_83);
+DEFLIT(lit_55);
+DEFLIT(lit_260);
+DEFLIT(lit_16);
+DEFLIT(lit_30);
+DEFLIT(lit_272);
+DEFLIT(lit_184);
+DEFLIT(lit_173);
+DEFLIT(lit_267);
+DEFLIT(lit_145);
+DEFLIT(lit_4);
 DEFLIT(lit_35);
 DEFLIT(lit_26);
+DEFLIT(lit_180);
 DEFLIT(lit_85);
-DEFLIT(lit_284);
-DEFLIT(lit_270);
-DEFLIT(lit_148);
+DEFLIT(lit_169);
+DEFLIT(lit_266);
+DEFLIT(lit_211);
+DEFLIT(lit_140);
+DEFLIT(lit_104);
 DEFLIT(lit_74);
-DEFLIT(lit_124);
-DEFLIT(lit_254);
-DEFLIT(lit_84);
-DEFLIT(lit_136);
-DEFLIT(lit_95);
 DEFLIT(lit_13);
+DEFLIT(lit_114);
+DEFLIT(lit_154);
 DEFLIT(lit_65);
-DEFLIT(lit_72);
-DEFLIT(lit_214);
-DEFLIT(lit_55);
-DEFLIT(lit_73);
-DEFLIT(lit_17);
-DEFLIT(lit_249);
-DEFLIT(lit_223);
-DEFLIT(lit_178);
-DEFLIT(lit_165);
-DEFLIT(lit_164);
-DEFLIT(lit_122);
-DEFLIT(lit_218);
-DEFLIT(lit_219);
-DEFLIT(lit_251);
+DEFLIT(lit_51);
+DEFLIT(lit_24);
+DEFLIT(lit_110);
+DEFLIT(lit_276);
+DEFLIT(lit_40);
+DEFLIT(lit_87);
+DEFLIT(lit_44);
+DEFLIT(lit_210);
+DEFLIT(lit_186);
+DEFLIT(lit_244);
+DEFLIT(lit_25);
+DEFLIT(lit_192);
 DEFLIT(lit_235);
+DEFLIT(lit_34);
+DEFLIT(lit_5);
+DEFLIT(lit_90);
+DEFLIT(lit_37);
+DEFLIT(lit_57);
 DEFLIT(lit_12);
+DEFLIT(lit_257);
+DEFLIT(lit_23);
+DEFLIT(lit_164);
+DEFLIT(lit_99);
+DEFLIT(lit_71);
+DEFLIT(lit_258);
+DEFLIT(lit_245);
+DEFLIT(lit_3);
+DEFLIT(lit_152);
+DEFLIT(lit_249);
+DEFLIT(lit_160);
+DEFLIT(lit_125);
+DEFLIT(lit_0);
+DEFLIT(lit_70);
+DEFLIT(lit_15);
+DEFLIT(lit_172);
+DEFLIT(lit_131);
+DEFLIT(lit_269);
+DEFLIT(lit_72);
+DEFLIT(lit_45);
+DEFLIT(lit_33);
+DEFLIT(lit_62);
+DEFLIT(lit_10);
+DEFLIT(lit_187);
+DEFLIT(lit_89);
+DEFLIT(lit_67);
+DEFLIT(lit_81);
+DEFLIT(lit_271);
+DEFLIT(lit_226);
+DEFLIT(lit_141);
+DEFLIT(lit_171);
+DEFLIT(lit_206);
+DEFLIT(lit_242);
+DEFLIT(lit_9);
+DEFLIT(lit_286);
+DEFLIT(lit_147);
+DEFLIT(lit_122);
+DEFLIT(lit_270);
+DEFLIT(lit_233);
+DEFLIT(lit_133);
+DEFLIT(lit_162);
+DEFLIT(lit_181);
+DEFLIT(lit_209);
+DEFLIT(lit_168);
+DEFLIT(lit_146);
+DEFLIT(lit_105);
+DEFLIT(lit_94);
+DEFLIT(lit_17);
+DEFLIT(lit_159);
 
 /* FUNCTIONS: */
 
@@ -728,8 +729,6 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_2) {
   P return_;
-  P x_1111F2094;
-  P x_1111F2093;
   P x_1111F2092;
   P x_1111F2091;
   P argsF2090;
@@ -737,64 +736,59 @@ LOCCODEDEF(fun_2) {
   P x_1112F2088;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
-  P T32,T33,T34,T35,T36,T37,T38,T39,T40,T41;
+  P T32,T33,T34,T35,T36,T37,T38;
 LINK_STACK();
   ARG(return_, 0);
-  T41 = FUNSHELL(0,fun_x_1112_1,2);
-  x_1112F2088 = T41;
+  T38 = FUNSHELL(0,fun_x_1112_1,2);
+  x_1112F2088 = T38;
   FUNINIT(x_1112F2088, 2,FREEREF(0),return_);
   x_1111F2089 = FREEREF(0);
   argsF2090 = YPfalse;
   T1 = CALL2(1,VARREF(YisaQ),x_1111F2089,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1111F2089,LITREF(lit_6),x_1112F2088);
-    x_1111F2091 = T6;
+    T3 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1111F2089,LITREF(lit_6),x_1112F2088);
+    x_1111F2091 = T3;
     argsF2090 = x_1111F2091;
     x_1111F2092 = Ynil;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1111F2092,x_1112F2088);
-    x_1111F2093 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1111F2093,x_1112F2088);
-    T5 = CALL1(1,VARREF(Ytail),x_1111F2092);
-    x_1111F2094 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1111F2094,x_1112F2088);
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1111F2092,x_1112F2088);
   } else {
-    T7 = CALL2(1,x_1112F2088,LITREF(lit_7),x_1111F2089);
+    T4 = CALL2(1,x_1112F2088,LITREF(lit_7),x_1111F2089);
   }
-  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
-  T17 = CALL1(1,VARREF(Ylst),LITREF(lit_0));
-  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_10));
+  T6 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T11 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
+  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_0));
+  T17 = CALL1(1,VARREF(Ylst),LITREF(lit_10));
+  T16 = CALL2(1,VARREF(YgooSmacrosYcat),T17,LITREF(lit_11));
+  T15 = CALL1(1,VARREF(Ylst),T16);
+  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_12));
   T19 = CALL2(1,VARREF(YgooSmacrosYcat),T20,LITREF(lit_11));
   T18 = CALL1(1,VARREF(Ylst),T19);
-  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_12));
-  T22 = CALL2(1,VARREF(YgooSmacrosYcat),T23,LITREF(lit_11));
-  T21 = CALL1(1,VARREF(Ylst),T22);
-  T24 = argsF2090;
-  T16 = CALL5(1,VARREF(YgooSmacrosYcat),T17,T18,T21,T24,LITREF(lit_11));
-  T15 = CALL1(1,VARREF(Ylst),T16);
-  T13 = CALL3(1,VARREF(YgooSmacrosYcat),T14,T15,LITREF(lit_11));
+  T21 = argsF2090;
+  T13 = CALL5(1,VARREF(YgooSmacrosYcat),T14,T15,T18,T21,LITREF(lit_11));
   T12 = CALL1(1,VARREF(Ylst),T13);
-  T11 = CALL2(1,VARREF(YgooSmacrosYcat),T12,LITREF(lit_11));
-  T10 = CALL1(1,VARREF(Ylst),T11);
-  T27 = CALL1(1,VARREF(Ylst),LITREF(lit_13));
-  T30 = CALL1(1,VARREF(Ylst),LITREF(lit_14));
-  T31 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
-  T29 = CALL3(1,VARREF(YgooSmacrosYcat),T30,T31,LITREF(lit_11));
-  T28 = CALL1(1,VARREF(Ylst),T29);
-  T34 = CALL1(1,VARREF(Ylst),LITREF(lit_15));
-  T35 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
-  T33 = CALL3(1,VARREF(YgooSmacrosYcat),T34,T35,LITREF(lit_11));
-  T32 = CALL1(1,VARREF(Ylst),T33);
-  T36 = argsF2090;
-  T39 = CALL1(1,VARREF(Ylst),LITREF(lit_16));
-  T40 = CALL1(1,VARREF(Ylst),Ynil);
-  T38 = CALL3(1,VARREF(YgooSmacrosYcat),T39,T40,Ynil);
-  T37 = CALL1(1,VARREF(Ylst),T38);
-  T26 = CALLN(1,VARREF(YgooSmacrosYcat),6,T27,T28,T32,T36,T37,LITREF(lit_11));
+  T10 = CALL3(1,VARREF(YgooSmacrosYcat),T11,T12,LITREF(lit_11));
+  T9 = CALL1(1,VARREF(Ylst),T10);
+  T8 = CALL2(1,VARREF(YgooSmacrosYcat),T9,LITREF(lit_11));
+  T7 = CALL1(1,VARREF(Ylst),T8);
+  T24 = CALL1(1,VARREF(Ylst),LITREF(lit_13));
+  T27 = CALL1(1,VARREF(Ylst),LITREF(lit_14));
+  T28 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
+  T26 = CALL3(1,VARREF(YgooSmacrosYcat),T27,T28,LITREF(lit_11));
   T25 = CALL1(1,VARREF(Ylst),T26);
-  T8 = CALL4(1,VARREF(YgooSmacrosYcat),T9,T10,T25,LITREF(lit_11));
+  T31 = CALL1(1,VARREF(Ylst),LITREF(lit_15));
+  T32 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
+  T30 = CALL3(1,VARREF(YgooSmacrosYcat),T31,T32,LITREF(lit_11));
+  T29 = CALL1(1,VARREF(Ylst),T30);
+  T33 = argsF2090;
+  T36 = CALL1(1,VARREF(Ylst),LITREF(lit_16));
+  T37 = CALL1(1,VARREF(Ylst),Ynil);
+  T35 = CALL3(1,VARREF(YgooSmacrosYcat),T36,T37,Ynil);
+  T34 = CALL1(1,VARREF(Ylst),T35);
+  T23 = CALLN(1,VARREF(YgooSmacrosYcat),6,T24,T25,T29,T33,T34,LITREF(lit_11));
+  T22 = CALL1(1,VARREF(Ylst),T23);
+  T5 = CALL4(1,VARREF(YgooSmacrosYcat),T6,T7,T22,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T8);
+  QRET(T5);
 }
 
 LOCCODEDEF(fun_3) {
@@ -822,69 +816,62 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_5) {
   P return_;
-  P x_1115F2101;
-  P x_1115F2100;
-  P x_1115F2099;
-  P x_1115F2098;
-  P argsF2097;
+  P x_1115F2097;
   P x_1115F2096;
-  P x_1116F2095;
+  P argsF2095;
+  P x_1115F2094;
+  P x_1116F2093;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
-  P T32,T33,T34,T35,T36,T37;
+  P T32,T33,T34;
 LINK_STACK();
   ARG(return_, 0);
-  T37 = FUNSHELL(0,fun_x_1116_4,2);
-  x_1116F2095 = T37;
-  FUNINIT(x_1116F2095, 2,FREEREF(0),return_);
-  x_1115F2096 = FREEREF(0);
-  argsF2097 = YPfalse;
-  T1 = CALL2(1,VARREF(YisaQ),x_1115F2096,VARREF(YLlstG));
+  T34 = FUNSHELL(0,fun_x_1116_4,2);
+  x_1116F2093 = T34;
+  FUNINIT(x_1116F2093, 2,FREEREF(0),return_);
+  x_1115F2094 = FREEREF(0);
+  argsF2095 = YPfalse;
+  T1 = CALL2(1,VARREF(YisaQ),x_1115F2094,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1115F2096,LITREF(lit_21),x_1116F2095);
-    x_1115F2098 = T6;
-    argsF2097 = x_1115F2098;
-    x_1115F2099 = Ynil;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1115F2099,x_1116F2095);
-    x_1115F2100 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1115F2100,x_1116F2095);
-    T5 = CALL1(1,VARREF(Ytail),x_1115F2099);
-    x_1115F2101 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1115F2101,x_1116F2095);
+    T3 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1115F2094,LITREF(lit_21),x_1116F2093);
+    x_1115F2096 = T3;
+    argsF2095 = x_1115F2096;
+    x_1115F2097 = Ynil;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1115F2097,x_1116F2093);
   } else {
-    T7 = CALL2(1,x_1116F2095,LITREF(lit_7),x_1115F2096);
+    T4 = CALL2(1,x_1116F2093,LITREF(lit_7),x_1115F2094);
   }
-  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
-  T17 = CALL1(1,VARREF(Ylst),LITREF(lit_0));
-  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_10));
+  T6 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T11 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
+  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_0));
+  T17 = CALL1(1,VARREF(Ylst),LITREF(lit_10));
+  T16 = CALL2(1,VARREF(YgooSmacrosYcat),T17,LITREF(lit_11));
+  T15 = CALL1(1,VARREF(Ylst),T16);
+  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_12));
   T19 = CALL2(1,VARREF(YgooSmacrosYcat),T20,LITREF(lit_11));
   T18 = CALL1(1,VARREF(Ylst),T19);
-  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_12));
-  T22 = CALL2(1,VARREF(YgooSmacrosYcat),T23,LITREF(lit_11));
-  T21 = CALL1(1,VARREF(Ylst),T22);
-  T24 = argsF2097;
-  T16 = CALL5(1,VARREF(YgooSmacrosYcat),T17,T18,T21,T24,LITREF(lit_11));
-  T15 = CALL1(1,VARREF(Ylst),T16);
-  T13 = CALL3(1,VARREF(YgooSmacrosYcat),T14,T15,LITREF(lit_11));
+  T21 = argsF2095;
+  T13 = CALL5(1,VARREF(YgooSmacrosYcat),T14,T15,T18,T21,LITREF(lit_11));
   T12 = CALL1(1,VARREF(Ylst),T13);
-  T11 = CALL2(1,VARREF(YgooSmacrosYcat),T12,LITREF(lit_11));
-  T10 = CALL1(1,VARREF(Ylst),T11);
-  T27 = CALL1(1,VARREF(Ylst),LITREF(lit_13));
-  T30 = CALL1(1,VARREF(Ylst),LITREF(lit_14));
-  T31 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
-  T29 = CALL3(1,VARREF(YgooSmacrosYcat),T30,T31,LITREF(lit_11));
-  T28 = CALL1(1,VARREF(Ylst),T29);
-  T34 = CALL1(1,VARREF(Ylst),LITREF(lit_15));
-  T35 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
-  T33 = CALL3(1,VARREF(YgooSmacrosYcat),T34,T35,LITREF(lit_11));
-  T32 = CALL1(1,VARREF(Ylst),T33);
-  T36 = argsF2097;
-  T26 = CALL5(1,VARREF(YgooSmacrosYcat),T27,T28,T32,T36,LITREF(lit_11));
+  T10 = CALL3(1,VARREF(YgooSmacrosYcat),T11,T12,LITREF(lit_11));
+  T9 = CALL1(1,VARREF(Ylst),T10);
+  T8 = CALL2(1,VARREF(YgooSmacrosYcat),T9,LITREF(lit_11));
+  T7 = CALL1(1,VARREF(Ylst),T8);
+  T24 = CALL1(1,VARREF(Ylst),LITREF(lit_13));
+  T27 = CALL1(1,VARREF(Ylst),LITREF(lit_14));
+  T28 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
+  T26 = CALL3(1,VARREF(YgooSmacrosYcat),T27,T28,LITREF(lit_11));
   T25 = CALL1(1,VARREF(Ylst),T26);
-  T8 = CALL4(1,VARREF(YgooSmacrosYcat),T9,T10,T25,LITREF(lit_11));
+  T31 = CALL1(1,VARREF(Ylst),LITREF(lit_15));
+  T32 = CALL1(1,VARREF(Ylst),LITREF(lit_9));
+  T30 = CALL3(1,VARREF(YgooSmacrosYcat),T31,T32,LITREF(lit_11));
+  T29 = CALL1(1,VARREF(Ylst),T30);
+  T33 = argsF2095;
+  T23 = CALL5(1,VARREF(YgooSmacrosYcat),T24,T25,T29,T33,LITREF(lit_11));
+  T22 = CALL1(1,VARREF(Ylst),T23);
+  T5 = CALL4(1,VARREF(YgooSmacrosYcat),T6,T7,T22,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T8);
+  QRET(T5);
 }
 
 LOCCODEDEF(fun_6) {
@@ -912,52 +899,44 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_8) {
   P return_;
-  P x_1119F2110;
-  P x_1119F2109;
-  P x_1119F2108;
-  P x_1119F2107;
-  P x_1119F2106;
-  P argsF2105;
-  P fF2104;
+  P x_1119F2104;
   P x_1119F2103;
-  P x_1120F2102;
-  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17;
+  P x_1119F2102;
+  P argsF2101;
+  P fF2100;
+  P x_1119F2099;
+  P x_1120F2098;
+  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14;
 LINK_STACK();
   ARG(return_, 0);
-  T17 = FUNSHELL(0,fun_x_1120_7,2);
-  x_1120F2102 = T17;
-  FUNINIT(x_1120F2102, 2,FREEREF(0),return_);
-  x_1119F2103 = FREEREF(0);
-  fF2104 = YPfalse;
-  argsF2105 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1119F2103,VARREF(YLlstG));
+  T14 = FUNSHELL(0,fun_x_1120_7,2);
+  x_1120F2098 = T14;
+  FUNINIT(x_1120F2098, 2,FREEREF(0),return_);
+  x_1119F2099 = FREEREF(0);
+  fF2100 = YPfalse;
+  argsF2101 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1119F2099,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1119F2103,LITREF(lit_26),x_1120F2102);
-    x_1119F2106 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1119F2106,x_1120F2102);
-    fF2104 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1119F2106);
-    x_1119F2107 = T8;
-    argsF2105 = x_1119F2107;
-    x_1119F2108 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1119F2108,x_1120F2102);
-    x_1119F2109 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1119F2109,x_1120F2102);
-    T6 = CALL1(1,VARREF(Ytail),x_1119F2108);
-    x_1119F2110 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1119F2110,x_1120F2102);
+    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1119F2099,LITREF(lit_26),x_1120F2098);
+    x_1119F2102 = T6;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1119F2102,x_1120F2098);
+    fF2100 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1119F2102);
+    x_1119F2103 = T5;
+    argsF2101 = x_1119F2103;
+    x_1119F2104 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1119F2104,x_1120F2098);
   } else {
-    T10 = CALL2(1,x_1120F2102,LITREF(lit_7),x_1119F2103);
+    T7 = CALL2(1,x_1120F2098,LITREF(lit_7),x_1119F2099);
   }
-  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_13));
-  T14 = fF2104;
-  T13 = CALL1(1,VARREF(Ylst),T14);
-  T15 = CALL1(1,VARREF(Ylst),YPfalse);
-  T16 = argsF2105;
-  T11 = CALL5(1,VARREF(YgooSmacrosYcat),T12,T13,T15,T16,LITREF(lit_11));
+  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_13));
+  T11 = fF2100;
+  T10 = CALL1(1,VARREF(Ylst),T11);
+  T12 = CALL1(1,VARREF(Ylst),YPfalse);
+  T13 = argsF2101;
+  T8 = CALL5(1,VARREF(YgooSmacrosYcat),T9,T10,T12,T13,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T11);
+  QRET(T8);
 }
 
 LOCCODEDEF(fun_9) {
@@ -985,97 +964,90 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_11) {
   P return_;
-  P setsF2124;
-  P valF2123;
-  P initsF2122;
-  P setsF2121;
-  P varF2120;
-  P x_1123F2119;
-  P x_1123F2118;
-  P x_1123F2117;
-  P x_1123F2116;
-  P x_1123F2115;
-  P prop_initsF2114;
-  P xF2113;
-  P x_1123F2112;
-  P x_1124F2111;
+  P setsF2116;
+  P valF2115;
+  P initsF2114;
+  P setsF2113;
+  P varF2112;
+  P x_1123F2111;
+  P x_1123F2110;
+  P x_1123F2109;
+  P prop_initsF2108;
+  P xF2107;
+  P x_1123F2106;
+  P x_1124F2105;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
-  P T32,T33,T34,T35,T36,T37,T38,T39,T40;
+  P T32,T33,T34,T35,T36,T37;
 LINK_STACK();
   ARG(return_, 0);
-  T40 = FUNSHELL(0,fun_x_1124_10,2);
-  x_1124F2111 = T40;
-  FUNINIT(x_1124F2111, 2,FREEREF(0),return_);
-  x_1123F2112 = FREEREF(0);
-  xF2113 = YPfalse;
-  prop_initsF2114 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1123F2112,VARREF(YLlstG));
+  T37 = FUNSHELL(0,fun_x_1124_10,2);
+  x_1124F2105 = T37;
+  FUNINIT(x_1124F2105, 2,FREEREF(0),return_);
+  x_1123F2106 = FREEREF(0);
+  xF2107 = YPfalse;
+  prop_initsF2108 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1123F2106,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1123F2112,LITREF(lit_31),x_1124F2111);
-    x_1123F2115 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1123F2115,x_1124F2111);
-    xF2113 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1123F2115);
-    x_1123F2116 = T8;
-    prop_initsF2114 = x_1123F2116;
-    x_1123F2117 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1123F2117,x_1124F2111);
-    x_1123F2118 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1123F2118,x_1124F2111);
-    T6 = CALL1(1,VARREF(Ytail),x_1123F2117);
-    x_1123F2119 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1123F2119,x_1124F2111);
+    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1123F2106,LITREF(lit_31),x_1124F2105);
+    x_1123F2109 = T6;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1123F2109,x_1124F2105);
+    xF2107 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1123F2109);
+    x_1123F2110 = T5;
+    prop_initsF2108 = x_1123F2110;
+    x_1123F2111 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1123F2111,x_1124F2105);
   } else {
-    T10 = CALL2(1,x_1124F2111,LITREF(lit_7),x_1123F2112);
+    T7 = CALL2(1,x_1124F2105,LITREF(lit_7),x_1123F2106);
   }
-  T39 = CALL0(1,VARREF(YgooSmacrosYgensym));
-  varF2120 = T39;
-  setsF2121 = Ynil;
-  T38 = prop_initsF2114;
-  initsF2122 = T38;
+  T36 = CALL0(1,VARREF(YgooSmacrosYgensym));
+  varF2112 = T36;
+  setsF2113 = Ynil;
+  T35 = prop_initsF2108;
+  initsF2114 = T35;
   LOOP_49: {
     P a49_0,a49_1;
-    T22 = CALL1(1,VARREF(YgooSmacrosYnulQ),initsF2122);
-    if (T22 != YPfalse) {
-      T23 = CALL1(1,VARREF(YgooSmacrosYrevX),setsF2121);
-      T21 = T23;
+    T19 = CALL1(1,VARREF(YgooSmacrosYnulQ),initsF2114);
+    if (T19 != YPfalse) {
+      T20 = CALL1(1,VARREF(YgooSmacrosYrevX),setsF2113);
+      T18 = T20;
     } else {
-      T37 = CALL1(1,VARREF(Ytail),initsF2122);
-      T36 = CALL1(1,VARREF(Yhead),T37);
-      valF2123 = T36;
-      T27 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-      T31 = CALL1(1,VARREF(Yhead),initsF2122);
-      T30 = CALL1(1,VARREF(Ylst),T31);
-      T32 = CALL1(1,VARREF(Ylst),varF2120);
-      T29 = CALL3(1,VARREF(YgooSmacrosYcat),T30,T32,LITREF(lit_11));
-      T28 = CALL1(1,VARREF(Ylst),T29);
-      T33 = CALL1(1,VARREF(Ylst),valF2123);
-      T26 = CALL4(1,VARREF(YgooSmacrosYcat),T27,T28,T33,LITREF(lit_11));
-      T25 = CALL2(1,VARREF(YgooSmacrosYpair),T26,setsF2121);
-      T35 = CALL1(1,VARREF(Ytail),initsF2122);
-      T34 = CALL1(1,VARREF(Ytail),T35);
-      a49_0 = T25;
-      a49_1 = T34;
-      setsF2121 = a49_0;
-      initsF2122 = a49_1;
+      T34 = CALL1(1,VARREF(Ytail),initsF2114);
+      T33 = CALL1(1,VARREF(Yhead),T34);
+      valF2115 = T33;
+      T24 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
+      T28 = CALL1(1,VARREF(Yhead),initsF2114);
+      T27 = CALL1(1,VARREF(Ylst),T28);
+      T29 = CALL1(1,VARREF(Ylst),varF2112);
+      T26 = CALL3(1,VARREF(YgooSmacrosYcat),T27,T29,LITREF(lit_11));
+      T25 = CALL1(1,VARREF(Ylst),T26);
+      T30 = CALL1(1,VARREF(Ylst),valF2115);
+      T23 = CALL4(1,VARREF(YgooSmacrosYcat),T24,T25,T30,LITREF(lit_11));
+      T22 = CALL2(1,VARREF(YgooSmacrosYpair),T23,setsF2113);
+      T32 = CALL1(1,VARREF(Ytail),initsF2114);
+      T31 = CALL1(1,VARREF(Ytail),T32);
+      a49_0 = T22;
+      a49_1 = T31;
+      setsF2113 = a49_0;
+      initsF2114 = a49_1;
       goto LOOP_49;
-      T21 = T24;
+      T18 = T21;
     }
   }
-  setsF2124 = T21;
-  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T17 = CALL1(1,VARREF(Ylst),varF2120);
-  T19 = xF2113;
-  T18 = CALL1(1,VARREF(Ylst),T19);
-  T16 = CALL3(1,VARREF(YgooSmacrosYcat),T17,T18,LITREF(lit_11));
+  setsF2116 = T18;
+  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T14 = CALL1(1,VARREF(Ylst),varF2112);
+  T16 = xF2107;
   T15 = CALL1(1,VARREF(Ylst),T16);
-  T14 = CALL2(1,VARREF(YgooSmacrosYcat),T15,LITREF(lit_11));
-  T13 = CALL1(1,VARREF(Ylst),T14);
-  T20 = CALL1(1,VARREF(Ylst),varF2120);
-  T11 = CALL5(1,VARREF(YgooSmacrosYcat),T12,T13,setsF2124,T20,LITREF(lit_11));
+  T13 = CALL3(1,VARREF(YgooSmacrosYcat),T14,T15,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),T13);
+  T11 = CALL2(1,VARREF(YgooSmacrosYcat),T12,LITREF(lit_11));
+  T10 = CALL1(1,VARREF(Ylst),T11);
+  T17 = CALL1(1,VARREF(Ylst),varF2112);
+  T8 = CALL5(1,VARREF(YgooSmacrosYcat),T9,T10,setsF2116,T17,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T11);
+  QRET(T8);
 }
 
 LOCCODEDEF(fun_12) {
@@ -1091,11 +1063,11 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_munch_13) {
   P subforms_;
-  P gF2129;
-  P subformF2128;
-  P g_argsF2127;
-  P g_declsF2126;
-  P tup3F2125;
+  P gF2121;
+  P subformF2120;
+  P g_argsF2119;
+  P g_declsF2118;
+  P tup3F2117;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18;
 LINK_STACK();
@@ -1107,27 +1079,27 @@ LINK_STACK();
   } else {
     T18 = CALL1(1,VARREF(Ytail),subforms_);
     T17 = CALL1(1,FREEREF(0),T18);
-    tup3F2125 = T17;
-    T16 = CALL2(1,VARREF(YgooSmacrosYelt),tup3F2125,YPint((P)0));
-    g_declsF2126 = T16;
-    T15 = CALL2(1,VARREF(YgooSmacrosYelt),tup3F2125,YPint((P)1));
-    g_argsF2127 = T15;
+    tup3F2117 = T17;
+    T16 = CALL2(1,VARREF(YgooSmacrosYelt),tup3F2117,YPint((P)0));
+    g_declsF2118 = T16;
+    T15 = CALL2(1,VARREF(YgooSmacrosYelt),tup3F2117,YPint((P)1));
+    g_argsF2119 = T15;
     T14 = CALL1(1,VARREF(Yhead),subforms_);
-    subformF2128 = T14;
-    T4 = CALL2(1,VARREF(YisaQ),subformF2128,VARREF(YLlstG));
+    subformF2120 = T14;
+    T4 = CALL2(1,VARREF(YisaQ),subformF2120,VARREF(YLlstG));
     if (T4 != YPfalse) {
       T11 = CALL0(1,VARREF(YgooSmacrosYgensym));
-      gF2129 = T11;
-      T8 = CALL1(1,VARREF(Ylst),gF2129);
-      T9 = CALL1(1,VARREF(Ylst),subformF2128);
+      gF2121 = T11;
+      T8 = CALL1(1,VARREF(Ylst),gF2121);
+      T9 = CALL1(1,VARREF(Ylst),subformF2120);
       T7 = CALL3(1,VARREF(YgooSmacrosYcat),T8,T9,LITREF(lit_11));
-      T6 = CALL2(1,VARREF(YgooSmacrosYpair),T7,g_declsF2126);
-      T10 = CALL2(1,VARREF(YgooSmacrosYpair),gF2129,g_argsF2127);
+      T6 = CALL2(1,VARREF(YgooSmacrosYpair),T7,g_declsF2118);
+      T10 = CALL2(1,VARREF(YgooSmacrosYpair),gF2121,g_argsF2119);
       T5 = CALL2(1,VARREF(Ytup),T6,T10);
       T3 = T5;
     } else {
-      T13 = CALL2(1,VARREF(YgooSmacrosYpair),subformF2128,g_argsF2127);
-      T12 = CALL2(1,VARREF(Ytup),g_declsF2126,T13);
+      T13 = CALL2(1,VARREF(YgooSmacrosYpair),subformF2120,g_argsF2119);
+      T12 = CALL2(1,VARREF(Ytup),g_declsF2118,T13);
       T3 = T12;
     }
     T0 = T3;
@@ -1138,32 +1110,32 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSmacrosYlift_place_subforms) {
   P place_;
-  P g_argsF2133;
-  P g_declsF2132;
-  P tup4F2131;
-  P munchF2130;
+  P g_argsF2125;
+  P g_declsF2124;
+  P tup4F2123;
+  P munchF2122;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
 LINK_STACK();
   ARG(place_, 0);
   T11 = FUNSHELL(1,fun_munch_13,1);
-  munchF2130 = T11;
-  FUNINIT(munchF2130, 1,munchF2130);
+  munchF2122 = T11;
+  FUNINIT(munchF2122, 1,munchF2122);
   T1 = CALL2(1,VARREF(YisaQ),place_,VARREF(YLsymG));
   if (T1 != YPfalse) {
     T2 = CALL2(1,VARREF(Ytup),Ynil,place_);
     T0 = T2;
   } else {
     T10 = CALL1(1,VARREF(Ytail),place_);
-    T9 = CALL1(1,munchF2130,T10);
-    tup4F2131 = T9;
-    T8 = CALL2(1,VARREF(YgooSmacrosYelt),tup4F2131,YPint((P)0));
-    g_declsF2132 = T8;
-    T7 = CALL2(1,VARREF(YgooSmacrosYelt),tup4F2131,YPint((P)1));
-    g_argsF2133 = T7;
+    T9 = CALL1(1,munchF2122,T10);
+    tup4F2123 = T9;
+    T8 = CALL2(1,VARREF(YgooSmacrosYelt),tup4F2123,YPint((P)0));
+    g_declsF2124 = T8;
+    T7 = CALL2(1,VARREF(YgooSmacrosYelt),tup4F2123,YPint((P)1));
+    g_argsF2125 = T7;
     T6 = CALL1(1,VARREF(Yhead),place_);
     T5 = CALL1(1,VARREF(Ylst),T6);
-    T4 = CALL3(1,VARREF(YgooSmacrosYcat),T5,g_argsF2133,LITREF(lit_11));
-    T3 = CALL2(1,VARREF(Ytup),g_declsF2132,T4);
+    T4 = CALL3(1,VARREF(YgooSmacrosYcat),T5,g_argsF2125,LITREF(lit_11));
+    T3 = CALL2(1,VARREF(Ytup),g_declsF2124,T4);
     T0 = T3;
   }
 UNLINK_STACK();
@@ -1195,111 +1167,104 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_17) {
   P return_;
-  P x_1131F2139;
-  P x_1131F2138;
-  P x_1131F2137;
-  P amountF2136;
-  P x_1131F2135;
-  P x_1132F2134;
+  P x_1131F2131;
+  P x_1131F2130;
+  P x_1131F2129;
+  P amountF2128;
+  P x_1131F2127;
+  P x_1132F2126;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
 LINK_STACK();
   ARG(return_, 0);
   T11 = FUNSHELL(0,fun_x_1132_16,1);
-  x_1132F2134 = T11;
-  FUNINIT(x_1132F2134, 1,return_);
+  x_1132F2126 = T11;
+  FUNINIT(x_1132F2126, 1,return_);
   T10 = BOXGET(FREEREF(0));
-  x_1131F2135 = T10;
-  amountF2136 = YPfalse;
-  T1 = CALL2(1,VARREF(YisaQ),x_1131F2135,VARREF(YLlstG));
+  x_1131F2127 = T10;
+  amountF2128 = YPfalse;
+  T1 = CALL2(1,VARREF(YisaQ),x_1131F2127,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1131F2135,x_1132F2134);
-    amountF2136 = T6;
-    T7 = CALL1(1,VARREF(Ytail),x_1131F2135);
-    x_1131F2137 = T7;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1131F2137,x_1132F2134);
-    x_1131F2138 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1131F2138,x_1132F2134);
-    T5 = CALL1(1,VARREF(Ytail),x_1131F2137);
-    x_1131F2139 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1131F2139,x_1132F2134);
+    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1131F2127,x_1132F2126);
+    amountF2128 = T6;
+    T7 = CALL1(1,VARREF(Ytail),x_1131F2127);
+    x_1131F2129 = T7;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1131F2129,x_1132F2126);
+    x_1131F2130 = T4;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1131F2130,x_1132F2126);
+    T5 = CALL1(1,VARREF(Ytail),x_1131F2129);
+    x_1131F2131 = T5;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1131F2131,x_1132F2126);
   } else {
-    T8 = CALL2(1,x_1132F2134,LITREF(lit_7),x_1131F2135);
+    T8 = CALL2(1,x_1132F2126,LITREF(lit_7),x_1131F2127);
   }
-  T9 = amountF2136;
+  T9 = amountF2128;
 UNLINK_STACK();
   QRET(T9);
 }
 
 LOCCODEDEF(fun_18) {
   P return_;
-  P amountF2152;
-  P g_placeF2151;
-  P g_declsF2150;
-  P tup6F2149;
-  P x_1129F2148;
-  P x_1129F2147;
-  P x_1129F2146;
-  P x_1129F2145;
-  P x_1129F2144;
-  P amountF2143;
-  P placeF2142;
-  P x_1129F2141;
-  P x_1130F2140;
+  P amountF2142;
+  P g_placeF2141;
+  P g_declsF2140;
+  P tup6F2139;
+  P x_1129F2138;
+  P x_1129F2137;
+  P x_1129F2136;
+  P amountF2135;
+  P placeF2134;
+  P x_1129F2133;
+  P x_1130F2132;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30;
+  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27;
 LINK_STACK();
   ARG(return_, 0);
-  T30 = FUNSHELL(0,fun_x_1130_15,2);
-  x_1130F2140 = T30;
-  FUNINIT(x_1130F2140, 2,FREEREF(0),return_);
-  x_1129F2141 = FREEREF(0);
-  placeF2142 = YPfalse;
-  amountF2143 = YPfalse;
-  amountF2143 = BOXFAB(amountF2143);
-  T2 = CALL2(1,VARREF(YisaQ),x_1129F2141,VARREF(YLlstG));
+  T27 = FUNSHELL(0,fun_x_1130_15,2);
+  x_1130F2132 = T27;
+  FUNINIT(x_1130F2132, 2,FREEREF(0),return_);
+  x_1129F2133 = FREEREF(0);
+  placeF2134 = YPfalse;
+  amountF2135 = YPfalse;
+  amountF2135 = BOXFAB(amountF2135);
+  T2 = CALL2(1,VARREF(YisaQ),x_1129F2133,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1129F2141,LITREF(lit_41),x_1130F2140);
-    x_1129F2144 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1129F2144,x_1130F2140);
-    placeF2142 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1129F2144);
-    x_1129F2145 = T8;
-    BOXPUT(x_1129F2145,amountF2143);
-    x_1129F2146 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1129F2146,x_1130F2140);
-    x_1129F2147 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1129F2147,x_1130F2140);
-    T6 = CALL1(1,VARREF(Ytail),x_1129F2146);
-    x_1129F2148 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1129F2148,x_1130F2140);
+    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1129F2133,LITREF(lit_41),x_1130F2132);
+    x_1129F2136 = T6;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1129F2136,x_1130F2132);
+    placeF2134 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1129F2136);
+    x_1129F2137 = T5;
+    BOXPUT(x_1129F2137,amountF2135);
+    x_1129F2138 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1129F2138,x_1130F2132);
   } else {
-    T10 = CALL2(1,x_1130F2140,LITREF(lit_7),x_1129F2141);
+    T7 = CALL2(1,x_1130F2132,LITREF(lit_7),x_1129F2133);
   }
-  T29 = placeF2142;
-  T28 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T29);
-  tup6F2149 = T28;
-  T27 = CALL2(1,VARREF(YgooSmacrosYelt),tup6F2149,YPint((P)0));
-  g_declsF2150 = T27;
-  T26 = CALL2(1,VARREF(YgooSmacrosYelt),tup6F2149,YPint((P)1));
-  g_placeF2151 = T26;
-  T25 = FUNFAB(fun_17,1,amountF2143);
-  T24 = with_exit(T25);
-  amountF2152 = T24;
-  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T14 = CALL2(1,VARREF(YgooSmacrosYcat),g_declsF2150,LITREF(lit_11));
-  T13 = CALL1(1,VARREF(Ylst),T14);
-  T17 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T18 = CALL1(1,VARREF(Ylst),g_placeF2151);
-  T21 = CALL1(1,VARREF(Ylst),LITREF(lit_45));
-  T22 = CALL1(1,VARREF(Ylst),g_placeF2151);
-  T23 = CALL1(1,VARREF(Ylst),amountF2152);
-  T20 = CALL4(1,VARREF(YgooSmacrosYcat),T21,T22,T23,LITREF(lit_11));
-  T19 = CALL1(1,VARREF(Ylst),T20);
-  T16 = CALL4(1,VARREF(YgooSmacrosYcat),T17,T18,T19,LITREF(lit_11));
-  T15 = CALL1(1,VARREF(Ylst),T16);
-  T11 = CALL4(1,VARREF(YgooSmacrosYcat),T12,T13,T15,LITREF(lit_11));
+  T26 = placeF2134;
+  T25 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T26);
+  tup6F2139 = T25;
+  T24 = CALL2(1,VARREF(YgooSmacrosYelt),tup6F2139,YPint((P)0));
+  g_declsF2140 = T24;
+  T23 = CALL2(1,VARREF(YgooSmacrosYelt),tup6F2139,YPint((P)1));
+  g_placeF2141 = T23;
+  T22 = FUNFAB(fun_17,1,amountF2135);
+  T21 = with_exit(T22);
+  amountF2142 = T21;
+  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T11 = CALL2(1,VARREF(YgooSmacrosYcat),g_declsF2140,LITREF(lit_11));
+  T10 = CALL1(1,VARREF(Ylst),T11);
+  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
+  T15 = CALL1(1,VARREF(Ylst),g_placeF2141);
+  T18 = CALL1(1,VARREF(Ylst),LITREF(lit_45));
+  T19 = CALL1(1,VARREF(Ylst),g_placeF2141);
+  T20 = CALL1(1,VARREF(Ylst),amountF2142);
+  T17 = CALL4(1,VARREF(YgooSmacrosYcat),T18,T19,T20,LITREF(lit_11));
+  T16 = CALL1(1,VARREF(Ylst),T17);
+  T13 = CALL4(1,VARREF(YgooSmacrosYcat),T14,T15,T16,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),T13);
+  T8 = CALL4(1,VARREF(YgooSmacrosYcat),T9,T10,T12,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T11);
+  QRET(T8);
 }
 
 LOCCODEDEF(fun_19) {
@@ -1338,111 +1303,104 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_22) {
   P return_;
-  P x_1139F2158;
-  P x_1139F2157;
-  P x_1139F2156;
-  P amountF2155;
-  P x_1139F2154;
-  P x_1140F2153;
+  P x_1139F2148;
+  P x_1139F2147;
+  P x_1139F2146;
+  P amountF2145;
+  P x_1139F2144;
+  P x_1140F2143;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
 LINK_STACK();
   ARG(return_, 0);
   T11 = FUNSHELL(0,fun_x_1140_21,1);
-  x_1140F2153 = T11;
-  FUNINIT(x_1140F2153, 1,return_);
+  x_1140F2143 = T11;
+  FUNINIT(x_1140F2143, 1,return_);
   T10 = BOXGET(FREEREF(0));
-  x_1139F2154 = T10;
-  amountF2155 = YPfalse;
-  T1 = CALL2(1,VARREF(YisaQ),x_1139F2154,VARREF(YLlstG));
+  x_1139F2144 = T10;
+  amountF2145 = YPfalse;
+  T1 = CALL2(1,VARREF(YisaQ),x_1139F2144,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1139F2154,x_1140F2153);
-    amountF2155 = T6;
-    T7 = CALL1(1,VARREF(Ytail),x_1139F2154);
-    x_1139F2156 = T7;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1139F2156,x_1140F2153);
-    x_1139F2157 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1139F2157,x_1140F2153);
-    T5 = CALL1(1,VARREF(Ytail),x_1139F2156);
-    x_1139F2158 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1139F2158,x_1140F2153);
+    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1139F2144,x_1140F2143);
+    amountF2145 = T6;
+    T7 = CALL1(1,VARREF(Ytail),x_1139F2144);
+    x_1139F2146 = T7;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1139F2146,x_1140F2143);
+    x_1139F2147 = T4;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1139F2147,x_1140F2143);
+    T5 = CALL1(1,VARREF(Ytail),x_1139F2146);
+    x_1139F2148 = T5;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1139F2148,x_1140F2143);
   } else {
-    T8 = CALL2(1,x_1140F2153,LITREF(lit_7),x_1139F2154);
+    T8 = CALL2(1,x_1140F2143,LITREF(lit_7),x_1139F2144);
   }
-  T9 = amountF2155;
+  T9 = amountF2145;
 UNLINK_STACK();
   QRET(T9);
 }
 
 LOCCODEDEF(fun_23) {
   P return_;
-  P amountF2171;
-  P g_placeF2170;
-  P g_declsF2169;
-  P tup8F2168;
-  P x_1137F2167;
-  P x_1137F2166;
-  P x_1137F2165;
-  P x_1137F2164;
-  P x_1137F2163;
-  P amountF2162;
-  P placeF2161;
-  P x_1137F2160;
-  P x_1138F2159;
+  P amountF2159;
+  P g_placeF2158;
+  P g_declsF2157;
+  P tup8F2156;
+  P x_1137F2155;
+  P x_1137F2154;
+  P x_1137F2153;
+  P amountF2152;
+  P placeF2151;
+  P x_1137F2150;
+  P x_1138F2149;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30;
+  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27;
 LINK_STACK();
   ARG(return_, 0);
-  T30 = FUNSHELL(0,fun_x_1138_20,2);
-  x_1138F2159 = T30;
-  FUNINIT(x_1138F2159, 2,FREEREF(0),return_);
-  x_1137F2160 = FREEREF(0);
-  placeF2161 = YPfalse;
-  amountF2162 = YPfalse;
-  amountF2162 = BOXFAB(amountF2162);
-  T2 = CALL2(1,VARREF(YisaQ),x_1137F2160,VARREF(YLlstG));
+  T27 = FUNSHELL(0,fun_x_1138_20,2);
+  x_1138F2149 = T27;
+  FUNINIT(x_1138F2149, 2,FREEREF(0),return_);
+  x_1137F2150 = FREEREF(0);
+  placeF2151 = YPfalse;
+  amountF2152 = YPfalse;
+  amountF2152 = BOXFAB(amountF2152);
+  T2 = CALL2(1,VARREF(YisaQ),x_1137F2150,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1137F2160,LITREF(lit_50),x_1138F2159);
-    x_1137F2163 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1137F2163,x_1138F2159);
-    placeF2161 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1137F2163);
-    x_1137F2164 = T8;
-    BOXPUT(x_1137F2164,amountF2162);
-    x_1137F2165 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1137F2165,x_1138F2159);
-    x_1137F2166 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1137F2166,x_1138F2159);
-    T6 = CALL1(1,VARREF(Ytail),x_1137F2165);
-    x_1137F2167 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1137F2167,x_1138F2159);
+    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1137F2150,LITREF(lit_50),x_1138F2149);
+    x_1137F2153 = T6;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1137F2153,x_1138F2149);
+    placeF2151 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1137F2153);
+    x_1137F2154 = T5;
+    BOXPUT(x_1137F2154,amountF2152);
+    x_1137F2155 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1137F2155,x_1138F2149);
   } else {
-    T10 = CALL2(1,x_1138F2159,LITREF(lit_7),x_1137F2160);
+    T7 = CALL2(1,x_1138F2149,LITREF(lit_7),x_1137F2150);
   }
-  T29 = placeF2161;
-  T28 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T29);
-  tup8F2168 = T28;
-  T27 = CALL2(1,VARREF(YgooSmacrosYelt),tup8F2168,YPint((P)0));
-  g_declsF2169 = T27;
-  T26 = CALL2(1,VARREF(YgooSmacrosYelt),tup8F2168,YPint((P)1));
-  g_placeF2170 = T26;
-  T25 = FUNFAB(fun_22,1,amountF2162);
-  T24 = with_exit(T25);
-  amountF2171 = T24;
-  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T14 = CALL2(1,VARREF(YgooSmacrosYcat),g_declsF2169,LITREF(lit_11));
-  T13 = CALL1(1,VARREF(Ylst),T14);
-  T17 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T18 = CALL1(1,VARREF(Ylst),g_placeF2170);
-  T21 = CALL1(1,VARREF(Ylst),LITREF(lit_54));
-  T22 = CALL1(1,VARREF(Ylst),g_placeF2170);
-  T23 = CALL1(1,VARREF(Ylst),amountF2171);
-  T20 = CALL4(1,VARREF(YgooSmacrosYcat),T21,T22,T23,LITREF(lit_11));
-  T19 = CALL1(1,VARREF(Ylst),T20);
-  T16 = CALL4(1,VARREF(YgooSmacrosYcat),T17,T18,T19,LITREF(lit_11));
-  T15 = CALL1(1,VARREF(Ylst),T16);
-  T11 = CALL4(1,VARREF(YgooSmacrosYcat),T12,T13,T15,LITREF(lit_11));
+  T26 = placeF2151;
+  T25 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T26);
+  tup8F2156 = T25;
+  T24 = CALL2(1,VARREF(YgooSmacrosYelt),tup8F2156,YPint((P)0));
+  g_declsF2157 = T24;
+  T23 = CALL2(1,VARREF(YgooSmacrosYelt),tup8F2156,YPint((P)1));
+  g_placeF2158 = T23;
+  T22 = FUNFAB(fun_22,1,amountF2152);
+  T21 = with_exit(T22);
+  amountF2159 = T21;
+  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T11 = CALL2(1,VARREF(YgooSmacrosYcat),g_declsF2157,LITREF(lit_11));
+  T10 = CALL1(1,VARREF(Ylst),T11);
+  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
+  T15 = CALL1(1,VARREF(Ylst),g_placeF2158);
+  T18 = CALL1(1,VARREF(Ylst),LITREF(lit_54));
+  T19 = CALL1(1,VARREF(Ylst),g_placeF2158);
+  T20 = CALL1(1,VARREF(Ylst),amountF2159);
+  T17 = CALL4(1,VARREF(YgooSmacrosYcat),T18,T19,T20,LITREF(lit_11));
+  T16 = CALL1(1,VARREF(Ylst),T17);
+  T13 = CALL4(1,VARREF(YgooSmacrosYcat),T14,T15,T16,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),T13);
+  T8 = CALL4(1,VARREF(YgooSmacrosYcat),T9,T10,T12,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T11);
+  QRET(T8);
 }
 
 LOCCODEDEF(fun_24) {
@@ -1470,72 +1428,65 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_26) {
   P return_;
-  P g_placeF2183;
-  P g_declsF2182;
-  P tup10F2181;
-  P x_1143F2180;
-  P x_1143F2179;
-  P x_1143F2178;
-  P x_1143F2177;
-  P x_1143F2176;
-  P valueF2175;
-  P placeF2174;
-  P x_1143F2173;
-  P x_1144F2172;
+  P g_placeF2169;
+  P g_declsF2168;
+  P tup10F2167;
+  P x_1143F2166;
+  P x_1143F2165;
+  P x_1143F2164;
+  P valueF2163;
+  P placeF2162;
+  P x_1143F2161;
+  P x_1144F2160;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
+  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28;
 LINK_STACK();
   ARG(return_, 0);
-  T31 = FUNSHELL(0,fun_x_1144_25,2);
-  x_1144F2172 = T31;
-  FUNINIT(x_1144F2172, 2,FREEREF(0),return_);
-  x_1143F2173 = FREEREF(0);
-  placeF2174 = YPfalse;
-  valueF2175 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1143F2173,VARREF(YLlstG));
+  T28 = FUNSHELL(0,fun_x_1144_25,2);
+  x_1144F2160 = T28;
+  FUNINIT(x_1144F2160, 2,FREEREF(0),return_);
+  x_1143F2161 = FREEREF(0);
+  placeF2162 = YPfalse;
+  valueF2163 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1143F2161,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T11 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1143F2173,LITREF(lit_59),x_1144F2172);
-    x_1143F2176 = T11;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1143F2176,x_1144F2172);
-    placeF2174 = T9;
-    T10 = CALL1(1,VARREF(Ytail),x_1143F2176);
-    x_1143F2177 = T10;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1143F2177,x_1144F2172);
-    valueF2175 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1143F2177);
-    x_1143F2178 = T8;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1143F2178,x_1144F2172);
-    x_1143F2179 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1143F2179,x_1144F2172);
-    T6 = CALL1(1,VARREF(Ytail),x_1143F2178);
-    x_1143F2180 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1143F2180,x_1144F2172);
+    T8 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1143F2161,LITREF(lit_59),x_1144F2160);
+    x_1143F2164 = T8;
+    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1143F2164,x_1144F2160);
+    placeF2162 = T6;
+    T7 = CALL1(1,VARREF(Ytail),x_1143F2164);
+    x_1143F2165 = T7;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1143F2165,x_1144F2160);
+    valueF2163 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1143F2165);
+    x_1143F2166 = T5;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1143F2166,x_1144F2160);
   } else {
-    T12 = CALL2(1,x_1144F2172,LITREF(lit_7),x_1143F2173);
+    T9 = CALL2(1,x_1144F2160,LITREF(lit_7),x_1143F2161);
   }
-  T30 = placeF2174;
-  T29 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T30);
-  tup10F2181 = T29;
-  T28 = CALL2(1,VARREF(YgooSmacrosYelt),tup10F2181,YPint((P)0));
-  g_declsF2182 = T28;
-  T27 = CALL2(1,VARREF(YgooSmacrosYelt),tup10F2181,YPint((P)1));
-  g_placeF2183 = T27;
-  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T16 = CALL2(1,VARREF(YgooSmacrosYcat),g_declsF2182,LITREF(lit_11));
-  T15 = CALL1(1,VARREF(Ylst),T16);
-  T19 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T20 = CALL1(1,VARREF(Ylst),g_placeF2183);
-  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_60));
-  T24 = CALL1(1,VARREF(Ylst),g_placeF2183);
-  T26 = valueF2175;
-  T25 = CALL1(1,VARREF(Ylst),T26);
-  T22 = CALL4(1,VARREF(YgooSmacrosYcat),T23,T24,T25,LITREF(lit_11));
-  T21 = CALL1(1,VARREF(Ylst),T22);
-  T18 = CALL4(1,VARREF(YgooSmacrosYcat),T19,T20,T21,LITREF(lit_11));
-  T17 = CALL1(1,VARREF(Ylst),T18);
-  T13 = CALL4(1,VARREF(YgooSmacrosYcat),T14,T15,T17,LITREF(lit_11));
+  T27 = placeF2162;
+  T26 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T27);
+  tup10F2167 = T26;
+  T25 = CALL2(1,VARREF(YgooSmacrosYelt),tup10F2167,YPint((P)0));
+  g_declsF2168 = T25;
+  T24 = CALL2(1,VARREF(YgooSmacrosYelt),tup10F2167,YPint((P)1));
+  g_placeF2169 = T24;
+  T11 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T13 = CALL2(1,VARREF(YgooSmacrosYcat),g_declsF2168,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),T13);
+  T16 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
+  T17 = CALL1(1,VARREF(Ylst),g_placeF2169);
+  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_60));
+  T21 = CALL1(1,VARREF(Ylst),g_placeF2169);
+  T23 = valueF2163;
+  T22 = CALL1(1,VARREF(Ylst),T23);
+  T19 = CALL4(1,VARREF(YgooSmacrosYcat),T20,T21,T22,LITREF(lit_11));
+  T18 = CALL1(1,VARREF(Ylst),T19);
+  T15 = CALL4(1,VARREF(YgooSmacrosYcat),T16,T17,T18,LITREF(lit_11));
+  T14 = CALL1(1,VARREF(Ylst),T15);
+  T10 = CALL4(1,VARREF(YgooSmacrosYcat),T11,T12,T14,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T13);
+  QRET(T10);
 }
 
 LOCCODEDEF(fun_27) {
@@ -1563,90 +1514,83 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_29) {
   P return_;
-  P tmpF2199;
-  P yg_placeF2198;
-  P yg_declsF2197;
-  P tup14F2196;
-  P xg_placeF2195;
-  P xg_declsF2194;
-  P tup13F2193;
-  P x_1147F2192;
-  P x_1147F2191;
-  P x_1147F2190;
-  P x_1147F2189;
-  P x_1147F2188;
-  P yF2187;
-  P xF2186;
-  P x_1147F2185;
-  P x_1148F2184;
+  P tmpF2183;
+  P yg_placeF2182;
+  P yg_declsF2181;
+  P tup14F2180;
+  P xg_placeF2179;
+  P xg_declsF2178;
+  P tup13F2177;
+  P x_1147F2176;
+  P x_1147F2175;
+  P x_1147F2174;
+  P yF2173;
+  P xF2172;
+  P x_1147F2171;
+  P x_1148F2170;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
-  P T32,T33,T34,T35,T36,T37,T38,T39,T40;
+  P T32,T33,T34,T35,T36,T37;
 LINK_STACK();
   ARG(return_, 0);
-  T40 = FUNSHELL(0,fun_x_1148_28,2);
-  x_1148F2184 = T40;
-  FUNINIT(x_1148F2184, 2,FREEREF(0),return_);
-  x_1147F2185 = FREEREF(0);
-  xF2186 = YPfalse;
-  yF2187 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1147F2185,VARREF(YLlstG));
+  T37 = FUNSHELL(0,fun_x_1148_28,2);
+  x_1148F2170 = T37;
+  FUNINIT(x_1148F2170, 2,FREEREF(0),return_);
+  x_1147F2171 = FREEREF(0);
+  xF2172 = YPfalse;
+  yF2173 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1147F2171,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T11 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1147F2185,LITREF(lit_65),x_1148F2184);
-    x_1147F2188 = T11;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1147F2188,x_1148F2184);
-    xF2186 = T9;
-    T10 = CALL1(1,VARREF(Ytail),x_1147F2188);
-    x_1147F2189 = T10;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1147F2189,x_1148F2184);
-    yF2187 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1147F2189);
-    x_1147F2190 = T8;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1147F2190,x_1148F2184);
-    x_1147F2191 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1147F2191,x_1148F2184);
-    T6 = CALL1(1,VARREF(Ytail),x_1147F2190);
-    x_1147F2192 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1147F2192,x_1148F2184);
+    T8 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1147F2171,LITREF(lit_65),x_1148F2170);
+    x_1147F2174 = T8;
+    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1147F2174,x_1148F2170);
+    xF2172 = T6;
+    T7 = CALL1(1,VARREF(Ytail),x_1147F2174);
+    x_1147F2175 = T7;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1147F2175,x_1148F2170);
+    yF2173 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1147F2175);
+    x_1147F2176 = T5;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1147F2176,x_1148F2170);
   } else {
-    T12 = CALL2(1,x_1148F2184,LITREF(lit_7),x_1147F2185);
+    T9 = CALL2(1,x_1148F2170,LITREF(lit_7),x_1147F2171);
   }
-  T39 = xF2186;
-  T38 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T39);
-  tup13F2193 = T38;
-  T37 = CALL2(1,VARREF(YgooSmacrosYelt),tup13F2193,YPint((P)0));
-  xg_declsF2194 = T37;
-  T36 = CALL2(1,VARREF(YgooSmacrosYelt),tup13F2193,YPint((P)1));
-  xg_placeF2195 = T36;
-  T35 = yF2187;
-  T34 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T35);
-  tup14F2196 = T34;
-  T33 = CALL2(1,VARREF(YgooSmacrosYelt),tup14F2196,YPint((P)0));
-  yg_declsF2197 = T33;
-  T32 = CALL2(1,VARREF(YgooSmacrosYelt),tup14F2196,YPint((P)1));
-  yg_placeF2198 = T32;
-  T31 = CALL0(1,VARREF(YgooSmacrosYgensym));
-  tmpF2199 = T31;
-  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T19 = CALL1(1,VARREF(Ylst),tmpF2199);
-  T20 = CALL1(1,VARREF(Ylst),xg_placeF2195);
-  T18 = CALL3(1,VARREF(YgooSmacrosYcat),T19,T20,LITREF(lit_11));
-  T17 = CALL1(1,VARREF(Ylst),T18);
-  T16 = CALL4(1,VARREF(YgooSmacrosYcat),xg_declsF2194,yg_declsF2197,T17,LITREF(lit_11));
-  T15 = CALL1(1,VARREF(Ylst),T16);
-  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T24 = CALL1(1,VARREF(Ylst),xg_placeF2195);
-  T25 = CALL1(1,VARREF(Ylst),yg_placeF2198);
-  T22 = CALL4(1,VARREF(YgooSmacrosYcat),T23,T24,T25,LITREF(lit_11));
-  T21 = CALL1(1,VARREF(Ylst),T22);
-  T28 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T29 = CALL1(1,VARREF(Ylst),yg_placeF2198);
-  T30 = CALL1(1,VARREF(Ylst),tmpF2199);
-  T27 = CALL4(1,VARREF(YgooSmacrosYcat),T28,T29,T30,LITREF(lit_11));
-  T26 = CALL1(1,VARREF(Ylst),T27);
-  T13 = CALL5(1,VARREF(YgooSmacrosYcat),T14,T15,T21,T26,LITREF(lit_11));
+  T36 = xF2172;
+  T35 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T36);
+  tup13F2177 = T35;
+  T34 = CALL2(1,VARREF(YgooSmacrosYelt),tup13F2177,YPint((P)0));
+  xg_declsF2178 = T34;
+  T33 = CALL2(1,VARREF(YgooSmacrosYelt),tup13F2177,YPint((P)1));
+  xg_placeF2179 = T33;
+  T32 = yF2173;
+  T31 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T32);
+  tup14F2180 = T31;
+  T30 = CALL2(1,VARREF(YgooSmacrosYelt),tup14F2180,YPint((P)0));
+  yg_declsF2181 = T30;
+  T29 = CALL2(1,VARREF(YgooSmacrosYelt),tup14F2180,YPint((P)1));
+  yg_placeF2182 = T29;
+  T28 = CALL0(1,VARREF(YgooSmacrosYgensym));
+  tmpF2183 = T28;
+  T11 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T16 = CALL1(1,VARREF(Ylst),tmpF2183);
+  T17 = CALL1(1,VARREF(Ylst),xg_placeF2179);
+  T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
+  T14 = CALL1(1,VARREF(Ylst),T15);
+  T13 = CALL4(1,VARREF(YgooSmacrosYcat),xg_declsF2178,yg_declsF2181,T14,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),T13);
+  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
+  T21 = CALL1(1,VARREF(Ylst),xg_placeF2179);
+  T22 = CALL1(1,VARREF(Ylst),yg_placeF2182);
+  T19 = CALL4(1,VARREF(YgooSmacrosYcat),T20,T21,T22,LITREF(lit_11));
+  T18 = CALL1(1,VARREF(Ylst),T19);
+  T25 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
+  T26 = CALL1(1,VARREF(Ylst),yg_placeF2182);
+  T27 = CALL1(1,VARREF(Ylst),tmpF2183);
+  T24 = CALL4(1,VARREF(YgooSmacrosYcat),T25,T26,T27,LITREF(lit_11));
+  T23 = CALL1(1,VARREF(Ylst),T24);
+  T10 = CALL5(1,VARREF(YgooSmacrosYcat),T11,T12,T18,T23,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T13);
+  QRET(T10);
 }
 
 LOCCODEDEF(fun_30) {
@@ -1711,92 +1655,85 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_35) {
   P return_;
-  P placesF2215;
-  P declsF2214;
-  P psF2213;
-  P tmpsF2212;
-  P placesF2211;
-  P x_1151F2210;
-  P x_1151F2209;
-  P x_1151F2208;
-  P x_1151F2207;
-  P x_1151F2206;
-  P x_1151F2205;
-  P zsF2204;
-  P yF2203;
-  P xF2202;
-  P x_1151F2201;
-  P x_1152F2200;
+  P placesF2197;
+  P declsF2196;
+  P psF2195;
+  P tmpsF2194;
+  P placesF2193;
+  P x_1151F2192;
+  P x_1151F2191;
+  P x_1151F2190;
+  P x_1151F2189;
+  P zsF2188;
+  P yF2187;
+  P xF2186;
+  P x_1151F2185;
+  P x_1152F2184;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
-  P T32,T33,T34,T35,T36,T37,T38,T39,T40,T41,T42;
+  P T32,T33,T34,T35,T36,T37,T38,T39;
 LINK_STACK();
   ARG(return_, 0);
-  T42 = FUNSHELL(0,fun_x_1152_31,2);
-  x_1152F2200 = T42;
-  FUNINIT(x_1152F2200, 2,FREEREF(0),return_);
-  x_1151F2201 = FREEREF(0);
-  xF2202 = YPfalse;
-  yF2203 = YPfalse;
-  zsF2204 = YPfalse;
-  T3 = CALL2(1,VARREF(YisaQ),x_1151F2201,VARREF(YLlstG));
+  T39 = FUNSHELL(0,fun_x_1152_31,2);
+  x_1152F2184 = T39;
+  FUNINIT(x_1152F2184, 2,FREEREF(0),return_);
+  x_1151F2185 = FREEREF(0);
+  xF2186 = YPfalse;
+  yF2187 = YPfalse;
+  zsF2188 = YPfalse;
+  T3 = CALL2(1,VARREF(YisaQ),x_1151F2185,VARREF(YLlstG));
   if (T3 != YPfalse) {
-    T12 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1151F2201,LITREF(lit_70),x_1152F2200);
-    x_1151F2205 = T12;
-    T10 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1151F2205,x_1152F2200);
-    xF2202 = T10;
-    T11 = CALL1(1,VARREF(Ytail),x_1151F2205);
-    x_1151F2206 = T11;
-    T8 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1151F2206,x_1152F2200);
-    yF2203 = T8;
-    T9 = CALL1(1,VARREF(Ytail),x_1151F2206);
-    x_1151F2207 = T9;
-    zsF2204 = x_1151F2207;
-    x_1151F2208 = Ynil;
-    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1151F2208,x_1152F2200);
-    x_1151F2209 = T6;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1151F2209,x_1152F2200);
-    T7 = CALL1(1,VARREF(Ytail),x_1151F2208);
-    x_1151F2210 = T7;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1151F2210,x_1152F2200);
+    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1151F2185,LITREF(lit_70),x_1152F2184);
+    x_1151F2189 = T9;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1151F2189,x_1152F2184);
+    xF2186 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1151F2189);
+    x_1151F2190 = T8;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1151F2190,x_1152F2184);
+    yF2187 = T5;
+    T6 = CALL1(1,VARREF(Ytail),x_1151F2190);
+    x_1151F2191 = T6;
+    zsF2188 = x_1151F2191;
+    x_1151F2192 = Ynil;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1151F2192,x_1152F2184);
   } else {
-    T13 = CALL2(1,x_1152F2200,LITREF(lit_7),x_1151F2201);
+    T10 = CALL2(1,x_1152F2184,LITREF(lit_7),x_1151F2185);
   }
-  T38 = xF2202;
-  T37 = CALL1(1,VARREF(Ylst),T38);
-  T40 = yF2203;
-  T39 = CALL1(1,VARREF(Ylst),T40);
-  T41 = zsF2204;
-  T36 = CALL4(1,VARREF(YgooSmacrosYcat),T37,T39,T41,LITREF(lit_11));
-  placesF2211 = T36;
-  T35 = fun_32;
-  T34 = CALL2(1,VARREF(YgooSmacrosYmap),T35,placesF2211);
-  tmpsF2212 = T34;
-  T33 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YgooSmacrosYlift_place_subforms),placesF2211);
-  psF2213 = T33;
-  T32 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YgooSmacrosY1st),psF2213);
-  declsF2214 = T32;
-  T31 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YgooSmacrosY2nd),psF2213);
-  placesF2215 = T31;
-  T15 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T18 = CALL3(1,VARREF(YgooSmacrosYnapp),VARREF(YgooSmacrosYcat),YPfalse,declsF2214);
-  T20 = fun_33;
-  T19 = CALL3(1,VARREF(YgooSmacrosYmap2),T20,tmpsF2212,placesF2215);
-  T17 = CALL3(1,VARREF(YgooSmacrosYcat),T18,T19,LITREF(lit_11));
-  T16 = CALL1(1,VARREF(Ylst),T17);
-  T22 = fun_34;
-  T23 = CALL1(1,VARREF(Ytail),tmpsF2212);
-  T21 = CALL3(1,VARREF(YgooSmacrosYmap2),T22,placesF2215,T23);
-  T26 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T28 = CALL1(1,VARREF(YgooSmacrosYlast),placesF2215);
-  T27 = CALL1(1,VARREF(Ylst),T28);
-  T30 = CALL1(1,VARREF(YgooSmacrosY1st),tmpsF2212);
-  T29 = CALL1(1,VARREF(Ylst),T30);
-  T25 = CALL4(1,VARREF(YgooSmacrosYcat),T26,T27,T29,LITREF(lit_11));
+  T35 = xF2186;
+  T34 = CALL1(1,VARREF(Ylst),T35);
+  T37 = yF2187;
+  T36 = CALL1(1,VARREF(Ylst),T37);
+  T38 = zsF2188;
+  T33 = CALL4(1,VARREF(YgooSmacrosYcat),T34,T36,T38,LITREF(lit_11));
+  placesF2193 = T33;
+  T32 = fun_32;
+  T31 = CALL2(1,VARREF(YgooSmacrosYmap),T32,placesF2193);
+  tmpsF2194 = T31;
+  T30 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YgooSmacrosYlift_place_subforms),placesF2193);
+  psF2195 = T30;
+  T29 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YgooSmacrosY1st),psF2195);
+  declsF2196 = T29;
+  T28 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YgooSmacrosY2nd),psF2195);
+  placesF2197 = T28;
+  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T15 = CALL3(1,VARREF(YgooSmacrosYnapp),VARREF(YgooSmacrosYcat),YPfalse,declsF2196);
+  T17 = fun_33;
+  T16 = CALL3(1,VARREF(YgooSmacrosYmap2),T17,tmpsF2194,placesF2197);
+  T14 = CALL3(1,VARREF(YgooSmacrosYcat),T15,T16,LITREF(lit_11));
+  T13 = CALL1(1,VARREF(Ylst),T14);
+  T19 = fun_34;
+  T20 = CALL1(1,VARREF(Ytail),tmpsF2194);
+  T18 = CALL3(1,VARREF(YgooSmacrosYmap2),T19,placesF2197,T20);
+  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
+  T25 = CALL1(1,VARREF(YgooSmacrosYlast),placesF2197);
   T24 = CALL1(1,VARREF(Ylst),T25);
-  T14 = CALL5(1,VARREF(YgooSmacrosYcat),T15,T16,T21,T24,LITREF(lit_11));
+  T27 = CALL1(1,VARREF(YgooSmacrosY1st),tmpsF2194);
+  T26 = CALL1(1,VARREF(Ylst),T27);
+  T22 = CALL4(1,VARREF(YgooSmacrosYcat),T23,T24,T26,LITREF(lit_11));
+  T21 = CALL1(1,VARREF(Ylst),T22);
+  T11 = CALL5(1,VARREF(YgooSmacrosYcat),T12,T13,T18,T21,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T14);
+  QRET(T11);
 }
 
 LOCCODEDEF(fun_36) {
@@ -1824,79 +1761,72 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_38) {
   P return_;
-  P valF2227;
-  P new_colF2226;
-  P g_placeF2225;
-  P g_declsF2224;
-  P tup16F2223;
-  P x_1155F2222;
-  P x_1155F2221;
-  P x_1155F2220;
-  P x_1155F2219;
-  P placeF2218;
-  P x_1155F2217;
-  P x_1156F2216;
+  P valF2207;
+  P new_colF2206;
+  P g_placeF2205;
+  P g_declsF2204;
+  P tup16F2203;
+  P x_1155F2202;
+  P x_1155F2201;
+  P placeF2200;
+  P x_1155F2199;
+  P x_1156F2198;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
-  P T32,T33,T34,T35,T36,T37;
+  P T32,T33,T34;
 LINK_STACK();
   ARG(return_, 0);
-  T37 = FUNSHELL(0,fun_x_1156_37,2);
-  x_1156F2216 = T37;
-  FUNINIT(x_1156F2216, 2,FREEREF(0),return_);
-  x_1155F2217 = FREEREF(0);
-  placeF2218 = YPfalse;
-  T1 = CALL2(1,VARREF(YisaQ),x_1155F2217,VARREF(YLlstG));
+  T34 = FUNSHELL(0,fun_x_1156_37,2);
+  x_1156F2198 = T34;
+  FUNINIT(x_1156F2198, 2,FREEREF(0),return_);
+  x_1155F2199 = FREEREF(0);
+  placeF2200 = YPfalse;
+  T1 = CALL2(1,VARREF(YisaQ),x_1155F2199,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T8 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1155F2217,LITREF(lit_78),x_1156F2216);
-    x_1155F2219 = T8;
-    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1155F2219,x_1156F2216);
-    placeF2218 = T6;
-    T7 = CALL1(1,VARREF(Ytail),x_1155F2219);
-    x_1155F2220 = T7;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1155F2220,x_1156F2216);
-    x_1155F2221 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1155F2221,x_1156F2216);
-    T5 = CALL1(1,VARREF(Ytail),x_1155F2220);
-    x_1155F2222 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1155F2222,x_1156F2216);
+    T5 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1155F2199,LITREF(lit_78),x_1156F2198);
+    x_1155F2201 = T5;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1155F2201,x_1156F2198);
+    placeF2200 = T3;
+    T4 = CALL1(1,VARREF(Ytail),x_1155F2201);
+    x_1155F2202 = T4;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1155F2202,x_1156F2198);
   } else {
-    T9 = CALL2(1,x_1156F2216,LITREF(lit_7),x_1155F2217);
+    T6 = CALL2(1,x_1156F2198,LITREF(lit_7),x_1155F2199);
   }
-  T36 = placeF2218;
-  T35 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T36);
-  tup16F2223 = T35;
-  T34 = CALL2(1,VARREF(YgooSmacrosYelt),tup16F2223,YPint((P)0));
-  g_declsF2224 = T34;
-  T33 = CALL2(1,VARREF(YgooSmacrosYelt),tup16F2223,YPint((P)1));
-  g_placeF2225 = T33;
-  T32 = CALL0(1,VARREF(YgooSmacrosYgensym));
-  new_colF2226 = T32;
-  T31 = CALL0(1,VARREF(YgooSmacrosYgensym));
-  valF2227 = T31;
-  T11 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T18 = CALL1(1,VARREF(Ylst),LITREF(lit_79));
-  T19 = CALL1(1,VARREF(Ylst),new_colF2226);
-  T20 = CALL1(1,VARREF(Ylst),valF2227);
-  T17 = CALL4(1,VARREF(YgooSmacrosYcat),T18,T19,T20,LITREF(lit_11));
-  T16 = CALL1(1,VARREF(Ylst),T17);
-  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_80));
-  T24 = CALL1(1,VARREF(Ylst),g_placeF2225);
-  T22 = CALL3(1,VARREF(YgooSmacrosYcat),T23,T24,LITREF(lit_11));
-  T21 = CALL1(1,VARREF(Ylst),T22);
-  T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T21,LITREF(lit_11));
-  T14 = CALL1(1,VARREF(Ylst),T15);
-  T13 = CALL3(1,VARREF(YgooSmacrosYcat),g_declsF2224,T14,LITREF(lit_11));
-  T12 = CALL1(1,VARREF(Ylst),T13);
-  T27 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T28 = CALL1(1,VARREF(Ylst),g_placeF2225);
-  T29 = CALL1(1,VARREF(Ylst),new_colF2226);
-  T26 = CALL4(1,VARREF(YgooSmacrosYcat),T27,T28,T29,LITREF(lit_11));
-  T25 = CALL1(1,VARREF(Ylst),T26);
-  T30 = CALL1(1,VARREF(Ylst),valF2227);
-  T10 = CALL5(1,VARREF(YgooSmacrosYcat),T11,T12,T25,T30,LITREF(lit_11));
+  T33 = placeF2200;
+  T32 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T33);
+  tup16F2203 = T32;
+  T31 = CALL2(1,VARREF(YgooSmacrosYelt),tup16F2203,YPint((P)0));
+  g_declsF2204 = T31;
+  T30 = CALL2(1,VARREF(YgooSmacrosYelt),tup16F2203,YPint((P)1));
+  g_placeF2205 = T30;
+  T29 = CALL0(1,VARREF(YgooSmacrosYgensym));
+  new_colF2206 = T29;
+  T28 = CALL0(1,VARREF(YgooSmacrosYgensym));
+  valF2207 = T28;
+  T8 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T15 = CALL1(1,VARREF(Ylst),LITREF(lit_79));
+  T16 = CALL1(1,VARREF(Ylst),new_colF2206);
+  T17 = CALL1(1,VARREF(Ylst),valF2207);
+  T14 = CALL4(1,VARREF(YgooSmacrosYcat),T15,T16,T17,LITREF(lit_11));
+  T13 = CALL1(1,VARREF(Ylst),T14);
+  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_80));
+  T21 = CALL1(1,VARREF(Ylst),g_placeF2205);
+  T19 = CALL3(1,VARREF(YgooSmacrosYcat),T20,T21,LITREF(lit_11));
+  T18 = CALL1(1,VARREF(Ylst),T19);
+  T12 = CALL3(1,VARREF(YgooSmacrosYcat),T13,T18,LITREF(lit_11));
+  T11 = CALL1(1,VARREF(Ylst),T12);
+  T10 = CALL3(1,VARREF(YgooSmacrosYcat),g_declsF2204,T11,LITREF(lit_11));
+  T9 = CALL1(1,VARREF(Ylst),T10);
+  T24 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
+  T25 = CALL1(1,VARREF(Ylst),g_placeF2205);
+  T26 = CALL1(1,VARREF(Ylst),new_colF2206);
+  T23 = CALL4(1,VARREF(YgooSmacrosYcat),T24,T25,T26,LITREF(lit_11));
+  T22 = CALL1(1,VARREF(Ylst),T23);
+  T27 = CALL1(1,VARREF(Ylst),valF2207);
+  T7 = CALL5(1,VARREF(YgooSmacrosYcat),T8,T9,T22,T27,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T10);
+  QRET(T7);
 }
 
 LOCCODEDEF(fun_39) {
@@ -1924,72 +1854,65 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_41) {
   P return_;
-  P g_placeF2239;
-  P g_declsF2238;
-  P tup18F2237;
-  P x_1159F2236;
-  P x_1159F2235;
-  P x_1159F2234;
-  P x_1159F2233;
-  P x_1159F2232;
-  P callF2231;
-  P placeF2230;
-  P x_1159F2229;
-  P x_1160F2228;
+  P g_placeF2217;
+  P g_declsF2216;
+  P tup18F2215;
+  P x_1159F2214;
+  P x_1159F2213;
+  P x_1159F2212;
+  P callF2211;
+  P placeF2210;
+  P x_1159F2209;
+  P x_1160F2208;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
+  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28;
 LINK_STACK();
   ARG(return_, 0);
-  T31 = FUNSHELL(0,fun_x_1160_40,2);
-  x_1160F2228 = T31;
-  FUNINIT(x_1160F2228, 2,FREEREF(0),return_);
-  x_1159F2229 = FREEREF(0);
-  placeF2230 = YPfalse;
-  callF2231 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1159F2229,VARREF(YLlstG));
+  T28 = FUNSHELL(0,fun_x_1160_40,2);
+  x_1160F2208 = T28;
+  FUNINIT(x_1160F2208, 2,FREEREF(0),return_);
+  x_1159F2209 = FREEREF(0);
+  placeF2210 = YPfalse;
+  callF2211 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1159F2209,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T11 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1159F2229,LITREF(lit_85),x_1160F2228);
-    x_1159F2232 = T11;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1159F2232,x_1160F2228);
-    placeF2230 = T9;
-    T10 = CALL1(1,VARREF(Ytail),x_1159F2232);
-    x_1159F2233 = T10;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1159F2233,x_1160F2228);
-    callF2231 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1159F2233);
-    x_1159F2234 = T8;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1159F2234,x_1160F2228);
-    x_1159F2235 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1159F2235,x_1160F2228);
-    T6 = CALL1(1,VARREF(Ytail),x_1159F2234);
-    x_1159F2236 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1159F2236,x_1160F2228);
+    T8 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1159F2209,LITREF(lit_85),x_1160F2208);
+    x_1159F2212 = T8;
+    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1159F2212,x_1160F2208);
+    placeF2210 = T6;
+    T7 = CALL1(1,VARREF(Ytail),x_1159F2212);
+    x_1159F2213 = T7;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1159F2213,x_1160F2208);
+    callF2211 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1159F2213);
+    x_1159F2214 = T5;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1159F2214,x_1160F2208);
   } else {
-    T12 = CALL2(1,x_1160F2228,LITREF(lit_7),x_1159F2229);
+    T9 = CALL2(1,x_1160F2208,LITREF(lit_7),x_1159F2209);
   }
-  T30 = placeF2230;
-  T29 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T30);
-  tup18F2237 = T29;
-  T28 = CALL2(1,VARREF(YgooSmacrosYelt),tup18F2237,YPint((P)0));
-  g_declsF2238 = T28;
-  T27 = CALL2(1,VARREF(YgooSmacrosYelt),tup18F2237,YPint((P)1));
-  g_placeF2239 = T27;
-  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T19 = CALL1(1,VARREF(Ylst),LITREF(lit_86));
-  T20 = CALL1(1,VARREF(Ylst),g_placeF2239);
-  T18 = CALL3(1,VARREF(YgooSmacrosYcat),T19,T20,LITREF(lit_11));
-  T17 = CALL1(1,VARREF(Ylst),T18);
-  T16 = CALL3(1,VARREF(YgooSmacrosYcat),g_declsF2238,T17,LITREF(lit_11));
-  T15 = CALL1(1,VARREF(Ylst),T16);
-  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T24 = CALL1(1,VARREF(Ylst),g_placeF2239);
-  T26 = callF2231;
-  T25 = CALL1(1,VARREF(Ylst),T26);
-  T22 = CALL4(1,VARREF(YgooSmacrosYcat),T23,T24,T25,LITREF(lit_11));
-  T21 = CALL1(1,VARREF(Ylst),T22);
-  T13 = CALL4(1,VARREF(YgooSmacrosYcat),T14,T15,T21,LITREF(lit_11));
+  T27 = placeF2210;
+  T26 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T27);
+  tup18F2215 = T26;
+  T25 = CALL2(1,VARREF(YgooSmacrosYelt),tup18F2215,YPint((P)0));
+  g_declsF2216 = T25;
+  T24 = CALL2(1,VARREF(YgooSmacrosYelt),tup18F2215,YPint((P)1));
+  g_placeF2217 = T24;
+  T11 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T16 = CALL1(1,VARREF(Ylst),LITREF(lit_86));
+  T17 = CALL1(1,VARREF(Ylst),g_placeF2217);
+  T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
+  T14 = CALL1(1,VARREF(Ylst),T15);
+  T13 = CALL3(1,VARREF(YgooSmacrosYcat),g_declsF2216,T14,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),T13);
+  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
+  T21 = CALL1(1,VARREF(Ylst),g_placeF2217);
+  T23 = callF2211;
+  T22 = CALL1(1,VARREF(Ylst),T23);
+  T19 = CALL4(1,VARREF(YgooSmacrosYcat),T20,T21,T22,LITREF(lit_11));
+  T18 = CALL1(1,VARREF(Ylst),T19);
+  T10 = CALL4(1,VARREF(YgooSmacrosYcat),T11,T12,T18,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T13);
+  QRET(T10);
 }
 
 LOCCODEDEF(fun_42) {
@@ -2017,77 +1940,70 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_44) {
   P return_;
-  P g_placeF2251;
-  P g_declsF2250;
-  P tup20F2249;
-  P x_1163F2248;
-  P x_1163F2247;
-  P x_1163F2246;
-  P x_1163F2245;
-  P x_1163F2244;
-  P valueF2243;
-  P placeF2242;
-  P x_1163F2241;
-  P x_1164F2240;
+  P g_placeF2227;
+  P g_declsF2226;
+  P tup20F2225;
+  P x_1163F2224;
+  P x_1163F2223;
+  P x_1163F2222;
+  P valueF2221;
+  P placeF2220;
+  P x_1163F2219;
+  P x_1164F2218;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
-  P T32,T33,T34,T35;
+  P T32;
 LINK_STACK();
   ARG(return_, 0);
-  T35 = FUNSHELL(0,fun_x_1164_43,2);
-  x_1164F2240 = T35;
-  FUNINIT(x_1164F2240, 2,FREEREF(0),return_);
-  x_1163F2241 = FREEREF(0);
-  placeF2242 = YPfalse;
-  valueF2243 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1163F2241,VARREF(YLlstG));
+  T32 = FUNSHELL(0,fun_x_1164_43,2);
+  x_1164F2218 = T32;
+  FUNINIT(x_1164F2218, 2,FREEREF(0),return_);
+  x_1163F2219 = FREEREF(0);
+  placeF2220 = YPfalse;
+  valueF2221 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1163F2219,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T11 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1163F2241,LITREF(lit_91),x_1164F2240);
-    x_1163F2244 = T11;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1163F2244,x_1164F2240);
-    placeF2242 = T9;
-    T10 = CALL1(1,VARREF(Ytail),x_1163F2244);
-    x_1163F2245 = T10;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1163F2245,x_1164F2240);
-    valueF2243 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1163F2245);
-    x_1163F2246 = T8;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1163F2246,x_1164F2240);
-    x_1163F2247 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1163F2247,x_1164F2240);
-    T6 = CALL1(1,VARREF(Ytail),x_1163F2246);
-    x_1163F2248 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1163F2248,x_1164F2240);
+    T8 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1163F2219,LITREF(lit_91),x_1164F2218);
+    x_1163F2222 = T8;
+    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1163F2222,x_1164F2218);
+    placeF2220 = T6;
+    T7 = CALL1(1,VARREF(Ytail),x_1163F2222);
+    x_1163F2223 = T7;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1163F2223,x_1164F2218);
+    valueF2221 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1163F2223);
+    x_1163F2224 = T5;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1163F2224,x_1164F2218);
   } else {
-    T12 = CALL2(1,x_1164F2240,LITREF(lit_7),x_1163F2241);
+    T9 = CALL2(1,x_1164F2218,LITREF(lit_7),x_1163F2219);
   }
-  T34 = placeF2242;
-  T33 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T34);
-  tup20F2249 = T33;
-  T32 = CALL2(1,VARREF(YgooSmacrosYelt),tup20F2249,YPint((P)0));
-  g_declsF2250 = T32;
-  T31 = CALL2(1,VARREF(YgooSmacrosYelt),tup20F2249,YPint((P)1));
-  g_placeF2251 = T31;
-  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T19 = CALL1(1,VARREF(Ylst),LITREF(lit_86));
-  T20 = CALL1(1,VARREF(Ylst),g_placeF2251);
-  T18 = CALL3(1,VARREF(YgooSmacrosYcat),T19,T20,LITREF(lit_11));
-  T17 = CALL1(1,VARREF(Ylst),T18);
-  T16 = CALL3(1,VARREF(YgooSmacrosYcat),g_declsF2250,T17,LITREF(lit_11));
-  T15 = CALL1(1,VARREF(Ylst),T16);
-  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_92));
-  T24 = CALL1(1,VARREF(Ylst),g_placeF2251);
-  T27 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T28 = CALL1(1,VARREF(Ylst),g_placeF2251);
-  T30 = valueF2243;
-  T29 = CALL1(1,VARREF(Ylst),T30);
-  T26 = CALL4(1,VARREF(YgooSmacrosYcat),T27,T28,T29,LITREF(lit_11));
-  T25 = CALL1(1,VARREF(Ylst),T26);
-  T22 = CALL4(1,VARREF(YgooSmacrosYcat),T23,T24,T25,LITREF(lit_11));
-  T21 = CALL1(1,VARREF(Ylst),T22);
-  T13 = CALL4(1,VARREF(YgooSmacrosYcat),T14,T15,T21,LITREF(lit_11));
+  T31 = placeF2220;
+  T30 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T31);
+  tup20F2225 = T30;
+  T29 = CALL2(1,VARREF(YgooSmacrosYelt),tup20F2225,YPint((P)0));
+  g_declsF2226 = T29;
+  T28 = CALL2(1,VARREF(YgooSmacrosYelt),tup20F2225,YPint((P)1));
+  g_placeF2227 = T28;
+  T11 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T16 = CALL1(1,VARREF(Ylst),LITREF(lit_86));
+  T17 = CALL1(1,VARREF(Ylst),g_placeF2227);
+  T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
+  T14 = CALL1(1,VARREF(Ylst),T15);
+  T13 = CALL3(1,VARREF(YgooSmacrosYcat),g_declsF2226,T14,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),T13);
+  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_92));
+  T21 = CALL1(1,VARREF(Ylst),g_placeF2227);
+  T24 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
+  T25 = CALL1(1,VARREF(Ylst),g_placeF2227);
+  T27 = valueF2221;
+  T26 = CALL1(1,VARREF(Ylst),T27);
+  T23 = CALL4(1,VARREF(YgooSmacrosYcat),T24,T25,T26,LITREF(lit_11));
+  T22 = CALL1(1,VARREF(Ylst),T23);
+  T19 = CALL4(1,VARREF(YgooSmacrosYcat),T20,T21,T22,LITREF(lit_11));
+  T18 = CALL1(1,VARREF(Ylst),T19);
+  T10 = CALL4(1,VARREF(YgooSmacrosYcat),T11,T12,T18,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T13);
+  QRET(T10);
 }
 
 LOCCODEDEF(fun_45) {
@@ -2115,57 +2031,50 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_47) {
   P return_;
-  P x_1167F2260;
-  P x_1167F2259;
-  P x_1167F2258;
-  P x_1167F2257;
-  P x_1167F2256;
-  P bodyF2255;
-  P testF2254;
-  P x_1167F2253;
-  P x_1168F2252;
+  P x_1167F2234;
+  P x_1167F2233;
+  P x_1167F2232;
+  P bodyF2231;
+  P testF2230;
+  P x_1167F2229;
+  P x_1168F2228;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22;
+  P T16,T17,T18,T19;
 LINK_STACK();
   ARG(return_, 0);
-  T22 = FUNSHELL(0,fun_x_1168_46,2);
-  x_1168F2252 = T22;
-  FUNINIT(x_1168F2252, 2,FREEREF(0),return_);
-  x_1167F2253 = FREEREF(0);
-  testF2254 = YPfalse;
-  bodyF2255 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1167F2253,VARREF(YLlstG));
+  T19 = FUNSHELL(0,fun_x_1168_46,2);
+  x_1168F2228 = T19;
+  FUNINIT(x_1168F2228, 2,FREEREF(0),return_);
+  x_1167F2229 = FREEREF(0);
+  testF2230 = YPfalse;
+  bodyF2231 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1167F2229,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1167F2253,LITREF(lit_97),x_1168F2252);
-    x_1167F2256 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1167F2256,x_1168F2252);
-    testF2254 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1167F2256);
-    x_1167F2257 = T8;
-    bodyF2255 = x_1167F2257;
-    x_1167F2258 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1167F2258,x_1168F2252);
-    x_1167F2259 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1167F2259,x_1168F2252);
-    T6 = CALL1(1,VARREF(Ytail),x_1167F2258);
-    x_1167F2260 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1167F2260,x_1168F2252);
+    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1167F2229,LITREF(lit_97),x_1168F2228);
+    x_1167F2232 = T6;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1167F2232,x_1168F2228);
+    testF2230 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1167F2232);
+    x_1167F2233 = T5;
+    bodyF2231 = x_1167F2233;
+    x_1167F2234 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1167F2234,x_1168F2228);
   } else {
-    T10 = CALL2(1,x_1168F2252,LITREF(lit_7),x_1167F2253);
+    T7 = CALL2(1,x_1168F2228,LITREF(lit_7),x_1167F2229);
   }
-  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_98));
-  T15 = CALL1(1,VARREF(Ylst),LITREF(lit_99));
-  T17 = testF2254;
-  T16 = CALL1(1,VARREF(Ylst),T17);
-  T14 = CALL3(1,VARREF(YgooSmacrosYcat),T15,T16,LITREF(lit_11));
+  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_98));
+  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_99));
+  T14 = testF2230;
   T13 = CALL1(1,VARREF(Ylst),T14);
-  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
-  T21 = bodyF2255;
-  T19 = CALL3(1,VARREF(YgooSmacrosYcat),T20,T21,LITREF(lit_11));
-  T18 = CALL1(1,VARREF(Ylst),T19);
-  T11 = CALL4(1,VARREF(YgooSmacrosYcat),T12,T13,T18,LITREF(lit_11));
+  T11 = CALL3(1,VARREF(YgooSmacrosYcat),T12,T13,LITREF(lit_11));
+  T10 = CALL1(1,VARREF(Ylst),T11);
+  T17 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
+  T18 = bodyF2231;
+  T16 = CALL3(1,VARREF(YgooSmacrosYcat),T17,T18,LITREF(lit_11));
+  T15 = CALL1(1,VARREF(Ylst),T16);
+  T8 = CALL4(1,VARREF(YgooSmacrosYcat),T9,T10,T15,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T11);
+  QRET(T8);
 }
 
 LOCCODEDEF(fun_48) {
@@ -2193,54 +2102,47 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_50) {
   P return_;
-  P x_1171F2269;
-  P x_1171F2268;
-  P x_1171F2267;
-  P x_1171F2266;
-  P x_1171F2265;
-  P bodyF2264;
-  P testF2263;
-  P x_1171F2262;
-  P x_1172F2261;
+  P x_1171F2241;
+  P x_1171F2240;
+  P x_1171F2239;
+  P bodyF2238;
+  P testF2237;
+  P x_1171F2236;
+  P x_1172F2235;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19;
+  P T16;
 LINK_STACK();
   ARG(return_, 0);
-  T19 = FUNSHELL(0,fun_x_1172_49,2);
-  x_1172F2261 = T19;
-  FUNINIT(x_1172F2261, 2,FREEREF(0),return_);
-  x_1171F2262 = FREEREF(0);
-  testF2263 = YPfalse;
-  bodyF2264 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1171F2262,VARREF(YLlstG));
+  T16 = FUNSHELL(0,fun_x_1172_49,2);
+  x_1172F2235 = T16;
+  FUNINIT(x_1172F2235, 2,FREEREF(0),return_);
+  x_1171F2236 = FREEREF(0);
+  testF2237 = YPfalse;
+  bodyF2238 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1171F2236,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1171F2262,LITREF(lit_105),x_1172F2261);
-    x_1171F2265 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1171F2265,x_1172F2261);
-    testF2263 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1171F2265);
-    x_1171F2266 = T8;
-    bodyF2264 = x_1171F2266;
-    x_1171F2267 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1171F2267,x_1172F2261);
-    x_1171F2268 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1171F2268,x_1172F2261);
-    T6 = CALL1(1,VARREF(Ytail),x_1171F2267);
-    x_1171F2269 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1171F2269,x_1172F2261);
+    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1171F2236,LITREF(lit_105),x_1172F2235);
+    x_1171F2239 = T6;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1171F2239,x_1172F2235);
+    testF2237 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1171F2239);
+    x_1171F2240 = T5;
+    bodyF2238 = x_1171F2240;
+    x_1171F2241 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1171F2241,x_1172F2235);
   } else {
-    T10 = CALL2(1,x_1172F2261,LITREF(lit_7),x_1171F2262);
+    T7 = CALL2(1,x_1172F2235,LITREF(lit_7),x_1171F2236);
   }
-  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_98));
-  T14 = testF2263;
-  T13 = CALL1(1,VARREF(Ylst),T14);
-  T17 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
-  T18 = bodyF2264;
-  T16 = CALL3(1,VARREF(YgooSmacrosYcat),T17,T18,LITREF(lit_11));
-  T15 = CALL1(1,VARREF(Ylst),T16);
-  T11 = CALL4(1,VARREF(YgooSmacrosYcat),T12,T13,T15,LITREF(lit_11));
+  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_98));
+  T11 = testF2237;
+  T10 = CALL1(1,VARREF(Ylst),T11);
+  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
+  T15 = bodyF2238;
+  T13 = CALL3(1,VARREF(YgooSmacrosYcat),T14,T15,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),T13);
+  T8 = CALL4(1,VARREF(YgooSmacrosYcat),T9,T10,T12,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T11);
+  QRET(T8);
 }
 
 LOCCODEDEF(fun_51) {
@@ -2309,21 +2211,21 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_55) {
   P return_;
-  P x_1183F2271;
-  P x_1184F2270;
+  P x_1183F2243;
+  P x_1184F2242;
   P T0,T1,T2,T3,T4,T5;
 LINK_STACK();
   ARG(return_, 0);
   T5 = FUNSHELL(0,fun_x_1184_54,3);
-  x_1184F2270 = T5;
-  FUNINIT(x_1184F2270, 3,FREEREF(0),FREEREF(1),return_);
+  x_1184F2242 = T5;
+  FUNINIT(x_1184F2242, 3,FREEREF(0),FREEREF(1),return_);
   T4 = BOXGET(FREEREF(1));
-  x_1183F2271 = T4;
-  T0 = CALL2(1,VARREF(YisaQ),x_1183F2271,VARREF(YLlstG));
+  x_1183F2243 = T4;
+  T0 = CALL2(1,VARREF(YisaQ),x_1183F2243,VARREF(YLlstG));
   if (T0 != YPfalse) {
-    T1 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1183F2271,x_1184F2270);
+    T1 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1183F2243,x_1184F2242);
   } else {
-    T2 = CALL2(1,x_1184F2270,LITREF(lit_7),x_1183F2271);
+    T2 = CALL2(1,x_1184F2242,LITREF(lit_7),x_1183F2243);
   }
   T3 = BOXGET(FREEREF(0));
 UNLINK_STACK();
@@ -2332,44 +2234,44 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_56) {
   P return_;
-  P x_1181F2279;
-  P x_1181F2278;
-  P x_1181F2277;
-  P x_1181F2276;
-  P restF2275;
-  P xF2274;
-  P x_1181F2273;
-  P x_1182F2272;
+  P x_1181F2251;
+  P x_1181F2250;
+  P x_1181F2249;
+  P x_1181F2248;
+  P restF2247;
+  P xF2246;
+  P x_1181F2245;
+  P x_1182F2244;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
 LINK_STACK();
   ARG(return_, 0);
   T13 = FUNSHELL(0,fun_x_1182_53,1);
-  x_1182F2272 = T13;
-  FUNINIT(x_1182F2272, 1,return_);
+  x_1182F2244 = T13;
+  FUNINIT(x_1182F2244, 1,return_);
   T12 = BOXGET(FREEREF(0));
-  x_1181F2273 = T12;
-  xF2274 = YPfalse;
-  xF2274 = BOXFAB(xF2274);
-  restF2275 = YPfalse;
-  restF2275 = BOXFAB(restF2275);
-  T2 = CALL2(1,VARREF(YisaQ),x_1181F2273,VARREF(YLlstG));
+  x_1181F2245 = T12;
+  xF2246 = YPfalse;
+  xF2246 = BOXFAB(xF2246);
+  restF2247 = YPfalse;
+  restF2247 = BOXFAB(restF2247);
+  T2 = CALL2(1,VARREF(YisaQ),x_1181F2245,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1181F2273,x_1182F2272);
-    BOXPUT(T7,xF2274);
-    T8 = CALL1(1,VARREF(Ytail),x_1181F2273);
-    x_1181F2276 = T8;
-    BOXPUT(x_1181F2276,restF2275);
-    x_1181F2277 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1181F2277,x_1182F2272);
-    x_1181F2278 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1181F2278,x_1182F2272);
-    T6 = CALL1(1,VARREF(Ytail),x_1181F2277);
-    x_1181F2279 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1181F2279,x_1182F2272);
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1181F2245,x_1182F2244);
+    BOXPUT(T7,xF2246);
+    T8 = CALL1(1,VARREF(Ytail),x_1181F2245);
+    x_1181F2248 = T8;
+    BOXPUT(x_1181F2248,restF2247);
+    x_1181F2249 = Ynil;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1181F2249,x_1182F2244);
+    x_1181F2250 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1181F2250,x_1182F2244);
+    T6 = CALL1(1,VARREF(Ytail),x_1181F2249);
+    x_1181F2251 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1181F2251,x_1182F2244);
   } else {
-    T9 = CALL2(1,x_1182F2272,LITREF(lit_7),x_1181F2273);
+    T9 = CALL2(1,x_1182F2244,LITREF(lit_7),x_1181F2245);
   }
-  T11 = FUNFAB(fun_55,2,xF2274,restF2275);
+  T11 = FUNFAB(fun_55,2,xF2246,restF2247);
   T10 = with_exit(T11);
 UNLINK_STACK();
   QRET(T10);
@@ -2377,41 +2279,34 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_57) {
   P return_;
-  P x_1179F2286;
-  P x_1179F2285;
-  P x_1179F2284;
-  P x_1179F2283;
-  P restF2282;
-  P x_1179F2281;
-  P x_1180F2280;
-  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
+  P x_1179F2256;
+  P x_1179F2255;
+  P restF2254;
+  P x_1179F2253;
+  P x_1180F2252;
+  P T0,T1,T2,T3,T4,T5,T6,T7;
 LINK_STACK();
   ARG(return_, 0);
-  T10 = FUNSHELL(0,fun_x_1180_52,2);
-  x_1180F2280 = T10;
-  FUNINIT(x_1180F2280, 2,FREEREF(0),return_);
-  x_1179F2281 = FREEREF(0);
-  restF2282 = YPfalse;
-  restF2282 = BOXFAB(restF2282);
-  T1 = CALL2(1,VARREF(YisaQ),x_1179F2281,VARREF(YLlstG));
+  T7 = FUNSHELL(0,fun_x_1180_52,2);
+  x_1180F2252 = T7;
+  FUNINIT(x_1180F2252, 2,FREEREF(0),return_);
+  x_1179F2253 = FREEREF(0);
+  restF2254 = YPfalse;
+  restF2254 = BOXFAB(restF2254);
+  T1 = CALL2(1,VARREF(YisaQ),x_1179F2253,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1179F2281,LITREF(lit_92),x_1180F2280);
-    x_1179F2283 = T6;
-    BOXPUT(x_1179F2283,restF2282);
-    x_1179F2284 = Ynil;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1179F2284,x_1180F2280);
-    x_1179F2285 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1179F2285,x_1180F2280);
-    T5 = CALL1(1,VARREF(Ytail),x_1179F2284);
-    x_1179F2286 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1179F2286,x_1180F2280);
+    T3 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1179F2253,LITREF(lit_92),x_1180F2252);
+    x_1179F2255 = T3;
+    BOXPUT(x_1179F2255,restF2254);
+    x_1179F2256 = Ynil;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1179F2256,x_1180F2252);
   } else {
-    T7 = CALL2(1,x_1180F2280,LITREF(lit_7),x_1179F2281);
+    T4 = CALL2(1,x_1180F2252,LITREF(lit_7),x_1179F2253);
   }
-  T9 = FUNFAB(fun_56,1,restF2282);
-  T8 = with_exit(T9);
+  T6 = FUNFAB(fun_56,1,restF2254);
+  T5 = with_exit(T6);
 UNLINK_STACK();
-  QRET(T8);
+  QRET(T5);
 }
 
 LOCCODEDEF(fun_58) {
@@ -2470,21 +2365,21 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_62) {
   P return_;
-  P x_1195F2288;
-  P x_1196F2287;
+  P x_1195F2258;
+  P x_1196F2257;
   P T0,T1,T2,T3,T4,T5;
 LINK_STACK();
   ARG(return_, 0);
   T5 = FUNSHELL(0,fun_x_1196_61,3);
-  x_1196F2287 = T5;
-  FUNINIT(x_1196F2287, 3,FREEREF(0),FREEREF(1),return_);
+  x_1196F2257 = T5;
+  FUNINIT(x_1196F2257, 3,FREEREF(0),FREEREF(1),return_);
   T4 = BOXGET(FREEREF(1));
-  x_1195F2288 = T4;
-  T0 = CALL2(1,VARREF(YisaQ),x_1195F2288,VARREF(YLlstG));
+  x_1195F2258 = T4;
+  T0 = CALL2(1,VARREF(YisaQ),x_1195F2258,VARREF(YLlstG));
   if (T0 != YPfalse) {
-    T1 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1195F2288,x_1196F2287);
+    T1 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1195F2258,x_1196F2257);
   } else {
-    T2 = CALL2(1,x_1196F2287,LITREF(lit_7),x_1195F2288);
+    T2 = CALL2(1,x_1196F2257,LITREF(lit_7),x_1195F2258);
   }
   T3 = BOXGET(FREEREF(0));
 UNLINK_STACK();
@@ -2493,44 +2388,44 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_63) {
   P return_;
-  P x_1193F2296;
-  P x_1193F2295;
-  P x_1193F2294;
-  P x_1193F2293;
-  P restF2292;
-  P xF2291;
-  P x_1193F2290;
-  P x_1194F2289;
+  P x_1193F2266;
+  P x_1193F2265;
+  P x_1193F2264;
+  P x_1193F2263;
+  P restF2262;
+  P xF2261;
+  P x_1193F2260;
+  P x_1194F2259;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
 LINK_STACK();
   ARG(return_, 0);
   T13 = FUNSHELL(0,fun_x_1194_60,1);
-  x_1194F2289 = T13;
-  FUNINIT(x_1194F2289, 1,return_);
+  x_1194F2259 = T13;
+  FUNINIT(x_1194F2259, 1,return_);
   T12 = BOXGET(FREEREF(0));
-  x_1193F2290 = T12;
-  xF2291 = YPfalse;
-  xF2291 = BOXFAB(xF2291);
-  restF2292 = YPfalse;
-  restF2292 = BOXFAB(restF2292);
-  T2 = CALL2(1,VARREF(YisaQ),x_1193F2290,VARREF(YLlstG));
+  x_1193F2260 = T12;
+  xF2261 = YPfalse;
+  xF2261 = BOXFAB(xF2261);
+  restF2262 = YPfalse;
+  restF2262 = BOXFAB(restF2262);
+  T2 = CALL2(1,VARREF(YisaQ),x_1193F2260,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1193F2290,x_1194F2289);
-    BOXPUT(T7,xF2291);
-    T8 = CALL1(1,VARREF(Ytail),x_1193F2290);
-    x_1193F2293 = T8;
-    BOXPUT(x_1193F2293,restF2292);
-    x_1193F2294 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1193F2294,x_1194F2289);
-    x_1193F2295 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1193F2295,x_1194F2289);
-    T6 = CALL1(1,VARREF(Ytail),x_1193F2294);
-    x_1193F2296 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1193F2296,x_1194F2289);
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1193F2260,x_1194F2259);
+    BOXPUT(T7,xF2261);
+    T8 = CALL1(1,VARREF(Ytail),x_1193F2260);
+    x_1193F2263 = T8;
+    BOXPUT(x_1193F2263,restF2262);
+    x_1193F2264 = Ynil;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1193F2264,x_1194F2259);
+    x_1193F2265 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1193F2265,x_1194F2259);
+    T6 = CALL1(1,VARREF(Ytail),x_1193F2264);
+    x_1193F2266 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1193F2266,x_1194F2259);
   } else {
-    T9 = CALL2(1,x_1194F2289,LITREF(lit_7),x_1193F2290);
+    T9 = CALL2(1,x_1194F2259,LITREF(lit_7),x_1193F2260);
   }
-  T11 = FUNFAB(fun_62,2,xF2291,restF2292);
+  T11 = FUNFAB(fun_62,2,xF2261,restF2262);
   T10 = with_exit(T11);
 UNLINK_STACK();
   QRET(T10);
@@ -2538,41 +2433,34 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_64) {
   P return_;
-  P x_1191F2303;
-  P x_1191F2302;
-  P x_1191F2301;
-  P x_1191F2300;
-  P restF2299;
-  P x_1191F2298;
-  P x_1192F2297;
-  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
+  P x_1191F2271;
+  P x_1191F2270;
+  P restF2269;
+  P x_1191F2268;
+  P x_1192F2267;
+  P T0,T1,T2,T3,T4,T5,T6,T7;
 LINK_STACK();
   ARG(return_, 0);
-  T10 = FUNSHELL(0,fun_x_1192_59,2);
-  x_1192F2297 = T10;
-  FUNINIT(x_1192F2297, 2,FREEREF(0),return_);
-  x_1191F2298 = FREEREF(0);
-  restF2299 = YPfalse;
-  restF2299 = BOXFAB(restF2299);
-  T1 = CALL2(1,VARREF(YisaQ),x_1191F2298,VARREF(YLlstG));
+  T7 = FUNSHELL(0,fun_x_1192_59,2);
+  x_1192F2267 = T7;
+  FUNINIT(x_1192F2267, 2,FREEREF(0),return_);
+  x_1191F2268 = FREEREF(0);
+  restF2269 = YPfalse;
+  restF2269 = BOXFAB(restF2269);
+  T1 = CALL2(1,VARREF(YisaQ),x_1191F2268,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1191F2298,LITREF(lit_121),x_1192F2297);
-    x_1191F2300 = T6;
-    BOXPUT(x_1191F2300,restF2299);
-    x_1191F2301 = Ynil;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1191F2301,x_1192F2297);
-    x_1191F2302 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1191F2302,x_1192F2297);
-    T5 = CALL1(1,VARREF(Ytail),x_1191F2301);
-    x_1191F2303 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1191F2303,x_1192F2297);
+    T3 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1191F2268,LITREF(lit_121),x_1192F2267);
+    x_1191F2270 = T3;
+    BOXPUT(x_1191F2270,restF2269);
+    x_1191F2271 = Ynil;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1191F2271,x_1192F2267);
   } else {
-    T7 = CALL2(1,x_1192F2297,LITREF(lit_7),x_1191F2298);
+    T4 = CALL2(1,x_1192F2267,LITREF(lit_7),x_1191F2268);
   }
-  T9 = FUNFAB(fun_63,1,restF2299);
-  T8 = with_exit(T9);
+  T6 = FUNFAB(fun_63,1,restF2269);
+  T5 = with_exit(T6);
 UNLINK_STACK();
-  QRET(T8);
+  QRET(T5);
 }
 
 LOCCODEDEF(fun_65) {
@@ -2614,48 +2502,48 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_68) {
   P return_;
-  P x_1203F2311;
-  P x_1203F2310;
-  P x_1203F2309;
-  P x_1203F2308;
-  P bodyF2307;
-  P condF2306;
-  P x_1203F2305;
-  P x_1204F2304;
+  P x_1203F2279;
+  P x_1203F2278;
+  P x_1203F2277;
+  P x_1203F2276;
+  P bodyF2275;
+  P condF2274;
+  P x_1203F2273;
+  P x_1204F2272;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25;
 LINK_STACK();
   ARG(return_, 0);
   T25 = FUNSHELL(0,fun_x_1204_67,2);
-  x_1204F2304 = T25;
-  FUNINIT(x_1204F2304, 2,FREEREF(0),return_);
+  x_1204F2272 = T25;
+  FUNINIT(x_1204F2272, 2,FREEREF(0),return_);
   T24 = BOXGET(FREEREF(0));
   T23 = CALL1(1,VARREF(Yhead),T24);
-  x_1203F2305 = T23;
-  condF2306 = YPfalse;
-  bodyF2307 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1203F2305,VARREF(YLlstG));
+  x_1203F2273 = T23;
+  condF2274 = YPfalse;
+  bodyF2275 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1203F2273,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1203F2305,x_1204F2304);
-    condF2306 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1203F2305);
-    x_1203F2308 = T8;
-    bodyF2307 = x_1203F2308;
-    x_1203F2309 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1203F2309,x_1204F2304);
-    x_1203F2310 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1203F2310,x_1204F2304);
-    T6 = CALL1(1,VARREF(Ytail),x_1203F2309);
-    x_1203F2311 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1203F2311,x_1204F2304);
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1203F2273,x_1204F2272);
+    condF2274 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1203F2273);
+    x_1203F2276 = T8;
+    bodyF2275 = x_1203F2276;
+    x_1203F2277 = Ynil;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1203F2277,x_1204F2272);
+    x_1203F2278 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1203F2278,x_1204F2272);
+    T6 = CALL1(1,VARREF(Ytail),x_1203F2277);
+    x_1203F2279 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1203F2279,x_1204F2272);
   } else {
-    T9 = CALL2(1,x_1204F2304,LITREF(lit_7),x_1203F2305);
+    T9 = CALL2(1,x_1204F2272,LITREF(lit_7),x_1203F2273);
   }
   T11 = CALL1(1,VARREF(Ylst),LITREF(lit_98));
-  T13 = condF2306;
+  T13 = condF2274;
   T12 = CALL1(1,VARREF(Ylst),T13);
   T16 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
-  T17 = bodyF2307;
+  T17 = bodyF2275;
   T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
   T14 = CALL1(1,VARREF(Ylst),T15);
   T20 = CALL1(1,VARREF(Ylst),LITREF(lit_132));
@@ -2670,48 +2558,41 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_69) {
   P return_;
-  P x_1201F2318;
-  P x_1201F2317;
-  P x_1201F2316;
-  P x_1201F2315;
-  P casesF2314;
-  P x_1201F2313;
-  P x_1202F2312;
-  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
+  P x_1201F2284;
+  P x_1201F2283;
+  P casesF2282;
+  P x_1201F2281;
+  P x_1202F2280;
+  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
 LINK_STACK();
   ARG(return_, 0);
-  T13 = FUNSHELL(0,fun_x_1202_66,2);
-  x_1202F2312 = T13;
-  FUNINIT(x_1202F2312, 2,FREEREF(0),return_);
-  x_1201F2313 = FREEREF(0);
-  casesF2314 = YPfalse;
-  casesF2314 = BOXFAB(casesF2314);
-  T1 = CALL2(1,VARREF(YisaQ),x_1201F2313,VARREF(YLlstG));
+  T10 = FUNSHELL(0,fun_x_1202_66,2);
+  x_1202F2280 = T10;
+  FUNINIT(x_1202F2280, 2,FREEREF(0),return_);
+  x_1201F2281 = FREEREF(0);
+  casesF2282 = YPfalse;
+  casesF2282 = BOXFAB(casesF2282);
+  T1 = CALL2(1,VARREF(YisaQ),x_1201F2281,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1201F2313,LITREF(lit_132),x_1202F2312);
-    x_1201F2315 = T6;
-    BOXPUT(x_1201F2315,casesF2314);
-    x_1201F2316 = Ynil;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1201F2316,x_1202F2312);
-    x_1201F2317 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1201F2317,x_1202F2312);
-    T5 = CALL1(1,VARREF(Ytail),x_1201F2316);
-    x_1201F2318 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1201F2318,x_1202F2312);
+    T3 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1201F2281,LITREF(lit_132),x_1202F2280);
+    x_1201F2283 = T3;
+    BOXPUT(x_1201F2283,casesF2282);
+    x_1201F2284 = Ynil;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1201F2284,x_1202F2280);
   } else {
-    T7 = CALL2(1,x_1202F2312,LITREF(lit_7),x_1201F2313);
+    T4 = CALL2(1,x_1202F2280,LITREF(lit_7),x_1201F2281);
   }
-  T10 = BOXGET(casesF2314);
-  T9 = CALL1(1,VARREF(YgooSmacrosYnulQ),T10);
-  if (T9 != YPfalse) {
-    T8 = YPfalse;
+  T7 = BOXGET(casesF2282);
+  T6 = CALL1(1,VARREF(YgooSmacrosYnulQ),T7);
+  if (T6 != YPfalse) {
+    T5 = YPfalse;
   } else {
-    T12 = FUNFAB(fun_68,1,casesF2314);
-    T11 = with_exit(T12);
-    T8 = T11;
+    T9 = FUNFAB(fun_68,1,casesF2282);
+    T8 = with_exit(T9);
+    T5 = T8;
   }
 UNLINK_STACK();
-  QRET(T8);
+  QRET(T5);
 }
 
 LOCCODEDEF(fun_70) {
@@ -2766,39 +2647,39 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_74) {
   P return_;
-  P x_1211F2324;
-  P x_1211F2323;
-  P x_1211F2322;
-  P valuesF2321;
-  P x_1211F2320;
-  P x_1212F2319;
+  P x_1211F2290;
+  P x_1211F2289;
+  P x_1211F2288;
+  P valuesF2287;
+  P x_1211F2286;
+  P x_1212F2285;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23;
 LINK_STACK();
   ARG(return_, 0);
   T23 = FUNSHELL(0,fun_x_1212_72,2);
-  x_1212F2319 = T23;
-  FUNINIT(x_1212F2319, 2,FREEREF(0),return_);
+  x_1212F2285 = T23;
+  FUNINIT(x_1212F2285, 2,FREEREF(0),return_);
   T22 = BOXGET(FREEREF(1));
-  x_1211F2320 = T22;
-  valuesF2321 = YPfalse;
-  T1 = CALL2(1,VARREF(YisaQ),x_1211F2320,VARREF(YLlstG));
+  x_1211F2286 = T22;
+  valuesF2287 = YPfalse;
+  T1 = CALL2(1,VARREF(YisaQ),x_1211F2286,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    valuesF2321 = x_1211F2320;
-    x_1211F2322 = Ynil;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1211F2322,x_1212F2319);
-    x_1211F2323 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1211F2323,x_1212F2319);
-    T5 = CALL1(1,VARREF(Ytail),x_1211F2322);
-    x_1211F2324 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1211F2324,x_1212F2319);
+    valuesF2287 = x_1211F2286;
+    x_1211F2288 = Ynil;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1211F2288,x_1212F2285);
+    x_1211F2289 = T4;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1211F2289,x_1212F2285);
+    T5 = CALL1(1,VARREF(Ytail),x_1211F2288);
+    x_1211F2290 = T5;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1211F2290,x_1212F2285);
   } else {
-    T6 = CALL2(1,x_1212F2319,LITREF(lit_7),x_1211F2320);
+    T6 = CALL2(1,x_1212F2285,LITREF(lit_7),x_1211F2286);
   }
   T8 = CALL1(1,VARREF(Ylst),LITREF(lit_98));
   T11 = CALL1(1,VARREF(Ylst),LITREF(lit_92));
   T13 = FUNFAB(fun_73,2,FREEREF(2),FREEREF(3));
-  T14 = valuesF2321;
+  T14 = valuesF2287;
   T12 = CALL2(1,VARREF(YgooSmacrosYmap),T13,T14);
   T10 = CALL3(1,VARREF(YgooSmacrosYcat),T11,T12,LITREF(lit_11));
   T9 = CALL1(1,VARREF(Ylst),T10);
@@ -2816,53 +2697,53 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_75) {
   P return_;
-  P x_1209F2332;
-  P x_1209F2331;
-  P x_1209F2330;
-  P x_1209F2329;
-  P bodyF2328;
-  P condF2327;
-  P x_1209F2326;
-  P x_1210F2325;
+  P x_1209F2298;
+  P x_1209F2297;
+  P x_1209F2296;
+  P x_1209F2295;
+  P bodyF2294;
+  P condF2293;
+  P x_1209F2292;
+  P x_1210F2291;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19;
 LINK_STACK();
   ARG(return_, 0);
   T19 = FUNSHELL(0,fun_x_1210_71,2);
-  x_1210F2325 = T19;
-  FUNINIT(x_1210F2325, 2,FREEREF(0),return_);
+  x_1210F2291 = T19;
+  FUNINIT(x_1210F2291, 2,FREEREF(0),return_);
   T18 = CALL1(1,VARREF(Yhead),FREEREF(0));
-  x_1209F2326 = T18;
-  condF2327 = YPfalse;
-  condF2327 = BOXFAB(condF2327);
-  bodyF2328 = YPfalse;
-  bodyF2328 = BOXFAB(bodyF2328);
-  T2 = CALL2(1,VARREF(YisaQ),x_1209F2326,VARREF(YLlstG));
+  x_1209F2292 = T18;
+  condF2293 = YPfalse;
+  condF2293 = BOXFAB(condF2293);
+  bodyF2294 = YPfalse;
+  bodyF2294 = BOXFAB(bodyF2294);
+  T2 = CALL2(1,VARREF(YisaQ),x_1209F2292,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1209F2326,x_1210F2325);
-    BOXPUT(T7,condF2327);
-    T8 = CALL1(1,VARREF(Ytail),x_1209F2326);
-    x_1209F2329 = T8;
-    BOXPUT(x_1209F2329,bodyF2328);
-    x_1209F2330 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1209F2330,x_1210F2325);
-    x_1209F2331 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1209F2331,x_1210F2325);
-    T6 = CALL1(1,VARREF(Ytail),x_1209F2330);
-    x_1209F2332 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1209F2332,x_1210F2325);
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1209F2292,x_1210F2291);
+    BOXPUT(T7,condF2293);
+    T8 = CALL1(1,VARREF(Ytail),x_1209F2292);
+    x_1209F2295 = T8;
+    BOXPUT(x_1209F2295,bodyF2294);
+    x_1209F2296 = Ynil;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1209F2296,x_1210F2291);
+    x_1209F2297 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1209F2297,x_1210F2291);
+    T6 = CALL1(1,VARREF(Ytail),x_1209F2296);
+    x_1209F2298 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1209F2298,x_1210F2291);
   } else {
-    T9 = CALL2(1,x_1210F2325,LITREF(lit_7),x_1209F2326);
+    T9 = CALL2(1,x_1210F2291,LITREF(lit_7),x_1209F2292);
   }
-  T12 = BOXGET(condF2327);
+  T12 = BOXGET(condF2293);
   T11 = CALL2(1,VARREF(YgooSmacrosYEE),T12,YPtrue);
   if (T11 != YPfalse) {
     T14 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
-    T15 = BOXGET(bodyF2328);
+    T15 = BOXGET(bodyF2294);
     T13 = CALL3(1,VARREF(YgooSmacrosYcat),T14,T15,LITREF(lit_11));
     T10 = T13;
   } else {
-    T17 = FUNFAB(fun_74,5,FREEREF(0),condF2327,FREEREF(1),FREEREF(2),bodyF2328);
+    T17 = FUNFAB(fun_74,5,FREEREF(0),condF2293,FREEREF(1),FREEREF(2),bodyF2294);
     T16 = with_exit(T17);
     T10 = T16;
   }
@@ -2903,77 +2784,69 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_78) {
   P return_;
-  P tst_varF2345;
-  P val_varF2344;
-  P x_1215F2343;
-  P x_1215F2342;
-  P x_1215F2341;
-  P x_1215F2340;
-  P x_1215F2339;
-  P x_1215F2338;
-  P casesF2337;
-  P tstF2336;
-  P valF2335;
-  P x_1215F2334;
-  P x_1216F2333;
+  P tst_varF2309;
+  P val_varF2308;
+  P x_1215F2307;
+  P x_1215F2306;
+  P x_1215F2305;
+  P x_1215F2304;
+  P casesF2303;
+  P tstF2302;
+  P valF2301;
+  P x_1215F2300;
+  P x_1216F2299;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
-  P T32,T33;
+  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30;
 LINK_STACK();
   ARG(return_, 0);
-  T33 = FUNSHELL(0,fun_x_1216_77,2);
-  x_1216F2333 = T33;
-  FUNINIT(x_1216F2333, 2,FREEREF(0),return_);
-  x_1215F2334 = FREEREF(0);
-  valF2335 = YPfalse;
-  tstF2336 = YPfalse;
-  casesF2337 = YPfalse;
-  T3 = CALL2(1,VARREF(YisaQ),x_1215F2334,VARREF(YLlstG));
+  T30 = FUNSHELL(0,fun_x_1216_77,2);
+  x_1216F2299 = T30;
+  FUNINIT(x_1216F2299, 2,FREEREF(0),return_);
+  x_1215F2300 = FREEREF(0);
+  valF2301 = YPfalse;
+  tstF2302 = YPfalse;
+  casesF2303 = YPfalse;
+  T3 = CALL2(1,VARREF(YisaQ),x_1215F2300,VARREF(YLlstG));
   if (T3 != YPfalse) {
-    T12 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1215F2334,LITREF(lit_152),x_1216F2333);
-    x_1215F2338 = T12;
-    T10 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1215F2338,x_1216F2333);
-    valF2335 = T10;
-    T11 = CALL1(1,VARREF(Ytail),x_1215F2338);
-    x_1215F2339 = T11;
-    T8 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1215F2339,x_1216F2333);
-    tstF2336 = T8;
-    T9 = CALL1(1,VARREF(Ytail),x_1215F2339);
-    x_1215F2340 = T9;
-    casesF2337 = x_1215F2340;
-    x_1215F2341 = Ynil;
-    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1215F2341,x_1216F2333);
-    x_1215F2342 = T6;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1215F2342,x_1216F2333);
-    T7 = CALL1(1,VARREF(Ytail),x_1215F2341);
-    x_1215F2343 = T7;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1215F2343,x_1216F2333);
+    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1215F2300,LITREF(lit_152),x_1216F2299);
+    x_1215F2304 = T9;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1215F2304,x_1216F2299);
+    valF2301 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1215F2304);
+    x_1215F2305 = T8;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1215F2305,x_1216F2299);
+    tstF2302 = T5;
+    T6 = CALL1(1,VARREF(Ytail),x_1215F2305);
+    x_1215F2306 = T6;
+    casesF2303 = x_1215F2306;
+    x_1215F2307 = Ynil;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1215F2307,x_1216F2299);
   } else {
-    T13 = CALL2(1,x_1216F2333,LITREF(lit_7),x_1215F2334);
+    T10 = CALL2(1,x_1216F2299,LITREF(lit_7),x_1215F2300);
   }
-  T32 = CALL0(1,VARREF(YgooSmacrosYgensym));
-  val_varF2344 = T32;
-  T31 = CALL0(1,VARREF(YgooSmacrosYgensym));
-  tst_varF2345 = T31;
-  T15 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T20 = CALL1(1,VARREF(Ylst),val_varF2344);
-  T22 = valF2335;
-  T21 = CALL1(1,VARREF(Ylst),T22);
-  T19 = CALL3(1,VARREF(YgooSmacrosYcat),T20,T21,LITREF(lit_11));
+  T29 = CALL0(1,VARREF(YgooSmacrosYgensym));
+  val_varF2308 = T29;
+  T28 = CALL0(1,VARREF(YgooSmacrosYgensym));
+  tst_varF2309 = T28;
+  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
+  T17 = CALL1(1,VARREF(Ylst),val_varF2308);
+  T19 = valF2301;
   T18 = CALL1(1,VARREF(Ylst),T19);
-  T25 = CALL1(1,VARREF(Ylst),tst_varF2345);
-  T27 = tstF2336;
-  T26 = CALL1(1,VARREF(Ylst),T27);
-  T24 = CALL3(1,VARREF(YgooSmacrosYcat),T25,T26,LITREF(lit_11));
+  T16 = CALL3(1,VARREF(YgooSmacrosYcat),T17,T18,LITREF(lit_11));
+  T15 = CALL1(1,VARREF(Ylst),T16);
+  T22 = CALL1(1,VARREF(Ylst),tst_varF2309);
+  T24 = tstF2302;
   T23 = CALL1(1,VARREF(Ylst),T24);
-  T17 = CALL3(1,VARREF(YgooSmacrosYcat),T18,T23,LITREF(lit_11));
-  T16 = CALL1(1,VARREF(Ylst),T17);
-  T30 = casesF2337;
-  T29 = CALL3(1,VARREF(YgooSmacrosYdo_case_by),val_varF2344,tst_varF2345,T30);
-  T28 = CALL1(1,VARREF(Ylst),T29);
-  T14 = CALL4(1,VARREF(YgooSmacrosYcat),T15,T16,T28,LITREF(lit_11));
+  T21 = CALL3(1,VARREF(YgooSmacrosYcat),T22,T23,LITREF(lit_11));
+  T20 = CALL1(1,VARREF(Ylst),T21);
+  T14 = CALL3(1,VARREF(YgooSmacrosYcat),T15,T20,LITREF(lit_11));
+  T13 = CALL1(1,VARREF(Ylst),T14);
+  T27 = casesF2303;
+  T26 = CALL3(1,VARREF(YgooSmacrosYdo_case_by),val_varF2308,tst_varF2309,T27);
+  T25 = CALL1(1,VARREF(Ylst),T26);
+  T11 = CALL4(1,VARREF(YgooSmacrosYcat),T12,T13,T25,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T14);
+  QRET(T11);
 }
 
 LOCCODEDEF(fun_79) {
@@ -3001,52 +2874,44 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_81) {
   P return_;
-  P x_1219F2354;
-  P x_1219F2353;
-  P x_1219F2352;
-  P x_1219F2351;
-  P x_1219F2350;
-  P casesF2349;
-  P valF2348;
-  P x_1219F2347;
-  P x_1220F2346;
-  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17;
+  P x_1219F2316;
+  P x_1219F2315;
+  P x_1219F2314;
+  P casesF2313;
+  P valF2312;
+  P x_1219F2311;
+  P x_1220F2310;
+  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14;
 LINK_STACK();
   ARG(return_, 0);
-  T17 = FUNSHELL(0,fun_x_1220_80,2);
-  x_1220F2346 = T17;
-  FUNINIT(x_1220F2346, 2,FREEREF(0),return_);
-  x_1219F2347 = FREEREF(0);
-  valF2348 = YPfalse;
-  casesF2349 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1219F2347,VARREF(YLlstG));
+  T14 = FUNSHELL(0,fun_x_1220_80,2);
+  x_1220F2310 = T14;
+  FUNINIT(x_1220F2310, 2,FREEREF(0),return_);
+  x_1219F2311 = FREEREF(0);
+  valF2312 = YPfalse;
+  casesF2313 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1219F2311,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1219F2347,LITREF(lit_157),x_1220F2346);
-    x_1219F2350 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1219F2350,x_1220F2346);
-    valF2348 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1219F2350);
-    x_1219F2351 = T8;
-    casesF2349 = x_1219F2351;
-    x_1219F2352 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1219F2352,x_1220F2346);
-    x_1219F2353 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1219F2353,x_1220F2346);
-    T6 = CALL1(1,VARREF(Ytail),x_1219F2352);
-    x_1219F2354 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1219F2354,x_1220F2346);
+    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1219F2311,LITREF(lit_157),x_1220F2310);
+    x_1219F2314 = T6;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1219F2314,x_1220F2310);
+    valF2312 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1219F2314);
+    x_1219F2315 = T5;
+    casesF2313 = x_1219F2315;
+    x_1219F2316 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1219F2316,x_1220F2310);
   } else {
-    T10 = CALL2(1,x_1220F2346,LITREF(lit_7),x_1219F2347);
+    T7 = CALL2(1,x_1220F2310,LITREF(lit_7),x_1219F2311);
   }
-  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_152));
-  T14 = valF2348;
-  T13 = CALL1(1,VARREF(Ylst),T14);
-  T15 = CALL1(1,VARREF(Ylst),LITREF(lit_158));
-  T16 = casesF2349;
-  T11 = CALL5(1,VARREF(YgooSmacrosYcat),T12,T13,T15,T16,LITREF(lit_11));
+  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_152));
+  T11 = valF2312;
+  T10 = CALL1(1,VARREF(Ylst),T11);
+  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_158));
+  T13 = casesF2313;
+  T8 = CALL5(1,VARREF(YgooSmacrosYcat),T9,T10,T12,T13,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T11);
+  QRET(T8);
 }
 
 LOCCODEDEF(fun_82) {
@@ -3086,21 +2951,21 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_85) {
   P return_;
-  P varF2369;
-  P x_1231F2368;
-  P x_1231F2367;
-  P x_1231F2366;
-  P x_1231F2365;
-  P x_1231F2364;
-  P x_1231F2363;
-  P x_1231F2362;
-  P x_1231F2361;
-  P x_1231F2360;
-  P restF2359;
-  P thenF2358;
-  P patF2357;
-  P x_1231F2356;
-  P x_1232F2355;
+  P varF2331;
+  P x_1231F2330;
+  P x_1231F2329;
+  P x_1231F2328;
+  P x_1231F2327;
+  P x_1231F2326;
+  P x_1231F2325;
+  P x_1231F2324;
+  P x_1231F2323;
+  P x_1231F2322;
+  P restF2321;
+  P thenF2320;
+  P patF2319;
+  P x_1231F2318;
+  P x_1232F2317;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33,T34,T35,T36,T37,T38,T39,T40,T41,T42,T43,T44,T45,T46,T47;
@@ -3108,54 +2973,54 @@ LOCCODEDEF(fun_85) {
 LINK_STACK();
   ARG(return_, 0);
   T51 = FUNSHELL(0,fun_x_1232_84,1);
-  x_1232F2355 = T51;
-  FUNINIT(x_1232F2355, 1,return_);
+  x_1232F2317 = T51;
+  FUNINIT(x_1232F2317, 1,return_);
   T50 = BOXGET(FREEREF(0));
-  x_1231F2356 = T50;
-  patF2357 = YPfalse;
-  thenF2358 = YPfalse;
-  restF2359 = YPfalse;
-  T3 = CALL2(1,VARREF(YisaQ),x_1231F2356,VARREF(YLlstG));
+  x_1231F2318 = T50;
+  patF2319 = YPfalse;
+  thenF2320 = YPfalse;
+  restF2321 = YPfalse;
+  T3 = CALL2(1,VARREF(YisaQ),x_1231F2318,VARREF(YLlstG));
   if (T3 != YPfalse) {
-    T14 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1231F2356,x_1232F2355);
-    x_1231F2360 = T14;
-    T12 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1231F2360,x_1232F2355);
-    patF2357 = T12;
-    T13 = CALL1(1,VARREF(Ytail),x_1231F2360);
-    x_1231F2361 = T13;
-    thenF2358 = x_1231F2361;
-    x_1231F2362 = Ynil;
-    T10 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1231F2362,x_1232F2355);
-    x_1231F2363 = T10;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1231F2363,x_1232F2355);
-    T11 = CALL1(1,VARREF(Ytail),x_1231F2362);
-    x_1231F2364 = T11;
-    T8 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1231F2364,x_1232F2355);
-    T15 = CALL1(1,VARREF(Ytail),x_1231F2356);
-    x_1231F2365 = T15;
-    restF2359 = x_1231F2365;
-    x_1231F2366 = Ynil;
-    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1231F2366,x_1232F2355);
-    x_1231F2367 = T6;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1231F2367,x_1232F2355);
-    T7 = CALL1(1,VARREF(Ytail),x_1231F2366);
-    x_1231F2368 = T7;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1231F2368,x_1232F2355);
+    T14 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1231F2318,x_1232F2317);
+    x_1231F2322 = T14;
+    T12 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1231F2322,x_1232F2317);
+    patF2319 = T12;
+    T13 = CALL1(1,VARREF(Ytail),x_1231F2322);
+    x_1231F2323 = T13;
+    thenF2320 = x_1231F2323;
+    x_1231F2324 = Ynil;
+    T10 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1231F2324,x_1232F2317);
+    x_1231F2325 = T10;
+    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1231F2325,x_1232F2317);
+    T11 = CALL1(1,VARREF(Ytail),x_1231F2324);
+    x_1231F2326 = T11;
+    T8 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1231F2326,x_1232F2317);
+    T15 = CALL1(1,VARREF(Ytail),x_1231F2318);
+    x_1231F2327 = T15;
+    restF2321 = x_1231F2327;
+    x_1231F2328 = Ynil;
+    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1231F2328,x_1232F2317);
+    x_1231F2329 = T6;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1231F2329,x_1232F2317);
+    T7 = CALL1(1,VARREF(Ytail),x_1231F2328);
+    x_1231F2330 = T7;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1231F2330,x_1232F2317);
   } else {
-    T16 = CALL2(1,x_1232F2355,LITREF(lit_7),x_1231F2356);
+    T16 = CALL2(1,x_1232F2317,LITREF(lit_7),x_1231F2318);
   }
-  T19 = patF2357;
+  T19 = patF2319;
   T18 = CALL2(1,VARREF(YgooSmacrosYEE),T19,YPtrue);
   if (T18 != YPfalse) {
     T21 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
-    T22 = thenF2358;
+    T22 = thenF2320;
     T20 = CALL3(1,VARREF(YgooSmacrosYcat),T21,T22,LITREF(lit_11));
     T17 = T20;
   } else {
     T49 = CALL0(1,VARREF(YgooSmacrosYgensym));
-    varF2369 = T49;
+    varF2331 = T49;
     T24 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-    T29 = CALL1(1,VARREF(Ylst),varF2369);
+    T29 = CALL1(1,VARREF(Ylst),varF2331);
     T31 = BOXGET(FREEREF(1));
     T30 = CALL1(1,VARREF(Ylst),T31);
     T28 = CALL3(1,VARREF(YgooSmacrosYcat),T29,T30,LITREF(lit_11));
@@ -3163,18 +3028,18 @@ LINK_STACK();
     T26 = CALL2(1,VARREF(YgooSmacrosYcat),T27,LITREF(lit_11));
     T25 = CALL1(1,VARREF(Ylst),T26);
     T34 = CALL1(1,VARREF(Ylst),LITREF(lit_171));
-    T38 = patF2357;
+    T38 = patF2319;
     T37 = CALL1(1,VARREF(Ylst),T38);
-    T39 = CALL1(1,VARREF(Ylst),varF2369);
+    T39 = CALL1(1,VARREF(Ylst),varF2331);
     T36 = CALL3(1,VARREF(YgooSmacrosYcat),T37,T39,LITREF(lit_11));
     T35 = CALL1(1,VARREF(Ylst),T36);
     T42 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
-    T43 = thenF2358;
+    T43 = thenF2320;
     T41 = CALL3(1,VARREF(YgooSmacrosYcat),T42,T43,LITREF(lit_11));
     T40 = CALL1(1,VARREF(Ylst),T41);
     T46 = CALL1(1,VARREF(Ylst),LITREF(lit_163));
-    T47 = CALL1(1,VARREF(Ylst),varF2369);
-    T48 = restF2359;
+    T47 = CALL1(1,VARREF(Ylst),varF2331);
+    T48 = restF2321;
     T45 = CALL4(1,VARREF(YgooSmacrosYcat),T46,T47,T48,LITREF(lit_11));
     T44 = CALL1(1,VARREF(Ylst),T45);
     T33 = CALL5(1,VARREF(YgooSmacrosYcat),T34,T35,T40,T44,LITREF(lit_11));
@@ -3201,21 +3066,21 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_87) {
   P return_;
-  P x_1229F2371;
-  P x_1230F2370;
+  P x_1229F2333;
+  P x_1230F2332;
   P T0,T1,T2,T3,T4,T5,T6,T7;
 LINK_STACK();
   ARG(return_, 0);
   T7 = FUNSHELL(0,fun_x_1230_86,3);
-  x_1230F2370 = T7;
-  FUNINIT(x_1230F2370, 3,FREEREF(0),FREEREF(1),return_);
+  x_1230F2332 = T7;
+  FUNINIT(x_1230F2332, 3,FREEREF(0),FREEREF(1),return_);
   T6 = BOXGET(FREEREF(0));
-  x_1229F2371 = T6;
-  T0 = CALL2(1,VARREF(YisaQ),x_1229F2371,VARREF(YLlstG));
+  x_1229F2333 = T6;
+  T0 = CALL2(1,VARREF(YisaQ),x_1229F2333,VARREF(YLlstG));
   if (T0 != YPfalse) {
-    T1 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1229F2371,x_1230F2370);
+    T1 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1229F2333,x_1230F2332);
   } else {
-    T2 = CALL2(1,x_1230F2370,LITREF(lit_7),x_1229F2371);
+    T2 = CALL2(1,x_1230F2332,LITREF(lit_7),x_1229F2333);
   }
   T4 = CALL1(1,VARREF(Ylst),LITREF(lit_172));
   T5 = CALL1(1,VARREF(Ylst),LITREF(lit_173));
@@ -3226,49 +3091,42 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_88) {
   P return_;
-  P x_1227F2380;
-  P x_1227F2379;
-  P x_1227F2378;
-  P x_1227F2377;
-  P x_1227F2376;
-  P casesF2375;
-  P expF2374;
-  P x_1227F2373;
-  P x_1228F2372;
-  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
+  P x_1227F2340;
+  P x_1227F2339;
+  P x_1227F2338;
+  P casesF2337;
+  P expF2336;
+  P x_1227F2335;
+  P x_1228F2334;
+  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
 LINK_STACK();
   ARG(return_, 0);
-  T13 = FUNSHELL(0,fun_x_1228_83,2);
-  x_1228F2372 = T13;
-  FUNINIT(x_1228F2372, 2,FREEREF(0),return_);
-  x_1227F2373 = FREEREF(0);
-  expF2374 = YPfalse;
-  expF2374 = BOXFAB(expF2374);
-  casesF2375 = YPfalse;
-  casesF2375 = BOXFAB(casesF2375);
-  T2 = CALL2(1,VARREF(YisaQ),x_1227F2373,VARREF(YLlstG));
+  T10 = FUNSHELL(0,fun_x_1228_83,2);
+  x_1228F2334 = T10;
+  FUNINIT(x_1228F2334, 2,FREEREF(0),return_);
+  x_1227F2335 = FREEREF(0);
+  expF2336 = YPfalse;
+  expF2336 = BOXFAB(expF2336);
+  casesF2337 = YPfalse;
+  casesF2337 = BOXFAB(casesF2337);
+  T2 = CALL2(1,VARREF(YisaQ),x_1227F2335,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1227F2373,LITREF(lit_163),x_1228F2372);
-    x_1227F2376 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1227F2376,x_1228F2372);
-    BOXPUT(T7,expF2374);
-    T8 = CALL1(1,VARREF(Ytail),x_1227F2376);
-    x_1227F2377 = T8;
-    BOXPUT(x_1227F2377,casesF2375);
-    x_1227F2378 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1227F2378,x_1228F2372);
-    x_1227F2379 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1227F2379,x_1228F2372);
-    T6 = CALL1(1,VARREF(Ytail),x_1227F2378);
-    x_1227F2380 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1227F2380,x_1228F2372);
+    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1227F2335,LITREF(lit_163),x_1228F2334);
+    x_1227F2338 = T6;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1227F2338,x_1228F2334);
+    BOXPUT(T4,expF2336);
+    T5 = CALL1(1,VARREF(Ytail),x_1227F2338);
+    x_1227F2339 = T5;
+    BOXPUT(x_1227F2339,casesF2337);
+    x_1227F2340 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1227F2340,x_1228F2334);
   } else {
-    T10 = CALL2(1,x_1228F2372,LITREF(lit_7),x_1227F2373);
+    T7 = CALL2(1,x_1228F2334,LITREF(lit_7),x_1227F2335);
   }
-  T12 = FUNFAB(fun_87,2,casesF2375,expF2374);
-  T11 = with_exit(T12);
+  T9 = FUNFAB(fun_87,2,casesF2337,expF2336);
+  T8 = with_exit(T9);
 UNLINK_STACK();
-  QRET(T11);
+  QRET(T8);
 }
 
 LOCCODEDEF(fun_89) {
@@ -3296,66 +3154,59 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_91) {
   P return_;
-  P x_1235F2391;
-  P x_1235F2390;
-  P x_1235F2389;
-  P x_1235F2388;
-  P x_1235F2387;
-  P x_1235F2386;
-  P argsF2385;
-  P messageF2384;
-  P condF2383;
-  P x_1235F2382;
-  P x_1236F2381;
+  P x_1235F2349;
+  P x_1235F2348;
+  P x_1235F2347;
+  P x_1235F2346;
+  P argsF2345;
+  P messageF2344;
+  P condF2343;
+  P x_1235F2342;
+  P x_1236F2341;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27;
+  P T16,T17,T18,T19,T20,T21,T22,T23,T24;
 LINK_STACK();
   ARG(return_, 0);
-  T27 = FUNSHELL(0,fun_x_1236_90,2);
-  x_1236F2381 = T27;
-  FUNINIT(x_1236F2381, 2,FREEREF(0),return_);
-  x_1235F2382 = FREEREF(0);
-  condF2383 = YPfalse;
-  messageF2384 = YPfalse;
-  argsF2385 = YPfalse;
-  T3 = CALL2(1,VARREF(YisaQ),x_1235F2382,VARREF(YLlstG));
+  T24 = FUNSHELL(0,fun_x_1236_90,2);
+  x_1236F2341 = T24;
+  FUNINIT(x_1236F2341, 2,FREEREF(0),return_);
+  x_1235F2342 = FREEREF(0);
+  condF2343 = YPfalse;
+  messageF2344 = YPfalse;
+  argsF2345 = YPfalse;
+  T3 = CALL2(1,VARREF(YisaQ),x_1235F2342,VARREF(YLlstG));
   if (T3 != YPfalse) {
-    T12 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1235F2382,LITREF(lit_178),x_1236F2381);
-    x_1235F2386 = T12;
-    T10 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1235F2386,x_1236F2381);
-    condF2383 = T10;
-    T11 = CALL1(1,VARREF(Ytail),x_1235F2386);
-    x_1235F2387 = T11;
-    T8 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1235F2387,x_1236F2381);
-    messageF2384 = T8;
-    T9 = CALL1(1,VARREF(Ytail),x_1235F2387);
-    x_1235F2388 = T9;
-    argsF2385 = x_1235F2388;
-    x_1235F2389 = Ynil;
-    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1235F2389,x_1236F2381);
-    x_1235F2390 = T6;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1235F2390,x_1236F2381);
-    T7 = CALL1(1,VARREF(Ytail),x_1235F2389);
-    x_1235F2391 = T7;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1235F2391,x_1236F2381);
+    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1235F2342,LITREF(lit_178),x_1236F2341);
+    x_1235F2346 = T9;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1235F2346,x_1236F2341);
+    condF2343 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1235F2346);
+    x_1235F2347 = T8;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1235F2347,x_1236F2341);
+    messageF2344 = T5;
+    T6 = CALL1(1,VARREF(Ytail),x_1235F2347);
+    x_1235F2348 = T6;
+    argsF2345 = x_1235F2348;
+    x_1235F2349 = Ynil;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1235F2349,x_1236F2341);
   } else {
-    T13 = CALL2(1,x_1236F2381,LITREF(lit_7),x_1235F2382);
+    T10 = CALL2(1,x_1236F2341,LITREF(lit_7),x_1235F2342);
   }
-  T15 = CALL1(1,VARREF(Ylst),LITREF(lit_98));
-  T18 = CALL1(1,VARREF(Ylst),LITREF(lit_99));
-  T20 = condF2383;
-  T19 = CALL1(1,VARREF(Ylst),T20);
-  T17 = CALL3(1,VARREF(YgooSmacrosYcat),T18,T19,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_98));
+  T15 = CALL1(1,VARREF(Ylst),LITREF(lit_99));
+  T17 = condF2343;
   T16 = CALL1(1,VARREF(Ylst),T17);
-  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_179));
-  T25 = messageF2384;
-  T24 = CALL1(1,VARREF(Ylst),T25);
-  T26 = argsF2385;
-  T22 = CALL4(1,VARREF(YgooSmacrosYcat),T23,T24,T26,LITREF(lit_11));
+  T14 = CALL3(1,VARREF(YgooSmacrosYcat),T15,T16,LITREF(lit_11));
+  T13 = CALL1(1,VARREF(Ylst),T14);
+  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_179));
+  T22 = messageF2344;
   T21 = CALL1(1,VARREF(Ylst),T22);
-  T14 = CALL4(1,VARREF(YgooSmacrosYcat),T15,T16,T21,LITREF(lit_11));
+  T23 = argsF2345;
+  T19 = CALL4(1,VARREF(YgooSmacrosYcat),T20,T21,T23,LITREF(lit_11));
+  T18 = CALL1(1,VARREF(Ylst),T19);
+  T11 = CALL4(1,VARREF(YgooSmacrosYcat),T12,T13,T18,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T14);
+  QRET(T11);
 }
 
 LOCCODEDEF(fun_92) {
@@ -3412,52 +3263,52 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_96) {
   P return_;
-  P x_1247F2400;
-  P x_1247F2399;
-  P x_1247F2398;
-  P x_1247F2397;
-  P x_1247F2396;
-  P valF2395;
-  P keyF2394;
-  P x_1247F2393;
-  P x_1248F2392;
+  P x_1247F2358;
+  P x_1247F2357;
+  P x_1247F2356;
+  P x_1247F2355;
+  P x_1247F2354;
+  P valF2353;
+  P keyF2352;
+  P x_1247F2351;
+  P x_1248F2350;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33;
 LINK_STACK();
   ARG(return_, 0);
   T33 = FUNSHELL(0,fun_x_1248_95,3);
-  x_1248F2392 = T33;
-  FUNINIT(x_1248F2392, 3,FREEREF(0),FREEREF(1),return_);
+  x_1248F2350 = T33;
+  FUNINIT(x_1248F2350, 3,FREEREF(0),FREEREF(1),return_);
   T32 = BOXGET(FREEREF(0));
-  x_1247F2393 = T32;
-  keyF2394 = YPfalse;
-  valF2395 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1247F2393,VARREF(YLlstG));
+  x_1247F2351 = T32;
+  keyF2352 = YPfalse;
+  valF2353 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1247F2351,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T11 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1247F2393,LITREF(lit_79),x_1248F2392);
-    x_1247F2396 = T11;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1247F2396,x_1248F2392);
-    keyF2394 = T9;
-    T10 = CALL1(1,VARREF(Ytail),x_1247F2396);
-    x_1247F2397 = T10;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1247F2397,x_1248F2392);
-    valF2395 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1247F2397);
-    x_1247F2398 = T8;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1247F2398,x_1248F2392);
-    x_1247F2399 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1247F2399,x_1248F2392);
-    T6 = CALL1(1,VARREF(Ytail),x_1247F2398);
-    x_1247F2400 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1247F2400,x_1248F2392);
+    T11 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1247F2351,LITREF(lit_79),x_1248F2350);
+    x_1247F2354 = T11;
+    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1247F2354,x_1248F2350);
+    keyF2352 = T9;
+    T10 = CALL1(1,VARREF(Ytail),x_1247F2354);
+    x_1247F2355 = T10;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1247F2355,x_1248F2350);
+    valF2353 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1247F2355);
+    x_1247F2356 = T8;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1247F2356,x_1248F2350);
+    x_1247F2357 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1247F2357,x_1248F2350);
+    T6 = CALL1(1,VARREF(Ytail),x_1247F2356);
+    x_1247F2358 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1247F2358,x_1248F2350);
   } else {
-    T12 = CALL2(1,x_1248F2392,LITREF(lit_7),x_1247F2393);
+    T12 = CALL2(1,x_1248F2350,LITREF(lit_7),x_1247F2351);
   }
   T16 = CALL1(1,VARREF(Ylst),LITREF(lit_79));
-  T18 = keyF2394;
+  T18 = keyF2352;
   T17 = CALL1(1,VARREF(Ylst),T18);
-  T20 = valF2395;
+  T20 = valF2353;
   T19 = CALL1(1,VARREF(Ylst),T20);
   T15 = CALL4(1,VARREF(YgooSmacrosYcat),T16,T17,T19,LITREF(lit_11));
   T14 = CALL1(1,VARREF(Ylst),T15);
@@ -3479,66 +3330,66 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_97) {
   P return_;
-  P stateF2409;
-  P x_1245F2408;
-  P x_1245F2407;
-  P x_1245F2406;
-  P x_1245F2405;
-  P expF2404;
-  P varF2403;
-  P x_1245F2402;
-  P x_1246F2401;
+  P stateF2367;
+  P x_1245F2366;
+  P x_1245F2365;
+  P x_1245F2364;
+  P x_1245F2363;
+  P expF2362;
+  P varF2361;
+  P x_1245F2360;
+  P x_1246F2359;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33,T34;
 LINK_STACK();
   ARG(return_, 0);
   T34 = FUNSHELL(0,fun_x_1246_94,1);
-  x_1246F2401 = T34;
-  FUNINIT(x_1246F2401, 1,return_);
-  x_1245F2402 = FREEREF(0);
-  varF2403 = YPfalse;
-  varF2403 = BOXFAB(varF2403);
-  expF2404 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1245F2402,VARREF(YLlstG));
+  x_1246F2359 = T34;
+  FUNINIT(x_1246F2359, 1,return_);
+  x_1245F2360 = FREEREF(0);
+  varF2361 = YPfalse;
+  varF2361 = BOXFAB(varF2361);
+  expF2362 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1245F2360,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1245F2402,x_1246F2401);
-    BOXPUT(T9,varF2403);
-    T10 = CALL1(1,VARREF(Ytail),x_1245F2402);
-    x_1245F2405 = T10;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1245F2405,x_1246F2401);
-    expF2404 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1245F2405);
-    x_1245F2406 = T8;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1245F2406,x_1246F2401);
-    x_1245F2407 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1245F2407,x_1246F2401);
-    T6 = CALL1(1,VARREF(Ytail),x_1245F2406);
-    x_1245F2408 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1245F2408,x_1246F2401);
+    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1245F2360,x_1246F2359);
+    BOXPUT(T9,varF2361);
+    T10 = CALL1(1,VARREF(Ytail),x_1245F2360);
+    x_1245F2363 = T10;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1245F2363,x_1246F2359);
+    expF2362 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1245F2363);
+    x_1245F2364 = T8;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1245F2364,x_1246F2359);
+    x_1245F2365 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1245F2365,x_1246F2359);
+    T6 = CALL1(1,VARREF(Ytail),x_1245F2364);
+    x_1245F2366 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1245F2366,x_1246F2359);
   } else {
-    T11 = CALL2(1,x_1246F2401,LITREF(lit_7),x_1245F2402);
+    T11 = CALL2(1,x_1246F2359,LITREF(lit_7),x_1245F2360);
   }
   T33 = CALL0(1,VARREF(YgooSmacrosYgensym));
-  stateF2409 = T33;
+  stateF2367 = T33;
   T13 = CALL1(1,VARREF(Ytail),FREEREF(1));
-  T16 = CALL1(1,VARREF(Ylst),stateF2409);
+  T16 = CALL1(1,VARREF(Ylst),stateF2367);
   T19 = CALL1(1,VARREF(Ylst),LITREF(lit_191));
-  T21 = expF2404;
+  T21 = expF2362;
   T20 = CALL1(1,VARREF(Ylst),T21);
   T18 = CALL3(1,VARREF(YgooSmacrosYcat),T19,T20,LITREF(lit_11));
   T17 = CALL1(1,VARREF(Ylst),T18);
   T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
   T14 = CALL2(1,VARREF(YgooSmacrosYpair),T15,FREEREF(2));
   T24 = CALL1(1,VARREF(Ylst),LITREF(lit_192));
-  T25 = CALL1(1,VARREF(Ylst),stateF2409);
+  T25 = CALL1(1,VARREF(Ylst),stateF2367);
   T23 = CALL3(1,VARREF(YgooSmacrosYcat),T24,T25,LITREF(lit_11));
   T22 = CALL2(1,VARREF(YgooSmacrosYpair),T23,FREEREF(3));
-  T28 = FUNFAB(fun_96,2,varF2403,stateF2409);
+  T28 = FUNFAB(fun_96,2,varF2361,stateF2367);
   T27 = with_exit(T28);
   T26 = CALL2(1,VARREF(YgooSmacrosYpair),T27,FREEREF(4));
   T31 = CALL1(1,VARREF(Ylst),LITREF(lit_198));
-  T32 = CALL1(1,VARREF(Ylst),stateF2409);
+  T32 = CALL1(1,VARREF(Ylst),stateF2367);
   T30 = CALL3(1,VARREF(YgooSmacrosYcat),T31,T32,LITREF(lit_11));
   T29 = CALL2(1,VARREF(YgooSmacrosYpair),T30,FREEREF(5));
   T12 = CALL5(1,FREEREF(6),T13,T14,T22,T26,T29);
@@ -3548,8 +3399,8 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_grok_98) {
   P clauses_,inits_,preds_,nows_,nexts_;
-  P clauseF2411;
-  P loopF2410;
+  P clauseF2369;
+  P loopF2368;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23;
 LINK_STACK();
@@ -3561,9 +3412,9 @@ LINK_STACK();
   T1 = CALL1(1,VARREF(YgooSmacrosYnulQ),clauses_);
   if (T1 != YPfalse) {
     T20 = CALL0(1,VARREF(YgooSmacrosYgensym));
-    loopF2410 = T20;
+    loopF2368 = T20;
     T3 = CALL1(1,VARREF(Ylst),LITREF(lit_187));
-    T4 = CALL1(1,VARREF(Ylst),loopF2410);
+    T4 = CALL1(1,VARREF(Ylst),loopF2368);
     T5 = CALL1(1,VARREF(Ylst),inits_);
     T8 = CALL1(1,VARREF(Ylst),LITREF(lit_97));
     T11 = CALL1(1,VARREF(Ylst),LITREF(lit_92));
@@ -3572,7 +3423,7 @@ LINK_STACK();
     T14 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
     T15 = CALL1(1,VARREF(Ylst),nows_);
     T16 = BOXGET(FREEREF(0));
-    T19 = CALL1(1,VARREF(Ylst),loopF2410);
+    T19 = CALL1(1,VARREF(Ylst),loopF2368);
     T18 = CALL3(1,VARREF(YgooSmacrosYcat),T19,nexts_,LITREF(lit_11));
     T17 = CALL1(1,VARREF(Ylst),T18);
     T13 = CALL5(1,VARREF(YgooSmacrosYcat),T14,T15,T16,T17,LITREF(lit_11));
@@ -3583,8 +3434,8 @@ LINK_STACK();
     T0 = T2;
   } else {
     T23 = CALL1(1,VARREF(Yhead),clauses_);
-    clauseF2411 = T23;
-    T22 = FUNFAB(fun_97,7,clauseF2411,clauses_,inits_,preds_,nows_,nexts_,FREEREF(1));
+    clauseF2369 = T23;
+    T22 = FUNFAB(fun_97,7,clauseF2369,clauses_,inits_,preds_,nows_,nexts_,FREEREF(1));
     T21 = with_exit(T22);
     T0 = T21;
   }
@@ -3594,65 +3445,57 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_99) {
   P return_;
-  P grokF2425;
-  P x_1243F2424;
-  P x_1243F2423;
-  P x_1243F2422;
-  P x_1243F2421;
-  P x_1243F2420;
-  P x_1243F2419;
-  P x_1243F2418;
-  P x_1243F2417;
-  P x_1243F2416;
-  P bodyF2415;
-  P clausesF2414;
-  P x_1243F2413;
-  P x_1244F2412;
+  P grokF2381;
+  P x_1243F2380;
+  P x_1243F2379;
+  P x_1243F2378;
+  P x_1243F2377;
+  P x_1243F2376;
+  P x_1243F2375;
+  P x_1243F2374;
+  P bodyF2373;
+  P clausesF2372;
+  P x_1243F2371;
+  P x_1244F2370;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18;
 LINK_STACK();
   ARG(return_, 0);
-  T18 = FUNSHELL(0,fun_x_1244_93,2);
-  x_1244F2412 = T18;
-  FUNINIT(x_1244F2412, 2,FREEREF(0),return_);
-  x_1243F2413 = FREEREF(0);
-  clausesF2414 = YPfalse;
-  bodyF2415 = YPfalse;
-  bodyF2415 = BOXFAB(bodyF2415);
-  T2 = CALL2(1,VARREF(YisaQ),x_1243F2413,VARREF(YLlstG));
+  T15 = FUNSHELL(0,fun_x_1244_93,2);
+  x_1244F2370 = T15;
+  FUNINIT(x_1244F2370, 2,FREEREF(0),return_);
+  x_1243F2371 = FREEREF(0);
+  clausesF2372 = YPfalse;
+  bodyF2373 = YPfalse;
+  bodyF2373 = BOXFAB(bodyF2373);
+  T2 = CALL2(1,VARREF(YisaQ),x_1243F2371,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T13 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1243F2413,LITREF(lit_184),x_1244F2412);
-    x_1243F2416 = T13;
-    T11 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1243F2416,x_1244F2412);
-    x_1243F2417 = T11;
-    clausesF2414 = x_1243F2417;
-    x_1243F2418 = Ynil;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1243F2418,x_1244F2412);
-    x_1243F2419 = T9;
-    T8 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1243F2419,x_1244F2412);
-    T10 = CALL1(1,VARREF(Ytail),x_1243F2418);
-    x_1243F2420 = T10;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1243F2420,x_1244F2412);
-    T12 = CALL1(1,VARREF(Ytail),x_1243F2416);
-    x_1243F2421 = T12;
-    BOXPUT(x_1243F2421,bodyF2415);
-    x_1243F2422 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1243F2422,x_1244F2412);
-    x_1243F2423 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1243F2423,x_1244F2412);
-    T6 = CALL1(1,VARREF(Ytail),x_1243F2422);
-    x_1243F2424 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1243F2424,x_1244F2412);
+    T10 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1243F2371,LITREF(lit_184),x_1244F2370);
+    x_1243F2374 = T10;
+    T8 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1243F2374,x_1244F2370);
+    x_1243F2375 = T8;
+    clausesF2372 = x_1243F2375;
+    x_1243F2376 = Ynil;
+    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1243F2376,x_1244F2370);
+    x_1243F2377 = T6;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1243F2377,x_1244F2370);
+    T7 = CALL1(1,VARREF(Ytail),x_1243F2376);
+    x_1243F2378 = T7;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1243F2378,x_1244F2370);
+    T9 = CALL1(1,VARREF(Ytail),x_1243F2374);
+    x_1243F2379 = T9;
+    BOXPUT(x_1243F2379,bodyF2373);
+    x_1243F2380 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1243F2380,x_1244F2370);
   } else {
-    T14 = CALL2(1,x_1244F2412,LITREF(lit_7),x_1243F2413);
+    T11 = CALL2(1,x_1244F2370,LITREF(lit_7),x_1243F2371);
   }
-  T17 = FUNSHELL(1,fun_grok_98,2);
-  grokF2425 = T17;
-  FUNINIT(grokF2425, 2,bodyF2415,grokF2425);
-  T16 = clausesF2414;
-  T15 = CALL5(1,grokF2425,T16,Ynil,Ynil,Ynil,Ynil);
+  T14 = FUNSHELL(1,fun_grok_98,2);
+  grokF2381 = T14;
+  FUNINIT(grokF2381, 2,bodyF2373,grokF2381);
+  T13 = clausesF2372;
+  T12 = CALL5(1,grokF2381,T13,Ynil,Ynil,Ynil,Ynil);
 UNLINK_STACK();
-  QRET(T15);
+  QRET(T12);
 }
 
 LOCCODEDEF(fun_100) {
@@ -3680,59 +3523,52 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_102) {
   P return_;
-  P x_1251F2434;
-  P x_1251F2433;
-  P x_1251F2432;
-  P x_1251F2431;
-  P x_1251F2430;
-  P bodyF2429;
-  P testF2428;
-  P x_1251F2427;
-  P x_1252F2426;
+  P x_1251F2388;
+  P x_1251F2387;
+  P x_1251F2386;
+  P bodyF2385;
+  P testF2384;
+  P x_1251F2383;
+  P x_1252F2382;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22,T23,T24;
+  P T16,T17,T18,T19,T20,T21;
 LINK_STACK();
   ARG(return_, 0);
-  T24 = FUNSHELL(0,fun_x_1252_101,2);
-  x_1252F2426 = T24;
-  FUNINIT(x_1252F2426, 2,FREEREF(0),return_);
-  x_1251F2427 = FREEREF(0);
-  testF2428 = YPfalse;
-  bodyF2429 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1251F2427,VARREF(YLlstG));
+  T21 = FUNSHELL(0,fun_x_1252_101,2);
+  x_1252F2382 = T21;
+  FUNINIT(x_1252F2382, 2,FREEREF(0),return_);
+  x_1251F2383 = FREEREF(0);
+  testF2384 = YPfalse;
+  bodyF2385 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1251F2383,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1251F2427,LITREF(lit_203),x_1252F2426);
-    x_1251F2430 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1251F2430,x_1252F2426);
-    testF2428 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1251F2430);
-    x_1251F2431 = T8;
-    bodyF2429 = x_1251F2431;
-    x_1251F2432 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1251F2432,x_1252F2426);
-    x_1251F2433 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1251F2433,x_1252F2426);
-    T6 = CALL1(1,VARREF(Ytail),x_1251F2432);
-    x_1251F2434 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1251F2434,x_1252F2426);
+    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1251F2383,LITREF(lit_203),x_1252F2382);
+    x_1251F2386 = T6;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1251F2386,x_1252F2382);
+    testF2384 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1251F2386);
+    x_1251F2387 = T5;
+    bodyF2385 = x_1251F2387;
+    x_1251F2388 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1251F2388,x_1252F2382);
   } else {
-    T10 = CALL2(1,x_1252F2426,LITREF(lit_7),x_1251F2427);
+    T7 = CALL2(1,x_1252F2382,LITREF(lit_7),x_1251F2383);
   }
-  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_187));
-  T13 = CALL1(1,VARREF(Ylst),LITREF(lit_204));
-  T14 = CALL1(1,VARREF(Ylst),Ynil);
-  T17 = CALL1(1,VARREF(Ylst),LITREF(lit_105));
-  T19 = testF2428;
-  T18 = CALL1(1,VARREF(Ylst),T19);
-  T20 = bodyF2429;
-  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_204));
-  T22 = CALL2(1,VARREF(YgooSmacrosYcat),T23,LITREF(lit_11));
-  T21 = CALL1(1,VARREF(Ylst),T22);
-  T16 = CALL5(1,VARREF(YgooSmacrosYcat),T17,T18,T20,T21,LITREF(lit_11));
+  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_187));
+  T10 = CALL1(1,VARREF(Ylst),LITREF(lit_204));
+  T11 = CALL1(1,VARREF(Ylst),Ynil);
+  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_105));
+  T16 = testF2384;
   T15 = CALL1(1,VARREF(Ylst),T16);
-  T11 = CALL5(1,VARREF(YgooSmacrosYcat),T12,T13,T14,T15,LITREF(lit_11));
+  T17 = bodyF2385;
+  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_204));
+  T19 = CALL2(1,VARREF(YgooSmacrosYcat),T20,LITREF(lit_11));
+  T18 = CALL1(1,VARREF(Ylst),T19);
+  T13 = CALL5(1,VARREF(YgooSmacrosYcat),T14,T15,T17,T18,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),T13);
+  T8 = CALL5(1,VARREF(YgooSmacrosYcat),T9,T10,T11,T12,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T11);
+  QRET(T8);
 }
 
 LOCCODEDEF(fun_103) {
@@ -3760,59 +3596,52 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_105) {
   P return_;
-  P x_1255F2443;
-  P x_1255F2442;
-  P x_1255F2441;
-  P x_1255F2440;
-  P x_1255F2439;
-  P bodyF2438;
-  P testF2437;
-  P x_1255F2436;
-  P x_1256F2435;
+  P x_1255F2395;
+  P x_1255F2394;
+  P x_1255F2393;
+  P bodyF2392;
+  P testF2391;
+  P x_1255F2390;
+  P x_1256F2389;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22,T23,T24;
+  P T16,T17,T18,T19,T20,T21;
 LINK_STACK();
   ARG(return_, 0);
-  T24 = FUNSHELL(0,fun_x_1256_104,2);
-  x_1256F2435 = T24;
-  FUNINIT(x_1256F2435, 2,FREEREF(0),return_);
-  x_1255F2436 = FREEREF(0);
-  testF2437 = YPfalse;
-  bodyF2438 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1255F2436,VARREF(YLlstG));
+  T21 = FUNSHELL(0,fun_x_1256_104,2);
+  x_1256F2389 = T21;
+  FUNINIT(x_1256F2389, 2,FREEREF(0),return_);
+  x_1255F2390 = FREEREF(0);
+  testF2391 = YPfalse;
+  bodyF2392 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1255F2390,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1255F2436,LITREF(lit_209),x_1256F2435);
-    x_1255F2439 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1255F2439,x_1256F2435);
-    testF2437 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1255F2439);
-    x_1255F2440 = T8;
-    bodyF2438 = x_1255F2440;
-    x_1255F2441 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1255F2441,x_1256F2435);
-    x_1255F2442 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1255F2442,x_1256F2435);
-    T6 = CALL1(1,VARREF(Ytail),x_1255F2441);
-    x_1255F2443 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1255F2443,x_1256F2435);
+    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1255F2390,LITREF(lit_209),x_1256F2389);
+    x_1255F2393 = T6;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1255F2393,x_1256F2389);
+    testF2391 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1255F2393);
+    x_1255F2394 = T5;
+    bodyF2392 = x_1255F2394;
+    x_1255F2395 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1255F2395,x_1256F2389);
   } else {
-    T10 = CALL2(1,x_1256F2435,LITREF(lit_7),x_1255F2436);
+    T7 = CALL2(1,x_1256F2389,LITREF(lit_7),x_1255F2390);
   }
-  T12 = CALL1(1,VARREF(Ylst),LITREF(lit_187));
-  T13 = CALL1(1,VARREF(Ylst),LITREF(lit_204));
-  T14 = CALL1(1,VARREF(Ylst),Ynil);
-  T17 = CALL1(1,VARREF(Ylst),LITREF(lit_97));
-  T19 = testF2437;
-  T18 = CALL1(1,VARREF(Ylst),T19);
-  T20 = bodyF2438;
-  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_204));
-  T22 = CALL2(1,VARREF(YgooSmacrosYcat),T23,LITREF(lit_11));
-  T21 = CALL1(1,VARREF(Ylst),T22);
-  T16 = CALL5(1,VARREF(YgooSmacrosYcat),T17,T18,T20,T21,LITREF(lit_11));
+  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_187));
+  T10 = CALL1(1,VARREF(Ylst),LITREF(lit_204));
+  T11 = CALL1(1,VARREF(Ylst),Ynil);
+  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_97));
+  T16 = testF2391;
   T15 = CALL1(1,VARREF(Ylst),T16);
-  T11 = CALL5(1,VARREF(YgooSmacrosYcat),T12,T13,T14,T15,LITREF(lit_11));
+  T17 = bodyF2392;
+  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_204));
+  T19 = CALL2(1,VARREF(YgooSmacrosYcat),T20,LITREF(lit_11));
+  T18 = CALL1(1,VARREF(Ylst),T19);
+  T13 = CALL5(1,VARREF(YgooSmacrosYcat),T14,T15,T17,T18,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),T13);
+  T8 = CALL5(1,VARREF(YgooSmacrosYcat),T9,T10,T11,T12,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T11);
+  QRET(T8);
 }
 
 LOCCODEDEF(fun_106) {
@@ -3853,24 +3682,24 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_109) {
   P return_;
-  P old_valueF2461;
-  P g_placeF2460;
-  P g_declsF2459;
-  P tup22F2458;
-  P x_1271F2457;
-  P x_1271F2456;
-  P x_1271F2455;
-  P x_1271F2454;
-  P x_1271F2453;
-  P x_1271F2452;
-  P x_1271F2451;
-  P x_1271F2450;
-  P x_1271F2449;
-  P restF2448;
-  P valueF2447;
-  P placeF2446;
-  P x_1271F2445;
-  P x_1272F2444;
+  P old_valueF2413;
+  P g_placeF2412;
+  P g_declsF2411;
+  P tup22F2410;
+  P x_1271F2409;
+  P x_1271F2408;
+  P x_1271F2407;
+  P x_1271F2406;
+  P x_1271F2405;
+  P x_1271F2404;
+  P x_1271F2403;
+  P x_1271F2402;
+  P x_1271F2401;
+  P restF2400;
+  P valueF2399;
+  P placeF2398;
+  P x_1271F2397;
+  P x_1272F2396;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33,T34,T35,T36,T37,T38,T39,T40,T41,T42,T43,T44,T45,T46,T47;
@@ -3878,69 +3707,69 @@ LOCCODEDEF(fun_109) {
 LINK_STACK();
   ARG(return_, 0);
   T56 = FUNSHELL(0,fun_x_1272_108,2);
-  x_1272F2444 = T56;
-  FUNINIT(x_1272F2444, 2,FREEREF(0),return_);
-  x_1271F2445 = FREEREF(1);
-  placeF2446 = YPfalse;
-  valueF2447 = YPfalse;
-  restF2448 = YPfalse;
-  T3 = CALL2(1,VARREF(YisaQ),x_1271F2445,VARREF(YLlstG));
+  x_1272F2396 = T56;
+  FUNINIT(x_1272F2396, 2,FREEREF(0),return_);
+  x_1271F2397 = FREEREF(1);
+  placeF2398 = YPfalse;
+  valueF2399 = YPfalse;
+  restF2400 = YPfalse;
+  T3 = CALL2(1,VARREF(YisaQ),x_1271F2397,VARREF(YLlstG));
   if (T3 != YPfalse) {
-    T16 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1271F2445,x_1272F2444);
-    x_1271F2449 = T16;
-    T14 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1271F2449,x_1272F2444);
-    placeF2446 = T14;
-    T15 = CALL1(1,VARREF(Ytail),x_1271F2449);
-    x_1271F2450 = T15;
-    T12 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1271F2450,x_1272F2444);
-    valueF2447 = T12;
-    T13 = CALL1(1,VARREF(Ytail),x_1271F2450);
-    x_1271F2451 = T13;
-    T10 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1271F2451,x_1272F2444);
-    x_1271F2452 = T10;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1271F2452,x_1272F2444);
-    T11 = CALL1(1,VARREF(Ytail),x_1271F2451);
-    x_1271F2453 = T11;
-    T8 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1271F2453,x_1272F2444);
-    T17 = CALL1(1,VARREF(Ytail),x_1271F2445);
-    x_1271F2454 = T17;
-    restF2448 = x_1271F2454;
-    x_1271F2455 = Ynil;
-    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1271F2455,x_1272F2444);
-    x_1271F2456 = T6;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1271F2456,x_1272F2444);
-    T7 = CALL1(1,VARREF(Ytail),x_1271F2455);
-    x_1271F2457 = T7;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1271F2457,x_1272F2444);
+    T16 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1271F2397,x_1272F2396);
+    x_1271F2401 = T16;
+    T14 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1271F2401,x_1272F2396);
+    placeF2398 = T14;
+    T15 = CALL1(1,VARREF(Ytail),x_1271F2401);
+    x_1271F2402 = T15;
+    T12 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1271F2402,x_1272F2396);
+    valueF2399 = T12;
+    T13 = CALL1(1,VARREF(Ytail),x_1271F2402);
+    x_1271F2403 = T13;
+    T10 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1271F2403,x_1272F2396);
+    x_1271F2404 = T10;
+    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1271F2404,x_1272F2396);
+    T11 = CALL1(1,VARREF(Ytail),x_1271F2403);
+    x_1271F2405 = T11;
+    T8 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1271F2405,x_1272F2396);
+    T17 = CALL1(1,VARREF(Ytail),x_1271F2397);
+    x_1271F2406 = T17;
+    restF2400 = x_1271F2406;
+    x_1271F2407 = Ynil;
+    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1271F2407,x_1272F2396);
+    x_1271F2408 = T6;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1271F2408,x_1272F2396);
+    T7 = CALL1(1,VARREF(Ytail),x_1271F2407);
+    x_1271F2409 = T7;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1271F2409,x_1272F2396);
   } else {
-    T18 = CALL2(1,x_1272F2444,LITREF(lit_7),x_1271F2445);
+    T18 = CALL2(1,x_1272F2396,LITREF(lit_7),x_1271F2397);
   }
-  T55 = placeF2446;
+  T55 = placeF2398;
   T54 = CALL1(1,VARREF(YgooSmacrosYlift_place_subforms),T55);
-  tup22F2458 = T54;
-  T53 = CALL2(1,VARREF(YgooSmacrosYelt),tup22F2458,YPint((P)0));
-  g_declsF2459 = T53;
-  T52 = CALL2(1,VARREF(YgooSmacrosYelt),tup22F2458,YPint((P)1));
-  g_placeF2460 = T52;
+  tup22F2410 = T54;
+  T53 = CALL2(1,VARREF(YgooSmacrosYelt),tup22F2410,YPint((P)0));
+  g_declsF2411 = T53;
+  T52 = CALL2(1,VARREF(YgooSmacrosYelt),tup22F2410,YPint((P)1));
+  g_placeF2412 = T52;
   T51 = CALL0(1,VARREF(YgooSmacrosYgensym));
-  old_valueF2461 = T51;
+  old_valueF2413 = T51;
   T20 = CALL1(1,VARREF(Ylst),LITREF(lit_8));
-  T25 = CALL1(1,VARREF(Ylst),old_valueF2461);
-  T26 = CALL1(1,VARREF(Ylst),g_placeF2460);
+  T25 = CALL1(1,VARREF(Ylst),old_valueF2413);
+  T26 = CALL1(1,VARREF(Ylst),g_placeF2412);
   T24 = CALL3(1,VARREF(YgooSmacrosYcat),T25,T26,LITREF(lit_11));
   T23 = CALL1(1,VARREF(Ylst),T24);
-  T22 = CALL3(1,VARREF(YgooSmacrosYcat),g_declsF2459,T23,LITREF(lit_11));
+  T22 = CALL3(1,VARREF(YgooSmacrosYcat),g_declsF2411,T23,LITREF(lit_11));
   T21 = CALL1(1,VARREF(Ylst),T22);
   T29 = CALL1(1,VARREF(Ylst),LITREF(lit_222));
   T32 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
   T35 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T36 = CALL1(1,VARREF(Ylst),g_placeF2460);
-  T38 = valueF2447;
+  T36 = CALL1(1,VARREF(Ylst),g_placeF2412);
+  T38 = valueF2399;
   T37 = CALL1(1,VARREF(Ylst),T38);
   T34 = CALL4(1,VARREF(YgooSmacrosYcat),T35,T36,T37,LITREF(lit_11));
   T33 = CALL1(1,VARREF(Ylst),T34);
   T41 = CALL1(1,VARREF(Ylst),LITREF(lit_214));
-  T44 = restF2448;
+  T44 = restF2400;
   T43 = CALL2(1,VARREF(YgooSmacrosYcat),T44,LITREF(lit_11));
   T42 = CALL1(1,VARREF(Ylst),T43);
   T45 = BOXGET(FREEREF(2));
@@ -3949,8 +3778,8 @@ LINK_STACK();
   T31 = CALL4(1,VARREF(YgooSmacrosYcat),T32,T33,T39,LITREF(lit_11));
   T30 = CALL1(1,VARREF(Ylst),T31);
   T48 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T49 = CALL1(1,VARREF(Ylst),g_placeF2460);
-  T50 = CALL1(1,VARREF(Ylst),old_valueF2461);
+  T49 = CALL1(1,VARREF(Ylst),g_placeF2412);
+  T50 = CALL1(1,VARREF(Ylst),old_valueF2413);
   T47 = CALL4(1,VARREF(YgooSmacrosYcat),T48,T49,T50,LITREF(lit_11));
   T46 = CALL1(1,VARREF(Ylst),T47);
   T28 = CALL4(1,VARREF(YgooSmacrosYcat),T29,T30,T46,LITREF(lit_11));
@@ -3962,13 +3791,13 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_x_1269_110) {
   P msg_,args_;
-  P x_1270F2462;
+  P x_1270F2414;
   P T0,T1,T2;
 LINK_STACK();
   ARG(msg_, 0);
   NARGS(args_, 1);
-  x_1270F2462 = FREEREF(0);
-  T2 = FUNFAB(fun_109,3,FREEREF(1),x_1270F2462,FREEREF(2));
+  x_1270F2414 = FREEREF(0);
+  T2 = FUNFAB(fun_109,3,FREEREF(1),x_1270F2414,FREEREF(2));
   T1 = with_exit(T2);
   T0 = CALL1(1,FREEREF(3),T1);
 UNLINK_STACK();
@@ -3977,20 +3806,20 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_111) {
   P return_;
-  P x_1268F2464;
-  P x_1269F2463;
+  P x_1268F2416;
+  P x_1269F2415;
   P T0,T1,T2,T3,T4,T5,T6;
 LINK_STACK();
   ARG(return_, 0);
   T6 = FUNSHELL(0,fun_x_1269_110,4);
-  x_1269F2463 = T6;
-  FUNINIT(x_1269F2463, 4,FREEREF(0),FREEREF(1),FREEREF(2),return_);
-  x_1268F2464 = FREEREF(0);
-  T0 = CALL2(1,VARREF(YisaQ),x_1268F2464,VARREF(YLlstG));
+  x_1269F2415 = T6;
+  FUNINIT(x_1269F2415, 4,FREEREF(0),FREEREF(1),FREEREF(2),return_);
+  x_1268F2416 = FREEREF(0);
+  T0 = CALL2(1,VARREF(YisaQ),x_1268F2416,VARREF(YLlstG));
   if (T0 != YPfalse) {
-    T1 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1268F2464,x_1269F2463);
+    T1 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1268F2416,x_1269F2415);
   } else {
-    T2 = CALL2(1,x_1269F2463,LITREF(lit_7),x_1268F2464);
+    T2 = CALL2(1,x_1269F2415,LITREF(lit_7),x_1268F2416);
   }
   T4 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
   T5 = BOXGET(FREEREF(2));
@@ -4001,52 +3830,45 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_112) {
   P return_;
-  P x_1267F2474;
-  P x_1265F2473;
-  P x_1265F2472;
-  P x_1265F2471;
-  P x_1265F2470;
-  P x_1265F2469;
-  P bodyF2468;
-  P placesF2467;
-  P x_1265F2466;
-  P x_1266F2465;
-  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14;
+  P x_1267F2424;
+  P x_1265F2423;
+  P x_1265F2422;
+  P x_1265F2421;
+  P bodyF2420;
+  P placesF2419;
+  P x_1265F2418;
+  P x_1266F2417;
+  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
 LINK_STACK();
   ARG(return_, 0);
-  T14 = FUNSHELL(0,fun_x_1266_107,2);
-  x_1266F2465 = T14;
-  FUNINIT(x_1266F2465, 2,FREEREF(0),return_);
-  x_1265F2466 = FREEREF(0);
-  placesF2467 = YPfalse;
-  placesF2467 = BOXFAB(placesF2467);
-  bodyF2468 = YPfalse;
-  bodyF2468 = BOXFAB(bodyF2468);
-  T2 = CALL2(1,VARREF(YisaQ),x_1265F2466,VARREF(YLlstG));
+  T11 = FUNSHELL(0,fun_x_1266_107,2);
+  x_1266F2417 = T11;
+  FUNINIT(x_1266F2417, 2,FREEREF(0),return_);
+  x_1265F2418 = FREEREF(0);
+  placesF2419 = YPfalse;
+  placesF2419 = BOXFAB(placesF2419);
+  bodyF2420 = YPfalse;
+  bodyF2420 = BOXFAB(bodyF2420);
+  T2 = CALL2(1,VARREF(YisaQ),x_1265F2418,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1265F2466,LITREF(lit_214),x_1266F2465);
-    x_1265F2469 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1265F2469,x_1266F2465);
-    BOXPUT(T7,placesF2467);
-    T8 = CALL1(1,VARREF(Ytail),x_1265F2469);
-    x_1265F2470 = T8;
-    BOXPUT(x_1265F2470,bodyF2468);
-    x_1265F2471 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1265F2471,x_1266F2465);
-    x_1265F2472 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1265F2472,x_1266F2465);
-    T6 = CALL1(1,VARREF(Ytail),x_1265F2471);
-    x_1265F2473 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1265F2473,x_1266F2465);
+    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1265F2418,LITREF(lit_214),x_1266F2417);
+    x_1265F2421 = T6;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1265F2421,x_1266F2417);
+    BOXPUT(T4,placesF2419);
+    T5 = CALL1(1,VARREF(Ytail),x_1265F2421);
+    x_1265F2422 = T5;
+    BOXPUT(x_1265F2422,bodyF2420);
+    x_1265F2423 = Ynil;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1265F2423,x_1266F2417);
   } else {
-    T10 = CALL2(1,x_1266F2465,LITREF(lit_7),x_1265F2466);
+    T7 = CALL2(1,x_1266F2417,LITREF(lit_7),x_1265F2418);
   }
-  T13 = BOXGET(placesF2467);
-  x_1267F2474 = T13;
-  T12 = FUNFAB(fun_111,3,x_1267F2474,placesF2467,bodyF2468);
-  T11 = with_exit(T12);
+  T10 = BOXGET(placesF2419);
+  x_1267F2424 = T10;
+  T9 = FUNFAB(fun_111,3,x_1267F2424,placesF2419,bodyF2420);
+  T8 = with_exit(T9);
 UNLINK_STACK();
-  QRET(T11);
+  QRET(T8);
 }
 
 LOCCODEDEF(fun_113) {
@@ -4074,94 +3896,87 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_115) {
   P return_;
-  P vnamF2486;
-  P typF2485;
-  P namF2484;
-  P x_1275F2483;
-  P x_1275F2482;
-  P x_1275F2481;
-  P x_1275F2480;
-  P x_1275F2479;
-  P valueF2478;
-  P varF2477;
-  P x_1275F2476;
-  P x_1276F2475;
+  P vnamF2434;
+  P typF2433;
+  P namF2432;
+  P x_1275F2431;
+  P x_1275F2430;
+  P x_1275F2429;
+  P valueF2428;
+  P varF2427;
+  P x_1275F2426;
+  P x_1276F2425;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33,T34,T35,T36,T37,T38,T39,T40,T41,T42,T43,T44,T45,T46,T47;
-  P T48,T49,T50,T51;
+  P T48;
 LINK_STACK();
   ARG(return_, 0);
-  T51 = FUNSHELL(0,fun_x_1276_114,2);
-  x_1276F2475 = T51;
-  FUNINIT(x_1276F2475, 2,FREEREF(0),return_);
-  x_1275F2476 = FREEREF(0);
-  varF2477 = YPfalse;
-  valueF2478 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1275F2476,VARREF(YLlstG));
+  T48 = FUNSHELL(0,fun_x_1276_114,2);
+  x_1276F2425 = T48;
+  FUNINIT(x_1276F2425, 2,FREEREF(0),return_);
+  x_1275F2426 = FREEREF(0);
+  varF2427 = YPfalse;
+  valueF2428 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1275F2426,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T11 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1275F2476,LITREF(lit_227),x_1276F2475);
-    x_1275F2479 = T11;
-    T9 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1275F2479,x_1276F2475);
-    varF2477 = T9;
-    T10 = CALL1(1,VARREF(Ytail),x_1275F2479);
-    x_1275F2480 = T10;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1275F2480,x_1276F2475);
-    valueF2478 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1275F2480);
-    x_1275F2481 = T8;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1275F2481,x_1276F2475);
-    x_1275F2482 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1275F2482,x_1276F2475);
-    T6 = CALL1(1,VARREF(Ytail),x_1275F2481);
-    x_1275F2483 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1275F2483,x_1276F2475);
+    T8 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1275F2426,LITREF(lit_227),x_1276F2425);
+    x_1275F2429 = T8;
+    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1275F2429,x_1276F2425);
+    varF2427 = T6;
+    T7 = CALL1(1,VARREF(Ytail),x_1275F2429);
+    x_1275F2430 = T7;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1275F2430,x_1276F2425);
+    valueF2428 = T4;
+    T5 = CALL1(1,VARREF(Ytail),x_1275F2430);
+    x_1275F2431 = T5;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1275F2431,x_1276F2425);
   } else {
-    T12 = CALL2(1,x_1276F2475,LITREF(lit_7),x_1275F2476);
+    T9 = CALL2(1,x_1276F2425,LITREF(lit_7),x_1275F2426);
   }
-  T50 = varF2477;
-  T49 = CALL1(1,VARREF(YgooSmacrosYvar_name),T50);
-  namF2484 = T49;
-  T48 = varF2477;
-  T47 = CALL1(1,VARREF(YgooSmacrosYvar_type),T48);
-  typF2485 = T47;
-  T46 = CALL3(1,VARREF(YgooSmacrosYcat_sym),LITREF(lit_228),namF2484,LITREF(lit_229));
-  vnamF2486 = T46;
-  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
-  T17 = CALL1(1,VARREF(Ylst),LITREF(lit_230));
-  T18 = CALL1(1,VARREF(Ylst),vnamF2486);
-  T20 = valueF2478;
-  T19 = CALL1(1,VARREF(Ylst),T20);
-  T16 = CALL4(1,VARREF(YgooSmacrosYcat),T17,T18,T19,LITREF(lit_11));
-  T15 = CALL1(1,VARREF(Ylst),T16);
-  T23 = CALL1(1,VARREF(Ylst),LITREF(lit_231));
-  T24 = CALL1(1,VARREF(Ylst),namF2484);
-  T27 = CALL1(1,VARREF(Ylst),LITREF(lit_232));
-  T28 = CALL1(1,VARREF(Ylst),typF2485);
-  T26 = CALL3(1,VARREF(YgooSmacrosYcat),T27,T28,LITREF(lit_11));
-  T25 = CALL1(1,VARREF(Ylst),T26);
-  T29 = CALL1(1,VARREF(Ylst),vnamF2486);
-  T22 = CALL5(1,VARREF(YgooSmacrosYcat),T23,T24,T25,T29,LITREF(lit_11));
-  T21 = CALL1(1,VARREF(Ylst),T22);
-  T32 = CALL1(1,VARREF(Ylst),LITREF(lit_231));
-  T34 = CALL1(1,VARREF(YgooSmacrosYfab_setter_name),namF2484);
-  T33 = CALL1(1,VARREF(Ylst),T34);
-  T39 = CALL1(1,VARREF(Ylst),LITREF(lit_233));
-  T40 = CALL1(1,VARREF(Ylst),typF2485);
-  T38 = CALL3(1,VARREF(YgooSmacrosYcat),T39,T40,LITREF(lit_11));
-  T37 = CALL1(1,VARREF(Ylst),T38);
-  T36 = CALL2(1,VARREF(YgooSmacrosYcat),T37,LITREF(lit_11));
-  T35 = CALL1(1,VARREF(Ylst),T36);
-  T43 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
-  T44 = CALL1(1,VARREF(Ylst),vnamF2486);
-  T45 = CALL1(1,VARREF(Ylst),LITREF(lit_233));
-  T42 = CALL4(1,VARREF(YgooSmacrosYcat),T43,T44,T45,LITREF(lit_11));
-  T41 = CALL1(1,VARREF(Ylst),T42);
-  T31 = CALL5(1,VARREF(YgooSmacrosYcat),T32,T33,T35,T41,LITREF(lit_11));
+  T47 = varF2427;
+  T46 = CALL1(1,VARREF(YgooSmacrosYvar_name),T47);
+  namF2432 = T46;
+  T45 = varF2427;
+  T44 = CALL1(1,VARREF(YgooSmacrosYvar_type),T45);
+  typF2433 = T44;
+  T43 = CALL3(1,VARREF(YgooSmacrosYcat_sym),LITREF(lit_228),namF2432,LITREF(lit_229));
+  vnamF2434 = T43;
+  T11 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
+  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_230));
+  T15 = CALL1(1,VARREF(Ylst),vnamF2434);
+  T17 = valueF2428;
+  T16 = CALL1(1,VARREF(Ylst),T17);
+  T13 = CALL4(1,VARREF(YgooSmacrosYcat),T14,T15,T16,LITREF(lit_11));
+  T12 = CALL1(1,VARREF(Ylst),T13);
+  T20 = CALL1(1,VARREF(Ylst),LITREF(lit_231));
+  T21 = CALL1(1,VARREF(Ylst),namF2432);
+  T24 = CALL1(1,VARREF(Ylst),LITREF(lit_232));
+  T25 = CALL1(1,VARREF(Ylst),typF2433);
+  T23 = CALL3(1,VARREF(YgooSmacrosYcat),T24,T25,LITREF(lit_11));
+  T22 = CALL1(1,VARREF(Ylst),T23);
+  T26 = CALL1(1,VARREF(Ylst),vnamF2434);
+  T19 = CALL5(1,VARREF(YgooSmacrosYcat),T20,T21,T22,T26,LITREF(lit_11));
+  T18 = CALL1(1,VARREF(Ylst),T19);
+  T29 = CALL1(1,VARREF(Ylst),LITREF(lit_231));
+  T31 = CALL1(1,VARREF(YgooSmacrosYfab_setter_name),namF2432);
   T30 = CALL1(1,VARREF(Ylst),T31);
-  T13 = CALL5(1,VARREF(YgooSmacrosYcat),T14,T15,T21,T30,LITREF(lit_11));
+  T36 = CALL1(1,VARREF(Ylst),LITREF(lit_233));
+  T37 = CALL1(1,VARREF(Ylst),typF2433);
+  T35 = CALL3(1,VARREF(YgooSmacrosYcat),T36,T37,LITREF(lit_11));
+  T34 = CALL1(1,VARREF(Ylst),T35);
+  T33 = CALL2(1,VARREF(YgooSmacrosYcat),T34,LITREF(lit_11));
+  T32 = CALL1(1,VARREF(Ylst),T33);
+  T40 = CALL1(1,VARREF(Ylst),LITREF(lit_32));
+  T41 = CALL1(1,VARREF(Ylst),vnamF2434);
+  T42 = CALL1(1,VARREF(Ylst),LITREF(lit_233));
+  T39 = CALL4(1,VARREF(YgooSmacrosYcat),T40,T41,T42,LITREF(lit_11));
+  T38 = CALL1(1,VARREF(Ylst),T39);
+  T28 = CALL5(1,VARREF(YgooSmacrosYcat),T29,T30,T32,T38,LITREF(lit_11));
+  T27 = CALL1(1,VARREF(Ylst),T28);
+  T10 = CALL5(1,VARREF(YgooSmacrosYcat),T11,T12,T18,T27,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T13);
+  QRET(T10);
 }
 
 LOCCODEDEF(fun_116) {
@@ -4189,48 +4004,40 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_118) {
   P return_;
-  P x_1279F2493;
-  P x_1279F2492;
-  P x_1279F2491;
-  P x_1279F2490;
-  P bodyF2489;
-  P x_1279F2488;
-  P x_1280F2487;
-  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17;
+  P x_1279F2439;
+  P x_1279F2438;
+  P bodyF2437;
+  P x_1279F2436;
+  P x_1280F2435;
+  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14;
 LINK_STACK();
   ARG(return_, 0);
-  T17 = FUNSHELL(0,fun_x_1280_117,2);
-  x_1280F2487 = T17;
-  FUNINIT(x_1280F2487, 2,FREEREF(0),return_);
-  x_1279F2488 = FREEREF(0);
-  bodyF2489 = YPfalse;
-  T1 = CALL2(1,VARREF(YisaQ),x_1279F2488,VARREF(YLlstG));
+  T14 = FUNSHELL(0,fun_x_1280_117,2);
+  x_1280F2435 = T14;
+  FUNINIT(x_1280F2435, 2,FREEREF(0),return_);
+  x_1279F2436 = FREEREF(0);
+  bodyF2437 = YPfalse;
+  T1 = CALL2(1,VARREF(YisaQ),x_1279F2436,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1279F2488,LITREF(lit_238),x_1280F2487);
-    x_1279F2490 = T6;
-    bodyF2489 = x_1279F2490;
-    x_1279F2491 = Ynil;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1279F2491,x_1280F2487);
-    x_1279F2492 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1279F2492,x_1280F2487);
-    T5 = CALL1(1,VARREF(Ytail),x_1279F2491);
-    x_1279F2493 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1279F2493,x_1280F2487);
+    T3 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1279F2436,LITREF(lit_238),x_1280F2435);
+    x_1279F2438 = T3;
+    bodyF2437 = x_1279F2438;
+    x_1279F2439 = Ynil;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1279F2439,x_1280F2435);
   } else {
-    T7 = CALL2(1,x_1280F2487,LITREF(lit_7),x_1279F2488);
+    T4 = CALL2(1,x_1280F2435,LITREF(lit_7),x_1279F2436);
   }
-  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_214));
-  T14 = CALL1(1,VARREF(Ylst),LITREF(lit_239));
-  T15 = CALL1(1,VARREF(Ylst),YPfalse);
-  T13 = CALL3(1,VARREF(YgooSmacrosYcat),T14,T15,LITREF(lit_11));
-  T12 = CALL1(1,VARREF(Ylst),T13);
-  T11 = CALL2(1,VARREF(YgooSmacrosYcat),T12,LITREF(lit_11));
-  T10 = CALL1(1,VARREF(Ylst),T11);
-  T16 = bodyF2489;
-  T8 = CALL4(1,VARREF(YgooSmacrosYcat),T9,T10,T16,LITREF(lit_11));
+  T6 = CALL1(1,VARREF(Ylst),LITREF(lit_214));
+  T11 = CALL1(1,VARREF(Ylst),LITREF(lit_239));
+  T12 = CALL1(1,VARREF(Ylst),YPfalse);
+  T10 = CALL3(1,VARREF(YgooSmacrosYcat),T11,T12,LITREF(lit_11));
+  T9 = CALL1(1,VARREF(Ylst),T10);
+  T8 = CALL2(1,VARREF(YgooSmacrosYcat),T9,LITREF(lit_11));
+  T7 = CALL1(1,VARREF(Ylst),T8);
+  T13 = bodyF2437;
+  T5 = CALL4(1,VARREF(YgooSmacrosYcat),T6,T7,T13,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T8);
+  QRET(T5);
 }
 
 LOCCODEDEF(fun_119) {
@@ -4258,66 +4065,59 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_121) {
   P return_;
-  P x_1283F2500;
-  P x_1283F2499;
-  P x_1283F2498;
-  P x_1283F2497;
-  P namesF2496;
-  P x_1283F2495;
-  P x_1284F2494;
+  P x_1283F2444;
+  P x_1283F2443;
+  P namesF2442;
+  P x_1283F2441;
+  P x_1284F2440;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
-  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
+  P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28;
 LINK_STACK();
   ARG(return_, 0);
-  T31 = FUNSHELL(0,fun_x_1284_120,2);
-  x_1284F2494 = T31;
-  FUNINIT(x_1284F2494, 2,FREEREF(0),return_);
-  x_1283F2495 = FREEREF(0);
-  namesF2496 = YPfalse;
-  T1 = CALL2(1,VARREF(YisaQ),x_1283F2495,VARREF(YLlstG));
+  T28 = FUNSHELL(0,fun_x_1284_120,2);
+  x_1284F2440 = T28;
+  FUNINIT(x_1284F2440, 2,FREEREF(0),return_);
+  x_1283F2441 = FREEREF(0);
+  namesF2442 = YPfalse;
+  T1 = CALL2(1,VARREF(YisaQ),x_1283F2441,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1283F2495,LITREF(lit_244),x_1284F2494);
-    x_1283F2497 = T6;
-    namesF2496 = x_1283F2497;
-    x_1283F2498 = Ynil;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1283F2498,x_1284F2494);
-    x_1283F2499 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1283F2499,x_1284F2494);
-    T5 = CALL1(1,VARREF(Ytail),x_1283F2498);
-    x_1283F2500 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1283F2500,x_1284F2494);
+    T3 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1283F2441,LITREF(lit_244),x_1284F2440);
+    x_1283F2443 = T3;
+    namesF2442 = x_1283F2443;
+    x_1283F2444 = Ynil;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1283F2444,x_1284F2440);
   } else {
-    T7 = CALL2(1,x_1284F2494,LITREF(lit_7),x_1283F2495);
+    T4 = CALL2(1,x_1284F2440,LITREF(lit_7),x_1283F2441);
   }
-  T10 = namesF2496;
-  T9 = CALL1(1,VARREF(YgooSmacrosYnulQ),T10);
-  if (T9 != YPfalse) {
-    T8 = YPfalse;
+  T7 = namesF2442;
+  T6 = CALL1(1,VARREF(YgooSmacrosYnulQ),T7);
+  if (T6 != YPfalse) {
+    T5 = YPfalse;
   } else {
-    T12 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
-    T15 = CALL1(1,VARREF(Ylst),LITREF(lit_121));
-    T16 = CALL1(1,VARREF(Ylst),YPfalse);
-    T19 = namesF2496;
-    T18 = CALL1(1,VARREF(Yhead),T19);
-    T17 = CALL1(1,VARREF(Ylst),T18);
-    T14 = CALL4(1,VARREF(YgooSmacrosYcat),T15,T16,T17,LITREF(lit_11));
-    T13 = CALL1(1,VARREF(Ylst),T14);
-    T22 = CALL1(1,VARREF(Ylst),LITREF(lit_245));
-    T25 = namesF2496;
-    T24 = CALL1(1,VARREF(Yhead),T25);
-    T23 = CALL1(1,VARREF(Ylst),T24);
-    T21 = CALL3(1,VARREF(YgooSmacrosYcat),T22,T23,LITREF(lit_11));
+    T9 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
+    T12 = CALL1(1,VARREF(Ylst),LITREF(lit_121));
+    T13 = CALL1(1,VARREF(Ylst),YPfalse);
+    T16 = namesF2442;
+    T15 = CALL1(1,VARREF(Yhead),T16);
+    T14 = CALL1(1,VARREF(Ylst),T15);
+    T11 = CALL4(1,VARREF(YgooSmacrosYcat),T12,T13,T14,LITREF(lit_11));
+    T10 = CALL1(1,VARREF(Ylst),T11);
+    T19 = CALL1(1,VARREF(Ylst),LITREF(lit_245));
+    T22 = namesF2442;
+    T21 = CALL1(1,VARREF(Yhead),T22);
     T20 = CALL1(1,VARREF(Ylst),T21);
-    T28 = CALL1(1,VARREF(Ylst),LITREF(lit_244));
-    T30 = namesF2496;
-    T29 = CALL1(1,VARREF(Ytail),T30);
-    T27 = CALL3(1,VARREF(YgooSmacrosYcat),T28,T29,LITREF(lit_11));
-    T26 = CALL1(1,VARREF(Ylst),T27);
-    T11 = CALL5(1,VARREF(YgooSmacrosYcat),T12,T13,T20,T26,LITREF(lit_11));
-    T8 = T11;
+    T18 = CALL3(1,VARREF(YgooSmacrosYcat),T19,T20,LITREF(lit_11));
+    T17 = CALL1(1,VARREF(Ylst),T18);
+    T25 = CALL1(1,VARREF(Ylst),LITREF(lit_244));
+    T27 = namesF2442;
+    T26 = CALL1(1,VARREF(Ytail),T27);
+    T24 = CALL3(1,VARREF(YgooSmacrosYcat),T25,T26,LITREF(lit_11));
+    T23 = CALL1(1,VARREF(Ylst),T24);
+    T8 = CALL5(1,VARREF(YgooSmacrosYcat),T9,T10,T17,T23,LITREF(lit_11));
+    T5 = T8;
   }
 UNLINK_STACK();
-  QRET(T8);
+  QRET(T5);
 }
 
 LOCCODEDEF(fun_122) {
@@ -4357,43 +4157,43 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_125) {
   P return_;
-  P x_1335F2506;
-  P x_1335F2505;
-  P x_1335F2504;
-  P nameF2503;
-  P x_1335F2502;
-  P x_1336F2501;
+  P x_1335F2450;
+  P x_1335F2449;
+  P x_1335F2448;
+  P nameF2447;
+  P x_1335F2446;
+  P x_1336F2445;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20;
 LINK_STACK();
   ARG(return_, 0);
   T20 = FUNSHELL(0,fun_x_1336_124,1);
-  x_1336F2501 = T20;
-  FUNINIT(x_1336F2501, 1,return_);
-  x_1335F2502 = FREEREF(0);
-  nameF2503 = YPfalse;
-  T1 = CALL2(1,VARREF(YisaQ),x_1335F2502,VARREF(YLlstG));
+  x_1336F2445 = T20;
+  FUNINIT(x_1336F2445, 1,return_);
+  x_1335F2446 = FREEREF(0);
+  nameF2447 = YPfalse;
+  T1 = CALL2(1,VARREF(YisaQ),x_1335F2446,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1335F2502,x_1336F2501);
-    nameF2503 = T6;
-    T7 = CALL1(1,VARREF(Ytail),x_1335F2502);
-    x_1335F2504 = T7;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1335F2504,x_1336F2501);
-    x_1335F2505 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1335F2505,x_1336F2501);
-    T5 = CALL1(1,VARREF(Ytail),x_1335F2504);
-    x_1335F2506 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1335F2506,x_1336F2501);
+    T6 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1335F2446,x_1336F2445);
+    nameF2447 = T6;
+    T7 = CALL1(1,VARREF(Ytail),x_1335F2446);
+    x_1335F2448 = T7;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1335F2448,x_1336F2445);
+    x_1335F2449 = T4;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1335F2449,x_1336F2445);
+    T5 = CALL1(1,VARREF(Ytail),x_1335F2448);
+    x_1335F2450 = T5;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1335F2450,x_1336F2445);
   } else {
-    T8 = CALL2(1,x_1336F2501,LITREF(lit_7),x_1335F2502);
+    T8 = CALL2(1,x_1336F2445,LITREF(lit_7),x_1335F2446);
   }
-  T11 = nameF2503;
+  T11 = nameF2447;
   T10 = CALL2(1,VARREF(YisaQ),T11,VARREF(YLsymG));
   if (T10 != YPfalse) {
-    T14 = nameF2503;
+    T14 = nameF2447;
     T13 = CALL1(1,VARREF(Ylst),T14);
     T17 = CALL1(1,VARREF(Ylst),LITREF(lit_245));
-    T19 = nameF2503;
+    T19 = nameF2447;
     T18 = CALL1(1,VARREF(Ylst),T19);
     T16 = CALL3(1,VARREF(YgooSmacrosYcat),T17,T18,LITREF(lit_11));
     T15 = CALL1(1,VARREF(Ylst),T16);
@@ -4408,13 +4208,13 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_x_1333_126) {
   P msg_,args_;
-  P x_1334F2507;
+  P x_1334F2451;
   P T0,T1,T2;
 LINK_STACK();
   ARG(msg_, 0);
   NARGS(args_, 1);
-  x_1334F2507 = FREEREF(0);
-  T2 = FUNFAB(fun_125,1,x_1334F2507);
+  x_1334F2451 = FREEREF(0);
+  T2 = FUNFAB(fun_125,1,x_1334F2451);
   T1 = with_exit(T2);
   T0 = CALL1(1,FREEREF(1),T1);
 UNLINK_STACK();
@@ -4423,48 +4223,48 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_127) {
   P return_;
-  P x_1332F2516;
-  P x_1332F2515;
-  P x_1332F2514;
-  P x_1332F2513;
-  P x_1332F2512;
-  P restF2511;
-  P nameF2510;
-  P x_1332F2509;
-  P x_1333F2508;
+  P x_1332F2460;
+  P x_1332F2459;
+  P x_1332F2458;
+  P x_1332F2457;
+  P x_1332F2456;
+  P restF2455;
+  P nameF2454;
+  P x_1332F2453;
+  P x_1333F2452;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19;
 LINK_STACK();
   ARG(return_, 0);
   T19 = FUNSHELL(0,fun_x_1333_126,2);
-  x_1333F2508 = T19;
-  FUNINIT(x_1333F2508, 2,FREEREF(0),return_);
-  x_1332F2509 = FREEREF(0);
-  nameF2510 = YPfalse;
-  restF2511 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1332F2509,VARREF(YLlstG));
+  x_1333F2452 = T19;
+  FUNINIT(x_1333F2452, 2,FREEREF(0),return_);
+  x_1332F2453 = FREEREF(0);
+  nameF2454 = YPfalse;
+  restF2455 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1332F2453,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1332F2509,LITREF(lit_275),x_1333F2508);
-    x_1332F2512 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1332F2512,x_1333F2508);
-    nameF2510 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1332F2512);
-    x_1332F2513 = T8;
-    restF2511 = x_1332F2513;
-    x_1332F2514 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1332F2514,x_1333F2508);
-    x_1332F2515 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1332F2515,x_1333F2508);
-    T6 = CALL1(1,VARREF(Ytail),x_1332F2514);
-    x_1332F2516 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1332F2516,x_1333F2508);
+    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1332F2453,LITREF(lit_275),x_1333F2452);
+    x_1332F2456 = T9;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1332F2456,x_1333F2452);
+    nameF2454 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1332F2456);
+    x_1332F2457 = T8;
+    restF2455 = x_1332F2457;
+    x_1332F2458 = Ynil;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1332F2458,x_1333F2452);
+    x_1332F2459 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1332F2459,x_1333F2452);
+    T6 = CALL1(1,VARREF(Ytail),x_1332F2458);
+    x_1332F2460 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1332F2460,x_1333F2452);
   } else {
-    T10 = CALL2(1,x_1333F2508,LITREF(lit_7),x_1332F2509);
+    T10 = CALL2(1,x_1333F2452,LITREF(lit_7),x_1332F2453);
   }
   T13 = BOXGET(FREEREF(1));
   T12 = CALL1(1,VARREF(Ylst),T13);
   T16 = CALL1(1,VARREF(Ylst),LITREF(lit_245));
-  T18 = nameF2510;
+  T18 = nameF2454;
   T17 = CALL1(1,VARREF(Ylst),T18);
   T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
   T14 = CALL1(1,VARREF(Ylst),T15);
@@ -4475,13 +4275,13 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_x_1330_128) {
   P msg_,args_;
-  P x_1331F2517;
+  P x_1331F2461;
   P T0,T1,T2;
 LINK_STACK();
   ARG(msg_, 0);
   NARGS(args_, 1);
-  x_1331F2517 = FREEREF(0);
-  T2 = FUNFAB(fun_127,2,x_1331F2517,FREEREF(1));
+  x_1331F2461 = FREEREF(0);
+  T2 = FUNFAB(fun_127,2,x_1331F2461,FREEREF(1));
   T1 = with_exit(T2);
   T0 = CALL1(1,FREEREF(2),T1);
 UNLINK_STACK();
@@ -4490,48 +4290,48 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_129) {
   P return_;
-  P x_1329F2526;
-  P x_1329F2525;
-  P x_1329F2524;
-  P x_1329F2523;
-  P x_1329F2522;
-  P restF2521;
-  P nameF2520;
-  P x_1329F2519;
-  P x_1330F2518;
+  P x_1329F2470;
+  P x_1329F2469;
+  P x_1329F2468;
+  P x_1329F2467;
+  P x_1329F2466;
+  P restF2465;
+  P nameF2464;
+  P x_1329F2463;
+  P x_1330F2462;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19;
 LINK_STACK();
   ARG(return_, 0);
   T19 = FUNSHELL(0,fun_x_1330_128,3);
-  x_1330F2518 = T19;
-  FUNINIT(x_1330F2518, 3,FREEREF(0),FREEREF(1),return_);
-  x_1329F2519 = FREEREF(0);
-  nameF2520 = YPfalse;
-  restF2521 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1329F2519,VARREF(YLlstG));
+  x_1330F2462 = T19;
+  FUNINIT(x_1330F2462, 3,FREEREF(0),FREEREF(1),return_);
+  x_1329F2463 = FREEREF(0);
+  nameF2464 = YPfalse;
+  restF2465 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1329F2463,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1329F2519,LITREF(lit_276),x_1330F2518);
-    x_1329F2522 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1329F2522,x_1330F2518);
-    nameF2520 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1329F2522);
-    x_1329F2523 = T8;
-    restF2521 = x_1329F2523;
-    x_1329F2524 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1329F2524,x_1330F2518);
-    x_1329F2525 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1329F2525,x_1330F2518);
-    T6 = CALL1(1,VARREF(Ytail),x_1329F2524);
-    x_1329F2526 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1329F2526,x_1330F2518);
+    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1329F2463,LITREF(lit_276),x_1330F2462);
+    x_1329F2466 = T9;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1329F2466,x_1330F2462);
+    nameF2464 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1329F2466);
+    x_1329F2467 = T8;
+    restF2465 = x_1329F2467;
+    x_1329F2468 = Ynil;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1329F2468,x_1330F2462);
+    x_1329F2469 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1329F2469,x_1330F2462);
+    T6 = CALL1(1,VARREF(Ytail),x_1329F2468);
+    x_1329F2470 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1329F2470,x_1330F2462);
   } else {
-    T10 = CALL2(1,x_1330F2518,LITREF(lit_7),x_1329F2519);
+    T10 = CALL2(1,x_1330F2462,LITREF(lit_7),x_1329F2463);
   }
   T13 = BOXGET(FREEREF(1));
   T12 = CALL1(1,VARREF(Ylst),T13);
   T16 = CALL1(1,VARREF(Ylst),LITREF(lit_245));
-  T18 = nameF2520;
+  T18 = nameF2464;
   T17 = CALL1(1,VARREF(Ylst),T18);
   T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
   T14 = CALL1(1,VARREF(Ylst),T15);
@@ -4542,13 +4342,13 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_x_1327_130) {
   P msg_,args_;
-  P x_1328F2527;
+  P x_1328F2471;
   P T0,T1,T2;
 LINK_STACK();
   ARG(msg_, 0);
   NARGS(args_, 1);
-  x_1328F2527 = FREEREF(0);
-  T2 = FUNFAB(fun_129,2,x_1328F2527,FREEREF(1));
+  x_1328F2471 = FREEREF(0);
+  T2 = FUNFAB(fun_129,2,x_1328F2471,FREEREF(1));
   T1 = with_exit(T2);
   T0 = CALL1(1,FREEREF(2),T1);
 UNLINK_STACK();
@@ -4557,48 +4357,48 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_131) {
   P return_;
-  P x_1326F2536;
-  P x_1326F2535;
-  P x_1326F2534;
-  P x_1326F2533;
-  P x_1326F2532;
-  P restF2531;
-  P nameF2530;
-  P x_1326F2529;
-  P x_1327F2528;
+  P x_1326F2480;
+  P x_1326F2479;
+  P x_1326F2478;
+  P x_1326F2477;
+  P x_1326F2476;
+  P restF2475;
+  P nameF2474;
+  P x_1326F2473;
+  P x_1327F2472;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19;
 LINK_STACK();
   ARG(return_, 0);
   T19 = FUNSHELL(0,fun_x_1327_130,3);
-  x_1327F2528 = T19;
-  FUNINIT(x_1327F2528, 3,FREEREF(0),FREEREF(1),return_);
-  x_1326F2529 = FREEREF(0);
-  nameF2530 = YPfalse;
-  restF2531 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1326F2529,VARREF(YLlstG));
+  x_1327F2472 = T19;
+  FUNINIT(x_1327F2472, 3,FREEREF(0),FREEREF(1),return_);
+  x_1326F2473 = FREEREF(0);
+  nameF2474 = YPfalse;
+  restF2475 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1326F2473,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1326F2529,LITREF(lit_277),x_1327F2528);
-    x_1326F2532 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1326F2532,x_1327F2528);
-    nameF2530 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1326F2532);
-    x_1326F2533 = T8;
-    restF2531 = x_1326F2533;
-    x_1326F2534 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1326F2534,x_1327F2528);
-    x_1326F2535 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1326F2535,x_1327F2528);
-    T6 = CALL1(1,VARREF(Ytail),x_1326F2534);
-    x_1326F2536 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1326F2536,x_1327F2528);
+    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1326F2473,LITREF(lit_277),x_1327F2472);
+    x_1326F2476 = T9;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1326F2476,x_1327F2472);
+    nameF2474 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1326F2476);
+    x_1326F2477 = T8;
+    restF2475 = x_1326F2477;
+    x_1326F2478 = Ynil;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1326F2478,x_1327F2472);
+    x_1326F2479 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1326F2479,x_1327F2472);
+    T6 = CALL1(1,VARREF(Ytail),x_1326F2478);
+    x_1326F2480 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1326F2480,x_1327F2472);
   } else {
-    T10 = CALL2(1,x_1327F2528,LITREF(lit_7),x_1326F2529);
+    T10 = CALL2(1,x_1327F2472,LITREF(lit_7),x_1326F2473);
   }
   T13 = BOXGET(FREEREF(1));
   T12 = CALL1(1,VARREF(Ylst),T13);
   T16 = CALL1(1,VARREF(Ylst),LITREF(lit_245));
-  T18 = nameF2530;
+  T18 = nameF2474;
   T17 = CALL1(1,VARREF(Ylst),T18);
   T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
   T14 = CALL1(1,VARREF(Ylst),T15);
@@ -4609,13 +4409,13 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_x_1324_132) {
   P msg_,args_;
-  P x_1325F2537;
+  P x_1325F2481;
   P T0,T1,T2;
 LINK_STACK();
   ARG(msg_, 0);
   NARGS(args_, 1);
-  x_1325F2537 = FREEREF(0);
-  T2 = FUNFAB(fun_131,2,x_1325F2537,FREEREF(1));
+  x_1325F2481 = FREEREF(0);
+  T2 = FUNFAB(fun_131,2,x_1325F2481,FREEREF(1));
   T1 = with_exit(T2);
   T0 = CALL1(1,FREEREF(2),T1);
 UNLINK_STACK();
@@ -4624,48 +4424,48 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_133) {
   P return_;
-  P x_1323F2546;
-  P x_1323F2545;
-  P x_1323F2544;
-  P x_1323F2543;
-  P x_1323F2542;
-  P restF2541;
-  P nameF2540;
-  P x_1323F2539;
-  P x_1324F2538;
+  P x_1323F2490;
+  P x_1323F2489;
+  P x_1323F2488;
+  P x_1323F2487;
+  P x_1323F2486;
+  P restF2485;
+  P nameF2484;
+  P x_1323F2483;
+  P x_1324F2482;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19;
 LINK_STACK();
   ARG(return_, 0);
   T19 = FUNSHELL(0,fun_x_1324_132,3);
-  x_1324F2538 = T19;
-  FUNINIT(x_1324F2538, 3,FREEREF(0),FREEREF(1),return_);
-  x_1323F2539 = FREEREF(0);
-  nameF2540 = YPfalse;
-  restF2541 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1323F2539,VARREF(YLlstG));
+  x_1324F2482 = T19;
+  FUNINIT(x_1324F2482, 3,FREEREF(0),FREEREF(1),return_);
+  x_1323F2483 = FREEREF(0);
+  nameF2484 = YPfalse;
+  restF2485 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1323F2483,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1323F2539,LITREF(lit_230),x_1324F2538);
-    x_1323F2542 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1323F2542,x_1324F2538);
-    nameF2540 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1323F2542);
-    x_1323F2543 = T8;
-    restF2541 = x_1323F2543;
-    x_1323F2544 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1323F2544,x_1324F2538);
-    x_1323F2545 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1323F2545,x_1324F2538);
-    T6 = CALL1(1,VARREF(Ytail),x_1323F2544);
-    x_1323F2546 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1323F2546,x_1324F2538);
+    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1323F2483,LITREF(lit_230),x_1324F2482);
+    x_1323F2486 = T9;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1323F2486,x_1324F2482);
+    nameF2484 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1323F2486);
+    x_1323F2487 = T8;
+    restF2485 = x_1323F2487;
+    x_1323F2488 = Ynil;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1323F2488,x_1324F2482);
+    x_1323F2489 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1323F2489,x_1324F2482);
+    T6 = CALL1(1,VARREF(Ytail),x_1323F2488);
+    x_1323F2490 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1323F2490,x_1324F2482);
   } else {
-    T10 = CALL2(1,x_1324F2538,LITREF(lit_7),x_1323F2539);
+    T10 = CALL2(1,x_1324F2482,LITREF(lit_7),x_1323F2483);
   }
   T13 = BOXGET(FREEREF(1));
   T12 = CALL1(1,VARREF(Ylst),T13);
   T16 = CALL1(1,VARREF(Ylst),LITREF(lit_245));
-  T18 = nameF2540;
+  T18 = nameF2484;
   T17 = CALL1(1,VARREF(Ylst),T18);
   T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
   T14 = CALL1(1,VARREF(Ylst),T15);
@@ -4676,13 +4476,13 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_x_1321_134) {
   P msg_,args_;
-  P x_1322F2547;
+  P x_1322F2491;
   P T0,T1,T2;
 LINK_STACK();
   ARG(msg_, 0);
   NARGS(args_, 1);
-  x_1322F2547 = FREEREF(0);
-  T2 = FUNFAB(fun_133,2,x_1322F2547,FREEREF(1));
+  x_1322F2491 = FREEREF(0);
+  T2 = FUNFAB(fun_133,2,x_1322F2491,FREEREF(1));
   T1 = with_exit(T2);
   T0 = CALL1(1,FREEREF(2),T1);
 UNLINK_STACK();
@@ -4691,48 +4491,48 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_135) {
   P return_;
-  P x_1320F2556;
-  P x_1320F2555;
-  P x_1320F2554;
-  P x_1320F2553;
-  P x_1320F2552;
-  P restF2551;
-  P nameF2550;
-  P x_1320F2549;
-  P x_1321F2548;
+  P x_1320F2500;
+  P x_1320F2499;
+  P x_1320F2498;
+  P x_1320F2497;
+  P x_1320F2496;
+  P restF2495;
+  P nameF2494;
+  P x_1320F2493;
+  P x_1321F2492;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19;
 LINK_STACK();
   ARG(return_, 0);
   T19 = FUNSHELL(0,fun_x_1321_134,3);
-  x_1321F2548 = T19;
-  FUNINIT(x_1321F2548, 3,FREEREF(0),FREEREF(1),return_);
-  x_1320F2549 = FREEREF(0);
-  nameF2550 = YPfalse;
-  restF2551 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1320F2549,VARREF(YLlstG));
+  x_1321F2492 = T19;
+  FUNINIT(x_1321F2492, 3,FREEREF(0),FREEREF(1),return_);
+  x_1320F2493 = FREEREF(0);
+  nameF2494 = YPfalse;
+  restF2495 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1320F2493,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1320F2549,LITREF(lit_278),x_1321F2548);
-    x_1320F2552 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1320F2552,x_1321F2548);
-    nameF2550 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1320F2552);
-    x_1320F2553 = T8;
-    restF2551 = x_1320F2553;
-    x_1320F2554 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1320F2554,x_1321F2548);
-    x_1320F2555 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1320F2555,x_1321F2548);
-    T6 = CALL1(1,VARREF(Ytail),x_1320F2554);
-    x_1320F2556 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1320F2556,x_1321F2548);
+    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1320F2493,LITREF(lit_278),x_1321F2492);
+    x_1320F2496 = T9;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1320F2496,x_1321F2492);
+    nameF2494 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1320F2496);
+    x_1320F2497 = T8;
+    restF2495 = x_1320F2497;
+    x_1320F2498 = Ynil;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1320F2498,x_1321F2492);
+    x_1320F2499 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1320F2499,x_1321F2492);
+    T6 = CALL1(1,VARREF(Ytail),x_1320F2498);
+    x_1320F2500 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1320F2500,x_1321F2492);
   } else {
-    T10 = CALL2(1,x_1321F2548,LITREF(lit_7),x_1320F2549);
+    T10 = CALL2(1,x_1321F2492,LITREF(lit_7),x_1320F2493);
   }
-  T13 = nameF2550;
+  T13 = nameF2494;
   T12 = CALL1(1,VARREF(Ylst),T13);
   T16 = CALL1(1,VARREF(Ylst),LITREF(lit_245));
-  T18 = nameF2550;
+  T18 = nameF2494;
   T17 = CALL1(1,VARREF(Ylst),T18);
   T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
   T14 = CALL1(1,VARREF(Ylst),T15);
@@ -4743,13 +4543,13 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_x_1318_136) {
   P msg_,args_;
-  P x_1319F2557;
+  P x_1319F2501;
   P T0,T1,T2;
 LINK_STACK();
   ARG(msg_, 0);
   NARGS(args_, 1);
-  x_1319F2557 = FREEREF(0);
-  T2 = FUNFAB(fun_135,2,x_1319F2557,FREEREF(1));
+  x_1319F2501 = FREEREF(0);
+  T2 = FUNFAB(fun_135,2,x_1319F2501,FREEREF(1));
   T1 = with_exit(T2);
   T0 = CALL1(1,FREEREF(2),T1);
 UNLINK_STACK();
@@ -4758,53 +4558,53 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_137) {
   P return_;
-  P x_1317F2566;
-  P x_1317F2565;
-  P x_1317F2564;
-  P x_1317F2563;
-  P x_1317F2562;
-  P restF2561;
-  P nameF2560;
-  P x_1317F2559;
-  P x_1318F2558;
+  P x_1317F2510;
+  P x_1317F2509;
+  P x_1317F2508;
+  P x_1317F2507;
+  P x_1317F2506;
+  P restF2505;
+  P nameF2504;
+  P x_1317F2503;
+  P x_1318F2502;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25;
 LINK_STACK();
   ARG(return_, 0);
   T25 = FUNSHELL(0,fun_x_1318_136,3);
-  x_1318F2558 = T25;
-  FUNINIT(x_1318F2558, 3,FREEREF(0),FREEREF(1),return_);
-  x_1317F2559 = FREEREF(0);
-  nameF2560 = YPfalse;
-  restF2561 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1317F2559,VARREF(YLlstG));
+  x_1318F2502 = T25;
+  FUNINIT(x_1318F2502, 3,FREEREF(0),FREEREF(1),return_);
+  x_1317F2503 = FREEREF(0);
+  nameF2504 = YPfalse;
+  restF2505 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1317F2503,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1317F2559,LITREF(lit_279),x_1318F2558);
-    x_1317F2562 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1317F2562,x_1318F2558);
-    nameF2560 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1317F2562);
-    x_1317F2563 = T8;
-    restF2561 = x_1317F2563;
-    x_1317F2564 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1317F2564,x_1318F2558);
-    x_1317F2565 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1317F2565,x_1318F2558);
-    T6 = CALL1(1,VARREF(Ytail),x_1317F2564);
-    x_1317F2566 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1317F2566,x_1318F2558);
+    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1317F2503,LITREF(lit_279),x_1318F2502);
+    x_1317F2506 = T9;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1317F2506,x_1318F2502);
+    nameF2504 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1317F2506);
+    x_1317F2507 = T8;
+    restF2505 = x_1317F2507;
+    x_1317F2508 = Ynil;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1317F2508,x_1318F2502);
+    x_1317F2509 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1317F2509,x_1318F2502);
+    T6 = CALL1(1,VARREF(Ytail),x_1317F2508);
+    x_1317F2510 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1317F2510,x_1318F2502);
   } else {
-    T10 = CALL2(1,x_1318F2558,LITREF(lit_7),x_1317F2559);
+    T10 = CALL2(1,x_1318F2502,LITREF(lit_7),x_1317F2503);
   }
   T13 = BOXGET(FREEREF(1));
   T12 = CALL1(1,VARREF(Ylst),T13);
   T16 = CALL1(1,VARREF(Ylst),LITREF(lit_245));
-  T18 = nameF2560;
+  T18 = nameF2504;
   T17 = CALL1(1,VARREF(Ylst),T18);
   T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
   T14 = CALL1(1,VARREF(Ylst),T15);
   T21 = CALL1(1,VARREF(Ylst),LITREF(lit_245));
-  T24 = nameF2560;
+  T24 = nameF2504;
   T23 = CALL1(1,VARREF(YgooSmacrosYfab_setter_name),T24);
   T22 = CALL1(1,VARREF(Ylst),T23);
   T20 = CALL3(1,VARREF(YgooSmacrosYcat),T21,T22,LITREF(lit_11));
@@ -4816,13 +4616,13 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_x_1315_138) {
   P msg_,args_;
-  P x_1316F2567;
+  P x_1316F2511;
   P T0,T1,T2;
 LINK_STACK();
   ARG(msg_, 0);
   NARGS(args_, 1);
-  x_1316F2567 = FREEREF(0);
-  T2 = FUNFAB(fun_137,2,x_1316F2567,FREEREF(1));
+  x_1316F2511 = FREEREF(0);
+  T2 = FUNFAB(fun_137,2,x_1316F2511,FREEREF(1));
   T1 = with_exit(T2);
   T0 = CALL1(1,FREEREF(2),T1);
 UNLINK_STACK();
@@ -4831,48 +4631,48 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_139) {
   P return_;
-  P x_1314F2576;
-  P x_1314F2575;
-  P x_1314F2574;
-  P x_1314F2573;
-  P x_1314F2572;
-  P restF2571;
-  P nameF2570;
-  P x_1314F2569;
-  P x_1315F2568;
+  P x_1314F2520;
+  P x_1314F2519;
+  P x_1314F2518;
+  P x_1314F2517;
+  P x_1314F2516;
+  P restF2515;
+  P nameF2514;
+  P x_1314F2513;
+  P x_1315F2512;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19;
 LINK_STACK();
   ARG(return_, 0);
   T19 = FUNSHELL(0,fun_x_1315_138,3);
-  x_1315F2568 = T19;
-  FUNINIT(x_1315F2568, 3,FREEREF(0),FREEREF(1),return_);
-  x_1314F2569 = FREEREF(0);
-  nameF2570 = YPfalse;
-  restF2571 = YPfalse;
-  T2 = CALL2(1,VARREF(YisaQ),x_1314F2569,VARREF(YLlstG));
+  x_1315F2512 = T19;
+  FUNINIT(x_1315F2512, 3,FREEREF(0),FREEREF(1),return_);
+  x_1314F2513 = FREEREF(0);
+  nameF2514 = YPfalse;
+  restF2515 = YPfalse;
+  T2 = CALL2(1,VARREF(YisaQ),x_1314F2513,VARREF(YLlstG));
   if (T2 != YPfalse) {
-    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1314F2569,LITREF(lit_280),x_1315F2568);
-    x_1314F2572 = T9;
-    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1314F2572,x_1315F2568);
-    nameF2570 = T7;
-    T8 = CALL1(1,VARREF(Ytail),x_1314F2572);
-    x_1314F2573 = T8;
-    restF2571 = x_1314F2573;
-    x_1314F2574 = Ynil;
-    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1314F2574,x_1315F2568);
-    x_1314F2575 = T5;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1314F2575,x_1315F2568);
-    T6 = CALL1(1,VARREF(Ytail),x_1314F2574);
-    x_1314F2576 = T6;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1314F2576,x_1315F2568);
+    T9 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1314F2513,LITREF(lit_280),x_1315F2512);
+    x_1314F2516 = T9;
+    T7 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1314F2516,x_1315F2512);
+    nameF2514 = T7;
+    T8 = CALL1(1,VARREF(Ytail),x_1314F2516);
+    x_1314F2517 = T8;
+    restF2515 = x_1314F2517;
+    x_1314F2518 = Ynil;
+    T5 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1314F2518,x_1315F2512);
+    x_1314F2519 = T5;
+    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1314F2519,x_1315F2512);
+    T6 = CALL1(1,VARREF(Ytail),x_1314F2518);
+    x_1314F2520 = T6;
+    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1314F2520,x_1315F2512);
   } else {
-    T10 = CALL2(1,x_1315F2568,LITREF(lit_7),x_1314F2569);
+    T10 = CALL2(1,x_1315F2512,LITREF(lit_7),x_1314F2513);
   }
   T13 = BOXGET(FREEREF(1));
   T12 = CALL1(1,VARREF(Ylst),T13);
   T16 = CALL1(1,VARREF(Ylst),LITREF(lit_245));
-  T18 = nameF2570;
+  T18 = nameF2514;
   T17 = CALL1(1,VARREF(Ylst),T18);
   T15 = CALL3(1,VARREF(YgooSmacrosYcat),T16,T17,LITREF(lit_11));
   T14 = CALL1(1,VARREF(Ylst),T15);
@@ -4883,48 +4683,41 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_140) {
   P return_;
-  P defsF2585;
-  P x_1313F2584;
-  P x_1311F2583;
-  P x_1311F2582;
-  P x_1311F2581;
-  P x_1311F2580;
-  P defF2579;
-  P x_1311F2578;
-  P x_1312F2577;
-  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
+  P defsF2527;
+  P x_1313F2526;
+  P x_1311F2525;
+  P x_1311F2524;
+  P defF2523;
+  P x_1311F2522;
+  P x_1312F2521;
+  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
 LINK_STACK();
   ARG(return_, 0);
-  T13 = FUNSHELL(0,fun_x_1312_123,2);
-  x_1312F2577 = T13;
-  FUNINIT(x_1312F2577, 2,FREEREF(0),return_);
-  x_1311F2578 = FREEREF(0);
-  defF2579 = YPfalse;
-  defF2579 = BOXFAB(defF2579);
-  T1 = CALL2(1,VARREF(YisaQ),x_1311F2578,VARREF(YLlstG));
+  T10 = FUNSHELL(0,fun_x_1312_123,2);
+  x_1312F2521 = T10;
+  FUNINIT(x_1312F2521, 2,FREEREF(0),return_);
+  x_1311F2522 = FREEREF(0);
+  defF2523 = YPfalse;
+  defF2523 = BOXFAB(defF2523);
+  T1 = CALL2(1,VARREF(YisaQ),x_1311F2522,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1311F2578,LITREF(lit_250),x_1312F2577);
-    x_1311F2580 = T6;
-    BOXPUT(x_1311F2580,defF2579);
-    x_1311F2581 = Ynil;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1311F2581,x_1312F2577);
-    x_1311F2582 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1311F2582,x_1312F2577);
-    T5 = CALL1(1,VARREF(Ytail),x_1311F2581);
-    x_1311F2583 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1311F2583,x_1312F2577);
+    T3 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1311F2522,LITREF(lit_250),x_1312F2521);
+    x_1311F2524 = T3;
+    BOXPUT(x_1311F2524,defF2523);
+    x_1311F2525 = Ynil;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1311F2525,x_1312F2521);
   } else {
-    T7 = CALL2(1,x_1312F2577,LITREF(lit_7),x_1311F2578);
+    T4 = CALL2(1,x_1312F2521,LITREF(lit_7),x_1311F2522);
   }
-  T12 = BOXGET(defF2579);
-  x_1313F2584 = T12;
-  T11 = FUNFAB(fun_139,2,x_1313F2584,defF2579);
-  T10 = with_exit(T11);
-  defsF2585 = T10;
-  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
-  T8 = CALL3(1,VARREF(YgooSmacrosYcat),T9,defsF2585,LITREF(lit_11));
+  T9 = BOXGET(defF2523);
+  x_1313F2526 = T9;
+  T8 = FUNFAB(fun_139,2,x_1313F2526,defF2523);
+  T7 = with_exit(T8);
+  defsF2527 = T7;
+  T6 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
+  T5 = CALL3(1,VARREF(YgooSmacrosYcat),T6,defsF2527,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T8);
+  QRET(T5);
 }
 
 LOCCODEDEF(fun_141) {
@@ -4952,7 +4745,7 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_143) {
   P x_;
-  P xF2586;
+  P xF2528;
   P T0,T1,T2,T3,T4;
 LINK_STACK();
   ARG(x_, 0);
@@ -4963,52 +4756,45 @@ LINK_STACK();
     T4 = CALL1(1,VARREF(Ylst),x_);
     T2 = T4;
   }
-  xF2586 = T2;
+  xF2528 = T2;
   T1 = CALL1(1,VARREF(Ylst),LITREF(lit_250));
-  T0 = CALL3(1,VARREF(YgooSmacrosYcat),T1,xF2586,LITREF(lit_11));
+  T0 = CALL3(1,VARREF(YgooSmacrosYcat),T1,xF2528,LITREF(lit_11));
 UNLINK_STACK();
   QRET(T0);
 }
 
 LOCCODEDEF(fun_144) {
   P return_;
-  P x_1339F2593;
-  P x_1339F2592;
-  P x_1339F2591;
-  P x_1339F2590;
-  P defsF2589;
-  P x_1339F2588;
-  P x_1340F2587;
-  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
+  P x_1339F2533;
+  P x_1339F2532;
+  P defsF2531;
+  P x_1339F2530;
+  P x_1340F2529;
+  P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
 LINK_STACK();
   ARG(return_, 0);
-  T13 = FUNSHELL(0,fun_x_1340_142,2);
-  x_1340F2587 = T13;
-  FUNINIT(x_1340F2587, 2,FREEREF(0),return_);
-  x_1339F2588 = FREEREF(0);
-  defsF2589 = YPfalse;
-  T1 = CALL2(1,VARREF(YisaQ),x_1339F2588,VARREF(YLlstG));
+  T10 = FUNSHELL(0,fun_x_1340_142,2);
+  x_1340F2529 = T10;
+  FUNINIT(x_1340F2529, 2,FREEREF(0),return_);
+  x_1339F2530 = FREEREF(0);
+  defsF2531 = YPfalse;
+  T1 = CALL2(1,VARREF(YisaQ),x_1339F2530,VARREF(YLlstG));
   if (T1 != YPfalse) {
-    T6 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1339F2588,LITREF(lit_285),x_1340F2587);
-    x_1339F2590 = T6;
-    defsF2589 = x_1339F2590;
-    x_1339F2591 = Ynil;
-    T4 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1339F2591,x_1340F2587);
-    x_1339F2592 = T4;
-    T3 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1339F2592,x_1340F2587);
-    T5 = CALL1(1,VARREF(Ytail),x_1339F2591);
-    x_1339F2593 = T5;
-    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1339F2593,x_1340F2587);
+    T3 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1339F2530,LITREF(lit_285),x_1340F2529);
+    x_1339F2532 = T3;
+    defsF2531 = x_1339F2532;
+    x_1339F2533 = Ynil;
+    T2 = CALL2(1,VARREF(YgooSmacrosYmatch_nul_list),x_1339F2533,x_1340F2529);
   } else {
-    T7 = CALL2(1,x_1340F2587,LITREF(lit_7),x_1339F2588);
+    T4 = CALL2(1,x_1340F2529,LITREF(lit_7),x_1339F2530);
   }
-  T9 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
-  T11 = fun_143;
-  T12 = defsF2589;
-  T10 = CALL2(1,VARREF(YgooSmacrosYmap),T11,T12);
-  T8 = CALL3(1,VARREF(YgooSmacrosYcat),T9,T10,LITREF(lit_11));
+  T6 = CALL1(1,VARREF(Ylst),LITREF(lit_100));
+  T8 = fun_143;
+  T9 = defsF2531;
+  T7 = CALL2(1,VARREF(YgooSmacrosYmap),T8,T9);
+  T5 = CALL3(1,VARREF(YgooSmacrosYcat),T6,T7,LITREF(lit_11));
 UNLINK_STACK();
-  QRET(T8);
+  QRET(T5);
 }
 
 LOCCODEDEF(fun_145) {
@@ -5779,580 +5565,581 @@ static USE_INFO use_infos[] = {
 };
 
 static IMPORT_INFO import_infos[] = {
-  {"%cu", &module_info_gooSboot, NULL},
-  {"@olen", &module_info_gooSboot, NULL},
-  {"%rep", &module_info_gooSboot, NULL},
-  {"%object-class", &module_info_gooSboot, NULL},
-  {"tup", &module_info_gooSboot, NULL},
-  {"%app-args", &module_info_gooSboot, NULL},
-  {"<met>", &module_info_gooSboot, NULL},
-  {"<sym>", &module_info_gooSboot, NULL},
-  {"%prop-dat-at", &module_info_gooSboot, NULL},
-  {"%met-info", &module_info_gooSboot, NULL},
-  {"%fun-cache", &module_info_gooSboot, NULL},
-  {"%class-of", &module_info_gooSboot, NULL},
-  {"set", &module_info_gooSboot, NULL},
-  {"class-gens-setter", &module_info_gooSboot, NULL},
-  {"@elt", &module_info_gooSboot, NULL},
-  {"%class-props", &module_info_gooSboot, NULL},
-  {"<str>", &module_info_gooSboot, NULL},
-  {"no-next-methods-error", &module_info_gooSboot, NULL},
-  {"%sp-elt", &module_info_gooSboot, NULL},
-  {"prop-owner", &module_info_gooSboot, NULL},
-  {"%classes-ready?", &module_info_gooSboot, NULL},
-  {"order-specs", &module_info_gooSboot, NULL},
-  {"@telt-setter", &module_info_gooSboot, NULL},
-  {"%dyn-var-val", &module_info_gooSboot, NULL},
-  {"%to-tup", &module_info_gooSboot, NULL},
-  {"%class", &module_info_gooSboot, NULL},
-  {"%selt", &module_info_gooSboot, NULL},
-  {"%class-mets-setter", &module_info_gooSboot, NULL},
-  {"@subtype?", &module_info_gooSboot, NULL},
-  {"<tup>", &module_info_gooSboot, NULL},
-  {"class-gens", &module_info_gooSboot, NULL},
-  {"<fun>", &module_info_gooSboot, NULL},
-  {"class-id", &module_info_gooSboot, NULL},
-  {"class-prop-len-setter", &module_info_gooSboot, NULL},
-  {"property-type-error", &module_info_gooSboot, NULL},
-  {"%iv", &module_info_gooSboot, NULL},
-  {"%union-elts", &module_info_gooSboot, NULL},
-  {"try", &module_info_gooSboot, NULL},
-  {"prop-type", &module_info_gooSboot, NULL},
-  {"%@subclass?", &module_info_gooSboot, NULL},
-  {"%class-children-setter", &module_info_gooSboot, NULL},
-  {"gen-cache-classes", &module_info_gooSboot, NULL},
-  {"update-instance-for-changed-class", &module_info_gooSboot, NULL},
-  {"$min-int", &module_info_gooSboot, NULL},
-  {"<flat>", &module_info_gooSboot, NULL},
-  {"*macros-ok?*", &module_info_gooSboot, NULL},
-  {"%prop-getter", &module_info_gooSboot, NULL},
-  {"@len", &module_info_gooSboot, NULL},
-  {"%prop-elt-setter", &module_info_gooSboot, NULL},
-  {"argument-type-error", &module_info_gooSboot, NULL},
-  {"property-unbound-error", &module_info_gooSboot, NULL},
-  {"%break", &module_info_gooSboot, NULL},
-  {"@class-isa?", &module_info_gooSboot, NULL},
-  {"%i-", &module_info_gooSboot, NULL},
-  {"%gen-cache-classes-setter", &module_info_gooSboot, NULL},
-  {"error", &module_info_gooSboot, NULL},
-  {"%product-elts", &module_info_gooSboot, NULL},
-  {"ds", &module_info_gooSboot, NULL},
-  {"@=", &module_info_gooSboot, NULL},
-  {"%untag", &module_info_gooSboot, NULL},
-  {"opts-tup-storage", &module_info_gooSboot, NULL},
-  {"class-prop-len", &module_info_gooSboot, NULL},
-  {"src-loc-file", &module_info_gooSboot, NULL},
-  {"gen-cache-missable?", &module_info_gooSboot, NULL},
-  {"%build-runtime-modules", &module_info_gooSboot, NULL},
-  {"%fun-info-inlineable?", &module_info_gooSboot, NULL},
-  {"%i*", &module_info_gooSboot, NULL},
-  {"stack-overflow-error", &module_info_gooSboot, NULL},
-  {"fun-env", &module_info_gooSboot, NULL},
-  {"%selt-setter", &module_info_gooSboot, NULL},
-  {"<lst>", &module_info_gooSboot, NULL},
-  {"@del-dups", &module_info_gooSboot, NULL},
-  {"%cb", &module_info_gooSboot, NULL},
-  {"%fab-met-inlineable", &module_info_gooSboot, NULL},
-  {"@all2?", &module_info_gooSboot, NULL},
-  {"cpl-error", &module_info_gooSboot, NULL},
-  {"sig-nary?-setter", &module_info_gooSboot, NULL},
-  {"%lu", &module_info_gooSboot, NULL},
-  {"%vm-fun-env-elt", &module_info_gooSboot, NULL},
-  {"%loc-off-setter", &module_info_gooSboot, NULL},
-  {"seq", &module_info_gooSboot, NULL},
-  {"sig-unification-vars-setter", &module_info_gooSboot, NULL},
-  {"<seq!>", &module_info_gooSboot, NULL},
-  {"nul-prop", &module_info_gooSboot, NULL},
-  {"%telt-setter", &module_info_gooSboot, NULL},
-  {"%vm-box-fab", &module_info_gooSboot, NULL},
-  {"%gen-cache-singletons-setter", &module_info_gooSboot, NULL},
-  {"%gen-cache-classes", &module_info_gooSboot, NULL},
-  {"fun-info-src-loc-setter", &module_info_gooSboot, NULL},
-  {"<fun-info>", &module_info_gooSboot, NULL},
-  {"unknown-function-error", &module_info_gooSboot, NULL},
-  {"loc", &module_info_gooSboot, NULL},
-  {"%i=", &module_info_gooSboot, NULL},
-  {"%relt-setter", &module_info_gooSboot, NULL},
-  {"%ib", &module_info_gooSboot, NULL},
-  {"if", &module_info_gooSboot, NULL},
-  {"fun-info-inlineable?-setter", &module_info_gooSboot, NULL},
-  {"%class-prop-len", &module_info_gooSboot, NULL},
-  {"product-elts", &module_info_gooSboot, NULL},
-  {"%type-object", &module_info_gooSboot, NULL},
-  {"<seq.>", &module_info_gooSboot, NULL},
-  {"sig-nary?", &module_info_gooSboot, NULL},
-  {"%class-ancestors-setter", &module_info_gooSboot, NULL},
-  {"arity-error", &module_info_gooSboot, NULL},
-  {"%sp-reg-setter", &module_info_gooSboot, NULL},
-  {"@type-equal?", &module_info_gooSboot, NULL},
-  {"@add", &module_info_gooSboot, NULL},
-  {"sig-unification-vars", &module_info_gooSboot, NULL},
-  {"@do", &module_info_gooSboot, NULL},
-  {"file-opening-error", &module_info_gooSboot, NULL},
-  {"fun-info-src-loc", &module_info_gooSboot, NULL},
-  {"<seq>", &module_info_gooSboot, NULL},
-  {"class-direct-props-setter", &module_info_gooSboot, NULL},
-  {"%c=", &module_info_gooSboot, NULL},
-  {"ambiguous-method-error", &module_info_gooSboot, NULL},
-  {"fun-info-inlineable?", &module_info_gooSboot, NULL},
-  {"as-error", &module_info_gooSboot, NULL},
-  {"%sig-unification-vars", &module_info_gooSboot, NULL},
-  {"%class-gens", &module_info_gooSboot, NULL},
-  {"arithmetic-error", &module_info_gooSboot, NULL},
-  {"%prop-type", &module_info_gooSboot, NULL},
-  {"<col!>", &module_info_gooSboot, NULL},
-  {"%vm-with-exit", &module_info_gooSboot, NULL},
-  {"def", &module_info_gooSboot, NULL},
-  {"@not", &module_info_gooSboot, NULL},
-  {"%%check-call-types", &module_info_gooSboot, NULL},
-  {"%class-forward", &module_info_gooSboot, NULL},
-  {"@any?", &module_info_gooSboot, NULL},
-  {"class-direct-props", &module_info_gooSboot, NULL},
-  {"opts-count", &module_info_gooSboot, NULL},
-  {"%check-call-types", &module_info_gooSboot, NULL},
-  {"@tail-setter", &module_info_gooSboot, NULL},
-  {"sym-name", &module_info_gooSboot, NULL},
-  {"src-loc-line", &module_info_gooSboot, NULL},
-  {"%c<", &module_info_gooSboot, NULL},
-  {"%vm-box-val", &module_info_gooSboot, NULL},
-  {"<sig>", &module_info_gooSboot, NULL},
-  {"*boot-macro-module-names*", &module_info_gooSboot, NULL},
   {"class-children", &module_info_gooSboot, NULL},
-  {"internal-error", &module_info_gooSboot, NULL},
-  {"@mem?", &module_info_gooSboot, NULL},
-  {"<col.>", &module_info_gooSboot, NULL},
-  {"type-error", &module_info_gooSboot, NULL},
-  {"%tail", &module_info_gooSboot, NULL},
-  {"%sig-nary?", &module_info_gooSboot, NULL},
-  {"%vnm", &module_info_gooSboot, NULL},
-  {"opts-location", &module_info_gooSboot, NULL},
-  {"%class-prop-len-setter", &module_info_gooSboot, NULL},
-  {"@all?", &module_info_gooSboot, NULL},
-  {"t*", &module_info_gooSboot, NULL},
-  {"%fab-dyn-var", &module_info_gooSboot, NULL},
-  {"<col>", &module_info_gooSboot, NULL},
-  {"$max-int", &module_info_gooSboot, NULL},
-  {"@pick", &module_info_gooSboot, NULL},
-  {"class-children-setter", &module_info_gooSboot, NULL},
-  {"macro-expand", &module_info_gooSboot, NULL},
-  {"@head", &module_info_gooSboot, NULL},
-  {"prop-init", &module_info_gooSboot, NULL},
-  {"%max-stack-len", &module_info_gooSboot, NULL},
-  {"%rnul", &module_info_gooSboot, NULL},
-  {"%gen-mets-setter", &module_info_gooSboot, NULL},
-  {"may-isa?", &module_info_gooSboot, NULL},
-  {"class-forward-setter", &module_info_gooSboot, NULL},
-  {"$direct-object-class", &module_info_gooSboot, NULL},
-  {"%sp-reg", &module_info_gooSboot, NULL},
-  {"%met-sig", &module_info_gooSboot, NULL},
-  {"@==", &module_info_gooSboot, NULL},
-  {"range-error", &module_info_gooSboot, NULL},
-  {"@tlen", &module_info_gooSboot, NULL},
-  {"<rep>", &module_info_gooSboot, NULL},
-  {"%class-parents", &module_info_gooSboot, NULL},
-  {"%i+", &module_info_gooSboot, NULL},
-  {"property-not-found-error", &module_info_gooSboot, NULL},
-  {"%class-row-setter", &module_info_gooSboot, NULL},
-  {"union-elts", &module_info_gooSboot, NULL},
-  {"%vfn-setter", &module_info_gooSboot, NULL},
-  {"%fun-info-src", &module_info_gooSboot, NULL},
-  {"%do-stack-frames", &module_info_gooSboot, NULL},
-  {"%%macro", &module_info_gooSboot, NULL},
-  {"%class-id", &module_info_gooSboot, NULL},
-  {"sig-specs-setter", &module_info_gooSboot, NULL},
-  {"%class-direct-props-setter", &module_info_gooSboot, NULL},
-  {"%false", &module_info_gooSboot, NULL},
-  {"<gen-cache>", &module_info_gooSboot, NULL},
-  {"<loc>", &module_info_gooSboot, NULL},
+  {"<flo>", &module_info_gooSboot, NULL},
+  {"%lb", &module_info_gooSboot, NULL},
   {"class-forward", &module_info_gooSboot, NULL},
-  {"%macro", &module_info_gooSboot, NULL},
-  {"@rev!", &module_info_gooSboot, NULL},
-  {"bound?", &module_info_gooSboot, NULL},
-  {"@telt", &module_info_gooSboot, NULL},
+  {"dss", &module_info_gooSboot, NULL},
+  {"%class-of", &module_info_gooSboot, NULL},
+  {"%object-class", &module_info_gooSboot, NULL},
   {"fun-info-setter", &module_info_gooSboot, NULL},
   {"%vpc-setter", &module_info_gooSboot, NULL},
-  {"%opts-tup", &module_info_gooSboot, NULL},
-  {"%raw-met-call", &module_info_gooSboot, NULL},
-  {"export", &module_info_gooSboot, NULL},
-  {"<flo>", &module_info_gooSboot, NULL},
-  {"%gen-cache", &module_info_gooSboot, NULL},
-  {"@add-new", &module_info_gooSboot, NULL},
-  {"sig-specs", &module_info_gooSboot, NULL},
-  {"%str", &module_info_gooSboot, NULL},
-  {"%su", &module_info_gooSboot, NULL},
-  {"@map", &module_info_gooSboot, NULL},
-  {"syntax-error", &module_info_gooSboot, NULL},
-  {"%class-direct-props", &module_info_gooSboot, NULL},
-  {"@lit", &module_info_gooSboot, NULL},
-  {"<fixnum>", &module_info_gooSboot, NULL},
-  {"%tlen", &module_info_gooSboot, NULL},
+  {"%iu", &module_info_gooSboot, NULL},
+  {"%met-code-setter", &module_info_gooSboot, NULL},
+  {"@@nul?", &module_info_gooSboot, NULL},
   {"@oelt-setter", &module_info_gooSboot, NULL},
-  {"%met-prop-len", &module_info_gooSboot, NULL},
-  {"@new", &module_info_gooSboot, NULL},
+  {"<bignum>", &module_info_gooSboot, NULL},
+  {"%class-gens", &module_info_gooSboot, NULL},
+  {"%untag", &module_info_gooSboot, NULL},
+  {"sig-specs-setter", &module_info_gooSboot, NULL},
+  {"%tail", &module_info_gooSboot, NULL},
+  {"%i>>", &module_info_gooSboot, NULL},
+  {"dl", &module_info_gooSboot, NULL},
+  {"sig-val-setter", &module_info_gooSboot, NULL},
+  {"@tup", &module_info_gooSboot, NULL},
+  {"%bb", &module_info_gooSboot, NULL},
+  {"%raw-call", &module_info_gooSboot, NULL},
+  {"%gen-mets-setter", &module_info_gooSboot, NULL},
+  {"assert-error", &module_info_gooSboot, NULL},
+  {"%class-children-setter", &module_info_gooSboot, NULL},
+  {"<fixnum>", &module_info_gooSboot, NULL},
+  {"fun-info-names-setter", &module_info_gooSboot, NULL},
+  {"opts-location", &module_info_gooSboot, NULL},
+  {"%unlink-stack", &module_info_gooSboot, NULL},
+  {"%vsp", &module_info_gooSboot, NULL},
   {"fun-info", &module_info_gooSboot, NULL},
   {"%src-loc", &module_info_gooSboot, NULL},
-  {"keyboard-interrupt", &module_info_gooSboot, NULL},
-  {"%singleton", &module_info_gooSboot, NULL},
-  {"%fun-info-src-setter", &module_info_gooSboot, NULL},
-  {"@singleton-isa?", &module_info_gooSboot, NULL},
-  {"%stack-check-reg?-setter", &module_info_gooSboot, NULL},
-  {"@@nul?", &module_info_gooSboot, NULL},
-  {"mif", &module_info_gooSboot, NULL},
-  {"%class-id-setter", &module_info_gooSboot, NULL},
-  {"<int>", &module_info_gooSboot, NULL},
-  {"%i&", &module_info_gooSboot, NULL},
-  {"dp", &module_info_gooSboot, NULL},
-  {"%vsp", &module_info_gooSboot, NULL},
-  {"not", &module_info_gooSboot, NULL},
-  {"fab-sym", &module_info_gooSboot, NULL},
-  {"<prop>", &module_info_gooSboot, NULL},
-  {"@tup", &module_info_gooSboot, NULL},
-  {"sig-val-setter", &module_info_gooSboot, NULL},
-  {"%type-class", &module_info_gooSboot, NULL},
-  {"%gen-sig", &module_info_gooSboot, NULL},
-  {"%vm-fun-env-elt-setter", &module_info_gooSboot, NULL},
-  {"app-args", &module_info_gooSboot, NULL},
-  {"%snul", &module_info_gooSboot, NULL},
-  {"fun-info-names-setter", &module_info_gooSboot, NULL},
-  {"%prop-unbound-error", &module_info_gooSboot, NULL},
   {"@cat2", &module_info_gooSboot, NULL},
-  {"<num>", &module_info_gooSboot, NULL},
-  {"ct", &module_info_gooSboot, NULL},
-  {"ddv", &module_info_gooSboot, NULL},
-  {"dp!", &module_info_gooSboot, NULL},
-  {"%met", &module_info_gooSboot, NULL},
-  {"fun-info-count-setter", &module_info_gooSboot, NULL},
-  {"esc", &module_info_gooSboot, NULL},
-  {"%gen-cache-arg-pos", &module_info_gooSboot, NULL},
-  {"%fu", &module_info_gooSboot, NULL},
-  {"%vm-fun-env-fab", &module_info_gooSboot, NULL},
-  {"type-class", &module_info_gooSboot, NULL},
-  {"<product>", &module_info_gooSboot, NULL},
-  {"sig-val", &module_info_gooSboot, NULL},
-  {"df", &module_info_gooSboot, NULL},
-  {"%relt", &module_info_gooSboot, NULL},
-  {"app-filename", &module_info_gooSboot, NULL},
-  {"%loc-val", &module_info_gooSboot, NULL},
-  {"fun-info-names", &module_info_gooSboot, NULL},
-  {"%unlink-stack", &module_info_gooSboot, NULL},
-  {"%eof-object", &module_info_gooSboot, NULL},
-  {"%fun-cache-setter", &module_info_gooSboot, NULL},
-  {"%vnm-setter", &module_info_gooSboot, NULL},
-  {"class-parents-setter", &module_info_gooSboot, NULL},
-  {"new", &module_info_gooSboot, NULL},
-  {"@+", &module_info_gooSboot, NULL},
-  {"tail-setter", &module_info_gooSboot, NULL},
-  {"%fb", &module_info_gooSboot, NULL},
-  {"fun-info-count", &module_info_gooSboot, NULL},
-  {"*restarts-ok?*", &module_info_gooSboot, NULL},
-  {"%fun-info-names", &module_info_gooSboot, NULL},
-  {"class-props-setter", &module_info_gooSboot, NULL},
-  {"<src-loc>", &module_info_gooSboot, NULL},
-  {"%sig-val", &module_info_gooSboot, NULL},
-  {"d.", &module_info_gooSboot, NULL},
-  {"%gen-info", &module_info_gooSboot, NULL},
-  {"@tail", &module_info_gooSboot, NULL},
-  {"%prop-init", &module_info_gooSboot, NULL},
-  {"<union>", &module_info_gooSboot, NULL},
-  {"@rev", &module_info_gooSboot, NULL},
-  {"use/mangle", &module_info_gooSboot, NULL},
-  {"@oelt", &module_info_gooSboot, NULL},
-  {"*early-classes*", &module_info_gooSboot, NULL},
-  {"%stack-reg", &module_info_gooSboot, NULL},
-  {"box-value-setter", &module_info_gooSboot, NULL},
-  {"%fun-info-src-loc-setter", &module_info_gooSboot, NULL},
-  {"%@class-of", &module_info_gooSboot, NULL},
-  {"%gen-cache-missable?", &module_info_gooSboot, NULL},
-  {"<chr>", &module_info_gooSboot, NULL},
-  {"class-parents", &module_info_gooSboot, NULL},
-  {"fab-pair", &module_info_gooSboot, NULL},
-  {"tail", &module_info_gooSboot, NULL},
-  {"use/include", &module_info_gooSboot, NULL},
-  {"dg", &module_info_gooSboot, NULL},
-  {"%gen-cache-arg-pos-setter", &module_info_gooSboot, NULL},
-  {"%sb", &module_info_gooSboot, NULL},
-  {"class-props", &module_info_gooSboot, NULL},
-  {"no-applicable-methods-error", &module_info_gooSboot, NULL},
-  {"fun-cache", &module_info_gooSboot, NULL},
-  {"%vm-box-val-setter", &module_info_gooSboot, NULL},
-  {"%class-mets", &module_info_gooSboot, NULL},
-  {"@pair", &module_info_gooSboot, NULL},
-  {"@@==", &module_info_gooSboot, NULL},
-  {"<subclass>", &module_info_gooSboot, NULL},
-  {"<mag>", &module_info_gooSboot, NULL},
-  {"rep", &module_info_gooSboot, NULL},
-  {"%patch-early-generics", &module_info_gooSboot, NULL},
-  {"%vfn", &module_info_gooSboot, NULL},
-  {"dc", &module_info_gooSboot, NULL},
-  {"%app-filename", &module_info_gooSboot, NULL},
-  {"prop-offset", &module_info_gooSboot, NULL},
-  {"%bb", &module_info_gooSboot, NULL},
-  {"narity-error", &module_info_gooSboot, NULL},
-  {"%i!", &module_info_gooSboot, NULL},
-  {"%fun-info-count", &module_info_gooSboot, NULL},
-  {"%raw-call", &module_info_gooSboot, NULL},
-  {"%i^", &module_info_gooSboot, NULL},
-  {"%met-env", &module_info_gooSboot, NULL},
-  {"class-mets-setter", &module_info_gooSboot, NULL},
-  {"%class-gens-setter", &module_info_gooSboot, NULL},
-  {"@int?", &module_info_gooSboot, NULL},
-  {"%iu", &module_info_gooSboot, NULL},
-  {"%fab-met", &module_info_gooSboot, NULL},
-  {"box-value", &module_info_gooSboot, NULL},
-  {"prop-setter", &module_info_gooSboot, NULL},
-  {"<singleton>", &module_info_gooSboot, NULL},
-  {"%i<", &module_info_gooSboot, NULL},
-  {"%fun-info-name-setter", &module_info_gooSboot, NULL},
-  {"<box>", &module_info_gooSboot, NULL},
-  {"%i?", &module_info_gooSboot, NULL},
-  {"fun-sig-setter", &module_info_gooSboot, NULL},
-  {"%im", &module_info_gooSboot, NULL},
-  {"@tall2?", &module_info_gooSboot, NULL},
   {"%i<<", &module_info_gooSboot, NULL},
-  {"%dispatch", &module_info_gooSboot, NULL},
-  {"<opts-tup>", &module_info_gooSboot, NULL},
-  {"%sig-arity", &module_info_gooSboot, NULL},
-  {"dl", &module_info_gooSboot, NULL},
-  {"type-object", &module_info_gooSboot, NULL},
-  {"use/export", &module_info_gooSboot, NULL},
-  {"class-mets", &module_info_gooSboot, NULL},
-  {"<log>", &module_info_gooSboot, NULL},
-  {"use/library", &module_info_gooSboot, NULL},
-  {"%allocate-stack", &module_info_gooSboot, NULL},
-  {"nil", &module_info_gooSboot, NULL},
-  {"props-of", &module_info_gooSboot, NULL},
-  {"%prop-elt", &module_info_gooSboot, NULL},
-  {"dss", &module_info_gooSboot, NULL},
-  {"%eof-object?", &module_info_gooSboot, NULL},
-  {"%head", &module_info_gooSboot, NULL},
-  {"%vpc", &module_info_gooSboot, NULL},
-  {"%it/", &module_info_gooSboot, NULL},
-  {"fun-sig", &module_info_gooSboot, NULL},
+  {"%fun-info-name", &module_info_gooSboot, NULL},
+  {"%union-elts", &module_info_gooSboot, NULL},
+  {"<prop>", &module_info_gooSboot, NULL},
+  {"fun-info-count-setter", &module_info_gooSboot, NULL},
+  {"sig-specs", &module_info_gooSboot, NULL},
+  {"@telt", &module_info_gooSboot, NULL},
+  {"%classes-ready?", &module_info_gooSboot, NULL},
+  {"@adr?", &module_info_gooSboot, NULL},
+  {"bound?", &module_info_gooSboot, NULL},
+  {"<int>", &module_info_gooSboot, NULL},
+  {"%gen-cache-classes", &module_info_gooSboot, NULL},
+  {"sig-val", &module_info_gooSboot, NULL},
+  {"%i+", &module_info_gooSboot, NULL},
+  {"prop-offset", &module_info_gooSboot, NULL},
+  {"not", &module_info_gooSboot, NULL},
+  {"fun-info-names", &module_info_gooSboot, NULL},
+  {"app-args", &module_info_gooSboot, NULL},
+  {"%set-regs", &module_info_gooSboot, NULL},
+  {"%sp-reg-setter", &module_info_gooSboot, NULL},
   {"@subclass?", &module_info_gooSboot, NULL},
-  {"*boot-macro-names*", &module_info_gooSboot, NULL},
-  {"ct-also", &module_info_gooSboot, NULL},
-  {"%next-methods", &module_info_gooSboot, NULL},
-  {"<any>", &module_info_gooSboot, NULL},
-  {"%eq?", &module_info_gooSboot, NULL},
-  {"lst", &module_info_gooSboot, NULL},
-  {"%telt", &module_info_gooSboot, NULL},
-  {"@nul?", &module_info_gooSboot, NULL},
-  {"%vm-with-cleanup", &module_info_gooSboot, NULL},
-  {"%vfp-setter", &module_info_gooSboot, NULL},
+  {"may-isa?", &module_info_gooSboot, NULL},
+  {"%ib", &module_info_gooSboot, NULL},
+  {"%vm-with-exit", &module_info_gooSboot, NULL},
+  {"<product>", &module_info_gooSboot, NULL},
+  {"use/include", &module_info_gooSboot, NULL},
+  {"fun-info-count", &module_info_gooSboot, NULL},
+  {"%vm-box-val-setter", &module_info_gooSboot, NULL},
+  {"<num>", &module_info_gooSboot, NULL},
+  {"keyboard-interrupt", &module_info_gooSboot, NULL},
   {"%tnul", &module_info_gooSboot, NULL},
-  {"gen-cache-singletons", &module_info_gooSboot, NULL},
-  {"<opts>", &module_info_gooSboot, NULL},
+  {"%vm-box-fab", &module_info_gooSboot, NULL},
+  {"seq", &module_info_gooSboot, NULL},
+  {"%class-props", &module_info_gooSboot, NULL},
+  {"prop-type", &module_info_gooSboot, NULL},
+  {"%product-elts", &module_info_gooSboot, NULL},
+  {"fab-sym", &module_info_gooSboot, NULL},
+  {"%fu", &module_info_gooSboot, NULL},
+  {"%class-mets-setter", &module_info_gooSboot, NULL},
+  {"@rev", &module_info_gooSboot, NULL},
+  {"@head", &module_info_gooSboot, NULL},
+  {"lst", &module_info_gooSboot, NULL},
+  {"app-filename", &module_info_gooSboot, NULL},
+  {"if", &module_info_gooSboot, NULL},
+  {"type-class", &module_info_gooSboot, NULL},
+  {"%class", &module_info_gooSboot, NULL},
+  {"fab-pair", &module_info_gooSboot, NULL},
+  {"<union>", &module_info_gooSboot, NULL},
+  {"%class-parents", &module_info_gooSboot, NULL},
+  {"%fb", &module_info_gooSboot, NULL},
+  {"props-of", &module_info_gooSboot, NULL},
+  {"%dispatch", &module_info_gooSboot, NULL},
+  {"<src-loc>", &module_info_gooSboot, NULL},
+  {"%telt-setter", &module_info_gooSboot, NULL},
+  {"%app-args", &module_info_gooSboot, NULL},
+  {"%vfn", &module_info_gooSboot, NULL},
+  {"%gen-code-setter", &module_info_gooSboot, NULL},
+  {"class-parents-setter", &module_info_gooSboot, NULL},
+  {"%i&", &module_info_gooSboot, NULL},
+  {"tail-setter", &module_info_gooSboot, NULL},
+  {"narity-error", &module_info_gooSboot, NULL},
+  {"class-props-setter", &module_info_gooSboot, NULL},
+  {"%i-", &module_info_gooSboot, NULL},
+  {"@@==", &module_info_gooSboot, NULL},
+  {"@=", &module_info_gooSboot, NULL},
+  {"%i^", &module_info_gooSboot, NULL},
+  {"<subclass>", &module_info_gooSboot, NULL},
+  {"<chr>", &module_info_gooSboot, NULL},
+  {"no-applicable-methods-error", &module_info_gooSboot, NULL},
+  {"gen-cache-classes", &module_info_gooSboot, NULL},
+  {"%type-class", &module_info_gooSboot, NULL},
+  {"fin", &module_info_gooSboot, NULL},
+  {"%sig-nary?", &module_info_gooSboot, NULL},
+  {"nul-prop", &module_info_gooSboot, NULL},
+  {"box-value-setter", &module_info_gooSboot, NULL},
+  {"%check-call-types", &module_info_gooSboot, NULL},
+  {"%prop-getter", &module_info_gooSboot, NULL},
+  {"fun-cache", &module_info_gooSboot, NULL},
+  {"class-parents", &module_info_gooSboot, NULL},
+  {"%fun-info-names-setter", &module_info_gooSboot, NULL},
+  {"fun-sig-setter", &module_info_gooSboot, NULL},
+  {"tail", &module_info_gooSboot, NULL},
+  {"<mag>", &module_info_gooSboot, NULL},
+  {"@tall2?", &module_info_gooSboot, NULL},
+  {"class-props", &module_info_gooSboot, NULL},
+  {"<singleton>", &module_info_gooSboot, NULL},
+  {"%stack-check-reg?", &module_info_gooSboot, NULL},
+  {"*boot-macro-module-names*", &module_info_gooSboot, NULL},
+  {"@new", &module_info_gooSboot, NULL},
+  {"@any?", &module_info_gooSboot, NULL},
+  {"%vm-fun-env-elt", &module_info_gooSboot, NULL},
+  {"%i?", &module_info_gooSboot, NULL},
+  {"%met-info", &module_info_gooSboot, NULL},
+  {"%gen-cache-classes-setter", &module_info_gooSboot, NULL},
+  {"<opts-tup>", &module_info_gooSboot, NULL},
+  {"fun-sig", &module_info_gooSboot, NULL},
+  {"@add-new", &module_info_gooSboot, NULL},
+  {"%%macro", &module_info_gooSboot, NULL},
+  {"class-mets-setter", &module_info_gooSboot, NULL},
+  {"<box>", &module_info_gooSboot, NULL},
+  {"@not", &module_info_gooSboot, NULL},
+  {"%tup", &module_info_gooSboot, NULL},
+  {"%clone", &module_info_gooSboot, NULL},
+  {"prop-setter", &module_info_gooSboot, NULL},
+  {"%class-ancestors", &module_info_gooSboot, NULL},
+  {"%iv", &module_info_gooSboot, NULL},
+  {"%fun-info-inlineable?-setter", &module_info_gooSboot, NULL},
+  {"box-value", &module_info_gooSboot, NULL},
+  {"%fun-info-name-setter", &module_info_gooSboot, NULL},
+  {"%next-methods-reg-setter", &module_info_gooSboot, NULL},
+  {"%head", &module_info_gooSboot, NULL},
+  {"@==", &module_info_gooSboot, NULL},
+  {"<log>", &module_info_gooSboot, NULL},
   {"fun", &module_info_gooSboot, NULL},
   {"%i<<<", &module_info_gooSboot, NULL},
-  {"%next-methods-reg-setter", &module_info_gooSboot, NULL},
-  {"%met-code", &module_info_gooSboot, NULL},
-  {"%fun-reg", &module_info_gooSboot, NULL},
-  {"class-name", &module_info_gooSboot, NULL},
-  {"use", &module_info_gooSboot, NULL},
-  {"%def-regs", &module_info_gooSboot, NULL},
+  {"@tail", &module_info_gooSboot, NULL},
+  {"try", &module_info_gooSboot, NULL},
+  {"type-object", &module_info_gooSboot, NULL},
   {"%rlen", &module_info_gooSboot, NULL},
-  {"@fold", &module_info_gooSboot, NULL},
-  {"%loc-off", &module_info_gooSboot, NULL},
-  {"%i>>>", &module_info_gooSboot, NULL},
-  {"%fun-info-name", &module_info_gooSboot, NULL},
-  {"%lb", &module_info_gooSboot, NULL},
-  {"unexec", &module_info_gooSboot, NULL},
-  {"@tany?", &module_info_gooSboot, NULL},
-  {"%fun-info-inlineable?-setter", &module_info_gooSboot, NULL},
-  {"%class-forward-setter", &module_info_gooSboot, NULL},
-  {"%fun-info-names-setter", &module_info_gooSboot, NULL},
-  {"%i>>", &module_info_gooSboot, NULL},
-  {"sig-arity-setter", &module_info_gooSboot, NULL},
-  {"%clone", &module_info_gooSboot, NULL},
-  {"quasiquote", &module_info_gooSboot, NULL},
-  {"assert-error", &module_info_gooSboot, NULL},
-  {"fun-info-name-setter", &module_info_gooSboot, NULL},
-  {"dv", &module_info_gooSboot, NULL},
-  {"fin", &module_info_gooSboot, NULL},
-  {"let", &module_info_gooSboot, NULL},
-  {"%symbols", &module_info_gooSboot, NULL},
-  {"fun-info-src-setter", &module_info_gooSboot, NULL},
-  {"prop-getter", &module_info_gooSboot, NULL},
-  {"%slen", &module_info_gooSboot, NULL},
+  {"class-mets", &module_info_gooSboot, NULL},
+  {"stack-overflow-error", &module_info_gooSboot, NULL},
   {"%fun-val-check-type", &module_info_gooSboot, NULL},
+  {"export", &module_info_gooSboot, NULL},
+  {"%sig-arity", &module_info_gooSboot, NULL},
+  {"@fold", &module_info_gooSboot, NULL},
+  {"<opts>", &module_info_gooSboot, NULL},
+  {"%it/", &module_info_gooSboot, NULL},
   {"%vfp", &module_info_gooSboot, NULL},
-  {"*boot-macro-expanders*", &module_info_gooSboot, NULL},
-  {"subtype?", &module_info_gooSboot, NULL},
-  {"%loc-val-setter", &module_info_gooSboot, NULL},
-  {"%pair", &module_info_gooSboot, NULL},
-  {"isa?", &module_info_gooSboot, NULL},
-  {"%fun-info-src-loc", &module_info_gooSboot, NULL},
-  {"%stack-check-reg?", &module_info_gooSboot, NULL},
-  {"%binding-name", &module_info_gooSboot, NULL},
-  {"%true", &module_info_gooSboot, NULL},
-  {"%class-props-setter", &module_info_gooSboot, NULL},
-  {"@lst", &module_info_gooSboot, NULL},
-  {"sig-arity", &module_info_gooSboot, NULL},
-  {"@<", &module_info_gooSboot, NULL},
-  {"%met-env-setter", &module_info_gooSboot, NULL},
-  {"return-type-error", &module_info_gooSboot, NULL},
-  {"@isa?", &module_info_gooSboot, NULL},
-  {"%gen-cache-singletons", &module_info_gooSboot, NULL},
-  {"%object-of", &module_info_gooSboot, NULL},
-  {"<gen>", &module_info_gooSboot, NULL},
-  {"fun-info-name", &module_info_gooSboot, NULL},
-  {"class-row", &module_info_gooSboot, NULL},
-  {"%class-ancestors", &module_info_gooSboot, NULL},
-  {"%gen-code-setter", &module_info_gooSboot, NULL},
-  {"%process-module", &module_info_gooSboot, NULL},
-  {"head-setter", &module_info_gooSboot, NULL},
-  {"fun-info-src", &module_info_gooSboot, NULL},
-  {"%with-monitor", &module_info_gooSboot, NULL},
-  {"%tup", &module_info_gooSboot, NULL},
-  {"<class>", &module_info_gooSboot, NULL},
-  {"class-ancestors-setter", &module_info_gooSboot, NULL},
-  {"%invoke-debugger", &module_info_gooSboot, NULL},
-  {"fun-mets-setter", &module_info_gooSboot, NULL},
-  {"fun-code", &module_info_gooSboot, NULL},
+  {"%met", &module_info_gooSboot, NULL},
+  {"ct-also", &module_info_gooSboot, NULL},
+  {"<any>", &module_info_gooSboot, NULL},
+  {"dp", &module_info_gooSboot, NULL},
+  {"unexec", &module_info_gooSboot, NULL},
+  {"quasiquote", &module_info_gooSboot, NULL},
+  {"%to-tup", &module_info_gooSboot, NULL},
+  {"@tany?", &module_info_gooSboot, NULL},
+  {"syntax-error", &module_info_gooSboot, NULL},
+  {"new", &module_info_gooSboot, NULL},
+  {"sig-arity-setter", &module_info_gooSboot, NULL},
+  {"fun-info-name-setter", &module_info_gooSboot, NULL},
+  {"dp!", &module_info_gooSboot, NULL},
+  {"gen-cache-singletons", &module_info_gooSboot, NULL},
+  {"%c=", &module_info_gooSboot, NULL},
   {"%fun-info-count-setter", &module_info_gooSboot, NULL},
-  {"%class-children", &module_info_gooSboot, NULL},
-  {"@adr?", &module_info_gooSboot, NULL},
-  {"%gen-mets", &module_info_gooSboot, NULL},
-  {"%vsp-setter", &module_info_gooSboot, NULL},
+  {"@oelt", &module_info_gooSboot, NULL},
+  {"@nul?", &module_info_gooSboot, NULL},
+  {"fun-info-src-setter", &module_info_gooSboot, NULL},
+  {"mif", &module_info_gooSboot, NULL},
+  {"%binding-name", &module_info_gooSboot, NULL},
+  {"@tail-setter", &module_info_gooSboot, NULL},
+  {"class-name", &module_info_gooSboot, NULL},
+  {"df", &module_info_gooSboot, NULL},
+  {"sig-arity", &module_info_gooSboot, NULL},
+  {"@lst", &module_info_gooSboot, NULL},
+  {"ds", &module_info_gooSboot, NULL},
+  {"use/export", &module_info_gooSboot, NULL},
+  {"fun-info-name", &module_info_gooSboot, NULL},
+  {"%true", &module_info_gooSboot, NULL},
   {"%dyn-var-val-setter", &module_info_gooSboot, NULL},
-  {"%raw", &module_info_gooSboot, NULL},
+  {"%gen-cache-arg-pos-setter", &module_info_gooSboot, NULL},
+  {"fun-info-src", &module_info_gooSboot, NULL},
+  {"%met-code", &module_info_gooSboot, NULL},
+  {"%fun-info-inlineable?", &module_info_gooSboot, NULL},
+  {"d.", &module_info_gooSboot, NULL},
+  {"return-type-error", &module_info_gooSboot, NULL},
+  {"<gen>", &module_info_gooSboot, NULL},
+  {"fun-code", &module_info_gooSboot, NULL},
+  {"use/mangle", &module_info_gooSboot, NULL},
+  {"dc", &module_info_gooSboot, NULL},
+  {"prop-getter", &module_info_gooSboot, NULL},
+  {"%with-monitor", &module_info_gooSboot, NULL},
+  {"<class>", &module_info_gooSboot, NULL},
+  {"%su", &module_info_gooSboot, NULL},
   {"@may-isa?", &module_info_gooSboot, NULL},
-  {"%sig-specs", &module_info_gooSboot, NULL},
-  {"<type>", &module_info_gooSboot, NULL},
-  {"%gen-code", &module_info_gooSboot, NULL},
+  {"dg", &module_info_gooSboot, NULL},
+  {"*boot-macro-expanders*", &module_info_gooSboot, NULL},
+  {"loc", &module_info_gooSboot, NULL},
+  {"@isa?", &module_info_gooSboot, NULL},
   {"quote", &module_info_gooSboot, NULL},
-  {"%met-code-setter", &module_info_gooSboot, NULL},
-  {"head", &module_info_gooSboot, NULL},
-  {"%%sym", &module_info_gooSboot, NULL},
-  {"gen-cache-arg-pos", &module_info_gooSboot, NULL},
+  {"%class-id-setter", &module_info_gooSboot, NULL},
   {"@opts-as-lst", &module_info_gooSboot, NULL},
-  {"dm", &module_info_gooSboot, NULL},
-  {"%set-regs", &module_info_gooSboot, NULL},
-  {"class-ancestors", &module_info_gooSboot, NULL},
+  {"class-row", &module_info_gooSboot, NULL},
+  {"%sp-reg", &module_info_gooSboot, NULL},
+  {"<type>", &module_info_gooSboot, NULL},
+  {"%%check-call-types", &module_info_gooSboot, NULL},
+  {"%class-forward", &module_info_gooSboot, NULL},
+  {"%class-children", &module_info_gooSboot, NULL},
+  {"%eq?", &module_info_gooSboot, NULL},
+  {"%selt-setter", &module_info_gooSboot, NULL},
+  {"%prop-elt", &module_info_gooSboot, NULL},
+  {"%macro", &module_info_gooSboot, NULL},
+  {"%gen-cache-singletons-setter", &module_info_gooSboot, NULL},
+  {"head-setter", &module_info_gooSboot, NULL},
+  {"%stack-reg", &module_info_gooSboot, NULL},
+  {"%fun-info-src", &module_info_gooSboot, NULL},
+  {"%sig-specs", &module_info_gooSboot, NULL},
+  {"update-instance-for-changed-class", &module_info_gooSboot, NULL},
+  {"%fab-met", &module_info_gooSboot, NULL},
+  {"class-ancestors-setter", &module_info_gooSboot, NULL},
+  {"%symbols", &module_info_gooSboot, NULL},
+  {"%prop-type", &module_info_gooSboot, NULL},
+  {"%%sym", &module_info_gooSboot, NULL},
+  {"def", &module_info_gooSboot, NULL},
+  {"<met>", &module_info_gooSboot, NULL},
+  {"@elt", &module_info_gooSboot, NULL},
+  {"%str", &module_info_gooSboot, NULL},
+  {"%dyn-var-val", &module_info_gooSboot, NULL},
+  {"<sym>", &module_info_gooSboot, NULL},
+  {"%gen-code", &module_info_gooSboot, NULL},
+  {"%next-methods", &module_info_gooSboot, NULL},
   {"fun-mets", &module_info_gooSboot, NULL},
+  {"gen-cache-arg-pos", &module_info_gooSboot, NULL},
+  {"rep", &module_info_gooSboot, NULL},
+  {"head", &module_info_gooSboot, NULL},
+  {"%rnul", &module_info_gooSboot, NULL},
+  {"class-ancestors", &module_info_gooSboot, NULL},
+  {"no-next-methods-error", &module_info_gooSboot, NULL},
+  {"%i<", &module_info_gooSboot, NULL},
+  {"<str>", &module_info_gooSboot, NULL},
+  {"%class-id", &module_info_gooSboot, NULL},
+  {"%vpc", &module_info_gooSboot, NULL},
+  {"macro-expand", &module_info_gooSboot, NULL},
+  {"%fun-reg", &module_info_gooSboot, NULL},
+  {"@subtype?", &module_info_gooSboot, NULL},
+  {"%object-of", &module_info_gooSboot, NULL},
+  {"nil", &module_info_gooSboot, NULL},
+  {"%fun-info-names", &module_info_gooSboot, NULL},
+  {"@pair", &module_info_gooSboot, NULL},
+  {"%eof-object?", &module_info_gooSboot, NULL},
+  {"argument-type-error", &module_info_gooSboot, NULL},
+  {"class-gens-setter", &module_info_gooSboot, NULL},
+  {"<tup>", &module_info_gooSboot, NULL},
+  {"%fun-cache", &module_info_gooSboot, NULL},
+  {"%snul", &module_info_gooSboot, NULL},
+  {"$max-int", &module_info_gooSboot, NULL},
+  {"isa?", &module_info_gooSboot, NULL},
+  {"%cu", &module_info_gooSboot, NULL},
+  {"union-elts", &module_info_gooSboot, NULL},
+  {"error", &module_info_gooSboot, NULL},
+  {"property-type-error", &module_info_gooSboot, NULL},
+  {"%opts-tup", &module_info_gooSboot, NULL},
+  {"prop-owner", &module_info_gooSboot, NULL},
+  {"%met-env", &module_info_gooSboot, NULL},
+  {"%raw-met-call", &module_info_gooSboot, NULL},
+  {"%invoke-debugger", &module_info_gooSboot, NULL},
+  {"%prop-init", &module_info_gooSboot, NULL},
+  {"<flat>", &module_info_gooSboot, NULL},
+  {"let", &module_info_gooSboot, NULL},
+  {"%i!", &module_info_gooSboot, NULL},
+  {"%vnm-setter", &module_info_gooSboot, NULL},
+  {"%gen-sig", &module_info_gooSboot, NULL},
+  {"@singleton-isa?", &module_info_gooSboot, NULL},
+  {"%vnm", &module_info_gooSboot, NULL},
+  {"class-gens", &module_info_gooSboot, NULL},
+  {"%class-gens-setter", &module_info_gooSboot, NULL},
+  {"set", &module_info_gooSboot, NULL},
+  {"property-unbound-error", &module_info_gooSboot, NULL},
+  {"class-id", &module_info_gooSboot, NULL},
+  {"%fun-info-src-setter", &module_info_gooSboot, NULL},
+  {"%i>>>", &module_info_gooSboot, NULL},
+  {"@del-dups", &module_info_gooSboot, NULL},
+  {"%stack-check-reg?-setter", &module_info_gooSboot, NULL},
+  {"%allocate-stack", &module_info_gooSboot, NULL},
+  {"%class-direct-props", &module_info_gooSboot, NULL},
+  {"$min-int", &module_info_gooSboot, NULL},
+  {"class-prop-len-setter", &module_info_gooSboot, NULL},
+  {"@all2?", &module_info_gooSboot, NULL},
+  {"%fab-dyn-var", &module_info_gooSboot, NULL},
+  {"ct", &module_info_gooSboot, NULL},
+  {"sig-nary?-setter", &module_info_gooSboot, NULL},
+  {"%class-row-setter", &module_info_gooSboot, NULL},
+  {"%pair", &module_info_gooSboot, NULL},
+  {"%im", &module_info_gooSboot, NULL},
+  {"<lst>", &module_info_gooSboot, NULL},
+  {"%@subclass?", &module_info_gooSboot, NULL},
+  {"%met-env-setter", &module_info_gooSboot, NULL},
+  {"%relt-setter", &module_info_gooSboot, NULL},
+  {"opts-tup-storage", &module_info_gooSboot, NULL},
+  {"sig-unification-vars-setter", &module_info_gooSboot, NULL},
+  {"%vsp-setter", &module_info_gooSboot, NULL},
+  {"%type-object", &module_info_gooSboot, NULL},
+  {"cpl-error", &module_info_gooSboot, NULL},
+  {"%fab-met-inlineable", &module_info_gooSboot, NULL},
+  {"%tlen", &module_info_gooSboot, NULL},
+  {"%class-direct-props-setter", &module_info_gooSboot, NULL},
+  {"arity-error", &module_info_gooSboot, NULL},
+  {"subtype?", &module_info_gooSboot, NULL},
+  {"*macros-ok?*", &module_info_gooSboot, NULL},
+  {"fun-info-src-loc-setter", &module_info_gooSboot, NULL},
+  {"%gen-cache", &module_info_gooSboot, NULL},
+  {"%sp-elt", &module_info_gooSboot, NULL},
+  {"%vm-fun-env-fab", &module_info_gooSboot, NULL},
+  {"@telt-setter", &module_info_gooSboot, NULL},
+  {"@olen", &module_info_gooSboot, NULL},
+  {"gen-cache-missable?", &module_info_gooSboot, NULL},
+  {"%build-runtime-modules", &module_info_gooSboot, NULL},
+  {"class-prop-len", &module_info_gooSboot, NULL},
+  {"fun-info-inlineable?-setter", &module_info_gooSboot, NULL},
+  {"@len", &module_info_gooSboot, NULL},
+  {"%loc-val-setter", &module_info_gooSboot, NULL},
+  {"src-loc-file", &module_info_gooSboot, NULL},
+  {"%sb", &module_info_gooSboot, NULL},
+  {"%prop-dat-at", &module_info_gooSboot, NULL},
+  {"unknown-function-error", &module_info_gooSboot, NULL},
+  {"sig-nary?", &module_info_gooSboot, NULL},
+  {"%slen", &module_info_gooSboot, NULL},
+  {"<fun-info>", &module_info_gooSboot, NULL},
+  {"%false", &module_info_gooSboot, NULL},
+  {"sig-unification-vars", &module_info_gooSboot, NULL},
+  {"@type-equal?", &module_info_gooSboot, NULL},
+  {"%fun-info-src-loc-setter", &module_info_gooSboot, NULL},
+  {"@do", &module_info_gooSboot, NULL},
+  {"*early-classes*", &module_info_gooSboot, NULL},
+  {"use/library", &module_info_gooSboot, NULL},
+  {"%gen-cache-singletons", &module_info_gooSboot, NULL},
+  {"<seq.>", &module_info_gooSboot, NULL},
+  {"fun-info-src-loc", &module_info_gooSboot, NULL},
+  {"ddv", &module_info_gooSboot, NULL},
+  {"%loc-val", &module_info_gooSboot, NULL},
+  {"%c<", &module_info_gooSboot, NULL},
+  {"%rep", &module_info_gooSboot, NULL},
+  {"fun-info-inlineable?", &module_info_gooSboot, NULL},
+  {"%@class-of", &module_info_gooSboot, NULL},
+  {"%i=", &module_info_gooSboot, NULL},
+  {"%break", &module_info_gooSboot, NULL},
+  {"%vm-with-cleanup", &module_info_gooSboot, NULL},
+  {"%loc-off-setter", &module_info_gooSboot, NULL},
+  {"ambiguous-method-error", &module_info_gooSboot, NULL},
+  {"order-specs", &module_info_gooSboot, NULL},
+  {"use", &module_info_gooSboot, NULL},
+  {"%class-mets", &module_info_gooSboot, NULL},
+  {"%singleton", &module_info_gooSboot, NULL},
+  {"%fun-info-count", &module_info_gooSboot, NULL},
+  {"%relt", &module_info_gooSboot, NULL},
+  {"%lu", &module_info_gooSboot, NULL},
+  {"product-elts", &module_info_gooSboot, NULL},
+  {"%max-stack-len", &module_info_gooSboot, NULL},
+  {"type-error", &module_info_gooSboot, NULL},
+  {"esc", &module_info_gooSboot, NULL},
+  {"file-opening-error", &module_info_gooSboot, NULL},
+  {"%process-module", &module_info_gooSboot, NULL},
+  {"@int?", &module_info_gooSboot, NULL},
+  {"%class-props-setter", &module_info_gooSboot, NULL},
+  {"%class-prop-len-setter", &module_info_gooSboot, NULL},
+  {"%gen-cache-missable?", &module_info_gooSboot, NULL},
+  {"arithmetic-error", &module_info_gooSboot, NULL},
+  {"<col!>", &module_info_gooSboot, NULL},
+  {"%telt", &module_info_gooSboot, NULL},
+  {"@mem?", &module_info_gooSboot, NULL},
+  {"@class-isa?", &module_info_gooSboot, NULL},
+  {"%met-sig", &module_info_gooSboot, NULL},
+  {"@lit", &module_info_gooSboot, NULL},
+  {"as-error", &module_info_gooSboot, NULL},
+  {"%gen-mets", &module_info_gooSboot, NULL},
+  {"class-direct-props-setter", &module_info_gooSboot, NULL},
+  {"%class-ancestors-setter", &module_info_gooSboot, NULL},
+  {"<sig>", &module_info_gooSboot, NULL},
+  {"@all?", &module_info_gooSboot, NULL},
+  {"<col.>", &module_info_gooSboot, NULL},
+  {"t*", &module_info_gooSboot, NULL},
+  {"dm", &module_info_gooSboot, NULL},
+  {"@pick", &module_info_gooSboot, NULL},
+  {"@tlen", &module_info_gooSboot, NULL},
+  {"%vm-fun-env-elt-setter", &module_info_gooSboot, NULL},
+  {"opts-count", &module_info_gooSboot, NULL},
+  {"@+", &module_info_gooSboot, NULL},
+  {"fun-mets-setter", &module_info_gooSboot, NULL},
+  {"fun-env", &module_info_gooSboot, NULL},
+  {"%vm-box-val", &module_info_gooSboot, NULL},
+  {"%i*", &module_info_gooSboot, NULL},
+  {"<seq!>", &module_info_gooSboot, NULL},
+  {"<seq>", &module_info_gooSboot, NULL},
+  {"internal-error", &module_info_gooSboot, NULL},
+  {"<fun>", &module_info_gooSboot, NULL},
+  {"%patch-early-generics", &module_info_gooSboot, NULL},
+  {"<col>", &module_info_gooSboot, NULL},
+  {"%gen-info", &module_info_gooSboot, NULL},
+  {"*restarts-ok?*", &module_info_gooSboot, NULL},
+  {"%fun-cache-setter", &module_info_gooSboot, NULL},
+  {"dv", &module_info_gooSboot, NULL},
+  {"class-direct-props", &module_info_gooSboot, NULL},
+  {"%sig-unification-vars", &module_info_gooSboot, NULL},
+  {"sym-name", &module_info_gooSboot, NULL},
+  {"%cb", &module_info_gooSboot, NULL},
+  {"%vfn-setter", &module_info_gooSboot, NULL},
+  {"%eof-object", &module_info_gooSboot, NULL},
+  {"src-loc-line", &module_info_gooSboot, NULL},
+  {"@<", &module_info_gooSboot, NULL},
+  {"%sig-val", &module_info_gooSboot, NULL},
+  {"%raw", &module_info_gooSboot, NULL},
+  {"@add", &module_info_gooSboot, NULL},
+  {"*boot-macro-names*", &module_info_gooSboot, NULL},
+  {"%class-forward-setter", &module_info_gooSboot, NULL},
+  {"<rep>", &module_info_gooSboot, NULL},
+  {"tup", &module_info_gooSboot, NULL},
+  {"%prop-elt-setter", &module_info_gooSboot, NULL},
+  {"%def-regs", &module_info_gooSboot, NULL},
+  {"$direct-object-class", &module_info_gooSboot, NULL},
+  {"%loc-off", &module_info_gooSboot, NULL},
+  {"@rev!", &module_info_gooSboot, NULL},
+  {"class-children-setter", &module_info_gooSboot, NULL},
+  {"range-error", &module_info_gooSboot, NULL},
+  {"prop-init", &module_info_gooSboot, NULL},
+  {"%prop-unbound-error", &module_info_gooSboot, NULL},
+  {"class-forward-setter", &module_info_gooSboot, NULL},
+  {"<gen-cache>", &module_info_gooSboot, NULL},
+  {"%app-filename", &module_info_gooSboot, NULL},
+  {"<loc>", &module_info_gooSboot, NULL},
+  {"%do-stack-frames", &module_info_gooSboot, NULL},
+  {"%fun-info-src-loc", &module_info_gooSboot, NULL},
+  {"property-not-found-error", &module_info_gooSboot, NULL},
+  {"%selt", &module_info_gooSboot, NULL},
+  {"%gen-cache-arg-pos", &module_info_gooSboot, NULL},
+  {"%met-prop-len", &module_info_gooSboot, NULL},
+  {"%class-prop-len", &module_info_gooSboot, NULL},
+  {"@map", &module_info_gooSboot, NULL},
+  {"%vfp-setter", &module_info_gooSboot, NULL},
   {NULL,NULL,NULL}
 };
 
 static BINDING_INFO binding_infos[] = {
-  {"popf", PVAR, NULL},
-  {"def-fun-var", PVAR, NULL},
-  {"exported", PVAR, NULL},
-  {"cat", CVAR, &YgooSmacrosYcat},
-  {"renew", PVAR, NULL},
-  {"match-sublist", CVAR, &YgooSmacrosYmatch_sublist},
-  {"last", CVAR, &YgooSmacrosYlast},
-  {"case-by", PVAR, NULL},
-  {"nul?", CVAR, &YgooSmacrosYnulQ},
-  {"napp", CVAR, &YgooSmacrosYnapp},
-  {"assert", PVAR, NULL},
-  {"decf", PVAR, NULL},
-  {"pub", PVAR, NULL},
-  {"dlet", PVAR, NULL},
-  {"2nd", CVAR, &YgooSmacrosY2nd},
-  {"@checked-next-methods", CVAR, &YgooSmacrosYOchecked_next_methods},
-  {"unless", PVAR, NULL},
-  {"app", PVAR, NULL},
-  {"var-name", CVAR, &YgooSmacrosYvar_name},
-  {"1st", CVAR, &YgooSmacrosY1st},
-  {"rev!", CVAR, &YgooSmacrosYrevX},
-  {"match-atom", CVAR, &YgooSmacrosYmatch_atom},
-  {"---main-0---", PVAR, NULL},
-  {"rotf", PVAR, NULL},
-  {"or", PVAR, NULL},
-  {"need-implementation", PVAR, NULL},
-  {"map2", CVAR, &YgooSmacrosYmap2},
-  {"app-sup", PVAR, NULL},
-  {"or/set", PVAR, NULL},
-  {"macro-error", CVAR, &YgooSmacrosYmacro_error},
+  {"var-type", CVAR, &YgooSmacrosYvar_type},
   {"fab-setter-name", CVAR, &YgooSmacrosYfab_setter_name},
-  {"map", CVAR, &YgooSmacrosYmap},
-  {"incf", PVAR, NULL},
+  {"case-by", PVAR, NULL},
+  {"@checked-next-methods", CVAR, &YgooSmacrosYOchecked_next_methods},
+  {"app", PVAR, NULL},
+  {"macro-error", CVAR, &YgooSmacrosYmacro_error},
+  {"assert", PVAR, NULL},
   {"match-unquote", CVAR, &YgooSmacrosYmatch_unquote},
-  {"---main-1---", PVAR, NULL},
-  {"do-case-by", CVAR, &YgooSmacrosYdo_case_by},
+  {"map", CVAR, &YgooSmacrosYmap},
+  {"pub", PVAR, NULL},
   {"gensym", CVAR, &YgooSmacrosYgensym},
-  {"do", CVAR, &YgooSmacrosYdo},
-  {"swapf", PVAR, NULL},
-  {"match", PVAR, NULL},
-  {"without-prop-unbound-errors", PVAR, NULL},
-  {"until", PVAR, NULL},
-  {"pair", CVAR, &YgooSmacrosYpair},
-  {"opf", PVAR, NULL},
-  {"elt", CVAR, &YgooSmacrosYelt},
-  {"for", PVAR, NULL},
   {"cond", PVAR, NULL},
+  {"do", CVAR, &YgooSmacrosYdo},
+  {"and", PVAR, NULL},
+  {"app-sup", PVAR, NULL},
+  {"elt", CVAR, &YgooSmacrosYelt},
+  {"incf", PVAR, NULL},
+  {"need-implementation", PVAR, NULL},
+  {"rotf", PVAR, NULL},
   {"cat-sym", CVAR, &YgooSmacrosYcat_sym},
   {"match-nul-list", CVAR, &YgooSmacrosYmatch_nul_list},
+  {"or", PVAR, NULL},
+  {"dlet", PVAR, NULL},
+  {"or/set", PVAR, NULL},
+  {"cat", CVAR, &YgooSmacrosYcat},
+  {"unless", PVAR, NULL},
+  {"==", CVAR, &YgooSmacrosYEE},
+  {"napp", CVAR, &YgooSmacrosYnapp},
+  {"---main-0---", PVAR, NULL},
+  {"last", CVAR, &YgooSmacrosYlast},
+  {"do-case-by", CVAR, &YgooSmacrosYdo_case_by},
+  {"match-sublist", CVAR, &YgooSmacrosYmatch_sublist},
+  {"match", PVAR, NULL},
+  {"swapf", PVAR, NULL},
+  {"pushf", PVAR, NULL},
+  {"---main-1---", PVAR, NULL},
+  {"without-prop-unbound-errors", PVAR, NULL},
+  {"until", PVAR, NULL},
+  {"decf", PVAR, NULL},
   {"lift-place-subforms", CVAR, &YgooSmacrosYlift_place_subforms},
   {"sup", PVAR, NULL},
-  {"==", CVAR, &YgooSmacrosYEE},
-  {"and", PVAR, NULL},
-  {"var-type", CVAR, &YgooSmacrosYvar_type},
-  {"pushf", PVAR, NULL},
+  {"opf", PVAR, NULL},
+  {"2nd", CVAR, &YgooSmacrosY2nd},
+  {"rev!", CVAR, &YgooSmacrosYrevX},
+  {"nul?", CVAR, &YgooSmacrosYnulQ},
+  {"1st", CVAR, &YgooSmacrosY1st},
+  {"var-name", CVAR, &YgooSmacrosYvar_name},
   {"case", PVAR, NULL},
-  {"when", PVAR, NULL},
+  {"for", PVAR, NULL},
+  {"renew", PVAR, NULL},
   {"while", PVAR, NULL},
+  {"exported", PVAR, NULL},
+  {"when", PVAR, NULL},
+  {"match-atom", CVAR, &YgooSmacrosYmatch_atom},
+  {"def-fun-var", PVAR, NULL},
+  {"map2", CVAR, &YgooSmacrosYmap2},
+  {"popf", PVAR, NULL},
+  {"pair", CVAR, &YgooSmacrosYpair},
   {NULL, NVAR, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"tup", NULL},
-  {"popf", NULL},
-  {"def-fun-var", NULL},
-  {"exported", NULL},
-  {"cat", NULL},
-  {"renew", NULL},
-  {"match-sublist", NULL},
-  {"last", NULL},
-  {"error", NULL},
-  {"case-by", NULL},
-  {"nul?", NULL},
-  {"assert", NULL},
-  {"decf", NULL},
-  {"pub", NULL},
-  {"2nd", NULL},
-  {"@checked-next-methods", NULL},
-  {"unless", NULL},
-  {"app", NULL},
-  {"var-name", NULL},
-  {"1st", NULL},
-  {"and", NULL},
-  {"rev!", NULL},
-  {"match-atom", NULL},
-  {"rotf", NULL},
-  {"or", NULL},
-  {"need-implementation", NULL},
-  {"map2", NULL},
-  {"app-sup", NULL},
-  {"or/set", NULL},
-  {"dlet", NULL},
-  {"macro-error", NULL},
   {"fab-setter-name", NULL},
-  {"map", NULL},
-  {"incf", NULL},
+  {"case-by", NULL},
+  {"@checked-next-methods", NULL},
+  {"app", NULL},
+  {"macro-error", NULL},
+  {"assert", NULL},
   {"match-unquote", NULL},
+  {"map", NULL},
+  {"pub", NULL},
   {"gensym", NULL},
+  {"unless", NULL},
   {"do", NULL},
-  {"swapf", NULL},
-  {"match", NULL},
-  {"without-prop-unbound-errors", NULL},
-  {"until", NULL},
-  {"pair", NULL},
-  {"napp", NULL},
-  {"opf", NULL},
+  {"and", NULL},
+  {"app-sup", NULL},
   {"elt", NULL},
-  {"cond", NULL},
+  {"incf", NULL},
+  {"need-implementation", NULL},
+  {"var-type", NULL},
   {"cat-sym", NULL},
   {"match-nul-list", NULL},
+  {"or", NULL},
+  {"dlet", NULL},
+  {"or/set", NULL},
+  {"cat", NULL},
+  {"rotf", NULL},
+  {"napp", NULL},
+  {"last", NULL},
+  {"match-sublist", NULL},
+  {"match", NULL},
+  {"swapf", NULL},
+  {"pushf", NULL},
+  {"without-prop-unbound-errors", NULL},
+  {"until", NULL},
+  {"error", NULL},
   {"lift-place-subforms", NULL},
   {"sup", NULL},
+  {"opf", NULL},
+  {"2nd", NULL},
+  {"rev!", NULL},
+  {"nul?", NULL},
+  {"1st", NULL},
+  {"var-name", NULL},
   {"==", NULL},
-  {"var-type", NULL},
-  {"pushf", NULL},
-  {"for", NULL},
   {"case", NULL},
-  {"when", NULL},
+  {"cond", NULL},
+  {"for", NULL},
+  {"renew", NULL},
   {"while", NULL},
+  {"exported", NULL},
+  {"when", NULL},
+  {"match-atom", NULL},
+  {"tup", NULL},
+  {"def-fun-var", NULL},
+  {"map2", NULL},
+  {"popf", NULL},
+  {"decf", NULL},
+  {"pair", NULL},
   {NULL, NULL}
 };
 
