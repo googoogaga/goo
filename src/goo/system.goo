@@ -142,7 +142,7 @@
 
 ;;; Create a directory with the given name.  The parent directory must
 ;;; already exist, and must contain no item with the given name.
-(df create-directory ((filename <str>) => #f)
+(df create-directory ((filename <str>))
   (%create-directory (%su filename)))
 
 (export
@@ -267,7 +267,7 @@
     (components-to-pathname (components-parent-directory components))))
 
 ;;; Make sure that the named directory exists.
-(df probe-directory ((name <str>) => #f)
+(df probe-directory ((name <str>))
   (let ((components (pathname-to-components name))
         (label      (label-components components))
         (hier       (hierarchical-components components)))

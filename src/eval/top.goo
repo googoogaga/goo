@@ -18,7 +18,7 @@
 (dg p2c-eval (exp ct-env))
 
 (dm parse-in ((s <str>) ct-env)
-  (objectify (read-from-string s) ct-env #f))
+  (objectify-with-subtransaction (read-from-string s) ct-env #f))
 
 (dm parse ((s <str>) (modname <sym>))
   (parse-in s (runtime-environment modname)))
@@ -43,7 +43,7 @@
 (ddv run auto-run)
 
 (dm eval-in ((x <any>) ct-env)
-  (let ((o (objectify x ct-env #f))
+  (let ((o (objectify-with-subtransaction x ct-env #f))
 	(e (ast-evaluate o)))
     e))
 
@@ -68,7 +68,7 @@
 
 (dm load-in ((filename <str>) ct-env) 
   (let ((x (read-file filename))
-	(o (objectify x ct-env #f)))
+	(o (objectify-with-subtransaction x ct-env #f)))
     (run o ct-env)
     ;; TODO - Hook me into the new module loader system in a useful way.
     ;; (report-undefined-global-bindings ct-env)
@@ -103,7 +103,7 @@
 (dc <keyboard-interrupt> (<condition>))
 
 (df keyboard-interrupt ()
-  (sig <keyboard-interrupt>))
+  (sig (isa <keyboard-interrupt>)))
 
 (df do-restart (restarts n)
   (unless restarts
@@ -158,7 +158,7 @@
                   ((= form '(auto-eval))
                    (set run auto-run))
                   (#t
-                   (let ((ast (objectify form ct-env #f)))
+                   (let ((ast (objectify-with-subtransaction form ct-env #f)))
                      (print-result-expression
                       ct-env level "=> " (run ast ct-env)))))))))
         (loop)))))

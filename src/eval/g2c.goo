@@ -56,27 +56,21 @@
                                   (c-filename file))))
     (set (module-src-file mod) src-file)
     (set (module-mtime mod) (file-mtime src-file))
-    (fin
-      (seq
-      ;; (format out "Computing ast for %s.\n" name)
-      (let ((ast      (compute-ast src-file env)))
-        ;; (format out "Computing program for %s.\n" name)
-        (let ((prg    (compute-program ast env)))
-          ;; (format out "Generating C code for %s.\n" name)
-          (probe-directory (parent-directory out-file))
-          (call-with-output-file
-           out-file
-           (fun (out-port)
-             (dlet ((*definitions* (program-definitions prg))) 
-               (generate-c-module out-port ast prg mod))))
-          (set keepmod? #t)
-          mod)))
-      ;;; Tricky unwind handler.  Our module may have altered the
-      ;;; the state of other module's bindings, and so we need to
-      ;;; back these changes out if we crash midway.  This would look
-      ;;; much nicer if we had some kind of try/catch/rethrow construct.
-      (unless keepmod?
-        (free-implemented-foreign-bindings mod)))))
+    ;; (format out "Computing ast for %s.\n" name)
+    (let ((ast      (compute-ast src-file env)))
+      ;; (format out "Computing program for %s.\n" name)
+      (let ((prg    (compute-program ast env)))
+        ;; (format out "Generating C code for %s.\n" name)
+        (probe-directory (parent-directory out-file))
+        (call-with-output-file
+         out-file
+         (fun (out-port)
+           (dlet ((*definitions* (program-definitions prg))) 
+             (generate-c-module out-port ast prg mod))))
+        ;;; No need to call roll-back-transaction here--we can
+        ;;; rely on the compilation subtransaction to do all
+        ;;; the work.
+        mod))))
 
 (df module-up-to-date? ((mod <p2c-module>) => <log>)
   (>= (module-mtime mod) (file-mtime (module-src-file mod))))
@@ -138,7 +132,7 @@
     file))
 
 (dm p2c-exp (exp env)
-  (p2c-ast (objectify exp env #f) env))
+  (p2c-ast (objectify-with-subtransaction exp env #f) env))
 
 (dp %compile-load)
 
@@ -163,7 +157,7 @@
 ;;; Given a file name and an environment, compute an ast in that
 ;;; environment.
 (dm compute-ast (filename ct-env)
-  (objectify (read-file filename) ct-env #f))
+  (objectify-with-subtransaction (read-file filename) ct-env #f))
 
 ;;; Given an ast 'e', prepare it for compilation to C.  Store any
 ;;; new global bindings into the environment 'scratch-env'.
@@ -1189,8 +1183,8 @@
       (write-string code-out "\n"))
     (to-c form #f 1 code-out)
     (write-string code-out "\n")
-    (unless *dynamic-linking?*
-      (write-string code-out "  YPprint_cpu_usage(__FILE__);\n"))
+    ;; (unless *dynamic-linking?*
+    ;;   (write-string code-out "  YPprint_cpu_usage(__FILE__);\n"))
     (write-string code-out "}\n")))
 
 (dm generate-main (code-out mod)

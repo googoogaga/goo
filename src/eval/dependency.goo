@@ -1,0 +1,154 @@
+;;;;;======================================================================
+;;;;;  Dependency Tracking
+;;;;;======================================================================
+;;;;;  TODO - Considering renaming all the major classes in this module.
+
+(use proto)
+
+
+;;;;=======================================================================
+;;;;  Types of Dependencies
+;;;;=======================================================================
+;;;;  We represent dependency types as integers for the sake of peformance
+;;;;  and compactness.
+
+(dv <dependency-type> <int>)
+
+(df dependency-or ((dep1 <dependency-type>)
+                   (dep2 <dependency-type>)
+                   => <dependency-type>)
+  (logior dep1 dep2))
+
+(df dependency-and ((dep1 <dependency-type>)
+                    (dep2 <dependency-type>)
+                    => <dependency-type>)
+  (logand dep1 dep2))
+
+(dv $empty-dependency 0)
+(dv $all-dependency-types 65535) ;; XXX - Should be all 1 bits.
+
+(df dependency-empty? ((dep <dependency-type>) => <log>)
+  (== dep $empty-dependency))
+
+(df dependency-includes-all? ((main <dependency-type>)
+                              (values <dependency-type>)
+                              => <log>)
+  (== (dependency-and main values) values))
+
+(df dependency-includes-any? ((main <dependency-type>)
+                              (values <dependency-type>)
+                              => <log>)
+  (not (dependency-empty? (dependency-and main values))))
+
+(export
+  <dependency-type>
+  dependency-or
+  dependency-and
+  $empty-dependency
+  $all-dependency-types
+  dependency-empty?
+  dependency-includes-all?
+  dependency-includes-any?)
+
+
+;;;;=======================================================================
+;;;;  Parse-Time Dependencies
+;;;;=======================================================================
+;;;;  If these are invalidated, we need to reparse the source code.
+
+(dv $name-parse-dependency 1)         ; We translated a name to a binding.
+(dv $expansion-parse-dependency 2)    ; We expanded a macro.
+
+(dv $parse-dependencies
+  (dependency-or $name-parse-dependency
+                 $expansion-parse-dependency))
+
+(export
+  $name-parse-dependency
+  $expansion-parse-dependency
+  $parse-dependencies)
+
+
+;;;;=======================================================================
+;;;;  Optimization-Time Dependencies
+;;;;=======================================================================
+;;;;  If these are invalidated, we only need to re-optimize the source
+;;;;  code.
+
+(dv $value-optimization-dependency 4) ; We looked at the binding's value.
+
+(dv $optimizaton-dependencies
+  $value-optimization-dependency)
+
+(export
+  $value-optimization-dependency
+  $optimizaton-dependencies)
+
+
+;;;;=======================================================================
+;;;;  Dependents & Dependables
+;;;;=======================================================================
+
+;;; May be depended-upon by a <dependent>.
+(dc <dependable> (<any>))
+  ;; A table keyed by <dependent>, containing <dependency-type> values.
+  (slot <dependable> (dependents <tab>) (fab <tab> 4))
+
+;;; May depend upon a <dependable>.
+(dc <dependent> (<any>))
+  (slot <dependent> (depends-on <tab>) (fab <tab> 20))
+
+;;; Log a dependency, together with any type information.
+(df log-dependency ((dependable <dependable>)
+                    (dependent <dependent>)
+                    (dtype <dependency-type>) => #f)
+  (set (elt (depends-on dependent) dependable) #t)
+  (let ((dep-table (dependents dependable))
+        (entry     (elt dep-table dependent)))
+    (set (elt dep-table dependent)
+         (if (nul? entry)
+             dtype
+             (dependency-or entry dtype))))
+  #f)
+
+;;; Look up a dependecy.  Primarily used for testing.
+(df find-dependency ((dependable <dependable>)
+                     (dependent <dependent>)
+                     => <any>) ; (false-or <dependency-type>)
+  (let ((entry (elt (dependents dependable) dependent)))
+    (if (nul? entry) #f entry)))
+
+;;; Clobber a single dependent.  'dtype' says which kinds of dependencies
+;;; have been invalidated.
+(dg invalidate-dependent ((dependent <dependent>)
+                          (dependable <dependable>)
+                          (dtype <dependency-type>)))
+
+;;; Clobber all dependents of 'dependable' which rely on any of the
+;;; bits in 'invalid-dtype'.
+(df invalidate-dependents ((dependable <dependable>)
+                           (invalid-dtype <dependency-type>) => #f)
+  (do-keyed
+   (fun (dependent dependendent-dtype)
+     (let ((intersection (dependency-and invalid-dtype dependendent-dtype)))
+       (unless (dependency-empty? intersection)
+         (invalidate-dependent dependent dependable intersection))))
+   (dependents dependable)))
+
+;;; Remove a dependent from everything it depends upon.
+(df detach-dependent ((dependent <dependent>) => #f)
+  (do-keyed
+   (fun (dependable junk)
+     (unless (del-key (dependents dependable) dependent)
+       (error "Cannot remove %= from %=.\n" dependent dependable)))
+   (depends-on dependent))
+  (set (depends-on dependent) (fab <tab> 0)))
+
+(export
+  <dependable>
+  <dependent>
+  log-dependency
+  find-dependency
+  invalidate-dependent
+  invalidate-dependents
+  detach-dependent)

@@ -1,6 +1,7 @@
 (use proto)
 (use tests/driver)
 (use tests/language)
+(use tests/dependency)
 
 (export
   run-all-tests)

@@ -113,7 +113,7 @@
 (dm describe-condition ((c <condition>) => <str>)
   (format-to-string "Anonymous condition %=" c))
 
-(dm default-handler-description ((cond-type <condition>) => <str>)
+(dm default-handler-description ((cond-type (t< <condition>)) => <str>)
   (format-to-string "Anonymous handler for %s" cond-type))
 
 (dm build-condition-interactively
@@ -163,7 +163,7 @@
 
 (dc <restart> (<condition>))
 
-(dm default-handler-description ((cond-type <restart>) => <str>)
+(dm default-handler-description ((cond-type (t< <restart>)) => <str>)
   (format-to-string "Anonymous restart of type %s" cond-type))
 
 (dc <incongruent-method-error> (<error>))
@@ -177,8 +177,8 @@
 
 (dc <replace-generic-restart> (<restart>))
 
-(dm default-handler-description ((cond-type <replace-generic-restart>)
-                                 => <str>)
+(dm default-handler-description 
+    ((cond-type (t< <replace-generic-restart>)) => <str>)
   "Replace the generic function with an empty, congruent one")
 
 (export

@@ -1669,7 +1669,7 @@
 
 ;;; ISA?
 
-(dg isa?     ((x <any>) (t <type>) => <log>))
+(dg isa? (x (t <type>) => <log>))
 
 (dm isa? (o (t <class>) => <log>)
   (@class-isa? o t))

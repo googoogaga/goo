@@ -13,6 +13,7 @@
 (use proto/math)
 (use proto/collections)
 (use proto/ports)
+(use dependency)
 
 ;;; TODO: MOVE TYPE OUT OF SIGNATURE
 
@@ -21,6 +22,18 @@
 (dv $proto-boot-module-name 'boot)
 ;;; The name of the runtime module, which contains a few items used by p2c.
 (dv $proto-runtime-module-name 'runtime)
+
+;;; The <dependent> object we're currently compiling.  Any dependencies we
+;;; encounter will automatically be assumed to be the resposibility of this
+;;; object.
+(dv *current-dependent* #f)
+(ds (with-dependent ,dependent ,@body)
+  (let ((saved-dependent (gensym)))
+    `(let ((,saved-dependent *current-dependent*))
+       (set *current-dependent* ,dependent)
+       (fin
+         (seq ,@body)
+         (set *current-dependent* ,saved-dependent)))))
 
 (dm objectify-error ((message <str>) (arguments ...))
   (apply error message arguments))
@@ -52,7 +65,7 @@
 (dc <global-box> (<any>))
   (slot <global-box> global-box-value nul)
 
-(dc <module-binding> (<binding>))
+(dc <module-binding> (<binding> <dependable>))
   ;; The name of the module in which this binding is defined.
   (slot <module-binding> binding-kind          'global)
   (slot <module-binding> (binding-module-name  <sym>))
@@ -67,6 +80,16 @@
 (dv binding-locative-setter   binding-info-setter)
 (dv binding-handler           binding-info)
 (dv binding-handler-setter    binding-info-setter)
+
+(df maybe-log-dependency ((dependable <dependable>)
+                          (dtype <dependency-type>))
+  (when *current-dependent*
+    (log-dependency dependable *current-dependent* dtype)
+    (transaction-register-dependent *current-dependent*)))
+
+(df macro-expander ((macro-binding <module-binding>) => <fun>)
+  (maybe-log-dependency macro-binding $expansion-parse-dependency)
+  (binding-handler macro-binding))
 
 (dc <local-binding> (<binding>))
   (slot <local-binding> binding-value           #f)
@@ -146,7 +169,7 @@
   (slot <ast-signature> signature-arity    #f)
   (slot <ast-signature> signature-value    #f)
 
-(dc <ast-function> (<computed-program>))
+(dc <ast-function> (<computed-program> <dependent>))
   (slot <ast-function> function-binding    #f)
   (slot <ast-function> function-debug-name #f)
   ;;  (slot <ast-function> function-next-methods-binding)
@@ -162,6 +185,27 @@
   (signature-value (function-signature x)))
 
 (dm function-kind ((x <ast-function>)) "FUN")
+
+(df function-display-name ((f <ast-function>))
+  (let ((b (function-binding f)))
+    (if b
+        (format-to-string "%s:%s" (binding-module-name b) (binding-name b))
+        "anonymous function"))))
+
+(dm invalidate-dependent ((dependent <ast-function>)
+                          (dependable <dependable>)
+                          (dtype <dependency-type>))
+  ;; Aggressively detach ourselves.  We'll eventually want
+  ;; to selectively detach ourselves.
+  (detach-dependent dependent)
+  (let ((name (function-display-name dependent)))
+    (case
+      ((dependency-includes-any? dtype $parse-dependencies)
+       (format out "warning: %s needs to be reparsed\n" name))
+      ((dependency-includes-any? dtype $optimizaton-dependencies)
+       (format out "warning: %s needs to be re-optimized\n" name))
+      (#t
+       (format out "warning: unknown dependency of %s clobbered\n" name)))))
 
 (dc <programs> (<passive-program>))
 
@@ -281,9 +325,6 @@
   ;; The modules used by this environment.
   (slot <static-global-environment> (environment-uses-modules <buf>)
         (fab <buf> 0))
-  ;; Forward references from other modules which are resolved by this
-  ;; module.
-  (slot <static-global-environment> (environment-implements <lst>) '())
   ;; Does this environment allow cross-module resolution of symbols
   ;; of the form 'foo::bar'?
   (slot <static-global-environment> (environment-allows-foreign-names? <log>)
@@ -327,7 +368,7 @@
     ((f <module-binding>) (e <lst>) (r <static-environment>) tail? => <any>)
   (select (binding-kind f)
     (('magic) ((binding-handler f) e r tail?))
-    (('macro) (objectify ((binding-handler f) e r tail?) r tail?))
+    (('macro) (objectify ((macro-expander f) e r tail?) r tail?))
     (#t       (error "Magic or Macro binding expected %=" f))))
 
 (dm objectify ((e <sym>) (r <static-environment>) tail? => <any>)
@@ -536,7 +577,8 @@
                    (seq
                      (set (binding-free? existing-binding) #f)
                      (when foreign?
-                       (pushf (environment-implements gr) existing-binding)))
+                       (transaction-register-implemented-binding
+                        existing-binding)))
                    ;; Otherwise, redefine the existing binding.
                    ;; TODO - We should do more useful redefinition here.
                    (when foreign?
@@ -545,6 +587,9 @@
                              (module-name mod)
                              name
                              (binding-module-name existing-binding))))
+               ;; Aggressively invalidate all dependents.  We might want to
+               ;; make this more selective someday.
+               (invalidate-dependents existing-binding $all-dependency-types)
                (update-binding-kind existing-binding kind)
                existing-binding)
              (let ((mod-name (module-name (find-environment-module r)))
@@ -685,6 +730,8 @@
 ;;; of local bindings is known and they can be appropriately handled
 ;;; in objectify-bindings-list. 
 ;;; all bindings are considered immutable at the beginning.
+;;; XXX - The dependency registration code here should be refactored and
+;;; redesigned into something more reasonable.
 
 (ddv *record-source?* #f)
 
@@ -698,15 +745,19 @@
      r)))
 
 (dm objectify-function (sig body r tail? => <ast-method>)
-  (let ((signature (objectify-signature sig r))
-        (new-r     (r-extend* r (signature-bindings signature)))
-	(b         (objectify-sequential body new-r #t)))
-    (isa <ast-method> 
-         (set function-debug-name (objectify-quotation #f r))
-	 (set function-signature  signature)
-	 (set function-body       b)
-         (set function-source     (objectify-function-source sig body r)))))
-
+  ;; Allocate the method up front so we can log dependencies against it.
+  (let ((method (isa <ast-method>)))
+    (with-dependent method
+      (let ((signature (objectify-signature sig r))
+            (new-r     (r-extend* r (signature-bindings signature)))
+            (b         (objectify-sequential body new-r #t)))
+        (set (function-debug-name method) (objectify-quotation #f r))
+        (set (function-signature method)  signature)
+        (set (function-body method)       b)
+        (set (function-source method)
+             (objectify-function-source sig body r))
+        method))))
+    
 (dv $sexpr-optionals-tag       '...)
 (dv $sexpr-optionals-type-name '<opts>)
 
@@ -1244,6 +1295,111 @@
   (objectify-use/export-module (2nd x) r tail?))
 
 ;;;;=======================================================================
+;;;;  Transaction Information
+;;;;=======================================================================
+;;;;  Compilation of a Proto expression has relatively few side effects.
+;;;;  So if we want to get rid of some small chunk compiled code (perhaps
+;;;;  an error occurred later in the compilation process, or p2c unloaded a
+;;;;  module), we can let the garbage collector do most of the work.
+;;;;
+;;;;  There are a few exceptions:
+;;;;    1) Imported free bindings may have been defined.  This hack
+;;;;       is needed for the 'need-implementation' macro.
+;;;;    2) Any number of dependencies may have been registered.
+;;;;
+;;;;  We need to take pains to undo these operations manually.  We *could*
+;;;;  do this by building destructor functions for all the ast nodes, but
+;;;;  that would be bletcherous, and require rewriting half the compiler.
+;;;;
+;;;;  Instead, we use a simple transaction mechanism.
+;;;;
+;;;;  Each module has an associated transaction.  If the module is unloaded,
+;;;;  the module transaction must be rolled back.
+;;;;
+;;;;  Each invocation of the compiler has a "subtransaction".  If
+;;;;  compilation succeeds, this is merged into the module transaction.  If
+;;;;  compilation fails, it is rolled back.
+
+(dc <transaction> (<any>))
+  (slot <transaction> (transaction-implemented-bindings <tab>) (fab <tab> 10))
+  (slot <transaction> (transaction-dependents <tab>) (fab <tab> 10))
+
+(dv *current-subtransaction* #f)
+
+(df transaction-register-implemented-binding ((b <binding>))
+  (unless *current-subtransaction*
+    (error "Can't register implemented foreign binding (no subtransaction)"))
+  (set (elt (transaction-implemented-bindings *current-subtransaction*) b) #t))
+
+(df transaction-register-dependent ((d <dependent>))
+  (unless *current-subtransaction*
+    (error "Can't register dependent (no subtransaction)"))
+  (set (elt (transaction-dependents *current-subtransaction*) d) #t))
+
+(df transaction-empty? ((t <transaction>) => <log>)
+  (and (empty? (transaction-implemented-bindings t))
+       (empty? (transaction-dependents t))))
+
+(df merge-transactions! ((t1 <transaction>) (t2 <transaction>)
+                         => <transaction>)
+  (case
+    ;; If one of the transactions is empty, return the other.
+    ((transaction-empty? t2) t1)
+    ((transaction-empty? t1) t2)
+    ;; Otherwise, merge t2 into t1 destructively.
+    (#t
+     (let ((t1-bindings (transaction-implemented-bindings t1))
+           (t2-bindings (transaction-implemented-bindings t2))
+           (t1-dependents (transaction-dependents t1))
+           (t2-dependents (transaction-dependents t2)))
+       (do-keyed (fun (k v) (set (elt t1-bindings k) #t)) t2-bindings)
+       (do-keyed (fun (k v) (set (elt t1-dependents k) #t)) t2-dependents)
+       t1))))
+
+(df roll-back-transaction ((t <transaction>))
+  (do-keyed
+   (fun (binding junk) (set (binding-free? binding) #t))
+   (transaction-implemented-bindings t))
+  (do-keyed
+   (fun (dependent junk) (detach-dependent dependent))
+   (transaction-dependents t)))
+
+(df call-with-subtransaction (module thunk => <any>)
+  (let ((success #f)
+        (saved *current-subtransaction*))
+    (fin
+      (seq
+        (set *current-subtransaction* (isa <transaction>))
+        (let ((value (thunk)))
+          (set success #t)
+          value))
+      (seq
+        (if success
+            (set (module-transaction module)
+                 (merge-transactions! (module-transaction module)
+                                      *current-subtransaction*))
+            (roll-back-transaction *current-subtransaction*))
+        (set *current-subtransaction* saved)))))
+
+(ds (with-subtransaction (,module) ,@body)
+  `(call-with-subtransaction ,module (fun () ,@body)))
+           
+;;; Objectify the specified code within a subtransaction associated
+;;; with the appropriate module.
+;;;
+;;; XXX - It's not strictly correct to call this from the interpreter,
+;;; because it will finalize the transaction as soon as the code
+;;; is succcessfully objectified, but before it is run--and I'm not
+;;; sure how we should handle rollbacks if part of the code is
+;;; objectified but never executed.  Nonetheless, this is nearly
+;;; correct, and probably good enough for now.
+(df objectify-with-subtransaction (e (r <static-environment>) tail?
+                                   => <any>)
+  (with-subtransaction ((environment-module r))
+    (objectify e r tail?)))
+
+
+;;;;=======================================================================
 ;;;;  Module Loaders & Modules
 ;;;;=======================================================================
 ;;;;  A module contains two environments: a target environment, and a
@@ -1279,6 +1435,7 @@
   (slot <module> (%module-exports <tab>) (fab <tab> 1000))
   (slot <module> (module-data-processed? <log>) #t)
   (slot <module> module-runtime-data            #f)
+  (slot <module> (module-transaction <transaction>) (isa <transaction>))
 
 (dv module-exports-setter %module-exports-setter)
 (dm module-exports ((x <module>) => <tab>)
@@ -1405,19 +1562,11 @@
       (collecting ()
         (do (fun (v) (collect v)) users)))))
 
-;;; Mark foreign bindings implemented by this module as free.
-;;; This is a an artifact of the way need-implementation works, and we
-;;; should probably redesign things to avoid this.
-(df free-implemented-foreign-bindings ((mod <module>))
-  (do
-   (fun (binding) (set (binding-free? binding) #t))
-   (environment-implements (module-target-environment mod))))
-
 ;;; Remove a single module object from the loader.
 ;;; This should not be called externally, because it does not bother to
 ;;; remove other modules which use this one.
 (df remove-module-internal! ((loader <module-loader>) (mod <module>))
-  (free-implemented-foreign-bindings mod)
+  (roll-back-transaction (module-transaction mod))
   (del-key (module-loader-modules loader) (module-name mod)))
 
 ;;; Unload all the named modules, and all the modules which use them.
@@ -1454,7 +1603,6 @@
   load-module
   binding-native-to?
   report-undefined-global-bindings
-  free-implemented-foreign-bindings
   remove-modules-by-name!
   module-name-to-relpath
   install-initial-bindings)
@@ -1467,9 +1615,8 @@
 ;;;;  environment.  Right now, there are several possible environments:
 ;;;;   
 ;;;;    1) The listener's module, known as the "runtime" module, contains
-;;;;       one global environment (which is used as both the syntax
-;;;;       and the target environment).
-;;;;       TODO - Recreate module structure in the listener.
+;;;;       one environment (which is used as both the syntax
+;;;;       and the target environment) per module.
 ;;;;
 ;;;;    2) p2c sets up seperate syntax and target environments for each
 ;;;;       module it compiles.
@@ -1554,12 +1701,17 @@
           (set (environment-allows-foreign-names? env) #t)
           (set keepmod? #t)
           module)
-        ;;; Tricky unwind handler.  Our module may have altered the
-        ;;; the state of other module's bindings, and so we need to
-        ;;; back these changes out if we crash midway.  This would look
-        ;;; much nicer if we had some kind of try/catch/rethrow construct.
+        ;;; Tricky unwind handler.  Our module may have altered the the state
+        ;;; of other modules, and so we need to back these changes out if we
+        ;;; crash midway.  This would look much nicer if we had some kind of
+        ;;; try/catch/rethrow construct.
+        ;;; TODO - This is much less necessary than before, since we already
+        ;;; handle rollbacks for the actual compilation process using a
+        ;;; subtransaction.  But there may still be errors /executing/
+        ;;; the code, and we choose to apply a module rollback if that code
+        ;;; fails.  Is this the right thing?  Hmmm.
         (unless keepmod?
-          (free-implemented-foreign-bindings module))))))
+          (roll-back-transaction (module-transaction module)))))))
 
 (dv *runtime-module-loader* (isa <runtime-module-loader>))
 (df runtime-module-loader () *runtime-module-loader*)
@@ -1901,7 +2053,7 @@
   monitor-main-thunk
   monitor-test
   monitor-type
-  objectify
+  objectify-with-subtransaction
   objectify-quotation
   objectify-signature
   <predefined-application>
