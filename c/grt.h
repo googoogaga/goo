@@ -268,10 +268,10 @@ extern void check_fun_val_type(P, P);
 extern P check_type(P, P);
 
 #define QRET(x) \
-  { return res; }
+  { return (x); }
 
 #define RET(x) \
-  { check_fun_val_type(res, Pfun); return res; }
+  { check_fun_val_type((x), Pfun); return (x); }
 
 /* NON-LOCAL EXITS */
 
