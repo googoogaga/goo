@@ -13,7 +13,7 @@ static P sloc (int line) {
 /* MODULE ENVIRONMENT: goo/boot */
 
 DEF(Ytype_object_setter,"goo/boot","type-object-setter");
-DEF(YTmacros_okQT,"goo/boot","*macros-ok?*");
+DEF(YDmax_int,"goo/boot","$max-int");
 DEF(YLintG,"goo/boot","<int>");
 DEF(Ygen_refs_setter,"goo/boot","gen-refs-setter");
 DEF(YOtall2Q,"goo/boot","@tall2?");
@@ -21,9 +21,8 @@ DEF(Yclass_ancestors,"goo/boot","class-ancestors");
 DEF(YOclass_direct_props,"goo/boot","@class-direct-props");
 DEF(Yopts_count_setter,"goo/boot","opts-count-setter");
 DEF(Yclass_gens,"goo/boot","class-gens");
-DEF(YPclasses_readyQ,"goo/boot","%classes-ready?");
 DEF(YOunion_specQ,"goo/boot","@union-spec?");
-DEF(Yorder_specs,"goo/boot","order-specs");
+DEF(Ygen_cache_missableQ_setter,"goo/boot","gen-cache-missable?-setter");
 DEF(YOOemptyQ,"goo/boot","@@empty?");
 DEF(Yincongruent_method_error,"goo/boot","incongruent-method-error");
 DEF(YLnumG,"goo/boot","<num>");
@@ -32,34 +31,33 @@ DEF(Yclass_type_cache,"goo/boot","class-type-cache");
 DEF(YOfun_mets_setter,"goo/boot","@fun-mets-setter");
 DEF(Ygen_cache_classes_setter,"goo/boot","gen-cache-classes-setter");
 DEF(YLproductG,"goo/boot","<product>");
-DEF(Ytype_object,"goo/boot","type-object");
 DEF(Yproduct_elts_setter,"goo/boot","product-elts-setter");
+DEF(YDgen_cache_singletons_offset,"goo/boot","$gen-cache-singletons-offset");
 DEF(Ygen_refs,"goo/boot","gen-refs");
-DEF(YPmet_prop_len,"goo/boot","%met-prop-len");
 DEF(YOfill,"goo/boot","@fill");
 DEF(Yprop_setter_setter,"goo/boot","prop-setter-setter");
 DEF(Yopts_count,"goo/boot","opts-count");
 DEF(Ygen_cache_missableQ,"goo/boot","gen-cache-missable?");
-DEF(YDdirect_object_class,"goo/boot","$direct-object-class");
+DEF(YOfun_mets,"goo/boot","@fun-mets");
 DEF(YOcat2,"goo/boot","@cat2");
 DEF(Ygen_cache_classes,"goo/boot","gen-cache-classes");
 DEF(Yprop_offset,"goo/boot","prop-offset");
 DEF(Ysig_naryQ_setter,"goo/boot","sig-nary?-setter");
+DEF(Yinternal_error,"goo/boot","internal-error");
 DEF(YLunionG,"goo/boot","<union>");
-DEF(Yforward_class,"goo/boot","forward-class");
 DEF(Yproduct_elts,"goo/boot","product-elts");
+DEF(YLparentsG,"goo/boot","<parents>");
 DEF(YLsrc_locG,"goo/boot","<src-loc>");
-DEF(Ynul,"goo/boot","nul");
+DEF(Ynul_prop,"goo/boot","nul-prop");
 DEF(Ysig_unification_vars_setter,"goo/boot","sig-unification-vars-setter");
 DEF(YOsubclass_specQ,"goo/boot","@subclass-spec?");
 DEF(Yassert_error,"goo/boot","assert-error");
 DEF(Yprop_setter,"goo/boot","prop-setter");
 DEF(YOmay_isaQ,"goo/boot","@may-isa?");
+DEF(Ynot,"goo/boot","not");
 DEF(Yfun_val,"goo/boot","fun-val");
 DEF(Yfun_sig_setter,"goo/boot","fun-sig-setter");
-DEF(YOfun_mets,"goo/boot","@fun-mets");
 DEF(YPadd_prop,"goo/boot","%add-prop");
-DEF(Yunexec,"goo/boot","unexec");
 DEF(YOmets_subclasses_at,"goo/boot","@mets-subclasses-at");
 DEF(YOalter,"goo/boot","@alter");
 DEF(Yfun_src_setter,"goo/boot","fun-src-setter");
@@ -67,122 +65,124 @@ DEF(YLchrG,"goo/boot","<chr>");
 DEF(YOtanyQ,"goo/boot","@tany?");
 DEF(Ygen_from_met,"goo/boot","gen-from-met");
 DEF(Ysig_naryQ,"goo/boot","sig-nary?");
+DEF(YLenvG,"goo/boot","<env>");
 DEF(YLsubclassG,"goo/boot","<subclass>");
 DEF(Ypatch_early_classes,"goo/boot","patch-early-classes");
 DEF(Ychoose_methods,"goo/boot","choose-methods");
 DEF(Ysig_unification_vars,"goo/boot","sig-unification-vars");
 DEF(YOspecd_args,"goo/boot","@specd-args");
+DEF(YPclasses_readyQ,"goo/boot","%classes-ready?");
+DEF(YDdirect_object_class,"goo/boot","$direct-object-class");
 DEF(YLmagG,"goo/boot","<mag>");
-DEF(Yarithmetic_error,"goo/boot","arithmetic-error");
 DEF(Yfun_sig,"goo/boot","fun-sig");
 DEF(Yensure_fresh_object,"goo/boot","ensure-fresh-object");
-DEF(Yrequires_singleton_prec,"goo/boot","requires-singleton-prec");
-DEF(Yargument_type_error,"goo/boot","argument-type-error");
+DEF(Yone_nil,"goo/boot","one-nil");
 DEF(Yfile_opening_error,"goo/boot","file-opening-error");
 DEF(Yfun_src,"goo/boot","fun-src");
-DEF(Yproperty_type_error,"goo/boot","property-type-error");
 DEF(YOsingleton_specQ,"goo/boot","@singleton-spec?");
 DEF(YOOEE,"goo/boot","@@==");
 DEF(YLsingletonG,"goo/boot","<singleton>");
 DEF(Yreturn_type_error,"goo/boot","return-type-error");
 DEF(YLlogG,"goo/boot","<log>");
-DEF(YTearly_classesT,"goo/boot","*early-classes*");
 DEF(YOlst,"goo/boot","@lst");
 DEF(YOfun_unification_vars,"goo/boot","@fun-unification-vars");
 DEF(Yfind_setter,"goo/boot","find-setter");
 DEF(Yord_app_mets_1,"goo/boot","ord-app-mets-1");
+DEF(Ysig_val_setter,"goo/boot","sig-val-setter");
+DEF(YPsnul,"goo/boot","%snul");
 DEF(Yhead_setter,"goo/boot","head-setter");
+DEF(Yno_next_methods_error,"goo/boot","no-next-methods-error");
 DEF(Yrange_error,"goo/boot","range-error");
-DEF(Yprop_owner_setter,"goo/boot","prop-owner-setter");
-DEF(YOsubtypeQ,"goo/boot","@subtype?");
 DEF(Yclass_prop_len_setter,"goo/boot","class-prop-len-setter");
 DEF(YLanyG,"goo/boot","<any>");
-DEF(Ygen_cache_missableQ_setter,"goo/boot","gen-cache-missable?-setter");
-DEF(Yinternal_error,"goo/boot","internal-error");
+DEF(Yupdate_instance_for_changed_class,"goo/boot","update-instance-for-changed-class");
 DEF(Yclass_direct_props_setter,"goo/boot","class-direct-props-setter");
-DEF(Yclass_children,"goo/boot","class-children");
-DEF(Yclass_mets,"goo/boot","class-mets");
+DEF(Yclass_props_setter,"goo/boot","class-props-setter");
+DEF(Ytype_object,"goo/boot","type-object");
 DEF(YOrev,"goo/boot","@rev");
 DEF(Yobject_parents,"goo/boot","object-parents");
-DEF(Yclass_of,"goo/boot","class-of");
 DEF(Yhead,"goo/boot","head");
-DEF(YPtnul,"goo/boot","%tnul");
-DEF(YTrestarts_okQT,"goo/boot","*restarts-ok?*");
+DEF(YDmissed_dispatch,"goo/boot","$missed-dispatch");
 DEF(YLopts_tupG,"goo/boot","<opts-tup>");
+DEF(Yobject_props,"goo/boot","object-props");
+DEF(YPprop_offset,"goo/boot","%prop-offset");
 DEF(Yclass_prop_len,"goo/boot","class-prop-len");
-DEF(Ytail_setter,"goo/boot","tail-setter");
 DEF(Yfab_sym,"goo/boot","fab-sym");
-DEF(Yclass_parents_setter,"goo/boot","class-parents-setter");
+DEF(Yclass_name_setter,"goo/boot","class-name-setter");
 DEF(YOfun_val,"goo/boot","@fun-val");
 DEF(Ygen_lookup_miss,"goo/boot","gen-lookup-miss");
 DEF(YPwith_monitor,"goo/boot","%with-monitor");
+DEF(YPTused_symbols_too_earlyT,"goo/boot","%*used-symbols-too-early*");
+DEF(YOdo,"goo/boot","@do");
 DEF(Ytype_error,"goo/boot","type-error");
 DEF(Yclass_direct_props,"goo/boot","class-direct-props");
 DEF(Yord_app_metsT,"goo/boot","ord-app-mets*");
 DEF(YPadd_met,"goo/boot","%add-met");
-DEF(YTboot_macro_module_namesT,"goo/boot","*boot-macro-module-names*");
 DEF(Yfun_arity,"goo/boot","fun-arity");
 DEF(Yclass_children_setter,"goo/boot","class-children-setter");
 DEF(YOmets_singletons_at,"goo/boot","@mets-singletons-at");
-DEF(YDmin_int,"goo/boot","$min-int");
+DEF(YLpropsG,"goo/boot","<props>");
 DEF(YOelt,"goo/boot","@elt");
 DEF(Yclass_forward_setter,"goo/boot","class-forward-setter");
 DEF(YsubtypeQ,"goo/boot","subtype?");
 DEF(Ymethod_accessor_offset,"goo/boot","method-accessor-offset");
 DEF(YLoptsG,"goo/boot","<opts>");
 DEF(Yclass_row_setter,"goo/boot","class-row-setter");
+DEF(Yproperty_type_error,"goo/boot","property-type-error");
 DEF(YPfinalize_propsX,"goo/boot","%finalize-props!");
-DEF(YPTstart_running_atT,"goo/boot","%*start-running-at*");
 DEF(Yunion_elts_setter,"goo/boot","union-elts-setter");
+DEF(YDmax_classes,"goo/boot","$max-classes");
 DEF(Yopts_location_setter,"goo/boot","opts-location-setter");
-DEF(YOfun_arity,"goo/boot","@fun-arity");
-DEF(YDnul_assocs,"goo/boot","$nul-assocs");
+DEF(Yclass_children,"goo/boot","class-children");
 DEF(Yclass_forward,"goo/boot","class-forward");
 DEF(Yproperty_unbound_error,"goo/boot","property-unbound-error");
 DEF(Ygen_cache_singletons_setter,"goo/boot","gen-cache-singletons-setter");
 DEF(Yhandler_info_message,"goo/boot","handler-info-message");
+DEF(Yargument_type_error,"goo/boot","argument-type-error");
+DEF(YTreport_prop_unbound_errorsQT,"goo/boot","*report-prop-unbound-errors?*");
 DEF(Yclass_row,"goo/boot","class-row");
 DEF(Ysig_specs_setter,"goo/boot","sig-specs-setter");
 DEF(YPearly_dispatch,"goo/boot","%early-dispatch");
-DEF(YPTused_symbols_too_earlyT,"goo/boot","%*used-symbols-too-early*");
+DEF(YTnext_class_idT,"goo/boot","*next-class-id*");
 DEF(Yunion_elts,"goo/boot","union-elts");
 DEF(Yprop_getter_setter,"goo/boot","prop-getter-setter");
 DEF(YOtype_equalQ,"goo/boot","@type-equal?");
 DEF(Yopts_location,"goo/boot","opts-location");
+DEF(YPrnul,"goo/boot","%rnul");
 DEF(Yprop_init_setter,"goo/boot","prop-init-setter");
 DEF(Yrefab_class,"goo/boot","refab-class");
 DEF(YPcollect_direct_props,"goo/boot","%collect-direct-props");
-DEF(YLsimple_handler_infoG,"goo/boot","<simple-handler-info>");
+DEF(Yfun_naryQ_setter,"goo/boot","fun-nary?-setter");
 DEF(Ygen_cache_singletons,"goo/boot","gen-cache-singletons");
 DEF(Ysyntax_error,"goo/boot","syntax-error");
 DEF(YLclassG,"goo/boot","<class>");
 DEF(Ysig_specs,"goo/boot","sig-specs");
-DEF(Ysig_val_setter,"goo/boot","sig-val-setter");
 DEF(YOgen_cache_classes_setter,"goo/boot","@gen-cache-classes-setter");
 DEF(Ymet_appQ,"goo/boot","met-app?");
 DEF(Yprop_getter,"goo/boot","prop-getter");
+DEF(Yclass_of,"goo/boot","class-of");
 DEF(Yerror,"goo/boot","error");
 DEF(Yfun_name_setter,"goo/boot","fun-name-setter");
 DEF(YOlst_helper,"goo/boot","@lst-helper");
 DEF(Yprop_init,"goo/boot","prop-init");
 DEF(YLtypeG,"goo/boot","<type>");
-DEF(YtT,"goo/boot","t*");
 DEF(Yfun_refs_setter,"goo/boot","fun-refs-setter");
+DEF(Yfun_specs,"goo/boot","fun-specs");
 DEF(YPprop,"goo/boot","%prop");
 DEF(YOmets_specs_at,"goo/boot","@mets-specs-at");
+DEF(YDnum_int_bits,"goo/boot","$num-int-bits");
 DEF(YOpick,"goo/boot","@pick");
-DEF(YTboot_macro_namesT,"goo/boot","*boot-macro-names*");
 DEF(YLgenG,"goo/boot","<gen>");
-DEF(YDgen_cache_classes_offset,"goo/boot","$gen-cache-classes-offset");
 DEF(Yfun_cache_setter,"goo/boot","fun-cache-setter");
 DEF(Ysig_val,"goo/boot","sig-val");
-DEF(YOclass_ancestors,"goo/boot","@class-ancestors");
-DEF(YPrnul,"goo/boot","%rnul");
-DEF(Yfinalize_props,"goo/boot","finalize-props");
+DEF(Yadd_prop,"goo/boot","add-prop");
+DEF(Yfun_congruentQ,"goo/boot","fun-congruent?");
 DEF(Yfun_naryQ,"goo/boot","fun-nary?");
 DEF(Yfun_name,"goo/boot","fun-name");
-DEF(Ynew,"goo/boot","new");
-DEF(YPdefine_method,"goo/boot","%define-method");
+DEF(Yunexec,"goo/boot","unexec");
+DEF(Yprop_value_setter,"goo/boot","prop-value-setter");
+DEF(YDnul_assocs,"goo/boot","$nul-assocs");
+DEF(YLbodyG,"goo/boot","<body>");
 DEF(YLsymG,"goo/boot","<sym>");
 DEF(Yfun_refs,"goo/boot","fun-refs");
 DEF(Yunknown_function_error,"goo/boot","unknown-function-error");
@@ -192,81 +192,78 @@ DEF(YOgen_cache_classes,"goo/boot","@gen-cache-classes");
 DEF(Ynarity_error,"goo/boot","narity-error");
 DEF(Yfun_cache,"goo/boot","fun-cache");
 DEF(YOnew,"goo/boot","@new");
+DEF(Yarithmetic_error,"goo/boot","arithmetic-error");
 DEF(Yambiguous_method_error,"goo/boot","ambiguous-method-error");
-DEF(YLenvG,"goo/boot","<env>");
-DEF(YPfalse,"goo/boot","%false");
 DEF(YLstrG,"goo/boot","<str>");
 DEF(Yprop_boundQ,"goo/boot","prop-bound?");
-DEF(YPsymbols,"goo/boot","%symbols");
+DEF(Yfind_getter,"goo/boot","find-getter");
+DEF(Yforward_class,"goo/boot","forward-class");
 DEF(Ysrc_loc_file_setter,"goo/boot","src-loc-file-setter");
-DEF(Yupdate_instance_for_changed_class,"goo/boot","update-instance-for-changed-class");
 DEF(Ygen_lookup_miss_1,"goo/boot","gen-lookup-miss-1");
 DEF(Yfab_class,"goo/boot","fab-class");
 DEF(Yas_error,"goo/boot","as-error");
 DEF(Ysym_name_setter,"goo/boot","sym-name-setter");
 DEF(YOfold,"goo/boot","@fold");
+DEF(Yclass_parents_setter,"goo/boot","class-parents-setter");
 DEF(YLtupG,"goo/boot","<tup>");
 DEF(YPdispatch,"goo/boot","%dispatch");
-DEF(Yfun_naryQ_setter,"goo/boot","fun-nary?-setter");
+DEF(YPpatch_early_generic,"goo/boot","%patch-early-generic");
 DEF(Yfun_arity_setter,"goo/boot","fun-arity-setter");
-DEF(Yprop_value_setter,"goo/boot","prop-value-setter");
-DEF(Yobject_props,"goo/boot","object-props");
+DEF(Yfun_unification_vars_setter,"goo/boot","fun-unification-vars-setter");
+DEF(Ydel_class,"goo/boot","del-class");
+DEF(Yinit_class,"goo/boot","init-class");
 DEF(Yorder_mets,"goo/boot","order-mets");
 DEF(Yclass_ordered_ancestors,"goo/boot","class-ordered-ancestors");
+DEF(Yfinalize_props,"goo/boot","finalize-props");
 DEF(Ysrc_loc_file,"goo/boot","src-loc-file");
 DEF(Ylst,"goo/boot","lst");
+DEF(YTboot_macro_namesT,"goo/boot","*boot-macro-names*");
 DEF(YOfun_names,"goo/boot","@fun-names");
 DEF(Ygen_lookup_miss_1_using,"goo/boot","gen-lookup-miss-1-using");
 DEF(Ycpl_error,"goo/boot","cpl-error");
+DEF(YPtrue,"goo/boot","%true");
 DEF(Ymay_isaQ,"goo/boot","may-isa?");
 DEF(YLmetG,"goo/boot","<met>");
+DEF(YTmacros_okQT,"goo/boot","*macros-ok?*");
 DEF(YOall2Q,"goo/boot","@all2?");
 DEF(YLflatG,"goo/boot","<flat>");
 DEF(Ysym_name,"goo/boot","sym-name");
 DEF(YOfun_naryQ,"goo/boot","@fun-nary?");
-DEF(Yfun_congruentQ,"goo/boot","fun-congruent?");
 DEF(Ygen_add_met,"goo/boot","gen-add-met");
 DEF(Yfun_specs_setter,"goo/boot","fun-specs-setter");
+DEF(YOsubtypeQ,"goo/boot","@subtype?");
 DEF(Yclass_parents,"goo/boot","class-parents");
-DEF(YPtrue,"goo/boot","%true");
-DEF(YTnext_class_idT,"goo/boot","*next-class-id*");
-DEF(Ynot,"goo/boot","not");
-DEF(YOdo,"goo/boot","@do");
+DEF(YTrestarts_okQT,"goo/boot","*restarts-ok?*");
+DEF(YOopts_as_lst,"goo/boot","@opts-as-lst");
 DEF(YOgen_cache_singletons_setter,"goo/boot","@gen-cache-singletons-setter");
-DEF(Ynil,"goo/boot","nil");
 DEF(YOdel_dups,"goo/boot","@del-dups");
-DEF(YLpropG,"goo/boot","<prop>");
-DEF(Yclass_props_setter,"goo/boot","class-props-setter");
+DEF(Ynul,"goo/boot","nul");
 DEF(Yclass_mets_setter,"goo/boot","class-mets-setter");
-DEF(Yno_next_methods_error,"goo/boot","no-next-methods-error");
 DEF(YOtup,"goo/boot","@tup");
-DEF(YDgen_cache_singletons_offset,"goo/boot","$gen-cache-singletons-offset");
+DEF(YLspecsG,"goo/boot","<specs>");
 DEF(YLlstG,"goo/boot","<lst>");
+DEF(YOclass_ancestors,"goo/boot","@class-ancestors");
 DEF(Yclass_id_setter,"goo/boot","class-id-setter");
 DEF(Yproperty_not_found_error,"goo/boot","property-not-found-error");
+DEF(YPtnul,"goo/boot","%tnul");
 DEF(YLfunG,"goo/boot","<fun>");
 DEF(Ytype_class_setter,"goo/boot","type-class-setter");
-DEF(Yfun_specs,"goo/boot","fun-specs");
 DEF(Ygen_src_setter,"goo/boot","gen-src-setter");
-DEF(YTreport_prop_unbound_errorsQT,"goo/boot","*report-prop-unbound-errors?*");
 DEF(Yclass_props,"goo/boot","class-props");
 DEF(YOprune_mets_by_type_at,"goo/boot","@prune-mets-by-type-at");
-DEF(YTboot_macro_expandersT,"goo/boot","*boot-macro-expanders*");
 DEF(YLseqXG,"goo/boot","<seq!>");
 DEF(Yopts_tup_storage_setter,"goo/boot","opts-tup-storage-setter");
-DEF(YPprop_offset,"goo/boot","%prop-offset");
+DEF(Yclass_mets,"goo/boot","class-mets");
 DEF(Ygen_cache_arg_pos_setter,"goo/boot","gen-cache-arg-pos-setter");
 DEF(YOgen_cache_singletons,"goo/boot","@gen-cache-singletons");
-DEF(Ymet_app_unify,"goo/boot","met-app-unify");
 DEF(Ytup,"goo/boot","tup");
 DEF(Yclass_id,"goo/boot","class-id");
-DEF(YPsymbols_readyQ,"goo/boot","%symbols-ready?");
-DEF(YLspecsG,"goo/boot","<specs>");
+DEF(Ynew,"goo/boot","new");
 DEF(Ysig_names_setter,"goo/boot","sig-names-setter");
 DEF(YOmap,"goo/boot","@map");
-DEF(Yone_nil,"goo/boot","one-nil");
 DEF(YOorder_specs,"goo/boot","@order-specs");
 DEF(Ytype_class,"goo/boot","type-class");
+DEF(Yprop_owner_setter,"goo/boot","prop-owner-setter");
 DEF(YLseqIG,"goo/boot","<seq.>");
 DEF(Ygen_src,"goo/boot","gen-src");
 DEF(Yprop_type_setter,"goo/boot","prop-type-setter");
@@ -274,20 +271,18 @@ DEF(YOclassL,"goo/boot","@class<");
 DEF(Yobject_class,"goo/boot","object-class");
 DEF(Yopts_tup_storage,"goo/boot","opts-tup-storage");
 DEF(Ygen_cache_arg_pos,"goo/boot","gen-cache-arg-pos");
+DEF(YtT,"goo/boot","t*");
 DEF(YLseqG,"goo/boot","<seq>");
-DEF(YPsnul,"goo/boot","%snul");
-DEF(YDmax_int,"goo/boot","$max-int");
 DEF(Ysig_names,"goo/boot","sig-names");
 DEF(Ysig_arity_setter,"goo/boot","sig-arity-setter");
+DEF(YDgen_cache_classes_offset,"goo/boot","$gen-cache-classes-offset");
 DEF(Yprop_owner,"goo/boot","prop-owner");
-DEF(Yadd_prop,"goo/boot","add-prop");
 DEF(YOdo_descendents,"goo/boot","@do-descendents");
 DEF(Yfun_code_setter,"goo/boot","fun-code-setter");
 DEF(Ykeyboard_interrupt,"goo/boot","keyboard-interrupt");
 DEF(YOfab,"goo/boot","@fab");
 DEF(Yprop_type,"goo/boot","prop-type");
 DEF(Yhandler_info_arguments,"goo/boot","handler-info-arguments");
-DEF(Yinit_class,"goo/boot","init-class");
 DEF(YLcolXG,"goo/boot","<col!>");
 DEF(Yfun_env_setter,"goo/boot","fun-env-setter");
 DEF(Yfun_names_setter,"goo/boot","fun-names-setter");
@@ -295,65 +290,70 @@ DEF(YOmemQ,"goo/boot","@mem?");
 DEF(Yprop_value,"goo/boot","prop-value");
 DEF(YLsigG,"goo/boot","<sig>");
 DEF(Yfun_mets_setter,"goo/boot","fun-mets-setter");
+DEF(YDgetter_not_found,"goo/boot","$getter-not-found");
+DEF(Ynil,"goo/boot","nil");
 DEF(Ysig_arity,"goo/boot","sig-arity");
 DEF(YOgen_cache_arg_pos_setter,"goo/boot","@gen-cache-arg-pos-setter");
+DEF(Ymet_app_unify,"goo/boot","met-app-unify");
 DEF(YLcolIG,"goo/boot","<col.>");
 DEF(Yfun_same_metQ,"goo/boot","fun-same-met?");
 DEF(Yfun_code,"goo/boot","fun-code");
-DEF(YDnum_int_bits,"goo/boot","$num-int-bits");
 DEF(YisaQ,"goo/boot","isa?");
 DEF(Yfun_env,"goo/boot","fun-env");
+DEF(Yorder_specs,"goo/boot","order-specs");
 DEF(Yfun_mets,"goo/boot","fun-mets");
+DEF(YOfun_arity,"goo/boot","@fun-arity");
 DEF(YLcolG,"goo/boot","<col>");
-DEF(Yfun_unification_vars_setter,"goo/boot","fun-unification-vars-setter");
+DEF(YLmetsG,"goo/boot","<mets>");
 DEF(Yclone,"goo/boot","clone");
 DEF(Yensure_singleton_cache,"goo/boot","ensure-singleton-cache");
-DEF(Ydel_class,"goo/boot","del-class");
 DEF(Yfun_names,"goo/boot","fun-names");
 DEF(YPprop_unbound_error,"goo/boot","%prop-unbound-error");
 DEF(YOmets_unspecialized_atQ,"goo/boot","@mets-unspecialized-at?");
-DEF(YDgetter_not_found,"goo/boot","$getter-not-found");
 DEF(YOanyQ,"goo/boot","@any?");
-DEF(YLparentsG,"goo/boot","<parents>");
 DEF(YOallQ,"goo/boot","@all?");
 DEF(YLrepG,"goo/boot","<rep>");
+DEF(Ytail_setter,"goo/boot","tail-setter");
 DEF(YPPmacro,"goo/boot","%%macro");
 DEF(YOgen_cache_arg_pos,"goo/boot","@gen-cache-arg-pos");
 DEF(YLgen_cacheG,"goo/boot","<gen-cache>");
-DEF(Yclass_name_setter,"goo/boot","class-name-setter");
 DEF(Ysrc_loc_line_setter,"goo/boot","src-loc-line-setter");
-DEF(Yfind_getter,"goo/boot","find-getter");
+DEF(YDmin_int,"goo/boot","$min-int");
 DEF(YLlocG,"goo/boot","<loc>");
 DEF(YOisaQ,"goo/boot","@isa?");
+DEF(YTboot_macro_expandersT,"goo/boot","*boot-macro-expanders*");
+DEF(YPsymbols_readyQ,"goo/boot","%symbols-ready?");
 DEF(Ystack_overflow_error,"goo/boot","stack-overflow-error");
 DEF(Yfun_unification_vars,"goo/boot","fun-unification-vars");
+DEF(YTboot_macro_module_namesT,"goo/boot","*boot-macro-module-names*");
 DEF(Ytail,"goo/boot","tail");
 DEF(Yfun_spec,"goo/boot","fun-spec");
-DEF(YDmissed_dispatch,"goo/boot","$missed-dispatch");
+DEF(YPsymbols,"goo/boot","%symbols");
+DEF(YPfalse,"goo/boot","%false");
 DEF(Yno_applicable_methods_error,"goo/boot","no-applicable-methods-error");
 DEF(Yclass_ordered_props,"goo/boot","class-ordered-props");
 DEF(Yclass_name,"goo/boot","class-name");
 DEF(YLfloG,"goo/boot","<flo>");
-DEF(YLbodyG,"goo/boot","<body>");
 DEF(Ysrc_loc_line,"goo/boot","src-loc-line");
 DEF(YOprecise_specQ,"goo/boot","@precise-spec?");
 DEF(YOrevX,"goo/boot","@rev!");
-DEF(YLpropsG,"goo/boot","<props>");
 DEF(YOcache_add,"goo/boot","@cache-add");
-DEF(Ynul_prop,"goo/boot","nul-prop");
+DEF(Yrequires_singleton_prec,"goo/boot","requires-singleton-prec");
 DEF(Yclass_ancestors_setter,"goo/boot","class-ancestors-setter");
-DEF(YOopts_as_lst,"goo/boot","@opts-as-lst");
 DEF(YLfixnumG,"goo/boot","<fixnum>");
-DEF(YPpatch_early_generic,"goo/boot","%patch-early-generic");
+DEF(YTearly_classesT,"goo/boot","*early-classes*");
 DEF(Yclass_gens_setter,"goo/boot","class-gens-setter");
-DEF(YDmax_classes,"goo/boot","$max-classes");
 DEF(YOfind,"goo/boot","@find");
-DEF(YLmetsG,"goo/boot","<mets>");
 DEF(YLreplace_generic_restartG,"goo/boot","<replace-generic-restart>");
+DEF(YPTstart_running_atT,"goo/boot","%*start-running-at*");
 DEF(YOorder_specs_class,"goo/boot","@order-specs-class");
 DEF(Yclass_type_cache_setter,"goo/boot","class-type-cache-setter");
+DEF(YPmet_prop_len,"goo/boot","%met-prop-len");
+DEF(YLsimple_handler_infoG,"goo/boot","<simple-handler-info>");
+DEF(YPdefine_method,"goo/boot","%define-method");
 DEF(Yarity_error,"goo/boot","arity-error");
 DEF(Yord_app_mets,"goo/boot","ord-app-mets");
+DEF(YLpropG,"goo/boot","<prop>");
 
 /* FORWARD QUOTATIONS: */
 
@@ -366,7 +366,7 @@ DEFLIT(lit_68);
 DEFLIT(lit_72);
 DEFLIT(lit_555);
 DEFLIT(lit_574);
-DEFLIT(lit_582);
+DEFLIT(lit_651);
 DEFLIT(lit_504);
 DEFLIT(lit_385);
 DEFLIT(lit_266);
@@ -375,7 +375,7 @@ DEFLIT(lit_47);
 DEFLIT(lit_658);
 DEFLIT(lit_489);
 DEFLIT(lit_161);
-DEFLIT(lit_462);
+DEFLIT(lit_429);
 DEFLIT(lit_517);
 DEFLIT(lit_669);
 DEFLIT(lit_318);
@@ -447,6 +447,7 @@ DEFLIT(lit_21);
 DEFLIT(lit_505);
 DEFLIT(lit_391);
 DEFLIT(lit_348);
+DEFLIT(lit_661);
 DEFLIT(lit_587);
 DEFLIT(lit_236);
 DEFLIT(lit_218);
@@ -537,7 +538,6 @@ DEFLIT(lit_360);
 DEFLIT(lit_592);
 DEFLIT(lit_210);
 DEFLIT(lit_618);
-DEFLIT(lit_651);
 DEFLIT(lit_165);
 DEFLIT(lit_353);
 DEFLIT(lit_547);
@@ -577,6 +577,7 @@ DEFLIT(lit_272);
 DEFLIT(lit_62);
 DEFLIT(lit_80);
 DEFLIT(lit_327);
+DEFLIT(lit_582);
 DEFLIT(lit_329);
 DEFLIT(lit_334);
 DEFLIT(lit_569);
@@ -628,7 +629,7 @@ DEFLIT(lit_108);
 DEFLIT(lit_46);
 DEFLIT(lit_186);
 DEFLIT(lit_16);
-DEFLIT(lit_661);
+DEFLIT(lit_622);
 DEFLIT(lit_69);
 DEFLIT(lit_603);
 DEFLIT(lit_509);
@@ -665,7 +666,7 @@ DEFLIT(lit_481);
 DEFLIT(lit_675);
 DEFLIT(lit_463);
 DEFLIT(lit_138);
-DEFLIT(lit_622);
+DEFLIT(lit_462);
 DEFLIT(lit_212);
 DEFLIT(lit_519);
 DEFLIT(lit_216);
@@ -1020,7 +1021,6 @@ DEFLIT(lit_670);
 DEFLIT(lit_79);
 DEFLIT(lit_345);
 DEFLIT(lit_320);
-DEFLIT(lit_429);
 DEFLIT(lit_660);
 DEFLIT(lit_81);
 DEFLIT(lit_381);
@@ -17343,972 +17343,964 @@ static IMPORT_INFO import_infos[] = {
 
 static BINDING_INFO binding_infos[] = {
   {"type-object-setter", CVAR, &Ytype_object_setter},
-  {"*macros-ok?*", CVAR, &YTmacros_okQT},
-  {"%ready?", PVAR, NULL},
+  {"%%rfab", PVAR, NULL},
+  {"$max-int", CVAR, &YDmax_int},
   {"<int>", CVAR, &YLintG},
-  {"%define-setter", PVAR, NULL},
-  {"%loc-val-setter", PVAR, NULL},
-  {"%open-in-file", PVAR, NULL},
+  {"prop-value-at", PVAR, NULL},
+  {"@telt-setter", PVAR, NULL},
+  {"%chr", PVAR, NULL},
   {"gen-refs-setter", CVAR, &Ygen_refs_setter},
   {"@tall2?", CVAR, &YOtall2Q},
   {"class-ancestors", CVAR, &Yclass_ancestors},
-  {"%met-code-setter", PVAR, NULL},
+  {"@head-setter", PVAR, NULL},
+  {"---main-2---", PVAR, NULL},
   {"@class-direct-props", CVAR, &YOclass_direct_props},
+  {"%tag", PVAR, NULL},
   {"opts-count-setter", CVAR, &Yopts_count_setter},
   {"class-gens", CVAR, &Yclass_gens},
-  {"%classes-ready?", CVAR, &YPclasses_readyQ},
-  {"%fatan2", PVAR, NULL},
-  {"%prop-getter-setter", PVAR, NULL},
   {"@union-spec?", CVAR, &YOunion_specQ},
-  {"%fab-code-refs", PVAR, NULL},
-  {"%vm-box-val-setter", PVAR, NULL},
-  {"%vm-fun-env-fab", PVAR, NULL},
-  {"order-specs", CVAR, &Yorder_specs},
-  {"%class-gens", PVAR, NULL},
-  {"%union", PVAR, NULL},
+  {"gen-cache-missable?-setter", CVAR, &Ygen_cache_missableQ_setter},
+  {"@head", PVAR, NULL},
+  {"%i*", PVAR, NULL},
+  {"%compute-ancestors", PVAR, NULL},
   {"@@empty?", CVAR, &YOOemptyQ},
-  {"%ready", PVAR, NULL},
   {"incongruent-method-error", CVAR, &Yincongruent_method_error},
   {"<num>", CVAR, &YLnumG},
   {"fun-val-setter", CVAR, &Yfun_val_setter},
   {"bound?", PVAR, NULL},
   {"class-type-cache", CVAR, &Yclass_type_cache},
-  {"@head", PVAR, NULL},
+  {"%flog", PVAR, NULL},
   {"@fun-mets-setter", CVAR, &YOfun_mets_setter},
-  {"$tag-len", PVAR, NULL},
+  {"%relt-setter", PVAR, NULL},
   {"gen-cache-classes-setter", CVAR, &Ygen_cache_classes_setter},
-  {"@class-isa?", PVAR, NULL},
-  {"%time", PVAR, NULL},
-  {"%macro", PVAR, NULL},
-  {"%union-elts", PVAR, NULL},
+  {"%prop-init-setter", PVAR, NULL},
+  {"%prop-type", PVAR, NULL},
+  {"%gen-code", PVAR, NULL},
   {"<product>", CVAR, &YLproductG},
-  {"type-object", CVAR, &Ytype_object},
+  {"%app-args", PVAR, NULL},
+  {"%rep!", PVAR, NULL},
   {"product-elts-setter", CVAR, &Yproduct_elts_setter},
   {"%raw", PVAR, NULL},
-  {"@subclass?", PVAR, NULL},
-  {"%gen-sig-setter", PVAR, NULL},
+  {"@singleton-isa?", PVAR, NULL},
+  {"$gen-cache-singletons-offset", CVAR, &YDgen_cache_singletons_offset},
+  {"%dyn-var-val", PVAR, NULL},
+  {"%gen-mets-setter", PVAR, NULL},
   {"gen-refs", CVAR, &Ygen_refs},
-  {"---main-9---", PVAR, NULL},
-  {"%met-prop-len", CVAR, &YPmet_prop_len},
   {"@fill", CVAR, &YOfill},
   {"prop-setter-setter", CVAR, &Yprop_setter_setter},
-  {"@add-new", PVAR, NULL},
-  {"%opts", PVAR, NULL},
-  {"---main-2---", PVAR, NULL},
-  {"%ft", PVAR, NULL},
-  {"%src-loc", PVAR, NULL},
+  {"%eq?", PVAR, NULL},
+  {"@subclass?", PVAR, NULL},
+  {"%ready", PVAR, NULL},
   {"opts-count", CVAR, &Yopts_count},
-  {"def-object-class-accessor", PVAR, NULL},
   {"gen-cache-missable?", CVAR, &Ygen_cache_missableQ},
-  {"%c=", PVAR, NULL},
-  {"---main-8---", PVAR, NULL},
-  {"$direct-object-class", CVAR, &YDdirect_object_class},
-  {"%i<<", PVAR, NULL},
+  {"%put", PVAR, NULL},
+  {"@fun-mets", CVAR, &YOfun_mets},
+  {"%opts-count", PVAR, NULL},
   {"@cat2", CVAR, &YOcat2},
   {"gen-cache-classes", CVAR, &Ygen_cache_classes},
   {"prop-offset", CVAR, &Yprop_offset},
-  {"%gen-mets-setter", PVAR, NULL},
   {"sig-nary?-setter", CVAR, &Ysig_naryQ_setter},
-  {"---main-14---", PVAR, NULL},
+  {"internal-error", CVAR, &Yinternal_error},
+  {"%prop-elt-setter", PVAR, NULL},
+  {"%eof-object", PVAR, NULL},
+  {"%define-accessor", PVAR, NULL},
+  {"@<", PVAR, NULL},
   {"<union>", CVAR, &YLunionG},
-  {"forward-class", CVAR, &Yforward_class},
   {"product-elts", CVAR, &Yproduct_elts},
+  {"<parents>", CVAR, &YLparentsG},
   {"<src-loc>", CVAR, &YLsrc_locG},
-  {"%os-val-setter", PVAR, NULL},
-  {"nul", CVAR, &Ynul},
+  {"nul-prop", CVAR, &Ynul_prop},
   {"sig-unification-vars-setter", CVAR, &Ysig_unification_vars_setter},
+  {"%raw-met-call", PVAR, NULL},
+  {"%rep", PVAR, NULL},
+  {"%os-val-setter", PVAR, NULL},
+  {"%met-name-setter", PVAR, NULL},
   {"@subclass-spec?", CVAR, &YOsubclass_specQ},
   {"assert-error", CVAR, &Yassert_error},
   {"use", PVAR, NULL},
-  {"%selt-setter", PVAR, NULL},
+  {"%product", PVAR, NULL},
   {"prop-setter", CVAR, &Yprop_setter},
   {"@may-isa?", CVAR, &YOmay_isaQ},
-  {"%i<<<", PVAR, NULL},
-  {"%class-name-setter", PVAR, NULL},
+  {"not", CVAR, &Ynot},
+  {"%opts-tup-count", PVAR, NULL},
   {"fun-val", CVAR, &Yfun_val},
-  {"%invoke-debugger", PVAR, NULL},
+  {"%tag-bits", PVAR, NULL},
   {"fun-sig-setter", CVAR, &Yfun_sig_setter},
-  {"@fun-mets", CVAR, &YOfun_mets},
+  {"%gen-refs-setter", PVAR, NULL},
+  {"gen-lookup", PVAR, NULL},
+  {"%fun-cache", PVAR, NULL},
+  {"@oelt", PVAR, NULL},
   {"%add-prop", CVAR, &YPadd_prop},
-  {"unexec", CVAR, &Yunexec},
+  {"%vm-box-val-setter", PVAR, NULL},
   {"@mets-subclasses-at", CVAR, &YOmets_subclasses_at},
   {"@alter", CVAR, &YOalter},
-  {"%sig-unification-vars-setter", PVAR, NULL},
-  {"%met-src-setter", PVAR, NULL},
-  {"%break", PVAR, NULL},
+  {"%rev!", PVAR, NULL},
+  {"%prop-owner-setter", PVAR, NULL},
+  {"%singleton", PVAR, NULL},
+  {"def-object-class-accessor", PVAR, NULL},
   {"fun-src-setter", CVAR, &Yfun_src_setter},
-  {"%lst", PVAR, NULL},
-  {"%get", PVAR, NULL},
   {"<chr>", CVAR, &YLchrG},
   {"@tany?", CVAR, &YOtanyQ},
+  {"%class-row", PVAR, NULL},
   {"gen-from-met", CVAR, &Ygen_from_met},
+  {"%class-direct-props", PVAR, NULL},
   {"sig-nary?", CVAR, &Ysig_naryQ},
-  {"%ff", PVAR, NULL},
+  {"%i=", PVAR, NULL},
+  {"<env>", CVAR, &YLenvG},
+  {"%finalize-props", PVAR, NULL},
+  {"%slen", PVAR, NULL},
+  {"%sig-val", PVAR, NULL},
   {"<subclass>", CVAR, &YLsubclassG},
-  {"%class-gens-setter", PVAR, NULL},
   {"ct-also", PVAR, NULL},
+  {"%class-type-cache", PVAR, NULL},
   {"patch-early-classes", CVAR, &Ypatch_early_classes},
+  {"%unlink-stack", PVAR, NULL},
   {"choose-methods", CVAR, &Ychoose_methods},
-  {"%class-parents-setter", PVAR, NULL},
   {"sig-unification-vars", CVAR, &Ysig_unification_vars},
   {"@specd-args", CVAR, &YOspecd_args},
-  {"%i!", PVAR, NULL},
-  {"%loc-off", PVAR, NULL},
-  {"%gen-cache-singletons", PVAR, NULL},
+  {"%classes-ready?", CVAR, &YPclasses_readyQ},
+  {"$direct-object-class", CVAR, &YDdirect_object_class},
   {"macro-expand", PVAR, NULL},
+  {"---main-1---", PVAR, NULL},
+  {"%i>>", PVAR, NULL},
+  {"%tup", PVAR, NULL},
+  {"%define-structure", PVAR, NULL},
+  {"%object-shells", PVAR, NULL},
   {"<mag>", CVAR, &YLmagG},
-  {"arithmetic-error", CVAR, &Yarithmetic_error},
+  {"%met-sig-setter", PVAR, NULL},
   {"fun-sig", CVAR, &Yfun_sig},
+  {"%empty?", PVAR, NULL},
   {"ensure-fresh-object", CVAR, &Yensure_fresh_object},
-  {"requires-singleton-prec", CVAR, &Yrequires_singleton_prec},
-  {"%class-props-setter", PVAR, NULL},
-  {"argument-type-error", CVAR, &Yargument_type_error},
-  {"%src-loc-line-setter", PVAR, NULL},
+  {"%fcosh", PVAR, NULL},
+  {"%class-props", PVAR, NULL},
+  {"%gen-refs", PVAR, NULL},
+  {"one-nil", CVAR, &Yone_nil},
   {"file-opening-error", CVAR, &Yfile_opening_error},
   {"seq", PVAR, NULL},
-  {"%fasin", PVAR, NULL},
   {"fun-src", CVAR, &Yfun_src},
-  {"%prop-setter-setter", PVAR, NULL},
-  {"property-type-error", CVAR, &Yproperty_type_error},
-  {"%elt", PVAR, NULL},
-  {"%gen-cache-classes", PVAR, NULL},
+  {"%break", PVAR, NULL},
+  {"%sym", PVAR, NULL},
+  {"%%prop", PVAR, NULL},
+  {"%rlen", PVAR, NULL},
+  {"%%len", PVAR, NULL},
   {"@singleton-spec?", CVAR, &YOsingleton_specQ},
+  {"%unexec", PVAR, NULL},
   {"@@==", CVAR, &YOOEE},
+  {"%gen-code-setter", PVAR, NULL},
   {"<singleton>", CVAR, &YLsingletonG},
+  {"%sym-nam-setter", PVAR, NULL},
   {"return-type-error", CVAR, &Yreturn_type_error},
-  {"%class-prop-len", PVAR, NULL},
+  {"%loc-off-setter", PVAR, NULL},
   {"<log>", CVAR, &YLlogG},
-  {"*early-classes*", CVAR, &YTearly_classesT},
-  {"%fsqrt", PVAR, NULL},
-  {"%type-object-setter", PVAR, NULL},
+  {"%prop-elt", PVAR, NULL},
   {"@lst", CVAR, &YOlst},
+  {"@tlen", PVAR, NULL},
   {"@fun-unification-vars", CVAR, &YOfun_unification_vars},
   {"find-setter", CVAR, &Yfind_setter},
-  {"%code-ref", PVAR, NULL},
-  {"%sym-nam-setter", PVAR, NULL},
-  {"---main-13---", PVAR, NULL},
+  {"%class-forward-setter", PVAR, NULL},
+  {"%ready?", PVAR, NULL},
   {"ord-app-mets-1", CVAR, &Yord_app_mets_1},
+  {"%met-name", PVAR, NULL},
+  {"sig-val-setter", CVAR, &Ysig_val_setter},
+  {"%elt-setter", PVAR, NULL},
   {"unless", PVAR, NULL},
-  {"%c<", PVAR, NULL},
+  {"%%mep-apply", PVAR, NULL},
+  {"%snul", CVAR, &YPsnul},
   {"head-setter", CVAR, &Yhead_setter},
-  {"%rep!", PVAR, NULL},
-  {"%cat2", PVAR, NULL},
+  {"no-next-methods-error", CVAR, &Yno_next_methods_error},
+  {"%flo-bits", PVAR, NULL},
+  {"%os-name", PVAR, NULL},
   {"range-error", CVAR, &Yrange_error},
-  {"%lb", PVAR, NULL},
-  {"%gen-src", PVAR, NULL},
-  {"%gen-mets", PVAR, NULL},
-  {"prop-owner-setter", CVAR, &Yprop_owner_setter},
-  {"@subtype?", CVAR, &YOsubtypeQ},
-  {"%i=", PVAR, NULL},
+  {"%define-primitives", PVAR, NULL},
+  {"%define-getter", PVAR, NULL},
   {"class-prop-len-setter", CVAR, &Yclass_prop_len_setter},
-  {"%ru", PVAR, NULL},
-  {"%prop-owner", PVAR, NULL},
   {"<any>", CVAR, &YLanyG},
-  {"gen-cache-missable?-setter", CVAR, &Ygen_cache_missableQ_setter},
-  {"internal-error", CVAR, &Yinternal_error},
-  {"%build-runtime-modules", PVAR, NULL},
-  {"%sig-specs-setter", PVAR, NULL},
-  {"%put", PVAR, NULL},
-  {"%sig-unification-vars", PVAR, NULL},
-  {"%class-row-setter", PVAR, NULL},
-  {"%fcosh", PVAR, NULL},
+  {"update-instance-for-changed-class", CVAR, &Yupdate_instance_for_changed_class},
+  {"%time", PVAR, NULL},
+  {"%new", PVAR, NULL},
+  {"%sig-arity", PVAR, NULL},
   {"class-direct-props-setter", CVAR, &Yclass_direct_props_setter},
-  {"class-children", CVAR, &Yclass_children},
-  {"class-mets", CVAR, &Yclass_mets},
-  {"---main-6---", PVAR, NULL},
-  {"%trace-on", PVAR, NULL},
-  {"@add", PVAR, NULL},
+  {"class-props-setter", CVAR, &Yclass_props_setter},
+  {"%type-object-setter", PVAR, NULL},
+  {"%define-structure-accessors", PVAR, NULL},
+  {"type-object", CVAR, &Ytype_object},
+  {"%prop-owner", PVAR, NULL},
   {"@rev", CVAR, &YOrev},
   {"object-parents", CVAR, &Yobject_parents},
-  {"@empty?", PVAR, NULL},
-  {"class-of", CVAR, &Yclass_of},
-  {"%class-shells", PVAR, NULL},
-  {"%union-elts-setter", PVAR, NULL},
-  {"%compute-ancestors", PVAR, NULL},
-  {"%src-loc-line", PVAR, NULL},
-  {"%close-out-port", PVAR, NULL},
+  {"%sig", PVAR, NULL},
+  {"%prop-init", PVAR, NULL},
+  {"%patch-early-generics", PVAR, NULL},
+  {"%sig-arity-setter", PVAR, NULL},
   {"head", CVAR, &Yhead},
-  {"%define-tagged-structure", PVAR, NULL},
-  {"%tnul", CVAR, &YPtnul},
-  {"%class-direct-props", PVAR, NULL},
-  {"%sp-reg-setter", PVAR, NULL},
-  {"%relt-setter", PVAR, NULL},
-  {"*restarts-ok?*", CVAR, &YTrestarts_okQT},
-  {"%define-structure-accessors", PVAR, NULL},
+  {"$missed-dispatch", CVAR, &YDmissed_dispatch},
   {"<opts-tup>", CVAR, &YLopts_tupG},
+  {"object-props", CVAR, &Yobject_props},
+  {"%prop-offset", CVAR, &YPprop_offset},
   {"class-prop-len", CVAR, &Yclass_prop_len},
-  {"tail-setter", CVAR, &Ytail_setter},
-  {"%vm-fun-env-elt-setter", PVAR, NULL},
   {"fab-sym", CVAR, &Yfab_sym},
-  {"class-parents-setter", CVAR, &Yclass_parents_setter},
+  {"class-name-setter", CVAR, &Yclass_name_setter},
   {"@fun-val", CVAR, &YOfun_val},
   {"gen-lookup-miss", CVAR, &Ygen_lookup_miss},
   {"%with-monitor", CVAR, &YPwith_monitor},
-  {"%flog", PVAR, NULL},
-  {"%telt-setter", PVAR, NULL},
-  {"%i>>>", PVAR, NULL},
-  {"%trace-off", PVAR, NULL},
+  {"%i!", PVAR, NULL},
+  {"%*used-symbols-too-early*", CVAR, &YPTused_symbols_too_earlyT},
+  {"@do", CVAR, &YOdo},
+  {"%%tfab", PVAR, NULL},
   {"type-error", CVAR, &Ytype_error},
   {"class-direct-props", CVAR, &Yclass_direct_props},
   {"ord-app-mets*", CVAR, &Yord_app_metsT},
-  {"%gen-cache-singletons-setter", PVAR, NULL},
-  {"%fi2f", PVAR, NULL},
-  {"%f*", PVAR, NULL},
-  {"%tlen", PVAR, NULL},
+  {"%met-env", PVAR, NULL},
+  {"%class", PVAR, NULL},
+  {"%class-name-setter", PVAR, NULL},
+  {"%prop-setter-setter", PVAR, NULL},
+  {"%sb", PVAR, NULL},
+  {"%su", PVAR, NULL},
   {"%add-met", CVAR, &YPadd_met},
-  {"%type-class-setter", PVAR, NULL},
-  {"%loc-val", PVAR, NULL},
-  {"%src-loc-file", PVAR, NULL},
-  {"%define-primitives", PVAR, NULL},
-  {"%loc", PVAR, NULL},
-  {"%current-out-port", PVAR, NULL},
-  {"*boot-macro-module-names*", CVAR, &YTboot_macro_module_namesT},
-  {"%peek", PVAR, NULL},
-  {"%tup", PVAR, NULL},
+  {"%fp-reg-setter", PVAR, NULL},
+  {"%newline", PVAR, NULL},
+  {"%%sfab", PVAR, NULL},
+  {"%lb", PVAR, NULL},
+  {"%vm-fun-env-elt", PVAR, NULL},
   {"ddv", PVAR, NULL},
+  {"%subclass", PVAR, NULL},
   {"fun-arity", CVAR, &Yfun_arity},
+  {"---main-0---", PVAR, NULL},
   {"try", PVAR, NULL},
-  {"%im", PVAR, NULL},
+  {"%sig-specs-setter", PVAR, NULL},
+  {"%cu", PVAR, NULL},
   {"class-children-setter", CVAR, &Yclass_children_setter},
-  {"%opts-tup", PVAR, NULL},
   {"@mets-singletons-at", CVAR, &YOmets_singletons_at},
   {"fin", PVAR, NULL},
-  {"$min-int", CVAR, &YDmin_int},
-  {"%lu", PVAR, NULL},
+  {"%gen", PVAR, NULL},
+  {"<props>", CVAR, &YLpropsG},
+  {"%im", PVAR, NULL},
   {"@elt", CVAR, &YOelt},
-  {"%met-env-setter", PVAR, NULL},
-  {"%gen-cache-missable?", PVAR, NULL},
+  {"%i^", PVAR, NULL},
+  {"%opts", PVAR, NULL},
   {"%%apply", PVAR, NULL},
   {"class-forward-setter", CVAR, &Yclass_forward_setter},
-  {"%f+", PVAR, NULL},
   {"subtype?", CVAR, &YsubtypeQ},
-  {"%met-env", PVAR, NULL},
-  {"%eq?", PVAR, NULL},
+  {"%src-loc-line-setter", PVAR, NULL},
   {"quasiquote", PVAR, NULL},
-  {"%vm-box-val", PVAR, NULL},
   {"method-accessor-offset", CVAR, &Ymethod_accessor_offset},
+  {"%c<", PVAR, NULL},
   {"<opts>", CVAR, &YLoptsG},
-  {"---main-1---", PVAR, NULL},
-  {"%class-prop-len-setter", PVAR, NULL},
+  {"%open-in-file", PVAR, NULL},
   {"class-row-setter", CVAR, &Yclass_row_setter},
-  {"prop-value-at-setter", PVAR, NULL},
-  {"%@subclass?", PVAR, NULL},
-  {"%opts-tup-location", PVAR, NULL},
+  {"property-type-error", CVAR, &Yproperty_type_error},
   {"%finalize-props!", CVAR, &YPfinalize_propsX},
   {"use/library", PVAR, NULL},
-  {"%gen-cache-arg-pos-setter", PVAR, NULL},
-  {"---main-4---", PVAR, NULL},
-  {"%*start-running-at*", CVAR, &YPTstart_running_atT},
-  {"%prop-getter", PVAR, NULL},
+  {"%class-children", PVAR, NULL},
+  {"%close-in-port", PVAR, NULL},
+  {"%sig-specs", PVAR, NULL},
+  {"%define-props", PVAR, NULL},
+  {"%current-out-port", PVAR, NULL},
   {"union-elts-setter", CVAR, &Yunion_elts_setter},
-  {"%gen-refs", PVAR, NULL},
+  {"%ir", PVAR, NULL},
+  {"%prop-setter", PVAR, NULL},
+  {"$max-classes", CVAR, &YDmax_classes},
+  {"%fpow", PVAR, NULL},
   {"opts-location-setter", CVAR, &Yopts_location_setter},
-  {"@fun-arity", CVAR, &YOfun_arity},
-  {"%%prop", PVAR, NULL},
-  {"%gen-name", PVAR, NULL},
-  {"%class-of", PVAR, NULL},
-  {"%class-type-cache", PVAR, NULL},
-  {"%finalize-props", PVAR, NULL},
-  {"$nul-assocs", CVAR, &YDnul_assocs},
-  {"%%tfab", PVAR, NULL},
-  {"%fsinh", PVAR, NULL},
-  {"%vm-box-fab", PVAR, NULL},
-  {"class-forward", CVAR, &Yclass_forward},
-  {"%str-eq?", PVAR, NULL},
-  {"property-unbound-error", CVAR, &Yproperty_unbound_error},
-  {"%define-structure", PVAR, NULL},
-  {"gen-cache-singletons-setter", CVAR, &Ygen_cache_singletons_setter},
+  {"class-children", CVAR, &Yclass_children},
+  {"%fab-code-refs", PVAR, NULL},
+  {"prop-value-at-setter", PVAR, NULL},
+  {"%gen-sig", PVAR, NULL},
+  {"%met-code", PVAR, NULL},
+  {"%opts-tup-location-setter", PVAR, NULL},
+  {"%fun-cache-setter", PVAR, NULL},
   {"%ib", PVAR, NULL},
-  {"%str-eq?-loop", PVAR, NULL},
-  {"%indirect-object?", PVAR, NULL},
+  {"%i>>>", PVAR, NULL},
+  {"%class-ancestors", PVAR, NULL},
+  {"%file-type", PVAR, NULL},
+  {"class-forward", CVAR, &Yclass_forward},
+  {"%union", PVAR, NULL},
+  {"%class-prop-len", PVAR, NULL},
+  {"property-unbound-error", CVAR, &Yproperty_unbound_error},
+  {"%fab-dyn-var", PVAR, NULL},
+  {"gen-cache-singletons-setter", CVAR, &Ygen_cache_singletons_setter},
+  {"%force-out", PVAR, NULL},
+  {"%tail", PVAR, NULL},
+  {"---main-8---", PVAR, NULL},
   {"handler-info-message", CVAR, &Yhandler_info_message},
+  {"argument-type-error", CVAR, &Yargument_type_error},
+  {"%f-", PVAR, NULL},
+  {"*report-prop-unbound-errors?*", CVAR, &YTreport_prop_unbound_errorsQT},
   {"class-row", CVAR, &Yclass_row},
-  {"%allocate-stack", PVAR, NULL},
-  {"%os-name", PVAR, NULL},
   {"sig-specs-setter", CVAR, &Ysig_specs_setter},
   {"%early-dispatch", CVAR, &YPearly_dispatch},
-  {"%*used-symbols-too-early*", CVAR, &YPTused_symbols_too_earlyT},
-  {"%facos", PVAR, NULL},
-  {"%tag-bits", PVAR, NULL},
-  {"%do-stack-frames", PVAR, NULL},
+  {"%define-repeated-structure", PVAR, NULL},
+  {"*next-class-id*", CVAR, &YTnext_class_idT},
   {"union-elts", CVAR, &Yunion_elts},
   {"prop-getter-setter", CVAR, &Yprop_getter_setter},
   {"@type-equal?", CVAR, &YOtype_equalQ},
-  {"@<", PVAR, NULL},
-  {"%prop-elt-setter", PVAR, NULL},
-  {"$tag-msk", PVAR, NULL},
-  {"gen-lookup-1-using", PVAR, NULL},
-  {"%define-parents", PVAR, NULL},
+  {"%class-forward", PVAR, NULL},
+  {"---main-3---", PVAR, NULL},
   {"opts-location", CVAR, &Yopts_location},
-  {"%unlink-stack", PVAR, NULL},
-  {"%class", PVAR, NULL},
-  {"%i*", PVAR, NULL},
-  {"%rev!", PVAR, NULL},
+  {"%str-eq?-loop", PVAR, NULL},
+  {"%rnul", CVAR, &YPrnul},
   {"prop-init-setter", CVAR, &Yprop_init_setter},
   {"refab-class", CVAR, &Yrefab_class},
-  {"%%len", PVAR, NULL},
-  {"%fcos", PVAR, NULL},
+  {"%gen-cache-count", PVAR, NULL},
+  {"@telt", PVAR, NULL},
+  {"%vm-box-fab", PVAR, NULL},
+  {"%gen-cache-classes", PVAR, NULL},
+  {"%object-class-setter", PVAR, NULL},
+  {"%tail-setter", PVAR, NULL},
   {"%collect-direct-props", CVAR, &YPcollect_direct_props},
-  {"<simple-handler-info>", CVAR, &YLsimple_handler_infoG},
-  {"%gen-sig", PVAR, NULL},
+  {"fun-nary?-setter", CVAR, &Yfun_naryQ_setter},
+  {"%process-module", PVAR, NULL},
+  {"%src-loc-file", PVAR, NULL},
+  {"%product-elts", PVAR, NULL},
   {"gen-cache-singletons", CVAR, &Ygen_cache_singletons},
+  {"%reparent-class-shells", PVAR, NULL},
   {"syntax-error", CVAR, &Ysyntax_error},
-  {"%class-id", PVAR, NULL},
-  {"%relt", PVAR, NULL},
-  {"%loc-off-setter", PVAR, NULL},
-  {"%sig-val", PVAR, NULL},
+  {"%code-ref", PVAR, NULL},
   {"<class>", CVAR, &YLclassG},
-  {"%gen-cache-count-setter", PVAR, NULL},
+  {"%trace-on", PVAR, NULL},
   {"export", PVAR, NULL},
   {"sig-specs", CVAR, &Ysig_specs},
-  {"sig-val-setter", CVAR, &Ysig_val_setter},
-  {"%elt-setter", PVAR, NULL},
+  {"%sp-reg-setter", PVAR, NULL},
+  {"%gen-cache-missable?-setter", PVAR, NULL},
+  {"%opts-location", PVAR, NULL},
   {"@gen-cache-classes-setter", CVAR, &YOgen_cache_classes_setter},
-  {"%tag", PVAR, NULL},
-  {"%src-loc-file-setter", PVAR, NULL},
+  {"%f<", PVAR, NULL},
+  {"%class-gens-setter", PVAR, NULL},
+  {"%fi2f", PVAR, NULL},
   {"met-app?", CVAR, &Ymet_appQ},
+  {"%src-loc", PVAR, NULL},
   {"prop-getter", CVAR, &Yprop_getter},
-  {"%update-instance-for-changed-class", PVAR, NULL},
+  {"%prop-type-setter", PVAR, NULL},
+  {"class-of", CVAR, &Yclass_of},
   {"error", CVAR, &Yerror},
   {"fun-name-setter", CVAR, &Yfun_name_setter},
   {"@lst-helper", CVAR, &YOlst_helper},
-  {"%sig-val-setter", PVAR, NULL},
+  {"@class-isa?", PVAR, NULL},
+  {"%ru", PVAR, NULL},
   {"mif", PVAR, NULL},
+  {"prop-bound-at?", PVAR, NULL},
+  {"%class-mets-setter", PVAR, NULL},
   {"prop-init", CVAR, &Yprop_init},
-  {"%current-in-port", PVAR, NULL},
-  {"%unexec", PVAR, NULL},
-  {"%force-out", PVAR, NULL},
-  {"%met-refs", PVAR, NULL},
-  {"<type>", CVAR, &YLtypeG},
-  {"t*", CVAR, &YtT},
+  {"---main-7---", PVAR, NULL},
   {"%opts-tup-tup", PVAR, NULL},
+  {"<type>", CVAR, &YLtypeG},
+  {"%tag-into", PVAR, NULL},
   {"fun-refs-setter", CVAR, &Yfun_refs_setter},
-  {"%f<", PVAR, NULL},
+  {"fun-specs", CVAR, &Yfun_specs},
   {"%prop", CVAR, &YPprop},
-  {"%sig-names-setter", PVAR, NULL},
-  {"%opts-location", PVAR, NULL},
+  {"%fcos", PVAR, NULL},
+  {"%cb", PVAR, NULL},
   {"@mets-specs-at", CVAR, &YOmets_specs_at},
-  {"%dyn-var-val", PVAR, NULL},
+  {"$num-int-bits", CVAR, &YDnum_int_bits},
   {"@pick", CVAR, &YOpick},
-  {"*boot-macro-names*", CVAR, &YTboot_macro_namesT},
-  {"%product-elts-setter", PVAR, NULL},
+  {"---main-4---", PVAR, NULL},
   {"<gen>", CVAR, &YLgenG},
-  {"$gen-cache-classes-offset", CVAR, &YDgen_cache_classes_offset},
   {"fun-cache-setter", CVAR, &Yfun_cache_setter},
-  {"%raw-met-call", PVAR, NULL},
-  {"%f=", PVAR, NULL},
-  {"%fun-cache", PVAR, NULL},
+  {"%gen-cache-arg-pos", PVAR, NULL},
+  {"%tup!", PVAR, NULL},
   {"sig-val", CVAR, &Ysig_val},
-  {"%class-ancestors", PVAR, NULL},
-  {"@class-ancestors", CVAR, &YOclass_ancestors},
-  {"%opts-tup-tup-setter", PVAR, NULL},
-  {"%f-", PVAR, NULL},
-  {"%flo", PVAR, NULL},
-  {"%rnul", CVAR, &YPrnul},
-  {"finalize-props", CVAR, &Yfinalize_props},
-  {"%rep", PVAR, NULL},
-  {"gen-lookup-1", PVAR, NULL},
+  {"%src-loc-line", PVAR, NULL},
+  {"$tag-msk", PVAR, NULL},
+  {"add-prop", CVAR, &Yadd_prop},
+  {"%union-elts-setter", PVAR, NULL},
+  {"fun-congruent?", CVAR, &Yfun_congruentQ},
+  {"%met-src-setter", PVAR, NULL},
   {"fun-nary?", CVAR, &Yfun_naryQ},
-  {"%sig-nary?", PVAR, NULL},
+  {"%i<<<", PVAR, NULL},
   {"fun-name", CVAR, &Yfun_name},
-  {"new", CVAR, &Ynew},
-  {"%define-method", CVAR, &YPdefine_method},
-  {"@oelt", PVAR, NULL},
-  {"%class-children-setter", PVAR, NULL},
-  {"%untag-into", PVAR, NULL},
-  {"%binding-name", PVAR, NULL},
-  {"---main-0---", PVAR, NULL},
+  {"%tu", PVAR, NULL},
+  {"unexec", CVAR, &Yunexec},
+  {"%met", PVAR, NULL},
+  {"$adr-tag", PVAR, NULL},
+  {"prop-value-setter", CVAR, &Yprop_value_setter},
+  {"%to-tup", PVAR, NULL},
+  {"$nul-assocs", CVAR, &YDnul_assocs},
+  {"%%sym", PVAR, NULL},
+  {"<body>", CVAR, &YLbodyG},
+  {"%allocate-stack", PVAR, NULL},
   {"<sym>", CVAR, &YLsymG},
-  {"prop-value-at", PVAR, NULL},
+  {"%vm-fun-env-elt-setter", PVAR, NULL},
   {"fun-refs", CVAR, &Yfun_refs},
-  {"@tail-setter", PVAR, NULL},
+  {"%class-of", PVAR, NULL},
+  {"%binding-name", PVAR, NULL},
   {"unknown-function-error", CVAR, &Yunknown_function_error},
   {"@fun-specs", CVAR, &YOfun_specs},
   {"fab-gen", CVAR, &Yfab_gen},
-  {"%define-getter", PVAR, NULL},
+  {"%prop-dat-at", PVAR, NULL},
+  {"%lu", PVAR, NULL},
   {"@gen-cache-classes", CVAR, &YOgen_cache_classes},
-  {"%type-object", PVAR, NULL},
   {"narity-error", CVAR, &Ynarity_error},
   {"fun-cache", CVAR, &Yfun_cache},
-  {"%fp-reg", PVAR, NULL},
-  {"%opts-tup-location-setter", PVAR, NULL},
-  {"%object-shells", PVAR, NULL},
-  {"%i&", PVAR, NULL},
-  {"%raw-call", PVAR, NULL},
-  {"%opts-count-setter", PVAR, NULL},
+  {"@add-new", PVAR, NULL},
+  {"%define-parents", PVAR, NULL},
   {"@new", CVAR, &YOnew},
-  {"%prop-init", PVAR, NULL},
-  {"%gen-code", PVAR, NULL},
-  {"%fc", PVAR, NULL},
-  {"%ftan", PVAR, NULL},
+  {"%fixnum", PVAR, NULL},
+  {"%opts-tup", PVAR, NULL},
+  {"arithmetic-error", CVAR, &Yarithmetic_error},
   {"ambiguous-method-error", CVAR, &Yambiguous_method_error},
-  {"%close-in-port", PVAR, NULL},
-  {"<env>", CVAR, &YLenvG},
-  {"%false", CVAR, &YPfalse},
+  {"%i-", PVAR, NULL},
   {"<str>", CVAR, &YLstrG},
   {"prop-bound?", CVAR, &Yprop_boundQ},
-  {"%open-out-file", PVAR, NULL},
-  {"%class-children", PVAR, NULL},
-  {"%class-row", PVAR, NULL},
-  {"%symbols", CVAR, &YPsymbols},
+  {"find-getter", CVAR, &Yfind_getter},
+  {"forward-class", CVAR, &Yforward_class},
   {"def", PVAR, NULL},
+  {"%fsqrt", PVAR, NULL},
   {"src-loc-file-setter", CVAR, &Ysrc_loc_file_setter},
-  {"update-instance-for-changed-class", CVAR, &Yupdate_instance_for_changed_class},
   {"gen-lookup-miss-1", CVAR, &Ygen_lookup_miss_1},
-  {"%define-repeated-structure", PVAR, NULL},
-  {"%rlen", PVAR, NULL},
-  {"%object-class", PVAR, NULL},
+  {"%open-out-file", PVAR, NULL},
+  {"%class-id-setter", PVAR, NULL},
+  {"%src-loc-file-setter", PVAR, NULL},
   {"fab-class", CVAR, &Yfab_class},
-  {"%define-hierarchy", PVAR, NULL},
+  {"%opts-count-setter", PVAR, NULL},
+  {"%head", PVAR, NULL},
   {"as-error", CVAR, &Yas_error},
   {"sym-name-setter", CVAR, &Ysym_name_setter},
-  {"%su", PVAR, NULL},
-  {"%opts-count", PVAR, NULL},
-  {"%str", PVAR, NULL},
+  {"%met-refs", PVAR, NULL},
+  {"%int", PVAR, NULL},
   {"@tail", PVAR, NULL},
-  {"%gen-cache-arg-pos", PVAR, NULL},
+  {"%i?", PVAR, NULL},
+  {"%str!", PVAR, NULL},
   {"@fold", CVAR, &YOfold},
-  {"%sym", PVAR, NULL},
-  {"%ft/", PVAR, NULL},
-  {"%f/", PVAR, NULL},
+  {"%loc-val-setter", PVAR, NULL},
+  {"class-parents-setter", CVAR, &Yclass_parents_setter},
   {"%selt", PVAR, NULL},
-  {"%met-code", PVAR, NULL},
-  {"%i>>", PVAR, NULL},
   {"<tup>", CVAR, &YLtupG},
-  {"%flo-dat-setter", PVAR, NULL},
-  {"def-fun/sig-accessor", PVAR, NULL},
+  {"%fp-reg", PVAR, NULL},
+  {"---main-9---", PVAR, NULL},
   {"%dispatch", CVAR, &YPdispatch},
-  {"fun-nary?-setter", CVAR, &Yfun_naryQ_setter},
+  {"%patch-early-generic", CVAR, &YPpatch_early_generic},
   {"fun-arity-setter", CVAR, &Yfun_arity_setter},
-  {"@tlen", PVAR, NULL},
-  {"prop-value-setter", CVAR, &Yprop_value_setter},
-  {"%fapply", PVAR, NULL},
-  {"object-props", CVAR, &Yobject_props},
+  {"fun-unification-vars-setter", CVAR, &Yfun_unification_vars_setter},
+  {"%build-runtime-modules", PVAR, NULL},
+  {"%class-gens", PVAR, NULL},
+  {"del-class", CVAR, &Ydel_class},
+  {"init-class", CVAR, &Yinit_class},
+  {"%class-type-cache-setter", PVAR, NULL},
+  {"%create-directory", PVAR, NULL},
+  {"%class-row-setter", PVAR, NULL},
+  {"%c=", PVAR, NULL},
   {"order-mets", CVAR, &Yorder_mets},
+  {"%f*", PVAR, NULL},
+  {"%get", PVAR, NULL},
+  {"%peek", PVAR, NULL},
   {"class-ordered-ancestors", CVAR, &Yclass_ordered_ancestors},
-  {"%object-class-setter", PVAR, NULL},
-  {"%%mep-apply", PVAR, NULL},
-  {"%%rfab", PVAR, NULL},
+  {"finalize-props", CVAR, &Yfinalize_props},
+  {"%fasin", PVAR, NULL},
   {"src-loc-file", CVAR, &Ysrc_loc_file},
-  {"%check-call-types", PVAR, NULL},
   {"lst", CVAR, &Ylst},
+  {"*boot-macro-names*", CVAR, &YTboot_macro_namesT},
   {"@fun-names", CVAR, &YOfun_names},
   {"gen-lookup-miss-1-using", CVAR, &Ygen_lookup_miss_1_using},
   {"cpl-error", CVAR, &Ycpl_error},
-  {"%singleton", PVAR, NULL},
+  {"%true", CVAR, &YPtrue},
   {"may-isa?", CVAR, &Ymay_isaQ},
-  {"---main-5---", PVAR, NULL},
   {"<met>", CVAR, &YLmetG},
+  {"*macros-ok?*", CVAR, &YTmacros_okQT},
+  {"%cat2", PVAR, NULL},
   {"@all2?", CVAR, &YOall2Q},
+  {"%sym-nam", PVAR, NULL},
   {"<flat>", CVAR, &YLflatG},
-  {"%define-props", PVAR, NULL},
   {"sym-name", CVAR, &Ysym_name},
+  {"%met-refs-setter", PVAR, NULL},
   {"@fun-nary?", CVAR, &YOfun_naryQ},
-  {"fun-congruent?", CVAR, &Yfun_congruentQ},
   {"gen-add-met", CVAR, &Ygen_add_met},
   {"fun-specs-setter", CVAR, &Yfun_specs_setter},
-  {"force-names-into-boot-module", PVAR, NULL},
-  {"%%sym", PVAR, NULL},
-  {"%newline", PVAR, NULL},
-  {"%eof-object", PVAR, NULL},
-  {"%file-exists?", PVAR, NULL},
-  {"class-parents", CVAR, &Yclass_parents},
-  {"%true", CVAR, &YPtrue},
-  {"*next-class-id*", CVAR, &YTnext_class_idT},
-  {"not", CVAR, &Ynot},
-  {"dp", PVAR, NULL},
-  {"%untag", PVAR, NULL},
-  {"@do", CVAR, &YOdo},
-  {"%puts", PVAR, NULL},
-  {"%fun-reg", PVAR, NULL},
-  {"rep", PVAR, NULL},
-  {"%cu", PVAR, NULL},
-  {"@gen-cache-singletons-setter", CVAR, &YOgen_cache_singletons_setter},
-  {"%chr", PVAR, NULL},
-  {"nil", CVAR, &Ynil},
+  {"%def-regs", PVAR, NULL},
   {"%@class-of", PVAR, NULL},
-  {"%class-forward", PVAR, NULL},
+  {"@+", PVAR, NULL},
+  {"%sig-nary?", PVAR, NULL},
+  {"@subtype?", CVAR, &YOsubtypeQ},
+  {"%flo", PVAR, NULL},
+  {"%it/", PVAR, NULL},
+  {"%sig-names-setter", PVAR, NULL},
+  {"class-parents", CVAR, &Yclass_parents},
+  {"dp", PVAR, NULL},
+  {"%gen-cache-missable?", PVAR, NULL},
+  {"*restarts-ok?*", CVAR, &YTrestarts_okQT},
+  {"%fun-reg", PVAR, NULL},
+  {"%class-props-setter", PVAR, NULL},
+  {"rep", PVAR, NULL},
+  {"@opts-as-lst", CVAR, &YOopts_as_lst},
+  {"@gen-cache-singletons-setter", CVAR, &YOgen_cache_singletons_setter},
+  {"%relt", PVAR, NULL},
   {"@del-dups", CVAR, &YOdel_dups},
-  {"<prop>", CVAR, &YLpropG},
-  {"@telt-setter", PVAR, NULL},
-  {"class-props-setter", CVAR, &Yclass_props_setter},
-  {"%class-ancestors-setter", PVAR, NULL},
-  {"%fixnum", PVAR, NULL},
+  {"%sp-reg", PVAR, NULL},
+  {"nul", CVAR, &Ynul},
+  {"%ftan", PVAR, NULL},
+  {"%vm-box-val", PVAR, NULL},
+  {"%ft", PVAR, NULL},
   {"%fu", PVAR, NULL},
-  {"%sig-arity", PVAR, NULL},
+  {"@pair", PVAR, NULL},
   {"df", PVAR, NULL},
   {"class-mets-setter", CVAR, &Yclass_mets_setter},
+  {"%sig-val-setter", PVAR, NULL},
   {"@len", PVAR, NULL},
-  {"no-next-methods-error", CVAR, &Yno_next_methods_error},
   {"@tup", CVAR, &YOtup},
-  {"%str!", PVAR, NULL},
-  {"%fpow", PVAR, NULL},
+  {"%gen-cache-singletons", PVAR, NULL},
+  {"%opts-tup-count-setter", PVAR, NULL},
+  {"<specs>", CVAR, &YLspecsG},
+  {"%vm-with-exit", PVAR, NULL},
   {"dss", PVAR, NULL},
-  {"$gen-cache-singletons-offset", CVAR, &YDgen_cache_singletons_offset},
-  {"%class-name", PVAR, NULL},
   {"<lst>", CVAR, &YLlstG},
-  {"%int", PVAR, NULL},
+  {"@class-ancestors", CVAR, &YOclass_ancestors},
   {"class-id-setter", CVAR, &Yclass_id_setter},
-  {"%sig-arity-setter", PVAR, NULL},
   {"property-not-found-error", CVAR, &Yproperty_not_found_error},
-  {"%met-src", PVAR, NULL},
-  {"%os-val", PVAR, NULL},
+  {"%tnul", CVAR, &YPtnul},
   {"<fun>", CVAR, &YLfunG},
-  {"%tag-into", PVAR, NULL},
+  {"%bb", PVAR, NULL},
   {"type-class-setter", CVAR, &Ytype_class_setter},
   {"%fb", PVAR, NULL},
   {"dg", PVAR, NULL},
-  {"fun-specs", CVAR, &Yfun_specs},
-  {"%fatan", PVAR, NULL},
+  {"%telt-setter", PVAR, NULL},
+  {"def-fun/sig-accessor", PVAR, NULL},
+  {"%define-hierarchy", PVAR, NULL},
   {"gen-src-setter", CVAR, &Ygen_src_setter},
-  {"*report-prop-unbound-errors?*", CVAR, &YTreport_prop_unbound_errorsQT},
   {"class-props", CVAR, &Yclass_props},
-  {"%process-module", PVAR, NULL},
+  {"%prop-getter-setter", PVAR, NULL},
   {"@prune-mets-by-type-at", CVAR, &YOprune_mets_by_type_at},
-  {"gen-lookup", PVAR, NULL},
-  {"*boot-macro-expanders*", CVAR, &YTboot_macro_expandersT},
-  {"%sig-names", PVAR, NULL},
+  {"%class-parents-setter", PVAR, NULL},
+  {"%iu", PVAR, NULL},
+  {"%prop-getter", PVAR, NULL},
   {"<seq!>", CVAR, &YLseqXG},
+  {"%sig-unification-vars-setter", PVAR, NULL},
   {"opts-tup-storage-setter", CVAR, &Yopts_tup_storage_setter},
-  {"%i^", PVAR, NULL},
-  {"%opts-tup-count", PVAR, NULL},
-  {"---main-10---", PVAR, NULL},
-  {"%gen-cache", PVAR, NULL},
-  {"%prop-offset", CVAR, &YPprop_offset},
-  {"%gen-cache-count", PVAR, NULL},
+  {"class-mets", CVAR, &Yclass_mets},
+  {"%puts", PVAR, NULL},
+  {"%clone", PVAR, NULL},
+  {"%i<<", PVAR, NULL},
   {"gen-cache-arg-pos-setter", CVAR, &Ygen_cache_arg_pos_setter},
-  {"%product", PVAR, NULL},
+  {"%type-class", PVAR, NULL},
   {"@gen-cache-singletons", CVAR, &YOgen_cache_singletons},
-  {"met-app-unify", CVAR, &Ymet_app_unify},
-  {"%it/", PVAR, NULL},
+  {"@=", PVAR, NULL},
+  {"%loc", PVAR, NULL},
+  {"force-names-into-boot-module", PVAR, NULL},
+  {"%check-call-types", PVAR, NULL},
+  {"%gen-cache", PVAR, NULL},
+  {"@tail-setter", PVAR, NULL},
   {"tup", CVAR, &Ytup},
   {"class-id", CVAR, &Yclass_id},
-  {"%flo-bits", PVAR, NULL},
+  {"%fsin", PVAR, NULL},
+  {"%sig-names", PVAR, NULL},
   {"dc", PVAR, NULL},
-  {"%symbols-ready?", CVAR, &YPsymbols_readyQ},
+  {"%untag-into", PVAR, NULL},
   {"quote", PVAR, NULL},
-  {"<specs>", CVAR, &YLspecsG},
+  {"new", CVAR, &Ynew},
   {"sig-names-setter", CVAR, &Ysig_names_setter},
   {"use/mangle", PVAR, NULL},
+  {"%file-mtime", PVAR, NULL},
   {"@map", CVAR, &YOmap},
-  {"one-nil", CVAR, &Yone_nil},
   {"@order-specs", CVAR, &YOorder_specs},
-  {"%opts-location-setter", PVAR, NULL},
   {"type-class", CVAR, &Ytype_class},
-  {"%create-directory", PVAR, NULL},
-  {"%tail", PVAR, NULL},
-  {"%class-props", PVAR, NULL},
+  {"%gen-cache-arg-pos-setter", PVAR, NULL},
+  {"prop-owner-setter", CVAR, &Yprop_owner_setter},
   {"<seq.>", CVAR, &YLseqIG},
-  {"%gen-name-setter", PVAR, NULL},
+  {"%invoke-debugger", PVAR, NULL},
   {"gen-src", CVAR, &Ygen_src},
-  {"%class-type-cache-setter", PVAR, NULL},
-  {"%fab-dyn-var", PVAR, NULL},
-  {"%empty?", PVAR, NULL},
-  {"%gen-cache-classes-setter", PVAR, NULL},
-  {"%iv", PVAR, NULL},
+  {"%class-ancestors-setter", PVAR, NULL},
+  {"---main-14---", PVAR, NULL},
+  {"%ff", PVAR, NULL},
   {"prop-type-setter", CVAR, &Yprop_type_setter},
   {"or", PVAR, NULL},
-  {"%file-type", PVAR, NULL},
   {"@class<", CVAR, &YOclassL},
   {"object-class", CVAR, &Yobject_class},
-  {"%flo-dat", PVAR, NULL},
-  {"%tup!", PVAR, NULL},
-  {"@+", PVAR, NULL},
+  {"%met-sig", PVAR, NULL},
   {"opts-tup-storage", CVAR, &Yopts_tup_storage},
   {"@==", PVAR, NULL},
   {"gen-cache-arg-pos", CVAR, &Ygen_cache_arg_pos},
-  {"%gen-refs-setter", PVAR, NULL},
-  {"@oelt-setter", PVAR, NULL},
-  {"%fsin", PVAR, NULL},
+  {"t*", CVAR, &YtT},
+  {"%raw-call", PVAR, NULL},
+  {"%os-val", PVAR, NULL},
   {"<seq>", CVAR, &YLseqG},
-  {"%tail-setter", PVAR, NULL},
-  {"%snul", CVAR, &YPsnul},
-  {"$max-int", CVAR, &YDmax_int},
-  {"%gen-src-setter", PVAR, NULL},
+  {"%iv", PVAR, NULL},
+  {"%indirect-object?", PVAR, NULL},
   {"sig-names", CVAR, &Ysig_names},
   {"sig-arity-setter", CVAR, &Ysig_arity_setter},
-  {"@telt", PVAR, NULL},
-  {"%met-name", PVAR, NULL},
-  {"---main-12---", PVAR, NULL},
-  {"%telt", PVAR, NULL},
+  {"$gen-cache-classes-offset", CVAR, &YDgen_cache_classes_offset},
   {"prop-owner", CVAR, &Yprop_owner},
-  {"add-prop", CVAR, &Yadd_prop},
+  {"%f/", PVAR, NULL},
   {"@do-descendents", CVAR, &YOdo_descendents},
+  {"%union-elts", PVAR, NULL},
   {"fun-code-setter", CVAR, &Yfun_code_setter},
   {"@not", PVAR, NULL},
-  {"@head-setter", PVAR, NULL},
+  {"$tag-len", PVAR, NULL},
   {"keyboard-interrupt", CVAR, &Ykeyboard_interrupt},
+  {"%type-class-setter", PVAR, NULL},
   {"@fab", CVAR, &YOfab},
+  {"%close-out-port", PVAR, NULL},
+  {"%class-prop-len-setter", PVAR, NULL},
+  {"%str-eq?", PVAR, NULL},
   {"prop-type", CVAR, &Yprop_type},
+  {"%vm-with-cleanup", PVAR, NULL},
   {"handler-info-arguments", CVAR, &Yhandler_info_arguments},
-  {"init-class", CVAR, &Yinit_class},
-  {"%fun-cache-setter", PVAR, NULL},
   {"<col!>", CVAR, &YLcolXG},
+  {"%elt", PVAR, NULL},
   {"fun-env-setter", CVAR, &Yfun_env_setter},
-  {"%app-filename", PVAR, NULL},
   {"fun-names-setter", CVAR, &Yfun_names_setter},
-  {"%bb", PVAR, NULL},
+  {"%object-of", PVAR, NULL},
   {"@mem?", CVAR, &YOmemQ},
   {"prop-value", CVAR, &Yprop_value},
   {"esc", PVAR, NULL},
-  {"%gen-code-setter", PVAR, NULL},
-  {"%class-direct-props-setter", PVAR, NULL},
+  {"gen-lookup-1-using", PVAR, NULL},
+  {"%class-parents", PVAR, NULL},
+  {"%telt", PVAR, NULL},
   {"<sig>", CVAR, &YLsigG},
-  {"%iu", PVAR, NULL},
   {"fun-mets-setter", CVAR, &Yfun_mets_setter},
   {"dl", PVAR, NULL},
-  {"%fp-reg-setter", PVAR, NULL},
+  {"%gen-src-setter", PVAR, NULL},
+  {"%product-elts-setter", PVAR, NULL},
+  {"$getter-not-found", CVAR, &YDgetter_not_found},
+  {"nil", CVAR, &Ynil},
+  {"@olen", PVAR, NULL},
+  {"%loc-val", PVAR, NULL},
   {"and", PVAR, NULL},
-  {"%class-mets", PVAR, NULL},
-  {"%class-parents", PVAR, NULL},
+  {"%f=", PVAR, NULL},
   {"sig-arity", CVAR, &Ysig_arity},
-  {"$adr-tag", PVAR, NULL},
+  {"%met-code-setter", PVAR, NULL},
   {"@gen-cache-arg-pos-setter", CVAR, &YOgen_cache_arg_pos_setter},
-  {"%class-forward-setter", PVAR, NULL},
+  {"met-app-unify", CVAR, &Ymet_app_unify},
+  {"%lst", PVAR, NULL},
   {"<col.>", CVAR, &YLcolIG},
-  {"%raw-alloc", PVAR, NULL},
+  {"%do-stack-frames", PVAR, NULL},
   {"fun-same-met?", CVAR, &Yfun_same_metQ},
+  {"%facos", PVAR, NULL},
   {"fun-code", CVAR, &Yfun_code},
-  {"%i-", PVAR, NULL},
-  {"$num-int-bits", CVAR, &YDnum_int_bits},
-  {"%prop-owner-setter", PVAR, NULL},
-  {"%i+", PVAR, NULL},
-  {"%file-mtime", PVAR, NULL},
-  {"%prop-dat-at", PVAR, NULL},
-  {"%gen", PVAR, NULL},
+  {"%sig-unification-vars", PVAR, NULL},
+  {"---main-5---", PVAR, NULL},
   {"isa?", CVAR, &YisaQ},
   {"fun-env", CVAR, &Yfun_env},
   {"fun", PVAR, NULL},
   {"if", PVAR, NULL},
   {"set", PVAR, NULL},
-  {"%sp-reg", PVAR, NULL},
-  {"%gen-cache-missable?-setter", PVAR, NULL},
-  {"%new", PVAR, NULL},
+  {"%class-id", PVAR, NULL},
+  {"order-specs", CVAR, &Yorder_specs},
+  {"%fc", PVAR, NULL},
+  {"---main-11---", PVAR, NULL},
   {"fun-mets", CVAR, &Yfun_mets},
+  {"@fun-arity", CVAR, &YOfun_arity},
+  {"%define-boxed-structure", PVAR, NULL},
   {"<col>", CVAR, &YLcolG},
-  {"fun-unification-vars-setter", CVAR, &Yfun_unification_vars_setter},
+  {"%opts-tup-tup-setter", PVAR, NULL},
+  {"<mets>", CVAR, &YLmetsG},
+  {"%class-name", PVAR, NULL},
   {"clone", CVAR, &Yclone},
   {"ensure-singleton-cache", CVAR, &Yensure_singleton_cache},
-  {"%i?", PVAR, NULL},
+  {"%loc-off", PVAR, NULL},
   {"%pair", PVAR, NULL},
-  {"del-class", CVAR, &Ydel_class},
-  {"%met-sig-setter", PVAR, NULL},
-  {"%ftanh", PVAR, NULL},
-  {"%object-of", PVAR, NULL},
+  {"%flo-dat-setter", PVAR, NULL},
+  {"%gen-cache-singletons-setter", PVAR, NULL},
+  {"%gen-sig-setter", PVAR, NULL},
   {"fun-names", CVAR, &Yfun_names},
-  {"%tu", PVAR, NULL},
-  {"%sb", PVAR, NULL},
   {"%next-methods", PVAR, NULL},
+  {"%pairize", PVAR, NULL},
   {"%prop-unbound-error", CVAR, &YPprop_unbound_error},
+  {"%gen-name-setter", PVAR, NULL},
   {"@mets-unspecialized-at?", CVAR, &YOmets_unspecialized_atQ},
-  {"$getter-not-found", CVAR, &YDgetter_not_found},
-  {"%met-refs-setter", PVAR, NULL},
+  {"%opts-location-setter", PVAR, NULL},
   {"@any?", CVAR, &YOanyQ},
-  {"%subclass", PVAR, NULL},
-  {"<parents>", CVAR, &YLparentsG},
+  {"%fatan", PVAR, NULL},
   {"@all?", CVAR, &YOallQ},
-  {"prop-bound-at?", PVAR, NULL},
-  {"%sym-nam", PVAR, NULL},
   {"<rep>", CVAR, &YLrepG},
-  {"%vm-fun-env-elt", PVAR, NULL},
-  {"%define-accessor", PVAR, NULL},
+  {"tail-setter", CVAR, &Ytail_setter},
   {"ct", PVAR, NULL},
+  {"%gen-name", PVAR, NULL},
+  {"%str", PVAR, NULL},
   {"%%macro", CVAR, &YPPmacro},
-  {"@=", PVAR, NULL},
-  {"%to-tup", PVAR, NULL},
+  {"%file-exists?", PVAR, NULL},
   {"@gen-cache-arg-pos", CVAR, &YOgen_cache_arg_pos},
   {"<gen-cache>", CVAR, &YLgen_cacheG},
   {"cond", PVAR, NULL},
-  {"class-name-setter", CVAR, &Yclass_name_setter},
-  {"%sig-nary?-setter", PVAR, NULL},
-  {"%met-sig", PVAR, NULL},
+  {"%define-setter", PVAR, NULL},
+  {"%fapply", PVAR, NULL},
   {"src-loc-line-setter", CVAR, &Ysrc_loc_line_setter},
-  {"%prop-type-setter", PVAR, NULL},
-  {"find-getter", CVAR, &Yfind_getter},
+  {"%raw-alloc", PVAR, NULL},
+  {"%vm-fun-env-fab", PVAR, NULL},
+  {"gen-lookup-1", PVAR, NULL},
+  {"%i<", PVAR, NULL},
+  {"$min-int", CVAR, &YDmin_int},
+  {"%fatan2", PVAR, NULL},
+  {"%fsinh", PVAR, NULL},
+  {"%gen-cache-count-setter", PVAR, NULL},
   {"loc", PVAR, NULL},
-  {"%app-args", PVAR, NULL},
+  {"%tlen", PVAR, NULL},
+  {"---main-10---", PVAR, NULL},
   {"<loc>", CVAR, &YLlocG},
   {"@isa?", CVAR, &YOisaQ},
-  {"%vm-with-exit", PVAR, NULL},
-  {"---main-7---", PVAR, NULL},
-  {"%patch-early-generics", PVAR, NULL},
-  {"%prop-type", PVAR, NULL},
-  {"---main-11---", PVAR, NULL},
+  {"@oelt-setter", PVAR, NULL},
+  {"*boot-macro-expanders*", CVAR, &YTboot_macro_expandersT},
+  {"%class-children-setter", PVAR, NULL},
+  {"%sig-nary?-setter", PVAR, NULL},
+  {"%symbols-ready?", CVAR, &YPsymbols_readyQ},
+  {"%i+", PVAR, NULL},
+  {"%define-tagged-structure", PVAR, NULL},
+  {"@empty?", PVAR, NULL},
+  {"%type-object", PVAR, NULL},
   {"stack-overflow-error", CVAR, &Ystack_overflow_error},
-  {"%class-id-setter", PVAR, NULL},
-  {"%sig-specs", PVAR, NULL},
   {"fun-unification-vars", CVAR, &Yfun_unification_vars},
-  {"%prop-init-setter", PVAR, NULL},
+  {"*boot-macro-module-names*", CVAR, &YTboot_macro_module_namesT},
   {"tail", CVAR, &Ytail},
   {"fun-spec", CVAR, &Yfun_spec},
+  {"%selt-setter", PVAR, NULL},
+  {"---main-6---", PVAR, NULL},
   {"let", PVAR, NULL},
+  {"%symbols", CVAR, &YPsymbols},
   {"ds", PVAR, NULL},
-  {"%cb", PVAR, NULL},
-  {"$missed-dispatch", CVAR, &YDmissed_dispatch},
+  {"%false", CVAR, &YPfalse},
   {"no-applicable-methods-error", CVAR, &Yno_applicable_methods_error},
   {"class-ordered-props", CVAR, &Yclass_ordered_props},
-  {"%pairize", PVAR, NULL},
   {"class-name", CVAR, &Yclass_name},
+  {"%trace-off", PVAR, NULL},
   {"<flo>", CVAR, &YLfloG},
-  {"<body>", CVAR, &YLbodyG},
-  {"%%sfab", PVAR, NULL},
+  {"%f+", PVAR, NULL},
   {"src-loc-line", CVAR, &Ysrc_loc_line},
-  {"%head-setter", PVAR, NULL},
+  {"%gen-mets", PVAR, NULL},
+  {"%@subclass?", PVAR, NULL},
   {"@precise-spec?", CVAR, &YOprecise_specQ},
-  {"%type-class", PVAR, NULL},
+  {"%dyn-var-val-setter", PVAR, NULL},
+  {"%gen-src", PVAR, NULL},
   {"when", PVAR, NULL},
+  {"%i&", PVAR, NULL},
   {"@rev!", CVAR, &YOrevX},
-  {"<props>", CVAR, &YLpropsG},
-  {"%met-name-setter", PVAR, NULL},
-  {"%i<", PVAR, NULL},
-  {"%clone", PVAR, NULL},
-  {"%met", PVAR, NULL},
+  {"%met-src", PVAR, NULL},
+  {"%ftanh", PVAR, NULL},
+  {"%met-env-setter", PVAR, NULL},
+  {"%gen-cache-classes-setter", PVAR, NULL},
   {"@cache-add", CVAR, &YOcache_add},
   {"dm", PVAR, NULL},
-  {"nul-prop", CVAR, &Ynul_prop},
+  {"requires-singleton-prec", CVAR, &Yrequires_singleton_prec},
   {"class-ancestors-setter", CVAR, &Yclass_ancestors_setter},
-  {"@olen", PVAR, NULL},
-  {"%def-regs", PVAR, NULL},
-  {"---main-3---", PVAR, NULL},
-  {"%prop-elt", PVAR, NULL},
-  {"@opts-as-lst", CVAR, &YOopts_as_lst},
+  {"%update-instance-for-changed-class", PVAR, NULL},
+  {"%app-filename", PVAR, NULL},
+  {"%ft/", PVAR, NULL},
   {"<fixnum>", CVAR, &YLfixnumG},
-  {"%product-elts", PVAR, NULL},
+  {"%flo-dat", PVAR, NULL},
+  {"@add", PVAR, NULL},
+  {"%opts-tup-location", PVAR, NULL},
   {"use/export", PVAR, NULL},
-  {"%patch-early-generic", CVAR, &YPpatch_early_generic},
+  {"*early-classes*", CVAR, &YTearly_classesT},
   {"class-gens-setter", CVAR, &Yclass_gens_setter},
-  {"$max-classes", CVAR, &YDmax_classes},
   {"@find", CVAR, &YOfind},
-  {"@singleton-isa?", PVAR, NULL},
-  {"<mets>", CVAR, &YLmetsG},
-  {"@pair", PVAR, NULL},
+  {"%object-class", PVAR, NULL},
   {"<replace-generic-restart>", CVAR, &YLreplace_generic_restartG},
-  {"%prop-setter", PVAR, NULL},
-  {"%reparent-class-shells", PVAR, NULL},
+  {"%class-direct-props-setter", PVAR, NULL},
+  {"%*start-running-at*", CVAR, &YPTstart_running_atT},
   {"@order-specs-class", CVAR, &YOorder_specs_class},
-  {"%define-boxed-structure", PVAR, NULL},
+  {"---main-13---", PVAR, NULL},
+  {"%class-shells", PVAR, NULL},
   {"class-type-cache-setter", CVAR, &Yclass_type_cache_setter},
-  {"%head", PVAR, NULL},
-  {"%ir", PVAR, NULL},
-  {"%slen", PVAR, NULL},
+  {"%met-prop-len", CVAR, &YPmet_prop_len},
+  {"<simple-handler-info>", CVAR, &YLsimple_handler_infoG},
+  {"%macro", PVAR, NULL},
+  {"%define-method", CVAR, &YPdefine_method},
   {"use/include", PVAR, NULL},
   {"dv", PVAR, NULL},
+  {"%untag", PVAR, NULL},
   {"arity-error", CVAR, &Yarity_error},
-  {"%opts-tup-count-setter", PVAR, NULL},
-  {"%class-mets-setter", PVAR, NULL},
-  {"%sig", PVAR, NULL},
+  {"%class-mets", PVAR, NULL},
+  {"%head-setter", PVAR, NULL},
   {"ord-app-mets", CVAR, &Yord_app_mets},
-  {"%dyn-var-val-setter", PVAR, NULL},
-  {"%vm-with-cleanup", PVAR, NULL},
+  {"%current-in-port", PVAR, NULL},
+  {"---main-12---", PVAR, NULL},
+  {"<prop>", CVAR, &YLpropG},
   {NULL, NVAR, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"*macros-ok?*", NULL},
-  {"%ready?", NULL},
-  {"%loc-val-setter", NULL},
-  {"%open-in-file", NULL},
+  {"$max-int", NULL},
+  {"<int>", NULL},
   {"gen-refs-setter", NULL},
   {"class-ancestors", NULL},
   {"if", NULL},
-  {"%fatan2", NULL},
-  {"%vm-box-val-setter", NULL},
-  {"%ftan", NULL},
-  {"%vm-fun-env-fab", NULL},
-  {"%gen-code-setter", NULL},
+  {"%i*", NULL},
   {"incongruent-method-error", NULL},
   {"<num>", NULL},
   {"bound?", NULL},
-  {"%dispatch", NULL},
-  {"%telt-setter", NULL},
-  {"%time", NULL},
+  {"%flog", NULL},
+  {"%relt-setter", NULL},
+  {"%gen-code", NULL},
   {"<product>", NULL},
-  {"type-object", NULL},
+  {"%app-args", NULL},
   {"%raw", NULL},
-  {"@subclass?", NULL},
+  {"%dyn-var-val", NULL},
   {"gen-refs", NULL},
-  {"%ft", NULL},
-  {"%src-loc", NULL},
+  {"*macros-ok?*", NULL},
+  {"%untag", NULL},
+  {"%eq?", NULL},
+  {"@subclass?", NULL},
+  {"@olen", NULL},
+  {"%f-", NULL},
   {"*report-prop-unbound-errors?*", NULL},
-  {"%c=", NULL},
-  {"%i<<", NULL},
+  {"%put", NULL},
   {"internal-error", NULL},
+  {"%eof-object", NULL},
+  {"@<", NULL},
   {"<union>", NULL},
   {"product-elts", NULL},
   {"<src-loc>", NULL},
+  {"%rep", NULL},
   {"%os-val-setter", NULL},
-  {"nul", NULL},
-  {"%@subclass?", NULL},
   {"assert-error", NULL},
   {"use", NULL},
-  {"%selt-setter", NULL},
   {"prop-setter", NULL},
-  {"%i<<<", NULL},
+  {"not", NULL},
   {"fun-val", NULL},
-  {"%invoke-debugger", NULL},
+  {"fun-sig-setter", NULL},
+  {"@oelt", NULL},
   {"unexec", NULL},
+  {"%vm-box-val-setter", NULL},
+  {"%telt-setter", NULL},
   {"fun-src-setter", NULL},
-  {"%get", NULL},
+  {"<chr>", NULL},
   {"sig-nary?", NULL},
+  {"%i=", NULL},
+  {"%slen", NULL},
   {"<subclass>", NULL},
   {"ct-also", NULL},
+  {"%unlink-stack", NULL},
   {"sig-unification-vars", NULL},
-  {"%i!", NULL},
   {"macro-expand", NULL},
+  {"%i>>", NULL},
   {"<mag>", NULL},
   {"fun-sig", NULL},
-  {"@len", NULL},
+  {"%fcosh", NULL},
+  {"%gen-refs", NULL},
   {"file-opening-error", NULL},
   {"seq", NULL},
-  {"%fasin", NULL},
+  {"fun-src", NULL},
+  {"%rlen", NULL},
+  {"%gen-code-setter", NULL},
   {"<singleton>", NULL},
   {"return-type-error", NULL},
+  {"%loc-off-setter", NULL},
   {"<log>", NULL},
-  {"%fsqrt", NULL},
   {"@lst", NULL},
   {"find-setter", NULL},
-  {"%c<", NULL},
+  {"%ready?", NULL},
+  {"fun-name", NULL},
+  {"%snul", NULL},
+  {"fun-refs", NULL},
   {"head-setter", NULL},
-  {"fun-src", NULL},
+  {"@len", NULL},
+  {"%flo-bits", NULL},
   {"range-error", NULL},
-  {"%gen-src", NULL},
-  {"%i=", NULL},
+  {"prop-getter", NULL},
   {"<any>", NULL},
   {"sig-specs", NULL},
-  {"%build-runtime-modules", NULL},
-  {"%put", NULL},
-  {"%fcosh", NULL},
-  {"%fun-reg", NULL},
+  {"%time", NULL},
+  {"type-object", NULL},
   {"object-parents", NULL},
-  {"class-of", NULL},
-  {"%close-out-port", NULL},
-  {"%tnul", NULL},
-  {"<int>", NULL},
-  {"%relt-setter", NULL},
-  {"*restarts-ok?*", NULL},
-  {"object-props", NULL},
   {"head", NULL},
-  {"%vm-fun-env-elt-setter", NULL},
+  {"object-props", NULL},
+  {"src-loc-file", NULL},
   {"fab-sym", NULL},
-  {"new", NULL},
   {"%with-monitor", NULL},
-  {"%flog", NULL},
-  {"%i>>>", NULL},
+  {"%i!", NULL},
+  {"%fu", NULL},
   {"class-direct-props", NULL},
-  {"%fi2f", NULL},
-  {"%f*", NULL},
-  {"%tlen", NULL},
-  {"%loc-val", NULL},
-  {"%current-out-port", NULL},
-  {"*boot-macro-module-names*", NULL},
-  {"%peek", NULL},
+  {"%sb", NULL},
+  {"%su", NULL},
+  {"%lb", NULL},
+  {"%vm-fun-env-elt", NULL},
   {"ddv", NULL},
   {"fun-arity", NULL},
   {"try", NULL},
-  {"%im", NULL},
+  {"%cu", NULL},
   {"fin", NULL},
-  {"$min-int", NULL},
-  {"%lu", NULL},
-  {"%met-env-setter", NULL},
-  {"%f+", NULL},
-  {"%eq?", NULL},
+  {"%im", NULL},
+  {"@opts-as-lst", NULL},
+  {"%i^", NULL},
+  {"subtype?", NULL},
   {"quasiquote", NULL},
-  {"<opts>", NULL},
-  {"@olen", NULL},
+  {"%c<", NULL},
+  {"%open-in-file", NULL},
   {"property-type-error", NULL},
   {"use/library", NULL},
-  {"%gen-refs", NULL},
-  {"find-getter", NULL},
+  {"%close-in-port", NULL},
+  {"%current-out-port", NULL},
+  {"%os-name", NULL},
+  {"fun-specs", NULL},
+  {"%fpow", NULL},
   {"class-children", NULL},
-  {"<loc>", NULL},
-  {"%class-of", NULL},
-  {"%app-args", NULL},
-  {"%fsinh", NULL},
-  {"%vm-box-fab", NULL},
-  {"property-unbound-error", NULL},
-  {"%check-call-types", NULL},
+  {"%met-code", NULL},
   {"%ib", NULL},
+  {"%i>>>", NULL},
+  {"%file-type", NULL},
+  {"property-unbound-error", NULL},
+  {"%fab-dyn-var", NULL},
+  {"%force-out", NULL},
   {"argument-type-error", NULL},
   {"dv", NULL},
-  {"%allocate-stack", NULL},
-  {"%os-name", NULL},
-  {"%facos", NULL},
   {"prop-bound?", NULL},
-  {"%do-stack-frames", NULL},
   {"union-elts", NULL},
-  {"fun-sig-setter", NULL},
-  {"%unlink-stack", NULL},
-  {"%i*", NULL},
-  {"%lb", NULL},
-  {"%fcos", NULL},
+  {"%vm-with-cleanup", NULL},
+  {"%rnul", NULL},
+  {"@telt", NULL},
+  {"%vm-box-fab", NULL},
   {"<simple-handler-info>", NULL},
   {"syntax-error", NULL},
-  {"%relt", NULL},
-  {"%loc-off-setter", NULL},
   {"<class>", NULL},
   {"export", NULL},
+  {"%sp-reg-setter", NULL},
+  {"%f<", NULL},
+  {"%fi2f", NULL},
   {"met-app?", NULL},
-  {"prop-getter", NULL},
+  {"%src-loc", NULL},
   {"error", NULL},
   {"fun-name-setter", NULL},
   {"mif", NULL},
   {"prop-init", NULL},
-  {"%current-in-port", NULL},
-  {"%force-out", NULL},
   {"<type>", NULL},
   {"fun-refs-setter", NULL},
-  {"%f<", NULL},
   {"%prop", NULL},
-  {"subtype?", NULL},
-  {"%dyn-var-val", NULL},
+  {"%fcos", NULL},
+  {"%cb", NULL},
+  {"%sp-reg", NULL},
   {"<gen>", NULL},
-  {"%raw-met-call", NULL},
-  {"%f=", NULL},
-  {"%cu", NULL},
-  {"sig-val", NULL},
-  {"%f-", NULL},
-  {"%rnul", NULL},
-  {"%rep", NULL},
-  {"%su", NULL},
-  {"fun-name", NULL},
-  {"%define-method", NULL},
-  {"@oelt", NULL},
-  {"%binding-name", NULL},
-  {"<sym>", NULL},
-  {"fun-refs", NULL},
-  {"unknown-function-error", NULL},
   {"fab-gen", NULL},
-  {"%vm-box-val", NULL},
-  {"%selt", NULL},
+  {"sig-val", NULL},
+  {"add-prop", NULL},
+  {"fun-nary?", NULL},
+  {"%i<<<", NULL},
+  {"new", NULL},
+  {"%met", NULL},
+  {"%to-tup", NULL},
+  {"%%sym", NULL},
+  {"%allocate-stack", NULL},
+  {"<sym>", NULL},
+  {"%vm-fun-env-elt-setter", NULL},
+  {"%class-of", NULL},
+  {"%binding-name", NULL},
+  {"unknown-function-error", NULL},
+  {"<seq>", NULL},
+  {"%process-module", NULL},
+  {"$min-int", NULL},
   {"narity-error", NULL},
   {"fun-cache", NULL},
-  {"@<", NULL},
-  {"%i&", NULL},
-  {"%gen-code", NULL},
   {"arithmetic-error", NULL},
   {"ambiguous-method-error", NULL},
-  {"%close-in-port", NULL},
+  {"%i-", NULL},
   {"<str>", NULL},
-  {"%open-out-file", NULL},
-  {"%symbols", NULL},
+  {"find-getter", NULL},
   {"def", NULL},
-  {"%rlen", NULL},
+  {"%tup", NULL},
+  {"%open-out-file", NULL},
+  {"@tlen", NULL},
   {"fab-class", NULL},
   {"as-error", NULL},
-  {"%untag", NULL},
-  {"%it/", NULL},
   {"%str", NULL},
-  {"%f/", NULL},
-  {"%met-code", NULL},
-  {"%i>>", NULL},
-  {"fun-specs", NULL},
-  {"fun-nary?", NULL},
+  {"%i?", NULL},
+  {"%selt", NULL},
+  {"%loc-val-setter", NULL},
+  {"<tup>", NULL},
+  {"%dispatch", NULL},
+  {"%build-runtime-modules", NULL},
   {"prop-value-setter", NULL},
-  {"%sb", NULL},
-  {"@tlen", NULL},
-  {"src-loc-file", NULL},
+  {"%symbols", NULL},
+  {"%create-directory", NULL},
+  {"%c=", NULL},
+  {"%f*", NULL},
+  {"%get", NULL},
+  {"%peek", NULL},
+  {"%fasin", NULL},
   {"lst", NULL},
-  {"%iu", NULL},
   {"cpl-error", NULL},
   {"may-isa?", NULL},
   {"<met>", NULL},
@@ -18317,129 +18309,137 @@ static EXPORT_INFO export_infos[] = {
   {"sym-name", NULL},
   {"gen-add-met", NULL},
   {"type-error", NULL},
-  {"%%sym", NULL},
-  {"%eof-object", NULL},
-  {"%file-exists?", NULL},
+  {"%@class-of", NULL},
+  {"@+", NULL},
+  {"t*", NULL},
+  {"%it/", NULL},
   {"class-parents", NULL},
-  {"not", NULL},
   {"handler-info-message", NULL},
   {"dp", NULL},
-  {"%puts", NULL},
+  {"*restarts-ok?*", NULL},
+  {"%fun-reg", NULL},
   {"rep", NULL},
-  {"nil", NULL},
-  {"%@class-of", NULL},
-  {"<chr>", NULL},
-  {"<prop>", NULL},
-  {"%fu", NULL},
+  {"%relt", NULL},
+  {"<loc>", NULL},
+  {"%lu", NULL},
+  {"<opts>", NULL},
+  {"%ftan", NULL},
+  {"%vm-box-val", NULL},
+  {"%ft", NULL},
   {"df", NULL},
   {"no-next-methods-error", NULL},
-  {"%fpow", NULL},
+  {"%vm-with-exit", NULL},
   {"dss", NULL},
   {"<lst>", NULL},
-  {"tail-setter", NULL},
   {"property-not-found-error", NULL},
-  {"%os-val", NULL},
+  {"%tnul", NULL},
   {"<fun>", NULL},
+  {"%bb", NULL},
   {"%fb", NULL},
+  {"%tlen", NULL},
   {"dg", NULL},
-  {"%fatan", NULL},
   {"gen-src-setter", NULL},
   {"class-props", NULL},
-  {"%process-module", NULL},
-  {"*boot-macro-expanders*", NULL},
+  {"%iu", NULL},
   {"<seq!>", NULL},
-  {"%i^", NULL},
-  {"<tup>", NULL},
+  {"%puts", NULL},
+  {"%i<<", NULL},
+  {"%check-call-types", NULL},
   {"tup", NULL},
-  {"%flo-bits", NULL},
+  {"%fsin", NULL},
   {"dc", NULL},
   {"quote", NULL},
   {"use/mangle", NULL},
+  {"%file-mtime", NULL},
   {"type-class", NULL},
-  {"%create-directory", NULL},
   {"<seq.>", NULL},
+  {"%invoke-debugger", NULL},
   {"gen-src", NULL},
-  {"%fab-dyn-var", NULL},
-  {"%iv", NULL},
-  {"%file-type", NULL},
+  {"nul", NULL},
   {"object-class", NULL},
-  {"@+", NULL},
   {"@==", NULL},
-  {"t*", NULL},
-  {"%fsin", NULL},
-  {"<seq>", NULL},
-  {"%snul", NULL},
-  {"$max-int", NULL},
+  {"%raw-call", NULL},
+  {"%os-val", NULL},
+  {"%iv", NULL},
   {"sig-names", NULL},
-  {"@telt", NULL},
-  {"%dyn-var-val-setter", NULL},
-  {"%telt", NULL},
   {"prop-owner", NULL},
-  {"add-prop", NULL},
+  {"%f/", NULL},
   {"@not", NULL},
   {"keyboard-interrupt", NULL},
+  {"%close-out-port", NULL},
   {"prop-type", NULL},
   {"handler-info-arguments", NULL},
   {"<col!>", NULL},
-  {"%app-filename", NULL},
-  {"%bb", NULL},
   {"prop-value", NULL},
   {"esc", NULL},
+  {"%telt", NULL},
   {"<sig>", NULL},
   {"dl", NULL},
+  {"nil", NULL},
+  {"%loc-val", NULL},
+  {"%f=", NULL},
   {"sig-arity", NULL},
   {"<col.>", NULL},
-  {"%i-", NULL},
-  {"%i+", NULL},
-  {"%file-mtime", NULL},
+  {"%do-stack-frames", NULL},
+  {"%facos", NULL},
   {"isa?", NULL},
   {"fun", NULL},
   {"set", NULL},
-  {"%sp-reg", NULL},
   {"fun-mets", NULL},
   {"<col>", NULL},
   {"clone", NULL},
-  {"%i?", NULL},
-  {"%ftanh", NULL},
+  {"%pair", NULL},
   {"fun-names", NULL},
   {"%next-methods", NULL},
   {"%prop-unbound-error", NULL},
   {"@any?", NULL},
-  {"%tup", NULL},
+  {"%fatan", NULL},
   {"<rep>", NULL},
-  {"%vm-fun-env-elt", NULL},
+  {"tail-setter", NULL},
   {"ct", NULL},
   {"%%macro", NULL},
-  {"%sp-reg-setter", NULL},
-  {"%to-tup", NULL},
+  {"%file-exists?", NULL},
+  {"%vm-fun-env-fab", NULL},
+  {"%i<", NULL},
+  {"%fatan2", NULL},
+  {"%fsinh", NULL},
   {"loc", NULL},
   {"@isa?", NULL},
-  {"%vm-with-exit", NULL},
-  {"%raw-call", NULL},
+  {"*boot-macro-expanders*", NULL},
+  {"%i+", NULL},
+  {"class-of", NULL},
   {"stack-overflow-error", NULL},
+  {"*boot-macro-module-names*", NULL},
   {"tail", NULL},
+  {"%selt-setter", NULL},
   {"let", NULL},
   {"ds", NULL},
-  {"%cb", NULL},
-  {"%loc-off", NULL},
+  {"%raw-met-call", NULL},
   {"no-applicable-methods-error", NULL},
   {"class-name", NULL},
   {"<flo>", NULL},
+  {"%f+", NULL},
   {"src-loc-line", NULL},
-  {"%pair", NULL},
-  {"%i<", NULL},
-  {"%met", NULL},
-  {"dm", NULL},
+  {"%@subclass?", NULL},
+  {"%dyn-var-val-setter", NULL},
+  {"%gen-src", NULL},
+  {"%i&", NULL},
+  {"%ftanh", NULL},
   {"*boot-macro-names*", NULL},
-  {"@opts-as-lst", NULL},
+  {"%met-env-setter", NULL},
+  {"%fsqrt", NULL},
+  {"dm", NULL},
+  {"%loc-off", NULL},
+  {"%app-filename", NULL},
   {"<fixnum>", NULL},
   {"use/export", NULL},
   {"<replace-generic-restart>", NULL},
-  {"%slen", NULL},
+  {"%define-method", NULL},
   {"use/include", NULL},
   {"arity-error", NULL},
   {"ord-app-mets", NULL},
-  {"%vm-with-cleanup", NULL},
+  {"%current-in-port", NULL},
+  {"<prop>", NULL},
   {NULL, NULL}
 };
 

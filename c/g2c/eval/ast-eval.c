@@ -12,7 +12,7 @@ static P sloc (int line) {
 
 /* MODULE ENVIRONMENT: eval/ast-eval */
 
-EXT(YTmacros_okQT,"goo/boot","*macros-ok?*");
+EXT(YDmax_int,"goo/boot","$max-int");
 EXT(YLintG,"goo/boot","<int>");
 EXT(YgooScolsSseqYsort_by,"goo/cols/seq","sort-by");
 EXT(YevalSastYfunction_source_setter,"eval/ast","function-source-setter");
@@ -22,6 +22,7 @@ EXT(YevalSastYbinding_inferred_type_setter,"eval/ast","binding-inferred-type-set
 EXT(YgooSioSportYLportG,"goo/io/port","<port>");
 EXT(YevalSastYbinding_mangled_name_setter,"eval/ast","binding-mangled-name-setter");
 DEF(YevalSast_evalYenv_global_binding_boundQ,"eval/ast-eval","env-global-binding-bound?");
+EXT(YevalSastYLbind_exitG,"eval/ast","<bind-exit>");
 EXT(YevalSastYfab_g2c_module,"eval/ast","fab-g2c-module");
 EXT(YevalSastYbinding_dynamic_extentQ_setter,"eval/ast","binding-dynamic-extent?-setter");
 EXT(YgooScolsSseqxYsortX,"goo/cols/seqx","sort!");
@@ -30,45 +31,49 @@ EXT(YgooSconditionsYmsg,"goo/conditions","msg");
 EXT(YevalSastYbinding_value_setter,"eval/ast","binding-value-setter");
 EXT(YgooScolsSseqYpush,"goo/cols/seq","push");
 EXT(YgooSmathYceilS,"goo/math","ceil/");
+EXT(YevalSastYdo_static_global_bindings,"eval/ast","do-static-global-bindings");
+EXT(YevalSastYreference_called_functionQ_setter,"eval/ast","reference-called-function?-setter");
 EXT(YevalSastYapplication_arguments,"eval/ast","application-arguments");
 EXT(YevalSastYLregular_applicationG,"eval/ast","<regular-application>");
+EXT(YevalSastYfunction_temporaries,"eval/ast","function-temporaries");
 DEF(YevalSast_evalYenv_define_bindingX,"eval/ast-eval","env-define-binding!");
 EXT(Yincongruent_method_error,"goo/boot","incongruent-method-error");
 EXT(YLnumG,"goo/boot","<num>");
 EXT(YPdispatch,"goo/boot","%dispatch");
 EXT(YevalSastYapplication_binding,"eval/ast","application-binding");
+EXT(YevalSastYLfab_listG,"eval/ast","<fab-list>");
 EXT(YgooSmathYasin,"goo/math","asin");
 EXT(YLproductG,"goo/boot","<product>");
 EXT(Ytype_object,"goo/boot","type-object");
-EXT(YgooSconditionsYfile_opening_error_filename,"goo/conditions","file-opening-error-filename");
 EXT(YgooScolsScolYlow_elt,"goo/cols/col","low-elt");
 EXT(YgooScolsStabYcase_insensitive_string_equal,"goo/cols/tab","case-insensitive-string-equal");
 EXT(YevalSastYfix_let_bindings_setter,"eval/ast","fix-let-bindings-setter");
+EXT(YevalSastYfix_let_bindings,"eval/ast","fix-let-bindings");
 EXT(YgooScolsScolYelt_default,"goo/cols/col","elt-default");
 EXT(Ygen_refs,"goo/boot","gen-refs");
 EXT(YevalSastYreference_frame_number,"eval/ast","reference-frame-number");
 EXT(YgooSconditionsYmsg_to_str,"goo/conditions","msg-to-str");
-EXT(YevalSastYfix_let_arguments_setter,"eval/ast","fix-let-arguments-setter");
 EXT(YevalSastYfix_let_body_setter,"eval/ast","fix-let-body-setter");
+EXT(YevalSastYfix_let_body,"eval/ast","fix-let-body");
+EXT(YevalSastYset_module_environments,"eval/ast","set-module-environments");
 EXT(YevalSastYLglobal_assignmentG,"eval/ast","<global-assignment>");
 EXT(YevalSastYLmagic_referenceG,"eval/ast","<magic-reference>");
 EXT(YgooSioSportYLfile_portG,"goo/io/port","<file-port>");
-EXT(YgooScolsSseqYins,"goo/cols/seq","ins");
 EXT(YgooSmacrosYmatch_empty_list,"goo/macros","match-empty-list");
 EXT(YevalSastYassignment_form_setter,"eval/ast","assignment-form-setter");
-EXT(YevalSastYbinding_kind,"eval/ast","binding-kind");
 EXT(YgooScolsSseqYsort,"goo/cols/seq","sort");
-EXT(YgooSconditionsYLproperty_type_errorG,"goo/conditions","<property-type-error>");
 EXT(YgooSconditionsYLhandlerG,"goo/conditions","<handler>");
+EXT(YgooSconditionsYLproperty_type_errorG,"goo/conditions","<property-type-error>");
+EXT(YgooSmathYDe,"goo/math","$e");
 EXT(YevalSastYmodule_name_to_relpath,"eval/ast","module-name-to-relpath");
 EXT(YgooScolsSseqYfinds,"goo/cols/seq","finds");
+EXT(YevalSastYbinding_global_box,"eval/ast","binding-global-box");
 EXT(YgooScolsSseqxYdel_dupsX,"goo/cols/seqx","del-dups!");
 EXT(Yinternal_error,"goo/boot","internal-error");
 EXT(YgooScolsScolxYlow_elt_setter,"goo/cols/colx","low-elt-setter");
 EXT(YgooSmathYNEE,"goo/math","~==");
 EXT(YgooScolsSrepYrep_fillX,"goo/cols/rep","rep-fill!");
 EXT(YgooSruntimeYapp_args,"goo/runtime","app-args");
-EXT(YevalSastYapplication_knownQ_setter,"eval/ast","application-known?-setter");
 EXT(YLunionG,"goo/boot","<union>");
 EXT(YgooSruntimeYrcurry,"goo/runtime","rcurry");
 EXT(YevalSastYLlocalsG,"eval/ast","<locals>");
@@ -79,10 +84,8 @@ EXT(YLsrc_locG,"goo/boot","<src-loc>");
 EXT(YgooSconditionsYLfile_opening_errorG,"goo/conditions","<file-opening-error>");
 EXT(YevalSastYfunction_body_setter,"eval/ast","function-body-setter");
 EXT(YgooSmathYto_digit,"goo/math","to-digit");
+EXT(YgooScolsScycleYcycle,"goo/cols/cycle","cycle");
 EXT(YgooScolsSstrYnum_to_str_base,"goo/cols/str","num-to-str-base");
-EXT(Ynul,"goo/boot","nul");
-EXT(YevalSastYLbind_exitG,"eval/ast","<bind-exit>");
-EXT(YevalSastYmodule_mangled_string_name_setter,"eval/ast","module-mangled-string-name-setter");
 EXT(YgooSmacrosYpair,"goo/macros","pair");
 EXT(Yassert_error,"goo/boot","assert-error");
 EXT(YevalSastYLlocal_bindingG,"eval/ast","<local-binding>");
@@ -91,28 +94,27 @@ DEF(YevalSast_evalYLloc_envG,"eval/ast-eval","<loc-env>");
 EXT(Yprop_setter,"goo/boot","prop-setter");
 EXT(YgooSmacrosYvar_name,"goo/macros","var-name");
 EXT(Ynot,"goo/boot","not");
+EXT(YevalSastYfunction_debug_name_setter,"eval/ast","function-debug-name-setter");
 EXT(Yfun_val,"goo/boot","fun-val");
 EXT(YgooSconditionsYLno_applicable_methods_errorG,"goo/conditions","<no-applicable-methods-error>");
 EXT(Yfun_sig_setter,"goo/boot","fun-sig-setter");
+EXT(YgooStypesYanyQ,"goo/types","any?");
 EXT(YgooSmathYposQ,"goo/math","pos?");
 EXT(YgooScolsScolYLenumG,"goo/cols/col","<enum>");
 EXT(YgooSmathYoddQ,"goo/math","odd?");
 EXT(YgooScolsScolYelt_type,"goo/cols/col","elt-type");
 EXT(YgooScolsSseqYcat2,"goo/cols/seq","cat2");
-EXT(YgooScolsSlstYlist,"goo/cols/lst","list");
 EXT(YevalSastYLapplicationG,"eval/ast","<application>");
 EXT(YgooSconditionsYDdefault_handler_info,"goo/conditions","$default-handler-info");
 EXT(Yfun_src_setter,"goo/boot","fun-src-setter");
 EXT(YLchrG,"goo/boot","<chr>");
 EXT(YgooSconditionsYcondition_message,"goo/conditions","condition-message");
-DEF(YevalSast_evalYenv_local_reference_value_setter,"eval/ast-eval","env-local-reference-value-setter");
+DEF(YevalSast_evalYast_eval,"eval/ast-eval","ast-eval");
 EXT(YgooScolsSseqYdel_dups,"goo/cols/seq","del-dups");
 EXT(YevalSastYfunction_self_recursiveQ_setter,"eval/ast","function-self-recursive?-setter");
 EXT(YevalSastYglobal_box_value,"eval/ast","global-box-value");
 DEF(YevalSast_evalYast_eval_specs,"eval/ast-eval","ast-eval-specs");
 EXT(Ysig_naryQ,"goo/boot","sig-nary?");
-EXT(YevalSastYfunction_debug_name,"eval/ast","function-debug-name");
-EXT(YevalSastYfind_binding,"eval/ast","find-binding");
 EXT(YevalSastYconstant_index,"eval/ast","constant-index");
 EXT(YgooSruntimeYapp_filename,"goo/runtime","app-filename");
 EXT(YLsubclassG,"goo/boot","<subclass>");
@@ -121,14 +123,15 @@ EXT(YevalSastYLast_primitiveG,"eval/ast","<ast-primitive>");
 DEF(YevalSast_evalYenv_local_value_setter,"eval/ast-eval","env-local-value-setter");
 EXT(YevalSastYLsequentialG,"eval/ast","<sequential>");
 DEF(YevalSast_evalYenv_binding_value_setter,"eval/ast-eval","env-binding-value-setter");
-EXT(YevalSastYbinding_dottedQ_setter,"eval/ast","binding-dotted?-setter");
 EXT(Ysig_unification_vars,"goo/boot","sig-unification-vars");
 DEF(YevalSast_evalYenv_names,"eval/ast-eval","env-names");
+DEF(YevalSast_evalYenv_values_setter,"eval/ast-eval","env-values-setter");
 EXT(YgooSconditionsYLrange_errorG,"goo/conditions","<range-error>");
 EXT(YgooSconditionsYLtype_errorG,"goo/conditions","<type-error>");
 DEF(YevalSast_evalYenv_global_binding_value_setter,"eval/ast-eval","env-global-binding-value-setter");
+DEF(YevalSast_evalYenv_frameX,"eval/ast-eval","env-frame!");
+DEF(YevalSast_evalYenv_runtime_value,"eval/ast-eval","env-runtime-value");
 DEF(YevalSast_evalYenv_runtime_value_setter,"eval/ast-eval","env-runtime-value-setter");
-EXT(YevalSastYbinding_info_setter,"eval/ast","binding-info-setter");
 EXT(YevalSastYlocals_bindings,"eval/ast","locals-bindings");
 EXT(YevalSastYassignment_reference,"eval/ast","assignment-reference");
 EXT(YLmagG,"goo/boot","<mag>");
@@ -142,15 +145,16 @@ EXT(YgooScolsSrepYrep_len,"goo/cols/rep","rep-len");
 EXT(Yfile_opening_error,"goo/boot","file-opening-error");
 EXT(YevalSastYprogram_type_setter,"eval/ast","program-type-setter");
 EXT(YgooSmathY1A,"goo/math","1+");
+EXT(YgooSruntimeYTgensym_counterT,"goo/runtime","*gensym-counter*");
 EXT(Yfun_src,"goo/boot","fun-src");
+EXT(YevalSastYmodule_syntax_environment,"eval/ast","module-syntax-environment");
 EXT(YevalSastYfunction_signature,"eval/ast","function-signature");
-EXT(YevalSastYfix_let_bindings,"eval/ast","fix-let-bindings");
 EXT(YevalSastYLmoduleG,"eval/ast","<module>");
 EXT(YgooScolsScolYcol_res_type,"goo/cols/col","col-res-type");
-EXT(YgooSmacrosYnapp,"goo/macros","napp");
+DEF(YevalSast_evalYenv_global_binding_value,"eval/ast-eval","env-global-binding-value");
 EXT(YgooScolsSseqxYdel_valsX,"goo/cols/seqx","del-vals!");
 EXT(YgooSpackerYpacker_res,"goo/packer","packer-res");
-EXT(YevalSastYLboundQG,"eval/ast","<bound?>");
+EXT(YgooSconditionsYLproperty_unbound_errorG,"goo/conditions","<property-unbound-error>");
 EXT(YgooScolsScolxYfillX,"goo/cols/colx","fill!");
 EXT(YevalSastYLargumentsG,"eval/ast","<arguments>");
 EXT(YevalSastYlocals_body,"eval/ast","locals-body");
@@ -161,11 +165,13 @@ EXT(YLlogG,"goo/boot","<log>");
 EXT(YOlst,"goo/boot","@lst");
 EXT(Yfind_setter,"goo/boot","find-setter");
 EXT(YevalSastYfunction_free_setter,"eval/ast","function-free-setter");
+EXT(YgooSconditionsYfile_opening_error_filename,"goo/conditions","file-opening-error-filename");
 EXT(YevalSastYfree_environment,"eval/ast","free-environment");
 EXT(YevalSastYsequentialize,"eval/ast","sequentialize");
 EXT(YgooSmathYlog,"goo/math","log");
 EXT(YevalSastYlocals_functions,"eval/ast","locals-functions");
 EXT(YgooSconditionsYfab_handler,"goo/conditions","fab-handler");
+EXT(YPsnul,"goo/boot","%snul");
 EXT(Yhead_setter,"goo/boot","head-setter");
 EXT(YgooScolsScolYfill,"goo/cols/col","fill");
 EXT(YgooSmathYA,"goo/math","+");
@@ -173,31 +179,29 @@ EXT(YgooSmathYdiv,"goo/math","div");
 EXT(YevalSastYLunwind_protectG,"eval/ast","<unwind-protect>");
 EXT(YgooScolsSrepYrep_elt_setter,"goo/cols/rep","rep-elt-setter");
 EXT(YgooSmathYC,"goo/math","^");
+DEF(YevalSast_evalYenv_local_reference_value_setter,"eval/ast-eval","env-local-reference-value-setter");
 EXT(YgooSioSportYLstr_portG,"goo/io/port","<str-port>");
 EXT(YgooSconditionsYdescribe_condition,"goo/conditions","describe-condition");
 EXT(YgooSconditionsYLinternal_errorG,"goo/conditions","<internal-error>");
 EXT(YLanyG,"goo/boot","<any>");
 EXT(YgooScolsSstepYLeachG,"goo/cols/step","<each>");
-DYNEXT(YgooScolsSstrYTprint_baseT,"goo/cols/str","*print-base*");
+EXT(YgooScolsSseqYdel_vals,"goo/cols/seq","del-vals");
 EXT(YgooSpackerYpacker_add,"goo/packer","packer-add");
 EXT(YevalSastYfunction_data_refs,"eval/ast","function-data-refs");
 EXT(YgooSmacrosYcat,"goo/macros","cat");
-EXT(YevalSastYDgoo_boot_module_name,"eval/ast","$goo-boot-module-name");
-EXT(YgooSconditionsYmacro_error_arguments,"goo/conditions","macro-error-arguments");
 EXT(YevalSastYLdynamic_assignmentG,"eval/ast","<dynamic-assignment>");
-EXT(YgooSmacrosYmacro_error,"goo/macros","macro-error");
-EXT(YgooSmathYDpi,"goo/math","$pi");
+EXT(YevalSastYsignature_value,"eval/ast","signature-value");
 EXT(YgooSconditionsYcall_error_arguments,"goo/conditions","call-error-arguments");
 EXT(YevalSastYsignature_arity_setter,"eval/ast","signature-arity-setter");
 EXT(YevalSastYbinding_dynamic_extentQ,"eval/ast","binding-dynamic-extent?");
 EXT(YgooSconditionsYhandler_function,"goo/conditions","handler-function");
 EXT(YevalSastYunwind_protect_protected_thunk,"eval/ast","unwind-protect-protected-thunk");
+EXT(YevalSastYfunction_registers,"eval/ast","function-registers");
 EXT(YgooScolsScolYitems,"goo/cols/col","items");
 EXT(YgooScolsStabYcase_insensitive_string_hash,"goo/cols/tab","case-insensitive-string-hash");
 EXT(YgooScolsScolYdel,"goo/cols/col","del");
 EXT(YevalSastYmodule_loader_module_type,"eval/ast","module-loader-module-type");
-EXT(YgooSmacrosYmap,"goo/macros","map");
-EXT(YgooScolsScolYdo_keyed,"goo/cols/col","do-keyed");
+EXT(YevalSastYload_module,"eval/ast","load-module");
 EXT(Yobject_parents,"goo/boot","object-parents");
 EXT(YgooSconditionsYLserious_conditionG,"goo/conditions","<serious-condition>");
 EXT(YevalSastYboundQ_reference,"eval/ast","bound?-reference");
@@ -205,23 +209,23 @@ EXT(YgooSmathYNE,"goo/math","~=");
 EXT(YgooScolsSrepYrep_nul,"goo/cols/rep","rep-nul");
 EXT(YgooSruntimeYloc_val_setter,"goo/runtime","loc-val-setter");
 EXT(YgooScolsStabYLstr_tabG,"goo/cols/tab","<str-tab>");
-EXT(Yclass_of,"goo/boot","class-of");
+DYNEXT(YgooSioSwriteYTmax_print_depthT,"goo/io/write","*max-print-depth*");
 EXT(YgooSioSportYpeek,"goo/io/port","peek");
 EXT(YgooSconditionsYLno_next_methods_errorG,"goo/conditions","<no-next-methods-error>");
 EXT(Yhead,"goo/boot","head");
-EXT(YPtnul,"goo/boot","%tnul");
+EXT(YevalSastYLfix_letG,"eval/ast","<fix-let>");
 EXT(YgooScolsSstrYstr_to_num,"goo/cols/str","str-to-num");
 EXT(YgooSconditionsYrange_error_collection,"goo/conditions","range-error-collection");
-EXT(YTrestarts_okQT,"goo/boot","*restarts-ok?*");
+EXT(YgooSconditionsYtype_error_value,"goo/conditions","type-error-value");
+EXT(YgooStypesYlen,"goo/types","len");
 EXT(YgooSmathYtan,"goo/math","tan");
 EXT(Yobject_props,"goo/boot","object-props");
 EXT(YgooSmathYround,"goo/math","round");
-EXT(YgooStypesYanyQ,"goo/types","any?");
+DYNEXT(YgooSioSwriteYTmax_print_lengthT,"goo/io/write","*max-print-length*");
 EXT(YevalSastYenvironment_uses_modules,"eval/ast","environment-uses-modules");
 EXT(YgooSconditionsYcondition_arguments,"goo/conditions","condition-arguments");
 EXT(YgooSioSportYLin_portG,"goo/io/port","<in-port>");
 DEF(YevalSast_evalYexport_goo_method,"eval/ast-eval","export-goo-method");
-EXT(YevalSastYfunction_bindings,"eval/ast","function-bindings");
 EXT(YgooSconditionsYLargument_type_errorG,"goo/conditions","<argument-type-error>");
 EXT(YevalSastYbinding_mangled_name,"eval/ast","binding-mangled-name");
 EXT(YgooSmacrosYlast,"goo/macros","last");
@@ -231,6 +235,7 @@ EXT(YevalSastYas_lst,"eval/ast","as-lst");
 EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
 EXT(YPwith_monitor,"goo/boot","%with-monitor");
 EXT(YevalSastYbinding_value,"eval/ast","binding-value");
+EXT(YgooSmacrosYmacro_error,"goo/macros","macro-error");
 EXT(YevalSastYreference_called_functionQ,"eval/ast","reference-called-function?");
 EXT(Ytype_error,"goo/boot","type-error");
 EXT(Yclass_direct_props,"goo/boot","class-direct-props");
@@ -245,18 +250,14 @@ EXT(YgooSioSportYLstr_in_portG,"goo/io/port","<str-in-port>");
 EXT(YevalSastYLast_primitive_definitionG,"eval/ast","<ast-primitive-definition>");
 EXT(YevalSastYLruntime_referenceG,"eval/ast","<runtime-reference>");
 EXT(YgooScolsSzipYzip,"goo/cols/zip","zip");
+EXT(YevalSastYfunction_debug_name,"eval/ast","function-debug-name");
 EXT(YevalSastYbinding_mutableQ,"eval/ast","binding-mutable?");
-EXT(YevalSastYfunction_debug_name_setter,"eval/ast","function-debug-name-setter");
 EXT(YgooSmathYevenQ,"goo/math","even?");
 EXT(YevalSastYLassignmentG,"eval/ast","<assignment>");
 EXT(YgooSpackerYpacker_fab,"goo/packer","packer-fab");
+EXT(YgooSmathYDpi,"goo/math","$pi");
 EXT(YgooScolsSseqYrev,"goo/cols/seq","rev");
 DEF(YevalSast_evalYenv_parent_setter,"eval/ast-eval","env-parent-setter");
-EXT(YgooSmathYLL,"goo/math","<<");
-EXT(YgooSconditionsYtype_error_value,"goo/conditions","type-error-value");
-EXT(YgooSmathYflo_bits,"goo/math","flo-bits");
-EXT(YTboot_macro_module_namesT,"goo/boot","*boot-macro-module-names*");
-EXT(YevalSastYLstatic_global_environmentG,"eval/ast","<static-global-environment>");
 EXT(YevalSastYLmonitorG,"eval/ast","<monitor>");
 EXT(Yfun_arity,"goo/boot","fun-arity");
 EXT(YevalSastYLimmediate_constantG,"eval/ast","<immediate-constant>");
@@ -264,26 +265,26 @@ EXT(YgooSmathYfabs,"goo/math","fabs");
 EXT(YgooSconditionsYLerrorG,"goo/conditions","<error>");
 DEF(YevalSast_evalYenv_binding_value,"eval/ast-eval","env-binding-value");
 DEF(YevalSast_evalYenv_function_setter,"eval/ast-eval","env-function-setter");
-DEF(YevalSast_evalYast_eval,"eval/ast-eval","ast-eval");
 EXT(YgooScolsScolYnxt,"goo/cols/col","nxt");
 EXT(YevalSastYsignature_naryQ,"eval/ast","signature-nary?");
-EXT(YDmin_int,"goo/boot","$min-int");
 EXT(YgooScolsScolxYlenSfill_setter,"goo/cols/colx","len/fill-setter");
+EXT(YevalSastYmonitor_handler,"eval/ast","monitor-handler");
 EXT(YgooScolsStabYid_hash,"goo/cols/tab","id-hash");
-EXT(YevalSastYsignature_value,"eval/ast","signature-value");
 EXT(YgooSconditionsYLarity_errorG,"goo/conditions","<arity-error>");
+DYNEXT(YgooScolsSstrYTprint_baseT,"goo/cols/str","*print-base*");
 EXT(YgooScolsScolYcol,"goo/cols/col","col");
-DEF(YevalSast_evalYenv_frameX,"eval/ast-eval","env-frame!");
 EXT(YevalSastYassignment_form,"eval/ast","assignment-form");
+EXT(YevalSastYsignature_names_setter,"eval/ast","signature-names-setter");
 EXT(YsubtypeQ,"goo/boot","subtype?");
 EXT(YgooScolsSseqYreject,"goo/cols/seq","reject");
 EXT(YgooScolsSrepYrep_elt,"goo/cols/rep","rep-elt");
+EXT(YevalSastYbinding_global_box_setter,"eval/ast","binding-global-box-setter");
+EXT(YgooSmathYmod,"goo/math","mod");
 EXT(YLoptsG,"goo/boot","<opts>");
-EXT(YgooSruntimeYloc_val,"goo/runtime","loc-val");
 EXT(YgooScolsSstepYLstepG,"goo/cols/step","<step>");
-EXT(YevalSastYLbindingG,"eval/ast","<binding>");
 EXT(YevalSastYmonitor_type,"eval/ast","monitor-type");
 EXT(Yproperty_type_error,"goo/boot","property-type-error");
+EXT(YgooSmacrosYmap,"goo/macros","map");
 EXT(YgooScolsSseqY3rd,"goo/cols/seq","3rd");
 EXT(YevalSastYconstant_index_setter,"eval/ast","constant-index-setter");
 EXT(YevalSastYdo_named_static_global_bindings,"eval/ast","do-named-static-global-bindings");
@@ -292,19 +293,19 @@ EXT(YgooSmathYto_upper,"goo/math","to-upper");
 EXT(YgooScolsScolYnow_key,"goo/cols/col","now-key");
 EXT(YevalSastYLpredefined_applicationG,"eval/ast","<predefined-application>");
 EXT(YgooScolsSrepYrep_intoX,"goo/cols/rep","rep-into!");
-EXT(YevalSastYLfab_listG,"eval/ast","<fab-list>");
 EXT(YgooSmacrosYgensym,"goo/macros","gensym");
 EXT(YevalSastYremove_modules_by_nameX,"eval/ast","remove-modules-by-name!");
 EXT(YevalSastYfunction_body,"eval/ast","function-body");
 EXT(Yfind_getter,"goo/boot","find-getter");
-DEF(YevalSast_evalYenv_values_setter,"eval/ast-eval","env-values-setter");
 EXT(Yclass_children,"goo/boot","class-children");
 EXT(YgooSconditionsYread,"goo/conditions","read");
 EXT(YevalSastYLmodule_binding_referenceG,"eval/ast","<module-binding-reference>");
 EXT(YevalSastYmonitor_test,"eval/ast","monitor-test");
 EXT(YgooSconditionsYLkeyboard_interruptG,"goo/conditions","<keyboard-interrupt>");
+EXT(YevalSastYapplication_knownQ_setter,"eval/ast","application-known?-setter");
 EXT(YgooSmathYS,"goo/math","/");
 EXT(YgooSmathYtanh,"goo/math","tanh");
+EXT(YgooScolsSlstYlist,"goo/cols/lst","list");
 EXT(YevalSastYmodule_uses_c_includes,"eval/ast","module-uses-c-includes");
 EXT(YevalSastYmodule_binding,"eval/ast","module-binding");
 EXT(YgooStypesYtQ,"goo/types","t?");
@@ -329,21 +330,20 @@ EXT(YevalSastYmodule_exports,"eval/ast","module-exports");
 EXT(YevalSastYLdefinitionG,"eval/ast","<definition>");
 DEF(YevalSast_evalYenv_dynamic_value_setter,"eval/ast-eval","env-dynamic-value-setter");
 EXT(Yunion_elts,"goo/boot","union-elts");
-EXT(YevalSastYprobe_module,"eval/ast","probe-module");
 EXT(YgooSioSportYgets,"goo/io/port","gets");
-EXT(YevalSastYload_module,"eval/ast","load-module");
+EXT(YevalSastYreport_undefined_global_bindings,"eval/ast","report-undefined-global-bindings");
+EXT(YevalSastYbinding_native_toQ,"eval/ast","binding-native-to?");
 EXT(YgooSmacrosY2nd,"goo/macros","2nd");
-EXT(YevalSastYassignment_binding,"eval/ast","assignment-binding");
 EXT(YgooSmathYpow,"goo/math","pow");
 EXT(YgooScolsSstrYstr,"goo/cols/str","str");
-DEF(YevalSast_evalYDnul_loc_env,"eval/ast-eval","$nul-loc-env");
+EXT(YPrnul,"goo/boot","%rnul");
 EXT(YevalSastYfind_environment_module,"eval/ast","find-environment-module");
 EXT(YgooSconditionsYLsimple_errorG,"goo/conditions","<simple-error>");
 EXT(YgooSioSportYclose,"goo/io/port","close");
 EXT(YevalSastYbinding_info,"eval/ast","binding-info");
 EXT(YevalSastYmodule_uses_c_libraries,"eval/ast","module-uses-c-libraries");
+EXT(YgooSmathYLL,"goo/math","<<");
 EXT(YLsimple_handler_infoG,"goo/boot","<simple-handler-info>");
-EXT(YevalSastYset_module_environments,"eval/ast","set-module-environments");
 EXT(YgooScolsSseqYpick,"goo/cols/seq","pick");
 EXT(YgooSconditionsYrange_error_key,"goo/conditions","range-error-key");
 EXT(YgooSconditionsYLcompiler_errorG,"goo/conditions","<compiler-error>");
@@ -351,6 +351,7 @@ EXT(YgooSpackerYpacker,"goo/packer","packer");
 EXT(YgooStypesYall2Q,"goo/types","all2?");
 EXT(YgooSmathYatan,"goo/math","atan");
 EXT(Ysyntax_error,"goo/boot","syntax-error");
+EXT(YevalSastYLboundQG,"eval/ast","<bound?>");
 EXT(YevalSastYprogram_type,"eval/ast","program-type");
 EXT(YLclassG,"goo/boot","<class>");
 EXT(YgooScolsScolYmap_keyed,"goo/cols/col","map-keyed");
@@ -358,18 +359,16 @@ EXT(YgooSmathYabs,"goo/math","abs");
 EXT(YevalSastYsignature_naryQ_setter,"eval/ast","signature-nary?-setter");
 EXT(Ysig_specs,"goo/boot","sig-specs");
 EXT(YgooScolsSseqxYsubT_setter,"goo/cols/seqx","sub*-setter");
-EXT(YgooStypesYlen,"goo/types","len");
 EXT(YgooScolsSrepYrep_fab,"goo/cols/rep","rep-fab");
-EXT(YgooSruntimeYTgensym_counterT,"goo/runtime","*gensym-counter*");
 EXT(YgooScolsScolxYlen_setter,"goo/cols/colx","len-setter");
 EXT(YgooSmathYceil,"goo/math","ceil");
 EXT(Ymet_appQ,"goo/boot","met-app?");
 EXT(Yprop_getter,"goo/boot","prop-getter");
-EXT(YevalSastYfunction_temporaries,"eval/ast","function-temporaries");
 EXT(YgooSruntimeYcompose,"goo/runtime","compose");
 EXT(YgooStypesYtL,"goo/types","t<");
 EXT(YevalSastYast_walk,"eval/ast","ast-walk");
 EXT(Yerror,"goo/boot","error");
+EXT(Yclass_of,"goo/boot","class-of");
 EXT(YgooScolsSseqYjoin,"goo/cols/seq","join");
 EXT(YevalSastYenvironment_bindings,"eval/ast","environment-bindings");
 EXT(Yfun_name_setter,"goo/boot","fun-name-setter");
@@ -386,7 +385,6 @@ EXT(Yfun_refs_setter,"goo/boot","fun-refs-setter");
 EXT(YPprop,"goo/boot","%prop");
 EXT(YgooSmacrosY1st,"goo/macros","1st");
 EXT(YgooSmathYK,"goo/math","|");
-DYNEXT(YgooSioSwriteYTmax_print_lengthT,"goo/io/write","*max-print-length*");
 EXT(YevalSastYLlocal_assignmentG,"eval/ast","<local-assignment>");
 EXT(YevalSastYfunction_value,"eval/ast","function-value");
 EXT(YLgenG,"goo/boot","<gen>");
@@ -398,18 +396,16 @@ EXT(YgooSconditionsYLproperty_errorG,"goo/conditions","<property-error>");
 EXT(YevalSastYLdynamic_definitionG,"eval/ast","<dynamic-definition>");
 EXT(YgooSruntimeYzipped,"goo/runtime","zipped");
 EXT(YgooStypesYtE,"goo/types","t=");
-EXT(YPrnul,"goo/boot","%rnul");
 EXT(YgooScolsSstepYeach,"goo/cols/step","each");
 EXT(YevalSastYsignature_arity,"eval/ast","signature-arity");
 EXT(Yfun_naryQ,"goo/boot","fun-nary?");
 EXT(Yfun_name,"goo/boot","fun-name");
-EXT(YevalSastYreference_called_functionQ_setter,"eval/ast","reference-called-function?-setter");
 EXT(YgooScolsScolYzap,"goo/cols/col","zap");
 EXT(YgooScolsSrangeYrange_by,"goo/cols/range","range-by");
 EXT(YgooScolsScolxYzapX,"goo/cols/colx","zap!");
 DEF(YevalSast_evalYas_fun_name,"eval/ast-eval","as-fun-name");
+EXT(Yadd_prop,"goo/boot","add-prop");
 EXT(YgooSmacrosYcat_sym,"goo/macros","cat-sym");
-EXT(YevalSdependencyYast_error,"eval/dependency","ast-error");
 EXT(YLsymG,"goo/boot","<sym>");
 EXT(YgooSioSportYput,"goo/io/port","put");
 EXT(Yfun_refs,"goo/boot","fun-refs");
@@ -420,19 +416,17 @@ EXT(YgooScolsScolYenum,"goo/cols/col","enum");
 EXT(YevalSastYLconstantG,"eval/ast","<constant>");
 EXT(Ynarity_error,"goo/boot","narity-error");
 EXT(Yfun_cache,"goo/boot","fun-cache");
-DYNEXT(YgooSioSwriteYTmax_print_depthT,"goo/io/write","*max-print-depth*");
 EXT(YgooSmathYsqrt,"goo/math","sqrt");
+EXT(YgooScolsScolYdo_keyed,"goo/cols/col","do-keyed");
 EXT(YevalSastYfunction_binding,"eval/ast","function-binding");
 EXT(YgooSconditionsYLsyntax_errorG,"goo/conditions","<syntax-error>");
 EXT(YevalSastYload_in,"eval/ast","load-in");
-EXT(YgooSmathYDe,"goo/math","$e");
 EXT(Yarithmetic_error,"goo/boot","arithmetic-error");
+EXT(YevalSastYbinding_dottedQ_setter,"eval/ast","binding-dotted?-setter");
 EXT(Yambiguous_method_error,"goo/boot","ambiguous-method-error");
 EXT(YevalSastYLast_macro_definitionG,"eval/ast","<ast-macro-definition>");
 EXT(YgooSconditionsYLmacro_errorG,"goo/conditions","<macro-error>");
 EXT(YLstrG,"goo/boot","<str>");
-EXT(YgooScolsScolYkey_type,"goo/cols/col","key-type");
-EXT(YPsymbols,"goo/boot","%symbols");
 EXT(YgooSioSportYport_contents,"goo/io/port","port-contents");
 EXT(YgooSioSportYforce_out,"goo/io/port","force-out");
 EXT(YgooScolsScolYdup,"goo/cols/col","dup");
@@ -448,72 +442,79 @@ EXT(YevalSastYsignature_specs_setter,"eval/ast","signature-specs-setter");
 EXT(YgooSconditionsYLsimple_conditionG,"goo/conditions","<simple-condition>");
 EXT(YevalSastYLstatic_module_binding_referenceG,"eval/ast","<static-module-binding-reference>");
 EXT(YgooSconditionsYLunbound_errorG,"goo/conditions","<unbound-error>");
+EXT(YevalSastYbinding_info_setter,"eval/ast","binding-info-setter");
+EXT(YgooSconditionsYmacro_error_arguments,"goo/conditions","macro-error-arguments");
 EXT(YevalSastYast_evaluate,"eval/ast","ast-evaluate");
 EXT(YLtupG,"goo/boot","<tup>");
 EXT(YevalSastYast_define_binding,"eval/ast","ast-define-binding");
 EXT(YevalSastYLmodule_bindingG,"eval/ast","<module-binding>");
 EXT(YgooScolsSseqxYpushX,"goo/cols/seqx","push!");
 EXT(YgooScolsSseqYsplit,"goo/cols/seq","split");
+EXT(YevalSastYbinding_kind,"eval/ast","binding-kind");
 EXT(YgooSmathYupperQ,"goo/math","upper?");
-EXT(YevalSastYreport_undefined_global_bindings,"eval/ast","report-undefined-global-bindings");
 EXT(Yprop_value_setter,"goo/boot","prop-value-setter");
+EXT(YgooScolsSseqYins,"goo/cols/seq","ins");
 EXT(YgooSconditionsYhandler_matchesQ,"goo/conditions","handler-matches?");
 EXT(YgooSmathYfloor,"goo/math","floor");
-EXT(YevalSastYbinding_global_box_setter,"eval/ast","binding-global-box-setter");
 EXT(YgooSmathYcos,"goo/math","cos");
 EXT(YgooStypesYtA,"goo/types","t+");
 EXT(Ysrc_loc_file,"goo/boot","src-loc-file");
 EXT(Ylst,"goo/boot","lst");
+EXT(YTboot_macro_namesT,"goo/boot","*boot-macro-names*");
 EXT(YgooSconditionsYproperty_error_owner,"goo/conditions","property-error-owner");
 EXT(YgooScolsSseqxYsub_setter,"goo/cols/seqx","sub-setter");
 EXT(Ycpl_error,"goo/boot","cpl-error");
 EXT(YgooScolsScolxYdelX,"goo/cols/colx","del!");
-EXT(YevalSastYbinding_global_box,"eval/ast","binding-global-box");
 EXT(Ymay_isaQ,"goo/boot","may-isa?");
 EXT(YgooScolsSstepYfirst_then,"goo/cols/step","first-then");
+EXT(YTmacros_okQT,"goo/boot","*macros-ok?*");
 EXT(YLmetG,"goo/boot","<met>");
 EXT(YOall2Q,"goo/boot","@all2?");
 EXT(YevalSastYbinding_inferred_type,"eval/ast","binding-inferred-type");
 EXT(YgooSioSportYopen,"goo/io/port","open");
 EXT(YLflatG,"goo/boot","<flat>");
+EXT(YgooSioSwriteYwrite_to_string,"goo/io/write","write-to-string");
 EXT(Ysym_name,"goo/boot","sym-name");
-EXT(YevalSastYsignature_names_setter,"eval/ast","signature-names-setter");
+EXT(YgooScolsScolYkey_test,"goo/cols/col","key-test");
 EXT(YgooSmathYneg,"goo/math","neg");
 EXT(Yrange_error,"goo/boot","range-error");
 EXT(Ygen_add_met,"goo/boot","gen-add-met");
 EXT(YevalSastYsignature_bindings_setter,"eval/ast","signature-bindings-setter");
 EXT(YevalSastYLraw_constantG,"eval/ast","<raw-constant>");
 EXT(YevalSastYdo_module_loader_modules,"eval/ast","do-module-loader-modules");
+EXT(YevalSastYLbindingG,"eval/ast","<binding>");
 EXT(YevalSastYapplication_knownQ,"eval/ast","application-known?");
 EXT(YgooSmathYT,"goo/math","*");
 EXT(Yclass_parents,"goo/boot","class-parents");
 EXT(YgooSmacrosYmatch_sublist,"goo/macros","match-sublist");
 EXT(YgooSmathYrem,"goo/math","rem");
+EXT(YTrestarts_okQT,"goo/boot","*restarts-ok?*");
+EXT(YgooSioSportYget,"goo/io/port","get");
+EXT(YevalSastYDgoo_boot_module_name,"eval/ast","$goo-boot-module-name");
 EXT(YevalSastYfunction_registers_setter,"eval/ast","function-registers-setter");
 EXT(YgooSmathYfloorS,"goo/math","floor/");
 EXT(YevalSastYfunction_naryQ,"eval/ast","function-nary?");
 EXT(YgooSruntimeYalways,"goo/runtime","always");
 EXT(YevalSastYLdynamic_referenceG,"eval/ast","<dynamic-reference>");
-EXT(Ynil,"goo/boot","nil");
 EXT(Ygen_src_setter,"goo/boot","gen-src-setter");
 EXT(YgooScolsScolYfind,"goo/cols/col","find");
 EXT(YgooSioSportYLfile_out_portG,"goo/io/port","<file-out-port>");
 EXT(YevalSastYfunction_adjectives,"eval/ast","function-adjectives");
+DEF(YevalSast_evalYDnul_loc_env,"eval/ast-eval","$nul-loc-env");
 EXT(YgooScolsScolYadd,"goo/cols/col","add");
-EXT(YevalSastYLfix_letG,"eval/ast","<fix-let>");
 EXT(YevalSastYLalternativeG,"eval/ast","<alternative>");
 EXT(YgooSmathYcosh,"goo/math","cosh");
 EXT(YevalSastYenv_object_name,"eval/ast","env-object-name");
 DEF(YevalSast_evalYenv_local_reference_value,"eval/ast-eval","env-local-reference-value");
-EXT(YevalSastYmodule_syntax_environment,"eval/ast","module-syntax-environment");
 EXT(YgooSconditionsYunbound_variable_error_variable,"goo/conditions","unbound-variable-error-variable");
-EXT(YevalSastYdo_static_global_bindings,"eval/ast","do-static-global-bindings");
 EXT(YgooSmagYmax,"goo/mag","max");
 EXT(YgooScolsScolYnow_setter,"goo/cols/col","now-setter");
+EXT(YevalSdependencyYast_error,"eval/dependency","ast-error");
 EXT(YevalSastYinit_environment_for_eval,"eval/ast","init-environment-for-eval");
 EXT(Yno_next_methods_error,"goo/boot","no-next-methods-error");
 EXT(YevalSastYLprogramsG,"eval/ast","<programs>");
 EXT(YgooSmacrosYdo,"goo/macros","do");
+EXT(YevalSastYmodule_mangled_string_name_setter,"eval/ast","module-mangled-string-name-setter");
 EXT(YgooScolsSrangeYLrangeG,"goo/cols/range","<range>");
 EXT(YgooSconditionsYLrestartG,"goo/conditions","<restart>");
 EXT(YevalSastYfunction_index_setter,"eval/ast","function-index-setter");
@@ -526,16 +527,17 @@ EXT(YgooSmacrosYlift_place_subforms,"goo/macros","lift-place-subforms");
 EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
 EXT(Yproperty_not_found_error,"goo/boot","property-not-found-error");
 EXT(YgooSmacrosYmap2,"goo/macros","map2");
+EXT(YPtnul,"goo/boot","%tnul");
 DEF(YevalSast_evalYenv_parent,"eval/ast-eval","env-parent");
 EXT(YLfunG,"goo/boot","<fun>");
 DEF(YevalSast_evalYenv_dynamic_value,"eval/ast-eval","env-dynamic-value");
 EXT(YgooScolsSseqxYpopX,"goo/cols/seqx","pop!");
 EXT(Yfun_specs,"goo/boot","fun-specs");
+EXT(YgooSmacrosYnapp,"goo/macros","napp");
 EXT(YTreport_prop_unbound_errorsQT,"goo/boot","*report-prop-unbound-errors?*");
 EXT(Yprop_boundQ,"goo/boot","prop-bound?");
 EXT(Yclass_props,"goo/boot","class-props");
-EXT(YgooSioSportYget,"goo/io/port","get");
-EXT(YTboot_macro_expandersT,"goo/boot","*boot-macro-expanders*");
+EXT(YevalSastYprobe_module,"eval/ast","probe-module");
 EXT(YgooSconditionsYLas_errorG,"goo/conditions","<as-error>");
 EXT(YLseqXG,"goo/boot","<seq!>");
 EXT(YgooSconditionsYLunbound_variable_errorG,"goo/conditions","<unbound-variable-error>");
@@ -543,8 +545,8 @@ EXT(YevalSastYLmodule_loaderG,"eval/ast","<module-loader>");
 EXT(YevalSastYprogram_register,"eval/ast","program-register");
 EXT(YgooSconditionsYLambiguous_method_errorG,"goo/conditions","<ambiguous-method-error>");
 EXT(YgooScolsStabYtab_shrink_threshold,"goo/cols/tab","tab-shrink-threshold");
-DEF(YevalSast_evalYenv_global_binding_value,"eval/ast-eval","env-global-binding-value");
 EXT(Ytup,"goo/boot","tup");
+EXT(YevalSastYfix_let_arguments_setter,"eval/ast","fix-let-arguments-setter");
 EXT(YevalSastYreference_binding,"eval/ast","reference-binding");
 EXT(YgooSmathYmodA,"goo/math","mod+");
 EXT(YgooScolsScolYempty,"goo/cols/col","empty");
@@ -555,14 +557,13 @@ EXT(YgooScolsScolxYeltX,"goo/cols/colx","elt!");
 EXT(Ytype_class,"goo/boot","type-class");
 EXT(YevalSastYLlocal_referenceG,"eval/ast","<local-reference>");
 EXT(YLseqIG,"goo/boot","<seq.>");
-EXT(YevalSastYbinding_locative,"eval/ast","binding-locative");
 EXT(YevalSastYobjectify_quotation,"eval/ast","objectify-quotation");
 EXT(YgooSmathYalphaQ,"goo/math","alpha?");
 EXT(YevalSastYfix_let_types_setter,"eval/ast","fix-let-types-setter");
-EXT(YgooScolsSlstYLlistG,"goo/cols/lst","<list>");
 EXT(Ygen_src,"goo/boot","gen-src");
 EXT(YevalSastYLruntime_assignmentG,"eval/ast","<runtime-assignment>");
 EXT(YevalSastYapplication_function,"eval/ast","application-function");
+EXT(YevalSastYbinding_locative_setter,"eval/ast","binding-locative-setter");
 EXT(YgooScolsScycleYLcycleG,"goo/cols/cycle","<cycle>");
 EXT(YgooSmathYacos,"goo/math","acos");
 EXT(YevalSastYbinding_index_setter,"eval/ast","binding-index-setter");
@@ -575,25 +576,21 @@ EXT(YgooSmathYlowerQ,"goo/math","lower?");
 EXT(YevalSastYglobal_box_value_setter,"eval/ast","global-box-value-setter");
 DEF(YevalSast_evalYenv_function,"eval/ast-eval","env-function");
 EXT(YevalSastYLcompile_timeG,"eval/ast","<compile-time>");
+EXT(YevalSastYbinding_locative,"eval/ast","binding-locative");
 EXT(YevalSastYreference_frame_offset,"eval/ast","reference-frame-offset");
 EXT(YgooSioSportYLout_portG,"goo/io/port","<out-port>");
 EXT(YLseqG,"goo/boot","<seq>");
-DEF(YevalSast_evalYenv_runtime_value,"eval/ast-eval","env-runtime-value");
 EXT(YevalSastYmodule_name,"eval/ast","module-name");
 EXT(YgooSconditionsYdefault_handler,"goo/conditions","default-handler");
 EXT(YevalSastYalternative_consequent,"eval/ast","alternative-consequent");
-EXT(YPsnul,"goo/boot","%snul");
 EXT(YevalSastYfunction_source,"eval/ast","function-source");
-EXT(YDmax_int,"goo/boot","$max-int");
 EXT(Ysig_names,"goo/boot","sig-names");
 EXT(YgooScolsScolYinto,"goo/cols/col","into");
 EXT(YgooSmathYroundS,"goo/math","round/");
 EXT(YgooSpackerYLpackerG,"goo/packer","<packer>");
 EXT(YgooStypesYas,"goo/types","as");
-EXT(YevalSastYbinding_locative_setter,"eval/ast","binding-locative-setter");
 EXT(YevalSastYLlow_letG,"eval/ast","<low-let>");
 EXT(Yprop_owner,"goo/boot","prop-owner");
-EXT(Yadd_prop,"goo/boot","add-prop");
 EXT(YgooSmathYnegQ,"goo/math","neg?");
 EXT(YgooSmacrosYemptyQ,"goo/macros","empty?");
 EXT(Ykeyboard_interrupt,"goo/boot","keyboard-interrupt");
@@ -611,8 +608,9 @@ EXT(YgooScolsSrangeYfrom,"goo/cols/range","from");
 EXT(YgooScolsScolYallQ,"goo/cols/col","all?");
 EXT(YgooSmathYtrunc,"goo/math","trunc");
 EXT(YLsigG,"goo/boot","<sig>");
+EXT(YevalSastYfind_binding,"eval/ast","find-binding");
 EXT(YevalSastYmodule_uses_c_files,"eval/ast","module-uses-c-files");
-EXT(YevalSastYbinding_native_toQ,"eval/ast","binding-native-to?");
+EXT(Ynil,"goo/boot","nil");
 DEF(YevalSast_evalYenv_values,"eval/ast-eval","env-values");
 EXT(Ysig_arity,"goo/boot","sig-arity");
 EXT(YgooSconditionsYLnarity_errorG,"goo/conditions","<narity-error>");
@@ -627,10 +625,11 @@ EXT(YLcolIG,"goo/boot","<col.>");
 EXT(YgooSconditionsYLstack_overflowG,"goo/conditions","<stack-overflow>");
 EXT(YgooSconditionsYLproperty_not_found_errorG,"goo/conditions","<property-not-found-error>");
 EXT(YgooScolsSseqYbelow,"goo/cols/seq","below");
-EXT(YevalSastYLast_signatureG,"eval/ast","<ast-signature>");
 EXT(YevalSastYprogram_line,"eval/ast","program-line");
+EXT(YevalSastYLast_signatureG,"eval/ast","<ast-signature>");
 EXT(YgooScolsScolYelts,"goo/cols/col","elts");
 EXT(YgooScolsSseqYdo3,"goo/cols/seq","do3");
+EXT(YevalSastYassignment_binding,"eval/ast","assignment-binding");
 EXT(YgooSioSportYport_line,"goo/io/port","port-line");
 EXT(YisaQ,"goo/boot","isa?");
 EXT(YgooScolsScolYcol_res,"goo/cols/col","col-res");
@@ -669,12 +668,12 @@ EXT(YgooScolsScolYkeys,"goo/cols/col","keys");
 EXT(Yunexec,"goo/boot","unexec");
 EXT(YPprop_unbound_error,"goo/boot","%prop-unbound-error");
 EXT(YgooScolsScolYLtabG,"goo/cols/col","<tab>");
-EXT(YevalSastYfunction_registers,"eval/ast","function-registers");
+EXT(YgooSruntimeYloc_val,"goo/runtime","loc-val");
 EXT(YOanyQ,"goo/boot","@any?");
 EXT(YgooSmathYE,"goo/math","=");
-EXT(YevalSastYfix_let_body,"eval/ast","fix-let-body");
 EXT(YLrepG,"goo/boot","<rep>");
 EXT(Ytail_setter,"goo/boot","tail-setter");
+EXT(YgooSmathYflo_bits,"goo/math","flo-bits");
 EXT(YPPmacro,"goo/boot","%%macro");
 EXT(YevalSastYLreal_referenceG,"eval/ast","<real-reference>");
 EXT(YgooSmathYsin,"goo/math","sin");
@@ -683,13 +682,14 @@ DEF(YevalSast_evalYarrange_arguments,"eval/ast-eval","arrange-arguments");
 EXT(YgooSmacrosYmatch_unquote,"goo/macros","match-unquote");
 EXT(YevalSastYLmacro_referenceG,"eval/ast","<macro-reference>");
 EXT(YgooScolsSmapYLmapG,"goo/cols/map","<map>");
-EXT(YgooScolsSseqYdel_vals,"goo/cols/seq","del-vals");
+EXT(YDmin_int,"goo/boot","$min-int");
 EXT(YgooScolsSvecYLvecG,"goo/cols/vec","<vec>");
 EXT(YgooScolsSvecYvec,"goo/cols/vec","vec");
 EXT(YevalSastYfunction_index,"eval/ast","function-index");
 EXT(YevalSastYlocals_bindings_setter,"eval/ast","locals-bindings-setter");
 EXT(YLlocG,"goo/boot","<loc>");
 EXT(YOisaQ,"goo/boot","@isa?");
+EXT(YTboot_macro_expandersT,"goo/boot","*boot-macro-expanders*");
 EXT(YevalSastYLglobal_referenceG,"eval/ast","<global-reference>");
 EXT(YgooScolsSseqYsuffixQ,"goo/cols/seq","suffix?");
 EXT(YgooSconditionsYLassert_errorG,"goo/conditions","<assert-error>");
@@ -699,15 +699,17 @@ EXT(Ystack_overflow_error,"goo/boot","stack-overflow-error");
 EXT(YgooSconditionsYLarithmetic_errorG,"goo/conditions","<arithmetic-error>");
 EXT(YevalSastYfunction_signature_setter,"eval/ast","function-signature-setter");
 EXT(YevalSastYinstall_initial_bindings,"eval/ast","install-initial-bindings");
+EXT(YTboot_macro_module_namesT,"goo/boot","*boot-macro-module-names*");
 EXT(YgooSmagYLE,"goo/mag","<=");
 EXT(Ytail,"goo/boot","tail");
 EXT(YevalSastYbinding_name,"eval/ast","binding-name");
 EXT(YgooSconditionsYLreturn_type_errorG,"goo/conditions","<return-type-error>");
-EXT(YgooScolsScolYkey_test,"goo/cols/col","key-test");
+EXT(YPsymbols,"goo/boot","%symbols");
 EXT(YgooScolsSseqYpop,"goo/cols/seq","pop");
+EXT(YgooScolsSlstYLlistG,"goo/cols/lst","<list>");
 EXT(YevalSastYlocals_body_setter,"eval/ast","locals-body-setter");
-EXT(YgooSioSwriteYwrite_to_string,"goo/io/write","write-to-string");
 EXT(YgooSioSwriteYwriteln,"goo/io/write","writeln");
+EXT(YevalSastYfunction_bindings,"eval/ast","function-bindings");
 EXT(Yno_applicable_methods_error,"goo/boot","no-applicable-methods-error");
 EXT(Yclass_name,"goo/boot","class-name");
 EXT(YLfloG,"goo/boot","<flo>");
@@ -716,19 +718,16 @@ EXT(YgooSmathYnum_to_str,"goo/math","num-to-str");
 EXT(Ysrc_loc_line,"goo/boot","src-loc-line");
 EXT(YgooSmathYGG,"goo/math",">>");
 EXT(YgooScolsSseqYdo2,"goo/cols/seq","do2");
-EXT(YgooSconditionsYLproperty_unbound_errorG,"goo/conditions","<property-unbound-error>");
 EXT(YevalSastYlocals_functions_setter,"eval/ast","locals-functions-setter");
 EXT(YgooSioSportYreadyQ,"goo/io/port","ready?");
 EXT(YevalSastYfix_let_arguments,"eval/ast","fix-let-arguments");
 EXT(YgooScolsScolYfold,"goo/cols/col","fold");
 EXT(YgooScolsSseqYsort_byX,"goo/cols/seq","sort-by!");
-EXT(YgooSmathYmod,"goo/math","mod");
-EXT(YTboot_macro_namesT,"goo/boot","*boot-macro-names*");
 EXT(YgooSmathYB,"goo/math","&");
+EXT(YevalSastYLstatic_global_environmentG,"eval/ast","<static-global-environment>");
 EXT(YevalSastYmodule_mangled_string_name,"eval/ast","module-mangled-string-name");
 EXT(YevalSastYenvironment_module,"eval/ast","environment-module");
 EXT(YevalSastYLfree_environmentG,"eval/ast","<free-environment>");
-EXT(YevalSastYmonitor_handler,"eval/ast","monitor-handler");
 EXT(YgooSmathYaddress_of,"goo/math","address-of");
 EXT(YgooSmathYisqrt,"goo/math","isqrt");
 EXT(YLfixnumG,"goo/boot","<fixnum>");
@@ -743,159 +742,160 @@ EXT(YevalSastYbinding_index,"eval/ast","binding-index");
 EXT(YevalSastYmodule_mangled_name,"eval/ast","module-mangled-name");
 EXT(YgooSconditionsYcall_error_function,"goo/conditions","call-error-function");
 EXT(YgooSconditionsYLio_errorG,"goo/conditions","<io-error>");
+EXT(YgooScolsScolYkey_type,"goo/cols/col","key-type");
 EXT(YPdefine_method,"goo/boot","%define-method");
 EXT(Yarity_error,"goo/boot","arity-error");
-EXT(YgooScolsScycleYcycle,"goo/cols/cycle","cycle");
 EXT(YgooSioSportYin,"goo/io/port","in");
 EXT(YgooScolsScolxYelt_setter,"goo/cols/colx","elt-setter");
 EXT(YevalSastYobjectify_with_subtransaction,"eval/ast","objectify-with-subtransaction");
 EXT(Yord_app_mets,"goo/boot","ord-app-mets");
+EXT(Ynul,"goo/boot","nul");
 EXT(YLpropG,"goo/boot","<prop>");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_46);
+DEFLIT(lit_139);
+DEFLIT(lit_122);
 DEFLIT(lit_36);
-DEFLIT(lit_37);
-DEFLIT(lit_58);
-DEFLIT(lit_60);
-DEFLIT(lit_50);
-DEFLIT(lit_88);
-DEFLIT(lit_103);
-DEFLIT(lit_127);
+DEFLIT(lit_70);
+DEFLIT(lit_108);
+DEFLIT(lit_104);
+DEFLIT(lit_40);
+DEFLIT(lit_94);
+DEFLIT(lit_134);
 DEFLIT(lit_73);
-DEFLIT(lit_119);
 DEFLIT(lit_2);
-DEFLIT(lit_120);
-DEFLIT(lit_117);
+DEFLIT(lit_59);
+DEFLIT(lit_99);
 DEFLIT(lit_27);
 DEFLIT(lit_64);
-DEFLIT(lit_53);
-DEFLIT(lit_109);
+DEFLIT(lit_5);
 DEFLIT(lit_38);
-DEFLIT(lit_112);
-DEFLIT(lit_99);
-DEFLIT(lit_55);
+DEFLIT(lit_41);
+DEFLIT(lit_105);
 DEFLIT(lit_47);
-DEFLIT(lit_43);
-DEFLIT(lit_97);
-DEFLIT(lit_94);
-DEFLIT(lit_118);
+DEFLIT(lit_88);
+DEFLIT(lit_92);
+DEFLIT(lit_119);
+DEFLIT(lit_91);
 DEFLIT(lit_140);
 DEFLIT(lit_61);
+DEFLIT(lit_86);
 DEFLIT(lit_136);
-DEFLIT(lit_56);
-DEFLIT(lit_78);
-DEFLIT(lit_116);
+DEFLIT(lit_133);
+DEFLIT(lit_37);
 DEFLIT(lit_34);
-DEFLIT(lit_130);
+DEFLIT(lit_35);
 DEFLIT(lit_76);
-DEFLIT(lit_10);
-DEFLIT(lit_106);
+DEFLIT(lit_117);
+DEFLIT(lit_53);
+DEFLIT(lit_51);
+DEFLIT(lit_13);
 DEFLIT(lit_114);
-DEFLIT(lit_126);
 DEFLIT(lit_71);
-DEFLIT(lit_141);
-DEFLIT(lit_20);
-DEFLIT(lit_52);
+DEFLIT(lit_132);
+DEFLIT(lit_28);
+DEFLIT(lit_6);
+DEFLIT(lit_19);
 DEFLIT(lit_54);
-DEFLIT(lit_23);
-DEFLIT(lit_98);
-DEFLIT(lit_33);
-DEFLIT(lit_45);
-DEFLIT(lit_83);
+DEFLIT(lit_121);
+DEFLIT(lit_29);
+DEFLIT(lit_22);
 DEFLIT(lit_63);
 DEFLIT(lit_25);
+DEFLIT(lit_102);
 DEFLIT(lit_14);
+DEFLIT(lit_33);
 DEFLIT(lit_8);
 DEFLIT(lit_80);
-DEFLIT(lit_59);
-DEFLIT(lit_85);
-DEFLIT(lit_92);
+DEFLIT(lit_129);
+DEFLIT(lit_23);
 DEFLIT(lit_15);
-DEFLIT(lit_24);
-DEFLIT(lit_22);
-DEFLIT(lit_28);
-DEFLIT(lit_0);
-DEFLIT(lit_42);
 DEFLIT(lit_31);
-DEFLIT(lit_104);
-DEFLIT(lit_110);
-DEFLIT(lit_132);
-DEFLIT(lit_131);
-DEFLIT(lit_48);
-DEFLIT(lit_101);
-DEFLIT(lit_102);
-DEFLIT(lit_79);
-DEFLIT(lit_93);
-DEFLIT(lit_13);
-DEFLIT(lit_70);
-DEFLIT(lit_115);
-DEFLIT(lit_39);
-DEFLIT(lit_72);
-DEFLIT(lit_5);
-DEFLIT(lit_138);
-DEFLIT(lit_44);
-DEFLIT(lit_139);
-DEFLIT(lit_86);
-DEFLIT(lit_96);
-DEFLIT(lit_68);
-DEFLIT(lit_123);
-DEFLIT(lit_95);
-DEFLIT(lit_7);
-DEFLIT(lit_128);
-DEFLIT(lit_12);
-DEFLIT(lit_100);
-DEFLIT(lit_77);
-DEFLIT(lit_11);
-DEFLIT(lit_49);
-DEFLIT(lit_26);
-DEFLIT(lit_82);
-DEFLIT(lit_62);
-DEFLIT(lit_105);
-DEFLIT(lit_6);
-DEFLIT(lit_21);
-DEFLIT(lit_67);
-DEFLIT(lit_122);
-DEFLIT(lit_137);
-DEFLIT(lit_90);
-DEFLIT(lit_17);
-DEFLIT(lit_111);
-DEFLIT(lit_91);
-DEFLIT(lit_133);
-DEFLIT(lit_74);
-DEFLIT(lit_108);
-DEFLIT(lit_1);
-DEFLIT(lit_66);
-DEFLIT(lit_35);
-DEFLIT(lit_87);
+DEFLIT(lit_135);
+DEFLIT(lit_124);
+DEFLIT(lit_46);
+DEFLIT(lit_0);
 DEFLIT(lit_125);
+DEFLIT(lit_42);
+DEFLIT(lit_21);
+DEFLIT(lit_39);
+DEFLIT(lit_90);
+DEFLIT(lit_75);
+DEFLIT(lit_120);
+DEFLIT(lit_56);
+DEFLIT(lit_130);
+DEFLIT(lit_79);
+DEFLIT(lit_106);
+DEFLIT(lit_11);
+DEFLIT(lit_20);
+DEFLIT(lit_138);
+DEFLIT(lit_111);
+DEFLIT(lit_109);
+DEFLIT(lit_72);
+DEFLIT(lit_44);
+DEFLIT(lit_52);
+DEFLIT(lit_83);
+DEFLIT(lit_55);
+DEFLIT(lit_126);
+DEFLIT(lit_68);
+DEFLIT(lit_84);
+DEFLIT(lit_123);
+DEFLIT(lit_12);
+DEFLIT(lit_3);
+DEFLIT(lit_77);
+DEFLIT(lit_131);
+DEFLIT(lit_85);
+DEFLIT(lit_78);
+DEFLIT(lit_110);
+DEFLIT(lit_98);
+DEFLIT(lit_115);
+DEFLIT(lit_82);
+DEFLIT(lit_60);
+DEFLIT(lit_141);
+DEFLIT(lit_43);
+DEFLIT(lit_96);
+DEFLIT(lit_67);
+DEFLIT(lit_62);
+DEFLIT(lit_17);
+DEFLIT(lit_116);
+DEFLIT(lit_95);
+DEFLIT(lit_50);
+DEFLIT(lit_7);
+DEFLIT(lit_74);
 DEFLIT(lit_18);
+DEFLIT(lit_66);
+DEFLIT(lit_93);
+DEFLIT(lit_49);
+DEFLIT(lit_127);
+DEFLIT(lit_26);
+DEFLIT(lit_101);
 DEFLIT(lit_65);
 DEFLIT(lit_32);
-DEFLIT(lit_75);
-DEFLIT(lit_51);
-DEFLIT(lit_19);
-DEFLIT(lit_30);
-DEFLIT(lit_41);
-DEFLIT(lit_121);
-DEFLIT(lit_89);
+DEFLIT(lit_58);
 DEFLIT(lit_9);
-DEFLIT(lit_57);
+DEFLIT(lit_30);
+DEFLIT(lit_89);
+DEFLIT(lit_1);
+DEFLIT(lit_10);
+DEFLIT(lit_45);
 DEFLIT(lit_4);
-DEFLIT(lit_29);
+DEFLIT(lit_100);
 DEFLIT(lit_69);
-DEFLIT(lit_40);
-DEFLIT(lit_124);
-DEFLIT(lit_16);
-DEFLIT(lit_81);
-DEFLIT(lit_134);
+DEFLIT(lit_57);
+DEFLIT(lit_137);
+DEFLIT(lit_118);
+DEFLIT(lit_112);
 DEFLIT(lit_113);
+DEFLIT(lit_16);
+DEFLIT(lit_24);
+DEFLIT(lit_81);
+DEFLIT(lit_48);
+DEFLIT(lit_87);
 DEFLIT(lit_107);
-DEFLIT(lit_84);
-DEFLIT(lit_3);
-DEFLIT(lit_129);
-DEFLIT(lit_135);
+DEFLIT(lit_97);
+DEFLIT(lit_128);
+DEFLIT(lit_103);
 
 /* FUNCTIONS: */
 
@@ -997,16 +997,16 @@ extern P YevalSast_evalY___main_1___ ();
 
 FUNCODEDEF(fun_env_global_binding_value_0) {
   P b_;
-  P boxF2995;
+  P boxF2996;
   P T0,T1,T2,T3,T4,T5,T6;
   P a1;
 LINK_STACK();
   ARG(b_, 0);
 loop:
   T1 = CALL1(1,VARREF(YevalSastYbinding_global_box),b_);
-  boxF2995 = T1;
-  if (boxF2995 != YPfalse) {
-    T3 = CALL1(1,VARREF(YevalSastYglobal_box_value),boxF2995);
+  boxF2996 = T1;
+  if (boxF2996 != YPfalse) {
+    T3 = CALL1(1,VARREF(YevalSastYglobal_box_value),boxF2996);
     T2 = T3;
   } else {
     T6 = CALL1(1,VARREF(YevalSastYbinding_name),b_);
@@ -1021,7 +1021,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_env_global_binding_value_setter_1) {
   P value_,b_;
-  P boxF2996;
+  P boxF2997;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9;
   P a1,a2;
 LINK_STACK();
@@ -1029,17 +1029,17 @@ LINK_STACK();
   ARG(b_, 1);
 loop:
   T1 = CALL1(1,VARREF(YevalSastYbinding_global_box),b_);
-  boxF2996 = T1;
-  boxF2996 = BOXFAB(boxF2996);
-  T4 = BOXVAL(boxF2996);
+  boxF2997 = T1;
+  boxF2997 = BOXFAB(boxF2997);
+  T4 = BOXVAL(boxF2997);
   T3 = CALL1(1,VARREF(Ynot),T4);
   if (T3 != YPfalse) {
     T7 = CALL1(1,VARREF(Ynew),VARREF(YevalSastYLglobal_boxG));
     T6 = CALL2(1,VARREF(YevalSastYbinding_global_box_setter),T7,b_);
-    T5 = BOXVAL(boxF2996) = T6;
+    T5 = BOXVAL(boxF2997) = T6;
   } else {
   }
-  T9 = BOXVAL(boxF2996);
+  T9 = BOXVAL(boxF2997);
   T8 = CALL2(1,VARREF(YevalSastYglobal_box_value_setter),value_,T9);
   T0 = T8;
 UNLINK_STACK();
@@ -1048,15 +1048,15 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_env_global_binding_boundQ_2) {
   P b_;
-  P boxF2997;
+  P boxF2998;
   P T0,T1,T2;
   P a1;
 LINK_STACK();
   ARG(b_, 0);
 loop:
   T1 = CALL1(1,VARREF(YevalSastYbinding_global_box),b_);
-  boxF2997 = T1;
-  if (boxF2997 != YPfalse) {
+  boxF2998 = T1;
+  if (boxF2998 != YPfalse) {
     T2 = YPtrue;
   } else {
     T2 = YPfalse;
@@ -1250,7 +1250,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_env_frameX_18) {
   P env_,function_,names_,args_;
-  P valuesF2998;
+  P valuesF2999;
   P T0,T1,T2,T3,T4;
   P a1,a2,a3,a4;
 LINK_STACK();
@@ -1262,8 +1262,8 @@ loop:
   T3 = CALL1(1,VARREF(YgooStypesYlen),args_);
   T2 = CALL2(1,VARREF(YgooScolsSrepYrep_fab),T3,VARREF(Ynul));
   T1 = CALL2(1,VARREF(YgooScolsSrepYrep_intoX),T2,args_);
-  valuesF2998 = T1;
-  T4 = CALLN(1,VARREF(Ynew),9,VARREF(YevalSast_evalYLloc_envG),VARREF(YevalSast_evalYenv_parent),env_,VARREF(YevalSast_evalYenv_function),function_,VARREF(YevalSast_evalYenv_values),valuesF2998,VARREF(YevalSast_evalYenv_names),names_);
+  valuesF2999 = T1;
+  T4 = CALLN(1,VARREF(Ynew),9,VARREF(YevalSast_evalYLloc_envG),VARREF(YevalSast_evalYenv_parent),env_,VARREF(YevalSast_evalYenv_function),function_,VARREF(YevalSast_evalYenv_values),valuesF2999,VARREF(YevalSast_evalYenv_names),names_);
   T0 = T4;
 UNLINK_STACK();
   RET(T0);
@@ -1356,7 +1356,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_env_binding_value_22) {
   P env_,name_;
-  P loopF2999;
+  P loopF3000;
   P T0,T1,T2,T3,T4,T5;
   P a1,a2;
 LINK_STACK();
@@ -1368,10 +1368,10 @@ loop:
     T0 = VARREF(Ynul);
   } else {
     T3 = FUNSHELL(1,fun_loop_21,3);
-    loopF2999 = T3;
-    FUNINIT(loopF2999, 3,env_,name_,loopF2999);
+    loopF3000 = T3;
+    FUNINIT(loopF3000, 3,env_,name_,loopF3000);
     T5 = CALL1(1,VARREF(YevalSast_evalYenv_names),env_);
-    T4 = CALL2(0,loopF2999,T5,YPint((P)0));
+    T4 = CALL2(0,loopF3000,T5,YPint((P)0));
     T2 = T4;
     T0 = T2;
   }
@@ -1417,7 +1417,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_env_binding_value_setter_24) {
   P v_,env_,name_;
-  P loopF3000;
+  P loopF3001;
   P T0,T1,T2,T3;
   P a1,a2,a3;
 LINK_STACK();
@@ -1426,10 +1426,10 @@ LINK_STACK();
   ARG(name_, 2);
 loop:
   T1 = FUNSHELL(1,fun_loop_23,4);
-  loopF3000 = T1;
-  FUNINIT(loopF3000, 4,v_,env_,name_,loopF3000);
+  loopF3001 = T1;
+  FUNINIT(loopF3001, 4,v_,env_,name_,loopF3001);
   T3 = CALL1(1,VARREF(YevalSast_evalYenv_names),env_);
-  T2 = CALL2(0,loopF3000,T3,YPint((P)0));
+  T2 = CALL2(0,loopF3001,T3,YPint((P)0));
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -1489,8 +1489,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_29) {
   P res_,specs_,i_;
-  P typeF3002;
-  P specF3001;
+  P typeF3003;
+  P specF3002;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
   P a1,a2,a3;
 LINK_STACK();
@@ -1504,15 +1504,15 @@ loop:
     T0 = T2;
   } else {
     T4 = CALL1(1,VARREF(Yhead),specs_);
-    specF3001 = T4;
-    if (specF3001 != YPfalse) {
-      T7 = CALL2(1,VARREF(YevalSast_evalYast_eval),specF3001,FREEREF(1));
+    specF3002 = T4;
+    if (specF3002 != YPfalse) {
+      T7 = CALL2(1,VARREF(YevalSast_evalYast_eval),specF3002,FREEREF(1));
       T6 = T7;
     } else {
       T6 = VARREF(YLanyG);
     }
-    typeF3002 = T6;
-    T9 = CALL2(1,VARREF(YgooSmacrosYpair),typeF3002,res_);
+    typeF3003 = T6;
+    T9 = CALL2(1,VARREF(YgooSmacrosYpair),typeF3003,res_);
     T10 = CALL1(1,VARREF(Ytail),specs_);
     T11 = CALL2(1,VARREF(YgooSmathYA),i_,YPint((P)1));
     a1 = T9;
@@ -1532,8 +1532,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_specs_30) {
   P specs_,naryQ_,env_;
-  P loopF3004;
-  P nreqF3003;
+  P loopF3005;
+  P nreqF3004;
   P T0,T1,T2,T3,T4,T5,T6,T7;
   P a1,a2,a3;
 LINK_STACK();
@@ -1549,11 +1549,11 @@ loop:
     T4 = CALL1(1,VARREF(YgooStypesYlen),specs_);
     T1 = T4;
   }
-  nreqF3003 = T1;
+  nreqF3004 = T1;
   T6 = FUNSHELL(1,fun_loop_29,3);
-  loopF3004 = T6;
-  FUNINIT(loopF3004, 3,nreqF3003,env_,loopF3004);
-  T7 = CALL3(0,loopF3004,Ynil,specs_,YPint((P)0));
+  loopF3005 = T6;
+  FUNINIT(loopF3005, 3,nreqF3004,env_,loopF3005);
+  T7 = CALL3(0,loopF3005,Ynil,specs_,YPint((P)0));
   T5 = T7;
   T0 = T5;
 UNLINK_STACK();
@@ -1562,7 +1562,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(YevalSast_evalYarrange_arguments) {
   P f_,naryQ_,arity_,args_;
-  P countF3005;
+  P countF3006;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12;
   P a1,a2,a3,a4;
 LINK_STACK();
@@ -1572,22 +1572,22 @@ LINK_STACK();
   ARG(args_, 3);
 loop:
   T1 = CALL1(1,VARREF(YgooStypesYlen),args_);
-  countF3005 = T1;
+  countF3006 = T1;
   if (naryQ_ != YPfalse) {
-    T4 = CALL2(1,VARREF(YgooSmagYL),countF3005,arity_);
+    T4 = CALL2(1,VARREF(YgooSmagYL),countF3006,arity_);
     if (T4 != YPfalse) {
       T5 = CALL2(1,VARREF(Ynarity_error),f_,args_);
       T3 = T5;
     } else {
       T7 = CALL3(1,VARREF(YgooScolsSseqYsub),args_,YPint((P)0),arity_);
-      T9 = CALL3(1,VARREF(YgooScolsSseqYsub),args_,arity_,countF3005);
+      T9 = CALL3(1,VARREF(YgooScolsSseqYsub),args_,arity_,countF3006);
       T8 = CALL1(1,VARREF(Ylst),T9);
       T6 = CALL2(1,VARREF(YgooScolsSseqYcat2),T7,T8);
       T3 = T6;
     }
     T2 = T3;
   } else {
-    T11 = CALL2(1,VARREF(YgooSmathYNEE),countF3005,arity_);
+    T11 = CALL2(1,VARREF(YgooSmathYNEE),countF3006,arity_);
     if (T11 != YPfalse) {
       T12 = CALL2(1,VARREF(Yarity_error),f_,args_);
       T10 = T12;
@@ -1617,6 +1617,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_33) {
   P return_;
+  P x_1471F3023;
   P x_1471F3022;
   P x_1471F3021;
   P x_1471F3020;
@@ -1625,15 +1626,14 @@ FUNCODEDEF(fun_33) {
   P x_1471F3017;
   P x_1471F3016;
   P x_1471F3015;
-  P x_1471F3014;
-  P bodyF3013;
-  P namesF3012;
-  P arityF3011;
-  P naryQF3010;
-  P fF3009;
-  P envF3008;
-  P x_1471F3007;
-  P x_1472F3006;
+  P bodyF3014;
+  P namesF3013;
+  P arityF3012;
+  P naryQF3011;
+  P fF3010;
+  P envF3009;
+  P x_1471F3008;
+  P x_1472F3007;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18,T19,T20,T21,T22,T23,T24,T25,T26,T27,T28,T29,T30,T31;
   P T32,T33,T34,T35,T36,T37,T38,T39,T40,T41,T42,T43,T44,T45,T46,T47;
@@ -1646,55 +1646,55 @@ LINK_STACK();
   ARG(return_, 0);
 loop:
   T1 = FUNSHELL(0,fun_x_1472_32,2);
-  x_1472F3006 = T1;
-  FUNINIT(x_1472F3006, 2,FREEREF(0),return_);
-  x_1471F3007 = FREEREF(0);
-  envF3008 = YPfalse;
-  envF3008 = BOXFAB(envF3008);
-  fF3009 = YPfalse;
-  fF3009 = BOXFAB(fF3009);
-  naryQF3010 = YPfalse;
-  naryQF3010 = BOXFAB(naryQF3010);
-  arityF3011 = YPfalse;
-  arityF3011 = BOXFAB(arityF3011);
-  namesF3012 = YPfalse;
-  namesF3012 = BOXFAB(namesF3012);
-  bodyF3013 = YPfalse;
-  bodyF3013 = BOXFAB(bodyF3013);
-  T15 = CALL2(1,VARREF(YisaQ),x_1471F3007,VARREF(YLlstG));
+  x_1472F3007 = T1;
+  FUNINIT(x_1472F3007, 2,FREEREF(0),return_);
+  x_1471F3008 = FREEREF(0);
+  envF3009 = YPfalse;
+  envF3009 = BOXFAB(envF3009);
+  fF3010 = YPfalse;
+  fF3010 = BOXFAB(fF3010);
+  naryQF3011 = YPfalse;
+  naryQF3011 = BOXFAB(naryQF3011);
+  arityF3012 = YPfalse;
+  arityF3012 = BOXFAB(arityF3012);
+  namesF3013 = YPfalse;
+  namesF3013 = BOXFAB(namesF3013);
+  bodyF3014 = YPfalse;
+  bodyF3014 = BOXFAB(bodyF3014);
+  T15 = CALL2(1,VARREF(YisaQ),x_1471F3008,VARREF(YLlstG));
   if (T15 != YPfalse) {
-    T17 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1471F3007,LITREF(lit_63),x_1472F3006);
-    x_1471F3014 = T17;
-    T19 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3014,x_1472F3006);
-    BOXVAL(envF3008) = T19;
-    T20 = CALL1(1,VARREF(Ytail),x_1471F3014);
-    x_1471F3015 = T20;
-    T22 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3015,x_1472F3006);
-    BOXVAL(fF3009) = T22;
-    T23 = CALL1(1,VARREF(Ytail),x_1471F3015);
-    x_1471F3016 = T23;
-    T25 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3016,x_1472F3006);
-    BOXVAL(naryQF3010) = T25;
-    T26 = CALL1(1,VARREF(Ytail),x_1471F3016);
-    x_1471F3017 = T26;
-    T28 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3017,x_1472F3006);
-    BOXVAL(arityF3011) = T28;
-    T29 = CALL1(1,VARREF(Ytail),x_1471F3017);
-    x_1471F3018 = T29;
-    T31 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3018,x_1472F3006);
-    BOXVAL(namesF3012) = T31;
-    T32 = CALL1(1,VARREF(Ytail),x_1471F3018);
-    x_1471F3019 = T32;
-    T34 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3019,x_1472F3006);
-    BOXVAL(bodyF3013) = T34;
-    T35 = CALL1(1,VARREF(Ytail),x_1471F3019);
-    x_1471F3020 = T35;
-    T37 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1471F3020,x_1472F3006);
-    x_1471F3021 = T37;
-    T38 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1471F3021,x_1472F3006);
-    T39 = CALL1(1,VARREF(Ytail),x_1471F3020);
-    x_1471F3022 = T39;
-    T40 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1471F3022,x_1472F3006);
+    T17 = CALL3(1,VARREF(YgooSmacrosYmatch_atom),x_1471F3008,LITREF(lit_63),x_1472F3007);
+    x_1471F3015 = T17;
+    T19 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3015,x_1472F3007);
+    BOXVAL(envF3009) = T19;
+    T20 = CALL1(1,VARREF(Ytail),x_1471F3015);
+    x_1471F3016 = T20;
+    T22 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3016,x_1472F3007);
+    BOXVAL(fF3010) = T22;
+    T23 = CALL1(1,VARREF(Ytail),x_1471F3016);
+    x_1471F3017 = T23;
+    T25 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3017,x_1472F3007);
+    BOXVAL(naryQF3011) = T25;
+    T26 = CALL1(1,VARREF(Ytail),x_1471F3017);
+    x_1471F3018 = T26;
+    T28 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3018,x_1472F3007);
+    BOXVAL(arityF3012) = T28;
+    T29 = CALL1(1,VARREF(Ytail),x_1471F3018);
+    x_1471F3019 = T29;
+    T31 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3019,x_1472F3007);
+    BOXVAL(namesF3013) = T31;
+    T32 = CALL1(1,VARREF(Ytail),x_1471F3019);
+    x_1471F3020 = T32;
+    T34 = CALL2(1,VARREF(YgooSmacrosYmatch_unquote),x_1471F3020,x_1472F3007);
+    BOXVAL(bodyF3014) = T34;
+    T35 = CALL1(1,VARREF(Ytail),x_1471F3020);
+    x_1471F3021 = T35;
+    T37 = CALL2(1,VARREF(YgooSmacrosYmatch_sublist),x_1471F3021,x_1472F3007);
+    x_1471F3022 = T37;
+    T38 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1471F3022,x_1472F3007);
+    T39 = CALL1(1,VARREF(Ytail),x_1471F3021);
+    x_1471F3023 = T39;
+    T40 = CALL2(1,VARREF(YgooSmacrosYmatch_empty_list),x_1471F3023,x_1472F3007);
     T36 = T40;
     T33 = T36;
     T30 = T33;
@@ -1704,7 +1704,7 @@ loop:
     T18 = T21;
     T16 = T18;
   } else {
-    T41 = CALL2(1,x_1472F3006,LITREF(lit_64),x_1471F3007);
+    T41 = CALL2(1,x_1472F3007,LITREF(lit_64),x_1471F3008);
   }
   T43 = CALL1(1,VARREF(Ylst),LITREF(lit_65));
   T48 = CALL1(1,VARREF(Ylst),LITREF(lit_66));
@@ -1738,12 +1738,12 @@ loop:
   T74 = CALL1(1,VARREF(Ylst),LITREF(lit_69));
   T75 = CALL1(1,VARREF(Ylst),LITREF(lit_78));
   T78 = CALL1(1,VARREF(Ylst),LITREF(lit_34));
-  T80 = BOXVAL(envF3008);
+  T80 = BOXVAL(envF3009);
   T79 = CALL1(1,VARREF(Ylst),T80);
-  T82 = BOXVAL(fF3009);
+  T82 = BOXVAL(fF3010);
   T81 = CALL1(1,VARREF(Ylst),T82);
   T85 = CALL1(1,VARREF(Ylst),LITREF(lit_79));
-  T87 = BOXVAL(namesF3012);
+  T87 = BOXVAL(namesF3013);
   T86 = CALL1(1,VARREF(Ylst),T87);
   T90 = CALL1(1,VARREF(Ylst),LITREF(lit_80));
   T93 = CALL1(1,VARREF(Ylst),LITREF(lit_81));
@@ -1766,7 +1766,7 @@ loop:
   T76 = CALL1(1,VARREF(Ylst),T77);
   T73 = CALL4(1,VARREF(YgooSmacrosYcat),T74,T75,T76,LITREF(lit_68));
   T72 = CALL1(1,VARREF(Ylst),T73);
-  T106 = BOXVAL(bodyF3013);
+  T106 = BOXVAL(bodyF3014);
   T105 = CALL1(1,VARREF(Ylst),T106);
   T107 = CALL1(1,VARREF(Ylst),LITREF(lit_78));
   T104 = CALL3(1,VARREF(YgooSmacrosYcat),T105,T107,LITREF(lit_68));
@@ -1869,9 +1869,9 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_41) {
   P arg_vector_;
-  P frameF3025;
-  P nmsF3024;
-  P argsF3023;
+  P frameF3026;
+  P nmsF3025;
+  P argsF3024;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
   P a1;
 LINK_STACK();
@@ -1879,16 +1879,16 @@ LINK_STACK();
 loop:
   T2 = CALL2(1,VARREF(YgooStypesYas),VARREF(YLlstG),arg_vector_);
   T1 = CALL4(1,VARREF(YevalSast_evalYarrange_arguments),FREEREF(0),FREEREF(1),FREEREF(2),T2);
-  argsF3023 = T1;
+  argsF3024 = T1;
   T4 = (P)YPnext_methods();
-  nmsF3024 = T4;
+  nmsF3025 = T4;
   T8 = CALL1(1,VARREF(Ylst),LITREF(lit_77));
   T7 = CALL2(1,VARREF(YgooScolsSseqYcat2),FREEREF(4),T8);
-  T10 = CALL1(1,VARREF(Ylst),nmsF3024);
-  T9 = CALL2(1,VARREF(YgooScolsSseqYcat2),argsF3023,T10);
+  T10 = CALL1(1,VARREF(Ylst),nmsF3025);
+  T9 = CALL2(1,VARREF(YgooScolsSseqYcat2),argsF3024,T10);
   T6 = CALL4(1,VARREF(YevalSast_evalYenv_frameX),FREEREF(3),FREEREF(0),T7,T9);
-  frameF3025 = T6;
-  T11 = CALL1(1,FREEREF(5),frameF3025);
+  frameF3026 = T6;
+  T11 = CALL1(1,FREEREF(5),frameF3026);
   T5 = T11;
   T3 = T5;
   T0 = T3;
@@ -1898,8 +1898,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_export_goo_method_42) {
   P f_,names_,specs_,naryQ_,value_,body_,env_;
-  P efunF3027;
-  P arityF3026;
+  P efunF3028;
+  P arityF3027;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
   P a1,a2,a3,a4,a5,a6,a7;
 LINK_STACK();
@@ -1919,11 +1919,11 @@ loop:
     T4 = CALL1(1,VARREF(YgooStypesYlen),specs_);
     T1 = T4;
   }
-  arityF3026 = T1;
-  T6 = FUNFAB(fun_41,6,f_,naryQ_,arityF3026,env_,names_,body_);
-  efunF3027 = T6;
+  arityF3027 = T1;
+  T6 = FUNFAB(fun_41,6,f_,naryQ_,arityF3027,env_,names_,body_);
+  efunF3028 = T6;
   T7 = CALL1(1,VARREF(YevalSast_evalYas_fun_name),f_);
-  CALL2(1,VARREF(Yfun_name_setter),T7,efunF3027);
+  CALL2(1,VARREF(Yfun_name_setter),T7,efunF3028);
   T9 = CALL3(1,VARREF(YevalSast_evalYast_eval_specs),specs_,naryQ_,env_);
   if (value_ != YPfalse) {
     T11 = CALL2(1,VARREF(YevalSast_evalYast_eval),value_,env_);
@@ -1931,9 +1931,9 @@ loop:
   } else {
     T10 = VARREF(YLanyG);
   }
-  T8 = CALLN(1,VARREF(Ynew),13,VARREF(YLsigG),VARREF(Ysig_names),names_,VARREF(Ysig_specs),T9,VARREF(Ysig_naryQ),naryQ_,VARREF(Ysig_arity),arityF3026,VARREF(Ysig_val),T10,VARREF(Ysig_unification_vars),Ynil);
-  CALL2(1,VARREF(Yfun_sig_setter),T8,efunF3027);
-  T5 = efunF3027;
+  T8 = CALLN(1,VARREF(Ynew),13,VARREF(YLsigG),VARREF(Ysig_names),names_,VARREF(Ysig_specs),T9,VARREF(Ysig_naryQ),naryQ_,VARREF(Ysig_arity),arityF3027,VARREF(Ysig_val),T10,VARREF(Ysig_unification_vars),Ynil);
+  CALL2(1,VARREF(Yfun_sig_setter),T8,efunF3028);
+  T5 = efunF3028;
   T0 = T5;
 UNLINK_STACK();
   QRET(T0);
@@ -1954,8 +1954,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_44) {
   P e_,env_;
-  P evalF3029;
-  P paramsF3028;
+  P evalF3030;
+  P paramsF3029;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8;
   P a1,a2;
 LINK_STACK();
@@ -1963,14 +1963,14 @@ LINK_STACK();
   ARG(env_, 1);
 loop:
   T1 = CALL1(1,VARREF(YevalSastYfunction_bindings),e_);
-  paramsF3028 = T1;
+  paramsF3029 = T1;
   T3 = FUNFAB(fun_43,1,e_);
-  evalF3029 = T3;
-  T5 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_name),paramsF3028);
-  T6 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_type),paramsF3028);
+  evalF3030 = T3;
+  T5 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_name),paramsF3029);
+  T6 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_type),paramsF3029);
   T7 = CALL1(1,VARREF(YevalSastYfunction_naryQ),e_);
   T8 = CALL1(1,VARREF(YevalSastYfunction_value),e_);
-  T4 = CALLN(1,VARREF(YevalSast_evalYexport_goo_method),7,e_,T5,T6,T7,T8,evalF3029,env_);
+  T4 = CALLN(1,VARREF(YevalSast_evalYexport_goo_method),7,e_,T5,T6,T7,T8,evalF3030,env_);
   T2 = T4;
   T0 = T2;
 UNLINK_STACK();
@@ -1979,10 +1979,10 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_45) {
   P e_,env_;
-  P specsF3033;
-  P namesF3032;
-  P naryQF3031;
-  P paramsF3030;
+  P specsF3034;
+  P namesF3033;
+  P naryQF3032;
+  P paramsF3031;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
   P a1,a2;
 LINK_STACK();
@@ -1990,16 +1990,16 @@ LINK_STACK();
   ARG(env_, 1);
 loop:
   T1 = CALL1(1,VARREF(YevalSastYfunction_bindings),e_);
-  paramsF3030 = T1;
+  paramsF3031 = T1;
   T3 = CALL1(1,VARREF(YevalSastYfunction_naryQ),e_);
-  naryQF3031 = T3;
-  T5 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_name),paramsF3030);
-  namesF3032 = T5;
-  T8 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_type),paramsF3030);
-  T7 = CALL3(1,VARREF(YevalSast_evalYast_eval_specs),T8,naryQF3031,env_);
-  specsF3033 = T7;
+  naryQF3032 = T3;
+  T5 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_name),paramsF3031);
+  namesF3033 = T5;
+  T8 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_type),paramsF3031);
+  T7 = CALL3(1,VARREF(YevalSast_evalYast_eval_specs),T8,naryQF3032,env_);
+  specsF3034 = T7;
   T10 = CALL1(1,VARREF(YevalSast_evalYas_fun_name),e_);
-  T9 = CALLN(1,VARREF(Yfab_gen),6,T10,namesF3032,specsF3033,naryQF3031,VARREF(YLanyG),Ynil);
+  T9 = CALLN(1,VARREF(Yfab_gen),6,T10,namesF3033,specsF3034,naryQF3032,VARREF(YLanyG),Ynil);
   T6 = T9;
   T4 = T6;
   T2 = T4;
@@ -2124,8 +2124,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_boundQ_54) {
   P e_,binding_,env_;
-  P x_1474F3035;
-  P x_1473F3034;
+  P x_1474F3036;
+  P x_1473F3035;
   P T0,T1,T2,T3,T4,T5;
   P a1,a2,a3;
 LINK_STACK();
@@ -2134,9 +2134,9 @@ LINK_STACK();
   ARG(env_, 2);
 loop:
   T1 = CALL1(1,VARREF(YevalSastYbinding_kind),binding_);
-  x_1473F3034 = T1;
-  x_1474F3035 = VARREF(YgooSmacrosYEE);
-  T4 = CALL2(1,x_1474F3035,x_1473F3034,LITREF(lit_107));
+  x_1473F3035 = T1;
+  x_1474F3036 = VARREF(YgooSmacrosYEE);
+  T4 = CALL2(1,x_1474F3036,x_1473F3035,LITREF(lit_107));
   if (T4 != YPfalse) {
     T5 = CALL1(1,VARREF(YevalSast_evalYenv_global_binding_boundQ),binding_);
     T3 = T5;
@@ -2163,7 +2163,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_56) {
   P e_,env_;
-  P valueF3036;
+  P valueF3037;
   P T0,T1,T2,T3,T4;
   P a1,a2;
 LINK_STACK();
@@ -2172,9 +2172,9 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(YevalSastYassignment_form),e_);
   T1 = CALL2(1,VARREF(YevalSast_evalYast_eval),T2,env_);
-  valueF3036 = T1;
+  valueF3037 = T1;
   T4 = CALL1(1,VARREF(YevalSastYassignment_binding),e_);
-  T3 = CALL2(1,VARREF(YevalSast_evalYenv_global_binding_value_setter),valueF3036,T4);
+  T3 = CALL2(1,VARREF(YevalSast_evalYenv_global_binding_value_setter),valueF3037,T4);
   T0 = T3;
 UNLINK_STACK();
   QRET(T0);
@@ -2193,26 +2193,6 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_58) {
   P e_,env_;
-  P valueF3037;
-  P T0,T1,T2,T3,T4,T5;
-  P a1,a2;
-LINK_STACK();
-  ARG(e_, 0);
-  ARG(env_, 1);
-loop:
-  T2 = CALL1(1,VARREF(YevalSastYassignment_form),e_);
-  T1 = CALL2(1,VARREF(YevalSast_evalYast_eval),T2,env_);
-  valueF3037 = T1;
-  T5 = CALL1(1,VARREF(YevalSastYassignment_binding),e_);
-  T4 = CALL1(1,VARREF(YevalSastYbinding_locative),T5);
-  T3 = CALL2(1,VARREF(YevalSast_evalYenv_runtime_value_setter),valueF3037,T4);
-  T0 = T3;
-UNLINK_STACK();
-  QRET(T0);
-}
-
-FUNCODEDEF(fun_ast_eval_59) {
-  P e_,env_;
   P valueF3038;
   P T0,T1,T2,T3,T4,T5;
   P a1,a2;
@@ -2225,16 +2205,16 @@ loop:
   valueF3038 = T1;
   T5 = CALL1(1,VARREF(YevalSastYassignment_binding),e_);
   T4 = CALL1(1,VARREF(YevalSastYbinding_locative),T5);
-  T3 = CALL2(1,VARREF(YevalSast_evalYenv_dynamic_value_setter),valueF3038,T4);
+  T3 = CALL2(1,VARREF(YevalSast_evalYenv_runtime_value_setter),valueF3038,T4);
   T0 = T3;
 UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_ast_eval_60) {
+FUNCODEDEF(fun_ast_eval_59) {
   P e_,env_;
   P valueF3039;
-  P T0,T1,T2,T3,T4;
+  P T0,T1,T2,T3,T4,T5;
   P a1,a2;
 LINK_STACK();
   ARG(e_, 0);
@@ -2243,8 +2223,28 @@ loop:
   T2 = CALL1(1,VARREF(YevalSastYassignment_form),e_);
   T1 = CALL2(1,VARREF(YevalSast_evalYast_eval),T2,env_);
   valueF3039 = T1;
+  T5 = CALL1(1,VARREF(YevalSastYassignment_binding),e_);
+  T4 = CALL1(1,VARREF(YevalSastYbinding_locative),T5);
+  T3 = CALL2(1,VARREF(YevalSast_evalYenv_dynamic_value_setter),valueF3039,T4);
+  T0 = T3;
+UNLINK_STACK();
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_ast_eval_60) {
+  P e_,env_;
+  P valueF3040;
+  P T0,T1,T2,T3,T4;
+  P a1,a2;
+LINK_STACK();
+  ARG(e_, 0);
+  ARG(env_, 1);
+loop:
+  T2 = CALL1(1,VARREF(YevalSastYassignment_form),e_);
+  T1 = CALL2(1,VARREF(YevalSast_evalYast_eval),T2,env_);
+  valueF3040 = T1;
   T4 = CALL1(1,VARREF(YevalSastYassignment_reference),e_);
-  T3 = CALL3(1,VARREF(YevalSast_evalYenv_local_reference_value_setter),valueF3039,env_,T4);
+  T3 = CALL3(1,VARREF(YevalSast_evalYenv_local_reference_value_setter),valueF3040,env_,T4);
   T0 = T3;
 UNLINK_STACK();
   QRET(T0);
@@ -2252,9 +2252,9 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_env_define_bindingX_61) {
   P b_,v_;
-  P xF3042;
-  P x_1476F3041;
-  P x_1475F3040;
+  P xF3043;
+  P x_1476F3042;
+  P x_1475F3041;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16,T17,T18;
   P a1,a2;
@@ -2263,24 +2263,24 @@ LINK_STACK();
   ARG(v_, 1);
 loop:
   T1 = CALL1(1,VARREF(YevalSastYbinding_kind),b_);
-  x_1475F3040 = T1;
-  x_1476F3041 = VARREF(YgooSmacrosYEE);
-  T4 = CALL2(1,x_1476F3041,x_1475F3040,LITREF(lit_116));
+  x_1475F3041 = T1;
+  x_1476F3042 = VARREF(YgooSmacrosYEE);
+  T4 = CALL2(1,x_1476F3042,x_1475F3041,LITREF(lit_116));
   if (T4 != YPfalse) {
     T6 = CALL1(1,VARREF(YevalSastYbinding_locative),b_);
     T5 = CALL2(1,VARREF(YevalSast_evalYenv_runtime_value_setter),v_,T6);
     T3 = T5;
   } else {
-    T8 = CALL2(1,x_1476F3041,x_1475F3040,LITREF(lit_107));
+    T8 = CALL2(1,x_1476F3042,x_1475F3041,LITREF(lit_107));
     if (T8 != YPfalse) {
       T9 = CALL2(1,VARREF(YevalSast_evalYenv_global_binding_value_setter),v_,b_);
       T7 = T9;
     } else {
-      T11 = CALL2(1,x_1476F3041,x_1475F3040,LITREF(lit_117));
+      T11 = CALL2(1,x_1476F3042,x_1475F3041,LITREF(lit_117));
       if (T11 != YPfalse) {
         T13 = (P)YPfab_dyn_var();
-        xF3042 = T13;
-        T14 = (P)YPtag_into(xF3042,(P)3);
+        xF3043 = T13;
+        T14 = (P)YPtag_into(xF3043,(P)3);
         T12 = T14;
         CALL2(1,VARREF(YevalSastYbinding_locative_setter),T12,b_);
         T16 = CALL1(1,VARREF(YevalSastYbinding_locative),b_);
@@ -2303,7 +2303,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_62) {
   P e_,env_;
-  P valueF3043;
+  P valueF3044;
   P T0,T1,T2,T3;
   P a1,a2;
 LINK_STACK();
@@ -2312,9 +2312,9 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(YevalSastYassignment_form),e_);
   T1 = CALL2(1,VARREF(YevalSast_evalYast_eval),T2,env_);
-  valueF3043 = T1;
+  valueF3044 = T1;
   T3 = CALL1(1,VARREF(YevalSastYassignment_binding),e_);
-  CALL2(1,VARREF(YevalSast_evalYenv_define_bindingX),T3,valueF3043);
+  CALL2(1,VARREF(YevalSast_evalYenv_define_bindingX),T3,valueF3044);
   T0 = YPfalse;
 UNLINK_STACK();
   QRET(T0);
@@ -2345,23 +2345,23 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_eval_64) {
   P e_;
-  P valF3045;
-  P nxtF3044;
+  P valF3046;
+  P nxtF3045;
   P T0,T1,T2,T3,T4,T5,T6,T7;
   P a1;
 LINK_STACK();
   ARG(e_, 0);
 loop:
   T1 = CALL1(1,VARREF(Ytail),e_);
-  nxtF3044 = T1;
+  nxtF3045 = T1;
   T4 = CALL1(1,VARREF(Yhead),e_);
   T3 = CALL2(1,VARREF(YevalSast_evalYast_eval),T4,FREEREF(0));
-  valF3045 = T3;
-  T6 = CALL1(1,VARREF(YgooSmacrosYemptyQ),nxtF3044);
+  valF3046 = T3;
+  T6 = CALL1(1,VARREF(YgooSmacrosYemptyQ),nxtF3045);
   if (T6 != YPfalse) {
-    T5 = valF3045;
+    T5 = valF3046;
   } else {
-    a1 = nxtF3044;
+    a1 = nxtF3045;
     e_ = a1;
     goto loop;
     T5 = T7;
@@ -2374,7 +2374,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_65) {
   P e_,env_;
-  P evalF3046;
+  P evalF3047;
   P T0,T1,T2;
   P a1,a2;
 LINK_STACK();
@@ -2382,9 +2382,9 @@ LINK_STACK();
   ARG(env_, 1);
 loop:
   T1 = FUNSHELL(1,fun_eval_64,2);
-  evalF3046 = T1;
-  FUNINIT(evalF3046, 2,env_,evalF3046);
-  T2 = CALL1(0,evalF3046,e_);
+  evalF3047 = T1;
+  FUNINIT(evalF3047, 2,env_,evalF3047);
+  T2 = CALL1(0,evalF3047,e_);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -2420,7 +2420,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_67) {
   P e_,env_;
-  P evalF3047;
+  P evalF3048;
   P T0,T1,T2;
   P a1,a2;
 LINK_STACK();
@@ -2428,9 +2428,9 @@ LINK_STACK();
   ARG(env_, 1);
 loop:
   T1 = FUNSHELL(1,fun_eval_66,2);
-  evalF3047 = T1;
-  FUNINIT(evalF3047, 2,env_,evalF3047);
-  T2 = CALL2(0,evalF3047,Ynil,e_);
+  evalF3048 = T1;
+  FUNINIT(evalF3048, 2,env_,evalF3048);
+  T2 = CALL2(0,evalF3048,Ynil,e_);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -2438,8 +2438,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_68) {
   P e_,env_;
-  P argsF3049;
-  P fF3048;
+  P argsF3050;
+  P fF3049;
   P T0,T1,T2,T3,T4,T5,T6;
   P a1,a2;
 LINK_STACK();
@@ -2448,11 +2448,11 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(YevalSastYapplication_function),e_);
   T1 = CALL2(1,VARREF(YevalSast_evalYast_eval),T2,env_);
-  fF3048 = T1;
+  fF3049 = T1;
   T5 = CALL1(1,VARREF(YevalSastYapplication_arguments),e_);
   T4 = CALL2(1,VARREF(YevalSast_evalYast_eval),T5,env_);
-  argsF3049 = T4;
-  T6 = CALL3(1,VARREF(YgooSmacrosYnapp),fF3048,YPfalse,argsF3049);
+  argsF3050 = T4;
+  T6 = CALL3(1,VARREF(YgooSmacrosYnapp),fF3049,YPfalse,argsF3050);
   T3 = T6;
   T0 = T3;
 UNLINK_STACK();
@@ -2461,10 +2461,10 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_69) {
   P e_,env_;
-  P argsF3053;
-  P fF3052;
-  P nmsF3051;
-  P bF3050;
+  P argsF3054;
+  P fF3053;
+  P nmsF3052;
+  P bF3051;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14;
   P a1,a2;
 LINK_STACK();
@@ -2472,27 +2472,27 @@ LINK_STACK();
   ARG(env_, 1);
 loop:
   T1 = CALL1(1,VARREF(YevalSastYapplication_binding),e_);
-  bF3050 = T1;
-  T4 = CALL1(1,VARREF(YevalSastYbinding_name),bF3050);
+  bF3051 = T1;
+  T4 = CALL1(1,VARREF(YevalSastYbinding_name),bF3051);
   T3 = CALL2(1,VARREF(YgooSmacrosYEE),T4,LITREF(lit_77));
   if (T3 != YPfalse) {
     T6 = CALL2(1,VARREF(YevalSast_evalYenv_binding_value),env_,LITREF(lit_77));
-    nmsF3051 = T6;
-    T8 = CALL2(1,VARREF(YgooSmacrosYEE),nmsF3051,VARREF(Ynul));
+    nmsF3052 = T6;
+    T8 = CALL2(1,VARREF(YgooSmacrosYEE),nmsF3052,VARREF(Ynul));
     if (T8 != YPfalse) {
       T7 = YPfalse;
     } else {
-      T7 = nmsF3051;
+      T7 = nmsF3052;
     }
     T5 = T7;
     T2 = T5;
   } else {
-    T10 = CALL1(1,VARREF(YevalSastYbinding_info),bF3050);
-    fF3052 = T10;
+    T10 = CALL1(1,VARREF(YevalSastYbinding_info),bF3051);
+    fF3053 = T10;
     T13 = CALL1(1,VARREF(YevalSastYapplication_arguments),e_);
     T12 = CALL2(1,VARREF(YevalSast_evalYast_eval),T13,env_);
-    argsF3053 = T12;
-    T14 = CALL3(1,VARREF(YgooSmacrosYnapp),fF3052,YPfalse,argsF3053);
+    argsF3054 = T12;
+    T14 = CALL3(1,VARREF(YgooSmacrosYnapp),fF3053,YPfalse,argsF3054);
     T11 = T14;
     T9 = T11;
     T2 = T9;
@@ -2504,8 +2504,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_70) {
   P e_,env_;
-  P nenvF3055;
-  P argsF3054;
+  P nenvF3056;
+  P argsF3055;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8;
   P a1,a2;
 LINK_STACK();
@@ -2514,13 +2514,13 @@ LINK_STACK();
 loop:
   T2 = CALL1(1,VARREF(YevalSastYfix_let_arguments),e_);
   T1 = CALL2(1,VARREF(YevalSast_evalYast_eval),T2,env_);
-  argsF3054 = T1;
+  argsF3055 = T1;
   T6 = CALL1(1,VARREF(YevalSastYfix_let_bindings),e_);
   T5 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_name),T6);
-  T4 = CALL4(1,VARREF(YevalSast_evalYenv_frameX),env_,YPfalse,T5,argsF3054);
-  nenvF3055 = T4;
+  T4 = CALL4(1,VARREF(YevalSast_evalYenv_frameX),env_,YPfalse,T5,argsF3055);
+  nenvF3056 = T4;
   T8 = CALL1(1,VARREF(YevalSastYfix_let_body),e_);
-  T7 = CALL2(1,VARREF(YevalSast_evalYast_eval),T8,nenvF3055);
+  T7 = CALL2(1,VARREF(YevalSast_evalYast_eval),T8,nenvF3056);
   T3 = T7;
   T0 = T3;
 UNLINK_STACK();
@@ -2542,8 +2542,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_ast_eval_72) {
   P e_,env_;
-  P new_envF3057;
-  P bindingsF3056;
+  P new_envF3058;
+  P bindingsF3057;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13;
   P a1,a2;
 LINK_STACK();
@@ -2551,20 +2551,20 @@ LINK_STACK();
   ARG(env_, 1);
 loop:
   T1 = CALL1(1,VARREF(YevalSastYlocals_bindings),e_);
-  bindingsF3056 = T1;
-  T4 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_name),bindingsF3056);
+  bindingsF3057 = T1;
+  T4 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_name),bindingsF3057);
   T6 = CALL1(1,VARREF(YgooSruntimeYalways),VARREF(Ynul));
-  T5 = CALL2(1,VARREF(YgooSmacrosYmap),T6,bindingsF3056);
+  T5 = CALL2(1,VARREF(YgooSmacrosYmap),T6,bindingsF3057);
   T3 = CALL4(1,VARREF(YevalSast_evalYenv_frameX),env_,YPfalse,T4,T5);
-  new_envF3057 = T3;
-  T7 = FUNFAB(fun_71,1,new_envF3057);
-  T8 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_name),bindingsF3056);
-  T10 = CALL2(1,VARREF(YgooSruntimeYrcurry),VARREF(YevalSast_evalYast_eval),new_envF3057);
+  new_envF3058 = T3;
+  T7 = FUNFAB(fun_71,1,new_envF3058);
+  T8 = CALL2(1,VARREF(YgooSmacrosYmap),VARREF(YevalSastYbinding_name),bindingsF3057);
+  T10 = CALL2(1,VARREF(YgooSruntimeYrcurry),VARREF(YevalSast_evalYast_eval),new_envF3058);
   T11 = CALL1(1,VARREF(YevalSastYlocals_functions),e_);
   T9 = CALL2(1,VARREF(YgooSmacrosYmap),T10,T11);
   CALL3(1,VARREF(YgooScolsSseqYdo2),T7,T8,T9);
   T13 = CALL1(1,VARREF(YevalSastYlocals_body),e_);
-  T12 = CALL2(1,VARREF(YevalSast_evalYast_eval),T13,new_envF3057);
+  T12 = CALL2(1,VARREF(YevalSast_evalYast_eval),T13,new_envF3058);
   T2 = T12;
   T0 = T2;
 UNLINK_STACK();
@@ -2586,22 +2586,22 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_74) {
   P return_;
-  P exitF3059;
-  P rprocF3058;
+  P exitF3060;
+  P rprocF3059;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8;
   P a1;
 LINK_STACK();
   ARG(return_, 0);
 loop:
   T1 = FUNFAB(fun_73,1,return_);
-  rprocF3058 = T1;
+  rprocF3059 = T1;
   T4 = CALL1(1,VARREF(Ylst),LITREF(lit_134));
   T5 = CALL1(1,VARREF(Ylst),YPfalse);
-  T3 = CALLN(1,VARREF(YevalSast_evalYexport_goo_method),7,rprocF3058,T4,T5,YPfalse,YPfalse,rprocF3058,FREEREF(0));
-  exitF3059 = T3;
+  T3 = CALLN(1,VARREF(YevalSast_evalYexport_goo_method),7,rprocF3059,T4,T5,YPfalse,YPfalse,rprocF3059,FREEREF(0));
+  exitF3060 = T3;
   T8 = CALL1(1,VARREF(YevalSastYbind_exit_main_fun),FREEREF(1));
   T7 = CALL2(1,VARREF(YevalSast_evalYast_eval),T8,FREEREF(0));
-  T6 = CALL1(1,T7,exitF3059);
+  T6 = CALL1(1,T7,exitF3060);
   T2 = T6;
   T0 = T2;
 UNLINK_STACK();
@@ -2684,7 +2684,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(YevalSastYinit_environment_for_eval) {
   P env_;
-  P bF3060;
+  P bF3061;
   P T0,T1,T2;
   P a1;
 LINK_STACK();
@@ -2692,29 +2692,14 @@ LINK_STACK();
 loop:
   CALL4(1,VARREF(YevalSastYast_define_binding),env_,LITREF(lit_77),YPfalse,LITREF(lit_140));
   T1 = CALL4(1,VARREF(YevalSastYast_define_binding),env_,LITREF(lit_141),YPfalse,LITREF(lit_107));
-  bF3060 = T1;
-  T2 = CALL2(1,VARREF(YevalSast_evalYenv_global_binding_value_setter),VARREF(YgooSmacrosYpair),bF3060);
+  bF3061 = T1;
+  T2 = CALL2(1,VARREF(YevalSast_evalYenv_global_binding_value_setter),VARREF(YgooSmacrosYpair),bF3061);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
 }
 
 P YevalSast_evalYPdefine_binding(P raw_mod_,P raw_nam_) {
-  P eF3061;
-  P T0,T1,T2,T3,T4;
-  P a1,a2;
-DEFCREGS();
-loop:
-  T2 = (P)YPPsym(raw_mod_);
-  T1 = XCALL1(1,VARREF(YevalSastYunchecked_runtime_environment),T2);
-  eF3061 = T1;
-  T4 = (P)YPPsym(raw_nam_);
-  T3 = XCALL4(1,VARREF(YevalSastYast_define_binding),eF3061,T4,YPfalse,LITREF(lit_107));
-  T0 = T3;
-  return T0;
-}
-
-P YevalSast_evalYPlookup_binding(P raw_mod_,P raw_nam_) {
   P eF3062;
   P T0,T1,T2,T3,T4;
   P a1,a2;
@@ -2724,21 +2709,36 @@ loop:
   T1 = XCALL1(1,VARREF(YevalSastYunchecked_runtime_environment),T2);
   eF3062 = T1;
   T4 = (P)YPPsym(raw_nam_);
-  T3 = XCALL2(1,VARREF(YevalSastYfind_binding),T4,eF3062);
+  T3 = XCALL4(1,VARREF(YevalSastYast_define_binding),eF3062,T4,YPfalse,LITREF(lit_107));
+  T0 = T3;
+  return T0;
+}
+
+P YevalSast_evalYPlookup_binding(P raw_mod_,P raw_nam_) {
+  P eF3063;
+  P T0,T1,T2,T3,T4;
+  P a1,a2;
+DEFCREGS();
+loop:
+  T2 = (P)YPPsym(raw_mod_);
+  T1 = XCALL1(1,VARREF(YevalSastYunchecked_runtime_environment),T2);
+  eF3063 = T1;
+  T4 = (P)YPPsym(raw_nam_);
+  T3 = XCALL2(1,VARREF(YevalSastYfind_binding),T4,eF3063);
   T0 = T3;
   return T0;
 }
 
 P YevalSast_evalYPensure_binding(P raw_mod_,P raw_nam_) {
-  P tmpF3063;
+  P tmpF3064;
   P T0,T1,T2,T3;
   P a1,a2;
 DEFCREGS();
 loop:
   T1 = (P)YevalSast_evalYPlookup_binding(raw_mod_,raw_nam_);
-  tmpF3063 = T1;
-  if (tmpF3063 != YPfalse) {
-    T2 = tmpF3063;
+  tmpF3064 = T1;
+  if (tmpF3064 != YPfalse) {
+    T2 = tmpF3064;
   } else {
     T3 = (P)YevalSast_evalYPdefine_binding(raw_mod_,raw_nam_);
     T2 = T3;
@@ -2748,25 +2748,25 @@ loop:
 }
 
 P YevalSast_evalYPdlvar_binding(P dlvar_) {
-  P yF3068;
+  P yF3069;
+  P xF3068;
   P xF3067;
   P xF3066;
-  P xF3065;
-  P bF3064;
+  P bF3065;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12;
   P a1;
 DEFCREGS();
 loop:
   T1 = (P)YevalSast_evalYPdlvar(dlvar_);
-  bF3064 = T1;
-  xF3067 = bF3064;
-  xF3065 = YPint((P)0);
-  xF3066 = xF3065;
-  T6 = (P)YPiGG(xF3066,(P)2);
+  bF3065 = T1;
+  xF3068 = bF3065;
+  xF3066 = YPint((P)0);
+  xF3067 = xF3066;
+  T6 = (P)YPiGG(xF3067,(P)2);
   T5 = T6;
   T4 = T5;
-  yF3068 = T4;
-  T8 = (P)YPeqQ(xF3067,yF3068);
+  yF3069 = T4;
+  T8 = (P)YPeqQ(xF3068,yF3069);
   T7 = (P)YPbb(T8);
   T3 = T7;
   if (T3 != YPfalse) {
@@ -2776,20 +2776,20 @@ loop:
     T9 = (P)YevalSast_evalYPdlvar_setter(T10,dlvar_);
     T2 = T9;
   } else {
-    T2 = bF3064;
+    T2 = bF3065;
   }
   T0 = T2;
   return T0;
 }
 
 INLINE P YevalSast_evalYPbinding_bound_ofQ(P b_) {
-  P tmpF3069;
+  P tmpF3070;
   P T0,T1,T2;
   P a1;
 DEFCREGS();
 loop:
-  tmpF3069 = b_;
-  if (tmpF3069 != YPfalse) {
+  tmpF3070 = b_;
+  if (tmpF3070 != YPfalse) {
     T2 = XCALL1(1,VARREF(YevalSastYbinding_info),b_);
     T1 = T2;
   } else {
@@ -2812,22 +2812,22 @@ loop:
 }
 
 INLINE P YevalSast_evalYPbinding_value_of(P binding_) {
-  P x_1478F3071;
-  P x_1477F3070;
+  P x_1478F3072;
+  P x_1477F3071;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
   P a1;
 DEFCREGS();
 loop:
   T1 = XCALL1(1,VARREF(YevalSastYbinding_kind),binding_);
-  x_1477F3070 = T1;
-  x_1478F3071 = VARREF(YgooSmacrosYEE);
-  T4 = XCALL2(1,x_1478F3071,x_1477F3070,LITREF(lit_116));
+  x_1477F3071 = T1;
+  x_1478F3072 = VARREF(YgooSmacrosYEE);
+  T4 = XCALL2(1,x_1478F3072,x_1477F3071,LITREF(lit_116));
   if (T4 != YPfalse) {
     T6 = XCALL1(1,VARREF(YevalSastYbinding_locative),binding_);
     T5 = XCALL1(1,VARREF(YevalSast_evalYenv_runtime_value),T6);
     T3 = T5;
   } else {
-    T8 = XCALL2(1,x_1478F3071,x_1477F3070,LITREF(lit_117));
+    T8 = XCALL2(1,x_1478F3072,x_1477F3071,LITREF(lit_117));
     if (T8 != YPfalse) {
       T10 = XCALL1(1,VARREF(YevalSastYbinding_locative),binding_);
       T9 = XCALL1(1,VARREF(YevalSast_evalYenv_dynamic_value),T10);
@@ -2854,22 +2854,22 @@ loop:
 }
 
 INLINE P YevalSast_evalYPbinding_value_of_setter(P val_,P binding_) {
-  P x_1480F3073;
-  P x_1479F3072;
+  P x_1480F3074;
+  P x_1479F3073;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11;
   P a1,a2;
 DEFCREGS();
 loop:
   T1 = XCALL1(1,VARREF(YevalSastYbinding_kind),binding_);
-  x_1479F3072 = T1;
-  x_1480F3073 = VARREF(YgooSmacrosYEE);
-  T4 = XCALL2(1,x_1480F3073,x_1479F3072,LITREF(lit_116));
+  x_1479F3073 = T1;
+  x_1480F3074 = VARREF(YgooSmacrosYEE);
+  T4 = XCALL2(1,x_1480F3074,x_1479F3073,LITREF(lit_116));
   if (T4 != YPfalse) {
     T6 = XCALL1(1,VARREF(YevalSastYbinding_locative),binding_);
     T5 = XCALL2(1,VARREF(YevalSast_evalYenv_runtime_value_setter),val_,T6);
     T3 = T5;
   } else {
-    T8 = XCALL2(1,x_1480F3073,x_1479F3072,LITREF(lit_117));
+    T8 = XCALL2(1,x_1480F3074,x_1479F3073,LITREF(lit_117));
     if (T8 != YPfalse) {
       T10 = XCALL1(1,VARREF(YevalSastYbinding_locative),binding_);
       T9 = XCALL2(1,VARREF(YevalSast_evalYenv_dynamic_value_setter),val_,T10);
@@ -3822,17 +3822,17 @@ extern MODULE_INFO module_info_gooSmath;
 extern MODULE_INFO module_info_gooScolsScol;
 extern MODULE_INFO module_info_gooScolsStab;
 extern MODULE_INFO module_info_gooScolsScolx;
+extern MODULE_INFO module_info_gooScolsScycle;
 extern MODULE_INFO module_info_gooScolsSstr;
-extern MODULE_INFO module_info_gooScolsSlst;
+extern MODULE_INFO module_info_gooStypes;
 extern MODULE_INFO module_info_gooSpacker;
 extern MODULE_INFO module_info_gooScolsSstep;
-extern MODULE_INFO module_info_gooStypes;
 extern MODULE_INFO module_info_gooSioSwrite;
+extern MODULE_INFO module_info_gooScolsSlst;
 extern MODULE_INFO module_info_gooSmag;
 extern MODULE_INFO module_info_gooSlate_macros;
 extern MODULE_INFO module_info_gooScolsSrange;
 extern MODULE_INFO module_info_evalSdependency;
-extern MODULE_INFO module_info_gooScolsScycle;
 extern MODULE_INFO module_info_gooScolsSmap;
 extern MODULE_INFO module_info_gooScolsSvec;
 extern MODULE_INFO module_info_gooSioSread;
@@ -3848,18 +3848,16 @@ static USE_INFO use_infos[] = {
 };
 
 static IMPORT_INFO import_infos[] = {
-  {"*macros-ok?*", &module_info_gooSboot, NULL},
-  {"%ready?", &module_info_gooSboot, NULL},
+  {"$max-int", &module_info_gooSboot, NULL},
   {"<int>", &module_info_gooSboot, NULL},
   {"sort-by", &module_info_gooScolsSseq, NULL},
   {"function-source-setter", &module_info_evalSast, NULL},
-  {"%loc-val-setter", &module_info_gooSboot, NULL},
-  {"%open-in-file", &module_info_gooSboot, NULL},
   {"gen-refs-setter", &module_info_gooSboot, NULL},
   {"class-ancestors", &module_info_gooSboot, NULL},
   {"binding-inferred-type-setter", &module_info_evalSast, NULL},
   {"<port>", &module_info_gooSioSport, NULL},
   {"binding-mangled-name-setter", &module_info_evalSast, NULL},
+  {"<bind-exit>", &module_info_evalSast, NULL},
   {"fab-g2c-module", &module_info_evalSast, NULL},
   {"binding-dynamic-extent?-setter", &module_info_evalSast, NULL},
   {"sort!", &module_info_gooScolsSseqx, NULL},
@@ -3868,57 +3866,62 @@ static IMPORT_INFO import_infos[] = {
   {"binding-value-setter", &module_info_evalSast, NULL},
   {"def-fun-var", &module_info_gooSmacros, NULL},
   {"push", &module_info_gooScolsSseq, NULL},
-  {"%fatan2", &module_info_gooSboot, NULL},
   {"ceil/", &module_info_gooSmath, NULL},
-  {"%vm-box-val-setter", &module_info_gooSboot, NULL},
-  {"%lb", &module_info_gooSboot, NULL},
+  {"do-static-global-bindings", &module_info_evalSast, NULL},
+  {"reference-called-function?-setter", &module_info_evalSast, NULL},
   {"application-arguments", &module_info_evalSast, NULL},
-  {"%vm-fun-env-fab", &module_info_gooSboot, NULL},
+  {"%i*", &module_info_gooSboot, NULL},
   {"<regular-application>", &module_info_evalSast, NULL},
+  {"function-temporaries", &module_info_evalSast, NULL},
   {"incongruent-method-error", &module_info_gooSboot, NULL},
   {"<num>", &module_info_gooSboot, NULL},
   {"bound?", &module_info_gooSboot, NULL},
+  {"%flog", &module_info_gooSboot, NULL},
   {"%dispatch", &module_info_gooSboot, NULL},
+  {"%relt-setter", &module_info_gooSboot, NULL},
   {"application-binding", &module_info_evalSast, NULL},
-  {"%time", &module_info_gooSboot, NULL},
+  {"<fab-list>", &module_info_evalSast, NULL},
   {"asin", &module_info_gooSmath, NULL},
+  {"%gen-code", &module_info_gooSboot, NULL},
   {"<product>", &module_info_gooSboot, NULL},
+  {"%app-args", &module_info_gooSboot, NULL},
   {"type-object", &module_info_gooSboot, NULL},
-  {"file-opening-error-filename", &module_info_gooSconditions, NULL},
   {"low-elt", &module_info_gooScolsScol, NULL},
   {"%raw", &module_info_gooSboot, NULL},
   {"case-insensitive-string-equal", &module_info_gooScolsStab, NULL},
-  {"@subclass?", &module_info_gooSboot, NULL},
   {"fix-let-bindings-setter", &module_info_evalSast, NULL},
+  {"fix-let-bindings", &module_info_evalSast, NULL},
   {"elt-default", &module_info_gooScolsScol, NULL},
+  {"%dyn-var-val", &module_info_gooSboot, NULL},
   {"gen-refs", &module_info_gooSboot, NULL},
   {"reference-frame-number", &module_info_evalSast, NULL},
   {"msg-to-str", &module_info_gooSconditions, NULL},
-  {"fix-let-arguments-setter", &module_info_evalSast, NULL},
   {"fix-let-body-setter", &module_info_evalSast, NULL},
+  {"fix-let-body", &module_info_evalSast, NULL},
+  {"set-module-environments", &module_info_evalSast, NULL},
   {"<global-assignment>", &module_info_evalSast, NULL},
   {"<magic-reference>", &module_info_evalSast, NULL},
   {"<file-port>", &module_info_gooSioSport, NULL},
-  {"ins", &module_info_gooScolsSseq, NULL},
+  {"%eq?", &module_info_gooSboot, NULL},
   {"match-empty-list", &module_info_gooSmacros, NULL},
+  {"@subclass?", &module_info_gooSboot, NULL},
   {"assignment-form-setter", &module_info_evalSast, NULL},
-  {"binding-kind", &module_info_evalSast, NULL},
-  {"%ft", &module_info_gooSboot, NULL},
-  {"%src-loc", &module_info_gooSboot, NULL},
   {"sort", &module_info_gooScolsSseq, NULL},
-  {"<property-type-error>", &module_info_gooSconditions, NULL},
   {"<handler>", &module_info_gooSconditions, NULL},
-  {"%c=", &module_info_gooSboot, NULL},
+  {"<property-type-error>", &module_info_gooSconditions, NULL},
+  {"%put", &module_info_gooSboot, NULL},
+  {"$e", &module_info_gooSmath, NULL},
   {"module-name-to-relpath", &module_info_evalSast, NULL},
   {"finds", &module_info_gooScolsSseq, NULL},
-  {"%i<<", &module_info_gooSboot, NULL},
+  {"binding-global-box", &module_info_evalSast, NULL},
   {"del-dups!", &module_info_gooScolsSseqx, NULL},
   {"internal-error", &module_info_gooSboot, NULL},
   {"low-elt-setter", &module_info_gooScolsScolx, NULL},
   {"~==", &module_info_gooSmath, NULL},
   {"rep-fill!", &module_info_gooScolsSrep, NULL},
+  {"%eof-object", &module_info_gooSboot, NULL},
   {"app-args", &module_info_gooSruntime, NULL},
-  {"application-known?-setter", &module_info_evalSast, NULL},
+  {"@<", &module_info_gooSboot, NULL},
   {"<union>", &module_info_gooSboot, NULL},
   {"rcurry", &module_info_gooSruntime, NULL},
   {"<locals>", &module_info_evalSast, NULL},
@@ -3929,61 +3932,60 @@ static IMPORT_INFO import_infos[] = {
   {"<file-opening-error>", &module_info_gooSconditions, NULL},
   {"function-body-setter", &module_info_evalSast, NULL},
   {"to-digit", &module_info_gooSmath, NULL},
-  {"%os-val-setter", &module_info_gooSboot, NULL},
+  {"cycle", &module_info_gooScolsScycle, NULL},
   {"num-to-str-base", &module_info_gooScolsSstr, NULL},
-  {"nul", &module_info_gooSboot, NULL},
-  {"<bind-exit>", &module_info_evalSast, NULL},
-  {"module-mangled-string-name-setter", &module_info_evalSast, NULL},
+  {"%rep", &module_info_gooSboot, NULL},
+  {"%raw-met-call", &module_info_gooSboot, NULL},
+  {"%os-val-setter", &module_info_gooSboot, NULL},
   {"pair", &module_info_gooSmacros, NULL},
   {"assert-error", &module_info_gooSboot, NULL},
   {"<local-binding>", &module_info_evalSast, NULL},
   {"use", &module_info_gooSboot, NULL},
   {"atan2", &module_info_gooSmath, NULL},
-  {"%selt-setter", &module_info_gooSboot, NULL},
   {"case-by", &module_info_gooSmacros, NULL},
   {"prop-setter", &module_info_gooSboot, NULL},
   {"var-name", &module_info_gooSmacros, NULL},
-  {"%i<<<", &module_info_gooSboot, NULL},
   {"not", &module_info_gooSboot, NULL},
+  {"function-debug-name-setter", &module_info_evalSast, NULL},
   {"fun-val", &module_info_gooSboot, NULL},
   {"<no-applicable-methods-error>", &module_info_gooSconditions, NULL},
-  {"%invoke-debugger", &module_info_gooSboot, NULL},
   {"fun-sig-setter", &module_info_gooSboot, NULL},
+  {"any?", &module_info_gooStypes, NULL},
   {"pos?", &module_info_gooSmath, NULL},
   {"<enum>", &module_info_gooScolsScol, NULL},
+  {"@oelt", &module_info_gooSboot, NULL},
   {"odd?", &module_info_gooSmath, NULL},
   {"elt-type", &module_info_gooScolsScol, NULL},
+  {"%vm-box-val-setter", &module_info_gooSboot, NULL},
   {"cat2", &module_info_gooScolsSseq, NULL},
-  {"list", &module_info_gooScolsSlst, NULL},
   {"<application>", &module_info_evalSast, NULL},
   {"$default-handler-info", &module_info_gooSconditions, NULL},
   {"fun-src-setter", &module_info_gooSboot, NULL},
-  {"%get", &module_info_gooSboot, NULL},
   {"<chr>", &module_info_gooSboot, NULL},
+  {"rotf", &module_info_gooSmacros, NULL},
   {"condition-message", &module_info_gooSconditions, NULL},
   {"del-dups", &module_info_gooScolsSseq, NULL},
   {"function-self-recursive?-setter", &module_info_evalSast, NULL},
   {"global-box-value", &module_info_evalSast, NULL},
   {"sig-nary?", &module_info_gooSboot, NULL},
-  {"function-debug-name", &module_info_evalSast, NULL},
+  {"%i=", &module_info_gooSboot, NULL},
   {"assert", &module_info_gooSmacros, NULL},
-  {"find-binding", &module_info_evalSast, NULL},
   {"constant-index", &module_info_evalSast, NULL},
   {"app-filename", &module_info_gooSruntime, NULL},
+  {"%slen", &module_info_gooSboot, NULL},
   {"<subclass>", &module_info_gooSboot, NULL},
   {"binding-type", &module_info_evalSast, NULL},
   {"<ast-primitive>", &module_info_evalSast, NULL},
   {"ct-also", &module_info_gooSboot, NULL},
   {"<sequential>", &module_info_evalSast, NULL},
-  {"binding-dotted?-setter", &module_info_evalSast, NULL},
+  {"%unlink-stack", &module_info_gooSboot, NULL},
   {"sig-unification-vars", &module_info_gooSboot, NULL},
   {"app", &module_info_gooSmacros, NULL},
-  {"%i!", &module_info_gooSboot, NULL},
-  {"%loc-off", &module_info_gooSboot, NULL},
   {"<range-error>", &module_info_gooSconditions, NULL},
   {"<type-error>", &module_info_gooSconditions, NULL},
   {"macro-expand", &module_info_gooSboot, NULL},
-  {"binding-info-setter", &module_info_evalSast, NULL},
+  {"%i>>", &module_info_gooSboot, NULL},
+  {"%tup", &module_info_gooSboot, NULL},
   {"locals-bindings", &module_info_evalSast, NULL},
   {"assignment-reference", &module_info_evalSast, NULL},
   {"<mag>", &module_info_gooSboot, NULL},
@@ -3992,40 +3994,46 @@ static IMPORT_INFO import_infos[] = {
   {"unzip", &module_info_gooScolsSzip, NULL},
   {"monitor-main-thunk", &module_info_evalSast, NULL},
   {"<condition>", &module_info_gooSconditions, NULL},
+  {"%fcosh", &module_info_gooSboot, NULL},
   {"bind-exit-main-fun", &module_info_evalSast, NULL},
   {"rep-len", &module_info_gooScolsSrep, NULL},
+  {"%gen-refs", &module_info_gooSboot, NULL},
   {"file-opening-error", &module_info_gooSboot, NULL},
   {"program-type-setter", &module_info_evalSast, NULL},
   {"1+", &module_info_gooSmath, NULL},
   {"seq", &module_info_gooSboot, NULL},
-  {"%fasin", &module_info_gooSboot, NULL},
+  {"*gensym-counter*", &module_info_gooSruntime, NULL},
   {"fun-src", &module_info_gooSboot, NULL},
+  {"module-syntax-environment", &module_info_evalSast, NULL},
   {"function-signature", &module_info_evalSast, NULL},
-  {"fix-let-bindings", &module_info_evalSast, NULL},
   {"<module>", &module_info_evalSast, NULL},
   {"col-res-type", &module_info_gooScolsScol, NULL},
-  {"napp", &module_info_gooSmacros, NULL},
   {"del-vals!", &module_info_gooScolsSseqx, NULL},
   {"packer-res", &module_info_gooSpacker, NULL},
-  {"<bound?>", &module_info_evalSast, NULL},
+  {"%rlen", &module_info_gooSboot, NULL},
+  {"<property-unbound-error>", &module_info_gooSconditions, NULL},
   {"fill!", &module_info_gooScolsScolx, NULL},
   {"<arguments>", &module_info_evalSast, NULL},
   {"locals-body", &module_info_evalSast, NULL},
+  {"%gen-code-setter", &module_info_gooSboot, NULL},
   {"function-temporaries-setter", &module_info_evalSast, NULL},
   {"<singleton>", &module_info_gooSboot, NULL},
   {"return-type-error", &module_info_gooSboot, NULL},
+  {"%loc-off-setter", &module_info_gooSboot, NULL},
   {"<log>", &module_info_gooSboot, NULL},
-  {"%fsqrt", &module_info_gooSboot, NULL},
   {"@lst", &module_info_gooSboot, NULL},
+  {"@tlen", &module_info_gooSboot, NULL},
   {"find-setter", &module_info_gooSboot, NULL},
   {"function-free-setter", &module_info_evalSast, NULL},
+  {"file-opening-error-filename", &module_info_gooSconditions, NULL},
   {"free-environment", &module_info_evalSast, NULL},
+  {"%ready?", &module_info_gooSboot, NULL},
   {"sequentialize", &module_info_evalSast, NULL},
   {"log", &module_info_gooSmath, NULL},
   {"locals-functions", &module_info_evalSast, NULL},
   {"unless", &module_info_gooSmacros, NULL},
   {"fab-handler", &module_info_gooSconditions, NULL},
-  {"%c<", &module_info_gooSboot, NULL},
+  {"%snul", &module_info_gooSboot, NULL},
   {"exported", &module_info_gooSmacros, NULL},
   {"head-setter", &module_info_gooSboot, NULL},
   {"fill", &module_info_gooScolsScol, NULL},
@@ -4037,36 +4045,31 @@ static IMPORT_INFO import_infos[] = {
   {"pack", &module_info_gooSpacker, NULL},
   {"^", &module_info_gooSmath, NULL},
   {"def-programs", &module_info_evalSast, NULL},
-  {"%gen-src", &module_info_gooSboot, NULL},
+  {"%flo-bits", &module_info_gooSboot, NULL},
+  {"%os-name", &module_info_gooSboot, NULL},
   {"<str-port>", &module_info_gooSioSport, NULL},
   {"describe-condition", &module_info_gooSconditions, NULL},
-  {"%i=", &module_info_gooSboot, NULL},
   {"<internal-error>", &module_info_gooSconditions, NULL},
   {"<any>", &module_info_gooSboot, NULL},
   {"<each>", &module_info_gooScolsSstep, NULL},
-  {"%build-runtime-modules", &module_info_gooSboot, NULL},
-  {"*print-base*", &module_info_gooScolsSstr, NULL},
+  {"del-vals", &module_info_gooScolsSseq, NULL},
+  {"%time", &module_info_gooSboot, NULL},
   {"packer-add", &module_info_gooSpacker, NULL},
   {"function-data-refs", &module_info_evalSast, NULL},
   {"cat", &module_info_gooSmacros, NULL},
-  {"%put", &module_info_gooSboot, NULL},
-  {"$goo-boot-module-name", &module_info_evalSast, NULL},
-  {"macro-error-arguments", &module_info_gooSconditions, NULL},
   {"<dynamic-assignment>", &module_info_evalSast, NULL},
-  {"macro-error", &module_info_gooSmacros, NULL},
-  {"$pi", &module_info_gooSmath, NULL},
-  {"%fcosh", &module_info_gooSboot, NULL},
+  {"signature-value", &module_info_evalSast, NULL},
   {"call-error-arguments", &module_info_gooSconditions, NULL},
   {"signature-arity-setter", &module_info_evalSast, NULL},
   {"binding-dynamic-extent?", &module_info_evalSast, NULL},
   {"handler-function", &module_info_gooSconditions, NULL},
   {"unwind-protect-protected-thunk", &module_info_evalSast, NULL},
+  {"function-registers", &module_info_evalSast, NULL},
   {"items", &module_info_gooScolsScol, NULL},
   {"case-insensitive-string-hash", &module_info_gooScolsStab, NULL},
   {"del", &module_info_gooScolsScol, NULL},
   {"module-loader-module-type", &module_info_evalSast, NULL},
-  {"map", &module_info_gooSmacros, NULL},
-  {"do-keyed", &module_info_gooScolsScol, NULL},
+  {"load-module", &module_info_evalSast, NULL},
   {"object-parents", &module_info_gooSboot, NULL},
   {"<serious-condition>", &module_info_gooSconditions, NULL},
   {"bound?-reference", &module_info_evalSast, NULL},
@@ -4074,29 +4077,25 @@ static IMPORT_INFO import_infos[] = {
   {"rep-nul", &module_info_gooScolsSrep, NULL},
   {"loc-val-setter", &module_info_gooSruntime, NULL},
   {"<str-tab>", &module_info_gooScolsStab, NULL},
-  {"class-of", &module_info_gooSboot, NULL},
+  {"*max-print-depth*", &module_info_gooSioSwrite, NULL},
   {"peek", &module_info_gooSioSport, NULL},
   {"<no-next-methods-error>", &module_info_gooSconditions, NULL},
-  {"%close-out-port", &module_info_gooSboot, NULL},
   {"head", &module_info_gooSboot, NULL},
-  {"%tnul", &module_info_gooSboot, NULL},
+  {"<fix-let>", &module_info_evalSast, NULL},
   {"str-to-num", &module_info_gooScolsSstr, NULL},
-  {"%sp-reg-setter", &module_info_gooSboot, NULL},
-  {"%relt-setter", &module_info_gooSboot, NULL},
   {"range-error-collection", &module_info_gooSconditions, NULL},
-  {"*restarts-ok?*", &module_info_gooSboot, NULL},
+  {"type-error-value", &module_info_gooSconditions, NULL},
+  {"len", &module_info_gooStypes, NULL},
   {"packing-in", &module_info_gooSpacker, NULL},
   {"tan", &module_info_gooSmath, NULL},
   {"object-props", &module_info_gooSboot, NULL},
   {"round", &module_info_gooSmath, NULL},
-  {"any?", &module_info_gooStypes, NULL},
+  {"*max-print-length*", &module_info_gooSioSwrite, NULL},
   {"environment-uses-modules", &module_info_evalSast, NULL},
   {"condition-arguments", &module_info_gooSconditions, NULL},
   {"<in-port>", &module_info_gooSioSport, NULL},
-  {"function-bindings", &module_info_evalSast, NULL},
   {"<argument-type-error>", &module_info_gooSconditions, NULL},
   {"binding-mangled-name", &module_info_evalSast, NULL},
-  {"%vm-fun-env-elt-setter", &module_info_gooSboot, NULL},
   {"last", &module_info_gooSmacros, NULL},
   {"fab-sym", &module_info_gooSboot, NULL},
   {"@opts-as-lst", &module_info_gooSboot, NULL},
@@ -4104,9 +4103,8 @@ static IMPORT_INFO import_infos[] = {
   {"elt-or", &module_info_gooScolsScol, NULL},
   {"%with-monitor", &module_info_gooSboot, NULL},
   {"binding-value", &module_info_evalSast, NULL},
-  {"%telt-setter", &module_info_gooSboot, NULL},
-  {"%flog", &module_info_gooSboot, NULL},
-  {"%i>>>", &module_info_gooSboot, NULL},
+  {"%i!", &module_info_gooSboot, NULL},
+  {"macro-error", &module_info_gooSmacros, NULL},
   {"reference-called-function?", &module_info_evalSast, NULL},
   {"type-error", &module_info_gooSboot, NULL},
   {"class-direct-props", &module_info_gooSboot, NULL},
@@ -4117,28 +4115,21 @@ static IMPORT_INFO import_infos[] = {
   {"<ast-function>", &module_info_evalSast, NULL},
   {"to-str", &module_info_gooSmath, NULL},
   {"unwind-protect-cleanup-thunk", &module_info_evalSast, NULL},
-  {"%fi2f", &module_info_gooSboot, NULL},
   {"<str-in-port>", &module_info_gooSioSport, NULL},
   {"<ast-primitive-definition>", &module_info_evalSast, NULL},
   {"<runtime-reference>", &module_info_evalSast, NULL},
-  {"%f*", &module_info_gooSboot, NULL},
   {"zip", &module_info_gooScolsSzip, NULL},
-  {"%tlen", &module_info_gooSboot, NULL},
+  {"function-debug-name", &module_info_evalSast, NULL},
+  {"%sb", &module_info_gooSboot, NULL},
   {"binding-mutable?", &module_info_evalSast, NULL},
-  {"function-debug-name-setter", &module_info_evalSast, NULL},
+  {"%su", &module_info_gooSboot, NULL},
   {"even?", &module_info_gooSmath, NULL},
   {"<assignment>", &module_info_evalSast, NULL},
   {"packer-fab", &module_info_gooSpacker, NULL},
+  {"$pi", &module_info_gooSmath, NULL},
   {"rev", &module_info_gooScolsSseq, NULL},
-  {"%loc-val", &module_info_gooSboot, NULL},
-  {"<<", &module_info_gooSmath, NULL},
-  {"%current-out-port", &module_info_gooSboot, NULL},
-  {"type-error-value", &module_info_gooSconditions, NULL},
-  {"flo-bits", &module_info_gooSmath, NULL},
-  {"*boot-macro-module-names*", &module_info_gooSboot, NULL},
-  {"%peek", &module_info_gooSboot, NULL},
-  {"%tup", &module_info_gooSboot, NULL},
-  {"<static-global-environment>", &module_info_evalSast, NULL},
+  {"%lb", &module_info_gooSboot, NULL},
+  {"%vm-fun-env-elt", &module_info_gooSboot, NULL},
   {"ddv", &module_info_gooSboot, NULL},
   {"<monitor>", &module_info_evalSast, NULL},
   {"fun-arity", &module_info_gooSboot, NULL},
@@ -4146,35 +4137,35 @@ static IMPORT_INFO import_infos[] = {
   {"try", &module_info_gooSboot, NULL},
   {"fabs", &module_info_gooSmath, NULL},
   {"<error>", &module_info_gooSconditions, NULL},
-  {"%im", &module_info_gooSboot, NULL},
+  {"%cu", &module_info_gooSboot, NULL},
   {"nxt", &module_info_gooScolsScol, NULL},
   {"signature-nary?", &module_info_evalSast, NULL},
   {"fin", &module_info_gooSboot, NULL},
-  {"$min-int", &module_info_gooSboot, NULL},
   {"len/fill-setter", &module_info_gooScolsScolx, NULL},
-  {"%lu", &module_info_gooSboot, NULL},
+  {"monitor-handler", &module_info_evalSast, NULL},
+  {"%im", &module_info_gooSboot, NULL},
   {"id-hash", &module_info_gooScolsStab, NULL},
-  {"signature-value", &module_info_evalSast, NULL},
-  {"%met-env-setter", &module_info_gooSboot, NULL},
   {"<arity-error>", &module_info_gooSconditions, NULL},
+  {"%i^", &module_info_gooSboot, NULL},
+  {"*print-base*", &module_info_gooScolsSstr, NULL},
   {"col", &module_info_gooScolsScol, NULL},
   {"assignment-form", &module_info_evalSast, NULL},
-  {"%f+", &module_info_gooSboot, NULL},
+  {"signature-names-setter", &module_info_evalSast, NULL},
   {"subtype?", &module_info_gooSboot, NULL},
   {"incf", &module_info_gooSmacros, NULL},
   {"reject", &module_info_gooScolsSseq, NULL},
-  {"%eq?", &module_info_gooSboot, NULL},
   {"rep-elt", &module_info_gooScolsSrep, NULL},
   {"def-list", &module_info_gooScolsSlst, NULL},
   {"quasiquote", &module_info_gooSboot, NULL},
-  {"%vm-box-val", &module_info_gooSboot, NULL},
+  {"binding-global-box-setter", &module_info_evalSast, NULL},
+  {"mod", &module_info_gooSmath, NULL},
+  {"%c<", &module_info_gooSboot, NULL},
   {"<opts>", &module_info_gooSboot, NULL},
-  {"loc-val", &module_info_gooSruntime, NULL},
+  {"%open-in-file", &module_info_gooSboot, NULL},
   {"<step>", &module_info_gooScolsSstep, NULL},
-  {"<binding>", &module_info_evalSast, NULL},
   {"monitor-type", &module_info_evalSast, NULL},
-  {"%@subclass?", &module_info_gooSboot, NULL},
   {"property-type-error", &module_info_gooSboot, NULL},
+  {"map", &module_info_gooSmacros, NULL},
   {"3rd", &module_info_gooScolsSseq, NULL},
   {"constant-index-setter", &module_info_evalSast, NULL},
   {"do-named-static-global-bindings", &module_info_evalSast, NULL},
@@ -4183,74 +4174,75 @@ static IMPORT_INFO import_infos[] = {
   {"to-upper", &module_info_gooSmath, NULL},
   {"now-key", &module_info_gooScolsScol, NULL},
   {"<predefined-application>", &module_info_evalSast, NULL},
+  {"%close-in-port", &module_info_gooSboot, NULL},
   {"rep-into!", &module_info_gooScolsSrep, NULL},
-  {"<fab-list>", &module_info_evalSast, NULL},
+  {"%current-out-port", &module_info_gooSboot, NULL},
   {"gensym", &module_info_gooSmacros, NULL},
-  {"%gen-refs", &module_info_gooSboot, NULL},
   {"remove-modules-by-name!", &module_info_evalSast, NULL},
   {"swapf", &module_info_gooSmacros, NULL},
   {"function-body", &module_info_evalSast, NULL},
+  {"%fpow", &module_info_gooSboot, NULL},
   {"find-getter", &module_info_gooSboot, NULL},
   {"class-children", &module_info_gooSboot, NULL},
   {"read", &module_info_gooSconditions, NULL},
   {"<module-binding-reference>", &module_info_evalSast, NULL},
   {"monitor-test", &module_info_evalSast, NULL},
-  {"%class-of", &module_info_gooSboot, NULL},
   {"<keyboard-interrupt>", &module_info_gooSconditions, NULL},
+  {"application-known?-setter", &module_info_evalSast, NULL},
   {"/", &module_info_gooSmath, NULL},
   {"tanh", &module_info_gooSmath, NULL},
+  {"list", &module_info_gooScolsSlst, NULL},
   {"module-uses-c-includes", &module_info_evalSast, NULL},
+  {"%met-code", &module_info_gooSboot, NULL},
   {"module-binding", &module_info_evalSast, NULL},
   {"t?", &module_info_gooStypes, NULL},
   {"runtime-environment", &module_info_evalSast, NULL},
   {"<handler-info>", &module_info_gooSconditions, NULL},
-  {"%fsinh", &module_info_gooSboot, NULL},
+  {"%i>>>", &module_info_gooSboot, NULL},
   {"unchecked-runtime-environment", &module_info_evalSast, NULL},
-  {"%vm-box-fab", &module_info_gooSboot, NULL},
+  {"%file-type", &module_info_gooSboot, NULL},
   {"mem?", &module_info_gooScolsScol, NULL},
   {"property-unbound-error", &module_info_gooSboot, NULL},
+  {"%fab-dyn-var", &module_info_gooSboot, NULL},
   {"elt", &module_info_gooSmacros, NULL},
   {"now", &module_info_gooScolsScol, NULL},
   {"app-sup", &module_info_gooSmacros, NULL},
+  {"%force-out", &module_info_gooSboot, NULL},
   {"<global-box>", &module_info_evalSast, NULL},
-  {"%ib", &module_info_gooSboot, NULL},
   {"monitor-info", &module_info_evalSast, NULL},
   {"tab-hash", &module_info_gooScolsStab, NULL},
   {"argument-type-error", &module_info_gooSboot, NULL},
   {"handler-info-message", &module_info_gooSboot, NULL},
+  {"%f-", &module_info_gooSboot, NULL},
   {"write", &module_info_gooSioSwrite, NULL},
+  {"dg", &module_info_gooSboot, NULL},
   {"eof-object?", &module_info_gooSmath, NULL},
-  {"%allocate-stack", &module_info_gooSboot, NULL},
-  {"%os-name", &module_info_gooSboot, NULL},
   {"min", &module_info_gooSmag, NULL},
   {"function-self-recursive?", &module_info_evalSast, NULL},
-  {"%facos", &module_info_gooSboot, NULL},
   {"out", &module_info_gooSioSport, NULL},
   {"module-exports", &module_info_evalSast, NULL},
   {"<definition>", &module_info_evalSast, NULL},
-  {"%do-stack-frames", &module_info_gooSboot, NULL},
   {"union-elts", &module_info_gooSboot, NULL},
-  {"probe-module", &module_info_evalSast, NULL},
   {"gets", &module_info_gooSioSport, NULL},
-  {"@<", &module_info_gooSboot, NULL},
-  {"load-module", &module_info_evalSast, NULL},
+  {"report-undefined-global-bindings", &module_info_evalSast, NULL},
+  {"binding-native-to?", &module_info_evalSast, NULL},
   {"2nd", &module_info_gooSmacros, NULL},
-  {"assignment-binding", &module_info_evalSast, NULL},
   {"pow", &module_info_gooSmath, NULL},
+  {"while", &module_info_gooSmacros, NULL},
   {"str", &module_info_gooScolsSstr, NULL},
-  {"%unlink-stack", &module_info_gooSboot, NULL},
-  {"%i*", &module_info_gooSboot, NULL},
+  {"%rnul", &module_info_gooSboot, NULL},
   {"find-environment-module", &module_info_evalSast, NULL},
   {"<simple-error>", &module_info_gooSconditions, NULL},
+  {"@telt", &module_info_gooSboot, NULL},
   {"close", &module_info_gooSioSport, NULL},
   {"binding-info", &module_info_evalSast, NULL},
+  {"%vm-box-fab", &module_info_gooSboot, NULL},
   {"module-uses-c-libraries", &module_info_evalSast, NULL},
   {"pushf", &module_info_gooSmacros, NULL},
-  {"%fcos", &module_info_gooSboot, NULL},
-  {"rotf", &module_info_gooSmacros, NULL},
   {"opf", &module_info_gooSmacros, NULL},
+  {"<<", &module_info_gooSmath, NULL},
   {"<simple-handler-info>", &module_info_gooSboot, NULL},
-  {"set-module-environments", &module_info_evalSast, NULL},
+  {"%process-module", &module_info_gooSboot, NULL},
   {"pick", &module_info_gooScolsSseq, NULL},
   {"range-error-key", &module_info_gooSconditions, NULL},
   {"<compiler-error>", &module_info_gooSconditions, NULL},
@@ -4258,29 +4250,30 @@ static IMPORT_INFO import_infos[] = {
   {"all2?", &module_info_gooStypes, NULL},
   {"atan", &module_info_gooSmath, NULL},
   {"syntax-error", &module_info_gooSboot, NULL},
-  {"%relt", &module_info_gooSboot, NULL},
+  {"<bound?>", &module_info_evalSast, NULL},
   {"program-type", &module_info_evalSast, NULL},
-  {"%loc-off-setter", &module_info_gooSboot, NULL},
   {"<class>", &module_info_gooSboot, NULL},
   {"map-keyed", &module_info_gooScolsScol, NULL},
   {"abs", &module_info_gooSmath, NULL},
   {"signature-nary?-setter", &module_info_evalSast, NULL},
   {"sig-specs", &module_info_gooSboot, NULL},
   {"export", &module_info_gooSboot, NULL},
+  {"%sp-reg-setter", &module_info_gooSboot, NULL},
   {"sub*-setter", &module_info_gooScolsSseqx, NULL},
-  {"len", &module_info_gooStypes, NULL},
   {"rep-fab", &module_info_gooScolsSrep, NULL},
   {"pack-in", &module_info_gooSpacker, NULL},
-  {"*gensym-counter*", &module_info_gooSruntime, NULL},
   {"len-setter", &module_info_gooScolsScolx, NULL},
+  {"%f<", &module_info_gooSboot, NULL},
+  {"%fi2f", &module_info_gooSboot, NULL},
   {"ceil", &module_info_gooSmath, NULL},
   {"met-app?", &module_info_gooSboot, NULL},
   {"prop-getter", &module_info_gooSboot, NULL},
-  {"function-temporaries", &module_info_evalSast, NULL},
+  {"%src-loc", &module_info_gooSboot, NULL},
   {"compose", &module_info_gooSruntime, NULL},
   {"t<", &module_info_gooStypes, NULL},
   {"ast-walk", &module_info_evalSast, NULL},
   {"error", &module_info_gooSboot, NULL},
+  {"class-of", &module_info_gooSboot, NULL},
   {"join", &module_info_gooScolsSseq, NULL},
   {"environment-bindings", &module_info_evalSast, NULL},
   {"fun-name-setter", &module_info_gooSboot, NULL},
@@ -4290,52 +4283,49 @@ static IMPORT_INFO import_infos[] = {
   {"mif", &module_info_gooSboot, NULL},
   {"prop-init", &module_info_gooSboot, NULL},
   {"post", &module_info_gooSioSwrite, NULL},
-  {"%current-in-port", &module_info_gooSboot, NULL},
   {"<ast-generic>", &module_info_evalSast, NULL},
-  {"%force-out", &module_info_gooSboot, NULL},
   {"<type>", &module_info_gooSboot, NULL},
   {"t*", &module_info_gooSboot, NULL},
   {"fun-refs-setter", &module_info_gooSboot, NULL},
-  {"%f<", &module_info_gooSboot, NULL},
   {"%prop", &module_info_gooSboot, NULL},
   {"1st", &module_info_gooSmacros, NULL},
   {"dlet", &module_info_gooSmacros, NULL},
   {"need-implementation", &module_info_gooSmacros, NULL},
-  {"%dyn-var-val", &module_info_gooSboot, NULL},
+  {"%fcos", &module_info_gooSboot, NULL},
+  {"%cb", &module_info_gooSboot, NULL},
   {"|", &module_info_gooSmath, NULL},
-  {"*max-print-length*", &module_info_gooSioSwrite, NULL},
   {"<local-assignment>", &module_info_evalSast, NULL},
   {"function-value", &module_info_evalSast, NULL},
   {"<gen>", &module_info_gooSboot, NULL},
   {"port-index", &module_info_gooSioSport, NULL},
-  {"%raw-met-call", &module_info_gooSboot, NULL},
-  {"%f=", &module_info_gooSboot, NULL},
   {"sig-val", &module_info_gooSboot, NULL},
   {"trunc/", &module_info_gooSmath, NULL},
   {"fin?", &module_info_gooScolsScol, NULL},
   {"<property-error>", &module_info_gooSconditions, NULL},
-  {"%f-", &module_info_gooSboot, NULL},
   {"<dynamic-definition>", &module_info_evalSast, NULL},
   {"zipped", &module_info_gooSruntime, NULL},
   {"t=", &module_info_gooStypes, NULL},
-  {"%rnul", &module_info_gooSboot, NULL},
   {"op", &module_info_gooSlate_macros, NULL},
   {"each", &module_info_gooScolsSstep, NULL},
   {"signature-arity", &module_info_evalSast, NULL},
-  {"%rep", &module_info_gooSboot, NULL},
   {"fun-nary?", &module_info_gooSboot, NULL},
   {"fun-name", &module_info_gooSboot, NULL},
-  {"reference-called-function?-setter", &module_info_evalSast, NULL},
+  {"%i<<<", &module_info_gooSboot, NULL},
   {"zap", &module_info_gooScolsScol, NULL},
-  {"@oelt", &module_info_gooSboot, NULL},
+  {"%met", &module_info_gooSboot, NULL},
   {"range-by", &module_info_gooScolsSrange, NULL},
-  {"%binding-name", &module_info_gooSboot, NULL},
   {"zap!", &module_info_gooScolsScolx, NULL},
+  {"add-prop", &module_info_gooSboot, NULL},
+  {"%to-tup", &module_info_gooSboot, NULL},
+  {"%%sym", &module_info_gooSboot, NULL},
+  {"%allocate-stack", &module_info_gooSboot, NULL},
   {"cat-sym", &module_info_gooSmacros, NULL},
-  {"ast-error", &module_info_evalSdependency, NULL},
   {"<sym>", &module_info_gooSboot, NULL},
   {"put", &module_info_gooSioSport, NULL},
   {"fun-refs", &module_info_gooSboot, NULL},
+  {"%vm-fun-env-elt-setter", &module_info_gooSboot, NULL},
+  {"%class-of", &module_info_gooSboot, NULL},
+  {"%binding-name", &module_info_gooSboot, NULL},
   {"unknown-function-error", &module_info_gooSboot, NULL},
   {"type-error-type", &module_info_gooSconditions, NULL},
   {"fab-gen", &module_info_gooSboot, NULL},
@@ -4343,124 +4333,126 @@ static IMPORT_INFO import_infos[] = {
   {"<constant>", &module_info_evalSast, NULL},
   {"narity-error", &module_info_gooSboot, NULL},
   {"fun-cache", &module_info_gooSboot, NULL},
-  {"*max-print-depth*", &module_info_gooSioSwrite, NULL},
   {"sqrt", &module_info_gooSmath, NULL},
-  {"%i&", &module_info_gooSboot, NULL},
-  {"%raw-call", &module_info_gooSboot, NULL},
+  {"do-keyed", &module_info_gooScolsScol, NULL},
   {"function-binding", &module_info_evalSast, NULL},
   {"<syntax-error>", &module_info_gooSconditions, NULL},
   {"load-in", &module_info_evalSast, NULL},
-  {"%gen-code", &module_info_gooSboot, NULL},
-  {"$e", &module_info_gooSmath, NULL},
-  {"%ftan", &module_info_gooSboot, NULL},
   {"arithmetic-error", &module_info_gooSboot, NULL},
+  {"binding-dotted?-setter", &module_info_evalSast, NULL},
   {"ambiguous-method-error", &module_info_gooSboot, NULL},
-  {"%close-in-port", &module_info_gooSboot, NULL},
+  {"%i-", &module_info_gooSboot, NULL},
   {"<ast-macro-definition>", &module_info_evalSast, NULL},
   {"<macro-error>", &module_info_gooSconditions, NULL},
   {"<str>", &module_info_gooSboot, NULL},
-  {"%open-out-file", &module_info_gooSboot, NULL},
-  {"key-type", &module_info_gooScolsScol, NULL},
-  {"%symbols", &module_info_gooSboot, NULL},
   {"port-contents", &module_info_gooSioSport, NULL},
   {"def", &module_info_gooSboot, NULL},
+  {"%fsqrt", &module_info_gooSboot, NULL},
   {"force-out", &module_info_gooSioSport, NULL},
   {"dup", &module_info_gooScolsScol, NULL},
   {"bit?", &module_info_gooSmath, NULL},
+  {"%open-out-file", &module_info_gooSboot, NULL},
   {"constant-value", &module_info_evalSast, NULL},
   {"any2?", &module_info_gooScolsSseq, NULL},
-  {"%rlen", &module_info_gooSboot, NULL},
   {"objectify-signature", &module_info_evalSast, NULL},
   {"fab-class", &module_info_gooSboot, NULL},
   {"as-error", &module_info_gooSboot, NULL},
   {"identity", &module_info_gooSruntime, NULL},
   {"digit?", &module_info_gooSmath, NULL},
-  {"%su", &module_info_gooSboot, NULL},
+  {"%i?", &module_info_gooSboot, NULL},
   {"signature-specs-setter", &module_info_evalSast, NULL},
-  {"%str", &module_info_gooSboot, NULL},
   {"<simple-condition>", &module_info_gooSconditions, NULL},
   {"<static-module-binding-reference>", &module_info_evalSast, NULL},
   {"<unbound-error>", &module_info_gooSconditions, NULL},
-  {"%selt", &module_info_gooSboot, NULL},
-  {"%f/", &module_info_gooSboot, NULL},
-  {"%met-code", &module_info_gooSboot, NULL},
+  {"binding-info-setter", &module_info_evalSast, NULL},
+  {"%loc-val-setter", &module_info_gooSboot, NULL},
+  {"macro-error-arguments", &module_info_gooSconditions, NULL},
   {"ast-evaluate", &module_info_evalSast, NULL},
-  {"%i>>", &module_info_gooSboot, NULL},
+  {"%selt", &module_info_gooSboot, NULL},
   {"<tup>", &module_info_gooSboot, NULL},
   {"ast-define-binding", &module_info_evalSast, NULL},
   {"<module-binding>", &module_info_evalSast, NULL},
   {"push!", &module_info_gooScolsSseqx, NULL},
   {"split", &module_info_gooScolsSseq, NULL},
+  {"binding-kind", &module_info_evalSast, NULL},
+  {"%build-runtime-modules", &module_info_gooSboot, NULL},
   {"upper?", &module_info_gooSmath, NULL},
-  {"report-undefined-global-bindings", &module_info_evalSast, NULL},
   {"prop-value-setter", &module_info_gooSboot, NULL},
-  {"@tlen", &module_info_gooSboot, NULL},
+  {"ins", &module_info_gooScolsSseq, NULL},
   {"handler-matches?", &module_info_gooSconditions, NULL},
   {"floor", &module_info_gooSmath, NULL},
-  {"binding-global-box-setter", &module_info_evalSast, NULL},
+  {"%create-directory", &module_info_gooSboot, NULL},
+  {"%c=", &module_info_gooSboot, NULL},
   {"cos", &module_info_gooSmath, NULL},
   {"t+", &module_info_gooStypes, NULL},
+  {"%f*", &module_info_gooSboot, NULL},
+  {"%get", &module_info_gooSboot, NULL},
+  {"%peek", &module_info_gooSboot, NULL},
   {"src-loc-file", &module_info_gooSboot, NULL},
-  {"%check-call-types", &module_info_gooSboot, NULL},
+  {"%fasin", &module_info_gooSboot, NULL},
   {"lst", &module_info_gooSboot, NULL},
+  {"*boot-macro-names*", &module_info_gooSboot, NULL},
   {"property-error-owner", &module_info_gooSconditions, NULL},
   {"sub-setter", &module_info_gooScolsSseqx, NULL},
   {"cpl-error", &module_info_gooSboot, NULL},
   {"del!", &module_info_gooScolsScolx, NULL},
-  {"binding-global-box", &module_info_evalSast, NULL},
   {"may-isa?", &module_info_gooSboot, NULL},
   {"first-then", &module_info_gooScolsSstep, NULL},
+  {"*macros-ok?*", &module_info_gooSboot, NULL},
   {"<met>", &module_info_gooSboot, NULL},
   {"@all2?", &module_info_gooSboot, NULL},
   {"binding-inferred-type", &module_info_evalSast, NULL},
   {"open", &module_info_gooSioSport, NULL},
-  {"@olen", &module_info_gooSboot, NULL},
   {"<flat>", &module_info_gooSboot, NULL},
+  {"write-to-string", &module_info_gooSioSwrite, NULL},
   {"sym-name", &module_info_gooSboot, NULL},
-  {"signature-names-setter", &module_info_evalSast, NULL},
+  {"key-test", &module_info_gooScolsScol, NULL},
   {"neg", &module_info_gooSmath, NULL},
   {"range-error", &module_info_gooSboot, NULL},
   {"gen-add-met", &module_info_gooSboot, NULL},
+  {"%@class-of", &module_info_gooSboot, NULL},
   {"signature-bindings-setter", &module_info_evalSast, NULL},
-  {"%%sym", &module_info_gooSboot, NULL},
+  {"@+", &module_info_gooSboot, NULL},
   {"<raw-constant>", &module_info_evalSast, NULL},
   {"do-module-loader-modules", &module_info_evalSast, NULL},
-  {"%eof-object", &module_info_gooSboot, NULL},
+  {"<binding>", &module_info_evalSast, NULL},
   {"application-known?", &module_info_evalSast, NULL},
-  {"%file-exists?", &module_info_gooSboot, NULL},
+  {"%it/", &module_info_gooSboot, NULL},
   {"*", &module_info_gooSmath, NULL},
   {"class-parents", &module_info_gooSboot, NULL},
   {"match-sublist", &module_info_gooSmacros, NULL},
   {"rem", &module_info_gooSmath, NULL},
-  {"%untag", &module_info_gooSboot, NULL},
   {"dp", &module_info_gooSboot, NULL},
+  {"*restarts-ok?*", &module_info_gooSboot, NULL},
   {"%fun-reg", &module_info_gooSboot, NULL},
-  {"%puts", &module_info_gooSboot, NULL},
-  {"%cu", &module_info_gooSboot, NULL},
+  {"get", &module_info_gooSioSport, NULL},
+  {"$goo-boot-module-name", &module_info_evalSast, NULL},
   {"rep", &module_info_gooSboot, NULL},
   {"function-registers-setter", &module_info_evalSast, NULL},
   {"floor/", &module_info_gooSmath, NULL},
   {"function-nary?", &module_info_evalSast, NULL},
   {"always", &module_info_gooSruntime, NULL},
   {"<dynamic-reference>", &module_info_evalSast, NULL},
-  {"nil", &module_info_gooSboot, NULL},
   {"gen-src-setter", &module_info_gooSboot, NULL},
   {"find", &module_info_gooScolsScol, NULL},
   {"<file-out-port>", &module_info_gooSioSport, NULL},
   {"function-adjectives", &module_info_evalSast, NULL},
-  {"%@class-of", &module_info_gooSboot, NULL},
+  {"%relt", &module_info_gooSboot, NULL},
   {"add", &module_info_gooScolsScol, NULL},
-  {"<fix-let>", &module_info_evalSast, NULL},
+  {"%sp-reg", &module_info_gooSboot, NULL},
+  {"%lu", &module_info_gooSboot, NULL},
   {"<alternative>", &module_info_evalSast, NULL},
   {"cosh", &module_info_gooSmath, NULL},
   {"env-object-name", &module_info_evalSast, NULL},
+  {"%ftan", &module_info_gooSboot, NULL},
   {"match", &module_info_gooSmacros, NULL},
-  {"module-syntax-environment", &module_info_evalSast, NULL},
   {"unbound-variable-error-variable", &module_info_gooSconditions, NULL},
+  {"%vm-box-val", &module_info_gooSboot, NULL},
   {"%fu", &module_info_gooSboot, NULL},
-  {"do-static-global-bindings", &module_info_evalSast, NULL},
+  {"%ft", &module_info_gooSboot, NULL},
   {"max", &module_info_gooSmag, NULL},
   {"now-setter", &module_info_gooScolsScol, NULL},
+  {"ast-error", &module_info_evalSdependency, NULL},
   {"df", &module_info_gooSboot, NULL},
   {"init-environment-for-eval", &module_info_evalSast, NULL},
   {"@len", &module_info_gooSboot, NULL},
@@ -4468,9 +4460,10 @@ static IMPORT_INFO import_infos[] = {
   {"packed", &module_info_gooSpacker, NULL},
   {"<programs>", &module_info_evalSast, NULL},
   {"do", &module_info_gooSmacros, NULL},
+  {"module-mangled-string-name-setter", &module_info_evalSast, NULL},
   {"<range>", &module_info_gooScolsSrange, NULL},
   {"<restart>", &module_info_gooSconditions, NULL},
-  {"%fpow", &module_info_gooSboot, NULL},
+  {"%vm-with-exit", &module_info_gooSboot, NULL},
   {"function-index-setter", &module_info_evalSast, NULL},
   {"dss", &module_info_gooSboot, NULL},
   {"<lst>", &module_info_gooSboot, NULL},
@@ -4482,31 +4475,35 @@ static IMPORT_INFO import_infos[] = {
   {"sub*", &module_info_gooScolsSseq, NULL},
   {"property-not-found-error", &module_info_gooSboot, NULL},
   {"map2", &module_info_gooSmacros, NULL},
-  {"%os-val", &module_info_gooSboot, NULL},
+  {"%tnul", &module_info_gooSboot, NULL},
   {"<fun>", &module_info_gooSboot, NULL},
+  {"%bb", &module_info_gooSboot, NULL},
   {"%fb", &module_info_gooSboot, NULL},
   {"pop!", &module_info_gooScolsSseqx, NULL},
+  {"%telt-setter", &module_info_gooSboot, NULL},
   {"fun-specs", &module_info_gooSboot, NULL},
-  {"dg", &module_info_gooSboot, NULL},
-  {"%fatan", &module_info_gooSboot, NULL},
   {"until", &module_info_gooSmacros, NULL},
+  {"napp", &module_info_gooSmacros, NULL},
   {"*report-prop-unbound-errors?*", &module_info_gooSboot, NULL},
   {"prop-bound?", &module_info_gooSboot, NULL},
   {"class-props", &module_info_gooSboot, NULL},
-  {"%process-module", &module_info_gooSboot, NULL},
-  {"get", &module_info_gooSioSport, NULL},
-  {"*boot-macro-expanders*", &module_info_gooSboot, NULL},
+  {"probe-module", &module_info_evalSast, NULL},
+  {"%iu", &module_info_gooSboot, NULL},
   {"<as-error>", &module_info_gooSconditions, NULL},
   {"<seq!>", &module_info_gooSboot, NULL},
   {"<unbound-variable-error>", &module_info_gooSconditions, NULL},
   {"<module-loader>", &module_info_evalSast, NULL},
-  {"%i^", &module_info_gooSboot, NULL},
   {"program-register", &module_info_evalSast, NULL},
+  {"%puts", &module_info_gooSboot, NULL},
+  {"loc", &module_info_gooSboot, NULL},
+  {"modincf", &module_info_gooSmath, NULL},
+  {"%i<<", &module_info_gooSboot, NULL},
   {"<ambiguous-method-error>", &module_info_gooSconditions, NULL},
+  {"%check-call-types", &module_info_gooSboot, NULL},
   {"tab-shrink-threshold", &module_info_gooScolsStab, NULL},
-  {"%it/", &module_info_gooSboot, NULL},
   {"tup", &module_info_gooSboot, NULL},
-  {"%flo-bits", &module_info_gooSboot, NULL},
+  {"fix-let-arguments-setter", &module_info_evalSast, NULL},
+  {"%fsin", &module_info_gooSboot, NULL},
   {"reference-binding", &module_info_evalSast, NULL},
   {"dc", &module_info_gooSboot, NULL},
   {"mod+", &module_info_gooSmath, NULL},
@@ -4518,86 +4515,83 @@ static IMPORT_INFO import_infos[] = {
   {"fab", &module_info_gooScolsScol, NULL},
   {"use/mangle", &module_info_gooSboot, NULL},
   {"packing", &module_info_gooSpacker, NULL},
+  {"%file-mtime", &module_info_gooSboot, NULL},
   {"elt!", &module_info_gooScolsScolx, NULL},
   {"type-class", &module_info_gooSboot, NULL},
-  {"%create-directory", &module_info_gooSboot, NULL},
   {"<local-reference>", &module_info_evalSast, NULL},
   {"<seq.>", &module_info_gooSboot, NULL},
-  {"binding-locative", &module_info_evalSast, NULL},
+  {"%invoke-debugger", &module_info_gooSboot, NULL},
   {"objectify-quotation", &module_info_evalSast, NULL},
   {"alpha?", &module_info_gooSmath, NULL},
   {"fix-let-types-setter", &module_info_evalSast, NULL},
-  {"<list>", &module_info_gooScolsSlst, NULL},
   {"gen-src", &module_info_gooSboot, NULL},
   {"<runtime-assignment>", &module_info_evalSast, NULL},
-  {"%fab-dyn-var", &module_info_gooSboot, NULL},
   {"application-function", &module_info_evalSast, NULL},
+  {"binding-locative-setter", &module_info_evalSast, NULL},
   {"<cycle>", &module_info_gooScolsScycle, NULL},
   {"acos", &module_info_gooSmath, NULL},
-  {"%iv", &module_info_gooSboot, NULL},
   {"or", &module_info_gooSmacros, NULL},
   {"binding-index-setter", &module_info_evalSast, NULL},
-  {"%file-type", &module_info_gooSboot, NULL},
   {"module-mangled-name-setter", &module_info_evalSast, NULL},
   {"alternative-alternant", &module_info_evalSast, NULL},
   {"object-class", &module_info_gooSboot, NULL},
   {"popf", &module_info_gooSmacros, NULL},
   {"tab-growth-factor", &module_info_gooScolsStab, NULL},
   {"find-or", &module_info_gooScolsScol, NULL},
-  {"@+", &module_info_gooSboot, NULL},
   {"@==", &module_info_gooSboot, NULL},
   {"lower?", &module_info_gooSmath, NULL},
   {"global-box-value-setter", &module_info_evalSast, NULL},
   {"<compile-time>", &module_info_evalSast, NULL},
+  {"binding-locative", &module_info_evalSast, NULL},
   {"reference-frame-offset", &module_info_evalSast, NULL},
   {"<out-port>", &module_info_gooSioSport, NULL},
-  {"%fsin", &module_info_gooSboot, NULL},
+  {"%raw-call", &module_info_gooSboot, NULL},
   {"<seq>", &module_info_gooSboot, NULL},
+  {"%os-val", &module_info_gooSboot, NULL},
   {"module-name", &module_info_evalSast, NULL},
   {"default-handler", &module_info_gooSconditions, NULL},
   {"alternative-consequent", &module_info_evalSast, NULL},
-  {"%snul", &module_info_gooSboot, NULL},
   {"function-source", &module_info_evalSast, NULL},
-  {"$max-int", &module_info_gooSboot, NULL},
+  {"%iv", &module_info_gooSboot, NULL},
   {"sig-names", &module_info_gooSboot, NULL},
   {"into", &module_info_gooScolsScol, NULL},
-  {"@telt", &module_info_gooSboot, NULL},
   {"round/", &module_info_gooSmath, NULL},
   {"<packer>", &module_info_gooSpacker, NULL},
-  {"%telt", &module_info_gooSboot, NULL},
   {"as", &module_info_gooStypes, NULL},
-  {"binding-locative-setter", &module_info_evalSast, NULL},
   {"with-port", &module_info_gooSioSport, NULL},
   {"<low-let>", &module_info_evalSast, NULL},
   {"prop-owner", &module_info_gooSboot, NULL},
-  {"add-prop", &module_info_gooSboot, NULL},
+  {"%f/", &module_info_gooSboot, NULL},
   {"neg?", &module_info_gooSmath, NULL},
   {"empty?", &module_info_gooSmacros, NULL},
   {"@not", &module_info_gooSboot, NULL},
   {"keyboard-interrupt", &module_info_gooSboot, NULL},
   {"cat!", &module_info_gooScolsSseqx, NULL},
+  {"%close-out-port", &module_info_gooSboot, NULL},
   {"prop-type", &module_info_gooSboot, NULL},
   {"1-", &module_info_gooSmath, NULL},
+  {"%vm-with-cleanup", &module_info_gooSboot, NULL},
   {"handler-info-arguments", &module_info_gooSboot, NULL},
   {"signature-specs", &module_info_evalSast, NULL},
   {"match-atom", &module_info_gooSmacros, NULL},
   {"<col!>", &module_info_gooSboot, NULL},
   {"macro-error-name", &module_info_gooSconditions, NULL},
-  {"%app-filename", &module_info_gooSboot, NULL},
   {"prefix?", &module_info_gooScolsSseq, NULL},
-  {"%bb", &module_info_gooSboot, NULL},
   {"prop-value", &module_info_gooSboot, NULL},
   {"from", &module_info_gooScolsSrange, NULL},
-  {"%gen-code-setter", &module_info_gooSboot, NULL},
   {"esc", &module_info_gooSboot, NULL},
   {"all?", &module_info_gooScolsScol, NULL},
   {"trunc", &module_info_gooSmath, NULL},
-  {"%iu", &module_info_gooSboot, NULL},
+  {"%telt", &module_info_gooSboot, NULL},
   {"<sig>", &module_info_gooSboot, NULL},
   {"dl", &module_info_gooSboot, NULL},
+  {"find-binding", &module_info_evalSast, NULL},
   {"module-uses-c-files", &module_info_evalSast, NULL},
+  {"@olen", &module_info_gooSboot, NULL},
+  {"nil", &module_info_gooSboot, NULL},
+  {"%loc-val", &module_info_gooSboot, NULL},
   {"and", &module_info_gooSmacros, NULL},
-  {"binding-native-to?", &module_info_evalSast, NULL},
+  {"%f=", &module_info_gooSboot, NULL},
   {"sig-arity", &module_info_gooSboot, NULL},
   {"<narity-error>", &module_info_gooSconditions, NULL},
   {"add!", &module_info_gooScolsScolx, NULL},
@@ -4609,16 +4603,16 @@ static IMPORT_INFO import_infos[] = {
   {"init-ast", &module_info_evalSast, NULL},
   {"<col.>", &module_info_gooSboot, NULL},
   {"<stack-overflow>", &module_info_gooSconditions, NULL},
+  {"%do-stack-frames", &module_info_gooSboot, NULL},
   {"<property-not-found-error>", &module_info_gooSconditions, NULL},
-  {"%i-", &module_info_gooSboot, NULL},
+  {"%facos", &module_info_gooSboot, NULL},
   {"below", &module_info_gooScolsSseq, NULL},
-  {"<ast-signature>", &module_info_evalSast, NULL},
   {"program-line", &module_info_evalSast, NULL},
+  {"<ast-signature>", &module_info_evalSast, NULL},
   {"elts", &module_info_gooScolsScol, NULL},
-  {"%i+", &module_info_gooSboot, NULL},
   {"do3", &module_info_gooScolsSseq, NULL},
+  {"assignment-binding", &module_info_evalSast, NULL},
   {"port-line", &module_info_gooSioSport, NULL},
-  {"%file-mtime", &module_info_gooSboot, NULL},
   {"isa?", &module_info_gooSboot, NULL},
   {"col-res", &module_info_gooScolsScol, NULL},
   {">=", &module_info_gooSmag, NULL},
@@ -4628,7 +4622,6 @@ static IMPORT_INFO import_infos[] = {
   {"fun", &module_info_gooSboot, NULL},
   {"set", &module_info_gooSboot, NULL},
   {"rev!", &module_info_gooSmacros, NULL},
-  {"%sp-reg", &module_info_gooSboot, NULL},
   {"pos", &module_info_gooScolsSseq, NULL},
   {"<ast-method>", &module_info_evalSast, NULL},
   {"curry", &module_info_gooSruntime, NULL},
@@ -4647,104 +4640,111 @@ static IMPORT_INFO import_infos[] = {
   {"say", &module_info_gooSioSwrite, NULL},
   {"<reference>", &module_info_evalSast, NULL},
   {"logn", &module_info_gooSmath, NULL},
-  {"%i?", &module_info_gooSboot, NULL},
   {"%pair", &module_info_gooSboot, NULL},
+  {"%loc-off", &module_info_gooSboot, NULL},
   {"==", &module_info_gooSmacros, NULL},
   {"binding-module", &module_info_evalSast, NULL},
   {"newline", &module_info_gooSioSport, NULL},
   {"module-target-environment", &module_info_evalSast, NULL},
   {"<computed-program>", &module_info_evalSast, NULL},
-  {"%ftanh", &module_info_gooSboot, NULL},
   {"tab-growth-threshold", &module_info_gooScolsStab, NULL},
   {"fun-names", &module_info_gooSboot, NULL},
   {"<set>", &module_info_gooScolsStab, NULL},
   {"keys", &module_info_gooScolsScol, NULL},
   {"unexec", &module_info_gooSboot, NULL},
-  {"%sb", &module_info_gooSboot, NULL},
+  {"%next-methods", &module_info_gooSboot, NULL},
   {"%prop-unbound-error", &module_info_gooSboot, NULL},
   {"<tab>", &module_info_gooScolsScol, NULL},
+  {"loc-val", &module_info_gooSruntime, NULL},
   {"packing-with", &module_info_gooSpacker, NULL},
-  {"function-registers", &module_info_evalSast, NULL},
   {"@any?", &module_info_gooSboot, NULL},
+  {"%fatan", &module_info_gooSboot, NULL},
   {"=", &module_info_gooSmath, NULL},
-  {"fix-let-body", &module_info_evalSast, NULL},
   {"<rep>", &module_info_gooSboot, NULL},
   {"tail-setter", &module_info_gooSboot, NULL},
-  {"%vm-fun-env-elt", &module_info_gooSboot, NULL},
+  {"flo-bits", &module_info_gooSmath, NULL},
   {"ct", &module_info_gooSboot, NULL},
+  {"%str", &module_info_gooSboot, NULL},
   {"%%macro", &module_info_gooSboot, NULL},
   {"<real-reference>", &module_info_evalSast, NULL},
-  {"%to-tup", &module_info_gooSboot, NULL},
   {"for", &module_info_gooSmacros, NULL},
+  {"%file-exists?", &module_info_gooSboot, NULL},
   {"case", &module_info_gooSmacros, NULL},
   {"sin", &module_info_gooSmath, NULL},
   {"binding-type-setter", &module_info_evalSast, NULL},
   {"cond", &module_info_gooSmacros, NULL},
   {"match-unquote", &module_info_gooSmacros, NULL},
   {"<macro-reference>", &module_info_evalSast, NULL},
+  {"%vm-fun-env-fab", &module_info_gooSboot, NULL},
   {"<map>", &module_info_gooScolsSmap, NULL},
-  {"%vm-with-cleanup", &module_info_gooSboot, NULL},
-  {"del-vals", &module_info_gooScolsSseq, NULL},
+  {"$min-int", &module_info_gooSboot, NULL},
+  {"%i<", &module_info_gooSboot, NULL},
+  {"%fatan2", &module_info_gooSboot, NULL},
+  {"%fsinh", &module_info_gooSboot, NULL},
   {"<vec>", &module_info_gooScolsSvec, NULL},
-  {"%app-args", &module_info_gooSboot, NULL},
-  {"loc", &module_info_gooSboot, NULL},
+  {"%ib", &module_info_gooSboot, NULL},
+  {"%tlen", &module_info_gooSboot, NULL},
   {"vec", &module_info_gooScolsSvec, NULL},
   {"function-index", &module_info_evalSast, NULL},
   {"locals-bindings-setter", &module_info_evalSast, NULL},
   {"<loc>", &module_info_gooSboot, NULL},
   {"@isa?", &module_info_gooSboot, NULL},
-  {"%vm-with-exit", &module_info_gooSboot, NULL},
+  {"*boot-macro-expanders*", &module_info_gooSboot, NULL},
   {"<global-reference>", &module_info_evalSast, NULL},
   {"suffix?", &module_info_gooScolsSseq, NULL},
   {"<assert-error>", &module_info_gooSconditions, NULL},
   {"range", &module_info_gooScolsSrange, NULL},
+  {"%i+", &module_info_gooSboot, NULL},
   {"function-data-refs-setter", &module_info_evalSast, NULL},
   {"stack-overflow-error", &module_info_gooSboot, NULL},
   {"<arithmetic-error>", &module_info_gooSconditions, NULL},
   {"function-signature-setter", &module_info_evalSast, NULL},
   {"install-initial-bindings", &module_info_evalSast, NULL},
+  {"*boot-macro-module-names*", &module_info_gooSboot, NULL},
   {"<=", &module_info_gooSmag, NULL},
   {"tail", &module_info_gooSboot, NULL},
   {"binding-name", &module_info_evalSast, NULL},
+  {"%selt-setter", &module_info_gooSboot, NULL},
   {"<return-type-error>", &module_info_gooSconditions, NULL},
-  {"key-test", &module_info_gooScolsScol, NULL},
+  {"%symbols", &module_info_gooSboot, NULL},
   {"let", &module_info_gooSboot, NULL},
-  {"while", &module_info_gooSmacros, NULL},
   {"renew", &module_info_gooSmacros, NULL},
   {"pop", &module_info_gooScolsSseq, NULL},
   {"ds", &module_info_gooSboot, NULL},
-  {"%cb", &module_info_gooSboot, NULL},
+  {"<list>", &module_info_gooScolsSlst, NULL},
   {"locals-body-setter", &module_info_evalSast, NULL},
-  {"write-to-string", &module_info_gooSioSwrite, NULL},
   {"writeln", &module_info_gooSioSwrite, NULL},
+  {"function-bindings", &module_info_evalSast, NULL},
   {"no-applicable-methods-error", &module_info_gooSboot, NULL},
   {"class-name", &module_info_gooSboot, NULL},
   {"<flo>", &module_info_gooSboot, NULL},
+  {"%f+", &module_info_gooSboot, NULL},
   {"zero?", &module_info_gooSmath, NULL},
   {"num-to-str", &module_info_gooSmath, NULL},
   {"src-loc-line", &module_info_gooSboot, NULL},
   {">>", &module_info_gooSmath, NULL},
+  {"%@subclass?", &module_info_gooSboot, NULL},
+  {"%dyn-var-val-setter", &module_info_gooSboot, NULL},
   {"do2", &module_info_gooScolsSseq, NULL},
-  {"<property-unbound-error>", &module_info_gooSconditions, NULL},
+  {"%gen-src", &module_info_gooSboot, NULL},
   {"locals-functions-setter", &module_info_evalSast, NULL},
   {"when", &module_info_gooSmacros, NULL},
   {"ready?", &module_info_gooSioSport, NULL},
-  {"%i<", &module_info_gooSboot, NULL},
+  {"%i&", &module_info_gooSboot, NULL},
   {"fix-let-arguments", &module_info_evalSast, NULL},
+  {"%ftanh", &module_info_gooSboot, NULL},
   {"fold", &module_info_gooScolsScol, NULL},
-  {"modincf", &module_info_gooSmath, NULL},
-  {"%met", &module_info_gooSboot, NULL},
   {"decf", &module_info_gooSmacros, NULL},
+  {"%met-env-setter", &module_info_gooSboot, NULL},
   {"sort-by!", &module_info_gooScolsSseq, NULL},
-  {"mod", &module_info_gooSmath, NULL},
   {"sup", &module_info_gooSmacros, NULL},
   {"dm", &module_info_gooSboot, NULL},
-  {"*boot-macro-names*", &module_info_gooSboot, NULL},
   {"&", &module_info_gooSmath, NULL},
+  {"<static-global-environment>", &module_info_evalSast, NULL},
   {"module-mangled-string-name", &module_info_evalSast, NULL},
   {"environment-module", &module_info_evalSast, NULL},
   {"<free-environment>", &module_info_evalSast, NULL},
-  {"monitor-handler", &module_info_evalSast, NULL},
+  {"%app-filename", &module_info_gooSboot, NULL},
   {"address-of", &module_info_gooSmath, NULL},
   {"isqrt", &module_info_gooSmath, NULL},
   {"<fixnum>", &module_info_gooSboot, NULL},
@@ -4758,20 +4758,20 @@ static IMPORT_INFO import_infos[] = {
   {"binding-index", &module_info_evalSast, NULL},
   {"module-mangled-name", &module_info_evalSast, NULL},
   {"call-error-function", &module_info_gooSconditions, NULL},
-  {"%next-methods", &module_info_gooSboot, NULL},
   {"<io-error>", &module_info_gooSconditions, NULL},
+  {"key-type", &module_info_gooScolsScol, NULL},
   {"%define-method", &module_info_gooSboot, NULL},
-  {"%slen", &module_info_gooSboot, NULL},
   {"dv", &module_info_gooSboot, NULL},
   {"use/include", &module_info_gooSboot, NULL},
+  {"%untag", &module_info_gooSboot, NULL},
   {"arity-error", &module_info_gooSboot, NULL},
-  {"cycle", &module_info_gooScolsScycle, NULL},
   {"in", &module_info_gooSioSport, NULL},
   {"elt-setter", &module_info_gooScolsScolx, NULL},
   {"objectify-with-subtransaction", &module_info_evalSast, NULL},
   {"ord-app-mets", &module_info_gooSboot, NULL},
+  {"%current-in-port", &module_info_gooSboot, NULL},
+  {"nul", &module_info_gooSboot, NULL},
   {"<prop>", &module_info_gooSboot, NULL},
-  {"%dyn-var-val-setter", &module_info_gooSboot, NULL},
   {NULL,NULL,NULL}
 };
 
@@ -4780,62 +4780,62 @@ static BINDING_INFO binding_infos[] = {
   {"env-define-binding!", CVAR, &YevalSast_evalYenv_define_bindingX},
   {"ifun", PVAR, NULL},
   {"<loc-env>", CVAR, &YevalSast_evalYLloc_envG},
-  {"env-local-reference-value-setter", CVAR, &YevalSast_evalYenv_local_reference_value_setter},
+  {"ast-eval", CVAR, &YevalSast_evalYast_eval},
   {"ast-eval-specs", CVAR, &YevalSast_evalYast_eval_specs},
   {"env-local-value-setter", CVAR, &YevalSast_evalYenv_local_value_setter},
   {"env-binding-value-setter", CVAR, &YevalSast_evalYenv_binding_value_setter},
   {"env-names", CVAR, &YevalSast_evalYenv_names},
+  {"env-values-setter", CVAR, &YevalSast_evalYenv_values_setter},
   {"env-global-binding-value-setter", CVAR, &YevalSast_evalYenv_global_binding_value_setter},
+  {"env-frame!", CVAR, &YevalSast_evalYenv_frameX},
+  {"---main-1---", PVAR, NULL},
+  {"env-runtime-value", CVAR, &YevalSast_evalYenv_runtime_value},
   {"env-runtime-value-setter", CVAR, &YevalSast_evalYenv_runtime_value_setter},
-  {"%dlvar-setter", PVAR, NULL},
-  {"%lookup-binding", PVAR, NULL},
-  {"%binding-value", PVAR, NULL},
+  {"env-global-binding-value", CVAR, &YevalSast_evalYenv_global_binding_value},
+  {"env-local-reference-value-setter", CVAR, &YevalSast_evalYenv_local_reference_value_setter},
   {"export-goo-method", CVAR, &YevalSast_evalYexport_goo_method},
   {"env-parent-setter", CVAR, &YevalSast_evalYenv_parent_setter},
   {"env-binding-value", CVAR, &YevalSast_evalYenv_binding_value},
   {"env-function-setter", CVAR, &YevalSast_evalYenv_function_setter},
-  {"ast-eval", CVAR, &YevalSast_evalYast_eval},
-  {"%ensure-binding", PVAR, NULL},
-  {"env-frame!", CVAR, &YevalSast_evalYenv_frameX},
-  {"env-values-setter", CVAR, &YevalSast_evalYenv_values_setter},
+  {"%binding-value", PVAR, NULL},
   {"env-dynamic-value-setter", CVAR, &YevalSast_evalYenv_dynamic_value_setter},
-  {"%binding-value-of-setter", PVAR, NULL},
-  {"$nul-loc-env", CVAR, &YevalSast_evalYDnul_loc_env},
-  {"%dlvar", PVAR, NULL},
-  {"%binding-bound?", PVAR, NULL},
+  {"%define-binding", PVAR, NULL},
   {"env-local-value", CVAR, &YevalSast_evalYenv_local_value},
-  {"---main-1---", PVAR, NULL},
   {"as-fun-name", CVAR, &YevalSast_evalYas_fun_name},
-  {"---main-0---", PVAR, NULL},
-  {"%dlvar-nam", PVAR, NULL},
   {"%binding-bound-of?", PVAR, NULL},
-  {"%binding-value-setter", PVAR, NULL},
-  {"%dlvar-binding", PVAR, NULL},
+  {"%dlvar-mod", PVAR, NULL},
+  {"%binding-value-of-setter", PVAR, NULL},
+  {"%dlvar", PVAR, NULL},
+  {"%dlvar-nam", PVAR, NULL},
+  {"%ensure-binding", PVAR, NULL},
+  {"%lookup-binding", PVAR, NULL},
+  {"$nul-loc-env", CVAR, &YevalSast_evalYDnul_loc_env},
   {"env-local-reference-value", CVAR, &YevalSast_evalYenv_local_reference_value},
-  {"%binding-value-of", PVAR, NULL},
   {"env-parent", CVAR, &YevalSast_evalYenv_parent},
   {"env-dynamic-value", CVAR, &YevalSast_evalYenv_dynamic_value},
-  {"env-global-binding-value", CVAR, &YevalSast_evalYenv_global_binding_value},
   {"env-function", CVAR, &YevalSast_evalYenv_function},
-  {"env-runtime-value", CVAR, &YevalSast_evalYenv_runtime_value},
   {"env-values", CVAR, &YevalSast_evalYenv_values},
   {"ast-eval-bound?", CVAR, &YevalSast_evalYast_eval_boundQ},
-  {"%dlvar-mod", PVAR, NULL},
+  {"%binding-value-of", PVAR, NULL},
+  {"---main-0---", PVAR, NULL},
+  {"%binding-value-setter", PVAR, NULL},
   {"arrange-arguments", CVAR, &YevalSast_evalYarrange_arguments},
-  {"%define-binding", PVAR, NULL},
+  {"%dlvar-setter", PVAR, NULL},
+  {"%binding-bound?", PVAR, NULL},
+  {"%dlvar-binding", PVAR, NULL},
   {"env-names-setter", CVAR, &YevalSast_evalYenv_names_setter},
   {NULL, NVAR, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"%binding-value", NULL},
-  {"%binding-bound?", NULL},
-  {"ast-evaluate", NULL},
-  {"%binding-bound-of?", NULL},
-  {"%binding-value-of", NULL},
-  {"init-environment-for-eval", NULL},
-  {"%binding-value-of-setter", NULL},
   {"%binding-value-setter", NULL},
+  {"%binding-value-of", NULL},
+  {"%binding-value", NULL},
+  {"%binding-bound-of?", NULL},
+  {"ast-evaluate", NULL},
+  {"init-environment-for-eval", NULL},
+  {"%binding-bound?", NULL},
+  {"%binding-value-of-setter", NULL},
   {NULL, NULL}
 };
 
