@@ -766,4 +766,19 @@ removed
 
 === 0.116 ===
 
+summary
+
+  minor cleanups towards release
+
+added
+
+  exported and checked/fixed packer
+  created partial evaluated format called msg speeding up compiler
+  port2str macro for doing str-out-ports
+
+changed
+
+  mucked around with mutable class exports to reflect manual
+  fixed dlgrt to have correct module name for dlsym functions
+
 
