@@ -448,13 +448,13 @@
    (set assignment-form      val)))
 
 (dm objectify-assignment-using 
-    ((ref <global-reference>) (val <program>) => <local-assignment>)
+    ((ref <global-reference>) (val <program>) => <global-assignment>)
  (isa <global-assignment> 
    (set assignment-binding (reference-binding ref))
    (set assignment-form    val)))
 
 (dm objectify-assignment-using 
-    ((ref <runtime-reference>) (val <program>) => <local-assignment>)
+    ((ref <runtime-reference>) (val <program>) => <runtime-assignment>)
  (isa <runtime-assignment> 
    (set assignment-binding (reference-binding ref))
    (set assignment-form    val)))
@@ -524,12 +524,12 @@
       defn)))
 
 (dm objectify-primitive-definition 
-    (name params body r => <ast-primitive-definition>)
+    (name sig body r => <ast-primitive-definition>)
   (let ((binding
 	 (ast-define-binding r name (fun () (isa <predefined-binding>))))
 	;; TODO: MULTIPLE VALUES
-	((tup bindings nary?)
-	 (objectify-parameters params r))
+	((tup bindings nary? value)
+	 (objectify-signature sig r))
 	(body
 	 (objectify-sequential body (r-extend* r bindings) #t))
 	(form
@@ -537,6 +537,7 @@
 	      (set function-name binding)
 	      (set function-bindings bindings)
 	      (set function-nary? nary?)
+	      (set function-value value)
 	      (set function-body body))))
     (set (binding-description binding) form)
     (let ((defn
@@ -545,16 +546,17 @@
 		(set assignment-form form))))
       defn)))
 
-(dm objectify-generic-definition (name params r => <ast-generic-definition>)
+(dm objectify-generic-definition (name sig r => <ast-generic-definition>)
   (let ((binding
 	 (ast-define-binding r name (fun () (isa <global-binding>))))
-	((tup bindings nary?)
-	 (objectify-parameters params r))
+	((tup bindings nary? value)
+	 (objectify-signature sig r))
 	(form
 	 (isa <ast-generic>
 	      (set function-name binding)
 	      (set function-bindings bindings)
-	      (set function-nary? nary?)))
+	      (set function-nary? nary?)
+	      (set function-value value)))
 	(defn
 	  (isa <ast-generic-definition>
 	       (set assignment-binding binding)
@@ -579,12 +581,13 @@
 ;;; in objectify-bindings-list. 
 ;;; all bindings are considered immutable at the beginning.
 
-(dm objectify-function (parameters body r tail? => <ast-method>)
-  (let (((tup bindings nary?) (objectify-parameters parameters r))
+(dm objectify-function (sig body r tail? => <ast-method>)
+  (let (((tup bindings nary? value) (objectify-signature sig r))
 	(b (objectify-sequential body (r-extend* r bindings) #t)))
     (isa <ast-method> 
 	 (set function-bindings bindings)
 	 (set function-nary? nary?)
+	 (set function-value value)
 	 (set function-body b))))
 
 (dv $sexpr-optionals-tag       '...)
@@ -592,10 +595,12 @@
 
 ;; TODO: MULTIPLE VALUES
 
-(dm objectify-parameters (params r => (bindings <lst>) (nary? <log>))
-  (rep col ((params params) (nary? #f) (bindings '()))
+(dm objectify-signature (sig r => (tup (bindings <lst>) (nary? <log>) (value <any>)))
+  (rep col ((params (sexpr-signature-parameters sig)) (nary? #f) (bindings '()))
     (if (empty? params)
-	(tup (rev! bindings) nary?)
+	(let ((sexpr-value (sexpr-signature-value sig))
+	      (value (objectify (or sexpr-value (default-type r)) r #f)))
+	  (tup (rev! bindings) nary? value))
 	(let ((param   (head params))
 	      (sname   (sexpr-variable-name param))
 	      (stype   (sexpr-variable-type param))
@@ -875,8 +880,7 @@
 
 (define-magic-binding define-generic (x r tail?)
   (objectify-generic-definition
-    (sexpr-function-definition-variable x) 
-    (sexpr-function-parameters x) r))
+    (sexpr-function-definition-variable x) (sexpr-function-signature x) r))
 
 (define-magic-binding define-function (x r tail?)
   (objectify-function-definition
@@ -885,7 +889,7 @@
 
 (define-magic-binding method (x r tail?)
   (objectify-function
-    (sexpr-method-parameters x) (sexpr-method-body x) r tail?))
+    (sexpr-method-signature x) (sexpr-method-body x) r tail?))
 
 (dv $sexpr-bound?-tag 'bound?)
 
@@ -897,7 +901,7 @@
 
 (define-magic-binding locals (x r tail?)
   (objectify-locals
-    (sexpr-loc-bound-names x) (sexpr-loc-bound-parameters x) 
+    (sexpr-loc-bound-names x) (sexpr-loc-bound-signatures x) 
     (sexpr-loc-bound-bodies x) (sexpr-loc-raw-body x) r tail?))
 
 (define-magic-binding iterate (x r tail?)
@@ -963,8 +967,7 @@
 	   (objectify #f r tail?))
       (objectify-primitive-definition
        (sexpr-function-definition-variable x) 
-       (sexpr-function-parameters x)
-       (sexpr-function-body x) r)))
+       (sexpr-function-signature x) (sexpr-function-body x) r)))
 
 (define-magic-binding quasiquote (x r tail?)
   (let ((bq-ast    (objectify (sexpr-expand-backquote x) r tail?))

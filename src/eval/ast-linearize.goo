@@ -352,6 +352,7 @@
 	 (isa <primitive-definition> 
 	   (set function-name     (function-name p))
 	   (set function-bindings (function-bindings p))
+	   (set function-value    (function-value p))
 	   (set function-body     body))))
     ;; (assert (function-name p) "NO NAME FOR %=" p)
     (set (program-definitions result)

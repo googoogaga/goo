@@ -622,7 +622,7 @@
   (rep loop ((x x))
     (if (@empty? p) x (seq (set (@head p) f) (loop (@tail p))))))
 
-(df @any? ((test <fun>) (c <lst>) => <log>)
+(df @any? ((test <fun>) (c <lst>) => <any>) ;; TODO: => <log>
   (rep fnd ((p c))
     (if (@empty? p) #f (or (test (@head p)) (fnd (@tail p))))))
 
@@ -636,7 +636,7 @@
 	(@rev! res)
 	(do (@tail x) (@pair (f (@head x)) res)))))
 
-(df @do ((f <fun>) (x <lst>) => ())
+(df @do ((f <fun>) (x <lst>) => <any>) ;; TODO: => (tup)
   (rep do ((x x))
     (if (@empty? x)
 	#f
@@ -662,7 +662,7 @@
 (df @cat2 ((x <lst>) (y <lst>) => <lst>)
   (%cat2 x y))
 
-(df @find-key ((f <fun>) (c <lst>) => <int>)
+(df @find-key ((f <fun>) (c <lst>) => <any>) ;; TODO: => <int>
   (rep fnd ((c c) (i 0))
     (if (@empty? c)
 	nul
@@ -773,7 +773,7 @@
 (dv <tup> <lst>)
 (dv @tup  @lst)
 
-(df order-specs (t1 t2 arg => (order <sym>) canonical-type)
+(df order-specs (t1 t2 arg => (tup (order <sym>) canonical-type))
   (if (@== t1 t2) 
       (@tup '= t1)
       (if (object< t1 t2 arg)
@@ -799,7 +799,7 @@
 
 (df sorted-app-mets-1
       ((mets <lst>) (args <args>) (order-mets <fun>)
-       => (ordered <lst>) (ambig <lst>))
+       => (tup (ordered <lst>) (ambig <lst>)))
   (let (((ohead <lst>) (@pair #f '()))
 	((ahead <lst>) (@pair #f '())))
     (rep loop (((mets <lst>) mets))
@@ -849,7 +849,7 @@
 	      #f)))))
 
 (df sorted-app-mets
-      ((gf <gen>) (args <args>) => (ordered <lst>) (ambig <lst>))
+      ((gf <gen>) (args <args>) => (tup (ordered <lst>) (ambig <lst>)))
   (let ((considered-mets
 	 (rep col ((ans '()) (ms (@fun-mets gf)))
 	   (if (@empty? ms)
@@ -1009,8 +1009,8 @@
 	      (singleton-app? (and (met-has-singleton-specs? m) (met< m met))))
 	  (loop (if singleton-app? (@pair m res) res) (@tail mets))))))
 
-(df gen-lookup-miss ((gen <gen>) (args <lst>) => <gen-cache>)
-  (let ((met (choose-method gen args))
+(df gen-lookup-miss ((gen <gen>) (args <lst>) => <any>) 
+  (let ((met (choose-method gen args)) ;; TODO: => (or <met> <gen-cache>)
 	(specs (@fun-specs met))
 	(n (@fun-arity gen))
 	(cache (gen-lookup-miss-1 gen (%fun-cache gen) met 0 n args specs))

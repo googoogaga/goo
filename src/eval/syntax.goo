@@ -116,14 +116,25 @@
 	signature
 	(sub signature 0 values-spec-index))))
 
-(dm sexpr-signature-values ((signature <lst>) => <lst>)
+(dm sexpr-signature-value ((signature <lst>) => <any>)
   (let ((values-spec-index (pos signature '=>)))
     (if (== values-spec-index nul)
-	'()
-	(sub signature (+ values-spec-index 1) (len signature)))))
+	#f
+        (let ((value (elt signature (+ values-spec-index 1))))
+	  (if (isa? value <lst>)
+	      (if (== (head value) 'tup)
+		  '<tup>
+		  (2nd value))
+	      value)))))
+
+(dm sexpr-function-signature (defn => <lst>)
+  (3rd defn))
 
 (dm sexpr-function-parameters (defn => <lst>)
-  (sexpr-signature-parameters (3rd defn)))
+  (sexpr-signature-parameters (sexpr-function-signature defn)))
+
+(dm sexpr-function-value (defn => <lst>)
+  (sexpr-signature-value (sexpr-function-signature defn)))
 
 (dm sexpr-function-body (defn => <any>)
   (tail (tail (tail defn))))
@@ -142,11 +153,14 @@
 
 ;; TODO: POSITION DEFINED BUT NAMED POS
 
-(dm sexpr-method-parameters ((method-exp <lst>) => <lst>)
-  (sexpr-signature-parameters (2nd method-exp)))
+(dm sexpr-method-signature ((method-exp <lst>) => <lst>)
+  (2nd method-exp))
 
-(dm sexpr-method-values ((method-exp <lst>) => <lst>)
-  (sexpr-signature-values (2nd method-exp)))
+(dm sexpr-method-parameters ((method-exp <lst>) => <lst>)
+  (sexpr-signature-parameters (sexpr-method-signature method-exp)))
+
+(dm sexpr-method-value ((method-exp <lst>) => <any>)
+  (sexpr-signature-value (sexpr-method-signature method-exp)))
 
 (dm sexpr-method-body ((method-exp <lst>) => <lst>)
   (tail (tail method-exp)))
@@ -307,7 +321,7 @@
   (sexpr-sequence->begin (tail (tail let-exp))))
 
 (dm sexpr-let-names+values
-    ((names <lst>) (vals <lst>) => ((names <lst>) (values <lst>)))
+    ((names <lst>) (vals <lst>) => (tup (names <lst>) (values <lst>)))
   (rep loop ((rnames '()) (rvalues '()) (names names) (vals vals))
     (if (empty? names)
 	(tup (rev! rnames) (rev! rvalues))
@@ -361,7 +375,7 @@
 (dm sexpr-loc-bound-names ((loc-exp <lst>) => <lst>)
   (map 1st (2nd loc-exp)))
 
-(dm sexpr-loc-bound-parameters ((loc-exp <lst>) => <lst>)
+(dm sexpr-loc-bound-signatures ((loc-exp <lst>) => <lst>)
   (map 2nd (2nd loc-exp)))
 
 ;; COMPOSE DEFINED
@@ -389,10 +403,10 @@
 (dm sexpr-iterate-signature ((rep-exp <lst>) => <lst>)
   (let ((sig (3rd rep-exp)))
     (cat (map 1st (sexpr-signature-parameters sig))
-	 (if (empty? (sexpr-signature-values sig))
+	 (if (sexpr-signature-value sig)
 	     '()
 	     (lst $sexpr-values-tag))
-	 (sexpr-signature-values sig))))
+	 (lst (sexpr-signature-value sig)))))
 
 (dm sexpr-iterate-inits ((rep-exp <lst>) => <lst>)
   (map 2nd (3rd rep-exp)))

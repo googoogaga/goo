@@ -98,10 +98,10 @@
 (dm >= (x y => <log>)
   (not (< x y)))
 
-(dm min (x y => <log>)
+(dm min (x y => <num>)
   (if (< x y) x y))
 
-(dm max (x y => <log>)
+(dm max (x y => <num>)
   (if (> x y) x y))
 
 ;;; character
@@ -180,19 +180,19 @@
 (dm * ((x <num>) (y <num>) => <num>)
   (contagious-call * x y))
 
-(dm floor ((x <num>) => <int> (rem <num>))
+(dm floor ((x <num>) => (tup <int> (rem <num>)))
   (contagious-call floor/ x 1))
 
-(dm ceiling ((x <num>) => <int> (rem <num>))
+(dm ceiling ((x <num>) => (tup <int> (rem <num>)))
   (contagious-call ceiling/ x 1))
 
-(dm round ((x <num>) => <int> (rem <num>))
+(dm round ((x <num>) => (tup <int> (rem <num>)))
   (contagious-call round/ x 1))
 
-(dm truncate ((x <num>) => <int> (rem <num>))
+(dm truncate ((x <num>) => (tup <int> (rem <num>)))
   (contagious-call truncate/ x 1))
 
-(dm floor/ ((real <num>) (divisor <num>) => <int> (remainder <num>))
+(dm floor/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
   (let (((tup (integer <int>) (remainder <num>)) (truncate/ real divisor)))
     (if (and (not (zero? remainder))
 	     (if (neg? divisor)
@@ -201,7 +201,7 @@
 	(tup (- integer 1) (+ remainder divisor))
 	(tup integer remainder))))
 
-(dm ceiling/ ((real <num>) (divisor <num>) => <int> (remainder <num>))
+(dm ceiling/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
   (let (((tup (integer <int>) (remainder <num>)) (truncate/ real divisor)))
     (if (and (not (zero? remainder))
 	     (if (neg? divisor)
@@ -210,7 +210,7 @@
 	(tup (+ integer 1) (- remainder divisor))
 	(tup integer remainder))))
 
-(dm round/ ((real <num>) (divisor <num>) => <int> (remainder <num>))
+(dm round/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
   (let (((tup (integer <int>) (remainder <num>)) (truncate/ real divisor))
 	((threshold <num>) (/ (abs divisor) 2.0)))
     (if (or (> remainder threshold) 
@@ -226,7 +226,7 @@
 		(tup (- integer 1) (+ remainder divisor)))
 	    (tup integer remainder)))))
 
-(dm truncate/ ((real <num>) (divisor <num>) => <int> (remainder <num>))
+(dm truncate/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
   (contagious-call truncate/ real divisor))
 
 (dm modulo ((real <num>) (divisor <num>) => <num>)
@@ -338,19 +338,19 @@
 (dm * ((x <int>) (y <int>) => <int>)
   (%ib (%i* (%iu x) (%iu y))))
 
-(dm floor ((x <int>) => <int> (remainder <int>))
+(dm floor ((x <int>) => (tup <int> (remainder <int>)))
   (tup x 0))
 
-(dm ceiling ((x <int>) => <int> (remainder <int>))
+(dm ceiling ((x <int>) => (tup <int> (remainder <int>)))
   (tup x 0))
 
-(dm round ((x <int>) => <int> (remainder <int>))
+(dm round ((x <int>) => (tup <int> (remainder <int>)))
   (tup x 0))
 
-(dm truncate ((x <int>) => <int> (remainder <int>))
+(dm truncate ((x <int>) => (tup <int> (remainder <int>)))
   (tup x 0))
 
-(dm truncate/ ((x <int>) (y <int>) => <int> (remainder <int>))
+(dm truncate/ ((x <int>) (y <int>) => (tup <int> (remainder <int>)))
   (let ((result (%ib (%it/ (%iu x) (%iu y)))))
     (tup result (- x (* result y)))))
 
@@ -457,7 +457,7 @@
 (dm / ((x <flo>) (y <flo>) => <flo>)
   (%fb (%f/ (%fu x) (%fu y))))
 
-(dm truncate/ ((x <flo>) (y <flo>) => <int> (remainder <flo>))
+(dm truncate/ ((x <flo>) (y <flo>) => (tup <int> (remainder <flo>)))
   (let ((divided (/ x y))
 	(result  (%ib (%ft (%fu x)))))
     (tup result (* y (- divided (as <flo> result))))))
@@ -514,7 +514,7 @@
 (dm as ((p <col>) (x <col>) => <lst>)
   (into (fab p (len x)) x 0 (len x)))
 
-(dm do-key-vals ((fn <fun>) (key-vals <opts>) => ())
+(dm do-key-vals ((fn <fun>) (key-vals <opts>) => (tup))
   (rep rep (((key-vals <opts>) key-vals))
     (unless (empty? key-vals)
       (fn (head key-vals) (head (tail key-vals)))
@@ -606,7 +606,7 @@
         (con (add res (f (now-elt x sx) (now-elt y sy))) 
 	     (nxt-state x sx) (nxt-state y sy)))))
 
-(dm do2 ((f <fun>) (x <col>) (y <col>) => <col>)
+(dm do2 ((f <fun>) (x <col>) (y <col>))
   (rep lop ((sx (ini-state x)) (sy (ini-state y)))
     (unless (or (fin-state? x sx) (fin-state? y sy))
       (f (now-elt x sx) (now-elt y sy))
@@ -647,7 +647,7 @@
 (dm len ((x <assocs>) => <int>)
   (len (assocs-keys x)))
 
-(dm elt ((x <assocs>) key => _)
+(dm elt ((x <assocs>) key => <any>)
   (rep fnd (((keys <lst>) (assocs-keys x)) ((vals <lst>) (assocs-vals x)))
     (if (== keys '())
         nul
@@ -673,6 +673,14 @@
 
 (dm as ((d <seq>) (s <seq>) => <seq>)
   (alter (fab d (len s)) s))
+
+(df range-error ((x <seq>) (i <int>))
+  ;; TODO: REAL CONDITION
+  (error "RANGE ERROR %= %=" x i))
+
+(df range-check ((x <seq>) (i <int>))
+  (when (or (< i 0) (>= i (len x)))
+    (range-error x i)))
 
 (dm 1st ((x <seq>) => <any>) (elt x 0))
 
@@ -811,10 +819,10 @@
         count
         (sum (+ count 1) (tail x)))))
 
-(dm elt ((x <lst>) (key <int>) => _)
+(dm elt ((x <lst>) (key <int>) => <any>)
   (rep fnd (((count <int>) 0) ((x <lst>) x))
     (if (== x '())
-        nul
+        nul ;; TODO: RANGE ERROR
         (if (== count key)
             (head x)
             (fnd (+ count 1) (tail x))))))
@@ -822,7 +830,7 @@
 (dm elt-setter (z (x <lst>) (key <int>))
   (rep fnd (((count <int>) 0) ((x <lst>) x))
     (if (== x '())
-        nul
+        nul ;; TODO: RANGE ERROR
         (if (== count key)
             (set (head x) z)
             (fnd (+ count 1) (tail x))))))
@@ -860,7 +868,7 @@
 (dm nxt-state ((_ <lst>) (state <lst>) => <lst>)
   (tail state))
 
-(dm now-elt ((_ <lst>) (state <lst>) => _)
+(dm now-elt ((_ <lst>) (state <lst>) => <any>)
   (head state))
 
 (dm now-elt-setter (z (_ <lst>) (state <lst>))
@@ -894,11 +902,11 @@
 (dm nxt-state ((_ <flat>) (state <int>) => <int>)
   (+ state 1))
 
-(dm now-elt ((c <flat>) (state <int>) => _)
-  (elt c state))
+(dm now-elt ((c <flat>) (state <int>) => <any>)
+  (low-elt c state))
 
 (dm now-elt-setter (z (c <flat>) (state <int>))
-  (set (elt c state) z))
+  (set (low-elt c state) z))
 
 (dm now-key ((_ <flat>) (state <int>) => <int>)
   state)
@@ -925,11 +933,19 @@
 (dm len ((x <vec>) => <int>)
   (%ib (%vlen x)))
 
-(dm elt ((x <vec>) (i <int>) => _)
+(dm low-elt ((x <vec>) (i <int>) => <any>)
   (%velt x (%iu i)))
 
-(dm elt-setter (z (x <vec>) (i <int>))
+(dm low-elt-setter (z (x <vec>) (i <int>))
   (set (%velt x (%iu i)) z))
+
+(dm elt ((x <vec>) (i <int>) => <any>)
+  (range-check x i)
+  (%velt x (%iu i))) ;; TODO: LOW-ELT
+
+(dm elt-setter (z (x <vec>) (i <int>))
+  (range-check x i)
+  (set (%velt x (%iu i)) z)) ;; TODO: LOW-ELT
 
 (dm to-str ((x <vec>) => <str>)
   (cat "#(" (vals-to-str x) ")"))
@@ -967,20 +983,28 @@
 	      (set (buf-len c) new-len)
 	      (rep fill (((i <int>) new-len))
 		(and (< i old-len)
-		     (set (elt dat i) nul)
+		     (set (low-elt dat i) nul)
 		     (fill (+ i 1)))))
 	    (set (buf-len c) new-len)))))
 
-(dm elt ((c <buf>) (i <int>) => <any>)
-  (elt (buf-dat c) i))
+(dm low-elt ((x <buf>) (i <int>) => <any>)
+  (low-elt (buf-dat c) i))
 
-(dm elt-setter (v (c <buf>) (i <int>))
+(dm low-elt-setter (z (x <buf>) (i <int>))
   (when (>= i (len c))
     (set (len c) (+ i 1)))
-  (set (elt (buf-dat c) i) v))
+  (set (low-elt (buf-dat c) i) v))
+
+(dm elt ((c <buf>) (i <int>) => <any>)
+  (range-check c i)
+  (low-elt c i))
+
+(dm elt-setter (v (c <buf>) (i <int>))
+  (when (< i 0) (range-error c i))
+  (set (low-elt x i) z))
 
 (dm add! ((c <buf>) x => <buf>)
-  (set (elt c (len c)) x)
+  (set (low-elt c (len c)) x)
   c)
 
 (dm push ((c <buf>) x => <buf>)
@@ -988,7 +1012,7 @@
 
 (dm pop ((c <buf>) => <any>)
   (let ((new-len (- (len c) 1))
-	(x (elt c new-len)))
+	(x       (low-elt c new-len)))
     (set (len c) new-len)
     x))
 
@@ -1009,11 +1033,11 @@
 ;;; TODO: FEWER SLOTS
 
 (dv <range> (isa <seq>))
-  (slot <range> (range-from <num>) 0)
-  (slot <range> (range-to <num>))
+  (slot <range> (range-from  <num>) 0)
+  (slot <range> (range-to    <num>))
   (slot <range> (range-below <num>))
   (slot <range> (range-above <num>))
-  (slot <range> (range-by <num>)   1)
+  (slot <range> (range-by    <num>) 1)
 
 (dm from ((from <num>) => <range>)
   (isa <range> (set range-from from)))
@@ -1058,7 +1082,7 @@
 (dm nxt-state ((c <range>) (state <num>) => <num>)
   (+ state (range-by c)))
 
-(dm now-elt ((c <range>) (state <num>) => _)
+(dm now-elt ((c <range>) (state <num>) => <any>)
   state)
 
 (dm copy-state ((_ <range>) (state <num>) => <num>)
@@ -1082,7 +1106,7 @@
 (dm nxt-state ((c <step>) (state <log>) => <log>)
   #f)
 
-(dm now-elt ((c <step>) (state <log>) => _)
+(dm now-elt ((c <step>) (state <log>) => <any>)
   (if state (step-first c) (step-then c)))
 
 (dm copy-state ((_ <step>) (state <log>) => <log>)
@@ -1129,11 +1153,19 @@
 (dm len ((x <str>) => <int>)
   (%ib (%slen x)))
 
-(dm elt ((x <str>) (i <int>) => <chr>)
+(dm low-elt ((x <str>) (i <int>) => <chr>)
   (%cb (%selt x (%iu i))))
 
-(dm elt-setter ((z <chr>) (x <str>) (i <int>))
+(dm low-elt-setter ((z <chr>) (x <str>) (i <int>))
   (set (%selt x (%iu i)) (%cu z)))
+
+(dm elt ((x <str>) (i <int>) => <chr>)
+  (range-check x i)
+  (%cb (%selt x (%iu i)))) ;; TODO: USE LOW-ELT
+
+(dm elt-setter ((z <chr>) (x <str>) (i <int>))
+  (range-check x i)
+  (set (%selt x (%iu i)) (%cu z))) ;; TODO: USE LOW-ELT
 
 (dm to-str ((x <str>) => <str>)
   x)

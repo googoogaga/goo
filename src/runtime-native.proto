@@ -140,10 +140,13 @@
       v))
 
 (dm elt ((vector <simple-table-vector>) (index <int>) => <any>)
-  (elt (%data vector) index))
+  ;; (elt (%data vector) index)
+  (%velt (%data vector) (%iu index)))
 
 (dm elt-setter (new-value (vector <simple-table-vector>) (index <int>) => <any>)
-  (set (elt (%data vector) index) new-value))
+  ;; (set (elt (%data vector) index) new-value)
+  (set (%velt (%data vector) (%iu index)) new-value)
+  )
 
 (dm clr! ((vector <simple-table-vector>) fill-value)
   (fill (%data vector) fill-value)
@@ -168,19 +171,19 @@
   (slot <tab> (%count <int>) 0)
   (slot <tab> (%vector <simple-table-vector>))
 
-(dg table-protocol ((x <tab>) => (test-fun <fun>) (hash-fun <fun>)))
+(dg table-protocol ((x <tab>) => (tup (test-fun <fun>) (hash-fun <fun>))))
 
-(dm table-protocol ((x <tab>) => (test-fun <fun>) (hash-fun <fun>))
+(dm table-protocol ((x <tab>) => (tup (test-fun <fun>) (hash-fun <fun>)))
   (tup == id-hash))
 
 (dv $empty-cell-marker (lst "empty cell"))
 (dv $vacated-cell-marker (lst "vacated cell"))
 
 (df hash-moduli ((hash <int>) (primary <int>) (secondary <int>)
-		 => (index <int>) (offset <int>))
+		 => (tup (index <int>) (offset <int>)))
    (tup (modulo hash primary) (+ (modulo hash secondary) 1)))
 
-(dm fab ((type <tab>) (size <int>) => ())
+(dm fab ((type <tab>) (size <int>) => <tab>)
   ;; (trace out "FAB %= SIZE %=\n" type size)
   (let (((tup n-buckets bucket-depth) (choose-table-geometry size))
 	(table (isa type)))
@@ -333,7 +336,7 @@
       ;; Table totally full???  That's not right
       (error "The table is totally full this shouldn't happen"))))
 
-(dm do-keyed ((function <fun>) (table <tab>) => ())
+(dm do-keyed ((function <fun>) (table <tab>) => <any>) ;; TODO: => (tup)
   (let ((vector (%vector table))
 	(n-buckets (%n-buckets vector))
 	(bucket-depth (%bucket-depth vector)))
@@ -349,7 +352,7 @@
 	    (inner (+ i 1))))
 	(outer (+ b 1))))))
 
-(dm do ((function <fun>) (table <tab>) => ())
+(dm do ((function <fun>) (table <tab>) => <any>) ;; TODO: => (tup)
   (let ((vector (%vector table))
 	(n-buckets (%n-buckets vector))
 	(bucket-depth (%bucket-depth vector)))
@@ -365,7 +368,7 @@
 	    (inner (+ i 1))))
 	(outer (+ b 1))))))
 
-(dm del-keys ((table <tab>) => ())
+(dm del-keys ((table <tab>) => <any>) ;; TODO: (tup)
   (clr! (%vector table) $empty-cell-marker)
   (set (%count table) 0))
 
@@ -489,7 +492,7 @@
     table))
 
 (df choose-table-geometry 
-     ((capacity <int>) => (n-buckets <int>) (bucket-depth <int>))
+     ((capacity <int>) => (tup (n-buckets <int>) (bucket-depth <int>)))
    ;;--- These numbers are completely arbitrary and need to be tuned up
    (lab return
      (let ((depth
@@ -506,7 +509,7 @@
 	   *twin-primes*)
        (error "Not enough primes to compute new table size"))))
 
-(dm copy-to-new-vector ((table <tab>) new-vector => ())
+(dm copy-to-new-vector ((table <tab>) new-vector => <any>) ;; TODO: => (tup)
   (do-keyed
     (fun (k v)
       (lab return
@@ -568,7 +571,7 @@
 (dm id-hash ((x <flo>))
   (tup (+ (flo-bits x) 89) $permanent-hash-state))
 
-(df case-insensitive-string-hash ((x <str>) => (hi <int>) hash-state)
+(df case-insensitive-string-hash ((x <str>) => (tup (hi <int>) hash-state))
   (let ((s 0) (e (len x)))
     (rep loop (((i <int>) s) ((hash <int>) 0))
       (if (< i e)
@@ -590,7 +593,7 @@
 
 (dv <str-tab> (isa <tab>))
 
-(dm table-protocol ((_ <str-tab>) => (equal-fun <fun>) (hash-fun <fun>))
+(dm table-protocol ((_ <str-tab>) => (tup (equal-fun <fun>) (hash-fun <fun>)))
   (tup case-insensitive-string-equal case-insensitive-string-hash))
 
 (dv symbols (fab <str-tab> 2000))

@@ -1,1 +1,4 @@
 (dv <opts> <lst>)
+
+(df not ((x <any>) => <log>) (%bb (%eq? x #f)))
+

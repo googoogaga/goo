@@ -16,8 +16,8 @@
     ((= (os-name) "win32") "\\")
     (#t "/")))
 
-(dm base-path ((filename <str>) => <lst>)
-  (rep loop ((i (len filename)))
+(dm base-path ((filename <str>) => <str>)
+  (rep loop ((i (- (len filename) 1)))
     (if (< i 0)
 	""
 	(if (= (elt filename i) (elt *path-separator* 0))
