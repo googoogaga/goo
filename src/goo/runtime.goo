@@ -52,6 +52,11 @@
 
 (df type-or ((args ...)) <any>) ;; TODO: FOR REAL
 
+;;; nul
+
+(df nul? (x => <log>)
+  (== x nul))
+
 ;;; <any>
 
 (dm nyi-error ()
@@ -703,9 +708,6 @@
 (dm add! ((c <seq>) x => <seq>)
   (add c x))
 
-(dm push ((c <seq>) x => <seq>)
-  (add! c x))
-
 (dm pos ((x <seq>) v => <any>) ;; TODO: (false-or <int>)
   (find-key (curry == v) x))
 
@@ -882,6 +884,12 @@
 (dm add ((c <lst>) x => <lst>)
   (pair x c))
 
+(dm push ((c <lst>) x => <lst>)
+  (pair x c))
+
+(dm pop ((c <lst>) => (tup (new-c <lst>) value))
+  (tup (tail c) (head c)))
+
 (dm rev! ((c <lst>) => <lst>)
   (rep loop ((l c) (r (empty c)))
     (if (empty? l)
@@ -1030,10 +1038,10 @@
   (set (low-elt c (len c)) x)
   c)
 
-(dm push ((c <buf>) x => <buf>)
+(dm push-last! ((c <buf>) x => <buf>)
   (add! c x))
 
-(dm pop ((c <buf>) => <any>)
+(dm pop-last! ((c <buf>) => <any>)
   (let ((new-len (- (len c) 1))
 	(x       (low-elt c new-len)))
     (set (len c) new-len)
@@ -1458,6 +1466,11 @@
 
 (dm write-string ((port <file-output-port>) (s <str>))
   (%write-string (port-handle port) (%su s)))
+
+;;; Other file-related functions.
+
+(dm file-mtime ((filename <str>) => <flo>)
+  (%fb (%file-mtime (%su filename))))
 
 ;;; STRING-PORT IMPLEMENTATION
 
@@ -2076,12 +2089,14 @@
   <condition> condition-arguments condition-message
   curry
   del-dups
+  del-key del-keys
   do do2
   elt elt-setter
   empty empty?
   eof-object eof-object?
   error
   fab fabs
+  file-mtime
   fill
   fin-state?
   first-then
@@ -2105,6 +2120,7 @@
   newline
   now-elt
   now-key
+  nul?
   num-to-str
   numeric?
   nxt-state
@@ -2114,6 +2130,7 @@
   peek-char
   <port>
   pos
+  pop pop-last! push push-last!
   rcurry
   read-char
   rev!

@@ -33,15 +33,19 @@
 	    (sub filename 0 (+ i 1))
 	    (loop (- i 1))))))
 
-(dv *proto-root* (os-binding-value "PROTO_ROOT"))
+(dv *proto-root*
+  (let ((env-root (os-binding-value "PROTO_ROOT")))
+    (if (empty? env-root)
+        ;; Defaults to a path relative to the current working directory.
+        (cat (base-path (app-filename)) ".." *path-separator* "..")
+        env-root)))
 
-;; TODO: GENERALIZE
-(dm src-filename ((filename <str>) => <str>)
-  (if (empty? *proto-root*)
-      (cat (base-path (app-filename)) ;; relative to app start
-	   ".." *path-separator* "SRC" *path-separator*
-	   filename)
-      (cat *proto-root* "SRC" *path-separator* filename)))
+(dm add-src-path (relpath => <str>)
+  (cat *proto-root* *path-separator* "SRC" *path-separator* relpath))
+
+(dm add-build-path (builddir relpath => <str>)
+  (cat *proto-root* *path-separator* "C" *path-separator*
+       builddir *path-separator* relpath))
 
 (dm parse-in ((s <str>) ct-env)
   (objectify (read-from-string s) ct-env #f))
@@ -87,13 +91,22 @@
 (dm load ((filename <str>)) 
   (load-in filename (runtime-environment)))
 
-(dv *base-path* "/home/ai/jrb/proto/SRC/")
+(dv *proto-extension* ".proto")
+(dv *c-extension* ".c")
+(dv *obj-extension* ".o")
+(dv *exe-extension* "")
 
 (df proto-filename (name)
-  (cat *base-path* name ".proto"))
+  (cat name *proto-extension*))
 
 (df c-filename (name)
-  (cat *base-path* "../C/" name ".c"))
+  (cat name *c-extension*))
+
+(df obj-filename (name)
+  (cat name *obj-extension*))
+
+(df exe-filename (name)
+  (cat name *exe-extension*))
 
 (dm load-from (name)
   (load (proto-filename name)))
@@ -157,13 +170,23 @@
       (loop))))
 
 (export
+  add-src-path
+  add-build-path
+
+  *proto-extension*
+  *c-extension*
+  *obj-extension*
+  *exe-extension*
+
   c-filename
+  proto-filename
+  exe-filename
+  obj-filename
+
   eval
   load
   parse-in
   *path-separator*
-  proto-filename
   *proto-root*
   read-file
-  src-filename
   top)

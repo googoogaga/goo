@@ -25,15 +25,57 @@
 (ds (collected ,name)
   `(rev! ,name))
 
+(ct-also
+
+  ;; Lift subforms out of a place form.  Return a series of gensym bindings
+  ;; and a new place form which uses them instead of the original
+  ;; expressions.  This can be used to prevent multiple evaluation when
+  ;; expanding incf, decf, and similar macros.  For example:
+  ;;   '(foo x y z) =>
+  ;;       (tup '((g1 x) (g2 y) (g3 z)) '(foo g1 g2 g3))
+  ;;   'bar => (tup '() 'bar)
+  (df lift-place-subforms (place => (tup (g-decls <lst>) (g-place <lst>)))
+    (loc ((munch ((subforms <lst>) => (tup (g-decls <lst>) (g-args <lst>)))
+            (if (empty? subforms)
+                '()
+                (let (((tup g-decls g-args) (munch (tail subforms))))
+                  (let ((g (gensym)))
+                    (tup (pair `(,g ,(head subforms)) g-decls)
+                         (pair g g-args)))))))
+      (if (isa? place <sym>)
+          (tup '() place)
+          (let (((tup g-decls g-args) (munch (tail place))))
+            (tup g-decls (pair (head place) g-args))))))
+
+  )
+           
 ;; TODO: GENERALIZED VERSION
 
-(ds (inc ,x ,@amount)
-  (let ((amount (mif ((,amount) amount) amount 1)))
-    `(set ,x (+ ,x ,amount))))
+(ds (inc ,place ,@amount)
+  (let (((tup g-decls g-place) (lift-place-subforms place))
+        (amount (mif ((,amount) amount) amount 1)))
+    `(let (,@g-decls)
+       (set ,g-place (+ ,g-place ,amount)))))
 
-(ds (dec ,x ,@amount)
-  (let ((amount (mif ((,amount) amount) amount 1)))
-    `(set ,x (- ,x ,amount))))
+(ds (dec ,place ,@amount)
+  (let (((tup g-decls g-place) (lift-place-subforms place))
+        (amount (mif ((,amount) amount) amount 1)))
+    `(let (,@g-decls)
+       (set ,g-place (- ,g-place ,amount)))))
+
+(ds (pushf ,place ,value)
+  (let (((tup g-decls g-place) (lift-place-subforms place)))
+    `(let (,@g-decls)
+       (set ,g-place (push ,g-place ,value)))))
+
+(ds (popf ,place)
+  (let (((tup g-decls g-place) (lift-place-subforms place))
+        (new-col (gensym))
+        (val (gensym)))
+    `(let (,@g-decls
+           ((tup ,new-col ,val) (pop ,g-place)))
+       (set ,g-place ,new-col)
+       ,val)))
 
 (ds (unless ,test ,@body)
   `(if (not ,test) (seq ,@body)))
@@ -161,6 +203,7 @@
   match-sublist
   match-unquote
   pair
+  tup
   var-name
   var-type)
 
@@ -172,6 +215,8 @@
   collected
   inc
   dec
+  pushf
+  popf
   unless
   when
   or

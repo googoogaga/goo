@@ -18,38 +18,15 @@
 (use ast)
 (use top)
 (use ast-linearize)
+(use strings)
 
-;;;;=======================================================================
-;;;;  String Hacking
-;;;;=======================================================================
-;;;;  TODO - Refactor this code into a strings module as soon as we
-;;;;  switch to a new top-level compilation driver.
+;;; Convert a module name to a relative path name.
+;;;   foo/bar => "foo/bar" or "foo\\bar", etc.
+(df module-name-to-relpath ((name <sym>) => <str>)
+  (let ((namestr (map-str as-lowercase (sym-name name))))
+    (string-join (string-split namestr #\/) *path-separator*)))	 
 
-;;; Build a string containing the specified number of spaces.
-(df string-repeat (str n)
-  (if (<= n 0)
-      ""
-      (cat str (string-repeat str (- n 1)))))
-
-;;; Split 'str' apart on occurrences of 'sep' (similar to Perl).
-(df string-split ((str <str>) (sep <chr>) => <lst>)
-  (let ((match (pos str sep)))
-    (if (== nul match)
-	(lst str)
-	(pair (sub str 0 match)
-	      (string-split (sub str (+ match 1) (len str)) sep)))))
-
-;;; Join each string in 'strs' with 'sep' (similar to Perl).
-(df string-join ((strs <lst>) (sep <str>) => <str>)
-  (case
-    ((empty? strs) "")
-    ((empty? (tail strs)) (head strs))
-    (#t (cat (head strs) sep (string-join (tail strs) sep)))))
-
-;;; Map a function over each element of a string.
-;;; TODO - Fix regular 'map' to work on strings.
-(df map-str ((f <fun>) (s <str>) => <str>)
-  (as <str> (map f (as <lst> s))))
+(dv *definitions* #f) ;; TODO: thread variable
 
 
 ;;;;=======================================================================
@@ -58,38 +35,53 @@
 ;;;;  We subclass the module loader and add our own code for locating and
 ;;;;  processing modules.
 
-;;; Convert a module name to a relative path name.
-;;;   foo/bar => "foo/bar" or "foo\\bar", etc.
-;;; TODO - Where should this live?  Merge with proto-filename?
-(df module-name-to-relpath ((name <sym>) => <str>)
-  (let ((namestr (map-str as-lowercase (sym-name name))))
-    (string-join (string-split namestr #\/) *path-separator*)))	 
-
 (dv <p2c-module-loader> (isa <module-loader>))
-  (slot <p2c-module-loader> (collected-ast <lst>) '())
-  (slot <p2c-module-loader> (load-depth <int>) 0)
+  (slot <p2c-module-loader> (module-loader-appname <str>))
+  (slot <p2c-module-loader> (module-loader-app-modname <sym>))
 
-;;; TODO - Refactor into <module-loader>.
-(df module-loader-begin-module ((loader <p2c-module-loader>) (name <sym>))
-  (format out "%s[Loading module %s...\n"
-          (string-repeat "  " (load-depth loader))
-          name)
-  (inc (load-depth loader)))
+(dv <p2c-module> (isa <module>))
+  (slot <p2c-module> (module-src-file <str>))
+  (slot <p2c-module> (module-mtime <flo>))
 
-(df module-loader-end-module ((loader <p2c-module-loader>) (name <sym>))
-  (dec (load-depth loader))
-  (format out "%s]\n" (string-repeat "  " (load-depth loader))))
+(dm module-loader-module-type ((loader <p2c-module-loader>) => <p2c-module>)
+  <p2c-module>)
 
 (dm load-module ((loader <p2c-module-loader>) (name <sym>) => <module>)
-  (module-loader-begin-module loader name)
-  (let ((mod  (fab-p2c-module loader name))
-        (env  (module-target-environment mod))
-        (file (module-name-to-relpath name))
-        (ast  (compute-ast file env)))
-    (module-loader-end-module loader name)
-    (set (collected-ast loader)
-         (pair ast (collected-ast loader)))
-    mod))
+  (let ((mod      (fab-p2c-module loader name))
+        (env      (module-target-environment mod))
+        (file     (module-name-to-relpath name))
+        (src-file (add-src-path (proto-filename file)))
+        (out-file (add-build-path (module-loader-appname loader)
+                                  (c-filename file))))
+    (set (module-src-file mod) src-file)
+    (set (module-mtime mod) (file-mtime src-file))
+    (let ((ast      (compute-ast src-file env)))
+      ;;(format out "Computing program for %s.\n" name)
+      (let ((prg    (compute-program ast env)))
+        ;;(format out "Generating C code for %s.\n" name)
+        (call-with-output-file
+         out-file
+         (fun (out-port)
+           (dlet ((*definitions* (program-definitions prg))) 
+             (generate-c-module out-port ast prg mod))))
+        mod))))
+
+(df module-up-to-date? ((mod <p2c-module>) => <log>)
+  (>= (module-mtime mod) (file-mtime (module-src-file mod))))
+
+(df purge-outdated-modules ((loader <module-loader>))
+  (let ((changed '()))
+
+    ;; Figure out which modules have changed...
+    (do-module-loader-modules
+     (fun (mod)
+       (when (not (module-up-to-date? mod))
+         (pushf changed (module-name mod))))
+     loader)
+
+    ;; ...notify the user, and dump them.
+    (do (fun (name) (format out "%s has changed.\n" name)) changed)
+    (remove-modules-by-name! loader changed)))
 
 
 ;;;;=======================================================================
@@ -97,35 +89,38 @@
 ;;;;=======================================================================
 ;;;;  The new module-based compiler drivers.
 
-;;; The basename to use for our output C file.
-(dv *c-out-name* "proto")
+;;; Create a module loader for the specified application.  'appname'
+;;; will be used as the executable name.  'modname' will be used to
+;;; recursively load all the modules which make up the application.
+;;; TODO - Hide module loader inside wrapper object?
+(df p2c-def-app ((appname <str>) (modname <sym>) => <p2c-module-loader>)
+  (isa <p2c-module-loader>
+    (set module-loader-appname appname)
+    (set module-loader-app-modname modname)))
+
+;;; Given a module loader, generate an up-to-date C program.
+(df p2c-build-app ((loader <p2c-module-loader>) => #f)
+  (purge-outdated-modules loader)
+  (let ((mod (probe-module loader (module-loader-app-modname loader))))
+    (format out "Searching for undefined global bindings.\n")
+    (do-module-loader-modules report-undefined-global-bindings loader)
+    (generate-c-application loader mod)
+    (generate-makefile loader)
+    #f))
+
+;;; Backwards compatibility for users: Build p2c itself.
+(dv *p2c-app* (p2c-def-app "p2c" 'main))
+(dm p2c-top () (p2c-build-app *p2c-app*))
 
 ;;; Given a file name and an environment, compute an ast in that
 ;;; environment.
 (dm compute-ast (filename ct-env)
-  (let ((in-name (proto-filename filename))
-	(x       (read-file in-name)))
-    (objectify x ct-env #f)))
-
-;;; Compile a module to C, along with any supporting modules.
-(df p2c-module (name)
-  (let ((loader (isa <p2c-module-loader>)))
-    (find-module loader name)
-    (let ((out-name (c-filename *c-out-name*))) ;; filename
-      (call-with-output-file
-       out-name
-       (fun (out-port)
-         (let ((ast (sequentialize (rev (collected-ast loader)))))
-           (compile->c-in ast loader out-port))))))
-  #f)
-
-;;; Backwards compatibility for users: Build p2c itself.
-(dm p2c-top () (p2c-module 'main))
+  (objectify (read-file filename) ct-env #f))
 
 ;;; Given an ast 'e', prepare it for compilation to C.  Store any
 ;;; new global bindings into the environment 'scratch-env'.
-(dm compute-program (e scratch-env)
-  (let ((obj (sexp->object e scratch-env))
+(dm compute-program (e env)
+  (let ((obj (sexp->object e env))
 	;; (format out "OBJ %=\n" obj)
 	(dyn (analyze-dynamic-extent obj))
 	;; (format out "DYN %=\n" dyn)
@@ -135,7 +130,7 @@
 	;; (format out "LFT %=\n" lft)
         (prg (extract-things! lft)))
     ;; (format out "EXT %=\n" prg)
-    (let ((flt (closurize-main! prg scratch-env 64)))
+    (let ((flt (closurize-main! prg env 64)))
     ;; (format out "FLT %=\n" flt)
     (gather-temporaries! flt)
     ;; (format out "TMP %=\n" flt)
@@ -144,28 +139,50 @@
     ;; (format out "\n\n%=\n\n" prg)
     prg)))
 
-(dv *definitions* #f) ;; TODO: thread variable
-
-(dm compile->c-in (e loader code-out)
-  (format out "Analyzing program.\n")
-  (let ((scratch-mod (fab-p2c-module loader (as <sym> "---main---")))
-        (scratch-env (module-target-environment scratch-mod))
-        (prg (compute-program e scratch-env)))
-    (format out "Searching for undefined bindings.\n")
-    (do-module-loader-modules report-undefined-global-bindings loader)
-    (format out "Generating C code.\n")
-    (dlet ((*definitions* (program-definitions prg))) 
-      (generate-c-program code-out e prg loader))))
-
-(dm generate-c-program (out e prg loader)
+(dm generate-c-module (out e prg mod)
   (generate-header out e)
-  (generate-global-environment out loader)
+  (generate-global-environment out mod)
   (generate-quotation-forwards out (program-quotations prg))
   (generate-function-forwards out (program-definitions prg))
   (generate-function-bodies out (program-definitions prg))
-  (generate-main out (program-form prg)) 
+  (generate-module-init out mod (program-form prg)) 
   (generate-trailer out)
   prg)
+
+(dm generate-c-application ((loader <module-loader>) (mod <module>))
+  (let ((appname   (module-loader-appname loader))
+        (init-name (cat appname "-init")))
+    (call-with-output-file
+     (add-build-path appname (c-filename init-name))
+     (fun (out-port)
+       (generate-header out-port #f)
+       (generate-main out-port mod)
+       (generate-trailer out-port)))
+    #f))
+
+(dm generate-makefile ((loader <module-loader>))
+  (let ((appname   (module-loader-appname loader))
+        (init-name (cat appname "-init"))
+        (exe-name  (exe-filename appname))
+        (sep       *path-separator*))
+    (call-with-output-file
+     (add-build-path appname "Makefile")
+     (fun (out)
+       (format out "%s%s: ..%sprt.h\n" *c-extension* *obj-extension* sep)
+       (format out "\tcc -I.. -c -g -O -o $@ $<\n\n")
+       (format out "OBJS = \\\n")
+       (do-module-loader-modules
+        (fun (mod)
+          (format out "\t%s \\\n"
+                  (obj-filename (module-name-to-relpath (module-name mod)))))
+        loader)
+       (format out "\t%s\n\n" (obj-filename init-name))
+       (format out "%s: ..%sprt.o $(OBJS)\n" exe-name sep)
+       (format out "\tcc -o %s ..%sprt.o $(OBJS) ..%sgc.a\n\n"
+               exe-name sep sep)
+       (format out "clean:\n\trm -f %s ..%sprt.o $(OBJS)\n"
+               exe-name sep)))))
+
 
 ;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 ;;;              generation
@@ -191,16 +208,14 @@
 
 ;;; gb* is a list of instances of global-binding.
 
-(dm generate-global-environment (out loader)
-  (do-module-loader-modules
-   (fun (mod)
-     (format out "\n/* MODULE ENVIRONMENT: %s */\n\n" (module-name mod))
-     (do-static-global-bindings
-      (fun (binding)
-        (when (binding-native-to? binding mod)
-          (generate-global-binding out #f binding)))
-      (module-target-environment mod)))
-   loader))
+(dm generate-global-environment (out mod)
+  (format out "\n/* MODULE ENVIRONMENT: %s */\n\n" (module-name mod))
+  (do-static-global-bindings
+   (fun (binding)
+     (generate-global-binding out
+                              (not (binding-native-to? binding mod))
+                              binding))
+   (module-target-environment mod)))
 
 (dm generate-global-binding (out imported? gb)
   (let ((name (binding-name gb)))
@@ -395,10 +410,12 @@
   (mangle-global-name modname (as <str> name)))
 
 ;; Mangle a name which is defined in boot.proto.
+;; Be sure to provide a matching EXT declaration in prt.h.
 (dm mangle-boot-name (name => <str>)
   (mangle-global-name $proto-boot-module-name name))
 
-;; Mangle a name which is defined in boot.proto.
+;; Mangle a name which is defined in runtime.proto.
+;; Be sure to provide a matching EXT declaration in prt.h.
 (dm mangle-runtime-name (name => <str>)
   (mangle-global-name $proto-runtime-module-name name))
 
@@ -1046,14 +1063,44 @@
                  (gen-ref (head regs) out)
                  (next-reg (tail regs) (+ i 1))))))))
 
-(dm generate-main (out form)
-  (format out "\n/* EXPRESSION: */\nint main(int argc, char* argv[]) {\n")
+(dm module-init-name (name)
+  (cat "load_module_" (mangle-raw-name name)))
+
+(dm module-init-decl (name)
+  (cat "void " (module-init-name name) " (void)"))
+
+(dm generate-module-init (out mod form)
+  (let ((name       (module-name mod))
+        (init-decl  (module-init-decl name))
+        (env        (module-target-environment mod))
+        (uses       (environment-uses-modules env))
+        (uses-names (map module-name uses)))
+    (format out "\n/* MODULES USED: */\n\n")
+    (for ((n uses-names))
+      (format out "extern %s;\n" (module-init-decl n)))
+    (format out "\n/* EXPRESSION: */\n\n")
+    (format out "extern %s;\n\n" init-decl)
+    (format out "%s {\n" init-decl)
+    (format out "  static int need_init = 1;\n")
+    (format out "  if (!need_init) return;\n\n")
+    (for ((n uses-names))
+      (format out "  %s();\n" (module-init-name n)))
+    (format out "\n")
+    (to-c form #f 1 out)
+    (format out "\n")    
+    (format out "  need_init = 0;\n")
+    (format out "}\n")))
+
+(dm generate-main (out mod)
+  (format out "\n/* APPLICATION: */\n\n")
+  (format out "extern %s;\n\n" (module-init-decl (module-name mod)))
+  (format out "int main(int argc, char* argv[]) {\n")
   (format out "  %s(argc, argv);\n" (mangle-boot-name "%init-world"))
-  ;; (format out "  %s" (mangle-boot-name "print-out"))
-  (to-c form #f 1 out)
-  (format out "  return(0);\n")
+  (format out "  %s();\n" (module-init-name (module-name mod)))
+  (format out "  return 0;\n")
   (format out "}\n"))
 
 (export
-  p2c-module
+  p2c-def-app
+  p2c-build-app
   p2c-top)

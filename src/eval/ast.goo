@@ -6,6 +6,7 @@
 (use runtime)
 (use write)
 (use syntax)
+(use strings)
 
 ;;; TODO: MOVE TYPE OUT OF SIGNATURE
 
@@ -270,6 +271,12 @@
   ;; The module-loader which should be used to load new modules for
   ;; use by this environment.
   (slot <static-global-environment> environment-module-loader) ;<module-loader>
+  ;; The modules used by this environment.
+  (slot <static-global-environment> (environment-uses-modules <buf>)
+        (fab <buf> 0))
+  ;; Forward references from other modules which are resolved by this
+  ;; module.
+  (slot <static-global-environment> (environment-implements <lst>) '())
 
 (dv <static-empty-environment> (isa <static-environment>))
 
@@ -337,11 +344,24 @@
   (let ((ref (objectify-symbol e r)))
     (isa <bound?> (set bound?-reference ref))))
 
-(dm objectify-compile-time (program r tail? => <constant>)
-  (let ((syntax-env (find-syntax-environment r))
-	(program (objectify program syntax-env tail?)))
-    (ast-evaluate program)
-    (isa <constant> (set constant-value #f))))
+;;; This routine always produces a version of 'program' which is accessible
+;;; in the syntax environment.  If 'rt?' is true, it will make sure that
+;;; there is also a version in the runtime environment.
+(dm objectify-compile-time (program r tail? rt? => <program>)
+  (let ((mod (find-environment-module r))
+        (syntax-env (module-syntax-environment mod))
+        (target-env (module-target-environment mod))
+        (ast (objectify program syntax-env tail?)))
+    ;; Process the program immediately.
+    (ast-evaluate ast)
+    ;; If we have been asked to create a runtime copy of this code--and we
+    ;; are compiling--create a second copy of this code which can be
+    ;; accessed in the runtime.  This parallels they way
+    ;; <ast-macro-definition> works.  Otherwise, objectify #f.
+    ;; The value of a CT-ALSO form is currently undefined.
+    (if (and rt? (~== syntax-env target-env))
+        (objectify program r tail?)
+        (isa <constant> (set constant-value #f)))))
 
 (dm objectify-alternative (t c a r tail? => <alternative>)
   (isa <alternative> 
@@ -475,21 +495,25 @@
         (mod (environment-module gr))
 	(binding
 	 (if existing-binding
-	     (seq
+             (let ((foreign?
+                    (not (or (binding-native-to? existing-binding mod)
+                             defining-method?))))
                (if (binding-free? existing-binding)
                    ;; If the binding is free, define it.
-                   (set (binding-free? existing-binding) #f)
+                   (seq
+                     (set (binding-free? existing-binding) #f)
+                     (when foreign?
+                       (pushf (environment-implements gr) existing-binding)))
                    ;; Otherwise, redefine the existing binding.
                    ;; TODO - We should do more useful redefinition here.
-                   (unless (or defining-method?
-                               (binding-native-to? existing-binding mod))
+                   (when foreign?
                      (format out
                              "%s: warning: '%s' clobbers binding from %s.\n"
                              (module-name mod)
                              name
                              (binding-module-name existing-binding))))
                existing-binding)
-	     (let ((binding (make-binding)))
+             (let ((binding (make-binding)))
 	       (set (binding-name binding)   name)
 	       (set (binding-free? binding)  #f)
                (set (binding-module-name binding)
@@ -774,20 +798,21 @@
             (export-binding! module name binding)))))
   (isa <constant> (set constant-value #f)))
 
-;;; This works like 'insert-global?', but it's more careful about clobbering.
-(df import-global! ((env <static-global-environment>) (b <module-binding>))
+;;; This works like 'insert-global!', but it's more careful about clobbering.
+(df import-global! ((b <module-binding>) (env <static-global-environment>))
   (let ((existing (find-binding (binding-name b) env)))
     (unless (or (== existing #f) (== existing b))
       (format out "warning: '%s' from %s clobbers local binding.\n"
               (binding-name b) (binding-module-name b))))
-  (insert-global! env b)
+  (insert-global! b env)
   #f)
 
 (dm objectify-use-module (name r tail? => <program>)
   (let ((env (find-static-global-environment r))
         (loader (environment-module-loader env))
-        (module (find-module loader name)))
-    (do (rcurry insert-global! env) (module-exports module)))
+        (used-module (probe-module loader name)))
+    (push-last! (environment-uses-modules env) used-module)
+    (do (rcurry import-global! env) (module-exports used-module)))
   (isa <constant> (set constant-value #f)))
 
 (dm expand-bind-list (pat var fail => <any>)
@@ -1043,7 +1068,12 @@
 (dv $sexpr-compile-time-tag 'ct)
 
 (define-magic-binding compile-time (x r tail?)
-  (objectify-compile-time (head (tail x)) r tail?))
+  (objectify-compile-time (head (tail x)) r tail? #f))
+
+(dv $sexpr-compile-time-also-tag 'ct-also)
+
+(define-magic-binding compile-time-also (x r tail?)
+  (objectify-compile-time (head (tail x)) r tail? #t))
 
 (dv $sexpr-define-primitive-tag 'dp)
 
@@ -1146,6 +1176,7 @@
 (define-primitive %close-input-port ())
 (define-primitive %write-char ())
 (define-primitive %write-string ())
+(define-primitive %file-mtime ())
 (define-primitive %force-output ())
 (define-primitive %char-ready? ())
 (define-primitive %read-char ())
@@ -1227,6 +1258,9 @@
   ;; A map from module names (represented as symbols) to
   ;; <module> objects.
   (slot <module-loader> (module-loader-modules <tab>) (fab <tab> 1000))
+  ;; A stack of all the names of modules currently being loaded.
+  ;; We use this to catch circular dependencies.
+  (slot <module-loader> (module-loader-stack <lst>) '())
 
 (export <module-loader>)
 
@@ -1244,10 +1278,21 @@
   module-syntax-environment
   module-target-environment)
 
+(df set-module-environments ((mod <module>)
+                             (syntax-env <static-global-environment>)
+                             (target-env <static-global-environment>))
+  (set (module-syntax-environment mod) syntax-env)
+  (set (module-target-environment mod) target-env))
+
 ;;; Call a function 'f' for each module associated with the module loader.
 (df do-module-loader-modules (f loader)
   (do (fun (mod) (f mod))
       (module-loader-modules loader)))
+
+;; Create an empty module for use with a particular loader.
+;; Override this method to use a custom module class.
+(dm module-loader-module-type ((loader <module-loader>) => <module>)
+  <module>)
 
 ;;; Add a module to a module-loader.
 (df register-module! ((module-loader <module-loader>) (mod <module>)
@@ -1256,11 +1301,33 @@
   module-loader)
 
 ;;; Find the module with the given name, loading it if necessary.
-(df find-module ((module-loader <module-loader>) (name <sym>) => <module>)
+(df probe-module ((module-loader <module-loader>) (name <sym>) => <module>)
   (let ((module (elt (module-loader-modules module-loader) name)))
     (if (== module nul)
-	(load-module module-loader name)
+	(load-and-register-module module-loader name)
 	module)))
+
+;;; This function keeps track of nesting and registration.
+(df load-and-register-module ((loader <module-loader>)
+                              (name <sym>)
+                              => <module>)
+  (let ((stack (module-loader-stack loader))
+        (depth (len stack))
+        (indent (string-repeat "  " depth)))
+  
+    ;; First, make sure we aren't already loading this module.
+    (when (mem? stack name)
+      (error "%s: error: Circular use of %s not allowed" (head stack) name))
+
+    ;; Load the module, using a FIN form to manage the load stack.
+    (format out "%s[Loading module %s...\n" indent name)
+    (let ((mod (seq (pushf (module-loader-stack loader) name)
+                    (fin
+                      (load-module loader name)
+                      (popf (module-loader-stack loader))))))
+      (register-module! loader mod)
+      (format out "%s]\n" indent)
+      mod)))
 
 ;;; Create a <module-loader> subclass and override this method.  It should
 ;;; create and register a module, call 'read-file', objectify the code in
@@ -1302,12 +1369,56 @@
                (binding-name binding))))
    (module-target-environment mod)))
 
+;;; Compute all the modules which use the specified modules, directly or
+;;; indirectly.  Yes, this function is slow and ugly.
+(df compute-transitive-users ((loader <module-loader>)
+                              (modnames <lst>) => <lst>)
+  (let ((users (fab <tab> 100)))
+    (loc ((add-user (modname)
+            (when (nul? (elt users modname))
+              (set (elt users modname) modname)
+              (do-module-loader-modules
+               (fun (mod)
+                 (do
+                  (fun (uses-mod)
+                    (when (== modname (module-name uses-mod))
+                      (add-user (module-name mod))))
+                  (environment-uses-modules (module-target-environment mod))))
+               loader))))
+      (do add-user modnames)
+      (collecting ()
+        (do (fun (v) (collect v)) users)))))
+
+;;; Remove a single module object from the loader.
+;;; This should not be called externally, because it does not bother to
+;;; remove other modules which use this one.
+(df remove-module-internal! ((loader <module-loader>) (mod <module>))
+  ;; If this module defined any foreign bindings, set them back to free.
+  (do
+   (fun (binding) (set (binding-free? binding) #t))
+   (environment-implements (module-target-environment mod)))
+  ;; Remove it from our list of modules.
+  (del-key (module-loader-modules loader) (module-name mod)))
+
+;;; Unload all the named modules, and all the modules which use them.
+(df remove-modules-by-name! ((loader <module-loader>) (modnames <lst>) => #f)
+  (let ((remove-names (compute-transitive-users loader modnames)))
+    (do
+     (fun (modname)
+       (let ((mod (elt (module-loader-modules loader) modname)))
+         (remove-module-internal! loader mod)))
+     remove-names))
+  #f)
+
 (export
+  set-module-environments
+  module-loader-module-type
   do-module-loader-modules
-  find-module
+  probe-module
   load-module
   binding-native-to?
-  report-undefined-global-bindings)
+  report-undefined-global-bindings
+  remove-modules-by-name!)
 
 
 ;;;;=======================================================================
@@ -1390,12 +1501,10 @@
 ;; to run code typed into the listener, to process 'eval' calls, and so on.
 (df init-runtime ()
   (let ((rt-loader (isa <module-loader>))
-        (rt-module (isa <module> (set module-name $proto-boot-module-name)))
+        (type      (module-loader-module-type rt-loader))
+        (rt-module (isa type (set module-name $proto-boot-module-name)))
         (rt-env (fab-static-global-environment rt-module rt-loader)))
-
-    ;; Hook up our environments properly.
-    (set (module-target-environment rt-module) rt-env)
-    (set (module-syntax-environment rt-module) rt-env)
+    (set-module-environments rt-module rt-env rt-env)
 
     ;; First, we need to get all the bindings which were built into our
     ;; image by the compiler, and copy them into our new environment.
@@ -1431,13 +1540,13 @@
 ;; The section numbers refer to DOC/DOC.TXT.
 (dv syntax-environment-bindings
   '(;; Section 1.1/2.1: Special forms.
-    ;; Not included: CT, DS
+    ;; Not included: CT, CT-ALSO, DS, USE, EXPORT
     IF SEQ SET FUN LET LOC LAB FIN DV DM DG ISA SLOT MACRO-EXPAND
     NEXT-METHOD QUOTE
 
     ;; Section 1.2/2.2: Macros.
     DF TRY REP MIF AND OR SELECT CASE INC DEC UNLESS WHEN ASSERT
-    FOR COLLECTING
+    FOR COLLECTING PUSHF POPF
 
     ;; Section 1.3: Read macros.
     quasiquote
@@ -1450,7 +1559,7 @@
     object-direct-parents object-slots object-parents object-name
 
     ;; Section 3.3: Null.
-    nul
+    nul nul?
 
     ;; Section 3.4: Booleans.
     <log> not
@@ -1485,11 +1594,11 @@
     ;; 3.7.4 Tuples.
     <tup> tup
     ;; 3.7.5 (the first one): Lists.
-    <lst> <list> head tail lst list pair nil
+    <lst> <list> head tail lst list pair nil push pop
     ;; 3.7.5 (the second one): Optionals.
     <opts>
     ;; 3.7.6 (the first one): Flat sequences.
-    <flat> <vec> vec <str> str to-str <buf> buf push pop
+    <flat> <vec> vec <str> str to-str <buf> buf push-last! pop-last!
     ;; 3.7.6 (the second one):  Ranges.
     <range> from from-by from-to from-to-by from-below from-below-by
     from-above from-above-by
@@ -1560,21 +1669,14 @@
 ;;; live in p2c.proto.
 
 (df fab-p2c-module ((loader <module-loader>) (name <sym>) => <module>)
-  (let ((module (isa <module> (set module-name name)))
+  (let ((type       (module-loader-module-type loader))
+        (module     (isa type (set module-name name)))
         (syntax-env (fab-syntax-environment module))
 	(target-env (fab-static-global-environment module loader)))
-  
-    ;; Hook up our environments properly.
-    (set (module-target-environment module) target-env)
-    (set (module-syntax-environment module) syntax-env)
-
-    ;; Insert the right stuff into the target environment.
+    (set-module-environments module syntax-env target-env)
     (if (== name $proto-boot-module-name)
         (init-p2c-boot-environment target-env)
         (init-p2c-regular-environment target-env loader))
-
-    ;; Register and return the module.
-    (register-module! loader module)
     module))
 
 (export fab-p2c-module)
@@ -1595,7 +1697,7 @@
   ;; Copy the binding for 'use' into the module, so it can ask for more
   ;; bindings as needed.  Copy 'seq', too, because the top-level of the
   ;; file gets wrapped in it.
-  (let ((bootmod (find-module loader $proto-boot-module-name))
+  (let ((bootmod (probe-module loader $proto-boot-module-name))
         (bootenv (module-target-environment bootmod)))
     (copy-environment-bindings env bootenv '(SEQ USE))))
 
@@ -1669,6 +1771,7 @@
   def-programs
   do-static-global-bindings
   env-object-name
+  environment-uses-modules
   <fix-let>
   fix-let-arguments
   fix-let-arguments-setter

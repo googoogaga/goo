@@ -1493,6 +1493,7 @@
             (force-names-into-boot-module ,@(tail names)))))
 
 (force-names-into-boot-module
+  error
   unknown-function-error
   file-opening-error
   type-error
@@ -1515,6 +1516,7 @@
   quasiquote
   dp
   ct
+  ct-also
   slot
   isa
   try
@@ -1561,6 +1563,7 @@
   %f<
   %f=
   %fi2f
+  %file-mtime
   %flo-bits
   %force-output
   %ft
