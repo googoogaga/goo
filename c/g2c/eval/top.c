@@ -5,809 +5,826 @@
 
 /* MODULE ENVIRONMENT: top */
 
-EXT(YastYbinding_kind,"ast","binding-kind");
-EXT(YruntimeYreduceA,"runtime","reduce+");
-DEF(YtopYload,"top","load");
-EXT(YsyntaxYsexpr_block_name,"syntax","sexpr-block-name");
-EXT(YastYmodule_target_environment,"ast","module-target-environment");
-EXT(YwriteYwriteln,"write","writeln");
-EXT(YmacrosYmap,"macros","map");
-EXT(Ynul,"boot","nul");
-EXT(YsyntaxYsexpr_slot_object,"syntax","sexpr-slot-object");
-EXT(YruntimeYcurry,"runtime","curry");
-EXT(YastYLast_genericG,"ast","<ast-generic>");
-EXT(YprotoSsystemYcomponents_basename,"proto/system","components-basename");
-EXT(YruntimeYtable_protocol,"runtime","table-protocol");
-EXT(Yast_linearizeYclosure_creation_index,"ast-linearize","closure-creation-index");
-EXT(Ysig_value,"boot","sig-value");
-EXT(YruntimeYin,"runtime","in");
-EXT(Yclass_name,"boot","class-name");
-EXT(YruntimeYassocs_test,"runtime","assocs-test");
-EXT(YmacrosYmake_setter_name,"macros","make-setter-name");
-EXT(YastYLfree_environmentG,"ast","<free-environment>");
-EXT(YruntimeYalways,"runtime","always");
+EXT(Yfile_opening_error,"boot","file-opening-error");
+EXT(YprotoScollectionsScollectionYadd,"proto/collections/collection","add");
 EXT(YprotoSsystemYos_name,"proto/system","os-name");
-EXT(YprotoSsystemYTc_extensionT,"proto/system","*c-extension*");
-EXT(YsyntaxYDsexpr_isa_tag,"syntax","$sexpr-isa-tag");
-EXT(Ymay_isaQ,"boot","may-isa?");
-EXT(Yast_linearizeYprogram_quotations,"ast-linearize","program-quotations");
-EXT(YastYLassignmentG,"ast","<assignment>");
-EXT(YastYmonitor_main_thunk,"ast","monitor-main-thunk");
-EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
-EXT(YLintG,"boot","<int>");
-EXT(YLnumG,"boot","<num>");
-EXT(YruntimeYmap2,"runtime","map2");
-EXT(YastYfunction_source_setter,"ast","function-source-setter");
-EXT(YsyntaxYDsexpr_syntax_if_tag,"syntax","$sexpr-syntax-if-tag");
-EXT(YastYglobal_box_value_setter,"ast","global-box-value-setter");
-EXT(YruntimeYchoose_handler,"runtime","choose-handler");
-EXT(YastYfunction_data_refs_setter,"ast","function-data-refs-setter");
-EXT(YruntimeY3rd,"runtime","3rd");
-EXT(YastYLlocal_referenceG,"ast","<local-reference>");
-EXT(YruntimeYread_char,"runtime","read-char");
-DEF(YtopYprompt_for_command_expression,"top","prompt-for-command-expression");
-DEF(YtopYstr_parse_in,"top","str-parse-in");
-EXT(YastYLdefinitionG,"ast","<definition>");
-EXT(YruntimeYLfile_portG,"runtime","<file-port>");
-EXT(YsyntaxYsexpr_block_body,"syntax","sexpr-block-body");
-EXT(YruntimeYnxt_state,"runtime","nxt-state");
-EXT(Yfun_value,"boot","fun-value");
-EXT(YastYload_in,"ast","load-in");
-EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
-EXT(YastYglobal_box_value,"ast","global-box-value");
-EXT(YastYsignature_specs,"ast","signature-specs");
-EXT(YastYalternative_condition,"ast","alternative-condition");
-EXT(YastYsignature_naryQ,"ast","signature-nary?");
-EXT(YruntimeYLstring_portG,"runtime","<string-port>");
-EXT(YastYfunction_signature_setter,"ast","function-signature-setter");
-EXT(YruntimeYceilingS,"runtime","ceiling/");
-EXT(YastYunwind_protect_cleanup_thunk,"ast","unwind-protect-cleanup-thunk");
-EXT(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
-EXT(YastYfunction_temporaries,"ast","function-temporaries");
-EXT(YsyntaxYDsexpr_define_generic_tag,"syntax","$sexpr-define-generic-tag");
-EXT(YastYsignature_value,"ast","signature-value");
-EXT(YsyntaxYsexpr_make_getter,"syntax","sexpr-make-getter");
-EXT(YLchrG,"boot","<chr>");
-EXT(YmacrosYmatch_atom,"macros","match-atom");
-EXT(YastYmodule_name_to_relpath,"ast","module-name-to-relpath");
-EXT(YastYsignature_names_setter,"ast","signature-names-setter");
-EXT(YsyntaxYDsexpr_quote_tag,"syntax","$sexpr-quote-tag");
-EXT(YruntimeYport_index,"runtime","port-index");
-EXT(YsyntaxYsexpr_loc_bound_signatures,"syntax","sexpr-loc-bound-signatures");
-EXT(YruntimeYfloorS,"runtime","floor/");
-EXT(YruntimeYnow_key,"runtime","now-key");
-EXT(YastYlocals_body_setter,"ast","locals-body-setter");
-EXT(YastYfunction_debug_name,"ast","function-debug-name");
-EXT(YwriteYwrite_to_string,"write","write-to-string");
-EXT(YsyntaxYDsexpr_set_tag,"syntax","$sexpr-set-tag");
-EXT(YruntimeYreduce,"runtime","reduce");
-EXT(YsyntaxYsexpr_unquoteQ,"syntax","sexpr-unquote?");
-EXT(YprotoSsystemYadd_build_path,"proto/system","add-build-path");
-EXT(YPslot,"boot","%slot");
-EXT(YruntimeYrcurry,"runtime","rcurry");
-EXT(YastYLglobal_referenceG,"ast","<global-reference>");
-EXT(YmacrosYvar_type,"macros","var-type");
-EXT(YastYlocals_functions,"ast","locals-functions");
-EXT(Ysig_names,"boot","sig-names");
-EXT(YastYlocals_functions_setter,"ast","locals-functions-setter");
-EXT(Yast_linearizeYextract_thingsX,"ast-linearize","extract-things!");
-EXT(YprotoSsystemYproto_filename,"proto/system","proto-filename");
-EXT(YastYLast_primitive_definitionG,"ast","<ast-primitive-definition>");
-EXT(Yslot_setter,"boot","slot-setter");
-EXT(YruntimeYclose_input_port,"runtime","close-input-port");
-EXT(YruntimeYroundS,"runtime","round/");
-EXT(YruntimeYnum_to_str,"runtime","num-to-str");
-EXT(YsyntaxYsexpr_slot_variable,"syntax","sexpr-slot-variable");
-EXT(YDmin_int,"boot","$min-int");
-EXT(YruntimeYassocq,"runtime","assocq");
-EXT(Yslot_value_setter,"boot","slot-value-setter");
-EXT(YruntimeYnow_elt,"runtime","now-elt");
-EXT(Yast_linearizeYTregister_passiveQT,"ast-linearize","*register-passive?*");
-EXT(YsyntaxYeval,"syntax","eval");
-EXT(YsyntaxYDsexpr_define_class_tag,"syntax","$sexpr-define-class-tag");
-EXT(YLlogG,"boot","<log>");
-EXT(YastYlocals_body,"ast","locals-body");
-EXT(YruntimeYflo_bits,"runtime","flo-bits");
-EXT(YruntimeYlsh,"runtime","lsh");
-EXT(YsyntaxYDsexpr_define_tag,"syntax","$sexpr-define-tag");
-EXT(YastYas_lst,"ast","as-lst");
-EXT(YruntimeYash,"runtime","ash");
-EXT(Yfun_name_setter,"boot","fun-name-setter");
-EXT(YruntimeYidentity,"runtime","identity");
-EXT(YLslotG,"boot","<slot>");
-EXT(YruntimeYPwith_monitor,"runtime","%with-monitor");
-EXT(YruntimeYTprint_baseT,"runtime","*print-base*");
-EXT(YruntimeYLfile_input_portG,"runtime","<file-input-port>");
-EXT(YsubtypeQ,"boot","subtype?");
-EXT(YmacrosYpair,"macros","pair");
-EXT(YprotoSsystemYTobj_extensionT,"proto/system","*obj-extension*");
-EXT(YprotoSsystemYadd_tmp_path,"proto/system","add-tmp-path");
-EXT(YruntimeYnow_elt_setter,"runtime","now-elt-setter");
-EXT(YsyntaxYsexpr_definition_value,"syntax","sexpr-definition-value");
-EXT(YastYLmoduleG,"ast","<module>");
-EXT(YastYfunction_value,"ast","function-value");
-EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
-EXT(Ynot,"boot","not");
-EXT(YprotoSsystemYcomponents_to_pathname,"proto/system","components-to-pathname");
-EXT(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
-EXT(YruntimeY_,"runtime","-");
-EXT(YprotoSsystemYfile_mtime,"proto/system","file-mtime");
-EXT(YastYapplication_binding,"ast","application-binding");
-EXT(YprotoSsystemYadd_src_path,"proto/system","add-src-path");
-EXT(Yfun_name,"boot","fun-name");
-EXT(YruntimeYabs,"runtime","abs");
-EXT(Yclass_parents,"boot","class-parents");
-EXT(YruntimeYto_str,"runtime","to-str");
-EXT(YruntimeYmax,"runtime","max");
-EXT(YastYapplication_tailQ,"ast","application-tail?");
-EXT(YLanyG,"boot","<any>");
-EXT(YmacrosYmatch_unquote,"macros","match-unquote");
-EXT(YruntimeYsub_setter,"runtime","sub-setter");
-EXT(YsyntaxYsexpr_function_definition_variable,"syntax","sexpr-function-definition-variable");
-EXT(YsyntaxYsexpr_loc_bound_names,"syntax","sexpr-loc-bound-names");
-EXT(YastYLast_functionG,"ast","<ast-function>");
-EXT(YruntimeYT,"runtime","*");
-EXT(YsyntaxYsexpr_loc_bound_bodies,"syntax","sexpr-loc-bound-bodies");
-EXT(YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
-EXT(Yast_linearizeYcollect_registersX,"ast-linearize","collect-registers!");
-DEF(YtopYbacktrace,"top","backtrace");
-EXT(YsyntaxYsexpr_slot_init,"syntax","sexpr-slot-init");
-EXT(Ygen_add_met,"boot","gen-add-met");
-EXT(Ytype_class,"boot","type-class");
-EXT(YastYbinding_value_setter,"ast","binding-value-setter");
-EXT(YruntimeYfin_stateQ,"runtime","fin-state?");
-EXT(YwriteYwrite,"write","write");
-EXT(YastYLunwind_protectG,"ast","<unwind-protect>");
-EXT(YruntimeYinvoke_handler_interactively,"runtime","invoke-handler-interactively");
-EXT(YsyntaxYsexpr_make_setter,"syntax","sexpr-make-setter");
-EXT(YLunionG,"boot","<union>");
-EXT(YastYconstant_index_setter,"ast","constant-index-setter");
-EXT(Yast_linearizeYinsert_boxX,"ast-linearize","insert-box!");
-EXT(Ylst,"boot","lst");
-EXT(YsyntaxYsexpr_forward_primitiveQ,"syntax","sexpr-forward-primitive?");
-DEF(YtopYread_file,"top","read-file");
-EXT(Yast_linearizeYcollect_temporariesX,"ast-linearize","collect-temporaries!");
-EXT(Yslot_value,"boot","slot-value");
-EXT(YDmax_int,"boot","$max-int");
-EXT(Yfun_arity,"boot","fun-arity");
-EXT(YmacrosYcat,"macros","cat");
-EXT(YsyntaxYsexpr_make_setter_name,"syntax","sexpr-make-setter-name");
-EXT(YastYbinding_global_box,"ast","binding-global-box");
-DEF(YtopYstr_parse,"top","str-parse");
-EXT(YastYconstant_index,"ast","constant-index");
-EXT(YastYLlocal_assignmentG,"ast","<local-assignment>");
-EXT(YastYassignment_form_setter,"ast","assignment-form-setter");
-EXT(Yast_linearizeYform_program,"ast-linearize","form-program");
-DEF(YtopYeval_in,"top","eval-in");
-EXT(YastYsignature_naryQ_setter,"ast","signature-nary?-setter");
-EXT(YprotoSsystemYprobe_directory,"proto/system","probe-directory");
-EXT(YruntimeYassoc,"runtime","assoc");
-EXT(YastYbinding_value,"ast","binding-value");
-EXT(YruntimeYini_state,"runtime","ini-state");
-EXT(YruntimeYfloor,"runtime","floor");
-EXT(YruntimeYLerrorG,"runtime","<error>");
-EXT(YastYbind_exit_main_fun,"ast","bind-exit-main-fun");
-EXT(YmacrosYvar_name,"macros","var-name");
-EXT(Yast_linearizeYbox_form,"ast-linearize","box-form");
-EXT(YsyntaxYsexpr_isa_parent,"syntax","sexpr-isa-parent");
-EXT(YsyntaxYsexpr_make_application,"syntax","sexpr-make-application");
-EXT(YruntimeYmodulo,"runtime","modulo");
-EXT(YruntimeYpick,"runtime","pick");
-EXT(YastYmonitor_handler,"ast","monitor-handler");
-EXT(YLreplace_generic_restartG,"boot","<replace-generic-restart>");
-EXT(YruntimeYmap_keyed,"runtime","map-keyed");
-EXT(YprotoSsystemYcomponents_last,"proto/system","components-last");
-EXT(YruntimeYlast,"runtime","last");
-EXT(YLsubclassG,"boot","<subclass>");
-EXT(YruntimeYlow_elt,"runtime","low-elt");
-EXT(YsyntaxYsexpr_signature_parameters,"syntax","sexpr-signature-parameters");
-DEF(YtopYp2c_eval,"top","p2c-eval");
-EXT(YruntimeYdefault_handler,"runtime","default-handler");
-EXT(YastYLmodule_bindingG,"ast","<module-binding>");
-EXT(Yhandler_info_message,"boot","handler-info-message");
-EXT(Yfab_sym,"boot","fab-sym");
-EXT(YsyntaxYsexpr_operator,"syntax","sexpr-operator");
-EXT(YastYLast_macro_definitionG,"ast","<ast-macro-definition>");
-EXT(Ysig_arity,"boot","sig-arity");
-EXT(YsyntaxYsexpr_loc_raw_body,"syntax","sexpr-loc-raw-body");
-EXT(YruntimeYLE,"runtime","<=");
-DEF(YtopYparse,"top","parse");
-EXT(YruntimeYpeek_char,"runtime","peek-char");
-EXT(YruntimeYpush_lastX,"runtime","push-last!");
-EXT(YastYLargumentsG,"ast","<arguments>");
-EXT(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
-EXT(YastYsignature_bindings_setter,"ast","signature-bindings-setter");
-EXT(YastYLast_signatureG,"ast","<ast-signature>");
-EXT(YruntimeYformat,"runtime","format");
-EXT(YprotoSsystemYTexe_extensionT,"proto/system","*exe-extension*");
-EXT(YruntimeYall2Q,"runtime","all2?");
-EXT(YastYfunction_signature,"ast","function-signature");
-EXT(YruntimeYdo_keyed,"runtime","do-keyed");
-EXT(YastYmodule_syntax_environment,"ast","module-syntax-environment");
-EXT(YruntimeYlow_elt_setter,"runtime","low-elt-setter");
-EXT(YastYreport_undefined_global_bindings,"ast","report-undefined-global-bindings");
-EXT(YastYruntime_environment,"ast","runtime-environment");
-EXT(YsyntaxYsexpr_sequence_Gbegin,"syntax","sexpr-sequence->begin");
+EXT(YprotoScollectionsSsequenceYlast,"proto/collections/sequence","last");
+EXT(Ytype_error,"boot","type-error");
 EXT(YsyntaxYsexpr_let_Gcombination,"syntax","sexpr-let->combination");
-EXT(Yunexec,"boot","unexec");
-EXT(YruntimeYmemQ,"runtime","mem?");
-EXT(YsyntaxYsexpr_variable_type,"syntax","sexpr-variable-type");
-EXT(YastYfix_let_bindings_setter,"ast","fix-let-bindings-setter");
-EXT(YLsingletonG,"boot","<singleton>");
-EXT(YruntimeYremainder,"runtime","remainder");
-EXT(YastYdo_module_loader_modules,"ast","do-module-loader-modules");
-EXT(YruntimeYcondition_message,"runtime","condition-message");
-EXT(YwriteYdisplay,"write","display");
-EXT(YsyntaxYDsexpr_method_tag,"syntax","$sexpr-method-tag");
-EXT(YastYassignment_binding,"ast","assignment-binding");
-EXT(YprotoSsystemYTpath_separatorT,"proto/system","*path-separator*");
-EXT(YPsnul,"boot","%snul");
-DEF(YtopYtop,"top","top");
-EXT(Yerror,"boot","error");
-EXT(YruntimeYlogior,"runtime","logior");
-EXT(YsyntaxYsexpr_isa_slot_inits,"syntax","sexpr-isa-slot-inits");
-EXT(YruntimeYrev,"runtime","rev");
-EXT(YsyntaxYsexpr_if_else,"syntax","sexpr-if-else");
-EXT(Yast_linearizeYLbox_writeG,"ast-linearize","<box-write>");
-EXT(YruntimeYclose_output_port,"runtime","close-output-port");
-EXT(YsyntaxYsexpr_unwind_protect_protected_form,"syntax","sexpr-unwind-protect-protected-form");
-EXT(YastYfunction_self_recursiveQ_setter,"ast","function-self-recursive?-setter");
-DEF(YtopYauto_run,"top","auto-run");
-EXT(YruntimeYLstepG,"runtime","<step>");
-EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
-EXT(YruntimeYdescribe_condition,"runtime","describe-condition");
-EXT(YruntimeYLmapG,"runtime","<map>");
-EXT(YastYDproto_boot_module_name,"ast","$proto-boot-module-name");
-EXT(YruntimeYlowercaseQ,"runtime","lowercase?");
-EXT(YwriteYTmax_print_depthT,"write","*max-print-depth*");
-EXT(YsyntaxYDsexpr_define_method_tag,"syntax","$sexpr-define-method-tag");
-EXT(YruntimeYposQ,"runtime","pos?");
-EXT(YastYprogram_type_setter,"ast","program-type-setter");
-EXT(YastYfunction_temporaries_setter,"ast","function-temporaries-setter");
-EXT(YruntimeYG,"runtime",">");
-EXT(YastYdo_named_static_global_bindings,"ast","do-named-static-global-bindings");
-EXT(YsyntaxYDsexpr_quasiquote_tag,"syntax","$sexpr-quasiquote-tag");
-EXT(YsyntaxYDsexpr_locals_tag,"syntax","$sexpr-locals-tag");
-EXT(YruntimeYNE,"runtime","~=");
-EXT(YsyntaxYsexpr_if_test,"syntax","sexpr-if-test");
-EXT(YruntimeYLrestartG,"runtime","<restart>");
-EXT(YsyntaxYsexpr_unwind_protect_cleanup_forms,"syntax","sexpr-unwind-protect-cleanup-forms");
-EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
-EXT(YsyntaxYsexpr_make_begin,"syntax","sexpr-make-begin");
-EXT(YastYdo_static_global_bindings,"ast","do-static-global-bindings");
-EXT(YPvnul,"boot","%vnul");
-EXT(YruntimeYpop_lastX,"runtime","pop-last!");
-EXT(YastYbinding_name,"ast","binding-name");
-EXT(YruntimeYsig,"runtime","sig");
-EXT(YastYLpredefined_applicationG,"ast","<predefined-application>");
-EXT(YastYreference_frame_offset,"ast","reference-frame-offset");
-EXT(Yadd_slot,"boot","add-slot");
-EXT(YruntimeYcopy_state,"runtime","copy-state");
-EXT(YsyntaxYDsexpr_define_function_tag,"syntax","$sexpr-define-function-tag");
-EXT(Yast_linearizeYprogram_definitions,"ast-linearize","program-definitions");
-EXT(YprotoSsystemYexe_filename,"proto/system","exe-filename");
-EXT(YastYfunction_registers_setter,"ast","function-registers-setter");
-EXT(YastYfunction_source,"ast","function-source");
-DEF(YtopYstr_eval,"top","str-eval");
-EXT(Yfun_naryQ,"boot","fun-nary?");
-EXT(YsyntaxYsexpr_define_classQ,"syntax","sexpr-define-class?");
-EXT(YsyntaxYsexpr_definition_variable,"syntax","sexpr-definition-variable");
-EXT(YsyntaxYsexpr_operands,"syntax","sexpr-operands");
-EXT(YruntimeYlogxor,"runtime","logxor");
-EXT(YsyntaxYsexpr_unquote_splicingQ,"syntax","sexpr-unquote-splicing?");
-EXT(YsyntaxYsexpr_method_body,"syntax","sexpr-method-body");
-EXT(YastYsignature_arity_setter,"ast","signature-arity-setter");
-EXT(YastYmodule_binding,"ast","module-binding");
-EXT(YruntimeYascii_limit,"runtime","ascii-limit");
-EXT(YsyntaxYsexpr_isa_init_slots,"syntax","sexpr-isa-init-slots");
-EXT(YruntimeYchar_readyQ,"runtime","char-ready?");
-EXT(Yast_linearizeYLbox_creationG,"ast-linearize","<box-creation>");
-EXT(YastYremove_modules_by_nameX,"ast","remove-modules-by-name!");
-EXT(YruntimeYlist_handlers,"runtime","list-handlers");
-EXT(YruntimeYcat2,"runtime","cat2");
-EXT(YruntimeYL,"runtime","<");
-EXT(YruntimeYpop,"runtime","pop");
-EXT(YastYlocals_bindings,"ast","locals-bindings");
-EXT(Yslot_getter,"boot","slot-getter");
-EXT(YPdefine_method,"boot","%define-method");
-EXT(YastYDproto_runtime_module_name,"ast","$proto-runtime-module-name");
-EXT(YastYfunction_self_recursiveQ,"ast","function-self-recursive?");
-EXT(YastYLglobal_boxG,"ast","<global-box>");
-DEF(YtopYdo_stack_frames,"top","do-stack-frames");
-EXT(YsyntaxYsexpr_monitor_expand,"syntax","sexpr-monitor-expand");
-EXT(YruntimeYdefault,"runtime","default");
-EXT(YastYfind_binding,"ast","find-binding");
 EXT(YLoptsG,"boot","<opts>");
-DEF(YtopYstr_eval_in,"top","str-eval-in");
-EXT(YruntimeYkeys,"runtime","keys");
-EXT(YruntimeYlogand,"runtime","logand");
-EXT(YruntimeYLconditionG,"runtime","<condition>");
-EXT(YsyntaxYsexpr_if_then,"syntax","sexpr-if-then");
-EXT(YruntimeYcatX,"runtime","cat!");
-EXT(YsyntaxYsexpr_text_of_quotation,"syntax","sexpr-text-of-quotation");
-EXT(YsyntaxYsexpr_bind_pattern_variables,"syntax","sexpr-bind-pattern-variables");
-EXT(YastYalternative_alternant,"ast","alternative-alternant");
-EXT(YruntimeYlen,"runtime","len");
-EXT(YastYfunction_index_setter,"ast","function-index-setter");
-EXT(YmacrosYnapply,"macros","napply");
-EXT(YastYreference_called_functionQ_setter,"ast","reference-called-function?-setter");
-EXT(YruntimeYE,"runtime","=");
-EXT(YastYprogram_type,"ast","program-type");
-EXT(YmacrosYtup,"macros","tup");
-EXT(YsyntaxYsexpr_expand_backquote,"syntax","sexpr-expand-backquote");
-EXT(YprotoSsystemYparent_directory,"proto/system","parent-directory");
-EXT(YruntimeYadd,"runtime","add");
-EXT(YruntimeYceiling,"runtime","ceiling");
-EXT(YruntimeYLinput_portG,"runtime","<input-port>");
-EXT(YprotoSsystemYhierarchical_components,"proto/system","hierarchical-components");
-EXT(YastYLreferenceG,"ast","<reference>");
-DEF(YtopYrun,"top","run");
-EXT(Yclass_direct_slots,"boot","class-direct-slots");
-EXT(YsyntaxYsexpr_method_signature,"syntax","sexpr-method-signature");
-EXT(YruntimeYaddX,"runtime","add!");
-EXT(YsyntaxYDsexpr_iterate_tag,"syntax","$sexpr-iterate-tag");
-EXT(YruntimeYid_hash,"runtime","id-hash");
-EXT(YsyntaxYsexpr_syntax_definition_variable,"syntax","sexpr-syntax-definition-variable");
-EXT(YruntimeYtruncateS,"runtime","truncate/");
-EXT(YruntimeYeof_object,"runtime","eof-object");
-EXT(YsyntaxYDsexpr_unwind_protect_tag,"syntax","$sexpr-unwind-protect-tag");
-EXT(YruntimeYeof_objectQ,"runtime","eof-object?");
-EXT(YruntimeYlognot,"runtime","lognot");
-EXT(YastYlocals_bindings_setter,"ast","locals-bindings-setter");
-EXT(Yast_linearizeYanalyze_dynamic_extent,"ast-linearize","analyze-dynamic-extent");
-EXT(YruntimeYLincongruent_method_errorG,"runtime","<incongruent-method-error>");
-EXT(YsyntaxYsexpr_make_macro_function,"syntax","sexpr-make-macro-function");
-EXT(YmacrosYgensym,"macros","gensym");
-EXT(YruntimeYany2Q,"runtime","any2?");
-EXT(Ytype_object,"boot","type-object");
-EXT(YastYbinding_global_box_setter,"ast","binding-global-box-setter");
-EXT(YastYfunction_registers,"ast","function-registers");
+EXT(YprotoScollectionsSsequenceYpick,"proto/collections/sequence","pick");
+EXT(YruntimeYidentity,"runtime","identity");
+EXT(YsyntaxYDsexpr_let_tag,"syntax","$sexpr-let-tag");
+EXT(YprotoSsystemYpathname_to_components,"proto/system","pathname-to-components");
+EXT(YmacrosYvar_type,"macros","var-type");
+EXT(YruntimeYTgensym_counterT,"runtime","*gensym-counter*");
 EXT(YsyntaxYsexpr_isa_init_values,"syntax","sexpr-isa-init-values");
-EXT(Yast_linearizeYLtop_level_formG,"ast-linearize","<top-level-form>");
+EXT(YastYLpassive_programG,"ast","<passive-program>");
+EXT(YprotoScollectionsSassocYassocs_test,"proto/collections/assoc","assocs-test");
+DEF(YtopYparse,"top","parse");
+EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
+EXT(YprotoSmathYzeroQ,"proto/math","zero?");
+EXT(YprotoScollectionsSstringYTprint_baseT,"proto/collections/string","*print-base*");
+EXT(YprotoScollectionsScollectionYfill,"proto/collections/collection","fill");
+EXT(YDmin_int,"boot","$min-int");
+DEF(YtopYdo_stack_frames,"top","do-stack-frames");
+EXT(YprotoSmathYE,"proto/math","=");
+EXT(YprotoSmathYnulQ,"proto/math","nul?");
+DEF(YtopYast_run,"top","ast-run");
+EXT(Yast_linearizeYliftX,"ast-linearize","lift!");
+EXT(YprotoScollectionsSlistYLlistG,"proto/collections/list","<list>");
+EXT(YastYload_in,"ast","load-in");
+EXT(YsyntaxYsexpr_text_of_quotation,"syntax","sexpr-text-of-quotation");
+EXT(YmacrosYfin_stateQ,"macros","fin-state?");
+EXT(Yclass_direct_slots,"boot","class-direct-slots");
+EXT(YprotoScollectionsScollectionYnow_elt_setter,"proto/collections/collection","now-elt-setter");
+EXT(YruntimeYalways,"runtime","always");
+EXT(YprotoSmathYuppercaseQ,"proto/math","uppercase?");
+EXT(YastYast_define_binding,"ast","ast-define-binding");
+EXT(YastYunwind_protect_cleanup_thunk,"ast","unwind-protect-cleanup-thunk");
+EXT(YprotoScollectionsScollectionYdel_key,"proto/collections/collection","del-key");
+EXT(YprotoScollectionsStableYtable_shrink_threshold,"proto/collections/table","table-shrink-threshold");
+EXT(YprotoScollectionsSrangeYfrom,"proto/collections/range","from");
+EXT(YprotoScollectionsScollectionYinto,"proto/collections/collection","into");
+EXT(YprotoScollectionsScollectionYdo3,"proto/collections/collection","do3");
+EXT(YastYLlocalsG,"ast","<locals>");
+EXT(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
+EXT(YastYLast_functionG,"ast","<ast-function>");
+EXT(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
+EXT(YsyntaxYsexpr_make_application,"syntax","sexpr-make-application");
+EXT(YastYbinding_name,"ast","binding-name");
+EXT(YastYsignature_specs_setter,"ast","signature-specs-setter");
+EXT(YprotoSmathYto_str,"proto/math","to-str");
+EXT(YprotoSmathYroundS,"proto/math","round/");
+EXT(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
+EXT(YprotoScollectionsScollectionYreduce,"proto/collections/collection","reduce");
+EXT(Ytype_object,"boot","type-object");
+EXT(YprotoSmathYlsh,"proto/math","lsh");
+EXT(YsyntaxYDsexpr_unwind_protect_tag,"syntax","$sexpr-unwind-protect-tag");
+EXT(Yast_linearizeYTregister_passiveQT,"ast-linearize","*register-passive?*");
+EXT(YTmacros_okQT,"boot","*macros-ok?*");
+EXT(Yunknown_function_error,"boot","unknown-function-error");
+EXT(YmacrosYini_state,"macros","ini-state");
 EXT(YLclassG,"boot","<class>");
-EXT(YruntimeYas,"runtime","as");
-EXT(YruntimeYcurrent_gc_state,"runtime","current-gc-state");
-EXT(YastYbinding_inferred_type_setter,"ast","binding-inferred-type-setter");
-EXT(YsyntaxYsexpr_syntax_definition_value,"syntax","sexpr-syntax-definition-value");
-EXT(Yast_linearizeYform_definitions,"ast-linearize","form-definitions");
-EXT(YruntimeYto_digit,"runtime","to-digit");
-EXT(YastYLbotG,"ast","<bot>");
-EXT(YastYprobe_module,"ast","probe-module");
-EXT(YsyntaxYsexpr_assignment_value,"syntax","sexpr-assignment-value");
-EXT(YastYbinding_dottedQ,"ast","binding-dotted?");
-EXT(YastYLsequentialG,"ast","<sequential>");
-EXT(YastYLreal_referenceG,"ast","<real-reference>");
-EXT(YruntimeYanyQ,"runtime","any?");
-EXT(YastYapplication_knownQ,"ast","application-known?");
-EXT(YastYfunction_index,"ast","function-index");
-DEF(YtopYtop_in,"top","top-in");
-EXT(YastYapplication_knownQ_setter,"ast","application-known?-setter");
-EXT(YastYbinding_dynamic_extentQ,"ast","binding-dynamic-extent?");
+EXT(YprotoScollectionsScollectionYlen,"proto/collections/collection","len");
+EXT(YmacrosYgensym,"macros","gensym");
 EXT(YastYbinding_index_setter,"ast","binding-index-setter");
-EXT(YruntimeYassq,"runtime","assq");
-EXT(YsyntaxYsexpr_signature_value,"syntax","sexpr-signature-value");
-EXT(YsyntaxYsexpr_variable_name,"syntax","sexpr-variable-name");
-EXT(YastYbinding_native_toQ,"ast","binding-native-to?");
-EXT(YLtypeG,"boot","<type>");
-EXT(YruntimeYdefault_handler_description,"runtime","default-handler-description");
-EXT(YruntimeYLstr_tabG,"runtime","<str-tab>");
-EXT(YastYapplication_function,"ast","application-function");
-EXT(YruntimeYpush,"runtime","push");
-EXT(YastYset_module_environments,"ast","set-module-environments");
-EXT(YastYmodule_name,"ast","module-name");
-EXT(YastYbinding_dynamic_extentQ_setter,"ast","binding-dynamic-extent?-setter");
-EXT(YastYbinding_inferred_type,"ast","binding-inferred-type");
-EXT(YruntimeYcompose,"runtime","compose");
-EXT(YastYLregular_applicationG,"ast","<regular-application>");
-EXT(YruntimeYopen_input_file,"runtime","open-input-file");
-EXT(YruntimeYfill,"runtime","fill");
-EXT(Yfun_specs,"boot","fun-specs");
-EXT(YastYbinding_mutableQ,"ast","binding-mutable?");
-EXT(YruntimeYout,"runtime","out");
-EXT(YruntimeYcall_with_output_file,"runtime","call-with-output-file");
-EXT(YsyntaxYDsexpr_define_syntax_tag,"syntax","$sexpr-define-syntax-tag");
-EXT(YruntimeYLhandlerG,"runtime","<handler>");
-EXT(YruntimeYLbufG,"runtime","<buf>");
-EXT(YruntimeYchar_Gascii,"runtime","char->ascii");
+EXT(YprotoSportsYLoutput_portG,"proto/ports","<output-port>");
+EXT(YprotoScollectionsSrangeYfrom_to_by,"proto/collections/range","from-to-by");
 EXT(YastYassignment_form,"ast","assignment-form");
-EXT(YruntimeYfrom,"runtime","from");
-EXT(YastYapplication_arguments,"ast","application-arguments");
+EXT(YruntimeYread,"runtime","read");
+EXT(YastYLglobal_referenceG,"ast","<global-reference>");
+EXT(YprotoSmathYlogior,"proto/math","logior");
+EXT(Yast_linearizeYregister_allocateX,"ast-linearize","register-allocate!");
+EXT(YprotoSmathYlogxor,"proto/math","logxor");
+EXT(YruntimeYformat,"runtime","format");
+EXT(YastYdo_static_global_bindings,"ast","do-static-global-bindings");
+EXT(Yast_linearizeYclosure_creation_free,"ast-linearize","closure-creation-free");
+EXT(YprotoScollectionsSsequenceYsub,"proto/collections/sequence","sub");
+EXT(YsyntaxYsexpr_syntax_if_pattern,"syntax","sexpr-syntax-if-pattern");
+EXT(YsyntaxYsexpr_definition_variable,"syntax","sexpr-definition-variable");
+EXT(YprotoScollectionsStableYLstr_tabG,"proto/collections/table","<str-tab>");
+EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
+EXT(YsyntaxYsexpr_if_else,"syntax","sexpr-if-else");
+EXT(YastYmodule_name_to_relpath,"ast","module-name-to-relpath");
+EXT(YreadYread_from_string,"read","read-from-string");
+EXT(YprotoSsystemYhierarchical_components,"proto/system","hierarchical-components");
+EXT(YLtypeG,"boot","<type>");
+EXT(YsyntaxYsexpr_slot_object,"syntax","sexpr-slot-object");
+EXT(Yast_linearizeYclosure_creation_index,"ast-linearize","closure-creation-index");
+EXT(YprotoSmathYneg,"proto/math","neg");
+EXT(YastYsignature_names_setter,"ast","signature-names-setter");
+EXT(YastYmonitor_info,"ast","monitor-info");
+EXT(YprotoSmathYevenQ,"proto/math","even?");
+EXT(YprotoSmathYLE,"proto/math","<=");
+EXT(YprotoSsystemYparent_directory,"proto/system","parent-directory");
+EXT(YprotoSmathYcontagious_type,"proto/math","contagious-type");
+EXT(YprotoScollectionsStableYtable_growth_factor_setter,"proto/collections/table","table-growth-factor-setter");
+EXT(Yfun_specs,"boot","fun-specs");
+EXT(YruntimeYlocative_value,"runtime","locative-value");
+EXT(YastYLalternativeG,"ast","<alternative>");
+EXT(YastYmodule_binding,"ast","module-binding");
+EXT(YastYprogram_register,"ast","program-register");
+EXT(YruntimeYdescribe_handler,"runtime","describe-handler");
+EXT(YprotoScollectionsScollectionYdel_keys,"proto/collections/collection","del-keys");
+EXT(YastYobjectify,"ast","objectify");
+EXT(YprotoSmathYremainder,"proto/math","remainder");
+EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
+EXT(YsyntaxYsexpr_loc_bound_names,"syntax","sexpr-loc-bound-names");
+EXT(YastYLbind_exitG,"ast","<bind-exit>");
+EXT(YastYenv_object_name,"ast","env-object-name");
 EXT(Yobject_parents,"boot","object-parents");
 EXT(Ysig_naryQ,"boot","sig-nary?");
+EXT(YsyntaxYsexpr_definition_value,"syntax","sexpr-definition-value");
+EXT(YastYmonitor_type,"ast","monitor-type");
 EXT(YLgenG,"boot","<gen>");
-EXT(YastYenv_object_name,"ast","env-object-name");
-EXT(YastYLstatic_global_environmentG,"ast","<static-global-environment>");
-EXT(YruntimeYfirst_then,"runtime","first-then");
-EXT(YreadYread_from_string,"read","read-from-string");
-EXT(Yslot_init,"boot","slot-init");
-EXT(YruntimeYlen_setter,"runtime","len-setter");
-EXT(YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
-EXT(YastYreference_frame_number,"ast","reference-frame-number");
-EXT(YruntimeYfalse_or,"runtime","false-or");
-EXT(YastYmodule_loader_module_type,"ast","module-loader-module-type");
-EXT(YruntimeYuppercaseQ,"runtime","uppercase?");
-EXT(YprotoSsystemYos_binding_value,"proto/system","os-binding-value");
-EXT(YastYLlocalsG,"ast","<locals>");
-EXT(YPsymbols,"boot","%symbols");
-DEF(YtopYp2c_run,"top","p2c-run");
-EXT(YruntimeYbuild_condition_for_handler_interactively,"runtime","build-condition-for-handler-interactively");
 EXT(YsyntaxYDsexpr_if_tag,"syntax","$sexpr-if-tag");
-EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
-EXT(YastYsignature_bindings,"ast","signature-bindings");
-EXT(YruntimeYzeroQ,"runtime","zero?");
-EXT(Yast_linearizeYclosure_creation_free,"ast-linearize","closure-creation-free");
+EXT(YastYfunction_free_setter,"ast","function-free-setter");
+EXT(Yslot_init,"boot","slot-init");
+EXT(YastYbinding_dynamic_extentQ,"ast","binding-dynamic-extent?");
+EXT(YsyntaxYsexpr_function_definition_value,"syntax","sexpr-function-definition-value");
+EXT(YprotoSportsYchar_readyQ,"proto/ports","char-ready?");
+EXT(YprotoSmathYas_uppercase,"proto/math","as-uppercase");
+EXT(YprotoScollectionsSlistYassqn,"proto/collections/list","assqn");
+EXT(YwriteYTmax_print_lengthT,"write","*max-print-length*");
+EXT(YprotoSmathYto_digit,"proto/math","to-digit");
+EXT(YprotoSportsYLfile_output_portG,"proto/ports","<file-output-port>");
+EXT(YastYfunction_data_refs,"ast","function-data-refs");
+EXT(YastYapplication_knownQ_setter,"ast","application-known?-setter");
 EXT(Yobject_slots,"boot","object-slots");
-EXT(Yast_linearizeYLfree_referenceG,"ast-linearize","<free-reference>");
-EXT(YprotoSsystemYprocess_id,"proto/system","process-id");
-EXT(YastYinit_ast,"ast","init-ast");
-EXT(YruntimeYaddress_of,"runtime","address-of");
-EXT(YastYsignature_names,"ast","signature-names");
-EXT(YruntimeYbuild_condition_interactively,"runtime","build-condition-interactively");
-EXT(YruntimeYalter,"runtime","alter");
-EXT(YruntimeYallQ,"runtime","all?");
-EXT(YLsymG,"boot","<sym>");
-EXT(Ysym_name,"boot","sym-name");
-EXT(YastYbinding_info_setter,"ast","binding-info-setter");
-EXT(YruntimeYGE,"runtime",">=");
-EXT(YastYbinding_module_name,"ast","binding-module-name");
-EXT(YmacrosYelt,"macros","elt");
-EXT(Yfind_setter,"boot","find-setter");
-EXT(Yast_linearizeYregister_allocateX,"ast-linearize","register-allocate!");
-EXT(YruntimeYLportG,"runtime","<port>");
+EXT(YprotoScollectionsStableYid_hash,"proto/collections/table","id-hash");
+EXT(YastYbinding_native_toQ,"ast","binding-native-to?");
+EXT(YastYLast_primitive_definitionG,"ast","<ast-primitive-definition>");
+EXT(YastYLdefinitionG,"ast","<definition>");
+EXT(YsyntaxYsexpr_unwind_protect_protected_form,"syntax","sexpr-unwind-protect-protected-form");
 EXT(YastYprogram_register_setter,"ast","program-register-setter");
-EXT(YruntimeYLlistG,"runtime","<list>");
-EXT(YastYLcomputed_programG,"ast","<computed-program>");
-EXT(YruntimeYelt_setter,"runtime","elt-setter");
-EXT(YprotoSsystemYTproto_extensionT,"proto/system","*proto-extension*");
-EXT(YprotoSsystemYos_binding_value_setter,"proto/system","os-binding-value-setter");
-EXT(YsyntaxYDsexpr_macro_expand_tag,"syntax","$sexpr-macro-expand-tag");
-EXT(YruntimeYalphabeticQ,"runtime","alphabetic?");
-EXT(YastYprogram_register,"ast","program-register");
-EXT(YruntimeYnewline,"runtime","newline");
-DEF(YtopYast_run,"top","ast-run");
-EXT(YastYLast_methodG,"ast","<ast-method>");
-EXT(Yclass_direct_children,"boot","class-direct-children");
-EXT(YruntimeYLsimple_errorG,"runtime","<simple-error>");
-EXT(YastYfunction_free,"ast","function-free");
-EXT(YastYLmodule_binding_referenceG,"ast","<module-binding-reference>");
-EXT(YprotoSsystemYTproto_rootT,"proto/system","*proto-root*");
-EXT(YastYbinding_info,"ast","binding-info");
-EXT(YruntimeYLstring_output_portG,"runtime","<string-output-port>");
-EXT(YruntimeYvec,"runtime","vec");
-EXT(YprotoSsystemYlabel_components,"proto/system","label-components");
-EXT(YastYreference_binding,"ast","reference-binding");
-EXT(YLstrG,"boot","<str>");
+EXT(YprotoSsystemYcreate_directory,"proto/system","create-directory");
+EXT(YLsymG,"boot","<sym>");
+EXT(YprotoStypesYtL,"proto/types","t<");
+EXT(YprotoScollectionsSassocYassocs_test_setter,"proto/collections/assoc","assocs-test-setter");
+EXT(Yast_linearizeYprogram_definitions,"ast-linearize","program-definitions");
 EXT(YastYLbindingG,"ast","<binding>");
-EXT(YastYcompile_time_program,"ast","compile-time-program");
-EXT(YruntimeYstr,"runtime","str");
+EXT(YastYfix_let_bindings_setter,"ast","fix-let-bindings-setter");
+EXT(Yfind_setter,"boot","find-setter");
+EXT(YastYfunction_bindings,"ast","function-bindings");
+EXT(YsyntaxYsexpr_loc_bound_signatures,"syntax","sexpr-loc-bound-signatures");
+EXT(YsyntaxYDsexpr_monitor_tag,"syntax","$sexpr-monitor-tag");
+EXT(YprotoSmathYfabs,"proto/math","fabs");
+EXT(YprotoSmathYLbotG,"proto/math","<bot>");
+EXT(YprotoSmathYaddress_of,"proto/math","address-of");
+EXT(Yast_linearizeYcollect_temporariesX,"ast-linearize","collect-temporaries!");
+EXT(YprotoSmathYflo_bits,"proto/math","flo-bits");
+EXT(YprotoSmathYround,"proto/math","round");
+EXT(Yclass_direct_children,"boot","class-direct-children");
+EXT(YprotoStypesYtA,"proto/types","t+");
+EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
+EXT(YprotoStypesYfalse_or,"proto/types","false-or");
+EXT(YastYlocals_body_setter,"ast","locals-body-setter");
+EXT(YprotoScollectionsSsequenceYcat2,"proto/collections/sequence","cat2");
+DEF(YtopYread_file,"top","read-file");
+EXT(YprotoSportsYpeek_char,"proto/ports","peek-char");
+EXT(YprotoSsystemYadd_src_path,"proto/system","add-src-path");
+EXT(YsyntaxYsexpr_define_classQ,"syntax","sexpr-define-class?");
+EXT(YsyntaxYeval,"syntax","eval");
+EXT(Yast_linearizeYprogram_form,"ast-linearize","program-form");
+EXT(YLstrG,"boot","<str>");
+EXT(YprotoSmathYtruncateS,"proto/math","truncate/");
+EXT(YruntimeYsig,"runtime","sig");
+EXT(YprotoSsystemYc_filename,"proto/system","c-filename");
+EXT(YprotoScollectionsStableYtable_protocol,"proto/collections/table","table-protocol");
+EXT(YastYfunction_signature_setter,"ast","function-signature-setter");
+EXT(YprotoSmathYas_log,"proto/math","as-log");
+EXT(YprotoSportsYcall_with_output_file,"proto/ports","call-with-output-file");
+EXT(YastYbinding_dynamic_extentQ_setter,"ast","binding-dynamic-extent?-setter");
+EXT(YPvnul,"boot","%vnul");
+EXT(YreadYDchar_long_names,"read","$char-long-names");
+EXT(YprotoSmathYA,"proto/math","+");
+EXT(YastYassignment_reference,"ast","assignment-reference");
+EXT(YprotoScollectionsSsequenceYpos,"proto/collections/sequence","pos");
+EXT(YastYfunction_registers_setter,"ast","function-registers-setter");
+EXT(YsyntaxYsexpr_bind_pattern_variables,"syntax","sexpr-bind-pattern-variables");
 EXT(YastYfind_environment_module,"ast","find-environment-module");
-EXT(Yast_linearizeYupdate_walkX,"ast-linearize","update-walk!");
-EXT(YruntimeYapp_args,"runtime","app-args");
-EXT(YastYbinding_type_setter,"ast","binding-type-setter");
-EXT(YastYfunction_body,"ast","function-body");
-EXT(YastYLraw_constantG,"ast","<raw-constant>");
-EXT(YruntimeYNEE,"runtime","~==");
-EXT(YastYbinding_index,"ast","binding-index");
-EXT(YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
-EXT(YruntimeYread,"runtime","read");
-EXT(YruntimeYrevX,"runtime","rev!");
-EXT(YruntimeY1st,"runtime","1st");
-EXT(YsyntaxYDsexpr_bind_exit_tag,"syntax","$sexpr-bind-exit-tag");
-EXT(YsyntaxYsexpr_make_anonymous_method,"syntax","sexpr-make-anonymous-method");
-EXT(YastYinit_environment_for_eval,"ast","init-environment-for-eval");
-EXT(YastYmonitor_test,"ast","monitor-test");
-EXT(YruntimeYwrite_string,"runtime","write-string");
-EXT(YruntimeYpos,"runtime","pos");
-EXT(YsyntaxYsexpr_function_body,"syntax","sexpr-function-body");
-EXT(YruntimeYdo3,"runtime","do3");
-EXT(YastYLruntime_referenceG,"ast","<runtime-reference>");
+EXT(YastYbinding_kind,"ast","binding-kind");
+EXT(YastYinit_ast,"ast","init-ast");
+DEF(YtopYeval_in,"top","eval-in");
+EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
+EXT(Yast_linearizeYLbox_creationG,"ast-linearize","<box-creation>");
+EXT(YprotoStypesYtE,"proto/types","t=");
+EXT(YastYbinding_value,"ast","binding-value");
+EXT(Yast_linearizeYflatten_seqs,"ast-linearize","flatten-seqs");
+EXT(YastYfix_let_bindings,"ast","fix-let-bindings");
+EXT(YprotoScollectionsScollectionYdo,"proto/collections/collection","do");
 EXT(YastYfunction_body_setter,"ast","function-body-setter");
-EXT(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
-EXT(YruntimeYforce_output,"runtime","force-output");
-EXT(YastYLprogramsG,"ast","<programs>");
-EXT(YruntimeYdo,"runtime","do");
-EXT(YTboot_macro_module_namesT,"boot","*boot-macro-module-names*");
-EXT(YsyntaxYsexpr_define_class_parents,"syntax","sexpr-define-class-parents");
-EXT(YruntimeYapp_filename,"runtime","app-filename");
-EXT(YsyntaxYsexpr_assignment_variable,"syntax","sexpr-assignment-variable");
-EXT(YastYbinding_type,"ast","binding-type");
-EXT(YastYLconstantG,"ast","<constant>");
-EXT(YruntimeYround,"runtime","round");
-EXT(YastYLfab_listG,"ast","<fab-list>");
+EXT(YprotoSmathYG,"proto/math",">");
+EXT(Yerror,"boot","error");
+EXT(Yast_linearizeYcollect_registersX,"ast-linearize","collect-registers!");
+EXT(YastYbinding_mutableQ,"ast","binding-mutable?");
+EXT(YprotoSmathYmax,"proto/math","max");
+EXT(YastYassignment_form_setter,"ast","assignment-form-setter");
+EXT(YastYfunction_signature,"ast","function-signature");
+EXT(YprotoSportsYcall_with_input_file,"proto/ports","call-with-input-file");
 EXT(YLvecG,"boot","<vec>");
-EXT(YastYboundQ_reference,"ast","bound?-reference");
-EXT(YastYenvironment_module,"ast","environment-module");
-EXT(YastYunwind_protect_protected_thunk,"ast","unwind-protect-protected-thunk");
+EXT(YastYLlocal_bindingG,"ast","<local-binding>");
 EXT(Yslot_owner,"boot","slot-owner");
-EXT(YruntimeYascii_whitespaces,"runtime","ascii-whitespaces");
-EXT(YruntimeYLtabG,"runtime","<tab>");
-EXT(YruntimeYlogbitQ,"runtime","logbit?");
-EXT(Yast_linearizeYunconstrained_typeQ,"ast-linearize","unconstrained-type?");
-EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
+EXT(Yast_linearizeYLtop_level_formG,"ast-linearize","<top-level-form>");
+EXT(YruntimeYdefault_handler_description,"runtime","default-handler-description");
+EXT(YastYLpredefined_applicationG,"ast","<predefined-application>");
 EXT(Yfun_names,"boot","fun-names");
 EXT(YLmetG,"boot","<met>");
-EXT(YastYLruntime_assignmentG,"ast","<runtime-assignment>");
-EXT(YruntimeYnulQ,"runtime","nul?");
-EXT(YprotoSsystemYcreate_directory,"proto/system","create-directory");
-EXT(Yhead_setter,"boot","head-setter");
-EXT(YsyntaxYDsexpr_let_tag,"syntax","$sexpr-let-tag");
-EXT(YsyntaxYsexpr_syntax_if_value,"syntax","sexpr-syntax-if-value");
-EXT(YastYLmonitorG,"ast","<monitor>");
-EXT(YwriteYTmax_print_lengthT,"write","*max-print-length*");
-EXT(YruntimeYfab,"runtime","fab");
-EXT(YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
-DEF(YtopYprint_result_expression,"top","print-result-expression");
-EXT(YsyntaxYsexpr_variableQ,"syntax","sexpr-variable?");
-EXT(Yfind_getter,"boot","find-getter");
-EXT(Yfile_opening_error,"boot","file-opening-error");
-EXT(YprotoSsystemYcomponents_parent_directory,"proto/system","components-parent-directory");
-EXT(YprotoSsystemYfile_existsQ,"proto/system","file-exists?");
-EXT(Yast_linearizeYprogram_form,"ast-linearize","program-form");
-EXT(YprotoSsystemYpathname_to_components,"proto/system","pathname-to-components");
-EXT(Yincongruent_method_error,"boot","incongruent-method-error");
-EXT(YLflatG,"boot","<flat>");
-EXT(YruntimeYlist,"runtime","list");
-EXT(Yhead,"boot","head");
-EXT(YruntimeYmake_handler,"runtime","make-handler");
-EXT(YsyntaxYDsexpr_slot_tag,"syntax","$sexpr-slot-tag");
-EXT(Yast_linearizeYgather_temporariesX,"ast-linearize","gather-temporaries!");
-EXT(YruntimeYLoutput_portG,"runtime","<output-port>");
-EXT(YastYast_define_binding,"ast","ast-define-binding");
-EXT(YprotoSsystemYc_filename,"proto/system","c-filename");
-EXT(YprotoSsystemYobj_filename,"proto/system","obj-filename");
-EXT(YastYLbind_exitG,"ast","<bind-exit>");
-EXT(YastYsequentialize,"ast","sequentialize");
-EXT(Ysig_unification_vars,"boot","sig-unification-vars");
-EXT(Yclass_direct_parents,"boot","class-direct-parents");
-EXT(YruntimeYevenQ,"runtime","even?");
-EXT(YastYast_evaluate,"ast","ast-evaluate");
-EXT(YruntimeYdescribe_handler,"runtime","describe-handler");
-EXT(YastYLlocal_bindingG,"ast","<local-binding>");
-EXT(Yast_linearizeYLbox_readG,"ast-linearize","<box-read>");
-EXT(YruntimeYbuf,"runtime","buf");
-EXT(YastYLast_primitiveG,"ast","<ast-primitive>");
-EXT(Yobject_class,"boot","object-class");
-EXT(YastYload_module,"ast","load-module");
-EXT(YruntimeYassoc_value,"runtime","assoc-value");
-EXT(YastYLprogramG,"ast","<program>");
-DEF(YtopYparse_in,"top","parse-in");
-EXT(Yfun_mets,"boot","fun-mets");
-EXT(YastYLglobal_assignmentG,"ast","<global-assignment>");
-EXT(YastYobjectify_signature,"ast","objectify-signature");
-EXT(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
-EXT(YruntimeYdel_dups,"runtime","del-dups");
-EXT(YruntimeYport_contents,"runtime","port-contents");
-EXT(YruntimeYnegQ,"runtime","neg?");
-EXT(YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
-EXT(YastYLpassive_programG,"ast","<passive-program>");
-EXT(YsyntaxYsexpr_syntax_if_pattern,"syntax","sexpr-syntax-if-pattern");
-EXT(Yfab_gen,"boot","fab-gen");
-EXT(YruntimeYas_lowercase,"runtime","as-lowercase");
-EXT(YruntimeYtable_growth_factor,"runtime","table-growth-factor");
-EXT(YruntimeYformat_to_string,"runtime","format-to-string");
-EXT(Yast_linearizeYflatten_seqs,"ast-linearize","flatten-seqs");
-EXT(YTmacros_okQT,"boot","*macros-ok?*");
-EXT(YLfunG,"boot","<fun>");
-EXT(Yast_linearizeYanalyze_calls,"ast-linearize","analyze-calls");
-EXT(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
-EXT(YastYbinding_locative,"ast","binding-locative");
-EXT(YruntimeYempty,"runtime","empty");
-EXT(YastYLboundQG,"ast","<bound?>");
-EXT(YreadYDchar_long_names,"read","$char-long-names");
-EXT(YruntimeYstr_to_num,"runtime","str-to-num");
-EXT(YastYalternative_consequent,"ast","alternative-consequent");
-EXT(YastYfree_environment,"ast","free-environment");
-EXT(YLlstG,"boot","<lst>");
-EXT(YruntimeYfrom_above,"runtime","from-above");
-EXT(YruntimeYtL,"runtime","t<");
-EXT(YastYmodule_exports,"ast","module-exports");
-EXT(YastYsignature_value_setter,"ast","signature-value-setter");
-EXT(YruntimeYLfile_output_portG,"runtime","<file-output-port>");
-EXT(YmacrosYmake_sym,"macros","make-sym");
-EXT(YruntimeYnumericQ,"runtime","numeric?");
-DEF(YtopYsave_image,"top","save-image");
-EXT(YastYconstant_value,"ast","constant-value");
-EXT(Ysig_specs,"boot","sig-specs");
-EXT(YLtupG,"boot","<tup>");
-EXT(Ytype_error,"boot","type-error");
-EXT(YruntimeYdo2,"runtime","do2");
-EXT(YsyntaxYsexpr_iterate_Gloc,"syntax","sexpr-iterate->loc");
-EXT(Ytail_setter,"boot","tail-setter");
-EXT(YastYfix_let_body_setter,"ast","fix-let-body-setter");
-EXT(Yslot_type,"boot","slot-type");
-EXT(YastYfunction_bindings,"ast","function-bindings");
-EXT(YastYLalternativeG,"ast","<alternative>");
-EXT(YruntimeYfrom_above_by,"runtime","from-above-by");
-EXT(YruntimeYfrom_below,"runtime","from-below");
-EXT(YastYfree_implemented_foreign_bindings,"ast","free-implemented-foreign-bindings");
-EXT(Ysorted_app_mets,"boot","sorted-app-mets");
-EXT(YruntimeYlocative_value,"runtime","locative-value");
-EXT(YwriteYrecurring_write,"write","recurring-write");
-EXT(YastYfunction_naryQ,"ast","function-nary?");
-EXT(YruntimeYassqn,"runtime","assqn");
-EXT(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
-EXT(YruntimeY2nd,"runtime","2nd");
-EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
-EXT(YLseqG,"boot","<seq>");
-EXT(YruntimeYLhandler_infoG,"runtime","<handler-info>");
-EXT(YastYLapplicationG,"ast","<application>");
-EXT(YastYfunction_binding,"ast","function-binding");
-EXT(YruntimeYA,"runtime","+");
-DEF(YtopYLkeyboard_interruptG,"top","<keyboard-interrupt>");
-EXT(Yfun_sig_setter,"boot","fun-sig-setter");
-EXT(YastYreference_called_functionQ,"ast","reference-called-function?");
-EXT(Ytail,"boot","tail");
-EXT(YastYfunction_data_refs,"ast","function-data-refs");
-EXT(YTrestarts_okQT,"boot","*restarts-ok?*");
-EXT(YmacrosYEE,"macros","==");
-EXT(YastYmonitor_info,"ast","monitor-info");
-EXT(YastYfunction_debug_name_setter,"ast","function-debug-name-setter");
-EXT(YastYfix_let_types_setter,"ast","fix-let-types-setter");
-EXT(YruntimeYwrite_char,"runtime","write-char");
-EXT(YruntimeYmin,"runtime","min");
-EXT(YastYfix_let_bindings,"ast","fix-let-bindings");
-EXT(YruntimeYS,"runtime","/");
-EXT(Yast_linearizeYliftX,"ast-linearize","lift!");
+EXT(YsyntaxYsexpr_if_test,"syntax","sexpr-if-test");
+EXT(YastYset_module_environments,"ast","set-module-environments");
+EXT(YprotoScollectionsScollectionYfab,"proto/collections/collection","fab");
 EXT(YsyntaxYsexpr_syntax_if_then,"syntax","sexpr-syntax-if-then");
-EXT(YastYfix_let_arguments_setter,"ast","fix-let-arguments-setter");
-EXT(YastYinstall_initial_bindings,"ast","install-initial-bindings");
-EXT(YruntimeYtE,"runtime","t=");
-EXT(YruntimeYfab_map,"runtime","fab-map");
-EXT(YruntimeYfrom_by,"runtime","from-by");
-EXT(YruntimeYdel_keys,"runtime","del-keys");
-EXT(Yclass_slots,"boot","class-slots");
-EXT(YruntimeYtruncate,"runtime","truncate");
-EXT(YruntimeYfabs,"runtime","fabs");
-EXT(Yast_linearizeYform_quotations,"ast-linearize","form-quotations");
-EXT(YruntimeYLrangeG,"runtime","<range>");
-EXT(YLcolG,"boot","<col>");
-EXT(YprotoSsystemYfile_type,"proto/system","file-type");
-EXT(YruntimeYhandler_function,"runtime","handler-function");
-EXT(YruntimeYfrom_below_by,"runtime","from-below-by");
-EXT(YruntimeYfrom_to,"runtime","from-to");
-EXT(Yfab_class,"boot","fab-class");
-EXT(YastYLimmediate_constantG,"ast","<immediate-constant>");
-EXT(Yast_linearizeYreference_offset,"ast-linearize","reference-offset");
-EXT(YruntimeYdel_key,"runtime","del-key");
-EXT(YruntimeYdel,"runtime","del");
-EXT(Yunknown_function_error,"boot","unknown-function-error");
-EXT(Yast_linearizeYbox_reference,"ast-linearize","box-reference");
-EXT(YmacrosYmatch_sublist,"macros","match-sublist");
-EXT(YsyntaxYsexpr_function_signature,"syntax","sexpr-function-signature");
-EXT(YastYsignature_specs_setter,"ast","signature-specs-setter");
-DEF(YtopYload_from,"top","load-from");
-EXT(YastYLfix_letG,"ast","<fix-let>");
-EXT(YsyntaxYsexpr_function_definition_value,"syntax","sexpr-function-definition-value");
-EXT(Yast_linearizeYreference_selfQ,"ast-linearize","reference-self?");
-EXT(YLsigG,"boot","<sig>");
-EXT(YastYfab_p2c_module,"ast","fab-p2c-module");
-EXT(YastYmonitor_type,"ast","monitor-type");
-EXT(YastYbinding_dottedQ_setter,"ast","binding-dotted?-setter");
-EXT(YastYfix_let_body,"ast","fix-let-body");
-EXT(YruntimeYopen_output_file,"runtime","open-output-file");
-EXT(YastYfunction_free_setter,"ast","function-free-setter");
-EXT(YastYsignature_arity,"ast","signature-arity");
-EXT(YastYfix_let_arguments,"ast","fix-let-arguments");
-EXT(Yast_linearizeYast_contains_funQ,"ast-linearize","ast-contains-fun?");
-EXT(YruntimeYfrom_to_by,"runtime","from-to-by");
-EXT(YruntimeYLstring_input_portG,"runtime","<string-input-port>");
-EXT(YruntimeYoddQ,"runtime","odd?");
-EXT(Ynil,"boot","nil");
-EXT(YLlocG,"boot","<loc>");
-EXT(YPPmacro,"boot","%%macro");
-EXT(YastYobjectify_quotation,"ast","objectify-quotation");
-EXT(YastYLmodule_loaderG,"ast","<module-loader>");
-EXT(YruntimeYtA,"runtime","t+");
-EXT(YastYenvironment_uses_modules,"ast","environment-uses-modules");
-EXT(YruntimeYsub,"runtime","sub");
-EXT(Yast_linearizeYclosurize_mainX,"ast-linearize","closurize-main!");
-EXT(YruntimeYelt_or,"runtime","elt-or");
-EXT(Yast_linearizeYLrenamed_local_bindingG,"ast-linearize","<renamed-local-binding>");
-EXT(YsyntaxYsexpr_syntax_if_else,"syntax","sexpr-syntax-if-else");
-EXT(Yast_linearizeYLclosure_creationG,"ast-linearize","<closure-creation>");
-EXT(YruntimeYLassocsG,"runtime","<assocs>");
-EXT(Ytype_elts,"boot","type-elts");
-EXT(YastYobjectify,"ast","objectify");
-EXT(YisaQ,"boot","isa?");
-EXT(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
-EXT(Ymet_appQ,"boot","met-app?");
-EXT(YastYfix_let_types,"ast","fix-let-types");
-EXT(YruntimeYneg,"runtime","neg");
-EXT(YsyntaxYDsexpr_begin_tag,"syntax","$sexpr-begin-tag");
-EXT(YsyntaxYDsexpr_monitor_tag,"syntax","$sexpr-monitor-tag");
-EXT(YmacrosYemptyQ,"macros","empty?");
-EXT(YPisa,"boot","%isa");
+EXT(YsyntaxYDsexpr_quote_tag,"syntax","$sexpr-quote-tag");
+EXT(Yhead_setter,"boot","head-setter");
+EXT(YprotoScollectionsSsequenceYdo_key_vals,"proto/collections/sequence","do-key-vals");
+EXT(YsyntaxYsexpr_operator,"syntax","sexpr-operator");
+EXT(YprotoScollectionsSbufferYlenSfill_setter,"proto/collections/buffer","len/fill-setter");
+EXT(YruntimeYcondition_message,"runtime","condition-message");
+EXT(YastYsignature_names,"ast","signature-names");
+EXT(YastYsignature_value,"ast","signature-value");
+DEF(YtopYLkeyboard_interruptG,"top","<keyboard-interrupt>");
+EXT(YprotoScollectionsSsequenceYrange_checkQ,"proto/collections/sequence","range-check?");
+EXT(YastYlocals_body,"ast","locals-body");
+EXT(YprotoScollectionsScollectionYall2Q,"proto/collections/collection","all2?");
+EXT(YruntimeYchoose_handler,"runtime","choose-handler");
+EXT(YsyntaxYDsexpr_define_tag,"syntax","$sexpr-define-tag");
+EXT(YsyntaxYsexpr_slot_variable,"syntax","sexpr-slot-variable");
+EXT(YsyntaxYsexpr_operands,"syntax","sexpr-operands");
+EXT(YprotoScollectionsSsequenceYcatX,"proto/collections/sequence","cat!");
+EXT(YprotoSportsYport_index,"proto/ports","port-index");
+EXT(Yfind_getter,"boot","find-getter");
+EXT(YastYfunction_self_recursiveQ_setter,"ast","function-self-recursive?-setter");
+EXT(YmacrosYpair,"macros","pair");
+EXT(YastYfunction_body,"ast","function-body");
+EXT(YsyntaxYsexpr_function_definition_variable,"syntax","sexpr-function-definition-variable");
+EXT(YLflatG,"boot","<flat>");
+EXT(YastYbinding_global_box,"ast","binding-global-box");
+EXT(Yhead,"boot","head");
+EXT(YastYmodule_syntax_environment,"ast","module-syntax-environment");
+EXT(YprotoScollectionsSrangeYfrom_above,"proto/collections/range","from-above");
+EXT(YprotoSportsYread_char,"proto/ports","read-char");
+EXT(YprotoSmathYnegQ,"proto/math","neg?");
+EXT(YsyntaxYsexpr_method_body,"syntax","sexpr-method-body");
+EXT(Ysig_unification_vars,"boot","sig-unification-vars");
+EXT(YsyntaxYDsexpr_syntax_if_tag,"syntax","$sexpr-syntax-if-tag");
+EXT(Yclass_direct_parents,"boot","class-direct-parents");
+EXT(YprotoSsystemYlabel_components,"proto/system","label-components");
+EXT(YastYLruntime_assignmentG,"ast","<runtime-assignment>");
+EXT(YastYbinding_value_setter,"ast","binding-value-setter");
+EXT(YastYLprogramsG,"ast","<programs>");
+EXT(YastYLprogramG,"ast","<program>");
+EXT(YprotoScollectionsScollectionYfind_key,"proto/collections/collection","find-key");
+EXT(Ynul,"boot","nul");
+EXT(YprotoSsystemYadd_tmp_path,"proto/system","add-tmp-path");
+EXT(YsyntaxYsexpr_assignment_value,"syntax","sexpr-assignment-value");
+EXT(Yobject_class,"boot","object-class");
+EXT(YprotoSsystemYTproto_extensionT,"proto/system","*proto-extension*");
+EXT(YastYfunction_registers,"ast","function-registers");
+EXT(YprotoSmathYNEE,"proto/math","~==");
+EXT(YastYLmodule_bindingG,"ast","<module-binding>");
+EXT(YastYLunwind_protectG,"ast","<unwind-protect>");
+EXT(YprotoSportsYLstring_output_portG,"proto/ports","<string-output-port>");
 EXT(YastYLcompile_timeG,"ast","<compile-time>");
+EXT(Yfun_mets,"boot","fun-mets");
+EXT(YprotoScollectionsSbufferYpop_lastX,"proto/collections/buffer","pop-last!");
+EXT(Ysym_name,"boot","sym-name");
+EXT(YsyntaxYDsexpr_method_tag,"syntax","$sexpr-method-tag");
+EXT(YsyntaxYsexpr_unwind_protect_cleanup_forms,"syntax","sexpr-unwind-protect-cleanup-forms");
+EXT(YprotoSportsYopen_output_file,"proto/ports","open-output-file");
+EXT(YprotoSmathYas_lowercase,"proto/math","as-lowercase");
+EXT(YastYalternative_alternant,"ast","alternative-alternant");
+EXT(YruntimeYLrestartG,"runtime","<restart>");
+EXT(Yfab_gen,"boot","fab-gen");
+EXT(YprotoScollectionsStableYtable_shrink_threshold_setter,"proto/collections/table","table-shrink-threshold-setter");
+EXT(YprotoSmathYeof_objectQ,"proto/math","eof-object?");
+EXT(YsyntaxYsexpr_loc_bound_bodies,"syntax","sexpr-loc-bound-bodies");
+EXT(YprotoSportsYcall_with_string_output_port,"proto/ports","call-with-string-output-port");
+EXT(YastYremove_modules_by_nameX,"ast","remove-modules-by-name!");
+EXT(YLfunG,"boot","<fun>");
+EXT(YprotoSmathYmodulo,"proto/math","modulo");
+EXT(YastYmodule_target_environment,"ast","module-target-environment");
+EXT(YprotoSportsYLfile_input_portG,"proto/ports","<file-input-port>");
+EXT(YprotoSportsYLstring_input_portG,"proto/ports","<string-input-port>");
+EXT(YmacrosYnapply,"macros","napply");
+EXT(YprotoSsystemYcomponents_parent_directory,"proto/system","components-parent-directory");
+EXT(YprotoScollectionsSsequenceYrange_check,"proto/collections/sequence","range-check");
+EXT(YastYfix_let_body_setter,"ast","fix-let-body-setter");
+EXT(Yast_linearizeYclosurize_mainX,"ast-linearize","closurize-main!");
+EXT(YprotoScollectionsScollectionYmemQ,"proto/collections/collection","mem?");
+EXT(YLlstG,"boot","<lst>");
+EXT(YPsnul,"boot","%snul");
+EXT(YastYmodule_exports,"ast","module-exports");
+EXT(YprotoScollectionsSsequenceYaddX,"proto/collections/sequence","add!");
+EXT(YsyntaxYsexpr_unquoteQ,"syntax","sexpr-unquote?");
+EXT(YDmax_int,"boot","$max-int");
+EXT(YastYLreal_referenceG,"ast","<real-reference>");
+EXT(YruntimeYmake_handler,"runtime","make-handler");
+EXT(YsyntaxYDsexpr_iterate_tag,"syntax","$sexpr-iterate-tag");
+EXT(YastYLfix_letG,"ast","<fix-let>");
+EXT(YsyntaxYsexpr_make_macro_function,"syntax","sexpr-make-macro-function");
+EXT(YprotoScollectionsSmapYfab_map,"proto/collections/map","fab-map");
+EXT(YastYconstant_index,"ast","constant-index");
+EXT(YastYmodule_name,"ast","module-name");
+EXT(YsyntaxYDsexpr_define_generic_tag,"syntax","$sexpr-define-generic-tag");
+EXT(YprotoSmathYT,"proto/math","*");
+EXT(YsyntaxYsexpr_block_name,"syntax","sexpr-block-name");
+EXT(YprotoSmathYoddQ,"proto/math","odd?");
+EXT(Yast_linearizeYreference_selfQ,"ast-linearize","reference-self?");
+EXT(YastYfunction_self_recursiveQ,"ast","function-self-recursive?");
+EXT(Ysig_specs,"boot","sig-specs");
+EXT(YastYmonitor_handler,"ast","monitor-handler");
+EXT(YprotoSportsYopen_input_file,"proto/ports","open-input-file");
+DEF(YtopYparse_in,"top","parse-in");
+EXT(YprotoSsystemYfile_type,"proto/system","file-type");
+EXT(Ytail_setter,"boot","tail-setter");
+EXT(Yslot_type,"boot","slot-type");
+EXT(YastYfix_let_arguments,"ast","fix-let-arguments");
+EXT(YastYsignature_specs,"ast","signature-specs");
+EXT(YastYLast_macro_definitionG,"ast","<ast-macro-definition>");
+EXT(Yhandler_info_message,"boot","handler-info-message");
+EXT(YprotoSsystemYTobj_extensionT,"proto/system","*obj-extension*");
+EXT(YastYenvironment_uses_modules,"ast","environment-uses-modules");
+EXT(YastYconstant_index_setter,"ast","constant-index-setter");
+EXT(Yast_linearizeYinsert_boxX,"ast-linearize","insert-box!");
+EXT(Ysorted_app_mets,"boot","sorted-app-mets");
+EXT(YruntimeYLhandler_infoG,"runtime","<handler-info>");
+EXT(YastYdo_module_loader_modules,"ast","do-module-loader-modules");
+EXT(YastYprobe_module,"ast","probe-module");
+EXT(YLseqG,"boot","<seq>");
+EXT(YmacrosYcat,"macros","cat");
+EXT(YprotoSsystemYproto_filename,"proto/system","proto-filename");
+EXT(YprotoSmathY_,"proto/math","-");
+EXT(Yast_linearizeYform_quotations,"ast-linearize","form-quotations");
+EXT(YprotoSportsYport_contents,"proto/ports","port-contents");
+EXT(Yfun_sig_setter,"boot","fun-sig-setter");
+EXT(YastYinit_environment_for_eval,"ast","init-environment-for-eval");
+EXT(YastYLlocal_referenceG,"ast","<local-reference>");
+EXT(YTrestarts_okQT,"boot","*restarts-ok?*");
+EXT(YprotoScollectionsScollectionYallQ,"proto/collections/collection","all?");
+EXT(YruntimeYinvoke_handler_interactively,"runtime","invoke-handler-interactively");
+EXT(Ytail,"boot","tail");
+EXT(YastYLmonitorG,"ast","<monitor>");
+EXT(YLreplace_generic_restartG,"boot","<replace-generic-restart>");
+EXT(Yast_linearizeYextract_thingsX,"ast-linearize","extract-things!");
+EXT(YsyntaxYsexpr_isa_parent,"syntax","sexpr-isa-parent");
+EXT(YsyntaxYsexpr_syntax_if_else,"syntax","sexpr-syntax-if-else");
+EXT(YprotoScollectionsStableYLtabG,"proto/collections/table","<tab>");
+EXT(YastYLboundQG,"ast","<bound?>");
+EXT(YprotoScollectionsSstringYascii_limit,"proto/collections/string","ascii-limit");
+EXT(YastYbinding_global_box_setter,"ast","binding-global-box-setter");
+EXT(YprotoStypesYas,"proto/types","as");
+EXT(YprotoScollectionsSbufferYpush_lastX,"proto/collections/buffer","push-last!");
+EXT(YprotoScollectionsSrangeYfrom_to,"proto/collections/range","from-to");
+DEF(YtopYrun,"top","run");
+EXT(Ylst,"boot","lst");
+EXT(Yclass_slots,"boot","class-slots");
+EXT(YprotoScollectionsSsequenceYrange_error,"proto/collections/sequence","range-error");
+EXT(YsyntaxYsexpr_slot_init,"syntax","sexpr-slot-init");
 DEF(YtopYdo_restart,"top","do-restart");
-EXT(YastYassignment_reference,"ast","assignment-reference");
+EXT(YprotoSmathYalphabeticQ,"proto/math","alphabetic?");
+DEF(YtopYauto_run,"top","auto-run");
+EXT(YastYLregular_applicationG,"ast","<regular-application>");
+EXT(YLcolG,"boot","<col>");
+EXT(YastYLast_genericG,"ast","<ast-generic>");
+EXT(YprotoScollectionsSsequenceYvals_to_str,"proto/collections/sequence","vals-to-str");
+EXT(YprotoSmathYGE,"proto/math",">=");
+EXT(YprotoScollectionsStableYtable_growth_threshold,"proto/collections/table","table-growth-threshold");
+EXT(Yfab_class,"boot","fab-class");
+EXT(YprotoSmathYlogand,"proto/math","logand");
+EXT(YprotoSportsYLfile_portG,"proto/ports","<file-port>");
+EXT(YsyntaxYDsexpr_quasiquote_tag,"syntax","$sexpr-quasiquote-tag");
+EXT(YastYbinding_dottedQ,"ast","binding-dotted?");
+EXT(YsyntaxYsexpr_forward_primitiveQ,"syntax","sexpr-forward-primitive?");
+EXT(YLtupG,"boot","<tup>");
+EXT(YsyntaxYDsexpr_begin_tag,"syntax","$sexpr-begin-tag");
+EXT(YprotoScollectionsScollectionYdefault,"proto/collections/collection","default");
+EXT(YastYfix_let_body,"ast","fix-let-body");
+EXT(YprotoScollectionsScollectionYmap_keyed,"proto/collections/collection","map-keyed");
+EXT(YprotoSmathYtruncate,"proto/math","truncate");
+EXT(Yast_linearizeYunconstrained_typeQ,"ast-linearize","unconstrained-type?");
+EXT(YastYLast_signatureG,"ast","<ast-signature>");
+EXT(YprotoSmathYeof_object,"proto/math","eof-object");
+EXT(Yast_linearizeYanalyze_dynamic_extent,"ast-linearize","analyze-dynamic-extent");
+EXT(YLsigG,"boot","<sig>");
+EXT(YprotoSportsYout,"proto/ports","out");
+EXT(YruntimeYLerrorG,"runtime","<error>");
+EXT(Yast_linearizeYform_program,"ast-linearize","form-program");
+EXT(YruntimeYcompose,"runtime","compose");
+EXT(YastYLlocal_assignmentG,"ast","<local-assignment>");
+EXT(YsyntaxYsexpr_make_getter,"syntax","sexpr-make-getter");
+EXT(YastYLstatic_global_environmentG,"ast","<static-global-environment>");
+EXT(YsyntaxYsexpr_sequence_Gbegin,"syntax","sexpr-sequence->begin");
+EXT(YastYenvironment_module,"ast","environment-module");
+EXT(YsyntaxYDsexpr_define_class_tag,"syntax","$sexpr-define-class-tag");
+EXT(YprotoScollectionsScollectionYempty,"proto/collections/collection","empty");
+EXT(YprotoScollectionsSlistYlist,"proto/collections/list","list");
+EXT(YastYfunction_source_setter,"ast","function-source-setter");
+EXT(YruntimeYLconditionG,"runtime","<condition>");
+EXT(YastYLimmediate_constantG,"ast","<immediate-constant>");
+EXT(YastYfix_let_arguments_setter,"ast","fix-let-arguments-setter");
+EXT(YLlocG,"boot","<loc>");
+EXT(YsyntaxYsexpr_make_anonymous_method,"syntax","sexpr-make-anonymous-method");
+EXT(YastYfunction_debug_name_setter,"ast","function-debug-name-setter");
+EXT(YprotoSportsYcall_with_string_input_port,"proto/ports","call-with-string-input-port");
+EXT(YastYbinding_dottedQ_setter,"ast","binding-dotted?-setter");
+EXT(YprotoScollectionsSbufferYbuf,"proto/collections/buffer","buf");
+EXT(YastYLcomputed_programG,"ast","<computed-program>");
+EXT(YwriteYTmax_print_depthT,"write","*max-print-depth*");
+EXT(YastYLfab_listG,"ast","<fab-list>");
+EXT(YruntimeYrcurry,"runtime","rcurry");
+EXT(YprotoScollectionsScollectionYkeys,"proto/collections/collection","keys");
+EXT(YprotoSsystemYfile_mtime,"proto/system","file-mtime");
+EXT(YprotoScollectionsSsequenceYdel_dups,"proto/collections/sequence","del-dups");
+EXT(Ytype_elts,"boot","type-elts");
+EXT(YsyntaxYsexpr_loc_raw_body,"syntax","sexpr-loc-raw-body");
+EXT(YprotoSmathYnum_to_str,"proto/math","num-to-str");
+EXT(YsyntaxYDsexpr_locals_tag,"syntax","$sexpr-locals-tag");
+EXT(YprotoSsystemYadd_build_path,"proto/system","add-build-path");
+EXT(Ymet_appQ,"boot","met-app?");
+EXT(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
+EXT(YsyntaxYDsexpr_bind_exit_tag,"syntax","$sexpr-bind-exit-tag");
+EXT(YprotoScollectionsSsequenceYrev,"proto/collections/sequence","rev");
+EXT(YsyntaxYsexpr_expand_backquote,"syntax","sexpr-expand-backquote");
+EXT(YprotoScollectionsSrangeYfrom_below_by,"proto/collections/range","from-below-by");
+EXT(YprotoSportsYclose_output_port,"proto/ports","close-output-port");
+EXT(Yast_linearizeYanalyze_calls,"ast-linearize","analyze-calls");
+EXT(YPisa,"boot","%isa");
+EXT(YwriteYwrite_to_string,"write","write-to-string");
+EXT(YastYLfree_environmentG,"ast","<free-environment>");
+EXT(YastYsignature_arity_setter,"ast","signature-arity-setter");
+EXT(YruntimeYbuild_condition_interactively,"runtime","build-condition-interactively");
+EXT(YsyntaxYsexpr_assignment_variable,"syntax","sexpr-assignment-variable");
 EXT(YLfloG,"boot","<flo>");
-EXT(YruntimeYas_uppercase,"runtime","as-uppercase");
-EXT(YruntimeYfind_key,"runtime","find-key");
+DEF(YtopYprompt_for_command_expression,"top","prompt-for-command-expression");
+EXT(YsyntaxYsexpr_define_class_parents,"syntax","sexpr-define-class-parents");
+EXT(YastYfunction_value,"ast","function-value");
+EXT(YprotoScollectionsStableYcase_insensitive_string_equal,"proto/collections/table","case-insensitive-string-equal");
+EXT(YprotoSmathYfloor,"proto/math","floor");
+EXT(YastYobjectify_quotation,"ast","objectify-quotation");
+EXT(YastYreference_binding,"ast","reference-binding");
+EXT(YastYapplication_tailQ,"ast","application-tail?");
+EXT(YprotoScollectionsSstepYfirst_then,"proto/collections/step","first-then");
+EXT(YastYfunction_temporaries,"ast","function-temporaries");
+EXT(YprotoScollectionsScollectionYdo_keyed,"proto/collections/collection","do-keyed");
+EXT(YastYassignment_binding,"ast","assignment-binding");
+EXT(YastYprogram_type_setter,"ast","program-type-setter");
+DEF(YtopYstr_parse,"top","str-parse");
+EXT(YastYprogram_type,"ast","program-type");
+EXT(YprotoSportsYwrite_string,"proto/ports","write-string");
+EXT(Yast_linearizeYLbox_writeG,"ast-linearize","<box-write>");
+EXT(YprotoSportsYport_line,"proto/ports","port-line");
+EXT(Ysig_value,"boot","sig-value");
+EXT(YprotoSportsYin,"proto/ports","in");
+EXT(Yclass_name,"boot","class-name");
+EXT(YastYreference_frame_number,"ast","reference-frame-number");
+EXT(YprotoScollectionsSsequenceYdel,"proto/collections/sequence","del");
+EXT(YruntimeYLhandlerG,"runtime","<handler>");
+EXT(YsyntaxYDsexpr_set_tag,"syntax","$sexpr-set-tag");
+EXT(YwriteYrecurring_write,"write","recurring-write");
+EXT(YprotoSportsYport_index_setter,"proto/ports","port-index-setter");
+EXT(YmacrosYmake_sym,"macros","make-sym");
+DEF(YtopYload_from,"top","load-from");
+EXT(YprotoScollectionsSbufferYLbufG,"proto/collections/buffer","<buf>");
+EXT(YastYlocals_bindings_setter,"ast","locals-bindings-setter");
+EXT(Yast_linearizeYgather_temporariesX,"ast-linearize","gather-temporaries!");
+EXT(YTboot_macro_module_namesT,"boot","*boot-macro-module-names*");
+EXT(YprotoSsystemYcomponents_basename,"proto/system","components-basename");
+EXT(YruntimeYlist_handlers,"runtime","list-handlers");
+EXT(YastYLmodule_binding_referenceG,"ast","<module-binding-reference>");
+EXT(YLnumG,"boot","<num>");
+EXT(YLintG,"boot","<int>");
+EXT(Ynil,"boot","nil");
+EXT(YastYunchecked_runtime_environment,"ast","unchecked-runtime-environment");
+EXT(YprotoScollectionsSstringYstr_to_num,"proto/collections/string","str-to-num");
+EXT(Yast_linearizeYLrenamed_local_bindingG,"ast-linearize","<renamed-local-binding>");
+EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
+EXT(YmacrosYEE,"macros","==");
+EXT(YsyntaxYsexpr_block_body,"syntax","sexpr-block-body");
+EXT(YastYbinding_type,"ast","binding-type");
+EXT(Yast_linearizeYbox_form,"ast-linearize","box-form");
+EXT(YastYLconstantG,"ast","<constant>");
+EXT(YwriteYwriteln,"write","writeln");
+EXT(YsyntaxYDsexpr_macro_expand_tag,"syntax","$sexpr-macro-expand-tag");
+EXT(YastYconstant_value,"ast","constant-value");
+EXT(YastYast_evaluate,"ast","ast-evaluate");
+EXT(YastYLmoduleG,"ast","<module>");
+EXT(Yfun_value,"boot","fun-value");
+EXT(YsyntaxYsexpr_isa_slot_inits,"syntax","sexpr-isa-slot-inits");
+EXT(YastYbinding_type_setter,"ast","binding-type-setter");
+EXT(YprotoSsystemYfile_existsQ,"proto/system","file-exists?");
+EXT(YprotoScollectionsScollectionYany2Q,"proto/collections/collection","any2?");
+EXT(YastYreference_frame_offset,"ast","reference-frame-offset");
+EXT(YprotoScollectionsSstepYLstepG,"proto/collections/step","<step>");
+EXT(YastYsignature_bindings,"ast","signature-bindings");
+EXT(YruntimeYdefault_handler,"runtime","default-handler");
+EXT(YprotoSmathYlognot,"proto/math","lognot");
+DEF(YtopYp2c_run,"top","p2c-run");
+EXT(YastYbinding_locative,"ast","binding-locative");
+EXT(YLchrG,"boot","<chr>");
+EXT(YmacrosYmake_setter_name,"macros","make-setter-name");
+EXT(YprotoScollectionsScollectionYreduceA,"proto/collections/collection","reduce+");
+EXT(YsyntaxYsexpr_syntax_definition_variable,"syntax","sexpr-syntax-definition-variable");
+EXT(YsyntaxYsexpr_signature_parameters,"syntax","sexpr-signature-parameters");
+EXT(YastYbinding_inferred_type,"ast","binding-inferred-type");
+EXT(YsyntaxYsexpr_function_signature,"syntax","sexpr-function-signature");
+DEF(YtopYprint_result_expression,"top","print-result-expression");
+EXT(YprotoScollectionsScollectionYlow_elt_setter,"proto/collections/collection","low-elt-setter");
+EXT(YmacrosYemptyQ,"macros","empty?");
+EXT(YprotoSportsYLportG,"proto/ports","<port>");
+EXT(YPslot,"boot","%slot");
+EXT(YruntimeYbuild_condition_for_handler_interactively,"runtime","build-condition-for-handler-interactively");
+EXT(YsyntaxYDsexpr_define_method_tag,"syntax","$sexpr-define-method-tag");
+EXT(YastYLargumentsG,"ast","<arguments>");
+EXT(YprotoScollectionsStableYcurrent_gc_state,"proto/collections/table","current-gc-state");
+EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
+EXT(Ysig_names,"boot","sig-names");
+EXT(YastYobjectify_signature,"ast","objectify-signature");
+EXT(YsyntaxYsexpr_signature_value,"syntax","sexpr-signature-value");
+EXT(Yast_linearizeYLbox_readG,"ast-linearize","<box-read>");
+EXT(YsyntaxYsexpr_make_begin,"syntax","sexpr-make-begin");
+EXT(YprotoSsystemYos_binding_value,"proto/system","os-binding-value");
+EXT(Yslot_setter,"boot","slot-setter");
+EXT(YsyntaxYDsexpr_define_function_tag,"syntax","$sexpr-define-function-tag");
+EXT(YprotoSmathYash,"proto/math","ash");
+EXT(YmacrosYmatch_sublist,"macros","match-sublist");
+EXT(YastYglobal_box_value,"ast","global-box-value");
+EXT(YastYsignature_bindings_setter,"ast","signature-bindings-setter");
+EXT(Yslot_value_setter,"boot","slot-value-setter");
+DEF(YtopYtop,"top","top");
+EXT(YastYLapplicationG,"ast","<application>");
+EXT(YPsymbols,"boot","%symbols");
+EXT(YprotoSsystemYTc_extensionT,"proto/system","*c-extension*");
+EXT(YprotoScollectionsScollectionYmap2,"proto/collections/collection","map2");
+EXT(YLlogG,"boot","<log>");
+EXT(YastYfind_binding,"ast","find-binding");
+EXT(Yast_linearizeYLfree_referenceG,"ast-linearize","<free-reference>");
+EXT(YprotoScollectionsStableYcase_insensitive_string_hash,"proto/collections/table","case-insensitive-string-hash");
+EXT(YastYLassignmentG,"ast","<assignment>");
+EXT(Yvec,"boot","vec");
+EXT(Yfun_name_setter,"boot","fun-name-setter");
+EXT(YprotoSmathYposQ,"proto/math","pos?");
+EXT(YsyntaxYDsexpr_define_syntax_tag,"syntax","$sexpr-define-syntax-tag");
+EXT(YprotoScollectionsSmapYLmapG,"proto/collections/map","<map>");
+EXT(YLslotG,"boot","<slot>");
+EXT(YsyntaxYsexpr_make_setter,"syntax","sexpr-make-setter");
+EXT(YprotoSsystemYTexe_extensionT,"proto/system","*exe-extension*");
+EXT(YsubtypeQ,"boot","subtype?");
+EXT(YprotoSmathYlowercaseQ,"proto/math","lowercase?");
+EXT(YPPmacro,"boot","%%macro");
+EXT(YastYfunction_index,"ast","function-index");
+EXT(YprotoSsystemYTproto_rootT,"proto/system","*proto-root*");
+EXT(YprotoSmathYchar_Gascii,"proto/math","char->ascii");
+EXT(YastYLreferenceG,"ast","<reference>");
+EXT(Ynot,"boot","not");
+EXT(YprotoScollectionsScollectionYanyQ,"proto/collections/collection","any?");
+EXT(YastYfunction_binding,"ast","function-binding");
+EXT(YastYbinding_inferred_type_setter,"ast","binding-inferred-type-setter");
+EXT(YsyntaxYsexpr_unquote_splicingQ,"syntax","sexpr-unquote-splicing?");
+EXT(YprotoScollectionsSassocYLassocsG,"proto/collections/assoc","<assocs>");
+EXT(YastYDproto_boot_module_name,"ast","$proto-boot-module-name");
+EXT(Yast_linearizeYprogram_quotations,"ast-linearize","program-quotations");
+EXT(YruntimeYformat_to_string,"runtime","format-to-string");
+EXT(YprotoSmathYS,"proto/math","/");
+EXT(Yfun_name,"boot","fun-name");
+EXT(YruntimeYcurry,"runtime","curry");
+EXT(Yclass_parents,"boot","class-parents");
+EXT(YastYfunction_temporaries_setter,"ast","function-temporaries-setter");
+EXT(Yast_linearizeYast_contains_funQ,"ast-linearize","ast-contains-fun?");
+EXT(Ymay_isaQ,"boot","may-isa?");
+EXT(YLanyG,"boot","<any>");
+EXT(YprotoScollectionsSrangeYLrangeG,"proto/collections/range","<range>");
+EXT(YastYfix_let_types,"ast","fix-let-types");
+EXT(YastYfunction_debug_name,"ast","function-debug-name");
+EXT(YprotoSportsYforce_output,"proto/ports","force-output");
+EXT(YsyntaxYsexpr_monitor_expand,"syntax","sexpr-monitor-expand");
+EXT(YastYLast_methodG,"ast","<ast-method>");
+EXT(YastYalternative_condition,"ast","alternative-condition");
+EXT(YastYLmodule_loaderG,"ast","<module-loader>");
+EXT(YprotoScollectionsScollectionYlow_elt,"proto/collections/collection","low-elt");
+EXT(YprotoSsystemYcomponents_to_pathname,"proto/system","components-to-pathname");
+DEF(YtopYload,"top","load");
+EXT(YastYapplication_arguments,"ast","application-arguments");
+EXT(Yast_linearizeYform_definitions,"ast-linearize","form-definitions");
+EXT(YprotoSsystemYexe_filename,"proto/system","exe-filename");
+EXT(Ygen_add_met,"boot","gen-add-met");
+EXT(Ytype_class,"boot","type-class");
+EXT(YprotoScollectionsSstringYstr,"proto/collections/string","str");
+EXT(YprotoSmathYnumericQ,"proto/math","numeric?");
+EXT(YLunionG,"boot","<union>");
+EXT(YprotoSmathYfloorS,"proto/math","floor/");
+EXT(YastYLraw_constantG,"ast","<raw-constant>");
+EXT(YastYlocals_bindings,"ast","locals-bindings");
+EXT(YastYbinding_info,"ast","binding-info");
+EXT(YsyntaxYsexpr_function_body,"syntax","sexpr-function-body");
+EXT(YastYfree_implemented_foreign_bindings,"ast","free-implemented-foreign-bindings");
+EXT(Yslot_value,"boot","slot-value");
+EXT(YprotoSmathYL,"proto/math","<");
+EXT(Yfun_arity,"boot","fun-arity");
+EXT(YsyntaxYsexpr_variable_type,"syntax","sexpr-variable-type");
+EXT(YprotoScollectionsSbufferYlen_setter,"proto/collections/buffer","len-setter");
+EXT(YastYcompile_time_program,"ast","compile-time-program");
+EXT(YsyntaxYsexpr_variable_name,"syntax","sexpr-variable-name");
+EXT(YastYapplication_binding,"ast","application-binding");
+EXT(YprotoScollectionsSsequenceY3rd,"proto/collections/sequence","3rd");
+EXT(YastYsignature_value_setter,"ast","signature-value-setter");
+EXT(YprotoScollectionsSsequenceYfrom_below,"proto/collections/sequence","from-below");
+EXT(YastYLsequentialG,"ast","<sequential>");
+EXT(YastYboundQ_reference,"ast","bound?-reference");
+EXT(YsyntaxYsexpr_make_setter_name,"syntax","sexpr-make-setter-name");
+EXT(YprotoScollectionsStableYtable_growth_threshold_setter,"proto/collections/table","table-growth-threshold-setter");
+EXT(YprotoScollectionsStableYtable_growth_factor,"proto/collections/table","table-growth-factor");
+EXT(YastYsequentialize,"ast","sequentialize");
+EXT(YprotoSportsYLinput_portG,"proto/ports","<input-port>");
+EXT(YmacrosYmap,"macros","map");
+EXT(YsyntaxYsexpr_variableQ,"syntax","sexpr-variable?");
+EXT(YsyntaxYsexpr_isa_init_slots,"syntax","sexpr-isa-init-slots");
+EXT(YastYsignature_naryQ,"ast","signature-nary?");
+EXT(YprotoSsystemYTpath_separatorT,"proto/system","*path-separator*");
+EXT(YruntimeYLsimple_errorG,"runtime","<simple-error>");
+EXT(YastYdo_named_static_global_bindings,"ast","do-named-static-global-bindings");
+EXT(YprotoScollectionsSstringYascii_whitespaces,"proto/collections/string","ascii-whitespaces");
+EXT(YLsubclassG,"boot","<subclass>");
+EXT(YastYfunction_source,"ast","function-source");
+EXT(YastYglobal_box_value_setter,"ast","global-box-value-setter");
+EXT(YastYfunction_index_setter,"ast","function-index-setter");
+EXT(YastYDproto_runtime_module_name,"ast","$proto-runtime-module-name");
+EXT(YprotoScollectionsSlistYpush,"proto/collections/list","push");
+EXT(YprotoScollectionsSlistYpop,"proto/collections/list","pop");
+DEF(YtopYbacktrace,"top","backtrace");
+EXT(YastYsignature_naryQ_setter,"ast","signature-nary?-setter");
+EXT(Yfab_sym,"boot","fab-sym");
+EXT(YastYLglobal_boxG,"ast","<global-box>");
+EXT(Ysig_arity,"boot","sig-arity");
+EXT(YmacrosYrevX,"macros","rev!");
+EXT(YastYlocals_functions_setter,"ast","locals-functions-setter");
+EXT(YprotoSsystemYcomponents_last,"proto/system","components-last");
+EXT(YastYfree_environment,"ast","free-environment");
+EXT(YastYsignature_arity,"ast","signature-arity");
+EXT(YastYbinding_info_setter,"ast","binding-info-setter");
+EXT(YprotoScollectionsSrangeYfrom_above_by,"proto/collections/range","from-above-by");
+EXT(YprotoSmathYmin,"proto/math","min");
+EXT(YsyntaxYsexpr_syntax_definition_value,"syntax","sexpr-syntax-definition-value");
+EXT(YastYalternative_consequent,"ast","alternative-consequent");
+EXT(YprotoScollectionsSrangeYfrom_by,"proto/collections/range","from-by");
+EXT(YastYapplication_knownQ,"ast","application-known?");
+EXT(YprotoSportsYport_line_setter,"proto/ports","port-line-setter");
+EXT(YprotoScollectionsScollectionYas_copy,"proto/collections/collection","as-copy");
+EXT(YastYfunction_data_refs_setter,"ast","function-data-refs-setter");
+EXT(YprotoScollectionsScollectionYalter,"proto/collections/collection","alter");
+EXT(YsyntaxYsexpr_iterate_Gloc,"syntax","sexpr-iterate->loc");
+EXT(YprotoScollectionsScollectionYcopy_state,"proto/collections/collection","copy-state");
+EXT(YprotoScollectionsScollectionYelt_setter,"proto/collections/collection","elt-setter");
+EXT(YastYfab_p2c_module,"ast","fab-p2c-module");
+EXT(YsyntaxYsexpr_syntax_if_value,"syntax","sexpr-syntax-if-value");
+EXT(YastYbinding_module_name,"ast","binding-module-name");
+EXT(YastYfix_let_types_setter,"ast","fix-let-types-setter");
+EXT(Yunexec,"boot","unexec");
+EXT(YmacrosYmatch_atom,"macros","match-atom");
+EXT(YruntimeYhandler_function,"runtime","handler-function");
+EXT(YsyntaxYDsexpr_isa_tag,"syntax","$sexpr-isa-tag");
+EXT(YwriteYwrite,"write","write");
+EXT(YprotoSsystemYprobe_directory,"proto/system","probe-directory");
+EXT(YastYLast_primitiveG,"ast","<ast-primitive>");
+EXT(YLsingletonG,"boot","<singleton>");
+EXT(Yast_linearizeYreference_offset,"ast-linearize","reference-offset");
+EXT(YprotoSsystemYos_binding_value_setter,"proto/system","os-binding-value-setter");
+EXT(YprotoScollectionsSsequenceY2nd,"proto/collections/sequence","2nd");
+EXT(Ytup,"boot","tup");
+EXT(Yast_linearizeYupdate_walkX,"ast-linearize","update-walk!");
+EXT(YwriteYdisplay,"write","display");
+EXT(YprotoSmathYceiling,"proto/math","ceiling");
+EXT(YastYreport_undefined_global_bindings,"ast","report-undefined-global-bindings");
+EXT(YastYmodule_loader_module_type,"ast","module-loader-module-type");
+EXT(YprotoScollectionsStableYDpermanent_hash_state,"proto/collections/table","$permanent-hash-state");
+EXT(YmacrosYnxt_state,"macros","nxt-state");
+EXT(YprotoSsystemYprocess_id,"proto/system","process-id");
+EXT(Yast_linearizeYLclosure_creationG,"ast-linearize","<closure-creation>");
+DEF(YtopYsave_image,"top","save-image");
+EXT(YprotoSmathYabs,"proto/math","abs");
+DEF(YtopYstr_eval,"top","str-eval");
+EXT(YprotoSmathYceilingS,"proto/math","ceiling/");
+EXT(YastYinstall_initial_bindings,"ast","install-initial-bindings");
+EXT(YruntimeYapp_args,"runtime","app-args");
+EXT(YastYload_module,"ast","load-module");
+EXT(YsyntaxYsexpr_if_then,"syntax","sexpr-if-then");
+DEF(YtopYtop_in,"top","top-in");
+EXT(YsyntaxYsexpr_method_signature,"syntax","sexpr-method-signature");
+EXT(YastYreference_called_functionQ,"ast","reference-called-function?");
+EXT(YsyntaxYDsexpr_slot_tag,"syntax","$sexpr-slot-tag");
+EXT(YprotoSportsYLstring_portG,"proto/ports","<string-port>");
+EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
+EXT(YprotoScollectionsScollectionYnow_key,"proto/collections/collection","now-key");
+EXT(Yincongruent_method_error,"boot","incongruent-method-error");
+EXT(YprotoScollectionsSsequenceYsub_setter,"proto/collections/sequence","sub-setter");
+EXT(YastYreference_called_functionQ_setter,"ast","reference-called-function?-setter");
+EXT(YprotoSportsYclose_input_port,"proto/ports","close-input-port");
+EXT(YPwith_monitor,"boot","%with-monitor");
+EXT(YastYbind_exit_main_fun,"ast","bind-exit-main-fun");
+EXT(YprotoSportsYwrite_char,"proto/ports","write-char");
+EXT(YprotoSportsYnewline,"proto/ports","newline");
+EXT(YastYfunction_naryQ,"ast","function-nary?");
+EXT(YastYunwind_protect_protected_thunk,"ast","unwind-protect-protected-thunk");
+EXT(YastYLglobal_assignmentG,"ast","<global-assignment>");
+DEF(YtopYstr_parse_in,"top","str-parse-in");
+EXT(Yast_linearizeYbox_reference,"ast-linearize","box-reference");
+EXT(Yadd_slot,"boot","add-slot");
+EXT(YruntimeYapp_filename,"runtime","app-filename");
+EXT(YastYapplication_function,"ast","application-function");
+EXT(YastYmonitor_test,"ast","monitor-test");
+EXT(YprotoSmathYnyi_error,"proto/math","nyi-error");
+DEF(YtopYstr_eval_in,"top","str-eval-in");
+EXT(YastYfunction_free,"ast","function-free");
+EXT(YastYas_lst,"ast","as-lst");
+EXT(YisaQ,"boot","isa?");
+EXT(YastYmonitor_main_thunk,"ast","monitor-main-thunk");
+EXT(YruntimeYdescribe_condition,"runtime","describe-condition");
+EXT(Yfun_naryQ,"boot","fun-nary?");
+EXT(YmacrosYnow_elt,"macros","now-elt");
+EXT(YprotoSmathYNE,"proto/math","~=");
+EXT(YastYlocals_functions,"ast","locals-functions");
+EXT(YprotoScollectionsScollectionYdo2,"proto/collections/collection","do2");
+EXT(YprotoScollectionsSsequenceY1st,"proto/collections/sequence","1st");
+EXT(YmacrosYmatch_unquote,"macros","match-unquote");
+EXT(YprotoSmathYlogbitQ,"proto/math","logbit?");
+EXT(YprotoSmathYcontagious_call,"proto/math","contagious-call");
+EXT(YmacrosYvar_name,"macros","var-name");
+EXT(YmacrosYelt,"macros","elt");
+EXT(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
+EXT(Yslot_getter,"boot","slot-getter");
+EXT(YPdefine_method,"boot","%define-method");
+EXT(YastYLruntime_referenceG,"ast","<runtime-reference>");
+EXT(YprotoScollectionsSlistYassq,"proto/collections/list","assq");
+DEF(YtopYp2c_eval,"top","p2c-eval");
+EXT(YprotoSsystemYobj_filename,"proto/system","obj-filename");
+EXT(YprotoSmathYpower_of_two_ceiling,"proto/math","power-of-two-ceiling");
+EXT(YastYruntime_environment,"ast","runtime-environment");
+EXT(YastYbinding_index,"ast","binding-index");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_16);
-DEFLIT(lit_66);
-DEFLIT(lit_28);
-DEFLIT(lit_70);
-DEFLIT(lit_35);
-DEFLIT(lit_36);
-DEFLIT(lit_71);
-DEFLIT(lit_30);
-DEFLIT(lit_14);
-DEFLIT(lit_45);
-DEFLIT(lit_47);
-DEFLIT(lit_53);
-DEFLIT(lit_52);
-DEFLIT(lit_44);
-DEFLIT(lit_76);
-DEFLIT(lit_77);
-DEFLIT(lit_79);
-DEFLIT(lit_39);
-DEFLIT(lit_27);
-DEFLIT(lit_54);
-DEFLIT(lit_25);
-DEFLIT(lit_32);
-DEFLIT(lit_78);
-DEFLIT(lit_0);
-DEFLIT(lit_10);
-DEFLIT(lit_3);
-DEFLIT(lit_17);
-DEFLIT(lit_43);
-DEFLIT(lit_50);
-DEFLIT(lit_72);
-DEFLIT(lit_57);
-DEFLIT(lit_13);
-DEFLIT(lit_23);
-DEFLIT(lit_18);
-DEFLIT(lit_7);
-DEFLIT(lit_29);
-DEFLIT(lit_20);
-DEFLIT(lit_22);
-DEFLIT(lit_73);
-DEFLIT(lit_12);
-DEFLIT(lit_60);
-DEFLIT(lit_51);
-DEFLIT(lit_15);
-DEFLIT(lit_55);
-DEFLIT(lit_26);
-DEFLIT(lit_46);
-DEFLIT(lit_49);
-DEFLIT(lit_9);
-DEFLIT(lit_1);
 DEFLIT(lit_56);
-DEFLIT(lit_38);
-DEFLIT(lit_33);
-DEFLIT(lit_68);
-DEFLIT(lit_42);
-DEFLIT(lit_2);
-DEFLIT(lit_75);
-DEFLIT(lit_41);
-DEFLIT(lit_62);
-DEFLIT(lit_58);
-DEFLIT(lit_31);
-DEFLIT(lit_11);
 DEFLIT(lit_37);
-DEFLIT(lit_21);
-DEFLIT(lit_40);
-DEFLIT(lit_34);
-DEFLIT(lit_80);
-DEFLIT(lit_67);
-DEFLIT(lit_5);
-DEFLIT(lit_6);
-DEFLIT(lit_24);
-DEFLIT(lit_69);
-DEFLIT(lit_8);
-DEFLIT(lit_48);
-DEFLIT(lit_81);
-DEFLIT(lit_64);
 DEFLIT(lit_74);
-DEFLIT(lit_61);
-DEFLIT(lit_63);
+DEFLIT(lit_16);
+DEFLIT(lit_49);
+DEFLIT(lit_18);
+DEFLIT(lit_22);
+DEFLIT(lit_23);
+DEFLIT(lit_20);
+DEFLIT(lit_33);
+DEFLIT(lit_15);
+DEFLIT(lit_17);
+DEFLIT(lit_45);
+DEFLIT(lit_14);
+DEFLIT(lit_26);
+DEFLIT(lit_32);
+DEFLIT(lit_69);
+DEFLIT(lit_35);
+DEFLIT(lit_7);
+DEFLIT(lit_38);
 DEFLIT(lit_4);
-DEFLIT(lit_19);
-DEFLIT(lit_65);
+DEFLIT(lit_50);
+DEFLIT(lit_48);
+DEFLIT(lit_3);
+DEFLIT(lit_1);
+DEFLIT(lit_60);
+DEFLIT(lit_41);
+DEFLIT(lit_42);
+DEFLIT(lit_10);
+DEFLIT(lit_29);
+DEFLIT(lit_63);
+DEFLIT(lit_54);
+DEFLIT(lit_40);
+DEFLIT(lit_78);
+DEFLIT(lit_47);
+DEFLIT(lit_75);
+DEFLIT(lit_31);
+DEFLIT(lit_79);
+DEFLIT(lit_8);
+DEFLIT(lit_30);
+DEFLIT(lit_68);
+DEFLIT(lit_13);
+DEFLIT(lit_5);
+DEFLIT(lit_66);
+DEFLIT(lit_11);
+DEFLIT(lit_51);
+DEFLIT(lit_25);
+DEFLIT(lit_58);
+DEFLIT(lit_27);
+DEFLIT(lit_80);
+DEFLIT(lit_6);
+DEFLIT(lit_57);
+DEFLIT(lit_36);
+DEFLIT(lit_21);
+DEFLIT(lit_64);
+DEFLIT(lit_81);
+DEFLIT(lit_46);
+DEFLIT(lit_44);
+DEFLIT(lit_72);
+DEFLIT(lit_61);
+DEFLIT(lit_76);
+DEFLIT(lit_12);
+DEFLIT(lit_77);
+DEFLIT(lit_0);
+DEFLIT(lit_67);
+DEFLIT(lit_71);
+DEFLIT(lit_62);
+DEFLIT(lit_2);
+DEFLIT(lit_52);
+DEFLIT(lit_9);
+DEFLIT(lit_24);
+DEFLIT(lit_43);
+DEFLIT(lit_73);
+DEFLIT(lit_53);
+DEFLIT(lit_28);
+DEFLIT(lit_39);
+DEFLIT(lit_34);
 DEFLIT(lit_59);
+DEFLIT(lit_19);
+DEFLIT(lit_70);
+DEFLIT(lit_55);
+DEFLIT(lit_65);
 
 /* FUNCTIONS: */
 
@@ -839,9 +856,9 @@ LOCFOR(fun_24);
 LOCFOR(fun_25);
 LOCFOR(fun_26);
 LOCFOR(fun_27);
-LOCFOR(fun_x_1315_28);
+LOCFOR(fun_x_1347_28);
 LOCFOR(fun_29);
-LOCFOR(fun_x_1317_30);
+LOCFOR(fun_x_1349_30);
 LOCFOR(fun_31);
 LOCFOR(fun_32);
 LOCFOR(fun_33);
@@ -899,7 +916,7 @@ LINK_STACK();
   ARG(ct_env_, 1);
 loop:
   T1 = CALL2(1,VARREF(YtopYparse_in),s_,ct_env_);
-  T0 = CALL3(1,VARREF(YruntimeYformat),VARREF(YruntimeYout),LITREF(lit_8),T1);
+  T0 = CALL3(1,VARREF(YruntimeYformat),VARREF(YprotoSportsYout),LITREF(lit_8),T1);
 UNLINK_STACK();
   QRET(T0);
 }
@@ -966,8 +983,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_eval_in_7) {
   P x_,ct_env_;
-  P eF1633;
-  P oF1632;
+  P eF1690;
+  P oF1689;
   P T3,T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -975,10 +992,10 @@ LINK_STACK();
   ARG(ct_env_, 1);
 loop:
   T1 = CALL3(1,VARREF(YastYobjectify),x_,ct_env_,YPfalse);
-  oF1632 = T1;
-  T3 = CALL1(1,VARREF(YastYast_evaluate),oF1632);
-  eF1633 = T3;
-  T2 = eF1633;
+  oF1689 = T1;
+  T3 = CALL1(1,VARREF(YastYast_evaluate),oF1689);
+  eF1690 = T3;
+  T2 = eF1690;
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -1029,21 +1046,21 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_loop_11) {
   P forms_;
-  P xF1634;
+  P xF1691;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 LINK_STACK();
   ARG(forms_, 0);
 loop:
   T1 = CALL1(1,VARREF(YruntimeYread),FREEREF(0));
-  xF1634 = T1;
-  T3 = CALL1(1,VARREF(YruntimeYeof_objectQ),xF1634);
+  xF1691 = T1;
+  T3 = CALL1(1,VARREF(YprotoSmathYeof_objectQ),xF1691);
   if (T3 != YPfalse) {
-    T5 = CALL1(1,VARREF(YruntimeYrevX),forms_);
+    T5 = CALL1(1,VARREF(YmacrosYrevX),forms_);
     T4 = CALL1(1,VARREF(YsyntaxYsexpr_sequence_Gbegin),T5);
     T2 = T4;
   } else {
-    T7 = CALL2(1,VARREF(YmacrosYpair),xF1634,forms_);
+    T7 = CALL2(1,VARREF(YmacrosYpair),xF1691,forms_);
     a1 = T7;
     forms_ = a1;
     goto loop;
@@ -1056,16 +1073,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_12) {
   P port_;
-  P loopF1635;
+  P loopF1692;
   P T2,T1,T0;
   P a1;
 LINK_STACK();
   ARG(port_, 0);
 loop:
   T1 = FUNSHELL(1,fun_loop_11,2);
-  loopF1635 = T1;
-  FUNINIT(loopF1635, 2,port_,loopF1635);
-  T2 = CALL1(0,loopF1635,Ynil);
+  loopF1692 = T1;
+  FUNINIT(loopF1692, 2,port_,loopF1692);
+  T2 = CALL1(0,loopF1692,Ynil);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -1079,15 +1096,15 @@ LINK_STACK();
   ARG(filename_, 0);
 loop:
   T1 = fun_12;
-  T0 = CALL2(1,VARREF(YruntimeYcall_with_input_file),filename_,T1);
+  T0 = CALL2(1,VARREF(YprotoSportsYcall_with_input_file),filename_,T1);
 UNLINK_STACK();
   QRET(T0);
 }
 
 FUNCODEDEF(fun_load_in_14) {
   P filename_,ct_env_;
-  P oF1637;
-  P xF1636;
+  P oF1694;
+  P xF1693;
   P T4,T3,T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -1095,10 +1112,10 @@ LINK_STACK();
   ARG(ct_env_, 1);
 loop:
   T1 = CALL1(1,VARREF(YtopYread_file),filename_);
-  xF1636 = T1;
-  T3 = CALL3(1,VARREF(YastYobjectify),xF1636,ct_env_,YPfalse);
-  oF1637 = T3;
-  T4 = CALL2(1,VARREF(YtopYast_run),oF1637,ct_env_);
+  xF1693 = T1;
+  T3 = CALL3(1,VARREF(YastYobjectify),xF1693,ct_env_,YPfalse);
+  oF1694 = T3;
+  T4 = CALL2(1,VARREF(YtopYrun),oF1694,ct_env_);
   T2 = T4;
   T0 = T2;
 UNLINK_STACK();
@@ -1144,9 +1161,9 @@ LINK_STACK();
 loop:
   T1 = CALL1(1,VARREF(YastYfind_environment_module),env_);
   T0 = CALL1(1,VARREF(YastYmodule_name),T1);
-  CALLN(1,VARREF(YruntimeYformat),5,VARREF(YruntimeYout),LITREF(lit_32),T0,level_,prompt_);
-  CALL1(1,VARREF(YruntimeYforce_output),VARREF(YruntimeYout));
-  T2 = CALL1(1,VARREF(YruntimeYread),VARREF(YruntimeYin));
+  CALLN(1,VARREF(YruntimeYformat),5,VARREF(YprotoSportsYout),LITREF(lit_32),T0,level_,prompt_);
+  CALL1(1,VARREF(YprotoSportsYforce_output),VARREF(YprotoSportsYout));
+  T2 = CALL1(1,VARREF(YruntimeYread),VARREF(YprotoSportsYin));
 UNLINK_STACK();
   QRET(T2);
 }
@@ -1163,8 +1180,8 @@ LINK_STACK();
 loop:
   T1 = CALL1(1,VARREF(YastYfind_environment_module),env_);
   T0 = CALL1(1,VARREF(YastYmodule_name),T1);
-  CALLN(1,VARREF(YruntimeYformat),5,VARREF(YruntimeYout),LITREF(lit_36),T0,level_,label_);
-  T2 = CALL2(1,VARREF(YwriteYwrite),VARREF(YruntimeYout),result_);
+  CALLN(1,VARREF(YruntimeYformat),5,VARREF(YprotoSportsYout),LITREF(lit_36),T0,level_,label_);
+  T2 = CALL2(1,VARREF(YwriteYwrite),VARREF(YprotoSportsYout),result_);
 UNLINK_STACK();
   QRET(T2);
 }
@@ -1190,23 +1207,23 @@ LINK_STACK();
   ARG(args_, 1);
 loop:
   T0 = BOXVAL(FREEREF(0));
-  T1 = CALL1(1,VARREF(YruntimeYrev),args_);
-  CALLN(1,VARREF(YruntimeYformat),5,VARREF(YruntimeYout),LITREF(lit_42),T0,f_,T1);
+  T1 = CALL1(1,VARREF(YprotoScollectionsSsequenceYrev),args_);
+  CALLN(1,VARREF(YruntimeYformat),5,VARREF(YprotoSportsYout),LITREF(lit_42),T0,f_,T1);
   T4 = BOXVAL(FREEREF(0));
-  T3 = CALL2(1,VARREF(YruntimeYA),T4,YPint((P)1));
+  T3 = CALL2(1,VARREF(YprotoSmathYA),T4,YPint((P)1));
   T2 = BOXVAL(FREEREF(0)) = T3;
 UNLINK_STACK();
   QRET(T2);
 }
 
 FUNCODEDEF(fun_backtrace_21) {
-  P numF1638;
+  P numF1695;
   P T3,T2,T1,T0;
 LINK_STACK();
 loop:
-  numF1638 = YPint((P)0);
-  numF1638 = BOXFAB(numF1638);
-  T3 = FUNFAB(fun_20,1,numF1638);
+  numF1695 = YPint((P)0);
+  numF1695 = BOXFAB(numF1695);
+  T3 = FUNFAB(fun_20,1,numF1695);
   T2 = CALL1(1,VARREF(YtopYdo_stack_frames),T3);
   T0 = T2;
 UNLINK_STACK();
@@ -1224,7 +1241,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(YtopYdo_restart) {
   P restarts_,n_;
-  P tmpF1639;
+  P tmpF1696;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 LINK_STACK();
@@ -1236,11 +1253,11 @@ loop:
     T1 = CALL1(1,VARREF(Yerror),LITREF(lit_48));
   } else {
   }
-  T4 = CALL2(1,VARREF(YruntimeYG),n_,YPint((P)0));
-  tmpF1639 = T4;
-  if (tmpF1639 != YPfalse) {
-    T7 = CALL1(1,VARREF(YruntimeYlen),restarts_);
-    T6 = CALL2(1,VARREF(YruntimeYLE),n_,T7);
+  T4 = CALL2(1,VARREF(YprotoSmathYG),n_,YPint((P)0));
+  tmpF1696 = T4;
+  if (tmpF1696 != YPfalse) {
+    T7 = CALL1(1,VARREF(YprotoScollectionsScollectionYlen),restarts_);
+    T6 = CALL2(1,VARREF(YprotoSmathYLE),n_,T7);
     T5 = T6;
   } else {
     T5 = YPfalse;
@@ -1251,9 +1268,9 @@ loop:
     T8 = CALL1(1,VARREF(Yerror),LITREF(lit_49));
   } else {
   }
-  T11 = CALL2(1,VARREF(YruntimeY_),n_,YPint((P)1));
+  T11 = CALL2(1,VARREF(YprotoSmathY_),n_,YPint((P)1));
   T10 = CALL2(1,VARREF(YmacrosYelt),restarts_,T11);
-  T9 = CALL3(1,VARREF(YruntimeYinvoke_handler_interactively),T10,VARREF(YruntimeYin),VARREF(YruntimeYout));
+  T9 = CALL3(1,VARREF(YruntimeYinvoke_handler_interactively),T10,VARREF(YprotoSportsYin),VARREF(YprotoSportsYout));
 UNLINK_STACK();
   QRET(T9);
 }
@@ -1275,12 +1292,12 @@ LINK_STACK();
 loop:
   T0 = CALL2(1,VARREF(YisaQ),c_,VARREF(YtopYLkeyboard_interruptG));
   if (T0 != YPfalse) {
-    T1 = CALL2(1,VARREF(YruntimeYformat),VARREF(YruntimeYout),LITREF(lit_58));
+    T1 = CALL2(1,VARREF(YruntimeYformat),VARREF(YprotoSportsYout),LITREF(lit_58));
   } else {
     T3 = CALL1(1,VARREF(YruntimeYdescribe_condition),c_);
-    T2 = CALL3(1,VARREF(YruntimeYformat),VARREF(YruntimeYout),LITREF(lit_59),T3);
+    T2 = CALL3(1,VARREF(YruntimeYformat),VARREF(YprotoSportsYout),LITREF(lit_59),T3);
   }
-  T4 = CALL2(1,VARREF(YruntimeYA),FREEREF(0),YPint((P)1));
+  T4 = CALL2(1,VARREF(YprotoSmathYA),FREEREF(0),YPint((P)1));
   T5 = BOXVAL(FREEREF(3));
   CALLN(1,VARREF(YtopYtop_in),5,T4,FREEREF(1),FREEREF(2),YPtrue,T5);
   T6 = CALL1(1,FREEREF(4),YPfalse);
@@ -1308,7 +1325,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_x_1315_28) {
+FUNCODEDEF(fun_x_1347_28) {
   P msg_,args_;
   P T0;
   P a1,a2;
@@ -1323,35 +1340,35 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_29) {
   P return_;
-  P x_1314F1644;
-  P x_1314F1643;
-  P nF1642;
-  P x_1314F1641;
-  P x_1315F1640;
+  P x_1346F1701;
+  P x_1346F1700;
+  P nF1699;
+  P x_1346F1698;
+  P x_1347F1697;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 LINK_STACK();
   ARG(return_, 0);
 loop:
-  T1 = FUNSHELL(0,fun_x_1315_28,1);
-  x_1315F1640 = T1;
-  FUNINIT(x_1315F1640, 1,return_);
-  x_1314F1641 = FREEREF(0);
-  nF1642 = YPfalse;
-  nF1642 = BOXFAB(nF1642);
-  T5 = CALL2(1,VARREF(YisaQ),x_1314F1641,VARREF(YLlstG));
+  T1 = FUNSHELL(0,fun_x_1347_28,1);
+  x_1347F1697 = T1;
+  FUNINIT(x_1347F1697, 1,return_);
+  x_1346F1698 = FREEREF(0);
+  nF1699 = YPfalse;
+  nF1699 = BOXFAB(nF1699);
+  T5 = CALL2(1,VARREF(YisaQ),x_1346F1698,VARREF(YLlstG));
   if (T5 != YPfalse) {
-    T7 = CALL3(1,VARREF(YmacrosYmatch_atom),x_1314F1641,LITREF(lit_70),x_1315F1640);
-    x_1314F1643 = T7;
-    T9 = CALL2(1,VARREF(YmacrosYmatch_unquote),x_1314F1643,x_1315F1640);
-    BOXVAL(nF1642) = T9;
-    T10 = CALL1(1,VARREF(Ytail),x_1314F1643);
-    x_1314F1644 = T10;
-    T11 = CALL2(1,VARREF(YmacrosYmatch_empty_list),x_1314F1644,x_1315F1640);
+    T7 = CALL3(1,VARREF(YmacrosYmatch_atom),x_1346F1698,LITREF(lit_70),x_1347F1697);
+    x_1346F1700 = T7;
+    T9 = CALL2(1,VARREF(YmacrosYmatch_unquote),x_1346F1700,x_1347F1697);
+    BOXVAL(nF1699) = T9;
+    T10 = CALL1(1,VARREF(Ytail),x_1346F1700);
+    x_1346F1701 = T10;
+    T11 = CALL2(1,VARREF(YmacrosYmatch_empty_list),x_1346F1701,x_1347F1697);
     T8 = T11;
     T6 = T8;
   } else {
-    T12 = CALL2(1,x_1315F1640,LITREF(lit_71),x_1314F1641);
+    T12 = CALL2(1,x_1347F1697,LITREF(lit_71),x_1346F1698);
   }
   T3 = YPtrue;
   T2 = T3;
@@ -1360,7 +1377,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_x_1317_30) {
+FUNCODEDEF(fun_x_1349_30) {
   P msg_,args_;
   P T0;
   P a1,a2;
@@ -1375,35 +1392,35 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_31) {
   P return_;
-  P x_1316F1649;
-  P x_1316F1648;
-  P mF1647;
-  P x_1316F1646;
-  P x_1317F1645;
+  P x_1348F1706;
+  P x_1348F1705;
+  P mF1704;
+  P x_1348F1703;
+  P x_1349F1702;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 LINK_STACK();
   ARG(return_, 0);
 loop:
-  T1 = FUNSHELL(0,fun_x_1317_30,1);
-  x_1317F1645 = T1;
-  FUNINIT(x_1317F1645, 1,return_);
-  x_1316F1646 = FREEREF(0);
-  mF1647 = YPfalse;
-  mF1647 = BOXFAB(mF1647);
-  T5 = CALL2(1,VARREF(YisaQ),x_1316F1646,VARREF(YLlstG));
+  T1 = FUNSHELL(0,fun_x_1349_30,1);
+  x_1349F1702 = T1;
+  FUNINIT(x_1349F1702, 1,return_);
+  x_1348F1703 = FREEREF(0);
+  mF1704 = YPfalse;
+  mF1704 = BOXFAB(mF1704);
+  T5 = CALL2(1,VARREF(YisaQ),x_1348F1703,VARREF(YLlstG));
   if (T5 != YPfalse) {
-    T7 = CALL3(1,VARREF(YmacrosYmatch_atom),x_1316F1646,LITREF(lit_73),x_1317F1645);
-    x_1316F1648 = T7;
-    T9 = CALL2(1,VARREF(YmacrosYmatch_unquote),x_1316F1648,x_1317F1645);
-    BOXVAL(mF1647) = T9;
-    T10 = CALL1(1,VARREF(Ytail),x_1316F1648);
-    x_1316F1649 = T10;
-    T11 = CALL2(1,VARREF(YmacrosYmatch_empty_list),x_1316F1649,x_1317F1645);
+    T7 = CALL3(1,VARREF(YmacrosYmatch_atom),x_1348F1703,LITREF(lit_73),x_1349F1702);
+    x_1348F1705 = T7;
+    T9 = CALL2(1,VARREF(YmacrosYmatch_unquote),x_1348F1705,x_1349F1702);
+    BOXVAL(mF1704) = T9;
+    T10 = CALL1(1,VARREF(Ytail),x_1348F1705);
+    x_1348F1706 = T10;
+    T11 = CALL2(1,VARREF(YmacrosYmatch_empty_list),x_1348F1706,x_1349F1702);
     T8 = T11;
     T6 = T8;
   } else {
-    T12 = CALL2(1,x_1317F1645,LITREF(lit_71),x_1316F1646);
+    T12 = CALL2(1,x_1349F1702,LITREF(lit_71),x_1348F1703);
   }
   T3 = YPtrue;
   T2 = T3;
@@ -1413,35 +1430,35 @@ UNLINK_STACK();
 }
 
 FUNCODEDEF(fun_32) {
-  P astF1653;
-  P new_envF1652;
-  P tmpF1651;
-  P formF1650;
+  P astF1710;
+  P new_envF1709;
+  P tmpF1708;
+  P formF1707;
   P T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36;
   P T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20;
   P T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4;
   P T3,T2,T1,T0;
 LINK_STACK();
 loop:
-  CALL1(1,VARREF(YruntimeYnewline),VARREF(YruntimeYout));
+  CALL1(1,VARREF(YprotoSportsYnewline),VARREF(YprotoSportsYout));
   T0 = BOXVAL(FREEREF(0));
   if (T0 != YPfalse) {
-    CALL2(1,VARREF(YruntimeYformat),VARREF(YruntimeYout),LITREF(lit_61));
-    T1 = CALL2(1,VARREF(YruntimeYlist_handlers),VARREF(YruntimeYLrestartG),VARREF(YruntimeYout));
+    CALL2(1,VARREF(YruntimeYformat),VARREF(YprotoSportsYout),LITREF(lit_61));
+    T1 = CALL2(1,VARREF(YruntimeYlist_handlers),VARREF(YruntimeYLrestartG),VARREF(YprotoSportsYout));
     BOXVAL(FREEREF(1)) = T1;
     T2 = BOXVAL(FREEREF(0)) = YPfalse;
   } else {
   }
   T5 = BOXVAL(FREEREF(2));
   T4 = CALL3(1,VARREF(YtopYprompt_for_command_expression),T5,FREEREF(3),LITREF(lit_62));
-  formF1650 = T4;
-  T8 = CALL2(1,VARREF(YruntimeYE),formF1650,LITREF(lit_63));
-  tmpF1651 = T8;
-  if (tmpF1651 != YPfalse) {
-    T9 = tmpF1651;
+  formF1707 = T4;
+  T8 = CALL2(1,VARREF(YprotoSmathYE),formF1707,LITREF(lit_63));
+  tmpF1708 = T8;
+  if (tmpF1708 != YPfalse) {
+    T9 = tmpF1708;
   } else {
-    T11 = CALL0(1,VARREF(YruntimeYeof_object));
-    T10 = CALL2(1,VARREF(YruntimeYE),formF1650,T11);
+    T11 = CALL0(1,VARREF(YprotoSmathYeof_object));
+    T10 = CALL2(1,VARREF(YprotoSmathYE),formF1707,T11);
     T9 = T10;
   }
   T7 = T9;
@@ -1449,61 +1466,61 @@ loop:
     T12 = CALL1(1,FREEREF(4),YPfalse);
     T6 = T12;
   } else {
-    T14 = CALL2(1,VARREF(YruntimeYE),formF1650,LITREF(lit_64));
+    T14 = CALL2(1,VARREF(YprotoSmathYE),formF1707,LITREF(lit_64));
     if (T14 != YPfalse) {
       T15 = CALL1(1,FREEREF(5),YPfalse);
       T13 = T15;
     } else {
-      T17 = CALL2(1,VARREF(YruntimeYE),formF1650,LITREF(lit_65));
+      T17 = CALL2(1,VARREF(YprotoSmathYE),formF1707,LITREF(lit_65));
       if (T17 != YPfalse) {
-        T18 = CALL2(1,VARREF(YruntimeYlist_handlers),VARREF(YruntimeYLconditionG),VARREF(YruntimeYout));
+        T18 = CALL2(1,VARREF(YruntimeYlist_handlers),VARREF(YruntimeYLconditionG),VARREF(YprotoSportsYout));
         T16 = T18;
       } else {
-        T20 = CALL2(1,VARREF(YruntimeYE),formF1650,LITREF(lit_66));
+        T20 = CALL2(1,VARREF(YprotoSmathYE),formF1707,LITREF(lit_66));
         if (T20 != YPfalse) {
-          T21 = CALL2(1,VARREF(YruntimeYlist_handlers),VARREF(YruntimeYLrestartG),VARREF(YruntimeYout));
+          T21 = CALL2(1,VARREF(YruntimeYlist_handlers),VARREF(YruntimeYLrestartG),VARREF(YprotoSportsYout));
           T19 = T21;
         } else {
-          T24 = FUNFAB(fun_29,1,formF1650);
+          T24 = FUNFAB(fun_29,1,formF1707);
           T23 = with_exit(T24);
           if (T23 != YPfalse) {
             T26 = BOXVAL(FREEREF(1));
-            T27 = CALL1(1,VARREF(YruntimeY2nd),formF1650);
+            T27 = CALL1(1,VARREF(YprotoScollectionsSsequenceY2nd),formF1707);
             T25 = CALL2(1,VARREF(YtopYdo_restart),T26,T27);
             T22 = T25;
           } else {
-            T30 = FUNFAB(fun_31,1,formF1650);
+            T30 = FUNFAB(fun_31,1,formF1707);
             T29 = with_exit(T30);
             if (T29 != YPfalse) {
-              T33 = CALL1(1,VARREF(YruntimeY2nd),formF1650);
+              T33 = CALL1(1,VARREF(YprotoScollectionsSsequenceY2nd),formF1707);
               T32 = CALL1(1,VARREF(YastYruntime_environment),T33);
-              new_envF1652 = T32;
-              T34 = BOXVAL(FREEREF(2)) = new_envF1652;
+              new_envF1709 = T32;
+              T34 = BOXVAL(FREEREF(2)) = new_envF1709;
               T31 = T34;
               T28 = T31;
             } else {
-              T36 = CALL2(1,VARREF(YruntimeYE),formF1650,LITREF(lit_74));
+              T36 = CALL2(1,VARREF(YprotoSmathYE),formF1707,LITREF(lit_74));
               if (T36 != YPfalse) {
                 T37 = VARSET(YtopYrun,VARREF(YtopYp2c_run));
                 T35 = T37;
               } else {
-                T39 = CALL2(1,VARREF(YruntimeYE),formF1650,LITREF(lit_75));
+                T39 = CALL2(1,VARREF(YprotoSmathYE),formF1707,LITREF(lit_75));
                 if (T39 != YPfalse) {
                   T40 = VARSET(YtopYrun,VARREF(YtopYast_run));
                   T38 = T40;
                 } else {
-                  T42 = CALL2(1,VARREF(YruntimeYE),formF1650,LITREF(lit_76));
+                  T42 = CALL2(1,VARREF(YprotoSmathYE),formF1707,LITREF(lit_76));
                   if (T42 != YPfalse) {
                     T43 = VARSET(YtopYrun,VARREF(YtopYauto_run));
                     T41 = T43;
                   } else {
                     if (YPtrue != YPfalse) {
                       T47 = BOXVAL(FREEREF(2));
-                      T46 = CALL3(1,VARREF(YastYobjectify),formF1650,T47,YPfalse);
-                      astF1653 = T46;
+                      T46 = CALL3(1,VARREF(YastYobjectify),formF1707,T47,YPfalse);
+                      astF1710 = T46;
                       T49 = BOXVAL(FREEREF(2));
                       T51 = BOXVAL(FREEREF(2));
-                      T50 = CALL2(1,VARREF(YtopYrun),astF1653,T51);
+                      T50 = CALL2(1,VARREF(YtopYrun),astF1710,T51);
                       T48 = CALLN(1,VARREF(YtopYprint_result_expression),4,T49,FREEREF(3),LITREF(lit_77),T50);
                       T45 = T48;
                       T44 = T45;
@@ -1546,7 +1563,7 @@ loop:
   T7 = fun_26;
   T8 = FUNFAB(fun_27,1,FREEREF(1));
   T9 = FUNFAB(fun_32,6,FREEREF(2),FREEREF(3),FREEREF(4),FREEREF(0),FREEREF(5),FREEREF(6));
-  T0 = CALLN(1,YruntimeYPwith_monitor,5,VARREF(YruntimeYLrestartG),T1,T7,T8,T9);
+  T0 = CALLN(1,YPwith_monitor,5,VARREF(YruntimeYLrestartG),T1,T7,T8,T9);
 UNLINK_STACK();
   QRET(T0);
 }
@@ -1561,7 +1578,7 @@ loop:
   T1 = fun_24;
   T2 = FUNFAB(fun_25,5,FREEREF(0),FREEREF(1),FREEREF(2),FREEREF(3),continue_);
   T3 = FUNFAB(fun_33,7,FREEREF(0),continue_,FREEREF(4),FREEREF(5),FREEREF(3),FREEREF(2),FREEREF(6));
-  T0 = CALLN(1,YruntimeYPwith_monitor,5,VARREF(YruntimeYLconditionG),VARREF(YruntimeYDdefault_handler_info),T1,T2,T3);
+  T0 = CALLN(1,YPwith_monitor,5,VARREF(YruntimeYLconditionG),VARREF(YruntimeYDdefault_handler_info),T1,T2,T3);
 UNLINK_STACK();
   QRET(T0);
 }
@@ -1579,16 +1596,16 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_36) {
   P blow_;
-  P loopF1654;
+  P loopF1711;
   P T2,T1,T0;
   P a1;
 LINK_STACK();
   ARG(blow_, 0);
 loop:
   T1 = FUNSHELL(1,fun_loop_35,8);
-  loopF1654 = T1;
-  FUNINIT(loopF1654, 8,FREEREF(0),FREEREF(1),FREEREF(2),FREEREF(3),FREEREF(4),FREEREF(5),blow_,loopF1654);
-  T2 = CALL0(0,loopF1654);
+  loopF1711 = T1;
+  FUNINIT(loopF1711, 8,FREEREF(0),FREEREF(1),FREEREF(2),FREEREF(3),FREEREF(4),FREEREF(5),blow_,loopF1711);
+  T2 = CALL0(0,loopF1711);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -1596,7 +1613,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(fun_top_in_37) {
   P level_,top_,quit_,show_restartsQ_,ct_env_;
-  P restartsF1655;
+  P restartsF1712;
   P T5,T4,T3,T2,T1,T0;
   P a1,a2,a3,a4,a5;
 LINK_STACK();
@@ -1608,9 +1625,9 @@ LINK_STACK();
 loop:
   show_restartsQ_ = BOXFAB(show_restartsQ_);
   ct_env_ = BOXFAB(ct_env_);
-  restartsF1655 = YPfalse;
-  restartsF1655 = BOXFAB(restartsF1655);
-  T5 = FUNFAB(fun_36,6,level_,top_,quit_,ct_env_,show_restartsQ_,restartsF1655);
+  restartsF1712 = YPfalse;
+  restartsF1712 = BOXFAB(restartsF1712);
+  T5 = FUNFAB(fun_36,6,level_,top_,quit_,ct_env_,show_restartsQ_,restartsF1712);
   T4 = with_exit(T5);
   T2 = T4;
 UNLINK_STACK();
@@ -1662,14 +1679,14 @@ UNLINK_STACK();
 }
 
 FUNCODEDEF(fun_42) {
-  P loopF1656;
+  P loopF1713;
   P T2,T1,T0;
 LINK_STACK();
 loop:
   T1 = FUNSHELL(1,fun_loop_41,3);
-  loopF1656 = T1;
-  FUNINIT(loopF1656, 3,FREEREF(0),FREEREF(1),loopF1656);
-  T2 = CALL0(0,loopF1656);
+  loopF1713 = T1;
+  FUNINIT(loopF1713, 3,FREEREF(0),FREEREF(1),loopF1713);
+  T2 = CALL0(0,loopF1713);
   T0 = T2;
 UNLINK_STACK();
   QRET(T0);
@@ -1691,7 +1708,7 @@ loop:
   T7 = fun_38;
   T8 = FUNFAB(fun_39,1,quit_);
   T9 = FUNFAB(fun_42,2,quit_,FREEREF(0));
-  T0 = CALLN(1,YruntimeYPwith_monitor,5,VARREF(YruntimeYLrestartG),T1,T7,T8,T9);
+  T0 = CALLN(1,YPwith_monitor,5,VARREF(YruntimeYLrestartG),T1,T7,T8,T9);
 UNLINK_STACK();
   QRET(T0);
 }
@@ -2019,11 +2036,11 @@ loop:
   lit_65 = YPPlist(1,YPPsym((P)"handlers"));
   lit_66 = YPPlist(1,YPPsym((P)"restarts"));
   lit_67 = YPPsym((P)"return");
-  lit_68 = YPPsym((P)"x-1315");
+  lit_68 = YPPsym((P)"x-1347");
   lit_69 = YPPsym((P)"msg");
   lit_70 = YPPsym((P)"restart");
   lit_71 = YPsb((P)"Match Pattern Failure");
-  lit_72 = YPPsym((P)"x-1317");
+  lit_72 = YPPsym((P)"x-1349");
   lit_73 = YPPsym((P)"in-mod");
   lit_74 = YPPlist(1,YPPsym((P)"p2c-eval"));
   lit_75 = YPPlist(1,YPPsym((P)"ast-eval"));
@@ -2038,11 +2055,11 @@ loop:
   T107 = YPsig(YPPlist(2,LITREF(lit_56),LITREF(lit_57)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
   fun_27 = YPmet(FUNCODEREF(fun_27),YPfalse,T107,ENVNUL,PNUL,YPfalse);
   T106 = YPsig(YPPlist(2,LITREF(lit_69),LITREF(lit_41)),YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_1315_28 = YPmet(FUNCODEREF(fun_x_1315_28),LITREF(lit_68),T106,ENVNUL,PNUL,YPfalse);
+  fun_x_1347_28 = YPmet(FUNCODEREF(fun_x_1347_28),LITREF(lit_68),T106,ENVNUL,PNUL,YPfalse);
   T105 = YPsig(YPPlist(1,LITREF(lit_67)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   fun_29 = YPmet(FUNCODEREF(fun_29),YPfalse,T105,ENVNUL,PNUL,YPfalse);
   T104 = YPsig(YPPlist(2,LITREF(lit_69),LITREF(lit_41)),YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_x_1317_30 = YPmet(FUNCODEREF(fun_x_1317_30),LITREF(lit_72),T104,ENVNUL,PNUL,YPfalse);
+  fun_x_1349_30 = YPmet(FUNCODEREF(fun_x_1349_30),LITREF(lit_72),T104,ENVNUL,PNUL,YPfalse);
   T103 = YPsig(YPPlist(1,LITREF(lit_67)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
   fun_31 = YPmet(FUNCODEREF(fun_31),YPfalse,T103,ENVNUL,PNUL,YPfalse);
   T102 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
@@ -2115,6 +2132,20 @@ extern MODULE_INFO module_info_ast;
 extern MODULE_INFO module_info_ast_linearize;
 extern MODULE_INFO module_info_ast_eval;
 extern MODULE_INFO module_info_protoSsystem;
+extern MODULE_INFO module_info_protoStypes;
+extern MODULE_INFO module_info_protoSmath;
+extern MODULE_INFO module_info_protoScollections;
+extern MODULE_INFO module_info_protoSports;
+extern MODULE_INFO module_info_protoScollectionsScollection;
+extern MODULE_INFO module_info_protoScollectionsSsequence;
+extern MODULE_INFO module_info_protoScollectionsSassoc;
+extern MODULE_INFO module_info_protoScollectionsSstring;
+extern MODULE_INFO module_info_protoScollectionsSlist;
+extern MODULE_INFO module_info_protoScollectionsStable;
+extern MODULE_INFO module_info_protoScollectionsSrange;
+extern MODULE_INFO module_info_protoScollectionsSbuffer;
+extern MODULE_INFO module_info_protoScollectionsSmap;
+extern MODULE_INFO module_info_protoScollectionsSstep;
 
 static USE_INFO use_infos[] = {
   {&module_info_boot},
@@ -2127,897 +2158,920 @@ static USE_INFO use_infos[] = {
   {&module_info_ast_linearize},
   {&module_info_ast_eval},
   {&module_info_protoSsystem},
+  {&module_info_protoStypes},
+  {&module_info_protoSmath},
+  {&module_info_protoScollections},
+  {&module_info_protoSports},
   {NULL}
 };
 
 static IMPORT_INFO import_infos[] = {
-  {"binding-kind", &module_info_ast, "binding-kind"},
-  {"reduce+", &module_info_runtime, "reduce+"},
-  {"sexpr-block-name", &module_info_syntax, "sexpr-block-name"},
-  {"module-target-environment", &module_info_ast, "module-target-environment"},
-  {"writeln", &module_info_write, "writeln"},
-  {"map", &module_info_macros, "map"},
-  {"nul", &module_info_boot, "nul"},
-  {"swapf", &module_info_macros, "swapf"},
-  {"sexpr-slot-object", &module_info_syntax, "sexpr-slot-object"},
-  {"curry", &module_info_runtime, "curry"},
-  {"<ast-generic>", &module_info_ast, "<ast-generic>"},
-  {"%i<", &module_info_boot, "%i<"},
-  {"components-basename", &module_info_protoSsystem, "components-basename"},
-  {"table-protocol", &module_info_runtime, "table-protocol"},
-  {"closure-creation-index", &module_info_ast_linearize, "closure-creation-index"},
-  {"sig-value", &module_info_boot, "sig-value"},
-  {"in", &module_info_runtime, "in"},
-  {"class-name", &module_info_boot, "class-name"},
-  {"assocs-test", &module_info_runtime, "assocs-test"},
-  {"make-setter-name", &module_info_macros, "make-setter-name"},
-  {"<free-environment>", &module_info_ast, "<free-environment>"},
-  {"always", &module_info_runtime, "always"},
+  {"file-opening-error", &module_info_boot, "file-opening-error"},
+  {"add", &module_info_protoScollectionsScollection, "add"},
   {"os-name", &module_info_protoSsystem, "os-name"},
-  {"*c-extension*", &module_info_protoSsystem, "*c-extension*"},
-  {"$sexpr-isa-tag", &module_info_syntax, "$sexpr-isa-tag"},
-  {"select", &module_info_macros, "select"},
-  {"may-isa?", &module_info_boot, "may-isa?"},
-  {"program-quotations", &module_info_ast_linearize, "program-quotations"},
-  {"<assignment>", &module_info_ast, "<assignment>"},
-  {"monitor-main-thunk", &module_info_ast, "monitor-main-thunk"},
-  {"wrong-number-arguments-error", &module_info_boot, "wrong-number-arguments-error"},
-  {"<int>", &module_info_boot, "<int>"},
-  {"<num>", &module_info_boot, "<num>"},
-  {"map2", &module_info_runtime, "map2"},
-  {"function-source-setter", &module_info_ast, "function-source-setter"},
-  {"$sexpr-syntax-if-tag", &module_info_syntax, "$sexpr-syntax-if-tag"},
-  {"global-box-value-setter", &module_info_ast, "global-box-value-setter"},
-  {"choose-handler", &module_info_runtime, "choose-handler"},
-  {"function-data-refs-setter", &module_info_ast, "function-data-refs-setter"},
-  {"%i^", &module_info_boot, "%i^"},
-  {"3rd", &module_info_runtime, "3rd"},
-  {"<local-reference>", &module_info_ast, "<local-reference>"},
-  {"read-char", &module_info_runtime, "read-char"},
-  {"<definition>", &module_info_ast, "<definition>"},
-  {"%file-type", &module_info_boot, "%file-type"},
-  {"<file-port>", &module_info_runtime, "<file-port>"},
-  {"sexpr-block-body", &module_info_syntax, "sexpr-block-body"},
-  {"nxt-state", &module_info_runtime, "nxt-state"},
-  {"fun-value", &module_info_boot, "fun-value"},
-  {"load-in", &module_info_ast, "load-in"},
-  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
-  {"%i-", &module_info_boot, "%i-"},
-  {"global-box-value", &module_info_ast, "global-box-value"},
-  {"loc", &module_info_boot, "loc"},
-  {"signature-specs", &module_info_ast, "signature-specs"},
-  {"alternative-condition", &module_info_ast, "alternative-condition"},
-  {"signature-nary?", &module_info_ast, "signature-nary?"},
-  {"<string-port>", &module_info_runtime, "<string-port>"},
-  {"function-signature-setter", &module_info_ast, "function-signature-setter"},
-  {"ceiling/", &module_info_runtime, "ceiling/"},
-  {"unwind-protect-cleanup-thunk", &module_info_ast, "unwind-protect-cleanup-thunk"},
-  {"call-with-input-file", &module_info_runtime, "call-with-input-file"},
-  {"function-temporaries", &module_info_ast, "function-temporaries"},
-  {"$sexpr-define-generic-tag", &module_info_syntax, "$sexpr-define-generic-tag"},
-  {"signature-value", &module_info_ast, "signature-value"},
-  {"%i<<", &module_info_boot, "%i<<"},
-  {"sexpr-make-getter", &module_info_syntax, "sexpr-make-getter"},
-  {"<chr>", &module_info_boot, "<chr>"},
-  {"match-atom", &module_info_macros, "match-atom"},
-  {"%selt", &module_info_boot, "%selt"},
-  {"module-name-to-relpath", &module_info_ast, "module-name-to-relpath"},
-  {"signature-names-setter", &module_info_ast, "signature-names-setter"},
-  {"$sexpr-quote-tag", &module_info_syntax, "$sexpr-quote-tag"},
-  {"port-index", &module_info_runtime, "port-index"},
-  {"sexpr-loc-bound-signatures", &module_info_syntax, "sexpr-loc-bound-signatures"},
-  {"floor/", &module_info_runtime, "floor/"},
-  {"now-key", &module_info_runtime, "now-key"},
-  {"locals-body-setter", &module_info_ast, "locals-body-setter"},
-  {"function-debug-name", &module_info_ast, "function-debug-name"},
-  {"write-to-string", &module_info_write, "write-to-string"},
-  {"%cu", &module_info_boot, "%cu"},
-  {"$sexpr-set-tag", &module_info_syntax, "$sexpr-set-tag"},
-  {"reduce", &module_info_runtime, "reduce"},
-  {"sexpr-unquote?", &module_info_syntax, "sexpr-unquote?"},
-  {"add-build-path", &module_info_protoSsystem, "add-build-path"},
-  {"%slot", &module_info_boot, "%slot"},
-  {"rcurry", &module_info_runtime, "rcurry"},
-  {"<global-reference>", &module_info_ast, "<global-reference>"},
-  {"%fu", &module_info_boot, "%fu"},
-  {"var-type", &module_info_macros, "var-type"},
-  {"locals-functions", &module_info_ast, "locals-functions"},
-  {"sig-names", &module_info_boot, "sig-names"},
-  {"locals-functions-setter", &module_info_ast, "locals-functions-setter"},
-  {"extract-things!", &module_info_ast_linearize, "extract-things!"},
-  {"proto-filename", &module_info_protoSsystem, "proto-filename"},
-  {"dg", &module_info_boot, "dg"},
-  {"<ast-primitive-definition>", &module_info_ast, "<ast-primitive-definition>"},
-  {"slot-setter", &module_info_boot, "slot-setter"},
-  {"close-input-port", &module_info_runtime, "close-input-port"},
-  {"round/", &module_info_runtime, "round/"},
-  {"num-to-str", &module_info_runtime, "num-to-str"},
-  {"sexpr-slot-variable", &module_info_syntax, "sexpr-slot-variable"},
-  {"dss", &module_info_boot, "dss"},
-  {"$min-int", &module_info_boot, "$min-int"},
-  {"dp", &module_info_boot, "dp"},
-  {"assocq", &module_info_runtime, "assocq"},
-  {"slot-value-setter", &module_info_boot, "slot-value-setter"},
-  {"now-elt", &module_info_runtime, "now-elt"},
-  {"*register-passive?*", &module_info_ast_linearize, "*register-passive?*"},
-  {"%sb", &module_info_boot, "%sb"},
-  {"eval", &module_info_syntax, "eval"},
-  {"$sexpr-define-class-tag", &module_info_syntax, "$sexpr-define-class-tag"},
-  {"<log>", &module_info_boot, "<log>"},
-  {"locals-body", &module_info_ast, "locals-body"},
-  {"flo-bits", &module_info_runtime, "flo-bits"},
-  {"lsh", &module_info_runtime, "lsh"},
-  {"$sexpr-define-tag", &module_info_syntax, "$sexpr-define-tag"},
-  {"as-lst", &module_info_ast, "as-lst"},
-  {"ash", &module_info_runtime, "ash"},
-  {"fun-name-setter", &module_info_boot, "fun-name-setter"},
-  {"identity", &module_info_runtime, "identity"},
-  {"<slot>", &module_info_boot, "<slot>"},
-  {"%with-monitor", &module_info_runtime, "%with-monitor"},
-  {"*print-base*", &module_info_runtime, "*print-base*"},
-  {"<file-input-port>", &module_info_runtime, "<file-input-port>"},
-  {"subtype?", &module_info_boot, "subtype?"},
-  {"pair", &module_info_macros, "pair"},
-  {"*obj-extension*", &module_info_protoSsystem, "*obj-extension*"},
-  {"dv", &module_info_boot, "dv"},
-  {"add-tmp-path", &module_info_protoSsystem, "add-tmp-path"},
-  {"now-elt-setter", &module_info_runtime, "now-elt-setter"},
-  {"sexpr-definition-value", &module_info_syntax, "sexpr-definition-value"},
-  {"<module>", &module_info_ast, "<module>"},
-  {"function-value", &module_info_ast, "function-value"},
-  {"keyboard-interrupt", &module_info_boot, "keyboard-interrupt"},
-  {"not", &module_info_boot, "not"},
-  {"%loc-off-setter", &module_info_boot, "%loc-off-setter"},
-  {"components-to-pathname", &module_info_protoSsystem, "components-to-pathname"},
-  {"%os-name", &module_info_boot, "%os-name"},
-  {"<simple-condition>", &module_info_runtime, "<simple-condition>"},
-  {"-", &module_info_runtime, "-"},
-  {"file-mtime", &module_info_protoSsystem, "file-mtime"},
-  {"application-binding", &module_info_ast, "application-binding"},
-  {"add-src-path", &module_info_protoSsystem, "add-src-path"},
-  {"fun-name", &module_info_boot, "fun-name"},
-  {"abs", &module_info_runtime, "abs"},
-  {"class-parents", &module_info_boot, "class-parents"},
-  {"%write-string", &module_info_boot, "%write-string"},
-  {"to-str", &module_info_runtime, "to-str"},
-  {"max", &module_info_runtime, "max"},
-  {"application-tail?", &module_info_ast, "application-tail?"},
-  {"%f*", &module_info_boot, "%f*"},
-  {"<any>", &module_info_boot, "<any>"},
-  {"match-unquote", &module_info_macros, "match-unquote"},
-  {"%velt-setter", &module_info_boot, "%velt-setter"},
-  {"sub-setter", &module_info_runtime, "sub-setter"},
-  {"sexpr-function-definition-variable", &module_info_syntax, "sexpr-function-definition-variable"},
-  {"%su", &module_info_boot, "%su"},
-  {"sexpr-loc-bound-names", &module_info_syntax, "sexpr-loc-bound-names"},
-  {"assert", &module_info_macros, "assert"},
-  {"<ast-function>", &module_info_ast, "<ast-function>"},
-  {"*", &module_info_runtime, "*"},
-  {"sexpr-loc-bound-bodies", &module_info_syntax, "sexpr-loc-bound-bodies"},
-  {"table-growth-threshold", &module_info_runtime, "table-growth-threshold"},
-  {"collect-registers!", &module_info_ast_linearize, "collect-registers!"},
-  {"sexpr-slot-init", &module_info_syntax, "sexpr-slot-init"},
-  {"set", &module_info_boot, "set"},
-  {"export", &module_info_boot, "export"},
-  {"gen-add-met", &module_info_boot, "gen-add-met"},
-  {"type-class", &module_info_boot, "type-class"},
-  {"binding-value-setter", &module_info_ast, "binding-value-setter"},
-  {"ddv", &module_info_macros, "ddv"},
-  {"fin-state?", &module_info_runtime, "fin-state?"},
-  {"write", &module_info_write, "write"},
-  {"<unwind-protect>", &module_info_ast, "<unwind-protect>"},
-  {"invoke-handler-interactively", &module_info_runtime, "invoke-handler-interactively"},
-  {"sexpr-make-setter", &module_info_syntax, "sexpr-make-setter"},
-  {"%binding-bound?", &module_info_ast_eval, "%binding-bound?"},
-  {"<union>", &module_info_boot, "<union>"},
-  {"constant-index-setter", &module_info_ast, "constant-index-setter"},
-  {"insert-box!", &module_info_ast_linearize, "insert-box!"},
-  {"%bb", &module_info_boot, "%bb"},
-  {"lst", &module_info_boot, "lst"},
-  {"%ft", &module_info_boot, "%ft"},
-  {"sexpr-forward-primitive?", &module_info_syntax, "sexpr-forward-primitive?"},
-  {"collect-temporaries!", &module_info_ast_linearize, "collect-temporaries!"},
-  {"slot-value", &module_info_boot, "slot-value"},
-  {"$max-int", &module_info_boot, "$max-int"},
-  {"fun-arity", &module_info_boot, "fun-arity"},
-  {"cat", &module_info_macros, "cat"},
-  {"sexpr-make-setter-name", &module_info_syntax, "sexpr-make-setter-name"},
-  {"binding-global-box", &module_info_ast, "binding-global-box"},
-  {"constant-index", &module_info_ast, "constant-index"},
-  {"<local-assignment>", &module_info_ast, "<local-assignment>"},
-  {"assignment-form-setter", &module_info_ast, "assignment-form-setter"},
-  {"form-program", &module_info_ast_linearize, "form-program"},
-  {"%binding-value-setter", &module_info_ast_eval, "%binding-value-setter"},
-  {"signature-nary?-setter", &module_info_ast, "signature-nary?-setter"},
-  {"probe-directory", &module_info_protoSsystem, "probe-directory"},
-  {"%locative-value-setter", &module_info_boot, "%locative-value-setter"},
-  {"assoc", &module_info_runtime, "assoc"},
-  {"binding-value", &module_info_ast, "binding-value"},
-  {"isa", &module_info_boot, "isa"},
-  {"ini-state", &module_info_runtime, "ini-state"},
-  {"floor", &module_info_runtime, "floor"},
-  {"<error>", &module_info_runtime, "<error>"},
-  {"bind-exit-main-fun", &module_info_ast, "bind-exit-main-fun"},
-  {"var-name", &module_info_macros, "var-name"},
-  {"box-form", &module_info_ast_linearize, "box-form"},
-  {"sexpr-isa-parent", &module_info_syntax, "sexpr-isa-parent"},
-  {"%app-args", &module_info_boot, "%app-args"},
-  {"sexpr-make-application", &module_info_syntax, "sexpr-make-application"},
-  {"modulo", &module_info_runtime, "modulo"},
-  {"fun", &module_info_boot, "fun"},
-  {"pick", &module_info_runtime, "pick"},
-  {"collect", &module_info_macros, "collect"},
-  {"monitor-handler", &module_info_ast, "monitor-handler"},
-  {"need-implementation", &module_info_macros, "need-implementation"},
-  {"<replace-generic-restart>", &module_info_boot, "<replace-generic-restart>"},
-  {"map-keyed", &module_info_runtime, "map-keyed"},
-  {"components-last", &module_info_protoSsystem, "components-last"},
-  {"%selt-setter", &module_info_boot, "%selt-setter"},
-  {"last", &module_info_runtime, "last"},
-  {"or", &module_info_macros, "or"},
-  {"<subclass>", &module_info_boot, "<subclass>"},
-  {"low-elt", &module_info_runtime, "low-elt"},
-  {"sexpr-signature-parameters", &module_info_syntax, "sexpr-signature-parameters"},
-  {"default-handler", &module_info_runtime, "default-handler"},
-  {"<module-binding>", &module_info_ast, "<module-binding>"},
-  {"dec", &module_info_macros, "dec"},
-  {"handler-info-message", &module_info_boot, "handler-info-message"},
-  {"fab-sym", &module_info_boot, "fab-sym"},
-  {"sexpr-operator", &module_info_syntax, "sexpr-operator"},
-  {"<ast-macro-definition>", &module_info_ast, "<ast-macro-definition>"},
-  {"sig-arity", &module_info_boot, "sig-arity"},
-  {"sexpr-loc-raw-body", &module_info_syntax, "sexpr-loc-raw-body"},
-  {"<=", &module_info_runtime, "<="},
-  {"peek-char", &module_info_runtime, "peek-char"},
-  {"push-last!", &module_info_runtime, "push-last!"},
-  {"<arguments>", &module_info_ast, "<arguments>"},
-  {"handler-matches?", &module_info_runtime, "handler-matches?"},
-  {"signature-bindings-setter", &module_info_ast, "signature-bindings-setter"},
-  {"<ast-signature>", &module_info_ast, "<ast-signature>"},
-  {"format", &module_info_runtime, "format"},
-  {"*exe-extension*", &module_info_protoSsystem, "*exe-extension*"},
-  {"all2?", &module_info_runtime, "all2?"},
-  {"function-signature", &module_info_ast, "function-signature"},
-  {"@+", &module_info_boot, "@+"},
-  {"do-keyed", &module_info_runtime, "do-keyed"},
-  {"module-syntax-environment", &module_info_ast, "module-syntax-environment"},
-  {"low-elt-setter", &module_info_runtime, "low-elt-setter"},
-  {"report-undefined-global-bindings", &module_info_ast, "report-undefined-global-bindings"},
-  {"seq", &module_info_boot, "seq"},
-  {"runtime-environment", &module_info_ast, "runtime-environment"},
-  {"sexpr-sequence->begin", &module_info_syntax, "sexpr-sequence->begin"},
+  {"last", &module_info_protoScollectionsSsequence, "last"},
+  {"type-error", &module_info_boot, "type-error"},
   {"sexpr-let->combination", &module_info_syntax, "sexpr-let->combination"},
-  {"unexec", &module_info_boot, "unexec"},
-  {"%pair", &module_info_boot, "%pair"},
-  {"mem?", &module_info_runtime, "mem?"},
-  {"apply", &module_info_macros, "apply"},
-  {"sexpr-variable-type", &module_info_syntax, "sexpr-variable-type"},
-  {"%c=", &module_info_boot, "%c="},
-  {"%do-stack-frames", &module_info_boot, "%do-stack-frames"},
-  {"fix-let-bindings-setter", &module_info_ast, "fix-let-bindings-setter"},
-  {"<singleton>", &module_info_boot, "<singleton>"},
-  {"remainder", &module_info_runtime, "remainder"},
-  {"do-module-loader-modules", &module_info_ast, "do-module-loader-modules"},
-  {"condition-message", &module_info_runtime, "condition-message"},
-  {"display", &module_info_write, "display"},
-  {"$sexpr-method-tag", &module_info_syntax, "$sexpr-method-tag"},
-  {"assignment-binding", &module_info_ast, "assignment-binding"},
-  {"*path-separator*", &module_info_protoSsystem, "*path-separator*"},
-  {"%vec", &module_info_boot, "%vec"},
-  {"%snul", &module_info_boot, "%snul"},
-  {"error", &module_info_boot, "error"},
-  {"rep", &module_info_boot, "rep"},
-  {"logior", &module_info_runtime, "logior"},
-  {"sexpr-isa-slot-inits", &module_info_syntax, "sexpr-isa-slot-inits"},
-  {"%read-char", &module_info_boot, "%read-char"},
-  {"rev", &module_info_runtime, "rev"},
-  {"sexpr-if-else", &module_info_syntax, "sexpr-if-else"},
-  {"<box-write>", &module_info_ast_linearize, "<box-write>"},
-  {"close-output-port", &module_info_runtime, "close-output-port"},
-  {"sexpr-unwind-protect-protected-form", &module_info_syntax, "sexpr-unwind-protect-protected-form"},
-  {"function-self-recursive?-setter", &module_info_ast, "function-self-recursive?-setter"},
-  {"%binding-name", &module_info_boot, "%binding-name"},
-  {"<step>", &module_info_runtime, "<step>"},
-  {"try", &module_info_boot, "try"},
-  {"%i*", &module_info_boot, "%i*"},
-  {"match-empty-list", &module_info_macros, "match-empty-list"},
-  {"describe-condition", &module_info_runtime, "describe-condition"},
-  {"<map>", &module_info_runtime, "<map>"},
-  {"%%sym", &module_info_boot, "%%sym"},
-  {"$proto-boot-module-name", &module_info_ast, "$proto-boot-module-name"},
-  {"lowercase?", &module_info_runtime, "lowercase?"},
-  {"@oelt", &module_info_boot, "@oelt"},
-  {"*max-print-depth*", &module_info_write, "*max-print-depth*"},
-  {"$sexpr-define-method-tag", &module_info_syntax, "$sexpr-define-method-tag"},
-  {"pos?", &module_info_runtime, "pos?"},
-  {"program-type-setter", &module_info_ast, "program-type-setter"},
-  {"%ib", &module_info_boot, "%ib"},
-  {"function-temporaries-setter", &module_info_ast, "function-temporaries-setter"},
-  {">", &module_info_runtime, ">"},
-  {"do-named-static-global-bindings", &module_info_ast, "do-named-static-global-bindings"},
-  {"$sexpr-quasiquote-tag", &module_info_syntax, "$sexpr-quasiquote-tag"},
-  {"unless", &module_info_macros, "unless"},
-  {"$sexpr-locals-tag", &module_info_syntax, "$sexpr-locals-tag"},
-  {"~=", &module_info_runtime, "~="},
-  {"sexpr-if-test", &module_info_syntax, "sexpr-if-test"},
-  {"<restart>", &module_info_runtime, "<restart>"},
-  {"sexpr-unwind-protect-cleanup-forms", &module_info_syntax, "sexpr-unwind-protect-cleanup-forms"},
-  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
-  {"%locative-value", &module_info_boot, "%locative-value"},
-  {"sexpr-make-begin", &module_info_syntax, "sexpr-make-begin"},
-  {"do-static-global-bindings", &module_info_ast, "do-static-global-bindings"},
-  {"quote", &module_info_boot, "quote"},
-  {"%vnul", &module_info_boot, "%vnul"},
-  {"pop-last!", &module_info_runtime, "pop-last!"},
-  {"binding-name", &module_info_ast, "binding-name"},
-  {"sig", &module_info_runtime, "sig"},
-  {"<predefined-application>", &module_info_ast, "<predefined-application>"},
-  {"reference-frame-offset", &module_info_ast, "reference-frame-offset"},
-  {"add-slot", &module_info_boot, "add-slot"},
-  {"copy-state", &module_info_runtime, "copy-state"},
-  {"$sexpr-define-function-tag", &module_info_syntax, "$sexpr-define-function-tag"},
-  {"program-definitions", &module_info_ast_linearize, "program-definitions"},
-  {"exe-filename", &module_info_protoSsystem, "exe-filename"},
-  {"function-registers-setter", &module_info_ast, "function-registers-setter"},
-  {"function-source", &module_info_ast, "function-source"},
-  {"fun-nary?", &module_info_boot, "fun-nary?"},
-  {"sexpr-define-class?", &module_info_syntax, "sexpr-define-class?"},
-  {"sexpr-definition-variable", &module_info_syntax, "sexpr-definition-variable"},
-  {"sexpr-operands", &module_info_syntax, "sexpr-operands"},
-  {"logxor", &module_info_runtime, "logxor"},
-  {"sexpr-unquote-splicing?", &module_info_syntax, "sexpr-unquote-splicing?"},
-  {"sexpr-method-body", &module_info_syntax, "sexpr-method-body"},
-  {"signature-arity-setter", &module_info_ast, "signature-arity-setter"},
-  {"module-binding", &module_info_ast, "module-binding"},
-  {"ascii-limit", &module_info_runtime, "ascii-limit"},
-  {"sexpr-isa-init-slots", &module_info_syntax, "sexpr-isa-init-slots"},
-  {"char-ready?", &module_info_runtime, "char-ready?"},
-  {"<box-creation>", &module_info_ast_linearize, "<box-creation>"},
-  {"%fb", &module_info_boot, "%fb"},
-  {"remove-modules-by-name!", &module_info_ast, "remove-modules-by-name!"},
-  {"list-handlers", &module_info_runtime, "list-handlers"},
-  {"cat2", &module_info_runtime, "cat2"},
-  {"<", &module_info_runtime, "<"},
-  {"pop", &module_info_runtime, "pop"},
-  {"locals-bindings", &module_info_ast, "locals-bindings"},
-  {"slot-getter", &module_info_boot, "slot-getter"},
-  {"%define-method", &module_info_boot, "%define-method"},
-  {"$proto-runtime-module-name", &module_info_ast, "$proto-runtime-module-name"},
-  {"function-self-recursive?", &module_info_ast, "function-self-recursive?"},
-  {"<global-box>", &module_info_ast, "<global-box>"},
-  {"sexpr-monitor-expand", &module_info_syntax, "sexpr-monitor-expand"},
-  {"default", &module_info_runtime, "default"},
-  {"%f=", &module_info_boot, "%f="},
-  {"find-binding", &module_info_ast, "find-binding"},
-  {"%process-module", &module_info_boot, "%process-module"},
   {"<opts>", &module_info_boot, "<opts>"},
-  {"keys", &module_info_runtime, "keys"},
-  {"logand", &module_info_runtime, "logand"},
-  {"<condition>", &module_info_runtime, "<condition>"},
-  {"sexpr-if-then", &module_info_syntax, "sexpr-if-then"},
-  {"cat!", &module_info_runtime, "cat!"},
-  {"sexpr-text-of-quotation", &module_info_syntax, "sexpr-text-of-quotation"},
-  {"sexpr-bind-pattern-variables", &module_info_syntax, "sexpr-bind-pattern-variables"},
-  {"%loc-off", &module_info_boot, "%loc-off"},
-  {"alternative-alternant", &module_info_ast, "alternative-alternant"},
-  {"len", &module_info_runtime, "len"},
-  {"function-index-setter", &module_info_ast, "function-index-setter"},
-  {"napply", &module_info_macros, "napply"},
-  {"and", &module_info_macros, "and"},
-  {"reference-called-function?-setter", &module_info_ast, "reference-called-function?-setter"},
-  {"=", &module_info_runtime, "="},
-  {"program-type", &module_info_ast, "program-type"},
-  {"tup", &module_info_macros, "tup"},
-  {"%allocate-stack", &module_info_boot, "%allocate-stack"},
-  {"sexpr-expand-backquote", &module_info_syntax, "sexpr-expand-backquote"},
-  {"parent-directory", &module_info_protoSsystem, "parent-directory"},
-  {"add", &module_info_runtime, "add"},
-  {"ceiling", &module_info_runtime, "ceiling"},
-  {"<input-port>", &module_info_runtime, "<input-port>"},
-  {"hierarchical-components", &module_info_protoSsystem, "hierarchical-components"},
-  {"<reference>", &module_info_ast, "<reference>"},
-  {"class-direct-slots", &module_info_boot, "class-direct-slots"},
-  {"sexpr-method-signature", &module_info_syntax, "sexpr-method-signature"},
-  {"add!", &module_info_runtime, "add!"},
-  {"%str", &module_info_boot, "%str"},
-  {"$sexpr-iterate-tag", &module_info_syntax, "$sexpr-iterate-tag"},
-  {"id-hash", &module_info_runtime, "id-hash"},
-  {"sexpr-syntax-definition-variable", &module_info_syntax, "sexpr-syntax-definition-variable"},
-  {"@<", &module_info_boot, "@<"},
-  {"truncate/", &module_info_runtime, "truncate/"},
-  {"eof-object", &module_info_runtime, "eof-object"},
-  {"$sexpr-unwind-protect-tag", &module_info_syntax, "$sexpr-unwind-protect-tag"},
-  {"eof-object?", &module_info_runtime, "eof-object?"},
-  {"lognot", &module_info_runtime, "lognot"},
-  {"locals-bindings-setter", &module_info_ast, "locals-bindings-setter"},
-  {"analyze-dynamic-extent", &module_info_ast_linearize, "analyze-dynamic-extent"},
-  {"<incongruent-method-error>", &module_info_runtime, "<incongruent-method-error>"},
-  {"sexpr-make-macro-function", &module_info_syntax, "sexpr-make-macro-function"},
-  {"%lb", &module_info_boot, "%lb"},
-  {"gensym", &module_info_macros, "gensym"},
-  {"any2?", &module_info_runtime, "any2?"},
-  {"%build-runtime-modules", &module_info_boot, "%build-runtime-modules"},
-  {"type-object", &module_info_boot, "type-object"},
-  {"binding-global-box-setter", &module_info_ast, "binding-global-box-setter"},
-  {"if", &module_info_boot, "if"},
-  {"function-registers", &module_info_ast, "function-registers"},
+  {"pick", &module_info_protoScollectionsSsequence, "pick"},
+  {"identity", &module_info_runtime, "identity"},
+  {"$sexpr-let-tag", &module_info_syntax, "$sexpr-let-tag"},
+  {"pathname-to-components", &module_info_protoSsystem, "pathname-to-components"},
+  {"var-type", &module_info_macros, "var-type"},
+  {"*gensym-counter*", &module_info_runtime, "*gensym-counter*"},
   {"sexpr-isa-init-values", &module_info_syntax, "sexpr-isa-init-values"},
-  {"<top-level-form>", &module_info_ast_linearize, "<top-level-form>"},
-  {"<class>", &module_info_boot, "<class>"},
-  {"popf", &module_info_macros, "popf"},
-  {"as", &module_info_runtime, "as"},
-  {"current-gc-state", &module_info_runtime, "current-gc-state"},
-  {"binding-inferred-type-setter", &module_info_ast, "binding-inferred-type-setter"},
-  {"fin", &module_info_boot, "fin"},
-  {"sexpr-syntax-definition-value", &module_info_syntax, "sexpr-syntax-definition-value"},
-  {"form-definitions", &module_info_ast_linearize, "form-definitions"},
-  {"%open-output-file", &module_info_boot, "%open-output-file"},
-  {"to-digit", &module_info_runtime, "to-digit"},
-  {"<bot>", &module_info_ast, "<bot>"},
-  {"probe-module", &module_info_ast, "probe-module"},
-  {"%check-call-types", &module_info_boot, "%check-call-types"},
-  {"sexpr-assignment-value", &module_info_syntax, "sexpr-assignment-value"},
-  {"binding-dotted?", &module_info_ast, "binding-dotted?"},
-  {"<sequential>", &module_info_ast, "<sequential>"},
-  {"<real-reference>", &module_info_ast, "<real-reference>"},
-  {"%fi2f", &module_info_boot, "%fi2f"},
-  {"any?", &module_info_runtime, "any?"},
-  {"application-known?", &module_info_ast, "application-known?"},
-  {"function-index", &module_info_ast, "function-index"},
-  {"application-known?-setter", &module_info_ast, "application-known?-setter"},
-  {"binding-dynamic-extent?", &module_info_ast, "binding-dynamic-extent?"},
-  {"binding-index-setter", &module_info_ast, "binding-index-setter"},
-  {"assq", &module_info_runtime, "assq"},
-  {"sexpr-signature-value", &module_info_syntax, "sexpr-signature-value"},
-  {"sexpr-variable-name", &module_info_syntax, "sexpr-variable-name"},
-  {"binding-native-to?", &module_info_ast, "binding-native-to?"},
-  {"<type>", &module_info_boot, "<type>"},
-  {"default-handler-description", &module_info_runtime, "default-handler-description"},
-  {"<str-tab>", &module_info_runtime, "<str-tab>"},
-  {"application-function", &module_info_ast, "application-function"},
-  {"push", &module_info_runtime, "push"},
-  {"set-module-environments", &module_info_ast, "set-module-environments"},
-  {"module-name", &module_info_ast, "module-name"},
-  {"binding-dynamic-extent?-setter", &module_info_ast, "binding-dynamic-extent?-setter"},
-  {"binding-inferred-type", &module_info_ast, "binding-inferred-type"},
-  {"compose", &module_info_runtime, "compose"},
-  {"<regular-application>", &module_info_ast, "<regular-application>"},
-  {"open-input-file", &module_info_runtime, "open-input-file"},
-  {"%next-methods", &module_info_boot, "%next-methods"},
-  {"fill", &module_info_runtime, "fill"},
-  {"fun-specs", &module_info_boot, "fun-specs"},
-  {"binding-mutable?", &module_info_ast, "binding-mutable?"},
-  {"out", &module_info_runtime, "out"},
-  {"%current-output-port", &module_info_boot, "%current-output-port"},
+  {"<passive-program>", &module_info_ast, "<passive-program>"},
+  {"assocs-test", &module_info_protoScollectionsSassoc, "assocs-test"},
+  {"*boot-macro-names*", &module_info_boot, "*boot-macro-names*"},
+  {"zero?", &module_info_protoSmath, "zero?"},
+  {"*print-base*", &module_info_protoScollectionsSstring, "*print-base*"},
+  {"fill", &module_info_protoScollectionsScollection, "fill"},
+  {"$min-int", &module_info_boot, "$min-int"},
+  {"=", &module_info_protoSmath, "="},
+  {"nul?", &module_info_protoSmath, "nul?"},
+  {"lift!", &module_info_ast_linearize, "lift!"},
+  {"<list>", &module_info_protoScollectionsSlist, "<list>"},
+  {"%raw-call", &module_info_boot, "%raw-call"},
+  {"load-in", &module_info_ast, "load-in"},
+  {"sexpr-text-of-quotation", &module_info_syntax, "sexpr-text-of-quotation"},
+  {"dv", &module_info_boot, "dv"},
+  {"%f=", &module_info_boot, "%f="},
+  {"fin-state?", &module_info_macros, "fin-state?"},
+  {"class-direct-slots", &module_info_boot, "class-direct-slots"},
+  {"now-elt-setter", &module_info_protoScollectionsScollection, "now-elt-setter"},
+  {"%os-binding-value", &module_info_boot, "%os-binding-value"},
+  {"always", &module_info_runtime, "always"},
+  {"uppercase?", &module_info_protoSmath, "uppercase?"},
+  {"%velt-setter", &module_info_boot, "%velt-setter"},
+  {"ast-define-binding", &module_info_ast, "ast-define-binding"},
+  {"unwind-protect-cleanup-thunk", &module_info_ast, "unwind-protect-cleanup-thunk"},
+  {"del-key", &module_info_protoScollectionsScollection, "del-key"},
   {"%iu", &module_info_boot, "%iu"},
-  {"call-with-output-file", &module_info_runtime, "call-with-output-file"},
-  {"$sexpr-define-syntax-tag", &module_info_syntax, "$sexpr-define-syntax-tag"},
-  {"%slen", &module_info_boot, "%slen"},
-  {"<handler>", &module_info_runtime, "<handler>"},
-  {"<buf>", &module_info_runtime, "<buf>"},
-  {"char->ascii", &module_info_runtime, "char->ascii"},
+  {"table-shrink-threshold", &module_info_protoScollectionsStable, "table-shrink-threshold"},
+  {"from", &module_info_protoScollectionsSrange, "from"},
+  {"into", &module_info_protoScollectionsScollection, "into"},
+  {"do3", &module_info_protoScollectionsScollection, "do3"},
+  {"<locals>", &module_info_ast, "<locals>"},
+  {"locative-value-setter", &module_info_runtime, "locative-value-setter"},
+  {"%locative-value", &module_info_boot, "%locative-value"},
+  {"<ast-function>", &module_info_ast, "<ast-function>"},
+  {"<serious-condition>", &module_info_runtime, "<serious-condition>"},
+  {"sexpr-make-application", &module_info_syntax, "sexpr-make-application"},
+  {"binding-name", &module_info_ast, "binding-name"},
+  {"signature-specs-setter", &module_info_ast, "signature-specs-setter"},
+  {"use", &module_info_boot, "use"},
+  {"%lu", &module_info_boot, "%lu"},
+  {"to-str", &module_info_protoSmath, "to-str"},
+  {"round/", &module_info_protoSmath, "round/"},
+  {"handler-matches?", &module_info_runtime, "handler-matches?"},
+  {"reduce", &module_info_protoScollectionsScollection, "reduce"},
+  {"type-object", &module_info_boot, "type-object"},
+  {"lsh", &module_info_protoSmath, "lsh"},
+  {"$sexpr-unwind-protect-tag", &module_info_syntax, "$sexpr-unwind-protect-tag"},
+  {"*register-passive?*", &module_info_ast_linearize, "*register-passive?*"},
+  {"*macros-ok?*", &module_info_boot, "*macros-ok?*"},
+  {"unknown-function-error", &module_info_boot, "unknown-function-error"},
+  {"ini-state", &module_info_macros, "ini-state"},
+  {"<class>", &module_info_boot, "<class>"},
+  {"len", &module_info_protoScollectionsScollection, "len"},
+  {"dp", &module_info_boot, "dp"},
+  {"gensym", &module_info_macros, "gensym"},
+  {"binding-index-setter", &module_info_ast, "binding-index-setter"},
+  {"<output-port>", &module_info_protoSports, "<output-port>"},
+  {"from-to-by", &module_info_protoScollectionsSrange, "from-to-by"},
   {"assignment-form", &module_info_ast, "assignment-form"},
-  {"from", &module_info_runtime, "from"},
-  {"application-arguments", &module_info_ast, "application-arguments"},
+  {"read", &module_info_runtime, "read"},
+  {"<global-reference>", &module_info_ast, "<global-reference>"},
+  {"ddv", &module_info_macros, "ddv"},
+  {"logior", &module_info_protoSmath, "logior"},
+  {"register-allocate!", &module_info_ast_linearize, "register-allocate!"},
+  {"logxor", &module_info_protoSmath, "logxor"},
+  {"format", &module_info_runtime, "format"},
+  {"%pair", &module_info_boot, "%pair"},
+  {"and", &module_info_macros, "and"},
+  {"do-static-global-bindings", &module_info_ast, "do-static-global-bindings"},
+  {"%i-", &module_info_boot, "%i-"},
+  {"closure-creation-free", &module_info_ast_linearize, "closure-creation-free"},
+  {"sub", &module_info_protoScollectionsSsequence, "sub"},
+  {"sexpr-syntax-if-pattern", &module_info_syntax, "sexpr-syntax-if-pattern"},
+  {"%selt-setter", &module_info_boot, "%selt-setter"},
+  {"sexpr-definition-variable", &module_info_syntax, "sexpr-definition-variable"},
+  {"<str-tab>", &module_info_protoScollectionsStable, "<str-tab>"},
+  {"%read-char", &module_info_boot, "%read-char"},
+  {"condition-arguments", &module_info_runtime, "condition-arguments"},
+  {"sexpr-if-else", &module_info_syntax, "sexpr-if-else"},
+  {"module-name-to-relpath", &module_info_ast, "module-name-to-relpath"},
+  {"read-from-string", &module_info_read, "read-from-string"},
+  {"hierarchical-components", &module_info_protoSsystem, "hierarchical-components"},
+  {"<type>", &module_info_boot, "<type>"},
+  {"sexpr-slot-object", &module_info_syntax, "sexpr-slot-object"},
+  {"closure-creation-index", &module_info_ast_linearize, "closure-creation-index"},
+  {"neg", &module_info_protoSmath, "neg"},
+  {"signature-names-setter", &module_info_ast, "signature-names-setter"},
+  {"monitor-info", &module_info_ast, "monitor-info"},
+  {"even?", &module_info_protoSmath, "even?"},
+  {"<=", &module_info_protoSmath, "<="},
+  {"parent-directory", &module_info_protoSsystem, "parent-directory"},
+  {"contagious-type", &module_info_protoSmath, "contagious-type"},
+  {"table-growth-factor-setter", &module_info_protoScollectionsStable, "table-growth-factor-setter"},
+  {"fun-specs", &module_info_boot, "fun-specs"},
+  {"locative-value", &module_info_runtime, "locative-value"},
+  {"<alternative>", &module_info_ast, "<alternative>"},
+  {"module-binding", &module_info_ast, "module-binding"},
+  {"program-register", &module_info_ast, "program-register"},
+  {"describe-handler", &module_info_runtime, "describe-handler"},
+  {"del-keys", &module_info_protoScollectionsScollection, "del-keys"},
+  {"objectify", &module_info_ast, "objectify"},
+  {"remainder", &module_info_protoSmath, "remainder"},
+  {"match-empty-list", &module_info_macros, "match-empty-list"},
+  {"sexpr-loc-bound-names", &module_info_syntax, "sexpr-loc-bound-names"},
+  {"<bind-exit>", &module_info_ast, "<bind-exit>"},
+  {"env-object-name", &module_info_ast, "env-object-name"},
   {"object-parents", &module_info_boot, "object-parents"},
   {"sig-nary?", &module_info_boot, "sig-nary?"},
-  {"dc", &module_info_boot, "dc"},
-  {"<gen>", &module_info_boot, "<gen>"},
-  {"env-object-name", &module_info_ast, "env-object-name"},
-  {"%open-input-file", &module_info_boot, "%open-input-file"},
-  {"%iv", &module_info_boot, "%iv"},
-  {"<static-global-environment>", &module_info_ast, "<static-global-environment>"},
-  {"first-then", &module_info_runtime, "first-then"},
-  {"read-from-string", &module_info_read, "read-from-string"},
-  {"slot-init", &module_info_boot, "slot-init"},
-  {"len-setter", &module_info_runtime, "len-setter"},
-  {"$permanent-hash-state", &module_info_runtime, "$permanent-hash-state"},
-  {"reference-frame-number", &module_info_ast, "reference-frame-number"},
-  {"false-or", &module_info_runtime, "false-or"},
-  {"module-loader-module-type", &module_info_ast, "module-loader-module-type"},
-  {"uppercase?", &module_info_runtime, "uppercase?"},
-  {"os-binding-value", &module_info_protoSsystem, "os-binding-value"},
-  {"<locals>", &module_info_ast, "<locals>"},
-  {"%flo-bits", &module_info_boot, "%flo-bits"},
-  {"%symbols", &module_info_boot, "%symbols"},
-  {"build-condition-for-handler-interactively", &module_info_runtime, "build-condition-for-handler-interactively"},
-  {"$sexpr-if-tag", &module_info_syntax, "$sexpr-if-tag"},
-  {"*boot-macro-names*", &module_info_boot, "*boot-macro-names*"},
-  {"signature-bindings", &module_info_ast, "signature-bindings"},
-  {"%create-directory", &module_info_boot, "%create-directory"},
-  {"zero?", &module_info_runtime, "zero?"},
-  {"pushf", &module_info_macros, "pushf"},
-  {"closure-creation-free", &module_info_ast_linearize, "closure-creation-free"},
-  {"object-slots", &module_info_boot, "object-slots"},
-  {"<free-reference>", &module_info_ast_linearize, "<free-reference>"},
-  {"process-id", &module_info_protoSsystem, "process-id"},
-  {"init-ast", &module_info_ast, "init-ast"},
-  {"def-list", &module_info_ast, "def-list"},
-  {"address-of", &module_info_runtime, "address-of"},
-  {"signature-names", &module_info_ast, "signature-names"},
-  {"build-condition-interactively", &module_info_runtime, "build-condition-interactively"},
-  {"alter", &module_info_runtime, "alter"},
-  {"all?", &module_info_runtime, "all?"},
-  {"<sym>", &module_info_boot, "<sym>"},
-  {"sym-name", &module_info_boot, "sym-name"},
-  {"binding-info-setter", &module_info_ast, "binding-info-setter"},
-  {">=", &module_info_runtime, ">="},
-  {"binding-module-name", &module_info_ast, "binding-module-name"},
-  {"%app-filename", &module_info_boot, "%app-filename"},
-  {"def-programs", &module_info_ast, "def-programs"},
-  {"%vlen", &module_info_boot, "%vlen"},
-  {"elt", &module_info_macros, "elt"},
-  {"find-setter", &module_info_boot, "find-setter"},
-  {"%c<", &module_info_boot, "%c<"},
-  {"register-allocate!", &module_info_ast_linearize, "register-allocate!"},
-  {"let", &module_info_boot, "let"},
-  {"<port>", &module_info_runtime, "<port>"},
-  {"program-register-setter", &module_info_ast, "program-register-setter"},
-  {"<list>", &module_info_runtime, "<list>"},
-  {"%file-mtime", &module_info_boot, "%file-mtime"},
-  {"<computed-program>", &module_info_ast, "<computed-program>"},
-  {"elt-setter", &module_info_runtime, "elt-setter"},
-  {"*proto-extension*", &module_info_protoSsystem, "*proto-extension*"},
-  {"os-binding-value-setter", &module_info_protoSsystem, "os-binding-value-setter"},
-  {"%i+", &module_info_boot, "%i+"},
-  {"$sexpr-macro-expand-tag", &module_info_syntax, "$sexpr-macro-expand-tag"},
-  {"alphabetic?", &module_info_runtime, "alphabetic?"},
-  {"quasiquote", &module_info_boot, "quasiquote"},
-  {"program-register", &module_info_ast, "program-register"},
-  {"newline", &module_info_runtime, "newline"},
-  {"%raw", &module_info_boot, "%raw"},
-  {"<ast-method>", &module_info_ast, "<ast-method>"},
-  {"%sp-reg", &module_info_boot, "%sp-reg"},
-  {"class-direct-children", &module_info_boot, "class-direct-children"},
-  {"<simple-error>", &module_info_runtime, "<simple-error>"},
-  {"function-free", &module_info_ast, "function-free"},
-  {"<module-binding-reference>", &module_info_ast, "<module-binding-reference>"},
-  {"*proto-root*", &module_info_protoSsystem, "*proto-root*"},
-  {"%binding-value", &module_info_ast_eval, "%binding-value"},
-  {"binding-info", &module_info_ast, "binding-info"},
-  {"<string-output-port>", &module_info_runtime, "<string-output-port>"},
-  {"%os-binding-value-setter", &module_info_boot, "%os-binding-value-setter"},
-  {"vec", &module_info_runtime, "vec"},
-  {"label-components", &module_info_protoSsystem, "label-components"},
-  {"%im", &module_info_boot, "%im"},
-  {"reference-binding", &module_info_ast, "reference-binding"},
-  {"%close-output-port", &module_info_boot, "%close-output-port"},
-  {"<str>", &module_info_boot, "<str>"},
-  {"<binding>", &module_info_ast, "<binding>"},
-  {"compile-time-program", &module_info_ast, "compile-time-program"},
-  {"dlet", &module_info_macros, "dlet"},
-  {"str", &module_info_runtime, "str"},
-  {"find-environment-module", &module_info_ast, "find-environment-module"},
-  {"update-walk!", &module_info_ast_linearize, "update-walk!"},
-  {"%os-binding-value", &module_info_boot, "%os-binding-value"},
-  {"next-method", &module_info_macros, "next-method"},
-  {"app-args", &module_info_runtime, "app-args"},
-  {"binding-type-setter", &module_info_ast, "binding-type-setter"},
-  {"bound?", &module_info_boot, "bound?"},
-  {"function-body", &module_info_ast, "function-body"},
-  {"%f+", &module_info_boot, "%f+"},
-  {"<raw-constant>", &module_info_ast, "<raw-constant>"},
-  {"~==", &module_info_runtime, "~=="},
-  {"binding-index", &module_info_ast, "binding-index"},
-  {"case-insensitive-string-equal", &module_info_runtime, "case-insensitive-string-equal"},
-  {"read", &module_info_runtime, "read"},
-  {"rev!", &module_info_runtime, "rev!"},
-  {"1st", &module_info_runtime, "1st"},
-  {"$sexpr-bind-exit-tag", &module_info_syntax, "$sexpr-bind-exit-tag"},
-  {"sexpr-make-anonymous-method", &module_info_syntax, "sexpr-make-anonymous-method"},
-  {"init-environment-for-eval", &module_info_ast, "init-environment-for-eval"},
-  {"monitor-test", &module_info_ast, "monitor-test"},
-  {"write-string", &module_info_runtime, "write-string"},
-  {"pos", &module_info_runtime, "pos"},
-  {"sexpr-function-body", &module_info_syntax, "sexpr-function-body"},
-  {"%current-input-port", &module_info_boot, "%current-input-port"},
-  {"do3", &module_info_runtime, "do3"},
-  {"%eof-object", &module_info_boot, "%eof-object"},
-  {"<runtime-reference>", &module_info_ast, "<runtime-reference>"},
-  {"%lu", &module_info_boot, "%lu"},
-  {"function-body-setter", &module_info_ast, "function-body-setter"},
-  {"<serious-condition>", &module_info_runtime, "<serious-condition>"},
-  {"force-output", &module_info_runtime, "force-output"},
-  {"<programs>", &module_info_ast, "<programs>"},
-  {"do", &module_info_runtime, "do"},
-  {"*boot-macro-module-names*", &module_info_boot, "*boot-macro-module-names*"},
-  {"case", &module_info_macros, "case"},
-  {"sexpr-define-class-parents", &module_info_syntax, "sexpr-define-class-parents"},
-  {"for", &module_info_macros, "for"},
-  {"app-filename", &module_info_runtime, "app-filename"},
-  {"sexpr-assignment-variable", &module_info_syntax, "sexpr-assignment-variable"},
-  {"binding-type", &module_info_ast, "binding-type"},
-  {"<constant>", &module_info_ast, "<constant>"},
-  {"%i<<<", &module_info_boot, "%i<<<"},
-  {"round", &module_info_runtime, "round"},
-  {"<fab-list>", &module_info_ast, "<fab-list>"},
-  {"<vec>", &module_info_boot, "<vec>"},
-  {"bound?-reference", &module_info_ast, "bound?-reference"},
-  {"environment-module", &module_info_ast, "environment-module"},
-  {"unwind-protect-protected-thunk", &module_info_ast, "unwind-protect-protected-thunk"},
-  {"slot-owner", &module_info_boot, "slot-owner"},
-  {"ascii-whitespaces", &module_info_runtime, "ascii-whitespaces"},
-  {"%invoke-debugger", &module_info_boot, "%invoke-debugger"},
-  {"<tab>", &module_info_runtime, "<tab>"},
-  {"logbit?", &module_info_runtime, "logbit?"},
-  {"unconstrained-type?", &module_info_ast_linearize, "unconstrained-type?"},
-  {"condition-arguments", &module_info_runtime, "condition-arguments"},
-  {"fun-names", &module_info_boot, "fun-names"},
-  {"%force-output", &module_info_boot, "%force-output"},
-  {"<met>", &module_info_boot, "<met>"},
-  {"<runtime-assignment>", &module_info_ast, "<runtime-assignment>"},
-  {"nul?", &module_info_runtime, "nul?"},
-  {"create-directory", &module_info_protoSsystem, "create-directory"},
-  {"head-setter", &module_info_boot, "head-setter"},
-  {"$sexpr-let-tag", &module_info_syntax, "$sexpr-let-tag"},
-  {"sexpr-syntax-if-value", &module_info_syntax, "sexpr-syntax-if-value"},
-  {"<monitor>", &module_info_ast, "<monitor>"},
-  {"@olen", &module_info_boot, "@olen"},
-  {"*max-print-length*", &module_info_write, "*max-print-length*"},
-  {"fab", &module_info_runtime, "fab"},
-  {"%i>>>", &module_info_boot, "%i>>>"},
-  {"table-shrink-threshold", &module_info_runtime, "table-shrink-threshold"},
-  {"%i>>", &module_info_boot, "%i>>"},
-  {"sexpr-variable?", &module_info_syntax, "sexpr-variable?"},
-  {"find-getter", &module_info_boot, "find-getter"},
-  {"file-opening-error", &module_info_boot, "file-opening-error"},
-  {"%it/", &module_info_boot, "%it/"},
-  {"components-parent-directory", &module_info_protoSsystem, "components-parent-directory"},
-  {"file-exists?", &module_info_protoSsystem, "file-exists?"},
-  {"program-form", &module_info_ast_linearize, "program-form"},
-  {"pathname-to-components", &module_info_protoSsystem, "pathname-to-components"},
-  {"incongruent-method-error", &module_info_boot, "incongruent-method-error"},
-  {"<flat>", &module_info_boot, "<flat>"},
-  {"list", &module_info_runtime, "list"},
-  {"head", &module_info_boot, "head"},
-  {"make-handler", &module_info_runtime, "make-handler"},
-  {"$sexpr-slot-tag", &module_info_syntax, "$sexpr-slot-tag"},
-  {"gather-temporaries!", &module_info_ast_linearize, "gather-temporaries!"},
-  {"<output-port>", &module_info_runtime, "<output-port>"},
-  {"ast-define-binding", &module_info_ast, "ast-define-binding"},
-  {"collected", &module_info_macros, "collected"},
-  {"c-filename", &module_info_protoSsystem, "c-filename"},
-  {"obj-filename", &module_info_protoSsystem, "obj-filename"},
-  {"<bind-exit>", &module_info_ast, "<bind-exit>"},
-  {"sequentialize", &module_info_ast, "sequentialize"},
-  {"sig-unification-vars", &module_info_boot, "sig-unification-vars"},
-  {"class-direct-parents", &module_info_boot, "class-direct-parents"},
-  {"even?", &module_info_runtime, "even?"},
-  {"ast-evaluate", &module_info_ast, "ast-evaluate"},
-  {"describe-handler", &module_info_runtime, "describe-handler"},
-  {"<local-binding>", &module_info_ast, "<local-binding>"},
-  {"%file-exists?", &module_info_boot, "%file-exists?"},
-  {"<box-read>", &module_info_ast_linearize, "<box-read>"},
-  {"use", &module_info_boot, "use"},
-  {"df", &module_info_boot, "df"},
-  {"buf", &module_info_runtime, "buf"},
-  {"<ast-primitive>", &module_info_ast, "<ast-primitive>"},
-  {"object-class", &module_info_boot, "object-class"},
-  {"%peek-char", &module_info_boot, "%peek-char"},
-  {"load-module", &module_info_ast, "load-module"},
-  {"assoc-value", &module_info_runtime, "assoc-value"},
-  {"<program>", &module_info_ast, "<program>"},
-  {"dm", &module_info_boot, "dm"},
-  {"fun-mets", &module_info_boot, "fun-mets"},
-  {"<global-assignment>", &module_info_ast, "<global-assignment>"},
-  {"objectify-signature", &module_info_ast, "objectify-signature"},
-  {"locative-value-setter", &module_info_runtime, "locative-value-setter"},
-  {"del-dups", &module_info_runtime, "del-dups"},
-  {"port-contents", &module_info_runtime, "port-contents"},
-  {"when", &module_info_macros, "when"},
-  {"neg?", &module_info_runtime, "neg?"},
-  {"case-insensitive-string-hash", &module_info_runtime, "case-insensitive-string-hash"},
-  {"%velt", &module_info_boot, "%velt"},
-  {"<passive-program>", &module_info_ast, "<passive-program>"},
-  {"sexpr-syntax-if-pattern", &module_info_syntax, "sexpr-syntax-if-pattern"},
-  {"fab-gen", &module_info_boot, "fab-gen"},
-  {"as-lowercase", &module_info_runtime, "as-lowercase"},
-  {"table-growth-factor", &module_info_runtime, "table-growth-factor"},
-  {"format-to-string", &module_info_runtime, "format-to-string"},
-  {"flatten-seqs", &module_info_ast_linearize, "flatten-seqs"},
-  {"*macros-ok?*", &module_info_boot, "*macros-ok?*"},
-  {"<fun>", &module_info_boot, "<fun>"},
-  {"analyze-calls", &module_info_ast_linearize, "analyze-calls"},
-  {"call-with-string-input-port", &module_info_runtime, "call-with-string-input-port"},
-  {"binding-locative", &module_info_ast, "binding-locative"},
-  {"empty", &module_info_runtime, "empty"},
-  {"collecting", &module_info_macros, "collecting"},
-  {"<bound?>", &module_info_ast, "<bound?>"},
-  {"$char-long-names", &module_info_read, "$char-long-names"},
-  {"apply-next-method", &module_info_macros, "apply-next-method"},
-  {"str-to-num", &module_info_runtime, "str-to-num"},
-  {"alternative-consequent", &module_info_ast, "alternative-consequent"},
-  {"%untag", &module_info_boot, "%untag"},
-  {"%i=", &module_info_boot, "%i="},
-  {"free-environment", &module_info_ast, "free-environment"},
-  {"<lst>", &module_info_boot, "<lst>"},
-  {"%write-char", &module_info_boot, "%write-char"},
-  {"from-above", &module_info_runtime, "from-above"},
-  {"%raw-call", &module_info_boot, "%raw-call"},
-  {"t<", &module_info_runtime, "t<"},
-  {"module-exports", &module_info_ast, "module-exports"},
-  {"macro-expand", &module_info_boot, "macro-expand"},
-  {"signature-value-setter", &module_info_ast, "signature-value-setter"},
-  {"<file-output-port>", &module_info_runtime, "<file-output-port>"},
-  {"make-sym", &module_info_macros, "make-sym"},
-  {"numeric?", &module_info_runtime, "numeric?"},
-  {"constant-value", &module_info_ast, "constant-value"},
-  {"sig-specs", &module_info_boot, "sig-specs"},
-  {"<tup>", &module_info_boot, "<tup>"},
-  {"type-error", &module_info_boot, "type-error"},
-  {"do2", &module_info_runtime, "do2"},
-  {"sexpr-iterate->loc", &module_info_syntax, "sexpr-iterate->loc"},
-  {"tail-setter", &module_info_boot, "tail-setter"},
-  {"fix-let-body-setter", &module_info_ast, "fix-let-body-setter"},
-  {"slot-type", &module_info_boot, "slot-type"},
-  {"function-bindings", &module_info_ast, "function-bindings"},
-  {"slot", &module_info_boot, "slot"},
-  {"def-fun-var", &module_info_macros, "def-fun-var"},
-  {"<alternative>", &module_info_ast, "<alternative>"},
-  {"from-above-by", &module_info_runtime, "from-above-by"},
-  {"%eq?", &module_info_boot, "%eq?"},
-  {"from-below", &module_info_runtime, "from-below"},
-  {"free-implemented-foreign-bindings", &module_info_ast, "free-implemented-foreign-bindings"},
-  {"sorted-app-mets", &module_info_boot, "sorted-app-mets"},
-  {"locative-value", &module_info_runtime, "locative-value"},
-  {"recurring-write", &module_info_write, "recurring-write"},
-  {"function-nary?", &module_info_ast, "function-nary?"},
-  {"assqn", &module_info_runtime, "assqn"},
-  {"call-with-string-output-port", &module_info_runtime, "call-with-string-output-port"},
-  {"2nd", &module_info_runtime, "2nd"},
-  {"*boot-macro-expanders*", &module_info_boot, "*boot-macro-expanders*"},
-  {"<seq>", &module_info_boot, "<seq>"},
-  {"<handler-info>", &module_info_runtime, "<handler-info>"},
-  {"<application>", &module_info_ast, "<application>"},
-  {"function-binding", &module_info_ast, "function-binding"},
-  {"+", &module_info_runtime, "+"},
-  {"fun-sig-setter", &module_info_boot, "fun-sig-setter"},
-  {"reference-called-function?", &module_info_ast, "reference-called-function?"},
-  {"ct", &module_info_boot, "ct"},
-  {"%sp-reg-setter", &module_info_boot, "%sp-reg-setter"},
-  {"tail", &module_info_boot, "tail"},
-  {"%f<", &module_info_boot, "%f<"},
-  {"function-data-refs", &module_info_ast, "function-data-refs"},
-  {"*restarts-ok?*", &module_info_boot, "*restarts-ok?*"},
-  {"==", &module_info_macros, "=="},
-  {"monitor-info", &module_info_ast, "monitor-info"},
-  {"function-debug-name-setter", &module_info_ast, "function-debug-name-setter"},
-  {"fix-let-types-setter", &module_info_ast, "fix-let-types-setter"},
-  {"write-char", &module_info_runtime, "write-char"},
-  {"%i!", &module_info_boot, "%i!"},
-  {"opf", &module_info_macros, "opf"},
-  {"min", &module_info_runtime, "min"},
-  {"fix-let-bindings", &module_info_ast, "fix-let-bindings"},
-  {"/", &module_info_runtime, "/"},
-  {"%close-input-port", &module_info_boot, "%close-input-port"},
-  {"lift!", &module_info_ast_linearize, "lift!"},
-  {"sexpr-syntax-if-then", &module_info_syntax, "sexpr-syntax-if-then"},
-  {"fix-let-arguments-setter", &module_info_ast, "fix-let-arguments-setter"},
-  {"install-initial-bindings", &module_info_ast, "install-initial-bindings"},
-  {"t=", &module_info_runtime, "t="},
-  {"fab-map", &module_info_runtime, "fab-map"},
-  {"from-by", &module_info_runtime, "from-by"},
-  {"del-keys", &module_info_runtime, "del-keys"},
-  {"class-slots", &module_info_boot, "class-slots"},
-  {"truncate", &module_info_runtime, "truncate"},
-  {"fabs", &module_info_runtime, "fabs"},
-  {"form-quotations", &module_info_ast_linearize, "form-quotations"},
-  {"<range>", &module_info_runtime, "<range>"},
-  {"<col>", &module_info_boot, "<col>"},
-  {"file-type", &module_info_protoSsystem, "file-type"},
-  {"handler-function", &module_info_runtime, "handler-function"},
-  {"from-below-by", &module_info_runtime, "from-below-by"},
-  {"@==", &module_info_boot, "@=="},
-  {"from-to", &module_info_runtime, "from-to"},
-  {"fab-class", &module_info_boot, "fab-class"},
-  {"<immediate-constant>", &module_info_ast, "<immediate-constant>"},
-  {"reference-offset", &module_info_ast_linearize, "reference-offset"},
-  {"del-key", &module_info_runtime, "del-key"},
-  {"del", &module_info_runtime, "del"},
-  {"%char-ready?", &module_info_boot, "%char-ready?"},
-  {"lab", &module_info_boot, "lab"},
-  {"unknown-function-error", &module_info_boot, "unknown-function-error"},
-  {"%cb", &module_info_boot, "%cb"},
-  {"box-reference", &module_info_ast_linearize, "box-reference"},
-  {"match-sublist", &module_info_macros, "match-sublist"},
-  {"sexpr-function-signature", &module_info_syntax, "sexpr-function-signature"},
-  {"signature-specs-setter", &module_info_ast, "signature-specs-setter"},
-  {"<fix-let>", &module_info_ast, "<fix-let>"},
-  {"mif", &module_info_boot, "mif"},
-  {"sexpr-function-definition-value", &module_info_syntax, "sexpr-function-definition-value"},
-  {"reference-self?", &module_info_ast_linearize, "reference-self?"},
-  {"<sig>", &module_info_boot, "<sig>"},
-  {"fab-p2c-module", &module_info_ast, "fab-p2c-module"},
+  {"sexpr-definition-value", &module_info_syntax, "sexpr-definition-value"},
   {"monitor-type", &module_info_ast, "monitor-type"},
-  {"binding-dotted?-setter", &module_info_ast, "binding-dotted?-setter"},
-  {"fix-let-body", &module_info_ast, "fix-let-body"},
-  {"open-output-file", &module_info_runtime, "open-output-file"},
+  {"<gen>", &module_info_boot, "<gen>"},
+  {"$sexpr-if-tag", &module_info_syntax, "$sexpr-if-tag"},
   {"function-free-setter", &module_info_ast, "function-free-setter"},
-  {"signature-arity", &module_info_ast, "signature-arity"},
-  {"fix-let-arguments", &module_info_ast, "fix-let-arguments"},
-  {"ast-contains-fun?", &module_info_ast_linearize, "ast-contains-fun?"},
-  {"from-to-by", &module_info_runtime, "from-to-by"},
-  {"<string-input-port>", &module_info_runtime, "<string-input-port>"},
-  {"odd?", &module_info_runtime, "odd?"},
-  {"nil", &module_info_boot, "nil"},
-  {"<loc>", &module_info_boot, "<loc>"},
-  {"%%macro", &module_info_boot, "%%macro"},
-  {"objectify-quotation", &module_info_ast, "objectify-quotation"},
-  {"<module-loader>", &module_info_ast, "<module-loader>"},
-  {"t+", &module_info_runtime, "t+"},
+  {"slot-init", &module_info_boot, "slot-init"},
+  {"binding-dynamic-extent?", &module_info_ast, "binding-dynamic-extent?"},
+  {"sexpr-function-definition-value", &module_info_syntax, "sexpr-function-definition-value"},
+  {"char-ready?", &module_info_protoSports, "char-ready?"},
+  {"as-uppercase", &module_info_protoSmath, "as-uppercase"},
+  {"assqn", &module_info_protoScollectionsSlist, "assqn"},
+  {"rep", &module_info_boot, "rep"},
+  {"*max-print-length*", &module_info_write, "*max-print-length*"},
+  {"to-digit", &module_info_protoSmath, "to-digit"},
+  {"<file-output-port>", &module_info_protoSports, "<file-output-port>"},
+  {"function-data-refs", &module_info_ast, "function-data-refs"},
+  {"application-known?-setter", &module_info_ast, "application-known?-setter"},
+  {"object-slots", &module_info_boot, "object-slots"},
+  {"id-hash", &module_info_protoScollectionsStable, "id-hash"},
+  {"binding-native-to?", &module_info_ast, "binding-native-to?"},
+  {"<ast-primitive-definition>", &module_info_ast, "<ast-primitive-definition>"},
+  {"<definition>", &module_info_ast, "<definition>"},
+  {"sexpr-unwind-protect-protected-form", &module_info_syntax, "sexpr-unwind-protect-protected-form"},
+  {"program-register-setter", &module_info_ast, "program-register-setter"},
+  {"create-directory", &module_info_protoSsystem, "create-directory"},
+  {"%c<", &module_info_boot, "%c<"},
+  {"<sym>", &module_info_boot, "<sym>"},
+  {"t<", &module_info_protoStypes, "t<"},
+  {"assocs-test-setter", &module_info_protoScollectionsSassoc, "assocs-test-setter"},
+  {"program-definitions", &module_info_ast_linearize, "program-definitions"},
+  {"<binding>", &module_info_ast, "<binding>"},
+  {"fix-let-bindings-setter", &module_info_ast, "fix-let-bindings-setter"},
+  {"find-setter", &module_info_boot, "find-setter"},
+  {"function-bindings", &module_info_ast, "function-bindings"},
   {"inc", &module_info_macros, "inc"},
-  {"environment-uses-modules", &module_info_ast, "environment-uses-modules"},
-  {"ct-also", &module_info_boot, "ct-also"},
-  {"sub", &module_info_runtime, "sub"},
-  {"closurize-main!", &module_info_ast_linearize, "closurize-main!"},
-  {"%f/", &module_info_boot, "%f/"},
-  {"elt-or", &module_info_runtime, "elt-or"},
-  {"<renamed-local-binding>", &module_info_ast_linearize, "<renamed-local-binding>"},
-  {"%f-", &module_info_boot, "%f-"},
-  {"sexpr-syntax-if-else", &module_info_syntax, "sexpr-syntax-if-else"},
-  {"<closure-creation>", &module_info_ast_linearize, "<closure-creation>"},
-  {"<assocs>", &module_info_runtime, "<assocs>"},
-  {"type-elts", &module_info_boot, "type-elts"},
-  {"objectify", &module_info_ast, "objectify"},
-  {"isa?", &module_info_boot, "isa?"},
-  {"$default-handler-info", &module_info_runtime, "$default-handler-info"},
-  {"met-app?", &module_info_boot, "met-app?"},
-  {"fix-let-types", &module_info_ast, "fix-let-types"},
-  {"ds", &module_info_boot, "ds"},
-  {"neg", &module_info_runtime, "neg"},
-  {"$sexpr-begin-tag", &module_info_syntax, "$sexpr-begin-tag"},
+  {"%eq?", &module_info_boot, "%eq?"},
+  {"sexpr-loc-bound-signatures", &module_info_syntax, "sexpr-loc-bound-signatures"},
+  {"%c=", &module_info_boot, "%c="},
   {"$sexpr-monitor-tag", &module_info_syntax, "$sexpr-monitor-tag"},
-  {"empty?", &module_info_macros, "empty?"},
-  {"%i?", &module_info_boot, "%i?"},
-  {"%isa", &module_info_boot, "%isa"},
-  {"<compile-time>", &module_info_ast, "<compile-time>"},
-  {"%i&", &module_info_boot, "%i&"},
+  {"fabs", &module_info_protoSmath, "fabs"},
+  {"<bot>", &module_info_protoSmath, "<bot>"},
+  {"address-of", &module_info_protoSmath, "address-of"},
+  {"collect-temporaries!", &module_info_ast_linearize, "collect-temporaries!"},
+  {"%i<<<", &module_info_boot, "%i<<<"},
+  {"flo-bits", &module_info_protoSmath, "flo-bits"},
+  {"round", &module_info_protoSmath, "round"},
+  {"lab", &module_info_boot, "lab"},
+  {"exported", &module_info_macros, "exported"},
+  {"class-direct-children", &module_info_boot, "class-direct-children"},
+  {"t+", &module_info_protoStypes, "t+"},
+  {"wrong-number-arguments-error", &module_info_boot, "wrong-number-arguments-error"},
+  {"false-or", &module_info_protoStypes, "false-or"},
+  {"locals-body-setter", &module_info_ast, "locals-body-setter"},
+  {"cat2", &module_info_protoScollectionsSsequence, "cat2"},
+  {"peek-char", &module_info_protoSports, "peek-char"},
+  {"add-src-path", &module_info_protoSsystem, "add-src-path"},
+  {"sexpr-define-class?", &module_info_syntax, "sexpr-define-class?"},
+  {"eval", &module_info_syntax, "eval"},
+  {"program-form", &module_info_ast_linearize, "program-form"},
+  {"<str>", &module_info_boot, "<str>"},
+  {"truncate/", &module_info_protoSmath, "truncate/"},
+  {"dss", &module_info_boot, "dss"},
+  {"sig", &module_info_runtime, "sig"},
+  {"isa", &module_info_boot, "isa"},
+  {"%binding-value", &module_info_ast_eval, "%binding-value"},
+  {"%os-name", &module_info_boot, "%os-name"},
+  {"c-filename", &module_info_protoSsystem, "c-filename"},
+  {"export", &module_info_boot, "export"},
+  {"table-protocol", &module_info_protoScollectionsStable, "table-protocol"},
+  {"function-signature-setter", &module_info_ast, "function-signature-setter"},
+  {"%iv", &module_info_boot, "%iv"},
+  {"as-log", &module_info_protoSmath, "as-log"},
+  {"call-with-output-file", &module_info_protoSports, "call-with-output-file"},
+  {"binding-dynamic-extent?-setter", &module_info_ast, "binding-dynamic-extent?-setter"},
+  {"%app-filename", &module_info_boot, "%app-filename"},
+  {"%vnul", &module_info_boot, "%vnul"},
+  {"$char-long-names", &module_info_read, "$char-long-names"},
+  {"+", &module_info_protoSmath, "+"},
+  {"@==", &module_info_boot, "@=="},
   {"assignment-reference", &module_info_ast, "assignment-reference"},
+  {"%sp-reg-setter", &module_info_boot, "%sp-reg-setter"},
+  {"pos", &module_info_protoScollectionsSsequence, "pos"},
+  {"%os-binding-value-setter", &module_info_boot, "%os-binding-value-setter"},
+  {"function-registers-setter", &module_info_ast, "function-registers-setter"},
+  {"sexpr-bind-pattern-variables", &module_info_syntax, "sexpr-bind-pattern-variables"},
+  {"find-environment-module", &module_info_ast, "find-environment-module"},
+  {"binding-kind", &module_info_ast, "binding-kind"},
+  {"init-ast", &module_info_ast, "init-ast"},
+  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
+  {"<box-creation>", &module_info_ast_linearize, "<box-creation>"},
+  {"t=", &module_info_protoStypes, "t="},
+  {"binding-value", &module_info_ast, "binding-value"},
+  {"flatten-seqs", &module_info_ast_linearize, "flatten-seqs"},
+  {"fix-let-bindings", &module_info_ast, "fix-let-bindings"},
+  {"do", &module_info_protoScollectionsScollection, "do"},
+  {"function-body-setter", &module_info_ast, "function-body-setter"},
+  {">", &module_info_protoSmath, ">"},
+  {"error", &module_info_boot, "error"},
+  {"collect-registers!", &module_info_ast_linearize, "collect-registers!"},
+  {"binding-mutable?", &module_info_ast, "binding-mutable?"},
+  {"max", &module_info_protoSmath, "max"},
+  {"assignment-form-setter", &module_info_ast, "assignment-form-setter"},
+  {"function-signature", &module_info_ast, "function-signature"},
+  {"call-with-input-file", &module_info_protoSports, "call-with-input-file"},
+  {"<vec>", &module_info_boot, "<vec>"},
+  {"<local-binding>", &module_info_ast, "<local-binding>"},
+  {"slot-owner", &module_info_boot, "slot-owner"},
+  {"need-implementation", &module_info_macros, "need-implementation"},
+  {"<top-level-form>", &module_info_ast_linearize, "<top-level-form>"},
+  {"default-handler-description", &module_info_runtime, "default-handler-description"},
+  {"<predefined-application>", &module_info_ast, "<predefined-application>"},
+  {"%slen", &module_info_boot, "%slen"},
+  {"fun-names", &module_info_boot, "fun-names"},
+  {"<met>", &module_info_boot, "<met>"},
+  {"sexpr-if-test", &module_info_syntax, "sexpr-if-test"},
+  {"set-module-environments", &module_info_ast, "set-module-environments"},
+  {"fab", &module_info_protoScollectionsScollection, "fab"},
+  {"sexpr-syntax-if-then", &module_info_syntax, "sexpr-syntax-if-then"},
+  {"$sexpr-quote-tag", &module_info_syntax, "$sexpr-quote-tag"},
+  {"head-setter", &module_info_boot, "head-setter"},
+  {"do-key-vals", &module_info_protoScollectionsSsequence, "do-key-vals"},
+  {"sexpr-operator", &module_info_syntax, "sexpr-operator"},
+  {"len/fill-setter", &module_info_protoScollectionsSbuffer, "len/fill-setter"},
+  {"condition-message", &module_info_runtime, "condition-message"},
+  {"signature-names", &module_info_ast, "signature-names"},
+  {"signature-value", &module_info_ast, "signature-value"},
+  {"range-check?", &module_info_protoScollectionsSsequence, "range-check?"},
+  {"locals-body", &module_info_ast, "locals-body"},
+  {"%sp-reg", &module_info_boot, "%sp-reg"},
+  {"all2?", &module_info_protoScollectionsScollection, "all2?"},
+  {"choose-handler", &module_info_runtime, "choose-handler"},
+  {"$sexpr-define-tag", &module_info_syntax, "$sexpr-define-tag"},
+  {"%fi2f", &module_info_boot, "%fi2f"},
+  {"sexpr-slot-variable", &module_info_syntax, "sexpr-slot-variable"},
+  {"sexpr-operands", &module_info_syntax, "sexpr-operands"},
+  {"cat!", &module_info_protoScollectionsSsequence, "cat!"},
+  {"port-index", &module_info_protoSports, "port-index"},
+  {"find-getter", &module_info_boot, "find-getter"},
+  {"function-self-recursive?-setter", &module_info_ast, "function-self-recursive?-setter"},
+  {"quote", &module_info_boot, "quote"},
+  {"pair", &module_info_macros, "pair"},
+  {"function-body", &module_info_ast, "function-body"},
+  {"sexpr-function-definition-variable", &module_info_syntax, "sexpr-function-definition-variable"},
+  {"<flat>", &module_info_boot, "<flat>"},
+  {"binding-global-box", &module_info_ast, "binding-global-box"},
+  {"head", &module_info_boot, "head"},
+  {"module-syntax-environment", &module_info_ast, "module-syntax-environment"},
+  {"from-above", &module_info_protoScollectionsSrange, "from-above"},
+  {"read-char", &module_info_protoSports, "read-char"},
+  {"neg?", &module_info_protoSmath, "neg?"},
+  {"%build-runtime-modules", &module_info_boot, "%build-runtime-modules"},
+  {"%binding-bound?", &module_info_ast_eval, "%binding-bound?"},
+  {"sexpr-method-body", &module_info_syntax, "sexpr-method-body"},
+  {"sig-unification-vars", &module_info_boot, "sig-unification-vars"},
+  {"$sexpr-syntax-if-tag", &module_info_syntax, "$sexpr-syntax-if-tag"},
+  {"class-direct-parents", &module_info_boot, "class-direct-parents"},
+  {"label-components", &module_info_protoSsystem, "label-components"},
+  {"<runtime-assignment>", &module_info_ast, "<runtime-assignment>"},
+  {"when", &module_info_macros, "when"},
+  {"binding-value-setter", &module_info_ast, "binding-value-setter"},
+  {"<programs>", &module_info_ast, "<programs>"},
+  {"<program>", &module_info_ast, "<program>"},
+  {"find-key", &module_info_protoScollectionsScollection, "find-key"},
+  {"nul", &module_info_boot, "nul"},
+  {"add-tmp-path", &module_info_protoSsystem, "add-tmp-path"},
+  {"apply", &module_info_macros, "apply"},
+  {"sexpr-assignment-value", &module_info_syntax, "sexpr-assignment-value"},
+  {"object-class", &module_info_boot, "object-class"},
+  {"*proto-extension*", &module_info_protoSsystem, "*proto-extension*"},
+  {"function-registers", &module_info_ast, "function-registers"},
+  {"~==", &module_info_protoSmath, "~=="},
+  {"%i<", &module_info_boot, "%i<"},
+  {"<module-binding>", &module_info_ast, "<module-binding>"},
+  {"%sb", &module_info_boot, "%sb"},
+  {"<unwind-protect>", &module_info_ast, "<unwind-protect>"},
+  {"%str", &module_info_boot, "%str"},
+  {"%%sym", &module_info_boot, "%%sym"},
+  {"<string-output-port>", &module_info_protoSports, "<string-output-port>"},
+  {"<compile-time>", &module_info_ast, "<compile-time>"},
+  {"fun-mets", &module_info_boot, "fun-mets"},
+  {"pop-last!", &module_info_protoScollectionsSbuffer, "pop-last!"},
+  {"sym-name", &module_info_boot, "sym-name"},
+  {"$sexpr-method-tag", &module_info_syntax, "$sexpr-method-tag"},
+  {"sexpr-unwind-protect-cleanup-forms", &module_info_syntax, "sexpr-unwind-protect-cleanup-forms"},
+  {"set", &module_info_boot, "set"},
+  {"open-output-file", &module_info_protoSports, "open-output-file"},
+  {"as-lowercase", &module_info_protoSmath, "as-lowercase"},
+  {"alternative-alternant", &module_info_ast, "alternative-alternant"},
+  {"%i&", &module_info_boot, "%i&"},
+  {"<restart>", &module_info_runtime, "<restart>"},
+  {"fab-gen", &module_info_boot, "fab-gen"},
+  {"table-shrink-threshold-setter", &module_info_protoScollectionsStable, "table-shrink-threshold-setter"},
+  {"eof-object?", &module_info_protoSmath, "eof-object?"},
+  {"%raw", &module_info_boot, "%raw"},
+  {"sexpr-loc-bound-bodies", &module_info_syntax, "sexpr-loc-bound-bodies"},
+  {"call-with-string-output-port", &module_info_protoSports, "call-with-string-output-port"},
+  {"case", &module_info_macros, "case"},
+  {"remove-modules-by-name!", &module_info_ast, "remove-modules-by-name!"},
+  {"<fun>", &module_info_boot, "<fun>"},
+  {"modulo", &module_info_protoSmath, "modulo"},
+  {"swapf", &module_info_macros, "swapf"},
+  {"opf", &module_info_macros, "opf"},
+  {"%untag", &module_info_boot, "%untag"},
+  {"module-target-environment", &module_info_ast, "module-target-environment"},
+  {"ct", &module_info_boot, "ct"},
+  {"<file-input-port>", &module_info_protoSports, "<file-input-port>"},
+  {"<string-input-port>", &module_info_protoSports, "<string-input-port>"},
+  {"napply", &module_info_macros, "napply"},
+  {"components-parent-directory", &module_info_protoSsystem, "components-parent-directory"},
+  {"range-check", &module_info_protoScollectionsSsequence, "range-check"},
+  {"fix-let-body-setter", &module_info_ast, "fix-let-body-setter"},
+  {"closurize-main!", &module_info_ast_linearize, "closurize-main!"},
+  {"%check-call-types", &module_info_boot, "%check-call-types"},
+  {"%fb", &module_info_boot, "%fb"},
+  {"mem?", &module_info_protoScollectionsScollection, "mem?"},
+  {"<lst>", &module_info_boot, "<lst>"},
+  {"%snul", &module_info_boot, "%snul"},
+  {"module-exports", &module_info_ast, "module-exports"},
+  {"add!", &module_info_protoScollectionsSsequence, "add!"},
+  {"sexpr-unquote?", &module_info_syntax, "sexpr-unquote?"},
+  {"$max-int", &module_info_boot, "$max-int"},
+  {"<real-reference>", &module_info_ast, "<real-reference>"},
+  {"make-handler", &module_info_runtime, "make-handler"},
+  {"$sexpr-iterate-tag", &module_info_syntax, "$sexpr-iterate-tag"},
+  {"<fix-let>", &module_info_ast, "<fix-let>"},
+  {"%cb", &module_info_boot, "%cb"},
+  {"sexpr-make-macro-function", &module_info_syntax, "sexpr-make-macro-function"},
+  {"fab-map", &module_info_protoScollectionsSmap, "fab-map"},
+  {"%i+", &module_info_boot, "%i+"},
+  {"collect", &module_info_macros, "collect"},
+  {"constant-index", &module_info_ast, "constant-index"},
+  {"%flo-bits", &module_info_boot, "%flo-bits"},
+  {"module-name", &module_info_ast, "module-name"},
+  {"$sexpr-define-generic-tag", &module_info_syntax, "$sexpr-define-generic-tag"},
+  {"*", &module_info_protoSmath, "*"},
+  {"sexpr-block-name", &module_info_syntax, "sexpr-block-name"},
+  {"dc", &module_info_boot, "dc"},
+  {"odd?", &module_info_protoSmath, "odd?"},
+  {"reference-self?", &module_info_ast_linearize, "reference-self?"},
+  {"function-self-recursive?", &module_info_ast, "function-self-recursive?"},
+  {"sig-specs", &module_info_boot, "sig-specs"},
+  {"monitor-handler", &module_info_ast, "monitor-handler"},
+  {"open-input-file", &module_info_protoSports, "open-input-file"},
+  {"use/export", &module_info_boot, "use/export"},
+  {"file-type", &module_info_protoSsystem, "file-type"},
+  {"tail-setter", &module_info_boot, "tail-setter"},
+  {"slot-type", &module_info_boot, "slot-type"},
+  {"slot", &module_info_boot, "slot"},
+  {"fix-let-arguments", &module_info_ast, "fix-let-arguments"},
+  {"signature-specs", &module_info_ast, "signature-specs"},
+  {"<ast-macro-definition>", &module_info_ast, "<ast-macro-definition>"},
+  {"fin", &module_info_boot, "fin"},
+  {"handler-info-message", &module_info_boot, "handler-info-message"},
+  {"*obj-extension*", &module_info_protoSsystem, "*obj-extension*"},
+  {"environment-uses-modules", &module_info_ast, "environment-uses-modules"},
+  {"constant-index-setter", &module_info_ast, "constant-index-setter"},
+  {"if", &module_info_boot, "if"},
+  {"insert-box!", &module_info_ast_linearize, "insert-box!"},
+  {"sorted-app-mets", &module_info_boot, "sorted-app-mets"},
+  {"<handler-info>", &module_info_runtime, "<handler-info>"},
+  {"do-module-loader-modules", &module_info_ast, "do-module-loader-modules"},
+  {"probe-module", &module_info_ast, "probe-module"},
+  {"<seq>", &module_info_boot, "<seq>"},
+  {"cat", &module_info_macros, "cat"},
+  {"%i!", &module_info_boot, "%i!"},
+  {"%i>>", &module_info_boot, "%i>>"},
+  {"proto-filename", &module_info_protoSsystem, "proto-filename"},
+  {"-", &module_info_protoSmath, "-"},
+  {"form-quotations", &module_info_ast_linearize, "form-quotations"},
+  {"port-contents", &module_info_protoSports, "port-contents"},
+  {"fun-sig-setter", &module_info_boot, "fun-sig-setter"},
+  {"init-environment-for-eval", &module_info_ast, "init-environment-for-eval"},
+  {"<local-reference>", &module_info_ast, "<local-reference>"},
+  {"%f*", &module_info_boot, "%f*"},
+  {"%file-exists?", &module_info_boot, "%file-exists?"},
+  {"*restarts-ok?*", &module_info_boot, "*restarts-ok?*"},
+  {"all?", &module_info_protoScollectionsScollection, "all?"},
+  {"invoke-handler-interactively", &module_info_runtime, "invoke-handler-interactively"},
+  {"tail", &module_info_boot, "tail"},
+  {"%current-output-port", &module_info_boot, "%current-output-port"},
+  {"<monitor>", &module_info_ast, "<monitor>"},
+  {"<replace-generic-restart>", &module_info_boot, "<replace-generic-restart>"},
+  {"extract-things!", &module_info_ast_linearize, "extract-things!"},
+  {"%char-ready?", &module_info_boot, "%char-ready?"},
+  {"sexpr-isa-parent", &module_info_syntax, "sexpr-isa-parent"},
+  {"sexpr-syntax-if-else", &module_info_syntax, "sexpr-syntax-if-else"},
+  {"<tab>", &module_info_protoScollectionsStable, "<tab>"},
+  {"<bound?>", &module_info_ast, "<bound?>"},
+  {"ascii-limit", &module_info_protoScollectionsSstring, "ascii-limit"},
+  {"binding-global-box-setter", &module_info_ast, "binding-global-box-setter"},
+  {"as", &module_info_protoStypes, "as"},
+  {"%loc-off", &module_info_boot, "%loc-off"},
+  {"push-last!", &module_info_protoScollectionsSbuffer, "push-last!"},
+  {"from-to", &module_info_protoScollectionsSrange, "from-to"},
+  {"%f+", &module_info_boot, "%f+"},
+  {"%next-methods", &module_info_boot, "%next-methods"},
+  {"lst", &module_info_boot, "lst"},
+  {"class-slots", &module_info_boot, "class-slots"},
+  {"range-error", &module_info_protoScollectionsSsequence, "range-error"},
+  {"sexpr-slot-init", &module_info_syntax, "sexpr-slot-init"},
+  {"alphabetic?", &module_info_protoSmath, "alphabetic?"},
+  {"%vec", &module_info_boot, "%vec"},
+  {"<regular-application>", &module_info_ast, "<regular-application>"},
+  {"<col>", &module_info_boot, "<col>"},
+  {"<ast-generic>", &module_info_ast, "<ast-generic>"},
+  {"vals-to-str", &module_info_protoScollectionsSsequence, "vals-to-str"},
+  {">=", &module_info_protoSmath, ">="},
+  {"table-growth-threshold", &module_info_protoScollectionsStable, "table-growth-threshold"},
+  {"fab-class", &module_info_boot, "fab-class"},
+  {"logand", &module_info_protoSmath, "logand"},
+  {"<file-port>", &module_info_protoSports, "<file-port>"},
+  {"$sexpr-quasiquote-tag", &module_info_syntax, "$sexpr-quasiquote-tag"},
+  {"binding-dotted?", &module_info_ast, "binding-dotted?"},
+  {"sexpr-forward-primitive?", &module_info_syntax, "sexpr-forward-primitive?"},
+  {"<tup>", &module_info_boot, "<tup>"},
+  {"$sexpr-begin-tag", &module_info_syntax, "$sexpr-begin-tag"},
+  {"default", &module_info_protoScollectionsScollection, "default"},
+  {"fix-let-body", &module_info_ast, "fix-let-body"},
+  {"map-keyed", &module_info_protoScollectionsScollection, "map-keyed"},
+  {"truncate", &module_info_protoSmath, "truncate"},
+  {"unconstrained-type?", &module_info_ast_linearize, "unconstrained-type?"},
+  {"dg", &module_info_boot, "dg"},
+  {"<ast-signature>", &module_info_ast, "<ast-signature>"},
+  {"eof-object", &module_info_protoSmath, "eof-object"},
+  {"for", &module_info_macros, "for"},
+  {"analyze-dynamic-extent", &module_info_ast_linearize, "analyze-dynamic-extent"},
+  {"<sig>", &module_info_boot, "<sig>"},
+  {"out", &module_info_protoSports, "out"},
+  {"<error>", &module_info_runtime, "<error>"},
+  {"form-program", &module_info_ast_linearize, "form-program"},
+  {"compose", &module_info_runtime, "compose"},
+  {"<local-assignment>", &module_info_ast, "<local-assignment>"},
+  {"sexpr-make-getter", &module_info_syntax, "sexpr-make-getter"},
+  {"<static-global-environment>", &module_info_ast, "<static-global-environment>"},
+  {"sexpr-sequence->begin", &module_info_syntax, "sexpr-sequence->begin"},
+  {"environment-module", &module_info_ast, "environment-module"},
+  {"$sexpr-define-class-tag", &module_info_syntax, "$sexpr-define-class-tag"},
+  {"empty", &module_info_protoScollectionsScollection, "empty"},
+  {"try", &module_info_boot, "try"},
+  {"list", &module_info_protoScollectionsSlist, "list"},
+  {"function-source-setter", &module_info_ast, "function-source-setter"},
+  {"<condition>", &module_info_runtime, "<condition>"},
+  {"<immediate-constant>", &module_info_ast, "<immediate-constant>"},
+  {"fix-let-arguments-setter", &module_info_ast, "fix-let-arguments-setter"},
+  {"<loc>", &module_info_boot, "<loc>"},
+  {"sexpr-make-anonymous-method", &module_info_syntax, "sexpr-make-anonymous-method"},
+  {"function-debug-name-setter", &module_info_ast, "function-debug-name-setter"},
+  {"call-with-string-input-port", &module_info_protoSports, "call-with-string-input-port"},
+  {"dec", &module_info_macros, "dec"},
+  {"binding-dotted?-setter", &module_info_ast, "binding-dotted?-setter"},
+  {"buf", &module_info_protoScollectionsSbuffer, "buf"},
+  {"%i<<", &module_info_boot, "%i<<"},
+  {"<computed-program>", &module_info_ast, "<computed-program>"},
+  {"let", &module_info_boot, "let"},
+  {"*max-print-depth*", &module_info_write, "*max-print-depth*"},
+  {"<fab-list>", &module_info_ast, "<fab-list>"},
+  {"rcurry", &module_info_runtime, "rcurry"},
+  {"keys", &module_info_protoScollectionsScollection, "keys"},
+  {"file-mtime", &module_info_protoSsystem, "file-mtime"},
+  {"del-dups", &module_info_protoScollectionsSsequence, "del-dups"},
+  {"type-elts", &module_info_boot, "type-elts"},
+  {"sexpr-loc-raw-body", &module_info_syntax, "sexpr-loc-raw-body"},
+  {"num-to-str", &module_info_protoSmath, "num-to-str"},
+  {"$sexpr-locals-tag", &module_info_syntax, "$sexpr-locals-tag"},
+  {"%create-directory", &module_info_boot, "%create-directory"},
+  {"@oelt", &module_info_boot, "@oelt"},
+  {"add-build-path", &module_info_protoSsystem, "add-build-path"},
+  {"met-app?", &module_info_boot, "met-app?"},
+  {"<simple-condition>", &module_info_runtime, "<simple-condition>"},
+  {"ds", &module_info_boot, "ds"},
+  {"def-list", &module_info_ast, "def-list"},
+  {"$sexpr-bind-exit-tag", &module_info_syntax, "$sexpr-bind-exit-tag"},
+  {"def-programs", &module_info_ast, "def-programs"},
+  {"%current-input-port", &module_info_boot, "%current-input-port"},
+  {"rev", &module_info_protoScollectionsSsequence, "rev"},
+  {"sexpr-expand-backquote", &module_info_syntax, "sexpr-expand-backquote"},
+  {"from-below-by", &module_info_protoScollectionsSrange, "from-below-by"},
+  {"close-output-port", &module_info_protoSports, "close-output-port"},
+  {"%i=", &module_info_boot, "%i="},
+  {"analyze-calls", &module_info_ast_linearize, "analyze-calls"},
+  {"dlet", &module_info_macros, "dlet"},
+  {"%isa", &module_info_boot, "%isa"},
+  {"macro-expand", &module_info_boot, "macro-expand"},
+  {"write-to-string", &module_info_write, "write-to-string"},
+  {"<free-environment>", &module_info_ast, "<free-environment>"},
+  {"%i?", &module_info_boot, "%i?"},
+  {"signature-arity-setter", &module_info_ast, "signature-arity-setter"},
+  {"build-condition-interactively", &module_info_runtime, "build-condition-interactively"},
+  {"sexpr-assignment-variable", &module_info_syntax, "sexpr-assignment-variable"},
   {"<flo>", &module_info_boot, "<flo>"},
-  {"as-uppercase", &module_info_runtime, "as-uppercase"},
-  {"find-key", &module_info_runtime, "find-key"},
+  {"sexpr-define-class-parents", &module_info_syntax, "sexpr-define-class-parents"},
+  {"function-value", &module_info_ast, "function-value"},
+  {"@+", &module_info_boot, "@+"},
+  {"case-insensitive-string-equal", &module_info_protoScollectionsStable, "case-insensitive-string-equal"},
+  {"floor", &module_info_protoSmath, "floor"},
+  {"%i>>>", &module_info_boot, "%i>>>"},
+  {"%fu", &module_info_boot, "%fu"},
+  {"next-method", &module_info_macros, "next-method"},
+  {"objectify-quotation", &module_info_ast, "objectify-quotation"},
+  {"reference-binding", &module_info_ast, "reference-binding"},
+  {"application-tail?", &module_info_ast, "application-tail?"},
+  {"first-then", &module_info_protoScollectionsSstep, "first-then"},
+  {"function-temporaries", &module_info_ast, "function-temporaries"},
+  {"do-keyed", &module_info_protoScollectionsScollection, "do-keyed"},
+  {"assignment-binding", &module_info_ast, "assignment-binding"},
+  {"program-type-setter", &module_info_ast, "program-type-setter"},
+  {"df", &module_info_boot, "df"},
+  {"program-type", &module_info_ast, "program-type"},
+  {"write-string", &module_info_protoSports, "write-string"},
+  {"<box-write>", &module_info_ast_linearize, "<box-write>"},
+  {"port-line", &module_info_protoSports, "port-line"},
+  {"sig-value", &module_info_boot, "sig-value"},
+  {"in", &module_info_protoSports, "in"},
+  {"class-name", &module_info_boot, "class-name"},
+  {"reference-frame-number", &module_info_ast, "reference-frame-number"},
+  {"%bb", &module_info_boot, "%bb"},
+  {"del", &module_info_protoScollectionsSsequence, "del"},
+  {"<handler>", &module_info_runtime, "<handler>"},
+  {"$sexpr-set-tag", &module_info_syntax, "$sexpr-set-tag"},
+  {"recurring-write", &module_info_write, "recurring-write"},
+  {"port-index-setter", &module_info_protoSports, "port-index-setter"},
+  {"make-sym", &module_info_macros, "make-sym"},
+  {"<buf>", &module_info_protoScollectionsSbuffer, "<buf>"},
+  {"locals-bindings-setter", &module_info_ast, "locals-bindings-setter"},
+  {"gather-temporaries!", &module_info_ast_linearize, "gather-temporaries!"},
+  {"%eof-object", &module_info_boot, "%eof-object"},
+  {"*boot-macro-module-names*", &module_info_boot, "*boot-macro-module-names*"},
+  {"components-basename", &module_info_protoSsystem, "components-basename"},
+  {"%open-output-file", &module_info_boot, "%open-output-file"},
+  {"list-handlers", &module_info_runtime, "list-handlers"},
+  {"<module-binding-reference>", &module_info_ast, "<module-binding-reference>"},
+  {"<num>", &module_info_boot, "<num>"},
+  {"<int>", &module_info_boot, "<int>"},
+  {"nil", &module_info_boot, "nil"},
+  {"unchecked-runtime-environment", &module_info_ast, "unchecked-runtime-environment"},
+  {"str-to-num", &module_info_protoScollectionsSstring, "str-to-num"},
+  {"<renamed-local-binding>", &module_info_ast_linearize, "<renamed-local-binding>"},
+  {"keyboard-interrupt", &module_info_boot, "keyboard-interrupt"},
+  {"%i^", &module_info_boot, "%i^"},
+  {"==", &module_info_macros, "=="},
+  {"sexpr-block-body", &module_info_syntax, "sexpr-block-body"},
+  {"binding-type", &module_info_ast, "binding-type"},
+  {"box-form", &module_info_ast_linearize, "box-form"},
+  {"<constant>", &module_info_ast, "<constant>"},
+  {"writeln", &module_info_write, "writeln"},
+  {"$sexpr-macro-expand-tag", &module_info_syntax, "$sexpr-macro-expand-tag"},
+  {"constant-value", &module_info_ast, "constant-value"},
+  {"ast-evaluate", &module_info_ast, "ast-evaluate"},
+  {"<module>", &module_info_ast, "<module>"},
+  {"fun-value", &module_info_boot, "fun-value"},
+  {"sexpr-isa-slot-inits", &module_info_syntax, "sexpr-isa-slot-inits"},
+  {"binding-type-setter", &module_info_ast, "binding-type-setter"},
+  {"file-exists?", &module_info_protoSsystem, "file-exists?"},
+  {"any2?", &module_info_protoScollectionsScollection, "any2?"},
+  {"reference-frame-offset", &module_info_ast, "reference-frame-offset"},
+  {"<step>", &module_info_protoScollectionsSstep, "<step>"},
+  {"signature-bindings", &module_info_ast, "signature-bindings"},
+  {"%f/", &module_info_boot, "%f/"},
+  {"default-handler", &module_info_runtime, "default-handler"},
+  {"lognot", &module_info_protoSmath, "lognot"},
+  {"%su", &module_info_boot, "%su"},
+  {"binding-locative", &module_info_ast, "binding-locative"},
+  {"<chr>", &module_info_boot, "<chr>"},
+  {"make-setter-name", &module_info_macros, "make-setter-name"},
+  {"%ft", &module_info_boot, "%ft"},
+  {"%open-input-file", &module_info_boot, "%open-input-file"},
+  {"reduce+", &module_info_protoScollectionsScollection, "reduce+"},
+  {"sexpr-syntax-definition-variable", &module_info_syntax, "sexpr-syntax-definition-variable"},
+  {"sexpr-signature-parameters", &module_info_syntax, "sexpr-signature-parameters"},
+  {"binding-inferred-type", &module_info_ast, "binding-inferred-type"},
+  {"%locative-value-setter", &module_info_boot, "%locative-value-setter"},
+  {"sexpr-function-signature", &module_info_syntax, "sexpr-function-signature"},
+  {"%cu", &module_info_boot, "%cu"},
+  {"low-elt-setter", &module_info_protoScollectionsScollection, "low-elt-setter"},
+  {"empty?", &module_info_macros, "empty?"},
+  {"<port>", &module_info_protoSports, "<port>"},
+  {"%slot", &module_info_boot, "%slot"},
+  {"build-condition-for-handler-interactively", &module_info_runtime, "build-condition-for-handler-interactively"},
+  {"$sexpr-define-method-tag", &module_info_syntax, "$sexpr-define-method-tag"},
+  {"<arguments>", &module_info_ast, "<arguments>"},
+  {"current-gc-state", &module_info_protoScollectionsStable, "current-gc-state"},
+  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
+  {"sig-names", &module_info_boot, "sig-names"},
+  {"objectify-signature", &module_info_ast, "objectify-signature"},
+  {"sexpr-signature-value", &module_info_syntax, "sexpr-signature-value"},
+  {"<box-read>", &module_info_ast_linearize, "<box-read>"},
+  {"sexpr-make-begin", &module_info_syntax, "sexpr-make-begin"},
+  {"os-binding-value", &module_info_protoSsystem, "os-binding-value"},
+  {"slot-setter", &module_info_boot, "slot-setter"},
+  {"$sexpr-define-function-tag", &module_info_syntax, "$sexpr-define-function-tag"},
+  {"ash", &module_info_protoSmath, "ash"},
+  {"match-sublist", &module_info_macros, "match-sublist"},
+  {"global-box-value", &module_info_ast, "global-box-value"},
+  {"signature-bindings-setter", &module_info_ast, "signature-bindings-setter"},
+  {"bound?", &module_info_boot, "bound?"},
+  {"slot-value-setter", &module_info_boot, "slot-value-setter"},
+  {"<application>", &module_info_ast, "<application>"},
+  {"%close-output-port", &module_info_boot, "%close-output-port"},
+  {"%symbols", &module_info_boot, "%symbols"},
+  {"*c-extension*", &module_info_protoSsystem, "*c-extension*"},
+  {"map2", &module_info_protoScollectionsScollection, "map2"},
+  {"<log>", &module_info_boot, "<log>"},
+  {"find-binding", &module_info_ast, "find-binding"},
+  {"<free-reference>", &module_info_ast_linearize, "<free-reference>"},
+  {"%peek-char", &module_info_boot, "%peek-char"},
+  {"case-insensitive-string-hash", &module_info_protoScollectionsStable, "case-insensitive-string-hash"},
+  {"<assignment>", &module_info_ast, "<assignment>"},
+  {"vec", &module_info_boot, "vec"},
+  {"fun-name-setter", &module_info_boot, "fun-name-setter"},
+  {"pos?", &module_info_protoSmath, "pos?"},
+  {"$sexpr-define-syntax-tag", &module_info_syntax, "$sexpr-define-syntax-tag"},
+  {"<map>", &module_info_protoScollectionsSmap, "<map>"},
+  {"<slot>", &module_info_boot, "<slot>"},
+  {"sexpr-make-setter", &module_info_syntax, "sexpr-make-setter"},
+  {"%file-type", &module_info_boot, "%file-type"},
+  {"*exe-extension*", &module_info_protoSsystem, "*exe-extension*"},
+  {"subtype?", &module_info_boot, "subtype?"},
+  {"lowercase?", &module_info_protoSmath, "lowercase?"},
+  {"%%macro", &module_info_boot, "%%macro"},
+  {"ct-also", &module_info_boot, "ct-also"},
+  {"function-index", &module_info_ast, "function-index"},
+  {"*proto-root*", &module_info_protoSsystem, "*proto-root*"},
+  {"char->ascii", &module_info_protoSmath, "char->ascii"},
+  {"<reference>", &module_info_ast, "<reference>"},
+  {"not", &module_info_boot, "not"},
+  {"any?", &module_info_protoScollectionsScollection, "any?"},
+  {"function-binding", &module_info_ast, "function-binding"},
+  {"binding-inferred-type-setter", &module_info_ast, "binding-inferred-type-setter"},
+  {"sexpr-unquote-splicing?", &module_info_syntax, "sexpr-unquote-splicing?"},
+  {"<assocs>", &module_info_protoScollectionsSassoc, "<assocs>"},
+  {"%selt", &module_info_boot, "%selt"},
+  {"$proto-boot-module-name", &module_info_ast, "$proto-boot-module-name"},
+  {"program-quotations", &module_info_ast_linearize, "program-quotations"},
+  {"@<", &module_info_boot, "@<"},
+  {"format-to-string", &module_info_runtime, "format-to-string"},
+  {"/", &module_info_protoSmath, "/"},
+  {"fun-name", &module_info_boot, "fun-name"},
+  {"curry", &module_info_runtime, "curry"},
+  {"class-parents", &module_info_boot, "class-parents"},
+  {"function-temporaries-setter", &module_info_ast, "function-temporaries-setter"},
+  {"ast-contains-fun?", &module_info_ast_linearize, "ast-contains-fun?"},
+  {"may-isa?", &module_info_boot, "may-isa?"},
+  {"<any>", &module_info_boot, "<any>"},
+  {"<range>", &module_info_protoScollectionsSrange, "<range>"},
+  {"fix-let-types", &module_info_ast, "fix-let-types"},
+  {"function-debug-name", &module_info_ast, "function-debug-name"},
+  {"dm", &module_info_boot, "dm"},
+  {"force-output", &module_info_protoSports, "force-output"},
+  {"sexpr-monitor-expand", &module_info_syntax, "sexpr-monitor-expand"},
+  {"<ast-method>", &module_info_ast, "<ast-method>"},
+  {"alternative-condition", &module_info_ast, "alternative-condition"},
+  {"<module-loader>", &module_info_ast, "<module-loader>"},
+  {"low-elt", &module_info_protoScollectionsScollection, "low-elt"},
+  {"components-to-pathname", &module_info_protoSsystem, "components-to-pathname"},
+  {"%app-args", &module_info_boot, "%app-args"},
+  {"application-arguments", &module_info_ast, "application-arguments"},
+  {"form-definitions", &module_info_ast_linearize, "form-definitions"},
+  {"exe-filename", &module_info_protoSsystem, "exe-filename"},
+  {"gen-add-met", &module_info_boot, "gen-add-met"},
+  {"type-class", &module_info_boot, "type-class"},
+  {"%im", &module_info_boot, "%im"},
+  {"str", &module_info_protoScollectionsSstring, "str"},
+  {"%it/", &module_info_boot, "%it/"},
+  {"apply-next-method", &module_info_macros, "apply-next-method"},
+  {"%vlen", &module_info_boot, "%vlen"},
+  {"numeric?", &module_info_protoSmath, "numeric?"},
+  {"<union>", &module_info_boot, "<union>"},
+  {"floor/", &module_info_protoSmath, "floor/"},
+  {"select", &module_info_macros, "select"},
+  {"<raw-constant>", &module_info_ast, "<raw-constant>"},
+  {"seq", &module_info_boot, "seq"},
+  {"locals-bindings", &module_info_ast, "locals-bindings"},
+  {"binding-info", &module_info_ast, "binding-info"},
+  {"sexpr-function-body", &module_info_syntax, "sexpr-function-body"},
+  {"free-implemented-foreign-bindings", &module_info_ast, "free-implemented-foreign-bindings"},
+  {"slot-value", &module_info_boot, "slot-value"},
+  {"mif", &module_info_boot, "mif"},
+  {"<", &module_info_protoSmath, "<"},
+  {"fun-arity", &module_info_boot, "fun-arity"},
+  {"sexpr-variable-type", &module_info_syntax, "sexpr-variable-type"},
+  {"len-setter", &module_info_protoScollectionsSbuffer, "len-setter"},
+  {"compile-time-program", &module_info_ast, "compile-time-program"},
+  {"sexpr-variable-name", &module_info_syntax, "sexpr-variable-name"},
+  {"application-binding", &module_info_ast, "application-binding"},
+  {"3rd", &module_info_protoScollectionsSsequence, "3rd"},
+  {"signature-value-setter", &module_info_ast, "signature-value-setter"},
+  {"from-below", &module_info_protoScollectionsSsequence, "from-below"},
+  {"<sequential>", &module_info_ast, "<sequential>"},
+  {"bound?-reference", &module_info_ast, "bound?-reference"},
+  {"sexpr-make-setter-name", &module_info_syntax, "sexpr-make-setter-name"},
+  {"table-growth-threshold-setter", &module_info_protoScollectionsStable, "table-growth-threshold-setter"},
+  {"table-growth-factor", &module_info_protoScollectionsStable, "table-growth-factor"},
+  {"sequentialize", &module_info_ast, "sequentialize"},
+  {"<input-port>", &module_info_protoSports, "<input-port>"},
+  {"map", &module_info_macros, "map"},
+  {"fun", &module_info_boot, "fun"},
+  {"sexpr-variable?", &module_info_syntax, "sexpr-variable?"},
+  {"%i*", &module_info_boot, "%i*"},
+  {"sexpr-isa-init-slots", &module_info_syntax, "sexpr-isa-init-slots"},
+  {"signature-nary?", &module_info_ast, "signature-nary?"},
+  {"*path-separator*", &module_info_protoSsystem, "*path-separator*"},
+  {"<simple-error>", &module_info_runtime, "<simple-error>"},
+  {"%f<", &module_info_boot, "%f<"},
+  {"collected", &module_info_macros, "collected"},
+  {"do-named-static-global-bindings", &module_info_ast, "do-named-static-global-bindings"},
+  {"ascii-whitespaces", &module_info_protoScollectionsSstring, "ascii-whitespaces"},
+  {"<subclass>", &module_info_boot, "<subclass>"},
+  {"function-source", &module_info_ast, "function-source"},
+  {"%process-module", &module_info_boot, "%process-module"},
+  {"global-box-value-setter", &module_info_ast, "global-box-value-setter"},
+  {"function-index-setter", &module_info_ast, "function-index-setter"},
+  {"$proto-runtime-module-name", &module_info_ast, "$proto-runtime-module-name"},
+  {"push", &module_info_protoScollectionsSlist, "push"},
+  {"pop", &module_info_protoScollectionsSlist, "pop"},
+  {"signature-nary?-setter", &module_info_ast, "signature-nary?-setter"},
+  {"fab-sym", &module_info_boot, "fab-sym"},
+  {"<global-box>", &module_info_ast, "<global-box>"},
+  {"def-fun-var", &module_info_macros, "def-fun-var"},
+  {"sig-arity", &module_info_boot, "sig-arity"},
+  {"rev!", &module_info_macros, "rev!"},
+  {"locals-functions-setter", &module_info_ast, "locals-functions-setter"},
+  {"components-last", &module_info_protoSsystem, "components-last"},
+  {"free-environment", &module_info_ast, "free-environment"},
+  {"or", &module_info_macros, "or"},
+  {"signature-arity", &module_info_ast, "signature-arity"},
+  {"binding-info-setter", &module_info_ast, "binding-info-setter"},
+  {"unless", &module_info_macros, "unless"},
+  {"from-above-by", &module_info_protoScollectionsSrange, "from-above-by"},
+  {"min", &module_info_protoSmath, "min"},
+  {"sexpr-syntax-definition-value", &module_info_syntax, "sexpr-syntax-definition-value"},
+  {"%write-string", &module_info_boot, "%write-string"},
+  {"alternative-consequent", &module_info_ast, "alternative-consequent"},
+  {"from-by", &module_info_protoScollectionsSrange, "from-by"},
+  {"%invoke-debugger", &module_info_boot, "%invoke-debugger"},
+  {"application-known?", &module_info_ast, "application-known?"},
+  {"port-line-setter", &module_info_protoSports, "port-line-setter"},
+  {"as-copy", &module_info_protoScollectionsScollection, "as-copy"},
+  {"function-data-refs-setter", &module_info_ast, "function-data-refs-setter"},
+  {"alter", &module_info_protoScollectionsScollection, "alter"},
+  {"sexpr-iterate->loc", &module_info_syntax, "sexpr-iterate->loc"},
+  {"copy-state", &module_info_protoScollectionsScollection, "copy-state"},
+  {"elt-setter", &module_info_protoScollectionsScollection, "elt-setter"},
+  {"fab-p2c-module", &module_info_ast, "fab-p2c-module"},
+  {"sexpr-syntax-if-value", &module_info_syntax, "sexpr-syntax-if-value"},
+  {"binding-module-name", &module_info_ast, "binding-module-name"},
+  {"fix-let-types-setter", &module_info_ast, "fix-let-types-setter"},
+  {"unexec", &module_info_boot, "unexec"},
+  {"match-atom", &module_info_macros, "match-atom"},
+  {"handler-function", &module_info_runtime, "handler-function"},
+  {"%ib", &module_info_boot, "%ib"},
+  {"quasiquote", &module_info_boot, "quasiquote"},
+  {"$sexpr-isa-tag", &module_info_syntax, "$sexpr-isa-tag"},
+  {"write", &module_info_write, "write"},
+  {"probe-directory", &module_info_protoSsystem, "probe-directory"},
+  {"@olen", &module_info_boot, "@olen"},
+  {"<ast-primitive>", &module_info_ast, "<ast-primitive>"},
+  {"%do-stack-frames", &module_info_boot, "%do-stack-frames"},
+  {"<singleton>", &module_info_boot, "<singleton>"},
+  {"reference-offset", &module_info_ast_linearize, "reference-offset"},
+  {"os-binding-value-setter", &module_info_protoSsystem, "os-binding-value-setter"},
+  {"%binding-value-setter", &module_info_ast_eval, "%binding-value-setter"},
+  {"2nd", &module_info_protoScollectionsSsequence, "2nd"},
+  {"pushf", &module_info_macros, "pushf"},
+  {"tup", &module_info_boot, "tup"},
+  {"update-walk!", &module_info_ast_linearize, "update-walk!"},
+  {"display", &module_info_write, "display"},
+  {"ceiling", &module_info_protoSmath, "ceiling"},
+  {"report-undefined-global-bindings", &module_info_ast, "report-undefined-global-bindings"},
+  {"module-loader-module-type", &module_info_ast, "module-loader-module-type"},
+  {"$permanent-hash-state", &module_info_protoScollectionsStable, "$permanent-hash-state"},
+  {"nxt-state", &module_info_macros, "nxt-state"},
+  {"%force-output", &module_info_boot, "%force-output"},
+  {"collecting", &module_info_macros, "collecting"},
+  {"process-id", &module_info_protoSsystem, "process-id"},
+  {"<closure-creation>", &module_info_ast_linearize, "<closure-creation>"},
+  {"abs", &module_info_protoSmath, "abs"},
+  {"ceiling/", &module_info_protoSmath, "ceiling/"},
+  {"loc", &module_info_boot, "loc"},
+  {"%lb", &module_info_boot, "%lb"},
+  {"%allocate-stack", &module_info_boot, "%allocate-stack"},
+  {"install-initial-bindings", &module_info_ast, "install-initial-bindings"},
+  {"app-args", &module_info_runtime, "app-args"},
+  {"load-module", &module_info_ast, "load-module"},
+  {"sexpr-if-then", &module_info_syntax, "sexpr-if-then"},
+  {"%f-", &module_info_boot, "%f-"},
+  {"%velt", &module_info_boot, "%velt"},
+  {"sexpr-method-signature", &module_info_syntax, "sexpr-method-signature"},
+  {"reference-called-function?", &module_info_ast, "reference-called-function?"},
+  {"%binding-name", &module_info_boot, "%binding-name"},
+  {"%write-char", &module_info_boot, "%write-char"},
+  {"$sexpr-slot-tag", &module_info_syntax, "$sexpr-slot-tag"},
+  {"<string-port>", &module_info_protoSports, "<string-port>"},
+  {"*boot-macro-expanders*", &module_info_boot, "*boot-macro-expanders*"},
+  {"now-key", &module_info_protoScollectionsScollection, "now-key"},
+  {"%loc-off-setter", &module_info_boot, "%loc-off-setter"},
+  {"incongruent-method-error", &module_info_boot, "incongruent-method-error"},
+  {"sub-setter", &module_info_protoScollectionsSsequence, "sub-setter"},
+  {"reference-called-function?-setter", &module_info_ast, "reference-called-function?-setter"},
+  {"close-input-port", &module_info_protoSports, "close-input-port"},
+  {"%with-monitor", &module_info_boot, "%with-monitor"},
+  {"popf", &module_info_macros, "popf"},
+  {"bind-exit-main-fun", &module_info_ast, "bind-exit-main-fun"},
+  {"write-char", &module_info_protoSports, "write-char"},
+  {"newline", &module_info_protoSports, "newline"},
+  {"function-nary?", &module_info_ast, "function-nary?"},
+  {"unwind-protect-protected-thunk", &module_info_ast, "unwind-protect-protected-thunk"},
+  {"<global-assignment>", &module_info_ast, "<global-assignment>"},
+  {"box-reference", &module_info_ast_linearize, "box-reference"},
+  {"add-slot", &module_info_boot, "add-slot"},
+  {"app-filename", &module_info_runtime, "app-filename"},
+  {"application-function", &module_info_ast, "application-function"},
+  {"monitor-test", &module_info_ast, "monitor-test"},
+  {"nyi-error", &module_info_protoSmath, "nyi-error"},
+  {"function-free", &module_info_ast, "function-free"},
+  {"as-lst", &module_info_ast, "as-lst"},
+  {"isa?", &module_info_boot, "isa?"},
+  {"%file-mtime", &module_info_boot, "%file-mtime"},
+  {"monitor-main-thunk", &module_info_ast, "monitor-main-thunk"},
+  {"describe-condition", &module_info_runtime, "describe-condition"},
+  {"fun-nary?", &module_info_boot, "fun-nary?"},
+  {"now-elt", &module_info_macros, "now-elt"},
+  {"~=", &module_info_protoSmath, "~="},
+  {"locals-functions", &module_info_ast, "locals-functions"},
+  {"do2", &module_info_protoScollectionsScollection, "do2"},
+  {"1st", &module_info_protoScollectionsSsequence, "1st"},
+  {"match-unquote", &module_info_macros, "match-unquote"},
+  {"logbit?", &module_info_protoSmath, "logbit?"},
+  {"contagious-call", &module_info_protoSmath, "contagious-call"},
+  {"assert", &module_info_macros, "assert"},
+  {"var-name", &module_info_macros, "var-name"},
+  {"elt", &module_info_macros, "elt"},
+  {"$default-handler-info", &module_info_runtime, "$default-handler-info"},
+  {"slot-getter", &module_info_boot, "slot-getter"},
+  {"%define-method", &module_info_boot, "%define-method"},
+  {"<runtime-reference>", &module_info_ast, "<runtime-reference>"},
+  {"assq", &module_info_protoScollectionsSlist, "assq"},
+  {"%close-input-port", &module_info_boot, "%close-input-port"},
+  {"obj-filename", &module_info_protoSsystem, "obj-filename"},
+  {"power-of-two-ceiling", &module_info_protoSmath, "power-of-two-ceiling"},
+  {"runtime-environment", &module_info_ast, "runtime-environment"},
+  {"binding-index", &module_info_ast, "binding-index"},
   {NULL,NULL,NULL}
 };
 
 static BINDING_INFO binding_infos[] = {
-  {"load", &YtopYload},
-  {"prompt-for-command-expression", &YtopYprompt_for_command_expression},
-  {"str-parse-in", &YtopYstr_parse_in},
-  {"backtrace", &YtopYbacktrace},
-  {"read-file", &YtopYread_file},
-  {"str-parse", &YtopYstr_parse},
-  {"eval-in", &YtopYeval_in},
-  {"p2c-eval", &YtopYp2c_eval},
   {"parse", &YtopYparse},
-  {"top", &YtopYtop},
-  {"auto-run", &YtopYauto_run},
-  {"str-eval", &YtopYstr_eval},
   {"do-stack-frames", &YtopYdo_stack_frames},
-  {"str-eval-in", &YtopYstr_eval_in},
-  {"run", &YtopYrun},
-  {"top-in", &YtopYtop_in},
-  {"p2c-run", &YtopYp2c_run},
   {"ast-run", &YtopYast_run},
-  {"print-result-expression", &YtopYprint_result_expression},
-  {"parse-in", &YtopYparse_in},
-  {"save-image", &YtopYsave_image},
+  {"read-file", &YtopYread_file},
+  {"eval-in", &YtopYeval_in},
   {"<keyboard-interrupt>", &YtopYLkeyboard_interruptG},
-  {"load-from", &YtopYload_from},
-  {"do-restart", &YtopYdo_restart},
+  {"parse-in", &YtopYparse_in},
+  {"run", &YtopYrun},
   {"---main-0---", NULL},
+  {"do-restart", &YtopYdo_restart},
+  {"auto-run", &YtopYauto_run},
+  {"prompt-for-command-expression", &YtopYprompt_for_command_expression},
+  {"str-parse", &YtopYstr_parse},
+  {"load-from", &YtopYload_from},
+  {"p2c-run", &YtopYp2c_run},
+  {"print-result-expression", &YtopYprint_result_expression},
+  {"top", &YtopYtop},
+  {"load", &YtopYload},
+  {"backtrace", &YtopYbacktrace},
+  {"save-image", &YtopYsave_image},
+  {"str-eval", &YtopYstr_eval},
+  {"top-in", &YtopYtop_in},
+  {"str-parse-in", &YtopYstr_parse_in},
+  {"str-eval-in", &YtopYstr_eval_in},
+  {"p2c-eval", &YtopYp2c_eval},
   {NULL, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"load", "load"},
-  {"eval", "eval"},
-  {"read-file", "read-file"},
   {"p2c-eval", "p2c-eval"},
-  {"top", "top"},
-  {"do-stack-frames", "do-stack-frames"},
   {"backtrace", "backtrace"},
+  {"do-stack-frames", "do-stack-frames"},
+  {"eval", "eval"},
   {"parse-in", "parse-in"},
+  {"read-file", "read-file"},
+  {"top", "top"},
   {"save-image", "save-image"},
+  {"load", "load"},
   {NULL, NULL}
 };
 
@@ -3043,6 +3097,10 @@ extern void load_module_ast (void);
 extern void load_module_ast_linearize (void);
 extern void load_module_ast_eval (void);
 extern void load_module_protoSsystem (void);
+extern void load_module_protoStypes (void);
+extern void load_module_protoSmath (void);
+extern void load_module_protoScollections (void);
+extern void load_module_protoSports (void);
 
 /* EXPRESSION: */
 
@@ -3063,6 +3121,10 @@ void load_module_top (void) {
   load_module_ast_linearize();
   load_module_ast_eval();
   load_module_protoSsystem();
+  load_module_protoStypes();
+  load_module_protoSmath();
+  load_module_protoScollections();
+  load_module_protoSports();
 
   (P)YtopY___main_0___();
 

@@ -4,23 +4,41 @@ C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 	$(CC) -I.. -c -g -O -o $@ $<
 
 OBJS = \
-	main.o \
-	ast-eval.o \
-	proto.o \
-	read.o \
-	write.o \
-	runtime.o \
-	ast-linearize.o \
-	p2c.o \
-	macros.o \
-	boot.o \
 	syntax.o \
-	strings.o \
-	proto/user.o \
-	top.o \
 	proto/system.o \
-	proto/eval.o \
+	proto/math.o \
+	read.o \
+	proto/collections/collection.o \
+	main.o \
+	macros.o \
+	proto/collections/buffer.o \
 	ast.o \
+	runtime.o \
+	proto/collections/table.o \
+	proto/collections/vector.o \
+	proto/collections/range.o \
+	strings.o \
+	proto/collections/map.o \
+	proto/collections/flat.o \
+	proto.o \
+	proto/collections/string.o \
+	proto/user.o \
+	proto/collections/opts.o \
+	p2c.o \
+	boot.o \
+	ast-eval.o \
+	ast-linearize.o \
+	proto/collections.o \
+	top.o \
+	proto/collections/step.o \
+	proto/collections/assoc.o \
+	proto/ports.o \
+	runtime1.o \
+	proto/types.o \
+	proto/eval.o \
+	write.o \
+	proto/collections/list.o \
+	proto/collections/sequence.o \
 	p2c-init.o
 
 p2c: $(C_OBJS_DD) $(OBJS)
