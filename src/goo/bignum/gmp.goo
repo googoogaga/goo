@@ -24,6 +24,12 @@
 (dl %tdiv-qr-b-b)
 (dl %tdiv-qr-b-i)
 (dl %pow-b-i)
+(dl %rawint-to-goo)
+(dl %fixnum-to-bignum)
+(dl %gmp-initialize)
+
+;; setup the memory allocation stuff for the gmp library
+(%gmp-initialize)
 
 (dm (+ inline) (x|<bignum> y|<bignum> => <int>)
   (%add-b-b x y))
@@ -72,13 +78,13 @@
   (%eq? (%sgn-b y) 1))
 
 (dm (< inline) (x|<bignum> y|<fixnum> => <log>)
-  (%eq? (%sgn-b x) -1))
+  (%bb (%eq? (%sgn-b x) -1)))
 
 (dm (< inline) (x|<bignum> y|<bignum> => <log>)
-  (%eq? (%cmp-b-b x y) -1))
+  (%bb (%eq? (%cmp-b-b x y) -1)))
 
 (dm (== inline) (x|<bignum> y|<bignum> => <log>)
-  (%eq? (%cmp-b-b x y) 0))
+  (%bb (%eq? (%cmp-b-b x y) 0)))
 
 (dm (#| inline) (x|<bignum> y|<bignum> => <int>)
   (%ior-b-b x y))
@@ -138,7 +144,22 @@
       (/ 1 (%pow-b-i x (neg n)))
       (%pow-b-i x n)))
 
-;; this overrides the method in math.goo
-(dm pow (x|<fixnum> n|<fixnum> => <num>)
-  (%pow-b-i (as <bignum> x) n))
+;; these override the methods in math.goo
 
+(dm (+ inline) (x|<fixnum> y|<fixnum> => <int>)
+  (%rawint-to-goo (%i+ (%iu x) (%iu y))))
+
+(dm (- inline) (x|<fixnum> y|<fixnum> => <int>)
+  (%rawint-to-goo (%i- (%iu x) (%iu y))))
+
+(dm (* inline) (x|<fixnum> y|<fixnum> => <int>)
+  (%mul-b-i (%fixnum-to-bignum x) y))
+
+(dm pow (x|<fixnum> n|<fixnum> => <num>)
+  (%pow-b-i (%fixnum-to-bignum x) n))
+
+(dm (<< inline) (x|<fixnum> a|<fixnum> => <int>)
+  (def bx (%fixnum-to-bignum x))
+  (if (> a 0)
+      (%lsh-b-i bx a)
+      (%rsh-b-i bx (- 0 a))))

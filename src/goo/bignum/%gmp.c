@@ -1,13 +1,21 @@
 #include <gmp.h>
+#include <values.h>
 #include "grt.h"
 
 #define MODN(name) YgooSbignumSgmpYP##name
 
-#define MAX_GOO_FIXNUM 0x1FFFFFFF
-#define MIN_GOO_FIXNUM -0x20000000
-
 EXT(Ytup,"goo/boot","tup");
 EXT(YLbignumG,"goo/bignum/gmp","<bignum>");
+
+
+static mp_limb_t dummy_limb;
+
+static inline mpz_init_zero(mpz_ptr z)
+{
+	z->_mp_size = 0;
+	z->_mp_alloc = 0;
+	z->_mp_d = &dummy_limb;
+}
 
 // checks if the mpz will fit in a GOO fixnum (long - 2 tag bits)
 static inline int mpz_fits_fixnum(mpz_ptr z)
@@ -19,6 +27,10 @@ static inline int mpz_fits_fixnum(mpz_ptr z)
 			|| (size == 1  && data <= MAX_GOO_FIXNUM)
 			|| (size == -1 && data <= - (mp_limb_t) MIN_GOO_FIXNUM));
 
+}
+
+static inline int rawint_fits_fixnum(PINT x) {
+	return (x <= MAX_GOO_FIXNUM && x >= MIN_GOO_FIXNUM);
 }
 
 // returns a GOO integer
@@ -39,7 +51,7 @@ static inline P mpz_to_fixnum(mpz_ptr z)
 
 static inline P mpz_to_bignum(mpz_ptr p)
 {
-	P obj = (P)allocate(sizeof(P)+sizeof(__mpz_struct));
+	P* obj = (P*)allocate(sizeof(P)+sizeof(__mpz_struct));
 	YPobject_class_setter(YLbignumG, obj);
 	mpz_ptr newp = (mpz_ptr)(obj+1);
 	*newp = *p;
@@ -48,7 +60,29 @@ static inline P mpz_to_bignum(mpz_ptr p)
 
 static inline mpz_ptr bignum_to_mpz(P obj)
 {
-	return (mpz_ptr)(obj+1);
+	return (mpz_ptr)(((P*)obj)+1);
+}
+
+// this should only be used internally, as most functions assume bignums
+// cannot be in the range of fixnums
+P MODN(fixnum_to_bignum) (P num)
+{
+	mpz_t mpz;
+	mpz_init_set_si(mpz, untag(num));
+	return mpz_to_bignum(mpz);
+}
+
+P MODN(rawint_to_goo) (PINT num)
+{
+	if(rawint_fits_fixnum(num))
+		return YPib((P)num);
+	else
+	{
+		mpz_t mpz;
+		mpz_init_zero(mpz);
+		mpz_init_set_si(mpz, num);
+		return mpz_to_bignum(mpz);
+	}
 }
 
 P mpz_to_goo(mpz_ptr result)
@@ -63,6 +97,7 @@ P mpz_to_goo(mpz_ptr result)
 P MODN(name) (P op1, P op2) \
 { \
 	mpz_t z; \
+	mpz_init_zero(z); \
 	fun (z, bignum_to_mpz(op1), bignum_to_mpz(op2)); \
 	return mpz_to_goo(z); \
 }
@@ -71,6 +106,7 @@ P MODN(name) (P op1, P op2) \
 P MODN(name) (P op1, P op2) \
 { \
 	mpz_t z; \
+	mpz_init_zero(z); \
 	fun (z, bignum_to_mpz(op1), untag(op2)); \
 	return mpz_to_goo(z); \
 }
@@ -79,6 +115,7 @@ P MODN(name) (P op1, P op2) \
 P MODN(name) (P op) \
 { \
 	mpz_t z; \
+	mpz_init_zero(z); \
 	fun (z, bignum_to_mpz(op)); \
 	return mpz_to_goo(z); \
 }
@@ -95,6 +132,7 @@ DEFINE_B_B(add_b_b, mpz_add)
 P MODN(add_b_i) (P op1, P op2)
 {
 	mpz_t z;
+	mpz_init_zero(z);
 	if (op2 >= 0)
 		mpz_add_ui(z, bignum_to_mpz(op1), untag(op2));
 	else
@@ -107,6 +145,7 @@ DEFINE_B_B(sub_b_b, mpz_sub)
 P MODN(sub_b_i) (P op1, P op2)
 {
 	mpz_t z;
+	mpz_init_zero(z);
 	if (op2 >= 0)
 		mpz_sub_ui(z, bignum_to_mpz(op1), untag(op2));
 	else
@@ -117,6 +156,7 @@ P MODN(sub_b_i) (P op1, P op2)
 P MODN(sub_i_b) (P op1, P op2)
 {
 	mpz_t z;
+	mpz_init_zero(z);
 	if (op1 >= 0)
 		mpz_sub_ui(z, bignum_to_mpz(op2), untag(op1));
 	else
@@ -132,7 +172,14 @@ DEFINE_B(neg_b, mpz_neg)
 
 // cannot call these with negative shifts
 DEFINE_B_I(rsh_b_i, mpz_fdiv_q_2exp)
-DEFINE_B_I(lsh_b_i, mpz_mul_2exp)
+//DEFINE_B_I(lsh_b_i, mpz_mul_2exp)
+P MODN(lsh_b_i) (P op1, P op2) 
+{ 
+	mpz_t z; 
+	mpz_init_zero(z);
+	mpz_mul_2exp (z, bignum_to_mpz(op1), untag(op2)); 
+	return mpz_to_goo(z); 
+}
 
 /*
   comparison
@@ -175,6 +222,8 @@ DEFINE_B_B(tdiv_r_b_b, mpz_tdiv_r)
 P MODN(tdiv_qr_b_b) (P op1, P op2)
 {
 	mpz_t q, r;
+	mpz_init_zero(q);
+	mpz_init_zero(r);
 	mpz_tdiv_qr(q, r, bignum_to_mpz(op1), bignum_to_mpz(op2));
 	return XXCALLN(1, Ytup, 2, mpz_to_goo(q), mpz_to_goo(r));
 }
@@ -196,6 +245,7 @@ P MODN(tdiv_r_b_i) (P op1, P op2)
 P MODN(tdiv_q_b_i) (P op1, P op2)
 {
 	mpz_t q;
+	mpz_init_zero(q);
 	PINT d = (op2 > 0)?untag(op2):-untag(op2);
 	mpz_tdiv_q_ui(q, bignum_to_mpz(op1), d);
 	if(op2<0)
@@ -208,6 +258,8 @@ P MODN(tdiv_qr_b_i) (P op1, P op2)
 	mpz_t q;
 	long r;
 	mpz_ptr op1m = bignum_to_mpz(op1);
+	mpz_init_zero(q);
+
 	PINT d = (op2 > 0)?untag(op2):-untag(op2);
 	r = mpz_tdiv_q_ui(q, op1m, d);
 	if(mpz_sgn(op1m) < 0)
@@ -223,3 +275,21 @@ P MODN(tdiv_qr_b_i) (P op1, P op2)
 
 // only works with positive exponent
 DEFINE_B_I(pow_b_i, mpz_pow_ui)
+
+
+static void *gmp_realloc(void *ptr, size_t old, size_t new)
+{
+	if(ptr == &dummy_limb)
+		return GC_realloc(NULL, new);
+	else
+		return GC_realloc(ptr, new);
+}
+
+static void do_nothing_free(void *ptr, size_t size)
+{
+	//...do nothing
+}
+P MODN(gmp_initialize) ()
+{
+	mp_set_memory_functions(GC_malloc, gmp_realloc, do_nothing_free);
+}
