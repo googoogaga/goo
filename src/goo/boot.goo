@@ -1,5 +1,10 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
+;;; GOALS
+;;;
+;;; SIMPLEST POSSIBLE
+;;; DYNAMIC ORDER FORM BY FORM
+;;; MINIMIZE OBJECT SYSTEM OBFUSCATION
 ;;;
 ;;; TODO
 ;;; 
@@ -102,6 +107,8 @@
 	  (slot <gen> (fun-mets <lst>)  nil)
 	  (slot <gen> (fun-cache <any>) %false))))
 
+;; RETURN PROTOTYPE DEFS FROM BOOT DEFS
+
 (ct (df %map-boot-protos (f)
       (rep loop ((res '()) (defs (%boot-defs)))
         (if (empty? defs)
@@ -110,6 +117,8 @@
 		       (pair (f name parent) res)
 		       res)
 		  (tail defs))))))
+
+;; RETURN SLOT DEFS FROM BOOT DEFS
 
 (ct (df %map-boot-slots (f)
       (rep loop ((res '()) (defs (%boot-defs)))
@@ -124,7 +133,7 @@
 		  (tail defs))))))
 
 ;;;
-;;; 1. BUILD EMPTY PROTOTYPE OBJECTS 
+;;; 1. BUILD EMPTY PROTOTYPE OBJECTS WITH TRAITS
 ;;;
 
 (dp %%traits (owner)

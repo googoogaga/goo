@@ -20,3 +20,7 @@
 ;; (dm p2c-files (filenames)
 ;;   (p2c-files-in* filenames (rt-env) (ct-env) #f))
 
+;; (dv <t> (isa <any>))
+;; (dv <u> (isa <t>))
+;; (dm ttt ((x <t>)) x)
+;; (dm ttt-setter (z (x <t>)) x)

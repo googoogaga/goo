@@ -121,7 +121,14 @@
        ;; (pop *stack*)
        )))
 
-(dm export-proto-method (f names specs nary? body env)
+;; TODO -- CLEAN UP BELOW
+(dm as-fun-name ((x <fun>) => <any>)            (fun-name x))
+(dm as-fun-name ((x <ast-function>) => <any>)   (as-fun-name (function-name x)))
+(dm as-fun-name ((x <global-binding>) => <any>) (binding-name x))
+(dm as-fun-name ((x <sym>) => <sym>)            x)
+(dm as-fun-name ((x <any>) => <any>)            #f)
+
+(dm export-proto-method (f names specs nary? value body env)
   (let ((efun
 	 (select (len names)
 	   ((0) (ifun (env f names) body))
@@ -135,12 +142,11 @@
 	   ((8) (ifun (env f names a1 a2 a3 a4 a5 a6 a7 a8) body))
 	   ((9) (ifun (env f names a1 a2 a3 a4 a5 a6 a7 a8 a9) body)))))
     ;; TODO: HANDLE MORE THAN 7 CASE
-    (when nary?
-      (set (fun-nary? efun) #t)
-      (dec (fun-arity efun)))
-    (set (fun-name  efun) (function-name f))
-    (set (fun-names efun) names)
-    (set (fun-specs efun) (ast-eval-specs specs nary? env))
+    (set (fun-name  efun) (as-fun-name f)) 
+    (set (fun-sig efun) ;; TODO: USE ISA
+	 (%sig names (ast-eval-specs specs nary? env) nary?
+	       (- (fun-arity efun) (if nary? 1 0))
+	       (if value (ast-eval value env) <any>)))
     efun))
 
 (dm ast-eval ((e <ast-method>) (env <loc-env>))
@@ -148,7 +154,7 @@
 	(eval   (fun ((env <loc-env>)) (ast-eval (function-body e) env))))
     (export-proto-method
      e (map binding-name params) (map binding-type params) 
-     (function-nary? e) eval env)))
+     (function-nary? e) (function-value e) eval env)))
 
 ;; (dm ast-eval ((e <ast-primitive>) (env <loc-env>))
 ;;   (let ((params (function-bindings e))
@@ -160,7 +166,7 @@
 	(nary?  (function-nary? e))
 	(names  (map binding-name params))
 	(specs  (ast-eval-specs (map binding-type params) nary? env)))
-    (fab-gen (function-name e) names specs nary? '())))
+    (fab-gen (as-fun-name e) names specs nary? '())))
 
 (dm env-local-reference-value ((env <loc-env>) (ref <local-reference>) => <any>)
   (env-local-value
@@ -307,7 +313,7 @@
   (lab return
     (let ((rproc (fun ((env <loc-env>)) 
 		   (return (env-binding-value env 'x))))
-	  (exit  (export-proto-method rproc (lst 'x) (lst #f) #f rproc env)))
+	  (exit  (export-proto-method rproc (lst 'x) (lst #f) #f #f rproc env)))
       ((ast-eval (bind-exit-main-fun e) env) exit))))
 
 (dm ast-eval ((e <unwind-protect>) (env <loc-env>))

@@ -1,6 +1,6 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(dv *proto-version* "0.90")
+(dv *proto-version* "0.91")
 (dv *proto-date*    "JUN 21, 2001")
 
 (format out ";;; \n")
