@@ -114,14 +114,34 @@
 
 (dv *stack* (fab <buf> 0))
 
-(ds (ifun ,env ,f ,names ,body)
-  `(fun ((args ...))
-     (let ((nms
+;;; Check to make sure we have a legal number of arguments, and arrange
+;;; them in the fashion required by our argument list.
+;;; TODO - There's probably another one of these functions hiding somewhere
+;;; in the compiler or runtime.  Look for it, and see if we can use it instead
+;;; of this code.
+;;; TODO - Add function name argument for better error messages.
+(df arrange-arguments (f (nary? <log>) (arity <int>) (args <lst>)
+                       => <lst>)
+  (let ((count (len args)))
+    (if nary?
+        (if (< count arity)
+            (error "%= called with %=; needs at least %d arguments"
+                   (as-fun-name f) args arity)
+            (cat2 (sub args 0 arity) (lst (sub args arity count))))
+        (if (~== count arity)
+            (error "%= called with %=; needs %d arguments"
+                   (as-fun-name f) args arity)
+            args))))
+
+(ds (ifun ,env ,f ,nary? ,arity ,names ,body)
+  `(fun ((arg-vector ...))
+     (let ((args (arrange-arguments f nary? arity (as <lst> arg-vector)))
+           (nms
 	    (%next-methods))
 	   (frame 
 	    (env-frame! ;; TODO: SLOW HACK
 	     ,env ,f (cat2 ,names (lst '%next-methods))
-             (cat2 (as <lst> args) (lst nms)))))
+             (cat2 args (lst nms)))))
        ;; (push-last! *stack* frame)
        (,body frame)
        ;; (pop-last! *stack*)
@@ -142,15 +162,15 @@
   #f)
 
 (dm export-proto-method (f names specs nary? value body env)
-  (let ((efun
-         (ifun env f names body)))
+  (let ((arity (if nary? (- (len specs) 1) (len specs)))
+        (efun  (ifun env f nary? arity names body)))
     (set (fun-name  efun) (as-fun-name f))
     (set (fun-sig efun)
          (isa <sig>
            (set sig-names names)
            (set sig-specs (ast-eval-specs specs nary? env))
            (set sig-nary? nary?)
-           (set sig-arity (if nary? (- (len specs) 1) (len specs)))
+           (set sig-arity arity)
            (set sig-value (if value (ast-eval value env) <any>))
            (set sig-unification-vars '())))
     efun))
