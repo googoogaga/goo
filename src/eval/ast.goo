@@ -865,7 +865,7 @@
               (arity (- (len names) (if nary? 1 0))))
           (new <ast-signature>
             signature-bindings (rev! bindings)
-            signature-names    (rev! names)
+            signature-names    (objectify-quotation (rev! names) r)
             signature-specs    (rev! types)
             signature-nary?    (objectify nary? r #f)
             signature-arity    (objectify arity r #f)
@@ -876,7 +876,6 @@
               (dotted? (== stype $sexpr-optionals-tag))
               (stype   (if dotted? $sexpr-optionals-type-name stype))
               (type    (objectify stype r #f))
-              (name    (objectify-quotation sname r))
               (binding
                (new <local-binding>
                  binding-name sname
@@ -884,8 +883,8 @@
                  binding-dotted? dotted?)))
           (col (tail params) dotted? 
                (pair binding bindings)
-               (new <fab-list> head name tail names)
-               (new <fab-list> head type tail types))))))
+               (new <fab-list> head sname tail names)
+               (new <fab-list> head type  tail types))))))
 
 (dm compute-local-reference-offsets 
     (binding|<local-binding> r|<static-local-environment> 
