@@ -232,7 +232,8 @@
   (recurring-write port x d recur))
 
 (dm write-type ((port <output-port>) x)
-  (recurring-write-type port x 0 recurring-write))
+  (rep recur ((x x) (d 0))
+    (recurring-write-type port x d recur)))
 
 (dm recurring-write ((port <output-port>) (x <slot>) (d <int>) (recur <fun>))
   (write-string port "#{Slot ")

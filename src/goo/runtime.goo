@@ -575,8 +575,8 @@
         (and (= (now-elt c1 s1)  (now-elt c2 s2))
              (eq (nxt-state c1 s1) (nxt-state c2 s2))))))
 
-(dm fab ((c (t< <col>)) (s <int>) => <bot>)
-  (nyi-error))
+;(dm fab ((c (t< <col>)) (s <int>) => <bot>)
+;  (nyi-error))
 
 (dm as ((p (t< <col>)) (x <col>) => <col>)
   (into (fab p (len x)) x 0 (len x)))

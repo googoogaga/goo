@@ -48,7 +48,7 @@
         %do-stack-frames 
         %unexec
         %build-runtime-modules %process-module
-        %loc-off %loc-off-setter %raw-call %check-call-types %location-of-end-of-vec
+        %loc-off %loc-off-setter %raw-call %check-call-types
         %sp-reg %sp-reg-setter %fp-reg %fp-reg-setter %unlink-stack
         )
 ))
@@ -962,26 +962,14 @@
 (dp @class-isa? (o c => <log>)
   (@subclass? (%class-of o) c))
 
-(dp @union-isa? (o u => <log>)
-  (@any? (fun (t) (@isa? o t)) (%type-elts u)))
-
 (dp @singleton-isa? (o t => <log>)
   ;; TODO: FIX UP TO DO PROPER ==
   (@== (%type-object t) o))
 
-(dp @subclass-isa? (o t => <log>)
-  (and (@isa? o <class>)
-       (@subclass? o (%type-class t))))
-
 (df @isa? (o t => <log>)
-  (case 
-    ((@class-isa? t <class>)     (@class-isa? o t))     
-    ((@class-isa? t <singleton>) (@singleton-isa? o t)) 
-    ((@class-isa? t <subclass>)  (@subclass-isa? o t)) 
-    ((@class-isa? t <union>)     (@union-isa? o t))
-    (#t                          (nyi-isa? o t))))
-
-;; TODO: DEF ISA METHODS
+  (if (@== (%class-of t) <class>)
+      (@class-isa? o t)
+      (isa? o t)))
 
 (df @class< (c1 c2 wrt => <log>)
   (rep find ((ps (%class-parents wrt)))
@@ -1002,128 +990,47 @@
 
 (df @type-equal? (t1 t2 => <log>)
   (or (@== t1 t2)
-      (and (not (@class-isa? t1 <class>)) (not (@class-isa? t2 <class>))
+      (and (not (@== (%class-of t1) <class>)) (not (@== (%class-of t2) <class>))
            (@subtype? t1 t2) (@subtype? t2 t1))))
 
 (df @subtype? (t1 t2 => <log>)
-  (case 
-    ((@class-isa? t1 <union>)
-     (@all? (fun (t) (@subtype? t t2)) (%type-elts t1)))
-    ((@class-isa? t2 <union>)
-     (@any? (fun (t) (@subtype? t1 t)) (%type-elts t2)))
-    ((@class-isa? t2 <class>)
-     (case
-       ((@class-isa? t1 <class>)     (@subclass? t1 t2))
-       ((@class-isa? t1 <singleton>) (@isa? (%type-object t1) t2))
-       ((@class-isa? t1 <subclass>)  (@subclass? <class> t2))
-       (#t                           (nyi-subtype? t1 t2))))
-    ((@class-isa? t2 <singleton>) ;; TODO: PROB DOESN'T HAVE TO BE BOOTSTRAPPED
-     (case
-       ((@class-isa? t1 <class>)     #f)
-       ((@class-isa? t1 <singleton>) (@singleton-isa? (%type-object t1) t2))
-       ((@class-isa? t1 <subclass>)  #f)
-       (#t                           (nyi-subtype? t1 t2))))
-    ((@class-isa? t2 <subclass>) ;; TODO: DOESN'T HAVE TO BE BOOTSTRAPPED
-     (case
-       ((@class-isa? t1 <singleton>) 
-        (and (@isa? (%type-object t1) <class>)
-             (@subclass? (%type-object t1) (%type-class t2))))
-       ((@class-isa? t1 <subclass>)
-        (@subclass? (%type-class t1) (%type-class t2)))
-       ((@class-isa? t1 <class>)
-        (and (@== t1 <class>) (@== (%type-class t2) <class>)))
-       (#t
-        (nyi-subtype? t1 t2))))
-    (#t 
-     (subtype? t1 t2))))
-
-;;; HAS-INSTANCES?: class contains => (some? all?) instances of type
-
+  (if (and (@== (%class-of t2) <class>) (@== (%class-of t1) <class>))
+      (@subclass? t1 t2)
+      (subtype? t1 t2)))
+  
 (df @may-isa? ((c <class>) (t <type>) => (tup <log> <log>))
-  (case
-    ((@class-isa? t <class>)
-     (if (@subclass? c t) (@tup #t #t) (@tup #f #f)))
-    ((@class-isa? t <singleton>)
-     (@tup (@may-isa? (%class-of (%type-object t)) c) #f))
-    ((@class-isa? t <subclass>)
-     (let ((class? (@subtype? c <class>)))
-       (@tup class? (and class? (@== (%type-class c) <any>)))))
-    ((@class-isa? t <union>)
-     (rep loop ((some? #f) (all? #f) (elts (%type-elts t)))
-       (if (@empty? elts)
-           (@tup some? all?)
-           (let (((tup elt-some? elt-all?) (@may-isa? c (@head elts))))
-             (loop (or elt-some? some?) (or elt-all? all?) (@tail elts))))))
-    (#t
-     (may-isa? c t))))
+  (if (@== (%class-of t) <class>)
+      (if (@subclass? c t) (@tup #t #t) (@tup #f #f))
+      (may-isa? c t)))
 
-(df order-specs-default (t1 t2 arg => (tup (order <sym>) canonical-type))
-  (if (@subtype? t1 t2)
-      (@tup (if (@subtype? t2 t1) '= '<) t1)
-      (if (@subtype? t2 t1)
-          (@tup '>  t2)
-	  (@tup '<> <any>))))
+(df @order-specs-class (t1 t2 arg)
+  (if (@== t1 t2)
+      (@tup '= t1)
+      (if (@class< t1 t2 (%class-of arg))
+          (@tup '< t1)
+          (@tup '> t2))))
 
-;;; TODO: COULD PERFORM DISPATCH BY HAND
+(df @order-specs (t1 t2 arg)
+  (if (and (@== (%class-of t1) <class>) (@== (%class-of t2) <class>))
+      (@order-specs-class t1 t2 arg)
+      (order-specs t1 t2 arg)))
 
-(df order-specs (t1 t2 arg => (tup (order <sym>) canonical-type))
-  (case 
-    ((@== t1 t2)    
-     (@tup '= t1))
-    ((@class-isa? t1 <singleton>)
-     (@tup (if (@class-isa? t2 <singleton>) '= '<) t1))
-    ((@class-isa? t1 <subclass>)
-     (case 
-       ((@class-isa? t2 <subclass>)
-        (let ((c1 (%type-class t1))
-              (c2 (%type-class t2)))
-          (case 
-            ((@== c1 c2)         (@tup '= t1))
-            ((@class< c1 c2 arg) (@tup '< t1))
-            (#t                  (@tup '> t2)))))
-       ((@class-isa? t2 <class>)
-        (@tup (if (@subtype? <class> t2) ;; TODO: THIS SEEMS WRONG
-                  (if (@== t1 <any>)
-                      (order-specs <class> t2 arg)
-                      '<)
-                  '<>)
-             t1))
-       (#t
-        (order-specs-default t1 t2 arg))))
-    ((@class-isa? t2 <subclass>)
-     (if (@class-isa? t1 <class>)
-         (@tup (if (@subtype? <class> t1) ;; TODO: THIS SEEMS WRONG
-                   (if (@== t2 <any>)
-                       (order-specs t1 <class> arg)
-                       '>)
-                   '<>)
-               t2)
-         (order-specs-default t1 t2 arg)))
-    ((@class-isa? t1 <class>)
-     (if (@class-isa? t2 <class>)
-         (if (@class< t1 t2 (%class-of arg))
-             (@tup '< t1)
-             (@tup '> t2))
-         (order-specs-default t1 t2 arg)))
-    (#t
-     (order-specs-default t1 t2 arg))))
-      
 (df order-mets ((m1 <met>) (m2 <met>) (args <opts>) => <sym>)
   (let (((arity <int>) (@fun-arity m1)))
     (rep loop (((state <sym>) '=) ((idx <int>) 0))
       (if (@= idx arity)
-	  state
-	  (let ((m1spec (fun-spec m1 idx))
-		(m2spec (fun-spec m2 idx))
-		((cmp+typ <tup>) (order-specs m1spec m2spec (@oelt args idx)))
-		((cmp <sym>) (@elt cmp+typ 0))
-		((idx <int>) (@+ idx 1)))
-	    (if (@== cmp '=)
-		(loop state idx)
-		(if (and (not (@== cmp '<>))
-			 (or (@== state '=) (@== cmp state)))
-		    (loop cmp idx)
-		    '<>)))))))
+          state
+          (let ((m1spec (fun-spec m1 idx))
+                (m2spec (fun-spec m2 idx))
+                ((cmp+typ <tup>) (@order-specs m1spec m2spec (@oelt args idx)))
+                ((cmp <sym>) (@elt cmp+typ 0))
+                ((idx <int>) (@+ idx 1)))
+            (if (@== cmp '=)
+                (loop state idx)
+                (if (and (not (@== cmp '<>))
+                         (or (@== state '=) (@== cmp state)))
+                    (loop cmp idx)
+                    '<>)))))))
 
 (df sorted-app-mets-1
       ((mets <lst>) (args <opts>) (order-mets <fun>)
@@ -1414,11 +1321,11 @@
   (let ((ord-amb-mets   (sorted-app-mets gen args))
         (sorted-mets    (@elt ord-amb-mets 0))
         (ambiguous-mets (@elt ord-amb-mets 1)))
-    (if (@< 0 (@len ambiguous-mets))
-        (error "Ambiguous Method Error when calling %= on %=" gen args)
+;    (if (@< 0 (@len ambiguous-mets))
+;        (error "Ambiguous Method Error when calling %= on %=" gen args)
         (if (@empty? sorted-mets)
             (error "No Applicable Methods Error when calling %= on %=" gen args)
-            sorted-mets))))
+            sorted-mets)))
 
 ;; FIXME: note the horrible hack in p2c.proto that makes it not generate
 ;; an UNLINK_STACK at the end of this function.
@@ -1710,26 +1617,120 @@
 
 ;;; TYPE PROTOCOL
 
-;; TODO: MAKE THIS EXTENSIBLE
-
-(dg nyi-subtype? ((t1 <type>) (t2 <type>) => <log>))
-
+;;; SUBTYPE?
 (dg subtype? ((t1 <type>) (t2 <type>) => <log>))
 
-(dm subtype? ((t1 <type>) (t2 <type>) => <log>)
-  (@subtype? t1 t2))
+(dm subtype? ((t1 <union>) (t2 <type>) => <log>)
+  (@all? (fun (t) (@subtype? t t2)) (%type-elts t1)))
+(dm subtype? ((t1 <type>) (t2 <union>) => <log>)
+  (@any? (fun (t) (@subtype? t1 t)) (%type-elts t2)))
+;; disambiguate the case where there are two unions.
+(dm subtype? ((t1 <union>) (t2 <union>) => <log>)
+  (@all? (fun (t) (@subtype? t t2)) (%type-elts t1)))
 
-(dg nyi-isa? ((x <any>) (t <type>) => <log>))
+(dm subtype? ((t1 <class>) (t2 <class>) => <log>)
+  (@subclass? t1 t2))
+(dm subtype? ((t1 <singleton>) (t2 <class>) => <log>)
+  (@isa? (%type-object t1) t2))
+(dm subtype? ((t1 <subclass>) (t2 <class>) => <log>)
+  (@subclass? <class> t2)) ;    ????????
+
+(dm subtype? ((t1 <class>) (t2 <singleton>) => <log>)
+  #f)
+(dm subtype? ((t1 <singleton>) (t2 <singleton>) => <log>)
+  (@singleton-isa? (%type-object t1) t2))
+(dm subtype? ((t1 <subclass>) (t2 <singleton>) => <log>)
+  #f)
+
+(dm subtype? ((t1 <class>) (t2 <subclass>) => <log>)
+  (and (@== t1 <class>) (@== (%type-class t2) <class>)))
+(dm subtype? ((t1 <subclass>) (t2 <subclass>) => <log>)
+  (@subclass? (%type-class t1) (%type-class t2)))
+(dm subtype? ((t1 <singleton>) (t2 <subclass>) => <log>)
+  (and (@isa? (%type-object t1) <class>)
+       (@subclass? (%type-object t1) (%type-class t2))))
+
+;;; ISA?
 
 (dg isa?     ((x <any>) (t <type>) => <log>))
 
-(dm isa?     ((x <any>) (t <type>) => <log>)
-  (@isa? x t))
+(dm isa? (o (t <class>) => <log>)
+  (@class-isa? o t))
+(dm isa? (o (t <singleton>) => <log>)
+  (@singleton-isa? o t))
+(dm isa? (o (t <subclass>) => <log>)
+  (and (@isa? o <class>)
+       (@subclass? o (%type-class t))))
+(dm isa? (o (u <union>) => <log>)
+  (@any? (fun (t) (@isa? o t)) (%type-elts u)))
 
-(dg may-isa? ((c <class>) (t <type>) => <log>))
+;;; ORDER-SPECS
+(dg order-specs ((t1 <type>) (t2 <type>) (arg <any>)
+                 => (tup (order <sym>) canonical-type)))
 
-(dm may-isa? ((c <class>) (t <type>) => <log>)
-  (@may-isa? c t))
+(dm order-specs ((t1 <singleton>) (t2 <singleton>) arg
+                 => (tup (order <sym>) canonical-type))
+  (@tup '= t1))
+
+(dm order-specs ((t1 <singleton>) (t2 <type>) arg
+                 => (tup (order <sym>) canonical-type))
+  (@tup '< t1))
+
+(dm order-specs ((t1 <subclass>) (t2 <subclass>) arg
+                 => (tup (order <sym>) canonical-type))
+  (let ((c1 (%type-class t1))
+        (c2 (%type-class t2)))
+    (case
+      ((@== c1 c2)         (@tup '= t1))
+      ((@class< c1 c2 arg) (@tup '< t1))
+      (#t                  (@tup '> t2)))))
+
+(dm order-specs ((t1 <subclass>) (t2 <class>) arg
+                 => (tup (order <sym>) canonical-type))
+  (@tup (if (@subtype? <class> t2) ;; TODO: THIS SEEMS WRONG
+            (if (@== t1 <any>)
+                (order-specs <class> t2 arg)
+                '<)
+            '<>)
+        t1))
+
+(dm order-specs ((t1 <class>) (t2 <subclass>) arg
+                 => (tup (order <sym>) canonical-type))
+  (@tup (if (@subtype? <class> t1) ;; TODO: THIS SEEMS WRONG
+            (if (@== t2 <any>)
+                (order-specs t1 <class> arg)
+                '>)
+            '<>)
+        t2))
+
+(dm order-specs ((t1 <class>) (t2 <class>) arg
+                 => (tup (order <sym>) canonical-type))
+  (@order-specs-class t1 t2 arg))
+
+(dm order-specs ((t1 <type>) (t2 <type>) arg
+                 => (tup (order <sym>) canonical-type))
+  (if (@subtype? t1 t2)
+      (@tup (if (@subtype? t2 t1) '= '<) t1)
+      (if (@subtype? t2 t1)
+          (@tup '>  t2)
+          (@tup '<> <any>))))
+
+;;; MAY-ISA?: class contains => (some? all?) instances of type
+(dg may-isa? ((c <class>) (t <type>) => (tup <log> <log>)))
+
+(dm may-isa? ((c <class>) (t <class>) => (tup <log> <log>))
+  (if (@subclass? c t) (@tup #t #t) (@tup #f #f)))
+(dm may-isa? ((c <class>) (t <singleton>) => (tup <log> <log>))
+  (@tup (@may-isa? (%class-of (%type-object t)) c) #f))
+(dm may-isa? ((c <class>) (t <subclass>) => (tup <log> <log>))
+  (let ((class? (@subtype? c <class>)))
+    (@tup class? (and class? (@== (%type-class c) <any>)))))
+(dm may-isa? ((c <class>) (t <union>) => (tup <log> <log>))
+  (rep loop ((some? #f) (all? #f) (elts (%type-elts t)))
+    (if (@empty? elts)
+        (@tup some? all?)
+        (let (((tup elt-some? elt-all?) (@may-isa? c (@head elts))))
+          (loop (or elt-some? some?) (or elt-all? all?) (@tail elts))))))
 
 ;;; 
 ;;; 14. MACROS

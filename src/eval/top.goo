@@ -79,9 +79,8 @@
 (dm backtrace ()
   (let ((num 0))
     (do-stack-frames
-      (fun (f args)
-	(unless (isa? f <gen>) 
-	  (format out "[%=] %= %=\n" num f args) (inc num))))))
+     (fun (f args)
+       (format out "[%=] %= %=\n" num f (rev args)) (inc num))))))
 
 (dc <keyboard-interrupt> (<condition>))
 
