@@ -127,11 +127,18 @@
        )))
 
 ;; TODO -- CLEAN UP BELOW
-(dm as-fun-name ((x <fun>) => <any>)            (fun-name x))
-(dm as-fun-name ((x <ast-function>) => <any>)   (as-fun-name (function-name x)))
-(dm as-fun-name ((x <module-binding>) => <any>) (binding-name x))
-(dm as-fun-name ((x <sym>) => <sym>)            x)
-(dm as-fun-name ((x <any>) => <any>)            #f)
+(dm as-fun-name ((x <fun>) => <any>)            
+  (fun-name x))
+(dm as-fun-name ((x <ast-function>) => <any>)   
+  (as-fun-name (function-debug-name x)))
+(dm as-fun-name ((x <module-binding>) => <any>) 
+  (binding-name x))
+(dm as-fun-name ((x <constant>) => <any>)
+  (as-fun-name (constant-value x)))
+(dm as-fun-name ((x <sym>) => <sym>)            
+  x)
+(dm as-fun-name ((x <any>) => <any>)
+  #f)
 
 (dm export-proto-method (f names specs nary? value body env)
   (let ((efun

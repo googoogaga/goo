@@ -1474,7 +1474,7 @@
 ;; TODO: NEED FUN-VALUE AS WELL
 
 (df fab-gen
-  ((name <sym>) (names <lst>) (specs <lst>) (nary? <log>) (mets <lst>) 
+  (name (names <lst>) (specs <lst>) (nary? <log>) (mets <lst>) 
    => <gen>)
   (isa <gen>
     (set fun-code (fun-code %dispatch))

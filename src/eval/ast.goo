@@ -126,20 +126,20 @@
 (dv <ast-macro-definition> (isa <definition>))
 
 (dv <ast-signature> (isa <computed-program>))
-  (slot <ast-signature> signature-names '())
-  (slot <ast-signature> signature-specs '())
-  (slot <ast-signature> signature-nary? #f)
-  (slot <ast-signature> signature-value #f)
-
-(dv signature-bindings signature-names)
+  (slot <ast-signature> signature-bindings '())
+  (slot <ast-signature> signature-names    '())
+  (slot <ast-signature> signature-specs    '())
+  (slot <ast-signature> signature-nary?    #f)
+  (slot <ast-signature> signature-value    #f)
 
 (dv <ast-function> (isa <computed-program>))
-  (slot <ast-function> function-name #f)
+  (slot <ast-function> function-binding #f)
+  (slot <ast-function> function-debug-name #f)
   ;;  (slot <ast-function> function-next-methods-binding)
   (slot <ast-function> function-signature)
 
 (df function-bindings ((x <ast-function>)) 
-  (signature-names (function-signature x)))
+  (signature-bindings (function-signature x)))
 (df function-specs ((x <ast-function>)) 
   (signature-specs (function-signature x)))
 (df function-nary? ((x <ast-function>))
@@ -206,7 +206,7 @@
   (slot <fix-let> fix-let-arguments)
   (slot <fix-let> fix-let-body)
 
-(def-programs types)
+(def-programs fab-list)
 
 (def-programs arguments)
 
@@ -566,7 +566,8 @@
 (dm objectify-function-definition (name e r => <ast-function-definition>)
   (let ((binding (ast-define-binding r name #f 'global))
 	(f       (objectify e r #f)))
-    (set (function-name f) binding)
+    (set (function-binding f)    binding)
+    (set (function-debug-name f) (objectify-quotation name r))
     (let ((defn (isa <ast-function-definition>
 		     (set assignment-binding binding)
 		     (set assignment-form f))))
@@ -582,9 +583,10 @@
         (new-r     (r-extend* r (signature-bindings signature)))
 	(body      (objectify-sequential body new-r #t))
 	(form      (isa <ast-primitive> 
-                     (set function-name binding)
-                     (set function-signature signature)
-                     (set function-body body))))
+                     (set function-binding    binding)
+                     (set function-debug-name (objectify-quotation name r))
+                     (set function-signature  signature)
+                     (set function-body       body))))
     (let ((defn (isa <ast-primitive-definition>
                   (set assignment-binding binding)
                   (set assignment-form form))))
@@ -594,11 +596,12 @@
   (let ((binding   (ast-define-binding r name #f 'global))
 	(signature (objectify-signature sig r))
 	(form      (isa <ast-generic>
-                     (set function-name binding)
-                     (set function-signature signature)))
+                     (set function-binding    binding)
+                     (set function-debug-name (objectify-quotation name r))
+                     (set function-signature  signature)))
 	(defn      (isa <ast-generic-definition>
                      (set assignment-binding binding)
-                     (set assignment-form form))))
+                     (set assignment-form    form))))
     defn))
 
 (dm objectify-method-definition (name e r => <ast-method-definition>)
@@ -611,7 +614,7 @@
 	(defn    (isa <ast-method-definition>
 		      (set assignment-binding binding)
 		      (set assignment-form    form))))
-    (set (function-name met) name)
+    (set (function-debug-name met) (objectify-quotation name r))
     defn))
 
 ;;; it is important that the body is objectified first so mutability
@@ -624,8 +627,9 @@
         (new-r     (r-extend* r (signature-bindings signature)))
 	(b         (objectify-sequential body new-r #t)))
     (isa <ast-method> 
-	 (set function-signature signature)
-	 (set function-body b))))
+         (set function-debug-name (objectify-quotation #f r))
+	 (set function-signature  signature)
+	 (set function-body       b))))
 
 (dv $sexpr-optionals-tag       '...)
 (dv $sexpr-optionals-type-name '<opts>)
@@ -633,21 +637,23 @@
 (dm objectify-signature (sig r => <ast-signature>)
   (let ((sexpr-params (sexpr-signature-parameters sig)))
     (rep col ((params sexpr-params) (nary? #f) (bindings '()) 
-              (types (empty <types>)))
+              (names (empty <fab-list>)) (types (empty <fab-list>)))
       (if (empty? params)
           (let ((sexpr-value (sexpr-signature-value sig))
                 (value (objectify (or sexpr-value (default-type r)) r #f)))
             (isa <ast-signature>
-              (set signature-names (rev! bindings))
-              (set signature-specs (rev! types))
-              (set signature-nary? nary?)
-              (set signature-value value)))
+              (set signature-bindings (rev! bindings))
+              (set signature-names    (rev! names))
+              (set signature-specs    (rev! types))
+              (set signature-nary?    nary?)
+              (set signature-value    value)))
           (let ((param   (head params))
                 (sname   (sexpr-variable-name param))
                 (stype   (sexpr-variable-type param))
                 (dotted? (== stype $sexpr-optionals-tag))
                 (stype   (if dotted? $sexpr-optionals-type-name stype))
                 (type    (objectify stype r #f))
+                (name    (objectify-quotation sname r))
                 (binding
                  (isa <local-binding>
                       (set binding-name sname)
@@ -655,7 +661,8 @@
                       (set binding-dotted? dotted?))))
             (col (tail params) dotted? 
                  (pair binding bindings)
-                 (isa <types> (set head type) (set tail types))))))))
+                 (isa <fab-list> (set head name) (set tail names))
+                 (isa <fab-list> (set head type) (set tail types))))))))
 
 (dm compute-local-reference-offsets 
     ((binding <local-binding>) (r <static-local-environment>) 
@@ -733,7 +740,11 @@
 	(functions 
 	  (map (rcurry objectify new-r #f) function-forms)))
     ;; TODO: CIRCULARITIES IN AST
-    (do2 (fun (f b) (set (function-name f) b) (set (binding-value b) f)) 
+    (do2 (fun (f b) 
+           (set (function-binding f) b)
+           (set (function-debug-name f) 
+                (objectify-quotation (binding-name b) r))
+           (set (binding-value b) f)) 
 	 functions bindings)
     (isa <locals>
 	 (set locals-bindings  bindings)
@@ -1600,6 +1611,7 @@
   application-known?
   application-known?-setter
   application-tail?
+  <fab-list>
   <arguments>
   assignment-binding
   assignment-form
@@ -1655,6 +1667,8 @@
   <ast-signature>
   signature-names
   signature-names-setter
+  signature-bindings
+  signature-bindings-setter
   signature-specs
   signature-specs-setter
   signature-nary?
@@ -1662,10 +1676,13 @@
   signature-value
   signature-value-setter
   function-signature
+  function-signature-setter
   function-bindings
   function-body
   function-body-setter
-  function-name
+  function-binding
+  function-debug-name
+  function-debug-name-setter
   function-nary?
   function-value
   <global-assignment>
@@ -1693,6 +1710,7 @@
   monitor-test
   monitor-type
   objectify
+  objectify-quotation
   <predefined-application>
   <program>
   <computed-program>

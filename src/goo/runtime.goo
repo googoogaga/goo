@@ -500,9 +500,8 @@
 (dm empty? ((c <col>) => <log>)
   (= (len c) 0))
 
-;; This is no longer correct, now that isa copies slot values.
-;;(dm empty ((c <col>) => <col>)
-;;  (isa c))
+(dm empty ((c <col>) => <col>)
+  (fab c 0))
 
 (dm default ((c <col>) => <col>)
   #f)
@@ -519,6 +518,12 @@
 
 (dm as ((p <col>) (x <col>) => <col>)
   (into (fab p (len x)) x 0 (len x)))
+
+(dm keys ((c <col>) => <seq>)
+  (rep con ((res '()) (s (ini-state c)))
+    (if (fin-state? c s)
+        (rev! res)
+        (con (add res (now-key c s)) (nxt-state c s)))))
 
 (dm do-key-vals ((fn <fun>) (key-vals <opts>) => (tup))
   (rep rep (((key-vals <opts>) key-vals))
@@ -632,14 +637,12 @@
 
 ;;; BAG
 
-(dv <bag> (isa <col>))
-
 ;;; MAP
 
 (dv <map> (isa <col>))
 
 (dm fab-map ((p <map>) (key-vals ...))
-  (let ((x (isa p)))
+  (let ((x (fab p (1st (truncate/ (len key-vals) 2)))))
     (do-key-vals (fun (key val) (set (elt x key) val)) key-vals)
     x))
 
@@ -678,6 +681,9 @@
 
 (dm as ((d <seq>) (s <seq>) => <seq>)
   (alter (fab d (len s)) s))
+
+(dm keys ((d <seq>) => <seq>)
+  (from-below 0 (len d)))
 
 (dm alter ((dst <seq>) (src <seq>) => <seq>)
   (rep in ((ds (ini-state dst)) (ss (ini-state src)))
@@ -2226,6 +2232,7 @@
 (export
   1st 2nd 3rd
   = + - == ~== <= >= > <
+  keys
   add! add
   all?
   alphabetic?
@@ -2288,6 +2295,7 @@
   <port>
   pos
   pop pop-last! push push-last!
+  reduce reduce+
   rcurry
   read-char
   rev!

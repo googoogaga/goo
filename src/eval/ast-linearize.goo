@@ -175,7 +175,7 @@
 	    (set reference-binding b)
 	    (set reference-offset offset)
 	    (set reference-self?
-		 (== (reference-binding o) (function-name flat-fun))))))))
+		 (== (reference-binding o) (function-binding flat-fun))))))))
 
 (dm adjoin-free-binding! ((flat-fun <flat-function>) ref => <int>)
   (rep check (((i <int>) 0) (free* (function-free flat-fun)))
@@ -227,10 +227,11 @@
 	 (function-body o))
 	(new-fun        
 	 (isa <flat-function> 
-	   (set function-name      (function-name o))
-           (set function-signature (function-signature o))
-	   (set function-body      body)
-	   (set function-free      (empty <free-environment>)))))
+	   (set function-binding    (function-binding o))
+	   (set function-debug-name (function-debug-name o))
+           (set function-signature  (function-signature o))
+	   (set function-body       body)
+	   (set function-free       (empty <free-environment>)))))
     (set (function-body new-fun)
 	 (lift-procedures! body new-fun local-bindings))
     (let ((free* (function-free new-fun)))
@@ -318,9 +319,14 @@
 (dm extract! 
     ((o <flat-function>) 
      (form <top-level-form>) (result <flattened-program>))
-  (let ((new-body  (extract! (function-body o) form result))
-	(name      (function-name o))
-        (signature (function-signature o) form result))
+  (set (function-debug-name o)
+       (extract! (function-debug-name o) form result))
+  (set (function-signature o)
+       (extract! (function-signature o) form result))
+  (let ((new-body   (extract! (function-body o) form result))
+	(debug-name (function-debug-name o))
+	(binding    (function-binding o))
+        (signature  (function-signature o)))
     (do (fun (binding)
 	  (set (binding-type binding) 
 	       (extract! (binding-type binding) form result)))
@@ -329,12 +335,11 @@
            (map reference-binding (function-free o)))
 	  (index
 	   (adjoin-definition!
-	    form result name signature new-body free-bindings)))
+	    form result debug-name binding signature new-body free-bindings)))
       (isa <closure-creation> 
 	(set closure-creation-index    index)
 	(set closure-creation-bindings (function-bindings o))
-	(set closure-creation-free     (function-free o))
-	))))
+	(set closure-creation-free     (function-free o))))))
 
 (dm extract! 
     ((o <ast-primitive-definition>) 
@@ -343,28 +348,29 @@
 	(body (extract! (function-body p) form result))
 	(definition
 	 (isa <primitive-definition> 
-	   (set function-name      (function-name p))
-           (set function-signature (function-signature p))
-	   (set function-body      body))))
-    ;; (assert (function-name p) "NO NAME FOR %=" p)
+	   (set function-binding    (function-binding p))
+	   (set function-debug-name (function-debug-name p))
+           (set function-signature  (function-signature p))
+	   (set function-body       body))))
     (set (program-definitions result)
 	 (pair definition (program-definitions result)))
     (extract! (isa <constant> (set constant-value #f)) form result)))
 
 (dm adjoin-definition! 
     ((form <top-level-form>) (result <flattened-program>)
-     name signature body free)
+     debug-name binding signature body free)
   (let ((definitions
 	 (program-definitions result))
 	(new-index
 	 (len definitions))
 	(definition
 	 (isa <function-definition> 
-	   (set function-name      name)
-           (set function-signature signature)
-           (set function-body      body)
-	   (set function-free      free)
-	   (set function-index     new-index))))
+	   (set function-binding    binding)
+	   (set function-debug-name debug-name)
+           (set function-signature  signature)
+           (set function-body       body)
+	   (set function-free       free)
+	   (set function-index      new-index))))
     (set (program-definitions result) (pair definition definitions))
     (set (form-definitions form)      (pair definition (form-definitions form)))
     new-index))
@@ -400,11 +406,10 @@
 		 (ast-define-binding r name #f 'predefined))
 		(defn
 		 (isa <primitive-definition>
-		   (set function-name      binding)
-                   (set function-signature (isa <ast-signature>))
-		   (set function-body      (head forms))
-		   ;; (set function-index    (+ base-index i))
-		   ))
+		   (set function-binding    binding)
+		   (set function-debug-name (objectify-quotation name 4))
+                   (set function-signature  (isa <ast-signature>))
+		   (set function-body       (head forms))))
 		(call
 		 (isa <predefined-application> 
 		   (set application-binding   binding)

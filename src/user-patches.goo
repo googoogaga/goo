@@ -1,1 +1,5 @@
+(df load-curse () (load "/home/ai/jrb/proto/SRC/curse.proto"))
+(df load-grid  () (load "/home/ai/jrb/proto/SRC/grid.proto"))
+(dv *p2m-app* (p2c-def-app "p2m" 'main))
+(dm p2c-p2m () (p2c-build-app *p2m-app*))
 (df test () (set *p2c-app* (p2c-def-app "p2c-test" 'main)))

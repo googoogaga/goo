@@ -7,9 +7,10 @@
 (use ast)
 (use top)
 (use p2c)
+;; (use p2m)
 
-(dv *proto-version* "0.97")
-(dv *proto-date*    "AUG 01, 2001")
+(dv *proto-version* "0.98")
+(dv *proto-date*    "AUG 10, 2001")
 
 (format out ";;; \n")
 (format out ";;; PROTO\n")

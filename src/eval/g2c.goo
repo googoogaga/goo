@@ -790,7 +790,7 @@
   (let ((binding (application-binding e)))
     (if (and (application-tail? e) 
 	     (isa? f <primitive-definition>)
-	     (== binding (function-name f)))
+	     (== binding (function-binding f)))
 	(generate-self-recursive-call e f d out)
         (seq 
           (for ((arg (application-arguments e)))
@@ -807,12 +807,12 @@
         (f (elt *definitions* (closure-creation-index e))))
     (if (== n 0)
         (with-used-expression (e d out)
-          (generate-function-name out f))
+          (generate-function-binding out f))
         (seq (do (fun (x) (to-c x f d out)) (closure-creation-free e))
              (with-expression (e d out)
                (format out "FUNFAB")
                (between-parentheses (out)
-                 (generate-function-name out f)
+                 (generate-function-binding out f)
                  (format out ",%d" n)
                  (for ((x (closure-creation-free e)))
                    (write-char out #\,) (gen-ref x out))))))))
@@ -822,12 +822,12 @@
 	(f (elt *definitions* (closure-creation-index e))))
     (with-expression (e d out)
       (if (== n 0)
-          (generate-function-name out f)
+          (generate-function-binding out f)
           ;; (format out "fun_%s" (closure-creation-index e))
 	  (seq (format out "FUNSHELL")
 	       (between-parentheses-comma-separated (out)
 		 (format out "%d" (if (binding-dynamic-extent? b) 1 0))
-		 (generate-function-name out f)
+		 (generate-function-binding out f)
 		 (format out "%d" n)))))))
 
 (dm funinit-to-c ((b <binding>) (e <closure-creation>) f d out)
@@ -866,17 +866,16 @@
             (f e))))))
 
 
+(dm gen-fab-list (out (refs <fab-list>))
+  (out-list-builder (fun (x) (gen-ref x out)) out refs))
+
 (dm generate-function-specs (out sig)
   ;; TODO: HACK -- THIS SHOULD BE CORRECTED EARLIER
   (let ((types (signature-specs sig))
         (specs (if (signature-nary? sig)
 		   (sub types 0 (- (len types) 1))
 		   types)))
-    (out-list-builder (fun (x) (gen-ref x out)) out specs)))
-
-(dm generate-function-names (out sig)
-  (out-list-builder (fun (b) (generate-quotation out (binding-name b))) 
-		    out (signature-names sig)))
+    (gen-fab-list out specs)))
 
 (dm to-c ((e <ast-signature>) f d out)
   (do (fun (x) (to-c x f d out)) (signature-specs e))
@@ -884,21 +883,11 @@
   (with-expression (e d out)
     (format out "%s" (mangle-boot-name "%sig"))
     (between-parentheses-comma-separated (out)
-      (generate-function-names out e)
+      (gen-fab-list out (signature-names e))
       (generate-function-specs out e)
       (generate-quotation out (signature-nary? e))
       (generate-quotation out (signature-arity e))
       (gen-ref (signature-value e) out))))
-
-(dm generate-debug-name (out name)
-  (generate-quotation out name))
-
-(dm generate-debug-name (out (name <binding>))
-  (generate-debug-name out (binding-name name)))
-
-;; TODO: USE THIS WHEN CAN DIFF BETWEEN DM's AND DF's
-;; (dm generate-debug-name (out (name <module-binding>))
-;;   (binding->c name out))
 
 (dm to-c ((e <ast-generic>) f d out)
   (to-c (function-signature e) f d out)
@@ -906,7 +895,7 @@
     (format out "%s" (mangle-boot-name "%gen"))
     (between-parentheses-comma-separated (out)
       (format out "(P)YPgen_code((P)CHKREF(YPdispatch))") ;; TODO: HACK!!!
-      (generate-debug-name out (function-name e))
+      (gen-ref (function-debug-name e) out)
       (gen-ref (function-signature e) out)
       (format out (mangle-boot-name "nil"))
       (format out (mangle-boot-name "%false")))))
@@ -920,14 +909,14 @@
     (generate-function-forward out def)))
 
 (dm generate-function-forward (out (defn <primitive-definition>))
-  (format out "P %s (" 
-	  (mangle-module-binding (function-name defn)))
+  (format out "extern P %s (" 
+	  (mangle-module-binding (function-binding defn)))
   (for-commas out ((i (from-below 0 (len (function-bindings defn)))))
     (format out "P"))
   (format out ");\n"))
 
-(dm generate-function-name (out defn)
-  (let ((name (function-name defn)))
+(dm generate-function-binding (out defn)
+  (let ((name (function-binding defn)))
     (if (and (isa? name <module-binding>) 
              (mem? '(global runtime) (binding-kind name)))
 	(format out "%s" (mangle-module-binding name))
@@ -940,9 +929,9 @@
 		      (mangle-raw-name name) (function-index defn)))))))
 
 (dm generate-function-forward (out defn)
-  (let ((bound? (isa? (function-name defn) <module-binding>)))
+  (let ((bound? (isa? (function-binding defn) <module-binding>)))
     (format out (if bound?  "FUNFOR(" "LOCFOR("))
-    (generate-function-name out defn)
+    (generate-function-binding out defn)
     (format out ");\n")))
 
 (dm generate-function-bodies (out definitions)
@@ -960,17 +949,17 @@
 (dm generate-closure-structure (definition f d out)
   (to-c (function-signature definition) f d out)
   (with-expression (definition d out)
-    (generate-function-name out definition)
+    (generate-function-binding out definition)
     (format out " = %s" (mangle-boot-name "%met"))
     (between-parentheses-comma-separated (out)
       (generate-function-body-reference out definition)
-      (generate-debug-name out (function-name definition))
+      (gen-ref (function-debug-name definition) out)
       (gen-ref (function-signature definition) out)
       (format out "ENVNUL"))))
 
 (dm generate-function-body-reference (out definition)
   (format out "FUNCODEREF(")
-  (generate-function-name out definition)
+  (generate-function-binding out definition)
   (format out ")"))
 
 ;; TODO: RIP THIS OUT AND USE REAL PARAMETERS
@@ -997,7 +986,7 @@
     (between-parentheses (out) (gen-ref (function-body defn) out))))
 
 (dm primitive-inlinable? ((e <primitive-definition>))
-  (let ((binding (function-name e)))
+  (let ((binding (function-binding e)))
     ;; TODO: ADD FUNCTION ADJECTIVES
     (mem? '(%tag-bits %tag %untag %traits-of
 	    %int %ib %iu
@@ -1016,7 +1005,7 @@
 
 (dm generate-function-code (out (e <primitive-definition>))
   (format out "\n%sP " (if (primitive-inlinable? e) "INLINE " ""))
-  (binding->c (function-name e) out)
+  (binding->c (function-binding e) out)
   (between-parentheses (out)
     (for-commas out ((binding (function-bindings e)))
       (format out "P ") (binding->c binding out)))
@@ -1030,7 +1019,7 @@
 
 (dm generate-function-code (out definition)
   (format out "\nFUNCODEDEF(")
-  (generate-function-name out definition)
+  (generate-function-binding out definition)
   (format out ") {\n")
   (let ((offset 0)
 	(bindings (function-bindings definition)))
