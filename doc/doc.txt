@@ -528,8 +528,6 @@ Generic     pos ((x <seq>) (v <any>) => (union <int> nul))
 
   finds position of v in x else returns nul.
 
-Generic     into ((dst <seq>) (src <seq>) (from <int>) (below <int>) => <seq>)
-
 Generic     rev ((x <seq>) => <seq>)
 
   returns reversed sequence.
@@ -553,6 +551,11 @@ Generic     cat2 ((x <seq>) (y <seq>) => <seq>)
 Generic     sub ((x <seq>) (from <int>) (below <int>) => <seq>)
 
   subsequence of x between from and below.
+
+Generic     sub-setter ((dst <seq>) (src <seq>) (from <int>) (below <int>))
+
+  replaces subsequence in range between from and below of dst with
+  contents of src.
 
 Generic     pick ((test <fun>) (x <seq>) => <seq>)
 
@@ -581,10 +584,20 @@ Generic     tup ((elts ...) => <tup>)
 
 Prototype   <lst> (isa <seq>)
 
+Alias       <list> 
+
+            == <lst>
+
 Slot        head ((x <lst>) => <any>)
+
 Slot        tail ((x <lst>) => <lst>)
 
 Generic     lst ((elts ...) => <lst>)
+
+Alias       list 
+
+            == lst
+
 Generic     pair ((x <any>) (y <lst>) => <lst>)
 
 Instance    nil (isa <lst>)
@@ -959,9 +972,15 @@ Typing proto at your shell will start up a proto read-eval-print loop.
 
 4.1.1 PATCHES FILE
 
-During start up, Proto will load a patch file from
+During start up, Proto will load two patch files, one from
 
-  ${PROTO_ROOT}\SRC\patches.proto
+  ${PROTO_ROOT}\SRC\system-patches.proto
+
+and one from
+
+  ${PROTO_ROOT}\SRC\user-patches.proto
+
+You can customize your proto by adding forms to user-patches.
 
 4.2 STOPPING
 
@@ -1056,8 +1075,6 @@ There might be times when the interpreter gets confused.  Please try
 to figure out why if possible, but don't be surprised if you have to
 exit proto and reload your program.  I will try to make Proto a much
 more livable place asap.
-
-TUP's are not fully supported in the interpreter at this point.
 
 Please, please, please send bug reports to jrb@ai.mit.edu.  I will fix
 your bugs asap.
