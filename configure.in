@@ -46,6 +46,7 @@ AC_MSG_RESULT([yes])], AC_MSG_RESULT([no]))
 AC_CHECK_LIB(pthread, pthread_create, [
 AC_DEFINE(WITH_THREADS)
 AC_DEFINE(HAVE_POSIX_THREAD)
+LIBS="-lpthread $LIBS"
 THREADKIND=posix
 ], [
 AC_MSG_ERROR([Unable to find thread library])
