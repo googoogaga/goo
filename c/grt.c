@@ -107,11 +107,13 @@ int stack_allocp = 0;
 unsigned long nallocd  = 0; /* BYTES TOTAL ALLOCATED */
 unsigned long nsallocd = 0; /* BYTES STACK ALLOCATED */
 
+int any_stack_allocp = 1;
+
 INLINE P allocate (unsigned long size) {
   nallocd += size;
   if (size > 100000000)
     YPbreak("ALLOCATE: BAD SIZE");
-  if (stack_allocp) {
+  if (any_stack_allocp && stack_allocp) {
     P res;
     int nwords = (size / sizeof(P)) + 1; /* TODO: BETTER ROUNDING */
     int osp    = sp;
@@ -856,6 +858,7 @@ UNWIND_PROTECT_FRAME Pcurrent_unwind_protect_frame;
 
 void nlx_step (BIND_EXIT_FRAME ultimate_destination) {
   /* handled all unwind protect frames presently in force? */
+  int osp = sp;
   if (Pcurrent_unwind_protect_frame == 
       ultimate_destination->present_unwind_protect_frame) {
     /* invalidate current frame */
@@ -869,8 +872,6 @@ void nlx_step (BIND_EXIT_FRAME ultimate_destination) {
     Pcurrent_unwind_protect_frame = next_frame->previous_unwind_protect_frame;
     /* register ultimate destination of non-local exit in cupf */
     Pcurrent_unwind_protect_frame->ultimate_destination = ultimate_destination;
-    sp = ultimate_destination->sp;    
-    fp = ultimate_destination->fp;    
     /* do cleanup step in next unwind protect frame */
     longjmp(next_frame->destination, 1);
   }
@@ -914,7 +915,7 @@ unsigned long nlx_nallocd = 0;
 P MAKE_BIND_EXIT_FRAME () {
   int snallocd = nallocd;
   int osp = sp, ofp = fp;
-  BIND_EXIT_FRAME frame 
+  BIND_EXIT_FRAME frame
     = (BIND_EXIT_FRAME)stack_allocate(sizeof(BIND_EXIT_FRAME_DATA));
   nlx_nallocd += nallocd - snallocd;
   frame->sp = osp;
