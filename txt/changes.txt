@@ -891,3 +891,39 @@ removed
 
   extraneous dp object variables
 
+=== 0.126 ===
+
+summary 
+
+  many speed and clean ups and test suite works 100%
+
+added
+
+  repeat join split
+  col-res-type
+  sort sort-by sort! sort-by!
+  fast and constant time subtype byte matrix including adding class-id
+  nested comment #/ /#
+
+changed
+
+  ends-with to suffix?
+  begins-with to prefix?
+  as-copy col-res
+  fab-gen to take fun-val arg
+  ast-linearize to merge various passes and to put 
+    dynamic extent analysis info into ast conversion
+  as on <col> to check for same type and return unchanged
+  dup to always dup
+  function-registers to be a vec
+  $number-call-templates to 5
+  changed user-patches.goo and system-patches.goo to init.goo's
+  to use tup's for dispatch cache
+  moved multicollection arg funs to seq (e.g., map2 ...)
+  = to work with two maps
+  set to be subclass of tab to get mem? to work properly
+
+removed
+
+  string-join string-repeat string-split
+  isa and %isa
