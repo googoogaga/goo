@@ -1,0 +1,77 @@
+Listener Basics
+===============
+
+Exiting
+-------
+
+  proto/user 0<= (quit)
+
+Development
+-----------
+
+To compile Proto:
+
+  proto/user 0<= (use p2c)
+  proto/user 0=> #f
+  proto/user 0<= (p2c-top)
+
+To run the test suites:
+
+  proto/user 0<= (use tests)
+  proto/user 0=> #f
+  proto/user 0<= (run-all-tests)
+
+Modules
+-------
+
+To change modules:
+
+  proto/user 0<= (in-mod ast)
+  ast 0<= 
+
+To access a variable in another module:
+
+  proto/user 0<= p2c:p2c-top
+  proto/user 0=> #{Gen p2c-top ()}
+
+The Debugger
+------------
+
+Entering:
+
+  proto/user 0<= (error "oops")
+  ERROR: oops
+  Type (restart N) to restart execution:
+  1. Return to interpreter level 1.
+  2. Return to interpreter level 0.
+  3. Exit the top-level interpreter.
+  proto/user 1<= 
+
+Going up a level:
+
+  proto/user 1<= (up)
+  proto/user 0<= 
+
+Going up to level 0:
+
+  proto/user 1<= (top)
+  proto/user 0<= 
+
+Listing the available restarts:
+
+  proto/user 1<= (restarts)
+  1. Return to interpreter level 1.
+  2. Return to interpreter level 0.
+  3. Exit the top-level interpreter.
+
+Choosing a restart:
+
+  proto/user 1<= (restart 2)
+  proto/user 0<= 
+
+Showing the installed exception handlers:
+
+  proto/user 0<= (handlers)
+  1. Return to interpreter level 0.
+  2. Anonymous handler for <condition>.
+  3. Exit the top-level interpreter.
