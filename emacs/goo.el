@@ -15,7 +15,8 @@
 (if (not proto-mode-syntax-table)
     (let ((i 0))
       ;; let's just use Lisp's syntax for now...
-      (setq proto-mode-syntax-table (copy-syntax-table lisp-mode-syntax-table))))
+      (setq proto-mode-syntax-table (copy-syntax-table lisp-mode-syntax-table))
+      (modify-syntax-entry ?- "w   " proto-mode-syntax-table)))
 
 (defvar proto-mode-abbrev-table nil "")
 (define-abbrev-table 'proto-mode-abbrev-table ())
