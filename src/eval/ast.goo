@@ -1022,12 +1022,21 @@
 
 (dm objectify-use-module (name r tail? => <program>)
   (def env (find-static-global-environment r))
-  (if (suffix? (as <str> name) ".c")
-      (push! (module-uses-c-files (environment-module env)) name)
-      (let ((loader (environment-module-loader env))
-            (used-module (probe-module loader name)))
-        (push! (environment-uses-modules env) used-module)
-        (do (fun (b) (import-global! b env)) (module-exports used-module))))
+  (def mod (environment-module env))
+  (loc ((use-mod (name)
+          (let ((loader (environment-module-loader env))
+                (used-module (probe-module loader name)))
+            (push! (environment-uses-modules env) used-module)
+            (do (fun (b) (import-global! b env)) 
+                (module-exports used-module)))))
+    (case-by (as <str> name) suffix?
+      ((".c") 
+       (push! (module-uses-c-files mod) name))
+      ((".swig")
+       (use-mod (as <sym> (1st (split (as <str> name) #\.))))
+       (push! (module-uses-c-files mod) (as <sym> (cat (as <str> name) ".c"))))
+      (#t
+       (use-mod name))))
   (new <constant> constant-value #f))
 
 (dm expand-bind-list (pat var fail => <any>)
