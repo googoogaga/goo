@@ -1,0 +1,7 @@
+PREFIX   = /usr
+GOO_BIN  = $(PREFIX)/bin
+GOO_ROOT = $(PREFIX)/lib/goo
+GOO_LIB  = $(GOO_ROOT)/lib
+GOO_MODS = $(GOO_ROOT)/mods
+GOO_DOC  = $(PREFIX)/share/doc/goo
+
