@@ -315,7 +315,6 @@ extern P YPmacro (P,P);
 extern P YPsig (P,P,P,P,P);
 extern P YPgen (P,P,P,P,P);
 extern P YPmet (P,P,P,P);
-extern P YruntimeYPwith_monitor (P,P);
 
 /* FUNCTIONS */
 
