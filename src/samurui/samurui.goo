@@ -644,8 +644,6 @@
 (dm ad-opt! (container|<gui-box> item|<gui> opt|(t? <col>))
   (def fill (when opt (mem? opt 'fill))) ; default to false
   (def scroll (when opt (mem? opt 'scroll)))
-  (debugstr "Adding with options %= which I think means fill: %= (%=)\n" opt fill (log-to-gtk fill))
-  (debugstr "Adding %= to gui-box %=.\n" item container)
   (when scroll
     (def scroll-win (gui-scrolled-window))
     (ad! scroll-win item)    
@@ -1397,9 +1395,12 @@
                         0
                         width
                         height)
-    )
 
-  (repaint-widget imagebox)
+    ;; Don't repaint if the thing is too fricking small.
+    (unless (or (<= width 2) (<= height 2))
+      (repaint-widget imagebox)
+      )
+    )
   )
 
 (dm blank (imagebox|<gui-drawable>)
@@ -2033,10 +2034,23 @@
   (g_object_unref (handle gtv)) ; should set to NULL...
   )
 
-(dg bind-master (obj|<any> master|<gui-master>))
+(dg bind-master (obj|<any> master|<gui-master> => <log>))
 
-(dm bind-master (tv|<gui-treeview> master|<gui-master>)
+(dm bind-master (container|<gui-container> master|<gui-master> => <log>)
+  (esc found-it
+    (do (fun (child)
+          (when (bind-master child master)
+            (found-it #t)
+            )
+          )
+        (children container)
+        )
+    )
+  )
+
+(dm bind-master (tv|<gui-treeview> master|<gui-master> => <log>)
   (set (tv-master tv) master)
+  #t
   )
 
 ; Constructs a binding
@@ -2048,13 +2062,16 @@
         ;; Changed callback
         (callback (fun (selection data)
                     ;;Selection changed...
-                    ;; (gtk_tree_selection_get_user_data selection)
+                    (def selnode (gtk_tree_goo_selection_get_node selection))
+                    (when selnode
+                      (master-update-slaves (tv-master gtv) selnode)
+                      )
                     )))
 
     ; Establish our hooks into the gui object
-    (g_signal_connect (handle gtv)
+    (g_signal_connect (gtk_tree_view_get_selection (handle gtv))
                       "changed"
-                      (gtk_getGtkCallback)
+                      (gtk_getGtkCallthrough)
                       (goo_safeCreateCallback callback 0))
 
     ; Construct the helper functions
@@ -2235,7 +2252,23 @@
             ;; This is special; it means that we're embedding an interface-model inside another
              ;; interface-model.  As such, this calls for an updater attached to the parent that
              ;; will update this interface model as it changes.
-            (renderize payload (type info) updaters masters (vec)))
+            (let ((my-updaters (vec))
+                  (rebind-my-updaters (fun (new-obj)
+                                        (def my-obj ((getter info) new-obj))
+                                        (do (fun (updater-tup)
+                                              ((1st updater-tup) my-obj)
+                                              )
+                                            my-updaters))
+                                      )
+                  (refresh-my-updaters (fun ()
+                                         (do (fun (updater-tup) ((2nd updater-tup))) my-updaters)
+                                         ))
+                  (free-my-updaters (fun ()))
+                  )
+              (add! updaters (tup rebind-my-updaters refresh-my-updaters free-my-updaters))
+              (renderize payload (type info) my-updaters (fab <str-tab> 0) (vec))
+              )
+            )
         )
     )
   )
@@ -2288,9 +2321,9 @@
     ((not (slave-inited slave))
      (def model (find-interface-model (object-class new-obj) root-interface (vec)))
      (set (slave-updaters slave) (vec))
-     (set (active-container slave) 
+     (set (active-container slave)
           (renderize-model model root-interface (object-class new-obj) (slave-updaters slave) (fab <str-tab> 0)))
-     (ad! (placeholder slave) (active-container slave))
+     (ad-opt! (placeholder slave) (active-container slave) (attrs (placeholder slave)))
      (show-all (placeholder slave))
      (set (slave-inited slave) #t)
      (set (slave-object slave) new-obj)
@@ -2360,10 +2393,12 @@
   )
 
 (dm master-update-slaves (master|<gui-master> new-obj|<any>)
-  (do (fun (slave)
-        (update-slave slave new-obj))
-      (slaves master)
-      )
+  (when new-obj
+    (do (fun (slave)
+          (update-slave slave new-obj))
+        (slaves master)
+        )
+    )
   )
 
 (dm renderize ((model-list <lst>) (class <class>) (updaters <col>) (masters <tab>) (attribs <col>))
@@ -2429,7 +2464,13 @@
 (dm renderize ((act <interface-action>) (class <class>) (updaters <col>) (masters <tab>) (attribs <col>))
   (let ((button (gui-button (description act))))
     (let ((cur-obj #f))
-      (connect button (fun (x) ((method act) cur-obj)) 0)
+      (connect button (fun (x) 
+                        ;; Perform the action
+                        ((method act) cur-obj)
+                        ;; Refresh all updaters
+                        (do (fun (y) ((2nd y))) updaters)
+                        )
+               0)
 
       (add!
        updaters

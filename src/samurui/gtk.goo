@@ -1,9 +1,9 @@
 (use goo)
 (use goo/boot)
 
+
 (use samurui/gtk.swig.c)
 (use/library gtk-x11-2.0)
-
 (seq
 (dv G_SIGNAL_RUN_FIRST #f)
 (export G_SIGNAL_RUN_FIRST)
@@ -32,24 +32,6 @@
 (dv G_CONNECT_SWAPPED #f)
 (export G_CONNECT_SWAPPED)
 
-(dv G_SIGNAL_MATCH_ID #f)
-(export G_SIGNAL_MATCH_ID)
-
-(dv G_SIGNAL_MATCH_DETAIL #f)
-(export G_SIGNAL_MATCH_DETAIL)
-
-(dv G_SIGNAL_MATCH_CLOSURE #f)
-(export G_SIGNAL_MATCH_CLOSURE)
-
-(dv G_SIGNAL_MATCH_FUNC #f)
-(export G_SIGNAL_MATCH_FUNC)
-
-(dv G_SIGNAL_MATCH_DATA #f)
-(export G_SIGNAL_MATCH_DATA)
-
-(dv G_SIGNAL_MATCH_UNBLOCKED #f)
-(export G_SIGNAL_MATCH_UNBLOCKED)
-
 (dv g_signal_connect_data #f)
 (export g_signal_connect_data)
 
@@ -67,18 +49,6 @@
 
 (dv g_object_newv #f)
 (export g_object_newv)
-
-(dv g_object_set #f)
-(export g_object_set)
-
-(dv g_object_get #f)
-(export g_object_get)
-
-(dv g_object_connect #f)
-(export g_object_connect)
-
-(dv g_object_disconnect #f)
-(export g_object_disconnect)
 
 (dv g_object_set_property #f)
 (export g_object_set_property)
@@ -302,9 +272,6 @@
 (dv gdk_rgb_ditherable #f)
 (export gdk_rgb_ditherable)
 
-)
-
-(seq
 (dv gdk_rgb_set_verbose #f)
 (export gdk_rgb_set_verbose)
 
@@ -335,6 +302,9 @@
 (dv GDK_SOURCE_PEN #f)
 (export GDK_SOURCE_PEN)
 
+)
+
+(seq
 (dv GDK_SOURCE_ERASER #f)
 (export GDK_SOURCE_ERASER)
 
@@ -605,9 +575,6 @@
 (dv GTK_JUSTIFY_LEFT #f)
 (export GTK_JUSTIFY_LEFT)
 
-)
-
-(seq
 (dv GTK_JUSTIFY_RIGHT #f)
 (export GTK_JUSTIFY_RIGHT)
 
@@ -638,6 +605,9 @@
 (dv GTK_MENU_DIR_PARENT #f)
 (export GTK_MENU_DIR_PARENT)
 
+)
+
+(seq
 (dv GTK_MENU_DIR_CHILD #f)
 (export GTK_MENU_DIR_CHILD)
 
@@ -908,9 +878,6 @@
 (dv GTK_TOOLBAR_TEXT #f)
 (export GTK_TOOLBAR_TEXT)
 
-)
-
-(seq
 (dv GTK_TOOLBAR_BOTH #f)
 (export GTK_TOOLBAR_BOTH)
 
@@ -941,6 +908,9 @@
 (dv GTK_WIN_POS_CENTER #f)
 (export GTK_WIN_POS_CENTER)
 
+)
+
+(seq
 (dv GTK_WIN_POS_MOUSE #f)
 (export GTK_WIN_POS_MOUSE)
 
@@ -982,6 +952,9 @@
 
 (dv gtk_getGtkCallback #f)
 (export gtk_getGtkCallback)
+
+(dv gtk_getGtkCallthrough #f)
+(export gtk_getGtkCallthrough)
 
 (dv gtk_getEventCallback #f)
 (export gtk_getEventCallback)
@@ -1075,6 +1048,12 @@
 
 (dv GTK_ACCEL_MASK #f)
 (export GTK_ACCEL_MASK)
+
+(dv gtk_accel_group_get_type #f)
+(export gtk_accel_group_get_type)
+
+(dv gtk_accel_group_new #f)
+(export gtk_accel_group_new)
 
 (dv gtk_accel_group_lock #f)
 (export gtk_accel_group_lock)
@@ -1193,9 +1172,6 @@
 (dv delete__GtkWidget #f)
 (export delete__GtkWidget)
 
-(dv gtk_widget_new #f)
-(export gtk_widget_new)
-
 (dv gtk_widget_ref #f)
 (export gtk_widget_ref)
 
@@ -1211,9 +1187,6 @@
 (dv gtk_widget_unparent #f)
 (export gtk_widget_unparent)
 
-)
-
-(seq
 (dv gtk_widget_show #f)
 (export gtk_widget_show)
 
@@ -1238,6 +1211,9 @@
 (dv gtk_widget_realize #f)
 (export gtk_widget_realize)
 
+)
+
+(seq
 (dv gtk_widget_unrealize #f)
 (export gtk_widget_unrealize)
 
@@ -1312,6 +1288,9 @@
 
 (dv gtk_widget_set_name #f)
 (export gtk_widget_set_name)
+
+(dv gtk_widget_get_name #f)
+(export gtk_widget_get_name)
 
 (dv gtk_widget_set_state #f)
 (export gtk_widget_set_state)
@@ -1514,9 +1493,6 @@
 (dv gtk_requisition_free #f)
 (export gtk_requisition_free)
 
-)
-
-(seq
 (dv _GdkColor_pixel_set #f)
 (export _GdkColor_pixel_set)
 
@@ -1538,6 +1514,9 @@
 (dv _GdkColor_blue_set #f)
 (export _GdkColor_blue_set)
 
+)
+
+(seq
 (dv _GdkColor_blue_get #f)
 (export _GdkColor_blue_get)
 
@@ -1817,9 +1796,6 @@
 (dv GDK_MAP #f)
 (export GDK_MAP)
 
-)
-
-(seq
 (dv GDK_UNMAP #f)
 (export GDK_UNMAP)
 
@@ -1841,6 +1817,9 @@
 (dv GDK_PROXIMITY_OUT #f)
 (export GDK_PROXIMITY_OUT)
 
+)
+
+(seq
 (dv GDK_DRAG_ENTER #f)
 (export GDK_DRAG_ENTER)
 
@@ -2120,9 +2099,6 @@
 (dv _GdkEventMotion_type_get #f)
 (export _GdkEventMotion_type_get)
 
-)
-
-(seq
 (dv _GdkEventMotion_window_set #f)
 (export _GdkEventMotion_window_set)
 
@@ -2144,6 +2120,9 @@
 (dv _GdkEventMotion_x_set #f)
 (export _GdkEventMotion_x_set)
 
+)
+
+(seq
 (dv _GdkEventMotion_x_get #f)
 (export _GdkEventMotion_x_get)
 
@@ -2423,9 +2402,6 @@
 (dv _GdkEventCrossing_window_get #f)
 (export _GdkEventCrossing_window_get)
 
-)
-
-(seq
 (dv _GdkEventCrossing_send_event_set #f)
 (export _GdkEventCrossing_send_event_set)
 
@@ -2447,6 +2423,9 @@
 (dv _GdkEventCrossing_x_set #f)
 (export _GdkEventCrossing_x_set)
 
+)
+
+(seq
 (dv _GdkEventCrossing_x_get #f)
 (export _GdkEventCrossing_x_get)
 
@@ -2726,9 +2705,6 @@
 (dv _GdkEventClient_send_event_get #f)
 (export _GdkEventClient_send_event_get)
 
-)
-
-(seq
 (dv _GdkEventClient_message_type_set #f)
 (export _GdkEventClient_message_type_set)
 
@@ -2750,6 +2726,9 @@
 (dv delete__GdkEventClient #f)
 (export delete__GdkEventClient)
 
+)
+
+(seq
 (dv _GdkEventClient_data_b_set #f)
 (export _GdkEventClient_data_b_set)
 
@@ -3029,9 +3008,6 @@
 (dv GDK_JOIN_BEVEL #f)
 (export GDK_JOIN_BEVEL)
 
-)
-
-(seq
 (dv GDK_LINE_SOLID #f)
 (export GDK_LINE_SOLID)
 
@@ -3053,6 +3029,9 @@
 (dv GDK_GC_BACKGROUND #f)
 (export GDK_GC_BACKGROUND)
 
+)
+
+(seq
 (dv GDK_GC_FONT #f)
 (export GDK_GC_FONT)
 
@@ -3332,9 +3311,6 @@
 (dv gdk_pixmap_foreign_new #f)
 (export gdk_pixmap_foreign_new)
 
-)
-
-(seq
 (dv gdk_pixmap_lookup #f)
 (export gdk_pixmap_lookup)
 
@@ -3356,6 +3332,9 @@
 (dv GDK_VISUAL_DIRECT_COLOR #f)
 (export GDK_VISUAL_DIRECT_COLOR)
 
+)
+
+(seq
 (dv gdk_visual_get_type #f)
 (export gdk_visual_get_type)
 
@@ -3635,9 +3614,6 @@
 (dv gdk_window_remove_filter #f)
 (export gdk_window_remove_filter)
 
-)
-
-(seq
 (dv gdk_window_scroll #f)
 (export gdk_window_scroll)
 
@@ -3659,6 +3635,9 @@
 (dv gdk_window_is_viewable #f)
 (export gdk_window_is_viewable)
 
+)
+
+(seq
 (dv gdk_window_get_state #f)
 (export gdk_window_get_state)
 
@@ -3938,9 +3917,6 @@
 (dv gtk_box_set_child_packing #f)
 (export gtk_box_set_child_packing)
 
-)
-
-(seq
 (dv gtk_button_get_type #f)
 (export gtk_button_get_type)
 
@@ -3962,6 +3938,9 @@
 (dv gtk_button_released #f)
 (export gtk_button_released)
 
+)
+
+(seq
 (dv gtk_button_clicked #f)
 (export gtk_button_clicked)
 
@@ -4241,9 +4220,6 @@
 (dv gtk_clist_optimal_column_width #f)
 (export gtk_clist_optimal_column_width)
 
-)
-
-(seq
 (dv gtk_clist_set_column_width #f)
 (export gtk_clist_set_column_width)
 
@@ -4265,6 +4241,9 @@
 (dv gtk_clist_get_cell_type #f)
 (export gtk_clist_get_cell_type)
 
+)
+
+(seq
 (dv gtk_clist_set_text #f)
 (export gtk_clist_set_text)
 
@@ -4544,9 +4523,6 @@
 (dv gtk_ctree_remove_node #f)
 (export gtk_ctree_remove_node)
 
-)
-
-(seq
 (dv gtk_ctree_insert_gnode #f)
 (export gtk_ctree_insert_gnode)
 
@@ -4568,6 +4544,9 @@
 (dv gtk_ctree_is_viewable #f)
 (export gtk_ctree_is_viewable)
 
+)
+
+(seq
 (dv gtk_ctree_last #f)
 (export gtk_ctree_last)
 
@@ -4799,17 +4778,11 @@
 (dv gtk_dialog_new #f)
 (export gtk_dialog_new)
 
-(dv gtk_dialog_new_with_buttons #f)
-(export gtk_dialog_new_with_buttons)
-
 (dv gtk_dialog_add_action_widget #f)
 (export gtk_dialog_add_action_widget)
 
 (dv gtk_dialog_add_button #f)
 (export gtk_dialog_add_button)
-
-(dv gtk_dialog_add_buttons #f)
-(export gtk_dialog_add_buttons)
 
 (dv gtk_dialog_set_response_sensitive #f)
 (export gtk_dialog_set_response_sensitive)
@@ -4847,9 +4820,6 @@
 (dv gtk_editable_get_chars #f)
 (export gtk_editable_get_chars)
 
-)
-
-(seq
 (dv gtk_editable_cut_clipboard #f)
 (export gtk_editable_cut_clipboard)
 
@@ -4877,6 +4847,9 @@
 (dv gtk_entry_new #f)
 (export gtk_entry_new)
 
+)
+
+(seq
 (dv gtk_entry_set_visibility #f)
 (export gtk_entry_set_visibility)
 
@@ -4988,6 +4961,9 @@
 (dv gtk_font_selection_dialog_set_font_name #f)
 (export gtk_font_selection_dialog_set_font_name)
 
+(dv gtk_font_selection_dialog_get_preview_text #f)
+(export gtk_font_selection_dialog_get_preview_text)
+
 (dv gtk_font_selection_dialog_set_preview_text #f)
 (export gtk_font_selection_dialog_set_preview_text)
 
@@ -4996,6 +4972,9 @@
 
 (dv gtk_frame_set_label #f)
 (export gtk_frame_set_label)
+
+(dv gtk_frame_get_label #f)
+(export gtk_frame_get_label)
 
 (dv gtk_frame_set_label_widget #f)
 (export gtk_frame_set_label_widget)
@@ -5150,9 +5129,6 @@
 (dv gtk_input_dialog_new #f)
 (export gtk_input_dialog_new)
 
-)
-
-(seq
 (dv gtk_item_select #f)
 (export gtk_item_select)
 
@@ -5174,6 +5150,9 @@
 (dv gtk_item_factory_from_widget #f)
 (export gtk_item_factory_from_widget)
 
+)
+
+(seq
 (dv gtk_item_factory_path_from_widget #f)
 (export gtk_item_factory_path_from_widget)
 
@@ -5228,6 +5207,9 @@
 (dv gtk_label_set_text #f)
 (export gtk_label_set_text)
 
+(dv gtk_label_get_text #f)
+(export gtk_label_get_text)
+
 (dv gtk_label_set_attributes #f)
 (export gtk_label_set_attributes)
 
@@ -5236,6 +5218,9 @@
 
 (dv gtk_label_set_label #f)
 (export gtk_label_set_label)
+
+(dv gtk_label_get_label #f)
+(export gtk_label_get_label)
 
 (dv gtk_label_set_markup #f)
 (export gtk_label_set_markup)
@@ -5453,9 +5438,6 @@
 (dv gtk_quit_add #f)
 (export gtk_quit_add)
 
-)
-
-(seq
 (dv gtk_quit_add_full #f)
 (export gtk_quit_add_full)
 
@@ -5471,6 +5453,9 @@
 (dv gtk_timeout_add_full #f)
 (export gtk_timeout_add_full)
 
+)
+
+(seq
 (dv gtk_timeout_remove #f)
 (export gtk_timeout_remove)
 
@@ -5551,6 +5536,9 @@
 
 (dv gtk_menu_set_title #f)
 (export gtk_menu_set_title)
+
+(dv gtk_menu_get_title #f)
+(export gtk_menu_get_title)
 
 (dv gtk_menu_reorder_child #f)
 (export gtk_menu_reorder_child)
@@ -5732,11 +5720,23 @@
 (dv gtk_notebook_set_tab_label_text #f)
 (export gtk_notebook_set_tab_label_text)
 
+(dv gtk_notebook_get_tab_label_text #f)
+(export gtk_notebook_get_tab_label_text)
+
+(dv gtk_notebook_get_menu_label #f)
+(export gtk_notebook_get_menu_label)
+
 (dv gtk_notebook_set_menu_label #f)
 (export gtk_notebook_set_menu_label)
 
 (dv gtk_notebook_set_menu_label_text #f)
 (export gtk_notebook_set_menu_label_text)
+
+(dv gtk_notebook_get_menu_label_text #f)
+(export gtk_notebook_get_menu_label_text)
+
+(dv gtk_notebook_query_tab_label_packing #f)
+(export gtk_notebook_query_tab_label_packing)
 
 (dv gtk_notebook_set_tab_label_packing #f)
 (export gtk_notebook_set_tab_label_packing)
@@ -5912,6 +5912,9 @@
 (dv gtk_progress_bar_set_orientation #f)
 (export gtk_progress_bar_set_orientation)
 
+(dv gtk_progress_bar_get_text #f)
+(export gtk_progress_bar_get_text)
+
 (dv gtk_progress_bar_get_fraction #f)
 (export gtk_progress_bar_get_fraction)
 
@@ -6056,12 +6059,12 @@
 (dv gtk_scrolled_window_set_placement #f)
 (export gtk_scrolled_window_set_placement)
 
-(dv gtk_scrolled_window_get_placement #f)
-(export gtk_scrolled_window_get_placement)
-
 )
 
 (seq
+(dv gtk_scrolled_window_get_placement #f)
+(export gtk_scrolled_window_get_placement)
+
 (dv gtk_scrolled_window_set_shadow_type #f)
 (export gtk_scrolled_window_set_shadow_type)
 
@@ -6359,12 +6362,12 @@
 (dv gtk_paint_option #f)
 (export gtk_paint_option)
 
-(dv gtk_paint_tab #f)
-(export gtk_paint_tab)
-
 )
 
 (seq
+(dv gtk_paint_tab #f)
+(export gtk_paint_tab)
+
 (dv gtk_paint_shadow_gap #f)
 (export gtk_paint_shadow_gap)
 
@@ -6443,44 +6446,347 @@
 (dv gtk_tearoff_menu_item_new #f)
 (export gtk_tearoff_menu_item_new)
 
-(dv gtk_text_new #f)
-(export gtk_text_new)
+(dv gtk_text_buffer_get_type #f)
+(export gtk_text_buffer_get_type)
 
-(dv gtk_text_set_editable #f)
-(export gtk_text_set_editable)
+(dv gtk_text_buffer_new #f)
+(export gtk_text_buffer_new)
 
-(dv gtk_text_set_word_wrap #f)
-(export gtk_text_set_word_wrap)
+(dv gtk_text_buffer_get_line_count #f)
+(export gtk_text_buffer_get_line_count)
 
-(dv gtk_text_set_line_wrap #f)
-(export gtk_text_set_line_wrap)
+(dv gtk_text_buffer_get_char_count #f)
+(export gtk_text_buffer_get_char_count)
 
-(dv gtk_text_set_adjustments #f)
-(export gtk_text_set_adjustments)
+(dv gtk_text_buffer_get_tag_table #f)
+(export gtk_text_buffer_get_tag_table)
 
-(dv gtk_text_set_point #f)
-(export gtk_text_set_point)
+(dv gtk_text_buffer_set_text #f)
+(export gtk_text_buffer_set_text)
 
-(dv gtk_text_get_point #f)
-(export gtk_text_get_point)
+(dv gtk_text_buffer_insert #f)
+(export gtk_text_buffer_insert)
 
-(dv gtk_text_get_length #f)
-(export gtk_text_get_length)
+(dv gtk_text_buffer_insert_at_cursor #f)
+(export gtk_text_buffer_insert_at_cursor)
 
-(dv gtk_text_freeze #f)
-(export gtk_text_freeze)
+(dv gtk_text_buffer_insert_interactive #f)
+(export gtk_text_buffer_insert_interactive)
 
-(dv gtk_text_thaw #f)
-(export gtk_text_thaw)
+(dv gtk_text_buffer_insert_interactive_at_cursor #f)
+(export gtk_text_buffer_insert_interactive_at_cursor)
 
-(dv gtk_text_insert #f)
-(export gtk_text_insert)
+(dv gtk_text_buffer_insert_range #f)
+(export gtk_text_buffer_insert_range)
 
-(dv gtk_text_backward_delete #f)
-(export gtk_text_backward_delete)
+(dv gtk_text_buffer_insert_range_interactive #f)
+(export gtk_text_buffer_insert_range_interactive)
 
-(dv gtk_text_forward_delete #f)
-(export gtk_text_forward_delete)
+(dv gtk_text_buffer_delete #f)
+(export gtk_text_buffer_delete)
+
+(dv gtk_text_buffer_delete_interactive #f)
+(export gtk_text_buffer_delete_interactive)
+
+(dv gtk_text_buffer_get_text #f)
+(export gtk_text_buffer_get_text)
+
+(dv gtk_text_buffer_get_slice #f)
+(export gtk_text_buffer_get_slice)
+
+(dv gtk_text_buffer_insert_pixbuf #f)
+(export gtk_text_buffer_insert_pixbuf)
+
+(dv gtk_text_buffer_insert_child_anchor #f)
+(export gtk_text_buffer_insert_child_anchor)
+
+(dv gtk_text_buffer_create_child_anchor #f)
+(export gtk_text_buffer_create_child_anchor)
+
+(dv gtk_text_buffer_create_mark #f)
+(export gtk_text_buffer_create_mark)
+
+(dv gtk_text_buffer_move_mark #f)
+(export gtk_text_buffer_move_mark)
+
+(dv gtk_text_buffer_delete_mark #f)
+(export gtk_text_buffer_delete_mark)
+
+(dv gtk_text_buffer_get_mark #f)
+(export gtk_text_buffer_get_mark)
+
+(dv gtk_text_buffer_move_mark_by_name #f)
+(export gtk_text_buffer_move_mark_by_name)
+
+(dv gtk_text_buffer_delete_mark_by_name #f)
+(export gtk_text_buffer_delete_mark_by_name)
+
+(dv gtk_text_buffer_get_insert #f)
+(export gtk_text_buffer_get_insert)
+
+(dv gtk_text_buffer_get_selection_bound #f)
+(export gtk_text_buffer_get_selection_bound)
+
+(dv gtk_text_buffer_place_cursor #f)
+(export gtk_text_buffer_place_cursor)
+
+(dv gtk_text_buffer_apply_tag #f)
+(export gtk_text_buffer_apply_tag)
+
+(dv gtk_text_buffer_remove_tag #f)
+(export gtk_text_buffer_remove_tag)
+
+(dv gtk_text_buffer_apply_tag_by_name #f)
+(export gtk_text_buffer_apply_tag_by_name)
+
+(dv gtk_text_buffer_remove_tag_by_name #f)
+(export gtk_text_buffer_remove_tag_by_name)
+
+(dv gtk_text_buffer_remove_all_tags #f)
+(export gtk_text_buffer_remove_all_tags)
+
+(dv gtk_text_buffer_get_iter_at_line_offset #f)
+(export gtk_text_buffer_get_iter_at_line_offset)
+
+(dv gtk_text_buffer_get_iter_at_line_index #f)
+(export gtk_text_buffer_get_iter_at_line_index)
+
+(dv gtk_text_buffer_get_iter_at_offset #f)
+(export gtk_text_buffer_get_iter_at_offset)
+
+(dv gtk_text_buffer_get_iter_at_line #f)
+(export gtk_text_buffer_get_iter_at_line)
+
+(dv gtk_text_buffer_get_start_iter #f)
+(export gtk_text_buffer_get_start_iter)
+
+(dv gtk_text_buffer_get_end_iter #f)
+(export gtk_text_buffer_get_end_iter)
+
+(dv gtk_text_buffer_get_bounds #f)
+(export gtk_text_buffer_get_bounds)
+
+(dv gtk_text_buffer_get_iter_at_mark #f)
+(export gtk_text_buffer_get_iter_at_mark)
+
+(dv gtk_text_buffer_get_iter_at_child_anchor #f)
+(export gtk_text_buffer_get_iter_at_child_anchor)
+
+(dv gtk_text_buffer_get_modified #f)
+(export gtk_text_buffer_get_modified)
+
+(dv gtk_text_buffer_set_modified #f)
+(export gtk_text_buffer_set_modified)
+
+(dv gtk_text_buffer_add_selection_clipboard #f)
+(export gtk_text_buffer_add_selection_clipboard)
+
+(dv gtk_text_buffer_remove_selection_clipboard #f)
+(export gtk_text_buffer_remove_selection_clipboard)
+
+(dv gtk_text_buffer_cut_clipboard #f)
+(export gtk_text_buffer_cut_clipboard)
+
+(dv gtk_text_buffer_copy_clipboard #f)
+(export gtk_text_buffer_copy_clipboard)
+
+(dv gtk_text_buffer_paste_clipboard #f)
+(export gtk_text_buffer_paste_clipboard)
+
+(dv gtk_text_buffer_get_selection_bounds #f)
+(export gtk_text_buffer_get_selection_bounds)
+
+(dv gtk_text_buffer_delete_selection #f)
+(export gtk_text_buffer_delete_selection)
+
+(dv gtk_text_buffer_begin_user_action #f)
+(export gtk_text_buffer_begin_user_action)
+
+(dv gtk_text_buffer_end_user_action #f)
+(export gtk_text_buffer_end_user_action)
+
+(dv GTK_TEXT_WINDOW_PRIVATE #f)
+(export GTK_TEXT_WINDOW_PRIVATE)
+
+(dv GTK_TEXT_WINDOW_WIDGET #f)
+(export GTK_TEXT_WINDOW_WIDGET)
+
+(dv GTK_TEXT_WINDOW_TEXT #f)
+(export GTK_TEXT_WINDOW_TEXT)
+
+(dv GTK_TEXT_WINDOW_LEFT #f)
+(export GTK_TEXT_WINDOW_LEFT)
+
+(dv GTK_TEXT_WINDOW_RIGHT #f)
+(export GTK_TEXT_WINDOW_RIGHT)
+
+(dv GTK_TEXT_WINDOW_TOP #f)
+(export GTK_TEXT_WINDOW_TOP)
+
+(dv GTK_TEXT_WINDOW_BOTTOM #f)
+(export GTK_TEXT_WINDOW_BOTTOM)
+
+(dv gtk_text_view_get_type #f)
+(export gtk_text_view_get_type)
+
+(dv gtk_text_view_new #f)
+(export gtk_text_view_new)
+
+(dv gtk_text_view_new_with_buffer #f)
+(export gtk_text_view_new_with_buffer)
+
+(dv gtk_text_view_set_buffer #f)
+(export gtk_text_view_set_buffer)
+
+(dv gtk_text_view_get_buffer #f)
+(export gtk_text_view_get_buffer)
+
+(dv gtk_text_view_scroll_to_iter #f)
+(export gtk_text_view_scroll_to_iter)
+
+(dv gtk_text_view_scroll_to_mark #f)
+(export gtk_text_view_scroll_to_mark)
+
+(dv gtk_text_view_scroll_mark_onscreen #f)
+(export gtk_text_view_scroll_mark_onscreen)
+
+(dv gtk_text_view_move_mark_onscreen #f)
+(export gtk_text_view_move_mark_onscreen)
+
+(dv gtk_text_view_place_cursor_onscreen #f)
+(export gtk_text_view_place_cursor_onscreen)
+
+(dv gtk_text_view_get_visible_rect #f)
+(export gtk_text_view_get_visible_rect)
+
+(dv gtk_text_view_set_cursor_visible #f)
+(export gtk_text_view_set_cursor_visible)
+
+(dv gtk_text_view_get_cursor_visible #f)
+(export gtk_text_view_get_cursor_visible)
+
+)
+
+(seq
+(dv gtk_text_view_get_iter_location #f)
+(export gtk_text_view_get_iter_location)
+
+(dv gtk_text_view_get_iter_at_location #f)
+(export gtk_text_view_get_iter_at_location)
+
+(dv gtk_text_view_get_line_yrange #f)
+(export gtk_text_view_get_line_yrange)
+
+(dv gtk_text_view_get_line_at_y #f)
+(export gtk_text_view_get_line_at_y)
+
+(dv gtk_text_view_buffer_to_window_coords #f)
+(export gtk_text_view_buffer_to_window_coords)
+
+(dv gtk_text_view_window_to_buffer_coords #f)
+(export gtk_text_view_window_to_buffer_coords)
+
+(dv gtk_text_view_get_window #f)
+(export gtk_text_view_get_window)
+
+(dv gtk_text_view_get_window_type #f)
+(export gtk_text_view_get_window_type)
+
+(dv gtk_text_view_set_border_window_size #f)
+(export gtk_text_view_set_border_window_size)
+
+(dv gtk_text_view_get_border_window_size #f)
+(export gtk_text_view_get_border_window_size)
+
+(dv gtk_text_view_forward_display_line #f)
+(export gtk_text_view_forward_display_line)
+
+(dv gtk_text_view_backward_display_line #f)
+(export gtk_text_view_backward_display_line)
+
+(dv gtk_text_view_forward_display_line_end #f)
+(export gtk_text_view_forward_display_line_end)
+
+(dv gtk_text_view_backward_display_line_start #f)
+(export gtk_text_view_backward_display_line_start)
+
+(dv gtk_text_view_starts_display_line #f)
+(export gtk_text_view_starts_display_line)
+
+(dv gtk_text_view_move_visually #f)
+(export gtk_text_view_move_visually)
+
+(dv gtk_text_view_add_child_at_anchor #f)
+(export gtk_text_view_add_child_at_anchor)
+
+(dv gtk_text_view_add_child_in_window #f)
+(export gtk_text_view_add_child_in_window)
+
+(dv gtk_text_view_move_child #f)
+(export gtk_text_view_move_child)
+
+(dv gtk_text_view_set_wrap_mode #f)
+(export gtk_text_view_set_wrap_mode)
+
+(dv gtk_text_view_get_wrap_mode #f)
+(export gtk_text_view_get_wrap_mode)
+
+(dv gtk_text_view_set_editable #f)
+(export gtk_text_view_set_editable)
+
+(dv gtk_text_view_get_editable #f)
+(export gtk_text_view_get_editable)
+
+(dv gtk_text_view_set_pixels_above_lines #f)
+(export gtk_text_view_set_pixels_above_lines)
+
+(dv gtk_text_view_get_pixels_above_lines #f)
+(export gtk_text_view_get_pixels_above_lines)
+
+(dv gtk_text_view_set_pixels_below_lines #f)
+(export gtk_text_view_set_pixels_below_lines)
+
+(dv gtk_text_view_get_pixels_below_lines #f)
+(export gtk_text_view_get_pixels_below_lines)
+
+(dv gtk_text_view_set_pixels_inside_wrap #f)
+(export gtk_text_view_set_pixels_inside_wrap)
+
+(dv gtk_text_view_get_pixels_inside_wrap #f)
+(export gtk_text_view_get_pixels_inside_wrap)
+
+(dv gtk_text_view_set_justification #f)
+(export gtk_text_view_set_justification)
+
+(dv gtk_text_view_get_justification #f)
+(export gtk_text_view_get_justification)
+
+(dv gtk_text_view_set_left_margin #f)
+(export gtk_text_view_set_left_margin)
+
+(dv gtk_text_view_get_left_margin #f)
+(export gtk_text_view_get_left_margin)
+
+(dv gtk_text_view_set_right_margin #f)
+(export gtk_text_view_set_right_margin)
+
+(dv gtk_text_view_get_right_margin #f)
+(export gtk_text_view_get_right_margin)
+
+(dv gtk_text_view_set_indent #f)
+(export gtk_text_view_set_indent)
+
+(dv gtk_text_view_get_indent #f)
+(export gtk_text_view_get_indent)
+
+(dv gtk_text_view_set_tabs #f)
+(export gtk_text_view_set_tabs)
+
+(dv gtk_text_view_get_tabs #f)
+(export gtk_text_view_get_tabs)
+
+(dv gtk_text_view_get_default_attributes #f)
+(export gtk_text_view_get_default_attributes)
 
 (dv gtk_tips_query_new #f)
 (export gtk_tips_query_new)
@@ -6662,12 +6968,12 @@
 (dv gtk_tree_remove_items #f)
 (export gtk_tree_remove_items)
 
-(dv gtk_tree_clear_items #f)
-(export gtk_tree_clear_items)
-
 )
 
 (seq
+(dv gtk_tree_clear_items #f)
+(export gtk_tree_clear_items)
+
 (dv gtk_tree_select_item #f)
 (export gtk_tree_select_item)
 
@@ -6779,138 +7085,6 @@
 (dv GTK_TREE_VIEW_DROP_INTO_OR_AFTER #f)
 (export GTK_TREE_VIEW_DROP_INTO_OR_AFTER)
 
-(dv _GtkTreeView_parent_set #f)
-(export _GtkTreeView_parent_set)
-
-(dv _GtkTreeView_parent_get #f)
-(export _GtkTreeView_parent_get)
-
-(dv _GtkTreeView_priv_set #f)
-(export _GtkTreeView_priv_set)
-
-(dv _GtkTreeView_priv_get #f)
-(export _GtkTreeView_priv_get)
-
-(dv new__GtkTreeView #f)
-(export new__GtkTreeView)
-
-(dv delete__GtkTreeView #f)
-(export delete__GtkTreeView)
-
-(dv _GtkTreeViewClass_parent_class_set #f)
-(export _GtkTreeViewClass_parent_class_set)
-
-(dv _GtkTreeViewClass_parent_class_get #f)
-(export _GtkTreeViewClass_parent_class_get)
-
-(dv _GtkTreeViewClass_set_scroll_adjustments_set #f)
-(export _GtkTreeViewClass_set_scroll_adjustments_set)
-
-(dv _GtkTreeViewClass_set_scroll_adjustments_get #f)
-(export _GtkTreeViewClass_set_scroll_adjustments_get)
-
-(dv _GtkTreeViewClass_row_activated_set #f)
-(export _GtkTreeViewClass_row_activated_set)
-
-(dv _GtkTreeViewClass_row_activated_get #f)
-(export _GtkTreeViewClass_row_activated_get)
-
-(dv _GtkTreeViewClass_row_expanded_set #f)
-(export _GtkTreeViewClass_row_expanded_set)
-
-(dv _GtkTreeViewClass_row_expanded_get #f)
-(export _GtkTreeViewClass_row_expanded_get)
-
-(dv _GtkTreeViewClass_row_collapsed_set #f)
-(export _GtkTreeViewClass_row_collapsed_set)
-
-(dv _GtkTreeViewClass_row_collapsed_get #f)
-(export _GtkTreeViewClass_row_collapsed_get)
-
-(dv _GtkTreeViewClass_columns_changed_set #f)
-(export _GtkTreeViewClass_columns_changed_set)
-
-(dv _GtkTreeViewClass_columns_changed_get #f)
-(export _GtkTreeViewClass_columns_changed_get)
-
-(dv _GtkTreeViewClass_cursor_changed_set #f)
-(export _GtkTreeViewClass_cursor_changed_set)
-
-(dv _GtkTreeViewClass_cursor_changed_get #f)
-(export _GtkTreeViewClass_cursor_changed_get)
-
-(dv _GtkTreeViewClass_unselect_all_set #f)
-(export _GtkTreeViewClass_unselect_all_set)
-
-(dv _GtkTreeViewClass_unselect_all_get #f)
-(export _GtkTreeViewClass_unselect_all_get)
-
-(dv _GtkTreeViewClass_select_cursor_row_set #f)
-(export _GtkTreeViewClass_select_cursor_row_set)
-
-(dv _GtkTreeViewClass_select_cursor_row_get #f)
-(export _GtkTreeViewClass_select_cursor_row_get)
-
-(dv _GtkTreeViewClass_toggle_cursor_row_set #f)
-(export _GtkTreeViewClass_toggle_cursor_row_set)
-
-(dv _GtkTreeViewClass_toggle_cursor_row_get #f)
-(export _GtkTreeViewClass_toggle_cursor_row_get)
-
-(dv _GtkTreeViewClass_expand_collapse_cursor_row_set #f)
-(export _GtkTreeViewClass_expand_collapse_cursor_row_set)
-
-(dv _GtkTreeViewClass_expand_collapse_cursor_row_get #f)
-(export _GtkTreeViewClass_expand_collapse_cursor_row_get)
-
-(dv _GtkTreeViewClass_select_cursor_parent_set #f)
-(export _GtkTreeViewClass_select_cursor_parent_set)
-
-(dv _GtkTreeViewClass_select_cursor_parent_get #f)
-(export _GtkTreeViewClass_select_cursor_parent_get)
-
-(dv _GtkTreeViewClass_start_interactive_search_set #f)
-(export _GtkTreeViewClass_start_interactive_search_set)
-
-(dv _GtkTreeViewClass_start_interactive_search_get #f)
-(export _GtkTreeViewClass_start_interactive_search_get)
-
-(dv _GtkTreeViewClass__gtk_reserved0_set #f)
-(export _GtkTreeViewClass__gtk_reserved0_set)
-
-(dv _GtkTreeViewClass__gtk_reserved0_get #f)
-(export _GtkTreeViewClass__gtk_reserved0_get)
-
-(dv _GtkTreeViewClass__gtk_reserved1_set #f)
-(export _GtkTreeViewClass__gtk_reserved1_set)
-
-(dv _GtkTreeViewClass__gtk_reserved1_get #f)
-(export _GtkTreeViewClass__gtk_reserved1_get)
-
-(dv _GtkTreeViewClass__gtk_reserved2_set #f)
-(export _GtkTreeViewClass__gtk_reserved2_set)
-
-(dv _GtkTreeViewClass__gtk_reserved2_get #f)
-(export _GtkTreeViewClass__gtk_reserved2_get)
-
-(dv _GtkTreeViewClass__gtk_reserved3_set #f)
-(export _GtkTreeViewClass__gtk_reserved3_set)
-
-(dv _GtkTreeViewClass__gtk_reserved3_get #f)
-(export _GtkTreeViewClass__gtk_reserved3_get)
-
-(dv _GtkTreeViewClass__gtk_reserved4_set #f)
-(export _GtkTreeViewClass__gtk_reserved4_set)
-
-(dv _GtkTreeViewClass__gtk_reserved4_get #f)
-(export _GtkTreeViewClass__gtk_reserved4_get)
-
-(dv new__GtkTreeViewClass #f)
-(export new__GtkTreeViewClass)
-
-(dv delete__GtkTreeViewClass #f)
-(export delete__GtkTreeViewClass)
-
 (dv gtk_tree_view_get_type #f)
 (export gtk_tree_view_get_type)
 
@@ -6965,21 +7139,6 @@
 (dv gtk_tree_view_remove_column #f)
 (export gtk_tree_view_remove_column)
 
-(dv gtk_tree_view_insert_column #f)
-(export gtk_tree_view_insert_column)
-
-)
-
-(seq
-(dv gtk_tree_view_insert_column_with_attributes #f)
-(export gtk_tree_view_insert_column_with_attributes)
-
-(dv gtk_tree_view_get_column #f)
-(export gtk_tree_view_get_column)
-
-(dv gtk_tree_view_get_columns #f)
-(export gtk_tree_view_get_columns)
-
 (dv gtk_tree_view_move_column_after #f)
 (export gtk_tree_view_move_column_after)
 
@@ -6988,9 +7147,6 @@
 
 (dv gtk_tree_view_get_expander_column #f)
 (export gtk_tree_view_get_expander_column)
-
-(dv gtk_tree_view_set_column_drag_function #f)
-(export gtk_tree_view_set_column_drag_function)
 
 (dv gtk_tree_view_scroll_to_point #f)
 (export gtk_tree_view_scroll_to_point)
@@ -7012,9 +7168,6 @@
 
 (dv gtk_tree_view_collapse_row #f)
 (export gtk_tree_view_collapse_row)
-
-(dv gtk_tree_view_map_expanded_rows #f)
-(export gtk_tree_view_map_expanded_rows)
 
 (dv gtk_tree_view_row_expanded #f)
 (export gtk_tree_view_row_expanded)
@@ -7091,9 +7244,6 @@
 (dv gtk_tree_view_column_new #f)
 (export gtk_tree_view_column_new)
 
-(dv gtk_tree_view_column_new_with_attributes #f)
-(export gtk_tree_view_column_new_with_attributes)
-
 (dv gtk_tree_view_column_pack_start #f)
 (export gtk_tree_view_column_pack_start)
 
@@ -7109,9 +7259,6 @@
 (dv gtk_tree_view_column_add_attribute #f)
 (export gtk_tree_view_column_add_attribute)
 
-(dv gtk_tree_view_column_set_attributes #f)
-(export gtk_tree_view_column_set_attributes)
-
 (dv gtk_tree_view_column_set_cell_data_func #f)
 (export gtk_tree_view_column_set_cell_data_func)
 
@@ -7124,6 +7271,9 @@
 (dv gtk_tree_view_column_get_spacing #f)
 (export gtk_tree_view_column_get_spacing)
 
+)
+
+(seq
 (dv gtk_tree_view_column_set_visible #f)
 (export gtk_tree_view_column_set_visible)
 
@@ -7168,6 +7318,9 @@
 
 (dv gtk_tree_view_column_set_title #f)
 (export gtk_tree_view_column_set_title)
+
+(dv gtk_tree_view_column_get_title #f)
+(export gtk_tree_view_column_get_title)
 
 (dv gtk_tree_view_column_set_clickable #f)
 (export gtk_tree_view_column_set_clickable)
@@ -7255,6 +7408,9 @@
 
 (dv gtk_window_new #f)
 (export gtk_window_new)
+
+(dv gtk_tree_goo_selection_get_node #f)
+(export gtk_tree_goo_selection_get_node)
 
 (dv gtk_tree_goo_new #f)
 (export gtk_tree_goo_new)

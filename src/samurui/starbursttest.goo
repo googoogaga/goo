@@ -60,17 +60,17 @@
                               )))
 
 
-(imodel <int-hold>
+(iview <int-hold>
         "Current Int"
         da-int
         )
 
-(imodel <str-hold>
+(iview <str-hold>
         "Current String"
         da-str
         )
 
-(imodel <simple-app>
+(iview <simple-app>
         (attr (columns
                (master bob (attr tree-nodes fill))
                (slave bob)

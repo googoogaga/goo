@@ -39,8 +39,9 @@
    )
   )
 
-(dm bind-master (sb|<visi-sb> master|<gui-master>)
+(dm bind-master (sb|<visi-sb> master|<gui-master> => <log>)
   (set (sb-master sb) master)
+  #t
   )
 
 ;; ----- Painting ----------------------------------------------------------------------

@@ -19,6 +19,8 @@
 
 #include <gtk/gtktreemodel.h>
 #include <gtk/gtktreednd.h>
+#include <gtk/gtktreeselection.h>
+
 #include <string.h>
 #include <gobject/gvaluecollector.h>
 
@@ -292,6 +294,22 @@ gtk_tree_goo_init (GtkTreeGoo *tree_goo)
       tree_goo->stamp = g_random_int ();
     }
   while (tree_goo->stamp == 0);
+}
+
+// Selection magic
+P 
+gtk_tree_goo_selection_get_node(GtkTreeSelection *sel)
+{
+  GtkTreeIter myIter;
+
+  if(!gtk_tree_selection_get_selected(sel, NULL, &myIter))
+    {
+      return YPfalse;
+    }
+  else // we good, let's return this biyatch
+    {
+      return myIter.user_data; // it's a P!
+    }
 }
 
 /**

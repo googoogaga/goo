@@ -301,8 +301,9 @@
  (dp enable-anim (<visi-fdg> => <log>) #t)
  (dp fdg-master (<visi-fdg> => (t? <gui-master>)) #f)
 
-(dm bind-master (fdg|<visi-fdg> master|<gui-master>)
+(dm bind-master (fdg|<visi-fdg> master|<gui-master> => <log>)
   (set (fdg-master fdg) master)
+  #t
   )
 
 (dm find-graph-node (fdg|<visi-fdg> node)

@@ -73,12 +73,13 @@
    ;; -- Rebinder --
    (fun (new-obj)
      ;; Detach from current if applicable
-     (when (wrapped pimp)
-       ;; um... nop for now
+     (when (and (prop-bound? pimp wrapped)
+                (wrapped pimp))
+       (zap! (bars pimp))
        )
      
      ;; 
-     (set (wrapped pimp) (getter new-obj))
+     (set (wrapped pimp) ((getter info) new-obj))
      
      ;; Fab the bars
      (do (fun (item)
@@ -89,6 +90,18 @@
    
    ;; -- Refresher --
    (fun ()
+     ;; Might need to re-fab the bars...
+     (when (~= (len (bars pimp)) (len (wrapped pimp)))
+       (zap! (bars pimp))
+       
+       ;; Fab the bars
+       (do (fun (item)
+             (add! (bars pimp) (fab-ho pimp item (1st (hobar-item-payload item))))
+             )
+           (wrapped pimp))
+       )
+
+     (repaint-widget pimp)
      )
 
    ;; -- Free / Cleanup --
@@ -123,19 +136,26 @@
   )
 
 (dm repaint-widget (pimp|<hobar-pimp>)
-  ;; Rescale
-  (rescale pimp)
+  ;; White it out
+  (blank pimp)
 
-  ;; Paint
-  (rep loop ((ho-enum (enum (bars pimp))) (cur-x (badge-space pimp)) (cur-y 0))
-    (when (not (fin? ho-enum))
-      (def cur-ho (now ho-enum))
-      
-      (hobar-draw cur-ho pimp (scale pimp) 0 (rect cur-x cur-y (gui-width pimp) (height cur-ho)))
+  (when (< 0 (len (bars pimp)))
+    ;; Rescale
+    (rescale pimp)
 
-      (loop (nxt ho-enum) cur-x (+ cur-y (height cur-ho)))
+    ;; Paint
+    (rep loop ((ho-enum (enum (bars pimp))) (cur-x (badge-space pimp)) (cur-y 0))
+      (when (not (fin? ho-enum))
+        (def cur-ho (now ho-enum))
+        
+        (hobar-draw cur-ho pimp (scale pimp) 0 (rect cur-x cur-y (gui-width pimp) (height cur-ho)))
+        
+        (loop (nxt ho-enum) cur-x (+ cur-y (height cur-ho)))
+        )
       )
     )
+
+  (invalidate-all pimp)
   )
 
 (dm pimp-find-ho (pimp|<hobar-pimp> x|<int> y|<int>)
