@@ -6,6 +6,10 @@
 (use samurui/gtk.swig)
 (use samurui/gtkcallbacks)
 
+;; This file demonstrates drawing a polygon, and animation I guess.
+;; It draws a polygon whose vertices randomly drive around, centered
+;;  on the mouse's location.
+
 (dc <happy-dummy> (<any>))
 
 (df tick-dummy (dummy)
@@ -65,7 +69,7 @@
 ; -------- Interface Models
 
 (imodel <simapp>
-        "Magic Scribble"
+        "Magic Polygon"
         (attr scribble fill)
 )
 

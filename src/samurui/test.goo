@@ -2,6 +2,12 @@
 (use samurui/samurui)
 (use samurui/gtk)
 
+;; test.goo is a trivial drawing application.
+
+;; the left (1st) mouse button, draws a box in the current color
+;; the right (2nd) mouse button changes the color
+;; the middle (3rd) mouse button writes out a string but clips it incorrectly
+
 ; ------- Simulation App Singelton
 
 ; Drawing Areas
@@ -64,7 +70,7 @@
 
 (dm mouse-move ((widget <happy-draw>) (x <int>) (y <int>) (state <int>))
   (unless (= (& state GDK_BUTTON1_MASK) 0)
-    (mouse-press widget x y 1)
+    (mouse-press widget x y 1 1)
     )
   )
 

@@ -45,18 +45,9 @@
 (imodel <simple-app>
         "Tree View Hopefully"
         (attr tree-nodes fill scroll)
-        ;;(columns
-        ;; (master bob tree-nodes)
-        ;; (slave bob)
-        ;; )
-)
+        )
 
-;;(imodel <str-hold>
-;;        "The String"
-;;        da-str
-;;        )
-
-(gtk_init_easy)
+(samurui-init)
 
 (present my-app)
-(gtk_main)
+(samurui-go)

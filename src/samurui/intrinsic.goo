@@ -11,13 +11,13 @@
 
 (dg draw-lightweight (canvas|<any> at-point|<point> renderer|<lightweight-renderer> item|<any>))
 
-(dg get-lightweight-dimensions (renderer|<lightweight-renderer> item|<any> => <rect>))
+(dg get-lightweight-dimensions (renderer|<lightweight-renderer> item|<any> => <rectangle>))
 
 (dc <visi-intrinsic> (<lightweight-renderer>))
 
 (dv $pretty-blue #f)
 
-(dm map-color (renderer|<visi-intrinsic> item|<any> => <color>)
+(dm map-color (renderer|<visi-intrinsic> item|<any> => <gui-color>)
   (unless $pretty-blue
     (set $pretty-blue (color 0 16 192))
     )
@@ -26,14 +26,14 @@
 
 (dm draw-lightweight (canvas|<any> at-point|<point> renderer|<visi-intrinsic> item|<any>)
   (draw-ellipse canvas
-                (rect-around (point-x at-point)
-                             (point-y at-point)
+                (rect-around (floor (point-x at-point))
+                             (floor (point-y at-point))
                              4 4)
                 #t
                 (map-color renderer item))
   )
 
-(dm get-lightweight-dimensions (renderer|<visi-intrinsic> item|<any> => <rect>)
+(dm get-lightweight-dimensions (renderer|<visi-intrinsic> item|<any> => <rectangle>)
   (rect 0 0 8 8)
   )
 
@@ -47,3 +47,11 @@
 ;; Specialized heuristics, possibly based on consuming James's quantities?
 ;;  -- since the dimensions are explicit, we can tell when we're talking about temperature,
 ;;   speed, etc.
+
+(export
+  <visi-intrinsic>
+  <lightweight-renderer>
+
+  draw-lightweight
+  get-lightweight-dimensions
+  )

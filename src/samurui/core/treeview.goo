@@ -64,7 +64,8 @@
                     ;;Selection changed...
                     (def selnode (gtk_tree_goo_selection_get_node selection))
                     (when selnode
-                      (master-update-slaves (tv-master gtv) selnode)
+                      (when (tv-master gtv)
+                        (master-update-slaves (tv-master gtv) selnode))
                       )
                     )))
 

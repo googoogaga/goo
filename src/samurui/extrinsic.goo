@@ -19,8 +19,8 @@
 (dp! ext-y-axis (<visi-extrinsic> => <any>) #f)
 
 (dp! ext-x-min (<visi-extrinsic> => <flo>) 0.0)
-(dp! ext-x-max (<visi-extrinsic> => <flo>) 0.0)
-(dp! ext-y-min (<visi-extrinsic> => <flo>) 1.0)
+(dp! ext-x-max (<visi-extrinsic> => <flo>) 1.0)
+(dp! ext-y-min (<visi-extrinsic> => <flo>) 0.0)
 (dp! ext-y-max (<visi-extrinsic> => <flo>) 1.0)
 
 (dp! ext-lenses (<visi-extrinsic> => <col>) (vec))
@@ -28,7 +28,7 @@
 (dp! ext-wrapped (<visi-extrinsic> => (t? <visi-col>)) #f)
 (dp! ext-master (<visi-extrinsic> => (t? <gui-master>)) #f)
 
-(dp! ext-item-renderer (<visi-extrinsic> => (t? <lightweight-renderer>)) #f)
+(dp! ext-item-renderer (<visi-extrinsic> => (t? <lightweight-renderer>)) (new <visi-intrinsic>))
 
 
 (dm method-fold (methods initial-data)
@@ -41,16 +41,23 @@
   )
 
 (dm repaint-widget (ext|<visi-extrinsic>)
-  (def renderer (ext-item-renderer renderer))
+  (def renderer (ext-item-renderer ext))
+
+  (def scale-x (/ (as <flo> (gui-width ext)) (as <flo> (- (ext-x-max ext) (ext-x-min ext)))))
+  (def scale-y (/ (as <flo> (gui-height ext)) (as <flo> (- (ext-y-max ext) (ext-y-min ext)))))
+
+  (post "Scales x: %= y: %=\n" scale-x scale-y)
+  (post "Fundamental axis is: %=\n" (ext-fundamental-axis ext))
+  (post "Painting with nodes: %=\n"       (node-out-edges (ext-wrapped ext) (ext-fundamental-axis ext) (ext-root-node ext)))
 
   (do (fun (item)
         ;; Get the point from the visi-col
-        (def init-point (point (1st (node-out-edges (ext-wrapped ext) 
-                                                    (ext-x-axis ext)
-                                                    item))
-                               (1st (node-out-edges (ext-wrapped ext)
-                                                    (ext-y-axis ext)
-                                                    item))))
+        (def init-point (point (* scale-x (1st (node-out-edges (ext-wrapped ext) 
+                                                               (ext-x-axis ext)
+                                                               item)))
+                               (* scale-y (1st (node-out-edges (ext-wrapped ext)
+                                                               (ext-y-axis ext)
+                                                               item)))))
 
         ;; Transform with global lenses
         (def actual-point (method-fold (ext-lenses ext) init-point))
@@ -58,7 +65,7 @@
         ;; Render
         (draw-lightweight ext actual-point renderer item)
         )
-      (node-out-edges (ext-wrapped ext) (ext-fundamental-axis) (ext-root-node ext))
+      (node-out-edges (ext-wrapped ext) (ext-fundamental-axis ext) (ext-root-node ext))
       )
   )
 
@@ -68,7 +75,7 @@
    ;; -- Rebinder --
    (fun (new-obj)
      ;; Detach from current if applicable
-     (when (wrapped ext)
+     (when (ext-wrapped ext)
        ;; um... nop for now
        )
      
@@ -76,6 +83,25 @@
      (set (ext-wrapped ext) ((getter info) new-obj))
 
      (set (ext-root-node ext) (get-start-node (ext-wrapped ext)))
+
+     (do (fun (attr)
+           (when (isa? attr <col>)
+             (post "Processing attribute pair: %=\n" attr)
+             (case-by (as <str> (1st attr)) =
+               (("fundamental")
+                (set (ext-fundamental-axis ext) (as <str> (2nd attr)))
+                )
+               (("x")
+                (set (ext-x-axis ext) (as <str> (2nd attr)))
+                )
+               (("y")
+                (set (ext-y-axis ext) (as <str> (2nd attr)))
+                )
+               )
+             )
+           )
+         (attrs ext)
+         )
      )
 
    ;; -- Refresher --
@@ -94,6 +120,8 @@
   )
 
 (dm mouse-press (widget|<visi-extrinsic> x|<int> y|<int> button|<int> time|<int>)
+  (repaint-widget widget)
+  (invalidate-all widget)
   )
 
 (dm mouse-release (widget|<visi-extrinsic> x|<int> y|<int> button|<int> time|<int>)
@@ -102,3 +130,40 @@
 (dm mouse-move (widget|<visi-extrinsic> x|<int> y|<int> state|<int>)
   )
 
+(export
+  ext-fundamental-axis
+  ext-fundamental-axis-setter
+
+  ext-root-node
+  ext-root-node-setter
+
+  ext-x-axis
+  ext-x-axis-setter
+
+  ext-y-axis
+  ext-y-axis-setter
+ 
+  ext-x-min
+  ext-x-min-setter
+
+  ext-y-min
+  ext-y-min-setter
+
+  ext-x-max
+  ext-x-max-setter
+ 
+  ext-y-max
+  ext-y-max-setter
+
+  ext-lenses
+  ext-lenses-setter
+
+  ext-wrapped
+  ext-wrapped-setter
+  
+  ext-master
+  ext-master-setter
+
+  ext-item-renderer
+  ext-item-renderer-setter
+  )
