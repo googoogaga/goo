@@ -138,6 +138,8 @@
     (when nary?
       (set (fun-nary? efun) #t)
       (dec (fun-arity efun)))
+    (set (fun-name  efun) (function-name f))
+    (set (fun-names efun) names)
     (set (fun-specs efun) (ast-eval-specs specs nary? env))
     efun))
 
@@ -156,8 +158,9 @@
 (dm ast-eval ((e <ast-generic>) (env <loc-env>))
   (let ((params (function-bindings e))
 	(nary?  (function-nary? e))
+	(names  (map binding-name params))
 	(specs  (ast-eval-specs (map binding-type params) nary? env)))
-    (fab-gen specs nary? '())))
+    (fab-gen (function-name e) names specs nary? '())))
 
 (dm env-local-reference-value ((env <loc-env>) (ref <local-reference>) => <any>)
   (env-local-value

@@ -29,14 +29,17 @@
 (dm binding-index-setter ((_ <int>) (x <binding>))
   _)
 
-(dv <global-binding> (isa <binding>))
+(dv <module-binding> (isa <binding>))
+  (slot <module-binding> binding-module #f)
+
+(dv <global-binding> (isa <module-binding>))
   (slot <global-binding> (binding-free? <log>) #t)
   (slot <global-binding> (binding-index <int>))
 
-(dv <runtime-binding> (isa <binding>))
+(dv <runtime-binding> (isa <module-binding>))
   (slot <runtime-binding> (binding-locative <loc>))
 
-(dv <predefined-binding> (isa <binding>))
+(dv <predefined-binding> (isa <module-binding>))
   (slot <predefined-binding> binding-description #f)
   (slot <predefined-binding> binding-value       #f)
 
@@ -418,11 +421,12 @@
 
 ;; TODO: HANDLE REDEF
 
-(dm ast-define-binding (r name make-binding => <any>)
+(dm ast-define-binding (r name shadow? make-binding => <any>)
   (let ((existing-binding (find-binding name r))
 	(gr (find-static-global-environment r))
 	(binding
-	 (if existing-binding
+	 (if (and existing-binding 
+		  (or (not shadow?) (== (binding-module existing-binding) gr)))
 	     (seq (if (binding-free? existing-binding)
 		      (set (binding-free? existing-binding) #f)
 		      ;; (format out "REDEF %s\n" name)
@@ -431,9 +435,10 @@
 		       existing-binding)
 		  existing-binding)
 	     (let ((binding (make-binding)))
-	       (set (binding-name binding) name)
-	       (set (binding-free? binding) #f)
-	       (set (binding-index binding) (inc (environment-next-index gr)))
+	       (set (binding-name binding)   name)
+	       (set (binding-free? binding)  #f)
+	       (set (binding-module binding) gr)
+	       (set (binding-index binding)  (inc (environment-next-index gr)))
 	       (insert-global! binding gr)
 	       binding))))
     binding))
@@ -444,12 +449,14 @@
   (let ((name
 	 (sexpr-variable-name var))
 	(binding 
-	 (ast-define-binding r name (fun () (isa <global-binding>))))
+	 (ast-define-binding r name #f (fun () (isa <global-binding>))))
 	(defn
 	 (isa <definition> 
 	   (set assignment-binding binding)
 	   (set assignment-form (objectify e r #f)))))
     defn))
+
+(dv *shadow-macros?* #f)
 
 (df %%macro (name expander r => <macro-binding>)
   ;; (format out "DEFMACRO ") (writeln out sep-expander)
@@ -461,7 +468,9 @@
 	      (format out "  => ") (write out exp) (format out "\n"))
 	    exp)))
     ;; (format out "DEFMAC %=\n" name)
-    (let ((binding (ast-define-binding r name (fun () (isa <macro-binding>)))))
+    (let ((binding 
+	   (ast-define-binding
+	    r name *shadow-macros?* (fun () (isa <macro-binding>)))))
       (set (binding-handler binding) expand)
       binding)))
 
@@ -477,7 +486,7 @@
 	(objectify-quotation #f r))))
 
 (dm objectify-function-definition (name e r => <ast-function-definition>)
-  (let ((binding (ast-define-binding r name (fun () (isa <global-binding>))))
+  (let ((binding (ast-define-binding r name #f (fun () (isa <global-binding>))))
 	(f       (objectify e r #f)))
     (set (function-name f) binding)
     (let ((defn (isa <ast-function-definition>
@@ -488,7 +497,7 @@
 (dm objectify-primitive-definition 
     (name sig body r => <ast-primitive-definition>)
   (let ((binding
-	 (ast-define-binding r name (fun () (isa <predefined-binding>))))
+	 (ast-define-binding r name #f (fun () (isa <predefined-binding>))))
 	;; TODO: MULTIPLE VALUES
 	((tup bindings nary? value)
 	 (objectify-signature sig r))
@@ -510,7 +519,7 @@
 
 (dm objectify-generic-definition (name sig r => <ast-generic-definition>)
   (let ((binding
-	 (ast-define-binding r name (fun () (isa <global-binding>))))
+	 (ast-define-binding r name #f (fun () (isa <global-binding>))))
 	((tup bindings nary? value)
 	 (objectify-signature sig r))
 	(form
@@ -526,7 +535,7 @@
     defn))
 
 (dm objectify-method-definition (name e r => <ast-method-definition>)
-  (let ((binding (ast-define-binding r name (fun () (isa <global-binding>))))
+  (let ((binding (ast-define-binding r name #f (fun () (isa <global-binding>))))
 	(gen     (lst 'if (lst 'bound? name) name #f))
 	(met     (objectify e r #f))
 	;; TODO: NAME AND MARK AS GENERIC METHOD
@@ -950,7 +959,7 @@
 (define-magic-binding define-primitive (x r tail?)
   (if (sexpr-forward-primitive? x)
       (seq (ast-define-binding
-	    r (sexpr-function-definition-variable x) 
+	    r (sexpr-function-definition-variable x) #f
 	    (fun () (isa <predefined-binding>)))
 	   (objectify #f r tail?))
       (objectify-primitive-definition

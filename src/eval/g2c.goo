@@ -704,10 +704,10 @@
     (format out ",")
     (to-c (assignment-form e) #f out)))
 
-(dm to-c ((e <ast-generic>) f out)
-  (format out "%s" (mangle-global-name "%gen"))
+(dm generate-signature (out e)
+  (format out "%s" (mangle-global-name "%sig"))
   (between-parentheses (out)
-    (format out "(P)YPgen_code((P)CHKREF(YPdispatch))") ;; TODO: HACK!!!
+    (generate-function-names out e)
     (format out ",")
     (generate-function-specs out e)
     (format out ",")
@@ -715,7 +715,25 @@
     (format out ",")
     (generate-quotation out (ast-function-arity e))
     (format out ",")
-    (to-c (function-value e) #f out)
+    (to-c (function-value e) #f out)))
+
+(dm generate-debug-name (out name)
+  (generate-quotation out name))
+
+(dm generate-debug-name (out (name <binding>))
+  (generate-debug-name out (binding-name name)))
+
+(dm generate-debug-name (out (name <global-binding>))
+  (binding->c name out))
+
+(dm to-c ((e <ast-generic>) f out)
+  (format out "%s" (mangle-global-name "%gen"))
+  (between-parentheses (out)
+    (format out "(P)YPgen_code((P)CHKREF(YPdispatch))") ;; TODO: HACK!!!
+    (format out ",")
+    (generate-debug-name out (function-name e))
+    (format out ",")
+    (generate-signature out e)
     (format out ",")
     (format out (mangle-global-name "nil"))
     (format out ",")
@@ -783,13 +801,9 @@
   (between-parentheses (out)
     (generate-function-body-reference out definition)
     (format out ",")
-    (generate-function-specs out definition)
+    (generate-debug-name out (function-name definition))
     (format out ",")
-    (generate-quotation out (function-nary? definition))
-    (format out ",")
-    (generate-quotation out (ast-function-arity definition))
-    (format out ",")
-    (to-c (function-value definition) #f out)
+    (generate-signature out definition)
     (format out ",")
     (format out "ENVNUL")))
 
@@ -813,6 +827,10 @@
 		   (sub types 0 (- (len types) 1))
 		   types)))
     (out-list-builder (rcurry to-c #f out) out specs)))
+
+(dm generate-function-names (out definition)
+  (out-list-builder (fun (b) (generate-quotation out (binding-name b))) 
+		    out (function-bindings definition)))
 
 (dm generate-free-bindings ((free <lst>) out)
   (format out "ENVFAB(%d" (len free))

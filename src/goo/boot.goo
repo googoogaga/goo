@@ -86,12 +86,16 @@
 	(dv <gen-cache> (isa <any>))
 	  (slot <gen-cache> (gen-cache-singletons <lst>) nil)
 	  (slot <gen-cache> (gen-cache-classes <lst>)    nil)
+        (dv <sig> (isa <any>))
+	  (slot <sig> (sig-names <lst>) nil)
+	  (slot <sig> (sig-specs <lst>) nil)
+	  (slot <sig> (sig-nary? <log>) %false)
+	  (slot <sig> (sig-arity <int>) 0)
+	  (slot <sig> (sig-value <any>) <any>)
 	(dv <fun> (isa <any>))
 	  (slot <fun> (fun-code <any>)  %false)
-	  (slot <fun> (fun-specs <lst>) nil)
-	  (slot <fun> (fun-nary? <log>) %false)
-	  (slot <fun> (fun-arity <int>) 0)
-	  (slot <fun> (fun-value <any>) <any>)
+	  (slot <fun> (fun-name <any>)  %false)
+	  (slot <fun> (fun-sig <sig>))
 	(dv <met> (isa <fun>))
 	  (slot <met> (fun-env <any>)   %false)
 	(dv <gen> (isa <fun>))
@@ -140,7 +144,8 @@
 
 (%object-shells)
 
-(dv %check-types? #f)
+(dv %check-types?   #f)
+(dv %symbols-ready? #f)
 
 ;;;
 ;;; 2. SETUP LST BASICS
@@ -196,11 +201,14 @@
 
 ;;; MET BASICS
 
-(%define-structure % met ;; met-names
-   met-code met-specs met-nary? met-arity met-value met-env)
+(%define-structure % sig 
+   sig-names sig-specs sig-nary? sig-arity sig-value)
 
-(dv %fun-nary? %met-nary?) ;; need this for interpreter
-(dv %fun-specs %met-specs) ;; need this for interpreter
+(%define-structure % met 
+   met-code met-name met-sig met-env)
+
+;; (dv %fun-nary? %met-nary?) ;; need this for emulator
+;; (dv %fun-specs %met-specs) ;; need this for emulator
 
 ;; (dp %apply-n (f (args ...)) 
 ;;   (set (%fun-reg) f)
@@ -384,7 +392,7 @@
 (dv $gen-cache-classes-offset    2)
 
 (%define-structure % gen 
-   gen-code gen-specs gen-nary? gen-arity gen-value gen-mets fun-cache)
+   gen-code gen-name gen-sig gen-mets fun-cache)
 
 (df %slot-offset (owner getter)
   (rep loop ((i (%raw 0)) (slots (%traits-slots (%object-traits owner))))
@@ -420,9 +428,10 @@
 
 (dss (%define-accessor ,name (,@sig) ,@body)
   (let ((params  (sexpr-signature-parameters sig))
-	(gen-sig (&pairize (map (always '<any>) params)))
+	(specs   (&pairize (map (always '<any>) params)))
 	(arity   (len params)))
-    `(seq (dv ,name (%gen %early-dispatch ,gen-sig #f ,arity <any> '() #f))
+    `(seq (dv ,name 
+	    (%gen %early-dispatch ',name (%sig '() ,specs #f ,arity <any>) '() #f))
 	  (let ((accessor (fun (,@sig) ,@body)))
 	    (%add-met ,name accessor)
 	    (%register-early-generic ,name)
@@ -559,8 +568,12 @@
 	      sym
 	      (lookup (%tail s)))))))
 
-(dp %%sym (raw-str)    ;; FOR COMPILER
-  (fab-sym (%sb raw-str))) 
+(set %symbols-ready? #t)
+
+(dp %%sym (raw-str)  ;; FOR COMPILER
+  (if %symbols-ready?
+     (fab-sym (%sb raw-str))
+     #f))
 
 ;;;
 ;;; 11. FUNCTION PREP
@@ -679,13 +692,15 @@
 
 (df @lst ((objects ...)) objects)
 
-(df @fun-specs ((x <fun>) => <lst>) (%gen-specs x))
+(df @fun-names ((x <fun>) => <lst>) (%sig-names (%gen-sig x)))
 
-(df @fun-nary? ((x <fun>) => <log>) (%gen-nary? x))
+(df @fun-specs ((x <fun>) => <lst>) (%sig-specs (%gen-sig x)))
 
-(df @fun-arity ((x <fun>) => <int>) (%gen-arity x))
+(df @fun-nary? ((x <fun>) => <log>) (%sig-nary? (%gen-sig x)))
 
-(df @fun-value ((x <fun>) => <any>) (%gen-value x))
+(df @fun-arity ((x <fun>) => <int>) (%sig-arity (%gen-sig x)))
+
+(df @fun-value ((x <fun>) => <any>) (%sig-value (%gen-sig x)))
 
 (df @fun-mets ((x <fun>) => <lst>) (%gen-mets x))
 
@@ -707,8 +722,8 @@
 ;; (dv <gen> (isa <fun>))
 ;;   (slot <gen> (fun-mets <mets>) '())
 
-(df fab-gen ((specs <lst>) (nary? <log>) (mets <lst>) => <gen>)
-  (%gen (%gen-code %dispatch) specs nary? (len specs) <any> mets #f))
+(df fab-gen ((name <sym>) (names <lst>) (specs <lst>) (nary? <log>) (mets <lst>) => <gen>)
+  (%gen (%gen-code %dispatch) name (%sig names specs nary? (len specs) <any>) mets #f))
 
 (df fun-same-met? ((x <met>) (y <met>) => <log>)
   (@all2? @@== (@fun-specs x) (@fun-specs y)))
@@ -928,7 +943,7 @@
 (dp gen-lookup-1) ;; FORWARD DECL
 
 (dp gen-lookup ((gen <gen>) (args <lst>))
-  (let ((n (%gen-arity gen))
+  (let ((n (%sig-arity (%gen-sig gen)))
 	(c (%fun-cache gen)))
     (gen-lookup-1 gen c 0 n args args)))
 
@@ -1041,7 +1056,9 @@
 
 (df gen-from-met ((x <met>) => <gen>)
   (let ((specs (@map (fun (x) <any>) (@fun-specs x))))
-    (%gen (%gen-code %dispatch) specs (@fun-nary? x) (@len specs) <any> '() #f)))
+    (%gen (%gen-code %dispatch) (%met-name x) 
+	  (%sig '() specs (@fun-nary? x) (@len specs) <any>) 
+	  '() #f)))
 
 (df %define-method (gen (met <met>) => <gen>)
   (let ((gen (or gen (gen-from-met met))))
@@ -1073,6 +1090,20 @@
 
 (df fapply (fproc (args <opts>))
   (%fapply fproc args))
+
+;; TRAMPOLINES
+
+(dss (def-fun/sig-accessor ,name)
+  `(seq (df ,(make-sym "fun-" name) (x)
+	  (,(make-sym "sig-" name) (fun-sig x)))
+	(df ,(make-sym "fun-" name "-setter") (z x) 
+	  (set (,(make-sym "sig-" name) (fun-sig x)) z))))
+
+(def-fun/sig-accessor names)
+(def-fun/sig-accessor specs)
+(def-fun/sig-accessor nary?)
+(def-fun/sig-accessor arity)
+(def-fun/sig-accessor value)
 
 ;;; 
 ;;; 13. OBJECTS

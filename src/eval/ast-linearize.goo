@@ -403,7 +403,8 @@
 	  (let ((name
 		 (make-sym "---main-" i "---"))
 		(binding
-		 (ast-define-binding r name (fun () (isa <predefined-binding>))))
+		 (ast-define-binding 
+		  r name #f (fun () (isa <predefined-binding>))))
 		(defn
 		 (isa <primitive-definition>
 		   (set function-name     binding)

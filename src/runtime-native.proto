@@ -472,9 +472,9 @@
   (collecting () (do-keyed (fun (k v) (collect k)) table)))
 
 (dm grow-table ((table <tab>) => <tab>)
-  (let ((vec (%vector table)))
-    (trace out "GROWING TABLE %= %= OF %=\n" (object-name table)
-  	      (%count table) (* (%n-buckets vec) (%bucket-depth vec))))
+  ;; (let ((vec (%vector table)))
+  ;;   (trace out "GROWING TABLE %= %= OF %=\n" (object-name table)
+  ;; 	      (%count table) (* (%n-buckets vec) (%bucket-depth vec))))
   (let ((vector (%vector table))
 	((tup new-n-buckets new-bucket-depth)
 	 (choose-table-geometry
