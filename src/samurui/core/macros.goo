@@ -35,7 +35,7 @@
 
 (ds iview (,class ,@body)
   `(register-interface-model ,class (interface-model (fun (x attribs) 1)
-                                                     (quote (,@body))))
+                                                     (,'quasiquote (,@body))))
   )
 
 ; Drawing areas are a recognition that no matter how many auto-magic visualization

@@ -124,7 +124,7 @@
   )
 
 (dm ad! (container|<gui-box> item|<gui>)
-  (debugstr "Adding %= to gui-box %=.\n" item container)
+  ;;(debugstr "Adding %= to gui-box %=.\n" item container)
   (gtk_box_pack_start (handle container) (handle item) gtk_false gtk_false 8)
   (add! (children container) item)
   )
@@ -183,6 +183,56 @@
 (dm show-all (widget|<gui-widget>)
   (gtk_widget_show_all (handle widget))
   ) 
+
+(dc <gui-paned> (<gui-container>))
+(dc <gui-hpaned> (<gui-paned>))
+
+(dm gui-hpaned ( => <gui-hpaned>)
+  (let ((hpaned (new <gui-hpaned>))
+        (handle (gtk_hpaned_new)))
+    (set (handle hpaned) handle)
+    ; tweak some GTK-level settings
+    ;;(gtk_container_set_border_width handle 8)
+    hpaned
+    )
+  )
+
+(dm ad! (container|<gui-paned> item|<gui>)
+  ;;(debugstr "Adding %= to gui-paned %=.\n" item container)
+  (case (len (children container))
+    ((0)
+     (gtk_paned_pack1 (handle container) (handle item) gtk_true gtk_true)
+     (add! (children container) item))
+    ((1)
+     (gtk_paned_pack2 (handle container) (handle item) gtk_true gtk_true)
+     (add! (children container) item))
+    (#t
+     (post "Only two objects in a paned object!\n")
+     )
+    )
+  )
+
+(dm ad-opt! (container|<gui-paned> item|<gui> opt|(t? <col>))
+  (def fill (when opt (mem? opt 'fill))) ; default to false
+  (def scroll (when opt (mem? opt 'scroll)))
+  (when scroll
+    (def scroll-win (gui-scrolled-window))
+    (ad! scroll-win item)    
+    (set item scroll-win)
+    )
+
+  (case (len (children container))
+    ((0)
+     (gtk_paned_pack1 (handle container) (handle item) (log-to-gtk fill) (log-to-gtk fill))
+     (add! (children container) item))
+    ((1)
+     (gtk_paned_pack2 (handle container) (handle item) (log-to-gtk fill) (log-to-gtk fill))
+     (add! (children container) item))
+    (#t
+     (post "Only two objects in a paned object!\n")
+     )
+    )
+  )
 
 (dc <gui-adjustment> (<gui>))
 (dp! constraint (<gui-adjustment> => <numeric-constraint>))
@@ -435,6 +485,8 @@
   <gui-box>
   <gui-vbox>
   <gui-hbox>
+  <gui-paned>
+  <gui-hpaned>
   
   <gui-button>
   <gui-toggle-button>
@@ -475,6 +527,7 @@
   gui-frame
   gui-vbox
   gui-hbox
+  gui-hpaned
 
   show
   show-all

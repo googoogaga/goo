@@ -17,10 +17,13 @@
 
 (dc <gui-treeview> (<gui-widget>))
  (dp! collection (<gui-treeview> => <visi-col>))
- (dp! axis (<gui-treeview> => <any>) "implicit")
- (dp! prop-axes (<gui-treeview> => <col>) (fab <vec> 0))
+ (dp! axis (<gui-treeview> => <any>) 'implicit)
+ (dp! prop-axes (<gui-treeview> => <col>) (tup))
  (dp! model (<gui-treeview> => <gui-treeview-model>))
+ (dp! columns (<gui-treeview> => <col>) (vec))
+ (dp! column-renderer (<gui-treeview> => <any>))
  (dp! tv-master (<gui-treeview> => (t? <gui-master>)) #f)
+ (dp! cur-root (<gui-treeview> => (t? <any>)) #f)
 
 (dm gui-treeview (=> <gui-treeview>)
   (def gtv (new <gui-treeview>))
@@ -34,7 +37,9 @@
   (set (handle gtv) (gtk_tree_view_new_with_model (handle gtv-model)))
   ; Add some columns for amusement purposes
   (def my-renderer (gtk_cell_renderer_text_new))
+  (set (column-renderer gtv) my-renderer)
   (def column (gtk_tree_view_column_new))
+  (add! (columns gtv) column)
   (gtk_tree_view_column_set_title column "Default")
   (gtk_tree_view_column_pack_start column my-renderer (log-to-gtk #t))
   (gtk_tree_view_column_add_attribute column my-renderer "text" 0)
@@ -77,12 +82,40 @@
 
     ; Construct the helper functions
     (tup 
-                                        ; Establish re-binder
+
+     ;; --- REBIND ---
      (fun (new-obj)
-       ;(msg out "Rebinding!\n")
-       (set (collection my-gtv) (visi-wrap-col ((getter info) new-obj)))
+       ;;(msg out "Rebinding!\n")
+       (set (collection my-gtv) ((getter info) new-obj))
+       (set (cur-root my-gtv) #f)
+       
+       (do (fun (attr)
+             (when (isa? attr <col>)
+               (post "Processing attribute pair: %=\n" attr)
+               (case-by (1st attr) =
+                 (('prop-axes)
+                  (set (prop-axes gtv) (tail attr))
+                  )
+                 )
+               )
+             )
+           (attrs gtv)
+           )
+       
+       (when (>= (len (prop-axes gtv)) (len (columns gtv)))
+         (def column (gtk_tree_view_column_new))
+         (add! (columns gtv) column)
+         (gtk_tree_view_column_set_title column
+                                         (as <str> (elt (prop-axes gtv)
+                                                        (- (len (columns gtv)) 2))))
+         (gtk_tree_view_column_pack_start column (column-renderer gtv) (log-to-gtk #t))
+         (gtk_tree_view_column_add_attribute column (column-renderer gtv) 
+                                             "text" (- (len (columns gtv)) 1))
+         (gtk_tree_view_append_column (handle gtv) column)
+         )
        )
-                                        ; Establish refresher
+     
+     ;; --- REFRESH ---
      (fun ()
        ;(msg out "Refreshing!\n")
        (gtk_tree_goo_refresh (handle (model my-gtv))) ;yes this does go first
@@ -109,7 +142,10 @@
   )
 
 (dm gtk-tv-get-start-node (gtv|<gui-treeview>)
-  (get-start-node (collection gtv))
+  (def start-node (get-start-node (collection gtv)))
+  ;; Garbage collection kludge :P
+  (set (cur-root gtv) start-node)
+  start-node
   )
 
 (dm gtk-tv-get-label (gtv|<gui-treeview> node column|<int>)
@@ -119,11 +155,11 @@
         (to-str (node-label (collection gtv) node))
         (seq
           ;; Other column -> use property axes
-          (def prop-axis (elt (prop-axes gtv) column))
+          (def prop-axis (elt (prop-axes gtv) (- column 1)))
           (def props (node-out-edges (collection gtv) prop-axis node))
         (if (< 0 (len props))
-            (to-str (1st props))
-            "props issue...")
+            (node-label (collection gtv) (1st props))
+            "") ;; nothing for us? it's okay. we just leave it blank
         )
         )
     )
@@ -194,16 +230,17 @@
   )
 
 
-(register-interface-model <col> (interface-model
-                                 (fun (item attribs) 1)
-                                 (fun (info class updaters)
-                                   (def my-gtv (gui-treeview))
-                                   (def gtv-updater (bind my-gtv info))
-                                   (ad! updaters gtv-updater)
-                                   my-gtv
-                                   )
-                                 )
+(register-interface-model <visi-col> (interface-model
+                                      (fun (item attribs) (if (mem? attribs 'treeview) 1000 1))
+                                      (fun (info class updaters)
+                                        (def my-gtv (gui-treeview))
+                                        (def gtv-updater (bind my-gtv info))
+                                        (ad! updaters gtv-updater)
+                                        my-gtv
+                                        )
+                                      )
                           )
+
 
 (export
   <gui-treeview>

@@ -70,7 +70,81 @@
       (empty <tup>))
   )
 
+
+
+;; visi-wrap
+
+(dc <visi-reversablize> (<visi-col>))
+ (dp! wrapped (<visi-reversablize> => <visi-col>))
+
+(dm visi-reversablize (to-wrap|<visi-col> => <visi-reversablize>)
+  (def vr (new <visi-reversablize>))
+  (set (wrapped vr) to-wrap)
+  vr
+  )
+
+(dm get-start-node (vr|<visi-reversablize> => <any>)
+  (vr-node (get-start-node (wrapped vr)) #f)
+  )
+
+(dc <vr-node> (<any>))
+(dp! wrapped (<vr-node> => <any>))
+(dp! kids (<vr-node> => <tab>) (fab <tab> 0))
+(dp! parent (<vr-node> => (t? <vr-node>)))
+
+(dm vr-node (cur-node node-parent)
+  (def vrn (new <vr-node>))
+  (set (wrapped vrn) cur-node)
+  (set (parent vrn) node-parent)
+  vrn
+  )
+
+;; It's generally good to have a simple label for a given node.  Note that we are not using to-str
+;;  because that is a function of only the node, whereas we want the collection to be the control
+;;  factor. The colleciton can of course defer to to-str if it is so inclined. 
+(dm node-label (vr|<visi-reversablize> node|<vr-node> => <str>)
+  (node-label (wrapped vr) (wrapped node))
+  )
+
+;; Our weight is 1.0 if we are a leaf, or the sum of the weights of our children if we're a collection.
+;;  Of course, we're screwed if there are loops/recursion in our structure.
+(dm node-weight (vr|<visi-reversablize> node|<vr-node> => <flo>)
+  (node-weight (wrapped vr) (wrapped node))
+  )
+
+(dm node-browsable (vr|<visi-reversablize> node|<vr-node> => <log>)
+  (node-browsable (wrapped vr) (wrapped node))
+  )
+
+;; ----------------
+;; Edge-Information
+;; ----------------
+
+;; Returns a list of the axes supported by the nodes
+(dm node-axes (vr|<visi-reversablize> => <col>)
+  (node-axes (wrapped vr))
+  )
+
+;; Retrieves the edges associated with the given axis for the node.
+(dm node-out-edges (vr|<visi-reversablize> axis node|<vr-node> => <col>)
+  (or (elt-or (kids node) axis #f)
+      (set (elt (kids node) axis)
+         (map (fun (kid) (vr-node kid node))
+              (node-out-edges (wrapped vr) axis (wrapped node)))))
+  )
+
+(dm node-in-edges (vr|<visi-reversablize> axis node|<vr-node> => <col>)
+  (if (parent node)
+      (tup (parent node))
+      (tup)
+      )
+  )
+
+
 (export
   <visi-wrap-col>
   visi-wrap-col
+
+  <visi-reversablize>
+  visi-reversablize
   )

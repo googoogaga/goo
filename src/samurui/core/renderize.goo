@@ -50,12 +50,19 @@
     (cond
       ;; COLUMNS
       ((= (1st model-list) 'columns)
-        ; Multiple parallel columns!
-        ; Create an hbox and stick everything we fab in it
+        ;; Multiple parallel columns!
+        ;; Create an hbox and stick everything we fab in it
         (let ((hbox (gui-hbox))
               (comps (map renderize-this (tail model-list))))
           (add-all-opt! hbox comps)
           hbox))
+
+      ((= (1st model-list) 'panes)
+        ;; Horizontal Pane
+        (let ((hpaned (gui-hpaned))
+              (comps (map renderize-this (tail model-list))))
+          (add-all-opt! hpaned comps)
+          hpaned))
 
       ;; MASTER
       ((= (1st model-list) 'master)
@@ -86,6 +93,25 @@
            (post "Warning: component returned when renderizing %= was #f.\n" model-list))
        my-comp
        )
+
+      ;; COERCE thing class-it-will-be coerce-to-func uncoerce-func
+      ;; Coercion implicitly lets us know that we're dealing with a property.
+      ;; To simplify things as much as possible (braindead right now), we lookup the relevant property info object,
+       ;; then clone it, and replace the getter and setter with our own.  Brilliant, no?  Muahahahahahhahaha.
+      ((= (1st model-list) 'coerce)
+       (let ((info (find-property class (as <str> (2nd model-list))))
+             (new-info (interface-property (name info)
+                                           (elt model-list 2) ;; 3rd
+                                           ;; wrap the getter, coercing on the way out
+                                           (fun (x)
+                                             ((elt model-list 3) ((getter info) x)))
+                                           ;; wrap the setter, uncoercing on the way in
+                                           (fun (new-val obj)
+                                             ((setter info) ((elt model-list 4) new-val) obj))
+                                           (description info)
+                                           )))
+         
+         (renderize-model (find-interface-model (type new-info) new-info attribs) new-info class updaters masters)))
 
       ;; DEFAULT: VBOX
       (#t
