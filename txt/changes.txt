@@ -547,3 +547,35 @@ adds
 fixes
 
   methods have names again in c output
+
+=== 0.103 ===
+
+summary
+
+  james' faster calling convention
+
+=== 0.104 ===
+
+summary
+
+  lazy module loading
+
+changes
+
+  runtime modules are now lazily loaded
+  loc now tags and untags correctly
+  split out library specific primitives into their respective source files
+  increased symbol table initial size to 10000
+
+adds
+
+  opf 
+  $max-int $min-int
+  elt-or for specifying defaults to elt access
+  more support for win32 esp stdout flushing and gc-init
+
+fixes
+
+  corrected return values of do-key-vals, reduce, reduce+
+  made class printing terse during signatures and nested types
+
