@@ -27,7 +27,7 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.145")
+(dv *goo-version* "0.146")
 (dv *goo-date*    "AUG 30, 2002")
 
 (post ";;; GOO\n")

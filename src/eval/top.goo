@@ -50,7 +50,7 @@
   (let ((mode (os-val "GOO_EVAL_MODE")))
     (and (not (case-insensitive-string-equal mode  "ast"))
          (or (case-insensitive-string-equal mode "g2c")
-             (= (os-name) "linux")))))
+             #t))))  ;; (= (os-name) "linux")
 
 (ddv run (if $g2c-eval? auto-run %%bottom%%ast-run))
 

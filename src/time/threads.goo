@@ -13,8 +13,9 @@
 (dl %thread-detach)
 (dl %thread-join)
 (dl %thread-current)
-(dl %thread-goo-thread)
 (dl %thread-sleep)
+(dl %thread-goo-thread)
+(dl %thread-goo-thread-setter)
 
 (dc <thread> (<any>))
   (dp thread-name (<thread> => (t? <sym>)) #f)
@@ -39,10 +40,11 @@
     (set (%thread-priority h) (%iu (thread-priority t))))
   t)
 
-(new <thread> 
-     thread-name     'main
-     thread-function main-thread-key
-     thread-handle   (%lb (%thread-current)))
+(set (%thread-goo-thread)
+  (new <thread> 
+    thread-name     'main
+    thread-function main-thread-key
+    thread-handle   (%lb (%thread-current))))
 
 (ds (spawn ,@body)
   `(new <thread> thread-function (fun () ,@body)))
