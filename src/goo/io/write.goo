@@ -1,4 +1,4 @@
-;;  Copyright (c) 1993, 1994 Richard Kelsey and Jonathan Rees. 
+;  Copyright (c) 1993, 1994 Richard Kelsey and Jonathan Rees. 
 ;;  See file COPYING.
 ;;  Copyright (c) 2001 Jonathan Bachrach
 
@@ -14,18 +14,11 @@
 (dm as-binding-name (name) 
   (as <str> name))
 
-(ds (maybe-write-proto-name (,port ,x ,proto) ,@body)
-  `(if (== ,x ,proto)
-       (write-string ,port (as-binding-name ',proto))
-       (seq ,@body)))
-     
 (dm do-display ((port <output-port>) (x <str>) (d <int>) (recur <fun>))
-  (maybe-write-proto-name (port x <str>)
-    (write-string port x)))
+  (write-string port x))
 
 (dm do-display ((port <output-port>) (x <chr>) (d <int>) (recur <fun>))
-  (maybe-write-proto-name (port x <chr>)
-    (write-char port x)))
+  (write-char port x))
 
 (dm do-display ((port <output-port>) x (d <int>) (recur <fun>))
   (recurring-write port x d recur))
@@ -51,16 +44,13 @@
 (dm recurring-write ((port <output-port>) (x <lst>) (d <int>) (recur <fun>))
   (if (empty? x)
       (write-string port "()")
-      (maybe-write-proto-name (port x <lst>)
-        (write-list port x d recur))))
+      (write-list port x d recur)))
 
 (dm recurring-write ((port <output-port>) (x <vec>) (d <int>) (recur <fun>))
-  (maybe-write-proto-name (port x <vec>)
-    (write-vector port x d recur)))
+  (write-vector port x d recur))
 
 (dm recurring-write ((port <output-port>) (x <map>) (d <int>) (recur <fun>))
-  (maybe-write-proto-name (port x <map>)
-    (write-map port x d recur)))
+  (write-map port x d recur))
 
 (dm recurring-write ((port <output-port>) (x <log>) (d <int>) (recur <fun>))
   (if x
@@ -68,13 +58,11 @@
       (write-boolean port 'f)))
 
 (dm recurring-write ((port <output-port>) (x <sym>) (d <int>) (recur <fun>))
-  (maybe-write-proto-name (port x <sym>)
-    (write-string port (as <str> x))))
+  (write-string port (as <str> x)))
 
 (dm recurring-write ((port <output-port>) (x <loc>) (d <int>) (recur <fun>))
-  (maybe-write-proto-name (port x <loc>)
-    (write-string port "&0x")
-    (num-to-str (%ib (%lu x)) 16)))
+  (write-string port "&0x")
+  (num-to-str (%ib (%lu x)) 16))
 
 (dm recurring-write ((port <output-port>) (x <num>) (d <int>) (recur <fun>))
   (if (== x <num>)
@@ -82,21 +70,17 @@
       (write-number port x)))
 
 (dm recurring-write ((port <output-port>) (x <str>) (d <int>) (recur <fun>))
-  (maybe-write-proto-name (port x <str>)
-    (write-string-literal port x)))
+  (write-string-literal port x))
 
 (dm recurring-write ((port <output-port>) (x <chr>) (d <int>) (recur <fun>))
-  (maybe-write-proto-name (port x <chr>)
-    (write-char-literal port x)))
+  (write-char-literal port x))
 
 (dm write-boolean ((port <output-port>) mumble)
   (write-char port #\#)
   (write port mumble))
 
 (dm write-number ((port <output-port>) (x <num>))
-  (maybe-write-proto-name (port x <int>)
-    (maybe-write-proto-name (port x <flo>)
-      (write-string port (num-to-str x 10)))))
+  (write-string port (num-to-str x 10)))
 
 (dm write-char-literal ((port <output-port>) x)
   (let ((probe (character-name x)))
@@ -157,21 +141,17 @@
   (write-char port #\)))
 
 (dm write-map ((port <output-port>) (x <map>) (d <int>) (recur <fun>))
-  (let ((name (object-name x)))
-    (if name
-	(write-string port (as-binding-name name))
-	(seq (write-string port "#[")
-	     (let ((owner (object-name (1st (object-parents x)))))
-	       (display port owner)
-	       (lab blow
-	         (for (((tup key val) x) (i (from 0)))
-		   (when (>= i *max-print-length*)
-		     (write-string port " ...") (blow #f))
-		   (write-char port #\space)
-		   (recur key d)
-		   (write-string port ": ")
-		   (recur val d))))
-	     (write-char port #\])))))
+  (write-string port "#[")
+  (display port (class-name (object-class x)))
+  (lab blow
+    (for (((tup key val) x) (i (from 0)))
+      (when (>= i *max-print-length*)
+        (write-string port " ...") (blow #f))
+      (write-char port #\space)
+      (recur key d)
+      (write-string port ": ")
+      (recur val d)))
+  (write-char port #\]))
 
 (dm recurring-write
     ((port <output-port>) (x <input-port>) (d <int>) (recur <fun>))
@@ -182,12 +162,6 @@
   (write-string port "#{Output-port}"))
 
 ;; TODO: CHANGE C IMPLEMENTATION
-
-(dv *glo-name?* #f)
-
-(dm object-name (x)
-  (let ((name (or (%binding-name x) (and *glo-name?* (env-object-name x)))))
-    (and name (as <str> name))))
 
 (dm write-params ((port <output-port>) (x <fun>) (recur <fun>))
   (let ((names (fun-names x)))
@@ -214,12 +188,35 @@
   (write-string port "}"))
 
 (dm recurring-write ((port <output-port>) (x <gen>) (d <int>) (recur <fun>))
-  (maybe-write-proto-name (port x <gen>)
-    (write-fun-guts port x "Gen" recur)))
+  (write-fun-guts port x "Gen" recur))
 
 (dm recurring-write ((port <output-port>) (x <met>) (d <int>) (recur <fun>))
-  (maybe-write-proto-name (port x <met>)
-    (write-fun-guts port x "Met" recur)))
+  (write-fun-guts port x "Met" recur))
+
+(dm recurring-write ((port <output-port>) (x <class>) (d <int>) (recur <fun>))
+  (write-string port "#{Class ")
+  (write-string port (as <str> (class-name x)))
+  (write-string port " ")
+  (recur (map class-name (class-direct-parents x)) d)
+  (write-string port "}"))
+
+(dm recurring-write 
+    ((port <output-port>) (x <singleton>) (d <int>) (recur <fun>))
+  (write-string port "#{T= ")
+  (recur (type-object x) d)
+  (write-string port "}"))
+
+(dm recurring-write 
+    ((port <output-port>) (x <subclass>) (d <int>) (recur <fun>))
+  (write-string port "#{T< ")
+  (recur (type-class x) d)
+  (write-string port "}"))
+
+(dm recurring-write 
+    ((port <output-port>) (x <union>) (d <int>) (recur <fun>))
+  (write-string port "#{T+ ")
+  (recur (type-class x) d)
+  (write-string port "}"))
 
 (dm recurring-write ((port <output-port>) (x <slot>) (d <int>) (recur <fun>))
   (write-string port "#{Slot ")
@@ -227,25 +224,21 @@
   (write-string port "}"))
 
 (dm recurring-write ((port <output-port>) x (d <int>) (recur <fun>))
-  (let ((name (object-name x)))
-    (if name
-	(write-string port (as-binding-name name))
-	(let ((owner (object-name (1st (object-parents x)))))
-	  (write-string port "#{")
-	  (display port owner)
-	  (lab blow
-	    (for ((slot (object-slots x)) (i (from 0)))
-	      (when (>= i *max-print-length*)
-		(write-string port " ...") (blow #f))
-	      (let ((getter (slot-getter slot)))
-		(write-char port #\space)
-		(display port (fun-name getter))
-		(write-string port ": ")
-		(recur (getter x) d))))
-	  (write-string port "}")))))
+  (write-string port "#{")
+  (display port (class-name (object-class x)))
+  (lab blow
+    (for ((slot (object-slots x)) (i (from 0)))
+      (when (>= i *max-print-length*)
+        (write-string port " ...") (blow #f))
+      (let ((getter (slot-getter slot)))
+        (write-char port #\space)
+        (display port (fun-name getter))
+        (write-string port ": ")
+        (recur (getter x) d))))
+  (write-string port "}"))
 
 (dm recurring-write
-    ((port <output-port>) (x (eof-object)) (d <int>) (recur <fun>))
+    ((port <output-port>) (x (t= (eof-object))) (d <int>) (recur <fun>))
   (write-string port "#{End-of-file}"))
 
 (dm format ((port <output-port>) (message <str>) (arguments ...))
@@ -293,14 +286,10 @@
 
 ;; (set *debug-tables?* #t)
 
-(need-implementation
-  env-object-name)
-
 (export
   format
   format-to-string
   display
-  object-name
   write
   writeln
   write-to-string)

@@ -67,21 +67,13 @@ extern P YPtrue;
 
 /* OBJ */
 
-typedef struct _values {
-  PINT size;
-  P    values[1];
-} *VALUES, VALUES_DATA;
-
 typedef struct _obj {
-  P      traits;
-  VALUES values;
+  P class;
+  P values[1];
 } *OBJECT, OBJECT_DATA;
 
-#define YPobject_traits(x)           (((OBJECT)(x))->traits)
-#define YPobject_traits_setter(z, x) (((OBJECT)(x))->traits = (z))
-#define YPobject_values(x)           (((OBJECT)(x))->values)
-#define YPobject_values_setter(z, x) (((OBJECT)(x))->values = ((VALUES)(z)))
-#define YPobject_values_size(x)      (((VALUES)(x))->size)
+#define YPobject_class(x)            (((OBJECT)(x))->class)
+#define YPobject_class_setter(z, x)  (((OBJECT)(x))->class = (z))
 
 #include "gc.h"
 
@@ -90,27 +82,29 @@ extern void* malloc(size_t);
 extern P Ynul;
 extern P Ynul_slot;
 
-#define VALUES_SIZE(n) (sizeof(VALUES_DATA) + ((PINT)(n))*sizeof(P) - sizeof(P))
 #define OBJECT_DATA_SIZE (sizeof(OBJECT_DATA))
 
-extern P YPmake_object (void);
-extern P YPmake_object_values (P size);
-extern P YPinstall_object_values (P dst, P size);
-extern P YPadjust_object_values_size (P dst, P new_size, P src);
+extern P YPobject_of (P class, P size);
 extern P YPclone (P x);
 extern P YPraw_alloc (P size);
 extern P YPelt (P v, P i);
 extern P YPelt_setter (P x, P v, P i);
 
-#define YPslot_elt(x, i) (((VALUES)(YPobject_values(x)))->values[(PINT)(i)])
-#define YPslot_elt_setter(z, x, i) (((VALUES)(YPobject_values(x)))->values[(PINT)(i)] = (z))
+/*
+extern P YPslot_elt(P, P);
+extern P YPslot_elt_setter(P, P, P);
+*/
+
+#define YPslot_elt(x, i)           (((OBJECT)(x))->values[(PINT)(i)])
+#define YPslot_elt_setter(z, x, i) (((OBJECT)(x))->values[(PINT)(i)] = (z))
+#define YPslot_dat_at(x, i)        (&(((OBJECT)(x))->values[(PINT)(i)]))
 
 /* FLO */
 
 extern P FLOINT (PFLO x);
 extern P YPflo_bits (P x);
 
-/* VEC */
+/*
 
 typedef struct _vec {
   PINT size;
@@ -122,14 +116,40 @@ extern P YPPvfab (P size, P fill);
 #define YPPvelt(x, i)           (((PVEC)(x))->values[((PINT)(i))])
 #define YPPvelt_setter(z, x, i) (((PVEC)(x))->values[((PINT)(i))] = (z))
 
-/* STR */
-
 typedef PCHR* PSTR;
 
 extern P YPPsfab (P size, P fill);
 #define YPPslen(x)              ((P)(strlen((PSTR)(x))))
 #define YPPselt(x, i)           ((P)(PINT)(((PSTR)(x))[((PINT)(i))]))
 #define YPPselt_setter(z, x, i) ((P)(PINT)(((PSTR)(x))[((PINT)(i))] = ((PCHR)(PINT)(z))))
+
+*/
+
+/* REP */
+
+#define REP_LEN_OFF 0
+#define REP_DAT_OFF 1
+
+#define YPrep_dat(x)            (YPslot_dat_at((x), (P)REP_DAT_OFF))
+
+/* VEC */
+
+extern P YPPvfab (P size, P fill);
+#define YPvu(x)                ((P)(YPrep_dat(x)))
+#define YPvlen(x)              ((P)(YPslot_elt((x), (P)REP_LEN_OFF)))
+#define YPvelt(x, i)           ((P)(YPslot_elt((x), (P)(REP_DAT_OFF + (i)))))
+#define YPvelt_setter(z, x, i) ((P)(YPslot_elt_setter((z), (x), (P)(REP_DAT_OFF + (i)))))
+
+/* STR */
+
+typedef PCHR* PSTR;
+
+extern P YPPsfab (P size, P fill);
+extern P YPsb (P str);
+#define YPsu(x)                ((P)(YPrep_dat(x)))
+#define YPslen(x)              ((P)(YPslot_elt((x), (P)REP_LEN_OFF)))
+#define YPselt(x, i)           ((P)(PINT)(((PSTR)(YPsu(x)))[((PINT)(i))]))
+#define YPselt_setter(z, x, i) ((P)(PINT)(((PSTR)(YPsu(x)))[((PINT)(i))] = ((PCHR)(PINT)(z))))
 
 /* IO */
 

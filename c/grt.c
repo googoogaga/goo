@@ -81,8 +81,8 @@ P YPdo_stack_frames (P fun) {
     int nfp    = (int)stack_[xfp];
     P   args   = Ynil;
     P   f      = stack_[--xfp];
-    P   traits = YPobject_traits(f);
-    if (traits == YPobject_traits(YLmetG)) {
+    P   class  = YPobject_class(f);
+    if (class == YLmetG) {
       int i;
       int arity = FUNARITY(f);
       int naryp = FUNNARYP(f);
@@ -90,7 +90,7 @@ P YPdo_stack_frames (P fun) {
         args = YPpair(stack_[--xfp], args);
       if (naryp)
         args = YPpair(stack_[--xfp], args);
-    } else if (traits == YPobject_traits(YLgenG)) {
+    } else if (class == YLgenG) {
       args = stack_[--xfp];
     } else {
       return CALL1(Yunknown_function_error, f);
@@ -141,47 +141,29 @@ INLINE P stack_allocate (unsigned long size) {
 
 #define OBJECT_DATA_SIZE (sizeof(OBJECT_DATA))
 
-INLINE P YPmake_object (void) {
-  return allocate(OBJECT_DATA_SIZE);
-}
-
 INLINE P YPraw_alloc (P size) {
   return allocate((unsigned long)size*(sizeof(P)));
 }
 
-INLINE P YPmake_object_values (P size) {
+INLINE P YPobject_of (P class, P size) {
   int i;
-  VALUES vs
-    = (VALUES)allocate(VALUES_SIZE(size));
+  P obj = allocate(((int)size + 1) * sizeof(P));
   for (i = 0; i < (int)size; i++)
-    vs->values[i] = Ynul_slot;
-  vs->size
-    = (PINT)size;
-  return vs;
+    YPslot_elt_setter(Ynul_slot, obj, (P)i);
+  YPobject_class_setter(class, obj);
+  return obj;
 }
 
-INLINE P YPinstall_object_values (P dst, P size) {
-  VALUES vs = YPmake_object_values(size);
-  YPobject_values_setter(vs, dst);
-  return PNUL;
-}
-
-INLINE P YPadjust_object_values_size (P dst, P new_size, P src) {
-  int i;
-  VALUES ovs = YPobject_values(src);
-  VALUES nvs = YPmake_object_values(new_size);
-  YPobject_values_setter(nvs, dst);
-  if (ovs != PNUL && (PINT)new_size > 0) {
-    for (i = 0; i < (PINT)YPobject_values_size(ovs); i++)
-      nvs->values[i] = ovs->values[i];
-  }
-  return PNUL;
-}
+extern P YPclass_slot_len(P);
 
 INLINE P YPclone (P x) {
-  P y = YPmake_object();
-  YPobject_traits_setter(YPobject_traits(x), y);
-  YPadjust_object_values_size(y, (P)YPobject_values_size(YPobject_values(x)), x);
+  int i, size;
+  P   c, y;
+  c    = YPobject_class(x);
+  size = YPiu(YPclass_slot_len(c));
+  y    = YPobject_of(c, (P)size);
+  for (i = 0; i < (int)size; i++)
+    YPslot_elt_setter(YPslot_elt(x, (P)i), y, (P)i);
   return y;
 }
 
@@ -194,35 +176,13 @@ INLINE P YPelt_setter (P x, P v, P i) {
 }
 
 /*
-P YPobject_traits(P x) {
-  return (((OBJECT)(x))->traits);
+P YPobject_class(P x) {
+  return (((OBJECT)(x))->class);
 }
-P YPobject_traits_setter(P z, P x) {
-  return ((OBJECT)(x))->traits = (z);
-}
-P YPobject_values(P x) {
-  return (((OBJECT)(x))->values);
-}
-P YPobject_values_setter(P z, P x) {
-  return (((OBJECT)(x))->values = ((VALUES)(z)));
-}
-P YPobject_values_size(P x) {
-  return (P)(((VALUES)(x))->size);
+P YPobject_class_setter(P z, P x) {
+  return ((OBJECT)(x))->class = (z);
 }
 */
-
-/* SUPPORT FUNCTIONS */
-
-/* This is a lot more correct than calling YPsb directly.
-** XXX - Fix uses of YPsb. */
-static P cstr_to_pstr (char *cstr) {
-  size_t buflen;
-  char *raw_pstr;
-  buflen = strlen(cstr) + 1;
-  raw_pstr = allocate(strlen(cstr));
-  strncpy(raw_pstr, cstr, buflen);
-  return YPsb(raw_pstr);
-}
 
 /* ARITHMETIC */
 
@@ -295,35 +255,76 @@ INLINE P YPflo_bits (P x) {
 
 /* DEBUG */
 
+/*
+P YPslot_elt(P x, P i) {
+  return (((OBJECT)(x))->values[(PINT)(i)]);
+}
+P YPslot_elt_setter (P z, P x, P i) {
+  return (((OBJECT)(x))->values[(PINT)(i)] = (z));
+}
+*/
+
 P YPSLOT_ELT (P x, P i) {
-  return ((VALUES)(YPobject_values(x)))->values[(PINT)i];
+  return YPslot_elt(x, i);
 }
 
 P YPSLOT_ELT_SETTER (P z, P x, P i) {
-  return ((VALUES)(YPobject_values(x)))->values[(PINT)i] = z;
+  return YPslot_elt_setter(z, x, i);
 }
 
 /* VEC */
 
-P YPPvfab (P size, P fill) {
-  int i;
-  PVEC v = (PVEC)allocate(sizeof(PVEC_DATA) + ((PINT)size - 1)*sizeof(P));
-  v->size = (PINT)size;
-  for (i = 0; i < (PINT)size; i++)
-    v->values[i] = fill;
-  return v;
-}
-  
-/* VEC */
+extern P YLvecG;
 
-P YPPsfab (P size, P fill) {
+P YPPvfab (P len, P fill) {
   int i;
-  PSTR s = (PSTR)allocate(((PINT)size + 1)*sizeof(PCHR));
-  for (i = 0; i < (PINT)size; i++)
-    s[i] = (PCHR)(int)fill;
-  return s;
+  P obj = allocate(((int)len + 2) * sizeof(P));
+  YPslot_elt_setter(len, obj, (P)REP_LEN_OFF);
+  for (i = 0; i < (int)len; i++)
+    YPslot_elt_setter(fill, obj, (P)(i + REP_DAT_OFF));
+  YPobject_class_setter(YLvecG, obj);
+  return obj;
 }
   
+/* STR */
+
+extern P YLstrG;
+
+P YPPsfab (P len, P fill) {
+  int i;
+  P obj = allocate((2) * sizeof(P) + ((PINT)len + 1)*sizeof(PCHR));
+  PSTR str = (PSTR)YPrep_dat(obj);
+  YPslot_elt_setter(len, obj, (P)REP_LEN_OFF);
+  for (i = 0; i < (int)len; i++)
+    str[i] = (PCHR)(int)fill;
+  str[(int)len] = (PCHR)0;
+  YPobject_class_setter(YLstrG, obj);
+  return obj;
+}
+  
+P YPsb (P pstr) {
+  PSTR str = (PSTR)pstr;
+  int i;
+  int len = strlen(str);
+  P obj   = allocate((2) * sizeof(P) + ((PINT)len + 1)*sizeof(PCHR));
+  PSTR dat = (PSTR)YPrep_dat(obj);
+  YPslot_elt_setter((P)len, obj, (P)REP_LEN_OFF);
+  strcpy(dat, str);
+  YPobject_class_setter(YLstrG, obj);
+  return obj;
+}  
+
+/* This is a lot more correct than calling YPsb directly.
+** XXX - Fix uses of YPsb. */
+static P cstr_to_pstr (char *cstr) {
+  size_t buflen;
+  char *raw_pstr;
+  buflen = strlen(cstr) + 1;
+  raw_pstr = allocate(strlen(cstr));
+  strncpy(raw_pstr, cstr, buflen);
+  return YPsb(raw_pstr);
+}
+
 /* IO */
 
 P YPopen_input_file (P name) { 
@@ -410,10 +411,10 @@ extern P Yerror;
 
 static void unix_error (char *command, char *filename) {
   CALLN(Yerror, 4,
-	cstr_to_pstr("%s: %s failed: %s.\n"),
-	cstr_to_pstr(command),
-	cstr_to_pstr(filename),
-	cstr_to_pstr(strerror(errno)));
+	YPsb("%s: %s failed: %s.\n"),
+	YPsb(command),
+	YPsb(filename),
+	YPsb(strerror(errno)));
 }
 
 /* TODO - Resolution is crummy because we use single floats. */
@@ -454,15 +455,15 @@ P YPfile_type (P name) {
   res = stat((PSTR) name, &buf);
   if (res == 0) {
     if (S_ISREG(buf.st_mode))
-      return CALL1(Yfab_sym, cstr_to_pstr("file"));
+      return CALL1(Yfab_sym, YPsb("file"));
     else if (S_ISDIR(buf.st_mode))
-      return CALL1(Yfab_sym, cstr_to_pstr("directory"));
+      return CALL1(Yfab_sym, YPsb("directory"));
     else
-      return CALL1(Yfab_sym, cstr_to_pstr("unknown"));
+      return CALL1(Yfab_sym, YPsb("unknown"));
   } else {
     unix_error("stat", name);
     /* Not executed. */
-    return CALL1(Yfab_sym, cstr_to_pstr("unknown"));
+    return CALL1(Yfab_sym, YPsb("unknown"));
   }
 }
 
@@ -549,10 +550,14 @@ P FUNINIT (P fun, int n, ...) {
 
 unsigned long fun_nallocd = 0;
 
+extern P YPib(P);
+extern P YPclass_slot_len_setter(P, P); /* TODO: TEMP */
+
 INLINE P FUNSHELL (int d, P x, int n) {
   P   fun;
   int snallocd = nallocd;
   int old_stack_allocp = stack_allocp; stack_allocp = d;
+  YPclass_slot_len_setter(YPib((P)4), YLmetG);
   fun = YPclone(x);
   fun_nallocd += nallocd - snallocd;
   FUNENVSETTER(ENVFAB(n), fun);
@@ -564,7 +569,9 @@ P FUNFAB (P x, int n, ...) {
   int i;
   va_list ap; 
   int snallocd = nallocd;
-  P fun = YPclone(x);
+  P   fun;
+  YPclass_slot_len_setter(YPib((P)4), YLmetG);
+  fun = YPclone(x);
   FUNENVSETTER(ENVFAB(n), fun);
   fun_nallocd += nallocd - snallocd;
   va_start(ap, n);
@@ -577,13 +584,10 @@ P FUNFAB (P x, int n, ...) {
 /* CALLS */
 
 INLINE OBJECT STACK_PAIR(P h, P t) {
-  OBJECT pair     = (OBJECT)stack_allocate(OBJECT_DATA_SIZE);
-  VALUES data     = (VALUES)stack_allocate(VALUES_SIZE(2));
-  pair->traits    = YPobject_traits(YLlstG);
-  pair->values    = data;
-  data->size      = 2;
-  data->values[0] = (h);
-  data->values[1] = (t);
+  OBJECT pair     = (OBJECT)stack_allocate(3 * sizeof(P));
+  pair->class     = YLlstG;
+  YPslot_elt_setter(h, pair, (P)0);
+  YPslot_elt_setter(t, pair, (P)1);
   return pair;
 }
 
@@ -648,17 +652,16 @@ P a[MAX_ARGUMENTS];
 
 extern P YLmetG;
 extern P YLgenG;
-extern P YPtraits_owner(P);
 
 P CALL0 (P fun) {
-  int osp    = sp, ofp = fp;
-  P   res    = YPfalse;
-  P   traits = PNUL;
-  /* don't get traits of non-object types.. */
+  int osp   = sp, ofp = fp;
+  P   res   = YPfalse;
+  P   class = PNUL;
+  /* don't get class of non-object types.. */
   if((tag_bits(fun)) == adr_tag)
-      traits = YPobject_traits(fun);
+      class = YPobject_class(fun);
   
-  if (traits == YPobject_traits(YLmetG)) {
+  if (class == YLmetG) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     CHECK_ARITY(fun,naryp,0,arity);
@@ -666,7 +669,7 @@ P CALL0 (P fun) {
       PUSH(Ynil);
     PUSH(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
-  } else if (traits == YPobject_traits(YLgenG)) {
+  } else if (class == YLgenG) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     CHECK_ARITY(fun,naryp,0,arity);
@@ -681,14 +684,14 @@ P CALL0 (P fun) {
 }
 
 P CALL1 (P fun, P a1) {
-  int osp    = sp, ofp = fp;
-  P   res    = YPfalse;
-  P   traits = PNUL;
-  /* don't get traits of non-object types.. */
+  int osp   = sp, ofp = fp;
+  P   res   = YPfalse;
+  P   class = PNUL;
+  /* don't get class of non-object types.. */
   if((tag_bits(fun)) == adr_tag)
-      traits = YPobject_traits(fun);
+      class = YPobject_class(fun);
 
-  if (traits == YPobject_traits(YLmetG)) {
+  if (class == YLmetG) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
@@ -704,7 +707,7 @@ P CALL1 (P fun, P a1) {
     }
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
-  } else if (traits == YPobject_traits(YLgenG)) {
+  } else if (class == YLgenG) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
@@ -721,14 +724,14 @@ P CALL1 (P fun, P a1) {
 }
 
 P CALL2 (P fun, P a1, P a2) {
-  int osp    = sp, ofp = fp;
-  P   res    = YPfalse;
-  P   traits = PNUL;
-  /* don't get traits of non-object types.. */
+  int osp   = sp, ofp = fp;
+  P   res   = YPfalse;
+  P   class = PNUL;
+  /* don't get class of non-object types.. */
   if((tag_bits(fun)) == adr_tag)
-      traits = YPobject_traits(fun);
+      class = YPobject_class(fun);
   
-  if (traits == YPobject_traits(YLmetG)) {
+  if (class == YLmetG) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
@@ -750,7 +753,7 @@ P CALL2 (P fun, P a1, P a2) {
     }
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
-  } else if (traits == YPobject_traits(YLgenG)) {
+  } else if (class == YLgenG) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
@@ -768,14 +771,14 @@ P CALL2 (P fun, P a1, P a2) {
 }
 
 P CALL3 (P fun, P a1, P a2, P a3) {
-  int osp    = sp, ofp = fp;
-  P   res    = YPfalse;
-  P   traits = PNUL;
-  /* don't get traits of non-object types.. */
+  int osp   = sp, ofp = fp;
+  P   res   = YPfalse;
+  P   class = PNUL;
+  /* don't get class of non-object types.. */
   if((tag_bits(fun)) == adr_tag)
-      traits = YPobject_traits(fun);
+      class = YPobject_class(fun);
   
-  if (traits == YPobject_traits(YLmetG)) {
+  if (class == YLmetG) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
@@ -803,7 +806,7 @@ P CALL3 (P fun, P a1, P a2, P a3) {
     }
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
-  } else if (traits == YPobject_traits(YLgenG)) {
+  } else if (class == YLgenG) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
@@ -823,14 +826,14 @@ P CALL3 (P fun, P a1, P a2, P a3) {
 
 P CALLN (P fun, int n, ...) {
   int i, j;
-  int osp    = sp, ofp = fp;
-  P   res    = YPfalse;
-  P   traits = PNUL;
-  /* don't get traits of non-object types.. */
+  int osp   = sp, ofp = fp;
+  P   res   = YPfalse;
+  P   class = PNUL;
+  /* don't get class of non-object types.. */
   if((tag_bits(fun)) == adr_tag)
-      traits = YPobject_traits(fun);
+      class = YPobject_class(fun);
   
-  if (traits == YPobject_traits(YLmetG)) {
+  if (class == YLmetG) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
@@ -855,7 +858,7 @@ P CALLN (P fun, int n, ...) {
     va_end(ap);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
-  } else if (traits == YPobject_traits(YLgenG)) {
+  } else if (class == YLgenG) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
@@ -939,15 +942,15 @@ extern P YPPlen(P);
 
 P YPPapply (P fun, P next_mets, P args) {
   int i, j;
-  int osp    = sp, ofp = fp;
-  int n      = (int)YPPlen(args);
-  P   res    = YPfalse;
-  P   traits = PNUL;
-  /* don't get traits of non-object types.. */
+  int osp   = sp, ofp = fp;
+  int n     = (int)YPPlen(args);
+  P   res   = YPfalse;
+  P   class = PNUL;
+  /* don't get class of non-object types.. */
   if((tag_bits(fun)) == adr_tag)
-      traits = YPobject_traits(fun);
+      class = YPobject_class(fun);
   
-  if (traits == YPobject_traits(YLmetG)) {
+  if (class == YLmetG) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
@@ -972,7 +975,7 @@ P YPPapply (P fun, P next_mets, P args) {
     } 
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, next_mets);
-  } else if (traits == YPobject_traits(YLgenG)) {
+  } else if (class == YLgenG) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     CHECK_ARITY(fun,naryp,n,arity);
@@ -1191,56 +1194,30 @@ INLINE P YPlocative_value_setter (P val, P loc) {
 
 /* SYMBOL TABLE */
 
-P**    symadrs;
-char** symmods;
-char** symnames;
-int    nsyms = 0;
+P regsym (P* adr, char *modstr, char *namestr) { }
 
-#define MAX_SYMS 10000
-
-int symoff (P adr) {
-  int i;
-  for (i = 0; i < nsyms; i++)
-    if (*symadrs[i] == adr)
-      return i;
-  return -1;
-}
-
-char* sym (P adr) {
-  int i = symoff(adr);
-  if (i > 0)
-    return symnames[i];
-  else
-    return (char*)0;
-}
-
-P YPbinding_name (P adr) {
-  char* s = sym(adr);
-  if (s == (char*)0)
-    return YPfalse;
-  else
-    return CALL1(Yfab_sym, YPsb(s));
-}
+extern P YPsym_nam(P);
+extern P YPclass_name(P);
 
 char* type (P adr) {
   if (adr == PNUL)
     return "UNBOUND";
   else {
     int tag = tag_bits(adr);
-    P traits;
+    P class;
     switch (tag) {
     case adr_tag:
-      traits = YPobject_traits(adr);
-      if (traits == PNUL)
+      class = YPobject_class(adr);
+      if (class == PNUL)
 	return "UNBOUND";
-      else if (tag_bits(traits) != adr_tag)
+      else if (tag_bits(class) != adr_tag)
 	  return "BOGUS";
       else {
-	char* owner_name = sym(YPtraits_owner(traits));
-	if (owner_name == NULL)
+	P class_name = (P)YPsym_nam(YPclass_name(class));
+	if (class_name == NULL)
 	  return "DYN";
 	else
-	  return owner_name;
+	  return (char*)YPsu(class_name);
       }
     case int_tag:
       return "<int>";
@@ -1252,44 +1229,7 @@ char* type (P adr) {
   }
 }
 
-int is_class (P adr) {
-  if (adr == PNUL)
-    return 0;
-  else {
-    int tag = tag_bits(adr);
-    if (tag != adr_tag)
-      return 0;
-    else {
-      P traits = YPobject_traits(adr);
-      if (traits == PNUL || tag_bits(traits) != adr_tag)
-	return 0;
-      else 
-	return YPtraits_owner(traits) == adr;
-    }
-  }
-}
-
 #define MIN(x,y) ((x)<(y) ? (x) : (y))
-
-void prtsym (P adr) {
-  char* name = sym(adr);
-  
-  if (name == 0)
-    printf("0x%lx", adr);
-  else
-    printf("%s", name);
-}
-
-void prtobj (P adr) {
-  if (adr == 0)
-    printf("NUL");
-  else {
-    char* typename = type(adr);
-    prtsym(adr);
-    if (typename) 
-      printf(" ISA %s", typename);
-  }
-}
 
 extern void print_kind(P, int, int);
 
@@ -1303,8 +1243,6 @@ int max_length = 10;
 void print_kind (P adr, int prettyp, int depth) {
   if (depth < max_depth) {
   char* typename = type(adr);
-  char* name     = sym(adr);
-  int   classp   = is_class(adr);
   int   t        = tag_bits(adr);
   if (adr == 0x0 || strcmp(typename, "UNBOUND") == 0) {
     printf("UNBOUND"); return;
@@ -1314,11 +1252,6 @@ void print_kind (P adr, int prettyp, int depth) {
     printf("#t"); return;
   } else if (adr == Ynil) {
     printf("()"); return;
-  } 
-  if (name) {
-    printf("%s", name);
-    if (!classp || prettyp)
-      printf("=");
   } 
   switch (t) {
   case int_tag:
@@ -1330,11 +1263,7 @@ void print_kind (P adr, int prettyp, int depth) {
   default:
     break;
   }
-  if (classp) {
-    if (prettyp)
-      print_kind(YPobject_traits(adr), 0, depth);
-    /* DO NOTHING FOR NOW */
-  } else if (strcmp(typename, "<int>") == 0) {
+  if (strcmp(typename, "<int>") == 0) {
     printf("%d", (int)YPslot_elt(adr, (P)0));
   } else if (strcmp(typename, "<chr>") == 0) {
     printf("%c", (int)YPslot_elt(adr, (P)0));
@@ -1345,9 +1274,11 @@ void print_kind (P adr, int prettyp, int depth) {
     x.i = (PINT)YPslot_elt(adr, (P)0);
     printf("%f", x.f);
   } else if (strcmp(typename, "<sym>") == 0) {
-    printf("%s", YPslot_elt(YPslot_elt(adr, (P)0), (P)0));
+    printf("%s", YPsu(YPslot_elt(adr, (P)0)));
+  } else if (strcmp(typename, "<class>") == 0) {
+    printf("%s", YPsu(YPclass_name(adr)));
   } else if (strcmp(typename, "<str>") == 0) {
-    printf("\""); printf("%s", YPslot_elt(adr, (P)0)); printf("\"");
+    printf("\""); printf("%s", YPsu(adr)); printf("\"");
   } else if (strcmp(typename, "<lst>") == 0) {
     P ptr; int j;
     printf("("); 
@@ -1362,13 +1293,12 @@ void print_kind (P adr, int prettyp, int depth) {
     printf(")");
   } else if (strcmp(typename, "<vec>") == 0) {
     int j, n;
-    PVEC v = (PVEC)YPslot_elt(adr, (P)0);
-    n = (PINT)YPPvlen(v);
+    n = (PINT)YPvlen(adr);
     printf("#("); 
     for (j = 0; j < n; j++) {
       if (j != 0) printf(" ");
       if (j < max_length) {
-	print_kind(YPPvelt(v, j), 0, depth + 1); 
+	print_kind(YPvelt(adr, j), 0, depth + 1); 
       } else {
 	printf("..."); break;
       }
@@ -1407,8 +1337,8 @@ void print_kind (P adr, int prettyp, int depth) {
     printf("(IN-PORT 0x%lx)", adr);
   } else {
     int i;
-    P values  = YPobject_values(adr);
-    int size  = (int)YPobject_values_size(values);
+    P c       = YPobject_class(adr);
+    int size  = (int)YPclass_slot_len(c);
     int below = MIN(size, 10);
     printf("(%s", typename);
     for (i = 0; i < below; i++) {
@@ -1429,6 +1359,23 @@ void println (P adr) {
   print_kind(adr, 1, 0); printf("\n");
 }
 
+void prtsym (char *typename, P adr) {
+  if (1)
+    printf("0x%lx", adr);
+  else
+    printf("%s", typename);
+}
+
+void prtobj (P adr) {
+  if (adr == 0)
+    printf("NUL");
+  else {
+    char* typename = type(adr);
+    prtsym(typename, adr);
+    if (typename) 
+      printf(" ISA %s", typename);
+  }
+}
 void desslot (int i, P adr) {
   printf("%d: ", i);
   prtobj(adr);
@@ -1453,8 +1400,8 @@ void desobj (P adr) {
       int metp  = strcmp(typename, "<met>") == 0;
       int genp  = strcmp(typename, "<gen>") == 0;
       int funp  = metp | genp;
-      P values  = YPobject_values(adr);
-      int size  = (int)YPobject_values_size(values);
+      P c       = YPobject_class(adr);
+      int size  = (int)YPclass_slot_len(c);
       int from  = funp ? 1 : 0;
       int below = MIN(metp ? size - 1 : size, 10);
       for (i = from; i < below; i++)
@@ -1473,61 +1420,13 @@ void desobj (P adr) {
 void des (P adr) {
   int tag  = tag_bits(adr);
   if (tag == adr_tag) {
-    P traits = YPobject_traits(adr);
-    printf("TRAITS:\n");
-    desobj(traits);
+    P class = YPobject_class(adr);
+    printf("CLASS: %s", YPsu(YPclass_name(class)));
+    desobj(class);
     printf("OBJECT: ");
-    if (sym(adr))
-      printf("%s", sym(adr));
-    printf("\n");
     desobj(adr);
   } else
     desobj(adr);
-}
-
-P regsym (P* adr, char *modstr, char *namestr) {
-  /* Find out if we've already registered this symbol.
-  ** Symbol registration is O(N^2), thanks to this probe. */
-  int i;
-  for (i = 0; i < nsyms; i++)
-    if (symadrs[i] == adr)
-      break;
-  if (i == nsyms)
-    /* We didn't find it, so allocate a new space at the end. */
-    nsyms++;
-  if (nsyms > MAX_SYMS)
-    YPbreak("REGSYM: SYM OVERFLOW");
-  symmods[i]  = modstr;
-  symnames[i] = namestr;
-  symadrs[i]  = adr;
-  return PNUL;
-}
-
-extern P YPlocative;
-extern P YPlb(P);
-
-P YPdo_runtime_bindings (P fun) {
-  int i, formatp = 0, evalp = 0;
-  /* printf("RTBS"); */
-  for (i = 0; i < nsyms; i++) {
-    char* m = symmods[i];
-    char* n = symnames[i];
-    /*
-    if (strcmp(n, "sexpr-self-evaluating?") == 0)
-      formatp = 1;
-    if (strcmp(n, "os-name") == 0)
-      evalp = 1;
-    */
-    if (!formatp || evalp) {
-      P mod      = YPsb((P)m);
-      P name     = YPsb((P)n);
-      P locative = YPlb((P)untag((P)symadrs[i]));
-      /* printf(" %s", n); */
-      CALL3(fun, mod, name, locative);
-    }
-  }
-  /* printf("\n"); */
-  return YPfalse;
 }
 
 /* KEYBOARD INTERRUPT HANDLING */
@@ -1589,9 +1488,6 @@ void YPinit_world(int argc, char* argv[]) {
   /* GC_enable_incremental(); */
 
   stack_  = (P*)allocate(MAX_STACK_SIZE * sizeof(P));
-  symnames = (char**)allocate(MAX_SYMS * sizeof(char*));
-  symmods = (char**)allocate(MAX_SYMS * sizeof(char*));
-  symadrs = (P**)allocate(MAX_SYMS * sizeof(P));
   envnul  = ENVFAB(0);
   Pcurrent_unwind_protect_frame = Ptop_unwind_protect_frame;
   Ptop_unwind_protect_frame->ultimate_destination = (BIND_EXIT_FRAME)0;
@@ -1620,34 +1516,22 @@ P YPprint_cpu_usage(char *file)
   //  return YPpair(YPib(usage.ru_utime), YPpair(YPib(*(void**)&usage.ru_stime), Ynil));
 }
 
-
 // woowee, much hackery lives here...is this even a good idea? :)
-P YPPlist(int num, ...)
-{
+P YPPlist(int num, ...) {
   if (num == 0)
     return Ynil;
-  else
-  {
+  else {
     int i;
-    char *lst = allocate(num*(OBJECT_DATA_SIZE+VALUES_SIZE(2)));
-    char *curptr = lst;
-    P lst_traits = YPobject_traits(YLlstG);
+    P lst = YPpair(Ynil, Ynil);
+    P nxt = lst;
     va_list ap; va_start(ap, num);
-    
-    for (i = 0; i < num; i++)
-    {
-      OBJECT o = (OBJECT)curptr;
-      VALUES v = (VALUES)(curptr+OBJECT_DATA_SIZE);
-      curptr += OBJECT_DATA_SIZE+VALUES_SIZE(2);
-      
-      o->traits = lst_traits;
-      o->values = v;
-      v->size = 2;
-      v->values[0] = va_arg(ap, P);
-      if(i == num - 1)
-	v->values[1] = Ynil;
-      else
-	v->values[1] = curptr;
+    for (i = 0; i < num; i++) {
+      P now = nxt;
+      YPhead_setter(va_arg(ap, P), now);
+      if (i < (num - 1)) {
+	nxt = YPpair(Ynil, Ynil);
+	YPtail_setter(nxt, now);
+      }
     }
     return lst;
   }
@@ -1715,7 +1599,7 @@ static void process_runtime_module(
   
   /* Create our own module object. */
   module_info->module_object =
-    CALL1(create_module_fun, cstr_to_pstr(module_info->module_name));
+    CALL1(create_module_fun, YPsb(module_info->module_name));
   modobj = module_info->module_object;
 
   /* Recursively initialize all the modules we depend upon, and mark
@@ -1734,9 +1618,9 @@ static void process_runtime_module(
        import_info++)
   {
     CALLN(import_fun, 4, modobj,
-	  cstr_to_pstr(import_info->variable_name),
+	  YPsb(import_info->variable_name),
 	  import_info->module_info->module_object,
-	  cstr_to_pstr(import_info->original_name));
+	  YPsb(import_info->original_name));
   }
   
   /* Define bindings in this module. */
@@ -1746,11 +1630,11 @@ static void process_runtime_module(
   {
     if (binding_info->location)
       CALL3(runtime_binding_fun, modobj,
-	    cstr_to_pstr(binding_info->variable_name),
+	    YPsb(binding_info->variable_name),
 	    YPlb((P)untag((P)binding_info->location)));
     else
       CALL2(other_binding_fun, modobj,
-	    cstr_to_pstr(binding_info->variable_name));
+	    YPsb(binding_info->variable_name));
   }
 
   /* Export bindings from this module. */
@@ -1759,8 +1643,8 @@ static void process_runtime_module(
        export_info++)
   {
     CALL3(export_fun, modobj,
-	  cstr_to_pstr(export_info->variable_name),
-	  cstr_to_pstr(export_info->exported_as));
+	  YPsb(export_info->variable_name),
+	  YPsb(export_info->exported_as));
   }
 }
 

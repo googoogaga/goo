@@ -125,10 +125,8 @@
     (if (== values-spec-index nul)
 	#f
         (let ((value (elt signature (+ values-spec-index 1))))
-	  (if (isa? value <lst>)
-	      (if (== (head value) 'tup)
-		  '<tup>
-		  (2nd value))
+	  (if (sexpr-tagged-list? value 'tup)
+              '<tup>
 	      value)))))
 
 (dm sexpr-function-signature (defn => <lst>)

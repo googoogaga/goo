@@ -32,20 +32,19 @@
         %force-output %char-ready?
         %read-char %newline %eof-object %eof-object
         %peek-char %char-ready
-        %object-traits %object-traits-setter
-        %object-values %object-values-setter
-        %raw-alloc %make-object %clone
+        %object-class %object-class-setter
+        %raw-alloc %object-of %clone
         %slot-elt %slot-elt-setter
-        %make-object-values %install-object-values %adjust-object-values-size
-        %elt %elt-setter %%slen %%selt %%selt-setter %%sfab
-        %%vlen %%velt %%velt-setter %%vfab
+        %elt %elt-setter
+        %slen %selt %selt-setter %%sfab %su %sb
+        %vlen %velt %velt-setter %%vfab %vu
         %app-filename %app-args
         %locative-value %locative-value-setter %invoke-debugger
         %os-name %os-binding-value %os-binding-value-setter
         %break %binding-name %fun-reg
         %trace-on %trace-off
         %%apply %%mep-apply %next-methods %fapply
-        %do-stack-frames %do-runtime-bindings
+        %do-stack-frames 
 	%unexec
         %build-runtime-modules
 
@@ -87,6 +86,16 @@
 	       (if tmp (and ,@rest) #f)))
        #t))
 
+(dss (case ,@cases)
+  (if (empty? cases)
+      #f
+      (mif ((,cond ,@body) (head cases))
+	   `(if ,cond
+		(seq ,@body)
+		(case ,@(tail cases)))
+	   ;; TODO: NEED SYNTAX ERROR CONDITIONS
+	   (error "CASE: SYNTAX ERROR BAD CASE" (head cases)))))
+
 ;;;
 ;;; BOOT OBJECTS
 ;;;
@@ -123,19 +132,27 @@
 	  (slot <str> (%%str-dat <any>)) ;; TODO: SHOULD RENAME LOWLEVEL
 	(dc <sym> (<any>))
 	  (slot <sym> (sym-name <str>))
-	(dc <traits> (<any>))
-	  (slot <traits> (traits-owner <any>))
-	  (slot <traits> (traits-direct-parents <lst>)  nil)
-	  (slot <traits> (traits-direct-slots <lst>)    nil)
-	  (slot <traits> (traits-parents <lst>)         nil)
-	  (slot <traits> (traits-slots <lst>)           nil)
-	  (slot <traits> (traits-direct-children <lst>) nil)
+	(dc <type> (<any>))
+	(dc <class> (<type>))
+	  (slot <class> (class-slot-len <int>)        0)
+	  (slot <class> (class-name <sym>))
+	  (slot <class> (class-direct-parents <lst>)  nil)
+	  (slot <class> (class-direct-slots <lst>)    nil)
+	  (slot <class> (class-parents <lst>)         nil)
+	  (slot <class> (class-slots <lst>)           nil)
+	  (slot <class> (class-direct-children <lst>) nil)
 	  ;; ULTIMATELY NEED GENS TO BE FLUSHED DURING CLASS REDEF
 	  ;; KEEP BOTH GENS/METS CAUSE NO MET->GEN MAP
 	  ;; WANT TO PRUNE OUT UNNECESSARY GENS BASED ON ACTUAL METS
-	  (slot <traits> (traits-gens <lst>)            nil)
-	  (slot <traits> (traits-mets <lst>)            nil)
-	  (slot <traits> (traits-forward <any>)         #f)
+	  (slot <class> (class-gens <lst>)            nil)
+	  (slot <class> (class-mets <lst>)            nil)
+	  (slot <class> (class-forward <any>)         #f)
+	(dc <singleton> (<type>))
+          (slot <singleton> (type-object <any>))
+	(dc <subclass> (<type>))
+          (slot <subclass>  (type-class <class>))
+	(dc <union> (<type>))
+          (slot <union>     (type-elts <lst>)           nil)
 	(dc <slot> (<any>))
 	  (slot <slot> (slot-owner <any>))
 	  (slot <slot> (slot-getter <fun>))
@@ -161,17 +178,26 @@
 	  (slot <gen> (fun-mets <lst>)  nil)
 	  (slot <gen> (fun-cache <any>) %false))))
 
-;; RETURN PROTO DEFS FROM BOOT DEFS
+;; RETURN CLASS DEFS FROM BOOT DEFS
 
-(ct (df %map-boot-protos (f)
+(ct (df %map-boot-classes (f)
+      (rep loop ((res '()) (defs (%boot-defs)))
+        (if (empty? defs)
+	    (rev! res)
+	    (loop (mif ((dc ,name (,parent)) (head defs))
+                       (pair (f name parent) res)
+                       res)
+		  (tail defs))))))
+
+;; RETURN OBJECTS DEFS FROM BOOT DEFS
+
+(ct (df %map-boot-objects (f)
       (rep loop ((res '()) (defs (%boot-defs)))
         (if (empty? defs)
 	    (rev! res)
 	    (loop (mif ((dv ,name (isa ,parent)) (head defs))
 		       (pair (f name parent) res)
-                       (mif ((dc ,name (,parent)) (head defs))
-                            (pair (f name parent) res)
-                            res))
+                       res)
 		  (tail defs))))))
 
 ;; RETURN SLOT DEFS FROM BOOT DEFS
@@ -189,53 +215,8 @@
 		  (tail defs))))))
 
 ;;;
-;;; 1. BUILD EMPTY PROTOTYPE OBJECTS WITH TRAITS
+;;; 1. CONSTRUCTION MACHINERY FOR BUILDING EARLY OBJECTS
 ;;;
-
-(dv %traits-size         (%raw 9)) ;; DEP ON TRAITS LAYOUT
-(dv %traits-owner-offset (%raw 0)) ;; DEP ON TRAITS LAYOUT
-
-;; BUILD BASIC TRAITS OBJECT WITH OWNER RECORDED
-;; TO BE COMPLETELY REPLACE IN DEFINE PARENTS BELOW
-
-(dp %%traits (owner)
-  (let ((traits (%make-object)))
-    (%install-object-values traits %traits-size)
-    (set (%slot-elt traits %traits-owner-offset) owner)
-    traits))
-
-;; BUILD BASIC STANDIN FOR PROTO 
-;; REAL SLOTS AND TRAITS TO BE FILLED IN
-
-(dp %object-shell ()
-  (let ((proto (%make-object)))
-    (set (%object-traits proto) (%%traits proto))
-    proto))
-
-(dss (%object-shells)
-  `(seq ,@(%map-boot-protos 
-	    (fun (name parent)
-              `(dv ,name (%object-shell))))))
-
-(%object-shells)
-
-;; now false and true have their permanent values.
-
-(dv %check-types?   #f) ;; READY FOR TYPE-CHECKING?
-(dv %symbols-ready? #f) ;; READY TO BUILD SYMBOLS?
-(dv %*start-running-at* nil)
-
-;;;
-;;; 2. SETUP LST BASICS
-;;;
-
-;; CONSTRUCTION MACHINERY FOR BUILDING EARLY OBJECTS
-
-(dp %object-of (owner size)
-  (let ((proto (%make-object)))
-    (set (%object-traits proto) (%object-traits owner))
-    (set (%object-values proto) (%make-object-values size))
-    proto))
 
 ;; STRUCTURES ARE OBJECT TEMPLATES WITH 
 ;;   PRIMITIVES FOR ACCESSORS AND 
@@ -274,6 +255,76 @@
 	    (loop (pair `(set (%slot-elt proto (%raw ,i)) ,name) inits)
 		  (+ i 1) (tail names)))))))
 
+;;;
+;;; 2. SETUP EARLY CLASS
+;;;
+
+(%define-structure % class
+ class-slot-len class-name 
+ class-direct-parents class-direct-slots
+ class-parents class-slots class-direct-children 
+ class-gens class-mets class-forward)
+
+(%define-structure % singleton type-object)
+(%define-structure % subclass  type-class)
+(%define-structure % union     type-elts)
+
+(dv <class> (%object-of (%raw 0) (%raw 10)))
+
+;;;
+;;; 3. SETUP EARLY OBJECTS
+;;;
+
+;;; PLACE HOLDERS FOR EARLY OBJECTS
+
+(dv <lst>    (%object-of <class> (%raw 10))) ;; PLACE HOLDER
+(dv nil      (%object-of <lst> (%raw 2)))    ;; AT LEAST GET SIZE RIGHT
+(dv one-nil  nil)                            ;; REMEMBER ORIGINAL NIL
+
+;;;
+;;; 4. SETUP EARLY CLASSES
+;;;
+
+;;; BUILD CLASS SHELLS POINTING TO INCOMPLETE <CLASS>
+
+(dss (%class-shells)
+  `(seq ,@(%map-boot-classes
+	    (fun (name parent)
+              `(dv ,name (%class nil nil nil nil nil nil nil nil nil nil))))))
+
+(%class-shells)
+
+;;; INITIALIZE CLASSES TO BE INSTANCES OF NOW REAL CLASS
+
+(dss (%reparent-class-shells)
+  `(seq ,@(%map-boot-classes
+	    (fun (name parent)
+              `(set (%object-class ,name) <class>)))))
+
+(%reparent-class-shells)
+
+;;;
+;;; 5. SETUP EARLY OBJECTS
+;;;
+
+;;; TODO: NEED SIZES TO BUILD OBJECTS CORRECTLY
+;;; TODO: COULD DELAY UNTIL AFTER SLOTS
+
+(set (%object-class nil) <lst>)
+
+;;; BUILD BASIC OBJECT HOLDERS
+
+(dss (%object-shells)
+  `(seq ,@(%map-boot-objects 
+	    (fun (name parent)
+              `(dv ,name (%object-of ,parent (%raw 0)))))))
+
+(%object-shells)
+
+;;;
+;;; 6. SETUP LIST BASICS
+;;;
+
 ;;; LST BASICS
 
 (%define-structure % lst head tail)
@@ -284,11 +335,14 @@
 
 (dp %%len (x) 
   (if (%empty? x) (%raw 0) (%i+ (%%len (%tail x)) (%raw 1))))
-  ;; (rep loop ((i (%iu 0)) (x x))
-  ;;   (if (%empty? x) count (loop (%i+ count (%iu 1)) (%tail x)))
+
+;;; INITIALIZE NIL
+
+(set nil         one-nil)
+(set (%head nil) nil)
+(set (%tail nil) nil)
 
 ;;; MET BASICS
-
 
 (%define-structure % sig 
    sig-names sig-specs sig-nary? sig-arity sig-value)
@@ -296,83 +350,23 @@
 (%define-structure % met 
    met-code met-name met-sig met-env)
 
-;;;
-;;; 3. SETUP HIERARCHY
-;;;
+(dv %met-slot-len (%raw 4))
 
-;; TRAITS -- PROTO VERSION OF CLASSES
+;; NOW FALSE AND TRUE HAVE THEIR PERMANENT VALUES.
 
-(%define-structure % traits
- traits-owner traits-direct-parents traits-direct-slots
- traits-parents traits-slots traits-direct-children 
- traits-gens traits-mets traits-forward)
-
-;; COMPUTE ALL PARENTS FROM DIRECT PARENTS ASSUMING SINGLE INHERITANCE
-
-(dp %compute-parents (parent)
-  (let ((traits (%object-traits parent)))
-    (if (%bb (%eq? traits (%object-traits <any>)))
-        (%pair <any> nil)
-        (%pair (%traits-owner traits) 
-	       (%compute-parents (%head (%traits-direct-parents traits)))))))
-
-;; DEFINE CHILD / PARENT RELATIONSHIP
-;; INSTALL REAL TRAITS OBJECTS WITH INHERITANCE INFO ONLY
-
-(dp %define-parent (owner direct-parent)
-  (let ((direct-parents (%pair direct-parent nil))
-	(parents        (%pair owner (%compute-parents direct-parent)))
-	(parent-traits  (%object-traits direct-parent)))
-    (set (%traits-direct-children parent-traits)
-	 (%pair owner (%traits-direct-children parent-traits)))
-    (set (%object-traits owner)
-	 (%traits owner direct-parents nil parents nil nil nil nil #f))))
-
-;; DEFINES SINGLE INHERITANCE HIERARCHY FROM TOP TO BOTTOM
-
-(dss (%define-hierarchy)
-  `(seq ,@(%map-boot-protos 
-	    (fun (name parent) `(%define-parent ,name ,parent)))))
-
-(%define-hierarchy)
-
-;; PATCH <ANY>'S PARENTS
-
-(set (%traits-parents (%object-traits <any>)) (%pair <any> nil))
-
-;; TRAIT PARENT LISTS DON'T HAVE PROPER TRAITS SO PATCH THEM
-;; TODO: THIS COULD BE REMOVED IF ORIGINAL TRAITS AREN'T DISCARDED
-
-(dp %copy (x) (if (%empty? x) x (%pair (%head x) (%copy (%tail x)))))
-
-(dv <traits>-traits (%object-traits <traits>))
-
-(dp %patch-parent (obj)
-  (let ((traits (%object-traits obj)))
-    (set (%object-traits traits) 
-         <traits>-traits)
-    (set (%traits-parents traits)
-         (%copy (%traits-parents traits)))
-    (set (%traits-direct-children traits)
-         (%copy (%traits-direct-children traits)))
-    (set (%traits-direct-parents traits) 
-         (%copy (%traits-direct-parents traits)))))
-
-(dss (%patch-parents)
-  `(seq ,@(%map-boot-protos 
-	    (fun (name parent) `(%patch-parent ,name)))))
-
-(%patch-parents)
+(dv %check-types?       #f)  ;; READY FOR TYPE-CHECKING?
+(dv %symbols-ready?     #f)  ;; READY TO BUILD SYMBOLS?
+(dv %*start-running-at* nil)
 
 ;;; 
-;;; 4. TAGGED OBJECTS
+;;; 8. TAGGED OBJECTS
 ;;; 
 
 ;; TAGGED OBJECTS ARE IMMEDIATE OBJECTS WHOSE TYPE AND DATA
 ;; ARE ENCODED IN ADDRESS
 ;; USES TWO TAG BITS WITH ADDRESSES HAVING TAG ZERO
 
-(dv $direct-object-traits (%raw-alloc (%raw 4)))
+(dv $direct-object-class (%raw-alloc (%raw 4)))
 
 (dv $tag-msk (%raw 3))
 
@@ -388,28 +382,26 @@
 
 (dp %indirect-object? (x) (%i= (%tag-bits x) ($adr-tag)))
 
-(dp %traits-of (x)
+(dp %class-of (x)
   (let ((tag (%tag-bits x)))
     (if (%bb (%i= tag ($adr-tag)))
-        (%object-traits x)
-        (%elt $direct-object-traits tag))))
+        (%object-class x)
+        (%elt $direct-object-class tag))))
 
 ;; DEFINE EARLY TAGGED PROTO 
 ;;   WHERE CODE IS ABBREVIATION PREFIX FOR OPS
 ;;   DEFINES TAG/FAB AND UNTAG OPS
-;;   DEFINES TAG2TRAITS ENTRY FOR MAP
+;;   DEFINES TAG2CLASS ENTRY FOR MAP
 
 (dss (%define-tagged-structure ,name ,code ,tag)
-  (let ((proto-name (make-sym "<" name ">"))
+  (let ((class-name (make-sym "<" name ">"))
 	(fab-name   (make-sym "%" name))
 	(tag-name   (make-sym "%" code "b"))
 	(untag-name (make-sym "%" code "u")))
     `(seq (dp ,tag-name (x) (%tag x (%raw ,tag)))
 	  (dp ,fab-name (x) (,tag-name x))
 	  (dp ,untag-name (x) (%untag x))
-	  (set (%elt $direct-object-traits (%raw ,tag)) 
-	       (%object-traits ,proto-name))
-	  )))
+	  (set (%elt $direct-object-class (%raw ,tag)) ,class-name))))
 
 (%define-tagged-structure int i 1) ;; INTEGERS
 
@@ -418,41 +410,21 @@
 (%define-tagged-structure loc l 3) ;; LOCATIVES
 
 ;;; 
-;;;  REPEATED OBJECTS
+;;;  9. SETUP REPEATED OBJECTS
 ;;; 
 
 ;; DEF STRUCT'S WITH INDEXED ELEMENTS W/ DATA STORED IN DATA SLOT
 ;;   DEFINING CONSTRUCTORS,ACCESSORS,LEN,BOX/UNBOX'ERS(FOR FFI),
 
 (dss (%define-repeated-structure ,name ,elt ,code ,init)
-  (let ((proto-name (make-sym "<"  name ">"))
+  (let ((class-name (make-sym "<"  name ">"))
 	(nul        (make-sym "%"  code "nul"))
-	(base-dat   (make-sym name "-dat"))
-	(dat        (make-sym "%"  base-dat))
-	(raw-elt    (make-sym "%%" code "elt"))
-	(elt        (make-sym "%"  code "elt"))
-	(elt-setter (make-sym "%"  code "elt-setter"))
-	(raw-len    (make-sym "%%" code "len"))
-	(len        (make-sym "%"  code "len"))
-	(box        (make-sym "%"  code "b"))
-	(unbox      (make-sym "%"  code "u"))
 	(fab        (make-sym "%"  name))
 	(fab!       (make-sym "%"  name "!"))
 	(raw-fab    (make-sym "%%" code "fab")))
-    `(seq (%define-structure-accessors ,base-dat)
-          (dp ,fab! (len)
-            (let ((proto (%object-of ,proto-name (%raw 1))))
-	      (set (,dat proto) (,raw-fab len ,init)) proto))
+    `(seq (dp ,fab! (len) (,raw-fab len ,init))
 	  (dv ,nul (,fab! (%raw 0)))
-	  (dp ,fab (len) 
-	    (if (%bb (%i= len (%raw 0))) ,nul (,fab! len)))
-	  (dp ,box (x) 
-            (let ((proto (%object-of ,proto-name (%raw 1))))
-	      (set (,dat proto) x) proto))
-	  (dp ,unbox (x) (,dat x))
-	  (dp ,len (x) (,raw-len (,dat x)))
-	  (dp ,elt (x i) (,raw-elt (,dat x) i))
-	  (dp ,elt-setter (z x i) (set (,raw-elt (,dat x) i) z)))))
+	  (dp ,fab (len) (if (%bb (%i= len (%raw 0))) ,nul (,fab! len))))))
 
 (%define-repeated-structure str <chr> s (%cu #\Space))
 
@@ -470,9 +442,45 @@
     (and (%bb (%i= len (%slen s2)))
          (%str-eq?-loop s1 s2 len (%raw 0)))))
 
-;;
-;;  SYMBOLS
-;;
+;;;
+;;; 7. SETUP HIERARCHY
+;;;
+
+;; COMPUTE ALL PARENTS FROM DIRECT PARENTS ASSUMING SINGLE INHERITANCE
+
+(dp %compute-parents (parent)
+  (if (%bb (%eq? parent <any>))
+      (%pair <any> nil)
+      (%pair parent
+             (%compute-parents (%head (%class-direct-parents parent))))))
+
+;; DEFINE CHILD / PARENT RELATIONSHIP
+
+(dp %define-parent (class direct-parent)
+  (set (%class-slot-len class) 0)    ;; NOW INT'S ARE DEFINED
+  (set (%class-forward class)  #f)   ;; NOW #F    IS  DEFINED
+  (set (%class-direct-parents class) 
+       (%pair direct-parent nil))
+  (set (%class-parents class) 
+       (%pair class (%compute-parents direct-parent)))
+  (set (%class-direct-children direct-parent)
+       (%pair class (%class-direct-children direct-parent))))
+
+;; DEFINES SINGLE INHERITANCE HIERARCHY FROM TOP TO BOTTOM
+
+(dss (%define-hierarchy)
+  `(seq ,@(%map-boot-classes
+	    (fun (name parent) `(%define-parent ,name ,parent)))))
+
+(%define-hierarchy)
+
+;; PATCH <ANY>'S PARENTS
+
+(set (%class-parents <any>) (%pair <any> nil))
+
+;;;
+;;; 10. SETUP SYMBOLS
+;;;
 
 ;; Get symbol fab up ASAP so we don't have to patch the names of
 ;; a bunch of objects.
@@ -520,11 +528,12 @@
               sym
               (lookup (%tail s)))))))
 
+;; NEED THIS TO BUILD METS -- COMPUTED FOR REAL BELOW
+(set (%class-slot-len <met>) (%ib %met-slot-len)) 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;; !!! Below here we can use functions !!! ;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 
 ;; MORE LST UTILITIES BUT NOW USING LOCAL METHODS
 
@@ -547,11 +556,11 @@
 
 
 ;;; 
-;;; 5. BOXED OBJECTS
+;;; 11. BOXED OBJECTS
 ;;; 
 
 (dss (%define-boxed-structure ,name ,code)
-  (let ((proto-name (make-sym "<" name ">"))
+  (let ((class-name (make-sym "<" name ">"))
 	(dat-name   (make-sym name "-dat"))
 	(fab-name   (make-sym "%" name))
 	(box-name   (make-sym "%" code "b"))
@@ -570,7 +579,7 @@
 ;; (%define-boxed-structure loc l)
 
 ;;;
-;;; 6. MAKE SLOTS AND ACCESSORS
+;;; 12. MAKE SLOTS AND ACCESSORS
 ;;; 
 
 ;; DEF SLOT'S
@@ -580,14 +589,14 @@
 
 ;; GENERIC DISPATCH CACHES 
 ;;   USED IN HIERARCHY DECISION TREE
-;;   MAP KEYS TO SUBTREES WHERE KEYS ARE EITHER OBJECTS OR TRAITS
+;;   MAP KEYS TO SUBTREES WHERE KEYS ARE EITHER OBJECTS OR CLASS
 ;;   AND SUBTREES ARE EITHER OTHER CACHES OR METHODS OR SLOT OFFSETS
 
 (%define-structure % gen-cache 
-   gen-cache-arg-pos gen-cache-singletons gen-cache-classes)
+   gen-cache-missable? gen-cache-arg-pos gen-cache-singletons gen-cache-classes)
 
-(dv $gen-cache-singletons-offset 1) ;; TODO: USED IN CACHE UPDATE
-(dv $gen-cache-classes-offset    2)
+(dv $gen-cache-singletons-offset 2) ;; TODO: USED IN CACHE UPDATE
+(dv $gen-cache-classes-offset    3)
 
 ;;; DEF GENERIC'S
  
@@ -595,7 +604,7 @@
    gen-code gen-name gen-sig gen-mets fun-cache)
 
 (df %slot-offset (owner getter)
-  (rep loop ((i (%raw 0)) (slots (%traits-slots (%object-traits owner))))
+  (rep loop ((i (%raw 0)) (slots (%class-slots (%object-class owner))))
     (if (%empty? slots)
 	(%iu -1)
 	(let ((slot (%head slots)))
@@ -603,19 +612,20 @@
 	      i
 	      (loop (%i+ i (%raw 1)) (%tail slots)))))))
 
-;; &PAIRIZE CONSTRUCTS CODE THAT BUILDS A LIST OF GIVEN ARGS WITH CALLS TO %PAIR
+;; &LISTIFY CONSTRUCTS CODE THAT BUILDS A LIST OF GIVEN ARGS WITH CALLS TO %PAIR
 
-(ct (df &pairize (args)
+(ct (df &listify (args)
       (if (empty? args)
 	  'nil
-	  `(%pair ,(head args) ,(&pairize (tail args))))))
+	  `(%pair ,(head args) ,(&listify (tail args))))))
 
 ;; EARLY DISPATCH ERRORS OUT
 
 (df %early-dispatch ((args ...))
   (let ((gen (%fun-reg)))
-    (%write-string (%current-output-port)
-                   (%su "ERROR: Generic function dispatch called before it existed."))
+    (%write-string
+     (%current-output-port)
+     (%su "ERROR: Generic function dispatch called before it existed."))
     ;; die (is there a better way?)
     ((%raw 0))))
 
@@ -626,7 +636,7 @@
 
 (dss (%define-accessor ,name (,@sig) ,@body)
   (let ((params  (sexpr-signature-parameters sig))
-	(specs   (&pairize (map (always '<any>) params))))
+	(specs   (&listify (map (always '<any>) params))))
     `(seq (dv ,name 
 	    (%gen %early-dispatch ',name 
 	          (%sig '() ,specs #f ,(len params) <any>) '() #f))
@@ -644,10 +654,9 @@
 
 ;; EARLY ADD-SLOT JUST ADDS SLOT TO DIRECT-SLOTS
 
-(df %add-slot (owner slot)
-  (let ((traits (%object-traits owner)))
-    (set (%traits-direct-slots traits)
-	 (%pair slot (%traits-direct-slots traits)))))
+(df %add-slot (class slot)
+  (set (%class-direct-slots class)
+       (%pair slot (%class-direct-slots class))))
 
 ;; DEF GETTER/SETTER/SLOTS FOR ALL BOOT PROTO SLOTS
 ;; N.B. SLOT METHODS CLOSE OVER SLOT
@@ -670,39 +679,24 @@
 ;;; 7. FINALIZE SLOTS
 ;;;
 
-;; NEED TO SET ALL SLOTS TRAITS SLOT
+;; NEED TO SET ALL SLOTS CLASS SLOT
 
-(df %collect-direct-slots (traits)
-  (let ((parent (%head (%traits-direct-parents traits))))
-    (%cat2 (%traits-slots (%object-traits parent))
-	   (%traits-direct-slots traits))))
+(df %collect-direct-slots (class)
+  (let ((parent (%head (%class-direct-parents class))))
+    (%cat2 (%class-slots parent) (%class-direct-slots class))))
 
-(df %finalize-slots! (owner)
-  (let ((traits (%object-traits owner)))
-    (set (%traits-direct-slots traits)
-	 (%rev! (%traits-direct-slots traits)))
-    (set (%traits-slots traits)
-	 (%collect-direct-slots traits))
-    (%adjust-object-values-size owner (%%len (%traits-slots traits)) owner)
-    owner))
+(df %finalize-slots! (name class)
+  (set (%class-name class)         name)
+  (set (%class-direct-slots class) (%rev! (%class-direct-slots class)))
+  (set (%class-slots class)        (%collect-direct-slots class))
+  (set (%class-slot-len class)     (%ib (%%len (%class-slots class))))
+  class)
 
 (dss (%finalize-slots)
-  `(seq ,@(%map-boot-protos (fun (name parent) `(%finalize-slots! ,name)))))
+  `(seq ,@(%map-boot-classes
+           (fun (name parent) `(%finalize-slots! ',name ,name)))))
 
 (%finalize-slots)
-
-;;;
-;;; 8. PATCH INSTANCES
-;;;
-
-;; UNFORTUNATELY NIL IS INCORRECTLY SET IN <LST> BECAUSE OF BOOT ORDER
-
-(dp %patch-lst (x) 
-  (set (%head x) '())
-  (set (%tail x) '()))
-
-(%patch-lst '())
-(%patch-lst <lst>)
 
 ;;;
 ;;; 11. FUNCTION PREP
@@ -786,6 +780,12 @@
 	(@rev! res)
 	(do (@tail x) (@pair (f (@head x)) res)))))
 
+(df @pick ((f <fun>) (x <lst>) => <lst>)
+  (rep do ((x x) (res '()))
+    (if (@empty? x)
+	(@rev! res)
+        (let ((h (@head x))) (do (@tail x) (if (f h) (@pair h res) res))))))
+
 (df @do ((f <fun>) (x <lst>) => <any>) ;; TODO: => (tup)
   (rep do ((x x))
     (if (@empty? x)
@@ -861,7 +861,7 @@
 (df fun-congruent? ((x <fun>) (y <fun>) => <log>)
   (and (@=  (@fun-arity x) (@fun-arity y))
        (@== (@fun-nary? x) (@fun-nary? y))
-       (@all2? isa? (@fun-specs x) (@fun-specs y))))
+       (@all2? @subtype? (@fun-specs x) (@fun-specs y))))
 
 (dv *restarts-ok?* #f)
 
@@ -889,12 +889,13 @@
         (rep lop ((specs (@fun-specs m)))
           (unless (@empty? specs)
             (let ((spec (@head specs)))
-              (unless (or (singleton-spec? spec) (@== spec <any>))
-                (let ((spec-traits (%object-traits spec)))
-                  (set (%traits-gens spec-traits)
-                       (@add-new (%traits-gens spec-traits) g))
-                  (set (%traits-mets spec-traits)
-                       (@add-new (%traits-mets spec-traits) m)))
+              ;; TODO: CHANGE TO REFLECT NEW SETUP -- DEP-CLASSES
+              (unless (or (@singleton-spec? spec) (@== spec <any>))
+                (let ((spec-class (%object-class spec)))
+                  (set (%class-gens spec-class)
+                       (@add-new (%class-gens spec-class) g))
+                  (set (%class-mets spec-class)
+                       (@add-new (%class-mets spec-class) m)))
                 (lop (@tail specs))))))
         ;; ACTUALLY PERFORM ADDITION KEEPING TRACK OF IT BEING A REPLACEMENT
         ;; OR NOT
@@ -909,51 +910,172 @@
 
 (dv <args> <lst>)
 
-(dp %%isa? (o1 o2 ps => <log>)
-  (if (%empty? ps)
+(dp @class-in? (c cs => <log>)
+  (if (%empty? cs)
       #f
-      (if (@== (%head ps) o2)
+      (if (@== (%head cs) c)
 	  #t
-	  (%%isa? o1 o2 (%tail ps)))))
+	  (@class-in? c (%tail cs)))))
 
-(dp %object-parents (x => <parents>)
-  (%traits-parents (%traits-of x)))
+(dp @subclass? (c1 c2 => <log>)
+  (or (@== c2 <any>) (@== c1 c2)
+      (@class-in? c2 (%class-parents c1))))
 
-(dp %isa? (o1 o2 => <log>)
-  (or (@== o2 <any>)
-      (@== o1 o2)
-      (%%isa? o1 o2 (%object-parents o1))))
+(dp @class-isa? (o c => <log>)
+  (@subclass? (%class-of o) c))
 
-(df isa? (o1 o2 => <log>)
-  (%isa? o1 o2))
+(dp @union-isa? (o u => <log>)
+  (@any? (fun (t) (@isa? o t)) (%type-elts u)))
 
-(df object< (o1 o2 wrt => <log>)
-  (if (@== wrt o1)
-      #t
-      (if (@== wrt o2)
-	  #f
-	  (rep find ((ps (object-parents wrt)))
-	    (if (@empty? ps)
-		(error "can't order specializers - arg/reference object %= is "
-		       "neither %= nor %=" wrt o1 o2) 
-		(let ((o (@head ps)))
-		  (if (@== o o1)
-		      #t
-		      (if (@== o o2)
-			  #f
-			  (find (@tail ps))))))))))
+(dp %isa? (o c => <log>)
+  (if (@== (%class-of c) <class>) ;; TODO: HACK
+      (@class-isa? o c)
+      (@isa? o c)))
+
+(dp @singleton-isa? (o t => <log>)
+  ;; TODO: FIX UP TO DO PROPER ==
+  (@== (%type-object t) o))
+
+(dp @subclass-isa? (o t => <log>)
+  (and (@isa? o <class>)
+       (@subclass? o (%type-class t))))
+
+(df @isa? (o t => <log>)
+  (case 
+    ((@class-isa? t <class>)     (@class-isa? o t))     
+    ((@class-isa? t <singleton>) (@singleton-isa? o t)) 
+    ((@class-isa? t <subclass>)  (@subclass-isa? o t)) 
+    ((@class-isa? t <union>)     (@union-isa? o t))
+    (#t                          (nyi-isa? o t))))
+
+;; TODO: DEF ISA METHODS
+
+(df @class< (c1 c2 wrt => <log>)
+  (rep find ((ps (%class-parents wrt)))
+    (if (@empty? ps)
+        (error "can't order specializers - arg/reference object %= is "
+               "neither %= nor %=" wrt c1 c2) 
+        (let ((c (@head ps)))
+          (if (@== c c1)
+              #t
+              (if (@== c c2)
+                  #f
+                  (find (@tail ps))))))))
 
 (dv <tup> <lst>)
 (dv @tup  @lst)
 
-(df order-specs (t1 t2 arg => (tup (order <sym>) canonical-type))
-  (if (@== t1 t2) 
-      (@tup '= t1)
-      (if (object< t1 t2 arg)
-	  (@tup '< t1)
-	  (@tup '> t2))))
+;; TODO: DEF SUBTYPE METHODS
 
-(df order-mets ((m1 <met>) (m2 <met>) (args <args>) => (order <sym>))
+(df @type-equal? (t1 t2 => <log>)
+  (or (@== t1 t2)
+      (and (not (@class-isa? t1 <class>)) (not (@class-isa? t2 <class>))
+           (@subtype? t1 t2) (@subtype? t2 t1))))
+
+(df @subtype? (t1 t2 => <log>)
+  (case 
+    ((@class-isa? t1 <union>)
+     (@all? (fun (t) (@subtype? t t2)) (%type-elts t1)))
+    ((@class-isa? t2 <union>)
+     (@any? (fun (t) (@subtype? t1 t)) (%type-elts t2)))
+    ((@class-isa? t2 <class>)
+     (case
+       ((@class-isa? t1 <class>)     (@subclass? t1 t2))
+       ((@class-isa? t1 <singleton>) (@isa? (%type-object t1) t2))
+       ((@class-isa? t1 <subclass>)  (@subclass? <class> t2))
+       (#t                           (nyi-subtype? t1 t2))))
+    ((@class-isa? t2 <singleton>) ;; TODO: PROB DOESN'T HAVE TO BE BOOTSTRAPPED
+     (case
+       ((@class-isa? t1 <class>)     #f)
+       ((@class-isa? t1 <singleton>) (@singleton-isa? (%type-object t1) t2))
+       ((@class-isa? t1 <subclass>)  #f)
+       (#t                           (nyi-subtype? t1 t2))))
+    ((@class-isa? t2 <subclass>) ;; TODO: DOESN'T HAVE TO BE BOOTSTRAPPED
+     (case
+       ((@class-isa? t1 <singleton>) 
+        (and (@isa? (%type-object t1) <class>)
+             (@subclass? (%type-object t1) (%type-class t2))))
+       ((@class-isa? t1 <subclass>)
+        (@subclass? (%type-class t1) (%type-class t2)))
+       ((@class-isa? t1 <class>)
+        (and (@== t1 <class>) (@== (%type-class t2) <class>)))
+       (#t
+        (nyi-subtype? t1 t2))))
+    (#t 
+     (subtype? t1 t2))))
+
+;;; HAS-INSTANCES?: class contains => (some? all?) instances of type
+
+(df @may-isa? ((c <class>) (t <type>) => (tup <log> <log>))
+  (case
+    ((@class-isa? t <class>)
+     (if (@subclass? c t) (@tup #t #t) (@tup #f #f)))
+    ((@class-isa? t <singleton>)
+     (@tup (@may-isa? (%class-of (%type-object t)) c) #f))
+    ((@class-isa? t <subclass>)
+     (let ((class? (@subtype? c <class>)))
+       (@tup class? (and class? (@== (%type-class c) <any>)))))
+    ((@class-isa? t <union>)
+     (rep loop ((some? #f) (all? #f) (elts (%type-elts t)))
+       (if (@empty? elts)
+           (@tup some? all?)
+           (let (((tup elt-some? elt-all?) (@may-isa? c (@head elts))))
+             (loop (or elt-some? some?) (or elt-all? all?) (@tail elts))))))
+    (#t
+     (may-isa? c t))))
+
+(df order-specs-default (t1 t2 arg => (tup (order <sym>) canonical-type))
+  (if (@subtype? t1 t2)
+      (@tup (if (@subtype? t2 t1) '= '<) t1)
+      (if (@subtype? t2 t1)
+          (@tup '>  t2)
+	  (@tup '<> <any>))))
+
+;;; TODO: COULD PERFORM DISPATCH BY HAND
+
+(df order-specs (t1 t2 arg => (tup (order <sym>) canonical-type))
+  (case 
+    ((@== t1 t2)    
+     (@tup '= t1))
+    ((@class-isa? t1 <singleton>)
+     (@tup (if (@class-isa? t2 <singleton>) '= '<) t1))
+    ((@class-isa? t1 <subclass>)
+     (case 
+       ((@class-isa? t2 <subclass>)
+        (let ((c1 (%type-class t1))
+              (c2 (%type-class t2)))
+          (case 
+            ((@== c1 c2)         (@tup '= t1))
+            ((@class< c1 c2 arg) (@tup '< t1))
+            (#t                  (@tup '> t2)))))
+       ((@class-isa? t2 <class>)
+        (@tup (if (@subtype? <class> t2) ;; TODO: THIS SEEMS WRONG
+                  (if (@== t1 <any>)
+                      (order-specs <class> t2 arg)
+                      '<)
+                  '<>)
+             t1))
+       (#t
+        (order-specs-default t1 t2 arg))))
+    ((@class-isa? t2 <subclass>)
+     (if (@class-isa? t1 <class>)
+         (@tup (if (@subtype? <class> t1) ;; TODO: THIS SEEMS WRONG
+                   (if (@== t2 <any>)
+                       (order-specs t1 <class> arg)
+                       '>)
+                   '<>)
+               t2)
+         (order-specs-default t1 t2 arg)))
+    ((@class-isa? t1 <class>)
+     (if (@class-isa? t2 <class>)
+         (if (@class< t1 t2 (%class-of arg))
+             (@tup '< t1)
+             (@tup '> t2))
+         (order-specs-default t1 t2 arg)))
+    (#t
+     (order-specs-default t1 t2 arg))))
+      
+(df order-mets ((m1 <met>) (m2 <met>) (args <args>) => <sym>)
   (let (((arity <int>) (@fun-arity m1)))
     (rep loop (((state <sym>) '=) ((idx <int>) 0))
       (if (@= idx arity)
@@ -1017,7 +1139,7 @@
     (rep loop (((i <int>) 0))
       (if (@= i n)
 	  #t
-	  (if (isa? (@elt args i) (fun-spec met i))
+	  (if (@isa? (@elt args i) (fun-spec met i))
 	      (loop (@+ i 1))
 	      #f)))))
 
@@ -1047,77 +1169,142 @@
 (df @gen-cache-classes (x)             (%gen-cache-classes x))
 (df @gen-cache-classes-setter (z x)    (set (%gen-cache-classes x) z))
 
-(df gen-unspecialized-at? ((gen <gen>) (pos <int>) => <log>)
-  (@all? (fun (met) (@= (fun-spec met pos) <any>)) (%gen-mets gen)))
-
-(df gen-lookup-miss-1-using
-    (key (all-assocs <fun>) (all-assocs-setter <fun>) 
-     (gen <gen>) cache (met <met>) (mets <lst>)
-     (i <int>) (n <int>) 
-     (args <lst>) (specs <lst>))
-  (if (or (and cache (@< i (%gen-cache-arg-pos cache)))
-	  (gen-unspecialized-at? gen i))
-      (gen-lookup-miss-1 gen cache met mets (@+ i 1) n args specs)
-      (let ((cache (or cache (%gen-cache i nil nil))))
-	(rep loop ((assocs (all-assocs cache)))
-	  (if (@empty? assocs) ;; miss
-	      ;; could be a stale object
-	      (if (and (@== all-assocs @gen-cache-classes)
-		       (%traits-forward key))
-		  (let ((arg (@elt args i)))
-		    (update-instance-for-changed-prototype arg)
-		    (set key (%traits-of arg)) ; reset key to new traits
-		    (loop (all-assocs cache))) ; restart search cause might hit
-		  (let ((val (gen-lookup-miss-1
-			      gen #f met mets (@+ i 1) n args specs)))
-		    (set (all-assocs cache)
-			 (@pair key (@pair val (all-assocs cache))))))
-	      (let ((k (@head assocs))
-		    (v (@head (@tail assocs))))
-		(if (@== k key)
-		    (gen-lookup-miss-1 gen v met mets (@+ i 1) n args specs)
-		    (loop (@tail (@tail assocs)))))))
-	cache)))
-
-(df singleton-spec? (x)
-  (not (@== (%traits-owner (%traits-of x)) x)))
-
-(dv <slot>-traits (%object-traits <slot>))
-
 ;; GIVEN MET/GEN AND ARGS FIND SLOT-OFFSET -- USING SLOT IN MET ENV
 
 (df method-accessor-offset ((gen <gen>) (met <met>) (args <lst>))
-  (let ((slot  (%met-env met))
-	(slot? (and slot (@== (%traits-of slot) <slot>-traits)))
+  (let ((slot  (%met-env met)) ;; TODO: THIS NEEDS TO BE IMPROVED
+	(slot? (and slot (@== (%class-of slot) <slot>)))
 	(n     (@len args)))
     (and slot?
 	 (if (@= n 1) ;; getter?
 	     (slot-offset (%head args) gen)
 	     (slot-offset (%head (%tail args)) (%slot-getter slot))))))
 
+(df @singleton-spec? (x)
+  (@class-isa? x <singleton>))
+
+(df @subclass-spec? (x)
+  (@class-isa? x <subclass>))
+
+(df @union-spec? (x)
+  (@class-isa? x <union>))
+
+(df @precise-spec? (x)
+  (or (@singleton-spec? x) (@subclass-spec? x) 
+      (and (@union-spec? x) (@any? @precise-spec? (%type-elts x)))))
+
+(df @mets-unspecialized-at? ((mets <lst>) (pos <int>) => <log>)
+  (@all? (fun (met) (@= (fun-spec met pos) <any>)) mets))
+
+(df @prune-mets-by-type-at
+    ((mets <lst>) (type <type>) (pos <int>) => <mets>)
+  (@pick (fun (met) (@subtype? type (fun-spec met pos))) mets))
+
+(df @mets-specs-at ((mets <lst>) (pos <int>) => <lst>)
+  (@map (fun (met) (fun-spec met pos)) mets))
+
+;; TODO: GROVEL THROUGH UNIONS
+
+(df @mets-singletons-at ((mets <lst>) (pos <int>) => <lst>)
+  (@pick (fun (spec) (@singleton-spec? spec)) (@mets-specs-at mets pos)))
+
+(df @mets-subclasses-at ((mets <lst>) (pos <int>) => <lst>)
+  (@pick (fun (spec) (@subclass-spec? spec)) (@mets-specs-at mets pos)))
+
+(df gen-lookup-miss-1-using
+    (key (all-assocs <fun>) (all-assocs-setter <fun>) 
+     (gen <gen>) cache (mets <lst>) (sorted-mets <lst>) (i <int>) (args <lst>))
+  ;; (if (or (and cache (@< i (%gen-cache-arg-pos cache)))
+  ;;         (@mets-unspecialized-at? mets i))
+  ;;     (gen-lookup-miss-1 gen cache mets sorted-mets (@+ i 1) args)
+      (let ((cache (or cache (%gen-cache #t i nil nil))))
+	(rep loop ((assocs (all-assocs cache)))
+	  (if (@empty? assocs) ;; miss
+	      ;; could be a stale object
+	      (if (and (@== all-assocs @gen-cache-classes)
+		       (%class-forward key))
+		  (let ((arg (@elt args i)))
+		    (update-instance-for-changed-class arg)
+		    (set key (%class-of arg)) ; reset key to new class
+		    (loop (all-assocs cache))) ; restart search cause might hit
+		  (let ((val (gen-lookup-miss-1
+			      gen #f mets sorted-mets (@+ i 1) args)))
+		    (set (all-assocs cache)
+			 (@pair key (@pair val (all-assocs cache))))))
+	      (let ((k (@head assocs)))
+		(if (@== k key)
+                    (let ((v (@head (@tail assocs))))
+                      (gen-lookup-miss-1 gen v mets sorted-mets (@+ i 1) args))
+		    (loop (@tail (@tail assocs)))))))
+	cache))
+
+;;; copy args with arg as i'th elt
+(df @specd-args ((args <lst>) (i <int>) (arg <any>) => <lst>)
+  (rep copy ((args args) (k 0) (r '()))
+    (if (@empty? args)
+        (@rev! r)
+        (copy (@tail args) (@+ k 1) 
+              (@pair (if (@== k i) arg (@head args)) r)))))
+
+(df ensure-singleton-cache
+    ((gen <gen>) cache (mets <lst>) (sorted-mets <lst>) (i <int>) (args <lst>))
+  (or cache 
+      ;; prefill with singletons
+      (let ((subclasses (@mets-subclasses-at mets i)))
+        (if (@empty? subclasses)
+            (let ((singletons (@mets-singletons-at mets i)))
+              (if (@empty? singletons)
+                  #f ;; no prefilling needed and no cache supplied
+                  (let ((cache (%gen-cache #t i nil nil)))
+                    (set (%fun-cache gen) cache)
+                    (rep loop ((singletons singletons))
+                      (if (@empty? singletons)
+                          cache
+                          (let ((sing  (@head singletons))
+                                (arg   (%type-object sing))
+                                (args  (@specd-args args i arg))
+                                (smets (choose-methods gen args))
+                                (mets  (@prune-mets-by-type-at mets sing i)))
+                            (gen-lookup-miss-1-using arg 
+                             @gen-cache-singletons @gen-cache-singletons-setter 
+                             gen cache mets smets i args)
+                            (loop (@tail singletons))))))))
+            (%gen-cache #f i nil nil))))) ;; subclasses require singleton prec
+
 (df gen-lookup-miss-1
-    ((gen <gen>) cache (met <met>) (mets <lst>)
-     (i <int>) (n <int>) (args <lst>) (specs <lst>))
-  (if (@= i n)
-      (or (method-accessor-offset gen met args) mets)
-      (let ((spec (@elt specs i)))
-	(if (singleton-spec? spec)
-	    (gen-lookup-miss-1-using
-	     spec @gen-cache-singletons @gen-cache-singletons-setter
-	     gen cache met mets i n args specs)
-	    (gen-lookup-miss-1-using
-	     (%traits-of (@elt args i)) 
-	     @gen-cache-classes @gen-cache-classes-setter
-	     gen cache met mets i n args specs)))))
+    ((gen <gen>) ocache (mets <lst>) (sorted-mets <lst>) (i <int>) (args <lst>))
+  (if (@= i (@fun-arity gen))
+      (or (method-accessor-offset gen (@head sorted-mets) args) sorted-mets)
+      (let ((arg   (@elt args i))
+            (cache (ensure-singleton-cache gen ocache mets sorted-mets i args))
+            (sing? (@singleton-spec? (fun-spec (@head sorted-mets) i))))
+	(if (or (and sing? (@== ocache cache)) ;; sing args not seen?
+                (and cache (not (%gen-cache-missable? cache)))) ;; force sing?
+            (let ((mets (@prune-mets-by-type-at mets (%singleton arg) i)))
+              (gen-lookup-miss-1-using
+               arg @gen-cache-singletons @gen-cache-singletons-setter
+               gen cache mets sorted-mets i args))
+            (if sing? ;; sing arg doesn't belong in this cache
+                cache ;; already in cache by way of ensure-singleton-cache?
+                (let ((class (%class-of arg))
+                      (app-mets (@prune-mets-by-type-at mets class i)))
+                  (gen-lookup-miss-1-using
+                   class @gen-cache-classes @gen-cache-classes-setter
+                   gen cache app-mets sorted-mets i args)))))))
+
+(df gen-lookup-miss ((gen <gen>) (args <lst>) => <any>) 
+  (let ((mets (choose-methods gen args))) ;; TODO: => (or <met> <gen-cache>)
+    (gen-lookup-miss-1 gen (%fun-cache gen) (%gen-mets gen) mets 0 args)))
 
 (dp gen-lookup-1) ;; FORWARD DECL
 
 (dp gen-lookup ((gen <gen>) (args <lst>))
   (let ((n (%sig-arity (%gen-sig gen)))
-	(c (%fun-cache gen)))
+	(c (or (%fun-cache gen)
+               (set (%fun-cache gen) (gen-lookup-miss gen args)))))
     (gen-lookup-1 gen c 0 n args args)))
 
-(dv <int>-traits (%traits-of <int>))
+(dv <int>-class <int>)
 
 (dp slot-value-at (object (offset <int>) => <any>)
   (let ((val (%slot-elt object (%iu offset))))
@@ -1142,8 +1329,8 @@
   (if (@empty? assocs) ;; miss
       (if missable?
 	  $missed-dispatch
-	  (seq (set (%fun-cache gen) (gen-lookup-miss gen all-args))
-	       (gen-lookup gen all-args)))
+          (seq (set (%fun-cache gen) (gen-lookup-miss gen all-args))
+	       (gen-lookup gen all-args))) ;; restart lookup
       (let ((k           (%head assocs))
 	    (tail-assocs (%tail assocs)))
 	(if (@== k key)
@@ -1152,6 +1339,7 @@
 	      (if (@== old-assocs assocs) ;; already at front?
 		  #f
 		  (let ((nxt-assocs (%tail tail-assocs)))
+                    ;; move assoc to front
 		    (set (%slot-elt cache (%iu cache-offset)) assocs)
 		    (set (%tail tail-assocs)                  old-assocs)
 		    (set (%tail (%tail prev-assocs))          nxt-assocs)))
@@ -1166,30 +1354,31 @@
 ;;               ELSE RECURSE WITH NEXT ARG
 
 (dp gen-lookup-1 
-      ((gen <gen>) cache (i <int>) (n <int>) (args <lst>) (all-args <lst>))
-  (if cache
-      (if (@= i n)
-	  (if (@== (%traits-of cache) <int>-traits) ;; int?
-	      (if (@= n 1) ;; getter?
-		  (slot-value-at (%head all-args) cache)
-		  (set (slot-value-at (%head (%tail all-args)) cache) 
-		       (%head all-args)))
-	      (%%mep-apply (%head cache) (%tail cache) all-args))
-	  (if (@= i (%gen-cache-arg-pos cache))
-	      (let ((arg (%head args))
-		    (val (let ((assocs (%gen-cache-singletons cache)))
-			   (gen-lookup-1-using
-			    arg assocs assocs #t $gen-cache-singletons-offset
-			    gen cache i n args all-args))))
-		(if (@== val $missed-dispatch)
-		    (let ((assocs (%gen-cache-classes cache)))
-		      (gen-lookup-1-using
-		       (%traits-of arg) assocs assocs #f
-		       $gen-cache-classes-offset gen cache i n args all-args))
-		    val))
-	      (gen-lookup-1 gen cache (@+ i 1) n (%tail args) all-args)))
-      (seq (set (%fun-cache gen) (gen-lookup-miss gen all-args))
-	   (gen-lookup gen all-args))))
+    ((gen <gen>) cache (i <int>) (n <int>) (args <lst>) (all-args <lst>))
+  (if (@= i n)
+      (if (@== (%class-of cache) <int>-class) ;; int?
+          (if (@= n 1) ;; getter?
+              (slot-value-at (%head all-args) cache)
+              (set (slot-value-at (%head (%tail all-args)) cache) 
+                   (%head all-args)))
+          (%%mep-apply (%head cache) (%tail cache) all-args))
+      ;; (if (@= i (%gen-cache-arg-pos cache))
+          (let ((arg (%head args))
+                (val (let ((assocs (%gen-cache-singletons cache)))
+                       ;; first look in singleton cache
+                       (gen-lookup-1-using
+                        arg assocs assocs (%gen-cache-missable? cache)
+                        $gen-cache-singletons-offset
+                        gen cache i n args all-args))))
+            (if (@== val $missed-dispatch)
+                (let ((assocs (%gen-cache-classes cache)))
+                  ;; otherwise look in class cache
+                  (gen-lookup-1-using
+                   (%class-of arg) assocs assocs #f
+                   $gen-cache-classes-offset gen cache i n args all-args))
+                val))
+          ;; (gen-lookup-1 gen cache (@+ i 1) n (%tail args) all-args))
+          ))
 
 ;; TODO: CONDITIONS FOR THESE ERRORS
 
@@ -1202,34 +1391,6 @@
 	(if (@empty? sorted-mets)
 	    (error "No Applicable Methods Error when calling %= on %=" gen args)
 	    sorted-mets))))
-
-(df met< ((m1 <met>) (m2 <met>) => <log>)
-  (if (@== m1 m2)
-      #f
-      (@all2? isa? (@fun-specs m1) (@fun-specs m2))))
-
-(df met-has-singleton-specs? ((m <met>) => <log>)
-  (@any? singleton-spec? (@fun-specs m)))
-
-(df find-app-singleton-mets ((gen <gen>) (met <met>) => <lst>)
-  (rep loop ((res '()) (mets (@fun-mets gen)))
-    (if (@empty? mets)
-	res
-	(let ((m (@head mets))
-	      (singleton-app? (and (met-has-singleton-specs? m) (met< m met))))
-	  (loop (if singleton-app? (@pair m res) res) (@tail mets))))))
-
-(df gen-lookup-miss ((gen <gen>) (args <lst>) => <any>) 
-  (let ((mets  (choose-methods gen args)) ;; TODO: => (or <met> <gen-cache>)
-	(met   (@head mets))
-	(specs (@fun-specs met))
-	(n     (@fun-arity gen))
-	(cache (gen-lookup-miss-1 gen (%fun-cache gen) met mets 0 n args specs))
-	(app-singleton-mets (find-app-singleton-mets gen met)))
-    (@do (fun (m) 
-	   (gen-lookup-miss-1 gen cache m mets 0 n args (@fun-specs m)))
-	 app-singleton-mets)
-    cache))
 
 (df %dispatch ((args ...))
   (gen-lookup (%fun-reg) args))
@@ -1246,7 +1407,6 @@
                  (%patch-early-generic ,name)
                  (%patch-early-generic ,(make-sym name "-setter")))))))
 
-(%patch-early-generic <gen>)
 (%patch-early-generics)
 
 (dv <opts> <lst>)
@@ -1288,14 +1448,15 @@
 (dv <parents> <lst>)
 (dv <slots>   <lst>)
 
-(df object-traits (x) (%traits-of x))
+(df object-class (x) (%class-of x))
+(df @class-parents (x) (%class-parents x))
 
-(df traits-ordered-parents ((o <traits>) => <parents>)
+(df class-ordered-parents ((c <class>) => <parents>)
   (loc ((merge-lists ((partial-cpl <lst>) (remaining-lists <lst>))
           ;; the partial-cpl is in reverse order at this point.
 	 (if (@all? @@empty? remaining-lists)
 	     (@rev! partial-cpl)
-	     (loc ((unconstrained-proto (p)
+	     (loc ((unconstrained-class (p)
 		    (loc ((p-in-and-unconstrained-in? ((l <lst>))
 			   (@== (@head l) p))
 			  (p-unconstrained-in? ((l <lst>))
@@ -1303,9 +1464,9 @@
 		      (and (@any? p-in-and-unconstrained-in? remaining-lists)
 			   (@all? p-unconstrained-in? remaining-lists)
 			   p)))
-		   (unconstrained-object-in-parents ((o <any>))
-		     (@any? unconstrained-proto (object-direct-parents o))))
-	       (let ((next (@any? unconstrained-object-in-parents partial-cpl)))
+		   (unconstrained-class-in-parents ((c <class>))
+		     (@any? unconstrained-class (%class-direct-parents c))))
+	       (let ((next (@any? unconstrained-class-in-parents partial-cpl)))
 		 (if next
 		      (loc ((remove-next ((l <lst>))
 			      (if (@== (@head l) next) (@tail l) l)))
@@ -1316,43 +1477,54 @@
 			 ;; )
 			 ))
 		      (error "inconsistent precedence graph")))))))
-     (let ((parents (%traits-direct-parents o)))
-       (if (or (@empty? parents)
-	       (and (@= (@len parents) 1)
-		    (@== (@elt parents 0) (%traits-owner o))))
-	   parents
-	   (merge-lists (@lst (%traits-owner o))
-			(@add (@map object-parents parents) parents))))))
+     (let ((parents (%class-direct-parents c)))
+       (merge-lists (@lst c)
+                    (@add (@map @class-parents parents) parents)))))
 
-(df traits-ordered-slots ((x <traits>) => <slots>)
-  (@del-dups
-    (@reduce @cat2 '() (@map object-direct-slots (%traits-parents x)))))
+(df @class-direct-slots (x) (%class-direct-slots x))
 
-(df make-traits ((parents <parents>) (slots <slots>) owner => <traits>)
-  (let ((x (%traits owner parents slots '() '() '() '() '() #f)))
-    (set (%object-traits owner) x)
-    (if (@empty? (%traits-direct-parents x)) ;; ONLY FOR <ANY> TODO: WHY?
-        (set (%traits-direct-parents x) (@lst (%traits-owner x))))
+(df class-ordered-slots ((x <class>) => <slots>)
+  (let ((slots
+         (@del-dups
+          (@reduce @cat2 '() (@map @class-direct-slots (%class-parents x))))))
+    (set (%class-slot-len x) (@len slots))
+    slots))
+
+(df del-class ((class <class>))
+  ;; TODO: DEL ALL DIRECT-SLOTS
+  ;; TODO: FLUSH ALL GEN'S ON ALL SLOTS
+  ;; TODO: DEL SELF FROM ALL DIRECT-PARENTS
+  )
+
+(df fab-class ((name <sym>) (parents <parents>) => <class>)
+  (let ((x (%class 0 name parents '() '() '() '() '() '() #f)))
+    (if (@empty? (%class-direct-parents x)) ;; ONLY FOR <ANY> TODO: WHY?
+        (set (%class-direct-parents x) (@lst x)))
     (@do (fun (parent) 
-	   (let ((parent-traits (%object-traits parent)))
-	     (set (%traits-direct-children parent-traits)
-		  (@add-new (%traits-direct-children parent-traits) x))))
-	 (%traits-direct-parents x))
-    (set (%traits-parents x) (traits-ordered-parents x))
-    (set (%traits-slots x)   (traits-ordered-slots x))
+           (set (%class-direct-children parent)
+                (@add-new (%class-direct-children parent) x)))
+	 (%class-direct-parents x))
+    (set (%class-parents x)  (class-ordered-parents x))
+    (set (%class-slots x)    (class-ordered-slots x))
     x))
 
+(df refab-class ((old-class <class>) (parents <parents>) => <class>)
+  ;; TODO: WHAT TO DO WITH OLD SLOTS? -- REUSE THEM FOR NOW
+  ;;       EXCEPT ALL OLD METS ARE SPEC'D ON OLD-CLASS
+  ;; TODO: NEED CONCRETE-CLASS CLASS FOR THIS
+  (let ((new-class (fab-class parents (%class-direct-slots old-class))))
+    (set (%class-forward old-class) new-class)
+    new-class))
+
 ;; TRAMPOLINE META METHODS
+;; TODO: OBSOLETE
 
-(dss (def-object-traits-accessor ,name)
+(dss (def-object-class-accessor ,name)
   `(df ,(make-sym "object-" name) (x) 
-     (,(make-sym "%traits-" name) (%traits-of x))))
+     (,(make-sym "%class-" name) (%class-of x))))
 
-(def-object-traits-accessor direct-slots)
-(def-object-traits-accessor direct-parents)
-(def-object-traits-accessor slots)
-(def-object-traits-accessor parents)
-(def-object-traits-accessor direct-children)
+(def-object-class-accessor slots)
+(def-object-class-accessor parents)
 
 ;;;
 ;;; SLOTS
@@ -1361,8 +1533,8 @@
 (dv $getter-not-found -1)
 
 (df ensure-fresh-object (x)
-  (when (%traits-forward (%traits-of x)) ;; stale object?
-    (update-instance-for-changed-prototype x)))
+  (when (%class-forward (%class-of x)) ;; stale object?
+    (update-instance-for-changed-class x)))
 
 (df slot-offset (object (getter <fun>) => <int>)
   (rep loop ((i 0) (slots (object-slots object)))
@@ -1386,42 +1558,14 @@
 	(error "slot %s not found in %=" getter object)
 	(set (slot-value-at object offset) z))))
 
-;; IT IS NOW CRUCIAL THAT OBJECT HAS ITS VERY OWN TRAITS SO THAT ITS TRAITS
+;; IT IS NOW CRUCIAL THAT OBJECT HAS ITS VERY OWN CLASS SO THAT ITS CLASS
 ;; CAN DEPART FROM ITS PARENTS.  THIS IS FOR COPY ON WRITE BEHAVIOR.
 
-(df ensure-traits (x => <any>)
-  (unless (@== (%traits-owner (%object-traits x)) x)
-    (set (%object-traits x)
-	 (make-traits (@lst (%traits-owner (%object-traits x))) '() x)))
-  x)
-
 (df %isa ((parents <lst>) (getters <lst>) (vals <lst>) => <any>)
-  (let ((object (%make-object)))
-    (if (@= (@len parents) 1)
-	;; SINGLE INHERITANCE
-	(let ((parent (@head parents))
-	      (traits (%object-traits (ensure-traits parent))))
-	  (set (%object-traits object) traits)
-	  (%adjust-object-values-size
-	   object (%%len (%traits-slots traits)) parent))
-	;; MULTIPLE INHERITANCE
-	(let ((traits (make-traits (@map ensure-traits parents) '() object)))
-	  (%install-object-values object (%%len (%traits-slots traits)))
-	  ;; CLONE CURRENT VALUES OF PARENTS' SLOTS IN CPL ORDER
-	  (rep loop-slots ((slots (%traits-slots traits)))
-	    (unless (@empty? slots)
-	      (let ((slot (@head slots)))
-		(rep loop-parents ((parents (%traits-parents traits)))
-		  (unless (@empty? parents)
-		    (let ((parent (@head parents))
-			  (getter (%slot-getter slot))
-			  (offset (slot-offset parent getter)))
-		      (if (@= offset $getter-not-found)
-			  (loop-parents (@tail parents))
-			  (seq (set (slot-value object getter)
-				    (slot-value-at parent offset))
-			       (loop-slots (@tail slots))))))))))))
+  (let ((parent (%head parents))
+        (object (%object-of parent (%iu (%class-slot-len parent)))))
     ;; SET SLOT-VALUES FROM ISA ARGUMENTS
+    ;; TODO: FASTER WITH GEN CACHE?
     (rep loop ((getters getters) (vals vals))
       (unless (or (@== getters '()) (@== vals '()))
         (seq (set (slot-value object (@head getters)) (@head vals))
@@ -1442,20 +1586,18 @@
     (if (@empty? mets)
 	(error "COULDN'T FIND SETTER")
 	(let ((met (@head mets)))
-	  (if (and (@== (fun-spec met 1) owner) (@== (fun-spec met 0) type))
+	  (if (and (@== (fun-spec met 1) owner) 
+                   (@type-equal? (fun-spec met 0) type))
 	      met
 	      (loop (@tail mets)))))))
 
-;; CREATE CLONE OF TRAITS AND MARK THEM AS FORWARDED CLONE OF ORIGINAL TRAITS
+;; CREATE CLONE OF CLASS AND MARK THEM AS FORWARDED CLONE OF ORIGINAL CLASS
 ;; ALSO CLEAR ALL ASSOC'D GENERIC DISPATCH CACHES SO THAT THEY TRAP NEXT TIME
 
-(df forward-traits (x)
-  (let ((old-traits (%object-traits x))
-        (new-traits (%clone old-traits))) ;; TODO: %CLONE
-    (@do (fun (g) (set (%fun-cache g) #f))
-         (%traits-gens old-traits))
-    (set (%traits-forward old-traits) new-traits)
-    (set (%object-traits x) new-traits)))
+(df forward-class (old-class)
+  (let ((new-class (%clone old-class))) 
+    (@do (fun (g) (set (%fun-cache g) #f)) (%class-gens old-class))
+    (set (%class-forward old-class) new-class)))
 
 (df @do-children (f x)
   (let ((visited '()))
@@ -1463,13 +1605,12 @@
       (unless (@mem? visited x)
         (set visited (@add visited x))
         (f x) 
-        (@do visit (%traits-direct-children (%object-traits x)))))))
+        (@do visit (%class-direct-children x))))))
 
 (df %slot (owner (getter <gen>) (setter <gen>) type (init <fun>))
-  (if (singleton-spec? owner)
-      (ensure-traits owner)
-      (@do-children forward-traits owner))
-  (let ((traits     (%object-traits owner))
+  ;; TODO: FORWARD CONDITIONALLY
+  ;; (@do-children forward-class owner)
+  (let ((class      owner)
 	(slot       (isa <slot> (set slot-owner owner)
 		      (set slot-getter getter) (set slot-setter setter)
 		      (set slot-type   type)   (set slot-init   init)))
@@ -1478,40 +1619,39 @@
     ;; ACCESSORS STORE SLOT IN THEIR ENVIRONMENT
     (set (%met-env getter-met) slot)
     (set (%met-env setter-met) slot)
-    (set (%traits-direct-slots traits)
-	 (@cat2 (%traits-direct-slots traits) (@lst slot)))
-    (set (%traits-slots traits)
-	 (traits-ordered-slots traits))
+    (set (%class-direct-slots class)
+	 (@cat2 (%class-direct-slots class) (@lst slot)))
+    (set (%class-slots class)
+	 (class-ordered-slots class))
     ;; FLUSH ACCESSOR GENERIC CACHES CAUSE THEY HOLD POTENTIALLY 
     ;; OUTDATED SLOT OFFSETS 
     (@do (fun (slot) (set (%fun-cache (%slot-getter slot)) #f))
-	 (%traits-slots traits)) 
-    (%adjust-object-values-size owner (%%len (object-slots owner)) owner)
+	 (%class-slots class)) 
     slot))
 
-(dp %update-instance-for-changed-prototype (new-object)
-  (let ((old-traits (%traits-of new-object))
-	(new-traits (%traits-forward old-traits))
-	(old-object (%make-object)))
-    ;; capture old values in temporary container
-    (set (%object-values old-object) (%object-values new-object))
-    ;; allocate new values in existing object and set new traits
-    (%install-object-values new-object (%%len (%traits-slots new-traits)))
-    (set (%object-traits new-object) new-traits)
-    ;; copy correlated slot values from old to new
-    (rep loop-old-slots ((old-slots (%traits-slots old-traits)) (old-offset 0))
-      (unless (@empty? old-slots)
-        (let ((old-slot   (@head old-slots))
-	      (getter     (%slot-getter old-slot))
-	      (new-offset (slot-offset new-object getter)))
-	  (unless (@= new-offset $getter-not-found)
-	    (set (slot-value-at new-object new-offset) 
-		 (slot-value-at old-object old-offset))
-	    (loop-old-slots (@tail old-slots) (@+ old-offset 1))))))
-    new-object))
+(dp %update-instance-for-changed-class (new-object)
+;;  (let ((old-class (%class-of new-object))
+;;	(new-class (%class-forward old-class))
+;;	(old-object (%make-object)))
+;;    ;; capture old values in temporary container
+;;    (set (%object-values old-object) (%object-values new-object))
+;;    ;; allocate new values in existing object and set new class
+;;    (%install-object-values new-object (%%len (%class-slots new-class)))
+;;    (set (%object-class new-object) new-class)
+;;    ;; copy correlated slot values from old to new
+;;    (rep loop-old-slots ((old-slots (%class-slots old-class)) (old-offset 0))
+;;      (unless (@empty? old-slots)
+;;        (let ((old-slot   (@head old-slots))
+;;	      (getter     (%slot-getter old-slot))
+;;	      (new-offset (slot-offset new-object getter)))
+;;	  (unless (@= new-offset $getter-not-found)
+;;	    (set (slot-value-at new-object new-offset) 
+;;		 (slot-value-at old-object old-offset))
+;;	    (loop-old-slots (@tail old-slots) (@+ old-offset 1))))))
+    new-object) ;; )
 
-(df update-instance-for-changed-prototype (object)
-  (%update-instance-for-changed-prototype object))
+(df update-instance-for-changed-class (object)
+  (%update-instance-for-changed-class object))
 
 (dv add-slot %slot)
 
@@ -1521,8 +1661,7 @@
 ;; TODO: NEED FUN-VALUE AS WELL
 
 (df fab-gen
-  (name (names <lst>) (specs <lst>) (nary? <log>) (mets <lst>) 
-   => <gen>)
+    (name (names <lst>) (specs <lst>) (nary? <log>) (mets <lst>) => <gen>)
   (isa <gen>
     (set fun-code (fun-code %dispatch))
     (set fun-name name)
@@ -1546,6 +1685,29 @@
 (df unexec ((name <str>) (fun <fun>))
   (set %*start-running-at* fun)
   (%unexec (%su name)))
+
+;;; TYPE PROTOCOL
+
+;; TODO: MAKE THIS EXTENSIBLE
+
+(dg nyi-subtype? ((t1 <type>) (t2 <type>) => <log>))
+
+(dg subtype? ((t1 <type>) (t2 <type>) => <log>))
+
+(dm subtype? ((t1 <type>) (t2 <type>) => <log>)
+  (@subtype? t1 t2))
+
+(dg nyi-isa? ((x <any>) (t <type>) => <log>))
+
+(dg isa?     ((x <any>) (t <type>) => <log>))
+
+(dm isa?     ((x <any>) (t <type>) => <log>)
+  (@isa? x t))
+
+(dg may-isa? ((c <class>) (t <type>) => <log>))
+
+(dm may-isa? ((c <class>) (t <type>) => <log>)
+  (@may-isa? c t))
 
 ;;; 
 ;;; 14. MACROS
@@ -1628,6 +1790,7 @@
   ct-also
   slot
   isa
+  fab-class
   try
   fin
   lab
@@ -1664,7 +1827,6 @@
   %create-directory
   %current-input-port
   %current-output-port
-  %do-runtime-bindings
   %do-stack-frames
   %eof-object
   %eq?
@@ -1735,7 +1897,11 @@
   <met>
   <num>
   <opts>
-  <traits>
+  <type>
+  <class>
+  <subclass>
+  <singleton>
+  <union>
   <seq>
   <sig>
   <slot>
@@ -1798,9 +1964,18 @@
   nil
   not
   nul
-  object<
-  object-direct-parents
-  object-direct-slots
+  subtype?
+  may-isa?
+  object-class
+  type-object
+  type-class
+  type-elts
+  class-name
+  class-direct-parents
+  class-direct-children
+  class-direct-slots
+  class-parents
+  class-slots
   object-parents
   object-slots
   *restarts-ok?*
@@ -1808,8 +1983,8 @@
   slot-owner
   slot-type
   slot-init
-  slot-value        ;; TODO: remove this when it can be called directly w/o being exported
-  slot-value-setter ;; me too
+  slot-value        ;; TODO: remove these when they can be called directly 
+  slot-value-setter ;; TODO: w/o being exported
   slot-getter
   slot-setter
   sig-names

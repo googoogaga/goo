@@ -266,7 +266,7 @@
 
 (dc <static-empty-environment> (<static-environment>))
 
-(dc $empty-static-environment (<static-empty-environment>))
+(dv $empty-static-environment (isa <static-empty-environment>))
 
 (dc <static-local-environment> (<static-environment>))
 
@@ -314,7 +314,7 @@
 (dm objectify ((e <program>) (r <static-environment>) tail? => <any>)
   e)
 
-(dm objectify ((e '()) (r <static-environment>) tail? => <any>)
+(dm objectify ((e (t= '())) (r <static-environment>) tail? => <any>)
   (objectify-quotation e r))
 
 (dm objectify (e (r <static-environment>) tail? => <any>)
@@ -646,6 +646,7 @@
 	(defn    (isa <ast-method-definition>
 		      (set assignment-binding binding)
 		      (set assignment-form    form))))
+    (set (function-binding met)    name)
     (set (function-debug-name met) (objectify-quotation name r))
     defn))
 
@@ -720,7 +721,8 @@
 ;;     (n (b <next-methods-binding>) r => <next-methods-reference>)
 ;;   (isa <next-methods-reference> (set reference-binding b)))
 
-(dm binding-reference-prototype ((b <module-binding>) => <reference>)
+(dm binding-reference-prototype ((b <module-binding>) => <type>)
+  ;; TODO: => (T< <REFERENCE>)
   (select (binding-kind b)
     (('global)     <global-reference>)
     (('predefined) <predefined-reference>)
@@ -872,7 +874,7 @@
 (dm expand-bind-list (pat var fail => <any>)
   (error "Expected Pattern List %=\n" pat))
 
-(dm expand-bind-list ((pat '()) var fail => <lst>)
+(dm expand-bind-list ((pat (t= '())) var fail => <lst>)
   `(match-empty-list ,var ,fail))
 
 (dm expand-bind-list ((pat <lst>) var fail => <lst>)
@@ -884,7 +886,7 @@
     (#t
      (expand-bind-list* pat var fail))))
 
-(dm expand-bind-list* ((pat '()) var fail => <any>)
+(dm expand-bind-list* ((pat (t= '())) var fail => <any>)
   `(match-empty-list ,var ,fail))
 
 (dm expand-bind-list* ((pat <lst>) var fail => <any>)
@@ -1104,8 +1106,9 @@
      r tail?)))
 
 (define-magic-binding define-class (x r tail?)
-  (objectify-definition
-    (sexpr-definition-variable x) `(isa ,(sexpr-define-class-parents x)) r))
+  (let ((name (sexpr-definition-variable x)))
+    (objectify-definition
+     name `(fab-class ',name ,(pairize (sexpr-define-class-parents x))) r)))
  
 (define-magic-binding slot (x r tail?)
   (let ((var         (sexpr-slot-variable x))
@@ -1233,7 +1236,7 @@
 
 ;; Create an empty module for use with a particular loader.
 ;; Override this method to use a custom module class.
-(dm module-loader-module-type ((loader <module-loader>) => <module>)
+(dm module-loader-module-type ((loader <module-loader>) => <type>)
   <module>)
 
 ;;; Add a module to a module-loader.

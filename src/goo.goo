@@ -20,10 +20,19 @@
  
  ;; Section 3.1: Any.
  <any> as
+ object-slots object-parents
  
+ ;; Section ?.?: Type.
+ <type>
+ <class>     class-direct-parents class-direct-children class-direct-slots
+             class-parents                              class-slots
+             class-name
+ <singleton> type-object
+ <subclass>  type-class
+ <union>     type-elts
+
  ;; Section 3.2: Comparables.
- == = < ~= ~== > <= >= min max isa? object< object-direct-slots
- object-direct-parents object-slots object-parents object-name
+ == = < ~= ~== > <= >= min max subtype? isa? may-isa? 
  
  ;; Section 3.3: Null.
  nul nul?
@@ -128,3 +137,7 @@
  ;; Stuff which should be documented.
  need-implementation bound? dlet t+ t= t< false-or
  )
+
+;; TODO: HYGIENE
+(export
+  fab-class)

@@ -38,7 +38,7 @@
   (slot <p2c-module> (module-src-file <str>))
   (slot <p2c-module> (module-mtime <flo>))
 
-(dm module-loader-module-type ((loader <p2c-module-loader>) => <p2c-module>)
+(dm module-loader-module-type ((loader <p2c-module-loader>) => <type>)
   <p2c-module>)
 
 (dm load-module ((loader <p2c-module-loader>) (name <sym>) => <module>)
@@ -520,7 +520,7 @@
 (dm generate-quotation (out (qb <log>))
   (format out "%s" (mangle-boot-name (if qb "%true" "%false"))))
 
-(dm generate-quotation (out (qb '()))
+(dm generate-quotation (out (qb (t= '())))
   (format out (mangle-boot-name "nil")))
 
 (dm generate-quotation (out (qb <lst>))
@@ -638,18 +638,6 @@
   (with-expression (e d out)
     (binding->c (assignment-binding e) out)
     (write-string out " = ") (gen-ref (assignment-form e) out)))
-
-(dm to-c ((e <definition>) f d out)
-  (next-method e f d out)
-  (with-statement (d out)
-    (let ((binding (assignment-binding e))
-          (modstr  (as <str> (binding-module-name binding)))
-          (namestr (as <str> (binding-name binding))))
-      (format out "regsym(&")
-      (binding->c binding out)
-      (format out ",\"%s\",\"%s\")"
-              (mangle-string-literal modstr)
-              (mangle-string-literal namestr)))))
 
 (dm to-c ((e <bound?>) f d out)
   (with-used-expression (e d out)
@@ -1001,16 +989,18 @@
 (dm primitive-inlinable? ((e <primitive-definition>))
   (let ((binding (function-binding e)))
     ;; TODO: ADD FUNCTION ADJECTIVES
-    (mem? '(%tag-bits %tag %untag %traits-of
+    (mem? '(%tag-bits %tag %untag %class-of
 	    %int %ib %iu
 	    %chr %cb %cu
 	    %loc %lb %lu
 	    @== @@== not
+            %vlen %velt %velt-setter
+            %slen %selt %selt-setter
 	    %empty? %head %tail
 	    @= @+ @<
             %gen-cache-arg-pos %gen-cache-singletons %gen-cache-classes
 	    @head @tail
-	    %isa? %object-parents
+	    %isa? %object-parents @class-isa? @subclass?
 	    slot-value-at slot-value-at-setter
 	    gen-lookup gen-lookup-1-using
 	    )

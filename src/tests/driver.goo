@@ -28,8 +28,8 @@
   (mif ((,name disabled) name)
     `(del-test ',name)
     `(seq (add-test ',name) 
-	(dm run-tests ((group-name ',name))
-	     ,@tests))))
+	(dm run-tests ((group-name (t= ',name)))
+	  ,@tests))))
 
 (export
   add-test
@@ -47,7 +47,7 @@
     (when *test-trace?* (format out "  %s\n" doc))
     (input-thunk)))
 
-(dv <test-warning> (isa <simple-condition>))
+(dc <test-warning> (<simple-condition>))
 
 (dm recurring-write
     ((port <output-port>) (x <test-warning>) (d <int>) (recur <fun>))

@@ -5,498 +5,511 @@
 
 /* MODULE ENVIRONMENT: main */
 
-EXT(YastYinit_ast,"ast","init-ast");
-EXT(YruntimeYlogxor,"runtime","logxor");
-EXT(YruntimeYLfile_input_portG,"runtime","<file-input-port>");
-EXT(YruntimeYdel_dups,"runtime","del-dups");
-EXT(YLlocG,"boot","<loc>");
-EXT(YprotoSsystemYhierarchical_components,"proto/system","hierarchical-components");
-EXT(YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
-EXT(YruntimeYpeek_char,"runtime","peek-char");
-EXT(YLseqG,"boot","<seq>");
-EXT(YprotoSsystemYparent_directory,"proto/system","parent-directory");
-EXT(YastYbinding_info,"ast","binding-info");
-EXT(YastYLcomputed_programG,"ast","<computed-program>");
-EXT(YprotoSsystemYTproto_extensionT,"proto/system","*proto-extension*");
-EXT(YruntimeYS,"runtime","/");
-EXT(YruntimeYreduceA,"runtime","reduce+");
-EXT(YastYLunwind_protectG,"ast","<unwind-protect>");
-EXT(YprotoSsystemYprobe_directory,"proto/system","probe-directory");
-EXT(YruntimeYfrom_below,"runtime","from-below");
-EXT(YruntimeYfabs,"runtime","fabs");
-EXT(YastYunwind_protect_protected_thunk,"ast","unwind-protect-protected-thunk");
-EXT(YprotoSsystemYTobj_extensionT,"proto/system","*obj-extension*");
-EXT(YruntimeYroundS,"runtime","round/");
-EXT(YastYlocals_bindings,"ast","locals-bindings");
-EXT(YastYmodule_name_to_relpath,"ast","module-name-to-relpath");
-EXT(YastYbinding_dynamic_extentQ,"ast","binding-dynamic-extent?");
-EXT(YruntimeYE,"runtime","=");
-EXT(Yslot_init,"boot","slot-init");
-EXT(Yp2cYp2c_top,"p2c","p2c-top");
-EXT(YastYfunction_binding,"ast","function-binding");
-EXT(YastYLargumentsG,"ast","<arguments>");
-EXT(YruntimeYrev,"runtime","rev");
-EXT(YmacrosYpair,"macros","pair");
-EXT(YruntimeYrcurry,"runtime","rcurry");
-EXT(YastYLast_primitiveG,"ast","<ast-primitive>");
-EXT(YruntimeYzeroQ,"runtime","zero?");
-EXT(YruntimeYtruncateS,"runtime","truncate/");
-EXT(YtopYdo_stack_frames,"top","do-stack-frames");
-EXT(YruntimeYLassocsG,"runtime","<assocs>");
-EXT(Yhandler_info_message,"boot","handler-info-message");
-EXT(YmacrosYvar_name,"macros","var-name");
-EXT(YruntimeYmap2,"runtime","map2");
-EXT(YastYfunction_body_setter,"ast","function-body-setter");
-EXT(YastYalternative_alternant,"ast","alternative-alternant");
-EXT(YastYmodule_name,"ast","module-name");
-EXT(YwriteYwrite,"write","write");
-EXT(YruntimeYreduce,"runtime","reduce");
-EXT(YruntimeYini_state,"runtime","ini-state");
-EXT(YastYDproto_boot_module_name,"ast","$proto-boot-module-name");
-EXT(YastYset_module_environments,"ast","set-module-environments");
-EXT(YastYDproto_runtime_module_name,"ast","$proto-runtime-module-name");
-EXT(YastYmonitor_handler,"ast","monitor-handler");
-EXT(Yfun_arity,"boot","fun-arity");
-EXT(YruntimeYport_index,"runtime","port-index");
-EXT(YastYload_in,"ast","load-in");
-EXT(YobjectL,"boot","object<");
-EXT(YastYassignment_form,"ast","assignment-form");
-EXT(YruntimeYtA,"runtime","t+");
-EXT(YruntimeYfrom,"runtime","from");
-EXT(YruntimeYapp_filename,"runtime","app-filename");
-EXT(YruntimeYnow_elt_setter,"runtime","now-elt-setter");
-EXT(YruntimeYcompose,"runtime","compose");
-EXT(YsyntaxYeval,"syntax","eval");
-EXT(YastYprogram_register_setter,"ast","program-register-setter");
-EXT(YastYlocals_body_setter,"ast","locals-body-setter");
-EXT(YastYLbind_exitG,"ast","<bind-exit>");
-EXT(YastYLsequentialG,"ast","<sequential>");
-EXT(YastYsignature_naryQ_setter,"ast","signature-nary?-setter");
-EXT(Ysorted_app_mets,"boot","sorted-app-mets");
-EXT(YruntimeY1st,"runtime","1st");
-EXT(YastYLglobal_assignmentG,"ast","<global-assignment>");
-EXT(Yfun_name,"boot","fun-name");
-EXT(YruntimeYL,"runtime","<");
-EXT(YastYreference_called_functionQ_setter,"ast","reference-called-function?-setter");
-EXT(Yslot_setter,"boot","slot-setter");
-EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
-EXT(YruntimeYLstring_portG,"runtime","<string-port>");
-EXT(YastYfix_let_types,"ast","fix-let-types");
-EXT(YruntimeYas,"runtime","as");
-EXT(YprotoSsystemYfile_existsQ,"proto/system","file-exists?");
-EXT(YastYfunction_body,"ast","function-body");
-EXT(YastYreference_called_functionQ,"ast","reference-called-function?");
-EXT(YwriteYenv_object_name,"write","env-object-name");
-EXT(YruntimeYuppercaseQ,"runtime","uppercase?");
-EXT(YruntimeYlogand,"runtime","logand");
-EXT(YastYmodule_exports,"ast","module-exports");
-EXT(YruntimeYNE,"runtime","~=");
-EXT(YruntimeYstr,"runtime","str");
-EXT(YprotoSsystemYexe_filename,"proto/system","exe-filename");
-EXT(YastYsignature_specs,"ast","signature-specs");
-EXT(YruntimeYsig,"runtime","sig");
-EXT(YprotoSsystemYcomponents_to_pathname,"proto/system","components-to-pathname");
-EXT(YLcolG,"boot","<col>");
-EXT(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
-EXT(YruntimeYfin_stateQ,"runtime","fin-state?");
-EXT(YwriteYwrite_to_string,"write","write-to-string");
-EXT(YastYLfab_listG,"ast","<fab-list>");
-EXT(YruntimeYmax,"runtime","max");
-EXT(YastYassignment_binding,"ast","assignment-binding");
 EXT(YprotoSsystemYTproto_rootT,"proto/system","*proto-root*");
-EXT(YastYsignature_bindings_setter,"ast","signature-bindings-setter");
-EXT(YastYfunction_value,"ast","function-value");
-EXT(YruntimeYceilingS,"runtime","ceiling/");
-EXT(YmacrosYcat,"macros","cat");
-EXT(YruntimeYopen_input_file,"runtime","open-input-file");
-EXT(Yerror,"boot","error");
-EXT(YastYmodule_target_environment,"ast","module-target-environment");
-EXT(YruntimeYopen_output_file,"runtime","open-output-file");
-EXT(YastYprobe_module,"ast","probe-module");
-EXT(YruntimeYLE,"runtime","<=");
-EXT(YruntimeYid_hash,"runtime","id-hash");
-EXT(YmacrosYtup,"macros","tup");
-EXT(YruntimeYfrom_above,"runtime","from-above");
-EXT(YLvecG,"boot","<vec>");
-EXT(YruntimeYtable_protocol,"runtime","table-protocol");
-EXT(YruntimeYpick,"runtime","pick");
-EXT(YruntimeYpop_lastX,"runtime","pop-last!");
-EXT(YastYLruntime_assignmentG,"ast","<runtime-assignment>");
-EXT(YastYdo_static_global_bindings,"ast","do-static-global-bindings");
-EXT(YruntimeYG,"runtime",">");
-EXT(YruntimeYLconditionG,"runtime","<condition>");
-EXT(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
-EXT(YruntimeYmap_keyed,"runtime","map-keyed");
-EXT(Yslot_owner,"boot","slot-owner");
-EXT(YwriteYdisplay,"write","display");
-EXT(YprotoSsystemYfile_type,"proto/system","file-type");
-EXT(YastYfunction_bindings,"ast","function-bindings");
-EXT(YruntimeYfloor,"runtime","floor");
-EXT(YprotoSsystemYlabel_components,"proto/system","label-components");
-EXT(YruntimeYidentity,"runtime","identity");
-EXT(Ynil,"boot","nil");
-EXT(YmacrosYmake_sym,"macros","make-sym");
-EXT(YruntimeYnewline,"runtime","newline");
-EXT(YruntimeYaddress_of,"runtime","address-of");
-EXT(YastYinstall_initial_bindings,"ast","install-initial-bindings");
-EXT(YastYLast_methodG,"ast","<ast-method>");
-EXT(YruntimeYLstring_output_portG,"runtime","<string-output-port>");
-EXT(YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
-EXT(YLslotG,"boot","<slot>");
-EXT(YruntimeYoddQ,"runtime","odd?");
-EXT(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
-EXT(Ymet_appQ,"boot","met-app?");
-EXT(YruntimeYmake_handler,"runtime","make-handler");
-EXT(YastYsignature_value_setter,"ast","signature-value-setter");
-EXT(YruntimeYfrom_by,"runtime","from-by");
-EXT(YastYreference_binding,"ast","reference-binding");
-EXT(YruntimeYcat2,"runtime","cat2");
-EXT(YruntimeYabs,"runtime","abs");
-EXT(Ytail,"boot","tail");
-EXT(YastYdo_named_static_global_bindings,"ast","do-named-static-global-bindings");
-EXT(YastYbinding_global_box_setter,"ast","binding-global-box-setter");
-EXT(YastYreport_undefined_global_bindings,"ast","report-undefined-global-bindings");
-EXT(YastYenvironment_uses_modules,"ast","environment-uses-modules");
-EXT(YLsymG,"boot","<sym>");
-EXT(YruntimeYpop,"runtime","pop");
-EXT(YruntimeYalphabeticQ,"runtime","alphabetic?");
-EXT(YruntimeYpush,"runtime","push");
-EXT(YruntimeYstr_to_num,"runtime","str-to-num");
-EXT(YruntimeYlognot,"runtime","lognot");
-EXT(YastYcompile_time_program,"ast","compile-time-program");
-EXT(YruntimeYlist,"runtime","list");
-EXT(YruntimeYround,"runtime","round");
-EXT(YruntimeYT,"runtime","*");
-EXT(YruntimeYfab,"runtime","fab");
-EXT(YruntimeYelt,"runtime","elt");
-EXT(YruntimeYmodulo,"runtime","modulo");
-EXT(YruntimeYnum_to_str,"runtime","num-to-str");
-EXT(YastYsignature_bindings,"ast","signature-bindings");
-EXT(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
-EXT(YruntimeYcurrent_gc_state,"runtime","current-gc-state");
-EXT(YLtupG,"boot","<tup>");
-EXT(YastYboundQ_reference,"ast","bound?-reference");
-EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
-EXT(YtopYload,"top","load");
-EXT(YruntimeYnow_key,"runtime","now-key");
-EXT(YruntimeYas_uppercase,"runtime","as-uppercase");
-EXT(YastYmonitor_main_thunk,"ast","monitor-main-thunk");
-EXT(YruntimeYpush_lastX,"runtime","push-last!");
-EXT(YruntimeYcurry,"runtime","curry");
-EXT(YastYapplication_arguments,"ast","application-arguments");
-EXT(Yfun_naryQ,"boot","fun-nary?");
-EXT(YruntimeYTprint_baseT,"runtime","*print-base*");
-EXT(YastYLlocalsG,"ast","<locals>");
-EXT(YruntimeYceiling,"runtime","ceiling");
-EXT(YruntimeYdel,"runtime","del");
-EXT(YastYfind_environment_module,"ast","find-environment-module");
-EXT(YastYLmodule_bindingG,"ast","<module-binding>");
-EXT(YastYbinding_mutableQ,"ast","binding-mutable?");
-EXT(YastYfix_let_arguments_setter,"ast","fix-let-arguments-setter");
-EXT(YruntimeYLtabG,"runtime","<tab>");
-EXT(YruntimeYlast,"runtime","last");
-EXT(YastYmodule_loader_module_type,"ast","module-loader-module-type");
-EXT(YruntimeYsub_setter,"runtime","sub-setter");
-EXT(YruntimeYtable_growth_factor,"runtime","table-growth-factor");
-EXT(Yp2cYp2c_def_app,"p2c","p2c-def-app");
-EXT(Ynul,"boot","nul");
-EXT(YruntimeYLstepG,"runtime","<step>");
-EXT(YtopYparse_in,"top","parse-in");
-EXT(YprotoSsystemYcomponents_parent_directory,"proto/system","components-parent-directory");
-EXT(YprotoSsystemYos_binding_value_setter,"proto/system","os-binding-value-setter");
-EXT(YruntimeYwrite_string,"runtime","write-string");
-EXT(YruntimeYLportG,"runtime","<port>");
-EXT(YastYLfix_letG,"ast","<fix-let>");
-EXT(YastYLprogramG,"ast","<program>");
-EXT(YLlogG,"boot","<log>");
-EXT(YastYLmoduleG,"ast","<module>");
-EXT(YPisa,"boot","%isa");
-EXT(YprotoSsystemYos_binding_value,"proto/system","os-binding-value");
-EXT(YruntimeYLrangeG,"runtime","<range>");
-EXT(YruntimeYlen,"runtime","len");
-EXT(YruntimeYread_char,"runtime","read-char");
-EXT(YruntimeYdo,"runtime","do");
-EXT(YmacrosYemptyQ,"macros","empty?");
-EXT(YastYLapplicationG,"ast","<application>");
-EXT(YruntimeYbuf,"runtime","buf");
-EXT(YisaQ,"boot","isa?");
-EXT(YmacrosYmatch_sublist,"macros","match-sublist");
-EXT(Yapply,"boot","apply");
-EXT(YprotoSsystemYobj_filename,"proto/system","obj-filename");
-EXT(YruntimeYlowercaseQ,"runtime","lowercase?");
-EXT(YprotoSsystemYos_name,"proto/system","os-name");
-EXT(YastYLboundQG,"ast","<bound?>");
-EXT(YruntimeYcondition_message,"runtime","condition-message");
-EXT(YruntimeYLlistG,"runtime","<list>");
-EXT(YastYbinding_native_toQ,"ast","binding-native-to?");
-EXT(YastYLmonitorG,"ast","<monitor>");
-EXT(YruntimeYflo_bits,"runtime","flo-bits");
-EXT(YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
-EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
-EXT(Yobject_parents,"boot","object-parents");
-EXT(YastYbinding_module_name,"ast","binding-module-name");
-EXT(YruntimeYnow_elt,"runtime","now-elt");
-EXT(YruntimeY_,"runtime","-");
-EXT(YruntimeYdel_key,"runtime","del-key");
-EXT(YastYfix_let_bindings_setter,"ast","fix-let-bindings-setter");
-EXT(YruntimeYnegQ,"runtime","neg?");
-EXT(YastYLast_primitive_definitionG,"ast","<ast-primitive-definition>");
-EXT(YruntimeYlocative_value,"runtime","locative-value");
-EXT(YastYmonitor_type,"ast","monitor-type");
-EXT(YastYLglobal_referenceG,"ast","<global-reference>");
-EXT(YLgenG,"boot","<gen>");
-EXT(YastYfab_p2c_module,"ast","fab-p2c-module");
-EXT(YprotoSsystemYpathname_to_components,"proto/system","pathname-to-components");
-EXT(YastYLast_macro_definitionG,"ast","<ast-macro-definition>");
-EXT(YruntimeYread,"runtime","read");
-EXT(YruntimeYremainder,"runtime","remainder");
-EXT(YastYalternative_condition,"ast","alternative-condition");
-EXT(YastYfix_let_body,"ast","fix-let-body");
-EXT(YmacrosYEE,"macros","==");
-EXT(YruntimeYdefault_handler,"runtime","default-handler");
-EXT(YruntimeYto_str,"runtime","to-str");
-EXT(YruntimeYeof_objectQ,"runtime","eof-object?");
-EXT(YastYsignature_names,"ast","signature-names");
-EXT(YastYfree_implemented_foreign_bindings,"ast","free-implemented-foreign-bindings");
-EXT(Yfun_mets,"boot","fun-mets");
-EXT(YastYmonitor_info,"ast","monitor-info");
-EXT(YastYbinding_dynamic_extentQ_setter,"ast","binding-dynamic-extent?-setter");
-EXT(YruntimeYwrite_char,"runtime","write-char");
-EXT(YastYfix_let_body_setter,"ast","fix-let-body-setter");
-EXT(YastYapplication_function,"ast","application-function");
-EXT(YruntimeYelt_setter,"runtime","elt-setter");
-EXT(YprotoSsystemYcreate_directory,"proto/system","create-directory");
-EXT(YruntimeYnumericQ,"runtime","numeric?");
-EXT(YruntimeYport_contents,"runtime","port-contents");
-EXT(YastYbinding_locative,"ast","binding-locative");
-EXT(YastYLalternativeG,"ast","<alternative>");
-EXT(YastYsignature_specs_setter,"ast","signature-specs-setter");
-EXT(YastYfunction_debug_name_setter,"ast","function-debug-name-setter");
-EXT(YruntimeYas_lowercase,"runtime","as-lowercase");
-EXT(Ynot,"boot","not");
-EXT(YastYsequentialize,"ast","sequentialize");
-DEF(YmainYTproto_dateT,"main","*proto-date*");
-EXT(YLchrG,"boot","<chr>");
-EXT(YastYapplication_knownQ,"ast","application-known?");
-EXT(YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
-EXT(YruntimeYfrom_to_by,"runtime","from-to-by");
-EXT(YmacrosYmap,"macros","map");
-EXT(YastYlocals_functions,"ast","locals-functions");
-EXT(YruntimeYclose_output_port,"runtime","close-output-port");
-EXT(YastYfix_let_types_setter,"ast","fix-let-types-setter");
-EXT(YruntimeY2nd,"runtime","2nd");
-EXT(YruntimeYmin,"runtime","min");
-EXT(YastYlocals_body,"ast","locals-body");
-EXT(YLanyG,"boot","<any>");
-EXT(YruntimeYnxt_state,"runtime","nxt-state");
-EXT(YastYbinding_name,"ast","binding-name");
-EXT(YastYLdefinitionG,"ast","<definition>");
-EXT(YruntimeYtruncate,"runtime","truncate");
-DEF(YmainYTproto_versionT,"main","*proto-version*");
-EXT(Ygen_add_met,"boot","gen-add-met");
-EXT(Yobject_slots,"boot","object-slots");
-EXT(YLoptsG,"boot","<opts>");
-EXT(YruntimeYchar_readyQ,"runtime","char-ready?");
-EXT(YastYinit_environment_for_eval,"ast","init-environment-for-eval");
-EXT(YastYLpredefined_applicationG,"ast","<predefined-application>");
-EXT(YruntimeYnulQ,"runtime","nul?");
-EXT(YruntimeYfloorS,"runtime","floor/");
-EXT(YruntimeYLerrorG,"runtime","<error>");
-EXT(YastYfunction_naryQ,"ast","function-nary?");
-EXT(YastYsignature_names_setter,"ast","signature-names-setter");
-EXT(Yslot_type,"boot","slot-type");
-EXT(YruntimeYdo2,"runtime","do2");
-EXT(YastYreference_frame_offset,"ast","reference-frame-offset");
-EXT(YastYLast_genericG,"ast","<ast-generic>");
-EXT(Yfun_specs,"boot","fun-specs");
-EXT(YruntimeYA,"runtime","+");
-EXT(YastYfunction_signature_setter,"ast","function-signature-setter");
-EXT(YLintG,"boot","<int>");
-EXT(YruntimeYpos,"runtime","pos");
-EXT(YruntimeYcatX,"runtime","cat!");
-EXT(Yfind_setter,"boot","find-setter");
-EXT(YastYLconstantG,"ast","<constant>");
-EXT(YmacrosYvar_type,"macros","var-type");
-EXT(YastYload_module,"ast","load-module");
-EXT(YruntimeYposQ,"runtime","pos?");
-EXT(YastYbinding_global_box,"ast","binding-global-box");
-EXT(YastYbinding_value,"ast","binding-value");
-EXT(YastYfunction_signature,"ast","function-signature");
-EXT(YastYapplication_knownQ_setter,"ast","application-known?-setter");
-EXT(YprotoSsystemYproto_filename,"proto/system","proto-filename");
-EXT(YLnumG,"boot","<num>");
-EXT(YastYsignature_naryQ,"ast","signature-nary?");
-EXT(YastYprogram_register,"ast","program-register");
-EXT(YastYglobal_box_value,"ast","global-box-value");
-EXT(YastYbinding_value_setter,"ast","binding-value-setter");
-EXT(YLstrG,"boot","<str>");
-EXT(YastYmodule_binding,"ast","module-binding");
-EXT(YruntimeYLfile_portG,"runtime","<file-port>");
-EXT(YtopYread_file,"top","read-file");
-EXT(YastYunwind_protect_cleanup_thunk,"ast","unwind-protect-cleanup-thunk");
-EXT(YastYmonitor_test,"ast","monitor-test");
-EXT(YastYassignment_reference,"ast","assignment-reference");
-EXT(YastYapplication_binding,"ast","application-binding");
-EXT(YastYapplication_tailQ,"ast","application-tail?");
-EXT(YruntimeYLsimple_errorG,"runtime","<simple-error>");
-EXT(YmacrosYmake_setter_name,"macros","make-setter-name");
-EXT(YPdefine_method,"boot","%define-method");
-EXT(YastYast_define_binding,"ast","ast-define-binding");
-EXT(YastYLregular_applicationG,"ast","<regular-application>");
-EXT(YmacrosYgensym,"macros","gensym");
-EXT(YruntimeYash,"runtime","ash");
-EXT(YruntimeYto_digit,"runtime","to-digit");
-EXT(YtopYtop,"top","top");
-EXT(Yslot_getter,"boot","slot-getter");
-EXT(Yobject_direct_parents,"boot","object-direct-parents");
-EXT(Yslot_value_setter,"boot","slot-value-setter");
-EXT(YastYLmodule_loaderG,"ast","<module-loader>");
-EXT(Yp2cYp2c_build_app,"p2c","p2c-build-app");
-EXT(YruntimeYvec,"runtime","vec");
-EXT(YastYmodule_syntax_environment,"ast","module-syntax-environment");
-EXT(YruntimeYLhandler_infoG,"runtime","<handler-info>");
-EXT(YmacrosYmatch_atom,"macros","match-atom");
-EXT(YruntimeYfalse_or,"runtime","false-or");
-EXT(YastYremove_modules_by_nameX,"ast","remove-modules-by-name!");
-EXT(YastYbind_exit_main_fun,"ast","bind-exit-main-fun");
-EXT(YastYfunction_debug_name,"ast","function-debug-name");
-EXT(YruntimeYalways,"runtime","always");
-EXT(YprotoSsystemYTpath_separatorT,"proto/system","*path-separator*");
-EXT(YastYLstatic_global_environmentG,"ast","<static-global-environment>");
-EXT(YwriteYwriteln,"write","writeln");
-EXT(YruntimeYsub,"runtime","sub");
-EXT(YastYLlocal_referenceG,"ast","<local-reference>");
-EXT(YastYLreal_referenceG,"ast","<real-reference>");
-EXT(YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
-EXT(YruntimeYlogbitQ,"runtime","logbit?");
-EXT(YastYfix_let_arguments,"ast","fix-let-arguments");
-EXT(YruntimeYlsh,"runtime","lsh");
-EXT(YastYbinding_type,"ast","binding-type");
-EXT(YruntimeYmemQ,"runtime","mem?");
-EXT(YastYobjectify_quotation,"ast","objectify-quotation");
-EXT(YastYbinding_kind,"ast","binding-kind");
-EXT(YastYLpassive_programG,"ast","<passive-program>");
-EXT(YruntimeYfind_key,"runtime","find-key");
-EXT(YruntimeYin,"runtime","in");
-EXT(YwriteYobject_name,"write","object-name");
-EXT(YastYLlocal_assignmentG,"ast","<local-assignment>");
-EXT(YruntimeYfill,"runtime","fill");
-EXT(YruntimeYalter,"runtime","alter");
-EXT(YruntimeYout,"runtime","out");
-EXT(YastYLast_signatureG,"ast","<ast-signature>");
-EXT(YruntimeYfrom_below_by,"runtime","from-below-by");
-EXT(Yp2cYp2c_clean,"p2c","p2c-clean");
-EXT(YruntimeYLoutput_portG,"runtime","<output-port>");
-EXT(YastYbinding_type_setter,"ast","binding-type-setter");
-EXT(YastYlocals_functions_setter,"ast","locals-functions-setter");
-EXT(YastYreference_frame_number,"ast","reference-frame-number");
 EXT(YruntimeYadd,"runtime","add");
-EXT(YastYLcompile_timeG,"ast","<compile-time>");
-EXT(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
-EXT(YruntimeYLbufG,"runtime","<buf>");
-EXT(YruntimeYLinput_portG,"runtime","<input-port>");
-EXT(Ylst,"boot","lst");
-EXT(Yfind_getter,"boot","find-getter");
-EXT(Yobject_direct_slots,"boot","object-direct-slots");
+EXT(YruntimeYLhandler_infoG,"runtime","<handler-info>");
+EXT(YastYbinding_global_box,"ast","binding-global-box");
+EXT(YruntimeYround,"runtime","round");
+EXT(YruntimeYelt,"runtime","elt");
+EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
+EXT(YastYLsequentialG,"ast","<sequential>");
+EXT(YastYLunwind_protectG,"ast","<unwind-protect>");
+EXT(YLnumG,"boot","<num>");
+EXT(YruntimeYfrom_below_by,"runtime","from-below-by");
+EXT(YastYbinding_dynamic_extentQ,"ast","binding-dynamic-extent?");
+EXT(YruntimeYelt_setter,"runtime","elt-setter");
+EXT(YruntimeYidentity,"runtime","identity");
+EXT(YruntimeYfrom,"runtime","from");
+EXT(YastYbinding_type_setter,"ast","binding-type-setter");
+EXT(YruntimeYlogbitQ,"runtime","logbit?");
+EXT(YastYfix_let_bindings,"ast","fix-let-bindings");
+EXT(YLslotG,"boot","<slot>");
+EXT(YastYLmodule_bindingG,"ast","<module-binding>");
+EXT(YastYassignment_binding,"ast","assignment-binding");
+EXT(YastYfunction_naryQ,"ast","function-nary?");
+EXT(Ynul,"boot","nul");
+DEF(YmainYTproto_dateT,"main","*proto-date*");
 EXT(YruntimeYNEE,"runtime","~==");
-EXT(YastYLprogramsG,"ast","<programs>");
-EXT(YastYalternative_consequent,"ast","alternative-consequent");
-EXT(YruntimeYempty,"runtime","empty");
-EXT(YastYast_evaluate,"ast","ast-evaluate");
+EXT(YastYLraw_constantG,"ast","<raw-constant>");
+EXT(YastYset_module_environments,"ast","set-module-environments");
+EXT(YastYmonitor_info,"ast","monitor-info");
+EXT(YruntimeYevenQ,"runtime","even?");
+EXT(YruntimeYstr,"runtime","str");
+EXT(YastYsignature_bindings_setter,"ast","signature-bindings-setter");
+EXT(YruntimeYpush_lastX,"runtime","push-last!");
+EXT(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
+EXT(YastYfix_let_arguments,"ast","fix-let-arguments");
+EXT(Yp2cYp2c_def_app,"p2c","p2c-def-app");
+EXT(YmacrosYvar_type,"macros","var-type");
+EXT(YastYbinding_locative,"ast","binding-locative");
+EXT(YtopYbacktrace,"top","backtrace");
+EXT(YtopYtop,"top","top");
+EXT(YLchrG,"boot","<chr>");
+EXT(YruntimeYlen,"runtime","len");
+EXT(YLoptsG,"boot","<opts>");
 EXT(YastYdo_module_loader_modules,"ast","do-module-loader-modules");
-EXT(YLmetG,"boot","<met>");
+EXT(YastYDproto_boot_module_name,"ast","$proto-boot-module-name");
+EXT(YruntimeYA,"runtime","+");
+EXT(YLunionG,"boot","<union>");
+EXT(YruntimeYfrom_to,"runtime","from-to");
+EXT(YastYalternative_alternant,"ast","alternative-alternant");
+EXT(YastYLast_primitiveG,"ast","<ast-primitive>");
+EXT(Yslot_getter,"boot","slot-getter");
+EXT(YastYfree_implemented_foreign_bindings,"ast","free-implemented-foreign-bindings");
+EXT(YruntimeYchar_readyQ,"runtime","char-ready?");
+EXT(YmacrosYmatch_atom,"macros","match-atom");
+EXT(YastYsignature_names_setter,"ast","signature-names-setter");
+EXT(YruntimeYstr_to_num,"runtime","str-to-num");
+EXT(YruntimeYto_str,"runtime","to-str");
+EXT(YruntimeYin,"runtime","in");
+EXT(YruntimeYas_lowercase,"runtime","as-lowercase");
+EXT(YastYfix_let_bindings_setter,"ast","fix-let-bindings-setter");
+EXT(YLlogG,"boot","<log>");
+EXT(YruntimeYnegQ,"runtime","neg?");
+EXT(YastYbinding_info,"ast","binding-info");
+EXT(YprotoSsystemYfile_existsQ,"proto/system","file-exists?");
+EXT(YruntimeYLsimple_errorG,"runtime","<simple-error>");
+EXT(Yfun_specs,"boot","fun-specs");
+EXT(YastYapplication_binding,"ast","application-binding");
+EXT(YruntimeYlist,"runtime","list");
+EXT(Ytail,"boot","tail");
+EXT(YruntimeYanyQ,"runtime","any?");
+EXT(YastYLprogramG,"ast","<program>");
+EXT(YastYLast_methodG,"ast","<ast-method>");
 EXT(YruntimeYallQ,"runtime","all?");
+EXT(YruntimeYLrangeG,"runtime","<range>");
+EXT(YLsubclassG,"boot","<subclass>");
+EXT(YastYbinding_kind,"ast","binding-kind");
+EXT(YruntimeYLconditionG,"runtime","<condition>");
+EXT(YastYLast_genericG,"ast","<ast-generic>");
+EXT(YastYfunction_bindings,"ast","function-bindings");
+EXT(YruntimeYfill,"runtime","fill");
+EXT(YruntimeYclose_output_port,"runtime","close-output-port");
+EXT(YprotoSsystemYTc_extensionT,"proto/system","*c-extension*");
+EXT(YastYLast_macro_definitionG,"ast","<ast-macro-definition>");
+EXT(Yclass_direct_slots,"boot","class-direct-slots");
+EXT(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
+EXT(YtopYload,"top","load");
+EXT(YmacrosYEE,"macros","==");
+EXT(YruntimeY1st,"runtime","1st");
+EXT(YastYmodule_name,"ast","module-name");
+EXT(YprotoSsystemYprobe_directory,"proto/system","probe-directory");
+EXT(YruntimeYLstring_portG,"runtime","<string-port>");
+EXT(YruntimeYLportG,"runtime","<port>");
+EXT(YLanyG,"boot","<any>");
+EXT(YruntimeYpop,"runtime","pop");
+EXT(YruntimeYvec,"runtime","vec");
+EXT(YruntimeYnumericQ,"runtime","numeric?");
+EXT(YPdefine_method,"boot","%define-method");
+EXT(Yp2cYp2c_build_app,"p2c","p2c-build-app");
+EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
+EXT(YastYfunction_debug_name,"ast","function-debug-name");
+EXT(YLsingletonG,"boot","<singleton>");
+EXT(YastYload_module,"ast","load-module");
+EXT(YastYLpassive_programG,"ast","<passive-program>");
+EXT(YwriteYwriteln,"write","writeln");
+EXT(YruntimeYLlistG,"runtime","<list>");
+EXT(YruntimeYLfile_portG,"runtime","<file-port>");
+EXT(YmacrosYvar_name,"macros","var-name");
+EXT(YastYLlocal_bindingG,"ast","<local-binding>");
+EXT(YmacrosYmatch_unquote,"macros","match-unquote");
+EXT(YastYfunction_signature_setter,"ast","function-signature-setter");
+EXT(YruntimeYalter,"runtime","alter");
+EXT(YprotoSsystemYparent_directory,"proto/system","parent-directory");
+EXT(YastYLconstantG,"ast","<constant>");
+EXT(YruntimeYLstr_tabG,"runtime","<str-tab>");
+EXT(YruntimeYapp_args,"runtime","app-args");
+EXT(YisaQ,"boot","isa?");
+EXT(YruntimeYdefault_handler,"runtime","default-handler");
+EXT(YruntimeYfrom_by,"runtime","from-by");
+EXT(Yp2cYp2c_clean,"p2c","p2c-clean");
+EXT(YastYreference_binding,"ast","reference-binding");
+EXT(YastYLstatic_global_environmentG,"ast","<static-global-environment>");
+EXT(YprotoSsystemYcomponents_basename,"proto/system","components-basename");
+EXT(YruntimeYLinput_portG,"runtime","<input-port>");
+EXT(YruntimeYdel_keys,"runtime","del-keys");
+EXT(Ytype_object,"boot","type-object");
+EXT(YastYinit_environment_for_eval,"ast","init-environment-for-eval");
+EXT(YruntimeYLhandlerG,"runtime","<handler>");
+EXT(YastYobjectify,"ast","objectify");
+EXT(YastYmodule_exports,"ast","module-exports");
+EXT(YruntimeYS,"runtime","/");
+EXT(YruntimeYapp_filename,"runtime","app-filename");
+EXT(YprotoSsystemYadd_src_path,"proto/system","add-src-path");
+EXT(YruntimeYLstepG,"runtime","<step>");
+EXT(YastYprogram_register,"ast","program-register");
+EXT(YastYLcompile_timeG,"ast","<compile-time>");
+EXT(YastYLfix_letG,"ast","<fix-let>");
+EXT(YruntimeYtruncate,"runtime","truncate");
+EXT(Yslot_init,"boot","slot-init");
+EXT(YastYLapplicationG,"ast","<application>");
+EXT(YruntimeYpick,"runtime","pick");
+EXT(Yobject_parents,"boot","object-parents");
+EXT(YruntimeYpos,"runtime","pos");
+EXT(YprotoSsystemYadd_build_path,"proto/system","add-build-path");
+EXT(YastYruntime_environment,"ast","runtime-environment");
+EXT(YastYsequentialize,"ast","sequentialize");
+EXT(Ynot,"boot","not");
+EXT(YastYbinding_type,"ast","binding-type");
+EXT(YruntimeYmin,"runtime","min");
+EXT(YruntimeYdel_dups,"runtime","del-dups");
+EXT(Yfun_names,"boot","fun-names");
+EXT(YastYLreal_referenceG,"ast","<real-reference>");
+EXT(YruntimeYfabs,"runtime","fabs");
+EXT(YastYLargumentsG,"ast","<arguments>");
+EXT(YastYLmoduleG,"ast","<module>");
+EXT(YastYbinding_name,"ast","binding-name");
+EXT(YruntimeYoddQ,"runtime","odd?");
+EXT(YastYlocals_functions,"ast","locals-functions");
+EXT(YruntimeYfrom_above_by,"runtime","from-above-by");
+EXT(YruntimeYid_hash,"runtime","id-hash");
+EXT(Yclass_direct_children,"boot","class-direct-children");
+EXT(YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
+EXT(YastYsignature_specs,"ast","signature-specs");
+EXT(YPPmacro,"boot","%%macro");
+EXT(YruntimeYneg,"runtime","neg");
+EXT(YastYalternative_consequent,"ast","alternative-consequent");
+EXT(Yobject_slots,"boot","object-slots");
+EXT(YruntimeYini_state,"runtime","ini-state");
+EXT(YastYinit_ast,"ast","init-ast");
+EXT(YastYapplication_arguments,"ast","application-arguments");
+EXT(YruntimeYas_uppercase,"runtime","as-uppercase");
+EXT(YruntimeYwrite_string,"runtime","write-string");
+EXT(YastYfind_environment_module,"ast","find-environment-module");
+EXT(YastYload_in,"ast","load-in");
+EXT(YruntimeYcurrent_gc_state,"runtime","current-gc-state");
+EXT(YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
+EXT(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
+EXT(YastYmonitor_type,"ast","monitor-type");
+EXT(YruntimeYopen_input_file,"runtime","open-input-file");
+EXT(YruntimeYeof_objectQ,"runtime","eof-object?");
+EXT(YruntimeYfrom_below,"runtime","from-below");
+EXT(YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
+EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
+EXT(YastYfix_let_types_setter,"ast","fix-let-types-setter");
+EXT(YastYfix_let_arguments_setter,"ast","fix-let-arguments-setter");
+EXT(YruntimeYfin_stateQ,"runtime","fin-state?");
+EXT(YruntimeY2nd,"runtime","2nd");
+EXT(Yerror,"boot","error");
+EXT(Yfind_setter,"boot","find-setter");
+EXT(YastYLregular_applicationG,"ast","<regular-application>");
+EXT(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
+EXT(YLtypeG,"boot","<type>");
+EXT(YastYreference_frame_offset,"ast","reference-frame-offset");
+EXT(YastYfunction_body_setter,"ast","function-body-setter");
+EXT(YastYalternative_condition,"ast","alternative-condition");
+EXT(Yslot_owner,"boot","slot-owner");
+EXT(YprotoSsystemYos_binding_value_setter,"proto/system","os-binding-value-setter");
+EXT(YastYLruntime_assignmentG,"ast","<runtime-assignment>");
+EXT(YprotoSsystemYproto_filename,"proto/system","proto-filename");
+EXT(YruntimeYto_digit,"runtime","to-digit");
+EXT(YmacrosYpair,"macros","pair");
+EXT(YastYlocals_bindings_setter,"ast","locals-bindings-setter");
+EXT(YruntimeYLbufG,"runtime","<buf>");
+EXT(YprotoSsystemYfile_type,"proto/system","file-type");
+EXT(YprotoSsystemYc_filename,"proto/system","c-filename");
+EXT(YruntimeY_,"runtime","-");
+EXT(YastYfix_let_body,"ast","fix-let-body");
+EXT(YruntimeYlocative_value,"runtime","locative-value");
+EXT(YastYbinding_module_name,"ast","binding-module-name");
+EXT(YruntimeYcondition_message,"runtime","condition-message");
+EXT(YastYsignature_naryQ,"ast","signature-nary?");
+EXT(YruntimeYcall_with_output_file,"runtime","call-with-output-file");
+EXT(YastYLdefinitionG,"ast","<definition>");
+EXT(YruntimeYrcurry,"runtime","rcurry");
+EXT(YastYLmodule_loaderG,"ast","<module-loader>");
+EXT(YruntimeYdel,"runtime","del");
+EXT(YastYfunction_value,"ast","function-value");
+EXT(YastYboundQ_reference,"ast","bound?-reference");
+EXT(YastYLbind_exitG,"ast","<bind-exit>");
+EXT(Yadd_slot,"boot","add-slot");
+EXT(Yhead,"boot","head");
+EXT(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
+EXT(YwriteYwrite,"write","write");
+EXT(YmacrosYemptyQ,"macros","empty?");
+EXT(YLsymG,"boot","<sym>");
+EXT(YruntimeYread,"runtime","read");
+EXT(YastYLglobal_assignmentG,"ast","<global-assignment>");
+EXT(YruntimeYtable_growth_factor,"runtime","table-growth-factor");
+EXT(YruntimeYceilingS,"runtime","ceiling/");
+EXT(YruntimeYnow_key,"runtime","now-key");
+EXT(Yclass_direct_parents,"boot","class-direct-parents");
+EXT(YastYapplication_knownQ,"ast","application-known?");
+EXT(YastYsignature_value,"ast","signature-value");
+EXT(YastYcompile_time_program,"ast","compile-time-program");
+EXT(YastYreport_undefined_global_bindings,"ast","report-undefined-global-bindings");
+EXT(YruntimeYfloorS,"runtime","floor/");
+EXT(YastYLlocal_assignmentG,"ast","<local-assignment>");
+EXT(YruntimeYcompose,"runtime","compose");
+EXT(YastYLglobal_boxG,"ast","<global-box>");
+EXT(YastYprogram_register_setter,"ast","program-register-setter");
+EXT(YprotoSsystemYcreate_directory,"proto/system","create-directory");
+EXT(YruntimeYdo2,"runtime","do2");
+EXT(YastYreference_frame_number,"ast","reference-frame-number");
+EXT(YtopYdo_stack_frames,"top","do-stack-frames");
+EXT(YastYLalternativeG,"ast","<alternative>");
+EXT(YruntimeYsub,"runtime","sub");
+EXT(YruntimeYnow_elt,"runtime","now-elt");
+EXT(YastYfunction_binding,"ast","function-binding");
+EXT(YastYLpredefined_applicationG,"ast","<predefined-application>");
+EXT(YastYLmonitorG,"ast","<monitor>");
+EXT(YruntimeYnow_elt_setter,"runtime","now-elt-setter");
+EXT(YastYbind_exit_main_fun,"ast","bind-exit-main-fun");
+EXT(YastYsignature_value_setter,"ast","signature-value-setter");
+EXT(YruntimeYwrite_char,"runtime","write-char");
+EXT(YastYLboundQG,"ast","<bound?>");
+EXT(YruntimeYroundS,"runtime","round/");
+EXT(YprotoSsystemYTobj_extensionT,"proto/system","*obj-extension*");
+EXT(YruntimeYnum_to_str,"runtime","num-to-str");
+EXT(YruntimeYLtabG,"runtime","<tab>");
+EXT(YruntimeYlsh,"runtime","lsh");
+EXT(Yfind_getter,"boot","find-getter");
+EXT(YruntimeYash,"runtime","ash");
+EXT(YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
+EXT(YLstrG,"boot","<str>");
+EXT(YruntimeYflo_bits,"runtime","flo-bits");
+EXT(YruntimeYdel_key,"runtime","del-key");
+EXT(YmacrosYgensym,"macros","gensym");
+EXT(YruntimeYLfile_output_portG,"runtime","<file-output-port>");
+EXT(YruntimeYnxt_state,"runtime","nxt-state");
+EXT(YruntimeYfrom_above,"runtime","from-above");
+EXT(YLgenG,"boot","<gen>");
+EXT(YastYsignature_names,"ast","signature-names");
+EXT(Ynil,"boot","nil");
+EXT(YruntimeYaddress_of,"runtime","address-of");
+EXT(YruntimeYtable_protocol,"runtime","table-protocol");
+EXT(YruntimeYnewline,"runtime","newline");
+EXT(YastYmonitor_test,"ast","monitor-test");
+EXT(YruntimeYabs,"runtime","abs");
+EXT(YruntimeYformat,"runtime","format");
+EXT(YprotoSsystemYexe_filename,"proto/system","exe-filename");
+EXT(YmacrosYtup,"macros","tup");
+EXT(Yslot_type,"boot","slot-type");
+EXT(YruntimeYLstring_output_portG,"runtime","<string-output-port>");
+EXT(YastYassignment_reference,"ast","assignment-reference");
+EXT(YruntimeYT,"runtime","*");
+EXT(YruntimeYtruncateS,"runtime","truncate/");
+EXT(YruntimeYcurry,"runtime","curry");
+EXT(Yhandler_info_message,"boot","handler-info-message");
+EXT(YastYobjectify_quotation,"ast","objectify-quotation");
+EXT(YLvecG,"boot","<vec>");
+EXT(YruntimeYread_char,"runtime","read-char");
+EXT(YruntimeY3rd,"runtime","3rd");
+EXT(YastYdo_static_global_bindings,"ast","do-static-global-bindings");
+EXT(YruntimeYmax,"runtime","max");
+EXT(YLclassG,"boot","<class>");
+EXT(YsyntaxYsexpr_signature_parameters,"syntax","sexpr-signature-parameters");
+EXT(YprotoSsystemYpathname_to_components,"proto/system","pathname-to-components");
+EXT(YPcall_next_method,"boot","%call-next-method");
+EXT(YruntimeYfloor,"runtime","floor");
+EXT(YastYast_define_binding,"ast","ast-define-binding");
+EXT(YwriteYdisplay,"write","display");
+EXT(YastYenvironment_uses_modules,"ast","environment-uses-modules");
+EXT(YruntimeYmodulo,"runtime","modulo");
+EXT(Yclass_slots,"boot","class-slots");
+EXT(YruntimeYdefault,"runtime","default");
+EXT(YsyntaxYeval,"syntax","eval");
+EXT(YLflatG,"boot","<flat>");
+EXT(YastYglobal_box_value_setter,"ast","global-box-value-setter");
+EXT(YastYunwind_protect_cleanup_thunk,"ast","unwind-protect-cleanup-thunk");
+EXT(YprotoSsystemYTproto_extensionT,"proto/system","*proto-extension*");
+EXT(YruntimeYfind_key,"runtime","find-key");
+EXT(YruntimeYreduceA,"runtime","reduce+");
+EXT(YLmetG,"boot","<met>");
+EXT(YmacrosYmap,"macros","map");
+EXT(YastYapplication_function,"ast","application-function");
+EXT(YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
+EXT(YruntimeYnulQ,"runtime","nul?");
+EXT(YruntimeYempty,"runtime","empty");
+EXT(YastYdo_named_static_global_bindings,"ast","do-named-static-global-bindings");
+EXT(YastYbinding_value_setter,"ast","binding-value-setter");
+EXT(YruntimeYport_index,"runtime","port-index");
+EXT(YastYLlocal_referenceG,"ast","<local-reference>");
 EXT(YprotoSsystemYcomponents_last,"proto/system","components-last");
+EXT(Ylst,"boot","lst");
+EXT(YastYreference_called_functionQ_setter,"ast","reference-called-function?-setter");
+EXT(YastYmonitor_handler,"ast","monitor-handler");
+EXT(YLtupG,"boot","<tup>");
+EXT(YruntimeYfirst_then,"runtime","first-then");
+EXT(YastYmodule_binding,"ast","module-binding");
+EXT(YastYremove_modules_by_nameX,"ast","remove-modules-by-name!");
+EXT(YruntimeYremainder,"runtime","remainder");
+EXT(Yfab_class,"boot","fab-class");
+EXT(YruntimeYlogior,"runtime","logior");
+EXT(Yfun_value,"boot","fun-value");
+EXT(YruntimeYLassocsG,"runtime","<assocs>");
+EXT(YruntimeYTprint_baseT,"runtime","*print-base*");
+EXT(YruntimeYLE,"runtime","<=");
+EXT(Ytype_elts,"boot","type-elts");
+EXT(YruntimeYE,"runtime","=");
+EXT(YruntimeYmap2,"runtime","map2");
+EXT(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
+EXT(YastYLbindingG,"ast","<binding>");
+EXT(YruntimeYlowercaseQ,"runtime","lowercase?");
+EXT(YLlstG,"boot","<lst>");
+EXT(YastYLreferenceG,"ast","<reference>");
+EXT(Ysorted_app_mets,"boot","sorted-app-mets");
+EXT(YruntimeYposQ,"runtime","pos?");
+EXT(YPisa,"boot","%isa");
+EXT(YprotoSsystemYos_name,"proto/system","os-name");
+EXT(YastYlocals_body,"ast","locals-body");
+EXT(YtopYparse_in,"top","parse-in");
+EXT(YruntimeYLstring_input_portG,"runtime","<string-input-port>");
+EXT(YruntimeYfalse_or,"runtime","false-or");
+EXT(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
+EXT(YastYfab_p2c_module,"ast","fab-p2c-module");
+EXT(YruntimeYL,"runtime","<");
+EXT(YLfunG,"boot","<fun>");
+EXT(Yfun_name,"boot","fun-name");
+EXT(YruntimeYhandler_function,"runtime","handler-function");
+EXT(YruntimeYlogxor,"runtime","logxor");
+EXT(Yclass_name,"boot","class-name");
+EXT(YruntimeYalways,"runtime","always");
+EXT(YastYunwind_protect_protected_thunk,"ast","unwind-protect-protected-thunk");
+EXT(YruntimeYLoutput_portG,"runtime","<output-port>");
+EXT(YastYLfab_listG,"ast","<fab-list>");
+EXT(YruntimeYsub_setter,"runtime","sub-setter");
+EXT(YLseqG,"boot","<seq>");
+EXT(YruntimeYpush,"runtime","push");
+EXT(Yp2cYp2c_top,"p2c","p2c-top");
+EXT(YruntimeYopen_output_file,"runtime","open-output-file");
+EXT(YruntimeYbuf,"runtime","buf");
+EXT(YruntimeYreduce,"runtime","reduce");
+EXT(YruntimeYNE,"runtime","~=");
+EXT(YprotoSsystemYcomponents_to_pathname,"proto/system","components-to-pathname");
+EXT(YastYLglobal_referenceG,"ast","<global-reference>");
+EXT(YastYmodule_loader_module_type,"ast","module-loader-module-type");
+EXT(YmacrosYcat,"macros","cat");
+EXT(YastYprobe_module,"ast","probe-module");
+EXT(YruntimeYG,"runtime",">");
+EXT(YprotoSsystemYTpath_separatorT,"proto/system","*path-separator*");
+EXT(YruntimeYlast,"runtime","last");
+EXT(YruntimeYlogand,"runtime","logand");
+EXT(YastYbinding_dynamic_extentQ_setter,"ast","binding-dynamic-extent?-setter");
+EXT(YastYLruntime_referenceG,"ast","<runtime-reference>");
+EXT(YastYfix_let_body_setter,"ast","fix-let-body-setter");
 EXT(YastYbinding_info_setter,"ast","binding-info-setter");
 EXT(YruntimeYtL,"runtime","t<");
-EXT(YruntimeYlogior,"runtime","logior");
-EXT(YastYlocals_bindings_setter,"ast","locals-bindings-setter");
-EXT(YruntimeYLstring_input_portG,"runtime","<string-input-port>");
-EXT(Yhead,"boot","head");
-EXT(YprotoSsystemYcomponents_basename,"proto/system","components-basename");
-EXT(YruntimeYcall_with_output_file,"runtime","call-with-output-file");
-EXT(YruntimeYdefault,"runtime","default");
-EXT(Yslot_value,"boot","slot-value");
-EXT(YastYsignature_value,"ast","signature-value");
-EXT(YruntimeYanyQ,"runtime","any?");
-EXT(Yfun_value,"boot","fun-value");
-EXT(YastYLbindingG,"ast","<binding>");
-EXT(Yfun_names,"boot","fun-names");
-EXT(YruntimeYevenQ,"runtime","even?");
-EXT(YruntimeYGE,"runtime",">=");
-EXT(YmacrosYmatch_unquote,"macros","match-unquote");
-EXT(YruntimeYLmapG,"runtime","<map>");
-EXT(YreadYread_from_string,"read","read-from-string");
-EXT(YprotoSsystemYadd_src_path,"proto/system","add-src-path");
-EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
-EXT(YruntimeYLfile_output_portG,"runtime","<file-output-port>");
-EXT(YprotoSsystemYfile_mtime,"proto/system","file-mtime");
-EXT(YLfloG,"boot","<flo>");
-EXT(YruntimeYfirst_then,"runtime","first-then");
-EXT(YastYconstant_value,"ast","constant-value");
-EXT(YprotoSsystemYTexe_extensionT,"proto/system","*exe-extension*");
-EXT(YruntimeYassocs_test,"runtime","assocs-test");
-EXT(YruntimeYneg,"runtime","neg");
-EXT(YastYLreferenceG,"ast","<reference>");
-EXT(YruntimeYdel_keys,"runtime","del-keys");
-EXT(YLflatG,"boot","<flat>");
-EXT(YastYLruntime_referenceG,"ast","<runtime-reference>");
-EXT(YruntimeYhandler_function,"runtime","handler-function");
-EXT(YruntimeYcopy_state,"runtime","copy-state");
-EXT(YastYruntime_environment,"ast","runtime-environment");
-EXT(YastYglobal_box_value_setter,"ast","global-box-value-setter");
-EXT(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
-EXT(YastYLast_functionG,"ast","<ast-function>");
-EXT(YruntimeYLhandlerG,"runtime","<handler>");
-EXT(YastYLraw_constantG,"ast","<raw-constant>");
-EXT(YruntimeYclose_input_port,"runtime","close-input-port");
-EXT(Yadd_slot,"boot","add-slot");
-EXT(YruntimeYforce_output,"runtime","force-output");
-EXT(YruntimeYapp_args,"runtime","app-args");
-EXT(YastYfix_let_bindings,"ast","fix-let-bindings");
-EXT(YsyntaxYsexpr_signature_parameters,"syntax","sexpr-signature-parameters");
-EXT(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
-EXT(YLlstG,"boot","<lst>");
-EXT(YastYobjectify,"ast","objectify");
-EXT(YprotoSsystemYadd_build_path,"proto/system","add-build-path");
-EXT(YruntimeYformat,"runtime","format");
-EXT(YastYLlocal_bindingG,"ast","<local-binding>");
+EXT(YastYmodule_name_to_relpath,"ast","module-name-to-relpath");
+EXT(YLcolG,"boot","<col>");
 EXT(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
-EXT(YPPmacro,"boot","%%macro");
-EXT(YruntimeYfrom_above_by,"runtime","from-above-by");
-EXT(YPcall_next_method,"boot","%call-next-method");
+EXT(YruntimeYfrom_to_by,"runtime","from-to-by");
+EXT(YastYinstall_initial_bindings,"ast","install-initial-bindings");
+EXT(YastYbinding_mutableQ,"ast","binding-mutable?");
+EXT(Yapply,"boot","apply");
+EXT(YruntimeYdo,"runtime","do");
+EXT(YastYast_evaluate,"ast","ast-evaluate");
+EXT(YastYmodule_target_environment,"ast","module-target-environment");
+EXT(YwriteYwrite_to_string,"write","write-to-string");
+EXT(YruntimeYforce_output,"runtime","force-output");
+EXT(YruntimeYfab,"runtime","fab");
+EXT(YastYreference_called_functionQ,"ast","reference-called-function?");
+EXT(YruntimeYceiling,"runtime","ceiling");
+EXT(YastYDproto_runtime_module_name,"ast","$proto-runtime-module-name");
 EXT(YruntimeYrevX,"runtime","rev!");
-EXT(YastYLglobal_boxG,"ast","<global-box>");
-EXT(YLfunG,"boot","<fun>");
+EXT(YruntimeYlognot,"runtime","lognot");
+EXT(YruntimeYas,"runtime","as");
+EXT(YruntimeYsig,"runtime","sig");
+EXT(YruntimeYout,"runtime","out");
+EXT(YastYsignature_bindings,"ast","signature-bindings");
+EXT(Yfun_arity,"boot","fun-arity");
+EXT(YruntimeYassocs_test,"runtime","assocs-test");
+EXT(YastYassignment_form,"ast","assignment-form");
+EXT(YtopYread_file,"top","read-file");
+EXT(Yslot_setter,"boot","slot-setter");
+EXT(Ymet_appQ,"boot","met-app?");
 EXT(YruntimeYtE,"runtime","t=");
-EXT(YtopYbacktrace,"top","backtrace");
-EXT(YprotoSsystemYc_filename,"proto/system","c-filename");
-EXT(YruntimeYfrom_to,"runtime","from-to");
-EXT(YruntimeY3rd,"runtime","3rd");
-EXT(YprotoSsystemYTc_extensionT,"proto/system","*c-extension*");
-EXT(YruntimeYLstr_tabG,"runtime","<str-tab>");
+EXT(YsubtypeQ,"boot","subtype?");
+EXT(YruntimeYrev,"runtime","rev");
+EXT(YreadYread_from_string,"read","read-from-string");
+EXT(YastYconstant_value,"ast","constant-value");
+EXT(YastYlocals_functions_setter,"ast","locals-functions-setter");
+EXT(YmacrosYmake_sym,"macros","make-sym");
+EXT(Yslot_value_setter,"boot","slot-value-setter");
+EXT(YLlocG,"boot","<loc>");
+EXT(YastYbinding_value,"ast","binding-value");
+EXT(YastYlocals_bindings,"ast","locals-bindings");
+EXT(YprotoSsystemYobj_filename,"proto/system","obj-filename");
+EXT(YprotoSsystemYos_binding_value,"proto/system","os-binding-value");
+EXT(YruntimeYLfile_input_portG,"runtime","<file-input-port>");
+EXT(YastYbinding_global_box_setter,"ast","binding-global-box-setter");
+EXT(YprotoSsystemYTexe_extensionT,"proto/system","*exe-extension*");
+EXT(YastYfunction_debug_name_setter,"ast","function-debug-name-setter");
+EXT(YastYLprogramsG,"ast","<programs>");
+EXT(Yfun_mets,"boot","fun-mets");
+EXT(Yclass_parents,"boot","class-parents");
+EXT(YastYfunction_body,"ast","function-body");
+EXT(YprotoSsystemYhierarchical_components,"proto/system","hierarchical-components");
+EXT(YprotoSsystemYfile_mtime,"proto/system","file-mtime");
+EXT(YprotoSsystemYcomponents_parent_directory,"proto/system","components-parent-directory");
+EXT(YastYLcomputed_programG,"ast","<computed-program>");
+EXT(YastYlocals_body_setter,"ast","locals-body-setter");
+EXT(YruntimeYuppercaseQ,"runtime","uppercase?");
 EXT(YruntimeYdo_keyed,"runtime","do-keyed");
+EXT(YruntimeYmap_keyed,"runtime","map-keyed");
+EXT(YLfloG,"boot","<flo>");
+EXT(YastYfix_let_types,"ast","fix-let-types");
+EXT(YruntimeYtA,"runtime","t+");
+EXT(YruntimeYcat2,"runtime","cat2");
+EXT(YruntimeYcopy_state,"runtime","copy-state");
+EXT(YruntimeYmemQ,"runtime","mem?");
+EXT(YastYsignature_specs_setter,"ast","signature-specs-setter");
+EXT(YruntimeYzeroQ,"runtime","zero?");
+EXT(YruntimeYalphabeticQ,"runtime","alphabetic?");
+EXT(YastYsignature_naryQ_setter,"ast","signature-nary?-setter");
+DEF(YmainYTproto_versionT,"main","*proto-version*");
+EXT(YmacrosYmatch_sublist,"macros","match-sublist");
+EXT(YastYenv_object_name,"ast","env-object-name");
+EXT(YastYLast_functionG,"ast","<ast-function>");
+EXT(Yslot_value,"boot","slot-value");
+EXT(YprotoSsystemYlabel_components,"proto/system","label-components");
+EXT(YastYLlocalsG,"ast","<locals>");
+EXT(YastYfunction_signature,"ast","function-signature");
+EXT(Ygen_add_met,"boot","gen-add-met");
+EXT(YastYapplication_knownQ_setter,"ast","application-known?-setter");
+EXT(YruntimeYcatX,"runtime","cat!");
+EXT(YastYmonitor_main_thunk,"ast","monitor-main-thunk");
+EXT(YastYapplication_tailQ,"ast","application-tail?");
+EXT(Ytype_class,"boot","type-class");
+EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
+EXT(YastYmodule_syntax_environment,"ast","module-syntax-environment");
+EXT(YastYLast_signatureG,"ast","<ast-signature>");
+EXT(YruntimeYLerrorG,"runtime","<error>");
+EXT(YastYbinding_native_toQ,"ast","binding-native-to?");
+EXT(YruntimeYclose_input_port,"runtime","close-input-port");
+EXT(YruntimeYpeek_char,"runtime","peek-char");
+EXT(YruntimeYGE,"runtime",">=");
+EXT(YLintG,"boot","<int>");
+EXT(YruntimeYport_contents,"runtime","port-contents");
+EXT(Ymay_isaQ,"boot","may-isa?");
+EXT(Yfun_naryQ,"boot","fun-nary?");
+EXT(YastYglobal_box_value,"ast","global-box-value");
+EXT(YmacrosYmake_setter_name,"macros","make-setter-name");
+EXT(YruntimeYpop_lastX,"runtime","pop-last!");
+EXT(YastYLast_primitive_definitionG,"ast","<ast-primitive-definition>");
+EXT(YruntimeYmake_handler,"runtime","make-handler");
+EXT(YruntimeYLmapG,"runtime","<map>");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_16);
 DEFLIT(lit_11);
-DEFLIT(lit_2);
-DEFLIT(lit_5);
-DEFLIT(lit_8);
-DEFLIT(lit_7);
-DEFLIT(lit_0);
 DEFLIT(lit_14);
-DEFLIT(lit_17);
-DEFLIT(lit_6);
+DEFLIT(lit_0);
+DEFLIT(lit_7);
+DEFLIT(lit_10);
 DEFLIT(lit_4);
 DEFLIT(lit_13);
-DEFLIT(lit_9);
-DEFLIT(lit_1);
-DEFLIT(lit_10);
+DEFLIT(lit_17);
 DEFLIT(lit_12);
 DEFLIT(lit_15);
+DEFLIT(lit_1);
+DEFLIT(lit_5);
+DEFLIT(lit_9);
+DEFLIT(lit_16);
+DEFLIT(lit_2);
 DEFLIT(lit_3);
+DEFLIT(lit_8);
+DEFLIT(lit_6);
 
 /* FUNCTIONS: */
 
@@ -507,12 +520,10 @@ extern P YmainY___main_0___ ();
 P YmainY___main_0___() {
   P T3,T2,T1,T0;
 loop:
-  lit_0 = YPsb((P)"0.101");
+  lit_0 = YPsb((P)"0.102");
   YmainYTproto_versionT = CHKREF(lit_0);
-  regsym(&YmainYTproto_versionT,"main","*proto-version*");
-  lit_1 = YPsb((P)"AUG 28, 2001");
+  lit_1 = YPsb((P)"SEP 11, 2001");
   YmainYTproto_dateT = CHKREF(lit_1);
-  regsym(&YmainYTproto_dateT,"main","*proto-date*");
   lit_2 = YPsb((P)";;; \n");
   CALL2(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),CHKREF(lit_2));
   lit_3 = YPsb((P)";;; PROTO\n");
@@ -580,529 +591,542 @@ static USE_INFO use_infos[] = {
 };
 
 static IMPORT_INFO import_infos[] = {
-  {"init-ast", &module_info_ast, "init-ast"},
-  {"logxor", &module_info_runtime, "logxor"},
-  {"<file-input-port>", &module_info_runtime, "<file-input-port>"},
-  {"del-dups", &module_info_runtime, "del-dups"},
-  {"quasiquote", &module_info_boot, "quasiquote"},
-  {"<loc>", &module_info_boot, "<loc>"},
-  {"unless", &module_info_macros, "unless"},
-  {"hierarchical-components", &module_info_protoSsystem, "hierarchical-components"},
-  {"$permanent-hash-state", &module_info_runtime, "$permanent-hash-state"},
-  {"peek-char", &module_info_runtime, "peek-char"},
-  {"<seq>", &module_info_boot, "<seq>"},
-  {"parent-directory", &module_info_protoSsystem, "parent-directory"},
-  {"binding-info", &module_info_ast, "binding-info"},
-  {"<computed-program>", &module_info_ast, "<computed-program>"},
-  {"*proto-extension*", &module_info_protoSsystem, "*proto-extension*"},
-  {"/", &module_info_runtime, "/"},
-  {"reduce+", &module_info_runtime, "reduce+"},
-  {"<unwind-protect>", &module_info_ast, "<unwind-protect>"},
-  {"probe-directory", &module_info_protoSsystem, "probe-directory"},
-  {"from-below", &module_info_runtime, "from-below"},
-  {"fabs", &module_info_runtime, "fabs"},
-  {"unwind-protect-protected-thunk", &module_info_ast, "unwind-protect-protected-thunk"},
-  {"*obj-extension*", &module_info_protoSsystem, "*obj-extension*"},
-  {"round/", &module_info_runtime, "round/"},
-  {"locals-bindings", &module_info_ast, "locals-bindings"},
-  {"module-name-to-relpath", &module_info_ast, "module-name-to-relpath"},
-  {"binding-dynamic-extent?", &module_info_ast, "binding-dynamic-extent?"},
-  {"=", &module_info_runtime, "="},
-  {"slot-init", &module_info_boot, "slot-init"},
-  {"p2c-top", &module_info_p2c, "p2c-top"},
-  {"function-binding", &module_info_ast, "function-binding"},
-  {"<arguments>", &module_info_ast, "<arguments>"},
-  {"rev", &module_info_runtime, "rev"},
-  {"export", &module_info_boot, "export"},
-  {"pair", &module_info_macros, "pair"},
-  {"rcurry", &module_info_runtime, "rcurry"},
-  {"<ast-primitive>", &module_info_ast, "<ast-primitive>"},
-  {"zero?", &module_info_runtime, "zero?"},
-  {"truncate/", &module_info_runtime, "truncate/"},
-  {"do-stack-frames", &module_info_top, "do-stack-frames"},
-  {"<assocs>", &module_info_runtime, "<assocs>"},
-  {"handler-info-message", &module_info_boot, "handler-info-message"},
-  {"var-name", &module_info_macros, "var-name"},
-  {"map2", &module_info_runtime, "map2"},
-  {"function-body-setter", &module_info_ast, "function-body-setter"},
-  {"alternative-alternant", &module_info_ast, "alternative-alternant"},
-  {"module-name", &module_info_ast, "module-name"},
-  {"if", &module_info_boot, "if"},
-  {"write", &module_info_write, "write"},
-  {"reduce", &module_info_runtime, "reduce"},
-  {"ini-state", &module_info_runtime, "ini-state"},
-  {"$proto-boot-module-name", &module_info_ast, "$proto-boot-module-name"},
-  {"set-module-environments", &module_info_ast, "set-module-environments"},
-  {"$proto-runtime-module-name", &module_info_ast, "$proto-runtime-module-name"},
-  {"monitor-handler", &module_info_ast, "monitor-handler"},
-  {"or", &module_info_macros, "or"},
-  {"fun-arity", &module_info_boot, "fun-arity"},
-  {"assert", &module_info_macros, "assert"},
-  {"port-index", &module_info_runtime, "port-index"},
-  {"when", &module_info_macros, "when"},
-  {"load-in", &module_info_ast, "load-in"},
-  {"object<", &module_info_boot, "object<"},
-  {"assignment-form", &module_info_ast, "assignment-form"},
-  {"t+", &module_info_runtime, "t+"},
-  {"from", &module_info_runtime, "from"},
-  {"app-filename", &module_info_runtime, "app-filename"},
-  {"now-elt-setter", &module_info_runtime, "now-elt-setter"},
-  {"popf", &module_info_macros, "popf"},
-  {"compose", &module_info_runtime, "compose"},
-  {"eval", &module_info_syntax, "eval"},
-  {"program-register-setter", &module_info_ast, "program-register-setter"},
-  {"locals-body-setter", &module_info_ast, "locals-body-setter"},
-  {"let", &module_info_boot, "let"},
-  {"<bind-exit>", &module_info_ast, "<bind-exit>"},
-  {"<sequential>", &module_info_ast, "<sequential>"},
-  {"signature-nary?-setter", &module_info_ast, "signature-nary?-setter"},
-  {"sorted-app-mets", &module_info_boot, "sorted-app-mets"},
-  {"1st", &module_info_runtime, "1st"},
-  {"<global-assignment>", &module_info_ast, "<global-assignment>"},
-  {"fun-name", &module_info_boot, "fun-name"},
-  {"<", &module_info_runtime, "<"},
-  {"reference-called-function?-setter", &module_info_ast, "reference-called-function?-setter"},
-  {"slot-setter", &module_info_boot, "slot-setter"},
-  {"match-empty-list", &module_info_macros, "match-empty-list"},
-  {"<string-port>", &module_info_runtime, "<string-port>"},
-  {"need-implementation", &module_info_macros, "need-implementation"},
-  {"fix-let-types", &module_info_ast, "fix-let-types"},
-  {"as", &module_info_runtime, "as"},
-  {"file-exists?", &module_info_protoSsystem, "file-exists?"},
-  {"function-body", &module_info_ast, "function-body"},
-  {"reference-called-function?", &module_info_ast, "reference-called-function?"},
-  {"env-object-name", &module_info_write, "env-object-name"},
-  {"uppercase?", &module_info_runtime, "uppercase?"},
-  {"logand", &module_info_runtime, "logand"},
-  {"module-exports", &module_info_ast, "module-exports"},
-  {"~=", &module_info_runtime, "~="},
-  {"df", &module_info_boot, "df"},
-  {"str", &module_info_runtime, "str"},
-  {"exe-filename", &module_info_protoSsystem, "exe-filename"},
-  {"signature-specs", &module_info_ast, "signature-specs"},
-  {"sig", &module_info_runtime, "sig"},
-  {"dv", &module_info_boot, "dv"},
-  {"components-to-pathname", &module_info_protoSsystem, "components-to-pathname"},
-  {"<col>", &module_info_boot, "<col>"},
-  {"<serious-condition>", &module_info_runtime, "<serious-condition>"},
-  {"fin-state?", &module_info_runtime, "fin-state?"},
-  {"write-to-string", &module_info_write, "write-to-string"},
-  {"<fab-list>", &module_info_ast, "<fab-list>"},
-  {"max", &module_info_runtime, "max"},
-  {"assignment-binding", &module_info_ast, "assignment-binding"},
   {"*proto-root*", &module_info_protoSsystem, "*proto-root*"},
-  {"signature-bindings-setter", &module_info_ast, "signature-bindings-setter"},
-  {"function-value", &module_info_ast, "function-value"},
-  {"ceiling/", &module_info_runtime, "ceiling/"},
-  {"cat", &module_info_macros, "cat"},
-  {"open-input-file", &module_info_runtime, "open-input-file"},
-  {"error", &module_info_boot, "error"},
-  {"module-target-environment", &module_info_ast, "module-target-environment"},
-  {"open-output-file", &module_info_runtime, "open-output-file"},
-  {"probe-module", &module_info_ast, "probe-module"},
-  {"<=", &module_info_runtime, "<="},
-  {"%pair", &module_info_boot, "%pair"},
-  {"seq", &module_info_boot, "seq"},
-  {"id-hash", &module_info_runtime, "id-hash"},
-  {"tup", &module_info_macros, "tup"},
-  {"from-above", &module_info_runtime, "from-above"},
-  {"pushf", &module_info_macros, "pushf"},
-  {"<vec>", &module_info_boot, "<vec>"},
-  {"quote", &module_info_boot, "quote"},
-  {"table-protocol", &module_info_runtime, "table-protocol"},
-  {"pick", &module_info_runtime, "pick"},
-  {"pop-last!", &module_info_runtime, "pop-last!"},
-  {"<runtime-assignment>", &module_info_ast, "<runtime-assignment>"},
-  {"do-static-global-bindings", &module_info_ast, "do-static-global-bindings"},
-  {">", &module_info_runtime, ">"},
-  {"<condition>", &module_info_runtime, "<condition>"},
-  {"loc", &module_info_boot, "loc"},
-  {"call-with-input-file", &module_info_runtime, "call-with-input-file"},
-  {"map-keyed", &module_info_runtime, "map-keyed"},
-  {"slot-owner", &module_info_boot, "slot-owner"},
-  {"display", &module_info_write, "display"},
-  {"file-type", &module_info_protoSsystem, "file-type"},
-  {"function-bindings", &module_info_ast, "function-bindings"},
-  {"floor", &module_info_runtime, "floor"},
-  {"label-components", &module_info_protoSsystem, "label-components"},
-  {"identity", &module_info_runtime, "identity"},
-  {"dec", &module_info_macros, "dec"},
-  {"nil", &module_info_boot, "nil"},
-  {"make-sym", &module_info_macros, "make-sym"},
-  {"newline", &module_info_runtime, "newline"},
-  {"address-of", &module_info_runtime, "address-of"},
-  {"install-initial-bindings", &module_info_ast, "install-initial-bindings"},
-  {"<ast-method>", &module_info_ast, "<ast-method>"},
-  {"<string-output-port>", &module_info_runtime, "<string-output-port>"},
-  {"case-insensitive-string-equal", &module_info_runtime, "case-insensitive-string-equal"},
-  {"<slot>", &module_info_boot, "<slot>"},
-  {"odd?", &module_info_runtime, "odd?"},
-  {"call-with-string-input-port", &module_info_runtime, "call-with-string-input-port"},
-  {"met-app?", &module_info_boot, "met-app?"},
-  {"make-handler", &module_info_runtime, "make-handler"},
-  {"signature-value-setter", &module_info_ast, "signature-value-setter"},
-  {"from-by", &module_info_runtime, "from-by"},
-  {"reference-binding", &module_info_ast, "reference-binding"},
-  {"cat2", &module_info_runtime, "cat2"},
-  {"abs", &module_info_runtime, "abs"},
-  {"tail", &module_info_boot, "tail"},
-  {"do-named-static-global-bindings", &module_info_ast, "do-named-static-global-bindings"},
-  {"binding-global-box-setter", &module_info_ast, "binding-global-box-setter"},
-  {"report-undefined-global-bindings", &module_info_ast, "report-undefined-global-bindings"},
-  {"environment-uses-modules", &module_info_ast, "environment-uses-modules"},
-  {"<sym>", &module_info_boot, "<sym>"},
-  {"pop", &module_info_runtime, "pop"},
-  {"alphabetic?", &module_info_runtime, "alphabetic?"},
-  {"push", &module_info_runtime, "push"},
-  {"str-to-num", &module_info_runtime, "str-to-num"},
-  {"lognot", &module_info_runtime, "lognot"},
-  {"compile-time-program", &module_info_ast, "compile-time-program"},
-  {"list", &module_info_runtime, "list"},
-  {"round", &module_info_runtime, "round"},
-  {"*", &module_info_runtime, "*"},
-  {"fab", &module_info_runtime, "fab"},
-  {"elt", &module_info_runtime, "elt"},
-  {"modulo", &module_info_runtime, "modulo"},
-  {"num-to-str", &module_info_runtime, "num-to-str"},
-  {"signature-bindings", &module_info_ast, "signature-bindings"},
-  {"locative-value-setter", &module_info_runtime, "locative-value-setter"},
-  {"current-gc-state", &module_info_runtime, "current-gc-state"},
-  {"<tup>", &module_info_boot, "<tup>"},
-  {"bound?-reference", &module_info_ast, "bound?-reference"},
-  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
-  {"load", &module_info_top, "load"},
-  {"now-key", &module_info_runtime, "now-key"},
-  {"as-uppercase", &module_info_runtime, "as-uppercase"},
-  {"next-method", &module_info_macros, "next-method"},
-  {"monitor-main-thunk", &module_info_ast, "monitor-main-thunk"},
-  {"push-last!", &module_info_runtime, "push-last!"},
-  {"curry", &module_info_runtime, "curry"},
-  {"application-arguments", &module_info_ast, "application-arguments"},
-  {"fun-nary?", &module_info_boot, "fun-nary?"},
-  {"*print-base*", &module_info_runtime, "*print-base*"},
-  {"<locals>", &module_info_ast, "<locals>"},
-  {"ceiling", &module_info_runtime, "ceiling"},
-  {"del", &module_info_runtime, "del"},
-  {"find-environment-module", &module_info_ast, "find-environment-module"},
-  {"dm", &module_info_boot, "dm"},
-  {"<module-binding>", &module_info_ast, "<module-binding>"},
-  {"binding-mutable?", &module_info_ast, "binding-mutable?"},
-  {"fix-let-arguments-setter", &module_info_ast, "fix-let-arguments-setter"},
-  {"<tab>", &module_info_runtime, "<tab>"},
-  {"last", &module_info_runtime, "last"},
-  {"module-loader-module-type", &module_info_ast, "module-loader-module-type"},
-  {"sub-setter", &module_info_runtime, "sub-setter"},
-  {"table-growth-factor", &module_info_runtime, "table-growth-factor"},
-  {"p2c-def-app", &module_info_p2c, "p2c-def-app"},
-  {"nul", &module_info_boot, "nul"},
-  {"<step>", &module_info_runtime, "<step>"},
-  {"parse-in", &module_info_top, "parse-in"},
-  {"components-parent-directory", &module_info_protoSsystem, "components-parent-directory"},
-  {"os-binding-value-setter", &module_info_protoSsystem, "os-binding-value-setter"},
-  {"write-string", &module_info_runtime, "write-string"},
-  {"<port>", &module_info_runtime, "<port>"},
-  {"<fix-let>", &module_info_ast, "<fix-let>"},
-  {"<program>", &module_info_ast, "<program>"},
-  {"<log>", &module_info_boot, "<log>"},
-  {"mif", &module_info_boot, "mif"},
-  {"<module>", &module_info_ast, "<module>"},
-  {"%isa", &module_info_boot, "%isa"},
-  {"dc", &module_info_boot, "dc"},
-  {"os-binding-value", &module_info_protoSsystem, "os-binding-value"},
-  {"<range>", &module_info_runtime, "<range>"},
-  {"dg", &module_info_boot, "dg"},
-  {"len", &module_info_runtime, "len"},
-  {"read-char", &module_info_runtime, "read-char"},
-  {"do", &module_info_runtime, "do"},
-  {"empty?", &module_info_macros, "empty?"},
-  {"<application>", &module_info_ast, "<application>"},
-  {"buf", &module_info_runtime, "buf"},
-  {"inc", &module_info_macros, "inc"},
-  {"isa?", &module_info_boot, "isa?"},
-  {"match-sublist", &module_info_macros, "match-sublist"},
-  {"apply", &module_info_boot, "apply"},
-  {"obj-filename", &module_info_protoSsystem, "obj-filename"},
-  {"lowercase?", &module_info_runtime, "lowercase?"},
-  {"os-name", &module_info_protoSsystem, "os-name"},
-  {"<bound?>", &module_info_ast, "<bound?>"},
-  {"condition-message", &module_info_runtime, "condition-message"},
-  {"<list>", &module_info_runtime, "<list>"},
-  {"binding-native-to?", &module_info_ast, "binding-native-to?"},
-  {"<monitor>", &module_info_ast, "<monitor>"},
-  {"flo-bits", &module_info_runtime, "flo-bits"},
-  {"case-insensitive-string-hash", &module_info_runtime, "case-insensitive-string-hash"},
-  {"condition-arguments", &module_info_runtime, "condition-arguments"},
-  {"object-parents", &module_info_boot, "object-parents"},
-  {"binding-module-name", &module_info_ast, "binding-module-name"},
-  {"now-elt", &module_info_runtime, "now-elt"},
-  {"-", &module_info_runtime, "-"},
-  {"del-key", &module_info_runtime, "del-key"},
-  {"isa", &module_info_boot, "isa"},
-  {"macro-expand", &module_info_boot, "macro-expand"},
-  {"fix-let-bindings-setter", &module_info_ast, "fix-let-bindings-setter"},
-  {"neg?", &module_info_runtime, "neg?"},
-  {"<ast-primitive-definition>", &module_info_ast, "<ast-primitive-definition>"},
-  {"locative-value", &module_info_runtime, "locative-value"},
-  {"fun", &module_info_boot, "fun"},
-  {"monitor-type", &module_info_ast, "monitor-type"},
-  {"<global-reference>", &module_info_ast, "<global-reference>"},
-  {"<gen>", &module_info_boot, "<gen>"},
-  {"fab-p2c-module", &module_info_ast, "fab-p2c-module"},
-  {"pathname-to-components", &module_info_protoSsystem, "pathname-to-components"},
-  {"<ast-macro-definition>", &module_info_ast, "<ast-macro-definition>"},
-  {"read", &module_info_runtime, "read"},
-  {"remainder", &module_info_runtime, "remainder"},
-  {"alternative-condition", &module_info_ast, "alternative-condition"},
-  {"fix-let-body", &module_info_ast, "fix-let-body"},
-  {"==", &module_info_macros, "=="},
-  {"default-handler", &module_info_runtime, "default-handler"},
-  {"to-str", &module_info_runtime, "to-str"},
-  {"eof-object?", &module_info_runtime, "eof-object?"},
-  {"signature-names", &module_info_ast, "signature-names"},
-  {"free-implemented-foreign-bindings", &module_info_ast, "free-implemented-foreign-bindings"},
-  {"fun-mets", &module_info_boot, "fun-mets"},
-  {"monitor-info", &module_info_ast, "monitor-info"},
-  {"binding-dynamic-extent?-setter", &module_info_ast, "binding-dynamic-extent?-setter"},
-  {"write-char", &module_info_runtime, "write-char"},
-  {"fix-let-body-setter", &module_info_ast, "fix-let-body-setter"},
-  {"application-function", &module_info_ast, "application-function"},
-  {"elt-setter", &module_info_runtime, "elt-setter"},
-  {"create-directory", &module_info_protoSsystem, "create-directory"},
-  {"numeric?", &module_info_runtime, "numeric?"},
-  {"%next-methods", &module_info_boot, "%next-methods"},
-  {"port-contents", &module_info_runtime, "port-contents"},
-  {"binding-locative", &module_info_ast, "binding-locative"},
-  {"<alternative>", &module_info_ast, "<alternative>"},
-  {"signature-specs-setter", &module_info_ast, "signature-specs-setter"},
-  {"function-debug-name-setter", &module_info_ast, "function-debug-name-setter"},
-  {"as-lowercase", &module_info_runtime, "as-lowercase"},
-  {"not", &module_info_boot, "not"},
-  {"sequentialize", &module_info_ast, "sequentialize"},
-  {"try", &module_info_boot, "try"},
-  {"<chr>", &module_info_boot, "<chr>"},
-  {"application-known?", &module_info_ast, "application-known?"},
-  {"table-shrink-threshold", &module_info_runtime, "table-shrink-threshold"},
-  {"from-to-by", &module_info_runtime, "from-to-by"},
-  {"map", &module_info_macros, "map"},
-  {"locals-functions", &module_info_ast, "locals-functions"},
-  {"close-output-port", &module_info_runtime, "close-output-port"},
-  {"fix-let-types-setter", &module_info_ast, "fix-let-types-setter"},
-  {"2nd", &module_info_runtime, "2nd"},
-  {"min", &module_info_runtime, "min"},
-  {"locals-body", &module_info_ast, "locals-body"},
-  {"<any>", &module_info_boot, "<any>"},
-  {"nxt-state", &module_info_runtime, "nxt-state"},
-  {"binding-name", &module_info_ast, "binding-name"},
-  {"<definition>", &module_info_ast, "<definition>"},
-  {"fin", &module_info_boot, "fin"},
-  {"truncate", &module_info_runtime, "truncate"},
-  {"def-programs", &module_info_ast, "def-programs"},
-  {"gen-add-met", &module_info_boot, "gen-add-met"},
-  {"object-slots", &module_info_boot, "object-slots"},
-  {"<opts>", &module_info_boot, "<opts>"},
-  {"char-ready?", &module_info_runtime, "char-ready?"},
-  {"init-environment-for-eval", &module_info_ast, "init-environment-for-eval"},
-  {"ds", &module_info_boot, "ds"},
-  {"<predefined-application>", &module_info_ast, "<predefined-application>"},
-  {"nul?", &module_info_runtime, "nul?"},
-  {"floor/", &module_info_runtime, "floor/"},
-  {"<error>", &module_info_runtime, "<error>"},
-  {"function-nary?", &module_info_ast, "function-nary?"},
-  {"signature-names-setter", &module_info_ast, "signature-names-setter"},
-  {"slot-type", &module_info_boot, "slot-type"},
-  {"do2", &module_info_runtime, "do2"},
-  {"reference-frame-offset", &module_info_ast, "reference-frame-offset"},
-  {"<ast-generic>", &module_info_ast, "<ast-generic>"},
-  {"fun-specs", &module_info_boot, "fun-specs"},
-  {"+", &module_info_runtime, "+"},
-  {"function-signature-setter", &module_info_ast, "function-signature-setter"},
-  {"select", &module_info_macros, "select"},
-  {"<int>", &module_info_boot, "<int>"},
-  {"pos", &module_info_runtime, "pos"},
-  {"cat!", &module_info_runtime, "cat!"},
-  {"find-setter", &module_info_boot, "find-setter"},
-  {"<constant>", &module_info_ast, "<constant>"},
-  {"var-type", &module_info_macros, "var-type"},
-  {"load-module", &module_info_ast, "load-module"},
-  {"pos?", &module_info_runtime, "pos?"},
-  {"binding-global-box", &module_info_ast, "binding-global-box"},
-  {"binding-value", &module_info_ast, "binding-value"},
-  {"function-signature", &module_info_ast, "function-signature"},
-  {"application-known?-setter", &module_info_ast, "application-known?-setter"},
-  {"proto-filename", &module_info_protoSsystem, "proto-filename"},
-  {"<num>", &module_info_boot, "<num>"},
-  {"ct-also", &module_info_boot, "ct-also"},
-  {"signature-nary?", &module_info_ast, "signature-nary?"},
-  {"dlet", &module_info_macros, "dlet"},
-  {"program-register", &module_info_ast, "program-register"},
-  {"global-box-value", &module_info_ast, "global-box-value"},
-  {"binding-value-setter", &module_info_ast, "binding-value-setter"},
-  {"<str>", &module_info_boot, "<str>"},
-  {"module-binding", &module_info_ast, "module-binding"},
-  {"case", &module_info_macros, "case"},
-  {"<file-port>", &module_info_runtime, "<file-port>"},
-  {"read-file", &module_info_top, "read-file"},
-  {"unwind-protect-cleanup-thunk", &module_info_ast, "unwind-protect-cleanup-thunk"},
-  {"monitor-test", &module_info_ast, "monitor-test"},
-  {"assignment-reference", &module_info_ast, "assignment-reference"},
-  {"application-binding", &module_info_ast, "application-binding"},
-  {"application-tail?", &module_info_ast, "application-tail?"},
-  {"<simple-error>", &module_info_runtime, "<simple-error>"},
-  {"make-setter-name", &module_info_macros, "make-setter-name"},
-  {"%define-method", &module_info_boot, "%define-method"},
-  {"ast-define-binding", &module_info_ast, "ast-define-binding"},
-  {"<regular-application>", &module_info_ast, "<regular-application>"},
-  {"gensym", &module_info_macros, "gensym"},
-  {"ash", &module_info_runtime, "ash"},
-  {"to-digit", &module_info_runtime, "to-digit"},
-  {"top", &module_info_top, "top"},
-  {"slot-getter", &module_info_boot, "slot-getter"},
-  {"object-direct-parents", &module_info_boot, "object-direct-parents"},
-  {"slot-value-setter", &module_info_boot, "slot-value-setter"},
-  {"<module-loader>", &module_info_ast, "<module-loader>"},
-  {"p2c-build-app", &module_info_p2c, "p2c-build-app"},
-  {"vec", &module_info_runtime, "vec"},
-  {"module-syntax-environment", &module_info_ast, "module-syntax-environment"},
-  {"<handler-info>", &module_info_runtime, "<handler-info>"},
-  {"match-atom", &module_info_macros, "match-atom"},
-  {"false-or", &module_info_runtime, "false-or"},
-  {"remove-modules-by-name!", &module_info_ast, "remove-modules-by-name!"},
-  {"bind-exit-main-fun", &module_info_ast, "bind-exit-main-fun"},
-  {"function-debug-name", &module_info_ast, "function-debug-name"},
-  {"always", &module_info_runtime, "always"},
-  {"*path-separator*", &module_info_protoSsystem, "*path-separator*"},
-  {"<static-global-environment>", &module_info_ast, "<static-global-environment>"},
-  {"writeln", &module_info_write, "writeln"},
-  {"def-list", &module_info_ast, "def-list"},
-  {"sub", &module_info_runtime, "sub"},
-  {"<local-reference>", &module_info_ast, "<local-reference>"},
-  {"<real-reference>", &module_info_ast, "<real-reference>"},
-  {"table-growth-threshold", &module_info_runtime, "table-growth-threshold"},
-  {"logbit?", &module_info_runtime, "logbit?"},
-  {"fix-let-arguments", &module_info_ast, "fix-let-arguments"},
-  {"lsh", &module_info_runtime, "lsh"},
-  {"use", &module_info_boot, "use"},
-  {"binding-type", &module_info_ast, "binding-type"},
-  {"mem?", &module_info_runtime, "mem?"},
-  {"objectify-quotation", &module_info_ast, "objectify-quotation"},
-  {"binding-kind", &module_info_ast, "binding-kind"},
-  {"<passive-program>", &module_info_ast, "<passive-program>"},
-  {"find-key", &module_info_runtime, "find-key"},
-  {"in", &module_info_runtime, "in"},
-  {"object-name", &module_info_write, "object-name"},
-  {"<local-assignment>", &module_info_ast, "<local-assignment>"},
-  {"fill", &module_info_runtime, "fill"},
-  {"ct", &module_info_boot, "ct"},
-  {"alter", &module_info_runtime, "alter"},
-  {"out", &module_info_runtime, "out"},
-  {"<ast-signature>", &module_info_ast, "<ast-signature>"},
-  {"from-below-by", &module_info_runtime, "from-below-by"},
-  {"p2c-clean", &module_info_p2c, "p2c-clean"},
-  {"<output-port>", &module_info_runtime, "<output-port>"},
-  {"and", &module_info_macros, "and"},
-  {"binding-type-setter", &module_info_ast, "binding-type-setter"},
-  {"locals-functions-setter", &module_info_ast, "locals-functions-setter"},
-  {"reference-frame-number", &module_info_ast, "reference-frame-number"},
   {"add", &module_info_runtime, "add"},
-  {"<compile-time>", &module_info_ast, "<compile-time>"},
-  {"call-with-string-output-port", &module_info_runtime, "call-with-string-output-port"},
-  {"<buf>", &module_info_runtime, "<buf>"},
-  {"<input-port>", &module_info_runtime, "<input-port>"},
-  {"for", &module_info_macros, "for"},
-  {"lst", &module_info_boot, "lst"},
-  {"find-getter", &module_info_boot, "find-getter"},
-  {"object-direct-slots", &module_info_boot, "object-direct-slots"},
+  {"quote", &module_info_boot, "quote"},
+  {"<handler-info>", &module_info_runtime, "<handler-info>"},
+  {"binding-global-box", &module_info_ast, "binding-global-box"},
+  {"round", &module_info_runtime, "round"},
+  {"elt", &module_info_runtime, "elt"},
+  {"condition-arguments", &module_info_runtime, "condition-arguments"},
+  {"<sequential>", &module_info_ast, "<sequential>"},
+  {"<unwind-protect>", &module_info_ast, "<unwind-protect>"},
+  {"<num>", &module_info_boot, "<num>"},
+  {"from-below-by", &module_info_runtime, "from-below-by"},
+  {"fun", &module_info_boot, "fun"},
+  {"binding-dynamic-extent?", &module_info_ast, "binding-dynamic-extent?"},
+  {"ds", &module_info_boot, "ds"},
+  {"elt-setter", &module_info_runtime, "elt-setter"},
+  {"identity", &module_info_runtime, "identity"},
+  {"from", &module_info_runtime, "from"},
+  {"binding-type-setter", &module_info_ast, "binding-type-setter"},
+  {"logbit?", &module_info_runtime, "logbit?"},
+  {"fix-let-bindings", &module_info_ast, "fix-let-bindings"},
+  {"<slot>", &module_info_boot, "<slot>"},
+  {"<module-binding>", &module_info_ast, "<module-binding>"},
+  {"assignment-binding", &module_info_ast, "assignment-binding"},
+  {"function-nary?", &module_info_ast, "function-nary?"},
+  {"bound?", &module_info_boot, "bound?"},
+  {"nul", &module_info_boot, "nul"},
   {"~==", &module_info_runtime, "~=="},
-  {"<programs>", &module_info_ast, "<programs>"},
-  {"alternative-consequent", &module_info_ast, "alternative-consequent"},
-  {"empty", &module_info_runtime, "empty"},
-  {"lab", &module_info_boot, "lab"},
-  {"ast-evaluate", &module_info_ast, "ast-evaluate"},
+  {"<raw-constant>", &module_info_ast, "<raw-constant>"},
+  {"set-module-environments", &module_info_ast, "set-module-environments"},
+  {"monitor-info", &module_info_ast, "monitor-info"},
+  {"even?", &module_info_runtime, "even?"},
+  {"str", &module_info_runtime, "str"},
+  {"signature-bindings-setter", &module_info_ast, "signature-bindings-setter"},
+  {"push-last!", &module_info_runtime, "push-last!"},
+  {"call-with-string-input-port", &module_info_runtime, "call-with-string-input-port"},
+  {"fix-let-arguments", &module_info_ast, "fix-let-arguments"},
+  {"p2c-def-app", &module_info_p2c, "p2c-def-app"},
+  {"var-type", &module_info_macros, "var-type"},
+  {"binding-locative", &module_info_ast, "binding-locative"},
+  {"backtrace", &module_info_top, "backtrace"},
+  {"top", &module_info_top, "top"},
+  {"popf", &module_info_macros, "popf"},
+  {"<chr>", &module_info_boot, "<chr>"},
+  {"len", &module_info_runtime, "len"},
+  {"<opts>", &module_info_boot, "<opts>"},
   {"do-module-loader-modules", &module_info_ast, "do-module-loader-modules"},
-  {"<met>", &module_info_boot, "<met>"},
+  {"$proto-boot-module-name", &module_info_ast, "$proto-boot-module-name"},
+  {"+", &module_info_runtime, "+"},
+  {"next-method", &module_info_macros, "next-method"},
+  {"<union>", &module_info_boot, "<union>"},
+  {"from-to", &module_info_runtime, "from-to"},
+  {"alternative-alternant", &module_info_ast, "alternative-alternant"},
+  {"slot", &module_info_boot, "slot"},
+  {"<ast-primitive>", &module_info_ast, "<ast-primitive>"},
+  {"slot-getter", &module_info_boot, "slot-getter"},
+  {"free-implemented-foreign-bindings", &module_info_ast, "free-implemented-foreign-bindings"},
+  {"char-ready?", &module_info_runtime, "char-ready?"},
+  {"match-atom", &module_info_macros, "match-atom"},
+  {"signature-names-setter", &module_info_ast, "signature-names-setter"},
+  {"str-to-num", &module_info_runtime, "str-to-num"},
+  {"to-str", &module_info_runtime, "to-str"},
+  {"in", &module_info_runtime, "in"},
+  {"as-lowercase", &module_info_runtime, "as-lowercase"},
+  {"loc", &module_info_boot, "loc"},
+  {"fix-let-bindings-setter", &module_info_ast, "fix-let-bindings-setter"},
+  {"ct-also", &module_info_boot, "ct-also"},
+  {"%next-methods", &module_info_boot, "%next-methods"},
+  {"<log>", &module_info_boot, "<log>"},
+  {"neg?", &module_info_runtime, "neg?"},
+  {"binding-info", &module_info_ast, "binding-info"},
+  {"file-exists?", &module_info_protoSsystem, "file-exists?"},
+  {"<simple-error>", &module_info_runtime, "<simple-error>"},
+  {"fun-specs", &module_info_boot, "fun-specs"},
+  {"application-binding", &module_info_ast, "application-binding"},
+  {"list", &module_info_runtime, "list"},
+  {"tail", &module_info_boot, "tail"},
+  {"any?", &module_info_runtime, "any?"},
+  {"<program>", &module_info_ast, "<program>"},
+  {"<ast-method>", &module_info_ast, "<ast-method>"},
   {"all?", &module_info_runtime, "all?"},
+  {"<range>", &module_info_runtime, "<range>"},
+  {"<subclass>", &module_info_boot, "<subclass>"},
+  {"binding-kind", &module_info_ast, "binding-kind"},
+  {"<condition>", &module_info_runtime, "<condition>"},
+  {"<ast-generic>", &module_info_ast, "<ast-generic>"},
+  {"function-bindings", &module_info_ast, "function-bindings"},
+  {"fill", &module_info_runtime, "fill"},
+  {"close-output-port", &module_info_runtime, "close-output-port"},
+  {"*c-extension*", &module_info_protoSsystem, "*c-extension*"},
+  {"<ast-macro-definition>", &module_info_ast, "<ast-macro-definition>"},
+  {"class-direct-slots", &module_info_boot, "class-direct-slots"},
+  {"$default-handler-info", &module_info_runtime, "$default-handler-info"},
+  {"load", &module_info_top, "load"},
+  {"==", &module_info_macros, "=="},
+  {"1st", &module_info_runtime, "1st"},
+  {"module-name", &module_info_ast, "module-name"},
+  {"probe-directory", &module_info_protoSsystem, "probe-directory"},
+  {"<string-port>", &module_info_runtime, "<string-port>"},
+  {"<port>", &module_info_runtime, "<port>"},
+  {"<any>", &module_info_boot, "<any>"},
+  {"pop", &module_info_runtime, "pop"},
+  {"vec", &module_info_runtime, "vec"},
+  {"numeric?", &module_info_runtime, "numeric?"},
+  {"%define-method", &module_info_boot, "%define-method"},
+  {"p2c-build-app", &module_info_p2c, "p2c-build-app"},
+  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
+  {"function-debug-name", &module_info_ast, "function-debug-name"},
+  {"<singleton>", &module_info_boot, "<singleton>"},
+  {"for", &module_info_macros, "for"},
+  {"load-module", &module_info_ast, "load-module"},
+  {"<passive-program>", &module_info_ast, "<passive-program>"},
+  {"writeln", &module_info_write, "writeln"},
+  {"<list>", &module_info_runtime, "<list>"},
+  {"macro-expand", &module_info_boot, "macro-expand"},
+  {"<file-port>", &module_info_runtime, "<file-port>"},
+  {"var-name", &module_info_macros, "var-name"},
+  {"<local-binding>", &module_info_ast, "<local-binding>"},
+  {"match-unquote", &module_info_macros, "match-unquote"},
+  {"function-signature-setter", &module_info_ast, "function-signature-setter"},
+  {"alter", &module_info_runtime, "alter"},
+  {"parent-directory", &module_info_protoSsystem, "parent-directory"},
+  {"<constant>", &module_info_ast, "<constant>"},
+  {"%pair", &module_info_boot, "%pair"},
+  {"df", &module_info_boot, "df"},
+  {"<str-tab>", &module_info_runtime, "<str-tab>"},
+  {"app-args", &module_info_runtime, "app-args"},
+  {"isa?", &module_info_boot, "isa?"},
+  {"default-handler", &module_info_runtime, "default-handler"},
+  {"from-by", &module_info_runtime, "from-by"},
+  {"p2c-clean", &module_info_p2c, "p2c-clean"},
+  {"select", &module_info_macros, "select"},
+  {"reference-binding", &module_info_ast, "reference-binding"},
+  {"<static-global-environment>", &module_info_ast, "<static-global-environment>"},
+  {"components-basename", &module_info_protoSsystem, "components-basename"},
+  {"<input-port>", &module_info_runtime, "<input-port>"},
+  {"del-keys", &module_info_runtime, "del-keys"},
+  {"type-object", &module_info_boot, "type-object"},
+  {"fin", &module_info_boot, "fin"},
+  {"init-environment-for-eval", &module_info_ast, "init-environment-for-eval"},
+  {"rep", &module_info_boot, "rep"},
+  {"<handler>", &module_info_runtime, "<handler>"},
+  {"objectify", &module_info_ast, "objectify"},
+  {"module-exports", &module_info_ast, "module-exports"},
+  {"/", &module_info_runtime, "/"},
+  {"app-filename", &module_info_runtime, "app-filename"},
+  {"add-src-path", &module_info_protoSsystem, "add-src-path"},
+  {"<step>", &module_info_runtime, "<step>"},
+  {"program-register", &module_info_ast, "program-register"},
+  {"<compile-time>", &module_info_ast, "<compile-time>"},
+  {"<fix-let>", &module_info_ast, "<fix-let>"},
+  {"truncate", &module_info_runtime, "truncate"},
+  {"slot-init", &module_info_boot, "slot-init"},
+  {"<application>", &module_info_ast, "<application>"},
+  {"pick", &module_info_runtime, "pick"},
+  {"object-parents", &module_info_boot, "object-parents"},
+  {"pos", &module_info_runtime, "pos"},
+  {"add-build-path", &module_info_protoSsystem, "add-build-path"},
+  {"runtime-environment", &module_info_ast, "runtime-environment"},
+  {"sequentialize", &module_info_ast, "sequentialize"},
+  {"not", &module_info_boot, "not"},
+  {"binding-type", &module_info_ast, "binding-type"},
+  {"dlet", &module_info_macros, "dlet"},
+  {"min", &module_info_runtime, "min"},
+  {"del-dups", &module_info_runtime, "del-dups"},
+  {"fun-names", &module_info_boot, "fun-names"},
+  {"<real-reference>", &module_info_ast, "<real-reference>"},
+  {"fabs", &module_info_runtime, "fabs"},
+  {"<arguments>", &module_info_ast, "<arguments>"},
+  {"<module>", &module_info_ast, "<module>"},
+  {"binding-name", &module_info_ast, "binding-name"},
+  {"odd?", &module_info_runtime, "odd?"},
+  {"locals-functions", &module_info_ast, "locals-functions"},
+  {"use", &module_info_boot, "use"},
+  {"from-above-by", &module_info_runtime, "from-above-by"},
+  {"dec", &module_info_macros, "dec"},
+  {"id-hash", &module_info_runtime, "id-hash"},
+  {"class-direct-children", &module_info_boot, "class-direct-children"},
+  {"lab", &module_info_boot, "lab"},
+  {"table-shrink-threshold", &module_info_runtime, "table-shrink-threshold"},
+  {"assert", &module_info_macros, "assert"},
+  {"signature-specs", &module_info_ast, "signature-specs"},
+  {"%%macro", &module_info_boot, "%%macro"},
+  {"neg", &module_info_runtime, "neg"},
+  {"alternative-consequent", &module_info_ast, "alternative-consequent"},
+  {"object-slots", &module_info_boot, "object-slots"},
+  {"ini-state", &module_info_runtime, "ini-state"},
+  {"isa", &module_info_boot, "isa"},
+  {"init-ast", &module_info_ast, "init-ast"},
+  {"application-arguments", &module_info_ast, "application-arguments"},
+  {"as-uppercase", &module_info_runtime, "as-uppercase"},
+  {"write-string", &module_info_runtime, "write-string"},
+  {"find-environment-module", &module_info_ast, "find-environment-module"},
+  {"load-in", &module_info_ast, "load-in"},
+  {"current-gc-state", &module_info_runtime, "current-gc-state"},
+  {"table-growth-threshold", &module_info_runtime, "table-growth-threshold"},
+  {"locative-value-setter", &module_info_runtime, "locative-value-setter"},
+  {"monitor-type", &module_info_ast, "monitor-type"},
+  {"open-input-file", &module_info_runtime, "open-input-file"},
+  {"set", &module_info_boot, "set"},
+  {"eof-object?", &module_info_runtime, "eof-object?"},
+  {"from-below", &module_info_runtime, "from-below"},
+  {"case-insensitive-string-equal", &module_info_runtime, "case-insensitive-string-equal"},
+  {"match-empty-list", &module_info_macros, "match-empty-list"},
+  {"fix-let-types-setter", &module_info_ast, "fix-let-types-setter"},
+  {"fix-let-arguments-setter", &module_info_ast, "fix-let-arguments-setter"},
+  {"fin-state?", &module_info_runtime, "fin-state?"},
+  {"2nd", &module_info_runtime, "2nd"},
+  {"error", &module_info_boot, "error"},
+  {"find-setter", &module_info_boot, "find-setter"},
+  {"or", &module_info_macros, "or"},
+  {"<regular-application>", &module_info_ast, "<regular-application>"},
+  {"call-with-input-file", &module_info_runtime, "call-with-input-file"},
+  {"<type>", &module_info_boot, "<type>"},
+  {"reference-frame-offset", &module_info_ast, "reference-frame-offset"},
+  {"function-body-setter", &module_info_ast, "function-body-setter"},
+  {"alternative-condition", &module_info_ast, "alternative-condition"},
+  {"slot-owner", &module_info_boot, "slot-owner"},
+  {"os-binding-value-setter", &module_info_protoSsystem, "os-binding-value-setter"},
+  {"<runtime-assignment>", &module_info_ast, "<runtime-assignment>"},
+  {"proto-filename", &module_info_protoSsystem, "proto-filename"},
+  {"to-digit", &module_info_runtime, "to-digit"},
+  {"pair", &module_info_macros, "pair"},
+  {"locals-bindings-setter", &module_info_ast, "locals-bindings-setter"},
+  {"<buf>", &module_info_runtime, "<buf>"},
+  {"file-type", &module_info_protoSsystem, "file-type"},
+  {"c-filename", &module_info_protoSsystem, "c-filename"},
+  {"-", &module_info_runtime, "-"},
+  {"fix-let-body", &module_info_ast, "fix-let-body"},
+  {"locative-value", &module_info_runtime, "locative-value"},
+  {"binding-module-name", &module_info_ast, "binding-module-name"},
+  {"condition-message", &module_info_runtime, "condition-message"},
+  {"signature-nary?", &module_info_ast, "signature-nary?"},
+  {"call-with-output-file", &module_info_runtime, "call-with-output-file"},
+  {"<definition>", &module_info_ast, "<definition>"},
+  {"rcurry", &module_info_runtime, "rcurry"},
+  {"<module-loader>", &module_info_ast, "<module-loader>"},
+  {"del", &module_info_runtime, "del"},
+  {"function-value", &module_info_ast, "function-value"},
+  {"bound?-reference", &module_info_ast, "bound?-reference"},
+  {"<bind-exit>", &module_info_ast, "<bind-exit>"},
+  {"add-slot", &module_info_boot, "add-slot"},
+  {"head", &module_info_boot, "head"},
+  {"call-with-string-output-port", &module_info_runtime, "call-with-string-output-port"},
+  {"write", &module_info_write, "write"},
+  {"empty?", &module_info_macros, "empty?"},
+  {"<sym>", &module_info_boot, "<sym>"},
+  {"read", &module_info_runtime, "read"},
+  {"<global-assignment>", &module_info_ast, "<global-assignment>"},
+  {"dv", &module_info_boot, "dv"},
+  {"table-growth-factor", &module_info_runtime, "table-growth-factor"},
+  {"ceiling/", &module_info_runtime, "ceiling/"},
+  {"now-key", &module_info_runtime, "now-key"},
+  {"class-direct-parents", &module_info_boot, "class-direct-parents"},
+  {"application-known?", &module_info_ast, "application-known?"},
+  {"unless", &module_info_macros, "unless"},
+  {"signature-value", &module_info_ast, "signature-value"},
+  {"compile-time-program", &module_info_ast, "compile-time-program"},
+  {"report-undefined-global-bindings", &module_info_ast, "report-undefined-global-bindings"},
+  {"floor/", &module_info_runtime, "floor/"},
+  {"<local-assignment>", &module_info_ast, "<local-assignment>"},
+  {"compose", &module_info_runtime, "compose"},
+  {"<global-box>", &module_info_ast, "<global-box>"},
+  {"program-register-setter", &module_info_ast, "program-register-setter"},
+  {"create-directory", &module_info_protoSsystem, "create-directory"},
+  {"do2", &module_info_runtime, "do2"},
+  {"reference-frame-number", &module_info_ast, "reference-frame-number"},
+  {"do-stack-frames", &module_info_top, "do-stack-frames"},
+  {"<alternative>", &module_info_ast, "<alternative>"},
+  {"dc", &module_info_boot, "dc"},
+  {"sub", &module_info_runtime, "sub"},
+  {"now-elt", &module_info_runtime, "now-elt"},
+  {"function-binding", &module_info_ast, "function-binding"},
+  {"<predefined-application>", &module_info_ast, "<predefined-application>"},
+  {"<monitor>", &module_info_ast, "<monitor>"},
+  {"now-elt-setter", &module_info_runtime, "now-elt-setter"},
+  {"bind-exit-main-fun", &module_info_ast, "bind-exit-main-fun"},
+  {"signature-value-setter", &module_info_ast, "signature-value-setter"},
+  {"write-char", &module_info_runtime, "write-char"},
+  {"<bound?>", &module_info_ast, "<bound?>"},
+  {"round/", &module_info_runtime, "round/"},
+  {"*obj-extension*", &module_info_protoSsystem, "*obj-extension*"},
+  {"num-to-str", &module_info_runtime, "num-to-str"},
+  {"<tab>", &module_info_runtime, "<tab>"},
+  {"lsh", &module_info_runtime, "lsh"},
+  {"find-getter", &module_info_boot, "find-getter"},
+  {"ash", &module_info_runtime, "ash"},
+  {"case-insensitive-string-hash", &module_info_runtime, "case-insensitive-string-hash"},
+  {"if", &module_info_boot, "if"},
+  {"<str>", &module_info_boot, "<str>"},
+  {"flo-bits", &module_info_runtime, "flo-bits"},
+  {"del-key", &module_info_runtime, "del-key"},
+  {"gensym", &module_info_macros, "gensym"},
+  {"<file-output-port>", &module_info_runtime, "<file-output-port>"},
+  {"nxt-state", &module_info_runtime, "nxt-state"},
+  {"from-above", &module_info_runtime, "from-above"},
+  {"<gen>", &module_info_boot, "<gen>"},
+  {"signature-names", &module_info_ast, "signature-names"},
+  {"nil", &module_info_boot, "nil"},
+  {"address-of", &module_info_runtime, "address-of"},
+  {"table-protocol", &module_info_runtime, "table-protocol"},
+  {"newline", &module_info_runtime, "newline"},
+  {"monitor-test", &module_info_ast, "monitor-test"},
+  {"abs", &module_info_runtime, "abs"},
+  {"format", &module_info_runtime, "format"},
+  {"dm", &module_info_boot, "dm"},
+  {"exe-filename", &module_info_protoSsystem, "exe-filename"},
+  {"tup", &module_info_macros, "tup"},
+  {"slot-type", &module_info_boot, "slot-type"},
+  {"<string-output-port>", &module_info_runtime, "<string-output-port>"},
+  {"assignment-reference", &module_info_ast, "assignment-reference"},
+  {"*", &module_info_runtime, "*"},
+  {"truncate/", &module_info_runtime, "truncate/"},
+  {"and", &module_info_macros, "and"},
+  {"curry", &module_info_runtime, "curry"},
+  {"handler-info-message", &module_info_boot, "handler-info-message"},
+  {"objectify-quotation", &module_info_ast, "objectify-quotation"},
+  {"seq", &module_info_boot, "seq"},
+  {"<vec>", &module_info_boot, "<vec>"},
+  {"read-char", &module_info_runtime, "read-char"},
+  {"3rd", &module_info_runtime, "3rd"},
+  {"try", &module_info_boot, "try"},
+  {"do-static-global-bindings", &module_info_ast, "do-static-global-bindings"},
+  {"max", &module_info_runtime, "max"},
+  {"<class>", &module_info_boot, "<class>"},
+  {"sexpr-signature-parameters", &module_info_syntax, "sexpr-signature-parameters"},
+  {"pathname-to-components", &module_info_protoSsystem, "pathname-to-components"},
+  {"def-list", &module_info_ast, "def-list"},
+  {"%call-next-method", &module_info_boot, "%call-next-method"},
+  {"floor", &module_info_runtime, "floor"},
+  {"ast-define-binding", &module_info_ast, "ast-define-binding"},
+  {"display", &module_info_write, "display"},
+  {"environment-uses-modules", &module_info_ast, "environment-uses-modules"},
+  {"modulo", &module_info_runtime, "modulo"},
+  {"class-slots", &module_info_boot, "class-slots"},
+  {"default", &module_info_runtime, "default"},
+  {"eval", &module_info_syntax, "eval"},
+  {"<flat>", &module_info_boot, "<flat>"},
+  {"global-box-value-setter", &module_info_ast, "global-box-value-setter"},
+  {"unwind-protect-cleanup-thunk", &module_info_ast, "unwind-protect-cleanup-thunk"},
+  {"*proto-extension*", &module_info_protoSsystem, "*proto-extension*"},
+  {"find-key", &module_info_runtime, "find-key"},
+  {"reduce+", &module_info_runtime, "reduce+"},
+  {"<met>", &module_info_boot, "<met>"},
+  {"map", &module_info_macros, "map"},
+  {"application-function", &module_info_ast, "application-function"},
+  {"$permanent-hash-state", &module_info_runtime, "$permanent-hash-state"},
+  {"nul?", &module_info_runtime, "nul?"},
+  {"empty", &module_info_runtime, "empty"},
+  {"do-named-static-global-bindings", &module_info_ast, "do-named-static-global-bindings"},
+  {"binding-value-setter", &module_info_ast, "binding-value-setter"},
+  {"port-index", &module_info_runtime, "port-index"},
+  {"<local-reference>", &module_info_ast, "<local-reference>"},
   {"components-last", &module_info_protoSsystem, "components-last"},
+  {"lst", &module_info_boot, "lst"},
+  {"reference-called-function?-setter", &module_info_ast, "reference-called-function?-setter"},
+  {"monitor-handler", &module_info_ast, "monitor-handler"},
+  {"<tup>", &module_info_boot, "<tup>"},
+  {"first-then", &module_info_runtime, "first-then"},
+  {"module-binding", &module_info_ast, "module-binding"},
+  {"remove-modules-by-name!", &module_info_ast, "remove-modules-by-name!"},
+  {"remainder", &module_info_runtime, "remainder"},
+  {"fab-class", &module_info_boot, "fab-class"},
+  {"logior", &module_info_runtime, "logior"},
+  {"fun-value", &module_info_boot, "fun-value"},
+  {"<assocs>", &module_info_runtime, "<assocs>"},
+  {"*print-base*", &module_info_runtime, "*print-base*"},
+  {"<=", &module_info_runtime, "<="},
+  {"type-elts", &module_info_boot, "type-elts"},
+  {"=", &module_info_runtime, "="},
+  {"map2", &module_info_runtime, "map2"},
+  {"handler-matches?", &module_info_runtime, "handler-matches?"},
+  {"<binding>", &module_info_ast, "<binding>"},
+  {"lowercase?", &module_info_runtime, "lowercase?"},
+  {"<lst>", &module_info_boot, "<lst>"},
+  {"pushf", &module_info_macros, "pushf"},
+  {"<reference>", &module_info_ast, "<reference>"},
+  {"sorted-app-mets", &module_info_boot, "sorted-app-mets"},
+  {"pos?", &module_info_runtime, "pos?"},
+  {"%isa", &module_info_boot, "%isa"},
+  {"os-name", &module_info_protoSsystem, "os-name"},
+  {"locals-body", &module_info_ast, "locals-body"},
+  {"parse-in", &module_info_top, "parse-in"},
+  {"<string-input-port>", &module_info_runtime, "<string-input-port>"},
+  {"false-or", &module_info_runtime, "false-or"},
+  {"<serious-condition>", &module_info_runtime, "<serious-condition>"},
+  {"fab-p2c-module", &module_info_ast, "fab-p2c-module"},
+  {"<", &module_info_runtime, "<"},
+  {"<fun>", &module_info_boot, "<fun>"},
+  {"fun-name", &module_info_boot, "fun-name"},
+  {"handler-function", &module_info_runtime, "handler-function"},
+  {"logxor", &module_info_runtime, "logxor"},
+  {"class-name", &module_info_boot, "class-name"},
+  {"always", &module_info_runtime, "always"},
+  {"unwind-protect-protected-thunk", &module_info_ast, "unwind-protect-protected-thunk"},
+  {"<output-port>", &module_info_runtime, "<output-port>"},
+  {"<fab-list>", &module_info_ast, "<fab-list>"},
+  {"sub-setter", &module_info_runtime, "sub-setter"},
+  {"<seq>", &module_info_boot, "<seq>"},
+  {"push", &module_info_runtime, "push"},
+  {"p2c-top", &module_info_p2c, "p2c-top"},
+  {"open-output-file", &module_info_runtime, "open-output-file"},
+  {"buf", &module_info_runtime, "buf"},
+  {"reduce", &module_info_runtime, "reduce"},
+  {"~=", &module_info_runtime, "~="},
+  {"components-to-pathname", &module_info_protoSsystem, "components-to-pathname"},
+  {"<global-reference>", &module_info_ast, "<global-reference>"},
+  {"module-loader-module-type", &module_info_ast, "module-loader-module-type"},
+  {"def-programs", &module_info_ast, "def-programs"},
+  {"cat", &module_info_macros, "cat"},
+  {"probe-module", &module_info_ast, "probe-module"},
+  {">", &module_info_runtime, ">"},
+  {"*path-separator*", &module_info_protoSsystem, "*path-separator*"},
+  {"last", &module_info_runtime, "last"},
+  {"logand", &module_info_runtime, "logand"},
+  {"binding-dynamic-extent?-setter", &module_info_ast, "binding-dynamic-extent?-setter"},
+  {"<runtime-reference>", &module_info_ast, "<runtime-reference>"},
+  {"fix-let-body-setter", &module_info_ast, "fix-let-body-setter"},
   {"binding-info-setter", &module_info_ast, "binding-info-setter"},
   {"t<", &module_info_runtime, "t<"},
-  {"logior", &module_info_runtime, "logior"},
-  {"locals-bindings-setter", &module_info_ast, "locals-bindings-setter"},
-  {"<string-input-port>", &module_info_runtime, "<string-input-port>"},
-  {"head", &module_info_boot, "head"},
-  {"components-basename", &module_info_protoSsystem, "components-basename"},
-  {"call-with-output-file", &module_info_runtime, "call-with-output-file"},
-  {"default", &module_info_runtime, "default"},
-  {"slot-value", &module_info_boot, "slot-value"},
-  {"slot", &module_info_boot, "slot"},
-  {"signature-value", &module_info_ast, "signature-value"},
-  {"any?", &module_info_runtime, "any?"},
-  {"fun-value", &module_info_boot, "fun-value"},
-  {"<binding>", &module_info_ast, "<binding>"},
-  {"fun-names", &module_info_boot, "fun-names"},
-  {"even?", &module_info_runtime, "even?"},
-  {">=", &module_info_runtime, ">="},
-  {"match-unquote", &module_info_macros, "match-unquote"},
-  {"<map>", &module_info_runtime, "<map>"},
-  {"read-from-string", &module_info_read, "read-from-string"},
-  {"add-src-path", &module_info_protoSsystem, "add-src-path"},
-  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
-  {"<file-output-port>", &module_info_runtime, "<file-output-port>"},
-  {"file-mtime", &module_info_protoSsystem, "file-mtime"},
-  {"<flo>", &module_info_boot, "<flo>"},
-  {"first-then", &module_info_runtime, "first-then"},
-  {"constant-value", &module_info_ast, "constant-value"},
-  {"*exe-extension*", &module_info_protoSsystem, "*exe-extension*"},
-  {"assocs-test", &module_info_runtime, "assocs-test"},
-  {"neg", &module_info_runtime, "neg"},
-  {"<reference>", &module_info_ast, "<reference>"},
-  {"del-keys", &module_info_runtime, "del-keys"},
-  {"<flat>", &module_info_boot, "<flat>"},
-  {"rep", &module_info_boot, "rep"},
-  {"<runtime-reference>", &module_info_ast, "<runtime-reference>"},
-  {"handler-function", &module_info_runtime, "handler-function"},
-  {"copy-state", &module_info_runtime, "copy-state"},
-  {"runtime-environment", &module_info_ast, "runtime-environment"},
-  {"global-box-value-setter", &module_info_ast, "global-box-value-setter"},
-  {"$default-handler-info", &module_info_runtime, "$default-handler-info"},
-  {"<ast-function>", &module_info_ast, "<ast-function>"},
-  {"<handler>", &module_info_runtime, "<handler>"},
-  {"<raw-constant>", &module_info_ast, "<raw-constant>"},
-  {"close-input-port", &module_info_runtime, "close-input-port"},
-  {"add-slot", &module_info_boot, "add-slot"},
-  {"force-output", &module_info_runtime, "force-output"},
-  {"app-args", &module_info_runtime, "app-args"},
-  {"fix-let-bindings", &module_info_ast, "fix-let-bindings"},
-  {"sexpr-signature-parameters", &module_info_syntax, "sexpr-signature-parameters"},
-  {"handler-matches?", &module_info_runtime, "handler-matches?"},
-  {"<lst>", &module_info_boot, "<lst>"},
-  {"objectify", &module_info_ast, "objectify"},
-  {"collecting", &module_info_macros, "collecting"},
-  {"add-build-path", &module_info_protoSsystem, "add-build-path"},
-  {"format", &module_info_runtime, "format"},
-  {"<local-binding>", &module_info_ast, "<local-binding>"},
+  {"module-name-to-relpath", &module_info_ast, "module-name-to-relpath"},
+  {"<col>", &module_info_boot, "<col>"},
   {"<simple-condition>", &module_info_runtime, "<simple-condition>"},
-  {"%%macro", &module_info_boot, "%%macro"},
-  {"bound?", &module_info_boot, "bound?"},
-  {"from-above-by", &module_info_runtime, "from-above-by"},
-  {"%call-next-method", &module_info_boot, "%call-next-method"},
+  {"from-to-by", &module_info_runtime, "from-to-by"},
+  {"install-initial-bindings", &module_info_ast, "install-initial-bindings"},
+  {"binding-mutable?", &module_info_ast, "binding-mutable?"},
+  {"apply", &module_info_boot, "apply"},
+  {"do", &module_info_runtime, "do"},
+  {"ast-evaluate", &module_info_ast, "ast-evaluate"},
+  {"module-target-environment", &module_info_ast, "module-target-environment"},
+  {"write-to-string", &module_info_write, "write-to-string"},
+  {"force-output", &module_info_runtime, "force-output"},
+  {"fab", &module_info_runtime, "fab"},
+  {"reference-called-function?", &module_info_ast, "reference-called-function?"},
+  {"ceiling", &module_info_runtime, "ceiling"},
+  {"$proto-runtime-module-name", &module_info_ast, "$proto-runtime-module-name"},
   {"rev!", &module_info_runtime, "rev!"},
-  {"<global-box>", &module_info_ast, "<global-box>"},
-  {"<fun>", &module_info_boot, "<fun>"},
-  {"set", &module_info_boot, "set"},
+  {"lognot", &module_info_runtime, "lognot"},
+  {"as", &module_info_runtime, "as"},
+  {"sig", &module_info_runtime, "sig"},
+  {"out", &module_info_runtime, "out"},
+  {"signature-bindings", &module_info_ast, "signature-bindings"},
+  {"fun-arity", &module_info_boot, "fun-arity"},
+  {"assocs-test", &module_info_runtime, "assocs-test"},
+  {"assignment-form", &module_info_ast, "assignment-form"},
+  {"read-file", &module_info_top, "read-file"},
+  {"slot-setter", &module_info_boot, "slot-setter"},
+  {"met-app?", &module_info_boot, "met-app?"},
   {"t=", &module_info_runtime, "t="},
-  {"backtrace", &module_info_top, "backtrace"},
-  {"c-filename", &module_info_protoSsystem, "c-filename"},
-  {"from-to", &module_info_runtime, "from-to"},
-  {"3rd", &module_info_runtime, "3rd"},
-  {"*c-extension*", &module_info_protoSsystem, "*c-extension*"},
-  {"<str-tab>", &module_info_runtime, "<str-tab>"},
+  {"subtype?", &module_info_boot, "subtype?"},
+  {"case", &module_info_macros, "case"},
+  {"rev", &module_info_runtime, "rev"},
+  {"read-from-string", &module_info_read, "read-from-string"},
+  {"constant-value", &module_info_ast, "constant-value"},
+  {"locals-functions-setter", &module_info_ast, "locals-functions-setter"},
+  {"make-sym", &module_info_macros, "make-sym"},
+  {"slot-value-setter", &module_info_boot, "slot-value-setter"},
+  {"<loc>", &module_info_boot, "<loc>"},
+  {"export", &module_info_boot, "export"},
+  {"binding-value", &module_info_ast, "binding-value"},
+  {"locals-bindings", &module_info_ast, "locals-bindings"},
+  {"obj-filename", &module_info_protoSsystem, "obj-filename"},
+  {"mif", &module_info_boot, "mif"},
+  {"os-binding-value", &module_info_protoSsystem, "os-binding-value"},
+  {"quasiquote", &module_info_boot, "quasiquote"},
+  {"<file-input-port>", &module_info_runtime, "<file-input-port>"},
+  {"binding-global-box-setter", &module_info_ast, "binding-global-box-setter"},
+  {"*exe-extension*", &module_info_protoSsystem, "*exe-extension*"},
+  {"function-debug-name-setter", &module_info_ast, "function-debug-name-setter"},
+  {"<programs>", &module_info_ast, "<programs>"},
+  {"fun-mets", &module_info_boot, "fun-mets"},
+  {"class-parents", &module_info_boot, "class-parents"},
+  {"function-body", &module_info_ast, "function-body"},
+  {"hierarchical-components", &module_info_protoSsystem, "hierarchical-components"},
+  {"file-mtime", &module_info_protoSsystem, "file-mtime"},
+  {"components-parent-directory", &module_info_protoSsystem, "components-parent-directory"},
+  {"<computed-program>", &module_info_ast, "<computed-program>"},
+  {"need-implementation", &module_info_macros, "need-implementation"},
+  {"locals-body-setter", &module_info_ast, "locals-body-setter"},
+  {"collecting", &module_info_macros, "collecting"},
+  {"uppercase?", &module_info_runtime, "uppercase?"},
   {"do-keyed", &module_info_runtime, "do-keyed"},
+  {"map-keyed", &module_info_runtime, "map-keyed"},
+  {"<flo>", &module_info_boot, "<flo>"},
+  {"fix-let-types", &module_info_ast, "fix-let-types"},
+  {"t+", &module_info_runtime, "t+"},
+  {"cat2", &module_info_runtime, "cat2"},
+  {"copy-state", &module_info_runtime, "copy-state"},
+  {"mem?", &module_info_runtime, "mem?"},
+  {"signature-specs-setter", &module_info_ast, "signature-specs-setter"},
+  {"zero?", &module_info_runtime, "zero?"},
+  {"alphabetic?", &module_info_runtime, "alphabetic?"},
+  {"signature-nary?-setter", &module_info_ast, "signature-nary?-setter"},
+  {"match-sublist", &module_info_macros, "match-sublist"},
+  {"when", &module_info_macros, "when"},
+  {"env-object-name", &module_info_ast, "env-object-name"},
+  {"<ast-function>", &module_info_ast, "<ast-function>"},
+  {"slot-value", &module_info_boot, "slot-value"},
+  {"label-components", &module_info_protoSsystem, "label-components"},
+  {"<locals>", &module_info_ast, "<locals>"},
+  {"function-signature", &module_info_ast, "function-signature"},
+  {"gen-add-met", &module_info_boot, "gen-add-met"},
+  {"application-known?-setter", &module_info_ast, "application-known?-setter"},
+  {"cat!", &module_info_runtime, "cat!"},
+  {"monitor-main-thunk", &module_info_ast, "monitor-main-thunk"},
+  {"application-tail?", &module_info_ast, "application-tail?"},
+  {"ct", &module_info_boot, "ct"},
+  {"type-class", &module_info_boot, "type-class"},
+  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
+  {"module-syntax-environment", &module_info_ast, "module-syntax-environment"},
+  {"<ast-signature>", &module_info_ast, "<ast-signature>"},
+  {"let", &module_info_boot, "let"},
+  {"<error>", &module_info_runtime, "<error>"},
+  {"binding-native-to?", &module_info_ast, "binding-native-to?"},
+  {"close-input-port", &module_info_runtime, "close-input-port"},
+  {"peek-char", &module_info_runtime, "peek-char"},
+  {">=", &module_info_runtime, ">="},
+  {"<int>", &module_info_boot, "<int>"},
+  {"port-contents", &module_info_runtime, "port-contents"},
+  {"may-isa?", &module_info_boot, "may-isa?"},
+  {"fun-nary?", &module_info_boot, "fun-nary?"},
+  {"global-box-value", &module_info_ast, "global-box-value"},
+  {"make-setter-name", &module_info_macros, "make-setter-name"},
+  {"pop-last!", &module_info_runtime, "pop-last!"},
+  {"<ast-primitive-definition>", &module_info_ast, "<ast-primitive-definition>"},
+  {"dg", &module_info_boot, "dg"},
+  {"make-handler", &module_info_runtime, "make-handler"},
+  {"<map>", &module_info_runtime, "<map>"},
+  {"inc", &module_info_macros, "inc"},
   {NULL,NULL,NULL}
 };
 
 static BINDING_INFO binding_infos[] = {
   {"*proto-date*", &YmainYTproto_dateT},
-  {"*proto-version*", &YmainYTproto_versionT},
   {"---main-0---", NULL},
+  {"*proto-version*", &YmainYTproto_versionT},
   {NULL, NULL}
 };
 

@@ -50,11 +50,11 @@
 
 ;;; DYNAMIC BINDING
 
-(df t+ ((args ...)) <any>)  ;; TODO: DEPRECATE
+(df t+ ((args ...)) (isa <union> (set type-elts args)))
 
-(df t= (x) x)               ;; TODO: FOR REAL
+(df t= (x) (isa <singleton> (set type-object x)))
 
-(df t< (x) x)               ;; TODO: FOR REAL
+(df t< (x) (isa <subclass>  (set type-class x)))
 
 (df false-or (x) (t+ x (t= #f)))
 
@@ -70,10 +70,7 @@
   )
 
 (dm to-str ((x <any>) => <str>)
-  (let ((name (%binding-name x)))
-    (if name 
-        (cat "$" (to-str name))
-        (cat "{ obj(" (to-str (object-parents x)) ") }"))))
+  (cat "{ obj(" (to-str (class-name (object-class x))) ") }"))
 
 (df address-of (x => <int>)
   ;; treat pointer as integer
@@ -171,7 +168,7 @@
 
 ;;; NUMBER
 
-(dg contagious-type ((x <num>) (y <num>) => <num>))
+(dg contagious-type ((x <num>) (y <num>) => (t< <num>)))
 
 (dg contagious-call ((f <fun>) (x <num>) (y <num>) => <any>))
 
@@ -319,16 +316,16 @@
 
 ;;; <INT>
 
-(dm contagious-type ((x <int>) (y <int>) => <int>)
+(dm contagious-type ((x <int>) (y <int>) => <type>)
   <int>)
 
-(dm contagious-type ((x <flo>) (y <flo>) => <flo>)
+(dm contagious-type ((x <flo>) (y <flo>) => <type>)
   <flo>)
 
-(dm contagious-type ((x <int>) (y <flo>) => <flo>)
+(dm contagious-type ((x <int>) (y <flo>) => <type>)
   <flo>)
 
-(dm contagious-type ((x <flo>) (y <int>) => <flo>)
+(dm contagious-type ((x <flo>) (y <int>) => <type>)
   <flo>)
 
 (dm == ((x <int>) (y <int>) => <log>)
@@ -512,6 +509,9 @@
 (dm default ((c (t< <col>)) => <any>)
   #f)
 
+(dm as-copy ((c <col>) (x <col>) => <col>)
+  (as (object-class c) x))
+
 (dm = ((c1 <col>) (c2 <col>) => <log>)
   (rep eq ((s1 (ini-state c1)) (s2 (ini-state c2)))
     (if (fin-state? c1 s1)
@@ -519,7 +519,7 @@
         (and (= (now-elt c1 s1)  (now-elt c2 s2))
              (eq (nxt-state c1 s1) (nxt-state c2 s2))))))
 
-(dm fab ((c <col>) (s <int>) => <bot>)
+(dm fab ((c (t< <col>)) (s <int>) => <bot>)
   (nyi-error))
 
 (dm as ((p (t< <col>)) (x <col>) => <col>)
@@ -606,7 +606,7 @@
 (dm map ((f <fun>) (c <col>) => <col>)
   (rep con ((res '()) (s (ini-state c)))
     (if (fin-state? c s)
-        (as c (rev! res))
+        (as-copy c (rev! res))
         (con (add res (f (now-elt c s))) (nxt-state c s)))))
 
 (dm do ((f <fun>) (c <col>))
@@ -617,7 +617,7 @@
 (dm map2 ((f <fun>) (x <col>) (y <col>) => <col>)
   (rep con ((res '()) (sx (ini-state x)) (sy (ini-state y)))
     (if (or (fin-state? x sx) (fin-state? y sy))
-        (as x (rev! res))
+        (as-copy x (rev! res))
         (con (add res (f (now-elt x sx) (now-elt y sy))) 
 	     (nxt-state x sx) (nxt-state y sy)))))
 
@@ -636,7 +636,7 @@
 (dm map-keyed ((f <fun>) (c <col>) => <col>)
   (rep con ((res '()) (s (ini-state c)))
     (if (fin-state? c s)
-        (as c (rev! res))
+        (as-copy c (rev! res))
         (con (add res (f (now-key c s) (now-elt c s))) (nxt-state c s)))))
 
 (dm do-keyed ((f <fun>) (c <col>))
@@ -653,7 +653,7 @@
 
 (dc <map> (<col>))
 
-(dm fab-map ((p <map>) (key-vals ...))
+(dm fab-map ((p (t< <map>)) (key-vals ...))
   (let ((x (fab p (1st (truncate/ (len key-vals) 2)))))
     (do-key-vals (fun (key val) (set (elt x key) val)) key-vals)
     x))
@@ -665,7 +665,7 @@
   (slot <assocs> (assocs-keys <lst>) '())
   (slot <assocs> (assocs-vals <lst>) '())
 
-(dm fab ((c <assocs>) (s <int>) => <assocs>)
+(dm fab ((c (t= <assocs>)) (s <int>) => <assocs>)
   (isa <assocs>))
 
 (dm len ((x <assocs>) => <int>)
@@ -781,7 +781,7 @@
 (dm rev ((x <seq>) => <seq>)
   (rep con ((seq '()) (sta (ini-state x)))
     (if (fin-state? x sta)
-        (as x seq)
+        (as-copy x seq)
         (con (add seq (now-elt x sta)) (nxt-state x sta)))))
 
 (dm cat2 ((x <seq>) (y <seq>) => <seq>)
@@ -789,7 +789,7 @@
     (if (fin-state? x sta)
         (rep con-y ((seq seq) (sta (ini-state y)))
           (if (fin-state? y sta)
-              (as x (rev! seq))
+              (as-copy x (rev! seq))
               (con-y (add seq (now-elt y sta)) (nxt-state y sta))))
         (con-x (add seq (now-elt x sta)) (nxt-state x sta)))))
 
@@ -825,19 +825,19 @@
 (dm sub ((x <seq>) (from <int>) (below <int>) => <seq>)
   (rep con-x ((seq '()) ((i <int>) 0) (sta (ini-state x)))
     (if (fin-state? x sta)
-        (as x (rev! seq))
+        (as-copy x (rev! seq))
         (con-x (if (if (>= i from) (< i below)) (add seq (now-elt x sta)) seq)
                (+ i 1) (nxt-state x sta)))))
 
 (dm pick ((test <fun>) (x <seq>) => <seq>)
   (rep con ((seq '()) (sta (ini-state x)))
     (if (fin-state? x sta)
-        (as x seq)
+        (as-copy x seq)
         (let ((e (now-elt x sta)))
           (con (if (test e) (add seq e) seq) (nxt-state x sta))))))
 
 (dm del-dups ((x <seq>) => <seq>)
-  (as x (rev! (reduce (fun (s e) (if (mem? s e) s (pair e s))) '() x))))
+  (as-copy x (rev! (reduce (fun (s e) (if (mem? s e) s (pair e s))) '() x))))
 
 (dm del ((s <seq>) x => <seq>)
   (pick (fun (e) (~== e x)) s))
@@ -857,12 +857,12 @@
 
 (dm empty ((c (t= <lst>)) => <lst>) '())
 
-(dm empty? ((c <lst>) => <log>) (== c (empty c)))
+(dm empty? ((c <lst>) => <log>) (== c (empty (object-class c))))
 
-(dm fab ((x <lst>) (s <int>) => <lst>)
-  (rep fab (((i <int>) s) ((res <lst>) (empty x)))
+(dm fab ((t (t= <lst>)) (s <int>) => <lst>)
+  (rep fab (((i <int>) s) ((res <lst>) (empty t)))
     (if (> i 0)
-        (fab (- i 1) (isa x (set tail res)))
+        (fab (- i 1) (isa t (set tail res)))
 	res)))
 
 ;; TODO: DO THIS IN GENERAL FOR AS
@@ -914,7 +914,7 @@
   (tup (tail c) (head c)))
 
 (dm rev! ((c <lst>) => <lst>)
-  (rep loop ((l c) (r (empty c)))
+  (rep loop ((l c) (r (empty (object-class c))))
     (if (empty? l)
 	r
 	(let ((t (tail l)))
@@ -984,7 +984,7 @@
 (df vec ((objects ...))
   (as <vec> objects))
 
-(dm fab ((x <vec>) (s <int>) => <vec>)
+(dm fab ((x (t= <vec>)) (s <int>) => <vec>)
   (%vec (%iu s)))
 
 (dm len ((x <vec>) => <int>)
@@ -1093,7 +1093,7 @@
   (slot <range> (range-above <num>))
   (slot <range> (range-by    <num>) 1)
 
-(dm fab ((c <range>) (s <int>) => <range>)
+(dm fab ((c (t= <range>)) (s <int>) => <range>)
   (from-below 0 s))
 
 (dm from ((from <num>) => <range>)
@@ -1197,7 +1197,7 @@
 (dm default ((c (t= <str>)) => <any>)
   #\space)
 
-(dm fab ((x <str>) (s <int>) => <str>)
+(dm fab ((x (t= <str>)) (s <int>) => <str>)
   (%str (%iu s)))
 
 (dm str ((objects ...))
@@ -1402,7 +1402,7 @@
   ((info <handler-info>) condition-type in out => <condition>)
   (build-condition-interactively condition-type in out))
 
-(dc $default-handler-info (<handler-info>))
+(dv $default-handler-info (isa <handler-info>))
 
 (dc <simple-handler-info> (<handler-info>))
   (slot <simple-handler-info> (handler-info-message <str>))
@@ -1427,13 +1427,13 @@
 (dv *current-handlers* '())
 
 (dc <handler> (<any>))
-  (slot <handler> (handler-condition-type <condition>))
+  (slot <handler> (handler-condition-type (t< <condition>)))
   (slot <handler> (handler-info <handler-info>))
   (slot <handler> (handler-test <fun>))
   (slot <handler> (handler-function <fun>))
 
 (df make-handler
-  ((type <condition>) (info <handler-info>) (test <fun>) (f <fun>)
+  ((type (t< <condition>)) (info <handler-info>) (test <fun>) (f <fun>)
    => <handler>)
   (isa <handler>
     (set handler-condition-type type)
@@ -1449,7 +1449,7 @@
        (handler-active? handler)))
 
 (df %with-monitor
-  ((type <condition>) (info <handler-info>) (test-fun <fun>)
+  ((type (t< <condition>)) (info <handler-info>) (test-fun <fun>)
    (user-handler <fun>) (main-fun <fun>))
   (lab _unwind-exception_
     (let ((_original-handlers_ *current-handlers*))
@@ -1506,7 +1506,7 @@
 ;;; INTERACTIVE HANDLER MUNGING
 
 ;;; Apply 'f' to all handlers whose type is a subtype of 'type'.
-(df do-handlers-of-type ((type <condition>) (f <fun>) => #f)
+(df do-handlers-of-type ((type (t< <condition>)) (f <fun>) => #f)
   (rep search ((handlers *current-handlers*))
     (if (empty? handlers)
         #f
@@ -1521,7 +1521,7 @@
 ;;; from 1) and return a sequence of those handlers in the same order
 ;;; (indexed from zero).  This allows us to keep track of which handlers
 ;;; correspond to which user-visible numbers.
-(df list-handlers ((type <condition>) out => <buf>)
+(df list-handlers ((type (t< <condition>)) out => <buf>)
   (let ((i 1)
         (applicable (fab <buf> 0)))
     (do-handlers-of-type type
@@ -1552,7 +1552,7 @@
                 (search remaining)))))))
 
 ;;; Chose a handler matching 'type', and call it interactively.
-(df choose-handler ((type <condition>) in out => <any>)
+(df choose-handler ((type (t< <condition>)) in out => <any>)
   (let ((handlers (list-handlers type out)))
     (format out "Please pick a handler: ")
     (let ((n (- (read in) 1)))
@@ -1813,7 +1813,7 @@
 		 => (tup (index <int>) (offset <int>)))
    (tup (modulo hash primary) (+ (modulo hash secondary) 1)))
 
-(dm fab ((type <tab>) (size <int>) => <tab>)
+(dm fab ((type (t< <tab>)) (size <int>) => <tab>)
   ;; (trace out "FAB %= SIZE %=\n" type size)
   (let (((tup n-buckets bucket-depth) (choose-table-geometry size))
 	(table (isa type)))
@@ -1933,7 +1933,7 @@
 	;; Table totally full???  That's not right
 	(error "The table is totally full this shouldn't happen")))))
 
-(dm del-key ((table <tab>) key => (found? <log>))
+(dm del-key ((table <tab>) key => <log>)
   (lab return
     (let (((tup test-function hash-function) (table-protocol table))
 	  ((tup (hash <int>) state) (hash-function key))

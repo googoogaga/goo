@@ -2,12 +2,12 @@ THE PROTO PROGRAMMING LANGUAGE
 
   JONATHAN BACHRACH
   MIT AI LAB
-  VERSION 0.70
-  MAR 05, 2001
+  VERSION 0.102
+  SEP 20, 2001
 
 0 Introduction
 
-  Proto is a new dynamic prototype-based object-oriented language.  It
+  Proto is a new dynamic type-based object-oriented language.  It
   is meant to be simple, productive, powerful, extensible, dynamic,
   efficient and real-time.  It heavily leverages features from many
   earlier languages.  In particular, it attempts to be a simpler
@@ -39,7 +39,8 @@ DV	     (DV ,binding-clause)
 
 DM	     (DM ,name ,sig ,@body)
 DG	     (DG ,name ,sig)
-ISA	     (ISA ,parent ,@slot-inits) | (ISA (,@parents) ,@slot-inits)
+DC           (DC ,name (,@parents))
+ISA	     (ISA ,type ,@slot-inits)
 SLOT	     (SLOT ,owner ,var ,init)
 
 DS	     (DS ,pattern ,@body)
@@ -183,10 +184,14 @@ DM	(DM ,name ,sig ,@body)
   congruent to signature ,sig and then adds  a method with signature
   ,sig and body ,@body (cf., Dylan's DEFINE METHOD).
 
-ISA	(ISA ,parent ,@slot-inits) | (ISA (,@parents) ,@slot-inits)
+DC	(DC ,name (,@parents))
 
-  creates an instance with direct parent(s) ,parent (or ,@parents) and
-  slot initializes as specified by ,@slot-inits.  For example,
+  defines a class named ,name with direct parents ,@parents
+
+ISA	(ISA ,type ,@slot-inits)
+
+  creates an instance of type ,type and slot initialized as specified by 
+  ,@slot-inits.  For example,
 
         (ISA <point> (set point-x 1) (set point-y 2))
 
@@ -390,13 +395,16 @@ QQ	(QUASIQUOTE ...)
 
 3.1 ANY
 
-Prototype   <any> (isa <any>)	
+Class       <any> (<any>)	
 
   is the top of the prototype inheritance hierarchy.
 
 Generic	    as ((x <any>) (y <any>) => <any>)
 
   coerces y to an instance of x.
+
+Generic	    object-parents ((x <any>) => <lst>)
+Generic	    object-slots ((x <any>) => <lst>)
 
 3.2 COMPARABLES
 
@@ -412,14 +420,6 @@ Generic	    >= ((x <any>) (y <any>) => <log>)
 Generic	    min ((x <any>) (y <any>) => <any>)
 Generic	    max ((x <any>) (y <any>) => <any>)
 
-Generic	    isa? ((x <any>) (y <any>) => <log>)
-Generic	    object< ((x <any>) (y <any>) => <log>)
-Generic	    object-direct-slots ((x <any>) => <lst>)
-Generic	    object-direct-parents ((x <any>) => <lst>)
-Generic	    object-slots ((x <any>) => <lst>)
-Generic	    object-parents ((x <any>) => <lst>)
-Generic	    object-name ((x <any>) => (union <sym> #f))
-
 3.3 NULL
 
 Instance    nul	(isa <any>)
@@ -427,7 +427,7 @@ Function    nul? (x => <log>)
 
 3.4 BOOLEANS
 
-Prototype   <log> (isa <any>)
+Class       <log> (<any>)
 
 Instance    #f
 Instance    #t
@@ -435,7 +435,7 @@ Method	    not ((x <any>) => <log>)
 
 3.5 CHARACTERS
 
-Prototype   <chr> (isa <any>)
+Class       <chr> (<any>)
 
 Generic	    lowercase? ((x <chr>) => <log>)
 Generic	    uppercase? ((x <chr>) => <log>)
@@ -448,7 +448,7 @@ Generic     eof-object? ((x <chr>) => <log>)
 
 3.6 NUMBERS (mostly same as Dylan)
 
-Prototype   <num> (isa <any>)
+Class       <num> (<any>)
 
 Generic	    + ((x <num>) (y <num>) => <num>)
 Generic	    - ((x <num>) (y <num>) => <num>)
@@ -475,7 +475,7 @@ Generic	    str-to-num ((x <str>) => <num>)
 
 3.6.1 INTEGERS (same as Dylan)
 
-Prototype   <int> (isa <num>)
+Class       <int> (<num>)
 
 Generic	    logior ((x <int>) (y <int>) => <int>)
 Generic	    logxor ((x <int>) (y <int>) => <int>)
@@ -491,13 +491,13 @@ Generic	    lsh ((x <int>) (y <int>) => <int>)
 
 3.6.2 FLOATS
 
-Prototype   <flo> (isa <num>)
+Class       <flo> (<num>)
 
 Generic	    flo-bits ((x <flo>) => <int>)
 
 3.6.3 LOCATIVES
 
-Prototype   <loc> (isa <num>)
+Class       <loc> (<num>)
 
 Generic	    locative-value ((x <loc>) => <any>)
 Generic	    locative-value-setter ((address <any>) (x <loc>))
@@ -505,7 +505,7 @@ Generic	    address-of ((x <any>) => <loc>)
 
 3.7 COLLECTIONS (look at runtime.proto)
 
-Prototype   <col> (isa <any>)
+Class       <col> (<any>)
 
 Generic     len ((x <col>) => <int>)
 Generic     elt ((x <col>) (k <any>) => <any>)
@@ -544,23 +544,23 @@ Generic	    copy-state ((x <col>) (state <any>) => <any>)
 
 3.7.2 MAPS
 
-Prototype   <map> (isa <col>)
+Class       <map> (<col>)
 
 (cf., Dylan's <explicit-key-collection>'s)
 
 3.7.2.1 ASSOCIATIONS
 
-Prototype   <assocs> (isa <map>)
+Class       <assocs> (<map>)
 
 Slot	    assocs-test ((x <col>) (y <col>) => <col>) <= ==
 
 3.7.2.2 TABLES
 
-Prototype   <tab> (isa <map>)
+Class       <tab> (<map>)
 
-slot        table-growth-factor ((x <tab>) => <flo>) <= 2.0
-slot        table-growth-threshold ((x <tab>) => <flo>) <= 0.8
-slot        table-shrink-threshold ((x <tab>) => <flo>)) <= 0.5
+Slot        table-growth-factor ((x <tab>) => <flo>) <= 2.0
+Slot        table-growth-threshold ((x <tab>) => <flo>) <= 0.8
+Slot        table-shrink-threshold ((x <tab>) => <flo>)) <= 0.5
 
 Method      fab ((_ <tab>) (size <int>) => <tab>)
 
@@ -569,7 +569,7 @@ Instance    $permanent-hash-state (isa <any>)
 Generic     current-gc-state ((x <tab>) => <any>)
 Generic     id-hash ((x <tab>) => (tup (hash <any>) (gc-state <any>)))
 
-3.7.2.2.1 Prototype   <str-tab> (isa <tab>)
+Class       <str-tab> (<tab>)
 
 Generic     case-insensitive-string-hash 
 	      ((x <tab>) => (tup (hash <any>) (gc-state <any>)))
@@ -578,7 +578,7 @@ Generic     case-insensitive-string-equal
 
 3.7.3 SEQUENCES
 
-Prototype   <seq> (isa <col>)
+Class       <seq> (<col>)
 
 Generic     add ((x <seq>) (y <any>) => <seq>) ;; NYI EXCEPT FOR LISTS
 
@@ -646,7 +646,7 @@ Generic     del-dups ((x <seq>) => <seq>)
 
 3.7.4 TUPLES
 
-Prototype   <tup> (isa <seq>)
+Class       <tup> (<seq>)
 
   represents multiple values in Proto.
 
@@ -656,7 +656,7 @@ Generic     tup ((elts ...) => <tup>)
 
 3.7.5 LISTS
 
-Prototype   <lst> (isa <seq>)
+Class       <lst> (<seq>)
 
 Alias       <list> 
 
@@ -678,31 +678,31 @@ Generic     push ((l <lst>) (x <any>) => <lst>)
 
 Generic     pop ((l <lst>) => (tup (new-col <lst>) value))
 
-Instance    nil (isa <lst>)
+Instance    nil (<lst>)
 
   aka ().
 
 3.7.5 OPTIONALS
 
-Prototype   <opts> (== <lst> <opts>)
+Class       <opts> (== <lst> <opts>)
 
   represents type of optional arguments.
 
 3.7.6 FLAT SEQUENCES
 
-Prototype   <flat> (isa <seq>)
+Class       <flat> (<seq>)
 
   represents sequences with constant access time.
 
 3.7.6.1 VECTORS
 
-Prototype   <vec> (isa <flat>)
+Class       <vec> (<flat>)
 
 Generic     vec ((elts ...) => <vec>)
 
 3.7.6.2 STRINGS
 
-Prototype   <str> (isa <flat>)
+Class       <str> (<flat>)
 
 Generic     str ((elts ...) => <str>)
 
@@ -712,7 +712,7 @@ Generic     to-str ((x <any>) => <str>)
 
 3.7.6.3 STRETCHY VECTORS
 
-Prototype   <buf> (isa <flat>)
+Class       <buf> (<flat>)
 
 Generic     buf ((elts ...) => <sec>)
 
@@ -726,7 +726,7 @@ Generic     pop-last! ((c <buf>) => <any>)
 
 3.7.6 RANGES
 
-Prototype   <range> (isa <seq>)
+Class       <range> (<seq>)
 
   represents series of numbers
 
@@ -748,7 +748,7 @@ Generic     from-above-by ((from <num>) (above <num>) (by <num>) => <range>)
 
 3.7.7 STEPS
 
-Prototype   <step> (isa <seq>)
+Class       <step> (<seq>)
 
   represents step function
 
@@ -756,7 +756,7 @@ Generic     first-then ((first <any>) (then <any>) => <step>)
 
 3.8 SYMBOLS
 
-Prototype   <sym> (isa <any>)
+Class       <sym> (<any>)
 
 Method      as ((_ <sym>) (x <str>) => <sym>)
 Generic     make-sym ((elts ...) => <sym>)
@@ -765,15 +765,55 @@ Generic     make-setter-name ((x <sym>) => <sym>)
 Generic     var-name ((x (union <sym> <lst>)) => <sym>)
 Generic     var-type ((x (union <sym> <lst>)) => <sym>)
 
-3.9 SLOTS
+3.9 TYPES
 
-Prototype   <slot> (isa <any>)
+Class       <type> (<any>)
+
+Generic	    isa? ((x <any>) (y <type>) => <log>)
+Generic	    subtype? ((x <type>) (y <type>) => <log>)
+
+3.9.1 SINGLETONS
+
+Class       <singleton> (<type>)
+
+Generic     t= ((x <any>) => <singleton>)
+Generic     type-object ((x <singleton>) => <any>)
+
+3.9.1 SUBCLASS
+
+Class       <subclass> (<type>)
+
+Generic     t< ((x <class>) => <subclass>)
+Generic     type-class ((x <subclass>) => <class>)
+
+3.9.3 UNION
+
+Class       <union> (<type>)
+
+Generic     t+ ((types ...) => <union>)
+Generic     type-elts ((x <union>) => <seq>)
+
+3.9.4 CLASSES
+
+Class       <class> (<type>)
+
+Generic	    class-name ((x <class>) => <sym>)
+Generic	    class-direct-parents ((x <class>) => <lst>)
+Generic	    class-parents ((x <class>) => <lst>)
+Generic	    class-direct-slots ((x <class>) => <lst>)
+Generic	    class-slots ((x <class>) => <lst>)
+Generic	    class-direct-children ((x <class>) => <lst>)
+
+
+3.10 SLOTS
+
+Class       <slot> (<any>)
 
 Slot        slot-owner ((x <slot>) => <any>)
-slot        slot-getter ((x <slot>) => <gen>)
-slot        slot-setter ((x <slot>) => <gen>)
-slot        slot-type ((x <slot>) => <any>)
-slot        slot-init ((x <slot>) => <met>)
+Slot        slot-getter ((x <slot>) => <gen>)
+Slot        slot-setter ((x <slot>) => <gen>)
+Slot        slot-type ((x <slot>) => <any>)
+Slot        slot-init ((x <slot>) => <met>)
 
 Generic     find-getter ((owner <any>) (getter <gen>) => <met>)
 Generic     find-setter ((owner <any>) (setter <gen>) => <met>)
@@ -784,31 +824,31 @@ Method      add-slot (owner (getter <gen>) (setter <gen>) type (init <fun>))
   value for the slot and gets called lazily with the new instance as
   the argument.
 
-3.10 FUNCTIONS
+3.11 FUNCTIONS
 
-Prototype   <fun> (isa <any>)
+Class       <fun> (<any>)
 
-slot        fun-name ((x <fun>) => (false-or <sym>))
+Slot        fun-name ((x <fun>) => (false-or <sym>))
 
   returns the name of function or false if unavailable.
 
-slot        fun-names ((x <fun>) => <lst>)
+Slot        fun-names ((x <fun>) => <lst>)
 
   returns the names of parameters of x or () if unavailable.
 
-slot        fun-specs ((x <fun>) => <lst>)
+Slot        fun-specs ((x <fun>) => <lst>)
 
   returns the specializers of x.
 
-slot        fun-nary? ((x <fun>) => <log>)
+Slot        fun-nary? ((x <fun>) => <log>)
 
   determines whether the function takes optional arguments.
 
-slot        fun-arity ((x <fun>) => <int>)
+Slot        fun-arity ((x <fun>) => <int>)
 
   returns x's number of required arguments.
 
-slot        fun-value ((x <fun>) => <any>)
+Slot        fun-value ((x <fun>) => <any>)
 
   returns x's return value.
 
@@ -834,11 +874,11 @@ Generic     always ((x <any>) => <fun>)
 
 Generic     apply ((x <fun>) (args <lst>) => <any>)
 
-3.10.1 GENERICS
+3.11.1 GENERICS
 
-Prototype   <gen> (isa <fun>)
+Class       <gen> (<fun>)
 
-slot        fun-mets ((x <gen>) => <lst>)
+Slot        fun-mets ((x <gen>) => <lst>)
 
   returns x's methods.
 
@@ -853,17 +893,17 @@ Generic     sorted-app-mets
   returns both the list of sorted applicable methods and any ambiguous
   methods when generic x is called with arguments args.
 
-3.10.2 METHODS
+3.11.2 METHODS
 
-Prototype   <met> (isa <fun>)
+Class       <met> (<fun>)
 
 Generic     met-app? ((x <met>) (args <lst>) => <log>)
 
   determines whether x is applicable when called with args.
 
-3.11 CONDITIONS
+3.12 CONDITIONS
 
-Prototype   <condition> (isa <any>)
+Class       <condition> (<any>)
 
 Generic     default-handler ((x <condition>) => <fun>)
 
@@ -884,55 +924,55 @@ Generic     sig ((x <condition>) (args ...))
 
   signals a condition with optional arguments args.
 
-Prototype   <simple-condition> (isa <condition>)
+Class       <simple-condition> (<condition>)
 
 Slot        condition-message ((x <simple-condition>) => <str>)
 Slot        condition-arguments ((x <simple-condition>) => <lst>)
 
-Prototype   <serious-condition> (isa <condition>)
+Class       <serious-condition> (<condition>)
 
-Prototype   <error> (isa <serious-condition>)
+Class       <error> (<serious-condition>)
 
 Generic     error ((x <any>) (args ...))
 
-Prototype   <simple-error> (isa <error> <simple-condition>)
+Class       <simple-error> (<error> <simple-condition>)
 
-Prototype   <restart> (isa <condition>)
+Class       <restart> (<condition>)
 
-Prototype   <handler> (isa <any>)
+Class       <handler> (<any>)
 
 Generic     handler-function ((x <handler>) => <fun>)
 Generic     make-handler ((x <fun>) => <handler>)
 Generic     handler-matches? ((x <handler>) (y <condition>) => <log>)
 
-3.12 PORTS
+3.13 PORTS
 
-Prototype   <port> (isa <any>)
+Class       <port> (<any>)
 
-3.12.1 INPUT PORTS
+3.13.1 INPUT PORTS
 
-Prototype   <input-port> (isa <port>)
+Class       <input-port> (<port>)
 
 Generic     read-char ((x <input-port>) => <chr>)
 Generic     peek-char ((x <input-port>) => <chr>)
 Generic     char-ready? ((x <input-port>) => <chr>)
 
-3.12.2 OUTPUT PORTS
+3.13.2 OUTPUT PORTS
 
-Prototype   <output-port> (isa <port>)
+Class       <output-port> (<port>)
 
 Generic     newline ((x <output-port>))
 Generic     force-output ((x <output-port>))
 Generic     write-char ((x <output-port>))
 Generic     write-string ((x <output-port>))
 
-3.12.3 FILE PORTS
+3.13.3 FILE PORTS
 
-Prototype   <file-port> (isa <port>)
+Class       <file-port> (<port>)
 
-3.12.3.1 FILE INPUT PORTS
+3.13.3.1 FILE INPUT PORTS
 
-Prototype   <file-input-port> (isa <file-port> <input-port>)
+Class       <file-input-port> (<file-port> <input-port>)
 
 Generic     open-input-file ((filename <str>) => <file-input-port>)
 Generic     close-input-port ((x <file-input-port>))
@@ -945,9 +985,9 @@ Instance    in (isa <file-input-port>)
 
 standard input.
 
-3.12.3.2 FILE OUTPUT PORTS
+3.13.3.2 FILE OUTPUT PORTS
 
-Prototype   <file-output-port> (isa <file-port> <output-port>)
+Class       <file-output-port> (<file-port> <output-port>)
 
 Generic     open-output-file ((filename <str>) => <file-output-port>)
 Generic     close-output-port ((x <file-output-port>))
@@ -960,31 +1000,31 @@ Instance    out (isa <file-output-port>)
 
   standard output.
 
-3.12.4 STRING PORTS
+3.13.4 STRING PORTS
 
-Prototype   <string-port>
+Class       <string-port>
 
 Generic     port-contents ((x <string-port>) => <str>)
 
-3.12.4.1 STRING INPUT PORTS
+3.13.4.1 STRING INPUT PORTS
 
-Prototype   <string-input-port> (isa <string-port> <output-port>)
+Class       <string-input-port> (<string-port> <output-port>)
 
-slot        port-index ((x <string-port>) => <int>)
+Slot        port-index ((x <string-port>) => <int>)
 
 Generic     call-with-string-input-port ((x <str>) (f <fun>))
 
   analogous to call-with-file-input-port.
 
-3.12.4.2 STRING OUTPUT PORTS
+3.13.4.2 STRING OUTPUT PORTS
 
-Prototype   <string-output-port> (isa <string-port> <input-port>)
+Class       <string-output-port> (<string-port> <input-port>)
 
 Generic     call-with-string-output-port ((f <fun>))
 
   analogous to call-with-file-output-port.
 
-3.13 INPUT
+3.14 INPUT
 
 Generic     read ((x <input-port>) => <any>)
 
@@ -1024,7 +1064,7 @@ Generic     format ((message <output-port>) (args ...))
   which consume one argument at a time.  otherwise subsequent message
   characters are printed to port x (cf. Dylan's and CL's format).
 
-3.15 SYSTEM
+3.16 SYSTEM
 
 Method      app-filename (=> <str>)
 
@@ -1034,7 +1074,7 @@ Method      app-args (=> <lst>)
 
   returns a list of argument strings with which the application was called.
 
-3.16 TOP LEVEL
+3.17 TOP LEVEL
 
 Functions which load code at runtime require a symbol specifying the module
 name to use.
