@@ -14,19 +14,28 @@
 (dl %listen-socket)
 (dl %accept-socket)
 (dl %read-socket-byte)
+(dl %read-max)
 (dl %peek-socket-byte)
 (dl %write-socket-byte)
 (dl %write-socket-string)
 (dl %close-socket)
 (dl %socket-connected)
+(dl %make-non-blocking)
+(dl %select)
+
+(dv socket-eof (gensym)) 
 
 (dc <socket-port> (<port>))
+
+(dc <listen-socket-port> (<port>))
 
 (dc <socket-in-port> (<in-port>))
 (dc <socket-out-port> (<out-port>))
 
 (dp in-port (<socket-port> => <socket-in-port>))
 (dp out-port (<socket-port> => <socket-out-port>))
+
+(dp socket-in-eof (<socket-in-port> => <log>) #f)
 
 (dm connect-socket (host|<str> port|<int>)
   (def sockfd (%new-socket))
@@ -37,6 +46,7 @@
         (def out-sock (new <socket-out-port>))
         (set (port-handle in-sock) sockfd)
         (set (port-handle out-sock) sockfd)
+        (set (port-handle sock) sockfd)
         (set (in-port sock) in-sock)
         (set (out-port sock) out-sock)
         sock
@@ -48,24 +58,87 @@
       )
   )
 
+(dm listen-socket (port|<int> => (t? <listen-socket-port>))
+  (def sockfd (%new-socket))
+  (if (%listen-socket sockfd port)
+      (seq
+        (def sock (new <listen-socket-port>))
+        (set (port-handle sock) sockfd)
+        sock
+        )
+      (seq
+        (%close-socket sockfd)
+        #f
+        )
+      )
+  )
+
+(dm accept-socket (sock|<listen-socket-port> => (t? <socket-port>))
+  (def sockfd (%accept-socket (port-handle sock)))
+  (when sockfd
+      (seq
+        (def sock (new <socket-port>))
+        (def in-sock (new <socket-in-port>))
+        (def out-sock (new <socket-out-port>))
+        (set (port-handle in-sock) sockfd)
+        (set (port-handle out-sock) sockfd)
+        (set (port-handle sock) sockfd)
+        (set (in-port sock) in-sock)
+        (set (out-port sock) out-sock)
+        sock        
+        )
+      )
+  )
+
 (dm close (port|<socket-port>)
   (%close-socket (port-handle (in-port port)))
   )
 
 (dm get (port|<socket-in-port> => <chr>)
   (def b (%read-socket-byte (port-handle port)))
-  (if b
-      b
-      (eof-object)
-      )
+  (cond
+    ((== b socket-eof)
+     (set (socket-in-eof port) #t)
+     (eof-object)
+     )
+    ((== b #f)
+     #f ;; Nothing right now?
+     )
+    (#t
+     b)
+    )
+  )
+
+;; Likes to return a string, #f if there's nothing there right now (EAGAIN),
+;;  or (eof-object) on eof.
+(dm get-max (port|<socket-in-port> => <any>)
+  (def s (%read-max (port-handle port)))
+  (cond
+    ((== s socket-eof)
+     (set (socket-in-eof port) #t)
+     (eof-object)
+     )
+    ((== s #f)
+     #f ;; Nothing right now?
+     )
+    (#t
+     s)
+    )
   )
 
 (dm peek (port|<socket-in-port> => <chr>)
   (def b (%peek-socket-byte (port-handle port)))
-  (if b
-      b
-      (eof-object)
-      )
+  (cond
+    ((== b socket-eof)
+     (set (socket-in-eof port) #t)
+     (eof-object)
+     )
+    ((== b #f)
+     #f ;; Nothing right now?
+     )
+    (#t
+     b)
+    )
   )
 
 (dm put (port|<socket-out-port> c|<chr>)
@@ -87,7 +160,18 @@
   )
 
 (dm eof? (port|<socket-in-port> => <log>)
-  (not (%socket-connected (port-handle port)))
+  (socket-in-eof port)
+  )
+
+(dm make-non-blocking (port|<socket-port> => <log>)
+  (%make-non-blocking (port-handle port))
+  )
+
+(dm select (read-ports|(t? <col>) write-ports|(t? <col>) except-ports|(t? <col>) wait-in-ms|(t? <int>))
+  (%select read-ports 
+           write-ports
+           except-ports
+           wait-in-ms)
   )
 
 (export
@@ -98,4 +182,9 @@
   in-port
   out-port
   eof?
+  select
+  accept-socket
+  listen-socket
+  get-max
+  make-non-blocking
   )
