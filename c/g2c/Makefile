@@ -1,24 +1,30 @@
+include ../Make.inc
+C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 .c.o: ../prt.h
 	cc -I.. -c -g -O -o $@ $<
 
 OBJS = \
-	p2c.o \
-	syntax.o \
-	read.o \
-	ast-eval.o \
-	macros.o \
-	ast.o \
-	strings.o \
-	runtime.o \
-	write.o \
-	top.o \
-	main.o \
 	ast-linearize.o \
+	proto/eval.o \
+	proto/system.o \
 	boot.o \
+	p2c.o \
+	top.o \
+	ast.o \
+	runtime.o \
+	read.o \
+	syntax.o \
+	proto.o \
+	macros.o \
+	main.o \
+	strings.o \
+	write.o \
+	ast-eval.o \
+	proto/user.o \
 	p2c-init.o
 
-p2c: ../prt.o $(OBJS)
-	cc -o p2c ../prt.o $(OBJS) ../gc.a
+p2c: $(C_OBJS_DD) $(OBJS)
+	cc -o p2c $(C_OBJS_DD) $(LIBS) $(OBJS)
 
 clean:
-	rm -f p2c ../prt.o $(OBJS)
+	rm -f p2c $(OBJS)

@@ -5,7 +5,10 @@
 
 /* APPLICATION: */
 
+extern MODULE_INFO module_info_main;
 extern void load_module_main (void);
+
+MODULE_INFO *proto_toplevel_module_info = &module_info_main;
 
 int main(int argc, char* argv[]) {
   YPinit_world(argc, argv);
