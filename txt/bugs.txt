@@ -1,3 +1,29 @@
+=== 0.97 BUGS ===
+* EARLY ERRORS
+
+The files prt.c, boot.proto and runtime.proto makes calls to (error ...)
+and various (*-error ...) functions before they have been set up.  Similarly,
+keyboard-interrupt may be invoked *long* before it is ready.
+
+Proposed fix:
+  Create %early-error and similar functions to handle errors in a safe
+  fashion until the regular error functions are ready.  And fix
+  the code in prt.c which calls keyboard-interrupt so that it copes
+  gracefully with an unbound variable.
+
+* 'IF' SYNTAX CHECKING
+
+0<= (if #f 1 2 3)
+0=> 2
+
+Actually, most of syntax.proto should be rewritten to use
+(mif ,pattern-bind ,code (error ...)).
+
+* HOSED GF DISPATCH
+
+Talk to James about how the singleton cache is getting flushed.  He
+understands this; I have no idea what's going on.
+
 === 0.92 BUGS ===
 0<= (ds (bar x) (list + 2 2))      
 0=> #f
