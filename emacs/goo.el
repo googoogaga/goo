@@ -239,6 +239,7 @@ See `run-hooks'."
 (put 'select 'proto-indent-function 1)
 (put 'seq 'proto-indent-function 0)
 (put 'for 'proto-indent-function 1)
+(put 'lab 'proto-indent-function 1)
 
 ;; defining forms:
 (put 'def 'proto-indent-function "define")
