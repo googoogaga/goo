@@ -227,7 +227,7 @@
 
 ;;;; Handlers
 
-(dv *current-handlers* '())
+(ddv *current-handlers* '())
 
 (dc <handler> (<any>))
   (dp handler-condition-type (<handler> => (t< <condition>)))
@@ -419,6 +419,7 @@
   match-sublist
   cat-sym
   *gensym-counter*
+  *current-handlers*
   gensym
   fab-setter-name
   var-name

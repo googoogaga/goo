@@ -2,6 +2,7 @@
 
 (use goo)
 (use goo/boot)
+(use goo/runtime)
 (use time/%threads.c)
 
 (dl %thread-create)
@@ -27,7 +28,12 @@
 (dm new (x|(t< <thread>) args|... => <thread>)
   (def t (app-sup x args))
   (unless (== (thread-function t) main-thread-key)
-    (def h (%lb (%thread-create (tup (thread-function t) t))))
+    (def f (fun () 
+             (set *current-handlers* '())
+             (try <condition> 
+               (fun (c r) (post "ERROR: %s" (describe-condition c)))
+               ((thread-function t)))))
+    (def h (%lb (%thread-create (tup f t))))
     (set (thread-handle t) h)
     (set (%thread-priority h) (%iu (thread-priority t))))
   t)
