@@ -1,0 +1,43 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.2.1, Fri Jul 19 10:44:22 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Methods</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_18.html"><img alt="Macros" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_15.html"><img alt="Functions" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_16.html"><img alt="Generics" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Methods</b></td></tr></table>
+<h2>Methods</h2>
+<p>Methods are <i>GOO's code objects.  Methods can optionally be added to
+generics. 
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;met&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;fun&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>met-app?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;met&gt; args|&lt;lst&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>determines whether <tt>x</tt> is applicable when called with <tt>args</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>DM</tt> </td><td colspan="1" align="LEFT"> <tt>(DM ,name ,sig ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>first ensures that a generic exists named ,name and with a minimally
+  congruent to signature <tt>,sig</tt> and then adds  a method with signature
+  <tt>,sig</tt> and body <tt>,@body</tt> (cf., Dylan's <tt>DEFINE METHOD</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>SUP</tt> </td><td colspan="1" align="LEFT"> <tt>(SUP ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>calls next most applicable method.  N.B., all
+  arguments must be supplied.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <tt>(APP-SUP ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>applies next most applicable method.  N.B., all
+  arguments must be supplied.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_18.html"><img alt="Macros" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_15.html"><img alt="Functions" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_16.html"><img alt="Generics" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Methods</b></td></tr></table></body></html>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.1.1, Thu May 16 16:15:29 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Lexical Structure</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_4.html"><img alt="Meta Syntax" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_1.html"><img alt="Introduction" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_2.html"><img alt="Notation" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Lexical Structure</b></td></tr></table>
+<h2>Lexical Structure</h2>
+<p>The lexical structure is mostly the same as 
+Scheme&nbsp;<a HREF="gooomanual_52.html#3">[3]</a> with
+the notable exceptions being that identifiers can start with numeric digits
+if they are clearly distinguishable from floating point numbers and
+no syntax is provided for specifying improper lists.
+Furthermore, vertical bars are tokenized immediately and separately and have
+special meaning within lists, providing syntactic sugar for typed
+variables.
+<p>The following is a very brief and incomplete description
+of how characters are tokenized into s-expressions, where
+s-expressions are either tokens or lists of s-expressions:
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>; ...</tt> </td><td colspan="1" align="LEFT"> <tt><i>Line comment</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>&#35;/ ... /&#35;</tt> </td><td colspan="1" align="LEFT"> <tt><i>Nested comment</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>.&#32;+ - [0-9]+</tt> </td><td colspan="1" align="LEFT"> <tt><i>Number</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>&#35;e &#35;i &#35;b &#35;o &#35;d &#35;x</tt> </td><td colspan="1" align="LEFT"> <tt><i>Special number</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>&#35;t &#35;f</tt> </td><td colspan="1" align="LEFT"> <tt><i>Logical</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>&#35;<i>\</i><i>name</i></tt> </td><td colspan="1" align="LEFT"> <tt><i>Character</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="7">&nbsp;</A><tt>[a-zA-Z0-9]+</tt> </td><td colspan="1" align="LEFT"> <tt><i>Identifier</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="8">&nbsp;</A><tt>( ... )</tt> </td><td colspan="1" align="LEFT"> <tt><i>List</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="9">&nbsp;</A><tt>&#35;( ... )</tt> </td><td colspan="1" align="LEFT"> <tt><i>Vector</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="10">&nbsp;</A><tt>" ... "</tt> </td><td colspan="1" align="LEFT"> <tt><i>String</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="11">&nbsp;</A><tt><i>\</i><i>c</i> </tt> </td><td colspan="1" align="LEFT"> <tt><i>Special character's within strings</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="12">&nbsp;</A><tt>x|t</tt> </td><td colspan="1" align="LEFT"> <tt><i>Typed variable within list <i> == </i> <tt>(x t)</tt>.</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="13">&nbsp;</A><tt>&#35;|</tt> </td><td colspan="1" align="LEFT"> <tt><i>Escaped vertical bar.</i></tt> </td><td colspan="1" align="RIGHT"> <tt>N</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_4.html"><img alt="Meta Syntax" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_1.html"><img alt="Introduction" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_2.html"><img alt="Notation" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Lexical Structure</b></td></tr></table></body></html>

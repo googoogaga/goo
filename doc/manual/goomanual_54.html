@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.2.1, Fri Jul 19 10:44:25 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Class Precedence List</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_55.html"><img alt="Subtyping Rules" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_53.html"><img alt="References" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Class Precedence List</b></td></tr></table>
+<h1>Class Precedence List</h1>
+
+<p>This section defines the algorithm for computing a class's linearized
+ancesters from its parents, its parent's parents, etc.  <i>GOO&#32;uses
+the C3 class linearization rule&nbsp;<a HREF="goomanual_53.html#dylan-cpl">[1]</a>.  The following is
+the <i>GOO&#32;implementation of this algorithm:
+<pre>
+(dm class-ordered-ancestors (c|&lt;class&gt; =&gt; &lt;lst&gt;)
+  (def parents (class-parents c))
+  (rep merge-lists
+      ((partial-cpl|&lt;lst&gt;     
+         (lst c)) 
+       (remaining-lists|&lt;lst&gt; 
+         (add (map class-ancestors parents) parents)))
+    (if (all? empty? remaining-lists)
+        (rev! partial-cpl)
+        (loc ((candidate (c) 
+                (loc ((tail? (l|&lt;lst&gt;) (mem? (tail l) c)))
+                  (and (not (any? tail? remaining-lists)) c)))
+              (candidate-at-head (l|&lt;lst&gt;)
+                (and (not (empty? l)) (candidate (head l)))))
+          (def next (any? candidate-at-head remaining-lists))
+          (if next
+              (loc ((del-next (l|&lt;lst&gt;)
+                      (if (== (head l) next) (tail l) l)))
+                (merge-lists
+                 (pair next partial-cpl) 
+                 (map del-next remaining-lists)))
+              (error "inconsistent precedence graph"))))))
+</pre>
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_55.html"><img alt="Subtyping Rules" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_53.html"><img alt="References" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Class Precedence List</b></td></tr></table></body></html>

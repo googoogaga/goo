@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.1.1, Thu May 16 16:15:32 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Formatted I/O</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="gooomanual_35.html"><img alt="Input / Output" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_36.html"><img alt="Ports" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Formatted I/O</b></td></tr></table>
+<h2>Formatted I/O</h2>
+<p><i>GOO&#32;provides convenient s-expression reading/writing facilities.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>read</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;in-port&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns sexpr result of parsing characters in a sequence.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>write</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;out-port&gt; y|&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>verbose printing.  prints strings with double quotes etc.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>writeln</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;out-port&gt; y|&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(seq (write x y) (newline x))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>emit</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;out-port&gt; y|&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>concise printing (e.g., prints strings without double quotes).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>msg</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;out-port&gt; message|&lt;seq&gt; args|...)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>formatted output using special commands embedded in message.
+  supported commands are:
+  <ul><li><tt>&#37;=  <i> -&gt; </i> (write x arg)</tt>
+  <li><tt>&#37;s  <i> -&gt; </i> (display x arg)</tt>
+  <li><tt>&#37;d  <i> -&gt; </i> (write x arg)</tt>
+  <li><tt>&#37;&#37; <i> -&gt; </i> (write-char x &#35;<i>\</i>&#37;)</tt>
+  </ul>
+  which consume one argument at a time.  otherwise subsequent message
+  characters are printed to port <tt>x</tt> 
+  (cf. Dylan's and CL's <tt>format</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>post</tt> </td><td colspan="1" align="LEFT"> <tt>(message|&lt;seq&gt; args|...)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(app msg out message args)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="gooomanual_35.html"><img alt="Input / Output" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_36.html"><img alt="Ports" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Formatted I/O</b></td></tr></table></body></html>

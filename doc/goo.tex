@@ -1772,12 +1772,14 @@ a reasonably portable fashion.
 
 Threads allow for expressing concurrent programs.  The assumed model
 is shared memory with explicit synchronization and symmetric
-multiprocessing and is based heavily upon pthreads %~\cite{pthreads}
-.
+multiprocessing and is based heavily upon pthreads %~\cite{pthreads} .
 This section is preliminary and might change in the future.  There are
-several limitations in the current implementation.  It
-represents a rudimentary but usable subset of typical thread
-operations.
+several limitations in the current implementation.  It represents a
+rudimentary but usable subset of typical thread operations.  Tables
+and vectors require user locks to ensure thread safety and no out of
+language crashes.  Finally, the compiler, interpreter, and
+(re)definition machinery are thread unsafe and can only reliably be
+run in one thread.
 
 \begin{defs}
 \class{<thread>}{<any>}
@@ -1795,8 +1797,8 @@ operations.
 \method{thread-yield}{}
   \doc{Surrenders processor to another thread.}
 % \method{thread-detach}{}
-\method{thread-join}{t|<thread>}
-  \doc{Causes current thread to wait for the termination of \code{t}.}
+\method{thread-join}{thread|<thread>}
+  \doc{Causes current thread to wait for the termination of \code{thread}.}
 \method{thread-current}{=> <thread>}
 \method{all-threads}{=> <tup>}
 \method{sleep}{secs|<flo>}
@@ -1838,12 +1840,12 @@ operations.
 \form{DLET}{(DLET ((,var ,val) ...) ,@body)}
   \doc{$\equiv$ \kode{(LET ((,old-var ,var) ...) (FIN (SEQ (SET ,var
   ,val) ... ,@body) (SET ,var ,old-var) ...))}}
-\class{<pipe>}{<flat!>}
+\class{<pipe>}{<flat> <seq!>}
   \doc{Represents a synchronized FIFO queue allowing multiple readers
   and writers in separate threads.}
-\method{enqueue!}{pipe|<pipe> x => <pipe>}
+\method{enq!}{pipe|<pipe> x => <pipe>}
   \doc{Adds \code{x} to \code{pipe}.} 
-\method{dequeue!}{pipe|<pipe> => <any>}
+\method{deq!}{pipe|<pipe> => <any>}
   \doc{Removes and returns element from \code{pipe} or waits for one
   to be available.} 
 % \method{dequeue-or!}{pipe|<pipe> default => <any>}
@@ -1935,32 +1937,37 @@ module name to use.
 
 \section{Installation}
 
-Unpack either a linux or windows version of \goo\ of either a
-development or binary tarball into an appropriate installation area.
-In the case of a binary tarball, there are five directories:
-\kode{doc}, \kode{bin}, \kode{lib}, \kode{mods}, and \kode{emacs}.  You
-can just run \goo\ from the \kode{bin} subdirectory.
+Unpack a \goo\ development or platform specific binary tarball into an
+appropriate staging directory.  In the case of a binary tarball, there
+will be five directories: \kode{doc}, \kode{bin}, \kode{c},
+\kode{src}, and \kode{emacs}.  You can just run \goo\ from the
+\kode{bin} subdirectory.
 
-In the case of a development tarball, you must install it.
-After unpacking, there will be five directories: \kode{doc},
-\kode{bin}, \kode{c}, \kode{src}, and \kode{emacs}.  Edit the
-\kode{Make.inc} file in the top level directory, to configure the
-installation directory root using the \kode{PREFIX} if \kode{/usr} is
-inapproriate.  Executing \kode{make install} will rebuild \goo\ with
-the proper roots, creating \kode{lib} and \kode{mods} directories, and
-installing \goo\ in \kode{bin} and setting up \kode{doc}.  For the
-simplest installation, just set \kode{GOO\_ROOT} to your desired
-installation location and type \kode{make simple-install}.  On
-windows, it is necessary to add \kode{GOO\_BIN} to your \kode{PATH}.
+In the case of a development tarball, you must install it.  After
+unpacking, there will be five directories: \kode{doc}, \kode{bin},
+\kode{c}, \kode{src}, and \kode{emacs}.  On windows, installation must
+be conducted from within a cygwin shell.  \goo\ requires Boehm's GC to
+be installed as a shared library on linux or under the source dir
+\kode{GOO\_DIR/gc} downloadable from
+\kode{http://www.hpl.hp.com/personal/Hans\_Boehm/gc/gc\_source/gc.tar.gz}.
+
+Generate makefiles by executing \kode{./configure}.  Configure takes a
+\kode{--prefix} argument which sets the installation root,
+\kode{GOO\_ROOT}.  Normally \kode{GOO\_ROOT} is set to \kode{/usr/local}
+but can be set to staging directory for a personal installation.
+Configure also takes a \kode{--with-threads} argument which enables
+threads support on linux.  The rest of the configure arguments can be
+found by executing \kode{./configure --help}.  Execute \kode{make} to
+build \goo\ and \kode{make install} to install it.  Executing
+\kode{make install} will build \goo\ with the proper roots, creating
+\kode{lib} and \kode{mods} directories, and installing \goo\ in
+\kode{bin} and setting up \kode{doc}.  On windows, it is necessary to
+add \kode{GOO\_BIN} to your \kode{PATH}.
 
 You can override the default \kode{GOO\_ROOT} by
 setting up your \kode{OS} environment variable.  
 For example, my \kode{GOO\_ROOT} on linux is: 
 \kode{setenv GOO\_ROOT /home/ai/jrb/goo}.
-% \begin{exv}
-%   SET GOO\_ROOT=\jrb\goo
-% \end{exv}
-% On linux of course you would use forward slashes and 
 Environment variable setting depends on the shell you're using.
 In order to run \kode{g2c-goo} you need to
 set \kode{GOO\_BUILD\_ROOT} to the directory which includes the \kode{src}

@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.1.1, Thu May 16 16:15:32 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Conditions</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_35.html"><img alt="Input / Output" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_33.html"><img alt="Symbols" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Conditions</b></td></tr></table>
+<h1>Conditions</h1>
+<p>Conditions are objects representing exceptional situations.  
+<i>GOO&#32;provides restartable conditions as well as the more traditional stack
+unwinding conditions.  A condition is an object used to provide
+information to a handler.  A handler is an object with a handler
+function used to take care
+of conditions of a particular type.  Signalling is a mechanism for
+finding the most appropriate handler for a given condition.
+See DRM&nbsp;<a HREF="gooomanual_52.html#4">[4]</a> for more information.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;condition&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>default-handler</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;condition&gt; =&gt; &lt;fun&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>called if no appropriate handler is in force.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>default-handler-description</tt> </td><td colspan="1" align="LEFT"> <tt>(c|&lt;condition&gt; =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>return a string describing an anonymous handler for this type of
+  condition.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>build-condition-interactively</tt> </td><td colspan="1" align="LEFT"> <tt>(type|&lt;condition&gt; in out
+           =&gt; &lt;condition&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>construct a condition of the specified type and interactively prompt
+  the user to fill in any important props.  Called by the debugger.
+  Methods should call next-method to build the condition, then set the
+  props for their own class.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>sig</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;condition&gt; args|...)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>signals a condition with optional arguments args.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>&lt;simple-condition&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;condition&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>a condition consisting of a <tt>msg</tt> message and arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="7">&nbsp;</A><tt>condition-message</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;simple-condition&gt; =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns <tt>msg</tt> string.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="8">&nbsp;</A><tt>condition-arguments</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;simple-condition&gt; =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns <tt>msg</tt> string arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="9">&nbsp;</A><tt>&lt;serious-condition&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;condition&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>a condition that can not be safely ignored.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="10">&nbsp;</A><tt>&lt;error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;serious-condition&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>a condition that indicates something is invalid about the program.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="11">&nbsp;</A><tt>error</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;any&gt; args|...)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>signals an error.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="12">&nbsp;</A><tt>error</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;str&gt; args|...)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>signals a simple error.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="13">&nbsp;</A><tt>&lt;simple-error&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;error&gt; &lt;simple-condition&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>an error that consists of a <tt>msg</tt> message and arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="14">&nbsp;</A><tt>&lt;restart&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;condition&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>used for restarting a computation.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="15">&nbsp;</A><tt>&lt;handler&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>object used for handling a signaled condition.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="16">&nbsp;</A><tt>handler-function</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;handler&gt; =&gt; &lt;fun&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="17">&nbsp;</A><tt>fab-handler</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;fun&gt; =&gt; &lt;handler&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>creates a handler from a handler function.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="18">&nbsp;</A><tt>handler-matches?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;handler&gt; y|&lt;condition&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>protocol for determining whether a handler handles a particular
+  condition.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="19">&nbsp;</A><tt>TRY</tt> </td><td colspan="1" align="LEFT"> <tt>(TRY ,try-options ,handler ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>installs <tt>,handler</tt> as a condition handler for the
+  duration of <tt>(SEQ ,@body)</tt>, using the instructions provided
+  by <tt>,try-options</tt>.
+  <tt>,try-options</tt> should either be the name of the condition type to
+  <tt>handle</tt>, or a <tt>,try-option-list</tt> with zero or more of the
+  following options: 
+  <ul><li><tt>(TYPE ,expr) =&gt;</tt>
+      An expression returning the type of condition to handle.
+    <li><tt>(TEST ,@body) =&gt; Code</tt>
+       which returns <tt>&#35;t</tt> if the condition is applicable,
+      and <tt>&#35;f</tt> otherwise.  This may be called at arbitrary times 
+      by the runtime, so it shouldn't do anything too alarming.
+    <li><tt>(DESCRIPTION ,message ,@arguments) =&gt;</tt>
+      A human-readable description of this handler.  Used by the debugger.
+  </ul>
+<p>  The handler function should take two arguments: the <tt>,condition</tt> to be
+  handled, and a <tt>,resume</tt> function.  if a matching condition is signaled
+  then the handler function is called with the signaled condition and a
+  resume function to be called if the handler wants to return a value to be
+  used as the result of the signaling <tt>SIG</tt> call.  the handler has three
+  possibilities: (1) it can handle the condition by taking an exit using
+  <tt>ESC</tt>, (2) it can resume to the original <tt>SIG</tt> call using the
+  resume function
+  called with the value to be returned, or (3) it can do neither, that is,
+  it can choose not to handle the condition by just falling through to the
+  end of the handler (cf., Dylan's <tt>BLOCK</tt>/<tt>EXCEPTION</tt> 
+  and <tt>LET HANDLER</tt>) and the next available handler will be invoked.
+  Note that <i>GOO&#32;<b>does not unwind the stack</b> before calling
+  handlers!</i></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<p>where
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="20">&nbsp;</A><tt>handler</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> (fun (,condition ,resume) ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="21">&nbsp;</A><tt>,try-options</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> ,condition-type-name | ,try-option-list</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="22">&nbsp;</A><tt>,try-option-list</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> (,try-option* )</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="23">&nbsp;</A><tt>,try-option</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> (,option-name ,@option-value)</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_35.html"><img alt="Input / Output" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_33.html"><img alt="Symbols" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Conditions</b></td></tr></table></body></html>

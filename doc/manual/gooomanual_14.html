@@ -1,0 +1,121 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.1.1, Thu May 16 16:15:30 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Classes</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="gooomanual_9.html"><img alt="Types, Classes and Properties" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_13.html"><img alt="Product" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Classes</b></td></tr></table>
+<h2>Classes</h2>
+<p>Classes are types that specify an inheritance relationship and can
+have associated structured data through properties.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;class&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;type&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>class-name</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;class&gt; =&gt; (t?&#32;&lt;sym&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns class name or false otherwise.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>class-parents</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;class&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>direct superclasses.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>class-ancestors</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;class&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>class precedence list including this class.  See
+  Appendix&nbsp;<a HREF="gooomanual_53.html">*</a> for details.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>class-direct-props</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;class&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>properties defined directly on this class.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>class-props</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;class&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>properties defined on this class or any superclass.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="7">&nbsp;</A><tt>class-children</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;class&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>direct subclasses.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="8">&nbsp;</A><tt>DC</tt> </td><td colspan="1" align="LEFT"> <tt>(DC ,name (,@parents))</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>defines a class named <tt>,name</tt> with direct parents <tt>,@parents</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="9">&nbsp;</A><tt>new</tt> </td><td colspan="1" align="LEFT"> <tt>(type|&lt;class&gt; prop-inits|...)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>creates an instance of type <tt>type</tt> and prop 
+  initialized as specified by <tt>prop-inits</tt>.  
+  For example, <tt>(new &lt;point&gt; point-x 1 point-y 2)</tt>
+  creates a point with <tt>x=1</tt> and <tt>y=2</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<h3><A NAME="10">Properties</a></h3>
+<p>Properties are named data associated with classes.  Their values are
+accessed exclusively through generic functions, called getters and
+setters.  Descriptions of properties are instances of <tt>&lt;prop&gt;</tt>.
+Property values can either be specified at creation time with keyword
+arguments, by calling a property setter, or through a property
+initialization function called lazily the first time a getter is called if
+the property is otherwise uninitialized.  Property initialization
+functions are called with a single argument, the object under construction.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="11">&nbsp;</A><tt>&lt;prop&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="12">&nbsp;</A><tt>prop-owner</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;prop&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>class on which property was directly defined.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="13">&nbsp;</A><tt>prop-getter</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;prop&gt; =&gt; &lt;gen&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>reader accessor generic.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="14">&nbsp;</A><tt>prop-setter</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;prop&gt; =&gt; &lt;gen&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>writer accessor generic.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="15">&nbsp;</A><tt>prop-type</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;prop&gt; =&gt; &lt;type&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>type constraining property value.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="16">&nbsp;</A><tt>prop-init</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;prop&gt; =&gt; &lt;fun&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>lazy initialization function.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="17">&nbsp;</A><tt>find-getter</tt> </td><td colspan="1" align="LEFT"> <tt>(c|&lt;class&gt; getter|&lt;gen&gt; =&gt; &lt;met&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>finds getter method defined on given class.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="18">&nbsp;</A><tt>find-setter</tt> </td><td colspan="1" align="LEFT"> <tt>(c|&lt;class&gt; setter|&lt;gen&gt; =&gt; &lt;met&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>finds setter method defined on given class.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="19">&nbsp;</A><tt>prop-bound?</tt> </td><td colspan="1" align="LEFT"> <tt>(x g|&lt;gen&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns true if property with getter <tt>g</tt> is bound in
+  instance <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="20">&nbsp;</A><tt>add-prop</tt> </td><td colspan="1" align="LEFT"> <tt>(owner getter|&lt;gen&gt; setter|&lt;gen&gt; type|&lt;type&gt; init|&lt;fun&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>where <tt>init</tt> is a one parameter function that returns the initial
+  value for the prop and gets called lazily with the new instance as
+  the argument.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="21">&nbsp;</A><tt>DP</tt> </td><td colspan="1" align="LEFT"> <tt>(DP ,name (,oname|,owner =&gt; ,type) [,@init])</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>add's a property to <tt>,owner</tt> with getter named
+       <tt>,name</tt>, setter named <tt>,name &#35;&#35; "-setter"</tt>, 
+       type <tt>,type</tt>, and optionally initial 
+  value <tt>,init</tt>.  The initial value function is evaluated 
+  lazily when prop's value is first requested.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="gooomanual_9.html"><img alt="Types, Classes and Properties" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_13.html"><img alt="Product" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Classes</b></td></tr></table></body></html>

@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.1.1, Thu May 16 16:15:29 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Types, Classes and Properties</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_15.html"><img alt="Functions" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_8.html"><img alt="Program Control" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Types, Classes and Properties</b></td></tr></table>
+<h1>Types, Classes and Properties</h1>
+<p><i>GOO&#32;types categorize objects.  Types are first class.  They are used
+to annotate bindings.  Binding types restrict the type of objects
+bindable to associated bindings.
+<p><i>GOO&#32;supports the following types in order of specificity 
+(with the exact ordering defined in Appendix&nbsp;<a HREF="gooomanual_54.html">*</a>):
+<ul><li><i>Singleton</i> types specify a unique instance,
+<li><i>Classes</i> and <i>properties</i> specify the structure, 
+inheritance, and
+initialization of objects.  Every object is a direct instance of a
+particular class,
+<li><i>Product</i> types specify a cross product of types, 
+<li><i>Subclass</i> types specify a lineage of classes, and
+<li><i>Union</i> types specify a union of types.
+</ul>
+<p>The basic type protocol is:
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;type&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>isa?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;any&gt; y|&lt;type&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>subtype?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;type&gt; y|&lt;type&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns true iff <tt>x</tt> is a subtype of <tt>y</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>new</tt> </td><td colspan="1" align="LEFT"> <tt>(type|&lt;type&gt; prop-inits|...)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>creation protocol taking type and creation options where
+  <tt>prop-inits</tt> contains getter / initial value pairs.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<menu>
+<li><a HREF="gooomanual_10.html">Singletons</a>
+<li><a HREF="gooomanual_11.html">Subclasses</a>
+<li><a HREF="gooomanual_12.html">Unions</a>
+<li><a HREF="gooomanual_13.html">Product</a>
+<li><a HREF="gooomanual_14.html">Classes</a>
+</menu>
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_15.html"><img alt="Functions" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_8.html"><img alt="Program Control" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Types, Classes and Properties</b></td></tr></table></body></html>

@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.2.1, Fri Jul 19 10:44:21 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Namespaces and Bindings</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_8.html"><img alt="Program Control" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_6.html"><img alt="Expressions" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Namespaces and Bindings</b></td></tr></table>
+<h1>Namespaces and Bindings</h1>
+<p><i>GOO&#32;is a lexically scoped language.  Bindings contain values and are
+looked up by name.  Lexical bindings are
+visible from only particular textual ranges in a program.  Lexical
+bindings shadow visible bindings of the same name.
+<p>At the topmost level, <i>GOO&#32;provides simple modules that map from
+names to bindings.  Each file introduces a new module with the same
+name as the file.  Nested modules are supported by way of slashes in
+module names.  Modules can import bindings exported by other modules,
+but currently there is no way to selectively exclude or rename
+imported bindings.  Furthermore, no cycles can occur in the module use
+heterarchy.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>DV</tt> </td><td colspan="1" align="LEFT"> <tt>(DV ,var ,form)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>defines a global variable named <tt>(var-name ,var)</tt> with an 
+  initial value <tt>,form</tt> (cf. Scheme's <tt>DEFINE</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>DEF</tt> </td><td colspan="1" align="LEFT"> <tt>(DEF ,var ,val)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>locally binds <tt>,var</tt> to <tt>,val</tt> and evaluates
+  remainder of current body in the context of that binding.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <tt>(DEF (TUP ,var ...) ,val)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>parallel binding can also be specified using <tt>TUP</tt> on the lhs of
+       a <tt>DEF</tt> binding. For example
+        <tt>(DEF (TUP x y) (TUP 1 2))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>LET</tt> </td><td colspan="1" align="LEFT"> <tt>(LET ((,var ,val) ...) ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SEQ (DEF ,var ,val) ... ,@body)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<p>where
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="4">&nbsp;</A><tt>,var</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> ,name | (,name ,type)</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>with <tt>,name | ,type</tt> <i> == </i> <tt>(,name ,type)</tt> within lists.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="5">&nbsp;</A><tt>SET</tt> </td><td colspan="1" align="LEFT"> <tt>(SET ,name ,form) </tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>sets <tt>,name</tt> binding to value of evaluating <tt>,form</tt>
+  (cf. Scheme's <tt>SET!</tt>)</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <tt>(SET (,name ,@args) ,form)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(,name &#35;&#35; -setter ,form ,@args)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>USE</tt> </td><td colspan="1" align="LEFT"> <tt>(USE ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>loads the module <tt>,name</tt> (if it hasn't been loaded
+  already) and aliases
+  all the exported bindings into the current namespace.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="7">&nbsp;</A><tt>EXPORT</tt> </td><td colspan="1" align="LEFT"> <tt>(EXPORT ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>makes the binding <tt>,name</tt> available to code which uses 
+       this module in the future.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="8">&nbsp;</A><tt>USE/EXPORT</tt> </td><td colspan="1" align="LEFT"> <tt>(USE/EXPORT ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>same as <tt>USE</tt> plus reexports all imported bindings.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_8.html"><img alt="Program Control" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_6.html"><img alt="Expressions" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Namespaces and Bindings</b></td></tr></table></body></html>

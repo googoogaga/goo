@@ -1,0 +1,87 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.1.1, Thu May 16 16:15:30 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Macros</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="gooomanual_15.html"><img alt="Functions" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_17.html"><img alt="Methods" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Macros</b></td></tr></table>
+<h2>Macros</h2>
+<p>Macros provide a facility for extending the base syntax of <i>GOO.  The
+design is based on quasiquote code templates and a simple list pattern
+matching facility.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>QUASIQUOTE</tt> </td><td colspan="1" align="LEFT"> <tt>(QUASIQUOTE ,@qq-forms)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><tt>QUOTE</tt> with selective evaluation using <tt>UNQUOTE</tt> and
+  <tt>SPLICING-UNQUOTE</tt> (cf. Lisp and Scheme's <tt>QUASIQUOTE</tt>),
+  abbreviated "<tt>`</tt>".</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>UNQUOTE</tt> </td><td colspan="1" align="LEFT"> <tt>(UNQUOTE ,form)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>evaluates <tt>,form</tt> in the midst of a <tt>QUASIQUOTE</tt>
+  expression, abbreviated "<tt>,</tt>".</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>SPLICING-UNQUOTE</tt> </td><td colspan="1" align="LEFT"> <tt>(SPLICING-UNQUOTE ,form)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>evaluates <tt>,form</tt> in the midst of a <tt>QUASIQUOTE</tt>
+       expression and splices it in, abbreviated "<tt>,@</tt>".</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>MATCH</tt> </td><td colspan="1" align="LEFT"> <tt>(MATCH ,exp (,pat ,val) ...)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>evaluates <tt>,val</tt> corresponding to first <tt>,pat</tt>
+  matching <tt>,exp</tt>.  The pattern is much the same as <tt>QUASIQUOTE</tt> 
+  and can contain either <tt>UNQUOTE</tt>'d variables
+  or <tt>UNQUOTE-SPLICING</tt> variables.  For example,
+<pre>
+(MATCH '(1 2) ((,a ,b) (lst a b))) $ --&gt; $ (1 2) 
+(MATCH '(1 2) ((,a ,@b) (lst a b))) $ --&gt; $ (1 (2))
+</pre></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>DS</tt> </td><td colspan="1" align="LEFT"> <tt>(DS ,pattern ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>defines a macro matching pattern ,pattern and expanding according to
+  <tt>,@body</tt>. The pattern matching occurs as in <tt>MIF</tt> and makes available
+  pattern variables during the evaluation of <tt>(SEQ ,@body)</tt>.  For example,
+<pre>
+(DS (when ,test ,@body) 
+  `(if (not ,test) (seq ,@body)))
+</pre>
+  defines the <tt>when</tt> macro in <i>GOO.</i></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+where
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="6">&nbsp;</A><tt>pattern</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> (,@qq-forms)</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="7">&nbsp;</A><tt>CT</tt> </td><td colspan="1" align="LEFT"> <tt>(CT ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>evaluates <tt>(SEQ ,@body)</tt> at compile-time allowing a user to make
+  available computations for the purpose of macro-expansion.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="8">&nbsp;</A><tt>CT-ALSO</tt> </td><td colspan="1" align="LEFT"> <tt>(CT-ALSO ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>equivalent to <tt>CT</tt>, but also includes a copy of
+  <tt>,@body</tt> in compiled
+  images.  Similar to <tt>(eval-when (:compile-toplevel :execute) ...)</tt>
+  in Common LISP.  The return value of <tt>CT-ALSO</tt> is undefined.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="9">&nbsp;</A><tt>MACRO-EXPAND</tt> </td><td colspan="1" align="LEFT"> <tt>(MACRO-EXPAND ,form)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>recursively expands macros in expression <tt>,form</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="gooomanual_15.html"><img alt="Functions" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_17.html"><img alt="Methods" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Macros</b></td></tr></table></body></html>

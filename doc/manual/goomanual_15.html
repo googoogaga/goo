@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.2.1, Fri Jul 19 10:44:22 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Functions</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_19.html"><img alt="Scalars" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_9.html"><img alt="Types, Classes and Properties" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Functions</b></td></tr></table>
+<h1>Functions</h1>
+<p>All operations in <i>GOO&#32;are functions.
+<p>Functions accept zero or more arguments, and return one value. The
+parameter list of the function describes the number and types of the
+arguments that the function accepts, and the type of the value it returns.
+<p>There are two kinds of functions, methods and generic functions. Both
+are invoked in the same way. The caller does not need to know whether
+the function it is calling is a method or a generic function.
+<p>A method is the basic unit of executable code.  A method accepts a
+number of arguments, creates local bindings for them, executes an
+implicit body in the scope of these bindings, and then returns a
+value.
+<p>A generic function contains a number of methods. When a generic
+function is called, it compares the arguments it received with the
+parameter lists of the methods it contains. It selects the most
+appropriate method and invokes it on the arguments. This technique of
+method dispatch is the basic mechanism of polymorphism in <i>GOO.
+<p>All <i>GOO&#32;functions are objects, instances of <tt>&lt;fun&gt;</tt>. Generic
+functions are instances of <tt>&lt;gen&gt;</tt> and methods are instances of
+<tt>&lt;met&gt;</tt>.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;fun&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>fun-name</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;fun&gt; =&gt; (t?&#32;&lt;sym&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns the name of function or false if unavailable.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>fun-names</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;fun&gt; =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns the names of parameters of <tt>x</tt> or <tt>()</tt> if unavailable.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>fun-specs</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;fun&gt; =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns the specializers of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>fun-nary?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;fun&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns true iff the function takes optional arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>fun-arity</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;fun&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns <tt>x</tt>'s number of required arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="7">&nbsp;</A><tt>fun-val</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;fun&gt; =&gt; &lt;type&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns the return type of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="8">&nbsp;</A><tt>FUN</tt> </td><td colspan="1" align="LEFT"> <tt>(FUN ,sig ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>creates an anonymous method with signature <tt>,sig</tt> and when called
+       evaluates <tt>,@body</tt> as <tt>(SEQ ,@body)</tt> (cf. Scheme's
+  <tt>LAMBDA</tt>).  The following a few example functions and their application:
+<p><font size="-3"><pre>
+((fun (x) x) 1) ==&gt; 1 
+((fun (x|&lt;int&gt; =&gt; &lt;int&gt;) x) 2) ==&gt; 2 
+((fun (x|...) x) 1 2 3) ==&gt; (1 2 3) 
+((fun (x y|...) y) 1 2 3) ==&gt; (2 3) 
+((fun (x =&gt; (tup &lt;int&gt;))) (tup x)) 1)  $ == $ (tup 1)
+</pre>
+</font>
+</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<p>where
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="9">&nbsp;</A><tt>,sig</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> (,@params) | (,@params =&gt; ,ret)</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="10">&nbsp;</A><tt>,params</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> (,@vars [(,name '...')])</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>where parameter lists can include an optional nary parameter which
+  binds to all arguments beyond required arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="11">&nbsp;</A><tt>,ret</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> ,var | (TUP ,@ret-vars)</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>with <tt>TUP</tt> turning into corresponding <tt>t*</tt> 
+  function return type.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="12">&nbsp;</A><tt>,ret-var</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> (,name ,type)</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="13">&nbsp;</A><tt>LOC</tt> </td><td colspan="1" align="LEFT"> <tt>(LOC ((,name ,sig ,@fbody)) ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i><pre>
+       (LET ((,name &#35;f) ...) 
+       (SET ,name (fun ,sig ,@fbody)) ... 
+       ,@body)
+       </pre>
+   <tt>LOC</tt> introduces local functions that can recursively call each other
+  (cf. Scheme's <tt>LETREC</tt>).  
+</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="14">&nbsp;</A><tt>DF</tt> </td><td colspan="1" align="LEFT"> <tt>(DF ,name ,sig ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(DV ,name (FUN ,sig ,@body))</tt> followed by
+       setting the function's name.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="15">&nbsp;</A><tt>zipped</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;fun&gt; =&gt; &lt;fun&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(fun (y|...) (app x y))</tt>.  This is useful when
+  mapping over zipped multiple sequences (e.g., <tt>(map (zipped +)
+  (zip '(1 2) '(2 3)))</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="16">&nbsp;</A><tt>OP</tt> </td><td colspan="1" align="LEFT"> <tt>(OP ,op-arg ...)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>creates an anonymous function with implicitly defined
+  arguments, where <tt>,op-arg</tt> is either an implicit required parameter
+  "<tt>&#95;</tt>" or rest parameter "<tt>...</tt>" or an s-expression 
+  potentially containing further op-args.  The required parameters are found
+  ordered according to a depth-first walk of the op-args.  
+  The following are typical examples:
+<pre>
+((op &#95;) 1) ==&gt; 1 
+((op 2) 1) ==&gt; 2 
+((op + &#95; 1) 3) ==&gt; 4 
+((op lst ...&#32;1) 3 2) ==&gt; (3 2 1) 
+((op tail (tail &#95;)) '(1 2 3)) ==&gt; (3) 
+</pre>
+</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="17">&nbsp;</A><tt>app</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; args|... =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>calls <tt>f</tt> with arguments 
+       <tt>(cat (sub args 0 (- (len args) 2)) (elt args (- (len args) 1)))</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<menu>
+<li><a HREF="goomanual_16.html">Generics</a>
+<li><a HREF="goomanual_17.html">Methods</a>
+<li><a HREF="goomanual_18.html">Macros</a>
+</menu>
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_19.html"><img alt="Scalars" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_9.html"><img alt="Types, Classes and Properties" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Functions</b></td></tr></table></body></html>

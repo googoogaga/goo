@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.2.1, Fri Jul 19 10:44:22 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Generics</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_17.html"><img alt="Methods" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_15.html"><img alt="Functions" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td align="center" bgcolor="#99ccff" width="100%"><b>Generics</b></td></tr></table>
+<h2>Generics</h2>
+<p>Generic functions provide a form of polymorphism allowing many
+implementation methods with varying parameter types, called
+<i>specializers</i>.  Methods on a given generic function are chosen
+according to applicability and are then ordered by specificity.
+A method is applicable if each argument is an instance of each
+corresponding specializer.
+A method A is more specific than method B
+if all of A's specializers are subtypes of B's.  
+During method dispatch three cases can occur:
+<ul><li>if no methods are applicable then a no-applicable-method error
+is signaled,
+<li>if methods are applicable but are not orderable then an
+ambiguous-method error is signaled,
+<li>if methods are applicable and are orderable then the most
+specific method is called and the next methods are established.
+</ul>
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;gen&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;fun&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>fun-mets</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;gen&gt; =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns <tt>x</tt>'s methods.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>gen-add-met</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;gen&gt; y|&lt;met&gt; =&gt; &lt;gen&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>adds method <tt>y</tt> to generic <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>ord-app-mets</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;gen&gt; args|... =&gt; (tup ord|&lt;lst&gt; amb|&lt;lst&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns both the list of sorted applicable methods and any ambiguous
+  methods when generic <tt>x</tt> is called with arguments args.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>DG</tt> </td><td colspan="1" align="LEFT"> <tt>(DG ,name ,sig)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>defines a binding with name <tt>,name</tt> bound to a generic with signature <tt>,sig</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_17.html"><img alt="Methods" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_15.html"><img alt="Functions" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td align="center" bgcolor="#99ccff" width="100%"><b>Generics</b></td></tr></table></body></html>

@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.2.1, Fri Jul 19 10:44:24 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Threads</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_42.html"><img alt="Compiler" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_38.html"><img alt="System" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Threads</b></td></tr></table>
+<h1>Threads</h1>
+<p>Threads allow for expressing concurrent programs.  The assumed model
+is shared memory with explicit synchronization and symmetric
+multiprocessing and is based heavily upon pthreads This section is preliminary and might change in the future.  There are
+several limitations in the current implementation.  It represents a
+rudimentary but usable subset of typical thread operations.  Tables
+and vectors require user locks to ensure thread safety and no out of
+language crashes.  Finally, the compiler, interpreter, and
+(re)definition machinery are thread unsafe and can only reliably be
+run in one thread.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;thread&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Represents a thread of executation schedulable across 
+  multiple processors.  Upon creation executes <code>thread-function</code>
+  in separate thread.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>thread-name</tt> </td><td colspan="1" align="LEFT"> <tt>(thread|&lt;thread&gt; =&gt; (t? &lt;sym&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>thread-priority</tt> </td><td colspan="1" align="LEFT"> <tt>(thread|&lt;thread&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>thread-function</tt> </td><td colspan="1" align="LEFT"> <tt>(thread|&lt;thread&gt; =&gt; &lt;fun&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>new</tt> </td><td colspan="1" align="LEFT"> <tt>(x|(t&lt; &lt;thread&gt;) inits|... =&gt; &lt;thread&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Creates thread and runs <code>thread-function</code> of created
+  thread in separate OS thread.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>SPAWN</tt> </td><td colspan="1" align="LEFT"> <tt>(SPAWN ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(FAB &lt;thread&gt; thread-function (fun () ,@body))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="7">&nbsp;</A><tt>thread-yield</tt> </td><td colspan="1" align="LEFT"> <tt>()</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Surrenders processor to another thread.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="8">&nbsp;</A><tt>thread-join</tt> </td><td colspan="1" align="LEFT"> <tt>(thread|&lt;thread&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Causes current thread to wait for the termination of <code>thread</code>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="9">&nbsp;</A><tt>thread-current</tt> </td><td colspan="1" align="LEFT"> <tt>(=&gt; &lt;thread&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="10">&nbsp;</A><tt>all-threads</tt> </td><td colspan="1" align="LEFT"> <tt>(=&gt; &lt;tup&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="11">&nbsp;</A><tt>sleep</tt> </td><td colspan="1" align="LEFT"> <tt>(secs|&lt;flo&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Pauses current thread for <code>secs</code> seconds.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="12">&nbsp;</A><tt>&lt;lock&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Represents a mutex.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="13">&nbsp;</A><tt>lock-name</tt> </td><td colspan="1" align="LEFT"> <tt>(lock|&lt;lock&gt; =&gt; (t? &lt;sym&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="14">&nbsp;</A><tt>new</tt> </td><td colspan="1" align="LEFT"> <tt>(x|(t&lt; &lt;lock&gt;) inits|... =&gt; &lt;lock&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="15">&nbsp;</A><tt>lock-lock</tt> </td><td colspan="1" align="LEFT"> <tt>(lock|&lt;lock&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Obtain exclusive access to <tt>lock</tt> waiting if necessary.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="16">&nbsp;</A><tt>lock-unlock</tt> </td><td colspan="1" align="LEFT"> <tt>(lock|&lt;lock&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Free up exclusive access to <tt>lock</tt> potentially allowing 
+  another thread access.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="17">&nbsp;</A><tt>WITH-LOCK</tt> </td><td colspan="1" align="LEFT"> <tt>(WITH-LOCK ,lock ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(FIN (SEQ (lock-lock ,lock) ,@body) (lock-unlock ,lock))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="18">&nbsp;</A><tt>&lt;event&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Represents a condition variable used for interthread notification.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="19">&nbsp;</A><tt>event-name</tt> </td><td colspan="1" align="LEFT"> <tt>(event|&lt;event&gt; =&gt; (t? &lt;sym&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>P</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="20">&nbsp;</A><tt>new</tt> </td><td colspan="1" align="LEFT"> <tt>(x|(t&lt; &lt;event&gt;) inits|... =&gt; &lt;event&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="21">&nbsp;</A><tt>event-signal</tt> </td><td colspan="1" align="LEFT"> <tt>(event|&lt;event&gt; lock|&lt;lock&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Unblocks at least one thread waiting on <code>event</code>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="22">&nbsp;</A><tt>event-broadcast</tt> </td><td colspan="1" align="LEFT"> <tt>(event|&lt;event&gt; lock|&lt;lock&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Unblocks all threads waiting on <code>event</code>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="23">&nbsp;</A><tt>event-wait</tt> </td><td colspan="1" align="LEFT"> <tt>(event|&lt;event&gt; lock|&lt;lock&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Unlocks <code>lock</code> and places thread in waiting state to be
+  resumed when <code>event</code> is signaled or broadcasted upon which time
+  <code>lock</code> is reacquired and thread resumed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="24">&nbsp;</A><tt>event-wait-timed</tt> </td><td colspan="1" align="LEFT"> <tt>(event|&lt;event&gt; lock|&lt;lock&gt; secs|&lt;flo&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Unlocks <code>lock</code> and places thread in waiting state to be
+  resumed when <code>event</code> is signaled or broadcasted or timeout
+  <code>secs</code> is reached upon which time <code>lock</code> is reacquired 
+  and thread resumed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="25">&nbsp;</A><tt>DDV</tt> </td><td colspan="1" align="LEFT"> <tt>(DDV ,var ,form)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Defines a thread local variable named <tt>(var-name ,var)</tt> with an 
+  initial value <tt>,form</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="26">&nbsp;</A><tt>DLET</tt> </td><td colspan="1" align="LEFT"> <tt>(DLET ((,var ,val) ...) ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(LET ((,old-var ,var) ...) (FIN (SEQ (SET ,var
+  ,val) ... ,@body) (SET ,var ,old-var) ...))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="27">&nbsp;</A><tt>&lt;pipe&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Represents a synchronized FIFO queue allowing multiple readers
+  and writers in separate threads.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="28">&nbsp;</A><tt>enq!</tt> </td><td colspan="1" align="LEFT"> <tt>(pipe|&lt;pipe&gt; x =&gt; &lt;pipe&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Adds <code>x</code> to <code>pipe</code>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="29">&nbsp;</A><tt>deq!</tt> </td><td colspan="1" align="LEFT"> <tt>(pipe|&lt;pipe&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Removes and returns element from <code>pipe</code> or waits for one
+  to be available.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_42.html"><img alt="Compiler" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_38.html"><img alt="System" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Threads</b></td></tr></table></body></html>

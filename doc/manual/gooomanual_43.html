@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.1.1, Thu May 16 16:15:32 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Installation</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_44.html"><img alt="Usage" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_42.html"><img alt="Top Level" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Installation</b></td></tr></table>
+<h1>Installation</h1>
+<p>Unpack either a linux or windows version of <i>GOO&#32;of either a
+development or binary tarball into an appropriate installation area.
+In the case of a binary tarball, there are five directories:
+<tt>doc</tt>, <tt>bin</tt>, <tt>lib</tt>, <tt>mods</tt>, and <tt>emacs</tt>.  You
+can just run <i>GOO&#32;from the <tt>bin</tt> subdirectory.
+<p>In the case of a development tarball, you must install it.
+After unpacking, there will be five directories: <tt>doc</tt>,
+<tt>bin</tt>, <tt>c</tt>, <tt>src</tt>, and <tt>emacs</tt>.  Edit the
+<tt>Make.inc</tt> file in the top level directory, to configure the
+installation directory root using the <tt>PREFIX</tt> if <tt>/usr</tt> is
+inapproriate.  Executing <tt>make install</tt> will rebuild <i>GOO&#32;with
+the proper roots, creating <tt>lib</tt> and <tt>mods</tt> directories, and
+installing <i>GOO&#32;in <tt>bin</tt> and setting up <tt>doc</tt>.  For the
+simplest installation, just set <tt>GOO&#95;ROOT</tt> to your desired
+installation location and type <tt>make simple-install</tt>.  On
+windows, it is necessary to add <tt>GOO&#95;BIN</tt> to your <tt>PATH</tt>.
+<p>You can override the default <tt>GOO&#95;ROOT</tt> by
+setting up your <tt>OS</tt> environment variable.  
+For example, my <tt>GOO&#95;ROOT</tt> on linux is: 
+<tt>setenv GOO&#95;ROOT /home/ai/jrb/goo</tt>.
+Environment variable setting depends on the shell you're using.
+In order to run <tt>g2c-goo</tt> you need to
+set <tt>GOO&#95;BUILD&#95;ROOT</tt> to the directory which includes the <tt>src</tt>
+directory.  
+<p>During start up, <i>GOO&#32;will load two patch files:
+<pre>
+${GOO_ROOT}/init.goo
+${HOME}/.goo/init.goo
+</pre>
+<p>You can customize your <i>GOO&#32;by adding forms to these files.
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_44.html"><img alt="Usage" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_42.html"><img alt="Top Level" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Installation</b></td></tr></table></body></html>

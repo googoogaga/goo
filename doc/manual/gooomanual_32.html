@@ -1,0 +1,63 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.1.1, Thu May 16 16:15:31 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Lazy Series'</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="gooomanual_26.html"><img alt="Collections" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_31.html"><img alt="Sequences" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Lazy Series'</b></td></tr></table>
+<h2>Lazy Series'</h2>
+<p>Represents an immutable sequence of numbers specified using a start number
+<tt>from</tt>, a step amount <tt>by</tt> , and an inclusive bound <tt>to</tt>.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;range&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>range-by</tt> </td><td colspan="1" align="LEFT"> <tt>(from|&lt;num&gt; test|&lt;fun&gt; lim|&lt;num&gt; by|&lt;fun&gt;=&gt; &lt;range&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns a range starting <tt>from</tt>, updated with <tt>by</tt>,
+  and continuing until <tt>(test x lim)</tt> is false.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>range</tt> </td><td colspan="1" align="LEFT"> <tt>(from|&lt;num&gt; test|&lt;fun&gt; lim|&lt;fun&gt; =&gt; &lt;range&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(range-by from test lim (op + &#95; 1))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>from</tt> </td><td colspan="1" align="LEFT"> <tt>(from|&lt;num&gt; =&gt; &lt;range&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(range from (always &#35;t) 0)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>below</tt> </td><td colspan="1" align="LEFT"> <tt>(lim|&lt;num&gt; =&gt; &lt;range&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(range 0 &lt; lim)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>&lt;step&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Steps represent step functions.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="7">&nbsp;</A><tt>first-then</tt> </td><td colspan="1" align="LEFT"> <tt>(first|&lt;fun&gt; then|&lt;fun&gt; =&gt; &lt;step&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns a new step object, calling thunks <tt>first</tt> to retrieve
+initial value and <tt>then</tt> to retrieve subsequent values.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="8">&nbsp;</A><tt>each</tt> </td><td colspan="1" align="LEFT"> <tt>(f|&lt;fun&gt; =&gt; &lt;each&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns a new each object, calling <tt>f</tt> thunk to retrieve
+  each value.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="9">&nbsp;</A><tt>&lt;cycle&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>Cycles provide a mechanism to create infinite sequences repeating
+  a certain sequence over and over again.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="10">&nbsp;</A><tt>cycle</tt> </td><td colspan="1" align="LEFT"> <tt>(x|... =&gt; &lt;cycle&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns a cycles that repeats elements of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td bgcolor="#99ccff"><a HREF="gooomanual_26.html"><img alt="Collections" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_31.html"><img alt="Sequences" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Lazy Series'</b></td></tr></table></body></html>

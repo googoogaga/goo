@@ -1,0 +1,118 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.2.1, Fri Jul 19 10:44:21 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Program Control</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_9.html"><img alt="Types, Classes and Properties" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_7.html"><img alt="Namespaces and Bindings" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Program Control</b></td></tr></table>
+<h1>Program Control</h1>
+<p><i>GOO&#32;provides a variety of program control constructs including
+function calls, conditional execution, and nonlocal control flow.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>SEQ</tt> </td><td colspan="1" align="LEFT"> <tt>(SEQ ,@forms)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>evaluates forms sequentially and returns values of evaluating last
+  form (cf. Scheme's <tt>BEGIN</tt>)</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <tt>(SEQ)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns false</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>IF</tt> </td><td colspan="1" align="LEFT"> <tt>(IF ,test ,then [ ,else ])</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>evaluates either <tt>,then</tt> if <tt>,test</tt> is non-false
+  otherwise evaluates <tt>,else</tt> (cf. Scheme's <tt>IF</tt>).  The
+  <tt>,else</tt> expression defaults to false.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>AND</tt> </td><td colspan="1" align="LEFT"> <tt>(AND ,form ,@forms)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(IF ,form (AND ,@FORMS))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <tt>(AND ,form)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>,form</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>OR</tt> </td><td colspan="1" align="LEFT"> <tt>(OR ,form ,@forms)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SEQ (DEF x ,form) (IF x x (OR ,@FORMS)))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <tt>(OR ,form)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>,form</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>UNLESS</tt> </td><td colspan="1" align="LEFT"> <tt>(UNLESS ,test ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(IF (NOT ,test) (SEQ ,@body))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>WHEN</tt> </td><td colspan="1" align="LEFT"> <tt>(WHEN ,test ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(IF ,test (SEQ ,@body))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="7">&nbsp;</A><tt>COND</tt> </td><td colspan="1" align="LEFT"> <tt>(COND (,test ,@body) ...)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>evaluates <tt>(SEQ ,@body)</tt> of first clause 
+  whose <tt>,test</tt> evaluates to
+  non-false (cf. Dylan's <tt>CASE</tt> and Scheme's <tt>COND</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="8">&nbsp;</A><tt>CASE[-BY]</tt> </td><td colspan="1" align="LEFT"> <tt>(CASE[-BY] ,value [ ,test ]((,@keys) ,@body) ...)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>evaluates <tt>,value</tt> and then evaluates <tt>(SEQ ,@body)</tt>
+  of first clause for which <tt>(,test ,value ,key)</tt> returns non-false
+  (cf. Dylan's <tt>SELECT</tt> and Scheme's <tt>CASE</tt>).  N.B., each
+  key is evaluated, thus symbols must be quoted.  The default
+  <tt>,test</tt> for the <tt>CASE</tt> form is <tt>==</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="9">&nbsp;</A><tt>OPF</tt> </td><td colspan="1" align="LEFT"> <tt>(OPF ,place ,expr)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SEQ (DEF &#95; ,place) (SET ,place ,expr))</tt>, where
+  <tt>,place</tt> is evaluated only once.  For example, 
+  <tt>(OPF x (+ &#95; 1))</tt> <i> == </i> <tt>(SET x (+ x 1))</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="10">&nbsp;</A><tt>SWAPF</tt> </td><td colspan="1" align="LEFT"> <tt>(SWAPF ,x ,y)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SEQ (DEF tmp ,x) (SET ,x ,y) (SET ,y tmp))</tt>,
+  where <tt>,x</tt> and <tt>,y</tt> are evaluated only once.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="11">&nbsp;</A><tt><i>call</i></tt> </td><td colspan="1" align="LEFT"> <tt>(,f ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>evaluates <tt>,f</tt> and then <tt>,@args</tt> in left to right
+  order and then calls <tt>,f</tt> with the evaluated arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="12">&nbsp;</A><tt>REP</tt> </td><td colspan="1" align="LEFT"> <tt>(REP ,name ((,var ,init) ...) ,@body) </tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>defines a recursive loop (cf., Dylan's <tt>ITERATE</tt> or Scheme's <tt>(LET ,var ...)</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="13">&nbsp;</A><tt>ESC</tt> </td><td colspan="1" align="LEFT"> <tt>(ESC ,name ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>evaluates <tt>(SEQ ,@body)</tt> with an exit
+  function of a single parameter, <tt>x</tt>, bound to
+  <tt>,name</tt> that if called, will cause <tt>ESC</tt> to
+  return the value of <tt>x</tt>
+  (cf. Dylan's <tt>BLOCK</tt>/<tt>RETURN</tt>).  It is illegal 
+  to call the exit function
+  after the execution of the creating <tt>ESC</tt> form (i.e., no upward
+  continuations).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="14">&nbsp;</A><tt>FIN</tt> </td><td colspan="1" align="LEFT"> <tt>(FIN ,protected ,@cleanups)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>ensures that <tt>(SEQ ,@cleanups)</tt> is evaluated whether
+  or not an <tt>ESC</tt> upwards exit is taken
+  during the dynamic-extent of <tt>,protected</tt>
+  (cf. Dylan's <tt>BLOCK/CLEANUP</tt> form and CL's
+  <tt>UNWIND-PROTECT</tt>).  The result of a <tt>FIN</tt> form is the
+  result of evaluating its protected form.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="15">&nbsp;</A><tt>ASSERT</tt> </td><td colspan="1" align="LEFT"> <tt>(ASSERT ,test ,message ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(UNLESS ,test (ERROR ,message ,@args))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_9.html"><img alt="Types, Classes and Properties" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_7.html"><img alt="Namespaces and Bindings" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Program Control</b></td></tr></table></body></html>

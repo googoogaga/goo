@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.2.1, Fri Jul 19 10:44:22 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Unions</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_13.html"><img alt="Product" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_9.html"><img alt="Types, Classes and Properties" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_11.html"><img alt="Subclasses" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Unions</b></td></tr></table>
+<h2>Unions</h2>
+<p>Union types represent the disjunction of types.  In conjunction with
+singleton types, they can be used to represent C-style <tt>enum</tt>'s.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;union&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;type&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>t+</tt> </td><td colspan="1" align="LEFT"> <tt>(types|... =&gt; &lt;union&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns union type representing disjunction of <tt>types</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>union-elts</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;union&gt; =&gt; &lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>types that union type matches.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>t?</tt> </td><td colspan="1" align="LEFT"> <tt>(type|&lt;type&gt; =&gt; &lt;union&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>F</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(t+ (t= &#35;f) type)</tt> (cf., Dylan's
+  <tt>false-or</tt>).  This is often used to widen a type to include the
+  convenient false null.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_13.html"><img alt="Product" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_9.html"><img alt="Types, Classes and Properties" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_11.html"><img alt="Subclasses" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Unions</b></td></tr></table></body></html>

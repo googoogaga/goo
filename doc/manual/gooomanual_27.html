@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.1.1, Thu May 16 16:15:31 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Mutable Collections</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_28.html"><img alt="Enumerators" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_26.html"><img alt="Collections" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td align="center" bgcolor="#99ccff" width="100%"><b>Mutable Collections</b></td></tr></table>
+<h2>Mutable Collections</h2>
+<p>Mutation is seen as a necessary evil and is supported but segregated
+in hopes of trying to isolate and optimize the nondestructive cases.
+Mutation includes the notion of modifying values and adding/removing
+keys.  The hope is that functional (nondestructive) programs will be
+both more succinct, understandable, and efficient than equivalent
+destructive programs.  Only core collection operators are given
+destructive versions.  All others can be built out of nondestructive
+operators followed by <tt>into</tt>&nbsp;<sup><a HREF="gooomanual_55.html#footnote-1">1</a></sup>.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;col!&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>elt-setter</tt> </td><td colspan="1" align="LEFT"> <tt>(v|&lt;any&gt; x|&lt;col&gt; k|&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>sets collection <tt>x</tt>'s element associated with key
+       <tt>k</tt> to <tt>v</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>into</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col!&gt; y|&lt;col&gt; =&gt; &lt;col!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>replaces elements of <tt>x</tt> with elements of <tt>y</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>fill!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col!&gt; y|&lt;any&gt; =&gt; &lt;col!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>fills <tt>x</tt> with <tt>y</tt>'s.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>add!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col!&gt; y|&lt;any =&gt; &lt;col!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>adds <tt>y</tt> to <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>del!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col!&gt; key|&lt;any&gt; =&gt; &lt;col!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>removes <tt>key</tt> from <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="7">&nbsp;</A><tt>zap!</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;col!&gt; =&gt; &lt;col!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>removes all of <tt>x</tt>'s elements.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+ 
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_28.html"><img alt="Enumerators" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_26.html"><img alt="Collections" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td align="center" bgcolor="#99ccff" width="100%"><b>Mutable Collections</b></td></tr></table></body></html>

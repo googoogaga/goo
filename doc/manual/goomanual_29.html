@@ -1,0 +1,89 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.2.1, Fri Jul 19 10:44:23 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Packers</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_30.html"><img alt="Maps" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_26.html"><img alt="Collections" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_28.html"><img alt="Enumerators" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Packers</b></td></tr></table>
+<h2>Packers</h2>
+<p>Packers are the complement of enumerators and are the 
+imperative version of <tt>fold</tt>.  The default packer returns a
+list of all accumulated values:
+<pre>
+(packing (for ((e '(1 2 3 4 5))) 
+           (when (odd? e) (pack e))))  ==&gt; (1 3 5)
+</pre>
+They can also be used for summing values etc:
+<pre>
+(packing-in (x|&lt;int&gt;) 
+  (for ((e '(1 2 3 4 5)))
+    (when (odd? e) (pack-in x e)))
+  (packed x))  ==&gt; 9
+</pre>
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;packer&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>packer-add</tt> </td><td colspan="1" align="LEFT"> <tt>(p|&lt;packer&gt; x =&gt; &lt;packer&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns a copy packer <tt>p</tt> augmented with element <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>packer-res</tt> </td><td colspan="1" align="LEFT"> <tt>(p|&lt;packer&gt; =&gt; &lt;any&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns result of packings over <tt>p</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>packer</tt> </td><td colspan="1" align="LEFT"> <tt>(init add|&lt;fun&gt; res|&lt;fun&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns a simple packer that starts its value out
+  with <tt>init</tt>, is augmented with <tt>add</tt>, and whose final value
+  is computed with <tt>res</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>packer-fab</tt> </td><td colspan="1" align="LEFT"> <tt>(t|&lt;type&gt; =&gt; &lt;packer&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns a new type <tt>t</tt> specific packer.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="6">&nbsp;</A><tt>packer-fab</tt> </td><td colspan="1" align="LEFT"> <tt>(t|(t&lt; &lt;seq&gt;) =&gt; &lt;packer&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(packer '() pair (op as t (rev!&#32;&#95;)))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="7">&nbsp;</A><tt>packer-fab</tt> </td><td colspan="1" align="LEFT"> <tt>(t|(t= &lt;int&gt;) =&gt; &lt;packer&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(packer 0 + (op &#95;))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="8">&nbsp;</A><tt>PACKING-WITH</tt> </td><td colspan="1" align="LEFT"> <tt>(PACKING-WITH ((,var ,pack) ...) ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>mechanism for packing objects using given packer into <tt>,var</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="9">&nbsp;</A><tt>PACKING-IN</tt> </td><td colspan="1" align="LEFT"> <tt>(PACKING-IN (,name '|' ,type ...) ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(PACKING-WITH (,name (packer-fab ,type)) ,@body)</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <tt>(PACKING-IN (,name) ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(PACKING-IN (,name '|' &lt;lst&gt;) ,@body)</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="10">&nbsp;</A><tt>PACKING</tt> </td><td colspan="1" align="LEFT"> <tt>(PACKING ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(PACKING-IN (packer-) ,@body (packed packer-))</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="11">&nbsp;</A><tt>PACK-IN</tt> </td><td colspan="1" align="LEFT"> <tt>(PACK-IN ,pack ,x)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>folds <tt>,x</tt> into packer in <tt>,pack</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="12">&nbsp;</A><tt>PACK</tt> </td><td colspan="1" align="LEFT"> <tt>(PACK ,x)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(PACK packer- ,name)</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="13">&nbsp;</A><tt>PACKED</tt> </td><td colspan="1" align="LEFT"> <tt>(PACKED ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(packer-res ,name)</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="goomanual_30.html"><img alt="Maps" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_26.html"><img alt="Collections" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_28.html"><img alt="Enumerators" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Packers</b></td></tr></table></body></html>

@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
+<html>
+<!-- XML file produced from file: goo.tex --
+ -- using Hyperlatex v 2.5 (c) Otfried Cheong--
+ -- on Emacs 21.1.1, Thu May 16 16:15:32 2002 -->
+<head>
+<title><i>GOO&#32;Manual -- Compiler</title>
+
+</head><body>
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_42.html"><img alt="Top Level" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_38.html"><img alt="System" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Compiler</b></td></tr></table>
+<h1>Compiler</h1>
+<p><i>GOO's compiler, <em>g2c</em>, compiles <i>GOO&#32;source code to C.  It lives
+within the <tt>eval</tt> module.  During a given session, <tt>g2c</tt> recompiles
+only used modules that are either modified or use modified modules.
+<table border><tr><td colspan="1" align="LEFT">
+
+<A NAME="1">&nbsp;</A><tt>&lt;g2c-module-loader&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;module-loader&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>a g2c module loader used in g2c builds.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>g2c-def-app</tt> </td><td colspan="1" align="LEFT"> <tt>(appname|&lt;str&gt; modname|&lt;str&gt; =&gt; &lt;g2c-module-loader&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>constructs a g2c module loader to be used in future g2c builds.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>g2c-build-app</tt> </td><td colspan="1" align="LEFT"> <tt>(loader|&lt;g2c-module-loader&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>translates <i>GOO&#32;app into C in subdirectory of <i>GOO's toplevel C
+       directory named after loader's top modname.</i></i></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="4">&nbsp;</A><tt>g2c-goo</tt> </td><td colspan="1" align="LEFT"> <tt>()</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>builds entire goo world.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="5">&nbsp;</A><tt>g2c-test</tt> </td><td colspan="1" align="LEFT"> <tt>(name)</tt> </td><td colspan="1" align="RIGHT"> <tt>M</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>changes destination directory to be <tt>(cat "g2c-" (to-str
+  name))</tt>.  This is useful for bootstrapping.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td></tr></table>
+
+<HR >
+<table width="100%" cellpadding=0 cellspacing=2><tr>
+  <td bgcolor="#99ccff"><a HREF="gooomanual_42.html"><img alt="Top Level" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual.html"><img alt="Top" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="gooomanual_38.html"><img alt="System" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Compiler</b></td></tr></table></body></html>
