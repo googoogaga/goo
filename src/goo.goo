@@ -2,6 +2,7 @@
 
 (use goo/boot)
 (use goo/macros)
+(use goo/mag)
 (use goo/types)
 (use goo/math)
 (use goo/runtime)
@@ -16,12 +17,12 @@
  ;; Section 1.1/2.1: Special forms.
  IF SEQ SET FUN LET DEF LOC ESC FIN DV DM DG DP DC MACRO-EXPAND
  SUP APP-SUP QUOTE
- CT CT-ALSO DS USE EXPORT 
+ CT CT-ALSO DS USE USE/MANGLE USE/EXPORT USE/INCLUDE USE/LIBRARY EXPORT 
  DDV
 
  ;; Section 1.2/2.2: Macros.
  DF TRY REP MIF AND OR CASE CASE-BY COND MATCH UNLESS WHEN ASSERT
- FOR WHILE UNTIL OPF PUSHF POPF INCF DECF SWAPF
+ FOR WHILE UNTIL OPF PUSHF POPF INCF DECF SWAPF ROTF
  OP PUB EXPORTED
  PACKING-WITH PACKING-IN PACKING PACK-IN PACK PACKED
  <PACKER> PACKER PACKER-FAB PACKER-ADD PACKER-RES
@@ -31,7 +32,7 @@
  quasiquote
  
  ;; Section 3.1: Any.
- <any> as new object-class
+ <any> as new object-class clone
  
  ;; Section ?.?: Type.
  <type>
@@ -120,6 +121,7 @@
  <condition> default-handler sig <simple-condition> condition-message
  condition-arguments <serious-condition> <error> error <simple-error>
  <handler> handler-function fab-handler handler-matches?
+ <restart>
 
  ;; Section 3.12: Ports.
  <port> <in-port> get gets peek ready? port-line
@@ -168,4 +170,6 @@
 ;; TODO: HYGIENE
 (export
   fab-class
-  %prop)
+  macro-error
+  %prop
+  )

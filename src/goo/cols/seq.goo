@@ -215,7 +215,7 @@
 (dm pick (test|<fun> x|<seq> => <seq>)
   (rep con ((seq '()) (e (enum x)))
     (if (fin? e)
-        (col-res x seq)
+        (col-res x (rev! seq))
         (let ((v (now e)))
           (con (if (test v) (add seq v) seq) (nxt e))))))
 
@@ -233,10 +233,10 @@
 
 (dm ins (x|<seq> v|<any> before|<int> => <seq>)
   (rep copy ((r '()) (i 0) (e (enum x)))
-    (if (fin? e)
-        (col-res x r)
-        (if (= i before)
-            (copy (pair v r) (+ i 1) e)
+    (if (= i before)
+        (copy (pair v r) (+ i 1) e)
+        (if (fin? e)
+            (col-res x (rev! r))
             (copy (pair (now e) r) (+ i 1) (nxt e))))))
 
 ;; TODO: PERHAPS THIS SHOULD BE THE AS <SEQ> <MAP> MET INSTEAD
@@ -276,6 +276,9 @@
 
 (df range-check? (x|<seq> i|<int>)
   (and (>= i 0) (< i (len x))))
+
+(dm add (x|<seq> e => <seq>)
+  (ins x e 0))
 
 (dm add-new (c|<seq> x => <seq>)
   (unless (mem? c x) (add c x)) 

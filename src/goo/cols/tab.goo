@@ -111,11 +111,13 @@
 (df @fill! (x|<tab-vec> fill)
   (rep-fill! (%data x) fill))
 
-(dm @elt (vector|<tab-vec> index|<int> => <any>)
+;; (dl (@elt inline) (vector|<tab-vec> index|<int> => <any>) ;; TODO: DM
+(dl @elt (vector|<tab-vec> index|<int> => <any>) ;; TODO: DM
   ;; (elt (%data vector) index)
   (%relt (%data vector) (%iu index)))
 
-(dm @elt-setter (new-value vector|<tab-vec> index|<int> => <any>)
+;; (dl (@elt-setter inline) (new-value vector|<tab-vec> index|<int> => <any>) 
+(dl @elt-setter (new-value vector|<tab-vec> index|<int> => <any>) 
   ;; (set (elt (%data vector) index) new-value)
   (set (%relt (%data vector) (%iu index)) new-value))
 

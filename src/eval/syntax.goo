@@ -112,8 +112,18 @@
   (sexpr-tagged-list? exp $sexpr-define-generic-tag))
 
 ;; (df foo (x ...) form ...)
+;; (df (foo adjectives ...) (x ...) form ...)
 (dm sexpr-function-definition-variable (defn|<lst> => <any>)
-  (2nd defn))
+  (def var (2nd defn))
+  (if (isa? var <lst>)
+      (head var)
+      var))
+
+(dm sexpr-function-definition-adjectives (defn|<lst> => <any>)
+  (def var (2nd defn))
+  (if (isa? var <lst>)
+      (tail var)
+      '()))
 
 (dm sexpr-forward-primitive? (defn|<lst> => <log>)
   (= (len defn) 2))
@@ -709,10 +719,11 @@
 
 ;; MACROS
 
-(dm sexpr-make-macro-function (exp|<lst> => <any>)
+(dm sexpr-make-macro-function (name exp|<lst> => <any>)
   (def mif  (sexpr-make-syntax-if
              (sexpr-method-parameters exp) 'exp
-             (sexpr-sequence->begin (sexpr-method-body exp)) #f))
+             (sexpr-sequence->begin (sexpr-method-body exp)) 
+             `(macro-error ',name)))
   (def func (sexpr-make-anonymous-method (lst 'exp) (lst mif)))
   func)
 
@@ -742,6 +753,7 @@
   sexpr-function-body
   sexpr-function-definition-value
   sexpr-function-definition-variable
+  sexpr-function-definition-adjectives
   sexpr-function-signature
   sexpr-if-else
   $sexpr-if-tag

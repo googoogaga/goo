@@ -35,23 +35,13 @@
 ;;;     leaf classes
 ;;;     tag checks
 
-(df walk-bindings (fun|<fun> mod|<sym>)
-  (walk-bindings* 
-   fun (runtime-environment mod) (fab <tab> 1000) (fab <tab> 10)))
-
-(df walk-bindings* 
-    (f|<fun> env|<static-global-environment> walked?|<tab> mods|<tab>)
-  (for ((mod (environment-uses-modules env)))
-    (unless (elt-or mods mod #f)
-      (set (elt mods mod) #t)
-      (walk-bindings* f (runtime-environment (module-name mod)) walked? mods)))
-  (for ((b (environment-bindings env)))
-    (unless (elt-or walked? b #f)
-      (set (elt walked? b) #t)
-      (f b))))
-  
 (df fun-spec (x|<fun> i|<int> => <type>)
   (elt (fun-specs x) i))
+
+;;; how access gen's that aren't in the current module?
+;;;   perhaps build mapping table
+;;;   could also have gen store mangled binding name
+;;;   could also store binding in gen and make that point to real binding
 
 (dm build-decision-tree (g|<gen>)
   (def refs   (fab <vec> 0))
@@ -68,15 +58,15 @@
   (loc ((do-type-case (val cases)
           (if (empty? cases)
               #f
-              (mif ((,cond ,@body) (head cases))
-                   (if (== cond #t)
-                       `(seq ,@body)
-                       (mif ((,@values) cond)
-                            `(if (or ,@(map (fun (x) `(%@subclass? ,val ,x)) values))
-                                 (seq ,@body)
-                                 ,(do-type-case val (tail cases)))
-                            (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))
-                   (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))))
+              (match (head cases) 
+                ((#t ,@body)    
+                 `(seq ,@body))
+                (((,@values) ,@body)
+                 `(if (or ,@(map (fun (x) `(@subtype? ,val ,x)) values))
+                      (seq ,@body)
+                      ,(do-type-case val (tail cases))))
+                (#t
+                 (error "CASE: SYNTAX ERROR BAD CASE" (head cases)))))))
     (let ((val-var (gensym)))
       `(let ((,val-var (%@class-of ,val)))
          ,(do-type-case val-var cases)))))
@@ -127,4 +117,18 @@
 
 ;;; (auto-eval d (runtime-environment 'goo/user))
     
+(df walk-bindings (fun|<fun> mod|<sym>)
+  (walk-bindings* 
+   fun (runtime-environment mod) (fab <tab> 1000) (fab <tab> 10)))
 
+(df walk-bindings* 
+    (f|<fun> env|<static-global-environment> walked?|<tab> mods|<tab>)
+  (for ((mod (environment-uses-modules env)))
+    (unless (elt-or mods mod #f)
+      (set (elt mods mod) #t)
+      (walk-bindings* f (runtime-environment (module-name mod)) walked? mods)))
+  (for ((b (environment-bindings env)))
+    (unless (elt-or walked? b #f)
+      (set (elt walked? b) #t)
+      (f b))))
+  

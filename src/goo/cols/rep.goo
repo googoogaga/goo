@@ -37,7 +37,7 @@
   x)
 
 (dm rep-into! (d|<rep> s|<rep> => <rep>)
-  (def l (rep-len d))
+  (def l (min (rep-len d) (rep-len s)))
   (rep into ((i 0))
     (when (< i l)
       (set (rep-elt d i) (rep-elt s i))
@@ -45,7 +45,7 @@
   d)
 
 (dm rep-into! (d|<rep> s|<col> => <rep>)
-  (def l (rep-len d))
+  (def l (min (rep-len d) (len s)))
   (rep into ((i 0) (e (enum s)))
     (when (< i l)
       (set (rep-elt d i) (now e))

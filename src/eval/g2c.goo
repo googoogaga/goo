@@ -121,7 +121,7 @@
 (df g2c-test (x)
   (set *g2c-app* (g2c-def-app (cat "g2c-" (to-str x)) 'eval/main)))
 
-(dv *tmp-file-counter* -1)
+(ddv *tmp-file-counter* -1)
 
 (dm g2c-ast (ast env)
   (def mod      (environment-module env))
@@ -217,6 +217,9 @@
     (generate-trailer out-port))
   #f)
 
+(ds (for-mods (,mod ,loader) ,@body)
+  `(do-module-loader-modules (fun (,mod) ,@body) ,loader))
+
 (dm generate-makefile (loader|<module-loader>)
   (def appname   (module-loader-appname loader))
   (def init-name (cat appname "-init"))
@@ -226,22 +229,25 @@
   (with-port (code-out (open <file-out-port> out-name))
     (msg* code-out "C_OBJS_DD = $(patsubst %%,..%s%%,$(C_OBJS))\n" sep)
     (msg* code-out "%s%s: ..%sgrt.h\n" *c-extension* *obj-extension* sep)
-    (msg* code-out "\t$(CC) -I.. $(CFLAGS) -DDEFAULT_GOO_ROOT=\\\"$(GOO_ROOT)\\\" -c -o $@ $<\n\n")
+    (msg* code-out "\t$(CC) -I.. ")
+    (for-mods (mod loader)
+      (do (fun (i) (msg* code-out "-I%s " i)) (module-uses-c-includes mod)))
+    (msg* code-out "$(CFLAGS) -DDEFAULT_GOO_ROOT=\\\"$(GOO_ROOT)\\\" -c -o $@ $<\n\n")
     (msg* code-out "OBJS = \\\n")
-    (do-module-loader-modules
-     (fun (mod)
-       (loc ((put-obj (name)
-               (msg* code-out "\t%s \\\n" 
-                     (obj-filename (module-name-to-relpath name)))))
-         (put-obj (module-name mod)) 
-         (do (fun (name) (put-obj (as <sym> (sub name 0 (- (len name) 2))))) 
-             (map (fun (n) (as <str> n)) (module-uses-c-files mod)))))
-     loader)
+    (for-mods (mod loader)
+      (loc ((put-obj (name)
+              (msg* code-out "\t%s \\\n" 
+                    (obj-filename (module-name-to-relpath name)))))
+        (put-obj (module-name mod)) 
+        (do (fun (name) (put-obj (as <sym> (sub name 0 (- (len name) 2))))) 
+            (map (fun (n) (as <str> n)) (module-uses-c-files mod)))))
     (msg* code-out "\t%s\n\n" (obj-filename init-name))
     (msg* code-out "%s: $(C_OBJS_DD) $(OBJS)\n" exe-name)
-    (msg* code-out "\t$(CC) $(LDFLAGS) -o %s $(C_OBJS_DD) $(OBJS) $(LIBS)\n\n"
+    (msg* code-out "\t$(CC) $(LDFLAGS) -o %s $(C_OBJS_DD) $(OBJS) $(LIBS)"
          exe-name sep sep)
-    (msg* code-out "clean:\n\trm -f %s $(OBJS)\n" exe-name sep)))
+    (for-mods (mod loader)
+      (do (fun (l) (msg* code-out " %s" l)) (module-uses-c-libraries mod)))
+    (msg* code-out "\n\nclean:\n\trm -f %s $(OBJS)\n" exe-name sep)))
 
 
 ;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
@@ -783,11 +789,12 @@
     (gen-ref x code-out)))
 
 (dm to-c (e|<fix-let> f d code-out)
+  (def low-let? (isa? e <low-let>))
   (for ((binding (fix-let-bindings e))
         (type    (fix-let-types e))
         (init    (fix-let-arguments e)))
     (to-c init f d code-out)
-    (unless (unconstrained-type? type)
+    (unless (or (unconstrained-type? type) low-let?)
       (to-c type f d code-out)
       (with-statement (d code-out)
         (puts code-out "check_type")
@@ -1044,27 +1051,8 @@
     (between-parentheses (code-out) (gen-ref (function-body defn) code-out))))
 
 (dm primitive-inlinable? (e|<ast-primitive>)
-  (def binding (function-binding e))
-  ;; TODO: ADD FUNCTION ADJECTIVES
-  (mem? '(%tag-bits %tag %untag %class-of
-          %int %ib %iu
-          %chr %cb %cu
-          %loc %lb %lu
-          %empty? %head %tail
-          @empty? @head @tail
-          @== @= @+ @<
-          %new %class-id %class-row
-          %gen-cache-arg-pos %gen-cache-singletons
-          %gen-cache-classes %gen-cache-missable?
-          %class-type-cache %class-type-cache-setter
-          @telt @telt-setter @tlen %to-tup
-          @oelt @oelt-setter @olen
-          %opts-location %opts-count
-          %class-ancestors @class-in? @subclass?
-          prop-value-at prop-value-at-setter
-          gen-lookup gen-lookup-1-using
-          )
-        (binding-name binding)))
+  (or (mem? (function-adjectives e) 'inline)
+      (mem? (function-adjectives e) 'inline-c)))
 
 (dm generate-function-code (code-out e|<ast-primitive>)
   (msg* code-out "\n%s%sP " 

@@ -30,7 +30,8 @@
 
 (dm new (x|(t< <lock>) args|... => <lock>)
   (def l (app-sup x args))
-  (set (lock-handle l) (%lb (%lock-create)))
+  (def n (lock-name l))
+  (set (lock-handle l) (%lb (%lock-create (%su (if n "" (as <str> n))))))
   l)
 
 (ds (with-lock ,lock ,@body)

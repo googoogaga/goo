@@ -30,22 +30,22 @@
 
 (dm elt-type (x|<col> => <type>) <chr>)
 
-(dm fab ((x (t= <str>)) s|<prim-int> => <str>)
+(dm fab ((x (t= <str>)) s|<fixnum> => <str>)
   (%str (%iu s) (%cu #\space)))
 
 (dm str (objects|...)
   (fabs <str> objects))
 
-(dm len (x|<str> => <prim-int>)
+(dm len (x|<str> => <fixnum>)
   (%ib (%slen x)))
 
-(dm low-elt (x|<str> i|<prim-int> => <chr>)
+(dm low-elt (x|<str> i|<fixnum> => <chr>)
   (%cb (%selt x (%iu i))))
 
-(dm fab-elt-setter (z|<chr> x|<str> i|<prim-int>)
+(dm fab-elt-setter (z|<chr> x|<str> i|<fixnum>)
   (set (%selt x (%iu i)) (%cu z)))
 
-(dm elt-or (x|<str> i|<prim-int> default => <any>) ;; TODO: TIGHTEN RET TYPE
+(dm elt-or (x|<str> i|<fixnum> default => <any>) ;; TODO: TIGHTEN RET TYPE
   (if (range-check? x i)
       (%cb (%selt x (%iu i))) ;; TODO: USE LOW-ELT
       default)) 
@@ -154,8 +154,7 @@
               (def char (elt string i))
               (if (= char #\.)
                   (if seen-decimal-point?
-                      (error "string->number: Two decimal points: %="
-                             string)
+                      (error "str-to-num: Two decimal points: %=" string)
                       (seq (set seen-decimal-point? #t)
                            (set i (+ i 1))
                            (if (>= i length) (fail!!))

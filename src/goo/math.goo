@@ -16,7 +16,7 @@
 (dm to-str (x|<any> => <str>)
   (cat "{ obj(" (to-str (class-name (object-class x))) ") }"))
 
-(df address-of (x => <prim-int>)
+(df address-of (x => <fixnum>)
   ;; treat pointer as integer
   (%ib x))
 
@@ -52,10 +52,10 @@
 
 ;;; character
 
-(dm as ((_ (t= <chr>)) i|<prim-int> => <chr>)
+(dm as ((_ (t= <chr>)) i|<fixnum> => <chr>)
   (%cb (%iu i)))
 
-(dm as ((_ (t< <int>)) c|<chr> => <prim-int>)
+(dm as ((_ (t< <int>)) c|<chr> => <fixnum>)
   (%ib (%cu c)))
 
 (dm < (x|<chr> y|<chr> => <log>)
@@ -65,28 +65,28 @@
   (%bb (%c= (%cu x) (%cu y))))
 
 (dm lower? (x|<chr> => <log>)
-  (def code (as <prim-int> x))
-  (if (>= code (as <prim-int> #\a))
-      (<= code (as <prim-int> #\z))
+  (def code (as <fixnum> x))
+  (if (>= code (as <fixnum> #\a))
+      (<= code (as <fixnum> #\z))
       #f))
 
 (dm upper? (x|<chr> => <log>)
-  (def code (as <prim-int> x))
-  (if (>= code (as <prim-int> #\A))
-      (<= code (as <prim-int> #\Z))
+  (def code (as <fixnum> x))
+  (if (>= code (as <fixnum> #\A))
+      (<= code (as <fixnum> #\Z))
       #f))
 
 (dm to-lower (x|<chr> => <chr>)
   (if (upper? x)
-      (as <chr> (+ (as <prim-int> x) (- (as <prim-int> #\a) (as <prim-int> #\A))))
+      (as <chr> (+ (as <fixnum> x) (- (as <fixnum> #\a) (as <fixnum> #\A))))
       x))
 
 (dm to-upper (x|<chr> => <chr>)
   (if (lower? x)
-      (as <chr> (+ (as <prim-int> x) (- (as <prim-int> #\A) (as <prim-int> #\a))))
+      (as <chr> (+ (as <fixnum> x) (- (as <fixnum> #\A) (as <fixnum> #\a))))
       x))
 
-(dm to-digit (digit|<chr> => <prim-int>)
+(dm to-digit (digit|<chr> => <fixnum>)
   (- (char->ascii digit) (char->ascii #\0)))
 
 (dm to-str (x|<chr> => <str>)
@@ -258,19 +258,19 @@
 (dm contagious-type (x|<flo> y|<int> => (t= <flo>))
   <flo>)
 
-(dm == (x|<prim-int> y|<prim-int> => <log>)
+(dm == (x|<fixnum> y|<fixnum> => <log>)
   (%bb (%i= (%iu x) (%iu y))))
 
-(dm < (x|<prim-int> y|<prim-int> => <log>)
+(dm < (x|<fixnum> y|<fixnum> => <log>)
   (%bb (%i< (%iu x) (%iu y))))
 
-(dm + (x|<prim-int> y|<prim-int> => <prim-int>)
+(dm + (x|<fixnum> y|<fixnum> => <fixnum>)
   (%ib (%i+ (%iu x) (%iu y))))
 
-(dm - (x|<prim-int> y|<prim-int> => <prim-int>)
+(dm - (x|<fixnum> y|<fixnum> => <fixnum>)
   (%ib (%i- (%iu x) (%iu y))))
 
-(dm * (x|<prim-int> y|<prim-int> => <prim-int>)
+(dm * (x|<fixnum> y|<fixnum> => <fixnum>)
   (%ib (%i* (%iu x) (%iu y))))
 
 (dm / (x|<int> y|<int> => <int>)
@@ -284,11 +284,11 @@
 
 (dm trunc (x|<int> => <int>) x)
 
-(dm trunc/ (x|<prim-int> y|<prim-int> => (tup x|<prim-int> rem|<prim-int>))
+(dm trunc/ (x|<fixnum> y|<fixnum> => (tup x|<fixnum> rem|<fixnum>))
   (def result (%ib (%it/ (%iu x) (%iu y))))
   (tup result (- x (* result y))))
 
-(dm mod (x|<prim-int> y|<prim-int> => <prim-int>)
+(dm mod (x|<fixnum> y|<fixnum> => <fixnum>)
   (def res (%ib (%im (%iu x) (%iu y))))
   (if (< res 0)
       (if (> y 0)
@@ -296,7 +296,7 @@
           (- res y))
       res))
 
-(dm pow (x|<prim-int> n|<prim-int> => <num>)
+(dm pow (x|<fixnum> n|<fixnum> => <num>)
   (cond
     ((neg? n) (/ 1 (pow x (neg n))))
     ((= x 2)  (<< 1 n))
@@ -311,34 +311,34 @@
                  (>> p 1)
                  (if (odd? p) (* x y) y)))))))
 
-(dm #| (x|<prim-int> y|<prim-int> => <int>)
+(dm #| (x|<fixnum> y|<fixnum> => <int>)
   (%ib (%iv (%iu x) (%iu y))))
 
-(dm ^ (x|<prim-int> y|<prim-int> => <int>)
+(dm ^ (x|<fixnum> y|<fixnum> => <int>)
   (%ib (%i^ (%iu x) (%iu y))))
 
-(dm & (x|<prim-int> y|<prim-int> => <int>)
+(dm & (x|<fixnum> y|<fixnum> => <int>)
   (%ib (%i& (%iu x) (%iu y))))
 
-(dm ~ (x|<prim-int> => <prim-int>)
+(dm ~ (x|<fixnum> => <fixnum>)
   (%ib (%i! (%iu x))))
 
-(dm bit? (o|<prim-int> x|<prim-int> => <prim-int>)
+(dm bit? (o|<fixnum> x|<fixnum> => <fixnum>)
   (%ib (%i? (%iu o) (%iu x))))
 
-(dm even? (x|<prim-int> => <log>)
+(dm even? (x|<fixnum> => <log>)
   (zero? (& x 1)))
 
-(dm odd? (x|<prim-int> => <log>)
+(dm odd? (x|<fixnum> => <log>)
   (not (even? x)))
 
-(dm >> (x|<prim-int> a|<prim-int> => <prim-int>)
+(dm >> (x|<fixnum> a|<fixnum> => <fixnum>)
   (%ib (%i>> (%iu x) (%iu a))))
 
-(dm >>> (x|<prim-int> a|<prim-int> => <prim-int>)
+(dm >>> (x|<fixnum> a|<fixnum> => <fixnum>)
   (%ib (%i>>> (%iu x) (%iu a))))
 
-(dm << (x|<prim-int> a|<prim-int> => <prim-int>)
+(dm << (x|<fixnum> a|<fixnum> => <fixnum>)
   (%ib (%i<< (%iu x) (%iu a))))
 
 (dm power-of-two-ceil (x|<int> => <int>)
@@ -352,7 +352,7 @@
 (df flo-bits (x|<flo> => <int>)
   (%ib (%flo-bits (%fu x))))
 
-(dm as ((_ (t= <flo>)) x|<prim-int> => <flo>)
+(dm as ((_ (t= <flo>)) x|<fixnum> => <flo>)
   (%fb (%fi2f (%iu x))))
 
 (dm == (x|<flo> y|<flo> => <log>)
@@ -373,7 +373,7 @@
 (dm / (x|<flo> y|<flo> => <flo>)
   (%fb (%f/ (%fu x) (%fu y))))
 
-(dm trunc/ (x|<flo> y|<flo> => (tup z|<prim-int> rem|<flo>))
+(dm trunc/ (x|<flo> y|<flo> => (tup z|<fixnum> rem|<flo>))
   (def divided (/ x y))
   (def result  (%ib (%ft (%fu divided))))
   (tup result (* y (- divided (as <flo> result)))))

@@ -10,32 +10,6 @@
 (use goo/math)
 (use goo/cols)
 
-;;; WALKER
-
-(dm update-walk! (g o args|...)
-  ;; (msg out "WALKING %=\n" o)
-  (for ((prop (object-props o)))
-    ;; (msg out "  PROP %=\n" prop)
-    (def getter (prop-getter prop))
-    (def setter (prop-setter prop))
-    (unless (== getter binding-value);; TODO: HACK
-      (when (prop-bound? o getter)
-        (def x (getter o))
-        (when (isa? x <program>)
-          ;; (msg out "    UPDATING %=\n" x)
-          (setter (app g x args) o)))))
-  o)
-
-(dm ast-walk (g o args|...)
-  (for ((prop (object-props o)))
-    (def getter (prop-getter prop))
-    (unless (== getter binding-value) ;; TODO: HACK
-      (when (prop-bound? o getter)
-        (def x (getter o))
-        (when (isa? x <program>)
-          (app g x args)))))
-  o)
-
 ;;; BOXING
 
 (dc <box-read> (<computed-program>))
@@ -49,7 +23,7 @@
   (dp box-reference (x|<box-creation> => <any>))
 
 (dm insert-box! (o|<program>)
-  (update-walk! insert-box! o))
+  (ast-walk! insert-box! o))
 
 (dm insert-box! (o|<local-reference>)
   (if (binding-mutable? (reference-binding o))
@@ -58,7 +32,7 @@
 
 ;;; IDENTIFY LOCAL CALLS
 (dm insert-box! (o|<regular-application>)
-  (update-walk! insert-box! o)
+  (ast-walk! insert-box! o)
   (when (isa? (application-function o) <local-reference>)
     (set (reference-called-function? (application-function o)) #t))
   o)
@@ -145,6 +119,7 @@
 (dm analyze-ast (o)
   (do-analysis! o))
 
+
 ;;; FLATTENING ENVIRONMENTS
 
 (dc <free-reference> (<real-reference>))
@@ -155,7 +130,7 @@
   (lift-procedures! o #f '()))
 
 (dm lift-procedures! (o|<program> flat-fun bindings)
-  (update-walk! lift-procedures! o flat-fun bindings))
+  (ast-walk! lift-procedures! o flat-fun bindings))
 
 (dm lift-procedures! (o|<local-reference> flat-fun bindings)
   (def b (reference-binding o))
@@ -222,6 +197,7 @@
 (dc <flattened-program> (<computed-program>))
   (dp program-form (x|<flattened-program> => (t? <program>)))
   (dp program-quotations (x|<flattened-program> => <any>) (fab <tab> 40))
+  (dp program-bindings (x|<flattened-program> => <any>) (fab <tab> 40))
   (dp program-definitions (x|<flattened-program> => <any>) '())
 
 (dc <top-level-form> (<computed-program>))
@@ -256,7 +232,7 @@
   result)
 
 (dm extract! (o|<program> form|<top-level-form> result|<flattened-program>)
-  (update-walk! extract! o form result))
+  (ast-walk! extract! o form result))
 
 (dm extract! (o|<constant> form|<top-level-form> result|<flattened-program>)
   (def value (constant-value o))
@@ -379,7 +355,7 @@
   o)
 
 (dm collect-temporaries! (o|<program> flat-fun r)
-  (update-walk! collect-temporaries! o flat-fun r))
+  (ast-walk! collect-temporaries! o flat-fun r))
 
 (dm collect-temporaries! (o|<local-reference> flat-fun r)
   (def binding (reference-binding o))
@@ -456,7 +432,7 @@
 
 (dm collect-registers! (o|<computed-program> flat-fun val?)
   (allocate-register o flat-fun val?)
-  (update-walk! collect-registers! o flat-fun #t))
+  (ast-walk! collect-registers! o flat-fun #t))
 
 (dm collect-registers! (o|<sequential> flat-fun val?)
   (rep loop ((x o))
@@ -469,7 +445,7 @@
 (dm collect-registers! (o|<passive-program> flat-fun val?)
   (when *register-passive?* 
     (allocate-register o flat-fun val?))
-  (update-walk! collect-registers! o flat-fun #t))
+  (ast-walk! collect-registers! o flat-fun #t))
 
 (dm collect-registers! (o|<top-level-form> flat-fun val?)
   (allocate-register o flat-fun val?)
@@ -525,12 +501,12 @@
   program-definitions
   program-form
   program-quotations
+  program-bindings
   reference-offset
   reference-self?
   <renamed-local-binding>
   <top-level-form>
   unconstrained-type?
-  update-walk!
   flatten-seqs
   *register-passive?*
   ast-contains-fun?

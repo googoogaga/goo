@@ -26,11 +26,11 @@
        (%lb (%event-create (%su (as <str> (or (event-name event) ""))))))
   event)
 
-(dm event-signal (e|<event> l|<lock>)
-  (%event-signal (%lu (event-handle e)) (%lu (lock-handle l))) #t)
+(dm event-signal (e|<event>)
+  (%event-signal (%lu (event-handle e))) #t)
 
-(dm event-broadcast (e|<event> l|<lock>)
-  (%event-broadcast (%lu (event-handle e)) (%lu (lock-handle l))) #t)
+(dm event-broadcast (e|<event>)
+  (%event-broadcast (%lu (event-handle e))) #t)
 
 ;; (dm event-destroy (e|<event>)
 ;;   (%event-destroy (%lu (event-handle e))))

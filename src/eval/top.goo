@@ -52,7 +52,11 @@
   (def ast (objectify-with-subtransaction form ct-env #f))
   (run ast ct-env))
 
-(dv $g2c-eval? (= (os-name) "linux"))
+(dv $g2c-eval? 
+  (let ((mode (os-val "GOO_EVAL_MODE")))
+    (and (not (case-insensitive-string-equal mode  "ast"))
+         (or (case-insensitive-string-equal mode "g2c")
+             (= (os-name) "linux")))))
 
 (ddv run (if $g2c-eval? auto-run %%bottom%%ast-run))
 
@@ -170,6 +174,10 @@
     (error "No restart #%d.\n" n))
   (invoke-handler-interactively (elt restarts (- n 1)) in out))
 
+(dv $   #f)
+(dv $$  #f)
+(dv $$$ #f)
+
 ;;  Initialization and driver loop
 ;;  The prompt is handled a bit differently than in the notes
 (dm %%top%%top-in (level top quit show-restarts? ct-env)
@@ -230,7 +238,8 @@
                   (#t 
                    (def res (auto-eval form ct-env))
                    (print-result-expression
-                    ct-env level "=> " res)))))))
+                    ct-env level "=> " res)
+                   (rotf $$$ $$ $ res)))))))
       (loop))))
 
 (dm top (modname|<sym>)
@@ -258,4 +267,5 @@
   backtrace bt frame frame-var
   save-image
   g2c-eval
-  esctst)
+  esctst
+  $ $$ $$$)

@@ -27,7 +27,7 @@ typedef FILE*          PPORT;
 typedef float          PFLO;
 typedef long           PINT;
 typedef unsigned long  PADR;
-typedef char           PCHR;
+typedef unsigned char  PCHR;
 typedef unsigned long  PLOG;
 typedef void*          P;
 #define PNUL           ((P)0)
@@ -359,6 +359,8 @@ extern P FUNINIT (P fun, int n, ...);
 extern P FUNSHELL (int d, P x, int n);
 extern P FUNFAB (P x, int n, ...);
 
+extern P YPenable_stack_checks ();
+
 /* TAG */
 
 STATIC_NOT_PRT_C INLINE int tag_bits (P adr) {
@@ -559,7 +561,6 @@ extern P _CALLN (REGS regs, int check, P fun, int n, ...);
 #define XXCALL3(...) _CALL3(REGSREF(), __VA_ARGS__)
 #define XXCALL4(...) _CALL4(REGSREF(), __VA_ARGS__)
 #define XXCALL5(...) _CALL5(REGSREF(), __VA_ARGS__)
-#define XXCALLN(...) _CALLN(REGSREF(), __VA_ARGS__)
 #define XXCALLN(...) _CALLN(REGSREF(), __VA_ARGS__)
 
 extern P _check_type(REGS, P,P);

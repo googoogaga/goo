@@ -421,7 +421,7 @@ PSTR YPgets (FILE* s) {
   return str;
 }
 
-INLINE P YPeof_objectQ (P x) { return (P)(PLOG)((PCHR)(PINT)x == EOF); }
+INLINE P YPeof_objectQ (P x) { return (P)(PLOG)((PINT)x == EOF); }
 
 INLINE P YPeof_object () { return (P)EOF; }
 
@@ -659,17 +659,29 @@ extern P YLgenG;
 extern P YPtraits_owner(P);
 extern P YPvnul;
 
+#define MIN_STACK_PAD_SIZE 32
+#define STACK_OVERFLOW     (MAX_STACK_SIZE - MIN_STACK_PAD_SIZE)
+int check_stack_overflowp = 1;
+
+P YPenable_stack_checks () { check_stack_overflowp = 1; return PNUL; }
+
+extern P Ystack_overflow_error;
+
 P _YPcheck_call_types(REGS regs) {
   P fun    = REG(sp)[-1];
   P traits = PNUL;
   if(fun != 0 && (tag_bits(fun)) == adr_tag)
     traits = YPobject_class(fun);
+  // if ((int)(REG(sp) - REG(stack)) > STACK_OVERFLOW && check_stack_overflowp) {
+  //   check_stack_overflowp = 0;
+  //   CALL0(1, Ystack_overflow_error);
+  // }
   
   if (traits == YLmetG) {
     PINT n     = (int)REG(sp)[-2];
     PINT arity = FUNARITY(fun);
     PLOG naryp = FUNNARYP(fun);
-    P   specs = FUNSPECS(fun);
+    P    specs = FUNSPECS(fun);
     int i;
     
     CHECK_ARITY(fun,naryp,n,arity);
@@ -865,7 +877,7 @@ char* type (P adr) {
 	  return (char*)YPsu(class_name);
       }
     case int_tag:
-      return "<prim-int>";
+      return "<fixnum>";
     case chr_tag:
       return "<chr>";
     case loc_tag:
@@ -908,7 +920,7 @@ void print_kind (P adr, int prettyp, int depth) {
   default:
     break;
   }
-  if (strcmp(typename, "<prim-int>") == 0) {
+  if (strcmp(typename, "<fixnum>") == 0) {
     printf("%ld", (PINT)YPprop_elt(adr, (P)0));
   } else if (strcmp(typename, "<chr>") == 0) {
     printf("%c", (char)(PINT)YPprop_elt(adr, (P)0));
@@ -949,6 +961,19 @@ void print_kind (P adr, int prettyp, int depth) {
       }
     }
     printf(")");
+  } else if (strcmp(typename, "<rep>") == 0) {
+    int j, n;
+    n = (PINT)YPrlen(adr);
+    printf("#<"); 
+    for (j = 0; j < n; j++) {
+      if (j != 0) printf(" ");
+      if (j < max_length) {
+	print_kind(YPrelt(adr, j), 0, depth + 1); 
+      } else {
+	printf("..."); break;
+      }
+    }
+    printf(">");
   } else if (strcmp(typename, "<opts>") == 0) {
     OBJECT p = (OBJECT)adr;
     int j, n;
@@ -1044,7 +1069,7 @@ void desobj (P adr) {
     printf("PNUL\n");
   } else {
     char* typename = type(adr);
-    if ((strcmp(typename, "<prim-int>") == 0)|
+    if ((strcmp(typename, "<fixnum>") == 0)|
 	(strcmp(typename, "<chr>") == 0)|
 	(strcmp(typename, "<loc>") == 0)|
 	(strcmp(typename, "<flo>") == 0)|

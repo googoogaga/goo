@@ -80,6 +80,16 @@
        (set ,xg-place ,yg-place)
        (set ,yg-place ,tmp))))
 
+(ds (rotf ,x ,y ,@zs)
+  (let ((places `(,x ,y ,@zs))
+        (tmps   (map (fun (x) (gensym)) places))
+        (ps     (map lift-place-subforms places))
+        (decls  (map 1st ps))
+        (places (map 2nd ps)))
+    `(let (,@(app cat decls) ,@(map2 (fun (t p) `(,t ,p)) tmps places))
+       ,@(map2 (fun (p t) `(set ,p ,t)) places (tail tmps))
+       (set ,(last places) ,(1st tmps)))))
+
 (ds (popf ,place)
   (let (((tup g-decls g-place) (lift-place-subforms place))
         (new-col (gensym))
@@ -303,14 +313,14 @@
   do
   rev!
   cat
-  elt
+  elt 1st 2nd last
   empty?
   error
   gensym
   lst
   fab-setter-name
   cat-sym
-  map
+  map map2
   match-atom
   match-empty-list
   match-sublist
@@ -319,7 +329,8 @@
   tup
   var-name
   var-type
-  napp)
+  napp
+  macro-error)
 
 (export
   app
@@ -332,6 +343,7 @@
   popf
   opf
   swapf
+  rotf
   op 
   unless
   when
@@ -347,5 +359,6 @@
   def-fun-var
   need-implementation
   pub exported
+  lift-place-subforms
   without-prop-unbound-errors
   *report-prop-unbound-errors?*)

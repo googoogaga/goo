@@ -32,9 +32,8 @@
           (packing () (for ((below n)) (pack (fetch-byte))))))
     (op-decode (fetch-byte))))
 
-;; TODO: MCASE
 (ct (df decode-arg (arg)
-      (mcase arg
+      (match arg
         ((LIT ,arg)    `(,arg (fetch-byte)))
         ((REF ,arg)    `(,arg (vm-ref-val (fetch-byte))))
         ((... ,n ,arg) `(,arg (fetch-bytes (vm-reg-val (fetch-byte)))))

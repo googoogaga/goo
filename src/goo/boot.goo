@@ -58,6 +58,7 @@
         %def-regs %sp-reg %sp-reg-setter %fp-reg %fp-reg-setter %unlink-stack
         %new %@class-of %@subclass?
         %fab-dyn-var %dyn-var-val %dyn-var-val-setter
+        %enable-stack-checks
         )
 ))
 
@@ -127,8 +128,8 @@
         ;; (dc <%chr> (<chr>))
         (dc <num> (<mag>))
         (dc <int> (<num>))
-        (dc <prim-int> (<int>))
-        ;; (dc <%int> (<prim-int>))
+        (dc <fixnum> (<int>))
+        ;; (dc <%int> (<fixnum>))
         (dc <flo> (<num>))
         ;; (dc <%flo> (<flo>))
         (dc <loc> (<any>))
@@ -150,7 +151,7 @@
           (dp sym-name (<sym> => <str>))
         (dc <type> (<any>))
         (dc <class> (<type>))
-          (dp class-prop-len (<class> => <prim-int>)        0)
+          (dp class-prop-len (<class> => <fixnum>)        0)
           (dp class-name (<class> => <sym>))
           (dp class-parents (<class> => <lst>)         nil)
           (dp class-direct-props (<class> => <lst>)    nil)
@@ -164,7 +165,7 @@
           (dp class-mets (<class> => <lst>)            nil)
           (dp class-forward (<class> => <any>)         #f)
           (dp class-type-cache (<class> => <any>)      #f)
-          (dp class-id (<class> => <prim-int>)              -1)
+          (dp class-id (<class> => <fixnum>)              -1)
           (dp class-row (<class> => <tup>)             nul)
         (dc <singleton> (<type>))
           (dp type-object (<singleton> => <any>))
@@ -182,14 +183,14 @@
           (dp prop-init (<prop> =>  <fun>) (fun (x) nul-prop))
         (dc <gen-cache> (<any>))
           (dp gen-cache-missable? (<gen-cache> => <log>)  #f)
-          (dp gen-cache-arg-pos (<gen-cache> => <prim-int>)    0)
+          (dp gen-cache-arg-pos (<gen-cache> => <fixnum>)    0)
           (dp gen-cache-singletons (<gen-cache> => <lst>) nil)
           (dp gen-cache-classes (<gen-cache> => <lst>)    nil)
         (dc <sig> (<any>))
           (dp sig-names (<sig> => <lst>) nil)
           (dp sig-specs (<sig> => <lst>) nil)
           (dp sig-nary? (<sig> => <log>) %false)
-          (dp sig-arity (<sig> => <prim-int>) 0)
+          (dp sig-arity (<sig> => <fixnum>) 0)
           (dp sig-val   (<sig> => <any>) <any>)
           (dp sig-unification-vars (<sig> => <lst>) nil)
         (dc <fun> (<any>))
@@ -207,7 +208,7 @@
           (dp gen-src (<gen> => <any>)   %false)
     (dc <opts> (<flat> <seq.>))
       (dp opts-location (<opts> => <loc>) 0)
-      (dp opts-count (<opts> => <prim-int>) 0)
+      (dp opts-count (<opts> => <fixnum>) 0)
     (dc <opts-tup> (<opts>))
       (dp opts-tup-storage (<opts-tup> => <tup>) nul)
 )))
@@ -267,7 +268,7 @@
 
 (dss (%define-structure-accessors ,@prop-names)
   (loc ((getter (name offset) 
-          `(dl ,(cat-sym "%" name) (x)
+          `(dl (,(cat-sym "%" name) inline-c) (x)
              (%prop-elt x (%raw ,offset))))
         (setter (name offset)
           `(dl ,(cat-sym "%" name "-setter") (z x)
@@ -377,7 +378,7 @@
 
 (dl %pair (head tail) (%lst head tail))
 
-(dl %empty? (x) (%bb (%eq? x nil)))
+(dl (%empty? inline-c) (x) (%bb (%eq? x nil)))
 
 (dl %%len (x) 
   (if (%empty? x) (%raw 0) (%i+ (%%len (%tail x)) (%raw 1))))
@@ -418,11 +419,11 @@
 (dss ($tag-msk) `(%raw 3))
 (dss ($tag-len) `(%raw 2))
 
-(dl %tag-bits (x) (%i& x ($tag-msk)))
+(dl (%tag-bits inline) (x) (%i& x ($tag-msk)))
 
-(dl %tag (x t) (%iv (%i<< x ($tag-len)) t))
+(dl (%tag inline) (x t) (%iv (%i<< x ($tag-len)) t))
 
-(dl %untag (x) (%i>> x ($tag-len)))
+(dl (%untag inline) (x) (%i>> x ($tag-len)))
 
 (dss ($adr-tag) `(%raw 0))
 
@@ -432,7 +433,7 @@
 
 (dl %indirect-object? (x) (%i= (%tag-bits x) ($adr-tag)))
 
-(dl %class-of (x)
+(dl (%class-of inline) (x)
   (def tag (%tag-bits x))
   (if (%bb (%i= tag ($adr-tag)))
       (%object-class x)
@@ -448,13 +449,12 @@
         (fab-name   (cat-sym "%" name))
         (tag-name   (cat-sym "%" code "b"))
         (untag-name (cat-sym "%" code "u")))
-    `(seq (dl ,tag-name (x) (,ptag x (%raw ,tag)))
-          (dl ,fab-name (x) (,tag-name x))
-          (dl ,untag-name (x) (,puntag x))
+    `(seq (dl (,tag-name inline) (x) (,ptag x (%raw ,tag)))
+          (dl (,fab-name inline) (x) (,tag-name x))
+          (dl (,untag-name inline) (x) (,puntag x))
           (set (%elt $direct-object-class (%raw ,tag)) ,class-name))))
 
-;;(%define-tagged-structure prim-int %tag %untag           i 1) ;; INTEGERS
-(%define-tagged-structure prim-int %tag %untag           i 1) ;; INTEGERS
+(%define-tagged-structure fixnum %tag %untag           i 1) ;; INTEGERS
 (dl %int (x) (%ib x)) ;; still need %int to work.
 
 (%define-tagged-structure chr %tag %untag           c 2) ;; CHARACTERS
@@ -780,46 +780,46 @@
 ;;   PRE GENERICS AND IN ORDER TO AVOID CIRCULARITIES
 ;;   USE PRIMITIVES FOR SPEED FOR NOW
 
-(dl @head (x|<lst> => <any>) (%head x))
+(dl (@head inline-c) (x|<lst> => <any>) (%head x))
 
 (dl @head-setter (z x|<lst>) (set (%head x) z))
 
-(dl @tail (x|<lst> => <lst>) (%tail x))
+(dl (@tail inline-c) (x|<lst> => <lst>) (%tail x))
 
 (dl @tail-setter (z|<lst> x|<lst>) (set (%tail x) z))
 
-(dl @= (x|<prim-int> y|<prim-int> => <log>)
+(dl (@= inline) (x|<fixnum> y|<fixnum> => <log>)
 ;; optimization based on knowing the tag bits for two ints are always the same
   (%bb (%i= x y)))
 ;;  (%bb (%i= (%iu x) (%iu y))))
 
-(dl @< (x|<prim-int> y|<prim-int> => <log>)
+(dl (@< inline) (x|<fixnum> y|<fixnum> => <log>)
   (%bb (%i< (%iu x) (%iu y))))
 
-(dl @+ (x|<prim-int> y|<prim-int> => <prim-int>)
+(dl (@+ inline-c) (x|<fixnum> y|<fixnum> => <fixnum>)
   (%ib (%i+ (%iu x) (%iu y))))
 
-(dl @== (x|<any> y|<any> => <log>) (%bb (%eq? x y)))
+(dl (@== inline) (x|<any> y|<any> => <log>) (%bb (%eq? x y)))
 
 (df @@== (x|<any> y|<any> => <log>) (%bb (%eq? x y)))
 
 (df not (x|<any> => <log>) (%bb (%eq? x #f)))
 
-(dl @not (x|<any> => <log>) (%bb (%eq? x #f)))
+(dl (@not inline) (x|<any> => <log>) (%bb (%eq? x #f)))
 
-(dl @empty? (x|<lst> => <log>) (%empty? x))
+(dl (@empty? inline-c) (x|<lst> => <log>) (%empty? x))
 
 (df @@empty? (x|<lst> => <log>) (%empty? x))
 
 (df @rev! (x|<lst> => <lst>) (%rev! x))
 
-(dl @len (x|<lst> => <prim-int>) (%ib (%%len x)))
+(dl @len (x|<lst> => <fixnum>) (%ib (%%len x)))
 
-(dl @oelt (x|<opts> i|<prim-int>)
+(dl (@oelt inline) (x|<opts> i|<fixnum>)
   (%loc-off (%opts-location x) (%i- (%raw 0) (%iu i))))
-(dl @oelt-setter (z x|<opts> i|<prim-int>) 
+(dl (@oelt-setter inline) (z x|<opts> i|<fixnum>) 
   (set (%loc-off (%opts-location x) (%i- (%raw 0) (%iu i))) z))
-(dl @olen ((x <opts>) => <prim-int>) (%opts-count x))
+(dl (@olen inline) ((x <opts>) => <fixnum>) (%opts-count x))
 
 (df @all? (test|<fun> c|<lst> => <log>)
   (rep fnd ((p c))
@@ -835,8 +835,8 @@
                 (fnd (@tail px) (@tail py))
                 #f)))))
 
-(df @elt (x|<lst> key|<prim-int> => <any>)
-  (rep fnd ((count|<prim-int> 0) (x|<lst> x))
+(df @elt (x|<lst> key|<fixnum> => <any>)
+  (rep fnd ((count|<fixnum> 0) (x|<lst> x))
     (if (@== x '())
         nul
         (if (@= count key) (@head x) (fnd (@+ count 1) (@tail x))))))
@@ -881,8 +881,8 @@
         (seq (set (@head ds) (@head ss))
              (in (@tail ds) (@tail ss))))))
 
-(df @fab (x|<lst> s|<prim-int> => <lst>)
-  (rep fab (((i <prim-int>) s) ((res <lst>) '()))
+(df @fab (x|<lst> s|<fixnum> => <lst>)
+  (rep fab (((i <fixnum>) s) ((res <lst>) '()))
     (if (@< i 0) res (fab (@+ i -1) (@pair nul res)))))
 
 (df @fold (combine|<fun> init|<any> c|<lst> => <lst>)
@@ -900,7 +900,7 @@
 (df @cat2 (x|<lst> y|<lst> => <lst>)
   (%cat2 x y))
 
-(df @find (f|<fun> c|<lst> => <any>) ;; TODO: => <prim-int>
+(df @find (f|<fun> c|<lst> => <any>) ;; TODO: => <fixnum>
   (rep fnd ((c c) (i 0))
     (if (@empty? c)
         nul
@@ -916,7 +916,7 @@
 (df @del-dups (x|<lst> => <lst>)
   (@rev! (@fold (fun (s e) (if (@mem? s e) s (@pair e s))) '() x)))
 
-(df @lst-helper (objects|<opts> i|<prim-int> l|<lst>)
+(df @lst-helper (objects|<opts> i|<fixnum> l|<lst>)
   (if (@== i -1)
       l
       (@lst-helper objects (@+ i -1) (@pair (@oelt objects i) l))))
@@ -926,13 +926,13 @@
 
 (df @lst (objects|...) (@lst-helper objects (@+ (@olen objects) -1) '()))
 
-(dl @tlen (x|<tup> => <prim-int>)
+(dl (@tlen inline-c) (x|<tup> => <fixnum>)
   (%ib (%tlen x)))
 
-(dl @telt (x|<tup> i|<prim-int> => <any>)
+(dl (@telt inline-c) (x|<tup> i|<fixnum> => <any>)
   (%telt x (%iu i)))
 
-(dl @telt-setter (z x|<tup> i|<prim-int>)
+(dl (@telt-setter inline-c) (z x|<tup> i|<fixnum>)
   (set (%telt x (%iu i)) z))
 
 (df @tany? (test|<fun> c|<tup> => <log>)
@@ -944,7 +944,7 @@
        (rep fnd ((i (@+ (@tlen c1) -1)))
          (or (@< i 0) (and (test (@telt c1 i) (@telt c2 i)) (fnd (@+ i -1)))))))
 
-(dl %to-tup (args|<opts>)
+(dl (%to-tup inline-c) (args|<opts>)
   (def l (@olen args))
   (def t (%tup (%iu l) nul))
   (if (@= l 2) ;; MOST FREQUENT CASE AND SPEED CRITICAL
@@ -964,7 +964,7 @@
 
 (df @fun-nary? (x|<fun> => <log>) (%sig-nary? (%gen-sig x)))
 
-(df @fun-arity (x|<fun> => <prim-int>) (%sig-arity (%gen-sig x)))
+(df @fun-arity (x|<fun> => <fixnum>) (%sig-arity (%gen-sig x)))
 
 (df @fun-val   (x|<fun> => <any>) (%sig-val (%gen-sig x)))
 
@@ -982,7 +982,7 @@
 (dv <specs> <lst>)
 (dv <body>  <any>)
 
-(df fun-spec (x|<met> i|<prim-int> => <any>)
+(df fun-spec (x|<met> i|<fixnum> => <any>)
   (@elt (@fun-specs x) i))
 
 (dv <mets> <lst>)
@@ -1048,7 +1048,7 @@
 ;;             #f
 ;;             (@class-in? c next-cs)))))
 
-(dl @subclass? (c1 c2 => <log>)
+(dl (@subclass? inline) (c1 c2 => <log>)
   (%bb (%i= (%selt (%class-row c1) (%iu (%class-id c2))) (%iu 1)))
   ;; (or (@== c2 <any>) (@== c1 c2)
   ;;     (@class-in? c2 (%class-ancestors c1)))
@@ -1121,15 +1121,15 @@
       (order-specs t1 t2 arg)))
 
 (df order-mets (m1|<met> m2|<met> args|<opts> => <sym>)
-  (def arity|<prim-int> (@fun-arity m1))
-  (rep loop ((state|<sym> '=) (idx|<prim-int> 0))
+  (def arity|<fixnum> (@fun-arity m1))
+  (rep loop ((state|<sym> '=) (idx|<fixnum> 0))
     (if (@= idx arity)
         state
         (let ((m1spec (fun-spec m1 idx))
               (m2spec (fun-spec m2 idx))
               (cmp+typ|<tup> (@order-specs m1spec m2spec (@oelt args idx)))
               (cmp|<sym> (@telt cmp+typ 0))
-              (idx|<prim-int> (@+ idx 1)))
+              (idx|<fixnum> (@+ idx 1)))
           (if (@== cmp '=)
               (loop state idx)
               (if (and (not (@== cmp '<>))
@@ -1184,8 +1184,8 @@
 (df met-app? (met|<met> args|<opts> => <log>)
   (if (not (@empty? (@fun-unification-vars met)))
       (met-app-unify met args)
-      (let ((n|<prim-int> (@fun-arity met)))
-        (rep loop ((i|<prim-int> 0))
+      (let ((n|<fixnum> (@fun-arity met)))
+        (rep loop ((i|<fixnum> 0))
           (if (@= i n)
               #t
               (if (@isa? (@oelt args i) (fun-spec met i))
@@ -1206,8 +1206,8 @@
 (df ord-app-mets (gf|<gen> args|... => (tup ordered|<lst> ambig|<lst>))
   (ord-app-mets* gf args))
 
-;; (df opt-args (n|<prim-int> args|<opts> => <opts>)
-;;   (rep col ((i|<prim-int> 0) (l|<opts> '()) (p|<opts> args))
+;; (df opt-args (n|<fixnum> args|<opts> => <opts>)
+;;   (rep col ((i|<fixnum> 0) (l|<opts> '()) (p|<opts> args))
 ;;     (if (@= i n)
 ;;       (if (@empty? l)
 ;;           (@lst p)
@@ -1245,22 +1245,22 @@
   (or (@singleton-spec? x) (@subclass-spec? x) 
       (and (@union-spec? x) (@any? @precise-spec? (%union-elts x)))))
 
-(df @mets-unspecialized-at? (mets|<lst> pos|<prim-int> => <log>)
+(df @mets-unspecialized-at? (mets|<lst> pos|<fixnum> => <log>)
   (@all? (fun (met) (@= (fun-spec met pos) <any>)) mets))
 
 (df @prune-mets-by-type-at
-    (mets|<lst> type|<type> pos|<prim-int> => <mets>)
+    (mets|<lst> type|<type> pos|<fixnum> => <mets>)
   (@pick (fun (met) (@subtype? type (fun-spec met pos))) mets))
 
-(df @mets-specs-at (mets|<lst> pos|<prim-int> => <lst>)
+(df @mets-specs-at (mets|<lst> pos|<fixnum> => <lst>)
   (@map (fun (met) (fun-spec met pos)) mets))
 
 ;; TODO: GROVEL THROUGH UNIONS
 
-(df @mets-singletons-at (mets|<lst> pos|<prim-int> => <lst>)
+(df @mets-singletons-at (mets|<lst> pos|<fixnum> => <lst>)
   (@pick (fun (spec) (@singleton-spec? spec)) (@mets-specs-at mets pos)))
 
-(df @mets-subclasses-at (mets|<lst> pos|<prim-int> => <lst>)
+(df @mets-subclasses-at (mets|<lst> pos|<fixnum> => <lst>)
   (@pick (fun (spec) (@subclass-spec? spec)) (@mets-specs-at mets pos)))
 
 (dv $nul-assocs %tnul)
@@ -1280,7 +1280,7 @@
 
 (df gen-lookup-miss-1-using
   (key instance all-assocs|<fun> all-assocs-setter|<fun> 
-   gen|<gen> cache mets|<lst> sorted-mets|<lst> i|<prim-int> args|<opts>)
+   gen|<gen> cache mets|<lst> sorted-mets|<lst> i|<fixnum> args|<opts>)
   ;; (if (or (and cache (@< i (%gen-cache-arg-pos cache)))
   ;;         (@mets-unspecialized-at? mets i))
   ;;     (gen-lookup-miss-1 gen cache mets sorted-mets (@+ i 1) args)
@@ -1303,7 +1303,7 @@
   cache)
 
 ;;; copy args with arg as i'th elt into a opts.
-(df @specd-args (args|<opts> i|<prim-int> arg|<any> => <opts>)
+(df @specd-args (args|<opts> i|<fixnum> arg|<any> => <opts>)
   (def v (%tup (%iu (@olen args)) nul))
   (def r (%opts-tup (%lb (%prop-dat-at v (%tlen v))) (%ib (%tlen v)) v))
   (rep copy ((k 0))
@@ -1329,7 +1329,7 @@
 ;;          (@mets-specs-at mets pos)))))
 
 (df ensure-singleton-cache
-    (gen|<gen> cache mets|<lst> sorted-mets|<lst> i|<prim-int> args|<opts>)
+    (gen|<gen> cache mets|<lst> sorted-mets|<lst> i|<fixnum> args|<opts>)
   (or cache 
       ;; prefill with singletons
       (if (requires-singleton-prec mets i)
@@ -1352,7 +1352,7 @@
                           (loop (@tail singletons)))))))))))
 
 (df gen-lookup-miss-1
-    (gen|<gen> ocache mets|<lst> sorted-mets|<lst> i|<prim-int> args|<opts>)
+    (gen|<gen> ocache mets|<lst> sorted-mets|<lst> i|<fixnum> args|<opts>)
   (cond ((@= i (@fun-arity gen))
          (or (method-accessor-offset gen (@head sorted-mets) args) sorted-mets))
         ((or (and ocache (@< i (%gen-cache-arg-pos ocache)))
@@ -1383,12 +1383,12 @@
 
 (dl gen-lookup-1) ;; FORWARD DECL
 
-(dl gen-lookup (gen|<gen> args|<opts>)
+(dl (gen-lookup inline-c) (gen|<gen> args|<opts>)
   (def c (or (%fun-cache gen)
              (set (%fun-cache gen) (gen-lookup-miss gen args))))
   (gen-lookup-1 gen c args))
 
-(dl prop-value-at (object offset|<prim-int> => <any>)
+(dl (prop-value-at inline-c) (object offset|<fixnum> => <any>)
   (def val (%prop-elt object (%iu offset)))
   (if (@== val nul-prop)
       (let ((props (object-props object)))
@@ -1396,14 +1396,14 @@
              ((%prop-init (@elt props offset)) object)))
       val))
 
-(dl prop-bound-at? (object offset|<prim-int> => <log>)
+(dl prop-bound-at? (object offset|<fixnum> => <log>)
   (def val (%prop-elt object (%iu offset)))
   (if (@== val nul-prop)
       (let ((props (object-props object)))
         (not (@== (%prop-init (@elt props offset)) %prop-unbound-error)))
       #t))
 
-(dl prop-value-at-setter (z object offset|<prim-int>)
+(dl (prop-value-at-setter inline-c) (z object offset|<fixnum>)
   (set (%prop-elt object (%iu offset)) z))
 
 (dv $missed-dispatch (%pair nil nil))
@@ -1412,7 +1412,7 @@
 ;; HIT RETURNS ASSOCD VALUE AND REORDERS ASSOCS PUT KEY AT FRONT REFLECTIN FREQS
 ;; MISS ADDS KEYS (UNLESS MISSABLE) AND THEN RERUNS LOOKUP FROM BEGINNING
 
-(dl gen-lookup-1-using
+(dl (gen-lookup-1-using inline-c)
     (key i len assocs|<tup> missable? gen|<gen> args|<opts>)
   (if (%bb (%i= i len))
       (if missable?
@@ -1463,7 +1463,7 @@
 
 (df %dispatch (args|...)
   (let ((result (gen-lookup (%fun-reg) args)))
-    (if (@== (%class-of result) <prim-int>) ;; int?
+    (if (@== (%class-of result) <fixnum>) ;; int?
         (let ((res
                (if (@= (@olen args) 1) ;; getter?
                    (prop-value-at (@oelt args 0) result)
@@ -1634,7 +1634,7 @@
   (when (%class-forward (%class-of x)) ;; stale object?
     (update-instance-for-changed-class x)))
 
-(df prop-offset (object getter|<fun> => <prim-int>)
+(df prop-offset (object getter|<fun> => <fixnum>)
   (rep loop ((i 0) (props (object-props object)))
     (if (@empty? props)
         $getter-not-found
@@ -1701,6 +1701,8 @@
   (def new-class (%clone old-class))
   (@do (fun (g) (set (%fun-cache g) #f)) (%class-gens old-class))
   (set (%class-forward old-class) new-class))
+
+(df clone (x) (%clone x))
 
 (df @do-descendents (f x)
   (def visited '())
@@ -1799,7 +1801,7 @@
 
 (dg new (parent|<type> inits|... => <any>))
 
-(dl %new (parent|<class> inits|<opts> => <any>)
+(dl (%new inline-c) (parent|<class> inits|<opts> => <any>)
   (def object (%object-of parent (%iu (%class-prop-len parent))))
   (def num    (@olen inits))
   (rep loop ((i 0))
@@ -1972,7 +1974,8 @@
         (set *boot-macro-module-names*
              (@pair modname *boot-macro-module-names*))
         (set *boot-macro-names*     (@pair name     *boot-macro-names*))
-        (set *boot-macro-expanders* (@pair expander *boot-macro-expanders*)))))
+        (set *boot-macro-expanders* (@pair expander *boot-macro-expanders*))))
+  #f)
 
 ;;;
 ;;; 15. EXPORTS
@@ -2022,6 +2025,8 @@
   use
   use/export
   use/mangle
+  use/library
+  use/include
   export
   mif
   macro-expand
@@ -2143,7 +2148,7 @@
   <fun>
   <gen>
   <int>
-  <prim-int>
+  <fixnum>
   <loc>
   <log>
   <lst>
@@ -2211,6 +2216,8 @@
   fun-name-setter
   fun-names
   fun-nary?
+  fun-refs fun-refs-setter
+  fun-src fun-src-setter
   fun-mets
   gen-refs gen-refs-setter
   gen-src gen-src-setter
@@ -2243,6 +2250,7 @@
   class-props
   object-parents
   object-props
+  clone
   *restarts-ok?*
   %prop %prop-unbound-error
   prop-owner
@@ -2283,4 +2291,6 @@
   %class-of @subclass?
   %@class-of %@subclass?
   %fab-dyn-var %dyn-var-val %dyn-var-val-setter
+  %enable-stack-checks
+  @not ;; hygiene
 )

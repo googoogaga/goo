@@ -57,7 +57,7 @@ P YtimeSthreadsYPthread_sleep (P secs) {
   return (P)res;
 }
 
-P YtimeSthreadsYPthread_priority_setter (P thread) {
+P YtimeSthreadsYPthread_priority_setter (P x, P thread) {
   return PNUL;
 }
 
@@ -83,7 +83,7 @@ P YtimeSthreadsYPthread_current () { return PNUL; }
 
 P YtimeSthreadsYPthread_sleep (P secs) { return PNUL; }
 
-P YtimeSthreadsYPthread_priority_setter (P thread) { return PNUL; }
+P YtimeSthreadsYPthread_priority_setter (P x, P thread) { return PNUL; }
 
 P YtimeSthreadsYPthread_detach () { return PNUL; }
 
