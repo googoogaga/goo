@@ -484,3 +484,31 @@ adds
     and added simple-minded register allocation pass to analysis
   overhauled p2c to output in statement oriented fashion
     now perhaps a few dead-code eliminations during output
+
+=== 0.96 ===
+
+summary
+
+  new compiler driver with dependency tracking and separate files.
+
+=== 0.97 ===
+
+summary
+ 
+  one class of binding.  use binding-kind to distinguish different types.
+
+changes
+
+  changed ast-define-binding to take a kind argument used for fabbing
+  binding obviating need for fab thunk
+
+adds
+
+  defaults to <simple-condition>'s condition-string and condition-arguments
+  curses primitives
+
+fixes
+ 
+  next-method to work in interpreter
+  got rid of description's from ast
+  bug in process-nary-closed-application to correctly fab a fix-let
