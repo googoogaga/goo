@@ -1,0 +1,121 @@
+(use goo)
+
+(use samurui/samurui)
+
+(dc <mote> (<any>))
+ (dp can-hear (<mote> => <col>) (vec))
+ (dp heard-by (<mote> => <col>) (vec))
+ (dp mote-id (<mote> => <int>))
+ (dp mote-thinks-x (<mote> => <int>))
+ (dp mote-thinks-y (<mote> => <int>))
+
+(iaction <mote> blink m "Blink"
+         (msg out "I would blink now if I could...\n")
+         )
+ 
+(dc <mote-ensemble> (<visi-col>))
+ (dp motes (<mote-ensemble> => <tab>) (fab <tab> 0))
+ (dp add-node-listeners (<mote-ensemble> => <col>) (vec)) ;; (fun (new-node))
+ (dp add-edge-listeners (<mote-ensemble> => <col>) (vec)) ;; (fun (from to))
+
+;; Mote-ensemble specific API -----
+
+(dm new-mote (me|<mote-ensemble> id|<int> => <mote>)
+  ;; Create mote and init
+  (def m (new <mote>))
+  (set (mote-id m) id)
+
+  ;; Put in our table
+  (set (elt (motes me) id) m)
+
+  ;; Add-notification
+  (do (fun (listener) (listener m)) (add-node-listeners me))
+
+  m
+  )
+
+(dm mote-can-hear (me|<mote-ensemble> mote-a|<mote> mote-b|<mote>)
+  (unless (mem? (can-hear mote-a) mote-b)
+    (add! (can-hear mote-a) mote-b)
+    (add! (heard-by mote-b) mote-a)
+    (do (fun (listener) (listener mote-a mote-b)) (add-edge-listeners me))
+    )
+  )
+
+(dm mote-can-hear-ids (me|<mote-ensemble> mote-a|<mote> ids|<col>)
+  (do (fun (id)
+        (def mote-b (or (elt-or (motes me) id #f)
+                        (new-mote me id)))
+        (mote-can-hear me mote-a mote-b)
+        )
+      ids)
+  #t
+  )
+
+(dm mote-id-can-hear-ids (me|<mote-ensemble> id-a|<int> ids|<col>)
+  (mote-can-hear-ids me 
+                     (or (elt-or (motes me) id-a #f)
+                         (new-mote me id-a)) 
+                     ids)
+  )
+
+;; Collection Abstraction -----
+(dm node-label (me|<mote-ensemble> node)
+  (to-str (mote-id node))
+  )
+
+(dm node-axes (me|<mote-ensemble> => <col>)
+  (vec "can-hear")
+  )
+
+(dm node-out-edges (me|<mote-ensemble> axis node => <col>)
+  (can-hear node)
+  )
+
+(dm node-in-edges (me|<mote-ensemble> axis node => <col>)
+  (heard-by node)
+  )
+
+(dm register-node-add-notification (me|<mote-ensemble> to-call|<fun>)
+  (add! (add-node-listeners me) to-call)
+  #t
+  )
+
+(dm remove-node-add-notification (me|<mote-ensemble> was-called|<fun>)
+  (del! (add-node-listeners me) was-called)
+  #f
+)
+
+(dm register-edge-add-notification (me|<mote-ensemble> to-call|<fun>)
+  (add! (add-edge-listeners me) to-call)
+  #t
+  )
+
+(dm remove-edge-add-notification (me|<mote-ensemble> was-called|<fun>)
+  (del! (add-edge-listeners me) was-called)
+  #t
+)
+
+(export
+  <mote>
+  <mote-ensemble>
+  )
+
+(export
+  can-hear
+  can-hear-setter
+  heard-by
+  heard-by-setter
+  mote-id
+  mote-id-setter
+  mote-thinks-x
+  mote-thinks-x-setter
+  mote-thinks-y
+  mote-thinks-y-setter
+  motes
+  motes-setter
+  new-mote
+  mote-can-hear
+  mote-can-hear-ids
+  mote-id-can-hear-ids
+  )

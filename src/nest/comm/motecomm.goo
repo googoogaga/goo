@@ -1,0 +1,344 @@
+(use goo)
+
+(use nest/comm/autoezv24)
+(use nest/comm/libezv24)
+
+(ds (hex ,da-str)
+  (def num 0)
+  (do (fun (d)
+        (cond 
+          ((digit? d)
+           (set num (+ (* 16 num) (to-digit d))))
+          ((mem? "abcdef" d)
+           (set num (+ (* 16 num) (- (to-digit d) 39))))
+          (#t
+           (error "Bad hex format!")))
+        )
+      (to-str da-str))
+  num)
+
+(dc <mote-comm-channel> (<any>))
+ (dp handle (<mote-comm-channel> => <loc>))
+
+(dm init-mote-comm (=> <mote-comm-channel>)
+  (def mcc (new <mote-comm-channel>))
+  (def port-handle (v24OpenPort "/dev/ttyS0" (| 0 V24_NO_DELAY)))
+  (set (handle mcc) port-handle)
+  (v24SetParameters port-handle V24_B19200 V24_8BIT V24_NONE)
+  mcc
+  )
+
+(dm v24-free (mcc|<mote-comm-channel>)
+  (v24ClosePort (handle mcc))
+  )
+
+; Guaranteed to return something! despite the weird bug running rampant in serial comm
+(dm read-byte (mcc|<mote-comm-channel> => (t? <int>))
+  (rep loop ()
+    (def retval (v24Getc (handle mcc)))
+    (if (== retval -1)
+        (if (== 0 (v24QueryErrno (handle mcc))) ; returns false if not ok!
+          (loop)
+          (post "Weird ass error.\n")
+          )
+      retval)
+    ))
+
+(dm write-byte (mcc|<mote-comm-channel> byte|<int>)
+  (v24Putc (handle mcc) byte)
+  )
+
+(dm dump-to-out (mcc|<mote-comm-channel>)
+  (def da-byte (read-byte mcc))
+  (when da-byte
+    (msg out (num-to-str-base da-byte  16))
+    (msg out " ")
+    (dump-to-out mcc))
+  )
+
+(dc <tiny-message> (<any>))
+ (dp destination-id (<tiny-message> => <int>)) ;; short
+ (dp handler-id (<tiny-message> => <int>)) ;; char
+ (dp group-id (<tiny-message> => <int>)) ;; char
+ (dp payload (<tiny-message> => <col>) (vec)) ;; array of 'bytes'
+
+(dm write-message (mcc|<mote-comm-channel> msg|<tiny-message>)
+  ;; Destination-id
+  (write-byte mcc (& (destination-id msg) 255))
+  (write-byte mcc (& (>> (destination-id msg) 8) 255))
+  ;; Handler
+  (write-byte mcc (& (handler-id msg) 255))
+  ;; Group
+  (write-byte mcc (& (group-id msg) 255))
+  ;; Payload
+  (do (fun (x)
+        (write-byte mcc x))
+      (payload mcc))
+  (unless (= 32 (len (payload mcc)))
+    (def need-to-write (- 32 (len (payload mcc))))
+    (rep loop ((i 0))
+      (when (< i need-to-write)
+        (seq
+          (write-byte mcc 0)
+          (loop (+ i 1)))))
+    )
+  )
+
+(dv *7e* (hex "7e"))
+(dv *ff* (hex "ff"))
+(dv *3f* (hex "3f"))
+
+(dm read-message-loop (mcc|<mote-comm-channel> func-on-message|<fun>)
+  (def cur-message #f)
+  (def cur-byte #f)
+  (def byte-idx #f)
+  (while (set cur-byte (read-byte mcc))
+         (unless cur-message
+           (set cur-message (new <tiny-message>))
+           (set byte-idx 0))
+         
+         (cond 
+           ((= byte-idx 0)
+            (set (destination-id cur-message) cur-byte)
+            )
+
+           ((= byte-idx 1)
+            (if (= cur-byte *7e*)
+                (seq
+                  (set byte-idx 0)
+                  (set (destination-id cur-message) cur-byte))
+                (set (destination-id cur-message) (| (destination-id cur-message)
+                                                     (<< cur-byte 8)))
+                )
+            )
+           
+           ((= byte-idx 2)
+            (set (handler-id cur-message) cur-byte)
+            )
+           
+           ((= byte-idx 3)
+            (set (group-id cur-message) cur-byte)
+            )
+
+           ;; Last byte. Finalize packet.
+           ((= byte-idx 35)
+            (add! (payload cur-message) cur-byte)
+            (func-on-message cur-message)
+            (set cur-message #f)
+            (set byte-idx #f)
+            )
+
+           ;; Payload
+           (#t
+            (add! (payload cur-message) cur-byte)
+            )
+           )
+         
+         (when byte-idx
+           (incf byte-idx))
+         )
+  )
+
+(ds (my-pop! ,dude)
+  `(seq
+     (def r (1st ,dude))
+     (set ,dude (del! ,dude 0))
+     r
+     )
+  )
+
+(dm eat-byte (msg|<tiny-message> => <int>)
+  (my-pop! (payload msg))
+  )
+
+(dm eat-multi-byte (msg|<tiny-message> n|<int> f|<fun>)
+  (rep loop ((i 0))
+    (when (< i n)
+      (f (eat-byte msg))
+      (loop (+ i 1))
+      )
+    )
+  )
+
+(dm eat-short (msg|<tiny-message> => <int>)
+  (| (my-pop! (payload msg))
+     (<< (my-pop! (payload msg)) 8))
+  )
+
+(dm eat-multi-short (msg|<tiny-message> n|<int> f|<fun>)
+  (rep loop ((i 0))
+    (when (< i n)
+      (f (eat-short msg))
+      (loop (+ i 1))
+      )
+    )
+  )
+
+;; Well, 30-bit int...
+(dm eat-int (msg|<tiny-message> => <int>)
+  (| (| (| (my-pop! (payload msg))
+           (<< (my-pop! (payload msg)) 8))
+        (<< (my-pop! (payload msg)) 16))
+     (<< (& (my-pop! (payload msg)) *3f*) 24))
+  )
+
+(dm spew-byte (msg|<tiny-message> b|<int>)
+  (add! (payload msg))
+  #t
+  )
+
+(dm spew-short (msg|<tiny-message> s|<int>)
+  (add! (payload msg) (& s *ff*))
+  (add! (payload msg) (& (>> s 8) *ff*))
+  )
+
+(dm spew-int (msg|<tiny-message> i|<int>)
+  (add! (payload msg) (& s *ff*))
+  (add! (payload msg) (& (>> s 8) *ff*))
+  (add! (payload msg) (& (>> s 16) *ff*))
+  (add! (payload msg) (& (>> s 24) *ff*))
+  )
+
+;; -------------------------------------------------
+
+(dc <tiny-abstract-message> (<any>))
+
+(dc <climb-message> (<tiny-abstract-message>))
+ (dp source (<climb-message> => <int>))
+ (dp msg-can-hear (<climb-message> => <col>) (vec))
+ (dp radio-power (<climb-message> => <int>))
+ (dp light-status (<climb-message> => <int>))
+ (dp grad-dists (<climb-message> => <col>) (vec))
+
+(dm process-climb-message (msg|<tiny-message> => <climb-message>)
+  (dm cm (new <climb-message>))
+  ;; sid
+  (set (source cm) (eat-short msg))
+  ;; i_can_hear
+  (eat-multi-short msg 8 
+                   (fun (id)
+                     (unless (= id 0)
+                       (add! (msg-can-hear cm) id)
+                       )
+                     ))
+  ;; skip symid
+  ;; skip dist
+  ;; radio_power
+  (set (radio-power cm) (eat-byte msg))
+  ;; light_status
+  (set (light-status cm) (eat-byte msg))
+  ;; gd0-gd3
+  (eat-multi-byte 4 (fun (val) (add! (grad-dists cm) val)))
+  )
+
+(dv *server-unique-id* 0)
+(df server-unique-id ()
+  (def res *server-unique-id*)
+  (incf *server-unique-id*)
+  (when (> *server-unique-id* 127)
+    (set *server-unique-id* 0))
+  res
+  )
+
+(dc <server-message> (<tiny-abstract-message>))
+ (dp target-mote-id (<server-message> => <int>))
+ (dp unique-id (<server-message> => <int>) (server-unique-id))
+ (dp action-id (<server-message> => <int>))
+ (dp param0 (<server-message> => <int>))
+ (dp param1 (<server-message> => <int>))
+ (dp param2 (<server-message> => <int>))
+ (dp param3 (<server-message> => <int>))
+
+(dm process-server-message (sm|<server-message> => <tiny-message>)
+  (dm msg (new <tiny-message>))
+  (spew-short msg (target-mote-id sm))
+  (spew-byte msg (unique-id sm))
+  (spew-byte msg (action-id sm))
+  (spew-byte msg (param0 sm))
+  (spew-byte msg (param1 sm))
+  (spew-byte msg (param2 sm))
+  (spew-byte msg (param3 sm))
+  )
+
+(dc <hear-report-message> (<tiny-abstract-message>))
+ (dp source (<hear-report-message> => <int>))
+ (dp heard (<hear-report-message> => <vec>) (vec))
+
+(dm process-hear-report-message (msg|<tiny-message> => <hear-report-message>)
+  (def hm (new <hear-report-message>))
+  ;; sid
+  (set (source hm) (eat-short msg))
+  ;; yo_heard
+  (eat-multi-short msg
+                   8 
+                   (fun (id)
+                     (unless (= id 0)
+                       (add! (heard hm) id)
+                       )
+                     ))
+  hm
+  )
+
+(export
+  <mote-comm-channel>
+  <tiny-message>
+  <tiny-abstract-message>
+  <climb-message>
+  <server-message>
+  <hear-report-message>
+  )
+
+(export
+  init-mote-comm
+  v24-free
+  read-byte
+  write-byte
+  dump-to-out
+  destination-id
+  destination-id-setter
+  handler-id
+  handler-id-setter
+  group-id
+  group-id-setter
+  payload
+  payload-setter
+  write-message
+  read-message-loop
+  eat-byte
+  eat-multi-short
+  eat-short
+  eat-multi-short
+  eat-int
+  spew-byte
+  spew-short
+  spew-int
+  source
+  source-setter
+  msg-can-hear
+  msg-can-hear-setter
+  radio-power
+  radio-power-setter
+  light-status
+  light-status-setter
+  grad-dists
+  grad-dists-setter
+  process-climb-message
+  target-mote-id
+  target-mote-id-setter
+  unique-id
+  unique-id-setter
+  action-id
+  action-id-setter
+  param0
+  param0-setter
+  param1
+  param1-setter
+  param2
+  param2-setter
+  param3
+  param3-setter
+  process-server-message
+  process-hear-report-message
+  heard
+  heard-setter
+  )

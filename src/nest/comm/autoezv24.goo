@@ -1,0 +1,4 @@
+(use nest/comm/libezv24)
+(use goo/system)
+
+(so-load "/home/ai2/sombrero/code/swiglibezV24/gooezV24.so")

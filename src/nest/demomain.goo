@@ -1,0 +1,88 @@
+;; (use nest/demomain)
+
+(use goo)
+
+(use goo/runtime)
+
+;; IPC
+(use time/threads)
+(use cols/pipe)
+
+;; Bring up GUI
+(use samurui/samurui)
+(use samurui/graph)
+
+;; Mote Abstraction
+(use nest/motes/motes)
+
+;; Communications
+(use nest/comm/motecomm)
+
+;; Need GTK
+(use samurui/gtkbinding)
+
+; =================================================================
+;; --- Define demo app class
+(dc <nest-demo-app> (<any>))
+
+(iprop <nest-demo-app> motes <mote-ensemble> "Motes")
+
+(imodel <nest-demo-app>
+        "Motes"
+        (attr motes fill)
+        )
+
+;; --- Instantiate Demo App
+
+(dv *nest-demo-app* (new <nest-demo-app>))
+(set (motes *nest-demo-app*) (new <mote-ensemble>))
+
+;; ------ Communications Related ------
+
+;; --- Periodically check our shared pipe
+
+(dv *server-flood-message-id* 12)
+(dv *climb-message-id* 11)
+(dv *hear-report-message-id* 9)
+
+(df tick-poll-pipe (da-pipe)
+  (while (> (len da-pipe) 0)
+    (def da-msg (dequeue! da-pipe))
+    ;; (post "<---- Dequeued message: %=\n" da-msg)
+    (case (handler-id da-msg)
+      ((*climb-message-id*)
+       (def cm (process-climb-message da-msg))
+       )
+
+      ((*hear-report-message-id*)
+       (def hm (process-hear-report-message da-msg))
+       (msg out "%= can hear %=\n" (source hm) (heard hm))
+       (mote-id-can-hear-ids (motes *nest-demo-app*) (source hm) (heard hm))
+       )
+      )
+    )
+  )
+
+(dv *incoming-event-pipe* (fab <pipe> 0))
+
+(gtk_timeout_add 200
+                 (gtk_getGtkFunctionCallback)
+                 (goo_createCallback tick-poll-pipe *incoming-event-pipe*))
+
+;; --- Spawn a thread to handle the message loop, putting all received messages in
+;;      our cute little pipe
+(spawn 
+ (def my-mcc (init-mote-comm))
+ (read-message-loop my-mcc (fun (da-msg)
+                             ;;(msg out "----> Received message: %=\n" da-msg)
+                             (enqueue! *incoming-event-pipe* da-msg)
+                             )
+                    )
+ )
+
+;; --- Init GTK
+
+(gtk_init_easy)
+
+(present *nest-demo-app*)
+(gtk_main)

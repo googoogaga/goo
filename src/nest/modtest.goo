@@ -1,0 +1,16 @@
+(use goo)
+
+(dv internal-var 0)
+(dv external-var 0)
+
+(df internal-function (x)
+  )
+
+(df external-function (x)
+  )
+
+(export 
+  external-var)
+
+(export 
+  external-function)

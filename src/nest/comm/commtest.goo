@@ -1,0 +1,10 @@
+(use goo)
+
+(use nest/comm/motecomm)
+
+(dv my-mcc (init-mote-comm))
+(read-message-loop my-mcc 
+                   (fun (da-msg)
+                     (msg out "Got message %=\n" da-msg)))
+
+                            
