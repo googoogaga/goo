@@ -839,3 +839,55 @@ added
 removed
 
   assoc
+
+=== 0.121 ===
+
+summary
+
+  more name changes towards release
+
+changed
+
+  lowercased txt/ filenames 
+  change dir x8r to eval
+
+=== 0.124 ===
+
+added
+
+  path searching code for loading modules
+  - preliminary support for precompiled modules.
+  better backtracing support
+
+changed
+
+  a bunch of signatures to | form which were missed before
+  the singleton-precision stuff to work nicely with paratype code
+
+=== 0.125 ===
+
+summary 
+
+  >10% speed increases due to mangling caches
+  conformance to and improvement of test suite
+
+added
+
+  more col tests from manual
+  namespace mangling caches
+  sort sort-by sort! sort-by!
+  lots of goo exports
+  push pop del elts
+
+changed
+
+  fixed test suite 
+  removed over eager requires singleton precision
+  nary fix-let conversion corrected
+  opts-to-lst conversion of no applicable methods condition args
+  ord-app-mets takes args|... instead of args|<opts>
+
+removed
+
+  extraneous dp object variables
+
