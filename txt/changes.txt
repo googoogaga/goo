@@ -768,7 +768,7 @@ removed
 
 summary
 
-  minor cleanups towards release
+  minor cleanups towards first goo release
 
 added
 
