@@ -40,21 +40,26 @@
 (dm below (lim|<num> => <range>)
   (new <range> range-lim lim))
 
-(dm as-copy (c|<range> x|<col> => <col>)
-  (as <lst> x))
+(dm col-res-type (x|<range> => <type>)
+  <lst>)
 
 (dc <range-enum> (<enum>))
 (dp %dat (<range-enum> => <range>))
 (dp %val (<range-enum> => <num>))
+(dp %key (<range-enum> => <int>))
 
 (dm enum (x|<range> => <range-enum>) 
-  (new <range-enum> %dat x %val (range-from x)))
+  (new <range-enum> %dat x %val (range-from x) %key 0))
+
 (dm fin? (e|<range-enum> => <log>)       
   (def c (%dat e))
   (not ((range-in? c) (%val e) (range-lim c))))
 
 (dm nxt (e|<range-enum> => <range-enum>)  
-  (renew e %val ((range-nxt (%dat e)) (%val e))
+  (renew e %val ((range-nxt (%dat e)) (%val e)) %key (+ (%key e) 1) 
          ))
 (dm now (e|<range-enum> => <num>)         
   (%val e))
+
+(dm now-key (e|<range-enum> => <int>)         
+  (%key e))

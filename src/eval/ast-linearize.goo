@@ -10,25 +10,6 @@
 (use goo/math)
 (use goo/cols)
 
-;;; this is moved from runtime
-;;; this doesn't deserve to be part of goo AFAICT, but its used here.
-
-;;; ASSOC
-
-(dc <assoc> (<any>))
-  (dp assoc-key (x|<assoc> => <any>))
-  (dp assoc-value (x|<assoc> => <any>))
-(df assoc (x y => <assoc>)
-  (new <assoc> assoc-key x assoc-value y))
-
-(dm assocq (x l|<lst> => <any>)
-  (if (empty? l)
-      #f
-      (if (== x (assoc-key (head l)))
-          (head l)
-          (assocq x (tail l)))))
-;;; END code from runtime
-
 ;;; WALKER
 
 (dm update-walk! (g o args|...)
@@ -75,6 +56,13 @@
       (new <box-read> box-reference o)
       o))
 
+;;; IDENTIFY LOCAL CALLS
+(dm insert-box! (o|<regular-application>)
+  (update-walk! insert-box! o)
+  (when (isa? (application-function o) <local-reference>)
+    (set (reference-called-function? (application-function o)) #t))
+  o)
+
 (dm insert-box! (o|<local-assignment>)
   (new <box-write> 
     box-reference (assignment-reference o)
@@ -117,46 +105,7 @@
                   (loop (pair creator res) (tail bindings)))
                 (loop res (tail bindings))))))))
 
-;;; DYNAMIC-EXTENT ANALYSIS
-
-(dm do-do-call-references! (o|<program>)
-  (update-walk! do-call-references! o))
-
-(dm do-call-references! (o|<program>)
-  (do-do-call-references! o))
-
-(dm do-call-references! (o|<regular-application>)
-  (do-do-call-references! o)
-  (if (isa? (application-function o) <local-reference>)
-      (set (reference-called-function? (application-function o)) #t))
-  o)
-
-(dm analyze-call-references (o)
-  (do-call-references! o))
-
-(dm do-do-dynamic-extent! (o|<program>)
-  (update-walk! do-dynamic-extent! o))
-
-(dm do-dynamic-extent! (o|<program>)
-  (do-do-dynamic-extent! o))
-
-(dm do-dynamic-extent! (o|<local-reference>)
-  (do-do-dynamic-extent! o)
-  (unless (reference-called-function? o)
-    (set (binding-dynamic-extent? (reference-binding o)) #f))
-  o)
-
-(dm analyze-dynamic-extent (o)
-  (analyze-call-references o)
-  (do-dynamic-extent! o))
-
-;;; CALL ANALYSIS
-
-(dm do-do-call-upgrades! (o|<program>)
-  (update-walk! do-call-upgrades! o))
-
-(dm do-call-upgrades! (o|<program>)
-  (do-do-call-upgrades! o))
+;;; DYNAMIC-EXTENT AND CALL UPGRADE ANALYSIS
 
 (dm unconstrained-type? (b|<program> => <log>)
   #f)
@@ -167,8 +116,20 @@
 (dm unconstrained-type? (o|<module-binding-reference> => <log>)
   (unconstrained-type? (reference-binding o)))
 
-(dm do-call-upgrades! (o|<regular-application>)
-  (do-do-call-upgrades! o)
+(dm do-do-analysis! (o|<program>)
+  (ast-walk do-analysis! o))
+
+(dm do-analysis! (o|<program>)
+  (do-do-analysis! o))
+
+(dm do-analysis! (o|<local-reference>)
+  (do-do-analysis! o)
+  (unless (reference-called-function? o)
+    (set (binding-dynamic-extent? (reference-binding o)) #f))
+  o)
+
+(dm do-analysis! (o|<regular-application>)
+  (do-do-analysis! o)
   (if (isa? (application-function o) <local-reference>)
       (let ((met (binding-value (reference-binding (application-function o)))))
         (if (and (isa? met <ast-function>)
@@ -181,8 +142,8 @@
             (set (application-known? o) #t))))
   o)
 
-(dm analyze-calls (o)
-  (do-call-upgrades! o))
+(dm analyze-ast (o)
+  (do-analysis! o))
 
 ;;; FLATTENING ENVIRONMENTS
 
@@ -398,6 +359,19 @@
 ;;; GATHER-TEMPORARIES -- PULLS ALL FIX-LET ARGS UP TO ENCLOSING FUN
 ;;;   FLAT-FUN IS ENCLOSING FUN AND R IS ENVIRONMENT FOR NEW AST
 
+(dc <assoc> (<any>))
+  (dp assoc-key (x|<assoc> => <any>))
+  (dp assoc-value (x|<assoc> => <any>))
+(df assoc (x y => <assoc>)
+  (new <assoc> assoc-key x assoc-value y))
+
+(dm assocq (x l|<lst> => <any>)
+  (if (empty? l)
+      #f
+      (if (== x (assoc-key (head l)))
+          (head l)
+          (assocq x (tail l)))))
+
 (dm gather-temporaries! (o|<program>)
   (set (program-definitions o)
        (map (fun (def) (collect-temporaries! def def '()))
@@ -414,11 +388,18 @@
       (new <local-reference> reference-binding (assoc-value b))
       o))
 
+(df prepend-renamings (x y r)
+  ;; (cat (map2 assoc x y) r) ;; speed critical
+  (rep loop ((z r) (x x) (y y))
+    (if (empty? x)
+        z
+        (loop (pair (assoc (head x) (head y)) z) (tail x) (tail y)))))
+
 (dm collect-temporaries! (o|<fix-let> flat-fun r)
   (set (fix-let-arguments o)
        (collect-temporaries! (fix-let-arguments o) flat-fun r))
   (def new-bindings (map new-renamed-binding (fix-let-bindings o)))
-  (def new-r (cat (map2 assoc (fix-let-bindings o) new-bindings) r))
+  (def new-r (prepend-renamings (fix-let-bindings o) new-bindings r))
   (adjoin-temporary-variables! flat-fun new-bindings)
   (set (fix-let-bindings o) new-bindings)
   (set (fix-let-body o) (collect-temporaries! (fix-let-body o) flat-fun new-r))
@@ -426,7 +407,7 @@
 
 (dm collect-temporaries! (o|<locals> flat-fun r)
   (def new-bindings (map new-renamed-binding (locals-bindings o)))
-  (def new-r (cat (map2 assoc (locals-bindings o) new-bindings) r))
+  (def new-r (prepend-renamings (locals-bindings o) new-bindings r))
   (set (locals-functions o)
        (map (rcurry collect-temporaries! flat-fun new-r) 
             (locals-functions o)))
@@ -467,11 +448,11 @@
     (do (fun (def) (collect-registers! def #f #t)) (program-definitions o)))
   o)
 
-(dm allocate-register (o|<program> flat-fun val?)
+(df allocate-register (o|<program> flat-fun val?)
   (when (and val? flat-fun (not (program-register o)))
     ;; TODO: INEFFICIENT
     (set (program-register o) (len (function-registers flat-fun)))
-    (pushf (function-registers flat-fun) o)))
+    (add! (function-registers flat-fun) o)))
 
 (dm collect-registers! (o|<computed-program> flat-fun val?)
   (allocate-register o flat-fun val?)
@@ -508,6 +489,8 @@
   (collect-registers! (function-body o) o #t)
   o)
 
+;;; MISC
+
 (dm ast-contains-fun? (x|<ast-method> => <log>) 
   #t)
 
@@ -518,8 +501,9 @@
     #f))
 
 (export
-  analyze-calls
-  analyze-dynamic-extent
+  analyze-ast
+  ;; analyze-calls
+  ;; analyze-dynamic-extent
   <box-creation>
   box-form
   <box-read>
@@ -534,8 +518,8 @@
   form-program
   form-quotations
   <free-reference>
-  gather-temporaries!
   insert-box!
+  gather-temporaries!
   register-allocate!
   lift!
   program-definitions
@@ -549,7 +533,5 @@
   update-walk!
   flatten-seqs
   *register-passive?*
-  collect-temporaries!
-  collect-registers!
   ast-contains-fun?
 )

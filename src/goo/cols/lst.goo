@@ -33,11 +33,6 @@
 
 ;;;;!! Implementation
 
-;;;; Creation protocol
-
-;; TODO: DO THIS IN GENERAL FOR AS
-(dm as ((p (t= <lst>)) x|<lst> => <lst>) x)
-
 ;;;; Collection protocol
 (dm len (x|<lst> => <int>)
   (rep sum (((count <int>) 0) ((x <lst>) x))
@@ -63,7 +58,7 @@
 
 (dm empty ((c (t= <lst>)) => <lst>) '())
 
-(dm fab ((t (t= <lst>)) s|<int> => <lst>)
+(dm fab ((t (t< <lst>)) s|<int> => <lst>)
   (rep fab ((i|<int> s) (res|<lst> (empty t)))
     (if (> i 0)
         (fab (- i 1) (new t tail res))
@@ -153,19 +148,6 @@
                          (set (head next) tmp))
                        tmp)
                    (tail prev) (tail next)))))))
-
-;; (dm sort-by! (items|<lst> test|<fun> => <lst>)
-;;   (def tmp #f)
-;;   (until (== tmp (head items))
-;;     (set tmp (head items))
-;;     (rep loop ((prev items) (next (tail items)))
-;;       (unless (empty? next)
-;;         (when (test (head next) (head prev))
-;;           (set tmp (head prev))
-;;           (set (head prev) (head next))
-;;           (set (head next) tmp))
-;;         (loop (tail prev) (tail next)))))
-;;   items)
 
 ;;;; Misc other stuff
 (dm to-str (x|<lst> => <str>)

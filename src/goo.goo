@@ -14,7 +14,7 @@
 
 (export
  ;; Section 1.1/2.1: Special forms.
- IF SEQ SET FUN LET DEF LOC ESC FIN DV DM DG DP DC ISA MACRO-EXPAND
+ IF SEQ SET FUN LET DEF LOC ESC FIN DV DM DG DP DC MACRO-EXPAND
  SUP QUOTE
  CT CT-ALSO DS USE EXPORT 
 
@@ -65,7 +65,7 @@
  <loc> loc-val loc-val-setter address-of
  
  ;; Section 3.7: Collections.
- <col> <col.> len elt elt-or elts low-elt dup as-copy
+ <col> <col.> len elt elt-or elts low-elt dup col-res col-res-type
  empty? empty elt-default elt-type key-type key-test fab fabs fill any?
  all? fold fold+ find find-or del zap do do2 map map2 do-keyed
  map-keyed mem? keys items zap find find-or 
@@ -81,7 +81,8 @@
  <set>
  ;; 3.7.3: Sequences.
  <seq> <seq.> add 1st 2nd 3rd last pos rev cat cat2 sub push pop
- pick reject ins del-vals del-dups finds sort sort-by
+ pick reject ins del-vals del-dups finds sort sort-by 
+ prefix? suffix? repeat split join
  <seq!>  add! rev! cat! sub-setter push! pop! del-vals! del-dups! sort! sort-by!
  ;; 3.7.4 Tuples.
  <tup> tup
@@ -143,7 +144,7 @@
  ;; error, but it needs to be here.
  match-atom match-empty-list match-unquote match-sublist
  sexpr-signature-parameters
- %pair %next-methods %define-method %isa %prop %prop-unbound-error
+ %pair %next-methods %define-method %prop %prop-unbound-error
  <handler-info>
  $default-handler-info
  <simple-handler-info>

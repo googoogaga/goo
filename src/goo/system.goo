@@ -56,7 +56,7 @@
   (cond
     ((= (os-name) "linux") "/")
     ((= (os-name) "win32") "\\")
-    (#t "/")))
+    (#t                    "/")))
 
 (dm base-path (filename|<str> => <str>)
   (rep loop ((i (- (len filename) 1)))
@@ -66,19 +66,24 @@
             (sub filename 0 (+ i 1))
             (loop (- i 1))))))
 
+;;; should be using pathname functions below
+(dm fab-path (dirs|... => <str>)
+  (join dirs *path-separator*))
+
 (dl %default-goo-root)
 
-;need to make this depend on external configuration
 (dv *goo-root*
   (let ((env-root (os-val "GOO_ROOT")))
     (if (empty? env-root)
         (%sb (%default-goo-root))
         env-root)))
 
+(dv *goo-personal-root* (fab-path (os-val "HOME") ".goo"))
+
 (dv *module-search-path*
-  (lst (cat (os-val "HOME") *path-separator* ".goo" *path-separator* "mods")
-       (cat *goo-root* "/local/mods")
-       (cat *goo-root* "/mods")))
+  (lst (fab-path *goo-personal-root* "mods")
+       (fab-path *goo-root* "local" "mods")
+       (fab-path *goo-root* "mods")))
 
 (dv *goo-build-root*
   (let ((env-root (os-val "GOO_BUILD_ROOT")))
@@ -87,24 +92,26 @@
         env-root)))
 
 (dm add-src-path (relpath => <str>)
-  (cat *goo-build-root* *path-separator* "src" *path-separator* relpath))
+  (fab-path *goo-build-root* "src" relpath))
 
 (dm add-goo-root-path (relpath => <str>)
-  (cat *goo-root* *path-separator* relpath))
+  (fab-path *goo-root* relpath))
+
+(dm add-goo-personal-root-path (relpath => <str>)
+  (fab-path *goo-personal-root* relpath))
 
 ;; TODO: GET THIS RIGHT ON WIN32
 (dm add-tmp-path (relpath => <str>)
-  (cat *path-separator* "tmp" *path-separator* relpath))
+  (fab-path "" "tmp" relpath))
 
 (dm add-build-path (builddir relpath => <str>)
-  (cat *goo-build-root* *path-separator* "c" *path-separator*
-       builddir *path-separator* relpath))
+  (fab-path *goo-build-root* "c" builddir relpath))
 
-(dv *goo-extension* ".goo")
+(dv *goo-extension*  ".goo")
 (dv *gooc-extension* ".gooc")
-(dv *c-extension*   ".c")
-(dv *obj-extension* ".o")
-(dv *exe-extension* "")
+(dv *c-extension*    ".c")
+(dv *obj-extension*  ".o")
+(dv *exe-extension*  "")
 
 (df goo-filename (name)
   (cat name *goo-extension*))
@@ -124,6 +131,7 @@
 (export
   *path-separator*
   *goo-root*
+  *goo-personal-root*
   *module-search-path*
   *goo-build-root*
   
@@ -131,6 +139,7 @@
   add-build-path
   add-tmp-path
   add-goo-root-path
+  add-goo-personal-root-path
   
   *goo-extension*
   *c-extension*
@@ -220,20 +229,20 @@
            ((= component "..") 'up)
            ((= component ".") 'current)
            (#t component)))
-       (string-split pathname (elt *path-separator* 0))))
+       (split pathname (elt *path-separator* 0))))
 
 ;;; Reassemble components created by the above function.
 (df components-to-pathname (components|<lst> => <str>)
   (when (empty? components)
     (error "Can't convert empty components to a pathname.\n"))
-  (string-join (map (fun (component)
-                      (cond
-                        ((== component 'root) "")
-                        ((== component 'up) "..")
-                        ((== component 'current) ".")
-                        (#t component)))
-                    components)
-               *path-separator*))
+  (join (map (fun (component)
+               (cond
+                 ((== component 'root)    "")
+                 ((== component 'up)      "..")
+                 ((== component 'current) ".")
+                 (#t                      component)))
+             components)
+        *path-separator*))
 
 ;;; Get any leading directory label.
 (df label-components (components|<lst> => <lst>)
@@ -323,25 +332,25 @@
   parent-directory
   probe-directory)
 
+(df find-goo-file-at (fname|<str> path|<str> => (t? <str>))
+  (def base-file  (fab-path path fname))
+  (def goo-file   (goo-filename base-file))
+  (def gooc-file  (gooc-filename base-file))
+  (def goo-found  (file-exists? goo-file))
+  (def gooc-found (file-exists? gooc-file))
+  (cond ((and goo-found gooc-found)
+         (if (> (file-mtime goo-file) (file-mtime gooc-file))
+             goo-file
+             gooc-file))
+        (gooc-found gooc-file)
+        (goo-found  goo-file)
+        (#t         #f)))
 
 (df find-goo-file-in-path (fname|<str> search-paths|<col> => (t? <str>))
   (esc return
     (for ((path search-paths))
-      (def base-file (cat path *path-separator* fname))
-      (def goo-file (goo-filename base-file))
-      (def gooc-file (gooc-filename base-file))
-;      (msg out "Checking: %s %s: " goo-file gooc-file)
-      (def goo-found (file-exists? goo-file))
-      (def gooc-found (file-exists? gooc-file))
-;      (msg out "%s %s\n" goo-found gooc-found)
-      (when (and goo-found gooc-found)
-        (if (> (file-mtime goo-file) (file-mtime gooc-file))
-            (return goo-file)
-            (return gooc-file)))
-      (when gooc-found
-        (return gooc-file))
-      (when goo-found
-        (return goo-file)))
+      (def file (find-goo-file-at fname path))
+      (when file (return file)))
     #f))
 
-(export find-goo-file-in-path)
+(export find-goo-file-at find-goo-file-in-path)

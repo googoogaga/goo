@@ -8,7 +8,7 @@
 (exported
  <col>
  <col.>
- len ;; (dg len (x|<col> => <int>)) ;; in types
+ (dg len (x|<col> => <int>))
  (dg elt (x|<col> k|<any> => <any>))
  (dg elt-or (x|<col> k|<any> default|<any> => <any>))
  (dg elt-type (x|<col> => <type>))
@@ -24,7 +24,7 @@
  (dg fabs ((x (t< <col>)) elts|... => <col>))
  (dg fill (x|<col> val|<any> => <col>))
 
- any? ;; (dg any? (f|<fun> x|<col> => <log>)) ;; in types
+ (dg any? (f|<fun> x|<col> => <log>))
  (dg all? (f|<fun> x|<col> => <log>))
  (dg fold (combine|<fun> init|<any> x|<col> => <any>))
  (dg fold+ (combine|<fun> x|<col> => <any>))
@@ -36,6 +36,7 @@
  (dg mem? (x|<col> y|<any> => <log>))
  (dg keys (c|<col> => <seq>))
  (dg items (c|<col> => <seq>))
+ (dg col-res-type (c|<col> => <type>))
 
 ;; 3.7.1 ENUMERATION PROTOCOL
  (dc <enum> (<any>))
@@ -49,12 +50,7 @@
 ;; Deprecated
  (dg do-keyed (f|<fun> x|<col>))
  (dg map-keyed (f|<fun> x|<col> => <col>))
- (dg do2 (f|<fun> x|<col> y|<col>))
- (dg do3 (f|<fun> x|<col> y|<col> z|<col>))
  (dg map (f|<fun> x|<col> => <col>))
- (dg map2 (f|<fun> x|<col> y|<col> => <col>))
- (dg any2? (test|<fun> x|<col> y|<col> => <log>))
- all2? ;; (dg all2? (test|<fun> x|<col> y|<col> => <log>)) ;; in types
 
 ;; Undocumented
  (dg fab-into (x|<col> y|<col> => <col>)) 
@@ -62,12 +58,22 @@
  (dg range-error ())
  (dg low-elt (x|<col> k|<any> => <any>))
  (dg fab-elt-setter (v|<any> x|<col> k|<any>))
- (dg as-copy (c|<col> x|<col> => <col>))
+ (dg col-res (c|<col> x|<col> => <col>))
 )
+
 ;;;;!! Implementation
 ;;;; Creation protocol
-(dm as ((p (t< <col>)) x|<col> => <col>)
-  (fab-into (fab p (len x)) x))
+(dm as ((t (t< <col>)) x|<col> => <col>)
+  (if (== (object-class x) t)
+      x
+      (fab-into (fab t (len x)) x)))
+
+(dm dup (x|<col> => <col>)
+  (fab-into (fab (object-class x) (len x)) x))
+
+;; no need to duplicate immutable collections
+(dm dup (x|<col.> => <col.>)
+  x)
 
 ;;;; Collection protocol default implementation
 
@@ -112,11 +118,7 @@
              (in (nxt ds))))))
 
 (dm fill (dst|<col> val => <col>)
-  (fab-fill! (fab (object-class dst) (len dst)) val))
-
-;; TODO: FLUSH OUT BETTER
-(dm dup (x|<col> => <col>)
-  (as-copy x x))
+  (fab-fill! (dup dst) val))
 
 (dm any? (test|<fun> c|<col> => <log>)
   (rep fnd ((e (enum c)))
@@ -169,24 +171,12 @@
     (unless (fin? e)
       (f (now e)) (lop (nxt e)))))
 
-(dm do2 (f|<fun> x|<col> y|<col>)
-  (rep lop ((ex (enum x)) (ey (enum y)))
-    (unless (or (fin? ex) (fin? ey))
-      (f (now ex) (now ey))
-      (lop (nxt ex) (nxt ey)))))
-
 (dm map (f|<fun> c|<col> => <col>)
-  (rep con ((res '()) (e (enum c)))
+  (rep con ((res (fab <tab> 0)) (e (enum c)))
     (if (fin? e)
-        (as-copy c (rev! res))
-        (con (add res (f (now e))) (nxt e)))))
-
-(dm map2 (f|<fun> x|<col> y|<col> => <col>)
-  (rep con ((res '()) (ex (enum x)) (ey (enum y)))
-    (if (or (fin? ex) (fin? ey))
-        (as-copy x (rev! res))
-        (con (add res (f (now ex) (now ey))) 
-             (nxt ex) (nxt ey)))))
+        (col-res c res)
+        (seq (set (fab-elt res (now-key e)) (f (now e)))
+             (con res (nxt e))))))
 
 (dm do-keyed (f|<fun> c|<col>)
   (rep lop ((e (enum c)))
@@ -194,10 +184,12 @@
       (f (now-key e) (now e)) (lop (nxt e)))))
 
 (dm map-keyed (f|<fun> c|<col> => <col>)
-  (rep con ((res '()) (e (enum c)))
+  (rep con ((res (fab <tab> 0)) (e (enum c)))
     (if (fin? e)
-        (as-copy c (rev! res))
-        (con (add res (f (now-key e) (now e))) (nxt e)))))
+        (col-res c res)
+        (let ((key (now-key e)))
+          (set (fab-elt res key) (f key (now e)))
+          (con res (nxt e))))))
 
 (dm keys (c|<col> => <seq>)
   (rep con ((res '()) (e (enum c)))
@@ -212,38 +204,25 @@
         (con (add res (tup (now-key e) (now e))) (nxt e)))))
 
 (dm mem? (c|<col> x => <log>)
-  (any? (fun (e) (== e x)) c))
+  (any? (fun (y) (== y x)) c))
+
+(dm col-res-type (c|<col> => <type>)
+  (object-class c))
 
 ;;;; Undocumented
 
-(dm as-copy (c|<col> x|<col> => <col>)
-  (as (object-class c) x))
+(dm col-res (c|<col> x|<col> => <col>)
+  (as (col-res-type c) x))
+
+(dv $eq-nul '(eq-nul))
 
 (dm = (c1|<col> c2|<col> => <log>)
-  (rep eq ((e1 (enum c1)) (e2 (enum c2)))
-    (if (fin? e1)
-        (fin? e2)
-        (and (= (now e1)  (now e2))
-             (eq (nxt e1) (nxt e2))))))
-
-(dm any2? (test|<fun> x|<col> y|<col> => <log>)
-  (rep fnd ((ex (enum x)) (ey (enum y)))
-    (if (or (fin? ex) (fin? ey))
-        #f
-        (or (as-log (test (now ex) (now ey)))
-            (fnd (nxt ex) (nxt ey))))))
-
-(dm all2? (test|<fun> x|<col> y|<col> => <log>)
-  (rep fnd ((ex (enum x)) (ey (enum y)))
-    (or (fin? ex) (fin? ey)
-        (and (test (now ex) (now ey)) 
-             (fnd (nxt ex) (nxt ey))))))
-
-(dm do3 (f|<fun> x|<col> y|<col> z|<col>)
-  (rep lop ((ex (enum x)) (ey (enum y)) (ez (enum z)))
-    (unless (or (fin? ex) (fin? ey) (fin? ez))
-      (f (now ex) (now ey) (now ez))
-      (lop (nxt ex) (nxt ey) (nxt ez)))))
+  (and (= (len c1) (len c2))
+       (rep eq ((e1 (enum c1)))
+         (if (fin? e1)
+             #t
+             (and (= (now e1) (elt-or c2 (now-key e1) $eq-nul))
+                  (eq (nxt e1)))))))
 
 (dm elt (c|<col> key|<any> => <any>) 
   (def val (elt-or c key $elt-default))

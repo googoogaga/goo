@@ -26,7 +26,7 @@
 
 (exported
  (dc <tab> (<map> <col!>))
- (dv <set> <tab>)
+ (dc <set> (<tab>))
  ;; Factor to grow by
  (dp tab-growth-factor (<tab> => <flo>) 2.0)
  ;; When to grow or shrink (percentage of table size)
@@ -530,13 +530,14 @@
 ;;;;
 
 (dm add! (c|<set> x => <set>)
-  (set (elt c x) #t))
+  (set (elt c x) #t) 
+  c)
 
 (dm mem? (c|<set> x => <log>)
-  (and (elt-or c x #f) #t))
+  (elt-or c x #f))
 
 (dm elts (x|<col> keys|<seq> => <col>)
   (def res (fab <tab> (len keys)))
   (do (fun (k) (set (elt res k) (elt x k))) keys)
-  (as-copy x res))
+  (col-res x res))
 

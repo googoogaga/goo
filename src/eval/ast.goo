@@ -223,10 +223,6 @@
         ($empty (cat-sym "$" name "-empty")))
     `(seq (dc ,class (<lst> ,@supers))
           (dv ,$empty (new ,class))
-          (dm as ((p (t= ,class)) (x ,class) => <lst>) x)
-          (dm as ((p (t= <lst>))  (x ,class) => <lst>) (as-lst x))
-          (dm as ((p (t= ,class)) x|<lst> => <lst>)
-            (app fabs ,class x))
           (df ,name (h t) (new ,class head h tail t))
           (dm empty ((e (t= ,class)) => ,class) ,$empty))))
 
@@ -236,7 +232,7 @@
   (dp function-body (<ast-embodied-function> => <any>)            #f)
   (dp function-index (<ast-embodied-function> => <any>)           0)
   (dp function-temporaries (<ast-embodied-function> => <any>)     '())
-  (dp function-registers (<ast-embodied-function> => <any>)       '())
+  (dp function-registers (<ast-embodied-function> => <vec>)       (fab <vec> 0))
   (dp function-data-refs (<ast-embodied-function> => <any>)       '())
   (dp function-self-recursive? (<ast-embodied-function> => <any>) #f)
   (dp function-source (<ast-embodied-function> => <any>)          #f)
@@ -477,6 +473,9 @@
 
 (dm objectify-application (ff e* r tail? => <program>)
   (def ee* (convert2arguments (map (fun (e) (objectify e r #f)) e*)))
+  ;; used for dynamic extent analysis
+  (when (isa? ff <local-reference>)
+    (set (reference-called-function? ff) #t))
   (new <regular-application> 
     application-function  ff
     application-arguments ee*
@@ -1218,16 +1217,6 @@
       (lst 'quote '())
       (lst '%pair (head args) (pairize (tail args)))))
 
-(define-magic-binding isa (x r tail?)
-  (def prop-inits (sexpr-isa-prop-inits x))
-  (objectify
-   (sexpr-make-application
-    '%isa
-    (lst (sexpr-isa-parent x)
-         (pairize (sexpr-isa-init-props prop-inits))
-         (pairize (sexpr-isa-init-values prop-inits))))
-   r tail?))
-
 (define-magic-binding define-class (x r tail?)
   (def name (sexpr-definition-variable x))
   (objectify-definition
@@ -1495,9 +1484,9 @@
 
 ;;; This function keeps track of nesting and registration.
 (df load-and-register-module (loader|<module-loader> name|<sym> => <module>)
-  (def stack (module-loader-stack loader))
-  (def depth (len stack))
-  (def indent (string-repeat "  " depth))
+  (def stack  (module-loader-stack loader))
+  (def depth  (len stack))
+  (def indent (repeat "  " depth))
   
   ;; First, make sure we aren't already loading this module.
   (when (mem? stack name)
@@ -1592,7 +1581,7 @@
 ;;;   foo/bar => "foo/bar" or "foo\\bar", etc.
 (df module-name-to-relpath (name|<sym> => <str>)
   (def namestr (map to-lower (sym-name name)))
-  (string-join (string-split namestr #\/) *path-separator*))
+  (join (split namestr #\/) *path-separator*))
 
 ;;; Copy the binding for 'use' into the module, so it can ask for more
 ;;; bindings as needed.  Copy 'seq', too, because the top-level of the
@@ -1695,7 +1684,7 @@
   (def env        (fab-static-global-environment module loader #f))
   (def keepmod?   #f)
   (def modpath       (module-name-to-relpath name))
-  (def file (find-goo-file-in-path modpath *module-search-path*))
+  (def file       (find-goo-file-in-path modpath *module-search-path*))
   (set-module-environments module env env)
   (if (not file)
       (error "Unable to find module %s" modpath))

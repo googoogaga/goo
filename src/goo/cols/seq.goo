@@ -18,7 +18,7 @@
  (dg 1st (x|<seq> => <any>))
 
  ;; == (elt x 1)
- 2nd ;; (dg 2nd (x|<seq> => <any>)) ;; in types
+ (dg 2nd (x|<seq> => <any>)) ;; in types
 
  ;; == (elt x 2)
  (dg 3rd (x|<seq> => <any>))
@@ -31,6 +31,12 @@
 
  ;; finds position of y in x else returns false.
  (dg finds (x|<seq> y|<seq> => (@t? <int>)))
+
+ (dg do2 (f|<fun> x|<seq> y|<seq>))
+ (dg do3 (f|<fun> x|<seq> y|<seq> z|<seq>))
+ (dg map2 (f|<fun> x|<seq> y|<seq> => <seq>))
+ (dg any2? (test|<fun> x|<seq> y|<seq> => <log>))
+ (dg all2? (test|<fun> x|<seq> y|<seq> => <log>))
 
  ;; returns reversed sequence.
  (dg rev (x|<seq> => <seq>))
@@ -69,10 +75,18 @@
  (dg sort (x|<seq> => <seq>))
  (dg sort-by (x|<seq> test|<fun> => <seq>))
 
- ;; returns true if sequence s begins with sequence begin
- (dg ends-with (s|<seq> end|<seq> => <log>))
+ ;; returns true if sequence s begins/ends with sequence begin/end
+ (dg suffix? (s|<seq> suffix|<seq> => <log>))
 
- (dg begins-with (s|<seq> begin|<seq> => <log>))
+ (dg prefix? (s|<seq> prefix|<seq> => <log>))
+
+ (dg repeat (s|<seq> n|<int> => <seq>))
+
+ ;;; Split 'str' apart on occurrences of 'sep' (similar to Perl).
+ (dg split (s|<seq> sep => <seq>))
+
+;;; Join each sequence in 'ss' with 'sep' (similar to Perl).
+ (dg join (ss|<seq> sep|<seq> => <seq>))
 
 ;; UNDOCUMENTED:
  (df range-check (x|<seq> i|<int>))
@@ -85,10 +99,6 @@
 
 ;;;;!! Implementation
 
-;;;; Creation protocol
-(dm as (d|(t< <seq>) s|<seq> => <seq>)
-  (fab-into (fab d (len s)) s))
-
 ;;;; Collection protocol
 
 (dm key-type (x|<col> => <type>) <int>)
@@ -100,6 +110,57 @@
 (dm 2nd (x|<seq> => <any>) (elt x 1))
 
 (dm 3rd (x|<seq> => <any>) (elt x 2))
+
+(dm map (f|<fun> c|<seq> => <seq>)
+  (rep con ((res '()) (e (enum c)))
+    (if (fin? e)
+        (col-res c (rev! res))
+        (con (add res (f (now e))) (nxt e)))))
+
+(dm map-keyed (f|<fun> c|<seq> => <seq>)
+  (rep con ((res '()) (e (enum c)))
+    (if (fin? e)
+        (col-res c (rev! res))
+        (con (add res (f (now-key e) (now e))) (nxt e)))))
+
+(dm do2 (f|<fun> x|<seq> y|<seq>)
+  (rep lop ((ex (enum x)) (ey (enum y)))
+    (unless (or (fin? ex) (fin? ey))
+      (f (now ex) (now ey))
+      (lop (nxt ex) (nxt ey)))))
+
+(dm do3 (f|<fun> x|<seq> y|<seq> z|<seq>)
+  (rep lop ((ex (enum x)) (ey (enum y)) (ez (enum z)))
+    (unless (or (fin? ex) (fin? ey) (fin? ez))
+      (f (now ex) (now ey) (now ez))
+      (lop (nxt ex) (nxt ey) (nxt ez)))))
+
+(dm map2 (f|<fun> x|<seq> y|<seq> => <seq>)
+  (rep con ((res '()) (ex (enum x)) (ey (enum y)))
+    (if (or (fin? ex) (fin? ey))
+        (col-res x (rev! res))
+        (con (add res (f (now ex) (now ey))) 
+             (nxt ex) (nxt ey)))))
+
+(dm any2? (test|<fun> x|<seq> y|<seq> => <log>)
+  (rep fnd ((ex (enum x)) (ey (enum y)))
+    (if (or (fin? ex) (fin? ey))
+        #f
+        (or (as-log (test (now ex) (now ey)))
+            (fnd (nxt ex) (nxt ey))))))
+
+(dm all2? (test|<fun> x|<seq> y|<seq> => <log>)
+  (rep fnd ((ex (enum x)) (ey (enum y)))
+    (or (fin? ex) (fin? ey)
+        (and (test (now ex) (now ey)) 
+             (fnd (nxt ex) (nxt ey))))))
+
+(dm = (c1|<seq> c2|<seq> => <log>)
+  (rep eq ((e1 (enum c1)) (e2 (enum c2)))
+    (if (fin? e1)
+        (fin? e2)
+        (and (= (now e1)  (now e2))
+             (eq (nxt e1) (nxt e2))))))
 
 ;; TODO: SHOULD USE BACKWARD ITERATION PROTOCOL???
 (dm last (x|<seq> => <any>) (elt x (- (len x) 1)))
@@ -121,7 +182,7 @@
 (dm rev (x|<seq> => <seq>)
   (rep con ((seq '()) (e (enum x)))
     (if (fin? e)
-        (as-copy x seq)
+        (col-res x seq)
         (con (add seq (now e)) (nxt e)))))
 
 ;; required: rev!
@@ -134,14 +195,14 @@
     (if (fin? ex)
         (rep con-y ((seq seq) (ey (enum y)))
           (if (fin? ey)
-              (as-copy x (rev! seq))
+              (col-res x (rev! seq))
               (con-y (add seq (now ey)) (nxt ey))))
         (con-x (add seq (now ex)) (nxt ex)))))
 
 (dm sub (x|<seq> from|<int> below|<int> => <seq>)
   (rep con-x ((seq '()) ((i <int>) 0) (e (enum x)))
     (if (fin? e)
-        (as-copy x (rev! seq))
+        (col-res x (rev! seq))
         (con-x (if (if (>= i from) (< i below)) (add seq (now e)) seq)
                (+ i 1) (nxt e)))))
 
@@ -154,7 +215,7 @@
 (dm pick (test|<fun> x|<seq> => <seq>)
   (rep con ((seq '()) (e (enum x)))
     (if (fin? e)
-        (as-copy x seq)
+        (col-res x seq)
         (let ((v (now e)))
           (con (if (test v) (add seq v) seq) (nxt e))))))
 
@@ -168,12 +229,12 @@
   (reject (fun (e) (== e x)) s))
 
 (dm del-dups (x|<seq> => <seq>)
-  (as-copy x (rev! (fold (fun (s e) (if (mem? s e) s (pair e s))) '() x))))
+  (col-res x (rev! (fold (fun (s e) (if (mem? s e) s (pair e s))) '() x))))
 
 (dm ins (x|<seq> v|<any> before|<int> => <seq>)
   (rep copy ((r '()) (i 0) (e (enum x)))
     (if (fin? e)
-        (as-copy x r)
+        (col-res x r)
         (if (= i before)
             (copy (pair v r) (+ i 1) e)
             (copy (pair (now e) r) (+ i 1) (nxt e))))))
@@ -182,7 +243,7 @@
 (dm elts (x|<seq> keys|<seq> => <seq>)
   (rep copy ((r '()) (e (enum x)) (i 0) (keys (enum (sort keys))))
     (cond ((fin? keys)
-           (as-copy x (rev! r)))
+           (col-res x (rev! r)))
           ((fin? e)
            (range-error x i))
           (#t 
@@ -230,11 +291,32 @@
       (def val  (and (not (fin? e)) (now e)))
       (fn key val) (rep (nxt e)))))
 
-(dm ends-with (s|<seq> end|<seq> => <log>)
+(dm suffix? (s|<seq> end|<seq> => <log>)
   (= (sub s (- (len s) (len end)) (len s)) end))
 
-(dm begins-with (s|<seq> begin|<seq> => <log>)
+(dm prefix? (s|<seq> begin|<seq> => <log>)
   (= (sub s 0 (len begin)) begin))
+
+;;; Build a sequence containing the specified number of cat'd sequences.
+(dm repeat (s|<seq> n|<int> => <seq>)
+  (if (<= n 0)
+      (empty (object-class s))
+      (cat2 s (repeat s (- n 1)))))
+
+;;; Split 'str' apart on occurrences of 'sep' (similar to Perl).
+;;; TODO - Add a <str> <str> method.
+(dm split (s|<seq> sep => <lst>)
+  (def match (pos s sep))
+  (if (== match #f)
+      (lst s)
+      (pair (sub s 0 match)
+            (split (sub s (+ match 1) (len s)) sep))))
+
+;;; Join each sequence in 'ss' with 'sep' (similar to Perl).
+(dm join (ss|<seq> sep|<seq> => <seq>)
+  (if (empty? ss)
+      (empty (object-class sep))
+      (fold (fun (x y) (cat x sep y)) (elt ss 0) (sub ss 1 (len ss)))))
 
 ;; from range.goo
 (need-implementation below sort-by!)

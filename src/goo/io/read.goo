@@ -223,6 +223,19 @@
 
 (define-sharp-macro #\| (fun (c port) (get port) $vert-proxy))
 
+(df gobble-nested-comment (port|<port>)
+  (rep loop ((found-slash? #f))
+    (def c (get port))
+    (if (eof-object? c) 
+        c
+        (case c
+          ((#\/) (loop #t))
+          ((#\#) (if found-slash? #f (loop #f)))
+          (#t    (loop #f))))))
+
+(define-sharp-macro #\/
+  (fun (c port) (gobble-nested-comment port) (sub-read port)))
+
 ;; TODO: ASSQ
 
 (dv $char-long-names

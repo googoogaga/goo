@@ -47,6 +47,8 @@
 (dm module-loader-module-type (loader|<g2c-module-loader> => <type>)
   <g2c-module>)
 
+(dl %print-cpu-usage)
+
 (dm load-module (loader|<g2c-module-loader> name|<sym> => <module>)
   (def mod      (fab-g2c-module loader name))
   (def keepmod? #f)
@@ -58,14 +60,17 @@
   (set (module-src-file mod) src-file)
   (set (module-mtime mod) (file-mtime src-file))
   ;; (msg* out "Computing ast for %s.\n" name)
+  (%print-cpu-usage (%su "START"))
   (def ast      (compute-ast src-file env))
   ;; (msg* out "Computing program for %s.\n" name)
   (def prg    (compute-program ast env))
+  (%print-cpu-usage (%su "OPTIMIZE"))
   ;; (msg* out "Generating C code for %s.\n" name)
   (probe-directory (parent-directory out-file))
   (with-port (out-port (open <file-out-port> out-file))
              (dlet ((*definitions* (program-definitions prg))) 
                (generate-c-module out-port ast prg mod)))
+  (%print-cpu-usage (%su "EMIT"))
   ;;; No need to call roll-back-transaction here--we can
   ;;; rely on the compilation subtransaction to do all
   ;;; the work.
@@ -155,28 +160,38 @@
 ;;; Given a file name and an environment, compute an ast in that
 ;;; environment.
 (dm compute-ast (filename ct-env)
-  (objectify-with-subtransaction (read-file filename) ct-env #f))
+  (def sexpr (read-file filename))
+  (%print-cpu-usage (%su "READ"))
+  (def ast   (objectify-with-subtransaction sexpr ct-env #f))
+  (%print-cpu-usage (%su "AST"))
+  ast)
 
 ;;; Given an ast 'e', prepare it for compilation to C.  Store any
 ;;; new global bindings into the environment 'scratch-env'.
 (dm compute-program (e env)
   (def box (insert-box! e))
+  (%print-cpu-usage (%su "BOX"))
   ;; (msg* out "BOX %=\n" box)
-  (def dyn (analyze-dynamic-extent box))
+  ;; (def dyn (analyze-dynamic-extent box))
+  ;; (%print-cpu-usage (%su "DYN"))
   ;; (msg* out "DYN %=\n" dyn)
-  (def cal (analyze-calls dyn))
+  (def ana (analyze-ast box))
+  (%print-cpu-usage (%su "ANA"))
   ;; (msg* out "CAL %=\n" cal)
-  (def lft (lift! cal))
+  (def lft (lift! ana))
+  (%print-cpu-usage (%su "LFT"))
   ;; (msg* out "LFT %=\n" lft)
   (def prg (extract-things! lft))
+  (%print-cpu-usage (%su "EXT"))
   ;; (msg* out "EXT %=\n" prg)
   (def flt (closurize-main! prg env 64))
+  (%print-cpu-usage (%su "CLO"))
   ;; (msg* out "FLT %=\n" flt)
   (gather-temporaries! flt)
-  ;; (msg* out "TMP %=\n" flt)
+  (%print-cpu-usage (%su "TMP"))
+  ;; (msg* out "FLT %=\n" flt)
   (register-allocate! flt #f)
-  ;; (msg* out "REG %=\n" flt)
-  ;; (msg* out "\n\n%=\n\n" prg)
+  (%print-cpu-usage (%su "REG"))
   prg)
 
 (dm generate-c-module (code-out e prg mod)
@@ -723,7 +738,7 @@
   (with-statement (d code-out)
     (puts code-out "goto loop")))
 
-(dv $number-call-templates 4)
+(dv $number-call-templates 5)
 
 (dm to-c (e|<regular-application> f d code-out)
   (def function (application-function e))
@@ -1022,9 +1037,11 @@
           %empty? %head %tail
           @empty? @head @tail
           @== @= @+ @<
+          %new
           %gen-cache-arg-pos %gen-cache-singletons
           %gen-cache-classes %gen-cache-missable?
-          @telt @telt-setter
+          %class-type-cache %class-type-cache-setter
+          @telt @telt-setter @tlen
           @oelt @oelt-setter @olen
           %opts-location %opts-count
           %class-ancestors @class-in? @subclass?
@@ -1104,16 +1121,17 @@
 
 (dv *registers-per-line* 16)
 
-(dm generate-registers (regs code-out)
-  (rep next-line ((regs regs))
-    (unless (empty? regs)
+(dm generate-registers (regs|<vec> code-out)
+  (def nregs (len regs))
+  (rep next-line ((j 0))
+    (when (< j nregs)
       (gen-depth 1 code-out) (puts code-out "P ")
-      (rep next-reg ((regs regs) (i 0))
-        (if (or (= i *registers-per-line*) (empty? regs))
-            (seq (puts code-out ";\n") (next-line regs))
+      (rep next-reg ((j j) (i 0))
+        (if (or (= i *registers-per-line*) (= j nregs))
+            (seq (puts code-out ";\n") (next-line j))
             (seq (unless (= i 0) (put code-out #\,))
-                 (gen-ref (head regs) code-out)
-                 (next-reg (tail regs) (+ i 1))))))))
+                 (gen-ref (elt regs j) code-out)
+                 (next-reg (+ j 1) (+ i 1))))))))
 
 (dm module-info-name (name)
   (cat "module_info_" (mangle-raw-name name)))

@@ -18,8 +18,8 @@
 ;;;;!! Implementation
 
 ;;;; Collection protocol
-(dm as-copy (c|<opts> x|<col> => <col>)
-  (as <lst> x))
+(dm col-res-type (c|<opts> => <type>)
+  <lst>)
 
 (dm len (x|<opts> => <int>)
   (@olen x))

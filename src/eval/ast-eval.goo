@@ -191,7 +191,7 @@
   (def nary?  (function-nary? e))
   (def names  (map binding-name params))
   (def specs  (ast-eval-specs (map binding-type params) nary? env))
-  (fab-gen (as-fun-name e) names specs nary? '()))
+  (fab-gen (as-fun-name e) names specs nary? <any> '()))
 
 (dm env-local-reference-value (env|<loc-env> ref|<local-reference> => <any>)
   (env-local-value

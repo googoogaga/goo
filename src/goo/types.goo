@@ -40,13 +40,6 @@
  class-descendents     ;; (dg class-descendents (x|<class> => <lst>))
 
  (df t? (x))
-
- ;; Don't belong here:
- (dg as (x|<any> y|<any> => <any>))
- (dg len (x|<col> => <int>))
- (dg 2nd (x|<seq> => <any>))
- (dg any? (test|<fun> x|<col> => <log>))
- (dg all2? (test|<fun> x|<col> y|<col> => <log>))
 )
 
 ;; FIXME: should type-elts really be <lst> instead of <seq> and also
@@ -82,3 +75,4 @@
 
 (df t? (x) (t+ x (t= #f)))
 
+(need-implementation as len 2nd any? all2?)

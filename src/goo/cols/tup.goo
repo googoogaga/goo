@@ -18,8 +18,6 @@
 
 ;;;;!! Implementation
 
-(dm as ((_ (t= <tup>)) x|<tup> => <tup>) x)
-
 ;;;; Collection protocol
 (dm len (x|<tup> => <int>)
   (%ib (%tlen x)))

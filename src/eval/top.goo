@@ -69,7 +69,7 @@
   (str-eval-in x (runtime-environment modname)))
 
 (df compiled-file? (name|<str>)
-  (ends-with name ".gooc"))
+  (suffix? name ".gooc"))
 
 (dm read-file (filename|<str> => <any>)
   (with-port (port (open <file-in-port> filename))
@@ -82,10 +82,9 @@
 (dm load-in (filename|<str> ct-env)
   (if (compiled-file? filename)
       (so-load filename)
-      (seq
-        (def x (read-file filename))
-        (def o (objectify-with-subtransaction x ct-env #f))
-        (run o ct-env)))
+      (seq (def x (read-file filename))
+           (def o (objectify-with-subtransaction x ct-env #f))
+           (run o ct-env)))
   ;; TODO - Hook me into the new module loader system in a useful way.
   ;; (report-undefined-global-bindings ct-env)
   )
@@ -96,8 +95,8 @@
 (dm load (name modname|<sym>)
   (def realfile (find-goo-file-in-path name *module-search-path*))
 ;  (msg out "Loading file %s\n" realfile)
-  (if (not realfile)
-      (error "File %s not found" name))
+  (unless realfile
+    (error "File %s not found" name))
   (load-file realfile modname))
 
 (dm prompt-for-command-expression (env level prompt)

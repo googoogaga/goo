@@ -29,6 +29,8 @@
 (dm to-str ((x (t= #t)) => <str>) "#t")
 (dm to-str ((x (t= #f)) => <str>) "#f")
 
+(dg as (x|<any> y|<any> => <any>))
+
 (dm as (type x => <any>)
   (if (isa? x type) 
       x

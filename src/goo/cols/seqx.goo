@@ -90,7 +90,7 @@
   (sort-by! items <))
 
 (dm sort-by! (items|<seq!> test|<fun> => <seq!>)
-  (as-copy items (sort-by! (as <lst> items) test)))
+  (col-res items (sort-by! (as <lst> items) test)))
 
 ;; TODO: DEPRECATED
 (dm alter (dst|<seq!> src|<seq> from|<int> below|<int> => <seq!>)

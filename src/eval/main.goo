@@ -18,8 +18,8 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.125")
-(dv *goo-date*    "MAR 27, 2002")
+(dv *goo-version* "0.126")
+(dv *goo-date*    "APR 02, 2002")
 
 (msg out ";;; GOO\n")
 (msg out ";;; JONATHAN BACHRACH\n")
@@ -31,8 +31,10 @@
 ;; (msg out ";;; Loading Runtime Bindings...\n")
 (init-ast)
 ;; (msg out ";;; Loading System Patches...\n")
-(load "system-patches" 'goo/user)
+(let ((file (find-goo-file-at "init" *goo-root*)))
+  (and file (load-file file 'goo/user)))
 ;; (msg out ";;; Loading User Patches...\n")
-(load "user-patches" 'goo/user)
+(let ((file (find-goo-file-at "init" *goo-personal-root*)))
+  (and file (load-file file 'goo/user)))
 ;; (msg out ";;; \n")
 (top 'goo/user)
