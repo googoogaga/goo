@@ -238,3 +238,15 @@ adds:
   multiple values binding tup to let
 
   loads "../SRC/patches.proto" now which you can hack
+
+0.83 6.894 RELEASE 15
+
+summary:
+
+fixes:
+
+  svec -> buf
+
+adds:
+
+  tail call analysis in ast
