@@ -103,6 +103,7 @@
         (dc <num> (<mag>))
         (dc <int> (<num>))
         (dc <fixnum> (<int>))
+        (dc <bignum> (<int>))
         ;; (dc <%int> (<fixnum>))
         (dc <flo> (<num>))
         ;; (dc <%flo> (<flo>))
