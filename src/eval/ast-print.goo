@@ -8,7 +8,7 @@
 (dm type-out (out|<out-port> x))
 
 (dm type-out (out|<out-port> x|<type>)
-  (unless (== x <any>)
+  (unless (or (== x <any>) (isa? x <bot>))
     (msg out "|%t" x)))
 
 (dm type-out (out|<out-port> x|<binding>)

@@ -20,10 +20,10 @@
 (pub dg low-elt-setter (v|<any> x|<col> k|<any>))
 
 ;; NEEDED FOR FAB-INTO
-(dm fab-elt-setter (value c|<col!> key => <any>)
+(dm (fab-elt-setter inline) (value c|<col!> key => <any>)
   (set (elt c key) value))
 
-(dm low-elt-setter (value c|<col!> key => <any>)
+(dm (low-elt-setter inline) (value c|<col!> key => <any>)
   (set (elt c key) value))
 
 ;; TODO: REMOVE PERHAPS?

@@ -116,7 +116,7 @@
 ;;;; INSTRUCTIONS
 
 (def-vm-push-op VM-DUP () 0
-  [*stk* (%vsp)])
+  [*stk* (1- (%vsp))])
 
 (def-vm-op VM-POP () 1
   (vm-pop))
@@ -175,7 +175,7 @@
 (def-vm-push-op VM-TYP-CHK () 60
   (def t (vm-pop))
   (def x (vm-pop))
-  (if (isa? x t) x (error "STACK ERROR")))
+  (if (isa? x t) x (error "TYPE CHECK FAILURE %= NOTA %t" x t)))
 
 (def-vm-op VM-JMP (n) 70
   (incf (%vpc) n))
@@ -195,7 +195,7 @@
     (set val (app nfn args)))
   (set (%vfn) ofn)
   (set (%vnm) onm)
-  (trace "RESUMING @ %=\n" (%vpc)) 
+  (trace "RESUMING @ %=\n" opc) 
   (set (%vpc) opc)
   val)
 
@@ -236,7 +236,9 @@
 
 (def-vm-push-op VM-FIN () 101
   (def cleanup (vm-pop))
-  (fin ((vm-pop)) (cleanup)))
+  (def main    (vm-pop))
+  (dlet ((*depth* (+ *depth* 1)))
+    (fin (main) (cleanup))))
 
 (def-vm-push-op VM-TRY () 102
   (def thunk   (vm-pop))
@@ -272,11 +274,12 @@
   (def fn (%fun-reg))
   (set (%vfn) fn)
   (set (%vnm) (%next-methods))
-  (for ((e (rev args)) (i (below (fun-arity fn)))) (vm-push e))
   (when (fun-nary? fn) (vm-push [args (fun-arity fn) *]))
+  (rep loop ((i (1- (fun-arity fn))))
+    (unless (< i 0) (vm-push [args i]) (loop (1- i))))
   (vm-run (%vm-fun-env-elt fn (%iu 0)))
   (def res (vm-pop))
-  (decf (%vsp) (len args))
+  (decf (%vsp) (+ (fun-arity fn) (if (fun-nary? fn) 1 0)))
   res)
 
 (df %vm-met-fab (sig nam nams dyn? => <met>)
@@ -397,6 +400,7 @@
 ;;;; RUNNING
 
 (dm vm-run (pc|<int>)
+  (def opc  (%vpc))
   (set (%vpc) pc)
   (rep run ()
     (unless (= (%vpc) $vm-ret) ;; value on top of stack
@@ -404,7 +408,8 @@
       (let ((opcode (vm-nxt-op))
             (op     [*codes* opcode]))
         (op)
-        (run)))))
+        (run))))
+  (set (%vpc) opc))
 
 (ddv *vm-running?* #f)
 

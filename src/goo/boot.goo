@@ -166,11 +166,12 @@
           (dp! sig-val   (<sig> => <any>) <any>)
           (dp! sig-unification-vars (<sig> => <lst>) nil)
         (dc <fun-info> (<any>))
-          (dp! fun-info-name (<fun-info> => <any>)    %false)
-          (dp! fun-info-names (<fun-info> => <lst>)   nil)
-          (dp! fun-info-src-loc (<fun-info> => <any>) %false)
-          (dp! fun-info-src (<fun-info> => <any>)     %false)
-          (dp! fun-info-count (<fun-info> => <int>)   0)
+          (dp! fun-info-name (<fun-info> => <any>)        %false)
+          (dp! fun-info-names (<fun-info> => <lst>)       nil)
+          (dp! fun-info-src-loc (<fun-info> => <any>)     %false)
+          (dp! fun-info-src (<fun-info> => <any>)         %false)
+          (dp! fun-info-count (<fun-info> => <int>)       0)
+          (dp! fun-info-inlineable? (<fun-info> => <log>) %false)
         (dc <fun> (<any>))
           (dp fun-code  (<fun> => <any>)   %false)
           (dp! fun-sig  (<fun> => <sig>))
@@ -393,7 +394,8 @@
 (%define-structure % src-loc src-loc-line src-loc-file)
 
 (%define-structure % fun-info
-   fun-info-name fun-info-names fun-info-src  fun-info-src-loc fun-info-count)
+   fun-info-name fun-info-names fun-info-src  fun-info-src-loc 
+   fun-info-count fun-info-inlineable?)
 
 (%define-structure % met met-code met-sig met-info met-env)
 
@@ -450,8 +452,8 @@
         (fab-name   (cat-sym "%" name))
         (tag-name   (cat-sym "%" code "b"))
         (untag-name (cat-sym "%" code "u")))
-    `(seq (dl (,tag-name inline) (x) (,ptag x (%raw ,tag)))
-          (dl (,fab-name inline) (x) (,tag-name x))
+    `(seq (dl (,tag-name inline) (x => ,class-name) (,ptag x (%raw ,tag)))
+          (dl (,fab-name inline) (x => ,class-name) (,tag-name x))
           (dl (,untag-name inline) (x) (,puntag x))
           (set (%elt $direct-object-class (%raw ,tag)) ,class-name))))
 
@@ -482,9 +484,10 @@
         (fab        (cat-sym "%"  name))
         (fab!       (cat-sym "%"  name "!"))
         (raw-fab    (cat-sym "%%" code "fab")))
-    `(seq (dl ,fab! (len e) (,raw-fab len e))
-          (dv ,nul (,fab! (%raw 0) ,init))
-          (dl ,fab (len e) (if (%bb (%i= len (%raw 0))) ,nul (,fab! len e))))))
+    `(seq (dl ,fab! (len e => ,class-name) (,raw-fab len e))
+          (dv (,nul ,class-name) (,fab! (%raw 0) ,init))
+          (dl ,fab (len e => ,class-name) 
+            (if (%bb (%i= len (%raw 0))) ,nul (,fab! len e))))))
 
 (%define-repeated-structure str <chr> s (%cu #\Space))
 
@@ -604,7 +607,7 @@
         (box-name   (cat-sym "%" code "b"))
         (unbox-name (cat-sym "%" code "u")))
     `(seq (%define-structure % ,name ,dat-name)
-          (dl ,box-name (x) (,fab-name x))
+          (dl ,box-name (x => ,class-name) (,fab-name x))
           (dl ,unbox-name (x) (%prop-elt x (%raw 0)))
           )))
 
@@ -676,15 +679,17 @@
   (%sig specs nary? arity val unis))
 
 (dl %fab-gen/code (code sig name names src-loc)
-  (let ((info (%fun-info name names src-loc #f 0)))
+  (let ((info (%fun-info name names src-loc #f 0 #f)))
     (%gen (%gen-code code) sig info '() #f)))
 
 (dl %fab-gen (sig name names src-loc)
   (%fab-gen/code %dispatch sig name names src-loc))
 
+(dl %fab-met-inlineable (code sig name names src-loc src)
+  (%met code sig (%fun-info name names src-loc src 0 #t) #f))
+
 (dl %fab-met (code sig name names src-loc src)
-  (let ((info (%fun-info name names src-loc src 0)))
-    (%met code sig info #f)))
+  (%met code sig (%fun-info name names src-loc src 0 #f) #f))
 
 (ct (df &params (sig)
       (if (or (nul? sig) (== (head sig) '=>))
@@ -701,7 +706,8 @@
           (export ,name)
           (let ((accessor (fun (,@sig) ,@body)))
             (%add-met ,name accessor)
-            (set (%fun-info-name (%met-info accessor)) ',name)
+            (set (%fun-info-name (%met-info accessor))        ',name)
+            (set (%fun-info-inlineable? (%met-info accessor)) #t)
             accessor))))
 
 (dss (%define-getter ,name ,owner ,type)
@@ -792,7 +798,7 @@
 
 (df @@== (x|<any> y|<any> => <log>) (%bb (%eq? x y)))
 
-(df not (x|<any> => <log>) (%bb (%eq? x #f)))
+(df (not inline) (x|<any> => <log>) (%bb (%eq? x #f)))
 
 (dl (@not inline) (x|<any> => <log>) (%bb (%eq? x #f)))
 
@@ -1281,7 +1287,7 @@
   %fun-reg
   %unlink-stack
   %src-loc
-  %fab-met
+  %fab-met %fab-met-inlineable
   %met %met-env-setter
   %vsp %vsp-setter %vfp %vfp-setter %vpc %vpc-setter 
   %vfn %vfn-setter %vnm %vnm-setter 
@@ -1405,11 +1411,12 @@
   %gen-cache-classes
   %max-stack-len
   %gen-cache-missable?
-  %fun-info-names   %fun-info-names-setter
-  %fun-info-name    %fun-info-name-setter
-  %fun-info-src     %fun-info-src-setter
-  %fun-info-src-loc %fun-info-src-loc-setter
-  %fun-info-count   %fun-info-count-setter
+  %fun-info-names       %fun-info-names-setter
+  %fun-info-name        %fun-info-name-setter
+  %fun-info-src         %fun-info-src-setter
+  %fun-info-src-loc     %fun-info-src-loc-setter
+  %fun-info-count       %fun-info-count-setter
+  %fun-info-inlineable? %fun-info-inlineable?-setter
   %class-forward
   %object-class
   %fun-cache

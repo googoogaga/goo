@@ -13,8 +13,8 @@
 
 (dc <lock> (<any>))
   (dp lock-name (<lock> => (t? <sym>)) #f)
-  (dp lock-state (<lock> => (t+ <sym> <thread>)))
-  (dp lock-handle (<lock> => <loc>))
+  (dp! lock-state (<lock> => (t+ <sym> <thread>)))
+  (dp! lock-handle (<lock> => <loc>))
 
 (dm lock-lock (lock|<lock>) 
   (%lock-lock (%lu (lock-handle lock)))

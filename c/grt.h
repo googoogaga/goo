@@ -464,7 +464,7 @@ fp->  prev fp
 				      YPib((char*)ARGLEN() - (n))))
 
 IMPORTEXPORT extern P YLoptsG;
-IMPORTEXPORT extern P _YPcheck_call_types(REGS);
+// IMPORTEXPORT extern P _YPcheck_call_types(REGS);
 IMPORTEXPORT extern P YPPcheck_call_types(P);
 
 #define YPcheck_call_types() YPPcheck_call_types(regs)
@@ -706,6 +706,7 @@ IMPORTEXPORT extern P YPsig (P,P,P,P,P);
 IMPORTEXPORT extern P YPfab_sig (P,P,P,P,P);
 IMPORTEXPORT extern P YPfab_gen (P,P,P,P);
 IMPORTEXPORT extern P YPfab_met (P,P,P,P,P,P);
+IMPORTEXPORT extern P YPfab_met_inlineable (P,P,P,P,P,P);
 IMPORTEXPORT extern P YPsrc_loc (P,P);
 
 /* FUNCTIONS */

@@ -30,8 +30,7 @@
   (mif ((,name disabled) name)
     `(del-test ',name)
     `(seq (add-test ',name) 
-        (dm run-tests (group-name|(t= ',name))
-          ,@tests (post "DONE WITH %=\n" group-name)))))
+        (dm run-tests (group-name|(t= ',name)) ,@tests ))))
 
 (export
   add-test
@@ -62,7 +61,7 @@
 (dm do-test-fn (group-name doc compare input-thunk output-thunk)
   (dlet ((*test-doc* doc))
     (when *test-trace?* (msg out "  %s\n" doc))
-    (def input (input-thunk))
+    (def input  (input-thunk))
     (def output (output-thunk))
     (unless (compare input output)
       (sig (new <test-warning> 
@@ -142,13 +141,8 @@
                      (resume #f))
                 (seq (pushf errors (lst condition *test-doc*))
                      (break #f))))
-          (tst)
-          ;; (post "DONE TRY\n")
-          )
-        ;; (post "DONE ESC\n")
-        )
+          (tst)))
       (tst))
-  ;; (post "TUPING RES\n")
   (tup errors warnings))
 
 (dv *all-warnings* #f)
@@ -161,7 +155,6 @@
         (when tst
           (post "Testing %=\n" tst)
           (def (tup errors warnings) (run-tests-in (fun () (run-tests tst))))
-          ;; (post "DONE %= E %= W %=\n" tst errors warnings)
           (set all-warnings (cat! all-warnings warnings))
           (set all-errors   (cat! all-errors   errors))))
       *tests*)

@@ -1050,7 +1050,10 @@
   (to-c (function-signature definition) f d out)
   (with-expression (definition d out)
     (generate-function-binding out definition)
-    (msg* out " = %s" (mangle-boot-name "%fab-met"))
+    (msg* out " = %s" 
+          (if (function-inlineable? definition)
+              (mangle-boot-name "%fab-met-inlineable")
+              (mangle-boot-name "%fab-met")))
     (between-parentheses-comma-separated (out)
       (generate-function-body-reference out definition)
       (gen-ref (function-signature definition) out)
@@ -1081,14 +1084,10 @@
     (puts out "RET")
     (between-parentheses (out) (gen-ref (function-body defn) out))))
 
-(dm primitive-inlinable? (e|<ast-primitive>)
-  (or (mem? (function-adjectives e) 'inline)
-      (mem? (function-adjectives e) 'inline-c)))
-
 (dm generate-function-code (out e|<ast-primitive>)
   (msg* out "\n%s%sP " 
         (if *dynamic-compilation?* "static " "")
-        (if (primitive-inlinable? e) "INLINE " ""))
+        (if (function-inlineable? e) "INLINE " ""))
   (binding->c (function-binding e) out)
   (between-parentheses (out)
     (for-commas out ((binding (function-bindings e)))

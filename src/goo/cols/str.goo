@@ -42,13 +42,13 @@
 (dm str (objects|...)
   (fabs <str> objects))
 
-(dm len (x|<str> => <fixnum>)
+(dm (len inline) (x|<str> => <fixnum>)
   (%ib (%slen x)))
 
-(dm low-elt (x|<str> i|<fixnum> => <chr>)
+(dm (low-elt inline) (x|<str> i|<fixnum> => <chr>)
   (%cb (%selt x (%iu i))))
 
-(dm fab-elt-setter (z|<chr> x|<str> i|<fixnum>)
+(dm (fab-elt-setter inline) (z|<chr> x|<str> i|<fixnum>)
   (set (%selt x (%iu i)) (%cu z)))
 
 (dm elt-or (x|<str> i|<fixnum> default => <any>) ;; TODO: TIGHTEN RET TYPE
@@ -242,10 +242,10 @@
 
 ;;; SYMBOL
 
-(dm as ((_ (t= <str>)) s|<sym> => <str>)
+(dm (as inline) ((_ (t= <str>)) s|<sym> => <str>)
   (sym-name s))
 
-(dm as ((_ (t= <sym>)) s|<str> => <sym>)
+(dm (as inline) ((_ (t= <sym>)) s|<str> => <sym>)
   (fab-sym s)
   ;; (def sym (elt symbols s))
   ;; (if (== sym nul)
@@ -253,7 +253,7 @@
   ;;     sym)
   )
 
-(dm < (x|<sym> y|<sym> => <log>)
+(dm (< inline) (x|<sym> y|<sym> => <log>)
   (< (sym-name x) (sym-name y)))
 
 (dm to-str (x|<sym> => <str>)

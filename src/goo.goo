@@ -205,4 +205,6 @@
   %fun-reg
   @not @==
   @checked-next-methods
+  prop-value-at
+  prop-value-at-setter
   )

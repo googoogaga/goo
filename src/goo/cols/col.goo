@@ -229,7 +229,7 @@
              (and (= (now e1) (elt-or c2 (now-key e1) $eq-nul))
                   (eq (nxt e1)))))))
 
-(dm elt (c|<col> key|<any> => <any>) 
+(dm (elt inline) (c|<col> key|<any> => <any>) 
   (def val (elt-or c key $elt-default))
   (if (== val $elt-default) (range-error c key) val))
 

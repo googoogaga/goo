@@ -276,11 +276,11 @@
 (dm keys (d|<seq> => <seq>)
   (below (len d)))
 
-(df range-check (x|<seq> i|<int>)
+(df (range-check inline) (x|<seq> i|<int>)
   (when (or (< i 0) (>= i (len x)))
     (range-error x i)))
 
-(df range-check? (x|<seq> i|<int>)
+(df (range-check? inline) (x|<seq> i|<int>)
   (and (>= i 0) (< i (len x))))
 
 (dm add (x|<seq> e => <seq>)

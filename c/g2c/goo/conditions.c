@@ -12,818 +12,822 @@ static P sloc (int line) {
 
 /* MODULE ENVIRONMENT: goo/conditions */
 
-EXT(YgooSmathYlog,"goo/math","log");
-DEF(YgooSconditionsYfile_opening_error_filename,"goo/conditions","file-opening-error-filename");
-EXT(YOOEE,"goo/boot","@@==");
-DEF(YgooSconditionsYLunbound_variable_errorG,"goo/conditions","<unbound-variable-error>");
-EXT(Yfab_pair,"goo/boot","fab-pair");
-EXT(YgooSmathYC,"goo/math","^");
-EXT(YgooScolsSseqxYsubT_setter,"goo/cols/seqx","sub*-setter");
-EXT(Ynil,"goo/boot","nil");
-EXT(YPtnul,"goo/boot","%tnul");
-EXT(YgooSfunYfun_specs,"goo/fun","fun-specs");
-EXT(YgooScolsScolYadd,"goo/cols/col","add");
-EXT(Yclass_gens_setter,"goo/boot","class-gens-setter");
-EXT(YgooSioSportYLfile_portG,"goo/io/port","<file-port>");
-EXT(YgooStypesYtL,"goo/types","t<");
-EXT(YPmet_prop_len,"goo/boot","%met-prop-len");
-EXT(YgooSioSportYLfile_out_portG,"goo/io/port","<file-out-port>");
-DEF(YgooSconditionsYbuild_condition_interactively,"goo/conditions","build-condition-interactively");
-EXT(YLsingletonG,"goo/boot","<singleton>");
-EXT(YgooSioSportYport_filename,"goo/io/port","port-filename");
-EXT(YLboxG,"goo/boot","<box>");
-EXT(YgooSmathYdiv,"goo/math","div");
-EXT(Yfun_sig_setter,"goo/boot","fun-sig-setter");
-DEF(YgooSconditionsYLproperty_errorG,"goo/conditions","<property-error>");
-EXT(Yprop_owner,"goo/boot","prop-owner");
-EXT(YgooScolsStabYLstr_tabG,"goo/cols/tab","<str-tab>");
-DEF(YgooSconditionsYdefault_handler,"goo/conditions","default-handler");
+EXT(YgooSlogYas_log,"goo/log","as-log");
+EXT(YgooSclassYfind_setter,"goo/class","find-setter");
+EXT(YgooScolsStabYtab_growth_factor,"goo/cols/tab","tab-growth-factor");
+EXT(Ytup,"goo/boot","tup");
+EXT(YLmetG,"goo/boot","<met>");
+EXT(YLsymG,"goo/boot","<sym>");
+DEF(YgooSconditionsYLcompiler_errorG,"goo/conditions","<compiler-error>");
+EXT(YgooSmathYS,"goo/math","/");
+EXT(YgooSmathYN,"goo/math","~");
+DEF(YgooSconditionsYdescribe_handler,"goo/conditions","describe-handler");
+EXT(YgooScolsStabYtab_hash,"goo/cols/tab","tab-hash");
 EXT(YgooScolsScolxYlenSfill_setter,"goo/cols/colx","len/fill-setter");
-DEF(YgooSconditionsYLproperty_type_errorG,"goo/conditions","<property-type-error>");
-EXT(YgooSmacrosYOchecked_next_methods,"goo/macros","@checked-next-methods");
+EXT(YgooSmathYceil,"goo/math","ceil");
+EXT(Yclass_gens_setter,"goo/boot","class-gens-setter");
+DEF(YgooSconditionsYbuild_condition_interactively,"goo/conditions","build-condition-interactively");
+EXT(YOelt,"goo/boot","@elt");
+EXT(YgooSfunYfun_count,"goo/fun","fun-count");
+EXT(YgooScolsScolYadd,"goo/cols/col","add");
+EXT(YLstrG,"goo/boot","<str>");
 EXT(YgooScolsScolYcol_res,"goo/cols/col","col-res");
-EXT(YgooSmathYsqrt,"goo/math","sqrt");
-DEF(YgooSconditionsYLno_applicable_methods_errorG,"goo/conditions","<no-applicable-methods-error>");
-EXT(YgooScolsScolYfind_or,"goo/cols/col","find-or");
-DEF(YgooSconditionsYLunknown_function_errorG,"goo/conditions","<unknown-function-error>");
-EXT(YLlogG,"goo/boot","<log>");
-EXT(Yclass_gens,"goo/boot","class-gens");
-EXT(YgooSioSportYpeek,"goo/io/port","peek");
+EXT(Yno_next_methods_error,"goo/boot","no-next-methods-error");
 EXT(YgooScolsSseqYdel_vals,"goo/cols/seq","del-vals");
-DEF(YgooSconditionsYLargument_type_errorG,"goo/conditions","<argument-type-error>");
-EXT(YgooSfunYfun_name,"goo/fun","fun-name");
+DEF(YgooSconditionsYLnarity_errorG,"goo/conditions","<narity-error>");
+EXT(YgooScolsScolYfind_or,"goo/cols/col","find-or");
 EXT(YgooSmacrosYcat,"goo/macros","cat");
-EXT(YPdispatch,"goo/boot","%dispatch");
-EXT(YgooScolsScolYemptyQ,"goo/cols/col","empty?");
-EXT(YLopts_tupG,"goo/boot","<opts-tup>");
+EXT(Yprop_owner,"goo/boot","prop-owner");
+EXT(YPclasses_readyQ,"goo/boot","%classes-ready?");
+EXT(YgooSmathYmodA,"goo/math","mod+");
+EXT(YgooSioSportYLfile_portG,"goo/io/port","<file-port>");
+EXT(YgooSioSportYput,"goo/io/port","put");
+EXT(YgooSioSportYforce_out,"goo/io/port","force-out");
+EXT(YgooSioSportYport_filename,"goo/io/port","port-filename");
+EXT(Yorder_specs,"goo/boot","order-specs");
+EXT(YgooSioSportYopen,"goo/io/port","open");
+EXT(YgooSfunYhandler_info_arguments,"goo/fun","handler-info-arguments");
+EXT(YgooScolsStabYLsetG,"goo/cols/tab","<set>");
+EXT(YOsubtypeQ,"goo/boot","@subtype?");
+EXT(YLtupG,"goo/boot","<tup>");
+DEF(YgooSconditionsYLsyntax_errorG,"goo/conditions","<syntax-error>");
+EXT(Yclass_gens,"goo/boot","class-gens");
+EXT(YgooScolsScolYempty,"goo/cols/col","empty");
+DEF(YgooSconditionsYdefault_handler,"goo/conditions","default-handler");
+EXT(YgooSfunYOfun_mets,"goo/fun","@fun-mets");
+EXT(YgooSlogYNEE,"goo/log","~==");
+EXT(YLfunG,"goo/boot","<fun>");
+EXT(YgooSmathY_,"goo/math","-");
 EXT(Yclass_id,"goo/boot","class-id");
-EXT(YgooSmathYasin,"goo/math","asin");
-DEF(YgooSconditionsYLfile_opening_errorG,"goo/conditions","<file-opening-error>");
+EXT(YgooSmathYfloor,"goo/math","floor");
 EXT(Yclass_prop_len_setter,"goo/boot","class-prop-len-setter");
-EXT(YOtall2Q,"goo/boot","@tall2?");
-EXT(Yfun_sig,"goo/boot","fun-sig");
+EXT(Yproperty_type_error,"goo/boot","property-type-error");
+EXT(YgooSmathYnum_to_str,"goo/math","num-to-str");
+EXT(YgooScolsSlstYlist,"goo/cols/lst","list");
+EXT(Yprop_type,"goo/boot","prop-type");
+EXT(Ygen_cache_classes,"goo/boot","gen-cache-classes");
+EXT(Yupdate_instance_for_changed_class,"goo/boot","update-instance-for-changed-class");
+EXT(YDmin_int,"goo/boot","$min-int");
+EXT(YLflatG,"goo/boot","<flat>");
+EXT(YTmacros_okQT,"goo/boot","*macros-ok?*");
+EXT(YgooSioSportYport_line,"goo/io/port","port-line");
+EXT(YgooSmathYT,"goo/math","*");
+DEF(YgooSconditionsYcall_error_arguments,"goo/conditions","call-error-arguments");
+EXT(YgooSfunYfun_val,"goo/fun","fun-val");
+EXT(YgooSmathYB,"goo/math","&");
+EXT(YgooScolsSseqYrev,"goo/cols/seq","rev");
+EXT(Yargument_type_error,"goo/boot","argument-type-error");
+EXT(Yproperty_unbound_error,"goo/boot","property-unbound-error");
 EXT(YgooScolsScolYnul,"goo/cols/col","nul");
-EXT(YgooSioSportYLportG,"goo/io/port","<port>");
-EXT(YgooSmathYK,"goo/math","|");
-EXT(YLanyG,"goo/boot","<any>");
-EXT(YgooScolsSseqYdo_key_vals,"goo/cols/seq","do-key-vals");
-EXT(YgooSmacrosYvar_type,"goo/macros","var-type");
-DEF(YgooSconditionsYsignal_handler_list,"goo/conditions","signal-handler-list");
-EXT(YgooStypesYtE,"goo/types","t=");
-EXT(YgooSmacrosYcat_sym,"goo/macros","cat-sym");
-EXT(YgooSmacrosYmatch_nul_list,"goo/macros","match-nul-list");
-EXT(YOanyQ,"goo/boot","@any?");
-DEF(YgooSconditionsYLsimple_errorG,"goo/conditions","<simple-error>");
-EXT(Yprop_offset,"goo/boot","prop-offset");
-EXT(YgooSmathYflo_bits,"goo/math","flo-bits");
-EXT(YgooSclassYclone,"goo/class","clone");
-EXT(YTrestarts_okQT,"goo/boot","*restarts-ok?*");
+EXT(YgooSmacrosYlast,"goo/macros","last");
+EXT(YgooSclassYfab_class,"goo/class","fab-class");
+EXT(YgooScolsSseqxYsub_setter,"goo/cols/seqx","sub-setter");
+EXT(Yerror,"goo/boot","error");
+EXT(YgooSioSportYLfile_out_portG,"goo/io/port","<file-out-port>");
+EXT(Yopts_tup_storage,"goo/boot","opts-tup-storage");
+EXT(YgooStypesYtQ,"goo/types","t?");
 EXT(Yclass_prop_len,"goo/boot","class-prop-len");
 EXT(Ysrc_loc_file,"goo/boot","src-loc-file");
-DEF(YgooSconditionsYhandler_condition_type,"goo/conditions","handler-condition-type");
-EXT(Ygen_cache_missableQ,"goo/boot","gen-cache-missable?");
-EXT(YgooScolsSseqYrev,"goo/cols/seq","rev");
-DEF(YgooSconditionsYDdefault_handler_info,"goo/conditions","$default-handler-info");
-EXT(YgooSmathY1_,"goo/math","1-");
-EXT(YLoptsG,"goo/boot","<opts>");
-EXT(YgooSmacrosYlast,"goo/macros","last");
-EXT(YgooSmathYacos,"goo/math","acos");
-EXT(YgooSmathYnum_to_str,"goo/math","num-to-str");
-EXT(YgooScolsStabYLsetG,"goo/cols/tab","<set>");
-EXT(YTearly_classesT,"goo/boot","*early-classes*");
-EXT(YgooSmathYtruncS,"goo/math","trunc/");
-EXT(YgooScolsScolYLtabG,"goo/cols/col","<tab>");
-EXT(YgooSioSportYport_line,"goo/io/port","port-line");
-EXT(YgooSmagYG,"goo/mag",">");
-EXT(YgooSmathYatan2,"goo/math","atan2");
-DEF(YgooSconditionsYproperty_error_owner,"goo/conditions","property-error-owner");
-DEF(YgooSconditionsYtype_error_type,"goo/conditions","type-error-type");
-EXT(Ymay_isaQ,"goo/boot","may-isa?");
-EXT(YgooSmathYcontagious_call,"goo/math","contagious-call");
-EXT(YgooSmacrosYnulQ,"goo/macros","nul?");
-EXT(YgooScolsScolYfoldA,"goo/cols/col","fold+");
-EXT(Yreturn_type_error,"goo/boot","return-type-error");
-EXT(YgooSmathYabs,"goo/math","abs");
-EXT(YgooScolsSseqYvals_to_str,"goo/cols/seq","vals-to-str");
-EXT(YgooScolsSseqxYsub_setter,"goo/cols/seqx","sub-setter");
 EXT(YgooScolsSseqYreject,"goo/cols/seq","reject");
-EXT(YgooSfunYfab_gen,"goo/fun","fab-gen");
-EXT(YgooScolsStabYid_hash,"goo/cols/tab","id-hash");
-EXT(YgooScolsScolxYlen_setter,"goo/cols/colx","len-setter");
-EXT(YgooScolsStabYtab_growth_factor,"goo/cols/tab","tab-growth-factor");
-EXT(Ysig_naryQ_setter,"goo/boot","sig-nary?-setter");
-EXT(YPPmacro,"goo/boot","%%macro");
-DEF(YgooSconditionsYhandler_test,"goo/conditions","handler-test");
-EXT(YgooSmagYL,"goo/mag","<");
-EXT(YTboot_macro_module_namesT,"goo/boot","*boot-macro-module-names*");
-EXT(YOfold,"goo/boot","@fold");
-EXT(YgooScolsScolYnxt,"goo/cols/col","nxt");
-EXT(Ysig_unification_vars_setter,"goo/boot","sig-unification-vars-setter");
-EXT(YgooSmathYpower_of_two_ceil,"goo/math","power-of-two-ceil");
-EXT(YgooSioSportYputs,"goo/io/port","puts");
-EXT(Yunexec,"goo/boot","unexec");
-EXT(YgooStypesYtA,"goo/types","t+");
-EXT(YOtanyQ,"goo/boot","@tany?");
-DYNDEF(YgooSconditionsYTcurrent_handlersT,"goo/conditions","*current-handlers*");
-DEF(YgooSconditionsYread,"goo/conditions","read");
-EXT(Yfun_info_src_loc_setter,"goo/boot","fun-info-src-loc-setter");
-EXT(YgooScolsSseqY3rd,"goo/cols/seq","3rd");
-EXT(YgooSclassYfab_class,"goo/class","fab-class");
-EXT(YgooSmathYatan,"goo/math","atan");
-DEF(YgooSconditionsYinvoke_handler_interactively,"goo/conditions","invoke-handler-interactively");
-EXT(YPwith_monitor,"goo/boot","%with-monitor");
-EXT(YgooScolsSseqYpos,"goo/cols/seq","pos");
-EXT(YgooSioSportYreadyQ,"goo/io/port","ready?");
-EXT(Ysyntax_error,"goo/boot","syntax-error");
-EXT(Yproduct_elts,"goo/boot","product-elts");
-EXT(YgooScolsScolYnow_key,"goo/cols/col","now-key");
-EXT(Ysig_naryQ,"goo/boot","sig-nary?");
-EXT(YgooSmathYneg,"goo/math","neg");
-EXT(YgooSfunYfun_spec,"goo/fun","fun-spec");
-EXT(YgooScolsStabYtab_hash,"goo/cols/tab","tab-hash");
-EXT(Ysig_unification_vars,"goo/boot","sig-unification-vars");
-EXT(YgooScolsScolxYzapX,"goo/cols/colx","zap!");
-DEF(YgooSconditionsYLcompiler_errorG,"goo/conditions","<compiler-error>");
-EXT(Yfun_info_src_loc,"goo/boot","fun-info-src-loc");
-EXT(YgooScolsScolYkeys,"goo/cols/col","keys");
-EXT(YLgenG,"goo/boot","<gen>");
-EXT(YgooScolsScolYnow,"goo/cols/col","now");
-DEF(YgooSconditionsYdescribe_handler,"goo/conditions","describe-handler");
-EXT(YgooSmathYisqrt,"goo/math","isqrt");
-EXT(YLclassG,"goo/boot","<class>");
-EXT(YgooSmathYA,"goo/math","+");
-EXT(Yclass_direct_props_setter,"goo/boot","class-direct-props-setter");
-EXT(YgooSmathYroundS,"goo/math","round/");
-EXT(Yfun_mets_setter,"goo/boot","fun-mets-setter");
-EXT(YgooScolsSseqYpick,"goo/cols/seq","pick");
-EXT(YOlst,"goo/boot","@lst");
-EXT(Yfun_code,"goo/boot","fun-code");
-EXT(YgooStypesYall2Q,"goo/types","all2?");
-EXT(YgooSmathYcontagious_type,"goo/math","contagious-type");
-EXT(YgooSmacrosY2nd,"goo/macros","2nd");
-EXT(YgooSlogYE,"goo/log","=");
-EXT(YgooSmathYDpi,"goo/math","$pi");
-EXT(Yprops_of,"goo/boot","props-of");
-EXT(YgooScolsScolYlow_elt,"goo/cols/col","low-elt");
-EXT(Yno_next_methods_error,"goo/boot","no-next-methods-error");
-EXT(YgooSfunYfun_count_setter,"goo/fun","fun-count-setter");
-DEF(YgooSconditionsYLnarity_errorG,"goo/conditions","<narity-error>");
-EXT(YgooScolsScolYelts,"goo/cols/col","elts");
-EXT(YgooScolsScolYfold,"goo/cols/col","fold");
-EXT(YLtypeG,"goo/boot","<type>");
-EXT(YgooSmathYnegQ,"goo/math","neg?");
-EXT(YgooScolsSvecYLvecG,"goo/cols/vec","<vec>");
-EXT(YgooScolsSseqYjoin,"goo/cols/seq","join");
-EXT(YOnew,"goo/boot","@new");
-EXT(YgooSmacrosYmatch_sublist,"goo/macros","match-sublist");
-EXT(YgooScolsSvecYvec,"goo/cols/vec","vec");
-EXT(YgooSfunYhandler_info_arguments,"goo/fun","handler-info-arguments");
-EXT(YgooScolsSlstYlist,"goo/cols/lst","list");
-EXT(YgooSanyYaddress_of,"goo/any","address-of");
-EXT(Yclass_direct_props,"goo/boot","class-direct-props");
-EXT(YTmacros_okQT,"goo/boot","*macros-ok?*");
-DEF(YgooSconditionsYincongruent_method_error_method,"goo/conditions","incongruent-method-error-method");
-EXT(Ysym_name,"goo/boot","sym-name");
-EXT(Yfun_mets,"goo/boot","fun-mets");
-EXT(Ysrc_loc_line,"goo/boot","src-loc-line");
-EXT(Yproperty_type_error,"goo/boot","property-type-error");
-EXT(Yclass_children,"goo/boot","class-children");
-EXT(YOmay_isaQ,"goo/boot","@may-isa?");
-EXT(YgooSchrYeof_object,"goo/chr","eof-object");
-EXT(YgooSfunYOorder_specs_class,"goo/fun","@order-specs-class");
-EXT(YgooSmacrosY1st,"goo/macros","1st");
-EXT(YgooScolsScolxYdelX,"goo/cols/colx","del!");
-EXT(YLsymG,"goo/boot","<sym>");
-EXT(Yargument_type_error,"goo/boot","argument-type-error");
-DEF(YgooSconditionsYLkeyboard_interruptG,"goo/conditions","<keyboard-interrupt>");
-EXT(YOopts_as_lst,"goo/boot","@opts-as-lst");
-EXT(YgooScolsScolYLenumG,"goo/cols/col","<enum>");
-EXT(YgooSfunYLsimple_handler_infoG,"goo/fun","<simple-handler-info>");
-EXT(YgooScolsScolYkey_test,"goo/cols/col","key-test");
-EXT(YgooScolsStabYtab_growth_threshold,"goo/cols/tab","tab-growth-threshold");
-EXT(YLmetG,"goo/boot","<met>");
-EXT(Yproperty_unbound_error,"goo/boot","property-unbound-error");
-EXT(YgooSmathYLL,"goo/math","<<");
-EXT(YgooSmathYzeroQ,"goo/math","zero?");
-EXT(Yclass_children_setter,"goo/boot","class-children-setter");
-EXT(YgooSclassYclass_of,"goo/class","class-of");
-EXT(YLlocG,"goo/boot","<loc>");
-EXT(Yprop_init,"goo/boot","prop-init");
-EXT(YgooSfunYfun_count,"goo/fun","fun-count");
-EXT(YgooScolsScolYfinQ,"goo/cols/col","fin?");
-EXT(YLstrG,"goo/boot","<str>");
-EXT(Yclass_forward_setter,"goo/boot","class-forward-setter");
-EXT(YgooSioSportYput,"goo/io/port","put");
-EXT(YgooSmathYceilS,"goo/math","ceil/");
-EXT(YgooScolsScolYfab_fillX,"goo/cols/col","fab-fill!");
-DEF(YgooSconditionsYLsyntax_errorG,"goo/conditions","<syntax-error>");
-EXT(YgooScolsScolYallQ,"goo/cols/col","all?");
-EXT(YgooSmathYDe,"goo/math","$e");
-EXT(Ynul_prop,"goo/boot","nul-prop");
-EXT(Yerror,"goo/boot","error");
-DEF(YgooSconditionsYLmacro_errorG,"goo/conditions","<macro-error>");
-EXT(YgooSchrYeof_objectQ,"goo/chr","eof-object?");
-EXT(YgooScolsSlstYLline_listG,"goo/cols/lst","<line-list>");
-EXT(Ystack_overflow_error,"goo/boot","stack-overflow-error");
-EXT(YgooScolsSseqYany2Q,"goo/cols/seq","any2?");
-EXT(Yunion_elts,"goo/boot","union-elts");
-EXT(YOelt,"goo/boot","@elt");
-EXT(YgooScolsScolYenum,"goo/cols/col","enum");
-EXT(YLtupG,"goo/boot","<tup>");
-EXT(YgooStypesYas,"goo/types","as");
-EXT(Ynew,"goo/boot","new");
-EXT(YgooSioSportYLstr_portG,"goo/io/port","<str-port>");
-EXT(Ysig_specs_setter,"goo/boot","sig-specs-setter");
-EXT(YgooSmathYtanh,"goo/math","tanh");
-DEF(YgooSconditionsYLassert_errorG,"goo/conditions","<assert-error>");
-EXT(YgooScolsScolYcol_res_type,"goo/cols/col","col-res-type");
-EXT(YgooSmathY1A,"goo/math","1+");
-EXT(YgooScolsScolYkey_type,"goo/cols/col","key-type");
-EXT(YTboot_macro_expandersT,"goo/boot","*boot-macro-expanders*");
-EXT(Yclass_forward,"goo/boot","class-forward");
-EXT(YgooSanyYto_str,"goo/any","to-str");
-EXT(YgooSmathYposQ,"goo/math","pos?");
-EXT(Ycpl_error,"goo/boot","cpl-error");
-EXT(YgooScolsSseqYsplit,"goo/cols/seq","split");
-DEF(YgooSconditionsYmsg_to_str,"goo/conditions","msg-to-str");
-EXT(YgooSmacrosYrevX,"goo/macros","rev!");
-EXT(YgooScolsSseqYins,"goo/cols/seq","ins");
-EXT(YgooSfunYOfun_mets,"goo/fun","@fun-mets");
-DEF(YgooSconditionsYdefault_handler_description,"goo/conditions","default-handler-description");
-EXT(YLfunG,"goo/boot","<fun>");
-EXT(YLflatG,"goo/boot","<flat>");
-EXT(YgooSclassYfind_setter,"goo/class","find-setter");
-EXT(YOsubtypeQ,"goo/boot","@subtype?");
-EXT(YgooScolsSlstYline_list_of,"goo/cols/lst","line-list-of");
-EXT(YgooSioSportYLfile_in_portG,"goo/io/port","<file-in-port>");
-EXT(YgooSioSportYport_handle,"goo/io/port","port-handle");
-EXT(YgooSmathYGGG,"goo/math",">>>");
-EXT(YgooScolsSseqxYalter,"goo/cols/seqx","alter");
-EXT(YgooSchrYdigitQ,"goo/chr","digit?");
-EXT(Ysig_specs,"goo/boot","sig-specs");
-EXT(YgooSfunYfun_val,"goo/fun","fun-val");
-DEF(YgooSconditionsYLno_next_methods_errorG,"goo/conditions","<no-next-methods-error>");
-EXT(YgooScolsScolxYeltX,"goo/cols/colx","elt!");
-EXT(Yopts_tup_storage,"goo/boot","opts-tup-storage");
-EXT(YgooSioSportYforce_out,"goo/io/port","force-out");
-EXT(YgooScolsScolYfab_into,"goo/cols/col","fab-into");
-EXT(Yunknown_function_error,"goo/boot","unknown-function-error");
-EXT(YgooSmathYcosh,"goo/math","cosh");
-EXT(YgooScolsStabYtab_shrink_threshold,"goo/cols/tab","tab-shrink-threshold");
-EXT(Yarity_error,"goo/boot","arity-error");
-EXT(YgooScolsScolYitems,"goo/cols/col","items");
-EXT(YgooScolsScolYelt_default,"goo/cols/col","elt-default");
-EXT(YgooStypesYanyQ,"goo/types","any?");
-EXT(YgooSmagYmax,"goo/mag","max");
-DEF(YgooSconditionsYdo_handlers_of_type,"goo/conditions","do-handlers-of-type");
-EXT(YgooSmacrosYvar_name,"goo/macros","var-name");
-EXT(Yfun_env,"goo/boot","fun-env");
-DEF(YgooSconditionsYlist_handlers,"goo/conditions","list-handlers");
-EXT(YgooScolsSseqYpush,"goo/cols/seq","push");
-EXT(YgooScolsSseqYprefixQ,"goo/cols/seq","prefix?");
-EXT(YgooScolsSseqYdel_dups,"goo/cols/seq","del-dups");
-EXT(YLlstG,"goo/boot","<lst>");
-EXT(YgooSmathYfloorS,"goo/math","floor/");
-EXT(YgooSfunYOclassL,"goo/fun","@class<");
-EXT(Yambiguous_method_error,"goo/boot","ambiguous-method-error");
-EXT(YgooSioSportYgets,"goo/io/port","gets");
-EXT(YgooSmathYoddQ,"goo/math","odd?");
-EXT(Yfile_opening_error,"goo/boot","file-opening-error");
-EXT(YgooSmathYpow,"goo/math","pow");
-EXT(Yarithmetic_error,"goo/boot","arithmetic-error");
-EXT(YgooSioSportYopen,"goo/io/port","open");
-EXT(YgooScolsSseqYrange_checkQ,"goo/cols/seq","range-check?");
-EXT(YgooScolsSseqYrepeat,"goo/cols/seq","repeat");
-EXT(YgooSchrYalphaQ,"goo/chr","alpha?");
-EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
-EXT(Yfab_sym,"goo/boot","fab-sym");
-EXT(YgooSmacrosYmap2,"goo/macros","map2");
-DEF(YgooSconditionsYproperty_error_generic,"goo/conditions","property-error-generic");
-EXT(Ysig_val_setter,"goo/boot","sig-val-setter");
-EXT(YLseqXG,"goo/boot","<seq!>");
-EXT(YgooScolsSseqxYcatX,"goo/cols/seqx","cat!");
-EXT(YgooScolsSlstYline_list,"goo/cols/lst","line-list");
-EXT(YOdel_dups,"goo/boot","@del-dups");
-EXT(YgooSclassYTreport_prop_unbound_errorsQT,"goo/class","*report-prop-unbound-errors?*");
-EXT(Yas_error,"goo/boot","as-error");
-EXT(Yprop_type,"goo/boot","prop-type");
-EXT(Yfun_info_names_setter,"goo/boot","fun-info-names-setter");
-EXT(YgooScolsScolYelt_type,"goo/cols/col","elt-type");
-EXT(YLfun_infoG,"goo/boot","<fun-info>");
-EXT(YOall2Q,"goo/boot","@all2?");
-DEF(YgooSconditionsYLunbound_errorG,"goo/conditions","<unbound-error>");
-EXT(YgooSclassYfind_getter,"goo/class","find-getter");
-EXT(YgooScolsSseqYsort_byX,"goo/cols/seq","sort-by!");
-EXT(Yfun_info_count_setter,"goo/boot","fun-info-count-setter");
-EXT(YgooScolsScolYfab_elt_setter,"goo/cols/col","fab-elt-setter");
-EXT(YgooSfunYfun_src_loc,"goo/fun","fun-src-loc");
-EXT(Yupdate_instance_for_changed_class,"goo/boot","update-instance-for-changed-class");
-DEF(YgooSconditionsYrange_error_key,"goo/conditions","range-error-key");
-EXT(YgooScolsScolxYaddX,"goo/cols/colx","add!");
-EXT(YLseqIG,"goo/boot","<seq.>");
-EXT(YgooSchrYchar_Gascii,"goo/chr","char->ascii");
-EXT(YgooSmacrosYnapp,"goo/macros","napp");
-EXT(YgooSmathYtrunc,"goo/math","trunc");
-EXT(YgooScolsSlstYassq,"goo/cols/lst","assq");
-EXT(Ytype_error,"goo/boot","type-error");
-EXT(YgooSmacrosYmap,"goo/macros","map");
-EXT(YgooScolsStabYcase_insensitive_string_equal,"goo/cols/tab","case-insensitive-string-equal");
-DEF(YgooSconditionsYLrange_errorG,"goo/conditions","<range-error>");
-EXT(Ytype_class,"goo/boot","type-class");
-EXT(YgooScolsScolYfill,"goo/cols/col","fill");
-DEF(YgooSconditionsYmacro_error_arguments,"goo/conditions","macro-error-arguments");
-EXT(Ysig_val,"goo/boot","sig-val");
-EXT(YgooSmathYevenQ,"goo/math","even?");
-EXT(YgooSfunYLreplace_generic_restartG,"goo/fun","<replace-generic-restart>");
-DEF(YgooSconditionsYLstack_overflowG,"goo/conditions","<stack-overflow>");
-EXT(YgooSmagYmin,"goo/mag","min");
-EXT(YgooSchrYto_digit,"goo/chr","to-digit");
-EXT(Yinternal_error,"goo/boot","internal-error");
-EXT(Yfun_info_names,"goo/boot","fun-info-names");
-DEF(YgooSconditionsYLtype_errorG,"goo/conditions","<type-error>");
-EXT(YgooSmathYceil,"goo/math","ceil");
-EXT(YLseqG,"goo/boot","<seq>");
-EXT(Yclass_parents_setter,"goo/boot","class-parents-setter");
+EXT(Ygen_cache_missableQ,"goo/boot","gen-cache-missable?");
+EXT(YgooScolsScolYfoldA,"goo/cols/col","fold+");
+EXT(YgooSmathYmod,"goo/math","mod");
 EXT(YgooSioSportYport_index_setter,"goo/io/port","port-index-setter");
-EXT(Ytail_setter,"goo/boot","tail-setter");
-EXT(YOlit,"goo/boot","@lit");
-EXT(YgooSmathYtan,"goo/math","tan");
-EXT(Yfun_info_count,"goo/boot","fun-info-count");
-EXT(YgooScolsScolYmemQ,"goo/cols/col","mem?");
-EXT(Yclass_props_setter,"goo/boot","class-props-setter");
-EXT(YPtrue,"goo/boot","%true");
-EXT(YgooSmathYrem,"goo/math","rem");
-EXT(YgooScolsSseqxYsortX,"goo/cols/seqx","sort!");
-EXT(YgooSioSportYnewline,"goo/io/port","newline");
-EXT(YOtype_equalQ,"goo/boot","@type-equal?");
-EXT(YOdo,"goo/boot","@do");
-EXT(YgooScolsSseqxYpushX,"goo/cols/seqx","push!");
-EXT(YLcolXG,"goo/boot","<col!>");
-DEF(YgooSconditionsYhandler_function,"goo/conditions","handler-function");
-EXT(YgooScolsSseqYrange_check,"goo/cols/seq","range-check");
-EXT(Yrange_error,"goo/boot","range-error");
-EXT(Ygen_cache_classes,"goo/boot","gen-cache-classes");
-EXT(Ybox_value_setter,"goo/boot","box-value-setter");
-EXT(YgooSmacrosYmatch_atom,"goo/macros","match-atom");
-EXT(YOallQ,"goo/boot","@all?");
-EXT(YgooSioSportYport_line_setter,"goo/io/port","port-line-setter");
-DEF(YgooSconditionsYcall_error_arguments,"goo/conditions","call-error-arguments");
-EXT(Yclass_parents,"goo/boot","class-parents");
-EXT(Yopts_count,"goo/boot","opts-count");
-DEF(YgooSconditionsYLserious_conditionG,"goo/conditions","<serious-condition>");
-EXT(Ytail,"goo/boot","tail");
-EXT(YgooSchrYto_upper,"goo/chr","to-upper");
-EXT(YgooSfunYfun_arity,"goo/fun","fun-arity");
-EXT(YgooSchrYto_lower,"goo/chr","to-lower");
-EXT(YLsigG,"goo/boot","<sig>");
-DEF(YgooSconditionsYhandler_matchesQ,"goo/conditions","handler-matches?");
-EXT(Yclass_props,"goo/boot","class-props");
-EXT(YLcolIG,"goo/boot","<col.>");
-DEF(YgooSconditionsYmacro_error_name,"goo/conditions","macro-error-name");
-EXT(Yproperty_not_found_error,"goo/boot","property-not-found-error");
-EXT(YgooSmathYround_to,"goo/math","round-to");
-EXT(YgooScolsScolYmap_keyed,"goo/cols/col","map-keyed");
-EXT(YgooSmathYcos,"goo/math","cos");
-EXT(YgooSmacrosYEE,"goo/macros","==");
-EXT(YgooSchrYfabs,"goo/chr","fabs");
-EXT(YgooSmathYGG,"goo/math",">>");
-EXT(YPsymbols,"goo/boot","%symbols");
-EXT(YgooScolsSseqxYdel_dupsX,"goo/cols/seqx","del-dups!");
-EXT(YTboot_macro_namesT,"goo/boot","*boot-macro-names*");
-EXT(YgooScolsSlstYline_pair,"goo/cols/lst","line-pair");
-EXT(YgooScolsSseqYbelow,"goo/cols/seq","below");
-DEF(YgooSconditionsYbuild_condition_for_handler_interactively,"goo/conditions","build-condition-for-handler-interactively");
-EXT(YgooScolsSseqYdo3,"goo/cols/seq","do3");
-DEF(YgooSconditionsYdescribe_condition,"goo/conditions","describe-condition");
-EXT(YDmax_int,"goo/boot","$max-int");
-DEF(YgooSconditionsYLambiguous_method_errorG,"goo/conditions","<ambiguous-method-error>");
-EXT(YisaQ,"goo/boot","isa?");
-DEF(YgooSconditionsYLhandler_infoG,"goo/conditions","<handler-info>");
-EXT(YLcolG,"goo/boot","<col>");
+EXT(YgooScolsScolxYlen_setter,"goo/cols/colx","len-setter");
+DEF(YgooSconditionsYLmacro_errorG,"goo/conditions","<macro-error>");
+EXT(Ystack_overflow_error,"goo/boot","stack-overflow-error");
+EXT(Yfun_env,"goo/boot","fun-env");
+EXT(YgooSfunYOclassL,"goo/fun","@class<");
+EXT(YgooScolsSseqYvals_to_str,"goo/cols/seq","vals-to-str");
+EXT(YgooScolsStabYtab_growth_threshold,"goo/cols/tab","tab-growth-threshold");
+EXT(YLlstG,"goo/boot","<lst>");
+EXT(YOdel_dups,"goo/boot","@del-dups");
+EXT(YgooScolsScolYfab_elt_setter,"goo/cols/col","fab-elt-setter");
+EXT(YOall2Q,"goo/boot","@all2?");
+EXT(YgooSlogYNE,"goo/log","~=");
+EXT(YgooSmacrosYnulQ,"goo/macros","nul?");
+EXT(YgooScolsSseqY3rd,"goo/cols/seq","3rd");
+EXT(YgooSfunYfun_count_setter,"goo/fun","fun-count-setter");
+EXT(Ycpl_error,"goo/boot","cpl-error");
+EXT(YgooSmacrosYnapp,"goo/macros","napp");
+EXT(Ysig_naryQ_setter,"goo/boot","sig-nary?-setter");
 EXT(YgooSclassYprop_value_setter,"goo/class","prop-value-setter");
-EXT(YgooScolsSlstYassqn,"goo/cols/lst","assqn");
-DEF(YgooSconditionsYhandler_info,"goo/conditions","handler-info");
-EXT(YgooSmathYB,"goo/math","&");
-EXT(YOmemQ,"goo/boot","@mem?");
-DEF(YgooSconditionsYLhandlerG,"goo/conditions","<handler>");
-DEF(YgooSconditionsYcondition_message_setter,"goo/conditions","condition-message-setter");
-DEF(YgooSconditionsYtype_error_value,"goo/conditions","type-error-value");
-EXT(YgooSmacrosYdo,"goo/macros","do");
-EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
-DEF(YgooSconditionsYLsimple_conditionG,"goo/conditions","<simple-condition>");
-EXT(Yclass_mets_setter,"goo/boot","class-mets-setter");
-EXT(YsubtypeQ,"goo/boot","subtype?");
-EXT(YgooSfunYfun_src,"goo/fun","fun-src");
-EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
-EXT(Ybox_value,"goo/boot","box-value");
-EXT(YgooSchrYupperQ,"goo/chr","upper?");
-EXT(YOrevX,"goo/boot","@rev!");
-EXT(Yprop_setter,"goo/boot","prop-setter");
-DEF(YgooSconditionsYLas_errorG,"goo/conditions","<as-error>");
-EXT(YLrepG,"goo/boot","<rep>");
-EXT(YgooSmacrosYlift_place_subforms,"goo/macros","lift-place-subforms");
-EXT(YgooSfunYord_app_mets,"goo/fun","ord-app-mets");
-EXT(YgooSmathYS,"goo/math","/");
-EXT(YtT,"goo/boot","t*");
-EXT(YgooSmathYround,"goo/math","round");
-EXT(Yfun_info_setter,"goo/boot","fun-info-setter");
+EXT(YgooSmathY1_,"goo/math","1-");
+EXT(YgooSclassYfind_getter,"goo/class","find-getter");
+DYNDEF(YgooSconditionsYTcurrent_handlersT,"goo/conditions","*current-handlers*");
+EXT(Ysig_unification_vars_setter,"goo/boot","sig-unification-vars-setter");
+EXT(YLseqXG,"goo/boot","<seq!>");
+EXT(Ynul_prop,"goo/boot","nul-prop");
+DEF(YgooSconditionsYLno_next_methods_errorG,"goo/conditions","<no-next-methods-error>");
 EXT(YgooSfunYPdefine_method,"goo/fun","%define-method");
-EXT(YgooSmathYsin,"goo/math","sin");
-EXT(YOpick,"goo/boot","@pick");
-EXT(YgooStypesYDbot,"goo/types","$bot");
-EXT(YgooSmathYmod_,"goo/math","mod-");
-DEF(YgooSconditionsYLrestartG,"goo/conditions","<restart>");
-EXT(YgooSmacrosYfab_setter_name,"goo/macros","fab-setter-name");
-DEF(YgooSconditionsYLincongruent_method_errorG,"goo/conditions","<incongruent-method-error>");
-EXT(YgooSmagYGE,"goo/mag",">=");
-EXT(Ytype_object,"goo/boot","type-object");
-EXT(YLgen_cacheG,"goo/boot","<gen-cache>");
-EXT(YgooSclassYPprop,"goo/class","%prop");
+DEF(YgooSconditionsYlist_handlers,"goo/conditions","list-handlers");
+EXT(YgooSmathYC,"goo/math","^");
+EXT(Yfun_info_src_loc_setter,"goo/boot","fun-info-src-loc-setter");
+EXT(YLfun_infoG,"goo/boot","<fun-info>");
+EXT(Yunknown_function_error,"goo/boot","unknown-function-error");
+EXT(YgooScolsScolxYzapX,"goo/cols/colx","zap!");
+EXT(YgooSchrYchar_Gascii,"goo/chr","char->ascii");
+EXT(YgooSfunYfun_src_loc,"goo/fun","fun-src-loc");
+EXT(Yfun_info_inlineableQ_setter,"goo/boot","fun-info-inlineable?-setter");
+EXT(Yproduct_elts,"goo/boot","product-elts");
+DEF(YgooSconditionsYhandler_matchesQ,"goo/conditions","handler-matches?");
+EXT(YLseqIG,"goo/boot","<seq.>");
+EXT(Ysig_naryQ,"goo/boot","sig-nary?");
+EXT(Yarity_error,"goo/boot","arity-error");
+EXT(YgooScolsSseqYpick,"goo/cols/seq","pick");
+EXT(YgooStypesYall2Q,"goo/types","all2?");
+EXT(YgooScolsStabYtab_shrink_threshold,"goo/cols/tab","tab-shrink-threshold");
+EXT(YOtype_equalQ,"goo/boot","@type-equal?");
+EXT(YgooSmacrosY2nd,"goo/macros","2nd");
+EXT(YgooSmathYdiv,"goo/math","div");
+EXT(Ysig_unification_vars,"goo/boot","sig-unification-vars");
+DEF(YgooSconditionsYmsg_to_str,"goo/conditions","msg-to-str");
+EXT(YgooSmathYlog,"goo/math","log");
+EXT(YOdo,"goo/boot","@do");
+EXT(YgooSmacrosYOchecked_next_methods,"goo/macros","@checked-next-methods");
+EXT(Yfile_opening_error,"goo/boot","file-opening-error");
+EXT(YgooSmagYG,"goo/mag",">");
+EXT(Yfun_info_src_loc,"goo/boot","fun-info-src-loc");
+EXT(YLseqG,"goo/boot","<seq>");
+EXT(Yclass_direct_props_setter,"goo/boot","class-direct-props-setter");
+EXT(YgooScolsScolYlow_elt,"goo/cols/col","low-elt");
+EXT(YgooScolsSvecYvec,"goo/cols/vec","vec");
+EXT(Yambiguous_method_error,"goo/boot","ambiguous-method-error");
+EXT(Yfun_info_inlineableQ,"goo/boot","fun-info-inlineable?");
+EXT(YgooScolsScolYfold,"goo/cols/col","fold");
 EXT(YgooScolsScolxYelt_setter,"goo/cols/colx","elt-setter");
-EXT(Yclass_mets,"goo/boot","class-mets");
-EXT(YPrnul,"goo/boot","%rnul");
-EXT(YgooScolsScolYdo_keyed,"goo/cols/col","do-keyed");
-DEF(YgooSconditionsYcondition_arguments,"goo/conditions","condition-arguments");
-DEF(YgooSconditionsYrange_error_collection,"goo/conditions","range-error-collection");
-EXT(YgooScolsScolYcol,"goo/cols/col","col");
-EXT(YgooScolsScolYzap,"goo/cols/col","zap");
-EXT(YgooSmathYbitQ,"goo/math","bit?");
-EXT(YgooScolsSseqxYdel_valsX,"goo/cols/seqx","del-vals!");
-EXT(YgooSmagYLE,"goo/mag","<=");
-EXT(YgooScolsSseqYsuffixQ,"goo/cols/seq","suffix?");
-EXT(Yfun_info,"goo/boot","fun-info");
-EXT(YgooSioSportYLout_portG,"goo/io/port","<out-port>");
-EXT(YgooSchrYlowerQ,"goo/chr","lower?");
-EXT(YgooSmacrosYmacro_error,"goo/macros","macro-error");
-EXT(YgooSfunYhandler_info_message,"goo/fun","handler-info-message");
-EXT(YLfloG,"goo/boot","<flo>");
-EXT(YPfalse,"goo/boot","%false");
-DEF(YgooSconditionsYmsg,"goo/conditions","msg");
-EXT(YgooSmacrosYpair,"goo/macros","pair");
-EXT(YgooScolsSseqYpop,"goo/cols/seq","pop");
-EXT(YgooSioSportYin,"goo/io/port","in");
-DEF(YgooSconditionsYhandler_activeQ,"goo/conditions","handler-active?");
-EXT(YOOnulQ,"goo/boot","@@nul?");
-EXT(YgooSmacrosYelt,"goo/macros","elt");
-EXT(YgooSlogYas_log,"goo/log","as-log");
-DEF(YgooSconditionsYLcall_errorG,"goo/conditions","<call-error>");
-EXT(YgooSclassYprop_boundQ,"goo/class","prop-bound?");
-DEF(YgooSconditionsYsig,"goo/conditions","sig");
-EXT(Ykeyboard_interrupt,"goo/boot","keyboard-interrupt");
-EXT(YgooScolsSseqxYpopX,"goo/cols/seqx","pop!");
-EXT(Ygen_cache_singletons,"goo/boot","gen-cache-singletons");
-EXT(YgooScolsSseqYdo2,"goo/cols/seq","do2");
-DEF(YgooSconditionsYLarity_errorG,"goo/conditions","<arity-error>");
-EXT(YLfixnumG,"goo/boot","<fixnum>");
-EXT(YgooSioSportYLin_portG,"goo/io/port","<in-port>");
-EXT(Yclass_name,"goo/boot","class-name");
+EXT(YgooScolsScolYkeys,"goo/cols/col","keys");
+EXT(Yas_error,"goo/boot","as-error");
+EXT(YgooScolsStabYcase_insensitive_string_equal,"goo/cols/tab","case-insensitive-string-equal");
+EXT(YgooSioSportYnewline,"goo/io/port","newline");
+EXT(Yarithmetic_error,"goo/boot","arithmetic-error");
+EXT(YgooScolsSseqYjoin,"goo/cols/seq","join");
+DEF(YgooSconditionsYincongruent_method_error_method,"goo/conditions","incongruent-method-error-method");
+EXT(YLcolXG,"goo/boot","<col!>");
+EXT(YgooScolsSseqYpos,"goo/cols/seq","pos");
+EXT(YgooSmacrosYvar_name,"goo/macros","var-name");
+EXT(YgooStypesYtE,"goo/types","t=");
+EXT(YgooSmacrosYmatch_sublist,"goo/macros","match-sublist");
+DEF(YgooSconditionsYLunbound_variable_errorG,"goo/conditions","<unbound-variable-error>");
+EXT(YgooSfunYfun_arity,"goo/fun","fun-arity");
+EXT(YgooSmathYK,"goo/math","|");
+EXT(YgooScolsScolYelts,"goo/cols/col","elts");
+EXT(YgooSmacrosY1st,"goo/macros","1st");
+DEF(YgooSconditionsYproperty_error_generic,"goo/conditions","property-error-generic");
+EXT(YOanyQ,"goo/boot","@any?");
+EXT(YgooScolsScolxYdelX,"goo/cols/colx","del!");
+EXT(YgooSmathYsqrt,"goo/math","sqrt");
+EXT(Yclass_direct_props,"goo/boot","class-direct-props");
+EXT(YgooSchrYeof_object,"goo/chr","eof-object");
+EXT(Yopts_count,"goo/boot","opts-count");
+EXT(Ysym_name,"goo/boot","sym-name");
+EXT(YgooScolsSseqxYcatX,"goo/cols/seqx","cat!");
+EXT(Ysrc_loc_line,"goo/boot","src-loc-line");
+EXT(YgooSioSportYpeek,"goo/io/port","peek");
+EXT(YLsigG,"goo/boot","<sig>");
+EXT(YTboot_macro_module_namesT,"goo/boot","*boot-macro-module-names*");
+EXT(Yclass_children,"goo/boot","class-children");
+EXT(Yinternal_error,"goo/boot","internal-error");
+EXT(YOmemQ,"goo/boot","@mem?");
+EXT(YLcolIG,"goo/boot","<col.>");
+DEF(YgooSconditionsYLtype_errorG,"goo/conditions","<type-error>");
+DEF(YgooSconditionsYLhandlerG,"goo/conditions","<handler>");
+EXT(Ytype_error,"goo/boot","type-error");
+EXT(YgooScolsScolYLenumG,"goo/cols/col","<enum>");
+EXT(YgooSmathYflo_bits,"goo/math","flo-bits");
+EXT(YgooSclassYPprop,"goo/class","%prop");
 EXT(Yopts_location,"goo/boot","opts-location");
-EXT(YDmin_int,"goo/boot","$min-int");
+EXT(YOallQ,"goo/boot","@all?");
+EXT(YgooSioSportYLstr_portG,"goo/io/port","<str-port>");
+EXT(YtT,"goo/boot","t*");
+EXT(YgooSclassYprop_boundQ,"goo/class","prop-bound?");
+EXT(YgooSmathYtruncS,"goo/math","trunc/");
+EXT(YgooScolsStabYcase_insensitive_string_hash,"goo/cols/tab","case-insensitive-string-hash");
+EXT(YLcolG,"goo/boot","<col>");
+EXT(YDmax_int,"goo/boot","$max-int");
+EXT(YOpick,"goo/boot","@pick");
+EXT(Yclass_children_setter,"goo/boot","class-children-setter");
+EXT(YgooSmathYcontagious_call,"goo/math","contagious-call");
+EXT(YgooScolsScolYfab_fillX,"goo/cols/col","fab-fill!");
+EXT(YgooScolsSlstYassq,"goo/cols/lst","assq");
+EXT(Yprop_init,"goo/boot","prop-init");
+EXT(YgooScolsScolYallQ,"goo/cols/col","all?");
+EXT(YgooSmathYabs,"goo/math","abs");
+EXT(YPrnul,"goo/boot","%rnul");
+EXT(YgooScolsScolYkey_test,"goo/cols/col","key-test");
+EXT(Ymay_isaQ,"goo/boot","may-isa?");
+EXT(Yclass_forward_setter,"goo/boot","class-forward-setter");
+EXT(YgooSfunYord_app_mets,"goo/fun","ord-app-mets");
+EXT(YgooSchrYeof_objectQ,"goo/chr","eof-object?");
+EXT(YDdirect_object_class,"goo/boot","$direct-object-class");
+EXT(Yrange_error,"goo/boot","range-error");
+EXT(YgooSmacrosYrevX,"goo/macros","rev!");
+DEF(YgooSconditionsYmacro_error_name,"goo/conditions","macro-error-name");
+EXT(YgooSioSportYLstr_out_portG,"goo/io/port","<str-out-port>");
+EXT(YLrepG,"goo/boot","<rep>");
+DEF(YgooSconditionsYhandler_function,"goo/conditions","handler-function");
+EXT(YgooStypesYtA,"goo/types","t+");
+EXT(YgooScolsScolYnow_key,"goo/cols/col","now-key");
+EXT(YgooSmacrosYmatch_atom,"goo/macros","match-atom");
+EXT(Yproperty_not_found_error,"goo/boot","property-not-found-error");
+EXT(YgooScolsScolYcol_res_type,"goo/cols/col","col-res-type");
+EXT(YgooSmathYpower_of_two_ceil,"goo/math","power-of-two-ceil");
+EXT(YgooScolsSseqYins,"goo/cols/seq","ins");
+EXT(Yunion_elts,"goo/boot","union-elts");
+DEF(YgooSconditionsYLrange_errorG,"goo/conditions","<range-error>");
+EXT(YgooSmathYatan2,"goo/math","atan2");
+DEF(YgooSconditionsYLsimple_conditionG,"goo/conditions","<simple-condition>");
+EXT(YgooScolsSseqxYalter,"goo/cols/seqx","alter");
+EXT(YgooScolsSseqxYsubT_setter,"goo/cols/seqx","sub*-setter");
+EXT(YPPmacro,"goo/boot","%%macro");
+EXT(YgooSfunYfun_src,"goo/fun","fun-src");
+EXT(Ysig_specs_setter,"goo/boot","sig-specs-setter");
+EXT(YPfalse,"goo/boot","%false");
+DEF(YgooSconditionsYdo_handlers_of_type,"goo/conditions","do-handlers-of-type");
+EXT(YLgen_cacheG,"goo/boot","<gen-cache>");
+EXT(YgooStypesYDbot,"goo/types","$bot");
+EXT(YgooScolsSlstYline_list_of,"goo/cols/lst","line-list-of");
+EXT(YgooSioSportYport_index,"goo/io/port","port-index");
+EXT(YLlocG,"goo/boot","<loc>");
+EXT(Yclass_forward,"goo/boot","class-forward");
+EXT(YgooScolsScolYnow,"goo/cols/col","now");
+DEF(YgooSconditionsYdefault_handler_description,"goo/conditions","default-handler-description");
+EXT(YOrevX,"goo/boot","@rev!");
+EXT(YgooSmathYneg,"goo/math","neg");
+EXT(YgooScolsScolYkey_type,"goo/cols/col","key-type");
+DEF(YgooSconditionsYtype_error_value,"goo/conditions","type-error-value");
+EXT(YgooScolsScolxYeltX,"goo/cols/colx","elt!");
+EXT(YgooSchrYdigitQ,"goo/chr","digit?");
+EXT(Yfun_info_setter,"goo/boot","fun-info-setter");
+EXT(YLfloG,"goo/boot","<flo>");
+DEF(YgooSconditionsYLas_errorG,"goo/conditions","<as-error>");
+EXT(YgooScolsScolYfab_into,"goo/cols/col","fab-into");
+EXT(YgooSmathY1A,"goo/math","1+");
+EXT(Ysig_specs,"goo/boot","sig-specs");
+EXT(YgooScolsScolYitems,"goo/cols/col","items");
+EXT(YgooSmathYisqrt,"goo/math","isqrt");
+DEF(YgooSconditionsYLunbound_errorG,"goo/conditions","<unbound-error>");
+EXT(YgooSfunYLreplace_generic_restartG,"goo/fun","<replace-generic-restart>");
+EXT(YgooSioSportYgets,"goo/io/port","gets");
+EXT(YgooSclassYprop_value,"goo/class","prop-value");
+EXT(YgooSmathYroundS,"goo/math","round/");
+EXT(YgooSmathYatan,"goo/math","atan");
+EXT(YgooScolsSseqYdo_key_vals,"goo/cols/seq","do-key-vals");
+EXT(YOmap,"goo/boot","@map");
+EXT(YgooSmathYcontagious_type,"goo/math","contagious-type");
+EXT(Ysyntax_error,"goo/boot","syntax-error");
+EXT(YOlit,"goo/boot","@lit");
+EXT(YgooSclassYadd_prop,"goo/class","add-prop");
+EXT(YgooScolsSseqYfinds,"goo/cols/seq","finds");
+EXT(YgooScolsScolYinto,"goo/cols/col","into");
+EXT(YLfixnumG,"goo/boot","<fixnum>");
+EXT(YgooSmathYacos,"goo/math","acos");
+EXT(YPmet_prop_len,"goo/boot","%met-prop-len");
+EXT(YOnew,"goo/boot","@new");
+DEF(YgooSconditionsYhandler_info,"goo/conditions","handler-info");
+EXT(Yfun_info,"goo/boot","fun-info");
+EXT(YgooScolsSseqYsubT,"goo/cols/seq","sub*");
+EXT(YgooSfunYfun_naryQ,"goo/fun","fun-nary?");
+EXT(YgooSmacrosYmap2,"goo/macros","map2");
+EXT(YgooSmathYnegQ,"goo/math","neg?");
+EXT(Ykeyboard_interrupt,"goo/boot","keyboard-interrupt");
+EXT(YgooScolsScolYelt_default,"goo/cols/col","elt-default");
+DEF(YgooSconditionsYhandler_activeQ,"goo/conditions","handler-active?");
+EXT(YgooScolsScolxYlow_elt_setter,"goo/cols/colx","low-elt-setter");
+EXT(YgooScolsScolxYfillX,"goo/cols/colx","fill!");
+EXT(YgooSchrYalphaQ,"goo/chr","alpha?");
+EXT(YgooScolsSseqYsort_byX,"goo/cols/seq","sort-by!");
+EXT(YOOnulQ,"goo/boot","@@nul?");
+DEF(YgooSconditionsYbuild_condition_for_handler_interactively,"goo/conditions","build-condition-for-handler-interactively");
+EXT(YgooSanyYaddress_of,"goo/any","address-of");
+DEF(YgooSconditionsYrange_error_collection,"goo/conditions","range-error-collection");
+DEF(YgooSconditionsYLhandler_infoG,"goo/conditions","<handler-info>");
+EXT(YgooScolsSseqYrepeat,"goo/cols/seq","repeat");
+EXT(YgooSioSportYport_line_setter,"goo/io/port","port-line-setter");
+EXT(YgooScolsSlstYline_list,"goo/cols/lst","line-list");
+EXT(YLintG,"goo/boot","<int>");
+DEF(YgooSconditionsYLarity_errorG,"goo/conditions","<arity-error>");
+EXT(YgooScolsSseqYsplit,"goo/cols/seq","split");
+DEF(YgooSconditionsYLproperty_unbound_errorG,"goo/conditions","<property-unbound-error>");
+EXT(Ynot,"goo/boot","not");
+EXT(Yfab_sym,"goo/boot","fab-sym");
+EXT(YLpropG,"goo/boot","<prop>");
+EXT(YOtup,"goo/boot","@tup");
+EXT(Ysig_val_setter,"goo/boot","sig-val-setter");
+DEF(YgooSconditionsYcondition_message_setter,"goo/conditions","condition-message-setter");
+EXT(YgooScolsScolxYaddX,"goo/cols/colx","add!");
+EXT(YgooScolsScolYfab,"goo/cols/col","fab");
+EXT(YgooStypesYanyQ,"goo/types","any?");
+EXT(YgooScolsScolYfinQ,"goo/cols/col","fin?");
+EXT(YgooSfunYhandler_info_message,"goo/fun","handler-info-message");
+EXT(YgooSfunYgen_add_met,"goo/fun","gen-add-met");
+EXT(YgooSmacrosYmacro_error,"goo/macros","macro-error");
+EXT(Yapp_args,"goo/boot","app-args");
+EXT(YPsnul,"goo/boot","%snul");
+EXT(Yfun_info_names_setter,"goo/boot","fun-info-names-setter");
+DEF(YgooSconditionsYsig,"goo/conditions","sig");
+EXT(YPprop_unbound_error,"goo/boot","%prop-unbound-error");
+EXT(YgooScolsSseqYrange_checkQ,"goo/cols/seq","range-check?");
+EXT(YOcat2,"goo/boot","@cat2");
+EXT(YLnumG,"goo/boot","<num>");
+EXT(YgooSmathYasin,"goo/math","asin");
+EXT(YgooSmacrosYfab_setter_name,"goo/macros","fab-setter-name");
+EXT(YgooSmacrosYmap,"goo/macros","map");
+EXT(YgooStypesYlen,"goo/types","len");
+EXT(YgooScolsScolYelt_or,"goo/cols/col","elt-or");
+EXT(YgooSmathYLL,"goo/math","<<");
+EXT(Yfun_info_count_setter,"goo/boot","fun-info-count-setter");
+EXT(YgooScolsScolYfill,"goo/cols/col","fill");
+EXT(YgooSmathYzeroQ,"goo/math","zero?");
+EXT(YgooScolsScolYelt_type,"goo/cols/col","elt-type");
+DEF(YgooSconditionsYrange_error_key,"goo/conditions","range-error-key");
+EXT(YgooSchrYto_digit,"goo/chr","to-digit");
+EXT(YgooScolsScolYenum,"goo/cols/col","enum");
+EXT(YgooScolsSseqxYsortX,"goo/cols/seqx","sort!");
+DEF(YgooSconditionsYLstack_overflowG,"goo/conditions","<stack-overflow>");
+DEF(YgooSconditionsYLproperty_not_found_errorG,"goo/conditions","<property-not-found-error>");
+EXT(Ytype_class,"goo/boot","type-class");
+EXT(YLproductG,"goo/boot","<product>");
+EXT(YgooSmathYceilS,"goo/math","ceil/");
+EXT(Ysig_val,"goo/boot","sig-val");
+DEF(YgooSconditionsYLassert_errorG,"goo/conditions","<assert-error>");
 DEF(YgooSconditionsYLcpl_errorG,"goo/conditions","<cpl-error>");
 EXT(YgooSmacrosYmatch_unquote,"goo/macros","match-unquote");
-EXT(YgooSmathYN,"goo/math","~");
-EXT(YgooStypesYLbotG,"goo/types","<bot>");
-EXT(YgooSioSportYLstr_in_portG,"goo/io/port","<str-in-port>");
-EXT(YgooScolsSlstYLlineG,"goo/cols/lst","<line>");
-DEF(YgooSconditionsYLproperty_not_found_errorG,"goo/conditions","<property-not-found-error>");
-EXT(Ylst,"goo/boot","lst");
-EXT(Ytup,"goo/boot","tup");
+EXT(YgooScolsScolYmemQ,"goo/cols/col","mem?");
+EXT(YgooSioSportYLportG,"goo/io/port","<port>");
+EXT(Yapp_filename,"goo/boot","app-filename");
+EXT(Yfun_info_names,"goo/boot","fun-info-names");
+DEF(YgooSconditionsYmacro_error_arguments,"goo/conditions","macro-error-arguments");
+EXT(Yclass_parents_setter,"goo/boot","class-parents-setter");
+EXT(Ynew,"goo/boot","new");
+EXT(Ytail_setter,"goo/boot","tail-setter");
+EXT(YgooSfunYfun_names,"goo/fun","fun-names");
+EXT(Yfun_info_count,"goo/boot","fun-info-count");
+DEF(YgooSconditionsYLserious_conditionG,"goo/conditions","<serious-condition>");
+EXT(YgooStypesYas,"goo/types","as");
+EXT(YTrestarts_okQT,"goo/boot","*restarts-ok?*");
+EXT(Yclass_props_setter,"goo/boot","class-props-setter");
+EXT(YLsrc_locG,"goo/boot","<src-loc>");
+EXT(YgooSmathYtanh,"goo/math","tanh");
+DEF(YgooSconditionsYLambiguous_method_errorG,"goo/conditions","<ambiguous-method-error>");
+EXT(YgooSmathYposQ,"goo/math","pos?");
 DEF(YgooSconditionsYcondition_arguments_setter,"goo/conditions","condition-arguments-setter");
-EXT(YgooSfunYfun_naryQ,"goo/fun","fun-nary?");
-EXT(YOmap,"goo/boot","@map");
-EXT(YgooScolsScolxYlow_elt_setter,"goo/cols/colx","low-elt-setter");
-EXT(YLintG,"goo/boot","<int>");
-DEF(YgooSconditionsYincongruent_method_error_generic,"goo/conditions","incongruent-method-error-generic");
-EXT(YgooSmathYfloor,"goo/math","floor");
-EXT(YgooScolsScolYinto,"goo/cols/col","into");
-EXT(YgooScolsScolYdel,"goo/cols/col","del");
-EXT(Yorder_specs,"goo/boot","order-specs");
-EXT(YgooStypesYlen,"goo/types","len");
-EXT(YLpropG,"goo/boot","<prop>");
-EXT(Ysig_arity_setter,"goo/boot","sig-arity-setter");
-EXT(YgooSmathYmodA,"goo/math","mod+");
-EXT(YgooScolsSseqYsort_by,"goo/cols/seq","sort-by");
-EXT(YgooSioSportYport_index,"goo/io/port","port-index");
-EXT(YgooScolsScolYfab,"goo/cols/col","fab");
-EXT(Ynot,"goo/boot","not");
-EXT(Yfun_info_name_setter,"goo/boot","fun-info-name-setter");
-DEF(YgooSconditionsYLreturn_type_errorG,"goo/conditions","<return-type-error>");
-EXT(YLnumG,"goo/boot","<num>");
+DEF(YgooSconditionsYLkeyboard_interruptG,"goo/conditions","<keyboard-interrupt>");
+EXT(YLunionG,"goo/boot","<union>");
+EXT(YOrev,"goo/boot","@rev");
+EXT(YgooSfunYmet_appQ,"goo/fun","met-app?");
+EXT(YgooSchrYto_upper,"goo/chr","to-upper");
+EXT(YgooSmathYDpi,"goo/math","$pi");
+EXT(YgooScolsSseqxYdel_dupsX,"goo/cols/seqx","del-dups!");
+EXT(YgooScolsSlstYLlistG,"goo/cols/lst","<list>");
+EXT(YTearly_classesT,"goo/boot","*early-classes*");
+EXT(Ybox_value_setter,"goo/boot","box-value-setter");
+EXT(YgooScolsSseqYprefixQ,"goo/cols/seq","prefix?");
+EXT(YLchrG,"goo/boot","<chr>");
+EXT(Yclass_parents,"goo/boot","class-parents");
+EXT(Yfab_pair,"goo/boot","fab-pair");
 EXT(YgooSmacrosYgensym,"goo/macros","gensym");
-EXT(YgooSfunYgen_add_met,"goo/fun","gen-add-met");
+EXT(YgooScolsScolYmap_keyed,"goo/cols/col","map-keyed");
+EXT(Ytail,"goo/boot","tail");
+EXT(YgooScolsSlstYassqn,"goo/cols/lst","assqn");
+EXT(YgooSmathYGGG,"goo/math",">>>");
+EXT(YgooScolsSseqYbelow,"goo/cols/seq","below");
+DEF(YgooSconditionsYLreturn_type_errorG,"goo/conditions","<return-type-error>");
+EXT(YgooSchrYfabs,"goo/chr","fabs");
+EXT(YgooScolsSseqYdo3,"goo/cols/seq","do3");
+EXT(YgooScolsSseqYrange_check,"goo/cols/seq","range-check");
+EXT(Yclass_props,"goo/boot","class-props");
+EXT(YgooScolsSlstYline_pair,"goo/cols/lst","line-pair");
+EXT(Yno_applicable_methods_error,"goo/boot","no-applicable-methods-error");
+EXT(Yfun_cache,"goo/boot","fun-cache");
+EXT(YgooSfunYfab_gen,"goo/fun","fab-gen");
+EXT(YgooSmathYlogn,"goo/math","logn");
+EXT(YOOEE,"goo/boot","@@==");
+EXT(YgooSanyYto_str,"goo/any","to-str");
+EXT(YLsubclassG,"goo/boot","<subclass>");
+EXT(YLmagG,"goo/boot","<mag>");
+EXT(YgooSmathYcosh,"goo/math","cosh");
+DEF(YgooSconditionsYLcall_errorG,"goo/conditions","<call-error>");
+DEF(YgooSconditionsYcall_error_function,"goo/conditions","call-error-function");
+EXT(YgooSmacrosYdo,"goo/macros","do");
+EXT(YgooScolsSseqYsub,"goo/cols/seq","sub");
+EXT(YgooSfunYfun_specs,"goo/fun","fun-specs");
+EXT(Yprop_offset,"goo/boot","prop-offset");
+DEF(YgooSconditionsYLarithmetic_errorG,"goo/conditions","<arithmetic-error>");
+EXT(Ynarity_error,"goo/boot","narity-error");
+EXT(YgooSchrYto_lower,"goo/chr","to-lower");
+DEF(YgooSconditionsYdescribe_condition,"goo/conditions","describe-condition");
+EXT(YgooSmagYmax,"goo/mag","max");
+EXT(YgooSclassYTreport_prop_unbound_errorsQT,"goo/class","*report-prop-unbound-errors?*");
+EXT(YgooSioSportYputs,"goo/io/port","puts");
+EXT(Yclass_mets_setter,"goo/boot","class-mets-setter");
+EXT(YgooScolsSseqYany2Q,"goo/cols/seq","any2?");
+EXT(YgooSfunYLsimple_handler_infoG,"goo/fun","<simple-handler-info>");
+EXT(YgooSmagYGE,"goo/mag",">=");
+EXT(Ybox_value,"goo/boot","box-value");
+EXT(YgooSmathYoddQ,"goo/math","odd?");
+EXT(Yprop_setter,"goo/boot","prop-setter");
+EXT(YgooScolsSvecYLvecG,"goo/cols/vec","<vec>");
+EXT(YgooSmathYpow,"goo/math","pow");
+EXT(YgooSioSportYget,"goo/io/port","get");
+EXT(YLsingletonG,"goo/boot","<singleton>");
+EXT(YgooSmathYDe,"goo/math","$e");
+EXT(YLboxG,"goo/boot","<box>");
+DEF(YgooSconditionsYLinternal_errorG,"goo/conditions","<internal-error>");
+EXT(YgooScolsSseqxYdel_valsX,"goo/cols/seqx","del-vals!");
+DEF(YgooSconditionsYunbound_variable_error_variable,"goo/conditions","unbound-variable-error-variable");
+EXT(Yfun_sig_setter,"goo/boot","fun-sig-setter");
+DEF(YgooSconditionsYchoose_handler,"goo/conditions","choose-handler");
+EXT(YgooSfunYincongruent_method_error,"goo/fun","incongruent-method-error");
+EXT(YOtall2Q,"goo/boot","@tall2?");
+EXT(YgooSclassYclone,"goo/class","clone");
+EXT(YgooSmathYsinh,"goo/math","sinh");
+EXT(YgooScolsScolYdo_keyed,"goo/cols/col","do-keyed");
+DEF(YgooSconditionsYLrestartG,"goo/conditions","<restart>");
+EXT(YgooSfunYfun_name,"goo/fun","fun-name");
+EXT(YgooSmacrosYpair,"goo/macros","pair");
+EXT(YgooScolsScolYzap,"goo/cols/col","zap");
+EXT(YgooSioSportYport_handle,"goo/io/port","port-handle");
+EXT(YPdispatch,"goo/boot","%dispatch");
+EXT(YLopts_tupG,"goo/boot","<opts-tup>");
+EXT(Ytype_object,"goo/boot","type-object");
+EXT(YgooSmathYfloorS,"goo/math","floor/");
+EXT(Yclass_mets,"goo/boot","class-mets");
+EXT(YLlogG,"goo/boot","<log>");
+EXT(YgooSioSportYLin_portG,"goo/io/port","<in-port>");
+EXT(YgooSchrYupperQ,"goo/chr","upper?");
+EXT(Ynil,"goo/boot","nil");
+EXT(YgooScolsSseqYpop,"goo/cols/seq","pop");
+DEF(YgooSconditionsYLio_errorG,"goo/conditions","<io-error>");
+EXT(Yprops_of,"goo/boot","props-of");
+EXT(YgooScolsSseqYsuffixQ,"goo/cols/seq","suffix?");
+DEF(YgooSconditionsYfab_handler,"goo/conditions","fab-handler");
+EXT(YgooSfunYfun_inlineableQ_setter,"goo/fun","fun-inlineable?-setter");
+EXT(Yfun_sig,"goo/boot","fun-sig");
+EXT(YgooSmathYevenQ,"goo/math","even?");
+EXT(YgooSmacrosYelt,"goo/macros","elt");
+EXT(YgooScolsScolYcol,"goo/cols/col","col");
+EXT(YgooScolsSseqYdo2,"goo/cols/seq","do2");
+EXT(YTboot_macro_namesT,"goo/boot","*boot-macro-names*");
+EXT(YLanyG,"goo/boot","<any>");
+DEF(YgooSconditionsYLproperty_errorG,"goo/conditions","<property-error>");
+EXT(Ylst,"goo/boot","lst");
+EXT(YgooSmagYmin,"goo/mag","min");
+EXT(YgooScolsSlstYLlineG,"goo/cols/lst","<line>");
+EXT(YgooSmathYtan,"goo/math","tan");
+EXT(YgooSioSportYin,"goo/io/port","in");
+EXT(YPtnul,"goo/boot","%tnul");
+EXT(Ygen_cache_singletons,"goo/boot","gen-cache-singletons");
+EXT(YLoptsG,"goo/boot","<opts>");
+EXT(YgooSmathYrem,"goo/math","rem");
+EXT(YgooStypesYLbotG,"goo/types","<bot>");
+EXT(YgooStypesYtL,"goo/types","t<");
+EXT(YgooSmathYtrunc,"goo/math","trunc");
+EXT(Yclass_name,"goo/boot","class-name");
+EXT(YgooSchrYlowerQ,"goo/chr","lower?");
+DEF(YgooSconditionsYfile_opening_error_filename,"goo/conditions","file-opening-error-filename");
+DEF(YgooSconditionsYLargument_type_errorG,"goo/conditions","<argument-type-error>");
+DEF(YgooSconditionsYLconditionG,"goo/conditions","<condition>");
+EXT(YgooSioSportYport_contents,"goo/io/port","port-contents");
+EXT(YOfold,"goo/boot","@fold");
+DEF(YgooSconditionsYLincongruent_method_errorG,"goo/conditions","<incongruent-method-error>");
+EXT(YgooScolsSseqYsort_by,"goo/cols/seq","sort-by");
+DEF(YgooSconditionsYLno_applicable_methods_errorG,"goo/conditions","<no-applicable-methods-error>");
+EXT(YgooScolsScolYdel,"goo/cols/col","del");
+EXT(YgooSioSportYLout_portG,"goo/io/port","<out-port>");
+DEF(YgooSconditionsYLproperty_type_errorG,"goo/conditions","<property-type-error>");
+EXT(Yunexec,"goo/boot","unexec");
+EXT(YOtanyQ,"goo/boot","@tany?");
+EXT(YgooSclassYclass_of,"goo/class","class-of");
+EXT(YgooSfunYfun_inlineableQ,"goo/fun","fun-inlineable?");
+EXT(YgooSmagYL,"goo/mag","<");
+EXT(YgooScolsSseqxYinsX,"goo/cols/seqx","ins!");
+EXT(YgooScolsSseqYpush,"goo/cols/seq","push");
+EXT(YgooScolsSlstYLline_listG,"goo/cols/lst","<line-list>");
+DEF(YgooSconditionsYsignal_handler_list,"goo/conditions","signal-handler-list");
+EXT(Ysig_arity_setter,"goo/boot","sig-arity-setter");
+EXT(YgooSmathYcos,"goo/math","cos");
 EXT(YgooScolsScolYnow_setter,"goo/cols/col","now-setter");
+EXT(YgooSmathYGG,"goo/math",">>");
+DEF(YgooSconditionsYLfile_opening_errorG,"goo/conditions","<file-opening-error>");
+EXT(Yassert_error,"goo/boot","assert-error");
+EXT(Yfun_info_name_setter,"goo/boot","fun-info-name-setter");
+DEF(YgooSconditionsYcondition_arguments,"goo/conditions","condition-arguments");
+EXT(YgooScolsScolYnxt,"goo/cols/col","nxt");
+DEF(YgooSconditionsYincongruent_method_error_generic,"goo/conditions","incongruent-method-error-generic");
+EXT(YgooSmacrosYcat_sym,"goo/macros","cat-sym");
+EXT(YgooSlogYE,"goo/log","=");
+EXT(YgooSmacrosYmatch_nul_list,"goo/macros","match-nul-list");
+DEF(YgooSconditionsYLerrorG,"goo/conditions","<error>");
+EXT(YPsymbols,"goo/boot","%symbols");
 EXT(Yfun_info_src_setter,"goo/boot","fun-info-src-setter");
 EXT(Yprop_getter,"goo/boot","prop-getter");
-EXT(YgooSlogYNEE,"goo/log","~==");
-EXT(YgooScolsSseqxYinsX,"goo/cols/seqx","ins!");
-EXT(YOtup,"goo/boot","@tup");
-EXT(YgooSfunYfun_names,"goo/fun","fun-names");
-EXT(YPsnul,"goo/boot","%snul");
-EXT(YPclasses_readyQ,"goo/boot","%classes-ready?");
-EXT(YgooSioSportYget,"goo/io/port","get");
-EXT(YLproductG,"goo/boot","<product>");
-EXT(YgooSmathY_,"goo/math","-");
-EXT(YgooSmathYsinh,"goo/math","sinh");
+EXT(YgooScolsStabYLstr_tabG,"goo/cols/tab","<str-tab>");
+EXT(YTboot_macro_expandersT,"goo/boot","*boot-macro-expanders*");
+DEF(YgooSconditionsYproperty_error_owner,"goo/conditions","property-error-owner");
+EXT(YsubtypeQ,"goo/boot","subtype?");
+EXT(YisaQ,"goo/boot","isa?");
+EXT(YgooScolsSseqYsort,"goo/cols/seq","sort");
+EXT(YgooSfunYfun_spec,"goo/fun","fun-spec");
+EXT(YgooScolsSseqxYpushX,"goo/cols/seqx","push!");
+EXT(YPtrue,"goo/boot","%true");
+EXT(YOlst,"goo/boot","@lst");
+EXT(YgooSmacrosYlift_place_subforms,"goo/macros","lift-place-subforms");
+EXT(YgooSmathYround_to,"goo/math","round-to");
 EXT(Ysig_arity,"goo/boot","sig-arity");
-EXT(YgooSclassYprop_value,"goo/class","prop-value");
-EXT(Yapp_args,"goo/boot","app-args");
-EXT(YDdirect_object_class,"goo/boot","$direct-object-class");
-EXT(YgooSclassYadd_prop,"goo/class","add-prop");
-DEF(YgooSconditionsYLarithmetic_errorG,"goo/conditions","<arithmetic-error>");
-EXT(YOcat2,"goo/boot","@cat2");
-EXT(YgooSmathYT,"goo/math","*");
-EXT(Yno_applicable_methods_error,"goo/boot","no-applicable-methods-error");
+EXT(YgooScolsSlstYline_of,"goo/cols/lst","line-of");
+EXT(Yreturn_type_error,"goo/boot","return-type-error");
+EXT(YgooScolsSseqxYpopX,"goo/cols/seqx","pop!");
+EXT(YgooSmacrosYEE,"goo/macros","==");
+EXT(YgooScolsScolYLtabG,"goo/cols/col","<tab>");
+EXT(YLgenG,"goo/boot","<gen>");
 EXT(Yfun_info_name,"goo/boot","fun-info-name");
 EXT(Yclass_row,"goo/boot","class-row");
-DEF(YgooSconditionsYLerrorG,"goo/conditions","<error>");
-EXT(YgooScolsSseqYsort,"goo/cols/seq","sort");
-EXT(Yhead_setter,"goo/boot","head-setter");
-EXT(Yfun_info_src,"goo/boot","fun-info-src");
-EXT(YgooScolsScolYdup,"goo/cols/col","dup");
-DEF(YgooSconditionsYLconditionG,"goo/conditions","<condition>");
-EXT(YgooScolsScolxYfillX,"goo/cols/colx","fill!");
-EXT(YgooSioSportYout,"goo/io/port","out");
-EXT(Yclass_ancestors_setter,"goo/boot","class-ancestors-setter");
-EXT(YLsrc_locG,"goo/boot","<src-loc>");
-DEF(YgooSconditionsYcall_error_function,"goo/conditions","call-error-function");
-DEF(YgooSconditionsYLproperty_unbound_errorG,"goo/conditions","<property-unbound-error>");
-EXT(YgooScolsSlstYline_of,"goo/cols/lst","line-of");
-EXT(YgooSmathYlogn,"goo/math","logn");
-EXT(YgooScolsStabYcase_insensitive_string_hash,"goo/cols/tab","case-insensitive-string-hash");
+EXT(YgooSmacrosYvar_type,"goo/macros","var-type");
 DEF(YgooSconditionsYcondition_message,"goo/conditions","condition-message");
+EXT(YgooSmathYsin,"goo/math","sin");
+EXT(YgooSioSportYout,"goo/io/port","out");
+DEF(YgooSconditionsYDdefault_handler_info,"goo/conditions","$default-handler-info");
+DEF(YgooSconditionsYtype_error_type,"goo/conditions","type-error-type");
+EXT(Yhead_setter,"goo/boot","head-setter");
 EXT(YgooScolsScolYfind,"goo/cols/col","find");
-EXT(Ynarity_error,"goo/boot","narity-error");
-EXT(YLunionG,"goo/boot","<union>");
-EXT(YgooSioSportYclose,"goo/io/port","close");
-EXT(Yapp_filename,"goo/boot","app-filename");
-EXT(YgooSmathYmod,"goo/math","mod");
-EXT(YgooStypesYtQ,"goo/types","t?");
-DEF(YgooSconditionsYunbound_variable_error_variable,"goo/conditions","unbound-variable-error-variable");
-EXT(YgooScolsSseqYfinds,"goo/cols/seq","finds");
-EXT(YLchrG,"goo/boot","<chr>");
-EXT(YgooSioSportYport_contents,"goo/io/port","port-contents");
-EXT(YgooSfunYmet_appQ,"goo/fun","met-app?");
-EXT(YgooScolsScolYempty,"goo/cols/col","empty");
-EXT(YgooScolsSlstYLlistG,"goo/cols/lst","<list>");
+EXT(Yfun_info_src,"goo/boot","fun-info-src");
+EXT(YPwith_monitor,"goo/boot","%with-monitor");
+EXT(YgooSmathYmod_,"goo/math","mod-");
+EXT(YLclassG,"goo/boot","<class>");
+EXT(Yclass_ancestors_setter,"goo/boot","class-ancestors-setter");
+EXT(Yfun_mets_setter,"goo/boot","fun-mets-setter");
+EXT(YgooSioSportYLfile_in_portG,"goo/io/port","<file-in-port>");
+DEF(YgooSconditionsYhandler_condition_type,"goo/conditions","handler-condition-type");
+EXT(Yfun_code,"goo/boot","fun-code");
+EXT(YgooScolsSseqYcat2,"goo/cols/seq","cat2");
+EXT(YgooScolsScolYdup,"goo/cols/col","dup");
+EXT(YgooScolsStabYid_hash,"goo/cols/tab","id-hash");
+DEF(YgooSconditionsYread,"goo/conditions","read");
+DEF(YgooSconditionsYLunknown_function_errorG,"goo/conditions","<unknown-function-error>");
+EXT(YgooScolsSseqYdel_dups,"goo/cols/seq","del-dups");
+DEF(YgooSconditionsYinvoke_handler_interactively,"goo/conditions","invoke-handler-interactively");
+EXT(YgooSmathYbitQ,"goo/math","bit?");
+EXT(YOmay_isaQ,"goo/boot","@may-isa?");
+EXT(YLtypeG,"goo/boot","<type>");
+EXT(YgooSmathYround,"goo/math","round");
+DEF(YgooSconditionsYmsg,"goo/conditions","msg");
+EXT(YgooSmathYA,"goo/math","+");
+DEF(YgooSconditionsYLsimple_errorG,"goo/conditions","<simple-error>");
+EXT(YgooScolsScolYemptyQ,"goo/cols/col","empty?");
 EXT(Yhead,"goo/boot","head");
 EXT(Ygen_cache_arg_pos,"goo/boot","gen-cache-arg-pos");
-EXT(YgooScolsSseqYcat2,"goo/cols/seq","cat2");
-EXT(YgooSioSportYLstr_out_portG,"goo/io/port","<str-out-port>");
-DEF(YgooSconditionsYLinternal_errorG,"goo/conditions","<internal-error>");
-EXT(YgooSlogYNE,"goo/log","~=");
+EXT(YgooSioSportYreadyQ,"goo/io/port","ready?");
+EXT(YgooSmagYLE,"goo/mag","<=");
+EXT(YOopts_as_lst,"goo/boot","@opts-as-lst");
+EXT(YgooSioSportYLstr_in_portG,"goo/io/port","<str-in-port>");
 EXT(Yclass_ancestors,"goo/boot","class-ancestors");
-EXT(YgooSfunYincongruent_method_error,"goo/fun","incongruent-method-error");
-EXT(YPprop_unbound_error,"goo/boot","%prop-unbound-error");
-DEF(YgooSconditionsYchoose_handler,"goo/conditions","choose-handler");
-DEF(YgooSconditionsYLio_errorG,"goo/conditions","<io-error>");
-EXT(Yfun_cache,"goo/boot","fun-cache");
-EXT(YOrev,"goo/boot","@rev");
-EXT(YLsubclassG,"goo/boot","<subclass>");
-EXT(Yassert_error,"goo/boot","assert-error");
-EXT(YLmagG,"goo/boot","<mag>");
-DEF(YgooSconditionsYfab_handler,"goo/conditions","fab-handler");
+EXT(YgooSioSportYclose,"goo/io/port","close");
+DEF(YgooSconditionsYhandler_test,"goo/conditions","handler-test");
+EXT(Yfun_mets,"goo/boot","fun-mets");
+EXT(YgooSfunYOorder_specs_class,"goo/fun","@order-specs-class");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_73);
-DEFLIT(lit_34);
-DEFLIT(lit_151);
-DEFLIT(lit_143);
-DEFLIT(lit_169);
-DEFLIT(lit_222);
-DEFLIT(lit_130);
-DEFLIT(lit_218);
-DEFLIT(lit_96);
-DEFLIT(lit_98);
-DEFLIT(lit_10);
-DEFLIT(lit_21);
-DEFLIT(lit_199);
-DEFLIT(lit_2);
-DEFLIT(lit_216);
-DEFLIT(lit_90);
-DEFLIT(lit_160);
-DEFLIT(lit_221);
-DEFLIT(lit_91);
-DEFLIT(lit_36);
 DEFLIT(lit_202);
-DEFLIT(lit_27);
-DEFLIT(lit_68);
-DEFLIT(lit_142);
-DEFLIT(lit_71);
-DEFLIT(lit_70);
-DEFLIT(lit_44);
-DEFLIT(lit_124);
-DEFLIT(lit_83);
-DEFLIT(lit_3);
-DEFLIT(lit_88);
-DEFLIT(lit_215);
-DEFLIT(lit_138);
-DEFLIT(lit_87);
-DEFLIT(lit_203);
-DEFLIT(lit_162);
-DEFLIT(lit_131);
-DEFLIT(lit_206);
-DEFLIT(lit_207);
-DEFLIT(lit_235);
-DEFLIT(lit_5);
-DEFLIT(lit_197);
-DEFLIT(lit_12);
-DEFLIT(lit_125);
-DEFLIT(lit_110);
-DEFLIT(lit_93);
-DEFLIT(lit_228);
-DEFLIT(lit_127);
-DEFLIT(lit_97);
-DEFLIT(lit_226);
-DEFLIT(lit_100);
-DEFLIT(lit_189);
-DEFLIT(lit_136);
-DEFLIT(lit_126);
-DEFLIT(lit_227);
-DEFLIT(lit_40);
-DEFLIT(lit_92);
-DEFLIT(lit_48);
-DEFLIT(lit_75);
-DEFLIT(lit_77);
-DEFLIT(lit_69);
-DEFLIT(lit_123);
-DEFLIT(lit_108);
-DEFLIT(lit_214);
-DEFLIT(lit_188);
-DEFLIT(lit_41);
-DEFLIT(lit_63);
-DEFLIT(lit_217);
-DEFLIT(lit_42);
-DEFLIT(lit_113);
-DEFLIT(lit_225);
-DEFLIT(lit_198);
-DEFLIT(lit_147);
-DEFLIT(lit_173);
-DEFLIT(lit_18);
-DEFLIT(lit_80);
-DEFLIT(lit_190);
-DEFLIT(lit_74);
-DEFLIT(lit_65);
-DEFLIT(lit_13);
-DEFLIT(lit_66);
-DEFLIT(lit_141);
-DEFLIT(lit_116);
-DEFLIT(lit_192);
-DEFLIT(lit_49);
-DEFLIT(lit_229);
-DEFLIT(lit_6);
-DEFLIT(lit_146);
 DEFLIT(lit_38);
-DEFLIT(lit_61);
-DEFLIT(lit_50);
-DEFLIT(lit_212);
-DEFLIT(lit_46);
-DEFLIT(lit_45);
-DEFLIT(lit_220);
-DEFLIT(lit_134);
-DEFLIT(lit_158);
-DEFLIT(lit_223);
-DEFLIT(lit_107);
-DEFLIT(lit_167);
-DEFLIT(lit_164);
-DEFLIT(lit_193);
+DEFLIT(lit_119);
+DEFLIT(lit_221);
+DEFLIT(lit_108);
+DEFLIT(lit_62);
+DEFLIT(lit_144);
+DEFLIT(lit_189);
+DEFLIT(lit_81);
+DEFLIT(lit_218);
+DEFLIT(lit_21);
+DEFLIT(lit_96);
+DEFLIT(lit_124);
+DEFLIT(lit_149);
+DEFLIT(lit_59);
+DEFLIT(lit_44);
+DEFLIT(lit_54);
+DEFLIT(lit_231);
+DEFLIT(lit_225);
+DEFLIT(lit_147);
+DEFLIT(lit_232);
+DEFLIT(lit_166);
+DEFLIT(lit_165);
+DEFLIT(lit_86);
+DEFLIT(lit_203);
+DEFLIT(lit_16);
+DEFLIT(lit_143);
+DEFLIT(lit_121);
+DEFLIT(lit_103);
+DEFLIT(lit_109);
+DEFLIT(lit_133);
 DEFLIT(lit_238);
-DEFLIT(lit_159);
-DEFLIT(lit_117);
-DEFLIT(lit_67);
-DEFLIT(lit_112);
+DEFLIT(lit_95);
+DEFLIT(lit_60);
+DEFLIT(lit_58);
+DEFLIT(lit_33);
+DEFLIT(lit_157);
+DEFLIT(lit_196);
+DEFLIT(lit_61);
+DEFLIT(lit_104);
+DEFLIT(lit_43);
+DEFLIT(lit_53);
+DEFLIT(lit_97);
+DEFLIT(lit_70);
+DEFLIT(lit_152);
+DEFLIT(lit_65);
+DEFLIT(lit_126);
+DEFLIT(lit_92);
+DEFLIT(lit_160);
+DEFLIT(lit_26);
+DEFLIT(lit_199);
+DEFLIT(lit_51);
+DEFLIT(lit_155);
+DEFLIT(lit_168);
+DEFLIT(lit_100);
+DEFLIT(lit_125);
+DEFLIT(lit_138);
+DEFLIT(lit_156);
+DEFLIT(lit_76);
+DEFLIT(lit_175);
+DEFLIT(lit_79);
+DEFLIT(lit_87);
+DEFLIT(lit_80);
+DEFLIT(lit_30);
+DEFLIT(lit_83);
+DEFLIT(lit_193);
+DEFLIT(lit_141);
+DEFLIT(lit_25);
+DEFLIT(lit_116);
+DEFLIT(lit_136);
+DEFLIT(lit_101);
+DEFLIT(lit_36);
+DEFLIT(lit_237);
+DEFLIT(lit_94);
+DEFLIT(lit_22);
+DEFLIT(lit_192);
+DEFLIT(lit_172);
+DEFLIT(lit_48);
+DEFLIT(lit_93);
+DEFLIT(lit_64);
+DEFLIT(lit_129);
+DEFLIT(lit_195);
+DEFLIT(lit_236);
+DEFLIT(lit_68);
+DEFLIT(lit_31);
+DEFLIT(lit_229);
+DEFLIT(lit_2);
+DEFLIT(lit_56);
+DEFLIT(lit_18);
+DEFLIT(lit_74);
+DEFLIT(lit_178);
+DEFLIT(lit_220);
+DEFLIT(lit_66);
 DEFLIT(lit_111);
+DEFLIT(lit_223);
+DEFLIT(lit_131);
+DEFLIT(lit_224);
+DEFLIT(lit_52);
+DEFLIT(lit_12);
+DEFLIT(lit_35);
+DEFLIT(lit_215);
+DEFLIT(lit_32);
+DEFLIT(lit_46);
+DEFLIT(lit_41);
+DEFLIT(lit_214);
+DEFLIT(lit_219);
+DEFLIT(lit_102);
+DEFLIT(lit_24);
+DEFLIT(lit_57);
+DEFLIT(lit_1);
+DEFLIT(lit_174);
+DEFLIT(lit_85);
+DEFLIT(lit_9);
+DEFLIT(lit_207);
+DEFLIT(lit_164);
+DEFLIT(lit_107);
+DEFLIT(lit_204);
+DEFLIT(lit_50);
+DEFLIT(lit_163);
+DEFLIT(lit_75);
+DEFLIT(lit_158);
+DEFLIT(lit_226);
+DEFLIT(lit_122);
+DEFLIT(lit_198);
+DEFLIT(lit_37);
+DEFLIT(lit_72);
+DEFLIT(lit_208);
+DEFLIT(lit_42);
+DEFLIT(lit_179);
+DEFLIT(lit_159);
+DEFLIT(lit_112);
+DEFLIT(lit_8);
+DEFLIT(lit_118);
+DEFLIT(lit_201);
+DEFLIT(lit_91);
+DEFLIT(lit_180);
+DEFLIT(lit_45);
+DEFLIT(lit_148);
+DEFLIT(lit_173);
+DEFLIT(lit_206);
+DEFLIT(lit_154);
+DEFLIT(lit_235);
+DEFLIT(lit_228);
+DEFLIT(lit_49);
+DEFLIT(lit_69);
+DEFLIT(lit_169);
+DEFLIT(lit_176);
+DEFLIT(lit_3);
+DEFLIT(lit_140);
+DEFLIT(lit_127);
+DEFLIT(lit_78);
+DEFLIT(lit_188);
+DEFLIT(lit_77);
+DEFLIT(lit_10);
+DEFLIT(lit_186);
+DEFLIT(lit_23);
+DEFLIT(lit_105);
+DEFLIT(lit_4);
+DEFLIT(lit_13);
+DEFLIT(lit_28);
+DEFLIT(lit_227);
+DEFLIT(lit_187);
+DEFLIT(lit_182);
+DEFLIT(lit_120);
+DEFLIT(lit_234);
+DEFLIT(lit_181);
+DEFLIT(lit_123);
+DEFLIT(lit_55);
+DEFLIT(lit_233);
+DEFLIT(lit_106);
+DEFLIT(lit_47);
+DEFLIT(lit_88);
+DEFLIT(lit_128);
+DEFLIT(lit_113);
+DEFLIT(lit_63);
+DEFLIT(lit_170);
+DEFLIT(lit_213);
+DEFLIT(lit_190);
+DEFLIT(lit_40);
+DEFLIT(lit_89);
+DEFLIT(lit_39);
+DEFLIT(lit_132);
+DEFLIT(lit_197);
+DEFLIT(lit_171);
+DEFLIT(lit_145);
+DEFLIT(lit_82);
+DEFLIT(lit_11);
+DEFLIT(lit_151);
 DEFLIT(lit_191);
 DEFLIT(lit_115);
-DEFLIT(lit_194);
-DEFLIT(lit_121);
-DEFLIT(lit_72);
-DEFLIT(lit_1);
-DEFLIT(lit_177);
-DEFLIT(lit_154);
-DEFLIT(lit_196);
-DEFLIT(lit_43);
-DEFLIT(lit_30);
-DEFLIT(lit_171);
-DEFLIT(lit_19);
-DEFLIT(lit_31);
+DEFLIT(lit_167);
 DEFLIT(lit_84);
-DEFLIT(lit_29);
-DEFLIT(lit_32);
-DEFLIT(lit_178);
-DEFLIT(lit_237);
-DEFLIT(lit_85);
-DEFLIT(lit_86);
-DEFLIT(lit_99);
-DEFLIT(lit_155);
-DEFLIT(lit_208);
-DEFLIT(lit_185);
-DEFLIT(lit_53);
-DEFLIT(lit_166);
-DEFLIT(lit_119);
-DEFLIT(lit_55);
-DEFLIT(lit_120);
-DEFLIT(lit_79);
-DEFLIT(lit_122);
-DEFLIT(lit_52);
-DEFLIT(lit_51);
-DEFLIT(lit_4);
-DEFLIT(lit_179);
-DEFLIT(lit_106);
-DEFLIT(lit_161);
-DEFLIT(lit_183);
-DEFLIT(lit_39);
-DEFLIT(lit_118);
-DEFLIT(lit_135);
-DEFLIT(lit_128);
-DEFLIT(lit_180);
-DEFLIT(lit_81);
-DEFLIT(lit_25);
-DEFLIT(lit_56);
-DEFLIT(lit_14);
-DEFLIT(lit_230);
-DEFLIT(lit_64);
-DEFLIT(lit_132);
-DEFLIT(lit_58);
-DEFLIT(lit_145);
-DEFLIT(lit_47);
-DEFLIT(lit_37);
-DEFLIT(lit_22);
-DEFLIT(lit_153);
-DEFLIT(lit_101);
-DEFLIT(lit_89);
-DEFLIT(lit_82);
-DEFLIT(lit_144);
-DEFLIT(lit_8);
-DEFLIT(lit_231);
-DEFLIT(lit_26);
-DEFLIT(lit_163);
-DEFLIT(lit_165);
-DEFLIT(lit_129);
-DEFLIT(lit_204);
-DEFLIT(lit_182);
-DEFLIT(lit_9);
-DEFLIT(lit_140);
-DEFLIT(lit_195);
-DEFLIT(lit_172);
-DEFLIT(lit_20);
-DEFLIT(lit_103);
-DEFLIT(lit_152);
-DEFLIT(lit_137);
-DEFLIT(lit_133);
-DEFLIT(lit_105);
-DEFLIT(lit_213);
-DEFLIT(lit_94);
-DEFLIT(lit_205);
-DEFLIT(lit_139);
-DEFLIT(lit_200);
-DEFLIT(lit_170);
-DEFLIT(lit_186);
-DEFLIT(lit_184);
-DEFLIT(lit_35);
-DEFLIT(lit_201);
-DEFLIT(lit_148);
-DEFLIT(lit_23);
-DEFLIT(lit_16);
-DEFLIT(lit_59);
-DEFLIT(lit_150);
-DEFLIT(lit_181);
-DEFLIT(lit_11);
-DEFLIT(lit_102);
+DEFLIT(lit_146);
+DEFLIT(lit_162);
 DEFLIT(lit_210);
-DEFLIT(lit_211);
-DEFLIT(lit_109);
-DEFLIT(lit_209);
-DEFLIT(lit_114);
-DEFLIT(lit_28);
-DEFLIT(lit_62);
-DEFLIT(lit_232);
-DEFLIT(lit_157);
-DEFLIT(lit_15);
-DEFLIT(lit_187);
-DEFLIT(lit_24);
-DEFLIT(lit_233);
-DEFLIT(lit_57);
-DEFLIT(lit_174);
-DEFLIT(lit_156);
-DEFLIT(lit_33);
-DEFLIT(lit_219);
 DEFLIT(lit_17);
-DEFLIT(lit_236);
-DEFLIT(lit_76);
-DEFLIT(lit_168);
-DEFLIT(lit_0);
-DEFLIT(lit_224);
-DEFLIT(lit_60);
-DEFLIT(lit_95);
-DEFLIT(lit_149);
+DEFLIT(lit_20);
+DEFLIT(lit_14);
+DEFLIT(lit_29);
+DEFLIT(lit_117);
+DEFLIT(lit_209);
+DEFLIT(lit_185);
+DEFLIT(lit_34);
+DEFLIT(lit_134);
 DEFLIT(lit_7);
-DEFLIT(lit_176);
-DEFLIT(lit_175);
-DEFLIT(lit_104);
-DEFLIT(lit_234);
-DEFLIT(lit_78);
-DEFLIT(lit_54);
+DEFLIT(lit_27);
+DEFLIT(lit_200);
+DEFLIT(lit_150);
+DEFLIT(lit_130);
+DEFLIT(lit_90);
+DEFLIT(lit_142);
+DEFLIT(lit_110);
+DEFLIT(lit_71);
+DEFLIT(lit_153);
+DEFLIT(lit_73);
+DEFLIT(lit_15);
+DEFLIT(lit_5);
+DEFLIT(lit_99);
+DEFLIT(lit_222);
+DEFLIT(lit_98);
+DEFLIT(lit_161);
+DEFLIT(lit_137);
+DEFLIT(lit_19);
+DEFLIT(lit_216);
+DEFLIT(lit_205);
+DEFLIT(lit_135);
+DEFLIT(lit_211);
+DEFLIT(lit_139);
+DEFLIT(lit_114);
+DEFLIT(lit_0);
+DEFLIT(lit_230);
+DEFLIT(lit_67);
+DEFLIT(lit_183);
+DEFLIT(lit_217);
+DEFLIT(lit_212);
+DEFLIT(lit_184);
+DEFLIT(lit_6);
+DEFLIT(lit_177);
+DEFLIT(lit_194);
 
 /* FUNCTIONS: */
 
@@ -1052,8 +1056,8 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_build_condition_interactively_11) {
   P cond_type_,in_,out_;
-  P condF3656;
-  P next_metsF3655;
+  P condF3754;
+  P next_metsF3753;
   P T0,T1,T2,T3,T4,T5,T6,T7;
 LINK_STACK();
   ARG(cond_type_, 0);
@@ -1062,19 +1066,19 @@ LINK_STACK();
   T6 = (P)YPfun_reg();
   T7 = (P)YPnext_methods();
   T5 = CALL5(1,VARREF(YgooSmacrosYOchecked_next_methods),T6,T7,cond_type_,in_,out_);
-  next_metsF3655 = T5;
-  T3 = CALL1(1,VARREF(Yhead),next_metsF3655);
-  T4 = CALL1(1,VARREF(Ytail),next_metsF3655);
+  next_metsF3753 = T5;
+  T3 = CALL1(1,VARREF(Yhead),next_metsF3753);
+  T4 = CALL1(1,VARREF(Ytail),next_metsF3753);
   T2 = CALLN(1,VARREF(YgooSmacrosYnapp),6,T3,T4,cond_type_,in_,out_,Ynil);
-  condF3656 = T2;
+  condF3754 = T2;
   CALL2(1,VARREF(YgooSconditionsYmsg),out_,LITREF(lit_25));
   T0 = CALL1(1,VARREF(YgooSconditionsYread),in_);
-  CALL2(1,VARREF(YgooSconditionsYcondition_message_setter),T0,condF3656);
+  CALL2(1,VARREF(YgooSconditionsYcondition_message_setter),T0,condF3754);
   CALL2(1,VARREF(YgooSconditionsYmsg),out_,LITREF(lit_26));
   T1 = CALL1(1,VARREF(YgooSconditionsYread),in_);
-  CALL2(1,VARREF(YgooSconditionsYcondition_arguments_setter),T1,condF3656);
+  CALL2(1,VARREF(YgooSconditionsYcondition_arguments_setter),T1,condF3754);
 UNLINK_STACK();
-  RET(condF3656);
+  RET(condF3754);
 }
 
 LOCCODEDEF(fun_default_handler_12) {
@@ -1327,7 +1331,7 @@ UNLINK_STACK();
 
 FUNCODEDEF(YPwith_monitor) {
   P type_,info_,test_fun_,user_handler_,main_fun_;
-  P Uoriginal_handlersUF3657;
+  P Uoriginal_handlersUF3755;
   P T0,T1,T2,T3,T4,T5;
 LINK_STACK();
   ARG(type_, 0);
@@ -1335,13 +1339,13 @@ LINK_STACK();
   ARG(test_fun_, 2);
   ARG(user_handler_, 3);
   ARG(main_fun_, 4);
-  Uoriginal_handlersUF3657 = DYNREF(YgooSconditionsYTcurrent_handlersT);
+  Uoriginal_handlersUF3755 = DYNREF(YgooSconditionsYTcurrent_handlersT);
   T2 = FUNFAB(fun_Uhandler_functionU_32,1,user_handler_);
   T1 = CALL4(1,VARREF(YgooSconditionsYfab_handler),type_,info_,test_fun_,T2);
   T0 = CALL2(1,VARREF(YgooScolsSseqxYpushX),DYNREF(YgooSconditionsYTcurrent_handlersT),T1);
   DYNSET(YgooSconditionsYTcurrent_handlersT,T0);
   T4 = FUNFAB(fun_33,1,main_fun_);
-  T5 = FUNFAB(fun_34,1,Uoriginal_handlersUF3657);
+  T5 = FUNFAB(fun_34,1,Uoriginal_handlersUF3755);
   T3 = with_cleanup(T4,T5);
 UNLINK_STACK();
   QRET(T3);
@@ -1357,8 +1361,8 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSconditionsYsignal_handler_list) {
   P condition_,handlers_;
-  P remainingF3659;
-  P handlerF3658;
+  P remainingF3757;
+  P handlerF3756;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10;
 LINK_STACK();
   ARG(condition_, 0);
@@ -1369,17 +1373,17 @@ LINK_STACK();
     T0 = T2;
   } else {
     T10 = CALL1(1,VARREF(Yhead),handlers_);
-    handlerF3658 = T10;
+    handlerF3756 = T10;
     T9 = CALL1(1,VARREF(Ytail),handlers_);
-    remainingF3659 = T9;
-    T4 = CALL2(1,VARREF(YgooSconditionsYhandler_matchesQ),handlerF3658,condition_);
+    remainingF3757 = T9;
+    T4 = CALL2(1,VARREF(YgooSconditionsYhandler_matchesQ),handlerF3756,condition_);
     if (T4 != YPfalse) {
-      T7 = CALL1(1,VARREF(YgooSconditionsYhandler_function),handlerF3658);
-      T6 = FUNFAB(fun_36,2,condition_,remainingF3659);
+      T7 = CALL1(1,VARREF(YgooSconditionsYhandler_function),handlerF3756);
+      T6 = FUNFAB(fun_36,2,condition_,remainingF3757);
       T5 = CALL2(1,T7,condition_,T6);
       T3 = T5;
     } else {
-      T8 = CALL2(1,VARREF(YgooSconditionsYsignal_handler_list),condition_,remainingF3659);
+      T8 = CALL2(1,VARREF(YgooSconditionsYsignal_handler_list),condition_,remainingF3757);
       T3 = T8;
     }
     T0 = T3;
@@ -1604,7 +1608,7 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_describe_condition_56) {
   P c_;
-  P next_metsF3660;
+  P next_metsF3758;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9;
 LINK_STACK();
   ARG(c_, 0);
@@ -1614,9 +1618,9 @@ LINK_STACK();
   T8 = (P)YPfun_reg();
   T9 = (P)YPnext_methods();
   T7 = CALL3(1,VARREF(YgooSmacrosYOchecked_next_methods),T8,T9,c_);
-  next_metsF3660 = T7;
-  T5 = CALL1(1,VARREF(Yhead),next_metsF3660);
-  T6 = CALL1(1,VARREF(Ytail),next_metsF3660);
+  next_metsF3758 = T7;
+  T5 = CALL1(1,VARREF(Yhead),next_metsF3758);
+  T6 = CALL1(1,VARREF(Ytail),next_metsF3758);
   T4 = CALL4(1,VARREF(YgooSmacrosYnapp),T5,T6,c_,Ynil);
   T0 = CALL2(1,VARREF(YgooSmacrosYcat),T1,T4);
 UNLINK_STACK();
@@ -1640,7 +1644,7 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_describe_condition_58) {
   P c_;
-  P next_metsF3661;
+  P next_metsF3759;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9;
 LINK_STACK();
   ARG(c_, 0);
@@ -1650,9 +1654,9 @@ LINK_STACK();
   T8 = (P)YPfun_reg();
   T9 = (P)YPnext_methods();
   T7 = CALL3(1,VARREF(YgooSmacrosYOchecked_next_methods),T8,T9,c_);
-  next_metsF3661 = T7;
-  T5 = CALL1(1,VARREF(Yhead),next_metsF3661);
-  T6 = CALL1(1,VARREF(Ytail),next_metsF3661);
+  next_metsF3759 = T7;
+  T5 = CALL1(1,VARREF(Yhead),next_metsF3759);
+  T6 = CALL1(1,VARREF(Ytail),next_metsF3759);
   T4 = CALL4(1,VARREF(YgooSmacrosYnapp),T5,T6,c_,Ynil);
   T0 = CALL2(1,VARREF(YgooSmacrosYcat),T1,T4);
 UNLINK_STACK();
@@ -1849,16 +1853,16 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_describe_condition_75) {
   P c_;
-  P next_metsF3662;
+  P next_metsF3760;
   P T0,T1,T2,T3,T4,T5,T6;
 LINK_STACK();
   ARG(c_, 0);
   T5 = (P)YPfun_reg();
   T6 = (P)YPnext_methods();
   T4 = CALL3(1,VARREF(YgooSmacrosYOchecked_next_methods),T5,T6,c_);
-  next_metsF3662 = T4;
-  T2 = CALL1(1,VARREF(Yhead),next_metsF3662);
-  T3 = CALL1(1,VARREF(Ytail),next_metsF3662);
+  next_metsF3760 = T4;
+  T2 = CALL1(1,VARREF(Yhead),next_metsF3760);
+  T3 = CALL1(1,VARREF(Ytail),next_metsF3760);
   T1 = CALL4(1,VARREF(YgooSmacrosYnapp),T2,T3,c_,Ynil);
   T0 = CALL2(1,VARREF(YgooSmacrosYcat),LITREF(lit_169),T1);
 UNLINK_STACK();
@@ -2059,7 +2063,7 @@ UNLINK_STACK();
 
 LOCCODEDEF(fun_describe_condition_94) {
   P c_;
-  P next_metsF3663;
+  P next_metsF3761;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8;
 LINK_STACK();
   ARG(c_, 0);
@@ -2068,9 +2072,9 @@ LINK_STACK();
   T7 = (P)YPfun_reg();
   T8 = (P)YPnext_methods();
   T6 = CALL3(1,VARREF(YgooSmacrosYOchecked_next_methods),T7,T8,c_);
-  next_metsF3663 = T6;
-  T4 = CALL1(1,VARREF(Yhead),next_metsF3663);
-  T5 = CALL1(1,VARREF(Ytail),next_metsF3663);
+  next_metsF3761 = T6;
+  T4 = CALL1(1,VARREF(Yhead),next_metsF3761);
+  T5 = CALL1(1,VARREF(Ytail),next_metsF3761);
   T3 = CALL4(1,VARREF(YgooSmacrosYnapp),T4,T5,c_,Ynil);
   T0 = CALL2(1,VARREF(YgooSmacrosYcat),T1,T3);
 UNLINK_STACK();
@@ -2125,38 +2129,38 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSconditionsYdo_handlers_of_type) {
   P type_,f_;
-  P remainingF3666;
-  P handlerF3665;
-  P handlersF3664;
+  P remainingF3764;
+  P handlerF3763;
+  P handlersF3762;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9;
 LINK_STACK();
   ARG(type_, 0);
   ARG(f_, 1);
-  handlersF3664 = DYNREF(YgooSconditionsYTcurrent_handlersT);
+  handlersF3762 = DYNREF(YgooSconditionsYTcurrent_handlersT);
   LOOP_150: {
     P a150_0;
-    T1 = CALL1(1,VARREF(YgooSmacrosYnulQ),handlersF3664);
+    T1 = CALL1(1,VARREF(YgooSmacrosYnulQ),handlersF3762);
     if (T1 != YPfalse) {
       T0 = YPfalse;
     } else {
-      T9 = CALL1(1,VARREF(Yhead),handlersF3664);
-      handlerF3665 = T9;
-      T8 = CALL1(1,VARREF(Ytail),handlersF3664);
-      remainingF3666 = T8;
-      T4 = CALL1(1,VARREF(YgooSconditionsYhandler_condition_type),handlerF3665);
+      T9 = CALL1(1,VARREF(Yhead),handlersF3762);
+      handlerF3763 = T9;
+      T8 = CALL1(1,VARREF(Ytail),handlersF3762);
+      remainingF3764 = T8;
+      T4 = CALL1(1,VARREF(YgooSconditionsYhandler_condition_type),handlerF3763);
       T3 = CALL2(1,VARREF(YsubtypeQ),T4,type_);
       if (T3 != YPfalse) {
-        T5 = CALL1(1,VARREF(YgooSconditionsYhandler_activeQ),handlerF3665);
+        T5 = CALL1(1,VARREF(YgooSconditionsYhandler_activeQ),handlerF3763);
         T2 = T5;
       } else {
         T2 = YPfalse;
       }
       if (T2 != YPfalse) {
-        T6 = CALL1(0,f_,handlerF3665);
+        T6 = CALL1(0,f_,handlerF3763);
       } else {
       }
-      a150_0 = remainingF3666;
-      handlersF3664 = a150_0;
+      a150_0 = remainingF3764;
+      handlersF3762 = a150_0;
       goto LOOP_150;
       T0 = T7;
     }
@@ -2185,20 +2189,20 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSconditionsYlist_handlers) {
   P type_,out_;
-  P applicableF3668;
-  P iF3667;
+  P applicableF3766;
+  P iF3765;
   P T0,T1,T2;
 LINK_STACK();
   ARG(type_, 0);
   ARG(out_, 1);
-  iF3667 = YPint((P)1);
-  iF3667 = BOXFAB(iF3667);
+  iF3765 = YPint((P)1);
+  iF3765 = BOXFAB(iF3765);
   T2 = CALL2(1,VARREF(YgooScolsScolYfab),VARREF(YgooScolsSvecYLvecG),YPint((P)0));
-  applicableF3668 = T2;
-  T1 = FUNFAB(fun_100,3,out_,iF3667,applicableF3668);
+  applicableF3766 = T2;
+  T1 = FUNFAB(fun_100,3,out_,iF3765,applicableF3766);
   CALL2(1,VARREF(YgooSconditionsYdo_handlers_of_type),type_,T1);
 UNLINK_STACK();
-  RET(applicableF3668);
+  RET(applicableF3766);
 }
 
 LOCCODEDEF(fun_102) {
@@ -2211,10 +2215,10 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSconditionsYinvoke_handler_interactively) {
   P handler_,in_,out_;
-  P remainingF3672;
-  P currentF3671;
-  P handlersF3670;
-  P conditionF3669;
+  P remainingF3770;
+  P currentF3769;
+  P handlersF3768;
+  P conditionF3767;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11,T12,T13,T14,T15;
   P T16;
 LINK_STACK();
@@ -2224,34 +2228,34 @@ LINK_STACK();
   T15 = CALL1(1,VARREF(YgooSconditionsYhandler_info),handler_);
   T16 = CALL1(1,VARREF(YgooSconditionsYhandler_condition_type),handler_);
   T14 = CALL4(1,VARREF(YgooSconditionsYbuild_condition_for_handler_interactively),T15,T16,in_,out_);
-  conditionF3669 = T14;
-  T1 = CALL2(1,VARREF(YgooSconditionsYhandler_matchesQ),handler_,conditionF3669);
+  conditionF3767 = T14;
+  T1 = CALL2(1,VARREF(YgooSconditionsYhandler_matchesQ),handler_,conditionF3767);
   T0 = CALL1(1,VARREF(Ynot),T1);
   if (T0 != YPfalse) {
-    T2 = CALL3(1,VARREF(Yerror),LITREF(lit_233),handler_,conditionF3669);
+    T2 = CALL3(1,VARREF(Yerror),LITREF(lit_233),handler_,conditionF3767);
   } else {
   }
-  handlersF3670 = DYNREF(YgooSconditionsYTcurrent_handlersT);
+  handlersF3768 = DYNREF(YgooSconditionsYTcurrent_handlersT);
   LOOP_151: {
     P a151_0;
-    T4 = CALL1(1,VARREF(YgooSmacrosYnulQ),handlersF3670);
+    T4 = CALL1(1,VARREF(YgooSmacrosYnulQ),handlersF3768);
     if (T4 != YPfalse) {
       T5 = CALL2(1,VARREF(Yerror),LITREF(lit_234),handler_);
       T3 = T5;
     } else {
-      T13 = CALL1(1,VARREF(Yhead),handlersF3670);
-      currentF3671 = T13;
-      T12 = CALL1(1,VARREF(Ytail),handlersF3670);
-      remainingF3672 = T12;
-      T7 = CALL2(1,VARREF(YgooSmacrosYEE),handler_,currentF3671);
+      T13 = CALL1(1,VARREF(Yhead),handlersF3768);
+      currentF3769 = T13;
+      T12 = CALL1(1,VARREF(Ytail),handlersF3768);
+      remainingF3770 = T12;
+      T7 = CALL2(1,VARREF(YgooSmacrosYEE),handler_,currentF3769);
       if (T7 != YPfalse) {
         T10 = CALL1(1,VARREF(YgooSconditionsYhandler_function),handler_);
-        T9 = FUNFAB(fun_102,2,conditionF3669,remainingF3672);
-        T8 = CALL2(1,T10,conditionF3669,T9);
+        T9 = FUNFAB(fun_102,2,conditionF3767,remainingF3770);
+        T8 = CALL2(1,T10,conditionF3767,T9);
         T6 = T8;
       } else {
-        a151_0 = remainingF3672;
-        handlersF3670 = a151_0;
+        a151_0 = remainingF3770;
+        handlersF3768 = a151_0;
         goto LOOP_151;
         T6 = T11;
       }
@@ -2264,34 +2268,34 @@ UNLINK_STACK();
 
 FUNCODEDEF(YgooSconditionsYchoose_handler) {
   P type_,in_,out_;
-  P tmpF3675;
-  P nF3674;
-  P handlersF3673;
+  P tmpF3773;
+  P nF3772;
+  P handlersF3771;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9;
 LINK_STACK();
   ARG(type_, 0);
   ARG(in_, 1);
   ARG(out_, 2);
   T9 = CALL2(1,VARREF(YgooSconditionsYlist_handlers),type_,out_);
-  handlersF3673 = T9;
+  handlersF3771 = T9;
   CALL2(1,VARREF(YgooSconditionsYmsg),out_,LITREF(lit_237));
   T8 = CALL1(1,VARREF(YgooSconditionsYread),in_);
   T7 = CALL2(1,VARREF(YgooSmathY_),T8,YPint((P)1));
-  nF3674 = T7;
-  T3 = CALL2(1,VARREF(YgooSmagYL),nF3674,YPint((P)0));
-  tmpF3675 = T3;
-  if (tmpF3675 != YPfalse) {
-    T0 = tmpF3675;
+  nF3772 = T7;
+  T3 = CALL2(1,VARREF(YgooSmagYL),nF3772,YPint((P)0));
+  tmpF3773 = T3;
+  if (tmpF3773 != YPfalse) {
+    T0 = tmpF3773;
   } else {
-    T2 = CALL1(1,VARREF(YgooStypesYlen),handlersF3673);
-    T1 = CALL2(1,VARREF(YgooSmagYGE),nF3674,T2);
+    T2 = CALL1(1,VARREF(YgooStypesYlen),handlersF3771);
+    T1 = CALL2(1,VARREF(YgooSmagYGE),nF3772,T2);
     T0 = T1;
   }
   if (T0 != YPfalse) {
-    T4 = CALL2(1,VARREF(Yerror),LITREF(lit_238),nF3674);
+    T4 = CALL2(1,VARREF(Yerror),LITREF(lit_238),nF3772);
   } else {
   }
-  T6 = CALL2(1,VARREF(YgooSmacrosYelt),handlersF3673,nF3674);
+  T6 = CALL2(1,VARREF(YgooSmacrosYelt),handlersF3771,nF3772);
   T5 = CALL3(1,VARREF(YgooSconditionsYinvoke_handler_interactively),T6,in_,out_);
 UNLINK_STACK();
   QRET(T5);
@@ -2312,7 +2316,7 @@ DEFCREGS();
   lit_1 = YPPsym((P)"default-handler");
   lit_2 = YPPlist(1,YPPsym((P)"c"));
   T2 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLconditionG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_default_handler_0 = YPfab_met(FUNCODEREF(fun_default_handler_0),T2,LITREF(lit_1),LITREF(lit_2),sloc(27),YPsb((P)"(fun ((c <condition>)) #f)"));
+  fun_default_handler_0 = YPfab_met(FUNCODEREF(fun_default_handler_0),T2,LITREF(lit_1),LITREF(lit_2),sloc(27),YPfalse);
   T4 = VARREF_OR(YgooSconditionsYdefault_handler,YPfalse);
   T5 = fun_default_handler_0;
   T3 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T4,T5);
@@ -2321,7 +2325,7 @@ DEFCREGS();
   lit_4 = YPPlist(1,YPPsym((P)"c"));
   lit_5 = YPsb((P)"Anonymous condition %=");
   T6 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLconditionG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_1 = YPfab_met(FUNCODEREF(fun_describe_condition_1),T6,LITREF(lit_3),LITREF(lit_4),sloc(30),YPsb((P)"(fun ((c <condition>) => <str>) (msg-to-str Anonymous condition %= c))"));
+  fun_describe_condition_1 = YPfab_met(FUNCODEREF(fun_describe_condition_1),T6,LITREF(lit_3),LITREF(lit_4),sloc(30),YPfalse);
   T8 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T9 = fun_describe_condition_1;
   T7 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T8,T9);
@@ -2331,7 +2335,7 @@ DEFCREGS();
   lit_8 = YPsb((P)"Anonymous handler for %s");
   T11 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YgooSconditionsYLconditionG));
   T10 = YPfab_sig(YPPlist(1,T11),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_default_handler_description_2 = YPfab_met(FUNCODEREF(fun_default_handler_description_2),T10,LITREF(lit_6),LITREF(lit_7),sloc(33),YPsb((P)"(fun ((cond-type (t< <condition>)) => <str>) (msg-to-str Anonymous handler for %s cond-type))"));
+  fun_default_handler_description_2 = YPfab_met(FUNCODEREF(fun_default_handler_description_2),T10,LITREF(lit_6),LITREF(lit_7),sloc(33),YPfalse);
   T13 = VARREF_OR(YgooSconditionsYdefault_handler_description,YPfalse);
   T14 = fun_default_handler_description_2;
   T12 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T13,T14);
@@ -2340,7 +2344,7 @@ DEFCREGS();
   lit_10 = YPPlist(3,YPPsym((P)"cond-type"),YPPsym((P)"in"),YPPsym((P)"out"));
   T16 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YgooSconditionsYLconditionG));
   T15 = YPfab_sig(YPPlist(3,T16,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YgooSconditionsYLconditionG),Ynil);
-  fun_build_condition_interactively_3 = YPfab_met(FUNCODEREF(fun_build_condition_interactively_3),T15,LITREF(lit_9),LITREF(lit_10),sloc(36),YPsb((P)"(fun ((cond-type (t< <condition>)) in out => <condition>) (new cond-type))"));
+  fun_build_condition_interactively_3 = YPfab_met(FUNCODEREF(fun_build_condition_interactively_3),T15,LITREF(lit_9),LITREF(lit_10),sloc(36),YPfalse);
   T18 = VARREF_OR(YgooSconditionsYbuild_condition_interactively,YPfalse);
   T19 = fun_build_condition_interactively_3;
   T17 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T18,T19);
@@ -2352,7 +2356,7 @@ DEFCREGS();
   lit_12 = YPPsym((P)"condition-message");
   lit_13 = YPPlist(1,YPPsym((P)"_x"));
   T22 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLsimple_conditionG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_condition_message_4 = YPfab_met(FUNCODEREF(fun_condition_message_4),T22,LITREF(lit_12),LITREF(lit_13),sloc(41),YPsb((P)"(fun ((_x <simple-condition>)) (prop-value _x condition-message))"));
+  fun_condition_message_4 = YPfab_met(FUNCODEREF(fun_condition_message_4),T22,LITREF(lit_12),LITREF(lit_13),sloc(41),YPfalse);
   T24 = VARREF_OR(YgooSconditionsYcondition_message,YPfalse);
   T25 = fun_condition_message_4;
   T23 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T24,T25);
@@ -2360,7 +2364,7 @@ DEFCREGS();
   lit_14 = YPPsym((P)"condition-message-setter");
   lit_15 = YPPlist(2,YPPsym((P)"_z"),YPPsym((P)"_x"));
   T26 = YPfab_sig(YPPlist(2,VARREF(YLstrG),VARREF(YgooSconditionsYLsimple_conditionG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_condition_message_setter_5 = YPfab_met(FUNCODEREF(fun_condition_message_setter_5),T26,LITREF(lit_14),LITREF(lit_15),sloc(41),YPsb((P)"(fun ((_z <str>) (_x <simple-condition>)) (prop-value-setter _z _x condition-message))"));
+  fun_condition_message_setter_5 = YPfab_met(FUNCODEREF(fun_condition_message_setter_5),T26,LITREF(lit_14),LITREF(lit_15),sloc(41),YPfalse);
   T28 = VARREF_OR(YgooSconditionsYcondition_message_setter,YPfalse);
   T29 = fun_condition_message_setter_5;
   T27 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T28,T29);
@@ -2368,13 +2372,13 @@ DEFCREGS();
   lit_16 = YPPlist(1,YPPsym((P)"_x"));
   lit_17 = YPsb((P)"");
   T30 = YPfab_sig(YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_6 = YPfab_met(FUNCODEREF(fun_6),T30,YPfalse,LITREF(lit_16),sloc(41),YPsb((P)"(fun ((_x <any>)) )"));
+  fun_6 = YPfab_met(FUNCODEREF(fun_6),T30,YPfalse,LITREF(lit_16),sloc(41),YPfalse);
   T31 = fun_6;
   XCALL5(1,VARREF(YgooSclassYPprop),VARREF(YgooSconditionsYLsimple_conditionG),VARREF(YgooSconditionsYcondition_message),VARREF(YgooSconditionsYcondition_message_setter),VARREF(YLstrG),T31);
   lit_18 = YPPsym((P)"condition-arguments");
   lit_19 = YPPlist(1,YPPsym((P)"_x"));
   T32 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLsimple_conditionG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_condition_arguments_7 = YPfab_met(FUNCODEREF(fun_condition_arguments_7),T32,LITREF(lit_18),LITREF(lit_19),sloc(42),YPsb((P)"(fun ((_x <simple-condition>)) (prop-value _x condition-arguments))"));
+  fun_condition_arguments_7 = YPfab_met(FUNCODEREF(fun_condition_arguments_7),T32,LITREF(lit_18),LITREF(lit_19),sloc(42),YPfalse);
   T34 = VARREF_OR(YgooSconditionsYcondition_arguments,YPfalse);
   T35 = fun_condition_arguments_7;
   T33 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T34,T35);
@@ -2382,19 +2386,19 @@ DEFCREGS();
   lit_20 = YPPsym((P)"condition-arguments-setter");
   lit_21 = YPPlist(2,YPPsym((P)"_z"),YPPsym((P)"_x"));
   T36 = YPfab_sig(YPPlist(2,VARREF(YLlstG),VARREF(YgooSconditionsYLsimple_conditionG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_condition_arguments_setter_8 = YPfab_met(FUNCODEREF(fun_condition_arguments_setter_8),T36,LITREF(lit_20),LITREF(lit_21),sloc(42),YPsb((P)"(fun ((_z <lst>) (_x <simple-condition>)) (prop-value-setter _z _x condition-arguments))"));
+  fun_condition_arguments_setter_8 = YPfab_met(FUNCODEREF(fun_condition_arguments_setter_8),T36,LITREF(lit_20),LITREF(lit_21),sloc(42),YPfalse);
   T38 = VARREF_OR(YgooSconditionsYcondition_arguments_setter,YPfalse);
   T39 = fun_condition_arguments_setter_8;
   T37 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T38,T39);
   VARSET(YgooSconditionsYcondition_arguments_setter,T37);
   lit_22 = YPPlist(1,YPPsym((P)"_x"));
   T40 = YPfab_sig(YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_9 = YPfab_met(FUNCODEREF(fun_9),T40,YPfalse,LITREF(lit_22),sloc(42),YPsb((P)"(fun ((_x <any>)) '())"));
+  fun_9 = YPfab_met(FUNCODEREF(fun_9),T40,YPfalse,LITREF(lit_22),sloc(42),YPfalse);
   T41 = fun_9;
   XCALL5(1,VARREF(YgooSclassYPprop),VARREF(YgooSconditionsYLsimple_conditionG),VARREF(YgooSconditionsYcondition_arguments),VARREF(YgooSconditionsYcondition_arguments_setter),VARREF(YLlstG),T41);
   lit_23 = YPPlist(1,YPPsym((P)"c"));
   T42 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLsimple_conditionG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_10 = YPfab_met(FUNCODEREF(fun_describe_condition_10),T42,LITREF(lit_3),LITREF(lit_23),sloc(44),YPsb((P)"(fun ((c <simple-condition>) => <str>) (app msg-to-str (condition-message c) (condition-arguments c)))"));
+  fun_describe_condition_10 = YPfab_met(FUNCODEREF(fun_describe_condition_10),T42,LITREF(lit_3),LITREF(lit_23),sloc(44),YPfalse);
   T44 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T45 = fun_describe_condition_10;
   T43 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T44,T45);
@@ -2404,7 +2408,7 @@ DEFCREGS();
   lit_26 = YPsb((P)"Condition format arguments: ");
   T47 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YgooSconditionsYLsimple_conditionG));
   T46 = YPfab_sig(YPPlist(3,T47,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YgooSconditionsYLconditionG),Ynil);
-  fun_build_condition_interactively_11 = YPfab_met(FUNCODEREF(fun_build_condition_interactively_11),T46,LITREF(lit_9),LITREF(lit_24),sloc(47),YPsb((P)"(fun ((cond-type (t< <simple-condition>)) in out => <condition>) (def cond (sup cond-type in out)) (msg out Condition format string: ) (set (condition-message cond) (read in)) (msg out Condition format arguments: ) (set (condition-arguments cond) (read in)) cond)"));
+  fun_build_condition_interactively_11 = YPfab_met(FUNCODEREF(fun_build_condition_interactively_11),T46,LITREF(lit_9),LITREF(lit_24),sloc(47),YPfalse);
   T49 = VARREF_OR(YgooSconditionsYbuild_condition_interactively,YPfalse);
   T50 = fun_build_condition_interactively_11;
   T48 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T49,T50);
@@ -2416,7 +2420,7 @@ DEFCREGS();
   lit_28 = YPPlist(1,YPPsym((P)"c"));
   lit_29 = YPsb((P)"%s\n");
   T53 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLserious_conditionG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_default_handler_12 = YPfab_met(FUNCODEREF(fun_default_handler_12),T53,LITREF(lit_1),LITREF(lit_28),sloc(58),YPsb((P)"(fun ((c <serious-condition>)) (msg out %s\n (describe-condition c)) (%invoke-debugger c))"));
+  fun_default_handler_12 = YPfab_met(FUNCODEREF(fun_default_handler_12),T53,LITREF(lit_1),LITREF(lit_28),sloc(58),YPfalse);
   T55 = VARREF_OR(YgooSconditionsYdefault_handler,YPfalse);
   T56 = fun_default_handler_12;
   T54 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T55,T56);
@@ -2438,7 +2442,7 @@ DEFCREGS();
   lit_34 = YPsb((P)"Anonymous restart of type %s");
   T65 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YgooSconditionsYLrestartG));
   T64 = YPfab_sig(YPPlist(1,T65),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_default_handler_description_13 = YPfab_met(FUNCODEREF(fun_default_handler_description_13),T64,LITREF(lit_6),LITREF(lit_33),sloc(82),YPsb((P)"(fun ((cond-type (t< <restart>)) => <str>) (msg-to-str Anonymous restart of type %s cond-type))"));
+  fun_default_handler_description_13 = YPfab_met(FUNCODEREF(fun_default_handler_description_13),T64,LITREF(lit_6),LITREF(lit_33),sloc(82),YPfalse);
   T67 = VARREF_OR(YgooSconditionsYdefault_handler_description,YPfalse);
   T68 = fun_default_handler_description_13;
   T66 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T67,T68);
@@ -2450,7 +2454,7 @@ DEFCREGS();
   lit_36 = YPPsym((P)"incongruent-method-error-generic");
   lit_37 = YPPlist(1,YPPsym((P)"_x"));
   T71 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLincongruent_method_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_incongruent_method_error_generic_14 = YPfab_met(FUNCODEREF(fun_incongruent_method_error_generic_14),T71,LITREF(lit_36),LITREF(lit_37),sloc(86),YPsb((P)"(fun ((_x <incongruent-method-error>)) (prop-value _x incongruent-method-error-generic))"));
+  fun_incongruent_method_error_generic_14 = YPfab_met(FUNCODEREF(fun_incongruent_method_error_generic_14),T71,LITREF(lit_36),LITREF(lit_37),sloc(86),YPfalse);
   T73 = VARREF_OR(YgooSconditionsYincongruent_method_error_generic,YPfalse);
   T74 = fun_incongruent_method_error_generic_14;
   T72 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T73,T74);
@@ -2459,7 +2463,7 @@ DEFCREGS();
   lit_38 = YPPsym((P)"incongruent-method-error-method");
   lit_39 = YPPlist(1,YPPsym((P)"_x"));
   T75 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLincongruent_method_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_incongruent_method_error_method_15 = YPfab_met(FUNCODEREF(fun_incongruent_method_error_method_15),T75,LITREF(lit_38),LITREF(lit_39),sloc(87),YPsb((P)"(fun ((_x <incongruent-method-error>)) (prop-value _x incongruent-method-error-method))"));
+  fun_incongruent_method_error_method_15 = YPfab_met(FUNCODEREF(fun_incongruent_method_error_method_15),T75,LITREF(lit_38),LITREF(lit_39),sloc(87),YPfalse);
   T77 = VARREF_OR(YgooSconditionsYincongruent_method_error_method,YPfalse);
   T78 = fun_incongruent_method_error_method_15;
   T76 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T77,T78);
@@ -2468,7 +2472,7 @@ DEFCREGS();
   lit_40 = YPPlist(1,YPPsym((P)"c"));
   lit_41 = YPsb((P)"Method %= incongruent with generic %=.");
   T81 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLincongruent_method_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  T80 = fun_describe_condition_16 = YPfab_met(FUNCODEREF(fun_describe_condition_16),T81,LITREF(lit_3),LITREF(lit_40),sloc(89),YPsb((P)"(fun ((c <incongruent-method-error>) => <str>) (msg-to-str Method %= incongruent with generic %=. (incongruent-method-error-method c) (incongruent-method-error-generic c)))"));
+  T80 = fun_describe_condition_16 = YPfab_met(FUNCODEREF(fun_describe_condition_16),T81,LITREF(lit_3),LITREF(lit_40),sloc(89),YPfalse);
   T84 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T85 = fun_describe_condition_16;
   T83 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T84,T85);
@@ -2494,7 +2498,7 @@ DEFCREGS();
   lit_44 = YPsb((P)"Replace the generic function with an nul, congruent one");
   T3 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YgooSfunYLreplace_generic_restartG));
   T2 = YPfab_sig(YPPlist(1,T3),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_default_handler_description_17 = YPfab_met(FUNCODEREF(fun_default_handler_description_17),T2,LITREF(lit_6),LITREF(lit_43),sloc(96),YPsb((P)"(fun ((cond-type (t< <replace-generic-restart>)) => <str>) Replace the generic function with an nul, congruent one)"));
+  fun_default_handler_description_17 = YPfab_met(FUNCODEREF(fun_default_handler_description_17),T2,LITREF(lit_6),LITREF(lit_43),sloc(96),YPfalse);
   T5 = VARREF_OR(YgooSconditionsYdefault_handler_description,YPfalse);
   T6 = fun_default_handler_description_17;
   T4 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T5,T6);
@@ -2506,7 +2510,7 @@ DEFCREGS();
   lit_46 = YPPsym((P)"describe-handler");
   lit_47 = YPPlist(2,YPPsym((P)"info"),YPPsym((P)"condition-type"));
   T9 = YPfab_sig(YPPlist(2,VARREF(YgooSconditionsYLhandler_infoG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLstrG),Ynil);
-  fun_describe_handler_18 = YPfab_met(FUNCODEREF(fun_describe_handler_18),T9,LITREF(lit_46),LITREF(lit_47),sloc(113),YPsb((P)"(fun ((info <handler-info>) condition-type => <str>) (default-handler-description condition-type))"));
+  fun_describe_handler_18 = YPfab_met(FUNCODEREF(fun_describe_handler_18),T9,LITREF(lit_46),LITREF(lit_47),sloc(113),YPfalse);
   T11 = VARREF_OR(YgooSconditionsYdescribe_handler,YPfalse);
   T12 = fun_describe_handler_18;
   T10 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T11,T12);
@@ -2514,7 +2518,7 @@ DEFCREGS();
   lit_48 = YPPsym((P)"build-condition-for-handler-interactively");
   lit_49 = YPPlist(4,YPPsym((P)"info"),YPPsym((P)"condition-type"),YPPsym((P)"in"),YPPsym((P)"out"));
   T13 = YPfab_sig(YPPlist(4,VARREF(YgooSconditionsYLhandler_infoG),VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)4),VARREF(YgooSconditionsYLconditionG),Ynil);
-  fun_build_condition_for_handler_interactively_19 = YPfab_met(FUNCODEREF(fun_build_condition_for_handler_interactively_19),T13,LITREF(lit_48),LITREF(lit_49),sloc(116),YPsb((P)"(fun ((info <handler-info>) condition-type in out => <condition>) (build-condition-interactively condition-type in out))"));
+  fun_build_condition_for_handler_interactively_19 = YPfab_met(FUNCODEREF(fun_build_condition_for_handler_interactively_19),T13,LITREF(lit_48),LITREF(lit_49),sloc(116),YPfalse);
   T15 = VARREF_OR(YgooSconditionsYbuild_condition_for_handler_interactively,YPfalse);
   T16 = fun_build_condition_for_handler_interactively_19;
   T14 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T15,T16);
@@ -2528,7 +2532,7 @@ DEFCREGS();
   lit_51 = YPPsym((P)"handler-info-message");
   lit_52 = YPPlist(1,YPPsym((P)"_x"));
   T20 = YPfab_sig(YPPlist(1,VARREF(YgooSfunYLsimple_handler_infoG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_handler_info_message_20 = YPfab_met(FUNCODEREF(fun_handler_info_message_20),T20,LITREF(lit_51),LITREF(lit_52),sloc(123),YPsb((P)"(fun ((_x <simple-handler-info>)) (prop-value _x handler-info-message))"));
+  fun_handler_info_message_20 = YPfab_met(FUNCODEREF(fun_handler_info_message_20),T20,LITREF(lit_51),LITREF(lit_52),sloc(123),YPfalse);
   T22 = VARREF_OR(YgooSfunYhandler_info_message,YPfalse);
   T23 = fun_handler_info_message_20;
   T21 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T22,T23);
@@ -2537,19 +2541,19 @@ DEFCREGS();
   lit_53 = YPPsym((P)"handler-info-arguments");
   lit_54 = YPPlist(1,YPPsym((P)"_x"));
   T24 = YPfab_sig(YPPlist(1,VARREF(YgooSfunYLsimple_handler_infoG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_handler_info_arguments_21 = YPfab_met(FUNCODEREF(fun_handler_info_arguments_21),T24,LITREF(lit_53),LITREF(lit_54),sloc(124),YPsb((P)"(fun ((_x <simple-handler-info>)) (prop-value _x handler-info-arguments))"));
+  fun_handler_info_arguments_21 = YPfab_met(FUNCODEREF(fun_handler_info_arguments_21),T24,LITREF(lit_53),LITREF(lit_54),sloc(124),YPfalse);
   T26 = VARREF_OR(YgooSfunYhandler_info_arguments,YPfalse);
   T27 = fun_handler_info_arguments_21;
   T25 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T26,T27);
   VARSET(YgooSfunYhandler_info_arguments,T25);
   lit_55 = YPPlist(1,YPPsym((P)"_x"));
   T28 = YPfab_sig(YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_22 = YPfab_met(FUNCODEREF(fun_22),T28,YPfalse,LITREF(lit_55),sloc(124),YPsb((P)"(fun ((_x <any>)) '())"));
+  fun_22 = YPfab_met(FUNCODEREF(fun_22),T28,YPfalse,LITREF(lit_55),sloc(124),YPfalse);
   T29 = fun_22;
   XCALL5(1,VARREF(YgooSclassYPprop),VARREF(YgooSfunYLsimple_handler_infoG),VARREF(YgooSfunYhandler_info_arguments),YPfalse,VARREF(YLlstG),T29);
   lit_56 = YPPlist(2,YPPsym((P)"info"),YPPsym((P)"condition-type"));
   T30 = YPfab_sig(YPPlist(2,VARREF(YgooSfunYLsimple_handler_infoG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLstrG),Ynil);
-  fun_describe_handler_23 = YPfab_met(FUNCODEREF(fun_describe_handler_23),T30,LITREF(lit_46),LITREF(lit_56),sloc(126),YPsb((P)"(fun ((info <simple-handler-info>) condition-type => <str>) (app msg-to-str (handler-info-message info) (handler-info-arguments info)))"));
+  fun_describe_handler_23 = YPfab_met(FUNCODEREF(fun_describe_handler_23),T30,LITREF(lit_46),LITREF(lit_56),sloc(126),YPfalse);
   T32 = VARREF_OR(YgooSconditionsYdescribe_handler,YPfalse);
   T33 = fun_describe_handler_23;
   T31 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T32,T33);
@@ -2562,7 +2566,7 @@ DEFCREGS();
   lit_58 = YPPsym((P)"handler-condition-type");
   lit_59 = YPPlist(1,YPPsym((P)"_x"));
   T36 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLhandlerG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_handler_condition_type_24 = YPfab_met(FUNCODEREF(fun_handler_condition_type_24),T36,LITREF(lit_58),LITREF(lit_59),sloc(144),YPsb((P)"(fun ((_x <handler>)) (prop-value _x handler-condition-type))"));
+  fun_handler_condition_type_24 = YPfab_met(FUNCODEREF(fun_handler_condition_type_24),T36,LITREF(lit_58),LITREF(lit_59),sloc(144),YPfalse);
   T38 = VARREF_OR(YgooSconditionsYhandler_condition_type,YPfalse);
   T39 = fun_handler_condition_type_24;
   T37 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T38,T39);
@@ -2572,7 +2576,7 @@ DEFCREGS();
   lit_60 = YPPsym((P)"handler-info");
   lit_61 = YPPlist(1,YPPsym((P)"_x"));
   T41 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLhandlerG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_handler_info_25 = YPfab_met(FUNCODEREF(fun_handler_info_25),T41,LITREF(lit_60),LITREF(lit_61),sloc(145),YPsb((P)"(fun ((_x <handler>)) (prop-value _x handler-info))"));
+  fun_handler_info_25 = YPfab_met(FUNCODEREF(fun_handler_info_25),T41,LITREF(lit_60),LITREF(lit_61),sloc(145),YPfalse);
   T43 = VARREF_OR(YgooSconditionsYhandler_info,YPfalse);
   T44 = fun_handler_info_25;
   T42 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T43,T44);
@@ -2581,7 +2585,7 @@ DEFCREGS();
   lit_62 = YPPsym((P)"handler-test");
   lit_63 = YPPlist(1,YPPsym((P)"_x"));
   T45 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLhandlerG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_handler_test_26 = YPfab_met(FUNCODEREF(fun_handler_test_26),T45,LITREF(lit_62),LITREF(lit_63),sloc(146),YPsb((P)"(fun ((_x <handler>)) (prop-value _x handler-test))"));
+  fun_handler_test_26 = YPfab_met(FUNCODEREF(fun_handler_test_26),T45,LITREF(lit_62),LITREF(lit_63),sloc(146),YPfalse);
   T47 = VARREF_OR(YgooSconditionsYhandler_test,YPfalse);
   T48 = fun_handler_test_26;
   T46 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T47,T48);
@@ -2590,7 +2594,7 @@ DEFCREGS();
   lit_64 = YPPsym((P)"handler-function");
   lit_65 = YPPlist(1,YPPsym((P)"_x"));
   T49 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLhandlerG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_handler_function_27 = YPfab_met(FUNCODEREF(fun_handler_function_27),T49,LITREF(lit_64),LITREF(lit_65),sloc(147),YPsb((P)"(fun ((_x <handler>)) (prop-value _x handler-function))"));
+  fun_handler_function_27 = YPfab_met(FUNCODEREF(fun_handler_function_27),T49,LITREF(lit_64),LITREF(lit_65),sloc(147),YPfalse);
   T51 = VARREF_OR(YgooSconditionsYhandler_function,YPfalse);
   T52 = fun_handler_function_27;
   T50 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T51,T52);
@@ -2600,19 +2604,19 @@ DEFCREGS();
   lit_67 = YPPlist(4,YPPsym((P)"type"),YPPsym((P)"info"),YPPsym((P)"test"),YPPsym((P)"f"));
   T54 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YgooSconditionsYLconditionG));
   T53 = YPfab_sig(YPPlist(4,T54,VARREF(YgooSconditionsYLhandler_infoG),VARREF(YLfunG),VARREF(YLfunG)),YPfalse,YPint((P)4),VARREF(YgooSconditionsYLhandlerG),Ynil);
-  YgooSconditionsYfab_handler = YPfab_met(FUNCODEREF(YgooSconditionsYfab_handler),T53,LITREF(lit_66),LITREF(lit_67),sloc(149),YPsb((P)"(fun ((type (t< <condition>)) (info <handler-info>) (test <fun>) (f <fun>) => <handler>) (new <handler> handler-condition-type type handler-info info handler-test test handler-function f))"));
+  YgooSconditionsYfab_handler = YPfab_met(FUNCODEREF(YgooSconditionsYfab_handler),T53,LITREF(lit_66),LITREF(lit_67),sloc(149),YPfalse);
   T55 = YgooSconditionsYfab_handler;
   VARSET(YgooSconditionsYfab_handler,T55);
   lit_68 = YPPsym((P)"handler-active?");
   lit_69 = YPPlist(1,YPPsym((P)"handler"));
   T56 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLhandlerG)),YPfalse,YPint((P)1),VARREF(YLlogG),Ynil);
-  YgooSconditionsYhandler_activeQ = YPfab_met(FUNCODEREF(YgooSconditionsYhandler_activeQ),T56,LITREF(lit_68),LITREF(lit_69),sloc(157),YPsb((P)"(fun ((handler <handler>) => <log>) ((handler-test handler)))"));
+  YgooSconditionsYhandler_activeQ = YPfab_met(FUNCODEREF(YgooSconditionsYhandler_activeQ),T56,LITREF(lit_68),LITREF(lit_69),sloc(157),YPfalse);
   T57 = YgooSconditionsYhandler_activeQ;
   VARSET(YgooSconditionsYhandler_activeQ,T57);
   lit_70 = YPPsym((P)"handler-matches?");
   lit_71 = YPPlist(2,YPPsym((P)"handler"),YPPsym((P)"condition"));
   T58 = YPfab_sig(YPPlist(2,VARREF(YgooSconditionsYLhandlerG),VARREF(YgooSconditionsYLconditionG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  YgooSconditionsYhandler_matchesQ = YPfab_met(FUNCODEREF(YgooSconditionsYhandler_matchesQ),T58,LITREF(lit_70),LITREF(lit_71),sloc(160),YPsb((P)"(fun ((handler <handler>) (condition <condition>) => <log>) (and (isa? condition (handler-condition-type handler)) (handler-active? handler)))"));
+  YgooSconditionsYhandler_matchesQ = YPfab_met(FUNCODEREF(YgooSconditionsYhandler_matchesQ),T58,LITREF(lit_70),LITREF(lit_71),sloc(160),YPfalse);
   T59 = YgooSconditionsYhandler_matchesQ;
   VARSET(YgooSconditionsYhandler_matchesQ,T59);
   lit_72 = YPPsym((P)"%with-monitor");
@@ -2622,37 +2626,37 @@ DEFCREGS();
   lit_76 = YPPlist(1,YPPsym((P)"_resume_"));
   lit_77 = Ynil;
   T65 = YPfab_sig(YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_31 = YPfab_met(FUNCODEREF(fun_31),T65,YPfalse,LITREF(lit_76),sloc(169),YPsb((P)"(fun (_resume_) (user-handler condition _resume_) (_next-handler_))"));
+  fun_31 = YPfab_met(FUNCODEREF(fun_31),T65,YPfalse,LITREF(lit_76),sloc(169),YPfalse);
   T64 = YPfab_sig(YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_Uhandler_functionU_32 = YPfab_met(FUNCODEREF(fun_Uhandler_functionU_32),T64,LITREF(lit_74),LITREF(lit_75),sloc(168),YPsb((P)"(fun (condition _next-handler_) (esc _resume_ (user-handler condition _resume_) (_next-handler_)))"));
+  fun_Uhandler_functionU_32 = YPfab_met(FUNCODEREF(fun_Uhandler_functionU_32),T64,LITREF(lit_74),LITREF(lit_75),sloc(168),YPfalse);
   T63 = YPfab_sig(Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
-  fun_33 = YPfab_met(FUNCODEREF(fun_33),T63,YPfalse,LITREF(lit_77),sloc(174),YPsb((P)"(fun () (main-fun))"));
+  fun_33 = YPfab_met(FUNCODEREF(fun_33),T63,YPfalse,LITREF(lit_77),sloc(174),YPfalse);
   T62 = YPfab_sig(Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
-  fun_34 = YPfab_met(FUNCODEREF(fun_34),T62,YPfalse,LITREF(lit_77),sloc(174),YPsb((P)"(fun () (set *current-handlers* _original-handlers_))"));
+  fun_34 = YPfab_met(FUNCODEREF(fun_34),T62,YPfalse,LITREF(lit_77),sloc(174),YPfalse);
   T61 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YgooSconditionsYLconditionG));
   T60 = YPfab_sig(YPPlist(5,T61,VARREF(YgooSconditionsYLhandler_infoG),VARREF(YLfunG),VARREF(YLfunG),VARREF(YLfunG)),YPfalse,YPint((P)5),VARREF(YLanyG),Ynil);
-  YPwith_monitor = YPfab_met(FUNCODEREF(YPwith_monitor),T60,LITREF(lit_72),LITREF(lit_73),sloc(164),YPsb((P)"(fun ((type (t< <condition>)) (info <handler-info>) (test-fun <fun>) (user-handler <fun>) (main-fun <fun>)) (def _original-handlers_ *current-handlers*) (loc ((_handler-function_ (condition _next-handler_) (esc _resume_ (user-handler condition _resume_) (_next-handler_)))) (pushf *current-handlers* (fab-handler type info test-fun _handler-function_)) (fin (main-fun) (set *current-handlers* _original-handlers_))))"));
+  YPwith_monitor = YPfab_met(FUNCODEREF(YPwith_monitor),T60,LITREF(lit_72),LITREF(lit_73),sloc(164),YPfalse);
   T66 = YPwith_monitor;
   VARSET(YPwith_monitor,T66);
   lit_78 = YPPsym((P)"signal-handler-list");
   lit_79 = YPPlist(2,YPPsym((P)"condition"),YPPsym((P)"handlers"));
   T68 = YPfab_sig(Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
-  fun_36 = YPfab_met(FUNCODEREF(fun_36),T68,YPfalse,LITREF(lit_77),sloc(184),YPsb((P)"(fun () (signal-handler-list condition remaining))"));
+  fun_36 = YPfab_met(FUNCODEREF(fun_36),T68,YPfalse,LITREF(lit_77),sloc(184),YPfalse);
   T67 = YPfab_sig(YPPlist(2,VARREF(YgooSconditionsYLconditionG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YgooSconditionsYsignal_handler_list = YPfab_met(FUNCODEREF(YgooSconditionsYsignal_handler_list),T67,LITREF(lit_78),LITREF(lit_79),sloc(177),YPsb((P)"(fun ((condition <condition>) (handlers <lst>) => <any>) (if (nul? handlers) (default-handler condition) (let ((handler (head handlers)) (remaining (tail handlers))) (if (handler-matches? handler condition) ((handler-function handler) condition (fun () (signal-handler-list condition remaining))) (signal-handler-list condition remaining)))))"));
+  YgooSconditionsYsignal_handler_list = YPfab_met(FUNCODEREF(YgooSconditionsYsignal_handler_list),T67,LITREF(lit_78),LITREF(lit_79),sloc(177),YPfalse);
   T69 = YgooSconditionsYsignal_handler_list;
   VARSET(YgooSconditionsYsignal_handler_list,T69);
   lit_80 = YPPsym((P)"sig");
   lit_81 = YPPlist(2,YPPsym((P)"condition"),YPPsym((P)"args"));
   T70 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLconditionG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_sig_38 = YPfab_met(FUNCODEREF(fun_sig_38),T70,LITREF(lit_80),LITREF(lit_81),sloc(187),YPsb((P)"(fun ((condition <condition>) (args ...)) (signal-handler-list condition *current-handlers*))"));
+  fun_sig_38 = YPfab_met(FUNCODEREF(fun_sig_38),T70,LITREF(lit_80),LITREF(lit_81),sloc(187),YPfalse);
   T72 = VARREF_OR(YgooSconditionsYsig,YPfalse);
   T73 = fun_sig_38;
   T71 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T72,T73);
   VARSET(YgooSconditionsYsig,T71);
   lit_82 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"args"));
   T74 = YPfab_sig(YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_sig_39 = YPfab_met(FUNCODEREF(fun_sig_39),T74,LITREF(lit_80),LITREF(lit_82),sloc(190),YPsb((P)"(fun ((c <str>) (args ...)) (sig (new <simple-condition> condition-message c condition-arguments (as <lst> args))))"));
+  fun_sig_39 = YPfab_met(FUNCODEREF(fun_sig_39),T74,LITREF(lit_80),LITREF(lit_82),sloc(190),YPfalse);
   T76 = VARREF_OR(YgooSconditionsYsig,YPfalse);
   T77 = fun_sig_39;
   T75 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T76,T77);
@@ -2660,14 +2664,14 @@ DEFCREGS();
   lit_83 = YPPsym((P)"error");
   lit_84 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"args"));
   T78 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLerrorG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_error_40 = YPfab_met(FUNCODEREF(fun_error_40),T78,LITREF(lit_83),LITREF(lit_84),sloc(197),YPsb((P)"(fun ((c <error>) (args ...)) (sig c))"));
+  fun_error_40 = YPfab_met(FUNCODEREF(fun_error_40),T78,LITREF(lit_83),LITREF(lit_84),sloc(197),YPfalse);
   T80 = VARREF_OR(Yerror,YPfalse);
   T81 = fun_error_40;
   T79 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T80,T81);
   VARSET(Yerror,T79);
   lit_85 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"args"));
   T82 = YPfab_sig(YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_error_41 = YPfab_met(FUNCODEREF(fun_error_41),T82,LITREF(lit_83),LITREF(lit_85),sloc(200),YPsb((P)"(fun ((c <str>) (args ...)) (error (new <simple-error> condition-message c condition-arguments (as <lst> args))))"));
+  fun_error_41 = YPfab_met(FUNCODEREF(fun_error_41),T82,LITREF(lit_83),LITREF(lit_85),sloc(200),YPfalse);
   T84 = VARREF_OR(Yerror,YPfalse);
   T85 = fun_error_41;
   T83 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T84,T85);
@@ -2675,7 +2679,7 @@ DEFCREGS();
   lit_86 = YPPsym((P)"incongruent-method-error");
   lit_87 = YPPlist(2,YPPsym((P)"gen"),YPPsym((P)"met"));
   T86 = YPfab_sig(YPPlist(2,VARREF(YLgenG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YgooSfunYincongruent_method_error = YPfab_met(FUNCODEREF(YgooSfunYincongruent_method_error),T86,LITREF(lit_86),LITREF(lit_87),sloc(204),YPsb((P)"(fun ((gen <gen>) (met <met>)) (error (new <incongruent-method-error> incongruent-method-error-generic gen incongruent-method-error-method met)))"));
+  YgooSfunYincongruent_method_error = YPfab_met(FUNCODEREF(YgooSfunYincongruent_method_error),T86,LITREF(lit_86),LITREF(lit_87),sloc(204),YPfalse);
   T87 = YgooSfunYincongruent_method_error;
   VARSET(YgooSfunYincongruent_method_error,T87);
   lit_88 = YPPsym((P)"<call-error>");
@@ -2685,7 +2689,7 @@ DEFCREGS();
   lit_89 = YPPsym((P)"call-error-function");
   lit_90 = YPPlist(1,YPPsym((P)"_x"));
   T90 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLcall_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_call_error_function_43 = YPfab_met(FUNCODEREF(fun_call_error_function_43),T90,LITREF(lit_89),LITREF(lit_90),sloc(210),YPsb((P)"(fun ((_x <call-error>)) (prop-value _x call-error-function))"));
+  fun_call_error_function_43 = YPfab_met(FUNCODEREF(fun_call_error_function_43),T90,LITREF(lit_89),LITREF(lit_90),sloc(210),YPfalse);
   T92 = VARREF_OR(YgooSconditionsYcall_error_function,YPfalse);
   T93 = fun_call_error_function_43;
   T91 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T92,T93);
@@ -2694,7 +2698,7 @@ DEFCREGS();
   lit_91 = YPPsym((P)"call-error-arguments");
   lit_92 = YPPlist(1,YPPsym((P)"_x"));
   T94 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLcall_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_call_error_arguments_44 = YPfab_met(FUNCODEREF(fun_call_error_arguments_44),T94,LITREF(lit_91),LITREF(lit_92),sloc(211),YPsb((P)"(fun ((_x <call-error>)) (prop-value _x call-error-arguments))"));
+  fun_call_error_arguments_44 = YPfab_met(FUNCODEREF(fun_call_error_arguments_44),T94,LITREF(lit_91),LITREF(lit_92),sloc(211),YPfalse);
   T96 = VARREF_OR(YgooSconditionsYcall_error_arguments,YPfalse);
   T97 = fun_call_error_arguments_44;
   T95 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T96,T97);
@@ -2707,7 +2711,7 @@ DEFCREGS();
   lit_94 = YPPlist(1,YPPsym((P)"c"));
   lit_95 = YPsb((P)"Function %= called with wrong number arguments %=.");
   T100 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLarity_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_45 = YPfab_met(FUNCODEREF(fun_describe_condition_45),T100,LITREF(lit_3),LITREF(lit_94),sloc(215),YPsb((P)"(fun ((c <arity-error>) => <str>) (msg-to-str Function %= called with wrong number arguments %=. (call-error-function c) (call-error-arguments c)))"));
+  fun_describe_condition_45 = YPfab_met(FUNCODEREF(fun_describe_condition_45),T100,LITREF(lit_3),LITREF(lit_94),sloc(215),YPfalse);
   T102 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T103 = fun_describe_condition_45;
   T101 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T102,T103);
@@ -2715,7 +2719,7 @@ DEFCREGS();
   lit_96 = YPPsym((P)"arity-error");
   lit_97 = YPPlist(2,YPPsym((P)"fun"),YPPsym((P)"args"));
   T106 = YPfab_sig(YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T105 = Yarity_error = YPfab_met(FUNCODEREF(Yarity_error),T106,LITREF(lit_96),LITREF(lit_97),sloc(219),YPsb((P)"(fun ((fun <fun>) (args <seq>)) (sig (new <arity-error> call-error-function fun call-error-arguments (as <lst> args))))"));
+  T105 = Yarity_error = YPfab_met(FUNCODEREF(Yarity_error),T106,LITREF(lit_96),LITREF(lit_97),sloc(219),YPfalse);
   T108 = Yarity_error;
   T107 = VARSET(Yarity_error,T108);
   T104 = T107;
@@ -2739,13 +2743,13 @@ DEFCREGS();
   lit_99 = YPPsym((P)"narity-error");
   lit_100 = YPPlist(2,YPPsym((P)"fun"),YPPsym((P)"args"));
   T2 = YPfab_sig(YPPlist(2,VARREF(YLfunG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Ynarity_error = YPfab_met(FUNCODEREF(Ynarity_error),T2,LITREF(lit_99),LITREF(lit_100),sloc(225),YPsb((P)"(fun ((fun <fun>) (args <seq>)) (sig (new <narity-error> call-error-function fun call-error-arguments (as <lst> args))))"));
+  Ynarity_error = YPfab_met(FUNCODEREF(Ynarity_error),T2,LITREF(lit_99),LITREF(lit_100),sloc(225),YPfalse);
   T3 = Ynarity_error;
   VARSET(Ynarity_error,T3);
   lit_101 = YPPlist(1,YPPsym((P)"c"));
   lit_102 = YPsb((P)"Nary function %= called with too few arguments %=.");
   T4 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLnarity_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_48 = YPfab_met(FUNCODEREF(fun_describe_condition_48),T4,LITREF(lit_3),LITREF(lit_101),sloc(229),YPsb((P)"(fun ((c <narity-error>) => <str>) (msg-to-str Nary function %= called with too few arguments %=. (call-error-function c) (call-error-arguments c)))"));
+  fun_describe_condition_48 = YPfab_met(FUNCODEREF(fun_describe_condition_48),T4,LITREF(lit_3),LITREF(lit_101),sloc(229),YPfalse);
   T6 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T7 = fun_describe_condition_48;
   T5 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T6,T7);
@@ -2757,7 +2761,7 @@ DEFCREGS();
   lit_104 = YPPsym((P)"type-error-value");
   lit_105 = YPPlist(1,YPPsym((P)"_x"));
   T10 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLtype_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_type_error_value_49 = YPfab_met(FUNCODEREF(fun_type_error_value_49),T10,LITREF(lit_104),LITREF(lit_105),sloc(234),YPsb((P)"(fun ((_x <type-error>)) (prop-value _x type-error-value))"));
+  fun_type_error_value_49 = YPfab_met(FUNCODEREF(fun_type_error_value_49),T10,LITREF(lit_104),LITREF(lit_105),sloc(234),YPfalse);
   T12 = VARREF_OR(YgooSconditionsYtype_error_value,YPfalse);
   T13 = fun_type_error_value_49;
   T11 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T12,T13);
@@ -2766,7 +2770,7 @@ DEFCREGS();
   lit_106 = YPPsym((P)"type-error-type");
   lit_107 = YPPlist(1,YPPsym((P)"_x"));
   T14 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLtype_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_type_error_type_50 = YPfab_met(FUNCODEREF(fun_type_error_type_50),T14,LITREF(lit_106),LITREF(lit_107),sloc(235),YPsb((P)"(fun ((_x <type-error>)) (prop-value _x type-error-type))"));
+  fun_type_error_type_50 = YPfab_met(FUNCODEREF(fun_type_error_type_50),T14,LITREF(lit_106),LITREF(lit_107),sloc(235),YPfalse);
   T16 = VARREF_OR(YgooSconditionsYtype_error_type,YPfalse);
   T17 = fun_type_error_type_50;
   T15 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T16,T17);
@@ -2775,13 +2779,13 @@ DEFCREGS();
   lit_108 = YPPsym((P)"type-error");
   lit_109 = YPPlist(2,YPPsym((P)"arg"),YPPsym((P)"type"));
   T18 = YPfab_sig(YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Ytype_error = YPfab_met(FUNCODEREF(Ytype_error),T18,LITREF(lit_108),LITREF(lit_109),sloc(237),YPsb((P)"(fun (arg type) (sig (new <type-error> type-error-value arg type-error-type type)))"));
+  Ytype_error = YPfab_met(FUNCODEREF(Ytype_error),T18,LITREF(lit_108),LITREF(lit_109),sloc(237),YPfalse);
   T19 = Ytype_error;
   VARSET(Ytype_error,T19);
   lit_110 = YPPlist(1,YPPsym((P)"c"));
   lit_111 = YPsb((P)"Type check failure on %= expected %t.");
   T20 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLtype_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_52 = YPfab_met(FUNCODEREF(fun_describe_condition_52),T20,LITREF(lit_3),LITREF(lit_110),sloc(240),YPsb((P)"(fun ((c <type-error>) => <str>) (msg-to-str Type check failure on %= expected %t. (type-error-value c) (type-error-type c)))"));
+  fun_describe_condition_52 = YPfab_met(FUNCODEREF(fun_describe_condition_52),T20,LITREF(lit_3),LITREF(lit_110),sloc(240),YPfalse);
   T22 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T23 = fun_describe_condition_52;
   T21 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T22,T23);
@@ -2794,13 +2798,13 @@ DEFCREGS();
   lit_113 = YPPsym((P)"unknown-function-error");
   lit_114 = YPPlist(2,YPPsym((P)"f"),YPPsym((P)"args"));
   T27 = YPfab_sig(YPPlist(2,VARREF(YLanyG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yunknown_function_error = YPfab_met(FUNCODEREF(Yunknown_function_error),T27,LITREF(lit_113),LITREF(lit_114),sloc(246),YPsb((P)"(fun (f (args <seq>)) (sig (new <unknown-function-error> call-error-function f call-error-arguments (as <lst> args) type-error-value f type-error-type <fun>)))"));
+  Yunknown_function_error = YPfab_met(FUNCODEREF(Yunknown_function_error),T27,LITREF(lit_113),LITREF(lit_114),sloc(246),YPfalse);
   T28 = Yunknown_function_error;
   VARSET(Yunknown_function_error,T28);
   lit_115 = YPPlist(1,YPPsym((P)"c"));
   lit_116 = YPsb((P)"Unknown function %= called on %=.");
   T29 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLunknown_function_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_54 = YPfab_met(FUNCODEREF(fun_describe_condition_54),T29,LITREF(lit_3),LITREF(lit_115),sloc(251),YPsb((P)"(fun ((c <unknown-function-error>) => <str>) (msg-to-str Unknown function %= called on %=. (type-error-value c) (call-error-arguments c)))"));
+  fun_describe_condition_54 = YPfab_met(FUNCODEREF(fun_describe_condition_54),T29,LITREF(lit_3),LITREF(lit_115),sloc(251),YPfalse);
   T31 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T32 = fun_describe_condition_54;
   T30 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T31,T32);
@@ -2813,13 +2817,13 @@ DEFCREGS();
   lit_118 = YPPsym((P)"argument-type-error");
   lit_119 = YPPlist(4,YPPsym((P)"f"),YPPsym((P)"val"),YPPsym((P)"type"),YPPsym((P)"args"));
   T36 = YPfab_sig(YPPlist(4,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG),VARREF(YLseqG)),YPfalse,YPint((P)4),VARREF(YLanyG),Ynil);
-  Yargument_type_error = YPfab_met(FUNCODEREF(Yargument_type_error),T36,LITREF(lit_118),LITREF(lit_119),sloc(257),YPsb((P)"(fun (f val type (args <seq>)) (sig (new <argument-type-error> call-error-function f call-error-arguments (as <lst> args) type-error-value val type-error-type type)))"));
+  Yargument_type_error = YPfab_met(FUNCODEREF(Yargument_type_error),T36,LITREF(lit_118),LITREF(lit_119),sloc(257),YPfalse);
   T37 = Yargument_type_error;
   VARSET(Yargument_type_error,T37);
   lit_120 = YPPlist(1,YPPsym((P)"c"));
   lit_121 = YPsb((P)"During call of %= on %= ");
   T38 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLargument_type_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_56 = YPfab_met(FUNCODEREF(fun_describe_condition_56),T38,LITREF(lit_3),LITREF(lit_120),sloc(262),YPsb((P)"(fun ((c <argument-type-error>) => <str>) (cat (msg-to-str During call of %= on %=  (call-error-function c) (call-error-arguments c)) (sup c)))"));
+  fun_describe_condition_56 = YPfab_met(FUNCODEREF(fun_describe_condition_56),T38,LITREF(lit_3),LITREF(lit_120),sloc(262),YPfalse);
   T40 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T41 = fun_describe_condition_56;
   T39 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T40,T41);
@@ -2832,13 +2836,13 @@ DEFCREGS();
   lit_123 = YPPsym((P)"return-type-error");
   lit_124 = YPPlist(4,YPPsym((P)"f"),YPPsym((P)"val"),YPPsym((P)"type"),YPPsym((P)"args"));
   T45 = YPfab_sig(YPPlist(4,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG),VARREF(YLseqG)),YPfalse,YPint((P)4),VARREF(YLanyG),Ynil);
-  Yreturn_type_error = YPfab_met(FUNCODEREF(Yreturn_type_error),T45,LITREF(lit_123),LITREF(lit_124),sloc(269),YPsb((P)"(fun (f val type (args <seq>)) (sig (new <return-type-error> call-error-function f call-error-arguments (as <lst> args) type-error-value val type-error-type type)))"));
+  Yreturn_type_error = YPfab_met(FUNCODEREF(Yreturn_type_error),T45,LITREF(lit_123),LITREF(lit_124),sloc(269),YPfalse);
   T46 = Yreturn_type_error;
   VARSET(Yreturn_type_error,T46);
   lit_125 = YPPlist(1,YPPsym((P)"c"));
   lit_126 = YPsb((P)"During return of call of %= on %= ");
   T47 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLreturn_type_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_58 = YPfab_met(FUNCODEREF(fun_describe_condition_58),T47,LITREF(lit_3),LITREF(lit_125),sloc(274),YPsb((P)"(fun ((c <return-type-error>) => <str>) (cat (msg-to-str During return of call of %= on %=  (call-error-function c) (call-error-arguments c)) (sup c)))"));
+  fun_describe_condition_58 = YPfab_met(FUNCODEREF(fun_describe_condition_58),T47,LITREF(lit_3),LITREF(lit_125),sloc(274),YPfalse);
   T49 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T50 = fun_describe_condition_58;
   T48 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T49,T50);
@@ -2850,13 +2854,13 @@ DEFCREGS();
   lit_128 = YPPsym((P)"ambiguous-method-error");
   lit_129 = YPPlist(2,YPPsym((P)"gen"),YPPsym((P)"args"));
   T53 = YPfab_sig(YPPlist(2,VARREF(YLgenG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yambiguous_method_error = YPfab_met(FUNCODEREF(Yambiguous_method_error),T53,LITREF(lit_128),LITREF(lit_129),sloc(281),YPsb((P)"(fun ((gen <gen>) (args <opts>)) (sig (new <ambiguous-method-error> call-error-function gen call-error-arguments (as <lst> args))))"));
+  Yambiguous_method_error = YPfab_met(FUNCODEREF(Yambiguous_method_error),T53,LITREF(lit_128),LITREF(lit_129),sloc(281),YPfalse);
   T54 = Yambiguous_method_error;
   VARSET(Yambiguous_method_error,T54);
   lit_130 = YPPlist(1,YPPsym((P)"c"));
   lit_131 = YPsb((P)"Ambiguous methods on %= when called with %=.");
   T55 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLambiguous_method_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_60 = YPfab_met(FUNCODEREF(fun_describe_condition_60),T55,LITREF(lit_3),LITREF(lit_130),sloc(285),YPsb((P)"(fun ((c <ambiguous-method-error>) => <str>) (msg-to-str Ambiguous methods on %= when called with %=. (call-error-function c) (call-error-arguments c)))"));
+  fun_describe_condition_60 = YPfab_met(FUNCODEREF(fun_describe_condition_60),T55,LITREF(lit_3),LITREF(lit_130),sloc(285),YPfalse);
   T57 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T58 = fun_describe_condition_60;
   T56 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T57,T58);
@@ -2868,13 +2872,13 @@ DEFCREGS();
   lit_133 = YPPsym((P)"no-applicable-methods-error");
   lit_134 = YPPlist(2,YPPsym((P)"gen"),YPPsym((P)"args"));
   T61 = YPfab_sig(YPPlist(2,VARREF(YLgenG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yno_applicable_methods_error = YPfab_met(FUNCODEREF(Yno_applicable_methods_error),T61,LITREF(lit_133),LITREF(lit_134),sloc(291),YPsb((P)"(fun ((gen <gen>) (args <opts>)) (sig (new <no-applicable-methods-error> call-error-function gen call-error-arguments (as <lst> args))))"));
+  Yno_applicable_methods_error = YPfab_met(FUNCODEREF(Yno_applicable_methods_error),T61,LITREF(lit_133),LITREF(lit_134),sloc(291),YPfalse);
   T62 = Yno_applicable_methods_error;
   VARSET(Yno_applicable_methods_error,T62);
   lit_135 = YPPlist(1,YPPsym((P)"c"));
   lit_136 = YPsb((P)"No applicable methods on %= when called with %=.");
   T63 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLno_applicable_methods_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_62 = YPfab_met(FUNCODEREF(fun_describe_condition_62),T63,LITREF(lit_3),LITREF(lit_135),sloc(296),YPsb((P)"(fun ((c <no-applicable-methods-error>) => <str>) (msg-to-str No applicable methods on %= when called with %=. (call-error-function c) (call-error-arguments c)))"));
+  fun_describe_condition_62 = YPfab_met(FUNCODEREF(fun_describe_condition_62),T63,LITREF(lit_3),LITREF(lit_135),sloc(296),YPfalse);
   T65 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T66 = fun_describe_condition_62;
   T64 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T65,T66);
@@ -2886,13 +2890,13 @@ DEFCREGS();
   lit_138 = YPPsym((P)"no-next-methods-error");
   lit_139 = YPPlist(2,YPPsym((P)"met"),YPPsym((P)"args"));
   T69 = YPfab_sig(YPPlist(2,VARREF(YLanyG),VARREF(YLseqG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yno_next_methods_error = YPfab_met(FUNCODEREF(Yno_next_methods_error),T69,LITREF(lit_138),LITREF(lit_139),sloc(302),YPsb((P)"(fun (met (args <seq>)) (sig (new <no-next-methods-error> call-error-function met call-error-arguments (as <lst> args))))"));
+  Yno_next_methods_error = YPfab_met(FUNCODEREF(Yno_next_methods_error),T69,LITREF(lit_138),LITREF(lit_139),sloc(302),YPfalse);
   T70 = Yno_next_methods_error;
   VARSET(Yno_next_methods_error,T70);
   lit_140 = YPPlist(1,YPPsym((P)"c"));
   lit_141 = YPsb((P)"No next-methods on %= when called with %=.");
   T71 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLno_next_methods_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_64 = YPfab_met(FUNCODEREF(fun_describe_condition_64),T71,LITREF(lit_3),LITREF(lit_140),sloc(306),YPsb((P)"(fun ((c <no-next-methods-error>) => <str>) (msg-to-str No next-methods on %= when called with %=. (call-error-function c) (call-error-arguments c)))"));
+  fun_describe_condition_64 = YPfab_met(FUNCODEREF(fun_describe_condition_64),T71,LITREF(lit_3),LITREF(lit_140),sloc(306),YPfalse);
   T73 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T74 = fun_describe_condition_64;
   T72 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T73,T74);
@@ -2904,7 +2908,7 @@ DEFCREGS();
   lit_143 = YPPsym((P)"cpl-error");
   lit_144 = YPPlist(2,YPPsym((P)"msg"),YPPsym((P)"args"));
   T77 = YPfab_sig(YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  Ycpl_error = YPfab_met(FUNCODEREF(Ycpl_error),T77,LITREF(lit_143),LITREF(lit_144),sloc(312),YPsb((P)"(fun ((msg <str>) (args ...)) (sig (new <cpl-error> condition-message msg (as <lst> args))))"));
+  Ycpl_error = YPfab_met(FUNCODEREF(Ycpl_error),T77,LITREF(lit_143),LITREF(lit_144),sloc(312),YPfalse);
   T78 = Ycpl_error;
   VARSET(Ycpl_error,T78);
   lit_145 = YPPsym((P)"<compiler-error>");
@@ -2919,7 +2923,7 @@ DEFCREGS();
   lit_147 = YPPsym((P)"syntax-error");
   lit_148 = YPPlist(2,YPPsym((P)"msg"),YPPsym((P)"args"));
   T84 = YPfab_sig(YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  Ysyntax_error = YPfab_met(FUNCODEREF(Ysyntax_error),T84,LITREF(lit_147),LITREF(lit_148),sloc(319),YPsb((P)"(fun ((msg <str>) (args ...)) (sig (new <syntax-error> condition-message msg condition-arguments (as <lst> args))))"));
+  Ysyntax_error = YPfab_met(FUNCODEREF(Ysyntax_error),T84,LITREF(lit_147),LITREF(lit_148),sloc(319),YPfalse);
   T85 = Ysyntax_error;
   VARSET(Ysyntax_error,T85);
   lit_149 = YPPsym((P)"<macro-error>");
@@ -2929,7 +2933,7 @@ DEFCREGS();
   lit_150 = YPPsym((P)"macro-error-name");
   lit_151 = YPPlist(1,YPPsym((P)"_x"));
   T88 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLmacro_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_macro_error_name_67 = YPfab_met(FUNCODEREF(fun_macro_error_name_67),T88,LITREF(lit_150),LITREF(lit_151),sloc(324),YPsb((P)"(fun ((_x <macro-error>)) (prop-value _x macro-error-name))"));
+  fun_macro_error_name_67 = YPfab_met(FUNCODEREF(fun_macro_error_name_67),T88,LITREF(lit_150),LITREF(lit_151),sloc(324),YPfalse);
   T90 = VARREF_OR(YgooSconditionsYmacro_error_name,YPfalse);
   T91 = fun_macro_error_name_67;
   T89 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T90,T91);
@@ -2938,7 +2942,7 @@ DEFCREGS();
   lit_152 = YPPsym((P)"macro-error-arguments");
   lit_153 = YPPlist(1,YPPsym((P)"_x"));
   T92 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLmacro_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_macro_error_arguments_68 = YPfab_met(FUNCODEREF(fun_macro_error_arguments_68),T92,LITREF(lit_152),LITREF(lit_153),sloc(325),YPsb((P)"(fun ((_x <macro-error>)) (prop-value _x macro-error-arguments))"));
+  fun_macro_error_arguments_68 = YPfab_met(FUNCODEREF(fun_macro_error_arguments_68),T92,LITREF(lit_152),LITREF(lit_153),sloc(325),YPfalse);
   T94 = VARREF_OR(YgooSconditionsYmacro_error_arguments,YPfalse);
   T95 = fun_macro_error_arguments_68;
   T93 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T94,T95);
@@ -2947,13 +2951,13 @@ DEFCREGS();
   lit_154 = YPPsym((P)"macro-error");
   lit_155 = YPPlist(2,YPPsym((P)"name"),YPPsym((P)"args"));
   T96 = YPfab_sig(YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YgooSmacrosYmacro_error = YPfab_met(FUNCODEREF(YgooSmacrosYmacro_error),T96,LITREF(lit_154),LITREF(lit_155),sloc(327),YPsb((P)"(fun (name args) (sig (new <macro-error> macro-error-name name macro-error-arguments args)))"));
+  YgooSmacrosYmacro_error = YPfab_met(FUNCODEREF(YgooSmacrosYmacro_error),T96,LITREF(lit_154),LITREF(lit_155),sloc(327),YPfalse);
   T97 = YgooSmacrosYmacro_error;
   VARSET(YgooSmacrosYmacro_error,T97);
   lit_156 = YPPlist(1,YPPsym((P)"c"));
   lit_157 = YPsb((P)"Macro expansion failure for %s when called with %=.");
   T98 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLmacro_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_70 = YPfab_met(FUNCODEREF(fun_describe_condition_70),T98,LITREF(lit_3),LITREF(lit_156),sloc(330),YPsb((P)"(fun ((c <macro-error>) => <str>) (msg-to-str Macro expansion failure for %s when called with %=. (macro-error-name c) (macro-error-arguments c)))"));
+  fun_describe_condition_70 = YPfab_met(FUNCODEREF(fun_describe_condition_70),T98,LITREF(lit_3),LITREF(lit_156),sloc(330),YPfalse);
   T100 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T101 = fun_describe_condition_70;
   T99 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T100,T101);
@@ -2964,13 +2968,13 @@ DEFCREGS();
   VARSET(YgooSconditionsYLstack_overflowG,T102);
   lit_159 = YPPsym((P)"stack-overflow-error");
   T104 = YPfab_sig(Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
-  Ystack_overflow_error = YPfab_met(FUNCODEREF(Ystack_overflow_error),T104,LITREF(lit_159),LITREF(lit_77),sloc(336),YPsb((P)"(fun () (sig (new <stack-overflow>)))"));
+  Ystack_overflow_error = YPfab_met(FUNCODEREF(Ystack_overflow_error),T104,LITREF(lit_159),LITREF(lit_77),sloc(336),YPfalse);
   T105 = Ystack_overflow_error;
   VARSET(Ystack_overflow_error,T105);
   lit_160 = YPPlist(1,YPPsym((P)"c"));
   lit_161 = YPsb((P)"Stack overflow.");
   T106 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLstack_overflowG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_72 = YPfab_met(FUNCODEREF(fun_describe_condition_72),T106,LITREF(lit_3),LITREF(lit_160),sloc(339),YPsb((P)"(fun ((c <stack-overflow>) => <str>) Stack overflow.)"));
+  fun_describe_condition_72 = YPfab_met(FUNCODEREF(fun_describe_condition_72),T106,LITREF(lit_3),LITREF(lit_160),sloc(339),YPfalse);
   T108 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T109 = fun_describe_condition_72;
   T107 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T108,T109);
@@ -2982,7 +2986,7 @@ DEFCREGS();
   lit_163 = YPPsym((P)"internal-error");
   lit_164 = YPPlist(2,YPPsym((P)"msg"),YPPsym((P)"args"));
   T112 = YPfab_sig(YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yinternal_error = YPfab_met(FUNCODEREF(Yinternal_error),T112,LITREF(lit_163),LITREF(lit_164),sloc(343),YPsb((P)"(fun ((msg <str>) (args ...)) (sig (new <internal-error> condition-message msg condition-arguments (as <lst> args))))"));
+  Yinternal_error = YPfab_met(FUNCODEREF(Yinternal_error),T112,LITREF(lit_163),LITREF(lit_164),sloc(343),YPfalse);
   T113 = Yinternal_error;
   VARSET(Yinternal_error,T113);
   lit_165 = YPPsym((P)"<assert-error>");
@@ -3006,13 +3010,13 @@ DEFCREGS();
   lit_166 = YPPsym((P)"assert-error");
   lit_167 = YPPlist(2,YPPsym((P)"msg"),YPPsym((P)"args"));
   T0 = YPfab_sig(YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yassert_error = YPfab_met(FUNCODEREF(Yassert_error),T0,LITREF(lit_166),LITREF(lit_167),sloc(349),YPsb((P)"(fun ((msg <str>) (args ...)) (sig (new <assert-error> condition-message msg condition-arguments (as <lst> args))))"));
+  Yassert_error = YPfab_met(FUNCODEREF(Yassert_error),T0,LITREF(lit_166),LITREF(lit_167),sloc(349),YPfalse);
   T1 = Yassert_error;
   VARSET(Yassert_error,T1);
   lit_168 = YPPlist(1,YPPsym((P)"c"));
   lit_169 = YPsb((P)"Assert failure ");
   T2 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLassert_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_75 = YPfab_met(FUNCODEREF(fun_describe_condition_75),T2,LITREF(lit_3),LITREF(lit_168),sloc(353),YPsb((P)"(fun ((c <assert-error>) => <str>) (cat Assert failure  (sup c)))"));
+  fun_describe_condition_75 = YPfab_met(FUNCODEREF(fun_describe_condition_75),T2,LITREF(lit_3),LITREF(lit_168),sloc(353),YPfalse);
   T4 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T5 = fun_describe_condition_75;
   T3 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T4,T5);
@@ -3024,7 +3028,7 @@ DEFCREGS();
   lit_171 = YPPsym((P)"range-error-collection");
   lit_172 = YPPlist(1,YPPsym((P)"_x"));
   T8 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLrange_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_range_error_collection_76 = YPfab_met(FUNCODEREF(fun_range_error_collection_76),T8,LITREF(lit_171),LITREF(lit_172),sloc(357),YPsb((P)"(fun ((_x <range-error>)) (prop-value _x range-error-collection))"));
+  fun_range_error_collection_76 = YPfab_met(FUNCODEREF(fun_range_error_collection_76),T8,LITREF(lit_171),LITREF(lit_172),sloc(357),YPfalse);
   T10 = VARREF_OR(YgooSconditionsYrange_error_collection,YPfalse);
   T11 = fun_range_error_collection_76;
   T9 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T10,T11);
@@ -3033,7 +3037,7 @@ DEFCREGS();
   lit_173 = YPPsym((P)"range-error-key");
   lit_174 = YPPlist(1,YPPsym((P)"_x"));
   T12 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLrange_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_range_error_key_77 = YPfab_met(FUNCODEREF(fun_range_error_key_77),T12,LITREF(lit_173),LITREF(lit_174),sloc(358),YPsb((P)"(fun ((_x <range-error>)) (prop-value _x range-error-key))"));
+  fun_range_error_key_77 = YPfab_met(FUNCODEREF(fun_range_error_key_77),T12,LITREF(lit_173),LITREF(lit_174),sloc(358),YPfalse);
   T14 = VARREF_OR(YgooSconditionsYrange_error_key,YPfalse);
   T15 = fun_range_error_key_77;
   T13 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T14,T15);
@@ -3042,7 +3046,7 @@ DEFCREGS();
   lit_175 = YPPsym((P)"range-error");
   lit_176 = YPPlist(2,YPPsym((P)"c"),YPPsym((P)"k"));
   T16 = YPfab_sig(YPPlist(2,VARREF(YLcolG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_range_error_78 = YPfab_met(FUNCODEREF(fun_range_error_78),T16,LITREF(lit_175),LITREF(lit_176),sloc(360),YPsb((P)"(fun ((c <col>) k) (sig (new <range-error> range-error-collection c range-error-key k)))"));
+  fun_range_error_78 = YPfab_met(FUNCODEREF(fun_range_error_78),T16,LITREF(lit_175),LITREF(lit_176),sloc(360),YPfalse);
   T18 = VARREF_OR(Yrange_error,YPfalse);
   T19 = fun_range_error_78;
   T17 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T18,T19);
@@ -3050,7 +3054,7 @@ DEFCREGS();
   lit_177 = YPPlist(1,YPPsym((P)"c"));
   lit_178 = YPsb((P)"Nonexistent key %= in %=");
   T20 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLrange_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_79 = YPfab_met(FUNCODEREF(fun_describe_condition_79),T20,LITREF(lit_3),LITREF(lit_177),sloc(363),YPsb((P)"(fun ((c <range-error>) => <str>) (msg-to-str Nonexistent key %= in %= (range-error-key c) (range-error-collection c)))"));
+  fun_describe_condition_79 = YPfab_met(FUNCODEREF(fun_describe_condition_79),T20,LITREF(lit_3),LITREF(lit_177),sloc(363),YPfalse);
   T22 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T23 = fun_describe_condition_79;
   T21 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T22,T23);
@@ -3066,7 +3070,7 @@ DEFCREGS();
   lit_181 = YPPsym((P)"file-opening-error-filename");
   lit_182 = YPPlist(1,YPPsym((P)"_x"));
   T28 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLfile_opening_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_file_opening_error_filename_80 = YPfab_met(FUNCODEREF(fun_file_opening_error_filename_80),T28,LITREF(lit_181),LITREF(lit_182),sloc(370),YPsb((P)"(fun ((_x <file-opening-error>)) (prop-value _x file-opening-error-filename))"));
+  fun_file_opening_error_filename_80 = YPfab_met(FUNCODEREF(fun_file_opening_error_filename_80),T28,LITREF(lit_181),LITREF(lit_182),sloc(370),YPfalse);
   T30 = VARREF_OR(YgooSconditionsYfile_opening_error_filename,YPfalse);
   T31 = fun_file_opening_error_filename_80;
   T29 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T30,T31);
@@ -3075,7 +3079,7 @@ DEFCREGS();
   lit_183 = YPPsym((P)"file-opening-error");
   lit_184 = YPPlist(1,YPPsym((P)"filename"));
   T32 = YPfab_sig(YPPlist(1,VARREF(YLstrG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_file_opening_error_81 = YPfab_met(FUNCODEREF(fun_file_opening_error_81),T32,LITREF(lit_183),LITREF(lit_184),sloc(372),YPsb((P)"(fun ((filename <str>)) (sig (new <file-opening-error> file-opening-error-filename filename)))"));
+  fun_file_opening_error_81 = YPfab_met(FUNCODEREF(fun_file_opening_error_81),T32,LITREF(lit_183),LITREF(lit_184),sloc(372),YPfalse);
   T34 = VARREF_OR(Yfile_opening_error,YPfalse);
   T35 = fun_file_opening_error_81;
   T33 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T34,T35);
@@ -3083,7 +3087,7 @@ DEFCREGS();
   lit_185 = YPPlist(1,YPPsym((P)"c"));
   lit_186 = YPsb((P)"Failed to open %s.");
   T36 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLfile_opening_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_82 = YPfab_met(FUNCODEREF(fun_describe_condition_82),T36,LITREF(lit_3),LITREF(lit_185),sloc(375),YPsb((P)"(fun ((c <file-opening-error>) => <str>) (msg-to-str Failed to open %s. (file-opening-error-filename c)))"));
+  fun_describe_condition_82 = YPfab_met(FUNCODEREF(fun_describe_condition_82),T36,LITREF(lit_3),LITREF(lit_185),sloc(375),YPfalse);
   T38 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T39 = fun_describe_condition_82;
   T37 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T38,T39);
@@ -3099,7 +3103,7 @@ DEFCREGS();
   lit_189 = YPPsym((P)"unbound-variable-error-variable");
   lit_190 = YPPlist(1,YPPsym((P)"_x"));
   T44 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLunbound_variable_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_unbound_variable_error_variable_83 = YPfab_met(FUNCODEREF(fun_unbound_variable_error_variable_83),T44,LITREF(lit_189),LITREF(lit_190),sloc(381),YPsb((P)"(fun ((_x <unbound-variable-error>)) (prop-value _x unbound-variable-error-variable))"));
+  fun_unbound_variable_error_variable_83 = YPfab_met(FUNCODEREF(fun_unbound_variable_error_variable_83),T44,LITREF(lit_189),LITREF(lit_190),sloc(381),YPfalse);
   T46 = VARREF_OR(YgooSconditionsYunbound_variable_error_variable,YPfalse);
   T47 = fun_unbound_variable_error_variable_83;
   T45 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T46,T47);
@@ -3108,7 +3112,7 @@ DEFCREGS();
   lit_191 = YPPlist(1,YPPsym((P)"c"));
   lit_192 = YPsb((P)"Unbound variable %s.");
   T48 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLunbound_variable_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_84 = YPfab_met(FUNCODEREF(fun_describe_condition_84),T48,LITREF(lit_3),LITREF(lit_191),sloc(383),YPsb((P)"(fun ((c <unbound-variable-error>) => <str>) (msg-to-str Unbound variable %s. (unbound-variable-error-variable c)))"));
+  fun_describe_condition_84 = YPfab_met(FUNCODEREF(fun_describe_condition_84),T48,LITREF(lit_3),LITREF(lit_191),sloc(383),YPfalse);
   T50 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T51 = fun_describe_condition_84;
   T49 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T50,T51);
@@ -3120,27 +3124,27 @@ DEFCREGS();
   lit_194 = YPPsym((P)"property-error-owner");
   lit_195 = YPPlist(1,YPPsym((P)"_x"));
   T54 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLproperty_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_property_error_owner_85 = YPfab_met(FUNCODEREF(fun_property_error_owner_85),T54,LITREF(lit_194),LITREF(lit_195),sloc(387),YPsb((P)"(fun ((_x <property-error>)) (prop-value _x property-error-owner))"));
+  fun_property_error_owner_85 = YPfab_met(FUNCODEREF(fun_property_error_owner_85),T54,LITREF(lit_194),LITREF(lit_195),sloc(387),YPfalse);
   T56 = VARREF_OR(YgooSconditionsYproperty_error_owner,YPfalse);
   T57 = fun_property_error_owner_85;
   T55 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T56,T57);
   VARSET(YgooSconditionsYproperty_error_owner,T55);
   lit_196 = YPPlist(1,YPPsym((P)"_x"));
   T58 = YPfab_sig(YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_86 = YPfab_met(FUNCODEREF(fun_86),T58,YPfalse,LITREF(lit_196),sloc(387),YPsb((P)"(fun ((_x <any>)) #f)"));
+  fun_86 = YPfab_met(FUNCODEREF(fun_86),T58,YPfalse,LITREF(lit_196),sloc(387),YPfalse);
   T59 = fun_86;
   XCALL5(1,VARREF(YgooSclassYPprop),VARREF(YgooSconditionsYLproperty_errorG),VARREF(YgooSconditionsYproperty_error_owner),YPfalse,VARREF(YLanyG),T59);
   lit_197 = YPPsym((P)"property-error-generic");
   lit_198 = YPPlist(1,YPPsym((P)"_x"));
   T60 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLproperty_errorG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_property_error_generic_87 = YPfab_met(FUNCODEREF(fun_property_error_generic_87),T60,LITREF(lit_197),LITREF(lit_198),sloc(388),YPsb((P)"(fun ((_x <property-error>)) (prop-value _x property-error-generic))"));
+  fun_property_error_generic_87 = YPfab_met(FUNCODEREF(fun_property_error_generic_87),T60,LITREF(lit_197),LITREF(lit_198),sloc(388),YPfalse);
   T62 = VARREF_OR(YgooSconditionsYproperty_error_generic,YPfalse);
   T63 = fun_property_error_generic_87;
   T61 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T62,T63);
   VARSET(YgooSconditionsYproperty_error_generic,T61);
   lit_199 = YPPlist(1,YPPsym((P)"_x"));
   T64 = YPfab_sig(YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_88 = YPfab_met(FUNCODEREF(fun_88),T64,YPfalse,LITREF(lit_199),sloc(388),YPsb((P)"(fun ((_x <any>)) #f)"));
+  fun_88 = YPfab_met(FUNCODEREF(fun_88),T64,YPfalse,LITREF(lit_199),sloc(388),YPfalse);
   T65 = fun_88;
   XCALL5(1,VARREF(YgooSclassYPprop),VARREF(YgooSconditionsYLproperty_errorG),VARREF(YgooSconditionsYproperty_error_generic),YPfalse,VARREF(YLanyG),T65);
   lit_200 = YPPsym((P)"<property-unbound-error>");
@@ -3151,13 +3155,13 @@ DEFCREGS();
   lit_201 = YPPsym((P)"property-unbound-error");
   lit_202 = YPPlist(1,YPPsym((P)"owner"));
   T69 = YPfab_sig(YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yproperty_unbound_error = YPfab_met(FUNCODEREF(Yproperty_unbound_error),T69,LITREF(lit_201),LITREF(lit_202),sloc(392),YPsb((P)"(fun (owner) (sig (new <property-unbound-error> property-error-owner owner)))"));
+  Yproperty_unbound_error = YPfab_met(FUNCODEREF(Yproperty_unbound_error),T69,LITREF(lit_201),LITREF(lit_202),sloc(392),YPfalse);
   T70 = Yproperty_unbound_error;
   VARSET(Yproperty_unbound_error,T70);
   lit_203 = YPPlist(1,YPPsym((P)"c"));
   lit_204 = YPsb((P)"Unbound property on %=.");
   T71 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLproperty_unbound_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_90 = YPfab_met(FUNCODEREF(fun_describe_condition_90),T71,LITREF(lit_3),LITREF(lit_203),sloc(395),YPsb((P)"(fun ((c <property-unbound-error>) => <str>) (msg-to-str Unbound property on %=. (property-error-owner c)))"));
+  fun_describe_condition_90 = YPfab_met(FUNCODEREF(fun_describe_condition_90),T71,LITREF(lit_3),LITREF(lit_203),sloc(395),YPfalse);
   T73 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T74 = fun_describe_condition_90;
   T72 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T73,T74);
@@ -3169,13 +3173,13 @@ DEFCREGS();
   lit_206 = YPPsym((P)"property-not-found-error");
   lit_207 = YPPlist(2,YPPsym((P)"generic"),YPPsym((P)"owner"));
   T77 = YPfab_sig(YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yproperty_not_found_error = YPfab_met(FUNCODEREF(Yproperty_not_found_error),T77,LITREF(lit_206),LITREF(lit_207),sloc(400),YPsb((P)"(fun (generic owner) (sig (new <property-not-found-error> property-error-generic generic property-error-owner owner)))"));
+  Yproperty_not_found_error = YPfab_met(FUNCODEREF(Yproperty_not_found_error),T77,LITREF(lit_206),LITREF(lit_207),sloc(400),YPfalse);
   T78 = Yproperty_not_found_error;
   VARSET(Yproperty_not_found_error,T78);
   lit_208 = YPPlist(1,YPPsym((P)"c"));
   lit_209 = YPsb((P)"Property %s not found in %s.");
   T79 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLproperty_not_found_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_92 = YPfab_met(FUNCODEREF(fun_describe_condition_92),T79,LITREF(lit_3),LITREF(lit_208),sloc(405),YPsb((P)"(fun ((c <property-not-found-error>) => <str>) (msg-to-str Property %s not found in %s. (property-error-generic c) (property-error-owner c)))"));
+  fun_describe_condition_92 = YPfab_met(FUNCODEREF(fun_describe_condition_92),T79,LITREF(lit_3),LITREF(lit_208),sloc(405),YPfalse);
   T81 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T82 = fun_describe_condition_92;
   T80 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T81,T82);
@@ -3188,13 +3192,13 @@ DEFCREGS();
   lit_211 = YPPsym((P)"property-type-error");
   lit_212 = YPPlist(3,YPPsym((P)"generic"),YPPsym((P)"value"),YPPsym((P)"type"));
   T86 = YPfab_sig(YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  Yproperty_type_error = YPfab_met(FUNCODEREF(Yproperty_type_error),T86,LITREF(lit_211),LITREF(lit_212),sloc(411),YPsb((P)"(fun (generic value type) (sig (new <property-type-error> property-error-generic generic type-error-value value type-error-type type)))"));
+  Yproperty_type_error = YPfab_met(FUNCODEREF(Yproperty_type_error),T86,LITREF(lit_211),LITREF(lit_212),sloc(411),YPfalse);
   T87 = Yproperty_type_error;
   VARSET(Yproperty_type_error,T87);
   lit_213 = YPPlist(1,YPPsym((P)"c"));
   lit_214 = YPsb((P)"Property %s ");
   T88 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLproperty_type_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_94 = YPfab_met(FUNCODEREF(fun_describe_condition_94),T88,LITREF(lit_3),LITREF(lit_213),sloc(417),YPsb((P)"(fun ((c <property-type-error>) => <str>) (cat (msg-to-str Property %s  (property-error-generic c)) (sup c)))"));
+  fun_describe_condition_94 = YPfab_met(FUNCODEREF(fun_describe_condition_94),T88,LITREF(lit_3),LITREF(lit_213),sloc(417),YPfalse);
   T90 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T91 = fun_describe_condition_94;
   T89 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T90,T91);
@@ -3206,13 +3210,13 @@ DEFCREGS();
   lit_216 = YPPsym((P)"as-error");
   lit_217 = YPPlist(2,YPPsym((P)"type"),YPPsym((P)"value"));
   T94 = YPfab_sig(YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yas_error = YPfab_met(FUNCODEREF(Yas_error),T94,LITREF(lit_216),LITREF(lit_217),sloc(422),YPsb((P)"(fun (type value) (sig (new <as-error> type-error-type type type-error-value value)))"));
+  Yas_error = YPfab_met(FUNCODEREF(Yas_error),T94,LITREF(lit_216),LITREF(lit_217),sloc(422),YPfalse);
   T95 = Yas_error;
   VARSET(Yas_error,T95);
   lit_218 = YPPlist(1,YPPsym((P)"c"));
   lit_219 = YPsb((P)"No AS method for type %t and value %=.");
   T96 = YPfab_sig(YPPlist(1,VARREF(YgooSconditionsYLas_errorG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
-  fun_describe_condition_96 = YPfab_met(FUNCODEREF(fun_describe_condition_96),T96,LITREF(lit_3),LITREF(lit_218),sloc(425),YPsb((P)"(fun ((c <as-error>) => <str>) (msg-to-str No AS method for type %t and value %=. (type-error-type c) (type-error-value c)))"));
+  fun_describe_condition_96 = YPfab_met(FUNCODEREF(fun_describe_condition_96),T96,LITREF(lit_3),LITREF(lit_218),sloc(425),YPfalse);
   T98 = VARREF_OR(YgooSconditionsYdescribe_condition,YPfalse);
   T99 = fun_describe_condition_96;
   T97 = XCALL2(1,VARREF(YgooSfunYPdefine_method),T98,T99);
@@ -3224,7 +3228,7 @@ DEFCREGS();
   lit_221 = YPPsym((P)"arithmetic-error");
   lit_222 = YPPlist(2,YPPsym((P)"msg"),YPPsym((P)"args"));
   T102 = YPfab_sig(YPPlist(1,VARREF(YLstrG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yarithmetic_error = YPfab_met(FUNCODEREF(Yarithmetic_error),T102,LITREF(lit_221),LITREF(lit_222),sloc(431),YPsb((P)"(fun ((msg <str>) (args ...)) (sig (new <arithmetic-error> condition-message msg condition-arguments (as <lst> args))))"));
+  Yarithmetic_error = YPfab_met(FUNCODEREF(Yarithmetic_error),T102,LITREF(lit_221),LITREF(lit_222),sloc(431),YPfalse);
   T103 = Yarithmetic_error;
   VARSET(Yarithmetic_error,T103);
   lit_223 = YPPsym((P)"<keyboard-interrupt>");
@@ -3233,14 +3237,14 @@ DEFCREGS();
   VARSET(YgooSconditionsYLkeyboard_interruptG,T104);
   lit_224 = YPPsym((P)"keyboard-interrupt");
   T106 = YPfab_sig(Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
-  Ykeyboard_interrupt = YPfab_met(FUNCODEREF(Ykeyboard_interrupt),T106,LITREF(lit_224),LITREF(lit_77),sloc(437),YPsb((P)"(fun () (sig (new <keyboard-interrupt>)))"));
+  Ykeyboard_interrupt = YPfab_met(FUNCODEREF(Ykeyboard_interrupt),T106,LITREF(lit_224),LITREF(lit_77),sloc(437),YPfalse);
   T107 = Ykeyboard_interrupt;
   VARSET(Ykeyboard_interrupt,T107);
   lit_225 = YPPsym((P)"do-handlers-of-type");
   lit_226 = YPPlist(2,YPPsym((P)"type"),YPPsym((P)"f"));
   T109 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YgooSconditionsYLconditionG));
   T108 = YPfab_sig(YPPlist(2,T109,VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YgooSconditionsYdo_handlers_of_type = YPfab_met(FUNCODEREF(YgooSconditionsYdo_handlers_of_type),T108,LITREF(lit_225),LITREF(lit_226),sloc(468),YPsb((P)"(fun ((type (t< <condition>)) (f <fun>)) (rep search ((handlers *current-handlers*)) (if (nul? handlers) #f (let ((handler (head handlers)) (remaining (tail handlers))) (when (and (subtype? (handler-condition-type handler) type) (handler-active? handler)) (f handler)) (search remaining)))))"));
+  YgooSconditionsYdo_handlers_of_type = YPfab_met(FUNCODEREF(YgooSconditionsYdo_handlers_of_type),T108,LITREF(lit_225),LITREF(lit_226),sloc(468),YPfalse);
   T110 = YgooSconditionsYdo_handlers_of_type;
   VARSET(YgooSconditionsYdo_handlers_of_type,T110);
   lit_227 = YPPsym((P)"list-handlers");
@@ -3248,10 +3252,10 @@ DEFCREGS();
   lit_229 = YPPlist(1,YPPsym((P)"handler"));
   lit_230 = YPsb((P)"%d. %s.\n");
   T116 = YPfab_sig(YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T115 = fun_100 = YPfab_met(FUNCODEREF(fun_100),T116,YPfalse,LITREF(lit_229),sloc(487),YPsb((P)"(fun (handler) (msg out %d. %s.\n i (describe-handler (handler-info handler) (handler-condition-type handler))) (push! applicable handler) (incf i))"));
+  T115 = fun_100 = YPfab_met(FUNCODEREF(fun_100),T116,YPfalse,LITREF(lit_229),sloc(487),YPfalse);
   T114 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YgooSconditionsYLconditionG));
   T113 = YPfab_sig(YPPlist(2,T114,VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YgooScolsSvecYLvecG),Ynil);
-  T112 = YgooSconditionsYlist_handlers = YPfab_met(FUNCODEREF(YgooSconditionsYlist_handlers),T113,LITREF(lit_227),LITREF(lit_228),sloc(483),YPsb((P)"(fun ((type (t< <condition>)) out => <vec>) (def i 1) (def applicable (fab <vec> 0)) (do-handlers-of-type type (fun (handler) (msg out %d. %s.\n i (describe-handler (handler-info handler) (handler-condition-type handler))) (push! applicable handler) (incf i))) applicable)"));
+  T112 = YgooSconditionsYlist_handlers = YPfab_met(FUNCODEREF(YgooSconditionsYlist_handlers),T113,LITREF(lit_227),LITREF(lit_228),sloc(483),YPfalse);
   T118 = YgooSconditionsYlist_handlers;
   T117 = VARSET(YgooSconditionsYlist_handlers,T118);
   T111 = T117;
@@ -3266,9 +3270,9 @@ DEFCREGS();
   lit_233 = YPsb((P)"Handler %= does not match condition %=");
   lit_234 = YPsb((P)"Handler %= is not installed");
   T1 = YPfab_sig(Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
-  fun_102 = YPfab_met(FUNCODEREF(fun_102),T1,YPfalse,LITREF(lit_77),sloc(510),YPsb((P)"(fun () (signal-handler-list condition remaining))"));
+  fun_102 = YPfab_met(FUNCODEREF(fun_102),T1,YPfalse,LITREF(lit_77),sloc(510),YPfalse);
   T0 = YPfab_sig(YPPlist(3,VARREF(YgooSconditionsYLhandlerG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  YgooSconditionsYinvoke_handler_interactively = YPfab_met(FUNCODEREF(YgooSconditionsYinvoke_handler_interactively),T0,LITREF(lit_231),LITREF(lit_232),sloc(497),YPsb((P)"(fun ((handler <handler>) in out => <any>) (def condition (build-condition-for-handler-interactively (handler-info handler) (handler-condition-type handler) in out)) (unless (handler-matches? handler condition) (error Handler %= does not match condition %= handler condition)) (rep search ((handlers *current-handlers*)) (if (nul? handlers) (error Handler %= is not installed handler) (let ((current (head handlers)) (remaining (tail handlers))) (if (== handler current) ((handler-function handler) condition (fun () (signal-handler-list condition remaining))) (search remaining))))))"));
+  YgooSconditionsYinvoke_handler_interactively = YPfab_met(FUNCODEREF(YgooSconditionsYinvoke_handler_interactively),T0,LITREF(lit_231),LITREF(lit_232),sloc(497),YPfalse);
   T2 = YgooSconditionsYinvoke_handler_interactively;
   VARSET(YgooSconditionsYinvoke_handler_interactively,T2);
   lit_235 = YPPsym((P)"choose-handler");
@@ -3277,7 +3281,7 @@ DEFCREGS();
   lit_238 = YPsb((P)"No such handler %d");
   T4 = XCALL1(1,VARREF(YgooStypesYtL),VARREF(YgooSconditionsYLconditionG));
   T3 = YPfab_sig(YPPlist(3,T4,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  YgooSconditionsYchoose_handler = YPfab_met(FUNCODEREF(YgooSconditionsYchoose_handler),T3,LITREF(lit_235),LITREF(lit_236),sloc(514),YPsb((P)"(fun ((type (t< <condition>)) in out => <any>) (def handlers (list-handlers type out)) (msg out Please pick a handler: ) (def n (- (read in) 1)) (when (or (< n 0) (>= n (len handlers))) (error No such handler %d n)) (invoke-handler-interactively (elt handlers n) in out))"));
+  YgooSconditionsYchoose_handler = YPfab_met(FUNCODEREF(YgooSconditionsYchoose_handler),T3,LITREF(lit_235),LITREF(lit_236),sloc(514),YPfalse);
   T5 = YgooSconditionsYchoose_handler;
   VARSET(YgooSconditionsYchoose_handler,T5);
   VARSET(YTrestarts_okQT,YPtrue);
@@ -3344,958 +3348,965 @@ static USE_INFO use_infos[] = {
 };
 
 static IMPORT_INFO import_infos[] = {
-  {"log", &module_info_gooSmath, NULL},
-  {"@@==", &module_info_gooSboot, NULL},
-  {"fab-pair", &module_info_gooSboot, NULL},
-  {"decf", &module_info_gooSmacros, NULL},
-  {"^", &module_info_gooSmath, NULL},
-  {"seq", &module_info_gooSboot, NULL},
-  {"sub*-setter", &module_info_gooScolsSseqx, NULL},
-  {"nil", &module_info_gooSboot, NULL},
-  {"%tnul", &module_info_gooSboot, NULL},
-  {"fun-specs", &module_info_gooSfun, NULL},
-  {"add", &module_info_gooScolsScol, NULL},
-  {"%gen-cache-classes", &module_info_gooSboot, NULL},
-  {"assert", &module_info_gooSmacros, NULL},
-  {"class-gens-setter", &module_info_gooSboot, NULL},
-  {"<file-port>", &module_info_gooSioSport, NULL},
-  {"t<", &module_info_gooStypes, NULL},
-  {"%met-prop-len", &module_info_gooSboot, NULL},
-  {"@tail", &module_info_gooSboot, NULL},
-  {"<file-out-port>", &module_info_gooSioSport, NULL},
-  {"<singleton>", &module_info_gooSboot, NULL},
-  {"%patch-early-generics", &module_info_gooSboot, NULL},
-  {"port-filename", &module_info_gooSioSport, NULL},
-  {"<box>", &module_info_gooSboot, NULL},
-  {"div", &module_info_gooSmath, NULL},
-  {"if", &module_info_gooSboot, NULL},
-  {"%next-methods-reg-setter", &module_info_gooSboot, NULL},
-  {"%macro", &module_info_gooSboot, NULL},
-  {"fun-sig-setter", &module_info_gooSboot, NULL},
-  {"prop-owner", &module_info_gooSboot, NULL},
-  {"<str-tab>", &module_info_gooScolsStab, NULL},
-  {"len/fill-setter", &module_info_gooScolsScolx, NULL},
-  {"%class-gens-setter", &module_info_gooSboot, NULL},
-  {"%ib", &module_info_gooSboot, NULL},
-  {"%rep", &module_info_gooSboot, NULL},
-  {"@checked-next-methods", &module_info_gooSmacros, NULL},
-  {"def-list", &module_info_gooScolsSlst, NULL},
-  {"col-res", &module_info_gooScolsScol, NULL},
-  {"pub", &module_info_gooSmacros, NULL},
-  {"sqrt", &module_info_gooSmath, NULL},
-  {"%i?", &module_info_gooSboot, NULL},
-  {"find-or", &module_info_gooScolsScol, NULL},
-  {"%vfn", &module_info_gooSboot, NULL},
-  {"%gen-mets", &module_info_gooSboot, NULL},
-  {"<log>", &module_info_gooSboot, NULL},
-  {"class-gens", &module_info_gooSboot, NULL},
-  {"peek", &module_info_gooSioSport, NULL},
-  {"unless", &module_info_gooSmacros, NULL},
-  {"del-vals", &module_info_gooScolsSseq, NULL},
-  {"%vsp", &module_info_gooSboot, NULL},
-  {"fun-name", &module_info_gooSfun, NULL},
-  {"%app-args", &module_info_gooSboot, NULL},
-  {"cat", &module_info_gooSmacros, NULL},
-  {"%dispatch", &module_info_gooSboot, NULL},
-  {"empty?", &module_info_gooScolsScol, NULL},
-  {"<opts-tup>", &module_info_gooSboot, NULL},
-  {"%gen-code-setter", &module_info_gooSboot, NULL},
-  {"class-id", &module_info_gooSboot, NULL},
-  {"asin", &module_info_gooSmath, NULL},
-  {"app", &module_info_gooSmacros, NULL},
-  {"class-prop-len-setter", &module_info_gooSboot, NULL},
-  {"@tall2?", &module_info_gooSboot, NULL},
-  {"fun-sig", &module_info_gooSboot, NULL},
-  {"renew", &module_info_gooSmacros, NULL},
-  {"quasiquote", &module_info_gooSboot, NULL},
-  {"%vm-fun-env-elt", &module_info_gooSboot, NULL},
-  {"nul", &module_info_gooScolsScol, NULL},
-  {"<port>", &module_info_gooSioSport, NULL},
-  {"%fun-info-src-loc-setter", &module_info_gooSboot, NULL},
-  {"|", &module_info_gooSmath, NULL},
-  {"<any>", &module_info_gooSboot, NULL},
-  {"do-key-vals", &module_info_gooScolsSseq, NULL},
-  {"var-type", &module_info_gooSmacros, NULL},
-  {"t=", &module_info_gooStypes, NULL},
-  {"@telt", &module_info_gooSboot, NULL},
-  {"cat-sym", &module_info_gooSmacros, NULL},
-  {"%fun-info-src-setter", &module_info_gooSboot, NULL},
-  {"match-nul-list", &module_info_gooSmacros, NULL},
-  {"%tup", &module_info_gooSboot, NULL},
-  {"%clone", &module_info_gooSboot, NULL},
-  {"@any?", &module_info_gooSboot, NULL},
-  {"%type-class", &module_info_gooSboot, NULL},
-  {"%object-of", &module_info_gooSboot, NULL},
-  {"@len", &module_info_gooSboot, NULL},
-  {"prop-offset", &module_info_gooSboot, NULL},
-  {"%iv", &module_info_gooSboot, NULL},
-  {"%i<<", &module_info_gooSboot, NULL},
-  {"%singleton", &module_info_gooSboot, NULL},
-  {"flo-bits", &module_info_gooSmath, NULL},
-  {"clone", &module_info_gooSclass, NULL},
-  {"*restarts-ok?*", &module_info_gooSboot, NULL},
-  {"and", &module_info_gooSmacros, NULL},
-  {"class-prop-len", &module_info_gooSboot, NULL},
-  {"%cb", &module_info_gooSboot, NULL},
-  {"src-loc-file", &module_info_gooSboot, NULL},
-  {"@<", &module_info_gooSboot, NULL},
-  {"gen-cache-missable?", &module_info_gooSboot, NULL},
-  {"rev", &module_info_gooScolsSseq, NULL},
-  {"1-", &module_info_gooSmath, NULL},
-  {"<opts>", &module_info_gooSboot, NULL},
-  {"last", &module_info_gooSmacros, NULL},
-  {"%vnm", &module_info_gooSboot, NULL},
-  {"acos", &module_info_gooSmath, NULL},
-  {"num-to-str", &module_info_gooSmath, NULL},
-  {"<set>", &module_info_gooScolsStab, NULL},
-  {"*early-classes*", &module_info_gooSboot, NULL},
-  {"@add-new", &module_info_gooSboot, NULL},
-  {"trunc/", &module_info_gooSmath, NULL},
-  {"<tab>", &module_info_gooScolsScol, NULL},
-  {"%telt", &module_info_gooSboot, NULL},
-  {"port-line", &module_info_gooSioSport, NULL},
-  {">", &module_info_gooSmag, NULL},
-  {"atan2", &module_info_gooSmath, NULL},
-  {"may-isa?", &module_info_gooSboot, NULL},
-  {"fin", &module_info_gooSboot, NULL},
-  {"contagious-call", &module_info_gooSmath, NULL},
-  {"nul?", &module_info_gooSmacros, NULL},
-  {"fold+", &module_info_gooScolsScol, NULL},
-  {"return-type-error", &module_info_gooSboot, NULL},
-  {"abs", &module_info_gooSmath, NULL},
-  {"%class-prop-len", &module_info_gooSboot, NULL},
-  {"vals-to-str", &module_info_gooScolsSseq, NULL},
-  {"fun", &module_info_gooSboot, NULL},
-  {"sub-setter", &module_info_gooScolsSseqx, NULL},
-  {"reject", &module_info_gooScolsSseq, NULL},
-  {"%class-children-setter", &module_info_gooSboot, NULL},
-  {"fab-gen", &module_info_gooSfun, NULL},
-  {"%class-id-setter", &module_info_gooSboot, NULL},
-  {"rotf", &module_info_gooSmacros, NULL},
-  {"id-hash", &module_info_gooScolsStab, NULL},
-  {"len-setter", &module_info_gooScolsScolx, NULL},
-  {"tab-growth-factor", &module_info_gooScolsStab, NULL},
-  {"sig-nary?-setter", &module_info_gooSboot, NULL},
-  {"%%macro", &module_info_gooSboot, NULL},
-  {"%fun-info-src", &module_info_gooSboot, NULL},
-  {"<", &module_info_gooSmag, NULL},
-  {"*boot-macro-module-names*", &module_info_gooSboot, NULL},
-  {"@fold", &module_info_gooSboot, NULL},
-  {"use/export", &module_info_gooSboot, NULL},
-  {"nxt", &module_info_gooScolsScol, NULL},
-  {"sig-unification-vars-setter", &module_info_gooSboot, NULL},
-  {"power-of-two-ceil", &module_info_gooSmath, NULL},
-  {"use/mangle", &module_info_gooSboot, NULL},
-  {"puts", &module_info_gooSioSport, NULL},
-  {"unexec", &module_info_gooSboot, NULL},
-  {"%fun-info-name", &module_info_gooSboot, NULL},
-  {"t+", &module_info_gooStypes, NULL},
-  {"@tany?", &module_info_gooSboot, NULL},
-  {"@int?", &module_info_gooSboot, NULL},
-  {"%sp-reg", &module_info_gooSboot, NULL},
-  {"fun-info-src-loc-setter", &module_info_gooSboot, NULL},
-  {"3rd", &module_info_gooScolsSseq, NULL},
-  {"fab-class", &module_info_gooSclass, NULL},
-  {"%met-env-setter", &module_info_gooSboot, NULL},
-  {"%stack-reg", &module_info_gooSboot, NULL},
-  {"atan", &module_info_gooSmath, NULL},
-  {"use", &module_info_gooSboot, NULL},
-  {"dss", &module_info_gooSboot, NULL},
-  {"%with-monitor", &module_info_gooSboot, NULL},
-  {"%sig-unification-vars", &module_info_gooSboot, NULL},
-  {"%object-class", &module_info_gooSboot, NULL},
-  {"%prop-getter", &module_info_gooSboot, NULL},
-  {"pos", &module_info_gooScolsSseq, NULL},
-  {"ready?", &module_info_gooSioSport, NULL},
-  {"syntax-error", &module_info_gooSboot, NULL},
-  {"product-elts", &module_info_gooSboot, NULL},
-  {"now-key", &module_info_gooScolsScol, NULL},
-  {"sig-nary?", &module_info_gooSboot, NULL},
-  {"neg", &module_info_gooSmath, NULL},
-  {"%process-module", &module_info_gooSboot, NULL},
-  {"%class-ancestors", &module_info_gooSboot, NULL},
-  {"fun-spec", &module_info_gooSfun, NULL},
-  {"tab-hash", &module_info_gooScolsStab, NULL},
-  {"sig-unification-vars", &module_info_gooSboot, NULL},
-  {"zap!", &module_info_gooScolsScolx, NULL},
-  {"%i&", &module_info_gooSboot, NULL},
-  {"dp", &module_info_gooSboot, NULL},
-  {"%fun-info-name-setter", &module_info_gooSboot, NULL},
-  {"%sig-nary?", &module_info_gooSboot, NULL},
-  {"%class", &module_info_gooSboot, NULL},
-  {"opf", &module_info_gooSmacros, NULL},
-  {"fun-info-src-loc", &module_info_gooSboot, NULL},
-  {"keys", &module_info_gooScolsScol, NULL},
-  {"mif", &module_info_gooSboot, NULL},
-  {"<gen>", &module_info_gooSboot, NULL},
-  {"now", &module_info_gooScolsScol, NULL},
-  {"isqrt", &module_info_gooSmath, NULL},
-  {"<class>", &module_info_gooSboot, NULL},
-  {"+", &module_info_gooSmath, NULL},
-  {"%%check-call-types", &module_info_gooSboot, NULL},
-  {"class-direct-props-setter", &module_info_gooSboot, NULL},
-  {"%class-id", &module_info_gooSboot, NULL},
-  {"round/", &module_info_gooSmath, NULL},
-  {"fun-mets-setter", &module_info_gooSboot, NULL},
-  {"pick", &module_info_gooScolsSseq, NULL},
-  {"@lst", &module_info_gooSboot, NULL},
-  {"fun-code", &module_info_gooSboot, NULL},
-  {"ct", &module_info_gooSboot, NULL},
-  {"all2?", &module_info_gooStypes, NULL},
-  {"%%sym", &module_info_gooSboot, NULL},
-  {"contagious-type", &module_info_gooSmath, NULL},
-  {"%prop-init", &module_info_gooSboot, NULL},
-  {"2nd", &module_info_gooSmacros, NULL},
-  {"=", &module_info_gooSlog, NULL},
-  {"$pi", &module_info_gooSmath, NULL},
-  {"%i>>>", &module_info_gooSboot, NULL},
-  {"%stack-check-reg?-setter", &module_info_gooSboot, NULL},
-  {"props-of", &module_info_gooSboot, NULL},
-  {"dp!", &module_info_gooSboot, NULL},
-  {"low-elt", &module_info_gooScolsScol, NULL},
-  {"export", &module_info_gooSboot, NULL},
-  {"%raw", &module_info_gooSboot, NULL},
-  {"no-next-methods-error", &module_info_gooSboot, NULL},
-  {"fun-count-setter", &module_info_gooSfun, NULL},
-  {"elts", &module_info_gooScolsScol, NULL},
-  {"fold", &module_info_gooScolsScol, NULL},
-  {"%class-forward", &module_info_gooSboot, NULL},
-  {"<type>", &module_info_gooSboot, NULL},
-  {"neg?", &module_info_gooSmath, NULL},
-  {"<vec>", &module_info_gooScolsSvec, NULL},
-  {"join", &module_info_gooScolsSseq, NULL},
-  {"%vm-fun-env-elt-setter", &module_info_gooSboot, NULL},
-  {"@new", &module_info_gooSboot, NULL},
-  {"match-sublist", &module_info_gooSmacros, NULL},
-  {"try", &module_info_gooSboot, NULL},
-  {"vec", &module_info_gooScolsSvec, NULL},
-  {"handler-info-arguments", &module_info_gooSfun, NULL},
-  {"list", &module_info_gooScolsSlst, NULL},
-  {"address-of", &module_info_gooSany, NULL},
-  {"class-direct-props", &module_info_gooSboot, NULL},
-  {"%prop-elt-setter", &module_info_gooSboot, NULL},
-  {"app-sup", &module_info_gooSmacros, NULL},
-  {"*macros-ok?*", &module_info_gooSboot, NULL},
-  {"sym-name", &module_info_gooSboot, NULL},
-  {"df", &module_info_gooSboot, NULL},
-  {"fun-mets", &module_info_gooSboot, NULL},
-  {"%gen-cache", &module_info_gooSboot, NULL},
-  {"src-loc-line", &module_info_gooSboot, NULL},
-  {"%binding-name", &module_info_gooSboot, NULL},
-  {"%fun-info-count-setter", &module_info_gooSboot, NULL},
-  {"property-type-error", &module_info_gooSboot, NULL},
-  {"%relt", &module_info_gooSboot, NULL},
-  {"%tail", &module_info_gooSboot, NULL},
-  {"class-children", &module_info_gooSboot, NULL},
-  {"%slen", &module_info_gooSboot, NULL},
-  {"%class-props", &module_info_gooSboot, NULL},
-  {"@may-isa?", &module_info_gooSboot, NULL},
-  {"eof-object", &module_info_gooSchr, NULL},
-  {"or/set", &module_info_gooSmacros, NULL},
-  {"@order-specs-class", &module_info_gooSfun, NULL},
-  {"@olen", &module_info_gooSboot, NULL},
-  {"with-port", &module_info_gooSioSport, NULL},
-  {"1st", &module_info_gooSmacros, NULL},
-  {"%set-regs", &module_info_gooSboot, NULL},
-  {"del!", &module_info_gooScolsScolx, NULL},
-  {"<sym>", &module_info_gooSboot, NULL},
-  {"argument-type-error", &module_info_gooSboot, NULL},
-  {"d.", &module_info_gooSboot, NULL},
-  {"%lb", &module_info_gooSboot, NULL},
-  {"@opts-as-lst", &module_info_gooSboot, NULL},
-  {"<enum>", &module_info_gooScolsScol, NULL},
-  {"<simple-handler-info>", &module_info_gooSfun, NULL},
-  {"dlet", &module_info_gooSmacros, NULL},
-  {"key-test", &module_info_gooScolsScol, NULL},
-  {"tab-growth-threshold", &module_info_gooScolsStab, NULL},
-  {"<met>", &module_info_gooSboot, NULL},
-  {"%i+", &module_info_gooSboot, NULL},
-  {"property-unbound-error", &module_info_gooSboot, NULL},
-  {"<<", &module_info_gooSmath, NULL},
-  {"%i<<<", &module_info_gooSboot, NULL},
-  {"zero?", &module_info_gooSmath, NULL},
-  {"class-children-setter", &module_info_gooSboot, NULL},
-  {"class-of", &module_info_gooSclass, NULL},
-  {"@tlen", &module_info_gooSboot, NULL},
-  {"%union-elts", &module_info_gooSboot, NULL},
-  {"<loc>", &module_info_gooSboot, NULL},
-  {"prop-init", &module_info_gooSboot, NULL},
-  {"fun-count", &module_info_gooSfun, NULL},
-  {"fin?", &module_info_gooScolsScol, NULL},
-  {"<str>", &module_info_gooSboot, NULL},
-  {"class-forward-setter", &module_info_gooSboot, NULL},
-  {"%im", &module_info_gooSboot, NULL},
-  {"put", &module_info_gooSioSport, NULL},
-  {"dg", &module_info_gooSboot, NULL},
-  {"ceil/", &module_info_gooSmath, NULL},
-  {"fab-fill!", &module_info_gooScolsScol, NULL},
-  {"@==", &module_info_gooSboot, NULL},
-  {"%vnm-setter", &module_info_gooSboot, NULL},
-  {"ds", &module_info_gooSboot, NULL},
-  {"%prop-elt", &module_info_gooSboot, NULL},
-  {"all?", &module_info_gooScolsScol, NULL},
-  {"$e", &module_info_gooSmath, NULL},
-  {"nul-prop", &module_info_gooSboot, NULL},
-  {"%fun-info-src-loc", &module_info_gooSboot, NULL},
-  {"error", &module_info_gooSboot, NULL},
-  {"eof-object?", &module_info_gooSchr, NULL},
-  {"<line-list>", &module_info_gooScolsSlst, NULL},
-  {"%i*", &module_info_gooSboot, NULL},
-  {"stack-overflow-error", &module_info_gooSboot, NULL},
-  {"%src-loc", &module_info_gooSboot, NULL},
-  {"any2?", &module_info_gooScolsSseq, NULL},
-  {"%fun-cache-setter", &module_info_gooSboot, NULL},
-  {"union-elts", &module_info_gooSboot, NULL},
-  {"swapf", &module_info_gooSmacros, NULL},
-  {"@elt", &module_info_gooSboot, NULL},
-  {"enum", &module_info_gooScolsScol, NULL},
-  {"<tup>", &module_info_gooSboot, NULL},
-  {"%vm-box-val", &module_info_gooSboot, NULL},
-  {"%allocate-stack", &module_info_gooSboot, NULL},
-  {"as", &module_info_gooStypes, NULL},
-  {"dc", &module_info_gooSboot, NULL},
-  {"new", &module_info_gooSboot, NULL},
-  {"<str-port>", &module_info_gooSioSport, NULL},
-  {"%gen-cache-classes-setter", &module_info_gooSboot, NULL},
-  {"sig-specs-setter", &module_info_gooSboot, NULL},
-  {"tanh", &module_info_gooSmath, NULL},
-  {"col-res-type", &module_info_gooScolsScol, NULL},
-  {"1+", &module_info_gooSmath, NULL},
-  {"key-type", &module_info_gooScolsScol, NULL},
-  {"%vm-with-exit", &module_info_gooSboot, NULL},
-  {"*boot-macro-expanders*", &module_info_gooSboot, NULL},
-  {"class-forward", &module_info_gooSboot, NULL},
-  {"to-str", &module_info_gooSany, NULL},
-  {"pos?", &module_info_gooSmath, NULL},
-  {"@=", &module_info_gooSboot, NULL},
-  {"cpl-error", &module_info_gooSboot, NULL},
-  {"split", &module_info_gooScolsSseq, NULL},
-  {"rev!", &module_info_gooSmacros, NULL},
-  {"ins", &module_info_gooScolsSseq, NULL},
-  {"%invoke-debugger", &module_info_gooSboot, NULL},
-  {"@fun-mets", &module_info_gooSfun, NULL},
-  {"<fun>", &module_info_gooSboot, NULL},
-  {"<flat>", &module_info_gooSboot, NULL},
+  {"as-log", &module_info_gooSlog, NULL},
   {"find-setter", &module_info_gooSclass, NULL},
-  {"@subtype?", &module_info_gooSboot, NULL},
-  {"line-list-of", &module_info_gooScolsSlst, NULL},
-  {"%fun-info-names-setter", &module_info_gooSboot, NULL},
-  {"<file-in-port>", &module_info_gooSioSport, NULL},
-  {"%i-", &module_info_gooSboot, NULL},
-  {"match", &module_info_gooSmacros, NULL},
-  {"port-handle", &module_info_gooSioSport, NULL},
-  {">>>", &module_info_gooSmath, NULL},
-  {"alter", &module_info_gooScolsSseqx, NULL},
-  {"digit?", &module_info_gooSchr, NULL},
-  {"sig-specs", &module_info_gooSboot, NULL},
-  {"%rlen", &module_info_gooSboot, NULL},
-  {"fun-val", &module_info_gooSfun, NULL},
-  {"%gen-cache-arg-pos-setter", &module_info_gooSboot, NULL},
-  {"elt!", &module_info_gooScolsScolx, NULL},
-  {"opts-tup-storage", &module_info_gooSboot, NULL},
-  {"%met-code", &module_info_gooSboot, NULL},
-  {"%relt-setter", &module_info_gooSboot, NULL},
-  {"force-out", &module_info_gooSioSport, NULL},
-  {"fab-into", &module_info_gooScolsScol, NULL},
-  {"unknown-function-error", &module_info_gooSboot, NULL},
-  {"cosh", &module_info_gooSmath, NULL},
-  {"tab-shrink-threshold", &module_info_gooScolsStab, NULL},
-  {"arity-error", &module_info_gooSboot, NULL},
-  {"items", &module_info_gooScolsScol, NULL},
-  {"elt-default", &module_info_gooScolsScol, NULL},
-  {"any?", &module_info_gooStypes, NULL},
-  {"%i^", &module_info_gooSboot, NULL},
-  {"max", &module_info_gooSmag, NULL},
-  {"var-name", &module_info_gooSmacros, NULL},
-  {"fun-env", &module_info_gooSboot, NULL},
-  {"loc", &module_info_gooSboot, NULL},
-  {"push", &module_info_gooScolsSseq, NULL},
-  {"prefix?", &module_info_gooScolsSseq, NULL},
-  {"del-dups", &module_info_gooScolsSseq, NULL},
-  {"<lst>", &module_info_gooSboot, NULL},
-  {"%to-tup", &module_info_gooSboot, NULL},
-  {"floor/", &module_info_gooSmath, NULL},
-  {"%untag", &module_info_gooSboot, NULL},
-  {"@class<", &module_info_gooSfun, NULL},
-  {"ambiguous-method-error", &module_info_gooSboot, NULL},
-  {"gets", &module_info_gooSioSport, NULL},
-  {"rep", &module_info_gooSboot, NULL},
-  {"%i=", &module_info_gooSboot, NULL},
-  {"odd?", &module_info_gooSmath, NULL},
-  {"%sig-val", &module_info_gooSboot, NULL},
-  {"file-opening-error", &module_info_gooSboot, NULL},
-  {"pow", &module_info_gooSmath, NULL},
-  {"arithmetic-error", &module_info_gooSboot, NULL},
-  {"open", &module_info_gooSioSport, NULL},
-  {"range-check?", &module_info_gooScolsSseq, NULL},
-  {"repeat", &module_info_gooScolsSseq, NULL},
-  {"alpha?", &module_info_gooSchr, NULL},
-  {"ct-also", &module_info_gooSboot, NULL},
-  {"sub*", &module_info_gooScolsSseq, NULL},
-  {"%it/", &module_info_gooSboot, NULL},
-  {"%dyn-var-val", &module_info_gooSboot, NULL},
-  {"fab-sym", &module_info_gooSboot, NULL},
-  {"map2", &module_info_gooSmacros, NULL},
-  {"sig-val-setter", &module_info_gooSboot, NULL},
-  {"<seq!>", &module_info_gooSboot, NULL},
-  {"cat!", &module_info_gooScolsSseqx, NULL},
-  {"quote", &module_info_gooSboot, NULL},
-  {"%gen-cache-singletons-setter", &module_info_gooSboot, NULL},
-  {"%fun-info-count", &module_info_gooSboot, NULL},
-  {"line-list", &module_info_gooScolsSlst, NULL},
-  {"@del-dups", &module_info_gooSboot, NULL},
-  {"*report-prop-unbound-errors?*", &module_info_gooSclass, NULL},
-  {"as-error", &module_info_gooSboot, NULL},
-  {"prop-type", &module_info_gooSboot, NULL},
-  {"%class-row-setter", &module_info_gooSboot, NULL},
-  {"fun-info-names-setter", &module_info_gooSboot, NULL},
-  {"elt-type", &module_info_gooScolsScol, NULL},
-  {"<fun-info>", &module_info_gooSboot, NULL},
-  {"@all2?", &module_info_gooSboot, NULL},
-  {"%fun-info-names", &module_info_gooSboot, NULL},
-  {"%unlink-stack", &module_info_gooSboot, NULL},
-  {"find-getter", &module_info_gooSclass, NULL},
-  {"sort-by!", &module_info_gooScolsSseq, NULL},
-  {"%prop-type", &module_info_gooSboot, NULL},
-  {"%fun-cache", &module_info_gooSboot, NULL},
-  {"fun-info-count-setter", &module_info_gooSboot, NULL},
-  {"fab-elt-setter", &module_info_gooScolsScol, NULL},
-  {"fun-src-loc", &module_info_gooSfun, NULL},
-  {"update-instance-for-changed-class", &module_info_gooSboot, NULL},
-  {"use/library", &module_info_gooSboot, NULL},
-  {"add!", &module_info_gooScolsScolx, NULL},
-  {"<seq.>", &module_info_gooSboot, NULL},
-  {"def", &module_info_gooSboot, NULL},
-  {"char->ascii", &module_info_gooSchr, NULL},
-  {"@telt-setter", &module_info_gooSboot, NULL},
-  {"napp", &module_info_gooSmacros, NULL},
-  {"trunc", &module_info_gooSmath, NULL},
-  {"assq", &module_info_gooScolsSlst, NULL},
-  {"type-error", &module_info_gooSboot, NULL},
-  {"map", &module_info_gooSmacros, NULL},
-  {"without-prop-unbound-errors", &module_info_gooSmacros, NULL},
-  {"%class-of", &module_info_gooSboot, NULL},
-  {"case-insensitive-string-equal", &module_info_gooScolsStab, NULL},
-  {"%class-children", &module_info_gooSboot, NULL},
-  {"%su", &module_info_gooSboot, NULL},
-  {"type-class", &module_info_gooSboot, NULL},
-  {"fill", &module_info_gooScolsScol, NULL},
-  {"sig-val", &module_info_gooSboot, NULL},
-  {"even?", &module_info_gooSmath, NULL},
-  {"<replace-generic-restart>", &module_info_gooSfun, NULL},
-  {"%gen-code", &module_info_gooSboot, NULL},
-  {"%eq?", &module_info_gooSboot, NULL},
-  {"min", &module_info_gooSmag, NULL},
-  {"@+", &module_info_gooSboot, NULL},
-  {"to-digit", &module_info_gooSchr, NULL},
-  {"@class-isa?", &module_info_gooSboot, NULL},
-  {"%vsp-setter", &module_info_gooSboot, NULL},
-  {"internal-error", &module_info_gooSboot, NULL},
-  {"%vfn-setter", &module_info_gooSboot, NULL},
-  {"fun-info-names", &module_info_gooSboot, NULL},
-  {"ceil", &module_info_gooSmath, NULL},
-  {"@adr?", &module_info_gooSboot, NULL},
-  {"<seq>", &module_info_gooSboot, NULL},
-  {"class-parents-setter", &module_info_gooSboot, NULL},
-  {"%next-methods", &module_info_gooSboot, NULL},
-  {"port-index-setter", &module_info_gooSioSport, NULL},
-  {"%fu", &module_info_gooSboot, NULL},
-  {"tail-setter", &module_info_gooSboot, NULL},
-  {"@lit", &module_info_gooSboot, NULL},
-  {"%bb", &module_info_gooSboot, NULL},
-  {"tan", &module_info_gooSmath, NULL},
-  {"fun-info-count", &module_info_gooSboot, NULL},
-  {"%fab-dyn-var", &module_info_gooSboot, NULL},
-  {"mem?", &module_info_gooScolsScol, NULL},
-  {"class-props-setter", &module_info_gooSboot, NULL},
-  {"%true", &module_info_gooSboot, NULL},
-  {"rem", &module_info_gooSmath, NULL},
-  {"sort!", &module_info_gooScolsSseqx, NULL},
-  {"newline", &module_info_gooSioSport, NULL},
-  {"@type-equal?", &module_info_gooSboot, NULL},
-  {"@do", &module_info_gooSboot, NULL},
-  {"push!", &module_info_gooScolsSseqx, NULL},
-  {"%gen-info", &module_info_gooSboot, NULL},
-  {"<col!>", &module_info_gooSboot, NULL},
-  {"%fun-reg", &module_info_gooSboot, NULL},
-  {"range-check", &module_info_gooScolsSseq, NULL},
-  {"%fb", &module_info_gooSboot, NULL},
-  {"range-error", &module_info_gooSboot, NULL},
-  {"gen-cache-classes", &module_info_gooSboot, NULL},
-  {"box-value-setter", &module_info_gooSboot, NULL},
-  {"match-atom", &module_info_gooSmacros, NULL},
-  {"ddv", &module_info_gooSboot, NULL},
-  {"@all?", &module_info_gooSboot, NULL},
-  {"%class-direct-props", &module_info_gooSboot, NULL},
-  {"port-line-setter", &module_info_gooSioSport, NULL},
-  {"%loc-val-setter", &module_info_gooSboot, NULL},
-  {"class-parents", &module_info_gooSboot, NULL},
-  {"@subclass?", &module_info_gooSboot, NULL},
-  {"opts-count", &module_info_gooSboot, NULL},
-  {"%class-mets", &module_info_gooSboot, NULL},
-  {"%vm-with-cleanup", &module_info_gooSboot, NULL},
-  {"tail", &module_info_gooSboot, NULL},
-  {"to-upper", &module_info_gooSchr, NULL},
-  {"fun-arity", &module_info_gooSfun, NULL},
-  {"to-lower", &module_info_gooSchr, NULL},
-  {"<sig>", &module_info_gooSboot, NULL},
-  {"pushf", &module_info_gooSmacros, NULL},
-  {"class-props", &module_info_gooSboot, NULL},
-  {"<col.>", &module_info_gooSboot, NULL},
-  {"property-not-found-error", &module_info_gooSboot, NULL},
-  {"%loc-off-setter", &module_info_gooSboot, NULL},
-  {"%str", &module_info_gooSboot, NULL},
-  {"%vm-box-val-setter", &module_info_gooSboot, NULL},
-  {"round-to", &module_info_gooSmath, NULL},
-  {"map-keyed", &module_info_gooScolsScol, NULL},
-  {"@oelt-setter", &module_info_gooSboot, NULL},
-  {"cos", &module_info_gooSmath, NULL},
-  {"==", &module_info_gooSmacros, NULL},
-  {"fabs", &module_info_gooSchr, NULL},
-  {">>", &module_info_gooSmath, NULL},
-  {"%symbols", &module_info_gooSboot, NULL},
-  {"del-dups!", &module_info_gooScolsSseqx, NULL},
-  {"*boot-macro-names*", &module_info_gooSboot, NULL},
-  {"%vm-fun-env-fab", &module_info_gooSboot, NULL},
-  {"line-pair", &module_info_gooScolsSlst, NULL},
-  {"below", &module_info_gooScolsSseq, NULL},
-  {"%opts-tup", &module_info_gooSboot, NULL},
-  {"do3", &module_info_gooScolsSseq, NULL},
-  {"moddecf", &module_info_gooSmath, NULL},
-  {"$max-int", &module_info_gooSboot, NULL},
-  {"isa?", &module_info_gooSboot, NULL},
-  {"%fab-met", &module_info_gooSboot, NULL},
-  {"<col>", &module_info_gooSboot, NULL},
-  {"%met-env", &module_info_gooSboot, NULL},
-  {"prop-value-setter", &module_info_gooSclass, NULL},
-  {"let", &module_info_gooSboot, NULL},
-  {"%sb", &module_info_gooSboot, NULL},
-  {"%eof-object", &module_info_gooSboot, NULL},
-  {"assqn", &module_info_gooScolsSlst, NULL},
-  {"&", &module_info_gooSmath, NULL},
-  {"@mem?", &module_info_gooSboot, NULL},
-  {"do", &module_info_gooSmacros, NULL},
-  {"elt-or", &module_info_gooScolsScol, NULL},
-  {"case", &module_info_gooSmacros, NULL},
-  {"class-mets-setter", &module_info_gooSboot, NULL},
-  {"cond", &module_info_gooSmacros, NULL},
-  {"subtype?", &module_info_gooSboot, NULL},
-  {"%product-elts", &module_info_gooSboot, NULL},
-  {"fun-src", &module_info_gooSfun, NULL},
-  {"sub", &module_info_gooScolsSseq, NULL},
-  {"box-value", &module_info_gooSboot, NULL},
-  {"upper?", &module_info_gooSchr, NULL},
-  {"@rev!", &module_info_gooSboot, NULL},
-  {"prop-setter", &module_info_gooSboot, NULL},
-  {"port-to-str", &module_info_gooSioSport, NULL},
-  {"<rep>", &module_info_gooSboot, NULL},
-  {"lift-place-subforms", &module_info_gooSmacros, NULL},
-  {"ord-app-mets", &module_info_gooSfun, NULL},
+  {"with-port", &module_info_gooSioSport, NULL},
+  {"%cu", &module_info_gooSboot, NULL},
+  {"tab-growth-factor", &module_info_gooScolsStab, NULL},
+  {"@olen", &module_info_gooSboot, NULL},
+  {"%rep", &module_info_gooSboot, NULL},
+  {"%object-class", &module_info_gooSboot, NULL},
+  {"tup", &module_info_gooSboot, NULL},
+  {"%app-args", &module_info_gooSboot, NULL},
+  {"<met>", &module_info_gooSboot, NULL},
+  {"<sym>", &module_info_gooSboot, NULL},
+  {"%prop-dat-at", &module_info_gooSboot, NULL},
   {"/", &module_info_gooSmath, NULL},
-  {"%sig-specs", &module_info_gooSboot, NULL},
-  {"sup", &module_info_gooSmacros, NULL},
-  {"t*", &module_info_gooSboot, NULL},
-  {"round", &module_info_gooSmath, NULL},
-  {"fun-info-setter", &module_info_gooSboot, NULL},
+  {"%met-info", &module_info_gooSboot, NULL},
+  {"%fun-cache", &module_info_gooSboot, NULL},
+  {"~", &module_info_gooSmath, NULL},
+  {"%class-of", &module_info_gooSboot, NULL},
+  {"tab-hash", &module_info_gooScolsStab, NULL},
+  {"set", &module_info_gooSboot, NULL},
+  {"len/fill-setter", &module_info_gooScolsScolx, NULL},
+  {"ceil", &module_info_gooSmath, NULL},
+  {"class-gens-setter", &module_info_gooSboot, NULL},
+  {"def-list", &module_info_gooScolsSlst, NULL},
+  {"@elt", &module_info_gooSboot, NULL},
+  {"fun-count", &module_info_gooSfun, NULL},
+  {"popf", &module_info_gooSmacros, NULL},
+  {"%class-props", &module_info_gooSboot, NULL},
+  {"add", &module_info_gooScolsScol, NULL},
+  {"<str>", &module_info_gooSboot, NULL},
+  {"def-fun-var", &module_info_gooSmacros, NULL},
+  {"col-res", &module_info_gooScolsScol, NULL},
+  {"exported", &module_info_gooSmacros, NULL},
+  {"no-next-methods-error", &module_info_gooSboot, NULL},
+  {"del-vals", &module_info_gooScolsSseq, NULL},
+  {"%sp-elt", &module_info_gooSboot, NULL},
+  {"find-or", &module_info_gooScolsScol, NULL},
+  {"cat", &module_info_gooSmacros, NULL},
+  {"prop-owner", &module_info_gooSboot, NULL},
+  {"%classes-ready?", &module_info_gooSboot, NULL},
+  {"mod+", &module_info_gooSmath, NULL},
+  {"<file-port>", &module_info_gooSioSport, NULL},
+  {"put", &module_info_gooSioSport, NULL},
+  {"renew", &module_info_gooSmacros, NULL},
+  {"force-out", &module_info_gooSioSport, NULL},
+  {"port-filename", &module_info_gooSioSport, NULL},
+  {"order-specs", &module_info_gooSboot, NULL},
+  {"@telt-setter", &module_info_gooSboot, NULL},
+  {"open", &module_info_gooSioSport, NULL},
+  {"%dyn-var-val", &module_info_gooSboot, NULL},
+  {"handler-info-arguments", &module_info_gooSfun, NULL},
+  {"%to-tup", &module_info_gooSboot, NULL},
+  {"<set>", &module_info_gooScolsStab, NULL},
+  {"%class", &module_info_gooSboot, NULL},
+  {"%selt", &module_info_gooSboot, NULL},
+  {"%class-mets-setter", &module_info_gooSboot, NULL},
+  {"@subtype?", &module_info_gooSboot, NULL},
+  {"<tup>", &module_info_gooSboot, NULL},
+  {"class-gens", &module_info_gooSboot, NULL},
+  {"empty", &module_info_gooScolsScol, NULL},
+  {"@fun-mets", &module_info_gooSfun, NULL},
+  {"~==", &module_info_gooSlog, NULL},
+  {"<fun>", &module_info_gooSboot, NULL},
+  {"-", &module_info_gooSmath, NULL},
+  {"class-id", &module_info_gooSboot, NULL},
+  {"floor", &module_info_gooSmath, NULL},
+  {"class-prop-len-setter", &module_info_gooSboot, NULL},
+  {"property-type-error", &module_info_gooSboot, NULL},
+  {"%iv", &module_info_gooSboot, NULL},
+  {"num-to-str", &module_info_gooSmath, NULL},
+  {"list", &module_info_gooScolsSlst, NULL},
+  {"%union-elts", &module_info_gooSboot, NULL},
+  {"try", &module_info_gooSboot, NULL},
+  {"prop-type", &module_info_gooSboot, NULL},
+  {"%@subclass?", &module_info_gooSboot, NULL},
+  {"%class-children-setter", &module_info_gooSboot, NULL},
+  {"gen-cache-classes", &module_info_gooSboot, NULL},
+  {"update-instance-for-changed-class", &module_info_gooSboot, NULL},
+  {"$min-int", &module_info_gooSboot, NULL},
+  {"<flat>", &module_info_gooSboot, NULL},
+  {"*macros-ok?*", &module_info_gooSboot, NULL},
+  {"%prop-getter", &module_info_gooSboot, NULL},
+  {"port-line", &module_info_gooSioSport, NULL},
+  {"*", &module_info_gooSmath, NULL},
+  {"@len", &module_info_gooSboot, NULL},
+  {"%prop-elt-setter", &module_info_gooSboot, NULL},
+  {"fun-val", &module_info_gooSfun, NULL},
+  {"&", &module_info_gooSmath, NULL},
+  {"rev", &module_info_gooScolsSseq, NULL},
+  {"argument-type-error", &module_info_gooSboot, NULL},
+  {"property-unbound-error", &module_info_gooSboot, NULL},
+  {"nul", &module_info_gooScolsScol, NULL},
+  {"%break", &module_info_gooSboot, NULL},
+  {"last", &module_info_gooSmacros, NULL},
+  {"fab-class", &module_info_gooSclass, NULL},
+  {"@class-isa?", &module_info_gooSboot, NULL},
+  {"%i-", &module_info_gooSboot, NULL},
+  {"sub-setter", &module_info_gooScolsSseqx, NULL},
+  {"%gen-cache-classes-setter", &module_info_gooSboot, NULL},
+  {"error", &module_info_gooSboot, NULL},
+  {"%product-elts", &module_info_gooSboot, NULL},
+  {"ds", &module_info_gooSboot, NULL},
+  {"@=", &module_info_gooSboot, NULL},
+  {"%untag", &module_info_gooSboot, NULL},
+  {"<file-out-port>", &module_info_gooSioSport, NULL},
+  {"opts-tup-storage", &module_info_gooSboot, NULL},
+  {"t?", &module_info_gooStypes, NULL},
+  {"class-prop-len", &module_info_gooSboot, NULL},
+  {"src-loc-file", &module_info_gooSboot, NULL},
+  {"reject", &module_info_gooScolsSseq, NULL},
+  {"gen-cache-missable?", &module_info_gooSboot, NULL},
+  {"fold+", &module_info_gooScolsScol, NULL},
+  {"%build-runtime-modules", &module_info_gooSboot, NULL},
+  {"%fun-info-inlineable?", &module_info_gooSboot, NULL},
+  {"mod", &module_info_gooSmath, NULL},
+  {"%i*", &module_info_gooSboot, NULL},
+  {"port-index-setter", &module_info_gooSioSport, NULL},
+  {"len-setter", &module_info_gooScolsScolx, NULL},
+  {"stack-overflow-error", &module_info_gooSboot, NULL},
+  {"fun-env", &module_info_gooSboot, NULL},
+  {"%selt-setter", &module_info_gooSboot, NULL},
+  {"@class<", &module_info_gooSfun, NULL},
+  {"case-by", &module_info_gooSmacros, NULL},
+  {"vals-to-str", &module_info_gooScolsSseq, NULL},
+  {"tab-growth-threshold", &module_info_gooScolsStab, NULL},
+  {"<lst>", &module_info_gooSboot, NULL},
+  {"@del-dups", &module_info_gooSboot, NULL},
+  {"%cb", &module_info_gooSboot, NULL},
+  {"fab-elt-setter", &module_info_gooScolsScol, NULL},
+  {"%fab-met-inlineable", &module_info_gooSboot, NULL},
+  {"@all2?", &module_info_gooSboot, NULL},
+  {"~=", &module_info_gooSlog, NULL},
+  {"nul?", &module_info_gooSmacros, NULL},
+  {"3rd", &module_info_gooScolsSseq, NULL},
+  {"fun-count-setter", &module_info_gooSfun, NULL},
+  {"cpl-error", &module_info_gooSboot, NULL},
+  {"napp", &module_info_gooSmacros, NULL},
+  {"sig-nary?-setter", &module_info_gooSboot, NULL},
+  {"%lu", &module_info_gooSboot, NULL},
+  {"%vm-fun-env-elt", &module_info_gooSboot, NULL},
+  {"%loc-off-setter", &module_info_gooSboot, NULL},
+  {"prop-value-setter", &module_info_gooSclass, NULL},
+  {"1-", &module_info_gooSmath, NULL},
+  {"find-getter", &module_info_gooSclass, NULL},
+  {"assert", &module_info_gooSmacros, NULL},
+  {"seq", &module_info_gooSboot, NULL},
+  {"decf", &module_info_gooSmacros, NULL},
+  {"sig-unification-vars-setter", &module_info_gooSboot, NULL},
+  {"<seq!>", &module_info_gooSboot, NULL},
+  {"nul-prop", &module_info_gooSboot, NULL},
   {"%telt-setter", &module_info_gooSboot, NULL},
   {"%define-method", &module_info_gooSfun, NULL},
-  {"%class-parents", &module_info_gooSboot, NULL},
-  {"sin", &module_info_gooSmath, NULL},
-  {"@pick", &module_info_gooSboot, NULL},
-  {"$bot", &module_info_gooStypes, NULL},
-  {"@head", &module_info_gooSboot, NULL},
-  {"%i>>", &module_info_gooSboot, NULL},
-  {"mod-", &module_info_gooSmath, NULL},
-  {"fab-setter-name", &module_info_gooSmacros, NULL},
-  {"bound?", &module_info_gooSboot, NULL},
-  {">=", &module_info_gooSmag, NULL},
-  {"type-object", &module_info_gooSboot, NULL},
-  {"<gen-cache>", &module_info_gooSboot, NULL},
-  {"%prop", &module_info_gooSclass, NULL},
-  {"elt-setter", &module_info_gooScolsScolx, NULL},
-  {"class-mets", &module_info_gooSboot, NULL},
-  {"%rnul", &module_info_gooSboot, NULL},
-  {"modincf", &module_info_gooSmath, NULL},
-  {"%selt-setter", &module_info_gooSboot, NULL},
-  {"do-keyed", &module_info_gooScolsScol, NULL},
-  {"%gen-cache-arg-pos", &module_info_gooSboot, NULL},
-  {"col", &module_info_gooScolsScol, NULL},
-  {"zap", &module_info_gooScolsScol, NULL},
-  {"%gen-cache-singletons", &module_info_gooSboot, NULL},
-  {"%type-object", &module_info_gooSboot, NULL},
-  {"bit?", &module_info_gooSmath, NULL},
-  {"use/include", &module_info_gooSboot, NULL},
-  {"del-vals!", &module_info_gooScolsSseqx, NULL},
-  {"<=", &module_info_gooSmag, NULL},
-  {"suffix?", &module_info_gooScolsSseq, NULL},
-  {"%class-prop-len-setter", &module_info_gooSboot, NULL},
-  {"fun-info", &module_info_gooSboot, NULL},
-  {"%vpc-setter", &module_info_gooSboot, NULL},
-  {"<out-port>", &module_info_gooSioSport, NULL},
-  {"@oelt", &module_info_gooSboot, NULL},
-  {"lower?", &module_info_gooSchr, NULL},
-  {"macro-error", &module_info_gooSmacros, NULL},
-  {"%i!", &module_info_gooSboot, NULL},
-  {"handler-info-message", &module_info_gooSfun, NULL},
-  {"%loc-off", &module_info_gooSboot, NULL},
-  {"for", &module_info_gooSmacros, NULL},
-  {"<flo>", &module_info_gooSboot, NULL},
-  {"%@subclass?", &module_info_gooSboot, NULL},
-  {"%false", &module_info_gooSboot, NULL},
-  {"@isa?", &module_info_gooSboot, NULL},
-  {"pair", &module_info_gooSmacros, NULL},
-  {"%class-forward-setter", &module_info_gooSboot, NULL},
-  {"pop", &module_info_gooScolsSseq, NULL},
-  {"in", &module_info_gooSioSport, NULL},
-  {"@@nul?", &module_info_gooSboot, NULL},
-  {"esc", &module_info_gooSboot, NULL},
-  {"elt", &module_info_gooSmacros, NULL},
-  {"%check-call-types", &module_info_gooSboot, NULL},
-  {"as-log", &module_info_gooSlog, NULL},
-  {"prop-bound?", &module_info_gooSclass, NULL},
-  {"when", &module_info_gooSmacros, NULL},
-  {"dl", &module_info_gooSboot, NULL},
-  {"keyboard-interrupt", &module_info_gooSboot, NULL},
-  {"pop!", &module_info_gooScolsSseqx, NULL},
-  {"@add", &module_info_gooSboot, NULL},
-  {"gen-cache-singletons", &module_info_gooSboot, NULL},
-  {"%class-mets-setter", &module_info_gooSboot, NULL},
-  {"do2", &module_info_gooScolsSseq, NULL},
-  {"macro-expand", &module_info_gooSboot, NULL},
-  {"%gen-cache-missable?", &module_info_gooSboot, NULL},
-  {"<fixnum>", &module_info_gooSboot, NULL},
-  {"<in-port>", &module_info_gooSioSport, NULL},
-  {"class-name", &module_info_gooSboot, NULL},
-  {"opts-location", &module_info_gooSboot, NULL},
-  {"$min-int", &module_info_gooSboot, NULL},
-  {"dm", &module_info_gooSboot, NULL},
-  {"match-unquote", &module_info_gooSmacros, NULL},
-  {"while", &module_info_gooSmacros, NULL},
-  {"%sp-reg-setter", &module_info_gooSboot, NULL},
-  {"@tail-setter", &module_info_gooSboot, NULL},
-  {"~", &module_info_gooSmath, NULL},
-  {"<bot>", &module_info_gooStypes, NULL},
-  {"%class-gens", &module_info_gooSboot, NULL},
-  {"<str-in-port>", &module_info_gooSioSport, NULL},
-  {"<line>", &module_info_gooScolsSlst, NULL},
-  {"lst", &module_info_gooSboot, NULL},
-  {"tup", &module_info_gooSboot, NULL},
-  {"fun-nary?", &module_info_gooSfun, NULL},
-  {"@map", &module_info_gooSboot, NULL},
-  {"%met-info", &module_info_gooSboot, NULL},
-  {"low-elt-setter", &module_info_gooScolsScolx, NULL},
-  {"%@class-of", &module_info_gooSboot, NULL},
-  {"set", &module_info_gooSboot, NULL},
-  {"<int>", &module_info_gooSboot, NULL},
-  {"floor", &module_info_gooSmath, NULL},
-  {"into", &module_info_gooScolsScol, NULL},
-  {"%raw-met-call", &module_info_gooSboot, NULL},
-  {"%sp-elt", &module_info_gooSboot, NULL},
-  {"dv", &module_info_gooSboot, NULL},
-  {"prop-value-at", &module_info_gooSfun, NULL},
-  {"del", &module_info_gooScolsScol, NULL},
-  {"order-specs", &module_info_gooSboot, NULL},
-  {"len", &module_info_gooStypes, NULL},
-  {"<prop>", &module_info_gooSboot, NULL},
-  {"%vpc", &module_info_gooSboot, NULL},
-  {"sig-arity-setter", &module_info_gooSboot, NULL},
   {"%vm-box-fab", &module_info_gooSboot, NULL},
-  {"mod+", &module_info_gooSmath, NULL},
-  {"sort-by", &module_info_gooScolsSseq, NULL},
-  {"port-index", &module_info_gooSioSport, NULL},
-  {"exported", &module_info_gooSmacros, NULL},
-  {"popf", &module_info_gooSmacros, NULL},
-  {"%dyn-var-val-setter", &module_info_gooSboot, NULL},
-  {"fab", &module_info_gooScolsScol, NULL},
-  {"not", &module_info_gooSboot, NULL},
-  {"fun-info-name-setter", &module_info_gooSboot, NULL},
-  {"%max-stack-len", &module_info_gooSboot, NULL},
+  {"%gen-cache-singletons-setter", &module_info_gooSboot, NULL},
+  {"%gen-cache-classes", &module_info_gooSboot, NULL},
+  {"^", &module_info_gooSmath, NULL},
+  {"fun-info-src-loc-setter", &module_info_gooSboot, NULL},
+  {"<fun-info>", &module_info_gooSboot, NULL},
+  {"unknown-function-error", &module_info_gooSboot, NULL},
+  {"zap!", &module_info_gooScolsScolx, NULL},
+  {"loc", &module_info_gooSboot, NULL},
+  {"%i=", &module_info_gooSboot, NULL},
+  {"char->ascii", &module_info_gooSchr, NULL},
+  {"%relt-setter", &module_info_gooSboot, NULL},
+  {"%ib", &module_info_gooSboot, NULL},
+  {"fun-src-loc", &module_info_gooSfun, NULL},
+  {"if", &module_info_gooSboot, NULL},
+  {"fun-info-inlineable?-setter", &module_info_gooSboot, NULL},
+  {"%class-prop-len", &module_info_gooSboot, NULL},
+  {"product-elts", &module_info_gooSboot, NULL},
+  {"pub", &module_info_gooSmacros, NULL},
+  {"%type-object", &module_info_gooSboot, NULL},
+  {"<seq.>", &module_info_gooSboot, NULL},
+  {"dlet", &module_info_gooSmacros, NULL},
+  {"sig-nary?", &module_info_gooSboot, NULL},
   {"%class-ancestors-setter", &module_info_gooSboot, NULL},
-  {"@pair", &module_info_gooSboot, NULL},
-  {"<num>", &module_info_gooSboot, NULL},
-  {"until", &module_info_gooSmacros, NULL},
-  {"need-implementation", &module_info_gooSmacros, NULL},
-  {"%fun-val-check-type", &module_info_gooSboot, NULL},
-  {"%pair", &module_info_gooSboot, NULL},
-  {"gensym", &module_info_gooSmacros, NULL},
-  {"%app-filename", &module_info_gooSboot, NULL},
-  {"gen-add-met", &module_info_gooSfun, NULL},
-  {"now-setter", &module_info_gooScolsScol, NULL},
-  {"def-fun-var", &module_info_gooSmacros, NULL},
-  {"fun-info-src-setter", &module_info_gooSboot, NULL},
-  {"%raw-call", &module_info_gooSboot, NULL},
-  {"prop-getter", &module_info_gooSboot, NULL},
-  {"%eof-object?", &module_info_gooSboot, NULL},
-  {"%lu", &module_info_gooSboot, NULL},
-  {"~==", &module_info_gooSlog, NULL},
-  {"%head", &module_info_gooSboot, NULL},
-  {"@singleton-isa?", &module_info_gooSboot, NULL},
-  {"ins!", &module_info_gooScolsSseqx, NULL},
-  {"@tup", &module_info_gooSboot, NULL},
-  {"fun-names", &module_info_gooSfun, NULL},
-  {"%snul", &module_info_gooSboot, NULL},
-  {"%classes-ready?", &module_info_gooSboot, NULL},
-  {"get", &module_info_gooSioSport, NULL},
-  {"<product>", &module_info_gooSboot, NULL},
-  {"-", &module_info_gooSmath, NULL},
-  {"sinh", &module_info_gooSmath, NULL},
-  {"sig-arity", &module_info_gooSboot, NULL},
-  {"%loc-val", &module_info_gooSboot, NULL},
-  {"prop-value", &module_info_gooSclass, NULL},
-  {"app-args", &module_info_gooSboot, NULL},
+  {"arity-error", &module_info_gooSboot, NULL},
+  {"pick", &module_info_gooScolsSseq, NULL},
+  {"all2?", &module_info_gooStypes, NULL},
+  {"tab-shrink-threshold", &module_info_gooScolsStab, NULL},
+  {"%sp-reg-setter", &module_info_gooSboot, NULL},
+  {"@type-equal?", &module_info_gooSboot, NULL},
+  {"@add", &module_info_gooSboot, NULL},
+  {"2nd", &module_info_gooSmacros, NULL},
+  {"div", &module_info_gooSmath, NULL},
+  {"sig-unification-vars", &module_info_gooSboot, NULL},
+  {"log", &module_info_gooSmath, NULL},
+  {"@do", &module_info_gooSboot, NULL},
+  {"@checked-next-methods", &module_info_gooSmacros, NULL},
+  {"file-opening-error", &module_info_gooSboot, NULL},
+  {"unless", &module_info_gooSmacros, NULL},
+  {">", &module_info_gooSmag, NULL},
+  {"fun-info-src-loc", &module_info_gooSboot, NULL},
+  {"<seq>", &module_info_gooSboot, NULL},
+  {"class-direct-props-setter", &module_info_gooSboot, NULL},
+  {"low-elt", &module_info_gooScolsScol, NULL},
+  {"%c=", &module_info_gooSboot, NULL},
+  {"vec", &module_info_gooScolsSvec, NULL},
+  {"ambiguous-method-error", &module_info_gooSboot, NULL},
+  {"fun-info-inlineable?", &module_info_gooSboot, NULL},
+  {"fold", &module_info_gooScolsScol, NULL},
+  {"elt-setter", &module_info_gooScolsScolx, NULL},
+  {"keys", &module_info_gooScolsScol, NULL},
+  {"as-error", &module_info_gooSboot, NULL},
+  {"case-insensitive-string-equal", &module_info_gooScolsStab, NULL},
+  {"app", &module_info_gooSmacros, NULL},
+  {"newline", &module_info_gooSioSport, NULL},
+  {"%sig-unification-vars", &module_info_gooSboot, NULL},
+  {"%class-gens", &module_info_gooSboot, NULL},
+  {"prop-value-at", &module_info_gooSfun, NULL},
+  {"arithmetic-error", &module_info_gooSboot, NULL},
+  {"join", &module_info_gooScolsSseq, NULL},
+  {"%prop-type", &module_info_gooSboot, NULL},
+  {"<col!>", &module_info_gooSboot, NULL},
+  {"%vm-with-exit", &module_info_gooSboot, NULL},
+  {"pos", &module_info_gooScolsSseq, NULL},
+  {"var-name", &module_info_gooSmacros, NULL},
+  {"t=", &module_info_gooStypes, NULL},
+  {"def", &module_info_gooSboot, NULL},
+  {"match-sublist", &module_info_gooSmacros, NULL},
+  {"fun-arity", &module_info_gooSfun, NULL},
+  {"@not", &module_info_gooSboot, NULL},
+  {"|", &module_info_gooSmath, NULL},
+  {"%%check-call-types", &module_info_gooSboot, NULL},
+  {"elts", &module_info_gooScolsScol, NULL},
+  {"1st", &module_info_gooSmacros, NULL},
+  {"%class-forward", &module_info_gooSboot, NULL},
+  {"@any?", &module_info_gooSboot, NULL},
+  {"del!", &module_info_gooScolsScolx, NULL},
+  {"sqrt", &module_info_gooSmath, NULL},
+  {"class-direct-props", &module_info_gooSboot, NULL},
+  {"eof-object", &module_info_gooSchr, NULL},
+  {"opts-count", &module_info_gooSboot, NULL},
+  {"%check-call-types", &module_info_gooSboot, NULL},
+  {"@tail-setter", &module_info_gooSboot, NULL},
+  {"sym-name", &module_info_gooSboot, NULL},
+  {"cat!", &module_info_gooScolsSseqx, NULL},
+  {"src-loc-line", &module_info_gooSboot, NULL},
+  {"%c<", &module_info_gooSboot, NULL},
+  {"%vm-box-val", &module_info_gooSboot, NULL},
+  {"peek", &module_info_gooSioSport, NULL},
+  {"<sig>", &module_info_gooSboot, NULL},
+  {"*boot-macro-module-names*", &module_info_gooSboot, NULL},
+  {"class-children", &module_info_gooSboot, NULL},
+  {"internal-error", &module_info_gooSboot, NULL},
+  {"@mem?", &module_info_gooSboot, NULL},
+  {"<col.>", &module_info_gooSboot, NULL},
+  {"type-error", &module_info_gooSboot, NULL},
+  {"%tail", &module_info_gooSboot, NULL},
+  {"<enum>", &module_info_gooScolsScol, NULL},
+  {"flo-bits", &module_info_gooSmath, NULL},
+  {"%sig-nary?", &module_info_gooSboot, NULL},
+  {"%prop", &module_info_gooSclass, NULL},
+  {"%vnm", &module_info_gooSboot, NULL},
+  {"opts-location", &module_info_gooSboot, NULL},
+  {"%class-prop-len-setter", &module_info_gooSboot, NULL},
+  {"@all?", &module_info_gooSboot, NULL},
+  {"<str-port>", &module_info_gooSioSport, NULL},
+  {"t*", &module_info_gooSboot, NULL},
+  {"prop-bound?", &module_info_gooSclass, NULL},
+  {"trunc/", &module_info_gooSmath, NULL},
+  {"%fab-dyn-var", &module_info_gooSboot, NULL},
+  {"case-insensitive-string-hash", &module_info_gooScolsStab, NULL},
+  {"<col>", &module_info_gooSboot, NULL},
+  {"$max-int", &module_info_gooSboot, NULL},
+  {"@pick", &module_info_gooSboot, NULL},
+  {"class-children-setter", &module_info_gooSboot, NULL},
+  {"contagious-call", &module_info_gooSmath, NULL},
+  {"fab-fill!", &module_info_gooScolsScol, NULL},
+  {"macro-expand", &module_info_gooSboot, NULL},
+  {"@head", &module_info_gooSboot, NULL},
+  {"assq", &module_info_gooScolsSlst, NULL},
+  {"prop-init", &module_info_gooSboot, NULL},
+  {"all?", &module_info_gooScolsScol, NULL},
+  {"%max-stack-len", &module_info_gooSboot, NULL},
+  {"abs", &module_info_gooSmath, NULL},
+  {"%rnul", &module_info_gooSboot, NULL},
+  {"key-test", &module_info_gooScolsScol, NULL},
+  {"%gen-mets-setter", &module_info_gooSboot, NULL},
+  {"may-isa?", &module_info_gooSboot, NULL},
+  {"class-forward-setter", &module_info_gooSboot, NULL},
+  {"ord-app-mets", &module_info_gooSfun, NULL},
+  {"eof-object?", &module_info_gooSchr, NULL},
   {"$direct-object-class", &module_info_gooSboot, NULL},
-  {"add-prop", &module_info_gooSclass, NULL},
-  {"@cat2", &module_info_gooSboot, NULL},
-  {"*", &module_info_gooSmath, NULL},
-  {"%tlen", &module_info_gooSboot, NULL},
+  {"%sp-reg", &module_info_gooSboot, NULL},
   {"%met-sig", &module_info_gooSboot, NULL},
+  {"@==", &module_info_gooSboot, NULL},
+  {"range-error", &module_info_gooSboot, NULL},
+  {"rev!", &module_info_gooSmacros, NULL},
+  {"<str-out-port>", &module_info_gooSioSport, NULL},
+  {"@tlen", &module_info_gooSboot, NULL},
+  {"<rep>", &module_info_gooSboot, NULL},
+  {"t+", &module_info_gooStypes, NULL},
+  {"now-key", &module_info_gooScolsScol, NULL},
+  {"%class-parents", &module_info_gooSboot, NULL},
+  {"%i+", &module_info_gooSboot, NULL},
+  {"match-atom", &module_info_gooSmacros, NULL},
+  {"property-not-found-error", &module_info_gooSboot, NULL},
+  {"col-res-type", &module_info_gooScolsScol, NULL},
+  {"power-of-two-ceil", &module_info_gooSmath, NULL},
+  {"ins", &module_info_gooScolsSseq, NULL},
+  {"%class-row-setter", &module_info_gooSboot, NULL},
+  {"union-elts", &module_info_gooSboot, NULL},
+  {"%vfn-setter", &module_info_gooSboot, NULL},
+  {"atan2", &module_info_gooSmath, NULL},
+  {"%fun-info-src", &module_info_gooSboot, NULL},
+  {"alter", &module_info_gooScolsSseqx, NULL},
+  {"%do-stack-frames", &module_info_gooSboot, NULL},
+  {"sub*-setter", &module_info_gooScolsSseqx, NULL},
+  {"%%macro", &module_info_gooSboot, NULL},
+  {"fun-src", &module_info_gooSfun, NULL},
+  {"%class-id", &module_info_gooSboot, NULL},
+  {"sig-specs-setter", &module_info_gooSboot, NULL},
+  {"%class-direct-props-setter", &module_info_gooSboot, NULL},
+  {"%false", &module_info_gooSboot, NULL},
+  {"<gen-cache>", &module_info_gooSboot, NULL},
+  {"$bot", &module_info_gooStypes, NULL},
+  {"line-list-of", &module_info_gooScolsSlst, NULL},
+  {"port-index", &module_info_gooSioSport, NULL},
+  {"<loc>", &module_info_gooSboot, NULL},
+  {"class-forward", &module_info_gooSboot, NULL},
+  {"%macro", &module_info_gooSboot, NULL},
+  {"prop-value-at-setter", &module_info_gooSfun, NULL},
+  {"now", &module_info_gooScolsScol, NULL},
+  {"@rev!", &module_info_gooSboot, NULL},
+  {"bound?", &module_info_gooSboot, NULL},
+  {"neg", &module_info_gooSmath, NULL},
+  {"@telt", &module_info_gooSboot, NULL},
+  {"key-type", &module_info_gooScolsScol, NULL},
+  {"elt!", &module_info_gooScolsScolx, NULL},
+  {"digit?", &module_info_gooSchr, NULL},
+  {"fun-info-setter", &module_info_gooSboot, NULL},
+  {"%vpc-setter", &module_info_gooSboot, NULL},
+  {"%opts-tup", &module_info_gooSboot, NULL},
+  {"%raw-met-call", &module_info_gooSboot, NULL},
+  {"export", &module_info_gooSboot, NULL},
+  {"<flo>", &module_info_gooSboot, NULL},
+  {"fab-into", &module_info_gooScolsScol, NULL},
+  {"%gen-cache", &module_info_gooSboot, NULL},
+  {"1+", &module_info_gooSmath, NULL},
+  {"@add-new", &module_info_gooSboot, NULL},
+  {"sig-specs", &module_info_gooSboot, NULL},
+  {"items", &module_info_gooScolsScol, NULL},
+  {"isqrt", &module_info_gooSmath, NULL},
+  {"%str", &module_info_gooSboot, NULL},
+  {"rotf", &module_info_gooSmacros, NULL},
+  {"<replace-generic-restart>", &module_info_gooSfun, NULL},
+  {"gets", &module_info_gooSioSport, NULL},
+  {"prop-value", &module_info_gooSclass, NULL},
+  {"round/", &module_info_gooSmath, NULL},
+  {"atan", &module_info_gooSmath, NULL},
+  {"do-key-vals", &module_info_gooScolsSseq, NULL},
+  {"%su", &module_info_gooSboot, NULL},
+  {"@map", &module_info_gooSboot, NULL},
+  {"contagious-type", &module_info_gooSmath, NULL},
+  {"syntax-error", &module_info_gooSboot, NULL},
+  {"%class-direct-props", &module_info_gooSboot, NULL},
+  {"or", &module_info_gooSmacros, NULL},
+  {"@lit", &module_info_gooSboot, NULL},
+  {"add-prop", &module_info_gooSclass, NULL},
+  {"finds", &module_info_gooScolsSseq, NULL},
+  {"need-implementation", &module_info_gooSmacros, NULL},
+  {"into", &module_info_gooScolsScol, NULL},
+  {"<fixnum>", &module_info_gooSboot, NULL},
+  {"%tlen", &module_info_gooSboot, NULL},
+  {"acos", &module_info_gooSmath, NULL},
+  {"@oelt-setter", &module_info_gooSboot, NULL},
+  {"%met-prop-len", &module_info_gooSboot, NULL},
+  {"@new", &module_info_gooSboot, NULL},
+  {"fun-info", &module_info_gooSboot, NULL},
+  {"sub*", &module_info_gooScolsSseq, NULL},
+  {"%src-loc", &module_info_gooSboot, NULL},
+  {"fun-nary?", &module_info_gooSfun, NULL},
+  {"map2", &module_info_gooSmacros, NULL},
+  {"neg?", &module_info_gooSmath, NULL},
+  {"keyboard-interrupt", &module_info_gooSboot, NULL},
+  {"%singleton", &module_info_gooSboot, NULL},
+  {"%fun-info-src-setter", &module_info_gooSboot, NULL},
+  {"elt-default", &module_info_gooScolsScol, NULL},
+  {"@singleton-isa?", &module_info_gooSboot, NULL},
+  {"low-elt-setter", &module_info_gooScolsScolx, NULL},
+  {"fill!", &module_info_gooScolsScolx, NULL},
+  {"%stack-check-reg?-setter", &module_info_gooSboot, NULL},
+  {"app-sup", &module_info_gooSmacros, NULL},
+  {"alpha?", &module_info_gooSchr, NULL},
+  {"sort-by!", &module_info_gooScolsSseq, NULL},
+  {"@@nul?", &module_info_gooSboot, NULL},
+  {"mif", &module_info_gooSboot, NULL},
+  {"%class-id-setter", &module_info_gooSboot, NULL},
+  {"or/set", &module_info_gooSmacros, NULL},
+  {"address-of", &module_info_gooSany, NULL},
+  {"repeat", &module_info_gooScolsSseq, NULL},
+  {"port-line-setter", &module_info_gooSioSport, NULL},
+  {"line-list", &module_info_gooScolsSlst, NULL},
+  {"<int>", &module_info_gooSboot, NULL},
+  {"%i&", &module_info_gooSboot, NULL},
+  {"split", &module_info_gooScolsSseq, NULL},
+  {"dp", &module_info_gooSboot, NULL},
+  {"%vsp", &module_info_gooSboot, NULL},
+  {"not", &module_info_gooSboot, NULL},
+  {"fab-sym", &module_info_gooSboot, NULL},
+  {"<prop>", &module_info_gooSboot, NULL},
+  {"@tup", &module_info_gooSboot, NULL},
+  {"sig-val-setter", &module_info_gooSboot, NULL},
+  {"add!", &module_info_gooScolsScolx, NULL},
+  {"%type-class", &module_info_gooSboot, NULL},
+  {"fab", &module_info_gooScolsScol, NULL},
+  {"any?", &module_info_gooStypes, NULL},
+  {"fin?", &module_info_gooScolsScol, NULL},
+  {"handler-info-message", &module_info_gooSfun, NULL},
+  {"gen-add-met", &module_info_gooSfun, NULL},
+  {"%gen-sig", &module_info_gooSboot, NULL},
+  {"macro-error", &module_info_gooSmacros, NULL},
+  {"%vm-fun-env-elt-setter", &module_info_gooSboot, NULL},
+  {"moddecf", &module_info_gooSmath, NULL},
+  {"app-args", &module_info_gooSboot, NULL},
+  {"%snul", &module_info_gooSboot, NULL},
+  {"fun-info-names-setter", &module_info_gooSboot, NULL},
+  {"%prop-unbound-error", &module_info_gooSboot, NULL},
+  {"range-check?", &module_info_gooScolsSseq, NULL},
+  {"@cat2", &module_info_gooSboot, NULL},
+  {"<num>", &module_info_gooSboot, NULL},
+  {"asin", &module_info_gooSmath, NULL},
+  {"ct", &module_info_gooSboot, NULL},
+  {"ddv", &module_info_gooSboot, NULL},
+  {"fab-setter-name", &module_info_gooSmacros, NULL},
+  {"map", &module_info_gooSmacros, NULL},
+  {"dp!", &module_info_gooSboot, NULL},
+  {"%met", &module_info_gooSboot, NULL},
+  {"len", &module_info_gooStypes, NULL},
+  {"elt-or", &module_info_gooScolsScol, NULL},
+  {"<<", &module_info_gooSmath, NULL},
+  {"fun-info-count-setter", &module_info_gooSboot, NULL},
+  {"esc", &module_info_gooSboot, NULL},
+  {"fill", &module_info_gooScolsScol, NULL},
+  {"zero?", &module_info_gooSmath, NULL},
+  {"incf", &module_info_gooSmacros, NULL},
+  {"elt-type", &module_info_gooScolsScol, NULL},
+  {"%gen-cache-arg-pos", &module_info_gooSboot, NULL},
+  {"prop-bound-at?", &module_info_gooSfun, NULL},
+  {"to-digit", &module_info_gooSchr, NULL},
+  {"enum", &module_info_gooScolsScol, NULL},
+  {"sort!", &module_info_gooScolsSseqx, NULL},
+  {"%fu", &module_info_gooSboot, NULL},
+  {"%vm-fun-env-fab", &module_info_gooSboot, NULL},
+  {"type-class", &module_info_gooSboot, NULL},
+  {"<product>", &module_info_gooSboot, NULL},
+  {"ceil/", &module_info_gooSmath, NULL},
+  {"sig-val", &module_info_gooSboot, NULL},
+  {"df", &module_info_gooSboot, NULL},
+  {"match-unquote", &module_info_gooSmacros, NULL},
+  {"%relt", &module_info_gooSboot, NULL},
+  {"mem?", &module_info_gooScolsScol, NULL},
+  {"<port>", &module_info_gooSioSport, NULL},
+  {"app-filename", &module_info_gooSboot, NULL},
+  {"%loc-val", &module_info_gooSboot, NULL},
+  {"fun-info-names", &module_info_gooSboot, NULL},
+  {"%unlink-stack", &module_info_gooSboot, NULL},
+  {"%eof-object", &module_info_gooSboot, NULL},
+  {"%fun-cache-setter", &module_info_gooSboot, NULL},
+  {"%vnm-setter", &module_info_gooSboot, NULL},
+  {"class-parents-setter", &module_info_gooSboot, NULL},
+  {"new", &module_info_gooSboot, NULL},
+  {"@+", &module_info_gooSboot, NULL},
+  {"tail-setter", &module_info_gooSboot, NULL},
+  {"%fb", &module_info_gooSboot, NULL},
+  {"fun-names", &module_info_gooSfun, NULL},
+  {"fun-info-count", &module_info_gooSboot, NULL},
+  {"as", &module_info_gooStypes, NULL},
+  {"*restarts-ok?*", &module_info_gooSboot, NULL},
+  {"%fun-info-names", &module_info_gooSboot, NULL},
+  {"class-props-setter", &module_info_gooSboot, NULL},
+  {"<src-loc>", &module_info_gooSboot, NULL},
+  {"tanh", &module_info_gooSmath, NULL},
+  {"%sig-val", &module_info_gooSboot, NULL},
+  {"d.", &module_info_gooSboot, NULL},
+  {"%gen-info", &module_info_gooSboot, NULL},
+  {"@tail", &module_info_gooSboot, NULL},
+  {"%prop-init", &module_info_gooSboot, NULL},
+  {"pos?", &module_info_gooSmath, NULL},
+  {"<union>", &module_info_gooSboot, NULL},
+  {"@rev", &module_info_gooSboot, NULL},
+  {"use/mangle", &module_info_gooSboot, NULL},
+  {"met-app?", &module_info_gooSfun, NULL},
+  {"to-upper", &module_info_gooSchr, NULL},
+  {"@oelt", &module_info_gooSboot, NULL},
+  {"$pi", &module_info_gooSmath, NULL},
+  {"del-dups!", &module_info_gooScolsSseqx, NULL},
+  {"<list>", &module_info_gooScolsSlst, NULL},
+  {"*early-classes*", &module_info_gooSboot, NULL},
+  {"%stack-reg", &module_info_gooSboot, NULL},
+  {"box-value-setter", &module_info_gooSboot, NULL},
+  {"%fun-info-src-loc-setter", &module_info_gooSboot, NULL},
+  {"%@class-of", &module_info_gooSboot, NULL},
+  {"%gen-cache-missable?", &module_info_gooSboot, NULL},
+  {"prefix?", &module_info_gooScolsSseq, NULL},
+  {"<chr>", &module_info_gooSboot, NULL},
+  {"class-parents", &module_info_gooSboot, NULL},
+  {"fab-pair", &module_info_gooSboot, NULL},
+  {"gensym", &module_info_gooSmacros, NULL},
+  {"map-keyed", &module_info_gooScolsScol, NULL},
+  {"tail", &module_info_gooSboot, NULL},
+  {"use/include", &module_info_gooSboot, NULL},
+  {"dg", &module_info_gooSboot, NULL},
+  {"assqn", &module_info_gooScolsSlst, NULL},
+  {">>>", &module_info_gooSmath, NULL},
+  {"below", &module_info_gooScolsSseq, NULL},
+  {"fabs", &module_info_gooSchr, NULL},
+  {"do3", &module_info_gooScolsSseq, NULL},
+  {"%gen-cache-arg-pos-setter", &module_info_gooSboot, NULL},
+  {"range-check", &module_info_gooScolsSseq, NULL},
+  {"%sb", &module_info_gooSboot, NULL},
+  {"class-props", &module_info_gooSboot, NULL},
+  {"line-pair", &module_info_gooScolsSlst, NULL},
   {"no-applicable-methods-error", &module_info_gooSboot, NULL},
+  {"fun-cache", &module_info_gooSboot, NULL},
+  {"fab-gen", &module_info_gooSfun, NULL},
+  {"%vm-box-val-setter", &module_info_gooSboot, NULL},
+  {"%class-mets", &module_info_gooSboot, NULL},
+  {"@pair", &module_info_gooSboot, NULL},
+  {"logn", &module_info_gooSmath, NULL},
+  {"@@==", &module_info_gooSboot, NULL},
+  {"to-str", &module_info_gooSany, NULL},
+  {"<subclass>", &module_info_gooSboot, NULL},
+  {"<mag>", &module_info_gooSboot, NULL},
+  {"cosh", &module_info_gooSmath, NULL},
+  {"rep", &module_info_gooSboot, NULL},
+  {"%patch-early-generics", &module_info_gooSboot, NULL},
+  {"%vfn", &module_info_gooSboot, NULL},
+  {"dc", &module_info_gooSboot, NULL},
+  {"do", &module_info_gooSmacros, NULL},
+  {"sub", &module_info_gooScolsSseq, NULL},
+  {"%app-filename", &module_info_gooSboot, NULL},
+  {"fun-specs", &module_info_gooSfun, NULL},
+  {"swapf", &module_info_gooSmacros, NULL},
+  {"prop-offset", &module_info_gooSboot, NULL},
+  {"%bb", &module_info_gooSboot, NULL},
+  {"narity-error", &module_info_gooSboot, NULL},
+  {"to-lower", &module_info_gooSchr, NULL},
+  {"%i!", &module_info_gooSboot, NULL},
+  {"match", &module_info_gooSmacros, NULL},
+  {"max", &module_info_gooSmag, NULL},
+  {"%fun-info-count", &module_info_gooSboot, NULL},
+  {"*report-prop-unbound-errors?*", &module_info_gooSclass, NULL},
+  {"puts", &module_info_gooSioSport, NULL},
+  {"%raw-call", &module_info_gooSboot, NULL},
+  {"%i^", &module_info_gooSboot, NULL},
+  {"%met-env", &module_info_gooSboot, NULL},
+  {"class-mets-setter", &module_info_gooSboot, NULL},
+  {"%class-gens-setter", &module_info_gooSboot, NULL},
+  {"any2?", &module_info_gooScolsSseq, NULL},
+  {"@int?", &module_info_gooSboot, NULL},
+  {"%iu", &module_info_gooSboot, NULL},
+  {"<simple-handler-info>", &module_info_gooSfun, NULL},
+  {"%fab-met", &module_info_gooSboot, NULL},
+  {">=", &module_info_gooSmag, NULL},
+  {"box-value", &module_info_gooSboot, NULL},
+  {"odd?", &module_info_gooSmath, NULL},
+  {"prop-setter", &module_info_gooSboot, NULL},
+  {"<vec>", &module_info_gooScolsSvec, NULL},
+  {"pow", &module_info_gooSmath, NULL},
+  {"get", &module_info_gooSioSport, NULL},
+  {"<singleton>", &module_info_gooSboot, NULL},
+  {"%i<", &module_info_gooSboot, NULL},
+  {"$e", &module_info_gooSmath, NULL},
+  {"%fun-info-name-setter", &module_info_gooSboot, NULL},
+  {"<box>", &module_info_gooSboot, NULL},
+  {"%i?", &module_info_gooSboot, NULL},
+  {"del-vals!", &module_info_gooScolsSseqx, NULL},
+  {"fun-sig-setter", &module_info_gooSboot, NULL},
+  {"incongruent-method-error", &module_info_gooSfun, NULL},
+  {"%im", &module_info_gooSboot, NULL},
+  {"@tall2?", &module_info_gooSboot, NULL},
+  {"without-prop-unbound-errors", &module_info_gooSmacros, NULL},
+  {"clone", &module_info_gooSclass, NULL},
+  {"%i<<", &module_info_gooSboot, NULL},
+  {"until", &module_info_gooSmacros, NULL},
+  {"sinh", &module_info_gooSmath, NULL},
+  {"do-keyed", &module_info_gooScolsScol, NULL},
+  {"fun-name", &module_info_gooSfun, NULL},
+  {"pair", &module_info_gooSmacros, NULL},
+  {"zap", &module_info_gooScolsScol, NULL},
+  {"port-handle", &module_info_gooSioSport, NULL},
+  {"%dispatch", &module_info_gooSboot, NULL},
+  {"<opts-tup>", &module_info_gooSboot, NULL},
+  {"%sig-arity", &module_info_gooSboot, NULL},
+  {"dl", &module_info_gooSboot, NULL},
+  {"type-object", &module_info_gooSboot, NULL},
+  {"floor/", &module_info_gooSmath, NULL},
+  {"use/export", &module_info_gooSboot, NULL},
+  {"class-mets", &module_info_gooSboot, NULL},
+  {"<log>", &module_info_gooSboot, NULL},
+  {"<in-port>", &module_info_gooSioSport, NULL},
+  {"use/library", &module_info_gooSboot, NULL},
+  {"upper?", &module_info_gooSchr, NULL},
+  {"%allocate-stack", &module_info_gooSboot, NULL},
+  {"nil", &module_info_gooSboot, NULL},
+  {"opf", &module_info_gooSmacros, NULL},
+  {"pop", &module_info_gooScolsSseq, NULL},
+  {"modincf", &module_info_gooSmath, NULL},
+  {"props-of", &module_info_gooSboot, NULL},
+  {"suffix?", &module_info_gooScolsSseq, NULL},
+  {"%prop-elt", &module_info_gooSboot, NULL},
+  {"dss", &module_info_gooSboot, NULL},
+  {"%eof-object?", &module_info_gooSboot, NULL},
+  {"%head", &module_info_gooSboot, NULL},
+  {"%vpc", &module_info_gooSboot, NULL},
+  {"fun-inlineable?-setter", &module_info_gooSfun, NULL},
+  {"%it/", &module_info_gooSboot, NULL},
+  {"fun-sig", &module_info_gooSboot, NULL},
+  {"@subclass?", &module_info_gooSboot, NULL},
+  {"even?", &module_info_gooSmath, NULL},
+  {"elt", &module_info_gooSmacros, NULL},
+  {"col", &module_info_gooScolsScol, NULL},
+  {"do2", &module_info_gooScolsSseq, NULL},
+  {"*boot-macro-names*", &module_info_gooSboot, NULL},
+  {"ct-also", &module_info_gooSboot, NULL},
+  {"%next-methods", &module_info_gooSboot, NULL},
+  {"<any>", &module_info_gooSboot, NULL},
+  {"%eq?", &module_info_gooSboot, NULL},
+  {"lst", &module_info_gooSboot, NULL},
+  {"min", &module_info_gooSmag, NULL},
+  {"%telt", &module_info_gooSboot, NULL},
+  {"@nul?", &module_info_gooSboot, NULL},
+  {"%vm-with-cleanup", &module_info_gooSboot, NULL},
+  {"%vfp-setter", &module_info_gooSboot, NULL},
+  {"<line>", &module_info_gooScolsSlst, NULL},
+  {"tan", &module_info_gooSmath, NULL},
+  {"in", &module_info_gooSioSport, NULL},
+  {"%tnul", &module_info_gooSboot, NULL},
+  {"gen-cache-singletons", &module_info_gooSboot, NULL},
+  {"<opts>", &module_info_gooSboot, NULL},
+  {"fun", &module_info_gooSboot, NULL},
+  {"rem", &module_info_gooSmath, NULL},
+  {"<bot>", &module_info_gooStypes, NULL},
+  {"%i<<<", &module_info_gooSboot, NULL},
+  {"t<", &module_info_gooStypes, NULL},
+  {"%next-methods-reg-setter", &module_info_gooSboot, NULL},
+  {"trunc", &module_info_gooSmath, NULL},
+  {"%met-code", &module_info_gooSboot, NULL},
+  {"%fun-reg", &module_info_gooSboot, NULL},
+  {"class-name", &module_info_gooSboot, NULL},
+  {"lower?", &module_info_gooSchr, NULL},
+  {"use", &module_info_gooSboot, NULL},
+  {"%def-regs", &module_info_gooSboot, NULL},
+  {"%rlen", &module_info_gooSboot, NULL},
+  {"port-contents", &module_info_gooSioSport, NULL},
+  {"@fold", &module_info_gooSboot, NULL},
+  {"%loc-off", &module_info_gooSboot, NULL},
+  {"%i>>>", &module_info_gooSboot, NULL},
+  {"sort-by", &module_info_gooScolsSseq, NULL},
+  {"del", &module_info_gooScolsScol, NULL},
+  {"<out-port>", &module_info_gooSioSport, NULL},
+  {"%fun-info-name", &module_info_gooSboot, NULL},
+  {"%lb", &module_info_gooSboot, NULL},
+  {"unexec", &module_info_gooSboot, NULL},
+  {"@tany?", &module_info_gooSboot, NULL},
+  {"class-of", &module_info_gooSclass, NULL},
+  {"port-to-str", &module_info_gooSioSport, NULL},
+  {"fun-inlineable?", &module_info_gooSfun, NULL},
+  {"<", &module_info_gooSmag, NULL},
+  {"ins!", &module_info_gooScolsSseqx, NULL},
+  {"%fun-info-inlineable?-setter", &module_info_gooSboot, NULL},
+  {"%class-forward-setter", &module_info_gooSboot, NULL},
+  {"push", &module_info_gooScolsSseq, NULL},
+  {"<line-list>", &module_info_gooScolsSlst, NULL},
+  {"%fun-info-names-setter", &module_info_gooSboot, NULL},
+  {"%i>>", &module_info_gooSboot, NULL},
+  {"sig-arity-setter", &module_info_gooSboot, NULL},
+  {"cos", &module_info_gooSmath, NULL},
+  {"%clone", &module_info_gooSboot, NULL},
+  {"now-setter", &module_info_gooScolsScol, NULL},
+  {"quasiquote", &module_info_gooSboot, NULL},
+  {">>", &module_info_gooSmath, NULL},
+  {"assert-error", &module_info_gooSboot, NULL},
+  {"for", &module_info_gooSmacros, NULL},
+  {"fun-info-name-setter", &module_info_gooSboot, NULL},
+  {"nxt", &module_info_gooScolsScol, NULL},
+  {"dv", &module_info_gooSboot, NULL},
+  {"fin", &module_info_gooSboot, NULL},
+  {"let", &module_info_gooSboot, NULL},
+  {"cond", &module_info_gooSmacros, NULL},
+  {"cat-sym", &module_info_gooSmacros, NULL},
+  {"=", &module_info_gooSlog, NULL},
+  {"match-nul-list", &module_info_gooSmacros, NULL},
+  {"%symbols", &module_info_gooSboot, NULL},
+  {"fun-info-src-setter", &module_info_gooSboot, NULL},
+  {"prop-getter", &module_info_gooSboot, NULL},
+  {"%slen", &module_info_gooSboot, NULL},
+  {"%fun-val-check-type", &module_info_gooSboot, NULL},
+  {"%vfp", &module_info_gooSboot, NULL},
+  {"<str-tab>", &module_info_gooScolsStab, NULL},
+  {"*boot-macro-expanders*", &module_info_gooSboot, NULL},
+  {"subtype?", &module_info_gooSboot, NULL},
+  {"%loc-val-setter", &module_info_gooSboot, NULL},
+  {"%pair", &module_info_gooSboot, NULL},
+  {"isa?", &module_info_gooSboot, NULL},
+  {"%fun-info-src-loc", &module_info_gooSboot, NULL},
+  {"sort", &module_info_gooScolsSseq, NULL},
+  {"fun-spec", &module_info_gooSfun, NULL},
+  {"%stack-check-reg?", &module_info_gooSboot, NULL},
+  {"push!", &module_info_gooScolsSseqx, NULL},
+  {"%binding-name", &module_info_gooSboot, NULL},
+  {"%true", &module_info_gooSboot, NULL},
+  {"%class-props-setter", &module_info_gooSboot, NULL},
+  {"@lst", &module_info_gooSboot, NULL},
+  {"lift-place-subforms", &module_info_gooSmacros, NULL},
+  {"round-to", &module_info_gooSmath, NULL},
+  {"sig-arity", &module_info_gooSboot, NULL},
+  {"sup", &module_info_gooSmacros, NULL},
+  {"line-of", &module_info_gooScolsSlst, NULL},
+  {"@<", &module_info_gooSboot, NULL},
+  {"%met-env-setter", &module_info_gooSboot, NULL},
+  {"return-type-error", &module_info_gooSboot, NULL},
+  {"pop!", &module_info_gooScolsSseqx, NULL},
+  {"@isa?", &module_info_gooSboot, NULL},
+  {"%gen-cache-singletons", &module_info_gooSboot, NULL},
+  {"==", &module_info_gooSmacros, NULL},
+  {"and", &module_info_gooSmacros, NULL},
+  {"<tab>", &module_info_gooScolsScol, NULL},
+  {"%object-of", &module_info_gooSboot, NULL},
+  {"<gen>", &module_info_gooSboot, NULL},
   {"fun-info-name", &module_info_gooSboot, NULL},
   {"class-row", &module_info_gooSboot, NULL},
-  {"case-by", &module_info_gooSmacros, NULL},
-  {"@not", &module_info_gooSboot, NULL},
-  {"or", &module_info_gooSmacros, NULL},
-  {"%selt", &module_info_gooSboot, NULL},
-  {"sort", &module_info_gooScolsSseq, NULL},
-  {"head-setter", &module_info_gooSboot, NULL},
-  {"%stack-check-reg?", &module_info_gooSboot, NULL},
-  {"%do-stack-frames", &module_info_gooSboot, NULL},
-  {"fun-info-src", &module_info_gooSboot, NULL},
-  {"dup", &module_info_gooScolsScol, NULL},
-  {"fill!", &module_info_gooScolsScolx, NULL},
+  {"%class-ancestors", &module_info_gooSboot, NULL},
+  {"%gen-code-setter", &module_info_gooSboot, NULL},
+  {"var-type", &module_info_gooSmacros, NULL},
+  {"%process-module", &module_info_gooSboot, NULL},
+  {"sin", &module_info_gooSmath, NULL},
   {"out", &module_info_gooSioSport, NULL},
-  {"class-ancestors-setter", &module_info_gooSboot, NULL},
-  {"<src-loc>", &module_info_gooSboot, NULL},
-  {"prop-bound-at?", &module_info_gooSfun, NULL},
-  {"line-of", &module_info_gooScolsSlst, NULL},
-  {"%vfp", &module_info_gooSboot, NULL},
-  {"logn", &module_info_gooSmath, NULL},
-  {"case-insensitive-string-hash", &module_info_gooScolsStab, NULL},
+  {"head-setter", &module_info_gooSboot, NULL},
   {"find", &module_info_gooScolsScol, NULL},
-  {"narity-error", &module_info_gooSboot, NULL},
-  {"%c<", &module_info_gooSboot, NULL},
-  {"<union>", &module_info_gooSboot, NULL},
-  {"%c=", &module_info_gooSboot, NULL},
-  {"close", &module_info_gooSioSport, NULL},
-  {"%cu", &module_info_gooSboot, NULL},
-  {"%met-code-setter", &module_info_gooSboot, NULL},
-  {"app-filename", &module_info_gooSboot, NULL},
-  {"mod", &module_info_gooSmath, NULL},
-  {"t?", &module_info_gooStypes, NULL},
-  {"finds", &module_info_gooScolsSseq, NULL},
-  {"%iu", &module_info_gooSboot, NULL},
-  {"<chr>", &module_info_gooSboot, NULL},
-  {"port-contents", &module_info_gooSioSport, NULL},
-  {"%met", &module_info_gooSboot, NULL},
-  {"met-app?", &module_info_gooSfun, NULL},
-  {"%class-direct-props-setter", &module_info_gooSboot, NULL},
-  {"empty", &module_info_gooScolsScol, NULL},
-  {"<list>", &module_info_gooScolsSlst, NULL},
-  {"head", &module_info_gooSboot, NULL},
-  {"@nul?", &module_info_gooSboot, NULL},
-  {"%vfp-setter", &module_info_gooSboot, NULL},
-  {"gen-cache-arg-pos", &module_info_gooSboot, NULL},
+  {"fun-info-src", &module_info_gooSboot, NULL},
+  {"pushf", &module_info_gooSmacros, NULL},
+  {"%with-monitor", &module_info_gooSboot, NULL},
+  {"mod-", &module_info_gooSmath, NULL},
+  {"%tup", &module_info_gooSboot, NULL},
+  {"<class>", &module_info_gooSboot, NULL},
+  {"class-ancestors-setter", &module_info_gooSboot, NULL},
+  {"%invoke-debugger", &module_info_gooSboot, NULL},
+  {"fun-mets-setter", &module_info_gooSboot, NULL},
+  {"<file-in-port>", &module_info_gooSioSport, NULL},
+  {"fun-code", &module_info_gooSboot, NULL},
+  {"case", &module_info_gooSmacros, NULL},
   {"cat2", &module_info_gooScolsSseq, NULL},
-  {"<str-out-port>", &module_info_gooSioSport, NULL},
-  {"%build-runtime-modules", &module_info_gooSboot, NULL},
-  {"%sig-arity", &module_info_gooSboot, NULL},
-  {"%gen-mets-setter", &module_info_gooSboot, NULL},
-  {"~=", &module_info_gooSlog, NULL},
+  {"dup", &module_info_gooScolsScol, NULL},
+  {"%fun-info-count-setter", &module_info_gooSboot, NULL},
+  {"id-hash", &module_info_gooScolsStab, NULL},
+  {"%class-children", &module_info_gooSboot, NULL},
+  {"@adr?", &module_info_gooSboot, NULL},
+  {"%gen-mets", &module_info_gooSboot, NULL},
+  {"%vsp-setter", &module_info_gooSboot, NULL},
+  {"%dyn-var-val-setter", &module_info_gooSboot, NULL},
+  {"del-dups", &module_info_gooScolsSseq, NULL},
+  {"%raw", &module_info_gooSboot, NULL},
+  {"bit?", &module_info_gooSmath, NULL},
+  {"@may-isa?", &module_info_gooSboot, NULL},
+  {"%sig-specs", &module_info_gooSboot, NULL},
+  {"<type>", &module_info_gooSboot, NULL},
+  {"round", &module_info_gooSmath, NULL},
+  {"%gen-code", &module_info_gooSboot, NULL},
+  {"quote", &module_info_gooSboot, NULL},
+  {"%met-code-setter", &module_info_gooSboot, NULL},
+  {"+", &module_info_gooSmath, NULL},
+  {"when", &module_info_gooSmacros, NULL},
+  {"empty?", &module_info_gooScolsScol, NULL},
+  {"head", &module_info_gooSboot, NULL},
+  {"%%sym", &module_info_gooSboot, NULL},
+  {"gen-cache-arg-pos", &module_info_gooSboot, NULL},
+  {"ready?", &module_info_gooSioSport, NULL},
+  {"<=", &module_info_gooSmag, NULL},
+  {"@opts-as-lst", &module_info_gooSboot, NULL},
+  {"dm", &module_info_gooSboot, NULL},
+  {"<str-in-port>", &module_info_gooSioSport, NULL},
+  {"%set-regs", &module_info_gooSboot, NULL},
   {"class-ancestors", &module_info_gooSboot, NULL},
-  {"incongruent-method-error", &module_info_gooSfun, NULL},
-  {"prop-value-at-setter", &module_info_gooSfun, NULL},
-  {"%prop-unbound-error", &module_info_gooSboot, NULL},
-  {"%i<", &module_info_gooSboot, NULL},
-  {"fun-cache", &module_info_gooSboot, NULL},
-  {"incf", &module_info_gooSmacros, NULL},
-  {"%break", &module_info_gooSboot, NULL},
-  {"%class-props-setter", &module_info_gooSboot, NULL},
-  {"%prop-dat-at", &module_info_gooSboot, NULL},
-  {"@rev", &module_info_gooSboot, NULL},
-  {"%gen-sig", &module_info_gooSboot, NULL},
-  {"<subclass>", &module_info_gooSboot, NULL},
-  {"assert-error", &module_info_gooSboot, NULL},
-  {"<mag>", &module_info_gooSboot, NULL},
-  {"%def-regs", &module_info_gooSboot, NULL},
+  {"while", &module_info_gooSmacros, NULL},
+  {"close", &module_info_gooSioSport, NULL},
+  {"fun-mets", &module_info_gooSboot, NULL},
+  {"@order-specs-class", &module_info_gooSfun, NULL},
   {NULL,NULL,NULL}
 };
 
 static BINDING_INFO binding_infos[] = {
-  {"file-opening-error-filename", CVAR, &YgooSconditionsYfile_opening_error_filename},
-  {"<unbound-variable-error>", CVAR, &YgooSconditionsYLunbound_variable_errorG},
-  {"build-condition-interactively", CVAR, &YgooSconditionsYbuild_condition_interactively},
-  {"<property-error>", CVAR, &YgooSconditionsYLproperty_errorG},
-  {"default-handler", CVAR, &YgooSconditionsYdefault_handler},
-  {"<property-type-error>", CVAR, &YgooSconditionsYLproperty_type_errorG},
-  {"<no-applicable-methods-error>", CVAR, &YgooSconditionsYLno_applicable_methods_errorG},
-  {"<unknown-function-error>", CVAR, &YgooSconditionsYLunknown_function_errorG},
-  {"<argument-type-error>", CVAR, &YgooSconditionsYLargument_type_errorG},
-  {"<file-opening-error>", CVAR, &YgooSconditionsYLfile_opening_errorG},
-  {"signal-handler-list", CVAR, &YgooSconditionsYsignal_handler_list},
-  {"<simple-error>", CVAR, &YgooSconditionsYLsimple_errorG},
-  {"handler-condition-type", CVAR, &YgooSconditionsYhandler_condition_type},
-  {"$default-handler-info", CVAR, &YgooSconditionsYDdefault_handler_info},
-  {"property-error-owner", CVAR, &YgooSconditionsYproperty_error_owner},
-  {"type-error-type", CVAR, &YgooSconditionsYtype_error_type},
-  {"handler-test", CVAR, &YgooSconditionsYhandler_test},
-  {"---main-0---", PVAR, NULL},
-  {"*current-handlers*", DVAR, &YgooSconditionsYTcurrent_handlersT},
-  {"read", CVAR, &YgooSconditionsYread},
-  {"invoke-handler-interactively", CVAR, &YgooSconditionsYinvoke_handler_interactively},
   {"<compiler-error>", CVAR, &YgooSconditionsYLcompiler_errorG},
   {"describe-handler", CVAR, &YgooSconditionsYdescribe_handler},
+  {"build-condition-interactively", CVAR, &YgooSconditionsYbuild_condition_interactively},
   {"<narity-error>", CVAR, &YgooSconditionsYLnarity_errorG},
-  {"---main-1---", PVAR, NULL},
-  {"incongruent-method-error-method", CVAR, &YgooSconditionsYincongruent_method_error_method},
-  {"---main-2---", PVAR, NULL},
-  {"<keyboard-interrupt>", CVAR, &YgooSconditionsYLkeyboard_interruptG},
   {"<syntax-error>", CVAR, &YgooSconditionsYLsyntax_errorG},
-  {"<macro-error>", CVAR, &YgooSconditionsYLmacro_errorG},
-  {"<assert-error>", CVAR, &YgooSconditionsYLassert_errorG},
-  {"msg-to-str", CVAR, &YgooSconditionsYmsg_to_str},
-  {"default-handler-description", CVAR, &YgooSconditionsYdefault_handler_description},
-  {"<no-next-methods-error>", CVAR, &YgooSconditionsYLno_next_methods_errorG},
-  {"do-handlers-of-type", CVAR, &YgooSconditionsYdo_handlers_of_type},
-  {"list-handlers", CVAR, &YgooSconditionsYlist_handlers},
-  {"---main-3---", PVAR, NULL},
-  {"property-error-generic", CVAR, &YgooSconditionsYproperty_error_generic},
-  {"<unbound-error>", CVAR, &YgooSconditionsYLunbound_errorG},
-  {"range-error-key", CVAR, &YgooSconditionsYrange_error_key},
-  {"<range-error>", CVAR, &YgooSconditionsYLrange_errorG},
-  {"macro-error-arguments", CVAR, &YgooSconditionsYmacro_error_arguments},
-  {"<stack-overflow>", CVAR, &YgooSconditionsYLstack_overflowG},
-  {"<type-error>", CVAR, &YgooSconditionsYLtype_errorG},
-  {"handler-function", CVAR, &YgooSconditionsYhandler_function},
-  {"call-error-arguments", CVAR, &YgooSconditionsYcall_error_arguments},
-  {"<serious-condition>", CVAR, &YgooSconditionsYLserious_conditionG},
-  {"handler-matches?", CVAR, &YgooSconditionsYhandler_matchesQ},
-  {"macro-error-name", CVAR, &YgooSconditionsYmacro_error_name},
-  {"build-condition-for-handler-interactively", CVAR, &YgooSconditionsYbuild_condition_for_handler_interactively},
-  {"describe-condition", CVAR, &YgooSconditionsYdescribe_condition},
-  {"<ambiguous-method-error>", CVAR, &YgooSconditionsYLambiguous_method_errorG},
-  {"<handler-info>", CVAR, &YgooSconditionsYLhandler_infoG},
-  {"handler-info", CVAR, &YgooSconditionsYhandler_info},
-  {"<handler>", CVAR, &YgooSconditionsYLhandlerG},
-  {"condition-message-setter", CVAR, &YgooSconditionsYcondition_message_setter},
-  {"type-error-value", CVAR, &YgooSconditionsYtype_error_value},
-  {"<simple-condition>", CVAR, &YgooSconditionsYLsimple_conditionG},
-  {"<as-error>", CVAR, &YgooSconditionsYLas_errorG},
-  {"<restart>", CVAR, &YgooSconditionsYLrestartG},
-  {"<incongruent-method-error>", CVAR, &YgooSconditionsYLincongruent_method_errorG},
-  {"condition-arguments", CVAR, &YgooSconditionsYcondition_arguments},
-  {"range-error-collection", CVAR, &YgooSconditionsYrange_error_collection},
-  {"msg", CVAR, &YgooSconditionsYmsg},
-  {"handler-active?", CVAR, &YgooSconditionsYhandler_activeQ},
-  {"<call-error>", CVAR, &YgooSconditionsYLcall_errorG},
-  {"sig", CVAR, &YgooSconditionsYsig},
-  {"<arity-error>", CVAR, &YgooSconditionsYLarity_errorG},
-  {"<cpl-error>", CVAR, &YgooSconditionsYLcpl_errorG},
-  {"<property-not-found-error>", CVAR, &YgooSconditionsYLproperty_not_found_errorG},
+  {"default-handler", CVAR, &YgooSconditionsYdefault_handler},
   {"---main-4---", PVAR, NULL},
-  {"condition-arguments-setter", CVAR, &YgooSconditionsYcondition_arguments_setter},
-  {"incongruent-method-error-generic", CVAR, &YgooSconditionsYincongruent_method_error_generic},
-  {"<return-type-error>", CVAR, &YgooSconditionsYLreturn_type_errorG},
-  {"<arithmetic-error>", CVAR, &YgooSconditionsYLarithmetic_errorG},
-  {"<error>", CVAR, &YgooSconditionsYLerrorG},
-  {"<condition>", CVAR, &YgooSconditionsYLconditionG},
-  {"call-error-function", CVAR, &YgooSconditionsYcall_error_function},
+  {"call-error-arguments", CVAR, &YgooSconditionsYcall_error_arguments},
+  {"<macro-error>", CVAR, &YgooSconditionsYLmacro_errorG},
+  {"*current-handlers*", DVAR, &YgooSconditionsYTcurrent_handlersT},
+  {"<no-next-methods-error>", CVAR, &YgooSconditionsYLno_next_methods_errorG},
+  {"list-handlers", CVAR, &YgooSconditionsYlist_handlers},
+  {"handler-matches?", CVAR, &YgooSconditionsYhandler_matchesQ},
+  {"msg-to-str", CVAR, &YgooSconditionsYmsg_to_str},
+  {"incongruent-method-error-method", CVAR, &YgooSconditionsYincongruent_method_error_method},
+  {"<unbound-variable-error>", CVAR, &YgooSconditionsYLunbound_variable_errorG},
+  {"property-error-generic", CVAR, &YgooSconditionsYproperty_error_generic},
+  {"<type-error>", CVAR, &YgooSconditionsYLtype_errorG},
+  {"<handler>", CVAR, &YgooSconditionsYLhandlerG},
+  {"macro-error-name", CVAR, &YgooSconditionsYmacro_error_name},
+  {"handler-function", CVAR, &YgooSconditionsYhandler_function},
+  {"<range-error>", CVAR, &YgooSconditionsYLrange_errorG},
+  {"<simple-condition>", CVAR, &YgooSconditionsYLsimple_conditionG},
+  {"do-handlers-of-type", CVAR, &YgooSconditionsYdo_handlers_of_type},
+  {"---main-3---", PVAR, NULL},
+  {"default-handler-description", CVAR, &YgooSconditionsYdefault_handler_description},
+  {"type-error-value", CVAR, &YgooSconditionsYtype_error_value},
+  {"<as-error>", CVAR, &YgooSconditionsYLas_errorG},
+  {"<unbound-error>", CVAR, &YgooSconditionsYLunbound_errorG},
+  {"handler-info", CVAR, &YgooSconditionsYhandler_info},
+  {"handler-active?", CVAR, &YgooSconditionsYhandler_activeQ},
+  {"build-condition-for-handler-interactively", CVAR, &YgooSconditionsYbuild_condition_for_handler_interactively},
+  {"range-error-collection", CVAR, &YgooSconditionsYrange_error_collection},
+  {"<handler-info>", CVAR, &YgooSconditionsYLhandler_infoG},
+  {"<arity-error>", CVAR, &YgooSconditionsYLarity_errorG},
   {"<property-unbound-error>", CVAR, &YgooSconditionsYLproperty_unbound_errorG},
-  {"condition-message", CVAR, &YgooSconditionsYcondition_message},
-  {"unbound-variable-error-variable", CVAR, &YgooSconditionsYunbound_variable_error_variable},
+  {"condition-message-setter", CVAR, &YgooSconditionsYcondition_message_setter},
+  {"sig", CVAR, &YgooSconditionsYsig},
+  {"range-error-key", CVAR, &YgooSconditionsYrange_error_key},
+  {"<stack-overflow>", CVAR, &YgooSconditionsYLstack_overflowG},
+  {"<property-not-found-error>", CVAR, &YgooSconditionsYLproperty_not_found_errorG},
+  {"<assert-error>", CVAR, &YgooSconditionsYLassert_errorG},
+  {"<cpl-error>", CVAR, &YgooSconditionsYLcpl_errorG},
+  {"macro-error-arguments", CVAR, &YgooSconditionsYmacro_error_arguments},
+  {"<serious-condition>", CVAR, &YgooSconditionsYLserious_conditionG},
+  {"---main-2---", PVAR, NULL},
+  {"<ambiguous-method-error>", CVAR, &YgooSconditionsYLambiguous_method_errorG},
+  {"condition-arguments-setter", CVAR, &YgooSconditionsYcondition_arguments_setter},
+  {"<keyboard-interrupt>", CVAR, &YgooSconditionsYLkeyboard_interruptG},
+  {"---main-1---", PVAR, NULL},
+  {"<return-type-error>", CVAR, &YgooSconditionsYLreturn_type_errorG},
+  {"<call-error>", CVAR, &YgooSconditionsYLcall_errorG},
+  {"call-error-function", CVAR, &YgooSconditionsYcall_error_function},
+  {"<arithmetic-error>", CVAR, &YgooSconditionsYLarithmetic_errorG},
+  {"describe-condition", CVAR, &YgooSconditionsYdescribe_condition},
   {"<internal-error>", CVAR, &YgooSconditionsYLinternal_errorG},
+  {"unbound-variable-error-variable", CVAR, &YgooSconditionsYunbound_variable_error_variable},
   {"choose-handler", CVAR, &YgooSconditionsYchoose_handler},
+  {"<restart>", CVAR, &YgooSconditionsYLrestartG},
   {"<io-error>", CVAR, &YgooSconditionsYLio_errorG},
   {"fab-handler", CVAR, &YgooSconditionsYfab_handler},
+  {"<property-error>", CVAR, &YgooSconditionsYLproperty_errorG},
+  {"file-opening-error-filename", CVAR, &YgooSconditionsYfile_opening_error_filename},
+  {"<argument-type-error>", CVAR, &YgooSconditionsYLargument_type_errorG},
+  {"<condition>", CVAR, &YgooSconditionsYLconditionG},
+  {"<incongruent-method-error>", CVAR, &YgooSconditionsYLincongruent_method_errorG},
+  {"<no-applicable-methods-error>", CVAR, &YgooSconditionsYLno_applicable_methods_errorG},
+  {"<property-type-error>", CVAR, &YgooSconditionsYLproperty_type_errorG},
+  {"signal-handler-list", CVAR, &YgooSconditionsYsignal_handler_list},
+  {"---main-0---", PVAR, NULL},
+  {"<file-opening-error>", CVAR, &YgooSconditionsYLfile_opening_errorG},
+  {"condition-arguments", CVAR, &YgooSconditionsYcondition_arguments},
+  {"incongruent-method-error-generic", CVAR, &YgooSconditionsYincongruent_method_error_generic},
+  {"<error>", CVAR, &YgooSconditionsYLerrorG},
+  {"property-error-owner", CVAR, &YgooSconditionsYproperty_error_owner},
+  {"condition-message", CVAR, &YgooSconditionsYcondition_message},
+  {"$default-handler-info", CVAR, &YgooSconditionsYDdefault_handler_info},
+  {"type-error-type", CVAR, &YgooSconditionsYtype_error_type},
+  {"handler-condition-type", CVAR, &YgooSconditionsYhandler_condition_type},
+  {"read", CVAR, &YgooSconditionsYread},
+  {"<unknown-function-error>", CVAR, &YgooSconditionsYLunknown_function_errorG},
+  {"invoke-handler-interactively", CVAR, &YgooSconditionsYinvoke_handler_interactively},
+  {"msg", CVAR, &YgooSconditionsYmsg},
+  {"<simple-error>", CVAR, &YgooSconditionsYLsimple_errorG},
+  {"handler-test", CVAR, &YgooSconditionsYhandler_test},
   {NULL, NVAR, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"<unbound-variable-error>", NULL},
-  {"build-condition-interactively", NULL},
-  {"<property-error>", NULL},
-  {"default-handler", NULL},
-  {"<property-type-error>", NULL},
-  {"<no-applicable-methods-error>", NULL},
-  {"file-opening-error-filename", NULL},
-  {"<argument-type-error>", NULL},
-  {"<file-opening-error>", NULL},
-  {"condition-arguments", NULL},
-  {"<simple-error>", NULL},
-  {"$default-handler-info", NULL},
-  {"property-error-owner", NULL},
-  {"type-error-type", NULL},
-  {"return-type-error", NULL},
-  {"<unknown-function-error>", NULL},
-  {"*current-handlers*", NULL},
-  {"read", NULL},
-  {"invoke-handler-interactively", NULL},
-  {"range-error-key", NULL},
   {"<compiler-error>", NULL},
   {"describe-handler", NULL},
+  {"build-condition-interactively", NULL},
   {"no-next-methods-error", NULL},
   {"<narity-error>", NULL},
   {"handler-info-arguments", NULL},
+  {"default-handler", NULL},
+  {"call-error-arguments", NULL},
+  {"<simple-handler-info>", NULL},
   {"argument-type-error", NULL},
   {"<keyboard-interrupt>", NULL},
-  {"<simple-handler-info>", NULL},
   {"<syntax-error>", NULL},
+  {"error", NULL},
+  {"<assert-error>", NULL},
   {"<macro-error>", NULL},
   {"stack-overflow-error", NULL},
-  {"call-error-arguments", NULL},
-  {"<assert-error>", NULL},
-  {"msg-to-str", NULL},
-  {"default-handler-description", NULL},
+  {"assert-error", NULL},
+  {"*current-handlers*", NULL},
   {"<no-next-methods-error>", NULL},
   {"list-handlers", NULL},
-  {"arity-error", NULL},
-  {"<condition>", NULL},
-  {"arithmetic-error", NULL},
   {"handler-matches?", NULL},
-  {"<restart>", NULL},
-  {"<handler>", NULL},
-  {"<replace-generic-restart>", NULL},
-  {"<stack-overflow>", NULL},
+  {"arity-error", NULL},
+  {"msg-to-str", NULL},
+  {"arithmetic-error", NULL},
   {"property-error-generic", NULL},
   {"internal-error", NULL},
   {"<type-error>", NULL},
-  {"<range-error>", NULL},
+  {"<handler>", NULL},
   {"range-error", NULL},
-  {"<serious-condition>", NULL},
-  {"%with-monitor", NULL},
   {"macro-error-name", NULL},
-  {"error", NULL},
-  {"describe-condition", NULL},
-  {"<ambiguous-method-error>", NULL},
-  {"<handler-info>", NULL},
-  {"type-error-value", NULL},
-  {"<simple-condition>", NULL},
-  {"<as-error>", NULL},
-  {"build-condition-for-handler-interactively", NULL},
-  {"macro-error-arguments", NULL},
-  {"range-error-collection", NULL},
   {"handler-function", NULL},
-  {"macro-error", NULL},
-  {"handler-info-message", NULL},
-  {"msg", NULL},
-  {"<call-error>", NULL},
-  {"sig", NULL},
-  {"keyboard-interrupt", NULL},
+  {"<range-error>", NULL},
+  {"<simple-condition>", NULL},
+  {"<ambiguous-method-error>", NULL},
+  {"default-handler-description", NULL},
+  {"type-error-value", NULL},
+  {"<as-error>", NULL},
+  {"<replace-generic-restart>", NULL},
+  {"macro-error-arguments", NULL},
+  {"build-condition-for-handler-interactively", NULL},
+  {"range-error-collection", NULL},
+  {"<handler-info>", NULL},
   {"<arity-error>", NULL},
   {"<property-not-found-error>", NULL},
-  {"<return-type-error>", NULL},
+  {"handler-info-message", NULL},
+  {"macro-error", NULL},
+  {"<call-error>", NULL},
+  {"keyboard-interrupt", NULL},
+  {"sig", NULL},
+  {"<stack-overflow>", NULL},
+  {"<serious-condition>", NULL},
   {"<unbound-error>", NULL},
-  {"<arithmetic-error>", NULL},
-  {"<error>", NULL},
   {"call-error-function", NULL},
-  {"<property-unbound-error>", NULL},
-  {"condition-message", NULL},
+  {"<return-type-error>", NULL},
+  {"<arithmetic-error>", NULL},
   {"narity-error", NULL},
-  {"unbound-variable-error-variable", NULL},
+  {"describe-condition", NULL},
+  {"<property-unbound-error>", NULL},
   {"<internal-error>", NULL},
+  {"unbound-variable-error-variable", NULL},
   {"choose-handler", NULL},
+  {"<restart>", NULL},
   {"<io-error>", NULL},
-  {"assert-error", NULL},
   {"fab-handler", NULL},
+  {"<unbound-variable-error>", NULL},
+  {"<property-error>", NULL},
+  {"condition-message", NULL},
+  {"file-opening-error-filename", NULL},
+  {"<argument-type-error>", NULL},
+  {"<condition>", NULL},
+  {"<no-applicable-methods-error>", NULL},
+  {"<property-type-error>", NULL},
+  {"<file-opening-error>", NULL},
+  {"condition-arguments", NULL},
+  {"<error>", NULL},
+  {"property-error-owner", NULL},
+  {"return-type-error", NULL},
+  {"$default-handler-info", NULL},
+  {"type-error-type", NULL},
+  {"%with-monitor", NULL},
+  {"read", NULL},
+  {"<unknown-function-error>", NULL},
+  {"invoke-handler-interactively", NULL},
+  {"msg", NULL},
+  {"<simple-error>", NULL},
+  {"range-error-key", NULL},
   {NULL, NULL}
 };
 

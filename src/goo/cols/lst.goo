@@ -60,9 +60,9 @@
             (set (head x) z)
             (fnd (+ count 1) (tail x))))))
 
-(dm nul? (c|<lst> => <log>) (== c (nul (class-of c))))
+(dm (nul? inline) (c|<lst> => <log>) (== c (nul (class-of c))))
 
-(dm nul ((c (t= <lst>)) => <lst>) '())
+(dm (nul inline) ((c (t= <lst>)) => <lst>) '())
 
 (dm fab ((t (t< <lst>)) s|<int> => <lst>)
   (rep fab ((i|<int> s) (res|<lst> (nul t)))

@@ -8,18 +8,19 @@
 (use eval/g2c)
 
 #/
+(use goo/io/pretty)
 (use eval/ast-print)
 (use eval/typist)
-
 (use eval/g2m)
 (use eval/vm)
 (use eval/profiler)
-
 (use eval/decision-trees)
+/#
 
 (use time/threads)
 (use time/lock)
 (use time/event)
+#/
 (use cols/pipe)
 (use goo/random)
 /#
@@ -33,8 +34,8 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.151")
-(dv *goo-date*    "SEP 18, 2002")
+(dv *goo-version* "0.152")
+(dv *goo-date*    "SEP 30, 2002")
 
 (post ";;; GOO\n")
 (post ";;; JONATHAN BACHRACH\n")

@@ -105,7 +105,7 @@
 
 (dv $getter-not-found -1)
 
-(df ensure-fresh-object (x)
+(dl (ensure-fresh-object inline) (x)   ;; TODO: SHOULD BE DF
   (when (%class-forward (%class-of x)) ;; stale object?
     (update-instance-for-changed-class x)))
 

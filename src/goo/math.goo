@@ -75,18 +75,21 @@
   (def type (contagious-type x y))
   (f (as type x) (as type y)))
 
+(dm = (x|<num> y|<num> => <log>)
+  (contagious-call == x y))
+
 (dm < (x|<num> y|<num> => <log>)
   (contagious-call < x y))
 
 (dm + (x|<num> y|<num> => <num>)
   (contagious-call + x y))
 
-(df 1+ (x|<num> => <num>) (+ x 1))
+(df (1+ inline) (x|<num> => <num>) (+ x 1))
 
 (dm - (x|<num> y|<num> => <num>)
   (contagious-call - x y))
 
-(df 1- (x|<num> => <num>) (- x 1))
+(df (1- inline) (x|<num> => <num>) (- x 1))
 
 (dm * (x|<num> y|<num> => <num>)
   (contagious-call * x y))
@@ -162,10 +165,10 @@
   (def (tup _ (remainder <num>)) (floor/ real divisor))
   remainder)
 
-(dm mod+ (i|<num> j|<num> n|<num> => <num>)
+(dm (mod+ inline) (i|<num> j|<num> n|<num> => <num>)
   (mod (+ i j) n))
 
-(dm mod- (i|<num> j|<num> n|<num> => <num>)
+(dm (mod- inline) (i|<num> j|<num> n|<num> => <num>)
   (mod (- i j) n))
 
 (ds (modincf ,place ,max)
@@ -181,19 +184,19 @@
 (dm pow (base|<num> n|<num> => <num>)
   (contagious-call pow base n))
 
-(dm pos? (x|<num> => <log>)
+(dm (pos? inline) (x|<num> => <log>)
   (> x 0))
 
-(dm zero? (x|<num> => <log>)
-  (contagious-call = x 0))
+(dm (zero? inline) (x|<num> => <log>)
+  (= x 0))
 
-(dm neg? (x|<num> => <log>)
+(dm (neg? inline) (x|<num> => <log>)
   (< x 0))
 
-(dm neg (x|<num> => <num>)
+(dm (neg inline) (x|<num> => <num>)
   (- 0 x))
 
-(dm abs (x|<num> => <num>)
+(dm (abs inline) (x|<num> => <num>)
   (if (neg? x) (neg x) x))
 
 (dm to-str (x|<num> => <str>)
@@ -213,31 +216,31 @@
 (dm contagious-type (x|<flo> y|<int> => (t= <flo>))
   <flo>)
 
-(dm == (x|<fixnum> y|<fixnum> => <log>)
+(dm (== inline) (x|<fixnum> y|<fixnum> => <log>)
   (%bb (%i= (%iu x) (%iu y))))
 
-(dm < (x|<fixnum> y|<fixnum> => <log>)
+(dm (< inline) (x|<fixnum> y|<fixnum> => <log>)
   (%bb (%i< (%iu x) (%iu y))))
 
-(dm + (x|<fixnum> y|<fixnum> => <fixnum>)
+(dm (+ inline) (x|<fixnum> y|<fixnum> => <fixnum>)
   (%ib (%i+ (%iu x) (%iu y))))
 
-(dm - (x|<fixnum> y|<fixnum> => <fixnum>)
+(dm (- inline) (x|<fixnum> y|<fixnum> => <fixnum>)
   (%ib (%i- (%iu x) (%iu y))))
 
-(dm * (x|<fixnum> y|<fixnum> => <fixnum>)
+(dm (* inline) (x|<fixnum> y|<fixnum> => <fixnum>)
   (%ib (%i* (%iu x) (%iu y))))
 
-(dm / (x|<int> y|<int> => <int>)
+(dm (/ inline) (x|<int> y|<int> => <int>)
   (arithmetic-error "No int divide, consider trunc/"))
 
-(dm floor (x|<int> => <int>) x)
+(dm (floor inline) (x|<int> => <int>) x)
 
-(dm ceil (x|<int> => <int>) x)
+(dm (ceil inline) (x|<int> => <int>) x)
 
-(dm round (x|<int> => <int>) x)
+(dm (round inline) (x|<int> => <int>) x)
 
-(dm trunc (x|<int> => <int>) x)
+(dm (trunc inline) (x|<int> => <int>) x)
 
 (dm trunc/ (x|<fixnum> y|<fixnum> => (tup x|<fixnum> rem|<fixnum>))
   (def result (%ib (%it/ (%iu x) (%iu y))))
@@ -257,43 +260,43 @@
     ((= x 2)  (<< 1 n))
     ((neg? x) (if (odd? n) (neg (pow (neg x) n)) (pow (neg x) n)))
     (#t
-     (rep loop ((x|<int> (if (> n 1) (* x x) x))
-                (p|<int> (>> n 1))
-                (y|<int> (if (odd? n) x 1)))
+     (rep loop ((x|<fixnum> (if (> n 1) (* x x) x))
+                (p|<fixnum> (>> n 1))
+                (y|<fixnum> (if (odd? n) x 1)))
        (if (zero? p)
            y
            (loop (if (> p 1) (* x x) x)
                  (>> p 1)
                  (if (odd? p) (* x y) y)))))))
 
-(dm #| (x|<fixnum> y|<fixnum> => <int>)
+(dm (#| inline) (x|<fixnum> y|<fixnum> => <int>)
   (%ib (%iv (%iu x) (%iu y))))
 
-(dm ^ (x|<fixnum> y|<fixnum> => <int>)
+(dm (^ inline) (x|<fixnum> y|<fixnum> => <int>)
   (%ib (%i^ (%iu x) (%iu y))))
 
-(dm & (x|<fixnum> y|<fixnum> => <int>)
+(dm (& inline) (x|<fixnum> y|<fixnum> => <int>)
   (%ib (%i& (%iu x) (%iu y))))
 
-(dm ~ (x|<fixnum> => <fixnum>)
+(dm (~ inline) (x|<fixnum> => <fixnum>)
   (%ib (%i! (%iu x))))
 
-(dm bit? (o|<fixnum> x|<fixnum> => <fixnum>)
+(dm (bit? inline) (o|<fixnum> x|<fixnum> => <fixnum>)
   (%ib (%i? (%iu o) (%iu x))))
 
-(dm even? (x|<fixnum> => <log>)
+(dm (even? inline) (x|<fixnum> => <log>)
   (zero? (& x 1)))
 
-(dm odd? (x|<fixnum> => <log>)
+(dm (odd? inline) (x|<fixnum> => <log>)
   (not (even? x)))
 
-(dm >> (x|<fixnum> a|<fixnum> => <fixnum>)
+(dm (>> inline) (x|<fixnum> a|<fixnum> => <fixnum>)
   (%ib (%i>> (%iu x) (%iu a))))
 
-(dm >>> (x|<fixnum> a|<fixnum> => <fixnum>)
+(dm (>>> inline) (x|<fixnum> a|<fixnum> => <fixnum>)
   (%ib (%i>>> (%iu x) (%iu a))))
 
-(dm << (x|<fixnum> a|<fixnum> => <fixnum>)
+(dm (<< inline) (x|<fixnum> a|<fixnum> => <fixnum>)
   (%ib (%i<< (%iu x) (%iu a))))
 
 (dm power-of-two-ceil (x|<int> => <int>)
@@ -336,22 +339,22 @@
 (dm as ((_ (t= <flo>)) x|<fixnum> => <flo>)
   (%fb (%fi2f (%iu x))))
 
-(dm == (x|<flo> y|<flo> => <log>)
+(dm (== inline) (x|<flo> y|<flo> => <log>)
   (%bb (%f= (%fu x) (%fu y))))
 
-(dm < (x|<flo> y|<flo> => <log>)
+(dm (< inline) (x|<flo> y|<flo> => <log>)
   (%bb (%f< (%fu x) (%fu y))))
 
-(dm + (x|<flo> y|<flo> => <flo>)
+(dm (+ inline) (x|<flo> y|<flo> => <flo>)
   (%fb (%f+ (%fu x) (%fu y))))
 
-(dm - (x|<flo> y|<flo> => <flo>)
+(dm (- inline) (x|<flo> y|<flo> => <flo>)
   (%fb (%f- (%fu x) (%fu y))))
 
-(dm * (x|<flo> y|<flo> => <flo>)
+(dm (* inline) (x|<flo> y|<flo> => <flo>)
   (%fb (%f* (%fu x) (%fu y))))
 
-(dm / (x|<flo> y|<flo> => <flo>)
+(dm (/ inline) (x|<flo> y|<flo> => <flo>)
   (%fb (%f/ (%fu x) (%fu y))))
 
 (dm trunc/ (x|<flo> y|<flo> => (tup z|<fixnum> rem|<flo>))

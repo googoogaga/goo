@@ -511,6 +511,7 @@
 (def-fun/info-accessor src)
 (def-fun/info-accessor src-loc)
 (def-fun/info-accessor count)
+(def-fun/info-accessor inlineable?)
 
 ;; USED FROM INTERPRETER TO BUILD GEN'S
 
@@ -548,6 +549,7 @@
   fun-nary?
   fun-specs
   fun-count fun-count-setter
+  fun-inlineable? fun-inlineable?-setter
   fun-val
   fun-src
   fun-src-loc

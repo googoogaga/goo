@@ -209,6 +209,7 @@
   (dp! function-loop (<ast-embodied-function> => <any>)            #f)
   (dp! function-source (<ast-embodied-function> => <any>)          #f)
   (dp! function-frame-len (<ast-embodied-function> => <any>)       #f)
+  (dp! function-adjectives (<ast-embodied-function> => <lst>)      '())
 
 (def-programs free-environment)
 
@@ -223,7 +224,6 @@
 (dm function-kind (x|<ast-method>) "MET")
 
 (dc <ast-primitive> (<ast-embodied-function>))
-  (dp! function-adjectives (<ast-primitive> => <lst>)             '())
 
 (dm function-kind (x|<ast-primitive>) "PRM")
 
@@ -450,10 +450,10 @@
       (new <constant> constant-value #f)
       (if (nul? (tail e*))
           (head e*)
-          (rep loop ((e* e*))
+          (rep loop ((r (nul <sequential>)) (e* e*))
             (if (nul? e*)
-                (nul <sequential>)
-                (sequential (head e*) (loop (tail e*))))))))
+                (rev! r)
+                (loop (sequential (head e*) r) (tail e*)))))))
 
 (dm transform-defs (e*|<lst> => <lst>)
   (if (nul? e*)
@@ -724,10 +724,11 @@
           (objectify sep-expander r #f))
       (objectify-quotation #f r)))
   
-(dm objectify-function-definition (name e r => <ast-function-definition>)
+(dm objectify-function-definition (name mods e r => <ast-function-definition>)
   (def binding (ast-define-binding r name #f 'global))
   (def f       (objectify e r #f))
   (set (function-binding f)    binding)
+  (set (function-adjectives f) mods)
   (set (function-debug-name f) (objectify-quotation name r))
   (def defn (new <ast-function-definition>
               assignment-binding binding assignment-form f))
@@ -735,6 +736,10 @@
 
 (df module-binding (kind|<sym> => <module-binding>)
   (new <module-binding> binding-kind kind))
+
+(dm function-inlineable? (e|<ast-embodied-function>)
+  (or (mem? (function-adjectives e) 'inline)
+      (mem? (function-adjectives e) 'inline-c)))
 
 (dm objectify-primitive-definition 
     (name mods sig body r => <ast-primitive-definition>)
@@ -767,7 +772,7 @@
                    assignment-form    form))
   defn)
 
-(dm objectify-method-definition (name e r => <ast-method-definition>)
+(dm objectify-method-definition (name mods e r => <ast-method-definition>)
   (def binding (ast-define-binding r name #t 'global))
   (def gen    `(bound? ,name #f))
   (def met     (objectify e r #f))
@@ -778,6 +783,7 @@
                  assignment-binding binding
                  assignment-form    form))
   (set (function-binding met)    name)
+  (set (function-adjectives met) mods)
   (set (function-debug-name met) (objectify-quotation name r))
   defn)
 
@@ -1230,6 +1236,7 @@
 (define-magic-binding define-method (x r tail?)
   (objectify-method-definition
     (sexpr-function-definition-variable x) 
+    (sexpr-function-definition-adjectives x) 
     (sexpr-function-definition-value x) r))
 
 (define-magic-binding define-generic (x r tail?)
@@ -1239,6 +1246,7 @@
 (define-magic-binding define-function (x r tail?)
   (objectify-function-definition
     (sexpr-function-definition-variable x) 
+    (sexpr-function-definition-adjectives x) 
     (sexpr-function-definition-value x) r))
 
 (define-magic-binding method (x r tail?)
@@ -1662,6 +1670,7 @@
   function-specs
   function-value
   function-loop function-loop-setter
+  function-inlineable?
   <global-assignment>
   <module-binding-reference>
   <static-module-binding-reference>

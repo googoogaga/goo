@@ -1,0 +1,155 @@
+(use goo)
+(use goo/io/write)
+
+(dc <doc> (<any>))
+
+(dc <doc-nil> (<doc>))
+
+(dc <doc-cons> (<doc>))
+  (dp doc-head (<doc-cons> => <doc>))
+  (dp doc-tail (<doc-cons> => <doc>))
+
+(dc <doc-text> (<doc>))
+  (dp doc-text (<doc-text> => <str>))
+
+(dc <doc-nest> (<doc>))
+  (dp doc-n (<doc-nest> => <int>))
+  (dp doc-nest (<doc-nest> => <doc>))
+
+(dc <doc-break> (<doc>))
+  (dp doc-break (<doc-break> => <str>))
+
+(dc <doc-group> (<doc>))
+  (dp doc-group (<doc-group> => <doc>))
+
+(dv docnil         (new <doc-nil>))
+
+(df text (x)       (new <doc-text>  doc-text  x))
+
+(df nest (i x)     (new <doc-nest>  doc-n     i doc-nest x))
+
+(dv break          (new <doc-break> doc-break " "))
+
+(df break-with (s) (new <doc-break> doc-break s))
+
+(df group (d)      (new <doc-group> doc-group d))
+
+(df doc-em (x|...) 
+  (rep loop ((r docnil) (i (1- (len x))))
+    (if (< i 0)
+        r
+        (loop (new <doc-cons> doc-head [x i] doc-tail r) (- i 1)))))
+
+(dm doc-sep-em2 (x|<doc-nil> y|<doc> => <doc>)
+  y)
+(dm doc-sep-em2 (x|<doc> y|<doc-nil> => <doc>)
+  x)
+(dm doc-sep-em2 (x|<doc> y|<doc> => <doc>)
+  (doc-em x break y))
+
+(df doc-sep-em (x|... => <doc>)
+  (fold+ doc-sep-em2 x))
+
+(dm binop (left|<str> op|<str> right|<str> => <doc>)
+  (group 
+   (nest 2 (doc-sep-em
+            (group (doc-sep-em (text left) (text op)))
+            (text right)))))
+
+(dc <sdoc> (<any>))
+
+(dc <snil> (<sdoc>))
+
+(dc <stext> (<sdoc>))
+  (dp sdoc-string (<stext> => <str>))
+  (dp sdoc-text (<stext> => <sdoc>))
+
+(dc <sline> (<sdoc>))
+  (dp sdoc-n (<sline> => <int>))
+  (dp sdoc-line (<sline> => <sdoc>))
+
+(dv snil (new <snil>))
+
+(dm sdoc-to-str (s|<snil> => <str>) 
+  "")
+
+(dm sdoc-to-str (s|<stext> => <str>)
+  (cat (sdoc-string s) (sdoc-to-str (sdoc-text s))))
+
+(dm sdoc-to-str (s|<sline> => <str>)
+  (cat "\n" (repeat " " (sdoc-n s)) (sdoc-to-str (sdoc-line s))))
+
+(dv <mode> <sym>)
+
+(dm fits? (w|<int> x|... => <log>)
+  (post "<= FITS? W%= X%=\n" w x)
+  (def res (and (>= w 0) (or (nul? x) (app fits-on? w x))))
+  (post "=> FITS? W%= X%= => %=\n" w x res)
+  res)
+
+(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-nil> z|... => <log>)
+  (app fits? w z))
+
+(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-cons> z|... => <log>)
+  (app fits? w i m (doc-head d) i m (doc-tail d) z))
+
+(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-nest> z|... => <log>)
+  (app fits? w (+ i (doc-n d)) m (doc-nest d) z))
+
+(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-text> z|... => <log>)
+  (app fits? (- w (len (doc-text d))) z))
+
+(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-break> z|... => <log>)
+  (or (== m 'break)
+      (app fits? (- w (len (doc-break d))) z)))
+
+(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-group> z|... => <log>)
+  (app fits? w i 'flat (doc-group d) z))
+
+(dm format (w|<int> k|<int> x|... => <sdoc>)
+  (post "FORMAT W%= K%= X%=\n" w k x)
+  (if (nul? x) snil (app format-on w k x)))
+
+(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-nil> z|... => <sdoc>)
+  (app format w k z))
+
+(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-cons> z|... => <sdoc>)
+  (app format w k i m (doc-head d) i m (doc-tail d) z))
+
+(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-nest> z|... => <sdoc>)
+  (app format w k (+ i (doc-n d)) m (doc-nest d) z))
+  
+(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-text> z|... => <sdoc>)
+  (new <stext> 
+    sdoc-string (doc-text d)
+    sdoc-text   (app format w (+ k (len (doc-text d))) z)))
+
+(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-break> z|... => <sdoc>)
+  (if (== m 'flat)
+      (new <stext> 
+        sdoc-string (doc-break d)
+        sdoc-text   (app format w (+ k (len (doc-break d))) z))
+      (new <sline> sdoc-n i sdoc-line (app format w i z))))
+  
+(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-group> z|... => <sdoc>)
+  (if (app fits? (- w k) i 'flat (doc-group d) z)
+      (app format w k i 'flat  (doc-group d) z)
+      (app format w k i 'break (doc-group d) z)))
+
+(dm pretty (p|<out-port> w|<int> d|<doc>)
+  (def sdoc (format w 0 0 'flat (group d)))
+  (def str  (sdoc-to-str sdoc))
+  (msg p "%s\n" str))
+
+(dv test  (binop "a" "==" "b"))
+(dv expr1 (binop "a" "<<" "2"))
+(dv expr2 (binop "a" "+"  "b"))
+
+(df ifthen (c e1 e2)
+  (group (doc-sep-em (group (nest 2 (doc-sep-em (text "if")   c)))
+                     (group (nest 2 (doc-sep-em (text "then") e1)))
+                     (group (nest 2 (doc-sep-em (text "else") e2))))))
+
+(dv doc (ifthen test expr1 expr2))
+
+;; (pretty out 100 doc)

@@ -29,9 +29,9 @@
  rep-elt-setter
 )
 
-(df rep-nul () %rnul)
+(df (rep-nul inline) () %rnul)
 
-(df rep-len (x|<rep> => <int>)
+(df (rep-len inline) (x|<rep> => <int>)
   (%ib (%rlen x)))
 
 (df rep-fill! (x|<rep> val => <rep>)
@@ -58,13 +58,13 @@
       (into (+ i 1) (nxt e))))
   d)
 
-(df rep-fab (s|<int> fill => <rep>)
+(df (rep-fab inline) (s|<int> fill => <rep>)
   (%rep (%iu s) fill))
 
-(df rep-elt (x|<rep> i|<int> => <any>)
+(df (rep-elt inline) (x|<rep> i|<int> => <any>)
   (%relt x (%iu i)))
   
-(df rep-elt-setter (z x|<rep> i|<int>)
+(df (rep-elt-setter inline) (z x|<rep> i|<int>)
   (set (%relt x (%iu i)) z))
   
 

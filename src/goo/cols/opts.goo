@@ -23,7 +23,7 @@
 (dm col-res-type (c|<opts> => <type>)
   <lst>)
 
-(dm len (x|<opts> => <int>)
+(dm (len inline) (x|<opts> => <int>)
   (@olen x))
 
 (dm elt-or (x|<opts> i|<int> default => <any>)
@@ -35,5 +35,5 @@
 
 
 ;;;; Undocumented
-(dm low-elt (x|<opts> i|<int> => <any>)
+(dm (low-elt inline) (x|<opts> i|<int> => <any>)
   (@oelt x i))

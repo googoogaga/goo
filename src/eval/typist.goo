@@ -19,6 +19,17 @@
     (#t 
      (new <union> union-elts (if (isa? y <union>) (pair x y) (lst x y))))))
 
+;; TODO: CONSERVATIVE
+(dm type-intersection (x|<type> y|<type> => <type>)
+  (cond
+    ((subtype? x y) x)
+    ((subtype? y x) y)
+    (#t             <any>)))
+
+(dc <type-state> (<any>))
+  (dp type-state-acts (<type-state> => <tab>) (fab <tab> 0))
+  (dp type-state-env  (<type-state> => <any>))
+
 (dc <act> (<any>))
 
 (dc <dispatch> (<act>))
@@ -34,47 +45,56 @@
 (dc <fold-call> (<fold>))
   (dp act-val (<fold-call> => <any>))
 
-(dm type-infer-check (a t acts)
-  (def inferred-type (type-infer a acts))
-  (def type          (type-value (type-infer t acts)))
+(dc <prop-access> (<fold>))
+  (dp act-off (<prop-access> => <int>))
+
+(dc <inline-call> (<fold>))
+  (dp act-val (<inline-call> => <any>))
+
+(dm mem-act (s|<type-state> x act|<act>)
+  (set [(type-state-acts s) x] act))
+
+(dm type-infer-check (a t s)
+  (def inferred-type (type-infer a s))
+  (def type          (type-value (type-infer t s)))
   (post "IT %= T %=\n" inferred-type type)
   (if (subtype? inferred-type type) 
       inferred-type
       type))
 
-(dm type-infer-all (x|<program>)
-  (let ((acts (fab <tab> 0)))
-    (type-infer x acts)
-    acts))
+(dm type-infer-all (x|<program> r)
+  (let ((s (new <type-state> type-state-env r)))
+    (type-infer x s)
+    (type-state-acts s)))
 
-(dm type-infer (x|<program> acts|<tab>)
+(dm type-infer (x|<program> s|<type-state>)
   (post "TYPING %= \n" x)
-  (def res (opf (program-type x) (type-union _ (do-type-infer x acts))))
+  (def res (opf (program-type x) (type-union _ (do-type-infer x s))))
   (post "TYPING %= => %t\n" x res)
   res)
 
-(dm do-type-infer (x|<program> acts|<tab>)
+(dm do-type-infer (x|<program> s|<type-state>)
   (error "NYI %t: %=" (class-of x) x ))
 
-(dm do-type-infer (x|<sequential> acts|<tab>)
-  (do (op type-infer _ acts) x)
+(dm do-type-infer (x|<sequential> s|<type-state>)
+  (do (op type-infer _ s) x)
   (program-type (last x)))
 
-(dm do-type-infer (x|<constant> acts|<tab>)
+(dm do-type-infer (x|<constant> s|<type-state>)
   (case-by (constant-value x) isa?
     ((<log>) (t= (constant-value x)))
     (#t      (class-of (constant-value x)))))
 
-(dm do-type-infer (x|<assignment> acts|<tab>)
-  (type-infer (assignment-form x) acts))
+(dm do-type-infer (x|<assignment> s|<type-state>)
+  (type-infer (assignment-form x) s))
 
-(dm type-infer-binding (x|<module-binding> acts|<tab>)
+(dm type-infer-binding (x|<module-binding> s|<type-state>)
   (let ((val (binding-value-or x #f)))
     (case-by val isa?
-      ((<gen> <type>)  (t= val))
+      ((<fun> <type>)  (t= val))
       (#t              <any>)))) ;; TODO: module-type
 
-(dm type-infer-binding (x|<binding> acts|<tab>)
+(dm type-infer-binding (x|<binding> s|<type-state>)
   ;; TODO: PRETTY LIMITED
   <any>)
 
@@ -84,7 +104,7 @@
 (dm type-value (t|<singleton> => <type>)
   (type-object t))
 
-(dm type-infer-binding (x|<local-binding> acts|<tab>)
+(dm type-infer-binding (x|<local-binding> s|<type-state>)
   ;; (post "LB BV %=\n" (binding-value x))
   (cond ((binding-mutable? x)
          <any>)
@@ -93,60 +113,61 @@
         (#t
          (binding-inferred-type x))))
 
-(dm do-type-infer (x|<real-reference> acts|<tab>)
-  (type-infer-binding (reference-binding x) acts))
+(dm do-type-infer (x|<real-reference> s|<type-state>)
+  (type-infer-binding (reference-binding x) s))
 
-(dm do-type-infer (x|<bound?> acts|<tab>)
+(dm do-type-infer (x|<bound?> s|<type-state>)
   <log>)
 
-(dm do-type-infer (x|<definition> acts|<tab>)
+(dm do-type-infer (x|<definition> s|<type-state>)
   (t= #f))
 
-(dm do-type-infer (x|<ast-method> acts|<tab>)
+(dm do-type-infer (x|<ast-method> s|<type-state>)
   (for ((b (function-bindings x)))
-    (set (binding-inferred-type b) (type-infer (binding-type x) acts)))
-  (type-infer (function-body x) acts)
+    (set (binding-inferred-type b) 
+         (type-value (type-infer (binding-type b) s))))
+  (type-infer (function-body x) s)
   ;; TODO: TIGHTEN UP
   <met>)
 
-(dm do-type-infer (x|<ast-generic> acts|<tab>)
+(dm do-type-infer (x|<ast-generic> s|<type-state>)
   <gen>)
 
-(dm do-type-infer (x|<alternative> acts|<tab>)
-  (def test-type (type-infer (alternative-condition x) acts))
+(dm do-type-infer (x|<alternative> s|<type-state>)
+  (def test-type (type-infer (alternative-condition x) s))
   (cond ((type-equiv? test-type (t= #f))
-         (set [acts x] (new <fold-if> act-test #f))
-         (type-infer (alternative-alternant x) acts))
+         (mem-act s x (new <fold-if> act-test #f))
+         (type-infer (alternative-alternant x) s))
         ((not (potentially-joint? test-type (t= #f)))
-         (set [acts x] (new <fold-if> act-test #t))
-         (type-infer (alternative-consequent x) acts))
+         (mem-act s x (new <fold-if> act-test #t))
+         (type-infer (alternative-consequent x) s))
         (#t
-         (type-union (type-infer (alternative-consequent x) acts)
-                     (type-infer (alternative-alternant x)  acts)))))
+         (type-union (type-infer (alternative-consequent x) s)
+                     (type-infer (alternative-alternant x)  s)))))
 
-(dm do-type-infer (x|<sequential> acts|<tab>)
-  (do (op type-infer _ acts) x)
-  (type-infer (last x) acts))
+(dm do-type-infer (x|<sequential> s|<type-state>)
+  (do (op type-infer _ s) x)
+  (type-infer (last x) s))
 
-(dm do-type-infer (x|<fix-let> acts|<tab>)
+(dm do-type-infer (x|<fix-let> s|<type-state>)
   (for ((binding (fix-let-bindings x))
         (type    (fix-let-types x))
         (arg     (fix-let-arguments x)))
     (unless (binding-mutable? binding)
       (set (binding-inferred-type binding)
-           ;; (type-infer arg acts)
-           (type-infer-check arg (binding-type binding) acts))))
-  (type-infer (fix-let-body x) acts))
+           ;; (type-infer arg s)
+           (type-infer-check arg (binding-type binding) s))))
+  (type-infer (fix-let-body x) s))
 
 ;; TODO: the following are incomplete
 
 (dm subtype? (x|<bot> y|<bot> => <log>) #t)
 
-(dm do-type-infer (x|<locals> acts|<tab>)
-  (do (op type-infer _ acts) (locals-functions x))
-  (type-infer (locals-body x) acts))
+(dm do-type-infer (x|<locals> s|<type-state>)
+  (do (op type-infer _ s) (locals-functions x))
+  (type-infer (locals-body x) s))
 
-(dm do-type-infer (x|<loop> acts|<tab>)
+(dm do-type-infer (x|<loop> s|<type-state>)
   (loc ((recurse (arg-types)
           (def param-types
             (map binding-inferred-type (loop-bindings x)))
@@ -158,73 +179,114 @@
           (post "NEW-PARAM TYPES %=\n" new-param-types)
           (if (all2? type-equiv? param-types new-param-types) ;; fixpoint?
               (program-type x)
-              (type-infer (loop-body x) acts))))
+              (type-infer (loop-body x) s))))
     (dlet (((loop-continue x) recurse))
-      (type-infer (loop-body x) acts))))
+      (type-infer (loop-body x) s))))
 
-(dm do-type-infer (x|<loop-application> acts|<tab>)
+(dm do-type-infer (x|<loop-application> s|<type-state>)
   (let ((loop (application-loop x)))
     ((loop-continue loop)
-     (map2 (fun (a b) (type-infer-check a (binding-type b) acts))
+     (map2 (fun (a b) (type-infer-check a (binding-type b) s))
            (application-arguments x)
            (loop-bindings loop)))))
 
-(dm do-type-infer (x|<predefined-application> acts|<tab>)
-  (do (op type-infer _ acts) (application-arguments x))
+(dm do-type-infer (x|<predefined-application> s|<type-state>)
+  (do (op type-infer _ s) (application-arguments x))
   <any>)
 
-(dm arity-check? (nary? arity x|<regular-application> acts|<tab> => <log>)
+(dm arity-check? (nary? arity x|<regular-application> s|<type-state> => <log>)
   (def len (len (application-arguments x)))
   (if nary? (>= len arity) (= len arity)))
 
 (dm known-call?
-    (nary? arity arg-types fun-types x|<regular-application> acts|<tab> => <log>)
-  (if (and (arity-check? nary? arity x acts)
+    (nary? arity arg-types fun-types x|<regular-application> s|<type-state> 
+     => <log>)
+  (if (and (arity-check? nary? arity x s)
            (all2? subtype? arg-types fun-types))
-      { (set [acts x] (new <know-call>)) #t }
+      { (mem-act s x (new <know-call>)) #t }
       #f))
 
-(dm do-type-infer (x|<regular-application> acts|<tab>)
-  (def arg-types (map (op type-infer _ acts) (application-arguments x)))
+(dm type-known-met-call 
+    (x|<regular-application> f|<met> nms|<lst> s|<type-state> => <type>)
+  (if (fun-inlineable? f)
+      (let ((r  (type-state-env s))
+            (fi (dynamic-compute-program
+                 (read-from-string (fun-src f)) (type-state-env s)))
+            (c  (process-closed-application 
+                 fi (application-arguments x) r (application-tail? x))))
+        (mem-act s x (new <inline-call> act-val c))
+        (type-intersection (type-infer c s) (fun-val f)))
+      { (mem-act s x (new <know-call>)) (fun-val f) }))
+
+(dm met-prop (m|<met> => (t? <prop>))
+  (%met-env m))
+
+(df prop-offset-in (t|<class> p|<prop> => (t? <int>))
+  (pos (class-props t) p))
+
+(dm all-prop-offsets (t|<class> p|<prop> => (t? <int>))
+  (def off (prop-offset-in t p))
+  (and (all? (op = (prop-offset-in _ p) off) (class-children t)) off)) 
+
+(dm type-prop-access 
+    (x|<regular-application> g|<gen> m|<met> s|<type-state> => <type>)
+  (post "TYPING PROP-ACCESS\n")
+  (def args (application-arguments x))
+  (def prop (met-prop m))
+  (def type (type-infer (if (= (len args) 1) [args 0] [args 1]) s))
+  (def off  (all-prop-offsets type prop))
+  (if off
+      { (post "CONST-PROP-ACCESS %d\n" off)
+        (mem-act s x (new <prop-access> act-off off)) }
+      (mem-act s x (new <know-call>)))
+  (prop-type prop))
+
+(dm do-type-infer (x|<regular-application> s|<type-state>)
+  (def arg-types (map (op type-infer _ s) (application-arguments x)))
   (def fn        (application-function x))
-  (def fun-type  (type-infer fn acts))
+  (def fun-type  (type-infer fn s))
   (if (isa? fun-type <singleton>)
       (let ((f (type-object fun-type)))
         (case-by f isa? 
           ((<gen>) 
-           (if (arity-check? (fun-nary? f) (fun-arity f) x acts)
+           (if (arity-check? (fun-nary? f) (fun-arity f) x s)
                (let (((tup sorted others) 
                       (sorted-applicable-methods-using-types
                        (fun-mets f) arg-types)))
                  (post "APP-METS %= %= %= %=\n" f arg-types sorted others)
                  (if (or (nul? sorted) (not (nul? others)))
-                     { (set [acts x] (new <know-call>)) (fun-val f) }
-                     { (post "REGISTERING ACT\n")
-                       (set [acts x] (new <dispatch> act-sorted sorted))
-                       (fun-val (head sorted)) }))
+                     { (mem-act s x (new <know-call>)) (fun-val f) }
+                     (if (and (met-prop (head sorted)) (nul? (tail sorted)))
+                         { (type-prop-access x f (head sorted) s) }
+                         { (post "KNOWN MET CALL\n")
+                           (type-known-met-call
+                            x (head sorted) (tail sorted) s) })))
                (fun-val f)))
           ((<ast-method>) 
            (def fun-types
-             (map (op type-value (type-infer _ acts)) (function-specs f)))
+             (map (op type-value (type-infer _ s)) (function-specs f)))
            (if (known-call? 
-                (function-nary? f) (function-arity f) arg-types fun-types x acts)
-               (type-value (type-infer (function-value f) acts))
+                (function-nary? f) (function-arity f) arg-types fun-types x s)
+               { (mem-act s x (new <know-call>)) 
+                 (type-value (type-infer (function-value f) s)) }
+
                <any>))
           ((<fun>) 
-           (known-call?
-            (fun-nary? f) (fun-arity f) arg-types (fun-specs f) x acts)
-           (fun-val f))
+           (if (known-call?
+                (fun-nary? f) (fun-arity f) arg-types (fun-specs f) x s)
+               (type-known-met-call x f '() s)
+               <any>))
           (#t
            <any>)))
       <any>))
 
-(dm do-type-infer (x|<bind-exit> acts|<tab>)
+(dm do-type-infer (x|<bind-exit> s|<type-state>)
   <any>)
 
-(dm do-type-infer (x|<unwind-protect> acts|<tab>)
+(dm do-type-infer (x|<unwind-protect> s|<type-state>)
   <any>)
 
-(dm do-type-infer (x|<monitor> acts|<tab>)
+(dm do-type-infer (x|<monitor> s|<type-state>)
   <any>)
 
 (export potentially-joint? type-infer)
@@ -246,6 +308,17 @@
 
 (dm do-surgery! (o|<regular-application> act|<fold-call> r)
   (objectify-with-subtransaction (act-val act) r #t (application-tail? o)))
+
+(dm do-surgery! (o|<regular-application> act|<prop-access> r)
+  (def args (application-arguments o))
+  (dynamic-compute-program
+   (if (= (len args) 2)
+       `(prop-value-at-setter ,@args)
+       `(prop-value-at ,@args))
+   r))
+
+(dm do-surgery! (o|<regular-application> act|<inline-call> r)
+  (act-val act))
 
 (dm do-surgery! (o|<regular-application> act|<know-call> r)
   (set (application-known? o) #t)
@@ -270,15 +343,15 @@
 ;; (dv cp eval/g2m:asm-compute-program)
 
 (df type-exp (x)
-  (let ((r   (runtime-environment 'goo/user))
+  (let ((r   (runtime-environment 'eval/typist))
         (ast (cp x r))) 
-    (type-infer-all ast)
+    (type-infer-all ast r)
     ast))
 
 (df type+opt-exp (x)
-  (let ((r    (runtime-environment 'goo/user))
+  (let ((r    (runtime-environment 'eval/typist))
         (ast  (cp x r))
-        (acts (type-infer-all ast)))
+        (acts (type-infer-all ast r)))
     (surgery! ast acts r)))
 
 ;;;;

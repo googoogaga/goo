@@ -21,7 +21,7 @@
 ;;;;!! Implementation
 
 ;;;; Collection protocol
-(dm len (x|<tup> => <int>)
+(dm (len inline) (x|<tup> => <int>)
   (%ib (%tlen x)))
 
 (dm elt-or (x|<tup> i|<int> default => <any>)
@@ -36,7 +36,7 @@
 (dm nul (c|(t= <tup>) => <tup>)
   %tnul)
 
-(dm fab (x|(t= <tup>) s|<int> => <tup>)
+(dm (fab inline) (x|(t= <tup>) s|<int> => <tup>)
   (%tup (%iu s) #f))
 
 
@@ -46,8 +46,8 @@
   (cat "#(" (vals-to-str x) ")"))
 
 ;;;; Undocumented
-(dm low-elt (x|<tup> i|<int> => <any>)
+(dm (low-elt inline) (x|<tup> i|<int> => <any>)
   (%telt x (%iu i)))
 
-(dm fab-elt-setter (z x|<tup> i|<int>)
+(dm (fab-elt-setter inline) (z x|<tup> i|<int>)
   (set (%telt x (%iu i)) z))

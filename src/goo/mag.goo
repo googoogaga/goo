@@ -18,15 +18,15 @@
 (dm > (x|<mag> y|<mag> => <log>)
   (< y x))
 
-(dm <= (x|<mag> y|<mag>  => <log>)
+(dm (<= inline) (x|<mag> y|<mag>  => <log>)
   (not (< y x)))
 
-(dm >= (x|<mag> y|<mag>  => <log>)
+(dm (>= inline) (x|<mag> y|<mag>  => <log>)
   (not (< x y)))
 
-(dm min (x|<mag> y|<mag> => <mag>)
+(dm (min inline) (x|<mag> y|<mag> => <mag>)
   (if (< x y) x y))
 
-(dm max (x|<mag> y|<mag> => <mag>)
+(dm (max inline) (x|<mag> y|<mag> => <mag>)
   (if (> x y) x y))
 

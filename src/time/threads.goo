@@ -21,7 +21,7 @@
   (dp thread-name (<thread> => (t? <sym>)) #f)
   (dp thread-priority (<thread> => <int>) 0)
   (dp thread-function (<thread> => <fun>) (fun ()))
-  (dp thread-handle (<thread> => <loc>))
+  (dp! thread-handle (<thread> => <loc>))
 
 (dm thread-yield () (%thread-yield))
 

@@ -18,7 +18,7 @@
 
 (dc <event> (<any>))
   (dp event-name (<event> => (t? <sym>)) #f)
-  (dp event-handle (<event> => <any>))
+  (dp! event-handle (<event> => <any>))
 
 (dm new (c|(t< <event>) args|... => <event>)
   (def event (app-sup c args))
