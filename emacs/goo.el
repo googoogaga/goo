@@ -47,6 +47,8 @@
   (imenu-add-menubar-index)
   (make-local-variable 'lisp-indent-function)
   (set lisp-indent-function 'proto-indent-function)
+  (make-local-variable 'indent-tabs-mode)
+  (setq indent-tabs-mode nil)
   (setq font-lock-defaults
         '((proto-font-lock-keywords	; by default, same as proto-font-lock-keywords-1
 	   proto-font-lock-keywords-1	
