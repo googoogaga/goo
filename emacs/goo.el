@@ -250,6 +250,7 @@ See `run-hooks'."
 (put 'ct-also 'proto-indent-function 0)
 (put 'fin 'proto-indent-function 1)
 (put 'dlet 'proto-indent-function 1)
+(put 'try 'proto-indent-function 1)
 
 ;; defining forms:
 (put 'def 'proto-indent-function "define")
