@@ -49,7 +49,5 @@ cp -p ../../EMACS/proto.el .
 cp -p ../../EMACS/proto-shell.el .
 cd ../..
 
-cd proto-$1
-tar cf ../proto-$1.tar .
-cd ..
+tar cf ../proto-$1.tar proto-$1
 gzip proto-$1.tar
