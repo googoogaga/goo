@@ -3,6 +3,31 @@
 0<= (map (fun (c) "-") "abc")
 ERROR: No Applicable Methods Error when calling #{Gen low-elt-setter (<any> <any> <any>)} on ("-" "   " 0)
 
+=== 0.89 BUGS ===
+
+2<= (quit)
+6=> #f
+6<= (quit)
+
+---
+
+(dv test (isa <any>))
+(slot test param-slots '())
+(len (set (param-slots test) (add (param-slots test) (slot test heh))))
+=> 1
+(len (param-slots test))
+=> 0
+
+---
+
+(fabs <tab> 1 2 3 4)
+(dm f (x) )
+(dm f (x) ) ;; TYPE ERROR #{Met ()} SHOULD BE A <gen>
+
+---
+
+isa inheriting slot values
+
 === 0.82 BUGS ===
 
 0<= (dv <ptr> (isa <any>))

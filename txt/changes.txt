@@ -354,7 +354,8 @@ adds:
 summary:
 
   adds compileable macros and mif.  gets rid of need for loading
-  macros file, reducing startup time and forgotten macros.
+  macros file, reducing startup time and forgotten macros.  gets
+  backtrace working.
 
 fixes:
 
@@ -369,3 +370,41 @@ fixes:
 adds:
 
   backtrace function
+
+=== 0.89 ===
+
+summary:
+
+  compiler bootstrapped.
+
+fixes:
+
+  got table iteration protocol working for larger tables.
+
+adds:
+
+  for loop support for collection keys:  (for (((tup key val) tab)) ...)
+
+=== 0.90 ===
+
+summary:
+
+  more debuggability.  splits out function signature slots into
+  signature object.
+
+fixes:
+
+  flush getter caches when slot added.
+
+adds:
+
+  signature object <sig>.
+  fun-name and sig-names for debuggability.
+  improved fun writing
+    to use fun-name instead of object-name.
+    optionally print return type
+    print fun-names when available
+  remove mark from closures to decrease size
+  <module-binding> with binding-home slot
+     superclass of global, runtime and predefined bindings
+  potential to shadow bindings in ast-define-binding
