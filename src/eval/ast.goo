@@ -6,7 +6,7 @@
 (use goo/macros)
 (use goo/runtime)
 (use goo/io/write)
-(use x8r/syntax)
+(use eval/syntax)
 (use goo/cols/str)
 (use goo/system) ; Needed by runtime module loader.
 (use goo/io/write)
@@ -14,7 +14,7 @@
 (use goo/math)
 (use goo/cols)
 (use goo/io/port)
-(use x8r/dependency)
+(use eval/dependency)
 
 ;;; TODO: MOVE TYPE OUT OF SIGNATURE
 

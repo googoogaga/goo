@@ -652,8 +652,8 @@ extern P YPbuild_runtime_modules(
 
 );
 
-extern P Yx8rSast_evalYPbinding_value(P x);
-extern P Yx8rSast_evalYPbinding_value_setter(P v, P x);
+extern P YevalSast_evalYPbinding_value(P x);
+extern P YevalSast_evalYPbinding_value_setter(P v, P x);
 
 typedef struct {
   PSTR  var_name;    
@@ -661,16 +661,16 @@ typedef struct {
   P     binding;    
 } DLVAR_DAT, *DLVAR;
 
-STATIC_NOT_PRT_C INLINE P Yx8rSast_evalYPdlvar_nam(P x) { 
+STATIC_NOT_PRT_C INLINE P YevalSast_evalYPdlvar_nam(P x) { 
   return (((DLVAR)(x))->var_name); 
 }
-STATIC_NOT_PRT_C INLINE P Yx8rSast_evalYPdlvar_mod(P x) {
+STATIC_NOT_PRT_C INLINE P YevalSast_evalYPdlvar_mod(P x) {
   return (((DLVAR)(x))->mod_name);
 }
-STATIC_NOT_PRT_C INLINE P Yx8rSast_evalYPdlvar(P x) {
+STATIC_NOT_PRT_C INLINE P YevalSast_evalYPdlvar(P x) {
   return (((DLVAR)(x))->binding);
 }
-STATIC_NOT_PRT_C INLINE P Yx8rSast_evalYPdlvar_setter(P v, P x) {
+STATIC_NOT_PRT_C INLINE P YevalSast_evalYPdlvar_setter(P v, P x) {
   return ((((DLVAR)(x))->binding)=(v));
 }
 

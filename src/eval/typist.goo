@@ -1,6 +1,6 @@
 (use goo)
 (use goo/boot)
-(use x8r/ast)
+(use eval/ast)
 
 (dc <type>       (<any>))
 

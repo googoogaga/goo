@@ -6,7 +6,7 @@
 (use goo/runtime)
 (use goo)
 (use goo/cols/rep)
-(use x8r/ast)
+(use eval/ast)
 
 ;;; ENV
 

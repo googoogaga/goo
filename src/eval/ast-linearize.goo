@@ -4,7 +4,7 @@
 (use goo/boot)
 (use goo/macros)
 (use goo/runtime)
-(use x8r/ast)
+(use eval/ast)
 (use goo/types)
 (use goo/math)
 (use goo/cols)

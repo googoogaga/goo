@@ -7,7 +7,7 @@
 (use goo/packer)
 (use goo/io/write)
 (use goo/io/read)
-(use x8r/syntax)
+(use eval/syntax)
 (use goo/io/port)
 
 (export

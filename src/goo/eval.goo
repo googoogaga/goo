@@ -1,5 +1,5 @@
 (use goo)
-(use x8r/top)
+(use eval/top)
 
 ;;; This list of symbols should match those in goo/user.
 (export

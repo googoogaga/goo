@@ -1370,7 +1370,7 @@ P YPbuild_runtime_modules(
 typedef P (*PLD)();
 extern P YgooSsystemYTgoo_rootT;
 
-P Yx8rSg2cYPcompile (P name) {
+P YevalSg2cYPcompile (P name) {
   char  buf[256];
   sprintf(buf, CGEN_CC, YPsu(YgooSsystemYTgoo_rootT), name, name);
   // printf("EXECUTING %s\n", buf);
@@ -1380,7 +1380,7 @@ P Yx8rSg2cYPcompile (P name) {
   system(buf);
 }
 
-P Yx8rSg2cYPload(P name) {
+P YevalSg2cYPload(P name) {
   void* mod;
   char  buf[256];
   PLD   load;

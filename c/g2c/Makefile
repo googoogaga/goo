@@ -4,47 +4,47 @@ C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 	$(CC) -I.. -c -g -O -o $@ $<
 
 OBJS = \
-	goo/app.o \
-	goo/cols/tab.o \
-	x8r/g2c.o \
-	goo/cols/seqx.o \
+	goo/cols/lst.o \
+	goo/cols/str.o \
+	eval/top.o \
+	goo/io/read.o \
+	eval/syntax.o \
+	goo/cols/range.o \
 	goo/cols/seq.o \
+	goo/cols/opts.o \
 	goo.o \
 	goo/system.o \
-	goo/cols/range.o \
+	goo/cols/col.o \
+	goo/cols/flat.o \
 	goo/cols/zip.o \
 	goo/macros.o \
-	goo/io/write.o \
-	goo/cols/opts.o \
-	goo/cols/col.o \
-	x8r/syntax.o \
-	goo/mag.o \
-	goo/cols/flat.o \
-	x8r/ast-eval.o \
-	goo/types.o \
-	goo/cols/rep.o \
-	goo/cols/vec.o \
-	x8r/ast.o \
-	x8r/dependency.o \
-	goo/math.o \
-	x8r/top.o \
 	goo/io/port.o \
 	goo/eval.o \
-	x8r/main.o \
-	x8r/ast-linearize.o \
+	eval/ast-linearize.o \
+	goo/runtime.o \
+	goo/cols/seqx.o \
+	goo/cols/vec.o \
+	goo/cols/step.o \
+	goo/cols/cycle.o \
+	eval/dependency.o \
+	goo/boot.o \
+	eval/ast-eval.o \
 	goo/cols/map.o \
+	goo/cols/rep.o \
+	goo/types.o \
+	goo/math.o \
+	goo/user.o \
 	goo/cols.o \
 	goo/cols/tup.o \
-	goo/cols/str.o \
-	goo/runtime.o \
+	goo/cols/tab.o \
+	goo/io/write.o \
+	eval/main.o \
+	goo/mag.o \
 	goo/cols/colx.o \
-	goo/io/read.o \
-	goo/cols/cycle.o \
-	goo/boot.o \
-	goo/cols/step.o \
+	eval/g2c.o \
 	goo/packer.o \
-	goo/cols/lst.o \
-	goo/user.o \
+	goo/app.o \
+	eval/ast.o \
 	g2c-init.o
 
 g2c: $(C_OBJS_DD) $(OBJS)

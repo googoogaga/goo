@@ -16,9 +16,9 @@
 (use goo/macros)
 (use goo/runtime)
 (use goo/io/write)
-(use x8r/ast)
-(use x8r/top)
-(use x8r/ast-linearize)
+(use eval/ast)
+(use eval/top)
+(use eval/ast-linearize)
 (use goo/cols/str)
 (use goo/system)
 (use goo/types)
@@ -113,7 +113,7 @@
   #f)
 
 (df g2c-test (x)
-  (set *g2c-app* (g2c-def-app (cat "g2c-" (to-str x)) 'x8r/main)))
+  (set *g2c-app* (g2c-def-app (cat "g2c-" (to-str x)) 'eval/main)))
 
 (dv *tmp-file-counter* -1)
 
@@ -151,10 +151,10 @@
   (compile-load name))
 
 ;;; Backwards compatibility for users: Build g2c itself.
-(dv *g2c-app* (g2c-def-app "g2c" 'x8r/main))
+(dv *g2c-app* (g2c-def-app "g2c" 'eval/main))
 (dm g2c-top () (g2c-build-app *g2c-app*))
 (dm g2c-clean ()
-  (set *g2c-app* (g2c-def-app "g2c" 'x8r/main))
+  (set *g2c-app* (g2c-def-app "g2c" 'eval/main))
   #f)
 
 ;;; Given a file name and an environment, compute an ast in that
