@@ -2,19 +2,19 @@
 	cc -I.. -c -g -O -o $@ $<
 
 OBJS = \
-	macros.o \
-	write.o \
-	read.o \
-	runtime.o \
-	strings.o \
 	p2c.o \
-	top.o \
 	syntax.o \
-	boot.o \
-	main.o \
+	read.o \
 	ast-eval.o \
+	macros.o \
 	ast.o \
+	strings.o \
+	runtime.o \
+	write.o \
+	top.o \
+	main.o \
 	ast-linearize.o \
+	boot.o \
 	p2c-init.o
 
 p2c: ../prt.o $(OBJS)

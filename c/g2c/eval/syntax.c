@@ -5,352 +5,397 @@
 
 /* MODULE ENVIRONMENT: syntax */
 
-DEF(YsyntaxYsexpr_new_unique_name_counterX,"syntax","sexpr-new-unique-name-counter!");
-DEF(YsyntaxYsexpr_isa_slot_inits,"syntax","sexpr-isa-slot-inits");
+EXT(YLlstG,"boot","<lst>");
+DEF(YsyntaxYmap_tree,"syntax","map-tree");
+DEF(YsyntaxYsexpr_method_signature,"syntax","sexpr-method-signature");
+EXT(YmacrosYtup,"macros","tup");
+DEF(YsyntaxYDsexpr_locals_tag,"syntax","$sexpr-locals-tag");
+EXT(YruntimeYbuild_condition_for_handler_interactively,"runtime","build-condition-for-handler-interactively");
+DEF(YsyntaxYsexpr_isaQ,"syntax","sexpr-isa?");
+DEF(YsyntaxYsexpr_pattern_variableQ,"syntax","sexpr-pattern-variable?");
+DEF(YsyntaxYsexpr_definition_variable,"syntax","sexpr-definition-variable");
+EXT(YruntimeYsub,"runtime","sub");
+EXT(Yobject_slots,"boot","object-slots");
+EXT(YruntimeYeof_object,"runtime","eof-object");
+EXT(Yapply,"boot","apply");
+DEF(YsyntaxYDsexpr_unwind_protect_tag,"syntax","$sexpr-unwind-protect-tag");
+EXT(Yfun_name,"boot","fun-name");
+DEF(YsyntaxYsexpr_unique_name,"syntax","sexpr-unique-name");
+DEF(YsyntaxYsexpr_iterateQ,"syntax","sexpr-iterate?");
+EXT(Ytail,"boot","tail");
+DEF(YsyntaxYsexpr_make_getter,"syntax","sexpr-make-getter");
+DEF(YsyntaxYsexpr_loc_raw_body,"syntax","sexpr-loc-raw-body");
+DEF(YsyntaxYTbq_listT,"syntax","*bq-list*");
+EXT(YruntimeYassq,"runtime","assq");
+EXT(YruntimeYpop_lastX,"runtime","pop-last!");
+EXT(Yhead_setter,"boot","head-setter");
+DEF(YsyntaxYsexpr_text_of_quotation,"syntax","sexpr-text-of-quotation");
+EXT(YLgenG,"boot","<gen>");
+DEF(YsyntaxYDsexpr_let_tag,"syntax","$sexpr-let-tag");
+DEF(YsyntaxYsexpr_forward_primitiveQ,"syntax","sexpr-forward-primitive?");
+EXT(YruntimeYto_str,"runtime","to-str");
+DEF(YsyntaxYsexpr_expand_backquote,"syntax","sexpr-expand-backquote");
 EXT(YruntimeYfrom_to,"runtime","from-to");
+EXT(YruntimeYread,"runtime","read");
 EXT(YruntimeYpop,"runtime","pop");
 EXT(Ynot,"boot","not");
 EXT(Yfun_value,"boot","fun-value");
-DEF(YsyntaxYsexpr_rest_exps,"syntax","sexpr-rest-exps");
-DEF(YsyntaxYsexpr_generic_definitionQ,"syntax","sexpr-generic-definition?");
-DEF(YsyntaxYsexpr_assignmentQ,"syntax","sexpr-assignment?");
-DEF(YsyntaxYDsexpr_define_tag,"syntax","$sexpr-define-tag");
-DEF(YsyntaxYDsexpr_isa_tag,"syntax","$sexpr-isa-tag");
-DEF(YsyntaxYbq_process,"syntax","bq-process");
-EXT(Yfun_name_setter,"boot","fun-name-setter");
-EXT(Yfile_opening_error,"boot","file-opening-error");
-DEF(YsyntaxYsexpr_isaQ,"syntax","sexpr-isa?");
+EXT(YruntimeYdo,"runtime","do");
 DEF(YsyntaxYsexpr_beginQ,"syntax","sexpr-begin?");
+DEF(YsyntaxYsexpr_function_signature,"syntax","sexpr-function-signature");
+EXT(YruntimeYeof_objectQ,"runtime","eof-object?");
+EXT(Yfun_name_setter,"boot","fun-name-setter");
+DEF(YsyntaxYTunique_name_counterT,"syntax","*unique-name-counter*");
 EXT(Ytail_setter,"boot","tail-setter");
 EXT(YruntimeYfab,"runtime","fab");
-DEF(YsyntaxYsexpr_slot_init,"syntax","sexpr-slot-init");
-DEF(YsyntaxYsexpr_definition_variable,"syntax","sexpr-definition-variable");
+EXT(YruntimeYLinput_portG,"runtime","<input-port>");
+EXT(YruntimeYchoose_handler,"runtime","choose-handler");
+DEF(YsyntaxYsexpr_assignment_value,"syntax","sexpr-assignment-value");
 EXT(YruntimeYcatX,"runtime","cat!");
+EXT(YruntimeYassqn,"runtime","assqn");
+DEF(YsyntaxYsexpr_variable_name,"syntax","sexpr-variable-name");
 EXT(YruntimeYmemQ,"runtime","mem?");
-EXT(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
+EXT(YruntimeYdefault_handler_description,"runtime","default-handler-description");
 EXT(YruntimeYlen_setter,"runtime","len-setter");
-EXT(YruntimeYeof_objectQ,"runtime","eof-object?");
-EXT(YLcolG,"boot","<col>");
+EXT(YruntimeYLmapG,"runtime","<map>");
 EXT(YruntimeYfabs,"runtime","fabs");
 EXT(Yerror,"boot","error");
-DEF(YsyntaxYDsexpr_method_tag,"syntax","$sexpr-method-tag");
+DEF(YsyntaxYDsexpr_macro_expand_tag,"syntax","$sexpr-macro-expand-tag");
 EXT(Yslot_getter,"boot","slot-getter");
 EXT(YruntimeYnum_to_str,"runtime","num-to-str");
-DEF(YsyntaxYDsexpr_macro_tag,"syntax","$sexpr-macro-tag");
-DEF(YsyntaxYsexpr_iterate_inits,"syntax","sexpr-iterate-inits");
-DEF(YsyntaxYsexpr_isa_parents,"syntax","sexpr-isa-parents");
-EXT(YruntimeYLconditionG,"runtime","<condition>");
+DEF(YsyntaxYsexpr_monitor_body,"syntax","sexpr-monitor-body");
+EXT(YPsnul,"boot","%snul");
+DEF(YsyntaxYsexpr_locQ,"syntax","sexpr-loc?");
+DEF(YsyntaxYsexpr_syntax_definitionQ,"syntax","sexpr-syntax-definition?");
+DEF(YsyntaxYDsexpr_define_method_tag,"syntax","$sexpr-define-method-tag");
 EXT(YmacrosYvar_type,"macros","var-type");
-EXT(YPsymbols,"boot","%symbols");
-DEF(YsyntaxYsexpr_let_values,"syntax","sexpr-let-values");
-DEF(YsyntaxYbracket,"syntax","bracket");
+EXT(YLchrG,"boot","<chr>");
 EXT(Yfun_sig_setter,"boot","fun-sig-setter");
-DEF(YsyntaxYsexpr_variable_name,"syntax","sexpr-variable-name");
+DEF(YsyntaxYDsexpr_isa_tag,"syntax","$sexpr-isa-tag");
 EXT(YmacrosYmake_sym,"macros","make-sym");
-DEF(YsyntaxYsexpr_forward_primitiveQ,"syntax","sexpr-forward-primitive?");
-DEF(YsyntaxYsexpr_if_test,"syntax","sexpr-if-test");
-EXT(YruntimeYfrom_below,"runtime","from-below");
-DEF(YsyntaxYsexpr_function_value,"syntax","sexpr-function-value");
-DEF(YsyntaxYsexpr_methodQ,"syntax","sexpr-method?");
-DEF(YsyntaxYsexpr_iterate_Gloc,"syntax","sexpr-iterate->loc");
-EXT(YruntimeYelt_setter,"runtime","elt-setter");
-DEF(YsyntaxYsexpr_last_expQ,"syntax","sexpr-last-exp?");
-EXT(YmacrosYlst,"macros","lst");
-EXT(YPcall_next_method,"boot","%call-next-method");
-DEF(YsyntaxYsexpr_assignment_value,"syntax","sexpr-assignment-value");
-DEF(YsyntaxYnreconc,"syntax","nreconc");
-DEF(YsyntaxYsexpr_make_macro_function,"syntax","sexpr-make-macro-function");
+DEF(YsyntaxYsexpr_make_anonymous_method,"syntax","sexpr-make-anonymous-method");
 EXT(YruntimeYforce_output,"runtime","force-output");
-DEF(YsyntaxYsexpr_make_if,"syntax","sexpr-make-if");
+DEF(YsyntaxYDsexpr_quasiquote_tag,"syntax","$sexpr-quasiquote-tag");
+EXT(YruntimeYfrom_below,"runtime","from-below");
+DEF(YsyntaxYDsexpr_syntax_if_tag,"syntax","$sexpr-syntax-if-tag");
+DEF(YsyntaxYsexpr_variableQ,"syntax","sexpr-variable?");
+EXT(YruntimeYelt_setter,"runtime","elt-setter");
+DEF(YsyntaxYsexpr_slot_init,"syntax","sexpr-slot-init");
+EXT(YmacrosYlst,"macros","lst");
+DEF(YsyntaxYsexpr_isa_slot_inits,"syntax","sexpr-isa-slot-inits");
+EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
+DEF(YsyntaxYsexpr_unquoteQ,"syntax","sexpr-unquote?");
+DEF(YsyntaxYDsexpr_quote_tag,"syntax","$sexpr-quote-tag");
+DEF(YsyntaxYsexpr_pattern_variable_name,"syntax","sexpr-pattern-variable-name");
+DEF(YsyntaxYsexpr_letQ,"syntax","sexpr-let?");
+DEF(YsyntaxYsexpr_make_quote,"syntax","sexpr-make-quote");
+DEF(YsyntaxYsexpr_let_values,"syntax","sexpr-let-values");
+EXT(YPcall_next_method,"boot","%call-next-method");
+DEF(YsyntaxYsexpr_no_operandsQ,"syntax","sexpr-no-operands?");
+DEF(YsyntaxYsexpr_bind_pattern_variables,"syntax","sexpr-bind-pattern-variables");
+DEF(YsyntaxYsexpr_definition_value,"syntax","sexpr-definition-value");
+DEF(YsyntaxYsexpr_backquoteQ,"syntax","sexpr-backquote?");
+EXT(YLvecG,"boot","<vec>");
+DEF(YsyntaxYsexpr_function_definition_variable,"syntax","sexpr-function-definition-variable");
+EXT(YruntimeYcurry,"runtime","curry");
+EXT(YruntimeYdel_key,"runtime","del-key");
 EXT(YruntimeYalphabeticQ,"runtime","alphabetic?");
-DEF(YsyntaxYsexpr_iterate_name,"syntax","sexpr-iterate-name");
-EXT(YLstrG,"boot","<str>");
-EXT(YruntimeYassqn,"runtime","assqn");
-DEF(YsyntaxYsexpr_variable_type,"syntax","sexpr-variable-type");
+EXT(YLoptsG,"boot","<opts>");
 EXT(Yslot_setter,"boot","slot-setter");
-EXT(YruntimeYchar_Gascii,"runtime","char->ascii");
-EXT(YPPmacro,"boot","%%macro");
+EXT(YPsymbols,"boot","%symbols");
+DEF(YsyntaxYbq_process,"syntax","bq-process");
+EXT(YLflatG,"boot","<flat>");
 EXT(YruntimeYanyQ,"runtime","any?");
+EXT(YruntimeYwrite_string,"runtime","write-string");
 EXT(YruntimeYas,"runtime","as");
-DEF(YsyntaxYsexpr_method_definitionQ,"syntax","sexpr-method-definition?");
-DEF(YsyntaxYsexpr_loc_bound_signatures,"syntax","sexpr-loc-bound-signatures");
+DEF(YsyntaxYsexpr_operands,"syntax","sexpr-operands");
+DEF(YsyntaxYDsexpr_define_tag,"syntax","$sexpr-define-tag");
+DEF(YsyntaxYsexpr_slot_variable,"syntax","sexpr-slot-variable");
+EXT(YruntimeYport_contents,"runtime","port-contents");
 EXT(YruntimeYempty,"runtime","empty");
-DEF(YsyntaxYsexpr_iterate_signature,"syntax","sexpr-iterate-signature");
-DEF(YsyntaxYsexpr_method_signature,"syntax","sexpr-method-signature");
-DEF(YsyntaxYDsexpr_define_syntax_tag,"syntax","$sexpr-define-syntax-tag");
 DEF(YsyntaxYTbq_quoteT,"syntax","*bq-quote*");
+DEF(YsyntaxYsexpr_atomQ,"syntax","sexpr-atom?");
+DEF(YsyntaxYsexpr_make_setter,"syntax","sexpr-make-setter");
+EXT(YruntimeYLhandler_infoG,"runtime","<handler-info>");
+DEF(YsyntaxYsexpr_syntax_if_else,"syntax","sexpr-syntax-if-else");
 EXT(YruntimeYLE,"runtime","<=");
 EXT(YruntimeYrevX,"runtime","rev!");
-EXT(Ytype_error,"boot","type-error");
 EXT(YruntimeYas_uppercase,"runtime","as-uppercase");
 EXT(Ysym_name,"boot","sym-name");
-EXT(YLnumG,"boot","<num>");
+EXT(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
 EXT(YruntimeYNEE,"runtime","~==");
-DEF(YsyntaxYsexpr_function_definitionQ,"syntax","sexpr-function-definition?");
-DEF(YsyntaxYDsexpr_define_method_tag,"syntax","$sexpr-define-method-tag");
-DEF(YsyntaxYsexpr_no_operandsQ,"syntax","sexpr-no-operands?");
 EXT(Yfab_gen,"boot","fab-gen");
-EXT(YTmacros_okQT,"boot","*macros-ok?*");
-DEF(YsyntaxYsexpr_bind_pattern_variables,"syntax","sexpr-bind-pattern-variables");
-EXT(YruntimeYLmapG,"runtime","<map>");
+EXT(YLcolG,"boot","<col>");
+DEF(YsyntaxYsexpr_assignmentQ,"syntax","sexpr-assignment?");
+DEF(YsyntaxYsexpr_if_test,"syntax","sexpr-if-test");
+DEF(YsyntaxYsexpr_isa_init_slots,"syntax","sexpr-isa-init-slots");
+EXT(YPvnul,"boot","%vnul");
+DEF(YsyntaxYDsexpr_slot_tag,"syntax","$sexpr-slot-tag");
+EXT(YruntimeYhandler_info_message,"runtime","handler-info-message");
 EXT(YruntimeYassoc_value,"runtime","assoc-value");
+DEF(YsyntaxYTcomma_atsignT,"syntax","*comma-atsign*");
+DEF(YsyntaxYsexpr_function_definition_value,"syntax","sexpr-function-definition-value");
+EXT(YLtraitsG,"boot","<traits>");
+EXT(YLlogG,"boot","<log>");
 EXT(YruntimeYadd,"runtime","add");
-DEF(YsyntaxYsexpr_text_of_quotation,"syntax","sexpr-text-of-quotation");
+DEF(YsyntaxYsexpr_unwind_protectQ,"syntax","sexpr-unwind-protect?");
+DEF(YsyntaxYsexpr_loc_bound_bodies,"syntax","sexpr-loc-bound-bodies");
 EXT(YruntimeYfrom,"runtime","from");
-EXT(Ynul,"boot","nul");
-EXT(YruntimeY1st,"runtime","1st");
-DEF(YsyntaxYsexpr_syntax_if_value,"syntax","sexpr-syntax-if-value");
-DEF(YsyntaxYsexpr_blockQ,"syntax","sexpr-block?");
-EXT(YLsigG,"boot","<sig>");
-EXT(YruntimeYpush,"runtime","push");
-DEF(YsyntaxYsexpr_ifQ,"syntax","sexpr-if?");
-DEF(YsyntaxYsexpr_syntax_if_pattern,"syntax","sexpr-syntax-if-pattern");
-DEF(YsyntaxYDsexpr_bind_exit_tag,"syntax","$sexpr-bind-exit-tag");
-DEF(YsyntaxYDsexpr_define_generic_tag,"syntax","$sexpr-define-generic-tag");
-EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
-EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
+DEF(YsyntaxYsexpr_rest_operands,"syntax","sexpr-rest-operands");
+DEF(YsyntaxYDsexpr_if_tag,"syntax","$sexpr-if-tag");
+DEF(YsyntaxYDsexpr_iterate_tag,"syntax","$sexpr-iterate-tag");
+DEF(YsyntaxYsexpr_macro_expandQ,"syntax","sexpr-macro-expand?");
+DEF(YsyntaxYsexpr_macroQ,"syntax","sexpr-macro?");
+EXT(YruntimeYbuild_condition_interactively,"runtime","build-condition-interactively");
+DEF(YsyntaxYsexpr_signature_parameters,"syntax","sexpr-signature-parameters");
+DEF(YsyntaxYsexpr_new_unique_name_counterX,"syntax","sexpr-new-unique-name-counter!");
 EXT(YruntimeYnulQ,"runtime","nul?");
 EXT(YmacrosYcat,"macros","cat");
-DEF(YsyntaxYsexpr_make_syntax_if,"syntax","sexpr-make-syntax-if");
 EXT(YruntimeYfill,"runtime","fill");
-DEF(YsyntaxYsexpr_syntax_definition_variable,"syntax","sexpr-syntax-definition-variable");
-EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
-DEF(YsyntaxYsexpr_function_definition_value,"syntax","sexpr-function-definition-value");
-DEF(YsyntaxYDsexpr_monitor_tag,"syntax","$sexpr-monitor-tag");
+EXT(YLslotG,"boot","<slot>");
+EXT(YruntimeYascii_whitespaces,"runtime","ascii-whitespaces");
 EXT(Yslot_value,"boot","slot-value");
+EXT(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
 EXT(YmacrosYEE,"macros","==");
-DEF(YsyntaxYsexpr_self_evaluatingQ,"syntax","sexpr-self-evaluating?");
+EXT(YruntimeY1st,"runtime","1st");
+EXT(YLfloG,"boot","<flo>");
 EXT(YLanyG,"boot","<any>");
-EXT(YLseqG,"boot","<seq>");
-DEF(YsyntaxYsexpr_definition_value,"syntax","sexpr-definition-value");
-DEF(YsyntaxYeval,"syntax","eval");
+DEF(YsyntaxYDsexpr_define_generic_tag,"syntax","$sexpr-define-generic-tag");
+DEF(YsyntaxYsexpr_method_parameters,"syntax","sexpr-method-parameters");
 DEF(YsyntaxYsexpr_if_then,"syntax","sexpr-if-then");
-DEF(YsyntaxYsexpr_variableQ,"syntax","sexpr-variable?");
-DEF(YsyntaxYsexpr_syntax_definition_value,"syntax","sexpr-syntax-definition-value");
+DEF(YsyntaxYsexpr_monitor_test,"syntax","sexpr-monitor-test");
 EXT(YruntimeYini_state,"runtime","ini-state");
-DEF(YsyntaxYsexpr_make_quote,"syntax","sexpr-make-quote");
-DEF(YsyntaxYsexpr_assignment_variable,"syntax","sexpr-assignment-variable");
-EXT(YruntimeYascii_limit,"runtime","ascii-limit");
-EXT(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
-DEF(YsyntaxYsexpr_sequence_Gbegin,"syntax","sexpr-sequence->begin");
+DEF(YsyntaxYsexpr_iterate_Gloc,"syntax","sexpr-iterate->loc");
 DEF(YsyntaxYsexpr_if_else,"syntax","sexpr-if-else");
-DEF(YsyntaxYsexpr_pattern_variableQ,"syntax","sexpr-pattern-variable?");
-EXT(YruntimeYdel_key,"runtime","del-key");
-DEF(YsyntaxYDsexpr_define_function_tag,"syntax","$sexpr-define-function-tag");
-DEF(YsyntaxYsexpr_tagged_listQ,"syntax","sexpr-tagged-list?");
-DEF(YsyntaxYsexpr_rest_operands,"syntax","sexpr-rest-operands");
-DEF(YsyntaxYsexpr_slot_object,"syntax","sexpr-slot-object");
-EXT(YmacrosYemptyQ,"macros","empty?");
-EXT(YruntimeYwrite_char,"runtime","write-char");
-DEF(YsyntaxYsexpr_letQ,"syntax","sexpr-let?");
-EXT(YruntimeYE,"runtime","=");
-DEF(YsyntaxYsexpr_pattern_variable_name,"syntax","sexpr-pattern-variable-name");
-EXT(Yfapply,"boot","fapply");
-EXT(YruntimeYLbufG,"runtime","<buf>");
-EXT(YLlstG,"boot","<lst>");
-DEF(YsyntaxYTcomma_atsignT,"syntax","*comma-atsign*");
-DEF(YsyntaxYsexpr_signature_value,"syntax","sexpr-signature-value");
-DEF(YsyntaxYsexpr_first_exp,"syntax","sexpr-first-exp");
-EXT(YruntimeYfin_stateQ,"runtime","fin-state?");
-DEF(YsyntaxYLnameG,"syntax","<name>");
-EXT(YmacrosYmatch_unquote,"macros","match-unquote");
-DEF(YsyntaxYsexpr_signature_parameters,"syntax","sexpr-signature-parameters");
+DEF(YsyntaxYsexpr_make_macro_function,"syntax","sexpr-make-macro-function");
+DEF(YsyntaxYsexpr_syntax_if_then,"syntax","sexpr-syntax-if-then");
+EXT(YruntimeYformat_to_string,"runtime","format-to-string");
+DEF(YsyntaxYsexpr_ifQ,"syntax","sexpr-if?");
 EXT(YruntimeYcompose,"runtime","compose");
-EXT(YLmetG,"boot","<met>");
-EXT(YruntimeYLportG,"runtime","<port>");
-DEF(YsyntaxYsexpr_function_definition_variable,"syntax","sexpr-function-definition-variable");
-DEF(YsyntaxYsexpr_make_anonymous_method,"syntax","sexpr-make-anonymous-method");
-DEF(YsyntaxYDsexpr_iterate_tag,"syntax","$sexpr-iterate-tag");
-EXT(YPisa,"boot","%isa");
+DEF(YsyntaxYsexpr_unwind_protect_cleanup_forms,"syntax","sexpr-unwind-protect-cleanup-forms");
+DEF(YsyntaxYsexpr_iterate_inits,"syntax","sexpr-iterate-inits");
+EXT(YruntimeYread_char,"runtime","read-char");
+DEF(YsyntaxYDsexpr_begin_tag,"syntax","$sexpr-begin-tag");
+DEF(YsyntaxYDsexpr_set_tag,"syntax","$sexpr-set-tag");
+EXT(YruntimeYascii_limit,"runtime","ascii-limit");
+DEF(YsyntaxYDsexpr_monitor_tag,"syntax","$sexpr-monitor-tag");
+EXT(YLseqG,"boot","<seq>");
 DEF(YsyntaxYsexpr_block_body,"syntax","sexpr-block-body");
+EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
+DEF(YsyntaxYsexpr_function_definitionQ,"syntax","sexpr-function-definition?");
+DEF(YsyntaxYsexpr_monitorQ,"syntax","sexpr-monitor?");
+EXT(YmacrosYemptyQ,"macros","empty?");
+EXT(YLfunG,"boot","<fun>");
+EXT(YruntimeYapp_filename,"runtime","app-filename");
+EXT(YLnumG,"boot","<num>");
+EXT(YruntimeYE,"runtime","=");
+DEF(YsyntaxYsexpr_iterate_signature,"syntax","sexpr-iterate-signature");
+DEF(YsyntaxYbracket,"syntax","bracket");
+EXT(Yfapply,"boot","fapply");
+DEF(YsyntaxYTbq_nconcT,"syntax","*bq-nconc*");
+DEF(YsyntaxYTbq_clobberableT,"syntax","*bq-clobberable*");
+DEF(YsyntaxYsexpr_monitor_type,"syntax","sexpr-monitor-type");
+EXT(YruntimeYfin_stateQ,"runtime","fin-state?");
+EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
+DEF(YsyntaxYsexpr_syntax_definition_value,"syntax","sexpr-syntax-definition-value");
+EXT(YmacrosYmatch_unquote,"macros","match-unquote");
+DEF(YsyntaxYsexpr_tagged_listQ,"syntax","sexpr-tagged-list?");
+EXT(YruntimeYPwith_monitor,"runtime","%with-monitor");
+DEF(YsyntaxYsexpr_first_exp,"syntax","sexpr-first-exp");
+EXT(YPisa,"boot","%isa");
 EXT(YruntimeYlen,"runtime","len");
+DEF(YsyntaxYsexpr_slotQ,"syntax","sexpr-slot?");
+DEF(YsyntaxYsexpr_syntax_if_pattern,"syntax","sexpr-syntax-if-pattern");
 EXT(Ysig_names,"boot","sig-names");
-DEF(YsyntaxYsexpr_syntax_ifQ,"syntax","sexpr-syntax-if?");
-EXT(YruntimeYdel_keys,"runtime","del-keys");
-DEF(YsyntaxYsexpr_slot_variable,"syntax","sexpr-slot-variable");
+EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
+EXT(YruntimeYrcurry,"runtime","rcurry");
+DEF(YsyntaxYsexpr_self_evaluatingQ,"syntax","sexpr-self-evaluating?");
 EXT(YmacrosYpair,"macros","pair");
+DEF(YsyntaxYDsexpr_define_function_tag,"syntax","$sexpr-define-function-tag");
+EXT(YruntimeYalways,"runtime","always");
+EXT(YruntimeYLbufG,"runtime","<buf>");
 EXT(YruntimeYL,"runtime","<");
+DEF(YsyntaxYsexpr_isa_parents,"syntax","sexpr-isa-parents");
 EXT(YmacrosYmap,"macros","map");
 EXT(YruntimeYnumericQ,"runtime","numeric?");
 EXT(YruntimeYallQ,"runtime","all?");
-DEF(YsyntaxYsexpr_make_setter,"syntax","sexpr-make-setter");
-DEF(YsyntaxYTunique_name_counterT,"syntax","*unique-name-counter*");
-DEF(YsyntaxYsexpr_build_backquote_expander,"syntax","sexpr-build-backquote-expander");
+EXT(YLintG,"boot","<int>");
+EXT(YruntimeYtype_or,"runtime","type-or");
 EXT(YruntimeYlast,"runtime","last");
-DEF(YsyntaxYsexpr_expand_backquote,"syntax","sexpr-expand-backquote");
-DEF(YsyntaxYsexpr_unwind_protect_cleanup_forms,"syntax","sexpr-unwind-protect-cleanup-forms");
+EXT(YTmacros_okQT,"boot","*macros-ok?*");
+EXT(YruntimeYpush,"runtime","push");
+DEF(YsyntaxYsexpr_make_application,"syntax","sexpr-make-application");
+DEF(YsyntaxYsexpr_methodQ,"syntax","sexpr-method?");
+EXT(Yfile_opening_error,"boot","file-opening-error");
+DEF(YsyntaxYTbq_listTT,"syntax","*bq-list**");
 EXT(YisaQ,"boot","isa?");
+EXT(YLlocG,"boot","<loc>");
 EXT(YruntimeYvec,"runtime","vec");
-DEF(YsyntaxYDsexpr_if_tag,"syntax","$sexpr-if-tag");
-DEF(YsyntaxYDsexpr_begin_tag,"syntax","$sexpr-begin-tag");
-EXT(YLtraitsG,"boot","<traits>");
-DEF(YsyntaxYsexpr_function_body,"syntax","sexpr-function-body");
-DEF(YsyntaxYsexpr_isa_init_values,"syntax","sexpr-isa-init-values");
-DEF(YsyntaxYsexpr_loc_raw_body,"syntax","sexpr-loc-raw-body");
+EXT(YruntimeYformat,"runtime","format");
+EXT(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
+EXT(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
+DEF(YsyntaxYTbq_appendT,"syntax","*bq-append*");
 EXT(YmacrosYmake_setter_name,"macros","make-setter-name");
-DEF(YsyntaxYDsexpr_let_tag,"syntax","$sexpr-let-tag");
-DEF(YsyntaxYsexpr_unquote_splicingQ,"syntax","sexpr-unquote-splicing?");
-EXT(YruntimeYapp_filename,"runtime","app-filename");
+EXT(YruntimeYLoutput_portG,"runtime","<output-port>");
+EXT(YruntimeYchar_Gascii,"runtime","char->ascii");
 EXT(Ysig_specs,"boot","sig-specs");
-DEF(YsyntaxYsexpr_syntax_if_else,"syntax","sexpr-syntax-if-else");
-EXT(Yunknown_function_error,"boot","unknown-function-error");
 EXT(Yfab_sym,"boot","fab-sym");
 EXT(YruntimeYaddX,"runtime","add!");
-DEF(YsyntaxYsexpr_locQ,"syntax","sexpr-loc?");
-EXT(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
+EXT(YruntimeYpeek_char,"runtime","peek-char");
+DEF(YsyntaxYsexpr_let_bound_variables,"syntax","sexpr-let-bound-variables");
 EXT(YPdefine_method,"boot","%define-method");
+DEF(YsyntaxYsexpr_loc_bound_names,"syntax","sexpr-loc-bound-names");
 EXT(YmacrosYmatch_sublist,"macros","match-sublist");
-DEF(YsyntaxYbq_remove_tokens,"syntax","bq-remove-tokens");
+EXT(YruntimeYout,"runtime","out");
+DEF(YsyntaxYsexpr_function_parameters,"syntax","sexpr-function-parameters");
 EXT(YruntimeYA,"runtime","+");
-DEF(YsyntaxYsexpr_make_application,"syntax","sexpr-make-application");
+DEF(YsyntaxYsexpr_monitor_info,"syntax","sexpr-monitor-info");
+EXT(Ytype_error,"boot","type-error");
+EXT(YruntimeYdel_keys,"runtime","del-keys");
 EXT(YPslot,"boot","%slot");
-DEF(YsyntaxYmap_tree,"syntax","map-tree");
-DEF(YsyntaxYDsexpr_quote_tag,"syntax","$sexpr-quote-tag");
-EXT(YruntimeYtype_or,"runtime","type-or");
-DEF(YsyntaxYsexpr_begin_actions,"syntax","sexpr-begin-actions");
-DEF(YsyntaxYsexpr_macroQ,"syntax","sexpr-macro?");
-EXT(YruntimeYrcurry,"runtime","rcurry");
-EXT(YruntimeYG,"runtime",">");
-EXT(YLvecG,"boot","<vec>");
-EXT(YmacrosYvar_name,"macros","var-name");
-DEF(YsyntaxYsexpr_operator,"syntax","sexpr-operator");
-EXT(Ysig_naryQ,"boot","sig-nary?");
-EXT(YruntimeYLinput_portG,"runtime","<input-port>");
 EXT(YruntimeYcall_with_output_file,"runtime","call-with-output-file");
-EXT(YruntimeYalways,"runtime","always");
-EXT(YruntimeYnxt_state,"runtime","nxt-state");
+EXT(YruntimeYLsimple_handler_infoG,"runtime","<simple-handler-info>");
+EXT(YruntimeYG,"runtime",">");
+DEF(YsyntaxYDsexpr_bind_exit_tag,"syntax","$sexpr-bind-exit-tag");
+DEF(YsyntaxYsexpr_isa_init_values,"syntax","sexpr-isa-init-values");
+DEF(YsyntaxYsexpr_first_operand,"syntax","sexpr-first-operand");
+DEF(YsyntaxYsexpr_make_method,"syntax","sexpr-make-method");
+EXT(YruntimeYnewline,"runtime","newline");
+EXT(YPPmacro,"boot","%%macro");
+EXT(YLtupG,"boot","<tup>");
+DEF(YsyntaxYsexpr_assignment_variable,"syntax","sexpr-assignment-variable");
+DEF(YsyntaxYsexpr_let_Gcombination,"syntax","sexpr-let->combination");
+EXT(Ysig_naryQ,"boot","sig-nary?");
+DEF(YsyntaxYsexpr_iterate_body,"syntax","sexpr-iterate-body");
+EXT(YruntimeYlist_handlers,"runtime","list-handlers");
+DEF(YsyntaxYsexpr_make_begin,"syntax","sexpr-make-begin");
+DEF(YsyntaxYbq_remove_tokens,"syntax","bq-remove-tokens");
+DEF(YsyntaxYsexpr_begin_actions,"syntax","sexpr-begin-actions");
 EXT(YmacrosYgensym,"macros","gensym");
-EXT(YruntimeYformat,"runtime","format");
-DEF(YsyntaxYsexpr_method_value,"syntax","sexpr-method-value");
-DEF(YsyntaxYDsexpr_syntax_if_tag,"syntax","$sexpr-syntax-if-tag");
-DEF(YsyntaxYDsexpr_set_tag,"syntax","$sexpr-set-tag");
-DEF(YsyntaxYTbq_listTT,"syntax","*bq-list**");
-DEF(YsyntaxYsexpr_iterateQ,"syntax","sexpr-iterate?");
+DEF(YsyntaxYDsexpr_macro_tag,"syntax","$sexpr-macro-tag");
+DEF(YsyntaxYeval,"syntax","eval");
+DEF(YsyntaxYsexpr_make_if,"syntax","sexpr-make-if");
+EXT(YruntimeYdescribe_handler,"runtime","describe-handler");
+DEF(YsyntaxYsexpr_quotedQ,"syntax","sexpr-quoted?");
 EXT(YruntimeYfirst_then,"runtime","first-then");
-DEF(YsyntaxYsexpr_unique_name,"syntax","sexpr-unique-name");
+DEF(YsyntaxYsexpr_rest_exps,"syntax","sexpr-rest-exps");
+DEF(YsyntaxYsexpr_let_body,"syntax","sexpr-let-body");
 EXT(YruntimeYrev,"runtime","rev");
-EXT(YLbagG,"boot","<bag>");
-EXT(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
+DEF(YsyntaxYDsexpr_method_tag,"syntax","$sexpr-method-tag");
+DEF(YsyntaxYDsexpr_values_tag,"syntax","$sexpr-values-tag");
+EXT(YruntimeYcondition_message,"runtime","condition-message");
 EXT(YruntimeY3rd,"runtime","3rd");
-EXT(YruntimeY_,"runtime","-");
+DEF(YsyntaxYDsexpr_define_syntax_tag,"syntax","$sexpr-define-syntax-tag");
 EXT(YruntimeYnow_key,"runtime","now-key");
 EXT(YruntimeYmap2,"runtime","map2");
-DEF(YsyntaxYsexpr_quotedQ,"syntax","sexpr-quoted?");
+DEF(YsyntaxYsexpr_method_definitionQ,"syntax","sexpr-method-definition?");
+EXT(YruntimeYLportG,"runtime","<port>");
 EXT(YruntimeYGE,"runtime",">=");
-DEF(YsyntaxYsexpr_loc_bound_bodies,"syntax","sexpr-loc-bound-bodies");
 EXT(Yfun_names,"boot","fun-names");
-EXT(Ysig_arity,"boot","sig-arity");
-EXT(YruntimeYfile_mtime,"runtime","file-mtime");
-DEF(YsyntaxYsexpr_unquoteQ,"syntax","sexpr-unquote?");
-DEF(YsyntaxYsexpr_loc_body,"syntax","sexpr-loc-body");
-EXT(YLlogG,"boot","<log>");
-EXT(YPvnul,"boot","%vnul");
-DEF(YsyntaxYsexpr_operands,"syntax","sexpr-operands");
-EXT(Yobject_parents,"boot","object-parents");
-DEF(YsyntaxYsexpr_make_method,"syntax","sexpr-make-method");
-EXT(YruntimeYdo2,"runtime","do2");
-DEF(YsyntaxYsexpr_let_body,"syntax","sexpr-let-body");
-EXT(YruntimeYdo,"runtime","do");
-DEF(YsyntaxYDsexpr_locals_tag,"syntax","$sexpr-locals-tag");
 DEF(YsyntaxYsexpr_definitionQ,"syntax","sexpr-definition?");
-EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
-DEF(YsyntaxYsexpr_make_begin,"syntax","sexpr-make-begin");
-EXT(YruntimeYneg,"runtime","neg");
-EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
-DEF(YsyntaxYDsexpr_quasiquote_tag,"syntax","$sexpr-quasiquote-tag");
-DEF(YsyntaxYsexpr_loc_bound_names,"syntax","sexpr-loc-bound-names");
-EXT(YruntimeYtruncateS,"runtime","truncate/");
-DEF(YsyntaxYsexpr_syntax_definitionQ,"syntax","sexpr-syntax-definition?");
-EXT(YruntimeYcat2,"runtime","cat2");
-DEF(YsyntaxYsexpr_unwind_protectQ,"syntax","sexpr-unwind-protect?");
-DEF(YsyntaxYsexpr_isa_init_slots,"syntax","sexpr-isa-init-slots");
-EXT(YruntimeYnow_elt,"runtime","now-elt");
-DEF(YsyntaxYsexpr_make_getter,"syntax","sexpr-make-getter");
-EXT(YPsnul,"boot","%snul");
-EXT(YruntimeYdel_dups,"runtime","del-dups");
-EXT(YruntimeYpos,"runtime","pos");
-EXT(YLtupG,"boot","<tup>");
-EXT(YruntimeYcondition_message,"runtime","condition-message");
-EXT(Ysig_value,"boot","sig-value");
-DEF(YsyntaxYsexpr_monitor_handler,"syntax","sexpr-monitor-handler");
-DEF(YsyntaxYTbq_appendT,"syntax","*bq-append*");
-EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
-DEF(YsyntaxYsexpr_let_Gcombination,"syntax","sexpr-let->combination");
-EXT(YruntimeYLoutput_portG,"runtime","<output-port>");
-EXT(YruntimeY2nd,"runtime","2nd");
-EXT(YruntimeYpeek_char,"runtime","peek-char");
-EXT(YruntimeYin,"runtime","in");
-DEF(YsyntaxYsexpr_monitor_body,"syntax","sexpr-monitor-body");
-EXT(YruntimeYassoc,"runtime","assoc");
-DEF(YsyntaxYsexpr_iterate_body,"syntax","sexpr-iterate-body");
-EXT(YruntimeYpush_lastX,"runtime","push-last!");
-DEF(YsyntaxYDsexpr_macro_expand_tag,"syntax","$sexpr-macro-expand-tag");
-DEF(YsyntaxYsexpr_unwind_protect_protected_form,"syntax","sexpr-unwind-protect-protected-form");
-DEF(YsyntaxYDsexpr_values_tag,"syntax","$sexpr-values-tag");
+EXT(Ysig_arity,"boot","sig-arity");
 DEF(YsyntaxYsexpr_let_namesAvalues,"syntax","sexpr-let-names+values");
-EXT(YruntimeYascii_whitespaces,"runtime","ascii-whitespaces");
-EXT(Yfun_arity,"boot","fun-arity");
-EXT(YruntimeYstr_to_num,"runtime","str-to-num");
+DEF(YsyntaxYsexpr_last_expQ,"syntax","sexpr-last-exp?");
+DEF(YsyntaxYsexpr_signature_value,"syntax","sexpr-signature-value");
+DEF(YsyntaxYsexpr_function_body,"syntax","sexpr-function-body");
+DEF(YsyntaxYsexpr_slot_object,"syntax","sexpr-slot-object");
+DEF(YsyntaxYsexpr_sequence_Gbegin,"syntax","sexpr-sequence->begin");
+DEF(YsyntaxYsexpr_iterate_name,"syntax","sexpr-iterate-name");
 DEF(YsyntaxYsexpr_make_setter_name,"syntax","sexpr-make-setter-name");
-EXT(YLfloG,"boot","<flo>");
-DEF(YsyntaxYsexpr_macro_expandQ,"syntax","sexpr-macro-expand?");
-EXT(YLoptsG,"boot","<opts>");
-DEF(YsyntaxYTbq_nconcT,"syntax","*bq-nconc*");
-EXT(YruntimeYnewline,"runtime","newline");
-DEF(YsyntaxYsexpr_applicationQ,"syntax","sexpr-application?");
-EXT(YLchrG,"boot","<chr>");
-DEF(YsyntaxYsexpr_method_parameters,"syntax","sexpr-method-parameters");
-EXT(YruntimeYelt,"runtime","elt");
-EXT(YLgenG,"boot","<gen>");
-EXT(YruntimeYLtabG,"runtime","<tab>");
-DEF(YsyntaxYsexpr_monitorQ,"syntax","sexpr-monitor?");
-DEF(YsyntaxYDsexpr_slot_tag,"syntax","$sexpr-slot-tag");
-EXT(Yslot_value_setter,"boot","slot-value-setter");
-EXT(YLsymG,"boot","<sym>");
-DEF(YsyntaxYsexpr_function_signature,"syntax","sexpr-function-signature");
-EXT(YruntimeYas_lowercase,"runtime","as-lowercase");
-EXT(YLlocG,"boot","<loc>");
-EXT(YLintG,"boot","<int>");
-EXT(Yhead,"boot","head");
-EXT(YruntimeYread_char,"runtime","read-char");
-DEF(YsyntaxYsexpr_method_body,"syntax","sexpr-method-body");
-EXT(Yfun_specs,"boot","fun-specs");
-DEF(YsyntaxYsexpr_function_parameters,"syntax","sexpr-function-parameters");
-EXT(YLslotG,"boot","<slot>");
-EXT(YLflatG,"boot","<flat>");
-DEF(YsyntaxYsexpr_slotQ,"syntax","sexpr-slot?");
-EXT(YmacrosYmatch_atom,"macros","match-atom");
-EXT(YruntimeYassocq,"runtime","assocq");
-EXT(YLfunG,"boot","<fun>");
-EXT(YmacrosYtup,"macros","tup");
+EXT(Yobject_parents,"boot","object-parents");
+EXT(YruntimeYdo2,"runtime","do2");
+DEF(YsyntaxYsexpr_method_value,"syntax","sexpr-method-value");
+DEF(YsyntaxYsexpr_make_syntax_if,"syntax","sexpr-make-syntax-if");
+DEF(YsyntaxYsexpr_syntax_definition_variable,"syntax","sexpr-syntax-definition-variable");
+DEF(YsyntaxYsexpr_build_backquote_expander,"syntax","sexpr-build-backquote-expander");
+EXT(YLbagG,"boot","<bag>");
+EXT(YruntimeYneg,"runtime","neg");
 EXT(YruntimeYsig,"runtime","sig");
-EXT(YruntimeYsub,"runtime","sub");
-DEF(YsyntaxYTbq_clobberableT,"syntax","*bq-clobberable*");
-EXT(Yobject_slots,"boot","object-slots");
+EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
+EXT(YruntimeYtruncateS,"runtime","truncate/");
 DEF(YsyntaxYsexpr_block_name,"syntax","sexpr-block-name");
-EXT(Yapply,"boot","apply");
-DEF(YsyntaxYsexpr_first_operand,"syntax","sexpr-first-operand");
-EXT(Yfun_name,"boot","fun-name");
-EXT(YruntimeYout,"runtime","out");
-EXT(YruntimeYeof_object,"runtime","eof-object");
-DEF(YsyntaxYsexpr_atomQ,"syntax","sexpr-atom?");
-DEF(YsyntaxYsexpr_let_bound_variables,"syntax","sexpr-let-bound-variables");
-EXT(Ytail,"boot","tail");
-DEF(YsyntaxYDsexpr_unwind_protect_tag,"syntax","$sexpr-unwind-protect-tag");
-DEF(YsyntaxYsexpr_syntax_if_then,"syntax","sexpr-syntax-if-then");
-EXT(YruntimeYpop_lastX,"runtime","pop-last!");
-EXT(YruntimeYassq,"runtime","assq");
-EXT(Yhead_setter,"boot","head-setter");
-EXT(YruntimeYcurry,"runtime","curry");
+EXT(YruntimeYcat2,"runtime","cat2");
+EXT(YLmetG,"boot","<met>");
+EXT(YruntimeYnow_elt,"runtime","now-elt");
+DEF(YsyntaxYsexpr_operator,"syntax","sexpr-operator");
+EXT(YruntimeYwrite_char,"runtime","write-char");
+EXT(YruntimeYdel_dups,"runtime","del-dups");
+DEF(YsyntaxYsexpr_monitor_expand,"syntax","sexpr-monitor-expand");
+EXT(YruntimeYpos,"runtime","pos");
+DEF(YsyntaxYsexpr_generic_definitionQ,"syntax","sexpr-generic-definition?");
+EXT(YLstrG,"boot","<str>");
+EXT(YLsigG,"boot","<sig>");
+DEF(YsyntaxYsexpr_loc_body,"syntax","sexpr-loc-body");
+EXT(Ysig_value,"boot","sig-value");
+DEF(YsyntaxYsexpr_blockQ,"syntax","sexpr-block?");
+EXT(YruntimeY2nd,"runtime","2nd");
+EXT(YruntimeYin,"runtime","in");
+DEF(YsyntaxYsexpr_function_value,"syntax","sexpr-function-value");
+EXT(YruntimeYassoc,"runtime","assoc");
+EXT(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
+EXT(YruntimeYpush_lastX,"runtime","push-last!");
+EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
+EXT(Yfun_arity,"boot","fun-arity");
 EXT(YruntimeYlocative_value,"runtime","locative-value");
-EXT(YruntimeYwrite_string,"runtime","write-string");
-EXT(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
-DEF(YsyntaxYsexpr_backquoteQ,"syntax","sexpr-backquote?");
-EXT(YruntimeYto_str,"runtime","to-str");
-DEF(YsyntaxYTbq_listT,"syntax","*bq-list*");
+EXT(YruntimeYstr_to_num,"runtime","str-to-num");
+DEF(YsyntaxYfind_option,"syntax","find-option");
+EXT(YmacrosYvar_name,"macros","var-name");
+DEF(YsyntaxYsexpr_unquote_splicingQ,"syntax","sexpr-unquote-splicing?");
+DEF(YsyntaxYsexpr_loc_bound_signatures,"syntax","sexpr-loc-bound-signatures");
+EXT(Ynul,"boot","nul");
+EXT(YruntimeYLconditionG,"runtime","<condition>");
+EXT(YruntimeYLrestartG,"runtime","<restart>");
+EXT(YruntimeYLtabG,"runtime","<tab>");
+DEF(YsyntaxYsexpr_method_body,"syntax","sexpr-method-body");
+EXT(YruntimeYelt,"runtime","elt");
+EXT(YLsymG,"boot","<sym>");
+EXT(YruntimeYhandler_info_arguments,"runtime","handler-info-arguments");
+EXT(YruntimeYnxt_state,"runtime","nxt-state");
+DEF(YsyntaxYsexpr_syntax_if_value,"syntax","sexpr-syntax-if-value");
+EXT(Yslot_value_setter,"boot","slot-value-setter");
+EXT(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
+EXT(YruntimeYas_lowercase,"runtime","as-lowercase");
+EXT(YruntimeYfile_mtime,"runtime","file-mtime");
+EXT(Yhead,"boot","head");
+DEF(YsyntaxYsexpr_variable_type,"syntax","sexpr-variable-type");
+EXT(Yunknown_function_error,"boot","unknown-function-error");
+DEF(YsyntaxYsexpr_unwind_protect_protected_form,"syntax","sexpr-unwind-protect-protected-form");
+EXT(Yfun_specs,"boot","fun-specs");
+DEF(YsyntaxYsexpr_syntax_ifQ,"syntax","sexpr-syntax-if?");
+DEF(YsyntaxYLnameG,"syntax","<name>");
+EXT(YruntimeY_,"runtime","-");
+EXT(YmacrosYmatch_atom,"macros","match-atom");
+DEF(YsyntaxYsexpr_applicationQ,"syntax","sexpr-application?");
+EXT(YruntimeYassocq,"runtime","assocq");
+DEF(YsyntaxYnreconc,"syntax","nreconc");
 
 /* FORWARD QUOTATIONS: */
 
+DEFLIT(lit_88);
+DEFLIT(lit_87);
+DEFLIT(lit_86);
+DEFLIT(lit_85);
+DEFLIT(lit_84);
+DEFLIT(lit_83);
+DEFLIT(lit_82);
+DEFLIT(lit_81);
+DEFLIT(lit_80);
+DEFLIT(lit_79);
+DEFLIT(lit_78);
+DEFLIT(lit_77);
+DEFLIT(lit_76);
+DEFLIT(lit_75);
+DEFLIT(lit_74);
+DEFLIT(lit_73);
+DEFLIT(lit_72);
+DEFLIT(lit_71);
+DEFLIT(lit_70);
+DEFLIT(lit_69);
+DEFLIT(lit_68);
+DEFLIT(lit_67);
+DEFLIT(lit_66);
+DEFLIT(lit_65);
+DEFLIT(lit_64);
 DEFLIT(lit_63);
 DEFLIT(lit_62);
 DEFLIT(lit_61);
@@ -468,83 +513,95 @@ LOCFOR(fun_sexpr_unwind_protectQ_46);
 LOCFOR(fun_sexpr_unwind_protect_protected_form_47);
 LOCFOR(fun_sexpr_unwind_protect_cleanup_forms_48);
 LOCFOR(fun_sexpr_monitorQ_49);
-LOCFOR(fun_sexpr_monitor_handler_50);
-LOCFOR(fun_sexpr_monitor_body_51);
-LOCFOR(fun_sexpr_beginQ_52);
-LOCFOR(fun_sexpr_begin_actions_53);
-LOCFOR(fun_sexpr_last_expQ_54);
-LOCFOR(fun_sexpr_first_exp_55);
-LOCFOR(fun_sexpr_rest_exps_56);
-LOCFOR(fun_sexpr_sequence_Gbegin_57);
-LOCFOR(fun_sexpr_make_begin_58);
-LOCFOR(fun_sexpr_applicationQ_59);
-LOCFOR(fun_sexpr_operator_60);
-LOCFOR(fun_sexpr_operands_61);
-LOCFOR(fun_sexpr_no_operandsQ_62);
-LOCFOR(fun_sexpr_first_operand_63);
-LOCFOR(fun_sexpr_rest_operands_64);
-LOCFOR(fun_sexpr_make_application_65);
-LOCFOR(fun_sexpr_new_unique_name_counterX_66);
-LOCFOR(fun_sexpr_unique_name_67);
-LOCFOR(fun_sexpr_letQ_68);
-LOCFOR(fun_sexpr_let_bound_variables_69);
-LOCFOR(fun_sexpr_let_values_70);
-LOCFOR(fun_sexpr_let_body_71);
-LOCFOR(fun_inner_72);
-LOCFOR(fun_loop_73);
-LOCFOR(fun_sexpr_let_namesAvalues_74);
-LOCFOR(fun_col_75);
-LOCFOR(fun_sexpr_let_Gcombination_76);
-LOCFOR(fun_sexpr_locQ_77);
-LOCFOR(fun_sexpr_loc_bound_names_78);
-LOCFOR(fun_sexpr_loc_bound_signatures_79);
-LOCFOR(fun_sexpr_loc_bound_bodies_80);
-LOCFOR(fun_sexpr_loc_raw_body_81);
-LOCFOR(fun_sexpr_loc_body_82);
-LOCFOR(fun_sexpr_iterateQ_83);
-LOCFOR(fun_sexpr_iterate_name_84);
-LOCFOR(fun_sexpr_iterate_signature_85);
-LOCFOR(fun_sexpr_iterate_inits_86);
-LOCFOR(fun_sexpr_iterate_body_87);
-LOCFOR(fun_sexpr_iterate_Gloc_88);
-LOCFOR(fun_sexpr_isaQ_89);
-LOCFOR(fun_sexpr_isa_parents_90);
-LOCFOR(fun_sexpr_isa_slot_inits_91);
-LOCFOR(fun_sexpr_isa_init_slots_92);
-LOCFOR(fun_sexpr_isa_init_values_93);
-LOCFOR(fun_sexpr_slotQ_94);
-LOCFOR(fun_sexpr_slot_object_95);
-LOCFOR(fun_sexpr_slot_variable_96);
-LOCFOR(fun_sexpr_slot_init_97);
-LOCFOR(fun_sexpr_make_getter_98);
-LOCFOR(fun_sexpr_make_setter_99);
-LOCFOR(fun_sexpr_make_setter_name_100);
-LOCFOR(fun_sexpr_macroQ_101);
-LOCFOR(fun_sexpr_macro_expandQ_102);
-LOCFOR(fun_sexpr_make_syntax_if_103);
+LOCFOR(fun_x_1212_50);
+LOCFOR(fun_51);
+LOCFOR(fun_sexpr_monitor_expand_52);
+FUNFOR(YsyntaxYfind_option);
+LOCFOR(fun_x_1214_54);
+LOCFOR(fun_55);
+LOCFOR(fun_sexpr_monitor_type_56);
+LOCFOR(fun_x_1218_57);
+LOCFOR(fun_58);
+LOCFOR(fun_x_1216_59);
+LOCFOR(fun_60);
+LOCFOR(fun_sexpr_monitor_info_61);
+LOCFOR(fun_sexpr_monitor_test_62);
+LOCFOR(fun_sexpr_monitor_body_63);
+LOCFOR(fun_sexpr_beginQ_64);
+LOCFOR(fun_sexpr_begin_actions_65);
+LOCFOR(fun_sexpr_last_expQ_66);
+LOCFOR(fun_sexpr_first_exp_67);
+LOCFOR(fun_sexpr_rest_exps_68);
+LOCFOR(fun_sexpr_sequence_Gbegin_69);
+LOCFOR(fun_sexpr_make_begin_70);
+LOCFOR(fun_sexpr_applicationQ_71);
+LOCFOR(fun_sexpr_operator_72);
+LOCFOR(fun_sexpr_operands_73);
+LOCFOR(fun_sexpr_no_operandsQ_74);
+LOCFOR(fun_sexpr_first_operand_75);
+LOCFOR(fun_sexpr_rest_operands_76);
+LOCFOR(fun_sexpr_make_application_77);
+LOCFOR(fun_sexpr_new_unique_name_counterX_78);
+LOCFOR(fun_sexpr_unique_name_79);
+LOCFOR(fun_sexpr_letQ_80);
+LOCFOR(fun_sexpr_let_bound_variables_81);
+LOCFOR(fun_sexpr_let_values_82);
+LOCFOR(fun_sexpr_let_body_83);
+LOCFOR(fun_inner_84);
+LOCFOR(fun_loop_85);
+LOCFOR(fun_sexpr_let_namesAvalues_86);
+LOCFOR(fun_col_87);
+LOCFOR(fun_sexpr_let_Gcombination_88);
+LOCFOR(fun_sexpr_locQ_89);
+LOCFOR(fun_sexpr_loc_bound_names_90);
+LOCFOR(fun_sexpr_loc_bound_signatures_91);
+LOCFOR(fun_sexpr_loc_bound_bodies_92);
+LOCFOR(fun_sexpr_loc_raw_body_93);
+LOCFOR(fun_sexpr_loc_body_94);
+LOCFOR(fun_sexpr_iterateQ_95);
+LOCFOR(fun_sexpr_iterate_name_96);
+LOCFOR(fun_sexpr_iterate_signature_97);
+LOCFOR(fun_sexpr_iterate_inits_98);
+LOCFOR(fun_sexpr_iterate_body_99);
+LOCFOR(fun_sexpr_iterate_Gloc_100);
+LOCFOR(fun_sexpr_isaQ_101);
+LOCFOR(fun_sexpr_isa_parents_102);
+LOCFOR(fun_sexpr_isa_slot_inits_103);
+LOCFOR(fun_sexpr_isa_init_slots_104);
+LOCFOR(fun_sexpr_isa_init_values_105);
+LOCFOR(fun_sexpr_slotQ_106);
+LOCFOR(fun_sexpr_slot_object_107);
+LOCFOR(fun_sexpr_slot_variable_108);
+LOCFOR(fun_sexpr_slot_init_109);
+LOCFOR(fun_sexpr_make_getter_110);
+LOCFOR(fun_sexpr_make_setter_111);
+LOCFOR(fun_sexpr_make_setter_name_112);
+LOCFOR(fun_sexpr_macroQ_113);
+LOCFOR(fun_sexpr_macro_expandQ_114);
+LOCFOR(fun_sexpr_make_syntax_if_115);
 FUNFOR(YsyntaxYsexpr_expand_backquote);
-LOCFOR(fun_sexpr_build_backquote_expander_105);
-LOCFOR(fun_sexpr_unquoteQ_106);
-LOCFOR(fun_sexpr_unquote_splicingQ_107);
-LOCFOR(fun_sexpr_backquoteQ_108);
-LOCFOR(fun_sexpr_atomQ_109);
-LOCFOR(fun_nreconc_110);
-LOCFOR(fun_loop_111);
-LOCFOR(fun_112);
-LOCFOR(fun_bq_process_113);
-LOCFOR(fun_bracket_114);
-LOCFOR(fun_map_tree_115);
-LOCFOR(fun_bq_remove_tokens_116);
-LOCFOR(fun_sexpr_syntax_ifQ_117);
-LOCFOR(fun_sexpr_syntax_if_value_118);
-LOCFOR(fun_sexpr_syntax_if_pattern_119);
-LOCFOR(fun_sexpr_syntax_if_then_120);
-LOCFOR(fun_sexpr_syntax_if_else_121);
-LOCFOR(fun_sexpr_pattern_variableQ_122);
-LOCFOR(fun_sexpr_pattern_variable_name_123);
-LOCFOR(fun_col_124);
-LOCFOR(fun_sexpr_bind_pattern_variables_125);
-LOCFOR(fun_sexpr_make_macro_function_126);
+LOCFOR(fun_sexpr_build_backquote_expander_117);
+LOCFOR(fun_sexpr_unquoteQ_118);
+LOCFOR(fun_sexpr_unquote_splicingQ_119);
+LOCFOR(fun_sexpr_backquoteQ_120);
+LOCFOR(fun_sexpr_atomQ_121);
+LOCFOR(fun_nreconc_122);
+LOCFOR(fun_loop_123);
+LOCFOR(fun_124);
+LOCFOR(fun_bq_process_125);
+LOCFOR(fun_bracket_126);
+LOCFOR(fun_map_tree_127);
+LOCFOR(fun_bq_remove_tokens_128);
+LOCFOR(fun_sexpr_syntax_ifQ_129);
+LOCFOR(fun_sexpr_syntax_if_value_130);
+LOCFOR(fun_sexpr_syntax_if_pattern_131);
+LOCFOR(fun_sexpr_syntax_if_then_132);
+LOCFOR(fun_sexpr_syntax_if_else_133);
+LOCFOR(fun_sexpr_pattern_variableQ_134);
+LOCFOR(fun_sexpr_pattern_variable_name_135);
+LOCFOR(fun_col_136);
+LOCFOR(fun_sexpr_bind_pattern_variables_137);
+LOCFOR(fun_sexpr_make_macro_function_138);
 extern P YsyntaxY___main_0___ ();
 extern P YsyntaxY___main_1___ ();
 extern P YsyntaxY___main_2___ ();
@@ -553,38 +610,38 @@ extern P YsyntaxY___main_2___ ();
 
 FUNCODEDEF(fun_sexpr_self_evaluatingQ_0) {
   ARG(exp_, 0);
-  P tmpF1120;
-  P tmpF1119;
-  P tmpF1118;
-  P tmpF1117;
-  P tmpF1116;
+  P tmpF1134;
+  P tmpF1133;
+  P tmpF1132;
+  P tmpF1131;
+  P tmpF1130;
   P T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T15 = CALL2(CHKREF(YisaQ),exp_,CHKREF(YLnumG));
-  tmpF1116 = T15;
-  if (tmpF1116 != YPfalse) {
-    T1 = tmpF1116;
+  tmpF1130 = T15;
+  if (tmpF1130 != YPfalse) {
+    T1 = tmpF1130;
   } else {
     T14 = CALL2(CHKREF(YisaQ),exp_,CHKREF(YLchrG));
-    tmpF1117 = T14;
-    if (tmpF1117 != YPfalse) {
-      T3 = tmpF1117;
+    tmpF1131 = T14;
+    if (tmpF1131 != YPfalse) {
+      T3 = tmpF1131;
     } else {
       T13 = CALL2(CHKREF(YmacrosYEE),exp_,YPtrue);
-      tmpF1118 = T13;
-      if (tmpF1118 != YPfalse) {
-        T5 = tmpF1118;
+      tmpF1132 = T13;
+      if (tmpF1132 != YPfalse) {
+        T5 = tmpF1132;
       } else {
         T12 = CALL2(CHKREF(YmacrosYEE),exp_,YPfalse);
-        tmpF1119 = T12;
-        if (tmpF1119 != YPfalse) {
-          T7 = tmpF1119;
+        tmpF1133 = T12;
+        if (tmpF1133 != YPfalse) {
+          T7 = tmpF1133;
         } else {
           T11 = CALL2(CHKREF(YisaQ),exp_,CHKREF(YLstrG));
-          tmpF1120 = T11;
-          if (tmpF1120 != YPfalse) {
-            T9 = tmpF1120;
+          tmpF1134 = T11;
+          if (tmpF1134 != YPfalse) {
+            T9 = tmpF1134;
           } else {
             T10 = CALL2(CHKREF(YisaQ),exp_,CHKREF(YLvecG));
             T9 = T10;
@@ -617,13 +674,13 @@ loop:
 FUNCODEDEF(fun_sexpr_tagged_listQ_2) {
   ARG(tag_, 0);
   ARG(exp_, 1);
-  P tmpF1121;
+  P tmpF1135;
   P T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T4 = CALL2(CHKREF(YisaQ),exp_,CHKREF(YLlstG));
-  tmpF1121 = T4;
-  if (tmpF1121 != YPfalse) {
+  tmpF1135 = T4;
+  if (tmpF1135 != YPfalse) {
     T3 = CALL1(CHKREF(Yhead),exp_);
     T2 = CALL2(CHKREF(YmacrosYEE),T3,tag_);
     T1 = T2;
@@ -828,17 +885,17 @@ loop:
 
 FUNCODEDEF(fun_sexpr_signature_parameters_24) {
   ARG(signature_, 0);
-  P values_spec_indexF1122;
+  P values_spec_indexF1136;
   P T4,T3,T2,T1,T0;
   P a1;
 loop:
   T4 = CALL2(CHKREF(YruntimeYpos),signature_,CHKREF(lit_10));
-  values_spec_indexF1122 = T4;
-  T3 = CALL2(CHKREF(YmacrosYEE),values_spec_indexF1122,CHKREF(Ynul));
+  values_spec_indexF1136 = T4;
+  T3 = CALL2(CHKREF(YmacrosYEE),values_spec_indexF1136,CHKREF(Ynul));
   if (T3 != YPfalse) {
     T1 = signature_;
   } else {
-    T2 = CALL3(CHKREF(YruntimeYsub),signature_,YPint((P)0),values_spec_indexF1122);
+    T2 = CALL3(CHKREF(YruntimeYsub),signature_,YPint((P)0),values_spec_indexF1136);
     T1 = T2;
   }
   T0 = T1;
@@ -847,33 +904,33 @@ loop:
 
 FUNCODEDEF(fun_sexpr_signature_value_25) {
   ARG(signature_, 0);
-  P valueF1124;
-  P values_spec_indexF1123;
+  P valueF1138;
+  P values_spec_indexF1137;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T12 = CALL2(CHKREF(YruntimeYpos),signature_,CHKREF(lit_13));
-  values_spec_indexF1123 = T12;
-  T11 = CALL2(CHKREF(YmacrosYEE),values_spec_indexF1123,CHKREF(Ynul));
+  values_spec_indexF1137 = T12;
+  T11 = CALL2(CHKREF(YmacrosYEE),values_spec_indexF1137,CHKREF(Ynul));
   if (T11 != YPfalse) {
     T1 = YPfalse;
   } else {
-    T10 = CALL2(CHKREF(YruntimeYA),values_spec_indexF1123,YPint((P)1));
+    T10 = CALL2(CHKREF(YruntimeYA),values_spec_indexF1137,YPint((P)1));
     T9 = CALL2(CHKREF(YruntimeYelt),signature_,T10);
-    valueF1124 = T9;
-    T8 = CALL2(CHKREF(YisaQ),valueF1124,CHKREF(YLlstG));
+    valueF1138 = T9;
+    T8 = CALL2(CHKREF(YisaQ),valueF1138,CHKREF(YLlstG));
     if (T8 != YPfalse) {
-      T7 = CALL1(CHKREF(Yhead),valueF1124);
+      T7 = CALL1(CHKREF(Yhead),valueF1138);
       T6 = CALL2(CHKREF(YmacrosYEE),T7,CHKREF(lit_12));
       if (T6 != YPfalse) {
         T4 = CHKREF(lit_11);
       } else {
-        T5 = CALL1(CHKREF(YruntimeY2nd),valueF1124);
+        T5 = CALL1(CHKREF(YruntimeY2nd),valueF1138);
         T4 = T5;
       }
       T3 = T4;
     } else {
-      T3 = valueF1124;
+      T3 = valueF1138;
     }
     T2 = T3;
     T1 = T2;
@@ -1132,32 +1189,383 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_monitor_handler_50) {
-  ARG(exp_, 0);
-  P handler_exprF1125;
-  P T4,T3,T2,T1,T0;
+FUNCODEDEF(fun_x_1212_50) {
+  ARG(args_, 0);
+  ARG(msg_, 1);
+  P T1,T0;
+  P a1,a2;
+loop:
+  T1 = CALL2(CHKREF(Yerror),CHKREF(lit_22),FREEREF(0));
+  T0 = CALL1(FREEREF(1),T1);
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_51) {
+  ARG(return_, 0);
+  P x_1211F1148;
+  P x_1211F1147;
+  P x_1211F1146;
+  P x_1211F1145;
+  P optionsF1144;
+  P bodyF1143;
+  P handlerF1142;
+  P optionsF1141;
+  P x_1211F1140;
+  P x_1212F1139;
+  P T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23;
+  P T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7;
+  P T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
-  T4 = CALL1(CHKREF(YruntimeY2nd),exp_);
-  handler_exprF1125 = T4;
-  T3 = CALL1(CHKREF(Yhead),handler_exprF1125);
-  T2 = CALL1(CHKREF(Ytail),handler_exprF1125);
-  T1 = CALL2(CHKREF(YsyntaxYsexpr_make_anonymous_method),T3,T2);
+  T38 = FUNSHELL(0,fun_x_1212_50,2);
+  x_1212F1139 = T38;
+  FUNINIT(x_1212F1139, 2,FREEREF(0),return_);
+  x_1211F1140 = FREEREF(0);
+  optionsF1141 = YPfalse;
+  optionsF1141 = BOXFAB(optionsF1141);
+  handlerF1142 = YPfalse;
+  handlerF1142 = BOXFAB(handlerF1142);
+  bodyF1143 = YPfalse;
+  bodyF1143 = BOXFAB(bodyF1143);
+  T19 = CALL2(CHKREF(YisaQ),x_1211F1140,CHKREF(YLlstG));
+  if (T19 != YPfalse) {
+    T18 = CALL3(CHKREF(YmacrosYmatch_atom),x_1211F1140,CHKREF(lit_21),x_1212F1139);
+    x_1211F1145 = T18;
+    T16 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1211F1145,x_1212F1139);
+    BOXVAL(optionsF1141) = T16;
+    T17 = CALL1(CHKREF(Ytail),x_1211F1145);
+    x_1211F1146 = T17;
+    T14 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1211F1146,x_1212F1139);
+    BOXVAL(handlerF1142) = T14;
+    T15 = CALL1(CHKREF(Ytail),x_1211F1146);
+    x_1211F1147 = T15;
+    BOXVAL(bodyF1143) = x_1211F1147;
+    x_1211F1148 = Ynil;
+    T13 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1211F1148,x_1212F1139);
+    T12 = T13;
+    T11 = T12;
+    T10 = T11;
+    T9 = T10;
+  } else {
+    T8 = CALL2(x_1212F1139,CHKREF(lit_20),x_1211F1140);
+  }
+  T37 = BOXVAL(optionsF1141);
+  T36 = CALL2(CHKREF(YisaQ),T37,CHKREF(YLsymG));
+  if (T36 != YPfalse) {
+    T35 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_19));
+    T34 = BOXVAL(optionsF1141);
+    T33 = CALL1(CHKREF(YmacrosYlst),T34);
+    T32 = CALL3(CHKREF(YmacrosYcat),T35,T33,Ynil);
+    T31 = CALL1(CHKREF(YmacrosYlst),T32);
+    T30 = CALL2(CHKREF(YmacrosYcat),T31,Ynil);
+    T28 = T30;
+  } else {
+    T29 = BOXVAL(optionsF1141);
+    T28 = T29;
+  }
+  optionsF1144 = T28;
+  T27 = CALL1(CHKREF(YsyntaxYsexpr_monitor_type),optionsF1144);
+  T26 = CALL1(CHKREF(YsyntaxYsexpr_monitor_info),optionsF1144);
+  T25 = CALL1(CHKREF(YsyntaxYsexpr_monitor_test),optionsF1144);
+  T24 = BOXVAL(handlerF1142);
+  T23 = BOXVAL(bodyF1143);
+  T22 = CALL1(CHKREF(YsyntaxYsexpr_monitor_body),T23);
+  T21 = CALLN(CHKREF(YmacrosYtup),5,T27,T26,T25,T24,T22);
+  T20 = T21;
+  T6 = T20;
+  T4 = T6;
+  T2 = T4;
+  T1 = T2;
   T0 = T1;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_monitor_body_51) {
+FUNCODEDEF(fun_sexpr_monitor_expand_52) {
   ARG(exp_, 0);
   P T1,T0;
   P a1;
 loop:
-  T1 = CALL1(CHKREF(Ytail),exp_);
-  T0 = CALL1(CHKREF(Ytail),T1);
+  T1 = FUNFAB(fun_51,1,exp_);
+  T0 = with_exit(T1);
+  QRET(T0);
+}
+
+FUNCODEDEF(YsyntaxYfind_option) {
+  ARG(default_, 0);
+  ARG(option_, 1);
+  ARG(options_, 2);
+  P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P a1,a2,a3;
+loop:
+  T10 = CALL1(CHKREF(YmacrosYemptyQ),options_);
+  if (T10 != YPfalse) {
+    T0 = default_;
+  } else {
+    T9 = CALL1(CHKREF(YruntimeY1st),options_);
+    T8 = CALL1(CHKREF(Yhead),T9);
+    T7 = CALL2(CHKREF(YmacrosYEE),option_,T8);
+    if (T7 != YPfalse) {
+      T6 = CALL1(CHKREF(YruntimeY1st),options_);
+      T5 = CALL1(CHKREF(Ytail),T6);
+      T1 = T5;
+    } else {
+      if (YPtrue != YPfalse) {
+        T4 = CALL1(CHKREF(Ytail),options_);
+        T3 = CALL3(CHKREF(YsyntaxYfind_option),T4,option_,default_);
+        T2 = T3;
+      } else {
+        T2 = YPfalse;
+      }
+      T1 = T2;
+    }
+    T0 = T1;
+  }
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_x_1214_54) {
+  ARG(args_, 0);
+  ARG(msg_, 1);
+  P T1,T0;
+  P a1,a2;
+loop:
+  T1 = CALL2(CHKREF(Yerror),CHKREF(lit_24),FREEREF(0));
+  T0 = CALL1(FREEREF(1),T1);
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_55) {
+  ARG(return_, 0);
+  P x_1213F1152;
+  P typeF1151;
+  P x_1213F1150;
+  P x_1214F1149;
+  P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P a1;
+loop:
+  T11 = FUNSHELL(0,fun_x_1214_54,2);
+  x_1214F1149 = T11;
+  FUNINIT(x_1214F1149, 2,FREEREF(0),return_);
+  x_1213F1150 = FREEREF(0);
+  typeF1151 = YPfalse;
+  typeF1151 = BOXFAB(typeF1151);
+  T9 = CALL2(CHKREF(YisaQ),x_1213F1150,CHKREF(YLlstG));
+  if (T9 != YPfalse) {
+    T7 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1213F1150,x_1214F1149);
+    BOXVAL(typeF1151) = T7;
+    T8 = CALL1(CHKREF(Ytail),x_1213F1150);
+    x_1213F1152 = T8;
+    T6 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1213F1152,x_1214F1149);
+    T5 = T6;
+  } else {
+    T4 = CALL2(x_1214F1149,CHKREF(lit_23),x_1213F1150);
+  }
+  T10 = BOXVAL(typeF1151);
+  T2 = T10;
+  T1 = T2;
+  T0 = T1;
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_sexpr_monitor_type_56) {
+  ARG(options_, 0);
+  P type_listF1153;
+  P T3,T2,T1,T0;
+  P a1;
+loop:
+  T3 = CALL3(CHKREF(YsyntaxYfind_option),options_,CHKREF(lit_26),CHKREF(lit_25));
+  type_listF1153 = T3;
+  T2 = FUNFAB(fun_55,1,type_listF1153);
+  T1 = with_exit(T2);
+  T0 = T1;
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_x_1218_57) {
+  ARG(args_, 0);
+  ARG(msg_, 1);
+  P T1,T0;
+  P a1,a2;
+loop:
+  T1 = CALL2(CHKREF(Yerror),CHKREF(lit_36),FREEREF(0));
+  T0 = CALL1(FREEREF(1),T1);
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_58) {
+  ARG(return_, 0);
+  P x_1217F1159;
+  P x_1217F1158;
+  P argumentsF1157;
+  P messageF1156;
+  P x_1217F1155;
+  P x_1218F1154;
+  P T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15;
+  P T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P a1;
+loop:
+  T30 = FUNSHELL(0,fun_x_1218_57,2);
+  x_1218F1154 = T30;
+  FUNINIT(x_1218F1154, 2,FREEREF(0),return_);
+  x_1217F1155 = FREEREF(0);
+  messageF1156 = YPfalse;
+  messageF1156 = BOXFAB(messageF1156);
+  argumentsF1157 = YPfalse;
+  argumentsF1157 = BOXFAB(argumentsF1157);
+  T12 = CALL2(CHKREF(YisaQ),x_1217F1155,CHKREF(YLlstG));
+  if (T12 != YPfalse) {
+    T10 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1217F1155,x_1218F1154);
+    BOXVAL(messageF1156) = T10;
+    T11 = CALL1(CHKREF(Ytail),x_1217F1155);
+    x_1217F1158 = T11;
+    BOXVAL(argumentsF1157) = x_1217F1158;
+    x_1217F1159 = Ynil;
+    T9 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1217F1159,x_1218F1154);
+    T8 = T9;
+    T7 = T8;
+  } else {
+    T6 = CALL2(x_1218F1154,CHKREF(lit_35),x_1217F1155);
+  }
+  T29 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_34));
+  T28 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_33));
+  T27 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_32));
+  T26 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_31));
+  T25 = BOXVAL(messageF1156);
+  T24 = CALL1(CHKREF(YmacrosYlst),T25);
+  T23 = CALLN(CHKREF(YmacrosYcat),4,T27,T26,T24,Ynil);
+  T22 = CALL1(CHKREF(YmacrosYlst),T23);
+  T21 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_30));
+  T20 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_29));
+  T19 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_28));
+  T18 = BOXVAL(argumentsF1157);
+  T17 = CALL3(CHKREF(YmacrosYcat),T19,T18,Ynil);
+  T16 = CALL1(CHKREF(YmacrosYlst),T17);
+  T15 = CALLN(CHKREF(YmacrosYcat),4,T21,T20,T16,Ynil);
+  T14 = CALL1(CHKREF(YmacrosYlst),T15);
+  T13 = CALLN(CHKREF(YmacrosYcat),5,T29,T28,T22,T14,Ynil);
+  T4 = T13;
+  T2 = T4;
+  T1 = T2;
+  T0 = T1;
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_x_1216_59) {
+  ARG(args_, 0);
+  ARG(msg_, 1);
+  P T1,T0;
+  P a1,a2;
+loop:
+  T1 = CALL2(CHKREF(Yerror),CHKREF(lit_38),FREEREF(0));
+  T0 = CALL1(FREEREF(1),T1);
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_60) {
+  ARG(return_, 0);
+  P x_1215F1163;
+  P info_exprF1162;
+  P x_1215F1161;
+  P x_1216F1160;
+  P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P a1;
+loop:
+  T11 = FUNSHELL(0,fun_x_1216_59,2);
+  x_1216F1160 = T11;
+  FUNINIT(x_1216F1160, 2,FREEREF(0),return_);
+  x_1215F1161 = FREEREF(0);
+  info_exprF1162 = YPfalse;
+  info_exprF1162 = BOXFAB(info_exprF1162);
+  T9 = CALL2(CHKREF(YisaQ),x_1215F1161,CHKREF(YLlstG));
+  if (T9 != YPfalse) {
+    T7 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1215F1161,x_1216F1160);
+    BOXVAL(info_exprF1162) = T7;
+    T8 = CALL1(CHKREF(Ytail),x_1215F1161);
+    x_1215F1163 = T8;
+    T6 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1215F1163,x_1216F1160);
+    T5 = T6;
+  } else {
+    T4 = CALL2(x_1216F1160,CHKREF(lit_37),x_1215F1161);
+  }
+  T10 = BOXVAL(info_exprF1162);
+  T2 = T10;
+  T1 = T2;
+  T0 = T1;
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_sexpr_monitor_info_61) {
+  ARG(options_, 0);
+  P tmpF1166;
+  P descriptionF1165;
+  P infoF1164;
+  P T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P a1;
+loop:
+  T14 = CALL3(CHKREF(YsyntaxYfind_option),options_,CHKREF(lit_41),YPfalse);
+  infoF1164 = T14;
+  T13 = CALL3(CHKREF(YsyntaxYfind_option),options_,CHKREF(lit_40),YPfalse);
+  descriptionF1165 = T13;
+  tmpF1166 = infoF1164;
+  if (tmpF1166 != YPfalse) {
+    T12 = descriptionF1165;
+  } else {
+    T12 = YPfalse;
+  }
+  T11 = T12;
+  if (T11 != YPfalse) {
+    T10 = CALL2(CHKREF(Yerror),CHKREF(lit_39),options_);
+    T2 = T10;
+  } else {
+    if (infoF1164 != YPfalse) {
+      T9 = FUNFAB(fun_60,1,infoF1164);
+      T8 = with_exit(T9);
+      T3 = T8;
+    } else {
+      if (descriptionF1165 != YPfalse) {
+        T7 = FUNFAB(fun_58,1,descriptionF1165);
+        T6 = with_exit(T7);
+        T4 = T6;
+      } else {
+        if (YPtrue != YPfalse) {
+          T5 = CHKREF(lit_27);
+        } else {
+          T5 = YPfalse;
+        }
+        T4 = T5;
+      }
+      T3 = T4;
+    }
+    T2 = T3;
+  }
+  T1 = T2;
+  T0 = T1;
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_sexpr_monitor_test_62) {
+  ARG(options_, 0);
+  P test_bodyF1167;
+  P T2,T1,T0;
+  P a1;
+loop:
+  T2 = CALL3(CHKREF(YsyntaxYfind_option),options_,CHKREF(lit_43),CHKREF(lit_42));
+  test_bodyF1167 = T2;
+  T1 = CALL2(CHKREF(YsyntaxYsexpr_make_anonymous_method),Ynil,test_bodyF1167);
+  T0 = T1;
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_beginQ_52) {
+FUNCODEDEF(fun_sexpr_monitor_body_63) {
+  ARG(body_, 0);
+  P T0;
+  P a1;
+loop:
+  T0 = CALL2(CHKREF(YsyntaxYsexpr_make_anonymous_method),Ynil,body_);
+  RET(T0);
+}
+
+FUNCODEDEF(fun_sexpr_beginQ_64) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1166,7 +1574,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_begin_actions_53) {
+FUNCODEDEF(fun_sexpr_begin_actions_65) {
   ARG(begin_exp_, 0);
   P T0;
   P a1;
@@ -1175,7 +1583,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_last_expQ_54) {
+FUNCODEDEF(fun_sexpr_last_expQ_66) {
   ARG(seq_, 0);
   P T1,T0;
   P a1;
@@ -1185,7 +1593,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_first_exp_55) {
+FUNCODEDEF(fun_sexpr_first_exp_67) {
   ARG(seq_, 0);
   P T0;
   P a1;
@@ -1194,7 +1602,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_rest_exps_56) {
+FUNCODEDEF(fun_sexpr_rest_exps_68) {
   ARG(seq_, 0);
   P T0;
   P a1;
@@ -1203,7 +1611,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_sequence_Gbegin_57) {
+FUNCODEDEF(fun_sexpr_sequence_Gbegin_69) {
   ARG(seq_, 0);
   P T5,T4,T3,T2,T1,T0;
   P a1;
@@ -1225,7 +1633,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_make_begin_58) {
+FUNCODEDEF(fun_sexpr_make_begin_70) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1234,15 +1642,15 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_applicationQ_59) {
+FUNCODEDEF(fun_sexpr_applicationQ_71) {
   ARG(exp_, 0);
-  P tmpF1126;
+  P tmpF1168;
   P T4,T3,T2,T1,T0;
   P a1;
 loop:
   T4 = CALL2(CHKREF(YisaQ),exp_,CHKREF(YLlstG));
-  tmpF1126 = T4;
-  if (tmpF1126 != YPfalse) {
+  tmpF1168 = T4;
+  if (tmpF1168 != YPfalse) {
     T3 = CALL1(CHKREF(YmacrosYemptyQ),exp_);
     T2 = CALL1(CHKREF(Ynot),T3);
     T1 = T2;
@@ -1253,7 +1661,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_operator_60) {
+FUNCODEDEF(fun_sexpr_operator_72) {
   ARG(app_, 0);
   P T0;
   P a1;
@@ -1262,7 +1670,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_operands_61) {
+FUNCODEDEF(fun_sexpr_operands_73) {
   ARG(app_, 0);
   P T0;
   P a1;
@@ -1271,7 +1679,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_no_operandsQ_62) {
+FUNCODEDEF(fun_sexpr_no_operandsQ_74) {
   ARG(args_, 0);
   P T0;
   P a1;
@@ -1280,7 +1688,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_first_operand_63) {
+FUNCODEDEF(fun_sexpr_first_operand_75) {
   ARG(args_, 0);
   P T0;
   P a1;
@@ -1289,7 +1697,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_rest_operands_64) {
+FUNCODEDEF(fun_sexpr_rest_operands_76) {
   ARG(args_, 0);
   P T0;
   P a1;
@@ -1298,7 +1706,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_make_application_65) {
+FUNCODEDEF(fun_sexpr_make_application_77) {
   ARG(operands_, 0);
   ARG(op_, 1);
   P T1,T0;
@@ -1309,7 +1717,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_new_unique_name_counterX_66) {
+FUNCODEDEF(fun_sexpr_new_unique_name_counterX_78) {
   P T0;
 loop:
   T0 = CALL2(CHKREF(YruntimeYA),CHKREF(YsyntaxYTunique_name_counterT),YPint((P)1));
@@ -1317,7 +1725,7 @@ loop:
   RET(CHKREF(YsyntaxYTunique_name_counterT));
 }
 
-FUNCODEDEF(fun_sexpr_unique_name_67) {
+FUNCODEDEF(fun_sexpr_unique_name_79) {
   ARG(prefix_, 0);
   P T4,T3,T2,T1,T0;
   P a1;
@@ -1330,7 +1738,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_letQ_68) {
+FUNCODEDEF(fun_sexpr_letQ_80) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1339,7 +1747,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_let_bound_variables_69) {
+FUNCODEDEF(fun_sexpr_let_bound_variables_81) {
   ARG(let_exp_, 0);
   P T1,T0;
   P a1;
@@ -1349,7 +1757,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_let_values_70) {
+FUNCODEDEF(fun_sexpr_let_values_82) {
   ARG(let_exp_, 0);
   P T1,T0;
   P a1;
@@ -1359,7 +1767,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_let_body_71) {
+FUNCODEDEF(fun_sexpr_let_body_83) {
   ARG(let_exp_, 0);
   P T2,T1,T0;
   P a1;
@@ -1370,13 +1778,13 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_inner_72) {
+FUNCODEDEF(fun_inner_84) {
   ARG(tnames_, 0);
   ARG(index_, 1);
   ARG(rtvalues_, 2);
   ARG(rtnames_, 3);
-  P tmpF1128;
-  P nameF1127;
+  P tmpF1170;
+  P nameF1169;
   P T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3,a4;
@@ -1387,21 +1795,21 @@ loop:
     T0 = T26;
   } else {
     T25 = CALL1(CHKREF(Yhead),tnames_);
-    nameF1127 = T25;
-    T24 = CALL2(CHKREF(YisaQ),nameF1127,CHKREF(YLlstG));
-    tmpF1128 = T24;
-    if (tmpF1128 != YPfalse) {
-      T23 = CALL1(CHKREF(Ytail),nameF1127);
+    nameF1169 = T25;
+    T24 = CALL2(CHKREF(YisaQ),nameF1169,CHKREF(YLlstG));
+    tmpF1170 = T24;
+    if (tmpF1170 != YPfalse) {
+      T23 = CALL1(CHKREF(Ytail),nameF1169);
       T22 = CALL1(CHKREF(Yhead),T23);
-      T21 = CALL2(CHKREF(YmacrosYEE),T22,CHKREF(lit_24));
+      T21 = CALL2(CHKREF(YmacrosYEE),T22,CHKREF(lit_49));
       T20 = T21;
     } else {
       T20 = YPfalse;
     }
     T19 = T20;
     if (T19 != YPfalse) {
-      T18 = CALL1(CHKREF(Yhead),nameF1127);
-      T17 = CALL2(CHKREF(YmacrosYlst),T18,CHKREF(lit_23));
+      T18 = CALL1(CHKREF(Yhead),nameF1169);
+      T17 = CALL2(CHKREF(YmacrosYlst),T18,CHKREF(lit_48));
       T16 = CALL2(CHKREF(YmacrosYpair),T17,rtnames_);
       T15 = CALL2(CHKREF(YmacrosYpair),FREEREF(0),rtvalues_);
       T14 = CALL2(CHKREF(YruntimeYA),index_,YPint((P)1));
@@ -1417,10 +1825,10 @@ loop:
       goto loop;
       T2 = T12;
     } else {
-      T11 = CALL2(CHKREF(YmacrosYpair),nameF1127,rtnames_);
+      T11 = CALL2(CHKREF(YmacrosYpair),nameF1169,rtnames_);
       T10 = CALL2(CHKREF(YmacrosYpair),FREEREF(0),T11);
-      T9 = CALL2(CHKREF(YmacrosYlst),CHKREF(lit_22),FREEREF(0));
-      T8 = CALL2(CHKREF(YmacrosYlst),CHKREF(lit_21),FREEREF(0));
+      T9 = CALL2(CHKREF(YmacrosYlst),CHKREF(lit_47),FREEREF(0));
+      T8 = CALL2(CHKREF(YmacrosYlst),CHKREF(lit_46),FREEREF(0));
       T7 = CALL2(CHKREF(YmacrosYpair),T8,rtvalues_);
       T6 = CALL2(CHKREF(YmacrosYpair),T9,T7);
       T5 = CALL2(CHKREF(YruntimeYA),index_,YPint((P)1));
@@ -1442,21 +1850,21 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_loop_73) {
+FUNCODEDEF(fun_loop_85) {
   ARG(vals_, 0);
   ARG(names_, 1);
   ARG(rvalues_, 2);
   ARG(rnames_, 3);
-  P tmpF1138;
-  P tup34F1137;
-  P rtvaluesF1136;
-  P tup34F1135;
-  P rtnamesF1134;
-  P tup34F1133;
-  P innerF1132;
-  P tupnameF1131;
-  P valueF1130;
-  P nameF1129;
+  P tmpF1180;
+  P tup34F1179;
+  P rtvaluesF1178;
+  P tup34F1177;
+  P rtnamesF1176;
+  P tup34F1175;
+  P innerF1174;
+  P tupnameF1173;
+  P valueF1172;
+  P nameF1171;
   P T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26;
   P T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
@@ -1470,41 +1878,41 @@ loop:
     T0 = T38;
   } else {
     T37 = CALL1(CHKREF(Yhead),names_);
-    nameF1129 = T37;
+    nameF1171 = T37;
     T36 = CALL1(CHKREF(Yhead),vals_);
-    valueF1130 = T36;
-    T35 = CALL2(CHKREF(YisaQ),nameF1129,CHKREF(YLlstG));
-    tmpF1138 = T35;
-    if (tmpF1138 != YPfalse) {
-      T34 = CALL1(CHKREF(Yhead),nameF1129);
-      T33 = CALL2(CHKREF(YmacrosYEE),T34,CHKREF(lit_26));
+    valueF1172 = T36;
+    T35 = CALL2(CHKREF(YisaQ),nameF1171,CHKREF(YLlstG));
+    tmpF1180 = T35;
+    if (tmpF1180 != YPfalse) {
+      T34 = CALL1(CHKREF(Yhead),nameF1171);
+      T33 = CALL2(CHKREF(YmacrosYEE),T34,CHKREF(lit_51));
       T32 = T33;
     } else {
       T32 = YPfalse;
     }
     T31 = T32;
     if (T31 != YPfalse) {
-      T30 = CALL1(CHKREF(YsyntaxYsexpr_unique_name),CHKREF(lit_25));
-      tupnameF1131 = T30;
-      T29 = FUNSHELL(1,fun_inner_72,2);
-      innerF1132 = T29;
-      FUNINIT(innerF1132, 2,tupnameF1131,innerF1132);
-      T28 = CALL1(CHKREF(YmacrosYlst),tupnameF1131);
-      T27 = CALL1(CHKREF(YmacrosYlst),valueF1130);
-      T26 = CALL1(CHKREF(Ytail),nameF1129);
-      T25 = KCALLN(innerF1132,4,T28,T27,YPint((P)0),T26);
+      T30 = CALL1(CHKREF(YsyntaxYsexpr_unique_name),CHKREF(lit_50));
+      tupnameF1173 = T30;
+      T29 = FUNSHELL(1,fun_inner_84,2);
+      innerF1174 = T29;
+      FUNINIT(innerF1174, 2,tupnameF1173,innerF1174);
+      T28 = CALL1(CHKREF(YmacrosYlst),tupnameF1173);
+      T27 = CALL1(CHKREF(YmacrosYlst),valueF1172);
+      T26 = CALL1(CHKREF(Ytail),nameF1171);
+      T25 = KCALLN(innerF1174,4,T28,T27,YPint((P)0),T26);
       T24 = T25;
-      tup34F1133 = T24;
-      T23 = CALL1(CHKREF(Yhead),tup34F1133);
-      rtnamesF1134 = T23;
-      T22 = CALL1(CHKREF(Ytail),tup34F1133);
-      tup34F1135 = T22;
-      T21 = CALL1(CHKREF(Yhead),tup34F1135);
-      rtvaluesF1136 = T21;
-      T20 = CALL1(CHKREF(Ytail),tup34F1135);
-      tup34F1137 = T20;
-      T19 = CALL2(CHKREF(YmacrosYcat),rtnamesF1134,rnames_);
-      T18 = CALL2(CHKREF(YmacrosYcat),rtvaluesF1136,rvalues_);
+      tup34F1175 = T24;
+      T23 = CALL1(CHKREF(Yhead),tup34F1175);
+      rtnamesF1176 = T23;
+      T22 = CALL1(CHKREF(Ytail),tup34F1175);
+      tup34F1177 = T22;
+      T21 = CALL1(CHKREF(Yhead),tup34F1177);
+      rtvaluesF1178 = T21;
+      T20 = CALL1(CHKREF(Ytail),tup34F1177);
+      tup34F1179 = T20;
+      T19 = CALL2(CHKREF(YmacrosYcat),rtnamesF1176,rnames_);
+      T18 = CALL2(CHKREF(YmacrosYcat),rtvaluesF1178,rvalues_);
       T17 = CALL1(CHKREF(Ytail),names_);
       T16 = CALL1(CHKREF(Ytail),vals_);
       a1 = T19;
@@ -1524,8 +1932,8 @@ loop:
       T9 = T10;
       T3 = T9;
     } else {
-      T8 = CALL2(CHKREF(YmacrosYpair),nameF1129,rnames_);
-      T7 = CALL2(CHKREF(YmacrosYpair),valueF1130,rvalues_);
+      T8 = CALL2(CHKREF(YmacrosYpair),nameF1171,rnames_);
+      T7 = CALL2(CHKREF(YmacrosYpair),valueF1172,rvalues_);
       T6 = CALL1(CHKREF(Ytail),names_);
       T5 = CALL1(CHKREF(Ytail),vals_);
       a1 = T8;
@@ -1546,22 +1954,22 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_let_namesAvalues_74) {
+FUNCODEDEF(fun_sexpr_let_namesAvalues_86) {
   ARG(vals_, 0);
   ARG(names_, 1);
-  P loopF1139;
+  P loopF1181;
   P T2,T1,T0;
   P a1,a2;
 loop:
-  T2 = FUNSHELL(1,fun_loop_73,1);
-  loopF1139 = T2;
-  FUNINIT(loopF1139, 1,loopF1139);
-  T1 = KCALLN(loopF1139,4,Ynil,Ynil,names_,vals_);
+  T2 = FUNSHELL(1,fun_loop_85,1);
+  loopF1181 = T2;
+  FUNINIT(loopF1181, 1,loopF1181);
+  T1 = KCALLN(loopF1181,4,Ynil,Ynil,names_,vals_);
   T0 = T1;
   RET(T0);
 }
 
-FUNCODEDEF(fun_col_75) {
+FUNCODEDEF(fun_col_87) {
   ARG(values_, 0);
   ARG(names_, 1);
   P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
@@ -1585,41 +1993,41 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_let_Gcombination_76) {
+FUNCODEDEF(fun_sexpr_let_Gcombination_88) {
   ARG(let_exp_, 0);
-  P colF1148;
-  P tup35F1147;
-  P valuesF1146;
-  P tup35F1145;
-  P namesF1144;
-  P tup35F1143;
-  P bodyF1142;
-  P ovaluesF1141;
-  P onamesF1140;
+  P colF1190;
+  P tup35F1189;
+  P valuesF1188;
+  P tup35F1187;
+  P namesF1186;
+  P tup35F1185;
+  P bodyF1184;
+  P ovaluesF1183;
+  P onamesF1182;
   P T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3;
   P T2,T1,T0;
   P a1;
 loop:
   T18 = CALL1(CHKREF(YsyntaxYsexpr_let_bound_variables),let_exp_);
-  onamesF1140 = T18;
+  onamesF1182 = T18;
   T17 = CALL1(CHKREF(YsyntaxYsexpr_let_values),let_exp_);
-  ovaluesF1141 = T17;
+  ovaluesF1183 = T17;
   T16 = CALL1(CHKREF(YsyntaxYsexpr_let_body),let_exp_);
-  bodyF1142 = T16;
-  T15 = CALL2(CHKREF(YsyntaxYsexpr_let_namesAvalues),onamesF1140,ovaluesF1141);
-  tup35F1143 = T15;
-  T14 = CALL1(CHKREF(Yhead),tup35F1143);
-  namesF1144 = T14;
-  T13 = CALL1(CHKREF(Ytail),tup35F1143);
-  tup35F1145 = T13;
-  T12 = CALL1(CHKREF(Yhead),tup35F1145);
-  valuesF1146 = T12;
-  T11 = CALL1(CHKREF(Ytail),tup35F1145);
-  tup35F1147 = T11;
-  T10 = FUNSHELL(1,fun_col_75,2);
-  colF1148 = T10;
-  FUNINIT(colF1148, 2,colF1148,bodyF1142);
-  T9 = KCALL2(colF1148,namesF1144,valuesF1146);
+  bodyF1184 = T16;
+  T15 = CALL2(CHKREF(YsyntaxYsexpr_let_namesAvalues),onamesF1182,ovaluesF1183);
+  tup35F1185 = T15;
+  T14 = CALL1(CHKREF(Yhead),tup35F1185);
+  namesF1186 = T14;
+  T13 = CALL1(CHKREF(Ytail),tup35F1185);
+  tup35F1187 = T13;
+  T12 = CALL1(CHKREF(Yhead),tup35F1187);
+  valuesF1188 = T12;
+  T11 = CALL1(CHKREF(Ytail),tup35F1187);
+  tup35F1189 = T11;
+  T10 = FUNSHELL(1,fun_col_87,2);
+  colF1190 = T10;
+  FUNINIT(colF1190, 2,colF1190,bodyF1184);
+  T9 = KCALL2(colF1190,namesF1186,valuesF1188);
   T8 = T9;
   T7 = T8;
   T6 = T7;
@@ -1632,7 +2040,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_locQ_77) {
+FUNCODEDEF(fun_sexpr_locQ_89) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1641,7 +2049,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_loc_bound_names_78) {
+FUNCODEDEF(fun_sexpr_loc_bound_names_90) {
   ARG(loc_exp_, 0);
   P T1,T0;
   P a1;
@@ -1651,7 +2059,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_loc_bound_signatures_79) {
+FUNCODEDEF(fun_sexpr_loc_bound_signatures_91) {
   ARG(loc_exp_, 0);
   P T1,T0;
   P a1;
@@ -1661,7 +2069,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_loc_bound_bodies_80) {
+FUNCODEDEF(fun_sexpr_loc_bound_bodies_92) {
   ARG(loc_exp_, 0);
   P T2,T1,T0;
   P a1;
@@ -1672,7 +2080,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_loc_raw_body_81) {
+FUNCODEDEF(fun_sexpr_loc_raw_body_93) {
   ARG(loc_exp_, 0);
   P T1,T0;
   P a1;
@@ -1682,7 +2090,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_loc_body_82) {
+FUNCODEDEF(fun_sexpr_loc_body_94) {
   ARG(loc_exp_, 0);
   P T1,T0;
   P a1;
@@ -1692,7 +2100,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_iterateQ_83) {
+FUNCODEDEF(fun_sexpr_iterateQ_95) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1701,7 +2109,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_iterate_name_84) {
+FUNCODEDEF(fun_sexpr_iterate_name_96) {
   ARG(rep_exp_, 0);
   P T0;
   P a1;
@@ -1710,31 +2118,31 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_iterate_signature_85) {
+FUNCODEDEF(fun_sexpr_iterate_signature_97) {
   ARG(rep_exp_, 0);
-  P sigF1149;
+  P sigF1191;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T9 = CALL1(CHKREF(YruntimeY3rd),rep_exp_);
-  sigF1149 = T9;
-  T8 = CALL1(CHKREF(YsyntaxYsexpr_signature_parameters),sigF1149);
+  sigF1191 = T9;
+  T8 = CALL1(CHKREF(YsyntaxYsexpr_signature_parameters),sigF1191);
   T7 = CALL2(CHKREF(YmacrosYmap),CHKREF(YruntimeY1st),T8);
-  T6 = CALL1(CHKREF(YsyntaxYsexpr_signature_value),sigF1149);
+  T6 = CALL1(CHKREF(YsyntaxYsexpr_signature_value),sigF1191);
   if (T6 != YPfalse) {
     T4 = Ynil;
   } else {
     T5 = CALL1(CHKREF(YmacrosYlst),CHKREF(YsyntaxYDsexpr_values_tag));
     T4 = T5;
   }
-  T3 = CALL1(CHKREF(YsyntaxYsexpr_signature_value),sigF1149);
+  T3 = CALL1(CHKREF(YsyntaxYsexpr_signature_value),sigF1191);
   T2 = CALL1(CHKREF(YmacrosYlst),T3);
   T1 = CALL3(CHKREF(YmacrosYcat),T7,T4,T2);
   T0 = T1;
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_iterate_inits_86) {
+FUNCODEDEF(fun_sexpr_iterate_inits_98) {
   ARG(rep_exp_, 0);
   P T1,T0;
   P a1;
@@ -1744,7 +2152,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_iterate_body_87) {
+FUNCODEDEF(fun_sexpr_iterate_body_99) {
   ARG(rep_exp_, 0);
   P T2,T1,T0;
   P a1;
@@ -1755,28 +2163,28 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_iterate_Gloc_88) {
+FUNCODEDEF(fun_sexpr_iterate_Gloc_100) {
   ARG(rep_exp_, 0);
-  P initsF1153;
-  P bodyF1152;
-  P sigF1151;
-  P nameF1150;
+  P initsF1195;
+  P bodyF1194;
+  P sigF1193;
+  P nameF1192;
   P T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T13 = CALL1(CHKREF(YsyntaxYsexpr_iterate_name),rep_exp_);
-  nameF1150 = T13;
+  nameF1192 = T13;
   T12 = CALL1(CHKREF(YsyntaxYsexpr_iterate_signature),rep_exp_);
-  sigF1151 = T12;
+  sigF1193 = T12;
   T11 = CALL1(CHKREF(YsyntaxYsexpr_iterate_body),rep_exp_);
-  bodyF1152 = T11;
+  bodyF1194 = T11;
   T10 = CALL1(CHKREF(YsyntaxYsexpr_iterate_inits),rep_exp_);
-  initsF1153 = T10;
-  T9 = CALL2(CHKREF(YmacrosYlst),nameF1150,sigF1151);
-  T8 = CALL2(CHKREF(YmacrosYcat),T9,bodyF1152);
+  initsF1195 = T10;
+  T9 = CALL2(CHKREF(YmacrosYlst),nameF1192,sigF1193);
+  T8 = CALL2(CHKREF(YmacrosYcat),T9,bodyF1194);
   T7 = CALL1(CHKREF(YmacrosYlst),T8);
-  T6 = CALL1(CHKREF(YmacrosYlst),nameF1150);
-  T5 = CALL2(CHKREF(YmacrosYcat),T6,initsF1153);
+  T6 = CALL1(CHKREF(YmacrosYlst),nameF1192);
+  T5 = CALL2(CHKREF(YmacrosYcat),T6,initsF1195);
   T4 = CALL3(CHKREF(YmacrosYlst),CHKREF(YsyntaxYDsexpr_locals_tag),T7,T5);
   T3 = T4;
   T2 = T3;
@@ -1785,7 +2193,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_isaQ_89) {
+FUNCODEDEF(fun_sexpr_isaQ_101) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1794,26 +2202,26 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_isa_parents_90) {
+FUNCODEDEF(fun_sexpr_isa_parents_102) {
   ARG(exp_, 0);
-  P parentsF1154;
+  P parentsF1196;
   P T4,T3,T2,T1,T0;
   P a1;
 loop:
   T4 = CALL1(CHKREF(YruntimeY2nd),exp_);
-  parentsF1154 = T4;
-  T3 = CALL2(CHKREF(YisaQ),parentsF1154,CHKREF(YLlstG));
+  parentsF1196 = T4;
+  T3 = CALL2(CHKREF(YisaQ),parentsF1196,CHKREF(YLlstG));
   if (T3 != YPfalse) {
-    T1 = parentsF1154;
+    T1 = parentsF1196;
   } else {
-    T2 = CALL1(CHKREF(YmacrosYlst),parentsF1154);
+    T2 = CALL1(CHKREF(YmacrosYlst),parentsF1196);
     T1 = T2;
   }
   T0 = T1;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_isa_slot_inits_91) {
+FUNCODEDEF(fun_sexpr_isa_slot_inits_103) {
   ARG(exp_, 0);
   P T1,T0;
   P a1;
@@ -1823,7 +2231,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_isa_init_slots_92) {
+FUNCODEDEF(fun_sexpr_isa_init_slots_104) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1832,7 +2240,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_isa_init_values_93) {
+FUNCODEDEF(fun_sexpr_isa_init_values_105) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1841,7 +2249,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_slotQ_94) {
+FUNCODEDEF(fun_sexpr_slotQ_106) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1850,7 +2258,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_slot_object_95) {
+FUNCODEDEF(fun_sexpr_slot_object_107) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1859,7 +2267,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_slot_variable_96) {
+FUNCODEDEF(fun_sexpr_slot_variable_108) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1868,7 +2276,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_slot_init_97) {
+FUNCODEDEF(fun_sexpr_slot_init_109) {
   ARG(exp_, 0);
   P T3,T2,T1,T0;
   P a1;
@@ -1879,26 +2287,26 @@ loop:
     T1 = CALL2(CHKREF(YruntimeYelt),exp_,YPint((P)3));
     T0 = T1;
   } else {
-    T0 = CHKREF(lit_32);
+    T0 = CHKREF(lit_57);
   }
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_make_getter_98) {
+FUNCODEDEF(fun_sexpr_make_getter_110) {
   ARG(type_, 0);
   ARG(name_, 1);
   P T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
-  T4 = CALL2(CHKREF(YmacrosYlst),CHKREF(lit_35),type_);
+  T4 = CALL2(CHKREF(YmacrosYlst),CHKREF(lit_60),type_);
   T3 = CALL1(CHKREF(YmacrosYlst),T4);
-  T2 = CALL3(CHKREF(YmacrosYlst),CHKREF(lit_34),CHKREF(lit_33),name_);
+  T2 = CALL3(CHKREF(YmacrosYlst),CHKREF(lit_59),CHKREF(lit_58),name_);
   T1 = CALL1(CHKREF(YmacrosYlst),T2);
   T0 = CALL3(CHKREF(YsyntaxYsexpr_make_method),name_,T3,T1);
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_make_setter_99) {
+FUNCODEDEF(fun_sexpr_make_setter_111) {
   ARG(slot_type_, 0);
   ARG(type_, 1);
   ARG(name_, 2);
@@ -1906,27 +2314,27 @@ FUNCODEDEF(fun_sexpr_make_setter_99) {
   P a1,a2,a3;
 loop:
   T6 = CALL1(CHKREF(YsyntaxYsexpr_make_setter_name),name_);
-  T5 = CALL2(CHKREF(YmacrosYlst),CHKREF(lit_40),slot_type_);
-  T4 = CALL2(CHKREF(YmacrosYlst),CHKREF(lit_39),type_);
+  T5 = CALL2(CHKREF(YmacrosYlst),CHKREF(lit_65),slot_type_);
+  T4 = CALL2(CHKREF(YmacrosYlst),CHKREF(lit_64),type_);
   T3 = CALL2(CHKREF(YmacrosYlst),T5,T4);
-  T2 = CALLN(CHKREF(YmacrosYlst),4,CHKREF(lit_38),CHKREF(lit_37),CHKREF(lit_36),name_);
+  T2 = CALLN(CHKREF(YmacrosYlst),4,CHKREF(lit_63),CHKREF(lit_62),CHKREF(lit_61),name_);
   T1 = CALL1(CHKREF(YmacrosYlst),T2);
   T0 = CALL3(CHKREF(YsyntaxYsexpr_make_method),T6,T3,T1);
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_make_setter_name_100) {
+FUNCODEDEF(fun_sexpr_make_setter_name_112) {
   ARG(name_, 0);
   P T2,T1,T0;
   P a1;
 loop:
   T2 = CALL2(CHKREF(YruntimeYas),CHKREF(YLstrG),name_);
-  T1 = CALL2(CHKREF(YmacrosYcat),T2,CHKREF(lit_41));
+  T1 = CALL2(CHKREF(YmacrosYcat),T2,CHKREF(lit_66));
   T0 = CALL2(CHKREF(YruntimeYas),CHKREF(YLsymG),T1);
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_macroQ_101) {
+FUNCODEDEF(fun_sexpr_macroQ_113) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1935,7 +2343,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_macro_expandQ_102) {
+FUNCODEDEF(fun_sexpr_macro_expandQ_114) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -1944,7 +2352,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_make_syntax_if_103) {
+FUNCODEDEF(fun_sexpr_make_syntax_if_115) {
   ARG(else_, 0);
   ARG(then_, 1);
   ARG(exp_, 2);
@@ -1967,41 +2375,41 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_build_backquote_expander_105) {
+FUNCODEDEF(fun_sexpr_build_backquote_expander_117) {
   ARG(x_, 0);
-  P resF1156;
-  P raw_resultF1155;
+  P resF1198;
+  P raw_resultF1197;
   P T3,T2,T1,T0;
   P a1;
 loop:
   T3 = CALL1(CHKREF(YsyntaxYbq_process),x_);
-  raw_resultF1155 = T3;
-  T2 = CALL1(CHKREF(YsyntaxYbq_remove_tokens),raw_resultF1155);
-  resF1156 = T2;
-  T1 = resF1156;
+  raw_resultF1197 = T3;
+  T2 = CALL1(CHKREF(YsyntaxYbq_remove_tokens),raw_resultF1197);
+  resF1198 = T2;
+  T1 = resF1198;
   T0 = T1;
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_unquoteQ_106) {
+FUNCODEDEF(fun_sexpr_unquoteQ_118) {
   ARG(x_, 0);
   P T0;
   P a1;
 loop:
-  T0 = CALL2(CHKREF(YsyntaxYsexpr_tagged_listQ),x_,CHKREF(lit_51));
+  T0 = CALL2(CHKREF(YsyntaxYsexpr_tagged_listQ),x_,CHKREF(lit_76));
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_unquote_splicingQ_107) {
+FUNCODEDEF(fun_sexpr_unquote_splicingQ_119) {
   ARG(x_, 0);
   P T0;
   P a1;
 loop:
-  T0 = CALL2(CHKREF(YsyntaxYsexpr_tagged_listQ),x_,CHKREF(lit_52));
+  T0 = CALL2(CHKREF(YsyntaxYsexpr_tagged_listQ),x_,CHKREF(lit_77));
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_backquoteQ_108) {
+FUNCODEDEF(fun_sexpr_backquoteQ_120) {
   ARG(x_, 0);
   P T0;
   P a1;
@@ -2010,17 +2418,17 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_atomQ_109) {
+FUNCODEDEF(fun_sexpr_atomQ_121) {
   ARG(x_, 0);
-  P tmpF1157;
+  P tmpF1199;
   P T4,T3,T2,T1,T0;
   P a1;
 loop:
   T4 = CALL2(CHKREF(YisaQ),x_,CHKREF(YLlstG));
   T3 = CALL1(CHKREF(Ynot),T4);
-  tmpF1157 = T3;
-  if (tmpF1157 != YPfalse) {
-    T1 = tmpF1157;
+  tmpF1199 = T3;
+  if (tmpF1199 != YPfalse) {
+    T1 = tmpF1199;
   } else {
     T2 = CALL2(CHKREF(YmacrosYEE),x_,Ynil);
     T1 = T2;
@@ -2029,7 +2437,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_nreconc_110) {
+FUNCODEDEF(fun_nreconc_122) {
   ARG(y_, 0);
   ARG(x_, 1);
   P T1,T0;
@@ -2040,7 +2448,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_loop_111) {
+FUNCODEDEF(fun_loop_123) {
   ARG(q_, 0);
   ARG(p_, 1);
   P T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11;
@@ -2063,7 +2471,7 @@ loop:
       T3 = CALL1(CHKREF(YmacrosYemptyQ),T4);
       T2 = CALL1(CHKREF(Ynot),T3);
       if (T2 != YPfalse) {
-        T1 = CALL2(CHKREF(Yerror),CHKREF(lit_54),p_);
+        T1 = CALL2(CHKREF(Yerror),CHKREF(lit_79),p_);
       } else {
       }
       T11 = CALL1(CHKREF(Ytail),p_);
@@ -2077,7 +2485,7 @@ loop:
     T15 = CALL1(CHKREF(Ytail),p_);
     T14 = CALL2(CHKREF(YmacrosYEE),T15,CHKREF(YsyntaxYTcomma_atsignT));
     if (T14 != YPfalse) {
-      T13 = CALL2(CHKREF(Yerror),CHKREF(lit_53),p_);
+      T13 = CALL2(CHKREF(Yerror),CHKREF(lit_78),p_);
     } else {
     }
     T20 = CALL1(CHKREF(Ytail),p_);
@@ -2094,21 +2502,21 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_112) {
+FUNCODEDEF(fun_124) {
   ARG(return_, 0);
-  P loopF1158;
+  P loopF1200;
   P T2,T1,T0;
   P a1;
 loop:
-  T2 = FUNSHELL(1,fun_loop_111,2);
-  loopF1158 = T2;
-  FUNINIT(loopF1158, 2,loopF1158,return_);
-  T1 = KCALL2(loopF1158,FREEREF(0),Ynil);
+  T2 = FUNSHELL(1,fun_loop_123,2);
+  loopF1200 = T2;
+  FUNINIT(loopF1200, 2,loopF1200,return_);
+  T1 = KCALL2(loopF1200,FREEREF(0),Ynil);
   T0 = T1;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_bq_process_113) {
+FUNCODEDEF(fun_bq_process_125) {
   ARG(x_, 0);
   P T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6;
   P T5,T4,T3,T2,T1,T0;
@@ -2138,11 +2546,11 @@ loop:
           T10 = CALL0(x_);
           T9 = CALL1(CHKREF(Ytail),T10);
           T8 = CALL1(CHKREF(Yhead),T9);
-          T7 = CALL2(CHKREF(Yerror),CHKREF(lit_55),T8);
+          T7 = CALL2(CHKREF(Yerror),CHKREF(lit_80),T8);
           T3 = T7;
         } else {
           if (YPtrue != YPfalse) {
-            T6 = FUNFAB(fun_112,1,x_);
+            T6 = FUNFAB(fun_124,1,x_);
             T5 = with_exit(T6);
             T4 = T5;
           } else {
@@ -2159,7 +2567,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_bracket_114) {
+FUNCODEDEF(fun_bracket_126) {
   ARG(x_, 0);
   P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
   P T0;
@@ -2201,12 +2609,12 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_map_tree_115) {
+FUNCODEDEF(fun_map_tree_127) {
   ARG(x_, 0);
   ARG(fn_, 1);
-  P tmpF1161;
-  P dF1160;
-  P aF1159;
+  P tmpF1203;
+  P dF1202;
+  P aF1201;
   P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
   P T0;
   P a1,a2;
@@ -2218,16 +2626,16 @@ loop:
   } else {
     T14 = CALL1(CHKREF(Yhead),x_);
     T13 = CALL1(fn_,T14);
-    aF1159 = T13;
+    aF1201 = T13;
     T12 = CALL1(CHKREF(Ytail),x_);
     T11 = CALL2(CHKREF(YsyntaxYmap_tree),fn_,T12);
-    dF1160 = T11;
+    dF1202 = T11;
     T10 = CALL1(CHKREF(Yhead),x_);
-    T9 = CALL2(CHKREF(YruntimeYE),aF1159,T10);
-    tmpF1161 = T9;
-    if (tmpF1161 != YPfalse) {
+    T9 = CALL2(CHKREF(YruntimeYE),aF1201,T10);
+    tmpF1203 = T9;
+    if (tmpF1203 != YPfalse) {
       T8 = CALL1(CHKREF(Ytail),x_);
-      T7 = CALL2(CHKREF(YruntimeYE),dF1160,T8);
+      T7 = CALL2(CHKREF(YruntimeYE),dF1202,T8);
       T6 = T7;
     } else {
       T6 = YPfalse;
@@ -2236,7 +2644,7 @@ loop:
     if (T5 != YPfalse) {
       T3 = x_;
     } else {
-      T4 = CALL2(CHKREF(YmacrosYpair),aF1159,dF1160);
+      T4 = CALL2(CHKREF(YmacrosYpair),aF1201,dF1202);
       T3 = T4;
     }
     T2 = T3;
@@ -2246,10 +2654,10 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_bq_remove_tokens_116) {
+FUNCODEDEF(fun_bq_remove_tokens_128) {
   ARG(x_, 0);
-  P tmpF1163;
-  P tmpF1162;
+  P tmpF1205;
+  P tmpF1204;
   P T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22;
   P T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6;
   P T5,T4,T3,T2,T1,T0;
@@ -2257,23 +2665,23 @@ FUNCODEDEF(fun_bq_remove_tokens_116) {
 loop:
   T37 = CALL2(CHKREF(YmacrosYEE),x_,CHKREF(YsyntaxYTbq_listT));
   if (T37 != YPfalse) {
-    T0 = CHKREF(lit_61);
+    T0 = CHKREF(lit_86);
   } else {
     T36 = CALL2(CHKREF(YmacrosYEE),x_,CHKREF(YsyntaxYTbq_appendT));
     if (T36 != YPfalse) {
-      T1 = CHKREF(lit_60);
+      T1 = CHKREF(lit_85);
     } else {
       T35 = CALL2(CHKREF(YmacrosYEE),x_,CHKREF(YsyntaxYTbq_nconcT));
       if (T35 != YPfalse) {
-        T2 = CHKREF(lit_59);
+        T2 = CHKREF(lit_84);
       } else {
         T34 = CALL2(CHKREF(YmacrosYEE),x_,CHKREF(YsyntaxYTbq_listTT));
         if (T34 != YPfalse) {
-          T3 = CHKREF(lit_58);
+          T3 = CHKREF(lit_83);
         } else {
           T33 = CALL2(CHKREF(YmacrosYEE),x_,CHKREF(YsyntaxYTbq_quoteT));
           if (T33 != YPfalse) {
-            T4 = CHKREF(lit_57);
+            T4 = CHKREF(lit_82);
           } else {
             T32 = CALL1(CHKREF(YsyntaxYsexpr_atomQ),x_);
             if (T32 != YPfalse) {
@@ -2289,14 +2697,14 @@ loop:
               } else {
                 T26 = CALL1(CHKREF(Yhead),x_);
                 T25 = CALL2(CHKREF(YmacrosYEE),T26,CHKREF(YsyntaxYTbq_listTT));
-                tmpF1162 = T25;
-                if (tmpF1162 != YPfalse) {
+                tmpF1204 = T25;
+                if (tmpF1204 != YPfalse) {
                   T24 = CALL1(CHKREF(Ytail),x_);
                   T23 = CALL1(CHKREF(Ytail),T24);
                   T22 = CALL1(CHKREF(YmacrosYemptyQ),T23);
                   T21 = CALL1(CHKREF(Ynot),T22);
-                  tmpF1163 = T21;
-                  if (tmpF1163 != YPfalse) {
+                  tmpF1205 = T21;
+                  if (tmpF1205 != YPfalse) {
                     T20 = CALL1(CHKREF(Ytail),x_);
                     T19 = CALL1(CHKREF(Ytail),T20);
                     T18 = CALL1(CHKREF(Ytail),T19);
@@ -2314,7 +2722,7 @@ loop:
                 if (T13 != YPfalse) {
                   T12 = CALL1(CHKREF(Ytail),x_);
                   T11 = CALL2(CHKREF(YsyntaxYmap_tree),CHKREF(YsyntaxYbq_remove_tokens),T12);
-                  T10 = CALL2(CHKREF(YmacrosYpair),CHKREF(lit_56),T11);
+                  T10 = CALL2(CHKREF(YmacrosYpair),CHKREF(lit_81),T11);
                   T7 = T10;
                 } else {
                   if (YPtrue != YPfalse) {
@@ -2342,7 +2750,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_syntax_ifQ_117) {
+FUNCODEDEF(fun_sexpr_syntax_ifQ_129) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -2351,7 +2759,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_syntax_if_value_118) {
+FUNCODEDEF(fun_sexpr_syntax_if_value_130) {
   ARG(exp_, 0);
   P T1,T0;
   P a1;
@@ -2361,7 +2769,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_syntax_if_pattern_119) {
+FUNCODEDEF(fun_sexpr_syntax_if_pattern_131) {
   ARG(exp_, 0);
   P T1,T0;
   P a1;
@@ -2371,7 +2779,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_syntax_if_then_120) {
+FUNCODEDEF(fun_sexpr_syntax_if_then_132) {
   ARG(exp_, 0);
   P T0;
   P a1;
@@ -2380,34 +2788,34 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_syntax_if_else_121) {
+FUNCODEDEF(fun_sexpr_syntax_if_else_133) {
   ARG(exp_, 0);
-  P altF1164;
+  P altF1206;
   P T3,T2,T1,T0;
   P a1;
 loop:
   T3 = CALL2(CHKREF(YruntimeYelt),exp_,YPint((P)3));
-  altF1164 = T3;
-  T2 = CALL2(CHKREF(YmacrosYEE),altF1164,CHKREF(Ynul));
+  altF1206 = T3;
+  T2 = CALL2(CHKREF(YmacrosYEE),altF1206,CHKREF(Ynul));
   if (T2 != YPfalse) {
     T1 = YPfalse;
   } else {
-    T1 = altF1164;
+    T1 = altF1206;
   }
   T0 = T1;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_pattern_variableQ_122) {
+FUNCODEDEF(fun_sexpr_pattern_variableQ_134) {
   ARG(pat_, 0);
-  P tmpF1165;
+  P tmpF1207;
   P T3,T2,T1,T0;
   P a1;
 loop:
   T3 = CALL1(CHKREF(YsyntaxYsexpr_unquoteQ),pat_);
-  tmpF1165 = T3;
-  if (tmpF1165 != YPfalse) {
-    T1 = tmpF1165;
+  tmpF1207 = T3;
+  if (tmpF1207 != YPfalse) {
+    T1 = tmpF1207;
   } else {
     T2 = CALL1(CHKREF(YsyntaxYsexpr_unquote_splicingQ),pat_);
     T1 = T2;
@@ -2416,7 +2824,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_pattern_variable_name_123) {
+FUNCODEDEF(fun_sexpr_pattern_variable_name_135) {
   ARG(pat_, 0);
   P T0;
   P a1;
@@ -2425,19 +2833,19 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_col_124) {
+FUNCODEDEF(fun_col_136) {
   ARG(pat_, 0);
-  P tmpF1167;
-  P xF1166;
+  P tmpF1209;
+  P xF1208;
   P T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3;
   P T2,T1,T0;
   P a1;
 loop:
   T18 = CALL2(CHKREF(YisaQ),pat_,CHKREF(YLlstG));
   T17 = CALL1(CHKREF(Ynot),T18);
-  tmpF1167 = T17;
-  if (tmpF1167 != YPfalse) {
-    T15 = tmpF1167;
+  tmpF1209 = T17;
+  if (tmpF1209 != YPfalse) {
+    T15 = tmpF1209;
   } else {
     T16 = CALL1(CHKREF(YmacrosYemptyQ),pat_);
     T15 = T16;
@@ -2447,10 +2855,10 @@ loop:
     T0 = Ynil;
   } else {
     T13 = CALL1(CHKREF(Yhead),pat_);
-    xF1166 = T13;
-    T12 = CALL1(CHKREF(YsyntaxYsexpr_pattern_variableQ),xF1166);
+    xF1208 = T13;
+    T12 = CALL1(CHKREF(YsyntaxYsexpr_pattern_variableQ),xF1208);
     if (T12 != YPfalse) {
-      T11 = CALL1(CHKREF(YsyntaxYsexpr_pattern_variable_name),xF1166);
+      T11 = CALL1(CHKREF(YsyntaxYsexpr_pattern_variable_name),xF1208);
       T10 = CALL1(CHKREF(Ytail),pat_);
       T9 = KCALL1(FREEREF(0),T10);
       T8 = CALL2(CHKREF(YmacrosYpair),T11,T9);
@@ -2469,38 +2877,38 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_bind_pattern_variables_125) {
+FUNCODEDEF(fun_sexpr_bind_pattern_variables_137) {
   ARG(pat_, 0);
-  P colF1168;
+  P colF1210;
   P T3,T2,T1,T0;
   P a1;
 loop:
-  T3 = FUNSHELL(1,fun_col_124,1);
-  colF1168 = T3;
-  FUNINIT(colF1168, 1,colF1168);
-  T2 = KCALL1(colF1168,pat_);
+  T3 = FUNSHELL(1,fun_col_136,1);
+  colF1210 = T3;
+  FUNINIT(colF1210, 1,colF1210);
+  T2 = KCALL1(colF1210,pat_);
   T1 = T2;
   T0 = CALL1(CHKREF(YruntimeYdel_dups),T1);
   RET(T0);
 }
 
-FUNCODEDEF(fun_sexpr_make_macro_function_126) {
+FUNCODEDEF(fun_sexpr_make_macro_function_138) {
   ARG(exp_, 0);
-  P funcF1170;
-  P mifF1169;
+  P funcF1212;
+  P mifF1211;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T8 = CALL1(CHKREF(YsyntaxYsexpr_method_parameters),exp_);
   T7 = CALL1(CHKREF(YsyntaxYsexpr_method_body),exp_);
   T6 = CALL1(CHKREF(YsyntaxYsexpr_sequence_Gbegin),T7);
-  T5 = CALLN(CHKREF(YsyntaxYsexpr_make_syntax_if),4,T8,CHKREF(lit_63),T6,YPfalse);
-  mifF1169 = T5;
-  T4 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_62));
-  T3 = CALL1(CHKREF(YmacrosYlst),mifF1169);
+  T5 = CALLN(CHKREF(YsyntaxYsexpr_make_syntax_if),4,T8,CHKREF(lit_88),T6,YPfalse);
+  mifF1211 = T5;
+  T4 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_87));
+  T3 = CALL1(CHKREF(YmacrosYlst),mifF1211);
   T2 = CALL2(CHKREF(YsyntaxYsexpr_make_anonymous_method),T4,T3);
-  funcF1170 = T2;
-  T1 = funcF1170;
+  funcF1212 = T2;
+  T1 = funcF1212;
   T0 = T1;
   QRET(T0);
 }
@@ -3148,6 +3556,7 @@ loop:
 }
 
 P YsyntaxY___main_1___() {
+  P T280,T279,T278,T277,T276,T275,T274,T273,T272,T271,T270,T269,T268,T267,T266,T265;
   P T264,T263,T262,T261,T260,T259,T258,T257,T256,T255,T254,T253,T252,T251,T250,T249;
   P T248,T247,T246,T245,T244,T243,T242,T241,T240,T239,T238,T237,T236,T235,T234,T233;
   P T232,T231,T230,T229,T228,T227,T226,T225,T224,T223,T222,T221,T220,T219,T218,T217;
@@ -3193,959 +3602,1042 @@ loop:
   T6 = CALL2(CHKREF(YPdefine_method),T8,T7);
   YsyntaxYsexpr_monitorQ = T6;
   regsym(&YsyntaxYsexpr_monitorQ,"syntax","sexpr-monitor?");
+  lit_19 = YPPsym((P)"type");
+  lit_20 = YPsb((P)"Match Pattern Failure");
+  lit_21 = YPPsym((P)"try");
+  lit_22 = YPsb((P)"Malformed TRY expression: ~=");
+  T12 = YPsig(YPpair(YPPsym((P)"msg"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YLstrG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_x_1212_50 = YPmet(FUNCODEREF(fun_x_1212_50),YPPsym((P)"x-1212"),T12,ENVNUL);
+  T11 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_51 = YPmet(FUNCODEREF(fun_51),YPfalse,T11,ENVNUL);
   T10 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_monitor_handler_50 = YPmet(FUNCODEREF(fun_sexpr_monitor_handler_50),YPPsym((P)"sexpr-monitor-handler"),T10,ENVNUL);
-  T14 = BOUNDP(YsyntaxYsexpr_monitor_handler);
-  if (T14 != YPfalse) {
-    T13 = CHKREF(YsyntaxYsexpr_monitor_handler);
-  } else {
-    T13 = YPfalse;
-  }
-  T12 = fun_sexpr_monitor_handler_50;
-  T11 = CALL2(CHKREF(YPdefine_method),T13,T12);
-  YsyntaxYsexpr_monitor_handler = T11;
-  regsym(&YsyntaxYsexpr_monitor_handler,"syntax","sexpr-monitor-handler");
-  T15 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_monitor_body_51 = YPmet(FUNCODEREF(fun_sexpr_monitor_body_51),YPPsym((P)"sexpr-monitor-body"),T15,ENVNUL);
-  T19 = BOUNDP(YsyntaxYsexpr_monitor_body);
-  if (T19 != YPfalse) {
-    T18 = CHKREF(YsyntaxYsexpr_monitor_body);
-  } else {
-    T18 = YPfalse;
-  }
-  T17 = fun_sexpr_monitor_body_51;
-  T16 = CALL2(CHKREF(YPdefine_method),T18,T17);
-  YsyntaxYsexpr_monitor_body = T16;
-  regsym(&YsyntaxYsexpr_monitor_body,"syntax","sexpr-monitor-body");
-  lit_19 = YPPsym((P)"seq");
-  YsyntaxYDsexpr_begin_tag = CHKREF(lit_19);
-  regsym(&YsyntaxYDsexpr_begin_tag,"syntax","$sexpr-begin-tag");
-  T20 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_beginQ_52 = YPmet(FUNCODEREF(fun_sexpr_beginQ_52),YPPsym((P)"sexpr-begin?"),T20,ENVNUL);
-  T24 = BOUNDP(YsyntaxYsexpr_beginQ);
-  if (T24 != YPfalse) {
-    T23 = CHKREF(YsyntaxYsexpr_beginQ);
-  } else {
-    T23 = YPfalse;
-  }
-  T22 = fun_sexpr_beginQ_52;
-  T21 = CALL2(CHKREF(YPdefine_method),T23,T22);
-  YsyntaxYsexpr_beginQ = T21;
-  regsym(&YsyntaxYsexpr_beginQ,"syntax","sexpr-begin?");
-  T25 = YPsig(YPpair(YPPsym((P)"begin-exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_begin_actions_53 = YPmet(FUNCODEREF(fun_sexpr_begin_actions_53),YPPsym((P)"sexpr-begin-actions"),T25,ENVNUL);
-  T29 = BOUNDP(YsyntaxYsexpr_begin_actions);
-  if (T29 != YPfalse) {
-    T28 = CHKREF(YsyntaxYsexpr_begin_actions);
-  } else {
-    T28 = YPfalse;
-  }
-  T27 = fun_sexpr_begin_actions_53;
-  T26 = CALL2(CHKREF(YPdefine_method),T28,T27);
-  YsyntaxYsexpr_begin_actions = T26;
-  regsym(&YsyntaxYsexpr_begin_actions,"syntax","sexpr-begin-actions");
-  T30 = YPsig(YPpair(YPPsym((P)"seq"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_last_expQ_54 = YPmet(FUNCODEREF(fun_sexpr_last_expQ_54),YPPsym((P)"sexpr-last-exp?"),T30,ENVNUL);
-  T34 = BOUNDP(YsyntaxYsexpr_last_expQ);
-  if (T34 != YPfalse) {
-    T33 = CHKREF(YsyntaxYsexpr_last_expQ);
-  } else {
-    T33 = YPfalse;
-  }
-  T32 = fun_sexpr_last_expQ_54;
-  T31 = CALL2(CHKREF(YPdefine_method),T33,T32);
-  YsyntaxYsexpr_last_expQ = T31;
-  regsym(&YsyntaxYsexpr_last_expQ,"syntax","sexpr-last-exp?");
-  T35 = YPsig(YPpair(YPPsym((P)"seq"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_first_exp_55 = YPmet(FUNCODEREF(fun_sexpr_first_exp_55),YPPsym((P)"sexpr-first-exp"),T35,ENVNUL);
-  T39 = BOUNDP(YsyntaxYsexpr_first_exp);
-  if (T39 != YPfalse) {
-    T38 = CHKREF(YsyntaxYsexpr_first_exp);
-  } else {
-    T38 = YPfalse;
-  }
-  T37 = fun_sexpr_first_exp_55;
-  T36 = CALL2(CHKREF(YPdefine_method),T38,T37);
-  YsyntaxYsexpr_first_exp = T36;
-  regsym(&YsyntaxYsexpr_first_exp,"syntax","sexpr-first-exp");
-  T40 = YPsig(YPpair(YPPsym((P)"seq"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_rest_exps_56 = YPmet(FUNCODEREF(fun_sexpr_rest_exps_56),YPPsym((P)"sexpr-rest-exps"),T40,ENVNUL);
-  T44 = BOUNDP(YsyntaxYsexpr_rest_exps);
-  if (T44 != YPfalse) {
-    T43 = CHKREF(YsyntaxYsexpr_rest_exps);
-  } else {
-    T43 = YPfalse;
-  }
-  T42 = fun_sexpr_rest_exps_56;
-  T41 = CALL2(CHKREF(YPdefine_method),T43,T42);
-  YsyntaxYsexpr_rest_exps = T41;
-  regsym(&YsyntaxYsexpr_rest_exps,"syntax","sexpr-rest-exps");
-  T45 = YPsig(YPpair(YPPsym((P)"seq"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_sequence_Gbegin_57 = YPmet(FUNCODEREF(fun_sexpr_sequence_Gbegin_57),YPPsym((P)"sexpr-sequence->begin"),T45,ENVNUL);
-  T49 = BOUNDP(YsyntaxYsexpr_sequence_Gbegin);
-  if (T49 != YPfalse) {
-    T48 = CHKREF(YsyntaxYsexpr_sequence_Gbegin);
-  } else {
-    T48 = YPfalse;
-  }
-  T47 = fun_sexpr_sequence_Gbegin_57;
-  T46 = CALL2(CHKREF(YPdefine_method),T48,T47);
-  YsyntaxYsexpr_sequence_Gbegin = T46;
-  regsym(&YsyntaxYsexpr_sequence_Gbegin,"syntax","sexpr-sequence->begin");
-  T50 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_make_begin_58 = YPmet(FUNCODEREF(fun_sexpr_make_begin_58),YPPsym((P)"sexpr-make-begin"),T50,ENVNUL);
-  T54 = BOUNDP(YsyntaxYsexpr_make_begin);
-  if (T54 != YPfalse) {
-    T53 = CHKREF(YsyntaxYsexpr_make_begin);
-  } else {
-    T53 = YPfalse;
-  }
-  T52 = fun_sexpr_make_begin_58;
-  T51 = CALL2(CHKREF(YPdefine_method),T53,T52);
-  YsyntaxYsexpr_make_begin = T51;
-  regsym(&YsyntaxYsexpr_make_begin,"syntax","sexpr-make-begin");
-  T55 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_applicationQ_59 = YPmet(FUNCODEREF(fun_sexpr_applicationQ_59),YPPsym((P)"sexpr-application?"),T55,ENVNUL);
-  T59 = BOUNDP(YsyntaxYsexpr_applicationQ);
-  if (T59 != YPfalse) {
-    T58 = CHKREF(YsyntaxYsexpr_applicationQ);
-  } else {
-    T58 = YPfalse;
-  }
-  T57 = fun_sexpr_applicationQ_59;
-  T56 = CALL2(CHKREF(YPdefine_method),T58,T57);
-  YsyntaxYsexpr_applicationQ = T56;
-  regsym(&YsyntaxYsexpr_applicationQ,"syntax","sexpr-application?");
-  T60 = YPsig(YPpair(YPPsym((P)"app"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_operator_60 = YPmet(FUNCODEREF(fun_sexpr_operator_60),YPPsym((P)"sexpr-operator"),T60,ENVNUL);
-  T64 = BOUNDP(YsyntaxYsexpr_operator);
-  if (T64 != YPfalse) {
-    T63 = CHKREF(YsyntaxYsexpr_operator);
-  } else {
-    T63 = YPfalse;
-  }
-  T62 = fun_sexpr_operator_60;
-  T61 = CALL2(CHKREF(YPdefine_method),T63,T62);
-  YsyntaxYsexpr_operator = T61;
-  regsym(&YsyntaxYsexpr_operator,"syntax","sexpr-operator");
-  T65 = YPsig(YPpair(YPPsym((P)"app"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_operands_61 = YPmet(FUNCODEREF(fun_sexpr_operands_61),YPPsym((P)"sexpr-operands"),T65,ENVNUL);
-  T69 = BOUNDP(YsyntaxYsexpr_operands);
-  if (T69 != YPfalse) {
-    T68 = CHKREF(YsyntaxYsexpr_operands);
-  } else {
-    T68 = YPfalse;
-  }
-  T67 = fun_sexpr_operands_61;
-  T66 = CALL2(CHKREF(YPdefine_method),T68,T67);
-  YsyntaxYsexpr_operands = T66;
-  regsym(&YsyntaxYsexpr_operands,"syntax","sexpr-operands");
-  T70 = YPsig(YPpair(YPPsym((P)"args"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_no_operandsQ_62 = YPmet(FUNCODEREF(fun_sexpr_no_operandsQ_62),YPPsym((P)"sexpr-no-operands?"),T70,ENVNUL);
-  T74 = BOUNDP(YsyntaxYsexpr_no_operandsQ);
-  if (T74 != YPfalse) {
-    T73 = CHKREF(YsyntaxYsexpr_no_operandsQ);
-  } else {
-    T73 = YPfalse;
-  }
-  T72 = fun_sexpr_no_operandsQ_62;
-  T71 = CALL2(CHKREF(YPdefine_method),T73,T72);
-  YsyntaxYsexpr_no_operandsQ = T71;
-  regsym(&YsyntaxYsexpr_no_operandsQ,"syntax","sexpr-no-operands?");
-  T75 = YPsig(YPpair(YPPsym((P)"args"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_first_operand_63 = YPmet(FUNCODEREF(fun_sexpr_first_operand_63),YPPsym((P)"sexpr-first-operand"),T75,ENVNUL);
-  T79 = BOUNDP(YsyntaxYsexpr_first_operand);
-  if (T79 != YPfalse) {
-    T78 = CHKREF(YsyntaxYsexpr_first_operand);
-  } else {
-    T78 = YPfalse;
-  }
-  T77 = fun_sexpr_first_operand_63;
-  T76 = CALL2(CHKREF(YPdefine_method),T78,T77);
-  YsyntaxYsexpr_first_operand = T76;
-  regsym(&YsyntaxYsexpr_first_operand,"syntax","sexpr-first-operand");
-  T80 = YPsig(YPpair(YPPsym((P)"args"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_rest_operands_64 = YPmet(FUNCODEREF(fun_sexpr_rest_operands_64),YPPsym((P)"sexpr-rest-operands"),T80,ENVNUL);
-  T84 = BOUNDP(YsyntaxYsexpr_rest_operands);
-  if (T84 != YPfalse) {
-    T83 = CHKREF(YsyntaxYsexpr_rest_operands);
-  } else {
-    T83 = YPfalse;
-  }
-  T82 = fun_sexpr_rest_operands_64;
-  T81 = CALL2(CHKREF(YPdefine_method),T83,T82);
-  YsyntaxYsexpr_rest_operands = T81;
-  regsym(&YsyntaxYsexpr_rest_operands,"syntax","sexpr-rest-operands");
-  T85 = YPsig(YPpair(YPPsym((P)"op"),YPpair(YPPsym((P)"operands"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLlstG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_sexpr_make_application_65 = YPmet(FUNCODEREF(fun_sexpr_make_application_65),YPPsym((P)"sexpr-make-application"),T85,ENVNUL);
-  T89 = BOUNDP(YsyntaxYsexpr_make_application);
-  if (T89 != YPfalse) {
-    T88 = CHKREF(YsyntaxYsexpr_make_application);
-  } else {
-    T88 = YPfalse;
-  }
-  T87 = fun_sexpr_make_application_65;
-  T86 = CALL2(CHKREF(YPdefine_method),T88,T87);
-  YsyntaxYsexpr_make_application = T86;
-  regsym(&YsyntaxYsexpr_make_application,"syntax","sexpr-make-application");
-  YsyntaxYTunique_name_counterT = YPint((P)0);
-  regsym(&YsyntaxYTunique_name_counterT,"syntax","*unique-name-counter*");
-  T90 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLintG));
-  fun_sexpr_new_unique_name_counterX_66 = YPmet(FUNCODEREF(fun_sexpr_new_unique_name_counterX_66),YPPsym((P)"sexpr-new-unique-name-counter!"),T90,ENVNUL);
-  T94 = BOUNDP(YsyntaxYsexpr_new_unique_name_counterX);
-  if (T94 != YPfalse) {
-    T93 = CHKREF(YsyntaxYsexpr_new_unique_name_counterX);
-  } else {
-    T93 = YPfalse;
-  }
-  T92 = fun_sexpr_new_unique_name_counterX_66;
-  T91 = CALL2(CHKREF(YPdefine_method),T93,T92);
-  YsyntaxYsexpr_new_unique_name_counterX = T91;
-  regsym(&YsyntaxYsexpr_new_unique_name_counterX,"syntax","sexpr-new-unique-name-counter!");
-  YsyntaxYLnameG = CHKREF(YLanyG);
-  regsym(&YsyntaxYLnameG,"syntax","<name>");
-  T95 = YPsig(YPpair(YPPsym((P)"prefix"),Ynil),YPpair(CHKREF(YsyntaxYLnameG),Ynil),YPfalse,YPint((P)1),CHKREF(YLsymG));
-  fun_sexpr_unique_name_67 = YPmet(FUNCODEREF(fun_sexpr_unique_name_67),YPPsym((P)"sexpr-unique-name"),T95,ENVNUL);
-  T99 = BOUNDP(YsyntaxYsexpr_unique_name);
-  if (T99 != YPfalse) {
-    T98 = CHKREF(YsyntaxYsexpr_unique_name);
-  } else {
-    T98 = YPfalse;
-  }
-  T97 = fun_sexpr_unique_name_67;
-  T96 = CALL2(CHKREF(YPdefine_method),T98,T97);
-  YsyntaxYsexpr_unique_name = T96;
-  regsym(&YsyntaxYsexpr_unique_name,"syntax","sexpr-unique-name");
-  lit_20 = YPPsym((P)"let");
-  YsyntaxYDsexpr_let_tag = CHKREF(lit_20);
-  regsym(&YsyntaxYDsexpr_let_tag,"syntax","$sexpr-let-tag");
-  T100 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_letQ_68 = YPmet(FUNCODEREF(fun_sexpr_letQ_68),YPPsym((P)"sexpr-let?"),T100,ENVNUL);
-  T104 = BOUNDP(YsyntaxYsexpr_letQ);
-  if (T104 != YPfalse) {
-    T103 = CHKREF(YsyntaxYsexpr_letQ);
-  } else {
-    T103 = YPfalse;
-  }
-  T102 = fun_sexpr_letQ_68;
-  T101 = CALL2(CHKREF(YPdefine_method),T103,T102);
-  YsyntaxYsexpr_letQ = T101;
-  regsym(&YsyntaxYsexpr_letQ,"syntax","sexpr-let?");
-  T105 = YPsig(YPpair(YPPsym((P)"let-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_let_bound_variables_69 = YPmet(FUNCODEREF(fun_sexpr_let_bound_variables_69),YPPsym((P)"sexpr-let-bound-variables"),T105,ENVNUL);
-  T109 = BOUNDP(YsyntaxYsexpr_let_bound_variables);
-  if (T109 != YPfalse) {
-    T108 = CHKREF(YsyntaxYsexpr_let_bound_variables);
-  } else {
-    T108 = YPfalse;
-  }
-  T107 = fun_sexpr_let_bound_variables_69;
-  T106 = CALL2(CHKREF(YPdefine_method),T108,T107);
-  YsyntaxYsexpr_let_bound_variables = T106;
-  regsym(&YsyntaxYsexpr_let_bound_variables,"syntax","sexpr-let-bound-variables");
-  T110 = YPsig(YPpair(YPPsym((P)"let-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_let_values_70 = YPmet(FUNCODEREF(fun_sexpr_let_values_70),YPPsym((P)"sexpr-let-values"),T110,ENVNUL);
-  T114 = BOUNDP(YsyntaxYsexpr_let_values);
-  if (T114 != YPfalse) {
-    T113 = CHKREF(YsyntaxYsexpr_let_values);
-  } else {
-    T113 = YPfalse;
-  }
-  T112 = fun_sexpr_let_values_70;
-  T111 = CALL2(CHKREF(YPdefine_method),T113,T112);
-  YsyntaxYsexpr_let_values = T111;
-  regsym(&YsyntaxYsexpr_let_values,"syntax","sexpr-let-values");
-  T115 = YPsig(YPpair(YPPsym((P)"let-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_let_body_71 = YPmet(FUNCODEREF(fun_sexpr_let_body_71),YPPsym((P)"sexpr-let-body"),T115,ENVNUL);
-  T119 = BOUNDP(YsyntaxYsexpr_let_body);
-  if (T119 != YPfalse) {
-    T118 = CHKREF(YsyntaxYsexpr_let_body);
-  } else {
-    T118 = YPfalse;
-  }
-  T117 = fun_sexpr_let_body_71;
-  T116 = CALL2(CHKREF(YPdefine_method),T118,T117);
-  YsyntaxYsexpr_let_body = T116;
-  regsym(&YsyntaxYsexpr_let_body,"syntax","sexpr-let-body");
-  lit_21 = YPPsym((P)"head");
-  lit_22 = YPPsym((P)"tail");
-  lit_23 = YPPsym((P)"<lst>");
-  lit_24 = YPPsym((P)"...");
-  lit_25 = YPsb((P)"tup");
-  lit_26 = YPPsym((P)"tup");
-  T122 = YPsig(YPpair(YPPsym((P)"rtnames"),YPpair(YPPsym((P)"rtvalues"),YPpair(YPPsym((P)"index"),YPpair(YPPsym((P)"tnames"),Ynil)))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)))),YPfalse,YPint((P)4),CHKREF(YLanyG));
-  fun_inner_72 = YPmet(FUNCODEREF(fun_inner_72),YPPsym((P)"inner"),T122,ENVNUL);
-  T121 = YPsig(YPpair(YPPsym((P)"rnames"),YPpair(YPPsym((P)"rvalues"),YPpair(YPPsym((P)"names"),YPpair(YPPsym((P)"vals"),Ynil)))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)))),YPfalse,YPint((P)4),CHKREF(YLanyG));
-  fun_loop_73 = YPmet(FUNCODEREF(fun_loop_73),YPPsym((P)"loop"),T121,ENVNUL);
-  T120 = YPsig(YPpair(YPPsym((P)"names"),YPpair(YPPsym((P)"vals"),Ynil)),YPpair(CHKREF(YLlstG),YPpair(CHKREF(YLlstG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLtupG));
-  fun_sexpr_let_namesAvalues_74 = YPmet(FUNCODEREF(fun_sexpr_let_namesAvalues_74),YPPsym((P)"sexpr-let-names+values"),T120,ENVNUL);
-  T126 = BOUNDP(YsyntaxYsexpr_let_namesAvalues);
-  if (T126 != YPfalse) {
-    T125 = CHKREF(YsyntaxYsexpr_let_namesAvalues);
-  } else {
-    T125 = YPfalse;
-  }
-  T124 = fun_sexpr_let_namesAvalues_74;
-  T123 = CALL2(CHKREF(YPdefine_method),T125,T124);
-  YsyntaxYsexpr_let_namesAvalues = T123;
-  regsym(&YsyntaxYsexpr_let_namesAvalues,"syntax","sexpr-let-names+values");
-  T128 = YPsig(YPpair(YPPsym((P)"names"),YPpair(YPPsym((P)"values"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_col_75 = YPmet(FUNCODEREF(fun_col_75),YPPsym((P)"col"),T128,ENVNUL);
-  T127 = YPsig(YPpair(YPPsym((P)"let-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_let_Gcombination_76 = YPmet(FUNCODEREF(fun_sexpr_let_Gcombination_76),YPPsym((P)"sexpr-let->combination"),T127,ENVNUL);
-  T132 = BOUNDP(YsyntaxYsexpr_let_Gcombination);
-  if (T132 != YPfalse) {
-    T131 = CHKREF(YsyntaxYsexpr_let_Gcombination);
-  } else {
-    T131 = YPfalse;
-  }
-  T130 = fun_sexpr_let_Gcombination_76;
-  T129 = CALL2(CHKREF(YPdefine_method),T131,T130);
-  YsyntaxYsexpr_let_Gcombination = T129;
-  regsym(&YsyntaxYsexpr_let_Gcombination,"syntax","sexpr-let->combination");
-  lit_27 = YPPsym((P)"loc");
-  YsyntaxYDsexpr_locals_tag = CHKREF(lit_27);
-  regsym(&YsyntaxYDsexpr_locals_tag,"syntax","$sexpr-locals-tag");
-  T133 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_locQ_77 = YPmet(FUNCODEREF(fun_sexpr_locQ_77),YPPsym((P)"sexpr-loc?"),T133,ENVNUL);
-  T137 = BOUNDP(YsyntaxYsexpr_locQ);
-  if (T137 != YPfalse) {
-    T136 = CHKREF(YsyntaxYsexpr_locQ);
-  } else {
-    T136 = YPfalse;
-  }
-  T135 = fun_sexpr_locQ_77;
-  T134 = CALL2(CHKREF(YPdefine_method),T136,T135);
-  YsyntaxYsexpr_locQ = T134;
-  regsym(&YsyntaxYsexpr_locQ,"syntax","sexpr-loc?");
-  T138 = YPsig(YPpair(YPPsym((P)"loc-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_loc_bound_names_78 = YPmet(FUNCODEREF(fun_sexpr_loc_bound_names_78),YPPsym((P)"sexpr-loc-bound-names"),T138,ENVNUL);
-  T142 = BOUNDP(YsyntaxYsexpr_loc_bound_names);
-  if (T142 != YPfalse) {
-    T141 = CHKREF(YsyntaxYsexpr_loc_bound_names);
-  } else {
-    T141 = YPfalse;
-  }
-  T140 = fun_sexpr_loc_bound_names_78;
-  T139 = CALL2(CHKREF(YPdefine_method),T141,T140);
-  YsyntaxYsexpr_loc_bound_names = T139;
-  regsym(&YsyntaxYsexpr_loc_bound_names,"syntax","sexpr-loc-bound-names");
-  T143 = YPsig(YPpair(YPPsym((P)"loc-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_loc_bound_signatures_79 = YPmet(FUNCODEREF(fun_sexpr_loc_bound_signatures_79),YPPsym((P)"sexpr-loc-bound-signatures"),T143,ENVNUL);
-  T147 = BOUNDP(YsyntaxYsexpr_loc_bound_signatures);
-  if (T147 != YPfalse) {
-    T146 = CHKREF(YsyntaxYsexpr_loc_bound_signatures);
-  } else {
-    T146 = YPfalse;
-  }
-  T145 = fun_sexpr_loc_bound_signatures_79;
-  T144 = CALL2(CHKREF(YPdefine_method),T146,T145);
-  YsyntaxYsexpr_loc_bound_signatures = T144;
-  regsym(&YsyntaxYsexpr_loc_bound_signatures,"syntax","sexpr-loc-bound-signatures");
-  T148 = YPsig(YPpair(YPPsym((P)"loc-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_loc_bound_bodies_80 = YPmet(FUNCODEREF(fun_sexpr_loc_bound_bodies_80),YPPsym((P)"sexpr-loc-bound-bodies"),T148,ENVNUL);
-  T152 = BOUNDP(YsyntaxYsexpr_loc_bound_bodies);
-  if (T152 != YPfalse) {
-    T151 = CHKREF(YsyntaxYsexpr_loc_bound_bodies);
-  } else {
-    T151 = YPfalse;
-  }
-  T150 = fun_sexpr_loc_bound_bodies_80;
-  T149 = CALL2(CHKREF(YPdefine_method),T151,T150);
-  YsyntaxYsexpr_loc_bound_bodies = T149;
-  regsym(&YsyntaxYsexpr_loc_bound_bodies,"syntax","sexpr-loc-bound-bodies");
-  T153 = YPsig(YPpair(YPPsym((P)"loc-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_loc_raw_body_81 = YPmet(FUNCODEREF(fun_sexpr_loc_raw_body_81),YPPsym((P)"sexpr-loc-raw-body"),T153,ENVNUL);
-  T157 = BOUNDP(YsyntaxYsexpr_loc_raw_body);
-  if (T157 != YPfalse) {
-    T156 = CHKREF(YsyntaxYsexpr_loc_raw_body);
-  } else {
-    T156 = YPfalse;
-  }
-  T155 = fun_sexpr_loc_raw_body_81;
-  T154 = CALL2(CHKREF(YPdefine_method),T156,T155);
-  YsyntaxYsexpr_loc_raw_body = T154;
-  regsym(&YsyntaxYsexpr_loc_raw_body,"syntax","sexpr-loc-raw-body");
-  T158 = YPsig(YPpair(YPPsym((P)"loc-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_loc_body_82 = YPmet(FUNCODEREF(fun_sexpr_loc_body_82),YPPsym((P)"sexpr-loc-body"),T158,ENVNUL);
-  T162 = BOUNDP(YsyntaxYsexpr_loc_body);
-  if (T162 != YPfalse) {
-    T161 = CHKREF(YsyntaxYsexpr_loc_body);
-  } else {
-    T161 = YPfalse;
-  }
-  T160 = fun_sexpr_loc_body_82;
-  T159 = CALL2(CHKREF(YPdefine_method),T161,T160);
-  YsyntaxYsexpr_loc_body = T159;
-  regsym(&YsyntaxYsexpr_loc_body,"syntax","sexpr-loc-body");
-  lit_28 = YPPsym((P)"rep");
-  YsyntaxYDsexpr_iterate_tag = CHKREF(lit_28);
-  regsym(&YsyntaxYDsexpr_iterate_tag,"syntax","$sexpr-iterate-tag");
-  T163 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_iterateQ_83 = YPmet(FUNCODEREF(fun_sexpr_iterateQ_83),YPPsym((P)"sexpr-iterate?"),T163,ENVNUL);
-  T167 = BOUNDP(YsyntaxYsexpr_iterateQ);
-  if (T167 != YPfalse) {
-    T166 = CHKREF(YsyntaxYsexpr_iterateQ);
-  } else {
-    T166 = YPfalse;
-  }
-  T165 = fun_sexpr_iterateQ_83;
-  T164 = CALL2(CHKREF(YPdefine_method),T166,T165);
-  YsyntaxYsexpr_iterateQ = T164;
-  regsym(&YsyntaxYsexpr_iterateQ,"syntax","sexpr-iterate?");
-  T168 = YPsig(YPpair(YPPsym((P)"rep-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLsymG));
-  fun_sexpr_iterate_name_84 = YPmet(FUNCODEREF(fun_sexpr_iterate_name_84),YPPsym((P)"sexpr-iterate-name"),T168,ENVNUL);
-  T172 = BOUNDP(YsyntaxYsexpr_iterate_name);
-  if (T172 != YPfalse) {
-    T171 = CHKREF(YsyntaxYsexpr_iterate_name);
-  } else {
-    T171 = YPfalse;
-  }
-  T170 = fun_sexpr_iterate_name_84;
-  T169 = CALL2(CHKREF(YPdefine_method),T171,T170);
-  YsyntaxYsexpr_iterate_name = T169;
-  regsym(&YsyntaxYsexpr_iterate_name,"syntax","sexpr-iterate-name");
-  lit_29 = YPPsym((P)"=>");
-  YsyntaxYDsexpr_values_tag = CHKREF(lit_29);
-  regsym(&YsyntaxYDsexpr_values_tag,"syntax","$sexpr-values-tag");
-  T173 = YPsig(YPpair(YPPsym((P)"rep-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_iterate_signature_85 = YPmet(FUNCODEREF(fun_sexpr_iterate_signature_85),YPPsym((P)"sexpr-iterate-signature"),T173,ENVNUL);
-  T177 = BOUNDP(YsyntaxYsexpr_iterate_signature);
-  if (T177 != YPfalse) {
-    T176 = CHKREF(YsyntaxYsexpr_iterate_signature);
-  } else {
-    T176 = YPfalse;
-  }
-  T175 = fun_sexpr_iterate_signature_85;
-  T174 = CALL2(CHKREF(YPdefine_method),T176,T175);
-  YsyntaxYsexpr_iterate_signature = T174;
-  regsym(&YsyntaxYsexpr_iterate_signature,"syntax","sexpr-iterate-signature");
-  T178 = YPsig(YPpair(YPPsym((P)"rep-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_iterate_inits_86 = YPmet(FUNCODEREF(fun_sexpr_iterate_inits_86),YPPsym((P)"sexpr-iterate-inits"),T178,ENVNUL);
-  T182 = BOUNDP(YsyntaxYsexpr_iterate_inits);
-  if (T182 != YPfalse) {
-    T181 = CHKREF(YsyntaxYsexpr_iterate_inits);
-  } else {
-    T181 = YPfalse;
-  }
-  T180 = fun_sexpr_iterate_inits_86;
-  T179 = CALL2(CHKREF(YPdefine_method),T181,T180);
-  YsyntaxYsexpr_iterate_inits = T179;
-  regsym(&YsyntaxYsexpr_iterate_inits,"syntax","sexpr-iterate-inits");
-  T183 = YPsig(YPpair(YPPsym((P)"rep-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_iterate_body_87 = YPmet(FUNCODEREF(fun_sexpr_iterate_body_87),YPPsym((P)"sexpr-iterate-body"),T183,ENVNUL);
-  T187 = BOUNDP(YsyntaxYsexpr_iterate_body);
-  if (T187 != YPfalse) {
-    T186 = CHKREF(YsyntaxYsexpr_iterate_body);
-  } else {
-    T186 = YPfalse;
-  }
-  T185 = fun_sexpr_iterate_body_87;
-  T184 = CALL2(CHKREF(YPdefine_method),T186,T185);
-  YsyntaxYsexpr_iterate_body = T184;
-  regsym(&YsyntaxYsexpr_iterate_body,"syntax","sexpr-iterate-body");
-  T188 = YPsig(YPpair(YPPsym((P)"rep-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_iterate_Gloc_88 = YPmet(FUNCODEREF(fun_sexpr_iterate_Gloc_88),YPPsym((P)"sexpr-iterate->loc"),T188,ENVNUL);
-  T192 = BOUNDP(YsyntaxYsexpr_iterate_Gloc);
-  if (T192 != YPfalse) {
-    T191 = CHKREF(YsyntaxYsexpr_iterate_Gloc);
-  } else {
-    T191 = YPfalse;
-  }
-  T190 = fun_sexpr_iterate_Gloc_88;
-  T189 = CALL2(CHKREF(YPdefine_method),T191,T190);
-  YsyntaxYsexpr_iterate_Gloc = T189;
-  regsym(&YsyntaxYsexpr_iterate_Gloc,"syntax","sexpr-iterate->loc");
-  lit_30 = YPPsym((P)"isa");
-  YsyntaxYDsexpr_isa_tag = CHKREF(lit_30);
-  regsym(&YsyntaxYDsexpr_isa_tag,"syntax","$sexpr-isa-tag");
-  T193 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_isaQ_89 = YPmet(FUNCODEREF(fun_sexpr_isaQ_89),YPPsym((P)"sexpr-isa?"),T193,ENVNUL);
-  T197 = BOUNDP(YsyntaxYsexpr_isaQ);
-  if (T197 != YPfalse) {
-    T196 = CHKREF(YsyntaxYsexpr_isaQ);
-  } else {
-    T196 = YPfalse;
-  }
-  T195 = fun_sexpr_isaQ_89;
-  T194 = CALL2(CHKREF(YPdefine_method),T196,T195);
-  YsyntaxYsexpr_isaQ = T194;
-  regsym(&YsyntaxYsexpr_isaQ,"syntax","sexpr-isa?");
-  T198 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_isa_parents_90 = YPmet(FUNCODEREF(fun_sexpr_isa_parents_90),YPPsym((P)"sexpr-isa-parents"),T198,ENVNUL);
-  T202 = BOUNDP(YsyntaxYsexpr_isa_parents);
-  if (T202 != YPfalse) {
-    T201 = CHKREF(YsyntaxYsexpr_isa_parents);
-  } else {
-    T201 = YPfalse;
-  }
-  T200 = fun_sexpr_isa_parents_90;
-  T199 = CALL2(CHKREF(YPdefine_method),T201,T200);
-  YsyntaxYsexpr_isa_parents = T199;
-  regsym(&YsyntaxYsexpr_isa_parents,"syntax","sexpr-isa-parents");
-  T203 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_isa_slot_inits_91 = YPmet(FUNCODEREF(fun_sexpr_isa_slot_inits_91),YPPsym((P)"sexpr-isa-slot-inits"),T203,ENVNUL);
-  T207 = BOUNDP(YsyntaxYsexpr_isa_slot_inits);
-  if (T207 != YPfalse) {
-    T206 = CHKREF(YsyntaxYsexpr_isa_slot_inits);
-  } else {
-    T206 = YPfalse;
-  }
-  T205 = fun_sexpr_isa_slot_inits_91;
-  T204 = CALL2(CHKREF(YPdefine_method),T206,T205);
-  YsyntaxYsexpr_isa_slot_inits = T204;
-  regsym(&YsyntaxYsexpr_isa_slot_inits,"syntax","sexpr-isa-slot-inits");
-  T208 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_isa_init_slots_92 = YPmet(FUNCODEREF(fun_sexpr_isa_init_slots_92),YPPsym((P)"sexpr-isa-init-slots"),T208,ENVNUL);
-  T212 = BOUNDP(YsyntaxYsexpr_isa_init_slots);
-  if (T212 != YPfalse) {
-    T211 = CHKREF(YsyntaxYsexpr_isa_init_slots);
-  } else {
-    T211 = YPfalse;
-  }
-  T210 = fun_sexpr_isa_init_slots_92;
-  T209 = CALL2(CHKREF(YPdefine_method),T211,T210);
-  YsyntaxYsexpr_isa_init_slots = T209;
-  regsym(&YsyntaxYsexpr_isa_init_slots,"syntax","sexpr-isa-init-slots");
-  T213 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_isa_init_values_93 = YPmet(FUNCODEREF(fun_sexpr_isa_init_values_93),YPPsym((P)"sexpr-isa-init-values"),T213,ENVNUL);
-  T217 = BOUNDP(YsyntaxYsexpr_isa_init_values);
-  if (T217 != YPfalse) {
-    T216 = CHKREF(YsyntaxYsexpr_isa_init_values);
-  } else {
-    T216 = YPfalse;
-  }
-  T215 = fun_sexpr_isa_init_values_93;
-  T214 = CALL2(CHKREF(YPdefine_method),T216,T215);
-  YsyntaxYsexpr_isa_init_values = T214;
-  regsym(&YsyntaxYsexpr_isa_init_values,"syntax","sexpr-isa-init-values");
-  lit_31 = YPPsym((P)"slot");
-  YsyntaxYDsexpr_slot_tag = CHKREF(lit_31);
-  regsym(&YsyntaxYDsexpr_slot_tag,"syntax","$sexpr-slot-tag");
-  T218 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_slotQ_94 = YPmet(FUNCODEREF(fun_sexpr_slotQ_94),YPPsym((P)"sexpr-slot?"),T218,ENVNUL);
-  T222 = BOUNDP(YsyntaxYsexpr_slotQ);
-  if (T222 != YPfalse) {
-    T221 = CHKREF(YsyntaxYsexpr_slotQ);
-  } else {
-    T221 = YPfalse;
-  }
-  T220 = fun_sexpr_slotQ_94;
-  T219 = CALL2(CHKREF(YPdefine_method),T221,T220);
-  YsyntaxYsexpr_slotQ = T219;
-  regsym(&YsyntaxYsexpr_slotQ,"syntax","sexpr-slot?");
-  T223 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_slot_object_95 = YPmet(FUNCODEREF(fun_sexpr_slot_object_95),YPPsym((P)"sexpr-slot-object"),T223,ENVNUL);
-  T227 = BOUNDP(YsyntaxYsexpr_slot_object);
-  if (T227 != YPfalse) {
-    T226 = CHKREF(YsyntaxYsexpr_slot_object);
-  } else {
-    T226 = YPfalse;
-  }
-  T225 = fun_sexpr_slot_object_95;
-  T224 = CALL2(CHKREF(YPdefine_method),T226,T225);
-  YsyntaxYsexpr_slot_object = T224;
-  regsym(&YsyntaxYsexpr_slot_object,"syntax","sexpr-slot-object");
-  T228 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_slot_variable_96 = YPmet(FUNCODEREF(fun_sexpr_slot_variable_96),YPPsym((P)"sexpr-slot-variable"),T228,ENVNUL);
-  T232 = BOUNDP(YsyntaxYsexpr_slot_variable);
-  if (T232 != YPfalse) {
-    T231 = CHKREF(YsyntaxYsexpr_slot_variable);
-  } else {
-    T231 = YPfalse;
-  }
-  T230 = fun_sexpr_slot_variable_96;
-  T229 = CALL2(CHKREF(YPdefine_method),T231,T230);
-  YsyntaxYsexpr_slot_variable = T229;
-  regsym(&YsyntaxYsexpr_slot_variable,"syntax","sexpr-slot-variable");
-  lit_32 = YPPsym((P)"nul");
-  T233 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_slot_init_97 = YPmet(FUNCODEREF(fun_sexpr_slot_init_97),YPPsym((P)"sexpr-slot-init"),T233,ENVNUL);
-  T237 = BOUNDP(YsyntaxYsexpr_slot_init);
-  if (T237 != YPfalse) {
-    T236 = CHKREF(YsyntaxYsexpr_slot_init);
-  } else {
-    T236 = YPfalse;
-  }
-  T235 = fun_sexpr_slot_init_97;
-  T234 = CALL2(CHKREF(YPdefine_method),T236,T235);
-  YsyntaxYsexpr_slot_init = T234;
-  regsym(&YsyntaxYsexpr_slot_init,"syntax","sexpr-slot-init");
-  lit_33 = YPPsym((P)"_x");
-  lit_34 = YPPsym((P)"slot-value");
-  lit_35 = YPPsym((P)"_x");
-  T238 = YPsig(YPpair(YPPsym((P)"name"),YPpair(YPPsym((P)"type"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_sexpr_make_getter_98 = YPmet(FUNCODEREF(fun_sexpr_make_getter_98),YPPsym((P)"sexpr-make-getter"),T238,ENVNUL);
-  T242 = BOUNDP(YsyntaxYsexpr_make_getter);
-  if (T242 != YPfalse) {
-    T241 = CHKREF(YsyntaxYsexpr_make_getter);
-  } else {
-    T241 = YPfalse;
-  }
-  T240 = fun_sexpr_make_getter_98;
-  T239 = CALL2(CHKREF(YPdefine_method),T241,T240);
-  YsyntaxYsexpr_make_getter = T239;
-  regsym(&YsyntaxYsexpr_make_getter,"syntax","sexpr-make-getter");
-  lit_36 = YPPsym((P)"_x");
-  lit_37 = YPPsym((P)"_z");
-  lit_38 = YPPsym((P)"slot-value-setter");
-  lit_39 = YPPsym((P)"_x");
-  lit_40 = YPPsym((P)"_z");
-  T243 = YPsig(YPpair(YPPsym((P)"name"),YPpair(YPPsym((P)"type"),YPpair(YPPsym((P)"slot-type"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLlstG));
-  fun_sexpr_make_setter_99 = YPmet(FUNCODEREF(fun_sexpr_make_setter_99),YPPsym((P)"sexpr-make-setter"),T243,ENVNUL);
-  T247 = BOUNDP(YsyntaxYsexpr_make_setter);
-  if (T247 != YPfalse) {
-    T246 = CHKREF(YsyntaxYsexpr_make_setter);
-  } else {
-    T246 = YPfalse;
-  }
-  T245 = fun_sexpr_make_setter_99;
-  T244 = CALL2(CHKREF(YPdefine_method),T246,T245);
-  YsyntaxYsexpr_make_setter = T244;
-  regsym(&YsyntaxYsexpr_make_setter,"syntax","sexpr-make-setter");
-  lit_41 = YPsb((P)"-setter");
-  T248 = YPsig(YPpair(YPPsym((P)"name"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLsymG));
-  fun_sexpr_make_setter_name_100 = YPmet(FUNCODEREF(fun_sexpr_make_setter_name_100),YPPsym((P)"sexpr-make-setter-name"),T248,ENVNUL);
-  T252 = BOUNDP(YsyntaxYsexpr_make_setter_name);
-  if (T252 != YPfalse) {
-    T251 = CHKREF(YsyntaxYsexpr_make_setter_name);
-  } else {
-    T251 = YPfalse;
-  }
-  T250 = fun_sexpr_make_setter_name_100;
-  T249 = CALL2(CHKREF(YPdefine_method),T251,T250);
-  YsyntaxYsexpr_make_setter_name = T249;
-  regsym(&YsyntaxYsexpr_make_setter_name,"syntax","sexpr-make-setter-name");
-  T253 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_macroQ_101 = YPmet(FUNCODEREF(fun_sexpr_macroQ_101),YPPsym((P)"sexpr-macro?"),T253,ENVNUL);
-  T257 = BOUNDP(YsyntaxYsexpr_macroQ);
-  if (T257 != YPfalse) {
-    T256 = CHKREF(YsyntaxYsexpr_macroQ);
-  } else {
-    T256 = YPfalse;
-  }
-  T255 = fun_sexpr_macroQ_101;
-  T254 = CALL2(CHKREF(YPdefine_method),T256,T255);
-  YsyntaxYsexpr_macroQ = T254;
-  regsym(&YsyntaxYsexpr_macroQ,"syntax","sexpr-macro?");
-  lit_42 = YPPsym((P)"macro-expand");
-  YsyntaxYDsexpr_macro_expand_tag = CHKREF(lit_42);
-  regsym(&YsyntaxYDsexpr_macro_expand_tag,"syntax","$sexpr-macro-expand-tag");
-  T258 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_macro_expandQ_102 = YPmet(FUNCODEREF(fun_sexpr_macro_expandQ_102),YPPsym((P)"sexpr-macro-expand?"),T258,ENVNUL);
-  T262 = BOUNDP(YsyntaxYsexpr_macro_expandQ);
-  if (T262 != YPfalse) {
-    T261 = CHKREF(YsyntaxYsexpr_macro_expandQ);
-  } else {
-    T261 = YPfalse;
-  }
-  T260 = fun_sexpr_macro_expandQ_102;
-  T259 = CALL2(CHKREF(YPdefine_method),T261,T260);
-  YsyntaxYsexpr_macro_expandQ = T259;
-  regsym(&YsyntaxYsexpr_macro_expandQ,"syntax","sexpr-macro-expand?");
-  lit_43 = YPPsym((P)"mif");
-  T264 = YsyntaxYDsexpr_syntax_if_tag = CHKREF(lit_43);
-  regsym(&YsyntaxYDsexpr_syntax_if_tag,"syntax","$sexpr-syntax-if-tag");
-  T263 = T264;
-  return T263;
-}
-
-P YsyntaxY___main_2___() {
-  P T105,T104,T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90;
-  P T89,T88,T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74;
-  P T73,T72,T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58;
-  P T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42;
-  P T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26;
-  P T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10;
-  P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
-loop:
-  T0 = YPsig(YPpair(YPPsym((P)"pat"),YPpair(YPPsym((P)"exp"),YPpair(YPPsym((P)"then"),YPpair(YPPsym((P)"else"),Ynil)))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)))),YPfalse,YPint((P)4),CHKREF(YLlstG));
-  fun_sexpr_make_syntax_if_103 = YPmet(FUNCODEREF(fun_sexpr_make_syntax_if_103),YPPsym((P)"sexpr-make-syntax-if"),T0,ENVNUL);
-  T4 = BOUNDP(YsyntaxYsexpr_make_syntax_if);
-  if (T4 != YPfalse) {
-    T3 = CHKREF(YsyntaxYsexpr_make_syntax_if);
-  } else {
-    T3 = YPfalse;
-  }
-  T2 = fun_sexpr_make_syntax_if_103;
-  T1 = CALL2(CHKREF(YPdefine_method),T3,T2);
-  YsyntaxYsexpr_make_syntax_if = T1;
-  regsym(&YsyntaxYsexpr_make_syntax_if,"syntax","sexpr-make-syntax-if");
-  lit_44 = YPPsym((P)"comma-atsign");
-  YsyntaxYTcomma_atsignT = CHKREF(lit_44);
-  regsym(&YsyntaxYTcomma_atsignT,"syntax","*comma-atsign*");
-  lit_45 = YPPsym((P)"bq-list");
-  YsyntaxYTbq_listT = CHKREF(lit_45);
-  regsym(&YsyntaxYTbq_listT,"syntax","*bq-list*");
-  lit_46 = YPPsym((P)"bq-list*");
-  YsyntaxYTbq_listTT = CHKREF(lit_46);
-  regsym(&YsyntaxYTbq_listTT,"syntax","*bq-list**");
-  lit_47 = YPPsym((P)"bq-append");
-  YsyntaxYTbq_appendT = CHKREF(lit_47);
-  regsym(&YsyntaxYTbq_appendT,"syntax","*bq-append*");
-  lit_48 = YPPsym((P)"bq-nconc");
-  YsyntaxYTbq_nconcT = CHKREF(lit_48);
-  regsym(&YsyntaxYTbq_nconcT,"syntax","*bq-nconc*");
-  lit_49 = YPPsym((P)"bq-clobberable");
-  YsyntaxYTbq_clobberableT = CHKREF(lit_49);
-  regsym(&YsyntaxYTbq_clobberableT,"syntax","*bq-clobberable*");
-  lit_50 = YPPsym((P)"bq-quote");
-  YsyntaxYTbq_quoteT = CHKREF(lit_50);
-  regsym(&YsyntaxYTbq_quoteT,"syntax","*bq-quote*");
-  T5 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  YsyntaxYsexpr_expand_backquote = YPmet(FUNCODEREF(YsyntaxYsexpr_expand_backquote),YPPsym((P)"sexpr-expand-backquote"),T5,ENVNUL);
-  T6 = YsyntaxYsexpr_expand_backquote;
-  YsyntaxYsexpr_expand_backquote = T6;
-  regsym(&YsyntaxYsexpr_expand_backquote,"syntax","sexpr-expand-backquote");
-  T7 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_build_backquote_expander_105 = YPmet(FUNCODEREF(fun_sexpr_build_backquote_expander_105),YPPsym((P)"sexpr-build-backquote-expander"),T7,ENVNUL);
-  T11 = BOUNDP(YsyntaxYsexpr_build_backquote_expander);
-  if (T11 != YPfalse) {
-    T10 = CHKREF(YsyntaxYsexpr_build_backquote_expander);
-  } else {
-    T10 = YPfalse;
-  }
-  T9 = fun_sexpr_build_backquote_expander_105;
-  T8 = CALL2(CHKREF(YPdefine_method),T10,T9);
-  YsyntaxYsexpr_build_backquote_expander = T8;
-  regsym(&YsyntaxYsexpr_build_backquote_expander,"syntax","sexpr-build-backquote-expander");
-  lit_51 = YPPsym((P)"unquote");
-  T12 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_unquoteQ_106 = YPmet(FUNCODEREF(fun_sexpr_unquoteQ_106),YPPsym((P)"sexpr-unquote?"),T12,ENVNUL);
-  T16 = BOUNDP(YsyntaxYsexpr_unquoteQ);
+  fun_sexpr_monitor_expand_52 = YPmet(FUNCODEREF(fun_sexpr_monitor_expand_52),YPPsym((P)"sexpr-monitor-expand"),T10,ENVNUL);
+  T16 = BOUNDP(YsyntaxYsexpr_monitor_expand);
   if (T16 != YPfalse) {
-    T15 = CHKREF(YsyntaxYsexpr_unquoteQ);
+    T15 = CHKREF(YsyntaxYsexpr_monitor_expand);
   } else {
     T15 = YPfalse;
   }
-  T14 = fun_sexpr_unquoteQ_106;
+  T14 = fun_sexpr_monitor_expand_52;
   T13 = CALL2(CHKREF(YPdefine_method),T15,T14);
-  YsyntaxYsexpr_unquoteQ = T13;
-  regsym(&YsyntaxYsexpr_unquoteQ,"syntax","sexpr-unquote?");
-  lit_52 = YPPsym((P)"unquote-splicing");
-  T17 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_unquote_splicingQ_107 = YPmet(FUNCODEREF(fun_sexpr_unquote_splicingQ_107),YPPsym((P)"sexpr-unquote-splicing?"),T17,ENVNUL);
-  T21 = BOUNDP(YsyntaxYsexpr_unquote_splicingQ);
-  if (T21 != YPfalse) {
-    T20 = CHKREF(YsyntaxYsexpr_unquote_splicingQ);
+  YsyntaxYsexpr_monitor_expand = T13;
+  regsym(&YsyntaxYsexpr_monitor_expand,"syntax","sexpr-monitor-expand");
+  T17 = YPsig(YPpair(YPPsym((P)"options"),YPpair(YPPsym((P)"option"),YPpair(YPPsym((P)"default"),Ynil))),YPpair(CHKREF(YLlstG),YPpair(CHKREF(YLsymG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YsyntaxYfind_option = YPmet(FUNCODEREF(YsyntaxYfind_option),YPPsym((P)"find-option"),T17,ENVNUL);
+  T18 = YsyntaxYfind_option;
+  YsyntaxYfind_option = T18;
+  regsym(&YsyntaxYfind_option,"syntax","find-option");
+  lit_23 = YPsb((P)"Match Pattern Failure");
+  lit_24 = YPsb((P)"Malformed TRY condition type: %=");
+  lit_25 = YPpair(YPPsym((P)"<condition>"), Ynil);
+  lit_26 = YPPsym((P)"type");
+  T21 = YPsig(YPpair(YPPsym((P)"msg"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YLstrG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_x_1214_54 = YPmet(FUNCODEREF(fun_x_1214_54),YPPsym((P)"x-1214"),T21,ENVNUL);
+  T20 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_55 = YPmet(FUNCODEREF(fun_55),YPfalse,T20,ENVNUL);
+  T19 = YPsig(YPpair(YPPsym((P)"options"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_monitor_type_56 = YPmet(FUNCODEREF(fun_sexpr_monitor_type_56),YPPsym((P)"sexpr-monitor-type"),T19,ENVNUL);
+  T25 = BOUNDP(YsyntaxYsexpr_monitor_type);
+  if (T25 != YPfalse) {
+    T24 = CHKREF(YsyntaxYsexpr_monitor_type);
   } else {
-    T20 = YPfalse;
+    T24 = YPfalse;
   }
-  T19 = fun_sexpr_unquote_splicingQ_107;
-  T18 = CALL2(CHKREF(YPdefine_method),T20,T19);
-  YsyntaxYsexpr_unquote_splicingQ = T18;
-  regsym(&YsyntaxYsexpr_unquote_splicingQ,"syntax","sexpr-unquote-splicing?");
-  T22 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_backquoteQ_108 = YPmet(FUNCODEREF(fun_sexpr_backquoteQ_108),YPPsym((P)"sexpr-backquote?"),T22,ENVNUL);
-  T26 = BOUNDP(YsyntaxYsexpr_backquoteQ);
-  if (T26 != YPfalse) {
-    T25 = CHKREF(YsyntaxYsexpr_backquoteQ);
+  T23 = fun_sexpr_monitor_type_56;
+  T22 = CALL2(CHKREF(YPdefine_method),T24,T23);
+  YsyntaxYsexpr_monitor_type = T22;
+  regsym(&YsyntaxYsexpr_monitor_type,"syntax","sexpr-monitor-type");
+  lit_27 = YPPsym((P)"$default-handler-info");
+  lit_28 = YPPsym((P)"lst");
+  lit_29 = YPPsym((P)"handler-info-arguments");
+  lit_30 = YPPsym((P)"set");
+  lit_31 = YPPsym((P)"handler-info-message");
+  lit_32 = YPPsym((P)"set");
+  lit_33 = YPPsym((P)"<simple-handler-info>");
+  lit_34 = YPPsym((P)"isa");
+  lit_35 = YPsb((P)"Match Pattern Failure");
+  lit_36 = YPsb((P)"Malformed TRY description: %=");
+  lit_37 = YPsb((P)"Match Pattern Failure");
+  lit_38 = YPsb((P)"Malformed TRY info expression: %=");
+  lit_39 = YPsb((P)"TRY may only have one of INFO or DESCRIPTION: %=");
+  lit_40 = YPPsym((P)"description");
+  lit_41 = YPPsym((P)"info");
+  T30 = YPsig(YPpair(YPPsym((P)"msg"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YLstrG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_x_1218_57 = YPmet(FUNCODEREF(fun_x_1218_57),YPPsym((P)"x-1218"),T30,ENVNUL);
+  T29 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_58 = YPmet(FUNCODEREF(fun_58),YPfalse,T29,ENVNUL);
+  T28 = YPsig(YPpair(YPPsym((P)"msg"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YLstrG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_x_1216_59 = YPmet(FUNCODEREF(fun_x_1216_59),YPPsym((P)"x-1216"),T28,ENVNUL);
+  T27 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_60 = YPmet(FUNCODEREF(fun_60),YPfalse,T27,ENVNUL);
+  T26 = YPsig(YPpair(YPPsym((P)"options"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_monitor_info_61 = YPmet(FUNCODEREF(fun_sexpr_monitor_info_61),YPPsym((P)"sexpr-monitor-info"),T26,ENVNUL);
+  T34 = BOUNDP(YsyntaxYsexpr_monitor_info);
+  if (T34 != YPfalse) {
+    T33 = CHKREF(YsyntaxYsexpr_monitor_info);
   } else {
-    T25 = YPfalse;
+    T33 = YPfalse;
   }
-  T24 = fun_sexpr_backquoteQ_108;
-  T23 = CALL2(CHKREF(YPdefine_method),T25,T24);
-  YsyntaxYsexpr_backquoteQ = T23;
-  regsym(&YsyntaxYsexpr_backquoteQ,"syntax","sexpr-backquote?");
-  T27 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_atomQ_109 = YPmet(FUNCODEREF(fun_sexpr_atomQ_109),YPPsym((P)"sexpr-atom?"),T27,ENVNUL);
-  T31 = BOUNDP(YsyntaxYsexpr_atomQ);
-  if (T31 != YPfalse) {
-    T30 = CHKREF(YsyntaxYsexpr_atomQ);
+  T32 = fun_sexpr_monitor_info_61;
+  T31 = CALL2(CHKREF(YPdefine_method),T33,T32);
+  YsyntaxYsexpr_monitor_info = T31;
+  regsym(&YsyntaxYsexpr_monitor_info,"syntax","sexpr-monitor-info");
+  lit_42 = YPpair(YPtrue, Ynil);
+  lit_43 = YPPsym((P)"test");
+  T35 = YPsig(YPpair(YPPsym((P)"options"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_monitor_test_62 = YPmet(FUNCODEREF(fun_sexpr_monitor_test_62),YPPsym((P)"sexpr-monitor-test"),T35,ENVNUL);
+  T39 = BOUNDP(YsyntaxYsexpr_monitor_test);
+  if (T39 != YPfalse) {
+    T38 = CHKREF(YsyntaxYsexpr_monitor_test);
   } else {
-    T30 = YPfalse;
+    T38 = YPfalse;
   }
-  T29 = fun_sexpr_atomQ_109;
-  T28 = CALL2(CHKREF(YPdefine_method),T30,T29);
-  YsyntaxYsexpr_atomQ = T28;
-  regsym(&YsyntaxYsexpr_atomQ,"syntax","sexpr-atom?");
-  T32 = YPsig(YPpair(YPPsym((P)"x"),YPpair(YPPsym((P)"y"),Ynil)),YPpair(CHKREF(YLlstG),YPpair(CHKREF(YLlstG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_nreconc_110 = YPmet(FUNCODEREF(fun_nreconc_110),YPPsym((P)"nreconc"),T32,ENVNUL);
-  T36 = BOUNDP(YsyntaxYnreconc);
-  if (T36 != YPfalse) {
-    T35 = CHKREF(YsyntaxYnreconc);
+  T37 = fun_sexpr_monitor_test_62;
+  T36 = CALL2(CHKREF(YPdefine_method),T38,T37);
+  YsyntaxYsexpr_monitor_test = T36;
+  regsym(&YsyntaxYsexpr_monitor_test,"syntax","sexpr-monitor-test");
+  T40 = YPsig(YPpair(YPPsym((P)"body"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_monitor_body_63 = YPmet(FUNCODEREF(fun_sexpr_monitor_body_63),YPPsym((P)"sexpr-monitor-body"),T40,ENVNUL);
+  T44 = BOUNDP(YsyntaxYsexpr_monitor_body);
+  if (T44 != YPfalse) {
+    T43 = CHKREF(YsyntaxYsexpr_monitor_body);
   } else {
-    T35 = YPfalse;
+    T43 = YPfalse;
   }
-  T34 = fun_nreconc_110;
-  T33 = CALL2(CHKREF(YPdefine_method),T35,T34);
-  YsyntaxYnreconc = T33;
-  regsym(&YsyntaxYnreconc,"syntax","nreconc");
-  lit_53 = YPsb((P)"Dotted ,@%=");
-  lit_54 = YPsb((P)"Malformed ,%=");
-  lit_55 = YPsb((P)"UNQUOTE-SPLICING %= AFTER BQ");
-  T39 = YPsig(YPpair(YPPsym((P)"p"),YPpair(YPPsym((P)"q"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_loop_111 = YPmet(FUNCODEREF(fun_loop_111),YPPsym((P)"loop"),T39,ENVNUL);
-  T38 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_112 = YPmet(FUNCODEREF(fun_112),YPfalse,T38,ENVNUL);
-  T37 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_bq_process_113 = YPmet(FUNCODEREF(fun_bq_process_113),YPPsym((P)"bq-process"),T37,ENVNUL);
-  T43 = BOUNDP(YsyntaxYbq_process);
-  if (T43 != YPfalse) {
-    T42 = CHKREF(YsyntaxYbq_process);
+  T42 = fun_sexpr_monitor_body_63;
+  T41 = CALL2(CHKREF(YPdefine_method),T43,T42);
+  YsyntaxYsexpr_monitor_body = T41;
+  regsym(&YsyntaxYsexpr_monitor_body,"syntax","sexpr-monitor-body");
+  lit_44 = YPPsym((P)"seq");
+  YsyntaxYDsexpr_begin_tag = CHKREF(lit_44);
+  regsym(&YsyntaxYDsexpr_begin_tag,"syntax","$sexpr-begin-tag");
+  T45 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_beginQ_64 = YPmet(FUNCODEREF(fun_sexpr_beginQ_64),YPPsym((P)"sexpr-begin?"),T45,ENVNUL);
+  T49 = BOUNDP(YsyntaxYsexpr_beginQ);
+  if (T49 != YPfalse) {
+    T48 = CHKREF(YsyntaxYsexpr_beginQ);
   } else {
-    T42 = YPfalse;
+    T48 = YPfalse;
   }
-  T41 = fun_bq_process_113;
-  T40 = CALL2(CHKREF(YPdefine_method),T42,T41);
-  YsyntaxYbq_process = T40;
-  regsym(&YsyntaxYbq_process,"syntax","bq-process");
-  T44 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_bracket_114 = YPmet(FUNCODEREF(fun_bracket_114),YPPsym((P)"bracket"),T44,ENVNUL);
-  T48 = BOUNDP(YsyntaxYbracket);
-  if (T48 != YPfalse) {
-    T47 = CHKREF(YsyntaxYbracket);
+  T47 = fun_sexpr_beginQ_64;
+  T46 = CALL2(CHKREF(YPdefine_method),T48,T47);
+  YsyntaxYsexpr_beginQ = T46;
+  regsym(&YsyntaxYsexpr_beginQ,"syntax","sexpr-begin?");
+  T50 = YPsig(YPpair(YPPsym((P)"begin-exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_begin_actions_65 = YPmet(FUNCODEREF(fun_sexpr_begin_actions_65),YPPsym((P)"sexpr-begin-actions"),T50,ENVNUL);
+  T54 = BOUNDP(YsyntaxYsexpr_begin_actions);
+  if (T54 != YPfalse) {
+    T53 = CHKREF(YsyntaxYsexpr_begin_actions);
   } else {
-    T47 = YPfalse;
+    T53 = YPfalse;
   }
-  T46 = fun_bracket_114;
-  T45 = CALL2(CHKREF(YPdefine_method),T47,T46);
-  YsyntaxYbracket = T45;
-  regsym(&YsyntaxYbracket,"syntax","bracket");
-  T49 = YPsig(YPpair(YPPsym((P)"fn"),YPpair(YPPsym((P)"x"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_map_tree_115 = YPmet(FUNCODEREF(fun_map_tree_115),YPPsym((P)"map-tree"),T49,ENVNUL);
-  T53 = BOUNDP(YsyntaxYmap_tree);
-  if (T53 != YPfalse) {
-    T52 = CHKREF(YsyntaxYmap_tree);
+  T52 = fun_sexpr_begin_actions_65;
+  T51 = CALL2(CHKREF(YPdefine_method),T53,T52);
+  YsyntaxYsexpr_begin_actions = T51;
+  regsym(&YsyntaxYsexpr_begin_actions,"syntax","sexpr-begin-actions");
+  T55 = YPsig(YPpair(YPPsym((P)"seq"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_last_expQ_66 = YPmet(FUNCODEREF(fun_sexpr_last_expQ_66),YPPsym((P)"sexpr-last-exp?"),T55,ENVNUL);
+  T59 = BOUNDP(YsyntaxYsexpr_last_expQ);
+  if (T59 != YPfalse) {
+    T58 = CHKREF(YsyntaxYsexpr_last_expQ);
   } else {
-    T52 = YPfalse;
+    T58 = YPfalse;
   }
-  T51 = fun_map_tree_115;
-  T50 = CALL2(CHKREF(YPdefine_method),T52,T51);
-  YsyntaxYmap_tree = T50;
-  regsym(&YsyntaxYmap_tree,"syntax","map-tree");
-  lit_56 = YPPsym((P)"pair");
-  lit_57 = YPPsym((P)"quote");
-  lit_58 = YPPsym((P)"list*");
-  lit_59 = YPPsym((P)"cat!");
-  lit_60 = YPPsym((P)"cat");
-  lit_61 = YPPsym((P)"lst");
-  T54 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_bq_remove_tokens_116 = YPmet(FUNCODEREF(fun_bq_remove_tokens_116),YPPsym((P)"bq-remove-tokens"),T54,ENVNUL);
-  T58 = BOUNDP(YsyntaxYbq_remove_tokens);
-  if (T58 != YPfalse) {
-    T57 = CHKREF(YsyntaxYbq_remove_tokens);
+  T57 = fun_sexpr_last_expQ_66;
+  T56 = CALL2(CHKREF(YPdefine_method),T58,T57);
+  YsyntaxYsexpr_last_expQ = T56;
+  regsym(&YsyntaxYsexpr_last_expQ,"syntax","sexpr-last-exp?");
+  T60 = YPsig(YPpair(YPPsym((P)"seq"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_first_exp_67 = YPmet(FUNCODEREF(fun_sexpr_first_exp_67),YPPsym((P)"sexpr-first-exp"),T60,ENVNUL);
+  T64 = BOUNDP(YsyntaxYsexpr_first_exp);
+  if (T64 != YPfalse) {
+    T63 = CHKREF(YsyntaxYsexpr_first_exp);
   } else {
-    T57 = YPfalse;
+    T63 = YPfalse;
   }
-  T56 = fun_bq_remove_tokens_116;
-  T55 = CALL2(CHKREF(YPdefine_method),T57,T56);
-  YsyntaxYbq_remove_tokens = T55;
-  regsym(&YsyntaxYbq_remove_tokens,"syntax","bq-remove-tokens");
-  T59 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_syntax_ifQ_117 = YPmet(FUNCODEREF(fun_sexpr_syntax_ifQ_117),YPPsym((P)"sexpr-syntax-if?"),T59,ENVNUL);
-  T63 = BOUNDP(YsyntaxYsexpr_syntax_ifQ);
-  if (T63 != YPfalse) {
-    T62 = CHKREF(YsyntaxYsexpr_syntax_ifQ);
+  T62 = fun_sexpr_first_exp_67;
+  T61 = CALL2(CHKREF(YPdefine_method),T63,T62);
+  YsyntaxYsexpr_first_exp = T61;
+  regsym(&YsyntaxYsexpr_first_exp,"syntax","sexpr-first-exp");
+  T65 = YPsig(YPpair(YPPsym((P)"seq"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_rest_exps_68 = YPmet(FUNCODEREF(fun_sexpr_rest_exps_68),YPPsym((P)"sexpr-rest-exps"),T65,ENVNUL);
+  T69 = BOUNDP(YsyntaxYsexpr_rest_exps);
+  if (T69 != YPfalse) {
+    T68 = CHKREF(YsyntaxYsexpr_rest_exps);
   } else {
-    T62 = YPfalse;
+    T68 = YPfalse;
   }
-  T61 = fun_sexpr_syntax_ifQ_117;
-  T60 = CALL2(CHKREF(YPdefine_method),T62,T61);
-  YsyntaxYsexpr_syntax_ifQ = T60;
-  regsym(&YsyntaxYsexpr_syntax_ifQ,"syntax","sexpr-syntax-if?");
-  T64 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_syntax_if_value_118 = YPmet(FUNCODEREF(fun_sexpr_syntax_if_value_118),YPPsym((P)"sexpr-syntax-if-value"),T64,ENVNUL);
-  T68 = BOUNDP(YsyntaxYsexpr_syntax_if_value);
-  if (T68 != YPfalse) {
-    T67 = CHKREF(YsyntaxYsexpr_syntax_if_value);
+  T67 = fun_sexpr_rest_exps_68;
+  T66 = CALL2(CHKREF(YPdefine_method),T68,T67);
+  YsyntaxYsexpr_rest_exps = T66;
+  regsym(&YsyntaxYsexpr_rest_exps,"syntax","sexpr-rest-exps");
+  T70 = YPsig(YPpair(YPPsym((P)"seq"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_sequence_Gbegin_69 = YPmet(FUNCODEREF(fun_sexpr_sequence_Gbegin_69),YPPsym((P)"sexpr-sequence->begin"),T70,ENVNUL);
+  T74 = BOUNDP(YsyntaxYsexpr_sequence_Gbegin);
+  if (T74 != YPfalse) {
+    T73 = CHKREF(YsyntaxYsexpr_sequence_Gbegin);
   } else {
-    T67 = YPfalse;
+    T73 = YPfalse;
   }
-  T66 = fun_sexpr_syntax_if_value_118;
-  T65 = CALL2(CHKREF(YPdefine_method),T67,T66);
-  YsyntaxYsexpr_syntax_if_value = T65;
-  regsym(&YsyntaxYsexpr_syntax_if_value,"syntax","sexpr-syntax-if-value");
-  T69 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_syntax_if_pattern_119 = YPmet(FUNCODEREF(fun_sexpr_syntax_if_pattern_119),YPPsym((P)"sexpr-syntax-if-pattern"),T69,ENVNUL);
-  T73 = BOUNDP(YsyntaxYsexpr_syntax_if_pattern);
-  if (T73 != YPfalse) {
-    T72 = CHKREF(YsyntaxYsexpr_syntax_if_pattern);
+  T72 = fun_sexpr_sequence_Gbegin_69;
+  T71 = CALL2(CHKREF(YPdefine_method),T73,T72);
+  YsyntaxYsexpr_sequence_Gbegin = T71;
+  regsym(&YsyntaxYsexpr_sequence_Gbegin,"syntax","sexpr-sequence->begin");
+  T75 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_make_begin_70 = YPmet(FUNCODEREF(fun_sexpr_make_begin_70),YPPsym((P)"sexpr-make-begin"),T75,ENVNUL);
+  T79 = BOUNDP(YsyntaxYsexpr_make_begin);
+  if (T79 != YPfalse) {
+    T78 = CHKREF(YsyntaxYsexpr_make_begin);
   } else {
-    T72 = YPfalse;
+    T78 = YPfalse;
   }
-  T71 = fun_sexpr_syntax_if_pattern_119;
-  T70 = CALL2(CHKREF(YPdefine_method),T72,T71);
-  YsyntaxYsexpr_syntax_if_pattern = T70;
-  regsym(&YsyntaxYsexpr_syntax_if_pattern,"syntax","sexpr-syntax-if-pattern");
-  T74 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_syntax_if_then_120 = YPmet(FUNCODEREF(fun_sexpr_syntax_if_then_120),YPPsym((P)"sexpr-syntax-if-then"),T74,ENVNUL);
-  T78 = BOUNDP(YsyntaxYsexpr_syntax_if_then);
-  if (T78 != YPfalse) {
-    T77 = CHKREF(YsyntaxYsexpr_syntax_if_then);
+  T77 = fun_sexpr_make_begin_70;
+  T76 = CALL2(CHKREF(YPdefine_method),T78,T77);
+  YsyntaxYsexpr_make_begin = T76;
+  regsym(&YsyntaxYsexpr_make_begin,"syntax","sexpr-make-begin");
+  T80 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_applicationQ_71 = YPmet(FUNCODEREF(fun_sexpr_applicationQ_71),YPPsym((P)"sexpr-application?"),T80,ENVNUL);
+  T84 = BOUNDP(YsyntaxYsexpr_applicationQ);
+  if (T84 != YPfalse) {
+    T83 = CHKREF(YsyntaxYsexpr_applicationQ);
   } else {
-    T77 = YPfalse;
+    T83 = YPfalse;
   }
-  T76 = fun_sexpr_syntax_if_then_120;
-  T75 = CALL2(CHKREF(YPdefine_method),T77,T76);
-  YsyntaxYsexpr_syntax_if_then = T75;
-  regsym(&YsyntaxYsexpr_syntax_if_then,"syntax","sexpr-syntax-if-then");
-  T79 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_syntax_if_else_121 = YPmet(FUNCODEREF(fun_sexpr_syntax_if_else_121),YPPsym((P)"sexpr-syntax-if-else"),T79,ENVNUL);
-  T83 = BOUNDP(YsyntaxYsexpr_syntax_if_else);
-  if (T83 != YPfalse) {
-    T82 = CHKREF(YsyntaxYsexpr_syntax_if_else);
+  T82 = fun_sexpr_applicationQ_71;
+  T81 = CALL2(CHKREF(YPdefine_method),T83,T82);
+  YsyntaxYsexpr_applicationQ = T81;
+  regsym(&YsyntaxYsexpr_applicationQ,"syntax","sexpr-application?");
+  T85 = YPsig(YPpair(YPPsym((P)"app"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_operator_72 = YPmet(FUNCODEREF(fun_sexpr_operator_72),YPPsym((P)"sexpr-operator"),T85,ENVNUL);
+  T89 = BOUNDP(YsyntaxYsexpr_operator);
+  if (T89 != YPfalse) {
+    T88 = CHKREF(YsyntaxYsexpr_operator);
   } else {
-    T82 = YPfalse;
+    T88 = YPfalse;
   }
-  T81 = fun_sexpr_syntax_if_else_121;
-  T80 = CALL2(CHKREF(YPdefine_method),T82,T81);
-  YsyntaxYsexpr_syntax_if_else = T80;
-  regsym(&YsyntaxYsexpr_syntax_if_else,"syntax","sexpr-syntax-if-else");
-  T84 = YPsig(YPpair(YPPsym((P)"pat"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_sexpr_pattern_variableQ_122 = YPmet(FUNCODEREF(fun_sexpr_pattern_variableQ_122),YPPsym((P)"sexpr-pattern-variable?"),T84,ENVNUL);
-  T88 = BOUNDP(YsyntaxYsexpr_pattern_variableQ);
-  if (T88 != YPfalse) {
-    T87 = CHKREF(YsyntaxYsexpr_pattern_variableQ);
+  T87 = fun_sexpr_operator_72;
+  T86 = CALL2(CHKREF(YPdefine_method),T88,T87);
+  YsyntaxYsexpr_operator = T86;
+  regsym(&YsyntaxYsexpr_operator,"syntax","sexpr-operator");
+  T90 = YPsig(YPpair(YPPsym((P)"app"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_operands_73 = YPmet(FUNCODEREF(fun_sexpr_operands_73),YPPsym((P)"sexpr-operands"),T90,ENVNUL);
+  T94 = BOUNDP(YsyntaxYsexpr_operands);
+  if (T94 != YPfalse) {
+    T93 = CHKREF(YsyntaxYsexpr_operands);
   } else {
-    T87 = YPfalse;
+    T93 = YPfalse;
   }
-  T86 = fun_sexpr_pattern_variableQ_122;
-  T85 = CALL2(CHKREF(YPdefine_method),T87,T86);
-  YsyntaxYsexpr_pattern_variableQ = T85;
-  regsym(&YsyntaxYsexpr_pattern_variableQ,"syntax","sexpr-pattern-variable?");
-  T89 = YPsig(YPpair(YPPsym((P)"pat"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_pattern_variable_name_123 = YPmet(FUNCODEREF(fun_sexpr_pattern_variable_name_123),YPPsym((P)"sexpr-pattern-variable-name"),T89,ENVNUL);
-  T93 = BOUNDP(YsyntaxYsexpr_pattern_variable_name);
-  if (T93 != YPfalse) {
-    T92 = CHKREF(YsyntaxYsexpr_pattern_variable_name);
-  } else {
-    T92 = YPfalse;
-  }
-  T91 = fun_sexpr_pattern_variable_name_123;
-  T90 = CALL2(CHKREF(YPdefine_method),T92,T91);
-  YsyntaxYsexpr_pattern_variable_name = T90;
-  regsym(&YsyntaxYsexpr_pattern_variable_name,"syntax","sexpr-pattern-variable-name");
-  T95 = YPsig(YPpair(YPPsym((P)"pat"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_col_124 = YPmet(FUNCODEREF(fun_col_124),YPPsym((P)"col"),T95,ENVNUL);
-  T94 = YPsig(YPpair(YPPsym((P)"pat"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_sexpr_bind_pattern_variables_125 = YPmet(FUNCODEREF(fun_sexpr_bind_pattern_variables_125),YPPsym((P)"sexpr-bind-pattern-variables"),T94,ENVNUL);
-  T99 = BOUNDP(YsyntaxYsexpr_bind_pattern_variables);
+  T92 = fun_sexpr_operands_73;
+  T91 = CALL2(CHKREF(YPdefine_method),T93,T92);
+  YsyntaxYsexpr_operands = T91;
+  regsym(&YsyntaxYsexpr_operands,"syntax","sexpr-operands");
+  T95 = YPsig(YPpair(YPPsym((P)"args"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_no_operandsQ_74 = YPmet(FUNCODEREF(fun_sexpr_no_operandsQ_74),YPPsym((P)"sexpr-no-operands?"),T95,ENVNUL);
+  T99 = BOUNDP(YsyntaxYsexpr_no_operandsQ);
   if (T99 != YPfalse) {
-    T98 = CHKREF(YsyntaxYsexpr_bind_pattern_variables);
+    T98 = CHKREF(YsyntaxYsexpr_no_operandsQ);
   } else {
     T98 = YPfalse;
   }
-  T97 = fun_sexpr_bind_pattern_variables_125;
+  T97 = fun_sexpr_no_operandsQ_74;
   T96 = CALL2(CHKREF(YPdefine_method),T98,T97);
-  YsyntaxYsexpr_bind_pattern_variables = T96;
-  regsym(&YsyntaxYsexpr_bind_pattern_variables,"syntax","sexpr-bind-pattern-variables");
-  lit_62 = YPPsym((P)"exp");
-  lit_63 = YPPsym((P)"exp");
-  T100 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_sexpr_make_macro_function_126 = YPmet(FUNCODEREF(fun_sexpr_make_macro_function_126),YPPsym((P)"sexpr-make-macro-function"),T100,ENVNUL);
-  T104 = BOUNDP(YsyntaxYsexpr_make_macro_function);
+  YsyntaxYsexpr_no_operandsQ = T96;
+  regsym(&YsyntaxYsexpr_no_operandsQ,"syntax","sexpr-no-operands?");
+  T100 = YPsig(YPpair(YPPsym((P)"args"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_first_operand_75 = YPmet(FUNCODEREF(fun_sexpr_first_operand_75),YPPsym((P)"sexpr-first-operand"),T100,ENVNUL);
+  T104 = BOUNDP(YsyntaxYsexpr_first_operand);
   if (T104 != YPfalse) {
-    T103 = CHKREF(YsyntaxYsexpr_make_macro_function);
+    T103 = CHKREF(YsyntaxYsexpr_first_operand);
   } else {
     T103 = YPfalse;
   }
-  T102 = fun_sexpr_make_macro_function_126;
+  T102 = fun_sexpr_first_operand_75;
   T101 = CALL2(CHKREF(YPdefine_method),T103,T102);
-  YsyntaxYsexpr_make_macro_function = T101;
+  YsyntaxYsexpr_first_operand = T101;
+  regsym(&YsyntaxYsexpr_first_operand,"syntax","sexpr-first-operand");
+  T105 = YPsig(YPpair(YPPsym((P)"args"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_rest_operands_76 = YPmet(FUNCODEREF(fun_sexpr_rest_operands_76),YPPsym((P)"sexpr-rest-operands"),T105,ENVNUL);
+  T109 = BOUNDP(YsyntaxYsexpr_rest_operands);
+  if (T109 != YPfalse) {
+    T108 = CHKREF(YsyntaxYsexpr_rest_operands);
+  } else {
+    T108 = YPfalse;
+  }
+  T107 = fun_sexpr_rest_operands_76;
+  T106 = CALL2(CHKREF(YPdefine_method),T108,T107);
+  YsyntaxYsexpr_rest_operands = T106;
+  regsym(&YsyntaxYsexpr_rest_operands,"syntax","sexpr-rest-operands");
+  T110 = YPsig(YPpair(YPPsym((P)"op"),YPpair(YPPsym((P)"operands"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLlstG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_sexpr_make_application_77 = YPmet(FUNCODEREF(fun_sexpr_make_application_77),YPPsym((P)"sexpr-make-application"),T110,ENVNUL);
+  T114 = BOUNDP(YsyntaxYsexpr_make_application);
+  if (T114 != YPfalse) {
+    T113 = CHKREF(YsyntaxYsexpr_make_application);
+  } else {
+    T113 = YPfalse;
+  }
+  T112 = fun_sexpr_make_application_77;
+  T111 = CALL2(CHKREF(YPdefine_method),T113,T112);
+  YsyntaxYsexpr_make_application = T111;
+  regsym(&YsyntaxYsexpr_make_application,"syntax","sexpr-make-application");
+  YsyntaxYTunique_name_counterT = YPint((P)0);
+  regsym(&YsyntaxYTunique_name_counterT,"syntax","*unique-name-counter*");
+  T115 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLintG));
+  fun_sexpr_new_unique_name_counterX_78 = YPmet(FUNCODEREF(fun_sexpr_new_unique_name_counterX_78),YPPsym((P)"sexpr-new-unique-name-counter!"),T115,ENVNUL);
+  T119 = BOUNDP(YsyntaxYsexpr_new_unique_name_counterX);
+  if (T119 != YPfalse) {
+    T118 = CHKREF(YsyntaxYsexpr_new_unique_name_counterX);
+  } else {
+    T118 = YPfalse;
+  }
+  T117 = fun_sexpr_new_unique_name_counterX_78;
+  T116 = CALL2(CHKREF(YPdefine_method),T118,T117);
+  YsyntaxYsexpr_new_unique_name_counterX = T116;
+  regsym(&YsyntaxYsexpr_new_unique_name_counterX,"syntax","sexpr-new-unique-name-counter!");
+  YsyntaxYLnameG = CHKREF(YLanyG);
+  regsym(&YsyntaxYLnameG,"syntax","<name>");
+  T120 = YPsig(YPpair(YPPsym((P)"prefix"),Ynil),YPpair(CHKREF(YsyntaxYLnameG),Ynil),YPfalse,YPint((P)1),CHKREF(YLsymG));
+  fun_sexpr_unique_name_79 = YPmet(FUNCODEREF(fun_sexpr_unique_name_79),YPPsym((P)"sexpr-unique-name"),T120,ENVNUL);
+  T124 = BOUNDP(YsyntaxYsexpr_unique_name);
+  if (T124 != YPfalse) {
+    T123 = CHKREF(YsyntaxYsexpr_unique_name);
+  } else {
+    T123 = YPfalse;
+  }
+  T122 = fun_sexpr_unique_name_79;
+  T121 = CALL2(CHKREF(YPdefine_method),T123,T122);
+  YsyntaxYsexpr_unique_name = T121;
+  regsym(&YsyntaxYsexpr_unique_name,"syntax","sexpr-unique-name");
+  lit_45 = YPPsym((P)"let");
+  YsyntaxYDsexpr_let_tag = CHKREF(lit_45);
+  regsym(&YsyntaxYDsexpr_let_tag,"syntax","$sexpr-let-tag");
+  T125 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_letQ_80 = YPmet(FUNCODEREF(fun_sexpr_letQ_80),YPPsym((P)"sexpr-let?"),T125,ENVNUL);
+  T129 = BOUNDP(YsyntaxYsexpr_letQ);
+  if (T129 != YPfalse) {
+    T128 = CHKREF(YsyntaxYsexpr_letQ);
+  } else {
+    T128 = YPfalse;
+  }
+  T127 = fun_sexpr_letQ_80;
+  T126 = CALL2(CHKREF(YPdefine_method),T128,T127);
+  YsyntaxYsexpr_letQ = T126;
+  regsym(&YsyntaxYsexpr_letQ,"syntax","sexpr-let?");
+  T130 = YPsig(YPpair(YPPsym((P)"let-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_let_bound_variables_81 = YPmet(FUNCODEREF(fun_sexpr_let_bound_variables_81),YPPsym((P)"sexpr-let-bound-variables"),T130,ENVNUL);
+  T134 = BOUNDP(YsyntaxYsexpr_let_bound_variables);
+  if (T134 != YPfalse) {
+    T133 = CHKREF(YsyntaxYsexpr_let_bound_variables);
+  } else {
+    T133 = YPfalse;
+  }
+  T132 = fun_sexpr_let_bound_variables_81;
+  T131 = CALL2(CHKREF(YPdefine_method),T133,T132);
+  YsyntaxYsexpr_let_bound_variables = T131;
+  regsym(&YsyntaxYsexpr_let_bound_variables,"syntax","sexpr-let-bound-variables");
+  T135 = YPsig(YPpair(YPPsym((P)"let-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_let_values_82 = YPmet(FUNCODEREF(fun_sexpr_let_values_82),YPPsym((P)"sexpr-let-values"),T135,ENVNUL);
+  T139 = BOUNDP(YsyntaxYsexpr_let_values);
+  if (T139 != YPfalse) {
+    T138 = CHKREF(YsyntaxYsexpr_let_values);
+  } else {
+    T138 = YPfalse;
+  }
+  T137 = fun_sexpr_let_values_82;
+  T136 = CALL2(CHKREF(YPdefine_method),T138,T137);
+  YsyntaxYsexpr_let_values = T136;
+  regsym(&YsyntaxYsexpr_let_values,"syntax","sexpr-let-values");
+  T140 = YPsig(YPpair(YPPsym((P)"let-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_let_body_83 = YPmet(FUNCODEREF(fun_sexpr_let_body_83),YPPsym((P)"sexpr-let-body"),T140,ENVNUL);
+  T144 = BOUNDP(YsyntaxYsexpr_let_body);
+  if (T144 != YPfalse) {
+    T143 = CHKREF(YsyntaxYsexpr_let_body);
+  } else {
+    T143 = YPfalse;
+  }
+  T142 = fun_sexpr_let_body_83;
+  T141 = CALL2(CHKREF(YPdefine_method),T143,T142);
+  YsyntaxYsexpr_let_body = T141;
+  regsym(&YsyntaxYsexpr_let_body,"syntax","sexpr-let-body");
+  lit_46 = YPPsym((P)"head");
+  lit_47 = YPPsym((P)"tail");
+  lit_48 = YPPsym((P)"<lst>");
+  lit_49 = YPPsym((P)"...");
+  lit_50 = YPsb((P)"tup");
+  lit_51 = YPPsym((P)"tup");
+  T147 = YPsig(YPpair(YPPsym((P)"rtnames"),YPpair(YPPsym((P)"rtvalues"),YPpair(YPPsym((P)"index"),YPpair(YPPsym((P)"tnames"),Ynil)))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)))),YPfalse,YPint((P)4),CHKREF(YLanyG));
+  fun_inner_84 = YPmet(FUNCODEREF(fun_inner_84),YPPsym((P)"inner"),T147,ENVNUL);
+  T146 = YPsig(YPpair(YPPsym((P)"rnames"),YPpair(YPPsym((P)"rvalues"),YPpair(YPPsym((P)"names"),YPpair(YPPsym((P)"vals"),Ynil)))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)))),YPfalse,YPint((P)4),CHKREF(YLanyG));
+  fun_loop_85 = YPmet(FUNCODEREF(fun_loop_85),YPPsym((P)"loop"),T146,ENVNUL);
+  T145 = YPsig(YPpair(YPPsym((P)"names"),YPpair(YPPsym((P)"vals"),Ynil)),YPpair(CHKREF(YLlstG),YPpair(CHKREF(YLlstG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLtupG));
+  fun_sexpr_let_namesAvalues_86 = YPmet(FUNCODEREF(fun_sexpr_let_namesAvalues_86),YPPsym((P)"sexpr-let-names+values"),T145,ENVNUL);
+  T151 = BOUNDP(YsyntaxYsexpr_let_namesAvalues);
+  if (T151 != YPfalse) {
+    T150 = CHKREF(YsyntaxYsexpr_let_namesAvalues);
+  } else {
+    T150 = YPfalse;
+  }
+  T149 = fun_sexpr_let_namesAvalues_86;
+  T148 = CALL2(CHKREF(YPdefine_method),T150,T149);
+  YsyntaxYsexpr_let_namesAvalues = T148;
+  regsym(&YsyntaxYsexpr_let_namesAvalues,"syntax","sexpr-let-names+values");
+  T153 = YPsig(YPpair(YPPsym((P)"names"),YPpair(YPPsym((P)"values"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_col_87 = YPmet(FUNCODEREF(fun_col_87),YPPsym((P)"col"),T153,ENVNUL);
+  T152 = YPsig(YPpair(YPPsym((P)"let-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_let_Gcombination_88 = YPmet(FUNCODEREF(fun_sexpr_let_Gcombination_88),YPPsym((P)"sexpr-let->combination"),T152,ENVNUL);
+  T157 = BOUNDP(YsyntaxYsexpr_let_Gcombination);
+  if (T157 != YPfalse) {
+    T156 = CHKREF(YsyntaxYsexpr_let_Gcombination);
+  } else {
+    T156 = YPfalse;
+  }
+  T155 = fun_sexpr_let_Gcombination_88;
+  T154 = CALL2(CHKREF(YPdefine_method),T156,T155);
+  YsyntaxYsexpr_let_Gcombination = T154;
+  regsym(&YsyntaxYsexpr_let_Gcombination,"syntax","sexpr-let->combination");
+  lit_52 = YPPsym((P)"loc");
+  YsyntaxYDsexpr_locals_tag = CHKREF(lit_52);
+  regsym(&YsyntaxYDsexpr_locals_tag,"syntax","$sexpr-locals-tag");
+  T158 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_locQ_89 = YPmet(FUNCODEREF(fun_sexpr_locQ_89),YPPsym((P)"sexpr-loc?"),T158,ENVNUL);
+  T162 = BOUNDP(YsyntaxYsexpr_locQ);
+  if (T162 != YPfalse) {
+    T161 = CHKREF(YsyntaxYsexpr_locQ);
+  } else {
+    T161 = YPfalse;
+  }
+  T160 = fun_sexpr_locQ_89;
+  T159 = CALL2(CHKREF(YPdefine_method),T161,T160);
+  YsyntaxYsexpr_locQ = T159;
+  regsym(&YsyntaxYsexpr_locQ,"syntax","sexpr-loc?");
+  T163 = YPsig(YPpair(YPPsym((P)"loc-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_loc_bound_names_90 = YPmet(FUNCODEREF(fun_sexpr_loc_bound_names_90),YPPsym((P)"sexpr-loc-bound-names"),T163,ENVNUL);
+  T167 = BOUNDP(YsyntaxYsexpr_loc_bound_names);
+  if (T167 != YPfalse) {
+    T166 = CHKREF(YsyntaxYsexpr_loc_bound_names);
+  } else {
+    T166 = YPfalse;
+  }
+  T165 = fun_sexpr_loc_bound_names_90;
+  T164 = CALL2(CHKREF(YPdefine_method),T166,T165);
+  YsyntaxYsexpr_loc_bound_names = T164;
+  regsym(&YsyntaxYsexpr_loc_bound_names,"syntax","sexpr-loc-bound-names");
+  T168 = YPsig(YPpair(YPPsym((P)"loc-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_loc_bound_signatures_91 = YPmet(FUNCODEREF(fun_sexpr_loc_bound_signatures_91),YPPsym((P)"sexpr-loc-bound-signatures"),T168,ENVNUL);
+  T172 = BOUNDP(YsyntaxYsexpr_loc_bound_signatures);
+  if (T172 != YPfalse) {
+    T171 = CHKREF(YsyntaxYsexpr_loc_bound_signatures);
+  } else {
+    T171 = YPfalse;
+  }
+  T170 = fun_sexpr_loc_bound_signatures_91;
+  T169 = CALL2(CHKREF(YPdefine_method),T171,T170);
+  YsyntaxYsexpr_loc_bound_signatures = T169;
+  regsym(&YsyntaxYsexpr_loc_bound_signatures,"syntax","sexpr-loc-bound-signatures");
+  T173 = YPsig(YPpair(YPPsym((P)"loc-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_loc_bound_bodies_92 = YPmet(FUNCODEREF(fun_sexpr_loc_bound_bodies_92),YPPsym((P)"sexpr-loc-bound-bodies"),T173,ENVNUL);
+  T177 = BOUNDP(YsyntaxYsexpr_loc_bound_bodies);
+  if (T177 != YPfalse) {
+    T176 = CHKREF(YsyntaxYsexpr_loc_bound_bodies);
+  } else {
+    T176 = YPfalse;
+  }
+  T175 = fun_sexpr_loc_bound_bodies_92;
+  T174 = CALL2(CHKREF(YPdefine_method),T176,T175);
+  YsyntaxYsexpr_loc_bound_bodies = T174;
+  regsym(&YsyntaxYsexpr_loc_bound_bodies,"syntax","sexpr-loc-bound-bodies");
+  T178 = YPsig(YPpair(YPPsym((P)"loc-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_loc_raw_body_93 = YPmet(FUNCODEREF(fun_sexpr_loc_raw_body_93),YPPsym((P)"sexpr-loc-raw-body"),T178,ENVNUL);
+  T182 = BOUNDP(YsyntaxYsexpr_loc_raw_body);
+  if (T182 != YPfalse) {
+    T181 = CHKREF(YsyntaxYsexpr_loc_raw_body);
+  } else {
+    T181 = YPfalse;
+  }
+  T180 = fun_sexpr_loc_raw_body_93;
+  T179 = CALL2(CHKREF(YPdefine_method),T181,T180);
+  YsyntaxYsexpr_loc_raw_body = T179;
+  regsym(&YsyntaxYsexpr_loc_raw_body,"syntax","sexpr-loc-raw-body");
+  T183 = YPsig(YPpair(YPPsym((P)"loc-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_loc_body_94 = YPmet(FUNCODEREF(fun_sexpr_loc_body_94),YPPsym((P)"sexpr-loc-body"),T183,ENVNUL);
+  T187 = BOUNDP(YsyntaxYsexpr_loc_body);
+  if (T187 != YPfalse) {
+    T186 = CHKREF(YsyntaxYsexpr_loc_body);
+  } else {
+    T186 = YPfalse;
+  }
+  T185 = fun_sexpr_loc_body_94;
+  T184 = CALL2(CHKREF(YPdefine_method),T186,T185);
+  YsyntaxYsexpr_loc_body = T184;
+  regsym(&YsyntaxYsexpr_loc_body,"syntax","sexpr-loc-body");
+  lit_53 = YPPsym((P)"rep");
+  YsyntaxYDsexpr_iterate_tag = CHKREF(lit_53);
+  regsym(&YsyntaxYDsexpr_iterate_tag,"syntax","$sexpr-iterate-tag");
+  T188 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_iterateQ_95 = YPmet(FUNCODEREF(fun_sexpr_iterateQ_95),YPPsym((P)"sexpr-iterate?"),T188,ENVNUL);
+  T192 = BOUNDP(YsyntaxYsexpr_iterateQ);
+  if (T192 != YPfalse) {
+    T191 = CHKREF(YsyntaxYsexpr_iterateQ);
+  } else {
+    T191 = YPfalse;
+  }
+  T190 = fun_sexpr_iterateQ_95;
+  T189 = CALL2(CHKREF(YPdefine_method),T191,T190);
+  YsyntaxYsexpr_iterateQ = T189;
+  regsym(&YsyntaxYsexpr_iterateQ,"syntax","sexpr-iterate?");
+  T193 = YPsig(YPpair(YPPsym((P)"rep-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLsymG));
+  fun_sexpr_iterate_name_96 = YPmet(FUNCODEREF(fun_sexpr_iterate_name_96),YPPsym((P)"sexpr-iterate-name"),T193,ENVNUL);
+  T197 = BOUNDP(YsyntaxYsexpr_iterate_name);
+  if (T197 != YPfalse) {
+    T196 = CHKREF(YsyntaxYsexpr_iterate_name);
+  } else {
+    T196 = YPfalse;
+  }
+  T195 = fun_sexpr_iterate_name_96;
+  T194 = CALL2(CHKREF(YPdefine_method),T196,T195);
+  YsyntaxYsexpr_iterate_name = T194;
+  regsym(&YsyntaxYsexpr_iterate_name,"syntax","sexpr-iterate-name");
+  lit_54 = YPPsym((P)"=>");
+  YsyntaxYDsexpr_values_tag = CHKREF(lit_54);
+  regsym(&YsyntaxYDsexpr_values_tag,"syntax","$sexpr-values-tag");
+  T198 = YPsig(YPpair(YPPsym((P)"rep-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_iterate_signature_97 = YPmet(FUNCODEREF(fun_sexpr_iterate_signature_97),YPPsym((P)"sexpr-iterate-signature"),T198,ENVNUL);
+  T202 = BOUNDP(YsyntaxYsexpr_iterate_signature);
+  if (T202 != YPfalse) {
+    T201 = CHKREF(YsyntaxYsexpr_iterate_signature);
+  } else {
+    T201 = YPfalse;
+  }
+  T200 = fun_sexpr_iterate_signature_97;
+  T199 = CALL2(CHKREF(YPdefine_method),T201,T200);
+  YsyntaxYsexpr_iterate_signature = T199;
+  regsym(&YsyntaxYsexpr_iterate_signature,"syntax","sexpr-iterate-signature");
+  T203 = YPsig(YPpair(YPPsym((P)"rep-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_iterate_inits_98 = YPmet(FUNCODEREF(fun_sexpr_iterate_inits_98),YPPsym((P)"sexpr-iterate-inits"),T203,ENVNUL);
+  T207 = BOUNDP(YsyntaxYsexpr_iterate_inits);
+  if (T207 != YPfalse) {
+    T206 = CHKREF(YsyntaxYsexpr_iterate_inits);
+  } else {
+    T206 = YPfalse;
+  }
+  T205 = fun_sexpr_iterate_inits_98;
+  T204 = CALL2(CHKREF(YPdefine_method),T206,T205);
+  YsyntaxYsexpr_iterate_inits = T204;
+  regsym(&YsyntaxYsexpr_iterate_inits,"syntax","sexpr-iterate-inits");
+  T208 = YPsig(YPpair(YPPsym((P)"rep-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_iterate_body_99 = YPmet(FUNCODEREF(fun_sexpr_iterate_body_99),YPPsym((P)"sexpr-iterate-body"),T208,ENVNUL);
+  T212 = BOUNDP(YsyntaxYsexpr_iterate_body);
+  if (T212 != YPfalse) {
+    T211 = CHKREF(YsyntaxYsexpr_iterate_body);
+  } else {
+    T211 = YPfalse;
+  }
+  T210 = fun_sexpr_iterate_body_99;
+  T209 = CALL2(CHKREF(YPdefine_method),T211,T210);
+  YsyntaxYsexpr_iterate_body = T209;
+  regsym(&YsyntaxYsexpr_iterate_body,"syntax","sexpr-iterate-body");
+  T213 = YPsig(YPpair(YPPsym((P)"rep-exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_iterate_Gloc_100 = YPmet(FUNCODEREF(fun_sexpr_iterate_Gloc_100),YPPsym((P)"sexpr-iterate->loc"),T213,ENVNUL);
+  T217 = BOUNDP(YsyntaxYsexpr_iterate_Gloc);
+  if (T217 != YPfalse) {
+    T216 = CHKREF(YsyntaxYsexpr_iterate_Gloc);
+  } else {
+    T216 = YPfalse;
+  }
+  T215 = fun_sexpr_iterate_Gloc_100;
+  T214 = CALL2(CHKREF(YPdefine_method),T216,T215);
+  YsyntaxYsexpr_iterate_Gloc = T214;
+  regsym(&YsyntaxYsexpr_iterate_Gloc,"syntax","sexpr-iterate->loc");
+  lit_55 = YPPsym((P)"isa");
+  YsyntaxYDsexpr_isa_tag = CHKREF(lit_55);
+  regsym(&YsyntaxYDsexpr_isa_tag,"syntax","$sexpr-isa-tag");
+  T218 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_isaQ_101 = YPmet(FUNCODEREF(fun_sexpr_isaQ_101),YPPsym((P)"sexpr-isa?"),T218,ENVNUL);
+  T222 = BOUNDP(YsyntaxYsexpr_isaQ);
+  if (T222 != YPfalse) {
+    T221 = CHKREF(YsyntaxYsexpr_isaQ);
+  } else {
+    T221 = YPfalse;
+  }
+  T220 = fun_sexpr_isaQ_101;
+  T219 = CALL2(CHKREF(YPdefine_method),T221,T220);
+  YsyntaxYsexpr_isaQ = T219;
+  regsym(&YsyntaxYsexpr_isaQ,"syntax","sexpr-isa?");
+  T223 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_isa_parents_102 = YPmet(FUNCODEREF(fun_sexpr_isa_parents_102),YPPsym((P)"sexpr-isa-parents"),T223,ENVNUL);
+  T227 = BOUNDP(YsyntaxYsexpr_isa_parents);
+  if (T227 != YPfalse) {
+    T226 = CHKREF(YsyntaxYsexpr_isa_parents);
+  } else {
+    T226 = YPfalse;
+  }
+  T225 = fun_sexpr_isa_parents_102;
+  T224 = CALL2(CHKREF(YPdefine_method),T226,T225);
+  YsyntaxYsexpr_isa_parents = T224;
+  regsym(&YsyntaxYsexpr_isa_parents,"syntax","sexpr-isa-parents");
+  T228 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_isa_slot_inits_103 = YPmet(FUNCODEREF(fun_sexpr_isa_slot_inits_103),YPPsym((P)"sexpr-isa-slot-inits"),T228,ENVNUL);
+  T232 = BOUNDP(YsyntaxYsexpr_isa_slot_inits);
+  if (T232 != YPfalse) {
+    T231 = CHKREF(YsyntaxYsexpr_isa_slot_inits);
+  } else {
+    T231 = YPfalse;
+  }
+  T230 = fun_sexpr_isa_slot_inits_103;
+  T229 = CALL2(CHKREF(YPdefine_method),T231,T230);
+  YsyntaxYsexpr_isa_slot_inits = T229;
+  regsym(&YsyntaxYsexpr_isa_slot_inits,"syntax","sexpr-isa-slot-inits");
+  T233 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_isa_init_slots_104 = YPmet(FUNCODEREF(fun_sexpr_isa_init_slots_104),YPPsym((P)"sexpr-isa-init-slots"),T233,ENVNUL);
+  T237 = BOUNDP(YsyntaxYsexpr_isa_init_slots);
+  if (T237 != YPfalse) {
+    T236 = CHKREF(YsyntaxYsexpr_isa_init_slots);
+  } else {
+    T236 = YPfalse;
+  }
+  T235 = fun_sexpr_isa_init_slots_104;
+  T234 = CALL2(CHKREF(YPdefine_method),T236,T235);
+  YsyntaxYsexpr_isa_init_slots = T234;
+  regsym(&YsyntaxYsexpr_isa_init_slots,"syntax","sexpr-isa-init-slots");
+  T238 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_isa_init_values_105 = YPmet(FUNCODEREF(fun_sexpr_isa_init_values_105),YPPsym((P)"sexpr-isa-init-values"),T238,ENVNUL);
+  T242 = BOUNDP(YsyntaxYsexpr_isa_init_values);
+  if (T242 != YPfalse) {
+    T241 = CHKREF(YsyntaxYsexpr_isa_init_values);
+  } else {
+    T241 = YPfalse;
+  }
+  T240 = fun_sexpr_isa_init_values_105;
+  T239 = CALL2(CHKREF(YPdefine_method),T241,T240);
+  YsyntaxYsexpr_isa_init_values = T239;
+  regsym(&YsyntaxYsexpr_isa_init_values,"syntax","sexpr-isa-init-values");
+  lit_56 = YPPsym((P)"slot");
+  YsyntaxYDsexpr_slot_tag = CHKREF(lit_56);
+  regsym(&YsyntaxYDsexpr_slot_tag,"syntax","$sexpr-slot-tag");
+  T243 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_slotQ_106 = YPmet(FUNCODEREF(fun_sexpr_slotQ_106),YPPsym((P)"sexpr-slot?"),T243,ENVNUL);
+  T247 = BOUNDP(YsyntaxYsexpr_slotQ);
+  if (T247 != YPfalse) {
+    T246 = CHKREF(YsyntaxYsexpr_slotQ);
+  } else {
+    T246 = YPfalse;
+  }
+  T245 = fun_sexpr_slotQ_106;
+  T244 = CALL2(CHKREF(YPdefine_method),T246,T245);
+  YsyntaxYsexpr_slotQ = T244;
+  regsym(&YsyntaxYsexpr_slotQ,"syntax","sexpr-slot?");
+  T248 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_slot_object_107 = YPmet(FUNCODEREF(fun_sexpr_slot_object_107),YPPsym((P)"sexpr-slot-object"),T248,ENVNUL);
+  T252 = BOUNDP(YsyntaxYsexpr_slot_object);
+  if (T252 != YPfalse) {
+    T251 = CHKREF(YsyntaxYsexpr_slot_object);
+  } else {
+    T251 = YPfalse;
+  }
+  T250 = fun_sexpr_slot_object_107;
+  T249 = CALL2(CHKREF(YPdefine_method),T251,T250);
+  YsyntaxYsexpr_slot_object = T249;
+  regsym(&YsyntaxYsexpr_slot_object,"syntax","sexpr-slot-object");
+  T253 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_slot_variable_108 = YPmet(FUNCODEREF(fun_sexpr_slot_variable_108),YPPsym((P)"sexpr-slot-variable"),T253,ENVNUL);
+  T257 = BOUNDP(YsyntaxYsexpr_slot_variable);
+  if (T257 != YPfalse) {
+    T256 = CHKREF(YsyntaxYsexpr_slot_variable);
+  } else {
+    T256 = YPfalse;
+  }
+  T255 = fun_sexpr_slot_variable_108;
+  T254 = CALL2(CHKREF(YPdefine_method),T256,T255);
+  YsyntaxYsexpr_slot_variable = T254;
+  regsym(&YsyntaxYsexpr_slot_variable,"syntax","sexpr-slot-variable");
+  lit_57 = YPPsym((P)"nul");
+  T258 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_slot_init_109 = YPmet(FUNCODEREF(fun_sexpr_slot_init_109),YPPsym((P)"sexpr-slot-init"),T258,ENVNUL);
+  T262 = BOUNDP(YsyntaxYsexpr_slot_init);
+  if (T262 != YPfalse) {
+    T261 = CHKREF(YsyntaxYsexpr_slot_init);
+  } else {
+    T261 = YPfalse;
+  }
+  T260 = fun_sexpr_slot_init_109;
+  T259 = CALL2(CHKREF(YPdefine_method),T261,T260);
+  YsyntaxYsexpr_slot_init = T259;
+  regsym(&YsyntaxYsexpr_slot_init,"syntax","sexpr-slot-init");
+  lit_58 = YPPsym((P)"_x");
+  lit_59 = YPPsym((P)"slot-value");
+  lit_60 = YPPsym((P)"_x");
+  T263 = YPsig(YPpair(YPPsym((P)"name"),YPpair(YPPsym((P)"type"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_sexpr_make_getter_110 = YPmet(FUNCODEREF(fun_sexpr_make_getter_110),YPPsym((P)"sexpr-make-getter"),T263,ENVNUL);
+  T267 = BOUNDP(YsyntaxYsexpr_make_getter);
+  if (T267 != YPfalse) {
+    T266 = CHKREF(YsyntaxYsexpr_make_getter);
+  } else {
+    T266 = YPfalse;
+  }
+  T265 = fun_sexpr_make_getter_110;
+  T264 = CALL2(CHKREF(YPdefine_method),T266,T265);
+  YsyntaxYsexpr_make_getter = T264;
+  regsym(&YsyntaxYsexpr_make_getter,"syntax","sexpr-make-getter");
+  lit_61 = YPPsym((P)"_x");
+  lit_62 = YPPsym((P)"_z");
+  lit_63 = YPPsym((P)"slot-value-setter");
+  lit_64 = YPPsym((P)"_x");
+  lit_65 = YPPsym((P)"_z");
+  T268 = YPsig(YPpair(YPPsym((P)"name"),YPpair(YPPsym((P)"type"),YPpair(YPPsym((P)"slot-type"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLlstG));
+  fun_sexpr_make_setter_111 = YPmet(FUNCODEREF(fun_sexpr_make_setter_111),YPPsym((P)"sexpr-make-setter"),T268,ENVNUL);
+  T272 = BOUNDP(YsyntaxYsexpr_make_setter);
+  if (T272 != YPfalse) {
+    T271 = CHKREF(YsyntaxYsexpr_make_setter);
+  } else {
+    T271 = YPfalse;
+  }
+  T270 = fun_sexpr_make_setter_111;
+  T269 = CALL2(CHKREF(YPdefine_method),T271,T270);
+  YsyntaxYsexpr_make_setter = T269;
+  regsym(&YsyntaxYsexpr_make_setter,"syntax","sexpr-make-setter");
+  lit_66 = YPsb((P)"-setter");
+  T275 = YPsig(YPpair(YPPsym((P)"name"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLsymG));
+  T274 = fun_sexpr_make_setter_name_112 = YPmet(FUNCODEREF(fun_sexpr_make_setter_name_112),YPPsym((P)"sexpr-make-setter-name"),T275,ENVNUL);
+  T280 = BOUNDP(YsyntaxYsexpr_make_setter_name);
+  if (T280 != YPfalse) {
+    T279 = CHKREF(YsyntaxYsexpr_make_setter_name);
+  } else {
+    T279 = YPfalse;
+  }
+  T278 = fun_sexpr_make_setter_name_112;
+  T277 = CALL2(CHKREF(YPdefine_method),T279,T278);
+  T276 = YsyntaxYsexpr_make_setter_name = T277;
+  regsym(&YsyntaxYsexpr_make_setter_name,"syntax","sexpr-make-setter-name");
+  T273 = T276;
+  return T273;
+}
+
+P YsyntaxY___main_2___() {
+  P T115,T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100;
+  P T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84;
+  P T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68;
+  P T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52;
+  P T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36;
+  P T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20;
+  P T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4;
+  P T3,T2,T1,T0;
+loop:
+  T0 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_macroQ_113 = YPmet(FUNCODEREF(fun_sexpr_macroQ_113),YPPsym((P)"sexpr-macro?"),T0,ENVNUL);
+  T4 = BOUNDP(YsyntaxYsexpr_macroQ);
+  if (T4 != YPfalse) {
+    T3 = CHKREF(YsyntaxYsexpr_macroQ);
+  } else {
+    T3 = YPfalse;
+  }
+  T2 = fun_sexpr_macroQ_113;
+  T1 = CALL2(CHKREF(YPdefine_method),T3,T2);
+  YsyntaxYsexpr_macroQ = T1;
+  regsym(&YsyntaxYsexpr_macroQ,"syntax","sexpr-macro?");
+  lit_67 = YPPsym((P)"macro-expand");
+  YsyntaxYDsexpr_macro_expand_tag = CHKREF(lit_67);
+  regsym(&YsyntaxYDsexpr_macro_expand_tag,"syntax","$sexpr-macro-expand-tag");
+  T5 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_macro_expandQ_114 = YPmet(FUNCODEREF(fun_sexpr_macro_expandQ_114),YPPsym((P)"sexpr-macro-expand?"),T5,ENVNUL);
+  T9 = BOUNDP(YsyntaxYsexpr_macro_expandQ);
+  if (T9 != YPfalse) {
+    T8 = CHKREF(YsyntaxYsexpr_macro_expandQ);
+  } else {
+    T8 = YPfalse;
+  }
+  T7 = fun_sexpr_macro_expandQ_114;
+  T6 = CALL2(CHKREF(YPdefine_method),T8,T7);
+  YsyntaxYsexpr_macro_expandQ = T6;
+  regsym(&YsyntaxYsexpr_macro_expandQ,"syntax","sexpr-macro-expand?");
+  lit_68 = YPPsym((P)"mif");
+  YsyntaxYDsexpr_syntax_if_tag = CHKREF(lit_68);
+  regsym(&YsyntaxYDsexpr_syntax_if_tag,"syntax","$sexpr-syntax-if-tag");
+  T10 = YPsig(YPpair(YPPsym((P)"pat"),YPpair(YPPsym((P)"exp"),YPpair(YPPsym((P)"then"),YPpair(YPPsym((P)"else"),Ynil)))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)))),YPfalse,YPint((P)4),CHKREF(YLlstG));
+  fun_sexpr_make_syntax_if_115 = YPmet(FUNCODEREF(fun_sexpr_make_syntax_if_115),YPPsym((P)"sexpr-make-syntax-if"),T10,ENVNUL);
+  T14 = BOUNDP(YsyntaxYsexpr_make_syntax_if);
+  if (T14 != YPfalse) {
+    T13 = CHKREF(YsyntaxYsexpr_make_syntax_if);
+  } else {
+    T13 = YPfalse;
+  }
+  T12 = fun_sexpr_make_syntax_if_115;
+  T11 = CALL2(CHKREF(YPdefine_method),T13,T12);
+  YsyntaxYsexpr_make_syntax_if = T11;
+  regsym(&YsyntaxYsexpr_make_syntax_if,"syntax","sexpr-make-syntax-if");
+  lit_69 = YPPsym((P)"comma-atsign");
+  YsyntaxYTcomma_atsignT = CHKREF(lit_69);
+  regsym(&YsyntaxYTcomma_atsignT,"syntax","*comma-atsign*");
+  lit_70 = YPPsym((P)"bq-list");
+  YsyntaxYTbq_listT = CHKREF(lit_70);
+  regsym(&YsyntaxYTbq_listT,"syntax","*bq-list*");
+  lit_71 = YPPsym((P)"bq-list*");
+  YsyntaxYTbq_listTT = CHKREF(lit_71);
+  regsym(&YsyntaxYTbq_listTT,"syntax","*bq-list**");
+  lit_72 = YPPsym((P)"bq-append");
+  YsyntaxYTbq_appendT = CHKREF(lit_72);
+  regsym(&YsyntaxYTbq_appendT,"syntax","*bq-append*");
+  lit_73 = YPPsym((P)"bq-nconc");
+  YsyntaxYTbq_nconcT = CHKREF(lit_73);
+  regsym(&YsyntaxYTbq_nconcT,"syntax","*bq-nconc*");
+  lit_74 = YPPsym((P)"bq-clobberable");
+  YsyntaxYTbq_clobberableT = CHKREF(lit_74);
+  regsym(&YsyntaxYTbq_clobberableT,"syntax","*bq-clobberable*");
+  lit_75 = YPPsym((P)"bq-quote");
+  YsyntaxYTbq_quoteT = CHKREF(lit_75);
+  regsym(&YsyntaxYTbq_quoteT,"syntax","*bq-quote*");
+  T15 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  YsyntaxYsexpr_expand_backquote = YPmet(FUNCODEREF(YsyntaxYsexpr_expand_backquote),YPPsym((P)"sexpr-expand-backquote"),T15,ENVNUL);
+  T16 = YsyntaxYsexpr_expand_backquote;
+  YsyntaxYsexpr_expand_backquote = T16;
+  regsym(&YsyntaxYsexpr_expand_backquote,"syntax","sexpr-expand-backquote");
+  T17 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_build_backquote_expander_117 = YPmet(FUNCODEREF(fun_sexpr_build_backquote_expander_117),YPPsym((P)"sexpr-build-backquote-expander"),T17,ENVNUL);
+  T21 = BOUNDP(YsyntaxYsexpr_build_backquote_expander);
+  if (T21 != YPfalse) {
+    T20 = CHKREF(YsyntaxYsexpr_build_backquote_expander);
+  } else {
+    T20 = YPfalse;
+  }
+  T19 = fun_sexpr_build_backquote_expander_117;
+  T18 = CALL2(CHKREF(YPdefine_method),T20,T19);
+  YsyntaxYsexpr_build_backquote_expander = T18;
+  regsym(&YsyntaxYsexpr_build_backquote_expander,"syntax","sexpr-build-backquote-expander");
+  lit_76 = YPPsym((P)"unquote");
+  T22 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_unquoteQ_118 = YPmet(FUNCODEREF(fun_sexpr_unquoteQ_118),YPPsym((P)"sexpr-unquote?"),T22,ENVNUL);
+  T26 = BOUNDP(YsyntaxYsexpr_unquoteQ);
+  if (T26 != YPfalse) {
+    T25 = CHKREF(YsyntaxYsexpr_unquoteQ);
+  } else {
+    T25 = YPfalse;
+  }
+  T24 = fun_sexpr_unquoteQ_118;
+  T23 = CALL2(CHKREF(YPdefine_method),T25,T24);
+  YsyntaxYsexpr_unquoteQ = T23;
+  regsym(&YsyntaxYsexpr_unquoteQ,"syntax","sexpr-unquote?");
+  lit_77 = YPPsym((P)"unquote-splicing");
+  T27 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_unquote_splicingQ_119 = YPmet(FUNCODEREF(fun_sexpr_unquote_splicingQ_119),YPPsym((P)"sexpr-unquote-splicing?"),T27,ENVNUL);
+  T31 = BOUNDP(YsyntaxYsexpr_unquote_splicingQ);
+  if (T31 != YPfalse) {
+    T30 = CHKREF(YsyntaxYsexpr_unquote_splicingQ);
+  } else {
+    T30 = YPfalse;
+  }
+  T29 = fun_sexpr_unquote_splicingQ_119;
+  T28 = CALL2(CHKREF(YPdefine_method),T30,T29);
+  YsyntaxYsexpr_unquote_splicingQ = T28;
+  regsym(&YsyntaxYsexpr_unquote_splicingQ,"syntax","sexpr-unquote-splicing?");
+  T32 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_backquoteQ_120 = YPmet(FUNCODEREF(fun_sexpr_backquoteQ_120),YPPsym((P)"sexpr-backquote?"),T32,ENVNUL);
+  T36 = BOUNDP(YsyntaxYsexpr_backquoteQ);
+  if (T36 != YPfalse) {
+    T35 = CHKREF(YsyntaxYsexpr_backquoteQ);
+  } else {
+    T35 = YPfalse;
+  }
+  T34 = fun_sexpr_backquoteQ_120;
+  T33 = CALL2(CHKREF(YPdefine_method),T35,T34);
+  YsyntaxYsexpr_backquoteQ = T33;
+  regsym(&YsyntaxYsexpr_backquoteQ,"syntax","sexpr-backquote?");
+  T37 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_atomQ_121 = YPmet(FUNCODEREF(fun_sexpr_atomQ_121),YPPsym((P)"sexpr-atom?"),T37,ENVNUL);
+  T41 = BOUNDP(YsyntaxYsexpr_atomQ);
+  if (T41 != YPfalse) {
+    T40 = CHKREF(YsyntaxYsexpr_atomQ);
+  } else {
+    T40 = YPfalse;
+  }
+  T39 = fun_sexpr_atomQ_121;
+  T38 = CALL2(CHKREF(YPdefine_method),T40,T39);
+  YsyntaxYsexpr_atomQ = T38;
+  regsym(&YsyntaxYsexpr_atomQ,"syntax","sexpr-atom?");
+  T42 = YPsig(YPpair(YPPsym((P)"x"),YPpair(YPPsym((P)"y"),Ynil)),YPpair(CHKREF(YLlstG),YPpair(CHKREF(YLlstG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_nreconc_122 = YPmet(FUNCODEREF(fun_nreconc_122),YPPsym((P)"nreconc"),T42,ENVNUL);
+  T46 = BOUNDP(YsyntaxYnreconc);
+  if (T46 != YPfalse) {
+    T45 = CHKREF(YsyntaxYnreconc);
+  } else {
+    T45 = YPfalse;
+  }
+  T44 = fun_nreconc_122;
+  T43 = CALL2(CHKREF(YPdefine_method),T45,T44);
+  YsyntaxYnreconc = T43;
+  regsym(&YsyntaxYnreconc,"syntax","nreconc");
+  lit_78 = YPsb((P)"Dotted ,@%=");
+  lit_79 = YPsb((P)"Malformed ,%=");
+  lit_80 = YPsb((P)"UNQUOTE-SPLICING %= AFTER BQ");
+  T49 = YPsig(YPpair(YPPsym((P)"p"),YPpair(YPPsym((P)"q"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_loop_123 = YPmet(FUNCODEREF(fun_loop_123),YPPsym((P)"loop"),T49,ENVNUL);
+  T48 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_124 = YPmet(FUNCODEREF(fun_124),YPfalse,T48,ENVNUL);
+  T47 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_bq_process_125 = YPmet(FUNCODEREF(fun_bq_process_125),YPPsym((P)"bq-process"),T47,ENVNUL);
+  T53 = BOUNDP(YsyntaxYbq_process);
+  if (T53 != YPfalse) {
+    T52 = CHKREF(YsyntaxYbq_process);
+  } else {
+    T52 = YPfalse;
+  }
+  T51 = fun_bq_process_125;
+  T50 = CALL2(CHKREF(YPdefine_method),T52,T51);
+  YsyntaxYbq_process = T50;
+  regsym(&YsyntaxYbq_process,"syntax","bq-process");
+  T54 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_bracket_126 = YPmet(FUNCODEREF(fun_bracket_126),YPPsym((P)"bracket"),T54,ENVNUL);
+  T58 = BOUNDP(YsyntaxYbracket);
+  if (T58 != YPfalse) {
+    T57 = CHKREF(YsyntaxYbracket);
+  } else {
+    T57 = YPfalse;
+  }
+  T56 = fun_bracket_126;
+  T55 = CALL2(CHKREF(YPdefine_method),T57,T56);
+  YsyntaxYbracket = T55;
+  regsym(&YsyntaxYbracket,"syntax","bracket");
+  T59 = YPsig(YPpair(YPPsym((P)"fn"),YPpair(YPPsym((P)"x"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_map_tree_127 = YPmet(FUNCODEREF(fun_map_tree_127),YPPsym((P)"map-tree"),T59,ENVNUL);
+  T63 = BOUNDP(YsyntaxYmap_tree);
+  if (T63 != YPfalse) {
+    T62 = CHKREF(YsyntaxYmap_tree);
+  } else {
+    T62 = YPfalse;
+  }
+  T61 = fun_map_tree_127;
+  T60 = CALL2(CHKREF(YPdefine_method),T62,T61);
+  YsyntaxYmap_tree = T60;
+  regsym(&YsyntaxYmap_tree,"syntax","map-tree");
+  lit_81 = YPPsym((P)"pair");
+  lit_82 = YPPsym((P)"quote");
+  lit_83 = YPPsym((P)"list*");
+  lit_84 = YPPsym((P)"cat!");
+  lit_85 = YPPsym((P)"cat");
+  lit_86 = YPPsym((P)"lst");
+  T64 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_bq_remove_tokens_128 = YPmet(FUNCODEREF(fun_bq_remove_tokens_128),YPPsym((P)"bq-remove-tokens"),T64,ENVNUL);
+  T68 = BOUNDP(YsyntaxYbq_remove_tokens);
+  if (T68 != YPfalse) {
+    T67 = CHKREF(YsyntaxYbq_remove_tokens);
+  } else {
+    T67 = YPfalse;
+  }
+  T66 = fun_bq_remove_tokens_128;
+  T65 = CALL2(CHKREF(YPdefine_method),T67,T66);
+  YsyntaxYbq_remove_tokens = T65;
+  regsym(&YsyntaxYbq_remove_tokens,"syntax","bq-remove-tokens");
+  T69 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_syntax_ifQ_129 = YPmet(FUNCODEREF(fun_sexpr_syntax_ifQ_129),YPPsym((P)"sexpr-syntax-if?"),T69,ENVNUL);
+  T73 = BOUNDP(YsyntaxYsexpr_syntax_ifQ);
+  if (T73 != YPfalse) {
+    T72 = CHKREF(YsyntaxYsexpr_syntax_ifQ);
+  } else {
+    T72 = YPfalse;
+  }
+  T71 = fun_sexpr_syntax_ifQ_129;
+  T70 = CALL2(CHKREF(YPdefine_method),T72,T71);
+  YsyntaxYsexpr_syntax_ifQ = T70;
+  regsym(&YsyntaxYsexpr_syntax_ifQ,"syntax","sexpr-syntax-if?");
+  T74 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_syntax_if_value_130 = YPmet(FUNCODEREF(fun_sexpr_syntax_if_value_130),YPPsym((P)"sexpr-syntax-if-value"),T74,ENVNUL);
+  T78 = BOUNDP(YsyntaxYsexpr_syntax_if_value);
+  if (T78 != YPfalse) {
+    T77 = CHKREF(YsyntaxYsexpr_syntax_if_value);
+  } else {
+    T77 = YPfalse;
+  }
+  T76 = fun_sexpr_syntax_if_value_130;
+  T75 = CALL2(CHKREF(YPdefine_method),T77,T76);
+  YsyntaxYsexpr_syntax_if_value = T75;
+  regsym(&YsyntaxYsexpr_syntax_if_value,"syntax","sexpr-syntax-if-value");
+  T79 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_syntax_if_pattern_131 = YPmet(FUNCODEREF(fun_sexpr_syntax_if_pattern_131),YPPsym((P)"sexpr-syntax-if-pattern"),T79,ENVNUL);
+  T83 = BOUNDP(YsyntaxYsexpr_syntax_if_pattern);
+  if (T83 != YPfalse) {
+    T82 = CHKREF(YsyntaxYsexpr_syntax_if_pattern);
+  } else {
+    T82 = YPfalse;
+  }
+  T81 = fun_sexpr_syntax_if_pattern_131;
+  T80 = CALL2(CHKREF(YPdefine_method),T82,T81);
+  YsyntaxYsexpr_syntax_if_pattern = T80;
+  regsym(&YsyntaxYsexpr_syntax_if_pattern,"syntax","sexpr-syntax-if-pattern");
+  T84 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_syntax_if_then_132 = YPmet(FUNCODEREF(fun_sexpr_syntax_if_then_132),YPPsym((P)"sexpr-syntax-if-then"),T84,ENVNUL);
+  T88 = BOUNDP(YsyntaxYsexpr_syntax_if_then);
+  if (T88 != YPfalse) {
+    T87 = CHKREF(YsyntaxYsexpr_syntax_if_then);
+  } else {
+    T87 = YPfalse;
+  }
+  T86 = fun_sexpr_syntax_if_then_132;
+  T85 = CALL2(CHKREF(YPdefine_method),T87,T86);
+  YsyntaxYsexpr_syntax_if_then = T85;
+  regsym(&YsyntaxYsexpr_syntax_if_then,"syntax","sexpr-syntax-if-then");
+  T89 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_syntax_if_else_133 = YPmet(FUNCODEREF(fun_sexpr_syntax_if_else_133),YPPsym((P)"sexpr-syntax-if-else"),T89,ENVNUL);
+  T93 = BOUNDP(YsyntaxYsexpr_syntax_if_else);
+  if (T93 != YPfalse) {
+    T92 = CHKREF(YsyntaxYsexpr_syntax_if_else);
+  } else {
+    T92 = YPfalse;
+  }
+  T91 = fun_sexpr_syntax_if_else_133;
+  T90 = CALL2(CHKREF(YPdefine_method),T92,T91);
+  YsyntaxYsexpr_syntax_if_else = T90;
+  regsym(&YsyntaxYsexpr_syntax_if_else,"syntax","sexpr-syntax-if-else");
+  T94 = YPsig(YPpair(YPPsym((P)"pat"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_sexpr_pattern_variableQ_134 = YPmet(FUNCODEREF(fun_sexpr_pattern_variableQ_134),YPPsym((P)"sexpr-pattern-variable?"),T94,ENVNUL);
+  T98 = BOUNDP(YsyntaxYsexpr_pattern_variableQ);
+  if (T98 != YPfalse) {
+    T97 = CHKREF(YsyntaxYsexpr_pattern_variableQ);
+  } else {
+    T97 = YPfalse;
+  }
+  T96 = fun_sexpr_pattern_variableQ_134;
+  T95 = CALL2(CHKREF(YPdefine_method),T97,T96);
+  YsyntaxYsexpr_pattern_variableQ = T95;
+  regsym(&YsyntaxYsexpr_pattern_variableQ,"syntax","sexpr-pattern-variable?");
+  T99 = YPsig(YPpair(YPPsym((P)"pat"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_pattern_variable_name_135 = YPmet(FUNCODEREF(fun_sexpr_pattern_variable_name_135),YPPsym((P)"sexpr-pattern-variable-name"),T99,ENVNUL);
+  T103 = BOUNDP(YsyntaxYsexpr_pattern_variable_name);
+  if (T103 != YPfalse) {
+    T102 = CHKREF(YsyntaxYsexpr_pattern_variable_name);
+  } else {
+    T102 = YPfalse;
+  }
+  T101 = fun_sexpr_pattern_variable_name_135;
+  T100 = CALL2(CHKREF(YPdefine_method),T102,T101);
+  YsyntaxYsexpr_pattern_variable_name = T100;
+  regsym(&YsyntaxYsexpr_pattern_variable_name,"syntax","sexpr-pattern-variable-name");
+  T105 = YPsig(YPpair(YPPsym((P)"pat"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_col_136 = YPmet(FUNCODEREF(fun_col_136),YPPsym((P)"col"),T105,ENVNUL);
+  T104 = YPsig(YPpair(YPPsym((P)"pat"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_sexpr_bind_pattern_variables_137 = YPmet(FUNCODEREF(fun_sexpr_bind_pattern_variables_137),YPPsym((P)"sexpr-bind-pattern-variables"),T104,ENVNUL);
+  T109 = BOUNDP(YsyntaxYsexpr_bind_pattern_variables);
+  if (T109 != YPfalse) {
+    T108 = CHKREF(YsyntaxYsexpr_bind_pattern_variables);
+  } else {
+    T108 = YPfalse;
+  }
+  T107 = fun_sexpr_bind_pattern_variables_137;
+  T106 = CALL2(CHKREF(YPdefine_method),T108,T107);
+  YsyntaxYsexpr_bind_pattern_variables = T106;
+  regsym(&YsyntaxYsexpr_bind_pattern_variables,"syntax","sexpr-bind-pattern-variables");
+  lit_87 = YPPsym((P)"exp");
+  lit_88 = YPPsym((P)"exp");
+  T110 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLlstG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_sexpr_make_macro_function_138 = YPmet(FUNCODEREF(fun_sexpr_make_macro_function_138),YPPsym((P)"sexpr-make-macro-function"),T110,ENVNUL);
+  T114 = BOUNDP(YsyntaxYsexpr_make_macro_function);
+  if (T114 != YPfalse) {
+    T113 = CHKREF(YsyntaxYsexpr_make_macro_function);
+  } else {
+    T113 = YPfalse;
+  }
+  T112 = fun_sexpr_make_macro_function_138;
+  T111 = CALL2(CHKREF(YPdefine_method),T113,T112);
+  YsyntaxYsexpr_make_macro_function = T111;
   regsym(&YsyntaxYsexpr_make_macro_function,"syntax","sexpr-make-macro-function");
-  T105 = YPfalse;
-  return T105;
+  T115 = YPfalse;
+  return T115;
 }
 
 /* MODULES USED: */

@@ -5,399 +5,436 @@
 
 /* MODULE ENVIRONMENT: runtime */
 
-DEF(YruntimeYtable_growth_factor_setter,"runtime","table-growth-factor-setter");
-DEF(YruntimeYtable_growth_threshold_setter,"runtime","table-growth-threshold-setter");
+DEF(YruntimeYhandler_info_message_setter,"runtime","handler-info-message-setter");
+EXT(YLlstG,"boot","<lst>");
+EXT(YmacrosYtup,"macros","tup");
+DEF(YruntimeYbuild_condition_for_handler_interactively,"runtime","build-condition-for-handler-interactively");
+DEF(YruntimeYPcount_setter,"runtime","%count-setter");
+DEF(YruntimeYadd_new,"runtime","add-new");
+DEF(YruntimeYLstring_output_portG,"runtime","<string-output-port>");
+DEF(YruntimeYsub,"runtime","sub");
+DEF(YruntimeYinto,"runtime","into");
+EXT(Yobject_slots,"boot","object-slots");
+DEF(YruntimeYrange_below_setter,"runtime","range-below-setter");
+EXT(Yapply,"boot","apply");
+EXT(Yfun_name,"boot","fun-name");
+DEF(YruntimeYassocs_vals_setter,"runtime","assocs-vals-setter");
+EXT(Ytail,"boot","tail");
+DEF(YruntimeYfind_key,"runtime","find-key");
+DEF(YruntimeYassocs_keys,"runtime","assocs-keys");
+DEF(YruntimeYinvoke_handler_interactively,"runtime","invoke-handler-interactively");
+DEF(YruntimeYchar_readyQ,"runtime","char-ready?");
+DEF(YruntimeYassq,"runtime","assq");
+DEF(YruntimeYpop_lastX,"runtime","pop-last!");
+EXT(Yhead_setter,"boot","head-setter");
+DEF(YruntimeYcontagious_type,"runtime","contagious-type");
+DEF(YruntimeYrange_above,"runtime","range-above");
+DEF(YruntimeYfrom_above,"runtime","from-above");
+EXT(YLgenG,"boot","<gen>");
+DEF(YruntimeYbuf,"runtime","buf");
+DEF(YruntimeYassoc_value_setter,"runtime","assoc-value-setter");
+DEF(YruntimeYto_str,"runtime","to-str");
+DEF(YruntimeYopen_input_file,"runtime","open-input-file");
+DEF(YruntimeYDempty_cell_marker,"runtime","$empty-cell-marker");
 DEF(YruntimeYfrom_to,"runtime","from-to");
-DEF(YruntimeYPbucket_setter,"runtime","%bucket-setter");
 DEF(YruntimeYbuf_dat,"runtime","buf-dat");
+DEF(YruntimeYread,"runtime","read");
+DEF(YruntimeYport_handle,"runtime","port-handle");
+DEF(YruntimeYLstring_portG,"runtime","<string-port>");
 DEF(YruntimeYpop,"runtime","pop");
 EXT(Ynot,"boot","not");
 EXT(Yfun_value,"boot","fun-value");
-DEF(YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
+DEF(YruntimeYPprimary_modulus,"runtime","%primary-modulus");
+DEF(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
 DEF(YruntimeYreduce,"runtime","reduce");
+DEF(YruntimeYdo,"runtime","do");
 DEF(YruntimeYdo_key_vals,"runtime","do-key-vals");
+DEF(YruntimeYsignal_handler_list,"runtime","signal-handler-list");
+DEF(YruntimeYcondition_message_setter,"runtime","condition-message-setter");
 EXT(Yfun_name_setter,"boot","fun-name-setter");
-EXT(Yfile_opening_error,"boot","file-opening-error");
-DEF(YruntimeYascii_chars,"runtime","ascii-chars");
 DEF(YruntimeYlogand,"runtime","logand");
 DEF(YruntimeYassocs_vals,"runtime","assocs-vals");
 EXT(Ytail_setter,"boot","tail-setter");
-DEF(YruntimeYtrace,"runtime","trace");
 DEF(YruntimeYfab,"runtime","fab");
-DEF(YruntimeYLfile_portG,"runtime","<file-port>");
+DEF(YruntimeYPbucket,"runtime","%bucket");
 DEF(YruntimeYabs,"runtime","abs");
+DEF(YruntimeYLinput_portG,"runtime","<input-port>");
+DEF(YruntimeYLhandlerG,"runtime","<handler>");
+DEF(YruntimeYchoose_handler,"runtime","choose-handler");
 DEF(YruntimeYcatX,"runtime","cat!");
-DEF(YruntimeYhandler_function_setter,"runtime","handler-function-setter");
+DEF(YruntimeYassqn,"runtime","assqn");
+DEF(YruntimeYPcount,"runtime","%count");
+DEF(YruntimeYtable_growth_factor_setter,"runtime","table-growth-factor-setter");
 DEF(YruntimeYrange_to,"runtime","range-to");
 DEF(YruntimeYmemQ,"runtime","mem?");
+DEF(YruntimeYdefault_handler_description,"runtime","default-handler-description");
 DEF(YruntimeYlen_setter,"runtime","len-setter");
-DEF(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
-DEF(YruntimeYeof_objectQ,"runtime","eof-object?");
-EXT(YLcolG,"boot","<col>");
-DEF(YruntimeYPgc_state,"runtime","%gc-state");
+DEF(YruntimeYLmapG,"runtime","<map>");
+DEF(YruntimeYport_index_setter,"runtime","port-index-setter");
 DEF(YruntimeYlogxor,"runtime","logxor");
-DEF(YruntimeYnyi,"runtime","nyi");
+DEF(YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
 DEF(YruntimeYfabs,"runtime","fabs");
 EXT(Yerror,"boot","error");
-DEF(YruntimeYrot,"runtime","rot");
 EXT(Yslot_getter,"boot","slot-getter");
+DEF(YruntimeYdo_handlers_of_type,"runtime","do-handlers-of-type");
 DEF(YruntimeYnum_to_str,"runtime","num-to-str");
 DEF(YruntimeYlogior,"runtime","logior");
-DEF(YruntimeYfab_table_vector,"runtime","fab-table-vector");
-DEF(YruntimeYLconditionG,"runtime","<condition>");
+EXT(YPsnul,"boot","%snul");
+DEF(YruntimeYhandler_info_arguments_setter,"runtime","handler-info-arguments-setter");
+DEF(YruntimeYPn_buckets_setter,"runtime","%n-buckets-setter");
 EXT(YmacrosYvar_type,"macros","var-type");
-DEF(YruntimeYzeroQ,"runtime","zero?");
-EXT(YPsymbols,"boot","%symbols");
-DEF(YruntimeYtable_protocol,"runtime","table-protocol");
+EXT(YLchrG,"boot","<chr>");
 EXT(Yfun_sig_setter,"boot","fun-sig-setter");
+DEF(YruntimeYPbucket_depth,"runtime","%bucket-depth");
 EXT(YmacrosYmake_sym,"macros","make-sym");
+DEF(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
+DEF(YruntimeYforce_output,"runtime","force-output");
 DEF(YruntimeYfrom_below,"runtime","from-below");
 DEF(YruntimeYpick,"runtime","pick");
 DEF(YruntimeYlognot,"runtime","lognot");
-DEF(YruntimeYsymbols,"runtime","symbols");
-DEF(YruntimeYcondition_arguments_setter,"runtime","condition-arguments-setter");
+DEF(YruntimeYPlist,"runtime","%list");
 DEF(YruntimeYceiling,"runtime","ceiling");
 DEF(YruntimeYelt_setter,"runtime","elt-setter");
 EXT(YmacrosYlst,"macros","lst");
-DEF(YruntimeYPgc_state_setter,"runtime","%gc-state-setter");
+EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
+DEF(YruntimeYLassocG,"runtime","<assoc>");
 DEF(YruntimeYassocs_test,"runtime","assocs-test");
-DEF(YruntimeYPcount_setter,"runtime","%count-setter");
-DEF(YruntimeYport_handle,"runtime","port-handle");
 EXT(YPcall_next_method,"boot","%call-next-method");
 DEF(YruntimeYmin,"runtime","min");
 DEF(YruntimeYnyi_error,"runtime","nyi-error");
-DEF(YruntimeYforce_output,"runtime","force-output");
-DEF(YruntimeYtable_shrink_threshold_setter,"runtime","table-shrink-threshold-setter");
+EXT(YLvecG,"boot","<vec>");
+DEF(YruntimeYlist,"runtime","list");
+DEF(YruntimeYcurry,"runtime","curry");
+DEF(YruntimeYdel_key,"runtime","del-key");
+DEF(YruntimeYfab_table_vector,"runtime","fab-table-vector");
 DEF(YruntimeYalphabeticQ,"runtime","alphabetic?");
-EXT(YLstrG,"boot","<str>");
-DEF(YruntimeYhash_moduli,"runtime","hash-moduli");
-DEF(YruntimeYassqn,"runtime","assqn");
+EXT(YLoptsG,"boot","<opts>");
 EXT(Yslot_setter,"boot","slot-setter");
-DEF(YruntimeYcondition_message_setter,"runtime","condition-message-setter");
-DEF(YruntimeYchar_Gascii,"runtime","char->ascii");
-EXT(YPPmacro,"boot","%%macro");
+DEF(YruntimeYopen_output_file,"runtime","open-output-file");
+EXT(YPsymbols,"boot","%symbols");
 DEF(YruntimeYnow_elt_setter,"runtime","now-elt-setter");
+EXT(YLflatG,"boot","<flat>");
 DEF(YruntimeYanyQ,"runtime","any?");
-DEF(YruntimeYmake_handler,"runtime","make-handler");
+DEF(YruntimeYwrite_string,"runtime","write-string");
 DEF(YruntimeYas,"runtime","as");
+DEF(YruntimeYstr,"runtime","str");
+DEF(YruntimeYport_contents,"runtime","port-contents");
 DEF(YruntimeYempty,"runtime","empty");
 DEF(YruntimeYlow_elt,"runtime","low-elt");
+DEF(YruntimeYLhandler_infoG,"runtime","<handler-info>");
+DEF(YruntimeYnyi,"runtime","nyi");
 DEF(YruntimeYLE,"runtime","<=");
-DEF(YruntimeYrevX,"runtime","rev!");
-EXT(Ytype_error,"boot","type-error");
 DEF(YruntimeYas_uppercase,"runtime","as-uppercase");
 EXT(Ysym_name,"boot","sym-name");
-EXT(YLnumG,"boot","<num>");
+DEF(YruntimeYLfile_portG,"runtime","<file-port>");
+DEF(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
 DEF(YruntimeYNEE,"runtime","~==");
+DEF(YruntimeYLstr_tabG,"runtime","<str-tab>");
 EXT(Yfab_gen,"boot","fab-gen");
-EXT(YTmacros_okQT,"boot","*macros-ok?*");
+EXT(YLcolG,"boot","<col>");
 DEF(YruntimeYbuf_dat_setter,"runtime","buf-dat-setter");
-DEF(YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
-DEF(YruntimeYLhandlerG,"runtime","<handler>");
-DEF(YruntimeYLmapG,"runtime","<map>");
+DEF(YruntimeYbot,"runtime","bot");
+EXT(YPvnul,"boot","%vnul");
+DEF(YruntimeYhandler_info_message,"runtime","handler-info-message");
 DEF(YruntimeYassoc_value,"runtime","assoc-value");
 DEF(YruntimeYlowercaseQ,"runtime","lowercase?");
-DEF(YruntimeYstr,"runtime","str");
-DEF(YruntimeYPcat,"runtime","%cat");
+DEF(YruntimeYnative_chars,"runtime","native-chars");
+EXT(YLtraitsG,"boot","<traits>");
+EXT(YLlogG,"boot","<log>");
 DEF(YruntimeYadd,"runtime","add");
+DEF(YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
 DEF(YruntimeYfrom,"runtime","from");
 DEF(YruntimeYrange_from_setter,"runtime","range-from-setter");
-EXT(Ynul,"boot","nul");
-DEF(YruntimeYchar_Ginteger,"runtime","char->integer");
-DEF(YruntimeY1st,"runtime","1st");
-DEF(YruntimeYTgensym_counterT,"runtime","*gensym-counter*");
-EXT(YLsigG,"boot","<sig>");
+DEF(YruntimeYtable_growth_factor,"runtime","table-growth-factor");
+DEF(YruntimeYclose_input_port,"runtime","close-input-port");
 DEF(YruntimeYpush,"runtime","push");
-DEF(YruntimeYPvacated,"runtime","%vacated");
+DEF(YruntimeYhash_moduli,"runtime","hash-moduli");
+DEF(YruntimeYLassocsG,"runtime","<assocs>");
+DEF(YruntimeYzeroQ,"runtime","zero?");
+DEF(YruntimeYLsimple_errorG,"runtime","<simple-error>");
+DEF(YruntimeYapp_args,"runtime","app-args");
 DEF(YruntimeYport_index,"runtime","port-index");
-DEF(YruntimeYinteger_Gchar,"runtime","integer->char");
-DEF(YruntimeYPbucket_depth_setter,"runtime","%bucket-depth-setter");
-DEF(YruntimeYcondition_arguments,"runtime","condition-arguments");
-EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
 DEF(YruntimeYnulQ,"runtime","nul?");
 EXT(YmacrosYcat,"macros","cat");
 DEF(YruntimeYfill,"runtime","fill");
 DEF(YruntimeYrange_to_setter,"runtime","range-to-setter");
-EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
+DEF(YruntimeYLlistG,"runtime","<list>");
+DEF(YruntimeYDdigit_to_char,"runtime","$digit-to-char");
+EXT(YLslotG,"boot","<slot>");
 DEF(YruntimeYany2Q,"runtime","any2?");
+DEF(YruntimeYascii_whitespaces,"runtime","ascii-whitespaces");
+DEF(YruntimeYPsecondary_modulus,"runtime","%secondary-modulus");
+DEF(YruntimeYsymbols,"runtime","symbols");
 EXT(Yslot_value,"boot","slot-value");
+DEF(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
 EXT(YmacrosYEE,"macros","==");
-DEF(YruntimeYassocs_test_setter,"runtime","assocs-test-setter");
+DEF(YruntimeY1st,"runtime","1st");
+EXT(YLfloG,"boot","<flo>");
 EXT(YLanyG,"boot","<any>");
-EXT(YLseqG,"boot","<seq>");
+DEF(YruntimeYascii_chars,"runtime","ascii-chars");
+DEF(YruntimeYcondition_arguments_setter,"runtime","condition-arguments-setter");
 DEF(YruntimeYrange_above_setter,"runtime","range-above-setter");
-DEF(YruntimeYLstring_portG,"runtime","<string-port>");
 DEF(YruntimeYini_state,"runtime","ini-state");
 DEF(YruntimeYstep_then_setter,"runtime","step-then-setter");
 DEF(YruntimeYlogbitQ,"runtime","logbit?");
-DEF(YruntimeYPlist,"runtime","%list");
 DEF(YruntimeYbuf_len_setter,"runtime","buf-len-setter");
-DEF(YruntimeYascii_limit,"runtime","ascii-limit");
-DEF(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
+DEF(YruntimeYstep_first,"runtime","step-first");
 DEF(YruntimeYrange_by_setter,"runtime","range-by-setter");
-DEF(YruntimeYPn_buckets_setter,"runtime","%n-buckets-setter");
+DEF(YruntimeYformat_to_string,"runtime","format-to-string");
 DEF(YruntimeYfrom_by,"runtime","from-by");
-DEF(YruntimeYdel_key,"runtime","del-key");
-DEF(YruntimeYPprimary_modulus_setter,"runtime","%primary-modulus-setter");
-DEF(YruntimeYidentity,"runtime","identity");
+DEF(YruntimeYinteger_Gchar,"runtime","integer->char");
+DEF(YruntimeYcompose,"runtime","compose");
+DEF(YruntimeYread_char,"runtime","read-char");
+DEF(YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
 DEF(YruntimeYall2Q,"runtime","all2?");
-DEF(YruntimeYhandler_function,"runtime","handler-function");
-DEF(YruntimeYassoc_key_setter,"runtime","assoc-key-setter");
-DEF(YruntimeYLstring_input_portG,"runtime","<string-input-port>");
+DEF(YruntimeYport_guts_setter,"runtime","port-guts-setter");
+DEF(YruntimeYascii_limit,"runtime","ascii-limit");
+EXT(YLseqG,"boot","<seq>");
+DEF(YruntimeYTcurrent_handlersT,"runtime","*current-handlers*");
+EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
 EXT(YmacrosYemptyQ,"macros","empty?");
-DEF(YruntimeYwrite_char,"runtime","write-char");
+DEF(YruntimeYhandler_activeQ,"runtime","handler-active?");
+DEF(YruntimeYLrangeG,"runtime","<range>");
+DEF(YruntimeYassocs_test_setter,"runtime","assocs-test-setter");
+EXT(YLfunG,"boot","<fun>");
+DEF(YruntimeYapp_filename,"runtime","app-filename");
+EXT(YLnumG,"boot","<num>");
+DEF(YruntimeYfab_map,"runtime","fab-map");
 DEF(YruntimeYE,"runtime","=");
-DEF(YruntimeYgrow_table,"runtime","grow-table");
-DEF(YruntimeYtab_keys,"runtime","tab-keys");
 EXT(Yfapply,"boot","fapply");
-DEF(YruntimeYLbufG,"runtime","<buf>");
-EXT(YLlstG,"boot","<lst>");
+DEF(YruntimeYeof_object,"runtime","eof-object");
+DEF(YruntimeYPvacated,"runtime","%vacated");
 DEF(YruntimeYfrom_above_by,"runtime","from-above-by");
-DEF(YruntimeYapp_args,"runtime","app-args");
 DEF(YruntimeYevenQ,"runtime","even?");
 DEF(YruntimeYfrom_to_by,"runtime","from-to-by");
+DEF(YruntimeYeof_objectQ,"runtime","eof-object?");
 DEF(YruntimeYfin_stateQ,"runtime","fin-state?");
-DEF(YruntimeYPcount,"runtime","%count");
+EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
 DEF(YruntimeYfrom_below_by,"runtime","from-below-by");
+DEF(YruntimeYdo2,"runtime","do2");
 EXT(YmacrosYmatch_unquote,"macros","match-unquote");
-DEF(YruntimeYcompose,"runtime","compose");
-EXT(YLmetG,"boot","<met>");
+DEF(YruntimeYhandler_function,"runtime","handler-function");
 DEF(YruntimeYnegQ,"runtime","neg?");
-DEF(YruntimeYlast,"runtime","last");
-DEF(YruntimeYLportG,"runtime","<port>");
+DEF(YruntimeYPwith_monitor,"runtime","%with-monitor");
+DEF(YruntimeYhandler_info,"runtime","handler-info");
 EXT(YPisa,"boot","%isa");
-DEF(YruntimeYfloorS,"runtime","floor/");
-DEF(YruntimeYascii_Gchar,"runtime","ascii->char");
 DEF(YruntimeYround,"runtime","round");
-DEF(YruntimeYPvacated_setter,"runtime","%vacated-setter");
 DEF(YruntimeYlen,"runtime","len");
-DEF(YruntimeYLlistG,"runtime","<list>");
-DEF(YruntimeYLsimple_table_vectorG,"runtime","<simple-table-vector>");
-DEF(YruntimeYLfile_input_portG,"runtime","<file-input-port>");
+DEF(YruntimeYtable_growth_threshold_setter,"runtime","table-growth-threshold-setter");
+DEF(YruntimeYchar_Ginteger,"runtime","char->integer");
 EXT(Ysig_names,"boot","sig-names");
+DEF(YruntimeYcondition_arguments,"runtime","condition-arguments");
 DEF(YruntimeYPsecondary_modulus_setter,"runtime","%secondary-modulus-setter");
 DEF(YruntimeYstep_first_setter,"runtime","step-first-setter");
-DEF(YruntimeYLstr_tabG,"runtime","<str-tab>");
-DEF(YruntimeYdel_keys,"runtime","del-keys");
+DEF(YruntimeYLfile_input_portG,"runtime","<file-input-port>");
+DEF(YruntimeYbooted_fab_sym,"runtime","booted-fab-sym");
+DEF(YruntimeYrcurry,"runtime","rcurry");
+DEF(YruntimeYPn_buckets,"runtime","%n-buckets");
 EXT(YmacrosYpair,"macros","pair");
+DEF(YruntimeYalways,"runtime","always");
+DEF(YruntimeYLbufG,"runtime","<buf>");
+DEF(YruntimeYtab_keys,"runtime","tab-keys");
+DEF(YruntimeYPprimary_modulus_setter,"runtime","%primary-modulus-setter");
 DEF(YruntimeYL,"runtime","<");
 EXT(YmacrosYmap,"macros","map");
 DEF(YruntimeYnumericQ,"runtime","numeric?");
 DEF(YruntimeYallQ,"runtime","all?");
+EXT(YLintG,"boot","<int>");
 DEF(YruntimeYtype_or,"runtime","type-or");
+DEF(YruntimeYlast,"runtime","last");
+EXT(YTmacros_okQT,"boot","*macros-ok?*");
 DEF(YruntimeYdecode_radix_option,"runtime","decode-radix-option");
+DEF(YruntimeYascii_Gchar,"runtime","ascii->char");
 DEF(YruntimeYrange_check,"runtime","range-check");
-DEF(YruntimeYlist,"runtime","list");
 DEF(YruntimeYrange_by,"runtime","range-by");
-DEF(YruntimeYid_hash,"runtime","id-hash");
-DEF(YruntimeYstep_first,"runtime","step-first");
+EXT(Yfile_opening_error,"boot","file-opening-error");
+DEF(YruntimeYPindex_setter,"runtime","%index-setter");
 EXT(YisaQ,"boot","isa?");
+EXT(YLlocG,"boot","<loc>");
 DEF(YruntimeYdel,"runtime","del");
-DEF(YruntimeYchar_readyQ,"runtime","char-ready?");
+DEF(YruntimeYTdebug_tablesQT,"runtime","*debug-tables?*");
 DEF(YruntimeYvec,"runtime","vec");
-EXT(YLtraitsG,"boot","<traits>");
-DEF(YruntimeYLtab_stateG,"runtime","<tab-state>");
+DEF(YruntimeYformat,"runtime","format");
+DEF(YruntimeYrevX,"runtime","rev!");
+DEF(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
 DEF(YruntimeYdo_keyed,"runtime","do-keyed");
-DEF(YruntimeYPdata_setter,"runtime","%data-setter");
+DEF(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
+DEF(YruntimeYidentity,"runtime","identity");
+DEF(YruntimeYTprint_baseT,"runtime","*print-base*");
 EXT(YmacrosYmake_setter_name,"macros","make-setter-name");
-DEF(YruntimeYepsilon,"runtime","epsilon");
+DEF(YruntimeYLoutput_portG,"runtime","<output-port>");
+DEF(YruntimeYchar_Gascii,"runtime","char->ascii");
 DEF(YruntimeYalter,"runtime","alter");
-DEF(YruntimeYapp_filename,"runtime","app-filename");
 EXT(Ysig_specs,"boot","sig-specs");
-EXT(Yunknown_function_error,"boot","unknown-function-error");
+DEF(YruntimeYPbucket_depth_setter,"runtime","%bucket-depth-setter");
 EXT(Yfab_sym,"boot","fab-sym");
+DEF(YruntimeYLfile_output_portG,"runtime","<file-output-port>");
 DEF(YruntimeYaddX,"runtime","add!");
-DEF(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
+DEF(YruntimeYpeek_char,"runtime","peek-char");
 EXT(YPdefine_method,"boot","%define-method");
-DEF(YruntimeYTtwin_primesT,"runtime","*twin-primes*");
-DEF(YruntimeYfab_map,"runtime","fab-map");
 EXT(YmacrosYmatch_sublist,"macros","match-sublist");
+DEF(YruntimeYPgc_state_setter,"runtime","%gc-state-setter");
+DEF(YruntimeYtrace,"runtime","trace");
+DEF(YruntimeYout,"runtime","out");
 DEF(YruntimeYA,"runtime","+");
+EXT(Ytype_error,"boot","type-error");
+DEF(YruntimeYdel_keys,"runtime","del-keys");
 DEF(YruntimeYuppercaseQ,"runtime","uppercase?");
 EXT(YPslot,"boot","%slot");
-DEF(YruntimeYLtabG,"runtime","<tab>");
 DEF(YruntimeYcontagious_call,"runtime","contagious-call");
-DEF(YruntimeYrcurry,"runtime","rcurry");
-DEF(YruntimeYG,"runtime",">");
-EXT(YLvecG,"boot","<vec>");
-DEF(YruntimeYPindex,"runtime","%index");
-DEF(YruntimeYdo2,"runtime","do2");
-EXT(YmacrosYvar_name,"macros","var-name");
-DEF(YruntimeYPsecondary_modulus,"runtime","%secondary-modulus");
-DEF(YruntimeYDdigit_to_char,"runtime","$digit-to-char");
-DEF(YruntimeYrange_from,"runtime","range-from");
-DEF(YruntimeYPbucket,"runtime","%bucket");
-EXT(Ysig_naryQ,"boot","sig-nary?");
-DEF(YruntimeYclose_input_port,"runtime","close-input-port");
-DEF(YruntimeYLinput_portG,"runtime","<input-port>");
 DEF(YruntimeYcall_with_output_file,"runtime","call-with-output-file");
-DEF(YruntimeYalways,"runtime","always");
+DEF(YruntimeYcurrent_gc_state,"runtime","current-gc-state");
+DEF(YruntimeYLsimple_handler_infoG,"runtime","<simple-handler-info>");
+DEF(YruntimeYhandler_test,"runtime","handler-test");
+DEF(YruntimeYTtwin_primesT,"runtime","*twin-primes*");
+DEF(YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
+DEF(YruntimeYG,"runtime",">");
+DEF(YruntimeYchoose_table_geometry,"runtime","choose-table-geometry");
+DEF(YruntimeYrange_from,"runtime","range-from");
+DEF(YruntimeYid_hash,"runtime","id-hash");
+DEF(YruntimeYnewline,"runtime","newline");
+EXT(YPPmacro,"boot","%%macro");
+EXT(YLtupG,"boot","<tup>");
+EXT(Ysig_naryQ,"boot","sig-nary?");
+DEF(YruntimeYlist_handlers,"runtime","list-handlers");
+DEF(YruntimeYcopy_to_new_vector,"runtime","copy-to-new-vector");
+DEF(YruntimeYPbucket_setter,"runtime","%bucket-setter");
 EXT(YmacrosYgensym,"macros","gensym");
-DEF(YruntimeYformat,"runtime","format");
-DEF(YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
 DEF(YruntimeYmax,"runtime","max");
-DEF(YruntimeYboot_symbols,"runtime","boot-symbols");
-DEF(YruntimeYTcurrent_handlersT,"runtime","*current-handlers*");
-DEF(YruntimeYPindex_setter,"runtime","%index-setter");
+DEF(YruntimeYdescribe_handler,"runtime","describe-handler");
+DEF(YruntimeYPgc_state,"runtime","%gc-state");
+DEF(YruntimeYLstepG,"runtime","<step>");
 DEF(YruntimeYsub_setter,"runtime","sub-setter");
-DEF(YruntimeYrehash_table,"runtime","rehash-table");
 DEF(YruntimeYfirst_then,"runtime","first-then");
+DEF(YruntimeYhandler_function_setter,"runtime","handler-function-setter");
+DEF(YruntimeYhandler_condition_type,"runtime","handler-condition-type");
 DEF(YruntimeYrev,"runtime","rev");
-DEF(YruntimeYLsimple_errorG,"runtime","<simple-error>");
-DEF(YruntimeYPvector_setter,"runtime","%vector-setter");
-EXT(YLbagG,"boot","<bag>");
+DEF(YruntimeYPvector,"runtime","%vector");
 DEF(YruntimeYpower_of_two_ceiling,"runtime","power-of-two-ceiling");
+DEF(YruntimeYhandler_info_setter,"runtime","handler-info-setter");
 DEF(YruntimeYbuf_len,"runtime","buf-len");
-DEF(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
-DEF(YruntimeY_,"runtime","-");
+DEF(YruntimeYcondition_message,"runtime","condition-message");
 DEF(YruntimeY3rd,"runtime","3rd");
-DEF(YruntimeYbooted_fab_sym,"runtime","booted-fab-sym");
+DEF(YruntimeYmake_handler,"runtime","make-handler");
 DEF(YruntimeYnow_key,"runtime","now-key");
 DEF(YruntimeYmap2,"runtime","map2");
 DEF(YruntimeYreduceA,"runtime","reduce+");
+DEF(YruntimeYLportG,"runtime","<port>");
+DEF(YruntimeYLerrorG,"runtime","<error>");
 DEF(YruntimeYGE,"runtime",">=");
 EXT(Yfun_names,"boot","fun-names");
-DEF(YruntimeYbot,"runtime","bot");
+DEF(YruntimeYTgensym_counterT,"runtime","*gensym-counter*");
+DEF(YruntimeYepsilon,"runtime","epsilon");
 EXT(Ysig_arity,"boot","sig-arity");
 DEF(YruntimeYstep_then,"runtime","step-then");
-DEF(YruntimeYfile_mtime,"runtime","file-mtime");
 DEF(YruntimeYrange_below,"runtime","range-below");
-DEF(YruntimeYdefault_handler,"runtime","default-handler");
-EXT(YLlogG,"boot","<log>");
+DEF(YruntimeYport_handle_setter,"runtime","port-handle-setter");
 DEF(YruntimeYlow_elt_setter,"runtime","low-elt-setter");
-EXT(YPvnul,"boot","%vnul");
-DEF(YruntimeYPvector,"runtime","%vector");
+DEF(YruntimeYboot_symbols,"runtime","boot-symbols");
+DEF(YruntimeYgrow_table,"runtime","grow-table");
 EXT(Yobject_parents,"boot","object-parents");
 DEF(YruntimeYNE,"runtime","~=");
 DEF(YruntimeYremainder,"runtime","remainder");
-DEF(YruntimeYcurrent_gc_state,"runtime","current-gc-state");
-DEF(YruntimeYnative_chars,"runtime","native-chars");
+DEF(YruntimeYclrX,"runtime","clr!");
 DEF(YruntimeYoddQ,"runtime","odd?");
+DEF(YruntimeYhandler_condition_type_setter,"runtime","handler-condition-type-setter");
 DEF(YruntimeYcopy_state,"runtime","copy-state");
-DEF(YruntimeYdo,"runtime","do");
-DEF(YruntimeYLrangeG,"runtime","<range>");
+DEF(YruntimeYPcat,"runtime","%cat");
+DEF(YruntimeYport_guts,"runtime","port-guts");
 DEF(YruntimeYto_digit,"runtime","to-digit");
 DEF(YruntimeYaddress_of,"runtime","address-of");
-DEF(YruntimeYopen_input_file,"runtime","open-input-file");
-EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
+EXT(YLbagG,"boot","<bag>");
 DEF(YruntimeYneg,"runtime","neg");
-DEF(YruntimeYTprint_baseT,"runtime","*print-base*");
-DEF(YruntimeYDempty_cell_marker,"runtime","$empty-cell-marker");
-DEF(YruntimeYtable_growth_factor,"runtime","table-growth-factor");
+DEF(YruntimeYsig,"runtime","sig");
 EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
 DEF(YruntimeYmodulo,"runtime","modulo");
+DEF(YruntimeYassoc_key_setter,"runtime","assoc-key-setter");
 DEF(YruntimeYtruncateS,"runtime","truncate/");
 DEF(YruntimeYflo_bits,"runtime","flo-bits");
-DEF(YruntimeYport_guts_setter,"runtime","port-guts-setter");
 DEF(YruntimeYT,"runtime","*");
+DEF(YruntimeYPindex,"runtime","%index");
 DEF(YruntimeYdefault,"runtime","default");
 DEF(YruntimeYcat2,"runtime","cat2");
 DEF(YruntimeYtruncate,"runtime","truncate");
-DEF(YruntimeYLassocG,"runtime","<assoc>");
+EXT(YLmetG,"boot","<met>");
 DEF(YruntimeYnow_elt,"runtime","now-elt");
-DEF(YruntimeYclrX,"runtime","clr!");
-EXT(YPsnul,"boot","%snul");
+DEF(YruntimeYwrite_char,"runtime","write-char");
 DEF(YruntimeYdel_dups,"runtime","del-dups");
+DEF(YruntimeYPvector_setter,"runtime","%vector-setter");
 DEF(YruntimeYpos,"runtime","pos");
-DEF(YruntimeYLerrorG,"runtime","<error>");
-EXT(YLtupG,"boot","<tup>");
-DEF(YruntimeYcondition_message,"runtime","condition-message");
+EXT(YLstrG,"boot","<str>");
+EXT(YLsigG,"boot","<sig>");
 EXT(Ysig_value,"boot","sig-value");
-DEF(YruntimeYDvacated_cell_marker,"runtime","$vacated-cell-marker");
-EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
+DEF(YruntimeYhandler_test_setter,"runtime","handler-test-setter");
 DEF(YruntimeYroundS,"runtime","round/");
-DEF(YruntimeYPprimary_modulus,"runtime","%primary-modulus");
-DEF(YruntimeYLoutput_portG,"runtime","<output-port>");
-DEF(YruntimeYPn_buckets,"runtime","%n-buckets");
 DEF(YruntimeYposQ,"runtime","pos?");
 DEF(YruntimeY2nd,"runtime","2nd");
-DEF(YruntimeYpeek_char,"runtime","peek-char");
-DEF(YruntimeYcopy_to_new_vector,"runtime","copy-to-new-vector");
-DEF(YruntimeYport_handle_setter,"runtime","port-handle-setter");
+DEF(YruntimeYin,"runtime","in");
+DEF(YruntimeYPvacated_setter,"runtime","%vacated-setter");
 DEF(YruntimeYvals_to_str,"runtime","vals-to-str");
+DEF(YruntimeYdefault_handler,"runtime","default-handler");
 DEF(YruntimeYassoc,"runtime","assoc");
+DEF(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
 DEF(YruntimeYpush_lastX,"runtime","push-last!");
+DEF(YruntimeYPdata_setter,"runtime","%data-setter");
+DEF(YruntimeYtable_protocol,"runtime","table-protocol");
 DEF(YruntimeYfloor,"runtime","floor");
-DEF(YruntimeYascii_whitespaces,"runtime","ascii-whitespaces");
+EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
 EXT(Yfun_arity,"boot","fun-arity");
-DEF(YruntimeYopen_output_file,"runtime","open-output-file");
+DEF(YruntimeYLtab_stateG,"runtime","<tab-state>");
+DEF(YruntimeYlocative_value,"runtime","locative-value");
+DEF(YruntimeYLsimple_table_vectorG,"runtime","<simple-table-vector>");
 DEF(YruntimeYstr_to_num,"runtime","str-to-num");
-EXT(YLfloG,"boot","<flo>");
 DEF(YruntimeYceilingS,"runtime","ceiling/");
-EXT(YLoptsG,"boot","<opts>");
+EXT(YmacrosYvar_name,"macros","var-name");
+EXT(Ynul,"boot","nul");
 DEF(YruntimeYrange_error,"runtime","range-error");
-DEF(YruntimeYnewline,"runtime","newline");
-EXT(YLchrG,"boot","<chr>");
-DEF(YruntimeYLstepG,"runtime","<step>");
+DEF(YruntimeYLconditionG,"runtime","<condition>");
+DEF(YruntimeYLrestartG,"runtime","<restart>");
+DEF(YruntimeYrot,"runtime","rot");
+DEF(YruntimeYclose_output_port,"runtime","close-output-port");
+DEF(YruntimeYLtabG,"runtime","<tab>");
 DEF(YruntimeYelt,"runtime","elt");
+DEF(YruntimeYtable_shrink_threshold_setter,"runtime","table-shrink-threshold-setter");
 DEF(YruntimeYassocs_keys_setter,"runtime","assocs-keys-setter");
+EXT(YLsymG,"boot","<sym>");
 DEF(YruntimeYlsh,"runtime","lsh");
-EXT(YLgenG,"boot","<gen>");
+DEF(YruntimeYhandler_info_arguments,"runtime","handler-info-arguments");
 DEF(YruntimeYnxt_state,"runtime","nxt-state");
 EXT(Yslot_value_setter,"boot","slot-value-setter");
-EXT(YLsymG,"boot","<sym>");
-DEF(YruntimeYport_index_setter,"runtime","port-index-setter");
-DEF(YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
+DEF(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
+DEF(YruntimeYbuild_condition_interactively,"runtime","build-condition-interactively");
 DEF(YruntimeYas_lowercase,"runtime","as-lowercase");
+DEF(YruntimeYfile_mtime,"runtime","file-mtime");
 DEF(YruntimeYassoc_key,"runtime","assoc-key");
 DEF(YruntimeYS,"runtime","/");
-EXT(YLlocG,"boot","<loc>");
-EXT(YLintG,"boot","<int>");
+DEF(YruntimeYfloorS,"runtime","floor/");
 EXT(Yhead,"boot","head");
-DEF(YruntimeYread_char,"runtime","read-char");
-DEF(YruntimeYin,"runtime","in");
-DEF(YruntimeYLstring_output_portG,"runtime","<string-output-port>");
+DEF(YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
+EXT(Yunknown_function_error,"boot","unknown-function-error");
+DEF(YruntimeYPdata,"runtime","%data");
 EXT(Yfun_specs,"boot","fun-specs");
-EXT(YLslotG,"boot","<slot>");
-EXT(YLflatG,"boot","<flat>");
+DEF(YruntimeYLstring_input_portG,"runtime","<string-input-port>");
+DEF(YruntimeYrehash_table,"runtime","rehash-table");
+DEF(YruntimeYDvacated_cell_marker,"runtime","$vacated-cell-marker");
+DEF(YruntimeY_,"runtime","-");
 DEF(YruntimeYash,"runtime","ash");
 EXT(YmacrosYmatch_atom,"macros","match-atom");
 DEF(YruntimeYmap_keyed,"runtime","map-keyed");
 DEF(YruntimeYassocq,"runtime","assocq");
-EXT(YLfunG,"boot","<fun>");
-EXT(YmacrosYtup,"macros","tup");
-DEF(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
-DEF(YruntimeYsig,"runtime","sig");
-DEF(YruntimeYclose_output_port,"runtime","close-output-port");
-DEF(YruntimeYadd_new,"runtime","add-new");
-DEF(YruntimeYPbucket_depth,"runtime","%bucket-depth");
-DEF(YruntimeYsub,"runtime","sub");
-DEF(YruntimeYinto,"runtime","into");
-DEF(YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
-EXT(Yobject_slots,"boot","object-slots");
-DEF(YruntimeYrange_below_setter,"runtime","range-below-setter");
-EXT(Yapply,"boot","apply");
-DEF(YruntimeYport_guts,"runtime","port-guts");
-EXT(Yfun_name,"boot","fun-name");
-DEF(YruntimeYout,"runtime","out");
-DEF(YruntimeYeof_object,"runtime","eof-object");
-DEF(YruntimeYassocs_vals_setter,"runtime","assocs-vals-setter");
-EXT(Ytail,"boot","tail");
-DEF(YruntimeYfind_key,"runtime","find-key");
-DEF(YruntimeYPdata,"runtime","%data");
-DEF(YruntimeYassocs_keys,"runtime","assocs-keys");
-DEF(YruntimeYTdebug_tablesQT,"runtime","*debug-tables?*");
-DEF(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
-DEF(YruntimeYassq,"runtime","assq");
-DEF(YruntimeYpop_lastX,"runtime","pop-last!");
-EXT(Yhead_setter,"boot","head-setter");
-DEF(YruntimeYcurry,"runtime","curry");
-DEF(YruntimeYLfile_output_portG,"runtime","<file-output-port>");
-DEF(YruntimeYcontagious_type,"runtime","contagious-type");
-DEF(YruntimeYrange_above,"runtime","range-above");
-DEF(YruntimeYfrom_above,"runtime","from-above");
-DEF(YruntimeYLassocsG,"runtime","<assocs>");
-DEF(YruntimeYlocative_value,"runtime","locative-value");
-DEF(YruntimeYwrite_string,"runtime","write-string");
-DEF(YruntimeYport_contents,"runtime","port-contents");
-DEF(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
-DEF(YruntimeYbuf,"runtime","buf");
-DEF(YruntimeYassoc_value_setter,"runtime","assoc-value-setter");
-DEF(YruntimeYchoose_table_geometry,"runtime","choose-table-geometry");
-DEF(YruntimeYto_str,"runtime","to-str");
 
 /* FORWARD QUOTATIONS: */
 
+DEFLIT(lit_100);
+DEFLIT(lit_99);
+DEFLIT(lit_98);
+DEFLIT(lit_97);
+DEFLIT(lit_96);
+DEFLIT(lit_95);
+DEFLIT(lit_94);
+DEFLIT(lit_93);
+DEFLIT(lit_92);
+DEFLIT(lit_91);
 DEFLIT(lit_90);
 DEFLIT(lit_89);
 DEFLIT(lit_88);
@@ -834,214 +871,250 @@ LOCFOR(fun_low_elt_setter_338);
 LOCFOR(fun_elt_339);
 LOCFOR(fun_elt_setter_340);
 LOCFOR(fun_to_str_341);
-LOCFOR(fun_loop_342);
-LOCFOR(fun_343);
-LOCFOR(fun_ascii_Gchar_344);
-LOCFOR(fun_char_Ginteger_345);
-LOCFOR(fun_integer_Gchar_346);
-LOCFOR(fun_loop_347);
+LOCFOR(fun_add_342);
+LOCFOR(fun_loop_343);
+LOCFOR(fun_344);
+LOCFOR(fun_ascii_Gchar_345);
+LOCFOR(fun_char_Ginteger_346);
+LOCFOR(fun_integer_Gchar_347);
 LOCFOR(fun_loop_348);
-LOCFOR(fun_char_Gascii_349);
-LOCFOR(fun_as_350);
+LOCFOR(fun_loop_349);
+LOCFOR(fun_char_Gascii_350);
 LOCFOR(fun_as_351);
-LOCFOR(fun_L_352);
-LOCFOR(fun_to_str_353);
-LOCFOR(fun_identity_354);
-LOCFOR(fun_355);
-LOCFOR(fun_compose_356);
-LOCFOR(fun_357);
-LOCFOR(fun_rcurry_358);
-LOCFOR(fun_359);
-LOCFOR(fun_curry_360);
-LOCFOR(fun_361);
-LOCFOR(fun_always_362);
-LOCFOR(fun_default_handler_363);
-LOCFOR(fun_condition_message_364);
-LOCFOR(fun_condition_message_setter_365);
-LOCFOR(fun_366);
-LOCFOR(fun_condition_arguments_367);
-LOCFOR(fun_condition_arguments_setter_368);
+LOCFOR(fun_as_352);
+LOCFOR(fun_L_353);
+LOCFOR(fun_to_str_354);
+LOCFOR(fun_identity_355);
+LOCFOR(fun_356);
+LOCFOR(fun_compose_357);
+LOCFOR(fun_358);
+LOCFOR(fun_rcurry_359);
+LOCFOR(fun_360);
+LOCFOR(fun_curry_361);
+LOCFOR(fun_362);
+LOCFOR(fun_always_363);
+LOCFOR(fun_default_handler_364);
+LOCFOR(fun_default_handler_description_365);
+LOCFOR(fun_build_condition_interactively_366);
+LOCFOR(fun_condition_message_367);
+LOCFOR(fun_condition_message_setter_368);
 LOCFOR(fun_369);
-LOCFOR(fun_default_handler_370);
-LOCFOR(fun_handler_function_371);
-LOCFOR(fun_handler_function_setter_372);
-LOCFOR(fun_373);
-FUNFOR(YruntimeYmake_handler);
-FUNFOR(YruntimeYhandler_matchesQ);
-LOCFOR(fun_376);
-LOCFOR(fun_377);
-LOCFOR(fun_378);
-LOCFOR(fun_Uhandler_functionU_379);
+LOCFOR(fun_condition_arguments_370);
+LOCFOR(fun_condition_arguments_setter_371);
+LOCFOR(fun_372);
+LOCFOR(fun_build_condition_interactively_373);
+LOCFOR(fun_default_handler_374);
+LOCFOR(fun_default_handler_description_375);
+LOCFOR(fun_describe_handler_376);
+LOCFOR(fun_build_condition_for_handler_interactively_377);
+LOCFOR(fun_handler_info_message_378);
+LOCFOR(fun_handler_info_message_setter_379);
 LOCFOR(fun_380);
-extern P YruntimeYPwith_monitor (P,P);
-LOCFOR(fun_382);
-LOCFOR(fun_search_383);
-LOCFOR(fun_sig_384);
-LOCFOR(fun_sig_385);
-LOCFOR(fun_error_386);
-LOCFOR(fun_error_387);
+LOCFOR(fun_handler_info_arguments_381);
+LOCFOR(fun_handler_info_arguments_setter_382);
+LOCFOR(fun_383);
+LOCFOR(fun_describe_handler_384);
+LOCFOR(fun_handler_condition_type_385);
+LOCFOR(fun_handler_condition_type_setter_386);
+LOCFOR(fun_387);
+LOCFOR(fun_handler_info_388);
+LOCFOR(fun_handler_info_setter_389);
+LOCFOR(fun_390);
+LOCFOR(fun_handler_test_391);
+LOCFOR(fun_handler_test_setter_392);
+LOCFOR(fun_393);
+LOCFOR(fun_handler_function_394);
+LOCFOR(fun_handler_function_setter_395);
+LOCFOR(fun_396);
+FUNFOR(YruntimeYmake_handler);
+FUNFOR(YruntimeYhandler_activeQ);
+FUNFOR(YruntimeYhandler_matchesQ);
+LOCFOR(fun_400);
+LOCFOR(fun_401);
+LOCFOR(fun_402);
+LOCFOR(fun_Uhandler_functionU_403);
+LOCFOR(fun_404);
+FUNFOR(YruntimeYPwith_monitor);
+LOCFOR(fun_406);
+FUNFOR(YruntimeYsignal_handler_list);
+LOCFOR(fun_sig_408);
+LOCFOR(fun_sig_409);
+LOCFOR(fun_error_410);
+LOCFOR(fun_error_411);
 FUNFOR(Ywrong_number_arguments_error);
 FUNFOR(Yunknown_function_error);
 FUNFOR(Ytype_error);
+LOCFOR(fun_search_415);
+FUNFOR(YruntimeYdo_handlers_of_type);
+LOCFOR(fun_417);
+FUNFOR(YruntimeYlist_handlers);
+LOCFOR(fun_419);
+LOCFOR(fun_search_420);
+FUNFOR(YruntimeYinvoke_handler_interactively);
+LOCFOR(fun_422);
+LOCFOR(fun_423);
+LOCFOR(fun_424);
+LOCFOR(fun_425);
+FUNFOR(YruntimeYchoose_handler);
 FUNFOR(YruntimeYlocative_value);
 FUNFOR(YruntimeYlocative_value_setter);
 FUNFOR(YruntimeYapp_filename);
 FUNFOR(YruntimeYapp_args);
-LOCFOR(fun_port_handle_395);
-LOCFOR(fun_port_handle_setter_396);
-LOCFOR(fun_397);
-LOCFOR(fun_open_input_file_398);
-LOCFOR(fun_file_opening_error_399);
-LOCFOR(fun_open_output_file_400);
-LOCFOR(fun_close_input_port_401);
-LOCFOR(fun_close_output_port_402);
-LOCFOR(fun_403);
-LOCFOR(fun_404);
-LOCFOR(fun_call_with_input_file_405);
-LOCFOR(fun_406);
-LOCFOR(fun_407);
-LOCFOR(fun_call_with_output_file_408);
-LOCFOR(fun_eof_objectQ_409);
-LOCFOR(fun_eof_objectQ_410);
-LOCFOR(fun_eof_object_411);
-LOCFOR(fun_read_char_412);
-LOCFOR(fun_peek_char_413);
-LOCFOR(fun_char_readyQ_414);
-LOCFOR(fun_newline_415);
-LOCFOR(fun_force_output_416);
-LOCFOR(fun_write_char_417);
-LOCFOR(fun_write_string_418);
-LOCFOR(fun_file_mtime_419);
-LOCFOR(fun_port_guts_420);
-LOCFOR(fun_port_guts_setter_421);
-LOCFOR(fun_422);
-LOCFOR(fun_port_contents_423);
-LOCFOR(fun_port_index_424);
-LOCFOR(fun_port_index_setter_425);
-LOCFOR(fun_426);
-LOCFOR(fun_call_with_string_input_port_427);
-LOCFOR(fun_call_with_string_output_port_428);
-LOCFOR(fun_peek_char_429);
-LOCFOR(fun_read_char_430);
-LOCFOR(fun_char_readyQ_431);
-LOCFOR(fun_write_char_432);
-LOCFOR(fun_write_string_433);
-LOCFOR(fun_Pvacated_434);
-LOCFOR(fun_Pvacated_setter_435);
-LOCFOR(fun_436);
-LOCFOR(fun_Pprimary_modulus_437);
-LOCFOR(fun_Pprimary_modulus_setter_438);
+LOCFOR(fun_port_handle_431);
+LOCFOR(fun_port_handle_setter_432);
+LOCFOR(fun_433);
+LOCFOR(fun_open_input_file_434);
+LOCFOR(fun_file_opening_error_435);
+LOCFOR(fun_open_output_file_436);
+LOCFOR(fun_close_input_port_437);
+LOCFOR(fun_close_output_port_438);
 LOCFOR(fun_439);
-LOCFOR(fun_Psecondary_modulus_440);
-LOCFOR(fun_Psecondary_modulus_setter_441);
+LOCFOR(fun_440);
+LOCFOR(fun_call_with_input_file_441);
 LOCFOR(fun_442);
-LOCFOR(fun_Pn_buckets_443);
-LOCFOR(fun_Pn_buckets_setter_444);
-LOCFOR(fun_445);
-LOCFOR(fun_Pbucket_depth_446);
-LOCFOR(fun_Pbucket_depth_setter_447);
-LOCFOR(fun_448);
-LOCFOR(fun_Pdata_449);
-LOCFOR(fun_Pdata_setter_450);
-LOCFOR(fun_451);
-LOCFOR(fun_Pgc_state_452);
-LOCFOR(fun_Pgc_state_setter_453);
-LOCFOR(fun_454);
-FUNFOR(YruntimeYfab_table_vector);
-LOCFOR(fun_elt_456);
-LOCFOR(fun_elt_setter_457);
-LOCFOR(fun_clrX_458);
-FUNFOR(YruntimeYtrace);
-LOCFOR(fun_table_growth_factor_460);
-LOCFOR(fun_table_growth_factor_setter_461);
+LOCFOR(fun_443);
+LOCFOR(fun_call_with_output_file_444);
+LOCFOR(fun_eof_objectQ_445);
+LOCFOR(fun_eof_objectQ_446);
+LOCFOR(fun_eof_object_447);
+LOCFOR(fun_read_char_448);
+LOCFOR(fun_peek_char_449);
+LOCFOR(fun_char_readyQ_450);
+LOCFOR(fun_newline_451);
+LOCFOR(fun_force_output_452);
+LOCFOR(fun_write_char_453);
+LOCFOR(fun_write_string_454);
+LOCFOR(fun_file_mtime_455);
+LOCFOR(fun_port_guts_456);
+LOCFOR(fun_port_guts_setter_457);
+LOCFOR(fun_458);
+LOCFOR(fun_port_contents_459);
+LOCFOR(fun_port_index_460);
+LOCFOR(fun_port_index_setter_461);
 LOCFOR(fun_462);
-LOCFOR(fun_table_growth_threshold_463);
-LOCFOR(fun_table_growth_threshold_setter_464);
-LOCFOR(fun_465);
-LOCFOR(fun_table_shrink_threshold_466);
-LOCFOR(fun_table_shrink_threshold_setter_467);
-LOCFOR(fun_468);
-LOCFOR(fun_Pcount_469);
-LOCFOR(fun_Pcount_setter_470);
-LOCFOR(fun_471);
-LOCFOR(fun_Pvector_472);
-LOCFOR(fun_Pvector_setter_473);
-LOCFOR(fun_474);
-LOCFOR(fun_table_protocol_475);
-FUNFOR(YruntimeYhash_moduli);
-LOCFOR(fun_fab_477);
-LOCFOR(fun_x_1177_478);
-LOCFOR(fun_479);
-LOCFOR(fun_480);
-LOCFOR(fun_inner_481);
-LOCFOR(fun_outer_482);
-LOCFOR(fun_483);
-LOCFOR(fun_elt_484);
-LOCFOR(fun_inner_485);
-LOCFOR(fun_outer_486);
+LOCFOR(fun_call_with_string_input_port_463);
+LOCFOR(fun_call_with_string_output_port_464);
+LOCFOR(fun_peek_char_465);
+LOCFOR(fun_read_char_466);
+LOCFOR(fun_char_readyQ_467);
+LOCFOR(fun_write_char_468);
+LOCFOR(fun_write_string_469);
+LOCFOR(fun_Pvacated_470);
+LOCFOR(fun_Pvacated_setter_471);
+LOCFOR(fun_472);
+LOCFOR(fun_Pprimary_modulus_473);
+LOCFOR(fun_Pprimary_modulus_setter_474);
+LOCFOR(fun_475);
+LOCFOR(fun_Psecondary_modulus_476);
+LOCFOR(fun_Psecondary_modulus_setter_477);
+LOCFOR(fun_478);
+LOCFOR(fun_Pn_buckets_479);
+LOCFOR(fun_Pn_buckets_setter_480);
+LOCFOR(fun_481);
+LOCFOR(fun_Pbucket_depth_482);
+LOCFOR(fun_Pbucket_depth_setter_483);
+LOCFOR(fun_484);
+LOCFOR(fun_Pdata_485);
+LOCFOR(fun_Pdata_setter_486);
 LOCFOR(fun_487);
-LOCFOR(fun_elt_setter_488);
-LOCFOR(fun_inner_489);
-LOCFOR(fun_outer_490);
-LOCFOR(fun_491);
-LOCFOR(fun_del_key_492);
-LOCFOR(fun_inner_493);
-LOCFOR(fun_outer_494);
-LOCFOR(fun_do_keyed_495);
-LOCFOR(fun_inner_496);
-LOCFOR(fun_outer_497);
-LOCFOR(fun_do_498);
-LOCFOR(fun_del_keys_499);
-LOCFOR(fun_len_500);
-LOCFOR(fun_Pvector_501);
-LOCFOR(fun_Pvector_setter_502);
-LOCFOR(fun_503);
-LOCFOR(fun_Pbucket_504);
-LOCFOR(fun_Pbucket_setter_505);
-LOCFOR(fun_506);
-LOCFOR(fun_Pindex_507);
-LOCFOR(fun_Pindex_setter_508);
-LOCFOR(fun_509);
-LOCFOR(fun_inner_510);
-LOCFOR(fun_outer_511);
-LOCFOR(fun_512);
-LOCFOR(fun_ini_state_513);
-LOCFOR(fun_inner_514);
-LOCFOR(fun_outer_515);
+LOCFOR(fun_Pgc_state_488);
+LOCFOR(fun_Pgc_state_setter_489);
+LOCFOR(fun_490);
+FUNFOR(YruntimeYfab_table_vector);
+LOCFOR(fun_elt_492);
+LOCFOR(fun_elt_setter_493);
+LOCFOR(fun_clrX_494);
+FUNFOR(YruntimeYtrace);
+LOCFOR(fun_table_growth_factor_496);
+LOCFOR(fun_table_growth_factor_setter_497);
+LOCFOR(fun_498);
+LOCFOR(fun_table_growth_threshold_499);
+LOCFOR(fun_table_growth_threshold_setter_500);
+LOCFOR(fun_501);
+LOCFOR(fun_table_shrink_threshold_502);
+LOCFOR(fun_table_shrink_threshold_setter_503);
+LOCFOR(fun_504);
+LOCFOR(fun_Pcount_505);
+LOCFOR(fun_Pcount_setter_506);
+LOCFOR(fun_507);
+LOCFOR(fun_Pvector_508);
+LOCFOR(fun_Pvector_setter_509);
+LOCFOR(fun_510);
+LOCFOR(fun_table_protocol_511);
+FUNFOR(YruntimeYhash_moduli);
+LOCFOR(fun_fab_513);
+LOCFOR(fun_x_1177_514);
+LOCFOR(fun_515);
 LOCFOR(fun_516);
-LOCFOR(fun_nxt_state_517);
-LOCFOR(fun_fin_stateQ_518);
-LOCFOR(fun_now_key_519);
-LOCFOR(fun_now_elt_520);
-LOCFOR(fun_now_elt_setter_521);
-LOCFOR(fun_copy_state_522);
+LOCFOR(fun_inner_517);
+LOCFOR(fun_outer_518);
+LOCFOR(fun_519);
+LOCFOR(fun_elt_520);
+LOCFOR(fun_inner_521);
+LOCFOR(fun_outer_522);
 LOCFOR(fun_523);
-LOCFOR(fun_tab_keys_524);
-LOCFOR(fun_grow_table_525);
-LOCFOR(fun_rehash_table_526);
+LOCFOR(fun_elt_setter_524);
+LOCFOR(fun_inner_525);
+LOCFOR(fun_outer_526);
 LOCFOR(fun_527);
-LOCFOR(fun_528);
+LOCFOR(fun_del_key_528);
+LOCFOR(fun_inner_529);
+LOCFOR(fun_outer_530);
+LOCFOR(fun_do_keyed_531);
+LOCFOR(fun_inner_532);
+LOCFOR(fun_outer_533);
+LOCFOR(fun_do_534);
+LOCFOR(fun_del_keys_535);
+LOCFOR(fun_len_536);
+LOCFOR(fun_Pvector_537);
+LOCFOR(fun_Pvector_setter_538);
+LOCFOR(fun_539);
+LOCFOR(fun_Pbucket_540);
+LOCFOR(fun_Pbucket_setter_541);
+LOCFOR(fun_542);
+LOCFOR(fun_Pindex_543);
+LOCFOR(fun_Pindex_setter_544);
+LOCFOR(fun_545);
+LOCFOR(fun_inner_546);
+LOCFOR(fun_outer_547);
+LOCFOR(fun_548);
+LOCFOR(fun_ini_state_549);
+LOCFOR(fun_inner_550);
+LOCFOR(fun_outer_551);
+LOCFOR(fun_552);
+LOCFOR(fun_nxt_state_553);
+LOCFOR(fun_fin_stateQ_554);
+LOCFOR(fun_now_key_555);
+LOCFOR(fun_now_elt_556);
+LOCFOR(fun_now_elt_setter_557);
+LOCFOR(fun_copy_state_558);
+LOCFOR(fun_559);
+LOCFOR(fun_tab_keys_560);
+LOCFOR(fun_grow_table_561);
+LOCFOR(fun_rehash_table_562);
+LOCFOR(fun_563);
+LOCFOR(fun_564);
 FUNFOR(YruntimeYchoose_table_geometry);
-LOCFOR(fun_inner_530);
-LOCFOR(fun_outer_531);
-LOCFOR(fun_532);
-LOCFOR(fun_533);
-LOCFOR(fun_copy_to_new_vector_534);
+LOCFOR(fun_inner_566);
+LOCFOR(fun_outer_567);
+LOCFOR(fun_568);
+LOCFOR(fun_569);
+LOCFOR(fun_copy_to_new_vector_570);
 FUNFOR(YruntimeYcurrent_gc_state);
-LOCFOR(fun_id_hash_536);
-LOCFOR(fun_id_hash_537);
+LOCFOR(fun_id_hash_572);
+LOCFOR(fun_id_hash_573);
 FUNFOR(YruntimeYrot);
-LOCFOR(fun_id_hash_539);
-LOCFOR(fun_id_hash_540);
-LOCFOR(fun_id_hash_541);
-LOCFOR(fun_loop_542);
+LOCFOR(fun_id_hash_575);
+LOCFOR(fun_id_hash_576);
+LOCFOR(fun_id_hash_577);
+LOCFOR(fun_loop_578);
 FUNFOR(YruntimeYcase_insensitive_string_hash);
-LOCFOR(fun_loop_544);
+LOCFOR(fun_loop_580);
 FUNFOR(YruntimeYcase_insensitive_string_equal);
-LOCFOR(fun_table_protocol_546);
+LOCFOR(fun_table_protocol_582);
 extern P YruntimeYbooted_fab_sym_using (P,P);
 FUNFOR(YruntimeYbooted_fab_sym);
-LOCFOR(fun_boot_549);
+LOCFOR(fun_boot_585);
 FUNFOR(YruntimeYboot_symbols);
 extern P YruntimeY___main_0___ ();
 extern P YruntimeY___main_1___ ();
@@ -1051,6 +1124,7 @@ extern P YruntimeY___main_4___ ();
 extern P YruntimeY___main_5___ ();
 extern P YruntimeY___main_6___ ();
 extern P YruntimeY___main_7___ ();
+extern P YruntimeY___main_8___ ();
 
 /* FUNCTION CODES: */
 
@@ -6739,7 +6813,18 @@ loop:
   RET(x_);
 }
 
-FUNCODEDEF(fun_loop_342) {
+FUNCODEDEF(fun_add_342) {
+  ARG(c_, 0);
+  ARG(s_, 1);
+  P T1,T0;
+  P a1,a2;
+loop:
+  T1 = CALL1(CHKREF(YruntimeYto_str),c_);
+  T0 = CALL2(CHKREF(YmacrosYcat),s_,T1);
+  RET(T0);
+}
+
+FUNCODEDEF(fun_loop_343) {
   ARG(j_, 0);
   ARG(i_, 1);
   P T7,T6,T5,T4,T3,T2,T1,T0;
@@ -6765,14 +6850,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_343) {
+FUNCODEDEF(fun_344) {
   ARG(s_, 0);
   ARG(i_, 1);
   P loopF785;
   P T2,T1,T0;
   P a1,a2;
 loop:
-  T2 = FUNSHELL(1,fun_loop_342,3);
+  T2 = FUNSHELL(1,fun_loop_343,3);
   loopF785 = T2;
   FUNINIT(loopF785, 3,loopF785,FREEREF(0),s_);
   T1 = KCALL2(loopF785,i_,YPint((P)0));
@@ -6780,7 +6865,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_ascii_Gchar_344) {
+FUNCODEDEF(fun_ascii_Gchar_345) {
   ARG(n_, 0);
   P tmpF786;
   P T3,T2,T1,T0;
@@ -6798,7 +6883,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_char_Ginteger_345) {
+FUNCODEDEF(fun_char_Ginteger_346) {
   ARG(char_, 0);
   P T0;
   P a1;
@@ -6807,7 +6892,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_integer_Gchar_346) {
+FUNCODEDEF(fun_integer_Gchar_347) {
   ARG(n_, 0);
   P T0;
   P a1;
@@ -6816,7 +6901,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_loop_347) {
+FUNCODEDEF(fun_loop_348) {
   ARG(i_, 0);
   P cF787;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
@@ -6845,7 +6930,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_loop_348) {
+FUNCODEDEF(fun_loop_349) {
   ARG(greatest_, 0);
   ARG(least_, 1);
   ARG(i_, 2);
@@ -6864,7 +6949,7 @@ loop:
     T19 = CALL2(CHKREF(YruntimeYfab),CHKREF(YLvecG),T20);
     T18 = CALL2(CHKREF(YruntimeYfill),T19,YPfalse);
     vF790 = T18;
-    T17 = FUNSHELL(1,fun_loop_347,4);
+    T17 = FUNSHELL(1,fun_loop_348,4);
     loopF791 = T17;
     FUNINIT(loopF791, 4,loopF791,least_,vF790,FREEREF(1));
     T16 = KCALL1(loopF791,YPint((P)0));
@@ -6916,7 +7001,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_char_Gascii_349) {
+FUNCODEDEF(fun_char_Gascii_350) {
   ARG(char_, 0);
   P tmpF792;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
@@ -6939,7 +7024,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_as_350) {
+FUNCODEDEF(fun_as_351) {
   ARG(s_, 0);
   ARG(U_, 1);
   P T0;
@@ -6949,7 +7034,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_as_351) {
+FUNCODEDEF(fun_as_352) {
   ARG(s_, 0);
   ARG(U_, 1);
   P T0;
@@ -6959,7 +7044,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_L_352) {
+FUNCODEDEF(fun_L_353) {
   ARG(y_, 0);
   ARG(x_, 1);
   P T2,T1,T0;
@@ -6971,7 +7056,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_to_str_353) {
+FUNCODEDEF(fun_to_str_354) {
   ARG(x_, 0);
   P T0;
   P a1;
@@ -6980,14 +7065,14 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_identity_354) {
+FUNCODEDEF(fun_identity_355) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(x_);
 }
 
-FUNCODEDEF(fun_355) {
+FUNCODEDEF(fun_356) {
   ARG(args_, 0);
   P T1,T0;
   P a1;
@@ -6997,17 +7082,17 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_compose_356) {
+FUNCODEDEF(fun_compose_357) {
   ARG(fy_, 0);
   ARG(fx_, 1);
   P T0;
   P a1,a2;
 loop:
-  T0 = FUNFAB(fun_355,2,fy_,fx_);
+  T0 = FUNFAB(fun_356,2,fy_,fx_);
   RET(T0);
 }
 
-FUNCODEDEF(fun_357) {
+FUNCODEDEF(fun_358) {
   ARG(args_, 0);
   P T1,T0;
   P a1;
@@ -7017,17 +7102,17 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_rcurry_358) {
+FUNCODEDEF(fun_rcurry_359) {
   ARG(curried_, 0);
   ARG(f_, 1);
   P T0;
   P a1,a2;
 loop:
-  T0 = FUNFAB(fun_357,2,curried_,f_);
+  T0 = FUNFAB(fun_358,2,curried_,f_);
   RET(T0);
 }
 
-FUNCODEDEF(fun_359) {
+FUNCODEDEF(fun_360) {
   ARG(args_, 0);
   P T1,T0;
   P a1;
@@ -7037,40 +7122,61 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_curry_360) {
+FUNCODEDEF(fun_curry_361) {
   ARG(curried_, 0);
   ARG(f_, 1);
   P T0;
   P a1,a2;
 loop:
-  T0 = FUNFAB(fun_359,2,curried_,f_);
+  T0 = FUNFAB(fun_360,2,curried_,f_);
   RET(T0);
 }
 
-FUNCODEDEF(fun_361) {
+FUNCODEDEF(fun_362) {
   ARG(args_, 0);
   P a1;
 loop:
   QRET(FREEREF(0));
 }
 
-FUNCODEDEF(fun_always_362) {
+FUNCODEDEF(fun_always_363) {
   ARG(x_, 0);
   P T0;
   P a1;
 loop:
-  T0 = FUNFAB(fun_361,1,x_);
+  T0 = FUNFAB(fun_362,1,x_);
   RET(T0);
 }
 
-FUNCODEDEF(fun_default_handler_363) {
+FUNCODEDEF(fun_default_handler_364) {
   ARG(c_, 0);
   P a1;
 loop:
   QRET(YPfalse);
 }
 
-FUNCODEDEF(fun_condition_message_364) {
+FUNCODEDEF(fun_default_handler_description_365) {
+  ARG(cond_type_, 0);
+  P T0;
+  P a1;
+loop:
+  T0 = CALL2(CHKREF(YruntimeYformat_to_string),CHKREF(lit_50),cond_type_);
+  RET(T0);
+}
+
+FUNCODEDEF(fun_build_condition_interactively_366) {
+  ARG(out_, 0);
+  ARG(in_, 1);
+  ARG(cond_type_, 2);
+  P T1,T0;
+  P a1,a2,a3;
+loop:
+  T1 = (P)YPpair(cond_type_,Ynil);
+  T0 = CALL3(CHKREF(YPisa),T1,Ynil,Ynil);
+  RET(T0);
+}
+
+FUNCODEDEF(fun_condition_message_367) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7079,7 +7185,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_condition_message_setter_365) {
+FUNCODEDEF(fun_condition_message_setter_368) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7089,14 +7195,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_366) {
+FUNCODEDEF(fun_369) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(CHKREF(lit_50));
+  QRET(CHKREF(lit_51));
 }
 
-FUNCODEDEF(fun_condition_arguments_367) {
+FUNCODEDEF(fun_condition_arguments_370) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7105,7 +7211,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_condition_arguments_setter_368) {
+FUNCODEDEF(fun_condition_arguments_setter_371) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7115,14 +7221,35 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_369) {
+FUNCODEDEF(fun_372) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(Ynil);
 }
 
-FUNCODEDEF(fun_default_handler_370) {
+FUNCODEDEF(fun_build_condition_interactively_373) {
+  ARG(out_, 0);
+  ARG(in_, 1);
+  ARG(cond_type_, 2);
+  P condF793;
+  P T4,T3,T2,T1,T0;
+  P a1,a2,a3;
+loop:
+  T4 = (P)YPnext_methods();
+  T3 = CALLN(CHKREF(YPcall_next_method),4,T4,cond_type_,in_,out_);
+  condF793 = T3;
+  CALL2(CHKREF(YruntimeYformat),out_,CHKREF(lit_53));
+  T1 = CALL1(CHKREF(YruntimeYread),in_);
+  CALL2(CHKREF(YruntimeYcondition_message_setter),T1,condF793);
+  CALL2(CHKREF(YruntimeYformat),out_,CHKREF(lit_52));
+  T2 = CALL1(CHKREF(YruntimeYread),in_);
+  CALL2(CHKREF(YruntimeYcondition_arguments_setter),T2,condF793);
+  T0 = condF793;
+  RET(T0);
+}
+
+FUNCODEDEF(fun_default_handler_374) {
   ARG(c_, 0);
   P T5,T4,T3,T2,T1,T0;
   P a1;
@@ -7139,7 +7266,181 @@ loop:
   QRET(T5);
 }
 
-FUNCODEDEF(fun_handler_function_371) {
+FUNCODEDEF(fun_default_handler_description_375) {
+  ARG(cond_type_, 0);
+  P T0;
+  P a1;
+loop:
+  T0 = CALL2(CHKREF(YruntimeYformat_to_string),CHKREF(lit_54),cond_type_);
+  RET(T0);
+}
+
+FUNCODEDEF(fun_describe_handler_376) {
+  ARG(condition_type_, 0);
+  ARG(info_, 1);
+  P T0;
+  P a1,a2;
+loop:
+  T0 = CALL1(CHKREF(YruntimeYdefault_handler_description),condition_type_);
+  RET(T0);
+}
+
+FUNCODEDEF(fun_build_condition_for_handler_interactively_377) {
+  ARG(out_, 0);
+  ARG(in_, 1);
+  ARG(condition_type_, 2);
+  ARG(info_, 3);
+  P T0;
+  P a1,a2,a3,a4;
+loop:
+  T0 = CALL3(CHKREF(YruntimeYbuild_condition_interactively),condition_type_,in_,out_);
+  RET(T0);
+}
+
+FUNCODEDEF(fun_handler_info_message_378) {
+  ARG(Ux_, 0);
+  P T0;
+  P a1;
+loop:
+  T0 = CALL2(CHKREF(Yslot_value),Ux_,CHKREF(YruntimeYhandler_info_message));
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_handler_info_message_setter_379) {
+  ARG(Ux_, 0);
+  ARG(Uz_, 1);
+  P T0;
+  P a1,a2;
+loop:
+  T0 = CALL3(CHKREF(Yslot_value_setter),Uz_,Ux_,CHKREF(YruntimeYhandler_info_message));
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_380) {
+  ARG(x_, 0);
+  P a1;
+loop:
+  QRET(CHKREF(Ynul));
+}
+
+FUNCODEDEF(fun_handler_info_arguments_381) {
+  ARG(Ux_, 0);
+  P T0;
+  P a1;
+loop:
+  T0 = CALL2(CHKREF(Yslot_value),Ux_,CHKREF(YruntimeYhandler_info_arguments));
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_handler_info_arguments_setter_382) {
+  ARG(Ux_, 0);
+  ARG(Uz_, 1);
+  P T0;
+  P a1,a2;
+loop:
+  T0 = CALL3(CHKREF(Yslot_value_setter),Uz_,Ux_,CHKREF(YruntimeYhandler_info_arguments));
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_383) {
+  ARG(x_, 0);
+  P a1;
+loop:
+  QRET(Ynil);
+}
+
+FUNCODEDEF(fun_describe_handler_384) {
+  ARG(condition_type_, 0);
+  ARG(info_, 1);
+  P T3,T2,T1,T0;
+  P a1,a2;
+loop:
+  T3 = CALL1(CHKREF(YruntimeYhandler_info_message),info_);
+  T2 = CALL1(CHKREF(YruntimeYhandler_info_arguments),info_);
+  T1 = CALL2(CHKREF(YmacrosYpair),T3,T2);
+  T0 = CALL2(CHKREF(Yapply),CHKREF(YruntimeYformat_to_string),T1);
+  RET(T0);
+}
+
+FUNCODEDEF(fun_handler_condition_type_385) {
+  ARG(Ux_, 0);
+  P T0;
+  P a1;
+loop:
+  T0 = CALL2(CHKREF(Yslot_value),Ux_,CHKREF(YruntimeYhandler_condition_type));
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_handler_condition_type_setter_386) {
+  ARG(Ux_, 0);
+  ARG(Uz_, 1);
+  P T0;
+  P a1,a2;
+loop:
+  T0 = CALL3(CHKREF(Yslot_value_setter),Uz_,Ux_,CHKREF(YruntimeYhandler_condition_type));
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_387) {
+  ARG(x_, 0);
+  P a1;
+loop:
+  QRET(CHKREF(Ynul));
+}
+
+FUNCODEDEF(fun_handler_info_388) {
+  ARG(Ux_, 0);
+  P T0;
+  P a1;
+loop:
+  T0 = CALL2(CHKREF(Yslot_value),Ux_,CHKREF(YruntimeYhandler_info));
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_handler_info_setter_389) {
+  ARG(Ux_, 0);
+  ARG(Uz_, 1);
+  P T0;
+  P a1,a2;
+loop:
+  T0 = CALL3(CHKREF(Yslot_value_setter),Uz_,Ux_,CHKREF(YruntimeYhandler_info));
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_390) {
+  ARG(x_, 0);
+  P a1;
+loop:
+  QRET(CHKREF(Ynul));
+}
+
+FUNCODEDEF(fun_handler_test_391) {
+  ARG(Ux_, 0);
+  P T0;
+  P a1;
+loop:
+  T0 = CALL2(CHKREF(Yslot_value),Ux_,CHKREF(YruntimeYhandler_test));
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_handler_test_setter_392) {
+  ARG(Ux_, 0);
+  ARG(Uz_, 1);
+  P T0;
+  P a1,a2;
+loop:
+  T0 = CALL3(CHKREF(Yslot_value_setter),Uz_,Ux_,CHKREF(YruntimeYhandler_test));
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_393) {
+  ARG(x_, 0);
+  P a1;
+loop:
+  QRET(CHKREF(Ynul));
+}
+
+FUNCODEDEF(fun_handler_function_394) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7148,7 +7449,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_handler_function_setter_372) {
+FUNCODEDEF(fun_handler_function_setter_395) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7158,7 +7459,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_373) {
+FUNCODEDEF(fun_396) {
   ARG(x_, 0);
   P a1;
 loop:
@@ -7167,39 +7468,70 @@ loop:
 
 FUNCODEDEF(YruntimeYmake_handler) {
   ARG(f_, 0);
-  P T3,T2,T1,T0;
+  ARG(test_, 1);
+  ARG(info_, 2);
+  ARG(type_, 3);
+  P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P a1,a2,a3,a4;
+loop:
+  T9 = (P)YPpair(CHKREF(YruntimeYLhandlerG),Ynil);
+  T8 = (P)YPpair(CHKREF(YruntimeYhandler_function),Ynil);
+  T7 = (P)YPpair(CHKREF(YruntimeYhandler_test),T8);
+  T6 = (P)YPpair(CHKREF(YruntimeYhandler_info),T7);
+  T5 = (P)YPpair(CHKREF(YruntimeYhandler_condition_type),T6);
+  T4 = (P)YPpair(f_,Ynil);
+  T3 = (P)YPpair(test_,T4);
+  T2 = (P)YPpair(info_,T3);
+  T1 = (P)YPpair(type_,T2);
+  T0 = CALL3(CHKREF(YPisa),T9,T5,T1);
+  RET(T0);
+}
+
+FUNCODEDEF(YruntimeYhandler_activeQ) {
+  ARG(handler_, 0);
+  P T1,T0;
   P a1;
 loop:
-  T3 = (P)YPpair(CHKREF(YruntimeYLhandlerG),Ynil);
-  T2 = (P)YPpair(CHKREF(YruntimeYhandler_function),Ynil);
-  T1 = (P)YPpair(f_,Ynil);
-  T0 = CALL3(CHKREF(YPisa),T3,T2,T1);
+  T1 = CALL1(CHKREF(YruntimeYhandler_test),handler_);
+  T0 = CALL0(T1);
   RET(T0);
 }
 
 FUNCODEDEF(YruntimeYhandler_matchesQ) {
   ARG(condition_, 0);
   ARG(handler_, 1);
+  P tmpF794;
+  P T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
-  RET(YPtrue);
+  T4 = CALL1(CHKREF(YruntimeYhandler_condition_type),handler_);
+  T3 = CALL2(CHKREF(YisaQ),condition_,T4);
+  tmpF794 = T3;
+  if (tmpF794 != YPfalse) {
+    T2 = CALL1(CHKREF(YruntimeYhandler_activeQ),handler_);
+    T1 = T2;
+  } else {
+    T1 = YPfalse;
+  }
+  T0 = T1;
+  RET(T0);
 }
 
-FUNCODEDEF(fun_376) {
+FUNCODEDEF(fun_400) {
   P T0;
 loop:
   T0 = YruntimeYTcurrent_handlersT = FREEREF(0);
   QRET(T0);
 }
 
-FUNCODEDEF(fun_377) {
+FUNCODEDEF(fun_401) {
   P T0;
 loop:
   T0 = CALL0(FREEREF(0));
   QRET(T0);
 }
 
-FUNCODEDEF(fun_378) {
+FUNCODEDEF(fun_402) {
   ARG(UresumeU_, 0);
   P T0;
   P a1;
@@ -7209,81 +7541,85 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Uhandler_functionU_379) {
+FUNCODEDEF(fun_Uhandler_functionU_403) {
   ARG(Unext_handlerU_, 0);
   ARG(condition_, 1);
   P T1,T0;
   P a1,a2;
 loop:
-  T1 = FUNFAB(fun_378,3,Unext_handlerU_,condition_,FREEREF(0));
+  T1 = FUNFAB(fun_402,3,Unext_handlerU_,condition_,FREEREF(0));
   T0 = with_exit(T1);
   QRET(T0);
 }
 
-FUNCODEDEF(fun_380) {
+FUNCODEDEF(fun_404) {
   ARG(Uunwind_exceptionU_, 0);
-  P Uhandler_functionUF794;
-  P Uoriginal_handlersUF793;
+  P Uhandler_functionUF796;
+  P Uoriginal_handlersUF795;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
-  Uoriginal_handlersUF793 = CHKREF(YruntimeYTcurrent_handlersT);
-  T7 = FUNSHELL(0,fun_Uhandler_functionU_379,1);
-  Uhandler_functionUF794 = T7;
-  FUNINIT(Uhandler_functionUF794, 1,FREEREF(0));
-  T3 = CALL1(CHKREF(YruntimeYmake_handler),Uhandler_functionUF794);
-  T2 = CALL2(CHKREF(YmacrosYpair),T3,CHKREF(YruntimeYTcurrent_handlersT));
+  Uoriginal_handlersUF795 = CHKREF(YruntimeYTcurrent_handlersT);
+  T7 = FUNSHELL(0,fun_Uhandler_functionU_403,1);
+  Uhandler_functionUF796 = T7;
+  FUNINIT(Uhandler_functionUF796, 1,FREEREF(0));
+  T3 = CALLN(CHKREF(YruntimeYmake_handler),4,FREEREF(4),FREEREF(3),FREEREF(2),Uhandler_functionUF796);
+  T2 = CALL2(CHKREF(YruntimeYpush),CHKREF(YruntimeYTcurrent_handlersT),T3);
   YruntimeYTcurrent_handlersT = T2;
-  T6 = FUNFAB(fun_377,1,FREEREF(1));
-  T5 = FUNFAB(fun_376,1,Uoriginal_handlersUF793);
+  T6 = FUNFAB(fun_401,1,FREEREF(1));
+  T5 = FUNFAB(fun_400,1,Uoriginal_handlersUF795);
   T4 = with_cleanup(T6,T5);
   T1 = T4;
   T0 = T1;
   QRET(T0);
 }
 
-P YruntimeYPwith_monitor(P user_handler_,P main_fun_) {
+FUNCODEDEF(YruntimeYPwith_monitor) {
+  ARG(main_fun_, 0);
+  ARG(user_handler_, 1);
+  ARG(test_fun_, 2);
+  ARG(info_, 3);
+  ARG(type_, 4);
   P T1,T0;
-  P a1,a2;
+  P a1,a2,a3,a4,a5;
 loop:
-  T1 = FUNFAB(fun_380,2,user_handler_,main_fun_);
+  T1 = FUNFAB(fun_404,5,user_handler_,main_fun_,test_fun_,info_,type_);
   T0 = with_exit(T1);
-  return T0;
-}
-
-FUNCODEDEF(fun_382) {
-  P T0;
-loop:
-  T0 = KCALL1(FREEREF(1),FREEREF(0));
   QRET(T0);
 }
 
-FUNCODEDEF(fun_search_383) {
+FUNCODEDEF(fun_406) {
+  P T0;
+loop:
+  T0 = CALL2(CHKREF(YruntimeYsignal_handler_list),FREEREF(1),FREEREF(0));
+  QRET(T0);
+}
+
+FUNCODEDEF(YruntimeYsignal_handler_list) {
   ARG(handlers_, 0);
-  P remainingF796;
-  P handlerF795;
+  ARG(condition_, 1);
+  P remainingF798;
+  P handlerF797;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
-  P a1;
+  P a1,a2;
 loop:
   T12 = CALL1(CHKREF(YmacrosYemptyQ),handlers_);
   if (T12 != YPfalse) {
-    T11 = CALL1(CHKREF(YruntimeYdefault_handler),FREEREF(1));
+    T11 = CALL1(CHKREF(YruntimeYdefault_handler),condition_);
     T0 = T11;
   } else {
     T10 = CALL1(CHKREF(Yhead),handlers_);
-    handlerF795 = T10;
+    handlerF797 = T10;
     T9 = CALL1(CHKREF(Ytail),handlers_);
-    remainingF796 = T9;
-    T8 = CALL2(CHKREF(YruntimeYhandler_matchesQ),handlerF795,FREEREF(1));
+    remainingF798 = T9;
+    T8 = CALL2(CHKREF(YruntimeYhandler_matchesQ),handlerF797,condition_);
     if (T8 != YPfalse) {
-      T7 = CALL1(CHKREF(YruntimeYhandler_function),handlerF795);
-      T6 = FUNFAB(fun_382,2,remainingF796,FREEREF(0));
-      T5 = CALL2(T7,FREEREF(1),T6);
+      T7 = CALL1(CHKREF(YruntimeYhandler_function),handlerF797);
+      T6 = FUNFAB(fun_406,2,remainingF798,condition_);
+      T5 = CALL2(T7,condition_,T6);
       T3 = T5;
     } else {
-      a1 = remainingF796;
-      handlers_ = a1;
-      goto loop;
+      T4 = CALL2(CHKREF(YruntimeYsignal_handler_list),condition_,remainingF798);
       T3 = T4;
     }
     T2 = T3;
@@ -7293,22 +7629,17 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sig_384) {
+FUNCODEDEF(fun_sig_408) {
   ARG(args_, 0);
   ARG(condition_, 1);
-  P searchF797;
-  P T2,T1,T0;
+  P T0;
   P a1,a2;
 loop:
-  T2 = FUNSHELL(1,fun_search_383,2);
-  searchF797 = T2;
-  FUNINIT(searchF797, 2,searchF797,condition_);
-  T1 = KCALL1(searchF797,CHKREF(YruntimeYTcurrent_handlersT));
-  T0 = T1;
+  T0 = CALL2(CHKREF(YruntimeYsignal_handler_list),condition_,CHKREF(YruntimeYTcurrent_handlersT));
   QRET(T0);
 }
 
-FUNCODEDEF(fun_sig_385) {
+FUNCODEDEF(fun_sig_409) {
   ARG(args_, 0);
   ARG(c_, 1);
   P T6,T5,T4,T3,T2,T1,T0;
@@ -7324,7 +7655,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_error_386) {
+FUNCODEDEF(fun_error_410) {
   ARG(args_, 0);
   ARG(c_, 1);
   P T0;
@@ -7334,7 +7665,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_error_387) {
+FUNCODEDEF(fun_error_411) {
   ARG(args_, 0);
   ARG(c_, 1);
   P T6,T5,T4,T3,T2,T1,T0;
@@ -7357,7 +7688,7 @@ FUNCODEDEF(Ywrong_number_arguments_error) {
   P a1,a2;
 loop:
   T1 = CALL1(CHKREF(Yfun_arity),fun_);
-  T0 = CALLN(CHKREF(Yerror),4,CHKREF(lit_51),fun_,n_,T1);
+  T0 = CALLN(CHKREF(Yerror),4,CHKREF(lit_55),fun_,n_,T1);
   QRET(T0);
 }
 
@@ -7366,7 +7697,7 @@ FUNCODEDEF(Yunknown_function_error) {
   P T0;
   P a1;
 loop:
-  T0 = CALL2(CHKREF(Yerror),CHKREF(lit_52),fun_);
+  T0 = CALL2(CHKREF(Yerror),CHKREF(lit_56),fun_);
   QRET(T0);
 }
 
@@ -7376,7 +7707,247 @@ FUNCODEDEF(Ytype_error) {
   P T0;
   P a1,a2;
 loop:
-  T0 = CALL3(CHKREF(Yerror),CHKREF(lit_53),arg_,type_);
+  T0 = CALL3(CHKREF(Yerror),CHKREF(lit_57),arg_,type_);
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_search_415) {
+  ARG(handlers_, 0);
+  P tmpF801;
+  P remainingF800;
+  P handlerF799;
+  P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P a1;
+loop:
+  T12 = CALL1(CHKREF(YmacrosYemptyQ),handlers_);
+  if (T12 != YPfalse) {
+    T0 = YPfalse;
+  } else {
+    T11 = CALL1(CHKREF(Yhead),handlers_);
+    handlerF799 = T11;
+    T10 = CALL1(CHKREF(Ytail),handlers_);
+    remainingF800 = T10;
+    T8 = CALL1(CHKREF(YruntimeYhandler_condition_type),handlerF799);
+    T7 = CALL2(CHKREF(YisaQ),T8,FREEREF(2));
+    tmpF801 = T7;
+    if (tmpF801 != YPfalse) {
+      T6 = CALL1(CHKREF(YruntimeYhandler_activeQ),handlerF799);
+      T5 = T6;
+    } else {
+      T5 = YPfalse;
+    }
+    T4 = T5;
+    if (T4 != YPfalse) {
+      T3 = CALL1(FREEREF(1),handlerF799);
+    } else {
+    }
+    a1 = remainingF800;
+    handlers_ = a1;
+    goto loop;
+    T2 = T9;
+    T1 = T2;
+    T0 = T1;
+  }
+  QRET(T0);
+}
+
+FUNCODEDEF(YruntimeYdo_handlers_of_type) {
+  ARG(f_, 0);
+  ARG(type_, 1);
+  P searchF802;
+  P T2,T1,T0;
+  P a1,a2;
+loop:
+  T2 = FUNSHELL(1,fun_search_415,3);
+  searchF802 = T2;
+  FUNINIT(searchF802, 3,searchF802,f_,type_);
+  T1 = KCALL1(searchF802,CHKREF(YruntimeYTcurrent_handlersT));
+  T0 = T1;
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_417) {
+  ARG(handler_, 0);
+  P T6,T5,T4,T3,T2,T1,T0;
+  P a1;
+loop:
+  T3 = BOXVAL(FREEREF(0));
+  T2 = CALL1(CHKREF(YruntimeYhandler_info),handler_);
+  T1 = CALL1(CHKREF(YruntimeYhandler_condition_type),handler_);
+  T0 = CALL2(CHKREF(YruntimeYdescribe_handler),T2,T1);
+  CALLN(CHKREF(YruntimeYformat),4,FREEREF(2),CHKREF(lit_58),T3,T0);
+  CALL2(CHKREF(YruntimeYpush_lastX),FREEREF(1),handler_);
+  T6 = BOXVAL(FREEREF(0));
+  T5 = CALL2(CHKREF(YruntimeYA),T6,YPint((P)1));
+  T4 = BOXVAL(FREEREF(0)) = T5;
+  QRET(T4);
+}
+
+FUNCODEDEF(YruntimeYlist_handlers) {
+  ARG(out_, 0);
+  ARG(type_, 1);
+  P applicableF804;
+  P iF803;
+  P T4,T3,T2,T1,T0;
+  P a1,a2;
+loop:
+  iF803 = YPint((P)1);
+  iF803 = BOXFAB(iF803);
+  T4 = CALL2(CHKREF(YruntimeYfab),CHKREF(YruntimeYLbufG),YPint((P)0));
+  applicableF804 = T4;
+  T3 = FUNFAB(fun_417,3,iF803,applicableF804,out_);
+  CALL2(CHKREF(YruntimeYdo_handlers_of_type),type_,T3);
+  T2 = applicableF804;
+  T0 = T2;
+  RET(T0);
+}
+
+FUNCODEDEF(fun_419) {
+  P T0;
+loop:
+  T0 = CALL2(CHKREF(YruntimeYsignal_handler_list),FREEREF(1),FREEREF(0));
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_search_420) {
+  ARG(handlers_, 0);
+  P remainingF806;
+  P currentF805;
+  P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P a1;
+loop:
+  T12 = CALL1(CHKREF(YmacrosYemptyQ),handlers_);
+  if (T12 != YPfalse) {
+    T11 = CALL2(CHKREF(Yerror),CHKREF(lit_59),FREEREF(2));
+    T0 = T11;
+  } else {
+    T10 = CALL1(CHKREF(Yhead),handlers_);
+    currentF805 = T10;
+    T9 = CALL1(CHKREF(Ytail),handlers_);
+    remainingF806 = T9;
+    T8 = CALL2(CHKREF(YmacrosYEE),FREEREF(2),currentF805);
+    if (T8 != YPfalse) {
+      T7 = CALL1(CHKREF(YruntimeYhandler_function),FREEREF(2));
+      T6 = FUNFAB(fun_419,2,remainingF806,FREEREF(1));
+      T5 = CALL2(T7,FREEREF(1),T6);
+      T3 = T5;
+    } else {
+      a1 = remainingF806;
+      handlers_ = a1;
+      goto loop;
+      T3 = T4;
+    }
+    T2 = T3;
+    T1 = T2;
+    T0 = T1;
+  }
+  QRET(T0);
+}
+
+FUNCODEDEF(YruntimeYinvoke_handler_interactively) {
+  ARG(out_, 0);
+  ARG(in_, 1);
+  ARG(handler_, 2);
+  P searchF808;
+  P conditionF807;
+  P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P a1,a2,a3;
+loop:
+  T9 = CALL1(CHKREF(YruntimeYhandler_info),handler_);
+  T8 = CALL1(CHKREF(YruntimeYhandler_condition_type),handler_);
+  T7 = CALLN(CHKREF(YruntimeYbuild_condition_for_handler_interactively),4,T9,T8,in_,out_);
+  conditionF807 = T7;
+  T3 = CALL2(CHKREF(YruntimeYhandler_matchesQ),handler_,conditionF807);
+  T2 = CALL1(CHKREF(Ynot),T3);
+  if (T2 != YPfalse) {
+    T1 = CALL3(CHKREF(Yerror),CHKREF(lit_60),handler_,conditionF807);
+  } else {
+  }
+  T6 = FUNSHELL(1,fun_search_420,3);
+  searchF808 = T6;
+  FUNINIT(searchF808, 3,searchF808,conditionF807,handler_);
+  T5 = KCALL1(searchF808,CHKREF(YruntimeYTcurrent_handlersT));
+  T4 = T5;
+  T0 = T4;
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_422) {
+  P tmpF811;
+  P nF810;
+  P handlersF809;
+  P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+loop:
+  T12 = CALL2(CHKREF(YruntimeYlist_handlers),FREEREF(1),FREEREF(0));
+  handlersF809 = T12;
+  CALL2(CHKREF(YruntimeYformat),FREEREF(0),CHKREF(lit_62));
+  T11 = CALL1(CHKREF(YruntimeYread),FREEREF(2));
+  T10 = CALL2(CHKREF(YruntimeY_),T11,YPint((P)1));
+  nF810 = T10;
+  T7 = CALL2(CHKREF(YruntimeYL),nF810,YPint((P)0));
+  tmpF811 = T7;
+  if (tmpF811 != YPfalse) {
+    T4 = tmpF811;
+  } else {
+    T6 = CALL1(CHKREF(YruntimeYlen),handlersF809);
+    T5 = CALL2(CHKREF(YruntimeYGE),nF810,T6);
+    T4 = T5;
+  }
+  T3 = T4;
+  if (T3 != YPfalse) {
+    T2 = CALL2(CHKREF(Yerror),CHKREF(lit_61),nF810);
+  } else {
+  }
+  T9 = CALL2(CHKREF(YruntimeYelt),handlersF809,nF810);
+  T8 = CALL3(CHKREF(YruntimeYinvoke_handler_interactively),T9,FREEREF(2),FREEREF(0));
+  T1 = T8;
+  T0 = T1;
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_423) {
+  ARG(r_, 0);
+  ARG(c_, 1);
+  P T0;
+  P a1,a2;
+loop:
+  T0 = CALL1(FREEREF(0),YPfalse);
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_424) {
+loop:
+  QRET(YPtrue);
+}
+
+FUNCODEDEF(fun_425) {
+  ARG(return_, 0);
+  P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P a1;
+loop:
+  T10 = (P)YPpair(CHKREF(YruntimeYLsimple_handler_infoG),Ynil);
+  T9 = (P)YPpair(CHKREF(YruntimeYhandler_info_arguments),Ynil);
+  T8 = (P)YPpair(CHKREF(YruntimeYhandler_info_message),T9);
+  T7 = CALL0(CHKREF(YmacrosYlst));
+  T6 = (P)YPpair(T7,Ynil);
+  T5 = (P)YPpair(CHKREF(lit_63),T6);
+  T4 = CALL3(CHKREF(YPisa),T10,T8,T5);
+  T3 = fun_424;
+  T2 = FUNFAB(fun_423,1,return_);
+  T1 = FUNFAB(fun_422,3,FREEREF(2),FREEREF(1),FREEREF(0));
+  T0 = CALLN(YruntimeYPwith_monitor,5,CHKREF(YruntimeYLrestartG),T4,T3,T2,T1);
+  QRET(T0);
+}
+
+FUNCODEDEF(YruntimeYchoose_handler) {
+  ARG(out_, 0);
+  ARG(in_, 1);
+  ARG(type_, 2);
+  P T1,T0;
+  P a1,a2,a3;
+loop:
+  T1 = FUNFAB(fun_425,3,in_,type_,out_);
+  T0 = with_exit(T1);
   QRET(T0);
 }
 
@@ -7413,7 +7984,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_port_handle_395) {
+FUNCODEDEF(fun_port_handle_431) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7422,7 +7993,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_port_handle_setter_396) {
+FUNCODEDEF(fun_port_handle_setter_432) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7432,14 +8003,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_397) {
+FUNCODEDEF(fun_433) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_open_input_file_398) {
+FUNCODEDEF(fun_open_input_file_434) {
   ARG(filename_, 0);
   P T5,T4,T3,T2,T1,T0;
   P a1;
@@ -7453,16 +8024,16 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_file_opening_error_399) {
+FUNCODEDEF(fun_file_opening_error_435) {
   ARG(filename_, 0);
   P T0;
   P a1;
 loop:
-  T0 = CALL2(CHKREF(Yerror),CHKREF(lit_54),filename_);
+  T0 = CALL2(CHKREF(Yerror),CHKREF(lit_64),filename_);
   QRET(T0);
 }
 
-FUNCODEDEF(fun_open_output_file_400) {
+FUNCODEDEF(fun_open_output_file_436) {
   ARG(filename_, 0);
   P T5,T4,T3,T2,T1,T0;
   P a1;
@@ -7476,7 +8047,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_close_input_port_401) {
+FUNCODEDEF(fun_close_input_port_437) {
   ARG(port_, 0);
   P T1,T0;
   P a1;
@@ -7486,7 +8057,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_close_output_port_402) {
+FUNCODEDEF(fun_close_output_port_438) {
   ARG(port_, 0);
   P T1,T0;
   P a1;
@@ -7496,13 +8067,13 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_403) {
-  P tmpF798;
+FUNCODEDEF(fun_439) {
+  P tmpF812;
   P T4,T3,T2,T1,T0;
 loop:
   T4 = BOXVAL(FREEREF(0));
-  tmpF798 = T4;
-  if (tmpF798 != YPfalse) {
+  tmpF812 = T4;
+  if (tmpF812 != YPfalse) {
     T3 = BOXVAL(FREEREF(0));
     T2 = CALL1(CHKREF(YruntimeYclose_input_port),T3);
     T1 = T2;
@@ -7513,7 +8084,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_404) {
+FUNCODEDEF(fun_440) {
   P T2,T1,T0;
 loop:
   T0 = CALL1(CHKREF(YruntimeYopen_input_file),FREEREF(2));
@@ -7523,29 +8094,29 @@ loop:
   QRET(T1);
 }
 
-FUNCODEDEF(fun_call_with_input_file_405) {
+FUNCODEDEF(fun_call_with_input_file_441) {
   ARG(proc_, 0);
   ARG(string_, 1);
-  P portF799;
+  P portF813;
   P T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
-  portF799 = YPfalse;
-  portF799 = BOXFAB(portF799);
-  T4 = FUNFAB(fun_404,3,portF799,proc_,string_);
-  T3 = FUNFAB(fun_403,1,portF799);
+  portF813 = YPfalse;
+  portF813 = BOXFAB(portF813);
+  T4 = FUNFAB(fun_440,3,portF813,proc_,string_);
+  T3 = FUNFAB(fun_439,1,portF813);
   T2 = with_cleanup(T4,T3);
   T0 = T2;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_406) {
-  P tmpF800;
+FUNCODEDEF(fun_442) {
+  P tmpF814;
   P T4,T3,T2,T1,T0;
 loop:
   T4 = BOXVAL(FREEREF(0));
-  tmpF800 = T4;
-  if (tmpF800 != YPfalse) {
+  tmpF814 = T4;
+  if (tmpF814 != YPfalse) {
     T3 = BOXVAL(FREEREF(0));
     T2 = CALL1(CHKREF(YruntimeYclose_output_port),T3);
     T1 = T2;
@@ -7556,7 +8127,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_407) {
+FUNCODEDEF(fun_443) {
   P T2,T1,T0;
 loop:
   T0 = CALL1(CHKREF(YruntimeYopen_output_file),FREEREF(2));
@@ -7566,30 +8137,30 @@ loop:
   QRET(T1);
 }
 
-FUNCODEDEF(fun_call_with_output_file_408) {
+FUNCODEDEF(fun_call_with_output_file_444) {
   ARG(proc_, 0);
   ARG(string_, 1);
-  P portF801;
+  P portF815;
   P T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
-  portF801 = YPfalse;
-  portF801 = BOXFAB(portF801);
-  T4 = FUNFAB(fun_407,3,portF801,proc_,string_);
-  T3 = FUNFAB(fun_406,1,portF801);
+  portF815 = YPfalse;
+  portF815 = BOXFAB(portF815);
+  T4 = FUNFAB(fun_443,3,portF815,proc_,string_);
+  T3 = FUNFAB(fun_442,1,portF815);
   T2 = with_cleanup(T4,T3);
   T0 = T2;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_eof_objectQ_409) {
+FUNCODEDEF(fun_eof_objectQ_445) {
   ARG(x_, 0);
   P a1;
 loop:
   RET(YPfalse);
 }
 
-FUNCODEDEF(fun_eof_objectQ_410) {
+FUNCODEDEF(fun_eof_objectQ_446) {
   ARG(x_, 0);
   P T3,T2,T1,T0;
   P a1;
@@ -7601,7 +8172,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_eof_object_411) {
+FUNCODEDEF(fun_eof_object_447) {
   P T1,T0;
 loop:
   T1 = (P)YPeof_object();
@@ -7609,7 +8180,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_read_char_412) {
+FUNCODEDEF(fun_read_char_448) {
   ARG(port_, 0);
   P T2,T1,T0;
   P a1;
@@ -7620,7 +8191,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_peek_char_413) {
+FUNCODEDEF(fun_peek_char_449) {
   ARG(port_, 0);
   P T2,T1,T0;
   P a1;
@@ -7631,7 +8202,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_char_readyQ_414) {
+FUNCODEDEF(fun_char_readyQ_450) {
   ARG(port_, 0);
   P T1,T0;
   P a1;
@@ -7641,7 +8212,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_newline_415) {
+FUNCODEDEF(fun_newline_451) {
   ARG(port_, 0);
   P T0;
   P a1;
@@ -7650,7 +8221,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_force_output_416) {
+FUNCODEDEF(fun_force_output_452) {
   ARG(port_, 0);
   P T1,T0;
   P a1;
@@ -7660,7 +8231,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_write_char_417) {
+FUNCODEDEF(fun_write_char_453) {
   ARG(c_, 0);
   ARG(port_, 1);
   P T2,T1,T0;
@@ -7672,7 +8243,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_write_string_418) {
+FUNCODEDEF(fun_write_string_454) {
   ARG(s_, 0);
   ARG(port_, 1);
   P T2,T1,T0;
@@ -7684,7 +8255,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_file_mtime_419) {
+FUNCODEDEF(fun_file_mtime_455) {
   ARG(filename_, 0);
   P T2,T1,T0;
   P a1;
@@ -7695,7 +8266,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_port_guts_420) {
+FUNCODEDEF(fun_port_guts_456) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7704,7 +8275,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_port_guts_setter_421) {
+FUNCODEDEF(fun_port_guts_setter_457) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7714,14 +8285,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_422) {
+FUNCODEDEF(fun_458) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(CHKREF(lit_55));
+  QRET(CHKREF(lit_65));
 }
 
-FUNCODEDEF(fun_port_contents_423) {
+FUNCODEDEF(fun_port_contents_459) {
   ARG(port_, 0);
   P T1,T0;
   P a1;
@@ -7731,7 +8302,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_port_index_424) {
+FUNCODEDEF(fun_port_index_460) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7740,7 +8311,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_port_index_setter_425) {
+FUNCODEDEF(fun_port_index_setter_461) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7750,14 +8321,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_426) {
+FUNCODEDEF(fun_462) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(YPint((P)0));
 }
 
-FUNCODEDEF(fun_call_with_string_input_port_427) {
+FUNCODEDEF(fun_call_with_string_input_port_463) {
   ARG(proc_, 0);
   ARG(string_, 1);
   P T4,T3,T2,T1,T0;
@@ -7771,7 +8342,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_call_with_string_output_port_428) {
+FUNCODEDEF(fun_call_with_string_output_port_464) {
   ARG(proc_, 0);
   P T2,T1,T0;
   P a1;
@@ -7782,7 +8353,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_peek_char_429) {
+FUNCODEDEF(fun_peek_char_465) {
   ARG(port_, 0);
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
@@ -7803,10 +8374,10 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_read_char_430) {
+FUNCODEDEF(fun_read_char_466) {
   ARG(port_, 0);
-  P x_1173F803;
-  P resF802;
+  P x_1173F817;
+  P resF816;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
@@ -7821,25 +8392,25 @@ loop:
     T7 = CALL1(CHKREF(YruntimeYport_guts),port_);
     T6 = CALL1(CHKREF(YruntimeYport_index),port_);
     T5 = CALL2(CHKREF(YruntimeYelt),T7,T6);
-    resF802 = T5;
-    x_1173F803 = port_;
-    T4 = CALL1(CHKREF(YruntimeYport_index),x_1173F803);
+    resF816 = T5;
+    x_1173F817 = port_;
+    T4 = CALL1(CHKREF(YruntimeYport_index),x_1173F817);
     T3 = CALL2(CHKREF(YruntimeYA),T4,YPint((P)1));
-    T2 = CALL2(CHKREF(YruntimeYport_index_setter),T3,x_1173F803);
-    T1 = resF802;
+    T2 = CALL2(CHKREF(YruntimeYport_index_setter),T3,x_1173F817);
+    T1 = resF816;
     T0 = T1;
   }
   RET(T0);
 }
 
-FUNCODEDEF(fun_char_readyQ_431) {
+FUNCODEDEF(fun_char_readyQ_467) {
   ARG(port_, 0);
   P a1;
 loop:
   RET(YPtrue);
 }
 
-FUNCODEDEF(fun_write_char_432) {
+FUNCODEDEF(fun_write_char_468) {
   ARG(c_, 0);
   ARG(port_, 1);
   P T2,T1,T0;
@@ -7851,7 +8422,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_write_string_433) {
+FUNCODEDEF(fun_write_string_469) {
   ARG(s_, 0);
   ARG(port_, 1);
   P T2,T1,T0;
@@ -7863,7 +8434,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pvacated_434) {
+FUNCODEDEF(fun_Pvacated_470) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7872,7 +8443,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pvacated_setter_435) {
+FUNCODEDEF(fun_Pvacated_setter_471) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7882,14 +8453,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_436) {
+FUNCODEDEF(fun_472) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(YPint((P)0));
 }
 
-FUNCODEDEF(fun_Pprimary_modulus_437) {
+FUNCODEDEF(fun_Pprimary_modulus_473) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7898,7 +8469,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pprimary_modulus_setter_438) {
+FUNCODEDEF(fun_Pprimary_modulus_setter_474) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7908,14 +8479,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_439) {
+FUNCODEDEF(fun_475) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_Psecondary_modulus_440) {
+FUNCODEDEF(fun_Psecondary_modulus_476) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7924,7 +8495,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Psecondary_modulus_setter_441) {
+FUNCODEDEF(fun_Psecondary_modulus_setter_477) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7934,14 +8505,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_442) {
+FUNCODEDEF(fun_478) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_Pn_buckets_443) {
+FUNCODEDEF(fun_Pn_buckets_479) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7950,7 +8521,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pn_buckets_setter_444) {
+FUNCODEDEF(fun_Pn_buckets_setter_480) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7960,14 +8531,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_445) {
+FUNCODEDEF(fun_481) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_Pbucket_depth_446) {
+FUNCODEDEF(fun_Pbucket_depth_482) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7976,7 +8547,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pbucket_depth_setter_447) {
+FUNCODEDEF(fun_Pbucket_depth_setter_483) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7986,14 +8557,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_448) {
+FUNCODEDEF(fun_484) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_Pdata_449) {
+FUNCODEDEF(fun_Pdata_485) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -8002,7 +8573,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pdata_setter_450) {
+FUNCODEDEF(fun_Pdata_setter_486) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -8012,14 +8583,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_451) {
+FUNCODEDEF(fun_487) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_Pgc_state_452) {
+FUNCODEDEF(fun_Pgc_state_488) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -8028,7 +8599,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pgc_state_setter_453) {
+FUNCODEDEF(fun_Pgc_state_setter_489) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -8038,7 +8609,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_454) {
+FUNCODEDEF(fun_490) {
   ARG(x_, 0);
   P a1;
 loop:
@@ -8052,7 +8623,7 @@ FUNCODEDEF(YruntimeYfab_table_vector) {
   ARG(n_buckets_, 3);
   ARG(fill_value_, 4);
   ARG(size_, 5);
-  P vF804;
+  P vF818;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3,a4,a5,a6;
 loop:
@@ -8066,15 +8637,15 @@ loop:
   T5 = (P)YPpair(bucket_depth_,T6);
   T4 = (P)YPpair(n_buckets_,T5);
   T3 = CALL3(CHKREF(YPisa),T12,T8,T4);
-  vF804 = T3;
+  vF818 = T3;
   T2 = CALL2(CHKREF(YruntimeYfab),CHKREF(YLvecG),size_);
   T1 = CALL2(CHKREF(YruntimeYfill),T2,fill_value_);
-  CALL2(CHKREF(YruntimeYPdata_setter),T1,vF804);
-  T0 = vF804;
+  CALL2(CHKREF(YruntimeYPdata_setter),T1,vF818);
+  T0 = vF818;
   RET(T0);
 }
 
-FUNCODEDEF(fun_elt_456) {
+FUNCODEDEF(fun_elt_492) {
   ARG(index_, 0);
   ARG(vector_, 1);
   P T2,T1,T0;
@@ -8086,7 +8657,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_elt_setter_457) {
+FUNCODEDEF(fun_elt_setter_493) {
   ARG(index_, 0);
   ARG(vector_, 1);
   ARG(new_value_, 2);
@@ -8099,7 +8670,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_clrX_458) {
+FUNCODEDEF(fun_clrX_494) {
   ARG(fill_value_, 0);
   ARG(vector_, 1);
   P T1,T0;
@@ -8115,12 +8686,12 @@ FUNCODEDEF(YruntimeYtrace) {
   ARG(args_, 0);
   ARG(msg_, 1);
   ARG(port_, 2);
-  P tmpF805;
+  P tmpF819;
   P T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
-  tmpF805 = CHKREF(YruntimeYTdebug_tablesQT);
-  if (tmpF805 != YPfalse) {
+  tmpF819 = CHKREF(YruntimeYTdebug_tablesQT);
+  if (tmpF819 != YPfalse) {
     T4 = CALL2(CHKREF(YmacrosYlst),port_,msg_);
     T3 = CALL2(CHKREF(YmacrosYcat),T4,args_);
     T2 = CALL2(CHKREF(Yapply),CHKREF(YruntimeYformat),T3);
@@ -8132,7 +8703,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_table_growth_factor_460) {
+FUNCODEDEF(fun_table_growth_factor_496) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -8141,7 +8712,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_table_growth_factor_setter_461) {
+FUNCODEDEF(fun_table_growth_factor_setter_497) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -8151,14 +8722,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_462) {
+FUNCODEDEF(fun_498) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(CHKREF(lit_57));
+  QRET(CHKREF(lit_67));
 }
 
-FUNCODEDEF(fun_table_growth_threshold_463) {
+FUNCODEDEF(fun_table_growth_threshold_499) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -8167,7 +8738,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_table_growth_threshold_setter_464) {
+FUNCODEDEF(fun_table_growth_threshold_setter_500) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -8177,14 +8748,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_465) {
+FUNCODEDEF(fun_501) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(CHKREF(lit_58));
+  QRET(CHKREF(lit_68));
 }
 
-FUNCODEDEF(fun_table_shrink_threshold_466) {
+FUNCODEDEF(fun_table_shrink_threshold_502) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -8193,7 +8764,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_table_shrink_threshold_setter_467) {
+FUNCODEDEF(fun_table_shrink_threshold_setter_503) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -8203,14 +8774,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_468) {
+FUNCODEDEF(fun_504) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(CHKREF(lit_59));
+  QRET(CHKREF(lit_69));
 }
 
-FUNCODEDEF(fun_Pcount_469) {
+FUNCODEDEF(fun_Pcount_505) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -8219,7 +8790,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pcount_setter_470) {
+FUNCODEDEF(fun_Pcount_setter_506) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -8229,14 +8800,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_471) {
+FUNCODEDEF(fun_507) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(YPint((P)0));
 }
 
-FUNCODEDEF(fun_Pvector_472) {
+FUNCODEDEF(fun_Pvector_508) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -8245,7 +8816,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pvector_setter_473) {
+FUNCODEDEF(fun_Pvector_setter_509) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -8255,14 +8826,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_474) {
+FUNCODEDEF(fun_510) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_table_protocol_475) {
+FUNCODEDEF(fun_table_protocol_511) {
   ARG(x_, 0);
   P T0;
   P a1;
@@ -8285,38 +8856,38 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_fab_477) {
+FUNCODEDEF(fun_fab_513) {
   ARG(size_, 0);
   ARG(type_, 1);
-  P tableF811;
-  P tup19F810;
-  P bucket_depthF809;
-  P tup19F808;
-  P n_bucketsF807;
-  P tup19F806;
+  P tableF825;
+  P tup19F824;
+  P bucket_depthF823;
+  P tup19F822;
+  P n_bucketsF821;
+  P tup19F820;
   P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
   P T0;
   P a1,a2;
 loop:
   T16 = CALL1(CHKREF(YruntimeYchoose_table_geometry),size_);
-  tup19F806 = T16;
-  T15 = CALL1(CHKREF(Yhead),tup19F806);
-  n_bucketsF807 = T15;
-  T14 = CALL1(CHKREF(Ytail),tup19F806);
-  tup19F808 = T14;
-  T13 = CALL1(CHKREF(Yhead),tup19F808);
-  bucket_depthF809 = T13;
-  T12 = CALL1(CHKREF(Ytail),tup19F808);
-  tup19F810 = T12;
+  tup19F820 = T16;
+  T15 = CALL1(CHKREF(Yhead),tup19F820);
+  n_bucketsF821 = T15;
+  T14 = CALL1(CHKREF(Ytail),tup19F820);
+  tup19F822 = T14;
+  T13 = CALL1(CHKREF(Yhead),tup19F822);
+  bucket_depthF823 = T13;
+  T12 = CALL1(CHKREF(Ytail),tup19F822);
+  tup19F824 = T12;
   T11 = (P)YPpair(type_,Ynil);
   T10 = CALL3(CHKREF(YPisa),T11,Ynil,Ynil);
-  tableF811 = T10;
-  T9 = CALL2(CHKREF(YruntimeYT),bucket_depthF809,YPint((P)2));
-  T8 = CALL2(CHKREF(YruntimeYT),n_bucketsF807,T9);
-  T7 = CALL2(CHKREF(YruntimeY_),n_bucketsF807,YPint((P)2));
-  T6 = CALLN(CHKREF(YruntimeYfab_table_vector),6,T8,CHKREF(YruntimeYDempty_cell_marker),n_bucketsF807,bucket_depthF809,n_bucketsF807,T7);
-  CALL2(CHKREF(YruntimeYPvector_setter),T6,tableF811);
-  T5 = tableF811;
+  tableF825 = T10;
+  T9 = CALL2(CHKREF(YruntimeYT),bucket_depthF823,YPint((P)2));
+  T8 = CALL2(CHKREF(YruntimeYT),n_bucketsF821,T9);
+  T7 = CALL2(CHKREF(YruntimeY_),n_bucketsF821,YPint((P)2));
+  T6 = CALLN(CHKREF(YruntimeYfab_table_vector),6,T8,CHKREF(YruntimeYDempty_cell_marker),n_bucketsF821,bucket_depthF823,n_bucketsF821,T7);
+  CALL2(CHKREF(YruntimeYPvector_setter),T6,tableF825);
+  T5 = tableF825;
   T4 = T5;
   T3 = T4;
   T2 = T3;
@@ -8325,7 +8896,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_x_1177_478) {
+FUNCODEDEF(fun_x_1177_514) {
   ARG(args_, 0);
   ARG(msg_, 1);
   P T0;
@@ -8335,28 +8906,28 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_479) {
+FUNCODEDEF(fun_515) {
   ARG(return_, 0);
-  P x_1176F831;
-  P x_1176F830;
-  P x_1176F829;
-  P x_1176F828;
+  P x_1176F845;
+  P x_1176F844;
+  P x_1176F843;
+  P x_1176F842;
+  P x_1176F841;
+  P x_1176F840;
+  P x_1176F839;
+  P x_1176F838;
+  P x_1176F837;
+  P x_1176F836;
+  P x_1176F835;
+  P x_1176F834;
+  P x_1176F833;
+  P bodyF832;
+  P keyF831;
+  P tableF830;
+  P bucket_offsetF829;
+  P bucket_indexF828;
   P x_1176F827;
-  P x_1176F826;
-  P x_1176F825;
-  P x_1176F824;
-  P x_1176F823;
-  P x_1176F822;
-  P x_1176F821;
-  P x_1176F820;
-  P x_1176F819;
-  P bodyF818;
-  P keyF817;
-  P tableF816;
-  P bucket_offsetF815;
-  P bucket_indexF814;
-  P x_1176F813;
-  P x_1177F812;
+  P x_1177F826;
   P T104,T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89;
   P T88,T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73;
   P T72,T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57;
@@ -8366,123 +8937,123 @@ FUNCODEDEF(fun_479) {
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
-  T104 = FUNSHELL(0,fun_x_1177_478,1);
-  x_1177F812 = T104;
-  FUNINIT(x_1177F812, 1,return_);
-  x_1176F813 = FREEREF(0);
-  bucket_indexF814 = YPfalse;
-  bucket_indexF814 = BOXFAB(bucket_indexF814);
-  bucket_offsetF815 = YPfalse;
-  bucket_offsetF815 = BOXFAB(bucket_offsetF815);
-  tableF816 = YPfalse;
-  tableF816 = BOXFAB(tableF816);
-  keyF817 = YPfalse;
-  keyF817 = BOXFAB(keyF817);
-  bodyF818 = YPfalse;
-  bodyF818 = BOXFAB(bodyF818);
-  T43 = CALL2(CHKREF(YisaQ),x_1176F813,CHKREF(YLlstG));
+  T104 = FUNSHELL(0,fun_x_1177_514,1);
+  x_1177F826 = T104;
+  FUNINIT(x_1177F826, 1,return_);
+  x_1176F827 = FREEREF(0);
+  bucket_indexF828 = YPfalse;
+  bucket_indexF828 = BOXFAB(bucket_indexF828);
+  bucket_offsetF829 = YPfalse;
+  bucket_offsetF829 = BOXFAB(bucket_offsetF829);
+  tableF830 = YPfalse;
+  tableF830 = BOXFAB(tableF830);
+  keyF831 = YPfalse;
+  keyF831 = BOXFAB(keyF831);
+  bodyF832 = YPfalse;
+  bodyF832 = BOXFAB(bodyF832);
+  T43 = CALL2(CHKREF(YisaQ),x_1176F827,CHKREF(YLlstG));
   if (T43 != YPfalse) {
-    T42 = CALL3(CHKREF(YmacrosYmatch_atom),x_1176F813,CHKREF(lit_84),x_1177F812);
-    x_1176F819 = T42;
-    T40 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1176F819,x_1177F812);
-    x_1176F820 = T40;
-    T38 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1176F820,x_1177F812);
-    x_1176F821 = T38;
-    T37 = CALL3(CHKREF(YmacrosYmatch_atom),x_1176F821,CHKREF(lit_83),x_1177F812);
-    x_1176F822 = T37;
-    T35 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1176F822,x_1177F812);
-    BOXVAL(bucket_indexF814) = T35;
-    T36 = CALL1(CHKREF(Ytail),x_1176F822);
-    x_1176F823 = T36;
-    T33 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1176F823,x_1177F812);
-    BOXVAL(bucket_offsetF815) = T33;
-    T34 = CALL1(CHKREF(Ytail),x_1176F823);
-    x_1176F824 = T34;
-    T32 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1176F824,x_1177F812);
+    T42 = CALL3(CHKREF(YmacrosYmatch_atom),x_1176F827,CHKREF(lit_94),x_1177F826);
+    x_1176F833 = T42;
+    T40 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1176F833,x_1177F826);
+    x_1176F834 = T40;
+    T38 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1176F834,x_1177F826);
+    x_1176F835 = T38;
+    T37 = CALL3(CHKREF(YmacrosYmatch_atom),x_1176F835,CHKREF(lit_93),x_1177F826);
+    x_1176F836 = T37;
+    T35 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1176F836,x_1177F826);
+    BOXVAL(bucket_indexF828) = T35;
+    T36 = CALL1(CHKREF(Ytail),x_1176F836);
+    x_1176F837 = T36;
+    T33 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1176F837,x_1177F826);
+    BOXVAL(bucket_offsetF829) = T33;
+    T34 = CALL1(CHKREF(Ytail),x_1176F837);
+    x_1176F838 = T34;
+    T32 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1176F838,x_1177F826);
     T31 = T32;
     T30 = T31;
     T29 = T30;
-    T39 = CALL1(CHKREF(Ytail),x_1176F820);
-    x_1176F825 = T39;
-    T27 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1176F825,x_1177F812);
-    x_1176F826 = T27;
-    T25 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1176F826,x_1177F812);
-    BOXVAL(tableF816) = T25;
-    T26 = CALL1(CHKREF(Ytail),x_1176F826);
-    x_1176F827 = T26;
-    T23 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1176F827,x_1177F812);
-    BOXVAL(keyF817) = T23;
-    T24 = CALL1(CHKREF(Ytail),x_1176F827);
-    x_1176F828 = T24;
-    T22 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1176F828,x_1177F812);
+    T39 = CALL1(CHKREF(Ytail),x_1176F834);
+    x_1176F839 = T39;
+    T27 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1176F839,x_1177F826);
+    x_1176F840 = T27;
+    T25 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1176F840,x_1177F826);
+    BOXVAL(tableF830) = T25;
+    T26 = CALL1(CHKREF(Ytail),x_1176F840);
+    x_1176F841 = T26;
+    T23 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1176F841,x_1177F826);
+    BOXVAL(keyF831) = T23;
+    T24 = CALL1(CHKREF(Ytail),x_1176F841);
+    x_1176F842 = T24;
+    T22 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1176F842,x_1177F826);
     T21 = T22;
     T20 = T21;
-    T28 = CALL1(CHKREF(Ytail),x_1176F825);
-    x_1176F829 = T28;
-    T19 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1176F829,x_1177F812);
+    T28 = CALL1(CHKREF(Ytail),x_1176F839);
+    x_1176F843 = T28;
+    T19 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1176F843,x_1177F826);
     T18 = T19;
     T17 = T18;
-    T41 = CALL1(CHKREF(Ytail),x_1176F819);
-    x_1176F830 = T41;
-    BOXVAL(bodyF818) = x_1176F830;
-    x_1176F831 = Ynil;
-    T16 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1176F831,x_1177F812);
+    T41 = CALL1(CHKREF(Ytail),x_1176F833);
+    x_1176F844 = T41;
+    BOXVAL(bodyF832) = x_1176F844;
+    x_1176F845 = Ynil;
+    T16 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1176F845,x_1177F826);
     T15 = T16;
     T14 = T15;
     T13 = T14;
   } else {
-    T12 = CALL2(x_1177F812,CHKREF(lit_82),x_1176F813);
+    T12 = CALL2(x_1177F826,CHKREF(lit_92),x_1176F827);
   }
-  T103 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_81));
-  T102 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_80));
-  T101 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_79));
-  T100 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_78));
+  T103 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_91));
+  T102 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_90));
+  T101 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_89));
+  T100 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_88));
   T99 = CALLN(CHKREF(YmacrosYcat),4,T102,T101,T100,Ynil);
   T98 = CALL1(CHKREF(YmacrosYlst),T99);
-  T97 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_77));
-  T96 = BOXVAL(tableF816);
+  T97 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_87));
+  T96 = BOXVAL(tableF830);
   T95 = CALL1(CHKREF(YmacrosYlst),T96);
   T94 = CALL3(CHKREF(YmacrosYcat),T97,T95,Ynil);
   T93 = CALL1(CHKREF(YmacrosYlst),T94);
   T92 = CALL3(CHKREF(YmacrosYcat),T98,T93,Ynil);
   T91 = CALL1(CHKREF(YmacrosYlst),T92);
-  T90 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_76));
-  T89 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_75));
-  T88 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_74));
+  T90 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_86));
+  T89 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_85));
+  T88 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_84));
   T87 = CALL3(CHKREF(YmacrosYcat),T89,T88,Ynil);
   T86 = CALL1(CHKREF(YmacrosYlst),T87);
-  T85 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_73));
+  T85 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_83));
   T84 = CALLN(CHKREF(YmacrosYcat),4,T90,T86,T85,Ynil);
   T83 = CALL1(CHKREF(YmacrosYlst),T84);
-  T82 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_72));
-  T81 = BOXVAL(keyF817);
+  T82 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_82));
+  T81 = BOXVAL(keyF831);
   T80 = CALL1(CHKREF(YmacrosYlst),T81);
   T79 = CALL3(CHKREF(YmacrosYcat),T82,T80,Ynil);
   T78 = CALL1(CHKREF(YmacrosYlst),T79);
   T77 = CALL3(CHKREF(YmacrosYcat),T83,T78,Ynil);
   T76 = CALL1(CHKREF(YmacrosYlst),T77);
-  T75 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_71));
-  T74 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_70));
-  T73 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_69));
+  T75 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_81));
+  T74 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_80));
+  T73 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_79));
   T72 = CALL3(CHKREF(YmacrosYcat),T74,T73,Ynil);
   T71 = CALL1(CHKREF(YmacrosYlst),T72);
   T70 = CALL3(CHKREF(YmacrosYcat),T75,T71,Ynil);
   T69 = CALL1(CHKREF(YmacrosYlst),T70);
-  T68 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_68));
-  T67 = BOXVAL(bucket_indexF814);
+  T68 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_78));
+  T67 = BOXVAL(bucket_indexF828);
   T66 = CALL1(CHKREF(YmacrosYlst),T67);
-  T65 = BOXVAL(bucket_offsetF815);
+  T65 = BOXVAL(bucket_offsetF829);
   T64 = CALL1(CHKREF(YmacrosYlst),T65);
   T63 = CALLN(CHKREF(YmacrosYcat),4,T68,T66,T64,Ynil);
   T62 = CALL1(CHKREF(YmacrosYlst),T63);
-  T61 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_67));
-  T60 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_66));
-  T59 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_65));
-  T58 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_64));
+  T61 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_77));
+  T60 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_76));
+  T59 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_75));
+  T58 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_74));
   T57 = CALL3(CHKREF(YmacrosYcat),T59,T58,Ynil);
   T56 = CALL1(CHKREF(YmacrosYlst),T57);
-  T55 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_63));
-  T54 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_62));
+  T55 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_73));
+  T54 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_72));
   T53 = CALL3(CHKREF(YmacrosYcat),T55,T54,Ynil);
   T52 = CALL1(CHKREF(YmacrosYlst),T53);
   T51 = CALLN(CHKREF(YmacrosYcat),5,T61,T60,T56,T52,Ynil);
@@ -8491,7 +9062,7 @@ loop:
   T48 = CALL1(CHKREF(YmacrosYlst),T49);
   T47 = CALLN(CHKREF(YmacrosYcat),5,T91,T76,T69,T48,Ynil);
   T46 = CALL1(CHKREF(YmacrosYlst),T47);
-  T45 = BOXVAL(bodyF818);
+  T45 = BOXVAL(bodyF832);
   T44 = CALLN(CHKREF(YmacrosYcat),4,T103,T46,T45,Ynil);
   T10 = T44;
   T8 = T10;
@@ -8503,33 +9074,33 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_480) {
+FUNCODEDEF(fun_516) {
   ARG(exp_, 0);
   P T1,T0;
   P a1;
 loop:
-  T1 = FUNFAB(fun_479,1,exp_);
+  T1 = FUNFAB(fun_515,1,exp_);
   T0 = with_exit(T1);
   QRET(T0);
 }
 
-FUNCODEDEF(fun_inner_481) {
+FUNCODEDEF(fun_inner_517) {
   ARG(this_bucket_raw_index_, 0);
   ARG(i_, 1);
-  P this_keyF832;
+  P this_keyF846;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T12 = CALL2(CHKREF(YruntimeYL),i_,FREEREF(2));
   if (T12 != YPfalse) {
     T11 = CALL2(CHKREF(YruntimeYelt),FREEREF(0),this_bucket_raw_index_);
-    this_keyF832 = T11;
-    T3 = CALL2(CHKREF(YmacrosYEE),this_keyF832,CHKREF(YruntimeYDempty_cell_marker));
+    this_keyF846 = T11;
+    T3 = CALL2(CHKREF(YmacrosYEE),this_keyF846,CHKREF(YruntimeYDempty_cell_marker));
     if (T3 != YPfalse) {
       T2 = CALL1(FREEREF(3),CHKREF(Ynul));
     } else {
     }
-    T7 = CALL2(FREEREF(5),FREEREF(4),this_keyF832);
+    T7 = CALL2(FREEREF(5),FREEREF(4),this_keyF846);
     if (T7 != YPfalse) {
       T6 = CALL2(CHKREF(YruntimeYA),this_bucket_raw_index_,FREEREF(2));
       T5 = CALL2(CHKREF(YruntimeYelt),FREEREF(0),T6);
@@ -8551,10 +9122,10 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_outer_482) {
+FUNCODEDEF(fun_outer_518) {
   ARG(probes_, 0);
-  P innerF834;
-  P indexF833;
+  P innerF848;
+  P indexF847;
   P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
   P T0;
   P a1;
@@ -8564,11 +9135,11 @@ loop:
     T15 = BOXVAL(FREEREF(1));
     T14 = CALL2(CHKREF(YruntimeYT),FREEREF(0),YPint((P)2));
     T13 = CALL2(CHKREF(YruntimeYT),T15,T14);
-    indexF833 = T13;
-    T3 = FUNSHELL(1,fun_inner_481,6);
-    innerF834 = T3;
-    FUNINIT(innerF834, 6,FREEREF(8),innerF834,FREEREF(0),FREEREF(7),FREEREF(6),FREEREF(5));
-    T2 = KCALL2(innerF834,YPint((P)0),indexF833);
+    indexF847 = T13;
+    T3 = FUNSHELL(1,fun_inner_517,6);
+    innerF848 = T3;
+    FUNINIT(innerF848, 6,FREEREF(8),innerF848,FREEREF(0),FREEREF(7),FREEREF(6),FREEREF(5));
+    T2 = KCALL2(innerF848,YPint((P)0),indexF847);
     T5 = BOXVAL(FREEREF(1));
     T4 = CALL2(CHKREF(YruntimeY_),T5,FREEREF(4));
     BOXVAL(FREEREF(1)) = T4;
@@ -8592,77 +9163,77 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_483) {
+FUNCODEDEF(fun_519) {
   ARG(return_, 0);
-  P outerF853;
-  P tup22F852;
-  P bucket_offsetF851;
-  P tup22F850;
-  P bucket_indexF849;
-  P tup22F848;
-  P bucket_depthF847;
-  P n_bucketsF846;
-  P vectorF845;
-  P tup21F844;
-  P stateF843;
-  P tup21F842;
-  P hashF841;
-  P tup21F840;
-  P tup20F839;
-  P hash_functionF838;
-  P tup20F837;
-  P test_functionF836;
-  P tup20F835;
+  P outerF867;
+  P tup22F866;
+  P bucket_offsetF865;
+  P tup22F864;
+  P bucket_indexF863;
+  P tup22F862;
+  P bucket_depthF861;
+  P n_bucketsF860;
+  P vectorF859;
+  P tup21F858;
+  P stateF857;
+  P tup21F856;
+  P hashF855;
+  P tup21F854;
+  P tup20F853;
+  P hash_functionF852;
+  P tup20F851;
+  P test_functionF850;
+  P tup20F849;
   P T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26;
   P T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T41 = CALL1(CHKREF(YruntimeYtable_protocol),FREEREF(0));
-  tup20F835 = T41;
-  T40 = CALL1(CHKREF(Yhead),tup20F835);
-  test_functionF836 = T40;
-  T39 = CALL1(CHKREF(Ytail),tup20F835);
-  tup20F837 = T39;
-  T38 = CALL1(CHKREF(Yhead),tup20F837);
-  hash_functionF838 = T38;
-  T37 = CALL1(CHKREF(Ytail),tup20F837);
-  tup20F839 = T37;
-  T36 = CALL1(hash_functionF838,FREEREF(1));
-  tup21F840 = T36;
-  T35 = CALL1(CHKREF(Yhead),tup21F840);
+  tup20F849 = T41;
+  T40 = CALL1(CHKREF(Yhead),tup20F849);
+  test_functionF850 = T40;
+  T39 = CALL1(CHKREF(Ytail),tup20F849);
+  tup20F851 = T39;
+  T38 = CALL1(CHKREF(Yhead),tup20F851);
+  hash_functionF852 = T38;
+  T37 = CALL1(CHKREF(Ytail),tup20F851);
+  tup20F853 = T37;
+  T36 = CALL1(hash_functionF852,FREEREF(1));
+  tup21F854 = T36;
+  T35 = CALL1(CHKREF(Yhead),tup21F854);
   check_type(T35,CHKREF(YLintG));
-  hashF841 = T35;
-  T34 = CALL1(CHKREF(Ytail),tup21F840);
-  tup21F842 = T34;
-  T33 = CALL1(CHKREF(Yhead),tup21F842);
-  stateF843 = T33;
-  T32 = CALL1(CHKREF(Ytail),tup21F842);
-  tup21F844 = T32;
+  hashF855 = T35;
+  T34 = CALL1(CHKREF(Ytail),tup21F854);
+  tup21F856 = T34;
+  T33 = CALL1(CHKREF(Yhead),tup21F856);
+  stateF857 = T33;
+  T32 = CALL1(CHKREF(Ytail),tup21F856);
+  tup21F858 = T32;
   T31 = CALL1(CHKREF(YruntimeYPvector),FREEREF(0));
-  vectorF845 = T31;
-  T30 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF845);
-  n_bucketsF846 = T30;
-  T29 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF845);
-  bucket_depthF847 = T29;
-  T28 = CALL1(CHKREF(YruntimeYPprimary_modulus),vectorF845);
-  T27 = CALL1(CHKREF(YruntimeYPsecondary_modulus),vectorF845);
-  T26 = CALL3(CHKREF(YruntimeYhash_moduli),hashF841,T28,T27);
-  tup22F848 = T26;
-  T25 = CALL1(CHKREF(Yhead),tup22F848);
-  bucket_indexF849 = T25;
-  bucket_indexF849 = BOXFAB(bucket_indexF849);
-  T24 = CALL1(CHKREF(Ytail),tup22F848);
-  tup22F850 = T24;
-  T23 = CALL1(CHKREF(Yhead),tup22F850);
-  bucket_offsetF851 = T23;
-  T22 = CALL1(CHKREF(Ytail),tup22F850);
-  tup22F852 = T22;
-  T20 = FUNSHELL(1,fun_outer_482,9);
-  outerF853 = T20;
-  FUNINIT(outerF853, 9,bucket_depthF847,bucket_indexF849,outerF853,n_bucketsF846,bucket_offsetF851,test_functionF836,FREEREF(1),return_,vectorF845);
-  T19 = KCALL1(outerF853,YPint((P)0));
-  T21 = CALL1(CHKREF(Yerror),CHKREF(lit_85));
+  vectorF859 = T31;
+  T30 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF859);
+  n_bucketsF860 = T30;
+  T29 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF859);
+  bucket_depthF861 = T29;
+  T28 = CALL1(CHKREF(YruntimeYPprimary_modulus),vectorF859);
+  T27 = CALL1(CHKREF(YruntimeYPsecondary_modulus),vectorF859);
+  T26 = CALL3(CHKREF(YruntimeYhash_moduli),hashF855,T28,T27);
+  tup22F862 = T26;
+  T25 = CALL1(CHKREF(Yhead),tup22F862);
+  bucket_indexF863 = T25;
+  bucket_indexF863 = BOXFAB(bucket_indexF863);
+  T24 = CALL1(CHKREF(Ytail),tup22F862);
+  tup22F864 = T24;
+  T23 = CALL1(CHKREF(Yhead),tup22F864);
+  bucket_offsetF865 = T23;
+  T22 = CALL1(CHKREF(Ytail),tup22F864);
+  tup22F866 = T22;
+  T20 = FUNSHELL(1,fun_outer_518,9);
+  outerF867 = T20;
+  FUNINIT(outerF867, 9,bucket_depthF861,bucket_indexF863,outerF867,n_bucketsF860,bucket_offsetF865,test_functionF850,FREEREF(1),return_,vectorF859);
+  T19 = KCALL1(outerF867,YPint((P)0));
+  T21 = CALL1(CHKREF(Yerror),CHKREF(lit_95));
   T18 = T21;
   T17 = T18;
   T16 = T17;
@@ -8684,25 +9255,25 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_elt_484) {
+FUNCODEDEF(fun_elt_520) {
   ARG(key_, 0);
   ARG(table_, 1);
   P T1,T0;
   P a1,a2;
 loop:
-  T1 = FUNFAB(fun_483,2,table_,key_);
+  T1 = FUNFAB(fun_519,2,table_,key_);
   T0 = with_exit(T1);
   QRET(T0);
 }
 
-FUNCODEDEF(fun_inner_485) {
+FUNCODEDEF(fun_inner_521) {
   ARG(this_bucket_raw_index_, 0);
   ARG(i_, 1);
-  P x_1178F858;
-  P indexF857;
-  P x_1179F856;
-  P this_keyF855;
-  P vacancy_indexF854;
+  P x_1178F872;
+  P indexF871;
+  P x_1179F870;
+  P this_keyF869;
+  P vacancy_indexF868;
   P T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21;
   P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
   P T4,T3,T2,T1,T0;
@@ -8710,51 +9281,51 @@ FUNCODEDEF(fun_inner_485) {
 loop:
   T36 = CALL2(CHKREF(YruntimeYL),i_,FREEREF(4));
   if (T36 != YPfalse) {
-    vacancy_indexF854 = YPfalse;
-    vacancy_indexF854 = BOXFAB(vacancy_indexF854);
+    vacancy_indexF868 = YPfalse;
+    vacancy_indexF868 = BOXFAB(vacancy_indexF868);
     T35 = BOXVAL(FREEREF(0));
     T34 = CALL2(CHKREF(YruntimeYelt),T35,this_bucket_raw_index_);
-    this_keyF855 = T34;
-    T30 = CALL2(CHKREF(YmacrosYEE),this_keyF855,CHKREF(YruntimeYDempty_cell_marker));
+    this_keyF869 = T34;
+    T30 = CALL2(CHKREF(YmacrosYEE),this_keyF869,CHKREF(YruntimeYDempty_cell_marker));
     if (T30 != YPfalse) {
-      T29 = BOXVAL(vacancy_indexF854);
+      T29 = BOXVAL(vacancy_indexF868);
       if (T29 != YPfalse) {
         T27 = BOXVAL(FREEREF(0));
-        x_1179F856 = T27;
-        T26 = CALL1(CHKREF(YruntimeYPvacated),x_1179F856);
+        x_1179F870 = T27;
+        T26 = CALL1(CHKREF(YruntimeYPvacated),x_1179F870);
         T25 = CALL2(CHKREF(YruntimeY_),T26,YPint((P)1));
-        T24 = CALL2(CHKREF(YruntimeYPvacated_setter),T25,x_1179F856);
-        T28 = BOXVAL(vacancy_indexF854);
+        T24 = CALL2(CHKREF(YruntimeYPvacated_setter),T25,x_1179F870);
+        T28 = BOXVAL(vacancy_indexF868);
         T23 = T28;
       } else {
         T23 = this_bucket_raw_index_;
       }
-      indexF857 = T23;
+      indexF871 = T23;
       T16 = BOXVAL(FREEREF(0));
-      CALL3(CHKREF(YruntimeYelt_setter),FREEREF(5),T16,indexF857);
+      CALL3(CHKREF(YruntimeYelt_setter),FREEREF(5),T16,indexF871);
       T18 = BOXVAL(FREEREF(0));
-      T17 = CALL2(CHKREF(YruntimeYA),indexF857,FREEREF(4));
+      T17 = CALL2(CHKREF(YruntimeYA),indexF871,FREEREF(4));
       CALL3(CHKREF(YruntimeYelt_setter),FREEREF(2),T18,T17);
-      x_1178F858 = FREEREF(7);
-      T21 = CALL1(CHKREF(YruntimeYPcount),x_1178F858);
+      x_1178F872 = FREEREF(7);
+      T21 = CALL1(CHKREF(YruntimeYPcount),x_1178F872);
       T20 = CALL2(CHKREF(YruntimeYA),T21,YPint((P)1));
-      T19 = CALL2(CHKREF(YruntimeYPcount_setter),T20,x_1178F858);
+      T19 = CALL2(CHKREF(YruntimeYPcount_setter),T20,x_1178F872);
       T22 = CALL1(FREEREF(3),FREEREF(2));
       T15 = T22;
     } else {
-      T14 = CALL2(CHKREF(YmacrosYEE),this_keyF855,CHKREF(YruntimeYDvacated_cell_marker));
+      T14 = CALL2(CHKREF(YmacrosYEE),this_keyF869,CHKREF(YruntimeYDvacated_cell_marker));
       if (T14 != YPfalse) {
-        T13 = BOXVAL(vacancy_indexF854);
+        T13 = BOXVAL(vacancy_indexF868);
         T12 = CALL1(CHKREF(Ynot),T13);
         if (T12 != YPfalse) {
-          T11 = BOXVAL(vacancy_indexF854) = this_bucket_raw_index_;
+          T11 = BOXVAL(vacancy_indexF868) = this_bucket_raw_index_;
           T10 = T11;
         } else {
           T10 = YPfalse;
         }
         T4 = T10;
       } else {
-        T9 = CALL2(FREEREF(6),FREEREF(5),this_keyF855);
+        T9 = CALL2(FREEREF(6),FREEREF(5),this_keyF869);
         if (T9 != YPfalse) {
           T7 = BOXVAL(FREEREF(0));
           T6 = CALL2(CHKREF(YruntimeYA),this_bucket_raw_index_,FREEREF(4));
@@ -8783,10 +9354,10 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_outer_486) {
+FUNCODEDEF(fun_outer_522) {
   ARG(probes_, 0);
-  P innerF860;
-  P indexF859;
+  P innerF874;
+  P indexF873;
   P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
   P T0;
   P a1;
@@ -8796,11 +9367,11 @@ loop:
     T15 = BOXVAL(FREEREF(1));
     T14 = CALL2(CHKREF(YruntimeYT),FREEREF(0),YPint((P)2));
     T13 = CALL2(CHKREF(YruntimeYT),T15,T14);
-    indexF859 = T13;
-    T3 = FUNSHELL(1,fun_inner_485,8);
-    innerF860 = T3;
-    FUNINIT(innerF860, 8,FREEREF(10),innerF860,FREEREF(9),FREEREF(8),FREEREF(0),FREEREF(7),FREEREF(6),FREEREF(5));
-    T2 = CALL2(innerF860,YPint((P)0),indexF859);
+    indexF873 = T13;
+    T3 = FUNSHELL(1,fun_inner_521,8);
+    innerF874 = T3;
+    FUNINIT(innerF874, 8,FREEREF(10),innerF874,FREEREF(9),FREEREF(8),FREEREF(0),FREEREF(7),FREEREF(6),FREEREF(5));
+    T2 = CALL2(innerF874,YPint((P)0),indexF873);
     T5 = BOXVAL(FREEREF(1));
     T4 = CALL2(CHKREF(YruntimeY_),T5,FREEREF(4));
     BOXVAL(FREEREF(1)) = T4;
@@ -8824,78 +9395,78 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_487) {
+FUNCODEDEF(fun_523) {
   ARG(return_, 0);
-  P outerF878;
-  P tup25F877;
-  P bucket_offsetF876;
-  P tup25F875;
-  P bucket_indexF874;
-  P tup25F873;
-  P n_bucketsF872;
-  P bucket_depthF871;
-  P tup24F870;
-  P stateF869;
-  P tup24F868;
-  P hashF867;
-  P tup24F866;
-  P tup23F865;
-  P hash_functionF864;
-  P tup23F863;
-  P test_functionF862;
-  P tup23F861;
+  P outerF892;
+  P tup25F891;
+  P bucket_offsetF890;
+  P tup25F889;
+  P bucket_indexF888;
+  P tup25F887;
+  P n_bucketsF886;
+  P bucket_depthF885;
+  P tup24F884;
+  P stateF883;
+  P tup24F882;
+  P hashF881;
+  P tup24F880;
+  P tup23F879;
+  P hash_functionF878;
+  P tup23F877;
+  P test_functionF876;
+  P tup23F875;
   P T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28;
   P T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T43 = CALL1(CHKREF(YruntimeYtable_protocol),FREEREF(0));
-  tup23F861 = T43;
-  T42 = CALL1(CHKREF(Yhead),tup23F861);
-  test_functionF862 = T42;
-  T41 = CALL1(CHKREF(Ytail),tup23F861);
-  tup23F863 = T41;
-  T40 = CALL1(CHKREF(Yhead),tup23F863);
-  hash_functionF864 = T40;
-  T39 = CALL1(CHKREF(Ytail),tup23F863);
-  tup23F865 = T39;
-  T38 = CALL1(hash_functionF864,FREEREF(1));
-  tup24F866 = T38;
-  T37 = CALL1(CHKREF(Yhead),tup24F866);
+  tup23F875 = T43;
+  T42 = CALL1(CHKREF(Yhead),tup23F875);
+  test_functionF876 = T42;
+  T41 = CALL1(CHKREF(Ytail),tup23F875);
+  tup23F877 = T41;
+  T40 = CALL1(CHKREF(Yhead),tup23F877);
+  hash_functionF878 = T40;
+  T39 = CALL1(CHKREF(Ytail),tup23F877);
+  tup23F879 = T39;
+  T38 = CALL1(hash_functionF878,FREEREF(1));
+  tup24F880 = T38;
+  T37 = CALL1(CHKREF(Yhead),tup24F880);
   check_type(T37,CHKREF(YLintG));
-  hashF867 = T37;
-  T36 = CALL1(CHKREF(Ytail),tup24F866);
-  tup24F868 = T36;
-  T35 = CALL1(CHKREF(Yhead),tup24F868);
-  stateF869 = T35;
-  T34 = CALL1(CHKREF(Ytail),tup24F868);
-  tup24F870 = T34;
+  hashF881 = T37;
+  T36 = CALL1(CHKREF(Ytail),tup24F880);
+  tup24F882 = T36;
+  T35 = CALL1(CHKREF(Yhead),tup24F882);
+  stateF883 = T35;
+  T34 = CALL1(CHKREF(Ytail),tup24F882);
+  tup24F884 = T34;
   T33 = BOXVAL(FREEREF(2));
   T32 = CALL1(CHKREF(YruntimeYPbucket_depth),T33);
-  bucket_depthF871 = T32;
+  bucket_depthF885 = T32;
   T31 = BOXVAL(FREEREF(2));
   T30 = CALL1(CHKREF(YruntimeYPn_buckets),T31);
-  n_bucketsF872 = T30;
+  n_bucketsF886 = T30;
   T29 = BOXVAL(FREEREF(2));
   T28 = CALL1(CHKREF(YruntimeYPprimary_modulus),T29);
   T27 = BOXVAL(FREEREF(2));
   T26 = CALL1(CHKREF(YruntimeYPsecondary_modulus),T27);
-  T25 = CALL3(CHKREF(YruntimeYhash_moduli),hashF867,T28,T26);
-  tup25F873 = T25;
-  T24 = CALL1(CHKREF(Yhead),tup25F873);
-  bucket_indexF874 = T24;
-  bucket_indexF874 = BOXFAB(bucket_indexF874);
-  T23 = CALL1(CHKREF(Ytail),tup25F873);
-  tup25F875 = T23;
-  T22 = CALL1(CHKREF(Yhead),tup25F875);
-  bucket_offsetF876 = T22;
-  T21 = CALL1(CHKREF(Ytail),tup25F875);
-  tup25F877 = T21;
-  T19 = FUNSHELL(1,fun_outer_486,11);
-  outerF878 = T19;
-  FUNINIT(outerF878, 11,bucket_depthF871,bucket_indexF874,outerF878,n_bucketsF872,bucket_offsetF876,FREEREF(0),test_functionF862,FREEREF(1),return_,FREEREF(3),FREEREF(2));
-  T18 = CALL1(outerF878,YPint((P)0));
-  T20 = CALL1(CHKREF(Yerror),CHKREF(lit_86));
+  T25 = CALL3(CHKREF(YruntimeYhash_moduli),hashF881,T28,T26);
+  tup25F887 = T25;
+  T24 = CALL1(CHKREF(Yhead),tup25F887);
+  bucket_indexF888 = T24;
+  bucket_indexF888 = BOXFAB(bucket_indexF888);
+  T23 = CALL1(CHKREF(Ytail),tup25F887);
+  tup25F889 = T23;
+  T22 = CALL1(CHKREF(Yhead),tup25F889);
+  bucket_offsetF890 = T22;
+  T21 = CALL1(CHKREF(Ytail),tup25F889);
+  tup25F891 = T21;
+  T19 = FUNSHELL(1,fun_outer_522,11);
+  outerF892 = T19;
+  FUNINIT(outerF892, 11,bucket_depthF885,bucket_indexF888,outerF892,n_bucketsF886,bucket_offsetF890,FREEREF(0),test_functionF876,FREEREF(1),return_,FREEREF(3),FREEREF(2));
+  T18 = CALL1(outerF892,YPint((P)0));
+  T20 = CALL1(CHKREF(Yerror),CHKREF(lit_96));
   T17 = T20;
   T16 = T17;
   T15 = T16;
@@ -8916,23 +9487,23 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_elt_setter_488) {
+FUNCODEDEF(fun_elt_setter_524) {
   ARG(key_, 0);
   ARG(table_, 1);
   ARG(value_, 2);
-  P vectorF879;
+  P vectorF893;
   P T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17;
   P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
   P T0;
   P a1,a2,a3;
 loop:
   T32 = CALL1(CHKREF(YruntimeYPvector),table_);
-  vectorF879 = T32;
-  vectorF879 = BOXFAB(vectorF879);
+  vectorF893 = T32;
+  vectorF893 = BOXFAB(vectorF893);
   T29 = CALL1(CHKREF(YruntimeYPcount),table_);
-  T28 = BOXVAL(vectorF879);
+  T28 = BOXVAL(vectorF893);
   T27 = CALL1(CHKREF(YruntimeYPn_buckets),T28);
-  T26 = BOXVAL(vectorF879);
+  T26 = BOXVAL(vectorF893);
   T25 = CALL1(CHKREF(YruntimeYPbucket_depth),T26);
   T24 = CALL2(CHKREF(YruntimeYT),T27,T25);
   T23 = CALL1(CHKREF(YruntimeYtable_growth_threshold),table_);
@@ -8941,15 +9512,15 @@ loop:
   if (T21 != YPfalse) {
     T20 = CALL1(CHKREF(YruntimeYgrow_table),table_);
     T19 = CALL1(CHKREF(YruntimeYPvector),T20);
-    T18 = BOXVAL(vectorF879) = T19;
+    T18 = BOXVAL(vectorF893) = T19;
   } else {
     T17 = CALL1(CHKREF(YruntimeYPcount),table_);
-    T16 = BOXVAL(vectorF879);
+    T16 = BOXVAL(vectorF893);
     T15 = CALL1(CHKREF(YruntimeYPvacated),T16);
     T14 = CALL2(CHKREF(YruntimeYA),T17,T15);
-    T13 = BOXVAL(vectorF879);
+    T13 = BOXVAL(vectorF893);
     T12 = CALL1(CHKREF(YruntimeYPn_buckets),T13);
-    T11 = BOXVAL(vectorF879);
+    T11 = BOXVAL(vectorF893);
     T10 = CALL1(CHKREF(YruntimeYPbucket_depth),T11);
     T9 = CALL2(CHKREF(YruntimeYT),T12,T10);
     T8 = CALL1(CHKREF(YruntimeYtable_growth_threshold),table_);
@@ -8958,25 +9529,25 @@ loop:
     if (T6 != YPfalse) {
       T5 = CALL1(CHKREF(YruntimeYrehash_table),table_);
       T4 = CALL1(CHKREF(YruntimeYPvector),T5);
-      T3 = BOXVAL(vectorF879) = T4;
+      T3 = BOXVAL(vectorF893) = T4;
       T2 = T3;
     } else {
       T2 = YPfalse;
     }
   }
-  T31 = FUNFAB(fun_487,4,table_,key_,vectorF879,value_);
+  T31 = FUNFAB(fun_523,4,table_,key_,vectorF893,value_);
   T30 = with_exit(T31);
   T0 = T30;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_inner_489) {
+FUNCODEDEF(fun_inner_525) {
   ARG(this_bucket_raw_index_, 0);
   ARG(i_, 1);
-  P tmpF883;
-  P x_1180F882;
-  P x_1181F881;
-  P this_keyF880;
+  P tmpF897;
+  P x_1180F896;
+  P x_1181F895;
+  P this_keyF894;
   P T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4;
   P T3,T2,T1,T0;
   P a1,a2;
@@ -8984,16 +9555,16 @@ loop:
   T19 = CALL2(CHKREF(YruntimeYL),i_,FREEREF(6));
   if (T19 != YPfalse) {
     T18 = CALL2(CHKREF(YruntimeYelt),FREEREF(0),this_bucket_raw_index_);
-    this_keyF880 = T18;
-    T3 = CALL2(CHKREF(YmacrosYEE),this_keyF880,CHKREF(YruntimeYDempty_cell_marker));
+    this_keyF894 = T18;
+    T3 = CALL2(CHKREF(YmacrosYEE),this_keyF894,CHKREF(YruntimeYDempty_cell_marker));
     if (T3 != YPfalse) {
       T2 = CALL1(FREEREF(2),YPfalse);
     } else {
     }
-    T14 = CALL2(CHKREF(YruntimeYNEE),this_keyF880,CHKREF(YruntimeYDvacated_cell_marker));
-    tmpF883 = T14;
-    if (tmpF883 != YPfalse) {
-      T13 = CALL2(FREEREF(5),FREEREF(4),this_keyF880);
+    T14 = CALL2(CHKREF(YruntimeYNEE),this_keyF894,CHKREF(YruntimeYDvacated_cell_marker));
+    tmpF897 = T14;
+    if (tmpF897 != YPfalse) {
+      T13 = CALL2(FREEREF(5),FREEREF(4),this_keyF894);
       T12 = T13;
     } else {
       T12 = YPfalse;
@@ -9001,14 +9572,14 @@ loop:
     T11 = T12;
     if (T11 != YPfalse) {
       CALL3(CHKREF(YruntimeYelt_setter),CHKREF(YruntimeYDvacated_cell_marker),FREEREF(0),this_bucket_raw_index_);
-      x_1180F882 = FREEREF(3);
-      T6 = CALL1(CHKREF(YruntimeYPcount),x_1180F882);
+      x_1180F896 = FREEREF(3);
+      T6 = CALL1(CHKREF(YruntimeYPcount),x_1180F896);
       T5 = CALL2(CHKREF(YruntimeY_),T6,YPint((P)1));
-      T4 = CALL2(CHKREF(YruntimeYPcount_setter),T5,x_1180F882);
-      x_1181F881 = FREEREF(0);
-      T9 = CALL1(CHKREF(YruntimeYPvacated),x_1181F881);
+      T4 = CALL2(CHKREF(YruntimeYPcount_setter),T5,x_1180F896);
+      x_1181F895 = FREEREF(0);
+      T9 = CALL1(CHKREF(YruntimeYPvacated),x_1181F895);
       T8 = CALL2(CHKREF(YruntimeYA),T9,YPint((P)1));
-      T7 = CALL2(CHKREF(YruntimeYPvacated_setter),T8,x_1181F881);
+      T7 = CALL2(CHKREF(YruntimeYPvacated_setter),T8,x_1181F895);
       T10 = CALL1(FREEREF(2),YPtrue);
     } else {
     }
@@ -9027,10 +9598,10 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_outer_490) {
+FUNCODEDEF(fun_outer_526) {
   ARG(probes_, 0);
-  P innerF885;
-  P indexF884;
+  P innerF899;
+  P indexF898;
   P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
   P T0;
   P a1;
@@ -9041,11 +9612,11 @@ loop:
     T14 = CALL2(CHKREF(YruntimeYT),FREEREF(0),YPint((P)2));
     T13 = CALL2(CHKREF(YruntimeYT),T15,T14);
     check_type(T13,CHKREF(YLintG));
-    indexF884 = T13;
-    T3 = FUNSHELL(1,fun_inner_489,7);
-    innerF885 = T3;
-    FUNINIT(innerF885, 7,FREEREF(9),innerF885,FREEREF(8),FREEREF(7),FREEREF(6),FREEREF(5),FREEREF(0));
-    T2 = CALL2(innerF885,YPint((P)0),indexF884);
+    indexF898 = T13;
+    T3 = FUNSHELL(1,fun_inner_525,7);
+    innerF899 = T3;
+    FUNINIT(innerF899, 7,FREEREF(9),innerF899,FREEREF(8),FREEREF(7),FREEREF(6),FREEREF(5),FREEREF(0));
+    T2 = CALL2(innerF899,YPint((P)0),indexF898);
     T5 = BOXVAL(FREEREF(1));
     T4 = CALL2(CHKREF(YruntimeY_),T5,FREEREF(4));
     BOXVAL(FREEREF(1)) = T4;
@@ -9069,77 +9640,77 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_491) {
+FUNCODEDEF(fun_527) {
   ARG(return_, 0);
-  P outerF904;
-  P tup28F903;
-  P bucket_offsetF902;
-  P tup28F901;
-  P bucket_indexF900;
-  P tup28F899;
-  P bucket_depthF898;
-  P n_bucketsF897;
-  P vectorF896;
-  P tup27F895;
-  P stateF894;
-  P tup27F893;
-  P hashF892;
-  P tup27F891;
-  P tup26F890;
-  P hash_functionF889;
-  P tup26F888;
-  P test_functionF887;
-  P tup26F886;
+  P outerF918;
+  P tup28F917;
+  P bucket_offsetF916;
+  P tup28F915;
+  P bucket_indexF914;
+  P tup28F913;
+  P bucket_depthF912;
+  P n_bucketsF911;
+  P vectorF910;
+  P tup27F909;
+  P stateF908;
+  P tup27F907;
+  P hashF906;
+  P tup27F905;
+  P tup26F904;
+  P hash_functionF903;
+  P tup26F902;
+  P test_functionF901;
+  P tup26F900;
   P T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26;
   P T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T41 = CALL1(CHKREF(YruntimeYtable_protocol),FREEREF(0));
-  tup26F886 = T41;
-  T40 = CALL1(CHKREF(Yhead),tup26F886);
-  test_functionF887 = T40;
-  T39 = CALL1(CHKREF(Ytail),tup26F886);
-  tup26F888 = T39;
-  T38 = CALL1(CHKREF(Yhead),tup26F888);
-  hash_functionF889 = T38;
-  T37 = CALL1(CHKREF(Ytail),tup26F888);
-  tup26F890 = T37;
-  T36 = CALL1(hash_functionF889,FREEREF(1));
-  tup27F891 = T36;
-  T35 = CALL1(CHKREF(Yhead),tup27F891);
+  tup26F900 = T41;
+  T40 = CALL1(CHKREF(Yhead),tup26F900);
+  test_functionF901 = T40;
+  T39 = CALL1(CHKREF(Ytail),tup26F900);
+  tup26F902 = T39;
+  T38 = CALL1(CHKREF(Yhead),tup26F902);
+  hash_functionF903 = T38;
+  T37 = CALL1(CHKREF(Ytail),tup26F902);
+  tup26F904 = T37;
+  T36 = CALL1(hash_functionF903,FREEREF(1));
+  tup27F905 = T36;
+  T35 = CALL1(CHKREF(Yhead),tup27F905);
   check_type(T35,CHKREF(YLintG));
-  hashF892 = T35;
-  T34 = CALL1(CHKREF(Ytail),tup27F891);
-  tup27F893 = T34;
-  T33 = CALL1(CHKREF(Yhead),tup27F893);
-  stateF894 = T33;
-  T32 = CALL1(CHKREF(Ytail),tup27F893);
-  tup27F895 = T32;
+  hashF906 = T35;
+  T34 = CALL1(CHKREF(Ytail),tup27F905);
+  tup27F907 = T34;
+  T33 = CALL1(CHKREF(Yhead),tup27F907);
+  stateF908 = T33;
+  T32 = CALL1(CHKREF(Ytail),tup27F907);
+  tup27F909 = T32;
   T31 = CALL1(CHKREF(YruntimeYPvector),FREEREF(0));
-  vectorF896 = T31;
-  T30 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF896);
-  n_bucketsF897 = T30;
-  T29 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF896);
-  bucket_depthF898 = T29;
-  T28 = CALL1(CHKREF(YruntimeYPprimary_modulus),vectorF896);
-  T27 = CALL1(CHKREF(YruntimeYPsecondary_modulus),vectorF896);
-  T26 = CALL3(CHKREF(YruntimeYhash_moduli),hashF892,T28,T27);
-  tup28F899 = T26;
-  T25 = CALL1(CHKREF(Yhead),tup28F899);
-  bucket_indexF900 = T25;
-  bucket_indexF900 = BOXFAB(bucket_indexF900);
-  T24 = CALL1(CHKREF(Ytail),tup28F899);
-  tup28F901 = T24;
-  T23 = CALL1(CHKREF(Yhead),tup28F901);
-  bucket_offsetF902 = T23;
-  T22 = CALL1(CHKREF(Ytail),tup28F901);
-  tup28F903 = T22;
-  T20 = FUNSHELL(1,fun_outer_490,10);
-  outerF904 = T20;
-  FUNINIT(outerF904, 10,bucket_depthF898,bucket_indexF900,outerF904,n_bucketsF897,bucket_offsetF902,test_functionF887,FREEREF(1),FREEREF(0),return_,vectorF896);
-  T19 = CALL1(outerF904,YPint((P)0));
-  T21 = CALL1(CHKREF(Yerror),CHKREF(lit_87));
+  vectorF910 = T31;
+  T30 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF910);
+  n_bucketsF911 = T30;
+  T29 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF910);
+  bucket_depthF912 = T29;
+  T28 = CALL1(CHKREF(YruntimeYPprimary_modulus),vectorF910);
+  T27 = CALL1(CHKREF(YruntimeYPsecondary_modulus),vectorF910);
+  T26 = CALL3(CHKREF(YruntimeYhash_moduli),hashF906,T28,T27);
+  tup28F913 = T26;
+  T25 = CALL1(CHKREF(Yhead),tup28F913);
+  bucket_indexF914 = T25;
+  bucket_indexF914 = BOXFAB(bucket_indexF914);
+  T24 = CALL1(CHKREF(Ytail),tup28F913);
+  tup28F915 = T24;
+  T23 = CALL1(CHKREF(Yhead),tup28F915);
+  bucket_offsetF916 = T23;
+  T22 = CALL1(CHKREF(Ytail),tup28F915);
+  tup28F917 = T22;
+  T20 = FUNSHELL(1,fun_outer_526,10);
+  outerF918 = T20;
+  FUNINIT(outerF918, 10,bucket_depthF912,bucket_indexF914,outerF918,n_bucketsF911,bucket_offsetF916,test_functionF901,FREEREF(1),FREEREF(0),return_,vectorF910);
+  T19 = CALL1(outerF918,YPint((P)0));
+  T21 = CALL1(CHKREF(Yerror),CHKREF(lit_97));
   T18 = T21;
   T17 = T18;
   T16 = T17;
@@ -9161,22 +9732,22 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_del_key_492) {
+FUNCODEDEF(fun_del_key_528) {
   ARG(key_, 0);
   ARG(table_, 1);
   P T1,T0;
   P a1,a2;
 loop:
-  T1 = FUNFAB(fun_491,2,table_,key_);
+  T1 = FUNFAB(fun_527,2,table_,key_);
   T0 = with_exit(T1);
   RET(T0);
 }
 
-FUNCODEDEF(fun_inner_493) {
+FUNCODEDEF(fun_inner_529) {
   ARG(i_, 0);
-  P tmpF907;
-  P indexF906;
-  P keyF905;
+  P tmpF921;
+  P indexF920;
+  P keyF919;
   P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
   P T4,T3,T2,T1,T0;
   P a1;
@@ -9187,26 +9758,26 @@ loop:
     T16 = CALL2(CHKREF(YruntimeYT),FREEREF(2),T17);
     T15 = CALL2(CHKREF(YruntimeYA),i_,T16);
     T14 = CALL2(CHKREF(YruntimeYelt),FREEREF(3),T15);
-    keyF905 = T14;
-    T13 = CALL2(CHKREF(YmacrosYEE),keyF905,CHKREF(YruntimeYDempty_cell_marker));
-    tmpF907 = T13;
-    if (tmpF907 != YPfalse) {
-      T11 = tmpF907;
+    keyF919 = T14;
+    T13 = CALL2(CHKREF(YmacrosYEE),keyF919,CHKREF(YruntimeYDempty_cell_marker));
+    tmpF921 = T13;
+    if (tmpF921 != YPfalse) {
+      T11 = tmpF921;
     } else {
-      T12 = CALL2(CHKREF(YmacrosYEE),keyF905,CHKREF(YruntimeYDvacated_cell_marker));
+      T12 = CALL2(CHKREF(YmacrosYEE),keyF919,CHKREF(YruntimeYDvacated_cell_marker));
       T11 = T12;
     }
     T10 = T11;
     T9 = CALL1(CHKREF(Ynot),T10);
     if (T9 != YPfalse) {
-      CALLN(CHKREF(YruntimeYtrace),4,CHKREF(YruntimeYout),CHKREF(lit_88),FREEREF(2),i_);
+      CALLN(CHKREF(YruntimeYtrace),4,CHKREF(YruntimeYout),CHKREF(lit_98),FREEREF(2),i_);
       T8 = CALL2(CHKREF(YruntimeYT),FREEREF(1),YPint((P)2));
       T7 = CALL2(CHKREF(YruntimeYT),FREEREF(2),T8);
       T6 = CALL2(CHKREF(YruntimeYA),T7,FREEREF(1));
       T5 = CALL2(CHKREF(YruntimeYA),i_,T6);
-      indexF906 = T5;
-      T4 = CALL2(CHKREF(YruntimeYelt),FREEREF(3),indexF906);
-      T3 = CALL2(FREEREF(4),keyF905,T4);
+      indexF920 = T5;
+      T4 = CALL2(CHKREF(YruntimeYelt),FREEREF(3),indexF920);
+      T3 = CALL2(FREEREF(4),keyF919,T4);
       T2 = T3;
       T1 = T2;
     } else {
@@ -9223,18 +9794,18 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_outer_494) {
+FUNCODEDEF(fun_outer_530) {
   ARG(b_, 0);
-  P innerF908;
+  P innerF922;
   P T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T5 = CALL2(CHKREF(YruntimeYL),b_,FREEREF(4));
   if (T5 != YPfalse) {
-    T2 = FUNSHELL(1,fun_inner_493,5);
-    innerF908 = T2;
-    FUNINIT(innerF908, 5,innerF908,FREEREF(3),b_,FREEREF(2),FREEREF(1));
-    T1 = CALL1(innerF908,YPint((P)0));
+    T2 = FUNSHELL(1,fun_inner_529,5);
+    innerF922 = T2;
+    FUNINIT(innerF922, 5,innerF922,FREEREF(3),b_,FREEREF(2),FREEREF(1));
+    T1 = CALL1(innerF922,YPint((P)0));
     T4 = CALL2(CHKREF(YruntimeYA),b_,YPint((P)1));
     a1 = T4;
     b_ = a1;
@@ -9246,26 +9817,26 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_do_keyed_495) {
+FUNCODEDEF(fun_do_keyed_531) {
   ARG(table_, 0);
   ARG(function_, 1);
-  P outerF912;
-  P depthF911;
-  P n_bucketsF910;
-  P vectorF909;
+  P outerF926;
+  P depthF925;
+  P n_bucketsF924;
+  P vectorF923;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T8 = CALL1(CHKREF(YruntimeYPvector),table_);
-  vectorF909 = T8;
-  T7 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF909);
-  n_bucketsF910 = T7;
-  T6 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF909);
-  depthF911 = T6;
-  T5 = FUNSHELL(1,fun_outer_494,5);
-  outerF912 = T5;
-  FUNINIT(outerF912, 5,outerF912,function_,vectorF909,depthF911,n_bucketsF910);
-  T4 = CALL1(outerF912,YPint((P)0));
+  vectorF923 = T8;
+  T7 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF923);
+  n_bucketsF924 = T7;
+  T6 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF923);
+  depthF925 = T6;
+  T5 = FUNSHELL(1,fun_outer_530,5);
+  outerF926 = T5;
+  FUNINIT(outerF926, 5,outerF926,function_,vectorF923,depthF925,n_bucketsF924);
+  T4 = CALL1(outerF926,YPint((P)0));
   T3 = T4;
   T2 = T3;
   T1 = T2;
@@ -9273,11 +9844,11 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_inner_496) {
+FUNCODEDEF(fun_inner_532) {
   ARG(i_, 0);
-  P tmpF915;
-  P indexF914;
-  P keyF913;
+  P tmpF929;
+  P indexF928;
+  P keyF927;
   P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
   P T4,T3,T2,T1,T0;
   P a1;
@@ -9288,13 +9859,13 @@ loop:
     T16 = CALL2(CHKREF(YruntimeYT),FREEREF(2),T17);
     T15 = CALL2(CHKREF(YruntimeYA),i_,T16);
     T14 = CALL2(CHKREF(YruntimeYelt),FREEREF(3),T15);
-    keyF913 = T14;
-    T13 = CALL2(CHKREF(YmacrosYEE),keyF913,CHKREF(YruntimeYDempty_cell_marker));
-    tmpF915 = T13;
-    if (tmpF915 != YPfalse) {
-      T11 = tmpF915;
+    keyF927 = T14;
+    T13 = CALL2(CHKREF(YmacrosYEE),keyF927,CHKREF(YruntimeYDempty_cell_marker));
+    tmpF929 = T13;
+    if (tmpF929 != YPfalse) {
+      T11 = tmpF929;
     } else {
-      T12 = CALL2(CHKREF(YmacrosYEE),keyF913,CHKREF(YruntimeYDvacated_cell_marker));
+      T12 = CALL2(CHKREF(YmacrosYEE),keyF927,CHKREF(YruntimeYDvacated_cell_marker));
       T11 = T12;
     }
     T10 = T11;
@@ -9304,8 +9875,8 @@ loop:
       T7 = CALL2(CHKREF(YruntimeYT),FREEREF(2),T8);
       T6 = CALL2(CHKREF(YruntimeYA),T7,FREEREF(1));
       T5 = CALL2(CHKREF(YruntimeYA),i_,T6);
-      indexF914 = T5;
-      T4 = CALL2(CHKREF(YruntimeYelt),FREEREF(3),indexF914);
+      indexF928 = T5;
+      T4 = CALL2(CHKREF(YruntimeYelt),FREEREF(3),indexF928);
       T3 = CALL1(FREEREF(4),T4);
       T2 = T3;
       T1 = T2;
@@ -9323,18 +9894,18 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_outer_497) {
+FUNCODEDEF(fun_outer_533) {
   ARG(b_, 0);
-  P innerF916;
+  P innerF930;
   P T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T5 = CALL2(CHKREF(YruntimeYL),b_,FREEREF(4));
   if (T5 != YPfalse) {
-    T2 = FUNSHELL(1,fun_inner_496,5);
-    innerF916 = T2;
-    FUNINIT(innerF916, 5,innerF916,FREEREF(3),b_,FREEREF(2),FREEREF(1));
-    T1 = CALL1(innerF916,YPint((P)0));
+    T2 = FUNSHELL(1,fun_inner_532,5);
+    innerF930 = T2;
+    FUNINIT(innerF930, 5,innerF930,FREEREF(3),b_,FREEREF(2),FREEREF(1));
+    T1 = CALL1(innerF930,YPint((P)0));
     T4 = CALL2(CHKREF(YruntimeYA),b_,YPint((P)1));
     a1 = T4;
     b_ = a1;
@@ -9346,26 +9917,26 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_do_498) {
+FUNCODEDEF(fun_do_534) {
   ARG(table_, 0);
   ARG(function_, 1);
-  P outerF920;
-  P depthF919;
-  P n_bucketsF918;
-  P vectorF917;
+  P outerF934;
+  P depthF933;
+  P n_bucketsF932;
+  P vectorF931;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T8 = CALL1(CHKREF(YruntimeYPvector),table_);
-  vectorF917 = T8;
-  T7 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF917);
-  n_bucketsF918 = T7;
-  T6 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF917);
-  depthF919 = T6;
-  T5 = FUNSHELL(1,fun_outer_497,5);
-  outerF920 = T5;
-  FUNINIT(outerF920, 5,outerF920,function_,vectorF917,depthF919,n_bucketsF918);
-  T4 = CALL1(outerF920,YPint((P)0));
+  vectorF931 = T8;
+  T7 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF931);
+  n_bucketsF932 = T7;
+  T6 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF931);
+  depthF933 = T6;
+  T5 = FUNSHELL(1,fun_outer_533,5);
+  outerF934 = T5;
+  FUNINIT(outerF934, 5,outerF934,function_,vectorF931,depthF933,n_bucketsF932);
+  T4 = CALL1(outerF934,YPint((P)0));
   T3 = T4;
   T2 = T3;
   T1 = T2;
@@ -9373,7 +9944,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_del_keys_499) {
+FUNCODEDEF(fun_del_keys_535) {
   ARG(table_, 0);
   P T1,T0;
   P a1;
@@ -9384,7 +9955,7 @@ loop:
   QRET(T1);
 }
 
-FUNCODEDEF(fun_len_500) {
+FUNCODEDEF(fun_len_536) {
   ARG(table_, 0);
   P T0;
   P a1;
@@ -9393,7 +9964,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_Pvector_501) {
+FUNCODEDEF(fun_Pvector_537) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -9402,7 +9973,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pvector_setter_502) {
+FUNCODEDEF(fun_Pvector_setter_538) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -9412,14 +9983,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_503) {
+FUNCODEDEF(fun_539) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_Pbucket_504) {
+FUNCODEDEF(fun_Pbucket_540) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -9428,7 +9999,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pbucket_setter_505) {
+FUNCODEDEF(fun_Pbucket_setter_541) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -9438,14 +10009,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_506) {
+FUNCODEDEF(fun_542) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(YPint((P)0));
 }
 
-FUNCODEDEF(fun_Pindex_507) {
+FUNCODEDEF(fun_Pindex_543) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -9454,7 +10025,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_Pindex_setter_508) {
+FUNCODEDEF(fun_Pindex_setter_544) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -9464,17 +10035,17 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_509) {
+FUNCODEDEF(fun_545) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(YPint((P)0));
 }
 
-FUNCODEDEF(fun_inner_510) {
+FUNCODEDEF(fun_inner_546) {
   ARG(i_, 0);
-  P tmpF922;
-  P keyF921;
+  P tmpF936;
+  P keyF935;
   P T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7;
   P T6,T5,T4,T3,T2,T1,T0;
   P a1;
@@ -9485,13 +10056,13 @@ loop:
     T20 = CALL2(CHKREF(YruntimeYT),FREEREF(1),T21);
     T19 = CALL2(CHKREF(YruntimeYA),i_,T20);
     T18 = CALL2(CHKREF(YruntimeYelt),FREEREF(2),T19);
-    keyF921 = T18;
-    T15 = CALL2(CHKREF(YmacrosYEE),keyF921,CHKREF(YruntimeYDempty_cell_marker));
-    tmpF922 = T15;
-    if (tmpF922 != YPfalse) {
-      T13 = tmpF922;
+    keyF935 = T18;
+    T15 = CALL2(CHKREF(YmacrosYEE),keyF935,CHKREF(YruntimeYDempty_cell_marker));
+    tmpF936 = T15;
+    if (tmpF936 != YPfalse) {
+      T13 = tmpF936;
     } else {
-      T14 = CALL2(CHKREF(YmacrosYEE),keyF921,CHKREF(YruntimeYDvacated_cell_marker));
+      T14 = CALL2(CHKREF(YmacrosYEE),keyF935,CHKREF(YruntimeYDvacated_cell_marker));
       T13 = T14;
     }
     T12 = T13;
@@ -9520,18 +10091,18 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_outer_511) {
+FUNCODEDEF(fun_outer_547) {
   ARG(b_, 0);
-  P innerF923;
+  P innerF937;
   P T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T5 = CALL2(CHKREF(YruntimeYL),b_,FREEREF(4));
   if (T5 != YPfalse) {
-    T2 = FUNSHELL(1,fun_inner_510,5);
-    innerF923 = T2;
-    FUNINIT(innerF923, 5,FREEREF(3),b_,FREEREF(2),innerF923,FREEREF(1));
-    T1 = CALL1(innerF923,YPint((P)0));
+    T2 = FUNSHELL(1,fun_inner_546,5);
+    innerF937 = T2;
+    FUNINIT(innerF937, 5,FREEREF(3),b_,FREEREF(2),innerF937,FREEREF(1));
+    T1 = CALL1(innerF937,YPint((P)0));
     T4 = CALL2(CHKREF(YruntimeYA),b_,YPint((P)1));
     a1 = T4;
     b_ = a1;
@@ -9543,32 +10114,32 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_512) {
+FUNCODEDEF(fun_548) {
   ARG(return_, 0);
-  P outerF927;
-  P depthF926;
-  P n_bucketsF925;
-  P vectorF924;
+  P outerF941;
+  P depthF940;
+  P n_bucketsF939;
+  P vectorF938;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T7 = CALL1(CHKREF(YruntimeYPvector),FREEREF(0));
-  vectorF924 = T7;
-  T6 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF924);
-  n_bucketsF925 = T6;
-  T5 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF924);
-  depthF926 = T5;
-  T4 = FUNSHELL(1,fun_outer_511,5);
-  outerF927 = T4;
-  FUNINIT(outerF927, 5,outerF927,return_,vectorF924,depthF926,n_bucketsF925);
-  T3 = CALL1(outerF927,YPint((P)0));
+  vectorF938 = T7;
+  T6 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF938);
+  n_bucketsF939 = T6;
+  T5 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF938);
+  depthF940 = T5;
+  T4 = FUNSHELL(1,fun_outer_547,5);
+  outerF941 = T4;
+  FUNINIT(outerF941, 5,outerF941,return_,vectorF938,depthF940,n_bucketsF939);
+  T3 = CALL1(outerF941,YPint((P)0));
   T2 = YPfalse;
   T1 = T2;
   T0 = T1;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_ini_state_513) {
+FUNCODEDEF(fun_ini_state_549) {
   ARG(table_, 0);
   P T4,T3,T2,T1,T0;
   P a1;
@@ -9578,17 +10149,17 @@ loop:
   if (T3 != YPfalse) {
     T0 = YPfalse;
   } else {
-    T2 = FUNFAB(fun_512,1,table_);
+    T2 = FUNFAB(fun_548,1,table_);
     T1 = with_exit(T2);
     T0 = T1;
   }
   QRET(T0);
 }
 
-FUNCODEDEF(fun_inner_514) {
+FUNCODEDEF(fun_inner_550) {
   ARG(i_, 0);
-  P tmpF929;
-  P keyF928;
+  P tmpF943;
+  P keyF942;
   P T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
@@ -9598,13 +10169,13 @@ loop:
     T12 = CALL2(CHKREF(YruntimeYT),FREEREF(1),T13);
     T11 = CALL2(CHKREF(YruntimeYA),i_,T12);
     T10 = CALL2(CHKREF(YruntimeYelt),FREEREF(2),T11);
-    keyF928 = T10;
-    T7 = CALL2(CHKREF(YmacrosYEE),keyF928,CHKREF(YruntimeYDempty_cell_marker));
-    tmpF929 = T7;
-    if (tmpF929 != YPfalse) {
-      T5 = tmpF929;
+    keyF942 = T10;
+    T7 = CALL2(CHKREF(YmacrosYEE),keyF942,CHKREF(YruntimeYDempty_cell_marker));
+    tmpF943 = T7;
+    if (tmpF943 != YPfalse) {
+      T5 = tmpF943;
     } else {
-      T6 = CALL2(CHKREF(YmacrosYEE),keyF928,CHKREF(YruntimeYDvacated_cell_marker));
+      T6 = CALL2(CHKREF(YmacrosYEE),keyF942,CHKREF(YruntimeYDvacated_cell_marker));
       T5 = T6;
     }
     T4 = T5;
@@ -9627,25 +10198,25 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_outer_515) {
+FUNCODEDEF(fun_outer_551) {
   ARG(firstQ_, 0);
   ARG(b_, 1);
-  P innerF930;
+  P innerF944;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T7 = CALL2(CHKREF(YruntimeYL),b_,FREEREF(6));
   if (T7 != YPfalse) {
-    T4 = FUNSHELL(1,fun_inner_514,6);
-    innerF930 = T4;
-    FUNINIT(innerF930, 6,FREEREF(4),b_,FREEREF(3),innerF930,FREEREF(2),FREEREF(1));
+    T4 = FUNSHELL(1,fun_inner_550,6);
+    innerF944 = T4;
+    FUNINIT(innerF944, 6,FREEREF(4),b_,FREEREF(3),innerF944,FREEREF(2),FREEREF(1));
     if (firstQ_ != YPfalse) {
       T3 = CALL2(CHKREF(YruntimeYA),FREEREF(5),YPint((P)1));
       T2 = T3;
     } else {
       T2 = YPint((P)0);
     }
-    T1 = CALL1(innerF930,T2);
+    T1 = CALL1(innerF944,T2);
     T6 = CALL2(CHKREF(YruntimeYA),b_,YPint((P)1));
     a1 = T6;
     a2 = YPfalse;
@@ -9659,41 +10230,41 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_516) {
+FUNCODEDEF(fun_552) {
   ARG(return_, 0);
-  P outerF931;
+  P outerF945;
   P T1,T0;
   P a1;
 loop:
-  T1 = FUNSHELL(1,fun_outer_515,7);
-  outerF931 = T1;
-  FUNINIT(outerF931, 7,outerF931,return_,FREEREF(4),FREEREF(3),FREEREF(2),FREEREF(1),FREEREF(0));
-  T0 = CALL2(outerF931,FREEREF(5),YPtrue);
+  T1 = FUNSHELL(1,fun_outer_551,7);
+  outerF945 = T1;
+  FUNINIT(outerF945, 7,outerF945,return_,FREEREF(4),FREEREF(3),FREEREF(2),FREEREF(1),FREEREF(0));
+  T0 = CALL2(outerF945,FREEREF(5),YPtrue);
   QRET(YPfalse);
 }
 
-FUNCODEDEF(fun_nxt_state_517) {
+FUNCODEDEF(fun_nxt_state_553) {
   ARG(state_, 0);
   ARG(table_, 1);
-  P indexF936;
-  P bucketF935;
-  P depthF934;
-  P n_bucketsF933;
-  P vectorF932;
+  P indexF950;
+  P bucketF949;
+  P depthF948;
+  P n_bucketsF947;
+  P vectorF946;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T11 = CALL1(CHKREF(YruntimeYPvector),state_);
-  vectorF932 = T11;
-  T10 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF932);
-  n_bucketsF933 = T10;
-  T9 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF932);
-  depthF934 = T9;
+  vectorF946 = T11;
+  T10 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF946);
+  n_bucketsF947 = T10;
+  T9 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF946);
+  depthF948 = T9;
   T8 = CALL1(CHKREF(YruntimeYPbucket),state_);
-  bucketF935 = T8;
+  bucketF949 = T8;
   T7 = CALL1(CHKREF(YruntimeYPindex),state_);
-  indexF936 = T7;
-  T6 = FUNFAB(fun_516,6,n_bucketsF933,indexF936,depthF934,vectorF932,state_,bucketF935);
+  indexF950 = T7;
+  T6 = FUNFAB(fun_552,6,n_bucketsF947,indexF950,depthF948,vectorF946,state_,bucketF949);
   T5 = with_exit(T6);
   T4 = T5;
   T3 = T4;
@@ -9703,7 +10274,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_fin_stateQ_518) {
+FUNCODEDEF(fun_fin_stateQ_554) {
   ARG(state_, 0);
   ARG(table_, 1);
   P T0;
@@ -9713,82 +10284,82 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_now_key_519) {
+FUNCODEDEF(fun_now_key_555) {
   ARG(state_, 0);
   ARG(table_, 1);
-  P depthF938;
-  P vectorF937;
+  P depthF952;
+  P vectorF951;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T9 = CALL1(CHKREF(YruntimeYPvector),state_);
-  vectorF937 = T9;
-  T8 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF937);
-  depthF938 = T8;
+  vectorF951 = T9;
+  T8 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF951);
+  depthF952 = T8;
   T7 = CALL1(CHKREF(YruntimeYPindex),state_);
   T6 = CALL1(CHKREF(YruntimeYPbucket),state_);
-  T5 = CALL2(CHKREF(YruntimeYT),depthF938,YPint((P)2));
+  T5 = CALL2(CHKREF(YruntimeYT),depthF952,YPint((P)2));
   T4 = CALL2(CHKREF(YruntimeYT),T6,T5);
   T3 = CALL2(CHKREF(YruntimeYA),T7,T4);
-  T2 = CALL2(CHKREF(YruntimeYelt),vectorF937,T3);
+  T2 = CALL2(CHKREF(YruntimeYelt),vectorF951,T3);
   T1 = T2;
   T0 = T1;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_now_elt_520) {
+FUNCODEDEF(fun_now_elt_556) {
   ARG(state_, 0);
   ARG(table_, 1);
-  P depthF940;
-  P vectorF939;
+  P depthF954;
+  P vectorF953;
   P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T10 = CALL1(CHKREF(YruntimeYPvector),state_);
-  vectorF939 = T10;
-  T9 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF939);
-  depthF940 = T9;
+  vectorF953 = T10;
+  T9 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF953);
+  depthF954 = T9;
   T8 = CALL1(CHKREF(YruntimeYPindex),state_);
   T7 = CALL1(CHKREF(YruntimeYPbucket),state_);
-  T6 = CALL2(CHKREF(YruntimeYT),depthF940,YPint((P)2));
+  T6 = CALL2(CHKREF(YruntimeYT),depthF954,YPint((P)2));
   T5 = CALL2(CHKREF(YruntimeYT),T7,T6);
-  T4 = CALL2(CHKREF(YruntimeYA),depthF940,T5);
+  T4 = CALL2(CHKREF(YruntimeYA),depthF954,T5);
   T3 = CALL2(CHKREF(YruntimeYA),T8,T4);
-  T2 = CALL2(CHKREF(YruntimeYelt),vectorF939,T3);
+  T2 = CALL2(CHKREF(YruntimeYelt),vectorF953,T3);
   T1 = T2;
   T0 = T1;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_now_elt_setter_521) {
+FUNCODEDEF(fun_now_elt_setter_557) {
   ARG(state_, 0);
   ARG(table_, 1);
   ARG(value_, 2);
-  P depthF943;
-  P indexF942;
-  P vectorF941;
+  P depthF957;
+  P indexF956;
+  P vectorF955;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T11 = CALL1(CHKREF(YruntimeYPvector),state_);
-  vectorF941 = T11;
+  vectorF955 = T11;
   T10 = CALL1(CHKREF(YruntimeYPindex),state_);
-  indexF942 = T10;
-  T9 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF941);
-  depthF943 = T9;
+  indexF956 = T10;
+  T9 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF955);
+  depthF957 = T9;
   T8 = CALL1(CHKREF(YruntimeYPbucket),state_);
-  T7 = CALL2(CHKREF(YruntimeYT),depthF943,YPint((P)2));
+  T7 = CALL2(CHKREF(YruntimeYT),depthF957,YPint((P)2));
   T6 = CALL2(CHKREF(YruntimeYT),T8,T7);
-  T5 = CALL2(CHKREF(YruntimeYA),depthF943,T6);
-  T4 = CALL2(CHKREF(YruntimeYA),indexF942,T5);
-  T3 = CALL3(CHKREF(YruntimeYelt_setter),value_,vectorF941,T4);
+  T5 = CALL2(CHKREF(YruntimeYA),depthF957,T6);
+  T4 = CALL2(CHKREF(YruntimeYA),indexF956,T5);
+  T3 = CALL3(CHKREF(YruntimeYelt_setter),value_,vectorF955,T4);
   T2 = T3;
   T1 = T2;
   T0 = T1;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_copy_state_522) {
+FUNCODEDEF(fun_copy_state_558) {
   ARG(state_, 0);
   ARG(table_, 1);
   P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
@@ -9808,7 +10379,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_523) {
+FUNCODEDEF(fun_559) {
   ARG(v_, 0);
   ARG(k_, 1);
   P T2,T1,T0;
@@ -9820,61 +10391,61 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_tab_keys_524) {
+FUNCODEDEF(fun_tab_keys_560) {
   ARG(table_, 0);
-  P collector_F944;
+  P collector_F958;
   P T4,T3,T2,T1,T0;
   P a1;
 loop:
-  collector_F944 = Ynil;
-  collector_F944 = BOXFAB(collector_F944);
-  T2 = FUNFAB(fun_523,1,collector_F944);
+  collector_F958 = Ynil;
+  collector_F958 = BOXFAB(collector_F958);
+  T2 = FUNFAB(fun_559,1,collector_F958);
   CALL2(CHKREF(YruntimeYdo_keyed),T2,table_);
-  T4 = BOXVAL(collector_F944);
+  T4 = BOXVAL(collector_F958);
   T3 = CALL1(CHKREF(YruntimeYrevX),T4);
   T0 = T3;
   RET(T0);
 }
 
-FUNCODEDEF(fun_grow_table_525) {
+FUNCODEDEF(fun_grow_table_561) {
   ARG(table_, 0);
-  P new_vectorF951;
-  P tup29F950;
-  P new_bucket_depthF949;
-  P tup29F948;
-  P new_n_bucketsF947;
-  P tup29F946;
-  P vectorF945;
+  P new_vectorF965;
+  P tup29F964;
+  P new_bucket_depthF963;
+  P tup29F962;
+  P new_n_bucketsF961;
+  P tup29F960;
+  P vectorF959;
   P T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T23 = CALL1(CHKREF(YruntimeYPvector),table_);
-  vectorF945 = T23;
-  T22 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF945);
-  T21 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF945);
+  vectorF959 = T23;
+  T22 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF959);
+  T21 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF959);
   T20 = CALL2(CHKREF(YruntimeYT),T22,T21);
   T19 = CALL1(CHKREF(YruntimeYtable_growth_factor),table_);
   T18 = CALL2(CHKREF(YruntimeYT),T20,T19);
   T17 = CALL1(CHKREF(YruntimeYfloor),T18);
   T16 = CALL2(CHKREF(YruntimeYelt),T17,YPint((P)0));
   T15 = CALL1(CHKREF(YruntimeYchoose_table_geometry),T16);
-  tup29F946 = T15;
-  T14 = CALL1(CHKREF(Yhead),tup29F946);
-  new_n_bucketsF947 = T14;
-  T13 = CALL1(CHKREF(Ytail),tup29F946);
-  tup29F948 = T13;
-  T12 = CALL1(CHKREF(Yhead),tup29F948);
-  new_bucket_depthF949 = T12;
-  T11 = CALL1(CHKREF(Ytail),tup29F948);
-  tup29F950 = T11;
-  T10 = CALL2(CHKREF(YruntimeYT),new_bucket_depthF949,YPint((P)2));
-  T9 = CALL2(CHKREF(YruntimeYT),new_n_bucketsF947,T10);
-  T8 = CALL2(CHKREF(YruntimeY_),new_n_bucketsF947,YPint((P)2));
-  T7 = CALLN(CHKREF(YruntimeYfab_table_vector),6,T9,CHKREF(YruntimeYDempty_cell_marker),new_n_bucketsF947,new_bucket_depthF949,new_n_bucketsF947,T8);
-  new_vectorF951 = T7;
-  CALL2(CHKREF(YruntimeYcopy_to_new_vector),table_,new_vectorF951);
-  CALL2(CHKREF(YruntimeYPvector_setter),new_vectorF951,table_);
+  tup29F960 = T15;
+  T14 = CALL1(CHKREF(Yhead),tup29F960);
+  new_n_bucketsF961 = T14;
+  T13 = CALL1(CHKREF(Ytail),tup29F960);
+  tup29F962 = T13;
+  T12 = CALL1(CHKREF(Yhead),tup29F962);
+  new_bucket_depthF963 = T12;
+  T11 = CALL1(CHKREF(Ytail),tup29F962);
+  tup29F964 = T11;
+  T10 = CALL2(CHKREF(YruntimeYT),new_bucket_depthF963,YPint((P)2));
+  T9 = CALL2(CHKREF(YruntimeYT),new_n_bucketsF961,T10);
+  T8 = CALL2(CHKREF(YruntimeY_),new_n_bucketsF961,YPint((P)2));
+  T7 = CALLN(CHKREF(YruntimeYfab_table_vector),6,T9,CHKREF(YruntimeYDempty_cell_marker),new_n_bucketsF961,new_bucket_depthF963,new_n_bucketsF961,T8);
+  new_vectorF965 = T7;
+  CALL2(CHKREF(YruntimeYcopy_to_new_vector),table_,new_vectorF965);
+  CALL2(CHKREF(YruntimeYPvector_setter),new_vectorF965,table_);
   T6 = table_;
   T5 = T6;
   T4 = T5;
@@ -9885,33 +10456,33 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_rehash_table_526) {
+FUNCODEDEF(fun_rehash_table_562) {
   ARG(table_, 0);
-  P new_vectorF953;
-  P vectorF952;
+  P new_vectorF967;
+  P vectorF966;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T11 = CALL1(CHKREF(YruntimeYPvector),table_);
-  vectorF952 = T11;
-  T10 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF952);
-  T9 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF952);
+  vectorF966 = T11;
+  T10 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF966);
+  T9 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF966);
   T8 = CALL2(CHKREF(YruntimeYT),T9,YPint((P)2));
   T7 = CALL2(CHKREF(YruntimeYT),T10,T8);
-  T6 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF952);
-  T5 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF952);
-  T4 = CALL1(CHKREF(YruntimeYPprimary_modulus),vectorF952);
-  T3 = CALL1(CHKREF(YruntimeYPsecondary_modulus),vectorF952);
+  T6 = CALL1(CHKREF(YruntimeYPn_buckets),vectorF966);
+  T5 = CALL1(CHKREF(YruntimeYPbucket_depth),vectorF966);
+  T4 = CALL1(CHKREF(YruntimeYPprimary_modulus),vectorF966);
+  T3 = CALL1(CHKREF(YruntimeYPsecondary_modulus),vectorF966);
   T2 = CALLN(CHKREF(YruntimeYfab_table_vector),6,T7,CHKREF(YruntimeYDempty_cell_marker),T6,T5,T4,T3);
-  new_vectorF953 = T2;
-  CALL2(CHKREF(YruntimeYcopy_to_new_vector),table_,new_vectorF953);
-  CALL2(CHKREF(YruntimeYPvector_setter),new_vectorF953,table_);
+  new_vectorF967 = T2;
+  CALL2(CHKREF(YruntimeYcopy_to_new_vector),table_,new_vectorF967);
+  CALL2(CHKREF(YruntimeYPvector_setter),new_vectorF967,table_);
   T1 = table_;
   T0 = T1;
   RET(T0);
 }
 
-FUNCODEDEF(fun_527) {
+FUNCODEDEF(fun_563) {
   ARG(p_, 0);
   P T6,T5,T4,T3,T2,T1,T0;
   P a1;
@@ -9930,9 +10501,9 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_528) {
+FUNCODEDEF(fun_564) {
   ARG(return_, 0);
-  P depthF954;
+  P depthF968;
   P T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
@@ -9971,10 +10542,10 @@ loop:
     }
     T3 = T4;
   }
-  depthF954 = T3;
-  T1 = FUNFAB(fun_527,3,depthF954,return_,FREEREF(0));
+  depthF968 = T3;
+  T1 = FUNFAB(fun_563,3,depthF968,return_,FREEREF(0));
   CALL2(CHKREF(YruntimeYdo),T1,CHKREF(YruntimeYTtwin_primesT));
-  T2 = CALL1(CHKREF(Yerror),CHKREF(lit_89));
+  T2 = CALL1(CHKREF(Yerror),CHKREF(lit_99));
   T0 = T2;
   QRET(T0);
 }
@@ -9984,23 +10555,23 @@ FUNCODEDEF(YruntimeYchoose_table_geometry) {
   P T1,T0;
   P a1;
 loop:
-  T1 = FUNFAB(fun_528,1,capacity_);
+  T1 = FUNFAB(fun_564,1,capacity_);
   T0 = with_exit(T1);
   RET(T0);
 }
 
-FUNCODEDEF(fun_inner_530) {
+FUNCODEDEF(fun_inner_566) {
   ARG(index_, 0);
   ARG(i_, 1);
-  P this_keyF955;
+  P this_keyF969;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T9 = CALL2(CHKREF(YruntimeYL),i_,FREEREF(3));
   if (T9 != YPfalse) {
     T8 = CALL2(CHKREF(YruntimeYelt),FREEREF(0),index_);
-    this_keyF955 = T8;
-    T4 = CALL2(CHKREF(YmacrosYEE),this_keyF955,CHKREF(YruntimeYDempty_cell_marker));
+    this_keyF969 = T8;
+    T4 = CALL2(CHKREF(YmacrosYEE),this_keyF969,CHKREF(YruntimeYDempty_cell_marker));
     if (T4 != YPfalse) {
       CALL3(CHKREF(YruntimeYelt_setter),FREEREF(5),FREEREF(0),index_);
       T2 = CALL2(CHKREF(YruntimeYA),index_,FREEREF(3));
@@ -10023,10 +10594,10 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_outer_531) {
+FUNCODEDEF(fun_outer_567) {
   ARG(probes_, 0);
-  P innerF957;
-  P bucket_startF956;
+  P innerF971;
+  P bucket_startF970;
   P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
   P T0;
   P a1;
@@ -10036,11 +10607,11 @@ loop:
     T15 = BOXVAL(FREEREF(1));
     T14 = CALL2(CHKREF(YruntimeYT),FREEREF(0),YPint((P)2));
     T13 = CALL2(CHKREF(YruntimeYT),T15,T14);
-    bucket_startF956 = T13;
-    T3 = FUNSHELL(1,fun_inner_530,6);
-    innerF957 = T3;
-    FUNINIT(innerF957, 6,FREEREF(8),innerF957,FREEREF(7),FREEREF(0),FREEREF(6),FREEREF(5));
-    T2 = CALL2(innerF957,YPint((P)0),bucket_startF956);
+    bucket_startF970 = T13;
+    T3 = FUNSHELL(1,fun_inner_566,6);
+    innerF971 = T3;
+    FUNINIT(innerF971, 6,FREEREF(8),innerF971,FREEREF(7),FREEREF(0),FREEREF(6),FREEREF(5));
+    T2 = CALL2(innerF971,YPint((P)0),bucket_startF970);
     T5 = BOXVAL(FREEREF(1));
     T4 = CALL2(CHKREF(YruntimeY_),T5,FREEREF(4));
     BOXVAL(FREEREF(1)) = T4;
@@ -10064,78 +10635,78 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_532) {
+FUNCODEDEF(fun_568) {
   ARG(return_, 0);
-  P outerF977;
-  P tup32F976;
-  P new_bucket_offsetF975;
-  P tup32F974;
-  P new_bucket_indexF973;
-  P tup32F972;
-  P new_secondary_modulusF971;
-  P new_primary_modulusF970;
-  P new_bucket_depthF969;
-  P new_n_bucketsF968;
-  P tup31F967;
-  P stateF966;
-  P tup31F965;
-  P hashF964;
-  P tup31F963;
-  P tup30F962;
-  P hash_functionF961;
-  P tup30F960;
-  P test_functionF959;
-  P tup30F958;
+  P outerF991;
+  P tup32F990;
+  P new_bucket_offsetF989;
+  P tup32F988;
+  P new_bucket_indexF987;
+  P tup32F986;
+  P new_secondary_modulusF985;
+  P new_primary_modulusF984;
+  P new_bucket_depthF983;
+  P new_n_bucketsF982;
+  P tup31F981;
+  P stateF980;
+  P tup31F979;
+  P hashF978;
+  P tup31F977;
+  P tup30F976;
+  P hash_functionF975;
+  P tup30F974;
+  P test_functionF973;
+  P tup30F972;
   P T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26;
   P T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T41 = CALL1(CHKREF(YruntimeYtable_protocol),FREEREF(0));
-  tup30F958 = T41;
-  T40 = CALL1(CHKREF(Yhead),tup30F958);
-  test_functionF959 = T40;
-  T39 = CALL1(CHKREF(Ytail),tup30F958);
-  tup30F960 = T39;
-  T38 = CALL1(CHKREF(Yhead),tup30F960);
-  hash_functionF961 = T38;
-  T37 = CALL1(CHKREF(Ytail),tup30F960);
-  tup30F962 = T37;
-  T36 = CALL1(hash_functionF961,FREEREF(1));
-  tup31F963 = T36;
-  T35 = CALL1(CHKREF(Yhead),tup31F963);
+  tup30F972 = T41;
+  T40 = CALL1(CHKREF(Yhead),tup30F972);
+  test_functionF973 = T40;
+  T39 = CALL1(CHKREF(Ytail),tup30F972);
+  tup30F974 = T39;
+  T38 = CALL1(CHKREF(Yhead),tup30F974);
+  hash_functionF975 = T38;
+  T37 = CALL1(CHKREF(Ytail),tup30F974);
+  tup30F976 = T37;
+  T36 = CALL1(hash_functionF975,FREEREF(1));
+  tup31F977 = T36;
+  T35 = CALL1(CHKREF(Yhead),tup31F977);
   check_type(T35,CHKREF(YLintG));
-  hashF964 = T35;
-  T34 = CALL1(CHKREF(Ytail),tup31F963);
-  tup31F965 = T34;
-  T33 = CALL1(CHKREF(Yhead),tup31F965);
-  stateF966 = T33;
-  T32 = CALL1(CHKREF(Ytail),tup31F965);
-  tup31F967 = T32;
+  hashF978 = T35;
+  T34 = CALL1(CHKREF(Ytail),tup31F977);
+  tup31F979 = T34;
+  T33 = CALL1(CHKREF(Yhead),tup31F979);
+  stateF980 = T33;
+  T32 = CALL1(CHKREF(Ytail),tup31F979);
+  tup31F981 = T32;
   T31 = CALL1(CHKREF(YruntimeYPn_buckets),FREEREF(2));
-  new_n_bucketsF968 = T31;
+  new_n_bucketsF982 = T31;
   T30 = CALL1(CHKREF(YruntimeYPbucket_depth),FREEREF(2));
-  new_bucket_depthF969 = T30;
+  new_bucket_depthF983 = T30;
   T29 = CALL1(CHKREF(YruntimeYPprimary_modulus),FREEREF(2));
-  new_primary_modulusF970 = T29;
+  new_primary_modulusF984 = T29;
   T28 = CALL1(CHKREF(YruntimeYPsecondary_modulus),FREEREF(2));
-  new_secondary_modulusF971 = T28;
-  T27 = CALL3(CHKREF(YruntimeYhash_moduli),hashF964,new_primary_modulusF970,new_secondary_modulusF971);
-  tup32F972 = T27;
-  T26 = CALL1(CHKREF(Yhead),tup32F972);
-  new_bucket_indexF973 = T26;
-  new_bucket_indexF973 = BOXFAB(new_bucket_indexF973);
-  T25 = CALL1(CHKREF(Ytail),tup32F972);
-  tup32F974 = T25;
-  T24 = CALL1(CHKREF(Yhead),tup32F974);
-  new_bucket_offsetF975 = T24;
-  T23 = CALL1(CHKREF(Ytail),tup32F974);
-  tup32F976 = T23;
-  T21 = FUNSHELL(1,fun_outer_531,9);
-  outerF977 = T21;
-  FUNINIT(outerF977, 9,new_bucket_depthF969,new_bucket_indexF973,outerF977,new_n_bucketsF968,new_bucket_offsetF975,FREEREF(1),FREEREF(3),return_,FREEREF(2));
-  T20 = CALL1(outerF977,YPint((P)0));
-  T22 = CALL1(CHKREF(Yerror),CHKREF(lit_90));
+  new_secondary_modulusF985 = T28;
+  T27 = CALL3(CHKREF(YruntimeYhash_moduli),hashF978,new_primary_modulusF984,new_secondary_modulusF985);
+  tup32F986 = T27;
+  T26 = CALL1(CHKREF(Yhead),tup32F986);
+  new_bucket_indexF987 = T26;
+  new_bucket_indexF987 = BOXFAB(new_bucket_indexF987);
+  T25 = CALL1(CHKREF(Ytail),tup32F986);
+  tup32F988 = T25;
+  T24 = CALL1(CHKREF(Yhead),tup32F988);
+  new_bucket_offsetF989 = T24;
+  T23 = CALL1(CHKREF(Ytail),tup32F988);
+  tup32F990 = T23;
+  T21 = FUNSHELL(1,fun_outer_567,9);
+  outerF991 = T21;
+  FUNINIT(outerF991, 9,new_bucket_depthF983,new_bucket_indexF987,outerF991,new_n_bucketsF982,new_bucket_offsetF989,FREEREF(1),FREEREF(3),return_,FREEREF(2));
+  T20 = CALL1(outerF991,YPint((P)0));
+  T22 = CALL1(CHKREF(Yerror),CHKREF(lit_100));
   T19 = T22;
   T18 = T19;
   T17 = T18;
@@ -10158,24 +10729,24 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_533) {
+FUNCODEDEF(fun_569) {
   ARG(v_, 0);
   ARG(k_, 1);
   P T1,T0;
   P a1,a2;
 loop:
-  T1 = FUNFAB(fun_532,4,FREEREF(1),k_,FREEREF(0),v_);
+  T1 = FUNFAB(fun_568,4,FREEREF(1),k_,FREEREF(0),v_);
   T0 = with_exit(T1);
   QRET(T0);
 }
 
-FUNCODEDEF(fun_copy_to_new_vector_534) {
+FUNCODEDEF(fun_copy_to_new_vector_570) {
   ARG(new_vector_, 0);
   ARG(table_, 1);
   P T1,T0;
   P a1,a2;
 loop:
-  T1 = FUNFAB(fun_533,2,new_vector_,table_);
+  T1 = FUNFAB(fun_569,2,new_vector_,table_);
   T0 = CALL2(CHKREF(YruntimeYdo_keyed),T1,table_);
   QRET(T0);
 }
@@ -10185,7 +10756,7 @@ loop:
   QRET(CHKREF(YruntimeYDpermanent_hash_state));
 }
 
-FUNCODEDEF(fun_id_hash_536) {
+FUNCODEDEF(fun_id_hash_572) {
   ARG(x_, 0);
   P T2,T1,T0;
   P a1;
@@ -10196,7 +10767,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_id_hash_537) {
+FUNCODEDEF(fun_id_hash_573) {
   ARG(x_, 0);
   P T1,T0;
   P a1;
@@ -10223,7 +10794,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_id_hash_539) {
+FUNCODEDEF(fun_id_hash_575) {
   ARG(x_, 0);
   P T4,T3,T2,T1,T0;
   P a1;
@@ -10236,7 +10807,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_id_hash_540) {
+FUNCODEDEF(fun_id_hash_576) {
   ARG(x_, 0);
   P T1,T0;
   P a1;
@@ -10246,7 +10817,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_id_hash_541) {
+FUNCODEDEF(fun_id_hash_577) {
   ARG(x_, 0);
   P T2,T1,T0;
   P a1;
@@ -10257,7 +10828,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_loop_542) {
+FUNCODEDEF(fun_loop_578) {
   ARG(hash_, 0);
   ARG(i_, 1);
   P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
@@ -10287,61 +10858,61 @@ loop:
 
 FUNCODEDEF(YruntimeYcase_insensitive_string_hash) {
   ARG(x_, 0);
-  P loopF980;
-  P eF979;
-  P sF978;
+  P loopF994;
+  P eF993;
+  P sF992;
   P T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
-  sF978 = YPint((P)0);
+  sF992 = YPint((P)0);
   T5 = CALL1(CHKREF(YruntimeYlen),x_);
-  eF979 = T5;
-  T4 = FUNSHELL(1,fun_loop_542,3);
-  loopF980 = T4;
-  FUNINIT(loopF980, 3,x_,loopF980,eF979);
-  T3 = CALL2(loopF980,sF978,YPint((P)0));
+  eF993 = T5;
+  T4 = FUNSHELL(1,fun_loop_578,3);
+  loopF994 = T4;
+  FUNINIT(loopF994, 3,x_,loopF994,eF993);
+  T3 = CALL2(loopF994,sF992,YPint((P)0));
   T2 = T3;
   T1 = T2;
   T0 = T1;
   RET(T0);
 }
 
-FUNCODEDEF(fun_loop_544) {
+FUNCODEDEF(fun_loop_580) {
   ARG(i_, 0);
-  P tmpF985;
-  P tmpF984;
-  P cyF983;
-  P cxF982;
-  P tmpF981;
+  P tmpF999;
+  P tmpF998;
+  P cyF997;
+  P cxF996;
+  P tmpF995;
   P T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2;
   P T1,T0;
   P a1;
 loop:
   T17 = CALL2(CHKREF(YmacrosYEE),i_,FREEREF(0));
-  tmpF981 = T17;
-  if (tmpF981 != YPfalse) {
-    T1 = tmpF981;
+  tmpF995 = T17;
+  if (tmpF995 != YPfalse) {
+    T1 = tmpF995;
   } else {
     T16 = CALL2(CHKREF(YruntimeY_),i_,FREEREF(1));
     T15 = CALL2(CHKREF(YruntimeYelt),FREEREF(2),T16);
     check_type(T15,CHKREF(YLchrG));
-    cxF982 = T15;
+    cxF996 = T15;
     T14 = CALL2(CHKREF(YruntimeYelt),FREEREF(3),i_);
     check_type(T14,CHKREF(YLchrG));
-    cyF983 = T14;
-    T13 = CALL2(CHKREF(YmacrosYEE),cxF982,cyF983);
-    tmpF984 = T13;
-    if (tmpF984 != YPfalse) {
-      T9 = tmpF984;
+    cyF997 = T14;
+    T13 = CALL2(CHKREF(YmacrosYEE),cxF996,cyF997);
+    tmpF998 = T13;
+    if (tmpF998 != YPfalse) {
+      T9 = tmpF998;
     } else {
-      T12 = CALL1(CHKREF(YruntimeYas_lowercase),cxF982);
-      T11 = CALL1(CHKREF(YruntimeYas_lowercase),cyF983);
+      T12 = CALL1(CHKREF(YruntimeYas_lowercase),cxF996);
+      T11 = CALL1(CHKREF(YruntimeYas_lowercase),cyF997);
       T10 = CALL2(CHKREF(YmacrosYEE),T12,T11);
       T9 = T10;
     }
     T8 = T9;
-    tmpF985 = T8;
-    if (tmpF985 != YPfalse) {
+    tmpF999 = T8;
+    if (tmpF999 != YPfalse) {
       T7 = CALL2(CHKREF(YruntimeYA),i_,YPint((P)1));
       a1 = T7;
       i_ = a1;
@@ -10362,23 +10933,23 @@ loop:
 FUNCODEDEF(YruntimeYcase_insensitive_string_equal) {
   ARG(y_, 0);
   ARG(x_, 1);
-  P loopF988;
-  P eyF987;
-  P syF986;
+  P loopF1002;
+  P eyF1001;
+  P syF1000;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
-  syF986 = YPint((P)0);
+  syF1000 = YPint((P)0);
   T9 = CALL1(CHKREF(YruntimeYlen),y_);
-  eyF987 = T9;
+  eyF1001 = T9;
   T8 = CALL1(CHKREF(YruntimeYlen),x_);
-  T7 = CALL2(CHKREF(YruntimeY_),eyF987,syF986);
+  T7 = CALL2(CHKREF(YruntimeY_),eyF1001,syF1000);
   T6 = CALL2(CHKREF(YmacrosYEE),T8,T7);
   if (T6 != YPfalse) {
-    T5 = FUNSHELL(1,fun_loop_544,5);
-    loopF988 = T5;
-    FUNINIT(loopF988, 5,eyF987,syF986,x_,y_,loopF988);
-    T4 = CALL1(loopF988,syF986);
+    T5 = FUNSHELL(1,fun_loop_580,5);
+    loopF1002 = T5;
+    FUNINIT(loopF1002, 5,eyF1001,syF1000,x_,y_,loopF1002);
+    T4 = CALL1(loopF1002,syF1000);
     T3 = T4;
     T2 = T3;
   } else {
@@ -10389,7 +10960,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_table_protocol_546) {
+FUNCODEDEF(fun_table_protocol_582) {
   ARG(U_, 0);
   P T0;
   P a1;
@@ -10399,18 +10970,18 @@ loop:
 }
 
 P YruntimeYbooted_fab_sym_using(P name_,P given_sym_) {
-  P tmpF990;
-  P symF989;
+  P tmpF1004;
+  P symF1003;
   P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T10 = CALL2(CHKREF(YruntimeYelt),CHKREF(YruntimeYsymbols),name_);
-  symF989 = T10;
-  T9 = CALL2(CHKREF(YmacrosYEE),symF989,CHKREF(Ynul));
+  symF1003 = T10;
+  T9 = CALL2(CHKREF(YmacrosYEE),symF1003,CHKREF(Ynul));
   if (T9 != YPfalse) {
-    tmpF990 = given_sym_;
-    if (tmpF990 != YPfalse) {
-      T4 = tmpF990;
+    tmpF1004 = given_sym_;
+    if (tmpF1004 != YPfalse) {
+      T4 = tmpF1004;
     } else {
       T8 = (P)YPpair(CHKREF(YLsymG),Ynil);
       T7 = (P)YPpair(CHKREF(Ysym_name),Ynil);
@@ -10422,7 +10993,7 @@ loop:
     T2 = CALL3(CHKREF(YruntimeYelt_setter),T3,CHKREF(YruntimeYsymbols),name_);
     T1 = T2;
   } else {
-    T1 = symF989;
+    T1 = symF1003;
   }
   T0 = T1;
   return T0;
@@ -10437,9 +11008,9 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_boot_549) {
+FUNCODEDEF(fun_boot_585) {
   ARG(syms_, 0);
-  P symF991;
+  P symF1005;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
@@ -10447,9 +11018,9 @@ loop:
   T6 = CALL1(CHKREF(Ynot),T7);
   if (T6 != YPfalse) {
     T3 = CALL1(CHKREF(Yhead),syms_);
-    symF991 = T3;
-    T2 = CALL1(CHKREF(Ysym_name),symF991);
-    T1 = (P)YruntimeYbooted_fab_sym_using(T2,symF991);
+    symF1005 = T3;
+    T2 = CALL1(CHKREF(Ysym_name),symF1005);
+    T1 = (P)YruntimeYbooted_fab_sym_using(T2,symF1005);
     T5 = CALL1(CHKREF(Ytail),syms_);
     a1 = T5;
     syms_ = a1;
@@ -10462,13 +11033,13 @@ loop:
 }
 
 FUNCODEDEF(YruntimeYboot_symbols) {
-  P bootF992;
+  P bootF1006;
   P T2,T1,T0;
 loop:
-  T2 = FUNSHELL(1,fun_boot_549,1);
-  bootF992 = T2;
-  FUNINIT(bootF992, 1,bootF992);
-  T1 = KCALL1(bootF992,CHKREF(YPsymbols));
+  T2 = FUNSHELL(1,fun_boot_585,1);
+  bootF1006 = T2;
+  FUNINIT(bootF1006, 1,bootF1006);
+  T1 = KCALL1(bootF1006,CHKREF(YPsymbols));
   T0 = T1;
   QRET(T0);
 }
@@ -13467,29 +14038,29 @@ loop:
 }
 
 P YruntimeY___main_4___() {
-  P initF996;
-  P ascii_charsF995;
-  P loopF994;
-  P end259F993;
-  P T295,T294,T293,T292,T291,T290,T289,T288,T287,T286,T285,T284,T283,T282,T281,T280;
-  P T279,T278,T277,T276,T275,T274,T273,T272,T271,T270,T269,T268,T267,T266,T265,T264;
-  P T263,T262,T261,T260,T259,T258,T257,T256,T255,T254,T253,T252,T251,T250,T249,T248;
-  P T247,T246,T245,T244,T243,T242,T241,T240,T239,T238,T237,T236,T235,T234,T233,T232;
-  P T231,T230,T229,T228,T227,T226,T225,T224,T223,T222,T221,T220,T219,T218,T217,T216;
-  P T215,T214,T213,T212,T211,T210,T209,T208,T207,T206,T205,T204,T203,T202,T201,T200;
-  P T199,T198,T197,T196,T195,T194,T193,T192,T191,T190,T189,T188,T187,T186,T185,T184;
-  P T183,T182,T181,T180,T179,T178,T177,T176,T175,T174,T173,T172,T171,T170,T169,T168;
-  P T167,T166,T165,T164,T163,T162,T161,T160,T159,T158,T157,T156,T155,T154,T153,T152;
-  P T151,T150,T149,T148,T147,T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136;
-  P T135,T134,T133,T132,T131,T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120;
-  P T119,T118,T117,T116,T115,T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104;
-  P T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88;
-  P T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72;
-  P T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56;
-  P T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40;
-  P T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24;
-  P T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8;
-  P T7,T6,T5,T4,T3,T2,T1,T0;
+  P initF1010;
+  P ascii_charsF1009;
+  P loopF1008;
+  P end259F1007;
+  P T300,T299,T298,T297,T296,T295,T294,T293,T292,T291,T290,T289,T288,T287,T286,T285;
+  P T284,T283,T282,T281,T280,T279,T278,T277,T276,T275,T274,T273,T272,T271,T270,T269;
+  P T268,T267,T266,T265,T264,T263,T262,T261,T260,T259,T258,T257,T256,T255,T254,T253;
+  P T252,T251,T250,T249,T248,T247,T246,T245,T244,T243,T242,T241,T240,T239,T238,T237;
+  P T236,T235,T234,T233,T232,T231,T230,T229,T228,T227,T226,T225,T224,T223,T222,T221;
+  P T220,T219,T218,T217,T216,T215,T214,T213,T212,T211,T210,T209,T208,T207,T206,T205;
+  P T204,T203,T202,T201,T200,T199,T198,T197,T196,T195,T194,T193,T192,T191,T190,T189;
+  P T188,T187,T186,T185,T184,T183,T182,T181,T180,T179,T178,T177,T176,T175,T174,T173;
+  P T172,T171,T170,T169,T168,T167,T166,T165,T164,T163,T162,T161,T160,T159,T158,T157;
+  P T156,T155,T154,T153,T152,T151,T150,T149,T148,T147,T146,T145,T144,T143,T142,T141;
+  P T140,T139,T138,T137,T136,T135,T134,T133,T132,T131,T130,T129,T128,T127,T126,T125;
+  P T124,T123,T122,T121,T120,T119,T118,T117,T116,T115,T114,T113,T112,T111,T110,T109;
+  P T108,T107,T106,T105,T104,T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93;
+  P T92,T91,T90,T89,T88,T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77;
+  P T76,T75,T74,T73,T72,T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61;
+  P T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45;
+  P T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29;
+  P T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13;
+  P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
 loop:
   T0 = YPsig(YPpair(YPPsym((P)"from"),Ynil),YPpair(CHKREF(YLnumG),Ynil),YPfalse,YPint((P)1),CHKREF(YruntimeYLrangeG));
   fun_from_298 = YPmet(FUNCODEREF(fun_from_298),YPPsym((P)"from"),T0,ENVNUL);
@@ -13990,6 +14561,18 @@ loop:
   T205 = CALL2(CHKREF(YPdefine_method),T207,T206);
   YruntimeYto_str = T205;
   regsym(&YruntimeYto_str,"runtime","to-str");
+  T209 = YPsig(YPpair(YPPsym((P)"s"),YPpair(YPPsym((P)"c"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLchrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLstrG));
+  fun_add_342 = YPmet(FUNCODEREF(fun_add_342),YPPsym((P)"add"),T209,ENVNUL);
+  T213 = BOUNDP(YruntimeYadd);
+  if (T213 != YPfalse) {
+    T212 = CHKREF(YruntimeYadd);
+  } else {
+    T212 = YPfalse;
+  }
+  T211 = fun_add_342;
+  T210 = CALL2(CHKREF(YPdefine_method),T212,T211);
+  YruntimeYadd = T210;
+  regsym(&YruntimeYadd,"runtime","add");
   YruntimeYascii_limit = YPint((P)128);
   regsym(&YruntimeYascii_limit,"runtime","ascii-limit");
   lit_40 = YPsb((P)"`abcdefghijklmnopqrstuvwxyz{|}~");
@@ -13999,106 +14582,94 @@ loop:
   lit_44 = YPsb((P)"\f");
   lit_45 = YPsb((P)"\n");
   lit_46 = YPsb((P)"\t");
-  T210 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"j"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_loop_342 = YPmet(FUNCODEREF(fun_loop_342),YPPsym((P)"loop"),T210,ENVNUL);
-  T209 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"s"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_343 = YPmet(FUNCODEREF(fun_343),YPfalse,T209,ENVNUL);
-  T215 = CALL2(CHKREF(YruntimeYfab),CHKREF(YLvecG),CHKREF(YruntimeYascii_limit));
-  T214 = CALL2(CHKREF(YruntimeYfill),T215,YPfalse);
-  ascii_charsF995 = T214;
-  T213 = FUNFAB(fun_343,1,ascii_charsF995);
-  initF996 = T213;
-  CALL2(initF996,YPint((P)9),CHKREF(lit_46));
-  CALL2(initF996,YPint((P)10),CHKREF(lit_45));
-  CALL2(initF996,YPint((P)12),CHKREF(lit_44));
-  CALL2(initF996,YPint((P)13),CHKREF(lit_43));
-  CALL2(initF996,YPint((P)32),CHKREF(lit_42));
-  CALL2(initF996,YPint((P)64),CHKREF(lit_41));
-  CALL2(initF996,YPint((P)96),CHKREF(lit_40));
-  T212 = ascii_charsF995;
-  T211 = T212;
-  YruntimeYascii_chars = T211;
+  T215 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"j"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_loop_343 = YPmet(FUNCODEREF(fun_loop_343),YPPsym((P)"loop"),T215,ENVNUL);
+  T214 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"s"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_344 = YPmet(FUNCODEREF(fun_344),YPfalse,T214,ENVNUL);
+  T220 = CALL2(CHKREF(YruntimeYfab),CHKREF(YLvecG),CHKREF(YruntimeYascii_limit));
+  T219 = CALL2(CHKREF(YruntimeYfill),T220,YPfalse);
+  ascii_charsF1009 = T219;
+  T218 = FUNFAB(fun_344,1,ascii_charsF1009);
+  initF1010 = T218;
+  CALL2(initF1010,YPint((P)9),CHKREF(lit_46));
+  CALL2(initF1010,YPint((P)10),CHKREF(lit_45));
+  CALL2(initF1010,YPint((P)12),CHKREF(lit_44));
+  CALL2(initF1010,YPint((P)13),CHKREF(lit_43));
+  CALL2(initF1010,YPint((P)32),CHKREF(lit_42));
+  CALL2(initF1010,YPint((P)64),CHKREF(lit_41));
+  CALL2(initF1010,YPint((P)96),CHKREF(lit_40));
+  T217 = ascii_charsF1009;
+  T216 = T217;
+  YruntimeYascii_chars = T216;
   regsym(&YruntimeYascii_chars,"runtime","ascii-chars");
   lit_47 = YPsb((P)"not a standard character's ASCII code: %=");
-  T216 = YPsig(YPpair(YPPsym((P)"n"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
-  fun_ascii_Gchar_344 = YPmet(FUNCODEREF(fun_ascii_Gchar_344),YPPsym((P)"ascii->char"),T216,ENVNUL);
-  T220 = BOUNDP(YruntimeYascii_Gchar);
-  if (T220 != YPfalse) {
-    T219 = CHKREF(YruntimeYascii_Gchar);
-  } else {
-    T219 = YPfalse;
-  }
-  T218 = fun_ascii_Gchar_344;
-  T217 = CALL2(CHKREF(YPdefine_method),T219,T218);
-  YruntimeYascii_Gchar = T217;
-  regsym(&YruntimeYascii_Gchar,"runtime","ascii->char");
-  T221 = YPsig(YPpair(YPPsym((P)"char"),Ynil),YPpair(CHKREF(YLchrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLintG));
-  fun_char_Ginteger_345 = YPmet(FUNCODEREF(fun_char_Ginteger_345),YPPsym((P)"char->integer"),T221,ENVNUL);
-  T225 = BOUNDP(YruntimeYchar_Ginteger);
+  T221 = YPsig(YPpair(YPPsym((P)"n"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
+  fun_ascii_Gchar_345 = YPmet(FUNCODEREF(fun_ascii_Gchar_345),YPPsym((P)"ascii->char"),T221,ENVNUL);
+  T225 = BOUNDP(YruntimeYascii_Gchar);
   if (T225 != YPfalse) {
-    T224 = CHKREF(YruntimeYchar_Ginteger);
+    T224 = CHKREF(YruntimeYascii_Gchar);
   } else {
     T224 = YPfalse;
   }
-  T223 = fun_char_Ginteger_345;
+  T223 = fun_ascii_Gchar_345;
   T222 = CALL2(CHKREF(YPdefine_method),T224,T223);
-  YruntimeYchar_Ginteger = T222;
-  regsym(&YruntimeYchar_Ginteger,"runtime","char->integer");
-  T226 = YPsig(YPpair(YPPsym((P)"n"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
-  fun_integer_Gchar_346 = YPmet(FUNCODEREF(fun_integer_Gchar_346),YPPsym((P)"integer->char"),T226,ENVNUL);
-  T230 = BOUNDP(YruntimeYinteger_Gchar);
+  YruntimeYascii_Gchar = T222;
+  regsym(&YruntimeYascii_Gchar,"runtime","ascii->char");
+  T226 = YPsig(YPpair(YPPsym((P)"char"),Ynil),YPpair(CHKREF(YLchrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLintG));
+  fun_char_Ginteger_346 = YPmet(FUNCODEREF(fun_char_Ginteger_346),YPPsym((P)"char->integer"),T226,ENVNUL);
+  T230 = BOUNDP(YruntimeYchar_Ginteger);
   if (T230 != YPfalse) {
-    T229 = CHKREF(YruntimeYinteger_Gchar);
+    T229 = CHKREF(YruntimeYchar_Ginteger);
   } else {
     T229 = YPfalse;
   }
-  T228 = fun_integer_Gchar_346;
+  T228 = fun_char_Ginteger_346;
   T227 = CALL2(CHKREF(YPdefine_method),T229,T228);
-  YruntimeYinteger_Gchar = T227;
+  YruntimeYchar_Ginteger = T227;
+  regsym(&YruntimeYchar_Ginteger,"runtime","char->integer");
+  T231 = YPsig(YPpair(YPPsym((P)"n"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
+  fun_integer_Gchar_347 = YPmet(FUNCODEREF(fun_integer_Gchar_347),YPPsym((P)"integer->char"),T231,ENVNUL);
+  T235 = BOUNDP(YruntimeYinteger_Gchar);
+  if (T235 != YPfalse) {
+    T234 = CHKREF(YruntimeYinteger_Gchar);
+  } else {
+    T234 = YPfalse;
+  }
+  T233 = fun_integer_Gchar_347;
+  T232 = CALL2(CHKREF(YPdefine_method),T234,T233);
+  YruntimeYinteger_Gchar = T232;
   regsym(&YruntimeYinteger_Gchar,"runtime","integer->char");
-  T232 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_loop_347 = YPmet(FUNCODEREF(fun_loop_347),YPPsym((P)"loop"),T232,ENVNUL);
-  T231 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"least"),YPpair(YPPsym((P)"greatest"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_loop_348 = YPmet(FUNCODEREF(fun_loop_348),YPPsym((P)"loop"),T231,ENVNUL);
-  T237 = CALL1(CHKREF(YruntimeYlen),CHKREF(YruntimeYascii_chars));
-  end259F993 = T237;
-  T236 = FUNSHELL(1,fun_loop_348,2);
-  loopF994 = T236;
-  FUNINIT(loopF994, 2,loopF994,end259F993);
-  T235 = KCALL3(loopF994,YPint((P)0),YPfalse,YPfalse);
-  T234 = T235;
-  T233 = T234;
-  YruntimeYnative_chars = T233;
+  T237 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_loop_348 = YPmet(FUNCODEREF(fun_loop_348),YPPsym((P)"loop"),T237,ENVNUL);
+  T236 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"least"),YPpair(YPPsym((P)"greatest"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_loop_349 = YPmet(FUNCODEREF(fun_loop_349),YPPsym((P)"loop"),T236,ENVNUL);
+  T242 = CALL1(CHKREF(YruntimeYlen),CHKREF(YruntimeYascii_chars));
+  end259F1007 = T242;
+  T241 = FUNSHELL(1,fun_loop_349,2);
+  loopF1008 = T241;
+  FUNINIT(loopF1008, 2,loopF1008,end259F1007);
+  T240 = KCALL3(loopF1008,YPint((P)0),YPfalse,YPfalse);
+  T239 = T240;
+  T238 = T239;
+  YruntimeYnative_chars = T238;
   regsym(&YruntimeYnative_chars,"runtime","native-chars");
   lit_48 = YPsb((P)"not a standard character: %=");
-  T238 = YPsig(YPpair(YPPsym((P)"char"),Ynil),YPpair(CHKREF(YLchrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLintG));
-  fun_char_Gascii_349 = YPmet(FUNCODEREF(fun_char_Gascii_349),YPPsym((P)"char->ascii"),T238,ENVNUL);
-  T242 = BOUNDP(YruntimeYchar_Gascii);
-  if (T242 != YPfalse) {
-    T241 = CHKREF(YruntimeYchar_Gascii);
+  T243 = YPsig(YPpair(YPPsym((P)"char"),Ynil),YPpair(CHKREF(YLchrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLintG));
+  fun_char_Gascii_350 = YPmet(FUNCODEREF(fun_char_Gascii_350),YPPsym((P)"char->ascii"),T243,ENVNUL);
+  T247 = BOUNDP(YruntimeYchar_Gascii);
+  if (T247 != YPfalse) {
+    T246 = CHKREF(YruntimeYchar_Gascii);
   } else {
-    T241 = YPfalse;
+    T246 = YPfalse;
   }
-  T240 = fun_char_Gascii_349;
-  T239 = CALL2(CHKREF(YPdefine_method),T241,T240);
-  YruntimeYchar_Gascii = T239;
+  T245 = fun_char_Gascii_350;
+  T244 = CALL2(CHKREF(YPdefine_method),T246,T245);
+  YruntimeYchar_Gascii = T244;
   regsym(&YruntimeYchar_Gascii,"runtime","char->ascii");
   lit_49 = YPpair(YPint((P)32), YPpair(YPint((P)10), YPpair(YPint((P)9), YPpair(YPint((P)12), YPpair(YPint((P)13), Ynil)))));
   YruntimeYascii_whitespaces = CHKREF(lit_49);
   regsym(&YruntimeYascii_whitespaces,"runtime","ascii-whitespaces");
-  T243 = YPsig(YPpair(YPPsym((P)"_"),YPpair(YPPsym((P)"s"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLsymG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLstrG));
-  fun_as_350 = YPmet(FUNCODEREF(fun_as_350),YPPsym((P)"as"),T243,ENVNUL);
-  T247 = BOUNDP(YruntimeYas);
-  if (T247 != YPfalse) {
-    T246 = CHKREF(YruntimeYas);
-  } else {
-    T246 = YPfalse;
-  }
-  T245 = fun_as_350;
-  T244 = CALL2(CHKREF(YPdefine_method),T246,T245);
-  YruntimeYas = T244;
-  regsym(&YruntimeYas,"runtime","as");
-  T248 = YPsig(YPpair(YPPsym((P)"_"),YPpair(YPPsym((P)"s"),Ynil)),YPpair(CHKREF(YLsymG),YPpair(CHKREF(YLstrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLsymG));
+  T248 = YPsig(YPpair(YPPsym((P)"_"),YPpair(YPPsym((P)"s"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLsymG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLstrG));
   fun_as_351 = YPmet(FUNCODEREF(fun_as_351),YPPsym((P)"as"),T248,ENVNUL);
   T252 = BOUNDP(YruntimeYas);
   if (T252 != YPfalse) {
@@ -14110,1293 +14681,116 @@ loop:
   T249 = CALL2(CHKREF(YPdefine_method),T251,T250);
   YruntimeYas = T249;
   regsym(&YruntimeYas,"runtime","as");
-  T253 = YPsig(YPpair(YPPsym((P)"x"),YPpair(YPPsym((P)"y"),Ynil)),YPpair(CHKREF(YLsymG),YPpair(CHKREF(YLsymG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_L_352 = YPmet(FUNCODEREF(fun_L_352),YPPsym((P)"<"),T253,ENVNUL);
-  T257 = BOUNDP(YruntimeYL);
+  T253 = YPsig(YPpair(YPPsym((P)"_"),YPpair(YPPsym((P)"s"),Ynil)),YPpair(CHKREF(YLsymG),YPpair(CHKREF(YLstrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLsymG));
+  fun_as_352 = YPmet(FUNCODEREF(fun_as_352),YPPsym((P)"as"),T253,ENVNUL);
+  T257 = BOUNDP(YruntimeYas);
   if (T257 != YPfalse) {
-    T256 = CHKREF(YruntimeYL);
+    T256 = CHKREF(YruntimeYas);
   } else {
     T256 = YPfalse;
   }
-  T255 = fun_L_352;
+  T255 = fun_as_352;
   T254 = CALL2(CHKREF(YPdefine_method),T256,T255);
-  YruntimeYL = T254;
-  regsym(&YruntimeYL,"runtime","<");
-  T258 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLsymG),Ynil),YPfalse,YPint((P)1),CHKREF(YLstrG));
-  fun_to_str_353 = YPmet(FUNCODEREF(fun_to_str_353),YPPsym((P)"to-str"),T258,ENVNUL);
-  T262 = BOUNDP(YruntimeYto_str);
+  YruntimeYas = T254;
+  regsym(&YruntimeYas,"runtime","as");
+  T258 = YPsig(YPpair(YPPsym((P)"x"),YPpair(YPPsym((P)"y"),Ynil)),YPpair(CHKREF(YLsymG),YPpair(CHKREF(YLsymG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_L_353 = YPmet(FUNCODEREF(fun_L_353),YPPsym((P)"<"),T258,ENVNUL);
+  T262 = BOUNDP(YruntimeYL);
   if (T262 != YPfalse) {
-    T261 = CHKREF(YruntimeYto_str);
+    T261 = CHKREF(YruntimeYL);
   } else {
     T261 = YPfalse;
   }
-  T260 = fun_to_str_353;
+  T260 = fun_L_353;
   T259 = CALL2(CHKREF(YPdefine_method),T261,T260);
-  YruntimeYto_str = T259;
-  regsym(&YruntimeYto_str,"runtime","to-str");
-  T263 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_identity_354 = YPmet(FUNCODEREF(fun_identity_354),YPPsym((P)"identity"),T263,ENVNUL);
-  T267 = BOUNDP(YruntimeYidentity);
+  YruntimeYL = T259;
+  regsym(&YruntimeYL,"runtime","<");
+  T263 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLsymG),Ynil),YPfalse,YPint((P)1),CHKREF(YLstrG));
+  fun_to_str_354 = YPmet(FUNCODEREF(fun_to_str_354),YPPsym((P)"to-str"),T263,ENVNUL);
+  T267 = BOUNDP(YruntimeYto_str);
   if (T267 != YPfalse) {
-    T266 = CHKREF(YruntimeYidentity);
+    T266 = CHKREF(YruntimeYto_str);
   } else {
     T266 = YPfalse;
   }
-  T265 = fun_identity_354;
+  T265 = fun_to_str_354;
   T264 = CALL2(CHKREF(YPdefine_method),T266,T265);
-  YruntimeYidentity = T264;
+  YruntimeYto_str = T264;
+  regsym(&YruntimeYto_str,"runtime","to-str");
+  T268 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_identity_355 = YPmet(FUNCODEREF(fun_identity_355),YPPsym((P)"identity"),T268,ENVNUL);
+  T272 = BOUNDP(YruntimeYidentity);
+  if (T272 != YPfalse) {
+    T271 = CHKREF(YruntimeYidentity);
+  } else {
+    T271 = YPfalse;
+  }
+  T270 = fun_identity_355;
+  T269 = CALL2(CHKREF(YPdefine_method),T271,T270);
+  YruntimeYidentity = T269;
   regsym(&YruntimeYidentity,"runtime","identity");
-  T269 = YPsig(YPpair(YPPsym((P)"args"),Ynil),Ynil,YPtrue,YPint((P)0),CHKREF(YLanyG));
-  fun_355 = YPmet(FUNCODEREF(fun_355),YPfalse,T269,ENVNUL);
-  T268 = YPsig(YPpair(YPPsym((P)"fx"),YPpair(YPPsym((P)"fy"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YLfunG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLfunG));
-  fun_compose_356 = YPmet(FUNCODEREF(fun_compose_356),YPPsym((P)"compose"),T268,ENVNUL);
-  T273 = BOUNDP(YruntimeYcompose);
-  if (T273 != YPfalse) {
-    T272 = CHKREF(YruntimeYcompose);
+  T274 = YPsig(YPpair(YPPsym((P)"args"),Ynil),Ynil,YPtrue,YPint((P)0),CHKREF(YLanyG));
+  fun_356 = YPmet(FUNCODEREF(fun_356),YPfalse,T274,ENVNUL);
+  T273 = YPsig(YPpair(YPPsym((P)"fx"),YPpair(YPPsym((P)"fy"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YLfunG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLfunG));
+  fun_compose_357 = YPmet(FUNCODEREF(fun_compose_357),YPPsym((P)"compose"),T273,ENVNUL);
+  T278 = BOUNDP(YruntimeYcompose);
+  if (T278 != YPfalse) {
+    T277 = CHKREF(YruntimeYcompose);
   } else {
-    T272 = YPfalse;
+    T277 = YPfalse;
   }
-  T271 = fun_compose_356;
-  T270 = CALL2(CHKREF(YPdefine_method),T272,T271);
-  YruntimeYcompose = T270;
+  T276 = fun_compose_357;
+  T275 = CALL2(CHKREF(YPdefine_method),T277,T276);
+  YruntimeYcompose = T275;
   regsym(&YruntimeYcompose,"runtime","compose");
-  T275 = YPsig(YPpair(YPPsym((P)"args"),Ynil),Ynil,YPtrue,YPint((P)0),CHKREF(YLanyG));
-  fun_357 = YPmet(FUNCODEREF(fun_357),YPfalse,T275,ENVNUL);
-  T274 = YPsig(YPpair(YPPsym((P)"f"),YPpair(YPPsym((P)"curried"),Ynil)),YPpair(CHKREF(YLfunG),Ynil),YPtrue,YPint((P)1),CHKREF(YLfunG));
-  fun_rcurry_358 = YPmet(FUNCODEREF(fun_rcurry_358),YPPsym((P)"rcurry"),T274,ENVNUL);
-  T279 = BOUNDP(YruntimeYrcurry);
-  if (T279 != YPfalse) {
-    T278 = CHKREF(YruntimeYrcurry);
+  T280 = YPsig(YPpair(YPPsym((P)"args"),Ynil),Ynil,YPtrue,YPint((P)0),CHKREF(YLanyG));
+  fun_358 = YPmet(FUNCODEREF(fun_358),YPfalse,T280,ENVNUL);
+  T279 = YPsig(YPpair(YPPsym((P)"f"),YPpair(YPPsym((P)"curried"),Ynil)),YPpair(CHKREF(YLfunG),Ynil),YPtrue,YPint((P)1),CHKREF(YLfunG));
+  fun_rcurry_359 = YPmet(FUNCODEREF(fun_rcurry_359),YPPsym((P)"rcurry"),T279,ENVNUL);
+  T284 = BOUNDP(YruntimeYrcurry);
+  if (T284 != YPfalse) {
+    T283 = CHKREF(YruntimeYrcurry);
   } else {
-    T278 = YPfalse;
+    T283 = YPfalse;
   }
-  T277 = fun_rcurry_358;
-  T276 = CALL2(CHKREF(YPdefine_method),T278,T277);
-  YruntimeYrcurry = T276;
+  T282 = fun_rcurry_359;
+  T281 = CALL2(CHKREF(YPdefine_method),T283,T282);
+  YruntimeYrcurry = T281;
   regsym(&YruntimeYrcurry,"runtime","rcurry");
-  T281 = YPsig(YPpair(YPPsym((P)"args"),Ynil),Ynil,YPtrue,YPint((P)0),CHKREF(YLanyG));
-  fun_359 = YPmet(FUNCODEREF(fun_359),YPfalse,T281,ENVNUL);
-  T280 = YPsig(YPpair(YPPsym((P)"f"),YPpair(YPPsym((P)"curried"),Ynil)),YPpair(CHKREF(YLfunG),Ynil),YPtrue,YPint((P)1),CHKREF(YLfunG));
-  fun_curry_360 = YPmet(FUNCODEREF(fun_curry_360),YPPsym((P)"curry"),T280,ENVNUL);
-  T285 = BOUNDP(YruntimeYcurry);
-  if (T285 != YPfalse) {
-    T284 = CHKREF(YruntimeYcurry);
+  T286 = YPsig(YPpair(YPPsym((P)"args"),Ynil),Ynil,YPtrue,YPint((P)0),CHKREF(YLanyG));
+  fun_360 = YPmet(FUNCODEREF(fun_360),YPfalse,T286,ENVNUL);
+  T285 = YPsig(YPpair(YPPsym((P)"f"),YPpair(YPPsym((P)"curried"),Ynil)),YPpair(CHKREF(YLfunG),Ynil),YPtrue,YPint((P)1),CHKREF(YLfunG));
+  fun_curry_361 = YPmet(FUNCODEREF(fun_curry_361),YPPsym((P)"curry"),T285,ENVNUL);
+  T290 = BOUNDP(YruntimeYcurry);
+  if (T290 != YPfalse) {
+    T289 = CHKREF(YruntimeYcurry);
   } else {
-    T284 = YPfalse;
+    T289 = YPfalse;
   }
-  T283 = fun_curry_360;
-  T282 = CALL2(CHKREF(YPdefine_method),T284,T283);
-  YruntimeYcurry = T282;
+  T288 = fun_curry_361;
+  T287 = CALL2(CHKREF(YPdefine_method),T289,T288);
+  YruntimeYcurry = T287;
   regsym(&YruntimeYcurry,"runtime","curry");
-  T287 = YPsig(YPpair(YPPsym((P)"args"),Ynil),Ynil,YPtrue,YPint((P)0),CHKREF(YLanyG));
-  fun_361 = YPmet(FUNCODEREF(fun_361),YPfalse,T287,ENVNUL);
-  T286 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLfunG));
-  fun_always_362 = YPmet(FUNCODEREF(fun_always_362),YPPsym((P)"always"),T286,ENVNUL);
-  T291 = BOUNDP(YruntimeYalways);
-  if (T291 != YPfalse) {
-    T290 = CHKREF(YruntimeYalways);
+  T295 = YPsig(YPpair(YPPsym((P)"args"),Ynil),Ynil,YPtrue,YPint((P)0),CHKREF(YLanyG));
+  T294 = fun_362 = YPmet(FUNCODEREF(fun_362),YPfalse,T295,ENVNUL);
+  T293 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLfunG));
+  T292 = fun_always_363 = YPmet(FUNCODEREF(fun_always_363),YPPsym((P)"always"),T293,ENVNUL);
+  T300 = BOUNDP(YruntimeYalways);
+  if (T300 != YPfalse) {
+    T299 = CHKREF(YruntimeYalways);
   } else {
-    T290 = YPfalse;
+    T299 = YPfalse;
   }
-  T289 = fun_always_362;
-  T288 = CALL2(CHKREF(YPdefine_method),T290,T289);
-  YruntimeYalways = T288;
+  T298 = fun_always_363;
+  T297 = CALL2(CHKREF(YPdefine_method),T299,T298);
+  T296 = YruntimeYalways = T297;
   regsym(&YruntimeYalways,"runtime","always");
-  T295 = (P)YPpair(CHKREF(YLanyG),Ynil);
-  T294 = CALL3(CHKREF(YPisa),T295,Ynil,Ynil);
-  T293 = YruntimeYLconditionG = T294;
-  regsym(&YruntimeYLconditionG,"runtime","<condition>");
-  T292 = T293;
-  return T292;
+  T291 = T296;
+  return T291;
 }
 
 P YruntimeY___main_5___() {
-  P T248,T247,T246,T245,T244,T243,T242,T241,T240,T239,T238,T237,T236,T235,T234,T233;
-  P T232,T231,T230,T229,T228,T227,T226,T225,T224,T223,T222,T221,T220,T219,T218,T217;
-  P T216,T215,T214,T213,T212,T211,T210,T209,T208,T207,T206,T205,T204,T203,T202,T201;
-  P T200,T199,T198,T197,T196,T195,T194,T193,T192,T191,T190,T189,T188,T187,T186,T185;
-  P T184,T183,T182,T181,T180,T179,T178,T177,T176,T175,T174,T173,T172,T171,T170,T169;
-  P T168,T167,T166,T165,T164,T163,T162,T161,T160,T159,T158,T157,T156,T155,T154,T153;
-  P T152,T151,T150,T149,T148,T147,T146,T145,T144,T143,T142,T141,T140,T139,T138,T137;
-  P T136,T135,T134,T133,T132,T131,T130,T129,T128,T127,T126,T125,T124,T123,T122,T121;
-  P T120,T119,T118,T117,T116,T115,T114,T113,T112,T111,T110,T109,T108,T107,T106,T105;
-  P T104,T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89;
-  P T88,T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73;
-  P T72,T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57;
-  P T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41;
-  P T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25;
-  P T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9;
-  P T8,T7,T6,T5,T4,T3,T2,T1,T0;
-loop:
-  T0 = YPsig(YPpair(YPPsym((P)"c"),Ynil),YPpair(CHKREF(YruntimeYLconditionG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_default_handler_363 = YPmet(FUNCODEREF(fun_default_handler_363),YPPsym((P)"default-handler"),T0,ENVNUL);
-  T4 = BOUNDP(YruntimeYdefault_handler);
-  if (T4 != YPfalse) {
-    T3 = CHKREF(YruntimeYdefault_handler);
-  } else {
-    T3 = YPfalse;
-  }
-  T2 = fun_default_handler_363;
-  T1 = CALL2(CHKREF(YPdefine_method),T3,T2);
-  YruntimeYdefault_handler = T1;
-  regsym(&YruntimeYdefault_handler,"runtime","default-handler");
-  T6 = (P)YPpair(CHKREF(YruntimeYLconditionG),Ynil);
-  T5 = CALL3(CHKREF(YPisa),T6,Ynil,Ynil);
-  YruntimeYLsimple_conditionG = T5;
-  regsym(&YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
-  T7 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_condition_message_364 = YPmet(FUNCODEREF(fun_condition_message_364),YPPsym((P)"condition-message"),T7,ENVNUL);
-  T11 = BOUNDP(YruntimeYcondition_message);
-  if (T11 != YPfalse) {
-    T10 = CHKREF(YruntimeYcondition_message);
-  } else {
-    T10 = YPfalse;
-  }
-  T9 = fun_condition_message_364;
-  T8 = CALL2(CHKREF(YPdefine_method),T10,T9);
-  YruntimeYcondition_message = T8;
-  regsym(&YruntimeYcondition_message,"runtime","condition-message");
-  T12 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_condition_message_setter_365 = YPmet(FUNCODEREF(fun_condition_message_setter_365),YPPsym((P)"condition-message-setter"),T12,ENVNUL);
-  T16 = BOUNDP(YruntimeYcondition_message_setter);
-  if (T16 != YPfalse) {
-    T15 = CHKREF(YruntimeYcondition_message_setter);
-  } else {
-    T15 = YPfalse;
-  }
-  T14 = fun_condition_message_setter_365;
-  T13 = CALL2(CHKREF(YPdefine_method),T15,T14);
-  YruntimeYcondition_message_setter = T13;
-  regsym(&YruntimeYcondition_message_setter,"runtime","condition-message-setter");
-  lit_50 = YPsb((P)"");
-  T17 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_366 = YPmet(FUNCODEREF(fun_366),YPfalse,T17,ENVNUL);
-  T18 = fun_366;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_conditionG),CHKREF(YruntimeYcondition_message),CHKREF(YruntimeYcondition_message_setter),CHKREF(YLstrG),T18);
-  T19 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_condition_arguments_367 = YPmet(FUNCODEREF(fun_condition_arguments_367),YPPsym((P)"condition-arguments"),T19,ENVNUL);
-  T23 = BOUNDP(YruntimeYcondition_arguments);
-  if (T23 != YPfalse) {
-    T22 = CHKREF(YruntimeYcondition_arguments);
-  } else {
-    T22 = YPfalse;
-  }
-  T21 = fun_condition_arguments_367;
-  T20 = CALL2(CHKREF(YPdefine_method),T22,T21);
-  YruntimeYcondition_arguments = T20;
-  regsym(&YruntimeYcondition_arguments,"runtime","condition-arguments");
-  T24 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLlstG),YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_condition_arguments_setter_368 = YPmet(FUNCODEREF(fun_condition_arguments_setter_368),YPPsym((P)"condition-arguments-setter"),T24,ENVNUL);
-  T28 = BOUNDP(YruntimeYcondition_arguments_setter);
-  if (T28 != YPfalse) {
-    T27 = CHKREF(YruntimeYcondition_arguments_setter);
-  } else {
-    T27 = YPfalse;
-  }
-  T26 = fun_condition_arguments_setter_368;
-  T25 = CALL2(CHKREF(YPdefine_method),T27,T26);
-  YruntimeYcondition_arguments_setter = T25;
-  regsym(&YruntimeYcondition_arguments_setter,"runtime","condition-arguments-setter");
-  T29 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_369 = YPmet(FUNCODEREF(fun_369),YPfalse,T29,ENVNUL);
-  T30 = fun_369;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_conditionG),CHKREF(YruntimeYcondition_arguments),CHKREF(YruntimeYcondition_arguments_setter),CHKREF(YLlstG),T30);
-  T32 = (P)YPpair(CHKREF(YruntimeYLconditionG),Ynil);
-  T31 = CALL3(CHKREF(YPisa),T32,Ynil,Ynil);
-  YruntimeYLserious_conditionG = T31;
-  regsym(&YruntimeYLserious_conditionG,"runtime","<serious-condition>");
-  T33 = YPsig(YPpair(YPPsym((P)"c"),Ynil),YPpair(CHKREF(YruntimeYLserious_conditionG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_default_handler_370 = YPmet(FUNCODEREF(fun_default_handler_370),YPPsym((P)"default-handler"),T33,ENVNUL);
-  T37 = BOUNDP(YruntimeYdefault_handler);
-  if (T37 != YPfalse) {
-    T36 = CHKREF(YruntimeYdefault_handler);
-  } else {
-    T36 = YPfalse;
-  }
-  T35 = fun_default_handler_370;
-  T34 = CALL2(CHKREF(YPdefine_method),T36,T35);
-  YruntimeYdefault_handler = T34;
-  regsym(&YruntimeYdefault_handler,"runtime","default-handler");
-  T39 = (P)YPpair(CHKREF(YruntimeYLserious_conditionG),Ynil);
-  T38 = CALL3(CHKREF(YPisa),T39,Ynil,Ynil);
-  YruntimeYLerrorG = T38;
-  regsym(&YruntimeYLerrorG,"runtime","<error>");
-  T42 = (P)YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil);
-  T41 = (P)YPpair(CHKREF(YruntimeYLerrorG),T42);
-  T40 = CALL3(CHKREF(YPisa),T41,Ynil,Ynil);
-  YruntimeYLsimple_errorG = T40;
-  regsym(&YruntimeYLsimple_errorG,"runtime","<simple-error>");
-  YruntimeYTcurrent_handlersT = Ynil;
-  regsym(&YruntimeYTcurrent_handlersT,"runtime","*current-handlers*");
-  T44 = (P)YPpair(CHKREF(YLanyG),Ynil);
-  T43 = CALL3(CHKREF(YPisa),T44,Ynil,Ynil);
-  YruntimeYLhandlerG = T43;
-  regsym(&YruntimeYLhandlerG,"runtime","<handler>");
-  T45 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLhandlerG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_handler_function_371 = YPmet(FUNCODEREF(fun_handler_function_371),YPPsym((P)"handler-function"),T45,ENVNUL);
-  T49 = BOUNDP(YruntimeYhandler_function);
-  if (T49 != YPfalse) {
-    T48 = CHKREF(YruntimeYhandler_function);
-  } else {
-    T48 = YPfalse;
-  }
-  T47 = fun_handler_function_371;
-  T46 = CALL2(CHKREF(YPdefine_method),T48,T47);
-  YruntimeYhandler_function = T46;
-  regsym(&YruntimeYhandler_function,"runtime","handler-function");
-  T50 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YruntimeYLhandlerG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_handler_function_setter_372 = YPmet(FUNCODEREF(fun_handler_function_setter_372),YPPsym((P)"handler-function-setter"),T50,ENVNUL);
-  T54 = BOUNDP(YruntimeYhandler_function_setter);
-  if (T54 != YPfalse) {
-    T53 = CHKREF(YruntimeYhandler_function_setter);
-  } else {
-    T53 = YPfalse;
-  }
-  T52 = fun_handler_function_setter_372;
-  T51 = CALL2(CHKREF(YPdefine_method),T53,T52);
-  YruntimeYhandler_function_setter = T51;
-  regsym(&YruntimeYhandler_function_setter,"runtime","handler-function-setter");
-  T55 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_373 = YPmet(FUNCODEREF(fun_373),YPfalse,T55,ENVNUL);
-  T56 = fun_373;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLhandlerG),CHKREF(YruntimeYhandler_function),CHKREF(YruntimeYhandler_function_setter),CHKREF(YLfunG),T56);
-  T57 = YPsig(YPpair(YPPsym((P)"f"),Ynil),YPpair(CHKREF(YLfunG),Ynil),YPfalse,YPint((P)1),CHKREF(YruntimeYLhandlerG));
-  YruntimeYmake_handler = YPmet(FUNCODEREF(YruntimeYmake_handler),YPPsym((P)"make-handler"),T57,ENVNUL);
-  T58 = YruntimeYmake_handler;
-  YruntimeYmake_handler = T58;
-  regsym(&YruntimeYmake_handler,"runtime","make-handler");
-  T59 = YPsig(YPpair(YPPsym((P)"handler"),YPpair(YPPsym((P)"condition"),Ynil)),YPpair(CHKREF(YruntimeYLhandlerG),YPpair(CHKREF(YruntimeYLconditionG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlogG));
-  YruntimeYhandler_matchesQ = YPmet(FUNCODEREF(YruntimeYhandler_matchesQ),YPPsym((P)"handler-matches?"),T59,ENVNUL);
-  T60 = YruntimeYhandler_matchesQ;
-  YruntimeYhandler_matchesQ = T60;
-  regsym(&YruntimeYhandler_matchesQ,"runtime","handler-matches?");
-  T65 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_376 = YPmet(FUNCODEREF(fun_376),YPfalse,T65,ENVNUL);
-  T64 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_377 = YPmet(FUNCODEREF(fun_377),YPfalse,T64,ENVNUL);
-  T63 = YPsig(YPpair(YPPsym((P)"_resume_"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_378 = YPmet(FUNCODEREF(fun_378),YPfalse,T63,ENVNUL);
-  T62 = YPsig(YPpair(YPPsym((P)"condition"),YPpair(YPPsym((P)"_next-handler_"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Uhandler_functionU_379 = YPmet(FUNCODEREF(fun_Uhandler_functionU_379),YPPsym((P)"_handler-function_"),T62,ENVNUL);
-  T61 = YPsig(YPpair(YPPsym((P)"_unwind-exception_"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_380 = YPmet(FUNCODEREF(fun_380),YPfalse,T61,ENVNUL);
-  T68 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_382 = YPmet(FUNCODEREF(fun_382),YPfalse,T68,ENVNUL);
-  T67 = YPsig(YPpair(YPPsym((P)"handlers"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_search_383 = YPmet(FUNCODEREF(fun_search_383),YPPsym((P)"search"),T67,ENVNUL);
-  T66 = YPsig(YPpair(YPPsym((P)"condition"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YruntimeYLconditionG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
-  fun_sig_384 = YPmet(FUNCODEREF(fun_sig_384),YPPsym((P)"sig"),T66,ENVNUL);
-  T72 = BOUNDP(YruntimeYsig);
-  if (T72 != YPfalse) {
-    T71 = CHKREF(YruntimeYsig);
-  } else {
-    T71 = YPfalse;
-  }
-  T70 = fun_sig_384;
-  T69 = CALL2(CHKREF(YPdefine_method),T71,T70);
-  YruntimeYsig = T69;
-  regsym(&YruntimeYsig,"runtime","sig");
-  T73 = YPsig(YPpair(YPPsym((P)"c"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YLstrG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
-  fun_sig_385 = YPmet(FUNCODEREF(fun_sig_385),YPPsym((P)"sig"),T73,ENVNUL);
-  T77 = BOUNDP(YruntimeYsig);
-  if (T77 != YPfalse) {
-    T76 = CHKREF(YruntimeYsig);
-  } else {
-    T76 = YPfalse;
-  }
-  T75 = fun_sig_385;
-  T74 = CALL2(CHKREF(YPdefine_method),T76,T75);
-  YruntimeYsig = T74;
-  regsym(&YruntimeYsig,"runtime","sig");
-  T78 = YPsig(YPpair(YPPsym((P)"c"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YruntimeYLsimple_errorG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
-  fun_error_386 = YPmet(FUNCODEREF(fun_error_386),YPPsym((P)"error"),T78,ENVNUL);
-  T82 = BOUNDP(Yerror);
-  if (T82 != YPfalse) {
-    T81 = CHKREF(Yerror);
-  } else {
-    T81 = YPfalse;
-  }
-  T80 = fun_error_386;
-  T79 = CALL2(CHKREF(YPdefine_method),T81,T80);
-  Yerror = T79;
-  regsym(&Yerror,"boot","error");
-  T83 = YPsig(YPpair(YPPsym((P)"c"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YLstrG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
-  fun_error_387 = YPmet(FUNCODEREF(fun_error_387),YPPsym((P)"error"),T83,ENVNUL);
-  T87 = BOUNDP(Yerror);
-  if (T87 != YPfalse) {
-    T86 = CHKREF(Yerror);
-  } else {
-    T86 = YPfalse;
-  }
-  T85 = fun_error_387;
-  T84 = CALL2(CHKREF(YPdefine_method),T86,T85);
-  Yerror = T84;
-  regsym(&Yerror,"boot","error");
-  lit_51 = YPsb((P)"%= CALLED WITH %= ARGUMENTS EXPECTED %=");
-  T88 = YPsig(YPpair(YPPsym((P)"fun"),YPpair(YPPsym((P)"n"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  Ywrong_number_arguments_error = YPmet(FUNCODEREF(Ywrong_number_arguments_error),YPPsym((P)"wrong-number-arguments-error"),T88,ENVNUL);
-  T89 = Ywrong_number_arguments_error;
-  Ywrong_number_arguments_error = T89;
-  regsym(&Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
-  lit_52 = YPsb((P)"UNKNOWN FUNCTION %= CALLED");
-  T90 = YPsig(YPpair(YPPsym((P)"fun"),Ynil),YPpair(CHKREF(YLfunG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  Yunknown_function_error = YPmet(FUNCODEREF(Yunknown_function_error),YPPsym((P)"unknown-function-error"),T90,ENVNUL);
-  T91 = Yunknown_function_error;
-  Yunknown_function_error = T91;
-  regsym(&Yunknown_function_error,"boot","unknown-function-error");
-  lit_53 = YPsb((P)"TYPE ERROR %= SHOULD BE A %=");
-  T92 = YPsig(YPpair(YPPsym((P)"arg"),YPpair(YPPsym((P)"type"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  Ytype_error = YPmet(FUNCODEREF(Ytype_error),YPPsym((P)"type-error"),T92,ENVNUL);
-  T93 = Ytype_error;
-  Ytype_error = T93;
-  regsym(&Ytype_error,"boot","type-error");
-  T94 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLlocG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  YruntimeYlocative_value = YPmet(FUNCODEREF(YruntimeYlocative_value),YPPsym((P)"locative-value"),T94,ENVNUL);
-  T95 = YruntimeYlocative_value;
-  YruntimeYlocative_value = T95;
-  regsym(&YruntimeYlocative_value,"runtime","locative-value");
-  T96 = YPsig(YPpair(YPPsym((P)"z"),YPpair(YPPsym((P)"x"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLlocG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YruntimeYlocative_value_setter = YPmet(FUNCODEREF(YruntimeYlocative_value_setter),YPPsym((P)"locative-value-setter"),T96,ENVNUL);
-  T97 = YruntimeYlocative_value_setter;
-  YruntimeYlocative_value_setter = T97;
-  regsym(&YruntimeYlocative_value_setter,"runtime","locative-value-setter");
-  T98 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  YruntimeYapp_filename = YPmet(FUNCODEREF(YruntimeYapp_filename),YPPsym((P)"app-filename"),T98,ENVNUL);
-  T99 = YruntimeYapp_filename;
-  YruntimeYapp_filename = T99;
-  regsym(&YruntimeYapp_filename,"runtime","app-filename");
-  T100 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  YruntimeYapp_args = YPmet(FUNCODEREF(YruntimeYapp_args),YPPsym((P)"app-args"),T100,ENVNUL);
-  T101 = YruntimeYapp_args;
-  YruntimeYapp_args = T101;
-  regsym(&YruntimeYapp_args,"runtime","app-args");
-  T103 = (P)YPpair(CHKREF(YLanyG),Ynil);
-  T102 = CALL3(CHKREF(YPisa),T103,Ynil,Ynil);
-  YruntimeYLportG = T102;
-  regsym(&YruntimeYLportG,"runtime","<port>");
-  T104 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLportG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_port_handle_395 = YPmet(FUNCODEREF(fun_port_handle_395),YPPsym((P)"port-handle"),T104,ENVNUL);
-  T108 = BOUNDP(YruntimeYport_handle);
-  if (T108 != YPfalse) {
-    T107 = CHKREF(YruntimeYport_handle);
-  } else {
-    T107 = YPfalse;
-  }
-  T106 = fun_port_handle_395;
-  T105 = CALL2(CHKREF(YPdefine_method),T107,T106);
-  YruntimeYport_handle = T105;
-  regsym(&YruntimeYport_handle,"runtime","port-handle");
-  T109 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YruntimeYLportG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_port_handle_setter_396 = YPmet(FUNCODEREF(fun_port_handle_setter_396),YPPsym((P)"port-handle-setter"),T109,ENVNUL);
-  T113 = BOUNDP(YruntimeYport_handle_setter);
-  if (T113 != YPfalse) {
-    T112 = CHKREF(YruntimeYport_handle_setter);
-  } else {
-    T112 = YPfalse;
-  }
-  T111 = fun_port_handle_setter_396;
-  T110 = CALL2(CHKREF(YPdefine_method),T112,T111);
-  YruntimeYport_handle_setter = T110;
-  regsym(&YruntimeYport_handle_setter,"runtime","port-handle-setter");
-  T114 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_397 = YPmet(FUNCODEREF(fun_397),YPfalse,T114,ENVNUL);
-  T115 = fun_397;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLportG),CHKREF(YruntimeYport_handle),CHKREF(YruntimeYport_handle_setter),CHKREF(YLanyG),T115);
-  T117 = (P)YPpair(CHKREF(YruntimeYLportG),Ynil);
-  T116 = CALL3(CHKREF(YPisa),T117,Ynil,Ynil);
-  YruntimeYLinput_portG = T116;
-  regsym(&YruntimeYLinput_portG,"runtime","<input-port>");
-  T119 = (P)YPpair(CHKREF(YruntimeYLportG),Ynil);
-  T118 = CALL3(CHKREF(YPisa),T119,Ynil,Ynil);
-  YruntimeYLoutput_portG = T118;
-  regsym(&YruntimeYLoutput_portG,"runtime","<output-port>");
-  T121 = (P)YPpair(CHKREF(YruntimeYLportG),Ynil);
-  T120 = CALL3(CHKREF(YPisa),T121,Ynil,Ynil);
-  YruntimeYLfile_portG = T120;
-  regsym(&YruntimeYLfile_portG,"runtime","<file-port>");
-  T124 = (P)YPpair(CHKREF(YruntimeYLinput_portG),Ynil);
-  T123 = (P)YPpair(CHKREF(YruntimeYLfile_portG),T124);
-  T122 = CALL3(CHKREF(YPisa),T123,Ynil,Ynil);
-  YruntimeYLfile_input_portG = T122;
-  regsym(&YruntimeYLfile_input_portG,"runtime","<file-input-port>");
-  T127 = (P)YPpair(CHKREF(YruntimeYLoutput_portG),Ynil);
-  T126 = (P)YPpair(CHKREF(YruntimeYLfile_portG),T127);
-  T125 = CALL3(CHKREF(YPisa),T126,Ynil,Ynil);
-  YruntimeYLfile_output_portG = T125;
-  regsym(&YruntimeYLfile_output_portG,"runtime","<file-output-port>");
-  T128 = YPsig(YPpair(YPPsym((P)"filename"),Ynil),YPpair(CHKREF(YLstrG),Ynil),YPfalse,YPint((P)1),CHKREF(YruntimeYLfile_input_portG));
-  fun_open_input_file_398 = YPmet(FUNCODEREF(fun_open_input_file_398),YPPsym((P)"open-input-file"),T128,ENVNUL);
-  T132 = BOUNDP(YruntimeYopen_input_file);
-  if (T132 != YPfalse) {
-    T131 = CHKREF(YruntimeYopen_input_file);
-  } else {
-    T131 = YPfalse;
-  }
-  T130 = fun_open_input_file_398;
-  T129 = CALL2(CHKREF(YPdefine_method),T131,T130);
-  YruntimeYopen_input_file = T129;
-  regsym(&YruntimeYopen_input_file,"runtime","open-input-file");
-  lit_54 = YPsb((P)"Cannot open file named %=");
-  T133 = YPsig(YPpair(YPPsym((P)"filename"),Ynil),YPpair(CHKREF(YLstrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_file_opening_error_399 = YPmet(FUNCODEREF(fun_file_opening_error_399),YPPsym((P)"file-opening-error"),T133,ENVNUL);
-  T137 = BOUNDP(Yfile_opening_error);
-  if (T137 != YPfalse) {
-    T136 = CHKREF(Yfile_opening_error);
-  } else {
-    T136 = YPfalse;
-  }
-  T135 = fun_file_opening_error_399;
-  T134 = CALL2(CHKREF(YPdefine_method),T136,T135);
-  Yfile_opening_error = T134;
-  regsym(&Yfile_opening_error,"boot","file-opening-error");
-  T138 = YPsig(YPpair(YPPsym((P)"filename"),Ynil),YPpair(CHKREF(YLstrG),Ynil),YPfalse,YPint((P)1),CHKREF(YruntimeYLfile_output_portG));
-  fun_open_output_file_400 = YPmet(FUNCODEREF(fun_open_output_file_400),YPPsym((P)"open-output-file"),T138,ENVNUL);
-  T142 = BOUNDP(YruntimeYopen_output_file);
-  if (T142 != YPfalse) {
-    T141 = CHKREF(YruntimeYopen_output_file);
-  } else {
-    T141 = YPfalse;
-  }
-  T140 = fun_open_output_file_400;
-  T139 = CALL2(CHKREF(YPdefine_method),T141,T140);
-  YruntimeYopen_output_file = T139;
-  regsym(&YruntimeYopen_output_file,"runtime","open-output-file");
-  T143 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_close_input_port_401 = YPmet(FUNCODEREF(fun_close_input_port_401),YPPsym((P)"close-input-port"),T143,ENVNUL);
-  T147 = BOUNDP(YruntimeYclose_input_port);
-  if (T147 != YPfalse) {
-    T146 = CHKREF(YruntimeYclose_input_port);
-  } else {
-    T146 = YPfalse;
-  }
-  T145 = fun_close_input_port_401;
-  T144 = CALL2(CHKREF(YPdefine_method),T146,T145);
-  YruntimeYclose_input_port = T144;
-  regsym(&YruntimeYclose_input_port,"runtime","close-input-port");
-  T148 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_output_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_close_output_port_402 = YPmet(FUNCODEREF(fun_close_output_port_402),YPPsym((P)"close-output-port"),T148,ENVNUL);
-  T152 = BOUNDP(YruntimeYclose_output_port);
-  if (T152 != YPfalse) {
-    T151 = CHKREF(YruntimeYclose_output_port);
-  } else {
-    T151 = YPfalse;
-  }
-  T150 = fun_close_output_port_402;
-  T149 = CALL2(CHKREF(YPdefine_method),T151,T150);
-  YruntimeYclose_output_port = T149;
-  regsym(&YruntimeYclose_output_port,"runtime","close-output-port");
-  T155 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_403 = YPmet(FUNCODEREF(fun_403),YPfalse,T155,ENVNUL);
-  T154 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_404 = YPmet(FUNCODEREF(fun_404),YPfalse,T154,ENVNUL);
-  T153 = YPsig(YPpair(YPPsym((P)"string"),YPpair(YPPsym((P)"proc"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLfunG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_call_with_input_file_405 = YPmet(FUNCODEREF(fun_call_with_input_file_405),YPPsym((P)"call-with-input-file"),T153,ENVNUL);
-  T159 = BOUNDP(YruntimeYcall_with_input_file);
-  if (T159 != YPfalse) {
-    T158 = CHKREF(YruntimeYcall_with_input_file);
-  } else {
-    T158 = YPfalse;
-  }
-  T157 = fun_call_with_input_file_405;
-  T156 = CALL2(CHKREF(YPdefine_method),T158,T157);
-  YruntimeYcall_with_input_file = T156;
-  regsym(&YruntimeYcall_with_input_file,"runtime","call-with-input-file");
-  T162 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_406 = YPmet(FUNCODEREF(fun_406),YPfalse,T162,ENVNUL);
-  T161 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_407 = YPmet(FUNCODEREF(fun_407),YPfalse,T161,ENVNUL);
-  T160 = YPsig(YPpair(YPPsym((P)"string"),YPpair(YPPsym((P)"proc"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLfunG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_call_with_output_file_408 = YPmet(FUNCODEREF(fun_call_with_output_file_408),YPPsym((P)"call-with-output-file"),T160,ENVNUL);
-  T166 = BOUNDP(YruntimeYcall_with_output_file);
-  if (T166 != YPfalse) {
-    T165 = CHKREF(YruntimeYcall_with_output_file);
-  } else {
-    T165 = YPfalse;
-  }
-  T164 = fun_call_with_output_file_408;
-  T163 = CALL2(CHKREF(YPdefine_method),T165,T164);
-  YruntimeYcall_with_output_file = T163;
-  regsym(&YruntimeYcall_with_output_file,"runtime","call-with-output-file");
-  T171 = (P)YPpair(CHKREF(YruntimeYLfile_input_portG),Ynil);
-  T170 = (P)YPpair(CHKREF(YruntimeYport_handle),Ynil);
-  T169 = (P)YPcurrent_input_port();
-  T168 = (P)YPpair(T169,Ynil);
-  T167 = CALL3(CHKREF(YPisa),T171,T170,T168);
-  YruntimeYin = T167;
-  regsym(&YruntimeYin,"runtime","in");
-  T176 = (P)YPpair(CHKREF(YruntimeYLfile_output_portG),Ynil);
-  T175 = (P)YPpair(CHKREF(YruntimeYport_handle),Ynil);
-  T174 = (P)YPcurrent_output_port();
-  T173 = (P)YPpair(T174,Ynil);
-  T172 = CALL3(CHKREF(YPisa),T176,T175,T173);
-  YruntimeYout = T172;
-  regsym(&YruntimeYout,"runtime","out");
-  T177 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_eof_objectQ_409 = YPmet(FUNCODEREF(fun_eof_objectQ_409),YPPsym((P)"eof-object?"),T177,ENVNUL);
-  T181 = BOUNDP(YruntimeYeof_objectQ);
-  if (T181 != YPfalse) {
-    T180 = CHKREF(YruntimeYeof_objectQ);
-  } else {
-    T180 = YPfalse;
-  }
-  T179 = fun_eof_objectQ_409;
-  T178 = CALL2(CHKREF(YPdefine_method),T180,T179);
-  YruntimeYeof_objectQ = T178;
-  regsym(&YruntimeYeof_objectQ,"runtime","eof-object?");
-  T182 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLchrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_eof_objectQ_410 = YPmet(FUNCODEREF(fun_eof_objectQ_410),YPPsym((P)"eof-object?"),T182,ENVNUL);
-  T186 = BOUNDP(YruntimeYeof_objectQ);
-  if (T186 != YPfalse) {
-    T185 = CHKREF(YruntimeYeof_objectQ);
-  } else {
-    T185 = YPfalse;
-  }
-  T184 = fun_eof_objectQ_410;
-  T183 = CALL2(CHKREF(YPdefine_method),T185,T184);
-  YruntimeYeof_objectQ = T183;
-  regsym(&YruntimeYeof_objectQ,"runtime","eof-object?");
-  T187 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLchrG));
-  fun_eof_object_411 = YPmet(FUNCODEREF(fun_eof_object_411),YPPsym((P)"eof-object"),T187,ENVNUL);
-  T191 = BOUNDP(YruntimeYeof_object);
-  if (T191 != YPfalse) {
-    T190 = CHKREF(YruntimeYeof_object);
-  } else {
-    T190 = YPfalse;
-  }
-  T189 = fun_eof_object_411;
-  T188 = CALL2(CHKREF(YPdefine_method),T190,T189);
-  YruntimeYeof_object = T188;
-  regsym(&YruntimeYeof_object,"runtime","eof-object");
-  T192 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
-  fun_read_char_412 = YPmet(FUNCODEREF(fun_read_char_412),YPPsym((P)"read-char"),T192,ENVNUL);
-  T196 = BOUNDP(YruntimeYread_char);
-  if (T196 != YPfalse) {
-    T195 = CHKREF(YruntimeYread_char);
-  } else {
-    T195 = YPfalse;
-  }
-  T194 = fun_read_char_412;
-  T193 = CALL2(CHKREF(YPdefine_method),T195,T194);
-  YruntimeYread_char = T193;
-  regsym(&YruntimeYread_char,"runtime","read-char");
-  T197 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
-  fun_peek_char_413 = YPmet(FUNCODEREF(fun_peek_char_413),YPPsym((P)"peek-char"),T197,ENVNUL);
-  T201 = BOUNDP(YruntimeYpeek_char);
-  if (T201 != YPfalse) {
-    T200 = CHKREF(YruntimeYpeek_char);
-  } else {
-    T200 = YPfalse;
-  }
-  T199 = fun_peek_char_413;
-  T198 = CALL2(CHKREF(YPdefine_method),T200,T199);
-  YruntimeYpeek_char = T198;
-  regsym(&YruntimeYpeek_char,"runtime","peek-char");
-  T202 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_char_readyQ_414 = YPmet(FUNCODEREF(fun_char_readyQ_414),YPPsym((P)"char-ready?"),T202,ENVNUL);
-  T206 = BOUNDP(YruntimeYchar_readyQ);
-  if (T206 != YPfalse) {
-    T205 = CHKREF(YruntimeYchar_readyQ);
-  } else {
-    T205 = YPfalse;
-  }
-  T204 = fun_char_readyQ_414;
-  T203 = CALL2(CHKREF(YPdefine_method),T205,T204);
-  YruntimeYchar_readyQ = T203;
-  regsym(&YruntimeYchar_readyQ,"runtime","char-ready?");
-  T207 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLoutput_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_newline_415 = YPmet(FUNCODEREF(fun_newline_415),YPPsym((P)"newline"),T207,ENVNUL);
-  T211 = BOUNDP(YruntimeYnewline);
-  if (T211 != YPfalse) {
-    T210 = CHKREF(YruntimeYnewline);
-  } else {
-    T210 = YPfalse;
-  }
-  T209 = fun_newline_415;
-  T208 = CALL2(CHKREF(YPdefine_method),T210,T209);
-  YruntimeYnewline = T208;
-  regsym(&YruntimeYnewline,"runtime","newline");
-  T212 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_output_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_force_output_416 = YPmet(FUNCODEREF(fun_force_output_416),YPPsym((P)"force-output"),T212,ENVNUL);
-  T216 = BOUNDP(YruntimeYforce_output);
-  if (T216 != YPfalse) {
-    T215 = CHKREF(YruntimeYforce_output);
-  } else {
-    T215 = YPfalse;
-  }
-  T214 = fun_force_output_416;
-  T213 = CALL2(CHKREF(YPdefine_method),T215,T214);
-  YruntimeYforce_output = T213;
-  regsym(&YruntimeYforce_output,"runtime","force-output");
-  T217 = YPsig(YPpair(YPPsym((P)"port"),YPpair(YPPsym((P)"c"),Ynil)),YPpair(CHKREF(YruntimeYLfile_output_portG),YPpair(CHKREF(YLchrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_write_char_417 = YPmet(FUNCODEREF(fun_write_char_417),YPPsym((P)"write-char"),T217,ENVNUL);
-  T221 = BOUNDP(YruntimeYwrite_char);
-  if (T221 != YPfalse) {
-    T220 = CHKREF(YruntimeYwrite_char);
-  } else {
-    T220 = YPfalse;
-  }
-  T219 = fun_write_char_417;
-  T218 = CALL2(CHKREF(YPdefine_method),T220,T219);
-  YruntimeYwrite_char = T218;
-  regsym(&YruntimeYwrite_char,"runtime","write-char");
-  T222 = YPsig(YPpair(YPPsym((P)"port"),YPpair(YPPsym((P)"s"),Ynil)),YPpair(CHKREF(YruntimeYLfile_output_portG),YPpair(CHKREF(YLstrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_write_string_418 = YPmet(FUNCODEREF(fun_write_string_418),YPPsym((P)"write-string"),T222,ENVNUL);
-  T226 = BOUNDP(YruntimeYwrite_string);
-  if (T226 != YPfalse) {
-    T225 = CHKREF(YruntimeYwrite_string);
-  } else {
-    T225 = YPfalse;
-  }
-  T224 = fun_write_string_418;
-  T223 = CALL2(CHKREF(YPdefine_method),T225,T224);
-  YruntimeYwrite_string = T223;
-  regsym(&YruntimeYwrite_string,"runtime","write-string");
-  T227 = YPsig(YPpair(YPPsym((P)"filename"),Ynil),YPpair(CHKREF(YLstrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLfloG));
-  fun_file_mtime_419 = YPmet(FUNCODEREF(fun_file_mtime_419),YPPsym((P)"file-mtime"),T227,ENVNUL);
-  T231 = BOUNDP(YruntimeYfile_mtime);
-  if (T231 != YPfalse) {
-    T230 = CHKREF(YruntimeYfile_mtime);
-  } else {
-    T230 = YPfalse;
-  }
-  T229 = fun_file_mtime_419;
-  T228 = CALL2(CHKREF(YPdefine_method),T230,T229);
-  YruntimeYfile_mtime = T228;
-  regsym(&YruntimeYfile_mtime,"runtime","file-mtime");
-  T233 = (P)YPpair(CHKREF(YruntimeYLportG),Ynil);
-  T232 = CALL3(CHKREF(YPisa),T233,Ynil,Ynil);
-  YruntimeYLstring_portG = T232;
-  regsym(&YruntimeYLstring_portG,"runtime","<string-port>");
-  T234 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLstring_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_port_guts_420 = YPmet(FUNCODEREF(fun_port_guts_420),YPPsym((P)"port-guts"),T234,ENVNUL);
-  T238 = BOUNDP(YruntimeYport_guts);
-  if (T238 != YPfalse) {
-    T237 = CHKREF(YruntimeYport_guts);
-  } else {
-    T237 = YPfalse;
-  }
-  T236 = fun_port_guts_420;
-  T235 = CALL2(CHKREF(YPdefine_method),T237,T236);
-  YruntimeYport_guts = T235;
-  regsym(&YruntimeYport_guts,"runtime","port-guts");
-  T239 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLseqG),YPpair(CHKREF(YruntimeYLstring_portG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_port_guts_setter_421 = YPmet(FUNCODEREF(fun_port_guts_setter_421),YPPsym((P)"port-guts-setter"),T239,ENVNUL);
-  T243 = BOUNDP(YruntimeYport_guts_setter);
-  if (T243 != YPfalse) {
-    T242 = CHKREF(YruntimeYport_guts_setter);
-  } else {
-    T242 = YPfalse;
-  }
-  T241 = fun_port_guts_setter_421;
-  T240 = CALL2(CHKREF(YPdefine_method),T242,T241);
-  YruntimeYport_guts_setter = T240;
-  regsym(&YruntimeYport_guts_setter,"runtime","port-guts-setter");
-  lit_55 = YPsb((P)"");
-  T246 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  T245 = fun_422 = YPmet(FUNCODEREF(fun_422),YPfalse,T246,ENVNUL);
-  T248 = fun_422;
-  T247 = CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLstring_portG),CHKREF(YruntimeYport_guts),CHKREF(YruntimeYport_guts_setter),CHKREF(YLseqG),T248);
-  T244 = T247;
-  return T244;
-}
-
-P YruntimeY___main_6___() {
-  P T244,T243,T242,T241,T240,T239,T238,T237,T236,T235,T234,T233,T232,T231,T230,T229;
-  P T228,T227,T226,T225,T224,T223,T222,T221,T220,T219,T218,T217,T216,T215,T214,T213;
-  P T212,T211,T210,T209,T208,T207,T206,T205,T204,T203,T202,T201,T200,T199,T198,T197;
-  P T196,T195,T194,T193,T192,T191,T190,T189,T188,T187,T186,T185,T184,T183,T182,T181;
-  P T180,T179,T178,T177,T176,T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165;
-  P T164,T163,T162,T161,T160,T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149;
-  P T148,T147,T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133;
-  P T132,T131,T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117;
-  P T116,T115,T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101;
-  P T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85;
-  P T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69;
-  P T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53;
-  P T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37;
-  P T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21;
-  P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
-  P T4,T3,T2,T1,T0;
-loop:
-  T0 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLstring_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLstrG));
-  fun_port_contents_423 = YPmet(FUNCODEREF(fun_port_contents_423),YPPsym((P)"port-contents"),T0,ENVNUL);
-  T4 = BOUNDP(YruntimeYport_contents);
-  if (T4 != YPfalse) {
-    T3 = CHKREF(YruntimeYport_contents);
-  } else {
-    T3 = YPfalse;
-  }
-  T2 = fun_port_contents_423;
-  T1 = CALL2(CHKREF(YPdefine_method),T3,T2);
-  YruntimeYport_contents = T1;
-  regsym(&YruntimeYport_contents,"runtime","port-contents");
-  T7 = (P)YPpair(CHKREF(YruntimeYLinput_portG),Ynil);
-  T6 = (P)YPpair(CHKREF(YruntimeYLstring_portG),T7);
-  T5 = CALL3(CHKREF(YPisa),T6,Ynil,Ynil);
-  YruntimeYLstring_input_portG = T5;
-  regsym(&YruntimeYLstring_input_portG,"runtime","<string-input-port>");
-  T8 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLstring_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_port_index_424 = YPmet(FUNCODEREF(fun_port_index_424),YPPsym((P)"port-index"),T8,ENVNUL);
-  T12 = BOUNDP(YruntimeYport_index);
-  if (T12 != YPfalse) {
-    T11 = CHKREF(YruntimeYport_index);
-  } else {
-    T11 = YPfalse;
-  }
-  T10 = fun_port_index_424;
-  T9 = CALL2(CHKREF(YPdefine_method),T11,T10);
-  YruntimeYport_index = T9;
-  regsym(&YruntimeYport_index,"runtime","port-index");
-  T13 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLstring_input_portG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_port_index_setter_425 = YPmet(FUNCODEREF(fun_port_index_setter_425),YPPsym((P)"port-index-setter"),T13,ENVNUL);
-  T17 = BOUNDP(YruntimeYport_index_setter);
-  if (T17 != YPfalse) {
-    T16 = CHKREF(YruntimeYport_index_setter);
-  } else {
-    T16 = YPfalse;
-  }
-  T15 = fun_port_index_setter_425;
-  T14 = CALL2(CHKREF(YPdefine_method),T16,T15);
-  YruntimeYport_index_setter = T14;
-  regsym(&YruntimeYport_index_setter,"runtime","port-index-setter");
-  T18 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_426 = YPmet(FUNCODEREF(fun_426),YPfalse,T18,ENVNUL);
-  T19 = fun_426;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLstring_input_portG),CHKREF(YruntimeYport_index),CHKREF(YruntimeYport_index_setter),CHKREF(YLintG),T19);
-  T22 = (P)YPpair(CHKREF(YruntimeYLoutput_portG),Ynil);
-  T21 = (P)YPpair(CHKREF(YruntimeYLstring_portG),T22);
-  T20 = CALL3(CHKREF(YPisa),T21,Ynil,Ynil);
-  YruntimeYLstring_output_portG = T20;
-  regsym(&YruntimeYLstring_output_portG,"runtime","<string-output-port>");
-  T23 = YPsig(YPpair(YPPsym((P)"string"),YPpair(YPPsym((P)"proc"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLfunG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_call_with_string_input_port_427 = YPmet(FUNCODEREF(fun_call_with_string_input_port_427),YPPsym((P)"call-with-string-input-port"),T23,ENVNUL);
-  T27 = BOUNDP(YruntimeYcall_with_string_input_port);
-  if (T27 != YPfalse) {
-    T26 = CHKREF(YruntimeYcall_with_string_input_port);
-  } else {
-    T26 = YPfalse;
-  }
-  T25 = fun_call_with_string_input_port_427;
-  T24 = CALL2(CHKREF(YPdefine_method),T26,T25);
-  YruntimeYcall_with_string_input_port = T24;
-  regsym(&YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
-  T28 = YPsig(YPpair(YPPsym((P)"proc"),Ynil),YPpair(CHKREF(YLfunG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_call_with_string_output_port_428 = YPmet(FUNCODEREF(fun_call_with_string_output_port_428),YPPsym((P)"call-with-string-output-port"),T28,ENVNUL);
-  T32 = BOUNDP(YruntimeYcall_with_string_output_port);
-  if (T32 != YPfalse) {
-    T31 = CHKREF(YruntimeYcall_with_string_output_port);
-  } else {
-    T31 = YPfalse;
-  }
-  T30 = fun_call_with_string_output_port_428;
-  T29 = CALL2(CHKREF(YPdefine_method),T31,T30);
-  YruntimeYcall_with_string_output_port = T29;
-  regsym(&YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
-  T33 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLstring_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
-  fun_peek_char_429 = YPmet(FUNCODEREF(fun_peek_char_429),YPPsym((P)"peek-char"),T33,ENVNUL);
-  T37 = BOUNDP(YruntimeYpeek_char);
-  if (T37 != YPfalse) {
-    T36 = CHKREF(YruntimeYpeek_char);
-  } else {
-    T36 = YPfalse;
-  }
-  T35 = fun_peek_char_429;
-  T34 = CALL2(CHKREF(YPdefine_method),T36,T35);
-  YruntimeYpeek_char = T34;
-  regsym(&YruntimeYpeek_char,"runtime","peek-char");
-  T38 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLstring_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
-  fun_read_char_430 = YPmet(FUNCODEREF(fun_read_char_430),YPPsym((P)"read-char"),T38,ENVNUL);
-  T42 = BOUNDP(YruntimeYread_char);
-  if (T42 != YPfalse) {
-    T41 = CHKREF(YruntimeYread_char);
-  } else {
-    T41 = YPfalse;
-  }
-  T40 = fun_read_char_430;
-  T39 = CALL2(CHKREF(YPdefine_method),T41,T40);
-  YruntimeYread_char = T39;
-  regsym(&YruntimeYread_char,"runtime","read-char");
-  T43 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLstring_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  fun_char_readyQ_431 = YPmet(FUNCODEREF(fun_char_readyQ_431),YPPsym((P)"char-ready?"),T43,ENVNUL);
-  T47 = BOUNDP(YruntimeYchar_readyQ);
-  if (T47 != YPfalse) {
-    T46 = CHKREF(YruntimeYchar_readyQ);
-  } else {
-    T46 = YPfalse;
-  }
-  T45 = fun_char_readyQ_431;
-  T44 = CALL2(CHKREF(YPdefine_method),T46,T45);
-  YruntimeYchar_readyQ = T44;
-  regsym(&YruntimeYchar_readyQ,"runtime","char-ready?");
-  T48 = YPsig(YPpair(YPPsym((P)"port"),YPpair(YPPsym((P)"c"),Ynil)),YPpair(CHKREF(YruntimeYLstring_output_portG),YPpair(CHKREF(YLchrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_write_char_432 = YPmet(FUNCODEREF(fun_write_char_432),YPPsym((P)"write-char"),T48,ENVNUL);
-  T52 = BOUNDP(YruntimeYwrite_char);
-  if (T52 != YPfalse) {
-    T51 = CHKREF(YruntimeYwrite_char);
-  } else {
-    T51 = YPfalse;
-  }
-  T50 = fun_write_char_432;
-  T49 = CALL2(CHKREF(YPdefine_method),T51,T50);
-  YruntimeYwrite_char = T49;
-  regsym(&YruntimeYwrite_char,"runtime","write-char");
-  T53 = YPsig(YPpair(YPPsym((P)"port"),YPpair(YPPsym((P)"s"),Ynil)),YPpair(CHKREF(YruntimeYLstring_output_portG),YPpair(CHKREF(YLstrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_write_string_433 = YPmet(FUNCODEREF(fun_write_string_433),YPPsym((P)"write-string"),T53,ENVNUL);
-  T57 = BOUNDP(YruntimeYwrite_string);
-  if (T57 != YPfalse) {
-    T56 = CHKREF(YruntimeYwrite_string);
-  } else {
-    T56 = YPfalse;
-  }
-  T55 = fun_write_string_433;
-  T54 = CALL2(CHKREF(YPdefine_method),T56,T55);
-  YruntimeYwrite_string = T54;
-  regsym(&YruntimeYwrite_string,"runtime","write-string");
-  lit_56 = YPpair(YPint((P)3), YPpair(YPint((P)5), YPpair(YPint((P)11), YPpair(YPint((P)17), YPpair(YPint((P)29), YPpair(YPint((P)41), YPpair(YPint((P)47), YPpair(YPint((P)59), YPpair(YPint((P)71), YPpair(YPint((P)101), YPpair(YPint((P)107), YPpair(YPint((P)137), YPpair(YPint((P)149), YPpair(YPint((P)167), YPpair(YPint((P)179), YPpair(YPint((P)191), YPpair(YPint((P)197), YPpair(YPint((P)227), YPpair(YPint((P)239), YPpair(YPint((P)269), YPpair(YPint((P)281), YPpair(YPint((P)311), YPpair(YPint((P)347), YPpair(YPint((P)419), YPpair(YPint((P)431), YPpair(YPint((P)461), YPpair(YPint((P)521), YPpair(YPint((P)569), YPpair(YPint((P)599), YPpair(YPint((P)617), YPpair(YPint((P)641), YPpair(YPint((P)659), YPpair(YPint((P)809), YPpair(YPint((P)839), YPpair(YPint((P)881), YPpair(YPint((P)1019), YPpair(YPint((P)1049), YPpair(YPint((P)1091), YPpair(YPint((P)1151), YPpair(YPint((P)1229), YPpair(YPint((P)1277), YPpair(YPint((P)1319), YPpair(YPint((P)1367), YPpair(YPint((P)1427), YPpair(YPint((P)1481), YPpair(YPint((P)1607), YPpair(YPint((P)1667), YPpair(YPint((P)1721), YPpair(YPint((P)1787), YPpair(YPint((P)1871), YPpair(YPint((P)1931), YPpair(YPint((P)1997), YPpair(YPint((P)2081), YPpair(YPint((P)2141), YPpair(YPint((P)2207), YPpair(YPint((P)2267), YPpair(YPint((P)2339), YPpair(YPint((P)2549), YPpair(YPint((P)2657), YPpair(YPint((P)2729), YPpair(YPint((P)2801), YPpair(YPint((P)2969), YPpair(YPint((P)3119), YPpair(YPint((P)3251), YPpair(YPint((P)3359), YPpair(YPint((P)3461), YPpair(YPint((P)3557), YPpair(YPint((P)3671), YPpair(YPint((P)3767), YPpair(YPint((P)3917), YPpair(YPint((P)4019), YPpair(YPint((P)4127), YPpair(YPint((P)4241), YPpair(YPint((P)4421), YPpair(YPint((P)4547), YPpair(YPint((P)4721), YPpair(YPint((P)4931), YPpair(YPint((P)5099), YPpair(YPint((P)5231), YPpair(YPint((P)5417), YPpair(YPint((P)5639), YPpair(YPint((P)5849), YPpair(YPint((P)6089), YPpair(YPint((P)6269), YPpair(YPint((P)6449), YPpair(YPint((P)6659), YPpair(YPint((P)6827), YPpair(YPint((P)7127), YPpair(YPint((P)7307), YPpair(YPint((P)7547), YPpair(YPint((P)7757), YPpair(YPint((P)8009), YPpair(YPint((P)8219), YPpair(YPint((P)8429), YPpair(YPint((P)8819), YPpair(YPint((P)9041), YPpair(YPint((P)9281), YPpair(YPint((P)9629), YPpair(YPint((P)9929), YPpair(YPint((P)10271), YPpair(YPint((P)10529), YPpair(YPint((P)10859), YPpair(YPint((P)11159), YPpair(YPint((P)11447), YPpair(YPint((P)11777), YPpair(YPint((P)12107), YPpair(YPint((P)12539), YPpair(YPint((P)12917), YPpair(YPint((P)13337), YPpair(YPint((P)13679), YPpair(YPint((P)14081), YPpair(YPint((P)14447), YPpair(YPint((P)14867), YPpair(YPint((P)15269), YPpair(YPint((P)15731), YPpair(YPint((P)16139), YPpair(YPint((P)16631), YPpair(YPint((P)17189), YPpair(YPint((P)17657), YPpair(YPint((P)18119), YPpair(YPint((P)18911), YPpair(YPint((P)19421), YPpair(YPint((P)19961), YPpair(YPint((P)20477), YPpair(YPint((P)21011), YPpair(YPint((P)21557), YPpair(YPint((P)22109), YPpair(YPint((P)22697), YPpair(YPint((P)23291), YPpair(YPint((P)23909), YPpair(YPint((P)24917), YPpair(YPint((P)25577), YPpair(YPint((P)26249), YPpair(YPint((P)26951), YPpair(YPint((P)27689), YPpair(YPint((P)28409), YPpair(YPint((P)29129), YPpair(YPint((P)29879), YPpair(YPint((P)30839), YPpair(YPint((P)31721), YPpair(YPint((P)32531), YPpair(YPint((P)33347), YPpair(YPint((P)34211), YPpair(YPint((P)35081), YPpair(YPint((P)36011), YPpair(YPint((P)36929), YPpair(YPint((P)37991), YPpair(YPint((P)39041), YPpair(YPint((P)40037), YPpair(YPint((P)41141), YPpair(YPint((P)42179), YPpair(YPint((P)43319), YPpair(YPint((P)44531), YPpair(YPint((P)45821), YPpair(YPint((P)47057), YPpair(YPint((P)48311), YPpair(YPint((P)49529), YPpair(YPint((P)50891), YPpair(YPint((P)52181), YPpair(YPint((P)53549), YPpair(YPint((P)54917), YPpair(YPint((P)56477), YPpair(YPint((P)57899), YPpair(YPint((P)59357), YPpair(YPint((P)60887), YPpair(YPint((P)62927), YPpair(YPint((P)64577), YPpair(YPint((P)66359), YPpair(YPint((P)68111), YPpair(YPint((P)69827), YPpair(YPint((P)71711), YPpair(YPint((P)73607), YPpair(YPint((P)75539), YPpair(YPint((P)77477), YPpair(YPint((P)79559), YPpair(YPint((P)81551), YPpair(YPint((P)83639), YPpair(YPint((P)85817), YPpair(YPint((P)88001), YPpair(YPint((P)90371), YPpair(YPint((P)92639), YPpair(YPint((P)95087), YPpair(YPint((P)97499), YPpair(YPint((P)99989), YPpair(YPint((P)102497), YPpair(YPint((P)105227), YPpair(YPint((P)108011), YPpair(YPint((P)110729), YPpair(YPint((P)113537), YPpair(YPint((P)116531), YPpair(YPint((P)119549), YPpair(YPint((P)122597), YPpair(YPint((P)125789), YPpair(YPint((P)128939), YPpair(YPint((P)132329), YPpair(YPint((P)135647), YPpair(YPint((P)139121), YPpair(YPint((P)142607), YPpair(YPint((P)146297), YPpair(YPint((P)149969), YPpair(YPint((P)153887), YPpair(YPint((P)157769), YPpair(YPint((P)161729), YPpair(YPint((P)166301), YPpair(YPint((P)170537), YPpair(YPint((P)174929), YPpair(YPint((P)179381), YPpair(YPint((P)183917), YPpair(YPint((P)188831), YPpair(YPint((P)193601), YPpair(YPint((P)198461), YPpair(YPint((P)203429), YPpair(YPint((P)208589), YPpair(YPint((P)213947), YPpair(YPint((P)219311), YPpair(YPint((P)224909), YPpair(YPint((P)230561), YPpair(YPint((P)236477), YPpair(YPint((P)242447), YPpair(YPint((P)248639), YPpair(YPint((P)254927), YPpair(YPint((P)261431), YPpair(YPint((P)268517), YPpair(YPint((P)275321), YPpair(YPint((P)282239), YPpair(YPint((P)289841), YPpair(YPint((P)297467), YPpair(YPint((P)304979), YPpair(YPint((P)312617), YPpair(YPint((P)320561), YPpair(YPint((P)328589), YPpair(YPint((P)336827), YPpair(YPint((P)345461), YPpair(YPint((P)354251), YPpair(YPint((P)363149), YPpair(YPint((P)372269), YPpair(YPint((P)381629), YPpair(YPint((P)391217), YPpair(YPint((P)401309), YPpair(YPint((P)411527), YPpair(YPint((P)422087), YPpair(YPint((P)432659), YPpair(YPint((P)443561), YPpair(YPint((P)454709), YPpair(YPint((P)466181), YPpair(YPint((P)478067), YPpair(YPint((P)490031), YPpair(YPint((P)502499), YPpair(YPint((P)515087), YPpair(YPint((P)527981), YPpair(YPint((P)541361), YPpair(YPint((P)555041), YPpair(YPint((P)569081), YPpair(YPint((P)583337), YPpair(YPint((P)598049), YPpair(YPint((P)613007), YPpair(YPint((P)628679), YPpair(YPint((P)644489), YPpair(YPint((P)660617), YPpair(YPint((P)677231), YPpair(YPint((P)694259), YPpair(YPint((P)711707), YPpair(YPint((P)729557), YPpair(YPint((P)747827), YPpair(YPint((P)766541), YPpair(YPint((P)785777), YPpair(YPint((P)805499), YPpair(YPint((P)825827), YPpair(YPint((P)846749), YPpair(YPint((P)868121), YPpair(YPint((P)889871), YPpair(YPint((P)912449), YPpair(YPint((P)935591), YPpair(YPint((P)959207), YPpair(YPint((P)983327), Ynil)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
-  T58 = CALL2(CHKREF(YruntimeYas),CHKREF(YLvecG),CHKREF(lit_56));
-  YruntimeYTtwin_primesT = T58;
-  regsym(&YruntimeYTtwin_primesT,"runtime","*twin-primes*");
-  T60 = (P)YPpair(CHKREF(YLanyG),Ynil);
-  T59 = CALL3(CHKREF(YPisa),T60,Ynil,Ynil);
-  YruntimeYLsimple_table_vectorG = T59;
-  regsym(&YruntimeYLsimple_table_vectorG,"runtime","<simple-table-vector>");
-  T61 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Pvacated_434 = YPmet(FUNCODEREF(fun_Pvacated_434),YPPsym((P)"%vacated"),T61,ENVNUL);
-  T65 = BOUNDP(YruntimeYPvacated);
-  if (T65 != YPfalse) {
-    T64 = CHKREF(YruntimeYPvacated);
-  } else {
-    T64 = YPfalse;
-  }
-  T63 = fun_Pvacated_434;
-  T62 = CALL2(CHKREF(YPdefine_method),T64,T63);
-  YruntimeYPvacated = T62;
-  regsym(&YruntimeYPvacated,"runtime","%vacated");
-  T66 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Pvacated_setter_435 = YPmet(FUNCODEREF(fun_Pvacated_setter_435),YPPsym((P)"%vacated-setter"),T66,ENVNUL);
-  T70 = BOUNDP(YruntimeYPvacated_setter);
-  if (T70 != YPfalse) {
-    T69 = CHKREF(YruntimeYPvacated_setter);
-  } else {
-    T69 = YPfalse;
-  }
-  T68 = fun_Pvacated_setter_435;
-  T67 = CALL2(CHKREF(YPdefine_method),T69,T68);
-  YruntimeYPvacated_setter = T67;
-  regsym(&YruntimeYPvacated_setter,"runtime","%vacated-setter");
-  T71 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_436 = YPmet(FUNCODEREF(fun_436),YPfalse,T71,ENVNUL);
-  T72 = fun_436;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPvacated),CHKREF(YruntimeYPvacated_setter),CHKREF(YLintG),T72);
-  T73 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Pprimary_modulus_437 = YPmet(FUNCODEREF(fun_Pprimary_modulus_437),YPPsym((P)"%primary-modulus"),T73,ENVNUL);
-  T77 = BOUNDP(YruntimeYPprimary_modulus);
-  if (T77 != YPfalse) {
-    T76 = CHKREF(YruntimeYPprimary_modulus);
-  } else {
-    T76 = YPfalse;
-  }
-  T75 = fun_Pprimary_modulus_437;
-  T74 = CALL2(CHKREF(YPdefine_method),T76,T75);
-  YruntimeYPprimary_modulus = T74;
-  regsym(&YruntimeYPprimary_modulus,"runtime","%primary-modulus");
-  T78 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Pprimary_modulus_setter_438 = YPmet(FUNCODEREF(fun_Pprimary_modulus_setter_438),YPPsym((P)"%primary-modulus-setter"),T78,ENVNUL);
-  T82 = BOUNDP(YruntimeYPprimary_modulus_setter);
-  if (T82 != YPfalse) {
-    T81 = CHKREF(YruntimeYPprimary_modulus_setter);
-  } else {
-    T81 = YPfalse;
-  }
-  T80 = fun_Pprimary_modulus_setter_438;
-  T79 = CALL2(CHKREF(YPdefine_method),T81,T80);
-  YruntimeYPprimary_modulus_setter = T79;
-  regsym(&YruntimeYPprimary_modulus_setter,"runtime","%primary-modulus-setter");
-  T83 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_439 = YPmet(FUNCODEREF(fun_439),YPfalse,T83,ENVNUL);
-  T84 = fun_439;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPprimary_modulus),CHKREF(YruntimeYPprimary_modulus_setter),CHKREF(YLintG),T84);
-  T85 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Psecondary_modulus_440 = YPmet(FUNCODEREF(fun_Psecondary_modulus_440),YPPsym((P)"%secondary-modulus"),T85,ENVNUL);
-  T89 = BOUNDP(YruntimeYPsecondary_modulus);
-  if (T89 != YPfalse) {
-    T88 = CHKREF(YruntimeYPsecondary_modulus);
-  } else {
-    T88 = YPfalse;
-  }
-  T87 = fun_Psecondary_modulus_440;
-  T86 = CALL2(CHKREF(YPdefine_method),T88,T87);
-  YruntimeYPsecondary_modulus = T86;
-  regsym(&YruntimeYPsecondary_modulus,"runtime","%secondary-modulus");
-  T90 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Psecondary_modulus_setter_441 = YPmet(FUNCODEREF(fun_Psecondary_modulus_setter_441),YPPsym((P)"%secondary-modulus-setter"),T90,ENVNUL);
-  T94 = BOUNDP(YruntimeYPsecondary_modulus_setter);
-  if (T94 != YPfalse) {
-    T93 = CHKREF(YruntimeYPsecondary_modulus_setter);
-  } else {
-    T93 = YPfalse;
-  }
-  T92 = fun_Psecondary_modulus_setter_441;
-  T91 = CALL2(CHKREF(YPdefine_method),T93,T92);
-  YruntimeYPsecondary_modulus_setter = T91;
-  regsym(&YruntimeYPsecondary_modulus_setter,"runtime","%secondary-modulus-setter");
-  T95 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_442 = YPmet(FUNCODEREF(fun_442),YPfalse,T95,ENVNUL);
-  T96 = fun_442;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPsecondary_modulus),CHKREF(YruntimeYPsecondary_modulus_setter),CHKREF(YLintG),T96);
-  T97 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Pn_buckets_443 = YPmet(FUNCODEREF(fun_Pn_buckets_443),YPPsym((P)"%n-buckets"),T97,ENVNUL);
-  T101 = BOUNDP(YruntimeYPn_buckets);
-  if (T101 != YPfalse) {
-    T100 = CHKREF(YruntimeYPn_buckets);
-  } else {
-    T100 = YPfalse;
-  }
-  T99 = fun_Pn_buckets_443;
-  T98 = CALL2(CHKREF(YPdefine_method),T100,T99);
-  YruntimeYPn_buckets = T98;
-  regsym(&YruntimeYPn_buckets,"runtime","%n-buckets");
-  T102 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Pn_buckets_setter_444 = YPmet(FUNCODEREF(fun_Pn_buckets_setter_444),YPPsym((P)"%n-buckets-setter"),T102,ENVNUL);
-  T106 = BOUNDP(YruntimeYPn_buckets_setter);
-  if (T106 != YPfalse) {
-    T105 = CHKREF(YruntimeYPn_buckets_setter);
-  } else {
-    T105 = YPfalse;
-  }
-  T104 = fun_Pn_buckets_setter_444;
-  T103 = CALL2(CHKREF(YPdefine_method),T105,T104);
-  YruntimeYPn_buckets_setter = T103;
-  regsym(&YruntimeYPn_buckets_setter,"runtime","%n-buckets-setter");
-  T107 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_445 = YPmet(FUNCODEREF(fun_445),YPfalse,T107,ENVNUL);
-  T108 = fun_445;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPn_buckets),CHKREF(YruntimeYPn_buckets_setter),CHKREF(YLintG),T108);
-  T109 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Pbucket_depth_446 = YPmet(FUNCODEREF(fun_Pbucket_depth_446),YPPsym((P)"%bucket-depth"),T109,ENVNUL);
-  T113 = BOUNDP(YruntimeYPbucket_depth);
-  if (T113 != YPfalse) {
-    T112 = CHKREF(YruntimeYPbucket_depth);
-  } else {
-    T112 = YPfalse;
-  }
-  T111 = fun_Pbucket_depth_446;
-  T110 = CALL2(CHKREF(YPdefine_method),T112,T111);
-  YruntimeYPbucket_depth = T110;
-  regsym(&YruntimeYPbucket_depth,"runtime","%bucket-depth");
-  T114 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Pbucket_depth_setter_447 = YPmet(FUNCODEREF(fun_Pbucket_depth_setter_447),YPPsym((P)"%bucket-depth-setter"),T114,ENVNUL);
-  T118 = BOUNDP(YruntimeYPbucket_depth_setter);
-  if (T118 != YPfalse) {
-    T117 = CHKREF(YruntimeYPbucket_depth_setter);
-  } else {
-    T117 = YPfalse;
-  }
-  T116 = fun_Pbucket_depth_setter_447;
-  T115 = CALL2(CHKREF(YPdefine_method),T117,T116);
-  YruntimeYPbucket_depth_setter = T115;
-  regsym(&YruntimeYPbucket_depth_setter,"runtime","%bucket-depth-setter");
-  T119 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_448 = YPmet(FUNCODEREF(fun_448),YPfalse,T119,ENVNUL);
-  T120 = fun_448;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPbucket_depth),CHKREF(YruntimeYPbucket_depth_setter),CHKREF(YLintG),T120);
-  T121 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Pdata_449 = YPmet(FUNCODEREF(fun_Pdata_449),YPPsym((P)"%data"),T121,ENVNUL);
-  T125 = BOUNDP(YruntimeYPdata);
-  if (T125 != YPfalse) {
-    T124 = CHKREF(YruntimeYPdata);
-  } else {
-    T124 = YPfalse;
-  }
-  T123 = fun_Pdata_449;
-  T122 = CALL2(CHKREF(YPdefine_method),T124,T123);
-  YruntimeYPdata = T122;
-  regsym(&YruntimeYPdata,"runtime","%data");
-  T126 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLvecG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Pdata_setter_450 = YPmet(FUNCODEREF(fun_Pdata_setter_450),YPPsym((P)"%data-setter"),T126,ENVNUL);
-  T130 = BOUNDP(YruntimeYPdata_setter);
-  if (T130 != YPfalse) {
-    T129 = CHKREF(YruntimeYPdata_setter);
-  } else {
-    T129 = YPfalse;
-  }
-  T128 = fun_Pdata_setter_450;
-  T127 = CALL2(CHKREF(YPdefine_method),T129,T128);
-  YruntimeYPdata_setter = T127;
-  regsym(&YruntimeYPdata_setter,"runtime","%data-setter");
-  T131 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_451 = YPmet(FUNCODEREF(fun_451),YPfalse,T131,ENVNUL);
-  T132 = fun_451;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPdata),CHKREF(YruntimeYPdata_setter),CHKREF(YLvecG),T132);
-  T133 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Pgc_state_452 = YPmet(FUNCODEREF(fun_Pgc_state_452),YPPsym((P)"%gc-state"),T133,ENVNUL);
-  T137 = BOUNDP(YruntimeYPgc_state);
-  if (T137 != YPfalse) {
-    T136 = CHKREF(YruntimeYPgc_state);
-  } else {
-    T136 = YPfalse;
-  }
-  T135 = fun_Pgc_state_452;
-  T134 = CALL2(CHKREF(YPdefine_method),T136,T135);
-  YruntimeYPgc_state = T134;
-  regsym(&YruntimeYPgc_state,"runtime","%gc-state");
-  T138 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Pgc_state_setter_453 = YPmet(FUNCODEREF(fun_Pgc_state_setter_453),YPPsym((P)"%gc-state-setter"),T138,ENVNUL);
-  T142 = BOUNDP(YruntimeYPgc_state_setter);
-  if (T142 != YPfalse) {
-    T141 = CHKREF(YruntimeYPgc_state_setter);
-  } else {
-    T141 = YPfalse;
-  }
-  T140 = fun_Pgc_state_setter_453;
-  T139 = CALL2(CHKREF(YPdefine_method),T141,T140);
-  YruntimeYPgc_state_setter = T139;
-  regsym(&YruntimeYPgc_state_setter,"runtime","%gc-state-setter");
-  T143 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_454 = YPmet(FUNCODEREF(fun_454),YPfalse,T143,ENVNUL);
-  T144 = fun_454;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPgc_state),CHKREF(YruntimeYPgc_state_setter),CHKREF(YLanyG),T144);
-  T145 = YPsig(YPpair(YPPsym((P)"size"),YPpair(YPPsym((P)"fill-value"),YPpair(YPPsym((P)"n-buckets"),YPpair(YPPsym((P)"bucket-depth"),YPpair(YPPsym((P)"primary-modulus"),YPpair(YPPsym((P)"secondary-modulus"),Ynil)))))),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)))))),YPfalse,YPint((P)6),CHKREF(YruntimeYLsimple_table_vectorG));
-  YruntimeYfab_table_vector = YPmet(FUNCODEREF(YruntimeYfab_table_vector),YPPsym((P)"fab-table-vector"),T145,ENVNUL);
-  T146 = YruntimeYfab_table_vector;
-  YruntimeYfab_table_vector = T146;
-  regsym(&YruntimeYfab_table_vector,"runtime","fab-table-vector");
-  T147 = YPsig(YPpair(YPPsym((P)"vector"),YPpair(YPPsym((P)"index"),Ynil)),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_elt_456 = YPmet(FUNCODEREF(fun_elt_456),YPPsym((P)"elt"),T147,ENVNUL);
-  T151 = BOUNDP(YruntimeYelt);
-  if (T151 != YPfalse) {
-    T150 = CHKREF(YruntimeYelt);
-  } else {
-    T150 = YPfalse;
-  }
-  T149 = fun_elt_456;
-  T148 = CALL2(CHKREF(YPdefine_method),T150,T149);
-  YruntimeYelt = T148;
-  regsym(&YruntimeYelt,"runtime","elt");
-  T152 = YPsig(YPpair(YPPsym((P)"new-value"),YPpair(YPPsym((P)"vector"),YPpair(YPPsym((P)"index"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),YPpair(CHKREF(YLintG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_elt_setter_457 = YPmet(FUNCODEREF(fun_elt_setter_457),YPPsym((P)"elt-setter"),T152,ENVNUL);
-  T156 = BOUNDP(YruntimeYelt_setter);
-  if (T156 != YPfalse) {
-    T155 = CHKREF(YruntimeYelt_setter);
-  } else {
-    T155 = YPfalse;
-  }
-  T154 = fun_elt_setter_457;
-  T153 = CALL2(CHKREF(YPdefine_method),T155,T154);
-  YruntimeYelt_setter = T153;
-  regsym(&YruntimeYelt_setter,"runtime","elt-setter");
-  T157 = YPsig(YPpair(YPPsym((P)"vector"),YPpair(YPPsym((P)"fill-value"),Ynil)),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_clrX_458 = YPmet(FUNCODEREF(fun_clrX_458),YPPsym((P)"clr!"),T157,ENVNUL);
-  T161 = BOUNDP(YruntimeYclrX);
-  if (T161 != YPfalse) {
-    T160 = CHKREF(YruntimeYclrX);
-  } else {
-    T160 = YPfalse;
-  }
-  T159 = fun_clrX_458;
-  T158 = CALL2(CHKREF(YPdefine_method),T160,T159);
-  YruntimeYclrX = T158;
-  regsym(&YruntimeYclrX,"runtime","clr!");
-  YruntimeYTdebug_tablesQT = YPfalse;
-  regsym(&YruntimeYTdebug_tablesQT,"runtime","*debug-tables?*");
-  T162 = YPsig(YPpair(YPPsym((P)"port"),YPpair(YPPsym((P)"msg"),YPpair(YPPsym((P)"args"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPtrue,YPint((P)2),CHKREF(YLanyG));
-  YruntimeYtrace = YPmet(FUNCODEREF(YruntimeYtrace),YPPsym((P)"trace"),T162,ENVNUL);
-  T163 = YruntimeYtrace;
-  YruntimeYtrace = T163;
-  regsym(&YruntimeYtrace,"runtime","trace");
-  T165 = (P)YPpair(CHKREF(YruntimeYLmapG),Ynil);
-  T164 = CALL3(CHKREF(YPisa),T165,Ynil,Ynil);
-  YruntimeYLtabG = T164;
-  regsym(&YruntimeYLtabG,"runtime","<tab>");
-  T166 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_table_growth_factor_460 = YPmet(FUNCODEREF(fun_table_growth_factor_460),YPPsym((P)"table-growth-factor"),T166,ENVNUL);
-  T170 = BOUNDP(YruntimeYtable_growth_factor);
-  if (T170 != YPfalse) {
-    T169 = CHKREF(YruntimeYtable_growth_factor);
-  } else {
-    T169 = YPfalse;
-  }
-  T168 = fun_table_growth_factor_460;
-  T167 = CALL2(CHKREF(YPdefine_method),T169,T168);
-  YruntimeYtable_growth_factor = T167;
-  regsym(&YruntimeYtable_growth_factor,"runtime","table-growth-factor");
-  T171 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLfloG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_table_growth_factor_setter_461 = YPmet(FUNCODEREF(fun_table_growth_factor_setter_461),YPPsym((P)"table-growth-factor-setter"),T171,ENVNUL);
-  T175 = BOUNDP(YruntimeYtable_growth_factor_setter);
-  if (T175 != YPfalse) {
-    T174 = CHKREF(YruntimeYtable_growth_factor_setter);
-  } else {
-    T174 = YPfalse;
-  }
-  T173 = fun_table_growth_factor_setter_461;
-  T172 = CALL2(CHKREF(YPdefine_method),T174,T173);
-  YruntimeYtable_growth_factor_setter = T172;
-  regsym(&YruntimeYtable_growth_factor_setter,"runtime","table-growth-factor-setter");
-  lit_57 = YPflo(FLOINT(2.0));
-  T176 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_462 = YPmet(FUNCODEREF(fun_462),YPfalse,T176,ENVNUL);
-  T177 = fun_462;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtabG),CHKREF(YruntimeYtable_growth_factor),CHKREF(YruntimeYtable_growth_factor_setter),CHKREF(YLfloG),T177);
-  T178 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_table_growth_threshold_463 = YPmet(FUNCODEREF(fun_table_growth_threshold_463),YPPsym((P)"table-growth-threshold"),T178,ENVNUL);
-  T182 = BOUNDP(YruntimeYtable_growth_threshold);
-  if (T182 != YPfalse) {
-    T181 = CHKREF(YruntimeYtable_growth_threshold);
-  } else {
-    T181 = YPfalse;
-  }
-  T180 = fun_table_growth_threshold_463;
-  T179 = CALL2(CHKREF(YPdefine_method),T181,T180);
-  YruntimeYtable_growth_threshold = T179;
-  regsym(&YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
-  T183 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLfloG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_table_growth_threshold_setter_464 = YPmet(FUNCODEREF(fun_table_growth_threshold_setter_464),YPPsym((P)"table-growth-threshold-setter"),T183,ENVNUL);
-  T187 = BOUNDP(YruntimeYtable_growth_threshold_setter);
-  if (T187 != YPfalse) {
-    T186 = CHKREF(YruntimeYtable_growth_threshold_setter);
-  } else {
-    T186 = YPfalse;
-  }
-  T185 = fun_table_growth_threshold_setter_464;
-  T184 = CALL2(CHKREF(YPdefine_method),T186,T185);
-  YruntimeYtable_growth_threshold_setter = T184;
-  regsym(&YruntimeYtable_growth_threshold_setter,"runtime","table-growth-threshold-setter");
-  lit_58 = YPflo(FLOINT(0.8));
-  T188 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_465 = YPmet(FUNCODEREF(fun_465),YPfalse,T188,ENVNUL);
-  T189 = fun_465;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtabG),CHKREF(YruntimeYtable_growth_threshold),CHKREF(YruntimeYtable_growth_threshold_setter),CHKREF(YLfloG),T189);
-  T190 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_table_shrink_threshold_466 = YPmet(FUNCODEREF(fun_table_shrink_threshold_466),YPPsym((P)"table-shrink-threshold"),T190,ENVNUL);
-  T194 = BOUNDP(YruntimeYtable_shrink_threshold);
-  if (T194 != YPfalse) {
-    T193 = CHKREF(YruntimeYtable_shrink_threshold);
-  } else {
-    T193 = YPfalse;
-  }
-  T192 = fun_table_shrink_threshold_466;
-  T191 = CALL2(CHKREF(YPdefine_method),T193,T192);
-  YruntimeYtable_shrink_threshold = T191;
-  regsym(&YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
-  T195 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLfloG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_table_shrink_threshold_setter_467 = YPmet(FUNCODEREF(fun_table_shrink_threshold_setter_467),YPPsym((P)"table-shrink-threshold-setter"),T195,ENVNUL);
-  T199 = BOUNDP(YruntimeYtable_shrink_threshold_setter);
-  if (T199 != YPfalse) {
-    T198 = CHKREF(YruntimeYtable_shrink_threshold_setter);
-  } else {
-    T198 = YPfalse;
-  }
-  T197 = fun_table_shrink_threshold_setter_467;
-  T196 = CALL2(CHKREF(YPdefine_method),T198,T197);
-  YruntimeYtable_shrink_threshold_setter = T196;
-  regsym(&YruntimeYtable_shrink_threshold_setter,"runtime","table-shrink-threshold-setter");
-  lit_59 = YPflo(FLOINT(0.5));
-  T200 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_468 = YPmet(FUNCODEREF(fun_468),YPfalse,T200,ENVNUL);
-  T201 = fun_468;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtabG),CHKREF(YruntimeYtable_shrink_threshold),CHKREF(YruntimeYtable_shrink_threshold_setter),CHKREF(YLfloG),T201);
-  T202 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Pcount_469 = YPmet(FUNCODEREF(fun_Pcount_469),YPPsym((P)"%count"),T202,ENVNUL);
-  T206 = BOUNDP(YruntimeYPcount);
-  if (T206 != YPfalse) {
-    T205 = CHKREF(YruntimeYPcount);
-  } else {
-    T205 = YPfalse;
-  }
-  T204 = fun_Pcount_469;
-  T203 = CALL2(CHKREF(YPdefine_method),T205,T204);
-  YruntimeYPcount = T203;
-  regsym(&YruntimeYPcount,"runtime","%count");
-  T207 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Pcount_setter_470 = YPmet(FUNCODEREF(fun_Pcount_setter_470),YPPsym((P)"%count-setter"),T207,ENVNUL);
-  T211 = BOUNDP(YruntimeYPcount_setter);
-  if (T211 != YPfalse) {
-    T210 = CHKREF(YruntimeYPcount_setter);
-  } else {
-    T210 = YPfalse;
-  }
-  T209 = fun_Pcount_setter_470;
-  T208 = CALL2(CHKREF(YPdefine_method),T210,T209);
-  YruntimeYPcount_setter = T208;
-  regsym(&YruntimeYPcount_setter,"runtime","%count-setter");
-  T212 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_471 = YPmet(FUNCODEREF(fun_471),YPfalse,T212,ENVNUL);
-  T213 = fun_471;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtabG),CHKREF(YruntimeYPcount),CHKREF(YruntimeYPcount_setter),CHKREF(YLintG),T213);
-  T214 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Pvector_472 = YPmet(FUNCODEREF(fun_Pvector_472),YPPsym((P)"%vector"),T214,ENVNUL);
-  T218 = BOUNDP(YruntimeYPvector);
-  if (T218 != YPfalse) {
-    T217 = CHKREF(YruntimeYPvector);
-  } else {
-    T217 = YPfalse;
-  }
-  T216 = fun_Pvector_472;
-  T215 = CALL2(CHKREF(YPdefine_method),T217,T216);
-  YruntimeYPvector = T215;
-  regsym(&YruntimeYPvector,"runtime","%vector");
-  T219 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Pvector_setter_473 = YPmet(FUNCODEREF(fun_Pvector_setter_473),YPPsym((P)"%vector-setter"),T219,ENVNUL);
-  T223 = BOUNDP(YruntimeYPvector_setter);
-  if (T223 != YPfalse) {
-    T222 = CHKREF(YruntimeYPvector_setter);
-  } else {
-    T222 = YPfalse;
-  }
-  T221 = fun_Pvector_setter_473;
-  T220 = CALL2(CHKREF(YPdefine_method),T222,T221);
-  YruntimeYPvector_setter = T220;
-  regsym(&YruntimeYPvector_setter,"runtime","%vector-setter");
-  T224 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_474 = YPmet(FUNCODEREF(fun_474),YPfalse,T224,ENVNUL);
-  T225 = fun_474;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtabG),CHKREF(YruntimeYPvector),CHKREF(YruntimeYPvector_setter),CHKREF(YruntimeYLsimple_table_vectorG),T225);
-  T227 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLtupG));
-  T226 = YPgen((P)YPgen_code((P)CHKREF(YPdispatch)),YPPsym((P)"table-protocol"),T227,Ynil,YPfalse);
-  YruntimeYtable_protocol = T226;
-  regsym(&YruntimeYtable_protocol,"runtime","table-protocol");
-  T228 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLtupG));
-  fun_table_protocol_475 = YPmet(FUNCODEREF(fun_table_protocol_475),YPPsym((P)"table-protocol"),T228,ENVNUL);
-  T232 = BOUNDP(YruntimeYtable_protocol);
-  if (T232 != YPfalse) {
-    T231 = CHKREF(YruntimeYtable_protocol);
-  } else {
-    T231 = YPfalse;
-  }
-  T230 = fun_table_protocol_475;
-  T229 = CALL2(CHKREF(YPdefine_method),T231,T230);
-  YruntimeYtable_protocol = T229;
-  regsym(&YruntimeYtable_protocol,"runtime","table-protocol");
-  lit_60 = YPsb((P)"empty cell");
-  T233 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_60));
-  YruntimeYDempty_cell_marker = T233;
-  regsym(&YruntimeYDempty_cell_marker,"runtime","$empty-cell-marker");
-  lit_61 = YPsb((P)"vacated cell");
-  T234 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_61));
-  YruntimeYDvacated_cell_marker = T234;
-  regsym(&YruntimeYDvacated_cell_marker,"runtime","$vacated-cell-marker");
-  T235 = YPsig(YPpair(YPPsym((P)"hash"),YPpair(YPPsym((P)"primary"),YPpair(YPPsym((P)"secondary"),Ynil))),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLtupG));
-  YruntimeYhash_moduli = YPmet(FUNCODEREF(YruntimeYhash_moduli),YPPsym((P)"hash-moduli"),T235,ENVNUL);
-  T236 = YruntimeYhash_moduli;
-  YruntimeYhash_moduli = T236;
-  regsym(&YruntimeYhash_moduli,"runtime","hash-moduli");
-  T239 = YPsig(YPpair(YPPsym((P)"type"),YPpair(YPPsym((P)"size"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YruntimeYLtabG));
-  T238 = fun_fab_477 = YPmet(FUNCODEREF(fun_fab_477),YPPsym((P)"fab"),T239,ENVNUL);
-  T244 = BOUNDP(YruntimeYfab);
-  if (T244 != YPfalse) {
-    T243 = CHKREF(YruntimeYfab);
-  } else {
-    T243 = YPfalse;
-  }
-  T242 = fun_fab_477;
-  T241 = CALL2(CHKREF(YPdefine_method),T243,T242);
-  T240 = YruntimeYfab = T241;
-  regsym(&YruntimeYfab,"runtime","fab");
-  T237 = T240;
-  return T237;
-}
-
-P YruntimeY___main_7___() {
+  P T224,T223,T222,T221,T220,T219,T218,T217,T216,T215,T214,T213,T212,T211,T210,T209;
   P T208,T207,T206,T205,T204,T203,T202,T201,T200,T199,T198,T197,T196,T195,T194,T193;
   P T192,T191,T190,T189,T188,T187,T186,T185,T184,T183,T182,T181,T180,T179,T178,T177;
   P T176,T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164,T163,T162,T161;
@@ -15412,525 +14806,2027 @@ P YruntimeY___main_7___() {
   P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
   P T0;
 loop:
-  lit_62 = YPPsym((P)"vector");
-  lit_63 = YPPsym((P)"%secondary-modulus");
-  lit_64 = YPPsym((P)"vector");
-  lit_65 = YPPsym((P)"%primary-modulus");
-  lit_66 = YPPsym((P)"hash");
-  lit_67 = YPPsym((P)"hash-moduli");
-  lit_68 = YPPsym((P)"tup");
-  lit_69 = YPPsym((P)"table");
-  lit_70 = YPPsym((P)"%vector");
-  lit_71 = YPPsym((P)"vector");
-  lit_72 = YPPsym((P)"hash-function");
-  lit_73 = YPPsym((P)"state");
-  lit_74 = YPPsym((P)"<int>");
-  lit_75 = YPPsym((P)"hash");
-  lit_76 = YPPsym((P)"tup");
-  lit_77 = YPPsym((P)"table-protocol");
-  lit_78 = YPPsym((P)"hash-function");
-  lit_79 = YPPsym((P)"test-function");
-  lit_80 = YPPsym((P)"tup");
-  lit_81 = YPPsym((P)"let");
-  lit_82 = YPsb((P)"Match Pattern Failure");
-  lit_83 = YPPsym((P)"tup");
-  lit_84 = YPPsym((P)"with-hash");
-  T2 = YPsig(YPpair(YPPsym((P)"msg"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YLstrG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
-  fun_x_1177_478 = YPmet(FUNCODEREF(fun_x_1177_478),YPPsym((P)"x-1177"),T2,ENVNUL);
-  T1 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_479 = YPmet(FUNCODEREF(fun_479),YPfalse,T1,ENVNUL);
-  T0 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_480 = YPmet(FUNCODEREF(fun_480),YPfalse,T0,ENVNUL);
-  T3 = fun_480;
-  YPmacro(YPPsym((P)"with-hash"),T3);
-  lit_85 = YPsb((P)"The table is totally full this shouldn't happen");
-  T7 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"this-bucket-raw-index"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_inner_481 = YPmet(FUNCODEREF(fun_inner_481),YPPsym((P)"inner"),T7,ENVNUL);
-  T6 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_outer_482 = YPmet(FUNCODEREF(fun_outer_482),YPPsym((P)"outer"),T6,ENVNUL);
-  T5 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_483 = YPmet(FUNCODEREF(fun_483),YPfalse,T5,ENVNUL);
-  T4 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"key"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_elt_484 = YPmet(FUNCODEREF(fun_elt_484),YPPsym((P)"elt"),T4,ENVNUL);
-  T11 = BOUNDP(YruntimeYelt);
+  T1 = (P)YPpair(CHKREF(YLanyG),Ynil);
+  T0 = CALL3(CHKREF(YPisa),T1,Ynil,Ynil);
+  YruntimeYLconditionG = T0;
+  regsym(&YruntimeYLconditionG,"runtime","<condition>");
+  T2 = YPsig(YPpair(YPPsym((P)"c"),Ynil),YPpair(CHKREF(YruntimeYLconditionG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_default_handler_364 = YPmet(FUNCODEREF(fun_default_handler_364),YPPsym((P)"default-handler"),T2,ENVNUL);
+  T6 = BOUNDP(YruntimeYdefault_handler);
+  if (T6 != YPfalse) {
+    T5 = CHKREF(YruntimeYdefault_handler);
+  } else {
+    T5 = YPfalse;
+  }
+  T4 = fun_default_handler_364;
+  T3 = CALL2(CHKREF(YPdefine_method),T5,T4);
+  YruntimeYdefault_handler = T3;
+  regsym(&YruntimeYdefault_handler,"runtime","default-handler");
+  lit_50 = YPsb((P)"Anonymous handler for %s");
+  T7 = YPsig(YPpair(YPPsym((P)"cond-type"),Ynil),YPpair(CHKREF(YruntimeYLconditionG),Ynil),YPfalse,YPint((P)1),CHKREF(YLstrG));
+  fun_default_handler_description_365 = YPmet(FUNCODEREF(fun_default_handler_description_365),YPPsym((P)"default-handler-description"),T7,ENVNUL);
+  T11 = BOUNDP(YruntimeYdefault_handler_description);
   if (T11 != YPfalse) {
-    T10 = CHKREF(YruntimeYelt);
+    T10 = CHKREF(YruntimeYdefault_handler_description);
   } else {
     T10 = YPfalse;
   }
-  T9 = fun_elt_484;
+  T9 = fun_default_handler_description_365;
   T8 = CALL2(CHKREF(YPdefine_method),T10,T9);
-  YruntimeYelt = T8;
-  regsym(&YruntimeYelt,"runtime","elt");
-  lit_86 = YPsb((P)"The table is totally full this shouldn't happen");
-  T15 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"this-bucket-raw-index"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_inner_485 = YPmet(FUNCODEREF(fun_inner_485),YPPsym((P)"inner"),T15,ENVNUL);
-  T14 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_outer_486 = YPmet(FUNCODEREF(fun_outer_486),YPPsym((P)"outer"),T14,ENVNUL);
-  T13 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_487 = YPmet(FUNCODEREF(fun_487),YPfalse,T13,ENVNUL);
-  T12 = YPsig(YPpair(YPPsym((P)"value"),YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"key"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_elt_setter_488 = YPmet(FUNCODEREF(fun_elt_setter_488),YPPsym((P)"elt-setter"),T12,ENVNUL);
-  T19 = BOUNDP(YruntimeYelt_setter);
-  if (T19 != YPfalse) {
-    T18 = CHKREF(YruntimeYelt_setter);
+  YruntimeYdefault_handler_description = T8;
+  regsym(&YruntimeYdefault_handler_description,"runtime","default-handler-description");
+  T12 = YPsig(YPpair(YPPsym((P)"cond-type"),YPpair(YPPsym((P)"in"),YPpair(YPPsym((P)"out"),Ynil))),YPpair(CHKREF(YruntimeYLconditionG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YruntimeYLconditionG));
+  fun_build_condition_interactively_366 = YPmet(FUNCODEREF(fun_build_condition_interactively_366),YPPsym((P)"build-condition-interactively"),T12,ENVNUL);
+  T16 = BOUNDP(YruntimeYbuild_condition_interactively);
+  if (T16 != YPfalse) {
+    T15 = CHKREF(YruntimeYbuild_condition_interactively);
   } else {
-    T18 = YPfalse;
+    T15 = YPfalse;
   }
-  T17 = fun_elt_setter_488;
-  T16 = CALL2(CHKREF(YPdefine_method),T18,T17);
-  YruntimeYelt_setter = T16;
-  regsym(&YruntimeYelt_setter,"runtime","elt-setter");
-  lit_87 = YPsb((P)"The table is totally full this shouldn't happen");
-  T23 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"this-bucket-raw-index"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_inner_489 = YPmet(FUNCODEREF(fun_inner_489),YPPsym((P)"inner"),T23,ENVNUL);
-  T22 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_outer_490 = YPmet(FUNCODEREF(fun_outer_490),YPPsym((P)"outer"),T22,ENVNUL);
-  T21 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_491 = YPmet(FUNCODEREF(fun_491),YPfalse,T21,ENVNUL);
-  T20 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"key"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlogG));
-  fun_del_key_492 = YPmet(FUNCODEREF(fun_del_key_492),YPPsym((P)"del-key"),T20,ENVNUL);
-  T27 = BOUNDP(YruntimeYdel_key);
-  if (T27 != YPfalse) {
-    T26 = CHKREF(YruntimeYdel_key);
+  T14 = fun_build_condition_interactively_366;
+  T13 = CALL2(CHKREF(YPdefine_method),T15,T14);
+  YruntimeYbuild_condition_interactively = T13;
+  regsym(&YruntimeYbuild_condition_interactively,"runtime","build-condition-interactively");
+  T18 = (P)YPpair(CHKREF(YruntimeYLconditionG),Ynil);
+  T17 = CALL3(CHKREF(YPisa),T18,Ynil,Ynil);
+  YruntimeYLsimple_conditionG = T17;
+  regsym(&YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
+  T19 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_condition_message_367 = YPmet(FUNCODEREF(fun_condition_message_367),YPPsym((P)"condition-message"),T19,ENVNUL);
+  T23 = BOUNDP(YruntimeYcondition_message);
+  if (T23 != YPfalse) {
+    T22 = CHKREF(YruntimeYcondition_message);
   } else {
-    T26 = YPfalse;
+    T22 = YPfalse;
   }
-  T25 = fun_del_key_492;
-  T24 = CALL2(CHKREF(YPdefine_method),T26,T25);
-  YruntimeYdel_key = T24;
-  regsym(&YruntimeYdel_key,"runtime","del-key");
-  lit_88 = YPsb((P)"B %= I %=\n");
-  T30 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_inner_493 = YPmet(FUNCODEREF(fun_inner_493),YPPsym((P)"inner"),T30,ENVNUL);
-  T29 = YPsig(YPpair(YPPsym((P)"b"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_outer_494 = YPmet(FUNCODEREF(fun_outer_494),YPPsym((P)"outer"),T29,ENVNUL);
-  T28 = YPsig(YPpair(YPPsym((P)"function"),YPpair(YPPsym((P)"table"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_do_keyed_495 = YPmet(FUNCODEREF(fun_do_keyed_495),YPPsym((P)"do-keyed"),T28,ENVNUL);
-  T34 = BOUNDP(YruntimeYdo_keyed);
-  if (T34 != YPfalse) {
-    T33 = CHKREF(YruntimeYdo_keyed);
+  T21 = fun_condition_message_367;
+  T20 = CALL2(CHKREF(YPdefine_method),T22,T21);
+  YruntimeYcondition_message = T20;
+  regsym(&YruntimeYcondition_message,"runtime","condition-message");
+  T24 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_condition_message_setter_368 = YPmet(FUNCODEREF(fun_condition_message_setter_368),YPPsym((P)"condition-message-setter"),T24,ENVNUL);
+  T28 = BOUNDP(YruntimeYcondition_message_setter);
+  if (T28 != YPfalse) {
+    T27 = CHKREF(YruntimeYcondition_message_setter);
   } else {
-    T33 = YPfalse;
+    T27 = YPfalse;
   }
-  T32 = fun_do_keyed_495;
-  T31 = CALL2(CHKREF(YPdefine_method),T33,T32);
-  YruntimeYdo_keyed = T31;
-  regsym(&YruntimeYdo_keyed,"runtime","do-keyed");
-  T37 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_inner_496 = YPmet(FUNCODEREF(fun_inner_496),YPPsym((P)"inner"),T37,ENVNUL);
-  T36 = YPsig(YPpair(YPPsym((P)"b"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_outer_497 = YPmet(FUNCODEREF(fun_outer_497),YPPsym((P)"outer"),T36,ENVNUL);
-  T35 = YPsig(YPpair(YPPsym((P)"function"),YPpair(YPPsym((P)"table"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_do_498 = YPmet(FUNCODEREF(fun_do_498),YPPsym((P)"do"),T35,ENVNUL);
-  T41 = BOUNDP(YruntimeYdo);
-  if (T41 != YPfalse) {
-    T40 = CHKREF(YruntimeYdo);
+  T26 = fun_condition_message_setter_368;
+  T25 = CALL2(CHKREF(YPdefine_method),T27,T26);
+  YruntimeYcondition_message_setter = T25;
+  regsym(&YruntimeYcondition_message_setter,"runtime","condition-message-setter");
+  lit_51 = YPsb((P)"");
+  T29 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_369 = YPmet(FUNCODEREF(fun_369),YPfalse,T29,ENVNUL);
+  T30 = fun_369;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_conditionG),CHKREF(YruntimeYcondition_message),CHKREF(YruntimeYcondition_message_setter),CHKREF(YLstrG),T30);
+  T31 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_condition_arguments_370 = YPmet(FUNCODEREF(fun_condition_arguments_370),YPPsym((P)"condition-arguments"),T31,ENVNUL);
+  T35 = BOUNDP(YruntimeYcondition_arguments);
+  if (T35 != YPfalse) {
+    T34 = CHKREF(YruntimeYcondition_arguments);
   } else {
-    T40 = YPfalse;
+    T34 = YPfalse;
   }
-  T39 = fun_do_498;
-  T38 = CALL2(CHKREF(YPdefine_method),T40,T39);
-  YruntimeYdo = T38;
-  regsym(&YruntimeYdo,"runtime","do");
-  T42 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_del_keys_499 = YPmet(FUNCODEREF(fun_del_keys_499),YPPsym((P)"del-keys"),T42,ENVNUL);
-  T46 = BOUNDP(YruntimeYdel_keys);
-  if (T46 != YPfalse) {
-    T45 = CHKREF(YruntimeYdel_keys);
+  T33 = fun_condition_arguments_370;
+  T32 = CALL2(CHKREF(YPdefine_method),T34,T33);
+  YruntimeYcondition_arguments = T32;
+  regsym(&YruntimeYcondition_arguments,"runtime","condition-arguments");
+  T36 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLlstG),YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_condition_arguments_setter_371 = YPmet(FUNCODEREF(fun_condition_arguments_setter_371),YPPsym((P)"condition-arguments-setter"),T36,ENVNUL);
+  T40 = BOUNDP(YruntimeYcondition_arguments_setter);
+  if (T40 != YPfalse) {
+    T39 = CHKREF(YruntimeYcondition_arguments_setter);
   } else {
-    T45 = YPfalse;
+    T39 = YPfalse;
   }
-  T44 = fun_del_keys_499;
-  T43 = CALL2(CHKREF(YPdefine_method),T45,T44);
-  YruntimeYdel_keys = T43;
-  regsym(&YruntimeYdel_keys,"runtime","del-keys");
-  T47 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLintG));
-  fun_len_500 = YPmet(FUNCODEREF(fun_len_500),YPPsym((P)"len"),T47,ENVNUL);
-  T51 = BOUNDP(YruntimeYlen);
-  if (T51 != YPfalse) {
-    T50 = CHKREF(YruntimeYlen);
+  T38 = fun_condition_arguments_setter_371;
+  T37 = CALL2(CHKREF(YPdefine_method),T39,T38);
+  YruntimeYcondition_arguments_setter = T37;
+  regsym(&YruntimeYcondition_arguments_setter,"runtime","condition-arguments-setter");
+  T41 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_372 = YPmet(FUNCODEREF(fun_372),YPfalse,T41,ENVNUL);
+  T42 = fun_372;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_conditionG),CHKREF(YruntimeYcondition_arguments),CHKREF(YruntimeYcondition_arguments_setter),CHKREF(YLlstG),T42);
+  lit_52 = YPsb((P)"Condition format arguments: ");
+  lit_53 = YPsb((P)"Condition format string: ");
+  T43 = YPsig(YPpair(YPPsym((P)"cond-type"),YPpair(YPPsym((P)"in"),YPpair(YPPsym((P)"out"),Ynil))),YPpair(CHKREF(YruntimeYLsimple_conditionG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YruntimeYLconditionG));
+  fun_build_condition_interactively_373 = YPmet(FUNCODEREF(fun_build_condition_interactively_373),YPPsym((P)"build-condition-interactively"),T43,ENVNUL);
+  T47 = BOUNDP(YruntimeYbuild_condition_interactively);
+  if (T47 != YPfalse) {
+    T46 = CHKREF(YruntimeYbuild_condition_interactively);
   } else {
-    T50 = YPfalse;
+    T46 = YPfalse;
   }
-  T49 = fun_len_500;
-  T48 = CALL2(CHKREF(YPdefine_method),T50,T49);
-  YruntimeYlen = T48;
-  regsym(&YruntimeYlen,"runtime","len");
-  T53 = (P)YPpair(CHKREF(YLanyG),Ynil);
-  T52 = CALL3(CHKREF(YPisa),T53,Ynil,Ynil);
-  YruntimeYLtab_stateG = T52;
-  regsym(&YruntimeYLtab_stateG,"runtime","<tab-state>");
-  T54 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Pvector_501 = YPmet(FUNCODEREF(fun_Pvector_501),YPPsym((P)"%vector"),T54,ENVNUL);
-  T58 = BOUNDP(YruntimeYPvector);
-  if (T58 != YPfalse) {
-    T57 = CHKREF(YruntimeYPvector);
+  T45 = fun_build_condition_interactively_373;
+  T44 = CALL2(CHKREF(YPdefine_method),T46,T45);
+  YruntimeYbuild_condition_interactively = T44;
+  regsym(&YruntimeYbuild_condition_interactively,"runtime","build-condition-interactively");
+  T49 = (P)YPpair(CHKREF(YruntimeYLconditionG),Ynil);
+  T48 = CALL3(CHKREF(YPisa),T49,Ynil,Ynil);
+  YruntimeYLserious_conditionG = T48;
+  regsym(&YruntimeYLserious_conditionG,"runtime","<serious-condition>");
+  T50 = YPsig(YPpair(YPPsym((P)"c"),Ynil),YPpair(CHKREF(YruntimeYLserious_conditionG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_default_handler_374 = YPmet(FUNCODEREF(fun_default_handler_374),YPPsym((P)"default-handler"),T50,ENVNUL);
+  T54 = BOUNDP(YruntimeYdefault_handler);
+  if (T54 != YPfalse) {
+    T53 = CHKREF(YruntimeYdefault_handler);
   } else {
-    T57 = YPfalse;
+    T53 = YPfalse;
   }
-  T56 = fun_Pvector_501;
-  T55 = CALL2(CHKREF(YPdefine_method),T57,T56);
-  YruntimeYPvector = T55;
-  regsym(&YruntimeYPvector,"runtime","%vector");
-  T59 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Pvector_setter_502 = YPmet(FUNCODEREF(fun_Pvector_setter_502),YPPsym((P)"%vector-setter"),T59,ENVNUL);
-  T63 = BOUNDP(YruntimeYPvector_setter);
-  if (T63 != YPfalse) {
-    T62 = CHKREF(YruntimeYPvector_setter);
+  T52 = fun_default_handler_374;
+  T51 = CALL2(CHKREF(YPdefine_method),T53,T52);
+  YruntimeYdefault_handler = T51;
+  regsym(&YruntimeYdefault_handler,"runtime","default-handler");
+  T56 = (P)YPpair(CHKREF(YruntimeYLserious_conditionG),Ynil);
+  T55 = CALL3(CHKREF(YPisa),T56,Ynil,Ynil);
+  YruntimeYLerrorG = T55;
+  regsym(&YruntimeYLerrorG,"runtime","<error>");
+  T59 = (P)YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil);
+  T58 = (P)YPpair(CHKREF(YruntimeYLerrorG),T59);
+  T57 = CALL3(CHKREF(YPisa),T58,Ynil,Ynil);
+  YruntimeYLsimple_errorG = T57;
+  regsym(&YruntimeYLsimple_errorG,"runtime","<simple-error>");
+  T61 = (P)YPpair(CHKREF(YruntimeYLconditionG),Ynil);
+  T60 = CALL3(CHKREF(YPisa),T61,Ynil,Ynil);
+  YruntimeYLrestartG = T60;
+  regsym(&YruntimeYLrestartG,"runtime","<restart>");
+  lit_54 = YPsb((P)"Anonymous restart of type %s");
+  T62 = YPsig(YPpair(YPPsym((P)"cond-type"),Ynil),YPpair(CHKREF(YruntimeYLrestartG),Ynil),YPfalse,YPint((P)1),CHKREF(YLstrG));
+  fun_default_handler_description_375 = YPmet(FUNCODEREF(fun_default_handler_description_375),YPPsym((P)"default-handler-description"),T62,ENVNUL);
+  T66 = BOUNDP(YruntimeYdefault_handler_description);
+  if (T66 != YPfalse) {
+    T65 = CHKREF(YruntimeYdefault_handler_description);
   } else {
-    T62 = YPfalse;
+    T65 = YPfalse;
   }
-  T61 = fun_Pvector_setter_502;
-  T60 = CALL2(CHKREF(YPdefine_method),T62,T61);
-  YruntimeYPvector_setter = T60;
-  regsym(&YruntimeYPvector_setter,"runtime","%vector-setter");
-  T64 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_503 = YPmet(FUNCODEREF(fun_503),YPfalse,T64,ENVNUL);
-  T65 = fun_503;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtab_stateG),CHKREF(YruntimeYPvector),CHKREF(YruntimeYPvector_setter),CHKREF(YruntimeYLsimple_table_vectorG),T65);
-  T66 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Pbucket_504 = YPmet(FUNCODEREF(fun_Pbucket_504),YPPsym((P)"%bucket"),T66,ENVNUL);
-  T70 = BOUNDP(YruntimeYPbucket);
-  if (T70 != YPfalse) {
-    T69 = CHKREF(YruntimeYPbucket);
+  T64 = fun_default_handler_description_375;
+  T63 = CALL2(CHKREF(YPdefine_method),T65,T64);
+  YruntimeYdefault_handler_description = T63;
+  regsym(&YruntimeYdefault_handler_description,"runtime","default-handler-description");
+  T68 = (P)YPpair(CHKREF(YLanyG),Ynil);
+  T67 = CALL3(CHKREF(YPisa),T68,Ynil,Ynil);
+  YruntimeYLhandler_infoG = T67;
+  regsym(&YruntimeYLhandler_infoG,"runtime","<handler-info>");
+  T69 = YPsig(YPpair(YPPsym((P)"info"),YPpair(YPPsym((P)"condition-type"),Ynil)),YPpair(CHKREF(YruntimeYLhandler_infoG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLstrG));
+  fun_describe_handler_376 = YPmet(FUNCODEREF(fun_describe_handler_376),YPPsym((P)"describe-handler"),T69,ENVNUL);
+  T73 = BOUNDP(YruntimeYdescribe_handler);
+  if (T73 != YPfalse) {
+    T72 = CHKREF(YruntimeYdescribe_handler);
   } else {
-    T69 = YPfalse;
+    T72 = YPfalse;
   }
-  T68 = fun_Pbucket_504;
-  T67 = CALL2(CHKREF(YPdefine_method),T69,T68);
-  YruntimeYPbucket = T67;
-  regsym(&YruntimeYPbucket,"runtime","%bucket");
-  T71 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Pbucket_setter_505 = YPmet(FUNCODEREF(fun_Pbucket_setter_505),YPPsym((P)"%bucket-setter"),T71,ENVNUL);
-  T75 = BOUNDP(YruntimeYPbucket_setter);
-  if (T75 != YPfalse) {
-    T74 = CHKREF(YruntimeYPbucket_setter);
+  T71 = fun_describe_handler_376;
+  T70 = CALL2(CHKREF(YPdefine_method),T72,T71);
+  YruntimeYdescribe_handler = T70;
+  regsym(&YruntimeYdescribe_handler,"runtime","describe-handler");
+  T74 = YPsig(YPpair(YPPsym((P)"info"),YPpair(YPPsym((P)"condition-type"),YPpair(YPPsym((P)"in"),YPpair(YPPsym((P)"out"),Ynil)))),YPpair(CHKREF(YruntimeYLhandler_infoG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)))),YPfalse,YPint((P)4),CHKREF(YruntimeYLconditionG));
+  fun_build_condition_for_handler_interactively_377 = YPmet(FUNCODEREF(fun_build_condition_for_handler_interactively_377),YPPsym((P)"build-condition-for-handler-interactively"),T74,ENVNUL);
+  T78 = BOUNDP(YruntimeYbuild_condition_for_handler_interactively);
+  if (T78 != YPfalse) {
+    T77 = CHKREF(YruntimeYbuild_condition_for_handler_interactively);
   } else {
-    T74 = YPfalse;
+    T77 = YPfalse;
   }
-  T73 = fun_Pbucket_setter_505;
-  T72 = CALL2(CHKREF(YPdefine_method),T74,T73);
-  YruntimeYPbucket_setter = T72;
-  regsym(&YruntimeYPbucket_setter,"runtime","%bucket-setter");
-  T76 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_506 = YPmet(FUNCODEREF(fun_506),YPfalse,T76,ENVNUL);
-  T77 = fun_506;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtab_stateG),CHKREF(YruntimeYPbucket),CHKREF(YruntimeYPbucket_setter),CHKREF(YLintG),T77);
-  T78 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_Pindex_507 = YPmet(FUNCODEREF(fun_Pindex_507),YPPsym((P)"%index"),T78,ENVNUL);
-  T82 = BOUNDP(YruntimeYPindex);
-  if (T82 != YPfalse) {
-    T81 = CHKREF(YruntimeYPindex);
-  } else {
-    T81 = YPfalse;
-  }
-  T80 = fun_Pindex_507;
-  T79 = CALL2(CHKREF(YPdefine_method),T81,T80);
-  YruntimeYPindex = T79;
-  regsym(&YruntimeYPindex,"runtime","%index");
-  T83 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_Pindex_setter_508 = YPmet(FUNCODEREF(fun_Pindex_setter_508),YPPsym((P)"%index-setter"),T83,ENVNUL);
-  T87 = BOUNDP(YruntimeYPindex_setter);
+  T76 = fun_build_condition_for_handler_interactively_377;
+  T75 = CALL2(CHKREF(YPdefine_method),T77,T76);
+  YruntimeYbuild_condition_for_handler_interactively = T75;
+  regsym(&YruntimeYbuild_condition_for_handler_interactively,"runtime","build-condition-for-handler-interactively");
+  T80 = (P)YPpair(CHKREF(YruntimeYLhandler_infoG),Ynil);
+  T79 = CALL3(CHKREF(YPisa),T80,Ynil,Ynil);
+  YruntimeYDdefault_handler_info = T79;
+  regsym(&YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
+  T82 = (P)YPpair(CHKREF(YruntimeYLhandler_infoG),Ynil);
+  T81 = CALL3(CHKREF(YPisa),T82,Ynil,Ynil);
+  YruntimeYLsimple_handler_infoG = T81;
+  regsym(&YruntimeYLsimple_handler_infoG,"runtime","<simple-handler-info>");
+  T83 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_handler_infoG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_handler_info_message_378 = YPmet(FUNCODEREF(fun_handler_info_message_378),YPPsym((P)"handler-info-message"),T83,ENVNUL);
+  T87 = BOUNDP(YruntimeYhandler_info_message);
   if (T87 != YPfalse) {
-    T86 = CHKREF(YruntimeYPindex_setter);
+    T86 = CHKREF(YruntimeYhandler_info_message);
   } else {
     T86 = YPfalse;
   }
-  T85 = fun_Pindex_setter_508;
+  T85 = fun_handler_info_message_378;
   T84 = CALL2(CHKREF(YPdefine_method),T86,T85);
-  YruntimeYPindex_setter = T84;
-  regsym(&YruntimeYPindex_setter,"runtime","%index-setter");
-  T88 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_509 = YPmet(FUNCODEREF(fun_509),YPfalse,T88,ENVNUL);
-  T89 = fun_509;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtab_stateG),CHKREF(YruntimeYPindex),CHKREF(YruntimeYPindex_setter),CHKREF(YLintG),T89);
-  T93 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_inner_510 = YPmet(FUNCODEREF(fun_inner_510),YPPsym((P)"inner"),T93,ENVNUL);
-  T92 = YPsig(YPpair(YPPsym((P)"b"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_outer_511 = YPmet(FUNCODEREF(fun_outer_511),YPPsym((P)"outer"),T92,ENVNUL);
-  T91 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_512 = YPmet(FUNCODEREF(fun_512),YPfalse,T91,ENVNUL);
-  T90 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_ini_state_513 = YPmet(FUNCODEREF(fun_ini_state_513),YPPsym((P)"ini-state"),T90,ENVNUL);
-  T97 = BOUNDP(YruntimeYini_state);
-  if (T97 != YPfalse) {
-    T96 = CHKREF(YruntimeYini_state);
+  YruntimeYhandler_info_message = T84;
+  regsym(&YruntimeYhandler_info_message,"runtime","handler-info-message");
+  T88 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YruntimeYLsimple_handler_infoG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_handler_info_message_setter_379 = YPmet(FUNCODEREF(fun_handler_info_message_setter_379),YPPsym((P)"handler-info-message-setter"),T88,ENVNUL);
+  T92 = BOUNDP(YruntimeYhandler_info_message_setter);
+  if (T92 != YPfalse) {
+    T91 = CHKREF(YruntimeYhandler_info_message_setter);
   } else {
-    T96 = YPfalse;
+    T91 = YPfalse;
   }
-  T95 = fun_ini_state_513;
-  T94 = CALL2(CHKREF(YPdefine_method),T96,T95);
-  YruntimeYini_state = T94;
-  regsym(&YruntimeYini_state,"runtime","ini-state");
-  T101 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_inner_514 = YPmet(FUNCODEREF(fun_inner_514),YPPsym((P)"inner"),T101,ENVNUL);
-  T100 = YPsig(YPpair(YPPsym((P)"b"),YPpair(YPPsym((P)"first?"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_outer_515 = YPmet(FUNCODEREF(fun_outer_515),YPPsym((P)"outer"),T100,ENVNUL);
-  T99 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_516 = YPmet(FUNCODEREF(fun_516),YPfalse,T99,ENVNUL);
-  T98 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_nxt_state_517 = YPmet(FUNCODEREF(fun_nxt_state_517),YPPsym((P)"nxt-state"),T98,ENVNUL);
-  T105 = BOUNDP(YruntimeYnxt_state);
-  if (T105 != YPfalse) {
-    T104 = CHKREF(YruntimeYnxt_state);
+  T90 = fun_handler_info_message_setter_379;
+  T89 = CALL2(CHKREF(YPdefine_method),T91,T90);
+  YruntimeYhandler_info_message_setter = T89;
+  regsym(&YruntimeYhandler_info_message_setter,"runtime","handler-info-message-setter");
+  T93 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_380 = YPmet(FUNCODEREF(fun_380),YPfalse,T93,ENVNUL);
+  T94 = fun_380;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_handler_infoG),CHKREF(YruntimeYhandler_info_message),CHKREF(YruntimeYhandler_info_message_setter),CHKREF(YLstrG),T94);
+  T95 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_handler_infoG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_handler_info_arguments_381 = YPmet(FUNCODEREF(fun_handler_info_arguments_381),YPPsym((P)"handler-info-arguments"),T95,ENVNUL);
+  T99 = BOUNDP(YruntimeYhandler_info_arguments);
+  if (T99 != YPfalse) {
+    T98 = CHKREF(YruntimeYhandler_info_arguments);
   } else {
-    T104 = YPfalse;
+    T98 = YPfalse;
   }
-  T103 = fun_nxt_state_517;
-  T102 = CALL2(CHKREF(YPdefine_method),T104,T103);
-  YruntimeYnxt_state = T102;
-  regsym(&YruntimeYnxt_state,"runtime","nxt-state");
-  T106 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlogG));
-  fun_fin_stateQ_518 = YPmet(FUNCODEREF(fun_fin_stateQ_518),YPPsym((P)"fin-state?"),T106,ENVNUL);
-  T110 = BOUNDP(YruntimeYfin_stateQ);
-  if (T110 != YPfalse) {
-    T109 = CHKREF(YruntimeYfin_stateQ);
+  T97 = fun_handler_info_arguments_381;
+  T96 = CALL2(CHKREF(YPdefine_method),T98,T97);
+  YruntimeYhandler_info_arguments = T96;
+  regsym(&YruntimeYhandler_info_arguments,"runtime","handler-info-arguments");
+  T100 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YruntimeYLsimple_handler_infoG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_handler_info_arguments_setter_382 = YPmet(FUNCODEREF(fun_handler_info_arguments_setter_382),YPPsym((P)"handler-info-arguments-setter"),T100,ENVNUL);
+  T104 = BOUNDP(YruntimeYhandler_info_arguments_setter);
+  if (T104 != YPfalse) {
+    T103 = CHKREF(YruntimeYhandler_info_arguments_setter);
   } else {
-    T109 = YPfalse;
+    T103 = YPfalse;
   }
-  T108 = fun_fin_stateQ_518;
-  T107 = CALL2(CHKREF(YPdefine_method),T109,T108);
-  YruntimeYfin_stateQ = T107;
-  regsym(&YruntimeYfin_stateQ,"runtime","fin-state?");
-  T111 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_now_key_519 = YPmet(FUNCODEREF(fun_now_key_519),YPPsym((P)"now-key"),T111,ENVNUL);
-  T115 = BOUNDP(YruntimeYnow_key);
-  if (T115 != YPfalse) {
-    T114 = CHKREF(YruntimeYnow_key);
+  T102 = fun_handler_info_arguments_setter_382;
+  T101 = CALL2(CHKREF(YPdefine_method),T103,T102);
+  YruntimeYhandler_info_arguments_setter = T101;
+  regsym(&YruntimeYhandler_info_arguments_setter,"runtime","handler-info-arguments-setter");
+  T105 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_383 = YPmet(FUNCODEREF(fun_383),YPfalse,T105,ENVNUL);
+  T106 = fun_383;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_handler_infoG),CHKREF(YruntimeYhandler_info_arguments),CHKREF(YruntimeYhandler_info_arguments_setter),CHKREF(YLstrG),T106);
+  T107 = YPsig(YPpair(YPPsym((P)"info"),YPpair(YPPsym((P)"condition-type"),Ynil)),YPpair(CHKREF(YruntimeYLsimple_handler_infoG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLstrG));
+  fun_describe_handler_384 = YPmet(FUNCODEREF(fun_describe_handler_384),YPPsym((P)"describe-handler"),T107,ENVNUL);
+  T111 = BOUNDP(YruntimeYdescribe_handler);
+  if (T111 != YPfalse) {
+    T110 = CHKREF(YruntimeYdescribe_handler);
   } else {
-    T114 = YPfalse;
+    T110 = YPfalse;
   }
-  T113 = fun_now_key_519;
-  T112 = CALL2(CHKREF(YPdefine_method),T114,T113);
-  YruntimeYnow_key = T112;
-  regsym(&YruntimeYnow_key,"runtime","now-key");
-  T116 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_now_elt_520 = YPmet(FUNCODEREF(fun_now_elt_520),YPPsym((P)"now-elt"),T116,ENVNUL);
-  T120 = BOUNDP(YruntimeYnow_elt);
-  if (T120 != YPfalse) {
-    T119 = CHKREF(YruntimeYnow_elt);
+  T109 = fun_describe_handler_384;
+  T108 = CALL2(CHKREF(YPdefine_method),T110,T109);
+  YruntimeYdescribe_handler = T108;
+  regsym(&YruntimeYdescribe_handler,"runtime","describe-handler");
+  YruntimeYTcurrent_handlersT = Ynil;
+  regsym(&YruntimeYTcurrent_handlersT,"runtime","*current-handlers*");
+  T113 = (P)YPpair(CHKREF(YLanyG),Ynil);
+  T112 = CALL3(CHKREF(YPisa),T113,Ynil,Ynil);
+  YruntimeYLhandlerG = T112;
+  regsym(&YruntimeYLhandlerG,"runtime","<handler>");
+  T114 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLhandlerG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_handler_condition_type_385 = YPmet(FUNCODEREF(fun_handler_condition_type_385),YPPsym((P)"handler-condition-type"),T114,ENVNUL);
+  T118 = BOUNDP(YruntimeYhandler_condition_type);
+  if (T118 != YPfalse) {
+    T117 = CHKREF(YruntimeYhandler_condition_type);
   } else {
-    T119 = YPfalse;
+    T117 = YPfalse;
   }
-  T118 = fun_now_elt_520;
-  T117 = CALL2(CHKREF(YPdefine_method),T119,T118);
-  YruntimeYnow_elt = T117;
-  regsym(&YruntimeYnow_elt,"runtime","now-elt");
-  T121 = YPsig(YPpair(YPPsym((P)"value"),YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_now_elt_setter_521 = YPmet(FUNCODEREF(fun_now_elt_setter_521),YPPsym((P)"now-elt-setter"),T121,ENVNUL);
-  T125 = BOUNDP(YruntimeYnow_elt_setter);
-  if (T125 != YPfalse) {
-    T124 = CHKREF(YruntimeYnow_elt_setter);
+  T116 = fun_handler_condition_type_385;
+  T115 = CALL2(CHKREF(YPdefine_method),T117,T116);
+  YruntimeYhandler_condition_type = T115;
+  regsym(&YruntimeYhandler_condition_type,"runtime","handler-condition-type");
+  T119 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YruntimeYLconditionG),YPpair(CHKREF(YruntimeYLhandlerG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_handler_condition_type_setter_386 = YPmet(FUNCODEREF(fun_handler_condition_type_setter_386),YPPsym((P)"handler-condition-type-setter"),T119,ENVNUL);
+  T123 = BOUNDP(YruntimeYhandler_condition_type_setter);
+  if (T123 != YPfalse) {
+    T122 = CHKREF(YruntimeYhandler_condition_type_setter);
   } else {
-    T124 = YPfalse;
+    T122 = YPfalse;
   }
-  T123 = fun_now_elt_setter_521;
-  T122 = CALL2(CHKREF(YPdefine_method),T124,T123);
-  YruntimeYnow_elt_setter = T122;
-  regsym(&YruntimeYnow_elt_setter,"runtime","now-elt-setter");
-  T126 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YruntimeYLtab_stateG));
-  fun_copy_state_522 = YPmet(FUNCODEREF(fun_copy_state_522),YPPsym((P)"copy-state"),T126,ENVNUL);
-  T130 = BOUNDP(YruntimeYcopy_state);
+  T121 = fun_handler_condition_type_setter_386;
+  T120 = CALL2(CHKREF(YPdefine_method),T122,T121);
+  YruntimeYhandler_condition_type_setter = T120;
+  regsym(&YruntimeYhandler_condition_type_setter,"runtime","handler-condition-type-setter");
+  T124 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_387 = YPmet(FUNCODEREF(fun_387),YPfalse,T124,ENVNUL);
+  T125 = fun_387;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLhandlerG),CHKREF(YruntimeYhandler_condition_type),CHKREF(YruntimeYhandler_condition_type_setter),CHKREF(YruntimeYLconditionG),T125);
+  T126 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLhandlerG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_handler_info_388 = YPmet(FUNCODEREF(fun_handler_info_388),YPPsym((P)"handler-info"),T126,ENVNUL);
+  T130 = BOUNDP(YruntimeYhandler_info);
   if (T130 != YPfalse) {
-    T129 = CHKREF(YruntimeYcopy_state);
+    T129 = CHKREF(YruntimeYhandler_info);
   } else {
     T129 = YPfalse;
   }
-  T128 = fun_copy_state_522;
+  T128 = fun_handler_info_388;
   T127 = CALL2(CHKREF(YPdefine_method),T129,T128);
-  YruntimeYcopy_state = T127;
-  regsym(&YruntimeYcopy_state,"runtime","copy-state");
-  T132 = YPsig(YPpair(YPPsym((P)"k"),YPpair(YPPsym((P)"v"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_523 = YPmet(FUNCODEREF(fun_523),YPfalse,T132,ENVNUL);
-  T131 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_tab_keys_524 = YPmet(FUNCODEREF(fun_tab_keys_524),YPPsym((P)"tab-keys"),T131,ENVNUL);
-  T136 = BOUNDP(YruntimeYtab_keys);
-  if (T136 != YPfalse) {
-    T135 = CHKREF(YruntimeYtab_keys);
+  YruntimeYhandler_info = T127;
+  regsym(&YruntimeYhandler_info,"runtime","handler-info");
+  T131 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YruntimeYLhandler_infoG),YPpair(CHKREF(YruntimeYLhandlerG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_handler_info_setter_389 = YPmet(FUNCODEREF(fun_handler_info_setter_389),YPPsym((P)"handler-info-setter"),T131,ENVNUL);
+  T135 = BOUNDP(YruntimeYhandler_info_setter);
+  if (T135 != YPfalse) {
+    T134 = CHKREF(YruntimeYhandler_info_setter);
   } else {
-    T135 = YPfalse;
+    T134 = YPfalse;
   }
-  T134 = fun_tab_keys_524;
-  T133 = CALL2(CHKREF(YPdefine_method),T135,T134);
-  YruntimeYtab_keys = T133;
-  regsym(&YruntimeYtab_keys,"runtime","tab-keys");
-  T137 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YruntimeYLtabG));
-  fun_grow_table_525 = YPmet(FUNCODEREF(fun_grow_table_525),YPPsym((P)"grow-table"),T137,ENVNUL);
-  T141 = BOUNDP(YruntimeYgrow_table);
-  if (T141 != YPfalse) {
-    T140 = CHKREF(YruntimeYgrow_table);
+  T133 = fun_handler_info_setter_389;
+  T132 = CALL2(CHKREF(YPdefine_method),T134,T133);
+  YruntimeYhandler_info_setter = T132;
+  regsym(&YruntimeYhandler_info_setter,"runtime","handler-info-setter");
+  T136 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_390 = YPmet(FUNCODEREF(fun_390),YPfalse,T136,ENVNUL);
+  T137 = fun_390;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLhandlerG),CHKREF(YruntimeYhandler_info),CHKREF(YruntimeYhandler_info_setter),CHKREF(YruntimeYLhandler_infoG),T137);
+  T138 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLhandlerG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_handler_test_391 = YPmet(FUNCODEREF(fun_handler_test_391),YPPsym((P)"handler-test"),T138,ENVNUL);
+  T142 = BOUNDP(YruntimeYhandler_test);
+  if (T142 != YPfalse) {
+    T141 = CHKREF(YruntimeYhandler_test);
   } else {
-    T140 = YPfalse;
+    T141 = YPfalse;
   }
-  T139 = fun_grow_table_525;
-  T138 = CALL2(CHKREF(YPdefine_method),T140,T139);
-  YruntimeYgrow_table = T138;
-  regsym(&YruntimeYgrow_table,"runtime","grow-table");
-  T142 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YruntimeYLtabG));
-  fun_rehash_table_526 = YPmet(FUNCODEREF(fun_rehash_table_526),YPPsym((P)"rehash-table"),T142,ENVNUL);
-  T146 = BOUNDP(YruntimeYrehash_table);
-  if (T146 != YPfalse) {
-    T145 = CHKREF(YruntimeYrehash_table);
+  T140 = fun_handler_test_391;
+  T139 = CALL2(CHKREF(YPdefine_method),T141,T140);
+  YruntimeYhandler_test = T139;
+  regsym(&YruntimeYhandler_test,"runtime","handler-test");
+  T143 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YruntimeYLhandlerG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_handler_test_setter_392 = YPmet(FUNCODEREF(fun_handler_test_setter_392),YPPsym((P)"handler-test-setter"),T143,ENVNUL);
+  T147 = BOUNDP(YruntimeYhandler_test_setter);
+  if (T147 != YPfalse) {
+    T146 = CHKREF(YruntimeYhandler_test_setter);
   } else {
-    T145 = YPfalse;
+    T146 = YPfalse;
   }
-  T144 = fun_rehash_table_526;
-  T143 = CALL2(CHKREF(YPdefine_method),T145,T144);
-  YruntimeYrehash_table = T143;
-  regsym(&YruntimeYrehash_table,"runtime","rehash-table");
-  lit_89 = YPsb((P)"Not enough primes to compute new table size");
-  T149 = YPsig(YPpair(YPPsym((P)"p"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_527 = YPmet(FUNCODEREF(fun_527),YPfalse,T149,ENVNUL);
-  T148 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_528 = YPmet(FUNCODEREF(fun_528),YPfalse,T148,ENVNUL);
-  T147 = YPsig(YPpair(YPPsym((P)"capacity"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLtupG));
-  YruntimeYchoose_table_geometry = YPmet(FUNCODEREF(YruntimeYchoose_table_geometry),YPPsym((P)"choose-table-geometry"),T147,ENVNUL);
-  T150 = YruntimeYchoose_table_geometry;
-  YruntimeYchoose_table_geometry = T150;
-  regsym(&YruntimeYchoose_table_geometry,"runtime","choose-table-geometry");
-  lit_90 = YPsb((P)"The table is totally full this shouldn't happen");
-  T155 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"index"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_inner_530 = YPmet(FUNCODEREF(fun_inner_530),YPPsym((P)"inner"),T155,ENVNUL);
-  T154 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_outer_531 = YPmet(FUNCODEREF(fun_outer_531),YPPsym((P)"outer"),T154,ENVNUL);
-  T153 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_532 = YPmet(FUNCODEREF(fun_532),YPfalse,T153,ENVNUL);
-  T152 = YPsig(YPpair(YPPsym((P)"k"),YPpair(YPPsym((P)"v"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_533 = YPmet(FUNCODEREF(fun_533),YPfalse,T152,ENVNUL);
-  T151 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"new-vector"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_copy_to_new_vector_534 = YPmet(FUNCODEREF(fun_copy_to_new_vector_534),YPPsym((P)"copy-to-new-vector"),T151,ENVNUL);
-  T159 = BOUNDP(YruntimeYcopy_to_new_vector);
+  T145 = fun_handler_test_setter_392;
+  T144 = CALL2(CHKREF(YPdefine_method),T146,T145);
+  YruntimeYhandler_test_setter = T144;
+  regsym(&YruntimeYhandler_test_setter,"runtime","handler-test-setter");
+  T148 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_393 = YPmet(FUNCODEREF(fun_393),YPfalse,T148,ENVNUL);
+  T149 = fun_393;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLhandlerG),CHKREF(YruntimeYhandler_test),CHKREF(YruntimeYhandler_test_setter),CHKREF(YLfunG),T149);
+  T150 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLhandlerG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_handler_function_394 = YPmet(FUNCODEREF(fun_handler_function_394),YPPsym((P)"handler-function"),T150,ENVNUL);
+  T154 = BOUNDP(YruntimeYhandler_function);
+  if (T154 != YPfalse) {
+    T153 = CHKREF(YruntimeYhandler_function);
+  } else {
+    T153 = YPfalse;
+  }
+  T152 = fun_handler_function_394;
+  T151 = CALL2(CHKREF(YPdefine_method),T153,T152);
+  YruntimeYhandler_function = T151;
+  regsym(&YruntimeYhandler_function,"runtime","handler-function");
+  T155 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YruntimeYLhandlerG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_handler_function_setter_395 = YPmet(FUNCODEREF(fun_handler_function_setter_395),YPPsym((P)"handler-function-setter"),T155,ENVNUL);
+  T159 = BOUNDP(YruntimeYhandler_function_setter);
   if (T159 != YPfalse) {
-    T158 = CHKREF(YruntimeYcopy_to_new_vector);
+    T158 = CHKREF(YruntimeYhandler_function_setter);
   } else {
     T158 = YPfalse;
   }
-  T157 = fun_copy_to_new_vector_534;
+  T157 = fun_handler_function_setter_395;
   T156 = CALL2(CHKREF(YPdefine_method),T158,T157);
-  YruntimeYcopy_to_new_vector = T156;
+  YruntimeYhandler_function_setter = T156;
+  regsym(&YruntimeYhandler_function_setter,"runtime","handler-function-setter");
+  T160 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_396 = YPmet(FUNCODEREF(fun_396),YPfalse,T160,ENVNUL);
+  T161 = fun_396;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLhandlerG),CHKREF(YruntimeYhandler_function),CHKREF(YruntimeYhandler_function_setter),CHKREF(YLfunG),T161);
+  T162 = YPsig(YPpair(YPPsym((P)"type"),YPpair(YPPsym((P)"info"),YPpair(YPPsym((P)"test"),YPpair(YPPsym((P)"f"),Ynil)))),YPpair(CHKREF(YruntimeYLconditionG),YPpair(CHKREF(YruntimeYLhandler_infoG),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YLfunG),Ynil)))),YPfalse,YPint((P)4),CHKREF(YruntimeYLhandlerG));
+  YruntimeYmake_handler = YPmet(FUNCODEREF(YruntimeYmake_handler),YPPsym((P)"make-handler"),T162,ENVNUL);
+  T163 = YruntimeYmake_handler;
+  YruntimeYmake_handler = T163;
+  regsym(&YruntimeYmake_handler,"runtime","make-handler");
+  T164 = YPsig(YPpair(YPPsym((P)"handler"),Ynil),YPpair(CHKREF(YruntimeYLhandlerG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  YruntimeYhandler_activeQ = YPmet(FUNCODEREF(YruntimeYhandler_activeQ),YPPsym((P)"handler-active?"),T164,ENVNUL);
+  T165 = YruntimeYhandler_activeQ;
+  YruntimeYhandler_activeQ = T165;
+  regsym(&YruntimeYhandler_activeQ,"runtime","handler-active?");
+  T166 = YPsig(YPpair(YPPsym((P)"handler"),YPpair(YPPsym((P)"condition"),Ynil)),YPpair(CHKREF(YruntimeYLhandlerG),YPpair(CHKREF(YruntimeYLconditionG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlogG));
+  YruntimeYhandler_matchesQ = YPmet(FUNCODEREF(YruntimeYhandler_matchesQ),YPPsym((P)"handler-matches?"),T166,ENVNUL);
+  T167 = YruntimeYhandler_matchesQ;
+  YruntimeYhandler_matchesQ = T167;
+  regsym(&YruntimeYhandler_matchesQ,"runtime","handler-matches?");
+  T173 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_400 = YPmet(FUNCODEREF(fun_400),YPfalse,T173,ENVNUL);
+  T172 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_401 = YPmet(FUNCODEREF(fun_401),YPfalse,T172,ENVNUL);
+  T171 = YPsig(YPpair(YPPsym((P)"_resume_"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_402 = YPmet(FUNCODEREF(fun_402),YPfalse,T171,ENVNUL);
+  T170 = YPsig(YPpair(YPPsym((P)"condition"),YPpair(YPPsym((P)"_next-handler_"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Uhandler_functionU_403 = YPmet(FUNCODEREF(fun_Uhandler_functionU_403),YPPsym((P)"_handler-function_"),T170,ENVNUL);
+  T169 = YPsig(YPpair(YPPsym((P)"_unwind-exception_"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_404 = YPmet(FUNCODEREF(fun_404),YPfalse,T169,ENVNUL);
+  T168 = YPsig(YPpair(YPPsym((P)"type"),YPpair(YPPsym((P)"info"),YPpair(YPPsym((P)"test-fun"),YPpair(YPPsym((P)"user-handler"),YPpair(YPPsym((P)"main-fun"),Ynil))))),YPpair(CHKREF(YruntimeYLconditionG),YPpair(CHKREF(YruntimeYLhandler_infoG),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YLfunG),Ynil))))),YPfalse,YPint((P)5),CHKREF(YLanyG));
+  YruntimeYPwith_monitor = YPmet(FUNCODEREF(YruntimeYPwith_monitor),YPPsym((P)"%with-monitor"),T168,ENVNUL);
+  T174 = YruntimeYPwith_monitor;
+  YruntimeYPwith_monitor = T174;
+  regsym(&YruntimeYPwith_monitor,"runtime","%with-monitor");
+  T176 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_406 = YPmet(FUNCODEREF(fun_406),YPfalse,T176,ENVNUL);
+  T175 = YPsig(YPpair(YPPsym((P)"condition"),YPpair(YPPsym((P)"handlers"),Ynil)),YPpair(CHKREF(YruntimeYLconditionG),YPpair(CHKREF(YLlstG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YruntimeYsignal_handler_list = YPmet(FUNCODEREF(YruntimeYsignal_handler_list),YPPsym((P)"signal-handler-list"),T175,ENVNUL);
+  T177 = YruntimeYsignal_handler_list;
+  YruntimeYsignal_handler_list = T177;
+  regsym(&YruntimeYsignal_handler_list,"runtime","signal-handler-list");
+  T178 = YPsig(YPpair(YPPsym((P)"condition"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YruntimeYLconditionG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_sig_408 = YPmet(FUNCODEREF(fun_sig_408),YPPsym((P)"sig"),T178,ENVNUL);
+  T182 = BOUNDP(YruntimeYsig);
+  if (T182 != YPfalse) {
+    T181 = CHKREF(YruntimeYsig);
+  } else {
+    T181 = YPfalse;
+  }
+  T180 = fun_sig_408;
+  T179 = CALL2(CHKREF(YPdefine_method),T181,T180);
+  YruntimeYsig = T179;
+  regsym(&YruntimeYsig,"runtime","sig");
+  T183 = YPsig(YPpair(YPPsym((P)"c"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YLstrG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_sig_409 = YPmet(FUNCODEREF(fun_sig_409),YPPsym((P)"sig"),T183,ENVNUL);
+  T187 = BOUNDP(YruntimeYsig);
+  if (T187 != YPfalse) {
+    T186 = CHKREF(YruntimeYsig);
+  } else {
+    T186 = YPfalse;
+  }
+  T185 = fun_sig_409;
+  T184 = CALL2(CHKREF(YPdefine_method),T186,T185);
+  YruntimeYsig = T184;
+  regsym(&YruntimeYsig,"runtime","sig");
+  T188 = YPsig(YPpair(YPPsym((P)"c"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YruntimeYLsimple_errorG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_error_410 = YPmet(FUNCODEREF(fun_error_410),YPPsym((P)"error"),T188,ENVNUL);
+  T192 = BOUNDP(Yerror);
+  if (T192 != YPfalse) {
+    T191 = CHKREF(Yerror);
+  } else {
+    T191 = YPfalse;
+  }
+  T190 = fun_error_410;
+  T189 = CALL2(CHKREF(YPdefine_method),T191,T190);
+  Yerror = T189;
+  regsym(&Yerror,"boot","error");
+  T193 = YPsig(YPpair(YPPsym((P)"c"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YLstrG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_error_411 = YPmet(FUNCODEREF(fun_error_411),YPPsym((P)"error"),T193,ENVNUL);
+  T197 = BOUNDP(Yerror);
+  if (T197 != YPfalse) {
+    T196 = CHKREF(Yerror);
+  } else {
+    T196 = YPfalse;
+  }
+  T195 = fun_error_411;
+  T194 = CALL2(CHKREF(YPdefine_method),T196,T195);
+  Yerror = T194;
+  regsym(&Yerror,"boot","error");
+  lit_55 = YPsb((P)"%= CALLED WITH %= ARGUMENTS EXPECTED %=");
+  T198 = YPsig(YPpair(YPPsym((P)"fun"),YPpair(YPPsym((P)"n"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  Ywrong_number_arguments_error = YPmet(FUNCODEREF(Ywrong_number_arguments_error),YPPsym((P)"wrong-number-arguments-error"),T198,ENVNUL);
+  T199 = Ywrong_number_arguments_error;
+  Ywrong_number_arguments_error = T199;
+  regsym(&Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
+  lit_56 = YPsb((P)"UNKNOWN FUNCTION %= CALLED");
+  T200 = YPsig(YPpair(YPPsym((P)"fun"),Ynil),YPpair(CHKREF(YLfunG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  Yunknown_function_error = YPmet(FUNCODEREF(Yunknown_function_error),YPPsym((P)"unknown-function-error"),T200,ENVNUL);
+  T201 = Yunknown_function_error;
+  Yunknown_function_error = T201;
+  regsym(&Yunknown_function_error,"boot","unknown-function-error");
+  lit_57 = YPsb((P)"TYPE ERROR %= SHOULD BE A %=");
+  T202 = YPsig(YPpair(YPPsym((P)"arg"),YPpair(YPPsym((P)"type"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  Ytype_error = YPmet(FUNCODEREF(Ytype_error),YPPsym((P)"type-error"),T202,ENVNUL);
+  T203 = Ytype_error;
+  Ytype_error = T203;
+  regsym(&Ytype_error,"boot","type-error");
+  T205 = YPsig(YPpair(YPPsym((P)"handlers"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_search_415 = YPmet(FUNCODEREF(fun_search_415),YPPsym((P)"search"),T205,ENVNUL);
+  T204 = YPsig(YPpair(YPPsym((P)"type"),YPpair(YPPsym((P)"f"),Ynil)),YPpair(CHKREF(YruntimeYLconditionG),YPpair(CHKREF(YLfunG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YruntimeYdo_handlers_of_type = YPmet(FUNCODEREF(YruntimeYdo_handlers_of_type),YPPsym((P)"do-handlers-of-type"),T204,ENVNUL);
+  T206 = YruntimeYdo_handlers_of_type;
+  YruntimeYdo_handlers_of_type = T206;
+  regsym(&YruntimeYdo_handlers_of_type,"runtime","do-handlers-of-type");
+  lit_58 = YPsb((P)"%d. %s.\n");
+  T208 = YPsig(YPpair(YPPsym((P)"handler"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_417 = YPmet(FUNCODEREF(fun_417),YPfalse,T208,ENVNUL);
+  T207 = YPsig(YPpair(YPPsym((P)"type"),YPpair(YPPsym((P)"out"),Ynil)),YPpair(CHKREF(YruntimeYLconditionG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YruntimeYLbufG));
+  YruntimeYlist_handlers = YPmet(FUNCODEREF(YruntimeYlist_handlers),YPPsym((P)"list-handlers"),T207,ENVNUL);
+  T209 = YruntimeYlist_handlers;
+  YruntimeYlist_handlers = T209;
+  regsym(&YruntimeYlist_handlers,"runtime","list-handlers");
+  lit_59 = YPsb((P)"Handler %= is not installed");
+  lit_60 = YPsb((P)"Handler %= does not match condition %=");
+  T212 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_419 = YPmet(FUNCODEREF(fun_419),YPfalse,T212,ENVNUL);
+  T211 = YPsig(YPpair(YPPsym((P)"handlers"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_search_420 = YPmet(FUNCODEREF(fun_search_420),YPPsym((P)"search"),T211,ENVNUL);
+  T210 = YPsig(YPpair(YPPsym((P)"handler"),YPpair(YPPsym((P)"in"),YPpair(YPPsym((P)"out"),Ynil))),YPpair(CHKREF(YruntimeYLhandlerG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YruntimeYinvoke_handler_interactively = YPmet(FUNCODEREF(YruntimeYinvoke_handler_interactively),YPPsym((P)"invoke-handler-interactively"),T210,ENVNUL);
+  T213 = YruntimeYinvoke_handler_interactively;
+  YruntimeYinvoke_handler_interactively = T213;
+  regsym(&YruntimeYinvoke_handler_interactively,"runtime","invoke-handler-interactively");
+  lit_61 = YPsb((P)"No such handler %d");
+  lit_62 = YPsb((P)"Please pick a handler: ");
+  lit_63 = YPsb((P)"Exit CHOOSE-HANDLER");
+  T218 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_422 = YPmet(FUNCODEREF(fun_422),YPfalse,T218,ENVNUL);
+  T217 = YPsig(YPpair(YPPsym((P)"c"),YPpair(YPPsym((P)"r"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_423 = YPmet(FUNCODEREF(fun_423),YPfalse,T217,ENVNUL);
+  T216 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_424 = YPmet(FUNCODEREF(fun_424),YPfalse,T216,ENVNUL);
+  T215 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_425 = YPmet(FUNCODEREF(fun_425),YPfalse,T215,ENVNUL);
+  T214 = YPsig(YPpair(YPPsym((P)"type"),YPpair(YPPsym((P)"in"),YPpair(YPPsym((P)"out"),Ynil))),YPpair(CHKREF(YruntimeYLconditionG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YruntimeYchoose_handler = YPmet(FUNCODEREF(YruntimeYchoose_handler),YPPsym((P)"choose-handler"),T214,ENVNUL);
+  T219 = YruntimeYchoose_handler;
+  YruntimeYchoose_handler = T219;
+  regsym(&YruntimeYchoose_handler,"runtime","choose-handler");
+  T222 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLlocG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  T221 = YruntimeYlocative_value = YPmet(FUNCODEREF(YruntimeYlocative_value),YPPsym((P)"locative-value"),T222,ENVNUL);
+  T224 = YruntimeYlocative_value;
+  T223 = YruntimeYlocative_value = T224;
+  regsym(&YruntimeYlocative_value,"runtime","locative-value");
+  T220 = T223;
+  return T220;
+}
+
+P YruntimeY___main_6___() {
+  P T266,T265,T264,T263,T262,T261,T260,T259,T258,T257,T256,T255,T254,T253,T252,T251;
+  P T250,T249,T248,T247,T246,T245,T244,T243,T242,T241,T240,T239,T238,T237,T236,T235;
+  P T234,T233,T232,T231,T230,T229,T228,T227,T226,T225,T224,T223,T222,T221,T220,T219;
+  P T218,T217,T216,T215,T214,T213,T212,T211,T210,T209,T208,T207,T206,T205,T204,T203;
+  P T202,T201,T200,T199,T198,T197,T196,T195,T194,T193,T192,T191,T190,T189,T188,T187;
+  P T186,T185,T184,T183,T182,T181,T180,T179,T178,T177,T176,T175,T174,T173,T172,T171;
+  P T170,T169,T168,T167,T166,T165,T164,T163,T162,T161,T160,T159,T158,T157,T156,T155;
+  P T154,T153,T152,T151,T150,T149,T148,T147,T146,T145,T144,T143,T142,T141,T140,T139;
+  P T138,T137,T136,T135,T134,T133,T132,T131,T130,T129,T128,T127,T126,T125,T124,T123;
+  P T122,T121,T120,T119,T118,T117,T116,T115,T114,T113,T112,T111,T110,T109,T108,T107;
+  P T106,T105,T104,T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93,T92,T91;
+  P T90,T89,T88,T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77,T76,T75;
+  P T74,T73,T72,T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61,T60,T59;
+  P T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43;
+  P T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27;
+  P T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11;
+  P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+loop:
+  T0 = YPsig(YPpair(YPPsym((P)"z"),YPpair(YPPsym((P)"x"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLlocG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YruntimeYlocative_value_setter = YPmet(FUNCODEREF(YruntimeYlocative_value_setter),YPPsym((P)"locative-value-setter"),T0,ENVNUL);
+  T1 = YruntimeYlocative_value_setter;
+  YruntimeYlocative_value_setter = T1;
+  regsym(&YruntimeYlocative_value_setter,"runtime","locative-value-setter");
+  T2 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  YruntimeYapp_filename = YPmet(FUNCODEREF(YruntimeYapp_filename),YPPsym((P)"app-filename"),T2,ENVNUL);
+  T3 = YruntimeYapp_filename;
+  YruntimeYapp_filename = T3;
+  regsym(&YruntimeYapp_filename,"runtime","app-filename");
+  T4 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  YruntimeYapp_args = YPmet(FUNCODEREF(YruntimeYapp_args),YPPsym((P)"app-args"),T4,ENVNUL);
+  T5 = YruntimeYapp_args;
+  YruntimeYapp_args = T5;
+  regsym(&YruntimeYapp_args,"runtime","app-args");
+  T7 = (P)YPpair(CHKREF(YLanyG),Ynil);
+  T6 = CALL3(CHKREF(YPisa),T7,Ynil,Ynil);
+  YruntimeYLportG = T6;
+  regsym(&YruntimeYLportG,"runtime","<port>");
+  T8 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLportG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_port_handle_431 = YPmet(FUNCODEREF(fun_port_handle_431),YPPsym((P)"port-handle"),T8,ENVNUL);
+  T12 = BOUNDP(YruntimeYport_handle);
+  if (T12 != YPfalse) {
+    T11 = CHKREF(YruntimeYport_handle);
+  } else {
+    T11 = YPfalse;
+  }
+  T10 = fun_port_handle_431;
+  T9 = CALL2(CHKREF(YPdefine_method),T11,T10);
+  YruntimeYport_handle = T9;
+  regsym(&YruntimeYport_handle,"runtime","port-handle");
+  T13 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YruntimeYLportG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_port_handle_setter_432 = YPmet(FUNCODEREF(fun_port_handle_setter_432),YPPsym((P)"port-handle-setter"),T13,ENVNUL);
+  T17 = BOUNDP(YruntimeYport_handle_setter);
+  if (T17 != YPfalse) {
+    T16 = CHKREF(YruntimeYport_handle_setter);
+  } else {
+    T16 = YPfalse;
+  }
+  T15 = fun_port_handle_setter_432;
+  T14 = CALL2(CHKREF(YPdefine_method),T16,T15);
+  YruntimeYport_handle_setter = T14;
+  regsym(&YruntimeYport_handle_setter,"runtime","port-handle-setter");
+  T18 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_433 = YPmet(FUNCODEREF(fun_433),YPfalse,T18,ENVNUL);
+  T19 = fun_433;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLportG),CHKREF(YruntimeYport_handle),CHKREF(YruntimeYport_handle_setter),CHKREF(YLanyG),T19);
+  T21 = (P)YPpair(CHKREF(YruntimeYLportG),Ynil);
+  T20 = CALL3(CHKREF(YPisa),T21,Ynil,Ynil);
+  YruntimeYLinput_portG = T20;
+  regsym(&YruntimeYLinput_portG,"runtime","<input-port>");
+  T23 = (P)YPpair(CHKREF(YruntimeYLportG),Ynil);
+  T22 = CALL3(CHKREF(YPisa),T23,Ynil,Ynil);
+  YruntimeYLoutput_portG = T22;
+  regsym(&YruntimeYLoutput_portG,"runtime","<output-port>");
+  T25 = (P)YPpair(CHKREF(YruntimeYLportG),Ynil);
+  T24 = CALL3(CHKREF(YPisa),T25,Ynil,Ynil);
+  YruntimeYLfile_portG = T24;
+  regsym(&YruntimeYLfile_portG,"runtime","<file-port>");
+  T28 = (P)YPpair(CHKREF(YruntimeYLinput_portG),Ynil);
+  T27 = (P)YPpair(CHKREF(YruntimeYLfile_portG),T28);
+  T26 = CALL3(CHKREF(YPisa),T27,Ynil,Ynil);
+  YruntimeYLfile_input_portG = T26;
+  regsym(&YruntimeYLfile_input_portG,"runtime","<file-input-port>");
+  T31 = (P)YPpair(CHKREF(YruntimeYLoutput_portG),Ynil);
+  T30 = (P)YPpair(CHKREF(YruntimeYLfile_portG),T31);
+  T29 = CALL3(CHKREF(YPisa),T30,Ynil,Ynil);
+  YruntimeYLfile_output_portG = T29;
+  regsym(&YruntimeYLfile_output_portG,"runtime","<file-output-port>");
+  T32 = YPsig(YPpair(YPPsym((P)"filename"),Ynil),YPpair(CHKREF(YLstrG),Ynil),YPfalse,YPint((P)1),CHKREF(YruntimeYLfile_input_portG));
+  fun_open_input_file_434 = YPmet(FUNCODEREF(fun_open_input_file_434),YPPsym((P)"open-input-file"),T32,ENVNUL);
+  T36 = BOUNDP(YruntimeYopen_input_file);
+  if (T36 != YPfalse) {
+    T35 = CHKREF(YruntimeYopen_input_file);
+  } else {
+    T35 = YPfalse;
+  }
+  T34 = fun_open_input_file_434;
+  T33 = CALL2(CHKREF(YPdefine_method),T35,T34);
+  YruntimeYopen_input_file = T33;
+  regsym(&YruntimeYopen_input_file,"runtime","open-input-file");
+  lit_64 = YPsb((P)"Cannot open file named %=");
+  T37 = YPsig(YPpair(YPPsym((P)"filename"),Ynil),YPpair(CHKREF(YLstrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_file_opening_error_435 = YPmet(FUNCODEREF(fun_file_opening_error_435),YPPsym((P)"file-opening-error"),T37,ENVNUL);
+  T41 = BOUNDP(Yfile_opening_error);
+  if (T41 != YPfalse) {
+    T40 = CHKREF(Yfile_opening_error);
+  } else {
+    T40 = YPfalse;
+  }
+  T39 = fun_file_opening_error_435;
+  T38 = CALL2(CHKREF(YPdefine_method),T40,T39);
+  Yfile_opening_error = T38;
+  regsym(&Yfile_opening_error,"boot","file-opening-error");
+  T42 = YPsig(YPpair(YPPsym((P)"filename"),Ynil),YPpair(CHKREF(YLstrG),Ynil),YPfalse,YPint((P)1),CHKREF(YruntimeYLfile_output_portG));
+  fun_open_output_file_436 = YPmet(FUNCODEREF(fun_open_output_file_436),YPPsym((P)"open-output-file"),T42,ENVNUL);
+  T46 = BOUNDP(YruntimeYopen_output_file);
+  if (T46 != YPfalse) {
+    T45 = CHKREF(YruntimeYopen_output_file);
+  } else {
+    T45 = YPfalse;
+  }
+  T44 = fun_open_output_file_436;
+  T43 = CALL2(CHKREF(YPdefine_method),T45,T44);
+  YruntimeYopen_output_file = T43;
+  regsym(&YruntimeYopen_output_file,"runtime","open-output-file");
+  T47 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_close_input_port_437 = YPmet(FUNCODEREF(fun_close_input_port_437),YPPsym((P)"close-input-port"),T47,ENVNUL);
+  T51 = BOUNDP(YruntimeYclose_input_port);
+  if (T51 != YPfalse) {
+    T50 = CHKREF(YruntimeYclose_input_port);
+  } else {
+    T50 = YPfalse;
+  }
+  T49 = fun_close_input_port_437;
+  T48 = CALL2(CHKREF(YPdefine_method),T50,T49);
+  YruntimeYclose_input_port = T48;
+  regsym(&YruntimeYclose_input_port,"runtime","close-input-port");
+  T52 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_output_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_close_output_port_438 = YPmet(FUNCODEREF(fun_close_output_port_438),YPPsym((P)"close-output-port"),T52,ENVNUL);
+  T56 = BOUNDP(YruntimeYclose_output_port);
+  if (T56 != YPfalse) {
+    T55 = CHKREF(YruntimeYclose_output_port);
+  } else {
+    T55 = YPfalse;
+  }
+  T54 = fun_close_output_port_438;
+  T53 = CALL2(CHKREF(YPdefine_method),T55,T54);
+  YruntimeYclose_output_port = T53;
+  regsym(&YruntimeYclose_output_port,"runtime","close-output-port");
+  T59 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_439 = YPmet(FUNCODEREF(fun_439),YPfalse,T59,ENVNUL);
+  T58 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_440 = YPmet(FUNCODEREF(fun_440),YPfalse,T58,ENVNUL);
+  T57 = YPsig(YPpair(YPPsym((P)"string"),YPpair(YPPsym((P)"proc"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLfunG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_call_with_input_file_441 = YPmet(FUNCODEREF(fun_call_with_input_file_441),YPPsym((P)"call-with-input-file"),T57,ENVNUL);
+  T63 = BOUNDP(YruntimeYcall_with_input_file);
+  if (T63 != YPfalse) {
+    T62 = CHKREF(YruntimeYcall_with_input_file);
+  } else {
+    T62 = YPfalse;
+  }
+  T61 = fun_call_with_input_file_441;
+  T60 = CALL2(CHKREF(YPdefine_method),T62,T61);
+  YruntimeYcall_with_input_file = T60;
+  regsym(&YruntimeYcall_with_input_file,"runtime","call-with-input-file");
+  T66 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_442 = YPmet(FUNCODEREF(fun_442),YPfalse,T66,ENVNUL);
+  T65 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_443 = YPmet(FUNCODEREF(fun_443),YPfalse,T65,ENVNUL);
+  T64 = YPsig(YPpair(YPPsym((P)"string"),YPpair(YPPsym((P)"proc"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLfunG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_call_with_output_file_444 = YPmet(FUNCODEREF(fun_call_with_output_file_444),YPPsym((P)"call-with-output-file"),T64,ENVNUL);
+  T70 = BOUNDP(YruntimeYcall_with_output_file);
+  if (T70 != YPfalse) {
+    T69 = CHKREF(YruntimeYcall_with_output_file);
+  } else {
+    T69 = YPfalse;
+  }
+  T68 = fun_call_with_output_file_444;
+  T67 = CALL2(CHKREF(YPdefine_method),T69,T68);
+  YruntimeYcall_with_output_file = T67;
+  regsym(&YruntimeYcall_with_output_file,"runtime","call-with-output-file");
+  T75 = (P)YPpair(CHKREF(YruntimeYLfile_input_portG),Ynil);
+  T74 = (P)YPpair(CHKREF(YruntimeYport_handle),Ynil);
+  T73 = (P)YPcurrent_input_port();
+  T72 = (P)YPpair(T73,Ynil);
+  T71 = CALL3(CHKREF(YPisa),T75,T74,T72);
+  YruntimeYin = T71;
+  regsym(&YruntimeYin,"runtime","in");
+  T80 = (P)YPpair(CHKREF(YruntimeYLfile_output_portG),Ynil);
+  T79 = (P)YPpair(CHKREF(YruntimeYport_handle),Ynil);
+  T78 = (P)YPcurrent_output_port();
+  T77 = (P)YPpair(T78,Ynil);
+  T76 = CALL3(CHKREF(YPisa),T80,T79,T77);
+  YruntimeYout = T76;
+  regsym(&YruntimeYout,"runtime","out");
+  T81 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_eof_objectQ_445 = YPmet(FUNCODEREF(fun_eof_objectQ_445),YPPsym((P)"eof-object?"),T81,ENVNUL);
+  T85 = BOUNDP(YruntimeYeof_objectQ);
+  if (T85 != YPfalse) {
+    T84 = CHKREF(YruntimeYeof_objectQ);
+  } else {
+    T84 = YPfalse;
+  }
+  T83 = fun_eof_objectQ_445;
+  T82 = CALL2(CHKREF(YPdefine_method),T84,T83);
+  YruntimeYeof_objectQ = T82;
+  regsym(&YruntimeYeof_objectQ,"runtime","eof-object?");
+  T86 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLchrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_eof_objectQ_446 = YPmet(FUNCODEREF(fun_eof_objectQ_446),YPPsym((P)"eof-object?"),T86,ENVNUL);
+  T90 = BOUNDP(YruntimeYeof_objectQ);
+  if (T90 != YPfalse) {
+    T89 = CHKREF(YruntimeYeof_objectQ);
+  } else {
+    T89 = YPfalse;
+  }
+  T88 = fun_eof_objectQ_446;
+  T87 = CALL2(CHKREF(YPdefine_method),T89,T88);
+  YruntimeYeof_objectQ = T87;
+  regsym(&YruntimeYeof_objectQ,"runtime","eof-object?");
+  T91 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLchrG));
+  fun_eof_object_447 = YPmet(FUNCODEREF(fun_eof_object_447),YPPsym((P)"eof-object"),T91,ENVNUL);
+  T95 = BOUNDP(YruntimeYeof_object);
+  if (T95 != YPfalse) {
+    T94 = CHKREF(YruntimeYeof_object);
+  } else {
+    T94 = YPfalse;
+  }
+  T93 = fun_eof_object_447;
+  T92 = CALL2(CHKREF(YPdefine_method),T94,T93);
+  YruntimeYeof_object = T92;
+  regsym(&YruntimeYeof_object,"runtime","eof-object");
+  T96 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
+  fun_read_char_448 = YPmet(FUNCODEREF(fun_read_char_448),YPPsym((P)"read-char"),T96,ENVNUL);
+  T100 = BOUNDP(YruntimeYread_char);
+  if (T100 != YPfalse) {
+    T99 = CHKREF(YruntimeYread_char);
+  } else {
+    T99 = YPfalse;
+  }
+  T98 = fun_read_char_448;
+  T97 = CALL2(CHKREF(YPdefine_method),T99,T98);
+  YruntimeYread_char = T97;
+  regsym(&YruntimeYread_char,"runtime","read-char");
+  T101 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
+  fun_peek_char_449 = YPmet(FUNCODEREF(fun_peek_char_449),YPPsym((P)"peek-char"),T101,ENVNUL);
+  T105 = BOUNDP(YruntimeYpeek_char);
+  if (T105 != YPfalse) {
+    T104 = CHKREF(YruntimeYpeek_char);
+  } else {
+    T104 = YPfalse;
+  }
+  T103 = fun_peek_char_449;
+  T102 = CALL2(CHKREF(YPdefine_method),T104,T103);
+  YruntimeYpeek_char = T102;
+  regsym(&YruntimeYpeek_char,"runtime","peek-char");
+  T106 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_char_readyQ_450 = YPmet(FUNCODEREF(fun_char_readyQ_450),YPPsym((P)"char-ready?"),T106,ENVNUL);
+  T110 = BOUNDP(YruntimeYchar_readyQ);
+  if (T110 != YPfalse) {
+    T109 = CHKREF(YruntimeYchar_readyQ);
+  } else {
+    T109 = YPfalse;
+  }
+  T108 = fun_char_readyQ_450;
+  T107 = CALL2(CHKREF(YPdefine_method),T109,T108);
+  YruntimeYchar_readyQ = T107;
+  regsym(&YruntimeYchar_readyQ,"runtime","char-ready?");
+  T111 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLoutput_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_newline_451 = YPmet(FUNCODEREF(fun_newline_451),YPPsym((P)"newline"),T111,ENVNUL);
+  T115 = BOUNDP(YruntimeYnewline);
+  if (T115 != YPfalse) {
+    T114 = CHKREF(YruntimeYnewline);
+  } else {
+    T114 = YPfalse;
+  }
+  T113 = fun_newline_451;
+  T112 = CALL2(CHKREF(YPdefine_method),T114,T113);
+  YruntimeYnewline = T112;
+  regsym(&YruntimeYnewline,"runtime","newline");
+  T116 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLfile_output_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_force_output_452 = YPmet(FUNCODEREF(fun_force_output_452),YPPsym((P)"force-output"),T116,ENVNUL);
+  T120 = BOUNDP(YruntimeYforce_output);
+  if (T120 != YPfalse) {
+    T119 = CHKREF(YruntimeYforce_output);
+  } else {
+    T119 = YPfalse;
+  }
+  T118 = fun_force_output_452;
+  T117 = CALL2(CHKREF(YPdefine_method),T119,T118);
+  YruntimeYforce_output = T117;
+  regsym(&YruntimeYforce_output,"runtime","force-output");
+  T121 = YPsig(YPpair(YPPsym((P)"port"),YPpair(YPPsym((P)"c"),Ynil)),YPpair(CHKREF(YruntimeYLfile_output_portG),YPpair(CHKREF(YLchrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_write_char_453 = YPmet(FUNCODEREF(fun_write_char_453),YPPsym((P)"write-char"),T121,ENVNUL);
+  T125 = BOUNDP(YruntimeYwrite_char);
+  if (T125 != YPfalse) {
+    T124 = CHKREF(YruntimeYwrite_char);
+  } else {
+    T124 = YPfalse;
+  }
+  T123 = fun_write_char_453;
+  T122 = CALL2(CHKREF(YPdefine_method),T124,T123);
+  YruntimeYwrite_char = T122;
+  regsym(&YruntimeYwrite_char,"runtime","write-char");
+  T126 = YPsig(YPpair(YPPsym((P)"port"),YPpair(YPPsym((P)"s"),Ynil)),YPpair(CHKREF(YruntimeYLfile_output_portG),YPpair(CHKREF(YLstrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_write_string_454 = YPmet(FUNCODEREF(fun_write_string_454),YPPsym((P)"write-string"),T126,ENVNUL);
+  T130 = BOUNDP(YruntimeYwrite_string);
+  if (T130 != YPfalse) {
+    T129 = CHKREF(YruntimeYwrite_string);
+  } else {
+    T129 = YPfalse;
+  }
+  T128 = fun_write_string_454;
+  T127 = CALL2(CHKREF(YPdefine_method),T129,T128);
+  YruntimeYwrite_string = T127;
+  regsym(&YruntimeYwrite_string,"runtime","write-string");
+  T131 = YPsig(YPpair(YPPsym((P)"filename"),Ynil),YPpair(CHKREF(YLstrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLfloG));
+  fun_file_mtime_455 = YPmet(FUNCODEREF(fun_file_mtime_455),YPPsym((P)"file-mtime"),T131,ENVNUL);
+  T135 = BOUNDP(YruntimeYfile_mtime);
+  if (T135 != YPfalse) {
+    T134 = CHKREF(YruntimeYfile_mtime);
+  } else {
+    T134 = YPfalse;
+  }
+  T133 = fun_file_mtime_455;
+  T132 = CALL2(CHKREF(YPdefine_method),T134,T133);
+  YruntimeYfile_mtime = T132;
+  regsym(&YruntimeYfile_mtime,"runtime","file-mtime");
+  T137 = (P)YPpair(CHKREF(YruntimeYLportG),Ynil);
+  T136 = CALL3(CHKREF(YPisa),T137,Ynil,Ynil);
+  YruntimeYLstring_portG = T136;
+  regsym(&YruntimeYLstring_portG,"runtime","<string-port>");
+  T138 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLstring_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_port_guts_456 = YPmet(FUNCODEREF(fun_port_guts_456),YPPsym((P)"port-guts"),T138,ENVNUL);
+  T142 = BOUNDP(YruntimeYport_guts);
+  if (T142 != YPfalse) {
+    T141 = CHKREF(YruntimeYport_guts);
+  } else {
+    T141 = YPfalse;
+  }
+  T140 = fun_port_guts_456;
+  T139 = CALL2(CHKREF(YPdefine_method),T141,T140);
+  YruntimeYport_guts = T139;
+  regsym(&YruntimeYport_guts,"runtime","port-guts");
+  T143 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLseqG),YPpair(CHKREF(YruntimeYLstring_portG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_port_guts_setter_457 = YPmet(FUNCODEREF(fun_port_guts_setter_457),YPPsym((P)"port-guts-setter"),T143,ENVNUL);
+  T147 = BOUNDP(YruntimeYport_guts_setter);
+  if (T147 != YPfalse) {
+    T146 = CHKREF(YruntimeYport_guts_setter);
+  } else {
+    T146 = YPfalse;
+  }
+  T145 = fun_port_guts_setter_457;
+  T144 = CALL2(CHKREF(YPdefine_method),T146,T145);
+  YruntimeYport_guts_setter = T144;
+  regsym(&YruntimeYport_guts_setter,"runtime","port-guts-setter");
+  lit_65 = YPsb((P)"");
+  T148 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_458 = YPmet(FUNCODEREF(fun_458),YPfalse,T148,ENVNUL);
+  T149 = fun_458;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLstring_portG),CHKREF(YruntimeYport_guts),CHKREF(YruntimeYport_guts_setter),CHKREF(YLseqG),T149);
+  T150 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLstring_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLstrG));
+  fun_port_contents_459 = YPmet(FUNCODEREF(fun_port_contents_459),YPPsym((P)"port-contents"),T150,ENVNUL);
+  T154 = BOUNDP(YruntimeYport_contents);
+  if (T154 != YPfalse) {
+    T153 = CHKREF(YruntimeYport_contents);
+  } else {
+    T153 = YPfalse;
+  }
+  T152 = fun_port_contents_459;
+  T151 = CALL2(CHKREF(YPdefine_method),T153,T152);
+  YruntimeYport_contents = T151;
+  regsym(&YruntimeYport_contents,"runtime","port-contents");
+  T157 = (P)YPpair(CHKREF(YruntimeYLinput_portG),Ynil);
+  T156 = (P)YPpair(CHKREF(YruntimeYLstring_portG),T157);
+  T155 = CALL3(CHKREF(YPisa),T156,Ynil,Ynil);
+  YruntimeYLstring_input_portG = T155;
+  regsym(&YruntimeYLstring_input_portG,"runtime","<string-input-port>");
+  T158 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLstring_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_port_index_460 = YPmet(FUNCODEREF(fun_port_index_460),YPPsym((P)"port-index"),T158,ENVNUL);
+  T162 = BOUNDP(YruntimeYport_index);
+  if (T162 != YPfalse) {
+    T161 = CHKREF(YruntimeYport_index);
+  } else {
+    T161 = YPfalse;
+  }
+  T160 = fun_port_index_460;
+  T159 = CALL2(CHKREF(YPdefine_method),T161,T160);
+  YruntimeYport_index = T159;
+  regsym(&YruntimeYport_index,"runtime","port-index");
+  T163 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLstring_input_portG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_port_index_setter_461 = YPmet(FUNCODEREF(fun_port_index_setter_461),YPPsym((P)"port-index-setter"),T163,ENVNUL);
+  T167 = BOUNDP(YruntimeYport_index_setter);
+  if (T167 != YPfalse) {
+    T166 = CHKREF(YruntimeYport_index_setter);
+  } else {
+    T166 = YPfalse;
+  }
+  T165 = fun_port_index_setter_461;
+  T164 = CALL2(CHKREF(YPdefine_method),T166,T165);
+  YruntimeYport_index_setter = T164;
+  regsym(&YruntimeYport_index_setter,"runtime","port-index-setter");
+  T168 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_462 = YPmet(FUNCODEREF(fun_462),YPfalse,T168,ENVNUL);
+  T169 = fun_462;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLstring_input_portG),CHKREF(YruntimeYport_index),CHKREF(YruntimeYport_index_setter),CHKREF(YLintG),T169);
+  T172 = (P)YPpair(CHKREF(YruntimeYLoutput_portG),Ynil);
+  T171 = (P)YPpair(CHKREF(YruntimeYLstring_portG),T172);
+  T170 = CALL3(CHKREF(YPisa),T171,Ynil,Ynil);
+  YruntimeYLstring_output_portG = T170;
+  regsym(&YruntimeYLstring_output_portG,"runtime","<string-output-port>");
+  T173 = YPsig(YPpair(YPPsym((P)"string"),YPpair(YPPsym((P)"proc"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLfunG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_call_with_string_input_port_463 = YPmet(FUNCODEREF(fun_call_with_string_input_port_463),YPPsym((P)"call-with-string-input-port"),T173,ENVNUL);
+  T177 = BOUNDP(YruntimeYcall_with_string_input_port);
+  if (T177 != YPfalse) {
+    T176 = CHKREF(YruntimeYcall_with_string_input_port);
+  } else {
+    T176 = YPfalse;
+  }
+  T175 = fun_call_with_string_input_port_463;
+  T174 = CALL2(CHKREF(YPdefine_method),T176,T175);
+  YruntimeYcall_with_string_input_port = T174;
+  regsym(&YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
+  T178 = YPsig(YPpair(YPPsym((P)"proc"),Ynil),YPpair(CHKREF(YLfunG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_call_with_string_output_port_464 = YPmet(FUNCODEREF(fun_call_with_string_output_port_464),YPPsym((P)"call-with-string-output-port"),T178,ENVNUL);
+  T182 = BOUNDP(YruntimeYcall_with_string_output_port);
+  if (T182 != YPfalse) {
+    T181 = CHKREF(YruntimeYcall_with_string_output_port);
+  } else {
+    T181 = YPfalse;
+  }
+  T180 = fun_call_with_string_output_port_464;
+  T179 = CALL2(CHKREF(YPdefine_method),T181,T180);
+  YruntimeYcall_with_string_output_port = T179;
+  regsym(&YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
+  T183 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLstring_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
+  fun_peek_char_465 = YPmet(FUNCODEREF(fun_peek_char_465),YPPsym((P)"peek-char"),T183,ENVNUL);
+  T187 = BOUNDP(YruntimeYpeek_char);
+  if (T187 != YPfalse) {
+    T186 = CHKREF(YruntimeYpeek_char);
+  } else {
+    T186 = YPfalse;
+  }
+  T185 = fun_peek_char_465;
+  T184 = CALL2(CHKREF(YPdefine_method),T186,T185);
+  YruntimeYpeek_char = T184;
+  regsym(&YruntimeYpeek_char,"runtime","peek-char");
+  T188 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLstring_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLchrG));
+  fun_read_char_466 = YPmet(FUNCODEREF(fun_read_char_466),YPPsym((P)"read-char"),T188,ENVNUL);
+  T192 = BOUNDP(YruntimeYread_char);
+  if (T192 != YPfalse) {
+    T191 = CHKREF(YruntimeYread_char);
+  } else {
+    T191 = YPfalse;
+  }
+  T190 = fun_read_char_466;
+  T189 = CALL2(CHKREF(YPdefine_method),T191,T190);
+  YruntimeYread_char = T189;
+  regsym(&YruntimeYread_char,"runtime","read-char");
+  T193 = YPsig(YPpair(YPPsym((P)"port"),Ynil),YPpair(CHKREF(YruntimeYLstring_input_portG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  fun_char_readyQ_467 = YPmet(FUNCODEREF(fun_char_readyQ_467),YPPsym((P)"char-ready?"),T193,ENVNUL);
+  T197 = BOUNDP(YruntimeYchar_readyQ);
+  if (T197 != YPfalse) {
+    T196 = CHKREF(YruntimeYchar_readyQ);
+  } else {
+    T196 = YPfalse;
+  }
+  T195 = fun_char_readyQ_467;
+  T194 = CALL2(CHKREF(YPdefine_method),T196,T195);
+  YruntimeYchar_readyQ = T194;
+  regsym(&YruntimeYchar_readyQ,"runtime","char-ready?");
+  T198 = YPsig(YPpair(YPPsym((P)"port"),YPpair(YPPsym((P)"c"),Ynil)),YPpair(CHKREF(YruntimeYLstring_output_portG),YPpair(CHKREF(YLchrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_write_char_468 = YPmet(FUNCODEREF(fun_write_char_468),YPPsym((P)"write-char"),T198,ENVNUL);
+  T202 = BOUNDP(YruntimeYwrite_char);
+  if (T202 != YPfalse) {
+    T201 = CHKREF(YruntimeYwrite_char);
+  } else {
+    T201 = YPfalse;
+  }
+  T200 = fun_write_char_468;
+  T199 = CALL2(CHKREF(YPdefine_method),T201,T200);
+  YruntimeYwrite_char = T199;
+  regsym(&YruntimeYwrite_char,"runtime","write-char");
+  T203 = YPsig(YPpair(YPPsym((P)"port"),YPpair(YPPsym((P)"s"),Ynil)),YPpair(CHKREF(YruntimeYLstring_output_portG),YPpair(CHKREF(YLstrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_write_string_469 = YPmet(FUNCODEREF(fun_write_string_469),YPPsym((P)"write-string"),T203,ENVNUL);
+  T207 = BOUNDP(YruntimeYwrite_string);
+  if (T207 != YPfalse) {
+    T206 = CHKREF(YruntimeYwrite_string);
+  } else {
+    T206 = YPfalse;
+  }
+  T205 = fun_write_string_469;
+  T204 = CALL2(CHKREF(YPdefine_method),T206,T205);
+  YruntimeYwrite_string = T204;
+  regsym(&YruntimeYwrite_string,"runtime","write-string");
+  lit_66 = YPpair(YPint((P)3), YPpair(YPint((P)5), YPpair(YPint((P)11), YPpair(YPint((P)17), YPpair(YPint((P)29), YPpair(YPint((P)41), YPpair(YPint((P)47), YPpair(YPint((P)59), YPpair(YPint((P)71), YPpair(YPint((P)101), YPpair(YPint((P)107), YPpair(YPint((P)137), YPpair(YPint((P)149), YPpair(YPint((P)167), YPpair(YPint((P)179), YPpair(YPint((P)191), YPpair(YPint((P)197), YPpair(YPint((P)227), YPpair(YPint((P)239), YPpair(YPint((P)269), YPpair(YPint((P)281), YPpair(YPint((P)311), YPpair(YPint((P)347), YPpair(YPint((P)419), YPpair(YPint((P)431), YPpair(YPint((P)461), YPpair(YPint((P)521), YPpair(YPint((P)569), YPpair(YPint((P)599), YPpair(YPint((P)617), YPpair(YPint((P)641), YPpair(YPint((P)659), YPpair(YPint((P)809), YPpair(YPint((P)839), YPpair(YPint((P)881), YPpair(YPint((P)1019), YPpair(YPint((P)1049), YPpair(YPint((P)1091), YPpair(YPint((P)1151), YPpair(YPint((P)1229), YPpair(YPint((P)1277), YPpair(YPint((P)1319), YPpair(YPint((P)1367), YPpair(YPint((P)1427), YPpair(YPint((P)1481), YPpair(YPint((P)1607), YPpair(YPint((P)1667), YPpair(YPint((P)1721), YPpair(YPint((P)1787), YPpair(YPint((P)1871), YPpair(YPint((P)1931), YPpair(YPint((P)1997), YPpair(YPint((P)2081), YPpair(YPint((P)2141), YPpair(YPint((P)2207), YPpair(YPint((P)2267), YPpair(YPint((P)2339), YPpair(YPint((P)2549), YPpair(YPint((P)2657), YPpair(YPint((P)2729), YPpair(YPint((P)2801), YPpair(YPint((P)2969), YPpair(YPint((P)3119), YPpair(YPint((P)3251), YPpair(YPint((P)3359), YPpair(YPint((P)3461), YPpair(YPint((P)3557), YPpair(YPint((P)3671), YPpair(YPint((P)3767), YPpair(YPint((P)3917), YPpair(YPint((P)4019), YPpair(YPint((P)4127), YPpair(YPint((P)4241), YPpair(YPint((P)4421), YPpair(YPint((P)4547), YPpair(YPint((P)4721), YPpair(YPint((P)4931), YPpair(YPint((P)5099), YPpair(YPint((P)5231), YPpair(YPint((P)5417), YPpair(YPint((P)5639), YPpair(YPint((P)5849), YPpair(YPint((P)6089), YPpair(YPint((P)6269), YPpair(YPint((P)6449), YPpair(YPint((P)6659), YPpair(YPint((P)6827), YPpair(YPint((P)7127), YPpair(YPint((P)7307), YPpair(YPint((P)7547), YPpair(YPint((P)7757), YPpair(YPint((P)8009), YPpair(YPint((P)8219), YPpair(YPint((P)8429), YPpair(YPint((P)8819), YPpair(YPint((P)9041), YPpair(YPint((P)9281), YPpair(YPint((P)9629), YPpair(YPint((P)9929), YPpair(YPint((P)10271), YPpair(YPint((P)10529), YPpair(YPint((P)10859), YPpair(YPint((P)11159), YPpair(YPint((P)11447), YPpair(YPint((P)11777), YPpair(YPint((P)12107), YPpair(YPint((P)12539), YPpair(YPint((P)12917), YPpair(YPint((P)13337), YPpair(YPint((P)13679), YPpair(YPint((P)14081), YPpair(YPint((P)14447), YPpair(YPint((P)14867), YPpair(YPint((P)15269), YPpair(YPint((P)15731), YPpair(YPint((P)16139), YPpair(YPint((P)16631), YPpair(YPint((P)17189), YPpair(YPint((P)17657), YPpair(YPint((P)18119), YPpair(YPint((P)18911), YPpair(YPint((P)19421), YPpair(YPint((P)19961), YPpair(YPint((P)20477), YPpair(YPint((P)21011), YPpair(YPint((P)21557), YPpair(YPint((P)22109), YPpair(YPint((P)22697), YPpair(YPint((P)23291), YPpair(YPint((P)23909), YPpair(YPint((P)24917), YPpair(YPint((P)25577), YPpair(YPint((P)26249), YPpair(YPint((P)26951), YPpair(YPint((P)27689), YPpair(YPint((P)28409), YPpair(YPint((P)29129), YPpair(YPint((P)29879), YPpair(YPint((P)30839), YPpair(YPint((P)31721), YPpair(YPint((P)32531), YPpair(YPint((P)33347), YPpair(YPint((P)34211), YPpair(YPint((P)35081), YPpair(YPint((P)36011), YPpair(YPint((P)36929), YPpair(YPint((P)37991), YPpair(YPint((P)39041), YPpair(YPint((P)40037), YPpair(YPint((P)41141), YPpair(YPint((P)42179), YPpair(YPint((P)43319), YPpair(YPint((P)44531), YPpair(YPint((P)45821), YPpair(YPint((P)47057), YPpair(YPint((P)48311), YPpair(YPint((P)49529), YPpair(YPint((P)50891), YPpair(YPint((P)52181), YPpair(YPint((P)53549), YPpair(YPint((P)54917), YPpair(YPint((P)56477), YPpair(YPint((P)57899), YPpair(YPint((P)59357), YPpair(YPint((P)60887), YPpair(YPint((P)62927), YPpair(YPint((P)64577), YPpair(YPint((P)66359), YPpair(YPint((P)68111), YPpair(YPint((P)69827), YPpair(YPint((P)71711), YPpair(YPint((P)73607), YPpair(YPint((P)75539), YPpair(YPint((P)77477), YPpair(YPint((P)79559), YPpair(YPint((P)81551), YPpair(YPint((P)83639), YPpair(YPint((P)85817), YPpair(YPint((P)88001), YPpair(YPint((P)90371), YPpair(YPint((P)92639), YPpair(YPint((P)95087), YPpair(YPint((P)97499), YPpair(YPint((P)99989), YPpair(YPint((P)102497), YPpair(YPint((P)105227), YPpair(YPint((P)108011), YPpair(YPint((P)110729), YPpair(YPint((P)113537), YPpair(YPint((P)116531), YPpair(YPint((P)119549), YPpair(YPint((P)122597), YPpair(YPint((P)125789), YPpair(YPint((P)128939), YPpair(YPint((P)132329), YPpair(YPint((P)135647), YPpair(YPint((P)139121), YPpair(YPint((P)142607), YPpair(YPint((P)146297), YPpair(YPint((P)149969), YPpair(YPint((P)153887), YPpair(YPint((P)157769), YPpair(YPint((P)161729), YPpair(YPint((P)166301), YPpair(YPint((P)170537), YPpair(YPint((P)174929), YPpair(YPint((P)179381), YPpair(YPint((P)183917), YPpair(YPint((P)188831), YPpair(YPint((P)193601), YPpair(YPint((P)198461), YPpair(YPint((P)203429), YPpair(YPint((P)208589), YPpair(YPint((P)213947), YPpair(YPint((P)219311), YPpair(YPint((P)224909), YPpair(YPint((P)230561), YPpair(YPint((P)236477), YPpair(YPint((P)242447), YPpair(YPint((P)248639), YPpair(YPint((P)254927), YPpair(YPint((P)261431), YPpair(YPint((P)268517), YPpair(YPint((P)275321), YPpair(YPint((P)282239), YPpair(YPint((P)289841), YPpair(YPint((P)297467), YPpair(YPint((P)304979), YPpair(YPint((P)312617), YPpair(YPint((P)320561), YPpair(YPint((P)328589), YPpair(YPint((P)336827), YPpair(YPint((P)345461), YPpair(YPint((P)354251), YPpair(YPint((P)363149), YPpair(YPint((P)372269), YPpair(YPint((P)381629), YPpair(YPint((P)391217), YPpair(YPint((P)401309), YPpair(YPint((P)411527), YPpair(YPint((P)422087), YPpair(YPint((P)432659), YPpair(YPint((P)443561), YPpair(YPint((P)454709), YPpair(YPint((P)466181), YPpair(YPint((P)478067), YPpair(YPint((P)490031), YPpair(YPint((P)502499), YPpair(YPint((P)515087), YPpair(YPint((P)527981), YPpair(YPint((P)541361), YPpair(YPint((P)555041), YPpair(YPint((P)569081), YPpair(YPint((P)583337), YPpair(YPint((P)598049), YPpair(YPint((P)613007), YPpair(YPint((P)628679), YPpair(YPint((P)644489), YPpair(YPint((P)660617), YPpair(YPint((P)677231), YPpair(YPint((P)694259), YPpair(YPint((P)711707), YPpair(YPint((P)729557), YPpair(YPint((P)747827), YPpair(YPint((P)766541), YPpair(YPint((P)785777), YPpair(YPint((P)805499), YPpair(YPint((P)825827), YPpair(YPint((P)846749), YPpair(YPint((P)868121), YPpair(YPint((P)889871), YPpair(YPint((P)912449), YPpair(YPint((P)935591), YPpair(YPint((P)959207), YPpair(YPint((P)983327), Ynil)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
+  T208 = CALL2(CHKREF(YruntimeYas),CHKREF(YLvecG),CHKREF(lit_66));
+  YruntimeYTtwin_primesT = T208;
+  regsym(&YruntimeYTtwin_primesT,"runtime","*twin-primes*");
+  T210 = (P)YPpair(CHKREF(YLanyG),Ynil);
+  T209 = CALL3(CHKREF(YPisa),T210,Ynil,Ynil);
+  YruntimeYLsimple_table_vectorG = T209;
+  regsym(&YruntimeYLsimple_table_vectorG,"runtime","<simple-table-vector>");
+  T211 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_Pvacated_470 = YPmet(FUNCODEREF(fun_Pvacated_470),YPPsym((P)"%vacated"),T211,ENVNUL);
+  T215 = BOUNDP(YruntimeYPvacated);
+  if (T215 != YPfalse) {
+    T214 = CHKREF(YruntimeYPvacated);
+  } else {
+    T214 = YPfalse;
+  }
+  T213 = fun_Pvacated_470;
+  T212 = CALL2(CHKREF(YPdefine_method),T214,T213);
+  YruntimeYPvacated = T212;
+  regsym(&YruntimeYPvacated,"runtime","%vacated");
+  T216 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Pvacated_setter_471 = YPmet(FUNCODEREF(fun_Pvacated_setter_471),YPPsym((P)"%vacated-setter"),T216,ENVNUL);
+  T220 = BOUNDP(YruntimeYPvacated_setter);
+  if (T220 != YPfalse) {
+    T219 = CHKREF(YruntimeYPvacated_setter);
+  } else {
+    T219 = YPfalse;
+  }
+  T218 = fun_Pvacated_setter_471;
+  T217 = CALL2(CHKREF(YPdefine_method),T219,T218);
+  YruntimeYPvacated_setter = T217;
+  regsym(&YruntimeYPvacated_setter,"runtime","%vacated-setter");
+  T221 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_472 = YPmet(FUNCODEREF(fun_472),YPfalse,T221,ENVNUL);
+  T222 = fun_472;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPvacated),CHKREF(YruntimeYPvacated_setter),CHKREF(YLintG),T222);
+  T223 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_Pprimary_modulus_473 = YPmet(FUNCODEREF(fun_Pprimary_modulus_473),YPPsym((P)"%primary-modulus"),T223,ENVNUL);
+  T227 = BOUNDP(YruntimeYPprimary_modulus);
+  if (T227 != YPfalse) {
+    T226 = CHKREF(YruntimeYPprimary_modulus);
+  } else {
+    T226 = YPfalse;
+  }
+  T225 = fun_Pprimary_modulus_473;
+  T224 = CALL2(CHKREF(YPdefine_method),T226,T225);
+  YruntimeYPprimary_modulus = T224;
+  regsym(&YruntimeYPprimary_modulus,"runtime","%primary-modulus");
+  T228 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Pprimary_modulus_setter_474 = YPmet(FUNCODEREF(fun_Pprimary_modulus_setter_474),YPPsym((P)"%primary-modulus-setter"),T228,ENVNUL);
+  T232 = BOUNDP(YruntimeYPprimary_modulus_setter);
+  if (T232 != YPfalse) {
+    T231 = CHKREF(YruntimeYPprimary_modulus_setter);
+  } else {
+    T231 = YPfalse;
+  }
+  T230 = fun_Pprimary_modulus_setter_474;
+  T229 = CALL2(CHKREF(YPdefine_method),T231,T230);
+  YruntimeYPprimary_modulus_setter = T229;
+  regsym(&YruntimeYPprimary_modulus_setter,"runtime","%primary-modulus-setter");
+  T233 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_475 = YPmet(FUNCODEREF(fun_475),YPfalse,T233,ENVNUL);
+  T234 = fun_475;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPprimary_modulus),CHKREF(YruntimeYPprimary_modulus_setter),CHKREF(YLintG),T234);
+  T235 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_Psecondary_modulus_476 = YPmet(FUNCODEREF(fun_Psecondary_modulus_476),YPPsym((P)"%secondary-modulus"),T235,ENVNUL);
+  T239 = BOUNDP(YruntimeYPsecondary_modulus);
+  if (T239 != YPfalse) {
+    T238 = CHKREF(YruntimeYPsecondary_modulus);
+  } else {
+    T238 = YPfalse;
+  }
+  T237 = fun_Psecondary_modulus_476;
+  T236 = CALL2(CHKREF(YPdefine_method),T238,T237);
+  YruntimeYPsecondary_modulus = T236;
+  regsym(&YruntimeYPsecondary_modulus,"runtime","%secondary-modulus");
+  T240 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Psecondary_modulus_setter_477 = YPmet(FUNCODEREF(fun_Psecondary_modulus_setter_477),YPPsym((P)"%secondary-modulus-setter"),T240,ENVNUL);
+  T244 = BOUNDP(YruntimeYPsecondary_modulus_setter);
+  if (T244 != YPfalse) {
+    T243 = CHKREF(YruntimeYPsecondary_modulus_setter);
+  } else {
+    T243 = YPfalse;
+  }
+  T242 = fun_Psecondary_modulus_setter_477;
+  T241 = CALL2(CHKREF(YPdefine_method),T243,T242);
+  YruntimeYPsecondary_modulus_setter = T241;
+  regsym(&YruntimeYPsecondary_modulus_setter,"runtime","%secondary-modulus-setter");
+  T245 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_478 = YPmet(FUNCODEREF(fun_478),YPfalse,T245,ENVNUL);
+  T246 = fun_478;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPsecondary_modulus),CHKREF(YruntimeYPsecondary_modulus_setter),CHKREF(YLintG),T246);
+  T247 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_Pn_buckets_479 = YPmet(FUNCODEREF(fun_Pn_buckets_479),YPPsym((P)"%n-buckets"),T247,ENVNUL);
+  T251 = BOUNDP(YruntimeYPn_buckets);
+  if (T251 != YPfalse) {
+    T250 = CHKREF(YruntimeYPn_buckets);
+  } else {
+    T250 = YPfalse;
+  }
+  T249 = fun_Pn_buckets_479;
+  T248 = CALL2(CHKREF(YPdefine_method),T250,T249);
+  YruntimeYPn_buckets = T248;
+  regsym(&YruntimeYPn_buckets,"runtime","%n-buckets");
+  T252 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Pn_buckets_setter_480 = YPmet(FUNCODEREF(fun_Pn_buckets_setter_480),YPPsym((P)"%n-buckets-setter"),T252,ENVNUL);
+  T256 = BOUNDP(YruntimeYPn_buckets_setter);
+  if (T256 != YPfalse) {
+    T255 = CHKREF(YruntimeYPn_buckets_setter);
+  } else {
+    T255 = YPfalse;
+  }
+  T254 = fun_Pn_buckets_setter_480;
+  T253 = CALL2(CHKREF(YPdefine_method),T255,T254);
+  YruntimeYPn_buckets_setter = T253;
+  regsym(&YruntimeYPn_buckets_setter,"runtime","%n-buckets-setter");
+  T257 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_481 = YPmet(FUNCODEREF(fun_481),YPfalse,T257,ENVNUL);
+  T258 = fun_481;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPn_buckets),CHKREF(YruntimeYPn_buckets_setter),CHKREF(YLintG),T258);
+  T261 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  T260 = fun_Pbucket_depth_482 = YPmet(FUNCODEREF(fun_Pbucket_depth_482),YPPsym((P)"%bucket-depth"),T261,ENVNUL);
+  T266 = BOUNDP(YruntimeYPbucket_depth);
+  if (T266 != YPfalse) {
+    T265 = CHKREF(YruntimeYPbucket_depth);
+  } else {
+    T265 = YPfalse;
+  }
+  T264 = fun_Pbucket_depth_482;
+  T263 = CALL2(CHKREF(YPdefine_method),T265,T264);
+  T262 = YruntimeYPbucket_depth = T263;
+  regsym(&YruntimeYPbucket_depth,"runtime","%bucket-depth");
+  T259 = T262;
+  return T259;
+}
+
+P YruntimeY___main_7___() {
+  P T277,T276,T275,T274,T273,T272,T271,T270,T269,T268,T267,T266,T265,T264,T263,T262;
+  P T261,T260,T259,T258,T257,T256,T255,T254,T253,T252,T251,T250,T249,T248,T247,T246;
+  P T245,T244,T243,T242,T241,T240,T239,T238,T237,T236,T235,T234,T233,T232,T231,T230;
+  P T229,T228,T227,T226,T225,T224,T223,T222,T221,T220,T219,T218,T217,T216,T215,T214;
+  P T213,T212,T211,T210,T209,T208,T207,T206,T205,T204,T203,T202,T201,T200,T199,T198;
+  P T197,T196,T195,T194,T193,T192,T191,T190,T189,T188,T187,T186,T185,T184,T183,T182;
+  P T181,T180,T179,T178,T177,T176,T175,T174,T173,T172,T171,T170,T169,T168,T167,T166;
+  P T165,T164,T163,T162,T161,T160,T159,T158,T157,T156,T155,T154,T153,T152,T151,T150;
+  P T149,T148,T147,T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136,T135,T134;
+  P T133,T132,T131,T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120,T119,T118;
+  P T117,T116,T115,T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104,T103,T102;
+  P T101,T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88,T87,T86;
+  P T85,T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70;
+  P T69,T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54;
+  P T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38;
+  P T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22;
+  P T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6;
+  P T5,T4,T3,T2,T1,T0;
+loop:
+  T0 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Pbucket_depth_setter_483 = YPmet(FUNCODEREF(fun_Pbucket_depth_setter_483),YPPsym((P)"%bucket-depth-setter"),T0,ENVNUL);
+  T4 = BOUNDP(YruntimeYPbucket_depth_setter);
+  if (T4 != YPfalse) {
+    T3 = CHKREF(YruntimeYPbucket_depth_setter);
+  } else {
+    T3 = YPfalse;
+  }
+  T2 = fun_Pbucket_depth_setter_483;
+  T1 = CALL2(CHKREF(YPdefine_method),T3,T2);
+  YruntimeYPbucket_depth_setter = T1;
+  regsym(&YruntimeYPbucket_depth_setter,"runtime","%bucket-depth-setter");
+  T5 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_484 = YPmet(FUNCODEREF(fun_484),YPfalse,T5,ENVNUL);
+  T6 = fun_484;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPbucket_depth),CHKREF(YruntimeYPbucket_depth_setter),CHKREF(YLintG),T6);
+  T7 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_Pdata_485 = YPmet(FUNCODEREF(fun_Pdata_485),YPPsym((P)"%data"),T7,ENVNUL);
+  T11 = BOUNDP(YruntimeYPdata);
+  if (T11 != YPfalse) {
+    T10 = CHKREF(YruntimeYPdata);
+  } else {
+    T10 = YPfalse;
+  }
+  T9 = fun_Pdata_485;
+  T8 = CALL2(CHKREF(YPdefine_method),T10,T9);
+  YruntimeYPdata = T8;
+  regsym(&YruntimeYPdata,"runtime","%data");
+  T12 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLvecG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Pdata_setter_486 = YPmet(FUNCODEREF(fun_Pdata_setter_486),YPPsym((P)"%data-setter"),T12,ENVNUL);
+  T16 = BOUNDP(YruntimeYPdata_setter);
+  if (T16 != YPfalse) {
+    T15 = CHKREF(YruntimeYPdata_setter);
+  } else {
+    T15 = YPfalse;
+  }
+  T14 = fun_Pdata_setter_486;
+  T13 = CALL2(CHKREF(YPdefine_method),T15,T14);
+  YruntimeYPdata_setter = T13;
+  regsym(&YruntimeYPdata_setter,"runtime","%data-setter");
+  T17 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_487 = YPmet(FUNCODEREF(fun_487),YPfalse,T17,ENVNUL);
+  T18 = fun_487;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPdata),CHKREF(YruntimeYPdata_setter),CHKREF(YLvecG),T18);
+  T19 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_Pgc_state_488 = YPmet(FUNCODEREF(fun_Pgc_state_488),YPPsym((P)"%gc-state"),T19,ENVNUL);
+  T23 = BOUNDP(YruntimeYPgc_state);
+  if (T23 != YPfalse) {
+    T22 = CHKREF(YruntimeYPgc_state);
+  } else {
+    T22 = YPfalse;
+  }
+  T21 = fun_Pgc_state_488;
+  T20 = CALL2(CHKREF(YPdefine_method),T22,T21);
+  YruntimeYPgc_state = T20;
+  regsym(&YruntimeYPgc_state,"runtime","%gc-state");
+  T24 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Pgc_state_setter_489 = YPmet(FUNCODEREF(fun_Pgc_state_setter_489),YPPsym((P)"%gc-state-setter"),T24,ENVNUL);
+  T28 = BOUNDP(YruntimeYPgc_state_setter);
+  if (T28 != YPfalse) {
+    T27 = CHKREF(YruntimeYPgc_state_setter);
+  } else {
+    T27 = YPfalse;
+  }
+  T26 = fun_Pgc_state_setter_489;
+  T25 = CALL2(CHKREF(YPdefine_method),T27,T26);
+  YruntimeYPgc_state_setter = T25;
+  regsym(&YruntimeYPgc_state_setter,"runtime","%gc-state-setter");
+  T29 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_490 = YPmet(FUNCODEREF(fun_490),YPfalse,T29,ENVNUL);
+  T30 = fun_490;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_table_vectorG),CHKREF(YruntimeYPgc_state),CHKREF(YruntimeYPgc_state_setter),CHKREF(YLanyG),T30);
+  T31 = YPsig(YPpair(YPPsym((P)"size"),YPpair(YPPsym((P)"fill-value"),YPpair(YPPsym((P)"n-buckets"),YPpair(YPPsym((P)"bucket-depth"),YPpair(YPPsym((P)"primary-modulus"),YPpair(YPPsym((P)"secondary-modulus"),Ynil)))))),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)))))),YPfalse,YPint((P)6),CHKREF(YruntimeYLsimple_table_vectorG));
+  YruntimeYfab_table_vector = YPmet(FUNCODEREF(YruntimeYfab_table_vector),YPPsym((P)"fab-table-vector"),T31,ENVNUL);
+  T32 = YruntimeYfab_table_vector;
+  YruntimeYfab_table_vector = T32;
+  regsym(&YruntimeYfab_table_vector,"runtime","fab-table-vector");
+  T33 = YPsig(YPpair(YPPsym((P)"vector"),YPpair(YPPsym((P)"index"),Ynil)),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_elt_492 = YPmet(FUNCODEREF(fun_elt_492),YPPsym((P)"elt"),T33,ENVNUL);
+  T37 = BOUNDP(YruntimeYelt);
+  if (T37 != YPfalse) {
+    T36 = CHKREF(YruntimeYelt);
+  } else {
+    T36 = YPfalse;
+  }
+  T35 = fun_elt_492;
+  T34 = CALL2(CHKREF(YPdefine_method),T36,T35);
+  YruntimeYelt = T34;
+  regsym(&YruntimeYelt,"runtime","elt");
+  T38 = YPsig(YPpair(YPPsym((P)"new-value"),YPpair(YPPsym((P)"vector"),YPpair(YPPsym((P)"index"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),YPpair(CHKREF(YLintG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_elt_setter_493 = YPmet(FUNCODEREF(fun_elt_setter_493),YPPsym((P)"elt-setter"),T38,ENVNUL);
+  T42 = BOUNDP(YruntimeYelt_setter);
+  if (T42 != YPfalse) {
+    T41 = CHKREF(YruntimeYelt_setter);
+  } else {
+    T41 = YPfalse;
+  }
+  T40 = fun_elt_setter_493;
+  T39 = CALL2(CHKREF(YPdefine_method),T41,T40);
+  YruntimeYelt_setter = T39;
+  regsym(&YruntimeYelt_setter,"runtime","elt-setter");
+  T43 = YPsig(YPpair(YPPsym((P)"vector"),YPpair(YPPsym((P)"fill-value"),Ynil)),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_clrX_494 = YPmet(FUNCODEREF(fun_clrX_494),YPPsym((P)"clr!"),T43,ENVNUL);
+  T47 = BOUNDP(YruntimeYclrX);
+  if (T47 != YPfalse) {
+    T46 = CHKREF(YruntimeYclrX);
+  } else {
+    T46 = YPfalse;
+  }
+  T45 = fun_clrX_494;
+  T44 = CALL2(CHKREF(YPdefine_method),T46,T45);
+  YruntimeYclrX = T44;
+  regsym(&YruntimeYclrX,"runtime","clr!");
+  YruntimeYTdebug_tablesQT = YPfalse;
+  regsym(&YruntimeYTdebug_tablesQT,"runtime","*debug-tables?*");
+  T48 = YPsig(YPpair(YPPsym((P)"port"),YPpair(YPPsym((P)"msg"),YPpair(YPPsym((P)"args"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPtrue,YPint((P)2),CHKREF(YLanyG));
+  YruntimeYtrace = YPmet(FUNCODEREF(YruntimeYtrace),YPPsym((P)"trace"),T48,ENVNUL);
+  T49 = YruntimeYtrace;
+  YruntimeYtrace = T49;
+  regsym(&YruntimeYtrace,"runtime","trace");
+  T51 = (P)YPpair(CHKREF(YruntimeYLmapG),Ynil);
+  T50 = CALL3(CHKREF(YPisa),T51,Ynil,Ynil);
+  YruntimeYLtabG = T50;
+  regsym(&YruntimeYLtabG,"runtime","<tab>");
+  T52 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_table_growth_factor_496 = YPmet(FUNCODEREF(fun_table_growth_factor_496),YPPsym((P)"table-growth-factor"),T52,ENVNUL);
+  T56 = BOUNDP(YruntimeYtable_growth_factor);
+  if (T56 != YPfalse) {
+    T55 = CHKREF(YruntimeYtable_growth_factor);
+  } else {
+    T55 = YPfalse;
+  }
+  T54 = fun_table_growth_factor_496;
+  T53 = CALL2(CHKREF(YPdefine_method),T55,T54);
+  YruntimeYtable_growth_factor = T53;
+  regsym(&YruntimeYtable_growth_factor,"runtime","table-growth-factor");
+  T57 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLfloG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_table_growth_factor_setter_497 = YPmet(FUNCODEREF(fun_table_growth_factor_setter_497),YPPsym((P)"table-growth-factor-setter"),T57,ENVNUL);
+  T61 = BOUNDP(YruntimeYtable_growth_factor_setter);
+  if (T61 != YPfalse) {
+    T60 = CHKREF(YruntimeYtable_growth_factor_setter);
+  } else {
+    T60 = YPfalse;
+  }
+  T59 = fun_table_growth_factor_setter_497;
+  T58 = CALL2(CHKREF(YPdefine_method),T60,T59);
+  YruntimeYtable_growth_factor_setter = T58;
+  regsym(&YruntimeYtable_growth_factor_setter,"runtime","table-growth-factor-setter");
+  lit_67 = YPflo(FLOINT(2.0));
+  T62 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_498 = YPmet(FUNCODEREF(fun_498),YPfalse,T62,ENVNUL);
+  T63 = fun_498;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtabG),CHKREF(YruntimeYtable_growth_factor),CHKREF(YruntimeYtable_growth_factor_setter),CHKREF(YLfloG),T63);
+  T64 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_table_growth_threshold_499 = YPmet(FUNCODEREF(fun_table_growth_threshold_499),YPPsym((P)"table-growth-threshold"),T64,ENVNUL);
+  T68 = BOUNDP(YruntimeYtable_growth_threshold);
+  if (T68 != YPfalse) {
+    T67 = CHKREF(YruntimeYtable_growth_threshold);
+  } else {
+    T67 = YPfalse;
+  }
+  T66 = fun_table_growth_threshold_499;
+  T65 = CALL2(CHKREF(YPdefine_method),T67,T66);
+  YruntimeYtable_growth_threshold = T65;
+  regsym(&YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
+  T69 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLfloG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_table_growth_threshold_setter_500 = YPmet(FUNCODEREF(fun_table_growth_threshold_setter_500),YPPsym((P)"table-growth-threshold-setter"),T69,ENVNUL);
+  T73 = BOUNDP(YruntimeYtable_growth_threshold_setter);
+  if (T73 != YPfalse) {
+    T72 = CHKREF(YruntimeYtable_growth_threshold_setter);
+  } else {
+    T72 = YPfalse;
+  }
+  T71 = fun_table_growth_threshold_setter_500;
+  T70 = CALL2(CHKREF(YPdefine_method),T72,T71);
+  YruntimeYtable_growth_threshold_setter = T70;
+  regsym(&YruntimeYtable_growth_threshold_setter,"runtime","table-growth-threshold-setter");
+  lit_68 = YPflo(FLOINT(0.8));
+  T74 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_501 = YPmet(FUNCODEREF(fun_501),YPfalse,T74,ENVNUL);
+  T75 = fun_501;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtabG),CHKREF(YruntimeYtable_growth_threshold),CHKREF(YruntimeYtable_growth_threshold_setter),CHKREF(YLfloG),T75);
+  T76 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_table_shrink_threshold_502 = YPmet(FUNCODEREF(fun_table_shrink_threshold_502),YPPsym((P)"table-shrink-threshold"),T76,ENVNUL);
+  T80 = BOUNDP(YruntimeYtable_shrink_threshold);
+  if (T80 != YPfalse) {
+    T79 = CHKREF(YruntimeYtable_shrink_threshold);
+  } else {
+    T79 = YPfalse;
+  }
+  T78 = fun_table_shrink_threshold_502;
+  T77 = CALL2(CHKREF(YPdefine_method),T79,T78);
+  YruntimeYtable_shrink_threshold = T77;
+  regsym(&YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
+  T81 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLfloG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_table_shrink_threshold_setter_503 = YPmet(FUNCODEREF(fun_table_shrink_threshold_setter_503),YPPsym((P)"table-shrink-threshold-setter"),T81,ENVNUL);
+  T85 = BOUNDP(YruntimeYtable_shrink_threshold_setter);
+  if (T85 != YPfalse) {
+    T84 = CHKREF(YruntimeYtable_shrink_threshold_setter);
+  } else {
+    T84 = YPfalse;
+  }
+  T83 = fun_table_shrink_threshold_setter_503;
+  T82 = CALL2(CHKREF(YPdefine_method),T84,T83);
+  YruntimeYtable_shrink_threshold_setter = T82;
+  regsym(&YruntimeYtable_shrink_threshold_setter,"runtime","table-shrink-threshold-setter");
+  lit_69 = YPflo(FLOINT(0.5));
+  T86 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_504 = YPmet(FUNCODEREF(fun_504),YPfalse,T86,ENVNUL);
+  T87 = fun_504;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtabG),CHKREF(YruntimeYtable_shrink_threshold),CHKREF(YruntimeYtable_shrink_threshold_setter),CHKREF(YLfloG),T87);
+  T88 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_Pcount_505 = YPmet(FUNCODEREF(fun_Pcount_505),YPPsym((P)"%count"),T88,ENVNUL);
+  T92 = BOUNDP(YruntimeYPcount);
+  if (T92 != YPfalse) {
+    T91 = CHKREF(YruntimeYPcount);
+  } else {
+    T91 = YPfalse;
+  }
+  T90 = fun_Pcount_505;
+  T89 = CALL2(CHKREF(YPdefine_method),T91,T90);
+  YruntimeYPcount = T89;
+  regsym(&YruntimeYPcount,"runtime","%count");
+  T93 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Pcount_setter_506 = YPmet(FUNCODEREF(fun_Pcount_setter_506),YPPsym((P)"%count-setter"),T93,ENVNUL);
+  T97 = BOUNDP(YruntimeYPcount_setter);
+  if (T97 != YPfalse) {
+    T96 = CHKREF(YruntimeYPcount_setter);
+  } else {
+    T96 = YPfalse;
+  }
+  T95 = fun_Pcount_setter_506;
+  T94 = CALL2(CHKREF(YPdefine_method),T96,T95);
+  YruntimeYPcount_setter = T94;
+  regsym(&YruntimeYPcount_setter,"runtime","%count-setter");
+  T98 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_507 = YPmet(FUNCODEREF(fun_507),YPfalse,T98,ENVNUL);
+  T99 = fun_507;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtabG),CHKREF(YruntimeYPcount),CHKREF(YruntimeYPcount_setter),CHKREF(YLintG),T99);
+  T100 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_Pvector_508 = YPmet(FUNCODEREF(fun_Pvector_508),YPPsym((P)"%vector"),T100,ENVNUL);
+  T104 = BOUNDP(YruntimeYPvector);
+  if (T104 != YPfalse) {
+    T103 = CHKREF(YruntimeYPvector);
+  } else {
+    T103 = YPfalse;
+  }
+  T102 = fun_Pvector_508;
+  T101 = CALL2(CHKREF(YPdefine_method),T103,T102);
+  YruntimeYPvector = T101;
+  regsym(&YruntimeYPvector,"runtime","%vector");
+  T105 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Pvector_setter_509 = YPmet(FUNCODEREF(fun_Pvector_setter_509),YPPsym((P)"%vector-setter"),T105,ENVNUL);
+  T109 = BOUNDP(YruntimeYPvector_setter);
+  if (T109 != YPfalse) {
+    T108 = CHKREF(YruntimeYPvector_setter);
+  } else {
+    T108 = YPfalse;
+  }
+  T107 = fun_Pvector_setter_509;
+  T106 = CALL2(CHKREF(YPdefine_method),T108,T107);
+  YruntimeYPvector_setter = T106;
+  regsym(&YruntimeYPvector_setter,"runtime","%vector-setter");
+  T110 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_510 = YPmet(FUNCODEREF(fun_510),YPfalse,T110,ENVNUL);
+  T111 = fun_510;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtabG),CHKREF(YruntimeYPvector),CHKREF(YruntimeYPvector_setter),CHKREF(YruntimeYLsimple_table_vectorG),T111);
+  T113 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLtupG));
+  T112 = YPgen((P)YPgen_code((P)CHKREF(YPdispatch)),YPPsym((P)"table-protocol"),T113,Ynil,YPfalse);
+  YruntimeYtable_protocol = T112;
+  regsym(&YruntimeYtable_protocol,"runtime","table-protocol");
+  T114 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLtupG));
+  fun_table_protocol_511 = YPmet(FUNCODEREF(fun_table_protocol_511),YPPsym((P)"table-protocol"),T114,ENVNUL);
+  T118 = BOUNDP(YruntimeYtable_protocol);
+  if (T118 != YPfalse) {
+    T117 = CHKREF(YruntimeYtable_protocol);
+  } else {
+    T117 = YPfalse;
+  }
+  T116 = fun_table_protocol_511;
+  T115 = CALL2(CHKREF(YPdefine_method),T117,T116);
+  YruntimeYtable_protocol = T115;
+  regsym(&YruntimeYtable_protocol,"runtime","table-protocol");
+  lit_70 = YPsb((P)"empty cell");
+  T119 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_70));
+  YruntimeYDempty_cell_marker = T119;
+  regsym(&YruntimeYDempty_cell_marker,"runtime","$empty-cell-marker");
+  lit_71 = YPsb((P)"vacated cell");
+  T120 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_71));
+  YruntimeYDvacated_cell_marker = T120;
+  regsym(&YruntimeYDvacated_cell_marker,"runtime","$vacated-cell-marker");
+  T121 = YPsig(YPpair(YPPsym((P)"hash"),YPpair(YPPsym((P)"primary"),YPpair(YPPsym((P)"secondary"),Ynil))),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLtupG));
+  YruntimeYhash_moduli = YPmet(FUNCODEREF(YruntimeYhash_moduli),YPPsym((P)"hash-moduli"),T121,ENVNUL);
+  T122 = YruntimeYhash_moduli;
+  YruntimeYhash_moduli = T122;
+  regsym(&YruntimeYhash_moduli,"runtime","hash-moduli");
+  T123 = YPsig(YPpair(YPPsym((P)"type"),YPpair(YPPsym((P)"size"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YruntimeYLtabG));
+  fun_fab_513 = YPmet(FUNCODEREF(fun_fab_513),YPPsym((P)"fab"),T123,ENVNUL);
+  T127 = BOUNDP(YruntimeYfab);
+  if (T127 != YPfalse) {
+    T126 = CHKREF(YruntimeYfab);
+  } else {
+    T126 = YPfalse;
+  }
+  T125 = fun_fab_513;
+  T124 = CALL2(CHKREF(YPdefine_method),T126,T125);
+  YruntimeYfab = T124;
+  regsym(&YruntimeYfab,"runtime","fab");
+  lit_72 = YPPsym((P)"vector");
+  lit_73 = YPPsym((P)"%secondary-modulus");
+  lit_74 = YPPsym((P)"vector");
+  lit_75 = YPPsym((P)"%primary-modulus");
+  lit_76 = YPPsym((P)"hash");
+  lit_77 = YPPsym((P)"hash-moduli");
+  lit_78 = YPPsym((P)"tup");
+  lit_79 = YPPsym((P)"table");
+  lit_80 = YPPsym((P)"%vector");
+  lit_81 = YPPsym((P)"vector");
+  lit_82 = YPPsym((P)"hash-function");
+  lit_83 = YPPsym((P)"state");
+  lit_84 = YPPsym((P)"<int>");
+  lit_85 = YPPsym((P)"hash");
+  lit_86 = YPPsym((P)"tup");
+  lit_87 = YPPsym((P)"table-protocol");
+  lit_88 = YPPsym((P)"hash-function");
+  lit_89 = YPPsym((P)"test-function");
+  lit_90 = YPPsym((P)"tup");
+  lit_91 = YPPsym((P)"let");
+  lit_92 = YPsb((P)"Match Pattern Failure");
+  lit_93 = YPPsym((P)"tup");
+  lit_94 = YPPsym((P)"with-hash");
+  T130 = YPsig(YPpair(YPPsym((P)"msg"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YLstrG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_x_1177_514 = YPmet(FUNCODEREF(fun_x_1177_514),YPPsym((P)"x-1177"),T130,ENVNUL);
+  T129 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_515 = YPmet(FUNCODEREF(fun_515),YPfalse,T129,ENVNUL);
+  T128 = YPsig(YPpair(YPPsym((P)"exp"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_516 = YPmet(FUNCODEREF(fun_516),YPfalse,T128,ENVNUL);
+  T131 = fun_516;
+  YPmacro(YPPsym((P)"with-hash"),T131);
+  lit_95 = YPsb((P)"The table is totally full this shouldn't happen");
+  T135 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"this-bucket-raw-index"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_inner_517 = YPmet(FUNCODEREF(fun_inner_517),YPPsym((P)"inner"),T135,ENVNUL);
+  T134 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_outer_518 = YPmet(FUNCODEREF(fun_outer_518),YPPsym((P)"outer"),T134,ENVNUL);
+  T133 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_519 = YPmet(FUNCODEREF(fun_519),YPfalse,T133,ENVNUL);
+  T132 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"key"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_elt_520 = YPmet(FUNCODEREF(fun_elt_520),YPPsym((P)"elt"),T132,ENVNUL);
+  T139 = BOUNDP(YruntimeYelt);
+  if (T139 != YPfalse) {
+    T138 = CHKREF(YruntimeYelt);
+  } else {
+    T138 = YPfalse;
+  }
+  T137 = fun_elt_520;
+  T136 = CALL2(CHKREF(YPdefine_method),T138,T137);
+  YruntimeYelt = T136;
+  regsym(&YruntimeYelt,"runtime","elt");
+  lit_96 = YPsb((P)"The table is totally full this shouldn't happen");
+  T143 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"this-bucket-raw-index"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_inner_521 = YPmet(FUNCODEREF(fun_inner_521),YPPsym((P)"inner"),T143,ENVNUL);
+  T142 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_outer_522 = YPmet(FUNCODEREF(fun_outer_522),YPPsym((P)"outer"),T142,ENVNUL);
+  T141 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_523 = YPmet(FUNCODEREF(fun_523),YPfalse,T141,ENVNUL);
+  T140 = YPsig(YPpair(YPPsym((P)"value"),YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"key"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_elt_setter_524 = YPmet(FUNCODEREF(fun_elt_setter_524),YPPsym((P)"elt-setter"),T140,ENVNUL);
+  T147 = BOUNDP(YruntimeYelt_setter);
+  if (T147 != YPfalse) {
+    T146 = CHKREF(YruntimeYelt_setter);
+  } else {
+    T146 = YPfalse;
+  }
+  T145 = fun_elt_setter_524;
+  T144 = CALL2(CHKREF(YPdefine_method),T146,T145);
+  YruntimeYelt_setter = T144;
+  regsym(&YruntimeYelt_setter,"runtime","elt-setter");
+  lit_97 = YPsb((P)"The table is totally full this shouldn't happen");
+  T151 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"this-bucket-raw-index"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_inner_525 = YPmet(FUNCODEREF(fun_inner_525),YPPsym((P)"inner"),T151,ENVNUL);
+  T150 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_outer_526 = YPmet(FUNCODEREF(fun_outer_526),YPPsym((P)"outer"),T150,ENVNUL);
+  T149 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_527 = YPmet(FUNCODEREF(fun_527),YPfalse,T149,ENVNUL);
+  T148 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"key"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlogG));
+  fun_del_key_528 = YPmet(FUNCODEREF(fun_del_key_528),YPPsym((P)"del-key"),T148,ENVNUL);
+  T155 = BOUNDP(YruntimeYdel_key);
+  if (T155 != YPfalse) {
+    T154 = CHKREF(YruntimeYdel_key);
+  } else {
+    T154 = YPfalse;
+  }
+  T153 = fun_del_key_528;
+  T152 = CALL2(CHKREF(YPdefine_method),T154,T153);
+  YruntimeYdel_key = T152;
+  regsym(&YruntimeYdel_key,"runtime","del-key");
+  lit_98 = YPsb((P)"B %= I %=\n");
+  T158 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_inner_529 = YPmet(FUNCODEREF(fun_inner_529),YPPsym((P)"inner"),T158,ENVNUL);
+  T157 = YPsig(YPpair(YPPsym((P)"b"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_outer_530 = YPmet(FUNCODEREF(fun_outer_530),YPPsym((P)"outer"),T157,ENVNUL);
+  T156 = YPsig(YPpair(YPPsym((P)"function"),YPpair(YPPsym((P)"table"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_do_keyed_531 = YPmet(FUNCODEREF(fun_do_keyed_531),YPPsym((P)"do-keyed"),T156,ENVNUL);
+  T162 = BOUNDP(YruntimeYdo_keyed);
+  if (T162 != YPfalse) {
+    T161 = CHKREF(YruntimeYdo_keyed);
+  } else {
+    T161 = YPfalse;
+  }
+  T160 = fun_do_keyed_531;
+  T159 = CALL2(CHKREF(YPdefine_method),T161,T160);
+  YruntimeYdo_keyed = T159;
+  regsym(&YruntimeYdo_keyed,"runtime","do-keyed");
+  T165 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_inner_532 = YPmet(FUNCODEREF(fun_inner_532),YPPsym((P)"inner"),T165,ENVNUL);
+  T164 = YPsig(YPpair(YPPsym((P)"b"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_outer_533 = YPmet(FUNCODEREF(fun_outer_533),YPPsym((P)"outer"),T164,ENVNUL);
+  T163 = YPsig(YPpair(YPPsym((P)"function"),YPpair(YPPsym((P)"table"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YruntimeYLtabG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_do_534 = YPmet(FUNCODEREF(fun_do_534),YPPsym((P)"do"),T163,ENVNUL);
+  T169 = BOUNDP(YruntimeYdo);
+  if (T169 != YPfalse) {
+    T168 = CHKREF(YruntimeYdo);
+  } else {
+    T168 = YPfalse;
+  }
+  T167 = fun_do_534;
+  T166 = CALL2(CHKREF(YPdefine_method),T168,T167);
+  YruntimeYdo = T166;
+  regsym(&YruntimeYdo,"runtime","do");
+  T170 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_del_keys_535 = YPmet(FUNCODEREF(fun_del_keys_535),YPPsym((P)"del-keys"),T170,ENVNUL);
+  T174 = BOUNDP(YruntimeYdel_keys);
+  if (T174 != YPfalse) {
+    T173 = CHKREF(YruntimeYdel_keys);
+  } else {
+    T173 = YPfalse;
+  }
+  T172 = fun_del_keys_535;
+  T171 = CALL2(CHKREF(YPdefine_method),T173,T172);
+  YruntimeYdel_keys = T171;
+  regsym(&YruntimeYdel_keys,"runtime","del-keys");
+  T175 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLintG));
+  fun_len_536 = YPmet(FUNCODEREF(fun_len_536),YPPsym((P)"len"),T175,ENVNUL);
+  T179 = BOUNDP(YruntimeYlen);
+  if (T179 != YPfalse) {
+    T178 = CHKREF(YruntimeYlen);
+  } else {
+    T178 = YPfalse;
+  }
+  T177 = fun_len_536;
+  T176 = CALL2(CHKREF(YPdefine_method),T178,T177);
+  YruntimeYlen = T176;
+  regsym(&YruntimeYlen,"runtime","len");
+  T181 = (P)YPpair(CHKREF(YLanyG),Ynil);
+  T180 = CALL3(CHKREF(YPisa),T181,Ynil,Ynil);
+  YruntimeYLtab_stateG = T180;
+  regsym(&YruntimeYLtab_stateG,"runtime","<tab-state>");
+  T182 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_Pvector_537 = YPmet(FUNCODEREF(fun_Pvector_537),YPPsym((P)"%vector"),T182,ENVNUL);
+  T186 = BOUNDP(YruntimeYPvector);
+  if (T186 != YPfalse) {
+    T185 = CHKREF(YruntimeYPvector);
+  } else {
+    T185 = YPfalse;
+  }
+  T184 = fun_Pvector_537;
+  T183 = CALL2(CHKREF(YPdefine_method),T185,T184);
+  YruntimeYPvector = T183;
+  regsym(&YruntimeYPvector,"runtime","%vector");
+  T187 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YruntimeYLsimple_table_vectorG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Pvector_setter_538 = YPmet(FUNCODEREF(fun_Pvector_setter_538),YPPsym((P)"%vector-setter"),T187,ENVNUL);
+  T191 = BOUNDP(YruntimeYPvector_setter);
+  if (T191 != YPfalse) {
+    T190 = CHKREF(YruntimeYPvector_setter);
+  } else {
+    T190 = YPfalse;
+  }
+  T189 = fun_Pvector_setter_538;
+  T188 = CALL2(CHKREF(YPdefine_method),T190,T189);
+  YruntimeYPvector_setter = T188;
+  regsym(&YruntimeYPvector_setter,"runtime","%vector-setter");
+  T192 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_539 = YPmet(FUNCODEREF(fun_539),YPfalse,T192,ENVNUL);
+  T193 = fun_539;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtab_stateG),CHKREF(YruntimeYPvector),CHKREF(YruntimeYPvector_setter),CHKREF(YruntimeYLsimple_table_vectorG),T193);
+  T194 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_Pbucket_540 = YPmet(FUNCODEREF(fun_Pbucket_540),YPPsym((P)"%bucket"),T194,ENVNUL);
+  T198 = BOUNDP(YruntimeYPbucket);
+  if (T198 != YPfalse) {
+    T197 = CHKREF(YruntimeYPbucket);
+  } else {
+    T197 = YPfalse;
+  }
+  T196 = fun_Pbucket_540;
+  T195 = CALL2(CHKREF(YPdefine_method),T197,T196);
+  YruntimeYPbucket = T195;
+  regsym(&YruntimeYPbucket,"runtime","%bucket");
+  T199 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Pbucket_setter_541 = YPmet(FUNCODEREF(fun_Pbucket_setter_541),YPPsym((P)"%bucket-setter"),T199,ENVNUL);
+  T203 = BOUNDP(YruntimeYPbucket_setter);
+  if (T203 != YPfalse) {
+    T202 = CHKREF(YruntimeYPbucket_setter);
+  } else {
+    T202 = YPfalse;
+  }
+  T201 = fun_Pbucket_setter_541;
+  T200 = CALL2(CHKREF(YPdefine_method),T202,T201);
+  YruntimeYPbucket_setter = T200;
+  regsym(&YruntimeYPbucket_setter,"runtime","%bucket-setter");
+  T204 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_542 = YPmet(FUNCODEREF(fun_542),YPfalse,T204,ENVNUL);
+  T205 = fun_542;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtab_stateG),CHKREF(YruntimeYPbucket),CHKREF(YruntimeYPbucket_setter),CHKREF(YLintG),T205);
+  T206 = YPsig(YPpair(YPPsym((P)"_x"),Ynil),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_Pindex_543 = YPmet(FUNCODEREF(fun_Pindex_543),YPPsym((P)"%index"),T206,ENVNUL);
+  T210 = BOUNDP(YruntimeYPindex);
+  if (T210 != YPfalse) {
+    T209 = CHKREF(YruntimeYPindex);
+  } else {
+    T209 = YPfalse;
+  }
+  T208 = fun_Pindex_543;
+  T207 = CALL2(CHKREF(YPdefine_method),T209,T208);
+  YruntimeYPindex = T207;
+  regsym(&YruntimeYPindex,"runtime","%index");
+  T211 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_Pindex_setter_544 = YPmet(FUNCODEREF(fun_Pindex_setter_544),YPPsym((P)"%index-setter"),T211,ENVNUL);
+  T215 = BOUNDP(YruntimeYPindex_setter);
+  if (T215 != YPfalse) {
+    T214 = CHKREF(YruntimeYPindex_setter);
+  } else {
+    T214 = YPfalse;
+  }
+  T213 = fun_Pindex_setter_544;
+  T212 = CALL2(CHKREF(YPdefine_method),T214,T213);
+  YruntimeYPindex_setter = T212;
+  regsym(&YruntimeYPindex_setter,"runtime","%index-setter");
+  T216 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_545 = YPmet(FUNCODEREF(fun_545),YPfalse,T216,ENVNUL);
+  T217 = fun_545;
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLtab_stateG),CHKREF(YruntimeYPindex),CHKREF(YruntimeYPindex_setter),CHKREF(YLintG),T217);
+  T221 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_inner_546 = YPmet(FUNCODEREF(fun_inner_546),YPPsym((P)"inner"),T221,ENVNUL);
+  T220 = YPsig(YPpair(YPPsym((P)"b"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_outer_547 = YPmet(FUNCODEREF(fun_outer_547),YPPsym((P)"outer"),T220,ENVNUL);
+  T219 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_548 = YPmet(FUNCODEREF(fun_548),YPfalse,T219,ENVNUL);
+  T218 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_ini_state_549 = YPmet(FUNCODEREF(fun_ini_state_549),YPPsym((P)"ini-state"),T218,ENVNUL);
+  T225 = BOUNDP(YruntimeYini_state);
+  if (T225 != YPfalse) {
+    T224 = CHKREF(YruntimeYini_state);
+  } else {
+    T224 = YPfalse;
+  }
+  T223 = fun_ini_state_549;
+  T222 = CALL2(CHKREF(YPdefine_method),T224,T223);
+  YruntimeYini_state = T222;
+  regsym(&YruntimeYini_state,"runtime","ini-state");
+  T229 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_inner_550 = YPmet(FUNCODEREF(fun_inner_550),YPPsym((P)"inner"),T229,ENVNUL);
+  T228 = YPsig(YPpair(YPPsym((P)"b"),YPpair(YPPsym((P)"first?"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_outer_551 = YPmet(FUNCODEREF(fun_outer_551),YPPsym((P)"outer"),T228,ENVNUL);
+  T227 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_552 = YPmet(FUNCODEREF(fun_552),YPfalse,T227,ENVNUL);
+  T226 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_nxt_state_553 = YPmet(FUNCODEREF(fun_nxt_state_553),YPPsym((P)"nxt-state"),T226,ENVNUL);
+  T233 = BOUNDP(YruntimeYnxt_state);
+  if (T233 != YPfalse) {
+    T232 = CHKREF(YruntimeYnxt_state);
+  } else {
+    T232 = YPfalse;
+  }
+  T231 = fun_nxt_state_553;
+  T230 = CALL2(CHKREF(YPdefine_method),T232,T231);
+  YruntimeYnxt_state = T230;
+  regsym(&YruntimeYnxt_state,"runtime","nxt-state");
+  T234 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlogG));
+  fun_fin_stateQ_554 = YPmet(FUNCODEREF(fun_fin_stateQ_554),YPPsym((P)"fin-state?"),T234,ENVNUL);
+  T238 = BOUNDP(YruntimeYfin_stateQ);
+  if (T238 != YPfalse) {
+    T237 = CHKREF(YruntimeYfin_stateQ);
+  } else {
+    T237 = YPfalse;
+  }
+  T236 = fun_fin_stateQ_554;
+  T235 = CALL2(CHKREF(YPdefine_method),T237,T236);
+  YruntimeYfin_stateQ = T235;
+  regsym(&YruntimeYfin_stateQ,"runtime","fin-state?");
+  T239 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_now_key_555 = YPmet(FUNCODEREF(fun_now_key_555),YPPsym((P)"now-key"),T239,ENVNUL);
+  T243 = BOUNDP(YruntimeYnow_key);
+  if (T243 != YPfalse) {
+    T242 = CHKREF(YruntimeYnow_key);
+  } else {
+    T242 = YPfalse;
+  }
+  T241 = fun_now_key_555;
+  T240 = CALL2(CHKREF(YPdefine_method),T242,T241);
+  YruntimeYnow_key = T240;
+  regsym(&YruntimeYnow_key,"runtime","now-key");
+  T244 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_now_elt_556 = YPmet(FUNCODEREF(fun_now_elt_556),YPPsym((P)"now-elt"),T244,ENVNUL);
+  T248 = BOUNDP(YruntimeYnow_elt);
+  if (T248 != YPfalse) {
+    T247 = CHKREF(YruntimeYnow_elt);
+  } else {
+    T247 = YPfalse;
+  }
+  T246 = fun_now_elt_556;
+  T245 = CALL2(CHKREF(YPdefine_method),T247,T246);
+  YruntimeYnow_elt = T245;
+  regsym(&YruntimeYnow_elt,"runtime","now-elt");
+  T249 = YPsig(YPpair(YPPsym((P)"value"),YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil))),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_now_elt_setter_557 = YPmet(FUNCODEREF(fun_now_elt_setter_557),YPPsym((P)"now-elt-setter"),T249,ENVNUL);
+  T253 = BOUNDP(YruntimeYnow_elt_setter);
+  if (T253 != YPfalse) {
+    T252 = CHKREF(YruntimeYnow_elt_setter);
+  } else {
+    T252 = YPfalse;
+  }
+  T251 = fun_now_elt_setter_557;
+  T250 = CALL2(CHKREF(YPdefine_method),T252,T251);
+  YruntimeYnow_elt_setter = T250;
+  regsym(&YruntimeYnow_elt_setter,"runtime","now-elt-setter");
+  T254 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"state"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YruntimeYLtab_stateG),Ynil)),YPfalse,YPint((P)2),CHKREF(YruntimeYLtab_stateG));
+  fun_copy_state_558 = YPmet(FUNCODEREF(fun_copy_state_558),YPPsym((P)"copy-state"),T254,ENVNUL);
+  T258 = BOUNDP(YruntimeYcopy_state);
+  if (T258 != YPfalse) {
+    T257 = CHKREF(YruntimeYcopy_state);
+  } else {
+    T257 = YPfalse;
+  }
+  T256 = fun_copy_state_558;
+  T255 = CALL2(CHKREF(YPdefine_method),T257,T256);
+  YruntimeYcopy_state = T255;
+  regsym(&YruntimeYcopy_state,"runtime","copy-state");
+  T260 = YPsig(YPpair(YPPsym((P)"k"),YPpair(YPPsym((P)"v"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_559 = YPmet(FUNCODEREF(fun_559),YPfalse,T260,ENVNUL);
+  T259 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_tab_keys_560 = YPmet(FUNCODEREF(fun_tab_keys_560),YPPsym((P)"tab-keys"),T259,ENVNUL);
+  T264 = BOUNDP(YruntimeYtab_keys);
+  if (T264 != YPfalse) {
+    T263 = CHKREF(YruntimeYtab_keys);
+  } else {
+    T263 = YPfalse;
+  }
+  T262 = fun_tab_keys_560;
+  T261 = CALL2(CHKREF(YPdefine_method),T263,T262);
+  YruntimeYtab_keys = T261;
+  regsym(&YruntimeYtab_keys,"runtime","tab-keys");
+  T265 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YruntimeYLtabG));
+  fun_grow_table_561 = YPmet(FUNCODEREF(fun_grow_table_561),YPPsym((P)"grow-table"),T265,ENVNUL);
+  T269 = BOUNDP(YruntimeYgrow_table);
+  if (T269 != YPfalse) {
+    T268 = CHKREF(YruntimeYgrow_table);
+  } else {
+    T268 = YPfalse;
+  }
+  T267 = fun_grow_table_561;
+  T266 = CALL2(CHKREF(YPdefine_method),T268,T267);
+  YruntimeYgrow_table = T266;
+  regsym(&YruntimeYgrow_table,"runtime","grow-table");
+  T272 = YPsig(YPpair(YPPsym((P)"table"),Ynil),YPpair(CHKREF(YruntimeYLtabG),Ynil),YPfalse,YPint((P)1),CHKREF(YruntimeYLtabG));
+  T271 = fun_rehash_table_562 = YPmet(FUNCODEREF(fun_rehash_table_562),YPPsym((P)"rehash-table"),T272,ENVNUL);
+  T277 = BOUNDP(YruntimeYrehash_table);
+  if (T277 != YPfalse) {
+    T276 = CHKREF(YruntimeYrehash_table);
+  } else {
+    T276 = YPfalse;
+  }
+  T275 = fun_rehash_table_562;
+  T274 = CALL2(CHKREF(YPdefine_method),T276,T275);
+  T273 = YruntimeYrehash_table = T274;
+  regsym(&YruntimeYrehash_table,"runtime","rehash-table");
+  T270 = T273;
+  return T270;
+}
+
+P YruntimeY___main_8___() {
+  P T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46;
+  P T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30;
+  P T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14;
+  P T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+loop:
+  lit_99 = YPsb((P)"Not enough primes to compute new table size");
+  T2 = YPsig(YPpair(YPPsym((P)"p"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_563 = YPmet(FUNCODEREF(fun_563),YPfalse,T2,ENVNUL);
+  T1 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_564 = YPmet(FUNCODEREF(fun_564),YPfalse,T1,ENVNUL);
+  T0 = YPsig(YPpair(YPPsym((P)"capacity"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLtupG));
+  YruntimeYchoose_table_geometry = YPmet(FUNCODEREF(YruntimeYchoose_table_geometry),YPPsym((P)"choose-table-geometry"),T0,ENVNUL);
+  T3 = YruntimeYchoose_table_geometry;
+  YruntimeYchoose_table_geometry = T3;
+  regsym(&YruntimeYchoose_table_geometry,"runtime","choose-table-geometry");
+  lit_100 = YPsb((P)"The table is totally full this shouldn't happen");
+  T8 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"index"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_inner_566 = YPmet(FUNCODEREF(fun_inner_566),YPPsym((P)"inner"),T8,ENVNUL);
+  T7 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_outer_567 = YPmet(FUNCODEREF(fun_outer_567),YPPsym((P)"outer"),T7,ENVNUL);
+  T6 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_568 = YPmet(FUNCODEREF(fun_568),YPfalse,T6,ENVNUL);
+  T5 = YPsig(YPpair(YPPsym((P)"k"),YPpair(YPPsym((P)"v"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_569 = YPmet(FUNCODEREF(fun_569),YPfalse,T5,ENVNUL);
+  T4 = YPsig(YPpair(YPPsym((P)"table"),YPpair(YPPsym((P)"new-vector"),Ynil)),YPpair(CHKREF(YruntimeYLtabG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_copy_to_new_vector_570 = YPmet(FUNCODEREF(fun_copy_to_new_vector_570),YPPsym((P)"copy-to-new-vector"),T4,ENVNUL);
+  T12 = BOUNDP(YruntimeYcopy_to_new_vector);
+  if (T12 != YPfalse) {
+    T11 = CHKREF(YruntimeYcopy_to_new_vector);
+  } else {
+    T11 = YPfalse;
+  }
+  T10 = fun_copy_to_new_vector_570;
+  T9 = CALL2(CHKREF(YPdefine_method),T11,T10);
+  YruntimeYcopy_to_new_vector = T9;
   regsym(&YruntimeYcopy_to_new_vector,"runtime","copy-to-new-vector");
   YruntimeYDpermanent_hash_state = YPfalse;
   regsym(&YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
-  T160 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  YruntimeYcurrent_gc_state = YPmet(FUNCODEREF(YruntimeYcurrent_gc_state),YPPsym((P)"current-gc-state"),T160,ENVNUL);
-  T161 = YruntimeYcurrent_gc_state;
-  YruntimeYcurrent_gc_state = T161;
+  T13 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  YruntimeYcurrent_gc_state = YPmet(FUNCODEREF(YruntimeYcurrent_gc_state),YPPsym((P)"current-gc-state"),T13,ENVNUL);
+  T14 = YruntimeYcurrent_gc_state;
+  YruntimeYcurrent_gc_state = T14;
   regsym(&YruntimeYcurrent_gc_state,"runtime","current-gc-state");
-  T162 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_id_hash_536 = YPmet(FUNCODEREF(fun_id_hash_536),YPPsym((P)"id-hash"),T162,ENVNUL);
-  T166 = BOUNDP(YruntimeYid_hash);
-  if (T166 != YPfalse) {
-    T165 = CHKREF(YruntimeYid_hash);
+  T15 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_id_hash_572 = YPmet(FUNCODEREF(fun_id_hash_572),YPPsym((P)"id-hash"),T15,ENVNUL);
+  T19 = BOUNDP(YruntimeYid_hash);
+  if (T19 != YPfalse) {
+    T18 = CHKREF(YruntimeYid_hash);
   } else {
-    T165 = YPfalse;
+    T18 = YPfalse;
   }
-  T164 = fun_id_hash_536;
-  T163 = CALL2(CHKREF(YPdefine_method),T165,T164);
-  YruntimeYid_hash = T163;
+  T17 = fun_id_hash_572;
+  T16 = CALL2(CHKREF(YPdefine_method),T18,T17);
+  YruntimeYid_hash = T16;
   regsym(&YruntimeYid_hash,"runtime","id-hash");
-  T167 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLlogG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_id_hash_537 = YPmet(FUNCODEREF(fun_id_hash_537),YPPsym((P)"id-hash"),T167,ENVNUL);
-  T171 = BOUNDP(YruntimeYid_hash);
-  if (T171 != YPfalse) {
-    T170 = CHKREF(YruntimeYid_hash);
+  T20 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLlogG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_id_hash_573 = YPmet(FUNCODEREF(fun_id_hash_573),YPPsym((P)"id-hash"),T20,ENVNUL);
+  T24 = BOUNDP(YruntimeYid_hash);
+  if (T24 != YPfalse) {
+    T23 = CHKREF(YruntimeYid_hash);
   } else {
-    T170 = YPfalse;
+    T23 = YPfalse;
   }
-  T169 = fun_id_hash_537;
-  T168 = CALL2(CHKREF(YPdefine_method),T170,T169);
-  YruntimeYid_hash = T168;
+  T22 = fun_id_hash_573;
+  T21 = CALL2(CHKREF(YPdefine_method),T23,T22);
+  YruntimeYid_hash = T21;
   regsym(&YruntimeYid_hash,"runtime","id-hash");
-  T172 = YPsig(YPpair(YPPsym((P)"x"),YPpair(YPPsym((P)"a"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLintG));
-  YruntimeYrot = YPmet(FUNCODEREF(YruntimeYrot),YPPsym((P)"rot"),T172,ENVNUL);
-  T173 = YruntimeYrot;
-  YruntimeYrot = T173;
+  T25 = YPsig(YPpair(YPPsym((P)"x"),YPpair(YPPsym((P)"a"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLintG));
+  YruntimeYrot = YPmet(FUNCODEREF(YruntimeYrot),YPPsym((P)"rot"),T25,ENVNUL);
+  T26 = YruntimeYrot;
+  YruntimeYrot = T26;
   regsym(&YruntimeYrot,"runtime","rot");
-  T174 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_id_hash_539 = YPmet(FUNCODEREF(fun_id_hash_539),YPPsym((P)"id-hash"),T174,ENVNUL);
-  T178 = BOUNDP(YruntimeYid_hash);
-  if (T178 != YPfalse) {
-    T177 = CHKREF(YruntimeYid_hash);
+  T27 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_id_hash_575 = YPmet(FUNCODEREF(fun_id_hash_575),YPPsym((P)"id-hash"),T27,ENVNUL);
+  T31 = BOUNDP(YruntimeYid_hash);
+  if (T31 != YPfalse) {
+    T30 = CHKREF(YruntimeYid_hash);
   } else {
-    T177 = YPfalse;
+    T30 = YPfalse;
   }
-  T176 = fun_id_hash_539;
-  T175 = CALL2(CHKREF(YPdefine_method),T177,T176);
-  YruntimeYid_hash = T175;
+  T29 = fun_id_hash_575;
+  T28 = CALL2(CHKREF(YPdefine_method),T30,T29);
+  YruntimeYid_hash = T28;
   regsym(&YruntimeYid_hash,"runtime","id-hash");
-  T179 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLchrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_id_hash_540 = YPmet(FUNCODEREF(fun_id_hash_540),YPPsym((P)"id-hash"),T179,ENVNUL);
-  T183 = BOUNDP(YruntimeYid_hash);
-  if (T183 != YPfalse) {
-    T182 = CHKREF(YruntimeYid_hash);
+  T32 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLchrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_id_hash_576 = YPmet(FUNCODEREF(fun_id_hash_576),YPPsym((P)"id-hash"),T32,ENVNUL);
+  T36 = BOUNDP(YruntimeYid_hash);
+  if (T36 != YPfalse) {
+    T35 = CHKREF(YruntimeYid_hash);
   } else {
-    T182 = YPfalse;
+    T35 = YPfalse;
   }
-  T181 = fun_id_hash_540;
-  T180 = CALL2(CHKREF(YPdefine_method),T182,T181);
-  YruntimeYid_hash = T180;
+  T34 = fun_id_hash_576;
+  T33 = CALL2(CHKREF(YPdefine_method),T35,T34);
+  YruntimeYid_hash = T33;
   regsym(&YruntimeYid_hash,"runtime","id-hash");
-  T184 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLfloG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_id_hash_541 = YPmet(FUNCODEREF(fun_id_hash_541),YPPsym((P)"id-hash"),T184,ENVNUL);
-  T188 = BOUNDP(YruntimeYid_hash);
-  if (T188 != YPfalse) {
-    T187 = CHKREF(YruntimeYid_hash);
+  T37 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLfloG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_id_hash_577 = YPmet(FUNCODEREF(fun_id_hash_577),YPPsym((P)"id-hash"),T37,ENVNUL);
+  T41 = BOUNDP(YruntimeYid_hash);
+  if (T41 != YPfalse) {
+    T40 = CHKREF(YruntimeYid_hash);
   } else {
-    T187 = YPfalse;
+    T40 = YPfalse;
   }
-  T186 = fun_id_hash_541;
-  T185 = CALL2(CHKREF(YPdefine_method),T187,T186);
-  YruntimeYid_hash = T185;
+  T39 = fun_id_hash_577;
+  T38 = CALL2(CHKREF(YPdefine_method),T40,T39);
+  YruntimeYid_hash = T38;
   regsym(&YruntimeYid_hash,"runtime","id-hash");
-  T190 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"hash"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_loop_542 = YPmet(FUNCODEREF(fun_loop_542),YPPsym((P)"loop"),T190,ENVNUL);
-  T189 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLstrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLtupG));
-  YruntimeYcase_insensitive_string_hash = YPmet(FUNCODEREF(YruntimeYcase_insensitive_string_hash),YPPsym((P)"case-insensitive-string-hash"),T189,ENVNUL);
-  T191 = YruntimeYcase_insensitive_string_hash;
-  YruntimeYcase_insensitive_string_hash = T191;
+  T43 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"hash"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_loop_578 = YPmet(FUNCODEREF(fun_loop_578),YPPsym((P)"loop"),T43,ENVNUL);
+  T42 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLstrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLtupG));
+  YruntimeYcase_insensitive_string_hash = YPmet(FUNCODEREF(YruntimeYcase_insensitive_string_hash),YPPsym((P)"case-insensitive-string-hash"),T42,ENVNUL);
+  T44 = YruntimeYcase_insensitive_string_hash;
+  YruntimeYcase_insensitive_string_hash = T44;
   regsym(&YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
-  T193 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_loop_544 = YPmet(FUNCODEREF(fun_loop_544),YPPsym((P)"loop"),T193,ENVNUL);
-  T192 = YPsig(YPpair(YPPsym((P)"x"),YPpair(YPPsym((P)"y"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLstrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlogG));
-  YruntimeYcase_insensitive_string_equal = YPmet(FUNCODEREF(YruntimeYcase_insensitive_string_equal),YPPsym((P)"case-insensitive-string-equal"),T192,ENVNUL);
-  T194 = YruntimeYcase_insensitive_string_equal;
-  YruntimeYcase_insensitive_string_equal = T194;
+  T46 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_loop_580 = YPmet(FUNCODEREF(fun_loop_580),YPPsym((P)"loop"),T46,ENVNUL);
+  T45 = YPsig(YPpair(YPPsym((P)"x"),YPpair(YPPsym((P)"y"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLstrG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLlogG));
+  YruntimeYcase_insensitive_string_equal = YPmet(FUNCODEREF(YruntimeYcase_insensitive_string_equal),YPPsym((P)"case-insensitive-string-equal"),T45,ENVNUL);
+  T47 = YruntimeYcase_insensitive_string_equal;
+  YruntimeYcase_insensitive_string_equal = T47;
   regsym(&YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
-  T196 = (P)YPpair(CHKREF(YruntimeYLtabG),Ynil);
-  T195 = CALL3(CHKREF(YPisa),T196,Ynil,Ynil);
-  YruntimeYLstr_tabG = T195;
+  T49 = (P)YPpair(CHKREF(YruntimeYLtabG),Ynil);
+  T48 = CALL3(CHKREF(YPisa),T49,Ynil,Ynil);
+  YruntimeYLstr_tabG = T48;
   regsym(&YruntimeYLstr_tabG,"runtime","<str-tab>");
-  T197 = YPsig(YPpair(YPPsym((P)"_"),Ynil),YPpair(CHKREF(YruntimeYLstr_tabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLtupG));
-  fun_table_protocol_546 = YPmet(FUNCODEREF(fun_table_protocol_546),YPPsym((P)"table-protocol"),T197,ENVNUL);
-  T201 = BOUNDP(YruntimeYtable_protocol);
-  if (T201 != YPfalse) {
-    T200 = CHKREF(YruntimeYtable_protocol);
+  T50 = YPsig(YPpair(YPPsym((P)"_"),Ynil),YPpair(CHKREF(YruntimeYLstr_tabG),Ynil),YPfalse,YPint((P)1),CHKREF(YLtupG));
+  fun_table_protocol_582 = YPmet(FUNCODEREF(fun_table_protocol_582),YPPsym((P)"table-protocol"),T50,ENVNUL);
+  T54 = BOUNDP(YruntimeYtable_protocol);
+  if (T54 != YPfalse) {
+    T53 = CHKREF(YruntimeYtable_protocol);
   } else {
-    T200 = YPfalse;
+    T53 = YPfalse;
   }
-  T199 = fun_table_protocol_546;
-  T198 = CALL2(CHKREF(YPdefine_method),T200,T199);
-  YruntimeYtable_protocol = T198;
+  T52 = fun_table_protocol_582;
+  T51 = CALL2(CHKREF(YPdefine_method),T53,T52);
+  YruntimeYtable_protocol = T51;
   regsym(&YruntimeYtable_protocol,"runtime","table-protocol");
-  T202 = CALL2(CHKREF(YruntimeYfab),CHKREF(YruntimeYLstr_tabG),YPint((P)3000));
-  YruntimeYsymbols = T202;
+  T55 = CALL2(CHKREF(YruntimeYfab),CHKREF(YruntimeYLstr_tabG),YPint((P)3000));
+  YruntimeYsymbols = T55;
   regsym(&YruntimeYsymbols,"runtime","symbols");
-  T203 = YPsig(YPpair(YPPsym((P)"name"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  YruntimeYbooted_fab_sym = YPmet(FUNCODEREF(YruntimeYbooted_fab_sym),YPPsym((P)"booted-fab-sym"),T203,ENVNUL);
-  T204 = YruntimeYbooted_fab_sym;
-  YruntimeYbooted_fab_sym = T204;
+  T56 = YPsig(YPpair(YPPsym((P)"name"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  YruntimeYbooted_fab_sym = YPmet(FUNCODEREF(YruntimeYbooted_fab_sym),YPPsym((P)"booted-fab-sym"),T56,ENVNUL);
+  T57 = YruntimeYbooted_fab_sym;
+  YruntimeYbooted_fab_sym = T57;
   regsym(&YruntimeYbooted_fab_sym,"runtime","booted-fab-sym");
-  T206 = YPsig(YPpair(YPPsym((P)"syms"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_boot_549 = YPmet(FUNCODEREF(fun_boot_549),YPPsym((P)"boot"),T206,ENVNUL);
-  T205 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  YruntimeYboot_symbols = YPmet(FUNCODEREF(YruntimeYboot_symbols),YPPsym((P)"boot-symbols"),T205,ENVNUL);
-  T207 = YruntimeYboot_symbols;
-  YruntimeYboot_symbols = T207;
+  T59 = YPsig(YPpair(YPPsym((P)"syms"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_boot_585 = YPmet(FUNCODEREF(fun_boot_585),YPPsym((P)"boot"),T59,ENVNUL);
+  T58 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  YruntimeYboot_symbols = YPmet(FUNCODEREF(YruntimeYboot_symbols),YPPsym((P)"boot-symbols"),T58,ENVNUL);
+  T60 = YruntimeYboot_symbols;
+  YruntimeYboot_symbols = T60;
   regsym(&YruntimeYboot_symbols,"runtime","boot-symbols");
   CALL0(CHKREF(YruntimeYboot_symbols));
   Yfab_sym = CHKREF(YruntimeYbooted_fab_sym);
-  T208 = YPfalse;
-  return T208;
+  T61 = YPfalse;
+  return T61;
 }
 
 /* MODULES USED: */
@@ -15957,6 +16853,7 @@ void load_module_runtime (void) {
   (P)YruntimeY___main_5___();
   (P)YruntimeY___main_6___();
   (P)YruntimeY___main_7___();
+  (P)YruntimeY___main_8___();
 
   need_init = 0;
 }
