@@ -148,17 +148,34 @@ define method sexpr-signature-parameters
   end if;
 end method;
 
-define method sexpr-signature-values (signature :: <list>) => (res :: <list>)
+define method sexpr-signature-value (signature :: <list>) => (res)
   let values-spec-index = position(signature, #"=>");
   if (values-spec-index)
-    copy-sequence(signature, start: values-spec-index + 1)
+    let value = signature[values-spec-index + 1];
+    if (instance?(value, <pair>))
+      if (head(value) == #"tup")
+        #"<tup>"
+      else
+        second(value)
+      end if
+    else
+      value
+    end if
   else
-    #()
+    #f
   end if;
+end method;
+
+define method sexpr-function-signature (defn) => (res)
+  third(defn)
 end method;
 
 define method sexpr-function-parameters (defn) => (res)
   sexpr-signature-parameters(third(defn))
+end method;
+
+define method sexpr-function-value (defn) => (res)
+  sexpr-signature-value(third(defn))
 end method;
 
 define method sexpr-function-body (defn) => (res)
@@ -179,12 +196,16 @@ define method sexpr-method? (exp) => (well? :: <boolean>)
   sexpr-tagged-list?(exp, $sexpr-method-tag);
 end method;
 
+define method sexpr-method-signature (method-exp :: <list>) => (res :: <list>)
+  second(method-exp)
+end method;
+
 define method sexpr-method-parameters (method-exp :: <list>) => (res :: <list>)
   sexpr-signature-parameters(second(method-exp));
 end method;
 
-define method sexpr-method-values (method-exp :: <list>) => (res :: <list>)
-  sexpr-signature-values(second(method-exp));
+define method sexpr-method-value (method-exp :: <list>) => (res)
+  sexpr-signature-value(second(method-exp));
 end method;
 
 define method sexpr-method-body (method-exp :: <list>) => (res :: <list>)
@@ -453,7 +474,7 @@ define method sexpr-loc-bound-names (loc-exp :: <list>) => (res :: <list>)
   map(first, second(loc-exp));
 end method;
 
-define method sexpr-loc-bound-parameters (loc-exp :: <list>) => (res :: <list>)
+define method sexpr-loc-bound-signatures (loc-exp :: <list>) => (res :: <list>)
   map(second, second(loc-exp));
 end method;
 
@@ -485,11 +506,12 @@ define constant $sexpr-values-tag = #"=>";
 define method sexpr-itr-signature (itr-exp :: <list>) => (res :: <list>)
   let sig = third(itr-exp);
   concatenate(map(first, sexpr-signature-parameters(sig)),
-	      if (empty?(sexpr-signature-values(sig))) 
+	      if (sexpr-signature-value(sig)) 
 		#()
 	      else
-		list($sexpr-values-tag) end,
-	      sexpr-signature-values(sig))
+		list($sexpr-values-tag) 
+	      end if,
+	      list(sexpr-signature-value(sig)))
 end method;
 
 define method sexpr-itr-inits (itr-exp :: <list>) => (res :: <list>)

@@ -938,7 +938,7 @@ define method to-c (e :: <ast-generic>, f, out)
     format(out, ",");
     generate-quotation(out, ast-function-arity(e));
     format(out, ",");
-    generate-quotation(out, function-value(e));
+    to-c(function-value(e), #f, out);
     format(out, ",");
     format(out, mangle-global-name("nil"));
     format(out, ",");
@@ -1027,7 +1027,7 @@ define method generate-closure-structure (out, definition)
     format(out, ",");
     generate-quotation(out, ast-function-arity(definition));
     format(out, ",");
-    generate-quotation(out, function-value(definition));
+    to-c(function-value(definition), #f, out);
     format(out, ",");
     format(out, "ENVNUL");
   end between-parentheses;
@@ -1099,12 +1099,21 @@ define method generate-shadow-args (out, bindings)
   format(out, "loop:\n");
 end method;
 
+define method generate-actual-return (definition :: <primitive-definition>, out)
+  format(out, "return res");
+end method;
+
+define method generate-actual-return (definition, out)
+  format(out, "RET(res)");
+end method;
+
 define method generate-return (definition, out)
   if (function-self-recursive?(definition))
-    format(out, ";\nif (res == PNUL) goto loop; else return res");
+    format(out, ";\nif (res == PNUL) goto loop; else ");
   else
-    format(out, ";\nreturn res");
+    format(out, ";\n");
   end if;
+  generate-actual-return(definition, out)
 end method;
 
 define method primitive-inlinable? (e :: <primitive-definition>)
@@ -1118,7 +1127,7 @@ define method primitive-inlinable? (e :: <primitive-definition>)
 	    #"@==", #"@@==", #"%empty?",
 	    #"not",
 	    #"@=", #"@+", #"@<", 
-	    #"@head", #"@tail",
+	    #"@empty?", #"@head", #"@tail",
 	    #"%isa?",
 	    #"slot-value-at", #"slot-value-at-setter", 
 	    #"gen-lookup", #"gen-lookup-1-using"

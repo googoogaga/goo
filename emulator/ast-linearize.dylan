@@ -443,6 +443,7 @@ define method extract!
   let name      = function-name(o);
   let bindings  = function-bindings(o);
   let nary?     = function-nary?(o);
+  let value     = function-value(o);
   for (binding in bindings)
      binding-type(binding) := extract!(binding-type(binding), form, result);
   end for;
@@ -457,7 +458,7 @@ define method extract!
       end iterate;
   let index
     = adjoin-definition!
-        (form, result, name, bindings, nary?, new-body, free-bindings);
+        (form, result, name, bindings, nary?, value, new-body, free-bindings);
   make(<closure-creation>, 
        index: index, bindings: bindings, body: new-body, 
        free: function-free(o))
@@ -470,7 +471,8 @@ define method extract!
   let body = extract!(function-body(p), form, result);
   let definition
     = make(<primitive-definition>, 
-	   name: function-name(p), bindings: function-bindings(p), body: body);
+	   name: function-name(p), bindings: function-bindings(p), 
+           value: function-value(p), body: body);
   assert(function-name(p), "NO NAME FOR %=", p);
   program-definitions(result)
     := pair(definition, program-definitions(result));
@@ -481,7 +483,7 @@ end method;
 
 define method adjoin-definition! 
     (form :: <top-level-form>, result :: <flattened-program>, 
-     name, bindings, nary?, body, free)
+     name, bindings, nary?, value, body, free)
   let definitions
     = program-definitions(result);
   let new-index
@@ -489,7 +491,7 @@ define method adjoin-definition!
   let definition
     = make(<function-definition>, 
 	   name: name, bindings: bindings, nary?: nary?,
-           body: body, free: free, index: new-index);
+           value: value, body: body, free: free, index: new-index);
   program-definitions(result) := pair(definition, definitions);
   form-definitions(form)      := pair(definition, form-definitions(form));
   new-index

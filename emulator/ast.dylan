@@ -654,16 +654,17 @@ define method objectify-function-definition
 end method;
 
 define method objectify-primitive-definition 
-    (name, params, body, r) => (res :: <ast-primitive-definition>)
+    (name, sig, body, r) => (res :: <ast-primitive-definition>)
   let binding
     = ast-define-binding(r, name, <predefined-binding>);
-  let (bindings, nary?)
-    = objectify-parameters(params, r);
+  let (bindings, nary?, value)
+    = objectify-signature(sig, r);
   let body
     = objectify-sequential(body, r-extend*(r, bindings), #t);
   let form
     = make(<ast-primitive>, 
-           name: binding, bindings: bindings, nary?: nary?, body: body);
+           name: binding, bindings: bindings, nary?: nary?, value: value, 
+           body: body);
   binding-description(binding)
     := form;
   let defn
@@ -672,13 +673,14 @@ define method objectify-primitive-definition
 end method;
 
 define method objectify-generic-definition 
-    (name, params, r) => (res :: type-union(<constant>, <definition>))
+    (name, sig, r) => (res :: type-union(<constant>, <definition>))
   let binding
     = ast-define-binding(r, name, <global-binding>);
-  let (bindings, nary?)
-    = objectify-parameters(params, r);
+  let (bindings, nary?, value)
+    = objectify-signature(sig, r);
   let form
-    = make(<ast-generic>, name: binding, bindings: bindings, nary?: nary?);
+    = make(<ast-generic>, 
+	   name: binding, bindings: bindings, nary?: nary?, value: value);
   let defn
     = make(<ast-generic-definition>, binding: binding, form: form);
   defn
@@ -704,19 +706,19 @@ end method;
 /// all bindings are considered immutable at the beginning.
 
 define method objectify-function
-    (parameters, body, r, tail?) => (res :: <ast-method>)
-  let (bindings, nary?) = objectify-parameters(parameters, r);
+    (sig, body, r, tail?) => (res :: <ast-method>)
+  let (bindings, nary?, value) = objectify-signature(sig, r);
   let b = objectify-sequential(body, r-extend*(r, bindings), #t);
-  make(<ast-method>, bindings: bindings, nary?: nary?, body: b);
+  make(<ast-method>, bindings: bindings, nary?: nary?, value: value, body: b);
 end method;
 
 define constant $sexpr-optionals-tag       = #"...";
 define constant $sexpr-optionals-type-name = #"<opts>";
 
-define method objectify-parameters (params, r) => (bindings, nary?)
+define method objectify-signature (signature, r) => (bindings, nary?, value)
   let nary? = #f;
   collecting (bindings)
-    for (param in params) 
+    for (param in sexpr-signature-parameters(signature)) 
       let sname   = sexpr-variable-name(param);
       let stype   = sexpr-variable-type(param);
       let dotted? = stype == $sexpr-optionals-tag;
@@ -727,7 +729,9 @@ define method objectify-parameters (params, r) => (bindings, nary?)
       collect-into(bindings, binding);
       nary? := dotted?;
     end for;
-    values(collected(bindings), nary?)
+    let sexpr-value = sexpr-signature-value(signature);
+    let value = objectify(sexpr-value | default-type(r), r, #f);
+    values(collected(bindings), nary?, value)
   end collecting;
 end method;
 
@@ -1027,8 +1031,7 @@ end magic-binding;
 
 define magic-binding define-generic (x, r, tail?)
   objectify-generic-definition
-    (sexpr-function-definition-variable(x), 
-     sexpr-function-parameters(x), r)
+    (sexpr-function-definition-variable(x), sexpr-function-signature(x), r)
 end magic-binding;
 
 define magic-binding define-function (x, r, tail?)
@@ -1039,7 +1042,8 @@ end magic-binding;
 
 define magic-binding \method (x, r, tail?)
   objectify-function
-    (sexpr-method-parameters(x), sexpr-method-body(x), r, tail?);
+    (sexpr-method-signature(x),
+     sexpr-method-body(x), r, tail?);
 end magic-binding;
 
 define constant $sexpr-bound?-tag = #"bound?";
@@ -1054,7 +1058,7 @@ end magic-binding;
 
 define magic-binding \locals (x, r, tail?)
   objectify-locals
-    (sexpr-loc-bound-names(x), sexpr-loc-bound-parameters(x), 
+    (sexpr-loc-bound-names(x), sexpr-loc-bound-signatures(x), 
      sexpr-loc-bound-bodies(x), sexpr-loc-raw-body(x), r, tail?);
 end magic-binding;
 
@@ -1159,8 +1163,7 @@ define magic-binding define-primitive (x, r, tail?)
   else
     objectify-primitive-definition
       (sexpr-function-definition-variable(x), 
-       sexpr-function-parameters(x),
-       sexpr-function-body(x), r)
+       sexpr-function-signature(x), sexpr-function-body(x), r)
   end if
 end magic-binding;
 
