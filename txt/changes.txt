@@ -513,6 +513,30 @@ fixes
   got rid of description's from ast
   bug in process-nary-closed-application to correctly fab a fix-let
 
+=== 0.98 ===
+
+summary
+
+  restarts.
+
+=== 0.99 ===
+
+summary
+ 
+  p2m
+
+fixes
+
+  fab-map to use fab
+  empty to use fab
+  quotation extractor now scans debug-names and signatures
+  
+adds
+
+  keys
+  refs to symbols in functions and their signatures
+=======
+
 === 0.101 ===
 
 summary
@@ -579,3 +603,47 @@ fixes
   corrected return values of do-key-vals, reduce, reduce+
   made class printing terse during signatures and nested types
 
+=== 0.105 ===
+
+summary
+
+  sped up p2c by replacing calls to format by calls to write-string
+
+=== 0.106 ===
+
+summary
+
+  this is a major new release moving in the direction of compilation
+  to machine code, whole program optimization, and introducing a
+  dynamic compilation based interpreter mode.  interpreter can be
+  switched from ast interpretation to dynamic p2c evaluation by using
+  (p2c-eval) and (ast-eval) top-level commands.  the default is
+  (ast-eval). 
+
+changes
+
+  made %lb/%lu correctly tag/untag locatives without previous
+  gyrations.
+  merged a bunch of classes into ast from ast-linearize to reduce
+  consing and generally streamline ast construction.
+
+adds
+
+  elt-or
+  dynamic evaluation support with p2c-exp
+  simple type inference module: typist.proto
+  simple compile time dispatch mechanism: optimize.proto
+  start of a vm: pvm.proto
+  start of compilation to machine code: p2m.proto
+  <immediate-constant>
+  <method-application>
+  ability to store source with function: ast:*record-source?*
+  ability to record function references for p2m
+  process-id
+  swapf
+  ddv
+
+fixes
+
+  improved ast-print to really work
+  signature slots are now properly converted to programs

@@ -75,3 +75,15 @@ Showing the installed exception handlers:
   1. Return to interpreter level 0.
   2. Anonymous handler for <condition>.
   3. Exit the top-level interpreter.
+
+The Evaluator
+-------------
+
+Changing to dynamic compilation evaluation:
+
+  (p2c-eval)
+
+Changing to ast evaluation:
+
+  (ast-eval)
+

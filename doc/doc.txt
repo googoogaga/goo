@@ -374,6 +374,10 @@ POPF    (POPF ,place)
   pops a value from the front of the collection stored in ,place, replaces
   the collection with an updated collection, and returns the value.
 
+SWAPF	(SWAPF ,x ,y)
+
+          == (LET ((tmp ,x)) (SET ,x ,y) (SET ,y tmp))
+
 COLLECTING 
 
         (COLLECTING () ,@body)
@@ -510,6 +514,7 @@ Class       <col> (<any>)
 Generic     len ((x <col>) => <int>)
 Generic     elt ((x <col>) (k <any>) => <any>)
 Generic     elt-setter ((v <any>) (x <col>))
+Generic     keys ((x <col> => <seq>)
 Generic     empty? ((x <col>) => <log>)
 Generic     empty ((x <col>) => <col>)
 Generic     default ((x <col>) => <any>)
