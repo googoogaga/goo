@@ -1,10 +1,10 @@
-0.40 Keith RELEASE 1
+=== 0.40 Keith RELEASE 1 ===
 
-0.50 Keith RELEASE 2
+=== 0.50 Keith RELEASE 2 ===
 
-0.60 6.894 RELEASE 1
+=== 0.60 6.894 RELEASE 1 ===
 
-0.61 6.894 RELEASE 2
+=== 0.61 6.894 RELEASE 2 ===
 
 fixed gen-add-met problem whereby methods might not be properly
 replaced
@@ -12,7 +12,7 @@ replaced
 added initialization string
 added file-opening-error
 
-0.62 6.894 RELEASE 3
+=== 0.62 6.894 RELEASE 3 ===
 
 added 
 
@@ -32,11 +32,11 @@ require that users now setenv PROTO_ROOT which in my case would be:
 
 must be slash terminated.
 
-0.63 6.894 RELEASE 4
+=== 0.63 6.894 RELEASE 4 ===
 
 fixed AND and OR macros and native pattern matching mechanism.
 
-0.64 6.894 RELEASE 5
+=== 0.64 6.894 RELEASE 5 ===
 
 fixes
 
@@ -49,7 +49,7 @@ fixes
   (object-parents <lst>) at toplevel
 
 
-0.65 6.894 RELEASE 6
+=== 0.65 6.894 RELEASE 6 ===
 
 fixes:
 
@@ -64,7 +64,7 @@ adds:
   keyboard interrupt handling: which means that C-C will stop your
   program and put you in a next level of the listener
 
-0.66 6.894 RELEASE 7
+=== 0.66 6.894 RELEASE 7 ===
 
 fixes:
 
@@ -76,7 +76,7 @@ adds:
 
   fab-gen (used in assignment 3)
 
-0.70 6.894 RELEASE 8
+=== 0.70 6.894 RELEASE 8 ===
 
 fixes: 
 
@@ -141,13 +141,13 @@ changes:
 
   tagged <int>'s <chr>'s and <loc>'s
 
-0.71 6.894 RELEASE 9
+=== 0.71 6.894 RELEASE 9 ===
 
 fixes: 
 
   redefining a runtime binding
 
-0.72 6.894 RELEASE 10
+=== 0.72 6.894 RELEASE 10 ===
 
 fixes: 
 
@@ -159,7 +159,7 @@ adds:
 
     returns the traits object of a given argument
 
-0.80 6.894 RELEASE 12
+=== 0.80 6.894 RELEASE 12 ===
 
 summary:
 
@@ -201,7 +201,7 @@ steps -- like dylan's first/then for clause
 
   (for ((first? (first-then #t #f))) ...) 
 
-0.81 6.894 RELEASE 13
+=== 0.81 6.894 RELEASE 13 ===
 
 summary:
 
@@ -219,7 +219,7 @@ ffi support
   fapply (fproc (args <opts>)) function to boot.proto
 
 
-0.82 6.894 RELEASE 14
+=== 0.82 6.894 RELEASE 14 ===
 
 summary:
 
@@ -239,7 +239,7 @@ adds:
 
   loads "../SRC/patches.proto" now which you can hack
 
-0.83 6.894 RELEASE 15
+=== 0.83 6.894 RELEASE 15 ===
 
 summary:
 
@@ -257,7 +257,7 @@ adds:
 
   tail call analysis in ast
 
-0.84
+=== 0.84 ===
 
 summary:
 
@@ -295,7 +295,7 @@ adds:
 
   range checking on sequences
 
-0.85
+=== 0.85 ===
 
 summary:
 
@@ -311,7 +311,7 @@ adds:
 
   rewrote all list-like ast classes as list subclasses
 
-0.86
+=== 0.86 ===
 
 summary:
 
@@ -337,7 +337,7 @@ adds:
 
   int's and chr's as inline constants
 
-0.87
+=== 0.87 ===
 
 summary:
 
@@ -349,3 +349,23 @@ adds:
 
   next-method support through next-method and apply-next-method macros.
 
+=== 0.88 ===
+
+summary:
+
+  adds compileable macros and mif.  gets rid of need for loading
+  macros file, reducing startup time and forgotten macros.
+
+fixes:
+
+  makes mif a macro and not a special form
+
+  makes macros compileable
+
+  boot-symbol to recycle booted symbols
+
+  backtrace substrate
+
+adds:
+
+  backtrace function
