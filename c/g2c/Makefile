@@ -2,18 +2,18 @@
 	cc -I.. -c -g -O -o $@ $<
 
 OBJS = \
-	boot.o \
-	syntax.o \
 	macros.o \
-	strings.o \
-	top.o \
-	p2c.o \
 	write.o \
 	read.o \
-	ast.o \
-	ast-eval.o \
 	runtime.o \
+	strings.o \
+	p2c.o \
+	top.o \
+	syntax.o \
+	boot.o \
 	main.o \
+	ast-eval.o \
+	ast.o \
 	ast-linearize.o \
 	p2c-init.o
 

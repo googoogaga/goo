@@ -5,398 +5,400 @@
 
 /* MODULE ENVIRONMENT: runtime */
 
-DEF(YruntimeYlow_elt,"runtime","low-elt");
-DEF(YruntimeYPcount,"runtime","%count");
-EXT(YLtraitsG,"boot","<traits>");
-DEF(YruntimeYcontagious_type,"runtime","contagious-type");
-DEF(YruntimeYcat2,"runtime","cat2");
-EXT(YmacrosYmap,"macros","map");
-DEF(YruntimeYinto,"runtime","into");
-DEF(YruntimeYassocq,"runtime","assocq");
-DEF(YruntimeYbuf_dat_setter,"runtime","buf-dat-setter");
-DEF(YruntimeYLstring_output_portG,"runtime","<string-output-port>");
-DEF(YruntimeYLinput_portG,"runtime","<input-port>");
-DEF(YruntimeYdo2,"runtime","do2");
-DEF(YruntimeYnyi,"runtime","nyi");
+DEF(YruntimeYtable_growth_factor_setter,"runtime","table-growth-factor-setter");
+DEF(YruntimeYtable_growth_threshold_setter,"runtime","table-growth-threshold-setter");
+DEF(YruntimeYfrom_to,"runtime","from-to");
+DEF(YruntimeYPbucket_setter,"runtime","%bucket-setter");
+DEF(YruntimeYbuf_dat,"runtime","buf-dat");
+DEF(YruntimeYpop,"runtime","pop");
 EXT(Ynot,"boot","not");
 EXT(Yfun_value,"boot","fun-value");
-DEF(YruntimeYelt,"runtime","elt");
-DEF(YruntimeY3rd,"runtime","3rd");
-DEF(YruntimeYtab_keys,"runtime","tab-keys");
-DEF(YruntimeYclose_input_port,"runtime","close-input-port");
-DEF(YruntimeYport_guts_setter,"runtime","port-guts-setter");
-DEF(YruntimeYdo,"runtime","do");
-DEF(YruntimeYstr,"runtime","str");
-DEF(YruntimeYto_str,"runtime","to-str");
-DEF(YruntimeYcall_with_output_file,"runtime","call-with-output-file");
-EXT(YLstrG,"boot","<str>");
-DEF(YruntimeYrange_from_setter,"runtime","range-from-setter");
-EXT(Yfun_name_setter,"boot","fun-name-setter");
-DEF(YruntimeYcompose,"runtime","compose");
-DEF(YruntimeYdo_key_vals,"runtime","do-key-vals");
-DEF(YruntimeYpop,"runtime","pop");
-DEF(YruntimeYLconditionG,"runtime","<condition>");
-DEF(YruntimeYbuf,"runtime","buf");
-EXT(Ytail_setter,"boot","tail-setter");
-DEF(YruntimeYfrom_below,"runtime","from-below");
-DEF(YruntimeYfab,"runtime","fab");
-DEF(YruntimeYLrangeG,"runtime","<range>");
-DEF(YruntimeYPgc_state,"runtime","%gc-state");
-DEF(YruntimeYascii_limit,"runtime","ascii-limit");
-DEF(YruntimeYsymbols,"runtime","symbols");
-DEF(YruntimeYdefault_handler,"runtime","default-handler");
-DEF(YruntimeYdo_keyed,"runtime","do-keyed");
-DEF(YruntimeYPindex,"runtime","%index");
-DEF(YruntimeYnative_chars,"runtime","native-chars");
-EXT(YLvecG,"boot","<vec>");
 DEF(YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
-DEF(YruntimeYrange_to_setter,"runtime","range-to-setter");
-DEF(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
-DEF(YruntimeYcurry,"runtime","curry");
-DEF(YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
+DEF(YruntimeYreduce,"runtime","reduce");
+DEF(YruntimeYdo_key_vals,"runtime","do-key-vals");
+EXT(Yfun_name_setter,"boot","fun-name-setter");
+EXT(Yfile_opening_error,"boot","file-opening-error");
+DEF(YruntimeYascii_chars,"runtime","ascii-chars");
 DEF(YruntimeYlogand,"runtime","logand");
-DEF(YruntimeYcondition_arguments_setter,"runtime","condition-arguments-setter");
-DEF(YruntimeYrange_error,"runtime","range-error");
-DEF(YruntimeYassocs_keys_setter,"runtime","assocs-keys-setter");
-DEF(YruntimeYstep_first_setter,"runtime","step-first-setter");
+DEF(YruntimeYassocs_vals,"runtime","assocs-vals");
+EXT(Ytail_setter,"boot","tail-setter");
+DEF(YruntimeYtrace,"runtime","trace");
+DEF(YruntimeYfab,"runtime","fab");
+DEF(YruntimeYLfile_portG,"runtime","<file-port>");
 DEF(YruntimeYabs,"runtime","abs");
-DEF(YruntimeYfile_mtime,"runtime","file-mtime");
-EXT(Yslot_getter,"boot","slot-getter");
+DEF(YruntimeYcatX,"runtime","cat!");
+DEF(YruntimeYhandler_function_setter,"runtime","handler-function-setter");
+DEF(YruntimeYrange_to,"runtime","range-to");
+DEF(YruntimeYmemQ,"runtime","mem?");
+DEF(YruntimeYlen_setter,"runtime","len-setter");
+DEF(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
+DEF(YruntimeYeof_objectQ,"runtime","eof-object?");
+EXT(YLcolG,"boot","<col>");
+DEF(YruntimeYPgc_state,"runtime","%gc-state");
 DEF(YruntimeYlogxor,"runtime","logxor");
-DEF(YruntimeYPgc_state_setter,"runtime","%gc-state-setter");
-DEF(YruntimeYbuf_len_setter,"runtime","buf-len-setter");
-EXT(YLlocG,"boot","<loc>");
-DEF(YruntimeYnum_to_str,"runtime","num-to-str");
-EXT(Yfun_sig_setter,"boot","fun-sig-setter");
+DEF(YruntimeYnyi,"runtime","nyi");
 DEF(YruntimeYfabs,"runtime","fabs");
 EXT(Yerror,"boot","error");
-DEF(YruntimeYassq,"runtime","assq");
-DEF(YruntimeYfrom_to_by,"runtime","from-to-by");
+DEF(YruntimeYrot,"runtime","rot");
+EXT(Yslot_getter,"boot","slot-getter");
+DEF(YruntimeYnum_to_str,"runtime","num-to-str");
 DEF(YruntimeYlogior,"runtime","logior");
-DEF(YruntimeYassocs_keys,"runtime","assocs-keys");
-DEF(YruntimeYsub,"runtime","sub");
-DEF(YruntimeYlognot,"runtime","lognot");
-DEF(YruntimeYascii_Gchar,"runtime","ascii->char");
-DEF(YruntimeYdel_key,"runtime","del-key");
-DEF(YruntimeYcopy_state,"runtime","copy-state");
+DEF(YruntimeYfab_table_vector,"runtime","fab-table-vector");
+DEF(YruntimeYLconditionG,"runtime","<condition>");
 EXT(YmacrosYvar_type,"macros","var-type");
 DEF(YruntimeYzeroQ,"runtime","zero?");
-DEF(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
-DEF(YruntimeYdel_dups,"runtime","del-dups");
-DEF(YruntimeYLstepG,"runtime","<step>");
-DEF(YruntimeYTtwin_primesT,"runtime","*twin-primes*");
-DEF(YruntimeYLstring_input_portG,"runtime","<string-input-port>");
-DEF(YruntimeYid_hash,"runtime","id-hash");
-EXT(YPcall_next_method,"boot","%call-next-method");
+EXT(YPsymbols,"boot","%symbols");
+DEF(YruntimeYtable_protocol,"runtime","table-protocol");
+EXT(Yfun_sig_setter,"boot","fun-sig-setter");
 EXT(YmacrosYmake_sym,"macros","make-sym");
-DEF(YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
-DEF(YruntimeYLfile_portG,"runtime","<file-port>");
+DEF(YruntimeYfrom_below,"runtime","from-below");
+DEF(YruntimeYpick,"runtime","pick");
+DEF(YruntimeYlognot,"runtime","lognot");
+DEF(YruntimeYsymbols,"runtime","symbols");
+DEF(YruntimeYcondition_arguments_setter,"runtime","condition-arguments-setter");
 DEF(YruntimeYceiling,"runtime","ceiling");
-DEF(YruntimeYLbufG,"runtime","<buf>");
-DEF(YruntimeYtrace,"runtime","trace");
-EXT(YLsymG,"boot","<sym>");
-EXT(Yslot_setter,"boot","slot-setter");
-DEF(YruntimeYopen_input_file,"runtime","open-input-file");
-DEF(YruntimeYPindex_setter,"runtime","%index-setter");
-DEF(YruntimeYassocs_vals_setter,"runtime","assocs-vals-setter");
-DEF(YruntimeYPsecondary_modulus,"runtime","%secondary-modulus");
-DEF(YruntimeYPdata,"runtime","%data");
+DEF(YruntimeYelt_setter,"runtime","elt-setter");
+EXT(YmacrosYlst,"macros","lst");
+DEF(YruntimeYPgc_state_setter,"runtime","%gc-state-setter");
+DEF(YruntimeYassocs_test,"runtime","assocs-test");
+DEF(YruntimeYPcount_setter,"runtime","%count-setter");
+DEF(YruntimeYport_handle,"runtime","port-handle");
+EXT(YPcall_next_method,"boot","%call-next-method");
 DEF(YruntimeYmin,"runtime","min");
 DEF(YruntimeYnyi_error,"runtime","nyi-error");
-DEF(YruntimeYelt_setter,"runtime","elt-setter");
-DEF(YruntimeYall2Q,"runtime","all2?");
+DEF(YruntimeYforce_output,"runtime","force-output");
+DEF(YruntimeYtable_shrink_threshold_setter,"runtime","table-shrink-threshold-setter");
 DEF(YruntimeYalphabeticQ,"runtime","alphabetic?");
-EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
-EXT(Ysym_name,"boot","sym-name");
-DEF(YruntimeYcopy_to_new_vector,"runtime","copy-to-new-vector");
+EXT(YLstrG,"boot","<str>");
+DEF(YruntimeYhash_moduli,"runtime","hash-moduli");
+DEF(YruntimeYassqn,"runtime","assqn");
+EXT(Yslot_setter,"boot","slot-setter");
+DEF(YruntimeYcondition_message_setter,"runtime","condition-message-setter");
+DEF(YruntimeYchar_Gascii,"runtime","char->ascii");
+EXT(YPPmacro,"boot","%%macro");
+DEF(YruntimeYnow_elt_setter,"runtime","now-elt-setter");
 DEF(YruntimeYanyQ,"runtime","any?");
-DEF(YruntimeYmemQ,"runtime","mem?");
-EXT(YLslotG,"boot","<slot>");
-EXT(Yfab_gen,"boot","fab-gen");
+DEF(YruntimeYmake_handler,"runtime","make-handler");
 DEF(YruntimeYas,"runtime","as");
-DEF(YruntimeYas_uppercase,"runtime","as-uppercase");
-DEF(YruntimeYfab_table_vector,"runtime","fab-table-vector");
-DEF(YruntimeYreduceA,"runtime","reduce+");
-DEF(YruntimeYport_handle_setter,"runtime","port-handle-setter");
+DEF(YruntimeYempty,"runtime","empty");
+DEF(YruntimeYlow_elt,"runtime","low-elt");
 DEF(YruntimeYLE,"runtime","<=");
 DEF(YruntimeYrevX,"runtime","rev!");
-DEF(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
-EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
-DEF(YruntimeYinteger_Gchar,"runtime","integer->char");
-DEF(YruntimeYPcat,"runtime","%cat");
-DEF(YruntimeYadd_new,"runtime","add-new");
-DEF(YruntimeYPvector,"runtime","%vector");
-DEF(YruntimeYcatX,"runtime","cat!");
-DEF(YruntimeYout,"runtime","out");
-DEF(YruntimeYnewline,"runtime","newline");
-DEF(YruntimeYLoutput_portG,"runtime","<output-port>");
-DEF(YruntimeYlowercaseQ,"runtime","lowercase?");
-DEF(YruntimeYpush,"runtime","push");
-DEF(YruntimeY2nd,"runtime","2nd");
-DEF(YruntimeYrange_above_setter,"runtime","range-above-setter");
-EXT(YmacrosYlst,"macros","lst");
-DEF(YruntimeYvec,"runtime","vec");
-EXT(Yslot_value,"boot","slot-value");
-DEF(YruntimeYPbucket_depth_setter,"runtime","%bucket-depth-setter");
-DEF(YruntimeYread_char,"runtime","read-char");
-DEF(YruntimeYassocs_vals,"runtime","assocs-vals");
-DEF(YruntimeYnulQ,"runtime","nul?");
-DEF(YruntimeYfill,"runtime","fill");
-DEF(YruntimeY1st,"runtime","1st");
-DEF(YruntimeYassoc_value_setter,"runtime","assoc-value-setter");
-EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
-DEF(YruntimeYany2Q,"runtime","any2?");
-DEF(YruntimeYassocs_test,"runtime","assocs-test");
-DEF(YruntimeYPvector_setter,"runtime","%vector-setter");
-EXT(YPsnul,"boot","%snul");
-DEF(YruntimeYclose_output_port,"runtime","close-output-port");
-DEF(YruntimeYtable_growth_threshold_setter,"runtime","table-growth-threshold-setter");
-DEF(YruntimeYPn_buckets,"runtime","%n-buckets");
-EXT(YmacrosYEE,"macros","==");
-DEF(YruntimeYfrom_below_by,"runtime","from-below-by");
-DEF(YruntimeYLmapG,"runtime","<map>");
-EXT(YLanyG,"boot","<any>");
-EXT(YLfunG,"boot","<fun>");
-DEF(YruntimeYrange_from,"runtime","range-from");
-DEF(YruntimeYLsimple_errorG,"runtime","<simple-error>");
-DEF(YruntimeYassoc,"runtime","assoc");
-DEF(YruntimeYini_state,"runtime","ini-state");
-DEF(YruntimeYcondition_arguments,"runtime","condition-arguments");
-DEF(YruntimeYcurrent_gc_state,"runtime","current-gc-state");
-DEF(YruntimeYport_guts,"runtime","port-guts");
-DEF(YruntimeYlogbitQ,"runtime","logbit?");
-DEF(YruntimeYascii_whitespaces,"runtime","ascii-whitespaces");
-DEF(YruntimeYeof_object,"runtime","eof-object");
-DEF(YruntimeYTprint_baseT,"runtime","*print-base*");
-DEF(YruntimeYPvacated_setter,"runtime","%vacated-setter");
-DEF(YruntimeYmap_keyed,"runtime","map-keyed");
-DEF(YruntimeYPsecondary_modulus_setter,"runtime","%secondary-modulus-setter");
-DEF(YruntimeYformat,"runtime","format");
-DEF(YruntimeYlocative_value,"runtime","locative-value");
-DEF(YruntimeYLassocG,"runtime","<assoc>");
-DEF(YruntimeYchar_Ginteger,"runtime","char->integer");
-DEF(YruntimeYE,"runtime","=");
-EXT(YPvnul,"boot","%vnul");
-DEF(YruntimeYwrite_string,"runtime","write-string");
-DEF(YruntimeYport_contents,"runtime","port-contents");
-DEF(YruntimeYfab_map,"runtime","fab-map");
-DEF(YruntimeYfrom_by,"runtime","from-by");
-DEF(YruntimeYassqn,"runtime","assqn");
-DEF(YruntimeYPprimary_modulus_setter,"runtime","%primary-modulus-setter");
-EXT(YmacrosYemptyQ,"macros","empty?");
-DEF(YruntimeYevenQ,"runtime","even?");
-DEF(YruntimeYstep_then,"runtime","step-then");
-EXT(YmacrosYmatch_unquote,"macros","match-unquote");
-EXT(Yfile_opening_error,"boot","file-opening-error");
-DEF(YruntimeYnegQ,"runtime","neg?");
-EXT(YPisa,"boot","%isa");
-DEF(YruntimeYbuf_len,"runtime","buf-len");
-DEF(YruntimeYrcurry,"runtime","rcurry");
-EXT(YmacrosYcat,"macros","cat");
-DEF(YruntimeYpick,"runtime","pick");
-DEF(YruntimeYassoc_key_setter,"runtime","assoc-key-setter");
-DEF(YruntimeYfin_stateQ,"runtime","fin-state?");
-DEF(YruntimeYhandler_function_setter,"runtime","handler-function-setter");
-EXT(YPsymbols,"boot","%symbols");
-EXT(Ysig_names,"boot","sig-names");
-DEF(YruntimeYnow_elt_setter,"runtime","now-elt-setter");
-DEF(YruntimeYlow_elt_setter,"runtime","low-elt-setter");
-DEF(YruntimeYassocs_test_setter,"runtime","assocs-test-setter");
-DEF(YruntimeYuppercaseQ,"runtime","uppercase?");
-DEF(YruntimeYtable_shrink_threshold_setter,"runtime","table-shrink-threshold-setter");
-DEF(YruntimeYfirst_then,"runtime","first-then");
-DEF(YruntimeYeof_objectQ,"runtime","eof-object?");
-DEF(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
-DEF(YruntimeYrange_below,"runtime","range-below");
-DEF(YruntimeYLtab_stateG,"runtime","<tab-state>");
-DEF(YruntimeYPbucket,"runtime","%bucket");
-DEF(YruntimeYfrom_above_by,"runtime","from-above-by");
-DEF(YruntimeYL,"runtime","<");
-DEF(YruntimeYround,"runtime","round");
-DEF(YruntimeYlen,"runtime","len");
-DEF(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
-DEF(YruntimeYascii_chars,"runtime","ascii-chars");
-DEF(YruntimeYassoc_key,"runtime","assoc-key");
-EXT(YisaQ,"boot","isa?");
-EXT(YmacrosYpair,"macros","pair");
-DEF(YruntimeYfrom,"runtime","from");
-DEF(YruntimeYTcurrent_handlersT,"runtime","*current-handlers*");
+EXT(Ytype_error,"boot","type-error");
+DEF(YruntimeYas_uppercase,"runtime","as-uppercase");
+EXT(Ysym_name,"boot","sym-name");
+EXT(YLnumG,"boot","<num>");
 DEF(YruntimeYNEE,"runtime","~==");
-DEF(YruntimeYrot,"runtime","rot");
-EXT(YLgenG,"boot","<gen>");
+EXT(Yfab_gen,"boot","fab-gen");
+EXT(YTmacros_okQT,"boot","*macros-ok?*");
+DEF(YruntimeYbuf_dat_setter,"runtime","buf-dat-setter");
+DEF(YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
+DEF(YruntimeYLhandlerG,"runtime","<handler>");
+DEF(YruntimeYLmapG,"runtime","<map>");
+DEF(YruntimeYassoc_value,"runtime","assoc-value");
+DEF(YruntimeYlowercaseQ,"runtime","lowercase?");
+DEF(YruntimeYstr,"runtime","str");
+DEF(YruntimeYPcat,"runtime","%cat");
+DEF(YruntimeYadd,"runtime","add");
+DEF(YruntimeYfrom,"runtime","from");
+DEF(YruntimeYrange_from_setter,"runtime","range-from-setter");
 EXT(Ynul,"boot","nul");
-DEF(YruntimeYnumericQ,"runtime","numeric?");
-DEF(YruntimeYfrom_to,"runtime","from-to");
-DEF(YruntimeYallQ,"runtime","all?");
+DEF(YruntimeYchar_Ginteger,"runtime","char->integer");
+DEF(YruntimeY1st,"runtime","1st");
+DEF(YruntimeYTgensym_counterT,"runtime","*gensym-counter*");
+EXT(YLsigG,"boot","<sig>");
+DEF(YruntimeYpush,"runtime","push");
+DEF(YruntimeYPvacated,"runtime","%vacated");
+DEF(YruntimeYport_index,"runtime","port-index");
+DEF(YruntimeYinteger_Gchar,"runtime","integer->char");
+DEF(YruntimeYPbucket_depth_setter,"runtime","%bucket-depth-setter");
+DEF(YruntimeYcondition_arguments,"runtime","condition-arguments");
+EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
+DEF(YruntimeYnulQ,"runtime","nul?");
+EXT(YmacrosYcat,"macros","cat");
+DEF(YruntimeYfill,"runtime","fill");
+DEF(YruntimeYrange_to_setter,"runtime","range-to-setter");
+EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
+DEF(YruntimeYany2Q,"runtime","any2?");
+EXT(Yslot_value,"boot","slot-value");
+EXT(YmacrosYEE,"macros","==");
+DEF(YruntimeYassocs_test_setter,"runtime","assocs-test-setter");
+EXT(YLanyG,"boot","<any>");
+EXT(YLseqG,"boot","<seq>");
+DEF(YruntimeYrange_above_setter,"runtime","range-above-setter");
+DEF(YruntimeYLstring_portG,"runtime","<string-port>");
+DEF(YruntimeYini_state,"runtime","ini-state");
+DEF(YruntimeYstep_then_setter,"runtime","step-then-setter");
+DEF(YruntimeYlogbitQ,"runtime","logbit?");
 DEF(YruntimeYPlist,"runtime","%list");
+DEF(YruntimeYbuf_len_setter,"runtime","buf-len-setter");
+DEF(YruntimeYascii_limit,"runtime","ascii-limit");
+DEF(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
+DEF(YruntimeYrange_by_setter,"runtime","range-by-setter");
+DEF(YruntimeYPn_buckets_setter,"runtime","%n-buckets-setter");
+DEF(YruntimeYfrom_by,"runtime","from-by");
+DEF(YruntimeYdel_key,"runtime","del-key");
+DEF(YruntimeYPprimary_modulus_setter,"runtime","%primary-modulus-setter");
+DEF(YruntimeYidentity,"runtime","identity");
+DEF(YruntimeYall2Q,"runtime","all2?");
+DEF(YruntimeYhandler_function,"runtime","handler-function");
+DEF(YruntimeYassoc_key_setter,"runtime","assoc-key-setter");
+DEF(YruntimeYLstring_input_portG,"runtime","<string-input-port>");
+EXT(YmacrosYemptyQ,"macros","empty?");
+DEF(YruntimeYwrite_char,"runtime","write-char");
+DEF(YruntimeYE,"runtime","=");
+DEF(YruntimeYgrow_table,"runtime","grow-table");
+DEF(YruntimeYtab_keys,"runtime","tab-keys");
+EXT(Yfapply,"boot","fapply");
+DEF(YruntimeYLbufG,"runtime","<buf>");
+EXT(YLlstG,"boot","<lst>");
+DEF(YruntimeYfrom_above_by,"runtime","from-above-by");
+DEF(YruntimeYapp_args,"runtime","app-args");
+DEF(YruntimeYevenQ,"runtime","even?");
+DEF(YruntimeYfrom_to_by,"runtime","from-to-by");
+DEF(YruntimeYfin_stateQ,"runtime","fin-state?");
+DEF(YruntimeYPcount,"runtime","%count");
+DEF(YruntimeYfrom_below_by,"runtime","from-below-by");
+EXT(YmacrosYmatch_unquote,"macros","match-unquote");
+DEF(YruntimeYcompose,"runtime","compose");
+EXT(YLmetG,"boot","<met>");
+DEF(YruntimeYnegQ,"runtime","neg?");
+DEF(YruntimeYlast,"runtime","last");
+DEF(YruntimeYLportG,"runtime","<port>");
+EXT(YPisa,"boot","%isa");
+DEF(YruntimeYfloorS,"runtime","floor/");
+DEF(YruntimeYascii_Gchar,"runtime","ascii->char");
+DEF(YruntimeYround,"runtime","round");
+DEF(YruntimeYPvacated_setter,"runtime","%vacated-setter");
+DEF(YruntimeYlen,"runtime","len");
+DEF(YruntimeYLlistG,"runtime","<list>");
+DEF(YruntimeYLsimple_table_vectorG,"runtime","<simple-table-vector>");
+DEF(YruntimeYLfile_input_portG,"runtime","<file-input-port>");
+EXT(Ysig_names,"boot","sig-names");
+DEF(YruntimeYPsecondary_modulus_setter,"runtime","%secondary-modulus-setter");
+DEF(YruntimeYstep_first_setter,"runtime","step-first-setter");
+DEF(YruntimeYLstr_tabG,"runtime","<str-tab>");
+DEF(YruntimeYdel_keys,"runtime","del-keys");
+EXT(YmacrosYpair,"macros","pair");
+DEF(YruntimeYL,"runtime","<");
+EXT(YmacrosYmap,"macros","map");
+DEF(YruntimeYnumericQ,"runtime","numeric?");
+DEF(YruntimeYallQ,"runtime","all?");
 DEF(YruntimeYtype_or,"runtime","type-or");
 DEF(YruntimeYdecode_radix_option,"runtime","decode-radix-option");
-DEF(YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
-DEF(YruntimeYempty,"runtime","empty");
-EXT(Ysig_specs,"boot","sig-specs");
-EXT(Yfab_sym,"boot","fab-sym");
-DEF(YruntimeYalter,"runtime","alter");
-EXT(YPdefine_method,"boot","%define-method");
-DEF(YruntimeYclrX,"runtime","clr!");
-DEF(YruntimeYbooted_fab_sym,"runtime","booted-fab-sym");
-EXT(YPslot,"boot","%slot");
-EXT(YmacrosYmake_setter_name,"macros","make-setter-name");
+DEF(YruntimeYrange_check,"runtime","range-check");
+DEF(YruntimeYlist,"runtime","list");
+DEF(YruntimeYrange_by,"runtime","range-by");
+DEF(YruntimeYid_hash,"runtime","id-hash");
+DEF(YruntimeYstep_first,"runtime","step-first");
+EXT(YisaQ,"boot","isa?");
+DEF(YruntimeYdel,"runtime","del");
+DEF(YruntimeYchar_readyQ,"runtime","char-ready?");
+DEF(YruntimeYvec,"runtime","vec");
+EXT(YLtraitsG,"boot","<traits>");
+DEF(YruntimeYLtab_stateG,"runtime","<tab-state>");
+DEF(YruntimeYdo_keyed,"runtime","do-keyed");
 DEF(YruntimeYPdata_setter,"runtime","%data-setter");
-DEF(YruntimeYLerrorG,"runtime","<error>");
-DEF(YruntimeYA,"runtime","+");
-DEF(YruntimeYport_handle,"runtime","port-handle");
-EXT(YLcolG,"boot","<col>");
-DEF(YruntimeYcondition_message,"runtime","condition-message");
-EXT(YLlogG,"boot","<log>");
-DEF(YruntimeYmake_handler,"runtime","make-handler");
-EXT(YLtupG,"boot","<tup>");
-DEF(YruntimeYforce_output,"runtime","force-output");
-DEF(YruntimeYG,"runtime",">");
-DEF(YruntimeYboot_symbols,"runtime","boot-symbols");
-EXT(YmacrosYmatch_sublist,"macros","match-sublist");
-EXT(YLnumG,"boot","<num>");
-EXT(YLflatG,"boot","<flat>");
-DEF(YruntimeYrange_by_setter,"runtime","range-by-setter");
-DEF(YruntimeYcontagious_call,"runtime","contagious-call");
-DEF(YruntimeYpush_lastX,"runtime","push-last!");
-EXT(Ytype_error,"boot","type-error");
-EXT(YPPmacro,"boot","%%macro");
-DEF(YruntimeYpeek_char,"runtime","peek-char");
-EXT(Ysig_naryQ,"boot","sig-nary?");
+EXT(YmacrosYmake_setter_name,"macros","make-setter-name");
+DEF(YruntimeYepsilon,"runtime","epsilon");
+DEF(YruntimeYalter,"runtime","alter");
+DEF(YruntimeYapp_filename,"runtime","app-filename");
+EXT(Ysig_specs,"boot","sig-specs");
+EXT(Yunknown_function_error,"boot","unknown-function-error");
+EXT(Yfab_sym,"boot","fab-sym");
 DEF(YruntimeYaddX,"runtime","add!");
-DEF(YruntimeYTgensym_counterT,"runtime","*gensym-counter*");
-DEF(YruntimeYadd,"runtime","add");
-DEF(YruntimeYdel_keys,"runtime","del-keys");
-DEF(YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
-DEF(YruntimeYchoose_table_geometry,"runtime","choose-table-geometry");
-DEF(YruntimeYidentity,"runtime","identity");
-DEF(YruntimeYmax,"runtime","max");
-DEF(YruntimeYfrom_above,"runtime","from-above");
-DEF(YruntimeYrange_above,"runtime","range-above");
-EXT(YLseqG,"boot","<seq>");
-DEF(YruntimeYtable_protocol,"runtime","table-protocol");
-EXT(YLsigG,"boot","<sig>");
-DEF(YruntimeYreduce,"runtime","reduce");
+DEF(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
+EXT(YPdefine_method,"boot","%define-method");
+DEF(YruntimeYTtwin_primesT,"runtime","*twin-primes*");
+DEF(YruntimeYfab_map,"runtime","fab-map");
+EXT(YmacrosYmatch_sublist,"macros","match-sublist");
+DEF(YruntimeYA,"runtime","+");
+DEF(YruntimeYuppercaseQ,"runtime","uppercase?");
+EXT(YPslot,"boot","%slot");
+DEF(YruntimeYLtabG,"runtime","<tab>");
+DEF(YruntimeYcontagious_call,"runtime","contagious-call");
+DEF(YruntimeYrcurry,"runtime","rcurry");
+DEF(YruntimeYG,"runtime",">");
+EXT(YLvecG,"boot","<vec>");
+DEF(YruntimeYPindex,"runtime","%index");
+DEF(YruntimeYdo2,"runtime","do2");
+EXT(YmacrosYvar_name,"macros","var-name");
+DEF(YruntimeYPsecondary_modulus,"runtime","%secondary-modulus");
+DEF(YruntimeYDdigit_to_char,"runtime","$digit-to-char");
+DEF(YruntimeYrange_from,"runtime","range-from");
+DEF(YruntimeYPbucket,"runtime","%bucket");
+EXT(Ysig_naryQ,"boot","sig-nary?");
+DEF(YruntimeYclose_input_port,"runtime","close-input-port");
+DEF(YruntimeYLinput_portG,"runtime","<input-port>");
+DEF(YruntimeYcall_with_output_file,"runtime","call-with-output-file");
 DEF(YruntimeYalways,"runtime","always");
 EXT(YmacrosYgensym,"macros","gensym");
-DEF(YruntimeYpower_of_two_ceiling,"runtime","power-of-two-ceiling");
-DEF(YruntimeYPcount_setter,"runtime","%count-setter");
-DEF(YruntimeYLlistG,"runtime","<list>");
-EXT(Yfun_names,"boot","fun-names");
-EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
-EXT(Ysig_arity,"boot","sig-arity");
-DEF(YruntimeYPbucket_depth,"runtime","%bucket-depth");
-DEF(YruntimeYport_index,"runtime","port-index");
-DEF(YruntimeYrange_below_setter,"runtime","range-below-setter");
-EXT(YLfloG,"boot","<flo>");
+DEF(YruntimeYformat,"runtime","format");
+DEF(YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
+DEF(YruntimeYmax,"runtime","max");
+DEF(YruntimeYboot_symbols,"runtime","boot-symbols");
+DEF(YruntimeYTcurrent_handlersT,"runtime","*current-handlers*");
+DEF(YruntimeYPindex_setter,"runtime","%index-setter");
+DEF(YruntimeYsub_setter,"runtime","sub-setter");
+DEF(YruntimeYrehash_table,"runtime","rehash-table");
+DEF(YruntimeYfirst_then,"runtime","first-then");
+DEF(YruntimeYrev,"runtime","rev");
+DEF(YruntimeYLsimple_errorG,"runtime","<simple-error>");
+DEF(YruntimeYPvector_setter,"runtime","%vector-setter");
 EXT(YLbagG,"boot","<bag>");
+DEF(YruntimeYpower_of_two_ceiling,"runtime","power-of-two-ceiling");
+DEF(YruntimeYbuf_len,"runtime","buf-len");
+DEF(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
+DEF(YruntimeY_,"runtime","-");
+DEF(YruntimeY3rd,"runtime","3rd");
+DEF(YruntimeYbooted_fab_sym,"runtime","booted-fab-sym");
 DEF(YruntimeYnow_key,"runtime","now-key");
-DEF(YruntimeYLassocsG,"runtime","<assocs>");
-DEF(YruntimeYrange_by,"runtime","range-by");
-EXT(Yobject_parents,"boot","object-parents");
-DEF(YruntimeYGE,"runtime",">=");
-DEF(YruntimeYDvacated_cell_marker,"runtime","$vacated-cell-marker");
-DEF(YruntimeYpop_lastX,"runtime","pop-last!");
-DEF(YruntimeYPvacated,"runtime","%vacated");
-EXT(YLoptsG,"boot","<opts>");
-DEF(YruntimeYrange_check,"runtime","range-check");
 DEF(YruntimeYmap2,"runtime","map2");
-DEF(YruntimeYLtabG,"runtime","<tab>");
+DEF(YruntimeYreduceA,"runtime","reduce+");
+DEF(YruntimeYGE,"runtime",">=");
+EXT(Yfun_names,"boot","fun-names");
 DEF(YruntimeYbot,"runtime","bot");
-DEF(YruntimeYtable_growth_factor,"runtime","table-growth-factor");
-DEF(YruntimeYLstring_portG,"runtime","<string-port>");
-DEF(YruntimeYhash_moduli,"runtime","hash-moduli");
-DEF(YruntimeYdel,"runtime","del");
-DEF(YruntimeYLfile_output_portG,"runtime","<file-output-port>");
+EXT(Ysig_arity,"boot","sig-arity");
+DEF(YruntimeYstep_then,"runtime","step-then");
+DEF(YruntimeYfile_mtime,"runtime","file-mtime");
+DEF(YruntimeYrange_below,"runtime","range-below");
+DEF(YruntimeYdefault_handler,"runtime","default-handler");
+EXT(YLlogG,"boot","<log>");
+DEF(YruntimeYlow_elt_setter,"runtime","low-elt-setter");
+EXT(YPvnul,"boot","%vnul");
+DEF(YruntimeYPvector,"runtime","%vector");
+EXT(Yobject_parents,"boot","object-parents");
 DEF(YruntimeYNE,"runtime","~=");
 DEF(YruntimeYremainder,"runtime","remainder");
+DEF(YruntimeYcurrent_gc_state,"runtime","current-gc-state");
+DEF(YruntimeYnative_chars,"runtime","native-chars");
 DEF(YruntimeYoddQ,"runtime","odd?");
-DEF(YruntimeYT,"runtime","*");
-DEF(YruntimeYbuf_dat,"runtime","buf-dat");
+DEF(YruntimeYcopy_state,"runtime","copy-state");
+DEF(YruntimeYdo,"runtime","do");
+DEF(YruntimeYLrangeG,"runtime","<range>");
 DEF(YruntimeYto_digit,"runtime","to-digit");
-DEF(YruntimeYepsilon,"runtime","epsilon");
 DEF(YruntimeYaddress_of,"runtime","address-of");
-DEF(YruntimeYopen_output_file,"runtime","open-output-file");
-DEF(YruntimeYpos,"runtime","pos");
+DEF(YruntimeYopen_input_file,"runtime","open-input-file");
+EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
 DEF(YruntimeYneg,"runtime","neg");
+DEF(YruntimeYTprint_baseT,"runtime","*print-base*");
+DEF(YruntimeYDempty_cell_marker,"runtime","$empty-cell-marker");
+DEF(YruntimeYtable_growth_factor,"runtime","table-growth-factor");
 EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
 DEF(YruntimeYmodulo,"runtime","modulo");
-EXT(Ysig_value,"boot","sig-value");
 DEF(YruntimeYtruncateS,"runtime","truncate/");
 DEF(YruntimeYflo_bits,"runtime","flo-bits");
+DEF(YruntimeYport_guts_setter,"runtime","port-guts-setter");
+DEF(YruntimeYT,"runtime","*");
 DEF(YruntimeYdefault,"runtime","default");
-DEF(YruntimeYwrite_char,"runtime","write-char");
+DEF(YruntimeYcat2,"runtime","cat2");
 DEF(YruntimeYtruncate,"runtime","truncate");
-DEF(YruntimeYin,"runtime","in");
-EXT(YLlstG,"boot","<lst>");
+DEF(YruntimeYLassocG,"runtime","<assoc>");
 DEF(YruntimeYnow_elt,"runtime","now-elt");
-DEF(YruntimeYhandler_function,"runtime","handler-function");
-DEF(YruntimeYassoc_value,"runtime","assoc-value");
-EXT(YLmetG,"boot","<met>");
-DEF(YruntimeYsig,"runtime","sig");
-DEF(YruntimeYLhandlerG,"runtime","<handler>");
-DEF(YruntimeYapp_args,"runtime","app-args");
-DEF(YruntimeYLsimple_table_vectorG,"runtime","<simple-table-vector>");
+DEF(YruntimeYclrX,"runtime","clr!");
+EXT(YPsnul,"boot","%snul");
+DEF(YruntimeYdel_dups,"runtime","del-dups");
+DEF(YruntimeYpos,"runtime","pos");
+DEF(YruntimeYLerrorG,"runtime","<error>");
+EXT(YLtupG,"boot","<tup>");
+DEF(YruntimeYcondition_message,"runtime","condition-message");
+EXT(Ysig_value,"boot","sig-value");
+DEF(YruntimeYDvacated_cell_marker,"runtime","$vacated-cell-marker");
+EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
 DEF(YruntimeYroundS,"runtime","round/");
-EXT(Yfun_arity,"boot","fun-arity");
-DEF(YruntimeYrange_to,"runtime","range-to");
-DEF(YruntimeYposQ,"runtime","pos?");
-DEF(YruntimeYstr_to_num,"runtime","str-to-num");
-DEF(YruntimeYfind_key,"runtime","find-key");
-DEF(YruntimeYstep_then_setter,"runtime","step-then-setter");
 DEF(YruntimeYPprimary_modulus,"runtime","%primary-modulus");
-DEF(YruntimeYfloor,"runtime","floor");
+DEF(YruntimeYLoutput_portG,"runtime","<output-port>");
+DEF(YruntimeYPn_buckets,"runtime","%n-buckets");
+DEF(YruntimeYposQ,"runtime","pos?");
+DEF(YruntimeY2nd,"runtime","2nd");
+DEF(YruntimeYpeek_char,"runtime","peek-char");
+DEF(YruntimeYcopy_to_new_vector,"runtime","copy-to-new-vector");
+DEF(YruntimeYport_handle_setter,"runtime","port-handle-setter");
 DEF(YruntimeYvals_to_str,"runtime","vals-to-str");
-DEF(YruntimeYlen_setter,"runtime","len-setter");
-DEF(YruntimeYtable_growth_factor_setter,"runtime","table-growth-factor-setter");
-EXT(Yslot_value_setter,"boot","slot-value-setter");
-DEF(YruntimeYLstr_tabG,"runtime","<str-tab>");
-DEF(YruntimeYlast,"runtime","last");
-DEF(YruntimeYgrow_table,"runtime","grow-table");
-DEF(YruntimeYsub_setter,"runtime","sub-setter");
-EXT(YTmacros_okQT,"boot","*macros-ok?*");
+DEF(YruntimeYassoc,"runtime","assoc");
+DEF(YruntimeYpush_lastX,"runtime","push-last!");
+DEF(YruntimeYfloor,"runtime","floor");
+DEF(YruntimeYascii_whitespaces,"runtime","ascii-whitespaces");
+EXT(Yfun_arity,"boot","fun-arity");
+DEF(YruntimeYopen_output_file,"runtime","open-output-file");
+DEF(YruntimeYstr_to_num,"runtime","str-to-num");
+EXT(YLfloG,"boot","<flo>");
 DEF(YruntimeYceilingS,"runtime","ceiling/");
-DEF(YruntimeYTdebug_tablesQT,"runtime","*debug-tables?*");
-EXT(YmacrosYvar_name,"macros","var-name");
-DEF(YruntimeYDdigit_to_char,"runtime","$digit-to-char");
-EXT(Yhead,"boot","head");
-DEF(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
-EXT(Yfun_specs,"boot","fun-specs");
-DEF(YruntimeYS,"runtime","/");
-DEF(YruntimeYfloorS,"runtime","floor/");
-DEF(YruntimeYrehash_table,"runtime","rehash-table");
-DEF(YruntimeYstep_first,"runtime","step-first");
-DEF(YruntimeYPbucket_setter,"runtime","%bucket-setter");
+EXT(YLoptsG,"boot","<opts>");
+DEF(YruntimeYrange_error,"runtime","range-error");
+DEF(YruntimeYnewline,"runtime","newline");
+EXT(YLchrG,"boot","<chr>");
+DEF(YruntimeYLstepG,"runtime","<step>");
+DEF(YruntimeYelt,"runtime","elt");
+DEF(YruntimeYassocs_keys_setter,"runtime","assocs-keys-setter");
 DEF(YruntimeYlsh,"runtime","lsh");
+EXT(YLgenG,"boot","<gen>");
 DEF(YruntimeYnxt_state,"runtime","nxt-state");
-DEF(YruntimeYas_lowercase,"runtime","as-lowercase");
-DEF(YruntimeYLfile_input_portG,"runtime","<file-input-port>");
+EXT(Yslot_value_setter,"boot","slot-value-setter");
+EXT(YLsymG,"boot","<sym>");
 DEF(YruntimeYport_index_setter,"runtime","port-index-setter");
+DEF(YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
+DEF(YruntimeYas_lowercase,"runtime","as-lowercase");
+DEF(YruntimeYassoc_key,"runtime","assoc-key");
+DEF(YruntimeYS,"runtime","/");
+EXT(YLlocG,"boot","<loc>");
+EXT(YLintG,"boot","<int>");
+EXT(Yhead,"boot","head");
+DEF(YruntimeYread_char,"runtime","read-char");
+DEF(YruntimeYin,"runtime","in");
+DEF(YruntimeYLstring_output_portG,"runtime","<string-output-port>");
+EXT(Yfun_specs,"boot","fun-specs");
+EXT(YLslotG,"boot","<slot>");
+EXT(YLflatG,"boot","<flat>");
 DEF(YruntimeYash,"runtime","ash");
 EXT(YmacrosYmatch_atom,"macros","match-atom");
-DEF(YruntimeYrev,"runtime","rev");
-EXT(YLchrG,"boot","<chr>");
-DEF(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
-DEF(YruntimeYDempty_cell_marker,"runtime","$empty-cell-marker");
-DEF(YruntimeY_,"runtime","-");
-DEF(YruntimeYchar_Gascii,"runtime","char->ascii");
-EXT(Yobject_slots,"boot","object-slots");
-EXT(Yapply,"boot","apply");
-EXT(Yfun_name,"boot","fun-name");
-DEF(YruntimeYPn_buckets_setter,"runtime","%n-buckets-setter");
-EXT(YLintG,"boot","<int>");
-DEF(YruntimeYapp_filename,"runtime","app-filename");
-DEF(YruntimeYchar_readyQ,"runtime","char-ready?");
+DEF(YruntimeYmap_keyed,"runtime","map-keyed");
+DEF(YruntimeYassocq,"runtime","assocq");
+EXT(YLfunG,"boot","<fun>");
 EXT(YmacrosYtup,"macros","tup");
-EXT(Yunknown_function_error,"boot","unknown-function-error");
+DEF(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
+DEF(YruntimeYsig,"runtime","sig");
+DEF(YruntimeYclose_output_port,"runtime","close-output-port");
+DEF(YruntimeYadd_new,"runtime","add-new");
+DEF(YruntimeYPbucket_depth,"runtime","%bucket-depth");
+DEF(YruntimeYsub,"runtime","sub");
+DEF(YruntimeYinto,"runtime","into");
+DEF(YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
+EXT(Yobject_slots,"boot","object-slots");
+DEF(YruntimeYrange_below_setter,"runtime","range-below-setter");
+EXT(Yapply,"boot","apply");
+DEF(YruntimeYport_guts,"runtime","port-guts");
+EXT(Yfun_name,"boot","fun-name");
+DEF(YruntimeYout,"runtime","out");
+DEF(YruntimeYeof_object,"runtime","eof-object");
+DEF(YruntimeYassocs_vals_setter,"runtime","assocs-vals-setter");
 EXT(Ytail,"boot","tail");
-DEF(YruntimeYlist,"runtime","list");
-DEF(YruntimeYcondition_message_setter,"runtime","condition-message-setter");
-DEF(YruntimeYLportG,"runtime","<port>");
+DEF(YruntimeYfind_key,"runtime","find-key");
+DEF(YruntimeYPdata,"runtime","%data");
+DEF(YruntimeYassocs_keys,"runtime","assocs-keys");
+DEF(YruntimeYTdebug_tablesQT,"runtime","*debug-tables?*");
+DEF(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
+DEF(YruntimeYassq,"runtime","assq");
+DEF(YruntimeYpop_lastX,"runtime","pop-last!");
 EXT(Yhead_setter,"boot","head-setter");
+DEF(YruntimeYcurry,"runtime","curry");
+DEF(YruntimeYLfile_output_portG,"runtime","<file-output-port>");
+DEF(YruntimeYcontagious_type,"runtime","contagious-type");
+DEF(YruntimeYrange_above,"runtime","range-above");
+DEF(YruntimeYfrom_above,"runtime","from-above");
+DEF(YruntimeYLassocsG,"runtime","<assocs>");
+DEF(YruntimeYlocative_value,"runtime","locative-value");
+DEF(YruntimeYwrite_string,"runtime","write-string");
+DEF(YruntimeYport_contents,"runtime","port-contents");
+DEF(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
+DEF(YruntimeYbuf,"runtime","buf");
+DEF(YruntimeYassoc_value_setter,"runtime","assoc-value-setter");
+DEF(YruntimeYchoose_table_geometry,"runtime","choose-table-geometry");
+DEF(YruntimeYto_str,"runtime","to-str");
 
 /* FORWARD QUOTATIONS: */
 
+DEFLIT(lit_90);
 DEFLIT(lit_89);
 DEFLIT(lit_88);
 DEFLIT(lit_87);
@@ -1062,7 +1064,7 @@ loop:
   if (T2 != YPfalse) {
     T0 = Ynil;
   } else {
-    T1 = CALL2(fail_,lit_0,x_);
+    T1 = CALL2(fail_,CHKREF(lit_0),x_);
     T0 = T1;
   }
   QRET(T0);
@@ -1076,7 +1078,7 @@ FUNCODEDEF(YmacrosYmatch_unquote) {
 loop:
   T3 = CALL2(CHKREF(YmacrosYEE),x_,Ynil);
   if (T3 != YPfalse) {
-    T2 = CALL1(fail_,lit_1);
+    T2 = CALL1(fail_,CHKREF(lit_1));
     T0 = T2;
   } else {
     T1 = CALL1(CHKREF(Yhead),x_);
@@ -1095,7 +1097,7 @@ FUNCODEDEF(YmacrosYmatch_atom) {
 loop:
   T8 = CALL2(CHKREF(YmacrosYEE),x_,Ynil);
   if (T8 != YPfalse) {
-    T7 = CALL2(fail_,lit_3,pat_);
+    T7 = CALL2(fail_,CHKREF(lit_3),pat_);
     T0 = T7;
   } else {
     T6 = CALL1(CHKREF(Yhead),x_);
@@ -1105,7 +1107,7 @@ loop:
       T4 = CALL1(CHKREF(Ytail),x_);
       T2 = T4;
     } else {
-      T3 = CALL3(fail_,lit_2,expF618,pat_);
+      T3 = CALL3(fail_,CHKREF(lit_2),expF618,pat_);
       T2 = T3;
     }
     T1 = T2;
@@ -1127,7 +1129,7 @@ loop:
   if (T3 != YPfalse) {
     T1 = xF619;
   } else {
-    T2 = CALL2(fail_,lit_4,xF619);
+    T2 = CALL2(fail_,CHKREF(lit_4),xF619);
     T1 = T2;
   }
   T0 = T1;
@@ -1151,7 +1153,7 @@ FUNCODEDEF(fun_make_sym_5) {
   P a1;
 loop:
   T2 = fun_4;
-  T1 = CALL3(CHKREF(YruntimeYreduce),T2,lit_5,x_);
+  T1 = CALL3(CHKREF(YruntimeYreduce),T2,CHKREF(lit_5),x_);
   T0 = CALL2(CHKREF(YruntimeYas),CHKREF(YLsymG),T1);
   RET(T0);
 }
@@ -1161,7 +1163,7 @@ FUNCODEDEF(fun_gensym_6) {
 loop:
   T2 = CALL2(CHKREF(YruntimeYA),CHKREF(YruntimeYTgensym_counterT),YPint((P)1));
   T1 = YruntimeYTgensym_counterT = T2;
-  T0 = CALL2(CHKREF(YmacrosYmake_sym),lit_6,T1);
+  T0 = CALL2(CHKREF(YmacrosYmake_sym),CHKREF(lit_6),T1);
   RET(T0);
 }
 
@@ -1170,7 +1172,7 @@ FUNCODEDEF(fun_make_setter_name_7) {
   P T0;
   P a1;
 loop:
-  T0 = CALL2(CHKREF(YmacrosYmake_sym),x_,lit_7);
+  T0 = CALL2(CHKREF(YmacrosYmake_sym),x_,CHKREF(lit_7));
   RET(T0);
 }
 
@@ -1194,7 +1196,7 @@ FUNCODEDEF(fun_var_type_10) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(lit_8);
+  QRET(CHKREF(lit_8));
 }
 
 FUNCODEDEF(fun_var_type_11) {
@@ -1239,12 +1241,12 @@ loop:
   nameF620 = T7;
   if (nameF620 != YPfalse) {
     T6 = CALL1(CHKREF(YruntimeYto_str),nameF620);
-    T5 = CALL2(CHKREF(YmacrosYcat),lit_11,T6);
+    T5 = CALL2(CHKREF(YmacrosYcat),CHKREF(lit_11),T6);
     T1 = T5;
   } else {
     T4 = CALL1(CHKREF(Yobject_parents),x_);
     T3 = CALL1(CHKREF(YruntimeYto_str),T4);
-    T2 = CALL3(CHKREF(YmacrosYcat),lit_10,T3,lit_9);
+    T2 = CALL3(CHKREF(YmacrosYcat),CHKREF(lit_10),T3,CHKREF(lit_9));
     T1 = T2;
   }
   T0 = T1;
@@ -1264,14 +1266,14 @@ FUNCODEDEF(fun_to_str_17) {
   ARG(x_, 0);
   P a1;
 loop:
-  RET(lit_12);
+  RET(CHKREF(lit_12));
 }
 
 FUNCODEDEF(fun_to_str_18) {
   ARG(x_, 0);
   P a1;
 loop:
-  RET(lit_13);
+  RET(CHKREF(lit_13));
 }
 
 FUNCODEDEF(fun_as_19) {
@@ -1284,7 +1286,7 @@ loop:
   if (T2 != YPfalse) {
     T0 = x_;
   } else {
-    T1 = CALL3(CHKREF(Yerror),lit_14,type_,x_);
+    T1 = CALL3(CHKREF(Yerror),CHKREF(lit_14),type_,x_);
     T0 = T1;
   }
   QRET(T0);
@@ -1842,7 +1844,7 @@ loop:
   T43 = CALL1(CHKREF(Ytail),tup15F642);
   tup15F644 = T43;
   T42 = CALL1(CHKREF(YruntimeYabs),divisor_);
-  T41 = CALL2(CHKREF(YruntimeYS),T42,lit_15);
+  T41 = CALL2(CHKREF(YruntimeYS),T42,CHKREF(lit_15));
   check_type(T41,CHKREF(YLnumG));
   thresholdF645 = T41;
   T40 = CALL2(CHKREF(YruntimeYG),remainderF643,thresholdF645);
@@ -2141,7 +2143,7 @@ loop:
   if (T17 != YPfalse) {
     T16 = BOXVAL(FREEREF(4));
     if (T16 != YPfalse) {
-      T15 = CALL2(CHKREF(Yerror),lit_16,FREEREF(1));
+      T15 = CALL2(CHKREF(Yerror),CHKREF(lit_16),FREEREF(1));
       T6 = T15;
     } else {
       BOXVAL(FREEREF(4)) = YPtrue;
@@ -2722,7 +2724,7 @@ loop:
       T3 = CALL1(CHKREF(Yhead),rest_);
       T1 = T3;
     } else {
-      T2 = CALL3(CHKREF(Yerror),lit_19,caller_name_,rest_);
+      T2 = CALL3(CHKREF(Yerror),CHKREF(lit_19),caller_name_,rest_);
       T1 = T2;
     }
     T0 = T1;
@@ -2768,7 +2770,7 @@ FUNCODEDEF(fun_num_to_str_97) {
   P T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
-  T15 = CALL3(CHKREF(YruntimeYdecode_radix_option),radix_option_,CHKREF(YruntimeYTprint_baseT),lit_21);
+  T15 = CALL3(CHKREF(YruntimeYdecode_radix_option),radix_option_,CHKREF(YruntimeYTprint_baseT),CHKREF(lit_21));
   radixF690 = T15;
   T14 = CALL2(CHKREF(YruntimeYL),num_,YPint((P)0));
   if (T14 != YPfalse) {
@@ -2791,7 +2793,7 @@ loop:
   } else {
     T6 = CALL2(CHKREF(YruntimeYE),num_,YPint((P)0));
     if (T6 != YPfalse) {
-      T5 = lit_20;
+      T5 = CHKREF(lit_20);
     } else {
       T5 = digit_listF693;
     }
@@ -2980,7 +2982,7 @@ FUNCODEDEF(fun_num_to_str_108) {
   P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
-  T42 = CALL3(CHKREF(YruntimeYdecode_radix_option),radix_option_,CHKREF(YruntimeYTprint_baseT),lit_28);
+  T42 = CALL3(CHKREF(YruntimeYdecode_radix_option),radix_option_,CHKREF(YruntimeYTprint_baseT),CHKREF(lit_28));
   radixF699 = T42;
   T41 = CALL2(CHKREF(YruntimeYL),num_,YPint((P)0));
   if (T41 != YPfalse) {
@@ -2991,7 +2993,7 @@ loop:
   sF700 = T40;
   T39 = CALL2(CHKREF(YruntimeYT),num_,sF700);
   pF701 = T39;
-  stringF702 = lit_27;
+  stringF702 = CHKREF(lit_27);
   stringF702 = BOXFAB(stringF702);
   T38 = FUNSHELL(1,fun_loop_107,3);
   loopF703 = T38;
@@ -3005,13 +3007,13 @@ loop:
   T28 = CALL2(CHKREF(YruntimeYE),eF704,YPint((P)0));
   if (T28 != YPfalse) {
     T27 = BOXVAL(stringF702);
-    T26 = CALL2(CHKREF(YmacrosYcat),T27,lit_26);
+    T26 = CALL2(CHKREF(YmacrosYcat),T27,CHKREF(lit_26));
     T7 = T26;
   } else {
     T25 = CALL2(CHKREF(YruntimeYE),eF704,lengthF705);
     if (T25 != YPfalse) {
       T24 = BOXVAL(stringF702);
-      T23 = CALL2(CHKREF(YmacrosYcat),lit_25,T24);
+      T23 = CALL2(CHKREF(YmacrosYcat),CHKREF(lit_25),T24);
       T8 = T23;
     } else {
       T22 = CALL2(CHKREF(YruntimeYL),eF704,lengthF705);
@@ -3022,12 +3024,12 @@ loop:
         T18 = BOXVAL(stringF702);
         T17 = CALL2(CHKREF(YruntimeY_),lengthF705,eF704);
         T16 = CALL3(CHKREF(YruntimeYsub),T18,T17,lengthF705);
-        T15 = CALL3(CHKREF(YmacrosYcat),T19,lit_24,T16);
+        T15 = CALL3(CHKREF(YmacrosYcat),T19,CHKREF(lit_24),T16);
         T9 = T15;
       } else {
         T14 = CALL2(CHKREF(YruntimeY_),eF704,lengthF705);
         T13 = CALL2(CHKREF(YruntimeYA),T14,YPint((P)2));
-        T12 = CALL3(CHKREF(YruntimeYsub),lit_23,YPint((P)0),T13);
+        T12 = CALL3(CHKREF(YruntimeYsub),CHKREF(lit_23),YPint((P)0),T13);
         T11 = BOXVAL(stringF702);
         T10 = CALL2(CHKREF(YmacrosYcat),T12,T11);
         T9 = T10;
@@ -3040,7 +3042,7 @@ loop:
   T33 = CALL2(CHKREF(YruntimeYL),sF700,YPint((P)0));
   if (T33 != YPfalse) {
     T32 = BOXVAL(stringF702);
-    T31 = CALL2(CHKREF(YmacrosYcat),lit_22,T32);
+    T31 = CALL2(CHKREF(YmacrosYcat),CHKREF(lit_22),T32);
     T29 = T31;
   } else {
     T30 = BOXVAL(stringF702);
@@ -4233,7 +4235,7 @@ FUNCODEDEF(YruntimeYrange_error) {
   P T0;
   P a1,a2;
 loop:
-  T0 = CALL3(CHKREF(Yerror),lit_29,x_,i_);
+  T0 = CALL3(CHKREF(Yerror),CHKREF(lit_29),x_,i_);
   QRET(T0);
 }
 
@@ -5021,9 +5023,9 @@ FUNCODEDEF(fun_209) {
 loop:
   T3 = CALL1(CHKREF(YmacrosYemptyQ),s_);
   if (T3 != YPfalse) {
-    T2 = lit_32;
+    T2 = CHKREF(lit_32);
   } else {
-    T2 = lit_31;
+    T2 = CHKREF(lit_31);
   }
   T1 = CALL1(CHKREF(YruntimeYto_str),e_);
   T0 = CALL3(CHKREF(YmacrosYcat),s_,T2,T1);
@@ -5036,7 +5038,7 @@ FUNCODEDEF(fun_vals_to_str_210) {
   P a1;
 loop:
   T1 = fun_209;
-  T0 = CALL3(CHKREF(YruntimeYreduce),T1,lit_30,s_);
+  T0 = CALL3(CHKREF(YruntimeYreduce),T1,CHKREF(lit_30),s_);
   RET(T0);
 }
 
@@ -5046,7 +5048,7 @@ FUNCODEDEF(fun_to_str_211) {
   P a1;
 loop:
   T1 = CALL1(CHKREF(YruntimeYvals_to_str),x_);
-  T0 = CALL3(CHKREF(YmacrosYcat),lit_34,T1,lit_33);
+  T0 = CALL3(CHKREF(YmacrosYcat),CHKREF(lit_34),T1,CHKREF(lit_33));
   RET(T0);
 }
 
@@ -5721,7 +5723,7 @@ FUNCODEDEF(fun_to_str_259) {
   P a1;
 loop:
   T1 = CALL1(CHKREF(YruntimeYvals_to_str),x_);
-  T0 = CALL3(CHKREF(YmacrosYcat),lit_36,T1,lit_35);
+  T0 = CALL3(CHKREF(YmacrosYcat),CHKREF(lit_36),T1,CHKREF(lit_35));
   RET(T0);
 }
 
@@ -5774,7 +5776,7 @@ FUNCODEDEF(fun_265) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(lit_37);
+  QRET(CHKREF(lit_37));
 }
 
 FUNCODEDEF(fun_empty_266) {
@@ -6630,7 +6632,7 @@ FUNCODEDEF(fun_to_str_331) {
   P a1;
 loop:
   T1 = CALL1(CHKREF(YruntimeYvals_to_str),x_);
-  T0 = CALL3(CHKREF(YmacrosYcat),lit_39,T1,lit_38);
+  T0 = CALL3(CHKREF(YmacrosYcat),CHKREF(lit_39),T1,CHKREF(lit_38));
   RET(T0);
 }
 
@@ -6789,7 +6791,7 @@ loop:
   if (tmpF786 != YPfalse) {
     T1 = tmpF786;
   } else {
-    T2 = CALL2(CHKREF(Yerror),lit_47,n_);
+    T2 = CALL2(CHKREF(Yerror),CHKREF(lit_47),n_);
     T1 = T2;
   }
   T0 = T1;
@@ -6930,7 +6932,7 @@ loop:
   if (tmpF792 != YPfalse) {
     T1 = tmpF792;
   } else {
-    T2 = CALL2(CHKREF(Yerror),lit_48,char_);
+    T2 = CALL2(CHKREF(Yerror),CHKREF(lit_48),char_);
     T1 = T2;
   }
   T0 = T1;
@@ -7091,7 +7093,7 @@ FUNCODEDEF(fun_366) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(CHKREF(Ynul));
+  QRET(CHKREF(lit_50));
 }
 
 FUNCODEDEF(fun_condition_arguments_367) {
@@ -7117,7 +7119,7 @@ FUNCODEDEF(fun_369) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(CHKREF(Ynul));
+  QRET(Ynil);
 }
 
 FUNCODEDEF(fun_default_handler_370) {
@@ -7355,7 +7357,7 @@ FUNCODEDEF(Ywrong_number_arguments_error) {
   P a1,a2;
 loop:
   T1 = CALL1(CHKREF(Yfun_arity),fun_);
-  T0 = CALLN(CHKREF(Yerror),4,lit_50,fun_,n_,T1);
+  T0 = CALLN(CHKREF(Yerror),4,CHKREF(lit_51),fun_,n_,T1);
   QRET(T0);
 }
 
@@ -7364,7 +7366,7 @@ FUNCODEDEF(Yunknown_function_error) {
   P T0;
   P a1;
 loop:
-  T0 = CALL2(CHKREF(Yerror),lit_51,fun_);
+  T0 = CALL2(CHKREF(Yerror),CHKREF(lit_52),fun_);
   QRET(T0);
 }
 
@@ -7374,7 +7376,7 @@ FUNCODEDEF(Ytype_error) {
   P T0;
   P a1,a2;
 loop:
-  T0 = CALL3(CHKREF(Yerror),lit_52,arg_,type_);
+  T0 = CALL3(CHKREF(Yerror),CHKREF(lit_53),arg_,type_);
   QRET(T0);
 }
 
@@ -7456,7 +7458,7 @@ FUNCODEDEF(fun_file_opening_error_399) {
   P T0;
   P a1;
 loop:
-  T0 = CALL2(CHKREF(Yerror),lit_53,filename_);
+  T0 = CALL2(CHKREF(Yerror),CHKREF(lit_54),filename_);
   QRET(T0);
 }
 
@@ -7716,7 +7718,7 @@ FUNCODEDEF(fun_422) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(lit_54);
+  QRET(CHKREF(lit_55));
 }
 
 FUNCODEDEF(fun_port_contents_423) {
@@ -8153,7 +8155,7 @@ FUNCODEDEF(fun_462) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(lit_56);
+  QRET(CHKREF(lit_57));
 }
 
 FUNCODEDEF(fun_table_growth_threshold_463) {
@@ -8179,7 +8181,7 @@ FUNCODEDEF(fun_465) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(lit_57);
+  QRET(CHKREF(lit_58));
 }
 
 FUNCODEDEF(fun_table_shrink_threshold_466) {
@@ -8205,7 +8207,7 @@ FUNCODEDEF(fun_468) {
   ARG(x_, 0);
   P a1;
 loop:
-  QRET(lit_58);
+  QRET(CHKREF(lit_59));
 }
 
 FUNCODEDEF(fun_Pcount_469) {
@@ -8380,13 +8382,13 @@ loop:
   bodyF818 = BOXFAB(bodyF818);
   T43 = CALL2(CHKREF(YisaQ),x_1176F813,CHKREF(YLlstG));
   if (T43 != YPfalse) {
-    T42 = CALL3(CHKREF(YmacrosYmatch_atom),x_1176F813,lit_83,x_1177F812);
+    T42 = CALL3(CHKREF(YmacrosYmatch_atom),x_1176F813,CHKREF(lit_84),x_1177F812);
     x_1176F819 = T42;
     T40 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1176F819,x_1177F812);
     x_1176F820 = T40;
     T38 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1176F820,x_1177F812);
     x_1176F821 = T38;
-    T37 = CALL3(CHKREF(YmacrosYmatch_atom),x_1176F821,lit_82,x_1177F812);
+    T37 = CALL3(CHKREF(YmacrosYmatch_atom),x_1176F821,CHKREF(lit_83),x_1177F812);
     x_1176F822 = T37;
     T35 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1176F822,x_1177F812);
     BOXVAL(bucket_indexF814) = T35;
@@ -8429,58 +8431,58 @@ loop:
     T14 = T15;
     T13 = T14;
   } else {
-    T12 = CALL2(x_1177F812,lit_81,x_1176F813);
+    T12 = CALL2(x_1177F812,CHKREF(lit_82),x_1176F813);
   }
-  T103 = CALL1(CHKREF(YmacrosYlst),lit_80);
-  T102 = CALL1(CHKREF(YmacrosYlst),lit_79);
-  T101 = CALL1(CHKREF(YmacrosYlst),lit_78);
-  T100 = CALL1(CHKREF(YmacrosYlst),lit_77);
+  T103 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_81));
+  T102 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_80));
+  T101 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_79));
+  T100 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_78));
   T99 = CALLN(CHKREF(YmacrosYcat),4,T102,T101,T100,Ynil);
   T98 = CALL1(CHKREF(YmacrosYlst),T99);
-  T97 = CALL1(CHKREF(YmacrosYlst),lit_76);
+  T97 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_77));
   T96 = BOXVAL(tableF816);
   T95 = CALL1(CHKREF(YmacrosYlst),T96);
   T94 = CALL3(CHKREF(YmacrosYcat),T97,T95,Ynil);
   T93 = CALL1(CHKREF(YmacrosYlst),T94);
   T92 = CALL3(CHKREF(YmacrosYcat),T98,T93,Ynil);
   T91 = CALL1(CHKREF(YmacrosYlst),T92);
-  T90 = CALL1(CHKREF(YmacrosYlst),lit_75);
-  T89 = CALL1(CHKREF(YmacrosYlst),lit_74);
-  T88 = CALL1(CHKREF(YmacrosYlst),lit_73);
+  T90 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_76));
+  T89 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_75));
+  T88 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_74));
   T87 = CALL3(CHKREF(YmacrosYcat),T89,T88,Ynil);
   T86 = CALL1(CHKREF(YmacrosYlst),T87);
-  T85 = CALL1(CHKREF(YmacrosYlst),lit_72);
+  T85 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_73));
   T84 = CALLN(CHKREF(YmacrosYcat),4,T90,T86,T85,Ynil);
   T83 = CALL1(CHKREF(YmacrosYlst),T84);
-  T82 = CALL1(CHKREF(YmacrosYlst),lit_71);
+  T82 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_72));
   T81 = BOXVAL(keyF817);
   T80 = CALL1(CHKREF(YmacrosYlst),T81);
   T79 = CALL3(CHKREF(YmacrosYcat),T82,T80,Ynil);
   T78 = CALL1(CHKREF(YmacrosYlst),T79);
   T77 = CALL3(CHKREF(YmacrosYcat),T83,T78,Ynil);
   T76 = CALL1(CHKREF(YmacrosYlst),T77);
-  T75 = CALL1(CHKREF(YmacrosYlst),lit_70);
-  T74 = CALL1(CHKREF(YmacrosYlst),lit_69);
-  T73 = CALL1(CHKREF(YmacrosYlst),lit_68);
+  T75 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_71));
+  T74 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_70));
+  T73 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_69));
   T72 = CALL3(CHKREF(YmacrosYcat),T74,T73,Ynil);
   T71 = CALL1(CHKREF(YmacrosYlst),T72);
   T70 = CALL3(CHKREF(YmacrosYcat),T75,T71,Ynil);
   T69 = CALL1(CHKREF(YmacrosYlst),T70);
-  T68 = CALL1(CHKREF(YmacrosYlst),lit_67);
+  T68 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_68));
   T67 = BOXVAL(bucket_indexF814);
   T66 = CALL1(CHKREF(YmacrosYlst),T67);
   T65 = BOXVAL(bucket_offsetF815);
   T64 = CALL1(CHKREF(YmacrosYlst),T65);
   T63 = CALLN(CHKREF(YmacrosYcat),4,T68,T66,T64,Ynil);
   T62 = CALL1(CHKREF(YmacrosYlst),T63);
-  T61 = CALL1(CHKREF(YmacrosYlst),lit_66);
-  T60 = CALL1(CHKREF(YmacrosYlst),lit_65);
-  T59 = CALL1(CHKREF(YmacrosYlst),lit_64);
-  T58 = CALL1(CHKREF(YmacrosYlst),lit_63);
+  T61 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_67));
+  T60 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_66));
+  T59 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_65));
+  T58 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_64));
   T57 = CALL3(CHKREF(YmacrosYcat),T59,T58,Ynil);
   T56 = CALL1(CHKREF(YmacrosYlst),T57);
-  T55 = CALL1(CHKREF(YmacrosYlst),lit_62);
-  T54 = CALL1(CHKREF(YmacrosYlst),lit_61);
+  T55 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_63));
+  T54 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_62));
   T53 = CALL3(CHKREF(YmacrosYcat),T55,T54,Ynil);
   T52 = CALL1(CHKREF(YmacrosYlst),T53);
   T51 = CALLN(CHKREF(YmacrosYcat),5,T61,T60,T56,T52,Ynil);
@@ -8660,7 +8662,7 @@ loop:
   outerF853 = T20;
   FUNINIT(outerF853, 9,bucket_depthF847,bucket_indexF849,outerF853,n_bucketsF846,bucket_offsetF851,test_functionF836,FREEREF(1),return_,vectorF845);
   T19 = KCALL1(outerF853,YPint((P)0));
-  T21 = CALL1(CHKREF(Yerror),lit_84);
+  T21 = CALL1(CHKREF(Yerror),CHKREF(lit_85));
   T18 = T21;
   T17 = T18;
   T16 = T17;
@@ -8893,7 +8895,7 @@ loop:
   outerF878 = T19;
   FUNINIT(outerF878, 11,bucket_depthF871,bucket_indexF874,outerF878,n_bucketsF872,bucket_offsetF876,FREEREF(0),test_functionF862,FREEREF(1),return_,FREEREF(3),FREEREF(2));
   T18 = CALL1(outerF878,YPint((P)0));
-  T20 = CALL1(CHKREF(Yerror),lit_85);
+  T20 = CALL1(CHKREF(Yerror),CHKREF(lit_86));
   T17 = T20;
   T16 = T17;
   T15 = T16;
@@ -9137,7 +9139,7 @@ loop:
   outerF904 = T20;
   FUNINIT(outerF904, 10,bucket_depthF898,bucket_indexF900,outerF904,n_bucketsF897,bucket_offsetF902,test_functionF887,FREEREF(1),FREEREF(0),return_,vectorF896);
   T19 = CALL1(outerF904,YPint((P)0));
-  T21 = CALL1(CHKREF(Yerror),lit_86);
+  T21 = CALL1(CHKREF(Yerror),CHKREF(lit_87));
   T18 = T21;
   T17 = T18;
   T16 = T17;
@@ -9197,7 +9199,7 @@ loop:
     T10 = T11;
     T9 = CALL1(CHKREF(Ynot),T10);
     if (T9 != YPfalse) {
-      CALLN(CHKREF(YruntimeYtrace),4,CHKREF(YruntimeYout),lit_87,FREEREF(2),i_);
+      CALLN(CHKREF(YruntimeYtrace),4,CHKREF(YruntimeYout),CHKREF(lit_88),FREEREF(2),i_);
       T8 = CALL2(CHKREF(YruntimeYT),FREEREF(1),YPint((P)2));
       T7 = CALL2(CHKREF(YruntimeYT),FREEREF(2),T8);
       T6 = CALL2(CHKREF(YruntimeYA),T7,FREEREF(1));
@@ -9972,7 +9974,7 @@ loop:
   depthF954 = T3;
   T1 = FUNFAB(fun_527,3,depthF954,return_,FREEREF(0));
   CALL2(CHKREF(YruntimeYdo),T1,CHKREF(YruntimeYTtwin_primesT));
-  T2 = CALL1(CHKREF(Yerror),lit_88);
+  T2 = CALL1(CHKREF(Yerror),CHKREF(lit_89));
   T0 = T2;
   QRET(T0);
 }
@@ -10133,7 +10135,7 @@ loop:
   outerF977 = T21;
   FUNINIT(outerF977, 9,new_bucket_depthF969,new_bucket_indexF973,outerF977,new_n_bucketsF968,new_bucket_offsetF975,FREEREF(1),FREEREF(3),return_,FREEREF(2));
   T20 = CALL1(outerF977,YPint((P)0));
-  T22 = CALL1(CHKREF(Yerror),lit_89);
+  T22 = CALL1(CHKREF(Yerror),CHKREF(lit_90));
   T19 = T22;
   T18 = T19;
   T17 = T18;
@@ -11561,12 +11563,12 @@ loop:
   YruntimeYpower_of_two_ceiling = T148;
   regsym(&YruntimeYpower_of_two_ceiling,"runtime","power-of-two-ceiling");
   lit_17 = YPsb((P)"0123456789abcdefghijklmnopqrstuvwxyz");
-  YruntimeYDdigit_to_char = lit_17;
+  YruntimeYDdigit_to_char = CHKREF(lit_17);
   regsym(&YruntimeYDdigit_to_char,"runtime","$digit-to-char");
   YruntimeYTprint_baseT = YPint((P)10);
   regsym(&YruntimeYTprint_baseT,"runtime","*print-base*");
   lit_18 = YPflo(FLOINT(0.0000009999999));
-  YruntimeYepsilon = lit_18;
+  YruntimeYepsilon = CHKREF(lit_18);
   regsym(&YruntimeYepsilon,"runtime","epsilon");
   lit_19 = YPsb((P)"too many arguments: %=, %=");
   T152 = YPsig(YPpair(YPPsym((P)"rest"),YPpair(YPPsym((P)"default"),YPpair(YPPsym((P)"caller-name"),Ynil))),YPpair(CHKREF(YLoptsG),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLanyG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLintG));
@@ -14006,13 +14008,13 @@ loop:
   ascii_charsF995 = T214;
   T213 = FUNFAB(fun_343,1,ascii_charsF995);
   initF996 = T213;
-  CALL2(initF996,YPint((P)9),lit_46);
-  CALL2(initF996,YPint((P)10),lit_45);
-  CALL2(initF996,YPint((P)12),lit_44);
-  CALL2(initF996,YPint((P)13),lit_43);
-  CALL2(initF996,YPint((P)32),lit_42);
-  CALL2(initF996,YPint((P)64),lit_41);
-  CALL2(initF996,YPint((P)96),lit_40);
+  CALL2(initF996,YPint((P)9),CHKREF(lit_46));
+  CALL2(initF996,YPint((P)10),CHKREF(lit_45));
+  CALL2(initF996,YPint((P)12),CHKREF(lit_44));
+  CALL2(initF996,YPint((P)13),CHKREF(lit_43));
+  CALL2(initF996,YPint((P)32),CHKREF(lit_42));
+  CALL2(initF996,YPint((P)64),CHKREF(lit_41));
+  CALL2(initF996,YPint((P)96),CHKREF(lit_40));
   T212 = ascii_charsF995;
   T211 = T212;
   YruntimeYascii_chars = T211;
@@ -14082,7 +14084,7 @@ loop:
   YruntimeYchar_Gascii = T239;
   regsym(&YruntimeYchar_Gascii,"runtime","char->ascii");
   lit_49 = YPpair(YPint((P)32), YPpair(YPint((P)10), YPpair(YPint((P)9), YPpair(YPint((P)12), YPpair(YPint((P)13), Ynil)))));
-  YruntimeYascii_whitespaces = lit_49;
+  YruntimeYascii_whitespaces = CHKREF(lit_49);
   regsym(&YruntimeYascii_whitespaces,"runtime","ascii-whitespaces");
   T243 = YPsig(YPpair(YPPsym((P)"_"),YPpair(YPPsym((P)"s"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YLsymG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLstrG));
   fun_as_350 = YPmet(FUNCODEREF(fun_as_350),YPPsym((P)"as"),T243,ENVNUL);
@@ -14266,6 +14268,7 @@ loop:
   T13 = CALL2(CHKREF(YPdefine_method),T15,T14);
   YruntimeYcondition_message_setter = T13;
   regsym(&YruntimeYcondition_message_setter,"runtime","condition-message-setter");
+  lit_50 = YPsb((P)"");
   T17 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_366 = YPmet(FUNCODEREF(fun_366),YPfalse,T17,ENVNUL);
   T18 = fun_366;
@@ -14282,7 +14285,7 @@ loop:
   T20 = CALL2(CHKREF(YPdefine_method),T22,T21);
   YruntimeYcondition_arguments = T20;
   regsym(&YruntimeYcondition_arguments,"runtime","condition-arguments");
-  T24 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLstrG),YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  T24 = YPsig(YPpair(YPPsym((P)"_z"),YPpair(YPPsym((P)"_x"),Ynil)),YPpair(CHKREF(YLlstG),YPpair(CHKREF(YruntimeYLsimple_conditionG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
   fun_condition_arguments_setter_368 = YPmet(FUNCODEREF(fun_condition_arguments_setter_368),YPPsym((P)"condition-arguments-setter"),T24,ENVNUL);
   T28 = BOUNDP(YruntimeYcondition_arguments_setter);
   if (T28 != YPfalse) {
@@ -14297,7 +14300,7 @@ loop:
   T29 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_369 = YPmet(FUNCODEREF(fun_369),YPfalse,T29,ENVNUL);
   T30 = fun_369;
-  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_conditionG),CHKREF(YruntimeYcondition_arguments),CHKREF(YruntimeYcondition_arguments_setter),CHKREF(YLstrG),T30);
+  CALLN(CHKREF(YPslot),5,CHKREF(YruntimeYLsimple_conditionG),CHKREF(YruntimeYcondition_arguments),CHKREF(YruntimeYcondition_arguments_setter),CHKREF(YLlstG),T30);
   T32 = (P)YPpair(CHKREF(YruntimeYLconditionG),Ynil);
   T31 = CALL3(CHKREF(YPisa),T32,Ynil,Ynil);
   YruntimeYLserious_conditionG = T31;
@@ -14429,19 +14432,19 @@ loop:
   T84 = CALL2(CHKREF(YPdefine_method),T86,T85);
   Yerror = T84;
   regsym(&Yerror,"boot","error");
-  lit_50 = YPsb((P)"%= CALLED WITH %= ARGUMENTS EXPECTED %=");
+  lit_51 = YPsb((P)"%= CALLED WITH %= ARGUMENTS EXPECTED %=");
   T88 = YPsig(YPpair(YPPsym((P)"fun"),YPpair(YPPsym((P)"n"),Ynil)),YPpair(CHKREF(YLfunG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
   Ywrong_number_arguments_error = YPmet(FUNCODEREF(Ywrong_number_arguments_error),YPPsym((P)"wrong-number-arguments-error"),T88,ENVNUL);
   T89 = Ywrong_number_arguments_error;
   Ywrong_number_arguments_error = T89;
   regsym(&Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
-  lit_51 = YPsb((P)"UNKNOWN FUNCTION %= CALLED");
+  lit_52 = YPsb((P)"UNKNOWN FUNCTION %= CALLED");
   T90 = YPsig(YPpair(YPPsym((P)"fun"),Ynil),YPpair(CHKREF(YLfunG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
   Yunknown_function_error = YPmet(FUNCODEREF(Yunknown_function_error),YPPsym((P)"unknown-function-error"),T90,ENVNUL);
   T91 = Yunknown_function_error;
   Yunknown_function_error = T91;
   regsym(&Yunknown_function_error,"boot","unknown-function-error");
-  lit_52 = YPsb((P)"TYPE ERROR %= SHOULD BE A %=");
+  lit_53 = YPsb((P)"TYPE ERROR %= SHOULD BE A %=");
   T92 = YPsig(YPpair(YPPsym((P)"arg"),YPpair(YPPsym((P)"type"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
   Ytype_error = YPmet(FUNCODEREF(Ytype_error),YPPsym((P)"type-error"),T92,ENVNUL);
   T93 = Ytype_error;
@@ -14533,7 +14536,7 @@ loop:
   T129 = CALL2(CHKREF(YPdefine_method),T131,T130);
   YruntimeYopen_input_file = T129;
   regsym(&YruntimeYopen_input_file,"runtime","open-input-file");
-  lit_53 = YPsb((P)"Cannot open file named %=");
+  lit_54 = YPsb((P)"Cannot open file named %=");
   T133 = YPsig(YPpair(YPPsym((P)"filename"),Ynil),YPpair(CHKREF(YLstrG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_file_opening_error_399 = YPmet(FUNCODEREF(fun_file_opening_error_399),YPPsym((P)"file-opening-error"),T133,ENVNUL);
   T137 = BOUNDP(Yfile_opening_error);
@@ -14788,7 +14791,7 @@ loop:
   T240 = CALL2(CHKREF(YPdefine_method),T242,T241);
   YruntimeYport_guts_setter = T240;
   regsym(&YruntimeYport_guts_setter,"runtime","port-guts-setter");
-  lit_54 = YPsb((P)"");
+  lit_55 = YPsb((P)"");
   T246 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
   T245 = fun_422 = YPmet(FUNCODEREF(fun_422),YPfalse,T246,ENVNUL);
   T248 = fun_422;
@@ -14949,8 +14952,8 @@ loop:
   T54 = CALL2(CHKREF(YPdefine_method),T56,T55);
   YruntimeYwrite_string = T54;
   regsym(&YruntimeYwrite_string,"runtime","write-string");
-  lit_55 = YPpair(YPint((P)3), YPpair(YPint((P)5), YPpair(YPint((P)11), YPpair(YPint((P)17), YPpair(YPint((P)29), YPpair(YPint((P)41), YPpair(YPint((P)47), YPpair(YPint((P)59), YPpair(YPint((P)71), YPpair(YPint((P)101), YPpair(YPint((P)107), YPpair(YPint((P)137), YPpair(YPint((P)149), YPpair(YPint((P)167), YPpair(YPint((P)179), YPpair(YPint((P)191), YPpair(YPint((P)197), YPpair(YPint((P)227), YPpair(YPint((P)239), YPpair(YPint((P)269), YPpair(YPint((P)281), YPpair(YPint((P)311), YPpair(YPint((P)347), YPpair(YPint((P)419), YPpair(YPint((P)431), YPpair(YPint((P)461), YPpair(YPint((P)521), YPpair(YPint((P)569), YPpair(YPint((P)599), YPpair(YPint((P)617), YPpair(YPint((P)641), YPpair(YPint((P)659), YPpair(YPint((P)809), YPpair(YPint((P)839), YPpair(YPint((P)881), YPpair(YPint((P)1019), YPpair(YPint((P)1049), YPpair(YPint((P)1091), YPpair(YPint((P)1151), YPpair(YPint((P)1229), YPpair(YPint((P)1277), YPpair(YPint((P)1319), YPpair(YPint((P)1367), YPpair(YPint((P)1427), YPpair(YPint((P)1481), YPpair(YPint((P)1607), YPpair(YPint((P)1667), YPpair(YPint((P)1721), YPpair(YPint((P)1787), YPpair(YPint((P)1871), YPpair(YPint((P)1931), YPpair(YPint((P)1997), YPpair(YPint((P)2081), YPpair(YPint((P)2141), YPpair(YPint((P)2207), YPpair(YPint((P)2267), YPpair(YPint((P)2339), YPpair(YPint((P)2549), YPpair(YPint((P)2657), YPpair(YPint((P)2729), YPpair(YPint((P)2801), YPpair(YPint((P)2969), YPpair(YPint((P)3119), YPpair(YPint((P)3251), YPpair(YPint((P)3359), YPpair(YPint((P)3461), YPpair(YPint((P)3557), YPpair(YPint((P)3671), YPpair(YPint((P)3767), YPpair(YPint((P)3917), YPpair(YPint((P)4019), YPpair(YPint((P)4127), YPpair(YPint((P)4241), YPpair(YPint((P)4421), YPpair(YPint((P)4547), YPpair(YPint((P)4721), YPpair(YPint((P)4931), YPpair(YPint((P)5099), YPpair(YPint((P)5231), YPpair(YPint((P)5417), YPpair(YPint((P)5639), YPpair(YPint((P)5849), YPpair(YPint((P)6089), YPpair(YPint((P)6269), YPpair(YPint((P)6449), YPpair(YPint((P)6659), YPpair(YPint((P)6827), YPpair(YPint((P)7127), YPpair(YPint((P)7307), YPpair(YPint((P)7547), YPpair(YPint((P)7757), YPpair(YPint((P)8009), YPpair(YPint((P)8219), YPpair(YPint((P)8429), YPpair(YPint((P)8819), YPpair(YPint((P)9041), YPpair(YPint((P)9281), YPpair(YPint((P)9629), YPpair(YPint((P)9929), YPpair(YPint((P)10271), YPpair(YPint((P)10529), YPpair(YPint((P)10859), YPpair(YPint((P)11159), YPpair(YPint((P)11447), YPpair(YPint((P)11777), YPpair(YPint((P)12107), YPpair(YPint((P)12539), YPpair(YPint((P)12917), YPpair(YPint((P)13337), YPpair(YPint((P)13679), YPpair(YPint((P)14081), YPpair(YPint((P)14447), YPpair(YPint((P)14867), YPpair(YPint((P)15269), YPpair(YPint((P)15731), YPpair(YPint((P)16139), YPpair(YPint((P)16631), YPpair(YPint((P)17189), YPpair(YPint((P)17657), YPpair(YPint((P)18119), YPpair(YPint((P)18911), YPpair(YPint((P)19421), YPpair(YPint((P)19961), YPpair(YPint((P)20477), YPpair(YPint((P)21011), YPpair(YPint((P)21557), YPpair(YPint((P)22109), YPpair(YPint((P)22697), YPpair(YPint((P)23291), YPpair(YPint((P)23909), YPpair(YPint((P)24917), YPpair(YPint((P)25577), YPpair(YPint((P)26249), YPpair(YPint((P)26951), YPpair(YPint((P)27689), YPpair(YPint((P)28409), YPpair(YPint((P)29129), YPpair(YPint((P)29879), YPpair(YPint((P)30839), YPpair(YPint((P)31721), YPpair(YPint((P)32531), YPpair(YPint((P)33347), YPpair(YPint((P)34211), YPpair(YPint((P)35081), YPpair(YPint((P)36011), YPpair(YPint((P)36929), YPpair(YPint((P)37991), YPpair(YPint((P)39041), YPpair(YPint((P)40037), YPpair(YPint((P)41141), YPpair(YPint((P)42179), YPpair(YPint((P)43319), YPpair(YPint((P)44531), YPpair(YPint((P)45821), YPpair(YPint((P)47057), YPpair(YPint((P)48311), YPpair(YPint((P)49529), YPpair(YPint((P)50891), YPpair(YPint((P)52181), YPpair(YPint((P)53549), YPpair(YPint((P)54917), YPpair(YPint((P)56477), YPpair(YPint((P)57899), YPpair(YPint((P)59357), YPpair(YPint((P)60887), YPpair(YPint((P)62927), YPpair(YPint((P)64577), YPpair(YPint((P)66359), YPpair(YPint((P)68111), YPpair(YPint((P)69827), YPpair(YPint((P)71711), YPpair(YPint((P)73607), YPpair(YPint((P)75539), YPpair(YPint((P)77477), YPpair(YPint((P)79559), YPpair(YPint((P)81551), YPpair(YPint((P)83639), YPpair(YPint((P)85817), YPpair(YPint((P)88001), YPpair(YPint((P)90371), YPpair(YPint((P)92639), YPpair(YPint((P)95087), YPpair(YPint((P)97499), YPpair(YPint((P)99989), YPpair(YPint((P)102497), YPpair(YPint((P)105227), YPpair(YPint((P)108011), YPpair(YPint((P)110729), YPpair(YPint((P)113537), YPpair(YPint((P)116531), YPpair(YPint((P)119549), YPpair(YPint((P)122597), YPpair(YPint((P)125789), YPpair(YPint((P)128939), YPpair(YPint((P)132329), YPpair(YPint((P)135647), YPpair(YPint((P)139121), YPpair(YPint((P)142607), YPpair(YPint((P)146297), YPpair(YPint((P)149969), YPpair(YPint((P)153887), YPpair(YPint((P)157769), YPpair(YPint((P)161729), YPpair(YPint((P)166301), YPpair(YPint((P)170537), YPpair(YPint((P)174929), YPpair(YPint((P)179381), YPpair(YPint((P)183917), YPpair(YPint((P)188831), YPpair(YPint((P)193601), YPpair(YPint((P)198461), YPpair(YPint((P)203429), YPpair(YPint((P)208589), YPpair(YPint((P)213947), YPpair(YPint((P)219311), YPpair(YPint((P)224909), YPpair(YPint((P)230561), YPpair(YPint((P)236477), YPpair(YPint((P)242447), YPpair(YPint((P)248639), YPpair(YPint((P)254927), YPpair(YPint((P)261431), YPpair(YPint((P)268517), YPpair(YPint((P)275321), YPpair(YPint((P)282239), YPpair(YPint((P)289841), YPpair(YPint((P)297467), YPpair(YPint((P)304979), YPpair(YPint((P)312617), YPpair(YPint((P)320561), YPpair(YPint((P)328589), YPpair(YPint((P)336827), YPpair(YPint((P)345461), YPpair(YPint((P)354251), YPpair(YPint((P)363149), YPpair(YPint((P)372269), YPpair(YPint((P)381629), YPpair(YPint((P)391217), YPpair(YPint((P)401309), YPpair(YPint((P)411527), YPpair(YPint((P)422087), YPpair(YPint((P)432659), YPpair(YPint((P)443561), YPpair(YPint((P)454709), YPpair(YPint((P)466181), YPpair(YPint((P)478067), YPpair(YPint((P)490031), YPpair(YPint((P)502499), YPpair(YPint((P)515087), YPpair(YPint((P)527981), YPpair(YPint((P)541361), YPpair(YPint((P)555041), YPpair(YPint((P)569081), YPpair(YPint((P)583337), YPpair(YPint((P)598049), YPpair(YPint((P)613007), YPpair(YPint((P)628679), YPpair(YPint((P)644489), YPpair(YPint((P)660617), YPpair(YPint((P)677231), YPpair(YPint((P)694259), YPpair(YPint((P)711707), YPpair(YPint((P)729557), YPpair(YPint((P)747827), YPpair(YPint((P)766541), YPpair(YPint((P)785777), YPpair(YPint((P)805499), YPpair(YPint((P)825827), YPpair(YPint((P)846749), YPpair(YPint((P)868121), YPpair(YPint((P)889871), YPpair(YPint((P)912449), YPpair(YPint((P)935591), YPpair(YPint((P)959207), YPpair(YPint((P)983327), Ynil)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
-  T58 = CALL2(CHKREF(YruntimeYas),CHKREF(YLvecG),lit_55);
+  lit_56 = YPpair(YPint((P)3), YPpair(YPint((P)5), YPpair(YPint((P)11), YPpair(YPint((P)17), YPpair(YPint((P)29), YPpair(YPint((P)41), YPpair(YPint((P)47), YPpair(YPint((P)59), YPpair(YPint((P)71), YPpair(YPint((P)101), YPpair(YPint((P)107), YPpair(YPint((P)137), YPpair(YPint((P)149), YPpair(YPint((P)167), YPpair(YPint((P)179), YPpair(YPint((P)191), YPpair(YPint((P)197), YPpair(YPint((P)227), YPpair(YPint((P)239), YPpair(YPint((P)269), YPpair(YPint((P)281), YPpair(YPint((P)311), YPpair(YPint((P)347), YPpair(YPint((P)419), YPpair(YPint((P)431), YPpair(YPint((P)461), YPpair(YPint((P)521), YPpair(YPint((P)569), YPpair(YPint((P)599), YPpair(YPint((P)617), YPpair(YPint((P)641), YPpair(YPint((P)659), YPpair(YPint((P)809), YPpair(YPint((P)839), YPpair(YPint((P)881), YPpair(YPint((P)1019), YPpair(YPint((P)1049), YPpair(YPint((P)1091), YPpair(YPint((P)1151), YPpair(YPint((P)1229), YPpair(YPint((P)1277), YPpair(YPint((P)1319), YPpair(YPint((P)1367), YPpair(YPint((P)1427), YPpair(YPint((P)1481), YPpair(YPint((P)1607), YPpair(YPint((P)1667), YPpair(YPint((P)1721), YPpair(YPint((P)1787), YPpair(YPint((P)1871), YPpair(YPint((P)1931), YPpair(YPint((P)1997), YPpair(YPint((P)2081), YPpair(YPint((P)2141), YPpair(YPint((P)2207), YPpair(YPint((P)2267), YPpair(YPint((P)2339), YPpair(YPint((P)2549), YPpair(YPint((P)2657), YPpair(YPint((P)2729), YPpair(YPint((P)2801), YPpair(YPint((P)2969), YPpair(YPint((P)3119), YPpair(YPint((P)3251), YPpair(YPint((P)3359), YPpair(YPint((P)3461), YPpair(YPint((P)3557), YPpair(YPint((P)3671), YPpair(YPint((P)3767), YPpair(YPint((P)3917), YPpair(YPint((P)4019), YPpair(YPint((P)4127), YPpair(YPint((P)4241), YPpair(YPint((P)4421), YPpair(YPint((P)4547), YPpair(YPint((P)4721), YPpair(YPint((P)4931), YPpair(YPint((P)5099), YPpair(YPint((P)5231), YPpair(YPint((P)5417), YPpair(YPint((P)5639), YPpair(YPint((P)5849), YPpair(YPint((P)6089), YPpair(YPint((P)6269), YPpair(YPint((P)6449), YPpair(YPint((P)6659), YPpair(YPint((P)6827), YPpair(YPint((P)7127), YPpair(YPint((P)7307), YPpair(YPint((P)7547), YPpair(YPint((P)7757), YPpair(YPint((P)8009), YPpair(YPint((P)8219), YPpair(YPint((P)8429), YPpair(YPint((P)8819), YPpair(YPint((P)9041), YPpair(YPint((P)9281), YPpair(YPint((P)9629), YPpair(YPint((P)9929), YPpair(YPint((P)10271), YPpair(YPint((P)10529), YPpair(YPint((P)10859), YPpair(YPint((P)11159), YPpair(YPint((P)11447), YPpair(YPint((P)11777), YPpair(YPint((P)12107), YPpair(YPint((P)12539), YPpair(YPint((P)12917), YPpair(YPint((P)13337), YPpair(YPint((P)13679), YPpair(YPint((P)14081), YPpair(YPint((P)14447), YPpair(YPint((P)14867), YPpair(YPint((P)15269), YPpair(YPint((P)15731), YPpair(YPint((P)16139), YPpair(YPint((P)16631), YPpair(YPint((P)17189), YPpair(YPint((P)17657), YPpair(YPint((P)18119), YPpair(YPint((P)18911), YPpair(YPint((P)19421), YPpair(YPint((P)19961), YPpair(YPint((P)20477), YPpair(YPint((P)21011), YPpair(YPint((P)21557), YPpair(YPint((P)22109), YPpair(YPint((P)22697), YPpair(YPint((P)23291), YPpair(YPint((P)23909), YPpair(YPint((P)24917), YPpair(YPint((P)25577), YPpair(YPint((P)26249), YPpair(YPint((P)26951), YPpair(YPint((P)27689), YPpair(YPint((P)28409), YPpair(YPint((P)29129), YPpair(YPint((P)29879), YPpair(YPint((P)30839), YPpair(YPint((P)31721), YPpair(YPint((P)32531), YPpair(YPint((P)33347), YPpair(YPint((P)34211), YPpair(YPint((P)35081), YPpair(YPint((P)36011), YPpair(YPint((P)36929), YPpair(YPint((P)37991), YPpair(YPint((P)39041), YPpair(YPint((P)40037), YPpair(YPint((P)41141), YPpair(YPint((P)42179), YPpair(YPint((P)43319), YPpair(YPint((P)44531), YPpair(YPint((P)45821), YPpair(YPint((P)47057), YPpair(YPint((P)48311), YPpair(YPint((P)49529), YPpair(YPint((P)50891), YPpair(YPint((P)52181), YPpair(YPint((P)53549), YPpair(YPint((P)54917), YPpair(YPint((P)56477), YPpair(YPint((P)57899), YPpair(YPint((P)59357), YPpair(YPint((P)60887), YPpair(YPint((P)62927), YPpair(YPint((P)64577), YPpair(YPint((P)66359), YPpair(YPint((P)68111), YPpair(YPint((P)69827), YPpair(YPint((P)71711), YPpair(YPint((P)73607), YPpair(YPint((P)75539), YPpair(YPint((P)77477), YPpair(YPint((P)79559), YPpair(YPint((P)81551), YPpair(YPint((P)83639), YPpair(YPint((P)85817), YPpair(YPint((P)88001), YPpair(YPint((P)90371), YPpair(YPint((P)92639), YPpair(YPint((P)95087), YPpair(YPint((P)97499), YPpair(YPint((P)99989), YPpair(YPint((P)102497), YPpair(YPint((P)105227), YPpair(YPint((P)108011), YPpair(YPint((P)110729), YPpair(YPint((P)113537), YPpair(YPint((P)116531), YPpair(YPint((P)119549), YPpair(YPint((P)122597), YPpair(YPint((P)125789), YPpair(YPint((P)128939), YPpair(YPint((P)132329), YPpair(YPint((P)135647), YPpair(YPint((P)139121), YPpair(YPint((P)142607), YPpair(YPint((P)146297), YPpair(YPint((P)149969), YPpair(YPint((P)153887), YPpair(YPint((P)157769), YPpair(YPint((P)161729), YPpair(YPint((P)166301), YPpair(YPint((P)170537), YPpair(YPint((P)174929), YPpair(YPint((P)179381), YPpair(YPint((P)183917), YPpair(YPint((P)188831), YPpair(YPint((P)193601), YPpair(YPint((P)198461), YPpair(YPint((P)203429), YPpair(YPint((P)208589), YPpair(YPint((P)213947), YPpair(YPint((P)219311), YPpair(YPint((P)224909), YPpair(YPint((P)230561), YPpair(YPint((P)236477), YPpair(YPint((P)242447), YPpair(YPint((P)248639), YPpair(YPint((P)254927), YPpair(YPint((P)261431), YPpair(YPint((P)268517), YPpair(YPint((P)275321), YPpair(YPint((P)282239), YPpair(YPint((P)289841), YPpair(YPint((P)297467), YPpair(YPint((P)304979), YPpair(YPint((P)312617), YPpair(YPint((P)320561), YPpair(YPint((P)328589), YPpair(YPint((P)336827), YPpair(YPint((P)345461), YPpair(YPint((P)354251), YPpair(YPint((P)363149), YPpair(YPint((P)372269), YPpair(YPint((P)381629), YPpair(YPint((P)391217), YPpair(YPint((P)401309), YPpair(YPint((P)411527), YPpair(YPint((P)422087), YPpair(YPint((P)432659), YPpair(YPint((P)443561), YPpair(YPint((P)454709), YPpair(YPint((P)466181), YPpair(YPint((P)478067), YPpair(YPint((P)490031), YPpair(YPint((P)502499), YPpair(YPint((P)515087), YPpair(YPint((P)527981), YPpair(YPint((P)541361), YPpair(YPint((P)555041), YPpair(YPint((P)569081), YPpair(YPint((P)583337), YPpair(YPint((P)598049), YPpair(YPint((P)613007), YPpair(YPint((P)628679), YPpair(YPint((P)644489), YPpair(YPint((P)660617), YPpair(YPint((P)677231), YPpair(YPint((P)694259), YPpair(YPint((P)711707), YPpair(YPint((P)729557), YPpair(YPint((P)747827), YPpair(YPint((P)766541), YPpair(YPint((P)785777), YPpair(YPint((P)805499), YPpair(YPint((P)825827), YPpair(YPint((P)846749), YPpair(YPint((P)868121), YPpair(YPint((P)889871), YPpair(YPint((P)912449), YPpair(YPint((P)935591), YPpair(YPint((P)959207), YPpair(YPint((P)983327), Ynil)))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))))));
+  T58 = CALL2(CHKREF(YruntimeYas),CHKREF(YLvecG),CHKREF(lit_56));
   YruntimeYTtwin_primesT = T58;
   regsym(&YruntimeYTtwin_primesT,"runtime","*twin-primes*");
   T60 = (P)YPpair(CHKREF(YLanyG),Ynil);
@@ -15229,7 +15232,7 @@ loop:
   T172 = CALL2(CHKREF(YPdefine_method),T174,T173);
   YruntimeYtable_growth_factor_setter = T172;
   regsym(&YruntimeYtable_growth_factor_setter,"runtime","table-growth-factor-setter");
-  lit_56 = YPflo(FLOINT(2.0));
+  lit_57 = YPflo(FLOINT(2.0));
   T176 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_462 = YPmet(FUNCODEREF(fun_462),YPfalse,T176,ENVNUL);
   T177 = fun_462;
@@ -15258,7 +15261,7 @@ loop:
   T184 = CALL2(CHKREF(YPdefine_method),T186,T185);
   YruntimeYtable_growth_threshold_setter = T184;
   regsym(&YruntimeYtable_growth_threshold_setter,"runtime","table-growth-threshold-setter");
-  lit_57 = YPflo(FLOINT(0.8));
+  lit_58 = YPflo(FLOINT(0.8));
   T188 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_465 = YPmet(FUNCODEREF(fun_465),YPfalse,T188,ENVNUL);
   T189 = fun_465;
@@ -15287,7 +15290,7 @@ loop:
   T196 = CALL2(CHKREF(YPdefine_method),T198,T197);
   YruntimeYtable_shrink_threshold_setter = T196;
   regsym(&YruntimeYtable_shrink_threshold_setter,"runtime","table-shrink-threshold-setter");
-  lit_58 = YPflo(FLOINT(0.5));
+  lit_59 = YPflo(FLOINT(0.5));
   T200 = YPsig(YPpair(YPPsym((P)"x"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_468 = YPmet(FUNCODEREF(fun_468),YPfalse,T200,ENVNUL);
   T201 = fun_468;
@@ -15364,12 +15367,12 @@ loop:
   T229 = CALL2(CHKREF(YPdefine_method),T231,T230);
   YruntimeYtable_protocol = T229;
   regsym(&YruntimeYtable_protocol,"runtime","table-protocol");
-  lit_59 = YPsb((P)"empty cell");
-  T233 = CALL1(CHKREF(YmacrosYlst),lit_59);
+  lit_60 = YPsb((P)"empty cell");
+  T233 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_60));
   YruntimeYDempty_cell_marker = T233;
   regsym(&YruntimeYDempty_cell_marker,"runtime","$empty-cell-marker");
-  lit_60 = YPsb((P)"vacated cell");
-  T234 = CALL1(CHKREF(YmacrosYlst),lit_60);
+  lit_61 = YPsb((P)"vacated cell");
+  T234 = CALL1(CHKREF(YmacrosYlst),CHKREF(lit_61));
   YruntimeYDvacated_cell_marker = T234;
   regsym(&YruntimeYDvacated_cell_marker,"runtime","$vacated-cell-marker");
   T235 = YPsig(YPpair(YPPsym((P)"hash"),YPpair(YPPsym((P)"primary"),YPpair(YPPsym((P)"secondary"),Ynil))),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil))),YPfalse,YPint((P)3),CHKREF(YLtupG));
@@ -15409,29 +15412,29 @@ P YruntimeY___main_7___() {
   P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
   P T0;
 loop:
-  lit_61 = YPPsym((P)"vector");
-  lit_62 = YPPsym((P)"%secondary-modulus");
-  lit_63 = YPPsym((P)"vector");
-  lit_64 = YPPsym((P)"%primary-modulus");
-  lit_65 = YPPsym((P)"hash");
-  lit_66 = YPPsym((P)"hash-moduli");
-  lit_67 = YPPsym((P)"tup");
-  lit_68 = YPPsym((P)"table");
-  lit_69 = YPPsym((P)"%vector");
-  lit_70 = YPPsym((P)"vector");
-  lit_71 = YPPsym((P)"hash-function");
-  lit_72 = YPPsym((P)"state");
-  lit_73 = YPPsym((P)"<int>");
-  lit_74 = YPPsym((P)"hash");
-  lit_75 = YPPsym((P)"tup");
-  lit_76 = YPPsym((P)"table-protocol");
-  lit_77 = YPPsym((P)"hash-function");
-  lit_78 = YPPsym((P)"test-function");
-  lit_79 = YPPsym((P)"tup");
-  lit_80 = YPPsym((P)"let");
-  lit_81 = YPsb((P)"Match Pattern Failure");
-  lit_82 = YPPsym((P)"tup");
-  lit_83 = YPPsym((P)"with-hash");
+  lit_62 = YPPsym((P)"vector");
+  lit_63 = YPPsym((P)"%secondary-modulus");
+  lit_64 = YPPsym((P)"vector");
+  lit_65 = YPPsym((P)"%primary-modulus");
+  lit_66 = YPPsym((P)"hash");
+  lit_67 = YPPsym((P)"hash-moduli");
+  lit_68 = YPPsym((P)"tup");
+  lit_69 = YPPsym((P)"table");
+  lit_70 = YPPsym((P)"%vector");
+  lit_71 = YPPsym((P)"vector");
+  lit_72 = YPPsym((P)"hash-function");
+  lit_73 = YPPsym((P)"state");
+  lit_74 = YPPsym((P)"<int>");
+  lit_75 = YPPsym((P)"hash");
+  lit_76 = YPPsym((P)"tup");
+  lit_77 = YPPsym((P)"table-protocol");
+  lit_78 = YPPsym((P)"hash-function");
+  lit_79 = YPPsym((P)"test-function");
+  lit_80 = YPPsym((P)"tup");
+  lit_81 = YPPsym((P)"let");
+  lit_82 = YPsb((P)"Match Pattern Failure");
+  lit_83 = YPPsym((P)"tup");
+  lit_84 = YPPsym((P)"with-hash");
   T2 = YPsig(YPpair(YPPsym((P)"msg"),YPpair(YPPsym((P)"args"),Ynil)),YPpair(CHKREF(YLstrG),Ynil),YPtrue,YPint((P)1),CHKREF(YLanyG));
   fun_x_1177_478 = YPmet(FUNCODEREF(fun_x_1177_478),YPPsym((P)"x-1177"),T2,ENVNUL);
   T1 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
@@ -15440,7 +15443,7 @@ loop:
   fun_480 = YPmet(FUNCODEREF(fun_480),YPfalse,T0,ENVNUL);
   T3 = fun_480;
   YPmacro(YPPsym((P)"with-hash"),T3);
-  lit_84 = YPsb((P)"The table is totally full this shouldn't happen");
+  lit_85 = YPsb((P)"The table is totally full this shouldn't happen");
   T7 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"this-bucket-raw-index"),Ynil)),YPpair(CHKREF(YLanyG),YPpair(CHKREF(YLanyG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
   fun_inner_481 = YPmet(FUNCODEREF(fun_inner_481),YPPsym((P)"inner"),T7,ENVNUL);
   T6 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
@@ -15459,7 +15462,7 @@ loop:
   T8 = CALL2(CHKREF(YPdefine_method),T10,T9);
   YruntimeYelt = T8;
   regsym(&YruntimeYelt,"runtime","elt");
-  lit_85 = YPsb((P)"The table is totally full this shouldn't happen");
+  lit_86 = YPsb((P)"The table is totally full this shouldn't happen");
   T15 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"this-bucket-raw-index"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
   fun_inner_485 = YPmet(FUNCODEREF(fun_inner_485),YPPsym((P)"inner"),T15,ENVNUL);
   T14 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
@@ -15478,7 +15481,7 @@ loop:
   T16 = CALL2(CHKREF(YPdefine_method),T18,T17);
   YruntimeYelt_setter = T16;
   regsym(&YruntimeYelt_setter,"runtime","elt-setter");
-  lit_86 = YPsb((P)"The table is totally full this shouldn't happen");
+  lit_87 = YPsb((P)"The table is totally full this shouldn't happen");
   T23 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"this-bucket-raw-index"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
   fun_inner_489 = YPmet(FUNCODEREF(fun_inner_489),YPPsym((P)"inner"),T23,ENVNUL);
   T22 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
@@ -15497,7 +15500,7 @@ loop:
   T24 = CALL2(CHKREF(YPdefine_method),T26,T25);
   YruntimeYdel_key = T24;
   regsym(&YruntimeYdel_key,"runtime","del-key");
-  lit_87 = YPsb((P)"B %= I %=\n");
+  lit_88 = YPsb((P)"B %= I %=\n");
   T30 = YPsig(YPpair(YPPsym((P)"i"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_inner_493 = YPmet(FUNCODEREF(fun_inner_493),YPPsym((P)"inner"),T30,ENVNUL);
   T29 = YPsig(YPpair(YPPsym((P)"b"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
@@ -15776,7 +15779,7 @@ loop:
   T143 = CALL2(CHKREF(YPdefine_method),T145,T144);
   YruntimeYrehash_table = T143;
   regsym(&YruntimeYrehash_table,"runtime","rehash-table");
-  lit_88 = YPsb((P)"Not enough primes to compute new table size");
+  lit_89 = YPsb((P)"Not enough primes to compute new table size");
   T149 = YPsig(YPpair(YPPsym((P)"p"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_527 = YPmet(FUNCODEREF(fun_527),YPfalse,T149,ENVNUL);
   T148 = YPsig(YPpair(YPPsym((P)"return"),Ynil),YPpair(CHKREF(YLanyG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
@@ -15786,7 +15789,7 @@ loop:
   T150 = YruntimeYchoose_table_geometry;
   YruntimeYchoose_table_geometry = T150;
   regsym(&YruntimeYchoose_table_geometry,"runtime","choose-table-geometry");
-  lit_89 = YPsb((P)"The table is totally full this shouldn't happen");
+  lit_90 = YPsb((P)"The table is totally full this shouldn't happen");
   T155 = YPsig(YPpair(YPPsym((P)"i"),YPpair(YPPsym((P)"index"),Ynil)),YPpair(CHKREF(YLintG),YPpair(CHKREF(YLintG),Ynil)),YPfalse,YPint((P)2),CHKREF(YLanyG));
   fun_inner_530 = YPmet(FUNCODEREF(fun_inner_530),YPPsym((P)"inner"),T155,ENVNUL);
   T154 = YPsig(YPpair(YPPsym((P)"probes"),Ynil),YPpair(CHKREF(YLintG),Ynil),YPfalse,YPint((P)1),CHKREF(YLanyG));
