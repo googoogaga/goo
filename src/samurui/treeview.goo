@@ -1,0 +1,230 @@
+(use goo)
+
+(use samurui/gtk.swig)
+
+(use samurui/coreutil)
+(use samurui/coremetadata)
+(use samurui/coremacros)
+(use samurui/coregtkwrapping)
+(use samurui/coremasterslave)
+(use samurui/corevisicol)
+
+(use samurui/visiwrapcol)
+
+(use samurui/gtkcallbacks)
+
+(dc <gui-treeview-model> (<gui>))
+
+(dc <gui-treeview> (<gui-widget>))
+ (dp collection (<gui-treeview> => <visi-col>))
+ (dp axis (<gui-treeview> => <any>) "implicit")
+ (dp prop-axes (<gui-treeview> => <col>) (fab <vec> 0))
+ (dp model (<gui-treeview> => <gui-treeview-model>))
+ (dp tv-master (<gui-treeview> => (t? <gui-master>)) #f)
+
+(dm gui-treeview (=> <gui-treeview>)
+  (def gtv (new <gui-treeview>))
+  ; Dummy up the collection
+  (set (collection gtv) (visi-wrap-col (vec "dummy-a" "dummy-b" "dummy-c")))
+  ; Model
+  (def gtv-model (new <gui-treeview-model>))
+  (set (handle gtv-model) (gtk_tree_goo_new gtv))
+  (set (model gtv) gtv-model)
+  ; TreeView
+  (set (handle gtv) (gtk_tree_view_new_with_model (handle gtv-model)))
+  ; Add some columns for amusement purposes
+  (def my-renderer (gtk_cell_renderer_text_new))
+  (def column (gtk_tree_view_column_new))
+  (gtk_tree_view_column_set_title column "Default")
+  (gtk_tree_view_column_pack_start column my-renderer (log-to-gtk #t))
+  (gtk_tree_view_column_add_attribute column my-renderer "text" 0)
+  (gtk_tree_view_append_column (handle gtv) column)
+  gtv
+  )
+
+(dm free (gtv|<gui-treeview>)
+  (free (model gtv))
+  (g_object_unref (handle gtv)) ; should set to NULL...
+  )
+
+
+(dm bind-master (tv|<gui-treeview> master|<gui-master> => <log>)
+  (set (tv-master tv) master)
+  #t
+  )
+
+; Constructs a binding
+;; Rebind should update the underlying collection in the model
+;; Refresh should tell the tree-view that it is getting the new / same model
+;; Um, no freeing yet
+(dm bind ((gtv <gui-treeview>) (info <interface-info>) => (tup <fun> <fun> <fun>))
+  (let ((my-gtv gtv)
+        ;; Changed callback
+        (callback (fun (selection data)
+                    ;;Selection changed...
+                    (def selnode (gtk_tree_goo_selection_get_node selection))
+                    (when selnode
+                      (master-update-slaves (tv-master gtv) selnode)
+                      )
+                    )))
+
+    ; Establish our hooks into the gui object
+    (g_signal_connect (gtk_tree_view_get_selection (handle gtv))
+                      "changed"
+                      (gtk_getGtkCallthrough)
+                      (goo_safeCreateCallback callback 0))
+
+    ; Construct the helper functions
+    (tup 
+                                        ; Establish re-binder
+     (fun (new-obj)
+       ;(msg out "Rebinding!\n")
+       (set (collection my-gtv) (visi-wrap-col ((getter info) new-obj)))
+       )
+                                        ; Establish refresher
+     (fun ()
+       ;(msg out "Refreshing!\n")
+       (gtk_tree_goo_refresh (handle (model my-gtv))) ;yes this does go first
+       (gtk_tree_view_set_model (handle my-gtv) NULL)
+       (gtk_tree_view_set_model (handle my-gtv) (handle (model my-gtv)))
+       )
+
+                                        ; This is where we would de-bind if memory 
+                                        ; weren't so cheap that we don't need to 
+                                        ; worry about memory leaks.
+                                        ; (ha ha ha, I'm funny.)
+                          ; But really, it would be a good idea to free stuff here.
+     (fun ()
+       ; free your mind!
+       )
+     )
+    )
+  )
+
+;; /// TreeView Function Callees
+
+(dm gtk-tv-get-n-columns (gtv|<gui-treeview>)
+  (+ 1 (len (prop-axes gtv)))
+  )
+
+(dm gtk-tv-get-start-node (gtv|<gui-treeview>)
+  (get-start-node (collection gtv))
+  )
+
+(dm gtk-tv-get-label (gtv|<gui-treeview> node column|<int>)
+  (def my-result
+    (if (== 0 column)
+        ;; If it's the first column, just use the node itself. (eg, don't traverse fundamental axis)
+        (to-str (node-label (collection gtv) node))
+        (seq
+          ;; Other column -> use property axes
+          (def prop-axis (elt (prop-axes gtv) column))
+          (def props (node-out-edges (collection gtv) prop-axis node))
+        (if (< 0 (len props))
+            (to-str (1st props))
+            "props issue...")
+        )
+        )
+    )
+  my-result
+  )
+
+(dm gtk-tv-iter-children (gtv|<gui-treeview> node)
+  (def kids (node-out-edges (collection gtv) (axis gtv) node))
+  (if (< 0 (len kids))
+      (1st kids)
+      #f)
+  )
+
+(dm gtk-tv-iter-has-child (gtv|<gui-treeview> node => <log>)
+  (def has-child (< 0 (len (node-out-edges (collection gtv) (axis gtv) node))))
+;;  (msg out "%= has child: %=\n" (address-of node) has-child)
+  has-child
+  )
+
+(dm gtk-tv-iter-n-children (gtv|<gui-treeview> node => <int>)
+  (def num-kids (len (node-out-edges (collection gtv) (axis gtv) node)))
+;;  (msg out "Reporting %= kids for node %=\n" num-kids (address-of node))
+  num-kids
+  )
+
+(dm gtk-tv-iter-nth-child (gtv|<gui-treeview> node n)
+  (def num-kids (len (node-out-edges (collection gtv) (axis gtv) node)))
+  (if (< n num-kids)      
+      (elt (node-out-edges (collection gtv) (axis gtv) node) n)
+      (seq
+        (msg out "Out of bounds iter-nth-child access (%= of %=)\n" n num-kids)
+        #f
+        )
+      )
+  )
+
+(dm gtk-tv-iter-next-child (gtv|<gui-treeview> node)
+  (def parent (gtk-tv-iter-parent gtv node))
+  (def n (+ 1 (gtk-tv-node-pos-in-parent gtv node parent)))
+  (def edges (node-out-edges (collection gtv) (axis gtv) parent))
+  (if (>= n (len edges))
+      (seq
+        #f
+        )
+      (elt edges n)
+      )
+  )
+
+(dm gtk-tv-iter-parent (gtv|<gui-treeview> node)
+  (def da-parent (node-in-edges (collection gtv) (axis gtv) node))
+  (if (and da-parent 
+           (< 0 (len da-parent)))
+      (seq
+        (1st da-parent)
+        )
+      (seq
+        #f)
+      )
+  )
+
+(dm gtk-tv-iter-has-parent (gtv|<gui-treeview> node => <log>)
+  (def retval (~= 0 (len (node-in-edges (collection gtv) (axis gtv) node))))
+  retval
+  )
+
+(dm gtk-tv-node-pos-in-parent (gtv|<gui-treeview> node parent => <int>)
+  (pos (node-out-edges (collection gtv) (axis gtv) parent) node)
+  )
+
+
+(register-interface-model <col> (interface-model
+                                 (fun (item attribs) 1)
+                                 (fun (info class updaters)
+                                   (def my-gtv (gui-treeview))
+                                   (def gtv-updater (bind my-gtv info))
+                                   (ad! updaters gtv-updater)
+                                   my-gtv
+                                   )
+                                 )
+                          )
+
+(export
+  <gui-treeview>
+  <gui-treeview-model>
+  )
+
+(export
+  gui-treeview
+  )
+
+;; ;; Must export for linking purposes
+
+;; (export
+;;   gtk-tv-get-n-columns
+;;   gtk-tv-get-start-node
+;;   gtk-tv-get-label
+;;   gtk-tv-iter-children
+;;   gtk-tv-iter-has-child
+;;   gtk-tv-iter-n-children
+;;   gtk-tv-iter-nth-child
+;;   gtk-tv-iter-next-child
+;;   gtk-tv-iter-parent
+;;   gtk-tv-iter-has-parent
+;;   gtk-tv-node-pos-in-parent
+;;   )

@@ -1,0 +1,502 @@
+(use goo)
+
+(use samurui/gtk.swig)
+
+(use samurui/coreutil)
+(use samurui/coremetadata)
+(use samurui/coregeom)
+(use samurui/coreconstraints)
+
+(use samurui/gtkcallbacks)
+
+;; -- GUI Wrapper 
+
+(dc <gui> (<any>))
+  (dp handle (<gui> => <loc>))
+
+; -
+; -- Limited GUI Wrappers
+; -
+
+(dc <gui-widget> (<gui>))
+ (dp attrs (<gui-widget> => (t? <col>)) #f)
+
+(dm free (gui-obj|<gui>)
+  (unless (= (handle gui-obj) NULL)
+    (g_object_unref (handle gui-obj))
+    (set (handle gui-obj) NULL)
+    )
+  )
+
+; -- Widget stuff
+
+(dm gui-width (widget|<gui-widget> => <int>)
+  (_GdkRectangle_width_get (_GtkWidget_allocation_get (handle widget)))
+  )
+
+(dm gui-height (widget|<gui-widget> => <int>)
+  (_GdkRectangle_height_get (_GtkWidget_allocation_get (handle widget)))
+  )
+
+
+; -- Containers
+
+(dc <gui-container> (<gui-widget>))
+  (dp children (<gui-container> => <vec>) (fab <vec> 0))
+
+(dm free (container|<gui-container>)
+  ;; Kill off the kids
+  (do (fun (kid) (free kid)) (children container))
+  (zap! (children container))
+
+  ;; Kill off our own handle
+  (unless (= (handle container) NULL)
+    (g_object_unref (handle container))
+    (set (handle container) NULL)
+    )
+  )
+
+(dc <gui-window> (<gui-container>))
+
+(dm gui-window ( => <gui-window>)
+  (let ((window (new <gui-window>))
+        (handle (gtk_window_new GTK_WINDOW_TOPLEVEL)))
+    (set (handle window) handle)
+    ; tweak some GTK-level settings
+    (gtk_container_set_border_width handle 8)
+    window
+    )
+  )
+
+(dc <gui-scrolled-window> (<gui-container>))
+
+(dm gui-scrolled-window ( => <gui-scrolled-window>)
+  (def win (new <gui-scrolled-window>))
+  (set (handle win) (gtk_scrolled_window_new NULL NULL))
+  win
+  )
+
+(dc <gui-frame> (<gui-container>))
+
+(dm gui-frame (label|<str> => <gui-frame>)
+  (def f (new <gui-frame>))
+  (def da-frame (gtk_frame_new label))
+  (set (handle f) da-frame)
+  f
+  )
+
+(dc <gui-box> (<gui-container>))
+
+(dc <gui-vbox> (<gui-box>))
+
+(dm gui-vbox ( => <gui-vbox>)
+  (let ((vbox (new <gui-vbox>))
+        (handle (gtk_vbox_new gtk_false 8)))
+    (set (handle vbox) handle)
+    ; tweak some GTK-level settings
+    (gtk_container_set_border_width handle 8)
+    vbox
+    )
+  )
+
+(dc <gui-hbox> (<gui-box>))
+
+(dm gui-hbox ( => <gui-hbox>)
+  (let ((hbox (new <gui-hbox>))
+        (handle (gtk_hbox_new gtk_false 8)))
+    (set (handle hbox) handle)
+    ; tweak some GTK-level settings
+    (gtk_container_set_border_width handle 8)
+    hbox
+    )
+  )
+
+
+(dm ad! (container|<gui-container> item|<gui>)
+  ;;(debugstr "Adding %= to gui-container %=.\n" item container)
+  (gtk_container_add (handle container) (handle item))
+  (add! (children container) item)
+  )
+
+(dm rem! (container|<gui-container> item|<gui>)
+  (gtk_container_remove (handle container) (handle item))
+  (set (children container) (del-vals (children container) item))
+  )
+
+(dm ad! (container|<gui-box> item|<gui>)
+  (debugstr "Adding %= to gui-box %=.\n" item container)
+  (gtk_box_pack_start (handle container) (handle item) gtk_false gtk_false 8)
+  (add! (children container) item)
+  )
+
+(dm ad-opt! (container|<gui-container> item|<gui> opt|(t? <col>))
+  (def scroll (when opt (mem? opt 'scroll)))
+  ;; Support scrolling by throwing the item in a scrollwindow which gets placed in the dude.
+  (if scroll
+      (seq
+        (def scroll-win (gui-scrolled-window))
+        (ad! scroll-win item)
+        (ad! container scroll-win)
+        )
+      (seq
+        (ad! container item)
+        )
+      )
+  )
+
+(dm ad-opt! (container|<gui-box> item|<gui> opt|(t? <col>))
+  (def fill (when opt (mem? opt 'fill))) ; default to false
+  (def scroll (when opt (mem? opt 'scroll)))
+  (when scroll
+    (def scroll-win (gui-scrolled-window))
+    (ad! scroll-win item)    
+    (set item scroll-win)
+    )
+  (gtk_box_pack_start (handle container) (handle item) (log-to-gtk fill) (log-to-gtk fill) 8)
+  (add! (children container) item)
+  )
+
+(dm add-all-opt! (to from)
+  (do (fun (x)
+        (case-by x isa?
+          ((<gui-widget>)
+           (ad-opt! to x (attrs x))
+           )
+          (#t
+           (ad! to x)
+           )
+          )
+        )
+      from)
+  )
+
+; was going to do cool iteration, then I discovered that I knew about the show_all func
+(dm show (widget|<gui-widget>)
+  (gtk_widget_show (handle widget))
+  )
+
+(dm show (window|<gui-window>)
+  (debugstr "Going to show %=\n" window)
+  (gtk_widget_show_all (handle window))
+  ) 
+
+(dm show-all (widget|<gui-widget>)
+  (gtk_widget_show_all (handle widget))
+  ) 
+
+(dc <gui-adjustment> (<gui>))
+(dp constraint (<gui-adjustment> => <numeric-constraint>))
+
+(dm to-adjustment (constraint|<numeric-constraint> => <gui-adjustment>)
+  (def adj (new <gui-adjustment>))
+  (set (handle adj) (gtk_adjustment_new (as <flo> (lbound constraint))
+                                        (as <flo> (lbound constraint))
+                                        (as <flo> (ubound constraint))
+                                        (as <flo> (small-increment constraint))
+                                        (as <flo> (large-increment constraint))
+                                        (as <flo> (large-increment constraint))))
+  (set (constraint adj) constraint)
+  adj
+  )
+
+; -- Items
+
+;; ;;;;;; ;;
+;; Button ;;
+;; ;;;;;; ;;
+
+(dc <gui-button> (<gui-widget>))
+
+(dm gui-button (label|<str> => <gui-button>)
+  (let ((button (new <gui-button>))
+        (handle (gtk_button_new_with_label label)))
+    (set (handle button) handle)
+    button
+    )
+  )
+
+(dm connect (button|<gui-button> func|<fun> val-to-pass)
+  (gtk_signal_connect (handle button)
+                      "clicked"
+                      (gtk_getGtkCallback)
+                      (goo_safeCreateCallback func val-to-pass))
+  )
+
+;; ;;;;;;;;;;;;;;;;;;;;; ;;
+;; Radio / Toggle Button ;;
+;; ;;;;;;;;;;;;;;;;;;;;; ;;
+
+(dc <gui-toggle-button> (<gui-button>))
+
+(dc <gui-check-button> (<gui-toggle-button>))
+
+(dm gui-check-button (label|<str> => <gui-check-button>)
+  (let ((button (new <gui-check-button>))
+        (handle (gtk_check_button_new_with_label label)))
+    (set (handle button) handle)
+    button
+    )
+  )
+
+(dm connect (button|<gui-toggle-button> func|<fun> val-to-pass)
+  (gtk_signal_connect (handle button)
+                      "toggled"
+                      (gtk_getGtkCallback)
+                      (goo_safeCreateCallback func val-to-pass))
+  )
+
+;; ;;;;; ;;
+;; Label ;;
+;; ;;;;; ;;
+
+(dc <gui-label> (<gui-widget>))
+
+(dm gui-label (label-text|<str> => <gui-label>)
+  (let ((label (new <gui-label>))
+        (handle (gtk_label_new label-text)))
+    (set (handle label) handle)
+    label
+    )
+  )
+
+;; ;;;;;;; ;;
+;; Textbox ;;
+;; ;;;;;;; ;;
+(dc <gui-textbox> (<gui-widget>))
+
+(dm gui-textbox ( => <gui-textbox>)
+  (let ((textbox (new <gui-textbox>))
+        (handle (gtk_entry_new)))
+    (set (handle textbox) handle)
+    textbox
+    )
+  )
+
+;; ;;;;;;;;;; ;;
+;; SpinButton ;;
+;; ;;;;;;;;;; ;;
+
+(dc <gui-spinbutton> (<gui-widget>))
+
+(dm gui-spinbutton (adj|<gui-adjustment> => <gui-spinbutton>)
+  (def spin (new <gui-spinbutton>))
+  (set (handle spin) (gtk_spin_button_new (handle adj)
+                                          (as <flo> (small-increment (constraint adj)))
+                                          0)) ;; number of digits should be a hint or something
+  spin
+  )
+
+;; ;;;; ;;
+;; Menu ;;
+;; ;;;; ;;
+(dc <gui-menu> (<gui-container>))
+
+(dm gui-menu (=> <gui-menu>)
+  (def menu (new <gui-menu>))
+  (def h (gtk_menu_new))
+  (set (handle menu) h)
+  menu
+  )
+
+
+(dm popup (menu|<gui-menu> button|<int> button-time|<int>)
+  ;;(debugstr "Going to try and pop up a menu now...\n")
+  (gtk_menu_popup (handle menu) 
+                  NULL
+                  NULL
+                  NULL
+                  NULL
+                  button
+                  button-time)
+  ;;(debugstr "Done trying to pop up a menu now...\n")
+  )
+
+;; ;;;;;;;;;;;;;;;;; ;;
+;; Menu Item : Label ;;
+;; ;;;;;;;;;;;;;;;;; ;;
+
+(dc <gui-menu-item> (<gui-widget>))
+
+(dc <gui-menu-item-label> (<gui-menu-item>))
+
+(dm ad! (da-menu|<gui-menu> item|<gui-menu-item>)
+  (debugstr "Adding menu item to menu.\n")
+  (gtk_menu_shell_append (handle da-menu) (handle item))
+  (add! (children da-menu) item)
+  #t
+  )
+
+(dm gui-menu-item-label (label-text|<str> => <gui-menu-item-label>)
+  (def mi (new <gui-menu-item-label>))
+  (def h (gtk_menu_item_new_with_label label-text))
+  (set (handle mi) h)
+  mi
+  )
+
+(dm connect (menu-item|<gui-menu-item> func|<fun> val-to-pass)
+  (gtk_signal_connect (handle menu-item)
+                      "activate"
+                      (gtk_getGtkCallback)
+                      (goo_safeCreateCallback func val-to-pass))
+  )
+
+(dc <gdk-rect> (<gui> <rectangle>))
+
+(dm gdk-rect (x|<int> y|<int> w|<int> h|<int>  => <gdk-rect>)
+  (let ((rectangle (new <gdk-rect>))
+        (handle (new__GdkRectangle)))
+    ; Set the handle
+    (set (handle rectangle) handle)
+    (_GdkRectangle_x_set handle x)
+    (_GdkRectangle_y_set handle y)
+    (_GdkRectangle_width_set handle w)
+    (_GdkRectangle_height_set handle h)
+    rectangle
+    )
+  )
+
+(dm rect-x (r|<gdk-rect> => <int>)
+  (_GdkRectangle_x_get (handle r)))
+
+(dm rect-y (r|<gdk-rect> => <int>)
+  (_GdkRectangle_y_get (handle r)))
+
+(dm rect-w (r|<gdk-rect> => <int>)
+  (_GdkRectangle_width_get (handle r)))
+
+(dm rect-h (r|<gdk-rect> => <int>)
+  (_GdkRectangle_height_get (handle r)))
+
+(dm grow! (r|<gdk-rect> size|<int>)
+  (let ((hr (handle r)))
+    (_GdkRectangle_x_set hr (- (_GdkRectangle_x_get hr) size))
+    (_GdkRectangle_y_set hr (- (_GdkRectangle_y_get hr) size))
+    (_GdkRectangle_width_set hr (+ (_GdkRectangle_width_get hr) (* size 2)))
+    (_GdkRectangle_height_set hr (+ (_GdkRectangle_height_get hr) (* size 2)))
+    )
+  )
+
+(dm free (rect|<gdk-rect>)
+  (delete__GdkRectangle (handle rect))
+  )
+
+
+(dm rect-to-gdk (r|<gui-rect> => <gdk-rect>)
+  (gdk-rect (rect-x r) (rect-y r) (rect-w r) (rect-h r))
+  )
+
+
+(dc <gdk-point> (<gui> <point>))
+
+
+;; (dm point-to-gdk (p|<gui-point> => <gdk-point>)
+;;   (gdk-point (point-x p) (point-y p)))
+
+;; (dm gdk-point ((x <int>) (y <int>) => <gdk-point>)
+;;   (let ((p (new <gui-point>))
+;;         (handle (new__GdkPoint)))
+;;     ; Set the handle
+;;     (set (handle p) handle)
+;;     (_GdkPoint_x_set handle x)
+;;     (_GdkPoint_y_set handle y)
+;;     p
+;;     )
+;;   )
+
+;; (dm point-x ((p <gdk-point>) => <int>)
+;;   (_GdkPoint_x_get (handle p))
+;;   )
+
+;; (dm point-y ((p <gdk-point>) => <int>)
+;;   (_GdkPoint_y_get (handle p))
+;;   )
+
+(dm free (point|<gui-point>)
+  )
+
+;; (dm free ((point <gdk-point>))
+;;   (delete__GdkPoint (handle point))
+;;   )
+
+
+(df nop () )
+
+(dm bind (gui-obj|<gui> info|<interface-info> => (tup <fun> <fun> <fun>))
+  (tup identity nop identity)
+  )
+
+(export
+  <gui>
+  <gui-widget>
+  <gui-container>
+  <gui-window>
+  <gui-scrolled-window>
+  <gui-frame>
+  <gui-box>
+  <gui-vbox>
+  <gui-hbox>
+  
+  <gui-button>
+  <gui-toggle-button>
+  <gui-check-button>
+  
+  <gui-label>
+  <gui-textbox>
+  <gui-spinbutton>
+  <gui-menu>
+  <gui-menu-item>
+  <gui-menu-item-label>
+  
+  <gdk-rect>
+  <gdk-point>
+
+  <gui-adjustment>
+  )
+
+(export
+  handle
+  handle-setter
+
+  attrs
+  attrs-setter
+
+  children
+  children-setter
+  )
+
+(export
+  free
+
+  gui-width
+  gui-height
+
+  gui-window
+  gui-scrolled-window
+  gui-frame
+  gui-vbox
+  gui-hbox
+
+  show
+  show-all
+ 
+  connect
+ 
+  gui-button
+  gui-check-button
+  gui-spinbutton
+
+  gui-label
+  gui-textbox
+
+  gui-menu
+  popup
+  gui-menu-item-label
+  
+  gdk-rect
+  rect-to-gdk
+
+  bind
+  nop
+
+  to-adjustment
+  )

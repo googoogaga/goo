@@ -99,18 +99,18 @@ static void gtk_tree_goo_set_column_type (GtkTreeGoo *tree_goo,
 					    gint          column,
 					    GType         type);
 
-EXT(YsamuruiSsamuruiYgtk_tv_get_start_node, "samurui/samurui", "gtk-tv-get-start-node");
-EXT(YsamuruiSsamuruiYgtk_tv_get_label, "samurui/samurui", "gtk-tv-get-label");
+EXT(YsamuruiStreeviewYgtk_tv_get_start_node, "samurui/samurui", "gtk-tv-get-start-node");
+EXT(YsamuruiStreeviewYgtk_tv_get_label, "samurui/samurui", "gtk-tv-get-label");
 
-EXT(YsamuruiSsamuruiYgtk_tv_get_n_columns, "samurui/samurui", "gtk-tv-get-n-columns");
-EXT(YsamuruiSsamuruiYgtk_tv_iter_children, "samurui/samurui", "gtk-tv-iter-children");
-EXT(YsamuruiSsamuruiYgtk_tv_iter_has_child, "samurui/samurui", "gtk-tv-iter-has-child");
-EXT(YsamuruiSsamuruiYgtk_tv_iter_n_children, "samurui/samurui", "gtk-tv-iter-n-children");
-EXT(YsamuruiSsamuruiYgtk_tv_iter_next_child, "samurui/samurui", "gtk-tv-iter-next-child");
-EXT(YsamuruiSsamuruiYgtk_tv_iter_nth_child, "samurui/samurui", "gtk-tv-iter-nth-child");
-EXT(YsamuruiSsamuruiYgtk_tv_iter_parent, "samurui/samurui", "gtk-tv-iter-parent");
-EXT(YsamuruiSsamuruiYgtk_tv_iter_has_parent, "samurui/samurui", "gtk-tv-iter-has-parent");
-EXT(YsamuruiSsamuruiYgtk_tv_node_pos_in_parent, "samurui/samurui", "gtk-tv-node-pos-in-parent");
+EXT(YsamuruiStreeviewYgtk_tv_get_n_columns, "samurui/samurui", "gtk-tv-get-n-columns");
+EXT(YsamuruiStreeviewYgtk_tv_iter_children, "samurui/samurui", "gtk-tv-iter-children");
+EXT(YsamuruiStreeviewYgtk_tv_iter_has_child, "samurui/samurui", "gtk-tv-iter-has-child");
+EXT(YsamuruiStreeviewYgtk_tv_iter_n_children, "samurui/samurui", "gtk-tv-iter-n-children");
+EXT(YsamuruiStreeviewYgtk_tv_iter_next_child, "samurui/samurui", "gtk-tv-iter-next-child");
+EXT(YsamuruiStreeviewYgtk_tv_iter_nth_child, "samurui/samurui", "gtk-tv-iter-nth-child");
+EXT(YsamuruiStreeviewYgtk_tv_iter_parent, "samurui/samurui", "gtk-tv-iter-parent");
+EXT(YsamuruiStreeviewYgtk_tv_iter_has_parent, "samurui/samurui", "gtk-tv-iter-has-parent");
+EXT(YsamuruiStreeviewYgtk_tv_node_pos_in_parent, "samurui/samurui", "gtk-tv-node-pos-in-parent");
 
 /* DND interfaces */
 /*
@@ -334,8 +334,8 @@ gtk_tree_goo_new (P gtv)
 
   tree_goo->gui_tree_view = gtv;
 
-  tree_goo->root = XCALL1(0, VARREF(YsamuruiSsamuruiYgtk_tv_get_start_node), tree_goo->gui_tree_view);
-  tree_goo->n_columns = (gint)YPiu(XCALL1(0, VARREF(YsamuruiSsamuruiYgtk_tv_get_n_columns), tree_goo->gui_tree_view));
+  tree_goo->root = XCALL1(0, VARREF(YsamuruiStreeviewYgtk_tv_get_start_node), tree_goo->gui_tree_view);
+  tree_goo->n_columns = (gint)YPiu(XCALL1(0, VARREF(YsamuruiStreeviewYgtk_tv_get_n_columns), tree_goo->gui_tree_view));
 
   return tree_goo;
 }
@@ -350,8 +350,8 @@ gtk_tree_goo_refresh(GtkTreeGoo *tree_goo)
 
   DEFCREGS();
 
-   tree_goo->root = XCALL1(0, VARREF(YsamuruiSsamuruiYgtk_tv_get_start_node), tree_goo->gui_tree_view);
-   tree_goo->n_columns = (gint)YPiu(XCALL1(0, VARREF(YsamuruiSsamuruiYgtk_tv_get_n_columns), tree_goo->gui_tree_view));
+   tree_goo->root = XCALL1(0, VARREF(YsamuruiStreeviewYgtk_tv_get_start_node), tree_goo->gui_tree_view);
+   tree_goo->n_columns = (gint)YPiu(XCALL1(0, VARREF(YsamuruiStreeviewYgtk_tv_get_n_columns), tree_goo->gui_tree_view));
 
    /*
    myPath =  gtk_tree_path_new ();
@@ -466,7 +466,7 @@ gtk_tree_goo_get_path (GtkTreeModel *tree_model,
   g_return_val_if_fail (iter->user_data != NULL, NULL);
   g_return_val_if_fail (iter->stamp == GTK_TREE_GOO (tree_model)->stamp, NULL);
 
-  parent = XCALL2(0, VARREF(YsamuruiSsamuruiYgtk_tv_iter_parent), tree_goo->gui_tree_view, iter->user_data);
+  parent = XCALL2(0, VARREF(YsamuruiStreeviewYgtk_tv_iter_parent), tree_goo->gui_tree_view, iter->user_data);
 
   if ((parent == YPfalse) || (parent == tree_goo->root))
     return gtk_tree_path_new ();
@@ -490,7 +490,7 @@ gtk_tree_goo_get_path (GtkTreeModel *tree_model,
     return NULL;
 
   // Find our index 
-  our_index = XCALL3(0, VARREF(YsamuruiSsamuruiYgtk_tv_node_pos_in_parent), tree_goo->gui_tree_view, iter->user_data, parent);
+  our_index = XCALL3(0, VARREF(YsamuruiStreeviewYgtk_tv_node_pos_in_parent), tree_goo->gui_tree_view, iter->user_data, parent);
 
   if(our_index == YPfalse)
   {
@@ -520,7 +520,7 @@ gtk_tree_goo_get_value (GtkTreeModel *tree_model,
   g_return_if_fail (iter != NULL);
   g_return_if_fail (column < GTK_TREE_GOO (tree_model)->n_columns);
 
-  label_value = XCALL3(0, VARREF(YsamuruiSsamuruiYgtk_tv_get_label), tree_goo->gui_tree_view, iter->user_data, YPib((P)column));
+  label_value = XCALL3(0, VARREF(YsamuruiStreeviewYgtk_tv_get_label), tree_goo->gui_tree_view, iter->user_data, YPib((P)column));
   g_value_init(value, G_TYPE_STRING);
   g_value_set_string(value, (gchar *)YPsu(label_value));
 }
@@ -534,7 +534,7 @@ gtk_tree_goo_iter_next (GtkTreeModel  *tree_model,
 
   g_return_val_if_fail (iter->user_data != NULL, FALSE);
 
-  iter->user_data = XCALL2(0, VARREF(YsamuruiSsamuruiYgtk_tv_iter_next_child), tree_goo->gui_tree_view, iter->user_data);
+  iter->user_data = XCALL2(0, VARREF(YsamuruiStreeviewYgtk_tv_iter_next_child), tree_goo->gui_tree_view, iter->user_data);
 
   if(iter->user_data == YPfalse)
     return FALSE;
@@ -560,7 +560,7 @@ gtk_tree_goo_iter_children (GtkTreeModel *tree_model,
   else
     pnode = tree_goo->root;
 
-  children = XCALL2(0, VARREF(YsamuruiSsamuruiYgtk_tv_iter_children), tree_goo->gui_tree_view, pnode);
+  children = XCALL2(0, VARREF(YsamuruiStreeviewYgtk_tv_iter_children), tree_goo->gui_tree_view, pnode);
 
   if (children != YPfalse)
     {
@@ -584,7 +584,7 @@ gtk_tree_goo_iter_has_child (GtkTreeModel *tree_model,
   g_return_val_if_fail (iter->stamp == GTK_TREE_GOO (tree_model)->stamp, FALSE);
   g_return_val_if_fail (iter->user_data != NULL, FALSE);
 
-  return (XCALL2(0, VARREF(YsamuruiSsamuruiYgtk_tv_iter_has_child), tree_goo->gui_tree_view, iter->user_data) != YPfalse);
+  return (XCALL2(0, VARREF(YsamuruiStreeviewYgtk_tv_iter_has_child), tree_goo->gui_tree_view, iter->user_data) != YPfalse);
 }
 
 // How many kids does it have? (NULL iter => return num of toplevel)
@@ -604,7 +604,7 @@ gtk_tree_goo_iter_n_children (GtkTreeModel *tree_model,
   else
     pnode = iter->user_data;
 
-  return (int)YPiu(XCALL2(0, VARREF(YsamuruiSsamuruiYgtk_tv_iter_n_children), tree_goo->gui_tree_view, pnode));
+  return (int)YPiu(XCALL2(0, VARREF(YsamuruiStreeviewYgtk_tv_iter_n_children), tree_goo->gui_tree_view, pnode));
 }
 
 // Set iter to the nth child of parent. false on insane n
@@ -628,7 +628,7 @@ gtk_tree_goo_iter_nth_child (GtkTreeModel *tree_model,
     pnode = parent->user_data;
 
 
-  child = XCALL3(0, VARREF(YsamuruiSsamuruiYgtk_tv_iter_nth_child), tree_goo->gui_tree_view, pnode, YPib((P)n));
+  child = XCALL3(0, VARREF(YsamuruiStreeviewYgtk_tv_iter_nth_child), tree_goo->gui_tree_view, pnode, YPib((P)n));
 
   if (child != YPfalse)
     {
@@ -653,7 +653,7 @@ gtk_tree_goo_iter_parent (GtkTreeModel *tree_model,
   g_return_val_if_fail (iter != NULL, FALSE);
   g_return_val_if_fail (child->user_data != NULL, FALSE);
 
-  parent = XCALL2(0, VARREF(YsamuruiSsamuruiYgtk_tv_iter_parent), tree_goo->gui_tree_view, child->user_data);
+  parent = XCALL2(0, VARREF(YsamuruiStreeviewYgtk_tv_iter_parent), tree_goo->gui_tree_view, child->user_data);
 
 
   if (parent != YPfalse)

@@ -1,0 +1,118 @@
+(use goo)
+(use goo/boot)
+
+
+(dv gtk_true 1)
+(dv gtk_false 0)
+
+(dv NULL (%lb 0))
+(dv null_loc NULL)
+
+; Utility
+(dm add-all! (to from)
+  (do (fun (x)
+        (ad! to x)
+        )
+      from)
+  )
+
+(dg add-all-opt! (to from))
+
+(dm add-all! ((to <tab>) (from <tab>))
+  (do (fun (key)
+        (set (elt to key) (elt from key))
+        )
+      (keys from)
+      )
+  )
+  
+
+(dm ad! (to thing)
+  (add! to thing)
+  )
+
+; Utility:Pull Out
+; Takes a function that is to be tested on a class and all of its ancestors
+ ; in an arbitrary order (basically working its way up)
+(dm find-first-class ((func <fun>) (base-class <class>) => <class>)
+  (if (func base-class)
+      base-class
+      (let ((queue (class-parents base-class)))
+        (esc found-it
+          (do (fun ((cur-class <class>))
+                (if (func cur-class)
+                    (found-it cur-class)
+                    (add-all! queue (class-parents cur-class))
+                    ))
+                queue
+              )
+          )
+        )
+      )
+  )
+
+;; I think this needlessly recreates the join function. (didn't know about it before)
+(dm cat-with-commas (c|<col>)
+  (def did-first #f)
+  (def str-so-far "")
+  (do (fun (cur)
+        (when did-first
+          (set str-so-far (cat str-so-far ", "))
+          )
+        (set str-so-far (cat str-so-far cur))
+        (set did-first #t)
+        )
+      c
+      )
+  str-so-far
+  )
+
+
+(df okie? (l|<loc> m|<str>)
+  (when (== l null_loc)
+    (msg out m)
+    (msg out "\n"))
+  )
+
+(ds (debugstr ,@body)
+  `(msg out ,@body)
+  )
+
+(dm log-to-gtk ((log <log>) => <int>)
+  (if log
+      gtk_true
+      gtk_false)
+  )
+
+(dm gtk-to-log (gtk-val|<int> => <log>)
+  (gtk-val == gtk_true)
+  )
+
+(dg ad! (to thing))
+
+(dm ad! (to thing)
+  (add! to thing)
+  )
+
+(dg rem! (cont thing))
+
+(dg ad-opt! (cont item opt|(t? <col>)))
+
+(export
+  add-all!
+  add-all-opt!
+  ad!
+  ad-opt!
+  rem!
+  find-first-class
+  cat-with-commas
+  okie?
+  debugstr
+  log-to-gtk
+  gtk-to-log
+
+  gtk_true
+  gtk_false
+  NULL
+  null_loc
+  )

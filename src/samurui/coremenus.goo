@@ -1,0 +1,47 @@
+(use goo)
+
+(use samurui/coreutil)
+(use samurui/coremetadata)
+(use samurui/coregtkwrapping)
+
+; ----           ----
+; ------ Menus ------
+; ----           ----
+
+(dv *cached-menus* (fab <tab> 0))
+
+;; indirection to avoid problem of statically connecting...
+(dv *selected-menu-object* #f)
+
+(dm gimme-menu (obj)
+  (set *selected-menu-object* obj)
+  (or (elt-or *cached-menus* (object-class obj) #f)
+      (seq
+        (def da-actions (get-all-actions (object-class obj)))
+        
+        (def da-menu (gui-menu))
+        
+        (do (fun (act)
+              (def da-item (gui-menu-item-label (description act)))
+;;              (connect da-item (method act) obj)
+              (connect da-item 
+                       (fun (x)
+                         ((method act) *selected-menu-object*))
+                       #f)
+              (ad! da-menu da-item)
+              (show da-item)
+              )
+            da-actions)
+        
+        (set (elt *cached-menus* (object-class obj)) da-menu)
+
+        ;;(show-all da-menu)
+        
+        da-menu
+        )
+      )
+  )
+
+(export
+  gimme-menu
+  )

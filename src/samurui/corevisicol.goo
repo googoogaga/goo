@@ -1,0 +1,111 @@
+(use goo)
+
+(use samurui/coreutil)
+
+;;; ----                     ----
+;;; ------ VisiCollections ------
+;;; ----                     ----
+
+;;; The protocol for dealing with graphs/collections needs to be:
+;;;  - Relatively Simple
+;;;  - External to the nodes; ideally the collection should be backable by a database store,
+;;;     allowing user interaction with a subset of the store at a time so as to prevent massive
+;;;     thrash-death.
+;;;  - Easily reducible to efficient tree-behavior.
+;;;
+;;; Support for these behaviors from a node perspective should be easy/transparent. To this end:
+;;;  - Properties should be easily annotated to be _named_ edges.
+;;;  
+;;; NOTE! All collections returns are treated as if they are immutable, so for efficiency purposes
+;;;  provides of the interface *can* expose internal reps safely.
+
+;; ------------------------
+;; Initial Node Information - we need a way to arbitrarily decide on an initial node
+;;  in the case of db-backed collections.
+;; ------------------------
+
+(dc <visi-col> (<any>))
+
+;; ----------------
+;; Node-Information
+;; ----------------
+
+(dm node-label (c node => <str>)
+  (to-str node)
+  )
+
+(dg get-start-node (vc|<visi-col> => <any>))
+
+;; node-weight is expected to provide information for visualizations that rely on some form of magnitude to create a useful
+;;  visualization.  eg treemap, starburst, etc.  All visualizations rely on container objects to provide the aggregate weight
+;;  of the things it contains, and will not traverse the sub-structure to calculate it.  Eg, in the case of file-systems, 
+;;  we expect that the visi-col will pre-calculate, or calculate on demand, the total disk usage of a given directory.
+
+(dm node-weight (c node => <flo>)
+  1.0
+  )
+
+(dm node-browsable (c node => <log>)
+  #t
+  )
+
+(dg node-axes (vc|<visi-col> => <col>))
+
+(dg node-out-edges (vc|<visi-col> axis node => <col>))
+
+(dg node-in-edges (vc|<visi-col> axis node => <col>))
+
+;;; to-call should be of the form (fun (node) ...)
+;;; it is assumed you will know what collection we are talking about.
+;;;  [this is a dubious assumption to make, but arguably it is more
+;;;  efficient for the variable to be closed-over than to be passed
+;;;  every damn time.]
+(dm register-node-add-notification(c to-call)
+  #f
+  )
+
+(dm remove-node-add-notification (c was-called)
+  #f
+)
+
+;;; to-call should be of the form: (fun (from to axis) ...)
+;;; it is assumed you will know what collection we are talking about.
+;;;  [this is a dubious assumption to make, but arguably it is more
+;;;  efficient for the variable to be closed-over than to be passed
+;;;  every damn time.]
+(dm register-edge-add-notification(c to-call)
+  #f
+  )
+
+(dm remove-edge-add-notification (c was-called)
+  #f
+)
+
+;; I think join can be used instead of cat-with-commads
+(dm axis-to-str (vc|<visi-col> axis node => <str>)
+  (def axis-val (node-out-edges vc axis node))
+  (case (len axis-val)
+    ((0) "")
+    ((1) (to-str (1st axis-val)))
+    (#t (cat-with-commas (map to-str axis-val)))
+    )
+  )
+
+(export
+  <visi-col>
+  )
+
+(export
+  node-label
+  get-start-node
+  node-weight
+  node-browsable
+  node-axes
+  node-out-edges
+  node-in-edges
+  register-node-add-notification
+  remove-node-add-notification
+  register-edge-add-notification
+  remove-edge-add-notification
+  axis-to-str
+  )

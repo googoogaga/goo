@@ -1,0 +1,275 @@
+(use goo)
+
+(dc <rectangle> (<any>))
+
+(dc <gui-rect> (<rectangle>))
+ (dp rect-x (<gui-rect> => <int>))
+ (dp rect-y (<gui-rect> => <int>))
+ (dp rect-w (<gui-rect> => <int>))
+ (dp rect-h (<gui-rect> => <int>))
+
+(dm rect (x|<int> y|<int> w|<int> h|<int> => <gui-rect>)
+  (def r (new <gui-rect>))
+  (set (rect-x r) x)
+  (set (rect-y r) y)
+  (set (rect-w r) w)
+  (set (rect-h r) h)
+  r
+  )
+
+(dm rect-around (x|<int> y|<int> half-width|<int> half-vert|<int> => <gui-rect>)
+  (rect (- x half-width)
+        (- y half-vert)
+        (* 2 half-width)
+        (* 2 half-vert))
+  )
+
+
+(dm grow! ((r <gui-rect>) (size <int>))
+  (decf (rect-x r) size)
+  (decf (rect-y r) size)
+  (incf (rect-w r) (* size 2))
+  (incf (rect-h r) (* size 2))
+  )
+
+(dm shrink! ((r <gui-rect>) (size <int>))
+  (grow! r (- 0 size))
+  )
+
+(dm free ((rect <gui-rect>))
+  ;; NOP now
+  )
+
+(dc <point> (<any>))
+
+(dc <gui-point> (<point>))
+ (dp point-x (<gui-point> => <int>))
+ (dp point-y (<gui-point> => <int>))
+
+(dc <gui-point-flo> (<point>))
+ (dp point-x (<gui-point-flo> => <flo>))
+ (dp point-y (<gui-point-flo> => <flo>))
+
+
+(dm point (x|<int> y|<int> => <gui-point>)
+  (def p (new <gui-point>))
+  (set (point-x p) x)
+  (set (point-y p) y)
+  p
+  )
+
+(dm point (x|<flo> y|<flo> => <gui-point-flo>)
+  (def p (new <gui-point-flo>))
+  (set (point-x p) x)
+  (set (point-y p) y)
+  p
+  )
+
+(dm point-in-rect (p|<point> r|<gui-rect>)
+  (and (> (point-x p) (rect-x r))
+       (> (point-y p) (rect-y r))
+       (< (point-x p) (+ (rect-x r) (rect-w r)))
+       (< (point-y p) (+ (rect-y r) (rect-h r)))
+       )
+  )
+
+
+(dc <gui-circle-flo> (<any>))
+ (dp circle-p (<gui-circle-flo> => <gui-point-flo>))
+ (dp circle-r (<gui-circle-flo> => <flo>))
+
+(dm circle (x|<flo> y|<flo> r|<flo> => <gui-circle-flo>)
+  (def c (new <gui-circle-flo>))
+  (set (circle-p c) (point x y))
+  (set (circle-r c) r)
+  c
+  )
+
+(dc <gui-line> (<any>))
+ (dp line-p1 (<gui-line> => <gui-point>))
+ (dp line-p2 (<gui-line> => <gui-point>))
+
+(dm line (p1|<gui-point> p2|<gui-point> => <gui-line>)
+  (def l (new <gui-line>))
+  (set (line-p1 l) p1)
+  (set (line-p2 l) p2)
+  l
+  )
+
+(dc <gui-line-flo> (<any>))
+ (dp line-p1 (<gui-line-flo> => <gui-point-flo>))
+ (dp line-p2 (<gui-line-flo> => <gui-point-flo>))
+
+(dm line (p1|<gui-point-flo> p2|<gui-point-flo> => <gui-line-flo>)
+  (def l (new <gui-line-flo>))
+  (set (line-p1 l) p1)
+  (set (line-p2 l) p2)
+  l
+  )
+
+(dm dist (p1|<point> p2|<point> => <flo>)
+  (def dx (- (point-x p1) (point-x p2)))
+  (def dy (- (point-y p1) (point-y p2)))    
+  (sqrt (+ (* dx dx)
+           (* dy dy)))
+  )
+
+(dm sqdist (p1|<gui-point-flo> p2|<gui-point-flo> => <flo>)
+  (def dx (- (point-x p1) (point-x p2)))
+  (def dy (- (point-y p1) (point-y p2)))    
+  (+ (* dx dx)
+     (* dy dy))
+  )
+
+(dm intersect (c1|<gui-circle-flo> c2|<gui-circle-flo> => <any>)
+  (def d (dist (circle-p c1) (circle-p c2)))
+  (def a (/ (+ (- (* (circle-r c1) (circle-r c1))
+                  (* (circle-r c2) (circle-r c2)))
+               (* d d))
+            (* 2 d)))
+  (def p2 (point (+ (point-x (circle-p c1))
+                    (/ (* a
+                          (- (point-x (circle-p c2))
+                             (point-x (circle-p c1))))
+                       d))
+                 (+ (point-y (circle-p c1))
+                    (/ (* a
+                          (- (point-y (circle-p c2))
+                             (point-y (circle-p c1))))
+                          d))
+                 ))
+  (def h (sqrt (abs (- (* (circle-r c1) (circle-r c1))
+                  (* a a)))))
+  (def rsx (/ (* h
+                 (- (point-y (circle-p c2))
+                    (point-y (circle-p c1))))
+              d))
+  (def rsy (/ (* h
+                 (- (point-x (circle-p c2))
+                    (point-x (circle-p c1))))
+              d))
+  
+  (line (point (+ (point-x p2)
+                  rsx)
+               (- (point-y p2)
+                  rsy))
+        (point (- (point-x p2)
+                  rsx)
+               (+ (point-y p2)
+                  rsy)))
+  )
+
+(dm line-point-by-param (l|<gui-line-flo> u|<flo> => <gui-point-flo>)
+  (point (+ (point-x (line-p1 l))
+            (* u (- (point-x (line-p2 l)) (point-x (line-p1 l)))))
+         (+ (point-y (line-p1 l))
+            (* u (- (point-y (line-p2 l)) (point-y (line-p1 l))))))
+  )
+
+;; Intersection of a circle and a point is returned as a vector
+;;  as there can be 0, 1, or 2 points of intersection.
+(dm intersect (c|<gui-circle-flo> l|<gui-line-flo> => <any>)
+  (def p1 (line-p1 l))
+  (def p2 (line-p2 l))
+  (def p3 (circle-p c))
+  (def a (+ (* (- (point-x p2) (point-x p1))
+               (- (point-x p2) (point-x p1)))
+            (* (- (point-y p2) (point-y p1))
+               (- (point-y p2) (point-y p2)))))
+  (def b (* 2
+            (+ (* (- (point-x p2) (point-x p1))
+                  (- (point-x p1) (point-x p3)))
+               (* (- (point-y p2) (point-y p1))
+                  (- (point-y p1) (point-y p3))))))
+  (def c (fold+ +
+                (vec
+                 (* (point-x p3) (point-x p3))
+                 (* (point-y p3) (point-y p3))
+                 (* (point-x p1) (point-x p1))
+                 (* (point-y p1) (point-y p1))
+                 (* -2 (* (point-x p3) (point-x p1)))
+                 (* -2 (* (point-y p3) (point-y p1)))
+                 (* -1 (* (circle-r c) (circle-r c))))))
+  (def det (- (* b b)
+              (* (* 4 a)
+                 c)))
+  (cond
+    ((< det 0) ;; No intersection
+     (vec)
+     )
+    ((== det 0) ;; One point
+     (vec (line-point-by-param l (/ (* -1 b) (* 2 a))))
+     )
+    ((> det 0) ;; Two points
+     (def u1 (/ (+ (* -1 b)
+                   (sqrt det))
+                (* 2 a)))
+     (def u2 (/ (- (* -1 b)
+                   (sqrt det))
+                (* 2 a)))
+     (vec (line-point-by-param l u1)
+          (line-point-by-param l u2))
+     )
+    )
+  )
+
+(export
+  <rectangle>
+  <gui-rect>
+
+  <point>
+  <gui-point>
+  <gui-point-flo>
+
+  <gui-circle-flo>
+  
+  <gui-line>
+  <gui-line-flo>
+  )
+
+(export
+  rect-x
+  rect-x-setter
+
+  rect-y
+  rect-y-setter
+  
+  rect-w
+  rect-w-setter
+
+  rect-h
+  rect-h-setter
+
+  point-x
+  point-x-setter
+
+  point-y
+  point-y-setter
+
+  circle-p
+  circle-p-setter
+
+  circle-r
+  circle-r-setter
+
+  line-p1
+  line-p1-setter
+
+  line-p2
+  line-p2-setter
+  )
+
+(export
+  rect
+  rect-around
+  grow!
+  shrink!
+  point
+  point-in-rect
+  circle
+  line
+  dist
+  sqdist
+  intersect
+  line-point-by-param
+  )

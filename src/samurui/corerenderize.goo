@@ -1,0 +1,155 @@
+(use goo)
+
+(use samurui/coreutil)
+(use samurui/coremetadata)
+(use samurui/coregtkwrapping)
+(use samurui/coremasterslave)
+
+
+; ----                ----
+; ------ Renderize! ------
+; -----              -----
+
+(dm renderize-model ((model <interface-model>) (info <interface-info>) (class <class>) (updaters <col>) (masters <tab>))
+  (let ((payload (imodel-payload model)))
+    (if (isa? payload <fun>)
+        (payload info class updaters)
+        ;; Okay, it's an interface-model *list*
+        (if (= info root-interface)
+            (renderize payload class updaters masters (vec)) ;; Base case. Top-level.
+            ;; This is special; it means that we're embedding an interface-model inside another
+             ;; interface-model.  As such, this calls for an updater attached to the parent that
+             ;; will update this interface model as it changes.
+            (let ((my-updaters (vec))
+                  (rebind-my-updaters (fun (new-obj)
+                                        (def my-obj ((getter info) new-obj))
+                                        (do (fun (updater-tup)
+                                              ((1st updater-tup) my-obj)
+                                              )
+                                            my-updaters))
+                                      )
+                  (refresh-my-updaters (fun ()
+                                         (do (fun (updater-tup) ((2nd updater-tup))) my-updaters)
+                                         ))
+                  (free-my-updaters (fun ()))
+                  )
+              (add! updaters (tup rebind-my-updaters refresh-my-updaters free-my-updaters))
+              (renderize payload (type info) my-updaters (fab <str-tab> 0) (vec))
+              )
+            )
+        )
+    )
+  )
+
+
+(dm renderize ((model-list <lst>) (class <class>) (updaters <col>) (masters <tab>) (attribs <col>))
+  (let ((renderize-this (fun (thing)
+                          (renderize thing class updaters masters attribs)
+                          )
+                        ))    
+    (cond
+      ;; COLUMNS
+      ((= (1st model-list) 'columns)
+        ; Multiple parallel columns!
+        ; Create an hbox and stick everything we fab in it
+        (let ((hbox (gui-hbox))
+              (comps (map renderize-this (tail model-list))))
+          (add-all-opt! hbox comps)
+          hbox))
+
+      ;; MASTER
+      ((= (1st model-list) 'master)
+       (def m-name (as <str> (2nd model-list)))
+       (def master (new <gui-master>))
+       (set (elt masters m-name) master)
+       ;; Renderize the third param. (Can be a list of just a node.)
+       (def gui-obj (renderize (3rd model-list) class updaters masters attribs))
+       (bind-master gui-obj master)
+       gui-obj
+       )
+
+      ;; SLAVE
+      ((= (1st model-list) 'slave)
+       (def s-name (as <str> (2nd model-list)))
+       (def slave (new <gui-slave>))
+       (add! (slaves (elt masters s-name)) slave)
+       (set (placeholder slave) (gui-frame "Child..."))
+       (placeholder slave)
+       )
+ 
+      ;; Attr
+      ((= (1st model-list) 'attr)
+       (def da-attrs (tail (tail model-list)))
+       (def my-comp (renderize (elt model-list 1) class updaters masters da-attrs))
+       (if my-comp
+           (set (attrs my-comp) da-attrs)
+           (post "Warning: component returned when renderizing %= was #f.\n" model-list))
+       my-comp
+       )
+
+      ;; DEFAULT: VBOX
+      (#t
+       (let ((vbox (gui-vbox))
+             (comps (map renderize-this model-list)))
+         (add-all-opt! vbox comps)
+         vbox
+         )
+       )
+      )
+    )
+  )
+
+;; The action renderizer needs to be imbued with an implicit 'refresh' of the object in question
+ ;; after the action has taken places, as we are possibly altering data structures that don't
+ ;; don't auto-notify when changes are made.
+(dm renderize ((act <interface-action>) (class <class>) (updaters <col>) (masters <tab>) (attribs <col>))
+  (let ((button (gui-button (description act))))
+    (let ((cur-obj #f))
+      (connect button (fun (x) 
+                        ;; Perform the action
+                        ((method act) cur-obj)
+                        ;; Refresh all updaters
+                        (do (fun (y) ((2nd y))) updaters)
+                        )
+               0)
+
+      (add!
+       updaters
+       (tup
+        ;; Rebind
+        (fun (new-obj)
+          (set cur-obj new-obj))
+        ;; Refresh
+        (fun ()
+          )
+        ;; Free
+        (fun ()
+          )
+        )
+       )
+      )
+    button
+    )
+  )
+
+(dm renderize ((text <str>) (class <class>) (updaters <col>) (masters <tab>) (attribs <col>))
+  (gui-label text)
+  )
+
+(dm renderize ((sym <sym>) (class <class>) (updaters <col>) (masters <tab>) (attribs <col>))
+  (let ((name (as <str> sym)))
+    ;; If it's an action, get an interface-action object and renderize on it.
+    (cond ((find-action class name)
+           (renderize (find-action class name) class updaters masters attribs))
+          ;; If it's a property, defer the model renderizing to renderize-model.
+          ((find-property class name)
+           (let ((info (find-property class name)))
+             (renderize-model (find-interface-model (type info) info attribs) info class updaters masters)))
+          )
+    )
+  )
+
+(export
+  renderize-model
+  renderize
+  )

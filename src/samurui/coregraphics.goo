@@ -1,0 +1,572 @@
+(use goo)
+
+(use samurui/gtk.swig)
+
+(use samurui/coreutil)
+(use samurui/coremetadata)
+(use samurui/coregeom)
+(use samurui/coregtkwrapping)
+
+; In the GDK, a drawable area is generally going to be implemented as:
+;  - A GTK Drawing Area (gtk_drawing_area_new)
+;  - Backed by a Pixmap
+
+; We call our widget that is a drawable backed by a paintbox a... imagebox!
+
+; When drawing, we need a Graphics Context (gc), which has a 
+; Colormap.
+
+(dc <gui-drawable> (<gui-widget>))
+
+; Different prefix-space because this is implementation specific
+(dc <gdk-colormap> (<gui>))
+
+(dc <gdk-gc> (<gui>))
+ (dp colormap (<gdk-gc> => <gdk-colormap>))
+
+; <gui-drawable> slots
+ (dp gc (<gui-drawable> => (t? <gdk-gc>)) #f)
+
+
+(dc <gui-paintbox> (<gui-drawable>))
+
+(dm gui-paintbox (=> <gui-paintbox>)
+  (msg out "Constructing a paintbox...\n")
+  (let ((paintbox (new <gui-paintbox>))
+        (handle (gtk_drawing_area_new)))
+    (set (handle paintbox) handle)
+    (gtk_widget_set_size_request handle 320 200) ; SIZE!!!
+    (gtk_widget_show handle)
+    ; (set (gc paintbox) (gdk-gc paintbox))
+    (msg out "Returning paintbox...\n")
+    paintbox
+    )
+  )
+
+; A canvas is equivalent to a GDK Pixmap
+(dc <gui-canvas> (<gui-drawable>))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; FIX!
+(dm gui-canvas ((paintbox <gui-paintbox>)  => <gui-canvas>)
+  (let ((canvas (new <gui-canvas>))
+        (handle (gdk_pixmap_new (_GtkWidget_window_get (handle paintbox))
+                                320
+                                200
+                                24))
+        )
+    (set (handle canvas) handle)
+    (okie? handle "Canvas screwed")
+    ; (set (gc canvas) (gdk-gc canvas))
+    (msg out "Returning canvas...\n")
+    canvas
+    )
+  )
+
+(dm gui-canvas-ext ((paintbox <gui-paintbox>) (width <int>) (height <int>)  => <gui-canvas>)
+  (let ((canvas (new <gui-canvas>))
+        (handle (gdk_pixmap_new (_GtkWidget_window_get (handle paintbox))
+                                width
+                                height
+                                24))
+        )
+    (set (handle canvas) handle)
+    (okie? handle "Canvas-ext screwed")
+    ; (set (gc canvas) (gdk-gc canvas))
+    (msg out "Returning canvas...\n")
+    canvas
+    )
+  )
+
+(dm free (canvas|<gui-canvas>)
+  ; Liquidate gc
+  (when (and (prop-bound? canvas gc)
+             (gc canvas))
+    (free (gc canvas))
+    )
+  ; Liquidate our handle
+  (unless (= (handle canvas) NULL)
+    (g_object_unref (handle canvas))
+    (set (handle canvas) NULL))
+  )
+
+; note, does not call 'drawable' generic on the passed-in drawable.
+; For a canvas, which is a drawable, we do not need to use the window. (a pixmap doesn't have one!)
+(dm gdk-gc ((drawable <gui-drawable>) => <gdk-gc>)
+  (let ((gc (new <gdk-gc>))
+        (handle (gdk_gc_new (drawable-handle drawable))))
+    (set (handle gc) handle)
+    (set (colormap gc) (gdk-colormap))
+    (okie? handle "GC Screwed")
+    gc
+    )
+  )
+
+(dm free ((gc <gdk-gc>))
+  ; kill our colormap
+  (free (colormap gc))
+  ; Liquidate our handle
+  (unless (= (handle gc) NULL)
+    (g_object_unref (handle gc))
+    (set (handle gc) NULL))
+  )
+
+; -colors-
+; So working with colors is apparently a bitch. The GdkColor structure 
+;  holds r,g,b, and pixel fields.  You fill in r,g, and b and then need
+;  to have your color added to a colormap.  Although in true color a lot
+;  of this behavior is probably NOP'ed out, it probably behooves us to 
+;  implement things properly.  As such, gui-color runs into the craptastic
+;  problem that the objects have state and must be realized into a colormap.
+; My dubious kludge is this:
+;  Colors will have a field that references the colormap they've been realized
+;  into.  Before we use a color we make sure it's been realized into the 
+;  current colormap, if it hasn't, we add it.  If it's been previously realized
+;  into another dude, we remove the color from the colormap.  This may very
+;  possibly yield horrible and bad behavior in somewhat simple cases, but since
+;  we're going to assume that we're probably going to be on true color displays
+;  anyways where this isn't needed, we're just playing it safe.
+
+
+(dm gdk-colormap ( => <gdk-colormap>)
+  (let ((colormap (new <gdk-colormap>))
+        (handle (gdk_colormap_new (gdk_visual_get_system) gtk_true)))
+    (set (handle colormap) handle)
+    (okie? handle "Colormap screwed")
+    colormap
+    )
+  )
+
+(dc <gui-color> (<gui>))
+ (dp realized-into (<gui-color> => <any>) #f) ; <gdk-colormap> as type
+
+; r, g, b range from 0 to 255
+(dm color ((r <int>) (g <int>) (b <int>) => <gui-color>)
+  (let ((color (new <gui-color>))
+        (handle (new__GdkColor)))
+    (set (handle color) handle)
+    (okie? handle "Color screwed")
+    (_GdkColor_red_set handle (* r 256))
+    (_GdkColor_green_set handle (* g 256))
+    (_GdkColor_blue_set handle (* 256 b))
+    color
+    )
+  )
+
+(dm color-hsb (hue|<flo> saturation|<flo> brightness|<flo>)
+  (def h (* (- hue (as <flo> (floor hue)))
+            6.0))
+  (def f (- h (as <flo> (floor h))))
+  (def p (* brightness (- 1.0 saturation)))
+  (def q (* brightness (- 1.0 (* saturation f))))
+  (def t (* brightness (- 1.0 (* saturation (- 1.0 f)))))
+
+  (case (floor h)
+    ((0)
+     (color (floor (+ (* brightness 255.0) 0.5))
+            (floor (+ (* t 255.0) 0.5))
+            (floor (+ (* p 255.0) 0.5)))
+     )
+    ((1)
+     (color (floor (+ (* q 255.0) 0.5))
+            (floor (+ (* brightness 255.0) 0.5))
+            (floor (+ (* p 255.0) 0.5)))
+     )
+    ((2)
+     (color (floor (+ (* p 255.0) 0.5))
+            (floor (+ (* brightness 255.0) 0.5))
+            (floor (+ (* t 255.0) 0.5)))
+     )
+    ((3)
+     (color (floor (+ (* p 255.0) 0.5))
+            (floor (+ (* q 255.0) 0.5))
+            (floor (+ (* brightness 255.0) 0.5)))
+     )
+    ((4)
+     (color (floor (+ (* t 255.0) 0.5))
+            (floor (+ (* p 255.0) 0.5))
+            (floor (+ (* brightness 255.0) 0.5)))
+     )
+    ((5)
+     (color (floor (+ (* brightness 255.0) 0.5))
+            (floor (+ (* p 255.0) 0.5))
+            (floor (+ (* q 255.0) 0.5)))
+     )
+    )
+  )
+
+(dm free ((color <gui-color>))
+  (delete__GdkColor (handle color))
+  )
+
+(dm realize ((color <gui-color>) (colormap <gdk-colormap>))
+  ; Only have work to do if it hasn't been realized into the current colormap.
+  (unless (= (realized-into color) colormap)
+    ; Kill off any prior realizations
+    (if (realized-into color)
+        (gdk_colormap_free_colors (handle (realized-into color)) (tup (handle color))))
+    ; Now realize the color in
+    (gdk_colormap_alloc_color (handle colormap) (handle color) gtk_false gtk_true)
+    (set (realized-into color) colormap)
+    )
+  )
+
+(dm fg-setter ((color <gui-color>) (gc <gdk-gc>))
+  (realize color (colormap gc))
+  (gdk_gc_set_foreground (handle gc) (handle color))
+  )
+
+(dm bg-setter ((color <gui-color>) (gc <gdk-gc>))
+  (realize color (colormap gc))
+  (gdk_gc_set_background (handle gc) (handle color))
+  )
+
+; Font abstraction stuff...
+(dc <gui-font> (<gui>))
+
+(dv font-lucida "-*-lucida-medium-r-normal-*-14-*-*-*-p-*-*-1")
+;; Um, so 16 point isn't available on my x-win32
+;;(dv font-lucida "-*-lucida-medium-r-normal-*-16-*-*-*-p-*-*-1")
+
+(dm font (name|<str> => <gui-font>)
+  (def da-font (new <gui-font>))
+  (set (handle da-font) (gdk_font_load name))
+  da-font
+  )
+
+(dm free (font|<gui-font>)
+  (gdk_font_unref (handle font))
+  (set (handle font) NULL)
+  )
+
+(dv *default-samurui-font* #f)
+
+(dm get-default-samurui-font ()
+  (unless *default-samurui-font*
+    (set *default-samurui-font* (font font-lucida)))
+  *default-samurui-font*
+  )
+                                    
+; GUI ImageBox is a composite of gui-paintbox and gui-canvas
+; I was very dubious about the relation of who owns whom, so for the time being
+;  they're both the children of the imagebox.  Of course, I've got this little
+;  voice telling me that the PaintBox should own the canvas, but that's much
+;  more likely to mask errors and cause problems down the road.
+; Dammit. I don't want the handle slot here. I guess this shows that I should actually
+;  have the framework set up so that <gui> and its descendents are interfaces and then
+;  there is a GTK signature that gets mixed in... I'll wait a bit longer before refactoring
+;  though, as I'm sure I'll learn more.
+(dc <gui-imagebox> (<gui-drawable>))
+ (dp paintbox (<gui-imagebox> => <gui-paintbox>))
+ (dp canvas (<gui-imagebox> => <gui-canvas>))
+
+(dc <interface-drawing-area> (<gui-imagebox>))
+
+(dm gui-imagebox (=> <gui-imagebox>)
+  (let ((imagebox (new <gui-imagebox>)))
+    (set (paintbox imagebox) (gui-paintbox))
+    (set (canvas imagebox) (gui-canvas (paintbox imagebox)))
+    (set (handle imagebox) (handle (paintbox imagebox))) ; make the paintbox handle the default handle we use...
+    imagebox
+    )
+  )
+
+
+(dm free ((imagebox <gui-imagebox>))
+  (free (paintbox imagebox))
+  (free (canvas imagebox))
+  (set (handle imagebox) NULL) ; it belonged to the canvas anyways
+  )
+
+(dm reconfigure ((imagebox <gui-imagebox>) (gtk-widget <loc>))
+  ; Kill off the canvas
+  (free (canvas imagebox))
+
+  (let ((width (_GdkRectangle_width_get (_GtkWidget_allocation_get (handle imagebox))))
+        (height (_GdkRectangle_height_get (_GtkWidget_allocation_get (handle imagebox))))
+        (style (_GtkWidget_style_get (handle imagebox)))
+        )
+
+    (set (canvas imagebox) (gui-canvas-ext (paintbox imagebox) width height))
+
+    (gdk_draw_rectangle (drawable-handle (canvas imagebox))
+                        (_GtkStyle_white_gc_get style)
+                        gtk_true
+                        0
+                        0
+                        width
+                        height)
+
+    ;; Don't repaint if the thing is too fricking small.
+    (unless (or (<= width 2) (<= height 2))
+      (repaint-widget imagebox)
+      )
+    )
+  )
+
+(dm blank (imagebox|<gui-drawable>)
+  (let ((width (_GdkRectangle_width_get (_GtkWidget_allocation_get (handle imagebox))))
+        (height (_GdkRectangle_height_get (_GtkWidget_allocation_get (handle imagebox))))
+        (style (_GtkWidget_style_get (handle imagebox)))
+        )
+
+    (gdk_draw_rectangle (drawable-handle (canvas imagebox))
+                        (_GtkStyle_white_gc_get style)
+                        gtk_true
+                        0
+                        0
+                        width
+                        height)
+    )
+  )
+
+; Helper accessors to get drawable's (in case the thing we need is hidden away)
+(dm drawable ((gui-drawable <gui-drawable>) => <gui-drawable>)
+  gui-drawable
+  )
+
+(dm drawable ((gui-imagebox <gui-imagebox>) => <gui-drawable>)
+  (canvas gui-imagebox)
+  )
+
+(dm get-gc ((drawable <gui-drawable>) => <gdk-gc>)
+  (when (not (gc drawable))
+    (set (gc drawable) (gdk-gc drawable))
+    )
+  (gc drawable)
+  )
+
+(dm get-gc ((gui-imagebox <gui-imagebox>) => <gdk-gc>)
+  (get-gc (canvas gui-imagebox))
+  )
+
+
+(dm repaint ((widget <any>) (r <rectangle>))
+  ;;(msg out "Dummy repaint...\n")
+  #f)
+
+(dm repaint ((imagebox <gui-imagebox>) (r <rectangle>))
+  ;;(msg out "Repainting an imagebox...\n")
+  (draw-blit (paintbox imagebox)
+             (canvas imagebox)
+             (rect-x r)
+             (rect-y r)
+             (rect-x r)
+             (rect-y r)
+             (rect-w r)
+             (rect-h r)
+             )
+  )
+
+(dm repaint-widget (imagebox|<gui-imagebox>)
+  #f
+  )
+
+; -drawing-
+
+; I think this will resolve the problem with needing a drawable-handle off of someone
+(dm drawable-handle ((canvas <gui-canvas>))
+  (handle canvas)
+  )
+
+(dm drawable-handle ((paintbox <gui-paintbox>))
+  (_GtkWidget_window_get (handle paintbox))
+  )
+
+(dm drawable-handle ((imagebox <gui-imagebox>))
+  (drawable-handle (canvas imagebox))
+  )
+
+; All drawing routines take a drawable that we then call 'drawable' on to make sure we're
+;  grabbing the right handle out.  This is important for compositions of widget and backing
+;  buffer such as <gui-imagebox>
+
+(dm draw-blit ((target <gui-drawable>) (source <gui-drawable>) (sx <int>) (sy <int>) (dx <int>) (dy <int>) (w <int>) (h <int>))
+  (gdk_draw_drawable (drawable-handle target)
+                     (handle (get-gc target))
+                     (drawable-handle source)
+                     sx sy dx dy w h
+                     )
+  )
+                     
+        
+(dm draw-rect ((canvas <gui-drawable>) (rect <gui-rect>) (filled <log>) (color <gui-color>))
+  (let ((gc (get-gc canvas)))
+    ; Set the color
+    (set (fg gc) color)
+    ; Draw the rectangle
+    (gdk_draw_rectangle (drawable-handle canvas)
+                        (handle gc)
+                        (log-to-gtk filled)
+                        (rect-x rect)
+                        (rect-y rect)
+                        (rect-w rect)
+                        (rect-h rect)
+                        )
+    )
+  )
+
+(dm draw-arc ((canvas <gui-drawable>) (rect <gui-rect>) (ang1 <flo>) (ang2 <flo>) (filled <log>) (color <gui-color>))
+  (draw-arc canvas rect (round (* 64.0 ang1)) (round (* 64.0 ang2)) filled color)
+  )
+
+(dm draw-arc ((canvas <gui-drawable>) (rect <gui-rect>) (ang1 <int>) (ang2 <int>) (filled <log>) (color <gui-color>))
+  (let ((gc (get-gc canvas)))
+    ; Set the color
+    (set (fg gc) color)
+    ; Draw the rectangle
+    (gdk_draw_arc (drawable-handle canvas)
+                  (handle gc)
+                  (log-to-gtk filled)
+                  (rect-x rect)
+                  (rect-y rect)
+                  (rect-w rect)
+                  (rect-h rect)
+                  ang1
+                  (- ang2 ang1))
+    )
+  )
+
+(dm draw-line (canvas|<gui-drawable> x1|<int> y1|<int> x2|<int> y2|<int> color|<gui-color>)
+  (let ((gc (get-gc canvas)))
+    ;; Set the color
+    (set (fg gc) color)
+    ;; Draw the rectangle
+    (gdk_draw_line (drawable-handle canvas)
+                   (handle gc)
+                   x1 y1 x2 y2)
+    )
+  )
+
+(dm draw-string (canvas|<gui-drawable> font|<gui-font> x|<int> y|<int> string|<str> color|<gui-color>)
+  (let ((gc (get-gc canvas)))
+    ;; Set the color
+    (set (fg gc) color)
+    ;; Draw the rectangle
+    (gdk_draw_string (drawable-handle canvas)
+                     (handle font)
+                     (handle gc)
+                     x y string)
+    )
+  )
+
+(dm draw-string-ul (canvas|<gui-drawable> font|<gui-font> x|<int> y|<int> string|<str> color|<gui-color>)
+  (draw-string canvas font x (+ y (font-ascent font)) string color)
+  )
+
+(dm draw-string-center (canvas|<gui-drawable> font|<gui-font> x|<int> y|<int> string|<str> color|<gui-color>)
+  (def w (string-width font string))
+  (draw-string canvas font (- x (div w 2)) (+ y (div (font-ascent font) 2)) string color)
+  )
+
+(dm string-width (font|<gui-font> string|<str> => <int>)
+  (gdk_string_width (handle font) string)
+  )
+
+(dm string-height (font|<gui-font> string|<str> => <int>)
+  (gdk_string_height (handle font) string)
+  )
+
+(dm font-ascent (font|<gui-font>)
+  (_GdkFont_ascent_get (handle font))
+  )
+
+(dm font-height (font|<gui-font>)
+  (+ (_GdkFont_ascent_get (handle font))
+     (_GdkFont_descent_get (handle font)))
+  )
+
+(dm invalidate-all (widget|<gui-widget>)
+  (invalidate widget (rect 0 0 (gui-width widget) (gui-height widget)))
+  )
+
+(dm invalidate ((imagebox <gui-imagebox>) (r <gui-rect>))
+  (invalidate (paintbox imagebox) r)
+  )
+
+(dm invalidate ((window <gui-drawable>) (r <gui-rect>))
+  (def my-gdk-rect (rect-to-gdk r))
+  (invalidate window my-gdk-rect)
+  (free my-gdk-rect)
+  )
+
+(dm invalidate ((window <gui-drawable>) (r <gdk-rect>))
+  ;; (msg out "Invalidating a drawable...\n")
+  (gdk_window_invalidate_rect (drawable-handle window) ; better not be a pixmap...
+                              (handle r)
+                              gtk_false
+                              )
+  )
+
+(export
+  <gui-drawable>
+  <gdk-colormap>
+  <gdk-gc>
+
+  <gui-paintbox>
+  <gui-canvas>
+
+  <gui-color>
+
+  <gui-font>
+
+  <gui-imagebox>
+  <interface-drawing-area>
+  )
+
+(export
+  colormap
+  colormap-setter
+
+  gc
+  gc-setter
+
+  realized-into
+  realized-into-setter
+
+  paintbox
+  paintbox-setter
+
+  canvas
+  canvas-setter
+  )
+
+(export
+  font-lucida
+  *default-samurui-font*
+  )
+
+(export
+  gui-paintbox
+  gui-canvas
+  gui-canvas-ext
+  gdk-gc
+  gdk-colormap
+  color
+  color-hsb
+  realize
+  fg-setter
+  bg-setter
+  font
+  get-default-samurui-font
+  gui-imagebox
+  reconfigure
+  blank
+  drawable
+  get-gc
+  repaint
+  repaint-widget
+  drawable-handle
+  draw-blit
+  draw-rect
+  draw-arc
+  draw-line
+  draw-string
+  draw-string-ul
+  draw-string-center
+  string-width
+  string-height
+  font-ascent
+  font-height
+  invalidate-all
+  invalidate
+  )

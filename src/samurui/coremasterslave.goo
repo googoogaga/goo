@@ -1,0 +1,175 @@
+(use goo)
+
+(use samurui/coreutil)
+(use samurui/coremetadata)
+(use samurui/coregtkwrapping)
+
+(dc <gui-master> (<any>))
+ (dp slaves (<gui-master> => <col>) (vec))
+
+(dg bind-master (obj|<any> master|<gui-master> => <log>))
+
+;; A hack? perhaps. and maybe you smell.
+(dg renderize-model ((model <interface-model>) (info <interface-info>) (class <class>) (updaters <col>) (masters <tab>)))
+
+;; The master/slave thing requires some form of imodel-instantiation specific scratch space.
+;;
+;; Perhaps a runtime DOM-type tree is in order to store GUI configuration information...
+;; 
+;; The goal of master/slave is of course to allow the navigation of graph/collection structures,
+;;  with the currently selected node displayed in the slave space.  Issues include:
+;; - We want the collection to be able to be wildly heterogeneous, which means that the slave area
+;;   must be instantiated at run-time.  (This requires better cleanup code certainly.)
+;; - A master must be passed in a function to invoke when the currently selected node changes.  This
+;;   should allow the slave to be transparently updated.  The only question is whether the slave should
+;;   be allowed to persist configuration data in some way.  However, this seems clearly orthogonal 
+;;   to the master/slave issue, as it's mainly a persistence issue that merely comes to the forefront
+;;   when things are reinitialized extremely frequently.
+;; * The simplest solution would be to cluster them together so that the 'master' item actually could
+;;   have direct references to the slaves, but that would place a lot of un-needed limitations on 
+;;   GUI design.
+;; 
+;; When we change the object represented in a slaved area, we want to kill off the people in there.
+;;  This involves telling all the updaters to free, and killing off the objects in question.  Since
+;;  we need to maintain a list of the updaters associated with an instantiated interface-model, it
+;;  suggests that each instantiated interface model should have a control structure with the following:
+;; - List of updaters
+;; - Placeholder container
+;; - Interface-model container that sits in the place-holder
+;; - Method to change object reference, which:
+;;    - Calls free on all updaters
+;;    - Destroys the components in the interface-model container, as well as that container
+;;    - Unlinks the interface-model container
+;;    - Generates the new interface-model, and assumes its state.
+;; 
+;; This suggests that when it comes to creating master/slave pairs, we'll construct:
+;; - A master object which maintains a list of slaves
+;; - A slave object for each instantiation, as described above, which is added to the master's list.
+;; To provide the master to the instantiated master block, we will define a bind-master generic.
+
+(dc <gui-slave> (<any>))
+ (dp slave-inited (<gui-slave> => <log>) #f)
+ (dp slave-updaters (<gui-slave> => <col>))
+ (dp placeholder (<gui-slave> => <gui-container>))
+ (dp active-container (<gui-slave> => <gui-container>))
+ (dp slave-object (<gui-slave> => <any>) #f)
+
+
+(dm update-slave (slave|<gui-slave> new-obj|<any>)
+  (cond 
+    ;; First time
+    ((not (slave-inited slave))
+     (def model (find-interface-model (object-class new-obj) root-interface (vec)))
+     (set (slave-updaters slave) (vec))
+     (set (active-container slave)
+          (renderize-model model root-interface (object-class new-obj) (slave-updaters slave) (fab <str-tab> 0)))
+     (ad-opt! (placeholder slave) (active-container slave) (attrs (placeholder slave)))
+     (show-all (placeholder slave))
+     (set (slave-inited slave) #t)
+     (set (slave-object slave) new-obj)
+     
+     ;; Rebind and refresh
+     (do (fun (cur-updater)
+           ;; Rebind
+           ((1st cur-updater) new-obj)
+           ;; Refresh
+           ((2nd cur-updater))
+               )
+         (slave-updaters slave)
+         )
+     )
+
+    ;; Different object, same interface
+    ((and (slave-object slave)
+          (= (object-class (slave-object slave))
+             (object-class new-obj)))
+     ;; Just rebind and refresh
+     (do (fun (cur-updater)
+           ;; Rebind
+           ((1st cur-updater) new-obj)
+           ;; Refresh
+           ((2nd cur-updater))
+               )
+         (slave-updaters slave)
+         )
+     
+     (set (slave-object slave) new-obj)
+     )
+
+    ;; New object, go hard-core
+    (#t
+     ;; Free updaters
+     (do (fun (cur-updater)
+           ((3rd cur-updater))
+           )
+         (slave-updaters slave)
+         )
+     
+     ;; Destroy components
+     (rem! (placeholder slave) (active-container slave))
+     ;; Do we need to free? or will the remove have implicitly unref'd down to 0 and free?     
+
+     ;; Get us a new interface-model and what not
+     (def model (find-interface-model (object-class new-obj) root-interface (vec)))
+     (set (slave-updaters slave) (vec))
+     (set (active-container slave) 
+          (renderize-model model root-interface (object-class new-obj) (slave-updaters slave) (fab <str-tab> 0)))
+     (ad! (placeholder slave) (active-container slave))
+     (show-all (placeholder slave))
+     (set (slave-inited slave) #t)
+     (set (slave-object slave) new-obj)
+     
+     ;; Rebind and refresh
+     (do (fun (cur-updater)
+           ;; Rebind
+           ((1st cur-updater) new-obj)
+           ;; Refresh
+           ((2nd cur-updater))
+               )
+         (slave-updaters slave)
+         )
+     )
+    )
+  )
+
+(dm master-update-slaves (master|<gui-master> new-obj|<any>)
+  (when new-obj
+    (do (fun (slave)
+          (update-slave slave new-obj))
+        (slaves master)
+        )
+    )
+  )
+
+(export
+  <gui-master>
+  <gui-slave>
+  )
+
+(export
+  slaves
+  slaves-setter
+
+  slave-inited
+  slave-inited-setter
+
+  slave-updaters
+  slave-updaters-setter
+
+  placeholder
+  placeholder-setter
+
+  active-container
+  active-container-setter
+
+  slave-object
+  slave-object-setter
+  )
+
+(export
+  bind-master
+  update-slave
+  master-update-slaves
+
+  renderize-model
+  )

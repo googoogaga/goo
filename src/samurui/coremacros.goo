@@ -1,0 +1,127 @@
+(use goo)
+
+; --
+; --- User Macros 
+; -- 
+
+(ds (iprop ,class ,binding ,type ,desc)
+  `(seq
+     (dp ,binding (,class => ,type))
+     (add-property ,class (interface-property ,(as <str> binding) ,type ,binding ,(fab-setter-name binding) ,desc))
+     )
+  )
+
+(ds (ipropc ,class ,binding ,type ,desc ,constraint)
+  `(seq
+     (dp ,binding (,class => ,type))
+     (def da-prop (interface-property ,(as <str> binding) ,type ,binding ,(fab-setter-name binding) ,desc))
+     (set (constraint da-prop) ,constraint)
+     (add-property ,class da-prop)
+     )
+  )
+
+(ds (iaction ,class ,binding ,this-name ,desc ,@body)
+  `(seq
+     (dm ,binding ((,this-name ,class)) ,@body)
+     (add-action ,class (interface-action ,(as <str> binding) ,binding ,desc))
+     )
+  )
+
+(ds (imodel ,class ,@body)
+  `(register-interface-model ,class (interface-model (fun (x attribs) 1)
+                                                     (quote (,@body))))
+  )
+
+
+(ds (iview ,class ,@body)
+  `(register-interface-model ,class (interface-model (fun (x attribs) 1)
+                                                     (quote (,@body))))
+  )
+
+; Drawing areas are a recognition that no matter how many auto-magic visualization
+;  interfaces we provide, there will always be a need to be able to have custom 
+;  drawing interfaces.  In fact, this is how we intend to allow extension for
+;  auto-magic visualization.  Additionally, it's hard to make a drawing program 
+;  without something like this.
+; Drawing areas are implicitly associated with a type of object to render, the assoc-class.
+; Additionally, they must have an implementation class which is derived from interface-drawing-area,
+;  which is specified as class.  If all you want to do is have a drawing widget or something equally
+;  inane, you can happily have the associated class and the class be the same thing.
+
+;; Oy, now how to bind the drawer dude into interface models.  The
+;; associativity clearly indicates that the place of the drawing area
+;; is analogous to that of the interface model.  Of course, so are
+;; button bindings and text bindings.  My initial thought was that
+;; those would be handled via the renderize generic protocol.
+;; Basically there are two approaches then.  The first is the renderize
+;; protocol, where the idraw would also define a renderize method.  The
+;; problem is that we still need an inert class type (such as a
+;; singelton) to dispatch on that.  The alternative is to extend the
+;; concept of the interface model.  If we re-evaluate the current
+;; implementation right now, we should consider the need to figure out
+;; which of the many possible interface models to use.  Possible
+;; methods include allowing the interface model to carry a heuristic
+;; function with it, or perhaps just an id so we can only use the
+;; right-click menu.  More extensive tricks such as range-constraint
+;; and such could easily fit within the heuristic function model, which
+;; merely leads to pre-init'ing our interface model as opposed to
+;; trying to stuff the base-cases into pure-code form.  The current
+;; methedology uses a recursive recipe technique; We start out with the
+;; interface model in list form and then process each element using
+;; multi-method dispatch, which may quite possibly be another list.
+;; Symbols are looked up against our registered properties and actions.
+;; An alternative, hypothetical method is this.  Interface models
+;; consist of an evaluation function and either either a list or
+;; function for the model.  If the model is a list, we recursively
+;; process the list in the current style.  That is, strings are
+;; directly transformed to labels, special symbols such as 'columns'
+;; still work, and other symbols are looked up against our class
+;; information so that we can find a proper interface model for them.
+;; In the case the model is a function, it is expected to be a factory
+;; method equivalent to our current renderize dude.  Specifically, it
+;; must return a gui object, and must take a class (not outrightly
+;; needed, but we'll considering it future-proofing) and the list of
+;; updaters that should be added to as needed.
+
+(ds (idrawmodel ,assoc-class ,class ,@body)
+  `(idrawmodel-ext ,assoc-class ,class (1) (,@body))
+  )
+
+(ds (idrawmodel-ext ,assoc-class ,class (,@body-a) (,@body-b))
+  `(seq
+     (dc ,class (<interface-drawing-area>))
+     (register-interface-model ,assoc-class (interface-model 
+                                             (fun (item attribs) ,@body-a)
+                                             (fun (info parent-class updaters)
+                                               ;; -- stolen from gui-imagebox fabber...
+                                               ;; need to ask how to piggy-back on someone else's fab...
+                                               (let ((imagebox (new ,class)))
+                                                 (set (paintbox imagebox) (gui-paintbox))
+                                                 (set (canvas imagebox) (gui-canvas (paintbox imagebox)))
+                                                 ;; make the paintbox handle the default handle we use...
+                                                 (set (handle imagebox) (handle (paintbox imagebox))) 
+                                                 ;; Bind it
+                                                 (ad! updaters (bind imagebox info))
+                                                 
+                                                 ;; User setup-code
+                                                 ,@body-b
+                                                 
+                                                 ;; Events
+                                                 (hookify imagebox)
+                                                 imagebox
+                                                 )
+                                               )
+                                             )
+                               )
+     )
+  )
+
+(export
+  iprop
+  ipropc
+  iaction
+  imodel
+  iview
+  idrawmodel
+  idrawmodel-ext
+  )

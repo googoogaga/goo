@@ -1,0 +1,68 @@
+(use goo)
+
+(use samurui/gtk.swig)
+(use samurui/coremetadata)
+
+; -- 
+; --- Interface Constraints
+; --
+
+(dc <numeric-constraint> (<interface-constraint>))
+
+(dc <int-constraint> (<numeric-constraint>))
+
+(dp lbound (<int-constraint> => <int>))
+(dp ubound (<int-constraint> => <int>))
+(dp small-increment (<int-constraint> => <int>) 1)
+(dp large-increment (<int-constraint> => <int>) 10)
+
+(dc <flo-constraint> (<numeric-constraint>))
+
+(dp lbound (<flo-constraint> => <flo>))
+(dp ubound (<flo-constraint> => <flo>))
+(dp small-increment (<flo-constraint> => <flo>) 1.0)
+(dp large-increment (<flo-constraint> => <flo>) 10.0)
+
+(dm num-constraint (low|<int> high|<int> => <int-constraint>)
+  (def constraint (new <int-constraint>))
+  (set (lbound constraint) low)
+  (set (ubound constraint) high)
+  constraint
+  )
+
+(dm num-constraint (low|<flo> high|<flo> => <flo-constraint>)
+  (def constraint (new <flo-constraint>))
+  (set (lbound constraint) low)
+  (set (ubound constraint) high)
+  constraint
+  )
+  
+(dc <string-constraint> (<interface-constraint>))
+
+(export
+  <numeric-constraint>
+  <int-constraint>
+  <flo-constraint>
+  <string-constraint>
+  )
+
+(export
+  lbound
+  lbound-setter
+
+  ubound
+  ubound-setter
+
+  small-increment
+  small-increment-setter
+
+  large-increment
+  large-increment-setter
+
+  constraint
+  constraint-setter
+)
+
+(export
+  num-constraint
+  )

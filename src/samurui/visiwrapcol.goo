@@ -1,0 +1,76 @@
+(use goo)
+
+(use samurui/corevisicol)
+
+;; visi-wrap
+
+(dc <visi-wrap-col> (<visi-col>))
+ (dp wrapped (<visi-wrap-col> => <col>))
+ (dp parent-hash (<visi-wrap-col> => <tab>) (fab <tab> 0))
+
+(dm visi-wrap-col (to-wrap|<col> => <visi-wrap-col>)
+  (def vwc (new <visi-wrap-col>))
+  (set (wrapped vwc) to-wrap)
+  vwc
+  )
+
+(dm get-start-node (vwc|<visi-wrap-col> => <any>)
+  (wrapped vwc)
+  )
+
+;; It's generally good to have a simple label for a given node.  Note that we are not using to-str
+;;  because that is a function of only the node, whereas we want the collection to be the control
+;;  factor. The colleciton can of course defer to to-str if it is so inclined. 
+(dm node-label (vwc|<visi-wrap-col> node => <str>)
+  (if (and (isa? node <col>) (not (isa? node <str>)))
+      "Collection"
+      (to-str node)
+      )
+  )
+
+;; Our weight is 1.0 if we are a leaf, or the sum of the weights of our children if we're a collection.
+;;  Of course, we're screwed if there are loops/recursion in our structure.
+(dm node-weight (vwc|<visi-wrap-col> node => <flo>)
+  (if (and (isa? node <col>) (not (isa? node <str>)))
+      (fold+ + (map (fun (x) (node-weight vwc x)) node))
+      1.0)
+  )
+
+(dm node-browsable (vwc|<visi-wrap-col> node => <log>)
+  (not (and (isa? node <col>) (not (isa? node <str>))))
+  )
+
+;; ----------------
+;; Edge-Information
+;; ----------------
+
+;; Returns a list of the axes supported by the nodes
+(dm node-axes (vwc|<visi-wrap-col> => <col>)
+  (vec "implicit")
+  )
+
+;; Retrieves the edges associated with the given axis for the node.
+(dm node-out-edges (vwc|<visi-wrap-col> axis node => <col>)
+  (if (and (isa? node <col>) (not (isa? node <str>)))
+      (seq
+        ;; Make sure the parent links are there
+        (do (fun (x) 
+              (set (elt (parent-hash vwc) x) node))
+            node)
+        ;; Now return the collection
+        node
+        )
+      (empty <vec>))
+  )
+
+(dm node-in-edges (vwc|<visi-wrap-col> axis node => <col>)
+  (def node-parent (elt-or (parent-hash vwc) node #f))
+  (if node-parent
+      (tup node-parent)
+      (empty <tup>))
+  )
+
+(export
+  <visi-wrap-col>
+  visi-wrap-col
+  )
