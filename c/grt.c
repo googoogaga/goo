@@ -20,6 +20,11 @@ P YPbreak(char* message) {
   return PNUL;
 }
 
+P unbound () {
+  /* YPbreak("unbound binding"); */
+  return PNUL;
+}
+
 extern void println (P adr);
 
 P YPinvoke_debugger(P condition) {
@@ -509,7 +514,8 @@ extern P YPcheck_typesQ;
     int osp = sp, ofp = fp; \
     if (YPisaQ(a, t) == YPfalse) \
       CALL2(Ytype_error, a, t); \
-    sp = osp; fp = ofp; }
+    sp = osp; fp = ofp; \
+  }
 
 #define CHECK_TYPE(a,t) \
   if (YPcheck_typesQ == YPtrue) \

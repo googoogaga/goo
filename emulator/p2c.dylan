@@ -1128,7 +1128,7 @@ define method primitive-inlinable? (e :: <primitive-definition>)
 	    #"not",
 	    #"@=", #"@+", #"@<", 
 	    #"@empty?", #"@head", #"@tail",
-	    #"%isa?",
+	    #"%isa?", #"%object-parents",
 	    #"slot-value-at", #"slot-value-at-setter", 
 	    #"gen-lookup", #"gen-lookup-1-using"
 	    ))

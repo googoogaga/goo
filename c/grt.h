@@ -251,7 +251,7 @@ extern P YPisaQ(P,P);
 extern void check_type(P, P);
 
 #define RET(x) \
-  { /* check_type(res, Pfun); */ return res; }
+  { check_type(res, Pfun); return res; }
 
 /* NON-LOCAL EXITS */
 
@@ -265,8 +265,10 @@ extern P with_cleanup (P body_fun, P cleanup_fun);
 
 /* GLOBAL VARIABLES */
 
+extern P unbound ();
+
 #define DEF(x, n)  P x = PNUL;
-#define CHKREF(x)  (x)
+#define CHKREF(x)  (((x) == PNUL) ? unbound() : (x))
 
 /* FUNCTIONS */
 
