@@ -108,10 +108,12 @@ IMPORTEXPORT extern P YPib(P i);
 #define YPcE(x, y)    (((PCHR)(PINT)(x)) == ((PCHR)(PINT)(y)))
 #define YPcL(x, y)    (((PCHR)(PINT)(x)) <  ((PCHR)(PINT)(y)))
 
-#define RTVBOUNDP(x)   (((x) == PNUL) ? YPfalse : YPtrue)
-#define BOUNDP(x)      RTVBOUNDP(x)
-#define DYNNUL         ((P)1)
+#define RTVBOUNDP(x)  (((x) == PNUL) ? YPfalse : YPtrue)
+#define BOUNDP(x)     RTVBOUNDP(x)
+#define DYNNUL        ((P)1)
 
+#define RTVVARREF_OR(x, d)   (((x) == PNUL) ? d : (x))
+#define VARREF_OR(x, d)      RTVVARREF_OR(x, d)
 /* OBJ */
 
 typedef struct _obj {
@@ -237,6 +239,7 @@ typedef struct _bind_exit_frame {
   jmp_buf		        destination;
   P*                            sp;
   P*                            fp;
+  P                             vsp, vfp, vpc, vfn, vnm;
   P			        value;
   struct _unwind_protect_frame* present_unwind_protect_frame;
 } *BIND_EXIT_FRAME, BIND_EXIT_FRAME_DATA;
@@ -258,6 +261,12 @@ typedef struct {
   UNWIND_PROTECT_FRAME current_unwind_protect_frame;
   UNWIND_PROTECT_FRAME top_unwind_protect_frame;
   P   dynvars;
+  // VM STATE
+  P   vsp;
+  P   vfp;
+  P   vpc;
+  P   vfn;
+  P   vnm;
 } *REGS, REGS_DATA;
 
 // GOO FUNCTIONS
@@ -386,6 +395,17 @@ EXTTVAR(goo_thread);
 #define YPfp_reg()             (REG(fp))
 #define YPsp_reg_setter(value) (REGSET(sp, value))
 #define YPfp_reg_setter(value) (REGSET(fp, value))
+
+#define YPvpc()             (REG(vpc))
+#define YPvfn()             (REG(vfn))
+#define YPvnm()             (REG(vnm))
+#define YPvsp()             (REG(vsp))
+#define YPvfp()             (REG(vfp))
+#define YPvpc_setter(value) (REGSET(vpc, value))
+#define YPvfn_setter(value) (REGSET(vfn, value))
+#define YPvnm_setter(value) (REGSET(vnm, value))
+#define YPvsp_setter(value) (REGSET(vsp, value))
+#define YPvfp_setter(value) (REGSET(vfp, value))
 
 #define FREEREF(x) (FUNENVGET(Pfun, (x)))
 

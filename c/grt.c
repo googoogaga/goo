@@ -847,6 +847,11 @@ P do_exit (REGS regs) {
   frame->value = value;
   REGSET(sp, frame->sp);
   REGSET(fp, frame->fp);
+  REGSET(vsp, frame->vsp);
+  REGSET(vfp, frame->vfp);
+  REGSET(vpc, frame->vpc);
+  REGSET(vfn, frame->vfn);
+  REGSET(vnm, frame->vnm);
   longjmp(frame->destination, 1);
   return(PNUL); /* NEVER RETURNS BUT KEEPS COMPILER HAPPY */
 }
@@ -854,11 +859,14 @@ P do_exit (REGS regs) {
 
 P MAKE_BIND_EXIT_FRAME () {
   DEFREGS();
-  P *osp = REG(sp), *ofp = REG(fp);
+  P *osp  = REG(sp),  *ofp  = REG(fp);
+  P *ovsp = REG(vsp), *ovfp = REG(vfp);
+  P *ovpc = REG(vpc), *ovfn = REG(vfn), *ovnm = REG(vnm);
   BIND_EXIT_FRAME frame
     = (BIND_EXIT_FRAME)stack_allocate(sizeof(BIND_EXIT_FRAME_DATA));
-  frame->sp = osp;
-  frame->fp = ofp;
+  frame->sp  = osp;  frame->fp  = ofp;
+  frame->vsp = ovsp; frame->vfp = ovfp;
+  frame->vpc = ovpc; frame->vfn = ovfn; frame->vnm = ovnm;
   frame->present_unwind_protect_frame = REG(current_unwind_protect_frame);
   return((P)frame);
 }
@@ -1589,6 +1597,8 @@ REGS YPfab_regs() {
   REGSET(current_unwind_protect_frame, REG(top_unwind_protect_frame));
   REGSET(stack_allocp, 0);
   REGSET(stack_checkp, 1);
+  REGSET(vfp, YPib((P)0));
+  REGSET(vsp, YPib((P)0));
   REGSET(dynvars, YPPtfab((P)MAX_DYNVARS, YPfalse));
   if (main_regs != (REGS)0) {
     int i;
