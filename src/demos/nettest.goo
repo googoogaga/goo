@@ -1,0 +1,15 @@
+(use goo)
+
+(use goo/io/net)
+
+(with-port (sock (connect-socket "www.ai.mit.edu" 80))
+           (puts (out-port sock) "GET / HTTP/1.0\n\n")
+           (rep loop ()
+             (def c (get (in-port sock)))
+             (when (and (not (eof-object? c))
+                        (not (eof? (in-port sock))))
+               (post "%c" c)
+               (loop)))
+
+           (post "\n---- EOF ----\n")
+           )
