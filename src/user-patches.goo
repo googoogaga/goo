@@ -1,4 +1,4 @@
-(df test () (set p2c:*p2c-app* (p2c:p2c-def-app "p2c-test" 'main)))
+;; (df test () (set p2c:*p2c-app* (p2c:p2c-def-app "p2c-test" 'main)))
 ;; (set *max-print-depth*  7)
 ;; (set *max-print-length* 32)
 ;; (dv *p2m-app* (p2c-def-app "p2m" 'main))

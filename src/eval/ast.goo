@@ -1294,10 +1294,10 @@
   module-loader)
 
 ;;; Find the module with the given name, loading it if necessary.
-(df probe-module ((module-loader <module-loader>) (name <sym>) => <module>)
-  (let ((module (elt (module-loader-modules module-loader) name)))
+(df probe-module ((loader <module-loader>) (name <sym>) => <module>)
+  (let ((module (elt (module-loader-modules loader) name)))
     (if (== module nul)
-	(load-and-register-module module-loader name)
+        (load-and-register-module loader name)
 	module)))
 
 ;;; This function keeps track of nesting and registration.
@@ -1513,6 +1513,8 @@
 
 (dc <runtime-module-loader> (<module-loader>))
 
+(ddv *now-rt-env* #f)
+
 ;;; This is called if somebody tries to load a module at runtime which
 ;;; hadn't been built into the image.
 (dm load-module ((loader <runtime-module-loader>) (name <sym>) => <module>)
@@ -1524,19 +1526,20 @@
         (src-file   (add-src-path (proto-filename file))))
     (set-module-environments module env env)
     (install-initial-bindings env loader)
-    (fin
-      (seq
-        (load-in src-file env)
-        ;; Turn on foreign name support once the code has been loaded.
-        (set (environment-allows-foreign-names? env) #t)
-        (set keepmod? #t)
-        module)
-      ;;; Tricky unwind handler.  Our module may have altered the
-      ;;; the state of other module's bindings, and so we need to
-      ;;; back these changes out if we crash midway.  This would look
-      ;;; much nicer if we had some kind of try/catch/rethrow construct.
-      (unless keepmod?
-        (free-implemented-foreign-bindings module)))))
+    (dlet ((*now-rt-env* env))
+      (fin
+        (seq
+          (load-in src-file env)
+          ;; Turn on foreign name support once the code has been loaded.
+          (set (environment-allows-foreign-names? env) #t)
+          (set keepmod? #t)
+          module)
+        ;;; Tricky unwind handler.  Our module may have altered the
+        ;;; the state of other module's bindings, and so we need to
+        ;;; back these changes out if we crash midway.  This would look
+        ;;; much nicer if we had some kind of try/catch/rethrow construct.
+        (unless keepmod?
+          (free-implemented-foreign-bindings module))))))
 
 (dv *runtime-module-loader* (isa <runtime-module-loader>))
 (df runtime-module-loader () *runtime-module-loader*)
@@ -1548,6 +1551,11 @@
     (module-target-environment module)))
 (df runtime-core-environment ((modname <sym>))
   (module-target-environment (runtime-module modname)))
+(df unchecked-runtime-environment ((modname <sym>))
+  (let ((loader (runtime-module-loader)))
+    (if (== (1st (module-loader-stack loader)) modname)
+        *now-rt-env*
+        (module-target-environment (runtime-module modname)))))
 
 ;;; RELOADER METHODS FOR %BUILD-RUNTIME-MODULES
 ;;; These are called to reload modules which were compiled into our runtime.
@@ -1646,8 +1654,7 @@
 
 (df init-runtime ()
   (reload-modules)
-  (let ((bootmod (probe-module (runtime-module-loader)
-                               $proto-boot-module-name))
+  (let ((bootmod (probe-module (runtime-module-loader) $proto-boot-module-name))
         (bootenv (module-target-environment bootmod)))
     ;; We need to make a bunch of changes to bindings the boot module,
     ;; which will affect all the modules that use those bindings.
@@ -1901,6 +1908,7 @@
   report-undefined-global-bindings
   <runtime-assignment>
   runtime-environment
+  unchecked-runtime-environment
   <runtime-reference>
   <sequential>
   sequentialize

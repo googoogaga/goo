@@ -55,7 +55,7 @@
  <loc> locative-value locative-value-setter address-of
  
  ;; Section 3.7: Collections.
- <col> len len-setter elt elt-setter low-elt low-elt-setter
+ <col> len len-setter len/fill-setter elt elt-setter low-elt low-elt-setter
  empty? empty default fab fabs fill alter any?
  all? reduce reduce+ find-key del-key del-keys do do2 map map2 do-keyed
  map-keyed mem? keys
@@ -103,7 +103,7 @@
  <handler> handler-function make-handler handler-matches?
 
  ;; Section 3.12: Ports.
- <port> <input-port> read-char peek-char char-ready?
+ <port> <input-port> read-char peek-char char-ready? port-line
  <output-port> newline force-output write-char write-string
  <file-port> <file-input-port> open-input-file close-input-port
  call-with-input-file in

@@ -1103,10 +1103,10 @@
 (dm len ((c <buf>) => <int>)
   (buf-len c))
 
-(dm len-setter ((new-len <int>) (c <buf>))
+(dm len/fill-setter ((new-len <int>) (c <buf>) default)
   (let ((dat (buf-dat c)))
     (if (> new-len (len dat))
-	(let ((new-data (fab <vec> (power-of-two-ceiling new-len))))
+	(let ((new-data (fill (fab <vec> (power-of-two-ceiling new-len)) default)))
 	  (alter new-data dat)
 	  (set (buf-len c) new-len)
 	  (set (buf-dat c) new-data))
@@ -1115,9 +1115,12 @@
 	      (set (buf-len c) new-len)
 	      (rep fill (((i <int>) new-len))
 		(and (< i old-len)
-		     (set (low-elt dat i) nul)
+		     (set (low-elt dat i) default)
 		     (fill (+ i 1)))))
 	    (set (buf-len c) new-len)))))
+
+(dm len-setter ((new-len <int>) (c <buf>))
+  (set (len/fill c nul) new-len))
 
 (dm low-elt ((x <buf>) (i <int>) => <any>)
   (low-elt (buf-dat x) i))
@@ -1673,6 +1676,7 @@
   (slot <port> port-handle)
 
 (dc <input-port> (<port>))
+  (slot <input-port> (port-line <int>) 0)
 
 (dc <output-port> (<port>))
 
@@ -1728,7 +1732,9 @@
   (%cb (%eof-object)))
 
 (dm read-char ((port <file-input-port>) => <chr>)
-  (%cb (%read-char (port-handle port))))
+  (let ((c (%cb (%read-char (port-handle port)))))
+    (when (== c #\newline) (inc (port-line port)))
+    c))
 
 (dm peek-char ((port <file-input-port>) => <chr>)
   (%cb (%peek-char (port-handle port))))
@@ -2414,10 +2420,10 @@
   in
   <incongruent-method-error>
   ini-state copy-state
-  <input-port>
+  <input-port> port-line 
   keys
   last
-  len len-setter
+  len len-setter len/fill-setter
   list <list>
   locative-value locative-value-setter
   logior logxor logand lognot logbit?

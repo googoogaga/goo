@@ -365,11 +365,11 @@
 (dp %dlvar-setter)
 
 (dp %define-binding (raw-mod raw-nam)
-  (let ((e (runtime-environment (%%sym raw-mod))))
+  (let ((e (unchecked-runtime-environment (%%sym raw-mod))))
     (ast-define-binding e (%%sym raw-nam) #f 'global)))
 
 (dp %lookup-binding (raw-mod raw-nam)
-  (let ((e (runtime-environment (%%sym raw-mod))))
+  (let ((e (unchecked-runtime-environment (%%sym raw-mod))))
     (find-binding (%%sym raw-nam) e)))
 
 (dp %ensure-binding (raw-mod raw-nam)

@@ -65,7 +65,7 @@
 (dm load-in ((filename <str>) ct-env) 
   (let ((x (read-file filename))
 	(o (objectify x ct-env #f)))
-    (ast-run o ct-env)
+    (run o ct-env)
     ;; TODO - Hook me into the new module loader system in a useful way.
     ;; (report-undefined-global-bindings ct-env)
     ))
