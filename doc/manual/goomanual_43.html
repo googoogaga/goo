@@ -2,7 +2,7 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Mon Oct 20 18:37:47 2003 -->
+ -- on Emacs 21.2.1, Mon Oct 20 19:34:09 2003 -->
 <head>
 <title><i>GOO&#32;Manual -- C Interface</title>
 
@@ -46,11 +46,11 @@ and errors can occur during C compilation.
 <A NAME="5">&nbsp;</A><tt>&#35;&#123; ... &#125;</tt> </td><td colspan="1" align="LEFT"> <tt>Inlined C Statement</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>Shorthand for <tt>c-ment</tt> allowing <i>GOO&#32;forms to be
-  specified with a <tt>&#36;</tt> prefix and the conversion of <i>GOO&#10;  objects into C values specified with a
-  <tt></tt> prefix, with <tt>x</tt> <i> == </i> <tt>(to-c &#36;x)</tt>.
+  specified with a <tt>&#36;</tt> prefix and the conversion of <i>GOO&#10;  objects into C values specified with an
+  <tt>@</tt> prefix, with <tt>@x</tt> <i> == </i> <tt>(to-c &#36;x)</tt>.
 For example,
 <pre>
-(df f (x) &#35;&#123; printf("Got &#37;lxn", &#36;x); &#125;)
+(df f (x) &#35;&#123; printf("Got &#37;lx", &#36;x); &#125;)
 </pre>
 prints out the <i>GOO&#32;value <tt>&#36;x</tt>.  
 A callback can be defined at top level as follows:
