@@ -257,8 +257,9 @@
 
 (dm sort (x|<seq> => <seq>) (sort-by x <))
 
-(dm sort-by (x|<seq> test|<fun> => <seq>)
-  (sort-by! (dup x) test))
+;; <seq.> declaration in vec. should be fine, but we don't want any circularities in here.
+(dm sort-by (A|<seq!> test|<fun> => <seq!>)
+  (sort-by! (dup A) test))
 
 ;;;; Undocumented
 

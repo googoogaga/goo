@@ -105,12 +105,14 @@
     (set (len x) (+ i 1)))
   (set (rep-elt (vec-dat x) i) z))
 
+(dm sort-by (A|<seq.> test|<fun> => <seq.>)
+  (col-res A (sort-by! (as <vec> A) test)))
+ 
 (dm sort-by! (A|<seq!> test|<fun> => <seq!>)
-  (def A-len (len A))
-  (def sorted (quicksort! (as <vec> A) 0 (1- A-len) test))
+  (def sorted (quicksort! (as <vec> A) 0 (1- (len A)) test))
   (if (== A sorted) ; (as) can return the same object, so sorted could == A
       sorted
-      (sub-setter sorted A 0 A-len)))
+      (into A sorted)))
 
 (dm quicksort! (A|<vec> p|<int> r|<int> test|<fun> => <vec>)
   (if (< p r)
