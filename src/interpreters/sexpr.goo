@@ -7,7 +7,7 @@
   (3rd exp))
 
 (dm sexpr-if-else ((exp <lst>) => <any>)
-  (if (empty? (tail (tail (tail exp)))) ;;cdddr
+  (if (nul? (tail (tail (tail exp)))) ;;cdddr
       #f
       (head (tail (tail (tail exp)))))) ;;cadddr
 
@@ -41,7 +41,7 @@
 (dv $sexpr-begin-tag 'seq)
 
 (dm sexpr-last-exp? ((seq <lst>) => <log>)
-  (empty? (tail seq)))
+  (nul? (tail seq)))
 
 (dm sexpr-first-exp ((seq <lst>) => <any>)
   (head seq))

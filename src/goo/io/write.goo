@@ -8,6 +8,10 @@
 (use goo/macros)
 (use goo/packer)
 (use goo/types)
+(use goo/any)
+(use goo/log)
+(use goo/chr)
+(use goo/mag)
 (use goo/math)
 (use goo/io/port)
 (use goo/cols)
@@ -51,7 +55,7 @@
   (write port x) (newline port))
 
 (dm recurring-write (port|<out-port> x|<lst> d|<int> recur|<fun>)
-  (if (empty? x)
+  (if (nul? x)
       (puts port "()")
       (write-list port x d recur)))
 
@@ -128,7 +132,7 @@
       (seq (put port #\()
            (recur (head x) d)
            (rep loop ((l (tail x)) (n 1))
-             (unless (empty? l)
+             (unless (nul? l)
                (if (>= n *max-print-length*)
                    (puts port " ...")
                    (seq (put port #\space)
@@ -140,7 +144,7 @@
   (and (isa? x <lst>) 
        (== (head x) 'quote)
        (isa? (tail x) <lst>)
-       (empty? (tail (tail x)))))
+       (nul? (tail (tail x)))))
 
 (dm write-flat 
     (port|<out-port> prefix|<str> x|<flat> suffix|<str> d|<int> recur|<fun>)
@@ -190,7 +194,7 @@
   (def names (fun-names x))
   (for ((i (from 0)) (spec (fun-specs x)) (first? (first-then (op #t) (op #f))))
     (unless first? (put port #\space))
-    (if (empty? names)
+    (if (nul? names)
         (write-type port spec)
         (seq (msg port "(%s " (as <str> (elt names i)))
              (write-type port spec)
@@ -274,7 +278,7 @@
   (emit port (class-name (class-of x)))
   (esc blow
     (without-prop-unbound-errors
-      (for ((prop (object-props x)) (i (from 0)))
+      (for ((prop (props-of x)) (i (from 0)))
         (when (>= i *max-print-length*)
           (puts port " ...") (blow #f))
         (def getter (prop-getter prop))
@@ -286,9 +290,6 @@
 
 (dm recurring-write (port|<out-port> (x (t= (eof-object))) d|<int> recur|<fun>)
   (puts port "#{End-of-file}"))
-
-(dm recurring-write (port|<out-port> (x (t= nul)) d|<int> recur|<fun>)
-  (puts port "nul"))
 
 (dm msg (port|<out-port> message|<str> arguments|...)
   (def found-percent?       #f)
@@ -343,7 +344,7 @@
   (def exprs
     (packing
      (loc ((maybe-pack-chars ()
-             (unless (empty? chars)
+             (unless (nul? chars)
                (pack `(puts ,port ,(as <str> chars)))
                (zap! chars)))
            (arg (char|<chr> => <any>)

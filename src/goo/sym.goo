@@ -25,7 +25,7 @@
 
 (df boot-symbols ()
   (rep boot ((syms %symbols))
-    (unless (empty? syms)
+    (unless (nul? syms)
       (def sym (head syms)) (set (elt symbols (sym-name sym)) sym)
       (boot (tail syms)))))
 
@@ -33,3 +33,4 @@
 
 (set fab-sym booted-fab-sym)
 
+(export <sym> sym-name)

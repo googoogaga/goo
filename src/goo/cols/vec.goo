@@ -4,6 +4,10 @@
 (use goo/fun)
 (use goo/class)
 (use goo/macros)
+(use goo/any)
+(use goo/log)
+(use goo/chr)
+(use goo/mag)
 (use goo/math)
 (use goo/types)
 (use goo/cols/col)
@@ -41,7 +45,7 @@
   (when (< i 0) (range-error c i))
   (set (low-elt c i) z))
 
-(dm empty ((c (t= <vec>)) => <vec>) (new <vec>))
+(dm nul ((c (t= <vec>)) => <vec>) (new <vec>))
 
 (dm fab ((c (t= <vec>)) s|<int> => <vec>)
   (def dat (rep-fab (power-of-two-ceil s) #f))

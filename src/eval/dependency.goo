@@ -25,11 +25,11 @@
                     => <dependency-type>)
   (& dep1 dep2))
 
-(dv $empty-dependency 0)
+(dv $nul-dependency 0)
 (dv $all-dependency-types 65535) ;; XXX - Should be all 1 bits.
 
-(df dependency-empty? (dep|<dependency-type> => <log>)
-  (== dep $empty-dependency))
+(df dependency-nul? (dep|<dependency-type> => <log>)
+  (== dep $nul-dependency))
 
 (df dependency-includes-all? (main|<dependency-type>
                               values|<dependency-type>
@@ -39,15 +39,15 @@
 (df dependency-includes-any? (main|<dependency-type>
                               values|<dependency-type>
                               => <log>)
-  (not (dependency-empty? (dependency-and main values))))
+  (not (dependency-nul? (dependency-and main values))))
 
 (export
   <dependency-type>
   dependency-or
   dependency-and
-  $empty-dependency
+  $nul-dependency
   $all-dependency-types
-  dependency-empty?
+  dependency-nul?
   dependency-includes-all?
   dependency-includes-any?)
 
@@ -131,7 +131,7 @@
   (do-keyed
    (fun (dependent dependendent-dtype)
      (def intersection (dependency-and invalid-dtype dependendent-dtype))
-     (unless (dependency-empty? intersection)
+     (unless (dependency-nul? intersection)
        (invalidate-dependent dependent dependable intersection)))
    (dependents dependable)))
 

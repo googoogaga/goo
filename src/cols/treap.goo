@@ -56,7 +56,7 @@
 ;; add-key -- O(log n) expected time
 ;; del -- O(log n) expected time
 ;; elt -- O(log n) expected time
-;; empty? -- O(1)
+;; nul? -- O(1)
 ;; len -- O(n)
 ;; mem? -- O(n)
 ;;
@@ -110,7 +110,7 @@
 (dp tree (<treap> => <tree>))
 
 ;; We immediately implement the collection protocol, because goo will
-;; crash if we try to build the empty collection without these methods
+;; crash if we try to build the nul collection without these methods
 ;; existing. That's why they aren't down with the rest of the <col>
 ;; protocol implementation.
 
@@ -122,7 +122,7 @@
   (new <treap-enum> tree-list lst))
 
 (dm fin? (x|<treap-enum> => <log>)
-  (empty? (tree-list x)))
+  (nul? (tree-list x)))
 
 (dm nxt (x|<treap-enum> => <treap-enum>)
   (def lst (tree-list x))
@@ -161,11 +161,11 @@
 (dm treap-cmp (t|<treap> => <fun>)
   <)
 
-;; Now let's define the unique empty treap. Down below it will
-;; get wrapped around the 'empty' method, but internally it
+;; Now let's define the unique nul treap. Down below it will
+;; get wrapped around the 'nul' method, but internally it
 ;; gets used directly.
 
-(dv empty-treap (new <treap> seed 48637761 tree tree-nil))
+(dv nul-treap (new <treap> seed 48637761 tree tree-nil))
 
 ;; rot-l and rot-r stand for 'rotate left' and 'rotate right'. These
 ;; are pretty standard binary tree manipulations, though to truly
@@ -294,10 +294,10 @@
                      (val t)))))
       (search (tree t)))))
 
-;; empty is the Goo-standard interface, so we'll support that.
+;; nul is the Goo-standard interface, so we'll support that.
 
-(dm empty (t|(t= <treap>) => <treap>)
-  empty-treap)
+(dm nul (t|(t= <treap>) => <treap>)
+  nul-treap)
 
 ;; col is the standard collection constructor.
 
@@ -312,7 +312,7 @@
                     (def v (elt key-vals (+ 1 (* 2 i))))
                     (loop (+ i 1) (add-key new-treap k v)))
                   new-treap)))
-    (loop 0 empty-treap)))
+    (loop 0 nul-treap)))
 
 ;; key-test -- we override key-test so that the enumeration methods
 ;; will do the right things.
@@ -381,7 +381,7 @@
 
 (df random-treap (n m)
   (fold (fun (acc i) (add-key acc (random m) #f))
-        (empty <treap>)
+        (nul <treap>)
         (below n)))
 
 ;; To support printf-style debugging.

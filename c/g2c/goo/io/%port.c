@@ -1,3 +1,5 @@
+/* Copyright 2002, Jonathan Bachrach.  See file TERMS. */
+
 #include <grt.h>
 
 extern P Yfile_opening_error;

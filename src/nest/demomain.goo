@@ -160,7 +160,7 @@
                      (def l1 (intersect c1 c2))
                      (def intersection-points (intersect c3 l1))
                      
-                     (if (empty? intersection-points)
+                     (if (nul? intersection-points)
                          (msg out "No intersection points on mote id: %=\n" (mote-id mote))
                          (seq
                            
@@ -297,7 +297,7 @@
   )
 
 (dm gimme-mote-to-call ()
-  (if (empty? *motes-to-call*)
+  (if (nul? *motes-to-call*)
       #f
       (seq
         (def mote-to-call (1st *motes-to-call*))
@@ -359,7 +359,7 @@
   (incf probe-tick)
   (when (== probe-tick *probe-every*)
     (set probe-tick 0)
-    (if (empty? *messages-to-send*)
+    (if (nul? *messages-to-send*)
         (seq
           (def mote-to-call (gimme-mote-to-call))
           (when mote-to-call

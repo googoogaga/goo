@@ -28,7 +28,7 @@
 (ds (renew ,x ,@prop-inits)
   (let ((var  (gensym))
         (sets (rep loop ((sets '()) (inits prop-inits))
-                (if (empty? inits)
+                (if (nul? inits)
                     (rev! sets)
                     (let ((val (head (tail inits))))
                       (loop (pair `(set (,(head inits) ,var) ,val) sets)
@@ -46,16 +46,19 @@
   ;;   'bar => (tup '() 'bar)
   (df lift-place-subforms (place => (tup g-decls|<lst> g-place|<any>))
     (loc ((munch ((subforms <lst>) => (tup g-decls|<lst> g-args|<lst>))
-            (if (empty? subforms)
+            (if (nul? subforms)
                 (tup '() '())
                 (let (((tup g-decls g-args) (munch (tail subforms)))
-                      (g (gensym)))
-                  (tup (pair `(,g ,(head subforms)) g-decls)
-                       (pair g g-args))))))
+                      (subform (head subforms)))
+                  (if (isa? subform <lst>)
+                      (let ((g (gensym)))
+                        (tup (pair `(,g ,subform) g-decls)
+                             (pair g g-args)))
+                      (tup g-decls (pair subform g-args)))))))
       (if (isa? place <sym>)
           (tup '() place)
           (let (((tup g-decls g-args) (munch (tail place))))
-            (tup g-decls (pair (head place) g-args))))))
+            (tup g-decls `(,(head place) ,@g-args))))))
 
   )
            
@@ -135,7 +138,7 @@
        #t))
 
 (ds (cond ,@cases)
-  (if (empty? cases)
+  (if (nul? cases)
       #f
       (mif ((,cond ,@body) (head cases))
            `(if ,cond
@@ -145,7 +148,7 @@
 
 (ct-also
   (df do-case-by (val tst cases)
-    (if (empty? cases)
+    (if (nul? cases)
         #f
         (mif ((,cond ,@body) (head cases))
              (if (== cond #t)
@@ -183,7 +186,7 @@
 
 (ds (for (,@clauses) ,@body)
   (rep grok ((clauses clauses) (inits '()) (preds '()) (nows '()) (nexts '()))
-    (if (empty? clauses)
+    (if (nul? clauses)
         (let ((loop (gensym)))
           `(rep ,loop ,inits
              (unless (or ,@preds)
@@ -209,17 +212,18 @@
   `(rep _loop ()
      (unless ,test ,@body (_loop))))
 
-(ds (dlet ,bindings ,@body)
-  (mif (() bindings)
-    `(seq ,@body)
-     (mif (((,var ,value) ,@rest) bindings)
-       (let ((name (var-name var))
-             (old-value (gensym)))
-         `(let ((,old-value ,name))
-            (fin (seq (set ,name ,value)
-                      (dlet (,@rest) ,@body))
-                 (set ,name ,old-value))))
-       (syntax-error "Bad dlet bindings %=" bindings))))
+(ds (dlet ,places ,@body)
+  (match places
+    (() 
+     `(seq ,@body))
+    (((,place ,value) ,@rest)
+     (let (((tup g-decls g-place) (lift-place-subforms place))
+           (old-value (gensym)))
+       `(let (,@g-decls (,old-value ,g-place))
+          (fin (seq (set ,g-place ,value)
+                    (dlet (,@rest) ,@body))
+               (set ,g-place ,old-value)))))
+    (#t (syntax-error "Bad dlet places %=" places))))
 
 (ds (def-fun-var ,var ,value)
   (let ((nam (var-name var))
@@ -238,7 +242,7 @@
 ;; need it to modularize the existing code base.
 ;; TODO - Move this macro into boot.goo along with AND, OR, WHEN, UNLESS.
 (ds (need-implementation ,@names)
-  (if (empty? names)
+  (if (nul? names)
       #f
       `(seq (and #f ,(head names))
             (export ,(head names))
@@ -283,14 +287,14 @@
   rev!
   cat
   elt 1st 2nd last
-  empty?
+  nul?
   error
   gensym
   fab-setter-name
   cat-sym
   map map2
   match-atom
-  match-empty-list
+  match-nul-list
   match-sublist
   match-unquote
   pair

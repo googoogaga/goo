@@ -31,7 +31,7 @@
     `(del-test ',name)
     `(seq (add-test ',name) 
         (dm run-tests (group-name|(t= ',name))
-          ,@tests))))
+          ,@tests (post "DONE WITH %=\n" group-name)))))
 
 (export
   add-test
@@ -130,45 +130,51 @@
 (dv *catch-test-errors* #t)
 
 (dm run-tests-in (tst => (tup errors|<lst> warnings|<lst>))
-  (def errors '())
+  (def errors   '())
   (def warnings '())
   (if *catch-test-errors*
       (esc break
         (try <condition>
           (fun (condition resume)
-            (msg out "Failure: %s\n" (describe-condition condition))
+            (post "Failure: %s\n" (describe-condition condition))
             (if (isa? condition <test-warning>)
                 (seq (pushf warnings (lst condition *test-doc*))
                      (resume #f))
                 (seq (pushf errors (lst condition *test-doc*))
                      (break #f))))
-          (tst)))
+          (tst)
+          ;; (post "DONE TRY\n")
+          )
+        ;; (post "DONE ESC\n")
+        )
       (tst))
-    (tup errors warnings))
+  ;; (post "TUPING RES\n")
+  (tup errors warnings))
 
 (dv *all-warnings* #f)
-(dv *all-errors* #f)
+(dv *all-errors*   #f)
 
 (dm run-all-tests (=> <Int>)
   (newline out)
   (def all-warnings '()) (def all-errors '())
   (do (fun (tst)
         (when tst
-          (msg out "Testing %=\n" tst)
+          (post "Testing %=\n" tst)
           (def (tup errors warnings) (run-tests-in (fun () (run-tests tst))))
+          ;; (post "DONE %= E %= W %=\n" tst errors warnings)
           (set all-warnings (cat! all-warnings warnings))
           (set all-errors   (cat! all-errors   errors))))
       *tests*)
-  (msg out "WARNING AND ERROR SUMMARY\n")
+  (post "WARNING AND ERROR SUMMARY\n")
   (set *all-warnings* all-warnings)
-  (set *all-errors* all-errors)
-  (do (fun (c) (msg out "Warning: %=. Continuing...\n"
-                    (describe-condition (head c))))
+  (set *all-errors*   all-errors)
+  (do (fun (c) (post "Warning: %=. Continuing...\n"
+                     (describe-condition (head c))))
       (rev all-warnings))
-  (do (fun (c) (msg out "Error: %=.\n" (describe-condition (head c))))
+  (do (fun (c) (post "Error: %=.\n" (describe-condition (head c))))
       (rev all-errors))
-  (msg out "Tautology completed with %= warnings and %= errors\n"
-       (len all-warnings) (len all-errors))
+  (post "Tautology completed with %= warnings and %= errors\n"
+        (len all-warnings) (len all-errors))
   (+ (len all-warnings) (len all-errors)))
 
 (export run-all-tests)

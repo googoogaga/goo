@@ -213,7 +213,7 @@
   (3rd exp))
 
 (dm sexpr-if-else (exp|<lst> => <any>)
-  (if (empty? (tail (tail (tail exp)))) ;;cdddr
+  (if (nul? (tail (tail (tail exp)))) ;;cdddr
       #f
       (head (tail (tail (tail exp)))))) ;;cadddr
 
@@ -268,7 +268,7 @@
 ;;; Find an option.  Given '((foo 1) (bar 2)) and 'foo, return '(1).
 (df find-option (options|<lst> option|<sym> default => <any>)
   (cond
-    ((empty? options) default)
+    ((nul? options) default)
     ((== option (head (1st options))) (tail (1st options)))
     (#t (find-option (tail options) option default))))
 
@@ -316,7 +316,7 @@
   (tail begin-exp))
 
 (dm sexpr-last-exp? (seq|<lst> => <log>)
-  (empty? (tail seq)))
+  (nul? (tail seq)))
 
 (dm sexpr-first-exp (seq|<lst> => <any>)
   (head seq))
@@ -325,7 +325,7 @@
   (tail seq))
 
 (dm sexpr-sequence->begin (seq|<lst> => <any>)
-  (if (empty? seq)
+  (if (nul? seq)
       seq
       (if (sexpr-last-exp? seq)
           (sexpr-first-exp seq)
@@ -336,7 +336,7 @@
 
 ;;  Procedure applications -- NO-ARGS? and LAST-OPERAND? added
 (dm sexpr-application? (exp => <log>)
-  (and (isa? exp <lst>) (not (empty? exp))))
+  (and (isa? exp <lst>) (not (nul? exp))))
 
 (dm sexpr-operator (app|<lst> => <any>)
   (head app))
@@ -345,7 +345,7 @@
   (tail app))
 
 (dm sexpr-no-operands? (args|<lst> => <log>)
-  (empty? args))
+  (nul? args))
 
 (dm sexpr-first-operand (args|<lst> => <any>)
   (head args))
@@ -400,7 +400,7 @@
 (dm sexpr-let-names+values
     (names|<lst> vals|<lst> => (tup names|<lst> values|<lst>))
   (rep loop ((rnames '()) (rvalues '()) (names names) (vals vals))
-    (if (empty? names)
+    (if (nul? names)
         (tup (rev! rnames) (rev! rvalues))
         (let ((name  (head names))
               (value (head vals)))
@@ -411,7 +411,7 @@
                      (rep inner
                          ((rtnames (lst tupname)) (rtvalues (lst value))
                           (index 0) (tnames (tail name)))
-                       (if (empty? tnames)
+                       (if (nul? tnames)
                            (tup rtnames rtvalues)
                            (let ((name (head tnames)))
                              (if (and (isa? name <lst>) 
@@ -437,7 +437,7 @@
   (def body               (sexpr-let-body let-exp))
   (def (tup names values) (sexpr-let-names+values onames ovalues))
   (rep col ((names names) (values values))
-    (if (empty? names)
+    (if (nul? names)
         body
         (pair (lst $sexpr-method-tag (lst (head names))
                    (col (tail names) (tail values)))
@@ -628,7 +628,7 @@
   (sexpr-tagged-list? x $sexpr-quasiquote-tag))
 
 (dm sexpr-atom? (x => <log>)
-  (or (not (isa? x <lst>)) (empty? x)))
+  (or (not (isa? x <lst>)) (nul? x)))
 
 (dm nreconc (x|<lst> y|<lst> => <lst>)
   (cat! (rev! x) y))
@@ -649,7 +649,7 @@
                  (return (pair *bq-append*
                                (nreconc q (lst (lst *bq-quote* p)))))
                  (seq (when (sexpr-unquote? p)
-                        (unless (empty? (tail (tail p)))
+                        (unless (nul? (tail (tail p)))
                           (syntax-error "Malformed ,%=" p))
                         (return 
                          (pair *bq-append* 
@@ -687,8 +687,8 @@
         ((== (head x) *bq-clobberable*)
          (bq-remove-tokens (head (tail x))))
         ((and (== (head x) *bq-list**)
-              (not (empty? (tail (tail x))))
-              (empty? (tail (tail (tail x)))))
+              (not (nul? (tail (tail x))))
+              (nul? (tail (tail (tail x)))))
          (pair 'pair (map-tree bq-remove-tokens (tail x))))
         (#t
          (map-tree bq-remove-tokens x))))
@@ -721,7 +721,7 @@
 (dm sexpr-bind-pattern-variables (pat|<lst> => <lst>)
   (del-dups
     (rep col ((pat pat))
-      (if (or (not (isa? pat <lst>)) (empty? pat))
+      (if (or (not (isa? pat <lst>)) (nul? pat))
           '()
           (let ((x (head pat)))
             (if (sexpr-pattern-variable? x)

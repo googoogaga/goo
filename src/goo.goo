@@ -4,8 +4,11 @@
 (use goo/fun)
 (use goo/class)
 (use goo/macros)
-(use goo/mag)
 (use goo/types)
+(use goo/any)
+(use goo/mag)
+(use goo/log)
+(use goo/chr)
 (use goo/math)
 (use goo/functional)
 (use goo/loc)
@@ -36,7 +39,7 @@
  quasiquote
  
  ;; Section 3.1: Any.
- <any> as new object-class class-of clone
+ <any> as new class-of clone
  
  ;; Section ?.?: Type.
  <type>
@@ -50,9 +53,6 @@
 
  ;; Section 3.2: Comparables.
  == = < ~= ~== > <= >= min max subtype? isa? may-isa? 
- 
- ;; Section 3.3: Null.
- nul ;; nul?
  
  ;; Section 3.4: Booleans.
  <log> not
@@ -73,7 +73,7 @@
  
  ;; Section 3.7: Collections.
  <col> <col.> len elt elt-or elts low-elt dup col-res col-res-type
- empty? empty elt-default elt-type key-type key-test fab fabs fill any?
+ nul? nul elt-default elt-type key-type key-test fab fabs fill any?
  all? fold fold+ find find-or del zap do do2 do3 map map2 do-keyed
  map-keyed mem? keys items zap find find-or 
  <col!> del! elt! add! zap! fill! into
@@ -173,8 +173,8 @@
 
  ;; Undocumented stuff.  This was all found by a process of trial and
  ;; error, but it needs to be here.
- match-atom match-empty-list match-unquote match-sublist
- %pair %next-methods %define-method %prop %prop-unbound-error
+ match-atom match-nul-list match-unquote match-sublist
+ %pair fab-pair %next-methods %define-method %prop %prop-unbound-error
  <handler-info>
  $default-handler-info
  <simple-handler-info>
@@ -191,6 +191,10 @@
 (export 
   any2?
   all2?)
+
+;; TODO: DEPRECATED
+(export
+  empty? empty)
 
 ;; TODO: HYGIENE
 (export

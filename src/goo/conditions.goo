@@ -4,6 +4,10 @@
 (use goo/fun)
 (use goo/class)
 (use goo/macros)
+(use goo/any)
+(use goo/log)
+(use goo/chr)
+(use goo/mag)
 (use goo/math)
 (use goo/types)
 (use goo/app)
@@ -91,7 +95,7 @@
 
 (dm default-handler-description 
     (cond-type|(t< <replace-generic-restart>) => <str>)
-  "Replace the generic function with an empty, congruent one")
+  "Replace the generic function with an nul, congruent one")
 
 (export
   <restart>
@@ -171,7 +175,7 @@
 
 ;;; Pass a signal to a list of handlers for processing.
 (df signal-handler-list (condition|<condition> handlers|<lst> => <any>)
-  (if (empty? handlers)
+  (if (nul? handlers)
       (default-handler condition)
       (let ((handler (head handlers))
             (remaining (tail handlers)))
@@ -463,7 +467,7 @@
 ;;; Apply 'f' to all handlers whose type is a subtype of 'type'.
 (df do-handlers-of-type (type|(t< <condition>) f|<fun>)
   (rep search ((handlers *current-handlers*))
-    (if (empty? handlers)
+    (if (nul? handlers)
         #f
         (let ((handler (head handlers))
               (remaining (tail handlers)))
@@ -497,7 +501,7 @@
   (unless (handler-matches? handler condition)
     (error "Handler %= does not match condition %=" handler condition))
   (rep search ((handlers *current-handlers*))
-    (if (empty? handlers)
+    (if (nul? handlers)
         (error "Handler %= is not installed" handler)
         (let ((current (head handlers))
               (remaining (tail handlers)))

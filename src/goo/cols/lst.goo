@@ -5,6 +5,10 @@
 (use goo/class)
 (use goo/macros)
 (use goo/types)
+(use goo/any)
+(use goo/log)
+(use goo/chr)
+(use goo/mag)
 (use goo/math)
 (use goo/cols/col)
 (use goo/cols/colx)
@@ -38,11 +42,11 @@
 ;;;; Collection protocol
 (dm len (x|<lst> => <int>)
   (rep sum (((count <int>) 0) ((x <lst>) x))
-    (if (empty? x) count (sum (+ count 1) (tail x)))))
+    (if (nul? x) count (sum (+ count 1) (tail x)))))
 
 (dm elt-or (x|<lst> key|<int> default => <any>)
   (rep fnd (((count <int>) 0) ((x <lst>) x))
-    (if (empty? x)
+    (if (nul? x)
         default
         (if (== count key)
             (head x)
@@ -50,24 +54,24 @@
 
 (dm elt-setter (z x|<lst> key|<int>)
   (rep fnd (((count <int>) 0) ((x <lst>) x))
-    (if (empty? x)
+    (if (nul? x)
         (range-error x key)
         (if (== count key)
             (set (head x) z)
             (fnd (+ count 1) (tail x))))))
 
-(dm empty? (c|<lst> => <log>) (== c (empty (class-of c))))
+(dm nul? (c|<lst> => <log>) (== c (nul (class-of c))))
 
-(dm empty ((c (t= <lst>)) => <lst>) '())
+(dm nul ((c (t= <lst>)) => <lst>) '())
 
 (dm fab ((t (t< <lst>)) s|<int> => <lst>)
-  (rep fab ((i|<int> s) (res|<lst> (empty t)))
+  (rep fab ((i|<int> s) (res|<lst> (nul t)))
     (if (> i 0)
         (fab (- i 1) (new t tail res))
         res)))
 
 (dm fabs ((c (t< <lst>)) objects|... => <lst>)
-  (rep build ((index|<int> (- (len objects) 1)) (result|<lst> (empty c)))
+  (rep build ((index|<int> (- (len objects) 1)) (result|<lst> (nul c)))
     (if (< index 0)
         result
         (build (- index 1) 
@@ -80,7 +84,7 @@
 (dm enum (x|<lst> => <lst-enum>)
   (new <lst-enum> %dat x))
 (dm fin? (e|<lst-enum> => <log>)
-  (empty? (%dat e)))
+  (nul? (%dat e)))
 (dm nxt (e|<lst-enum> => <lst-enum>)    
   (renew e %key (+ (%key e) 1) %dat (tail (%dat e))))
 (dm now (e|<lst-enum> => <any>)
@@ -96,11 +100,11 @@
 
 (dm last (x|<lst> => <any>)
   (rep fnd ((x x) (px x))
-    (if (empty? x) (head px) (fnd (tail x) x))))
+    (if (nul? x) (head px) (fnd (tail x) x))))
 
 (dm rev! (c|<lst> => <lst>)
-  (rep loop ((l c) (r (empty (class-of c))))
-    (if (empty? l)
+  (rep loop ((l c) (r (nul (class-of c))))
+    (if (nul? l)
         r
         (let ((t (tail l)))
           (set (tail l) r)
@@ -109,11 +113,11 @@
 (dm cat! (x|<lst> more|... => <lst>)
   (loc ((connect (x|<lst> y|<lst> => <lst>)
           ;; connect x to y and return the last elem of the list
-          (if (empty? y)
+          (if (nul? y)
               x
               (seq (set (tail x) y)
                    (rep find-tail ((p|<lst> y))
-                     (if (empty? (tail p))
+                     (if (nul? (tail p))
                          p
                          (find-tail (tail p))))))))
     (def result (lst #f))
@@ -142,7 +146,7 @@
     (if (== tmp (head items))
         items
         (rep bub ((tmp (head items)) (prev items) (next (tail items)))
-          (if (empty? next)
+          (if (nul? next)
               (loop tmp)
               (bub (if (test (head next) (head prev))
                        (let ((tmp (head prev)))
@@ -160,14 +164,14 @@
 ;;;; Not documented
 ;; TODO: CHANGE ORDER OF ARGS LIKE MEM?
 (dm assq (x l|<lst> => <any>)
-  (if (empty? l)
+  (if (nul? l)
       #f
       (if (== x (head (head l)))
           (head l)
           (assq x (tail l)))))
 
 (dm assqn (x l|<lst> pos|<int> => <any>)
-  (if (empty? l)
+  (if (nul? l)
       #f
       (if (== x (elt (head l) pos))
           (head l)
@@ -176,11 +180,11 @@
 ;; (ct (dv cat-sym make-sym))
 (ds (def-list ,name (,@supers))
   (let ((class  (cat-sym "<" name ">"))
-        ($empty (cat-sym "$" name "-empty")))
+        ($nul (cat-sym "$" name "-nul")))
     `(seq (dc ,class (<lst> ,@supers))
-          (dv ,$empty (new ,class))
+          (dv ,$nul (new ,class))
           (df ,name (h t) (new ,class head h tail t))
-          (dm empty ((e (t= ,class)) => ,class) ,$empty))))
+          (dm nul ((e (t= ,class)) => ,class) ,$nul))))
 
 (dm line-of (x) #f)
 
@@ -194,14 +198,14 @@
 (df line-pair (h t l) (new <line-list> head h tail t line-of l))
 
 (df line-list (l elts|...) 
-  (rep fab ((r (empty <line-list>)) (i (- (len elts) 1)))
+  (rep fab ((r (nul <line-list>)) (i (- (len elts) 1)))
     (if (< i 0)
         r
         (fab (line-pair (elt elts i) r l) (- i 1)))))
 
 (dm line-list-of (ctx|<lst> src|<lst> => <lst>)
   (rep copy ((l (line-of ctx)) (src src))
-    (if (and (isa? src <lst>) (not (empty? src)))
+    (if (and (isa? src <lst>) (not (nul? src)))
         (let ((h (head src)) (t (tail src)))
           (line-pair (copy (or (line-of h) l) h) (copy (or (line-of t) l) t) l))
         src)))

@@ -21,9 +21,9 @@
     (fun (sr k) (pm sr (fun (v) ((if v m2 m3) sr k))))))
 
 (dm meaning-sequence ((e+ <lst>) r)
-  (if (empty? e+)
+  (if (nul? e+)
       (static-wrong "Illegal syntax: (seq)")
-      (if (empty? (tail e+))
+      (if (nul? (tail e+))
           (meaning (head e+) r)
           (meaning*-multiple-sequence (head e+) (tail e+) r))))
 
@@ -119,7 +119,7 @@
                   (wrong "Not a function" f)))))))
                          
 (dm meaning* ((e* <lst>) r size)
-  (if (empty? e*)
+  (if (nul? e*)
       (meaning-no-argument r size)
       (meaning-some-arguments (head e*) (tail e*) r size)))
 
@@ -216,9 +216,9 @@
   (pair n* r))
 
 (dm local-variable? ((r <lst>) (i <int>) (n <sym>))
-  (and (not (empty? r))
+  (and (not (nul? r))
        (rep scan ((names (head r)) (j 0))
-         (case ((empty? names)
+         (case ((nul? names)
                 (local-variable? (tail r) (+ i 1) n) )
                ((isa? names <lst>) 
                 (if (== n (head names))
@@ -280,15 +280,15 @@
         (let ((index (g.init-extend! name)))
           (set (elt sg.init i undefined-value))))))
 
-(dv *e* $the-empty-environment)
+(dv *e* $the-nul-environment)
 
 (dm initialize-world ()
-  (let ((env (env-extend! $the-empty-environment '() '() 'global)))
+  (let ((env (env-extend! $the-nul-environment '() '() 'global)))
     (env-define-binding! env 'sig  sig)
     (env-define-binding! env 'pair pair)
     (env-define-binding! env 'head head)
     (env-define-binding! env 'tail tail)
-    (env-define-binding! env 'empty? empty?)
+    (env-define-binding! env 'nul? nul?)
     (env-define-binding! env '+ +)
     (env-define-binding! env '< <)
     (env-define-binding! env '= =)

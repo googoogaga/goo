@@ -1,15 +1,5 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 ;;  Copyright (c) 1993, 1994 Richard Kelsey and Jonathan Rees.  See file COPYING.
-;;  A little Scheme reader.
-;;  Nonstandard things used:
-;;   Ascii stuff: char->ascii, ascii->char, ascii-whitespaces, ascii-limit
-;;     (for dispatch table; portable definitions in alt/ascii.scm)
-;;   reverse-list->string  -- ok to define as follows:
-;;     (define (reverse-list->string l n)
-;;       (list->string (reverse l)))
-;;   make-immutable! -- ok to define as follows:
-;;     (define (make-immutable! x) x)
-;;   signal (only for use by reading-error; easily excised)
 
 (use goo/boot)
 (use goo/fun)
@@ -17,6 +7,9 @@
 (use goo/macros)
 (use goo/conditions)
 (use goo/types)
+(use goo/any)
+(use goo/log)
+(use goo/chr)
 (use goo/math)
 (use goo/io/port)
 (use goo/cols)
@@ -362,12 +355,12 @@
         (if maybe-number
             maybe-number
             (if (any? (fun (x) (= string x)) $strange-symbol-names)
-                (as <sym> (make-immutable! string))
+                (as <sym> string)
                 (if (= string ".")
-                    (as <sym> (make-immutable! string))
+                    (as <sym> string)
                     (reading-error port "unsupported number syntax" string)))))
       (seq ;; (put out #\n) (newline out)
-       (as <sym> (make-immutable! string)))))
+       (as <sym> string))))
 ;;       (let ((vert-pos (pos string #\|)))
 ;;      (if (and vert-pos (> (len string) 1)) ;; typed variable?
 ;;          (if (= vert-pos 0)
@@ -375,7 +368,7 @@
 ;;              `(,(as <sym> (sub string 0 vert-pos)) 
 ;;                ,(as <sym> (sub string (+ vert-pos 1) (len string)))))
 ;;          (seq ;; (put out #\n) (newline out)
-;;           (as <sym> (make-immutable! string)))))
+;;           (as <sym> string))))
 
 (dv $strange-symbol-names 
   '("+" "-" "..."
@@ -402,8 +395,6 @@
 
 (dm reverse-list->string (l|<lst> n|<int> => <str>)
   (as <str> (rev! l)))
-
-(dm make-immutable! (x) x)
 
 (export
   read-delimited-list

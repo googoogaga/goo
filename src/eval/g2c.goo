@@ -17,8 +17,7 @@
 (use eval/typist)
 (use eval/optimize)
 
-(ddv *definitions*      #f)
-(ddv *dynamic-linking?* #f)
+(ddv *definitions* #f)
 
 ;;;;=======================================================================
 ;;;;  Module Loading
@@ -53,7 +52,7 @@
   (%print-cpu-usage (%su "START"))
   (def ast      (compute-ast src-file env))
   ;; (msg* out "Computing program for %s.\n" name)
-  (def prg    (compute-program ast env))
+  (def prg      (compute-program ast env))
   (%print-cpu-usage (%su "OPTIMIZE"))
   ;; (msg* out "Generating C code for %s.\n" name)
   (probe-directory (parent-directory out-file))
@@ -108,13 +107,14 @@
 
 ;;; Given a module loader, generate an up-to-date C program.
 (df g2c-build-app (loader|<g2c-module-loader> => #f)
-  (purge-outdated-modules loader)
-  (def mod (probe-module loader (module-loader-app-modname loader)))
-  (puts out "Searching for undefined global bindings.\n")
-  (do-module-loader-modules report-undefined-global-bindings loader)
-  (generate-c-application loader mod)
-  (generate-makefile loader)
-  #f)
+  (dlet ((*dynamic-compilation?* #f))
+    (purge-outdated-modules loader)
+    (def mod (probe-module loader (module-loader-app-modname loader)))
+    (puts out "Searching for undefined global bindings.\n")
+    (do-module-loader-modules report-undefined-global-bindings loader)
+    (generate-c-application loader mod)
+    (generate-makefile loader)
+    #f))
 
 (df g2c-test (x)
   (set *g2c-app* (g2c-def-app (cat "g2c-" (to-str x)) 'eval/main)))
@@ -128,13 +128,14 @@
   (def out-file (c-filename file))
   (def prg      (compute-program ast env))
   (with-port (out-port (open <file-out-port> out-file))
-    (dlet ((*dynamic-linking?* #t)
-           (*definitions*      (program-definitions prg))) 
+    (dlet ((*dynamic-compilation?* #t)
+           (*definitions*          (program-definitions prg))) 
       (generate-c-module out-port ast prg mod)))
   file)
 
 (dm g2c-exp (exp env)
-  (g2c-ast (objectify-with-subtransaction exp env #f) env))
+  (g2c-ast 
+   (objectify-with-subtransaction exp env *dynamic-compilation?* #f) env))
 
 (dm compile-load (name)
   (%compile (%su (cat name *c-extension*)) (%su (cat name ".so")))
@@ -161,7 +162,8 @@
 (dm compute-ast (filename ct-env)
   (def sexpr (read-file filename))
   (%print-cpu-usage (%su "READ"))
-  (def ast   (objectify-with-subtransaction sexpr ct-env #f))
+  (def ast
+    (objectify-with-subtransaction sexpr ct-env *dynamic-compilation?* #f))
   (%print-cpu-usage (%su "AST"))
   ast)
 
@@ -199,7 +201,7 @@
   (generate-quotation-forwards out (program-quotations prg))
   (generate-function-forwards out (program-definitions prg))
   (generate-function-bodies out (program-definitions prg))
-  (unless *dynamic-linking?*
+  (unless *dynamic-compilation?*
     (generate-module-info out mod))
   (generate-module-init out mod (program-form prg)) 
   (generate-trailer out)
@@ -263,7 +265,7 @@
   (def modvar $now-mod-var-name)
   (msg* out "/* GOO 2 C $REVISION: 0.120 $ \n")
   (msg* out "  */\n\n#include \"grt.h\"\n")
-  (when *dynamic-linking?*
+  (when *dynamic-compilation?*
     (msg* out "#include \"dlgrt.h\"\n"))
   (msg* out "\nstatic PSTR %s = PNUL;\n" modvar)
   (msg* out "\nstatic P sloc (int line) {\n")
@@ -286,11 +288,12 @@
 
 (dm generate-global-environment (out mod)
   (msg* out "\n/* MODULE ENVIRONMENT: %s */\n\n" (module-name mod))
-  (do-static-global-bindings
-   (fun (binding)
-     (generate-global-binding
-      out (not (binding-native-to? binding mod)) binding))
-   (module-target-environment mod)))
+  (loc ((gen-binding (b)
+          (generate-global-binding out (not (binding-native-to? b mod)) b)))
+    (if *dynamic-compilation?*
+        (do gen-binding (module-referenced-bindings mod))
+        (do-static-global-bindings
+         gen-binding (module-target-environment mod)))))
 
 (dm generate-global-binding (out imported? gb)
   (def kind (binding-kind gb))
@@ -514,7 +517,7 @@
     `(let ((,out-var ,out-val))
        (put ,out-var #\() 
        ,@(rep loop ((forms '()) (body body) (first? #t))
-           (if (empty? body)
+           (if (nul? body)
                (rev! forms)
                (loop (pair (head body)
                            (pair (or first? `(put ,out-var #\,)) forms))
@@ -556,6 +559,17 @@
     (with-statement (1 out)
       (msg* out "lit_%s = " (binding-name qb))
       (generate-quotation out (binding-info qb)))))
+
+(d. *lits*    (fab <vec> 0))
+(d. *lits-at* (fab <tab> 0))
+
+(df @lit (n) (elt *lits* n))
+
+(dm ref-lit (x)
+  (elt! *lits-at* x {\ (def n (len *lits*)) (add! *lits* x) n }))
+
+(dm generate-quotation (out x|<any>)
+  (msg* out "%s((P)%d)" (mangle-boot-name "%lit") (ref-lit x)))
 
 (dm false-name ()
   (mangle-boot-name "%false"))
@@ -771,7 +785,7 @@
   (def n (set (loop-continue e) (incf *loop-arg-counter*)))
   (gen-depth d out) (msg* out "LOOP_%d: {\n" n)
   (def bindings (loop-bindings e))
-  (unless (empty? bindings)
+  (unless (nul? bindings)
     (with-statement ((+ d 1) out)
       (puts out "P ")
       (for-commas out ((b bindings) (i (from 0)))
@@ -814,6 +828,13 @@
       (when (> n $number-call-templates) (msg* out ",%s" n))
       (for ((arg (application-arguments e)))
         (put out #\,) (gen-ref arg out)))))
+
+(dm to-c (e|<method-application> f d out)
+  (to-c (application-next-methods e) f d out)
+  (with-statement (d out)
+    (puts out (mangle-boot-name "%next-methods-reg-setter"))
+    (between-parentheses (out) (gen-ref (application-next-methods e) out)))
+  (sup e f d out))
 
 (dm to-c (e|<arguments> f d out)
   (for-commas out ((x e))
@@ -939,7 +960,7 @@
       (gen-ref (assignment-form e) out))))
 
 (dm out-list-builder (f|<fun> out elts|<lst>)
-  (if (empty? elts)
+  (if (nul? elts)
       (puts out (mangle-boot-name "nil"))
       (seq
         (puts out (mangle-boot-name "%%list"))
@@ -960,9 +981,8 @@
   (do (fun (x) (to-c x f d out)) (signature-specs e))
   (to-c (signature-value e) f d out)
   (with-expression (e d out)
-    (puts out (mangle-boot-name "%sig"))
+    (puts out (mangle-boot-name "%fab-sig"))
     (between-parentheses-comma-separated (out)
-      (gen-ref (signature-names e) out)
       (generate-function-specs out e)
       (gen-ref (signature-nary? e) out)
       (gen-ref (signature-arity e) out)
@@ -972,14 +992,11 @@
 (dm to-c (e|<ast-generic> f d out)
   (to-c (function-signature e) f d out)
   (with-expression (e d out)
-    (puts out (mangle-boot-name "%gen"))
+    (puts out (mangle-boot-name "%fab-gen"))
     (between-parentheses-comma-separated (out)
-      (puts out "(P)YPgen_code((P)YPdispatch)") ;; TODO: HACK!!!
-      (gen-ref (function-debug-name e) out)
       (gen-ref (function-signature e) out)
-      (puts out (mangle-boot-name "nil"))
-      (puts out (mangle-boot-name "%false"))
-      (puts out (mangle-boot-name "%false"))
+      (gen-ref (function-debug-name e) out)
+      (gen-ref (function-names e) out)
       (puts out (mangle-boot-name "%false")))))
 
 ;;;
@@ -992,7 +1009,7 @@
 
 (dm generate-function-forward (out defn|<ast-primitive>)
   (msg* out "%s P %s (" 
-        (if *dynamic-linking?* "static" "extern")
+        (if *dynamic-compilation?* "static" "extern")
         (mangle-binding (function-binding defn)))
   (for-commas out ((i (below (len (function-bindings defn)))))
     (puts out "P"))
@@ -1033,17 +1050,16 @@
   (to-c (function-signature definition) f d out)
   (with-expression (definition d out)
     (generate-function-binding out definition)
-    (msg* out " = %s" (mangle-boot-name "%met"))
+    (msg* out " = %s" (mangle-boot-name "%fab-met"))
     (between-parentheses-comma-separated (out)
       (generate-function-body-reference out definition)
-      (gen-ref (function-debug-name definition) out)
       (gen-ref (function-signature definition) out)
-      (puts out "ENVNUL")
-      (puts out "PNUL")
+      (gen-ref (function-debug-name definition) out)
+      (gen-ref (function-names definition) out)
       (if (program-line definition)
           (msg* out "sloc(%d)" (program-line definition))
-          (gen-ref (function-source definition) out))
-      )))
+          (puts out (mangle-boot-name "%false")))
+      (gen-ref (function-source definition) out))))
 
 (dm generate-function-body-reference (out definition)
   (puts out "FUNCODEREF(")
@@ -1071,7 +1087,7 @@
 
 (dm generate-function-code (out e|<ast-primitive>)
   (msg* out "\n%s%sP " 
-        (if *dynamic-linking?* "static " "")
+        (if *dynamic-compilation?* "static " "")
         (if (primitive-inlinable? e) "INLINE " ""))
   (binding->c (function-binding e) out)
   (between-parentheses (out)
@@ -1100,7 +1116,7 @@
   (puts out (if bound? "\nFUNCODEDEF(" "\nLOCCODEDEF("))
   (generate-function-binding out definition)
   (puts out ") {\n")
-  (unless (empty? bindings)
+  (unless (nul? bindings)
     (with-statement (1 out)
       (puts out "P ")
       (for-commas out ((b (function-bindings definition)))
@@ -1245,12 +1261,12 @@
   (cat "void " (module-init-name name) " (void)"))
 
 (dm generate-module-init (out mod form)
-  (def name       (if *dynamic-linking?* "dl" (module-name mod)))
+  (def name       (if *dynamic-compilation?* "dl" (module-name mod)))
   (def init-decl  (module-init-decl name))
   (def env        (module-target-environment mod))
   (def uses       (environment-uses-modules env))
   (def uses-names (map module-name uses))
-  (unless *dynamic-linking?*
+  (unless *dynamic-compilation?*
     (puts out "\n/* MODULES USED: */\n\n")
     (for ((n uses-names))
       (msg* out "extern %s;\n" (module-init-decl n))))
@@ -1260,13 +1276,13 @@
   (puts out "  static int need_init = 1;\n")
   (puts out "  if (!need_init) return;\n\n")
   (puts out "  need_init = 0;\n")
-  (unless *dynamic-linking?*
+  (unless *dynamic-compilation?*
     (for ((n uses-names))
       (msg* out "  %s();\n" (module-init-name n)))
     (puts out "\n"))
   (to-c form #f 1 out)
   (puts out "\n")
-  ;; (unless *dynamic-linking?*
+  ;; (unless *dynamic-compilation?*
   ;;   (puts out "  YPprint_cpu_usage(__FILE__);\n"))
   (puts out "}\n"))
 

@@ -1,3 +1,5 @@
+/* Copyright 2002, Jonathan Bachrach.  See file TERMS. */
+
 #include <grt.h>
 
 /* TODO - Need Windows versions of the following functions. */

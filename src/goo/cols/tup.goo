@@ -33,7 +33,7 @@
 ;;   (range-check x i)
 ;;   (set (%telt x (%iu i)) z)) ;; TODO: LOW-ELT
 
-(dm empty (c|(t= <tup>) => <tup>)
+(dm nul (c|(t= <tup>) => <tup>)
   %tnul)
 
 (dm fab (x|(t= <tup>) s|<int> => <tup>)

@@ -1,0 +1,35 @@
+(use goo)
+(use goo/fun)
+(use goo/packer)
+(use eval/ast-eval)
+(use eval/module)
+
+(df walk (b col)
+  (unless (mem? '(quotation magic predefined macro) (binding-kind b))
+    (let ((f (binding-value-or b #f)))
+      (def n (binding-name b))
+      (when (and (not (mem? '($direct-object-class %met-prop-len) n))
+                 (isa? f <fun>))
+        (def c (fun-count f))
+        (when (> c 0) 
+          (col `(,n ,c ,@(if (isa? f <gen>) 
+                             (sort-by 
+                              (map (fun (m) (lst m (fun-count m))) 
+                                   (fun-mets f))
+                              (op > (2nd _) (2nd _)))
+                             '()))))))))
+
+(df profile (mod)
+  (def pairs (packing (walk-bindings (op walk _ {x\(pack x)}) mod)))
+  (sort-by pairs (op > (2nd _) (2nd _))))
+
+(df shout (args|...)
+  (do (op post "%=" _) args) 
+  ;; (app say out args)
+  (newline out))
+
+(df profile-out (mod)
+  (for ((e (profile mod)))
+    (shout e)))
+
+;; (walk-bindings walk 'goo)

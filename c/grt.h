@@ -246,15 +246,20 @@ typedef struct {
 typedef P (*PFUN)(REGS);
 
 #define FUNCODEOFFSET  0
-#define FUNNAMEOFFSET  1
-#define FUNSIGOFFSET   2
+#define FUNSIGOFFSET   1
+#define FUNINFOOFFSET  2
 #define FUNENVOFFSET   3
 
-#define SIGNAMESOFFSET 0
-#define SIGSPECSOFFSET 1
-#define SIGNARYPOFFSET 2
-#define SIGARITYOFFSET 3
-#define SIGVALUEOFFSET 4
+#define FUNINFONAMEOFFSET   0
+#define FUNINFONAMESOFFSET  1
+#define FUNINFOSRCOFFSET    2
+#define FUNINFOSRCLOCOFFSET 3
+#define FUNINFOCOUNTOFFSET  4
+
+#define SIGSPECSOFFSET 0
+#define SIGNARYPOFFSET 1
+#define SIGARITYOFFSET 2
+#define SIGVALUEOFFSET 3
 
 #define PAIRHEADOFFSET 0
 #define PAIRTAILOFFSET 1
@@ -273,17 +278,18 @@ typedef P (*PFUN)(REGS);
 /* #define IU(x) (YPprop_elt((x), (P)0)) */
 #define IU(x) (untag(x))
 
-#define FUNCODE(fun) ((PFUN)YPprop_elt(fun, (P)FUNCODEOFFSET))
-#define FUNNAME(fun) ((PFUN)YPprop_elt(fun, (P)FUNNAMEOFFSET))
-#define FUNSIG(fun)  ((PFUN)YPprop_elt(fun, (P)FUNSIGOFFSET))
+#define FUNCODE(fun)  ((PFUN)YPprop_elt(fun, (P)FUNCODEOFFSET))
+#define FUNSIG(fun)   ((PFUN)YPprop_elt(fun, (P)FUNSIGOFFSET))
+#define FUNINFO(fun)  ((PFUN)YPprop_elt(fun, (P)FUNINFOOFFSET))
+#define FUNNAME(fun)  ((PFUN)YPprop_elt(FUNINFO(fun), (P)FUNINFONAMEOFFSET))
+#define FUNNAMES(fun) ((PFUN)YPprop_elt(FUNINFO(fun), (P)FUNINFONAMESOFFSET))
+#define FUNCOUNT(fun) ((PFUN)YPprop_elt(FUNINFO(fun), (P)FUNINFOCOUNTOFFSET))
 
-#define SIGNAMES(x) (P)(YPprop_elt((x), (P)SIGNAMESOFFSET))
 #define SIGARITY(x) (PINT)(IU(YPprop_elt((x), (P)SIGARITYOFFSET)))
 #define SIGVALUE(x) YPprop_elt((x), (P)SIGVALUEOFFSET)
 #define SIGSPECS(x) (P)(YPprop_elt((x), (P)SIGSPECSOFFSET))
 #define SIGNARYP(x) ((PLOG)(YPprop_elt((x), (P)SIGNARYPOFFSET) != YPfalse))
 
-#define FUNNAMES(x) SIGNAMES(FUNSIG(x))
 #define FUNARITY(x) SIGARITY(FUNSIG(x))
 #define FUNVALUE(x) SIGVALUE(FUNSIG(x))
 #define FUNSPECS(x) SIGSPECS(FUNSIG(x))
@@ -364,7 +370,8 @@ EXTTVAR(goo_thread);
 #define YPmax_stack_len()      (MAX_STACK_SIZE)
 
 #define YPfun_reg()            (Pfun)
-#define YPnext_methods_reg()   (Pnext_methods)
+#define YPnext_methods_reg()   (REG(next_methods))
+#define YPnext_methods_reg_setter(x) (REG(next_methods) = (x))
 #define YPsp_reg()             (REG(sp))
 #define YPsp_elt(i)            (REG(sp)[(int)i])
 #define YPfp_reg()             (REG(fp))
@@ -474,13 +481,20 @@ STATIC_NOT_GRT_C  INLINE P opts_stackalloc(REGS regs, P loc, P len)
   return opts;
 }
 
+// #define MAXFUNCOUNT (2<<28)
+// #define FUNINC(x) (FUNCOUNT(fun) = MIN(FUNCOUNT(fun), MAXFUNCOUNT))
+// #define FUNINC(x) (FUNCOUNT(fun)+=4, FUNCOUNT(fun))
+#define FUNINC(x) (FUNCOUNT(fun)+=4)
+// #define FUNCALL(fun) (FUNINC(fun), (FUNCODE(fun))(regs))
+#define FUNCALL(fun) ((FUNCODE(fun))(regs))
+
 STATIC_NOT_GRT_C  INLINE P _CALL0 (REGS regs, int check, P fun) {
   P   res;
   PUSH(0);
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(regs);
+  res = FUNCALL(fun);
   DEC_STACK(2);
   return res;
 }
@@ -492,7 +506,7 @@ STATIC_NOT_GRT_C  INLINE P _CALL1 (REGS regs, int check, P fun, P a1) {
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(regs);
+  res = FUNCALL(fun);
   DEC_STACK(3);
   return res;
 }
@@ -505,7 +519,7 @@ STATIC_NOT_GRT_C  INLINE P _CALL2 (REGS regs, int check, P fun, P a1, P a2) {
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(regs);
+  res = FUNCALL(fun);
   DEC_STACK(4);
   return res;
 }
@@ -520,7 +534,7 @@ STATIC_NOT_GRT_C  INLINE P _CALL3
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(regs);
+  res = FUNCALL(fun);
   DEC_STACK(5);
   return res;
 }
@@ -536,7 +550,7 @@ STATIC_NOT_GRT_C  INLINE P _CALL4
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(regs);
+  res = FUNCALL(fun);
   DEC_STACK(6);
   return res;
 }
@@ -553,15 +567,14 @@ STATIC_NOT_GRT_C INLINE P _CALL5
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(regs);
+  res = FUNCALL(fun);
   DEC_STACK(7);
   return res;
 }
 
-
 STATIC_NOT_GRT_C  INLINE P _YPraw_call(REGS regs, P fun, P next_mets) {
   REGSET(next_methods, next_mets);
-  return (FUNCODE(fun))(regs);
+  return FUNCALL(fun);
 }
 
 STATIC_NOT_GRT_C  INLINE P _YPraw_met_call(REGS regs, P fun, P next_mets) {
@@ -689,9 +702,10 @@ IMPORTEXPORT extern P YPflo (P);
 IMPORTEXPORT extern P YPsb (P);
 IMPORTEXPORT extern P YPPsym (P);
 IMPORTEXPORT extern P YPmacro (P,P,P);
-IMPORTEXPORT extern P YPsig (P,P,P,P,P,P);
-IMPORTEXPORT extern P YPgen (P,P,P,P,P,P,P);
-IMPORTEXPORT extern P YPmet (P,P,P,P,P,P);
+IMPORTEXPORT extern P YPsig (P,P,P,P,P);
+IMPORTEXPORT extern P YPfab_sig (P,P,P,P,P);
+IMPORTEXPORT extern P YPfab_gen (P,P,P,P);
+IMPORTEXPORT extern P YPfab_met (P,P,P,P,P,P);
 IMPORTEXPORT extern P YPsrc_loc (P,P);
 
 /* FUNCTIONS */
@@ -858,5 +872,7 @@ STATIC_NOT_GRT_C INLINE P YevalSast_evalYPdlvar_setter(P v, P x) {
 #define YgooSsystemYPdefault_goo_root() DEFAULT_GOO_ROOT
 
 IMPORTEXPORT extern P YPtime ();
+
+IMPORTEXPORT extern P YPlit (P n);
 
 #endif

@@ -142,7 +142,7 @@
   )
 
 (dm process-input (me|<name-state> user|<user> words|<col>)
-  (unless (empty? words)
+  (unless (nul? words)
     (msg out "Got words: %=\n" words)
     (set (name user) (1st words))
     (advance-state user)

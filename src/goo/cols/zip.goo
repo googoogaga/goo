@@ -34,7 +34,7 @@
   (new <zip-enum> %enums (map enum x)))
 
 (dm fin? (e|<zip-enum> => <log>)
-  (any? empty? (%enums e)))
+  (any? nul? (%enums e)))
 
 (dm nxt (e|<zip-enum> => <zip-enum>)    
   (renew e %enums (map nxt (%enums e))))

@@ -5,6 +5,10 @@
 (use goo/class)
 (use goo/macros)
 (use goo/types)
+(use goo/any)
+(use goo/log)
+(use goo/chr)
+(use goo/mag)
 (use goo/math)
 (use goo/cols/col)
 (use goo/cols/colx)
@@ -24,7 +28,7 @@
  )
 ;;; STRING
 
-(dm empty ((c (t= <str>)) => <str>)
+(dm nul ((c (t= <str>)) => <str>)
   %snul)
 
 (dm elt-default (x|<str> => <any>)

@@ -1,0 +1,36 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
+(use goo/boot)
+(use goo/fun)
+(use goo/class)
+(use goo/macros)
+(use goo/mag)
+(use goo/types)
+(use goo/any)
+
+(exported
+ ;; (dg == (x y => <log>))
+ (dg = (<any> <any> => <log>))
+ (dg ~= (<any> <any> => <log>))
+ (dg ~== (<any> <any> => <log>))
+ (df as-log (<any> => <log>))
+)
+
+(df as-log (x => <log>) (and x #t))
+
+;; TODO: DEAL WITH ==
+
+(dm == (x y => <log>) (%bb (%eq? x y)))
+
+(dm = (x y => <log>) (== x y))
+
+(dm ~= (x y => <log>)
+  (not (= x y)))
+
+(dm ~== (x y => <log>)
+  (not (== x y)))
+
+(dm to-str ((x (t= #t)) => <str>) "#t")
+
+(dm to-str ((x (t= #f)) => <str>) "#f")
+

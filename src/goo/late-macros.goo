@@ -4,6 +4,9 @@
 (use goo/fun)
 (use goo/class)
 (use goo/macros)
+(use goo/any)
+(use goo/log)
+(use goo/chr)
 (use goo/math)
 (use goo/cols)
 
@@ -23,7 +26,7 @@
                  (if splice? `(app ,(head y) (cat! ,@(splice (tail y)))) y))
                 (#t
                  x))))
-    (if (empty? args)
+    (if (nul? args)
       (if (== f '_)
           `(fun (x) x)
           `(fun (x|...) ,f))
@@ -36,19 +39,19 @@
 
 ;;; MACRO SUPPORT
 
-(df match-empty-list (x|<lst> fail|<fun>)
+(df match-nul-list (x|<lst> fail|<fun>)
   (if (empty? x)
       x
       (fail "Match Empty Failure of %=" x)))
 
 (df match-unquote (x|<lst> fail|<fun>)
-  (if (empty? x)
-      (fail "Match Failure Empty List on Unquote")
+  (if (nul? x)
+      (fail "Match Failure Nul List on Unquote")
       (head x)))
 
 (df match-atom (x|<lst> pat fail|<fun>)
-  (if (empty? x)
-      (fail "Match Failure Empty List on %=" pat)
+  (if (nul? x)
+      (fail "Match Failure Nul List on %=" pat)
       (let ((exp (head x)))
         (if (== exp pat)
             (tail x)
@@ -80,7 +83,7 @@
 (dm var-type (x|<lst>) (elt x 1))
 
 (export
-  match-empty-list
+  match-nul-list
   match-unquote
   match-atom
   match-sublist

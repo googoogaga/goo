@@ -1,0 +1,24 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
+(use goo/boot)
+(use goo/fun)
+(use goo/class)
+(use goo/macros)
+(use goo/mag)
+(use goo/types)
+
+(exported
+ (df address-of (<any> => <fixnum>))
+ (dg to-str (<any> => <str>))
+ (dg as (<any> <any> => <any>))
+)
+
+(df address-of (x => <fixnum>) (%ib x)) ;; treat pointer as integer
+
+(dm to-str (x|<any> => <str>)
+  (cat "{ obj(" (to-str (class-name (class-of x))) ") }"))
+
+(dm as (type x => <any>)
+  (if (isa? x type) x (as-error type x)))
+
+

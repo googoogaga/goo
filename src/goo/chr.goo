@@ -1,0 +1,82 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
+(use goo/boot)
+(use goo/fun)
+(use goo/class)
+(use goo/macros)
+(use goo/mag)
+(use goo/types)
+(use goo/any)
+(use goo/math)
+
+(exported
+ (dg lower? (<chr> => <log>))
+ (dg upper? (<chr> => <log>))
+ (dg to-lower (<chr> => <chr>))
+ (dg to-upper (<chr> => <chr>))
+ (dg to-digit (<chr> => <int>))
+ (dg alpha? (<chr> => <log>))
+ (dg digit? (<chr> => <log>))
+ (dg eof-object? (<chr> => <log>))
+ (dg eof-object ( => <chr>))
+)
+
+(dm as ((_ (t= <chr>)) i|<fixnum> => <chr>)
+  (%cb (%iu i)))
+
+(dm as ((_ (t< <int>)) c|<chr> => <fixnum>)
+  (%ib (%cu c)))
+
+(dm < (x|<chr> y|<chr> => <log>)
+  (%bb (%c< (%cu x) (%cu y))))
+
+(dm == (x|<chr> y|<chr> => <log>)
+  (%bb (%c= (%cu x) (%cu y))))
+
+(dm lower? (x|<chr> => <log>)
+  (def code (as <fixnum> x))
+  (if (>= code (as <fixnum> #\a))
+      (<= code (as <fixnum> #\z))
+      #f))
+
+(dm upper? (x|<chr> => <log>)
+  (def code (as <fixnum> x))
+  (if (>= code (as <fixnum> #\A))
+      (<= code (as <fixnum> #\Z))
+      #f))
+
+(dm to-lower (x|<chr> => <chr>)
+  (if (upper? x)
+      (as <chr> (+ (as <fixnum> x) (- (as <fixnum> #\a) (as <fixnum> #\A))))
+      x))
+
+(dm to-upper (x|<chr> => <chr>)
+  (if (lower? x)
+      (as <chr> (+ (as <fixnum> x) (- (as <fixnum> #\A) (as <fixnum> #\a))))
+      x))
+
+(dm to-digit (digit|<chr> => <fixnum>)
+  (- (char->ascii digit) (char->ascii #\0)))
+
+(dm to-str (x|<chr> => <str>)
+  (fabs <str> x))
+
+(dm alpha? (x|<chr> => <log>)
+  (or (and (<= #\a x) (<= x #\z))
+      (and (<= #\A x) (<= x #\Z))))
+
+(dm digit? (x|<chr> => <log>)
+  (and (<= #\0 x) (<= x #\9)))
+
+(dm eof-object? (x => <log>) 
+  #f)
+
+(dm eof-object? (x|<chr> => <log>)
+  (%bb (%eq? (%cu x) (%eof-object))))
+
+(dm eof-object (=> <chr>)
+  (%cb (%eof-object)))
+
+(need-implementation
+  char->ascii
+  fabs)

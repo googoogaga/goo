@@ -282,7 +282,7 @@ INLINE P FUNSHELL (int d, P x, int n) {
   P   fun;
   unsigned int snallocd = nallocd;
   int old_stack_allocp = REG(stack_allocp); REGSET(stack_allocp, d);
-  YPclass_prop_len_setter(YPib((P)6), YLmetG);
+  // YPclass_prop_len_setter(YPib((P)4), YLmetG);
   fun = YPclone(x);
   fun_nallocd += nallocd - snallocd;
   FUNENVSETTER(ENVFAB(n), fun);
@@ -295,7 +295,7 @@ P FUNFAB (P x, int n, ...) {
   va_list ap; 
   unsigned long snallocd = nallocd;
   P   fun;
-  YPclass_prop_len_setter(YPib((P)6), YLmetG);
+  // YPclass_prop_len_setter(YPib((P)4), YLmetG);
   fun = YPclone(x);
   FUNENVSETTER(ENVFAB(n), fun);
   fun_nallocd += nallocd - snallocd;
@@ -330,7 +330,7 @@ P _CALLN (REGS regs, int check, P fun, int n, ...) {
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(regs);
+  res = FUNCALL(fun);
   DEC_STACK(n+2);
   return res;
 }
@@ -345,9 +345,6 @@ void print_frame_count () {
     ptr = ptr->previous_unwind_protect_frame;
   printf("FRAME COUNT = %d\n", i);
 }
-
-extern P YPmet (P, P, P, P, P, P);
-extern P YPsig (P, P, P, P, P, P);
 
 P do_exit (REGS regs) {
   P value;
@@ -403,10 +400,11 @@ P with_exit (P fun) {
   int old_stack_allocp = REG(stack_allocp); REGSET(stack_allocp, 1);
 
   frame = MAKE_BIND_EXIT_FRAME();
-  exit  = YPmet(&do_exit, YPfalse,
-		YPsig(Ynil, YPpair(YLanyG, Ynil), 
-		      YPfalse, YPib((P)1), YPfalse, Ynil),
-		FABENV(1, frame), Ynul, YPfalse);
+  exit  = YPfab_met
+           (&do_exit, 
+	    YPsig(YPpair(YLanyG, Ynil), YPfalse, YPib((P)1), YPfalse, Ynil),
+	    YPfalse, Ynil, YPfalse, YPfalse);
+  FUNENVSETTER(FABENV(1, frame), exit);
   REGSET(stack_allocp, old_stack_allocp);
   if (!setjmp(frame->destination))
     return CALL1(1, fun, exit);
@@ -453,7 +451,12 @@ INLINE P BOXFAB(P x) {
 
 extern P YPclass_name(P);
 extern P YPsym_nam(P);
-extern P YPmet_name(P);
+extern P YPfun_info_name(P);
+extern P YPmet_info(P);
+
+P YPmet_name (P fun) {
+  return YPfun_info_name(YPmet_info(fun));
+}
 
 char* type (P adr) {
   if (adr == PNUL)
@@ -591,7 +594,7 @@ void print_kind (P adr, int prettyp, int depth) {
   } else if (strcmp(typename, "<met>") == 0) {
     ENV env; int j, n; 
     printf("(MET ");
-	print_kind((P)YPmet_name(adr), 0, depth + 1);
+    print_kind((P)YPmet_name(adr), 0, depth + 1);
     print_kind(FUNSPECS(adr), 0, depth + 1);
     /*
     env = (ENV)YPprop_elt(adr, (P)FUNENVOFFSET);
@@ -616,7 +619,7 @@ void print_kind (P adr, int prettyp, int depth) {
     printf(" 0x%lx)", adr);
   } else if (strcmp(typename, "<gen>") == 0) {
     printf("(GEN ");
-	print_kind((P)YPmet_name(adr), 0, depth+1);
+    print_kind((P)YPmet_name(adr), 0, depth+1);
     print_kind(FUNSPECS(adr), 0, depth + 1);
     printf(" 0x%lx)", adr);
   } else if (strcmp(typename, "<file-out-port>") == 0) {

@@ -3,7 +3,17 @@
 (use goo)
 (use goo/loc)
 (use eval/ast)
-(use eval/typist)
+
+(dm unconstrained-type? (b|<program> => <log>)
+  #f)
+
+(dm unconstrained-type? (b|<module-binding> => <log>)
+  (and (== (binding-module-name b) 'goo/boot) (== (binding-name b) '<any>)))
+
+(dm unconstrained-type? (o|<module-binding-reference> => <log>)
+  (unconstrained-type? (reference-binding o)))
+
+(export unconstrained-type?)
 
 (dv <arg-seq> <lst>)
 (dv <met-seq> <lst>)
@@ -14,7 +24,7 @@
   (def leading-sorted '())
   (def others         '())
   (loc ((merge-method (m sorted)
-          (if (empty? sorted)
+          (if (nul? sorted)
               (loc ((after-m? (other-m)
                       (method-precedes? m other-m arg-types)))
                 (if (all? after-m? others)
@@ -36,6 +46,8 @@
              arg-types (fun-specs m) (fun-arity m))
         (opf leading-sorted (merge-method m _)))))
   (tup leading-sorted others))
+
+(export sorted-applicable-methods-using-types)
 
 ;; Determine whether there is some guaranteed ordering between the two
 ;; methods for the given argument type estimates.
@@ -82,6 +94,8 @@
   ;; (not (guaranteed-disjoint? t1 t2))
   (or (subtype? t1 t2) (subtype? t2 t1)))
 
+(dm type-equiv? (x|<type> y|<type> => <log>)
+  (and (subtype? x y) (subtype? y x)))
 
 ;;; DYNAMIC-EXTENT AND CALL UPGRADE ANALYSIS
 
@@ -153,7 +167,7 @@
   (if single?
       (if (= (function-ref-count (1st new-funs)) 0)
           { (reopt-top! s t) 
-            (set (locals-functions o) (empty <functions>))
+            (set (locals-functions o) (nul <functions>))
             (set (locals-bindings o)  '())
             (locals-body o) }
           res)
@@ -165,10 +179,12 @@
     (if (isa? o <sequential>)
         (map (fun (x) (do-call-analysis! x r x #f s '())) o)
         (do-call-analysis! o r o #f s '())))
-  (if (empty? s) ;; no more reopts
+  (if (nul? s) ;; no more reopts
       res
       { (do (fun (e) (analyze-calls e r)) s) res }))
 
 (export analyze-calls
         ;; analyze-dynamic-extent
+        potentially-joint?
+        type-equiv?
         )

@@ -1,8 +1,13 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (use goo/boot)
 (use goo/fun)
 (use goo/class)
 (use goo/macros)
 (use goo/app)
+(use goo/any)
+(use goo/log)
+(use goo/chr)
 (use goo/math)
 
 (dm identity (x) x)

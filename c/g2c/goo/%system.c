@@ -1,3 +1,5 @@
+/* Copyright 2002, Jonathan Bachrach.  See file TERMS. */
+
 #include <grt.h>
 
 /* TODO - Need Windows versions of the following functions. */
@@ -133,6 +135,8 @@ typedef P (*PLD)();
 extern P YgooSsystemYTgoo_rootT;
 #endif
 
+//#include "libtcc.h"
+
 P YgooSsystemYPcompile (P cfile, P sofile) {
 #if defined(_MSC_VER)
   char* command = (char*)allocate(1024);
@@ -169,7 +173,35 @@ P YgooSsystemYPcompile (P cfile, P sofile) {
 	return YPtrue;
     } while(1);
     return YPfalse;
-  }
+	}
+
+/* TCC compiler code
+  TCCState *s;
+  char buf[5000];
+  void (*func)();
+  s = tcc_new();
+  printf("Got to 1\n");
+  if(!s)
+	  return YPfalse;
+  tcc_set_output_type(s, TCC_OUTPUT_MEMORY);
+  printf("Got to 2\n");
+  snprintf(buf, sizeof(buf)-1, "%s/lib", YPsu(YgooSsystemYTgoo_rootT));
+  tcc_add_include_path(s, buf);
+  printf("Got to 3\n");
+  tcc_add_file(s, cfile);
+  printf("Got to 4\n");
+  tcc_relocate(s);
+  printf("Got to 5\n");
+  func = tcc_get_symbol(s, "load_module_dl");
+  if(!func)
+	  return YPfalse;
+  printf("Got to 6\n");
+  func();
+  printf("Got to 7\n");
+  tcc_delete(s);
+  printf("Got to 8\n");
+  return YPtrue;
+*/
 #endif
 }
 
@@ -194,6 +226,7 @@ P YgooSsystemYPload(P name) {
 	}
   return YPfalse;
 #else
+
   void* mod;
   PLD   load;
   P     res;
@@ -201,7 +234,10 @@ P YgooSsystemYPload(P name) {
   // printf("LOADING   %s\n", name);
   mod = dlopen(name, RTLD_NOW | RTLD_GLOBAL);
   if (mod == NULL)
+  {
     printf("FAILED TO LOAD %s BECAUSE %s\n", name, dlerror());
+	return YPfalse;
+  }
   else {
     load = (PLD)dlsym(mod, "load_module_dl");
     res = load();

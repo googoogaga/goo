@@ -2,7 +2,6 @@
 
 (use goo/boot)
 (use goo)
-(use goo/loc)
 (use cols/priority-queue)
 (use eval/ast)
 (use eval/top)
@@ -23,7 +22,7 @@
 ;;;       t= -- code gen
 ;;;       t+ -- code gen
 ;;; o COMMON SUBEXPRESSION ELIMINATION
-;;;     hoist object-class
+;;;     hoist class-of
 ;;; o CONSTANT FOLDING
 ;;;     remove tests against <any>
 ;;; o INLINING
@@ -44,58 +43,52 @@
 ;;;   could also store binding in gen and make that point to real binding
 
 (dm build-decision-tree (g|<gen>)
-  (def refs   (fab <vec> 0))
-  (def code   (build-decision-tree* g 0 (len (fun-specs g)) refs (fun-mets g)))
+  (def code   (build-decision-tree* g 0 (len (fun-specs g)) (fun-mets g)))
   (def dname  (cat-sym "d-" (fun-name g) "-dispatch"))
-  (def dfun   `(df ,dname (args|...) 
-                 (let ((g (%fun-reg)) (refs (%gen-refs g))) ,code)))
+  (def dfun   `(df ,dname (args|...) ,code))
   (def dpatch `(set (%gen-code ,(fun-name g)) (%met-code ,dname)))
   (def top    `(seq ,dfun ,dpatch #t))
-  (set (gen-refs g) (as <tup> refs))
   top)
 
 (ds (type-case ,val ,@cases)
   (loc ((do-type-case (val cases)
-          (if (empty? cases)
+          (if (nul? cases)
               #f
               (match (head cases) 
                 ((#t ,@body)    
                  `(seq ,@body))
                 (((,@values) ,@body)
-                 `(if (or ,@(map (fun (x) `(@subtype? ,val ,x)) values))
+                 `(if (or ,@(map (fun (x) `(subtype? ,val ,x)) values))
                       (seq ,@body)
                       ,(do-type-case val (tail cases))))
                 (#t
                  (syntax-error "bad type-case %=" (head cases)))))))
     (let ((val-var (gensym)))
-      `(let ((,val-var (%@class-of ,val)))
+      `(let ((,val-var (class-of ,val)))
          ,(do-type-case val-var cases)))))
 
-(dm build-decision-tree* (g|<gen> i|<int> n|<int> refs|<vec> mets|<lst>)
-  (loc ((gen-ref (x) 
-          (def i (or (pos refs x) (seq (add! refs x) (- (len refs) 1))))
-          `(%telt refs (%iu ,i))))
-    (if (< i n)
-        (loc ((test (x y) (subtype?  (fun-spec x i) (fun-spec y i))))
-          (def ordered-mets (priority-order test mets))
-          (loc ((filter (mets type pos)
-                  (priority-order test 
-                    (pick (fun (met) (subtype? type (fun-spec met pos))) mets)))
-                (code-gen-case (m mets)
-                  (def type (fun-spec m i))
-                  `((,(gen-ref type))
-                    ,(build-decision-tree*
-                      g (+ i 1) n refs (filter mets type i))))
-                (code-gen-cases (mets)
-                  (packing ()
-                    (rep loop ((mets mets))
-                      (unless (empty? mets)
-                        (pack (code-gen-case (head mets) mets))
-                        (loop (tail mets)))))))
-            `(type-case (@oelt args ,i) 
-               ,@(code-gen-cases ordered-mets)
-               (#t (no-app-met ,(gen-ref g) args)))))
-        `(%raw-met-call ,(gen-ref (head mets)) ,(gen-ref (tail mets))))))
+(dm build-decision-tree* (g|<gen> i|<int> n|<int> mets|<lst>)
+  (if (< i n)
+      (loc ((test (x y) (subtype?  (fun-spec x i) (fun-spec y i))))
+        (def ordered-mets (priority-order test mets))
+        (loc ((filter (mets type pos)
+                (priority-order test 
+                  (pick (fun (met) (subtype? type (fun-spec met pos))) mets)))
+              (code-gen-case (m mets)
+                (def type (fun-spec m i))
+                `((,type)
+                  ,(build-decision-tree*
+                    g (+ i 1) n (filter mets type i))))
+              (code-gen-cases (mets)
+                (packing
+                  (rep loop ((mets mets))
+                    (unless (nul? mets)
+                      (pack (code-gen-case (head mets) mets))
+                      (loop (tail mets)))))))
+          `(type-case (@oelt args ,i) 
+             ,@(code-gen-cases ordered-mets)
+             (#t (no-app-met ,g args)))))
+      `(%raw-met-call ,(head mets) ',(tail mets))))
 
 (dm foo ((x <num>)) (tup x)) 
 (dm foo ((x <flo>)) (lst x))
@@ -109,26 +102,7 @@
 
 (df time (n) (let ((x 0)) (for ((i (below n))) (set x (+ x i))) x))
 
-(df d-+-dispatch ((args ...)) (let ((g (%fun-reg)) (refs (%gen-refs g))) (type-case (@oelt args 0) (((%telt refs (%iu 0))) (type-case (@oelt args 1) (((%telt refs (%iu 0))) (%raw-met-call (%telt refs (%iu 1)) (%telt refs (%iu 2)))) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (((%telt refs (%iu 7))) (type-case (@oelt args 1) (((%telt refs (%iu 7))) (%raw-met-call (%telt refs (%iu 8)) (%telt refs (%iu 9)))) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (((%telt refs (%iu 3))) (type-case (@oelt args 1) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (#t (no-app-met (%telt refs (%iu 6)) args)))))
-
 ;;; (f 2000000)
 ;;; (build-decision-tree +)
-;;; (seq (df d-+-dispatch ((args ...)) (let ((g (%fun-reg)) (refs (%gen-refs g))) (type-case (@oelt args 0) (((%telt refs (%iu 0))) (type-case (@oelt args 1) (((%telt refs (%iu 0))) (%raw-met-call (%telt refs (%iu 1)) (%telt refs (%iu 2)))) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (((%telt refs (%iu 7))) (type-case (@oelt args 1) (((%telt refs (%iu 7))) (%raw-met-call (%telt refs (%iu 8)) (%telt refs (%iu 9)))) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (((%telt refs (%iu 3))) (type-case (@oelt args 1) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (#t (no-app-met (%telt refs (%iu 6)) args))))) (set (%gen-code +) (%met-code d-+-dispatch)) #t)
-
 ;;; (auto-eval d (runtime-environment 'goo/user))
     
-(df walk-bindings (fun|<fun> mod|<sym>)
-  (walk-bindings* 
-   fun (runtime-environment mod) (fab <tab> 1000) (fab <tab> 10)))
-
-(df walk-bindings* 
-    (f|<fun> env|<static-global-environment> walked?|<tab> mods|<tab>)
-  (for ((mod (environment-uses-modules env)))
-    (unless (elt-or mods mod #f)
-      (set (elt mods mod) #t)
-      (walk-bindings* f (runtime-environment (module-name mod)) walked? mods)))
-  (for ((b (environment-bindings env)))
-    (unless (elt-or walked? b #f)
-      (set (elt walked? b) #t)
-      (f b))))
-  

@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (use goo/boot)
 (use goo/fun)
 
@@ -21,8 +23,6 @@
 (dv <parents> <lst>)
 (dv <props>   <lst>)
 
-(df object-class (x) (%class-of x))
-(dv class-of object-class)
 (df @class-ancestors (x) (%class-ancestors x))
 
 (df class-ordered-ancestors (c|<class> => <parents>)
@@ -31,13 +31,13 @@
         ((partial-cpl|<lst>     (@lst c)) 
          (remaining-lists|<lst> (@add (@map @class-ancestors parents) parents)))
     ;; the partial-cpl is in reverse order at this point.
-    (if (@all? @@empty? remaining-lists)
+    (if (@all? @@nul? remaining-lists)
         (@rev! partial-cpl)
         (loc ((candidate (c) ;; return c if it can go in result now, else false
                 (loc ((tail? (l|<lst>) (@mem? (@tail l) c)))
                   (and (not (@any? tail? remaining-lists)) c)))
               (candidate-at-head (l|<lst>)
-                (and (not (@empty? l)) (candidate (@head l)))))
+                (and (not (@nul? l)) (candidate (@head l)))))
           (def next (@any? candidate-at-head remaining-lists))
           (if next
               (loc ((del-next (l|<lst>) (if (@== (@head l) next) (@tail l) l)))
@@ -84,7 +84,7 @@
   x)
 
 (df fab-class (name|<sym> parents|<parents> => <class>)
-  (def x (%class 0 name parents '() '() '() '() '() '() #f #f -1 nul))
+  (def x (%class 0 name parents '() '() '() '() '() '() #f -1 #f))
   (init-class x)
   x)
 
@@ -96,15 +96,8 @@
   (set (%class-forward old-class) new-class)
   new-class)
 
-;; TRAMPOLINE META METHODS
-;; TODO: OBSOLETE
-
-(dss (def-object-class-accessor ,name)
-  `(df ,(cat-sym "object-" name) (x) 
-     (,(cat-sym "%class-" name) (%class-of x))))
-
-(def-object-class-accessor props)
-(def-object-class-accessor parents)
+(df class-of (x) (%class-of x))
+(df props-of (x) (%class-props (%class-of x)))
 
 ;;;
 ;;; PROPS
@@ -117,8 +110,8 @@
     (update-instance-for-changed-class x)))
 
 (df prop-offset (object getter|<fun> => <fixnum>)
-  (rep loop ((i 0) (props (object-props object)))
-    (if (@empty? props)
+  (rep loop ((i 0) (props (props-of object)))
+    (if (@nul? props)
         $getter-not-found
         (if (@== (%prop-getter (@head props)) getter)
             i
@@ -129,7 +122,7 @@
 (df %prop-unbound-error (x)
   (if *report-prop-unbound-errors?*
       (property-unbound-error x)
-      nul))
+      #f))
 
 (df prop-value (object getter|<fun> => <any>)
   (ensure-fresh-object object)
@@ -147,8 +140,8 @@
 
 (df prop-value-setter (z object getter|<fun>)
   (ensure-fresh-object object)
-  (rep loop ((i 0) (props (object-props object)))
-    (if (@empty? props)
+  (rep loop ((i 0) (props (props-of object)))
+    (if (@nul? props)
         (property-not-found-error getter object)
         (let ((prop (@head props)))
           (if (@== (%prop-getter prop) getter)
@@ -159,7 +152,7 @@
 
 (df find-getter (owner|<class> getter|<gen> => <met>)
   (rep loop ((mets (@fun-mets getter)))
-    (if (@empty? mets)
+    (if (@nul? mets)
         (property-not-found-error getter owner)
         (let ((met (@head mets)))
           (if (@== (fun-spec met 0) owner)
@@ -168,7 +161,7 @@
 
 (df find-setter (owner|<class> type zetter|<gen> => <met>)
   (rep loop ((mets (@fun-mets zetter)))
-    (if (@empty? mets)
+    (if (@nul? mets)
         (property-not-found-error zetter owner)
         (let ((met (@head mets)))
           (if (and (@== (fun-spec met 1) owner) 
@@ -230,7 +223,7 @@
 ;;    (set (%object-class new-object) new-class)
 ;;    ;; copy correlated prop values from old to new
 ;;    (rep loop-old-props ((old-props (%class-props old-class)) (old-offset 0))
-;;      (unless (@empty? old-props)
+;;      (unless (@nul? old-props)
 ;;        (let ((old-prop   (@head old-props))
 ;;            (getter     (%prop-getter old-prop))
 ;;            (new-offset (prop-offset new-object getter)))
@@ -274,15 +267,13 @@
 (export
   fab-class
   class-of
-  object-class class-of
   prop-value        ;; TODO: remove these when they can be called directly 
   prop-value-setter ;; TODO: w/o being exported
   prop-bound?       ;; TODO: w/o being exported
   find-getter
   find-setter
   clone
-  object-parents
-  object-props
+  props-of
   %prop %prop-unbound-error
   add-prop
   new

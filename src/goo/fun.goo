@@ -1,3 +1,5 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 (use goo/boot)
 
 ;;; Temporary, compile-time-only macros.  These are used by this file only--
@@ -17,7 +19,7 @@
        (mif (() rest) x `(if ,x (and ,@rest) #f))
        #t))
 
-(df @fun-names (x|<fun> => <lst>) (%sig-names (%gen-sig x)))
+(df @fun-names (x|<fun> => <lst>) (%fun-info-names (%gen-info x)))
 
 (df @fun-specs (x|<fun> => <lst>) (%sig-specs (%gen-sig x)))
 
@@ -64,7 +66,7 @@
           (esc return
             (try ((type <replace-generic-restart>)
                   (description
-                   "Replace %= with an empty generic congruent with %=" g m))
+                   "Replace %= with an nul generic congruent with %=" g m))
               (fun (c r)
                 (return (gen-add-met (gen-from-met m) m)))
               (incongruent-method-error g m)))
@@ -73,7 +75,7 @@
       ;; DEP TRACK MET/GEN IN ALL REAL SPECS -- USED FOR REDEFINITION
       (seq
         (rep lop ((specs (@fun-specs m)))
-          (unless (@empty? specs)
+          (unless (@nul? specs)
             (def spec (@head specs))
             ;; TODO: CHANGE TO REFLECT NEW SETUP -- DEP-CLASSES
             (unless (or (@singleton-spec? spec) (@== spec <any>))
@@ -86,7 +88,7 @@
         ;; ACTUALLY PERFORM ADDITION KEEPING TRACK OF IT BEING A REPLACEMENT
         ;; OR NOT
         (rep col ((mets '()) (same? #f) ((gms <mets>) (@fun-mets g)))
-          (if (@empty? gms)
+          (if (@nul? gms)
               (set (%gen-mets g) (@rev! (if same? mets (@add mets m))))
               (let ((gm         (@head gms))
                     (now-same?  (fun-same-met? gm m)))
@@ -98,7 +100,7 @@
 
 (df @class< (c1 c2 wrt => <log>)
   (rep find ((ps (%class-ancestors wrt)))
-    (if (@empty? ps)
+    (if (@nul? ps)
         (cpl-error "can't order specializers - arg/reference object %= is "
                    "neither %= nor %=" wrt c1 c2) 
         (let ((c (@head ps)))
@@ -167,7 +169,7 @@
                   (make-ambiguous oprev)
                   (set (@tail oprev) (@pair met (@tail oprev)))))
             (insert ((oprev <lst>) (osub <lst>))
-              (if (@empty? osub)
+              (if (@nul? osub)
                   (check-subsequent-ambiguities oprev)
                   (let ((indic (order-mets met (@head osub) args)))
                     (if (@== indic '<);; comes before current one.
@@ -182,7 +184,7 @@
 (dv met-app-unify (fun (x y) #f))
 
 (df met-app? (met|<met> args|<opts> => <log>)
-  (if (not (@empty? (@fun-unification-vars met)))
+  (if (not (@nul? (@fun-unification-vars met)))
       (met-app-unify met args)
       (let ((n|<fixnum> (@fun-arity met)))
         (rep loop ((i|<fixnum> 0))
@@ -196,7 +198,7 @@
     (gf|<gen> args|<opts> => <tup> #/(tup ordered|<lst> ambig|<lst>)/#)
   (def considered-mets
     (rep col ((ans '()) (ms (@fun-mets gf)))
-      (if (@empty? ms)
+      (if (@nul? ms)
           ans
           (let ((m (@head ms))
                 (ans (if (met-app? m args) (@pair m ans) ans)))
@@ -209,7 +211,7 @@
 ;; (df opt-args (n|<fixnum> args|<opts> => <opts>)
 ;;   (rep col ((i|<fixnum> 0) (l|<opts> '()) (p|<opts> args))
 ;;     (if (@= i n)
-;;       (if (@empty? l)
+;;       (if (@nul? l)
 ;;           (@lst p)
 ;;           (seq (set (@tail l) (@lst p)) args))
 ;;       (col (@+ i 1) p (@tail p)))))
@@ -267,7 +269,7 @@
 
 (df @cache-add (t|<tup> k v)
   (def olen (@tlen t))
-  (def res  (%tup (%iu (@+ olen 2)) nul))
+  (def res  (%tup (%iu (@+ olen 2)) #f))
   (rep copy ((i 0))
     (unless (@= i olen)
       (set (@telt res i) (@telt t i))
@@ -304,7 +306,7 @@
 
 ;;; copy args with arg as i'th elt into a opts.
 (df @specd-args (args|<opts> i|<fixnum> arg|<any> => <opts>)
-  (def v (%tup (%iu (@olen args)) nul))
+  (def v (%tup (%iu (@olen args)) #f))
   (def r (%opts-tup (%lb (%prop-dat-at v (%tlen v))) (%ib (%tlen v)) v))
   (rep copy ((k 0))
     (if (@== (@olen args) k)
@@ -314,11 +316,11 @@
 
 ;; does the specified position require singleton precision always?
 (df requires-singleton-prec (mets pos)
-  (not (@empty? (@mets-subclasses-at mets pos))))
+  (not (@nul? (@mets-subclasses-at mets pos))))
 
 ;; TODO: SHOULD BE USING @MAY-ISA? 
 ;;
-;;   (not (@empty?
+;;   (not (@nul?
 ;;         (@pick
 ;;          (fun (spec)
 ;;            (not (or (@class-isa? spec <class>) 
@@ -335,11 +337,11 @@
       (if (requires-singleton-prec mets i)
           (%gen-cache #f i $nul-assocs $nul-assocs (%raw 0))
           (let ((singletons (@mets-singletons-at mets i)))
-            (if (@empty? singletons)
+            (if (@nul? singletons)
                 #f ;; no prefilling needed and no cache supplied
                 (let ((cache (%gen-cache #t i $nul-assocs $nul-assocs (%raw 0))))
                   (rep loop ((singletons singletons))
-                    (if (@empty? singletons)
+                    (if (@nul? singletons)
                         cache
                         (let ((sing     (@head singletons))
                               (arg      (%type-object sing))
@@ -382,7 +384,7 @@
 (dl (prop-value-at inline-c) (object offset|<fixnum> => <any>)
   (def val (%prop-elt object (%iu offset)))
   (if (@== val nul-prop)
-      (let ((props (object-props object)))
+      (let ((props (props-of object)))
         (set (%prop-elt object (%iu offset))
              ((%prop-init (@elt props offset)) object)))
       val))
@@ -390,7 +392,7 @@
 (dl prop-bound-at? (object offset|<fixnum> => <log>)
   (def val (%prop-elt object (%iu offset)))
   (if (@== val nul-prop)
-      (let ((props (object-props object)))
+      (let ((props (props-of object)))
         (not (@== (%prop-init (@elt props offset)) %prop-unbound-error)))
       #t))
 
@@ -457,7 +459,7 @@
   (def ambiguous-mets (@telt ord-amb-mets 1))
   ;;    (if (@< 0 (@len ambiguous-mets))
   ;;        (error "Ambiguous Method Error when calling %= on %=" gen args)
-  (if (@empty? sorted-mets)
+  (if (@nul? sorted-mets)
       (no-applicable-methods-error gen args)
       sorted-mets))
 
@@ -492,32 +494,47 @@
         (df ,(cat-sym "fun-" name "-setter") (z x) 
           (set (,(cat-sym "sig-" name) (fun-sig x)) z))))
 
-(def-fun/sig-accessor names)
 (def-fun/sig-accessor specs)
 (def-fun/sig-accessor nary?)
 (def-fun/sig-accessor arity)
 (def-fun/sig-accessor val)
 (def-fun/sig-accessor unification-vars)
 
+(dss (def-fun/info-accessor ,name)
+  `(seq (df ,(cat-sym "fun-" name) (x)
+          (,(cat-sym "fun-info-" name) (fun-info x)))
+        (df ,(cat-sym "fun-" name "-setter") (z x) 
+          (set (,(cat-sym "fun-info-" name) (fun-info x)) z))))
+
+(def-fun/info-accessor name)
+(def-fun/info-accessor names)
+(def-fun/info-accessor src)
+(def-fun/info-accessor src-loc)
+(def-fun/info-accessor count)
+
 ;; USED FROM INTERPRETER TO BUILD GEN'S
 
 (df fab-gen
-    (name names|<lst> specs|<lst> nary?|<log> val|<type> mets|<lst> => <gen>)
+    (specs|<lst> nary?|<log> val|<type> name names|<lst> => <gen>)
+  (def i (@new <fun-info>
+            fun-info-name  name
+            fun-info-names names
+            fun-info-count 0))
   (def g (@new <gen>
-            fun-name name
-            fun-sig  (@new <sig>
-                        sig-names names
+            fun-sig   (@new <sig>
                         sig-specs specs
                         sig-nary? nary?
                         sig-arity (@len specs)
                         sig-val   val)
-            fun-mets mets))
+            fun-info  i
+            fun-mets  '()
+            fun-cache #f))
   (set (%gen-code g) (%met-code %dispatch))
   g)
 
 (df gen-from-met (x|<met> => <gen>)
   (def specs (@map (fun (x) <any>) (@fun-specs x)))
-  (fab-gen (fun-name x) '() specs (@fun-nary? x) <any> '()))
+  (fab-gen specs (@fun-nary? x) <any> (fun-name x) '()))
 
 ;; CALLED FROM COMPILER/INTERPRETER
 
@@ -526,10 +543,14 @@
 
 (export 
   fun-arity
+  fun-name
   fun-names
   fun-nary?
   fun-specs
+  fun-count fun-count-setter
   fun-val
+  fun-src
+  fun-src-loc
   gen-add-met
   met-app?
   ord-app-mets

@@ -15,7 +15,7 @@
   (dg packer-fab (t|<type> => <packer>))
   (dg packer-add (a|<packer> x => <packer>))
   (dg packer-res (a|<packer> => <any>))
-  packing-with packing-in packing pack-in pack packed)
+  packing-with packing-in packing packing-as pack-in pack packed)
 
 (dc <sim-packer> (<packer>))
 (dp! packer-value (<sim-packer> => <any>))
@@ -55,6 +55,9 @@
  
 (ds (packing ,@body)
   `(packing-in ((packer- <lst>)) (seq ,@body (packed packer-))))
+ 
+(ds (packing-as ,type ,@body)
+  `(packing-in ((packer- ,type)) (seq ,@body (packed packer-))))
  
 (ds (pack-in ,pack ,value)
   `(opf ,pack (packer-add _ ,value)))

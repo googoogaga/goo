@@ -6,106 +6,70 @@
 (use goo/macros)
 (use goo/mag)
 (use goo/types)
+(use goo/any)
+(use goo/log)
 (use goo/%math.c)
 
-(dm to-str (x|<any> => <str>)
-  (cat "{ obj(" (to-str (class-name (class-of x))) ") }"))
-
-(df address-of (x => <fixnum>)
-  ;; treat pointer as integer
-  (%ib x))
-
-;;; BOTTOM
-
-(dc <bot> (<any>)) ;; todo: should be disjoint from <any>
-
-;;; BOOLEAN
-
-(dm to-str ((x (t= #t)) => <str>) "#t")
-(dm to-str ((x (t= #f)) => <str>) "#f")
-
-(dg as (x|<any> y|<any> => <any>))
-
-(dm as (type x => <any>)
-  (if (isa? x type) x (as-error type x)))
-
-;; TODO: DEAL WITH ==
-
-(df as-log (x => <log>) (and x #t))
-
-(dm == (x y => <log>) (%bb (%eq? x y)))
-
-(dm = (x y => <log>) (== x y))
-
-(dm ~= (x y => <log>)
-  (not (= x y)))
-
-(dm ~== (x y => <log>)
-  (not (== x y)))
-
-;;; character
-
-(dm as ((_ (t= <chr>)) i|<fixnum> => <chr>)
-  (%cb (%iu i)))
-
-(dm as ((_ (t< <int>)) c|<chr> => <fixnum>)
-  (%ib (%cu c)))
-
-(dm < (x|<chr> y|<chr> => <log>)
-  (%bb (%c< (%cu x) (%cu y))))
-
-(dm == (x|<chr> y|<chr> => <log>)
-  (%bb (%c= (%cu x) (%cu y))))
-
-(dm lower? (x|<chr> => <log>)
-  (def code (as <fixnum> x))
-  (if (>= code (as <fixnum> #\a))
-      (<= code (as <fixnum> #\z))
-      #f))
-
-(dm upper? (x|<chr> => <log>)
-  (def code (as <fixnum> x))
-  (if (>= code (as <fixnum> #\A))
-      (<= code (as <fixnum> #\Z))
-      #f))
-
-(dm to-lower (x|<chr> => <chr>)
-  (if (upper? x)
-      (as <chr> (+ (as <fixnum> x) (- (as <fixnum> #\a) (as <fixnum> #\A))))
-      x))
-
-(dm to-upper (x|<chr> => <chr>)
-  (if (lower? x)
-      (as <chr> (+ (as <fixnum> x) (- (as <fixnum> #\A) (as <fixnum> #\a))))
-      x))
-
-(dm to-digit (digit|<chr> => <fixnum>)
-  (- (char->ascii digit) (char->ascii #\0)))
-
-(dm to-str (x|<chr> => <str>)
-  (fabs <str> x))
-
-(dm alpha? (x|<chr> => <log>)
-  (or (and (<= #\a x) (<= x #\z))
-      (and (<= #\A x) (<= x #\Z))))
-
-(dm digit? (x|<chr> => <log>)
-  (and (<= #\0 x) (<= x #\9)))
-
-(dm eof-object? (x => <log>) 
-  #f)
-
-(dm eof-object? (x|<chr> => <log>)
-  (%bb (%eq? (%cu x) (%eof-object))))
-
-(dm eof-object (=> <chr>)
-  (%cb (%eof-object)))
-
-;;; NUMBER
-
-(dg contagious-type (x|<num> y|<num> => (t< <num>)))
-
-(dg contagious-call (f|<fun> x|<num> y|<num> => <any>))
+(exported
+  (dg contagious-type (<num> <num> => (t< <num>)))
+  (dg contagious-call (<fun> <num> <num> => <any>))
+  (dg + (<num> <num> => <num>))
+  (dg - (<num> <num> => <num>))
+  (df 1+ (<num> => <num>))
+  (df 1- (<num> => <num>))
+  (dg * (<num> <num> => <num>))
+  (dg / (<num> <num> => <num>))
+  (dg sin (<num> => <num>))
+  (dg cos (<num> => <num>))
+  (dg tan (<num> => <num>))
+  (dg sinh (<num> => <num>))
+  (dg cosh (<num> => <num>))
+  (dg tanh (<num> => <num>))
+  (dg asin (<num> => <num>))
+  (dg acos (<num> => <num>))
+  (dg atan (<num> => <num>))
+  (dg atan2 (<num> <num> => <num>))
+  (dg sqrt (<num> => <num>))
+  (dg log (<num> => <num>))
+  (dg logn (<num> <num> => <num>))
+  (dg floor (<num> => <int>))
+  (dg ceil (<num> => <int>))
+  (dg round (<num> => <int>))
+  (dg round-to (<num> <int> => <num>))
+  (dg trunc (<num> => <int>))
+  (dg floor/ (real|<num> divisor|<num> => (tup x|<int> rem|<num>)))
+  (dg ceil/ (real|<num> divisor|<num> => (tup x|<int> rem|<num>)))
+  (dg round/ (real|<num> divisor|<num> => (tup x|<int> rem|<num>)))
+  (dg trunc/ (real|<num> divisor|<num> => (tup x|<int> rem|<num>)))
+  (dg div (<num> <num> => <num>))
+  (dg mod (<num> <num> => <num>))
+  (dg mod+ (<num> <num> <num> => <num>))
+  (dg mod- (<num> <num> <num> => <num>))
+  modincf
+  moddecf
+  (dg rem (<num> <num> => <num>))
+  (dg pow (<num> <num> => <num>))
+  (dg pos? (<num> => <log>))
+  (dg zero? (<num> => <log>))
+  (dg neg? (<num> => <log>))
+  (dg neg (<num> => <num>))
+  (dg abs (<num> => <num>))
+  (dg #| (<fixnum> <fixnum> => <int>))
+  (dg ^ (<fixnum> <fixnum> => <int>))
+  (dg & (<fixnum> <fixnum> => <int>))
+  (dg ~ (<fixnum> => <fixnum>))
+  (dg bit? (<fixnum> <fixnum> => <fixnum>))
+  (dg >> (<fixnum> <fixnum> => <fixnum>))
+  (dg even? (<fixnum> => <log>))
+  (dg odd? (<fixnum> => <log>))
+  (dg >>> (<fixnum> <fixnum> => <fixnum>))
+  (dg << (<fixnum> <fixnum> => <fixnum>))
+  (dg isqrt (<int> => <int>))
+  (dg power-of-two-ceil (<int> => <int>))
+  (dg flo-bits (<flo> => <int>))
+  $pi
+  $e
+)
 
 (dm contagious-call (f|<fun> x|<num> y|<num> => <any>)
   (def type (contagious-type x y))
@@ -117,14 +81,12 @@
 (dm + (x|<num> y|<num> => <num>)
   (contagious-call + x y))
 
-(dm 1+ (x|<num> => <num>)
-  (+ x 1))
+(df 1+ (x|<num> => <num>) (+ x 1))
 
 (dm - (x|<num> y|<num> => <num>)
   (contagious-call - x y))
 
-(dm 1- (x|<num> => <num>)
-  (- x 1))
+(df 1- (x|<num> => <num>) (- x 1))
 
 (dm * (x|<num> y|<num> => <num>)
   (contagious-call * x y))
@@ -200,10 +162,10 @@
   (def (tup _ (remainder <num>)) (floor/ real divisor))
   remainder)
 
-(dm mod+ (i|<num> j|<num> n|<num>)
+(dm mod+ (i|<num> j|<num> n|<num> => <num>)
   (mod (+ i j) n))
 
-(dm mod- (i|<num> j|<num> n|<num>)
+(dm mod- (i|<num> j|<num> n|<num> => <num>)
   (mod (- i j) n))
 
 (ds (modincf ,place ,max)
@@ -439,55 +401,9 @@
 (dm atan2 (y|<flo> x|<flo> => <flo>) 
   (%fb (%fatan2 (%fu y) (%fu x))))
 
-(dg logn (x|<num> b|<num> => <num>))
 (dm logn (x|<num> b|<num> => <num>) 
   (/ (log x) (log b)))
 
 ;; from strings.goo
 (need-implementation
-  num-to-str
-  char->ascii
-  fabs)
-
-(export
-  to-str
-  address-of
-  <bot>
-  as
-  as-log
-  ==
-  =
-  ~=
-  ~==
-  >
-  <
-  <=
-  >=
-  min
-  max
-  lower?
-  upper?
-  to-lower
-  to-upper
-  alpha?
-  digit?
-  to-digit
-  eof-object?
-  eof-object
-  contagious-type
-  contagious-call
-  + 1+ - 1- * / floor ceil round trunc
-  floor/ ceil/ round/ trunc/ div
-  mod mod+ mod- modincf moddecf rem
-  pos? zero? neg? neg abs
-  #| ^ & ~ bit?
-  even?
-  odd?
-  << >> >>>
-  power-of-two-ceil
-  flo-bits
-  log logn pow
-  sqrt isqrt
-  sin cos tan asin acos atan atan2 sinh cosh tanh
-  $pi $e
-  )
+  num-to-str)

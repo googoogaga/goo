@@ -53,25 +53,25 @@
              (assign (nxt bindings) (nxt functions) (+ index 1))))))
 
 (dm asm-closurize-main! (o|<program> r)
-  (loc ((fab-empty-method (name body)
+  (loc ((fab-nul-method (name body)
           (def sig (objectify-signature '() r))
           (new <ast-method>
             function-debug-name (objectify-quotation name 4)
             function-signature  sig
             function-body       body)))
     (def name     (cat-sym "_main_"))
-    (def main-met (fab-empty-method name o))
+    (def main-met (fab-nul-method name o))
     (def call
         (new <regular-application> 
           application-function  main-met
-          application-arguments (empty <arguments>)
+          application-arguments (nul <arguments>)
           application-tail?     #f))
     call))
 
 ;;; DRIVER
 
 (dm asm-compute-program (exp env)
-  (def ast (objectify-with-subtransaction exp env #f))
+  (def ast (objectify-with-subtransaction exp env #f #f))
   (def ana (analyze-calls ast env))
   (def box (insert-box! ana))
   (def lft (lift! box))
@@ -82,9 +82,9 @@
 (dv <ord-tab> <tab>)
 
 (dc <g2m> (<any>))
-  (dp g2m-vars    (<g2m> => <ord-tab>) (fab <ord-tab> 0))
-  (dp g2m-lits    (<g2m> => <ord-tab>) (fab <ord-tab> 0))
-  (dp g2m-nxt-lab (<g2m> => <int>)     -1)
+  (dp  g2m-vars    (<g2m> => <ord-tab>) (fab <ord-tab> 0))
+  (dp  g2m-lits    (<g2m> => <ord-tab>) (fab <ord-tab> 0))
+  (dp! g2m-nxt-lab (<g2m> => <int>)     -1)
 
 (dm asm-exp-in (e env)
   (def g2m (new <g2m>))
@@ -187,9 +187,9 @@
         (asm x ref #t)
         (asm x (box-form e) #t)
         `((VM-BOX-PUT)))
-      (tack+need need?
-        (asm x (box-form e) #t)
-        `((VM-LOC-PUT ,(binding-index var))))))
+      (tack (asm x (box-form e) #t)
+            `((VM-LOC-PUT ,(binding-index var)))
+            (if need? `((VM-LOC-GET ,(binding-index var))) '()))))
 
 (dm asm (x|<g2m> e|<box-creation> need?|<log>)
   (def binding (reference-binding (box-reference (box-reference e))))
@@ -209,7 +209,7 @@
         `(,l2)))
 
 (dm flatten (args|<code> => <code>) 
-  (fold tack (empty <code>) args))
+  (fold tack (nul <code>) args))
 
 (dm asm (x|<g2m> e|<arguments> need?|<log>)
   (flatten (as <lst> (map (fun (y) (asm x y #t)) e))))
@@ -219,7 +219,7 @@
 
 (dm asm (x|<g2m> e|<sequential> need?|<log>)
   (rep emit ((res '()) (e e))
-    (if (empty? (tail e))
+    (if (nul? (tail e))
         (flatten (rev! (pair (asm x (head e) need?) res)))
         (emit (pair (asm x (head e) #f) res) (tail e)))))
 
@@ -298,8 +298,10 @@
         `(,l2)))
 
 (dm asm-fun-shell (x|<g2m> e|<ast-function> need?|<log>)
-  (tack (asm x (function-debug-name e) #t) 
-        (asm x (function-signature e)  #t)))
+  (tack (asm x (function-signature e)  #t)
+        (asm x (function-debug-name e) #t) 
+        (asm x (function-names e) #t) 
+        ))
                                
 (dm asm (x|<g2m> e|<ast-method> need?|<log>)
   (tack (asm-fun-shell x e need?)
@@ -308,7 +310,6 @@
 (dm asm (x|<g2m> e|<ast-signature> need?|<log>)
   (tack (flatten (map (fun (y) (asm x y #t)) (req-sig-specs e)))
         (asm x (signature-value e) #t)
-        (asm x (signature-names e) #t)
         (asm-need need?
          `((VM-SIG-FAB 
             ,(constant-value (signature-arity e))

@@ -7,17 +7,15 @@
 (use goo/fun)
 (use goo/class)
 (use goo/macros)
+(use goo/types)
 (use goo/system)
 (use goo/cols/lst)
 (use goo/io/read)
 (use eval/syntax)
 (use eval/dependency)
+(use/export eval/module)
 
 ;;; TODO: MOVE TYPE OUT OF SIGNATURE
-
-;;; The name of the module which contains all of goo's primitives,
-;;; magic bindings, and core code.
-(dv $goo-boot-module-name    'goo/boot)
 
 ;;; The <dependent> object we're currently compiling.  Any dependencies we
 ;;; encounter will automatically be assumed to be the resposibility of this
@@ -37,72 +35,19 @@
 
 (dm ast-error (message|<str> arguments|...)
   (sig (new <simple-ast-error> 
-         condition-message message|<str> condition-arguments arguments)))
-
-(dc <namespace-error> (<simple-ast-error>))
-
-(dm namespace-error (msg|<str> args|...)
-  (sig (new <namespace-error> 
-         condition-message msg condition-arguments (as <lst> args))))
+         condition-message message condition-arguments arguments)))
 
 ;;; programs
 
-(dv ast-<bot> (lst 'bot))
-
 (dc <program> (<any>))
-  (dp! program-type (<program> => <any>))
+  (dp! program-type (<program> => <any>)      $bot)
   (dp! program-line (<program> => (t? <int>)) #f)
-  (dp! program-register (<program> => <any>) #f) ;; TODO: T? INT
+  (dp! program-register (<program> => <any>)  #f) ;; TODO: T? INT
 
 (dc <computed-program> (<program>))
   ;; (dp! program-register (<computed-program> => <any>) #f) ;; TODO: T? INT
 
 (dc <passive-program> (<program>))
-
-;;; bindings are not programs! they represent bindings.
-
-(dv <binding-name> <any>) ;; (type-union <sym> <int>)
-
-(dc <binding> (<any>))
-  (dp! binding-name (<binding> => <binding-name>))
-  (dp! binding-mangled-name (<binding> => (t? <str>)) #f)
-  (dp! binding-type (<binding> => <program>))
-  (dp! binding-inferred-type (<binding> => <any>) ast-<bot>)
-
-;; Global boxes are used by the interpreter to store the values of
-;; global variables.
-(dc <global-box> (<any>))
-  (dp! global-box-value (<global-box> => <any>) nul)
-
-(dc <module-binding> (<binding> <dependable>))
-  ;; The name of the module in which this binding is defined.
-  (dp! binding-kind (<module-binding> => <any>) 'global)
-  (dp! binding-module (<module-binding> => <any>) #f) ;; (t? <module>))
-  (dp! binding-free? (<module-binding> => <log>) #f)
-  (dp! binding-info (<module-binding> => <any>)  #f)
-  (dp! binding-prop (<module-binding> => <any>) #f)
-
-(dm binding-module-name (b|<module-binding> => <sym>)
-  (def mod (binding-module b))
-  (if mod (module-name mod) $goo-boot-module-name))
-
-;; TODO: GET RID OF ALIASES OR MAKE SEPARATE INFO OBJECT
-
-(dv binding-global-box        binding-info)
-(dv binding-global-box-setter binding-info-setter)
-(dv binding-locative          binding-info)
-(dv binding-locative-setter   binding-info-setter)
-(dv binding-handler           binding-info)
-(dv binding-handler-setter    binding-info-setter)
-
-(df maybe-log-dependency (dependable|<dependable> dtype|<dependency-type>)
-  (when *current-dependent*
-    (log-dependency dependable *current-dependent* dtype)
-    (transaction-register-dependent *current-dependent*)))
-
-(df macro-expander (macro-binding|<module-binding> => <fun>)
-  (maybe-log-dependency macro-binding $expansion-parse-dependency)
-  (binding-handler macro-binding))
 
 (dc <local-binding> (<binding>))
   (dp! binding-value (<local-binding> => <any>)           #f)
@@ -211,10 +156,14 @@
 
 (df function-bindings (x|<ast-function>) 
   (signature-bindings (function-signature x)))
+(df function-names (x|<ast-function>) 
+  (signature-names (function-signature x)))
 (df function-specs (x|<ast-function>) 
   (signature-specs (function-signature x)))
 (df function-nary? (x|<ast-function>)
   (constant-value (signature-nary? (function-signature x))))
+(df function-arity (x|<ast-function>)
+  (constant-value (signature-arity (function-signature x))))
 (df function-value (x|<ast-function>)
   (signature-value (function-signature x)))
 
@@ -230,9 +179,8 @@
     (#t 
      "anonymous function")))
 
-(dm invalidate-dependent (dependent|<ast-function>
-                          dependable|<dependable>
-                          dtype|<dependency-type>)
+(dm invalidate-dependent
+    (dependent|<ast-function> dependable|<dependable> dtype|<dependency-type>)
   ;; Aggressively detach ourselves.  We'll eventually want
   ;; to selectively detach ourselves.
   (detach-dependent dependent)
@@ -249,7 +197,7 @@
 
 (dm as-lst (e|<programs> => <lst>)
   (rep loop ((res '()) (e e))
-    (if (empty? e) (rev! res) (loop (pair (head e) res) (tail e)))))
+    (if (nul? e) (rev! res) (loop (pair (head e) res) (tail e)))))
 
 (ds (def-programs ,name) `(def-list ,name (<programs>)))
 
@@ -259,7 +207,6 @@
   (dp! function-temporaries (<ast-embodied-function> => <any>)     '())
   (dp! function-registers (<ast-embodied-function> => <vec>)       (fab <vec> 0))
   (dp! function-loop (<ast-embodied-function> => <any>)            #f)
-  ;; TODO: DEPRECATE
   (dp! function-source (<ast-embodied-function> => <any>)          #f)
   (dp! function-frame-len (<ast-embodied-function> => <any>)       #f)
 
@@ -268,7 +215,7 @@
 (dc <ast-method> (<ast-embodied-function>))
   (dp! function-ref-count (<ast-method> => <int>) 0)
   (dp! function-free (<ast-method> => <free-environment>)
-    (empty <free-environment>))
+    (nul <free-environment>))
 
 (dm incf-ref-count (x) x)
 (dm incf-ref-count (x|<ast-method>) (incf (function-ref-count x)))
@@ -292,7 +239,7 @@
 (dc <loop> (<computed-program>))
   (dp! loop-bindings (<loop> => <any>))
   (dp! loop-body (<loop> => <any>))
-  (dp! loop-continue (<loop> => <any>))
+  (dp! loop-continue (<loop> => <any>) #f)
 
 (def-programs sequential)
 
@@ -319,6 +266,8 @@
 
 (dc <method-application> (<regular-application>))
   (dp! application-next-methods (<method-application> => <any>))
+
+(dm application-known? (x|<method-application> => <log>) #t)
 
 (dc <predefined-application> (<application>))
   (dp! application-binding (<predefined-application> => <any>))
@@ -358,7 +307,7 @@
 
 (dm ast-walk! (g o args|...)
   ;; (msg out "WALKING %=\n" o)
-  (for ((prop (object-props o)))
+  (for ((prop (props-of o)))
     ;; (msg out "  PROP %=\n" prop)
     (def getter (prop-getter prop))
     (def setter (prop-setter prop))
@@ -372,7 +321,7 @@
   o)
 
 (dm ast-walk (g o args|...)
-  (for ((prop (object-props o)))
+  (for ((prop (props-of o)))
     (def getter (prop-getter prop))
     ;; TODO: HACK
     (unless (or (== getter binding-value) (== getter application-loop)) 
@@ -384,7 +333,7 @@
 
 (dm ast-walk (g o|<programs> args|...)
   (rep walk ((x o))
-    (unless (empty? x)
+    (unless (nul? x)
       (let ((e (head x)))
         (when (isa? e <program>) (app g e args))
         (walk (tail x))))))
@@ -393,7 +342,7 @@
 ;;;TODO: DOESN'T RETURN SIDE-EFFECT CORRECTLY FOR SOME REASON
 (dm ast-walk! (g o|<programs> args|...)
   (rep walk ((x o))
-    (if (empty? x)
+    (if (nul? x)
         o
         (let ((e (head x)))
           (when (isa? e <program>)
@@ -407,51 +356,9 @@
   (ast-walk! ast-copy copy))
 
 (dm ast-copy (x|<programs> => <any>)
-  (if (empty? x)
+  (if (nul? x)
       x
       (sup x)))
-
-;;; ENVIRONMENT
-
-(dc <static-environment> (<any>))
-  (dp! environment-next (<static-environment> => <any>) #f)
-  (dp! environment-bindings (<static-environment> => <col>))
-
-(dc <static-global-environment> (<static-environment>))
-  ;; The module associated with this environment.
-  (dp! environment-module (<static-global-environment> => <any>)) ;<module>
-  ;; The module-loader which should be used to load new modules for
-  ;; use by this environment.
-  (dp! environment-module-loader (<static-global-environment> => <any>)) ;<module-loader>
-  ;; The modules used by this environment.
-  (dp! environment-uses-modules (<static-global-environment> => <vec>)
-        (fab <vec> 0))
-  ;; Does this environment allow cross-module resolution of symbols
-  ;; of the form 'foo::bar'?
-  (dp! environment-allows-foreign-names? (<static-global-environment> => <log>)
-        #f)
-
-(dc <static-empty-environment> (<static-environment>))
-
-(dv $empty-static-environment (new <static-empty-environment>))
-
-(dc <static-local-environment> (<static-environment>))
-
-;; Given an object, try to find a global binding which contains it.
-;; Used by the writer.
-;; TODO - This will only work in the runtime environment, not any of the
-;; various syntax environments.
-;; XXX - This is now horrendously broken.
-(dm env-object-name (x => <any>)
-  (esc return
-    (do-static-global-bindings
-     (fun (binding)
-       (when (and (== (binding-kind binding) 'global)
-                  (binding-global-box binding)
-                  (== x (global-box-value (binding-global-box binding))))
-         (return (binding-name binding))))
-     (runtime-environment 'goo/boot))
-    #f))
 
 ;;;; CONVERT TO AST FORM
 
@@ -467,6 +374,15 @@
 (dm objectify-list
     (f|<magic-reference> e|<lst> r|<static-environment> tail? => <any>)
   ((binding-handler (reference-binding f)) e r tail?))
+
+(df maybe-log-dependency (dependable|<dependable> dtype|<dependency-type>)
+  (when *current-dependent*
+    (log-dependency dependable *current-dependent* dtype)
+    (transaction-register-dependent *current-dependent*)))
+
+(df macro-expander (macro-binding|<module-binding> => <fun>)
+  (maybe-log-dependency macro-binding $expansion-parse-dependency)
+  (binding-handler macro-binding))
 
 (dm objectify-list
     (f|<macro-reference> e|<lst> r|<static-environment> tail? => <any>)
@@ -530,17 +446,17 @@
     alternative-alternant  (objectify a r tail?)))
 
 (dm sequentialize (e*|<lst> => <program>)
-  (if (empty? e*)
+  (if (nul? e*)
       (new <constant> constant-value #f)
-      (if (empty? (tail e*))
+      (if (nul? (tail e*))
           (head e*)
           (rep loop ((e* e*))
-            (if (empty? e*)
-                (empty <sequential>)
+            (if (nul? e*)
+                (nul <sequential>)
                 (sequential (head e*) (loop (tail e*))))))))
 
 (dm transform-defs (e*|<lst> => <lst>)
-  (if (empty? e*)
+  (if (nul? e*)
       '()
       (let ((e (head e*)))
         (if (sexpr-def? e)
@@ -551,9 +467,9 @@
 (dm objectify-sequential (e*|<lst> r tail? => <program>)
   (def asts 
     (rep loop ((res '()) (e* (transform-defs e*)))
-      (if (empty? e*)
+      (if (nul? e*)
           (rev! res)
-          (let ((tail? (if (empty? (tail e*)) tail? #f))
+          (let ((tail? (if (nul? (tail e*)) tail? #f))
                 (head  (objectify (head e*) r tail?)))
             (loop (pair head res) (tail e*))))))
   (sequentialize asts))
@@ -600,20 +516,16 @@
           (ast-error "incorrect regular arity" f e*))))
 
 (dm process-nary-closed-application (f e* r tail? => <fix-let>)
-  (loc ((pack-nary-args (e*) ;; TODO: COULD BE SHARED WITH PAIRIZE
-           (if (empty? e*)
-               (lst 'quote '())
-               (lst '%pair (head e*) (pack-nary-args (tail e*)))))
-        (pack-args (e* v* t*)
+  (loc ((pack-args (e* v* t*)
           (def var (head v*))
           (if (binding-dotted? var)
-              (let ((lst-type (objectify '<lst> r #f)))
+              (let ((dotted-type (objectify '<tup> r #f)))
                 (set (binding-dotted? var) #f)
-                (set (binding-type var)    lst-type)
-                (set (head t*)             lst-type)
+                (set (binding-type var)    dotted-type)
+                (set (head t*)             dotted-type)
                 (arguments 
-                 (objectify (pack-nary-args e*) r #f) (empty <arguments>)))
-              (if (empty? e*)
+                 (objectify `(tup ,@e*) r #f) (nul <arguments>)))
+              (if (nul? e*)
                   (ast-error "incorrect dotted arity" f e*)
                   (arguments 
                    (head e*) (pack-args (tail e*) (tail v*) (tail t*)))))))
@@ -626,8 +538,8 @@
    o))
  
 (dm convert2arguments (e*|<lst> => <any>)
-  (if (empty? e*)
-      (empty <arguments>)
+  (if (nul? e*)
+      (nul <arguments>)
       (arguments (head e*) (convert2arguments (tail e*)))))
 
 ;;; assignment on mutable local bindings are immediately
@@ -734,7 +646,8 @@
                  binding-module mod)))
           (insert-global! binding gr)
           binding)))
-    binding)
+  (register-referenced-binding mod binding)
+  binding)
 
 (dv *macro-tracing?* #f)
 
@@ -881,20 +794,17 @@
   (dlet ((*max-print-depth*  $max-int)
          (*max-print-length* $max-int))
     (objectify-quotation
-     (and *record-source?*
-          (msg-to-str 
-           "(fun %s %s)" sig (if (isa? body <lst>) (pair 'seq body) body)))
-     r)))
+     (and *record-source?* (msg-to-str "%s" `(fun ,sig ,@body))) r)))
 
 (dm objectify-function-using (met sig body r tail? => <ast-method>)
   ;; Allocate the method up front so we can log dependencies against it.
   (with-dependent met
     (def signature (objectify-signature sig r))
     (def new-r     (r-extend* r (signature-bindings signature)))
-    (def body      (objectify-sequential body new-r #t))
+    (def ast       (objectify-sequential body new-r #t))
     (set (function-debug-name met) (objectify-quotation #f r))
     (set (function-signature met)  signature)
-    (set (function-body met)       body)
+    (set (function-body met)       ast)
     (set (function-source met)     (objectify-function-source sig body r))
     met))
 
@@ -908,8 +818,8 @@
 (dm objectify-signature (sig r => <ast-signature>)
   (def sexpr-params (sexpr-signature-parameters sig))
   (rep col ((params sexpr-params) (nary? #f) (bindings '()) 
-            (names (empty <fab-list>)) (types (empty <fab-list>)))
-    (if (empty? params)
+            (names (nul <fab-list>)) (types (nul <fab-list>)))
+    (if (nul? params)
         (let ((sexpr-value (sexpr-signature-value sig))
               (value (objectify (or sexpr-value (default-type r)) r #f))
               (arity (- (len names) (if nary? 1 0))))
@@ -942,7 +852,7 @@
  (rep loop ((i 0) (r r))
    (if (isa? r <static-local-environment>)
        (rep find ((j 0) (bindings (environment-bindings r)))
-         (if (empty? bindings)
+         (if (nul? bindings)
              (loop (+ i 1) (environment-next r))
              (if (== (head bindings) binding)
                  (tup i j)
@@ -974,6 +884,7 @@
     (#t            (ast-error "Unknown binding-kind %=" (binding-kind b)))))
 
 (dm objectify-binding (n b|<module-binding> r => <any>)
+  (register-referenced-binding r b)
   (def <ref> (binding-reference-class b))
   (new <ref> reference-binding b))
 
@@ -1003,6 +914,7 @@
                   binding-name   name
                   binding-module (find-environment-module r))))
         (insert-global! b gr)
+        (register-referenced-binding gr b)
         (new <global-reference> reference-binding b))))
 
 ;;; Does this name have the form 'foo:bar'?
@@ -1104,15 +1016,6 @@
       names)
   (new <constant> constant-value #f))
 
-;;; This works like 'insert-global!', but it's more careful about clobbering.
-(df import-global! (b|<module-binding> env|<static-global-environment>)
-  (def existing (find-binding (binding-name b) env))
-  (unless (or (== existing #f) (== existing b))
-    (msg out "warning: '%s' from %s clobbers local binding.\n"
-         (binding-name b) (binding-module-name b)))
-  (insert-global! b env)
-  #f)
-
 (dm objectify-use/export-module (name r tail? => <program>)
   (def env (find-static-global-environment r))
   (def module (find-environment-module r))
@@ -1163,21 +1066,6 @@
        (use-mod name))))
   (new <constant> constant-value #f))
 
-(dm insert-and-mangle-global! (binding mangle-prefix|<str> r)
-  (def r|<static-global-environment> (find-static-global-environment r))
-  (set (elt (environment-bindings r)
-            (cat-sym mangle-prefix (binding-name binding)))
-       binding))
-
-(df import-and-mangle-global!
-    (b|<module-binding> mangle-prefix|<str> env|<static-global-environment>)
-  (def existing (find-binding (cat-sym mangle-prefix (binding-name b)) env))
-  (unless (or (== existing #f) (== existing b))
-    (msg out "warning: '%s' from %s clobbers local binding.\n"
-         (cat-sym mangle-prefix (binding-name b)) (binding-module-name b)))
-  (insert-and-mangle-global! b mangle-prefix env)
-  #f)
-
 (dm objectify-use-mangle-module (name mangler r tail? => <program>)
   (def env (find-static-global-environment r))
   (def module (find-environment-module r))
@@ -1196,7 +1084,7 @@
   (syntax-error "Expected Pattern List %=\n" pat))
 
 (dm expand-bind-list ((pat (t= '())) var fail => <lst>)
-  `(match-empty-list ,var ,fail))
+  `(match-nul-list ,var ,fail))
 
 (dm expand-bind-list (pat|<lst> var fail => <lst>)
   (cond
@@ -1208,7 +1096,7 @@
      (expand-bind-list* pat var fail))))
 
 (dm expand-bind-list* ((pat (t= '())) var fail => <any>)
-  `(match-empty-list ,var ,fail))
+  `(match-nul-list ,var ,fail))
 
 (dm expand-bind-list* (pat|<lst> var fail => <any>)
   `(let ((,var ,(expand-bind-element (head pat) var fail)))
@@ -1261,31 +1149,9 @@
   (new <static-local-environment> 
     environment-next r environment-bindings bindings))
 
-(dm insert-global! (binding r)
-  (def r|<static-global-environment> (find-static-global-environment r))
-  (set (elt (environment-bindings r) (binding-name binding)) binding))
-
-(dm insert-globals! (bindings|<lst> r) 
-  (do (fun (b) (insert-global! b r)) bindings))
-
-(dm find-static-global-environment 
-    (r|<static-local-environment> => <static-global-environment>)
-  (find-static-global-environment (environment-next r)))
-
-(dm find-static-global-environment
-    (r|<static-global-environment> => <static-global-environment>)
-  r)
-
-(dm find-syntax-environment (r|<static-environment>
-                             => <static-global-environment>)
-  (module-syntax-environment (find-environment-module r)))
-
-(dm find-environment-module (r|<static-environment>) ; => <module>
-  (environment-module (find-static-global-environment r)))
-
 (dm find-binding (name r|<static-local-environment> => <any>)
   (rep loop ((bindings (environment-bindings r))) ;; TODO: => (or <binding> #f)
-    (if (empty? bindings)
+    (if (nul? bindings)
         (find-binding name (environment-next r))
         (if (== name (binding-name (head bindings)))
             (head bindings)
@@ -1293,18 +1159,8 @@
 
 ;; TODO: => T? <BINDING>
 
-(dm find-binding (name r|<static-empty-environment> => <any>)
+(dm find-binding (name r|<static-nul-environment> => <any>)
   #f)
-
-(dm find-binding (name r|<static-global-environment> => <any>) 
-  (or (elt-or (environment-bindings r) name #f)
-      (find-binding name (environment-next r))))
-
-;; TODO: CLEANUP
-
-(dm frame-bindings (env|<static-environment> => <col>)
-  ;; (as <lst> (map identity (environment-bindings env)))
-  (environment-bindings env))
 
 ;;;; SPECIAL FORMS
 
@@ -1426,9 +1282,9 @@
   (objectify-monitor type info test handler body r tail?))
 
 (dm pairize (args|<lst> => <any>)
-  (if (empty? args)
+  (if (nul? args)
       (lst 'quote '())
-      (lst '%pair (head args) (pairize (tail args)))))
+      (lst 'fab-pair (head args) (pairize (tail args)))))
 
 (define-magic-binding define-class (x r tail?)
   (def name (sexpr-definition-variable x))
@@ -1539,315 +1395,6 @@
   (objectify-use/export-module (2nd x) r tail?))
 
 ;;;;=======================================================================
-;;;;  Transaction Information
-;;;;=======================================================================
-;;;;  Compilation of a Goo expression has relatively few side effects.
-;;;;  So if we want to get rid of some small chunk compiled code (perhaps
-;;;;  an error occurred later in the compilation process, or p2c unloaded a
-;;;;  module), we can let the garbage collector do most of the work.
-;;;;
-;;;;  There are a few exceptions:
-;;;;    1) Imported free bindings may have been defined.  This hack
-;;;;       is needed for the 'need-implementation' macro.
-;;;;    2) Any number of dependencies may have been registered.
-;;;;
-;;;;  We need to take pains to undo these operations manually.  We *could*
-;;;;  do this by building destructor functions for all the ast nodes, but
-;;;;  that would be bletcherous, and require rewriting half the compiler.
-;;;;
-;;;;  Instead, we use a simple transaction mechanism.
-;;;;
-;;;;  Each module has an associated transaction.  If the module is unloaded,
-;;;;  the module transaction must be rolled back.
-;;;;
-;;;;  Each invocation of the compiler has a "subtransaction".  If
-;;;;  compilation succeeds, this is merged into the module transaction.  If
-;;;;  compilation fails, it is rolled back.
-
-(dc <transaction> (<any>))
-  (dp! transaction-implemented-bindings (<transaction> => <tab>) (fab <tab> 10))
-  (dp! transaction-dependents (<transaction> => <tab>) (fab <tab> 10))
-
-(dv *current-subtransaction* #f)
-
-(df transaction-register-implemented-binding (b|<binding>)
-  (unless *current-subtransaction*
-    (ast-error
-     "Can't register implemented foreign binding (no subtransaction)"))
-  (set (elt (transaction-implemented-bindings *current-subtransaction*) b) #t))
-
-(df transaction-register-dependent (d|<dependent>)
-  (unless *current-subtransaction*
-    (ast-error "Can't register dependent (no subtransaction)"))
-  (set (elt (transaction-dependents *current-subtransaction*) d) #t))
-
-(df transaction-empty? (t|<transaction> => <log>)
-  (and (empty? (transaction-implemented-bindings t))
-       (empty? (transaction-dependents t))))
-
-(df merge-transactions! (t1|<transaction> t2|<transaction> => <transaction>)
-  (cond
-    ;; If one of the transactions is empty, return the other.
-    ((transaction-empty? t2) t1)
-    ((transaction-empty? t1) t2)
-    ;; Otherwise, merge t2 into t1 destructively.
-    (#t
-     (def t1-bindings (transaction-implemented-bindings t1))
-     (def t2-bindings (transaction-implemented-bindings t2))
-     (def t1-dependents (transaction-dependents t1))
-     (def t2-dependents (transaction-dependents t2))
-     (do-keyed (fun (k v) (set (elt t1-bindings k) #t)) t2-bindings)
-     (do-keyed (fun (k v) (set (elt t1-dependents k) #t)) t2-dependents)
-     t1)))
-
-(df roll-back-transaction (t|<transaction>)
-  (do-keyed
-   (fun (binding junk) (set (binding-free? binding) #t))
-   (transaction-implemented-bindings t))
-  (do-keyed
-   (fun (dependent junk) (detach-dependent dependent))
-   (transaction-dependents t)))
-
-(df call-with-subtransaction (module thunk => <any>)
-  (def success #f)
-  (def saved *current-subtransaction*)
-  (fin
-    (seq
-      (set *current-subtransaction* (new <transaction>))
-      (def value (thunk))
-      (set success #t)
-      value)
-    (seq
-      (if success
-          (set (module-transaction module)
-               (merge-transactions! (module-transaction module)
-                                    *current-subtransaction*))
-          (roll-back-transaction *current-subtransaction*))
-      (set *current-subtransaction* saved))))
-
-(ds (with-subtransaction (,module) ,@body)
-  `(call-with-subtransaction ,module (fun () ,@body)))
-           
-;;; Objectify the specified code within a subtransaction associated
-;;; with the appropriate module.
-;;;
-;;; XXX - It's not strictly correct to call this from the interpreter,
-;;; because it will finalize the transaction as soon as the code
-;;; is succcessfully objectified, but before it is run--and I'm not
-;;; sure how we should handle rollbacks if part of the code is
-;;; objectified but never executed.  Nonetheless, this is nearly
-;;; correct, and probably good enough for now.
-(df objectify-with-subtransaction (e r|<static-environment> tail? => <any>)
-  (with-subtransaction ((environment-module r))
-    (objectify e r tail?)))
-
-
-;;;;=======================================================================
-;;;;  Module Loaders & Modules
-;;;;=======================================================================
-;;;;  A module contains two environments: a target environment, and a
-;;;;  syntax environment.  The target environment is used for objectifying
-;;;;  actual programs, and the syntax environment is used for objectifying
-;;;;  DS, CT, DSS and any other compile-time forms.  In some cases, the
-;;;;  syntax environment and the target environment might be the same.
-;;;;
-;;;;  See PROPOSALS/SIMPLE-MODULES.TXT for an overview of the module
-;;;;  system from a programmer's perspective.
-;;;;
-;;;;  A <module-loader> loads modules from disk and keeps them in memory.
-;;;;  There are typically several module loaders in use:
-;;;;    1. A module loader for the running image's listener.
-;;;;    2. A module loader for each program being compiled.
-
-(dc <module-loader> (<any>))
-  ;; A map from module names (represented as symbols) to
-  ;; <module> objects.
-  (dp! module-loader-modules (<module-loader> => <tab>) (fab <tab> 1000))
-  ;; A stack of all the names of modules currently being loaded.
-  ;; We use this to catch circular dependencies.
-  (dp! module-loader-stack (<module-loader> => <lst>) '())
-
-(export <module-loader>)
-
-(dc <module> (<any>))
-  (dp module-name (<module> => <sym>))
-  (dp! module-mangled-name (<module> => (t? <str>)) #f)
-  (dp! module-mangled-string-name (<module> => (t? <str>)) #f)
-  ;; The environments associated with this module.
-  (dp! module-target-environment (<module> => <static-global-environment>))
-  (dp! module-syntax-environment (<module> => <static-global-environment>))
-  ;; The bindings exported by this module.
-  (dp %module-exports (<module> => <tab>)            (fab <tab> 1000))
-  (dp! module-data-processed? (<module> => <log>)     #t)
-  (dp! module-runtime-data (<module> => <any>)        #f)
-  (dp! module-transaction (<module> => <transaction>) (new <transaction>))
-  (dp module-uses-c-files (<module> => <vec>)        (fab <vec> 0))
-  (dp module-uses-c-includes (<module> => <vec>)     (fab <vec> 0))
-  (dp module-uses-c-libraries (<module> => <vec>)    (fab <vec> 0))
-
-(dm module-exports (x|<module> => <tab>)
-  (ensure-module-data x)
-  (%module-exports x))
-
-(export
-  <module>
-  module-name
-  module-syntax-environment
-  module-target-environment)
-
-(df set-module-environments (mod|<module>
-                             syntax-env|<static-global-environment>
-                             target-env|<static-global-environment>)
-  (set (module-syntax-environment mod) syntax-env)
-  (set (module-target-environment mod) target-env))
-
-;;; Call a function 'f' for each module associated with the module loader.
-(df do-module-loader-modules (f loader)
-  (do (fun (mod) (f mod))
-      (module-loader-modules loader)))
-
-;; Create an empty module for use with a particular loader.
-;; Override this method to use a custom module class.
-(dm module-loader-module-type (loader|<module-loader> => <type>)
-  <module>)
-
-;;; Add a module to a module-loader.
-(df register-module! (module-loader|<module-loader> mod|<module>
-                      => <module-loader>)
-  (set (elt (module-loader-modules module-loader) (module-name mod)) mod)
-  module-loader)
-
-;;; Find the module with the given name, loading it if necessary.
-(df probe-module (loader|<module-loader> name|<sym> => <module>)
-  (or (elt-or (module-loader-modules loader) name #f)
-      (load-and-register-module loader name)))
-
-;;; This function keeps track of nesting and registration.
-(df load-and-register-module (loader|<module-loader> name|<sym> => <module>)
-  (def stack  (module-loader-stack loader))
-  (def depth  (len stack))
-  (def indent (repeat "  " depth))
-  
-  ;; First, make sure we aren't already loading this module.
-  (when (mem? stack name)
-    (namespace-error "%s: error: Circular use of %s not allowed"
-                     (head stack) name))
-
-  ;; Load the module, using a FIN form to manage the load stack.
-  ;; XXX - If an error occurs, we currently neglect to mark
-  ;; the environment-implements bindings of the half-created
-  ;; module as free.
-  (msg out "%s[Loading module %s...\n" indent name) 
-  (def mod (seq (pushf (module-loader-stack loader) name)
-                (fin (load-module loader name)
-                     (popf (module-loader-stack loader)))))
-  (register-module! loader mod)
-  (msg out "%s]\n" indent)
-  mod)
-
-;;; Create a <module-loader> subclass and override this method.  It should
-;;; create and register a module, call 'read-file', objectify the code in
-;;; the module's target environment, and do something appropriate with the
-;;; resulting ast.
-;;;
-;;; TODO - Block recursive loads.
-;;; TODO - We must eventually be able to support runtime modules, too.
-;;; this may require a fair bit of refactoring.
-(dg load-module (loader|<module-loader> name|<sym> => <module>))
-
-;;; Export a binding from a module.
-(df export-binding! (module|<module>
-                     name|<binding-name>
-                     binding|<module-binding>
-                     => (t= #f))
-  (def exports (module-exports module))
-  (def existing (elt-or exports name #f))
-  (unless (or (== existing #f) (== existing binding))
-    (namespace-error "Tried to export %= and %= from %= as %="
-                     existing binding module name))
-  (set (elt exports name) binding)
-  #f)
-
-;;; Return true iff a binding was originally defined in the current module.
-(df binding-native-to? (binding|<module-binding> module|<module> => <log>)
-  (== (module-name module) (binding-module-name binding)))
-
-;;; Report all the undefined bindings in the specified module.
-(df report-undefined-global-bindings (mod|<module>)
-  (do-static-global-bindings
-   (fun (binding)
-     (when (and (binding-free? binding)
-                (binding-native-to? binding mod))
-       (msg out "%s: warning: undefined binding '%s'.\n"
-            (module-name mod)
-            (binding-name binding))))
-   (module-target-environment mod)))
-
-;;; Compute all the modules which use the specified modules, directly or
-;;; indirectly.  Yes, this function is slow and ugly.
-(df compute-transitive-users (loader|<module-loader>
-                              modnames|<lst> => <lst>)
-  (def users (fab <tab> 100))
-  (loc ((add-user (modname)
-          (unless (elt-or users modname #f)
-            (set (elt users modname) modname)
-            (do-module-loader-modules
-             (fun (mod)
-               (do
-                (fun (uses-mod)
-                  (when (== modname (module-name uses-mod))
-                    (add-user (module-name mod))))
-                (environment-uses-modules (module-target-environment mod))))
-             loader))))
-    (do add-user modnames)
-    (packing () (do (fun (v) (pack v)) users))))
-
-;;; Remove a single module object from the loader.
-;;; This should not be called externally, because it does not bother to
-;;; remove other modules which use this one.
-(df remove-module-internal! (loader|<module-loader> mod|<module>)
-  (roll-back-transaction (module-transaction mod))
-  (del! (module-loader-modules loader) (module-name mod)))
-
-;;; Unload all the named modules, and all the modules which use them.
-(df remove-modules-by-name! (loader|<module-loader> modnames|<lst> => (t= #f))
-  (def remove-names (compute-transitive-users loader modnames))
-  (do (fun (modname)
-        (def mod (elt (module-loader-modules loader) modname))
-        (remove-module-internal! loader mod))
-      remove-names)
-  #f)
-
-;;; Convert a module name to a relative path name.
-;;;   foo/bar => "foo/bar" or "foo\\bar", etc.
-(df module-name-to-relpath (name|<sym> => <str>)
-  (def namestr (map to-lower (sym-name name)))
-  (join (split namestr #\/) *path-separator*))
-
-;;; Copy the binding for 'use' into the module, so it can ask for more
-;;; bindings as needed.  Copy 'seq', too, because the top-level of the
-;;; file gets wrapped in it.
-(df install-initial-bindings (env|<static-global-environment>
-                              loader|<module-loader>)
-  (def bootmod (probe-module loader $goo-boot-module-name))
-  (def bootenv (module-target-environment bootmod))
-  (do (fun (name) (insert-global! (find-binding name bootenv) env))
-      '(SEQ USE)))
-
-(export
-  set-module-environments
-  module-loader-module-type
-  do-module-loader-modules
-  probe-module
-  load-module
-  binding-native-to?
-  report-undefined-global-bindings
-  remove-modules-by-name!
-  module-name-to-relpath
-  install-initial-bindings)
-
-
-;;;;=======================================================================
 ;;;;  Set Up Initial Environments for Objectification
 ;;;;=======================================================================
 ;;;;  To objectify code, we need to look up variables in a global
@@ -1872,180 +1419,33 @@
 ;;;;       with the magic bindings SEQ and USE, which are enough to allow
 ;;;;       them to import bindings from other modules.
 
-;;; ENVIRONMENT CREATION 
+;;; Copy the binding for 'use' into the module, so it can ask for more
+;;; bindings as needed.  Copy 'seq', too, because the top-level of the
+;;; file gets wrapped in it.
+(dm install-initial-bindings (env|<static-global-environment>
+                              loader|<module-loader>)
+  (def bootmod (probe-module loader $goo-boot-module-name))
+  (def bootenv (module-target-environment bootmod))
+  (do (fun (name) (insert-global! (find-binding name bootenv) env))
+      '(SEQ USE)))
 
-;; Create a new global environment.
-(df fab-static-global-environment 
-  (module|<module> module-loader|<module-loader> allow-foreign-names?|<log>
-   => <static-global-environment>)
-  (def new-env (new <static-global-environment>
-                 environment-module module
-                 environment-module-loader module-loader
-                 environment-next $empty-static-environment
-                 environment-allows-foreign-names? allow-foreign-names?
-                 environment-bindings (fab <tab> 2000)))
-  new-env)
+(export install-initial-bindings)
 
-;; Given an environment and a list of symbols, return a new environment
-;; containing all the bindings in the original environment that are *not*
-;; named by a symbol in 'excluded'.
-(df fab-subset-environment (module|<module> src-module|<module> excluded|<col>
-                            => <static-global-environment>)
-  (def loader
-    (environment-module-loader (module-target-environment src-module)))
-  (def new-env
-    (fab-static-global-environment module loader #f))
-  (do-keyed
-   (fun (name binding)
-     (unless (mem? excluded name)
-       ;; TODO - Renaming: Honor name.
-       (insert-global! binding new-env)))
-   (module-exports src-module))
-  new-env)
+;;; Objectify the specified code within a subtransaction associated
+;;; with the appropriate module.
+;;;
+;;; XXX - It's not strictly correct to call this from the interpreter,
+;;; because it will finalize the transaction as soon as the code
+;;; is succcessfully objectified, but before it is run--and I'm not
+;;; sure how we should handle rollbacks if part of the code is
+;;; objectified but never executed.  Nonetheless, this is nearly
+;;; correct, and probably good enough for now.
+(df objectify-with-subtransaction 
+    (e r|<static-environment> dynamic-compilation? tail? => <any>)
+  (with-subtransaction ((environment-module r))
+    (objectify e r tail?)))
 
 
-;;;;=======================================================================
-;;;;  Runtime Setup
-;;;;=======================================================================
-;;;;  Recover information about the modules and bindings that were built
-;;;;  into our image.  This mostly involves calling build-runtime-modules
-;;;;  and passing it an appropriate set of functions, then doing a small
-;;;;  amount of tweaking to set up macros, magic bindings, and other
-;;;;  stuff correctly.
-
-(dc <runtime-module-loader> (<module-loader>))
-
-(ddv *now-rt-env* #f)
-
-;;; This is called if somebody tries to load a module at runtime which
-;;; hadn't been built into the image.
-(dm load-module (loader|<runtime-module-loader> name|<sym> => <module>)
-  (def type       (module-loader-module-type loader))
-  (def module     (new type module-name name))
-  (def env        (fab-static-global-environment module loader #f))
-  (def keepmod?   #f)
-  (def modpath       (module-name-to-relpath name))
-  (def file       (find-goo-file-in-path modpath *module-search-path*))
-  (set-module-environments module env env)
-  (if (not file)
-      (namespace-error "Unable to find module %s" modpath))
-  (fin
-    (seq
-      (install-initial-bindings env loader)
-      (dlet ((*now-rt-env* env))
-        (load-in file env))
-      ;; Turn on foreign name support once the code has been loaded.
-      (set (environment-allows-foreign-names? env) #t)
-      (set keepmod? #t)
-      module)
-        ;;; Tricky unwind handler.  Our module may have altered the the state
-        ;;; of other modules, and so we need to back these changes out if we
-        ;;; crash midway.  This would look much nicer if we had some kind of
-        ;;; try/catch/rethrow construct.
-        ;;; TODO - This is much less necessary than before, since we already
-        ;;; handle rollbacks for the actual compilation process using a
-        ;;; subtransaction.  But there may still be errors /executing/
-        ;;; the code, and we choose to apply a module rollback if that code
-        ;;; fails.  Is this the right thing?  Hmmm.
-    (unless keepmod?
-      (roll-back-transaction (module-transaction module)))))
-      
-(dv *runtime-module-loader* (new <runtime-module-loader>))
-(df runtime-module-loader () *runtime-module-loader*)
-(df runtime-module (modname|<sym>)
-  (probe-module (runtime-module-loader) modname))
-(df runtime-environment (modname|<sym>)
-  (def module (runtime-module modname))
-  (ensure-module-data module)
-  (module-target-environment module))
-(df runtime-core-environment (modname|<sym>)
-  (module-target-environment (runtime-module modname)))
-(df unchecked-runtime-environment (modname|<sym>)
-  (def loader (runtime-module-loader))
-  (if (== (elt-or (module-loader-stack loader) 0 #f) modname)
-      *now-rt-env*
-      (module-target-environment (runtime-module modname))))
-
-;;; RELOADER METHODS FOR %BUILD-RUNTIME-MODULES
-;;; These are called to reload modules which were compiled into our runtime.
-
-(df reloader-do-create-module (modname|<str> data => <module>)
-  (def loader (runtime-module-loader))
-  (def type   (module-loader-module-type loader))
-  (def mod    (new type module-name (as <sym> modname)))
-  (def env    (fab-static-global-environment mod loader #t))
-  (set (module-data-processed? mod) #f)
-  (set-module-environments mod env env)
-  (set (module-runtime-data mod) data)
-  (register-module! loader mod)
-  mod)
-
-(df reloader-do-use-module (mod|<module> uses|<module>)
-  (push! (environment-uses-modules (module-target-environment mod)) uses))
-
-(df reloader-do-import (mod|<module> name|<str>
-                        from-mod|<module> original-name|<str>)
-  (def home-env (module-target-environment from-mod))
-  (def binding  (find-binding (as <sym> original-name) home-env))
-  ;; TODO - Add support for using 'name'.
-  (when (not binding)
-    (namespace-error "Can't find %s from %s for %s\n"
-                     original-name (module-name from-mod) (module-name mod)))
-  (insert-global! binding (module-target-environment mod)))
-
-(df process-module-data (module|<module>)
-  (%process-module 
-   (module-runtime-data module) 
-   reloader-do-import reloader-do-export))
-
-(df ensure-module-data (module|<module>)
-  (unless (module-data-processed? module)
-    ;; TODO: DETECT CIRCULARITIES?
-    (set (module-data-processed? module) #t)
-    (process-module-data module)))
-
-(df reloader-do-runtime-binding (mod|<module> name|<str> loc|<loc>)
-  (def binding (new <module-binding>
-                 binding-kind     'runtime
-                 binding-module   mod
-                 binding-name     (as <sym> name)
-                 binding-free?    #f
-                 binding-locative loc))
-  (insert-global! binding (module-target-environment mod)))
-
-(df reloader-do-dynamic-binding (mod|<module> name|<str> loc|<loc>)
-  (def binding (new <module-binding>
-                 binding-kind     'dynamic
-                 binding-module   mod
-                 binding-name     (as <sym> name)
-                 binding-free?    #f
-                 binding-locative loc))
-  (insert-global! binding (module-target-environment mod)))
-
-;;; We create all non-runtime bindings with type 'global', so we have
-;;; something to export and import while rebuilding the module structure.
-;;; Later on, we'll need to update these bindings and change
-;;; their types using ast-define-binding.
-(df reloader-do-other-binding (mod|<module> name|<str>)
-  (def binding (new <module-binding>
-                 binding-kind   'predefined;; HACK: JB
-                 binding-module mod
-                 binding-name   (as <sym> name)
-                 binding-free?  #t))
-  (insert-global! binding (module-target-environment mod)))
-
-(df reloader-do-export (mod|<module> name|<str> as-name|<str>)
-  (def binding (find-binding (as <sym> name) (module-target-environment mod)))
-  (if binding
-      (export-binding! mod (as <sym> as-name) binding)
-      (namespace-error "Can't find %s in %s\n" name (module-name mod))))
-
-
-(df reload-modules ()
-  (%build-runtime-modules 
-   reloader-do-create-module reloader-do-use-module
-   reloader-do-runtime-binding reloader-do-other-binding
-   reloader-do-dynamic-binding))
 
 ;;; Change the type of the magic bindings in an environment, and install
 ;;; the right handlers.  We only need to do this for the boot environment,
@@ -2129,20 +1529,6 @@
 (df init-ast ()
   (init-runtime))
 
-;; Given a static global environment 'env', apply 'f' to all the bindings.
-(df do-static-global-bindings (f|<fun> env|<static-global-environment>)
-  (rep loop ((env env))
-    (unless (isa? env <static-empty-environment>)
-      (do f (frame-bindings env))
-      (loop (environment-next env)))))
-
-;; As above, but also supply the local name of the bindings.
-(df do-named-static-global-bindings (f|<fun> env|<static-global-environment>)
-  (rep loop ((env env))
-    (unless (isa? env <static-empty-environment>)
-      (do-keyed f (frame-bindings env))
-      (loop (environment-next env)))))
-
 
 ;;; MISC
 
@@ -2161,8 +1547,7 @@
 
 (need-implementation
   ast-evaluate
-  init-environment-for-eval
-  load-in)
+  init-environment-for-eval)
 
 (export
   <alternative>
@@ -2190,7 +1575,6 @@
   assignment-form-setter
   assignment-reference
   ast-define-binding
-  find-binding
   <ast-function>
   <ast-generic>
   <ast-macro-definition>
@@ -2216,34 +1600,17 @@
   <bind-exit>
   bind-exit-main-fun
   bind-exit-light?
-  <binding>
-  <module-binding>
-  module-binding
-  binding-kind
-  binding-mangled-name binding-mangled-name-setter
-  binding-dynamic-extent?
-  binding-dynamic-extent?-setter
   binding-index
   binding-index-setter
-  binding-global-box
-  binding-global-box-setter
-  binding-locative binding-locative-setter
-  binding-module-name
-  binding-module
   binding-mutable?
-  binding-name
-  binding-type
-  binding-type-setter
-  binding-inferred-type
-  binding-inferred-type-setter
-  binding-info
-  binding-info-setter
   binding-value
   binding-value-setter
   binding-dotted?
   binding-dotted?-setter
   binding-closed-over?
   binding-closed-over?-setter
+  binding-dynamic-extent?
+  binding-dynamic-extent?-setter
   <bound?>
   bound?-reference
   bound?-default
@@ -2257,11 +1624,6 @@
   <dynamic-definition>
   def-list
   def-programs
-  do-static-global-bindings
-  do-named-static-global-bindings
-  environment-bindings
-  env-object-name
-  environment-uses-modules
   <fix-let> <low-let>
   fix-let-arguments
   fix-let-arguments-setter
@@ -2285,10 +1647,10 @@
   signature-arity-setter
   signature-value
   signature-value-setter
-  find-environment-module
   function-signature
   function-signature-setter
   function-bindings
+  function-names
   function-body
   function-body-setter
   function-binding
@@ -2296,12 +1658,11 @@
   function-debug-name
   function-debug-name-setter
   function-nary?
+  function-arity
+  function-specs
   function-value
   function-loop function-loop-setter
   <global-assignment>
-  <global-box>
-  global-box-value
-  global-box-value-setter
   <module-binding-reference>
   <static-module-binding-reference>
   <global-reference>
@@ -2320,13 +1681,6 @@
   locals-functions
   locals-functions-setter
   %%macro %%%macro
-  module-name
-  module-mangled-name module-mangled-name-setter
-  module-mangled-string-name module-mangled-string-name-setter
-  module-exports
-  module-uses-c-files
-  module-uses-c-includes
-  module-uses-c-libraries
   <monitor>
   monitor-handler
   monitor-info
@@ -2338,6 +1692,7 @@
   objectify-signature
   <predefined-application>
   <program>
+  <bot> $bot
   program-type
   program-type-setter
   program-line
@@ -2346,7 +1701,6 @@
   program-register program-register-setter
   <programs>
   as-lst
-  $goo-boot-module-name
   <raw-constant>
   <real-reference>
   <reference>
@@ -2356,17 +1710,14 @@
   reference-frame-number
   reference-frame-offset
   <regular-application>
-  report-undefined-global-bindings
+  <method-application>
+    application-next-methods
   <runtime-assignment>
   <dynamic-assignment>
-  runtime-environment
-  unchecked-runtime-environment
   <runtime-reference>
   <sequential>
   sequentialize
   <functions>
-  <static-global-environment>
-  environment-module
   <unwind-protect>
   unwind-protect-cleanup-thunk
   unwind-protect-protected-thunk
@@ -2375,4 +1726,3 @@
   process-closed-application
   ast-contains-fun?
   )
-

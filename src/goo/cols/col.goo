@@ -5,6 +5,9 @@
 (use goo/class)
 (use goo/macros)
 (use goo/types)
+(use goo/any)
+(use goo/log)
+(use goo/chr)
 (use goo/math)
 
 (exported
@@ -18,8 +21,10 @@
  (dg key-type (x|<col> => <type>))
  (dg key-test (x|<col> => <fun>))
  (dg elts (x|<col> keys|<col> => <col>))
- (dg empty? (x|<col> => <log>))
- (dg empty ((x (t< <col>)) => <col>))
+ (dg nul? (x|<col> => <log>))
+ (dg nul ((x (t< <col>)) => <col>))
+ (dv empty? nul?) ;; TODO: DEPRECATED
+ (dv empty nul)   ;; TODO: DEPRECATED
  (dg add (x|<col> y|<any> => <col>))
  (dg dup (x|<col> => <col>))
  (dg fab ((t (t< <col>)) s|<int> => <col>))
@@ -92,10 +97,10 @@
 
 ;; required: elt-setter
 
-(dm empty? (c|<col> => <log>)
+(dm nul? (c|<col> => <log>)
   (= (len c) 0))
 
-(dm empty ((c (t< <col>)) => <col>)
+(dm nul ((c (t< <col>)) => <col>)
   (fab c 0))
 
 (dm elt-default (x|<col> => <any>)
@@ -164,7 +169,7 @@
 ;;; (dm del (x|<col> key|<any> => <col>) ...)
 
 (dm zap (x|<col> => <col>)
-  (empty (class-of x)))
+  (nul (class-of x)))
 
 (dm do (f|<fun> c|<col>)
   (rep lop ((e (enum c)))

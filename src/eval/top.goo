@@ -2,6 +2,7 @@
 
 (use goo)
 (use goo/boot)
+(use goo/fun)
 (use goo/system)
 (use goo/conditions)
 (use eval/syntax)
@@ -19,7 +20,8 @@
 (dg g2c-eval (exp ct-env))
 
 (dm parse-in (s|<str> ct-env)
-  (objectify-with-subtransaction (read-from-string s) ct-env #f))
+  (dlet ((*dynamic-compilation?* #f #/ #t /#))
+    (objectify-with-subtransaction (read-from-string s) ct-env #t #f)))
 
 (dm parse (s|<str> modname|<sym>)
   (parse-in s (runtime-environment modname)))
@@ -47,8 +49,10 @@
       (%%bottom%%ast-run ast ct-env)))
 
 (df auto-eval (form ct-env)
-  (def ast (objectify-with-subtransaction form ct-env #f))
-  (run ast ct-env))
+  (dlet ((*dynamic-compilation?* #t))
+    (zap-referenced-bindings! ct-env)
+    (def ast (objectify-with-subtransaction form ct-env #t #f))
+    (run ast ct-env)))
 
 (dv $g2c-eval? 
   (let ((mode (os-val "GOO_EVAL_MODE")))
@@ -59,7 +63,7 @@
 (ddv run (if $g2c-eval? auto-run %%bottom%%ast-run))
 
 (dm eval-in (x ct-env)
-  (def o (objectify-with-subtransaction x ct-env #f))
+  (def o (objectify-with-subtransaction x ct-env #t #f))
   (def e (ast-evaluate o))
   e)
 
@@ -86,9 +90,11 @@
 (dm load-in (filename|<str> ct-env)
   (if (compiled-file? filename)
       (so-load filename)
-      (seq (def x (read-file filename))
-           (def o (objectify-with-subtransaction x ct-env #f))
-           (run o ct-env)))
+      (dlet ((*dynamic-compilation?* #t))
+        (def x (read-file filename))
+        (zap-referenced-bindings! ct-env)
+        (def o (objectify-with-subtransaction x ct-env #f #f))
+        (run o ct-env)))
   ;; TODO - Hook me into the new module loader system in a useful way.
   ;; (report-undefined-global-bindings ct-env)
   )
@@ -141,7 +147,7 @@
 
 (dm msg-src-loc (f)
   (when (isa? f <met>)
-    (def sl (fun-src f))
+    (def sl (fun-src-loc f))
     (when (isa? sl <src-loc>)
       (msg out " %s:%d" (src-loc-file sl) (src-loc-line sl)))))
 
@@ -159,7 +165,7 @@
     (for-user-frames (num f args)
       (when (== n num) 
         (ret (elt args (pos (fun-names f) name)))))
-    nul))
+    #f)) ;; TODO: BETTER VALUE
 
 
 (dm bt ()
@@ -190,7 +196,12 @@
               ((<keyboard-interrupt>) 
                (msg out "BREAK"))
               (#t
-               (msg out "ERROR: %s" (describe-condition c))))
+               (esc break
+                 (try <error>
+                   (fun (c r)
+                     (post "<RECURSIVE ERROR ABORTING...>")
+                     (break #f))
+                   (msg out "ERROR: %s" (describe-condition c))))))
             ;; (backtrace (env))
             (%%top%%top-in (+ level 1) top quit #t ct-env)
             (continue #f))
@@ -272,4 +283,5 @@
   g2c-eval
   vm-evaluate
   esctst
+  *dynamic-compilation?*
   $ $$ $$$)

@@ -42,6 +42,11 @@
  class-children        ;; (dg class-children (x|<class> => <lst>))
 
  (df t? (x))
+
+ ;;; BOTTOM
+
+ (dc <bot> (<type>))
+ $bot
 )
 
 ;; FIXME: should union-elts really be <lst> instead of <seq> and also
@@ -56,10 +61,18 @@
 
 (need-implementation as len 2nd any? all2?)
 
+(dv $bot (new <bot>))
+
 ;;; TYPE PROTOCOL
 
 ;;; SUBTYPE?
 (dg subtype? (t1|<type> t2|<type> => <log>))
+
+(dm subtype? (t1|<type> t2|<bot> => <log>) #f)
+(dm subtype? (t1|<union> t2|<bot> => <log>) #f)
+(dm subtype? (t1|<bot> t2|<type> => <log>) #t)
+(dm subtype? (t1|<bot> t2|<union> => <log>) #t)
+(dm subtype? (t1|<bot> t2|<bot> => <log>)  #t)
 
 (dm subtype? (t1|<union> t2|<type> => <log>)
   (@all? (fun (t) (@subtype? t t2)) (%union-elts t1)))
@@ -184,7 +197,7 @@
   (@tup class? (and class? (@== (%type-class c) <any>))))
 (dm may-isa? (c|<class> t|<union> => (tup some?|<log> all?|<log>))
   (rep loop ((some? #f) (all? #f) (elts (%union-elts t)))
-    (if (@empty? elts)
+    (if (@nul? elts)
         (@tup some? all?)
         (let ((elt-some-all? (@may-isa? c (@head elts)))
               (elt-some?     (@telt elt-some-all? 0))
@@ -201,4 +214,5 @@
   subtype?
   may-isa?
   order-specs
+  <bot> $bot
 )

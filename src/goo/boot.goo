@@ -55,6 +55,7 @@
       %def-regs %set-regs %sp-reg %sp-reg-setter %sp-elt 
       %stack-reg %max-stack-len %stack-check-reg? %stack-check-reg?-setter
       %fp-reg %fp-reg-setter %unlink-stack
+      %next-methods-reg-setter
       %new %@class-of %@subclass?
       %fab-dyn-var %dyn-var-val %dyn-var-val-setter
       %vsp %vsp-setter %vfp %vfp-setter 
@@ -137,7 +138,6 @@
           (dp! class-gens (<class> => <lst>)            nil)
           (dp! class-mets (<class> => <lst>)            nil)
           (dp! class-forward (<class> => <any>)         #f)
-          (dp class-type-cache (<class> => <any>)       #f) ;; TODO: DEPRECATE
           (dp class-id (<class> => <fixnum>)            -1)
           (dp class-row (<class> => <tup>)              nul)
         (dc <singleton> (<type>))
@@ -160,25 +160,26 @@
           (dp gen-cache-singletons (<gen-cache> => <lst>) nil)
           (dp gen-cache-classes (<gen-cache> => <lst>)    nil)
         (dc <sig> (<any>))
-          (dp! sig-names (<sig> => <lst>) nil)
           (dp! sig-specs (<sig> => <lst>) nil)
           (dp! sig-nary? (<sig> => <log>) %false)
           (dp! sig-arity (<sig> => <fixnum>) 0)
           (dp! sig-val   (<sig> => <any>) <any>)
           (dp! sig-unification-vars (<sig> => <lst>) nil)
+        (dc <fun-info> (<any>))
+          (dp! fun-info-name (<fun-info> => <any>)    %false)
+          (dp! fun-info-names (<fun-info> => <lst>)   nil)
+          (dp! fun-info-src-loc (<fun-info> => <any>) %false)
+          (dp! fun-info-src (<fun-info> => <any>)     %false)
+          (dp! fun-info-count (<fun-info> => <int>)   0)
         (dc <fun> (<any>))
-          (dp fun-code (<fun> => <any>)  %false)
-          (dp! fun-name (<fun> => <any>)  %false)
-          (dp! fun-sig (<fun> => <sig>))
+          (dp fun-code  (<fun> => <any>)   %false)
+          (dp! fun-sig  (<fun> => <sig>))
+          (dp! fun-info (<fun> => <any>)   %false)
         (dc <met> (<fun>))
-          (dp fun-env (<met> => <any>)   %false)
-          (dp fun-refs (<met> => <any>)  %false)
-          (dp! fun-src (<met> => <any>)   %false)
+          (dp fun-env (<met> => <any>)     %false)
         (dc <gen> (<fun>))
-          (dp! fun-mets (<gen> => <lst>)  nil)
-          (dp fun-cache (<gen> => <any>) %false)
-          (dp gen-refs (<gen> => <tup>)  nul)
-          (dp! gen-src (<gen> => <any>)   %false)
+          (dp! fun-mets (<gen> => <lst>)   nil)
+          (dp fun-cache (<gen> => <any>)   %false)
     (dc <opts> (<flat> <seq.>))
       (dp opts-location (<opts> => <loc>) 0)
       (dp opts-count (<opts> => <fixnum>) 0)
@@ -190,7 +191,7 @@
 
 (ct (df %map-boot-classes (f)
       (rep loop ((res '()) (defs (%boot-defs)))
-        (if (empty? defs)
+        (if (nul? defs)
             (rev! res)
             (loop (mif ((dc ,name (,@parents)) (head defs))
                        (pair (f name parents) res)
@@ -201,7 +202,7 @@
 
 (ct (df %map-boot-objects (f)
       (rep loop ((res '()) (defs (%boot-defs)))
-        (if (empty? defs)
+        (if (nul? defs)
             (rev! res)
             (loop (mif ((dv ,name (new ,class)) (head defs))
                        (pair (f name class) res)
@@ -212,9 +213,9 @@
 
 (ct (df %map-boot-props (f)
       (loc ((get-init (maybe-init)
-              (if (empty? maybe-init) 'nul-prop (head maybe-init))))
+              (if (nul? maybe-init) 'nul-prop (head maybe-init))))
         (rep loop ((res '()) (defs (%boot-defs)))
-          (if (empty? defs)
+          (if (nul? defs)
               (rev! res)
               (loop (match (head defs)
                       ((dp ,name (,owner => ,type) ,@maybe-init)
@@ -280,7 +281,6 @@
  class-parents class-direct-props
  class-ancestors class-props class-children 
  class-gens class-mets class-forward
- class-type-cache  ;; TODO: DEPRECATE
  class-id class-row)
 
 (%define-structure % singleton type-object)
@@ -307,10 +307,11 @@
 ;;; BUILD CLASS SHELLS POINTING TO INCOMPLETE <CLASS>
 
 (dss (%class-shells)
-  `(seq ,@(%map-boot-classes
-            (fun (name parents)
-              `(dv ,name
-                 (%class nil nil nil nil nil nil nil nil nil nil nil -1 nil))))))
+  `(seq
+     ,@(%map-boot-classes
+        (fun (name parents)
+          `{ (dv ,name (%class nil nil nil nil nil nil nil nil nil nil -1 nil))
+             (export ,name) }))))
 
 (%class-shells)
 
@@ -337,7 +338,8 @@
 (dss (%object-shells)
   `(seq ,@(%map-boot-objects 
             (fun (name class)
-              `(dv ,name (%object-of ,class (%raw 0)))))))
+              `(seq (dv ,name (%object-of ,class (%raw 0)))
+                    ,(if (== name 'nul) #f `(export ,name)))))))
 
 (%object-shells)
 
@@ -353,15 +355,15 @@
 
 (dl %pair (head tail) (%lst head tail))
 
-(dl (%empty? inline) (x) (%bb (%eq? x nil)))
+(dl (%nul? inline) (x) (%bb (%eq? x nil)))
 
 (dl %%len (x) 
   (rep loop ((x x) (i (%raw 0)))
-    (if (%empty? x) i (loop (%tail x) (%i+ i (%raw 1))))))
+    (if (%nul? x) i (loop (%tail x) (%i+ i (%raw 1))))))
 
 (dl %rev! (c)
   (rep loop ((l c) (r '()))
-    (if (%empty? l)
+    (if (%nul? l)
         r
         (let ((t (%tail l)))
           (set (%tail l) r)
@@ -369,9 +371,9 @@
 
 (dl %cat2 (x y) 
   (rep colx ((lx nil) (x x))
-    (if (%empty? x)
+    (if (%nul? x)
         (rep coly ((lxy lx) (y y))
-          (if (%empty? y)
+          (if (%nul? y)
               (%rev! lxy)
               (coly (%pair (%head y) lxy) (%tail y))))
         (colx (%pair (%head x) lx) (%tail x)))))
@@ -386,14 +388,14 @@
 ;;; MET BASICS
 
 (%define-structure % sig 
-   sig-names sig-specs sig-nary? sig-arity sig-val sig-unification-vars)
+   sig-specs sig-nary? sig-arity sig-val sig-unification-vars)
 
 (%define-structure % src-loc src-loc-line src-loc-file)
 
-(%define-structure % met 
-   met-code met-name met-sig met-env 
-   met-refs met-src
-   )
+(%define-structure % fun-info
+   fun-info-name fun-info-names fun-info-src  fun-info-src-loc fun-info-count)
+
+(%define-structure % met met-code met-sig met-info met-env)
 
 (dv %met-prop-len (%raw 4))
 
@@ -529,7 +531,7 @@
 
 (dss (%pairize ,@elts)
   (rep pairize ((elts elts))
-    (if (empty? elts)
+    (if (nul? elts)
         '()
         `(%pair ,(head elts) ,(pairize (tail elts))))))
 
@@ -563,28 +565,13 @@
 
 ;; EARLY VERSION (PRE TAB) OF SYM CONSING USING LST SET
 (if (%bb (%eq? %*used-symbols-too-early* #t))
-    (%break "Warning: symbols were created in the boot image before the symbol-creation was setup. (Probably from a df or rep)\n"))
+    (%break (%su "Warning: symbols were created in the boot image before the symbol-creation was setup. (Probably from a df or rep)\n")))
 
 
 ;; this first version doesn't have proper symbols, but it works..
-(dv fab-sym
-  (fun (name)
-    (rep lookup ((s %symbols))
-      (if (%empty? s)
-          (let ((sym (%sym name)))
-            (set %symbols (%pair sym %symbols))
-            sym)
-          (let ((sym (%head s)))
-            (if (%str-eq? (%sym-nam sym) name)
-                sym
-                (lookup (%tail s))))))))
-
-(set %symbols-ready? #t) ;; READY TO CONS SYMBOLS
-
-;; do the same thing, this time the symbols will be filled in
-(df fab-sym (name)
+(dl %fab-sym (name)
   (rep lookup ((s %symbols))
-    (if (%empty? s)
+    (if (%nul? s)
         (let ((sym (%sym name)))
           (set %symbols (%pair sym %symbols))
           sym)
@@ -592,6 +579,13 @@
           (if (%str-eq? (%sym-nam sym) name)
               sym
               (lookup (%tail s)))))))
+
+(dv fab-sym (fun (name) (%fab-sym name)))
+
+(set %symbols-ready? #t) ;; READY TO CONS SYMBOLS
+
+;; do the same thing, this time the symbols will be filled in
+(df fab-sym (name) (%fab-sym name))
 
 ;; NEED THIS TO BUILD METS -- COMPUTED FOR REAL BELOW
 
@@ -649,12 +643,11 @@
 
 ;;; DEF GENERIC'S
  
-(%define-structure % gen 
-   gen-code gen-name gen-sig gen-mets fun-cache gen-refs gen-src)
+(%define-structure % gen gen-code gen-sig gen-info gen-mets fun-cache)
 
 (df %prop-offset (owner getter)
   (rep loop ((i (%raw 0)) (props (%class-props (%object-class owner))))
-    (if (%empty? props)
+    (if (%nul? props)
         (%iu -1)
         (let ((prop (%head props)))
           (if (%bb (%eq? (%prop-getter prop) getter))
@@ -664,7 +657,7 @@
 ;; &LISTIFY CONSTRUCTS CODE THAT BUILDS A LIST OF GIVEN ARGS WITH CALLS TO %PAIR
 
 (ct (df &listify (args)
-      (if (empty? args)
+      (if (nul? args)
           'nil
           `(%pair ,(head args) ,(&listify (tail args))))))
 
@@ -672,26 +665,47 @@
 
 (df %early-dispatch (args|...)
   (def gen (%fun-reg))
-  (%break "ERROR: Generic function dispatch called before it existed."))
+  (%break (%su "ERROR: Generic function dispatch called before it existed.")))
 
 (df %add-met (gen met)
   (set (%gen-mets gen) (%pair met (%gen-mets gen))))
 
 ;; DEFINE EARLY GENERIC METHOD FOR ACCESSORS
 
+(dl %fab-sig (specs nary? arity val unis)
+  (%sig specs nary? arity val unis))
+
+(dl %fab-gen/code (code sig name names src-loc)
+  (let ((info (%fun-info name names src-loc #f 0)))
+    (%gen (%gen-code code) sig info '() #f)))
+
+(dl %fab-gen (sig name names src-loc)
+  (%fab-gen/code %dispatch sig name names src-loc))
+
+(dl %fab-met (code sig name names src-loc src)
+  (let ((info (%fun-info name names src-loc src 0)))
+    (%met code sig info #f)))
+
+(ct (df &params (sig)
+      (if (or (nul? sig) (== (head sig) '=>))
+          '()
+          (pair (head sig) (&params (tail sig))))))
+
 (dss (%define-accessor ,name (,@sig) ,@body)
-  (let ((params  sig)
+  (let ((params  (&params sig))
         (specs   (&listify (map (always '<any>) params))))
     `(seq (dv ,name 
-            (%gen %early-dispatch ',name 
-                  (%sig '() ,specs #f ,(len params) <any> '()) '() #f #f #f))
+            (%fab-gen/code
+             %early-dispatch (%sig ,specs #f ,(len params) <any> '())
+             ',name '() #f))
+          (export ,name)
           (let ((accessor (fun (,@sig) ,@body)))
             (%add-met ,name accessor)
-        (set (%met-name accessor) ,name)
+            (set (%fun-info-name (%met-info accessor)) ',name)
             accessor))))
 
 (dss (%define-getter ,name ,owner ,type)
-  `(%define-accessor ,name ((x ,owner))
+  `(%define-accessor ,name ((x ,owner) => ,type)
       (%prop-elt x (%prop-offset ,owner ,name))))
 
 (dss (%define-setter ,name ,owner ,type)
@@ -782,9 +796,9 @@
 
 (dl (@not inline) (x|<any> => <log>) (%bb (%eq? x #f)))
 
-(dl (@empty? inline) (x|<lst> => <log>) (%empty? x))
+(dl (@nul? inline) (x|<lst> => <log>) (%nul? x))
 
-(df @@empty? (x|<lst> => <log>) (%empty? x))
+(df @@nul? (x|<lst> => <log>) (%nul? x))
 
 (df @rev! (x|<lst> => <lst>) (%rev! x))
 
@@ -798,13 +812,13 @@
 
 (df @all? (test|<fun> c|<lst> => <log>)
   (rep fnd ((p c))
-    (if (@empty? p) #t (if (test (@head p)) (fnd (@tail p)) #f))))
+    (if (@nul? p) #t (if (test (@head p)) (fnd (@tail p)) #f))))
 
 (df @all2? (test|<fun> x|<lst> y|<lst> => <log>)
   (rep fnd ((px x) (py y))
-    (if (@empty? px) 
-        (@empty? py)
-        (if (@empty? py)
+    (if (@nul? px) 
+        (@nul? py)
+        (if (@nul? py)
             #f
             (if (test (@head px) (@head py)) 
                 (fnd (@tail px) (@tail py))
@@ -818,13 +832,14 @@
 
 (df @fill (x|<lst> f|<fun> => <lst>)
   (rep loop ((p x))
-    (if (@empty? p) x (seq (set (@head p) f) (loop (@tail p))))))
+    (if (@nul? p) x (seq (set (@head p) f) (loop (@tail p))))))
 
 (df @any? (test|<fun> c|<lst> => <any>) ;; TODO: => <log>
   (rep fnd ((p c))
-    (if (@empty? p) #f (or (test (@head p)) (fnd (@tail p))))))
+    (if (@nul? p) #f (or (test (@head p)) (fnd (@tail p))))))
 
 (dl @pair (h|<any> t|<lst> => <lst>) (%pair h t))
+(df fab-pair (h|<any> t|<lst> => <lst>) (%pair h t))
 
 (dl @add (c|<lst> e|<any> => <lst>) (@pair e c))
 
@@ -833,25 +848,25 @@
 
 (df @map (f|<fun> x|<lst> => <lst>)
   (rep do ((x x) (res '()))
-    (if (@empty? x)
+    (if (@nul? x)
         (@rev! res)
         (do (@tail x) (@pair (f (@head x)) res)))))
 
 (df @pick (f|<fun> x|<lst> => <lst>)
   (rep do ((x x) (res '()))
-    (if (@empty? x)
+    (if (@nul? x)
         (@rev! res)
         (let ((h (@head x))) (do (@tail x) (if (f h) (@pair h res) res))))))
 
 (df @do (f|<fun> x|<lst>)
   (rep do ((x x))
-    (if (@empty? x)
+    (if (@nul? x)
         #f
         (seq (f (@head x)) (do (@tail x))))))
 
 (df @alter (dst|<lst> src|<lst> => <lst>)
   (rep in ((ds dst) (ss src))
-    (if (or (@empty? ds) (@empty? ss))
+    (if (or (@nul? ds) (@nul? ss))
         dst
         (seq (set (@head ds) (@head ss))
              (in (@tail ds) (@tail ss))))))
@@ -862,13 +877,13 @@
 
 (df @fold (combine|<fun> init|<any> c|<lst> => <lst>)
   (rep red ((res init) (c c))
-    (if (@empty? c)
+    (if (@nul? c)
         res
         (red (combine res (@head c)) (@tail c)))))
 
 (df @rev ((x <lst>) => <lst>)
   (rep loop ((l x) (r '()))
-    (if (@empty? l)
+    (if (@nul? l)
         r
         (loop (@tail l) (@pair (@head l) r)))))
 
@@ -877,7 +892,7 @@
 
 (df @find (f|<fun> c|<lst> => <any>) ;; TODO: => <fixnum>
   (rep fnd ((c c) (i 0))
-    (if (@empty? c)
+    (if (@nul? c)
         nul
         (if (f (@head c))
             i
@@ -951,15 +966,6 @@
 (dl (@class-isa? inline) (o c => <log>)
   (@subclass? (%class-of o) c))
 
-;; ;; specialized for usage with function call/return type checks
-;; (dl @type-check-class-isa? (o c2 => <log>)
-;;   (def c1 (%class-of o))
-;;   (def c3 (%class-type-cache c2))     ; last successful class to pass check
-;;   (or (@== c1 c3)                 
-;;       (and (@class-in? c2 (%class-ancestors c1))
-;;            (set (%class-type-cache c2) c1)       ; cache new winner
-;;            #t)))
-
 (df @subtype? (t1 t2 => <log>)
   (if (and (@== (%class-of t2) <class>) (@== (%class-of t1) <class>))
       (@subclass? t1 t2)
@@ -973,7 +979,7 @@
 ;; (dl @class-in? (c cs => <log>)
 ;;   (or (@== (%head cs) c) ; at least one ancestor
 ;;       (let ((next-cs (%tail cs)))
-;;         (if (%empty? next-cs)
+;;         (if (%nul? next-cs)
 ;;             #f
 ;;             (@class-in? c next-cs)))))
 
@@ -1010,7 +1016,7 @@
 
 (set (%class-prop-len <met>) (%ib %met-prop-len)) 
 
-(dl (@nul? inline) (x) (@== x (%raw 0)))
+(dl (@raw-nul? inline) (x) (@== x (%raw 0)))
 
 (dl %cons-args ()
   (%def-regs)
@@ -1068,9 +1074,12 @@
 
 (dl %%check-call-types (regs)
   (%set-regs regs)
-  (def fn    (%sp-elt (%raw -1)))
-  (def class (if (@nul? fn) (%raw 0) (if (@adr? fn) (%class-of fn) (%raw 0))))
-  (def n     (%sp-elt (%raw -2)))
+  (def fn
+    (%sp-elt (%raw -1)))
+  (def class
+    (if (@raw-nul? fn) (%raw 0) (if (@adr? fn) (%class-of fn) (%raw 0))))
+  (def n
+    (%sp-elt (%raw -2)))
   (%stack-check regs)
   (if (@== class <met>)
       (let ((sig (%met-sig fn)))
@@ -1084,8 +1093,8 @@
       (if (@== class <gen>)
           (%check-arity fn (%gen-sig fn) n)
           (if (@== unknown-function-error (%raw 0))
-              (%break "Tried to call an unbound function, but the function error\nhandler is itself unbound. Exiting.")
-              (unknown-function-error (if (@nul? fn) #f fn) (%cons-args)))))
+              (%break (%su "Tried to call an unbound function, but the function error\nhandler is itself unbound. Exiting."))
+              (unknown-function-error (if (@raw-nul? fn) #f fn) (%cons-args)))))
   #f)
 
 ;;;
@@ -1118,6 +1127,12 @@
 (export app-filename app-args)
 
 ;;;
+;;; xx. COMPILER SUPPORT
+;;;
+
+(dl %lit (n) (@lit (%ib n)))
+
+;;;
 ;;; 15. EXPORTS
 ;;;
 
@@ -1128,25 +1143,28 @@
 ;; TODO - It might be worth dumping (mangle-runtime-name ...) in
 ;; g2c and using this mechanism instead.
 (dss (force-names-into-boot-module ,@names)
-  (if (empty? names)
+  (if (nul? names)
       #f
       `(seq (if #f ,(head names))
             (export ,(head names))
             (force-names-into-boot-module ,@(tail names)))))
 
 (force-names-into-boot-module
+  @lit
+  %dispatch
+  %with-monitor
+  tup
   subtype?
   isa?
   may-isa?
   order-specs
-  @new
   update-instance-for-changed-class
+  @new
   new
-  %prop-unbound-error
   prop-offset
-  object-props
+  props-of
+  %prop-unbound-error
   %%macro
-  %dispatch
   lst
   error
   property-unbound-error
@@ -1171,15 +1189,12 @@
   assert-error
   as-error
   arithmetic-error
-  tup
-  %with-monitor
 )
 
 ;; Forward references.
 ;; TODO - These would normally be defined using need-implementation, but we
 ;; haven't defined that yet.
 (export
-  ;; %%macro ;; TODOO:
   error
   )
 
@@ -1256,17 +1271,17 @@
   %loc-val
   %loc-val-setter
   %next-methods
-  %pair
+  %pair 
   %%sym
   %check-call-types
   ;;; FOR DECISION TREE CODE
-  %gen-refs 
   %gen-code %gen-code-setter 
-  %gen-src
-  %met-code
+  ;;; FOR OPTIMIZE
+  %met-code %met-code-setter 
   %fun-reg
   %unlink-stack
   %src-loc
+  %fab-met
   %met %met-env-setter
   %vsp %vsp-setter %vfp %vfp-setter %vpc %vpc-setter 
   %vfn %vfn-setter %vnm %vnm-setter 
@@ -1276,41 +1291,20 @@
   %allocate-stack
 )
 
+(export
+  $max-int
+  $min-int
+  t*
+  fab-sym
+  not
+
+  %symbols
+  unexec
+)
+
 ;; Regular exports.
 (export
-  <any>
-  <mag>
-  <chr>
-  <col> <col.> <col!>
-  <flat>
-  <flo>
-  <fun>
-  <gen>
-  <gen-cache>
-  <int>
-  <fixnum>
-  <loc>
-  <log>
-  <lst>
-  <src-loc>
-  <met>
-  <num>
-  <opts>
-  <type>
-  <class>
-  <subclass>
-  <singleton>
-  <union>
-  t* <product>
-  <seq> <seq.> <seq!>
-  <sig>
-  <prop>
-  <str>
-  <sym>
-  <tup>
-  <rep>
-
-;; tagged structures
+  ;; tagged structures
   %cb
   %cu
   %fb
@@ -1319,11 +1313,9 @@
   %iu
   %lb
   %lu
-  $max-int
-  $min-int
   %untag
 
-;; repeated structures
+  ;; repeated structures
   %sb
   %selt
   %selt-setter
@@ -1342,54 +1334,10 @@
   %rlen
   %rnul
 
-  @isa?
-  fun-sig fun-sig-setter
-  fun-name
-  fun-name-setter
-  fun-refs
-  fun-src fun-src-setter
-  fun-mets
-  gen-refs
-  gen-src gen-src-setter
-  fun-cache
-  fab-sym
-  src-loc-line src-loc-file
-  head head-setter
-  tail tail-setter
-  nil
-  not
-  nul
-  type-object
-  type-class
-  union-elts
-  product-elts
-  class-name
-  class-parents
-  class-children
-  class-direct-props
-  class-ancestors
-  class-props
-  *restarts-ok?*
-  prop-owner
-  prop-type
-  prop-init
-  prop-getter
-  prop-setter
-  sig-names sig-names-setter
-  sig-specs sig-specs-setter
-  sig-nary? sig-nary?-setter
-  sig-arity sig-arity-setter
-  sig-val sig-val-setter
-  sig-unification-vars sig-unification-vars-setter
-  nul-prop
-  sym-name
-
-  %symbols
-  unexec
 
   %raw-call %raw-met-call
   %loc-off %loc-off-setter
-  %sp-reg-setter %sp-reg
+  %sp-reg-setter %sp-reg %next-methods-reg-setter
   %class-of @subclass?
   %@class-of %@subclass?
   %fab-dyn-var %dyn-var-val %dyn-var-val-setter
@@ -1439,6 +1387,8 @@
   %tail
   %sig-val
   %met-sig
+  %met-info
+  %gen-info
   %gen-mets
   %sig-specs
   %singleton
@@ -1455,7 +1405,11 @@
   %gen-cache-classes
   %max-stack-len
   %gen-cache-missable?
-  %sig-names
+  %fun-info-names   %fun-info-names-setter
+  %fun-info-name    %fun-info-name-setter
+  %fun-info-src     %fun-info-src-setter
+  %fun-info-src-loc %fun-info-src-loc-setter
+  %fun-info-count   %fun-info-count-setter
   %class-forward
   %object-class
   %fun-cache
@@ -1471,7 +1425,10 @@
   %fun-val-check-type
   %%check-call-types
   %macro
+)
 
+(export
+  @isa?
   @lst
   @len
   @all2?
@@ -1491,7 +1448,8 @@
   @add-new
   @type-equal?
   @=
-  @pair
+  @pair 
+  fab-pair ;; hygiene construction
   @tail
   @head
   @fold
@@ -1502,8 +1460,8 @@
   *early-classes*
   @rev!
   @do
-  @empty?
-  @@empty?
+  @nul?
+  @@nul?
   @mem?
   @subtype?
   @singleton-isa?
@@ -1520,7 +1478,10 @@
   @may-isa?
   @elt
   @pick
+)
 
+(export
+  *restarts-ok?*
   *macros-ok?*
   *boot-macro-expanders*
   *boot-macro-names*    

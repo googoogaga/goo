@@ -19,11 +19,11 @@
       (evol (sexpr-if-else e) env)))
 
 (dm evol-seq ((e* <lst>) env)
-  (if (empty? e*)
+  (if (nul? e*)
       #f
       (rep loop (((e* <lst>) e*))
         (let ((er (evol (head e*) env)))
-          (if (empty? (tail e*))
+          (if (nul? (tail e*))
               er
               (loop (tail e*)))))))
 
@@ -40,7 +40,7 @@
        (evol (sexpr-assignment-value e) env)))
 
 (dm sexpr-sequence->begin ((seq <lst>) => <any>)
-  (if (empty? seq)
+  (if (nul? seq)
       seq
       (if (sexpr-last-exp? seq)
           (sexpr-first-exp seq)
@@ -54,7 +54,7 @@
         (values (sexpr-let-values let-exp))
         (body   (sexpr-let-body->begin let-exp)))
     (rep col ((names names) (values values))
-      (if (empty? names)
+      (if (nul? names)
           body
           (pair (lst $sexpr-method-tag (lst (head names))
                      (col (tail names) (tail values)))
@@ -94,7 +94,7 @@
 
 (dm evol* ((e* <lst>) env)
   (rep loop (((r <lst>) '()) ((e* <lst>) e*))
-    (if (empty? e*)
+    (if (nul? e*)
         (rev! r)
         (loop (pair (evol (head e*) env) r) (tail e*)))))
 
@@ -107,14 +107,14 @@
 (dm evol-list ((first <fun>) (e <lst>) env)
   (invoke first (evol* (tail e) env)))
 
-(dv *e* $empty-env)
+(dv *e* $nul-env)
 
 (dm initialize-world ()
-  (let ((env (env-extend! $empty-env '() '())))
+  (let ((env (env-extend! $nul-env '() '())))
     (env-define-binding! env 'pair pair)
     (env-define-binding! env 'head head)
     (env-define-binding! env 'tail tail)
-    (env-define-binding! env 'empty? empty?)
+    (env-define-binding! env 'nul? nul?)
     (env-define-binding! env '+ +)
     (env-define-binding! env '- -)
     (env-define-binding! env '< <)

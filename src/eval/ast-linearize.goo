@@ -62,7 +62,7 @@
 (dm boxify-mutable-bindings (form bindings|<lst>)
   (sequentialize
     (rep loop ((res '()) (bindings bindings))
-      (if (empty? bindings)
+      (if (nul? bindings)
           (rev! (pair form res))
           (let ((binding (head bindings)))
             (if (binding-mutable? binding)
@@ -99,13 +99,13 @@
 
 (dm adjoin-free-binding! (flat-fun|<ast-method> ref => <int>)
   (rep check ((i|<int> 0) (free* (function-free flat-fun)))
-    (if (empty? free*)
-        (let ((new-env (free-environment ref (empty <free-environment>))))
-          (if (empty? (function-free flat-fun))
+    (if (nul? free*)
+        (let ((new-env (free-environment ref (nul <free-environment>))))
+          (if (nul? (function-free flat-fun))
               (set (function-free flat-fun) new-env)
               (rep add ((free* (function-free flat-fun)))
                 (def tail (tail free*))
-                (if (empty? tail)
+                (if (nul? tail)
                     (set (tail free*) new-env)
                     (add tail))))
           i)
@@ -168,10 +168,10 @@
 
 (dm flatten-seqs (o|<sequential>)
   (rep loop ((s o) (r '()))
-     (if (empty? s)
+     (if (nul? s)
          (rev! r)
          (rep inner ((ss (flatten-seqs (head s))) (r r))
-           (if (empty? ss)
+           (if (nul? ss)
                (loop (tail s) r)
                (inner (tail ss) (pair (head ss) r)))))))
 
@@ -249,7 +249,7 @@
 (dm split-program (o|<sequential> max-count|<int>)
   (rep loop ((forms '()) (s o))
     (rep inner ((res '()) (es s) (count 0))
-      (cond ((empty? es)
+      (cond ((nul? es)
              (rev! (pair (sequentialize (rev! res)) forms)))
             ((= count max-count)
              (loop (pair (sequentialize (rev! res)) forms) es))
@@ -260,7 +260,7 @@
   (def forms      (split-program (program-form o) max-count))
   (def base-index (len (program-definitions o))) ;; TODO: HACK INTERFACE
   (rep loop ((calls '()) (defns (program-definitions o)) (i 0) (forms forms))
-    (if (empty? forms)
+    (if (nul? forms)
         (seq (set (program-definitions o) (rev! defns))
              (set (program-form o)
                   (new <top-level-form>
@@ -280,7 +280,7 @@
               (call
                (new <predefined-application> 
                  application-binding   binding
-                 application-arguments (empty <arguments>)
+                 application-arguments (nul <arguments>)
                  application-tail?     #f)))
           (loop (pair call calls) (pair defn defns) (+ i 1) (tail forms))))))
 
@@ -296,7 +296,7 @@
   (new <assoc> assoc-key x assoc-value y))
 
 (dm assocq (x l|<lst> => <any>)
-  (if (empty? l)
+  (if (nul? l)
       #f
       (if (== x (assoc-key (head l)))
           (head l)
@@ -321,7 +321,7 @@
 (df prepend-renamings (x y r)
   ;; (cat (map2 assoc x y) r) ;; speed critical
   (rep loop ((z r) (x x) (y y))
-    (if (empty? x)
+    (if (nul? x)
         z
         (loop (pair (assoc (head x) (head y)) z) (tail x) (tail y)))))
 
@@ -359,7 +359,7 @@
 (dm adjoin-temporary-variables! (flat-fun new-bindings)
   (rep adjoin 
       ((temps (function-temporaries flat-fun)) (bindings new-bindings))
-    (if (empty? bindings)
+    (if (nul? bindings)
         (set (function-temporaries flat-fun) temps)
         (if (mem? temps (head bindings))
             (adjoin temps (tail bindings))
@@ -400,10 +400,10 @@
 
 (dm collect-registers! (o|<sequential> f val?)
   (rep loop ((x o))
-    (if (empty? x)
+    (if (nul? x)
         o
         (let ((next-x (tail x))) ;; ONLY LAST FORM IN SEQ CONSUMES VALUE
-          (collect-registers! (head x) f (and val? (empty? next-x)))
+          (collect-registers! (head x) f (and val? (nul? next-x)))
           (loop next-x)))))
 
 (dm collect-registers! (o|<passive-program> f val?)

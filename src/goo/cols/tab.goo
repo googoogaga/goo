@@ -5,6 +5,10 @@
 (use goo/class)
 (use goo/macros)
 (use goo/types)
+(use goo/any)
+(use goo/log)
+(use goo/chr)
+(use goo/mag)
 (use goo/math)
 (use goo/packer)
 (use goo/cols/col)
@@ -136,7 +140,7 @@
 (dm key-test (_|<tab> => <fun>) ==)
 (dm tab-hash (_|<tab> => <fun>) id-hash)
 
-(dv $empty-cell-marker '("empty cell"))
+(dv $nul-cell-marker '("nul cell"))
 (dv $vacated-cell-marker '("vacated cell"))
 
 (dm fab ((type (t< <tab>)) size|<int> => <tab>)
@@ -145,7 +149,7 @@
   (def table (new type))
   (set (%vector table)
        (fab-tab-vec
-        (* n-buckets (* bucket-depth 2)) $empty-cell-marker
+        (* n-buckets (* bucket-depth 2)) $nul-cell-marker
         n-buckets bucket-depth
         n-buckets (- n-buckets 2)))
   table)
@@ -174,7 +178,7 @@
           (rep inner ((i 0) (raw-index index))
             (if (< i bucket-depth)
                 (let ((this-key (@velt vector raw-index)))
-                  (cond ((== this-key $empty-cell-marker)
+                  (cond ((== this-key $nul-cell-marker)
                          default)
                         ((test-function key this-key)
                          (@velt vector (+ raw-index bucket-depth)))
@@ -217,14 +221,14 @@
                 (let ((this-key (@velt vector raw-index)))
                   (cond
                     ;; end of chain and not found
-                    ((== this-key $empty-cell-marker)
+                    ((== this-key $nul-cell-marker)
                      (def index 
                        (if vacancy-index
                            ;; use a vacant cell if you found one
                            (seq (decf (%vacated vector)) vacancy-index)
                            ;; use this cell
                            raw-index))
-                     ;; (trace out "FOUND EMPTY CELL @ %d\n"
+                     ;; (trace out "FOUND NUL CELL @ %d\n"
                      ;;        raw-index)
                      (set (@velt vector index) key)
                      (set (@velt vector (+ index bucket-depth)) value)
@@ -266,7 +270,7 @@
           (rep inner ((i|<int> 0) (raw-index|<int> index))
             (if (< i bucket-depth)
                 (let ((this-key (@velt vector raw-index)))
-                  (cond ((== this-key $empty-cell-marker) 
+                  (cond ((== this-key $nul-cell-marker) 
                          #f)
                         ;; N.B. Don't look at already vacated cells along
                         ;;      the collision chain 
@@ -295,7 +299,7 @@
       (rep inner ((i|<int> 0))
         (when (< i depth)
           (def key (@velt vector (+ i (* b (* depth 2)))))
-          (unless (or (== key $empty-cell-marker) 
+          (unless (or (== key $nul-cell-marker) 
                       (== key $vacated-cell-marker))
             ;; (trace out "B %= I %=\n" b i)
             (def index (+ i (+ (* b (* depth 2)) depth)))
@@ -312,7 +316,7 @@
       (rep inner ((i|<int> 0))
         (when (< i depth)
           (def key (@velt vector (+ i (* b (* depth 2)))))
-          (unless (or (== key $empty-cell-marker) 
+          (unless (or (== key $nul-cell-marker) 
                       (== key $vacated-cell-marker))
             (def index (+ i (+ (* b (* depth 2)) depth)))
             (function (@velt vector index)))
@@ -320,7 +324,7 @@
       (outer (+ b 1)))))
 
 (dm zap! (table|<tab> => <tab>)
-  (clr! (%vector table) $empty-cell-marker)
+  (clr! (%vector table) $nul-cell-marker)
   (set (%count table) 0)
   table)
 
@@ -345,7 +349,7 @@
               (rep inner ((i|<int> 0))
                 (if (< i depth)
                     (let ((key (@velt vector (+ i (* b (* depth 2))))))
-                      (if (or (== key $empty-cell-marker)
+                      (if (or (== key $nul-cell-marker)
                               (== key $vacated-cell-marker))
                           (inner (+ i 1))
                           (new <tab-enum> @vec vector @buc b @idx i)))
@@ -363,7 +367,7 @@
       (rep inner ((i|<int> (if first? (+ index 1) 0)))
         (if (< i depth)
             (let ((key (@velt vector (+ i (* b (* depth 2))))))
-              (if (or (== key $empty-cell-marker)
+              (if (or (== key $nul-cell-marker)
                       (== key $vacated-cell-marker))
                   (inner (+ i 1))
                   (renew e @vec vector @buc b @idx i)))
@@ -406,7 +410,7 @@
   (def new-vector
     (fab-tab-vec
      (* new-n-buckets (* new-bucket-depth 2))
-     $empty-cell-marker
+     $nul-cell-marker
      new-n-buckets new-bucket-depth new-n-buckets (- new-n-buckets 2)))
   ;; (trace out "OLD DATA %=\n" (%data (%vector table)))
   (copy-to-new-vector table new-vector)
@@ -420,7 +424,7 @@
   (def new-vector
     (fab-tab-vec
      (* (%n-buckets vector) (* (%bucket-depth vector) 2))
-     $empty-cell-marker 
+     $nul-cell-marker 
      (%n-buckets vector) (%bucket-depth vector)
      (%primary-modulus vector) 
      (%secondary-modulus vector)))
@@ -466,7 +470,7 @@
              (rep inner ((i|<int> 0) (index|<int> bucket-start))
                (if (< i new-bucket-depth)
                    (let ((this-key (@velt new-vector index)))
-                     (if (== this-key $empty-cell-marker)
+                     (if (== this-key $nul-cell-marker)
                          ;; (trace out "COPYING TO (%= %=) %=\n" k v index)
                          (seq
                            (set (@velt new-vector index) k)

@@ -90,7 +90,7 @@
 
 (dv *goo-root*
   (let ((env-root (os-val "GOO_ROOT")))
-    (if (empty? env-root)
+    (if (nul? env-root)
         (%sb (%default-goo-root))
         env-root)))
 
@@ -104,7 +104,7 @@
 
 (dv *goo-build-root*
   (let ((env-root (os-val "GOO_BUILD_ROOT")))
-    (if (empty? env-root)
+    (if (nul? env-root)
         "."
         env-root)))
 
@@ -252,7 +252,7 @@
 ;;;   C:\a\c.txt -> ((drive "C:") root "a" "c.txt")
 ;;; 
 ;;; Note that the hierarchical portion of this pathname (everything but the
-;;; label) must be non-empty at all times.
+;;; label) must be non-nul at all times.
 ;;;
 ;;; Please port this code to other platforms as needed.
 ;;; TODO - Unix version should handle '//' in the middle of pathnames
@@ -264,8 +264,8 @@
          condition-message msg condition-arguments (as <lst> args))))
 
 (df pathname-to-components (pathname|<str> => <lst>)
-  (when (empty? pathname)
-    (pathname-error "Can't convert empty an pathname to components."))
+  (when (nul? pathname)
+    (pathname-error "Can't convert nul an pathname to components."))
   (when (== (last pathname) (elt *path-separator* 0))
     (set pathname (sub pathname 0 (- (len pathname) 1))))
   (map (fun (component)
@@ -278,8 +278,8 @@
 
 ;;; Reassemble components created by the above function.
 (df components-to-pathname (components|<lst> => <str>)
-  (when (empty? components)
-    (pathname-error "Can't convert empty components to a pathname."))
+  (when (nul? components)
+    (pathname-error "Can't convert nul components to a pathname."))
   (join (map (fun (component)
                (cond
                  ((== component 'root)    "")
@@ -300,8 +300,8 @@
   (def result (if (isa? (head components) <lst>)
                   (tail components)
                   components))
-  (when (empty? result)
-    (pathname-error "Hierarchical portion of %= must not be empty." components))
+  (when (nul? result)
+    (pathname-error "Hierarchical portion of %= must not be nul." components))
   result)
 
 ;;; Return the last item in a list of components.

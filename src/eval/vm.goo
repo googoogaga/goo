@@ -149,11 +149,15 @@
   (set [*stk* (+ (%vfp) x)] (vm-pop)))
 
 (def-vm-push-op VM-BOX-GET () 40
-  (%vm-box-val (vm-pop)))
+  (def box (vm-pop))              
+  (assert (isa? box <box>) "NOT A BOX %=" box)
+  (%vm-box-val box))
 
 (def-vm-push-op VM-BOX-PUT () 41
   (def val (vm-pop))
-  (set (%vm-box-val (vm-pop)) val))
+  (def box (vm-pop))
+  (assert (isa? box <box>) "NOT A BOX %=" box)
+  (set (%vm-box-val box) val))
 
 (def-vm-op VM-BOX-FAB (x) 42
   (def idx (+ (%vfp) x))              
@@ -235,29 +239,34 @@
   (fin ((vm-pop)) (cleanup)))
 
 (def-vm-push-op VM-TRY () 102
-  (%with-monitor (vm-pop) (vm-pop) (vm-pop) (vm-pop) (vm-pop)))
+  (def thunk   (vm-pop))
+  (def handler (vm-pop))
+  (def test    (vm-pop))
+  (def info    (vm-pop))
+  (def type    (vm-pop))
+  (%with-monitor type info test handler thunk))
 
 (def-vm-push-op VM-SIG-FAB (arity nary?) 110
-  (def names (vm-pop))
   (def value (vm-pop))
   (def specs (vm-n-pop arity))
   (new <sig> 
-    sig-names names
     sig-specs specs
     sig-nary? (= nary? 1)
     sig-arity arity
     sig-val   value
     sig-unification-vars '()))
 
-(df %vm-gen-fab (name sig => <gen>)
-  (def g (new <gen> fun-name name fun-sig sig fun-mets '()))
+(df %vm-gen-fab (sig name names => <gen>)
+  (def i (new <fun-info> fun-info-name name fun-info-names names))
+  (def g (new <gen> fun-sig sig fun-info i fun-mets '() fun-cache #f))
   (set (%gen-code g) (%met-code %dispatch))
   g)
 
 (def-vm-push-op VM-GEN-FAB () 111
-  (def sig (vm-pop))
-  (def nam (vm-pop))
-  (%vm-gen-fab nam sig))
+  (def names (vm-pop))
+  (def name  (vm-pop))
+  (def sig   (vm-pop))
+  (%vm-gen-fab sig name names))
 
 (df %vm-met (args|...)
   (def fn (%fun-reg))
@@ -270,8 +279,8 @@
   (decf (%vsp) (len args))
   res)
 
-(df %vm-met-fab (name sig dyn? => <met>)
-  (%met (%met-code %vm-met) name sig #f #f #f))
+(df %vm-met-fab (sig nam nams dyn? => <met>)
+  (%fab-met (%met-code %vm-met) sig nam nams #f #f))
 
 (df %vm-met-ini (met env => <met>)
   (set (%met-env met) (%vm-fun-env-fab (%iu (len env))))
@@ -279,19 +288,21 @@
     (set (%vm-fun-env-elt met (%iu i)) e))
   met)
 
-(df %vm-met-fab+ini (name sig env => <met>)
-  (def met (%vm-met-fab name sig #f))
+(df %vm-met-fab+ini (sig env nam nams => <met>)
+  (def met (%vm-met-fab sig nam nams #f))
   (%vm-met-ini met env))
 
 (def-vm-push-op VM-FUN-FAB-DYN () 112
-  (def sig (vm-pop))
-  (def nam (vm-pop))
-  (%vm-met-fab nam sig #t))
+  (def nams (vm-pop))
+  (def nam  (vm-pop))
+  (def sig  (vm-pop))
+  (%vm-met-fab sig nam nams #t))
 
 (def-vm-push-op VM-FUN-FAB () 113
-  (def sig (vm-pop))
-  (def nam (vm-pop))
-  (%vm-met-fab nam sig #f))
+  (def nams (vm-pop))
+  (def nam  (vm-pop))
+  (def sig  (vm-pop))
+  (%vm-met-fab sig nam nams #f))
 
 (def-vm-op VM-FUN-INI (n l) 114
   (def env (pair (+ l (%vpc)) (vm-n-pop n)))
@@ -299,10 +310,11 @@
   (%vm-met-ini met env))
 
 (def-vm-push-op VM-FUN-FAB+INI (n l) 115
-  (def env (pair (+ l (%vpc)) (vm-n-pop n)))
-  (def sig (vm-pop))
-  (def nam (vm-pop))
-  (%vm-met-fab+ini nam sig env))
+  (def env  (pair (+ l (%vpc)) (vm-n-pop n)))
+  (def nams (vm-pop))
+  (def nam  (vm-pop))
+  (def sig  (vm-pop))
+  (%vm-met-fab+ini sig env nam nams))
 
 ;;;; LINKING/LOADING
 
@@ -331,7 +343,7 @@
 (dm vm-link (code|<lst> lits|<tup> vars|<tup> => <seq>)
   (def ops  (fab <vec> 0))
   (rep scan ((res '()) (ops code) (labels '()) (patches '()) (pc 0))
-    (if (empty? ops)
+    (if (nul? ops)
         (vm-patch (rev! res) labels patches)
         (let ((op (head ops)))
           (if (vm-label? op) 
@@ -349,7 +361,7 @@
                   (#t
                    (rep loop ((res (pair (vm-gen-op ins) res)) 
                               (args (tail op)) (pc (+ pc 1)) (patches patches))
-                     (if (empty? args)
+                     (if (nul? args)
                          (scan res (tail ops) labels patches pc)
                          (let ((arg (head args)))
                            (loop (pair arg res) (tail args) (+ pc 1)
@@ -434,7 +446,9 @@
   (msg port "%s:%s" (binding-module-name x) (binding-name x)))
 
 (dm recurring-write (port|<out-port> x|<sig> d|<int> recur|<fun>)
-  (msg port "<Sig %=>" (sig-names x)))
+  (puts port "<Sig ")
+  (do (op msg port "%t" _) (sig-specs x))
+  (puts port ">"))
 
 (dg asm-exp (x))
 

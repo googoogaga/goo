@@ -20,13 +20,13 @@
               (evol (sexpr-if-else e) env k)))))
 
 (dm evol-seq+ ((e+ <lst>) env k)
-  (if (empty? (tail e*))
+  (if (nul? (tail e*))
       (evol (head e*) env k)
       (evol (head e*) env
             (fun (e) (evol-seq+ (tail e*) env k)))))
 
 (dm evol-seq ((e* <lst>) env k)
-  (if (empty? e*)
+  (if (nul? e*)
       (k #f)
       (evol-seq+ e* env k)))
 
@@ -76,7 +76,7 @@
 
 (dm evol* ((e* <lst>) env)
   (rep loop (((r <lst>) '()) ((e* <lst>) e*))
-    (if (empty? e*)
+    (if (nul? e*)
         (rev! r)
         (loop (pair (evol (head e*) env) r) (tail e*)))))
 
@@ -86,15 +86,15 @@
 (dm evol-list ((first <sym>) (e <lst>) env)
   (invoke (evol first env) (evol* (tail e) env)))
 
-(dv *e* $the-empty-environment)
+(dv *e* $the-nul-environment)
 
 (dm initialize-world ()
-  (let ((env (env-extend! $the-empty-environment '() '() 'global)))
+  (let ((env (env-extend! $the-nul-environment '() '() 'global)))
     (env-define-binding! env 'sig  sig)
     (env-define-binding! env 'pair pair)
     (env-define-binding! env 'head head)
     (env-define-binding! env 'tail tail)
-    (env-define-binding! env 'empty? empty?)
+    (env-define-binding! env 'nul? nul?)
     (env-define-binding! env '+ +)
     (env-define-binding! env '< <)
     (env-define-binding! env '= =)

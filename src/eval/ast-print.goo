@@ -12,7 +12,7 @@
     (msg out "|%t" x)))
 
 (dm type-out (out|<out-port> x|<binding>)
-  (type-out out (binding-type x)))
+  (type-out out (binding-inferred-type x)))
 
 (dm type-out (out|<out-port> x|<program>)
   (type-out out (program-type x)))
@@ -65,7 +65,7 @@
        (put ,out-var #\() 
        ,@(packing 
            (rep loop ((body body) (first? #t))
-             (unless (empty? body)
+             (unless (nul? body)
                (unless first? (pack `(put ,out-var #\space)))
                (pack `(ast-write ,out-var ,(head body) ,depth-var))
                (loop (tail body) #f))))
@@ -91,7 +91,7 @@
     (out|<out-port> x prefix|<str> suffix|<str> d|<int> do-first? print)
   (puts out prefix)
   (rep loop ((x x) (first? #t))
-    (unless (empty? x)
+    (unless (nul? x)
       (when (or (not do-first?) (not first?)) (puts out " "))
       (print out (head x) d)
       (loop (tail x) #f)))
@@ -123,6 +123,11 @@
 (dm ast-write (out|<out-port> x|<regular-application> d|<int>)
   (ast-between-parentheses-spaced+typed (out d x)
     (application-function x) (application-arguments x)))
+
+(dm ast-write (out|<out-port> x|<method-application> d|<int>)
+  (ast-between-parentheses-spaced+typed (out d x)
+    (puts out "MC") (application-function x) (application-next-methods x) 
+    (application-arguments x)))
 
 (dm ast-write (out|<out-port> x|<predefined-application> d|<int>)
   (ast-between-parentheses-spaced (out d)
@@ -178,7 +183,7 @@
   (msg out "BW(%= %=)" (box-reference x) (box-form x)))
 
 (dm function-kind (x|<ast-function>)
-  "F")
+  "FUN")
 
 ;; (dm function-kind (x|<function-definition>)
 ;;   (msg-to-str "FD-%=" (function-index x)))
@@ -198,6 +203,9 @@
 ;;        (program-form x) (program-quotations x) (program-definitions x)))
 
 (dm recurring-write (port|<out-port> x|<program> d|<int> recur|<fun>)
+  (ast-write port x d))
+
+(dm recurring-write (port|<out-port> x|<programs> d|<int> recur|<fun>)
   (ast-write port x d))
 
 (export ast-write)

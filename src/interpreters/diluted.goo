@@ -186,9 +186,9 @@
   (meaning-sequence (sexpr-begin-actions e) r))
 
 (dm meaning-sequence (e+ r t?)
-  (if (empty? e+)
+  (if (nul? e+)
       (static-wrong "Illegal syntax: (seq)")
-      (if (empty? (tail e+))
+      (if (nul? (tail e+))
           (meaning (head e+) r t?)
           (meaning*-multiple-sequence (head e+) (tail e+) r t?))))
 
@@ -200,7 +200,7 @@
 (dm meaning-abstraction (nn* e+ r t?)
   (rep parse ((n* nn*)
               (regular '()) )
-    (if (empty? n*) (meaning-fix-abstraction nn* e+ r tail?)
+    (if (nul? n*) (meaning-fix-abstraction nn* e+ r tail?)
         (if (isa? n* <lst>) (parse (tail n*) (pair (head n*) regular))
             (meaning-dotted-abstraction 
              (rev regular) n* e+ r tail? )) ) ) )

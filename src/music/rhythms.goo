@@ -83,7 +83,7 @@
 (def-rhythm 6 clave
   (clave 1 clave "BB++BB+B+B++"))
 
-(def-rhythm 4 empty
+(def-rhythm 4 nul
   (pulse 1 metronome "++++++++++++++++"))
 
 (dm num-patterns (=> <int>)

@@ -5,8 +5,8 @@
 (use eval/dependency)
 
 (test-group dep-types
-  (test== (dependency-empty? $empty-dependency)      #t)
-  (test== (dependency-empty? $name-parse-dependency) #f)
+  (test== (dependency-nul? $nul-dependency)      #t)
+  (test== (dependency-nul? $name-parse-dependency) #f)
   (test== (dependency-includes-all? $parse-dependencies $name-parse-dependency)
           #t)
   (let ((n-and-e (dependency-or $name-parse-dependency
@@ -16,9 +16,9 @@
             #t)))
 
 (dc <test-dependent> (<dependent>))
-  (dp last-invalidation (<test-dependent> => <dependency-type>)
-    $empty-dependency)
-  (dp invalidation-count (<test-dependent> => <int>) 
+  (dp! last-invalidation (<test-dependent> => <dependency-type>)
+    $nul-dependency)
+  (dp! invalidation-count (<test-dependent> => <int>) 
     0)
 
 (dm invalidate-dependent
@@ -41,9 +41,9 @@
           (dependency-or $expansion-parse-dependency
                          $value-optimization-dependency))
   (test== (invalidation-count dest1) 0)
-  (test=  (last-invalidation dest1) $empty-dependency)
+  (test=  (last-invalidation dest1) $nul-dependency)
   (test== (invalidation-count dest2) 0)
-  (test=  (last-invalidation dest2) $empty-dependency)
+  (test=  (last-invalidation dest2) $nul-dependency)
   (invalidate-dependents source1 $parse-dependencies)
   (test== (invalidation-count dest1) 1)
   (test=  (last-invalidation dest1) $name-parse-dependency)

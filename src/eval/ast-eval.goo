@@ -59,7 +59,7 @@
 (dv $nul-loc-env (new <loc-env>))
 
 (dm env-frame! (env|<loc-env> function names|<lst> args|<lst> => <loc-env>)
-  (def values (rep-into! (rep-fab (len args) nul) args))
+  (def values (rep-into! (rep-fab (len args) #f) args))
   (new <loc-env>
     env-parent   env
     env-function function
@@ -79,9 +79,9 @@
 ;; TODO: SHOULD GO AWAY SOON
 (dm env-binding-value (env|<loc-env> name|<sym> => <any>)
   (if (== env $nul-loc-env)
-      nul
+      #f
       (rep loop ((names (env-names env)) (i 0))
-        (if (empty? names)
+        (if (nul? names)
             (env-binding-value (env-parent env) name)
             (if (== name (head names))
                 (rep-elt (env-values env) i)
@@ -89,7 +89,7 @@
 
 (dm env-binding-value-setter (v env|<loc-env> name|<sym>)
   (rep loop ((names (env-names env)) (i 0))
-    (if (empty? names)
+    (if (nul? names)
         (set (env-binding-value (env-parent env) name) v)
         (if (== name (head names))
             (set (rep-elt (env-values env) i) v)
@@ -164,10 +164,12 @@
 (dm export-goo-method (f names specs nary? value body env)
   (def arity (if nary? (- (len specs) 1) (len specs)))
   (def efun  (ifun env f nary? arity names body))
-  (set (fun-name  efun) (as-fun-name f))
+  (set (fun-info efun)
+       (new <fun-info>
+         fun-info-name  (as-fun-name f)
+         fun-info-names names))
   (set (fun-sig efun)
        (new <sig>
-         sig-names names
          sig-specs (ast-eval-specs specs nary? env)
          sig-nary? nary?
          sig-arity arity
@@ -192,7 +194,7 @@
   (def nary?  (function-nary? e))
   (def names  (map binding-name params))
   (def specs  (ast-eval-specs (map binding-type params) nary? env))
-  (fab-gen (as-fun-name e) names specs nary? <any> '()))
+  (fab-gen specs nary? <any> (as-fun-name e) names))
 
 (dm env-local-reference-value (env|<loc-env> ref|<local-reference> => <any>)
   (env-local-value
@@ -264,7 +266,7 @@
 (dm ast-eval (e|<definition> env|<loc-env>)
   (def value (ast-eval (assignment-form e) env))
   (env-define-binding! (assignment-binding e) value)
-  #f)
+  value)
 
 ;; (dc <box> (<any>))
 ;;   (dp box-value (<box> => <any>))
@@ -298,13 +300,13 @@
   (rep eval ((e e))
     (def nxt (tail e))
     (def val (ast-eval (head e) env))
-    (if (empty? nxt)
+    (if (nul? nxt)
         val
         (eval nxt))))
 
 (dm ast-eval (e|<arguments> env|<loc-env>)
   (rep eval ((res '()) (args e))
-    (if (empty? args)
+    (if (nul? args)
         (rev! res)
         (eval (pair (ast-eval (head args) env) res) (tail args)))))
 
@@ -322,12 +324,15 @@
 
 (dm ast-eval (e|<predefined-application> env|<loc-env>)
   (def b (application-binding e))
-  (if (== (binding-name b) '%next-methods)
-      (let ((nms (env-binding-value env '%next-methods)))
-        (if (== nms nul) #f nms))
-      (let ((f    (binding-info b))
-            (args (ast-eval (application-arguments e) env)))
-        (app f args))))
+  (case (binding-name b)
+    (('%next-methods)
+     (env-binding-value env '%next-methods))
+    (('%fun-reg) ;; ONLY NEEDED FOR NEXT-METHOD ERRORS
+     #f)
+    (#t
+     (let ((f    (%binding-value-of b))
+           (args (ast-eval (application-arguments e) env)))
+       (app f args)))))
 
 (dm ast-eval (e|<fix-let> env|<loc-env>)
   (def args (ast-eval (fix-let-arguments e) env))
@@ -338,13 +343,13 @@
   (def bindings
     (locals-bindings e))
   (def new-env 
-    (env-frame! env #f (map binding-name bindings) (map (always nul) bindings)))
+    (env-frame! env #f (map binding-name bindings) (map (always #f) bindings)))
   (do2 (fun (name value)
          (set (env-binding-value new-env name) value))
        (map binding-name bindings)
        (map (rcurry ast-eval new-env) (locals-functions e)))
   ;; (rep loop ((funs (locals-functions e)) (i 0))
-  ;;   (unless (empty? funs)
+  ;;   (unless (nul? funs)
   ;;     (set (env-local-value new-env 0 i) 
   ;;          (ast-eval (head funs) new-env))
   ;;     (loop (tail funs) (+ i 1))))
@@ -377,8 +382,9 @@
 ;; TODO - This function smells bad.
 (df init-environment-for-eval (env|<static-global-environment>)
   (ast-define-binding env '%next-methods #f 'predefined)
-  (def b (ast-define-binding env '%pair #f 'global))
-  (set (env-global-binding-value b) pair))
+  ;; (def b (ast-define-binding env '%pair #f 'predefined))
+  ;; (set (env-global-binding-value b) pair)
+  )
 
 (export
   ast-evaluate
@@ -436,11 +442,14 @@
       (%binding-value-of b)
       default))
 
+(df binding-value-or (b|<module-binding> def) (%binding-value-or-of b def))
+
 (dl %binding-value-or (dlvar default)
   (%binding-value-or-of 
    (%lookup-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar)) default))
 
 (export
+  binding-value-or
   %binding-value-or     %binding-value-or-of
   %binding-value        %binding-value-of
   %binding-value-setter %binding-value-of-setter)
