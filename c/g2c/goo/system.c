@@ -1234,7 +1234,7 @@ loop:
   VARSET(YgooSsystemYTgoo_rootT,T33);
   lit_19 = YPPsym((P)"add-src-path");
   lit_20 = YPPsym((P)"relpath");
-  lit_21 = YPsb((P)"SRC");
+  lit_21 = YPsb((P)"src");
   T40 = YPsig(YPPlist(1,LITREF(lit_20)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLstrG),Ynil);
   fun_add_src_path_6 = YPmet(FUNCODEREF(fun_add_src_path_6),LITREF(lit_19),T40,ENVNUL,PNUL,YPfalse);
   T43 = BOUNDP(YgooSsystemYadd_src_path);
@@ -1261,7 +1261,7 @@ loop:
   VARSET(YgooSsystemYadd_tmp_path,T46);
   lit_24 = YPPsym((P)"add-build-path");
   lit_25 = YPPsym((P)"builddir");
-  lit_26 = YPsb((P)"C");
+  lit_26 = YPsb((P)"c");
   T50 = YPsig(YPPlist(2,LITREF(lit_25),LITREF(lit_20)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLstrG),Ynil);
   fun_add_build_path_8 = YPmet(FUNCODEREF(fun_add_build_path_8),LITREF(lit_24),T50,ENVNUL,PNUL,YPfalse);
   T53 = BOUNDP(YgooSsystemYadd_build_path);
