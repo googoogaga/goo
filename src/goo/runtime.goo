@@ -1,0 +1,1111 @@
+;;; MACRO SUPPORT
+
+(dm make-sym ((x ...)  => <sym>)
+  (as <sym> (reduce (fun (r e) (cat r (to-str e))) "" x)))
+
+(dv *gensym-counter* 1000)
+
+(dm gensym (=> <sym>)
+  (make-sym "x-" (inc *gensym-counter*)))
+
+(dm make-setter-name ((x <sym>) => <sym>)
+  (make-sym x "-setter"))
+
+(dm var-name ((x <sym>)) x)
+
+(dm var-name ((x <lst>)) (elt x 0))
+
+(dm var-type ((x <sym>)) '<any>)
+
+(dm var-type ((x <lst>)) (elt x 1))
+
+(ds (def-fun-var ,var ,value)
+  (let ((nam (var-name var))
+        (typ (var-type var))
+        (vnam (make-sym "*" nam "*")))
+    `(seq (dv ,vnam ,value)
+	  (dm ,nam (=> ,typ) ,vnam)
+ 	  (dm ,(make-setter-name nam) ((z ,typ)) (set ,vnam z)))))
+
+;;; DYNAMIC BINDING
+
+(ds (dlet ,bindings ,@body)
+  (mif (() bindings)
+    `(seq ,@body)
+     (mif (((,var ,value) ,@rest) bindings)
+       (let ((name (var-name var))
+	     (old-value (gensym)))
+         `(let ((,old-value ,name))
+	    (fin (seq (set ,name ,value)
+		      (dlet (,@rest) ,@body))
+		 (set ,name ,old-value))))
+       (error "DLET: SYNTAX ERROR BAD BINDINGS" bindings))))
+
+;;; <any>
+
+(dm nyi-error ()
+  (nyi) ;; nyi nyi
+  )
+
+(dm to-str ((x <any>) => <str>)
+  (let ((name (%binding-name x)))
+    (if name 
+        (cat "$" (to-str name))
+        (cat "{ obj(" (to-str (object-parents x)) ") }"))))
+
+;;; bottom
+
+(dv bot (isa <any>)) ;; todo: should be disjoint from <any>
+
+;;; boolean
+
+;; (dv <log>  (isa <any>))
+
+;; (dv true  (isa <log>))
+
+;; (dv false (isa <log>))
+
+(dm to-str ((x #t) => <str>) "#t")
+(dm to-str ((x #f) => <str>) "#f")
+
+(dm as (type x => <any>)
+  (if (isa? x type) 
+      x
+      (error "NO AS METHOD FOR %= AND %=" type x)))
+
+;; todo: deal with ==
+
+(dm == (x y => <log>) (%bb (%eq? x y)))
+
+(dm = (x y => <log>) (== x y))
+
+(dm ~= (x y => <log>)
+  (not (= x y)))
+
+(dm ~== (x y => <log>)
+  (not (== x y)))
+
+(dm > (x y => <log>)
+  (< y x))
+
+(dm <= (x y => <log>)
+  (not (< y x)))
+
+(dm >= (x y => <log>)
+  (not (< x y)))
+
+(dm min (x y => <log>)
+  (if (< x y) x y))
+
+(dm max (x y => <log>)
+  (if (> x y) x y))
+
+;;; character
+
+;; (dv <chr> (isa <any>))
+;;   (slot <chr> (%chr-val <int>))
+
+(dm as ((_ <chr>) (i <int>) => <chr>)
+  (%cb (%iu i)))
+
+(dm as ((_ <int>) (c <chr>) => <int>)
+  (%ib (%cu c)))
+
+(dm < ((x <chr>) (y <chr>) => <log>)
+  (%bb (%c< (%cu x) (%cu y))))
+
+(dm == ((x <chr>) (y <chr>) => <log>)
+  (%bb (%c= (%cu x) (%cu y))))
+
+(dm lowercase?( (x <chr>) => <log>)
+  (let ((code (as <int> x)))
+    (if (>= code (as <int> #\a))
+        (<= code (as <int> #\z))
+        #f)))
+
+(dm uppercase?( (x <chr>) => <log>)
+  (let ((code (as <int> x)))
+    (if (>= code (as <int> #\A))
+        (<= code (as <int> #\Z))
+        #f)))
+
+(dm as-lowercase ((x <chr>) => <chr>)
+  (if (uppercase? x)
+      (as <chr> (+ (as <int> x) (- (as <int> #\a) (as <int> #\A))))
+      x))
+
+(dm as-uppercase ((x <chr>) => <chr>)
+  (if (lowercase? x)
+      (as <chr> (+ (as <int> x) (- (as <int> #\A) (as <int> #\a))))
+      x))
+
+(dm to-str ((x <chr>) => <str>)
+  (fabs <str> x))
+
+(dm alphabetic? ((x <chr>) => <log>)
+  (or (and (<= #\a x) (<= x #\z))
+      (and (<= #\A x) (<= x #\Z))))
+
+(dm numeric? ((x <chr>) => <log>)
+  (and (<= #\0 x) (<= x #\9)))
+
+(dm to-digit ((digit <chr>) => <int>)
+  (- (char->ascii digit) (char->ascii #\0)))
+
+;;; number
+
+;; (dv <num> (isa <any>))
+
+(dg contagious-type ((x <num>) (y <num>) => <num>))
+
+(dg contagious-call ((f <fun>) (x <num>) (y <num>) => <any>))
+
+(dm contagious-call ((f <fun>) (x <num>) (y <num>) => <any>)
+  (let ((type (contagious-type x y)))
+    (f (as type x) (as type y))))
+
+(dm < ((x <num>) (y <num>) => <log>)
+  (contagious-call < x y))
+
+(dm + ((x <num>) (y <num>) => <num>)
+  (contagious-call + x y))
+
+(dm - ((x <num>) (y <num>) => <num>)
+  (contagious-call - x y))
+
+(dm * ((x <num>) (y <num>) => <num>)
+  (contagious-call * x y))
+
+(dm floor ((x <num>) => <int> (rem <num>))
+  (contagious-call floor/ x 1))
+
+(dm ceiling ((x <num>) => <int> (rem <num>))
+  (contagious-call ceiling/ x 1))
+
+(dm round ((x <num>) => <int> (rem <num>))
+  (contagious-call round/ x 1))
+
+(dm truncate ((x <num>) => <int> (rem <num>))
+  (contagious-call truncate/ x 1))
+
+(dm floor/ ((real <num>) (divisor <num>) => <int> (remainder <num>))
+  (let (((tup (integer <int>) (remainder <num>)) (truncate/ real divisor)))
+    (if (and (not (zero? remainder))
+	     (if (neg? divisor)
+		 (pos? real)
+		 (neg? real)))
+	(tup (- integer 1) (+ remainder divisor))
+	(tup integer remainder))))
+
+(dm ceiling/ ((real <num>) (divisor <num>) => <int> (remainder <num>))
+  (let (((tup (integer <int>) (remainder <num>)) (truncate/ real divisor)))
+    (if (and (not (zero? remainder))
+	     (if (neg? divisor)
+		 (neg? real)
+		 (pos? real)))
+	(tup (+ integer 1) (- remainder divisor))
+	(tup integer remainder))))
+
+(dm round/ ((real <num>) (divisor <num>) => <int> (remainder <num>))
+  (let (((tup (integer <int>) (remainder <num>)) (truncate/ real divisor))
+	((threshold <num>) (/ (abs divisor) 2.0)))
+    (if (or (> remainder threshold) 
+	   (and (= remainder threshold) (odd? integer)))
+	(if (neg? divisor)
+	    (tup (- integer 1) (+ remainder divisor))
+	    (tup (+ integer 1) (- remainder divisor)))
+	(if (let ((minus-threshold (neg threshold)))
+	      (or (< remainder minus-threshold)
+		  (and (= remainder minus-threshold) (odd? integer))))
+	    (if (neg? divisor)
+		(tup (+ integer 1) (- remainder divisor))
+		(tup (- integer 1) (+ remainder divisor)))
+	    (tup integer remainder)))))
+
+(dm truncate/ ((real <num>) (divisor <num>) => <int> (remainder <num>))
+  (contagious-call truncate/ real divisor))
+
+(dm modulo ((real <num>) (divisor <num>) => <num>)
+  (let (((tup _ (remainder <num>)) (floor/ real divisor)))
+    remainder))
+
+(dm remainder ((real <num>) (divisor <num>) => <num>)
+  (let (((tup _ (remainder <num>)) (truncate/ real divisor)))
+    remainder))
+
+(dm pos? ((x <num>) => <log>)
+  (> x 0))
+
+(dm zero? ((x <num>) => <log>)
+  (= x 0))
+
+(dm neg? ((x <num>) => <log>)
+  (< x 0))
+
+(dm neg ((x <num>) => <num>)
+  (- 0 x))
+
+(dm abs ((x <num>) => <num>)
+  (if (neg? x) (neg x) x))
+
+(dm to-str ((x <num>) => <str>)
+  (num-to-str x))
+
+;;; <int>
+
+;; (dv <int> (isa <num>))
+;;   (slot <int> val)
+
+(dm contagious-type ((x <int>) (y <int>) => <int>)
+  <int>)
+
+(dm contagious-type ((x <flo>) (y <flo>) => <flo>)
+  <flo>)
+
+(dm contagious-type ((x <int>) (y <flo>) => <flo>)
+  <flo>)
+
+(dm contagious-type ((x <flo>) (y <int>) => <flo>)
+  <flo>)
+
+(dm == ((x <int>) (y <int>) => <log>)
+  (%bb (%i= (%iu x) (%iu y))))
+
+(dm < ((x <int>) (y <int>) => <log>)
+  (%bb (%i< (%iu x) (%iu y))))
+
+(dm + ((x <int>) (y <int>) => <int>)
+  (%ib (%i+ (%iu x) (%iu y))))
+
+(dm - ((x <int>) (y <int>) => <int>)
+  (%ib (%i- (%iu x) (%iu y))))
+
+(dm * ((x <int>) (y <int>) => <int>)
+  (%ib (%i* (%iu x) (%iu y))))
+
+(dm floor ((x <int>) => <int> (remainder <int>))
+  (tup x 0))
+
+(dm ceiling ((x <int>) => <int> (remainder <int>))
+  (tup x 0))
+
+(dm round ((x <int>) => <int> (remainder <int>))
+  (tup x 0))
+
+(dm truncate ((x <int>) => <int> (remainder <int>))
+  (tup x 0))
+
+(dm truncate/ ((x <int>) (y <int>) => <int> (remainder <int>))
+  (let ((result (%ib (%it/ (%iu x) (%iu y)))))
+    (tup result (- x (* result y)))))
+
+(dm modulo ((x <int>) (y <int>) => <int>)
+  (%ib (%im (%iu x) (%iu y))))
+
+(dm logior ((x <int>) (y <int>) => <int>)
+  (%ib (%iv (%iu x) (%iu y))))
+
+(dm logxor ((x <int>) (y <int>) => <int>)
+  (%ib (%i^ (%iu x) (%iu y))))
+
+(dm logand ((x <int>) (y <int>) => <int>)
+  (%ib (%i& (%iu x) (%iu y))))
+
+(dm lognot ((x <int>) => <int>)
+  (%ib (%i! (%iu x))))
+
+(dm logbit? ((o <int>) (x <int>) => <int>)
+  (%ib (%i? (%iu o) (%iu x))))
+
+(dm even? ((x <int>) => <log>)
+  (zero? (logand x 1)))
+
+(dm odd? ((x <int>) => <log>)
+  (not (even? x)))
+
+(dm ash ((x <int>) (a <int>) => <int>)
+  (if (neg? a)
+      (%ib (%i>> (%iu x) (%iu a)))
+      (%ib (%i<< (%iu x) (%iu a)))))
+
+(dm lsh ((x <int>) (a <int>) => <int>)
+  (if (neg? a)
+      (%ib (%i>>> (%iu x) (%iu a)))
+      (%ib (%i<<< (%iu x) (%iu a)))))
+
+(dm power-of-two-ceiling ((x <int>) => <int>)
+  (rep search (((po2 <int>) 1))
+    (if (> po2 x)
+	po2
+	(search (+ po2 po2)))))
+
+(dv $digit-to-char "0123456789abcdefghijklmnopqrstuvwxyz")
+
+(dv *print-base* 10)
+
+(dv epsilon 0.000001)
+
+(dm decode-radix-option ((rest <opts>) (default <int>) caller-name => <int>)
+  (if (empty? rest)
+      default
+      (if (= (len rest) 1)
+	  (head rest)
+	  (error "too many arguments: %=, %=" caller-name rest))))
+
+;;  (mif (() rest)
+;;       default
+;;       (mif ((,radix) rest)
+;;            radix
+;;            (error "too many arguments: %=, %=" caller-name rest)))
+
+(dm num-to-str ((num <int>) (radix-option ...) => <str>)
+  (let ((radix
+	 (decode-radix-option radix-option *print-base* 'num-to-str))
+        (s (if (< num 0) -1 +1))
+        (digit-list
+         (rep loop ((digit-list '()) (num (* num s)))
+           (if (= num 0)
+               digit-list
+	       (let ((digit (elt $digit-to-char (remainder num radix))))
+		 (loop (pair digit digit-list)
+		       (1st (truncate/ num radix))))))))
+    (as <str> (if (< s 0)
+		  (pair #\- digit-list)
+		  (if (= num 0) "0" digit-list)))))
+
+;;; flo
+
+;; (dv <flo> (isa <num>))
+;;   (slot <flo> val)
+
+(df flo-bits ((x <flo>) => <int>)
+  (%ib (%flo-bits (%fu x))))
+
+(dm as ((_ <flo>) (x <int>) => <flo>)
+  (%fb (%fi2f (%iu x))))
+
+(dm == ((x <flo>) (y <flo>) => <log>)
+  (%bb (%f= (%fu x) (%fu y))))
+
+(dm < ((x <flo>) (y <flo>) => <log>)
+  (%bb (%f< (%fu x) (%fu y))))
+
+(dm + ((x <flo>) (y <flo>) => <flo>)
+  (%fb (%f+ (%fu x) (%fu y))))
+
+(dm - ((x <flo>) (y <flo>) => <flo>)
+  (%fb (%f- (%fu x) (%fu y))))
+
+(dm * ((x <flo>) (y <flo>) => <flo>)
+  (%fb (%f* (%fu x) (%fu y))))
+
+(dm / ((x <flo>) (y <flo>) => <flo>)
+  (%fb (%f/ (%fu x) (%fu y))))
+
+(dm truncate/ ((x <flo>) (y <flo>) => <int> (remainder <flo>))
+  (let ((divided (/ x y))
+	(result  (%ib (%ft (%fu x)))))
+    (tup result (* y (- divided (as <flo> result))))))
+
+(dm num-to-str ((num <flo>) (radix-option ...) => <str>)
+  (let ((radix
+	 (decode-radix-option radix-option *print-base* 'num-to-str))
+        (s (if (< num 0) -1 +1))
+        (p (* num s))
+        (string "")
+        (e (rep loop ((p p) (e 0))
+             (let (((tup i) (truncate p)))
+               (if (< (- p i) epsilon)
+                   (seq (set string (num-to-str i radix)) e)
+                   (loop (* p radix) (+ e 1))))))
+        (length (len string)))
+    (set string
+         (if (= e 0)
+             (cat string ".0")
+             (if (= e length)
+                 (cat "0." string)
+                 (if (< e length)
+                     (cat (sub string 0 (- length e)) "." 
+			  (sub string (- length e) length))
+                     (cat (sub "0.0000000000000" 0 (+ (- e length) 2))
+			  string)))))
+    (if (< s 0) (cat "-" string) string)))
+
+;;; collection
+
+;; (dv <col> (isa <any>))
+
+;;; todo: need test args and not-found handlers
+
+(dm empty?( (c <col>) => <log>)
+  (= (len c) 0))
+
+(dm empty ((c <col>) => <col>)
+  (isa c))
+
+(dm default ((c <col>) => <col>)
+  #f)
+
+(dm = ((c1 <col>) (c2 <col>) => <log>)
+  (rep eq ((s1 (ini-state c1)) (s2 (ini-state c2)))
+    (if (fin-state? c1 s1)
+	(fin-state? c2 s2)
+        (and (= (now-elt c1 s1)  (now-elt c2 s2))
+             (eq (nxt-state c1 s1) (nxt-state c2 s2))))))
+
+(dm fab ((c <col>) (s <int>) => bot)
+  (nyi-error))
+
+(dm as ((p <col>) (x <col>) => <lst>)
+  (into (fab p (len x)) x))
+        
+(dm do-key-vals ((fn <fun>) (key-vals <opts>) => ())
+  (rep rep (((key-vals <opts>) key-vals))
+    (unless (empty? key-vals)
+      (fn (head key-vals) (head (tail key-vals)))
+      (rep (tail (tail key-vals))))))
+
+(dm fabs ((p <col>) (key-vals ...))
+  (let ((x (isa p)))
+    (do-key-vals (fun (key val) (set (elt x key) val)) key-vals)
+    x))
+
+;; todo: align col's
+(dm alter ((dst <col>) (src <col>) => <col>)
+  (rep in ((ds (ini-state dst)) (ss (ini-state src)))
+    (if (if (fin-state? dst ds) #t (fin-state? src ss))
+        dst
+        (seq (set (now-elt dst ds)  (now-elt src ss))
+             (in (nxt-state dst ds) (nxt-state src ss))))))
+
+(dm fill ((dst <col>) val => <col>)
+  (rep in ((ds (ini-state dst)))
+    (if (fin-state? dst ds)
+        dst
+        (seq (set (now-elt dst ds)  val)
+             (in (nxt-state dst ds))))))
+
+(dm any? ((test <fun>) (c <col>) => <log>)
+  (rep fnd ((state (ini-state c)))
+    (if (fin-state? c state)
+        #f
+        (or (test (now-elt c state))
+            (fnd (nxt-state c state))))))
+  
+(dm any2? ((test <fun>) (x <col>) (y <col>) => <log>)
+  (rep fnd ((sx (ini-state x)) (sy (ini-state y)))
+    (if (or (fin-state? x sx) (fin-state? y sy))
+	#f
+        (or (test (now-elt x sx) (now-elt y sy)) 
+	    (fnd (nxt-state x sx) (nxt-state y sy))))))
+
+(dm all? ((test <fun>) (c <col>) => <log>)
+  (rep fnd ((state (ini-state c)))
+    (or (fin-state? c state)
+        (and (test (now-elt c state))
+             (fnd (nxt-state c state))))))
+  
+(dm all2? ((test <fun>) (x <col>) (y <col>) => <log>)
+  (rep fnd ((sx (ini-state x)) (sy (ini-state y)))
+    (or (fin-state? x sx) (fin-state? y sy)
+        (and (test (now-elt x sx) (now-elt y sy)) 
+	     (fnd (nxt-state x sx) (nxt-state y sy))))))
+
+(dm reduce ((combine <fun>) init (c <col>) => <col>)
+  (rep red ((res init) (state (ini-state c)))
+    (if (fin-state? c state)
+        res
+        (red (combine res (now-elt c state)) (nxt-state c state)))))
+  
+(dm reduce+ ((combine <fun>) (c <col>) => <col>)
+  (let ((state (ini-state c))
+        (init  (now-elt c state)))
+    (rep red ((res init) (state (nxt-state c state)))
+      (if (fin-state? c state)
+          res
+          (red (combine res (now-elt c state)) (nxt-state c state))))))
+  
+(dm find-key ((f <fun>) (c <col>) => <any>)
+  (rep fnd ((state (ini-state c)))
+    (if (fin-state? c state)
+        nul
+        (if (f (now-elt c state))
+            (now-key c state)
+            (fnd (nxt-state c state))))))
+  
+(dm map ((f <fun>) (c <col>) => <col>)
+  (rep con ((res '()) (s (ini-state c)))
+    (if (fin-state? c s)
+        (as c (rev! res))
+        (con (add res (f (now-elt c s))) (nxt-state c s)))))
+
+(dm do ((f <fun>) (c <col>))
+  (rep lop ((s (ini-state c)))
+    (unless (fin-state? c s)
+      (f (now-elt c s)) (lop (nxt-state c s)))))
+
+(dm map2 ((f <fun>) (x <col>) (y <col>) => <col>)
+  (rep con ((res '()) (sx (ini-state x)) (sy (ini-state y)))
+    (if (or (fin-state? x sx) (fin-state? y sy))
+        (as x (rev! res))
+        (con (add res (f (now-elt x sx) (now-elt y sy))) 
+	     (nxt-state x sx) (nxt-state y sy)))))
+
+(dm do2 ((f <fun>) (x <col>) (y <col>) => <col>)
+  (rep lop ((sx (ini-state x)) (sy (ini-state y)))
+    (unless (or (fin-state? x sx) (fin-state? y sy))
+      (f (now-elt x sx) (now-elt y sy))
+      (lop (nxt-state x sx) (nxt-state y sy)))))
+
+(dm map-keyed ((f <fun>) (c <col>) => <col>)
+  (rep con ((res '()) (s (ini-state c)))
+    (if (fin-state? c s)
+        (as c (rev! res))
+        (con (add res (f (now-key c s) (now-elt c s))) (nxt-state c s)))))
+
+(dm do-keyed ((f <fun>) (c <col>))
+  (rep lop ((s (ini-state c)))
+    (unless (fin-state? c s)
+      (f (now-key c s) (now-elt c s)) (lop (nxt-state c s)))))
+
+(dm mem? ((c <col>) x => <log>)
+  (any? (fun (e) (== e x)) c))
+
+;;; bag
+
+(dv <bag> (isa <col>))
+
+;;; map
+
+(dv <map> (isa <col>))
+
+;;; assocs
+
+(dv <assocs> (isa <map>))
+  (slot <assocs> (assocs-test <fun>) ==)
+  (slot <assocs> (assocs-keys <lst>) '())
+  (slot <assocs> (assocs-vals <lst>) '())
+
+(dm fab ((c <assocs>) (s <int>) => <assocs>)
+  (isa <assocs>))
+
+(dm len ((x <assocs>) => <int>)
+  (len (assocs-keys x)))
+
+(dm elt ((x <assocs>) key => _)
+  (rep fnd (((keys <lst>) (assocs-keys x)) ((vals <lst>) (assocs-vals x)))
+    (if (== keys '())
+        nul
+        (if ((assocs-test x) key (head keys))
+            (head vals)
+            (fnd (tail keys) (tail vals))))))
+
+(dm elt-setter (val (x <assocs>) key)
+  (rep fnd (((keys <lst>) (assocs-keys x)) ((vals <lst>) (assocs-vals x)))
+    (if (== keys '())
+        (seq (set (assocs-keys x) (pair key (assocs-keys x)))
+             (set (assocs-vals x) (pair val (assocs-vals x)))
+          val)
+        (if ((assocs-test x) key (head keys))
+            (set (head vals) val)
+            (fnd (tail keys) (tail vals))))))
+
+;; TODO: NEED FIP
+
+;;; sequence
+
+;; (dv <seq> (isa <col>))
+
+(dm as ((d <seq>) (s <seq>) => <seq>)
+  (alter (fab d (len s)) s))
+
+(dm 1st ((x <seq>) => <any>) (elt x 0))
+
+(dm 2nd ((x <seq>) => <any>) (elt x 1))
+
+(dm 3rd ((x <seq>) => <any>) (elt x 2))
+
+;; TODO: SHOULD USE BACKWARD ITERATION PROTOCOL???
+
+(dm last ((x <seq>) => <any>) (elt x (- (len x) 1)))
+
+(dg add ((c <seq>) x => <seq>))
+
+(dm add! ((c <seq>) x => <seq>)
+  (add c x))
+
+(dm push ((c <seq>) x => <seq>)
+  (add! c x))
+
+(dm pos ((x <seq>) v => <any>) ;; TODO: (false-or <int>)
+  (find-key (curry == v) x))
+
+(dm into ((dst <seq>) (src <seq>) (from <int>) (below <int>) => <seq>)
+  ;; todo: consult replace-subsequence!
+  (rep in ((ds (ini-state dst)) (ss (ini-state src)))
+    (if (if (fin-state? dst ds) #t (fin-state? src ss))
+        dst
+        (seq (set (now-elt dst ds)  (now-elt src ss))
+             (in (nxt-state dst ds) (nxt-state src ss))))))
+
+(dm rev ((x <seq>) => <seq>)
+  (rep con ((seq '()) (sta (ini-state x)))
+    (if (fin-state? x sta)
+        (as x seq)
+        (con (add seq (now-elt x sta)) (nxt-state x sta)))))
+
+(dm cat2 ((x <seq>) (y <seq>) => <seq>)
+  (rep con-x ((seq '()) (sta (ini-state x)))
+    (if (fin-state? x sta)
+        (rep con-y ((seq seq) (sta (ini-state y)))
+          (if (fin-state? y sta)
+              (as x (rev! seq))
+              (con-y (add seq (now-elt y sta)) (nxt-state y sta))))
+        (con-x (add seq (now-elt x sta)) (nxt-state x sta)))))
+
+(dm cat ((x <seq>) (ss ...) => <seq>)
+  (reduce cat2 x ss))
+
+(dm cat! ((x <seq>) (more ...) => <seq>)
+  (apply cat (pair x more)))
+
+(dm cat! ((x <lst>) (more ...) => <lst>)
+  ;; find first non-empty arg., to be destructively updated and returned
+  (rep find-result (((r <lst>) x) ((more <lst>) more))
+    (if (empty? more)
+	r
+	(if (empty? r)
+	    ;; skip empty arg prefix
+	    (find-result (as <lst> (head more)) (tail more)) 
+	    ;; p points into r (which is growing).  p is non-empty.
+	    (rep connect (((p <lst>) r) ((more <lst>) more))
+	      (if (empty? more)
+		  r
+		  ;; find next non-empty arg. to add
+		  (let ((x (as <lst> (head more))))
+		    (if (empty? x)
+			(connect p (tail more)) ;; skip empty arg
+			;; cdr to end of p and side-effect tail
+			(rep find-tail (((p <lst>) p))
+			  (if (empty? (tail p))
+			      (seq (set (tail p) x)         ;; DESTRUCTIVE UPDATE
+				   (connect x (tail more))) ;; connect next arg
+			      (find-tail (tail p))))))))))))
+
+(dm sub ((x <seq>) (from <int>) (below <int>) => <seq>)
+  (rep con-x ((seq '()) ((i <int>) 0) (sta (ini-state x)))
+    (if (fin-state? x sta)
+        (as x (rev! seq))
+        (con-x (if (if (>= i from) (< i below)) (add seq (now-elt x sta)) seq)
+               (+ i 1) (nxt-state x sta)))))
+
+(dm pick ((test <fun>) (x <seq>) => <seq>)
+  (rep con ((seq '()) (sta (ini-state x)))
+    (if (fin-state? x sta)
+        (as x seq)
+        (let ((e (now-elt x sta)))
+          (con (if (test e) (add seq e) seq) (nxt-state x sta))))))
+
+(dm del-dups ((x <seq>) => <seq>)
+  (as x (reduce (fun (s e) (if (mem? s e) s (add s e))) '() x)))
+
+(dm del ((s <seq>) x => <seq>)
+  (pick (fun (e) (~== e x)) s))
+
+(dm vals-to-str ((s <seq>) => <str>)
+  (reduce (fun (s e) (cat s (if (empty? s) "" " ") (to-str e))) "" s))
+
+;;; list
+
+;; (dv <lst> (isa <seq>))
+;; (dv nil (isa <lst>))
+;;   (slot <lst> head nil)
+;;   (slot <lst> (tail <lst>) nil)
+
+(dm to-str ((x <lst>) => <str>)
+  (cat "(" (vals-to-str x) ")"))
+
+(dm pair (h (t <lst>))
+  (isa <lst> (set head h) (set tail t)))
+
+(dm fab ((x <lst>) (s <int>) => <lst>)
+  (rep fab (((i <int>) s) ((res <lst>) '()))
+    (if (> i 0)
+        (fab (- i 1) (isa <lst> (set tail res)))
+	res)))
+
+;; todo: do this in general for as
+(dm as ((p <lst>) (x <lst>) => <lst>)
+  x)
+
+(dm empty ((c <lst>) => <col>)
+  '())
+
+(dm lst ((objects ...))
+  (rep build (((index <int>) (- (len objects) 1)) ((result <lst>) '()))
+    (if (< index 0)
+        result
+        (build (- index 1) (pair (elt objects index) result)))))
+
+(dm fabs ((c <lst>) (objects ...))
+  (apply lst objects))
+
+(dm len ((x <lst>) => <int>)
+  (rep sum (((count <int>) 0) ((x <lst>) x))
+    (if (== x '())
+        count
+        (sum (+ count 1) (tail x)))))
+
+(dm elt ((x <lst>) (key <int>) => _)
+  (rep fnd (((count <int>) 0) ((x <lst>) x))
+    (if (== x '())
+        nul
+        (if (== count key)
+            (head x)
+            (fnd (+ count 1) (tail x))))))
+
+(dm elt-setter (z (x <lst>) (key <int>))
+  (rep fnd (((count <int>) 0) ((x <lst>) x))
+    (if (== x '())
+        nul
+        (if (== count key)
+            (set (head x) z)
+            (fnd (+ count 1) (tail x))))))
+
+(dm add ((c <lst>) x => <lst>)
+  (pair x c))
+
+(dm rev!( (c <lst>) => <lst>)
+  (rep loop ((l c) (r '()))
+    (if (== l '())
+	r
+	(let ((t (tail l)))
+	  (set (tail l) r)
+	  (loop t l)))))
+
+(dm assq (x (l <lst>) => <any>)
+  (if (empty? l)
+      #f
+      (if (== x (head (head l)))
+	  (head l)
+	  (assq x (tail l)))))
+
+(dm last ((x <lst>) => <any>)
+  (rep fnd ((x x) (px x))
+    (if (empty? x)
+	(head px)
+	(fnd (tail x) x))))
+
+(dm ini-state ((c <lst>) => <lst>)
+  c)
+
+(dm fin-state?( (_ <lst>) (state <lst>) => <log>)
+  (== state '()))
+
+(dm nxt-state ((_ <lst>) (state <lst>) => <lst>)
+  (tail state))
+
+(dm now-elt ((_ <lst>) (state <lst>) => _)
+  (head state))
+
+(dm now-elt-setter (z (_ <lst>) (state <lst>))
+  (set (head state) z))
+
+(dm now-key ((c <lst>) (state <lst>) => <int>)
+  (rep fnd (((key <int>) 0) ((c <lst>) c))
+    (if (== c state)
+        key
+        (fnd (+ key 1) (tail c)))))
+
+(dm copy-state ((_ <lst>) (state <lst>) => <lst>)
+  state)
+
+;;; <tup>
+
+;; (dv <tup> <lst>)
+
+(dv tup lst)
+
+;;; <flat>
+
+;; (dv <flat> (isa <seq>))
+
+(dm ini-state ((c <flat>) => <int>)
+  0)
+
+(dm fin-state?( (c <flat>) (state <int>) => <log>)
+  (== state (len c)))
+
+(dm nxt-state ((_ <flat>) (state <int>) => <int>)
+  (+ state 1))
+
+(dm now-elt ((c <flat>) (state <int>) => _)
+  (elt c state))
+
+(dm now-elt-setter (z (c <flat>) (state <int>))
+  (set (elt c state) z))
+
+(dm now-key ((_ <flat>) (state <int>) => <int>)
+  state)
+
+(dm copy-state ((_ <flat>) (state <int>) => <int>)
+  state)
+
+;;; vector
+
+;; (dv <vec> (isa <flat>))
+
+(dm empty ((c <vec>) => <vec>)
+  %vnul)
+
+(df vec ((objects ...))
+  (alter (fab <vec> (len objects)) objects))
+
+(dm fabs ((c <vec>) (objects ...))
+  (apply vec objects))
+
+(dm fab ((x <vec>) (s <int>) => <vec>)
+  (%vec (%iu s)))
+
+(dm len ((x <vec>) => <int>)
+  (%ib (%vlen x)))
+
+(dm elt ((x <vec>) (i <int>) => _)
+  (%velt x (%iu i)))
+
+(dm elt-setter (z (x <vec>) (i <int>))
+  (set (%velt x (%iu i)) z))
+
+(dm to-str ((x <vec>) => <str>)
+  (cat "#(" (vals-to-str x) ")"))
+
+;;; stretchy-vector
+
+(dv <svec> (isa <flat>))
+  (slot <svec> (svec-len <int>) 0)
+  (slot <svec> (svec-dat <vec>) #())
+
+(dm empty ((c <svec>) => <svec>) (isa <svec>))
+
+(dm svec ((elts ...) => <svec>)
+  (alter (fab <svec> (len elts)) elts))
+
+(dm fabs ((c <svec>) (elts ...) => <svec>)
+  (apply svec elts))
+
+(dm fab ((c <svec>) (s <int>) => <svec>)
+  (let ((dat (fab <vec> (power-of-two-ceiling s))))
+    (isa <svec> (set svec-len s) (set svec-dat dat))))
+
+(dm len ((c <svec>) => <int>)
+  (svec-len c))
+
+(dm len-setter ((new-len <int>) (c <svec>))
+  (let ((dat (svec-dat c)))
+    (if (> new-len (len dat))
+	(let ((new-data (fab <vec> (power-of-two-ceiling new-len))))
+	  (alter new-data dat)
+	  (set (svec-len c) new-len)
+	  (set (svec-dat c) new-data))
+	(if (< new-len (len c))
+	    (let ((old-len (len c)))
+	      (set (svec-len c) new-len)
+	      (rep fill (((i <int>) new-len))
+		(and (< i old-len)
+		     (set (elt dat i) nul)
+		     (fill (+ i 1)))))
+	    (set (svec-len c) new-len)))))
+
+(dm elt ((c <svec>) (i <int>) => <any>)
+  (elt (svec-dat c) i))
+
+(dm elt-setter (v (c <svec>) (i <int>))
+  (when (>= i (len c))
+    (set (len c) i))
+  (set (elt (svec-dat c) i) v))
+
+(dm add! ((c <svec>) x => <svec>)
+  (set (elt c (len c)) x)
+  c)
+
+(dm push ((c <svec>) x => <svec>)
+  (add! c x))
+
+(dm pop ((c <svec>) => <any>)
+  (let ((new-len (- (len c) 1))
+	(x (elt c new-len)))
+    (set (len c) new-len)
+    x))
+
+;; TODO: QUESTIONABLE SYNTAX
+(dm to-str ((x <svec>) => <str>) 
+  (cat "#[" (vals-to-str x) "]"))
+
+;;; string
+
+;; (dv <str> (isa <flat>))
+
+(dm empty ((c <str>) => <str>)
+  %snul)
+
+(dm default ((c <col>) => <col>)
+  #\space)
+
+(dm fab ((x <str>) (s <int>) => <str>)
+  (%str (%iu s)))
+
+(dm str ((objects ...))
+  (alter (fab <str> (len objects)) objects))
+
+(dm fabs ((c <str>) (objects ...))
+  (apply str objects))
+
+(dm len ((x <str>) => <int>)
+  (%ib (%slen x)))
+
+(dm elt ((x <str>) (i <int>) => <chr>)
+  (%cb (%selt x (%iu i))))
+
+(dm elt-setter ((z <chr>) (x <str>) (i <int>))
+  (set (%selt x (%iu i)) (%cu z)))
+
+(dm to-str ((x <str>) => <str>)
+  x)
+
+;;; symbol
+
+;; (dv <sym> (isa <any>))
+;;   (slot <sym> (sym-name str))
+
+(dm as ((_ <str>) (s <sym>) => <str>)
+  (sym-name s))
+
+(dm as ((_ <sym>) (s <str>) => <sym>)
+  (fab-sym s)
+  ;; (let ((sym (elt symbols s)))
+  ;;   (if (== sym nul)
+  ;;       (set (elt symbols s) sym)
+  ;;       sym))
+  )
+
+(dm < ((x <sym>) (y <sym>))
+  (< (sym-name x) (sym-name y)))
+
+(dm to-str ((x <sym>) => <str>)
+  (sym-name x))
+
+;;; functional 
+
+(dm identity (x) x)
+
+(dm compose ((fx <fun>) (fy <fun>) => <fun>)
+  (fun ((args ...)) (fx (apply fy args))))
+
+(dm rcurry ((f <fun>) (curried ...) => <fun>)
+  (fun ((args ...)) (apply f (cat args curried))))     
+
+(dm curry ((f <fun>) (curried ...) => <fun>)
+  (fun ((args ...)) (apply f (cat curried args))))     
+
+(dm always (x => <fun>)
+  (fun ((args ...)) x))
+
+;;; conditions
+
+(dv <condition> (isa <any>))
+
+(dm default-handler ((c <condition>))
+  #f)
+
+(dv <simple-condition> (isa <condition>))
+  (slot <simple-condition> (condition-message <str>))
+  (slot <simple-condition> (condition-arguments <str>))
+
+(dv <serious-condition> (isa <condition>))
+
+(dm default-handler ((c <serious-condition>))
+  (when (isa? c <simple-condition>)
+    (apply (curry format out (condition-message c)) (condition-arguments c)))  
+  (%invoke-debugger c))
+
+(dv <error> (isa <serious-condition>))
+
+(dv <simple-error> (isa (<error> <simple-condition>)))
+
+(dv *current-handlers* '())
+
+(dv <handler> (isa <any>))
+  (slot <handler> (handler-function <fun>))
+
+(df make-handler ((f <fun>) => <handler>)
+  (isa <handler> (set handler-function f)))
+
+(df handler-matches? ((handler <handler>) (condition <condition>) => <log>)
+  #t)
+
+(dp %with-monitor ((user-handler <fun>) (main-fun <fun>))
+  (lab _unwind-exception_
+    (let ((_original-handlers_ *current-handlers*))
+      (loc ((_handler-function_ (condition _next-handler_)
+	      (set *current-handlers* _original-handlers_)
+	      (lab _resume_
+		(user-handler condition _resume_)
+		(_next-handler_))))
+	(set *current-handlers*
+             (pair (make-handler _handler-function_) *current-handlers*))
+	(fin (main-fun) (set *current-handlers* _original-handlers_))))))
+
+(dm sig ((condition <condition>) (args ...))
+  (rep search ((handlers *current-handlers*))
+    (if (empty? handlers)
+	(default-handler condition)
+	(let ((handler (head handlers))
+	      (remaining (tail handlers)))
+	  (if (handler-matches? handler condition)
+	      ((handler-function handler)
+	       condition (fun () (search remaining)))
+	      (search remaining))))))
+
+(dm sig ((c <str>) (args ...)) 
+  (sig (isa <simple-condition> 
+	 (set condition-message c) (set condition-arguments args))))
+
+;; (df error ((message <str>) (args ...))
+;;   (%break (%su message)))
+
+(dm error ((c <simple-error>) (args ...))
+  (sig c))
+
+(dm error ((c <str>) (args ...))
+  (error (isa <simple-error>
+	   (set condition-message c) (set condition-arguments args))))
+
+(df wrong-number-arguments-error ((fun <fun>) (n <int>))
+  (error "%= CALLED WITH %= ARGUMENTS EXPECTED %=" fun n (fun-arity fun)))
+
+(df unknown-function-error ((fun <fun>))
+  (error "UNKNOWN FUNCTION %= CALLED" fun))
+
+(df type-error (arg type)
+  (error "TYPE ERROR %= SHOULD BE A %=" arg type))
+
+;;;
+;;; LOCATIVES
+;;; 
+
+;; (dv <loc> (isa <any>))
+;;   (slot <loc> locative-dat)
+
+(df locative-value ((x <loc>) => <any>)
+  (%locative-value x))
+
+(df locative-value-setter (z (x <loc>) => <any>)
+  (set (%locative-value x) z))
+
+;;;
+;;; APPLICATION INPUT
+;;;
+
+(df app-filename () (%app-filename))
+
+(df app-args () (%app-args))

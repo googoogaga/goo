@@ -1,0 +1,141 @@
+=== 0.70 FIXES ===
+
+In trying to tune my test script to handle errors that might be
+generated, I tried playing with the TRY command:
+
+  0<= (try ((x r) 1000) 3)
+  ERROR: Unbound binding: %with-monitor
+
+Is this a bug with the runtime, or am I wrong about how TRY is
+supposed to work?
+
+In Proto, <flo>'s don't print out with their decimal points, unless the either
+the part before or after the decimal point is 0.  E.g., 3.0 and 0.3
+get printed out correctly, but 4.3 gets printed out as 43.
+
+"(nxt-state c)" in reduce+ should "(nxt-state c state)"
+
+If an error occurs during the ,then clause of a 'MIF special form, the
+error never gets reported and the ,else clause gets executed.  For
+instance,
+
+   (mif ((,a ,b ,c) '(1 2 3))
+        (seq (display out "YES\n")
+             (no-such-method a b c))
+        (display out "NO\n"))
+
+outputs
+
+   YES
+   NO
+
+(apply + 2)
+Immediate death. (+ can be anything, having the second arg not be a 
+list is what kills it)
+
+Calling functions apparently doesn't do parameter type checking, 
+which is somewhat surprising, since you can declare functions to take 
+certain parameter types.
+e.g.
+0<= (dv test (fun ((a <num>) (b <num>)) (= a b)))
+0<= (test 1 1)
+0=> #t
+0<= (test #t #t)
+0=> #t
+IMO the second one should have returned an error, although I suppose 
+that may be a deliberate language design choice?
+
+I think its probably bad that:
+0<= (fun-mets +)
+0=> (#{Met (ERROR: No Applicable Methods Error when calling #{Gen 
+contagious-type (No Applicable Methods Error when calling #{Gen 
+contagious-type (No Applicable Methods Error when calling #{Gen 
+contagious-type (No Applicable Methods Error when calling #{Gen 
+contagious-type (No Applicable Methods Error when calling #{Gen 
+contagious-type (No Applicable Methods Error when calling #{Gen 
+contagious-type (No Applicable Methods Error when calling #{Gen 
+contagious-type (No Applicable Methods Error when calling #{Gen 
+contagious-type (No Applicable Methods Error when calling #{Gen 
+contagious-type (No Applicable Methods Error when calling #{Gen 
+contagious-type (No Applicable Methods Error when calling #{Gen 
+contagious-type (No Applicable Methods ............ segfault
+
+
+Also, running proto without the proper PROTO_ROOT set segfaults if 
+you aren't in the right dir. IMO it should attempt to figure out 
+where to look based on the location of the exe, not based on the 
+working dir.
+
+^C in Linux Proto only works the first time you type it.  The first
+time it works great, but if you try to use it again, it doesn't do
+anything.
+
+0<= (macro-expand (when 1 2))
+ERROR: TYPE ERROR (when 1 2) SHOULD BE A <fun>
+
+=== > 0.70 BUGS ===
+
+Hi.  What's the correct behavior if an attempt is made to use 'DV to
+change the value of a local variable?  I take it from the the
+following that it is to be considered an error?  (It's hard for me to
+tell from the error message if this is supposed to be an error, or if
+this is a bug.)
+
+   (let ((z 10)) (dv z 5) z)
+
+   ERROR: No Applicable Methods Error when calling #{Gen binding-free? ($<any>)} on
+(#{<local-binding> binding-dotted?: #f binding-mutable?: #f binding-type:
+#{<global-reference> reference-binding: #{<global-binding> binding-index: 0
+binding-free?: #t binding-type: $nul binding-name: <any>}} binding-name: z})
+
+   0<= (df bar (x) (+ x 1))
+   0=> #f
+   0<= (dm bar (x) (+ x 1))
+
+   Process proto segmentation fault
+
+and this should probably be an error:
+
+   0<= (df foo (x) x)
+   0=> #f
+   0<= (foo 1 2)
+   0=> 1
+
+DA> Hi.  Is there a way in Proto to make at runtime a method with a given
+DA> specs and body, so that I can implement abstraction interoperation
+DA> for methods?
+
+DA> I tried doing "(fun ((args ...)) ,@body)", and then setting the
+DA> fun-specs, fun-arity, and fun-nary slots on the resulting method to
+DA> represent a specific list of argument types.  But this caused 'args to
+DA> be bound to the wrong data.  So then I tried making a new type by
+DA> cloning <fun> and overriding ,apply on the new type.  But this causes
+DA> Proto to go into an infinite loop.  In fact, examining or touching
+DA> ,apply in any way seems to put Proto into a loop.
+
+I know this is supposed to be an error, but it probably shouldn't dump core:
+
+0<= (dv foo (lab bar bar))
+0=> #f
+0<= (foo) 
+Segmentation fault
+
+Very bad things happen if you use the name "seq" as a function
+parameter.  Not that someone should be doing this, but in the unlikely
+circumstance that someone does this by accident, it turns out to be
+very hard to track down the source of the problem.
+
+0<= (dv <foo> (isa <any>))
+0=> #f
+0<= (slot <foo> (x <int> 3))  
+Segmentation fault
+
+"env-extend!" doesn't really modify 'env', does it, despite the "!" in
+its name?  Also, it returns an <env>, not a <frame>.
+
+(dv heh (isa 5)) segfaults
+
+(dv heh (isa 'test)) doesn't work
+
+Is it illegal to add a slot to a generic in Proto?
+

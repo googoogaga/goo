@@ -1,0 +1,50 @@
+(dv <glo-env> (isa <any>))
+  ;; (slot <glo-env> (env-names  <vec>) #())
+  (slot <glo-env> (env-values <vec>) #())
+
+(dv $min-glo-env-size 10000)
+
+(dm fab-glo-env ()
+  (isa <glo-env>
+    (set env-values (fab <vec> $min-glo-env-size))))
+
+(dm env-global-value ((env <glo-env>) (i <int>))
+  (elt env i))
+
+(dm env-global-value-setter (v (env <glo-env>) (i <int>))
+  (set (elt env i) v))
+
+(dm env-runtime-value ((x <loc>))
+  (locative-value x))
+
+(dm env-runtime-value-setter (v (x <loc>))
+  (set (locative-value x) v))
+
+(dv <frame> <vec>)
+
+(dv <loc-env> (isa <any>))
+  (slot <loc-env> env-parent #f)
+  (slot <loc-env> (env-frame <frame>))
+
+(dv $nul-loc-env (isa <loc-env>))
+
+(dm env-extend! ((env <loc-env>) (new-env <loc-env>) => <loc-env>)
+  (set (env-parent new-env) env)
+  new-env)
+
+(dm env-make-frame ((env <loc-env>) (size <int>) => <frame>)
+  (fab <frame> size))
+
+(dm env-local-value ((env <loc-env>) (i <int>) (j <int>))
+  (if (= i 0)
+      (elt (env-frame env) j)
+      (env-deep-value (env-parent env) (- i 1) j)))
+
+(dm env-local-value-setter (v (env <loc-env>) (i <int>) (j <int>))
+  (if (= i 0)
+      (set (elt (env-frame env) j) v)
+      (set (env-deep-value (env-parent env) (- i 1) j) v)))
+
+;; TODO: do-static-global-bindings ...
+;; TODO: make-rt-base-env
+

@@ -1,0 +1,17 @@
+blk  => lab
+cln  => fin
+def  => dv
+def  => ds
+mon  => try
+sif  => mif
+itr  => rep
+incf => inc
+decf => dec
+
+proto-parents        => object-parents
+proto-direct-parents => object-direct-parents
+proto-slots          => object-slots
+proto-direct-slots   => object-direct-slots
+%proto-traits        => %object-traits
+%proto-values        => %object-values
+%adjust-proto-values-size => %adjust-object-values-size

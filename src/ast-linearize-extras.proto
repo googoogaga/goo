@@ -1,0 +1,286 @@
+;;; COLLECTING QUOTATIONS AND FUNCTIONS
+
+(dv <flattened-program> (isa <program>))
+  (slot <flattened-program> (program-form (type-or <program> #f)))
+  (slot <flattened-program> program-quotations '())
+  (slot <flattened-program> program-definitions '())
+
+(dv <top-level-form> (isa <program>))
+  (slot <top-level-form> (form-program <program>))
+  (slot <top-level-form> form-quotations '())
+  (slot <top-level-form> form-definitions '())
+
+(dv <quotation-binding> (isa <binding>))
+  (slot <quotation-binding> binding-value)
+
+(dv <function-definition> (isa <flat-function>))
+  (slot <function-definition> function-index)
+  (slot <function-definition> function-temporaries '())
+  (slot <function-definition> function-self-recursive? #f)
+
+(dv <primitive-definition> (isa <ast-primitive>))
+  (slot <primitive-definition> function-temporaries '())
+  (slot <primitive-definition> function-self-recursive? #f)
+
+(dv <closure-creation> (isa <program>))
+  (slot <closure-creation> closure-creation-index)
+  (slot <closure-creation> closure-creation-bindings)
+  (slot <closure-creation> closure-creation-free)
+
+(dm flatten-seqs (o)
+  (lst o))
+
+(dm flatten-seqs ((o <sequential>))
+  (rep loop ((s o) (r '()))
+     (if (empty-sequential? s)
+	 (rev! r)
+	 (rep inner ((s (flatten-seqs (sequential-head s))) (r r))
+           (if (empty? s)
+	       (loop (sequential-tail s) r)
+	       (inner (tail s) (pair (head s) r)))))))
+
+(dm as-top-level-forms (programs)
+  (map (fun (x) (isa <top-level-form> (set form-program x))) programs))
+
+(dm extract-things! (o)
+  (let ((forms (as-top-level-forms (flatten-seqs o)))
+	(result (isa <flattened-program>)))
+    (set (program-form result)
+	 (sequentialize
+	  (map (fun (form) (extract! form form result)) forms)))
+    result))
+
+(dm extract! 
+    ((o <program>) (form <top-level-form>) (result <flattened-program>))
+  (update-walk! (extract! o form result)))
+
+(dm extract! 
+    ((o <locals>) (form <top-level-form>) (result <flattened-program>))
+  (set (locals-functions o)
+       (map (rcurry extract! form result) (locals-functions o)))
+  (extract! (locals-body o) form result)
+  o)
+
+(dm extract! 
+    ((o <constant>) (form <top-level-form>) (result <flattened-program>))
+  (let ((value (constant-value o)))
+    (if (or (== value #f) (== value #t) (== value '()))
+	o
+	(let ((qb* (program-quotations result))
+	      (index (len qb*))
+	      (qb    (isa <quotation-binding> 
+		       (set binding-name index) (set binding-value value))))
+	  (set (program-quotations result) (pair qb qb*))
+	  (set (form-quotations form)      (pair qb (form-quotations form)))
+	  (isa <global-reference> (set reference-binding qb))))))
+
+(dm extract! 
+    ((o <raw-constant>) (form <top-level-form>) (result <flattened-program>))
+  o)
+
+(dm extract! 
+    ((o <flat-function>) 
+     (form <top-level-form>) (result <flattened-program>))
+  (let ((new-body (extract! (function-body o) form result))
+	(name     (function-name o))
+	(bindings (function-bindings o))
+	(nary?    (function-nary? o)))
+    (do (fun (binding)
+	  (set (binding-type binding) 
+	       (extract! (binding-type binding) form result)))
+	bindings)
+    (let ((free-bindings 
+	   (rep extract ((free (function-free o)))
+	     (if (empty-free-environment? free)
+		 '()
+		  (pair (reference-binding (free-environment-head free))
+			(extract (free-environment-tail free))))))
+	  (index
+	   (adjoin-definition!
+	    form result name bindings nary? new-body free-bindings)))
+      (isa <closure-creation> 
+	(set closure-creation-index index)
+	(set closure-creation-bindings bindings)
+	(set closure-creation-free (function-free o))
+	;; TODO: WHY THE FOLLOWING?
+	(set closure-creation-body new-body)
+	))))
+
+(dm extract! 
+    ((o <ast-primitive-definition>) 
+     (form <top-level-form>) (result <flattened-program>))
+  (let ((p    (assignment-form o))
+	(body (extract! (function-body p) form result))
+	(definition
+	 (isa <primitive-definition> 
+	   (set function-name (function-name p))
+	   (set function-bindings (function-bindings p))
+	   (set function-body body))))
+    ;; (assert (function-name p) "NO NAME FOR %=" p)
+    (set (program-definitions result)
+	 (pair definition (program-definitions result)))
+    (set (form-definitions form)
+	 (pair definition (form-definitions form)))
+    (extract! (isa <constant> (set constant-value #f)) form result)))
+
+(dm adjoin-definition! 
+    ((form <top-level-form>) (result <flattened-program>) 
+     name bindings nary? body free)
+  (let ((definitions
+	 (program-definitions result))
+	(new-index
+	 (len definitions))
+	(definition
+	 (isa <function-definition> 
+	   (set function-name name)
+	   (set function-bindings bindings)
+	   (set function-nary? nary?)
+           (set function-body body)
+	   (set function-free free)
+	   (set function-index new-index))))
+    (set (program-definitions result) (pair definition definitions))
+    (set (form-definitions form)      (pair definition (form-definitions form)))
+    new-index))
+
+(dm closurize-main! 
+    ((o <flattened-program>) r) => ((res <flattened-program>))
+  (let ((index
+	 (len (program-definitions o)))
+	(name
+	 '---MAIN---) ;; TODO: MAKE THIS HIDDEN
+	(binding
+	 (ast-define-binding r name <predefined-binding>))
+	(defn
+	 (isa <primitive-definition>
+	   (set function-name binding)
+           (set function-bindings '())
+	   (set function-body (program-form o))
+	   (set function-index index)))
+	(call
+	 (isa <predefined-application> 
+           (set application-binding
+		binding)
+	   ;; (set application-function  
+	   ;;      (isa <closure-creation> 
+           ;;        (set function-index index)
+	   ;;        (set function-bindings '())
+	   ;;        (set closure-creation-free (empty-free-environment))))
+	   (set application-arguments
+		(empty-argument-list))
+           (set application-tail?
+		#f))))
+    ;; TODO: reverse definitions in forms
+    (set (program-definitions o)
+	 (rev! (pair defn (program-definitions o))))
+    (set (program-form o)
+	 (isa <top-level-form> 
+	   (set form-program call)
+	   (set form-definitions (lst defn))))
+    o))
+
+;; (def f (fun (n k) (if (= n 0) (k 1) (f (- n 1) (fun (r) (k (* n r)))))))
+
+(dm gather-temporaries! ((o <program>))
+  program-definitions(o)
+    := map(method (def)
+	     collect-temporaries!(def def '())
+	   program-definitions(o))
+  o
+
+(dm collect-temporaries! ((o <program>) flat-fun r)
+  (update-walk! collect-temporaries! o flat-fun r))
+
+(dm collect-temporaries! ((o <local-reference>) flat-fun r)
+  (let ((binding (reference-binding o))
+	(b       (assq binding r)))
+    (if (isa? b <pair>)
+	(isa <local-reference> (set reference-binding (tail b)))
+	o)))
+
+(dm collect-temporaries! ((o <fix-let>) flat-fun r)
+  fix-let-arguments(o)
+    := collect-temporaries!(fix-let-arguments(o) flat-fun r)
+  let new-bindings
+    = map(new-renamed-binding fix-let-bindings(o))
+  let new-r
+    = concatenate(map(pair fix-let-bindings(o) new-bindings) r)
+  adjoin-temporary-variables!(flat-fun new-bindings)
+  fix-let-bindings(o) := new-bindings
+  fix-let-body(o)     := collect-temporaries!(fix-let-body(o) flat-fun new-r)
+  o
+
+(dm collect-temporaries! ((o <locals>) flat-fun r)
+  (let ((new-bindings
+	 (map new-renamed-binding (locals-bindings o)))
+	(new-r
+	 (cat (map pair (locals-bindings o) new-bindings) r)))
+    (set (locals-functions o)
+	 (map (rcurry collect-temporaries! flat-fun new-r) (locals-functions o)))
+    (adjoin-temporary-variables! flat-fun new-bindings)
+    (set (locals-bindings o) new-bindings)
+    (set (locals-body o)
+	 (collect-temporaries! (locals-body o) flat-fun new-r))
+    o))
+
+(dm adjoin-temporary-variables! (flat-fun new-bindings)
+  (rep adjoin 
+      ((temps (function-temporaries flat-fun)) (bindings new-bindings))
+    (if (empty? bindings)
+	(set (function-temporaries flat-fun) temps)
+	(if (mem? (head bindings) temps)
+	    (adjoin temps (tail bindings))
+	    (adjoin (pair (head bindings) temps) (tail bindings))))))
+
+(dv <renamed-local-binding> (isa <local-binding>))
+  (slot <renamed-local-binding> binding-index)
+
+(dv *renaming-bindings-counter* 0)
+
+(dm new-renamed-binding ((binding <local-binding>))
+  (set *renaming-bindings-counter* (+ *renaming-bindings-counter* 1))
+  (isa <renamed-local-binding> 
+       (set binding-name  (binding-name binding))
+       (set binding-type  (binding-type binding))
+       (set binding-index *renaming-bindings-counter*)))
+
+;; (dm print-object ((x <free-environment>) (s <stream>) => ())
+;;   print-object-list
+;;     (x s "(" ")" #t 
+;;      empty-free-environment? free-environment-head free-environment-tail)
+;; 
+;; (dm print-object ((x <closure-creation>) (s <stream>) => ())
+;;   format(s "CC-%=(B %= F %=)" 
+;;              closure-creation-index(x) closure-creation-bindings(x) closure-creation-free(x))
+;; 
+;; (dm print-object ((x <quotation-binding>) (s <stream>) => ())
+;;   format(s "QB(%= %=)" binding-name(x) binding-value(x))
+;; 
+;; (dm print-object ((x <top-level-form>) (s <stream>) => ())
+;;   format(s "FRM(PG %= QS %= DS %=)" 
+;;          form-program(x) form-quotations(x) form-definitions(x))
+;; 
+;; (dm print-object ((x <flattened-program>) (s <stream>) => ())
+;;   format(s "PG(FM %=\n   QS %=\n   DS %=)" 
+;;          program-form(x) program-quotations(x) program-definitions(x))
+;; 
+;; (dm print-object ((x <free-reference>) (s <stream>) => ())
+;;   format(s "FR^%s" reference-binding(x))
+;; 
+;; (dm print-object ((x <box-creation>) (s <stream>) => ())
+;;   format(s "BC(%=)" box-reference(x))
+;; 
+;; (dm print-object ((x <box-read>) (s <stream>) => ())
+;;   format(s "BR(%=)" box-reference(x))
+;; 
+;; (dm print-object ((x <box-write>) (s <stream>) => ())
+;;   format(s "BW(%= %=)" box-reference(x) box-form(x))
+;; 
+;; (dm function-kind ((x <function-definition>))
+;;   format-to-string("FD-%=" function-index(x))
+;; 
+;; (dm function-kind ((x <flat-function>))
+;;   "FFN")
+;; 
+;; (dm function-kind ((x <primitive-definition>))
+;;   // format-to-string("PD-%=" function-name(x))
+

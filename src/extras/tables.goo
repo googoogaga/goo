@@ -1,0 +1,409 @@
+;; Module:    simple-tables
+;; Author:    Scott McKay & John Dunning & Jonathan Bachrach
+;; Copyright: 1995 by Harlequin Inc.
+
+;;; Simple hash-table implementation
+
+;;--- To-do:
+;;--- Bugs:
+;;---   GC-state is not taken into account.  Adding a macro that wraps
+;;---     up key-searching would help organize this.
+;;--- Performance:
+;;---   Finish (hopefully) better hashing functions for both \== and \=.
+;;---   Make a subclass for \= tables that inlines the test and hash functions.
+;;---     Should we do this for \= and \== tables?
+;;---   Remove "below" tests when looping through tables since we provably
+;;---     must hit an empty or evacuated cell sometime.
+;;---   We don't currently need to lock table during rehash because we always
+;;---     create a new vector.  This is very inefficient when we are doing a
+;;---     same-size rehash on behalf of the GC.  Can we do better?
+;;---     except that a puthash might get lost
+;;---   Another way to decide to rehash a table might be on the basis of having
+;;---     collision chains that are "too long".
+;;---   Rehashing a table should consider the collision chain as it rehashes.
+;;---     That is when an object A is hashed to it's preferred place in the
+;;---     table and there is already an object B there due to secondary 
+;;---     hashing then object B should be removed to some other place in its 
+;;---     collision chain.  This means that object A will end up in its 
+;;---     preferred place and object B won't be much worse off.
+;;---   When removing the last key in a bucket in 'remhash' it can be marked
+;;---     as empty instead of vacated.
+;;--- Extensions:
+;;---   Implement set (0-valued) tables.
+
+
+;; Is 1 million big enough?
+;; (def *max-prime-for-table* 1000000)
+;; 
+;; List of the first number in each prime pair
+;; (def *twin-primes* (compute-twin-primes *max-prime-for-table*))
+
+(def *twin-primes*
+  (as <vec>
+    '(3 5 11 17 29 41 47 59 71 101 107 137 149 167 179 191 197 227 239
+      269 281 311 347 419 431 461 521 569 599 617 641 659 809 839 881 1019
+      1049 1091 1151 1229 1277 1319 1367 1427 1481 1607 1667 1721 1787 1871
+      1931 1997 2081 2141 2207 2267 2339 2549 2657 2729 2801 2969 3119 3251
+      3359 3461 3557 3671 3767 3917 4019 4127 4241 4421 4547 4721 4931 5099
+      5231 5417 5639 5849 6089 6269 6449 6659 6827 7127 7307 7547 7757 8009
+      8219 8429 8819 9041 9281 9629 9929 10271 10529 10859 11159 11447
+      11777 12107 12539 12917 13337 13679 14081 14447 14867 15269 15731
+      16139 16631 17189 17657 18119 18911 19421 19961 20477 21011 21557
+      22109 22697 23291 23909 24917 25577 26249 26951 27689 28409 29129
+      29879 30839 31721 32531 33347 34211 35081 36011 36929 37991 39041
+      40037 41141 42179 43319 44531 45821 47057 48311 49529 50891 52181
+      53549 54917 56477 57899 59357 60887 62927 64577 66359 68111 69827
+      71711 73607 75539 77477 79559 81551 83639 85817 88001 90371 92639
+      95087 97499 99989 102497 105227 108011 110729 113537 116531 119549
+      122597 125789 128939 132329 135647 139121 142607 146297 149969 153887
+      157769 161729 166301 170537 174929 179381 183917 188831 193601 198461
+      203429 208589 213947 219311 224909 230561 236477 242447 248639 254927
+      261431 268517 275321 282239 289841 297467 304979 312617 320561 328589
+      336827 345461 354251 363149 372269 381629 391217 401309 411527 422087
+      432659 443561 454709 466181 478067 490031 502499 515087 527981 541361
+      555041 569081 583337 598049 613007 628679 644489 660617 677231 694259
+      711707 729557 747827 766541 785777 805499 825827 846749 868121 889871
+      912449 935591 959207 983327)))
+
+;;;
+;;; SIMPLE-TABLE-VECTOR
+;;;
+
+(def <simple-table-vector> (isa <any>))
+  ;; Number of filled and vacant elements
+  (slot <simple-table-vector> (%vacated <int>) 0)
+  ;; Modulus values for primary and secondary hash
+  (slot <simple-table-vector> (%primary-modulus <int>))
+  (slot <simple-table-vector> (%secondary-modulus <int>))
+  ;; Number of buckets and number of elements in each bucket
+  (slot <simple-table-vector> (%n-buckets <int>))
+  (slot <simple-table-vector> (%bucket-depth <int>))
+  ;; The actual table data representation
+  (slot <simple-table-vector> (%data <simple-object-vector>))
+  ;; GC state
+  (slot <simple-table-vector> %gc-state)
+
+;; TODO: SIZE FILL N-BUCKETS BUCKET-DEPTH PRIMARY-MODULUS SECONDARY-MODULUS
+(def fab-table-vector 
+     ((size <int>) fill 
+      (n-buckets <int>) (bucket-depth <int>)
+      (primary-modulus <int>) (secondary-modulus <int>)
+      => <simple-table-vector>)
+   (let ((v (isa <simple-table-vector>
+	      (set %n-buckets n-buckets)
+	      (set %bucket-depth bucket-depth)
+	      (set %primary-modulus primary-modulus)
+	      (set %secondary-modulus secondary-modulus))))
+      (set (%data v) (fab <vec> size fill))
+      v))
+
+(dm elt ((vector <simple-table-vector>) (index <int>)) => (value)
+  (elt (%data vector) index))
+
+(dm elt-setter
+    (new-value (vector <simple-table-vector>) (index <int>)) => (value)
+  (set (elt (%data vector) index) new-value))
+
+(dm clr! ((vector <simple-table-vector>) fill)
+  (fill (%data vector) fill)
+  (set (%vacated vector) 0))
+
+;;;
+;;; SIMPLE-TABLE
+;;;
+
+(def <simple-table> (isa <col>))
+  ;; Factor to grow by
+  (slot <simple-table> (table-growth-factor <flo>) 2.0)
+  ;; When to grow or shrink (percentage of table size)
+  (slot <simple-table> (table-growth-threshold <flo>) 0.8)
+  (slot <simple-table> (table-shrink-threshold <flo>) 0.5)
+  (slot <simple-table> (%count <int>) 0)
+  (slot <simple-table> (%vector <simple-table-vector>))
+
+(dg hash-protocol ((x <simple-table>) => (test-fun <fun>) (hash-fun <fun>)))
+
+(dm hash-protocol ((x <simple-table>) => (test-fun <fun>) (hash-fun <fun>))
+  (tup == id-hash))
+
+(def $empty-cell-marker (list "empty cell"))
+(def $vacated-cell-marker (list "vacated cell"))
+
+(df hash-moduli ((hash <int>) (primary <int>) (secondary <int>)
+		 => (index <int>) (offset <int>))
+   (tup (modulo hash primary) (+ (modulo hash secondary) 1)))
+
+(dm fab ((_ <simple-table>) (size <int>) => ())
+  (let (((tup n-buckets bucket-depth) (choose-table-geometry size))
+	(table (isa <simple-table>)))
+    (set (%vector table)
+	 (fab-table-vector 
+	  (* (* n-buckets bucket-depth) * 2) $empty-cell-marker
+	  n-buckets bucket-depth
+	  n-buckets (- n-buckets 2)))
+    table))
+
+(dm gethash ((table <simple-table>) key => <any>)
+  (blk return
+    (let (((tup test-function hash-function) (table-protocol table))
+	  ((tup (hash <int>) state) (hash-function key))
+	  (vector (%vector table))
+	  (bucket-depth (%bucket-depth vector))
+	  ((tup bucket-index bucket-offset)
+	   (hash-moduli 
+	    hash (%primary-modulus vector) (%secondary-modulus vector))))
+      ;; Search each bucket
+      (itr outer ((probes 0))
+	(if (< probes (%n-buckets vector))
+	    (let ((index (* (* bucket-index bucket-depth) 2)))
+	      (itr inner ((_i 0) (this-bucket-raw-index index))
+		(when (< _i bucket-depth)
+		  (let ((this-key (elt vector this-bucket-raw-index)))
+		    (when (== this-key $empty-cell-marker)
+		      (return nul))
+		    ;; N.B. Don't look at already vacated cells along
+		    ;; the collision chain 
+		    (when (and (~== this-key $vacated-cell-marker)
+			       (test-function key this-key))
+		      (return
+		       (elt vector (+ this-bucket-raw-index bucket-depth))))
+		    (inner (+ _i 1) (+ bucket-index-raw-index 1)))))
+	      ;; Not in this bucket try the next one
+	      (decf bucket-index bucket-offset)
+	      (when (negative? bucket-index)
+		(incf bucket-index (%n-buckets vector)))
+	      (outer (+ probes 1)))
+	    ;; Table totally full???  That's not right
+	    (error "The table is totally full this shouldn't happen"))))))
+
+(dm puthash ((table <simple-table>) key value => <any>)
+  (let ((vector (%vector table)))
+    (if (> (%count table) 
+	   (* (* (%n-buckets vector) (%bucket-depth vector))
+	      (table-growth-threshold table)))
+	;; Grow the table if it's too full
+	(set vector (%vector (grow-table table)))
+	(> (+ (%count table) (%vacated vector)) 
+	   (* (* (%n-buckets vector) (%bucket-depth vector)
+		 (table-growth-threshold table)))) 
+	;; Rehash when there are too many vacated elements
+	(set vector (%vector (rehash-table table))))
+    (blk return
+      (let (((tup test-function hash-function) (table-protocol table))
+	    ((tup (hash <int>) state) (hash-function key))
+	    (bucket-depth (%bucket-depth vector))
+	    ((tup bucket-index bucket-offset)
+	     (hash-moduli 
+	      (hash (%primary-modulus vector) (%secondary-modulus vector)))))
+	;; Search each bucket
+	(itr outer (((probes <int>) 0))
+	  (if (< probes (%n-buckets vector))
+	      (let ((index (* (* bucket-index bucket-depth) 2)))
+		(itr inner (((_i <int>) 0) ((this-bucket-raw-index <int>) index))
+		  (if (< _i bucket-depth)
+		      (let ((vacancy-index #f)
+			    (this-key (elt vector this-bucket-raw-index)))
+			(case
+			  ;; end of chain and not found
+			  ((== this-key $empty-cell-marker)
+			   (let ((index 
+				  (if vacancy-index
+				      ;; use a vacant cell if you found one
+				      (seq (decf (%vacated vector))
+					   vacancy-index)
+				      ;; use this cell
+				      this-bucket-raw-index)))
+			     (format out "FOUND EMPTY CELL @ %d\n"
+				     this-bucket-raw-index)
+			     (set (elt vector index) key)
+			     (set (elt vector (+ index bucket-depth)) value)
+			     (incf (%count table))
+			     (return value)))
+			  ((== this-key $vacated-cell-marker) ;; remember vacancy
+			   ;; N.B. Only record the _first_ vacant cell
+			   (when vacancy-index 
+			     (set vacancy-index this-bucket-raw-index)
+			     (format out "FOUND VACATED CELL @ %d\n"
+				     vacancy-index)))
+			  ;; key already in table update value
+			  ((test-function key this-key)
+			   (set (elt vector 
+				     (+ this-bucket-raw-index bucket-depth))
+				value)
+			   (format out "FOUND KEY @ %d\n" this-bucket-raw-index)
+			   (return value)))
+			(inner (+ _i 1) (+ this-bucket-raw-index 1)))
+		      ;; Not in this bucket try the next one
+		      (seq (decf (bucket-index bucket-offset))
+			   (when (negative? bucket-index)
+			     (incf (bucket-index (%n-buckets vector)))))))
+		(outer (+ probes 1)))
+	      ;; Table totally full???  That's not right
+	      (error "The table is totally full this shouldn't happen")))))))
+
+(dm remhash ((table <simple-table>) key => (found? <log>))
+  (blk return
+    (let (((tup test-function hash-function) (table-protocol table))
+	  ((tup (hash <int>) state) (hash-function key))
+	  (vector (%vector table))
+	  (bucket-depth (%bucket-depth vector))
+	  ((tup bucket-index bucket-offset)
+	   (hash-moduli
+	    (hash (%primary-modulus vector) (%secondary-modulus vector)))))
+      ;; Search each bucket
+      (itr outer (((probes <int>) 0))
+	(if (< probes (%n-buckets vector))
+	    (let (((index <int>) (* (* bucket-index bucket-depth) 2)))
+	      (itr inner (((_i <int>) 0) ((this-bucket-raw-index <int>) index))
+		(if (< _i bucket-depth)
+		    (let ((this-key (elt vector this-bucket-raw-index)))
+		      (when (== this-key $empty-cell-marker)
+			(return #f))
+		      ;; N.B. Don't look at already vacated cells along
+		      ;;      the collision chain 
+		      (when (and (~== this-key $vacated-cell-marker)
+				 (test-function key this-key))
+			(set (elt vector this-bucket-raw-index)
+			     $vacated-cell-marker)
+			;; In a GC-ed environment clear the value cell too!
+			(decf (%count table))
+			(incf (%vacated vector))
+			(return #t))
+		      (inner (+ _i 1) (+ this-bucket-raw-index 1)))
+		    ;; Not in this bucket try the next one
+		    (seq (decf (bucket-index bucket-offset))
+			 (when (negative? bucket-index)
+			   (incf (bucket-index (%n-buckets vector)))))))
+	      (outer (+ probes 1)))
+	    ;; Table totally full???  That's not right
+	    (error "The table is totally full this shouldn't happen"))))))
+
+(dm maphash (function (table <simple-table>) => ())
+  (let ((vector (%vector table))
+	(bucket-depth (%bucket-depth vector)))
+    (itr outer (((b <int>) 0))
+      (when (< b (%n-buckets vector))
+	(itr inner (((i <int>) 0))
+	  (when (< i bucket-depth)
+	    (let ((key (elt vector (+ i (* (* b bucket-depth) 2)))))
+	      (unless (or (== key $empty-cell-marker) 
+			  (== key $vacated-cell-marker))
+		(let ((index (+ (+ i (* b (* bucket-depth 2)) bucket-depth))))
+		  (function key (elt vector index)))))
+	    (inner (+ i 1))))
+	(+ b 1)))))
+
+(dm clrhash ((table <simple-table>) => ())
+  (clr! (%vector table) $empty-cell-marker)
+  (set (%count table) 0))
+
+(dm size ((table <simple-table>) => <int>)
+  (%count table))
+
+;;; Internal functions
+
+(dm grow-table ((table <simple-table>) => <simple-table>)
+  (format out "GROWING TABLE\n")
+  (let ((vector (%vector table))
+	((tup new-n-buckets new-bucket-depth)
+	 (choose-table-geometry (* (%n-buckets vector) (%bucket-depth vector))))
+	(new-vector
+	 (fab-table-vector
+           (floor (* new-n-buckets
+		     (* new-bucket-depth (table-growth-factor table))))
+           $empty-cell-marker
+	   new-n-buckets new-bucket-depth new-n-buckets (- new-n-buckets 2))))
+    (format out "OLD DATA %=\n" (%data (%vector table)))
+    (copy-to-new-vector (table new-vector))
+    (set (%vector table) new-vector)
+    (format out "NEW DATA %=\n" (%data (%vector table)))
+    ;;--- It would be nice to be able to deallocate the old vector
+    table))
+
+(dm rehash-table ((table <simple-table>) => <simple-table>)
+  (let ((vector (%vector table))
+	(new-vector
+	 (fab-table-vector 
+	   (* (%n-buckets vector) (* (%bucket-depth vector) 2))
+           $empty-cell-marker 
+	   (%n-buckets vector) (%bucket-depth vector)
+	   (%primary-modulus vector) 
+           (%secondary-modulus vector))))
+    (copy-to-new-vector (table new-vector))
+    (set (%vector table) new-vector)
+    table))
+
+(df choose-table-geometry 
+     ((capacity <int>) => (n-buckets <int>) (bucket-depth <int>))
+   ;;--- These numbers are completely arbitrary and need to be tuned up
+   (blk return
+     (let ((depth
+	    (case
+	      ((< capacity 2000)    1)
+	      ((< capacity 5000)    2)
+	      ((< capacity 15000)   4)
+	      ((< capacity 50000)   8)
+	      ((< capacity 250000) 16)
+	      (#t                  32))))
+       (do (fun (p)
+	     (when (> p (ceiling capacity depth))
+	       (return (tup (+ p 2) depth))))
+	   *twin-primes*)
+       (error "Not enough primes to compute new table size"))))
+
+(dm copy-to-new-vector ((table <simple-table>) new-vector => ())
+  (maphash
+    (fun (k v)
+      (blk return
+	(let (((tup test-function hash-function) (table-protocol table))
+	      ((tup (hash <int>) state) (hash-function k))
+	      (new-n-buckets (%n-buckets new-vector))
+	      (new-bucket-depth (%bucket-depth new-vector))
+	      (new-primary-modulus (%primary-modulus new-vector))
+	      (new-secondary-modulus (%secondary-modulus new-vector))
+	      ((tup new-bucket-index new-bucket-offset)
+	       (hash-moduli (hash new-primary-modulus new-secondary-modulus))))
+	  ;; Search each bucket
+	  (itr outer (((probes <int>) 0))
+	    (if (< i new-n-buckets)
+		(let ((bucket-start (* new-bucket-index (* new-bucket-depth 2))))
+		  (itr inner (((_i <int>) 0) ((index <int>) bucket-start))
+		    (if (< _i new-bucket-depth)
+			(let ((this-key (elt new-vector index)))
+			  (when (== this-key $empty-cell-marker)
+			    (set (elt new-vector index) k)
+			    (set (elt new-vector (+ index new-bucket-depth) v))
+			    (return #f))
+			  (inner (+ _i 1) (+ index 1))))))
+		;; No room in this bucket try the next one
+		(seq (decf (new-bucket-index new-bucket-offset))
+		     (when (negative?(new-bucket-index))
+		       (incf (new-bucket-index new-n-buckets)))
+		     (outer (+ probes 1)))))
+	  ;; Table totally full???  That's not right
+	  (error "The table is totally full this shouldn't happen"))))
+    table))
+
+;;; HASHING FUNCTIONS
+
+;; TODO: NEED ADDRESS-OF
+
+(def $permanent-hash-state #f)
+(df current-gc-state () $permanent-hash-state)
+
+(dm id-hash (x)
+  (tup (address-of x) (current-gc-state)))
+
+(dm id-hash ((x <log>))
+  (tup (if x 131 149) $permanent-hash-state))
+
+;; TODO: NEED FLO-BITS
+(dm id-hash ((x <flo>))
+  (tup (+ (flo-bits x) 89) $permanent-hash-state))
+
+(def rot ash) ;; TODO: FIX THIS
+
+(dm id-hash ((x <int>))
+  ;; Offset it so that 0 doesn't hash to 0
+  (tup (abs (+ (- (rot x 15) - x) 31)) $permanent-hash-state))
+  

@@ -1,0 +1,186 @@
+/// WALKER
+
+(dm update-walk! (g o (args ...))
+  (rep loop ((slots (object-slots o)))
+    (if (empty? slots)
+	o
+	(let ((x (slot-value o sd)))
+	  (when (isa? x <program>)
+	    (set (slot-value o sd) (apply g o args)))
+	  (loop (tail slots))))))
+
+/// BOXING
+
+(dv <box-read> (isa <program>))
+  (slot <box-read> box-reference)
+
+(dv <box-write> (isa <program>))
+  (slot <box-write> box-reference)
+  (slot <box-write> box-form)
+
+(dv <box-creation> (isa <program>))
+  (slot <box-creation> box-reference)
+
+(dm insert-box! ((o <program>))
+  (update-walk! insert-box! o))
+
+(dm insert-box! ((o <local-reference>))
+  (if (binding-mutable? (reference-binding o))
+      (isa <box-read> (set box-reference o))
+      o))
+
+(dm insert-box! ((o <local-assignment>))
+  (isa <box-write> 
+       (set assignment-reference (assignment-reference o))
+       (set assignment-form      (insert-box! (assignment-form o)))))
+
+(dm insert-box! ((o <ast-method>))
+  (set (function-body o)
+       (insert-box! (boxify-mutable-bindings
+		     (function-body o) (function-bindings o))))
+  o)
+
+(dm insert-box! ((o <fix-let>))
+  (set (fix-let-arguments o)
+       (insert-box! (fix-let-arguments o)))
+  (set (fix-let-body o)
+       (insert-box! 
+	(boxify-mutable-bindings (fix-let-body o) (fix-let-bindings o))))
+  o)
+
+(dm insert-box! ((o <locals>))
+  (set (locals-functions o)
+       (map insert-box! (locals-functions o)))
+  (set (locals-body o)
+       (insert-box!
+	(boxify-mutable-bindings (locals-body o) (locals-bindings o))))
+  o)
+
+(dm boxify-mutable-bindings (form (bindings <lst>))
+  (sequentialize
+    (rep loop ((res '()) (bindings bindings))
+      (if (empty? bindings)
+	  (rev! res)
+	  (let ((binding (head bindings)))
+	    (if (binding-mutable? binding)
+		(let ((creator 
+		       (isa <box-creation>
+			 (set box-reference
+			      (isa <local-reference>
+				(set reference-binding binding))))))
+		  (loop (pair creator bindings) (tail bindings)))
+		(loop bindings (tail bindings))))))))
+
+(dm sexp->object (exp r)
+  (insert-box! (objectify exp r #f)))
+
+/// FLATTENING
+
+(dv <free-environment> (isa <program>))
+  (slot <free-environment> free-environment-head)
+  (slot <free-environment> free-environment-tail)
+
+(dv $empty-free-environment 
+  (isa <free-environment> 
+    (set free-environment-head #f) (set free-environment-tail #f)))
+
+(dm empty-free-environment () => ((res <free-environment>))
+  $empty-free-environment)
+
+(dm empty-free-environment? ((e <free-environment>) => <log>)
+  (== e $empty-free-environment))
+
+(dm number-of ((o <free-environment>) => <int>)
+  (if (empty-free-environment? o)
+      0
+      (+ (number-of (free-environment-tail o)) 1)))
+
+(dv <flat-function> (isa <ast-method>))
+  (slot <flat-function> function-free $empty-free-environment)
+
+(dv <free-reference> (isa <real-reference>))
+  (slot <free-reference> (reference-offset (type-or <int> #f)))
+  (slot <free-reference> (reference-self? <log>))
+
+(dm lift! (o)
+  (lift-procedures! o #f '()))
+
+(dm lift-procedures! ((o <Program>) flat-fun bindings)
+  (update-walk! (lift-procedures! o flat-fun bindings)))
+
+(dm lift-procedures! ((o <local-reference>) flat-fun bindings)
+  (let ((b (reference-binding o)))
+    (if (mem? b bindings)
+	o
+	(let ((offset (adjoin-free-binding! flat-fun o)))
+	  (isa <free-reference> 
+	    (set reference-binding b)
+	    (set reference-offset offset)
+	    (set reference-self?
+		 (== (reference-binding o) (function-name flat-fun))))))))
+
+(dm adjoin-free-binding! ((flat-fun <flat-function>) ref => <int>)
+  (rep check (((i <int>) 0) (free* (function-free flat-fun)))
+    (if (empty-free-environment? free*)
+	(let ((new-env
+	       (isa <free-environment> 
+		 (set free-environment-head ref)
+		 (set free-environment-tail (empty-free-environment)))))
+	  (if (empty-free-environment? (function-free flat-fun))
+	      (set (function-free flat-fun) new-env)
+	      (rep add ((free* (function-free flat-fun)))
+		(let ((tail (free-environment-tail free*)))
+		  (if (empty-free-environment? tail)
+		      (set (free-environment-tail free*) new-env)
+		      (add tail)))))
+	  i)
+	(if (== (reference-binding ref)
+		(reference-binding (free-environment-head free*)))
+	    i
+	    (check (+ i 1) (free-environment-tail free*))))))
+
+(dm lift-procedures! ((o <fix-let>) flat-fun bindings)
+  (set (fix-let-arguments o)
+       (lift-procedures! (fix-let-arguments o) flat-fun bindings))
+  (let ((new-bindings
+	 (cat (fix-let-bindings o) bindings)))
+    (set (fix-let-body o)
+	 (lift-procedures! (fix-let-body o) flat-fun new-bindings))
+    o))
+
+(dm lift-procedures! ((o <locals>) flat-fun bindings)
+  (let ((new-bindings (cat (locals-bindings o) bindings)))
+    (set (locals-functions o)
+	 (map (rcurry lift-procedures! flat-fun new-bindings) 
+	      (locals-functions o)))
+    (set (locals-body o)
+	 (lift-procedures! (locals-body o) flat-fun new-bindings))
+    o))
+
+(dm lift-procedures! ((o <ast-primitive>) flat-fun bindings)
+  (set (function-body o)
+       (lift-procedures! (function-body o) #f (function-bindings o)))
+  o)
+
+(dm lift-procedures! ((o <ast-generic>) flat-fun bindings)
+  o)
+
+(dm lift-procedures! ((o <ast-function>) flat-fun bindings)
+  (let ((local-bindings 
+	 (function-bindings o))
+	(body           
+	 (function-body o))
+	(new-fun        
+	 (isa <flat-function> 
+	   (set function-name        (function-name o))
+	   (set function-bindings    local-bindings)
+	   (set function-nary?       (function-nary? o))
+	   (set function-body        body)
+	   (set function-environment (empty-free-environment)))))
+    (set (function-body new-fun)
+	 (lift-procedures! body new-fun local-bindings))
+    (let ((free* (function-free new-fun)))
+      (set (function-free new-fun) 
+	   (lift-procedures! free* flat-fun bindings)))
+    new-fun))
+

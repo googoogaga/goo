@@ -1,0 +1,61 @@
+;; TODO: GENERALIZED VERSION
+
+(ds (inc ,x ,@amount)
+  (let ((amount (mif ((,amount) amount) amount 1)))
+    `(set ,x (+ ,x ,amount))))
+
+(ds (dec ,x ,@amount)
+  (let ((amount (mif ((,amount) amount) amount 1)))
+    `(set ,x (- ,x ,amount))))
+
+(ds (unless ,test ,@body)
+  `(if (not ,test) (seq ,@body)))
+
+(ds (when ,test ,@body)
+  `(if ,test (seq ,@body)))
+
+(ds (or ,@rest)
+  (mif ((,x ,@rest) rest)
+       (mif (() rest)
+	    x
+	    `(let ((tmp ,x))
+	       (if tmp tmp (or ,@rest))))
+       #f))
+
+(ds (and ,@rest)
+  (mif ((,x ,@rest) rest)
+       (mif (() rest)
+	    x
+	    `(let ((tmp ,x))
+	       (if tmp (and ,@rest) #f)))
+       #t))
+
+(ds (case ,@cases)
+  (if (empty? cases)
+      #f
+      (mif ((,cond ,@body) (head cases))
+	   `(if ,cond
+		(seq ,@body)
+		(case ,@(tail cases)))
+	   ;; TODO: NEED SYNTAX ERROR CONDITIONS
+	   (error "CASE: SYNTAX ERROR BAD CASE" (head cases)))))
+
+(ds (select ,val ,@cases)
+  (if (empty? cases)
+      #f
+      (mif ((,cond ,@body) (head cases))
+	   (if (== cond #t)
+	       `(seq ,@body)
+	       (let ((bv (gensym)))
+		 (mif ((,@values) cond)
+		      `(let ((,bv ,val))
+			 (if (or ,@(map (fun (x) `(== ,bv ,x)) values))
+			     (seq ,@body)
+			     (select ,bv ,@(tail cases))))
+		       (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))
+	       (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))))
+
+(ds (assert ,cond ,message ,@args)
+  `(if (not ,cond) (error ,message ,@args)))
+
+

@@ -1,0 +1,161 @@
+0.40 Keith RELEASE 1
+
+0.50 Keith RELEASE 2
+
+0.60 6.894 RELEASE 1
+
+0.61 6.894 RELEASE 2
+
+fixed gen-add-met problem whereby methods might not be properly
+replaced
+
+added initialization string
+added file-opening-error
+
+0.62 6.894 RELEASE 3
+
+added 
+
+  os-name
+  os-binding-value os-binding-value-setter
+  *proto-root*
+  src-filename
+  *path-separator*
+  *proto-version*
+  *proto-date*
+
+fixed file-opening-error
+
+require that users now setenv PROTO_ROOT which in my case would be:
+
+  \jrb\ai\proto\
+
+must be slash terminated.
+
+0.63 6.894 RELEASE 4
+
+fixed AND and OR macros and native pattern matching mechanism.
+
+0.64 6.894 RELEASE 5
+
+fixes
+
+  1.  nul/nul-slot  confusion  which  would  manifest  itself  in very
+  strange ways such as ((fun (x) x) nul) returning the empty list.
+
+  2. () typed into proto's toplevel crashes proto
+
+  3.   printing   prototypes   can   crash   proto,   in   particular,
+  (object-parents <lst>) at toplevel
+
+
+0.65 6.894 RELEASE 6
+
+fixes:
+
+  singleton specializer problem: whereby methods dispatching on
+  singletons would infinitely loop if they returned false
+
+  incomplete printing of errors in top-level: where
+  <simple-condition>'s weren't being formatted
+
+adds:
+
+  keyboard interrupt handling: which means that C-C will stop your
+  program and put you in a next level of the listener
+
+0.66 6.894 RELEASE 7
+
+fixes:
+
+  fixed singleton dispatch cache problem
+
+  fixed DG to create working generics
+
+adds:
+
+  fab-gen (used in assignment 3)
+
+0.70 6.894 RELEASE 8
+
+fixes: 
+
+  try broken 
+
+    0<= (try ((x r) 1000) 3)
+    ERROR: Unbound binding: %with-monitor
+
+  <flo>'s don't print out with their decimal points.
+
+  reduce+ calls nxt-state with wrong arguments.
+
+  If an error occurs during the ,then clause of a 'MIF special form,
+  the error never gets reported and the ,else clause gets executed.
+
+  Calling functions doesn't do parameter type checking ... and 
+  (apply + 2) causes segfault.
+
+  printing <num> causes segfault.
+
+  running proto without the proper PROTO_ROOT set segfaults if you
+  aren't in the right dir. it now figures out where to look based on
+  the location of the exe (see app-filename), not based on the working
+  dir.
+
+  ^C in Linux Proto only works the first time you type it.  The first
+  time it works great, but if you try to use it again, it doesn't do
+  anything.  
+
+  0<= (macro-expand (when 1 2))
+  ERROR: TYPE ERROR (when 1 2) SHOULD BE A <fun>
+
+  changed named objects to print without "$" prefix
+
+adds:
+
+  Generic  all2? ((test <fun>) (x <col>) (y <col>) => <log>)
+
+    two collection version of all?
+
+  Generic  any2? ((test <fun>) (x <col>) (y <col>) => <log>)
+
+    two collection version of any?
+
+  Method   add-slot (owner (getter <gen>) (setter <gen>) type (init <fun>))
+
+    where init is a one parameter function that returns the initial
+    value for the slot and gets called lazily with the new instance as
+    the argument.
+
+  Method   app-filename (=> <str>)
+
+    returns filename of proto exe.
+
+  Method   app-args (=> <lst>)
+
+    returns list of argument strings passed to proto.
+
+changes:
+
+  faster interpreter environments with integer offsets.
+
+  tagged <int>'s <chr>'s and <loc>'s
+
+0.71 6.894 RELEASE 9
+
+fixes: 
+
+  redefining a runtime binding
+
+0.72 6.894 RELEASE 10
+
+fixes: 
+
+  (re)defining method on a runtime defined generic
+
+adds:
+
+  Method object-traits (x => <traits>)
+
+    returns the traits object of a given argument
+

@@ -1,0 +1,292 @@
+;;  -*- Mode: Scheme; Syntax: Scheme; Package: Scheme; -*-
+;;  Copyright (c) 1993, 1994 Richard Kelsey and Jonathan Rees.  See file COPYING.
+;;  A little Scheme reader.
+;;  Nonstandard things used:
+;;   Ascii stuff: char->ascii, ascii->char, ascii-whitespaces, ascii-limit
+;;     (for dispatch table; portable definitions in alt/ascii.scm)
+;;   reverse-list->string  -- ok to define as follows:
+;;     (define (reverse-list->string l n)
+;;       (list->string (reverse l)))
+;;   make-immutable! -- ok to define as follows:
+;;     (define (make-immutable! x) x)
+;;   signal (only for use by reading-error; easily excised)
+
+;; READ
+
+(dm read ((port <input-port>) => <any>)
+  ;; (write-char out #\a) (newline out)
+  (rep loop ()
+    (let ((form (sub-read port)))
+      (if (not (reader-token? form))
+	  form
+	  (if (== form $close-paren)
+	      (warn "discarding extraneous right parenthesis")
+	      (loop))
+	  (reading-error port (tail form))))))
+
+(dm read-from-string ((x <str>) => <any>)
+  (call-with-string-input-port x read))
+
+(dm sub-read-carefully ((port <port>) => <any>)
+  ;; (write-char out #\b) (newline out)
+  (let ((form (sub-read port)))
+    (if (eof-object? form)
+	(reading-error port "unexpected end of file")
+	(if (reader-token? form)
+	    (reading-error port (tail form))
+	    form))))
+
+(dv $reader-token-marker (vec 'reader-token))
+
+(dm make-reader-token (message => <any>)
+  (vec $reader-token-marker message))
+
+(dm reader-token? (form => <log>)
+  (and (isa? form <vec>) (== (elt form 0) $reader-token-marker)))
+
+(dv $close-paren (make-reader-token "unexpected right parenthesis"))
+
+(dv $dot (make-reader-token "unexpected \" . \""))
+
+;;  Main dispatch
+
+(dm sub-read ((port <port>) => <any>)
+  ;; (write-char out #\c) (newline out)
+  (let ((c (read-char port)))
+    (if (eof-object? c)
+	(seq ;; (write-char out #\m) (write-char out c) (newline out) 
+	     c
+	     )
+	((elt *read-dispatch-vector* (char->ascii c)) c port))))
+
+(dv *read-dispatch-vector* 
+  (fill (fab <vec> ascii-limit)
+	(fun (c port) (reading-error port "illegal character read" c))))
+
+(dv *read-terminating?-vector* (fill (fab <vec> ascii-limit) #t))
+
+(dm set-standard-syntax! ((char <chr>) terminating? reader)
+  (set (elt *read-dispatch-vector* (char->ascii char)) reader)
+  (set (elt *read-terminating?-vector* (char->ascii char)) terminating?))
+
+(let ((sub-read-whitespace (fun (c port) (sub-read port))))
+  (do (fun (c) (set (elt *read-dispatch-vector* c) sub-read-whitespace))
+      ascii-whitespaces))
+
+(df sub-read-constituent (c port)
+  ;; (write-char out #\h) (newline out)
+  (parse-token (sub-read-token c port) port))
+
+(let ((str10496
+       (cat "!$%&*+-./0123456789:<=>?@^_~ABCDEFGHIJKLM"
+	    "NOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")))
+  (do (fun (c) (set-standard-syntax! c #f sub-read-constituent))
+      str10496))
+
+;; Usual read macros
+
+(dm set-standard-read-macro! ((char <chr>) terminating? (proc <fun>))
+  (set-standard-syntax! char terminating? proc))
+
+(dm sub-read-list ((c <chr>) (port <port>) => <any>)
+  ;; (write-char out #\d) (newline out)
+  (let ((form (sub-read port)))
+    (if (eof-object? form)
+	(reading-error 
+	 port "end of file inside list -- unbalanced parentheses");
+	(if (== form $close-paren)
+	    '()
+	    (if (== form $dot)
+		(let ((last-form (sub-read-carefully port))
+		      (another-form (sub-read port)))
+		  (if (== another-form $close-paren)
+		      last-form
+		      (reading-error 
+		       port "randomness after form after dot"
+		       another-form)))
+		(pair form (sub-read-list c port)))))))
+
+(set-standard-read-macro! #\( #t sub-read-list)
+
+(set-standard-read-macro! #\) #t (fun (c port) $close-paren))
+
+(set-standard-read-macro!
+  #\' #t (fun (c port) (lst 'quote (sub-read-carefully port))))
+
+(set-standard-read-macro!
+  #\` #t (fun (c port) (lst 'quasiquote (sub-read-carefully port))))
+
+(set-standard-read-macro!
+  #\, #t
+  (fun (c port)
+    (let ((next (peek-char port))
+	  (keyword
+	   (if (eof-object? next)
+	       (reading-error port "end of file after ,")
+	       (if (= next #\@)
+		   (seq (read-char port)
+			'unquote-splicing)
+		   'unquote))))
+      (lst keyword (sub-read-carefully port)))))
+
+(dv $string-escape-chars
+  (let ((vec (fill (fab <vec> ascii-limit) #f)))
+    (set (elt vec (as <int> #\t)) #\tab)
+    (set (elt vec (as <int> #\f)) #\page)
+    (set (elt vec (as <int> #\r)) #\return)
+    (set (elt vec (as <int> #\n)) #\newline)
+    vec))
+
+(df read-string-literal (c port)
+  ;; (write-char out #\g) (newline out)
+  (rep loop ((l '()) (i 0))
+    (let ((c (read-char port)))
+      (if (eof-object? c)
+	  (reading-error port "end of file within a string")
+	  (if (= c #\\)
+	      (let ((c (read-char port)))
+		(if (eof-object? c)
+		    (reading-error port "end of file within a string")
+		    (if (or (= c #\\) (= c #\"))
+			(loop (pair c l) (+ i 1))
+			(let ((ec (elt $string-escape-chars (as <int> c))))
+			  (if ec
+			      (loop (pair ec l) (+ i 1))
+			      (reading-error
+			       port "invalid escaped character in string" 
+			       c))))))
+	      (if (= c #\")
+		  (reverse-list->string l i)
+		  (loop (pair c l) (+ i 1))))))))
+
+(set-standard-read-macro!
+  #\" #t read-string-literal)
+
+(set-standard-read-macro!
+  #\; #t (fun (c port) (gobble-line port) (sub-read port)))
+
+(dm gobble-line ((port <port>))
+  (rep loop ()
+    (let ((c (read-char port)))
+      (if (eof-object? c) c (if (= c #\newline) #f (loop))))))
+
+(dv *sharp-macros* '())
+
+(dm define-sharp-macro (c proc)
+  (set *sharp-macros* (pair (lst c proc) *sharp-macros*)))
+
+(set-standard-read-macro!
+  #\# #f
+  (fun (c port)
+    (let ((c (peek-char port))
+          (c (if (eof-object? c)
+		 (reading-error port "end of file after #")
+		 (as-lowercase c)))
+	  (probe (assq c *sharp-macros*)))
+      (if probe
+	  ((head (tail probe)) c port)
+	  (reading-error port "unknown # syntax" c)))))
+
+(define-sharp-macro #\f (fun (c port) (read-char port) #f))
+
+(define-sharp-macro #\t (fun (c port) (read-char port) #t))
+
+;; TODO: ASSQ
+
+(dv $char-long-names
+  '((tab #\tab) (page #\page)
+    (return #\return) (newline #\newline)
+    (space #\space)))
+
+(define-sharp-macro
+  #\\
+  (fun (c port)
+    (read-char port)
+    (let ((c (peek-char port)))
+      (if (eof-object? c)
+	  (reading-error port "end of file after #\\")
+	  (if (alphabetic? c)
+	      (let ((name (sub-read-carefully port)))
+		(if (= (len (as <str> name)) 1)
+		    c
+		    (let ((temp (assq name $char-long-names)))
+		      (if temp
+			  (head (tail temp)) ;; Proto => syntax
+			  (reading-error port "unknown #\\ name" name)))))
+	      (read-char port))))))
+
+(define-sharp-macro
+  #\(
+  (fun (c port)
+    (read-char port)
+    (as <vec> (sub-read-list c port))))
+
+(let ((number-sharp-macro
+       (fun (c port)
+	 (let ((string (sub-read-token #\# port)))
+	   (or (str-to-num string)
+	       (reading-error port "unsupported number syntax" string))))))
+  (do (fun (c) (define-sharp-macro c number-sharp-macro))
+      '(#\b #\o #\d #\x #\i #\e)))
+
+;; Tokens
+
+(dm sub-read-token ((c <chr>) (port <port>) => <any>)
+  ;; (write-char out #\e) (write-char out c) (newline out)
+  (rep loop ((l (lst (preferred-case c))) (n 1))
+    (let ((c (peek-char port)))
+      (if (or (eof-object? c)
+	      (elt *read-terminating?-vector* (char->ascii c)))
+	  (reverse-list->string l n)
+	  (loop (pair (preferred-case (read-char port)) l) (+ n 1))))))
+
+;; TODO: MEM? WITH TEST
+
+(dm parse-token ((string <str>) (port <port>) => <any>)
+  ;; (write-char out #\f) (newline out)
+  (if (let ((c (elt string 0)))
+	(or (numeric? c)
+	    (= c #\+)
+	    (= c #\-)
+	    (= c #\.)))
+      (let ((maybe-number (str-to-num string)))
+	(if maybe-number
+	    maybe-number
+	    (if (any? (fun (x) (= string x)) $strange-symbol-names)
+		(as <sym> (make-immutable! string))
+		(if (= string ".")
+		    $dot
+		    (reading-error port "unsupported number syntax" string)))))
+      (seq ;; (write-char out #\n) (newline out)
+           (as <sym> (make-immutable! string)))))
+
+(dv $strange-symbol-names 
+  '("+" "-" "..."
+    "1st" "2nd" "3rd" ;; Seq Support
+    "1+" "-1+"        ;; Only for S&ICP support
+    "->"))            ;; Only for JAR's thesis
+
+(dv preferred-case 
+  (if (= (elt (as <str> 't) 0) #\T)
+      as-uppercase
+      as-lowercase))
+
+;; Reader errors
+
+(dm reading-error ((port <port>) (message <str>) (irritants ...))
+  (error (cat message ": %=")  ;; was: apply(...)
+	 (cat irritants (lst port))))
+
+(dm warn ((string <str>) (irritants-and-port ...))
+  ;; TODO: TURN BACK ON
+  ;; (apply sig string irritants-and-port)
+  #f
+  )
+  ;; format-string: string,
+  ;;  format-arguments: irritants-and-port
+
+(dm reverse-list->string ((l <lst>) (n <int>) => <str>)
+  (as <str> (rev! l)))
+
+(dm make-immutable! (x) x)
+

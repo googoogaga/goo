@@ -1,0 +1,31 @@
+// ...					=> ;; ...
+#(...)					=> '(...)
+#"abc"					=> 'abc
+define constant x = y;			=> (def x y)
+define method f (x :: y) => (z)		=> (dm f ((x y) => (z <any>)))
+define method f (x :: y) => (w :: z)	=> (dm f ((x y) => (w z)))
+define method f (x :: y) => (res :: z)	=> (dm f ((x y) => z))
+define class x (y)			=> (def x (isa y))
+  slot z :: a = v;			=> (slot x (z a) v)
+
+elt doesn't take a default
+need for loop cause don't do do2 etc
+
+define method -> (dm
+define function -> (df
+define constant -> (def
+define variable -> (def
+define generic -> (dg
+define class x (...) -> (def x (isa (...)))
+x :: y -> (x y)
+) => (res) ->  => <any>) 
+) => (well? :: <boolean>) -> => <log>)
+; -> 
+, -> 
+size -> len
+list -> lst
+<list> -> <lst>
+<object> -> <any>
+#(...) -> '(...)
+#"x" -> 'x
+infix -> prefix

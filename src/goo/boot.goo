@@ -1,0 +1,1214 @@
+;;;
+;;; JONATHAN BACHRACH
+;;;
+;;; TODO
+;;; 
+;;; o RENAME LOW PRIMITIVES TO HAVE TWO %%'s
+;;; o INVENT NAMING CONVENTION FOR COMPILE TIME THINGS SAY &...?
+;;; 
+
+(dv %false (%raw 0)) ;; EARLY DEFINITION
+
+;; TODO: GENERALIZED VERSION
+
+(ds (inc ,x ,@amount)
+  (let ((amount (mif ((,amount) amount) amount 1)))
+    `(set ,x (+ ,x ,amount))))
+
+(ds (dec ,x ,@amount)
+  (let ((amount (mif ((,amount) amount) amount 1)))
+    `(set ,x (- ,x ,amount))))
+
+(ds (unless ,test ,@body)
+  `(if (not ,test) (seq ,@body)))
+
+(ds (when ,test ,@body)
+  `(if ,test (seq ,@body)))
+
+(ds (or ,x ,@rest)
+  (mif (() rest)
+       x
+       `(let ((tmp ,x))
+          (if tmp tmp (or ,@rest)))))
+
+(ds (and ,x ,@rest)
+  (mif (() rest)
+       x
+       `(let ((tmp ,x))
+          (if tmp (and ,@rest) #f))))
+
+;;;
+;;; BOOT OBJECTS
+;;;
+
+(ct (df %boot-defs ()
+      '((dv <any>    (isa <any>))
+	(dv nul      (isa <any>))
+	(dv nul-slot (isa <any>))
+	(dv <log>    (isa <any>))
+	(dv %true    (isa <log>))
+	(dv %false   (isa <log>))
+	(dv <chr> (isa <any>))
+	  (slot <chr> (%chr-val <int>))
+	(dv <num> (isa <any>))
+	(dv <int> (isa <num>))
+	  (slot <int> (%int-val <any>))
+	(dv <flo> (isa <num>))
+	  (slot <flo> (%flo-val <any>))
+	(dv <loc> (isa <any>))
+	  (slot <loc> (%loc-val <any>))
+	(dv <col> (isa <any>))
+	(dv <bag> (isa <col>))
+	(dv <seq> (isa <col>))
+	(dv <lst> (isa <seq>))
+	(dv nil (isa <lst>))
+	  (slot <lst> (head <any>) nil)
+	  (slot <lst> (tail <lst>) nil)
+	(dv <flat> (isa <seq>))
+	(dv <vec> (isa <flat>))
+	  (slot <vec> (%%vec-dat <any>)) ;; TODO: SHOULD RENAME LOWLEVEL
+	(dv <str> (isa <flat>))
+	  (slot <str> (%%str-dat <any>)) ;; TODO: SHOULD RENAME LOWLEVEL
+	(dv <sym> (isa <any>))
+	  (slot <sym> (sym-name <str>))
+	(dv <traits> (isa <any>))
+	  (slot <traits> (traits-owner <any>))
+	  (slot <traits> (traits-direct-parents <lst>) nil)
+	  (slot <traits> (traits-direct-slots <lst>)   nil)
+	  (slot <traits> (traits-parents <lst>)        nil)
+	  (slot <traits> (traits-slots <lst>)          nil)
+	(dv <slot> (isa <any>))
+	  (slot <slot> (slot-owner <any>))
+	  (slot <slot> (slot-getter <fun>))
+	  (slot <slot> (slot-setter <fun>))
+	  (slot <slot> (slot-type  <any>))
+	  (slot <slot> (slot-init  <fun>) (fun (x) nul-slot))
+	(dv <gen-cache> (isa <any>))
+	  (slot <gen-cache> (gen-cache-singletons <lst>) nil)
+	  (slot <gen-cache> (gen-cache-classes <lst>)    nil)
+	(dv <fun> (isa <any>))
+	  (slot <fun> (fun-code <any>)  %false)
+	  (slot <fun> (fun-specs <lst>) nil)
+	  (slot <fun> (fun-nary? <log>) %false)
+	  (slot <fun> (fun-arity <int>) 0)
+	(dv <met> (isa <fun>))
+	  (slot <met> (fun-env <any>)   %false)
+	(dv <gen> (isa <fun>))
+	  (slot <gen> (fun-mets <lst>)  nil)
+	  (slot <gen> (fun-cache <any>) %false))))
+
+(ct (df %map-boot-protos (f)
+      (rep loop ((res '()) (defs (%boot-defs)))
+        (if (empty? defs)
+	    (rev! res)
+	    (loop (mif ((dv ,name (isa ,parent)) (head defs))
+		       (pair (f name parent) res)
+		       res)
+		  (tail defs))))))
+
+(ct (df %map-boot-slots (f)
+      (rep loop ((res '()) (defs (%boot-defs)))
+        (if (empty? defs)
+	    (rev! res)
+	    (loop (mif ((slot ,owner (,name ,type) ,@maybe-init) (head defs))
+		       (let ((init 
+			      (if (empty? maybe-init) 'nul-slot (head maybe-init))))
+			 (pair (f owner name type init) res)) 
+		       res)
+		  (tail defs))))))
+
+;;;
+;;; 1. BUILD EMPTY PROTOTYPE OBJECTS 
+;;;
+
+(dp %%traits (owner)
+  (let ((traits (%make-object)))
+    (%install-object-values traits (%raw 5))
+    (set (%slot-elt traits (%raw 0)) owner)
+    traits))
+
+(dp %object-shell ()
+  (let ((proto (%make-object)))
+    (set (%object-traits proto) (%%traits proto))
+    proto))
+
+(ds (%object-shells)
+  `(seq ,@(%map-boot-protos 
+	    (fun (name parent) `(dv ,name (%object-shell))))))
+
+(%object-shells)
+
+(dv %check-types? #f)
+
+;;;
+;;; 2. SETUP LST BASICS
+;;;
+
+;;; CONSTRUCTION MACHINERY
+
+(dp %object-of (owner size)
+  (let ((proto (%make-object)))
+    (set (%object-traits proto) (%object-traits owner))
+    (set (%object-values proto) (%make-object-values size))
+    proto))
+
+(ct (df %fab-sym2 (x y)
+      (as <sym> (cat2 (to-str x) (to-str y)))))
+(ct (df %fab-sym3 (x y z) 
+      (as <sym> (cat2 (to-str x) (cat2 (to-str y) (to-str z))))))
+
+(ds (%define-structure-accessors ,@slot-names)
+  (loc ((getter (name offset) 
+	  `(dp ,(%fab-sym2 "%" name) (x)
+	     (%slot-elt x (%raw ,offset))))
+	(setter (name offset)
+	  `(dp ,(%fab-sym3 "%" name "-setter") (z x)
+	     (set (%slot-elt x (%raw ,offset)) z))))
+    (rep loop ((res '()) (i 0) (names slot-names))
+      (if (== names '())
+	  `(seq ,@(rev! res))
+	  (let ((name (head names)))
+  	    (loop (pair (getter name i) (pair (setter name i) res))
+		  (+ i 1) (tail names)))))))
+
+(ds (%define-structure ,prefix ,proto-base-name ,@slot-names)
+  (loc ((constructor (name inits)
+	  (let ((proto-name (%fab-sym3 "<" name ">")))
+	    `(dp ,(%fab-sym2 prefix name) (,@slot-names) 
+	       (let ((proto (%object-of ,proto-name (%raw ,(len slot-names)))))
+		 ,@inits
+		 proto)))))
+    (rep loop ((inits '()) (i 0) (names slot-names))
+      (if (== names '())
+	  `(seq (%define-structure-accessors ,@slot-names)
+		,(constructor proto-base-name inits))
+	  (let ((name (head names)))
+	    (loop (pair `(set (%slot-elt proto (%raw ,i)) ,name) inits)
+		  (+ i 1) (tail names)))))))
+
+;;; LST BASICS
+
+(%define-structure % lst head tail)
+
+(dp %pair (head tail) (%lst head tail))
+
+;;; MET BASICS
+
+(%define-structure % met ;; met-names
+   met-code met-specs met-nary? met-arity met-env)
+
+(dv %fun-nary? %met-nary?) ;; need this for interpreter
+(dv %fun-specs %met-specs) ;; need this for interpreter
+
+;;; 
+;;; REQUIREMENTS
+;;; 
+;;; NO EARLY OPTIONALS
+;;; C COMPATIBLE		NO ENV
+;;; INTERPRETER FRIENDLY	ENV
+;;; 
+;;; 
+
+;; (dp %apply-n (f (args ...)) 
+;;   (set (%fun-reg) f)
+;;   (%invoke-n (%met-code f) args))
+
+;;; MORE LST BASICS
+
+(dp %empty? (x) (%bb (%eq? x nil)))
+
+(dp %%len (x) 
+  (if (%empty? x) (%raw 0) (%i+ (%%len (%tail x)) (%raw 1))))
+  ;; (rep loop ((i (%iu 0)) (x x))
+  ;;   (if (%empty? x) count (loop (%i+ count (%iu 1)) (%tail x)))
+
+
+(dv %spec-nil  nil)
+(dv %spec-pair %pair)
+(dv %sig-true  %true)
+(dv %sig-false %false)
+
+;;;
+;;; 3. SETUP HIERARCHY
+;;;
+
+;;; TRAITS
+
+(%define-structure % traits
+ traits-owner traits-direct-parents traits-direct-slots
+ traits-parents traits-slots)
+
+(dp %compute-parents (parent)
+  (let ((traits (%object-traits parent)))
+    (if (%bb (%eq? traits (%object-traits <any>)))
+        (%pair <any> nil)
+        (%pair (%traits-owner traits) 
+	       (%compute-parents (%head (%traits-direct-parents traits)))))))
+
+(dv *protos* nil)
+
+(dp %define-parent (owner direct-parent)
+  (let ((direct-parents (%pair direct-parent nil))
+	(parents        (%pair owner (%compute-parents direct-parent))))
+    (set *protos* (%pair owner *protos*))
+    (set (%object-traits owner)
+	 (%traits owner direct-parents nil parents nil))))
+
+(ds (%define-hierarchy)
+  `(seq ,@(%map-boot-protos 
+	    (fun (name parent) `(%define-parent ,name ,parent)))))
+
+(%define-hierarchy)
+
+;; TRAIT PARENT LISTS DON'T HAVE PROPER TRAITS SO PATCH THEM
+
+(dp %copy (x) (if (%empty? x) x (%pair (%head x) (%copy (%tail x)))))
+
+(dv <traits>-traits (%object-traits <traits>))
+
+(dp %patch-parents (protos)
+  (if (%empty? protos) #f
+    (let ((traits (%object-traits (%head protos))))
+      (set (%object-traits traits) 
+           <traits>-traits)
+      (set (%traits-parents traits)
+	   (%copy (%traits-parents traits)))
+      (set (%traits-direct-parents traits) 
+	   (%copy (%traits-direct-parents traits)))
+      (%patch-parents (%tail protos)))))
+
+(%patch-parents *protos*)
+
+(dv <gen>-traits (%object-traits <gen>))
+(dv <met>-traits (%object-traits <met>))
+(dv <lst>-traits (%object-traits <lst>))
+
+;;; 
+;;; 4. TAGGED OBJECTS
+;;; 
+
+(dv $direct-object-traits (%raw-alloc (%raw 4)))
+
+(dv $tag-msk (%raw 3))
+
+(dv $tag-len (%raw 2))
+
+(dp %tag-bits (x) (%i& x $tag-msk))
+
+(dp %tag (x t) (%iv (%i<< x $tag-len) t))
+
+(dp %untag (x) (%i>> x $tag-len))
+
+(dv $adr-tag (%raw 0))
+
+(dp %indirect-object? (x) (%i= (%tag-bits x) $adr-tag))
+
+(dp %traits-of (x)
+  (let ((tag (%tag-bits x)))
+    (if (%bb (%i= tag $adr-tag))
+        (%object-traits x)
+        (%elt $direct-object-traits tag))))
+
+(df object-traits (x) (%traits-of x))
+
+(ds (%define-tagged-structure ,name ,code ,tag)
+  (let ((proto-name (%fab-sym3 "<" name ">"))
+	(fab-name   (%fab-sym2 "%" name))
+	(tag-name   (%fab-sym3 "%" code "b"))
+	(untag-name (%fab-sym3 "%" code "u")))
+    `(seq (dp ,tag-name (x) (%tag x (%raw ,tag)))
+	  (dp ,fab-name (x) (,tag-name x))
+	  (dp ,untag-name (x) (%untag x))
+	  (set (%elt $direct-object-traits (%raw ,tag)) 
+	       (%object-traits ,proto-name))
+	  )))
+
+(%define-tagged-structure int i 1)
+
+(%define-tagged-structure chr c 2)
+
+(%define-tagged-structure loc l 3)
+
+;; N.B. CREATING FUNCTIONS SO MUST APPEAR AFTER FUNCTION TRAITS ARE REAL
+
+(dp %rev! (c)
+  (rep loop ((l c) (r nil))
+    (if (%empty? l)
+	r
+	(let ((t (%tail l)))
+	  (set (%tail l) r)
+	  (loop t l)))))
+
+(dp %cat2 (x y) 
+  (rep colx ((lx nil) (x x))
+    (if (%empty? x)
+	(rep coly ((lxy lx) (y y))
+	  (if (%empty? y)
+	      (%rev! lxy)
+	      (coly (%pair (%head y) lxy) (%tail y))))
+	(colx (%pair (%head x) lx) (%tail x)))))
+	
+;;; 
+;;; 5. BOXED OBJECTS
+;;; 
+
+(ds (%define-boxed-structure ,name ,code)
+  (let ((proto-name (%fab-sym3 "<" name ">"))
+	(dat-name   (%fab-sym2 name "-dat"))
+	(fab-name   (%fab-sym2 "%" name))
+	(box-name   (%fab-sym3 "%" code "b"))
+	(unbox-name (%fab-sym3 "%" code "u")))
+    `(seq (%define-structure % ,name ,dat-name)
+	  (dp ,box-name (x) (,fab-name x))
+	  (dp ,unbox-name (x) (%slot-elt x (%raw 0)))
+	  )))
+
+(%define-boxed-structure flo f)
+
+;; (%define-boxed-structure chr c)
+
+;; (%define-boxed-structure int i)
+
+;; (%define-boxed-structure loc l)
+
+;;;
+;;; 6. MAKE SLOTS AND ACCESSORS
+;;; 
+
+(%define-structure %% slot
+  slot-owner slot-getter slot-setter slot-type slot-init)
+
+;;; MAKE GENERIC'S
+
+(%define-structure % gen-cache 
+   gen-cache-singletons gen-cache-classes)
+
+(%define-structure % gen 
+   gen-code gen-specs gen-nary? gen-arity gen-mets fun-cache)
+
+(df %slot-offset (owner getter)
+  (rep loop ((i (%raw 0)) (slots (%traits-slots (%object-traits owner))))
+    (if (%empty? slots)
+	(%raw -1)
+	(let ((slot (%head slots)))
+	  (if (%bb (%eq? (%slot-getter slot) getter))
+	      i
+	      (loop (%i+ i (%raw 1)) (%tail slots)))))))
+
+(ct (df sexpr-signature-parameters ((sig <lst>) => <lst>)
+      (let ((values-spec-index (find-key (curry == '=>) sig)))
+	(if (== values-spec-index nul)
+	    sig
+	    (sub sig 0 values-spec-index)))))
+
+(ct (df &pairize (args)
+      (if (empty? args)
+	  'nil
+	  `(%pair ,(head args) ,(&pairize (tail args))))))
+
+(df %early-dispatch ((args ...))
+  (let ((gen (%fun-reg)))
+    (%%apply (%head (%gen-mets gen)) args)))
+
+(dv *early-generics* '())
+
+(df %register-early-generic ((x <gen>))
+  (set *early-generics* (%pair x *early-generics*)))
+
+(df %add-met (gen met)
+  (set (%gen-mets gen) (%pair met (%gen-mets gen))))
+
+(ds (%define-accessor ,name (,@sig) ,@body)
+  (let ((params  (sexpr-signature-parameters sig))
+	(gen-sig (&pairize (map (always '<any>) params)))
+	(arity   (len params)))
+    `(seq (dv ,name (%gen %early-dispatch ,gen-sig #f ,arity '() #f))
+	  (let ((accessor (fun (,@sig) ,@body)))
+	    (%add-met ,name accessor)
+	    (%register-early-generic ,name)
+	    accessor))))
+
+(ds (%define-getter ,name ,owner ,type)
+  `(%define-accessor ,name ((x ,owner))
+      (%slot-elt x (%slot-offset ,owner ,name))))
+
+(ds (%define-setter ,name ,owner ,type)
+  `(%define-accessor ,(%fab-sym2 name "-setter") ((z ,type) (x ,owner))
+     (set (%slot-elt x (%slot-offset ,owner ,name)) z)))
+
+(dv $nul-init (%pair "NUL-INIT" nil))
+
+(df nul-init (x) nul-slot)
+
+(df %add-slot (owner slot)
+  (let ((traits (%object-traits owner)))
+    (set (%traits-direct-slots traits)
+	 (%pair slot (%traits-direct-slots traits)))))
+
+(ds (%define-slots)
+  `(seq ,@(%map-boot-slots 
+	    (fun (owner name type init) 
+	      `(let ((getter (%define-getter ,name ,owner ,type))
+		     (setter (%define-setter ,name ,owner ,type))
+		     ;; TODO: X FROM OWNER VAR
+		     (slot   (%%slot ,owner ,name ,(%fab-sym2 name "-setter") 
+				     ,type (fun (x) ,init))))
+		 (set (%met-env getter) slot)
+		 (set (%met-env setter) slot)
+		 (%add-slot ,owner slot))))))
+
+(%define-slots)
+
+;;;
+;;; 7. FINALIZE SLOTS
+;;;
+
+(df %collect-direct-slots (traits)
+  (let ((parent (%head (%traits-direct-parents traits))))
+    (%cat2 (%traits-slots (%object-traits parent))
+	   (%traits-direct-slots traits))))
+
+(df %finalize-slots! (owner)
+  (let ((traits (%object-traits owner)))
+    (set (%traits-direct-slots traits)
+	 (%rev! (%traits-direct-slots traits)))
+    (set (%traits-slots traits)
+	 (%collect-direct-slots traits))
+    (%adjust-object-values-size owner (%%len (%traits-slots traits)) owner)
+    owner))
+
+(ds (%finalize-slots)
+  `(seq ,@(%map-boot-protos (fun (name parent) `(%finalize-slots! ,name)))))
+
+(%finalize-slots)
+
+;;;
+;;; 8. PATCH INSTANCES
+;;;
+
+(dp %patch-lst (x) 
+  (set (%head x) nil)
+  (set (%tail x) nil))
+
+(%patch-lst '())
+(%patch-lst <lst>)
+
+;;; 
+;;; 9. REPEATED OBJECTS
+;;; 
+
+(ds (%define-repeated-structure ,name ,elt ,code ,init)
+  (let ((proto-name (%fab-sym3 "<" name ">"))
+	(nul        (%fab-sym3 "%" code "nul"))
+	(base-dat   (%fab-sym2 name "-dat"))
+	(dat        (%fab-sym2 "%" base-dat))
+	(raw-elt    (%fab-sym3 "%%" code "elt"))
+	(elt        (%fab-sym3 "%" code "elt"))
+	(elt-setter (%fab-sym3 "%" code "elt-setter"))
+	(raw-len    (%fab-sym3 "%%" code "len"))
+	(len        (%fab-sym3 "%" code "len"))
+	(box        (%fab-sym3 "%" code "b"))
+	(unbox      (%fab-sym3 "%" code "u"))
+	(fab        (%fab-sym2 "%" name))
+	(fab!       (%fab-sym3 "%" name "!"))
+	(raw-fab    (%fab-sym3 "%%" code "fab")))
+    `(seq (%define-structure-accessors ,base-dat)
+          (dp ,fab! (len)
+            (let ((proto (%object-of ,proto-name (%raw 1))))
+	      (set (,dat proto) (,raw-fab len ,init)) proto))
+	  (dv ,nul (,fab! (%raw 0)))
+	  (dp ,fab (len) 
+	    (if (%bb (%i= len (%raw 0))) ,nul (,fab! len)))
+	  (dp ,box (x) 
+            (let ((proto (%object-of ,proto-name (%raw 1))))
+	      (set (,dat proto) x) proto))
+	  (dp ,unbox (x) (,dat x))
+	  (dp ,len (x) (,raw-len (,dat x)))
+	  (dp ,elt (x i) (,raw-elt (,dat x) i))
+	  (dp ,elt-setter (z x i) (set (,raw-elt (,dat x) i) z)))))
+
+(%define-repeated-structure str <chr> s (%cu #\Space))
+
+(%define-repeated-structure vec <any> v nul) 
+
+(df %str-eq? (s1 s2)
+  (let ((len (%slen s1)))
+    (and (%bb (%i= len (%slen s2)))
+	 (rep loop ((i (%raw 0)))
+	   (or (%bb (%i= i len))
+	       (let ((c1 (%selt s1 i)) (c2 (%selt s2 i)))
+		 (and (%bb (%c= c1 c2))
+		      (loop (%i+ i (%raw 1))))))))))
+
+;;; 
+;;; 10. SYMBOLS
+;;; 
+
+(%define-structure % sym sym-nam)
+
+(dv %symbols nil)
+
+(df fab-sym (name)
+  (rep lookup ((s %symbols))
+    (if (%empty? s)
+	(let ((sym (%sym name)))
+	  (set %symbols (%pair sym %symbols))
+	  sym)
+	(let ((sym (%head s)))
+	  (if (%str-eq? (%sym-nam sym) name)
+	      sym
+	      (lookup (%tail s)))))))
+
+(dp %%sym (raw-str)    ;; FOR COMPILER
+  (fab-sym (%sb raw-str))) 
+
+;;;
+;;; 11. FUNCTION PREP
+;;; 
+
+(dp @head ((x <lst>) => <any>) (%head x))
+
+(dp @head-setter (z (x <lst>)) (set (%head x) z))
+
+(dp @tail ((x <lst>) => <lst>) (%tail x))
+
+(dp @tail-setter ((z <lst>) (x <lst>)) (set (%tail x) z))
+
+(dp @= ((x <int>) (y <int>) => <log>)
+  (%bb (%i= (%iu x) (%iu y))))
+
+(dp @< ((x <int>) (y <int>) => <log>)
+  (%bb (%i< (%iu x) (%iu y))))
+
+(dp @+ ((x <int>) (y <int>) => <int>)
+  (%ib (%i+ (%iu x) (%iu y))))
+
+(dp @== ((x <any>) (y <any>) => <log>) (%bb (%eq? x y)))
+
+(df @@== ((x <any>) (y <any>) => <log>) (%bb (%eq? x y)))
+
+(df not ((x <any>) => <log>) (%bb (%eq? x #f)))
+
+(dp @empty? ((x <lst>) => <log>) (%empty? x))
+
+(df @@empty? ((x <lst>) => <log>) (%empty? x))
+
+(df @rev! ((x <lst>) => <lst>) (%rev! x))
+
+(dp @len ((x <lst>) => <int>) (%ib (%%len x)))
+
+(df @all? ((test <fun>) (c <lst>) => <log>)
+  (rep fnd ((p c))
+    (if (@empty? p) #t (if (test (@head p)) (fnd (@tail p)) #f))))
+
+(df @all2? ((test <fun>) (x <lst>) (y <lst>) => <log>)
+  (rep fnd ((px x) (py y))
+    (if (@empty? px) 
+	(@empty? py)
+	(if (@empty? py)
+	    #f
+	    (if (test (@head px) (@head py)) 
+		(fnd (@tail px) (@tail py))
+		#f)))))
+
+(df @elt ((x <lst>) (key <int>) => <any>)
+  (rep fnd (((count <int>) 0) ((x <lst>) x))
+    (if (@== x '())
+        nul
+        (if (@= count key) (@head x) (fnd (@+ count 1) (@tail x))))))
+
+(df @fill ((x <lst>) (f <fun>) => <lst>)
+  (rep loop ((x x))
+    (if (@empty? p) x (seq (set (@head p) f) (loop (@tail p))))))
+
+(df @any? ((test <fun>) (c <lst>) => <log>)
+  (rep fnd ((p c))
+    (if (@empty? p) #f (or (test (@head p)) (fnd (@tail p))))))
+
+(dp @pair ((x <any>) (y <lst>) => <lst>) (%pair x y))
+
+(dp @add ((c <lst>) (e <any>) => <lst>) (%pair e c))
+
+(df @map ((f <fun>) (x <lst>) => <lst>)
+  (rep do ((x x) (res '()))
+    (if (@empty? x)
+	(@rev! res)
+	(do (@tail x) (@pair (f (@head x)) res)))))
+
+(df @do ((f <fun>) (x <lst>) => ())
+  (rep do ((x x))
+    (if (@empty? x)
+	#f
+	(seq (f (@head x)) (do (@tail x))))))
+
+(df @alter ((dst <lst>) (src <lst>) => <lst>)
+  (rep in ((ds dst) (ss src))
+    (if (or (@empty? ds) (@empty? ss))
+        dst
+        (seq (set (@head ds) (@head ss))
+             (in (@tail ds) (@tail ss))))))
+
+(df @fab ((x <lst>) (s <int>) => <lst>)
+  (rep fab (((i <int>) s) ((res <lst>) '()))
+    (if (@< i 0) res (fab (@+ i -1) (@pair nul res)))))
+
+(df @reduce ((combine <fun>) (init <any>) (c <lst>) => <lst>)
+  (rep red ((res init) (c c))
+    (if (@empty? c)
+        res
+        (red (combine res (@head c)) (@tail c)))))
+
+(df @cat2 ((x <lst>) (y <lst>) => <lst>)
+  (%cat2 x y))
+
+(df @find-key ((f <fun>) (c <lst>) => <int>)
+  (rep fnd ((c c) (i 0))
+    (if (@empty? c)
+	nul
+	(if (f (@head c))
+	    i
+	    (fnd (@tail c) (@+ i 1))))))
+
+(df @mem? ((c <lst>) (x <any>) => <log>)
+  (not (@== (@find-key (fun (y) (@== x y)) c) nul)))
+
+(df @del-dups ((x <lst>) => <lst>)
+  (@reduce (fun (s e) (if (@mem? s e) s (@pair e s))) '() x))
+
+(df @lst ((objects ...)) objects)
+
+(df @fun-specs ((x <fun>) => <lst>) (%gen-specs x))
+
+(df @fun-nary? ((x <fun>) => <log>) (%gen-nary? x))
+
+(df @fun-arity ((x <fun>) => <int>) (%gen-arity x))
+
+(df @fun-mets ((x <fun>) => <lst>) (%gen-mets x))
+
+(df @fun-mets-setter ((z <lst>) (x <fun>)) (set (%gen-mets x) z))
+
+;;; 
+;;; 12. FUNCTIONS
+;;; 
+
+(dv <env>   <any>)
+(dv <specs> <lst>)
+(dv <body>  <any>)
+
+;; (dv <fun> (isa <any>))
+;;   (slot <fun> (fun-body  <body>))
+;;   (slot <fun> (fun-specs <specs>))
+;;   (slot <fun> (fun-opts? <log>) #f)
+
+;; (dv <met> (isa <fun>))
+;;   (slot <met> (fun-env   <env>))
+
+(df fun-spec ((x <met>) (i <int>) => <any>)
+  (@elt (@fun-specs x) i))
+
+(dv <mets> <lst>)
+
+;; (dv <gen> (isa <fun>))
+;;   (slot <gen> (fun-mets <mets>) '())
+
+(df fab-gen ((specs <lst>) (nary? <log>) (mets <lst>) => <gen>)
+  (%gen (%gen-code %dispatch) specs nary? (len specs) mets #f))
+
+(df fun-same-met? ((x <met>) (y <met>) => <log>)
+  (@all2? @@== (@fun-specs x) (@fun-specs y)))
+
+(df fun-congruent? ((x <fun>) (y <fun>) => <log>)
+  (and (@=  (@fun-arity x) (@fun-arity y))
+       (@== (@fun-nary? x) (@fun-nary? y))
+       (@all2? isa? (@fun-specs x) (@fun-specs y))))
+
+(df gen-add-met ((g <gen>) (m <met>) => <gen>)
+  (set (%fun-cache g) #f)
+  (unless (fun-congruent? m g)
+    (error "Method %= Incongruent with Generic %=" m g))
+  (rep col ((mets '()) (same? #f) ((gms <mets>) (@fun-mets g)))
+    (if (@empty? gms)
+	(set (%gen-mets g) (@rev! (if same? mets (@add mets m))))
+	(let ((gm        (@head gms))
+	      (now-same? (fun-same-met? gm m)))
+	  (col (@add mets (if now-same? m gm)) 
+	       (or now-same? same?) (@tail gms)))))
+  g)
+
+(dv <args> <lst>)
+
+(dp %isa? (o1 o2 => <log>)
+  (or (@== o2 <any>)
+      (@== o1 o2)
+      (rep find ((ps (object-parents o1)))
+	(if (@empty? ps)
+	    #f
+	    (let ((o (@head ps)))
+	      (if (@== o o2)
+		  #t
+		  (find (@tail ps))))))))
+
+(df isa? (o1 o2 => <log>)
+  (%isa? o1 o2))
+
+(df object< (o1 o2 wrt => <log>)
+  (if (@== wrt o1)
+      #t
+      (if (@== wrt o2)
+	  #f
+	  (rep find ((ps (object-parents wrt)))
+	    (if (@empty? ps)
+		(error "can't order specializers - arg/reference object %= is "
+		       "neither %= nor %=" wrt o1 o2) 
+		(let ((o (@head ps)))
+		  (if (@== o o1)
+		      #t
+		      (if (@== o o2)
+			  #f
+			  (find (@tail ps))))))))))
+
+(dv <tup> <lst>)
+(dv @tup  @lst)
+
+(df order-specs (t1 t2 arg => (order <sym>) canonical-type)
+  (if (@== t1 t2) 
+      (@tup '= t1)
+      (if (object< t1 t2 arg)
+	  (@tup '< t1)
+	  (@tup '> t2))))
+
+(df order-mets ((m1 <met>) (m2 <met>) (args <args>) => (order <sym>))
+  (let (((arity <int>) (@fun-arity m1)))
+    (rep loop (((state <sym>) '=) ((idx <int>) 0))
+      (if (@= idx arity)
+	  state
+	  (let ((m1spec (fun-spec m1 idx))
+		(m2spec (fun-spec m2 idx))
+		((cmp+typ <tup>) (order-specs m1spec m2spec (@elt args idx)))
+		((cmp <sym>) (@elt cmp+typ 0))
+		((idx <int>) (@+ idx 1)))
+	    (if (@== cmp '=)
+		(loop state idx)
+		(if (and (not (@== cmp '<>))
+			 (or (@== state '=) (@== cmp state)))
+		    (loop cmp idx)
+		    '<>)))))))
+
+(df sorted-app-mets-1
+      ((mets <lst>) (args <args>) (order-mets <fun>)
+       => (ordered <lst>) (ambig <lst>))
+  (let (((ohead <lst>) (@pair #f '()))
+	((ahead <lst>) (@pair #f '())))
+    (rep loop (((mets <lst>) mets))
+      (unless (@== mets '())
+	(let (((met <met>) (@head mets)))
+	  (loc ((make-ambiguous ((headed-list <lst>))
+		  (rep loop (((l <lst>) (@tail headed-list)))
+		    (or (@== l '())
+			(let ((t1 (@tail l)))
+			  (set (@tail l) (@tail ahead))
+			  (set (@tail ahead) l)
+			  (loop t1))))
+		  (set (@tail headed-list) '())
+		  (set (@tail ahead) (@pair met (@tail ahead))))
+		(precedes-all? ((l <lst>))
+                  (rep loop (((l <lst>) l))
+		    (if (@== l '())
+			#t
+			 (if (@== (order-mets met (@head l) args) '<)
+			     (loop (@tail l))
+			     #f))))
+		(check-subsequent-ambiguities ((oprev <lst>))
+		  (if (or (not (precedes-all? (@tail oprev)))
+			  (not (precedes-all? (@tail ahead))))
+		      (make-ambiguous oprev)
+		      (set (@tail oprev) (@pair met (@tail oprev)))))
+		(insert ((oprev <lst>) (osub <lst>))
+		  (if (@empty? osub)
+		      (check-subsequent-ambiguities oprev)
+		      (let ((indic (order-mets met (@head osub) args)))
+			(if (@== indic '<)     ;; comes before current one.
+			    (check-subsequent-ambiguities oprev)
+			    (if (@== indic '>) ;; comes after, check further.
+				(insert osub (@tail osub))
+				(make-ambiguous oprev)))))))
+	    (insert ohead (@tail ohead))
+	    (loop (@tail mets))))))
+    (@tup (@tail ohead) (@tail ahead))))
+
+(df met-app? ((met <met>) (args <args>) => <log>)
+  (let (((n <int>) (@fun-arity met)))
+    (rep loop (((i <int>) 0))
+      (if (@= i n)
+	  #t
+	  (if (isa? (@elt args i) (fun-spec met i))
+	      (loop (@+ i 1))
+	      #f)))))
+
+(df sorted-app-mets
+      ((gf <gen>) (args <args>) => (ordered <lst>) (ambig <lst>))
+  (let ((considered-mets
+	 (rep col ((ans '()) (ms (@fun-mets gf)))
+	   (if (@empty? ms)
+	       ans
+	       (let ((m (@head ms))
+		     (ans (if (met-app? m args) (@pair m ans) ans)))
+		 (col ans (@tail ms)))))))
+    (sorted-app-mets-1 considered-mets args order-mets)))
+
+(df opt-args ((n <int>) (args <args>) => <args>)
+  (rep col (((i <int>) 0) ((l <args>) '()) ((p <args>) args))
+    (if (@= i n)
+	(if (@empty? l)
+	    (@lst p)
+	    (seq (set (@tail l) (@lst p)) args))
+	(col (@+ i 1) p (@tail p)))))
+
+(df @gen-cache-singletons (x) (%gen-cache-singletons x))
+(df @gen-cache-singletons-setter (z x) (set (%gen-cache-singletons x) z))
+(df @gen-cache-classes (x) (%gen-cache-classes x))
+(df @gen-cache-classes-setter (z x) (set (%gen-cache-classes x) z))
+
+(df gen-lookup-miss-1-using
+    (key (all-assocs <fun>) (all-assocs-setter <fun>) 
+     (gen <gen>) cache (met <met>)
+     (i <int>) (n <int>) 
+     (args <lst>) (specs <lst>))
+  (let ((cache (or cache (%gen-cache nil nil))))
+    (rep loop ((assocs (all-assocs cache)))
+      (if (@empty? assocs) ;; miss
+	  (let ((val (gen-lookup-miss-1 gen #f met (@+ i 1) n args specs)))
+	    (set (all-assocs cache) (@pair key (@pair val (all-assocs cache)))))
+	  (let ((k (@head assocs))
+		(v (@head (@tail assocs))))
+	    (if (@== k key)
+		(gen-lookup-miss-1 gen v met (@+ i 1) n args specs)
+		(loop (@tail (@tail assocs)))))))
+    cache))
+
+(df singleton-spec? (x)
+  (not (@== (%traits-owner (%traits-of x)) x)))
+
+(dv <slot>-traits (%object-traits <slot>))
+
+(df method-accessor-offset ((gen <gen>) (met <met>) (args <lst>))
+  (let ((slot (%met-env met))
+	(slot? (and slot (@== (%traits-of slot) <slot>-traits)))
+	(n (@len args)))
+    (and slot?
+	 (if (@= n 1) ;; getter?
+	     (slot-offset (%head args) gen)
+	     (slot-offset (%head (%tail args)) (%slot-getter slot))))))
+
+(df gen-lookup-miss-1
+    ((gen <gen>) cache (met <met>)
+     (i <int>) (n <int>) (args <lst>) (specs <lst>))
+  (if (@= i n)
+      (let ((offset (method-accessor-offset gen met args)))
+	(or offset met))
+      (let ((spec (@elt specs i)))
+	(if (singleton-spec? spec)
+	    (gen-lookup-miss-1-using
+	     spec @gen-cache-singletons @gen-cache-singletons-setter
+	     gen cache met i n args specs)
+	    (gen-lookup-miss-1-using
+	     (%traits-of (@elt args i)) 
+	     @gen-cache-classes @gen-cache-classes-setter
+	     gen cache met i n args specs)))))
+
+(dp gen-lookup-1) ;; FORWARD DECL
+
+(dp gen-lookup ((gen <gen>) (args <lst>))
+  (let ((n (%gen-arity gen))
+	(c (%fun-cache gen)))
+    (gen-lookup-1 gen c 0 n args args)))
+
+(dv $missed-dispatch (%pair nil nil))
+
+(dp gen-lookup-1-using
+    (key (assocs <lst>) missable? (gen <gen>) cache
+     (i <int>) (n <int>) (args <lst>) (all-args <lst>))
+  ;; (rep loop ((assocs assocs))
+    (if (@empty? assocs) ;; miss
+	(if missable?
+	    $missed-dispatch
+	    (seq (set (%fun-cache gen) (gen-lookup-miss gen all-args))
+		 (gen-lookup gen all-args)))
+	(let ((k (%head assocs))
+	      (v (%head (%tail assocs))))
+	  (if (@== k key)
+	      (gen-lookup-1 gen v (@+ i 1) n (%tail args) all-args)
+	      (gen-lookup-1-using
+	       key (%tail (%tail assocs)) missable? 
+	       gen cache i n args all-args)))))
+     ;;  (loop (@tail (@tail assocs))))))
+     ;; ))
+
+(dv <int>-traits (%traits-of <int>))
+
+(dp slot-value-at (object (offset <int>) => <any>)
+  (let ((val (%slot-elt object (%iu offset))))
+    (if (@== val nul-slot)
+	(let ((slots (object-slots object)))
+	  (set (%slot-elt object (%iu offset))
+	       ((%slot-init (@elt slots offset)) object)))
+	val)))
+
+(dp slot-value-at-setter (z object (offset <int>))
+  (set (%slot-elt object (%iu offset)) z))
+
+(dp gen-lookup-1 
+      ((gen <gen>) cache (i <int>) (n <int>) (args <lst>) (all-args <lst>))
+  (if cache
+      (if (@= i n)
+	  (if (@== (%traits-of cache) <int>-traits) ;; int?
+	      (if (@= n 1) ;; getter?
+		  (slot-value-at (%head all-args) cache)
+		  (set (slot-value-at (%head (%tail all-args)) cache) 
+		       (%head all-args)))
+	      (%%mep-apply cache all-args))
+	  (let ((arg (%head args))
+		(val (gen-lookup-1-using
+		      arg (%gen-cache-singletons cache) 
+		      #t gen cache i n args all-args)))
+	    (if (@== val $missed-dispatch)
+		(gen-lookup-1-using
+		 (%traits-of arg) (%gen-cache-classes cache) 
+		 #f gen cache i n args all-args)
+		val)))
+      (seq (set (%fun-cache gen) (gen-lookup-miss gen all-args))
+	   (gen-lookup gen all-args))))
+
+(df choose-method ((gen <gen>) (args <lst>))
+  (let ((ord-amb-mets   (sorted-app-mets gen args))
+	(sorted-mets    (@elt ord-amb-mets 0))
+	(ambiguous-mets (@elt ord-amb-mets 1)))
+    (if (@< 0 (@len ambiguous-mets))
+	(error "Ambiguous Method Error when calling %= on %=" gen args)
+	(if (@empty? sorted-mets)
+	    (error "No Applicable Methods Error when calling %= on %="
+		   gen args)
+	    (@head sorted-mets)))))
+
+(df met< ((m1 <met>) (m2 <met>) => <log>)
+  (if (@== m1 m2)
+      #f
+      (@all2? isa? (@fun-specs m1) (@fun-specs m2))))
+
+(df met-has-singleton-specs? ((m <met>) => <log>)
+  (@any? singleton-spec? (@fun-specs m)))
+
+(df find-app-singleton-mets ((gen <gen>) (met <met>) => <lst>)
+  (rep loop ((res '()) (mets (@fun-mets gen)))
+    (if (@empty? mets)
+	res
+	(let ((m (@head mets))
+	      (singleton-app? (and (met-has-singleton-specs? m) (met< m met))))
+	  (loop (if singleton-app? (@pair m res) res) (@tail mets))))))
+
+(df gen-lookup-miss ((gen <gen>) (args <lst>) => <gen-cache>)
+  (let ((met (choose-method gen args))
+	(specs (@fun-specs met))
+	(n (@fun-arity gen))
+	(cache (gen-lookup-miss-1 gen (%fun-cache gen) met 0 n args specs))
+	(app-singleton-mets (find-app-singleton-mets gen met)))
+    (@do (fun (m) (gen-lookup-miss-1 gen cache m 0 n args (@fun-specs m)))
+	 app-singleton-mets)
+    cache))
+
+(df %dispatch ((args ...))
+  (gen-lookup (%fun-reg) args))
+
+(df gen-from-met ((x <met>) => <gen>)
+  (let ((specs (@map (fun (x) <any>) (@fun-specs x))))
+    (%gen (%gen-code %dispatch) specs (@fun-nary? x) (@len specs) '() #f)))
+
+(df %define-method (gen (met <met>) => <gen>)
+  (let ((gen (or gen (gen-from-met met))))
+    (gen-add-met gen met)
+    gen))
+
+(df %patch-early-generics ()
+  (set (%gen-code <gen>) %dispatch)
+  (rep loop ((gens *early-generics*))
+    (unless (@empty? gens)
+      (set (%gen-code (@head gens)) (%gen-code %dispatch))
+      (loop (@tail gens))))
+  (set *early-generics* '()))
+
+(%patch-early-generics)
+
+(dv <opts> <lst>)
+
+(df apply ((proc <fun>) (args <opts>))
+  (%%apply proc args))
+
+;;; 
+;;; 13. OBJECTS
+;;; 
+
+(dv <parents> <lst>)
+(dv <slots>   <lst>)
+
+;; (dv <traits> (isa <any>))
+;;   (slot <traits> (traits-direct-parents <parents>) (empty <parents>))
+;;   (slot <traits> (traits-direct-slots <slots>)     (empty <slots>))
+;;   (slot <traits> (traits-parents <parents>)        (empty <parents>))
+;;   (slot <traits> (traits-slots <slots>)            (empty <slots>))
+;;   (slot <traits> (traits-owner <any>))
+
+(df traits-ordered-parents ((o <traits>) => <parents>)
+  (loc ((merge-lists ((partial-cpl <lst>) (remaining-lists <lst>))
+          ;; the partial-cpl is in reverse order at this point.
+	 (if (@all? @@empty? remaining-lists)
+	     (@rev! partial-cpl)
+	     (loc ((unconstrained-proto (p)
+		    (loc ((p-in-and-unconstrained-in? ((l <lst>))
+			   (@== (@head l) p))
+			  (p-unconstrained-in? ((l <lst>))
+  		           (or (@== (@head l) p) (not (@mem? (@tail l) p)))))
+		      (and (@any? p-in-and-unconstrained-in? remaining-lists)
+			   (@all? p-unconstrained-in? remaining-lists)
+			   p)))
+		   (unconstrained-object-in-parents ((o <any>))
+		     (@any? unconstrained-proto (object-direct-parents o))))
+	       (let ((next (@any? unconstrained-object-in-parents partial-cpl)))
+		 (if next
+		      (loc ((remove-next ((l <lst>))
+			      (if (@== (@head l) next) (@tail l) l)))
+			(merge-lists 
+			 (@pair next partial-cpl)
+			 ;; (@alter remaining-lists 
+			   (@map remove-next remaining-lists)
+			 ;; )
+			 ))
+		      (error "inconsistent precedence graph")))))))
+     (let ((parents (%traits-direct-parents o)))
+       (if (or (@empty? parents)
+	       (and (@= (@len parents) 1)
+		    (@== (@elt parents 0) (%traits-owner o))))
+	   parents
+	   (merge-lists (@lst (%traits-owner o))
+			(@add (@map object-parents parents) parents))))))
+
+(df traits-ordered-slots ((x <traits>) => <slots>)
+  (@del-dups
+    (@reduce @cat2 '() (@map object-direct-slots (%traits-parents x)))))
+
+(df make-traits ((parents <parents>) (slots <slots>) owner => <traits>)
+  (let ((x ;; (isa <traits>
+	   ;; 	(set traits-direct-parents parents)
+	   ;; 	(set traits-direct-slots   slots)
+	   ;;   (set traits-owner          owner))
+	   (%traits owner parents slots '() '())
+	   ))
+    (set (%object-traits owner) x)
+    (if (@empty? (%traits-direct-parents x))
+        (set (%traits-direct-parents x) (@lst (%traits-owner x))))
+    (set (%traits-parents x) (traits-ordered-parents x))
+    (set (%traits-slots x)   (traits-ordered-slots x))
+    x))
+
+;; trampoline meta methods
+
+(df object-direct-slots (x => <slots>)
+  (%traits-direct-slots (%traits-of x)))
+
+(df object-direct-parents (x => <parents>)
+  (%traits-direct-parents (%traits-of x)))
+
+(df object-slots (x => <slots>)
+  (%traits-slots (%traits-of x)))
+
+(df object-parents (x => <parents>)
+  (%traits-parents (%traits-of x)))
+
+;;; slots
+
+;; (dv <slot> (isa <any>))
+;;   (slot <slot> (slot-getter <fun>))
+;;   (slot <slot> (slot-setter <fun>))
+;;   (slot <slot> (slot-owner <any>))
+;;   (slot <slot> (slot-init  <fun>) (fun (x) nul-slot))
+;;   (slot <slot> (slot-type  <any>))
+
+(df slot-offset (object (getter <fun>) => <int>)
+  (rep loop ((i 0) (slots (object-slots object)))
+    (if (@empty? slots)
+	-1
+	(if (@== (%slot-getter (@head slots)) getter)
+	    i
+	    (loop (@+ i 1) (@tail slots))))))
+
+(df slot-value (object (getter <fun>) => <any>)
+  (let ((offset (slot-offset object getter)))
+    (if offset
+	(slot-value-at object offset)
+	(error "slot %s not found in %=" getter object))))
+
+(df slot-value-setter (z object (getter <fun>))
+  (let ((offset (slot-offset object getter)))
+    (if offset
+	(set (slot-value-at object offset) z)
+	(error "slot %s not found in %=" getter object))))
+
+(df ensure-traits (x => <any>)
+  (unless (@== (%traits-owner (%object-traits x)) x)
+    (set (%object-traits x)
+	 (make-traits (@lst (%traits-owner (%object-traits x)))
+		      (%traits-direct-slots (%object-traits x))
+		      x)))
+  x)
+
+(df %isa ((parents <lst>) (getters <lst>) (vals <lst>) => <any>)
+  (let ((object (%make-object))
+	(traits (if (@= (@len parents) 1)
+		    (%object-traits (ensure-traits (@elt parents 0)))
+		    (make-traits
+		     (@map ensure-traits parents) '() object))))
+    (set (%object-traits object) traits)
+    (%install-object-values object (%%len (object-slots object)))
+    (rep loop ((getters getters) (vals vals))
+      (unless (or (@== getters '()) (@== vals '()))
+        (seq (set (slot-value object (@head getters)) (@head vals))
+	     (loop (@tail getters) (@tail vals)))))
+    object))
+
+(df find-getter (owner (getter <gen>) => <met>)
+  (rep loop ((mets (@fun-mets getter)))
+    (if (@empty? mets)
+	(error "COULDN'T FIND GETTER")
+	(let ((met (@head mets)))
+	  (if (@== (fun-spec met 0) owner)
+	      met
+	      (loop (@tail mets)))))))
+
+(df find-setter (owner type (zetter <gen>) => <met>)
+  (rep loop ((mets (@fun-mets zetter)))
+    (if (@empty? mets)
+	(error "COULDN'T FIND SETTER")
+	(let ((met (@head mets)))
+	  (if (and (@== (fun-spec met 1) owner) (@== (fun-spec met 0) type))
+	      met
+	      (loop (@tail mets)))))))
+
+(df %slot (owner (getter <gen>) (setter <gen>) type (init <fun>))
+  (ensure-traits owner)
+  (let ((traits (%object-traits owner))
+	(slot (isa <slot> (set slot-owner owner)
+		   (set slot-getter getter) (set slot-setter setter)
+		   (set slot-type type) (set slot-init  init)))
+	(getter-met (find-getter owner getter))
+	(setter-met (find-setter owner type setter)))
+    (set (%met-env getter-met) slot)
+    (set (%met-env setter-met) slot)
+    (set (%traits-direct-slots traits)
+	 (@cat2 (%traits-direct-slots traits) (@lst slot)))
+    (set (%traits-slots traits)
+	 (traits-ordered-slots traits))
+    (%adjust-object-values-size owner (%%len (object-slots owner)) owner)
+    slot))
+
+(dv add-slot %slot)
+
+(set %check-types? #t)

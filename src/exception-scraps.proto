@@ -1,0 +1,20 @@
+(dv <signal> (isa <program>))
+  (slot <signal> signal-condition)
+
+(dm ast-eval ((e <monitor>) (env <environment>))
+  (try ((c r) ((monitor-handler e) c r))
+    ((ast-eval (monitor-main-thunk e) env))))
+
+(dm ast-eval ((e <signal>) (env <environment>))
+  (sig (ast-eval (signal-condition e) env)))
+
+;;  SIGNAL
+
+(dv $sexpr-signal-tag 'sig)
+
+(dm sexpr-signal? (exp => <log>)
+  (sexpr-tagged-list? exp $sexpr-signal-tag))
+
+(dm sexpr-signal-condition ((exp <lst>) => <any>)
+  (2nd exp))
+

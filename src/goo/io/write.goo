@@ -1,0 +1,231 @@
+;;  -*- Mode: Scheme; Syntax: Scheme; Package: Scheme; -*-
+;;  Copyright (c) 1993, 1994 Richard Kelsey and Jonathan Rees.  See file COPYING.
+;;  This is file write.scm.
+;;  WRITE
+;;  To use this with some Scheme other than Scheme 48, do the following:
+;;   1. Copy the definition of output-port-option from port.scm
+;;   2. Define write-string as appropriate (as a write-char loop)
+;;   3. (define (disclose x) #f)
+
+;; WRITE
+
+(dm as-binding-name (name) 
+  (as <str> name))
+
+(ds (maybe-write-proto-name (,port ,x ,proto) ,@body)
+  `(if (== ,x ,proto)
+       (write-string ,port (as-binding-name ',proto))
+       (seq ,@body)))
+     
+(dm display ((port <output-port>) (x <str>))
+  (maybe-write-proto-name (port x <str>)
+    (write-string port x)))
+
+(dm display ((port <output-port>) (x <chr>))
+  (maybe-write-proto-name (port x <chr>)
+    (write-char port x)))
+
+(dm display ((port <output-port>) x)
+  (rep recur ((x x))
+    (recurring-write port x recur)))
+
+(dm write-to-string (x => <str>)
+  (call-with-string-output-port (rcurry write x)))
+
+(dm write ((port <output-port>) x)
+  (rep recur ((x x))
+    (recurring-write port x recur)))
+
+(dm writeln ((port <output-port>) x)
+  (write port x) (newline port))
+
+(dm recurring-write ((port <output-port>) (x <lst>) recur)
+  (if (empty? x)
+      (write-string port "()")
+      (maybe-write-proto-name (port x <lst>)
+        (write-list port x recur))))
+
+(dm recurring-write ((port <output-port>) (x <vec>) recur)
+  (maybe-write-proto-name (port x <vec>)
+    (write-vector port x recur)))
+
+(dm recurring-write ((port <output-port>) (x <log>) recur)
+  (if x
+      (write-boolean port 't)
+      (write-boolean port 'f)))
+
+(dm recurring-write ((port <output-port>) (x <sym>) recur)
+  (maybe-write-proto-name (port x <sym>)
+    (write-string port (as <str> x))))
+
+(dm recurring-write ((port <output-port>) (x <loc>) recur)
+  (maybe-write-proto-name (port x <loc>)
+    (write-string port "&0x")
+    (num-to-str (%ib (%lu x)) 16)))
+
+(dm recurring-write ((port <output-port>) (x <num>) recur)
+  (if (@@== x <num>)
+      (write-string port (as-binding-name "<num>"))
+      (write-number port x)))
+
+(dm recurring-write ((port <output-port>) (x <str>) recur)
+  (maybe-write-proto-name (port x <str>)
+    (write-string-literal port x)))
+
+(dm recurring-write ((port <output-port>) (x <chr>) recur)
+  (maybe-write-proto-name (port x <chr>)
+    (write-char-literal port x)))
+
+(dm write-boolean ((port <output-port>) mumble)
+  (write-char port #\#)
+  (write port mumble))
+
+(dm write-number ((port <output-port>) (x <num>))
+  (maybe-write-proto-name (port x <int>)
+    (maybe-write-proto-name (port x <flo>)
+      (write-string port (num-to-str x 10)))))
+
+(dm write-char-literal ((port <output-port>) x)
+  (let ((probe (character-name x)))
+    (write-string port "#\\")
+    (if probe
+	(write port probe)
+	(write-char port x))))
+
+(dm character-name ((char <chr>) => <any>)
+  (if (= char #\space)
+      'space
+      (if (= char #\newline)
+	  'newline
+	  #f)))
+
+(dm write-string-literal ((port <output-port>) x)
+  (write-char port #\")
+  (let ((len (len x)))
+    (rep loop ((i 0))
+      (if (= i len)
+	  (write-char port #\")
+	  (let ((c (elt x i)))
+	    (if (or (= c #\\) (= c #\"))
+		(write-char port #\\))
+	    (write-char port c)
+	    (loop (+ i 1)))))))
+
+(dm write-list ((port <output-port>) (x <lst>) recur)
+  (if (quotation? x)
+      (seq (write-char port #\')
+	   (recur (head (tail x))))
+      (seq (write-char port #\()
+	   (recur (head x))
+	   (rep loop ((l (tail x)) (n 1))
+	     (unless (empty? l)
+	       (write-char port #\space)
+	       (recur (head l))
+	       (loop (tail l) (+ n 1))))
+	   (write-char port #\) ))))
+
+(dm quotation? (x => <log>)
+  (and (isa? x <lst>) 
+       (== (head x) 'quote)
+       (isa? (tail x) <lst>)
+       (empty? (tail (tail x)))))
+
+(dm write-vector ((port <output-port>) (x <vec>) recur)
+  (write-string port "#(")
+  (let ((z (len x)))
+    (if (> z 0)
+	(seq (recur (elt x 0))
+	     (rep loop ((i 1))
+	       (if (>= i z)
+		   #t
+		   (seq (write-char port #\space)
+			(recur (elt x i))
+			(loop (+ i 1))))))))
+  (write-char port #\)))
+
+(dm recurring-write ((port <output-port>) (x <input-port>) recur)
+  (write-string port "#{Input-port}"))
+
+(dm recurring-write ((port <output-port>) (x <output-port>) recur)
+  (write-string port "#{Output-port}"))
+
+;; TODO: CHANGE C IMPLEMENTATION
+v
+(dm object-name (x)
+  (let ((name (%binding-name x))) (and name (as <str> name))))
+
+(dm write-fun-guts ((port <output-port>) (x <fun>) (name <str>) recur)
+  (write-string port "#{")
+  (write-string port name)
+  (let ((name (object-name x)))
+    (and name (seq (write-char port #\space) (write-string port name))))
+  (write-char port #\space)
+  (recur (fun-specs x))
+  (write-string port "}"))
+
+(dm recurring-write ((port <output-port>) (x <gen>) recur)
+  (maybe-write-proto-name (port x <gen>)
+    (write-fun-guts port x "Gen" recur)))
+
+(dm recurring-write ((port <output-port>) (x <met>) recur)
+  (maybe-write-proto-name (port x <met>)
+    (write-fun-guts port x "Met" recur)))
+
+(dm recurring-write ((port <output-port>) x recur)
+  (let ((name (object-name x)))
+    (if name
+	(write-string port (as-binding-name name))
+	(let ((owner (object-name (1st (object-parents x)))))
+	  (write-string port "#{")
+	  (display port owner)
+	  (do (fun ((slot <slot>)) 
+		(let ((getter (slot-getter slot)))
+		  (write-char port #\space)
+		  (display port (object-name getter))
+		  (write-string port ": ")
+		  (recur (slot-value x getter))))
+	      (object-slots x))
+	  (write-string port "}")))))
+
+(dm recurring-write ((port <output-port>) (x (eof-object)) recur)
+  (write-string port "#{End-of-file}"))
+
+(dm format ((port <output-port>) (message <str>) (arguments ...))
+  (let ((found-percent? #f)
+	((argument-index <int>) 0)
+	(no-of-arguments (len arguments)))
+    (loc ((arg ((char <chr>) (class <any>) => <any>)
+	    (let ((current-index argument-index))
+	      (set argument-index (+ argument-index 1))
+	      (assert (< current-index no-of-arguments)
+		      "Too few arguments for format string %=: %="
+		      message arguments)
+	      (let ((argument (elt arguments current-index)))
+		(assert (or (== class <any>) (isa? argument class))
+		  "Format argument for directive '%%%c' not of class %s: %="
+		  char class argument)
+		argument))))
+      (do (fun ((c <chr>))
+	    (if found-percent?
+		(seq (select (as-uppercase c)
+		       ((#\D) (write-string port (num-to-str (arg c <num>))))
+		       ((#\B) (write-string port (num-to-str (arg c <int>) 2)))
+		       ((#\O) (write-string port (num-to-str (arg c <int>) 8)))
+		       ((#\X) (write-string port (num-to-str (arg c <int>) 16)))
+		       ((#\C) (write-char port (arg c <chr>)))
+		       ((#\S) (display port (arg c <any>)))
+		       ((#\=) (write port (arg c <any>)))
+		       ((#\%) (write-char port #\%))
+		       (#t
+			 (error "Invalid format directive '%s' in \"%s\""
+				c message)))
+		     (set found-percent? #f))
+		(if (== c #\%)
+		    (set found-percent? #t)
+		    (write-char port c))))
+	  message))
+    (assert (not found-percent?)
+	    "Incomplete format directive in \"%s\"" message)))
+  
+
+;; (set *debug-tables?* #t)

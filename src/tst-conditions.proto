@@ -1,0 +1,16 @@
+(df main ()
+  (format out "RETURN %=\n"
+    (lab return
+      (try ((condition resume) (return "OK"))
+	(error "YOUR MAMA"))))
+  (format out "RESUME %=\n"
+    (lab return
+      (try ((condition resume) (resume 57))
+        (error "YOUR MAMA"))))
+  (format out "FALL %=\n"
+    (lab return
+      (try ((condition resume) 99)
+        (error "YOUR MAMA")))))
+
+(main) (main)
+(error "YOUR MAMA")

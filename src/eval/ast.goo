@@ -1,0 +1,1091 @@
+;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
+
+(dm objectify-error ((message <str>) (arguments ...))
+  (apply error message arguments))
+
+;;; programs
+
+(dv <program> (isa <any>))
+
+;;; bindings are not programs! they represent bindings.
+
+(dv <binding-name> <any>) ;; (type-union <sym> <int>)
+
+(dv <binding> (isa <any>))
+  (slot <binding> (binding-name <binding-name>))
+  (slot <binding> (binding-type <program>))
+
+(dm binding-free? ((x <binding>) => <log>)
+  #f)
+
+(dv <global-binding> (isa <binding>))
+  (slot <global-binding> (binding-free? <log>) #t)
+  (slot <global-binding> (binding-index <int>))
+
+(dv <runtime-binding> (isa <binding>))
+  (slot <runtime-binding> (binding-locative <loc>))
+
+(dv <predefined-binding> (isa <binding>))
+  (slot <predefined-binding> binding-description #f)
+
+(dv <local-binding> (isa <binding>))
+  (slot <local-binding> binding-mutable? #f)
+  (slot <local-binding> binding-dotted?  #f)
+
+;;; descriptions
+
+(dv <description> (isa <any>))
+
+(dv <functional-description> (isa <description>))
+  (slot <functional-description> description-comparator)
+  (slot <functional-description> description-arity)
+  (slot <functional-description> description-generator)
+
+(dv <constant-description> (isa <description>))
+  (slot <constant-description> description-value)
+
+;;; compile-time
+
+(dv <compile-time> (isa <program>))
+  (slot <compile-time> compile-time-program)
+
+;;; references are programs.
+
+(dv <reference> (isa <program>))
+
+;;; special category of bindings
+
+(dv <magic-binding> (isa (<global-binding> <reference>)))
+  (slot <magic-binding> binding-handler)
+
+;; DEAL WITH INITIALIZE
+
+(dm reference-binding ((x <magic-binding>) => <magic-binding>)
+  x)
+
+(dv <real-reference> (isa <reference>))
+  (slot <real-reference> reference-binding)
+
+(dv <local-reference> (isa <real-reference>))
+  (slot <local-reference> (reference-frame-number <int>))
+  (slot <local-reference> (reference-frame-offset <int>))
+
+(dv <global-reference> (isa <real-reference>))
+
+(dv <runtime-reference> (isa <real-reference>))
+
+(dv <predefined-reference> (isa <real-reference>))
+
+(dv <bound?> (isa <program>))
+  (slot <bound?> bound?-reference)
+
+(dv <assignment> (isa <program>))
+  (slot <assignment> assignment-form)
+
+(dv <local-assignment> (isa <assignment>))
+  (slot <local-assignment> assignment-reference)
+
+(dv <global-assignment> (isa <assignment>))
+  (slot <global-assignment> assignment-binding)
+
+(dv <runtime-assignment> (isa <global-assignment>))
+
+(dv <definition> (isa <global-assignment>))
+
+(dv <variable-definition> (isa <definition>))
+
+(dv <ast-generic-definition> (isa <definition>))
+
+(dv <ast-function-definition> (isa <definition>))
+
+(dv <ast-method-definition> (isa <definition>))
+
+(dv <ast-primitive-definition> (isa <definition>))
+
+(dv <ast-function> (isa <program>))
+  (slot <ast-function> function-name #f)
+  (slot <ast-function> function-bindings)
+  (slot <ast-function> function-nary? #f)
+
+(dm function-kind ((x <ast-function>)) "FUN")
+
+(dv <ast-method> (isa <ast-function>))
+  (slot <ast-method> function-body)
+
+(dm function-kind ((x <ast-method>)) "MET")
+
+(dv <ast-primitive> (isa <ast-method>))
+
+(dm function-kind ((x <ast-primitive>)) "PRM")
+
+(dv <ast-generic> (isa <ast-function>))
+
+(dm function-kind ((x <ast-generic>)) "GEN")
+
+(dv <alternative> (isa <program>))
+  (slot <alternative> alternative-condition)
+  (slot <alternative> alternative-consequent)
+  (slot <alternative> alternative-alternant)
+
+(dv <sequential> (isa <program>))
+  (slot <sequential> sequential-head)
+  (slot <sequential> sequential-tail)
+
+(dv $empty-sequential 
+  (isa <sequential> (set sequential-head #f) (set sequential-tail #f)))
+
+(dm empty-sequential (=> <sequential>)
+  $empty-sequential)
+
+(dm empty-sequential? ((e <sequential>) => <log>)
+  (== e $empty-sequential))
+
+(dv <constant> (isa <program>))
+  (slot <constant> constant-value)
+
+(dv <raw-constant> (isa <constant>))
+
+(dv <application> (isa <program>))
+  (slot <application> application-arguments)
+
+(dv <regular-application> (isa <application>))
+  (slot <regular-application> application-function)
+
+(dv <predefined-application> (isa <application>))
+  (slot <predefined-application> application-binding)
+
+(dv <fix-let> (isa <program>))
+  (slot <fix-let> fix-let-bindings)
+  (slot <fix-let> fix-let-arguments)
+  (slot <fix-let> fix-let-body)
+
+(dv <argument-list> (isa <program>))
+  (slot <argument-list> arguments-head)
+  (slot <argument-list> arguments-tail)
+
+(dv $argument-empty-list 
+  (isa <argument-list> (set arguments-head #f) (set arguments-tail #f)))
+
+(dm empty-argument-list (=> <argument-list>)
+  $argument-empty-list)
+
+(dm empty-argument-list? ((e <argument-list>) => <log>)
+  (== e $argument-empty-list))
+
+(dm as ((c <lst>) (e <argument-list>) => <lst>)
+  (rep loop ((res '()) (e e))
+    (if (empty-argument-list? e)
+	(rev! res)
+	(loop (pair (arguments-head e) res) (arguments-tail e)))))
+
+(dv <locals> (isa <program>))
+  (slot <locals> locals-bindings)
+  (slot <locals> locals-functions)
+  (slot <locals> locals-body)
+
+(dv <bind-exit> (isa <program>))
+  (slot <bind-exit> bind-exit-main-fun)
+
+(dv <unwind-protect> (isa <program>))
+  (slot <unwind-protect> unwind-protect-protected-thunk)
+  (slot <unwind-protect> unwind-protect-cleanup-thunk)
+
+(dv <monitor> (isa <program>))
+  (slot <monitor> monitor-handler)
+  (slot <monitor> monitor-main-thunk)
+
+(dv <syntax-if> (isa <program>))
+  (slot <syntax-if> sif-pattern)
+  (slot <syntax-if> sif-bindings)
+  (slot <syntax-if> sif-value)
+  (slot <syntax-if> sif-then)
+  (slot <syntax-if> sif-else)
+
+(dv <match> (isa <any>))
+
+(dv <match-structure> (isa <match>))
+
+(dv <match-atom> (isa <match-structure>))
+  (slot <match-structure> match-value)
+
+(dv <match-list> (isa <match-structure>))
+  (slot <match-structure> match-elements)
+
+(dv <match-sublist> (isa <match-structure>))
+  (slot <match-sublist> match-element)
+
+(dv <match-empty-list> (isa <match-structure>))
+
+(dv <match-binding> (isa <match>))
+  (slot <match-binding> match-binding)
+
+(dv <match-unquote> (isa <match-binding>))
+
+(dv <match-unquote-splicing> (isa <match-binding>))
+
+;;; ENVIRONMENT
+
+(dv <static-environment> (isa <any>))
+  (slot <static-environment> environment-next #f)
+  (slot <static-environment> (environment-bindings <col>))
+
+(dv <static-global-environment> (isa <static-environment>))
+  (slot <static-global-environment> environment-next-index -1)
+
+(dv <static-predefined-global-environment> (isa <static-global-environment>))
+
+(dv <static-empty-environment> (isa <static-environment>))
+
+(dv $empty-static-environment (isa <static-empty-environment>))
+
+(dv <static-local-environment> (isa <static-environment>))
+
+;;;;
+;;;; CONVERT TO AST FORM
+
+(dm objectify ((e <lst>) (r <static-environment>) => <any>)
+  (let ((m (objectify (head e) r)))
+    (if (isa? m <magic-binding>)
+	(objectify ((binding-handler m) e r) r)
+	(objectify-application m (tail e) r))))
+
+(dm objectify ((e <sym>) (r <static-environment>) => <any>)
+  (objectify-symbol e r))
+
+(dm objectify ((e <magic-binding>) (r <static-environment>) => <any>)
+  e)
+
+(dm objectify ((e <program>) (r <static-environment>) => <any>)
+  e)
+
+(dm objectify ((e '()) (r <static-environment>) => <any>)
+  (objectify-quotation e r))
+
+(dm objectify (e (r <static-environment>) => <any>)
+  (objectify-quotation e r))
+
+(dm objectify-quotation (value r => <constant>)
+  (isa <constant> (set constant-value value)))
+
+(dm objectify-raw (value r => <raw-constant>)
+  (isa <raw-constant> (set constant-value value)))
+
+(dm objectify-bound? ((e <sym>) (r <static-environment>) => <any>)
+  (let ((ref (objectify-symbol e r)))
+    (isa <bound?> (set bound?-reference ref))))
+
+(dm objectify-compile-time (program r => <constant>)
+  (let ((program (objectify program r)))
+    (ast-eval program (rt-env))
+    (isa <constant> (set constant-value #f))))
+
+(dm objectify-alternative (t c a r => <alternative>)
+  (isa <alternative> 
+       (set alternative-condition  (objectify t r))
+       (set alternative-consequent (objectify c r))
+       (set alternative-alternant  (objectify a r))))
+
+(dm sequentialize ((e* <lst>) => <program>)
+  (if (empty? e*)
+      (isa <constant> (set constant-value #f))
+      (if (empty? (tail e*))
+	  (head e*)
+	  (rep loop ((e* e*))
+	    (if (empty? e*)
+		(empty-sequential)
+		(isa <sequential> 
+		     (set sequential-head (head e*))
+		     (set sequential-tail (loop (tail e*)))))))))
+
+(dm objectify-sequential ((e* <lst>) r => <program>)
+  (sequentialize (map (rcurry objectify r) e*)))
+
+(dm objectify-application ((ff <ast-method>) e* r => <program>)
+  (let ((ee* (convert2arguments (map (fun (e) (objectify e r)) e*))))
+    (process-closed-application ff ee* r)))
+
+;; TODO: USE THIS FOR PRIMITIVES
+
+(dm objectify-application ((ff <predefined-reference>) e* r => <program>)
+  (let ((ee*  (convert2arguments (map (fun (e) (objectify e r)) e*)))
+	(fvf  (reference-binding ff))
+	(desc (binding-description fvf)))
+    (isa <predefined-application> 
+	 (set application-binding fvf)
+	 (set application-arguments ee*))))
+
+(dm objectify-application (ff e* r => <program>)
+  (let ((ee* (convert2arguments (map (fun (e) (objectify e r)) e*))))
+    (isa <regular-application> 
+	 (set application-function ff) 
+	 (set application-arguments ee*))))
+
+(dm process-closed-application ((f <ast-method>) e* r => <fix-let>)
+  (let ((v* (function-bindings f))
+	(b  (function-body f)))
+    (if (function-nary? f)
+	(process-nary-closed-application f e* r)
+	(if (= (number-of e*) (len (function-bindings f)))
+	    (isa <fix-let> 
+		 (set fix-let-bindings (function-bindings f))
+		 (set fix-let-arguments e*)
+		 (set fix-let-body (function-body f)))
+	    (objectify-error "incorrect regular arity" f e*)))))
+
+(dm process-nary-closed-application (f e* r => <fix-let>)
+  (loc ((pack-dotted-arguments (e*)
+	   (if (empty-argument-list? e*)
+	       (isa <constant> (set constant-value '()))
+	       (isa <regular-application> ;; <predefined-application>
+		    (set application-function
+			 (objectify-symbol 'pair r))
+		    (set application-arguments
+			 (isa <argument-list>
+			      (set arguments-head
+				   (arguments-head e*))
+			      (set arguments-tail
+				   (isa <argument-list> 
+					(set arguments-head
+					     (pack-dotted-arguments 
+					       (arguments-tail e*)))
+					(set arguments-tail
+					     (empty-argument-list)))))))))
+        (gather-arguments (e* v*)
+	  (if (binding-dotted? (head v*))
+	      (isa <argument-list>
+		   (set arguments-head (pack-dotted-arguments e*))
+		   (set arguments-tail (empty-argument-list)))
+	      (if (empty-argument-list? e*)
+		  (objectify-error "incorrect dotted arity" f e*)
+		  (isa <argument-list> 
+		       (set arguments-head 
+			    (arguments-head e*))
+		       (set arguments-tail 
+			    (gather-arguments
+			     (arguments-tail e*) (tail v*))))))))
+   (let ((v* (function-bindings f))
+	 (b  (function-body f))
+	 (o  (isa <fix-let> 
+		  (set fix-let-bindings  v*)
+		  (set fix-let-arguments (gather-arguments e* v*))
+		  (set fix-let-body      b))))
+     (set (binding-dotted? (last v*)) #f)
+     o)))
+ 
+(dm convert2arguments ((e* <lst>) => <any>)
+  (if (empty? e*)
+      (empty-argument-list)
+      (isa <argument-list>
+	   (set arguments-head (head e*))
+	   (set arguments-tail (convert2arguments (tail e*))))))
+
+(dm number-of ((o <argument-list>) => <int>)
+  (if (empty-argument-list? o)
+      0
+      (+ 1 (number-of (arguments-tail o)))))
+
+;;; assignment on mutable local bindings are immediately
+;;; processed. references to local mutable bindings must wait the
+;;; second pass.
+
+(dm objectify-assignment ((binding <lst>) e r => <program>)
+  (let ((op (sexpr-operator binding)))
+    (if (sexpr-variable? op)
+	(objectify
+	 (sexpr-make-application
+	  (objectify (sexpr-make-setter-name op) r) 
+	  (pair e (sexpr-operands binding)))
+	 r)
+	(objectify-error "Unsupported Set!: %=" e))))
+
+(dm objectify-assignment ((binding <sym>) e r => <assignment>)
+  (let ((ref (objectify binding r))
+	(val (objectify e r)))
+    (objectify-assignment-using ref val)))
+
+(dm objectify-assignment-using 
+    ((ref <local-reference>) (val <program>) => <local-assignment>)
+ (set (binding-mutable? (reference-binding ref)) #t)
+ (isa <local-assignment> 
+   (set assignment-reference ref)
+   (set assignment-form      val)))
+
+(dm objectify-assignment-using 
+    ((ref <global-reference>) (val <program>) => <local-assignment>)
+ (isa <global-assignment> 
+   (set assignment-binding (reference-binding ref))
+   (set assignment-form    val)))
+
+(dm objectify-assignment-using 
+    ((ref <runtime-reference>) (val <program>) => <local-assignment>)
+ (isa <runtime-assignment> 
+   (set assignment-binding (reference-binding ref))
+   (set assignment-form    val)))
+
+;; TODO: HANDLE REDEF
+
+(dm ast-define-binding (r name make-binding => <any>)
+  (let ((existing-binding (find-binding name r))
+	(binding
+	 (if existing-binding
+	     (seq (if (binding-free? existing-binding)
+		      (set (binding-free? existing-binding) #f)
+		      ;; (format out "REDEF %s\n" name)
+		      )
+		  existing-binding)
+	     (let ((binding (make-binding))
+		   (gr (find-static-global-environment r)))
+	       (set (binding-name binding) name)
+	       (set (binding-free? binding) #f)
+	       (set (binding-index binding) (inc (environment-next-index gr)))
+	       (insert-global! binding gr)
+	       binding))))
+    binding))
+
+(dv *macro-tracing?* #f)
+
+(dm objectify-definition (var e r => <any>)
+  (let ((name
+	 (sexpr-variable-name var))
+	(binding 
+	 (ast-define-binding r name (fun () (isa <global-binding>))))
+	(defn
+	 (isa <definition> 
+	   (set assignment-binding binding)
+	   (set assignment-form (objectify e r)))))
+    defn))
+
+(dm objectify-syntax-definition (name e r => <any>)
+  (let ((sep-expander (sexpr-make-macro-function e))
+	(ast-expander (objectify sep-expander r))
+	(expander     (ast-eval ast-expander (rt-env))))
+    ;; (format out "DEFMACRO ") (writeln out sep-expander)
+    (loc ((expand (x r)
+	    (when *macro-tracing?*
+	      (format out "MACRO ") (write out x) (format out "\n"))
+	    (let ((exp (apply expander (lst x))))
+	      (when *macro-tracing?*
+		(format out "  => ") (write out exp) (format out "\n"))
+	      exp)))
+      ;; (format out "DEFMAC %=\n" name)
+      (let ((binding 
+	     (ast-define-binding 
+	      r name
+	      (fun () (isa <magic-binding> (set binding-handler expand))))))
+	(isa <constant> (set constant-value #f))))))
+
+(dm objectify-function-definition (name e r => <ast-function-definition>)
+  (let ((binding (ast-define-binding r name (fun () (isa <global-binding>))))
+	(f       (objectify e r)))
+    (set (function-name f) binding)
+    (let ((defn (isa <ast-function-definition>
+		     (set assignment-binding binding)
+		     (set assignment-form f))))
+      defn)))
+
+(dm objectify-primitive-definition 
+    (name params body r => <ast-primitive-definition>)
+  (let ((binding
+	 (ast-define-binding r name (fun () (isa <predefined-binding>))))
+	;; TODO: MULTIPLE VALUES
+	((tup bindings nary?)
+	 (objectify-parameters params r))
+	(body
+	 (objectify-sequential body (r-extend* r bindings)))
+	(form
+	 (isa <ast-primitive> 
+	      (set function-name binding)
+	      (set function-bindings bindings)
+	      (set function-nary? nary?)
+	      (set function-body body))))
+    (set (binding-description binding) form)
+    (let ((defn
+	   (isa <ast-primitive-definition>
+		(set assignment-binding binding)
+		(set assignment-form form))))
+      defn)))
+
+(dm objectify-generic-definition (name params r => <ast-generic-definition>)
+  (let ((binding
+	 (ast-define-binding r name (fun () (isa <global-binding>))))
+	((tup bindings nary?)
+	 (objectify-parameters params r))
+	(form
+	 (isa <ast-generic>
+	      (set function-name binding)
+	      (set function-bindings bindings)
+	      (set function-nary? nary?)))
+	(defn
+	  (isa <ast-generic-definition>
+	       (set assignment-binding binding)
+	       (set assignment-form form))))
+    defn))
+
+(dm objectify-method-definition (name e r => <ast-method-definition>)
+  (let ((binding (ast-define-binding r name (fun () (isa <global-binding>))))
+	(gen     (lst 'if (lst 'bound? name) name #f))
+	(met     (objectify e r))
+	;; TODO: NAME AND MARK AS GENERIC METHOD
+	(call    (lst '%define-method gen met))
+	(form    (objectify call r))
+	(defn    (isa <ast-method-definition>
+		      (set assignment-binding binding)
+		      (set assignment-form form))))
+    (set (function-name met) name)
+    defn))
+
+;;; it is important that the body is objectified first so mutability
+;;; of local bindings is known and they can be appropriately handled
+;;; in objectify-bindings-list. 
+;;; all bindings are considered immutable at the beginning.
+
+(dm objectify-function (parameters body r => <ast-method>)
+  (let (((tup bindings nary?) (objectify-parameters parameters r))
+	(b (objectify-sequential body (r-extend* r bindings))))
+    (isa <ast-method> 
+	 (set function-bindings bindings)
+	 (set function-nary? nary?)
+	 (set function-body b))))
+
+(dv $sexpr-optionals-tag       '...)
+(dv $sexpr-optionals-type-name '<opts>)
+
+;; TODO: MULTIPLE VALUES
+
+(dm objectify-parameters (params r => (bindings <lst>) (nary? <log>))
+  (rep col ((params params) (nary? #f) (bindings '()))
+    (if (empty? params)
+	(tup (rev! bindings) nary?)
+	(let ((param   (head params))
+	      (sname   (sexpr-variable-name param))
+	      (stype   (sexpr-variable-type param))
+	      (dotted? (== stype $sexpr-optionals-tag))
+	      (stype   (if dotted? $sexpr-optionals-type-name stype))
+	      (type    (objectify stype r))
+	      (binding
+	       (isa <local-binding>
+		    (set binding-name sname)
+		    (set binding-type type)
+		    (set binding-dotted? dotted?))))
+	  (col (tail params) dotted? (pair binding bindings))))))
+
+(dm objectify-binding (n (b <magic-binding>) r => <magic-binding>)
+  b)
+
+(dm compute-local-reference-offsets 
+    ((binding <local-binding>) (r <static-local-environment>) 
+     => (tup (frame-number <int>) (frame-offset <int>)))
+ (rep loop ((i 0) (r r))
+   (if (isa? r <static-local-environment>)
+       (rep find ((j 0) (bindings (environment-bindings r)))
+	 (if (empty? bindings)
+	     (loop (+ i 1) (environment-next r))
+	     (if (== (head bindings) binding)
+		 (tup i j)
+		 (find (+ j 1) (tail bindings)))))
+       (error "DIDN'T FIND LOCAL BINDING %= IN %=" name r))))
+
+(dm objectify-binding (n (b <local-binding>) r => <local-reference>)
+  (let (((tup i j) (compute-local-reference-offsets b r)))
+    (isa <local-reference>
+      (set reference-binding b)
+      (set reference-frame-number i)
+      (set reference-frame-offset j))))
+
+(dm objectify-binding (n (b <global-binding>) r => <global-reference>)
+  (isa <global-reference> (set reference-binding b)))
+
+(dm objectify-binding (n (b <runtime-binding>) r => <runtime-reference>)
+  (isa <runtime-reference> (set reference-binding b)))
+
+(dm objectify-binding (n (b <predefined-binding>) r => <predefined-binding>)
+  (isa <predefined-reference> (set reference-binding b)))
+
+;;; a free binding is defined to be a global binding defined on the fly.
+
+(dm default-type (r) 
+  (objectify '<Any> r))
+
+(dm objectify-free-global-reference (name r => <global-reference>)
+  (let ((gr (find-static-global-environment r))
+	(b (isa <global-binding>
+	     (set binding-name name)
+	     (set binding-index (inc (environment-next-index gr))))))
+    (insert-global! b gr)
+    (isa <global-reference> (set reference-binding b))))
+
+(dm objectify-binding (n b r => <reference>)
+  (objectify-free-global-reference n r))
+
+(dm objectify-symbol (name r => <reference>)
+  (objectify-binding name (find-binding name r) r))
+
+(dm ftype (r)
+  (objectify '<fun> r))
+
+(dm objectify-locals (names sigs bodies body r => <locals>)
+  (let ((bindings
+	 (map (fun (n) (isa <local-binding> 
+			    (set binding-name n) (set binding-type (ftype r))))
+	      names))
+	(new-r
+	 (r-extend* r bindings))
+	(function-forms
+	 (map2 sexpr-make-anonymous-method sigs bodies))
+	(functions
+	 (map (rcurry objectify new-r) function-forms)))
+    (do2 (fun (x n) (set (function-name x) n)) functions bindings)
+    (isa <locals>
+	 (set locals-bindings  bindings)
+	 (set locals-functions functions)
+	 (set locals-body      (objectify-sequential body new-r)))))
+
+(dm objectify-bind-exit (name body r => <bind-exit>)
+  (isa <bind-exit>
+       (set bind-exit-main-fun 
+	    (objectify (sexpr-make-anonymous-method (lst name) body) r))))
+
+(dm objectify-unwind-protect (protected-form cleanup-forms r => <unwind-protect>)
+  (isa <unwind-protect>
+       (set unwind-protect-protected-thunk
+	    (objectify (sexpr-make-anonymous-method '() (lst protected-form)) r))
+       (set unwind-protect-cleanup-thunk
+	    (objectify (sexpr-make-anonymous-method '() cleanup-forms) r))))
+
+(dm objectify-monitor (handler body r => <monitor>)
+  (isa <monitor>
+       (set monitor-handler    
+	    (objectify handler r))
+       (set monitor-main-thunk
+	    (objectify (sexpr-make-anonymous-method '() body) r))))
+
+(dm objectify-bind-list (pat => <any>)
+  (error "Expected Pattern List %=\n" pat))
+
+(dm objectify-bind-list ((pat '()) => <any>)
+  (isa <match-empty-list>))
+
+(dm objectify-bind-list ((pat <lst>) => <any>)
+  (case
+    ((sexpr-unquote? pat)
+      (error "Unquote Unexpected Here %=\n" pat))
+    ((sexpr-unquote-splicing? pat)
+     (error "Unquote Splicing Unexpected Here %=\n" pat))
+    (#t
+     (objectify-bind-list* pat))))
+
+(dm objectify-bind-list* ((pat <lst>) => <any>)
+  (let ((matchers (map objectify-bind-element pat)))
+    (isa <match-list> (set match-elements matchers))))
+
+(dm objectify-bind-element (pat => <any>)
+  (isa <match-atom> (set match-value pat)))
+
+(dm objectify-bind-element ((pat <lst>) => <any>)
+  (case
+    ((sexpr-unquote? pat)
+     (objectify-bind-unquote pat))
+    ((sexpr-unquote-splicing? pat)
+     (objectify-bind-unquote-splicing pat))
+    (#t
+     (let ((matcher (objectify-bind-list pat)))
+       (isa <match-sublist> (set match-element matcher))))))
+
+(dm objectify-bind-unquote ((pat <lst>) => <any>)
+  (let ((binding (isa <local-binding> (set binding-name (2nd pat)))))
+    (isa <match-unquote> (set match-binding binding))))
+
+(dm objectify-bind-unquote-splicing ((pat <lst>) => <any>)
+  (let ((binding (isa <local-binding> (set binding-name (2nd pat)))))
+    (isa <match-unquote-splicing> (set match-binding binding))))
+
+(dm objectify-pattern (pattern => <match>)
+  (objectify-bind-list pattern))
+
+(dm objectify-syntax-if 
+    (pattern bindings value then else r => <syntax-if>)
+  (let ((bindings
+	 (map (fun (n) (isa <local-binding> (set binding-name n))) bindings)))
+    (isa <syntax-if>
+	 (set sif-pattern  (objectify-pattern pattern))
+	 (set sif-bindings bindings)
+	 (set sif-value    (objectify value r))
+	 (set sif-then     (objectify then (r-extend* r bindings)))
+	 (set sif-else     (objectify else r)))))
+
+;;; AST ENVIRONMENT
+
+;;; these functions deal with the environment.  r is a sequential of
+;;; full-environment objects containing local bindings followed by an
+;;; instance of environment followed by a sequential of full-environment
+;;; containing the global mutable bindings mixed with the global
+;;; macros followed by the predefined bindings.
+
+(dm r-extend* (r (bindings <lst>) => <static-environment>)
+  (isa <static-local-environment> 
+    (set environment-next r)
+    (set environment-bindings bindings)))
+
+(dm insert-global! (binding r)
+  (let (((r <static-global-environment>) (find-static-global-environment r)))
+    (set (elt (environment-bindings r) (binding-name binding)) binding)))
+
+(dm insert-globals! ((bindings <lst>) r) 
+  (do (fun (b) (insert-global! b r)) bindings))
+
+(dm find-static-global-environment 
+    ((r <static-local-environment>) => <static-global-environment>)
+  (find-static-global-environment (environment-next r)))
+
+(dm find-static-global-environment
+    ((r <static-global-environment>) => <static-global-environment>)
+  r)
+
+(dm find-binding (name (r <static-local-environment>) => (type-or <binding> #f))
+  (rep loop ((bindings (environment-bindings r)))
+    (if (empty? bindings)
+	(find-binding name (environment-next r))
+	(if (== name (binding-name (head bindings)))
+	    (head bindings)
+	    (loop (tail bindings))))))
+
+;; TODO: (FALSE-OR <BINDING>)
+
+(dm find-binding (name (r <static-global-environment>) => <any>) 
+  (let ((binding (elt (environment-bindings r) name)))
+    (if (== binding nul)
+	(find-binding name (environment-next r))
+	binding)))
+
+;; TODO: (FALSE-OR <BINDING>)
+
+(dm find-binding (name (r <static-empty-environment>) => <any>)
+  #f)
+
+(dm frame-bindings ((env <static-environment>) => <lst>)
+  (as <lst> (map identity (environment-bindings env))))
+
+(df report-undefined-global-bindings (env)
+  (let ((env (find-static-global-environment env)))
+    (rep loop ((env env))
+      (unless (isa? env <static-empty-environment>)
+        (do (fun (binding)
+	      (if (binding-free? binding)
+		  (format out "%= UNDEFINED\n" (binding-name binding))))
+	    (frame-bindings env))
+	(loop (environment-next env))))))
+
+;;;; SPECIAL FORMS
+
+(dv *magic-bindings* '())
+
+(dm register-magic-binding (name value)
+  (set *magic-bindings* (add *magic-bindings* value)))
+
+(dm magic-bindings ()
+  *magic-bindings*)
+
+(ds (define-magic-binding ,name (,@params) ,@body)
+  (let ((special-name (make-sym "special-" name))
+	(sexpr-name   (make-sym "$sexpr-" name "-tag")))
+    `(seq (dv ,special-name
+	       (isa <magic-binding>
+		    (set binding-name ,sexpr-name)
+		    (set binding-handler (fun (,@params) ,@body))
+		    (set binding-free? #f)))
+	  (register-magic-binding ',name ,special-name))))
+
+(define-magic-binding if (x r)
+  (objectify-alternative
+    (sexpr-if-test x) (sexpr-if-then x) (sexpr-if-else x) r))
+
+(define-magic-binding begin (x r)
+  (objectify-sequential (tail x) r))
+
+(dv $sexpr-%raw-tag '%raw)
+
+(define-magic-binding %raw (x r)
+  (objectify-raw (2nd x) r))
+
+(define-magic-binding quote (x r)
+  (objectify-quotation (sexpr-text-of-quotation x) r))
+
+(define-magic-binding set (x r)
+  (objectify-assignment
+    (sexpr-assignment-variable x) (sexpr-assignment-value x) r))
+
+(define-magic-binding define (x r)
+  (objectify-definition
+    (sexpr-definition-variable x) (sexpr-definition-value x) r))
+
+(define-magic-binding define-syntax (x r)
+  (objectify-syntax-definition
+    (sexpr-syntax-definition-variable x) (sexpr-syntax-definition-value x) r))
+
+(define-magic-binding define-method (x r)
+  (objectify-method-definition
+    (sexpr-function-definition-variable x) 
+    (sexpr-function-definition-value x) r))
+
+(define-magic-binding define-generic (x r)
+  (objectify-generic-definition
+    (sexpr-function-definition-variable x) 
+    (sexpr-function-parameters x) r))
+
+(define-magic-binding define-function (x r)
+  (objectify-function-definition
+    (sexpr-function-definition-variable x) 
+    (sexpr-function-definition-value x) r))
+
+(define-magic-binding method (x r)
+  (objectify-function
+    (sexpr-method-parameters x) (sexpr-method-body x) r))
+
+(dv $sexpr-bound?-tag 'bound?)
+
+(define-magic-binding bound? (x r)
+  (objectify-bound? (2nd x) r))
+
+(define-magic-binding let (x r)
+  (objectify (sexpr-let->combination x) r))
+
+(define-magic-binding locals (x r)
+  (objectify-locals
+    (sexpr-loc-bound-names x) (sexpr-loc-bound-parameters x) 
+    (sexpr-loc-bound-bodies x) (sexpr-loc-raw-body x) r))
+
+(define-magic-binding iterate (x r)
+  (objectify (sexpr-iterate->loc x) r))
+
+(define-magic-binding bind-exit (x r)
+  (objectify-bind-exit (sexpr-block-name x) (sexpr-block-body x) r))
+
+(define-magic-binding unwind-protect (x r)
+  (objectify-unwind-protect
+    (sexpr-unwind-protect-protected-form x) 
+    (sexpr-unwind-protect-cleanup-forms x)
+    r))
+
+(define-magic-binding monitor (x r)
+  (objectify-monitor (sexpr-monitor-handler x) (sexpr-monitor-body x) r))
+
+(dm pairize ((args <lst>) => <any>)
+  (if (empty? args)
+      (lst 'quote '())
+      (lst 'pair (head args) (pairize (tail args)))))
+
+(define-magic-binding isa (x r)
+  (let ((slot-inits (sexpr-isa-slot-inits x)))
+    (objectify
+     (sexpr-make-application
+       '%isa
+       (lst (pairize (sexpr-isa-parents x))
+	    (pairize (sexpr-isa-init-slots slot-inits))
+	    (pairize (sexpr-isa-init-values slot-inits))))
+     r)))
+
+(define-magic-binding slot (x r)
+  (let ((var       (sexpr-slot-variable x))
+	(name      (sexpr-variable-name var))
+	(setter-name (sexpr-make-setter-name name))
+	(slot-type (sexpr-variable-type var)))
+    (objectify
+     (sexpr-make-begin
+      (lst (sexpr-make-getter name (sexpr-slot-object x))
+	   (sexpr-make-setter name (sexpr-slot-object x) slot-type)
+	   (sexpr-make-application
+	     '%slot
+	     (lst (sexpr-slot-object x) 
+		  name setter-name slot-type
+		  (sexpr-make-anonymous-method
+		   '((x <any>)) (lst (sexpr-slot-init x)))))))
+     r)))
+			    
+(dv $sexpr-compile-time-tag 'ct)
+
+(define-magic-binding compile-time (x r)
+  (objectify-compile-time (head (tail x)) r))
+
+(dv $sexpr-define-primitive-tag 'dp)
+
+(define-magic-binding define-primitive (x r)
+  (objectify-primitive-definition
+    (sexpr-function-definition-variable x) 
+    (sexpr-function-parameters x)
+    (sexpr-function-body x) r))
+
+(define-magic-binding quasiquote (x r)
+  (let ((bq-ast    (objectify (sexpr-expand-backquote x) r))
+	(expansion (ast-eval bq-ast (rt-env))))
+    (objectify expansion r)))
+
+(dm ast-macro-expand (x r)
+  (let ((m (objectify (head x) r)))
+    (if (isa? m <magic-binding>)
+	(let ((res ((binding-handler m) x r)))
+	  ;; (format out "EXPANSION ") (write out res) (format out "\n")
+	  res)
+	#f)))
+
+(define-magic-binding macro-expand (x r)
+  (objectify-quotation
+    (ast-macro-expand (2nd x) r) r))
+
+(define-magic-binding syntax-if (x r)
+  ;; (syntax-if (?pattern ?value) ?form ...)
+  ;; x   => just matches etc
+  ;; x  => binds x to an sexpr
+  ;; @x => binds x to a series of sexprs
+  ;; TODO: make this deals with multiple bindings
+  (let ((pat (sexpr-syntax-if-pattern x)))
+    (objectify-syntax-if
+     pat (sexpr-bind-pattern-variables pat)
+     (sexpr-syntax-if-value x)
+     (sexpr-syntax-if-then x)
+     (sexpr-syntax-if-else x)
+     r)))
+
+(dv *primitives* '())
+
+(dm primitives ()
+  *primitives*)
+
+;; (dm register-primitive (name value)
+;;   (set *primitives* (add *primitives* value)))
+;; 
+;; (ds (define-primitive ,name (,@params))
+;;   `(let ((binding
+;; 	  (isa <magic-binding> (set binding-name ',name) (set binding-free? #f))))
+;;      (register-primitive binding)))
+;; 
+;; (define-primitive %eq? ())
+;; (define-primitive %bb ())
+;; (define-primitive %i= ())
+;; (define-primitive %i< ())
+;; (define-primitive %i+ ())
+;; (define-primitive %i- ())
+;; (define-primitive %i* ())
+;; (define-primitive %im ())
+;; (define-primitive %ir ())
+;; (define-primitive %it/ ())
+;; (define-primitive %iv ())
+;; (define-primitive %i^ ())
+;; (define-primitive %i& ())
+;; (define-primitive %i! ())
+;; (define-primitive %i? ())
+;; (define-primitive %i<< ())
+;; (define-primitive %i>> ())
+;; (define-primitive %i<<< ())
+;; (define-primitive %i>>> ())
+;; (define-primitive %fi2f ())
+;; (define-primitive %f= ())
+;; (define-primitive %f< ())
+;; (define-primitive %f+ ())
+;; (define-primitive %f* ())
+;; (define-primitive %f- ())
+;; (define-primitive %f/ ())
+;; (define-primitive %ft ())
+;; (define-primitive %ft/ ())
+;; (define-primitive %ff ())
+;; (define-primitive %fc ())
+;; (define-primitive %c= ())
+;; (define-primitive %c< ())
+;; (define-primitive %current-output-port ())
+;; (define-primitive %current-input-port ())
+;; (define-primitive %open-input-file ())
+;; (define-primitive %open-output-file ())
+;; (define-primitive %close-output-port ())
+;; (define-primitive %close-input-port ())
+;; (define-primitive %write-char ())
+;; (define-primitive %write-string ())
+;; (define-primitive %read-char ())
+;; (define-primitive %newline ())
+;; (define-primitive %eof-object ())
+;; (define-primitive %eof-object ())
+;; (define-primitive %peek-char ())
+;; (define-primitive %char-ready ())
+;; (define-primitive %object-traits ())
+;; (define-primitive %object-traits-setter ())
+;; (define-primitive %object-values ())
+;; (define-primitive %object-values-setter ())
+;; (define-primitive %make-object ())
+;; (define-primitive %slot-elt ())
+;; (define-primitive %slot-elt-setter ())
+;; (define-primitive %make-object-values ())
+;; (define-primitive %install-object-values ())
+;; (define-primitive %adjust-object-values-size ())
+;; (define-primitive %%slen ())
+;; (define-primitive %%selt ())
+;; (define-primitive %%selt-setter ())
+;; (define-primitive %%sfab ())
+;; (define-primitive %%vlen ())
+;; (define-primitive %%velt ())
+;; (define-primitive %%velt-setter ())
+;; (define-primitive %%vfab ())
+;; 
+;; (define-primitive %break ())
+;; (define-primitive %binding-name ())
+;; (define-primitive %fun-reg ())
+;; (define-primitive %trace-on ())
+;; (define-primitive %trace-off ())
+;; (define-primitive %%apply ())
+
+;;; SETUP INITIAL CT ENVIRONMENT
+
+;; TODO: UPDATE RETURN VALUES
+
+(df init-rt-environment (rt-env)
+  (%do-runtime-bindings
+   (fun (name loc)
+     (let ((sym (as <sym> name))
+  	   (binding
+	    (isa <runtime-binding>
+	      (set binding-name     sym)
+	      (set binding-locative loc))))
+       (insert-global! binding rt-env)))))
+
+(df fab-static-global-environment 
+    ((type <static-environment>) (next <static-environment>)
+     => <static-global-environment>)
+  (isa type 
+    (set environment-next next)
+    (set environment-bindings (fab <tab> 1000))))
+
+(df init-static-global-environment 
+    (=> (tup (sys-env <static-environment>) (user-env <static-environment>)))
+  (let ((rt-env
+	 (fab-static-global-environment
+	  <static-predefined-global-environment> $empty-static-environment))
+	(sys-env
+	 (fab-static-global-environment
+	  <static-predefined-global-environment> rt-env))
+	(user-env  
+	 (fab-static-global-environment
+	  <static-global-environment> sys-env)))
+    (init-rt-environment rt-env)
+    (insert-globals! (cat (magic-bindings) (primitives)) sys-env)
+    (tup sys-env user-env)))
+
+(dv *static-predefined-global-environment*      $empty-static-environment)
+(dv *static-global-environment*                 $empty-static-environment)
+
+(dv *static-predefined-global-boot-environment* $empty-static-environment)
+(dv *static-global-boot-environment*            $empty-static-environment)
+
+(df init-ast ()
+  (let (((tup sys-env usr-env) (init-static-global-environment)))
+    (set *static-predefined-global-environment* sys-env)
+    (set *static-global-environment* usr-env))
+  ;; (let (((tup sys-env usr-env) (init-static-global-environment)))
+  ;;   (set *static-predefined-global-boot-environment* sys-env)
+  ;;   (set *static-global-boot-environment* usr-env))
+  )
+
+(df ct-env () *static-global-environment*)
+(df ct-boot-env () *static-global-boot-environment*)
+
+(df do-static-global-bindings ((f <fun>) env)
+  (rep loop ((env env))
+    (unless (isa? env <static-predefined-global-environment>)
+      (do f (frame-bindings env))
+      (loop (environment-next env)))))

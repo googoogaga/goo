@@ -1,0 +1,4 @@
+look for generic
+g.current
+use macro for defining pair like classes
+quotation bindings can't have name's as such

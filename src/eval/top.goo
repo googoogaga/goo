@@ -1,0 +1,172 @@
+(dm os-name (=> <str>)
+  (%sb (%os-name)))
+
+(dm os-binding-value ((s <str>) => <str>)
+  (%sb (%os-binding-value (%su s))))
+
+(dm os-binding-value-setter ((v <str>) (s <str>) => <str>)
+  (set (%os-binding-value (%su s)) (%su v))
+  v)
+
+(dv *path-separator*
+  (case
+    ((= (os-name) "linux") "/")
+    ((= (os-name) "win32") "\\")
+    (#t "/")))
+
+(dm base-path ((filename <str>) => <lst>)
+  (rep loop ((i (len filename)))
+    (if (< i 0)
+	""
+	(if (= (elt filename i) (elt *path-separator* 0))
+	    (sub filename 0 (+ i 1))
+	    (loop (- i 1))))))
+
+(dv *proto-root* (os-binding-value "PROTO_ROOT"))
+
+;; TODO: GENERALIZE
+(dm src-filename ((filename <str>) => <str>)
+  (if (empty? *proto-root*)
+      (cat (base-path (app-filename)) ;; relative to app start
+	   ".." *path-separator* "SRC" *path-separator*
+	   filename)
+      (cat *proto-root* "SRC" *path-separator* filename)))
+
+(dm parse-in ((s <str>) ct-env)
+  (objectify (read-from-string s) ct-env))
+
+(dm parse ((s <str>)) (parse-in s (ct-env)))
+
+(dm str-parse-in ((s <str>) ct-env)
+  (format out "%=\n" (parse-in s ct-env)))
+
+(dm str-parse ((s <str>)) (str-parse-in s (ct-env)))
+
+(dm eval-in ((x <any>) ct-env rt-env)
+  (let ((o (objectify x ct-env))
+	(e (ast-eval-in o rt-env)))
+    e))
+
+(dm eval ((x <any>)) (eval-in x (ct-env) (rt-env)))
+
+;; (dm boot-eval ((x <str>))
+;;   (eval-in x (ct-boot-env) (boot-env)))
+
+(dm str-eval-in ((x <str>) ct-env rt-env => <any>)
+  (write-to-string (eval-in (read-from-string x) ct-env rt-env)))
+
+(dm str-eval ((x <str>))
+  (str-eval-in x (ct-env) (rt-env)))
+
+;; (dm str-boot-eval ((x <str>))
+;;   (str-eval-in x (ct-boot-env) (boot-env)))
+
+(dm read-file ((filename <str>) => <any>)
+  (call-with-input-file
+    filename
+    (fun (port)
+      (rep loop ((forms '()))
+	(let ((x (read port)))
+	  (if (eof-object? x)
+	      (sexpr-sequence->begin (rev! forms))
+	      (loop (pair x forms))))))))
+
+(dm load-in ((filename <str>) (rt-env <loc-env>) ct-env) 
+  (let ((x (read-file filename))
+	(o (objectify x ct-env)))
+    (ast-eval-in o rt-env)
+    ;; (report-undefined-global-bindings ct-env)
+    ))
+
+(dm load ((filename <str>)) 
+  (load-in filename (rt-env) (ct-env)))
+
+(dv *base-path* "\\jrb\\ai\\proto\\src\\")
+
+(df proto-filename (name)
+  (cat *base-path* name ".proto"))
+
+(df c-filename (name)
+  (cat *base-path* "..\\c\\" name ".c"))
+
+(dm load-from (name)
+  (load (proto-filename name)))
+
+(dm prompt-for-command-expression (level prompt)
+  (format out "%=%s" level prompt)
+  (force-output out)
+  (read in))
+
+;; TODO: BROKEN CAUSE ENV DOESN'T MODEL STACK
+;; TODO: FUNCTION PRINTING IS WAY TOO VERBOSE
+
+;; (dm backtrace ((env <loc-env>))
+;;   (rep loop ((env env) (i 0))
+;;     (unless (== env $nul-loc-env)
+;;       (let ((names    (env-names env))
+;; 	    (values   (env-values env))
+;; 	    (function (env-function env)))
+;; 	(format out "FRAME %=" i)
+;; 	(and function (format out " FUN %=" function))
+;; 	(newline out)
+;; 	(rep inner ((names names) (i 0))
+;; 	  (unless (empty? names)
+;; 	    (format out "  %= %=\n" (head names) (elt values i))
+;; 	    (inner (tail names) (+ i 1)))))
+;;       (loop (env-parent env) (+ i 1)))))
+
+(dm backtrace ()
+  (let ((stack-len (len *stack*)))
+    (rep loop ((i (- stack-len 1)))
+      (unless (< i 0)
+	(let ((env      (elt *stack* i))
+	      (names    (env-names env))
+	      (values   (env-values env))
+	      (function (env-function env)))
+	  (format out "FRAME %=" (- stack-len i))
+	  (and function (format out " FUN %=" function))
+	  (newline out)
+	  (rep inner ((names names) (i 0))
+	    (unless (empty? names)
+	      (format out "  %= %=\n" (head names) (elt values i))
+	      (inner (tail names) (+ i 1)))))
+	(loop (- i 1))))))
+
+(dv <keyboard-interrupt> (isa <condition>))
+
+(df keyboard-interrupt ()
+  (sig <keyboard-interrupt>))
+
+;;  Initialization and driver loop
+;;  The prompt is handled a bit differently than in the notes
+(dm top-in (level quit ct-env rt-env)
+  (lab blow
+    (rep loop ()
+      (lab continue
+	(try ((c r)
+	       (if (isa? c <keyboard-interrupt>)
+	           (format out "BREAK")
+	           (seq
+		     (format out "ERROR: ")
+		     (when (isa? c <simple-condition>)
+		       (apply (curry format out (condition-message c))
+			      (condition-arguments c)))))
+	       ;; (backtrace (env))
+	       (top-in (+ level 1) quit ct-env rt-env)
+	       (continue #f))
+	  (newline out)
+	  (let ((form (prompt-for-command-expression level "<= ")))
+	    (if (= form '(quit))
+		(quit #f)
+		(if (= form '(up))
+		    (blow #f)
+		    (let ((ast    (objectify form ct-env))
+			  (result (ast-eval-in ast rt-env)))
+		      (format out "%==> " level) 
+		      (write out result)))))))
+      (loop))))
+
+(dm top ()
+  (lab quit
+    (top-in 0 quit (ct-env) (rt-env))))
+

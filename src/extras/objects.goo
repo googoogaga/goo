@@ -1,0 +1,146 @@
+;;; object
+
+(def <parents> <lst>)
+(def <slots>   <lst>)
+
+;; (def <traits> (isa <any>))
+;;   (slot <traits> (proto-direct-parents <parents>) (empty <parents>))
+;;   (slot <traits> (proto-direct-slots <slots>)     (empty <slots>))
+;;   (slot <traits> (proto-parents <parents>)        (empty <parents>))
+;;   (slot <traits> (proto-slots <slots>)            (empty <slots>))
+;;   (slot <traits> (proto-owner <any>))
+
+(df traits-ordered-parents ((o <traits>) => <parents>)
+  (write-string "in pop") (newline)
+  (loc ((merge-lists ((partial-cpl <lst>) (remaining-lists <lst>))
+          ;; the partial-cpl is in reverse order at this point.
+	 (if (all? empty? remaining-lists)
+	     (rev! partial-cpl)
+	     (loc ((unconstrained-proto (p)
+		    (loc ((p-in-and-unconstrained-in? (l lst)
+			   (== (head l) p))
+			  (p-unconstrained-in? (l lst)
+  		           (or (== (head l) p) (not (mem? p (tail l))))))
+		      (and (any? p-in-and-unconstrained-in? remaining-lists)
+			   (all? p-unconstrained-in? remaining-lists)
+			   p)))
+		   (unconstrained-proto-in-parents (o <any>)
+		     (any? unconstrained-proto (proto-parents o))))
+	       (let ((next (any? unconstrained-proto-in-parents partial-cpl)))
+		 (if next
+		      (loc ((remove-next (l lst)
+			      (if (== (head l) next) (tail l) l)))
+			(merge-lists 
+			 (pair next partial-cpl)
+			 (into remaining-lists 
+			   (map remaining-lists remove-next remaining-lists))))
+		      (error "inconsistent precedence graph")))))))
+     (let ((parents (traits-direct-parents o)))
+       (if (or (empty? parents)
+	       (and (= (len parents) 1)
+		    (== (elt parents 0) (traits-owner o))))
+	   parents
+	   (merge-lists (lst (traits-owner o))
+			(add (map proto-parents parents) parents))))))
+
+(df traits-ordered-slots ((x <traits>) => <slots>)
+  (del-dups (reduce cat '() (map proto-direct-slots (traits-parents x)))))
+
+(df make-traits ((parents <parents>) (slots <slots>) owner => <traits>)
+  (write-string "0") (newline)
+  (let ((x (isa <traits>
+		(set traits-direct-parents parents)
+		(set traits-direct-slots   slots)
+		(set traits-owner          owner))))
+    (set (%proto-traits owner) x)
+    (if (empty? (traits-parents x))
+	(set (traits-direct-parents x) (lst (proto-owner x))))
+    (set (traits-parents x) (traits-ordered-parents x))
+    (set (traits-slots x)   (traits-ordered-slots x))
+    x))
+
+;; trampoline meta methods
+
+(df proto-direct-slots (x => <slots>)
+  (traits-direct-slots (%proto-traits x)))
+
+(df proto-direct-parents (x => <parents>)
+  (traits-direct-parents (%proto-traits x)))
+
+(df proto-slots (x => <slots>)
+  (traits-slots (%proto-traits x)))
+
+(df proto-parents (x => <parents>)
+  (traits-parents (%proto-traits x)))
+
+;;; slots
+
+;; (def <slot> (isa <any>))
+;;   (slot <slot> (slot-name  <sym>))
+;;   (slot <slot> (slot-owner <any>))
+;;   (slot <slot> (slot-init  <fun>) (fun (x) nul))
+;;   (slot <slot> (slot-type  <any>))
+
+(df slot-offset (object (name <sym>) => <int>)
+  (let ((slots (proto-slots object)))
+    (find-key slots (fun (slot) (== (slot-name slot) name)))))
+
+(df &slot-value (object (name <sym>) => <any>)
+  (let ((offset (slot-offset object name)))
+    (if offset
+	(let ((val (%proto-values-element object (%iu offset))))
+	  (if (== val nul)
+	      (let ((slots (proto-slots object)))
+		(set (%proto-values-element object (%iu offset))
+		     ((slot-init (elt slots offset)) object)))
+	      val))
+	(error "slot %s not found in %=" name object))))
+
+(df &slot-value-setter (z object (name <sym>))
+  (let ((offset (slot-offset object name)))
+    (if offset
+	(set (%proto-values-element object (%iu offset)) z)
+	(error "slot %s not found in %=" name object))))
+
+(df ensure-traits (x => <any>)
+  (unless (== (traits-owner (%proto-traits x)) x)
+    (set (%proto-traits x)
+	 (make-traits (lst (proto-owner (%proto-traits x)))
+		      (traits-direct-slots (%proto-traits x))
+		      x)))
+  x)
+
+(df %isa ((parents <lst>) (names <lst>) (vals <lst>) => <any>)
+  (let ((object (%make-proto))
+	(traits (if (= (len parents) 1)
+		    (%proto-traits (ensure-traits (elt parents 0)))
+		    (make-traits
+		     (map ensure-traits parents) '() object))))
+    (set (%proto-traits object) traits)
+    (%install-proto-values object (len (proto-slots object)))
+    (itr loop ((slots (proto-slots object)))
+      (unless (== slots '())
+	(let ((slot (head slots)))
+	  (set (&slot-value object (slot-name slot))
+	       (&slot-value (slot-owner slot) (slot-name slot)))
+	  (loop (tail slots)))))
+    (itr loop ((names names) (vals vals))
+      (unless (or (== names '()) (== vals '()))
+        (seq (set (&slot-value object (head names)) (head vals))
+	     (loop (tail names) (tail vals)))))
+    object))
+
+(df %slot (owner (name <sym>) type (init <fun>))
+  (ensure-traits owner)
+  (let ((traits (%proto-traits owner))
+	(slot (isa <slot>
+		   (set slot-name name) (set slot-owner owner)
+		   (set slot-type type) (set slot-init  init))))
+    (set (traits-direct-slots traits)
+	 (cat (traits-direct-slots traits) (lst slot)))
+    (set (traits-slots traits)
+	 (traits-ordered-slots traits))
+    (%adjust-proto-values-size owner (len (proto-slots owner)) owner)
+    (set (&slot-value owner name) (init owner))
+    slot))
+

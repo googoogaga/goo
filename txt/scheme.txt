@@ -1,0 +1,88 @@
+SPECIAL FORMS
+
+PROTO	SCHEME
+  SYNTAX
+--------------
+IF	IF
+  (IF ,test ,then ,else)
+SEQ	BEGIN
+  (SEQ ,@forms)
+SET	SET
+  (SET ,name ,form) | (SET (,name ,@args) ,form)
+
+FUN	LAMBDA
+  (FUN ,sig ,@body)
+
+LOC	LETREC
+  (LOC ((,name ,sig ,@body) ...) ,@body)
+LAB	???
+  (LAB ,name ,@body)
+FIN	???
+  (FIN ,protected-form ,@cleanup-forms)
+TRY	???
+  (TRY ,handler ,@body)
+SIG     ???
+  (SIG ,condition)
+
+DV	DEFINE
+  (DV ,var ,form)
+DF	DEFINE
+  (DF ,name ,sig ,@body)
+
+DM	???
+  (DM ,name ,sig ,@body)
+DG	???
+  (DG ,name ,sig)
+ISA	???
+  (ISA ,parent ,@slot-inits) | (ISA (,@parents) ,@slot-inits)
+SLOT	???
+  (SLOT ,owner ,var ,init)
+
+DS	DEFINE-SYNTAX
+  (DS ,pattern ,@body)
+CT	???
+  (CT ,@body)
+EXPAND	???
+  (EXPAND ,form)
+
+QUOTE   QUOTE
+  (QUOTE ,form) with ',form == (QUOTE ,form)
+
+where
+
+_		,form | ,@forms
+sig		(,@vars) | (,@vars => ,var)
+var		,name | (,name ,type)
+pattern		(QUASIQUOTE ...)
+slot-init	(SET ,name ,value)
+
+MACROS
+
+REP	LET 
+  (REP ,name ((,var ,init) ...) ,@body) 
+    == (LOC ((,name (,var ...) ,@body)) (,name ,init ...))
+IFM	???
+  (IFM (,pattern ,value) ,then ,else)
+
+AND	AND
+  (AND ,@forms)
+OR	OR
+  (OR ,@forms)
+UNLESS	???
+  (UNLESS ,test ,@body)
+WHEN	???
+  (WHEN ,test ,@body)
+INC	???
+  (INC ,name) | (INC (,name ,@rest))
+DEC	???
+  (DEC ,name) | (DEC (,name ,@rest))
+
+CASE   ???
+  (CASE (,cond ,@body) ...)
+
+READ MACROS
+
+QQ	QQ
+  (QUASIQUOTE ...) 
+    with (UNQUOTE ,form) and (SPLICING-UNQUOTE ,form)
+    and  `(...) == (QUASIQUOTE ...)

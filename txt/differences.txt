@@ -1,0 +1,23 @@
+DYLAN
+
+prefix syntax
+no sealing
+improved collection protocol along the lines of series
+prototype based object system
+procedural macros
+no builtin keyword arguments
+no multiple values
+simplified type system -- only objects
+
+CECIL
+
+prefix syntax
+macros
+optional arguments
+
+SCHEME
+
+object system
+backquote-based macros
+types
+short special form names

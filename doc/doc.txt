@@ -1,0 +1,1009 @@
+THE PROTO PROGRAMMING LANGUAGE
+
+  JONATHAN BACHRACH
+  MIT AI LAB
+  VERSION 0.70
+  MAR 05, 2001
+
+0 Introduction
+
+  Proto is a new dynamic prototype-based object-oriented language.  It
+  is meant to be simple, productive, powerful, extensible, dynamic,
+  efficient and real-time.  It heavily leverages features from many
+  earlier languages.  In particular, it attempts to be a simpler
+  lisp-syntaxed Dylan, an object-oriented Scheme, and a lispified Cecil.
+
+  This is a very preliminary document.
+
+1 CORE SYNTAX
+
+1.0 LEXICAL STRUCTURE
+
+same as Scheme.
+
+1.1 SPECIAL FORMS
+
+IF	     (IF ,test ,then ,else)
+SEQ	     (SEQ ,@forms)
+SET	     (SET ,binding-clause) | (SET (,name ,@args) ,form)
+
+FUN	     (FUN ,sig ,@body)
+
+LET          (LET ((,binding-clause) ...) ,@body)
+
+LOC	     (LOC ((,name ,sig ,@body) ...) ,@body)
+LAB	     (LAB ,name ,@body)
+FIN	     (FIN ,protected-form ,@cleanup-forms)
+
+DV	     (DV ,binding-clause)
+
+DM	     (DM ,name ,sig ,@body)
+DG	     (DG ,name ,sig)
+ISA	     (ISA ,parent ,@slot-inits) | (ISA (,@parents) ,@slot-inits)
+SLOT	     (SLOT ,owner ,var ,init)
+
+DS	     (DS ,pattern ,@body)
+CT	     (CT ,@body)
+MACRO-EXPAND (MACRO-EXPAND ,form)
+
+QUOTE        (QUOTE ,form) with ',form == (QUOTE ,form)
+
+where
+
+_		,form | ,@forms
+binding-clause  ,var ,value | (TUP ,var ...) ,value
+sig		(,@vars) | (,@vars => ,type)
+var		,name | (,name ,type)
+pattern		(QUASIQUOTE ...)
+slot-init	(SET ,name ,value)
+handler         (fun (,condition ,resume) ,@body)
+
+1.2 MACROS
+
+DF	(DF ,name ,sig ,@body)
+TRY	(TRY ((,condition:var ,resume:var) ,@body) ,@body)
+REP	(REP ,name ((,var ,init) ...) ,@body) 
+	  == (LOC ((,name (,var ...) ,@body)) (,name ,init ...))
+MIF	(MIF (,pattern ,value) ,then ,else)
+
+AND	(AND ,@forms)
+OR	(OR ,@forms)
+SELECT  (SELECT ,value ((,@keys) ,@body) ...)
+CASE    (CASE (,test ,@body) ...)
+
+INC	(INC ,name) | (INC (,name ,@rest))
+DEC	(DEC ,name) | (DEC (,name ,@rest))
+UNLESS	(UNLESS ,test ,@body)
+WHEN	(WHEN ,test ,@body)
+ASSERT  (ASSERT ,test ,message ,@args)
+
+1.3 READ MACROS
+
+QQ	(QUASIQUOTE ...) 
+	  with (UNQUOTE ,form) and (SPLICING-UNQUOTE ,form)
+	  and  `(...) == (QUASIQUOTE ...)
+
+
+2 CORE SEMANTICS
+
+2.1 SPECIAL FORMS
+
+IF	(IF ,test ,then ,else)
+
+  evaluates either ,then if ,test is non-false otherwise evaluates ,else
+  (cf. Scheme's IF).
+
+SEQ	(SEQ)
+
+  returns false
+
+	(SEQ ,@forms)
+
+  evaluates forms sequentially and returns values of evaluating last
+  form (cf. Scheme's BEGIN)
+
+SET	(SET ,name ,form) 
+
+  sets ,name binding to value of evaluating ,form (cf. Scheme's SET!)
+
+        (SET (,name ,@args) ,form)
+
+  equivalent to (,name ## -setter ,form ,@args)
+
+FUN	(FUN ,sig ,@body)
+
+  creates an anonymous method with signature ,sig and when called
+  evaluates ,@body as (SEQ ,@body) (cf. Scheme's LAMBDA).
+
+LET     (LET ((,var ,val) ...) ,@body)
+
+  sequentially binds ,var's to ,val's and evaluates (SEQ ,@body) in the
+  context of those bindings (cf. Scheme's LET*)
+
+        (LET (((TUP ,var ...) ,val) ...) ,@body)
+
+  parallel binding can also be specified using TUP on the lhs of a LET
+  binding. For example
+
+        (LET (((TUP x y) (TUP 1 2))) (lst x y)) => (1 2)
+
+LOC	(LOC ((,name ,sig ,@body) ...) ,@body)
+
+  introduces local functions that can recursively call each other
+  (cf. Scheme's LETREC).  this is equivalent to:
+
+        (LET ((,name nul) ...)
+          (SET ,name (fun ,sig ,@body)) ...
+          ,@body)
+
+LAB	(LAB ,name ,@body)
+
+  evaluates (SEQ ,@body) with a single argument exit function bound to
+  ,name that if called will cause LAB to yield the argument value
+  (cf. Dylan's BLOCK/RETURN).  It is illegal to call the exit function
+  after the execution of the creating LAB form (i.e., no upward
+  continuations).
+
+FIN	(FIN ,protected-form ,@cleanup-forms)
+
+  ensures that (SEQ ,@cleanup-forms) is evaluated if an exit evaluated
+  during the dynamic-extent of ,protected-form attempts to exit upwards
+  (cf. Dylan's BLOCK/CLEANUP form and CL's UNWIND-PROTECT).
+
+DV	(DV ,var ,form)
+
+  defines a variable named (var-name ,var) with an initial value
+  ,form (cf. Scheme's DEFINE).
+
+DG	(DG ,name ,sig)
+
+  defines a binding with name ,name bound to a generic with signature ,sig.
+
+DM	(DM ,name ,sig ,@body)
+
+  first ensures that a generic exists named ,name and with a minimally
+  congruent to signature ,sig and then adds  a method with signature
+  ,sig and body ,@body (cf., Dylan's DEFINE METHOD).
+
+ISA	(ISA ,parent ,@slot-inits) | (ISA (,@parents) ,@slot-inits)
+
+  creates an instance with direct parent(s) ,parent (or ,@parents) and
+  slot initializes as specified by ,@slot-inits.  For example,
+
+        (ISA <point> (set point-x 1) (set point-y 2))
+
+  creates a point with x=1 and y=2.
+
+SLOT	(SLOT ,owner ,var [,init])
+
+  add's a slot to ,owner with getter being (var-name ,var),
+  setter named (make-setter-name (var-name ,var)), type being
+  (var-type ,var), and optionally initial value being ,init and
+  defaulting to nul.  the initial value is evaluated lazily when slot's
+  value is first requested.
+
+DS	(DS ,pattern ,@body)
+
+  defines a macro matching pattern ,pattern and expanding according to
+  ,@body. The pattern matching occurs as in MIF and makes available
+  pattern variables during the evaluation of (SEQ ,@body).  For example,
+
+        (DS (when ,test ,@body) `(if (not ,test) (seq ,@body)))
+
+  defines the when macro in Proto.  
+
+CT	(CT ,@body)
+
+  evaluates (SEQ ,@body) at compile-time allowing a user to make
+  available computations for the purpose of macro-expansion.
+
+MACRO-EXPAND	(MACRO-EXPAND ,form)
+
+  recursively expands macros in expression ,form.
+
+QUOTE   (QUOTE ,form) with ',form == (QUOTE ,form)
+
+  (cf., Scheme's QUOTE)
+
+2.2 MACROS
+
+DF	(DF ,name ,sig ,@body)
+
+        == (DV ,name (FUN ,sig ,@body))
+
+TRY	(TRY ((,condition:var ,resume:var) ,@body) ,@body)
+
+  establishes a handler matching condition ,condition and corresponding
+  handler function with parameters ,condition and ,resume and body
+  ,@body.  the handler is established during the evaluation of (SEQ
+  ,@body). if a matching condition is signaled then the handler function
+  is called with the signaled condition and a resume function to be
+  called if the handler wants to return a value to be used as the result
+  of the signaling SIG call.  the handler has three possibilities: (1)
+  it can handle the condition by taking an exit using LAB, (2) it can
+  resume to the original SIG call using the resume function called with
+  the value to be returned, or (3) it can do neither, that is, it can
+  choose not to handle the condition by just falling through to the end
+  of the handler (cf., Dylan's BLOCK/EXCEPTION and LET HANDLER) and the
+  next available handler will be invoked.
+
+REP	(REP ,name ((,var ,init) ...) ,@body) 
+
+	  == (LOC ((,name (,var ...) ,@body)) (,name ,init ...))
+
+  defines a recursive loop (cf., Dylan's ITERATE or Scheme's LET ,var ...).
+
+MIF	(MIF (,pattern ,value) ,then [ ,else ])
+
+  evaluates ,then with pattern variables bound to matched parts of value
+  if matching succeeds and otherwise evaluates ,else.  The pattern is
+  much the same as QUASIQUOTE and can contain either UNQUOTE'd variables
+  or UNQUOTE-SPLICING variables.  For example,
+
+        (MIF ((,a ,b) '(1 2)) (lst a b)) => (1 2)
+
+  and
+
+        (MIF ((,a ,@b) '(1 2)) (lst a b)) => (1 (2))
+
+AND	(AND ,form)
+
+	  == ,form
+
+	(AND ,form ,@forms)
+
+	  == (IF ,form (AND ,@FORMS))
+
+OR	(OR ,form)
+          
+          == ,form
+
+        (OR ,@forms)
+        
+          == (LET ((x ,form)) (IF x x (OR ,@FORMS)))
+
+SELECT  (SELECT ,value ((,@keys) ,@body) ...)
+
+  evaluates ,value and then evaluates (SEQ ,@body) of first clause which
+  contains a matching key (cf. Dylan's SELECT and Scheme's CASE).
+
+CASE    (CASE (,test ,@body) ...)
+
+  evaluates (SEQ ,@body) of first clause whose ,test evaluates to
+  non-false (cf. Dylan's CASE and Scheme's COND).
+
+INC	(INC ,name)
+
+          == (SET ,name (+ ,name 1))
+
+	(INC (,name ,@rest))
+
+          == (SET (,name ,@rest) (+ (,name ,@rest) 1))
+
+DEC	(DEC ,name) 
+
+          == (SET ,name (+ ,name 1))
+
+        (DEC (,name ,@rest))
+
+          == (SET (,name ,@rest) (+ (,name ,@rest) 1))
+
+UNLESS	(UNLESS ,test ,@body)
+
+        == (IF (NOT ,test) (SEQ ,@body))
+
+WHEN	(WHEN ,test ,@body)
+
+        == (IF ,test (SEQ ,@body))
+
+ASSERT  (ASSERT ,test ,message ,@args)
+
+        == (UNLESS ,test (ERROR ,message ,@args))
+
+2.3 READ MACROS
+
+QQ	(QUASIQUOTE ...) 
+	  with (UNQUOTE ,form) and (SPLICING-UNQUOTE ,form)
+	  and  `(...) == (QUASIQUOTE ...)
+
+  same as Lisp and Scheme's QUASIQUOTE.
+
+
+3 LIBRARY
+
+3.1 ANY
+
+Prototype   <any> (isa <any>)	
+
+  is the top of the prototype inheritance hierarchy.
+
+Generic	    as ((x <any>) (y <any>) => <any>)
+
+  coerces y to an instance of x.
+
+3.2 COMPARABLES
+
+Generic	    == ((x <any>) (y <any>) => <log>)
+Generic	    =  ((x <any>) (y <any>) => <log>)
+Generic	    < ((x <any>) (y <any>) => <log>)
+
+Generic	    ~= ((x <any>) (y <any>) => <log>)
+Generic	    ~== ((x <any>) (y <any>) => <log>)
+Generic	    > ((x <any>) (y <any>) => <log>)
+Generic	    <= ((x <any>) (y <any>) => <log>)
+Generic	    >= ((x <any>) (y <any>) => <log>)
+Generic	    min ((x <any>) (y <any>) => <any>)
+Generic	    max ((x <any>) (y <any>) => <any>)
+
+Generic	    isa? ((x <any>) (y <any>) => <log>)
+Generic	    object< ((x <any>) (y <any>) => <log>)
+Generic	    object-direct-slots ((x <any>) => <lst>)
+Generic	    object-direct-parents ((x <any>) => <lst>)
+Generic	    object-slots ((x <any>) => <lst>)
+Generic	    object-parents ((x <any>) => <lst>)
+Generic	    object-name ((x <any>) => (union <sym> #f))
+
+3.3 NULL
+
+Instance    nul	(isa <any>)
+
+3.4 BOOLEANS
+
+Prototype   <log> (isa <any>)
+
+Instance    #f
+Instance    #t
+Method	    not ((x <any>) => <log>)
+
+3.5 CHARACTERS
+
+Prototype   <chr> (isa <any>)
+
+Generic	    lowercase? ((x <chr>) => <log>)
+Generic	    uppercase? ((x <chr>) => <log>)
+Generic	    as-lowercase ((x <chr>) => <chr>)
+Generic	    as-uppercase ((x <chr>) => <chr>)
+Generic	    alphabetic? ((x <chr>) => <log>))
+Generic	    numeric? ((x <chr>) => <log>))
+Generic	    to-digit ((x <chr>) => <int>)
+Generic     eof-object? ((x <chr>) => <log>)
+
+3.6 NUMBERS (mostly same as Dylan)
+
+Prototype   <num> (isa <any>)
+
+Generic	    + ((x <num>) (y <num>) => <num>)
+Generic	    - ((x <num>) (y <num>) => <num>)
+Generic	    * ((x <num>) (y <num>) => <num>)
+Generic	    / ((x <num>) (y <num>) => <num>)
+Generic	    floor ((x <num>) => (tup <int> (rem <num>)))
+Generic	    ceiling ((x <num>) => (tup <int> (rem <num>)))
+Generic	    round ((x <num>) => (tup <int> (rem <num>)))
+Generic	    truncate ((x <num>) => (tup <int> (rem <num>)))
+Generic	    floor/ ((x <num>) (y <num>) => (tup <int> (rem <num>)))
+Generic	    ceiling/ ((x <num>) (y <num>) => (tup <int> (rem <num>)))
+Generic	    round/ ((x <num>) (y <num>) => (tup <int> (rem <num>)))
+Generic	    truncate/ ((x <num>) (y <num>) => (tup <int> (rem <num>)))
+Generic	    modulo ((x <num>) (y <num>) => <num>)
+Generic	    remainder ((x <num>) (y <num>) => <num>)
+Generic	    pos? ((x <num>) => <log>)
+Generic	    zero? ((x <num>) => <log>)
+Generic	    neg? ((x <num>) => <log>)
+Generic	    neg ((x <num>) => <num>)
+Generic	    abs ((x <num>) => <num>)
+Instance    *print-base* (isa <int>)
+Generic	    num-to-str ((x <num>) => <str>)
+Generic	    str-to-num ((x <str>) => <num>)
+
+3.6.1 INTEGERS (same as Dylan)
+
+Prototype   <int> (isa <num>)
+
+Generic	    logior ((x <int>) (y <int>) => <int>)
+Generic	    logxor ((x <int>) (y <int>) => <int>)
+Generic	    logand ((x <int>) (y <int>) => <int>)
+Generic	    lognot ((x <int>) => <int>)
+Generic	    logbit? ((x <int>) (y <int>) => <log>)
+Generic	    even? ((x <int>) => <log>)
+Generic	    odd? ((x <int>) => <log>)
+Generic	    gcd ((x <int>) (y <int>) => <int>) ;; NYI
+Generic	    lcm ((x <int>) (y <int>) => <int>) ;; NYI
+Generic	    ash ((x <int>) (y <int>) => <int>)
+Generic	    lsh ((x <int>) (y <int>) => <int>)
+
+3.6.2 FLOATS
+
+Prototype   <flo> (isa <num>)
+
+Generic	    flo-bits ((x <flo>) => <int>)
+
+3.6.3 LOCATIVES
+
+Prototype   <loc> (isa <num>)
+
+Generic	    locative-value ((x <loc>) => <any>)
+Generic	    locative-value-setter ((address <any>) (x <loc>))
+Generic	    address-of ((x <any>) => <loc>)
+
+3.7 COLLECTIONS (look at runtime.proto)
+
+Prototype   <col> (isa <any>)
+
+Generic     len ((x <col>) => <int>)
+Generic     elt ((x <col>) (k <any>) => <any>)
+Generic     elt-setter ((v <any>) (x <col>))
+Generic     empty? ((x <col>) => <log>)
+Generic     empty ((x <col>) => <col>)
+Generic     default ((x <col>) => <any>)
+Generic     fab ((x <col>) (size <int>) => <col>)
+Generic	    fabs ((x <col>) (elts ...) => <col>)
+Generic	    fill ((x <col>) (y <col>) => <col>)
+Generic	    alter ((x <col>) (y <col>) => <col>)
+Generic	    any? ((f <fun>) (x <col>) => <log>)
+Generic	    all? ((f <fun>) (x <col>) => <log>)
+Generic	    reduce ((combine <fun>) (init <any>) (x <col>) => <col>)
+Generic	    reduce+ ((combine <fun>) (x <col>) => <col>)
+Generic	    find-key ((f <fun>) (x <col>) => <any>)
+Generic	    del-key ((x <col>) (y <col>) => <col>)
+Generic	    del-keys ((x <col>) (y <col>) => <col>)
+Generic	    do ((f <fun>) (x <col>) => (tup))
+Generic	    do2 ((f <fun>) (x <col>) (y <col>) => (tup))
+Generic	    map ((f <fun>) (x <col>) => <col>)
+Generic	    map2 ((f <fun>) (x <col>) (y <col>) => <col>)
+Generic	    do-keyed ((f <fun>) (x <col>) => (tup))
+Generic	    map-keyed ((f <fun>) (x <col>) => <col>)
+Generic	    mem? ((x <col>) (y <any>) => <log>)
+
+3.7.1 ITERATION PROTOCOL (cf., Dylan's iteration protocol)
+
+Generic	    ini-state ((x <col>) => <any>)
+Generic	    fin-state? ((x <col>) (state <any>) => <log>)
+Generic	    nxt-state ((x <col>) (state <any>) => <any>)
+Generic	    now-elt ((x <col>) (state <any>) => <any>)
+Generic	    now-elt-setter ((v <any>) (x <col>) (state <any>))
+Generic	    now-key ((x <col>) (state <any>) => <any>)
+Generic	    copy-state ((x <col>) (state <any>) => <any>)
+
+3.7.2 MAPS
+
+Prototype   <map> (isa <col>)
+
+(cf., Dylan's <explicit-key-collection>'s)
+
+3.7.2.1 ASSOCIATIONS
+
+Prototype   <assocs> (isa <map>)
+
+Slot	    assocs-test ((x <col>) (y <col>) => <col>) <= ==
+
+3.7.2.2 TABLES
+
+Prototype   <tab> (isa <map>)
+
+slot        table-growth-factor ((x <tab>) => <flo>) <= 2.0
+slot        table-growth-threshold ((x <tab>) => <flo>) <= 0.8
+slot        table-shrink-threshold ((x <tab>) => <flo>)) <= 0.5
+
+Method      fab ((_ <tab>) (size <int>) => <tab>)
+
+Generic     table-protocol ((x <tab>) => (tup (test-fun <fun>) (hash-fun <fun>)))
+Instance    $permanent-hash-state (isa <any>)
+Generic     current-gc-state ((x <tab>) => <any>)
+Generic     id-hash ((x <tab>) => (tup (hash <any>) (gc-state <any>)))
+
+3.7.2.2.1 Prototype   <str-tab> (isa <tab>)
+
+Generic     case-insensitive-string-hash 
+	      ((x <tab>) => (tup (hash <any>) (gc-state <any>)))
+Generic     case-insensitive-string-equal 
+	      ((x <tab>) (y <tab>) => <log>)
+
+3.7.3 SEQUENCES
+
+Prototype   <seq> (isa <col>)
+
+Generic     add ((x <seq>) (y <any>) => <seq>) ;; NYI EXCEPT FOR LISTS
+
+Generic     1st ((x <seq>) => <any>)
+
+            == (elt x 0)
+
+Generic     2nd ((x <seq>) => <any>)
+
+            == (elt x 1)
+
+Generic     3rd ((x <seq>) => <any>)
+
+            == (elt x 2)
+
+Generic     last ((x <seq>) => <any>)
+
+            == (elt x (- (len x) 1))
+
+Generic     pos ((x <seq>) (v <any>) => (union <int> nul))
+
+  finds position of v in x else returns nul.
+
+Generic     into ((dst <seq>) (src <seq>) (from <int>) (below <int>) => <seq>)
+
+Generic     rev ((x <seq>) => <seq>)
+
+  returns reversed sequence.
+
+Generic     rev! ((x <seq>) => <seq>)
+
+  returns destructively reversed sequence.
+
+Generic     cat ((x <seq>) (more ...) => <seq>)
+
+  returns concatenated sequences.
+
+Generic     cat! ((x <seq>) (more ...) => <seq>)
+
+  returns destructively concatenated sequences.
+
+Generic     cat2 ((x <seq>) (y <seq>) => <seq>)
+
+  returns two sequences concatenated.
+
+Generic     sub ((x <seq>) (from <int>) (below <int>) => <seq>)
+
+  subsequence of x between from and below.
+
+Generic     pick ((test <fun>) (x <seq>) => <seq>)
+
+  returns new sequence with elements corresponding to those where test
+  returns non-false.
+
+Generic     del ((x <seq>) (v <any>)  => <seq>)
+
+  returns sequence with all v's deleted from x.
+
+Generic     del-dups ((x <seq>) => <seq>)
+
+  returns sequence with all duplicates removed.
+
+3.7.4 TUPLES
+
+Prototype   <tup> (isa <seq>)
+
+  represents multiple values in Proto.
+
+Generic     tup ((elts ...) => <tup>)
+
+  creates a tuple with elements being elts.
+
+3.7.5 LISTS
+
+Prototype   <lst> (isa <seq>)
+
+Slot        head ((x <lst>) => <any>)
+Slot        tail ((x <lst>) => <lst>)
+
+Generic     lst ((elts ...) => <lst>)
+Generic     pair ((x <any>) (y <lst>) => <lst>)
+
+Instance    nil (isa <lst>)
+
+  aka ().
+
+3.7.5 OPTIONALS
+
+Prototype   <opts> (== <lst> <opts>)
+
+  represents type of optional arguments.
+
+3.7.6 FLAT SEQUENCES
+
+Prototype   <flat> (isa <seq>)
+
+  represents sequences with constant access time.
+
+3.7.6.1 VECTORS
+
+Prototype   <vec> (isa <flat>)
+
+Generic     vec ((elts ...) => <vec>)
+
+3.7.6.1 STRINGS
+
+Prototype   <str> (isa <flat>)
+
+Generic     str ((elts ...) => <str>)
+
+Generic     to-str ((x <any>) => <str>)
+
+  returns string representation of object.
+
+3.8 SYMBOLS
+
+Prototype   <sym> (isa <any>)
+
+Method      as ((_ <sym>) (x <str>) => <sym>)
+Generic     make-sym ((elts ...) => <sym>)
+Generic     gensym (=> <sym>)
+Generic     make-setter-name ((x <sym>) => <sym>)
+Generic     var-name ((x (union <sym> <lst>)) => <sym>)
+Generic     var-type ((x (union <sym> <lst>)) => <sym>)
+
+3.9 SLOTS
+
+Prototype   <slot> (isa <any>)
+
+Slot        slot-owner ((x <slot>) => <any>)
+slot        slot-getter ((x <slot>) => <gen>)
+slot        slot-setter ((x <slot>) => <gen>)
+slot        slot-type ((x <slot>) => <any>)
+slot        slot-init ((x <slot>) => <met>)
+
+Generic     slot-value ((x <slot>) (getter <gen>) => <any>)
+Generic     slot-value-setter ((v <any>) (x <slot>) (getter <gen>))
+Generic     find-getter ((owner <any>) (getter <gen>) => <met>)
+Generic     find-setter ((owner <any>) (setter <gen>) => <met>)
+
+Method      add-slot (owner (getter <gen>) (setter <gen>) type (init <fun>))
+
+  where init is a one parameter function that returns the initial
+  value for the slot and gets called lazily with the new instance as
+  the argument.
+
+3.10 FUNCTIONS
+
+Prototype   <fun> (isa <any>)
+
+slot        fun-specs ((x <fun>) => <lst>)
+
+  returns the specializers of x.
+
+slot        fun-nary? ((x <fun>) => <log>)
+
+  determines whether the function takes optional arguments.
+
+slot        fun-arity ((x <fun>) => <int>)
+
+  returns x's number of required arguments.
+
+Generic     identity (=> <fun>)
+
+  returns a function (fun (x) x).
+
+Generic     compose ((x <fun>) (y <fun>) => <fun>)
+
+  returns a function that composes function's x and y.
+
+Generic     curry ((x <fun>) (curried ...) => <fun>)
+
+            == (fun ((args ...)) (apply f (cat curried args)))
+
+Generic     rcurry ((x <fun>) (curried ...) => <fun>)
+
+            == (fun ((args ...)) (apply f (cat args curried))))     
+
+Generic     always ((x <any>) => <fun>)
+
+  creates a function that always returns x.
+
+Generic     apply ((x <fun>) (args <lst>) => <any>)
+
+3.10.1 GENERICS
+
+Prototype   <gen> (isa <fun>)
+
+slot        fun-mets ((x <gen>) => <lst>)
+
+  returns x's methods.
+
+Generic     gen-add-met ((x <gen>) (y <met>) => <gen>)
+
+  adds method y to generic x.
+
+Generic     sorted-app-mets 
+	      ((x <gen>) (args <lst>)
+	       => (tup (ordered <lst>) (ambiguous <lst>)))
+
+  returns both the list of sorted applicable methods and any ambiguous
+  methods when generic x is called with arguments args.
+
+3.10.2 METHODS
+
+Prototype   <met> (isa <fun>)
+
+Generic     met-app? ((x <met>) (args <lst>) => <log>)
+
+  determines whether x is applicable when called with args.
+
+3.11 CONDITIONS
+
+Prototype   <condition> (isa <any>)
+
+Generic     default-handler ((x <condition>) => <fun>)
+
+Generic     sig ((x <condition>) (args ...))
+
+  signals a condition with optional arguments args.
+
+Prototype   <simple-condition> (isa <condition>)
+
+Slot        condition-message ((x <simple-condition>) => <str>)
+Slot        condition-arguments ((x <simple-condition>) => <lst>)
+
+Prototype   <serious-condition> (isa <condition>)
+
+Prototype   <error> (isa <serious-condition>)
+
+Generic     error ((x <any>) (args ...))
+
+Prototype   <simple-error> (isa <error> <simple-condition>)
+
+Prototype   <handler> (isa <any>)
+
+Generic     handler-function ((x <handler>) => <fun>)
+Generic     make-handler ((x <fun>) => <handler>)
+Generic     handler-matches? ((x <handler>) (y <condition>) => <log>)
+
+3.12 PORTS
+
+Prototype   <port> (isa <any>)
+
+3.12.1 INPUT PORTS
+
+Prototype   <input-port> (isa <port>)
+
+Generic     read-char ((x <input-port>) => <chr>)
+Generic     peek-char ((x <input-port>) => <chr>)
+Generic     char-ready? ((x <input-port>) => <chr>)
+
+3.12.2 OUTPUT PORTS
+
+Prototype   <output-port> (isa <port>)
+
+Generic     newline ((x <output-port>))
+Generic     force-output ((x <output-port>))
+Generic     write-char ((x <output-port>))
+Generic     write-string ((x <output-port>))
+
+3.12.3 FILE PORTS
+
+Prototype   <file-port> (isa <port>)
+
+3.12.3.1 FILE INPUT PORTS
+
+Prototype   <file-input-port> (isa <file-port> <input-port>)
+
+Generic     open-input-file ((filename <str>) => <file-input-port>)
+Generic     close-input-port ((x <file-input-port>))
+Generic     call-with-input-file ((filename <str>) (f <fun>))
+
+  calls f with port created with open-input-file on filename and
+  ensures that port is closed after f returns.
+
+Instance    in (isa <file-input-port>)
+
+standard input.
+
+3.12.3.2 FILE OUTPUT PORTS
+
+Prototype   <file-output-port> (isa <file-port> <output-port>)
+
+Generic     open-output-file ((filename <str>) => <file-output-port>)
+Generic     close-output-port ((x <file-output-port>))
+Generic     call-with-output-file ((filename <str>) (f <fun>))
+
+  calls f with port created with open-output-file on filename and
+  ensures that port is closed after f returns.
+
+Instance    out (isa <file-output-port>)
+
+  standard output.
+
+3.12.4 STRING PORTS
+
+Prototype   <string-port>
+
+Generic     port-contents ((x <string-port>) => <str>)
+
+3.12.4.1 STRING INPUT PORTS
+
+Prototype   <string-input-port> (isa <string-port> <output-port>)
+
+slot        port-index ((x <string-port>) => <int>)
+
+Generic     call-with-string-input-port ((x <str>) (f <fun>))
+
+  analogous to call-with-file-input-port.
+
+3.12.4.2 STRING OUTPUT PORTS
+
+Prototype   <string-output-port> (isa <string-port> <input-port>)
+
+Generic     call-with-string-output-port ((f <fun>))
+
+  analogous to call-with-file-output-port.
+
+3.13 INPUT
+
+Generic     read ((x <input-port>) => <any>)
+
+  returns sexpr result of parsing characters coming in on port x until
+  (eof-char? (read-char x)) returns true.
+
+Generic     read-from-string ((x <str>) => <any>)
+
+Generic     read-file ((filename <str>) => <any>)
+
+3.14 OUTPUT
+
+Generic     write ((x <output-port>) (y <any>))
+
+  verbose printing.  prints strings with double quotes etc.
+
+Generic     display ((x <output-port>) (y <any>))
+
+  non verbose printing.  prints strings without double quotes etc.
+
+Generic     writeln ((x <output-port>) (y <any>))
+
+            (seq (write x y) (newline))
+
+Generic     write-to-string ((x <any>) => <str>)
+
+Generic     format ((message <output-port>) (args ...))
+
+  formatted output using special commands embedded in message.
+  supported commands are:
+
+  %= => (write x arg)
+  %s => (display x arg)
+  %d => (write x arg)
+  %% => (write-char x #\%)
+
+  which consume one argument at a time.  otherwise subsequent message
+  characters are printed to port x (cf. Dylan's and CL's format).
+
+3.15 SYSTEM
+
+Method      app-filename (=> <str>)
+
+  returns the filename of the application.
+
+Method      app-args (=> <lst>)
+
+  returns a list of argument strings with which the application was called.
+
+3.16 TOP LEVEL
+
+Generic     load ((filename <str>) => <any>)
+
+  returns the result of evaluating the result of reading file named filename.
+
+Generic     eval ((x <any>) => <any>)
+
+  return's result of evaluating x.
+
+Generic     top ()
+
+  runs top-level read-eval-print loop which reads from in and writes to out.
+
+
+4 USAGE
+
+4.0 INSTALLATION
+
+Unpack either a linux or windows version of proto into an appropriate
+installation area.  There are three directories: DOC, BIN, SRC, AND
+EMACS.
+
+4.0.1 SETTING UP PROTO_ROOT
+
+Set up your OS environment variable named PROTO_ROOT to your top level
+proto directory (i.e., containing the subdirectory named SRC).  Make
+sure to slash terminate the path.  For example, my PROTO_ROOT on win32
+is: 
+
+  SET PROTO_ROOT=\jrb\ai\proto\
+
+On linux of course you would use forward slashes and environment
+variable setting depends on the shell you're using.
+
+4.1 STARTING
+
+Typing proto at your shell will start up a proto read-eval-print loop.
+
+4.2 STOPPING
+
+Type (quit) at top level to exit from proto.
+
+4.3 KEYBOARD INTERRUPTS
+
+Type ^C at top level to invoke a recursive read-eval-print loop.
+
+4.4 ERRORS
+
+errors are reporting in recursive read-eval-print loops.  you can pop
+up a level by typing (up) at a particular level.
+
+4.5 LOADING CODE
+
+Use the load function to load a file of source into proto:
+
+  (load "\\jrb\\ai\\proto\\interpreters\\basic.proto")
+
+make sure to use double backslashes on windows in pathnames.  also you
+probably need to use an absolute pathname for your file include the
+".proto" suffix if appropriate.
+
+4.6 EMACS SUPPORT
+
+4.6.1 EMACS MODE
+
+Put EMACS/proto.el in your emacs lisp directory.  Add the following to
+your .emacs file:
+
+  ;; proto
+  (autoload 'proto-mode "proto" "Major mode for editing Proto source." t)
+  (setq auto-mode-alist
+        (cons '("\\.proto\\'" . proto-mode) auto-mode-alist))
+
+Cool features:
+
+  * You can add "font-lock" mode by adding the following to your .emacs:
+
+    (global-font-lock-mode t)
+
+    In a given buffer, you can toggle font-lock with M-x font-lock-mode
+
+  * Check out the "Index" menu item in a proto buffer.
+
+4.6.2 EMACS SHELL
+
+Put EMACS/proto-shell.el in your emacs lisp directory.  Add the
+following to your .emacs:
+
+  (autoload 'run-proto  "proto-shell" "Run an inferior Proto process." t)
+  (setq auto-mode-alist
+        (cons '("\\.proto\\'" . proto-mode) auto-mode-alist))
+  (setq proto-program-name "C:/proto/proto.exe") ; as appropriate
+
+make sure to set up the proto-program-name to correspond to your
+installation area.
+
+Useful command / key-bindings are:
+
+  M-C-x   proto-send-definition
+  C-c C-e proto-send-definition
+  C-c M-e proto-send-definition-and-go
+  C-c C-r proto-send-region
+  C-c M-r proto-send-region-and-go
+  C-c C-z switch-to-proto
+
+Check out proto-shell.el for the complete list of command /
+key-bindings. I doubt the compile commands do anything useful cause
+there isn't a compiler.
+
+5 CAVEATS 
+
+Proto is pretty slow at this point.  I'm using an AST-based
+interpreter.  This will improve in coming releases.
+
+There is not a large amount of debugging support.  In particular,
+there is no backtrace facilities.  You must instead rely on
+redefinition and print statements.  Again, i will be adding this in
+the next release.
+
+Documentation is lacking.  Please consult the runtime libraries in the
+SRC directory.  Also check out Scheme and Dylan's manuals for
+information of their lexical structure and special form behavior
+respectively. 
+
+The names of functions will probably change in the near future.
+Please give me feedback on the current names.
+
+There might be times when the interpreter gets confused.  Please try
+to figure out why if possible, but don't be surprised if you have to
+exit proto and reload your program.  I will try to make Proto a much
+more livable place asap.
+
+TUP's are not fully supported in the interpreter at this point.
+
+Please, please, please send bug reports to jrb@ai.mit.edu.  I will fix
+your bugs asap.

@@ -1,0 +1,130 @@
+Add generic / method support to your metacircular interpreter from
+assignment 1.  In particular, add the DM and DG special forms and
+write generic function multimethod dispatch.  The basic idea is to
+intercept interpretive calls to generics and to select the most
+applicable method and then call it.  Interpretive calls to methods
+should behave exactly as before.
+
+You should make use of function introspection functions (along with
+any other proto functions): fun-specs, fun-arity, and fun-mets which
+give the specializers of a function, the number of required arguments,
+and a generic's methods respectively.  You should also make use of the
+type relationship of functions:
+ 
+  (dv <fun> (isa <any>))
+  (dv <met> (isa <fun>))
+  (dv <gen> (isa <fun>))
+
+which you can exploit for type discrimination using isa? and method
+specializers.  N.B., you can not use the proto function
+sorted-app-mets in your solution.
+
+In terms of implementing DG, use the fab-gen function:
+
+  fab-gen ((specs <lst>) (nary? <log>) (arity <int>) (mets <lst>) => <gen>)
+
+The special form DM a bit challenging to write as it creates generics
+on demand.  It requires that you can query whether a global binding is
+bound.  Fortunately, Proto provides the
+
+  bound? ((x <sym>) => <log>)
+
+special form to do just that.  The basic sketch would then be: first,
+determine whether the binding corresponding to the name of the
+method/generic (from the DM form) is bound (and a generic) and if so
+if the method is congruent to the bound generic and otherwise create a
+new congruent generic using the method as a template and second, add
+the method to the congruent generic.  A method is considered congruent
+to a generic when they have the same arity, the same nary?'ness, and
+when all method specializers are isa? to their generic specializer
+counterparts.  You should error on methods being incongruent to their
+generic's using a call to error with an appropriate message.  Once you
+have a congruent generic then you can use the builtin:
+
+  gen-add-met ((g <gen>) (m <met>) => <gen>) 
+
+to add the method to the generic.
+
+The basic Method selection sketch is to find all applicable methods
+for a given argument list, sort them, and then call the most
+applicable method.  Your method selection code should call error (with
+a suitable message) in the cases of no applicable methods and
+ambiguous methods.  It should also prioritize "singleton" over "class"
+specializers (e.g., a specializer = 1 has priority over a specializer
+= <int>).
+
+You should add the following primitive methods to your base
+environment for better introspection: elt, len, fun-mets, fun-arity,
+fun-nary?, and fun-specs.
+
+Your new interpreter should now be able to match the following
+input/output pairs:
+
+  (dm simple ((x <int>)) (+ x 1)) 
+    => #f
+  (dm simple ((x <flo>)) x)
+    => #f
+  (len (fun-mets simple))
+    => 2
+  (simple 1)
+    => 2
+  (simple 1.0)
+    => 1.0
+  (simple '())
+    => NO-APPLICABLE-METHODS ERROR
+  (dg explicit-gen (x))
+    => #f
+  (dm explicit-gen ((x <int>)) (simple x))
+    => #f
+  (g 1)
+    => 2
+  (dm inheritance ((x <num>)) (simple x))
+    => #f
+  (dm inheritance ((x <int>)) 0)
+    => #f
+  (inheritance 1)
+    => 0
+  (inheritance 1.0)
+    => 1.0
+  (dm singleton ((x <int>)) (simple x))
+    => #f
+  (dm singleton ((x 1)) 0)
+    => #f
+  (singleton 0)
+    => 1
+  (singleton 1)
+    => 0
+  (dg incongruent-gen (x y))
+    => #f
+  (dm incongruent-gen (x) x)
+    => INCONGRUENCE ERROR
+  (dm binary ((x <int>) (y <int>)) (+ x y))
+    => #f
+  (dm binary ((x <flo>) (y <flo>)) x)
+    => #f
+  (binary 1 1)
+    => 2
+  (binary 1.0 2.0)
+    => 1.0
+  (binary 1.0 1)
+    => NO-APPLICABLE-METHODS ERROR
+  (dm g2 ((x <int>) (y <num>)) x)
+    => #f
+  (dm g2 ((x <num>) (y <int>)) x)
+    => #f
+  (g2 1 2)
+    => AMBIGUOUS-METHODS ERROR
+
+As per usual, feel free to ask questions by email at
+oodl-fac@ai.mit.edu or by stopping by our office: AI Lab (NE-43) room
+802.
+
+Also, please report bugs and keep checking the web site:
+
+  http://www.ai.mit.edu/projects/dynlangs/oodl-course/spring01/
+
+for new versions of Proto and its documentation as we fix bugs and
+fill out the documentation.
+
+This assignment is due Thursday 31FEB01 before class.  Please email it
+to us at: oodl-fac@ai.mit.edu.

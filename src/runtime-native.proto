@@ -1,0 +1,10 @@
+;;;
+;;; NATIVE RUNTIME ONLY
+;;;
+
+(dm sym-name ((x <sym>) => <str>) 
+  (%sym-nam x))
+
+(df address-of (x => <int>)
+  ;; treat pointer as integer
+  (%ib x))

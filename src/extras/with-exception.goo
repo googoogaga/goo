@@ -1,0 +1,32 @@
+(def *current-handlers* '())
+
+(df with-exception (handler main-fun)
+  (blk (_unwind-exception_)
+    (let ((_original-handlers_ *current-handlers*))
+      (loc ((_handler-function_ (name _next-handler_)
+	      (set *current-handlers* _original-handlers_)
+	      (_unwind-exception_ (handler))))
+	(set *current-handlers*
+             (pair (make-handler _handler-function_) *current-handlers*))
+	(cln (main-fun) (set *current-handlers* _original-handlers_))))))
+
+(df %sig (condition)
+  (let ((done-last? #f))
+    (itr search ((handlers *current-handlers*))
+      (if (empty? handlers)
+	  (if done-last?
+	      (default-handler condition)
+	      (seq (set done-last? #t)
+		   (search *last-handlers*)))
+	  (let ((handler (head handlers))
+		(remaining (tail handlers)))
+	    (if (handler-matches? handler condition)
+		((handler-function handler)
+		 condition (fun () (search remaining)))
+		(search remaining)))))))
+
+(df handler-matches? (handler condition)
+  #t)
+
+
+	    
