@@ -54,7 +54,7 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\title{{\Huge \goo\ Reference Manual v37 } % \\
+\title{{\Huge \goo\ Reference Manual v38 } % \\
 % {\large for release \input{version-number}} 
 }
 \author{{\huge Jonathan Bachrach} \\
@@ -1853,8 +1853,14 @@ module name to use.
 
 \section{Installation}
 
-Unpack either a linux or windows version of \goo\ into an appropriate
-installation area.  There are five directories: \kode{doc},
+Unpack either a linux or windows version of \goo\ of either a
+development or binary tarball into an appropriate installation area.
+In the case of a binary tarball, there are five directories:
+\kode{doc}, \kode{bin}, \kode{lib}, \kode{mods}, and \kode{emacs}.  You
+can just run \goo\ from the \kode{bin} subdirectory.
+
+In the case of a development tarball, you must install it.
+After unpacking, there will be five directories: \kode{doc},
 \kode{bin}, \kode{c}, \kode{src}, and \kode{emacs}.  Edit the
 \kode{Make.inc} file in the top level directory, to configure the
 installation directory root using the \kode{PREFIX} if \kode{/usr} is
@@ -2056,7 +2062,8 @@ This is the first release of \goo.
 \goo\ is relatively slow at this point.  There are no compiler
 optimizations in place.  The error reporting is minimal and no source
 locations are tracked.  Also hygiene is not implemented and there are
-some potential hygiene leaks.  
+some potential hygiene leaks.  Dynamic compilation and image saving
+work only on Linux.
 
 This manual is preliminary.  Please consult the runtime
 libraries in the \kode{src} directory.  Also check out Scheme and Dylan's
@@ -2195,47 +2202,32 @@ methods.
 \begin{exv}
 (dm subtype? (t1|<union> t2|<type> => <log>)
   (all? (op subtype? _ t2) (type-elts t1)))
-
 (dm subtype? (t1|<type> t2|<union> => <log>)
   (any? (op subtype? t1 _)) (type-elts t2)))
-
 (dm subtype? (t1|<union> t2|<union> => <log>)
   (all? (op subtype? _ t2)) (type-elts t1)))
-
 (dm subtype? (t1|<class> t2|<class> => <log>)
   (subclass? t1 t2))
-
 (dm subtype? (t1|<singleton> t2|<class> => <log>)
   (isa? (type-object t1) t2))
-
 (dm subtype? (t1|<subclass> t2|<class> => <log>)
   (subclass? <class> t2))
-
 (dm subtype? (t1|<class> t2|<singleton> => <log>) #f)
-
 (dm subtype? (t1|<singleton> t2|<singleton> => <log>)
   (== (type-object t1) t2))
-
 (dm subtype? (t1|<subclass> t2|<singleton> => <log>) #f)
-
 (dm subtype? (t1|<class> t2|<subclass> => <log>)
   (and (== t1 <class>) (== (type-class t2) <class>)))
-
 (dm subtype? (t1|<subclass> t2|<subclass> => <log>)
   (subclass? (type-class t1) (type-class t2)))
-
 (dm subtype? (t1|<singleton> t2|<subclass> => <log>)
   (and (isa? (type-object t1) <class>)
        (subclass? (type-object t1) (type-class t2))))
-
 (dm subtype? (t1|<product> t2|<type> => <log>) #f)
-
 (dm subtype? (t1|<type> t2|<product> => <log>) #f)
-
 (dm subtype? (t1|<product> t2|<product> => <log>)
   (and (== (len (type-elts t1)) (len (type-elts t2)))
        (all? (zipped subtype?) (zip (type-elts t1) (type-elts t2)))))
-
 (dm subtype? (t1|<product> t2|<class> => <log>)
   (subtype? <tup> t2))
 \end{exv}
