@@ -1,6 +1,7 @@
-(use goo)
-(use goo/math)
 (use goo/boot)
+(use goo/fun)
+(use goo/mag)
+(use goo/math)
 (use goo/bignum/%gmp.c)
 (use/library gmp)
 
@@ -123,7 +124,7 @@
   (not (odd? x)))
 
 (dm (odd? inline) (x|<bignum> => <log>)
-  (%oddp_b x))
+  (%oddp-b x))
 
 ;;(dm (/ inline) (x|<bignum> y|<bignum> => <int>)
 ;;  (arithmetic-error "No int divide, consider trunc/"))

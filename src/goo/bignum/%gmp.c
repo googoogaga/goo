@@ -4,6 +4,7 @@
 
 #define MODN(name) YgooSbignumSgmpYP##name
 
+#define iu(tint) (((PINT)(tint)) >> TAG_BITS)
 EXT(Ytup,"goo/boot","tup");
 EXT(YLbignumG,"goo/bignum/gmp","<bignum>");
 
@@ -68,7 +69,7 @@ static inline mpz_ptr bignum_to_mpz(P obj)
 P MODN(fixnum_to_bignum) (P num)
 {
 	mpz_t mpz;
-	mpz_init_set_si(mpz, untag(num));
+	mpz_init_set_si(mpz, (long)iu(num));
 	return mpz_to_bignum(mpz);
 }
 
@@ -107,7 +108,7 @@ P MODN(name) (P op1, P op2) \
 { \
 	mpz_t z; \
 	mpz_init_zero(z); \
-	fun (z, bignum_to_mpz(op1), untag(op2)); \
+	fun (z, bignum_to_mpz(op1), (long)iu(op2)); \
 	return mpz_to_goo(z); \
 }
 
@@ -134,9 +135,9 @@ P MODN(add_b_i) (P op1, P op2)
 	mpz_t z;
 	mpz_init_zero(z);
 	if (op2 >= 0)
-		mpz_add_ui(z, bignum_to_mpz(op1), untag(op2));
+		mpz_add_ui(z, bignum_to_mpz(op1), iu(op2));
 	else
-		mpz_sub_ui(z, bignum_to_mpz(op1), -untag(op2));
+		mpz_sub_ui(z, bignum_to_mpz(op1), -iu(op2));
 	return mpz_to_goo(z);
 }
 
@@ -147,9 +148,9 @@ P MODN(sub_b_i) (P op1, P op2)
 	mpz_t z;
 	mpz_init_zero(z);
 	if (op2 >= 0)
-		mpz_sub_ui(z, bignum_to_mpz(op1), untag(op2));
+		mpz_sub_ui(z, bignum_to_mpz(op1), iu(op2));
 	else
-		mpz_add_ui(z, bignum_to_mpz(op1), -untag(op2));
+		mpz_add_ui(z, bignum_to_mpz(op1), -iu(op2));
 	return mpz_to_goo(z);
 }
 
@@ -158,9 +159,9 @@ P MODN(sub_i_b) (P op1, P op2)
 	mpz_t z;
 	mpz_init_zero(z);
 	if (op1 >= 0)
-		mpz_sub_ui(z, bignum_to_mpz(op2), untag(op1));
+		mpz_sub_ui(z, bignum_to_mpz(op2), iu(op1));
 	else
-		mpz_add_ui(z, bignum_to_mpz(op2), -untag(op1));
+		mpz_add_ui(z, bignum_to_mpz(op2), -iu(op1));
 	mpz_neg(z, z);
 	return mpz_to_goo(z);
 }
@@ -177,7 +178,7 @@ P MODN(lsh_b_i) (P op1, P op2)
 { 
 	mpz_t z; 
 	mpz_init_zero(z);
-	mpz_mul_2exp (z, bignum_to_mpz(op1), untag(op2)); 
+	mpz_mul_2exp (z, bignum_to_mpz(op1), iu(op2)); 
 	return mpz_to_goo(z); 
 }
 
@@ -210,7 +211,7 @@ DEFINE_B(com_b, mpz_com)
 
 P MODN(bitQ_b_i) (P op, P index)
 {
-	return YPbb(mpz_tstbit(bignum_to_mpz(op), untag(index)));
+	return YPbb(mpz_tstbit(bignum_to_mpz(op), iu(index)));
 }
 
 /*
@@ -234,7 +235,7 @@ P MODN(tdiv_r_b_i) (P op1, P op2)
 {
 	long r;
 	mpz_ptr op1m = bignum_to_mpz(op1);
-	PINT d = (op2 > 0)?untag(op2):-untag(op2);
+	PINT d = (op2 > 0)?iu(op2):-iu(op2);
 	r = mpz_tdiv_ui(op1m, d);
 	if(mpz_sgn(op1m) < 0)
 		r = -r;
@@ -246,7 +247,7 @@ P MODN(tdiv_q_b_i) (P op1, P op2)
 {
 	mpz_t q;
 	mpz_init_zero(q);
-	PINT d = (op2 > 0)?untag(op2):-untag(op2);
+	PINT d = (op2 > 0)?iu(op2):-iu(op2);
 	mpz_tdiv_q_ui(q, bignum_to_mpz(op1), d);
 	if(op2<0)
 		mpz_neg(q,q);
@@ -260,7 +261,7 @@ P MODN(tdiv_qr_b_i) (P op1, P op2)
 	mpz_ptr op1m = bignum_to_mpz(op1);
 	mpz_init_zero(q);
 
-	PINT d = (op2 > 0)?untag(op2):-untag(op2);
+	PINT d = (op2 > 0)?iu(op2):-iu(op2);
 	r = mpz_tdiv_q_ui(q, op1m, d);
 	if(mpz_sgn(op1m) < 0)
 		r = -r;
