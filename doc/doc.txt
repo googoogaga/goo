@@ -45,6 +45,7 @@ SLOT	     (SLOT ,owner ,var ,init)
 DS	     (DS ,pattern ,@body)
 CT	     (CT ,@body)
 MACRO-EXPAND (MACRO-EXPAND ,form)
+NEXT-METHOD  (NEXT-METHOD ,@args) | (APPLY-NEXT-METHOD ,args)
 
 QUOTE        (QUOTE ,form) with ',form == (QUOTE ,form)
 
@@ -87,6 +88,10 @@ QQ	(QUASIQUOTE ...)
 2 CORE SEMANTICS
 
 2.1 SPECIAL FORMS
+
+QUOTE   (QUOTE ,form) with ',form == (QUOTE ,form)
+
+  (cf., Scheme's QUOTE)
 
 IF	(IF ,test ,then ,else)
 
@@ -197,13 +202,19 @@ CT	(CT ,@body)
   evaluates (SEQ ,@body) at compile-time allowing a user to make
   available computations for the purpose of macro-expansion.
 
-MACRO-EXPAND	(MACRO-EXPAND ,form)
+MACRO-EXPAND	
+ 
+        (MACRO-EXPAND ,form)
 
   recursively expands macros in expression ,form.
 
-QUOTE   (QUOTE ,form) with ',form == (QUOTE ,form)
+NEXT-METHOD
 
-  (cf., Scheme's QUOTE)
+        (NEXT-METHOD ,@args)
+        (APPLY-NEXT-METHOD ,args)
+
+  calls next most applicable method either as call or apply.  N.B., all
+  arguments must be supplied.
 
 2.2 MACROS
 
@@ -300,7 +311,9 @@ ASSERT  (ASSERT ,test ,message ,@args)
 
         == (UNLESS ,test (ERROR ,message ,@args))
 
-FOR     (FOR ((,var ,val) ...) ,@body)
+FOR     (FOR (for-clause ...) ,@body)
+
+        where for-clause = (,val ,col) | ((tup ,key ,val) ,col)
 
   parallel iteration over collections using collection iteration protocol.
 
@@ -311,14 +324,6 @@ COLLECTING
     
   mechanism for accumulating lists of objects.   COLLECTING returns
   list all COLLECT'd objects in body.
-
-NEXT-METHOD
-
-        (NEXT-METHOD ,@args)
-        (APPLY-NEXT-METHOD ,args)
-
-  calls next most applicable method either as call or apply.  N.B., all
-  arguments must be supplied.
 
 2.3 READ MACROS
 
@@ -728,6 +733,14 @@ Method      add-slot (owner (getter <gen>) (setter <gen>) type (init <fun>))
 
 Prototype   <fun> (isa <any>)
 
+slot        fun-name ((x <fun>) => (false-or <sym>))
+
+  returns the name of function or false if unavailable.
+
+slot        fun-names ((x <fun>) => <lst>)
+
+  returns the names of parameters of x or () if unavailable.
+
 slot        fun-specs ((x <fun>) => <lst>)
 
   returns the specializers of x.
@@ -739,6 +752,10 @@ slot        fun-nary? ((x <fun>) => <log>)
 slot        fun-arity ((x <fun>) => <int>)
 
   returns x's number of required arguments.
+
+slot        fun-value ((x <fun>) => <any>)
+
+  returns x's return value.
 
 Generic     identity (=> <fun>)
 
@@ -960,6 +977,14 @@ Generic     eval ((x <any>) => <any>)
 Generic     top ()
 
   runs top-level read-eval-print loop which reads from in and writes to out.
+
+Generic     do-stack-frames ((f <fun>))
+
+  calls f ((f <fun>) (args ...)) on all stack frames.
+
+Generic     backtrace ()
+
+  prints out called functions and their arguments.
 
 
 4 USAGE
