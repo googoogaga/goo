@@ -248,7 +248,7 @@ See `run-hooks'."
 (put 'export 'proto-indent-function 0)
 (put 'need-implementation 'proto-indent-function 0)
 (put 'ct-also 'proto-indent-function 0)
-(put 'fin 'proto-indent-function 1)
+(put 'fin 'proto-indent-function 0)
 (put 'dlet 'proto-indent-function 1)
 (put 'try 'proto-indent-function 1)
 
