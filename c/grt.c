@@ -590,6 +590,7 @@ P CALL1 (P fun, P a1) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
+    CHECK_ARITY(naryp,1,arity);
     if (arity > 0) {
       CHECK_TYPE(a1, Phead(specs));
       PUSH(a1);
@@ -599,7 +600,6 @@ P CALL1 (P fun, P a1) {
       if (arity == 0) opts = YPpair(a1, opts);
       PUSH(opts);
     }
-    CHECK_ARITY(naryp,1,arity);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
   } else if (traits == YLgenG_traits) {
@@ -626,6 +626,7 @@ P CALL2 (P fun, P a1, P a2) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
+    CHECK_ARITY(naryp,2,arity);
     if (arity > 0) {
       CHECK_TYPE(a1, Phead(specs)); 
       specs = Ptail(specs);
@@ -641,7 +642,6 @@ P CALL2 (P fun, P a1, P a2) {
       if (arity < 1) opts = YPpair(a1, opts);
       PUSH(opts);
     }
-    CHECK_ARITY(naryp,2,arity);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
   } else if (traits == YLgenG_traits) {
@@ -669,6 +669,7 @@ P CALL3 (P fun, P a1, P a2, P a3) {
     int arity = FUNARITY(fun);
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
+    CHECK_ARITY(naryp,3,arity);
     if (arity > 0) {
       CHECK_TYPE(a1, Phead(specs)); 
       specs = Ptail(specs);
@@ -690,7 +691,6 @@ P CALL3 (P fun, P a1, P a2, P a3) {
       if (arity < 1) opts = YPpair(a1, opts);
       PUSH(opts);
     }
-    CHECK_ARITY(naryp,3,arity);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
   } else if (traits == YLgenG_traits) {
@@ -721,6 +721,7 @@ P CALLN (P fun, int n, ...) {
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
     va_list ap; va_start(ap, n);
+    CHECK_ARITY(naryp,n,arity);
     for (i = 0; i < arity; i++) {
       P arg = va_arg(ap, P);
       CHECK_TYPE(arg, Phead(specs)); 
@@ -736,7 +737,6 @@ P CALLN (P fun, int n, ...) {
 	opts = YPpair(a[i], opts);
       PUSH(opts);
     }
-    CHECK_ARITY(naryp,n,arity);
     va_end(ap);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
@@ -745,6 +745,7 @@ P CALLN (P fun, int n, ...) {
     int naryp = FUNNARYP(fun);
     P arg     = Ynil;
     va_list ap; va_start(ap, n);
+    CHECK_ARITY(naryp,n,arity);
     for (i = 0; i < n; i++)
       a[i] = va_arg(ap, P);
     va_end(ap);
@@ -752,7 +753,6 @@ P CALLN (P fun, int n, ...) {
       STACK_PAIR_SET(arg, a[j], arg);
     }
     PUSH(arg);
-    CHECK_ARITY(naryp,n,arity);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, YPfalse);
   } else {
@@ -832,6 +832,7 @@ P YPPapply (P fun, P next_mets, P args) {
     P   specs = FUNSPECS(fun);
     int naryp = FUNNARYP(fun);
     P   ap    = args;
+    CHECK_ARITY(naryp,n,arity);	
     for (i = 0; i < arity; i++) {
       P head = Phead(ap);
       CHECK_TYPE(head, Phead(specs)); 
@@ -854,13 +855,7 @@ P YPPapply (P fun, P next_mets, P args) {
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
-    if (naryp) {
-      if (n < arity)
-	CALL2(Ywrong_number_arguments_error, fun, YPib((P)n));
-    } else {
-      if (n != arity)
-	CALL2(Ywrong_number_arguments_error, fun, YPib((P)n));
-    }
+    CHECK_ARITY(naryp,n,arity);
     PUSH(args);
     LINK_STACK(fun); 
     res = (FUNCODE(fun))(fun, next_mets);
@@ -1212,6 +1207,7 @@ void print_kind (P adr, int prettyp, int depth) {
   case loc_tag:
     printf("&0x%lx", tag((P)untag(adr), 0)); return;
   default:
+    break;
   }
   if (classp) {
     if (prettyp)
@@ -1458,3 +1454,5 @@ void YPinit_world(int argc, char* argv[]) {
   Ptop_unwind_protect_frame->ultimate_destination = (BIND_EXIT_FRAME)0;
   setup_keyboard_interrupts();
 }
+
+
