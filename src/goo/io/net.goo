@@ -76,18 +76,16 @@
 (dm accept-socket (sock|<listen-socket-port> => (t? <socket-port>))
   (def sockfd (%accept-socket (port-handle sock)))
   (when sockfd
-      (seq
-        (def sock (new <socket-port>))
-        (def in-sock (new <socket-in-port>))
-        (def out-sock (new <socket-out-port>))
-        (set (port-handle in-sock) sockfd)
-        (set (port-handle out-sock) sockfd)
-        (set (port-handle sock) sockfd)
-        (set (in-port sock) in-sock)
-        (set (out-port sock) out-sock)
-        sock        
-        )
-      )
+    (def sock (new <socket-port>))
+    (def in-sock (new <socket-in-port>))
+    (def out-sock (new <socket-out-port>))
+    (set (port-handle in-sock) sockfd)
+    (set (port-handle out-sock) sockfd)
+    (set (port-handle sock) sockfd)
+    (set (in-port sock) in-sock)
+    (set (out-port sock) out-sock)
+    sock        
+    )
   )
 
 (dm close (port|<socket-port>)
@@ -167,7 +165,7 @@
   (%make-non-blocking (port-handle port))
   )
 
-(dm select (read-ports|(t? <col>) write-ports|(t? <col>) except-ports|(t? <col>) wait-in-ms|(t? <int>))
+(dm select (read-ports|(t? <col>) write-ports|(t? <col>) except-ports|(t? <col>) wait-in-secs|(t? <flo>))
   (%select read-ports 
            write-ports
            except-ports

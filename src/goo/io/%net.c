@@ -330,9 +330,17 @@ GOOFUNC(select) (P readvec, P writevec, P exceptvec, P timeout)
 
   if(timeout != YPfalse)
     {
-      time_millis = intUnwrap(timeout);
-      tv.tv_sec = time_millis / 1000;
-      tv.tv_usec = (time_millis % 1000) * 1000;
+      INTFLO x;
+
+      x.i = (PINT)YPfu(timeout);
+
+
+      tv.tv_sec = (unsigned long)x.f;
+      tv.tv_usec = (unsigned long)((x.f - (float)tv.tv_sec) * 1000000.0);
+
+      //      time_millis = intUnwrap(timeout);
+      //      tv.tv_sec = time_millis / 1000;
+      //      tv.tv_usec = (time_millis % 1000) * 1000;
       
       retval = select(highest+1, &readset, &writeset, &exceptset, &tv);
     }
