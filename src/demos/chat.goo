@@ -1,0 +1,192 @@
+(use goo)
+
+(use goo/io/net)
+
+;; This little demo app creates a chat program of sorts.
+
+;; It demonstrates the use of select(), as well as non-blocking sockets.
+;; It should be noted that you do *NOT* want to just copy and paste any
+;;  of this code for your own use; the code makes no attempt to 
+;;  guarantee transmission of any outgoing data.  Although, thinking
+;;  about that now, there is potentially a deficiency in the port 
+;;  API for dealing with that; potentially meriting a new/extended set
+;;  of function calls, even if just for sockest. (Ex: get-max is well
+;;  on the way to such a thing.)
+
+;; -- Generic Framework --
+
+(dc <input-state> (<any>))
+ (dp next-state (<input-state> => <input-state>))
+
+(dc <user> (<any>))
+ (dp name (<user> => <str>))
+ (dp user-port (<user> => <port>))
+ (dp state (<user> => <input-state>))
+ (dp line-so-far (<user> => (t? <str>)) #f)
+
+(dg enter-state (state|<input-state> user|<user>))
+
+(dg exit-state (state|<input-state> user|<user>))
+
+(dm enter-state (state|<input-state> user|<user>)
+  ;; NOP
+  )
+
+(dm exit-state (state|<input-state> user|<user>)
+  ;; NOP
+  )
+
+(dg process-input (state|<input-state> user|<user> words|<col>))
+
+(df advance-state (user|<user>)
+  (exit-state (state user) user)
+  (set (state user) (next-state (state user)))
+  (enter-state (state user) user)
+  )
+
+(df ultra-main (start-state|<input-state> listen-port|<int>)
+  (def incoming (listen-socket listen-port))
+  (def ports (vec incoming))
+  (def port-to-user (fab <tab> 0))
+
+  (while #t
+         
+    (def sel-tup (select ports #f #f #f))
+    
+    ;; Handle readable
+    (do (fun (readable)
+          (if (== readable incoming)
+              ;; Then accept and what not
+              (seq
+                ;; Get the socket
+                (def newsock (accept-socket incoming))
+                ;; Make it non-blocking
+                (make-non-blocking newsock)
+                ;; Add the socket to our select'ing regimen
+                (add! ports newsock)
+                ;; Create the user
+                (def newuser (new <user>))
+                (set (user-port newuser) newsock)
+                ;; Associate in the hashtable
+                (set (elt port-to-user newsock) newuser)
+                ;; Put the user in the start state, and have them enter
+                (set (state newuser) start-state)
+                (enter-state start-state newuser)
+                )
+              ;; Otherwise, handle the read
+              (seq
+                (def user (elt port-to-user readable))
+                (def data (get-max (in-port readable)))
+                (if (eof-object? data) ;; EOF?
+                    (seq
+                      ;; User leaves state
+                      (exit-state (state user) user)
+                      ;; Remove from map and list
+                      (set ports (del-vals! ports readable)) ;; remove based on value
+                      (del! port-to-user readable) ;; remove based on key
+                      ;; Close socket
+                      (close readable)
+                      )
+                    ;; Not EOF, actual data.
+                    (seq
+                      (if (line-so-far user)
+                          (set (line-so-far user) (cat (line-so-far user) data))
+                          (set (line-so-far user) data)
+                          )
+                      (when (pos (line-so-far user) #\newline)
+                        (def lines (split (line-so-far user) #\newline))
+                        (set input (del-vals (1st lines) #\return))
+                        (set (line-so-far user) (2nd lines)) ;; Let's hope they don't type too fast.
+                        (process-input (state user) user (split input #\ ))
+                        )
+                      )
+                    )
+                )
+              )
+          )
+        (1st sel-tup)
+        )
+    )
+  )
+
+
+;; -- I/O Routines --
+
+(dm prf (user|<user> message|<str>)
+  (puts (out-port (user-port user)) message)
+  )
+
+(dm prf (users|<col> message|<str>)
+  (do (fun (user)
+        (puts (out-port (user-port user)) message)
+        )
+      users)
+  )
+
+(dm prf-alt (users|<col> message|<str> one-user|<user> one-message|<str>)
+  (do (fun (user)
+        (puts (out-port (user-port user))
+              (if (== user one-user)
+                  one-message
+                  message))
+        )
+      users)
+  )
+
+;; -- Name State --
+
+(dc <name-state> (<input-state>))
+
+(dm enter-state (me|<name-state> user|<user>)
+  (prf user "Please enter the name you would like to use.\n")
+  )
+
+(dm process-input (me|<name-state> user|<user> words|<col>)
+  (unless (empty? words)
+    (msg out "Got words: %=\n" words)
+    (set (name user) (1st words))
+    (advance-state user)
+    )
+  )
+
+;; -- Talk State --
+
+(dc <talk-state> (<input-state>))
+ (dp talk-users (<talk-state> => <col>) (vec))
+
+(dm enter-state (me|<talk-state> user|<user>)
+  (def enter-msg (cat "*** " (name user) " has entered!\n"))
+  (prf (talk-users me) enter-msg)
+  (add! (talk-users me) user)
+  )
+
+(dm exit-state (me|<talk-state> user|<user>)
+  (del-vals! (talk-users me) user)
+  (def leave-msg (cat "*** " (name user) " has left!\n"))
+  (prf (talk-users me) leave-msg)
+  )
+
+(dm process-input (me|<talk-state> user|<user> words|<col>)
+  (def all-msg (cat (name user) ": " (join words " ") "\n"))
+  (def one-msg "-- Message Sent --\n")
+  (prf-alt (talk-users me)
+           all-msg
+           user
+           one-msg)
+  )
+
+;; --- Do Stuff ---
+
+(df chat-main ()
+  (def name-state (new <name-state>))
+  (def talk-state (new <talk-state>))
+  (set (next-state name-state) talk-state)
+  (set (next-state talk-state) talk-state)
+
+  (ultra-main name-state 9099)
+  )
+
+(chat-main)
+
+(export
+  chat-main)
