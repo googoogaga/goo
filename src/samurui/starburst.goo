@@ -1,0 +1,270 @@
+
+(use goo)
+(use samurui/samurui)
+(use samurui/autogtk)
+(use samurui/gtkbinding)
+(use samurui/gtkcallbacks)
+
+(idrawmodel <visi-col> <visi-sb>)
+ (dp wrapped (<visi-sb> => (t? <visi-col>)) #f)
+ (dp current-root (<visi-sb> => <any>))
+ (dp axis (<visi-sb> => <any>) "implicit")
+ (dp sb-master (<visi-sb> => (t? <gui-master>)) #f)
+
+(dm bind (sb|<visi-sb> getter|<fun> setter|<fun> => (tup <fun> <fun> <fun>))
+  (tup
+   ;; -- Rebinder --
+   (fun (new-obj)
+     ;; Detach from current if applicable
+     (when (wrapped sb)
+       ;; um... nop for now
+       )
+     
+     ;; 
+     (set (wrapped sb) (getter new-obj))
+
+     (set (current-root sb) (get-start-node (wrapped sb)))
+     )
+
+   ;; -- Refresher --
+   (fun ()
+     ;; When we update the rebinder code... update this too by using a common method or something...
+;;     (paint-starburst sb)
+     )
+
+   ;; -- Free / Cleanup --
+   (fun ()
+     )
+   )
+  )
+
+(dm bind-master (sb|<visi-sb> master|<gui-master>)
+  (set (sb-master sb) master)
+  )
+
+;; ----- Painting ----------------------------------------------------------------------
+;; So let's have the center circle, plus 3 layers of rings.
+
+(dv *starburst-colors* (vec))
+
+(df free-starburst-colors ()
+  (do free *starburst-colors*)
+  (set *starburst-colors* (vec))
+  )
+
+(df gimme-color (ang0|<flo> ang1|<flo> ring|<int>)
+  (def h (/ (/ (+ ang0 ang1) 2) 360.0))
+  (def s (/ (- 4.0 (as <flo> ring)) 4.0))
+  (def c (color-hsb h s 1.0))
+  (add! *starburst-colors* c)
+  c
+  )
+
+(df gimme-dark-color (ang0|<flo> ang1|<flo> ring|<int>)
+  (def h (/ (/ (+ ang0 ang1) 2) 360.0))
+  (def s (/ (- 4.0 (as <flo> ring)) 4.0))
+  (def c (color-hsb h s 0.7))
+  (add! *starburst-colors* c)
+  c
+  )
+
+;; In theory we should recurse before we paint our own
+(df paint-ring (sb|<visi-sb> cur-node cur-depth|<int> cur-radius|<int> unit-radius|<int> min-angle|<flo> max-angle|<flo> max-depth|<int> center-x|<int> center-y|<int>)
+  (def my-rect (rect-around center-x center-y cur-radius cur-radius))
+
+  (def weight-scale (/ (- max-angle min-angle) (node-weight (wrapped sb) cur-node)))
+  (def kids (node-out-edges (wrapped sb) (axis sb) cur-node))
+
+  ;; Recurse over kids if applicable
+  (unless (= cur-depth max-depth)
+    (def next-ring (+ cur-depth 1))
+    (def next-radius (+ cur-radius unit-radius))
+
+    (rep loop ((kid-enum (enum kids))
+               (base-ang min-angle))
+      (unless (fin? kid-enum)
+        (def cur-kid (now kid-enum))
+        (def my-max-ang (+ base-ang (* weight-scale (node-weight (wrapped sb) cur-kid))))
+        (when (> (len (node-out-edges (wrapped sb) (axis sb) cur-kid)) 0)
+          (paint-ring sb
+                      cur-kid
+                      next-ring
+                      next-radius
+                      unit-radius
+                      base-ang
+                      my-max-ang
+                      max-depth
+                      center-x
+                      center-y
+                      )
+          )
+        (loop (nxt kid-enum) my-max-ang)
+        )
+      )
+    )
+
+  ;; Paint!
+  (def my-r (rect-around center-x center-y cur-radius cur-radius))
+  (rep loop ((kid-enum (enum kids))
+             (base-ang min-angle))
+    (unless (fin? kid-enum)
+      (def cur-kid (now kid-enum))
+      (def my-max-ang (+ base-ang (* weight-scale (node-weight (wrapped sb) cur-kid))))
+      (draw-arc sb my-r
+                base-ang my-max-ang
+                #t (gimme-color base-ang my-max-ang cur-depth))
+      (draw-arc sb my-r
+                base-ang my-max-ang
+                #f (gimme-dark-color base-ang my-max-ang cur-depth))
+      (msg out "Arc: Ang(%= %=) Weight: %= Depth: %=\n" base-ang my-max-ang (node-weight (wrapped sb) cur-kid) cur-depth)
+      (loop (nxt kid-enum) my-max-ang)
+      )
+    )
+  )
+
+(dm paint-starburst (sb|<visi-sb>)
+  (free-starburst-colors)
+  
+  (blank sb)
+
+  (def 
+    (tup limiting-axis max-size)
+    (if (< (gui-width sb) (gui-height sb))
+        (tup 'x (gui-width sb))
+        (tup 'y (gui-height sb))))
+
+  (def center-x (div (gui-width sb) 2))
+  (def center-y (div (gui-height sb) 2))
+
+  (def unit-radius (div max-size 8))
+
+  (def r0 (rect-around center-x center-y unit-radius unit-radius))
+
+  (paint-ring sb (current-root sb) 1 (* unit-radius 2) unit-radius 0.0 360.0 3 center-x center-y)
+;;  (draw-arc sb r0 0 360 
+
+  (invalidate-all sb)
+  )
+
+(dm find-node (sb|<visi-sb> x|<int> y|<int>)
+  (def 
+    (tup limiting-axis max-size)
+    (if (< (gui-width sb) (gui-height sb))
+        (tup 'x (gui-width sb))
+        (tup 'y (gui-height sb))))
+
+  (def center-x (div (gui-width sb) 2))
+  (def center-y (div (gui-height sb) 2))
+  
+  (def unit-radius (div max-size 8))
+
+  (def rel-x (- x center-x))
+  (def rel-y (- y center-y))
+
+  (def theta (atan2 (as <flo> rel-y) (as <flo> rel-x)))
+  (def r (dist (point center-x center-y) (point x y)))
+
+  (when (< theta 0)
+    (set theta (+ theta (* 2 $pi))))
+
+  (set theta (- (* $pi 2) theta))
+
+  (def ring (floor (/ r unit-radius)))
+
+  (def angle (/ (* 180.0 theta) $pi))
+
+  (msg out "Looking for thing at r: %= angle: %= ring: %=\n" r angle ring)
+
+  (find-node-in-ring sb (current-root sb)
+                     1 (* unit-radius 2)
+                     unit-radius
+                     0.0 360.0
+                     angle
+                     ring)
+)
+
+(dm find-node-in-ring (sb|<visi-sb> cur-node cur-depth cur-radius unit-radius min-angle max-angle actual-angle actual-ring)
+  (esc found-it
+    (def next-ring (+ cur-depth 1))
+    (def next-radius (+ cur-radius unit-radius))
+
+    (def weight-scale (/ (- max-angle min-angle) (node-weight (wrapped sb) cur-node)))
+    (def kids (node-out-edges (wrapped sb) (axis sb) cur-node))
+
+    (rep loop ((kid-enum (enum kids))
+               (base-ang min-angle))
+      (unless (fin? kid-enum)
+        (def cur-kid (now kid-enum))
+        (def my-max-ang (+ base-ang (* weight-scale (node-weight (wrapped sb) cur-kid))))
+
+        ;; Are we in the right angular range?
+        (msg out "Considering (%= %=) %=\n" base-ang my-max-ang cur-depth)
+        (when (and (>= actual-angle base-ang)
+                   (< actual-angle my-max-ang))
+          (if (< cur-depth actual-ring)
+              ;; Recurse
+              (seq
+
+                (if (> (len (node-out-edges (wrapped sb) (axis sb) cur-kid)) 0)
+                    (found-it (find-node-in-ring sb
+                                                 cur-kid
+                                                 next-ring
+                                                 next-radius
+                                                 unit-radius
+                                                 base-ang
+                                                 my-max-ang
+                                                 actual-angle
+                                                 actual-ring
+                                                 ))
+                    (msg out "SCREWED\n")
+                    )
+                )
+              ;; Found it
+              (found-it cur-kid)
+              )
+          )
+        (loop (nxt kid-enum) my-max-ang)
+        )
+      )
+    )
+  )
+
+
+(dm mouse-press ((widget <visi-sb>) (x <int>) (y <int>) (button <int>) (time <int>))
+  (case button
+    ((1)
+     (def da-node (find-node widget x y))
+     (msg out "Node is: %=\n" da-node)
+     (when (and (and (sb-master widget)
+                     da-node)
+                (node-browsable (wrapped widget) da-node))
+       (master-update-slaves (sb-master widget) da-node)
+       )
+     (when (and da-node
+                (not (node-browsable (wrapped widget) da-node)))
+       (set (current-root widget) da-node)
+       (paint-starburst widget)
+       )
+     )
+    ((2)
+     (paint-starburst widget)
+     )
+    ((3)
+     (paint-starburst widget)
+     )
+    )
+  )
+
+(dm mouse-release ((widget <visi-sb>) (x <int>) (y <int>) (button <int>) (time <int>))
+  (case button
+    ((1)
+     )
+    ((2)
+     )
+    ((3)
+     )
+    )
+  )
+
+(dm mouse-move ((widget <visi-sb>) (x <int>) (y <int>) (state <int>))
+  )

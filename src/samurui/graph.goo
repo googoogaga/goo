@@ -3,6 +3,9 @@
 (use goo)
 (use samurui/samurui)
 (use samurui/gtkbinding)
+(use samurui/badge)
+(use samurui/gtkcallbacks)
+
 (use goo/random)
 
 ;; All of the code currently in this file is basically a direct conversion
@@ -29,8 +32,8 @@
  (dp node-obj (<graph-node> => <any>))
 
 (dm node-rect (node|<graph-node> => <gui-rect>)
-  (rect-around (floor (node-x node))
-               (floor (node-y node))
+  (rect-around (floor (node-drawx node))
+               (floor (node-drawy node))
                (+ 2 (1st (trunc/ (node-width node) 2)))
                (+ 2 (node-height node)))
   )
@@ -271,16 +274,18 @@
   )
 
 (df tick-fdg (fdg)
-  (relax (layout fdg) (graph-nodes fdg) (graph-edges fdg))
+  (when (enable-anim fdg)
+    (relax (layout fdg) (graph-nodes fdg) (graph-edges fdg))
+    )
   (repaint-graph fdg)
   )
 
 (idrawmodel <visi-col> <visi-fdg>
 ;;            (gtk_timeout_add 500
 ;;                             (gtk_getGtkFunctionCallback)
-;;                             (goo_createCallback tick-fdg imagebox))
+;;                             (goo_safeCreateCallback tick-fdg imagebox))
             (gtk_idle_add (gtk_getGtkFunctionCallback)
-                          (goo_createCallback tick-fdg imagebox))
+                          (goo_safeCreateCallback tick-fdg imagebox))
             )
  (dp wrapped (<visi-fdg> => (t? <visi-col>)) #f)
  (dp graph-nodes (<visi-fdg> => <col>) (vec))
@@ -291,6 +296,9 @@
  (dp drag-node-off-x (<visi-fdg> => <int>) 0)
  (dp drag-node-off-y (<visi-fdg> => <int>) 0)
  (dp selected-node (<visi-fdg> => (t? <graph-node>)) #f)
+ (dp graph-badge (<visi-fdg> => (t? <badge>)) #f)
+ (dp post-node-renderers (<visi-fdg> => <col>) (vec))
+ (dp enable-anim (<visi-fdg> => <log>) #t)
 
 (dm find-graph-node (fdg|<visi-fdg> node)
   (esc found-it
@@ -300,6 +308,50 @@
         (graph-nodes fdg))
     (msg out "Unable to locate graph node %=\n" node)
     )
+  )
+
+(dm graph-control-add-post-draw (fdg|<visi-fdg> func)
+  (add! (post-node-renderers fdg) func)
+  )
+
+(dm graph-control-remove-post-draw (fdg|<visi-fdg> func)
+  (del! (post-node-renderers fdg) func)
+  )
+
+(dm graph-control-enable-anim (fdg|<visi-fdg> should-enable)
+  (set (enable-anim fdg) should-enable)
+  )
+
+(dm graph-control-clear-graph (fdg|<visi-fdg>)
+  (set (graph-nodes fdg) (vec))
+  (set (graph-edges fdg) (vec))
+  )
+
+
+(dm graph-control-clear-edges (fdg|<visi-fdg>)
+  (set (graph-edges fdg) (vec))
+  )
+
+(dm graph-control-fix-node (fdg|<visi-fdg> unode)
+  (def gnode (find-graph-node fdg unode))
+  (set (node-fixed gnode) #t)
+  )
+
+(dm graph-control-get-node-pos (fdg|<visi-fdg> unode => <gui-point-flo>)
+  (def gnode (find-graph-node fdg unode))
+  (point (node-x gnode)
+         (node-y gnode))
+  )
+
+(dm graph-control-draw-line (fdg|<visi-fdg> l|<gui-line-flo> c|<gui-color>)
+  (def p1 (point-to-draw-space fdg (line-p1 l)))
+  (def p2 (point-to-draw-space fdg (line-p2 l)))
+  (draw-line fdg
+             (round (point-x p1))
+             (round (point-y p1)) 
+             (round (point-x p2)) 
+             (round (point-y p2))
+             c)
   )
 
 (dm bind (fdg|<visi-fdg> getter|<fun> setter|<fun> => (tup <fun> <fun> <fun>))
@@ -324,9 +376,31 @@
                                        (def ge (new <graph-edge>))
                                        (set (edge-from ge) (find-graph-node fdg from))
                                        (set (edge-to ge)   (find-graph-node fdg to))
-                                       (add! (graph-edges fdg) ge)
+                                       ;; Only add it if both nodes are valid
+                                       (when (and (edge-from ge)
+                                                  (edge-to ge))
+                                         (add! (graph-edges fdg) ge))
                                        ))
 
+     (add! (lenses fdg)
+           (fun (p)
+             (point (+ (point-x p) (1st (trunc/ (gui-width fdg) 2)))
+                    (+ (point-y p) (1st (trunc/ (gui-height fdg) 2))))
+             )
+           )
+
+     (add! (unlenses fdg)
+           (fun (p)
+             (point (- (point-x p) (1st (trunc/ (gui-width fdg) 2)))
+                    (- (point-y p) (1st (trunc/ (gui-height fdg) 2))))
+             )
+           )
+
+     (set (graph-badge fdg) (suggest-badge (wrapped fdg)))
+
+     ;; Set up the graph-control handle thing
+     (graph-control-is (wrapped fdg) fdg)
+     
      ;; At some point we should traverse the existing collection...
      )
 
@@ -353,6 +427,11 @@
         )
       methods)
   cur-val
+  )
+
+(dm point-to-draw-space (fdg|<visi-fdg> p|<point> => <point>)
+  (method-fold (lenses fdg)
+               p)
   )
 
 (dm update-draw-positions (fdg|<visi-fdg>)
@@ -396,11 +475,23 @@
   (draw-rect fdg (rect 0 0 (gui-width fdg) (gui-width fdg)) #t c_background)
 
   ;; Pre-Paint
-  (do (fun (node)
-        (pre-paint-node node fdg)
-        )
-      (graph-nodes fdg)
-      )
+;;  (do (fun (node)
+;;        (pre-paint-node node fdg)
+;;        )
+;;      (graph-nodes fdg)
+;;      )
+
+  (when (graph-badge fdg)
+    (do (fun (node)
+          (when node
+            (render-badge fdg
+                          (graph-badge fdg)
+                          (wrapped fdg)
+                          (node-obj node)
+                          (round (node-drawx node))
+                          (round (node-drawy node)))))
+        (graph-nodes fdg))
+    )
 
   ;; Edges
   (do (fun (edge)
@@ -417,11 +508,14 @@
       )
 
   ;; Post-Paint
-  (do (fun (node)
-        (post-paint-node node fdg)
-        )
-      (graph-nodes fdg)
-      )
+
+  (unless (empty? (post-node-renderers fdg))
+    ;; hard-code for 1 post node renderer for the time being
+    (set render-func (1st (post-node-renderers fdg)))
+    (do (fun (node)
+          (render-func fdg (node-obj node)))
+        (graph-nodes fdg))
+    )
 
   (invalidate-all fdg)
   )
@@ -431,7 +525,8 @@
 
 (dm paint-node (node widget)
   ;; Intentional naivete : this should be rectified once things are working.
-  (def my-font (font font-lucida))
+  ;; (def my-font (font font-lucida))
+  (def my-font (get-default-samurui-font))
 
   (def label (node-label (wrapped widget) (node-obj node))) ;; widget is an fdg
   (def s-w (string-width my-font label))
@@ -440,8 +535,8 @@
   (set (node-width node) s-w)
   (set (node-height node) s-h)
 
-  (def node-rect (rect-around (floor (node-x node))
-                              (floor (node-y node))
+  (def node-rect (rect-around (floor (node-drawx node))
+                              (floor (node-drawy node))
                               (+ 2 (1st (trunc/ s-w 2)))
                               (+ 2 s-h)))
   (draw-rect widget node-rect #t c_node)
@@ -451,19 +546,49 @@
                   (font-ascent my-font))
                label c_label)
 
-  (free my-font)
+  ;; (free my-font)
   )
 
-(dm post-paint-node (node widget)
+(dm post-paint-node (gnode widget)
   )
 
 (dm paint-edge (edge widget)
-  (draw-line widget
-             (floor (node-x (edge-to edge)))
-             (floor (node-y (edge-to edge)))
-             (floor (node-x (edge-from edge)))
-             (floor (node-y (edge-from edge)))
-             c_edge)
+  (def tx (floor (node-drawx (edge-to edge))))
+  (def ty (floor (node-drawy (edge-to edge))))
+  (def fx (floor (node-drawx (edge-from edge))))
+  (def fy (floor (node-drawy (edge-from edge))))
+  (def dx (abs (- tx fx)))
+  (def dy (abs (- ty fy)))
+  (if (> dx dy)
+      (seq
+        (draw-line widget
+                   fx
+                   (- fy 3)
+                   tx
+                   ty
+                   c_edge)
+        (draw-line widget
+                   fx
+                   (+ fy 3)
+                   tx
+                   ty
+                   c_edge)
+        )
+      (seq
+        (draw-line widget
+                   (- fx 3)
+                   fy
+                   tx
+                   ty
+                   c_edge)
+        (draw-line widget
+                   (+ fx 3)
+                   fy
+                   tx
+                   ty
+                   c_edge)
+        )
+      )
   )
 
 (dm node-clicked (node widget)
@@ -481,14 +606,14 @@
   )
 
 
-(dm mouse-press ((widget <visi-fdg>) (x <int>) (y <int>) (button <int>))
+(dm mouse-press ((widget <visi-fdg>) (x <int>) (y <int>) (button <int>) (time <int>))
   (case button
     ((1)
      (def da-node (find-node widget x y))
      (set (drag-node (layout widget)) da-node)   
      (when da-node   
-       (set (drag-node-off-x widget) (- (floor (node-x da-node)) x))
-       (set (drag-node-off-y widget) (- (floor (node-y da-node)) y))
+       (set (drag-node-off-x widget) (- (floor (node-drawx da-node)) x))
+       (set (drag-node-off-y widget) (- (floor (node-drawy da-node)) y))
        )                                             
      )
     ((2)
@@ -497,8 +622,8 @@
 ;;           (def old-node (selected-node widget))
 ;;           (def new-node (or (find-node widget x y)
 ;;                             (let ((node (new <graph-node>)))
-;;                               (set (node-x node) (as <flo> x))
-;;                               (set (node-y node) (as <flo> y))
+;;                               (set (node-drawx node) (as <flo> x))
+;;                               (set (node-drawy node) (as <flo> y))
 ;;                               (set (node-obj node) (gimme-node-name))
 ;;                               (add! (graph-nodes widget) node)
 ;;                               node)))
@@ -509,8 +634,8 @@
 ;;           (repaint-graph widget))
 ;;         (seq
 ;;           (let ((node (new <graph-node>)))
-;;             (set (node-x node) (as <flo> x))
-;;             (set (node-y node) (as <flo> y))
+;;             (set (node-drawx node) (as <flo> x))
+;;             (set (node-drawy node) (as <flo> y))
 ;;             (set (node-obj node) (gimme-node-name))
 ;;             (add! (graph-nodes widget) node)
 ;;             (repaint-graph widget))
@@ -518,11 +643,16 @@
 ;;       )
      )
     ((3)
+     (def da-node (find-node widget x y))
+     (when da-node
+       (def da-menu (gimme-menu (node-obj da-node)))
+       (popup da-menu button 0)
+       )
      )
     )
   )
 
-(dm mouse-release ((widget <visi-fdg>) (x <int>) (y <int>) (button <int>))
+(dm mouse-release ((widget <visi-fdg>) (x <int>) (y <int>) (button <int>) (time <int>))
   (case button
     ((1)
      (when (drag-node (layout widget))
@@ -546,4 +676,19 @@
     (update-pos-from-draw widget da-node)
     (repaint-graph widget)
     )
+  )
+
+(dm graph-control-is (vc|<visi-col> fdg)
+  )
+
+(export
+  graph-control-is
+  graph-control-add-post-draw
+  graph-control-remove-post-draw
+  graph-control-fix-node
+  graph-control-get-node-pos
+  graph-control-draw-line
+  graph-control-clear-graph
+  graph-control-clear-edges
+  graph-control-enable-anim
   )

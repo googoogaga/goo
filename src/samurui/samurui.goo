@@ -1,7 +1,3 @@
-; (load "/home/ai2/sombrero/cvs/goo/src/samurui/samurui.goo" 'goo/user)
-; OR
-; (use samurui/samurui)
-
 (use goo)
 (use goo/system)
 (use goo/boot)
@@ -9,6 +5,7 @@
 (use samurui/autogtk)
 (use samurui/gtkbinding)
 
+(use samurui/gtkcallbacks)
 
 (dv gtk_true 1)
 (dv gtk_false 0)
@@ -110,7 +107,7 @@
 
 (ds (iaction ,class ,binding ,this-name ,desc ,@body)
   `(seq
-     (dm ,binding (,this-name ,class) ,@body)
+     (dm ,binding ((,this-name ,class)) ,@body)
      (add-action ,class (interface-action ,(as <str> binding) ,binding ,desc))
      )
   )
@@ -212,6 +209,7 @@
              )
          )
        )
+
      models)
     best-model            
     )
@@ -375,7 +373,7 @@
 
 (dm present (obj)
   (let ((window (gui-window))
-        (kill-gtk-cb (goo_createCallback kill-gtk 0))
+        (kill-gtk-cb (goo_safeCreateCallback kill-gtk 0))
         (class (object-class obj))
         (model (find-interface-model class root-interface))
         (updaters (fab <vec> 0))
@@ -383,7 +381,7 @@
     ; set up the window for death on destroy
     (gtk_signal_connect (handle window) "destroy" (gtk_getGtkCallback) kill-gtk-cb)
     (msg out "About to add-all\n")
-    (ad! window (renderize-model model root-interface class updaters))
+    (ad! window (renderize-model model root-interface class updaters (fab <str-tab> 0)))
     (msg out "About to rebind\n")
     (rebind-interface-model updaters obj)
     (msg out "About to update\n")
@@ -435,6 +433,18 @@
 (dc <gui-container> (<gui-widget>))
   (dp children (<gui-container> => <vec>) (fab <vec> 0))
 
+(dm free (container|<gui-container>)
+  ;; Kill off the kids
+  (do (fun (kid) (free kid)) (children container))
+  (zap! (children container))
+
+  ;; Kill off our own handle
+  (unless (= (handle gui-obj) NULL)
+    (g_object_unref (handle gui-obj))
+    (set (handle gui-obj) NULL)
+    )
+  )
+
 (dc <gui-window> (<gui-container>))
 
 (dm gui-window ( => <gui-window>)
@@ -446,7 +456,16 @@
     window
     )
   )
-  
+
+(dc <gui-frame> (<gui-container>))
+
+(dm gui-frame (label|<str> => <gui-frame>)
+  (def f (new <gui-frame>))
+  (def da-frame (gtk_frame_new label))
+  (set (handle f) da-frame)
+  f
+  )
+
 (dc <gui-box> (<gui-container>))
 
 (dc <gui-vbox> (<gui-box>))
@@ -478,9 +497,14 @@
   )
 
 (dm ad! ((container <gui-container>) (item <gui>))
-  (debugstr "Adding %= to gui-container %=.\n" item container)
+  ;;(debugstr "Adding %= to gui-container %=.\n" item container)
   (gtk_container_add (handle container) (handle item))
   (add! (children container) item)
+  )
+
+(dm rem! (container|<gui-container> item|<gui>)
+  (gtk_container_remove (handle container) (handle item))
+  (set (children container) (del-vals (children container) item))
   )
 
 (dm ad! ((container <gui-box>) (item <gui>))
@@ -498,9 +522,17 @@
   )
 
 ; was going to do cool iteration, then I discovered that I knew about the show_all func
+(dm show ((widget <gui-widget>))
+  (gtk_widget_show (handle widget))
+  )
+
 (dm show ((window <gui-window>))
   (debugstr "Going to show %=\n" window)
   (gtk_widget_show_all (handle window))
+  ) 
+
+(dm show-all ((widget <gui-widget>))
+  (gtk_widget_show_all (handle widget))
   ) 
 
 ; -- Items
@@ -523,7 +555,7 @@
   (gtk_signal_connect (handle button)
                       "clicked"
                       (gtk_getGtkCallback)
-                      (goo_createCallback func val-to-pass))
+                      (goo_safeCreateCallback func val-to-pass))
   )
 
 ;; ;;;;;;;;;;;;;;;;;;;;; ;;
@@ -546,7 +578,7 @@
   (gtk_signal_connect (handle button)
                       "toggled"
                       (gtk_getGtkCallback)
-                      (goo_createCallback func val-to-pass))
+                      (goo_safeCreateCallback func val-to-pass))
   )
 
 ;; ;;;;; ;;
@@ -588,14 +620,17 @@
   menu
   )
 
+
 (dm popup (menu|<gui-menu> button|<int> button-time|<int>)
-  (gtk_menu (handle menu) 
-            NULL
-            NULL
-            NULL
-            NULL
-            button
-            button-time)
+  ;;(debugstr "Going to try and pop up a menu now...\n")
+  (gtk_menu_popup (handle menu) 
+                  NULL
+                  NULL
+                  NULL
+                  NULL
+                  button
+                  button-time)
+  ;;(debugstr "Done trying to pop up a menu now...\n")
   )
 
 ;; ;;;;;;;;;;;;;;;;; ;;
@@ -605,6 +640,13 @@
 (dc <gui-menu-item> (<gui-widget>))
 
 (dc <gui-menu-item-label> (<gui-menu-item>))
+
+(dm ad! ((da-menu <gui-menu>) (item <gui-menu-item>))
+  (debugstr "Adding menu item to menu.\n")
+  (gtk_menu_shell_append (handle da-menu) (handle item))
+  (add! (children da-menu) item)
+  #t
+  )
 
 (dm gui-menu-item-label (label-text|<str> => <gui-menu-item-label>)
   (def mi (new <gui-menu-item-label>))
@@ -617,7 +659,7 @@
   (gtk_signal_connect (handle menu-item)
                       "activate"
                       (gtk_getGtkCallback)
-                      (goo_createCallback func val-to-pass))
+                      (goo_safeCreateCallback func val-to-pass))
   )
 
 ;; ;;;;;;;;;; ;;
@@ -730,7 +772,7 @@
   (def p (new <gui-point-flo>))
   (set (point-x p) x)
   (set (point-y p) y)
-  p  
+  p
   )
 
 (dm point-in-rect (p|<point> r|<gui-rect>)
@@ -769,6 +811,147 @@
 (dm free ((point <gdk-point>))
   (delete__GdkPoint (handle point))
   )
+
+(dc <gui-circle-flo> (<any>))
+ (dp circle-p (<gui-circle-flo> => <gui-point-flo>))
+ (dp circle-r (<gui-circle-flo> => <flo>))
+
+(dm circle (x|<flo> y|<flo> r|<flo> => <gui-circle-flo>)
+  (def c (new <gui-circle-flo>))
+  (set (circle-p c) (point x y))
+  (set (circle-r c) r)
+  c
+  )
+
+(dc <gui-line> (<any>))
+ (dp line-p1 (<gui-line> => <gui-point>))
+ (dp line-p2 (<gui-line> => <gui-point>))
+
+(dm line (p1|<gui-point> p2|<gui-point> => <gui-line>)
+  (def l (new <gui-line>))
+  (set (line-p1 l) p1)
+  (set (line-p2 l) p2)
+  l
+  )
+
+(dc <gui-line-flo> (<any>))
+ (dp line-p1 (<gui-line-flo> => <gui-point-flo>))
+ (dp line-p2 (<gui-line-flo> => <gui-point-flo>))
+
+(dm line (p1|<gui-point-flo> p2|<gui-point-flo> => <gui-line-flo>)
+  (def l (new <gui-line-flo>))
+  (set (line-p1 l) p1)
+  (set (line-p2 l) p2)
+  l
+  )
+
+(dm dist (p1|<point> p2|<point> => <flo>)
+  (def dx (- (point-x p1) (point-x p2)))
+  (def dy (- (point-y p1) (point-y p2)))    
+  (sqrt (+ (* dx dx)
+           (* dy dy)))
+  )
+
+(dm sqdist (p1|<gui-point-flo> p2|<gui-point-flo> => <flo>)
+  (def dx (- (point-x p1) (point-x p2)))
+  (def dy (- (point-y p1) (point-y p2)))    
+  (+ (* dx dx)
+     (* dy dy))
+  )
+
+(dm intersect (c1|<gui-circle-flo> c2|<gui-circle-flo> => <any>)
+  (def d (dist (circle-p c1) (circle-p c2)))
+  (def a (/ (+ (- (* (circle-r c1) (circle-r c1))
+                  (* (circle-r c2) (circle-r c2)))
+               (* d d))
+            (* 2 d)))
+  (def p2 (point (+ (point-x (circle-p c1))
+                    (/ (* a
+                          (- (point-x (circle-p c2))
+                             (point-x (circle-p c1))))
+                       d))
+                 (+ (point-y (circle-p c1))
+                    (/ (* a
+                          (- (point-y (circle-p c2))
+                             (point-y (circle-p c1))))
+                          d))
+                 ))
+  (def h (sqrt (abs (- (* (circle-r c1) (circle-r c1))
+                  (* a a)))))
+  (def rsx (/ (* h
+                 (- (point-y (circle-p c2))
+                    (point-y (circle-p c1))))
+              d))
+  (def rsy (/ (* h
+                 (- (point-x (circle-p c2))
+                    (point-x (circle-p c1))))
+              d))
+  
+  (line (point (+ (point-x p2)
+                  rsx)
+               (- (point-y p2)
+                  rsy))
+        (point (- (point-x p2)
+                  rsx)
+               (+ (point-y p2)
+                  rsy)))
+  )
+
+(dm line-point-by-param (l|<gui-line-flo> u|<flo> => <gui-point-flo>)
+  (point (+ (point-x (line-p1 l))
+            (* u (- (point-x (line-p2 l)) (point-x (line-p1 l)))))
+         (+ (point-y (line-p1 l))
+            (* u (- (point-y (line-p2 l)) (point-y (line-p1 l))))))
+  )
+
+;; Intersection of a circle and a point is returned as a vector
+;;  as there can be 0, 1, or 2 points of intersection.
+(dm intersect (c|<gui-circle-flo> l|<gui-line-flo> => <any>)
+  (def p1 (line-p1 l))
+  (def p2 (line-p2 l))
+  (def p3 (circle-p c))
+  (def a (+ (* (- (point-x p2) (point-x p1))
+               (- (point-x p2) (point-x p1)))
+            (* (- (point-y p2) (point-y p1))
+               (- (point-y p2) (point-y p2)))))
+  (def b (* 2
+            (+ (* (- (point-x p2) (point-x p1))
+                  (- (point-x p1) (point-x p3)))
+               (* (- (point-y p2) (point-y p1))
+                  (- (point-y p1) (point-y p3))))))
+  (def c (fold+ +
+                (vec
+                 (* (point-x p3) (point-x p3))
+                 (* (point-y p3) (point-y p3))
+                 (* (point-x p1) (point-x p1))
+                 (* (point-y p1) (point-y p1))
+                 (* -2 (* (point-x p3) (point-x p1)))
+                 (* -2 (* (point-y p3) (point-y p1)))
+                 (* -1 (* (circle-r c) (circle-r c))))))
+  (def det (- (* b b)
+              (* (* 4 a)
+                 c)))
+  (cond
+    ((< det 0) ;; No intersection
+     (vec)
+     )
+    ((== det 0) ;; One point
+     (vec (line-point-by-param l (/ (* -1 b) (* 2 a))))
+     )
+    ((> det 0) ;; Two points
+     (def u1 (/ (+ (* -1 b)
+                   (sqrt det))
+                (* 2 a)))
+     (def u2 (/ (- (* -1 b)
+                   (sqrt det))
+                (* 2 a)))
+     (vec (line-point-by-param l u1)
+          (line-point-by-param l u2))
+     )
+    )
+  )
+
+;; end fishy
 
 ; In the GDK, a drawable area is generally going to be implemented as:
 ;  - A GTK Drawing Area (gtk_drawing_area_new)
@@ -922,6 +1105,48 @@
     )
   )
 
+(dm color-hsb (hue|<flo> saturation|<flo> brightness|<flo>)
+  (def h (* (- hue (as <flo> (floor hue)))
+            6.0))
+  (def f (- h (as <flo> (floor h))))
+  (def p (* brightness (- 1.0 saturation)))
+  (def q (* brightness (- 1.0 (* saturation f))))
+  (def t (* brightness (- 1.0 (* saturation (- 1.0 f)))))
+
+  (case (floor h)
+    ((0)
+     (color (floor (+ (* brightness 255.0) 0.5))
+            (floor (+ (* t 255.0) 0.5))
+            (floor (+ (* p 255.0) 0.5)))
+     )
+    ((1)
+     (color (floor (+ (* q 255.0) 0.5))
+            (floor (+ (* brightness 255.0) 0.5))
+            (floor (+ (* p 255.0) 0.5)))
+     )
+    ((2)
+     (color (floor (+ (* p 255.0) 0.5))
+            (floor (+ (* brightness 255.0) 0.5))
+            (floor (+ (* t 255.0) 0.5)))
+     )
+    ((3)
+     (color (floor (+ (* p 255.0) 0.5))
+            (floor (+ (* q 255.0) 0.5))
+            (floor (+ (* brightness 255.0) 0.5)))
+     )
+    ((4)
+     (color (floor (+ (* t 255.0) 0.5))
+            (floor (+ (* p 255.0) 0.5))
+            (floor (+ (* brightness 255.0) 0.5)))
+     )
+    ((5)
+     (color (floor (+ (* brightness 255.0) 0.5))
+            (floor (+ (* p 255.0) 0.5))
+            (floor (+ (* q 255.0) 0.5)))
+     )
+    )
+  )
+
 (dm free ((color <gui-color>))
   (delete__GdkColor (handle color))
   )
@@ -951,7 +1176,8 @@
 ; Font abstraction stuff...
 (dc <gui-font> (<gui>))
 
-(dv font-lucida "-*-lucida-medium-r-normal-*-14-*-*-*-p-*-*-1")
+//(dv font-lucida "-*-lucida-medium-r-normal-*-14-*-*-*-p-*-*-1")
+(dv font-lucida "-*-lucida-medium-r-normal-*-16-*-*-*-p-*-*-1")
 
 (dm font (name|<str> => <gui-font>)
   (def da-font (new <gui-font>))
@@ -962,6 +1188,14 @@
 (dm free (font|<gui-font>)
   (gdk_font_unref (handle font))
   (set (handle font) NULL)
+  )
+
+(dv *default-samurui-font* #f)
+
+(dm get-default-samurui-font ()
+  (unless *default-samurui-font*
+    (set *default-samurui-font* (font font-lucida)))
+  *default-samurui-font*
   )
                                     
 ; GUI ImageBox is a composite of gui-paintbox and gui-canvas
@@ -1017,6 +1251,22 @@
     )
   )
 
+(dm blank (imagebox|<gui-drawable>)
+  (let ((width (_GdkRectangle_width_get (_GtkWidget_allocation_get (handle imagebox))))
+        (height (_GdkRectangle_height_get (_GtkWidget_allocation_get (handle imagebox))))
+        (style (_GtkWidget_style_get (handle imagebox)))
+        )
+
+    (gdk_draw_rectangle (drawable-handle (canvas imagebox))
+                        (_GtkStyle_white_gc_get style)
+                        gtk_true
+                        0
+                        0
+                        width
+                        height)
+    )
+  )
+
 ; Helper accessors to get drawable's (in case the thing we need is hidden away)
 (dm drawable ((gui-drawable <gui-drawable>) => <gui-drawable>)
   gui-drawable
@@ -1043,6 +1293,7 @@
 (df hook-configure-event (data widget event)
   (debugstr "Got configure event!\n")
   (reconfigure data widget)
+  #t
   )
 
 (df hook-expose-event (data widget event)
@@ -1051,11 +1302,12 @@
       (set (handle r-area) area)
       (repaint data r-area)
       )
+    #t
     )
 
-(dg mouse-press (widget x|<int> y|<int> button|<int>))
+(dg mouse-press (widget x|<int> y|<int> button|<int> time|<int>))
 
-(dg mouse-release (widget x|<int> y|<int> button|<int>))
+(dg mouse-release (widget x|<int> y|<int> button|<int> time|<int>))
 
 (dg mouse-move (widget x|<int> y|<int> state|<int>))
 
@@ -1064,7 +1316,9 @@
                (round (_GdkEventButton_x_get event))
                (round (_GdkEventButton_y_get event))
                (_GdkEventButton_button_get event)
+               (_GdkEventButton_time_get event)
                )
+  #t
   )
 
 (df hook-mouse-release (data widget event)
@@ -1072,7 +1326,9 @@
                  (round (_GdkEventButton_x_get event))
                  (round (_GdkEventButton_y_get event))
                  (_GdkEventButton_button_get event)
+                 (_GdkEventButton_time_get event)
                  )
+  #t
   )
 
 (df hook-mouse-move (data widget event)
@@ -1085,20 +1341,21 @@
                 (round y)
                 state)
     )
+  #t
   )
               
 (dm hookify ((imagebox <gui-imagebox>))
   (let ((hWidget (handle (paintbox imagebox)))
-        (cb-mouse-press (goo_createCallback hook-mouse-press imagebox))
-        (cb-mouse-release (goo_createCallback hook-mouse-release imagebox))
-        (cb-mouse-move (goo_createCallback hook-mouse-move imagebox))
-        (cb-expose-event (goo_createCallback hook-expose-event imagebox))
-        (cb-configure-event (goo_createCallback hook-configure-event imagebox)))
-    (g_signal_connect hWidget "button_press_event" (gtk_getEventCallback) cb-mouse-press)
-    (g_signal_connect hWidget "button_release_event" (gtk_getEventCallback) cb-mouse-release)
-    (g_signal_connect hWidget "motion_notify_event" (gtk_getEventCallback) cb-mouse-move)
-    (g_signal_connect hWidget "expose_event" (gtk_getEventCallback) cb-expose-event)
-    (g_signal_connect hWidget "configure_event" (gtk_getEventCallback) cb-configure-event)
+        (cb-mouse-press (goo_safeCreateCallback hook-mouse-press imagebox))
+        (cb-mouse-release (goo_safeCreateCallback hook-mouse-release imagebox))
+        (cb-mouse-move (goo_safeCreateCallback hook-mouse-move imagebox))
+        (cb-expose-event (goo_safeCreateCallback hook-expose-event imagebox))
+        (cb-configure-event (goo_safeCreateCallback hook-configure-event imagebox)))
+    (g_signal_connect hWidget "button_press_event" (gtk_getBoolEventCallback) cb-mouse-press)
+    (g_signal_connect hWidget "button_release_event" (gtk_getBoolEventCallback) cb-mouse-release)
+    (g_signal_connect hWidget "motion_notify_event" (gtk_getBoolEventCallback) cb-mouse-move)
+    (g_signal_connect hWidget "expose_event" (gtk_getBoolEventCallback) cb-expose-event)
+    (g_signal_connect hWidget "configure_event" (gtk_getBoolEventCallback) cb-configure-event)
     
     ;; ask to receive events the drawing area doesn't normally subscribe to
     (gtk_widget_set_events hWidget (| (| (| (| (| (| (gtk_widget_get_events hWidget)
@@ -1179,6 +1436,10 @@
     )
   )
 
+(dm draw-arc ((canvas <gui-drawable>) (rect <gui-rect>) (ang1 <flo>) (ang2 <flo>) (filled <log>) (color <gui-color>))
+  (draw-arc canvas rect (round (* 64.0 ang1)) (round (* 64.0 ang2)) filled color)
+  )
+
 (dm draw-arc ((canvas <gui-drawable>) (rect <gui-rect>) (ang1 <int>) (ang2 <int>) (filled <log>) (color <gui-color>))
   (let ((gc (get-gc canvas)))
     ; Set the color
@@ -1192,7 +1453,7 @@
                   (rect-w rect)
                   (rect-h rect)
                   ang1
-                  ang2)
+                  (- ang2 ang1))
     )
   )
 
@@ -1229,6 +1490,11 @@
 
 (dm font-ascent (font|<gui-font>)
   (_GdkFont_ascent_get (handle font))
+  )
+
+(dm font-height (font|<gui-font>)
+  (+ (_GdkFont_ascent_get (handle font))
+     (_GdkFont_descent_get (handle font)))
   )
 
 (dm invalidate-all (widget|<gui-widget>)
@@ -1296,7 +1562,7 @@
     (g_signal_connect (handle textbox)
                       "activate"
                       (gtk_getGtkCallback)
-                      (goo_createCallback callback 0))
+                      (goo_safeCreateCallback callback 0))
 
     ; Construct the helper functions
     (tup 
@@ -1337,7 +1603,7 @@
     (g_signal_connect (handle textbox)
                       "toggled"
                       (gtk_getGtkCallback)
-                      (goo_createCallback callback 0))
+                      (goo_safeCreateCallback callback 0))
 
     ; Construct the helper functions
     (tup 
@@ -1410,8 +1676,17 @@
   (to-str node)
   )
 
+;; node-weight is expected to provide information for visualizations that rely on some form of magnitude to create a useful
+;;  visualization.  eg treemap, starburst, etc.  All visualizations rely on container objects to provide the aggregate weight
+;;  of the things it contains, and will not traverse the sub-structure to calculate it.  Eg, in the case of file-systems, 
+;;  we expect that the visi-col will pre-calculate, or calculate on demand, the total disk usage of a given directory.
+
 (dm node-weight (c node => <flo>)
   1.0
+  )
+
+(dm node-browsable (c node => <log>)
+  #t
   )
 
 ;;; to-call should be of the form (fun (node) ...)
@@ -1444,10 +1719,22 @@
 ;;  because that is a function of only the node, whereas we want the collection to be the control
 ;;  factor. The colleciton can of course defer to to-str if it is so inclined. 
 (dm node-label (vwc|<visi-wrap-col> node => <str>)
-  (if (isa? node <col>)
+  (if (and (isa? node <col>) (not (isa? node <str>)))
       "Collection"
       (to-str node)
       )
+  )
+
+;; Our weight is 1.0 if we are a leaf, or the sum of the weights of our children if we're a collection.
+;;  Of course, we're screwed if there are loops/recursion in our structure.
+(dm node-weight (vwc|<visi-wrap-col> node => <flo>)
+  (if (and (isa? node <col>) (not (isa? node <str>)))
+      (fold+ + (map (fun (x) (node-weight vwc x)) node))
+      1.0)
+  )
+
+(dm node-browsable (vwc|<visi-wrap-col> node => <log>)
+  (not (and (isa? node <col>) (not (isa? node <str>))))
   )
 
 ;; ----------------
@@ -1479,6 +1766,30 @@
   (if node-parent
       (tup node-parent)
       (empty <tup>))
+  )
+
+(dm cat-with-commas (c|<col>)
+  (def did-first #f)
+  (def str-so-far "")
+  (do (fun (cur)
+        (when did-first
+          (set str-so-far (cat str-so-far ", "))
+          )
+        (set str-so-far (cat str-so-far cur))
+        (set did-first #t)
+        )
+      c
+      )
+  str-so-far
+  )
+
+(dm axis-to-str (vc|<visi-col> axis node => <str>)
+  (def axis-val (node-out-edges vc axis node))
+  (case (len axis-val)
+    ((0) "")
+    ((1) (to-str (1st axis-val)))
+    (#t (cat-with-commas (map to-str axis-val)))
+    )
   )
 
 (dc <gui-treeview-model> (<gui>))
@@ -1530,7 +1841,7 @@
     (g_signal_connect (handle gtv)
                       "changed"
                       (gtk_getGtkCallback)
-                      (goo_createCallback callback 0))
+                      (goo_safeCreateCallback callback 0))
 
     ; Construct the helper functions
     (tup 
@@ -1653,19 +1964,47 @@
 
 (dv *cached-menus* (fab <tab> 0))
 
-(dm gimme-menu (obj)
+;; indirection to avoid problem of statically connecting...
+(dv *selected-menu-object* #f)
 
+(dm gimme-menu (obj)
+  (set *selected-menu-object* obj)
+  (or (elt-or *cached-menus* (object-class obj) #f)
+      (seq
+        (def da-actions (get-all-actions (object-class obj)))
+        
+        (def da-menu (gui-menu))
+        
+        (do (fun (act)
+              (def da-item (gui-menu-item-label (description act)))
+;;              (connect da-item (method act) obj)
+              (connect da-item 
+                       (fun (x)
+                         ((method act) *selected-menu-object*))
+                       #f)
+              (ad! da-menu da-item)
+              (show da-item)
+              )
+            da-actions)
+        
+        (set (elt *cached-menus* (object-class obj)) da-menu)
+
+        ;;(show-all da-menu)
+        
+        da-menu
+        )
+      )
   )
 
 ; ----                ----
 ; ------ Renderize! ------
 ; -----              -----
 
-(dm renderize-model ((model <interface-model>) (info <interface-info>) (class <class>) (updaters <col>))
+(dm renderize-model ((model <interface-model>) (info <interface-info>) (class <class>) (updaters <col>) (masters <tab>))
   (let ((payload (imodel-payload model)))
     (if (isa? payload <fun>)
         (payload info class updaters)
-        (renderize payload class updaters)
+        (renderize payload class updaters masters)
         )
     )
   )
@@ -1687,14 +2026,110 @@
 ;;   have direct references to the slaves, but that would place a lot of un-needed limitations on 
 ;;   GUI design.
 ;; 
-(dm renderize ((model-list <lst>) (class <class>) (updaters <col>))
+;; When we change the object represented in a slaved area, we want to kill off the people in there.
+;;  This involves telling all the updaters to free, and killing off the objects in question.  Since
+;;  we need to maintain a list of the updaters associated with an instantiated interface-model, it
+;;  suggests that each instantiated interface model should have a control structure with the following:
+;; - List of updaters
+;; - Placeholder container
+;; - Interface-model container that sits in the place-holder
+;; - Method to change object reference, which:
+;;    - Calls free on all updaters
+;;    - Destroys the components in the interface-model container, as well as that container
+;;    - Unlinks the interface-model container
+;;    - Generates the new interface-model, and assumes its state.
+;; 
+;; This suggests that when it comes to creating master/slave pairs, we'll construct:
+;; - A master object which maintains a list of slaves
+;; - A slave object for each instantiation, as described above, which is added to the master's list.
+;; To provide the master to the instantiated master block, we will define a bind-master generic.
+
+(dc <gui-slave> (<any>))
+ (dp slave-inited (<gui-slave> => <log>) #f)
+ (dp slave-updaters (<gui-slave> => <col>))
+ (dp placeholder (<gui-slave> => <gui-container>))
+ (dp active-container (<gui-slave> => <gui-container>))
+ (dp slave-object (<gui-slave> => <any>) #f)
+
+(dm update-slave (slave|<gui-slave> new-obj|<any>)
+  (cond 
+    ;; First time
+    ((not (slave-inited slave))
+     (def model (find-interface-model (object-class new-obj) root-interface))
+     (set (slave-updaters slave) (vec))
+     (set (active-container slave) 
+          (renderize-model model root-interface (object-class new-obj) (slave-updaters slave) (fab <str-tab> 0)))
+     (ad! (placeholder slave) (active-container slave))
+     (show-all (placeholder slave))
+     (set (slave-inited slave) #t)
+     (set (slave-object slave) new-obj)
+     
+     ;; Rebind and refresh
+     (do (fun (cur-updater)
+           ;; Rebind
+           ((1st cur-updater) new-obj)
+           ;; Refresh
+           ((2nd cur-updater))
+               )
+         (slave-updaters slave)
+         )
+     )
+
+    ;; Different object, same interface
+    ((and (slave-object slave)
+          (= (object-class (slave-object slave))
+             (object-class new-obj)))
+     ;; Just rebind and refresh
+     (do (fun (cur-updater)
+           ;; Rebind
+           ((1st cur-updater) new-obj)
+           ;; Refresh
+           ((2nd cur-updater))
+               )
+         (slave-updaters slave)
+         )
+     
+     (set (slave-object slave) new-obj)
+     )
+
+    ;; New object, go hard-core
+    (#t
+     ;; Free updaters
+     (do (fun (cur-updater)
+           ((3rd cur-updater))
+           )
+         (slave-updaters slave)
+         )
+     
+     ;; Destroy components
+     (rem! (placeholder slave) (active-container slave))
+     ;; ...
+     
+     ;;
+     )
+    )
+  )
+
+(dc <gui-master> (<any>))
+ (dp slaves (<gui-master> => <col>) (vec))
+
+(dm master-update-slaves (master|<gui-master> new-obj|<any>)
+  (do (fun (slave)
+        (update-slave slave new-obj))
+      (slaves master)
+      )
+  )
+
+(dg bind-master (obj|<any> master|<gui-master>))
+
+(dm renderize ((model-list <lst>) (class <class>) (updaters <col>) (masters <tab>))
   (let ((renderize-this (fun (thing)
-                          (renderize thing class updaters)
+                          (renderize thing class updaters masters)
                           )
                         ))    
     (cond
       ;; COLUMNS
-      ((= (elt model-list 0) 'columns)
+      ((= (1st model-list) 'columns)
         ; Multiple parallel columns!
         ; Create an hbox and stick everything we fab in it
         (let ((hbox (gui-hbox))
@@ -1703,16 +2138,28 @@
           hbox))
 
       ;; MASTER
-      ((= (elt model-list 0) 'master)
+      ((= (1st model-list) 'master)
+       (def m-name (as <str> (2nd model-list)))
+       (def master (new <gui-master>))
+       (set (elt masters m-name) master)
+       ;; Renderize the third param. (Can be a list of just a node.)
+       (def gui-obj (renderize (3rd model-list) class updaters masters))
+       (bind-master gui-obj master)
+       gui-obj
        )
 
       ;; SLAVE
-      ((= (elt model-list 0) 'slave)
+      ((= (1st model-list) 'slave)
+       (def s-name (as <str> (2nd model-list)))
+       (def slave (new <gui-slave>))
+       (add! (slaves (elt masters s-name)) slave)
+       (set (placeholder slave) (gui-frame "Child..."))
+       (placeholder slave)
        )
  
       ;; Attr
-      ((= (elt model-list 0) 'attr)
-       (def my-comp (renderize (elt model-list 1) class updaters))
+      ((= (1st model-list) 'attr)
+       (def my-comp (renderize (elt model-list 1) class updaters masters))
        (set (attrs my-comp) (tail (tail model-list)))
        my-comp
        )
@@ -1729,27 +2176,44 @@
     )
   )
 
-(dm renderize ((act <interface-action>) (class <class>) (updaters <col>))
+(dm renderize ((act <interface-action>) (class <class>) (updaters <col>) (masters <tab>))
   (let ((button (gui-button (description act))))
-    (connect button (fun (x) ((method act))) 0)
+    (let ((cur-obj #f))
+      (connect button (fun (x) ((method act) cur-obj)) 0)
+
+      (add!
+       updaters
+       (tup
+        ;; Rebind
+        (fun (new-obj)
+          (set cur-obj new-obj))
+        ;; Refresh
+        (fun ()
+          )
+        ;; Free
+        (fun ()
+          )
+        )
+       )
+      )
     button
     )
   )
 
-(dm renderize ((text <str>) (class <class>) (updaters <col>))
+(dm renderize ((text <str>) (class <class>) (updaters <col>) (masters <tab>))
   (gui-label text)
   )
 
-(dm renderize ((sym <sym>) (class <class>) (updaters <col>))
+(dm renderize ((sym <sym>) (class <class>) (updaters <col>) (masters <tab>))
   (let ((name (as <str> sym)))
 ;    (msg out "Find-action was: %=\n" (find-action class name))
 ;    (msg out "Find-property was: %=\n" (find-property class name))
 ;    (msg out "Was attempting to renderize the symbol %= (name %=)\n" sym name)
     (cond ((find-action class name)
-           (renderize (find-action class name) class updaters))
+           (renderize (find-action class name) class updaters masters))
           ((find-property class name)
            (let ((info (find-property class name)))
-             (renderize-model (find-interface-model (type info) info) info class updaters)))
+             (renderize-model (find-interface-model (type info) info) info class updaters masters)))
           )
     )
   )
@@ -1789,7 +2253,13 @@
 ;                                 )
 ;                          )
 
-;; Fucking exports
+;;;;;;; EXPORTS
+(export
+  *default-samurui-font*
+  get-default-samurui-font
+  )
+
+
 
 ;; Classes
 (export
@@ -1828,6 +2298,9 @@
   <gui-point-flo>
   <gdk-point>
 
+  <gui-circle-flo>
+  <gui-line-flo>
+
   <gui-drawable>
   <gdk-colormap>
   <gdk-gc>
@@ -1844,6 +2317,9 @@
 
   <gui-treeview-model>
   <gui-treeview>
+  
+  <gui-master>
+  <gui-slave>
   )
 
 ;; Glorious functions
@@ -1891,6 +2367,7 @@
   ad!
   ad-opt!
   show
+  show-all
   gui-button
   connect
   gui-check-button
@@ -1916,18 +2393,34 @@
   gdk-point
   point-x
   point-y
+  circle
+  circle-p
+  circle-p-setter
+  circle-r
+  circle-r-setter
+  line
+  line-p1
+  line-p1-setter
+  line-p2
+  line-p2-setter
+  dist
+  sqdist
+  intersect
+  line-point-by-param
   gui-paintbox
   gui-canvas
   gui-canvas-ext
   gdk-gc
   gdk-colormap
   color
+  color-hsb
   realize
   fg-setter
   bg-setter
   font
   gui-imagebox
   reconfigure
+  blank
   drawable
   get-gc
   hookify
@@ -1943,6 +2436,7 @@
   string-width
   string-height
   font-ascent
+  font-height
   invalidate-all
   invalidate
   bind
@@ -1950,6 +2444,7 @@
   get-start-node
   node-label
   node-weight
+  node-browsable
   register-node-add-notification
   remove-node-add-notification
   register-edge-add-notification
@@ -1957,6 +2452,8 @@
   node-axes
   node-out-edges
   node-in-edges
+
+  axis-to-str
   
   gui-treeview
   gtk-tv-get-n-columns
@@ -2027,6 +2524,8 @@
   model-setter
   children
   children-setter
+  bind-master
+  master-update-slaves
   )
 
 (export 

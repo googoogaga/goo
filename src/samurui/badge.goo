@@ -1,0 +1,191 @@
+;; Provides an abstraction layer for lightweight widgets and stuff...
+(use goo)
+
+(use samurui/samurui)
+(use samurui/gtkbinding)
+
+;; Badges are containers.  Badges hold badge-lines... (Brilliant, no?)
+
+(dc <badge> (<any>))
+ (dp badge-offset-x (<badge> => <int>) 0)
+ (dp badge-offset-y (<badge> => <int>) 0)
+ (dp badge-lines (<badge> => <col>) (vec))
+ (dp badge-max-width (<badge> => <int>) 100)
+ (dp badge-color (<badge> => (t? <gui-color>)) #f)
+
+(dc <badge-line> (<any>))
+
+(dc <label-badge-line> (<badge-line>))
+ 
+
+(dc <bar-badge-line> (<badge-line>))
+ (dp bar-axis-source (<bar-badge-line> => <any>))
+ (dp bar-max-val (<bar-badge-line> => <int>) 100)
+ (dp bar-min-val (<bar-badge-line> => <int>) 0)
+ (dp bar-height (<bar-badge-line> => <int>) 10)
+;; (dp bar-show-label (<bar-badge-line> => <log> #f))
+ (dp bar-color (<bar-badge-line> => (t? <gui-color>)) #f)
+
+
+(dm suggest-badge (vcol|<visi-col> => (t? <badge>))
+  #f
+  )
+
+
+(dm render-badge (widget|<gui-drawable> badge|<badge> vcol|<visi-col> node|<any> owner-x|<int> owner-y|<int>)
+  ;; Calculate badge height
+  (def badge-height (fold+ + (map (fun (line) 
+                                    (calculate-badge-height badge line))
+                                  (badge-lines badge))))
+
+  (def badge-x (+ owner-x (badge-offset-x badge)))
+  (def badge-y (+ owner-y (badge-offset-y badge)))
+
+  (def left-x (- badge-x (div (badge-max-width badge) 2)))
+
+  ;; Draw the backing box
+  (draw-rect widget
+             (rect left-x badge-y (badge-max-width badge) badge-height)
+             #t
+             (badge-color badge))
+
+  ;; Loop over the lines, rendering them
+  (rep loop ((line-enum (enum (badge-lines badge)))
+             (cur-y badge-y))
+    (unless (fin? line-enum)
+      (def da-now (now line-enum))
+      (loop (nxt line-enum) 
+            (+ cur-y 
+               (render-badge-line widget
+                                  badge
+                                  da-now
+                                  vcol
+                                  node
+                                  left-x
+                                  cur-y)))
+      )
+    )
+  )
+
+;; Return the height of the line.  (This is a bit redundant...)
+(dg render-badge-line (widget|<gui-drawable> badge|<badge> line|<badge-line> vcol|<visi-col> node|<any> ul-x|<int> ul-y|<int> => <int>))
+
+(dg calculate-badge-height (badge|<badge> line|<badge-line> => <int>))
+
+(dm render-badge-line (widget|<gui-drawable> badge|<badge> line|<bar-badge-line> vcol|<visi-col> node|<any> ul-x|<int> ul-y|<int> => <int>)
+  (def da-val (1st (node-out-edges vcol (bar-axis-source line) node)))
+  (def bar-range (- (bar-max-val line) (bar-min-val line)))
+  (def percent-wide (/ (as <flo> (- da-val (bar-min-val line)))
+                       (as <flo> bar-range)))
+  (def pix-wide (round (* (badge-max-width badge) percent-wide)))
+  (draw-rect widget 
+             (rect ul-x ul-y pix-wide (bar-height line))
+             #t
+             (bar-color line))
+
+  (bar-height line)
+  )
+
+(dm calculate-badge-height (badge|<badge> line|<bar-badge-line> => <int>)
+  (bar-height line)
+  )
+
+(dc <label-badge-line> (<badge-line>))
+ (dp label-text-stream (<label-badge-line> => <col>) (vec))
+ (dp label-color (<label-badge-line> => (t? <gui-color>)) #f)
+
+(dm label-badge (label-text|<str> c|<gui-color>)
+  (def lab (new <label-badge-line>))
+  (set (label-text-stream lab) (split label-text (1st "!")))
+  (set (label-color lab) c)
+  lab
+  )
+
+(dv *label-space-above* 2)
+(dv *label-space-below* 2)
+(dv *label-space-left* 2)
+
+(dm calc-string-for-node (line|<label-badge-line> vcol|<visi-col> node|<any>)
+  (rep loop ((text-part-enum (enum (label-text-stream line)))
+             (str-so-far "")
+             (is-axis #f))
+    (unless (fin? text-part-enum)
+      (def cur-part (now text-part-enum))
+      (loop (nxt text-part-enum)
+            (cat str-so-far (if is-axis
+                                (axis-to-str vcol cur-part node)
+                                cur-part))
+            (not is-axis))
+      )
+    str-so-far
+    )
+  )
+
+(dm render-badge-line (widget|<gui-drawable> badge|<badge> line|<label-badge-line> vcol|<visi-col> node|<any> ul-x|<int> ul-y|<int> => <int>)
+  (def da-str (calc-string-for-node line vcol node))
+
+  (draw-string widget
+               (get-default-samurui-font)
+               (+ ul-x
+                  *label-space-left*)
+               (+ (+ ul-y
+                     *label-space-above*)
+                  (font-ascent *default-samurui-font*))
+               da-str
+               (label-color line))
+               
+  (+ (+ *label-space-above*
+        *label-space-below*)
+     (font-height (get-default-samurui-font)))
+  )
+
+(dm calculate-badge-height (badge|<badge> line|<label-badge-line> => <int>)
+  (+ (+ *label-space-above*
+        *label-space-below*)
+     (font-height (get-default-samurui-font)))
+  )
+
+
+(export
+  <badge>
+  badge-offset-x
+  badge-offset-x-setter
+  badge-offset-y
+  badge-offset-y-setter
+  badge-lines
+  badge-lines-setter
+  badge-max-width
+  badge-max-width-setter
+  badge-color
+  badge-color-setter
+  )
+
+(export
+  <badge-line>
+  )
+
+(export
+  <bar-badge-line>
+  bar-axis-source
+  bar-axis-source-setter
+  bar-max-val
+  bar-max-val-setter
+  bar-min-val
+  bar-min-val-setter
+  bar-height
+  bar-height-setter
+  bar-color
+  bar-color-setter
+  )
+
+(export
+  <label-badge-line>
+  label-badge
+  )
+
+(export
+  suggest-badge
+  render-badge
+  render-badge-line
+  calculate-badge-height
+  )

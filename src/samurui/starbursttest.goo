@@ -1,0 +1,68 @@
+(use goo)
+(use samurui/samurui)
+(use samurui/gtkbinding)
+(use samurui/starburst)
+
+(dc <simple-app> (<any>))
+
+(dc <str-hold> (<any>))
+(iprop <str-hold>  da-str <str> "DaString")
+
+(dm hold (s|<str>)
+  (def o (new <str-hold>))
+  (set (da-str o) s)
+  o
+  )
+
+(dm to-str (h|<str-hold>)
+  (da-str h)
+  )
+
+(iprop <simple-app> tree-nodes <visi-col> "Tree Nodes")
+
+(dv my-app (new <simple-app>))
+
+(set (tree-nodes my-app) (visi-wrap-col 
+                          (vec (hold "Apples")
+                               (hold "Bananas")
+                               (hold "Pears" )
+                               (vec (hold "Cows")
+                                    (hold "Pigs")
+                                    (hold "Ducks"))
+                               (vec (vec (hold "Spaceships")
+                                         (hold "Monkeys")
+                                         (hold "Dogs")
+                                         (vec (hold "Enterprise")
+                                              (hold "Endeavor")
+                                              (hold "Challenger"))
+                                         (vec (hold "Soup")
+                                              (hold "Crackers"))
+                                         (hold "Zoos"))
+                                    (hold "Kings")
+                                    (hold "Queens")
+                                    (hold "Pawns"))
+                              )))
+
+(imodel <str-hold>
+        "Current String"
+        da-str
+        )
+
+(imodel <simple-app>
+        "Starburst Hopefully"
+        ;; (attr tree-nodes fill)
+        (attr (columns
+               (master bob (attr tree-nodes fill))
+               (slave bob)
+               ) fill)
+        )
+
+;;(imodel <str-hold>
+;;        "The String"
+;;        da-str
+;;        )
+
+(gtk_init_easy)
+
+(present my-app)
+(gtk_main)

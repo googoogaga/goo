@@ -1,0 +1,22 @@
+(use goo)
+
+(use samurui/autogtk)
+(use samurui/gtkbinding)
+
+(dv goo-callbacks (vec))
+(dv goo-callback-data (vec))
+
+(dm goo_safeCreateCallback (a b)
+  (add! goo-callbacks a)
+  (add! goo-callback-data b)
+  (goo_createCallback a b))
+
+(dm goo_deleteCallback(a b)
+  (set goo-callbacks (del-vals goo-callbacks a))
+  (set goo-callback-data (del-vals goo-callback-data b))
+  )
+
+(export 
+  goo_safeCreateCallback
+  goo_deleteCallback
+  )
