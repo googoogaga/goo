@@ -255,6 +255,9 @@
 (dm * (x|<int> y|<int> => <int>)
   (%ib (%i* (%iu x) (%iu y))))
 
+(dm / (x|<int> y|<int> => <int>)
+  (%ib (%it/ (%iu x) (%iu y))))
+
 (dm floor (x|<int> => <int>) x)
 
 (dm ceil (x|<int> => <int>) x)
