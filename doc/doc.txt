@@ -757,8 +757,6 @@ slot        slot-setter ((x <slot>) => <gen>)
 slot        slot-type ((x <slot>) => <any>)
 slot        slot-init ((x <slot>) => <met>)
 
-Generic     slot-value ((x <slot>) (getter <gen>) => <any>)
-Generic     slot-value-setter ((v <any>) (x <slot>) (getter <gen>))
 Generic     find-getter ((owner <any>) (getter <gen>) => <met>)
 Generic     find-setter ((owner <any>) (setter <gen>) => <met>)
 
