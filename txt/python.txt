@@ -1,0 +1,9 @@
+slicing with :
+slicing setter
+classes as modules
+bound methods  p.x
+classes called being constructors
+keywords for all parameters
+defaulting parameters
+tuples as read only
+dictionary input syntax

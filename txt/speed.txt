@@ -25,3 +25,12 @@ o INLINE
 
 TYPE CHECKS
 o USE RCPL
+
+DONE:
+
+tags
+self recursive calls
+dynamic extent analysis
+dispatch cache
+stack allocation
+inlining primitives
