@@ -2,7 +2,7 @@
 (use goo/macros)
 
 ;;; COLLECTION
-(use/export goo/collections/opts)
+(use/export goo/collections/optionals)
 (use/export goo/collections/assoc)
 (use/export goo/collections/buffer)
 (use/export goo/collections/collection)

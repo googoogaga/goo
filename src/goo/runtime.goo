@@ -7,7 +7,7 @@
 (use runtime/apply)
 (use goo/collections/collection)
 (use goo/collections/sequence)
-(use goo/collections/opts)
+(use goo/collections/optionals)
 (use goo/collections/list)
 (use goo/collections/buffer)
 (use goo/collections/table)

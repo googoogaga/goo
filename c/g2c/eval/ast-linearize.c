@@ -5,778 +5,778 @@
 
 /* MODULE ENVIRONMENT: compiler/ast-linearize */
 
-EXT(YcompilerSastYLprogramG,"compiler/ast","<program>");
-EXT(YcompilerSastYapplication_knownQ,"compiler/ast","application-known?");
-EXT(YcompilerSastYLargumentsG,"compiler/ast","<arguments>");
-EXT(YcompilerSastYLpredefined_applicationG,"compiler/ast","<predefined-application>");
-EXT(Ymay_isaQ,"runtime/boot","may-isa?");
-DEF(YcompilerSast_linearizeYprogram_quotations_setter,"compiler/ast-linearize","program-quotations-setter");
-EXT(YcompilerSastYglobal_box_value,"compiler/ast","global-box-value");
-EXT(YgooSmathYcosh,"goo/math","cosh");
-EXT(YcompilerSastYunwind_protect_protected_thunk,"compiler/ast","unwind-protect-protected-thunk");
-EXT(YgooScollectionsStableYtab_growth_threshold,"goo/collections/table","tab-growth-threshold");
-EXT(YcompilerSastYfix_let_types_setter,"compiler/ast","fix-let-types-setter");
-EXT(YgooSmathYfloor,"goo/math","floor");
-EXT(YcompilerSastYreport_undefined_global_bindings,"compiler/ast","report-undefined-global-bindings");
-EXT(YgooScollectionsStableYtab_growth_factor,"goo/collections/table","tab-growth-factor");
-EXT(YDmin_int,"runtime/boot","$min-int");
-EXT(YgooSmathYeof_object,"goo/math","eof-object");
-EXT(Ygen_add_met,"runtime/boot","gen-add-met");
-EXT(YgooSmathYceil,"goo/math","ceil");
-DEF(YcompilerSast_linearizeYreference_offset_setter,"compiler/ast-linearize","reference-offset-setter");
-EXT(Yprop_setter,"runtime/boot","prop-setter");
-EXT(YcompilerSastYunwind_protect_cleanup_thunk,"compiler/ast","unwind-protect-cleanup-thunk");
-EXT(Yfun_val,"runtime/boot","fun-val");
-EXT(YgooScollectionsScollectionYlow_elt,"goo/collections/collection","low-elt");
-EXT(YgooScollectionsScollectionYmap_keyed,"goo/collections/collection","map-keyed");
-EXT(YgooScollectionsSsequenceYsub,"goo/collections/sequence","sub");
-EXT(YgooScollectionsStableYLstr_tabG,"goo/collections/table","<str-tab>");
-EXT(YcompilerSastYfunction_binding,"compiler/ast","function-binding");
-EXT(YruntimeSruntimeYbuild_condition_for_handler_interactively,"runtime/runtime","build-condition-for-handler-interactively");
-EXT(YgooScollectionsScollectionYitems,"goo/collections/collection","items");
-EXT(YgooStypesYlen,"goo/types","len");
-DEF(YcompilerSast_linearizeYform_definitions_setter,"compiler/ast-linearize","form-definitions-setter");
-DEF(YcompilerSast_linearizeYadjoin_definitionX,"compiler/ast-linearize","adjoin-definition!");
-EXT(YcompilerSastYreference_binding,"compiler/ast","reference-binding");
-DEF(YcompilerSast_linearizeYLflattened_programG,"compiler/ast-linearize","<flattened-program>");
-EXT(YcompilerSastYload_in,"compiler/ast","load-in");
-EXT(YgooStypesYtL,"goo/types","t<");
-EXT(YcompilerSastYsignature_value_setter,"compiler/ast","signature-value-setter");
-EXT(Yclass_ancestors,"runtime/boot","class-ancestors");
-EXT(YcompilerSastYconstant_index_setter,"compiler/ast","constant-index-setter");
-DEF(YcompilerSast_linearizeYast_contains_funQ,"compiler/ast-linearize","ast-contains-fun?");
-EXT(YcompilerSastYLast_signatureG,"compiler/ast","<ast-signature>");
-EXT(YcompilerSastYfix_let_types,"compiler/ast","fix-let-types");
-DEF(YcompilerSast_linearizeYanalyze_call_references,"compiler/ast-linearize","analyze-call-references");
-DEF(YcompilerSast_linearizeYform_quotations,"compiler/ast-linearize","form-quotations");
-EXT(YcompilerSastYcompile_time_program,"compiler/ast","compile-time-program");
-EXT(YgooScollectionsSlistYLlistG,"goo/collections/list","<list>");
-EXT(YruntimeSruntimeYcondition_arguments,"runtime/runtime","condition-arguments");
-EXT(YcompilerSastYsignature_naryQ_setter,"compiler/ast","signature-nary?-setter");
-EXT(YruntimeSruntimeYLserious_conditionG,"runtime/runtime","<serious-condition>");
-DEF(YcompilerSast_linearizeYdo_do_dynamic_extentX,"compiler/ast-linearize","do-do-dynamic-extent!");
-EXT(YcompilerSastYbinding_mutableQ,"compiler/ast","binding-mutable?");
-EXT(YPsnul,"runtime/boot","%snul");
-EXT(YcompilerSastYbinding_type,"compiler/ast","binding-type");
-EXT(YcompilerSastYunchecked_runtime_environment,"compiler/ast","unchecked-runtime-environment");
-EXT(YgooScollectionsSsequenceYcat2,"goo/collections/sequence","cat2");
-EXT(YgooScollectionsSrangeYfrom,"goo/collections/range","from");
-EXT(YgooScollectionsStableYtab_growth_threshold_setter,"goo/collections/table","tab-growth-threshold-setter");
-EXT(YgooSmacrosYmatch_unquote,"goo/macros","match-unquote");
-EXT(YgooScollectionsStableYtab_growth_factor_setter,"goo/collections/table","tab-growth-factor-setter");
-EXT(YLfloG,"runtime/boot","<flo>");
-EXT(YLsymG,"runtime/boot","<sym>");
-DEF(YcompilerSast_linearizeYTrenaming_bindings_counterT,"compiler/ast-linearize","*renaming-bindings-counter*");
-EXT(YcompilerSastYLast_primitive_definitionG,"compiler/ast","<ast-primitive-definition>");
-EXT(Ymet_appQ,"runtime/boot","met-app?");
-EXT(YgooScollectionsScollectionYaddX,"goo/collections/collection","add!");
-EXT(YruntimeSruntimeYformat_to_string,"runtime/runtime","format-to-string");
-EXT(Ynew,"runtime/boot","new");
-EXT(YgooSmathYalphaQ,"goo/math","alpha?");
-EXT(YcompilerSastYlocals_bindings,"compiler/ast","locals-bindings");
-DEF(YcompilerSast_linearizeYassoc_value_setter,"compiler/ast-linearize","assoc-value-setter");
-DEF(YcompilerSast_linearizeYadjoin_temporary_variablesX,"compiler/ast-linearize","adjoin-temporary-variables!");
-EXT(Yobject_parents,"runtime/boot","object-parents");
-DEF(YcompilerSast_linearizeYLclosure_creationG,"compiler/ast-linearize","<closure-creation>");
-EXT(YgooScollectionsScollectionYfold,"goo/collections/collection","fold");
-EXT(YgooScollectionsStableYtab_gc_state,"goo/collections/table","tab-gc-state");
-EXT(YcompilerSastYfix_let_body_setter,"compiler/ast","fix-let-body-setter");
-EXT(YcompilerSastYassignment_form_setter,"compiler/ast","assignment-form-setter");
-EXT(YcompilerSastYobjectify_quotation,"compiler/ast","objectify-quotation");
-EXT(YOisaQ,"runtime/boot","@isa?");
-EXT(Yfun_mets,"runtime/boot","fun-mets");
-EXT(YcompilerSastYapplication_arguments,"compiler/ast","application-arguments");
-EXT(YcompilerSastYinstall_initial_bindings,"compiler/ast","install-initial-bindings");
-DEF(YcompilerSast_linearizeYassoc_key_setter,"compiler/ast-linearize","assoc-key-setter");
-EXT(YcompilerSastYfix_let_bindings_setter,"compiler/ast","fix-let-bindings-setter");
-EXT(Ygen_src_setter,"runtime/boot","gen-src-setter");
-EXT(YgooSmacrosYEE,"goo/macros","==");
-EXT(YruntimeSruntimeYLsimple_errorG,"runtime/runtime","<simple-error>");
-EXT(YgooSmacrosYdo,"goo/macros","do");
-EXT(YcompilerSastYLfree_environmentG,"compiler/ast","<free-environment>");
-EXT(YcompilerSastYmodule_exports,"compiler/ast","module-exports");
-DEF(YcompilerSast_linearizeYassoc,"compiler/ast-linearize","assoc");
-EXT(YgooScollectionsStableYid_hash,"goo/collections/table","id-hash");
-EXT(Yadd_prop,"runtime/boot","add-prop");
-EXT(YcompilerSastYfunction_index_setter,"compiler/ast","function-index-setter");
-EXT(YcompilerSastYLlocalsG,"compiler/ast","<locals>");
-EXT(YgooScollectionsSzipYunzip,"goo/collections/zip","unzip");
-DEF(YcompilerSast_linearizeYLtop_level_formG,"compiler/ast-linearize","<top-level-form>");
-EXT(YruntimeSruntimeYread,"runtime/runtime","read");
-EXT(YcompilerSastYbinding_value_setter,"compiler/ast","binding-value-setter");
-EXT(YgooSmathYtruncS,"goo/math","trunc/");
-EXT(YgooScollectionsScollectionYdo_keyed,"goo/collections/collection","do-keyed");
-EXT(YgooStypesYtE,"goo/types","t=");
-EXT(YgooSmathY_,"goo/math","-");
-EXT(YgooScollectionsSsequenceYpick,"goo/collections/sequence","pick");
-EXT(YgooSmacrosYpair,"goo/macros","pair");
-EXT(YLpropG,"runtime/boot","<prop>");
-EXT(YcompilerSastYLconstantG,"compiler/ast","<constant>");
-EXT(YcompilerSastYfunction_index,"compiler/ast","function-index");
-EXT(YgooScollectionsSbufferYpush_lastX,"goo/collections/buffer","push-last!");
-EXT(YcompilerSastYLmonitorG,"compiler/ast","<monitor>");
-EXT(YgooScollectionsScollectionYelts,"goo/collections/collection","elts");
-EXT(YgooSmathYS,"goo/math","/");
-EXT(YcompilerSastYfunction_body_setter,"compiler/ast","function-body-setter");
-EXT(YcompilerSastYLraw_constantG,"compiler/ast","<raw-constant>");
-EXT(YLgenG,"runtime/boot","<gen>");
-EXT(YcompilerSastYfunction_signature_setter,"compiler/ast","function-signature-setter");
-EXT(YgooSmathYsinh,"goo/math","sinh");
-EXT(YcompilerSastYassignment_reference,"compiler/ast","assignment-reference");
-EXT(YgooSmathYDe,"goo/math","$e");
-EXT(Ygen_src,"runtime/boot","gen-src");
-EXT(YgooSmathYcontagious_call,"goo/math","contagious-call");
-DEF(YcompilerSast_linearizeYprogram_form,"compiler/ast-linearize","program-form");
-EXT(Yobject_props,"runtime/boot","object-props");
-EXT(YisaQ,"runtime/boot","isa?");
-EXT(YcompilerSastYLast_genericG,"compiler/ast","<ast-generic>");
-EXT(YcompilerSastYconstant_index,"compiler/ast","constant-index");
-EXT(YPsymbols,"runtime/boot","%symbols");
-EXT(YcompilerSastYfind_environment_module,"compiler/ast","find-environment-module");
-EXT(YgooScollectionsSlistYpop,"goo/collections/list","pop");
-EXT(YgooSmathYtrunc,"goo/math","trunc");
-EXT(YgooScollectionsStableYtab_hash,"goo/collections/table","tab-hash");
-DEF(YcompilerSast_linearizeYdo_call_referencesX,"compiler/ast-linearize","do-call-references!");
-EXT(YcompilerSastYfunction_body,"compiler/ast","function-body");
-EXT(YcompilerSastYreference_called_functionQ_setter,"compiler/ast","reference-called-function?-setter");
-EXT(YgooScollectionsScollectionYmemQ,"goo/collections/collection","mem?");
-EXT(YruntimeSruntimeYdescribe_handler,"runtime/runtime","describe-handler");
-EXT(YcompilerSastYLruntime_assignmentG,"compiler/ast","<runtime-assignment>");
-EXT(YgooSmathYfloorS,"goo/math","floor/");
-DEF(YcompilerSast_linearizeYclosure_creation_free_setter,"compiler/ast-linearize","closure-creation-free-setter");
-EXT(YruntimeSruntimeYrcurry,"runtime/runtime","rcurry");
-EXT(YcompilerSastYLregular_applicationG,"compiler/ast","<regular-application>");
-EXT(YgooSmathYto_str,"goo/math","to-str");
-EXT(YgooScollectionsSstringYnum_to_str_base,"goo/collections/string","num-to-str-base");
 EXT(YgooSmathYabs,"goo/math","abs");
-EXT(YcompilerSastYfab_g2c_module,"compiler/ast","fab-g2c-module");
-DEF(YcompilerSast_linearizeYassoc_value,"compiler/ast-linearize","assoc-value");
+EXT(YgooSmathYalphaQ,"goo/math","alpha?");
 EXT(Ysig_naryQ,"runtime/boot","sig-nary?");
-EXT(YPwith_monitor,"runtime/boot","%with-monitor");
+EXT(YgooSmacrosYmatch_empty_list,"goo/macros","match-empty-list");
 EXT(YLintG,"runtime/boot","<int>");
-EXT(YgooScollectionsSrangeYLrangeG,"goo/collections/range","<range>");
-EXT(YLstrG,"runtime/boot","<str>");
-EXT(YcompilerSastYLprogramsG,"compiler/ast","<programs>");
-EXT(YgooScollectionsScollectionYallQ,"goo/collections/collection","all?");
+EXT(YLtupG,"runtime/boot","<tup>");
+EXT(YgooSmacrosYvar_type,"goo/macros","var-type");
 EXT(Yfun_arity,"runtime/boot","fun-arity");
-EXT(YgooScollectionsScollectionYrange_error,"goo/collections/collection","range-error");
-EXT(YcompilerSastYsignature_bindings_setter,"compiler/ast","signature-bindings-setter");
+EXT(YTboot_macro_module_namesT,"runtime/boot","*boot-macro-module-names*");
+EXT(YcompilerSastYLruntime_assignmentG,"compiler/ast","<runtime-assignment>");
 EXT(YPprop,"runtime/boot","%prop");
-DEF(YcompilerSast_linearizeYform_program_setter,"compiler/ast-linearize","form-program-setter");
-EXT(YruntimeSruntimeYchoose_handler,"runtime/runtime","choose-handler");
-EXT(YruntimeSruntimeYLerrorG,"runtime/runtime","<error>");
-EXT(YruntimeSruntimeYspread,"runtime/runtime","spread");
-EXT(YcompilerSastYLbind_exitG,"compiler/ast","<bind-exit>");
-DEF(YcompilerSast_linearizeYprogram_definitions_setter,"compiler/ast-linearize","program-definitions-setter");
+EXT(YcompilerSastYLfix_letG,"compiler/ast","<fix-let>");
+EXT(YcompilerSastYmodule_target_environment,"compiler/ast","module-target-environment");
 EXT(YgooStypesYas,"goo/types","as");
+DEF(YcompilerSast_linearizeYanalyze_calls,"compiler/ast-linearize","analyze-calls");
 EXT(YgooSmathYtan,"goo/math","tan");
 EXT(YgooScollectionsSlistYassq,"goo/collections/list","assq");
-EXT(YcompilerSastYfix_let_bindings,"compiler/ast","fix-let-bindings");
-EXT(YgooScollectionsScollectionYelt_or,"goo/collections/collection","elt-or");
-EXT(YgooSmacrosYemptyQ,"goo/macros","empty?");
-EXT(YgooScollectionsScollectionYelt_setter,"goo/collections/collection","elt-setter");
 EXT(YPisa,"runtime/boot","%isa");
-EXT(YgooScollectionsScollectionYdel,"goo/collections/collection","del");
-EXT(YcompilerSastYbinding_dottedQ_setter,"compiler/ast","binding-dotted?-setter");
-EXT(YcompilerSastYreference_frame_number,"compiler/ast","reference-frame-number");
-EXT(YgooScollectionsScollectionYLenumG,"goo/collections/collection","<enum>");
-EXT(YcompilerSastYremove_modules_by_nameX,"compiler/ast","remove-modules-by-name!");
-EXT(YcompilerSastYfind_binding,"compiler/ast","find-binding");
+EXT(YruntimeSruntimeYloc_val_setter,"runtime/runtime","loc-val-setter");
+EXT(YcompilerSastYbinding_global_box,"compiler/ast","binding-global-box");
 EXT(YgooScollectionsSbufferYbuf,"goo/collections/buffer","buf");
+EXT(YcompilerSastYconstant_index_setter,"compiler/ast","constant-index-setter");
 EXT(YgooScollectionsScollectionYadd,"goo/collections/collection","add");
 EXT(Ytup,"runtime/boot","tup");
 EXT(YgooScollectionsScollectionYany2Q,"goo/collections/collection","any2?");
-EXT(YTmacros_okQT,"runtime/boot","*macros-ok?*");
-DEF(YcompilerSast_linearizeYadjoin_free_bindingX,"compiler/ast-linearize","adjoin-free-binding!");
-EXT(YruntimeSruntimeYidentity,"runtime/runtime","identity");
-EXT(Yhandler_info_message,"runtime/boot","handler-info-message");
+EXT(YcompilerSastYast_evaluate,"compiler/ast","ast-evaluate");
 EXT(YgooSmathYGGG,"goo/math",">>>");
-EXT(YcompilerSastYLast_primitiveG,"compiler/ast","<ast-primitive>");
+EXT(YcompilerSastYLimmediate_constantG,"compiler/ast","<immediate-constant>");
+EXT(YcompilerSastYenvironment_uses_modules,"compiler/ast","environment-uses-modules");
 EXT(YgooSmathYflo_bits,"goo/math","flo-bits");
-EXT(YgooSmacrosYfab_setter_name,"goo/macros","fab-setter-name");
+EXT(YcompilerSastYobjectify_quotation,"compiler/ast","objectify-quotation");
 EXT(YgooScollectionsSsequenceYcatX,"goo/collections/sequence","cat!");
-EXT(YLreplace_generic_restartG,"runtime/boot","<replace-generic-restart>");
 EXT(Ysig_unification_vars,"runtime/boot","sig-unification-vars");
-EXT(YgooSmathYas_log,"goo/math","as-log");
-EXT(YcompilerSastYmonitor_test,"compiler/ast","monitor-test");
+EXT(YLmagG,"runtime/boot","<mag>");
+DEF(YcompilerSast_linearizeYgather_temporariesX,"compiler/ast-linearize","gather-temporaries!");
+EXT(YcompilerSastYfunction_binding,"compiler/ast","function-binding");
 EXT(Yhead_setter,"runtime/boot","head-setter");
 EXT(Ytype_class,"runtime/boot","type-class");
 EXT(Yunexec,"runtime/boot","unexec");
 EXT(Yfun_sig_setter,"runtime/boot","fun-sig-setter");
-EXT(Yincongruent_method_error,"runtime/boot","incongruent-method-error");
+DEF(YcompilerSast_linearizeYassoc_key_setter,"compiler/ast-linearize","assoc-key-setter");
+DEF(YcompilerSast_linearizeYflatten_seqs,"compiler/ast-linearize","flatten-seqs");
 EXT(YLunionG,"runtime/boot","<union>");
-DEF(YcompilerSast_linearizeYanalyze_calls,"compiler/ast-linearize","analyze-calls");
-EXT(YgooScollectionsStableYtab_shrink_threshold,"goo/collections/table","tab-shrink-threshold");
+EXT(YgooSmathYfloorS,"goo/math","floor/");
+EXT(YcompilerSastYfix_let_body,"compiler/ast","fix-let-body");
+EXT(YcompilerSastYfunction_signature,"compiler/ast","function-signature");
 EXT(YgooSmathYatan2,"goo/math","atan2");
-EXT(YLtupG,"runtime/boot","<tup>");
 EXT(YgooScollectionsScollectionYnow_setter,"goo/collections/collection","now-setter");
-DEF(YcompilerSast_linearizeYcollect_temporariesX,"compiler/ast-linearize","collect-temporaries!");
-EXT(YcompilerSastYobjectify_with_subtransaction,"compiler/ast","objectify-with-subtransaction");
-EXT(YcompilerSastYfunction_registers_setter,"compiler/ast","function-registers-setter");
+EXT(YruntimeSruntimeYcurry,"runtime/runtime","curry");
 EXT(YgooScollectionsSsequenceYinsX,"goo/collections/sequence","ins!");
-DEF(YcompilerSast_linearizeYLbox_readG,"compiler/ast-linearize","<box-read>");
-DEF(YcompilerSast_linearizeYclosure_creation_index,"compiler/ast-linearize","closure-creation-index");
+EXT(YcompilerSastYsignature_specs,"compiler/ast","signature-specs");
+DEF(YcompilerSast_linearizeYreference_offset_setter,"compiler/ast-linearize","reference-offset-setter");
 EXT(YgooScollectionsScollectionYnxt,"goo/collections/collection","nxt");
-EXT(YcompilerSastYmodule_syntax_environment,"compiler/ast","module-syntax-environment");
-EXT(YcompilerSastYapplication_binding,"compiler/ast","application-binding");
-EXT(YcompilerSastYsignature_value,"compiler/ast","signature-value");
-EXT(YgooSmathYNE,"goo/math","~=");
-DEF(YcompilerSast_linearizeYclosure_creation_index_setter,"compiler/ast-linearize","closure-creation-index-setter");
-EXT(YcompilerSastYDgoo_runtime_module_name,"compiler/ast","$goo-runtime-module-name");
-EXT(YruntimeSruntimeYformat,"runtime/runtime","format");
-EXT(YgooScollectionsSstringYTprint_baseT,"goo/collections/string","*print-base*");
-DEF(YcompilerSast_linearizeYprogram_quotations,"compiler/ast-linearize","program-quotations");
-DEF(YcompilerSast_linearizeYanalyze_dynamic_extent,"compiler/ast-linearize","analyze-dynamic-extent");
-EXT(Yhead,"runtime/boot","head");
-EXT(YgooSmacrosYvar_name,"goo/macros","var-name");
-EXT(YcompilerSastYfunction_bindings,"compiler/ast","function-bindings");
-EXT(YcompilerSastYbind_exit_main_fun,"compiler/ast","bind-exit-main-fun");
-EXT(YcompilerSastYLapplicationG,"compiler/ast","<application>");
+DEF(YcompilerSast_linearizeYunconstrained_typeQ,"compiler/ast-linearize","unconstrained-type?");
+EXT(YcompilerSastYLfab_listG,"compiler/ast","<fab-list>");
+DEF(YcompilerSast_linearizeYreference_selfQ,"compiler/ast-linearize","reference-self?");
+EXT(YcompilerSastYLconstantG,"compiler/ast","<constant>");
+EXT(YcompilerSastYLfree_environmentG,"compiler/ast","<free-environment>");
+EXT(YruntimeSruntimeYbuild_condition_for_handler_interactively,"runtime/runtime","build-condition-for-handler-interactively");
 EXT(Ykeyboard_interrupt,"runtime/boot","keyboard-interrupt");
+EXT(YcompilerSastYLunwind_protectG,"compiler/ast","<unwind-protect>");
+DEF(YcompilerSast_linearizeYprogram_form,"compiler/ast-linearize","program-form");
+EXT(YruntimeSruntimeYbuild_condition_interactively,"runtime/runtime","build-condition-interactively");
+EXT(YruntimeSruntimeYloc_val,"runtime/runtime","loc-val");
+EXT(YruntimeSruntimeYdefault_handler,"runtime/runtime","default-handler");
+EXT(YcompilerSastYalternative_condition,"compiler/ast","alternative-condition");
+EXT(YgooScollectionsStableYid_hash,"goo/collections/table","id-hash");
+EXT(YcompilerSastYfunction_source,"compiler/ast","function-source");
+EXT(Yhead,"runtime/boot","head");
+EXT(YcompilerSastYbinding_type,"compiler/ast","binding-type");
+EXT(YgooScollectionsScollectionYelt_or,"goo/collections/collection","elt-or");
+EXT(YcompilerSastYLalternativeG,"compiler/ast","<alternative>");
+DEF(YcompilerSast_linearizeYclosurize_mainX,"compiler/ast-linearize","closurize-main!");
+EXT(YcompilerSastYbinding_index_setter,"compiler/ast","binding-index-setter");
+DEF(YcompilerSast_linearizeYliftX,"compiler/ast-linearize","lift!");
+EXT(YcompilerSastYDgoo_boot_module_name,"compiler/ast","$goo-boot-module-name");
 EXT(YLnumG,"runtime/boot","<num>");
 EXT(YLvecG,"runtime/boot","<vec>");
-EXT(YgooScollectionsStableYLsetG,"goo/collections/table","<set>");
-EXT(YgooSmagnitudeYmax,"goo/magnitude","max");
-EXT(YgooSmathYpower_of_two_ceiling,"goo/math","power-of-two-ceiling");
+EXT(YcompilerSastYlocals_body_setter,"compiler/ast","locals-body-setter");
+EXT(YcompilerSastYfunction_registers,"compiler/ast","function-registers");
 EXT(Yprop_getter,"runtime/boot","prop-getter");
-EXT(YcompilerSastYLlocal_bindingG,"compiler/ast","<local-binding>");
-EXT(YgooSmathYLbotG,"goo/math","<bot>");
-EXT(YcompilerSastYbinding_index,"compiler/ast","binding-index");
-EXT(YruntimeSruntimeYfab_handler,"runtime/runtime","fab-handler");
-EXT(YTboot_macro_namesT,"runtime/boot","*boot-macro-names*");
-EXT(YcompilerSastYLlocal_assignmentG,"compiler/ast","<local-assignment>");
+EXT(YgooScollectionsSmapYLmapG,"goo/collections/map","<map>");
+EXT(YcompilerSastYbinding_locative,"compiler/ast","binding-locative");
+DEF(YcompilerSast_linearizeYextractX,"compiler/ast-linearize","extract!");
+DEF(YcompilerSast_linearizeYdo_dynamic_extentX,"compiler/ast-linearize","do-dynamic-extent!");
 EXT(YcompilerSastYmonitor_info,"compiler/ast","monitor-info");
+EXT(YcompilerSastYLsequentialG,"compiler/ast","<sequential>");
 EXT(YgooScollectionsScollectionYinto,"goo/collections/collection","into");
-EXT(YcompilerSastYenv_object_name,"compiler/ast","env-object-name");
 EXT(YgooScollectionsScollectionYempty,"goo/collections/collection","empty");
-EXT(YcompilerSastYLalternativeG,"compiler/ast","<alternative>");
-EXT(YgooSmathYLL,"goo/math","<<");
-EXT(YcompilerSastYbinding_kind,"compiler/ast","binding-kind");
-EXT(YruntimeSruntimeYapp_args,"runtime/runtime","app-args");
-EXT(YgooStypesYtQ,"goo/types","t?");
-DEF(YcompilerSast_linearizeYreference_selfQ,"compiler/ast-linearize","reference-self?");
-DEF(YcompilerSast_linearizeYform_definitions,"compiler/ast-linearize","form-definitions");
+EXT(Ywrong_number_arguments_error,"runtime/boot","wrong-number-arguments-error");
+EXT(Yhandler_info_arguments,"runtime/boot","handler-info-arguments");
+EXT(YcompilerSastYsignature_bindings,"compiler/ast","signature-bindings");
+EXT(YgooScollectionsSzipYLzipG,"goo/collections/zip","<zip>");
+EXT(YcompilerSastYmodule_exports,"compiler/ast","module-exports");
 EXT(YgooScollectionsScollectionYnow_key,"goo/collections/collection","now-key");
 EXT(Yclass_direct_props,"runtime/boot","class-direct-props");
-EXT(YgooScollectionsSzipYLzipG,"goo/collections/zip","<zip>");
+EXT(YgooScollectionsSstringYascii_limit,"goo/collections/string","ascii-limit");
 EXT(YgooStypesYLproductG,"goo/types","<product>");
-EXT(YcompilerSastYLast_macro_definitionG,"compiler/ast","<ast-macro-definition>");
-EXT(YcompilerSastYLsequentialG,"compiler/ast","<sequential>");
-EXT(YcompilerSastYenvironment_bindings,"compiler/ast","environment-bindings");
+EXT(YcompilerSastYbinding_kind,"compiler/ast","binding-kind");
 EXT(YgooSmathYacos,"goo/math","acos");
-EXT(YcompilerSastYfree_environment,"compiler/ast","free-environment");
+DEF(YcompilerSast_linearizeYlift_proceduresX,"compiler/ast-linearize","lift-procedures!");
+EXT(YcompilerSastYbinding_dynamic_extentQ,"compiler/ast","binding-dynamic-extent?");
+EXT(YgooStypesYtL,"goo/types","t<");
 EXT(YLmetG,"runtime/boot","<met>");
-EXT(YruntimeSruntimeYLconditionG,"runtime/runtime","<condition>");
-EXT(YcompilerSastYLmoduleG,"compiler/ast","<module>");
+EXT(YcompilerSastYunwind_protect_cleanup_thunk,"compiler/ast","unwind-protect-cleanup-thunk");
+EXT(YcompilerSastYassignment_form,"compiler/ast","assignment-form");
 EXT(YgooScollectionsScollectionYzap,"goo/collections/collection","zap");
-DEF(YcompilerSast_linearizeYLrenamed_local_bindingG,"compiler/ast-linearize","<renamed-local-binding>");
-EXT(YgooScollectionsSbufferYlen_setter,"goo/collections/buffer","len-setter");
-EXT(YgooStypesYtA,"goo/types","t+");
-EXT(YgooSmathYnum_to_str,"goo/math","num-to-str");
-DEF(YcompilerSast_linearizeYLfree_referenceG,"compiler/ast-linearize","<free-reference>");
-EXT(YgooSmathYcontagious_type,"goo/math","contagious-type");
 DEF(YcompilerSast_linearizeYregister_allocateX,"compiler/ast-linearize","register-allocate!");
+EXT(YcompilerSastYLmodule_bindingG,"compiler/ast","<module-binding>");
+EXT(YgooSmathYcontagious_type,"goo/math","contagious-type");
 EXT(YgooSmagnitudeYmin,"goo/magnitude","min");
+EXT(YcompilerSastYglobal_box_value_setter,"compiler/ast","global-box-value-setter");
+DEF(YcompilerSast_linearizeYLfree_referenceG,"compiler/ast-linearize","<free-reference>");
 EXT(Yprop_init,"runtime/boot","prop-init");
+EXT(YgooScollectionsSassocYLassocsG,"goo/collections/assoc","<assocs>");
+EXT(YcompilerSastYmodule_loader_module_type,"compiler/ast","module-loader-module-type");
+EXT(YcompilerSastYbinding_module_name,"compiler/ast","binding-module-name");
 EXT(Yfun_naryQ,"runtime/boot","fun-nary?");
-EXT(YcompilerSastYdo_named_static_global_bindings,"compiler/ast","do-named-static-global-bindings");
-EXT(YruntimeSruntimeYinvoke_handler_interactively,"runtime/runtime","invoke-handler-interactively");
-EXT(YgooScollectionsSsequenceYlast,"goo/collections/sequence","last");
+EXT(YgooSmathYLbotG,"goo/math","<bot>");
+EXT(YPdefine_method,"runtime/boot","%define-method");
+EXT(YcompilerSastYLmodule_loaderG,"compiler/ast","<module-loader>");
+EXT(YcompilerSastYLmoduleG,"compiler/ast","<module>");
+EXT(YcompilerSastYunchecked_runtime_environment,"compiler/ast","unchecked-runtime-environment");
+EXT(YgooScollectionsSsequenceYpick,"goo/collections/sequence","pick");
+EXT(YgooSmacrosYcat_sym,"goo/macros","cat-sym");
+EXT(YcompilerSastYapplication_knownQ_setter,"compiler/ast","application-known?-setter");
+EXT(YcompilerSastYfunction_registers_setter,"compiler/ast","function-registers-setter");
 EXT(YLsubclassG,"runtime/boot","<subclass>");
 EXT(YgooScollectionsScollectionYnow,"goo/collections/collection","now");
-EXT(YcompilerSastYLstatic_global_environmentG,"compiler/ast","<static-global-environment>");
-DEF(YcompilerSast_linearizeYliftX,"compiler/ast-linearize","lift!");
-EXT(YcompilerSastYfunction_free_setter,"compiler/ast","function-free-setter");
-DEF(YcompilerSast_linearizeYclosurize_mainX,"compiler/ast-linearize","closurize-main!");
-EXT(YcompilerSastYprogram_register_setter,"compiler/ast","program-register-setter");
+EXT(YcompilerSastYprogram_type_setter,"compiler/ast","program-type-setter");
+DEF(YcompilerSast_linearizeYassoc_key,"compiler/ast-linearize","assoc-key");
+EXT(YTmacros_okQT,"runtime/boot","*macros-ok?*");
+EXT(YcompilerSastYLglobal_referenceG,"compiler/ast","<global-reference>");
+EXT(YruntimeSruntimeYdescribe_condition,"runtime/runtime","describe-condition");
+EXT(YcompilerSastYassignment_reference,"compiler/ast","assignment-reference");
 EXT(Yclass_descendents,"runtime/boot","class-descendents");
-EXT(YruntimeSruntimeYLrestartG,"runtime/runtime","<restart>");
 EXT(YgooStypesYtT,"goo/types","t*");
-EXT(YgooScollectionsStableYtab_shrink_threshold_setter,"goo/collections/table","tab-shrink-threshold-setter");
-DEF(YcompilerSast_linearizeYLbox_creationG,"compiler/ast-linearize","<box-creation>");
+EXT(YgooSmathYasin,"goo/math","asin");
+EXT(YgooScollectionsSsequenceYlast,"goo/collections/sequence","last");
+EXT(YgooScollectionsSsequenceYfinds,"goo/collections/sequence","finds");
+EXT(YcompilerSastYLargumentsG,"compiler/ast","<arguments>");
+EXT(YgooScollectionsStableYtab_hash,"goo/collections/table","tab-hash");
 EXT(YgooSmathYevenQ,"goo/math","even?");
 EXT(Ygen_refs_setter,"runtime/boot","gen-refs-setter");
-DEF(YcompilerSast_linearizeYform_quotations_setter,"compiler/ast-linearize","form-quotations-setter");
 EXT(YgooScollectionsSlistYpush,"goo/collections/list","push");
-EXT(YcompilerSastYfunction_registers,"compiler/ast","function-registers");
 EXT(YgooSmacrosYcat,"goo/macros","cat");
-EXT(YgooScollectionsSstringYascii_limit,"goo/collections/string","ascii-limit");
-EXT(YgooSmacrosYmatch_empty_list,"goo/macros","match-empty-list");
-DEF(YcompilerSast_linearizeYdo_do_call_referencesX,"compiler/ast-linearize","do-do-call-references!");
+EXT(YcompilerSastYLlocal_assignmentG,"compiler/ast","<local-assignment>");
+EXT(YcompilerSastYbinding_value,"compiler/ast","binding-value");
+EXT(YcompilerSastYfree_environment,"compiler/ast","free-environment");
 EXT(YgooSmathYoddQ,"goo/math","odd?");
+DEF(YcompilerSast_linearizeYprogram_quotations,"compiler/ast-linearize","program-quotations");
+EXT(YruntimeSruntimeYdefault_handler_description,"runtime/runtime","default-handler-description");
+EXT(YgooSmacrosYemptyQ,"goo/macros","empty?");
+EXT(YcompilerSastYapplication_tailQ,"compiler/ast","application-tail?");
 EXT(YgooSmathYatan,"goo/math","atan");
-EXT(YcompilerSastYbinding_type_setter,"compiler/ast","binding-type-setter");
+EXT(YcompilerSastYmodule_name_to_relpath,"compiler/ast","module-name-to-relpath");
+DEF(YcompilerSast_linearizeYbox_form,"compiler/ast-linearize","box-form");
 EXT(Yprop_value_setter,"runtime/boot","prop-value-setter");
-DEF(YcompilerSast_linearizeYnew_renamed_binding,"compiler/ast-linearize","new-renamed-binding");
+EXT(YruntimeSruntimeYapp_args,"runtime/runtime","app-args");
 EXT(YgooSmathY1_,"goo/math","1-");
-EXT(YgooScollectionsScollectionYfinQ,"goo/collections/collection","fin?");
-DEF(YcompilerSast_linearizeYas_top_level_forms,"compiler/ast-linearize","as-top-level-forms");
 EXT(YLchrG,"runtime/boot","<chr>");
 EXT(YLflatG,"runtime/boot","<flat>");
+EXT(YcompilerSastYfunction_data_refs_setter,"compiler/ast","function-data-refs-setter");
 EXT(YgooSmathYcos,"goo/math","cos");
-EXT(Yhandler_info_arguments,"runtime/boot","handler-info-arguments");
-EXT(Ytype_error,"runtime/boot","type-error");
+DEF(YcompilerSast_linearizeYbox_reference_setter,"compiler/ast-linearize","box-reference-setter");
+DEF(YcompilerSast_linearizeYbox_reference,"compiler/ast-linearize","box-reference");
 EXT(YgooSmathYT,"goo/math","*");
-EXT(YcompilerSastYmodule_name,"compiler/ast","module-name");
+DEF(YcompilerSast_linearizeYboxify_mutable_bindings,"compiler/ast-linearize","boxify-mutable-bindings");
 EXT(YsubtypeQ,"runtime/boot","subtype?");
+DEF(YcompilerSast_linearizeYLclosure_creationG,"compiler/ast-linearize","<closure-creation>");
+DEF(YcompilerSast_linearizeYextract_thingsX,"compiler/ast-linearize","extract-things!");
+DEF(YcompilerSast_linearizeYform_quotations,"compiler/ast-linearize","form-quotations");
 EXT(Ygen_refs,"runtime/boot","gen-refs");
-EXT(YcompilerSastYinit_environment_for_eval,"compiler/ast","init-environment-for-eval");
+DEF(YcompilerSast_linearizeYcollect_temporariesX,"compiler/ast-linearize","collect-temporaries!");
 EXT(Ynot,"runtime/boot","not");
-EXT(YgooSmathYsin,"goo/math","sin");
-EXT(YcompilerSastYsignature_bindings,"compiler/ast","signature-bindings");
-EXT(YcompilerSastYsignature_naryQ,"compiler/ast","signature-nary?");
+EXT(YcompilerSastYLcomputed_programG,"compiler/ast","<computed-program>");
+EXT(YLreplace_generic_restartG,"runtime/boot","<replace-generic-restart>");
+EXT(YcompilerSastYmonitor_type,"compiler/ast","monitor-type");
+DEF(YcompilerSast_linearizeYdo_do_dynamic_extentX,"compiler/ast-linearize","do-do-dynamic-extent!");
+EXT(YruntimeSruntimeYchoose_handler,"runtime/runtime","choose-handler");
 EXT(YgooSmathYaddress_of,"goo/math","address-of");
-EXT(YruntimeSruntimeYLsimple_conditionG,"runtime/runtime","<simple-condition>");
-EXT(YruntimeSruntimeYapp_filename,"runtime/runtime","app-filename");
-EXT(YcompilerSastYmonitor_main_thunk,"compiler/ast","monitor-main-thunk");
+EXT(YgooScollectionsScycleYcycle,"goo/collections/cycle","cycle");
+EXT(YruntimeSruntimeYspread,"runtime/runtime","spread");
+EXT(YcompilerSastYlocals_body,"compiler/ast","locals-body");
+EXT(YruntimeSruntimeYhandler_matchesQ,"runtime/runtime","handler-matches?");
+EXT(YruntimeSruntimeYrcurry,"runtime/runtime","rcurry");
 EXT(YgooScollectionsSsequenceY3rd,"goo/collections/sequence","3rd");
 EXT(YgooScollectionsSsequenceYpos,"goo/collections/sequence","pos");
-EXT(YcompilerSastYfunction_source_setter,"compiler/ast","function-source-setter");
-DEF(YcompilerSast_linearizeYupdate_walkX,"compiler/ast-linearize","update-walk!");
+EXT(YcompilerSastYapplication_knownQ,"compiler/ast","application-known?");
+EXT(YcompilerSastYsignature_specs_setter,"compiler/ast","signature-specs-setter");
 EXT(YgooSmathYto_upper,"goo/math","to-upper");
 EXT(YgooScollectionsScollectionYfill,"goo/collections/collection","fill");
+EXT(YcompilerSastYLast_macro_definitionG,"compiler/ast","<ast-macro-definition>");
+EXT(YgooScollectionsScycleYLcycleG,"goo/collections/cycle","<cycle>");
 EXT(YgooScollectionsSlistYassqn,"goo/collections/list","assqn");
 EXT(Yfab_sym,"runtime/boot","fab-sym");
+EXT(YDmin_int,"runtime/boot","$min-int");
 EXT(YgooSmacrosYelt,"goo/macros","elt");
 EXT(YgooSmathYN,"goo/math","~");
 EXT(Ylst,"runtime/boot","lst");
+EXT(YruntimeSruntimeYDdefault_handler_info,"runtime/runtime","$default-handler-info");
+EXT(YcompilerSastYfind_binding,"compiler/ast","find-binding");
+EXT(YruntimeSruntimeYcondition_arguments,"runtime/runtime","condition-arguments");
 EXT(YgooSmagnitudeYGE,"goo/magnitude",">=");
-EXT(YruntimeSruntimeYbuild_condition_interactively,"runtime/runtime","build-condition-interactively");
-EXT(YgooSmathYmod,"goo/math","mod");
+EXT(YgooSmacrosYmatch_sublist,"goo/macros","match-sublist");
+DEF(YcompilerSast_linearizeYLbox_readG,"compiler/ast-linearize","<box-read>");
 EXT(Ysig_specs,"runtime/boot","sig-specs");
+EXT(YcompilerSastYload_module,"compiler/ast","load-module");
 EXT(YOlst,"runtime/boot","@lst");
-EXT(YcompilerSastYLboundQG,"compiler/ast","<bound?>");
-DEF(YcompilerSast_linearizeYcollect_registersX,"compiler/ast-linearize","collect-registers!");
 EXT(YgooSmathYto_digit,"goo/math","to-digit");
-EXT(YcompilerSastYbinding_native_toQ,"compiler/ast","binding-native-to?");
 EXT(YgooSmathYNEE,"goo/math","~==");
+EXT(YgooScollectionsStableYtab_test,"goo/collections/table","tab-test");
 EXT(YgooSmacrosYmap,"goo/macros","map");
-EXT(YgooScollectionsSassocYassocs_test_setter,"goo/collections/assoc","assocs-test-setter");
-EXT(YgooScollectionsSstringYascii_whitespaces,"goo/collections/string","ascii-whitespaces");
-EXT(YcompilerSastYsequentialize,"compiler/ast","sequentialize");
-EXT(YcompilerSastYassignment_form,"compiler/ast","assignment-form");
-EXT(YcompilerSastYLimmediate_constantG,"compiler/ast","<immediate-constant>");
-EXT(Ynul,"runtime/boot","nul");
-EXT(Yerror,"runtime/boot","error");
+EXT(YruntimeSruntimeYformat_to_string,"runtime/runtime","format-to-string");
+DEF(YcompilerSast_linearizeYassoc,"compiler/ast-linearize","assoc");
+DEF(YcompilerSast_linearizeYanalyze_dynamic_extent,"compiler/ast-linearize","analyze-dynamic-extent");
+EXT(YcompilerSastYreference_called_functionQ_setter,"compiler/ast","reference-called-function?-setter");
+DEF(YcompilerSast_linearizeYclosure_creation_free_setter,"compiler/ast-linearize","closure-creation-free-setter");
+EXT(YgooStypesYtA,"goo/types","t+");
 EXT(YLsingletonG,"runtime/boot","<singleton>");
-EXT(YgooSmathYGG,"goo/math",">>");
-EXT(YcompilerSastYfunction_value,"compiler/ast","function-value");
-EXT(YcompilerSastYast_define_binding,"compiler/ast","ast-define-binding");
-EXT(YcompilerSastYbinding_inferred_type_setter,"compiler/ast","binding-inferred-type-setter");
-EXT(YcompilerSastYset_module_environments,"compiler/ast","set-module-environments");
-DEF(YcompilerSast_linearizeYextract_thingsX,"compiler/ast-linearize","extract-things!");
-EXT(YgooScollectionsSrangeYrange,"goo/collections/range","range");
-EXT(YruntimeSruntimeYsig,"runtime/runtime","sig");
-EXT(YruntimeSruntimeYcompose,"runtime/runtime","compose");
+EXT(Yerror,"runtime/boot","error");
+EXT(YcompilerSastYfunction_self_recursiveQ_setter,"compiler/ast","function-self-recursive?-setter");
+EXT(YcompilerSastYLreferenceG,"compiler/ast","<reference>");
+EXT(YcompilerSastYfab_g2c_module,"compiler/ast","fab-g2c-module");
+EXT(YcompilerSastYmodule_name,"compiler/ast","module-name");
+EXT(YcompilerSastYsignature_value,"compiler/ast","signature-value");
 EXT(YgooSmathYroundS,"goo/math","round/");
 EXT(YLfunG,"runtime/boot","<fun>");
 EXT(YgooScollectionsSsequenceYins,"goo/collections/sequence","ins");
+EXT(YruntimeSruntimeYread,"runtime/runtime","read");
 EXT(YgooSmathY1A,"goo/math","1+");
-EXT(YgooScollectionsSzipYzip,"goo/collections/zip","zip");
-EXT(YcompilerSastYlocals_bindings_setter,"compiler/ast","locals-bindings-setter");
-EXT(YcompilerSastYfunction_source,"compiler/ast","function-source");
-EXT(YgooSmathYbitQ,"goo/math","bit?");
-EXT(YcompilerSastYLcompile_timeG,"compiler/ast","<compile-time>");
+EXT(YcompilerSastYenvironment_bindings,"compiler/ast","environment-bindings");
+EXT(YcompilerSastYLbind_exitG,"compiler/ast","<bind-exit>");
 EXT(YTboot_macro_expandersT,"runtime/boot","*boot-macro-expanders*");
-EXT(YgooScollectionsSstepYLstepG,"goo/collections/step","<step>");
-DEF(YcompilerSast_linearizeYassoc_key,"compiler/ast-linearize","assoc-key");
+EXT(YgooSmathYbitQ,"goo/math","bit?");
+DEF(YcompilerSast_linearizeYLflattened_programG,"compiler/ast-linearize","<flattened-program>");
+DEF(YcompilerSast_linearizeYadjoin_definitionX,"compiler/ast-linearize","adjoin-definition!");
+EXT(YcompilerSastYfunction_naryQ,"compiler/ast","function-nary?");
 EXT(Yprop_boundQ,"runtime/boot","prop-bound?");
-DEF(YcompilerSast_linearizeYflatten_seqs,"compiler/ast-linearize","flatten-seqs");
-EXT(YgooScollectionsSstepYfirst_then,"goo/collections/step","first-then");
-DEF(YcompilerSast_linearizeYreference_selfQ_setter,"compiler/ast-linearize","reference-self?-setter");
-EXT(Yfile_opening_error,"runtime/boot","file-opening-error");
+EXT(YgooScollectionsScollectionYmap2,"goo/collections/collection","map2");
+EXT(YgooScollectionsScollectionYlow_elt,"goo/collections/collection","low-elt");
+EXT(YcompilerSastYprogram_register,"compiler/ast","program-register");
+DEF(YcompilerSast_linearizeYform_program,"compiler/ast-linearize","form-program");
+EXT(YcompilerSastYbinding_native_toQ,"compiler/ast","binding-native-to?");
+EXT(YgooScollectionsScollectionYkeys,"goo/collections/collection","keys");
 EXT(YgooScollectionsSsequenceYdo_key_vals,"goo/collections/sequence","do-key-vals");
-EXT(YcompilerSastYsignature_arity_setter,"compiler/ast","signature-arity-setter");
-EXT(YPPmacro,"runtime/boot","%%macro");
-EXT(YcompilerSastYboundQ_reference,"compiler/ast","bound?-reference");
 EXT(Ysig_val,"runtime/boot","sig-val");
-EXT(YgooSmacrosYcat_sym,"goo/macros","cat-sym");
-EXT(YgooSmathYlogn,"goo/math","logn");
+EXT(YcompilerSastYast_define_binding,"compiler/ast","ast-define-binding");
 EXT(YLlstG,"runtime/boot","<lst>");
-DEF(YcompilerSast_linearizeYbox_form_setter,"compiler/ast-linearize","box-form-setter");
+DEF(YcompilerSast_linearizeYdo_call_referencesX,"compiler/ast-linearize","do-call-references!");
+EXT(YcompilerSastYalternative_consequent,"compiler/ast","alternative-consequent");
 EXT(Yfab_class,"runtime/boot","fab-class");
 EXT(YLlogG,"runtime/boot","<log>");
 EXT(YgooSmathYC,"goo/math","^");
-EXT(YLsimple_handler_infoG,"runtime/boot","<simple-handler-info>");
-EXT(YcompilerSastYsignature_names,"compiler/ast","signature-names");
 EXT(YgooSmathYzeroQ,"goo/math","zero?");
-EXT(YcompilerSastYlocals_body_setter,"compiler/ast","locals-body-setter");
+DEF(YcompilerSast_linearizeYclosure_creation_free,"compiler/ast-linearize","closure-creation-free");
+EXT(YruntimeSruntimeYLhandler_infoG,"runtime/runtime","<handler-info>");
+EXT(YcompilerSastYbinding_global_box_setter,"compiler/ast","binding-global-box-setter");
 EXT(Yfun_specs,"runtime/boot","fun-specs");
 EXT(Ytype_object,"runtime/boot","type-object");
 EXT(Yfun_name_setter,"runtime/boot","fun-name-setter");
 EXT(YgooSmacrosYrevX,"goo/macros","rev!");
-EXT(YcompilerSastYbinding_index_setter,"compiler/ast","binding-index-setter");
-EXT(YcompilerSastYLpassive_programG,"compiler/ast","<passive-program>");
 EXT(YgooScollectionsSsequenceYrev,"goo/collections/sequence","rev");
-EXT(YcompilerSastYconstant_value,"compiler/ast","constant-value");
+EXT(YgooScollectionsStableYcase_insensitive_string_equal,"goo/collections/table","case-insensitive-string-equal");
 EXT(YgooScollectionsSsequenceY1st,"goo/collections/sequence","1st");
 EXT(YgooScollectionsScollectionYenum,"goo/collections/collection","enum");
+EXT(YruntimeSruntimeYTgensym_counterT,"runtime/runtime","*gensym-counter*");
 EXT(YgooSmathYeof_objectQ,"goo/math","eof-object?");
-EXT(YcompilerSastYbinding_dynamic_extentQ,"compiler/ast","binding-dynamic-extent?");
+EXT(Yadd_prop,"runtime/boot","add-prop");
 EXT(YgooSmathYupperQ,"goo/math","upper?");
-EXT(YcompilerSastYlocals_body,"compiler/ast","locals-body");
 EXT(YgooSmagnitudeYLE,"goo/magnitude","<=");
-EXT(YcompilerSastYbinding_dynamic_extentQ_setter,"compiler/ast","binding-dynamic-extent?-setter");
-EXT(Yunknown_function_error,"runtime/boot","unknown-function-error");
-EXT(YgooScollectionsStableYtab_test,"goo/collections/table","tab-test");
-EXT(YcompilerSastYfunction_data_refs_setter,"compiler/ast","function-data-refs-setter");
-EXT(YPvnul,"runtime/boot","%vnul");
-EXT(Ysym_name,"runtime/boot","sym-name");
-EXT(YruntimeSruntimeYLhandler_infoG,"runtime/runtime","<handler-info>");
-EXT(YgooScollectionsScollectionYfind,"goo/collections/collection","find");
-EXT(YruntimeSruntimeYlist_handlers,"runtime/runtime","list-handlers");
-EXT(YcompilerSastYapplication_function,"compiler/ast","application-function");
-EXT(YruntimeSruntimeYhandler_matchesQ,"runtime/runtime","handler-matches?");
-EXT(YPdefine_method,"runtime/boot","%define-method");
-EXT(YgooSmathYfabs,"goo/math","fabs");
-EXT(Yfun_name,"runtime/boot","fun-name");
-EXT(YcompilerSastYLmodule_bindingG,"compiler/ast","<module-binding>");
-EXT(YgooScollectionsSstringYstr_to_num,"goo/collections/string","str-to-num");
-EXT(YcompilerSastYalternative_consequent,"compiler/ast","alternative-consequent");
-EXT(YcompilerSastYast_evaluate,"compiler/ast","ast-evaluate");
-EXT(Yobject_class,"runtime/boot","object-class");
-EXT(Yprop_owner,"runtime/boot","prop-owner");
-EXT(YcompilerSastYLglobal_referenceG,"compiler/ast","<global-reference>");
-EXT(YgooScollectionsSrangeYrange_by,"goo/collections/range","range-by");
-EXT(YcompilerSastYLruntime_referenceG,"compiler/ast","<runtime-reference>");
-DEF(YcompilerSast_linearizeYgather_temporariesX,"compiler/ast-linearize","gather-temporaries!");
+DEF(YcompilerSast_linearizeYTrenaming_bindings_counterT,"compiler/ast-linearize","*renaming-bindings-counter*");
+EXT(Yfile_opening_error,"runtime/boot","file-opening-error");
 EXT(YcompilerSastYfunction_data_refs,"compiler/ast","function-data-refs");
-EXT(YgooScollectionsScollectionYLtabG,"goo/collections/collection","<tab>");
-EXT(YcompilerSastYbinding_global_box,"compiler/ast","binding-global-box");
-EXT(YcompilerSastYsignature_specs,"compiler/ast","signature-specs");
-EXT(YgooSmathYrem,"goo/math","rem");
-DEF(YcompilerSast_linearizeYinsert_boxX,"compiler/ast-linearize","insert-box!");
-EXT(Yprop_value,"runtime/boot","prop-value");
-EXT(YgooScollectionsSlistYlist,"goo/collections/list","list");
-EXT(Yclass_parents,"runtime/boot","class-parents");
+DEF(YcompilerSast_linearizeYform_definitions,"compiler/ast-linearize","form-definitions");
+EXT(YcompilerSastYLpredefined_applicationG,"compiler/ast","<predefined-application>");
+EXT(YcompilerSastYfunction_debug_name_setter,"compiler/ast","function-debug-name-setter");
+DEF(YcompilerSast_linearizeYcollect_registersX,"compiler/ast-linearize","collect-registers!");
 EXT(YgooScollectionsStableYDpermanent_hash_state,"goo/collections/table","$permanent-hash-state");
-EXT(YcompilerSastYprogram_register,"compiler/ast","program-register");
+EXT(YgooScollectionsSrangeYrange_by,"goo/collections/range","range-by");
+DEF(YcompilerSast_linearizeYform_program_setter,"compiler/ast-linearize","form-program-setter");
+EXT(Ysym_name,"runtime/boot","sym-name");
+EXT(YTboot_macro_namesT,"runtime/boot","*boot-macro-names*");
+EXT(YcompilerSastYas_lst,"compiler/ast","as-lst");
+EXT(YgooScollectionsScollectionYfind,"goo/collections/collection","find");
+DEF(YcompilerSast_linearizeYassoc_value,"compiler/ast-linearize","assoc-value");
+EXT(Ynil,"runtime/boot","nil");
+EXT(YcompilerSastYbinding_dottedQ_setter,"compiler/ast","binding-dotted?-setter");
+EXT(YgooSmacrosYgensym,"goo/macros","gensym");
+EXT(YgooSmathYsin,"goo/math","sin");
+EXT(YgooSmathYNE,"goo/math","~=");
+EXT(YcompilerSastYbinding_type_setter,"compiler/ast","binding-type-setter");
+EXT(YgooScollectionsSbufferYlen_setter,"goo/collections/buffer","len-setter");
+EXT(YgooSmathYfabs,"goo/math","fabs");
+DEF(YcompilerSast_linearizeYLrenamed_local_bindingG,"compiler/ast-linearize","<renamed-local-binding>");
+EXT(YcompilerSastYLregular_applicationG,"compiler/ast","<regular-application>");
+EXT(Yfun_name,"runtime/boot","fun-name");
+EXT(YcompilerSastYapplication_arguments,"compiler/ast","application-arguments");
+EXT(YruntimeSruntimeYhandler_function,"runtime/runtime","handler-function");
+EXT(YcompilerSastYLast_primitiveG,"compiler/ast","<ast-primitive>");
+EXT(YgooScollectionsSstringYstr_to_num,"goo/collections/string","str-to-num");
+DEF(YcompilerSast_linearizeYdo_call_upgradesX,"compiler/ast-linearize","do-call-upgrades!");
+EXT(YgooSmathYlog,"goo/math","log");
+EXT(YgooSmathYmod,"goo/math","mod");
+EXT(Yobject_class,"runtime/boot","object-class");
+EXT(YcompilerSastYfunction_self_recursiveQ,"compiler/ast","function-self-recursive?");
+EXT(Yprop_owner,"runtime/boot","prop-owner");
+EXT(YgooScollectionsScollectionYLtabG,"goo/collections/collection","<tab>");
+EXT(YcompilerSastYfunction_temporaries_setter,"compiler/ast","function-temporaries-setter");
+EXT(YcompilerSastYdo_static_global_bindings,"compiler/ast","do-static-global-bindings");
+DEF(YcompilerSast_linearizeYadjoin_free_bindingX,"compiler/ast-linearize","adjoin-free-binding!");
+EXT(YcompilerSastYsignature_arity,"compiler/ast","signature-arity");
+DEF(YcompilerSast_linearizeYas_top_level_forms,"compiler/ast-linearize","as-top-level-forms");
+EXT(YcompilerSastYobjectify_signature,"compiler/ast","objectify-signature");
+EXT(YcompilerSastYfix_let_bindings_setter,"compiler/ast","fix-let-bindings-setter");
+EXT(YcompilerSastYfunction_bindings,"compiler/ast","function-bindings");
+EXT(YgooSmathYrem,"goo/math","rem");
+EXT(Yprop_value,"runtime/boot","prop-value");
+EXT(YcompilerSastYbinding_index,"compiler/ast","binding-index");
+EXT(Yclass_parents,"runtime/boot","class-parents");
 EXT(YgooSmagnitudeYG,"goo/magnitude",">");
-EXT(YruntimeSruntimeYDdefault_handler_info,"runtime/runtime","$default-handler-info");
-EXT(YcompilerSastYLunwind_protectG,"compiler/ast","<unwind-protect>");
-EXT(YcompilerSastYenvironment_uses_modules,"compiler/ast","environment-uses-modules");
 EXT(YgooScollectionsSsequenceYvals_to_str,"goo/collections/sequence","vals-to-str");
+EXT(YcompilerSastYLglobal_boxG,"compiler/ast","<global-box>");
+EXT(YgooSmagnitudeYmax,"goo/magnitude","max");
 EXT(YgooSmathYB,"goo/math","&");
+EXT(YcompilerSastYmonitor_handler,"compiler/ast","monitor-handler");
+EXT(YcompilerSastYfix_let_body_setter,"compiler/ast","fix-let-body-setter");
 EXT(YgooStypesYall2Q,"goo/types","all2?");
-EXT(YcompilerSastYmodule_name_to_relpath,"compiler/ast","module-name-to-relpath");
+EXT(YcompilerSastYenvironment_module,"compiler/ast","environment-module");
 EXT(YgooScollectionsSmapYfab_map,"goo/collections/map","fab-map");
-EXT(YgooScollectionsScycleYcycle,"goo/collections/cycle","cycle");
 EXT(YgooSmathYK,"goo/math","|");
 EXT(YgooScollectionsScollectionYkey_test,"goo/collections/collection","key-test");
-EXT(YruntimeSruntimeYdefault_handler,"runtime/runtime","default-handler");
+EXT(YcompilerSastYreference_binding,"compiler/ast","reference-binding");
 EXT(YgooScollectionsSsequenceYrange_checkQ,"goo/collections/sequence","range-check?");
-EXT(YcompilerSastYLfix_letG,"compiler/ast","<fix-let>");
+EXT(YcompilerSastYmodule_syntax_environment,"compiler/ast","module-syntax-environment");
 EXT(YgooSmathYposQ,"goo/math","pos?");
-EXT(YcompilerSastYenvironment_module,"compiler/ast","environment-module");
-EXT(YcompilerSastYfunction_self_recursiveQ_setter,"compiler/ast","function-self-recursive?-setter");
-EXT(YgooSmacrosYmatch_sublist,"goo/macros","match-sublist");
+DEF(YcompilerSast_linearizeYLbox_creationG,"compiler/ast-linearize","<box-creation>");
 EXT(YgooSmathYdigitQ,"goo/math","digit?");
+EXT(YgooScollectionsScollectionYdel,"goo/collections/collection","del");
 EXT(YLseqG,"runtime/boot","<seq>");
-EXT(Yprop_type,"runtime/boot","prop-type");
 EXT(YLanyG,"runtime/boot","<any>");
-EXT(YcompilerSastYload_module,"compiler/ast","load-module");
+EXT(Yprop_type,"runtime/boot","prop-type");
+EXT(Yincongruent_method_error,"runtime/boot","incongruent-method-error");
 EXT(YgooSmathYtanh,"goo/math","tanh");
-EXT(YgooSmathYlog,"goo/math","log");
-EXT(YruntimeSruntimeYTgensym_counterT,"runtime/runtime","*gensym-counter*");
-EXT(YcompilerSastYfunction_self_recursiveQ,"compiler/ast","function-self-recursive?");
-EXT(YgooSmacrosYnapp,"goo/macros","napp");
+EXT(YcompilerSastYLast_methodG,"compiler/ast","<ast-method>");
+EXT(YcompilerSastYsignature_bindings_setter,"compiler/ast","signature-bindings-setter");
+EXT(YPwith_monitor,"runtime/boot","%with-monitor");
+EXT(YcompilerSastYbinding_mutableQ,"compiler/ast","binding-mutable?");
 EXT(YcompilerSastYfix_let_arguments_setter,"compiler/ast","fix-let-arguments-setter");
-EXT(YTrestarts_okQT,"runtime/boot","*restarts-ok?*");
+DEF(YcompilerSast_linearizeYTregister_passiveQT,"compiler/ast-linearize","*register-passive?*");
+EXT(YcompilerSastYLbindingG,"compiler/ast","<binding>");
+EXT(YgooSmacrosYnapp,"goo/macros","napp");
+EXT(YgooSmathYGG,"goo/math",">>");
+EXT(YcompilerSastYreference_called_functionQ,"compiler/ast","reference-called-function?");
 EXT(YgooSmathYnegQ,"goo/math","neg?");
-EXT(YruntimeSruntimeYloc_val_setter,"runtime/runtime","loc-val-setter");
-EXT(YcompilerSastYobjectify_signature,"compiler/ast","objectify-signature");
-EXT(YcompilerSastYLcomputed_programG,"compiler/ast","<computed-program>");
+EXT(YgooSmathYpower_of_two_ceiling,"goo/math","power-of-two-ceiling");
+DEF(YcompilerSast_linearizeYassocq,"compiler/ast-linearize","assocq");
+DEF(YcompilerSast_linearizeYprogram_definitions_setter,"compiler/ast-linearize","program-definitions-setter");
+EXT(YgooScollectionsStableYLstr_tabG,"goo/collections/table","<str-tab>");
 EXT(Yclass_props,"runtime/boot","class-props");
-EXT(YcompilerSastYalternative_condition,"compiler/ast","alternative-condition");
-EXT(YDmax_int,"runtime/boot","$max-int");
-EXT(YcompilerSastYdo_module_loader_modules,"compiler/ast","do-module-loader-modules");
+EXT(YcompilerSastYreference_frame_number,"compiler/ast","reference-frame-number");
+EXT(YcompilerSastYfunction_temporaries,"compiler/ast","function-temporaries");
 EXT(YgooSmagnitudeYL,"goo/magnitude","<");
-DEF(YcompilerSast_linearizeYbox_reference,"compiler/ast-linearize","box-reference");
 EXT(YgooScollectionsScollectionYdo3,"goo/collections/collection","do3");
-EXT(YcompilerSastYbinding_locative,"compiler/ast","binding-locative");
-EXT(YcompilerSastYprogram_type_setter,"compiler/ast","program-type-setter");
+DEF(YcompilerSast_linearizeYbox_form_setter,"compiler/ast-linearize","box-form-setter");
+EXT(YcompilerSastYinit_environment_for_eval,"compiler/ast","init-environment-for-eval");
+EXT(YcompilerSastYsignature_value_setter,"compiler/ast","signature-value-setter");
 EXT(YPprop_unbound_error,"runtime/boot","%prop-unbound-error");
-EXT(YgooScollectionsSassocYLassocsG,"goo/collections/assoc","<assocs>");
-EXT(YruntimeSruntimeYdefault_handler_description,"runtime/runtime","default-handler-description");
+EXT(YruntimeSruntimeYcondition_message,"runtime/runtime","condition-message");
+EXT(YcompilerSastYsignature_arity_setter,"compiler/ast","signature-arity-setter");
+DEF(YcompilerSast_linearizeYast_walk,"compiler/ast-linearize","ast-walk");
 EXT(Yvec,"runtime/boot","vec");
-EXT(YruntimeSruntimeYdescribe_condition,"runtime/runtime","describe-condition");
-EXT(YTboot_macro_module_namesT,"runtime/boot","*boot-macro-module-names*");
-EXT(YcompilerSastYLreal_referenceG,"compiler/ast","<real-reference>");
+EXT(YcompilerSastYbinding_inferred_type_setter,"compiler/ast","binding-inferred-type-setter");
 EXT(YgooScollectionsSsequenceYdel_dups,"goo/collections/sequence","del-dups");
-EXT(YgooSmathYDpi,"goo/math","$pi");
 EXT(YLsigG,"runtime/boot","<sig>");
-EXT(YgooScollectionsSbufferYLbufG,"goo/collections/buffer","<buf>");
-EXT(YcompilerSastYbinding_inferred_type,"compiler/ast","binding-inferred-type");
-DEF(YcompilerSast_linearizeYbox_reference_setter,"compiler/ast-linearize","box-reference-setter");
-EXT(YcompilerSastYas_lst,"compiler/ast","as-lst");
+EXT(YruntimeSruntimeYfab_handler,"runtime/runtime","fab-handler");
+EXT(YgooScollectionsStableYcase_insensitive_string_hash,"goo/collections/table","case-insensitive-string-hash");
+EXT(YcompilerSastYDgoo_runtime_module_name,"compiler/ast","$goo-runtime-module-name");
+EXT(YcompilerSastYload_in,"compiler/ast","load-in");
+EXT(YcompilerSastYLreal_referenceG,"compiler/ast","<real-reference>");
 EXT(YgooScollectionsScollectionYas_copy,"goo/collections/collection","as-copy");
+EXT(YruntimeSruntimeYLconditionG,"runtime/runtime","<condition>");
 EXT(YgooScollectionsScollectionYkey_type,"goo/collections/collection","key-type");
-DEF(YcompilerSast_linearizeYprogram_form_setter,"compiler/ast-linearize","program-form-setter");
 EXT(Yfun_names,"runtime/boot","fun-names");
-EXT(YcompilerSastYdo_static_global_bindings,"compiler/ast","do-static-global-bindings");
+EXT(YcompilerSastYmodule_binding,"compiler/ast","module-binding");
+EXT(Yhandler_info_message,"runtime/boot","handler-info-message");
+EXT(YcompilerSastYinstall_initial_bindings,"compiler/ast","install-initial-bindings");
 EXT(Yfind_setter,"runtime/boot","find-setter");
+EXT(YcompilerSastYLast_genericG,"compiler/ast","<ast-generic>");
+EXT(YgooScollectionsSbufferYLbufG,"goo/collections/buffer","<buf>");
 EXT(YgooSmathYceilingS,"goo/math","ceiling/");
 EXT(YgooScollectionsScollectionYfind_or,"goo/collections/collection","find-or");
-DEF(YcompilerSast_linearizeYLassocG,"compiler/ast-linearize","<assoc>");
-EXT(YgooSmathYasin,"goo/math","asin");
+EXT(YcompilerSastYsignature_naryQ,"compiler/ast","signature-nary?");
+EXT(YcompilerSastYunwind_protect_protected_thunk,"compiler/ast","unwind-protect-protected-thunk");
 EXT(YgooScollectionsSsequenceYsub_setter,"goo/collections/sequence","sub-setter");
-EXT(YcompilerSastYbinding_name,"compiler/ast","binding-name");
-EXT(YcompilerSastYDgoo_boot_module_name,"compiler/ast","$goo-boot-module-name");
-EXT(YcompilerSastYfix_let_body,"compiler/ast","fix-let-body");
-EXT(YruntimeSruntimeYLhandlerG,"runtime/runtime","<handler>");
-EXT(YcompilerSastYfix_let_arguments,"compiler/ast","fix-let-arguments");
+DEF(YcompilerSast_linearizeYform_definitions_setter,"compiler/ast-linearize","form-definitions-setter");
+EXT(YgooSmathYchar_Gascii,"goo/math","char->ascii");
 EXT(YgooSmathYE,"goo/math","=");
+EXT(YcompilerSastYfix_let_bindings,"compiler/ast","fix-let-bindings");
+EXT(YcompilerSastYLlocal_bindingG,"compiler/ast","<local-binding>");
 EXT(YOall2Q,"runtime/boot","@all2?");
-EXT(YruntimeSruntimeYcondition_message,"runtime/runtime","condition-message");
-EXT(YcompilerSastYbinding_value,"compiler/ast","binding-value");
 EXT(YgooScollectionsSsequenceYrange_check,"goo/collections/sequence","range-check");
-EXT(YcompilerSastYLmodule_loaderG,"compiler/ast","<module-loader>");
-EXT(YgooScollectionsScollectionYlow_elt_setter,"goo/collections/collection","low-elt-setter");
-EXT(YgooSmacrosYgensym,"goo/macros","gensym");
+EXT(YgooScollectionsScollectionYfinQ,"goo/collections/collection","fin?");
 EXT(YgooSmathYlowerQ,"goo/math","lower?");
-EXT(YcompilerSastYlocals_functions_setter,"compiler/ast","locals-functions-setter");
-EXT(YcompilerSastYLlocal_referenceG,"compiler/ast","<local-reference>");
-EXT(Ynil,"runtime/boot","nil");
-EXT(YcompilerSastYLast_functionG,"compiler/ast","<ast-function>");
+EXT(YcompilerSastYfix_let_arguments,"compiler/ast","fix-let-arguments");
+EXT(YcompilerSastYapplication_binding,"compiler/ast","application-binding");
+EXT(YcompilerSastYreport_undefined_global_bindings,"compiler/ast","report-undefined-global-bindings");
+DEF(YcompilerSast_linearizeYupdate_walkX,"compiler/ast-linearize","update-walk!");
 DEF(YcompilerSast_linearizeYLbox_writeG,"compiler/ast-linearize","<box-write>");
-EXT(YcompilerSastYLglobal_boxG,"compiler/ast","<global-box>");
-DEF(YcompilerSast_linearizeYclosure_creation_free,"compiler/ast-linearize","closure-creation-free");
+EXT(YcompilerSastYdo_named_static_global_bindings,"compiler/ast","do-named-static-global-bindings");
+EXT(YgooSmathYDe,"goo/math","$e");
+EXT(YgooScollectionsSassocYassocs_test_setter,"goo/collections/assoc","assocs-test-setter");
 EXT(YLcolG,"runtime/boot","<col>");
-EXT(YcompilerSastYfunction_temporaries_setter,"compiler/ast","function-temporaries-setter");
-EXT(Ysig_names,"runtime/boot","sig-names");
 EXT(YLclassG,"runtime/boot","<class>");
-EXT(YcompilerSastYfunction_signature,"compiler/ast","function-signature");
-EXT(YgooScollectionsScollectionYmap2,"goo/collections/collection","map2");
-EXT(YcompilerSastYlocals_functions,"compiler/ast","locals-functions");
-EXT(YcompilerSastYglobal_box_value_setter,"compiler/ast","global-box-value-setter");
-EXT(YgooScollectionsScycleYLcycleG,"goo/collections/cycle","<cycle>");
-DEF(YcompilerSast_linearizeYdo_call_upgradesX,"compiler/ast-linearize","do-call-upgrades!");
-DEF(YcompilerSast_linearizeYform_program,"compiler/ast-linearize","form-program");
-DEF(YcompilerSast_linearizeYassocq,"compiler/ast-linearize","assocq");
+EXT(Ysig_names,"runtime/boot","sig-names");
 EXT(Yfab_gen,"runtime/boot","fab-gen");
-EXT(YcompilerSastYalternative_alternant,"compiler/ast","alternative-alternant");
+EXT(YcompilerSastYfunction_signature_setter,"compiler/ast","function-signature-setter");
+EXT(YcompilerSastYbinding_name,"compiler/ast","binding-name");
+EXT(YgooSmacrosYmatch_atom,"goo/macros","match-atom");
+EXT(YruntimeSruntimeYformat,"runtime/runtime","format");
 EXT(YgooStypesYanyQ,"goo/types","any?");
-EXT(YgooSmathYneg,"goo/math","neg");
-EXT(YcompilerSastYprobe_module,"compiler/ast","probe-module");
-EXT(YcompilerSastYsignature_specs_setter,"compiler/ast","signature-specs-setter");
-EXT(YcompilerSastYmodule_target_environment,"compiler/ast","module-target-environment");
+EXT(YcompilerSastYLprogramG,"compiler/ast","<program>");
+DEF(YcompilerSast_linearizeYnew_renamed_binding,"compiler/ast-linearize","new-renamed-binding");
 EXT(YgooScollectionsScollectionYelt_default,"goo/collections/collection","elt-default");
-EXT(YcompilerSastYbinding_info,"compiler/ast","binding-info");
-DEF(YcompilerSast_linearizeYlift_proceduresX,"compiler/ast-linearize","lift-procedures!");
-EXT(YgooScollectionsStableYcase_insensitive_string_hash,"goo/collections/table","case-insensitive-string-hash");
-EXT(YcompilerSastYLbindingG,"compiler/ast","<binding>");
-EXT(YcompilerSastYbinding_global_box_setter,"compiler/ast","binding-global-box-setter");
-EXT(YcompilerSastYLreferenceG,"compiler/ast","<reference>");
-EXT(YcompilerSastYsignature_names_setter,"compiler/ast","signature-names-setter");
-EXT(YruntimeSruntimeYalways,"runtime/runtime","always");
-EXT(YruntimeSruntimeYhandler_function,"runtime/runtime","handler-function");
-EXT(YcompilerSastYLglobal_assignmentG,"compiler/ast","<global-assignment>");
-EXT(YgooSmacrosYvar_type,"goo/macros","var-type");
+EXT(YcompilerSastYLast_functionG,"compiler/ast","<ast-function>");
+EXT(YcompilerSastYfix_let_types,"compiler/ast","fix-let-types");
+EXT(YcompilerSastYfunction_value,"compiler/ast","function-value");
 EXT(YgooScollectionsSbufferYlenSfill_setter,"goo/collections/buffer","len/fill-setter");
-DEF(YcompilerSast_linearizeYTregister_passiveQT,"compiler/ast-linearize","*register-passive?*");
-EXT(YgooSmathYto_lower,"goo/math","to-lower");
-EXT(YcompilerSastYmodule_loader_module_type,"compiler/ast","module-loader-module-type");
 EXT(YcompilerSastYLdefinitionG,"compiler/ast","<definition>");
-EXT(YcompilerSastYmonitor_handler,"compiler/ast","monitor-handler");
+EXT(YgooSmathYto_lower,"goo/math","to-lower");
+EXT(YgooScollectionsScollectionYallQ,"goo/collections/collection","all?");
+EXT(YcompilerSastYobjectify_with_subtransaction,"compiler/ast","objectify-with-subtransaction");
+EXT(YcompilerSastYLglobal_assignmentG,"compiler/ast","<global-assignment>");
 EXT(YgooScollectionsSsequenceYdel_vals,"goo/collections/sequence","del-vals");
-EXT(YcompilerSastYapplication_knownQ_setter,"compiler/ast","application-known?-setter");
-EXT(YcompilerSastYbinding_info_setter,"compiler/ast","binding-info-setter");
+DEF(YcompilerSast_linearizeYdo_do_call_referencesX,"compiler/ast-linearize","do-do-call-references!");
+EXT(YruntimeSruntimeYapp_filename,"runtime/runtime","app-filename");
+EXT(YcompilerSastYenv_object_name,"compiler/ast","env-object-name");
 EXT(Ytail_setter,"runtime/boot","tail-setter");
+EXT(YgooSmathYnum_to_str,"goo/math","num-to-str");
 EXT(YgooSmathYA,"goo/math","+");
-EXT(YcompilerSastYfunction_naryQ,"compiler/ast","function-nary?");
+DEF(YcompilerSast_linearizeYLassocG,"compiler/ast-linearize","<assoc>");
+EXT(YcompilerSastYprobe_module,"compiler/ast","probe-module");
+EXT(YcompilerSastYfunction_body_setter,"compiler/ast","function-body-setter");
 EXT(YgooSmathYsqrt,"goo/math","sqrt");
+EXT(YgooSmathYLL,"goo/math","<<");
 EXT(Ysig_arity,"runtime/boot","sig-arity");
-EXT(YgooScollectionsScollectionYkeys,"goo/collections/collection","keys");
 EXT(YgooScollectionsScollectionYfoldA,"goo/collections/collection","fold+");
-EXT(YcompilerSastYsignature_arity,"compiler/ast","signature-arity");
-EXT(YcompilerSastYfunction_temporaries,"compiler/ast","function-temporaries");
-EXT(YruntimeSruntimeYcurry,"runtime/runtime","curry");
-EXT(YcompilerSastYfunction_debug_name,"compiler/ast","function-debug-name");
-EXT(YgooScollectionsStableYcase_insensitive_string_equal,"goo/collections/table","case-insensitive-string-equal");
-DEF(YcompilerSast_linearizeYdo_do_call_upgradesX,"compiler/ast-linearize","do-do-call-upgrades!");
+EXT(YgooScollectionsScollectionYLenumG,"goo/collections/collection","<enum>");
 EXT(YgooScollectionsScollectionYdo2,"goo/collections/collection","do2");
-EXT(YLmagG,"runtime/boot","<mag>");
+EXT(YPsymbols,"runtime/boot","%symbols");
+EXT(YcompilerSastYfunction_body,"compiler/ast","function-body");
 EXT(YgooScollectionsSstringYstr,"goo/collections/string","str");
-EXT(YcompilerSastYruntime_environment,"compiler/ast","runtime-environment");
-EXT(YcompilerSastYprogram_type,"compiler/ast","program-type");
-DEF(YcompilerSast_linearizeYboxify_mutable_bindings,"compiler/ast-linearize","boxify-mutable-bindings");
-DEF(YcompilerSast_linearizeYprogram_definitions,"compiler/ast-linearize","program-definitions");
-EXT(YcompilerSastYfunction_debug_name_setter,"compiler/ast","function-debug-name-setter");
+EXT(YcompilerSastYLboundQG,"compiler/ast","<bound?>");
+EXT(YcompilerSastYmonitor_main_thunk,"compiler/ast","monitor-main-thunk");
+EXT(YgooScollectionsScollectionYlow_elt_setter,"goo/collections/collection","low-elt-setter");
 EXT(YgooStypesYtype_elts_setter,"goo/types","type-elts-setter");
-DEF(YcompilerSast_linearizeYast_walk,"compiler/ast-linearize","ast-walk");
-DEF(YcompilerSast_linearizeYbox_form,"compiler/ast-linearize","box-form");
-EXT(YLoptsG,"runtime/boot","<opts>");
+EXT(YcompilerSastYLast_signatureG,"compiler/ast","<ast-signature>");
+DEF(YcompilerSast_linearizeYLtop_level_formG,"compiler/ast-linearize","<top-level-form>");
+EXT(YDmax_int,"runtime/boot","$max-int");
 EXT(Yfind_getter,"runtime/boot","find-getter");
-DEF(YcompilerSast_linearizeYextractX,"compiler/ast-linearize","extract!");
+EXT(YcompilerSastYglobal_box_value,"compiler/ast","global-box-value");
 EXT(YgooSmathYisqrt,"goo/math","isqrt");
 EXT(YgooScollectionsScollectionYdup,"goo/collections/collection","dup");
 EXT(Ytail,"runtime/boot","tail");
+DEF(YcompilerSast_linearizeYclosure_creation_index_setter,"compiler/ast-linearize","closure-creation-index-setter");
+EXT(Ytype_error,"runtime/boot","type-error");
+EXT(YgooScollectionsSrangeYrange,"goo/collections/range","range");
 EXT(YgooScollectionsScollectionYelt_type,"goo/collections/collection","elt-type");
-EXT(YcompilerSastYfunction_free,"compiler/ast","function-free");
-EXT(Ywrong_number_arguments_error,"runtime/boot","wrong-number-arguments-error");
-EXT(YcompilerSastYLfab_listG,"compiler/ast","<fab-list>");
+DEF(YcompilerSast_linearizeYform_quotations_setter,"compiler/ast-linearize","form-quotations-setter");
+EXT(YcompilerSastYfunction_debug_name,"compiler/ast","function-debug-name");
+EXT(YruntimeSruntimeYLrestartG,"runtime/runtime","<restart>");
+EXT(YgooSmathYas_log,"goo/math","as-log");
+EXT(YcompilerSastYlocals_bindings_setter,"compiler/ast","locals-bindings-setter");
 EXT(YgooScollectionsSsequenceYbelow,"goo/collections/sequence","below");
-EXT(YgooSmacrosYmatch_atom,"goo/macros","match-atom");
+DEF(YcompilerSast_linearizeYadjoin_temporary_variablesX,"compiler/ast-linearize","adjoin-temporary-variables!");
 EXT(YgooStypesY2nd,"goo/types","2nd");
 EXT(YLtypeG,"runtime/boot","<type>");
+EXT(YruntimeSruntimeYinvoke_handler_interactively,"runtime/runtime","invoke-handler-interactively");
 EXT(Yord_app_mets,"runtime/boot","ord-app-mets");
-EXT(YcompilerSastYinit_ast,"compiler/ast","init-ast");
-EXT(YcompilerSastYassignment_binding,"compiler/ast","assignment-binding");
-EXT(YruntimeSruntimeYloc_val,"runtime/runtime","loc-val");
+EXT(YcompilerSastYprogram_register_setter,"compiler/ast","program-register-setter");
+EXT(YgooStypesYtQ,"goo/types","t?");
+EXT(YcompilerSastYfunction_index_setter,"compiler/ast","function-index-setter");
 EXT(YLlocG,"runtime/boot","<loc>");
-EXT(YcompilerSastYbinding_module_name,"compiler/ast","binding-module-name");
-EXT(YcompilerSastYapplication_tailQ,"compiler/ast","application-tail?");
+DEF(YcompilerSast_linearizeYclosure_creation_index,"compiler/ast-linearize","closure-creation-index");
+EXT(YcompilerSastYlocals_bindings,"compiler/ast","locals-bindings");
 EXT(YgooScollectionsSbufferYpop_lastX,"goo/collections/buffer","pop-last!");
-EXT(YcompilerSastYbinding_dottedQ,"compiler/ast","binding-dotted?");
+EXT(YcompilerSastYassignment_binding,"compiler/ast","assignment-binding");
 EXT(YgooScollectionsScollectionYfab,"goo/collections/collection","fab");
 EXT(Ytype_elts,"runtime/boot","type-elts");
-EXT(YcompilerSastYmodule_binding,"compiler/ast","module-binding");
-DEF(YcompilerSast_linearizeYreference_offset,"compiler/ast-linearize","reference-offset");
+EXT(YcompilerSastYLapplicationG,"compiler/ast","<application>");
+EXT(YgooScollectionsStableYtab_shrink_threshold_setter,"goo/collections/table","tab-shrink-threshold-setter");
 EXT(YTreport_prop_unbound_errorsQT,"runtime/boot","*report-prop-unbound-errors?*");
-EXT(YgooSmathYchar_Gascii,"goo/math","char->ascii");
-EXT(YcompilerSastYLast_methodG,"compiler/ast","<ast-method>");
-EXT(YgooScollectionsSassocYassocs_test,"goo/collections/assoc","assocs-test");
-EXT(YgooScollectionsSsequenceYfinds,"goo/collections/sequence","finds");
-EXT(YcompilerSastYreference_frame_offset,"compiler/ast","reference-frame-offset");
+EXT(YgooScollectionsSrangeYfrom,"goo/collections/range","from");
+EXT(YTrestarts_okQT,"runtime/boot","*restarts-ok?*");
+EXT(YgooScollectionsStableYtab_gc_state,"goo/collections/table","tab-gc-state");
+EXT(YruntimeSruntimeYLsimple_conditionG,"runtime/runtime","<simple-condition>");
+EXT(YcompilerSastYbind_exit_main_fun,"compiler/ast","bind-exit-main-fun");
+EXT(YcompilerSastYfunction_index,"compiler/ast","function-index");
 EXT(YgooSmathYround,"goo/math","round");
-EXT(YcompilerSastYreference_called_functionQ,"compiler/ast","reference-called-function?");
-EXT(YcompilerSastYLmodule_binding_referenceG,"compiler/ast","<module-binding-reference>");
-DEF(YcompilerSast_linearizeYsplit_program,"compiler/ast-linearize","split-program");
-DEF(YcompilerSast_linearizeYallocate_register,"compiler/ast-linearize","allocate-register");
-EXT(YcompilerSastYmonitor_type,"compiler/ast","monitor-type");
+EXT(YPPmacro,"runtime/boot","%%macro");
+EXT(YcompilerSastYLprogramsG,"compiler/ast","<programs>");
+EXT(YcompilerSastYLstatic_global_environmentG,"compiler/ast","<static-global-environment>");
+EXT(YruntimeSruntimeYLsimple_errorG,"runtime/runtime","<simple-error>");
 EXT(YgooSmathYpow,"goo/math","pow");
-DEF(YcompilerSast_linearizeYdo_dynamic_extentX,"compiler/ast-linearize","do-dynamic-extent!");
-EXT(YgooScollectionsSmapYLmapG,"goo/collections/map","<map>");
+EXT(YgooScollectionsSassocYassocs_test,"goo/collections/assoc","assocs-test");
 EXT(YgooScollectionsSsequenceYreject,"goo/collections/sequence","reject");
-EXT(YcompilerSastYLassignmentG,"compiler/ast","<assignment>");
-DEF(YcompilerSast_linearizeYunconstrained_typeQ,"compiler/ast-linearize","unconstrained-type?");
+EXT(YcompilerSastYbinding_dottedQ,"compiler/ast","binding-dotted?");
+EXT(YgooSmacrosYmatch_unquote,"goo/macros","match-unquote");
+DEF(YcompilerSast_linearizeYast_contains_funQ,"compiler/ast-linearize","ast-contains-fun?");
 EXT(Yclass_name,"runtime/boot","class-name");
+EXT(Ymay_isaQ,"runtime/boot","may-isa?");
+EXT(YgooSmathYcosh,"goo/math","cosh");
+EXT(YgooScollectionsSlistYLlistG,"goo/collections/list","<list>");
+EXT(YLstrG,"runtime/boot","<str>");
+EXT(YcompilerSastYLassignmentG,"compiler/ast","<assignment>");
+EXT(YgooSmathYfloor,"goo/math","floor");
+EXT(YLoptsG,"runtime/boot","<opts>");
+DEF(YcompilerSast_linearizeYinsert_boxX,"compiler/ast-linearize","insert-box!");
+EXT(YgooScollectionsStableYtab_shrink_threshold,"goo/collections/table","tab-shrink-threshold");
+EXT(YgooSmathYeof_object,"goo/math","eof-object");
+EXT(Ygen_add_met,"runtime/boot","gen-add-met");
+EXT(YcompilerSastYLpassive_programG,"compiler/ast","<passive-program>");
+EXT(YcompilerSastYbinding_inferred_type,"compiler/ast","binding-inferred-type");
+EXT(YgooSmathYceil,"goo/math","ceil");
+DEF(YcompilerSast_linearizeYreference_offset,"compiler/ast-linearize","reference-offset");
+EXT(YgooScollectionsSstringYascii_whitespaces,"goo/collections/string","ascii-whitespaces");
+EXT(Yprop_setter,"runtime/boot","prop-setter");
+EXT(Yfun_val,"runtime/boot","fun-val");
+EXT(YruntimeSruntimeYsig,"runtime/runtime","sig");
+EXT(YgooScollectionsStableYtab_growth_threshold,"goo/collections/table","tab-growth-threshold");
+EXT(YcompilerSastYbinding_info_setter,"compiler/ast","binding-info-setter");
+EXT(YgooScollectionsScollectionYmap_keyed,"goo/collections/collection","map-keyed");
+EXT(YcompilerSastYbinding_info,"compiler/ast","binding-info");
+EXT(YgooScollectionsSzipYzip,"goo/collections/zip","zip");
+EXT(YgooScollectionsSsequenceYsub,"goo/collections/sequence","sub");
+EXT(YgooScollectionsScollectionYitems,"goo/collections/collection","items");
+EXT(YgooStypesYlen,"goo/types","len");
+EXT(YcompilerSastYfunction_free_setter,"compiler/ast","function-free-setter");
+DEF(YcompilerSast_linearizeYanalyze_call_references,"compiler/ast-linearize","analyze-call-references");
+EXT(Yunknown_function_error,"runtime/boot","unknown-function-error");
+DEF(YcompilerSast_linearizeYprogram_definitions,"compiler/ast-linearize","program-definitions");
+EXT(YgooScollectionsSzipYunzip,"goo/collections/zip","unzip");
+EXT(YcompilerSastYbinding_dynamic_extentQ_setter,"compiler/ast","binding-dynamic-extent?-setter");
+EXT(YcompilerSastYremove_modules_by_nameX,"compiler/ast","remove-modules-by-name!");
+DEF(YcompilerSast_linearizeYassoc_value_setter,"compiler/ast-linearize","assoc-value-setter");
+EXT(YcompilerSastYalternative_alternant,"compiler/ast","alternative-alternant");
+DEF(YcompilerSast_linearizeYprogram_quotations_setter,"compiler/ast-linearize","program-quotations-setter");
+EXT(YcompilerSastYruntime_environment,"compiler/ast","runtime-environment");
+EXT(Yclass_ancestors,"runtime/boot","class-ancestors");
+EXT(YcompilerSastYsignature_naryQ_setter,"compiler/ast","signature-nary?-setter");
+EXT(YcompilerSastYassignment_form_setter,"compiler/ast","assignment-form-setter");
+EXT(YcompilerSastYLlocal_referenceG,"compiler/ast","<local-reference>");
+EXT(YcompilerSastYsignature_names_setter,"compiler/ast","signature-names-setter");
+EXT(YcompilerSastYfind_environment_module,"compiler/ast","find-environment-module");
+EXT(YcompilerSastYconstant_index,"compiler/ast","constant-index");
+EXT(YcompilerSastYbinding_value_setter,"compiler/ast","binding-value-setter");
+EXT(YcompilerSastYapplication_function,"compiler/ast","application-function");
+EXT(YgooScollectionsStableYtab_growth_factor_setter,"goo/collections/table","tab-growth-factor-setter");
+EXT(YgooScollectionsStableYtab_growth_factor,"goo/collections/table","tab-growth-factor");
+EXT(YgooScollectionsSstepYfirst_then,"goo/collections/step","first-then");
+EXT(YLsimple_handler_infoG,"runtime/boot","<simple-handler-info>");
+DEF(YcompilerSast_linearizeYallocate_register,"compiler/ast-linearize","allocate-register");
+EXT(YcompilerSastYreference_frame_offset,"compiler/ast","reference-frame-offset");
+EXT(YgooScollectionsScollectionYrange_error,"goo/collections/collection","range-error");
+EXT(YcompilerSastYLraw_constantG,"compiler/ast","<raw-constant>");
+EXT(YcompilerSastYLast_primitive_definitionG,"compiler/ast","<ast-primitive-definition>");
+EXT(YgooSmacrosYfab_setter_name,"goo/macros","fab-setter-name");
+EXT(YruntimeSruntimeYLhandlerG,"runtime/runtime","<handler>");
+EXT(YcompilerSastYinit_ast,"compiler/ast","init-ast");
+EXT(YgooScollectionsStableYLsetG,"goo/collections/table","<set>");
+EXT(YLfloG,"runtime/boot","<flo>");
+DEF(YcompilerSast_linearizeYreference_selfQ_setter,"compiler/ast-linearize","reference-self?-setter");
+EXT(YLsymG,"runtime/boot","<sym>");
+EXT(Ymet_appQ,"runtime/boot","met-app?");
+EXT(YgooScollectionsScollectionYaddX,"goo/collections/collection","add!");
+EXT(Ynew,"runtime/boot","new");
+EXT(YruntimeSruntimeYidentity,"runtime/runtime","identity");
+EXT(YgooSmacrosYvar_name,"goo/macros","var-name");
+EXT(Yobject_parents,"runtime/boot","object-parents");
+EXT(YgooScollectionsScollectionYfold,"goo/collections/collection","fold");
+EXT(YruntimeSruntimeYLserious_conditionG,"runtime/runtime","<serious-condition>");
+EXT(YcompilerSastYmonitor_test,"compiler/ast","monitor-test");
+EXT(Yfun_mets,"runtime/boot","fun-mets");
+EXT(YOisaQ,"runtime/boot","@isa?");
+EXT(YgooScollectionsStableYtab_growth_threshold_setter,"goo/collections/table","tab-growth-threshold-setter");
+EXT(YPsnul,"runtime/boot","%snul");
+EXT(YcompilerSastYboundQ_reference,"compiler/ast","bound?-reference");
+EXT(YruntimeSruntimeYcompose,"runtime/runtime","compose");
+EXT(YcompilerSastYprogram_type,"compiler/ast","program-type");
+EXT(YgooScollectionsSstringYTprint_baseT,"goo/collections/string","*print-base*");
+EXT(Ygen_src_setter,"runtime/boot","gen-src-setter");
+EXT(YgooSmacrosYEE,"goo/macros","==");
+EXT(YcompilerSastYdo_module_loader_modules,"compiler/ast","do-module-loader-modules");
+EXT(YgooSmacrosYdo,"goo/macros","do");
+EXT(YcompilerSastYlocals_functions_setter,"compiler/ast","locals-functions-setter");
+EXT(YruntimeSruntimeYdescribe_handler,"runtime/runtime","describe-handler");
+EXT(Ynul,"runtime/boot","nul");
+EXT(YgooSmathYtruncS,"goo/math","trunc/");
+EXT(YgooScollectionsScollectionYelt_setter,"goo/collections/collection","elt-setter");
+EXT(YgooScollectionsScollectionYdo_keyed,"goo/collections/collection","do-keyed");
+EXT(YcompilerSastYconstant_value,"compiler/ast","constant-value");
+EXT(YgooStypesYtE,"goo/types","t=");
+EXT(YcompilerSastYset_module_environments,"compiler/ast","set-module-environments");
+EXT(YgooSmathY_,"goo/math","-");
+EXT(YgooSmacrosYpair,"goo/macros","pair");
+EXT(YcompilerSastYfunction_free,"compiler/ast","function-free");
+EXT(YLpropG,"runtime/boot","<prop>");
+EXT(YcompilerSastYsequentialize,"compiler/ast","sequentialize");
+EXT(YcompilerSastYlocals_functions,"compiler/ast","locals-functions");
+EXT(YgooScollectionsSrangeYLrangeG,"goo/collections/range","<range>");
+EXT(YgooSmathYneg,"goo/math","neg");
+EXT(YgooScollectionsSbufferYpush_lastX,"goo/collections/buffer","push-last!");
+EXT(YgooScollectionsScollectionYelts,"goo/collections/collection","elts");
+DEF(YcompilerSast_linearizeYsplit_program,"compiler/ast-linearize","split-program");
+EXT(YgooSmathYS,"goo/math","/");
+EXT(YgooScollectionsSsequenceYcat2,"goo/collections/sequence","cat2");
+EXT(YgooScollectionsSstepYLstepG,"goo/collections/step","<step>");
+EXT(YLgenG,"runtime/boot","<gen>");
+EXT(YgooSmathYsinh,"goo/math","sinh");
+EXT(YruntimeSruntimeYLerrorG,"runtime/runtime","<error>");
+EXT(YgooScollectionsSlistYlist,"goo/collections/list","list");
+EXT(Ygen_src,"runtime/boot","gen-src");
+EXT(YgooSmathYcontagious_call,"goo/math","contagious-call");
+EXT(YcompilerSastYcompile_time_program,"compiler/ast","compile-time-program");
+DEF(YcompilerSast_linearizeYdo_do_call_upgradesX,"compiler/ast-linearize","do-do-call-upgrades!");
+EXT(Yobject_props,"runtime/boot","object-props");
+EXT(YisaQ,"runtime/boot","isa?");
+EXT(YcompilerSastYLcompile_timeG,"compiler/ast","<compile-time>");
+EXT(YcompilerSastYLmonitorG,"compiler/ast","<monitor>");
+EXT(YgooSmathYlogn,"goo/math","logn");
+EXT(YgooScollectionsSstringYnum_to_str_base,"goo/collections/string","num-to-str-base");
+EXT(YgooScollectionsSlistYpop,"goo/collections/list","pop");
+EXT(YgooSmathYtrunc,"goo/math","trunc");
+EXT(YcompilerSastYfunction_source_setter,"compiler/ast","function-source-setter");
+EXT(YcompilerSastYLmodule_binding_referenceG,"compiler/ast","<module-binding-reference>");
+EXT(YcompilerSastYLruntime_referenceG,"compiler/ast","<runtime-reference>");
+EXT(YgooScollectionsScollectionYmemQ,"goo/collections/collection","mem?");
+EXT(YcompilerSastYfix_let_types_setter,"compiler/ast","fix-let-types-setter");
+EXT(YgooSmathYDpi,"goo/math","$pi");
+EXT(YruntimeSruntimeYlist_handlers,"runtime/runtime","list-handlers");
+EXT(YPvnul,"runtime/boot","%vnul");
+DEF(YcompilerSast_linearizeYprogram_form_setter,"compiler/ast-linearize","program-form-setter");
+EXT(YgooSmathYto_str,"goo/math","to-str");
+EXT(YcompilerSastYsignature_names,"compiler/ast","signature-names");
+EXT(YruntimeSruntimeYalways,"runtime/runtime","always");
+EXT(YcompilerSastYLlocalsG,"compiler/ast","<locals>");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_58);
-DEFLIT(lit_57);
-DEFLIT(lit_99);
-DEFLIT(lit_91);
-DEFLIT(lit_44);
-DEFLIT(lit_94);
-DEFLIT(lit_61);
-DEFLIT(lit_77);
-DEFLIT(lit_107);
-DEFLIT(lit_69);
-DEFLIT(lit_71);
-DEFLIT(lit_21);
-DEFLIT(lit_31);
-DEFLIT(lit_36);
-DEFLIT(lit_32);
-DEFLIT(lit_55);
-DEFLIT(lit_92);
-DEFLIT(lit_40);
-DEFLIT(lit_52);
-DEFLIT(lit_49);
-DEFLIT(lit_104);
-DEFLIT(lit_35);
-DEFLIT(lit_56);
-DEFLIT(lit_48);
-DEFLIT(lit_19);
-DEFLIT(lit_76);
-DEFLIT(lit_122);
-DEFLIT(lit_43);
-DEFLIT(lit_15);
-DEFLIT(lit_74);
-DEFLIT(lit_121);
-DEFLIT(lit_12);
-DEFLIT(lit_6);
-DEFLIT(lit_90);
-DEFLIT(lit_64);
-DEFLIT(lit_115);
-DEFLIT(lit_34);
-DEFLIT(lit_116);
-DEFLIT(lit_3);
-DEFLIT(lit_118);
-DEFLIT(lit_80);
-DEFLIT(lit_25);
-DEFLIT(lit_72);
-DEFLIT(lit_117);
-DEFLIT(lit_98);
-DEFLIT(lit_86);
-DEFLIT(lit_108);
-DEFLIT(lit_81);
-DEFLIT(lit_1);
-DEFLIT(lit_30);
-DEFLIT(lit_105);
-DEFLIT(lit_70);
-DEFLIT(lit_65);
-DEFLIT(lit_11);
-DEFLIT(lit_78);
-DEFLIT(lit_26);
-DEFLIT(lit_100);
-DEFLIT(lit_8);
-DEFLIT(lit_93);
-DEFLIT(lit_60);
-DEFLIT(lit_20);
-DEFLIT(lit_7);
-DEFLIT(lit_2);
-DEFLIT(lit_112);
-DEFLIT(lit_51);
-DEFLIT(lit_87);
-DEFLIT(lit_4);
-DEFLIT(lit_96);
-DEFLIT(lit_114);
-DEFLIT(lit_120);
 DEFLIT(lit_42);
-DEFLIT(lit_95);
-DEFLIT(lit_27);
-DEFLIT(lit_24);
-DEFLIT(lit_83);
-DEFLIT(lit_82);
-DEFLIT(lit_39);
-DEFLIT(lit_38);
-DEFLIT(lit_89);
-DEFLIT(lit_16);
-DEFLIT(lit_9);
-DEFLIT(lit_63);
-DEFLIT(lit_5);
-DEFLIT(lit_23);
-DEFLIT(lit_113);
-DEFLIT(lit_119);
-DEFLIT(lit_0);
-DEFLIT(lit_18);
-DEFLIT(lit_79);
-DEFLIT(lit_29);
-DEFLIT(lit_10);
-DEFLIT(lit_47);
-DEFLIT(lit_14);
-DEFLIT(lit_75);
-DEFLIT(lit_110);
-DEFLIT(lit_33);
-DEFLIT(lit_68);
-DEFLIT(lit_106);
-DEFLIT(lit_41);
-DEFLIT(lit_13);
-DEFLIT(lit_103);
-DEFLIT(lit_101);
-DEFLIT(lit_59);
-DEFLIT(lit_62);
-DEFLIT(lit_97);
-DEFLIT(lit_102);
-DEFLIT(lit_54);
-DEFLIT(lit_88);
+DEFLIT(lit_96);
+DEFLIT(lit_34);
 DEFLIT(lit_73);
-DEFLIT(lit_66);
-DEFLIT(lit_85);
-DEFLIT(lit_53);
-DEFLIT(lit_28);
-DEFLIT(lit_109);
-DEFLIT(lit_45);
-DEFLIT(lit_50);
-DEFLIT(lit_67);
-DEFLIT(lit_46);
+DEFLIT(lit_89);
 DEFLIT(lit_37);
-DEFLIT(lit_22);
-DEFLIT(lit_111);
-DEFLIT(lit_17);
+DEFLIT(lit_46);
+DEFLIT(lit_107);
 DEFLIT(lit_84);
+DEFLIT(lit_80);
+DEFLIT(lit_58);
+DEFLIT(lit_95);
+DEFLIT(lit_103);
+DEFLIT(lit_79);
+DEFLIT(lit_28);
+DEFLIT(lit_29);
+DEFLIT(lit_16);
+DEFLIT(lit_115);
+DEFLIT(lit_64);
+DEFLIT(lit_94);
+DEFLIT(lit_38);
+DEFLIT(lit_86);
+DEFLIT(lit_69);
+DEFLIT(lit_32);
+DEFLIT(lit_21);
+DEFLIT(lit_18);
+DEFLIT(lit_13);
+DEFLIT(lit_66);
+DEFLIT(lit_43);
+DEFLIT(lit_98);
+DEFLIT(lit_88);
+DEFLIT(lit_31);
+DEFLIT(lit_102);
+DEFLIT(lit_119);
+DEFLIT(lit_87);
+DEFLIT(lit_47);
+DEFLIT(lit_116);
+DEFLIT(lit_72);
+DEFLIT(lit_99);
+DEFLIT(lit_4);
+DEFLIT(lit_19);
+DEFLIT(lit_53);
+DEFLIT(lit_25);
+DEFLIT(lit_59);
+DEFLIT(lit_83);
+DEFLIT(lit_111);
+DEFLIT(lit_81);
+DEFLIT(lit_65);
+DEFLIT(lit_100);
+DEFLIT(lit_75);
+DEFLIT(lit_93);
+DEFLIT(lit_110);
+DEFLIT(lit_97);
+DEFLIT(lit_109);
+DEFLIT(lit_8);
+DEFLIT(lit_60);
+DEFLIT(lit_113);
+DEFLIT(lit_7);
+DEFLIT(lit_112);
+DEFLIT(lit_30);
+DEFLIT(lit_26);
+DEFLIT(lit_67);
+DEFLIT(lit_61);
+DEFLIT(lit_105);
+DEFLIT(lit_85);
+DEFLIT(lit_54);
+DEFLIT(lit_50);
+DEFLIT(lit_24);
+DEFLIT(lit_49);
+DEFLIT(lit_57);
+DEFLIT(lit_6);
+DEFLIT(lit_0);
+DEFLIT(lit_11);
+DEFLIT(lit_74);
+DEFLIT(lit_82);
+DEFLIT(lit_51);
+DEFLIT(lit_76);
+DEFLIT(lit_52);
+DEFLIT(lit_20);
+DEFLIT(lit_35);
+DEFLIT(lit_70);
+DEFLIT(lit_9);
+DEFLIT(lit_90);
+DEFLIT(lit_17);
+DEFLIT(lit_22);
+DEFLIT(lit_78);
+DEFLIT(lit_101);
+DEFLIT(lit_106);
+DEFLIT(lit_15);
+DEFLIT(lit_62);
+DEFLIT(lit_48);
+DEFLIT(lit_120);
+DEFLIT(lit_68);
+DEFLIT(lit_108);
+DEFLIT(lit_104);
+DEFLIT(lit_14);
+DEFLIT(lit_44);
+DEFLIT(lit_121);
+DEFLIT(lit_117);
+DEFLIT(lit_33);
+DEFLIT(lit_56);
+DEFLIT(lit_77);
+DEFLIT(lit_63);
+DEFLIT(lit_39);
+DEFLIT(lit_12);
+DEFLIT(lit_10);
+DEFLIT(lit_114);
+DEFLIT(lit_92);
+DEFLIT(lit_1);
+DEFLIT(lit_55);
+DEFLIT(lit_3);
+DEFLIT(lit_71);
+DEFLIT(lit_91);
+DEFLIT(lit_36);
+DEFLIT(lit_27);
+DEFLIT(lit_2);
+DEFLIT(lit_45);
+DEFLIT(lit_40);
+DEFLIT(lit_23);
+DEFLIT(lit_118);
+DEFLIT(lit_5);
+DEFLIT(lit_41);
+DEFLIT(lit_122);
 
 /* FUNCTIONS: */
 
@@ -4710,19 +4710,19 @@ extern MODULE_INFO module_info_compilerSast;
 extern MODULE_INFO module_info_gooStypes;
 extern MODULE_INFO module_info_gooSmath;
 extern MODULE_INFO module_info_gooScollections;
-extern MODULE_INFO module_info_gooScollectionsStable;
+extern MODULE_INFO module_info_gooScollectionsSlist;
+extern MODULE_INFO module_info_gooScollectionsSbuffer;
 extern MODULE_INFO module_info_gooScollectionsScollection;
 extern MODULE_INFO module_info_gooScollectionsSsequence;
-extern MODULE_INFO module_info_gooScollectionsSlist;
-extern MODULE_INFO module_info_gooScollectionsSrange;
+extern MODULE_INFO module_info_gooScollectionsStable;
+extern MODULE_INFO module_info_gooScollectionsSmap;
 extern MODULE_INFO module_info_gooScollectionsSzip;
-extern MODULE_INFO module_info_gooScollectionsSbuffer;
 extern MODULE_INFO module_info_gooScollectionsSstring;
 extern MODULE_INFO module_info_gooSmagnitude;
 extern MODULE_INFO module_info_gooScollectionsSassoc;
-extern MODULE_INFO module_info_gooScollectionsSstep;
-extern MODULE_INFO module_info_gooScollectionsSmap;
 extern MODULE_INFO module_info_gooScollectionsScycle;
+extern MODULE_INFO module_info_gooScollectionsSrange;
+extern MODULE_INFO module_info_gooScollectionsSstep;
 
 static USE_INFO use_infos[] = {
   {&module_info_runtimeSboot},
@@ -4736,875 +4736,875 @@ static USE_INFO use_infos[] = {
 };
 
 static IMPORT_INFO import_infos[] = {
-  {"<program>", &module_info_compilerSast, "<program>"},
-  {"loc", &module_info_runtimeSboot, "loc"},
-  {"application-known?", &module_info_compilerSast, "application-known?"},
-  {"<arguments>", &module_info_compilerSast, "<arguments>"},
-  {"<predefined-application>", &module_info_compilerSast, "<predefined-application>"},
-  {"may-isa?", &module_info_runtimeSboot, "may-isa?"},
-  {"%open-out-file", &module_info_runtimeSboot, "%open-out-file"},
-  {"global-box-value", &module_info_compilerSast, "global-box-value"},
-  {"cosh", &module_info_gooSmath, "cosh"},
-  {"unwind-protect-protected-thunk", &module_info_compilerSast, "unwind-protect-protected-thunk"},
-  {"tab-growth-threshold", &module_info_gooScollectionsStable, "tab-growth-threshold"},
-  {"fix-let-types-setter", &module_info_compilerSast, "fix-let-types-setter"},
-  {"sup", &module_info_gooSmacros, "sup"},
-  {"floor", &module_info_gooSmath, "floor"},
-  {"report-undefined-global-bindings", &module_info_compilerSast, "report-undefined-global-bindings"},
-  {"tab-growth-factor", &module_info_gooScollectionsStable, "tab-growth-factor"},
-  {"incf", &module_info_gooSmacros, "incf"},
-  {"$min-int", &module_info_runtimeSboot, "$min-int"},
-  {"without-prop-unbound-errors", &module_info_gooSmacros, "without-prop-unbound-errors"},
-  {"eof-object", &module_info_gooSmath, "eof-object"},
-  {"gen-add-met", &module_info_runtimeSboot, "gen-add-met"},
-  {"ceil", &module_info_gooSmath, "ceil"},
-  {"%vec", &module_info_runtimeSboot, "%vec"},
-  {"%raw-call", &module_info_runtimeSboot, "%raw-call"},
-  {"prop-setter", &module_info_runtimeSboot, "prop-setter"},
-  {"unwind-protect-cleanup-thunk", &module_info_compilerSast, "unwind-protect-cleanup-thunk"},
-  {"fun-val", &module_info_runtimeSboot, "fun-val"},
-  {"low-elt", &module_info_gooScollectionsScollection, "low-elt"},
-  {"map-keyed", &module_info_gooScollectionsScollection, "map-keyed"},
-  {"def", &module_info_runtimeSboot, "def"},
-  {"sub", &module_info_gooScollectionsSsequence, "sub"},
-  {"<str-tab>", &module_info_gooScollectionsStable, "<str-tab>"},
-  {"function-binding", &module_info_compilerSast, "function-binding"},
-  {"build-condition-for-handler-interactively", &module_info_runtimeSruntime, "build-condition-for-handler-interactively"},
-  {"items", &module_info_gooScollectionsScollection, "items"},
-  {"len", &module_info_gooStypes, "len"},
-  {"%fasin", &module_info_runtimeSboot, "%fasin"},
-  {"%cb", &module_info_runtimeSboot, "%cb"},
-  {"reference-binding", &module_info_compilerSast, "reference-binding"},
-  {"%met-code", &module_info_runtimeSboot, "%met-code"},
-  {"load-in", &module_info_compilerSast, "load-in"},
-  {"renew", &module_info_gooSmacros, "renew"},
-  {"t<", &module_info_gooStypes, "t<"},
-  {"isa", &module_info_runtimeSboot, "isa"},
-  {"signature-value-setter", &module_info_compilerSast, "signature-value-setter"},
-  {"class-ancestors", &module_info_runtimeSboot, "class-ancestors"},
-  {"constant-index-setter", &module_info_compilerSast, "constant-index-setter"},
-  {"<ast-signature>", &module_info_compilerSast, "<ast-signature>"},
-  {"fix-let-types", &module_info_compilerSast, "fix-let-types"},
-  {"compile-time-program", &module_info_compilerSast, "compile-time-program"},
-  {"<list>", &module_info_gooScollectionsSlist, "<list>"},
-  {"cond", &module_info_gooSmacros, "cond"},
-  {"condition-arguments", &module_info_runtimeSruntime, "condition-arguments"},
-  {"signature-nary?-setter", &module_info_compilerSast, "signature-nary?-setter"},
-  {"<serious-condition>", &module_info_runtimeSruntime, "<serious-condition>"},
-  {"binding-mutable?", &module_info_compilerSast, "binding-mutable?"},
-  {"%snul", &module_info_runtimeSboot, "%snul"},
-  {"binding-type", &module_info_compilerSast, "binding-type"},
-  {"unchecked-runtime-environment", &module_info_compilerSast, "unchecked-runtime-environment"},
-  {"cat2", &module_info_gooScollectionsSsequence, "cat2"},
-  {"from", &module_info_gooScollectionsSrange, "from"},
-  {"tab-growth-threshold-setter", &module_info_gooScollectionsStable, "tab-growth-threshold-setter"},
-  {"%velt-setter", &module_info_runtimeSboot, "%velt-setter"},
-  {"match-unquote", &module_info_gooSmacros, "match-unquote"},
-  {"tab-growth-factor-setter", &module_info_gooScollectionsStable, "tab-growth-factor-setter"},
-  {"<flo>", &module_info_runtimeSboot, "<flo>"},
-  {"<sym>", &module_info_runtimeSboot, "<sym>"},
-  {"for", &module_info_gooSmacros, "for"},
-  {"%gen-src", &module_info_runtimeSboot, "%gen-src"},
-  {"<ast-primitive-definition>", &module_info_compilerSast, "<ast-primitive-definition>"},
-  {"met-app?", &module_info_runtimeSboot, "met-app?"},
-  {"add!", &module_info_gooScollectionsScollection, "add!"},
-  {"format-to-string", &module_info_runtimeSruntime, "format-to-string"},
-  {"new", &module_info_runtimeSboot, "new"},
-  {"alpha?", &module_info_gooSmath, "alpha?"},
-  {"locals-bindings", &module_info_compilerSast, "locals-bindings"},
-  {"object-parents", &module_info_runtimeSboot, "object-parents"},
-  {"fold", &module_info_gooScollectionsScollection, "fold"},
-  {"tab-gc-state", &module_info_gooScollectionsStable, "tab-gc-state"},
-  {"fix-let-body-setter", &module_info_compilerSast, "fix-let-body-setter"},
-  {"assignment-form-setter", &module_info_compilerSast, "assignment-form-setter"},
-  {"objectify-quotation", &module_info_compilerSast, "objectify-quotation"},
-  {"@isa?", &module_info_runtimeSboot, "@isa?"},
-  {"fun-mets", &module_info_runtimeSboot, "fun-mets"},
-  {"application-arguments", &module_info_compilerSast, "application-arguments"},
-  {"%gen-code", &module_info_runtimeSboot, "%gen-code"},
-  {"install-initial-bindings", &module_info_compilerSast, "install-initial-bindings"},
-  {"%pair", &module_info_runtimeSboot, "%pair"},
-  {"fix-let-bindings-setter", &module_info_compilerSast, "fix-let-bindings-setter"},
-  {"gen-src-setter", &module_info_runtimeSboot, "gen-src-setter"},
-  {"==", &module_info_gooSmacros, "=="},
-  {"<simple-error>", &module_info_runtimeSruntime, "<simple-error>"},
-  {"do", &module_info_gooSmacros, "do"},
-  {"<free-environment>", &module_info_compilerSast, "<free-environment>"},
-  {"module-exports", &module_info_compilerSast, "module-exports"},
-  {"id-hash", &module_info_gooScollectionsStable, "id-hash"},
-  {"add-prop", &module_info_runtimeSboot, "add-prop"},
-  {"function-index-setter", &module_info_compilerSast, "function-index-setter"},
-  {"<locals>", &module_info_compilerSast, "<locals>"},
-  {"unzip", &module_info_gooScollectionsSzip, "unzip"},
-  {"%i^", &module_info_runtimeSboot, "%i^"},
-  {"read", &module_info_runtimeSruntime, "read"},
-  {"binding-value-setter", &module_info_compilerSast, "binding-value-setter"},
-  {"trunc/", &module_info_gooSmath, "trunc/"},
-  {"do-keyed", &module_info_gooScollectionsScollection, "do-keyed"},
-  {"%c<", &module_info_runtimeSboot, "%c<"},
-  {"t=", &module_info_gooStypes, "t="},
-  {"-", &module_info_gooSmath, "-"},
-  {"pick", &module_info_gooScollectionsSsequence, "pick"},
-  {"%su", &module_info_runtimeSboot, "%su"},
-  {"pair", &module_info_gooSmacros, "pair"},
-  {"<prop>", &module_info_runtimeSboot, "<prop>"},
-  {"<constant>", &module_info_compilerSast, "<constant>"},
-  {"%binding-name", &module_info_runtimeSboot, "%binding-name"},
-  {"function-index", &module_info_compilerSast, "function-index"},
-  {"%file-type", &module_info_runtimeSboot, "%file-type"},
-  {"push-last!", &module_info_gooScollectionsSbuffer, "push-last!"},
-  {"<monitor>", &module_info_compilerSast, "<monitor>"},
-  {"elts", &module_info_gooScollectionsScollection, "elts"},
-  {"%current-out-port", &module_info_runtimeSboot, "%current-out-port"},
-  {"/", &module_info_gooSmath, "/"},
-  {"function-body-setter", &module_info_compilerSast, "function-body-setter"},
-  {"<raw-constant>", &module_info_compilerSast, "<raw-constant>"},
-  {"<gen>", &module_info_runtimeSboot, "<gen>"},
-  {"function-signature-setter", &module_info_compilerSast, "function-signature-setter"},
-  {"%f=", &module_info_runtimeSboot, "%f="},
-  {"sinh", &module_info_gooSmath, "sinh"},
-  {"assignment-reference", &module_info_compilerSast, "assignment-reference"},
-  {"$e", &module_info_gooSmath, "$e"},
-  {"gen-src", &module_info_runtimeSboot, "gen-src"},
-  {"%iv", &module_info_runtimeSboot, "%iv"},
-  {"contagious-call", &module_info_gooSmath, "contagious-call"},
-  {"object-props", &module_info_runtimeSboot, "object-props"},
-  {"isa?", &module_info_runtimeSboot, "isa?"},
-  {"<ast-generic>", &module_info_compilerSast, "<ast-generic>"},
-  {"constant-index", &module_info_compilerSast, "constant-index"},
-  {"%symbols", &module_info_runtimeSboot, "%symbols"},
-  {"find-environment-module", &module_info_compilerSast, "find-environment-module"},
-  {"pop", &module_info_gooScollectionsSlist, "pop"},
-  {"trunc", &module_info_gooSmath, "trunc"},
-  {"case", &module_info_gooSmacros, "case"},
-  {"tab-hash", &module_info_gooScollectionsStable, "tab-hash"},
-  {"macro-expand", &module_info_runtimeSboot, "macro-expand"},
-  {"function-body", &module_info_compilerSast, "function-body"},
-  {"reference-called-function?-setter", &module_info_compilerSast, "reference-called-function?-setter"},
-  {"mem?", &module_info_gooScollectionsScollection, "mem?"},
-  {"%fun-reg", &module_info_runtimeSboot, "%fun-reg"},
-  {"describe-handler", &module_info_runtimeSruntime, "describe-handler"},
-  {"dv", &module_info_runtimeSboot, "dv"},
-  {"<runtime-assignment>", &module_info_compilerSast, "<runtime-assignment>"},
-  {"floor/", &module_info_gooSmath, "floor/"},
-  {"%slen", &module_info_runtimeSboot, "%slen"},
-  {"rcurry", &module_info_runtimeSruntime, "rcurry"},
-  {"<regular-application>", &module_info_compilerSast, "<regular-application>"},
-  {"to-str", &module_info_gooSmath, "to-str"},
-  {"num-to-str-base", &module_info_gooScollectionsSstring, "num-to-str-base"},
   {"set", &module_info_runtimeSboot, "set"},
   {"abs", &module_info_gooSmath, "abs"},
-  {"fab-g2c-module", &module_info_compilerSast, "fab-g2c-module"},
+  {"alpha?", &module_info_gooSmath, "alpha?"},
   {"sig-nary?", &module_info_runtimeSboot, "sig-nary?"},
-  {"%with-monitor", &module_info_runtimeSboot, "%with-monitor"},
-  {"%sp-reg-setter", &module_info_runtimeSboot, "%sp-reg-setter"},
+  {"match-empty-list", &module_info_gooSmacros, "match-empty-list"},
   {"<int>", &module_info_runtimeSboot, "<int>"},
-  {"<range>", &module_info_gooScollectionsSrange, "<range>"},
-  {"<str>", &module_info_runtimeSboot, "<str>"},
-  {"<programs>", &module_info_compilerSast, "<programs>"},
-  {"all?", &module_info_gooScollectionsScollection, "all?"},
+  {"%app-filename", &module_info_runtimeSboot, "%app-filename"},
+  {"<tup>", &module_info_runtimeSboot, "<tup>"},
+  {"%loc-off-setter", &module_info_runtimeSboot, "%loc-off-setter"},
+  {"%%sym", &module_info_runtimeSboot, "%%sym"},
+  {"var-type", &module_info_gooSmacros, "var-type"},
+  {"%vec", &module_info_runtimeSboot, "%vec"},
   {"fun-arity", &module_info_runtimeSboot, "fun-arity"},
   {"fun", &module_info_runtimeSboot, "fun"},
-  {"range-error", &module_info_gooScollectionsScollection, "range-error"},
-  {"signature-bindings-setter", &module_info_compilerSast, "signature-bindings-setter"},
-  {"%iu", &module_info_runtimeSboot, "%iu"},
+  {"*boot-macro-module-names*", &module_info_runtimeSboot, "*boot-macro-module-names*"},
+  {"%fi2f", &module_info_runtimeSboot, "%fi2f"},
+  {"<runtime-assignment>", &module_info_compilerSast, "<runtime-assignment>"},
   {"%prop", &module_info_runtimeSboot, "%prop"},
-  {"choose-handler", &module_info_runtimeSruntime, "choose-handler"},
-  {"<error>", &module_info_runtimeSruntime, "<error>"},
-  {"spread", &module_info_runtimeSruntime, "spread"},
-  {"<bind-exit>", &module_info_compilerSast, "<bind-exit>"},
-  {"%sb", &module_info_runtimeSboot, "%sb"},
+  {"<fix-let>", &module_info_compilerSast, "<fix-let>"},
+  {"module-target-environment", &module_info_compilerSast, "module-target-environment"},
   {"as", &module_info_gooStypes, "as"},
-  {"bound?", &module_info_runtimeSboot, "bound?"},
   {"tan", &module_info_gooSmath, "tan"},
-  {"%str", &module_info_runtimeSboot, "%str"},
   {"assq", &module_info_gooScollectionsSlist, "assq"},
-  {"fix-let-bindings", &module_info_compilerSast, "fix-let-bindings"},
-  {"elt-or", &module_info_gooScollectionsScollection, "elt-or"},
-  {"empty?", &module_info_gooSmacros, "empty?"},
-  {"elt-setter", &module_info_gooScollectionsScollection, "elt-setter"},
   {"%isa", &module_info_runtimeSboot, "%isa"},
-  {"del", &module_info_gooScollectionsScollection, "del"},
-  {"binding-dotted?-setter", &module_info_compilerSast, "binding-dotted?-setter"},
-  {"reference-frame-number", &module_info_compilerSast, "reference-frame-number"},
-  {"<enum>", &module_info_gooScollectionsScollection, "<enum>"},
-  {"remove-modules-by-name!", &module_info_compilerSast, "remove-modules-by-name!"},
-  {"find-binding", &module_info_compilerSast, "find-binding"},
+  {"%bb", &module_info_runtimeSboot, "%bb"},
+  {"loc-val-setter", &module_info_runtimeSruntime, "loc-val-setter"},
+  {"binding-global-box", &module_info_compilerSast, "binding-global-box"},
+  {"%eof-object", &module_info_runtimeSboot, "%eof-object"},
+  {"try", &module_info_runtimeSboot, "try"},
   {"buf", &module_info_gooScollectionsSbuffer, "buf"},
+  {"constant-index-setter", &module_info_compilerSast, "constant-index-setter"},
   {"add", &module_info_gooScollectionsScollection, "add"},
   {"tup", &module_info_runtimeSboot, "tup"},
   {"any2?", &module_info_gooScollectionsScollection, "any2?"},
-  {"*macros-ok?*", &module_info_runtimeSboot, "*macros-ok?*"},
-  {"%invoke-debugger", &module_info_runtimeSboot, "%invoke-debugger"},
-  {"%puts", &module_info_runtimeSboot, "%puts"},
-  {"identity", &module_info_runtimeSruntime, "identity"},
-  {"handler-info-message", &module_info_runtimeSboot, "handler-info-message"},
+  {"%binding-name", &module_info_runtimeSboot, "%binding-name"},
+  {"%ready?", &module_info_runtimeSboot, "%ready?"},
+  {"ast-evaluate", &module_info_compilerSast, "ast-evaluate"},
+  {"%i<", &module_info_runtimeSboot, "%i<"},
+  {"%pair", &module_info_runtimeSboot, "%pair"},
   {"ddv", &module_info_gooSmacros, "ddv"},
   {">>>", &module_info_gooSmath, ">>>"},
-  {"<ast-primitive>", &module_info_compilerSast, "<ast-primitive>"},
+  {"<immediate-constant>", &module_info_compilerSast, "<immediate-constant>"},
+  {"environment-uses-modules", &module_info_compilerSast, "environment-uses-modules"},
   {"dp", &module_info_runtimeSboot, "dp"},
   {"flo-bits", &module_info_gooSmath, "flo-bits"},
-  {"fab-setter-name", &module_info_gooSmacros, "fab-setter-name"},
-  {"%f*", &module_info_runtimeSboot, "%f*"},
+  {"objectify-quotation", &module_info_compilerSast, "objectify-quotation"},
   {"cat!", &module_info_gooScollectionsSsequence, "cat!"},
-  {"<replace-generic-restart>", &module_info_runtimeSboot, "<replace-generic-restart>"},
   {"sig-unification-vars", &module_info_runtimeSboot, "sig-unification-vars"},
+  {"decf", &module_info_gooSmacros, "decf"},
+  {"<mag>", &module_info_runtimeSboot, "<mag>"},
   {"collect", &module_info_gooSmacros, "collect"},
-  {"as-log", &module_info_gooSmath, "as-log"},
-  {"monitor-test", &module_info_compilerSast, "monitor-test"},
+  {"%i+", &module_info_runtimeSboot, "%i+"},
+  {"function-binding", &module_info_compilerSast, "function-binding"},
   {"ds", &module_info_runtimeSboot, "ds"},
   {"head-setter", &module_info_runtimeSboot, "head-setter"},
   {"type-class", &module_info_runtimeSboot, "type-class"},
   {"unexec", &module_info_runtimeSboot, "unexec"},
   {"fun-sig-setter", &module_info_runtimeSboot, "fun-sig-setter"},
-  {"use", &module_info_runtimeSboot, "use"},
-  {"%vlen", &module_info_runtimeSboot, "%vlen"},
-  {"incongruent-method-error", &module_info_runtimeSboot, "incongruent-method-error"},
-  {"@<", &module_info_runtimeSboot, "@<"},
+  {"%cu", &module_info_runtimeSboot, "%cu"},
   {"<union>", &module_info_runtimeSboot, "<union>"},
-  {"tab-shrink-threshold", &module_info_gooScollectionsStable, "tab-shrink-threshold"},
-  {"%i<<", &module_info_runtimeSboot, "%i<<"},
+  {"floor/", &module_info_gooSmath, "floor/"},
+  {"fix-let-body", &module_info_compilerSast, "fix-let-body"},
+  {"function-signature", &module_info_compilerSast, "function-signature"},
   {"atan2", &module_info_gooSmath, "atan2"},
-  {"<tup>", &module_info_runtimeSboot, "<tup>"},
+  {"%build-runtime-modules", &module_info_runtimeSboot, "%build-runtime-modules"},
   {"now-setter", &module_info_gooScollectionsScollection, "now-setter"},
-  {"%close-out-port", &module_info_runtimeSboot, "%close-out-port"},
-  {"objectify-with-subtransaction", &module_info_compilerSast, "objectify-with-subtransaction"},
-  {"function-registers-setter", &module_info_compilerSast, "function-registers-setter"},
+  {"curry", &module_info_runtimeSruntime, "curry"},
   {"ins!", &module_info_gooScollectionsSsequence, "ins!"},
+  {"signature-specs", &module_info_compilerSast, "signature-specs"},
+  {"%f*", &module_info_runtimeSboot, "%f*"},
   {"nxt", &module_info_gooScollectionsScollection, "nxt"},
-  {"module-syntax-environment", &module_info_compilerSast, "module-syntax-environment"},
-  {"application-binding", &module_info_compilerSast, "application-binding"},
-  {"signature-value", &module_info_compilerSast, "signature-value"},
+  {"%facos", &module_info_runtimeSboot, "%facos"},
+  {"<fab-list>", &module_info_compilerSast, "<fab-list>"},
   {"popf", &module_info_gooSmacros, "popf"},
-  {"~=", &module_info_gooSmath, "~="},
-  {"%i*", &module_info_runtimeSboot, "%i*"},
-  {"$goo-runtime-module-name", &module_info_compilerSast, "$goo-runtime-module-name"},
-  {"format", &module_info_runtimeSruntime, "format"},
-  {"*print-base*", &module_info_gooScollectionsSstring, "*print-base*"},
-  {"ct-also", &module_info_runtimeSboot, "ct-also"},
-  {"%f/", &module_info_runtimeSboot, "%f/"},
-  {"head", &module_info_runtimeSboot, "head"},
-  {"var-name", &module_info_gooSmacros, "var-name"},
-  {"%fatan", &module_info_runtimeSboot, "%fatan"},
-  {"function-bindings", &module_info_compilerSast, "function-bindings"},
-  {"bind-exit-main-fun", &module_info_compilerSast, "bind-exit-main-fun"},
-  {"<application>", &module_info_compilerSast, "<application>"},
+  {"<constant>", &module_info_compilerSast, "<constant>"},
+  {"<free-environment>", &module_info_compilerSast, "<free-environment>"},
+  {"loc", &module_info_runtimeSboot, "loc"},
+  {"build-condition-for-handler-interactively", &module_info_runtimeSruntime, "build-condition-for-handler-interactively"},
+  {"@+", &module_info_runtimeSboot, "@+"},
+  {"def-programs", &module_info_compilerSast, "def-programs"},
   {"keyboard-interrupt", &module_info_runtimeSboot, "keyboard-interrupt"},
-  {"%eq?", &module_info_runtimeSboot, "%eq?"},
+  {"<unwind-protect>", &module_info_compilerSast, "<unwind-protect>"},
+  {"build-condition-interactively", &module_info_runtimeSruntime, "build-condition-interactively"},
+  {"loc-val", &module_info_runtimeSruntime, "loc-val"},
+  {"@len", &module_info_runtimeSboot, "@len"},
+  {"default-handler", &module_info_runtimeSruntime, "default-handler"},
+  {"alternative-condition", &module_info_compilerSast, "alternative-condition"},
+  {"id-hash", &module_info_gooScollectionsStable, "id-hash"},
+  {"function-source", &module_info_compilerSast, "function-source"},
+  {"head", &module_info_runtimeSboot, "head"},
+  {"binding-type", &module_info_compilerSast, "binding-type"},
+  {"elt-or", &module_info_gooScollectionsScollection, "elt-or"},
+  {"<alternative>", &module_info_compilerSast, "<alternative>"},
+  {"%flog", &module_info_runtimeSboot, "%flog"},
+  {"binding-index-setter", &module_info_compilerSast, "binding-index-setter"},
+  {"$goo-boot-module-name", &module_info_compilerSast, "$goo-boot-module-name"},
   {"when", &module_info_gooSmacros, "when"},
   {"<num>", &module_info_runtimeSboot, "<num>"},
-  {"%app-args", &module_info_runtimeSboot, "%app-args"},
   {"<vec>", &module_info_runtimeSboot, "<vec>"},
-  {"<set>", &module_info_gooScollectionsStable, "<set>"},
-  {"max", &module_info_gooSmagnitude, "max"},
-  {"power-of-two-ceiling", &module_info_gooSmath, "power-of-two-ceiling"},
+  {"locals-body-setter", &module_info_compilerSast, "locals-body-setter"},
+  {"function-registers", &module_info_compilerSast, "function-registers"},
   {"prop-getter", &module_info_runtimeSboot, "prop-getter"},
-  {"<local-binding>", &module_info_compilerSast, "<local-binding>"},
-  {"<bot>", &module_info_gooSmath, "<bot>"},
-  {"binding-index", &module_info_compilerSast, "binding-index"},
-  {"%ftanh", &module_info_runtimeSboot, "%ftanh"},
-  {"fab-handler", &module_info_runtimeSruntime, "fab-handler"},
-  {"*boot-macro-names*", &module_info_runtimeSboot, "*boot-macro-names*"},
-  {"<local-assignment>", &module_info_compilerSast, "<local-assignment>"},
-  {"%sp-reg", &module_info_runtimeSboot, "%sp-reg"},
+  {"<map>", &module_info_gooScollectionsSmap, "<map>"},
+  {"binding-locative", &module_info_compilerSast, "binding-locative"},
   {"monitor-info", &module_info_compilerSast, "monitor-info"},
+  {"<sequential>", &module_info_compilerSast, "<sequential>"},
   {"into", &module_info_gooScollectionsScollection, "into"},
-  {"env-object-name", &module_info_compilerSast, "env-object-name"},
+  {"%os-val", &module_info_runtimeSboot, "%os-val"},
   {"empty", &module_info_gooScollectionsScollection, "empty"},
-  {"<alternative>", &module_info_compilerSast, "<alternative>"},
-  {"<<", &module_info_gooSmath, "<<"},
-  {"binding-kind", &module_info_compilerSast, "binding-kind"},
-  {"app-args", &module_info_runtimeSruntime, "app-args"},
-  {"t?", &module_info_gooStypes, "t?"},
-  {"%selt-setter", &module_info_runtimeSboot, "%selt-setter"},
-  {"def-list", &module_info_compilerSast, "def-list"},
+  {"wrong-number-arguments-error", &module_info_runtimeSboot, "wrong-number-arguments-error"},
+  {"handler-info-arguments", &module_info_runtimeSboot, "handler-info-arguments"},
+  {"signature-bindings", &module_info_compilerSast, "signature-bindings"},
+  {"<zip>", &module_info_gooScollectionsSzip, "<zip>"},
+  {"module-exports", &module_info_compilerSast, "module-exports"},
   {"now-key", &module_info_gooScollectionsScollection, "now-key"},
   {"class-direct-props", &module_info_runtimeSboot, "class-direct-props"},
-  {"<zip>", &module_info_gooScollectionsSzip, "<zip>"},
-  {"%untag", &module_info_runtimeSboot, "%untag"},
+  {"ascii-limit", &module_info_gooScollectionsSstring, "ascii-limit"},
+  {"%file-exists?", &module_info_runtimeSboot, "%file-exists?"},
   {"<product>", &module_info_gooStypes, "<product>"},
   {"mif", &module_info_runtimeSboot, "mif"},
-  {"<ast-macro-definition>", &module_info_compilerSast, "<ast-macro-definition>"},
-  {"<sequential>", &module_info_compilerSast, "<sequential>"},
+  {"binding-kind", &module_info_compilerSast, "binding-kind"},
   {"export", &module_info_runtimeSboot, "export"},
-  {"environment-bindings", &module_info_compilerSast, "environment-bindings"},
   {"acos", &module_info_gooSmath, "acos"},
-  {"free-environment", &module_info_compilerSast, "free-environment"},
+  {"binding-dynamic-extent?", &module_info_compilerSast, "binding-dynamic-extent?"},
+  {"t<", &module_info_gooStypes, "t<"},
   {"<met>", &module_info_runtimeSboot, "<met>"},
-  {"<condition>", &module_info_runtimeSruntime, "<condition>"},
-  {"<module>", &module_info_compilerSast, "<module>"},
+  {"unwind-protect-cleanup-thunk", &module_info_compilerSast, "unwind-protect-cleanup-thunk"},
+  {"assignment-form", &module_info_compilerSast, "assignment-form"},
   {"zap", &module_info_gooScollectionsScollection, "zap"},
-  {"%fsinh", &module_info_runtimeSboot, "%fsinh"},
-  {"len-setter", &module_info_gooScollectionsSbuffer, "len-setter"},
-  {"%build-runtime-modules", &module_info_runtimeSboot, "%build-runtime-modules"},
-  {"t+", &module_info_gooStypes, "t+"},
-  {"num-to-str", &module_info_gooSmath, "num-to-str"},
+  {"<module-binding>", &module_info_compilerSast, "<module-binding>"},
+  {"%fatan2", &module_info_runtimeSboot, "%fatan2"},
   {"contagious-type", &module_info_gooSmath, "contagious-type"},
   {"min", &module_info_gooSmagnitude, "min"},
-  {"prop-init", &module_info_runtimeSboot, "prop-init"},
-  {"%os-val-setter", &module_info_runtimeSboot, "%os-val-setter"},
-  {"fun-nary?", &module_info_runtimeSboot, "fun-nary?"},
-  {"%os-name", &module_info_runtimeSboot, "%os-name"},
-  {"%fsin", &module_info_runtimeSboot, "%fsin"},
-  {"do-named-static-global-bindings", &module_info_compilerSast, "do-named-static-global-bindings"},
+  {"global-box-value-setter", &module_info_compilerSast, "global-box-value-setter"},
   {"%lu", &module_info_runtimeSboot, "%lu"},
-  {"@==", &module_info_runtimeSboot, "@=="},
+  {"prop-init", &module_info_runtimeSboot, "prop-init"},
+  {"%puts", &module_info_runtimeSboot, "%puts"},
+  {"<assocs>", &module_info_gooScollectionsSassoc, "<assocs>"},
+  {"module-loader-module-type", &module_info_compilerSast, "module-loader-module-type"},
+  {"binding-module-name", &module_info_compilerSast, "binding-module-name"},
+  {"fun-nary?", &module_info_runtimeSboot, "fun-nary?"},
+  {"<bot>", &module_info_gooSmath, "<bot>"},
+  {"%define-method", &module_info_runtimeSboot, "%define-method"},
+  {"<module-loader>", &module_info_compilerSast, "<module-loader>"},
+  {"<module>", &module_info_compilerSast, "<module>"},
+  {"%iu", &module_info_runtimeSboot, "%iu"},
+  {"unchecked-runtime-environment", &module_info_compilerSast, "unchecked-runtime-environment"},
+  {"pick", &module_info_gooScollectionsSsequence, "pick"},
   {"app", &module_info_gooSmacros, "app"},
-  {"invoke-handler-interactively", &module_info_runtimeSruntime, "invoke-handler-interactively"},
+  {"cat-sym", &module_info_gooSmacros, "cat-sym"},
+  {"application-known?-setter", &module_info_compilerSast, "application-known?-setter"},
   {"%fu", &module_info_runtimeSboot, "%fu"},
-  {"last", &module_info_gooScollectionsSsequence, "last"},
+  {"function-registers-setter", &module_info_compilerSast, "function-registers-setter"},
   {"<subclass>", &module_info_runtimeSboot, "<subclass>"},
   {"now", &module_info_gooScollectionsScollection, "now"},
-  {"<static-global-environment>", &module_info_compilerSast, "<static-global-environment>"},
-  {"%i!", &module_info_runtimeSboot, "%i!"},
-  {"function-free-setter", &module_info_compilerSast, "function-free-setter"},
-  {"program-register-setter", &module_info_compilerSast, "program-register-setter"},
+  {"program-type-setter", &module_info_compilerSast, "program-type-setter"},
+  {"*macros-ok?*", &module_info_runtimeSboot, "*macros-ok?*"},
+  {"<global-reference>", &module_info_compilerSast, "<global-reference>"},
+  {"describe-condition", &module_info_runtimeSruntime, "describe-condition"},
+  {"%f/", &module_info_runtimeSboot, "%f/"},
+  {"assignment-reference", &module_info_compilerSast, "assignment-reference"},
   {"while", &module_info_gooSmacros, "while"},
+  {"%fcos", &module_info_runtimeSboot, "%fcos"},
   {"class-descendents", &module_info_runtimeSboot, "class-descendents"},
-  {"<restart>", &module_info_runtimeSruntime, "<restart>"},
   {"t*", &module_info_gooStypes, "t*"},
-  {"%put", &module_info_runtimeSboot, "%put"},
-  {"tab-shrink-threshold-setter", &module_info_gooScollectionsStable, "tab-shrink-threshold-setter"},
-  {"%i-", &module_info_runtimeSboot, "%i-"},
+  {"asin", &module_info_gooSmath, "asin"},
+  {"last", &module_info_gooScollectionsSsequence, "last"},
+  {"finds", &module_info_gooScollectionsSsequence, "finds"},
+  {"%i<<<", &module_info_runtimeSboot, "%i<<<"},
+  {"<arguments>", &module_info_compilerSast, "<arguments>"},
+  {"tab-hash", &module_info_gooScollectionsStable, "tab-hash"},
   {"even?", &module_info_gooSmath, "even?"},
   {"gen-refs-setter", &module_info_runtimeSboot, "gen-refs-setter"},
   {"need-implementation", &module_info_gooSmacros, "need-implementation"},
+  {"dl", &module_info_runtimeSboot, "dl"},
   {"push", &module_info_gooScollectionsSlist, "push"},
-  {"function-registers", &module_info_compilerSast, "function-registers"},
   {"cat", &module_info_gooSmacros, "cat"},
-  {"ascii-limit", &module_info_gooScollectionsSstring, "ascii-limit"},
+  {"%fsqrt", &module_info_runtimeSboot, "%fsqrt"},
+  {"<local-assignment>", &module_info_compilerSast, "<local-assignment>"},
   {"fin", &module_info_runtimeSboot, "fin"},
-  {"match-empty-list", &module_info_gooSmacros, "match-empty-list"},
+  {"%file-mtime", &module_info_runtimeSboot, "%file-mtime"},
+  {"binding-value", &module_info_compilerSast, "binding-value"},
+  {"free-environment", &module_info_compilerSast, "free-environment"},
   {"odd?", &module_info_gooSmath, "odd?"},
+  {"default-handler-description", &module_info_runtimeSruntime, "default-handler-description"},
   {"dc", &module_info_runtimeSboot, "dc"},
-  {"%bb", &module_info_runtimeSboot, "%bb"},
-  {"%i<", &module_info_runtimeSboot, "%i<"},
+  {"empty?", &module_info_gooSmacros, "empty?"},
+  {"application-tail?", &module_info_compilerSast, "application-tail?"},
   {"atan", &module_info_gooSmath, "atan"},
-  {"%flog", &module_info_runtimeSboot, "%flog"},
-  {"binding-type-setter", &module_info_compilerSast, "binding-type-setter"},
+  {"module-name-to-relpath", &module_info_compilerSast, "module-name-to-relpath"},
+  {"%check-call-types", &module_info_runtimeSboot, "%check-call-types"},
   {"prop-value-setter", &module_info_runtimeSboot, "prop-value-setter"},
+  {"app-args", &module_info_runtimeSruntime, "app-args"},
   {"1-", &module_info_gooSmath, "1-"},
-  {"fin?", &module_info_gooScollectionsScollection, "fin?"},
+  {"%unlink-stack", &module_info_runtimeSboot, "%unlink-stack"},
   {"<chr>", &module_info_runtimeSboot, "<chr>"},
   {"<flat>", &module_info_runtimeSboot, "<flat>"},
-  {"quasiquote", &module_info_runtimeSboot, "quasiquote"},
-  {"%app-filename", &module_info_runtimeSboot, "%app-filename"},
+  {"function-data-refs-setter", &module_info_compilerSast, "function-data-refs-setter"},
   {"cos", &module_info_gooSmath, "cos"},
-  {"handler-info-arguments", &module_info_runtimeSboot, "handler-info-arguments"},
-  {"%current-in-port", &module_info_runtimeSboot, "%current-in-port"},
-  {"type-error", &module_info_runtimeSboot, "type-error"},
+  {"%file-type", &module_info_runtimeSboot, "%file-type"},
   {"*", &module_info_gooSmath, "*"},
   {"%fb", &module_info_runtimeSboot, "%fb"},
-  {"module-name", &module_info_compilerSast, "module-name"},
   {"subtype?", &module_info_runtimeSboot, "subtype?"},
   {"gen-refs", &module_info_runtimeSboot, "gen-refs"},
-  {"init-environment-for-eval", &module_info_compilerSast, "init-environment-for-eval"},
   {"not", &module_info_runtimeSboot, "not"},
-  {"sin", &module_info_gooSmath, "sin"},
-  {"signature-bindings", &module_info_compilerSast, "signature-bindings"},
-  {"%process-module", &module_info_runtimeSboot, "%process-module"},
-  {"%f-", &module_info_runtimeSboot, "%f-"},
-  {"signature-nary?", &module_info_compilerSast, "signature-nary?"},
-  {"decf", &module_info_gooSmacros, "decf"},
+  {"<computed-program>", &module_info_compilerSast, "<computed-program>"},
+  {"<replace-generic-restart>", &module_info_runtimeSboot, "<replace-generic-restart>"},
+  {"monitor-type", &module_info_compilerSast, "monitor-type"},
+  {"%gen-src", &module_info_runtimeSboot, "%gen-src"},
+  {"ct", &module_info_runtimeSboot, "ct"},
+  {"choose-handler", &module_info_runtimeSruntime, "choose-handler"},
+  {"%loc-val", &module_info_runtimeSboot, "%loc-val"},
+  {"%put", &module_info_runtimeSboot, "%put"},
   {"address-of", &module_info_gooSmath, "address-of"},
-  {"opf", &module_info_gooSmacros, "opf"},
-  {"<simple-condition>", &module_info_runtimeSruntime, "<simple-condition>"},
+  {"cycle", &module_info_gooScollectionsScycle, "cycle"},
+  {"spread", &module_info_runtimeSruntime, "spread"},
   {"pushf", &module_info_gooSmacros, "pushf"},
-  {"app-filename", &module_info_runtimeSruntime, "app-filename"},
-  {"%peek", &module_info_runtimeSboot, "%peek"},
-  {"monitor-main-thunk", &module_info_compilerSast, "monitor-main-thunk"},
+  {"locals-body", &module_info_compilerSast, "locals-body"},
+  {"handler-matches?", &module_info_runtimeSruntime, "handler-matches?"},
+  {"rcurry", &module_info_runtimeSruntime, "rcurry"},
   {"3rd", &module_info_gooScollectionsSsequence, "3rd"},
   {"pos", &module_info_gooScollectionsSsequence, "pos"},
-  {"function-source-setter", &module_info_compilerSast, "function-source-setter"},
+  {"application-known?", &module_info_compilerSast, "application-known?"},
+  {"signature-specs-setter", &module_info_compilerSast, "signature-specs-setter"},
   {"to-upper", &module_info_gooSmath, "to-upper"},
   {"fill", &module_info_gooScollectionsScollection, "fill"},
+  {"<ast-macro-definition>", &module_info_compilerSast, "<ast-macro-definition>"},
+  {"<cycle>", &module_info_gooScollectionsScycle, "<cycle>"},
   {"assqn", &module_info_gooScollectionsSlist, "assqn"},
   {"fab-sym", &module_info_runtimeSboot, "fab-sym"},
+  {"$min-int", &module_info_runtimeSboot, "$min-int"},
   {"elt", &module_info_gooSmacros, "elt"},
   {"~", &module_info_gooSmath, "~"},
   {"lst", &module_info_runtimeSboot, "lst"},
-  {"%gen-refs", &module_info_runtimeSboot, "%gen-refs"},
-  {"%%sym", &module_info_runtimeSboot, "%%sym"},
+  {"$default-handler-info", &module_info_runtimeSruntime, "$default-handler-info"},
+  {"find-binding", &module_info_compilerSast, "find-binding"},
+  {"condition-arguments", &module_info_runtimeSruntime, "condition-arguments"},
   {">=", &module_info_gooSmagnitude, ">="},
-  {"build-condition-interactively", &module_info_runtimeSruntime, "build-condition-interactively"},
-  {"mod", &module_info_gooSmath, "mod"},
+  {"match-sublist", &module_info_gooSmacros, "match-sublist"},
   {"sig-specs", &module_info_runtimeSboot, "sig-specs"},
+  {"load-module", &module_info_compilerSast, "load-module"},
+  {"%do-stack-frames", &module_info_runtimeSboot, "%do-stack-frames"},
   {"@lst", &module_info_runtimeSboot, "@lst"},
-  {"<bound?>", &module_info_compilerSast, "<bound?>"},
   {"to-digit", &module_info_gooSmath, "to-digit"},
-  {"binding-native-to?", &module_info_compilerSast, "binding-native-to?"},
   {"~==", &module_info_gooSmath, "~=="},
+  {"tab-test", &module_info_gooScollectionsStable, "tab-test"},
+  {"%allocate-stack", &module_info_runtimeSboot, "%allocate-stack"},
   {"map", &module_info_gooSmacros, "map"},
-  {"assocs-test-setter", &module_info_gooScollectionsSassoc, "assocs-test-setter"},
-  {"ascii-whitespaces", &module_info_gooScollectionsSstring, "ascii-whitespaces"},
-  {"sequentialize", &module_info_compilerSast, "sequentialize"},
-  {"assignment-form", &module_info_compilerSast, "assignment-form"},
-  {"<immediate-constant>", &module_info_compilerSast, "<immediate-constant>"},
-  {"%loc-val-setter", &module_info_runtimeSboot, "%loc-val-setter"},
-  {"nul", &module_info_runtimeSboot, "nul"},
-  {"error", &module_info_runtimeSboot, "error"},
+  {"format-to-string", &module_info_runtimeSruntime, "format-to-string"},
+  {"%sb", &module_info_runtimeSboot, "%sb"},
+  {"reference-called-function?-setter", &module_info_compilerSast, "reference-called-function?-setter"},
+  {"t+", &module_info_gooStypes, "t+"},
   {"<singleton>", &module_info_runtimeSboot, "<singleton>"},
-  {">>", &module_info_gooSmath, ">>"},
-  {"function-value", &module_info_compilerSast, "function-value"},
-  {"ast-define-binding", &module_info_compilerSast, "ast-define-binding"},
-  {"binding-inferred-type-setter", &module_info_compilerSast, "binding-inferred-type-setter"},
-  {"set-module-environments", &module_info_compilerSast, "set-module-environments"},
-  {"range", &module_info_gooScollectionsSrange, "range"},
-  {"%open-in-file", &module_info_runtimeSboot, "%open-in-file"},
-  {"sig", &module_info_runtimeSruntime, "sig"},
-  {"compose", &module_info_runtimeSruntime, "compose"},
+  {"error", &module_info_runtimeSboot, "error"},
+  {"function-self-recursive?-setter", &module_info_compilerSast, "function-self-recursive?-setter"},
+  {"<reference>", &module_info_compilerSast, "<reference>"},
+  {"%met-code", &module_info_runtimeSboot, "%met-code"},
+  {"fab-g2c-module", &module_info_compilerSast, "fab-g2c-module"},
+  {"%ftanh", &module_info_runtimeSboot, "%ftanh"},
+  {"module-name", &module_info_compilerSast, "module-name"},
+  {"signature-value", &module_info_compilerSast, "signature-value"},
   {"round/", &module_info_gooSmath, "round/"},
   {"<fun>", &module_info_runtimeSboot, "<fun>"},
   {"ins", &module_info_gooScollectionsSsequence, "ins"},
+  {"@<", &module_info_runtimeSboot, "@<"},
+  {"%fsinh", &module_info_runtimeSboot, "%fsinh"},
+  {"read", &module_info_runtimeSruntime, "read"},
   {"1+", &module_info_gooSmath, "1+"},
-  {"%flo-bits", &module_info_runtimeSboot, "%flo-bits"},
-  {"zip", &module_info_gooScollectionsSzip, "zip"},
-  {"locals-bindings-setter", &module_info_compilerSast, "locals-bindings-setter"},
-  {"%fi2f", &module_info_runtimeSboot, "%fi2f"},
-  {"function-source", &module_info_compilerSast, "function-source"},
+  {"environment-bindings", &module_info_compilerSast, "environment-bindings"},
   {"match", &module_info_gooSmacros, "match"},
-  {"bit?", &module_info_gooSmath, "bit?"},
-  {"<compile-time>", &module_info_compilerSast, "<compile-time>"},
+  {"<bind-exit>", &module_info_compilerSast, "<bind-exit>"},
   {"*boot-macro-expanders*", &module_info_runtimeSboot, "*boot-macro-expanders*"},
-  {"<step>", &module_info_gooScollectionsSstep, "<step>"},
-  {"%fpow", &module_info_runtimeSboot, "%fpow"},
+  {"bit?", &module_info_gooSmath, "bit?"},
+  {"function-nary?", &module_info_compilerSast, "function-nary?"},
   {"prop-bound?", &module_info_runtimeSboot, "prop-bound?"},
-  {"first-then", &module_info_gooScollectionsSstep, "first-then"},
-  {"%cu", &module_info_runtimeSboot, "%cu"},
+  {"map2", &module_info_gooScollectionsScollection, "map2"},
+  {"low-elt", &module_info_gooScollectionsScollection, "low-elt"},
+  {"program-register", &module_info_compilerSast, "program-register"},
+  {"binding-native-to?", &module_info_compilerSast, "binding-native-to?"},
   {"dg", &module_info_runtimeSboot, "dg"},
-  {"file-opening-error", &module_info_runtimeSboot, "file-opening-error"},
+  {"keys", &module_info_gooScollectionsScollection, "keys"},
   {"do-key-vals", &module_info_gooScollectionsSsequence, "do-key-vals"},
-  {"signature-arity-setter", &module_info_compilerSast, "signature-arity-setter"},
-  {"%%macro", &module_info_runtimeSboot, "%%macro"},
-  {"bound?-reference", &module_info_compilerSast, "bound?-reference"},
+  {"%gen-code-setter", &module_info_runtimeSboot, "%gen-code-setter"},
   {"sig-val", &module_info_runtimeSboot, "sig-val"},
-  {"cat-sym", &module_info_gooSmacros, "cat-sym"},
-  {"logn", &module_info_gooSmath, "logn"},
+  {"ast-define-binding", &module_info_compilerSast, "ast-define-binding"},
   {"<lst>", &module_info_runtimeSboot, "<lst>"},
+  {"alternative-consequent", &module_info_compilerSast, "alternative-consequent"},
   {"fab-class", &module_info_runtimeSboot, "fab-class"},
+  {"%fatan", &module_info_runtimeSboot, "%fatan"},
   {"<log>", &module_info_runtimeSboot, "<log>"},
   {"^", &module_info_gooSmath, "^"},
-  {"@oelt", &module_info_runtimeSboot, "@oelt"},
-  {"<simple-handler-info>", &module_info_runtimeSboot, "<simple-handler-info>"},
-  {"signature-names", &module_info_compilerSast, "signature-names"},
   {"zero?", &module_info_gooSmath, "zero?"},
-  {"locals-body-setter", &module_info_compilerSast, "locals-body-setter"},
+  {"<handler-info>", &module_info_runtimeSruntime, "<handler-info>"},
+  {"binding-global-box-setter", &module_info_compilerSast, "binding-global-box-setter"},
   {"fun-specs", &module_info_runtimeSboot, "fun-specs"},
   {"type-object", &module_info_runtimeSboot, "type-object"},
-  {"try", &module_info_runtimeSboot, "try"},
+  {"dss", &module_info_runtimeSboot, "dss"},
   {"fun-name-setter", &module_info_runtimeSboot, "fun-name-setter"},
+  {"%velt-setter", &module_info_runtimeSboot, "%velt-setter"},
   {"rev!", &module_info_gooSmacros, "rev!"},
-  {"binding-index-setter", &module_info_compilerSast, "binding-index-setter"},
-  {"<passive-program>", &module_info_compilerSast, "<passive-program>"},
   {"rev", &module_info_gooScollectionsSsequence, "rev"},
-  {"def-programs", &module_info_compilerSast, "def-programs"},
-  {"constant-value", &module_info_compilerSast, "constant-value"},
-  {"%ftan", &module_info_runtimeSboot, "%ftan"},
+  {"case-insensitive-string-equal", &module_info_gooScollectionsStable, "case-insensitive-string-equal"},
   {"1st", &module_info_gooScollectionsSsequence, "1st"},
   {"quote", &module_info_runtimeSboot, "quote"},
   {"enum", &module_info_gooScollectionsScollection, "enum"},
+  {"*gensym-counter*", &module_info_runtimeSruntime, "*gensym-counter*"},
   {"eof-object?", &module_info_gooSmath, "eof-object?"},
-  {"%file-exists?", &module_info_runtimeSboot, "%file-exists?"},
-  {"binding-dynamic-extent?", &module_info_compilerSast, "binding-dynamic-extent?"},
+  {"add-prop", &module_info_runtimeSboot, "add-prop"},
   {"upper?", &module_info_gooSmath, "upper?"},
-  {"locals-body", &module_info_compilerSast, "locals-body"},
   {"<=", &module_info_gooSmagnitude, "<="},
-  {"binding-dynamic-extent?-setter", &module_info_compilerSast, "binding-dynamic-extent?-setter"},
-  {"unknown-function-error", &module_info_runtimeSboot, "unknown-function-error"},
-  {"tab-test", &module_info_gooScollectionsStable, "tab-test"},
-  {"%velt", &module_info_runtimeSboot, "%velt"},
-  {"function-data-refs-setter", &module_info_compilerSast, "function-data-refs-setter"},
-  {"%vnul", &module_info_runtimeSboot, "%vnul"},
-  {"sym-name", &module_info_runtimeSboot, "sym-name"},
-  {"<handler-info>", &module_info_runtimeSruntime, "<handler-info>"},
-  {"%i>>", &module_info_runtimeSboot, "%i>>"},
-  {"find", &module_info_gooScollectionsScollection, "find"},
-  {"list-handlers", &module_info_runtimeSruntime, "list-handlers"},
-  {"application-function", &module_info_compilerSast, "application-function"},
-  {"dlet", &module_info_gooSmacros, "dlet"},
-  {"handler-matches?", &module_info_runtimeSruntime, "handler-matches?"},
-  {"%i+", &module_info_runtimeSboot, "%i+"},
-  {"%define-method", &module_info_runtimeSboot, "%define-method"},
-  {"fabs", &module_info_gooSmath, "fabs"},
-  {"fun-name", &module_info_runtimeSboot, "fun-name"},
-  {"<module-binding>", &module_info_compilerSast, "<module-binding>"},
-  {"dm", &module_info_runtimeSboot, "dm"},
-  {"str-to-num", &module_info_gooScollectionsSstring, "str-to-num"},
-  {"alternative-consequent", &module_info_compilerSast, "alternative-consequent"},
-  {"assert", &module_info_gooSmacros, "assert"},
-  {"ast-evaluate", &module_info_compilerSast, "ast-evaluate"},
-  {"object-class", &module_info_runtimeSboot, "object-class"},
-  {"prop-owner", &module_info_runtimeSboot, "prop-owner"},
-  {"<global-reference>", &module_info_compilerSast, "<global-reference>"},
-  {"range-by", &module_info_gooScollectionsSrange, "range-by"},
-  {"%fcos", &module_info_runtimeSboot, "%fcos"},
-  {"%gen-code-setter", &module_info_runtimeSboot, "%gen-code-setter"},
-  {"<runtime-reference>", &module_info_compilerSast, "<runtime-reference>"},
+  {"file-opening-error", &module_info_runtimeSboot, "file-opening-error"},
   {"function-data-refs", &module_info_compilerSast, "function-data-refs"},
+  {"<predefined-application>", &module_info_compilerSast, "<predefined-application>"},
+  {"function-debug-name-setter", &module_info_compilerSast, "function-debug-name-setter"},
+  {"$permanent-hash-state", &module_info_gooScollectionsStable, "$permanent-hash-state"},
+  {"range-by", &module_info_gooScollectionsSrange, "range-by"},
+  {"%i-", &module_info_runtimeSboot, "%i-"},
+  {"sym-name", &module_info_runtimeSboot, "sym-name"},
+  {"*boot-macro-names*", &module_info_runtimeSboot, "*boot-macro-names*"},
+  {"as-lst", &module_info_compilerSast, "as-lst"},
+  {"find", &module_info_gooScollectionsScollection, "find"},
+  {"nil", &module_info_runtimeSboot, "nil"},
+  {"binding-dotted?-setter", &module_info_compilerSast, "binding-dotted?-setter"},
+  {"gensym", &module_info_gooSmacros, "gensym"},
+  {"sin", &module_info_gooSmath, "sin"},
+  {"dlet", &module_info_gooSmacros, "dlet"},
+  {"~=", &module_info_gooSmath, "~="},
+  {"binding-type-setter", &module_info_compilerSast, "binding-type-setter"},
+  {"len-setter", &module_info_gooScollectionsSbuffer, "len-setter"},
+  {"fabs", &module_info_gooSmath, "fabs"},
+  {"%str", &module_info_runtimeSboot, "%str"},
+  {"<regular-application>", &module_info_compilerSast, "<regular-application>"},
+  {"fun-name", &module_info_runtimeSboot, "fun-name"},
+  {"application-arguments", &module_info_compilerSast, "application-arguments"},
+  {"dm", &module_info_runtimeSboot, "dm"},
+  {"handler-function", &module_info_runtimeSruntime, "handler-function"},
+  {"<ast-primitive>", &module_info_compilerSast, "<ast-primitive>"},
+  {"str-to-num", &module_info_gooScollectionsSstring, "str-to-num"},
+  {"log", &module_info_gooSmath, "log"},
+  {"assert", &module_info_gooSmacros, "assert"},
+  {"mod", &module_info_gooSmath, "mod"},
+  {"object-class", &module_info_runtimeSboot, "object-class"},
+  {"function-self-recursive?", &module_info_compilerSast, "function-self-recursive?"},
+  {"prop-owner", &module_info_runtimeSboot, "prop-owner"},
   {"<tab>", &module_info_gooScollectionsScollection, "<tab>"},
-  {"binding-global-box", &module_info_compilerSast, "binding-global-box"},
-  {"signature-specs", &module_info_compilerSast, "signature-specs"},
+  {"function-temporaries-setter", &module_info_compilerSast, "function-temporaries-setter"},
+  {"do-static-global-bindings", &module_info_compilerSast, "do-static-global-bindings"},
+  {"%i&", &module_info_runtimeSboot, "%i&"},
+  {"%im", &module_info_runtimeSboot, "%im"},
+  {"signature-arity", &module_info_compilerSast, "signature-arity"},
+  {"objectify-signature", &module_info_compilerSast, "objectify-signature"},
+  {"fix-let-bindings-setter", &module_info_compilerSast, "fix-let-bindings-setter"},
+  {"%raw-call", &module_info_runtimeSboot, "%raw-call"},
+  {"function-bindings", &module_info_compilerSast, "function-bindings"},
+  {"%f<", &module_info_runtimeSboot, "%f<"},
   {"rem", &module_info_gooSmath, "rem"},
   {"prop-value", &module_info_runtimeSboot, "prop-value"},
-  {"list", &module_info_gooScollectionsSlist, "list"},
+  {"binding-index", &module_info_compilerSast, "binding-index"},
   {"class-parents", &module_info_runtimeSboot, "class-parents"},
-  {"$permanent-hash-state", &module_info_gooScollectionsStable, "$permanent-hash-state"},
-  {"program-register", &module_info_compilerSast, "program-register"},
+  {"@oelt", &module_info_runtimeSboot, "@oelt"},
   {">", &module_info_gooSmagnitude, ">"},
-  {"@olen", &module_info_runtimeSboot, "@olen"},
-  {"$default-handler-info", &module_info_runtimeSruntime, "$default-handler-info"},
-  {"<unwind-protect>", &module_info_compilerSast, "<unwind-protect>"},
-  {"environment-uses-modules", &module_info_compilerSast, "environment-uses-modules"},
   {"vals-to-str", &module_info_gooScollectionsSsequence, "vals-to-str"},
+  {"%f=", &module_info_runtimeSboot, "%f="},
+  {"<global-box>", &module_info_compilerSast, "<global-box>"},
+  {"max", &module_info_gooSmagnitude, "max"},
   {"&", &module_info_gooSmath, "&"},
-  {"%fatan2", &module_info_runtimeSboot, "%fatan2"},
+  {"monitor-handler", &module_info_compilerSast, "monitor-handler"},
+  {"%open-out-file", &module_info_runtimeSboot, "%open-out-file"},
+  {"fix-let-body-setter", &module_info_compilerSast, "fix-let-body-setter"},
   {"all2?", &module_info_gooStypes, "all2?"},
-  {"module-name-to-relpath", &module_info_compilerSast, "module-name-to-relpath"},
+  {"environment-module", &module_info_compilerSast, "environment-module"},
   {"fab-map", &module_info_gooScollectionsSmap, "fab-map"},
-  {"cycle", &module_info_gooScollectionsScycle, "cycle"},
   {"case-by", &module_info_gooSmacros, "case-by"},
   {"|", &module_info_gooSmath, "|"},
   {"df", &module_info_runtimeSboot, "df"},
   {"key-test", &module_info_gooScollectionsScollection, "key-test"},
-  {"default-handler", &module_info_runtimeSruntime, "default-handler"},
+  {"reference-binding", &module_info_compilerSast, "reference-binding"},
   {"range-check?", &module_info_gooScollectionsSsequence, "range-check?"},
-  {"<fix-let>", &module_info_compilerSast, "<fix-let>"},
+  {"module-syntax-environment", &module_info_compilerSast, "module-syntax-environment"},
   {"pos?", &module_info_gooSmath, "pos?"},
-  {"environment-module", &module_info_compilerSast, "environment-module"},
-  {"function-self-recursive?-setter", &module_info_compilerSast, "function-self-recursive?-setter"},
-  {"match-sublist", &module_info_gooSmacros, "match-sublist"},
   {"digit?", &module_info_gooSmath, "digit?"},
+  {"del", &module_info_gooScollectionsScollection, "del"},
   {"<seq>", &module_info_runtimeSboot, "<seq>"},
-  {"%fcosh", &module_info_runtimeSboot, "%fcosh"},
-  {"prop-type", &module_info_runtimeSboot, "prop-type"},
   {"<any>", &module_info_runtimeSboot, "<any>"},
-  {"%do-stack-frames", &module_info_runtimeSboot, "%do-stack-frames"},
-  {"load-module", &module_info_compilerSast, "load-module"},
+  {"prop-type", &module_info_runtimeSboot, "prop-type"},
+  {"incongruent-method-error", &module_info_runtimeSboot, "incongruent-method-error"},
+  {"%fcosh", &module_info_runtimeSboot, "%fcosh"},
   {"tanh", &module_info_gooSmath, "tanh"},
-  {"%i=", &module_info_runtimeSboot, "%i="},
-  {"log", &module_info_gooSmath, "log"},
-  {"*gensym-counter*", &module_info_runtimeSruntime, "*gensym-counter*"},
-  {"function-self-recursive?", &module_info_compilerSast, "function-self-recursive?"},
-  {"%loc-off-setter", &module_info_runtimeSboot, "%loc-off-setter"},
-  {"%raw", &module_info_runtimeSboot, "%raw"},
+  {"<ast-method>", &module_info_compilerSast, "<ast-method>"},
+  {"signature-bindings-setter", &module_info_compilerSast, "signature-bindings-setter"},
+  {"%with-monitor", &module_info_runtimeSboot, "%with-monitor"},
+  {"binding-mutable?", &module_info_compilerSast, "binding-mutable?"},
+  {"fix-let-arguments-setter", &module_info_compilerSast, "fix-let-arguments-setter"},
+  {"<binding>", &module_info_compilerSast, "<binding>"},
   {"rep", &module_info_runtimeSboot, "rep"},
   {"napp", &module_info_gooSmacros, "napp"},
-  {"fix-let-arguments-setter", &module_info_compilerSast, "fix-let-arguments-setter"},
-  {"*restarts-ok?*", &module_info_runtimeSboot, "*restarts-ok?*"},
+  {"%get", &module_info_runtimeSboot, "%get"},
+  {">>", &module_info_gooSmath, ">>"},
+  {"reference-called-function?", &module_info_compilerSast, "reference-called-function?"},
   {"neg?", &module_info_gooSmath, "neg?"},
-  {"loc-val-setter", &module_info_runtimeSruntime, "loc-val-setter"},
-  {"objectify-signature", &module_info_compilerSast, "objectify-signature"},
-  {"@len", &module_info_runtimeSboot, "@len"},
-  {"<computed-program>", &module_info_compilerSast, "<computed-program>"},
+  {"power-of-two-ceiling", &module_info_gooSmath, "power-of-two-ceiling"},
   {"def-fun-var", &module_info_gooSmacros, "def-fun-var"},
+  {"<str-tab>", &module_info_gooScollectionsStable, "<str-tab>"},
   {"class-props", &module_info_runtimeSboot, "class-props"},
-  {"@+", &module_info_runtimeSboot, "@+"},
-  {"alternative-condition", &module_info_compilerSast, "alternative-condition"},
-  {"$max-int", &module_info_runtimeSboot, "$max-int"},
-  {"do-module-loader-modules", &module_info_compilerSast, "do-module-loader-modules"},
+  {"%loc-val-setter", &module_info_runtimeSboot, "%loc-val-setter"},
+  {"reference-frame-number", &module_info_compilerSast, "reference-frame-number"},
+  {"function-temporaries", &module_info_compilerSast, "function-temporaries"},
+  {"%c=", &module_info_runtimeSboot, "%c="},
   {"<", &module_info_gooSmagnitude, "<"},
-  {"%allocate-stack", &module_info_runtimeSboot, "%allocate-stack"},
   {"do3", &module_info_gooScollectionsScollection, "do3"},
-  {"binding-locative", &module_info_compilerSast, "binding-locative"},
-  {"program-type-setter", &module_info_compilerSast, "program-type-setter"},
+  {"init-environment-for-eval", &module_info_compilerSast, "init-environment-for-eval"},
+  {"signature-value-setter", &module_info_compilerSast, "signature-value-setter"},
   {"%prop-unbound-error", &module_info_runtimeSboot, "%prop-unbound-error"},
-  {"<assocs>", &module_info_gooScollectionsSassoc, "<assocs>"},
-  {"%unlink-stack", &module_info_runtimeSboot, "%unlink-stack"},
-  {"default-handler-description", &module_info_runtimeSruntime, "default-handler-description"},
+  {"condition-message", &module_info_runtimeSruntime, "condition-message"},
+  {"signature-arity-setter", &module_info_compilerSast, "signature-arity-setter"},
   {"vec", &module_info_runtimeSboot, "vec"},
-  {"%i&", &module_info_runtimeSboot, "%i&"},
-  {"dss", &module_info_runtimeSboot, "dss"},
-  {"describe-condition", &module_info_runtimeSruntime, "describe-condition"},
-  {"*boot-macro-module-names*", &module_info_runtimeSboot, "*boot-macro-module-names*"},
-  {"<real-reference>", &module_info_compilerSast, "<real-reference>"},
-  {"%i>>>", &module_info_runtimeSboot, "%i>>>"},
-  {"%facos", &module_info_runtimeSboot, "%facos"},
+  {"binding-inferred-type-setter", &module_info_compilerSast, "binding-inferred-type-setter"},
   {"del-dups", &module_info_gooScollectionsSsequence, "del-dups"},
-  {"$pi", &module_info_gooSmath, "$pi"},
   {"<sig>", &module_info_runtimeSboot, "<sig>"},
-  {"<buf>", &module_info_gooScollectionsSbuffer, "<buf>"},
-  {"binding-inferred-type", &module_info_compilerSast, "binding-inferred-type"},
-  {"as-lst", &module_info_compilerSast, "as-lst"},
+  {"fab-handler", &module_info_runtimeSruntime, "fab-handler"},
+  {"case-insensitive-string-hash", &module_info_gooScollectionsStable, "case-insensitive-string-hash"},
+  {"$goo-runtime-module-name", &module_info_compilerSast, "$goo-runtime-module-name"},
+  {"%i*", &module_info_runtimeSboot, "%i*"},
+  {"load-in", &module_info_compilerSast, "load-in"},
+  {"<real-reference>", &module_info_compilerSast, "<real-reference>"},
   {"as-copy", &module_info_gooScollectionsScollection, "as-copy"},
+  {"<condition>", &module_info_runtimeSruntime, "<condition>"},
   {"key-type", &module_info_gooScollectionsScollection, "key-type"},
   {"fun-names", &module_info_runtimeSboot, "fun-names"},
-  {"%create-directory", &module_info_runtimeSboot, "%create-directory"},
-  {"do-static-global-bindings", &module_info_compilerSast, "do-static-global-bindings"},
+  {"module-binding", &module_info_compilerSast, "module-binding"},
+  {"handler-info-message", &module_info_runtimeSboot, "handler-info-message"},
+  {"install-initial-bindings", &module_info_compilerSast, "install-initial-bindings"},
   {"find-setter", &module_info_runtimeSboot, "find-setter"},
+  {"<ast-generic>", &module_info_compilerSast, "<ast-generic>"},
+  {"<buf>", &module_info_gooScollectionsSbuffer, "<buf>"},
   {"ceiling/", &module_info_gooSmath, "ceiling/"},
   {"if", &module_info_runtimeSboot, "if"},
   {"find-or", &module_info_gooScollectionsScollection, "find-or"},
-  {"dl", &module_info_runtimeSboot, "dl"},
-  {"%f+", &module_info_runtimeSboot, "%f+"},
-  {"ct", &module_info_runtimeSboot, "ct"},
-  {"asin", &module_info_gooSmath, "asin"},
-  {"%ib", &module_info_runtimeSboot, "%ib"},
-  {"use/export", &module_info_runtimeSboot, "use/export"},
+  {"signature-nary?", &module_info_compilerSast, "signature-nary?"},
+  {"use", &module_info_runtimeSboot, "use"},
+  {"unwind-protect-protected-thunk", &module_info_compilerSast, "unwind-protect-protected-thunk"},
+  {"%fun-reg", &module_info_runtimeSboot, "%fun-reg"},
   {"sub-setter", &module_info_gooScollectionsSsequence, "sub-setter"},
   {"collected", &module_info_gooSmacros, "collected"},
-  {"binding-name", &module_info_compilerSast, "binding-name"},
-  {"$goo-boot-module-name", &module_info_compilerSast, "$goo-boot-module-name"},
-  {"fix-let-body", &module_info_compilerSast, "fix-let-body"},
-  {"%selt", &module_info_runtimeSboot, "%selt"},
-  {"<handler>", &module_info_runtimeSruntime, "<handler>"},
-  {"fix-let-arguments", &module_info_compilerSast, "fix-let-arguments"},
+  {"char->ascii", &module_info_gooSmath, "char->ascii"},
+  {"%open-in-file", &module_info_runtimeSboot, "%open-in-file"},
   {"=", &module_info_gooSmath, "="},
+  {"fix-let-bindings", &module_info_compilerSast, "fix-let-bindings"},
+  {"<local-binding>", &module_info_compilerSast, "<local-binding>"},
   {"@all2?", &module_info_runtimeSboot, "@all2?"},
-  {"condition-message", &module_info_runtimeSruntime, "condition-message"},
-  {"binding-value", &module_info_compilerSast, "binding-value"},
   {"range-check", &module_info_gooScollectionsSsequence, "range-check"},
-  {"<module-loader>", &module_info_compilerSast, "<module-loader>"},
-  {"low-elt-setter", &module_info_gooScollectionsScollection, "low-elt-setter"},
-  {"gensym", &module_info_gooSmacros, "gensym"},
+  {"fin?", &module_info_gooScollectionsScollection, "fin?"},
+  {"isa", &module_info_runtimeSboot, "isa"},
   {"lower?", &module_info_gooSmath, "lower?"},
   {"or", &module_info_gooSmacros, "or"},
-  {"locals-functions-setter", &module_info_compilerSast, "locals-functions-setter"},
-  {"<local-reference>", &module_info_compilerSast, "<local-reference>"},
-  {"%f<", &module_info_runtimeSboot, "%f<"},
+  {"macro-expand", &module_info_runtimeSboot, "macro-expand"},
+  {"fix-let-arguments", &module_info_compilerSast, "fix-let-arguments"},
+  {"%i^", &module_info_runtimeSboot, "%i^"},
   {"until", &module_info_gooSmacros, "until"},
-  {"%i?", &module_info_runtimeSboot, "%i?"},
-  {"nil", &module_info_runtimeSboot, "nil"},
-  {"<ast-function>", &module_info_compilerSast, "<ast-function>"},
-  {"<global-box>", &module_info_compilerSast, "<global-box>"},
+  {"%it/", &module_info_runtimeSboot, "%it/"},
+  {"application-binding", &module_info_compilerSast, "application-binding"},
+  {"report-undefined-global-bindings", &module_info_compilerSast, "report-undefined-global-bindings"},
+  {"do-named-static-global-bindings", &module_info_compilerSast, "do-named-static-global-bindings"},
+  {"$e", &module_info_gooSmath, "$e"},
+  {"assocs-test-setter", &module_info_gooScollectionsSassoc, "assocs-test-setter"},
+  {"esc", &module_info_runtimeSboot, "esc"},
   {"<col>", &module_info_runtimeSboot, "<col>"},
-  {"function-temporaries-setter", &module_info_compilerSast, "function-temporaries-setter"},
-  {"sig-names", &module_info_runtimeSboot, "sig-names"},
   {"<class>", &module_info_runtimeSboot, "<class>"},
-  {"function-signature", &module_info_compilerSast, "function-signature"},
-  {"map2", &module_info_gooScollectionsScollection, "map2"},
-  {"locals-functions", &module_info_compilerSast, "locals-functions"},
-  {"global-box-value-setter", &module_info_compilerSast, "global-box-value-setter"},
-  {"<cycle>", &module_info_gooScollectionsScycle, "<cycle>"},
-  {"%ft", &module_info_runtimeSboot, "%ft"},
+  {"sig-names", &module_info_runtimeSboot, "sig-names"},
+  {"%current-in-port", &module_info_runtimeSboot, "%current-in-port"},
   {"fab-gen", &module_info_runtimeSboot, "fab-gen"},
-  {"%c=", &module_info_runtimeSboot, "%c="},
-  {"alternative-alternant", &module_info_compilerSast, "alternative-alternant"},
+  {"function-signature-setter", &module_info_compilerSast, "function-signature-setter"},
+  {"binding-name", &module_info_compilerSast, "binding-name"},
+  {"match-atom", &module_info_gooSmacros, "match-atom"},
+  {"format", &module_info_runtimeSruntime, "format"},
   {"any?", &module_info_gooStypes, "any?"},
   {"%next-methods", &module_info_runtimeSboot, "%next-methods"},
-  {"neg", &module_info_gooSmath, "neg"},
-  {"probe-module", &module_info_compilerSast, "probe-module"},
-  {"signature-specs-setter", &module_info_compilerSast, "signature-specs-setter"},
-  {"module-target-environment", &module_info_compilerSast, "module-target-environment"},
+  {"opf", &module_info_gooSmacros, "opf"},
+  {"<program>", &module_info_compilerSast, "<program>"},
   {"elt-default", &module_info_gooScollectionsScollection, "elt-default"},
-  {"binding-info", &module_info_compilerSast, "binding-info"},
-  {"case-insensitive-string-hash", &module_info_gooScollectionsStable, "case-insensitive-string-hash"},
-  {"<binding>", &module_info_compilerSast, "<binding>"},
-  {"%get", &module_info_runtimeSboot, "%get"},
-  {"binding-global-box-setter", &module_info_compilerSast, "binding-global-box-setter"},
-  {"<reference>", &module_info_compilerSast, "<reference>"},
-  {"%eof-object", &module_info_runtimeSboot, "%eof-object"},
-  {"signature-names-setter", &module_info_compilerSast, "signature-names-setter"},
-  {"always", &module_info_runtimeSruntime, "always"},
-  {"handler-function", &module_info_runtimeSruntime, "handler-function"},
-  {"<global-assignment>", &module_info_compilerSast, "<global-assignment>"},
-  {"var-type", &module_info_gooSmacros, "var-type"},
+  {"%gen-refs", &module_info_runtimeSboot, "%gen-refs"},
+  {"<ast-function>", &module_info_compilerSast, "<ast-function>"},
+  {"%loc-off", &module_info_runtimeSboot, "%loc-off"},
+  {"fix-let-types", &module_info_compilerSast, "fix-let-types"},
+  {"function-value", &module_info_compilerSast, "function-value"},
   {"len/fill-setter", &module_info_gooScollectionsSbuffer, "len/fill-setter"},
-  {"to-lower", &module_info_gooSmath, "to-lower"},
-  {"module-loader-module-type", &module_info_compilerSast, "module-loader-module-type"},
   {"<definition>", &module_info_compilerSast, "<definition>"},
+  {"def", &module_info_runtimeSboot, "def"},
+  {"to-lower", &module_info_gooSmath, "to-lower"},
+  {"all?", &module_info_gooScollectionsScollection, "all?"},
   {"swapf", &module_info_gooSmacros, "swapf"},
-  {"monitor-handler", &module_info_compilerSast, "monitor-handler"},
-  {"%lb", &module_info_runtimeSboot, "%lb"},
+  {"objectify-with-subtransaction", &module_info_compilerSast, "objectify-with-subtransaction"},
+  {"<global-assignment>", &module_info_compilerSast, "<global-assignment>"},
   {"del-vals", &module_info_gooScollectionsSsequence, "del-vals"},
-  {"%i<<<", &module_info_runtimeSboot, "%i<<<"},
-  {"application-known?-setter", &module_info_compilerSast, "application-known?-setter"},
-  {"binding-info-setter", &module_info_compilerSast, "binding-info-setter"},
+  {"app-filename", &module_info_runtimeSruntime, "app-filename"},
+  {"env-object-name", &module_info_compilerSast, "env-object-name"},
+  {"%i>>>", &module_info_runtimeSboot, "%i>>>"},
   {"tail-setter", &module_info_runtimeSboot, "tail-setter"},
+  {"num-to-str", &module_info_gooSmath, "num-to-str"},
   {"+", &module_info_gooSmath, "+"},
+  {"%close-in-port", &module_info_runtimeSboot, "%close-in-port"},
   {"exported", &module_info_gooSmacros, "exported"},
-  {"function-nary?", &module_info_compilerSast, "function-nary?"},
+  {"probe-module", &module_info_compilerSast, "probe-module"},
+  {"function-body-setter", &module_info_compilerSast, "function-body-setter"},
   {"sqrt", &module_info_gooSmath, "sqrt"},
+  {"<<", &module_info_gooSmath, "<<"},
   {"sig-arity", &module_info_runtimeSboot, "sig-arity"},
   {"collecting", &module_info_gooSmacros, "collecting"},
-  {"keys", &module_info_gooScollectionsScollection, "keys"},
   {"fold+", &module_info_gooScollectionsScollection, "fold+"},
   {"seq", &module_info_runtimeSboot, "seq"},
-  {"signature-arity", &module_info_compilerSast, "signature-arity"},
-  {"function-temporaries", &module_info_compilerSast, "function-temporaries"},
-  {"curry", &module_info_runtimeSruntime, "curry"},
-  {"function-debug-name", &module_info_compilerSast, "function-debug-name"},
-  {"case-insensitive-string-equal", &module_info_gooScollectionsStable, "case-insensitive-string-equal"},
-  {"%loc-val", &module_info_runtimeSboot, "%loc-val"},
+  {"<enum>", &module_info_gooScollectionsScollection, "<enum>"},
+  {"%selt", &module_info_runtimeSboot, "%selt"},
   {"do2", &module_info_gooScollectionsScollection, "do2"},
-  {"<mag>", &module_info_runtimeSboot, "<mag>"},
+  {"%symbols", &module_info_runtimeSboot, "%symbols"},
   {"and", &module_info_gooSmacros, "and"},
+  {"function-body", &module_info_compilerSast, "function-body"},
   {"str", &module_info_gooScollectionsSstring, "str"},
-  {"runtime-environment", &module_info_compilerSast, "runtime-environment"},
-  {"program-type", &module_info_compilerSast, "program-type"},
-  {"%im", &module_info_runtimeSboot, "%im"},
-  {"esc", &module_info_runtimeSboot, "esc"},
-  {"function-debug-name-setter", &module_info_compilerSast, "function-debug-name-setter"},
+  {"<bound?>", &module_info_compilerSast, "<bound?>"},
+  {"monitor-main-thunk", &module_info_compilerSast, "monitor-main-thunk"},
+  {"low-elt-setter", &module_info_gooScollectionsScollection, "low-elt-setter"},
   {"type-elts-setter", &module_info_gooStypes, "type-elts-setter"},
-  {"%check-call-types", &module_info_runtimeSboot, "%check-call-types"},
-  {"<opts>", &module_info_runtimeSboot, "<opts>"},
+  {"<ast-signature>", &module_info_compilerSast, "<ast-signature>"},
+  {"%invoke-debugger", &module_info_runtimeSboot, "%invoke-debugger"},
+  {"ct-also", &module_info_runtimeSboot, "ct-also"},
+  {"$max-int", &module_info_runtimeSboot, "$max-int"},
   {"find-getter", &module_info_runtimeSboot, "find-getter"},
+  {"%close-out-port", &module_info_runtimeSboot, "%close-out-port"},
+  {"global-box-value", &module_info_compilerSast, "global-box-value"},
   {"isqrt", &module_info_gooSmath, "isqrt"},
   {"dup", &module_info_gooScollectionsScollection, "dup"},
   {"tail", &module_info_runtimeSboot, "tail"},
+  {"type-error", &module_info_runtimeSboot, "type-error"},
+  {"range", &module_info_gooScollectionsSrange, "range"},
   {"elt-type", &module_info_gooScollectionsScollection, "elt-type"},
-  {"%file-mtime", &module_info_runtimeSboot, "%file-mtime"},
-  {"%loc-off", &module_info_runtimeSboot, "%loc-off"},
-  {"function-free", &module_info_compilerSast, "function-free"},
-  {"wrong-number-arguments-error", &module_info_runtimeSboot, "wrong-number-arguments-error"},
-  {"<fab-list>", &module_info_compilerSast, "<fab-list>"},
+  {"function-debug-name", &module_info_compilerSast, "function-debug-name"},
+  {"<restart>", &module_info_runtimeSruntime, "<restart>"},
+  {"as-log", &module_info_gooSmath, "as-log"},
+  {"%velt", &module_info_runtimeSboot, "%velt"},
+  {"%os-name", &module_info_runtimeSboot, "%os-name"},
+  {"locals-bindings-setter", &module_info_compilerSast, "locals-bindings-setter"},
   {"below", &module_info_gooScollectionsSsequence, "below"},
-  {"match-atom", &module_info_gooSmacros, "match-atom"},
   {"2nd", &module_info_gooStypes, "2nd"},
-  {"<type>", &module_info_runtimeSboot, "<type>"},
   {"let", &module_info_runtimeSboot, "let"},
+  {"<type>", &module_info_runtimeSboot, "<type>"},
+  {"invoke-handler-interactively", &module_info_runtimeSruntime, "invoke-handler-interactively"},
   {"ord-app-mets", &module_info_runtimeSboot, "ord-app-mets"},
-  {"init-ast", &module_info_compilerSast, "init-ast"},
-  {"assignment-binding", &module_info_compilerSast, "assignment-binding"},
-  {"loc-val", &module_info_runtimeSruntime, "loc-val"},
+  {"program-register-setter", &module_info_compilerSast, "program-register-setter"},
+  {"t?", &module_info_gooStypes, "t?"},
+  {"function-index-setter", &module_info_compilerSast, "function-index-setter"},
   {"app-sup", &module_info_gooSmacros, "app-sup"},
-  {"%force-out", &module_info_runtimeSboot, "%force-out"},
   {"<loc>", &module_info_runtimeSboot, "<loc>"},
-  {"%ready?", &module_info_runtimeSboot, "%ready?"},
-  {"%close-in-port", &module_info_runtimeSboot, "%close-in-port"},
-  {"binding-module-name", &module_info_compilerSast, "binding-module-name"},
-  {"application-tail?", &module_info_compilerSast, "application-tail?"},
+  {"locals-bindings", &module_info_compilerSast, "locals-bindings"},
   {"pop-last!", &module_info_gooScollectionsSbuffer, "pop-last!"},
-  {"%it/", &module_info_runtimeSboot, "%it/"},
-  {"binding-dotted?", &module_info_compilerSast, "binding-dotted?"},
+  {"@==", &module_info_runtimeSboot, "@=="},
+  {"assignment-binding", &module_info_compilerSast, "assignment-binding"},
   {"fab", &module_info_gooScollectionsScollection, "fab"},
   {"type-elts", &module_info_runtimeSboot, "type-elts"},
-  {"module-binding", &module_info_compilerSast, "module-binding"},
+  {"<application>", &module_info_compilerSast, "<application>"},
+  {"tab-shrink-threshold-setter", &module_info_gooScollectionsStable, "tab-shrink-threshold-setter"},
   {"*report-prop-unbound-errors?*", &module_info_runtimeSboot, "*report-prop-unbound-errors?*"},
-  {"char->ascii", &module_info_gooSmath, "char->ascii"},
-  {"<ast-method>", &module_info_compilerSast, "<ast-method>"},
-  {"assocs-test", &module_info_gooScollectionsSassoc, "assocs-test"},
-  {"finds", &module_info_gooScollectionsSsequence, "finds"},
-  {"reference-frame-offset", &module_info_compilerSast, "reference-frame-offset"},
+  {"from", &module_info_gooScollectionsSrange, "from"},
+  {"*restarts-ok?*", &module_info_runtimeSboot, "*restarts-ok?*"},
+  {"tab-gc-state", &module_info_gooScollectionsStable, "tab-gc-state"},
+  {"<simple-condition>", &module_info_runtimeSruntime, "<simple-condition>"},
+  {"bind-exit-main-fun", &module_info_compilerSast, "bind-exit-main-fun"},
+  {"function-index", &module_info_compilerSast, "function-index"},
   {"round", &module_info_gooSmath, "round"},
-  {"reference-called-function?", &module_info_compilerSast, "reference-called-function?"},
-  {"%os-val", &module_info_runtimeSboot, "%os-val"},
-  {"<module-binding-reference>", &module_info_compilerSast, "<module-binding-reference>"},
-  {"monitor-type", &module_info_compilerSast, "monitor-type"},
+  {"%%macro", &module_info_runtimeSboot, "%%macro"},
+  {"<programs>", &module_info_compilerSast, "<programs>"},
+  {"<static-global-environment>", &module_info_compilerSast, "<static-global-environment>"},
+  {"<simple-error>", &module_info_runtimeSruntime, "<simple-error>"},
   {"pow", &module_info_gooSmath, "pow"},
-  {"<map>", &module_info_gooScollectionsSmap, "<map>"},
+  {"assocs-test", &module_info_gooScollectionsSassoc, "assocs-test"},
   {"reject", &module_info_gooScollectionsSsequence, "reject"},
-  {"%fsqrt", &module_info_runtimeSboot, "%fsqrt"},
-  {"<assignment>", &module_info_compilerSast, "<assignment>"},
+  {"%raw", &module_info_runtimeSboot, "%raw"},
+  {"binding-dotted?", &module_info_compilerSast, "binding-dotted?"},
+  {"match-unquote", &module_info_gooSmacros, "match-unquote"},
+  {"%selt-setter", &module_info_runtimeSboot, "%selt-setter"},
   {"class-name", &module_info_runtimeSboot, "class-name"},
   {"unless", &module_info_gooSmacros, "unless"},
+  {"%f+", &module_info_runtimeSboot, "%f+"},
+  {"%create-directory", &module_info_runtimeSboot, "%create-directory"},
+  {"%iv", &module_info_runtimeSboot, "%iv"},
+  {"%sp-reg", &module_info_runtimeSboot, "%sp-reg"},
+  {"may-isa?", &module_info_runtimeSboot, "may-isa?"},
+  {"cosh", &module_info_gooSmath, "cosh"},
+  {"%i!", &module_info_runtimeSboot, "%i!"},
+  {"<list>", &module_info_gooScollectionsSlist, "<list>"},
+  {"<str>", &module_info_runtimeSboot, "<str>"},
+  {"<assignment>", &module_info_compilerSast, "<assignment>"},
+  {"sup", &module_info_gooSmacros, "sup"},
+  {"floor", &module_info_gooSmath, "floor"},
+  {"<opts>", &module_info_runtimeSboot, "<opts>"},
+  {"%f-", &module_info_runtimeSboot, "%f-"},
+  {"incf", &module_info_gooSmacros, "incf"},
+  {"%fasin", &module_info_runtimeSboot, "%fasin"},
+  {"without-prop-unbound-errors", &module_info_gooSmacros, "without-prop-unbound-errors"},
+  {"tab-shrink-threshold", &module_info_gooScollectionsStable, "tab-shrink-threshold"},
+  {"eof-object", &module_info_gooSmath, "eof-object"},
+  {"gen-add-met", &module_info_runtimeSboot, "gen-add-met"},
+  {"<passive-program>", &module_info_compilerSast, "<passive-program>"},
+  {"binding-inferred-type", &module_info_compilerSast, "binding-inferred-type"},
+  {"ceil", &module_info_gooSmath, "ceil"},
+  {"ascii-whitespaces", &module_info_gooScollectionsSstring, "ascii-whitespaces"},
+  {"prop-setter", &module_info_runtimeSboot, "prop-setter"},
+  {"fun-val", &module_info_runtimeSboot, "fun-val"},
+  {"sig", &module_info_runtimeSruntime, "sig"},
+  {"tab-growth-threshold", &module_info_gooScollectionsStable, "tab-growth-threshold"},
+  {"binding-info-setter", &module_info_compilerSast, "binding-info-setter"},
+  {"map-keyed", &module_info_gooScollectionsScollection, "map-keyed"},
+  {"binding-info", &module_info_compilerSast, "binding-info"},
+  {"zip", &module_info_gooScollectionsSzip, "zip"},
+  {"sub", &module_info_gooScollectionsSsequence, "sub"},
+  {"%cb", &module_info_runtimeSboot, "%cb"},
+  {"%ft", &module_info_runtimeSboot, "%ft"},
+  {"%app-args", &module_info_runtimeSboot, "%app-args"},
+  {"items", &module_info_gooScollectionsScollection, "items"},
+  {"len", &module_info_gooStypes, "len"},
+  {"function-free-setter", &module_info_compilerSast, "function-free-setter"},
+  {"unknown-function-error", &module_info_runtimeSboot, "unknown-function-error"},
+  {"unzip", &module_info_gooScollectionsSzip, "unzip"},
+  {"renew", &module_info_gooSmacros, "renew"},
+  {"binding-dynamic-extent?-setter", &module_info_compilerSast, "binding-dynamic-extent?-setter"},
+  {"remove-modules-by-name!", &module_info_compilerSast, "remove-modules-by-name!"},
+  {"alternative-alternant", &module_info_compilerSast, "alternative-alternant"},
+  {"bound?", &module_info_runtimeSboot, "bound?"},
+  {"%lb", &module_info_runtimeSboot, "%lb"},
+  {"runtime-environment", &module_info_compilerSast, "runtime-environment"},
+  {"class-ancestors", &module_info_runtimeSboot, "class-ancestors"},
+  {"%sp-reg-setter", &module_info_runtimeSboot, "%sp-reg-setter"},
+  {"%eq?", &module_info_runtimeSboot, "%eq?"},
+  {"%i>>", &module_info_runtimeSboot, "%i>>"},
+  {"signature-nary?-setter", &module_info_compilerSast, "signature-nary?-setter"},
+  {"assignment-form-setter", &module_info_compilerSast, "assignment-form-setter"},
+  {"%slen", &module_info_runtimeSboot, "%slen"},
+  {"<local-reference>", &module_info_compilerSast, "<local-reference>"},
+  {"signature-names-setter", &module_info_compilerSast, "signature-names-setter"},
+  {"%ib", &module_info_runtimeSboot, "%ib"},
+  {"find-environment-module", &module_info_compilerSast, "find-environment-module"},
+  {"cond", &module_info_gooSmacros, "cond"},
+  {"constant-index", &module_info_compilerSast, "constant-index"},
+  {"binding-value-setter", &module_info_compilerSast, "binding-value-setter"},
+  {"%force-out", &module_info_runtimeSboot, "%force-out"},
+  {"application-function", &module_info_compilerSast, "application-function"},
+  {"tab-growth-factor-setter", &module_info_gooScollectionsStable, "tab-growth-factor-setter"},
+  {"tab-growth-factor", &module_info_gooScollectionsStable, "tab-growth-factor"},
+  {"first-then", &module_info_gooScollectionsSstep, "first-then"},
+  {"<simple-handler-info>", &module_info_runtimeSboot, "<simple-handler-info>"},
+  {"reference-frame-offset", &module_info_compilerSast, "reference-frame-offset"},
+  {"range-error", &module_info_gooScollectionsScollection, "range-error"},
+  {"%os-val-setter", &module_info_runtimeSboot, "%os-val-setter"},
+  {"<raw-constant>", &module_info_compilerSast, "<raw-constant>"},
+  {"<ast-primitive-definition>", &module_info_compilerSast, "<ast-primitive-definition>"},
+  {"fab-setter-name", &module_info_gooSmacros, "fab-setter-name"},
+  {"<handler>", &module_info_runtimeSruntime, "<handler>"},
+  {"init-ast", &module_info_compilerSast, "init-ast"},
+  {"%peek", &module_info_runtimeSboot, "%peek"},
+  {"<set>", &module_info_gooScollectionsStable, "<set>"},
+  {"<flo>", &module_info_runtimeSboot, "<flo>"},
+  {"<sym>", &module_info_runtimeSboot, "<sym>"},
+  {"for", &module_info_gooSmacros, "for"},
+  {"%current-out-port", &module_info_runtimeSboot, "%current-out-port"},
+  {"def-list", &module_info_compilerSast, "def-list"},
+  {"met-app?", &module_info_runtimeSboot, "met-app?"},
+  {"add!", &module_info_gooScollectionsScollection, "add!"},
+  {"new", &module_info_runtimeSboot, "new"},
+  {"identity", &module_info_runtimeSruntime, "identity"},
+  {"%fpow", &module_info_runtimeSboot, "%fpow"},
+  {"%gen-code", &module_info_runtimeSboot, "%gen-code"},
+  {"var-name", &module_info_gooSmacros, "var-name"},
+  {"%su", &module_info_runtimeSboot, "%su"},
+  {"%flo-bits", &module_info_runtimeSboot, "%flo-bits"},
+  {"object-parents", &module_info_runtimeSboot, "object-parents"},
+  {"fold", &module_info_gooScollectionsScollection, "fold"},
+  {"<serious-condition>", &module_info_runtimeSruntime, "<serious-condition>"},
+  {"monitor-test", &module_info_compilerSast, "monitor-test"},
+  {"fun-mets", &module_info_runtimeSboot, "fun-mets"},
+  {"@isa?", &module_info_runtimeSboot, "@isa?"},
+  {"tab-growth-threshold-setter", &module_info_gooScollectionsStable, "tab-growth-threshold-setter"},
+  {"%snul", &module_info_runtimeSboot, "%snul"},
+  {"bound?-reference", &module_info_compilerSast, "bound?-reference"},
+  {"compose", &module_info_runtimeSruntime, "compose"},
+  {"program-type", &module_info_compilerSast, "program-type"},
+  {"*print-base*", &module_info_gooScollectionsSstring, "*print-base*"},
+  {"%i<<", &module_info_runtimeSboot, "%i<<"},
+  {"gen-src-setter", &module_info_runtimeSboot, "gen-src-setter"},
+  {"==", &module_info_gooSmacros, "=="},
+  {"do-module-loader-modules", &module_info_compilerSast, "do-module-loader-modules"},
+  {"%process-module", &module_info_runtimeSboot, "%process-module"},
+  {"do", &module_info_gooSmacros, "do"},
+  {"%i=", &module_info_runtimeSboot, "%i="},
+  {"%ftan", &module_info_runtimeSboot, "%ftan"},
+  {"locals-functions-setter", &module_info_compilerSast, "locals-functions-setter"},
+  {"describe-handler", &module_info_runtimeSruntime, "describe-handler"},
+  {"nul", &module_info_runtimeSboot, "nul"},
+  {"trunc/", &module_info_gooSmath, "trunc/"},
+  {"elt-setter", &module_info_gooScollectionsScollection, "elt-setter"},
+  {"do-keyed", &module_info_gooScollectionsScollection, "do-keyed"},
+  {"constant-value", &module_info_compilerSast, "constant-value"},
+  {"t=", &module_info_gooStypes, "t="},
+  {"set-module-environments", &module_info_compilerSast, "set-module-environments"},
+  {"-", &module_info_gooSmath, "-"},
+  {"pair", &module_info_gooSmacros, "pair"},
+  {"function-free", &module_info_compilerSast, "function-free"},
+  {"<prop>", &module_info_runtimeSboot, "<prop>"},
+  {"sequentialize", &module_info_compilerSast, "sequentialize"},
+  {"locals-functions", &module_info_compilerSast, "locals-functions"},
+  {"<range>", &module_info_gooScollectionsSrange, "<range>"},
+  {"neg", &module_info_gooSmath, "neg"},
+  {"push-last!", &module_info_gooScollectionsSbuffer, "push-last!"},
+  {"elts", &module_info_gooScollectionsScollection, "elts"},
+  {"%untag", &module_info_runtimeSboot, "%untag"},
+  {"/", &module_info_gooSmath, "/"},
+  {"cat2", &module_info_gooScollectionsSsequence, "cat2"},
+  {"<step>", &module_info_gooScollectionsSstep, "<step>"},
+  {"<gen>", &module_info_runtimeSboot, "<gen>"},
+  {"quasiquote", &module_info_runtimeSboot, "quasiquote"},
+  {"sinh", &module_info_gooSmath, "sinh"},
+  {"<error>", &module_info_runtimeSruntime, "<error>"},
+  {"%fsin", &module_info_runtimeSboot, "%fsin"},
+  {"list", &module_info_gooScollectionsSlist, "list"},
+  {"gen-src", &module_info_runtimeSboot, "gen-src"},
+  {"contagious-call", &module_info_gooSmath, "contagious-call"},
+  {"compile-time-program", &module_info_compilerSast, "compile-time-program"},
+  {"%i?", &module_info_runtimeSboot, "%i?"},
+  {"object-props", &module_info_runtimeSboot, "object-props"},
+  {"isa?", &module_info_runtimeSboot, "isa?"},
+  {"%c<", &module_info_runtimeSboot, "%c<"},
+  {"<compile-time>", &module_info_compilerSast, "<compile-time>"},
+  {"@olen", &module_info_runtimeSboot, "@olen"},
+  {"<monitor>", &module_info_compilerSast, "<monitor>"},
+  {"logn", &module_info_gooSmath, "logn"},
+  {"num-to-str-base", &module_info_gooScollectionsSstring, "num-to-str-base"},
+  {"pop", &module_info_gooScollectionsSlist, "pop"},
+  {"trunc", &module_info_gooSmath, "trunc"},
+  {"case", &module_info_gooSmacros, "case"},
+  {"function-source-setter", &module_info_compilerSast, "function-source-setter"},
+  {"<module-binding-reference>", &module_info_compilerSast, "<module-binding-reference>"},
+  {"%vlen", &module_info_runtimeSboot, "%vlen"},
+  {"<runtime-reference>", &module_info_compilerSast, "<runtime-reference>"},
+  {"mem?", &module_info_gooScollectionsScollection, "mem?"},
+  {"fix-let-types-setter", &module_info_compilerSast, "fix-let-types-setter"},
+  {"dv", &module_info_runtimeSboot, "dv"},
+  {"$pi", &module_info_gooSmath, "$pi"},
+  {"use/export", &module_info_runtimeSboot, "use/export"},
+  {"list-handlers", &module_info_runtimeSruntime, "list-handlers"},
+  {"%vnul", &module_info_runtimeSboot, "%vnul"},
+  {"to-str", &module_info_gooSmath, "to-str"},
+  {"signature-names", &module_info_compilerSast, "signature-names"},
+  {"always", &module_info_runtimeSruntime, "always"},
+  {"<locals>", &module_info_compilerSast, "<locals>"},
   {NULL,NULL,NULL}
 };
 
 static BINDING_INFO binding_infos[] = {
-  {"program-quotations-setter", &YcompilerSast_linearizeYprogram_quotations_setter},
-  {"reference-offset-setter", &YcompilerSast_linearizeYreference_offset_setter},
-  {"form-definitions-setter", &YcompilerSast_linearizeYform_definitions_setter},
-  {"adjoin-definition!", &YcompilerSast_linearizeYadjoin_definitionX},
-  {"<flattened-program>", &YcompilerSast_linearizeYLflattened_programG},
-  {"ast-contains-fun?", &YcompilerSast_linearizeYast_contains_funQ},
-  {"analyze-call-references", &YcompilerSast_linearizeYanalyze_call_references},
-  {"form-quotations", &YcompilerSast_linearizeYform_quotations},
-  {"do-do-dynamic-extent!", &YcompilerSast_linearizeYdo_do_dynamic_extentX},
-  {"*renaming-bindings-counter*", &YcompilerSast_linearizeYTrenaming_bindings_counterT},
-  {"assoc-value-setter", &YcompilerSast_linearizeYassoc_value_setter},
-  {"adjoin-temporary-variables!", &YcompilerSast_linearizeYadjoin_temporary_variablesX},
-  {"<closure-creation>", &YcompilerSast_linearizeYLclosure_creationG},
-  {"assoc-key-setter", &YcompilerSast_linearizeYassoc_key_setter},
-  {"assoc", &YcompilerSast_linearizeYassoc},
-  {"<top-level-form>", &YcompilerSast_linearizeYLtop_level_formG},
-  {"program-form", &YcompilerSast_linearizeYprogram_form},
-  {"do-call-references!", &YcompilerSast_linearizeYdo_call_referencesX},
-  {"closure-creation-free-setter", &YcompilerSast_linearizeYclosure_creation_free_setter},
-  {"assoc-value", &YcompilerSast_linearizeYassoc_value},
-  {"form-program-setter", &YcompilerSast_linearizeYform_program_setter},
-  {"program-definitions-setter", &YcompilerSast_linearizeYprogram_definitions_setter},
-  {"adjoin-free-binding!", &YcompilerSast_linearizeYadjoin_free_bindingX},
   {"analyze-calls", &YcompilerSast_linearizeYanalyze_calls},
-  {"collect-temporaries!", &YcompilerSast_linearizeYcollect_temporariesX},
-  {"<box-read>", &YcompilerSast_linearizeYLbox_readG},
-  {"closure-creation-index", &YcompilerSast_linearizeYclosure_creation_index},
-  {"closure-creation-index-setter", &YcompilerSast_linearizeYclosure_creation_index_setter},
-  {"program-quotations", &YcompilerSast_linearizeYprogram_quotations},
-  {"---main-1---", NULL},
-  {"analyze-dynamic-extent", &YcompilerSast_linearizeYanalyze_dynamic_extent},
-  {"reference-self?", &YcompilerSast_linearizeYreference_selfQ},
-  {"form-definitions", &YcompilerSast_linearizeYform_definitions},
-  {"<renamed-local-binding>", &YcompilerSast_linearizeYLrenamed_local_bindingG},
-  {"<free-reference>", &YcompilerSast_linearizeYLfree_referenceG},
-  {"register-allocate!", &YcompilerSast_linearizeYregister_allocateX},
-  {"lift!", &YcompilerSast_linearizeYliftX},
-  {"closurize-main!", &YcompilerSast_linearizeYclosurize_mainX},
-  {"<box-creation>", &YcompilerSast_linearizeYLbox_creationG},
-  {"form-quotations-setter", &YcompilerSast_linearizeYform_quotations_setter},
-  {"do-do-call-references!", &YcompilerSast_linearizeYdo_do_call_referencesX},
-  {"new-renamed-binding", &YcompilerSast_linearizeYnew_renamed_binding},
-  {"as-top-level-forms", &YcompilerSast_linearizeYas_top_level_forms},
-  {"update-walk!", &YcompilerSast_linearizeYupdate_walkX},
-  {"collect-registers!", &YcompilerSast_linearizeYcollect_registersX},
-  {"extract-things!", &YcompilerSast_linearizeYextract_thingsX},
-  {"---main-2---", NULL},
-  {"assoc-key", &YcompilerSast_linearizeYassoc_key},
-  {"flatten-seqs", &YcompilerSast_linearizeYflatten_seqs},
-  {"reference-self?-setter", &YcompilerSast_linearizeYreference_selfQ_setter},
-  {"box-form-setter", &YcompilerSast_linearizeYbox_form_setter},
   {"gather-temporaries!", &YcompilerSast_linearizeYgather_temporariesX},
-  {"insert-box!", &YcompilerSast_linearizeYinsert_boxX},
-  {"box-reference", &YcompilerSast_linearizeYbox_reference},
-  {"---main-0---", NULL},
-  {"box-reference-setter", &YcompilerSast_linearizeYbox_reference_setter},
-  {"program-form-setter", &YcompilerSast_linearizeYprogram_form_setter},
-  {"<assoc>", &YcompilerSast_linearizeYLassocG},
-  {"<box-write>", &YcompilerSast_linearizeYLbox_writeG},
-  {"closure-creation-free", &YcompilerSast_linearizeYclosure_creation_free},
-  {"do-call-upgrades!", &YcompilerSast_linearizeYdo_call_upgradesX},
-  {"form-program", &YcompilerSast_linearizeYform_program},
-  {"assocq", &YcompilerSast_linearizeYassocq},
-  {"lift-procedures!", &YcompilerSast_linearizeYlift_proceduresX},
-  {"*register-passive?*", &YcompilerSast_linearizeYTregister_passiveQT},
-  {"do-do-call-upgrades!", &YcompilerSast_linearizeYdo_do_call_upgradesX},
-  {"boxify-mutable-bindings", &YcompilerSast_linearizeYboxify_mutable_bindings},
-  {"program-definitions", &YcompilerSast_linearizeYprogram_definitions},
-  {"ast-walk", &YcompilerSast_linearizeYast_walk},
-  {"box-form", &YcompilerSast_linearizeYbox_form},
-  {"extract!", &YcompilerSast_linearizeYextractX},
-  {"reference-offset", &YcompilerSast_linearizeYreference_offset},
-  {"split-program", &YcompilerSast_linearizeYsplit_program},
-  {"allocate-register", &YcompilerSast_linearizeYallocate_register},
-  {"do-dynamic-extent!", &YcompilerSast_linearizeYdo_dynamic_extentX},
+  {"assoc-key-setter", &YcompilerSast_linearizeYassoc_key_setter},
+  {"flatten-seqs", &YcompilerSast_linearizeYflatten_seqs},
+  {"reference-offset-setter", &YcompilerSast_linearizeYreference_offset_setter},
   {"unconstrained-type?", &YcompilerSast_linearizeYunconstrained_typeQ},
+  {"reference-self?", &YcompilerSast_linearizeYreference_selfQ},
+  {"program-form", &YcompilerSast_linearizeYprogram_form},
+  {"closurize-main!", &YcompilerSast_linearizeYclosurize_mainX},
+  {"lift!", &YcompilerSast_linearizeYliftX},
+  {"extract!", &YcompilerSast_linearizeYextractX},
+  {"do-dynamic-extent!", &YcompilerSast_linearizeYdo_dynamic_extentX},
+  {"lift-procedures!", &YcompilerSast_linearizeYlift_proceduresX},
+  {"register-allocate!", &YcompilerSast_linearizeYregister_allocateX},
+  {"---main-0---", NULL},
+  {"---main-1---", NULL},
+  {"<free-reference>", &YcompilerSast_linearizeYLfree_referenceG},
+  {"assoc-key", &YcompilerSast_linearizeYassoc_key},
+  {"program-quotations", &YcompilerSast_linearizeYprogram_quotations},
+  {"box-form", &YcompilerSast_linearizeYbox_form},
+  {"box-reference-setter", &YcompilerSast_linearizeYbox_reference_setter},
+  {"box-reference", &YcompilerSast_linearizeYbox_reference},
+  {"boxify-mutable-bindings", &YcompilerSast_linearizeYboxify_mutable_bindings},
+  {"<closure-creation>", &YcompilerSast_linearizeYLclosure_creationG},
+  {"extract-things!", &YcompilerSast_linearizeYextract_thingsX},
+  {"form-quotations", &YcompilerSast_linearizeYform_quotations},
+  {"collect-temporaries!", &YcompilerSast_linearizeYcollect_temporariesX},
+  {"do-do-dynamic-extent!", &YcompilerSast_linearizeYdo_do_dynamic_extentX},
+  {"<box-read>", &YcompilerSast_linearizeYLbox_readG},
+  {"assoc", &YcompilerSast_linearizeYassoc},
+  {"analyze-dynamic-extent", &YcompilerSast_linearizeYanalyze_dynamic_extent},
+  {"closure-creation-free-setter", &YcompilerSast_linearizeYclosure_creation_free_setter},
+  {"<flattened-program>", &YcompilerSast_linearizeYLflattened_programG},
+  {"adjoin-definition!", &YcompilerSast_linearizeYadjoin_definitionX},
+  {"form-program", &YcompilerSast_linearizeYform_program},
+  {"do-call-references!", &YcompilerSast_linearizeYdo_call_referencesX},
+  {"closure-creation-free", &YcompilerSast_linearizeYclosure_creation_free},
+  {"*renaming-bindings-counter*", &YcompilerSast_linearizeYTrenaming_bindings_counterT},
+  {"form-definitions", &YcompilerSast_linearizeYform_definitions},
+  {"collect-registers!", &YcompilerSast_linearizeYcollect_registersX},
+  {"form-program-setter", &YcompilerSast_linearizeYform_program_setter},
+  {"assoc-value", &YcompilerSast_linearizeYassoc_value},
+  {"<renamed-local-binding>", &YcompilerSast_linearizeYLrenamed_local_bindingG},
+  {"do-call-upgrades!", &YcompilerSast_linearizeYdo_call_upgradesX},
+  {"adjoin-free-binding!", &YcompilerSast_linearizeYadjoin_free_bindingX},
+  {"as-top-level-forms", &YcompilerSast_linearizeYas_top_level_forms},
+  {"---main-2---", NULL},
+  {"<box-creation>", &YcompilerSast_linearizeYLbox_creationG},
+  {"*register-passive?*", &YcompilerSast_linearizeYTregister_passiveQT},
+  {"assocq", &YcompilerSast_linearizeYassocq},
+  {"program-definitions-setter", &YcompilerSast_linearizeYprogram_definitions_setter},
+  {"box-form-setter", &YcompilerSast_linearizeYbox_form_setter},
+  {"ast-walk", &YcompilerSast_linearizeYast_walk},
+  {"form-definitions-setter", &YcompilerSast_linearizeYform_definitions_setter},
+  {"update-walk!", &YcompilerSast_linearizeYupdate_walkX},
+  {"<box-write>", &YcompilerSast_linearizeYLbox_writeG},
+  {"new-renamed-binding", &YcompilerSast_linearizeYnew_renamed_binding},
+  {"do-do-call-references!", &YcompilerSast_linearizeYdo_do_call_referencesX},
+  {"<assoc>", &YcompilerSast_linearizeYLassocG},
+  {"<top-level-form>", &YcompilerSast_linearizeYLtop_level_formG},
+  {"closure-creation-index-setter", &YcompilerSast_linearizeYclosure_creation_index_setter},
+  {"form-quotations-setter", &YcompilerSast_linearizeYform_quotations_setter},
+  {"adjoin-temporary-variables!", &YcompilerSast_linearizeYadjoin_temporary_variablesX},
+  {"closure-creation-index", &YcompilerSast_linearizeYclosure_creation_index},
+  {"ast-contains-fun?", &YcompilerSast_linearizeYast_contains_funQ},
+  {"insert-box!", &YcompilerSast_linearizeYinsert_boxX},
+  {"reference-offset", &YcompilerSast_linearizeYreference_offset},
+  {"analyze-call-references", &YcompilerSast_linearizeYanalyze_call_references},
+  {"program-definitions", &YcompilerSast_linearizeYprogram_definitions},
+  {"assoc-value-setter", &YcompilerSast_linearizeYassoc_value_setter},
+  {"program-quotations-setter", &YcompilerSast_linearizeYprogram_quotations_setter},
+  {"allocate-register", &YcompilerSast_linearizeYallocate_register},
+  {"reference-self?-setter", &YcompilerSast_linearizeYreference_selfQ_setter},
+  {"split-program", &YcompilerSast_linearizeYsplit_program},
+  {"do-do-call-upgrades!", &YcompilerSast_linearizeYdo_do_call_upgradesX},
+  {"program-form-setter", &YcompilerSast_linearizeYprogram_form_setter},
   {NULL, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"ast-contains-fun?", "ast-contains-fun?"},
-  {"form-quotations", "form-quotations"},
-  {"<closure-creation>", "<closure-creation>"},
-  {"<top-level-form>", "<top-level-form>"},
-  {"program-form", "program-form"},
   {"analyze-calls", "analyze-calls"},
-  {"collect-temporaries!", "collect-temporaries!"},
-  {"analyze-dynamic-extent", "analyze-dynamic-extent"},
-  {"<box-read>", "<box-read>"},
-  {"program-quotations", "program-quotations"},
-  {"closure-creation-index", "closure-creation-index"},
-  {"reference-self?", "reference-self?"},
-  {"form-definitions", "form-definitions"},
-  {"<renamed-local-binding>", "<renamed-local-binding>"},
-  {"<free-reference>", "<free-reference>"},
-  {"register-allocate!", "register-allocate!"},
-  {"lift!", "lift!"},
-  {"<box-creation>", "<box-creation>"},
-  {"reference-offset", "reference-offset"},
-  {"update-walk!", "update-walk!"},
-  {"collect-registers!", "collect-registers!"},
-  {"insert-box!", "insert-box!"},
-  {"extract-things!", "extract-things!"},
-  {"flatten-seqs", "flatten-seqs"},
-  {"closurize-main!", "closurize-main!"},
+  {"program-form", "program-form"},
   {"gather-temporaries!", "gather-temporaries!"},
+  {"flatten-seqs", "flatten-seqs"},
+  {"reference-self?", "reference-self?"},
+  {"closurize-main!", "closurize-main!"},
+  {"lift!", "lift!"},
+  {"ast-contains-fun?", "ast-contains-fun?"},
+  {"<free-reference>", "<free-reference>"},
+  {"program-quotations", "program-quotations"},
+  {"box-form", "box-form"},
   {"box-reference", "box-reference"},
+  {"extract-things!", "extract-things!"},
+  {"form-quotations", "form-quotations"},
+  {"register-allocate!", "register-allocate!"},
   {"form-program", "form-program"},
   {"closure-creation-free", "closure-creation-free"},
-  {"<box-write>", "<box-write>"},
-  {"*register-passive?*", "*register-passive?*"},
-  {"program-definitions", "program-definitions"},
-  {"box-form", "box-form"},
   {"unconstrained-type?", "unconstrained-type?"},
+  {"form-definitions", "form-definitions"},
+  {"collect-registers!", "collect-registers!"},
+  {"analyze-dynamic-extent", "analyze-dynamic-extent"},
+  {"<renamed-local-binding>", "<renamed-local-binding>"},
+  {"<box-read>", "<box-read>"},
+  {"*register-passive?*", "*register-passive?*"},
+  {"<top-level-form>", "<top-level-form>"},
+  {"collect-temporaries!", "collect-temporaries!"},
+  {"<box-write>", "<box-write>"},
+  {"<box-creation>", "<box-creation>"},
+  {"closure-creation-index", "closure-creation-index"},
+  {"insert-box!", "insert-box!"},
+  {"reference-offset", "reference-offset"},
+  {"program-definitions", "program-definitions"},
+  {"<closure-creation>", "<closure-creation>"},
+  {"update-walk!", "update-walk!"},
   {NULL, NULL}
 };
 

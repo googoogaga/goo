@@ -4,46 +4,46 @@ C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 	$(CC) -I.. -c -g -O -o $@ $<
 
 OBJS = \
-	goo/system.o \
-	goo/io/read.o \
-	goo/collections/strings.o \
-	goo/collections.o \
-	goo/collections/zip.o \
-	goo/io/write.o \
-	compiler/top.o \
-	goo/collections/flat.o \
-	goo/collections/buffer.o \
-	goo/collections/map.o \
-	compiler/ast-linearize.o \
-	goo/math.o \
 	compiler/ast-eval.o \
-	goo/accumulator.o \
-	goo.o \
-	goo/collections/sequence.o \
-	compiler/syntax.o \
-	goo/collections/string.o \
-	goo/macros.o \
-	goo/collections/assoc.o \
-	goo/collections/vector.o \
-	goo/collections/range.o \
-	goo/types.o \
-	runtime/boot.o \
-	goo/collections/cycle.o \
-	goo/collections/table.o \
+	goo/math.o \
 	runtime/runtime.o \
-	runtime/apply.o \
-	goo/collections/opts.o \
-	compiler/main.o \
-	goo/collections/step.o \
+	goo/collections/buffer.o \
+	goo/collections/vector.o \
+	goo/collections/table.o \
+	goo/macros.o \
+	compiler/dependency.o \
+	goo/collections/map.o \
+	goo/collections/flat.o \
 	goo/collections/list.o \
 	goo/eval.o \
-	compiler/g2c.o \
-	compiler/dependency.o \
-	goo/magnitude.o \
-	compiler/ast.o \
-	goo/io/port.o \
-	goo/collections/collection.o \
+	goo/collections/step.o \
 	goo/user.o \
+	goo/magnitude.o \
+	compiler/main.o \
+	runtime/boot.o \
+	goo/collections/zip.o \
+	goo/io/write.o \
+	compiler/ast-linearize.o \
+	compiler/top.o \
+	compiler/syntax.o \
+	compiler/ast.o \
+	goo/collections.o \
+	goo/types.o \
+	goo/collections/cycle.o \
+	goo/collections/collection.o \
+	goo/collections/string.o \
+	goo/io/read.o \
+	goo/accumulator.o \
+	goo/collections/sequence.o \
+	runtime/apply.o \
+	goo.o \
+	goo/collections/optionals.o \
+	goo/io/port.o \
+	compiler/g2c.o \
+	goo/collections/range.o \
+	goo/system.o \
+	goo/collections/assoc.o \
+	goo/collections/strings.o \
 	g2c-init.o
 
 g2c: $(C_OBJS_DD) $(OBJS)
