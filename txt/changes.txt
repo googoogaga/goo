@@ -308,3 +308,5 @@ adds:
   <list> and list
  
   rewrote list to be subclassable
+
+  rewrote all list-like ast classes as list subclasses
