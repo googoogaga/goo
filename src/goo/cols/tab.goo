@@ -499,6 +499,16 @@
 (dm id-hash (x|<flo>)
   (+ (flo-bits x) 89))
 
+(dm id-hash (x|<tup>)
+  (rep loop ((t-enum (enum x)) (cur-hash 0))
+    (when (not (fin? t-enum))
+      (def cur-elem (now t-enum))
+      (loop (nxt t-enum) (+ (* cur-hash 31) (id-hash cur-elem)))
+      )
+    cur-hash
+    )
+  )
+
 (dm key-type (x|<str-tab> => <type>) <str>)
 (dm elt-type (x|<str-tab> => <type>) <sym>)
 
