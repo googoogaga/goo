@@ -134,10 +134,17 @@
 (dm p2c-exp (exp env)
   (p2c-ast (objectify-with-subtransaction exp env #f) env))
 
-(dp %compile-load)
+(dp %compile)
+(dp %load)
 
 (dm compile-load (name)
-  (%compile-load (%su name)))
+  (%compile (%su name))
+  (%load (%su name))
+)
+
+(dm so-load (name)
+  (%load (%su name))
+)  
 
 (dm p2c-eval (exp env)
   (let ((name (p2c-exp exp env)))
@@ -386,7 +393,7 @@
 
 (df mangle-name-into ((buf <buf>) (name <str>))
   (for ((c name))
-    (add! buf (elt $name-mangler-table (as <int> c)))))
+    (add! buf (elt $name-mangler-table (as <int> (as-lowercase c))))))
 
 (dm mangle-raw-name ((name <str>) => <str>)
   (mangler-reset *mangle-buffer*)
