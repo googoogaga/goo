@@ -337,7 +337,7 @@ EXTTVAR(goo_thread);
 #define CREG(x)      (REGSCREF()->x)
 #define REGSET(x, v) (regs->x = (v))
 
-#define MAX_STACK_SIZE 30000
+#define MAX_STACK_SIZE 50000
 
 #define YPfun_reg()            (Pfun)
 #define YPnext_methods_reg()   (Pnext_methods)
