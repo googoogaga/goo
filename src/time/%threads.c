@@ -1,3 +1,5 @@
+//// Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 #include <pthread.h>
 #include <signal.h>
 #include "grt.h"

@@ -63,8 +63,12 @@
     (dlet ((*definitions* (program-definitions prg))) 
       (generate-c-module out-port ast prg mod)))
   (do (fun (name)  ;; copy c files
-        (def file (module-name-to-relpath name))
-        (file-copy (add-src-path file) (add-build-path appname file)))
+        (def file       (module-name-to-relpath name))
+        (def build-file (add-build-path appname file))
+        (def src-file   (add-src-path file))
+        (when (or (not (file-exists? build-file))
+                  (>= (file-mtime src-file) (file-mtime build-file)))
+          (file-copy src-file build-file)))
       (module-uses-c-files mod))
   (%print-cpu-usage (%su "EMIT"))
   ;;; No need to call roll-back-transaction here--we can

@@ -670,18 +670,18 @@ EXT(YgooSmathYA,"goo/math","+");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_11);
-DEFLIT(lit_2);
-DEFLIT(lit_10);
-DEFLIT(lit_3);
 DEFLIT(lit_9);
-DEFLIT(lit_0);
-DEFLIT(lit_4);
-DEFLIT(lit_5);
-DEFLIT(lit_1);
 DEFLIT(lit_7);
-DEFLIT(lit_6);
+DEFLIT(lit_0);
+DEFLIT(lit_10);
+DEFLIT(lit_1);
 DEFLIT(lit_8);
+DEFLIT(lit_3);
+DEFLIT(lit_5);
+DEFLIT(lit_6);
+DEFLIT(lit_2);
+DEFLIT(lit_11);
+DEFLIT(lit_4);
 
 /* FUNCTIONS: */
 
@@ -690,10 +690,10 @@ extern P YevalSmainY___main_0___ ();
 /* FUNCTION CODES: */
 
 P YevalSmainY___main_0___() {
-  P tmpF2665;
-  P fileF2664;
-  P tmpF2663;
-  P fileF2662;
+  P tmpF7525;
+  P fileF7524;
+  P tmpF7523;
+  P fileF7522;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9;
 DEFCREGS();
 loop:
@@ -719,10 +719,10 @@ loop:
   lit_9 = YPsb((P)"init");
   lit_10 = YPPsym((P)"goo/user");
   T0 = XCALL2(1,VARREF(YgooSsystemYfind_goo_file_at),LITREF(lit_9),VARREF(YgooSsystemYTgoo_rootT));
-  fileF2662 = T0;
-  tmpF2663 = fileF2662;
-  if (tmpF2663 != YPfalse) {
-    T3 = XCALL2(1,VARREF(YevalStopYload_file),fileF2662,LITREF(lit_10));
+  fileF7522 = T0;
+  tmpF7523 = fileF7522;
+  if (tmpF7523 != YPfalse) {
+    T3 = XCALL2(1,VARREF(YevalStopYload_file),fileF7522,LITREF(lit_10));
     T2 = T3;
   } else {
     T2 = YPfalse;
@@ -730,10 +730,10 @@ loop:
   T1 = T2;
   lit_11 = YPsb((P)"init");
   T4 = XCALL2(1,VARREF(YgooSsystemYfind_goo_file_at),LITREF(lit_11),VARREF(YgooSsystemYTgoo_personal_rootT));
-  fileF2664 = T4;
-  tmpF2665 = fileF2664;
-  if (tmpF2665 != YPfalse) {
-    T7 = XCALL2(1,VARREF(YevalStopYload_file),fileF2664,LITREF(lit_10));
+  fileF7524 = T4;
+  tmpF7525 = fileF7524;
+  if (tmpF7525 != YPfalse) {
+    T7 = XCALL2(1,VARREF(YevalStopYload_file),fileF7524,LITREF(lit_10));
     T6 = T7;
   } else {
     T6 = YPfalse;

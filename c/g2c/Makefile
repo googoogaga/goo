@@ -4,42 +4,42 @@ C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 
 OBJS = \
 	goo/io/port.o \
-	eval/ast-eval.o \
 	goo/cols/vec.o \
-	eval/top.o \
-	goo/eval.o \
 	cols/pipe.o \
+	eval/ast.o \
 	goo/boot.o \
 	goo/cols/col.o \
 	goo/random.o \
 	goo/cols/seqx.o \
 	goo/cols/seq.o \
-	goo/user.o \
 	goo/cols/lst.o \
 	goo/cols/str.o \
+	eval/ast-linearize.o \
 	goo/mag.o \
+	goo/user.o \
 	goo/cols/flat.o \
 	goo/packer.o \
 	goo/app.o \
 	eval/syntax.o \
-	eval/main.o \
+	goo/eval.o \
 	goo/cols/range.o \
-	eval/g2c.o \
+	eval/main.o \
 	goo/cols/rep.o \
 	goo/cols/tup.o \
 	eval/dependency.o \
+	eval/top.o \
 	goo/cols/zip.o \
-	eval/ast.o \
 	goo/cols/tab.o \
 	goo/io/write.o \
 	goo/macros.o \
+	eval/g2c.o \
 	goo/cols/cycle.o \
 	goo/cols/opts.o \
 	time/lock.o \
 	time/%lock.o \
+	eval/ast-eval.o \
 	goo/cols/map.o \
 	goo/io/read.o \
-	eval/ast-linearize.o \
 	goo/cols/colx.o \
 	time/event.o \
 	time/%event.o \

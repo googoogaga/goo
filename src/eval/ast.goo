@@ -1031,10 +1031,13 @@
                 (module-exports used-module)))))
     (case-by (as <str> name) suffix?
       ((".c") 
-       (push! (module-uses-c-files mod) name))
+       (unless (mem? (module-uses-c-files mod) (as <sym> name))
+         (push! (module-uses-c-files mod) (as <sym> name))))
       ((".swig")
        (use-mod (as <sym> (1st (split (as <str> name) #\.))))
-       (push! (module-uses-c-files mod) (as <sym> (cat (as <str> name) ".c"))))
+       (def c-mod (as <sym> (cat (as <str> name) ".c")))
+       (unless (mem? (module-uses-c-files mod) c-mod)
+         (push! (module-uses-c-files mod) c-mod)))
       (#t
        (use-mod name))))
   (new <constant> constant-value #f))
