@@ -6,7 +6,7 @@
 
 (dm == (x y => <log>) (%bb (%eq? x y)))
 
-(df match-empty-list ((x <lst>) (fail <fun>))
+(df match-empty-list (x (fail <fun>))
   (if (== x '())
       '()
       (fail "Match Empty Failure of %=" x)))
@@ -24,9 +24,13 @@
 	    (tail x)
 	    (fail "Match Failure of %= on %=" exp pat)))))
 
-(df match-sublist ((x <lst>) (fail <fun>))
+(dm match-sublist (x (fail <fun>))
+  (fail "Match Failure on Sub List on %=" x))
+
+(dm match-sublist ((x <lst>) (fail <fun>))
   (let ((x (head x)))
     (if (isa? x <lst>)
 	x
         (fail "Match Failure on Sub List on %=" x))))
+
 

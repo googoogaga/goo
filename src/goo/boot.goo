@@ -1215,6 +1215,8 @@
 	 (@cat2 (%traits-direct-slots traits) (@lst slot)))
     (set (%traits-slots traits)
 	 (traits-ordered-slots traits))
+    (@do (fun (slot) (set (%fun-cache (%slot-getter slot)) #f))
+	 (%traits-slots traits)) 
     (%adjust-object-values-size owner (%%len (object-slots owner)) owner)
     slot))
 

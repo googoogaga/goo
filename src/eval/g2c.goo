@@ -1,0 +1,945 @@
+;;;; Copyright (c) 2001 Jonathan Bachrach
+;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
+
+(ds (with-native ,@body) ;; TODO: TEMPORARY
+  `(seq ,@body))
+
+(dv *c-out-name* "proto")
+
+(dm compute-ast (filename ct-env)
+  (let ((in-name (proto-filename filename))
+	(x       (read-file in-name)))
+    (with-native (objectify x ct-env #f))))
+
+(dm fab-ct-env (ct-env)
+  (fab-static-global-environment <static-global-environment> ct-env))
+
+(dm p2c-file-in (in-filename out-filename rt-env ct-env prg)
+  (let ((ct-env   (fab-ct-env ct-env))
+        (out-name (c-filename out-filename)) 
+	(ast      (or prg (compute-ast in-filename ct-env))))
+    (call-with-output-file
+     out-name
+     (fun (out-port) (compile->c-in ast ct-env rt-env out-port)))
+    #f))
+
+(dm p2c-file (filename)
+  (p2c-file-in filename filename (rt-env) (ct-env) #f))
+
+(dm p2c-files-in (filenames rt-env ct-env prg)
+  (let ((out-name (c-filename *c-out-name*)) ;; filename
+        (ct-env   (fab-ct-env ct-env)))
+    (call-with-output-file
+     out-name
+     (fun (out-port)
+       (let ((ast (or prg
+	              (sequentialize 
+                        (collecting ()
+ 		          (for ((filename filenames))
+		            (collect (compute-ast filename ct-env))))))))
+	 (compile->c-in ast ct-env rt-env out-port))))
+    #f))
+
+(dm p2c-files (filenames)
+  (p2c-files-in filenames (rt-env) (ct-env) #f))
+
+(dv $boot-files
+  '("boot" "macros" "runtime" "runtime-native"
+    "read" "write" "syntax" 
+    "ast" "ast-eval" "ast-linearize" "p2c" 
+    "top" "main"))
+
+(dm p2c-top () (p2c-files $boot-files))
+
+(dm p2c-top-sep () 
+  (do (fun (filename) (p2c-file filename)) $boot-files))
+
+(dm p2c-str-in (s rt-env ct-env)
+  (let ((ct-env (fab-ct-env ct-env))
+        (ast    (parse-in s ct-env)))
+    ;; format-out("SXP %=\n" sxp)
+    (compile->c ast ct-env rt-env)
+    #f))
+
+(dm p2c-str (s)
+  (p2c-str-in s (rt-env) (ct-env)))
+
+(dv *definitions* #f) ;; TODO: thread variable
+
+(dm compute-program (e ct-env rt-env)
+  (let ((obj (sexp->object e ct-env))
+	;; (format out "OBJ %=\n" obj)
+	(dyn (analyze-dynamic-extent obj))
+	;; (format out "DYN %=\n" dyn)
+	(cal (analyze-calls dyn))
+	;; (format out "CAL %=\n" cal)
+	(lft (lift! cal))
+	;; (format out "LFT %=\n" lft)
+        (prg (extract-things! lft)))
+    ;; (format out "EXT %=\n" prg)
+    (let ((flt (closurize-main! prg ct-env 64)))
+    ;; (format out "FLT %=\n" flt)
+    (gather-temporaries! flt)
+    ;; (format out "TMP %=\n" flt)
+    ;; (format out "\n\n%=\n\n" prg)
+    (report-undefined-global-bindings ct-env)
+    prg)))
+
+(dm compile->c-in (e ct-env rt-env out)
+  (let ((prg (compute-program e ct-env rt-env)))
+    (dlet ((*definitions* (program-definitions prg))) 
+      (generate-c-program out e prg ct-env))))
+
+(dm compile->c (e ct-env rt-env)
+  (compile->c-in e ct-env rt-env out))
+
+(dm generate-c-program (out e prg ct-env)
+  (generate-header out e)
+  (generate-global-environment out ct-env)
+  (generate-quotation-forwards out (program-quotations prg))
+  (generate-function-forwards out (program-definitions prg))
+  (generate-function-bodies out (program-definitions prg))
+  (generate-main out (program-form prg)) 
+  (generate-trailer out)
+  prg)
+
+;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;;              generation
+
+;;; file header and trailer are simple.
+
+(dm pp (e out)
+  ;; (print e out pretty?: #t) ;; TODO: PRETTY?
+  (write out e)) 
+
+(dm generate-header (out e)
+  (format out "/* PROTO 2 C $REVISION: 0.2 $ \n")
+  ;; (pp e out)
+  (format out "  */\n\n#include \"prt.h\"\n"))
+
+(dm generate-trailer (out)
+  (format out "\n/* END OF GENERATED CODE. */\n"))
+
+;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; generate global environment. for all global-bindings allocate a
+;;; location to hold it. we also give the real name to the macro so
+;;; that some reflective capabilities can be added to c.
+
+;;; gb* is a list of instances of global-binding.
+
+(dm generate-global-environment (out env)
+  (format out "\n/* IMPORT ENVIRONMENT: */\n\n")
+  (for ((binding (environment-imports env)))
+    (when (== (elt (environment-redefinitions env) (binding-name binding)) nul)
+      (generate-global-binding out #t binding)))
+  (format out "\n/* GLOBAL ENVIRONMENT: */\n\n")
+  ;; TODO: TAKE ENV AS ARG
+  (do-static-global-bindings (curry generate-global-binding out #f) env)
+  (format out "\n/* RUNTIME ENVIRONMENT: */\n\n")
+  (for ((binding (environment-redefinitions env)))
+    (when (isa? binding <runtime-binding>)
+      (generate-global-binding out #f binding))))
+
+(dm generate-global-binding (out imported? gb)
+  (let ((name (binding-name gb)))
+    (format out "%s(%s,\"%s\");\n" 
+	    (if imported? "EXT" "DEF")
+	    (mangle-global-name name) name)))
+
+(dm generate-global-binding (out imported? (gb <predefined-binding>)))
+(dm generate-global-binding (out imported? (gb <magic-binding>)))
+(dm generate-global-binding (out imported? (gb <macro-binding>)))
+
+;;;; NAME MANGLING
+
+(dv $module-separator               "Y")
+(dv $local-suffix                   "_")
+(dv $hygiene-marker	            "F")
+(dv $escape-separator               "Z")
+(dv $iep-suffix 	            "I")
+(dv $method-mangled-marker-string   "M")
+
+;; Note that the following must be characters rather than strings since
+;; the initialization of mangles tables assumes that.
+
+(dv $module-marker             (elt $module-separator 0))
+(dv $local-marker              (elt $local-suffix 0))
+(dv $hygiene-char              (elt $hygiene-marker 0))
+(dv $escape-marker             (elt $escape-separator 0))
+(dv $iep-marker                (elt $iep-suffix 0))
+(dv $method-mangled-marker     (elt $method-mangled-marker-string 0))
+
+(dv $min-character-code 0)
+(dv $max-character-code 255) ;; We allow 8 bit ascii.
+
+;;; MANGLING
+
+(dv $mangles-data
+  (vec #(#\- #\_) #(#\! #\X) #(#\$ #\D) #(#\% #\P) #(#\* #\T) 
+       #(#\/ #\S) #(#\< #\L) #(#\> #\G) #(#\? #\Q) #(#\+ #\A)
+       #(#\& #\B) #(#\^ #\C) #(#\_ #\U) #(#\@ #\O) #(#\= #\E)
+       #(#\~ #\N)))
+
+(dv <abstract-mangler> (isa <any>))
+  (slot <abstract-mangler> mangler-buffer (isa <buf>))
+  (slot <abstract-mangler> mangler-table  (fab <vec> (+ $max-character-code 1)))
+
+(dv <mangler> (isa <abstract-mangler>))
+
+(dv <simple-mangler> (isa <mangler>))
+
+;; Guarantee instantiability of the <MANGLER> class.
+
+(dm mangler-position ((mangler <mangler>) => <int>)
+  (len (mangler-buffer mangler)))
+
+(dm initialize-mangler-table ((mangler <mangler>) => <mangler>)
+  (let ((table (mangler-table mangler)))
+    ;; fill with default manglings
+    (for ((i (from-to $min-character-code $max-character-code)))
+      (set (elt table i)
+	   (cat $escape-separator (mangle-integer i) $escape-separator)))
+    ;; fill in special cases
+    (for ((mangle $mangles-data))
+      (set (elt table (as <int> (elt mangle 0))) (elt mangle 1)))
+    ;; fill C allowable versions
+    (for ((i (from-to (as <int> #\a) (as <int> #\z))))
+      (set (elt table i) (as <chr> i)))
+    (for ((i (from-to (as <int> #\0) (as <int> #\9))))
+      (set (elt table i) (as <chr> i))))
+  mangler)
+
+(dv ($number-characters <str>) "0123456789")
+
+(dm mangle-integer ((number <int>) => <str>)
+  (rep process-integer (((number <int>) number) ((index <int>) 1))
+    (let ((qr ;; (tup (quotient <int>) (remainder <int>)) ;; TODO: TUP'S 
+	   (truncate/ number 10))
+	  ((quotient <int>) (elt qr 0))
+	  ((remainder <int>) (elt qr 1))
+	  ((digit <chr>) (elt $number-characters remainder)))
+      (if (= quotient 0)
+	  (let (((result <str>) (fab <str> index)))
+	    (set (elt result 0) digit)
+	    result)
+	  (let (((result <str>) (process-integer quotient (+ index 1))))
+	    (set (elt result (- (len result) index)) digit)
+	    result)))))
+
+(dm mangler-as-string-from
+    ((mangler <abstract-mangler>) (start <int>) => <str>)
+  ;; (if (= start 0)
+  ;;     (as <str> (mangler-buffer mangler))
+  ;;     (as <str> (sub-from (mangler-buffer mangler) start)))
+  (let (((buffer <buf>)
+	(mangler-buffer mangler))
+	((buffer-size <int>)
+	 (len buffer))
+	((string <str>)
+	 (fab <str> (- buffer-size start))))
+    ;; without-bounds-checks
+    (for (((i <int>) (from-below start buffer-size))
+	  ((j <int>) (from 0)))
+      (set (elt string j) (elt buffer i)))
+    ;; end without-bounds-checks
+    string))
+
+(dm mangler-as-string ((mangler <abstract-mangler>) => <str>)
+  (mangler-as-string-from mangler 0))
+
+;; The method for <mangler-with-options> is responsible for
+;; installing the prefixes and suffixes in the final string.
+;; (Is this the most efficient way? It certainly seems to be
+;; the cleanest).
+
+(dm mangler-reset
+    ((mangler <abstract-mangler>) => <abstract-mangler>)
+  (set (len (mangler-buffer mangler))  0)
+  mangler)
+
+(dm mangle-raw-into ((mangler <abstract-mangler>) (name <chr>))
+  (add! (mangler-buffer mangler) name))
+
+(dm mangle-raw-into ((mangler <abstract-mangler>) (name <str>))
+  (cat! (mangler-buffer mangler) name))
+
+(dm mangle-raw-into ((mangler <abstract-mangler>) (name <sym>))
+  (cat! (mangler-buffer mangler) (as-lowercase (as <str> name))))
+
+(dm mangle-name-into ((mangler <mangler>) (name <str>))
+  (for ((c name))
+    (mangle-raw-into mangler (elt (mangler-table mangler) (as <int> c)))))
+
+(dm mangle-name-into ((mangler <mangler>) name)
+  (mangle-name-into mangler (as-lowercase (as <str> name))))
+
+(dm mangle-name-raw ((mangler <mangler>) name => <str>)
+  (mangler-reset mangler)
+  (mangle-name-into mangler name)
+  (mangler-as-string mangler))
+
+(dm mangle-name-locally ((mangler <mangler>) name => <str>)
+  (mangler-reset mangler)
+  (mangle-name-into mangler name)
+  (mangle-raw-into mangler $local-suffix)
+  (mangler-as-string mangler))
+ 
+(dm mangle-name-globally ((mangler <mangler>) name => <str>)
+  (mangler-reset mangler)
+  (mangle-raw-into mangler $module-marker)
+  (mangle-name-into mangler name)
+  (mangler-as-string mangler))
+ 
+(dm mangle-name-hygienically ((mangler <mangler>) name (marker <int>) => <str>)
+  (mangler-reset mangler)
+  (mangle-name-into mangler name)
+  (cat (mangler-as-string mangler) $hygiene-marker (mangle-integer marker)))
+
+;; TODO: would like initialization to happen more invisibly
+(dv *mangler* (initialize-mangler-table (isa <simple-mangler>)))
+
+(dm mangle-global-name ((name <str>) => <str>)
+  (mangle-name-globally *mangler* name))
+
+(dm mangle-global-name ((name <sym>) => <str>)
+  (mangle-global-name (as <str> name)))
+
+(dm mangle-local-name ((name <str>) => <str>)
+  (mangle-name-locally *mangler* name))
+
+(dm mangle-local-name ((name <sym>) => <str>)
+  (mangle-local-name (as <str> name)))
+
+(dm mangle-raw-name ((name <str>) => <str>)
+  (mangle-name-raw *mangler* name))
+
+(dm mangle-raw-name ((name <sym>) => <str>)
+  (mangle-raw-name (as <str> name)))
+
+(dm mangle-local-marked-name ((name <str>) (marker <int>) => <str>)
+  (mangle-name-hygienically *mangler* name marker))
+
+(dm mangle-local-marked-name ((name <sym>) (marker <int>) => <str>)
+  (mangle-local-marked-name (as <str> name) marker))
+
+;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; to ease writing printing expressions.
+
+(ds (between-parentheses (,outval) ,@body)
+  `(let ((out ,outval))
+     (format out "(") ,@body (format out ")")))
+
+;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; generate static shared quotations. linearize quotations so they
+;;; can be expressed by c constants. equal? quotations are shared.
+;;; and quotations here are completely static.
+
+;;; qb* is a list of instances of quotation-binding.
+
+(dm generate-quotation-forwards (out (qb* <lst>))
+  (format out "\n/* FORWARD QUOTATIONS: */\n\n")
+  (for ((qb qb*))
+    (format out "DEFLIT(lit_%s);\n" (binding-name qb))))
+
+(dm generate-quotations (out (qb* <lst>))
+  (for ((qb (rev qb*))) ;; TODO: BIP
+    (format out "lit_%s = " (binding-name qb))
+    (generate-quotation out (binding-value qb))
+    ;; (format out " ") 
+    (format out ";\n  ")))
+
+(dm false-name ()
+  (mangle-global-name "%false"))
+
+(dm generate-quotation (out (qb <log>))
+  (format out "%s" (mangle-global-name (if qb "%true" "%false"))))
+
+(dm generate-quotation (out (qb '()))
+  (format out (mangle-global-name "nil")))
+
+(dm generate-quotation (out (qb <lst>))
+  (format out "%s(" (mangle-global-name "%pair"))
+  (generate-quotation out (head qb))
+  (format out ", ")
+  (generate-quotation out (tail qb))
+  (format out ")"))
+
+(dm generate-quotation (out (x <int>))
+  (format out "%s((P)%d)" (mangle-global-name "%int") x))
+
+(dm generate-quotation (out (x <chr>))
+  (format out "%s((P)%d)" (mangle-global-name "%chr") (as <int> x)))
+
+(dm float-to-c-string ((o <flo>) => <str>)
+  (let ((s (num-to-str o)))
+  ;;---*** Is there a better way to do this???
+  (lab done
+    (rep loop ((i (- (len s) 1)))
+      (if (> i (neg 1)) ;; TODO: -1
+	  (select (elt s i)
+	    ;;---*** Should be #\f but GCC complains!
+	    ((#\s) (set (elt s i) #\e) (done #f)) 
+	    ((#\d) (set (elt s i) #\e) (done #f)) 
+	    ;;---*** Should be #\l but GCC complains!
+	    ((#\x) (set (elt s i) #\e) (done #f)) 
+	    (#t    (loop (- i 1))))
+	  s)))))
+
+(dm generate-quotation (out (x <flo>))
+  (format out "%s(FLOINT(%s))" 
+	  (mangle-global-name "%flo") (float-to-c-string x)))
+
+(dm generate-quotation (out (x <str>))
+  (format out "%s((P)%=)" (mangle-global-name "%sb") x))
+
+(dm generate-quotation (out (x <vec>))
+  ;; TODO: TIE TOGETHER
+  (format out "CALLN(%s, %s" (mangle-global-name "vec") (len x))
+  (for ((e x))
+    (format out ", ")
+    (generate-quotation out e))
+  (format out ")"))
+
+(dm generate-quotation (out (x <sym>))
+  (format out "%s((P)%=)" (mangle-global-name "%%sym") (as <str> x)))
+
+
+;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; convert an expression to c
+;;; faire en une passe  plutot qu'avec  des chaines.
+
+(dg to-c ((e <program>) f out))
+
+;; (dm to-c ((e <top-level-form>) f out)
+;;   (between-parentheses (out)
+;;     (generate-quotations out (form-quotations e))
+;;     (generate-functions out (form-definitions e))
+;;     (to-c (form-program e) f out)))
+
+(dm to-c ((e <top-level-form>) f out)
+  (generate-quotations out (form-quotations e))
+  (generate-functions out (form-definitions e))
+  (between-parentheses (out)
+    (to-c (form-program e) f out)))
+
+;;; generate the name used in c for a binding.
+
+(dg binding->c (binding out))
+
+(dm binding->c ((binding <binding>) out)
+  (format out (mangle-global-name (binding-name binding))))
+
+(dm binding->c ((binding <local-binding>) out)
+  (format out (mangle-local-name (binding-name binding))))
+
+;; TODO: USE MANGLER FOR THIS
+(dm binding->c ((binding <renamed-local-binding>) out)
+  (format out "%s" 
+	 (mangle-local-marked-name 
+	  (binding-name binding) (binding-index binding))))
+
+(dm binding->c ((binding <quotation-binding>) out)
+  (format out "lit_%s" (binding-name binding)))
+
+;;; works for local- global- predefined- references but for free-references.
+
+(dm to-c ((e <reference>) f out)
+  (reference->c (reference-binding e) out))
+
+(dg reference->c ((v <binding>) out))
+
+(dm reference->c ((v <binding>) out)
+  (binding->c v out))
+
+;;; exercice: change this to produce a more user-friendly error message.
+
+(dm reference->c ((v <global-binding>) out)
+  (format out "CHKREF")
+  (between-parentheses (out)
+    (binding->c v out)))
+
+(dm to-c ((e <free-reference>) f out)
+  (format out "FREEREF")
+  (between-parentheses (out)
+    (format out "%d" (reference-offset e))))
+
+(dm to-c ((e <global-assignment>) f out)
+  (between-parentheses (out)
+    (between-parentheses (out)
+      (binding->c (assignment-binding e) out)
+      (format out " = ")
+      (to-c (assignment-form e) f out))
+    (when (isa? e <definition>)
+      (format out ", ")
+      (between-parentheses (out)
+	(format out "regsym(&")
+	(binding->c (assignment-binding e) out)
+	(format out ",%=)"
+		(as <str> (binding-name (assignment-binding e))))))))
+
+(dm to-c ((e <raw-constant>) f out)
+  (format out "(P)%s" (constant-value e)))
+
+(dm to-c ((e <constant>) f out)
+  (generate-quotation out (constant-value e)))
+
+(dm to-c ((e <bound?>) f out)
+  (format out "BOUNDP")
+  (between-parentheses (out)
+    (binding->c (reference-binding (bound?-reference e)) out)))
+
+(dm to-c ((e <box-read>) f out)
+  (format out "BOXVAL")
+  (between-parentheses (out)
+    (to-c (box-reference e) f out)))
+
+(dm to-c ((e <box-write>) f out)
+  (between-parentheses (out)
+    (format out "BOXVAL")
+    (between-parentheses (out)
+      (to-c (box-reference e) f out))
+    (format out "=")
+    (to-c (box-form e) f out)))
+
+(dm to-c ((e <box-creation>) f out)
+  (to-c (box-reference (box-reference e)) f out)
+  (format out "= BOXFAB")
+  (between-parentheses (out)
+    (to-c (box-reference (box-reference e)) f out)))
+
+;;;  distinguer qqs  cas comme  eq? ou pair?
+
+(dm to-c ((e <alternative>) f out)
+  (between-parentheses (out)
+    (boolean->c (alternative-condition e) out)
+    (format out "\n    ? ")
+    (to-c (alternative-consequent e) f out)
+    (format out "\n    : ")
+    (to-c (alternative-alternant e) f out)))
+
+(dg boolean->c (e out))
+
+(dm boolean->c (e out)
+  (between-parentheses (out)
+    (to-c e #f out)
+    (format out " != %s" (false-name))))
+    
+(dm to-c ((e <sequential>) f out)
+  (between-parentheses (out)
+    (rep loop ((e e) (first? #t))
+      (unless (empty? e)
+        (unless first? (format out ",\n  "))
+        (to-c (head e) f out)
+	(loop (tail e) #f)))))
+
+;;; (dm to-c ((e constant) ...) ...) does not exist any longer.
+
+(dm generate-self-recursive-call ((e <application>) f out)
+  (set (function-self-recursive? f) #t)
+  (between-parentheses (out)
+    (rep loop ((args (application-arguments e)) (i 1))
+      (unless (empty? args)
+	(format out "a%s=" i)
+	(to-c (head args) f out)
+	(format out ",")
+	(loop (tail args) (+ i 1))))
+    (for ((binding (function-bindings f)) (i (from 1)))
+      (binding->c binding out)
+      (format out "=a%s," i))
+    (format out "PNUL")))
+
+(dv $number-call-templates 3)
+
+(dm to-c ((e <regular-application>) f out)
+  (let ((function (application-function e)))
+    (if (and (application-tail? e) 
+	     (isa? f <flat-function>)
+	     (not (function-nary? f))
+	     (isa? function <free-reference>)
+	     (reference-self? function))
+	(generate-self-recursive-call e f out)
+	(let ((n (len (application-arguments e))))
+	  (format out "%sCALL%s" 
+		  (if (application-known? e) "K" "") 
+		  (if (> n $number-call-templates) "N" n))
+	  (between-parentheses (out)
+	    (to-c (application-function e) f out)
+	    (when (> n $number-call-templates) (format out ",%s" n))
+	    (to-c (application-arguments e) f out))))))
+
+(dm to-c ((e <arguments>) f out)
+  (unless (empty? e)
+    (format out ",") 
+    (to-c (head e) f out)
+    (to-c (tail e) f out)))
+
+(dm to-c ((e <fix-let>) f out)
+  (between-parentheses (out)
+    (bindings->c (fix-let-bindings e) (fix-let-arguments e) out)
+    (to-c (fix-let-body e) f out)))
+
+(dm to-c ((e <locals>) f out)
+  (between-parentheses (out)
+    (bindings->c-using
+      (locals-bindings e) (locals-functions e) out funshell-to-c #f)
+    (do2 (rcurry funinit-to-c f out) (locals-bindings e) (locals-functions e))
+    (to-c (locals-body e) f out)))
+
+(dm to-c ((e <bind-exit>) f out)
+  (format out "with_exit")
+  (between-parentheses (out)
+    (to-c (bind-exit-main-fun e) f out)))
+
+(dm to-c ((e <unwind-protect>) f out)
+  (format out "with_cleanup")
+  (between-parentheses (out)
+    (to-c (unwind-protect-protected-thunk e) f out)
+    (format out ", ")
+    (to-c (unwind-protect-cleanup-thunk e) f out)))
+
+(dm to-c ((e <monitor>) f out)
+  (format out (mangle-global-name "%with-monitor"))
+  (between-parentheses (out)
+    (to-c (monitor-handler e) f out)
+    (format out ", ")
+    (to-c (monitor-main-thunk e) f out)))
+
+(dm to-c-ignore-binding (b e f o)
+  (to-c e f o))
+
+(dm bindings->c-using (bindings (e <lst>) out to-c check-types?)
+  (if (empty? e)
+      (format out "")
+      (let ((binding (head bindings)))
+	(binding->c binding out)
+	(format out "=")
+	(let ((type? (unconstrained-type? (binding-type binding))))
+	  (if (and type? check-types?)
+	      (seq (format out "check_type")
+		   (between-parentheses (out)
+		     (to-c binding (head e) #f out)
+		     (format out ",")
+		     (to-c binding (binding-type binding) #f out)))
+	      (to-c binding (head e) #f out))
+	  (format out ",")
+	  (bindings->c-using
+	    (tail bindings) (tail e) out to-c check-types?)))))
+
+(dm bindings->c (bindings e out)
+  (bindings->c-using bindings e out to-c-ignore-binding #t))
+
+(dm to-c ((e <predefined-application>) f out)
+  (let ((binding (application-binding e)))
+    (if (and (application-tail? e) 
+	     (isa? f <primitive-definition>)
+	     (== binding (function-name f)))
+	(generate-self-recursive-call e f out)
+	(let ((n (len (application-arguments e))))
+	  (format out "(P)%s" 
+		  (mangle-global-name (binding-name (application-binding e))))
+	  (between-parentheses (out)
+	    (predefined-arguments-to-c (application-arguments e) out))))))
+
+(dm predefined-arguments-to-c ((e <arguments>) out)
+  (rep loop ((e e) (first? #t))
+    (unless (empty? e)
+      (unless first? (format out ","))
+      (format out "(P)")
+      (to-c (head e) #f out)
+      (loop (tail e) #f))))
+
+(dm make-predefined-application-generator (cname)
+  (fun (e out)
+    (format out "%s" cname)
+    (between-parentheses (out)
+      (arguments->c (application-arguments e) out))))
+
+(dm arguments->c ((e <arguments>) out)
+  (unless (empty? e)
+    (to-c (head e) #f out)
+    (to-c (tail e) #f out)))
+
+(dm to-c ((e <closure-creation>) f out)
+  (let ((n (len (closure-creation-free e)))
+	(f (elt *definitions* (closure-creation-index e))))
+    (if (== n 0)
+	(generate-function-name out f)
+	;; (format out "fun_%s" (closure-creation-index e))
+	(seq (format out "FUNFAB")
+	     (between-parentheses (out)
+	       (generate-function-name out f)
+	       (format out ", %s" n)
+	       (to-c (closure-creation-free e) f out))))))
+
+(dm funshell-to-c ((b <binding>) (e <closure-creation>) f out)
+  (let ((n (len (closure-creation-free e)))
+	(f (elt *definitions* (closure-creation-index e))))
+    (if (== n 0)
+	(generate-function-name out f)
+	;; (format out "fun_%s" (closure-creation-index e))
+	(seq (format out "FUNSHELL")
+	     (between-parentheses (out)
+               (format out "%=," (if (binding-dynamic-extent? b) 1 0))				  
+	       (generate-function-name out f)
+	       (format out ",%s" n))))))
+
+(dm funinit-to-c ((b <binding>) (e <closure-creation>) f out)
+  (let ((n (len (closure-creation-free e))))
+    (unless (== n 0)
+      (format out "FUNINIT")
+      (between-parentheses (out)
+        (binding->c b out)
+	(format out ", %s" n)
+	(to-c (closure-creation-free e) #f out))
+      (format out ",\n  "))))
+
+(dm ast-function-arity ((e <ast-function>))
+  (let ((specs (function-bindings e)))
+    (if (function-nary? e) (- (len specs) 1) (len specs))))
+
+(dm to-c ((e <ast-macro-definition>) f out)
+  (format out "%s" (mangle-global-name "%macro"))
+  (between-parentheses (out)
+    (generate-quotation out (binding-name (assignment-binding e)))
+    (format out ",")
+    (to-c (assignment-form e) #f out)))
+
+(dm to-c ((e <ast-generic>) f out)
+  (format out "%s" (mangle-global-name "%gen"))
+  (between-parentheses (out)
+    (format out "(P)YPgen_code((P)CHKREF(YPdispatch))") ;; TODO: HACK!!!
+    (format out ",")
+    (generate-function-specs out e)
+    (format out ",")
+    (generate-quotation out (function-nary? e))
+    (format out ",")
+    (generate-quotation out (ast-function-arity e))
+    (format out ",")
+    (to-c (function-value e) #f out)
+    (format out ",")
+    (format out (mangle-global-name "nil"))
+    (format out ",")
+    (format out (mangle-global-name "%false"))))
+
+(dm to-c ((e <free-environment>) f out)
+  (unless (empty? e)
+    (format out ",")
+    (to-c (head e) f out)
+    (to-c (tail e) f out)))
+
+;;; FUNCTION DEFINITIONS
+
+(dm generate-function-forwards (out definitions)
+  (format out "\n/* FUNCTIONS: */\n\n")
+  (for ((def definitions))
+    (generate-function-forward out def)))
+
+;; TODO: first-then
+
+(dm generate-function-forward (out (defn <primitive-definition>))
+  (format out "extern P %s (" 
+	  (mangle-global-name (binding-name (function-name defn))))
+  (for ((i (from-below 0 (len (function-bindings defn))))
+	(first? (first-then #t #f)))
+    (unless first? (format out ","))
+    (format out "P"))
+  (format out ");\n"))
+
+(dm generate-function-name (out defn)
+  (let ((name (function-name defn)))
+    (if (or (isa? name <global-binding>) (isa? name <runtime-binding>))
+	(format out "%s" (mangle-global-name (binding-name name)))
+	;; (format-out "UNNAMED %=\n" defn)
+	(if (== name #f)
+	    (format out "fun_%s" (function-index defn))
+	    (let ((name 
+		   (if (isa? name <local-binding>) (binding-name name) name)))
+	      (format out "fun_%s_%s"
+		      (mangle-raw-name name) (function-index defn)))))))
+
+(dm generate-function-forward (out defn)
+  (let ((bound? (isa? (function-name defn) <global-binding>)))
+    (format out (if bound?  "FUNFOR(" "LOCFOR("))
+    (generate-function-name out defn)
+    (format out ");\n")))
+
+(dm generate-function-bodies (out definitions)
+  (format out "\n/* FUNCTION CODES: */\n")
+  (do (fun (def) 
+	(generate-function-code out def))
+      definitions))
+
+(dm generate-functions (out definitions)
+  (do (fun (def) 
+	(unless (isa? def <primitive-definition>)
+	  (generate-closure-structure out def)
+	  ;; (format out ", \n  ")
+	  (format out "; \n  ")))
+      (rev definitions)))
+
+(dm generate-closure-structure (out definition)
+  (generate-function-name out definition)
+  (format out " = %s" (mangle-global-name "%met"))
+  (between-parentheses (out)
+    (generate-function-body-reference out definition)
+    (format out ",")
+    (generate-function-specs out definition)
+    (format out ",")
+    (generate-quotation out (function-nary? definition))
+    (format out ",")
+    (generate-quotation out (ast-function-arity definition))
+    (format out ",")
+    (to-c (function-value definition) #f out)
+    (format out ",")
+    (format out "ENVNUL")))
+
+(dm generate-function-body-reference (out definition)
+  (format out "FUNCODEREF(")
+  (generate-function-name out definition)
+  (format out ")"))
+
+(dm out-list-builder ((f <fun>) out (elts <lst>))
+  (if (empty? elts)
+      (format out "%s" (mangle-global-name "nil"))
+      (seq (format out "%s" (mangle-global-name "%pair"))
+	   (between-parentheses (out)
+	     (f (head elts))
+	     (format out ",")
+	     (out-list-builder f out (tail elts))))))
+
+(dm generate-function-specs (out definition)
+  (let ((types (map binding-type (function-bindings definition)))
+	(specs (if (function-nary? definition)
+		   (sub types 0 (- (len types) 1))
+		   types)))
+    (out-list-builder (rcurry to-c #f out) out specs)))
+
+(dm generate-free-bindings ((free <lst>) out)
+  (format out "ENVFAB(%d" (len free))
+  (rep loop ((free free))
+    (unless (empty? free)
+      (format out ",")
+      (binding->c (head free) out)
+      (loop (tail free))))
+  (format out ")"))
+
+;; TODO: RIP THIS OUT AND USE REAL PARAMETERS
+;; MAKE CALL SMART AND RESTIFY IF NEC
+;; WOULD LIKE TO AVOID XEP APPROACH FIRST GO ROUND
+
+(dv $res-name "res")
+
+(dm generate-shadow-args (out bindings)
+  (format out "  P %s" $res-name)
+  (for ((b bindings) (i (from 1)))
+    (format out ", a%s" i))
+  (format out ";\n")
+  (format out "loop:\n"))
+
+(dm generate-actual-return ((defn <primitive-definition>) out)
+  (format out "return %s" $res-name))
+
+(dm generate-actual-return (defn out)
+  (if (unconstrained-type? (function-value defn))
+      (format out "QRET(%s)" $res-name)
+      (format out "RET(%s)" $res-name)))
+
+(dm generate-return (definition out)
+  (if (function-self-recursive? definition)
+      (format out ";\nif (%s == PNUL) goto loop; else " $res-name)
+      (format out ";\n"))
+  (generate-actual-return definition out))
+
+(dm primitive-inlinable? ((e <primitive-definition>))
+  (let ((binding (function-name e)))
+    ;; TODO: ADD FUNCTION ADJECTIVES
+    (mem? '(%tag-bits %tag %untag %traits-of
+	    %int %ib %iu
+	    %chr %cb %cu
+	    %loc %lb %lu
+	    @== @@== not
+	    %empty? %head %tail
+	    @= @+ @<
+            %gen-cache-arg-pos %gen-cache-singletons %gen-cache-classes
+	    @head @tail
+	    %isa? %object-parents
+	    slot-value-at slot-value-at-setter
+	    gen-lookup gen-lookup-1-using
+	    )
+ 	   (binding-name binding))))
+
+(dm generate-function-code (out (e <primitive-definition>))
+  (format out "\n%sP " (if (primitive-inlinable? e) "INLINE " ""))
+  (binding->c (function-name e) out)
+  (between-parentheses (out)
+    (for ((binding (function-bindings e)) (first? (first-then #t #f)))
+      (unless first? (format out ", "))
+      (format out "P ")
+      (binding->c binding out)))
+  (format out " {\n")
+  (let ((temps (function-temporaries e)))
+    (generate-local-temporaries temps out)
+    (generate-shadow-args out (function-bindings e))
+    (let ((main? (== (function-name e) '*---MAIN---*)))
+      (if main? (format out "MAIN\n"))
+      (body-to-c (function-body e) main? e out)
+      (generate-return e out)
+      (format out ";\n}\n\n"))))
+
+(dm generate-function-code (out definition)
+  (format out "\nFUNCODEDEF(")
+  (generate-function-name out definition)
+  (format out ") {\n")
+  (let ((offset 0)
+	(bindings (function-bindings definition)))
+    (do (fun (b)
+	  (when (isa? b <binding>)
+	    (format out "  ARG(")
+	    (binding->c b out)
+	    (format out ", %=);\n" offset)
+	    (set offset (+ offset 1))))
+	(rev bindings))
+    (let ((temps (function-temporaries definition)))
+      (generate-local-temporaries temps out)
+      (generate-shadow-args out bindings)
+      (body-to-c (function-body definition) #f definition out)
+      (generate-return definition out)
+      (format out ";\n}\n\n"))))
+
+(dm generate-local-temporaries (temps out)
+  (unless  (empty? temps)
+    (format out "  P ")
+    (binding->c (head temps) out)
+    (format out ";\n")
+    (generate-local-temporaries (tail temps) out)))
+
+;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
+;;; main procedure. we choose to print the result.
+
+(dm body-to-c (e main? f out)
+  (format out "  %s = " $res-name)
+  (to-c e f out))
+
+(dm body-to-c ((e <sequential>) main? f out)
+  (rep loop ((e e) (first? #t))
+    (unless (empty? e)
+      (let ((tail (tail e)))
+	(unless  first? (format out ";\n  "))
+	(let ((ready-for-return? (empty? tail)))
+	  (if (and ready-for-return? (not main?)) 
+	      (format out "%s = " $res-name))
+	  (if main?
+	      (body-to-c (head e) #f f out)
+	      (to-c (head e) f out)))
+	(loop tail #f)))))
+
+(dm generate-main (out form)
+  (format out "\n/* EXPRESSION: */\nint main(int argc, char* argv[]) {\n")
+  (format out "  %s(argc, argv);\n" (mangle-global-name "%init-world"))
+  ;; (format out "  %s" (mangle-global-name "print-out"))
+  (format out "  ")
+  (between-parentheses (out)
+    (to-c form #f out))
+  ;; format(out ";\n  exit(0)")
+  (format out ";\n  return(0)")
+  (format out ";\n}\n"))

@@ -98,7 +98,12 @@
 		    (pair `(,exp-tmp ,exp) exps)
 		    (pair `(,state (ini-state ,exp-tmp)) inits)
 		    (pair `(fin-state? ,exp-tmp ,state) preds)
-		    (pair `(,var (now-elt ,exp-tmp ,state)) nows)
+		    (pair (mif ((tup ,key ,val) var)
+		    	       `((tup ,key ,val) 
+		    		 (tup (now-key ,exp-tmp ,state)
+		    		      (now-elt ,exp-tmp ,state))) 
+		    	       `(,var (now-elt ,exp-tmp ,state)))
+		    	  nows)
 		    (pair `(nxt-state ,exp-tmp ,state) nexts))))))))
 
 (ds (dlet ,bindings ,@body)

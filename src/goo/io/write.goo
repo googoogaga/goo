@@ -167,6 +167,11 @@ v
   (maybe-write-proto-name (port x <met>)
     (write-fun-guts port x "Met" recur)))
 
+(dm recurring-write ((port <output-port>) (x <slot>) recur)
+  (write-string port "#{Slot ")
+  (recurring-write port (slot-getter x) recur)
+  (write-string port "}"))
+
 (dm recurring-write ((port <output-port>) x recur)
   (let ((name (object-name x)))
     (if name

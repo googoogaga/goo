@@ -93,9 +93,6 @@
   (force-output out)
   (read in))
 
-;; TODO: BROKEN CAUSE ENV DOESN'T MODEL STACK
-;; TODO: FUNCTION PRINTING IS WAY TOO VERBOSE
-
 (dm do-stack-frames (fun)
   (%do-stack-frames fun))
 

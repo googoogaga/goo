@@ -1,0 +1,22 @@
+;; (dm p2c-file-in* (filename rt-env ct-env prg)
+;;   (format out "COMPILING %=\n" filename)
+;;   (let ((ct-env   (fab-ct-env ct-env))
+;;         (out-name (c-filename filename))
+;; 	(ast      (or prg (compute-ast filename ct-env))))
+;;     (call-with-output-file
+;;      out-name
+;;      (fun (out-port) (compile->c-in ast ct-env rt-env out-port)))
+;;     #f))
+;; 
+;; (dm p2c-files-in* (filenames rt-env ct-env prg)
+;;   (format out "COMPILING %=\n" filenames)
+;;   (do (fun (filename) 
+;; 	(format out "C %=\n" filename)
+;; 	(format out "YO %=\n" filename)
+;; 	(p2c-file-in* filename rt-env ct-env prg)
+;; 	)
+;;       filenames))
+;; 
+;; (dm p2c-files (filenames)
+;;   (p2c-files-in* filenames (rt-env) (ct-env) #f))
+

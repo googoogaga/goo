@@ -715,7 +715,9 @@
 	   (tail ,var)))))
 
 (dm expand-pattern ((pat <lst>) var fail => <any>)
-  (expand-bind-list pat var fail))
+  `(if (isa? ,var <lst>)
+       ,(expand-bind-list pat var fail)
+       (,fail "Match Pattern Failure" ,var)))
 
 (dm expand-syntax-if ((x <lst>) => <lst>)
   (let ((pat   (sexpr-syntax-if-pattern x))
