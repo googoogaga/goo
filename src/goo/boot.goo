@@ -2000,7 +2000,7 @@
   %symbols
   tail
   tail-setter
-
+  unexec
   @oelt
   @olen
   @+

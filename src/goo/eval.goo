@@ -5,4 +5,7 @@
 (export
   ;; Section 3.16: Top level.
   load eval top
-  do-stack-frames backtrace)
+  do-stack-frames backtrace
+
+  ;; Needs to be documented.
+  save-image)

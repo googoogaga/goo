@@ -149,6 +149,9 @@
           (top-in 0 top quit #f (runtime-environment modname)))
         (loop)))))
 
+(df save-image ((image-name <str>))
+  (unexec image-name (fun () (top 'proto/user))))
+
 (export
   eval
   load
@@ -156,4 +159,5 @@
   read-file
   top
   do-stack-frames
-  backtrace)
+  backtrace
+  save-image)
