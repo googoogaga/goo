@@ -622,8 +622,8 @@ extern P YPbuild_runtime_modules(
 
 );
 
-extern P Yast_evalYPbinding_value(P x);
-extern P Yast_evalYPbinding_value_setter(P v, P x);
+extern P YcompilerSast_evalYPbinding_value(P x);
+extern P YcompilerSast_evalYPbinding_value_setter(P v, P x);
 
 typedef struct {
   PSTR  var_name;    
