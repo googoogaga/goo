@@ -152,6 +152,9 @@ extern P YPeof_object ();
 extern PPORT YPcurrent_input_port (void);
 extern PPORT YPcurrent_output_port (void);
 extern P YPfile_mtime (P x);
+extern P YPfile_existsQ (P name);
+extern P YPfile_type (P name);
+extern P YPcreate_directory (P name);
 
 /* OS */
 
@@ -306,6 +309,7 @@ EXT(YPfalse, "boot", "%false");
 EXT(YPtrue, "boot", "%true");
 EXT(Ynil, "boot", "nil");
 EXT(YruntimeYvec, "runtime", "vec");
+EXT(YruntimeYPwith_monitor, "runtime", "%with-monitor");
 
 /* It is not clear who is generating code which uses this. */
 EXT(YPdispatch,"boot","%dispatch");
@@ -319,7 +323,7 @@ extern P YPchr (P);
 extern P YPflo (P);
 extern P YPsb (P);
 extern P YPPsym (P);
-extern P YPmacro (P,P);
+extern P YPmacro (P,P,P);
 extern P YPsig (P,P,P,P,P);
 extern P YPgen (P,P,P,P,P);
 extern P YPmet (P,P,P,P);
@@ -371,3 +375,61 @@ extern P YPgrid_move (P x, P y);
 extern P YPgrid_read ();
 extern P YPgrid_write (P c);
 extern P YPgrid_refresh ();
+
+/* MODULE ENVIRONMENT INFORMATION */
+
+typedef struct _MODULE_INFO MODULE_INFO;
+
+typedef struct {
+  MODULE_INFO  *module_info;    /* The module used */
+} USE_INFO;
+
+typedef struct {
+  char         *variable_name;  /* The binding's name in this module */
+  MODULE_INFO  *module_info;    /* The defining module */
+  char         *original_name;  /* The original name in that module */
+} IMPORT_INFO;
+
+typedef struct {
+  char         *variable_name;  /* The binding's name in this module */
+  P            *location;       /* The storage location or NULL */
+} BINDING_INFO;
+
+typedef struct {
+  char         *variable_name;  /* The binding's name in this module */
+  char         *exported_as;    /* The name to export it under */
+} EXPORT_INFO;
+
+struct _MODULE_INFO {
+  char         *module_name;
+  P            *module_object;  /* NULL or run-time module object */
+  USE_INFO     *uses;
+  IMPORT_INFO  *imports;
+  BINDING_INFO *bindings;
+  EXPORT_INFO  *exports;
+};
+
+/* Holds pointer to top-level MODULE_INFO structure. */
+extern MODULE_INFO *proto_toplevel_module_info;
+
+/* Building the runtime environment. */
+extern P YPbuild_runtime_modules(
+  /* ((modname <str>) => <module>) */
+  P create_module_fun,
+
+  /* ((mod <module>) (uses <module>) => <any>) */
+  P use_module_fun,    
+
+  /* ((mod <module>) (name <str>)
+      (from-mod <module>) (original-name <str>) => <any>) */
+  P import_fun,
+
+  /* ((mod <module>) (name <str>) (loc <loc>) => <any>) */
+  P runtime_binding_fun,    
+
+  /* ((mod <module>) (name <str>) => <any>) */
+  P other_binding_fun,    
+
+  /* ((mod <module>) (name <str>) (as-name <str>) => <any>) */
+  P export_fun
+);

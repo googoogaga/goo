@@ -399,13 +399,25 @@ INLINE PPORT YPcurrent_input_port (void) { return stdin; }
 
 INLINE PPORT YPcurrent_output_port (void) { return stdout; }
 
-/* TODO - Need Windows version. */
-/* TODO - Resolution is crummy because we use single floats. */
+/* TODO - Need Windows versions of the following functions. */
+
 #include <sys/stat.h>
 #include <unistd.h>
 #include <errno.h>
-#define PROTO_EPOCH (978307200) /* January 01, 2001 00:00:00 GMT */
+
+extern P Yfab_sym;
 extern P Yerror;
+
+static void unix_error (char *command, char *filename) {
+  CALLN(Yerror, 4,
+	cstr_to_pstr("%s: %s failed: %s.\n"),
+	cstr_to_pstr(command),
+	cstr_to_pstr(filename),
+	cstr_to_pstr(strerror(errno)));
+}
+
+/* TODO - Resolution is crummy because we use single floats. */
+#define PROTO_EPOCH (978307200) /* January 01, 2001 00:00:00 GMT */
 P YPfile_mtime (P name) {
   struct stat buf;
   int res;
@@ -415,14 +427,57 @@ P YPfile_mtime (P name) {
   if (res == 0) {
     flo.f = (PFLO) buf.st_mtime - PROTO_EPOCH;
   } else {
-    CALL3(Yerror,
-	  cstr_to_pstr("%s: stat failed: %s"),
-	  cstr_to_pstr(name),
-	  cstr_to_pstr(strerror(errno)));
+    unix_error("stat", name);
     /* Not executed. */
     flo.f = 0.0;
   }
   return (P) flo.i;
+}
+
+P YPfile_existsQ (P name) {
+  struct stat buf;
+  int res;
+  res = stat((PSTR) name, &buf);
+  if (res == 0)
+    return YPtrue;
+  else if (errno == ENOENT)
+    return YPfalse;
+  else
+    unix_error("stat", name);
+  /* Not executed. */
+  return YPfalse;
+}
+
+P YPfile_type (P name) {
+  struct stat buf;
+  int res;
+  res = stat((PSTR) name, &buf);
+  if (res == 0) {
+    if (S_ISREG(buf.st_mode))
+      return CALL1(Yfab_sym, cstr_to_pstr("file"));
+    else if (S_ISDIR(buf.st_mode))
+      return CALL1(Yfab_sym, cstr_to_pstr("directory"));
+    else
+      return CALL1(Yfab_sym, cstr_to_pstr("unknown"));
+  } else {
+    unix_error("stat", name);
+    /* Not executed. */
+    return CALL1(Yfab_sym, cstr_to_pstr("unknown"));
+  }
+}
+
+/* mkdir is available on Linux and GNU systems.  Other systems may not
+** bother to supply it!  I think you can find N different semi-portable
+** implementations in the GNU tar source code.  Yes, some Unix systems
+** really require you to invoke the 'mkdir' *program* to create a
+** directory. */
+P YPcreate_directory (P name) {
+  int res;
+  /* Rely on umask to set privileges. */
+  res = mkdir(name, S_IRWXU|S_IRWXG|S_IRWXO);
+  if (res != 0)
+    unix_error("mkdir", name);
+  return YPfalse;
 }
 
 /* OS */
@@ -1159,8 +1214,6 @@ char* sym (P adr) {
     return (char*)0;
 }
 
-extern P Yfab_sym;
-
 P YPbinding_name (P adr) {
   char* s = sym(adr);
   if (s == (char*)0)
@@ -1639,4 +1692,89 @@ P YPgrid_refresh () {
   refresh(); 
 #endif
   return YPfalse; 
+}
+
+static void process_runtime_module(
+  MODULE_INFO *module_info,
+  P create_module_fun,
+  P use_module_fun,    
+  P import_fun,
+  P runtime_binding_fun,    
+  P other_binding_fun,    
+  P export_fun)
+{
+  P modobj;
+  USE_INFO *use_info;
+  IMPORT_INFO *import_info;
+  BINDING_INFO *binding_info;
+  EXPORT_INFO *export_info;
+
+  /* Don't initialize ourself more than once. */
+  if (module_info->module_object)
+    return;
+  
+  /* Create our own module object. */
+  module_info->module_object =
+    CALL1(create_module_fun, cstr_to_pstr(module_info->module_name));
+  modobj = module_info->module_object;
+
+  /* Recursively initialize all the modules we depend upon, and mark
+  ** them as used. */
+  for (use_info = module_info->uses; use_info->module_info; use_info++) {
+    process_runtime_module(use_info->module_info,
+			   create_module_fun, use_module_fun,
+			   import_fun, runtime_binding_fun,
+			   other_binding_fun, export_fun);
+    CALL2(use_module_fun, modobj, use_info->module_info->module_object);
+  }
+
+  /* Import bindings into this module. */
+  for (import_info = module_info->imports;
+       import_info->variable_name;
+       import_info++)
+  {
+    CALLN(import_fun, 4, modobj,
+	  cstr_to_pstr(import_info->variable_name),
+	  import_info->module_info->module_object,
+	  cstr_to_pstr(import_info->original_name));
+  }
+  
+  /* Define bindings in this module. */
+  for (binding_info = module_info->bindings;
+       binding_info->variable_name;
+       binding_info++)
+  {
+    if (binding_info->location)
+      CALL3(runtime_binding_fun, modobj,
+	    cstr_to_pstr(binding_info->variable_name),
+	    YPlb((P)untag((P)binding_info->location)));
+    else
+      CALL2(other_binding_fun, modobj,
+	    cstr_to_pstr(binding_info->variable_name));
+  }
+
+  /* Export bindings from this module. */
+  for (export_info = module_info->exports;
+       export_info->variable_name;
+       export_info++)
+  {
+    CALL3(export_fun, modobj,
+	  cstr_to_pstr(export_info->variable_name),
+	  cstr_to_pstr(export_info->exported_as));
+  }
+}
+
+P YPbuild_runtime_modules(
+  P create_module_fun,
+  P use_module_fun,    
+  P import_fun,
+  P runtime_binding_fun,    
+  P other_binding_fun,    
+  P export_fun)
+{
+  process_runtime_module(proto_toplevel_module_info,
+			 create_module_fun, use_module_fun,
+			 import_fun, runtime_binding_fun,
+			 other_binding_fun, export_fun);
+  return YPfalse;
 }
