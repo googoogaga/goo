@@ -68,7 +68,7 @@
 
 (dm recurring-write (port|<out-port> x|<loc> d|<int> recur|<fun>)
   (puts port "&0x")
-  (num-to-str-base (%ib (%lu x)) 16))
+  (puts port (num-to-str-base (%ib (%lu x)) 16)))
 
 (dm recurring-write (port|<out-port> x|<num> d|<int> recur|<fun>)
   (if (== x <num>)
