@@ -15,8 +15,7 @@
 (if (not proto-mode-syntax-table)
     (let ((i 0))
       ;; let's just use Lisp's syntax for now...
-      (setq proto-mode-syntax-table (copy-syntax-table lisp-mode-syntax-table))
-      (set-syntax-table proto-mode-syntax-table)))
+      (setq proto-mode-syntax-table (copy-syntax-table lisp-mode-syntax-table))))
 
 (defvar proto-mode-abbrev-table nil "")
 (define-abbrev-table 'proto-mode-abbrev-table ())
@@ -43,12 +42,14 @@
   (setq imenu-generic-expression proto-imenu-generic-expression)
   (make-local-variable 'imenu-syntax-alist)
   (setq imenu-syntax-alist '(("+-*/.<>=?!$%_&~^:" . "w")))
+  (make-local-variable 'imenu-case-fold-search)
   (setq imenu-case-fold-search nil)
   (imenu-add-menubar-index)
   (make-local-variable 'lisp-indent-function)
   (set lisp-indent-function 'proto-indent-function)
   (make-local-variable 'indent-tabs-mode)
   (setq indent-tabs-mode nil)
+  (make-local-variable 'font-lock-defaults)
   (setq font-lock-defaults
         '((proto-font-lock-keywords	; by default, same as proto-font-lock-keywords-1
 	   proto-font-lock-keywords-1	
