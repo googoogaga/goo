@@ -300,6 +300,10 @@ ASSERT  (ASSERT ,test ,message ,@args)
 
         == (UNLESS ,test (ERROR ,message ,@args))
 
+FOR     (FOR ((,var ,val) ...) ,@body)
+
+  parallel iteration over collections using collection iteration protocol.
+
 2.3 READ MACROS
 
 QQ	(QUASIQUOTE ...) 
@@ -605,7 +609,7 @@ Prototype   <vec> (isa <flat>)
 
 Generic     vec ((elts ...) => <vec>)
 
-3.7.6.1 STRINGS
+3.7.6.2 STRINGS
 
 Prototype   <str> (isa <flat>)
 
@@ -614,6 +618,50 @@ Generic     str ((elts ...) => <str>)
 Generic     to-str ((x <any>) => <str>)
 
   returns string representation of object.
+
+3.7.6.3 STRETCHY VECTORS
+
+Prototype   <svec> (isa <flat>)
+
+Generic     svec ((elts ...) => <sec>)
+
+Generic     push ((c <svec>) (x <any>) => <svec>)
+
+  pushes element onto end of stretchy vector
+
+Generic     pop ((c <svec>) => <any>)
+
+  pops element from end of stretchy vector
+
+3.7.6 RANGES
+
+Prototype   <range> (isa <seq>)
+
+  represents series of numbers
+
+Generic     from ((from <num>) => <range>)
+
+Generic     from-by ((from <num>) (by <num>) => <range>)
+
+Generic     from-to ((from <num>) (to <num>) => <range>)
+
+Generic     from-to-by ((from <num>) (to <num>) (by <num>) => <range>)
+
+Generic     from-below ((from <num>) (below <num>) => <range>)
+
+Generic     from-below-by ((from <num>) (below <num>) (by <num>) => <range>)
+
+Generic     from-above ((from <num>) (above <num>) => <range>)
+
+Generic     from-above-by ((from <num>) (above <num>) (by <num>) => <range>)
+
+3.7.7 STEPS
+
+Prototype   <step> (isa <seq>)
+
+  represents step function
+
+Generic     first-then ((first <any>) (then <any>) => <step>)
 
 3.8 SYMBOLS
 
