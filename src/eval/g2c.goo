@@ -218,16 +218,13 @@
    (module-target-environment mod)))
 
 (dm generate-global-binding (out imported? gb)
-  (let ((name (binding-name gb)))
-    (format out "%s(%s,\"%s\",\"%s\");\n" 
-	    (if imported? "EXT" "DEF")
-	    (mangle-module-binding gb)
-            (mangle-string-literal (as <str> (binding-module-name gb)))
-	    (mangle-string-literal (as <str> name)))))
-
-(dm generate-global-binding (out imported? (gb <predefined-binding>)))
-(dm generate-global-binding (out imported? (gb <magic-binding>)))
-(dm generate-global-binding (out imported? (gb <macro-binding>)))
+  (when (== (binding-kind gb) 'global)
+    (let ((name (binding-name gb)))
+      (format out "%s(%s,\"%s\",\"%s\");\n" 
+              (if imported? "EXT" "DEF")
+              (mangle-module-binding gb)
+              (mangle-string-literal (as <str> (binding-module-name gb)))
+              (mangle-string-literal (as <str> name))))))
 
 ;;;; NAME MANGLING
 
@@ -501,7 +498,7 @@
   (for ((qb (rev qb*))) ;; TODO: BIP
     (with-statement (1 out)
       (format out "lit_%s = " (binding-name qb))
-      (generate-quotation out (binding-value qb)))))
+      (generate-quotation out (binding-info qb)))))
 
 (dm false-name ()
   (mangle-boot-name "%false"))
@@ -570,7 +567,9 @@
 (dg binding->c (binding out))
 
 (dm binding->c ((binding <module-binding>) out)
-  (write-string out (mangle-module-binding binding)))
+  (if (== (binding-kind binding) 'quotation)
+      (format out "lit_%s" (binding-name binding))
+      (write-string out (mangle-module-binding binding))))
 
 (dm binding->c ((binding <local-binding>) out)
   (write-string out (mangle-local-name (binding-name binding))))
@@ -581,9 +580,6 @@
     (mangle-local-marked-name 
      (binding-name binding) (binding-index binding))))
 
-(dm binding->c ((binding <quotation-binding>) out)
-  (format out "lit_%s" (binding-name binding)))
-
 ;;; WORKS FOR LOCAL- GLOBAL- PREDEFINED- REFERENCES EXCEPT FOR FREE-REFERENCES.
 
 (dg reference->c ((v <binding>) out))
@@ -591,7 +587,7 @@
 (dm reference->c ((v <binding>) out)
   (binding->c v out))
 
-(dm reference->c ((v <global-binding>) out)
+(dm reference->c ((v <module-binding>) out)
   (format out "CHKREF")
   (between-parentheses (out)
     (binding->c v out)))
@@ -792,7 +788,7 @@
 	(generate-self-recursive-call e f d out)
         (seq 
           (for ((arg (application-arguments e)))
-            (to-c arg f d out)) ;; DODO: COERCE TO (P)
+            (to-c arg f d out))
           (with-expression (e d out)
             (format out "(P)%s" 
                     (mangle-module-binding (application-binding e)))
@@ -806,7 +802,6 @@
     (if (== n 0)
         (with-used-expression (e d out)
           (generate-function-name out f))
-        ;; (format out "fun_%d" (closure-creation-index e))
         (seq (do (fun (x) (to-c x f d out)) (closure-creation-free e))
              (with-expression (e d out)
                (format out "FUNFAB")
@@ -892,7 +887,7 @@
   (generate-debug-name out (binding-name name)))
 
 ;; TODO: USE THIS WHEN CAN DIFF BETWEEN DM's AND DF's
-;; (dm generate-debug-name (out (name <global-binding>))
+;; (dm generate-debug-name (out (name <module-binding>))
 ;;   (binding->c name out))
 
 (dm to-c ((e <ast-generic>) f d out)
@@ -923,7 +918,8 @@
 
 (dm generate-function-name (out defn)
   (let ((name (function-name defn)))
-    (if (or (isa? name <global-binding>) (isa? name <runtime-binding>))
+    (if (and (isa? name <module-binding>) 
+             (mem? '(global runtime) (binding-kind name)))
 	(format out "%s" (mangle-module-binding name))
 	;; (format-out "UNNAMED %=\n" defn)
 	(if (== name #f)
@@ -934,7 +930,7 @@
 		      (mangle-raw-name name) (function-index defn)))))))
 
 (dm generate-function-forward (out defn)
-  (let ((bound? (isa? (function-name defn) <global-binding>)))
+  (let ((bound? (isa? (function-name defn) <module-binding>)))
     (format out (if bound?  "FUNFOR(" "LOCFOR("))
     (generate-function-name out defn)
     (format out ");\n")))

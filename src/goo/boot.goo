@@ -1476,6 +1476,17 @@
 	(set *boot-macro-expanders* (@pair expander *boot-macro-expanders*)))))
 
 ;;;
+;;; 14A. CURSES
+;;;
+
+(df grid-open () (%grid-open))
+(df grid-close () (%grid-close))
+(df grid-move (x y) (%grid-move (%iu x) (%iu y)))
+(df grid-read () (%cb (%grid-read)))
+(df grid-write (c) (%grid-write (%cu c)))
+(df grid-refresh () (%grid-refresh))
+
+;;;
 ;;; 15. EXPORTS
 ;;;
 
@@ -1596,7 +1607,14 @@
   %peek-char
   %read-char
   %write-char
-  %write-string)
+  %write-string
+
+  ;; %grid-open
+  ;; %grid-close
+  ;; %grid-move
+  ;; %grid-write
+  ;; %grid-refresh
+)
 
 ;; Regular exports.
 (export
@@ -1648,6 +1666,7 @@
   %vnul
 
   apply				;; %%apply
+  fapply                        ;; %fapply
   %call-next-method
   *boot-macro-expanders*	;;var
   *boot-macro-names*		;;var

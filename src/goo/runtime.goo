@@ -1299,8 +1299,8 @@
   #f)
 
 (dv <simple-condition> (isa <condition>))
-  (slot <simple-condition> (condition-message <str>))
-  (slot <simple-condition> (condition-arguments <str>))
+  (slot <simple-condition> (condition-message <str>)   "")
+  (slot <simple-condition> (condition-arguments <lst>) '())
 
 (dv <serious-condition> (isa <condition>))
 

@@ -9,16 +9,16 @@
 ;;; ENV
 
 ;;; Global binding box support.  Right now, we allocate storage boxes for
-;;; each <global-binding> lazily, and we assume the absence of a box 
+;;; each <module-binding> lazily, and we assume the absence of a box 
 ;;; means the binding is uninitialized.  When we implement a "LISP in
 ;;; Small Pieces"-style fast intepreter, we may want to change this around.
-(dm env-global-binding-value ((b <global-binding>) => <any>)
+(dm env-global-binding-value ((b <module-binding>) => <any>)
   (let ((box (binding-global-box b)))
     (if box
 	(global-box-value box)
 	(error "Unbound binding: %=" (binding-name b)))))
 
-(dm env-global-binding-value-setter (value (b <global-binding>) => <any>)
+(dm env-global-binding-value-setter (value (b <module-binding>) => <any>)
   (let ((box (binding-global-box b)))
     (unless box
       ;; Lazy box creation.
@@ -26,7 +26,7 @@
       (set box (set (binding-global-box b) (isa <global-box>))))
     (set (global-box-value box) value)))
 
-(dm env-global-binding-bound? ((b <global-binding>) => <log>)
+(dm env-global-binding-bound? ((b <module-binding>) => <log>)
   (let ((box (binding-global-box b)))
     (if box #t #f)))
 
@@ -129,7 +129,7 @@
 ;; TODO -- CLEAN UP BELOW
 (dm as-fun-name ((x <fun>) => <any>)            (fun-name x))
 (dm as-fun-name ((x <ast-function>) => <any>)   (as-fun-name (function-name x)))
-(dm as-fun-name ((x <global-binding>) => <any>) (binding-name x))
+(dm as-fun-name ((x <module-binding>) => <any>) (binding-name x))
 (dm as-fun-name ((x <sym>) => <sym>)            x)
 (dm as-fun-name ((x <any>) => <any>)            #f)
 
@@ -146,14 +146,15 @@
 	   ((7) (ifun (env f names a1 a2 a3 a4 a5 a6 a7) body))
 	   ((8) (ifun (env f names a1 a2 a3 a4 a5 a6 a7 a8) body))
 	   ((9) (ifun (env f names a1 a2 a3 a4 a5 a6 a7 a8 a9) body)))))
-    ;; TODO: HANDLE MORE THAN 7 CASE
+    ;; TODO: HANDLE MORE THAN 9 CASE
     (set (fun-name  efun) (as-fun-name f))
-    (set (fun-sig efun) (isa <sig>
-                          (set sig-names names)
-                          (set sig-specs (ast-eval-specs specs nary? env))
-                          (set sig-nary? nary?)
-                          (set sig-arity (- (fun-arity efun) (if nary? 1 0)))
-                          (set sig-value (if value (ast-eval value env) <any>))))
+    (set (fun-sig efun)
+         (isa <sig>
+           (set sig-names names)
+           (set sig-specs (ast-eval-specs specs nary? env))
+           (set sig-nary? nary?)
+           (set sig-arity (- (fun-arity efun) (if nary? 1 0)))
+           (set sig-value (if value (ast-eval value env) <any>))))
     efun))
 
 (dm ast-eval ((e <ast-method>) (env <loc-env>))
@@ -197,11 +198,10 @@
 (dm ast-eval ((e <bound?>) (env <loc-env>))
   (ast-eval-bound? e (reference-binding (bound?-reference e)) env))
 
-(dm ast-eval-bound? ((e <bound?>) (binding <global-binding>) (env <loc-env>))
-  (env-global-binding-bound? binding))
-
-(dm ast-eval-bound? ((e <bound?>) (binding <runtime-binding>) (env <loc-env>))
-  #t)
+(dm ast-eval-bound? ((e <bound?>) (binding <module-binding>) (env <loc-env>))
+  (select (binding-kind binding)
+    (('global) (env-global-binding-bound? binding))
+    (#t        #t)))
 
 (dm ast-eval-bound? ((e <bound?>) (binding <local-binding>) (env <loc-env>))
   #t)
@@ -222,11 +222,11 @@
   (let ((value (ast-eval (assignment-form e) env)))
     (set (env-local-reference-value env (assignment-reference e)) value)))
 
-(dm env-define-binding! ((b <runtime-binding>) v)
-  (set (env-runtime-value (binding-locative b)) v))
-
-(dm env-define-binding! ((b <global-binding>) v)
-  (set (env-global-binding-value b) v))
+(dm env-define-binding! ((b <module-binding>) v)
+  (select (binding-kind b)
+    (('runtime) (set (env-runtime-value (binding-locative b)) v))
+    (('global)  (set (env-global-binding-value b) v))
+    (#t         (error "Defining invalid binding kind %=" (binding-kind b)))))
 
 (dm ast-eval ((e <definition>) (env <loc-env>))
   (let ((value (ast-eval (assignment-form e) env)))
@@ -277,7 +277,7 @@
     (if (== (binding-name b) '%next-methods)
 	(let ((nms (env-binding-value env '%next-methods)))
 	  (if (== nms nul) #f nms))
-	(let ((f    (binding-value b))
+	(let ((f    (binding-info b))
 	      (args (ast-eval (application-arguments e) env)))
 	  (apply f args)))))
 
@@ -307,7 +307,8 @@
   (lab return
     (let ((rproc (fun ((env <loc-env>)) 
 		   (return (env-binding-value env 'x))))
-	  (exit  (export-proto-method rproc (lst 'x) (lst #f) #f #f rproc env)))
+	  (exit  (export-proto-method 
+                  rproc (lst 'x) (lst #f) #f #f rproc env)))
       ((ast-eval (bind-exit-main-fun e) env) exit))))
 
 (dm ast-eval ((e <unwind-protect>) (env <loc-env>))
@@ -327,7 +328,8 @@
 ;; to add a run-time shadow.
 ;; TODO - This function smells bad.
 (df init-environment-for-eval ((env <static-global-environment>))
-  (let ((b (ast-define-binding env '%pair #f (fun () (isa <global-binding>)))))
+  (ast-define-binding env '%next-methods #f 'predefined)
+  (let ((b (ast-define-binding env '%pair #f 'global)))
     (set (env-global-binding-value b) pair)))
 
 (export

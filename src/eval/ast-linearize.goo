@@ -250,9 +250,6 @@
   (slot <top-level-form> form-quotations '())
   (slot <top-level-form> form-definitions '())
 
-(dv <quotation-binding> (isa <binding>))
-  (slot <quotation-binding> binding-value)
-
 (dv <function-definition> (isa <flat-function>))
   (slot <function-definition> function-index)
   (slot <function-definition> function-temporaries '())
@@ -304,8 +301,9 @@
 	o
 	(let ((qb*   (program-quotations result))
 	      (index (len qb*))
-	      (qb    (isa <quotation-binding> 
-		       (set binding-name index) (set binding-value value))))
+	      (qb    (isa <module-binding> 
+                       (set binding-kind 'quotation)
+		       (set binding-name index) (set binding-info value))))
 	  (set (program-quotations result) (pair qb qb*))
 	  (set (form-quotations form)      (pair qb (form-quotations form)))
 	  (isa <global-reference> (set reference-binding qb))))))
@@ -404,8 +402,7 @@
 	  (let ((name
 		 (make-sym "---main-" i "---"))
 		(binding
-		 (ast-define-binding 
-		  r name #f (fun () (isa <predefined-binding>))))
+		 (ast-define-binding r name #f 'predefined))
 		(defn
 		 (isa <primitive-definition>
 		   (set function-name      binding)
@@ -565,7 +562,6 @@
   program-definitions
   program-form
   program-quotations
-  <quotation-binding>
   reference-offset
   reference-self?
   <renamed-local-binding>

@@ -1,10 +1,19 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(dm write ((out <output-port>) (x <global-binding>))
+(dm write ((out <output-port>) (x <module-binding>))
+  (write-binding out x (binding-kind x)))
+
+(dm write-binding ((out <output-port>) (x <module-binding>) (k <sym>))
+  (format out "MB_%s" (binding-name x)))
+
+(dm write-binding ((out <output-port>) (x <module-binding>) (k 'global))
   (format out "GB_%s" (binding-name x)))
 
-(dm write ((out <output-port>) (x <predefined-binding>))
+(dm write-binding ((out <output-port>) (x <module-binding>) (k 'predefined))
   (format out "PB_%s" (binding-name x)))
+
+(dm write-binding ((out <output-port>) (x <module-binding>) (k 'quotation))
+  (format out "QB(%= %=)" (binding-name x) (binding-value x)))
 
 (dm write ((out <output-port>) (x <local-binding>))
   (format out "LB");
@@ -13,9 +22,6 @@
   (when (binding-dotted? x)
     (format out "D"))
   (format out "_%s" (binding-name x)))
-
-(dm write ((out <output-port>) (x <magic-binding>))
-  (format out "MK_%s" (binding-name x)))
 
 (dm write ((out <output-port>) (x <local-reference>))
   (format out "LR^%s" (reference-binding x)))
@@ -117,9 +123,6 @@
   (format out "CC-%=(B %= F %=)" 
           (closure-creation-index x) (closure-creation-bindings x)
           (closure-creation-free x)))
-
-(dm write ((out <output-port>) (x <quotation-binding>))
-  (format out "QB(%= %=)" (binding-name x) (binding-value x)))
 
 (dm write ((out <output-port>) (x <top-level-form>))
   (format out "FRM(PG %= QS %= DS %=)" 
