@@ -1,4 +1,22 @@
+=== 0.111 BUGS ===
+
+x too few args blows up in dispatcher
+x don't type check prop inits
+x macro-expand doesn't work
+o ,', broken e.g., `(mif (,',pattern)) says unable to evaluate pattern
+o generic on stack instead of method
+o app is a macro
+o (apply | args) ;; translates to ((apply args))
+o (df x ((x|<int>) => <int>) ...) ;; blows up in mangler -- should be detected
+
+=== 0.110 BUGS ===
+
+* colon not allowed in compiled code
+* mangler doesn't handle weird chars or capitals
+* breaking out of compiler broken
+
 === 0.97 BUGS ===
+
 * EARLY ERRORS
 
 The files prt.c, boot.proto and runtime.proto makes calls to (error ...)
@@ -24,7 +42,12 @@ Actually, most of syntax.proto should be rewritten to use
 Talk to James about how the singleton cache is getting flushed.  He
 understands this; I have no idea what's going on.
 
+=== 0.95 BUGS ===
+
+next-method doesn't work in interpreted code
+
 === 0.92 BUGS ===
+
 0<= (ds (bar x) (list + 2 2))      
 0=> #f
 0<= (bar 2)

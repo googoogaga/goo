@@ -701,3 +701,41 @@ added
   objectify-with-subtransaction
 
 
+=== 0.111 ===
+
+summary
+
+  first version of goo
+
+=== 0.112 ===
+
+summary
+
+=== 0.113 ===
+
+summary
+
+  tweaks to initial goo
+  
+added
+
+  accumulators, zip, cycle
+
+=== 0.114 ===
+
+summary
+
+  basic bug fixes getting ready for a release
+
+changes
+
+  fixed macro-expand
+  fixed failed checks from below
+  changed from string-*-port to str-*-port
+
+removed
+
+added
+
+  arity check on dispatch
+  type check on props set during new

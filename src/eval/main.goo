@@ -17,8 +17,8 @@
 ;; Make sure the proto/user module gets compiled into our image.
 (use proto/user)
 
-(dv *goo-version* "0.112")
-(dv *goo-date*    "MAR 13, 2002")
+(dv *goo-version* "0.113")
+(dv *goo-date*    "MAR 14, 2002")
 
 (format out ";;; GOO\n")
 (format out ";;; JONATHAN BACHRACH\n")
