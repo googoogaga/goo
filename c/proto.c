@@ -33285,9 +33285,9 @@ loop:
   (((Ytop = CALL2(CHKREF(YPdefine_method),((BOUNDP(Ytop) != YPfalse)
     ? CHKREF(Ytop)
     : YPfalse),fun_top_1886)), (regsym(&Ytop,"top"))));
-  lit_1169 = YPsb((P)"0.85");
+  lit_1169 = YPsb((P)"0.86");
   (((YTproto_versionT = lit_1169), (regsym(&YTproto_versionT,"*proto-version*"))));
-  lit_1170 = YPsb((P)"MAY 30, 2001");
+  lit_1170 = YPsb((P)"JUN 05, 2001");
   (((YTproto_dateT = lit_1170), (regsym(&YTproto_dateT,"*proto-date*"))));
   lit_1171 = YPsb((P)";;; \n");
   (CALL2(CHKREF(Yformat),CHKREF(Yout),lit_1171));
