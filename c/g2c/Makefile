@@ -10,8 +10,8 @@ OBJS = \
 	goo/eval.o \
 	cols/pipe.o \
 	goo/boot.o \
-	goo/random.o \
 	goo/cols/col.o \
+	goo/random.o \
 	goo/cols/seqx.o \
 	goo/cols/seq.o \
 	goo/user.o \
@@ -37,12 +37,12 @@ OBJS = \
 	goo/cols/opts.o \
 	time/lock.o \
 	time/%lock.o \
-	time/event.o \
-	time/%event.o \
 	goo/cols/map.o \
 	goo/io/read.o \
 	eval/ast-linearize.o \
 	goo/cols/colx.o \
+	time/event.o \
+	time/%event.o \
 	goo/cols.o \
 	goo.o \
 	goo/system.o \
