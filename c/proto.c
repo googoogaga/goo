@@ -37163,9 +37163,9 @@ loop:
   (YPfalse);
   (YPfalse);
   (YPfalse);
-  lit_1103 = YPsb((P)"0.92");
+  lit_1103 = YPsb((P)"0.93");
   (((YmainYTproto_versionT = lit_1103), (regsym(&YmainYTproto_versionT,"main","*proto-version*"))));
-  lit_1104 = YPsb((P)"JUL 06, 2001");
+  lit_1104 = YPsb((P)"JUL 25, 2001");
   (((YmainYTproto_dateT = lit_1104), (regsym(&YmainYTproto_dateT,"main","*proto-date*"))));
   lit_1105 = YPsb((P)";;; \n");
   (CALL2(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),lit_1105));
