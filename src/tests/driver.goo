@@ -1,0 +1,137 @@
+;; (%trace-on)
+;; (%trace-off)
+
+;;; Some of these bugs apply to tests/driver, and some to tests/language,
+;;; I think.
+;;;
+;;; BUGS
+;;;
+;;; 1. need element-type and generator therein (fabs <str> 0 1)
+;;; 2. fab <range> 2 causes nyi which should be a real condition
+;;; 3. warnings shouldn't result in failure
+;;; 4. need way to debug object system and retest with undef?
+;;; 5. need split to debug <map>'s
+
+(use proto)
+
+(dv *tests* '())
+
+(dm add-test (name)
+  (set *tests* (del-dups (cat *tests* (lst name)))))
+
+(dm del-test (name)
+  (set *tests* (del *tests* name)))
+
+(dg run-tests ((group-name <sym>)))
+
+(ds (test-group ,name ,@tests)
+  (mif ((,name disabled) name)
+    `(del-test ',name)
+    `(seq (add-test ',name) 
+	(dm run-tests ((group-name ',name))
+	     ,@tests))))
+
+(export
+  add-test
+  del-test
+  run-tests
+  test-group)
+
+(dv *test-trace?* #t)
+(dv *test-doc*    #f)
+
+(export *test-trace?*)
+
+(dm do-test (group-name doc input-thunk)
+  (dlet ((*test-doc* doc))
+    (when *test-trace?* (format out "  %s\n" doc))
+    (input-thunk)))
+
+(dv <test-warning> (isa <simple-condition>))
+
+(dm recurring-write
+    ((port <output-port>) (x <test-warning>) (d <int>) (recur <fun>))
+  (write port (condition-message x)))
+
+(dm recurring-write
+    ((port <output-port>) (x <simple-condition>) (d <int>) (recur <fun>))
+  (apply format 
+    (cat (lst port (condition-message x)) (condition-arguments x))))
+
+(dm do-test-fn (group-name doc compare input-thunk output-thunk)
+  (dlet ((*test-doc* doc))
+    (when *test-trace?* (format out "  %s\n" doc))
+    (unless (compare (input-thunk) (output-thunk))
+      (sig (isa <test-warning> 
+	     (set condition-message (cat (as <str> group-name) ": " doc))
+	     (set condition-arguments '()))))))
+
+(dm do-test-eq (group-name doc input-thunk output-thunk)
+  (do-test-fn group-name doc == input-thunk output-thunk))
+
+(dm do-test-eqv (group-name doc input-thunk output-thunk)
+  (do-test-fn group-name doc = input-thunk output-thunk))
+
+(export
+  do-test
+  <test-warning>
+  do-test-fn
+  do-test-eq
+  do-test-eqv)
+
+(ds (test ,input)
+  `(do-test group-name 
+	    ,(to-str input)
+	    (fun () ,input)))
+
+(ds (test= ,input ,output)
+  `(do-test-eqv group-name
+		,(to-str input)
+		(fun () ,input) (fun () ,output)))
+
+(ds (test== ,input ,output)
+  `(do-test-eq group-name
+	       ,(to-str input)
+	       (fun () ,input) (fun () ,output)))
+
+(export
+  test
+  test=
+  test==)
+
+;; (def `(out ,@objects)
+;;   `(do write-string (lst ,@(map (fun (x) `(to-str ,x)) objects))))
+
+(dm run-tests-in (tst => (tup <lst> <lst>))
+  (let ((errors '()) (warnings '()))
+    (lab break
+      (try <condition>
+        (fun (condition resume)
+          (if (isa? condition <test-warning>)
+              (seq (pushf warnings (lst condition *test-doc*))
+                   (resume #f))
+              (seq (pushf errors (lst condition *test-doc*))
+                   (break #f))))
+	(tst)))
+      (tup errors warnings)))
+
+(dm run-all-tests (=> <Int>)
+  (newline out)
+  (let ((all-warnings '()) (all-errors '()))
+    (do (fun (tst)
+          (when tst
+	    (format out "Testing %=\n" tst)
+	    (let (((tup errors warnings) 
+		   (run-tests-in (fun () (run-tests tst)))))
+	      (do (fun (c) (format out "Warning: %=. Continuing...\n" c))
+		  warnings)
+	      (do (fun (c) (format out "Error: %=.\n" c))
+		  errors)
+	      (set all-warnings (cat! all-warnings warnings))
+	      (set all-errors   (cat! all-errors   errors)))))
+	*tests*)
+      (format out "Tautology completed with %= warnings and %= errors\n"
+	      (len all-warnings) (len all-errors))
+      (+ (len all-warnings) (len all-errors))))
+
+(export run-all-tests)
