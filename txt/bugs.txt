@@ -1,3 +1,33 @@
+=== 0.133 BUGS ===
+
+=== 0.131 BUGS ===
+
+o ,top doesn't work
+o missing object-class
+o document that macros are unhygienic at present
+o no as str method for true
+x add missing reader macro support
+x vec should print with #[] syntax
+o backslashes in gnumakefile
+o split out vec from flat-sequences in manual
+x special forms produce a rather odd error when evaluated:
+  goo/user 0<= dc
+  ERROR: No applicable methods error when calling #{Gen ast-evaluate
+  (<any>)} on (#{<module-binding> ....
+  [several more lines here]
+x goo segfaults when attempting to instantiate a class with no superclasses.
+  goo/user 0<= (dc foo ())
+  goo/user 0=> #f
+  goo/user 0<= (new foo)
+  zsh: segmentation fault  bin/goo
+x pop! range-error for vec
+x len-setter range-error
+x pow should use contagious-call
+x flo pow returns 1.0
+x use c3 algorithm
+x descendents works like children
+x adding a property after the fact crashes goo
+
 === 0.116 BUGS ===
 
 o rep should take return type decls

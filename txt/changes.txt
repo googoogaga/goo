@@ -989,3 +989,29 @@ changed
   made tup ret var names required because of ambiguity
   bit neg tests
   Makefile configs
+
+=== 0.133 ===
+
+summary
+
+  lots of bug fixes from first public release
+
+added
+
+changed
+
+  freebsd patches
+  ,top doesn't work
+  missing object-class
+  document that macros are unhygienic at present
+  add missing reader macro support
+  vec should print with #[] syntax
+  special forms produce a rather odd error when evaluated:
+  goo segfaults when attempting to instantiate a class with no superclasses.
+  pop! range-error for vec
+  len-setter range-error
+  pow should use contagious-call
+  flo pow returns 1.0
+  use c3 algorithm
+  descendents works like children
+  adding a property after the fact crashes goo
