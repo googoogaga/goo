@@ -249,9 +249,9 @@
 	  val
 	  (eval nxt)))))
 
-(dm ast-eval ((e <argument-list>) (env <loc-env>))
+(dm ast-eval ((e <arguments>) (env <loc-env>))
   (rep eval ((res '()) (args e))
-    (if (empty-argument-list? args)
+    (if (empty-arguments? args)
 	(rev! res)
 	(eval (pair (ast-eval (arguments-head args) env) res) 
 	      (arguments-tail args)))))

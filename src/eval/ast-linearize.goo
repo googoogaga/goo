@@ -7,11 +7,12 @@
   ;; (format out "WALKING %=\n" o)
   (for ((slot (object-slots o)))
     ;; (format out "  SLOT %=\n" slot)
-    (let ((getter (slot-getter slot))
-	  (x (slot-value o getter)))
-      (when (isa? x <program>)
-        ;; (format out "    UPDATING %=\n" x)
-	(set (slot-value o getter) (apply g (pair x args))))))
+    (let ((getter (slot-getter slot)))
+      (unless (== getter binding-value) ;; TODO: HACK
+	(let ((x (slot-value o getter)))
+	  (when (isa? x <program>)
+	    ;; (format out "    UPDATING %=\n" x)
+	    (set (slot-value o getter) (apply g (pair x args))))))))
   o)
 
 ;;; BOXING
@@ -124,19 +125,7 @@
 
 ;;; FLATTENING
 
-(dv <free-environment> (isa <program>))
-  (slot <free-environment> free-environment-head)
-  (slot <free-environment> free-environment-tail)
-
-(dv $empty-free-environment 
-  (isa <free-environment> 
-    (set free-environment-head #f) (set free-environment-tail #f)))
-
-(dm empty-free-environment ( => <free-environment>)
-  $empty-free-environment)
-
-(dm empty-free-environment? ((e <free-environment>) => <log>)
-  (== e $empty-free-environment))
+(def-list free-environment (isa <program>))
 
 (dm number-of ((o <free-environment>) => <int>)
   (if (empty-free-environment? o)
@@ -397,17 +386,14 @@
 	   (set function-index    index)))
 	(call
 	 (isa <predefined-application> 
-           (set application-binding
-		binding)
+           (set application-binding   binding)
 	   ;; (set application-function  
 	   ;;      (isa <closure-creation> 
            ;;        (set function-index        index)
 	   ;;        (set function-bindings     '())
 	   ;;        (set closure-creation-free (empty-free-environment))))
-	   (set application-arguments
-		(empty-argument-list))
-	   (set application-tail?
-		#f)
+	   (set application-arguments (empty-arguments))
+	   (set application-tail?     #f)
 	   )))
     ;; TODO: reverse definitions in forms
     (set (program-definitions o)

@@ -296,13 +296,13 @@
 
 (dp %untag (x) (%i>> x $tag-len))
 
-(dv $adr-tag (%raw 0))
+(ds ($adr-tag) `(%raw 0))
 
-(dp %indirect-object? (x) (%i= (%tag-bits x) $adr-tag))
+(dp %indirect-object? (x) (%i= (%tag-bits x) ($adr-tag)))
 
 (dp %traits-of (x)
   (let ((tag (%tag-bits x)))
-    (if (%bb (%i= tag $adr-tag))
+    (if (%bb (%i= tag ($adr-tag)))
         (%object-traits x)
         (%elt $direct-object-traits tag))))
 
@@ -728,16 +728,20 @@
 
 (dv <args> <lst>)
 
+(dp %%isa? (o1 o2 ps => <log>)
+  (if (@empty? ps)
+      #f
+      (if (@== (@head ps) o2)
+	  #t
+	  (%%isa? o1 o2 (@tail ps)))))
+
+(dp %object-parents (x => <parents>)
+  (%traits-parents (%traits-of x)))
+
 (dp %isa? (o1 o2 => <log>)
   (or (@== o2 <any>)
       (@== o1 o2)
-      (rep find ((ps (object-parents o1)))
-	(if (@empty? ps)
-	    #f
-	    (let ((o (@head ps)))
-	      (if (@== o o2)
-		  #t
-		  (find (@tail ps))))))))
+      (%%isa? o1 o2 (%object-parents o1))))
 
 (df isa? (o1 o2 => <log>)
   (%isa? o1 o2))
@@ -1103,7 +1107,7 @@
   (%traits-slots (%traits-of x)))
 
 (df object-parents (x => <parents>)
-  (%traits-parents (%traits-of x)))
+  (%object-parents x))
 
 ;;; slots
 

@@ -57,17 +57,11 @@
         (cat "$" (to-str name))
         (cat "{ obj(" (to-str (object-parents x)) ") }"))))
 
-;;; bottom
+;;; BOTTOM
 
 (dv bot (isa <any>)) ;; todo: should be disjoint from <any>
 
-;;; boolean
-
-;; (dv <log>  (isa <any>))
-
-;; (dv true  (isa <log>))
-
-;; (dv false (isa <log>))
+;;; BOOLEAN
 
 (dm to-str ((x #t) => <str>) "#t")
 (dm to-str ((x #f) => <str>) "#f")
@@ -77,7 +71,7 @@
       x
       (error "NO AS METHOD FOR %= AND %=" type x)))
 
-;; todo: deal with ==
+;; TODO: DEAL WITH ==
 
 (dm == (x y => <log>) (%bb (%eq? x y)))
 
@@ -156,9 +150,7 @@
 (dm to-digit ((digit <chr>) => <int>)
   (- (char->ascii digit) (char->ascii #\0)))
 
-;;; number
-
-;; (dv <num> (isa <any>))
+;;; NUMBER
 
 (dg contagious-type ((x <num>) (y <num>) => <num>))
 
@@ -306,10 +298,7 @@
        (let ((f (* (as <flo> s) (/ (as <flo> n) (as <flo> scale)))))
 	 (if seen-decimal-point? f (1st (truncate f))))))))
 
-;;; <int>
-
-;; (dv <int> (isa <num>))
-;;   (slot <int> val)
+;;; <INT>
 
 (dm contagious-type ((x <int>) (y <int>) => <int>)
   <int>)
@@ -428,10 +417,7 @@
 		  (pair #\- digit-list)
 		  (if (= num 0) "0" digit-list)))))
 
-;;; flo
-
-;; (dv <flo> (isa <num>))
-;;   (slot <flo> val)
+;;; FLO
 
 (df flo-bits ((x <flo>) => <int>)
   (%ib (%flo-bits (%fu x))))
@@ -486,11 +472,9 @@
 			  string)))))
     (if (< s 0) (cat "-" string) string)))
 
-;;; collection
+;;; COLLECTION
 
-;; (dv <col> (isa <any>))
-
-;;; todo: need test args and not-found handlers
+;;; TODO: NEED TEST ARGS AND NOT-FOUND HANDLERS
 
 (dm empty? ((c <col>) => <log>)
   (= (len c) 0))
@@ -525,7 +509,11 @@
     (do-key-vals (fun (key val) (set (elt x key) val)) key-vals)
     x))
 
-;; todo: align col's
+(dm len ((x <col>) => <int>)
+  (rep count ((s (ini-state x)) (i 0))
+    (if (fin-state? x s) i (count (nxt-state x s) (+ i 1)))))
+
+;; TODO: ALIGN COL'S
 (dm alter ((dst <col>) (src <col>) => <col>)
   (rep in ((ds (ini-state dst)) (ss (ini-state src)))
     (if (if (fin-state? dst ds) #t (fin-state? src ss))
@@ -626,15 +614,15 @@
 (dm mem? ((c <col>) x => <log>)
   (any? (fun (e) (== e x)) c))
 
-;;; bag
+;;; BAG
 
 (dv <bag> (isa <col>))
 
-;;; map
+;;; MAP
 
 (dv <map> (isa <col>))
 
-;;; assocs
+;;; ASSOCS
 
 (dv <assocs> (isa <map>))
   (slot <assocs> (assocs-test <fun>) ==)
@@ -665,11 +653,7 @@
             (set (head vals) val)
             (fnd (tail keys) (tail vals))))))
 
-;; TODO: NEED FIP
-
-;;; sequence
-
-;; (dv <seq> (isa <col>))
+;;; SEQUENCE
 
 (dm as ((d <seq>) (s <seq>) => <seq>)
   (alter (fab d (len s)) s))
@@ -703,13 +687,49 @@
 (dm pos ((x <seq>) v => <any>) ;; TODO: (false-or <int>)
   (find-key (curry == v) x))
 
+;; TODO: DEPRECATED
 (dm into ((dst <seq>) (src <seq>) (from <int>) (below <int>) => <seq>)
-  ;; todo: consult replace-subsequence!
   (rep in ((ds (ini-state dst)) (ss (ini-state src)))
     (if (if (fin-state? dst ds) #t (fin-state? src ss))
         dst
         (seq (set (now-elt dst ds)  (now-elt src ss))
              (in (nxt-state dst ds) (nxt-state src ss))))))
+
+(dm sub-setter
+    ((src <seq>) (dst <seq>) (from <int>) (below <int>) => <seq>)
+  (let (((dst-len <int>) (len dst))
+	((src-len <int>) (len src))
+	((del-len <int>) (- below from)))
+    (if (= del-len src-len) ;;  Can modify in place?
+	(rep find ((ds (ini-state dst)) (i 0))
+	  (if (= i from)
+	      (rep in ((ds ds) (ss (ini-state src)))
+		(if (fin-state? src ss)
+		    dst
+		    (seq (set (now-elt dst ds)  (now-elt src ss))
+			 (in (nxt-state dst ds) (nxt-state src ss)))))
+	      (find (nxt-state dst ds) (+ i 1))))
+	;; Don't know if dst is stretchy so we have to create a new one
+	(let ((new-len (+ (- dst-len del-len) src-len))
+	      (ndst    (fab dst new-len)))
+	  (rep copy ((nds (ini-state ndst)) (ds (ini-state dst)) (i 0))
+	    (if (= i from)
+		(rep insert ((nds nds) (ss (ini-state src)))
+		  (if (fin-state? src ss)
+		      (rep skip ((ds ds) (i from))
+			(if (= i below)
+			    (rep onto ((nds nds) (ds ds) (i below))
+			      (if (= i dst-len)
+				  ndst
+				  (seq (set (now-elt ndst nds) (now-elt dst ds))
+				       (onto (nxt-state ndst nds)
+					     (nxt-state dst ds) (+ i 1)))))
+			    (skip (nxt-state dst ds) (+ i 1))))
+		      (seq (set (now-elt ndst nds) (now-elt src ss))
+			   (insert (nxt-state ndst nds) (nxt-state src ss)))))
+		(seq (set (now-elt ndst nds) (now-elt dst ds))
+		     (copy (nxt-state ndst nds) (nxt-state dst ds) 
+			   (+ i 1)))))))))
 
 (dm rev ((x <seq>) => <seq>)
   (rep con ((seq '()) (sta (ini-state x)))
@@ -778,12 +798,9 @@
 (dm vals-to-str ((s <seq>) => <str>)
   (reduce (fun (s e) (cat s (if (empty? s) "" " ") (to-str e))) "" s))
 
-;;; list
+;;; LIST
 
-;; (dv <lst> (isa <seq>))
-;; (dv nil (isa <lst>))
-;;   (slot <lst> head nil)
-;;   (slot <lst> (tail <lst>) nil)
+(dv <list> <lst>)
 
 (dm to-str ((x <lst>) => <str>)
   (cat "(" (vals-to-str x) ")"))
@@ -791,37 +808,38 @@
 (dm pair (h (t <lst>))
   (isa <lst> (set head h) (set tail t)))
 
+(dm empty ((c <lst>) => <lst>) '())
+
+(dm empty? ((c <lst>) => <log>) (== c (empty c)))
+
 (dm fab ((x <lst>) (s <int>) => <lst>)
-  (rep fab (((i <int>) s) ((res <lst>) '()))
+  (rep fab (((i <int>) s) ((res <lst>) (empty x)))
     (if (> i 0)
-        (fab (- i 1) (isa <lst> (set tail res)))
+        (fab (- i 1) (isa x (set tail res)))
 	res)))
 
-;; todo: do this in general for as
-(dm as ((p <lst>) (x <lst>) => <lst>)
-  x)
-
-(dm empty ((c <lst>) => <col>)
-  '())
-
-(dm lst ((objects ...))
-  (rep build (((index <int>) (- (len objects) 1)) ((result <lst>) '()))
-    (if (< index 0)
-        result
-        (build (- index 1) (pair (elt objects index) result)))))
+;; TODO: DO THIS IN GENERAL FOR AS
+(dm as ((p <lst>) (x <lst>) => <lst>) x)
 
 (dm fabs ((c <lst>) (objects ...))
-  (apply lst objects))
+  (rep build (((index <int>) (- (len objects) 1)) ((result <lst>) (empty c)))
+    (if (< index 0)
+        result
+        (build (- index 1) 
+	       (isa c (set head (elt objects index)) (set tail result))))))
+
+(dm lst ((objects ...))
+  (apply fabs (pair <lst> objects)))
+
+(dv list lst)
 
 (dm len ((x <lst>) => <int>)
   (rep sum (((count <int>) 0) ((x <lst>) x))
-    (if (== x '())
-        count
-        (sum (+ count 1) (tail x)))))
+    (if (empty? x) count (sum (+ count 1) (tail x)))))
 
 (dm elt ((x <lst>) (key <int>) => <any>)
   (rep fnd (((count <int>) 0) ((x <lst>) x))
-    (if (== x '())
+    (if (empty? x)
         nul ;; TODO: RANGE ERROR
         (if (== count key)
             (head x)
@@ -829,7 +847,7 @@
 
 (dm elt-setter (z (x <lst>) (key <int>))
   (rep fnd (((count <int>) 0) ((x <lst>) x))
-    (if (== x '())
+    (if (empty? x)
         nul ;; TODO: RANGE ERROR
         (if (== count key)
             (set (head x) z)
@@ -839,8 +857,8 @@
   (pair x c))
 
 (dm rev! ((c <lst>) => <lst>)
-  (rep loop ((l c) (r '()))
-    (if (== l '())
+  (rep loop ((l c) (r (empty c)))
+    (if (empty? l)
 	r
 	(let ((t (tail l)))
 	  (set (tail l) r)
@@ -855,68 +873,45 @@
 
 (dm last ((x <lst>) => <any>)
   (rep fnd ((x x) (px x))
-    (if (empty? x)
-	(head px)
-	(fnd (tail x) x))))
+    (if (empty? x) (head px) (fnd (tail x) x))))
 
-(dm ini-state ((c <lst>) => <lst>)
-  c)
+(dm ini-state ((c <lst>) => <lst>) c)
 
-(dm fin-state? ((_ <lst>) (state <lst>) => <log>)
-  (== state '()))
+(dm fin-state? ((_ <lst>) (state <lst>) => <log>) (empty? state))
 
-(dm nxt-state ((_ <lst>) (state <lst>) => <lst>)
-  (tail state))
+(dm nxt-state ((_ <lst>) (state <lst>) => <lst>) (tail state))
 
-(dm now-elt ((_ <lst>) (state <lst>) => <any>)
-  (head state))
+(dm now-elt ((_ <lst>) (state <lst>) => <any>) (head state))
 
-(dm now-elt-setter (z (_ <lst>) (state <lst>))
-  (set (head state) z))
+(dm now-elt-setter (z (_ <lst>) (state <lst>)) (set (head state) z))
 
 (dm now-key ((c <lst>) (state <lst>) => <int>)
   (rep fnd (((key <int>) 0) ((c <lst>) c))
-    (if (== c state)
-        key
-        (fnd (+ key 1) (tail c)))))
+    (if (== c state) key (fnd (+ key 1) (tail c)))))
 
-(dm copy-state ((_ <lst>) (state <lst>) => <lst>)
-  state)
+(dm copy-state ((_ <lst>) (state <lst>) => <lst>) state)
 
-;;; <tup>
-
-;; (dv <tup> <lst>)
+;;; TUPLE
 
 (dv tup lst)
 
-;;; <flat>
+;;; <FLAT>
 
-;; (dv <flat> (isa <seq>))
+(dm ini-state ((c <flat>) => <int>) 0)
 
-(dm ini-state ((c <flat>) => <int>)
-  0)
+(dm fin-state? ((c <flat>) (state <int>) => <log>) (== state (len c)))
 
-(dm fin-state? ((c <flat>) (state <int>) => <log>)
-  (== state (len c)))
+(dm nxt-state ((_ <flat>) (state <int>) => <int>) (+ state 1))
 
-(dm nxt-state ((_ <flat>) (state <int>) => <int>)
-  (+ state 1))
+(dm now-elt ((c <flat>) (state <int>) => <any>) (low-elt c state))
 
-(dm now-elt ((c <flat>) (state <int>) => <any>)
-  (low-elt c state))
+(dm now-elt-setter (z (c <flat>) (state <int>)) (set (low-elt c state) z))
 
-(dm now-elt-setter (z (c <flat>) (state <int>))
-  (set (low-elt c state) z))
+(dm now-key ((_ <flat>) (state <int>) => <int>) state)
 
-(dm now-key ((_ <flat>) (state <int>) => <int>)
-  state)
+(dm copy-state ((_ <flat>) (state <int>) => <int>) state)
 
-(dm copy-state ((_ <flat>) (state <int>) => <int>)
-  state)
-
-;;; vector
-
-;; (dv <vec> (isa <flat>))
+;;; VECTOR
 
 (dm empty ((c <vec>) => <vec>)
   %vnul)
@@ -950,7 +945,7 @@
 (dm to-str ((x <vec>) => <str>)
   (cat "#(" (vals-to-str x) ")"))
 
-;;; stretchy-vector
+;;; STRETCHY-VECTOR
 
 (dv <buf> (isa <flat>))
   (slot <buf> (buf-len <int>) 0)
@@ -1131,9 +1126,7 @@
 (dm to-str ((x <buf>) => <str>) 
   (cat "#[" (vals-to-str x) "]"))
 
-;;; string
-
-;; (dv <str> (isa <flat>))
+;;; STRING
 
 (dm empty ((c <str>) => <str>)
   %snul)
@@ -1170,10 +1163,7 @@
 (dm to-str ((x <str>) => <str>)
   x)
 
-;;; symbol
-
-;; (dv <sym> (isa <any>))
-;;   (slot <sym> (sym-name str))
+;;; SYMBOL
 
 (dm as ((_ <str>) (s <sym>) => <str>)
   (sym-name s))
@@ -1192,9 +1182,7 @@
 (dm to-str ((x <sym>) => <str>)
   (sym-name x))
 
-;;;
 ;;; FUNCTIONAL 
-;;;
 
 (dm identity (x) x)
 
@@ -1210,7 +1198,7 @@
 (dm always (x => <fun>)
   (fun ((args ...)) x))
 
-;;; conditions
+;;; CONDITIONS
 
 (dv <condition> (isa <any>))
 
@@ -1289,9 +1277,7 @@
 (df type-error (arg type)
   (error "TYPE ERROR %= SHOULD BE A %=" arg type))
 
-;;;
 ;;; LOCATIVES
-;;; 
 
 ;; (dv <loc> (isa <any>))
 ;;   (slot <loc> locative-dat)
@@ -1302,17 +1288,13 @@
 (df locative-value-setter (z (x <loc>) => <any>)
   (set (%locative-value x) z))
 
-;;;
 ;;; APPLICATION INPUT
-;;;
 
 (df app-filename () (%app-filename))
 
 (df app-args () (%app-args))
 
-;;;
 ;;; PORTS
-;;;
 
 (dv <port> (isa <any>))
   (slot <port> port-handle)

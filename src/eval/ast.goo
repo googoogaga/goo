@@ -41,9 +41,10 @@
   (slot <predefined-binding> binding-value       #f)
 
 (dv <local-binding> (isa <binding>))
-  (slot <local-binding> binding-mutable? #f)
+  (slot <local-binding> binding-value           #f)
+  (slot <local-binding> binding-mutable?        #f)
   (slot <local-binding> binding-dynamic-extent? #t)
-  (slot <local-binding> binding-dotted?  #f)
+  (slot <local-binding> binding-dotted?         #f)
 
 ;;; descriptions
 
@@ -70,6 +71,8 @@
 
 (dv <magic-binding> (isa (<global-binding> <reference>)))
   (slot <magic-binding> binding-handler)
+
+(dv <macro-binding> (isa <magic-binding>))
 
 ;; DEAL WITH INITIALIZE
 
@@ -142,18 +145,28 @@
   (slot <alternative> alternative-consequent)
   (slot <alternative> alternative-alternant)
 
-(dv <sequential> (isa <program>))
-  (slot <sequential> sequential-head)
-  (slot <sequential> sequential-tail)
+(ds (def-list ,name (isa ,@supers))
+  (let ((class  (make-sym "<" name ">"))
+	(head   (make-sym name "-head")) ;; COMPAT
+	(tail   (make-sym name "-tail")) ;; COMPAT
+	(head-setter (make-sym head "-setter")) ;; COMPAT
+	(tail-setter (make-sym tail "-setter")) ;; COMPAT
+	(empty  (make-sym "empty-" name)) ;; COMPAT
+	($empty (make-sym "$" empty))
+	(empty? (make-sym empty "?"))) ;; COMPAT
+    `(seq (dv ,class (isa (<lst> ,@supers)))
+	  (dv ,head head) ;; COMPAT
+	  (dv ,tail tail) ;; COMPAT
+	  (dv ,head-setter head-setter) ;; COMPAT
+	  (dv ,tail-setter tail-setter) ;; COMPAT
+	  (dv ,$empty (isa ,class (set ,head #f) (set ,tail #f)))
+	  ;; OLD MECHANISM
+	  (dm ,empty (=> ,class) ,$empty)
+	  (dm ,empty? ((e ,class) => <log>) (== e ,$empty))
+	  ;; NEW MECHANISM
+	  (dm empty ((e ,class) => ,class) ,$empty))))
 
-(dv $empty-sequential 
-  (isa <sequential> (set sequential-head #f) (set sequential-tail #f)))
-
-(dm empty-sequential (=> <sequential>)
-  $empty-sequential)
-
-(dm empty-sequential? ((e <sequential>) => <log>)
-  (== e $empty-sequential))
+(def-list sequential (isa <program>))
 
 (dv <constant> (isa <program>))
   (slot <constant> constant-value)
@@ -175,22 +188,11 @@
   (slot <fix-let> fix-let-arguments)
   (slot <fix-let> fix-let-body)
 
-(dv <argument-list> (isa <program>))
-  (slot <argument-list> arguments-head)
-  (slot <argument-list> arguments-tail)
+(def-list arguments (isa <program>))
 
-(dv $argument-empty-list 
-  (isa <argument-list> (set arguments-head #f) (set arguments-tail #f)))
-
-(dm empty-argument-list (=> <argument-list>)
-  $argument-empty-list)
-
-(dm empty-argument-list? ((e <argument-list>) => <log>)
-  (== e $argument-empty-list))
-
-(dm as ((c <lst>) (e <argument-list>) => <lst>)
+(dm as ((c <lst>) (e <arguments>) => <lst>)
   (rep loop ((res '()) (e e))
-    (if (empty-argument-list? e)
+    (if (empty-arguments? e)
 	(rev! res)
 	(loop (pair (arguments-head e) res) (arguments-tail e)))))
 
@@ -270,10 +272,19 @@
 ;;;; CONVERT TO AST FORM
 
 (dm objectify ((e <lst>) (r <static-environment>) tail? => <any>)
-  (let ((m (objectify (head e) r tail?)))
-    (if (isa? m <magic-binding>)
-	(objectify ((binding-handler m) e r tail?) r tail?)
-	(objectify-application m (tail e) r tail?))))
+  (objectify-list (objectify (head e) r #f) e r tail?))
+
+(dm objectify-list
+    ((f <any>) (e <lst>) (r <static-environment>) tail? => <any>)
+  (objectify-application f (tail e) r tail?))
+
+(dm objectify-list
+    ((f <magic-binding>) (e <lst>) (r <static-environment>) tail? => <any>)
+  ((binding-handler f) e r tail?))
+
+(dm objectify-list
+    ((f <macro-binding>) (e <lst>) (r <static-environment>) tail? => <any>)
+  (objectify ((binding-handler f) e r tail?) r tail?))
 
 (dm objectify ((e <sym>) (r <static-environment>) tail? => <any>)
   (objectify-symbol e r))
@@ -369,18 +380,18 @@
 
 (dm process-nary-closed-application (f e* r tail? => <fix-let>)
   (loc ((pack-nary-args (e*) ;; TODO: COULD BE SHARED WITH PAIRIZE
-	   (if (empty-argument-list? e*)
+	   (if (empty-arguments? e*)
 	       (lst 'quote '())
 	       (lst '%pair (arguments-head e*) 
 		     (pack-nary-args (arguments-tail e*)))))
         (gather-arguments (e* v*)
 	  (if (binding-dotted? (head v*))
-	      (isa <argument-list>
+	      (isa <arguments>
 		   (set arguments-head (objectify (pack-nary-args e*) r #f))
-		   (set arguments-tail (empty-argument-list)))
-	      (if (empty-argument-list? e*)
+		   (set arguments-tail (empty-arguments)))
+	      (if (empty-arguments? e*)
 		  (objectify-error "incorrect dotted arity" f e*)
-		  (isa <argument-list> 
+		  (isa <arguments> 
 		       (set arguments-head 
 			    (arguments-head e*))
 		       (set arguments-tail 
@@ -397,13 +408,13 @@
  
 (dm convert2arguments ((e* <lst>) => <any>)
   (if (empty? e*)
-      (empty-argument-list)
-      (isa <argument-list>
+      (empty-arguments)
+      (isa <arguments>
 	   (set arguments-head (head e*))
 	   (set arguments-tail (convert2arguments (tail e*))))))
 
-(dm number-of ((o <argument-list>) => <int>)
-  (if (empty-argument-list? o)
+(dm number-of ((o <arguments>) => <int>)
+  (if (empty-arguments? o)
       0
       (+ 1 (number-of (arguments-tail o)))))
 
@@ -496,7 +507,7 @@
       (let ((binding 
 	     (ast-define-binding 
 	      r name
-	      (fun () (isa <magic-binding>)))))
+	      (fun () (isa <macro-binding>)))))
 	(set (binding-handler binding) expand)
 	(isa <constant> (set constant-value #f))))))
 
@@ -629,7 +640,7 @@
 (dm objectify-binding (n (b <runtime-binding>) r => <runtime-reference>)
   (isa <runtime-reference> (set reference-binding b)))
 
-(dm objectify-binding (n (b <predefined-binding>) r => <predefined-binding>)
+(dm objectify-binding (n (b <predefined-binding>) r => <predefined-reference>)
   (isa <predefined-reference> (set reference-binding b)))
 
 ;;; a free binding is defined to be a global binding defined on the fly.
@@ -665,7 +676,9 @@
 	 (map2 sexpr-make-anonymous-method sigs bodies))
 	(functions
 	 (map (rcurry objectify new-r #f) function-forms)))
-    (do2 (fun (x n) (set (function-name x) n)) functions bindings)
+    ;; TODO: CIRCULARITIES IN AST
+    (do2 (fun (f b) (set (function-name f) b) (set (binding-value b) f)) 
+	 functions bindings)
     (isa <locals>
 	 (set locals-bindings  bindings)
 	 (set locals-functions functions)
@@ -775,8 +788,8 @@
     ((r <static-global-environment>) => <static-global-environment>)
   r)
 
-(dm find-binding (name (r <static-local-environment>) => (type-or <binding> #f))
-  (rep loop ((bindings (environment-bindings r)))
+(dm find-binding (name (r <static-local-environment>) => <any>)
+  (rep loop ((bindings (environment-bindings r))) ;; TODO: => (or <binding> #f)
     (if (empty? bindings)
 	(find-binding name (environment-next r))
 	(if (== name (binding-name (head bindings)))
@@ -1144,9 +1157,9 @@
 (dv *static-global-environment*                 $empty-static-environment)
 
 (df init-ast ()
-  (let (((tup sys-env  usr-env)      (init-static-global-environment)))
-    (set *static-predefined-global-environment*      sys-env)
-    (set *static-global-environment*                 usr-env)))
+  (let (((tup sys-env  usr-env) (init-static-global-environment)))
+    (set *static-predefined-global-environment* sys-env)
+    (set *static-global-environment*            usr-env)))
 
 (df ct-env ()      *static-global-environment*)
 
