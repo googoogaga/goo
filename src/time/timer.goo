@@ -30,7 +30,7 @@
 ;; (dv t (fab-timer 1000 cb))
 ;; (timer-start t)
 
-(df cb (x|<timer>) (format out "TICK %d\n" (timer-ticks x)))
+(df cb (x|<timer>) (msg out "TICK %d\n" (timer-ticks x)))
 (df timer-dispatcher (x|<timer> max|<int>) 
   (for ((i (below max))) (timer-poll x)))
 

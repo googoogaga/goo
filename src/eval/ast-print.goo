@@ -8,16 +8,16 @@
 (dv <out-port> <out-port>)
 
 (dm write-binding (out|<out-port> x|<module-binding> k|<sym>)
-  (format out "MB_%s" (binding-name x)))
+  (msg out "MB_%s" (binding-name x)))
 
 (dm write-binding (out|<out-port> x|<module-binding> k|(t= 'global))
-  (format out "GB_%s" (binding-name x)))
+  (msg out "GB_%s" (binding-name x)))
 
 (dm write-binding (out|<out-port> x|<module-binding> k|(t= 'predefined))
-  (format out "PB_%s" (binding-name x)))
+  (msg out "PB_%s" (binding-name x)))
 
 (dm write-binding (out|<out-port> x|<module-binding> k|(t= 'quotation))
-  (format out "QB(%= %=)" (binding-name x) (binding-value x)))
+  (msg out "QB(%= %=)" (binding-name x) (binding-value x)))
 
 (dm ast-write (out|<out-port> x|<any> d|<int>)
   (write out x))
@@ -31,16 +31,16 @@
     (write out "M"))
   ;; (when (binding-dotted? x)
   ;;   (write out "D"))
-  (format out "_%s" (binding-name x)))
+  (msg out "_%s" (binding-name x)))
 
 (dm ast-write (out|<out-port> x|<local-reference> d|<int>)
-  (format out "LR^%s" (reference-binding x)))
+  (msg out "LR^%s" (reference-binding x)))
 
 (dm ast-write (out|<out-port> x|<global-reference> d|<int>)
-  (format out "GR^%s" (reference-binding x)))
+  (msg out "GR^%s" (reference-binding x)))
 
 ;; (dm ast-write (out|<out-port> x|<predefined-reference> d|<int>)
-;;   (format out "PR^%s" (reference-binding x)))
+;;   (msg out "PR^%s" (reference-binding x)))
 
 (ds (ast-between-parentheses-spaced (,out-val ,depth-val) ,@body)
   (let ((out-var (gensym)) (depth-var (gensym)))
@@ -98,7 +98,7 @@
   (do-ast-write-list out x "(SEQ" ")" d #f ast-write))
 
 (dm ast-write (out|<out-port> x|<constant> d|<int>)
-  (format out "C(%=)" (constant-value x)))
+  (msg out "C(%=)" (constant-value x)))
 
 (dm ast-write (out|<out-port> x|<regular-application> d|<int>)
   (ast-between-parentheses-spaced (out d)
@@ -134,38 +134,38 @@
     "MON" (monitor-handler x) (monitor-main-thunk x)))
 
 (dm ast-write (out|<out-port> x|<closure-creation> d|<int>)
-  (format out "CC-%=(F %=)" 
+  (msg out "CC-%=(F %=)" 
           (closure-creation-index x) (closure-creation-free x)))
 
 (dm ast-write (out|<out-port> x|<free-reference> d|<int>)
-  (format out "FR^%s" (reference-binding x)))
+  (msg out "FR^%s" (reference-binding x)))
 
 (dm ast-write (out|<out-port> x|<box-creation> d|<int>)
-  (format out "BC(%=)" (box-reference x)))
+  (msg out "BC(%=)" (box-reference x)))
 
 (dm ast-write (out|<out-port> x|<box-read> d|<int>)
-  (format out "BR(%=)" (box-reference x)))
+  (msg out "BR(%=)" (box-reference x)))
 
 (dm ast-write (out|<out-port> x|<box-write> d|<int>)
-  (format out "BW(%= %=)" (box-reference x) (box-form x)))
+  (msg out "BW(%= %=)" (box-reference x) (box-form x)))
 
 (dm function-kind (x|<ast-function>)
   "F")
 
 ;; (dm function-kind (x|<function-definition>)
-;;   (format-to-string "FD-%=" (function-index x)))
+;;   (msg-to-str "FD-%=" (function-index x)))
 ;; 
 ;; (dm function-kind (x|<method-definition>)
 ;;   "MD")
 ;; 
 ;; (dm function-kind (x|<primitive-definition>)
-;;   (format-to-string "PD-%=" (function-name x)))
+;;   (msg-to-str "PD-%=" (function-name x)))
 
 ;; (dm ast-write (out|<out-port> x|<top-level-form> d|<int>)
-;;   (format out "FRM(PG %= QS %= DS %=)" 
-;;           (form-program x) (form-quotations x) (form-definitions x)))
+;;   (msg out "FRM(PG %= QS %= DS %=)" 
+;;        (form-program x) (form-quotations x) (form-definitions x)))
 
 ;; (dm ast-write (out|<out-port> x|<flattened-program> d|<int>)
-;;   (format out "PG(FM %=\n   QS %=\n   DS %=)" 
-;;           (program-form x) (program-quotations x) (program-definitions x)))
+;;   (msg out "PG(FM %=\n   QS %=\n   DS %=)" 
+;;        (program-form x) (program-quotations x) (program-definitions x)))
 

@@ -3,6 +3,7 @@
 (use goo/types)
 (use goo/math)
 (use goo/cols/col)
+(use goo/cols/colx)
 (use goo/cols/seq)
 
 ;; 3.7.6 FLAT SEQUENCES

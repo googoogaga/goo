@@ -15,7 +15,7 @@
  rep-len
  rep-fab
  rep-fill!
- rep-into!
+ (dg rep-into! (d|<rep> s => <rep>))
  rep-nul
  rep-elt
  rep-elt-setter
@@ -34,12 +34,20 @@
       (fill (+ i 1))))
   x)
 
-(df rep-into! (d|<rep> s|<rep> => <rep>)
+(dm rep-into! (d|<rep> s|<rep> => <rep>)
   (def l (rep-len d))
   (rep into ((i 0))
     (when (< i l)
       (set (rep-elt d i) (rep-elt s i))
       (into (+ i 1))))
+  d)
+
+(dm rep-into! (d|<rep> s|<col> => <rep>)
+  (def l (rep-len d))
+  (rep into ((i 0) (e (enum s)))
+    (when (< i l)
+      (set (rep-elt d i) (now e))
+      (into (+ i 1) (nxt e))))
   d)
 
 (df rep-fab (s|<int> fill => <rep>)

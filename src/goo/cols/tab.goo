@@ -42,23 +42,22 @@
   ;; The actual table data representation
   (dp %data (x|<tab-vec> => <rep>))
   ;; GC state
-  (dp %gc-state (x|<tab-vec> => <any>))
+  ;; (dp %gc-state (x|<tab-vec> => <any>))
 
 (dp %count (x|<tab> => <int>) 0)
 (dp %vector (x|<tab> => <tab-vec>))
 
 (exported
- (dg tab-test (x|<tab> => <fun>))
  (dg tab-hash (x|<tab> => <fun>))
  
- (dv $permanent-hash-state #f)
- (df tab-gc-state ())
+ ;; (dv $permanent-hash-state #f)
+ ;; (df tab-gc-state ())
  
  (dg id-hash (x))
 
  (dc <str-tab> (<tab>))
  
- (df case-insensitive-string-hash (x|<str> => (tup hi|<int> hash-state)))
+ (df case-insensitive-string-hash (x|<str> => <int>))
  (df case-insensitive-string-equal (x|<str> y|<str> => <log>))
  )
 
@@ -124,18 +123,14 @@
 (dv *debug-tables?* #f)
 
 ;; (df trace (port msg (args ...))
-;;  (and *debug-tables?* (app format port msg args))))
+;;  (and *debug-tables?* (app msg port msg args))))
       
 
-(dm tab-test (_|<tab> => <fun>) ==)
+(dm key-test (_|<tab> => <fun>) ==)
 (dm tab-hash (_|<tab> => <fun>) id-hash)
 
 (dv $empty-cell-marker '("empty cell"))
 (dv $vacated-cell-marker '("vacated cell"))
-
-(df hash-moduli
-    (hash|<int> primary|<int> secondary|<int> => (tup index|<int> offset|<int>))
-  (tup (mod hash primary) (+ (mod hash secondary) 1)))
 
 (dm fab ((type (t< <tab>)) size|<int> => <tab>)
   ;; (trace out "FAB %= SIZE %=\n" type size)
@@ -149,48 +144,44 @@
   table)
 
 ;; (ds (with-hash ((tup ,bucket-index ,bucket-offset) (,table ,key)) ,@body)
-;;   `(let ((test-function (tab-test ,table))
+;;   `(let ((test-function (key-test ,table))
 ;;           (hash-function (tab-hash ,table))
-;;           ((tup (hash <int>) state) (hash-function ,key))
+;;           ((hash <int>) (hash-function ,key))
 ;;           (vector (%vector table))
-;;           ((tup ,bucket-index ,bucket-offset)
-;;            (hash-moduli 
-;;             hash (%primary-modulus vector) (%secondary-modulus vector))))
+;;           (,bucket-index (mod hash (%primary-modulus vector)))
+;;           (,bucket-offset (+ (mod hash (%secondary-modulus vector)) 1)))
 ;;          ,@body))
 
+(df mod- (i d m) (let ((i (- i d))) (if (< i 0) (+ i m) i)))
+
 (dm elt-or (table|<tab> key default => <any>)
-  (esc return
-    (def test-function (tab-test table))
-    (def hash-function (tab-hash table))
-    (def vector        (%vector table))
-    (def n-buckets     (%n-buckets vector))
-    (def bucket-depth  (%bucket-depth vector))
-    (def (tup (hash <int>) state) (hash-function key))
-    (def (tup bucket-index bucket-offset)
-      (hash-moduli 
-       hash (%primary-modulus vector) (%secondary-modulus vector)))
-    ;; Search each bucket
-    (rep outer ((probes 0))
-      (when (< probes n-buckets)
-        (def index (* bucket-index (* bucket-depth 2)))
-        (rep inner ((i 0) (this-bucket-raw-index index))
-          (when (< i bucket-depth)
-            (def this-key (@elt vector this-bucket-raw-index))
-            (when (== this-key $empty-cell-marker)
-              (return default))
-            ;; N.B. Don't look at already vacated cells along
-            ;; the collision chain 
-            (when (and;; (~== this-key $vacated-cell-marker)
-                   (test-function key this-key))
-              (return (@elt vector (+ this-bucket-raw-index bucket-depth))))
-            (inner (+ i 1) (+ this-bucket-raw-index 1))))
-        ;; Not in this bucket try the next one
-        (decf bucket-index bucket-offset)
-        (when (neg? bucket-index)
-          (incf bucket-index n-buckets))
-        (outer (+ probes 1))))
-    ;; Table totally full???  That's not right
-    (error "The table is totally full this shouldn't happen")))
+  (def test-function (key-test table))
+  (def vector        (%vector table))
+  (def n-buckets     (%n-buckets vector))
+  (def bucket-depth  (%bucket-depth vector))
+  (def hash|<int>    ((tab-hash table) key))
+  (def bucket-index  (mod hash (%primary-modulus vector)))
+  (def bucket-offset (+ (mod hash (%secondary-modulus vector)) 1))
+  ;; Search each bucket
+  (rep outer ((bucket-index bucket-index) (probes 0))
+    (if (< probes n-buckets)
+        (let ((index (* bucket-index (* bucket-depth 2))))
+          (rep inner ((i 0) (raw-index index))
+            (if (< i bucket-depth)
+                (let ((this-key (@elt vector raw-index)))
+                  (cond ((== this-key $empty-cell-marker)
+                         default)
+                        ((test-function key this-key)
+                         (@elt vector (+ raw-index bucket-depth)))
+                        (#t
+                         (inner (+ i 1) (+ raw-index 1)))))
+                ;; Not in this bucket try the next one
+                (outer (mod- bucket-index bucket-offset n-buckets)
+                       (+ probes 1)))))
+        ;; Table totally full???  That's not right
+        (error "The table is totally full this shouldn't happen"))))
+
+
 
 (dm elt-setter (value table|<tab> key => <any>)
   ;; (trace out "PUT COUNT %= val %=\n" (%count table) value)
@@ -205,97 +196,86 @@
                   (tab-growth-threshold table))) 
             ;; Rehash when there are too many vacated elements
             (set vector (%vector (rehash-table table)))))
-  (esc return
-    (def test-function (tab-test table))
-    (def hash-function (tab-hash table))
-    (def bucket-depth (%bucket-depth vector))
-    (def n-buckets    (%n-buckets vector))
-    (def (tup (hash <int>) state) (hash-function key))
-    (def (tup bucket-index bucket-offset)
-      (hash-moduli hash (%primary-modulus vector) (%secondary-modulus vector)))
-    ;; Search each bucket
-    (rep outer ((probes|<int> 0))
-      (when (< probes n-buckets)
-        (def index (* bucket-index (* bucket-depth 2)))
-        ;; (trace out "LOOKING AT %=\n" index)
-        (rep inner ((i|<int> 0) (this-bucket-raw-index|<int> index))
-          (when (< i bucket-depth)
-            (def vacancy-index #f)
-            (def this-key      (@elt vector this-bucket-raw-index))
-            (cond
-              ;; end of chain and not found
-              ((== this-key $empty-cell-marker)
-               (def index 
-                 (if vacancy-index
-                     ;; use a vacant cell if you found one
-                     (seq (decf (%vacated vector))
-                          vacancy-index)
-                     ;; use this cell
-                     this-bucket-raw-index))
-               ;; (trace out "FOUND EMPTY CELL @ %d\n"
-               ;;        this-bucket-raw-index)
-               (set (@elt vector index) key)
-               (set (@elt vector (+ index bucket-depth)) value)
-               (incf (%count table))
-               (return value))
-              ((== this-key $vacated-cell-marker);; remember vacancy
-               ;; N.B. Only record the _first_ vacant cell
-               (unless vacancy-index 
-                 ;; (trace out "FOUND VACATED CELL @ %d\n" vacancy-index)
-                 (set vacancy-index this-bucket-raw-index)))
-              ;; key already in table update value
-              ((test-function key this-key)
-               (set (@elt vector (+ this-bucket-raw-index bucket-depth)) value)
-               ;; (trace out "FOUND KEY @ %d\n" this-bucket-raw-index)
-               (return value)))
-            (inner (+ i 1) (+ this-bucket-raw-index 1))))
-        ;; Not in this bucket try the next one
-        (decf bucket-index bucket-offset)
-        (when (neg? bucket-index)
-          (incf bucket-index n-buckets))
-        (outer (+ probes 1))))
-    ;; Table totally full???  That's not right
-    (error "The table is totally full this shouldn't happen")))
+  (def test-function (key-test table))
+  (def bucket-depth  (%bucket-depth vector))
+  (def n-buckets     (%n-buckets vector))
+  (def hash|<int>    ((tab-hash table) key))
+  (def bucket-index  (mod hash (%primary-modulus vector)))
+  (def bucket-offset (+ (mod hash (%secondary-modulus vector)) 1))
+  ;; Search each bucket
+  (rep outer ((bucket-index bucket-index) (probes|<int> 0))
+    (if (< probes n-buckets)
+        (let ((index (* bucket-index (* bucket-depth 2))))
+          ;; (trace out "LOOKING AT %=\n" index)
+          (rep inner ((vacancy-index #f) (i|<int> 0) (raw-index|<int> index))
+            (if (< i bucket-depth)
+                (let ((this-key (@elt vector raw-index)))
+                  (cond
+                    ;; end of chain and not found
+                    ((== this-key $empty-cell-marker)
+                     (def index 
+                       (if vacancy-index
+                           ;; use a vacant cell if you found one
+                           (seq (decf (%vacated vector)) vacancy-index)
+                           ;; use this cell
+                           raw-index))
+                     ;; (trace out "FOUND EMPTY CELL @ %d\n"
+                     ;;        raw-index)
+                     (set (@elt vector index) key)
+                     (set (@elt vector (+ index bucket-depth)) value)
+                     (incf (%count table))
+                     value)
+                    ((== this-key $vacated-cell-marker) ;; remember vacancy
+                     ;; N.B. Only record the _first_ vacant cell
+                     (inner 
+                      (or vacancy-index raw-index) (+ i 1) (+ raw-index 1)))
+                    ;; key already in table update value
+                    ((test-function key this-key)
+                     (set (@elt vector (+ raw-index bucket-depth)) value)
+                     ;; (trace out "FOUND KEY @ %d\n" raw-index)
+                     value)
+                    (#t
+                     (inner vacancy-index (+ i 1) (+ raw-index 1)))))
+                ;; Not in this bucket try the next one
+                (outer (mod- bucket-index bucket-offset n-buckets)
+                       (+ probes 1)))))
+        ;; Table totally full???  That's not right
+        (error "The table is totally full this shouldn't happen"))))
 
 (dm del! (table|<tab> key => <tab>)
-  (esc return
-    (def test-function (tab-test table))
-    (def hash-function (tab-hash table))
-    (def vector        (%vector table))
-    (def n-buckets     (%n-buckets vector))
-    (def bucket-depth  (%bucket-depth vector))
-    (def (tup (hash <int>) state) 
-      (hash-function key))
-    (def (tup bucket-index bucket-offset)
-      (hash-moduli hash (%primary-modulus vector) (%secondary-modulus vector)))
-    ;; Search each bucket
-    (rep outer ((probes|<int> 0))
-      (when (< probes n-buckets)
-        (def index|<int> (* bucket-index (* bucket-depth 2)))
-        ;; (trace out "LOOKING AT %=\n" index)
-        (rep inner ((i|<int> 0) (this-bucket-raw-index|<int> index))
-          (when (< i bucket-depth)
-            (def this-key (@elt vector this-bucket-raw-index))
-            (when (== this-key $empty-cell-marker)
-              (return #f))
-            ;; N.B. Don't look at already vacated cells along
-            ;;      the collision chain 
-            (when (and (~== this-key $vacated-cell-marker)
-                       (test-function key this-key))
-              (set (@elt vector this-bucket-raw-index)
-                   $vacated-cell-marker)
-              ;; In a GC-ed environment clear the value cell too!
-              (decf (%count table))
-              (incf (%vacated vector))
-              (return #t))
-            (inner (+ i 1) (+ this-bucket-raw-index 1))))
-        ;; Not in this bucket try the next one
-        (decf bucket-index bucket-offset)
-        (when (neg? bucket-index)
-          (incf bucket-index n-buckets))
-        (outer (+ probes 1))))
-    ;; Table totally full???  That's not right
-    (error "The table is totally full this shouldn't happen"))
+  (def test-function (key-test table))
+  (def vector        (%vector table))
+  (def n-buckets     (%n-buckets vector))
+  (def bucket-depth  (%bucket-depth vector))
+  (def hash|<int>    ((tab-hash table) key))
+  (def bucket-index  (mod hash (%primary-modulus vector)))
+  (def bucket-offset (+ (mod hash (%secondary-modulus vector)) 1))
+  ;; Search each bucket
+  (rep outer ((bucket-index bucket-index) (probes|<int> 0))
+    (if (< probes n-buckets)
+        (let ((index|<int> (* bucket-index (* bucket-depth 2))))
+          ;; (trace out "LOOKING AT %=\n" index)
+          (rep inner ((i|<int> 0) (raw-index|<int> index))
+            (if (< i bucket-depth)
+                (let ((this-key (@elt vector raw-index)))
+                  (cond ((== this-key $empty-cell-marker) 
+                         #f)
+                        ;; N.B. Don't look at already vacated cells along
+                        ;;      the collision chain 
+                        ((and (~== this-key $vacated-cell-marker)
+                              (test-function key this-key))
+                         (set (@elt vector raw-index) $vacated-cell-marker)
+                         ;; In a GC-ed environment clear the value cell too!
+                         (decf (%count table))
+                         (incf (%vacated vector))
+                         #t)
+                        (#t
+                         (inner (+ i 1) (+ raw-index 1)))))
+                ;; Not in this bucket try the next one
+                (outer (mod- bucket-index bucket-offset n-buckets)
+                       (+ probes 1)))))
+        ;; Table totally full???  That's not right
+        (error "The table is totally full this shouldn't happen")))
   table)
 
 (dm do-keyed (function|<fun> table|<tab>)
@@ -349,21 +329,20 @@
 (dm enum (table|<tab> => <tab-enum>)
   (if (= (len table) 0)
       $fin-enum
-      (esc return
-        (def vector    (%vector table))
-        (def n-buckets (%n-buckets vector))
-        (def depth     (%bucket-depth vector))
+      (let ((vector    (%vector table))
+            (n-buckets (%n-buckets vector))
+            (depth     (%bucket-depth vector)))
         (rep outer ((b|<int> 0))
-          (when (< b n-buckets)
-            (rep inner ((i|<int> 0))
-              (when (< i depth)
-                (def key (@elt vector (+ i (* b (* depth 2)))))
-                (unless (or (== key $empty-cell-marker)
-                            (== key $vacated-cell-marker))
-                  (return (new <tab-enum> @vec vector @buc b @idx i)))
-                (inner (+ i 1))))
-            (outer (+ b 1))))
-        $fin-enum)))
+          (if (< b n-buckets)
+              (rep inner ((i|<int> 0))
+                (if (< i depth)
+                    (let ((key (@elt vector (+ i (* b (* depth 2))))))
+                      (if (or (== key $empty-cell-marker)
+                              (== key $vacated-cell-marker))
+                          (inner (+ i 1))
+                          (new <tab-enum> @vec vector @buc b @idx i)))
+                    (outer (+ b 1))))
+              $fin-enum)))))
 
 (dm nxt (e|<tab-enum> => <tab-enum>)
   (def vector    (@vec e))
@@ -371,18 +350,17 @@
   (def depth     (%bucket-depth vector))
   (def bucket    (@buc e))
   (def index     (@idx e))
-  (esc return
-    (rep outer ((b|<int> bucket) (first? #t))
-      (when (< b n-buckets)
-        (rep inner ((i|<int> (if first? (+ index 1) 0)))
-          (when (< i depth)
-            (def key (@elt vector (+ i (* b (* depth 2)))))
-            (unless (or (== key $empty-cell-marker)
-                        (== key $vacated-cell-marker))
-              (return (renew e @vec vector @buc b @idx i)))
-            (inner (+ i 1))))
-        (outer (+ b 1) #f)))
-    $fin-enum))
+  (rep outer ((b|<int> bucket) (first? #t))
+    (if (< b n-buckets)
+      (rep inner ((i|<int> (if first? (+ index 1) 0)))
+        (if (< i depth)
+            (let ((key (@elt vector (+ i (* b (* depth 2))))))
+              (if (or (== key $empty-cell-marker)
+                      (== key $vacated-cell-marker))
+                  (inner (+ i 1))
+                  (renew e @vec vector @buc b @idx i)))
+            (outer (+ b 1) #f)))
+      $fin-enum)))
 
 (dm fin? (e|<tab-enum> => <log>)
   (@fin? e))
@@ -460,52 +438,48 @@
         *twin-primes*)
     (error "Not enough primes to compute new table size")))
 
-(dm copy-to-new-vector (table|<tab> new-vector => <any>) ;; TODO: => (tup)
+(dm copy-to-new-vector (table|<tab> new-vector)
   (do-keyed
    (fun (k v)
-     (esc return
-       (def test-function          (tab-test table))
-       (def hash-function          (tab-hash table))
-       (def new-n-buckets          (%n-buckets new-vector))
-       (def new-bucket-depth       (%bucket-depth new-vector))
-       (def new-primary-modulus    (%primary-modulus new-vector))
-       (def new-secondary-modulus  (%secondary-modulus new-vector))
-       (def (tup hash|<int> state) (hash-function k))
-       (def (tup new-bucket-index new-bucket-offset)
-         (hash-moduli hash new-primary-modulus new-secondary-modulus))
-       ;; (trace out "VISITING (%= %=)\n" k v)
-       ;; Search each bucket
-       (rep outer ((probes|<int> 0))
-         (when (< probes new-n-buckets)
-           (def bucket-start (* new-bucket-index (* new-bucket-depth 2)))
-           (rep inner ((i|<int> 0) (index|<int> bucket-start))
-             (when (< i new-bucket-depth)
-               (def this-key (@elt new-vector index))
-               (when (== this-key $empty-cell-marker)
-                 ;; (trace out "COPYING TO (%= %=) %=\n" k v index)
-                 (set (@elt new-vector index) k)
-                 (set (@elt new-vector (+ index new-bucket-depth)) v)
-                 (return #f))
-               (inner (+ i 1) (+ index 1))))
-           ;; No room in this bucket try the next one
-           (decf new-bucket-index new-bucket-offset)
-           (when (neg? new-bucket-index)
-             (incf new-bucket-index new-n-buckets))
-           (outer (+ probes 1))))
-       ;; Table totally full???  That's not right
-       (error "The table is totally full this shouldn't happen")))
+     (def test-function          (key-test table))
+     (def new-n-buckets          (%n-buckets new-vector))
+     (def new-bucket-depth       (%bucket-depth new-vector))
+     (def new-primary-modulus    (%primary-modulus new-vector))
+     (def new-secondary-modulus  (%secondary-modulus new-vector))
+     (def hash|<int>             ((tab-hash table) k))
+     (def new-bucket-index       (mod hash new-primary-modulus))
+     (def new-bucket-offset      (+ (mod hash new-secondary-modulus) 1))
+     ;; (trace out "VISITING (%= %=)\n" k v)
+     ;; Search each bucket
+     (rep outer ((new-bucket-index new-bucket-index) (probes|<int> 0))
+       (if (< probes new-n-buckets)
+           (let ((bucket-start 
+                  (* new-bucket-index (* new-bucket-depth 2))))
+             (rep inner ((i|<int> 0) (index|<int> bucket-start))
+               (if (< i new-bucket-depth)
+                   (let ((this-key (@elt new-vector index)))
+                     (if (== this-key $empty-cell-marker)
+                         ;; (trace out "COPYING TO (%= %=) %=\n" k v index)
+                         (seq
+                           (set (@elt new-vector index) k)
+                           (set (@elt new-vector (+ index new-bucket-depth)) v))
+                         (inner (+ i 1) (+ index 1))))
+                   ;; No room in this bucket try the next one
+                   (outer
+                    (mod- new-bucket-index new-bucket-offset new-n-buckets)
+                    (+ probes 1)))))
+           ;; Table totally full???  That's not right
+           (error "The table is totally full this shouldn't happen"))))
    table))
 
 ;;; HASHING FUNCTIONS
 
-;; TODO: NEED ADDRESS-OF
-(df tab-gc-state () $permanent-hash-state)
+;; TODO: SOME STORY FOR REHASHING ON GC MOVEMENT
+;; (df tab-gc-state () $permanent-hash-state)
 
-(dm id-hash (x)
-  (tup (address-of x) (tab-gc-state)))
+(dm id-hash (x) (address-of x))
 
-(dm id-hash (x|<log>)
-  (tup (if x 131 149) $permanent-hash-state))
+(dm id-hash (x|<log>) (if x 131 149))
 
 ;; TODO: CHECK FOR CORRECTNESS
 (df rot (x|<int> a|<int> => <int>)
@@ -513,24 +487,24 @@
 
 (dm id-hash (x|<int>)
   ;; Offset it so that 0 doesn't hash to 0
-  (tup (abs (+ (- (rot x 15) x) 31)) $permanent-hash-state))
+  (abs (+ (- (rot x 15) x) 31)))
   
 (dm id-hash (x|<chr>)
   (id-hash (as <int> x)))
 
 (dm id-hash (x|<flo>)
-  (tup (+ (flo-bits x) 89) $permanent-hash-state))
+  (+ (flo-bits x) 89))
 
 (dm key-type (x|<str-tab> => <type>) <str>)
 (dm elt-type (x|<str-tab> => <type>) <sym>)
 
-(df case-insensitive-string-hash (x|<str> => (tup hi|<int> hash-state))
+(df case-insensitive-string-hash (x|<str> => <int>)
   (def s 0) (def e (len x))
   (rep loop ((i|<int> s) (hash|<int> 0))
     (if (< i e)
         (loop (+ i 1);; #x9f
               (mod (+ (<< hash 6) (& (as <int> (elt x i)) 159)) 970747))
-        (tup hash $permanent-hash-state))))
+        hash)))
 
 (df case-insensitive-string-equal (x|<str> y|<str> => <log>)
   (def sy 0) (def ey (len y))
@@ -542,7 +516,7 @@
             (and (or (== cx cy) (== (to-lower cx) (to-lower cy)))
                  (loop (+ i 1))))))))
 
-(dm tab-test (_|<str-tab> => <fun>) case-insensitive-string-equal)
+(dm key-test (_|<str-tab> => <fun>) case-insensitive-string-equal)
 (dm tab-hash (_|<str-tab> => <fun>) case-insensitive-string-hash)
 
 ;;;;

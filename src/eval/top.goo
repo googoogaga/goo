@@ -18,9 +18,9 @@
 (df esctst ()
   (esc exit 
     (fin (exit 'exit) 
-         (format out "CLEANUP\n")
+         (msg out "CLEANUP\n")
          'cleanup) 
-    (format out "DO\n")
+    (msg out "DO\n")
     'done))
 
 (dg g2c-eval (exp ct-env))
@@ -32,7 +32,7 @@
   (parse-in s (runtime-environment modname)))
 
 (dm str-parse-in (s|<str> ct-env)
-  (format out "%=\n" (parse-in s ct-env)))
+  (msg out "%=\n" (parse-in s ct-env)))
 
 (dm str-parse (s|<str> modname|<sym>)
   (str-parse-in s (runtime-environment modname)))
@@ -91,8 +91,7 @@
   (load (goo-filename name) modname))
 
 (dm prompt-for-command-expression (env level prompt)
-  (format out "%s %=%s"
-          (module-name (find-environment-module env)) level prompt)
+  (msg out "%s %=%s" (module-name (find-environment-module env)) level prompt)
   (force-out out)
   (def form (read in))
   (if (and (isa? form <lst>) (== (head form) 'unquote))
@@ -102,8 +101,7 @@
       form))
 
 (dm print-result-expression (env level label result)
-  (format out "%s %=%s"
-           (module-name (find-environment-module env)) level label)
+  (msg out "%s %=%s" (module-name (find-environment-module env)) level label)
   (write out result))
 
 (dm do-stack-frames (fun)
@@ -116,12 +114,12 @@
 
 (dm backtrace ()
   (for-frames (num f args)
-    (format out "[%=] %= %=\n" num f args)))
+    (msg out "[%=] %= %=\n" num f args)))
 
 (dm frame (n|<int>)
   (for-frames (num f args)
     (when (== n num)
-      (format out "[%=] %= %=\n" num f args))))
+      (msg out "[%=] %= %=\n" num f args))))
 
 (dm frame-var (n|<int> name|<sym>)
   (esc ret
@@ -132,7 +130,7 @@
 
 (dm bt ()
   (for-frames (num f args)
-    (format out "[%=] %=\n" num f)))
+    (msg out "[%=] %=\n" num f)))
 
 (dc <keyboard-interrupt> (<condition>))
 
@@ -156,8 +154,8 @@
         (try <condition>
           (fun (c r)
             (if (isa? c <keyboard-interrupt>)
-                (format out "BREAK")
-                (format out "ERROR: %s" (describe-condition c)))
+                (msg out "BREAK")
+                (msg out "ERROR: %s" (describe-condition c)))
             ;; (backtrace (env))
             (top-in (+ level 1) top quit #t ct-env)
             (continue #f))
@@ -166,7 +164,7 @@
             (fun (c r) (continue #f))
             (newline out)
             (when show-restarts?
-              (format out "Type (restart N) to restart execution:\n")
+              (msg out "Type (restart N) to restart execution:\n")
               (set restarts (list-handlers <restart> out))
               (set show-restarts? #f))
             (def form (prompt-for-command-expression ct-env level "<= "))

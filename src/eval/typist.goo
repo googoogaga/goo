@@ -37,7 +37,7 @@
          (lst x y)))))
 
 (dm type-infer-check (inferred-type type)
-  ;; (format out "IT %= T %=\n" inferred-type type)
+  ;; (msg out "IT %= T %=\n" inferred-type type)
   (if (isa? inferred-type type) 
       inferred-type
       type))
@@ -65,7 +65,7 @@
   (prototype <any>))
 
 (dm type-infer-binding (x|<local-binding>)
-  ;; (format out "LB %=" x)
+  ;; (msg out "LB %=" x)
   (if (binding-mutable? x)
       (prototype <any>)
       (type-infer-check (type-infer (binding-type x))

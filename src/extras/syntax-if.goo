@@ -1,10 +1,10 @@
 (def <pattern-match-failure> (isa <simple-condition>))
 
 (dm match-error (message|<str> args|...)
-  ;; (format-out "MATCH ERROR %=\n" message)
+  ;; (msg-out "MATCH ERROR %=\n" message)
   (sig (isa <pattern-match-failure>
-         (set condition-format-string message)
-         (set condition-format-arguments args))))
+         (set condition-msg-string message)
+         (set condition-msg-arguments args))))
 
 (dm ast-eval-match (match|<match-empty-list> v e|<environment>)
   (unless (== v '())

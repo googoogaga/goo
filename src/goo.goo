@@ -73,9 +73,9 @@
  ;; 3.7.1: Iteration protocol.
  <enum> enum fin? nxt now now-setter now-key
  ;; 3.7.2: Maps.
- <map> fab-map <assocs> assocs-test
+ <map> fab-map ;; <assocs> assocs-test
  <tab> tab-growth-factor tab-growth-threshold tab-shrink-threshold
- tab-test tab-hash $permanent-hash-state tab-gc-state id-hash
+ tab-hash id-hash ;; $permanent-hash-state tab-gc-state 
  <str-tab> case-insensitive-string-hash case-insensitive-string-equal
  <set>
  ;; 3.7.3: Sequences.
@@ -128,7 +128,7 @@
  ;; TODO - Defined in top, where we can't export it: read-file
 
  ;; Section 3.14: Output.
- write display writeln write-to-string format say
+ write display writeln write-to-string msg say
 
  ;; Section 3.15: System.
  app-filename app-args

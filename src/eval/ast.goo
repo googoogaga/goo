@@ -187,7 +187,7 @@
 (df function-display-name (f|<ast-function>)
   (def b (function-binding f))
   (if b
-      (format-to-string "%s:%s" (binding-module-name b) (binding-name b))
+      (msg-to-str "%s:%s" (binding-module-name b) (binding-name b))
       "anonymous function"))
 
 (dm invalidate-dependent (dependent|<ast-function>
@@ -199,11 +199,11 @@
   (def name (function-display-name dependent))
   (cond
     ((dependency-includes-any? dtype $parse-dependencies)
-     (format out "warning: %s needs to be reparsed\n" name))
+     (msg out "warning: %s needs to be reparsed\n" name))
     ((dependency-includes-any? dtype $optimizaton-dependencies)
-     (format out "warning: %s needs to be re-optimized\n" name))
+     (msg out "warning: %s needs to be re-optimized\n" name))
     (#t
-     (format out "warning: unknown dependency of %s clobbered\n" name))))
+     (msg out "warning: unknown dependency of %s clobbered\n" name))))
 
 (dc <programs> (<passive-program>))
 
@@ -590,11 +590,11 @@
               ;; Otherwise, redefine the existing binding.
               ;; TODO - We should do more useful redefinition here.
               (when foreign?
-                (format out
-                        "%s: warning: '%s' clobbers binding from %s.\n"
-                        (module-name mod)
-                        name
-                        (binding-module-name existing-binding))))
+                (msg out
+                     "%s: warning: '%s' clobbers binding from %s.\n"
+                     (module-name mod)
+                     name
+                     (binding-module-name existing-binding))))
           ;; Aggressively invalidate all dependents.  We might want to
           ;; make this more selective someday.
           (invalidate-dependents existing-binding $all-dependency-types)
@@ -625,15 +625,15 @@
   defn)
 
 (df %%macro (modname name expander env-or-false => <module-binding>)
-    ;; (format out "DEFMACRO ") (writeln out sep-expander)
+    ;; (msg out "DEFMACRO ") (writeln out sep-expander)
     (loc ((expand (x r tail?)
                   (when *macro-tracing?*
-                    (format out "MACRO ") (write out x) (format out "\n"))
+                    (msg out "MACRO ") (write out x) (msg out "\n"))
                   (def exp (app expander (lst x)))
                   (when *macro-tracing?*
-                    (format out "  => ") (write out exp) (format out "\n"))
+                    (msg out "  => ") (write out exp) (msg out "\n"))
                   exp))
-      ;; (format out "DEFMAC %=\n" name)
+      ;; (msg out "DEFMAC %=\n" name)
       (def env     (or env-or-false (unchecked-runtime-environment modname)))
       (def binding (ast-define-binding env name #f 'macro))
       (set (binding-handler binding) expand)
@@ -745,8 +745,8 @@
          (*max-print-length* $max-int))
     (objectify-quotation
      (and *record-source?*
-          (format-to-string "(fun %s %s)" 
-                            sig (if (isa? body <lst>) (pair 'seq body) body)))
+          (msg-to-str 
+           "(fun %s %s)" sig (if (isa? body <lst>) (pair 'seq body) body)))
      r)))
 
 (dm objectify-function (sig body r tail? => <ast-method>)
@@ -956,8 +956,8 @@
 (df import-global! (b|<module-binding> env|<static-global-environment>)
   (def existing (find-binding (binding-name b) env))
   (unless (or (== existing #f) (== existing b))
-    (format out "warning: '%s' from %s clobbers local binding.\n"
-            (binding-name b) (binding-module-name b)))
+    (msg out "warning: '%s' from %s clobbers local binding.\n"
+         (binding-name b) (binding-module-name b)))
   (insert-global! b env)
   #f)
 
@@ -1271,7 +1271,7 @@
   (def m (objectify (head x) r tail?))
   (if (and (isa? m <module-binding>) (== (binding-kind m) 'macro))
       (let ((res ((binding-handler m) x r tail?)))
-        ;; (format out "EXPANSION ") (write out res) (format out "\n")
+        ;; (msg out "EXPANSION ") (write out res) (msg out "\n")
         res)
       #f))
 
@@ -1495,12 +1495,12 @@
   ;; XXX - If an error occurs, we currently neglect to mark
   ;; the environment-implements bindings of the half-created
   ;; module as free.
-  (format out "%s[Loading module %s...\n" indent name) 
+  (msg out "%s[Loading module %s...\n" indent name) 
   (def mod (seq (pushf (module-loader-stack loader) name)
                 (fin (load-module loader name)
                      (popf (module-loader-stack loader)))))
   (register-module! loader mod)
-  (format out "%s]\n" indent)
+  (msg out "%s]\n" indent)
   mod)
 
 ;;; Create a <module-loader> subclass and override this method.  It should
@@ -1536,9 +1536,9 @@
    (fun (binding)
      (when (and (binding-free? binding)
                 (binding-native-to? binding mod))
-       (format out "%s: warning: undefined binding '%s'.\n"
-               (module-name mod)
-               (binding-name binding))))
+       (msg out "%s: warning: undefined binding '%s'.\n"
+            (module-name mod)
+            (binding-name binding))))
    (module-target-environment mod)))
 
 ;;; Compute all the modules which use the specified modules, directly or

@@ -883,22 +883,22 @@
 
 (dm show-registers (message)
   (when *debug* 
-    (format out "\n----------------%s" message)
-    (format out "\nENV  = ") (show *env*)
-    (format out"\nVAL  = ") (show *val*)
-    (format out "\nFUN  = ") (show *fun*)
+    (msg out "\n----------------%s" message)
+    (msg out "\nENV  = ") (show *env*)
+    (msg out"\nVAL  = ") (show *val*)
+    (msg out "\nFUN  = ") (show *fun*)
     (show-stack (save-stack))
-    (format out "\n(PC  = %s), next INSTR to be executed = %s\n" 
+    (msg out "\n(PC  = %s), next INSTR to be executed = %s\n" 
             *pc* (instruction-decode *code* *pc*) ) ) )
 
 (dm show-stack (stack)
   (let ((n (len stack)))
     (rep loop ((i 0))
       (unless (= i n)
-        (format out "\nSTK[%s]= " i) (show (elt *stack* i)) (loop (+ i 1))))))
+        (msg out "\nSTK[%s]= " i) (show (elt *stack* i)) (loop (+ i 1))))))
 
 (dm show ((f closure) stream)
-  (format stream "#<Closure(pc=%s)>" (closure-code f)) ) )
+  (msg stream "#<Closure(pc=%s)>" (closure-code f)) ) )
 
 (dm show (stream (a <activation-frame>))
   (display stream "[Frame next=")
@@ -964,7 +964,7 @@
   (set run-machine
        (fun (stack-size pc code constants global-names)
          (when *debug*                     ; DEBUG
-           (format out "Code= %s\n" (disassemble code)) )         
+           (msg out "Code= %s\n" (disassemble code)) )         
          (native-run-machine stack-size pc code constants global-names) ) ) )
 
 ;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
@@ -997,12 +997,12 @@
 (dm setup-wrong-functions (error)
   (set signal-exception (fun (c (args ...)) (apply error args)))
   (set wrong (fun ((args ...))
-                (format out "
+                (msg out "
                 >>>>>>>>>>>>>>>>>>RunTime PANIC<<<<<<<<<<<<<<<<<<<<<<<<<
                 %s\n" (activation-frame-argument *val* 1) )
                 (apply error args) ))
   (set static-wrong (fun args
-                       (format out "
+                       (msg out "
                 >>>>>>>>>>>>>>>>>>Static WARNING<<<<<<<<<<<<<<<<<<<<<<<<<
                 %s\n" args )
                        (apply error args) )) )

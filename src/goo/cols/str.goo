@@ -40,7 +40,7 @@
 (dm low-elt (x|<str> i|<int> => <chr>)
   (%cb (%selt x (%iu i))))
 
-(dm low-elt-setter (z|<chr> x|<str> i|<int>)
+(dm fab-elt-setter (z|<chr> x|<str> i|<int>)
   (set (%selt x (%iu i)) (%cu z)))
 
 (dm elt-or (x|<str> i|<int> default => <any>) ;; TODO: TIGHTEN RET TYPE

@@ -117,10 +117,10 @@
   #f)
 
 (dm describe-condition (c|<condition> => <str>)
-  (format-to-string "Anonymous condition %=" c))
+  (msg-to-str "Anonymous condition %=" c))
 
 (dm default-handler-description ((cond-type (t< <condition>)) => <str>)
-  (format-to-string "Anonymous handler for %s" cond-type))
+  (msg-to-str "Anonymous handler for %s" cond-type))
 
 (dm build-condition-interactively
     ((cond-type (t< <condition>)) in out => <condition>)
@@ -131,22 +131,21 @@
   (dp condition-arguments (x|<simple-condition> => <lst>) '())
 
 (dm describe-condition (c|<simple-condition> => <str>)
-  (app format-to-string (condition-message c)
-                          (condition-arguments c)))
+  (app msg-to-str (condition-message c) (condition-arguments c)))
 
 (dm build-condition-interactively
     ((cond-type (t< <simple-condition>)) in out => <condition>)
   (def cond (sup cond-type in out))
-  (format out "Condition format string: ")
+  (msg out "Condition format string: ")
   (set (condition-message cond) (read in))
-  (format out "Condition format arguments: ")
+  (msg out "Condition format arguments: ")
   (set (condition-arguments cond) (read in))
   cond)
 
 (dc <serious-condition> (<condition>))
 
 (dm default-handler (c|<serious-condition>)
-  (format out "%s\n" (describe-condition c))
+  (msg out "%s\n" (describe-condition c))
   (%invoke-debugger c))
 
 (dc <error> (<serious-condition>))
@@ -170,16 +169,16 @@
 (dc <restart> (<condition>))
 
 (dm default-handler-description ((cond-type (t< <restart>)) => <str>)
-  (format-to-string "Anonymous restart of type %s" cond-type))
+  (msg-to-str "Anonymous restart of type %s" cond-type))
 
 (dc <incongruent-method-error> (<error>))
   (dp incongruent-method-error-generic (x|<incongruent-method-error> => <gen>))
   (dp incongruent-method-error-method (x|<incongruent-method-error> => <met>))
 
 (dm describe-condition (c|<incongruent-method-error> => <str>)
-  (format-to-string "Method %= incongruent with generic %=.\n"
-                    (incongruent-method-error-method c)
-                    (incongruent-method-error-generic c)))
+  (msg-to-str "Method %= incongruent with generic %=.\n"
+              (incongruent-method-error-method c)
+              (incongruent-method-error-generic c)))
 
 (dc <replace-generic-restart> (<restart>))
 
@@ -214,9 +213,7 @@
   (dp handler-info-arguments (x|<simple-handler-info> => <lst>) '())
 
 (dm describe-handler (info|<simple-handler-info> condition-type => <str>)
-  (app format-to-string
-         (handler-info-message info)
-         (handler-info-arguments info)))
+  (app msg-to-str (handler-info-message info) (handler-info-arguments info)))
 
 (export
   <handler-info>
@@ -331,9 +328,9 @@
   (def applicable (fab <vec> 0))
   (do-handlers-of-type type
     (fun (handler)
-      (format out "%d. %s.\n" i
-              (describe-handler (handler-info handler)
-                                (handler-condition-type handler)))
+      (msg out "%d. %s.\n" i
+           (describe-handler 
+            (handler-info handler) (handler-condition-type handler)))
       (push! applicable handler)
       (incf i)))
   applicable)
@@ -359,7 +356,7 @@
 ;;; Chose a handler matching 'type', and call it interactively.
 (df choose-handler ((type (t< <condition>)) in out => <any>)
   (def handlers (list-handlers type out))
-  (format out "Please pick a handler: ")
+  (msg out "Please pick a handler: ")
   (def n (- (read in) 1))
   (when (or (< n 0) (>= n (len handlers)))
     (error "No such handler %d" n))
@@ -411,8 +408,8 @@
 
 (need-implementation
   read
-  format
-  format-to-string)
+  msg
+  msg-to-str)
 
 ;; TODO: TEMPORARY EXPORTS
 (export

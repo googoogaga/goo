@@ -179,12 +179,12 @@
     (unless first? (put port #\space))
     (if (empty? names)
         (write-type port spec)
-        (seq (format port "(%s " (as <str> (elt names i)))
+        (seq (msg port "(%s " (as <str> (elt names i)))
              (write-type port spec)
              (put port #\)))))
   (def value (fun-val x))
   (unless (or (not value) (== value <any>))
-    (format port " => ") (write-type port value))
+    (msg port " => ") (write-type port value))
   (put port #\)))
 
 (dm write-fun-guts (port|<out-port> x|<fun> name|<str> recur|<fun>)
@@ -261,7 +261,7 @@
 (dm recurring-write (port|<out-port> (x (t= nul)) d|<int> recur|<fun>)
   (puts port "nul"))
 
-(dm format (port|<out-port> message|<str> arguments|...)
+(dm msg (port|<out-port> message|<str> arguments|...)
   (def found-percent?       #f)
   (def argument-index|<int> 0)
   (def num-arguments        (len arguments))
@@ -269,11 +269,11 @@
           (def current-index argument-index)
           (set argument-index (+ argument-index 1))
           (assert (< current-index num-arguments)
-                  "Too few arguments for format string %=: %="
+                  "Too few arguments for msg string %=: %="
                   message arguments)
           (def argument (elt arguments current-index))
             (assert (or (== class <any>) (isa? argument class))
-              "Format argument for directive '%%%c' not of class %s: %="
+              "Msg argument for directive '%%%c' not of class %s: %="
               char class argument)
             argument))
     (do (fun ((c <chr>))
@@ -287,7 +287,7 @@
                      ((#\S) (display port (arg c <any>)))
                      ((#\=) (write port (arg c <any>)))
                      ((#\%) (put port #\%))
-                     (#t    (error "Invalid format directive '%s' in \"%s\""
+                     (#t    (error "Invalid msg directive '%s' in \"%s\""
                                    c message)))
                    (set found-percent? #f))
               (if (== c #\%)
@@ -295,16 +295,16 @@
                   (put port c))))
         message))
   (assert (not found-percent?)
-          "Incomplete format directive in \"%s\"" message))
+          "Incomplete msg directive in \"%s\"" message))
 
-;;; PARTIAL EVALUATOR FOR FORMAT 
+;;; PARTIAL EVALUATOR FOR MSG 
 ;;; TODO: SHOULD GO AWAY WHEN REAL PARTIAL EVALUATION IS WORKING
 
 (ct-also (seq
-(dm pe-format (port-expr message args|<lst>)
-  `(format ,port-expr ,message ,@args))
+(dm pe-msg (port-expr message args|<lst>)
+  `(msg ,port-expr ,message ,@args))
 
-(dm pe-format (port-expr message|<str> args|<lst>)
+(dm pe-msg (port-expr message|<str> args|<lst>)
   (def found-percent?  #f)
   (def arg-index|<int> 0)
   (def num-args        (len args))
@@ -321,7 +321,7 @@
              (def current-index arg-index)
              (set arg-index (+ arg-index 1))
              (assert (< current-index num-args)
-                     "Too few arguments for format string %=: %=" message args)
+                     "Too few arguments for msg string %=: %=" message args)
              (elt args current-index)))
        (do (fun ((c <chr>))
              (if found-percent?
@@ -334,7 +334,7 @@
                         ((#\S) (pack `(display ,port ,(arg c))))
                         ((#\=) (pack `(write ,port ,(arg c))))
                         ((#\%) (add! chars #\%))
-                        (#t    (error "Invalid format directive '%s' in \"%s\""
+                        (#t    (error "Invalid msg directive '%s' in \"%s\""
                                       c message)))
                       (set found-percent? #f))
                  (if (== c #\%)
@@ -343,18 +343,18 @@
            message)
        (maybe-pack-chars))))
   (assert (not found-percent?) 
-          "Incomplete format directive in \"%s\"" message)
+          "Incomplete msg directive in \"%s\"" message)
   `(let ((,port ,port-expr)) ,@exprs))))
 
-(ds (msg ,port ,message ,@args)
-  (pe-format port message args))
+(ds (msg* ,port ,message ,@args)
+  (pe-msg port message args))
 
-;; (ds (msg ,port ,message ,@args)
-;;   `(format ,port ,message ,@args))
+;; (ds (msg* ,port ,message ,@args)
+;;   `(msg ,port ,message ,@args))
 
-(df format-to-string (message|<str> arguments|... => <str>)
+(df msg-to-str (message|<str> arguments|... => <str>)
   (with-port (port (open <str-out-port> "")) 
-    (app format port message arguments)
+    (app msg port message arguments)
     (port-contents port)))
 
 (df say (port|<out-port> args|...)
@@ -371,8 +371,8 @@
 ;; (set *debug-tables?* #t)
 
 (export
-  format pe-format msg
-  format-to-string
+  msg pe-msg msg*
+  msg-to-str
   display
   write
   writeln

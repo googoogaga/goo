@@ -32,26 +32,26 @@
 ;;; CLOSURIZE MAIN
 
 (ds (watch (,@args) ,@exp)
-  `(seq (format out "%= [%=] => " '(seq ,@exp) (lst ,@args))
+  `(seq (msg out "%= [%=] => " '(seq ,@exp) (lst ,@args))
         (def r (seq ,@exp))
-        (format out "%=\n" r)
+        (msg out "%=\n" r)
         r))
 
 (ddv *watch-depth* 0)
 
-(dm watch-format (port msg args|...)
+(dm watch-msg (port msg args|...)
   (for ((i (below *watch-depth*)))
     (puts out "  "))
-  (app format (pair port (pair msg args))))
+  (app msg (pair port (pair msg args))))
 
 (ds (dm-watch ,name (,@sig) ,@body)
   (let ((params (sexpr-signature-parameters sig))
         (names  (map (fun (x) (if (isa? x <lst>) (1st x) x)) params)))
     `(dm ,name (,@sig)
        (dlet ((*watch-depth* (+ *watch-depth* 1)))
-         (watch-format out "WATCH %= <= %=\n" '(,name ,@sig) (lst ,@names))
+         (watch-msg out "WATCH %= <= %=\n" '(,name ,@sig) (lst ,@names))
          (def r (seq ,@body))
-         (watch-format out "WATCH %= => %=\n" '(,name ,@sig) r)
+         (watch-msg out "WATCH %= => %=\n" '(,name ,@sig) r)
          r))))
 
 ;;; COLLECTING QUOTATIONS AND GLOBAL-BINDING REFS
@@ -69,7 +69,7 @@
 
 (dm asm-lookup-data-ref 
     (f|<ast-function> key value-thunk|<fun> value-index|<fun> => <int>)
-  ;; (format out "INSERTING %= INTO %=\n" key (cv (function-debug-name f)))
+  ;; (msg out "INSERTING %= INTO %=\n" key (cv (function-debug-name f)))
   (def index (+ (len (function-data-refs f)) (len (function-temporaries f))))
   (when (isa? (function-data-refs f) <tab>) (set (function-data-refs f) '()))
   (pushf (function-data-refs f) (value-thunk index))
@@ -223,9 +223,9 @@
   (asm-all prg top-met))
 
 (dm out-code (out code)
-  (format out "(%=\n" (head code))
-  (do (fun (e) (format out "  %=\n" e)) (tail code))
-  (format out ")\n"))
+  (msg out "(%=\n" (head code))
+  (do (fun (e) (msg out "  %=\n" e)) (tail code))
+  (msg out ")\n"))
 
 (dm asm-all (x|<program> f|<ast-function>)
   (dlet ((*top-met* f))
@@ -281,7 +281,7 @@
 
 ;; TODO: REMOVE
 (dm asm-binding (e|<program> v|<module-binding>)
-  (format out "BOGUS VAR %=\n" e)
+  (msg out "BOGUS VAR %=\n" e)
   (asm-used-rhs (d e) 
     `(VM-VAR ,d ,(binding-module-name v) ,(binding-name v))))
 
@@ -536,7 +536,7 @@
        (dlet ((*asm-fun* ,d)) ,@body))))
 
 (dm asm-closure-structure (defn)
-  ;; (format out "REFS %= %=\n" (met-name defn) (function-data-refs defn))
+  ;; (msg out "REFS %= %=\n" (met-name defn) (function-data-refs defn))
   (with-asm-fun (defn)
     (def refs (function-data-refs defn))
     (cat! (asm (function-debug-name defn))

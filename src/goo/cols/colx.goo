@@ -12,8 +12,11 @@
 (pub dg len-setter (new-len|<int> c|<col!>))
 (pub dg len/fill-setter (new-len|<int> c|<col!> default))
 (pub dg fill! (c|<col!> x => <col!>))
+(pub dg low-elt-setter (v|<any> x|<col> k|<any>))
 
-;; NEEDED FOR LOW-INTO
+;; NEEDED FOR FAB-INTO
+(dm fab-elt-setter (value c|<col!> key => <any>)
+  (set (elt c key) value))
 (dm low-elt-setter (value c|<col!> key => <any>)
   (set (elt c key) value))
 

@@ -640,7 +640,7 @@
 (dm sexpr-build-backquote-expander (x|<lst> => <lst>)
   (def raw-result (bq-process x))
   (def res        (bq-remove-tokens raw-result))
-  ;; (format-out "RES = %=\n" res)
+  ;; (msg-out "RES = %=\n" res)
   res)
 
 (dm sexpr-unquote? (x => <log>)

@@ -225,7 +225,7 @@
   (dp %song-len (x|<song> => <int>))
 
 (dm file-out (port|<port> x|<song>)
-  (format port "%d\n" (len (song-tracks x)))
+  (msg port "%d\n" (len (song-tracks x)))
   (do (fun (t) (file-out port t) (newline port)) (song-tracks x)))
 
 (dm file-in (port|<port> x|<song>)
@@ -318,7 +318,7 @@
   `(opf ,place (mod+ _ 1 ,max)))
 
 (df play-raw-note (x pitch velocity)
-  ;; (format out "PLAYING %d %d\n" pitch velocity)
+  ;; (msg out "PLAYING %d %d\n" pitch velocity)
   (unless (== pitch 0)
     (midi-on  (player-out-device x) (player-channel x) pitch velocity)
     (midi-off (player-out-device x) (player-channel x) pitch velocity))
@@ -342,7 +342,7 @@
     (def i     (player-pos x))
     ;; (play-note x note (fun (k) (track-char->pitch-map track k)))
     (when (== (player-state player) 'playing)
-      ;; (format out "FOUND %d %d %s\n" i d1 (track-now-vec track))
+      ;; (msg out "FOUND %d %d %s\n" i d1 (track-now-vec track))
       (track-note! track i note)
       (beatview-store-beats (player-track-num x) (track-now-vec track))
       )))
@@ -459,10 +459,10 @@
                          (def spos (random-elt (range 1 < nt)))
                          (def src  (elt (song-tracks song) spos))
                          (def dst  (elt (song-tracks song) ti))
-                         (format out "OP %s SPOS %d DPOS %d %s => "
-                                 op spos ti (track-now-vec dst))
+                         (msg out "OP %s SPOS %d DPOS %d %s => "
+                              op spos ti (track-now-vec dst))
                          (track-op dst src op)
-                         (format out "%s\n" (track-now-vec dst))
+                         (msg out "%s\n" (track-now-vec dst))
                          (force-out out)
                          (beatview-store-beats ti (track-now-vec dst)))
                        (decf (elt (player-update-times player) ti)))
@@ -504,6 +504,6 @@
 (df beatview-sync (player|<player>)
   (def song (player-song player))
   (for ((track (song-tracks song)) (i (from 0)))
-    (format out "T %s\n" (track-now-vec track))
+    (msg out "T %s\n" (track-now-vec track))
     (beatview-store-beats i (track-now-vec track))))
 

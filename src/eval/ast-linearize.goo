@@ -31,16 +31,16 @@
 ;;; WALKER
 
 (dm update-walk! (g o args|...)
-  ;; (format out "WALKING %=\n" o)
+  ;; (msg out "WALKING %=\n" o)
   (for ((prop (object-props o)))
-    ;; (format out "  PROP %=\n" prop)
+    ;; (msg out "  PROP %=\n" prop)
     (def getter (prop-getter prop))
     (def setter (prop-setter prop))
     (unless (== getter binding-value);; TODO: HACK
       (when (prop-bound? o getter)
         (def x (getter o))
         (when (isa? x <program>)
-          ;; (format out "    UPDATING %=\n" x)
+          ;; (msg out "    UPDATING %=\n" x)
           (setter (app g x args) o)))))
   o)
 

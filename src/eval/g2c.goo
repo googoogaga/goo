@@ -56,11 +56,11 @@
                                 (c-filename file)))
   (set (module-src-file mod) src-file)
   (set (module-mtime mod) (file-mtime src-file))
-  ;; (msg out "Computing ast for %s.\n" name)
+  ;; (msg* out "Computing ast for %s.\n" name)
   (def ast      (compute-ast src-file env))
-  ;; (msg out "Computing program for %s.\n" name)
+  ;; (msg* out "Computing program for %s.\n" name)
   (def prg    (compute-program ast env))
-  ;; (msg out "Generating C code for %s.\n" name)
+  ;; (msg* out "Generating C code for %s.\n" name)
   (probe-directory (parent-directory out-file))
   (with-port (out-port (open <file-out-port> out-file))
              (dlet ((*definitions* (program-definitions prg))) 
@@ -84,7 +84,7 @@
    loader)
 
   ;; ...notify the user, and dump them.
-  (do (fun (name) (msg out "%s has changed.\n" name)) changed)
+  (do (fun (name) (msg* out "%s has changed.\n" name)) changed)
   (remove-modules-by-name! loader changed))
 
 
@@ -119,8 +119,7 @@
 
 (dm g2c-ast (ast env)
   (def mod      (environment-module env))
-  (def name     (format-to-string 
-                 "exp-%d-%d" (process-id) (incf *tmp-file-counter*)))
+  (def name     (msg-to-str "exp-%d-%d" (process-id) (incf *tmp-file-counter*)))
   (def file     (add-tmp-path name))
   (def out-file (c-filename file))
   (def prg      (compute-program ast env))
@@ -167,22 +166,22 @@
 ;;; new global bindings into the environment 'scratch-env'.
 (dm compute-program (e env)
   (def box (insert-box! e))
-  ;; (msg out "BOX %=\n" box)
+  ;; (msg* out "BOX %=\n" box)
   (def dyn (analyze-dynamic-extent box))
-  ;; (msg out "DYN %=\n" dyn)
+  ;; (msg* out "DYN %=\n" dyn)
   (def cal (analyze-calls dyn))
-  ;; (msg out "CAL %=\n" cal)
+  ;; (msg* out "CAL %=\n" cal)
   (def lft (lift! cal))
-  ;; (msg out "LFT %=\n" lft)
+  ;; (msg* out "LFT %=\n" lft)
   (def prg (extract-things! lft))
-  ;; (msg out "EXT %=\n" prg)
+  ;; (msg* out "EXT %=\n" prg)
   (def flt (closurize-main! prg env 64))
-  ;; (msg out "FLT %=\n" flt)
+  ;; (msg* out "FLT %=\n" flt)
   (gather-temporaries! flt)
-  ;; (msg out "TMP %=\n" flt)
+  ;; (msg* out "TMP %=\n" flt)
   (register-allocate! flt #f)
-  ;; (msg out "REG %=\n" flt)
-  ;; (msg out "\n\n%=\n\n" prg)
+  ;; (msg* out "REG %=\n" flt)
+  ;; (msg* out "\n\n%=\n\n" prg)
   prg)
 
 (dm generate-c-module (code-out e prg mod)
@@ -214,21 +213,21 @@
   (def sep       *path-separator*)
   (def out-name  (add-build-path appname "Makefile"))
   (with-port (code-out (open <file-out-port> out-name))
-    (msg code-out "include ..%sMake.inc\n" sep)
-    (msg code-out "C_OBJS_DD = $(patsubst %%,..%s%%,$(C_OBJS))\n" sep)
-    (msg code-out "%s%s: ..%sgrt.h\n" *c-extension* *obj-extension* sep)
-    (msg code-out "\t$(CC) -I.. -c -g -O -o $@ $<\n\n")
-    (msg code-out "OBJS = \\\n")
+    (msg* code-out "include ..%sMake.inc\n" sep)
+    (msg* code-out "C_OBJS_DD = $(patsubst %%,..%s%%,$(C_OBJS))\n" sep)
+    (msg* code-out "%s%s: ..%sgrt.h\n" *c-extension* *obj-extension* sep)
+    (msg* code-out "\t$(CC) -I.. -c -g -O -o $@ $<\n\n")
+    (msg* code-out "OBJS = \\\n")
     (do-module-loader-modules
      (fun (mod)
-       (msg code-out "\t%s \\\n"
-            (obj-filename (module-name-to-relpath (module-name mod)))))
+       (msg* code-out "\t%s \\\n"
+             (obj-filename (module-name-to-relpath (module-name mod)))))
      loader)
-    (msg code-out "\t%s\n\n" (obj-filename init-name))
-    (msg code-out "%s: $(C_OBJS_DD) $(OBJS)\n" exe-name)
-    (msg code-out "\t$(CC) -Wl,--export-dynamic -o %s $(C_OBJS_DD) $(LIBS) $(OBJS)\n\n"
+    (msg* code-out "\t%s\n\n" (obj-filename init-name))
+    (msg* code-out "%s: $(C_OBJS_DD) $(OBJS)\n" exe-name)
+    (msg* code-out "\t$(CC) -Wl,--export-dynamic -o %s $(C_OBJS_DD) $(LIBS) $(OBJS)\n\n"
          exe-name sep sep)
-    (msg code-out "clean:\n\trm -f %s $(OBJS)\n" exe-name sep)))
+    (msg* code-out "clean:\n\trm -f %s $(OBJS)\n" exe-name sep)))
 
 
 ;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
@@ -241,14 +240,14 @@
   (write code-out e)) 
 
 (dm generate-header (code-out e)
-  (msg code-out "/* GOO 2 C $REVISION: 0.111 $ \n")
+  (msg* code-out "/* GOO 2 C $REVISION: 0.120 $ \n")
   ;; (when pp (pp e code-out))
-  (msg code-out "  */\n\n#include \"grt.h\"\n")
+  (msg* code-out "  */\n\n#include \"grt.h\"\n")
   (when *dynamic-linking?*
-    (msg code-out "#include \"dlgrt.h\"\n")))
+    (msg* code-out "#include \"dlgrt.h\"\n")))
 
 (dm generate-trailer (code-out)
-  (msg code-out "\n/* END OF GENERATED CODE. */\n"))
+  (msg* code-out "\n/* END OF GENERATED CODE. */\n"))
 
 ;;;ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 ;;; generate global environment. for all global-bindings allocate a
@@ -258,7 +257,7 @@
 ;;; gb* is a list of instances of global-binding.
 
 (dm generate-global-environment (code-out mod)
-  (msg code-out "\n/* MODULE ENVIRONMENT: %s */\n\n" (module-name mod))
+  (msg* code-out "\n/* MODULE ENVIRONMENT: %s */\n\n" (module-name mod))
   (do-static-global-bindings
    (fun (binding)
      (generate-global-binding
@@ -269,11 +268,11 @@
   (def kind (binding-kind gb))
   (when (or (== kind 'global) (== kind 'runtime))
     (def name (binding-name gb))
-    (msg code-out "%s(%s,\"%s\",\"%s\");\n" 
-         (if imported? "EXT" "DEF")
-         (mangle-module-binding gb)
-         (mangle-string-literal (binding-module-name gb))
-         (mangle-string-literal name))))
+    (msg* code-out "%s(%s,\"%s\",\"%s\");\n" 
+          (if imported? "EXT" "DEF")
+          (mangle-module-binding gb)
+          (mangle-string-literal (binding-module-name gb))
+          (mangle-string-literal name))))
 
 ;;;; NAME MANGLING
 
@@ -313,7 +312,7 @@
   ;; without-bounds-checks
   (rep loop ((i 0)) 
     (when (< i buffer-size)
-      (set (low-elt string i) (low-elt buffer i))
+      (set (fab-elt string i) (low-elt buffer i))
       (loop (+ i 1))))
   ;; end without-bounds-checks
   string)
@@ -463,7 +462,7 @@
 
 (dm gen-result (e|<program> d code-out => <log>)
   (def reg (program-register e))
-  (and reg (msg code-out "T%d = " reg) #t))
+  (and reg (msg* code-out "T%d = " reg) #t))
 
 (dm gen-depth (d|<int> code-out)
   (for ((i (below d)))
@@ -488,12 +487,12 @@
 (dm generate-quotation-forwards (code-out (qb* <col>))
   (puts code-out "\n/* FORWARD QUOTATIONS: */\n\n")
   (for ((qb qb*))
-    (msg code-out "DEFLIT(lit_%s);\n" (binding-name qb))))
+    (msg* code-out "DEFLIT(lit_%s);\n" (binding-name qb))))
 
 (dm generate-quotations (code-out qb*|<lst>)
   (for ((qb (rev qb*))) ;; TODO: BIP
     (with-statement (1 code-out)
-      (msg code-out "lit_%s = " (binding-name qb))
+      (msg* code-out "lit_%s = " (binding-name qb))
       (generate-quotation code-out (binding-info qb)))))
 
 (dm false-name ()
@@ -509,10 +508,10 @@
   (out-list-builder (fun (x) (generate-quotation code-out x)) code-out qb))
 
 (dm generate-quotation (code-out x|<int>)
-  (msg code-out "%s((P)%d)" (mangle-boot-name "%int") x))
+  (msg* code-out "%s((P)%d)" (mangle-boot-name "%int") x))
 
 (dm generate-quotation (code-out x|<chr>)
-  (msg code-out "%s((P)%d)" (mangle-boot-name "%chr") (as <int> x)))
+  (msg* code-out "%s((P)%d)" (mangle-boot-name "%chr") (as <int> x)))
 
 (dm float-to-c-string (o|<flo> => <str>)
   (def s (num-to-str o))
@@ -530,16 +529,16 @@
           s))))
 
 (dm generate-quotation (code-out x|<flo>)
-  (msg code-out "%s(FLOINT(%s))" 
-       (mangle-boot-name "%flo") (float-to-c-string x)))
+  (msg* code-out "%s(FLOINT(%s))" 
+        (mangle-boot-name "%flo") (float-to-c-string x)))
 
 (dm generate-quotation (code-out x|<str>)
-  (msg code-out "%s((P)\"%s\")" 
-       (mangle-boot-name "%sb") (mangle-string-literal x)))
+  (msg* code-out "%s((P)\"%s\")" 
+        (mangle-boot-name "%sb") (mangle-string-literal x)))
 
 (dm generate-quotation (code-out x|<vec>)
   ;; TODO: TIE TOGETHER
-  (msg code-out "CALLN(1, %s, %s" (mangle-boot-name "vec") (len x))
+  (msg* code-out "CALLN(1, %s, %s" (mangle-boot-name "vec") (len x))
   (for ((e x))
     (puts code-out ", ")
     (generate-quotation code-out e))
@@ -547,15 +546,15 @@
 
 (dm generate-quotation (code-out x|<tup>)
   ;; TODO: TIE TOGETHER
-  (msg code-out "CALLN(1, %s, %s" (mangle-boot-name "tup") (len x))
+  (msg* code-out "CALLN(1, %s, %s" (mangle-boot-name "tup") (len x))
   (for ((e x))
     (puts code-out ", ")
     (generate-quotation code-out e))
   (puts code-out ")"))
 
 (dm generate-quotation (code-out x|<sym>)
-  (msg code-out "%s((P)\"%s\")" 
-       (mangle-boot-name "%%sym") (mangle-string-literal x)))
+  (msg* code-out "%s((P)\"%s\")" 
+        (mangle-boot-name "%%sym") (mangle-string-literal x)))
 
 ;;;
 ;;; CONVERT AN EXPRESSION TO C
@@ -566,7 +565,7 @@
 
 (dm binding->c (binding|<module-binding> code-out)
   (if (== (binding-kind binding) 'quotation)
-      (msg code-out "lit_%s" (binding-name binding))
+      (msg* code-out "lit_%s" (binding-name binding))
       (puts code-out (mangle-module-binding binding))))
 
 (dm binding->c (binding|<local-binding> code-out)
@@ -607,14 +606,14 @@
 (dm gen-ref (e|<free-reference> code-out)
   (puts code-out "FREEREF")
   (between-parentheses (code-out)
-    (msg code-out "%d" (reference-offset e))))
+    (msg* code-out "%d" (reference-offset e))))
 
 (dm gen-ref (e|<program> code-out)
   (def reg (program-register e))
-  (if reg (msg code-out "T%d" reg) (puts code-out "T_1")))
+  (if reg (msg* code-out "T%d" reg) (puts code-out "T_1")))
 
 (dm gen-ref (e|<raw-constant> code-out)
-  (msg code-out "(P)%s" (constant-value e)))
+  (msg* code-out "(P)%s" (constant-value e)))
 
 (dm gen-ref (e|<constant> code-out)
   (generate-quotation code-out (constant-value e)))
@@ -665,7 +664,7 @@
   (to-c (alternative-condition e) f d code-out)
   (gen-depth d code-out)
   (puts code-out "if (") (gen-ref (alternative-condition e) code-out)
-  (msg code-out " != %s) {\n" (false-name))
+  (msg* code-out " != %s) {\n" (false-name))
   (to-c (alternative-consequent e) f (+ d 1) code-out)
   (with-used-expression (e (+ d 1) code-out)
     (gen-ref (alternative-consequent e) code-out))
@@ -683,12 +682,12 @@
     (to-c arg f d code-out))
   (for ((arg (application-arguments e)) (i (from 1)))
     (with-statement (d code-out)
-      (msg code-out "a%d = " i)
+      (msg* code-out "a%d = " i)
       (gen-ref arg code-out)))
   (for ((binding (function-bindings f)) (i (from 1)))
     (with-statement (d code-out)
       (binding->c binding code-out)
-      (msg code-out " = a%d" i)))
+      (msg* code-out " = a%d" i)))
   (with-statement (d code-out)
     (puts code-out "goto loop")))
 
@@ -707,11 +706,11 @@
         (for ((arg (application-arguments e)))
           (to-c arg f d code-out))
         (with-expression (e d code-out)
-          (msg code-out "CALL%s" (if (> n $number-call-templates) "N" n))
+          (msg* code-out "CALL%s" (if (> n $number-call-templates) "N" n))
           (between-parentheses (code-out)
             (puts code-out (if (application-known? e) "0," "1,") )
             (gen-ref (application-function e) code-out)
-            (when (> n $number-call-templates) (msg code-out ",%s" n))
+            (when (> n $number-call-templates) (msg* code-out ",%s" n))
             (for ((arg (application-arguments e)))
               (put code-out #\,) (gen-ref arg code-out)))))))
 
@@ -790,7 +789,7 @@
         (for ((arg (application-arguments e)))
           (to-c arg f d code-out))
         (with-expression (e d code-out)
-          (msg code-out "(P)%s" (mangle-module-binding (application-binding e)))
+          (msg* code-out "(P)%s" (mangle-module-binding (application-binding e)))
           (between-parentheses (code-out)
             (for-commas code-out ((arg (application-arguments e)))
               (gen-ref arg code-out)))))))
@@ -806,7 +805,7 @@
              (puts code-out "FUNFAB")
              (between-parentheses (code-out)
                (generate-function-binding code-out f)
-               (msg code-out ",%d" n)
+               (msg* code-out ",%d" n)
                (for ((x (closure-creation-free e)))
                  (put code-out #\,) (gen-ref x code-out)))))))
 
@@ -816,12 +815,12 @@
   (with-expression (e d code-out)
     (if (== n 0)
         (generate-function-binding code-out f)
-        ;; (msg code-out "fun_%s" (closure-creation-index e))
+        ;; (msg* code-out "fun_%s" (closure-creation-index e))
         (seq (puts code-out "FUNSHELL")
              (between-parentheses-comma-separated (code-out)
-               (msg code-out "%d" (if (binding-dynamic-extent? b) 1 0))
+               (msg* code-out "%d" (if (binding-dynamic-extent? b) 1 0))
                (generate-function-binding code-out f)
-               (msg code-out "%d" n))))))
+               (msg* code-out "%d" n))))))
 
 (dm funinit-to-c (b|<binding> e|<closure-creation> f d code-out)
   (def n (len (closure-creation-free e)))
@@ -831,7 +830,7 @@
       (puts code-out "FUNINIT")
       (between-parentheses (code-out)
         (binding->c b code-out)
-        (msg code-out ", %s" n)
+        (msg* code-out ", %s" n)
         (for ((x (closure-creation-free e)))
           (put code-out #\,) (gen-ref x code-out))))))
 
@@ -850,7 +849,7 @@
       (seq
         (puts code-out (mangle-boot-name "%%list"))
         (between-parentheses (code-out)
-          (msg code-out "%d" (len elts))
+          (msg* code-out "%d" (len elts))
           (for ((e elts))
             (put code-out #\,)
             (f e))))))
@@ -902,9 +901,9 @@
     (generate-function-forward code-out def)))
 
 (dm generate-function-forward (code-out defn|<ast-primitive>)
-  (msg code-out "%s P %s (" 
-       (if *dynamic-linking?* "static" "extern")
-       (mangle-module-binding (function-binding defn)))
+  (msg* code-out "%s P %s (" 
+        (if *dynamic-linking?* "static" "extern")
+        (mangle-module-binding (function-binding defn)))
   (for-commas code-out ((i (below (len (function-bindings defn)))))
     (puts code-out "P"))
   (puts code-out ");\n"))
@@ -914,13 +913,13 @@
   (if (and (isa? name <module-binding>) 
            (mem? '(global runtime) (binding-kind name)))
       (puts code-out (mangle-module-binding name))
-      ;; (format-out "UNNAMED %=\n" defn)
+      ;; (msg-out "UNNAMED %=\n" defn)
       (if (== name #f)
-          (msg code-out "fun_%s" (function-index defn))
+          (msg* code-out "fun_%s" (function-index defn))
           (let ((name 
                   (if (isa? name <local-binding>) (binding-name name) name)))
-            (msg code-out "fun_%s_%s"
-                 (mangle-raw-name name) (function-index defn))))))
+            (msg* code-out "fun_%s_%s"
+                  (mangle-raw-name name) (function-index defn))))))
 
 (dm generate-function-forward (code-out defn)
   (def bound? (isa? (function-binding defn) <module-binding>))
@@ -944,7 +943,7 @@
   (to-c (function-signature definition) f d code-out)
   (with-expression (definition d code-out)
     (generate-function-binding code-out definition)
-    (msg code-out " = %s" (mangle-boot-name "%met"))
+    (msg* code-out " = %s" (mangle-boot-name "%met"))
     (between-parentheses-comma-separated (code-out)
       (generate-function-body-reference code-out definition)
       (gen-ref (function-debug-name definition) code-out)
@@ -967,7 +966,7 @@
     (with-statement (1 code-out)
       (puts code-out "P ")
       (for-commas code-out ((b bindings) (i (from 1)))
-        (msg code-out "a%d" i)))))
+        (msg* code-out "a%d" i)))))
 
 (dm generate-return (defn|<ast-primitive> d code-out)
   (with-statement (d code-out)
@@ -995,16 +994,17 @@
           %gen-cache-classes %gen-cache-missable?
           @telt @telt-setter
           @oelt @oelt-setter @olen
-        
+          %opts-location %opts-count
+          %class-ancestors @class-in? @subclass?
           prop-value-at prop-value-at-setter
           gen-lookup gen-lookup-1-using
           )
         (binding-name binding)))
 
 (dm generate-function-code (code-out e|<ast-primitive>)
-  (msg code-out "\n%s%sP " 
-       (if *dynamic-linking?* "static " "")
-       (if (primitive-inlinable? e) "INLINE " ""))
+  (msg* code-out "\n%s%sP " 
+        (if *dynamic-linking?* "static " "")
+        (if (primitive-inlinable? e) "INLINE " ""))
   (binding->c (function-binding e) code-out)
   (between-parentheses (code-out)
     (for-commas code-out ((binding (function-bindings e)))
@@ -1049,7 +1049,7 @@
                 (puts code-out "NARGS(")
                 (puts code-out "ARG("))
             (binding->c b code-out)
-            (msg code-out ", %d)" offset))
+            (msg* code-out ", %d)" offset))
           (set offset (+ offset 1))))
       bindings)
   (puts code-out "loop:\n")
@@ -1095,8 +1095,8 @@
   (loc ((maybe-declare (modname)
           (unless (elt-or seen modname #f)
             (set (elt seen modname) #t)
-            (msg code-out "extern MODULE_INFO %s;\n"
-                 (module-info-name modname)))))
+            (msg* code-out "extern MODULE_INFO %s;\n"
+                  (module-info-name modname)))))
     (do maybe-declare (map module-name (environment-uses-modules env)))
     (do-static-global-bindings
      (fun (binding)
@@ -1114,52 +1114,52 @@
   (def env        (module-target-environment mod))
   (def uses       (environment-uses-modules env))
   (def uses-names (map module-name uses))
-  ;;(msg out "Dumping module information...\n")
+  ;;(msg* out "Dumping module information...\n")
   (puts code-out "\n/* MODULE ENVIRONMENT INFORMATION */\n\n")
   (declare-imported-module-infos code-out mod)
 
   (puts code-out "\nstatic USE_INFO use_infos[] = {\n")
   (for ((n uses-names))
-    (msg code-out "  {&%s},\n" (module-info-name n)))
+    (msg* code-out "  {&%s},\n" (module-info-name n)))
   (puts code-out "  {NULL}\n};\n")
 
-  ;;(msg out "Dumping imports...\n")
+  ;;(msg* out "Dumping imports...\n")
   (puts code-out "\nstatic IMPORT_INFO import_infos[] = {\n")
   (do-named-static-global-bindings
    (fun (local-name binding)
      (unless (binding-native-to? binding mod)
-       (msg code-out "  {\"%s\", &%s, \"%s\"},\n"
+       (msg* code-out "  {\"%s\", &%s, \"%s\"},\n"
             (mangle-string-literal (binding-name binding))
                (module-info-name (binding-module-name binding))
                (mangle-string-literal local-name))))
    (module-target-environment mod))
   (puts code-out "  {NULL,NULL,NULL}\n};\n")
 
-  ;;(msg out "Dumping bindings...\n")
+  ;;(msg* out "Dumping bindings...\n")
   (puts code-out "\nstatic BINDING_INFO binding_infos[] = {\n")
   (do-static-global-bindings
    (fun (binding)
      (when (binding-native-to? binding mod)
        (if (== (binding-kind binding) 'global)
-           (msg code-out "  {\"%s\", &%s},\n"
-                (mangle-string-literal (binding-name binding))
-                (mangle-module-binding binding))
-           (msg code-out "  {\"%s\", NULL},\n"
-                (mangle-string-literal (binding-name binding))))))
+           (msg* code-out "  {\"%s\", &%s},\n"
+                 (mangle-string-literal (binding-name binding))
+                 (mangle-module-binding binding))
+           (msg* code-out "  {\"%s\", NULL},\n"
+                 (mangle-string-literal (binding-name binding))))))
    (module-target-environment mod))
   (puts code-out "  {NULL, NULL}\n};\n")
 
-  ;;(msg out "Dumping exports...\n")
+  ;;(msg* out "Dumping exports...\n")
   (puts code-out "\nstatic EXPORT_INFO export_infos[] = {\n")
   (for (((tup exported-as binding) (module-exports mod)))
-    (msg code-out "  {\"%s\", \"%s\"},\n"
-         (mangle-string-literal (binding-name binding))
-         (mangle-string-literal exported-as)))
+    (msg* code-out "  {\"%s\", \"%s\"},\n"
+          (mangle-string-literal (binding-name binding))
+          (mangle-string-literal exported-as)))
   (puts code-out "  {NULL, NULL}\n};\n")
 
-  (msg code-out "\nextern MODULE_INFO %s;\n" info-name)
-  (msg code-out "MODULE_INFO %s = {\n" info-name)
-  (msg code-out "  \"%s\",\n" (mangle-string-literal name))
+  (msg* code-out "\nextern MODULE_INFO %s;\n" info-name)
+  (msg* code-out "MODULE_INFO %s = {\n" info-name)
+  (msg* code-out "  \"%s\",\n" (mangle-string-literal name))
   (puts code-out "  NULL,\n")
   (puts code-out "  use_infos,\n")
   (puts code-out "  import_infos,\n")
@@ -1182,16 +1182,16 @@
   (unless *dynamic-linking?*
     (puts code-out "\n/* MODULES USED: */\n\n")
     (for ((n uses-names))
-      (msg code-out "extern %s;\n" (module-init-decl n))))
+      (msg* code-out "extern %s;\n" (module-init-decl n))))
   (puts code-out "\n/* EXPRESSION: */\n\n")
-  (msg code-out "extern %s;\n\n" init-decl)
-  (msg code-out "%s {\n" init-decl)
+  (msg* code-out "extern %s;\n\n" init-decl)
+  (msg* code-out "%s {\n" init-decl)
   (puts code-out "  static int need_init = 1;\n")
   (puts code-out "  if (!need_init) return;\n\n")
   (puts code-out "  need_init = 0;\n")
   (unless *dynamic-linking?*
     (for ((n uses-names))
-      (msg code-out "  %s();\n" (module-init-name n)))
+      (msg* code-out "  %s();\n" (module-init-name n)))
     (puts code-out "\n"))
   (to-c form #f 1 code-out)
   (puts code-out "\n")
@@ -1203,12 +1203,12 @@
   (def name      (module-name mod))
   (def info-name (module-info-name name))
   (puts code-out "\n/* APPLICATION: */\n\n")
-  (msg code-out "extern MODULE_INFO %s;\n" info-name)
-  (msg code-out "extern %s;\n\n" (module-init-decl name))
-  (msg code-out "MODULE_INFO *goo_toplevel_module_info = &%s;\n\n" info-name)
+  (msg* code-out "extern MODULE_INFO %s;\n" info-name)
+  (msg* code-out "extern %s;\n\n" (module-init-decl name))
+  (msg* code-out "MODULE_INFO *goo_toplevel_module_info = &%s;\n\n" info-name)
   (puts code-out "int main(int argc, char* argv[]) {\n")
-  (msg code-out "  %s(argc, argv);\n" (mangle-boot-name "%init-world"))
-  (msg code-out "  %s();\n" (module-init-name name))
+  (msg* code-out "  %s(argc, argv);\n" (mangle-boot-name "%init-world"))
+  (msg* code-out "  %s();\n" (module-init-name name))
   (puts code-out "  return 0;\n")
   (puts code-out "}\n"))
 

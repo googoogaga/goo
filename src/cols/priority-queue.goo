@@ -54,7 +54,7 @@
 (dm heap-insert (q|<priority-queue> key)
   (add! (queue-data q) key)
   (rep loop ((i (len q)))
-    ;; (format out "i = %d\n" i)
+    ;; (msg out "i = %d\n" i)
     (if (and (> i 1) ((queue-test q) key (ref q (parent i))))
         (seq (set (ref q i) (ref q (parent i)))
              (loop (parent i)))

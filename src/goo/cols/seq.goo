@@ -73,7 +73,7 @@
 
 ;;;; Creation protocol
 (dm as ((d (t< <seq>)) s|<seq> => <seq>)
-  (low-into (fab d (len s)) s))
+  (fab-into (fab d (len s)) s))
 
 ;;;; Collection protocol
 

@@ -321,8 +321,8 @@
   ;; (app sig string irritants-and-port)
   #f
   )
-  ;; format-string: string,
-  ;;  format-arguments: irritants-and-port
+  ;; msg-string: string,
+  ;;  msg-arguments: irritants-and-port
 
 (dm reverse-list->string (l|<lst> n|<int> => <str>)
   (as <str> (rev! l)))

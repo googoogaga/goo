@@ -3,6 +3,7 @@
 (use goo/math)
 (use goo/types)
 (use goo/cols/col)
+(use goo/cols/colx)
 (use goo/cols/seq)
 (use goo/cols/lst)
 

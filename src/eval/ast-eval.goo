@@ -5,6 +5,7 @@
 (use goo/macros)
 (use goo/runtime)
 (use goo)
+(use goo/cols/rep)
 (use x8r/ast)
 
 ;;; ENV
@@ -43,12 +44,12 @@
   (dp env-parent (x|<loc-env> => <any>)   #f)
   (dp env-function (x|<loc-env> => <any>) #f)
   (dp env-names (x|<loc-env> =>  <lst>)   '())
-  (dp env-values (x|<loc-env> => <vec>)   )
+  (dp env-values (x|<loc-env> => <rep>)   )
 
 (dv $nul-loc-env (new <loc-env>))
 
 (dm env-frame! (env|<loc-env> function names|<lst> args|<lst> => <loc-env>)
-  (def values (as <vec> args))
+  (def values (rep-into! (rep-fab (len args) nul) args))
   (new <loc-env>
     env-parent   env
     env-function function
@@ -57,12 +58,12 @@
 
 (dm env-local-value (env|<loc-env> i|<int> j|<int>)
   (if (= i 0)
-      (elt (env-values env) j)
+      (rep-elt (env-values env) j)
       (env-local-value (env-parent env) (- i 1) j)))
 
 (dm env-local-value-setter (v env|<loc-env> i|<int> j|<int>)
   (if (= i 0)
-      (set (elt (env-values env) j) v)
+      (set (rep-elt (env-values env) j) v)
       (set (env-local-value (env-parent env) (- i 1) j) v)))
 
 ;; TODO: SHOULD GO AWAY SOON
@@ -73,7 +74,7 @@
         (if (empty? names)
             (env-binding-value (env-parent env) name)
             (if (== name (head names))
-                (elt (env-values env) i)
+                (rep-elt (env-values env) i)
                 (loop (tail names) (+ i 1)))))))
 
 (dm env-binding-value-setter (v env|<loc-env> name|<sym>)
@@ -81,7 +82,7 @@
     (if (empty? names)
         (set (env-binding-value (env-parent env) name) v)
         (if (== name (head names))
-            (set (elt (env-values env) i) v)
+            (set (rep-elt (env-values env) i) v)
             (loop (tail names) (+ i 1))))))
 
 ;;; EVAL

@@ -3,7 +3,6 @@
 
 ;;; COLLECTION
 (use/export goo/cols/opts)
-(use/export goo/cols/assoc)
 (use/export goo/cols/col)
 (use/export goo/cols/colx)
 (use/export goo/cols/flat)

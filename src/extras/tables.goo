@@ -213,8 +213,8 @@
                                            vacancy-index)
                                       ;; use this cell
                                       this-bucket-raw-index)))
-                             (format out "FOUND EMPTY CELL @ %d\n"
-                                     this-bucket-raw-index)
+                             (msg out "FOUND EMPTY CELL @ %d\n"
+                                  this-bucket-raw-index)
                              (set (elt vector index) key)
                              (set (elt vector (+ index bucket-depth)) value)
                              (incf (%count table))
@@ -223,14 +223,14 @@
                            ;; N.B. Only record the _first_ vacant cell
                            (when vacancy-index 
                              (set vacancy-index this-bucket-raw-index)
-                             (format out "FOUND VACATED CELL @ %d\n"
-                                     vacancy-index)))
+                             (msg out "FOUND VACATED CELL @ %d\n"
+                                  vacancy-index)))
                           ;; key already in table update value
                           ((test-function key this-key)
                            (set (elt vector 
                                      (+ this-bucket-raw-index bucket-depth))
                                 value)
-                           (format out "FOUND KEY @ %d\n" this-bucket-raw-index)
+                           (msg out "FOUND KEY @ %d\n" this-bucket-raw-index)
                            (return value)))
                         (inner (+ _i 1) (+ this-bucket-raw-index 1)))
                       ;; Not in this bucket try the next one
@@ -304,7 +304,7 @@
 ;;; Internal functions
 
 (dm grow-table ((table <simple-table>) => <simple-table>)
-  (format out "GROWING TABLE\n")
+  (msg out "GROWING TABLE\n")
   (let ((vector (%vector table))
         ((tup new-n-buckets new-bucket-depth)
          (choose-table-geometry (* (%n-buckets vector) (%bucket-depth vector))))
@@ -314,10 +314,10 @@
                      (* new-bucket-depth (table-growth-factor table))))
            $empty-cell-marker
            new-n-buckets new-bucket-depth new-n-buckets (- new-n-buckets 2))))
-    (format out "OLD DATA %=\n" (%data (%vector table)))
+    (msg out "OLD DATA %=\n" (%data (%vector table)))
     (copy-to-new-vector (table new-vector))
     (set (%vector table) new-vector)
-    (format out "NEW DATA %=\n" (%data (%vector table)))
+    (msg out "NEW DATA %=\n" (%data (%vector table)))
     ;;--- It would be nice to be able to deallocate the old vector
     table))
 

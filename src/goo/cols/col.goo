@@ -55,17 +55,17 @@
  all2? ;; (dg all2? (test|<fun> x|<col> y|<col> => <log>)) ;; in types
 
 ;; Undocumented
- (dg low-into (x|<col> y|<col> => <col>)) 
- (dg low-fill! (x|<col> y => <col>)) 
+ (dg fab-into (x|<col> y|<col> => <col>)) 
+ (dg fab-fill! (x|<col> y => <col>)) 
  (dg range-error ())
  (dg low-elt (x|<col> k|<any> => <any>))
- (dg low-elt-setter (v|<any> x|<col> k|<any>))
+ (dg fab-elt-setter (v|<any> x|<col> k|<any>))
  (dg as-copy (c|<col> x|<col> => <col>))
 )
 ;;;;!! Implementation
 ;;;; Creation protocol
 (dm as ((p (t< <col>)) x|<col> => <col>)
-  (low-into (fab p (len x)) x))
+  (fab-into (fab p (len x)) x))
 
 ;;;; Collection protocol default implementation
 
@@ -92,25 +92,25 @@
 
 ;; required: fab
 
-(dm low-into (dst|<col> src|<col> => <col>)
+(dm fab-into (dst|<col> src|<col> => <col>)
   (rep in ((ss (enum src)))
     (if (fin? ss)
         dst
-        (seq (set (low-elt dst (now-key ss)) (now ss))
+        (seq (set (fab-elt dst (now-key ss)) (now ss))
              (in (nxt ss))))))
 
 (dm fabs (c|(t< <col>) objects|... => <col>)
-  (low-into (fab c (len objects)) objects))
+  (fab-into (fab c (len objects)) objects))
 
-(dm low-fill! (dst|<col> src => <col>)
+(dm fab-fill! (dst|<col> src => <col>)
   (rep in ((ds (enum dst)))
     (if (fin? ds)
         dst
-        (seq (set (low-elt dst (now-key ds)) src)
+        (seq (set (fab-elt dst (now-key ds)) src)
              (in (nxt ds))))))
 
 (dm fill (dst|<col> val => <col>)
-  (low-fill! (fab (object-class dst) (len dst)) val))
+  (fab-fill! (fab (object-class dst) (len dst)) val))
 
 ;; TODO: FLUSH OUT BETTER
 (dm dup (x|<col> => <col>)

@@ -47,5 +47,5 @@
 (dm low-elt (x|<tup> i|<int> => <any>)
   (%telt x (%iu i)))
 
-(dm low-elt-setter (z x|<tup> i|<int>)
+(dm fab-elt-setter (z x|<tup> i|<int>)
   (set (%telt x (%iu i)) z))

@@ -19,8 +19,8 @@
 (df callback
     (dev|<midi-device> chan|<int> type|<sym> kind|<sym>
      time|<int> d1|<int> d2|<int>)
-  (format out "CHAN %d TYPE %s KIND %s TIME %d D1 %d D2 %d\n"
-          chan type kind time d1 d2))
+  (msg out "CHAN %d TYPE %s KIND %s TIME %d D1 %d D2 %d\n"
+       chan type kind time d1 d2))
 
 (dv midi-in-devs #f)
 
