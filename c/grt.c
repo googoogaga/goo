@@ -1,6 +1,7 @@
 /* Copyright (c) 2001 Jonathan Bachrach */
 
 #include "prt.h"
+#include <sys/resource.h>
 
 extern P Ynil;
 
@@ -21,7 +22,7 @@ P YPbreak(char* message) {
 }
 
 P unbound () {
-  /* YPbreak("unbound binding"); */
+  //  YPbreak("unbound binding");
   return PNUL;
 }
 
@@ -1521,10 +1522,19 @@ P YPapp_args () {
 
 void* _DYNAMIC;
 
+extern P YPTstart_running_atT;
+
 void YPinit_world(int argc, char* argv[]) {
-  /* GC_enable_incremental(); */
+  static int need_init = 1;
   Pargc   = argc;
   Pargv   = argv;
+  if(!need_init)
+  {
+    CALL0(YPTstart_running_atT);
+    exit(0);
+  }
+  /* GC_enable_incremental(); */
+
   stack_  = (P*)allocate(MAX_STACK_SIZE * sizeof(P));
   symnames = (char**)allocate(MAX_SYMS * sizeof(char*));
   symmods = (char**)allocate(MAX_SYMS * sizeof(char*));
@@ -1533,8 +1543,62 @@ void YPinit_world(int argc, char* argv[]) {
   Pcurrent_unwind_protect_frame = Ptop_unwind_protect_frame;
   Ptop_unwind_protect_frame->ultimate_destination = (BIND_EXIT_FRAME)0;
   setup_keyboard_interrupts();
+  need_init = 0;
 }
 
+P YPunexec(P name)
+{
+#ifdef NO_UNEXEC
+  CALL1(Yerror, "Cannot unexec.");
+#else
+  unexec((char *)name, YPsu(YPapp_filename()), 0, 0, 0);
+#endif
+  return YPfalse;
+}
+
+P YPprint_cpu_usage(char *file)
+{
+  struct rusage usage;
+  getrusage(RUSAGE_SELF, &usage);
+  printf("%20s %d.%06.6d %d.%06.6d\n", file,
+	 usage.ru_utime.tv_sec, usage.ru_utime.tv_usec,
+	 usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
+  return YPfalse;
+  //  return YPpair(YPib(usage.ru_utime), YPpair(YPib(*(void**)&usage.ru_stime), Ynil));
+}
+
+
+// woowee, much hackery lives here...is this even a good idea? :)
+P YPPlist(int num, ...)
+{
+  if (num == 0)
+    return Ynil;
+  else
+  {
+    int i;
+    char *lst = allocate(num*(OBJECT_DATA_SIZE+VALUES_SIZE(2)));
+    char *curptr = lst;
+    P lst_traits = YPobject_traits(YLlstG);
+    va_list ap; va_start(ap, num);
+    
+    for (i = 0; i < num; i++)
+    {
+      OBJECT o = (OBJECT)curptr;
+      VALUES v = (VALUES)(curptr+OBJECT_DATA_SIZE);
+      curptr += OBJECT_DATA_SIZE+VALUES_SIZE(2);
+      
+      o->traits = lst_traits;
+      o->values = v;
+      v->size = 2;
+      v->values[0] = va_arg(ap, P);
+      if(i == num - 1)
+	v->values[1] = Ynil;
+      else
+	v->values[1] = curptr;
+    }
+    return lst;
+  }
+}
 /* CURSES */
 
 /* #include <curses.h> */

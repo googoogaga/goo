@@ -33,6 +33,13 @@ extern P YPbreak(char*);
 extern P YPfalse;
 extern P YPtrue;
 
+/*
+  Not used yet.
+#define YPprim_nary_start(arg) va_list ap; va_start(ap, arg)
+#define YPprim_nary_next() va_arg(ap, P)
+#define YPprim_nary_end() va_end(ap)
+*/
+
 #define YPEE(x, y)    ((x) == (y))
 #define YPeqQ(x, y)   ((x) == (y))
 #define YPbb(x)       (((x) == 0) ? YPfalse : YPtrue)
@@ -306,6 +313,7 @@ EXT(YPdispatch,"boot","%dispatch");
 /* PRIVATE MODULE PRIMITIVES USED DIRECTLY BY THE C BACK END */
 
 extern P YPpair (P,P);
+extern P YPPlist(int num, ...);
 extern P YPint (P);
 extern P YPchr (P);
 extern P YPflo (P);
