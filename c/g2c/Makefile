@@ -1,7 +1,7 @@
 include ../Make.inc
 C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 .c.o: ../prt.h
-	$(CC) -I.. -c -g -o $@ $<
+	$(CC) -I.. -c -g -O -o $@ $<
 
 OBJS = \
 	proto/collections.o \
