@@ -1,0 +1,102 @@
+(use proto)
+(use midi)
+
+;;; TONE
+
+(dv <tone-map> <tab>)
+
+;; TODO: SEPARATE OUT TONE-MAP SO IT CAN BE SHARED EASIER
+
+(dv $percussion-channel 9)
+
+(dc <tone> (<any>))
+  (slot <tone> (tone-name <sym>))
+  (slot <tone> (tone-key <chr>))
+  (slot <tone> (tone-channel <int>) $percussion-channel)
+  (slot <tone> (tone-pitch <int>))
+
+(dv $zero-tone-key #\+)
+(dv $std-tone-map
+  (fab-map <tone-map> $zero-tone-key 0))
+
+;;; INSTRUMENT
+
+(dc <instrument> (<any>))
+  (slot <instrument> (instrument-name <sym>))
+  (slot <instrument> (instrument-version <int>))
+  (slot <instrument> (instrument-tone-map <tone-map>) $std-tone-map)
+
+;;; INSTRUMENTS
+
+(dv $instruments (fab <buf> 0))
+
+(dm register-instrument (name version tones)
+  (let ((tone-map (fab <tone-map> (len tones)))
+        (inst     (isa <instrument>
+                    (set instrument-name     name)
+                    (set instrument-version  version)
+                    (set instrument-tone-map tone-map))))
+    (do (fun (t) (set (elt tone-map (tone-key t)) t)) tones)
+    (add! $instruments inst)))
+
+(df fab-tone (name key pitch)
+  (isa <tone> 
+    (set tone-name  name)
+    (set tone-key   key)
+    (set tone-pitch pitch)))
+
+(dv $zero-tone (fab-tone 'zero $zero-tone-key 0))
+
+(ds (def-instrument ,inst-name ,version ,@tones)
+  (let ((tone-inits
+         (map (fun (tone) 
+                (mif ((,name ,key ,pitch) tone) 
+                     `(lst ',name ,key ,pitch)))
+              tones)))
+    `(register-instrument ',inst-name ,version
+       (map (fun (tone-args) (apply fab-tone tone-args)) (lst ,@tone-inits)))))
+
+(dm find-instrument ((name <sym>) => (false-or <instrument>))
+  (lab ret
+    (for ((inst $instruments))
+      (when (== (instrument-name inst) name)
+        (ret inst)))))
+
+(dm percussion-pitch ((name <str>) => (false-or <int>))
+  (let ((mi (find-midi-percussion name)))
+    (and mi (midi-number mi))))
+
+(def-instrument djembe 1
+  (bass #\B (percussion-pitch "Hi Bongo"))
+  (tone #\T (percussion-pitch "Low Bongo"))
+  (slap #\S (percussion-pitch "Bass Drum 1")))
+
+(def-instrument djundjun 1
+  (kenkeni  #\S (percussion-pitch "Open Hi Conga"))
+  (sangban  #\T (percussion-pitch "Low Conga"))
+  (doundoun #\B (percussion-pitch "Low Floor Tom")))
+
+(def-instrument bell 1
+  (kengele  #\B (percussion-pitch "Cowbell")))
+
+(def-instrument clave 1
+  (clave    #\B (percussion-pitch "Claves")))
+
+(def-instrument metronome 1
+  (tick  #\T (percussion-pitch "Side Stick")))
+
+(export 
+  <tone-map>
+  <tone>
+  $zero-tone-key
+  $zero-tone
+  tone-name
+  tone-key
+  tone-channel
+  tone-pitch
+  $std-tone-map
+  <instrument>
+  instrument-name
+  instrument-version
+  instrument-tone-map
+  find-instrument)
