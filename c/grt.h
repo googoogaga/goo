@@ -450,7 +450,7 @@ fp->  prev fp
 #define FUNREG()          *(REG(sp)-1)
 #define LINK_STACK()      P Pfun = FUNREG(); P Pnext_methods = REG(next_methods); *REG(sp) = REG(fp); REGSET(fp, REG(sp)); REGSET(sp, REG(sp)+1); 
 #define UNLINK_STACK()    {REGSET(sp, REG(fp));  REGSET(fp, *REG(sp)); }
-#define YPunlink_stack (0);UNLINK_STACK
+#define YPunlink_stack() (0);UNLINK_STACK()
 #define ARGLEN()          (REG(fp)[-2])
 #define ARG(x, n)         x = (REG(fp)[- (n) - 3])
 #define NARGS(x, n)       x = (opts_stackalloc(regs, (P)tag((P)untag(REG(fp) - (n) - 3), loc_tag), \
@@ -641,7 +641,7 @@ IMPORTEXPORT extern P unbound ();
 
 // RTV'S ARE RUNTIME VARIABLES IMPLEMENTED IN TERMS OF C VARIABLES
 
-#define RTVDEF(x, m, n)  IMPORTEXPORT extern P x; P x = PNUL;
+#define RTVDEF(x, m, n)  IMPORTEXPORT P x = PNUL;
 #define RTVEXT(x, m, n)  IMPORTEXPORT extern P x;
 #define RTVREF(x)        x
 #define RTVSET(x, v)     x = v
@@ -713,6 +713,7 @@ IMPORTEXPORT extern P BOXFAB(P x);
 /* FUNCTION CODE */
 
 #define FUNCODEDEF(x)  P x##I (REGS regs)
+#define LOCCODEDEF(x)  static P x##I (REGS regs)
 #define FUNCODEREF(x)  (&(x##I))
 
 /* SYMBOL TABLE */
