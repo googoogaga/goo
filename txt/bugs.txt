@@ -1,3 +1,8 @@
+=== 0.116 BUGS ===
+
+o rep should take return type decls
+o run ast-linearize on type-expressions
+
 === 0.111 BUGS ===
 
 x too few args blows up in dispatcher
