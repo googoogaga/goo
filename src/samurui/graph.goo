@@ -1,6 +1,9 @@
 ; (load "/home/ai2/sombrero/cvs/goo/src/samurui/graph.goo" 'goo/user)
 
-;;(use goo/random)
+(use goo)
+(use samurui/samurui)
+(use samurui/gtkbinding)
+(use goo/random)
 
 ;; All of the code currently in this file is basically a direct conversion
 ;;  of the relevant touchgraph code into goo, with minimal idiom conversions.
@@ -12,38 +15,34 @@
 (dc <layout-engine> (<any>))
 
 (dc <graph-node> (<any>))
- (dp node-x (<graph-node> => <flo> 0.0))
- (dp node-y (<graph-node> => <flo> 0.0))
- (dp node-dx (<graph-node> => <flo>))
- (dp node-dy (<graph-node> => <flo>))
- (dp node-drawx (<graph-node> => <flo>))
- (dp node-drawy (<graph-node> => <flo>))
+ (dp node-x (<graph-node> => <flo>) 0.0)
+ (dp node-y (<graph-node> => <flo>) 0.0)
+ (dp node-dx (<graph-node> => <flo>) 0.0)
+ (dp node-dy (<graph-node> => <flo>) 0.0)
+ (dp node-drawx (<graph-node> => <flo>) 0.0)
+ (dp node-drawy (<graph-node> => <flo>) 0.0)
  (dp node-width (<graph-node> => <int>) 0) ;; cached when drawn
  (dp node-height (<graph-node> => <int>) 0) ;; cached when drawn
  (dp node-fixed (<graph-node> => <log>) #f)
  (dp node-just-made-local (<graph-node> => <log>) #f)
- (dp node-repulsion (<graph-node> => <flo>) 0.0)
+ (dp node-repulsion (<graph-node> => <flo>) 100.0)
  (dp node-obj (<graph-node> => <any>))
 
 (dm node-rect (node|<graph-node> => <gui-rect>)
-  (def ix (floor (node-x node)))
-  (def iy (floor (node-y node)))
-  (def ihw (1st (trunc/ (node-width node) 2)))
-  (def ihh (1st (trunc/ (node-height node) 2)))
-  (rect (- ix ihw)
-        (- iy ihh)
-        (+ ix ihw)
-        (+ ix ihh))
+  (rect-around (floor (node-x node))
+               (floor (node-y node))
+               (+ 2 (1st (trunc/ (node-width node) 2)))
+               (+ 2 (node-height node)))
   )
 
 (dc <graph-edge> (<any>))
  (dp edge-to (<graph-edge> => <graph-node>))
  (dp edge-from (<graph-edge> => <graph-node>))
- (dp edge-length (<graph-edge> => <flo> 40.0))
+ (dp edge-length (<graph-edge> => <flo>) 40.0)
 
 (dc <touchgraph-layout> (<layout-engine>))
- (dp damper (<touchgraph-layout> => <flo>) 0.0)
- (dp damping (<touchgraph-layout> => <log>) #t)
+ (dp damper (<touchgraph-layout> => <flo>) 1.0)
+ (dp damping (<touchgraph-layout> => <log>) #f)
  (dp drag-node (<touchgraph-layout> => (t? <graph-node>)) #f)
  (dp max-motion (<touchgraph-layout> => <flo>) 0.0)
  (dp motion-ratio (<touchgraph-layout> => <flo>) 0.0)
@@ -115,9 +114,9 @@
                 (func node1 node2)
                 )
               )
-            vis-nodes)
+            nodes)
         )
-      vis-nodes)
+      nodes)
   )
 
 (dm avoid-labels (tgl|<touchgraph-layout> vis-nodes)
@@ -136,8 +135,8 @@
 
      (if (== len 0.0)
          (seq
-           (set dx (math-random)) ;; 0.0 -> 1.0
-           (set dy (math-random)) ;; 0.0 -> 1.0
+           (set dx (random-unit)) ;; 0.0 -> 1.0
+           (set dy (random-unit)) ;; 0.0 -> 1.0
            )
          (seq
            (set dx (/ vx len))
@@ -154,20 +153,20 @@
          (seq
            (set (node-dx node1)
                 (+ (node-dx node1)
-                   (* dx repSum (rigidity tgl))))
+                   (* (* dx repSum) (rigidity tgl))))
            (set (node-dy node1)
                 (+ (node-dy node1)
-                   (* dy repSym (rigidity tgl))))
+                   (* (* dy repSum) (rigidity tgl))))
            )
          (seq
            (set (node-dx node1)
                 (+ (node-dx node1)
-                   (* dx repSum (/ (rigidity tgl)
-                                   10.0))))
+                   (* (* dx repSum) (/ (rigidity tgl)
+                                       10.0))))
            (set (node-dy node1)
                 (+ (node-dy node1)
-                   (* dy repSym (/ (rigidity tgl)
-                                   10.0))))
+                   (* (* dy repSum) (/ (rigidity tgl)
+                                       10.0))))
            )
          )
 
@@ -176,20 +175,20 @@
          (seq
            (set (node-dx node2)
                 (- (node-dx node2)
-                   (* dx repSum (rigidity tgl))))
+                   (* (* dx repSum) (rigidity tgl))))
            (set (node-dy node2)
                 (- (node-dy node2)
-                   (* dy repSym (rigidity tgl))))
+                   (* (* dy repSum) (rigidity tgl))))
            )
          (seq
            (set (node-dx node2)
                 (- (node-dx node2)
-                   (* dx repSum (/ (rigidity tgl)
-                                   10.0))))
+                   (* (* dx repSum) (/ (rigidity tgl)
+                                       10.0))))
            (set (node-dy node2)
                 (- (node-dy node2)
-                   (* dy repSym (/ (rigidity tgl)
-                                   10.0))))
+                   (* (* dy repSum) (/ (rigidity tgl)
+                                       10.0))))
            )
          )
      )
@@ -221,7 +220,7 @@
                                 (max -30.0 (min 30.0 dy))))
           )
 
-        (set maxMotion (max distMoved maxMotion))
+        (set maxMotion (max dist-moved maxMotion))
         )
       vis-nodes)
   
@@ -231,7 +230,7 @@
 
   (set (max-motion tgl) maxMotion)
 
-  (damp tgl)
+  (damp tgl vis-nodes)
   )
 
 (dm damp (tgl|<touchgraph-layout> vis-nodes)
@@ -271,7 +270,19 @@
   ; repaint
   )
 
-(idrawmodel <col> <visi-fdg>)
+(df tick-fdg (fdg)
+  (relax (layout fdg) (graph-nodes fdg) (graph-edges fdg))
+  (repaint-graph fdg)
+  )
+
+(idrawmodel <visi-col> <visi-fdg>
+;;            (gtk_timeout_add 500
+;;                             (gtk_getGtkFunctionCallback)
+;;                             (goo_createCallback tick-fdg imagebox))
+            (gtk_idle_add (gtk_getGtkFunctionCallback)
+                          (goo_createCallback tick-fdg imagebox))
+            )
+ (dp wrapped (<visi-fdg> => (t? <visi-col>)) #f)
  (dp graph-nodes (<visi-fdg> => <col>) (vec))
  (dp graph-edges (<visi-fdg> => <col>) (vec))
  (dp lenses (<visi-fdg> => <col>) (vec))
@@ -281,14 +292,59 @@
  (dp drag-node-off-y (<visi-fdg> => <int>) 0)
  (dp selected-node (<visi-fdg> => (t? <graph-node>)) #f)
 
+(dm find-graph-node (fdg|<visi-fdg> node)
+  (esc found-it
+    (do (fun (gn)
+          (when (== (node-obj gn) node)
+            (found-it gn)))
+        (graph-nodes fdg))
+    (msg out "Unable to locate graph node %=\n" node)
+    )
+  )
+
+(dm bind (fdg|<visi-fdg> getter|<fun> setter|<fun> => (tup <fun> <fun> <fun>))
+  (tup
+   ;; -- Rebinder --
+   (fun (new-obj)
+     ;; Detach from current if applicable
+     (when (wrapped fdg)
+       ;; um... nop for now
+       )
+     
+     ;; 
+     (set (wrapped fdg) (getter new-obj))
+     (register-node-add-notification (wrapped fdg) 
+                                     (fun (node)
+                                       (def gn (new <graph-node>))
+                                       (set (node-obj gn) node)
+                                       (add! (graph-nodes fdg) gn)
+                                       ))
+     (register-edge-add-notification (wrapped fdg)
+                                     (fun (from to)
+                                       (def ge (new <graph-edge>))
+                                       (set (edge-from ge) (find-graph-node fdg from))
+                                       (set (edge-to ge)   (find-graph-node fdg to))
+                                       (add! (graph-edges fdg) ge)
+                                       ))
+
+     ;; At some point we should traverse the existing collection...
+     )
+
+   ;; -- Refresher --
+   (fun ()
+     ;; When we update the rebinder code... update this too by using a common method or something...
+     )
+
+   ;; -- Free / Cleanup --
+   (fun ()
+     )
+   )
+  )
+
 (dv c_background (color 255 255 255))
 (dv c_node (color 192 64 64))
 (dv c_label (color 255 192 255))
 (dv c_edge (color 64 192 64))
-
-(dm graph-node-label (gn|<graph-node>)
-  (to-str (node-obj gn))
-  )
 
 (dm method-fold (methods initial-data)
   (def cur-val initial-data)
@@ -377,7 +433,7 @@
   ;; Intentional naivete : this should be rectified once things are working.
   (def my-font (font font-lucida))
 
-  (def label (graph-node-label node))
+  (def label (node-label (wrapped widget) (node-obj node))) ;; widget is an fdg
   (def s-w (string-width my-font label))
   (def s-h (string-height my-font label))
 
@@ -436,30 +492,30 @@
        )                                             
      )
     ((2)
-     (if (selected-node widget)
-         (seq
-           (def old-node (selected-node widget))
-           (def new-node (or (find-node widget x y)
-                             (let ((node (new <graph-node>)))
-                               (set (node-x node) (as <flo> x))
-                               (set (node-y node) (as <flo> y))
-                               (set (node-obj node) (gimme-node-name))
-                               (add! (graph-nodes widget) node)
-                               node)))
-           (def new-edge (new <graph-edge>))
-           (set (edge-to new-edge) new-node)
-           (set (edge-from new-edge) old-node)
-           (add! (graph-edges widget) new-edge)
-           (repaint-graph widget))
-         (seq
-           (let ((node (new <graph-node>)))
-             (set (node-x node) (as <flo> x))
-             (set (node-y node) (as <flo> y))
-             (set (node-obj node) (gimme-node-name))
-             (add! (graph-nodes widget) node)
-             (repaint-graph widget))
-           )
-       )
+;;     (if (selected-node widget)
+;;         (seq
+;;           (def old-node (selected-node widget))
+;;           (def new-node (or (find-node widget x y)
+;;                             (let ((node (new <graph-node>)))
+;;                               (set (node-x node) (as <flo> x))
+;;                               (set (node-y node) (as <flo> y))
+;;                               (set (node-obj node) (gimme-node-name))
+;;                               (add! (graph-nodes widget) node)
+;;                               node)))
+;;           (def new-edge (new <graph-edge>))
+;;           (set (edge-to new-edge) new-node)
+;;           (set (edge-from new-edge) old-node)
+;;           (add! (graph-edges widget) new-edge)
+;;           (repaint-graph widget))
+;;         (seq
+;;           (let ((node (new <graph-node>)))
+;;             (set (node-x node) (as <flo> x))
+;;             (set (node-y node) (as <flo> y))
+;;             (set (node-obj node) (gimme-node-name))
+;;             (add! (graph-nodes widget) node)
+;;             (repaint-graph widget))
+;;           )
+;;       )
      )
     ((3)
      )

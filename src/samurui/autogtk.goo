@@ -1,0 +1,4 @@
+(use samurui/gtkbinding)
+
+(use goo/system)
+(so-load "/home/ai2/sombrero/code/swiggtk/googtk.so")

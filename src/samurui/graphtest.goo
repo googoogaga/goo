@@ -9,8 +9,8 @@
 (set (tree-nodes my-app) (vec "A" "B" "C"))
 
 (imodel <simple-app>
-        "Graph Hopefully"
-        tree-nodes
+        "Graph Hopefully" 
+        (attr tree-nodes fill)
         ;;(columns
         ;; (master bob tree-nodes)
         ;; (slave bob)

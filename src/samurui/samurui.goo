@@ -1,11 +1,14 @@
-; (use goo/system)
-; (so-load "/home/ai2/sombrero/code/swiggtk/googtk.so")
-
 ; (load "/home/ai2/sombrero/cvs/goo/src/samurui/samurui.goo" 'goo/user)
 ; OR
 ; (use samurui/samurui)
 
+(use goo)
+(use goo/system)
 (use goo/boot)
+
+(use samurui/autogtk)
+(use samurui/gtkbinding)
+
 
 (dv gtk_true 1)
 (dv gtk_false 0)
@@ -17,7 +20,7 @@
   (when (== l null_loc)
     (msg out m)
     (msg out "\n"))
-    )
+  )
 
 (ds (debugstr ,@body)
   `(msg out ,@body)
@@ -150,7 +153,7 @@
 ;  renderize dude.  Specifically, it must return a gui object, and must take a class (not outrightly needed, but
 ;  we'll considering it future-proofing) and the list of updaters that should be added to as needed.
 
-(ds (idrawmodel ,assoc-class ,class)
+(ds (idrawmodel ,assoc-class ,class ,@body)
   `(seq
      (dc ,class (<interface-drawing-area>))
      (register-interface-model ,assoc-class (interface-model (fun (x) 1)
@@ -164,6 +167,10 @@
                                                            (set (handle imagebox) (handle (paintbox imagebox))) 
                                                            ; Bind it
                                                            (ad! updaters (bind imagebox (getter info) (setter info)))
+
+                                                           ; User setup-code
+                                                           ,@body
+
                                                            ; Events
                                                            (hookify imagebox)
                                                            imagebox
@@ -231,6 +238,20 @@
 (dm add-all! (to from)
   (do (fun (x)
         (ad! to x)
+        )
+      from)
+  )
+
+(dm add-all-opt! (to from)
+  (do (fun (x)
+        (case-by x isa?
+          ((<gui-widget>)
+           (ad-opt! to x (attrs x))
+           )
+          (#t
+           (ad! to x)
+           )
+          )
         )
       from)
   )
@@ -380,6 +401,7 @@
   (dp handle (<gui> => <loc>))
 
 (dc <gui-widget> (<gui>))
+ (dp attrs (<gui-widget> => (t? <col>)) #f)
 
 (dm log-to-gtk ((log <log>) => <int>)
   (if log
@@ -464,6 +486,14 @@
 (dm ad! ((container <gui-box>) (item <gui>))
   (debugstr "Adding %= to gui-box %=.\n" item container)
   (gtk_box_pack_start (handle container) (handle item) gtk_false gtk_false 8)
+  (add! (children container) item)
+  )
+
+(dm ad-opt! (container|<gui-box> item|<gui> opt|(t? <col>))
+  (def fill (when opt (mem? opt 'fill))) ; default to false
+  (debugstr "Adding with options %= which I think means fill: %= (%=)\n" opt fill (log-to-gtk fill))
+  (debugstr "Adding %= to gui-box %=.\n" item container)
+  (gtk_box_pack_start (handle container) (handle item) (log-to-gtk fill) (log-to-gtk fill) 8)
   (add! (children container) item)
   )
 
@@ -812,9 +842,10 @@
     )
   )
 
-(dm free ((canvas <gui-canvas>))
+(dm free (canvas|<gui-canvas>)
   ; Liquidate gc
-  (when (prop-bound? canvas gc)
+  (when (and (prop-bound? canvas gc)
+             (gc canvas))
     (free (gc canvas))
     )
   ; Liquidate our handle
@@ -967,12 +998,14 @@
   ; Kill off the canvas
   (free (canvas imagebox))
 
-  (let ((width (_GdkRectangle_width_get (_GtkWidget_allocation_get widget)))
-        (height (_GdkRectangle_height_get (_GtkWidget_allocation_get widget)))
-        (style (_GtkWidget_style_get widget))
+  (let ((width (_GdkRectangle_width_get (_GtkWidget_allocation_get (handle imagebox))))
+        (height (_GdkRectangle_height_get (_GtkWidget_allocation_get (handle imagebox))))
+        (style (_GtkWidget_style_get (handle imagebox)))
         )
 
-    (set (canvas imagebox) (gui-canvas-ext imagebox width height))
+    (debugstr "@@@ Reconfiguring imagebox for %= by %= @@@\n" width height) 
+
+    (set (canvas imagebox) (gui-canvas-ext (paintbox imagebox) width height))
 
     (gdk_draw_rectangle (drawable-handle (canvas imagebox))
                         (_GtkStyle_white_gc_get style)
@@ -1008,6 +1041,7 @@
 ; Provide default event hooks for widgets
 
 (df hook-configure-event (data widget event)
+  (debugstr "Got configure event!\n")
   (reconfigure data widget)
   )
 
@@ -1018,6 +1052,12 @@
       (repaint data r-area)
       )
     )
+
+(dg mouse-press (widget x|<int> y|<int> button|<int>))
+
+(dg mouse-release (widget x|<int> y|<int> button|<int>))
+
+(dg mouse-move (widget x|<int> y|<int> state|<int>))
 
 (df hook-mouse-press (data widget event)
   (mouse-press data ; data is our widget... widget is their widget!               
@@ -1058,14 +1098,16 @@
     (g_signal_connect hWidget "button_release_event" (gtk_getEventCallback) cb-mouse-release)
     (g_signal_connect hWidget "motion_notify_event" (gtk_getEventCallback) cb-mouse-move)
     (g_signal_connect hWidget "expose_event" (gtk_getEventCallback) cb-expose-event)
-    (g_signal_connect hWidget "configure_event" (gtk_getEventCallback) cb-expose-event)
+    (g_signal_connect hWidget "configure_event" (gtk_getEventCallback) cb-configure-event)
     
     ;; ask to receive events the drawing area doesn't normally subscribe to
-    (gtk_widget_set_events hWidget (| (| (| (| (gtk_widget_get_events hWidget)
-                                               GDK_BUTTON_PRESS_MASK)
-                                            GDK_BUTTON_RELEASE_MASK)
-                                         GDK_POINTER_MOTION_MASK)
-                                      GDK_POINTER_MOTION_HINT_MASK))
+    (gtk_widget_set_events hWidget (| (| (| (| (| (| (gtk_widget_get_events hWidget)
+                                                     GDK_BUTTON_PRESS_MASK)
+                                                  GDK_BUTTON_RELEASE_MASK)
+                                               GDK_POINTER_MOTION_MASK)
+                                            GDK_POINTER_MOTION_HINT_MASK)
+                                         GDK_EXPOSURE_MASK)
+                                      GDK_STRUCTURE_MASK))
     )
   )
 
@@ -1372,6 +1414,32 @@
   1.0
   )
 
+;;; to-call should be of the form (fun (node) ...)
+;;; it is assumed you will know what collection we are talking about.
+;;;  (this is a dubious assumption to make, but arguably it is more
+;;;  efficient for the variable to be closed-over than to be passed
+;;;  every damn time.)
+(dm register-node-add-notification(c to-call)
+  #f
+  )
+
+(dm remove-node-add-notification (c was-called)
+  #f
+)
+
+;;; to-call should be of the form: (fun (from to) ...)
+;;; it is assumed you will know what collection we are talking about.
+;;;  (this is a dubious assumption to make, but arguably it is more
+;;;  efficient for the variable to be closed-over than to be passed
+;;;  every damn time.)
+(dm register-edge-add-notification(c to-call)
+  #f
+  )
+
+(dm remove-edge-add-notification (c was-called)
+  #f
+)
+
 ;; It's generally good to have a simple label for a given node.  Note that we are not using to-str
 ;;  because that is a function of only the node, whereas we want the collection to be the control
 ;;  factor. The colleciton can of course defer to to-str if it is so inclined. 
@@ -1579,6 +1647,16 @@
   (pos (node-out-edges (collection gtv) (axis gtv) parent) node)
   )
 
+; ----           ----
+; ------ Menus ------
+; ----           ----
+
+(dv *cached-menus* (fab <tab> 0))
+
+(dm gimme-menu (obj)
+
+  )
+
 ; ----                ----
 ; ------ Renderize! ------
 ; -----              -----
@@ -1621,7 +1699,7 @@
         ; Create an hbox and stick everything we fab in it
         (let ((hbox (gui-hbox))
               (comps (map renderize-this (tail model-list))))
-          (add-all! hbox comps)
+          (add-all-opt! hbox comps)
           hbox))
 
       ;; MASTER
@@ -1631,12 +1709,19 @@
       ;; SLAVE
       ((= (elt model-list 0) 'slave)
        )
+ 
+      ;; Attr
+      ((= (elt model-list 0) 'attr)
+       (def my-comp (renderize (elt model-list 1) class updaters))
+       (set (attrs my-comp) (tail (tail model-list)))
+       my-comp
+       )
 
       ;; DEFAULT: VBOX
       (#t
        (let ((vbox (gui-vbox))
              (comps (map renderize-this model-list)))
-         (add-all! vbox comps)
+         (add-all-opt! vbox comps)
          vbox
          )
        )
@@ -1703,3 +1788,255 @@
 ;                                   )
 ;                                 )
 ;                          )
+
+;; Fucking exports
+
+;; Classes
+(export
+  <interface-info>
+  <interface-action>
+  <interface-property>
+  <interface-class-info>
+  <interface-model>
+  
+  <gui>
+  <gui-widget>
+  
+  <gui-container>
+  <gui-window>
+  <gui-box>
+  <gui-vbox>
+  <gui-hbox>
+
+  <gui-button>
+  <gui-toggle-button>
+  <gui-check-button>
+  
+  <gui-label>
+  <gui-textbox>
+
+  <gui-menu>
+  <gui-menu-item>
+  <gui-menu-item-label>
+
+  <rectangle>
+  <gdk-rect>
+  <gui-rect>
+
+  <point>
+  <gui-point>
+  <gui-point-flo>
+  <gdk-point>
+
+  <gui-drawable>
+  <gdk-colormap>
+  <gdk-gc>
+  <gui-paintbox>
+  <gui-canvas>
+  <gui-color>
+  <gui-font>
+  <gui-imagebox>
+  
+  <interface-drawing-area>
+
+  <visi-col>
+  <visi-wrap-col>
+
+  <gui-treeview-model>
+  <gui-treeview>
+  )
+
+;; Glorious functions
+(export
+  interface-action
+  interface-property
+  interface-class-info
+  interface-model
+  imodel-eval
+  imodel-payload
+  register-interface-model
+  has-interface-model?
+  get-interface-model
+  get-interface-models
+  find-interface-model
+  
+  add-all!
+  add-all-opt!
+  
+  find-first-class
+  get-class-info
+  add-property
+  add-action
+  get-class-actions
+  get-all-actions
+  find-action
+  get-class-properties
+  get-all-properties
+  find-property
+  rebind-interface-model
+  update-interface-model
+  kill-gtk
+  present
+  
+  log-to-gtk
+  gtk-to-log
+  free
+
+  gui-width
+  gui-height
+
+  gui-window
+  gui-vbox
+  gui-hbox
+  ad!
+  ad-opt!
+  show
+  gui-button
+  connect
+  gui-check-button
+  gui-label
+  gui-textbox
+  gui-menu
+  popup
+  gui-menu-item-label
+  gdk-rect
+  rect-x
+  rect-y
+  rect-w
+  rect-h
+  grow!
+  free
+  rect
+  rect-around
+  rect-to-gdk
+  shrink!
+  point
+  point-in-rect
+  point-to-gdk
+  gdk-point
+  point-x
+  point-y
+  gui-paintbox
+  gui-canvas
+  gui-canvas-ext
+  gdk-gc
+  gdk-colormap
+  color
+  realize
+  fg-setter
+  bg-setter
+  font
+  gui-imagebox
+  reconfigure
+  drawable
+  get-gc
+  hookify
+  repaint
+  mouse-click
+  mouse-move
+  drawable-handle
+  draw-blit
+  draw-rect
+  draw-arc
+  draw-line
+  draw-string
+  string-width
+  string-height
+  font-ascent
+  invalidate-all
+  invalidate
+  bind
+  visi-wrap-col
+  get-start-node
+  node-label
+  node-weight
+  register-node-add-notification
+  remove-node-add-notification
+  register-edge-add-notification
+  remove-edge-add-notification
+  node-axes
+  node-out-edges
+  node-in-edges
+  
+  gui-treeview
+  gtk-tv-get-n-columns
+  gtk-tv-get-start-node
+  gtk-tv-get-label
+  gtk-tv-iter-children
+  gtk-tv-iter-has-child
+  gtk-tv-iter-n-children
+  gtk-tv-iter-nth-child
+  gtk-tv-iter-next-child
+  gtk-tv-iter-parent
+  gtk-tv-iter-has-parent
+  gtk-tv-node-pos-in-parent
+  
+  gimme-menu
+  renderize-model
+  renderize
+
+  mouse-press
+  mouse-release
+  mouse-move
+  )
+
+(export
+  name
+  name-setter
+  method
+  method-setter
+  description
+  description-setter
+  type
+  type-setter
+  getter
+  getter-setter
+  setter
+  setter-setter
+  properties
+  properties-setter
+  actions
+  actions-setter
+  handle
+  handle-setter
+  attrs
+  attrs-setter
+  children
+  children-setter
+  colormap
+  colormap-setter
+  gc
+  gc-setter
+  realized-into
+  realized-into-setter
+  paintbox
+  paintbox-setter
+  canvas
+  canvas-setter
+  wrapped
+  wrapped-setter
+  parent-hash
+  parent-hash-setter
+  collection
+  collection-setter
+  axis
+  axis-setter
+  prop-axes
+  prop-axes-setter
+  model
+  model-setter
+  children
+  children-setter
+  )
+
+(export 
+  debugstr
+  iprop
+  iaction
+  imodel
+  idrawmodel
+  )
+
+(export
+  font-lucida
+  )
