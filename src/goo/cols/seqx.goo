@@ -89,8 +89,9 @@
 (dm sort! (items|<seq!> => <seq!>)
   (sort-by! items <))
 
-(dm sort-by! (items|<seq!> test|<fun> => <seq!>)
-  (col-res items (sort-by! (as <lst> items) test)))
+;; vec.goo now provides a quicksort, so do not use the horrible list bubble-sort
+;;(dm sort-by! (items|<seq!> test|<fun> => <seq!>)
+;;  (col-res items (sort-by! (as <lst> items) test)))
 
 ;; TODO: DEPRECATED
 (dm alter (dst|<seq!> src|<seq> from|<int> below|<int> => <seq!>)
