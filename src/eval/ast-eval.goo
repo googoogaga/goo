@@ -114,13 +114,14 @@
 
 (dv *stack* (fab <buf> 0))
 
-(ds (ifun (,env ,f ,names ,@args) ,body)
-  `(fun (,@args)
+(ds (ifun ,env ,f ,names ,body)
+  `(fun ((args ...))
      (let ((nms
 	    (%next-methods))
 	   (frame 
 	    (env-frame! ;; TODO: SLOW HACK
-	     ,env ,f (cat2 ,names (lst '%next-methods)) (lst ,@args nms))))
+	     ,env ,f (cat2 ,names (lst '%next-methods))
+             (cat2 (as <lst> args) (lst nms)))))
        ;; (push-last! *stack* frame)
        (,body frame)
        ;; (pop-last! *stack*)
@@ -142,26 +143,16 @@
 
 (dm export-proto-method (f names specs nary? value body env)
   (let ((efun
-	 (select (len names)
-	   ((0) (ifun (env f names) body))
-	   ((1) (ifun (env f names a1) body))
-	   ((2) (ifun (env f names a1 a2) body))
-	   ((3) (ifun (env f names a1 a2 a3) body))
-	   ((4) (ifun (env f names a1 a2 a3 a4) body))
-	   ((5) (ifun (env f names a1 a2 a3 a4 a5) body))
-	   ((6) (ifun (env f names a1 a2 a3 a4 a5 a6) body))
-	   ((7) (ifun (env f names a1 a2 a3 a4 a5 a6 a7) body))
-	   ((8) (ifun (env f names a1 a2 a3 a4 a5 a6 a7 a8) body))
-	   ((9) (ifun (env f names a1 a2 a3 a4 a5 a6 a7 a8 a9) body)))))
-    ;; TODO: HANDLE MORE THAN 9 CASE
+         (ifun env f names body)))
     (set (fun-name  efun) (as-fun-name f))
     (set (fun-sig efun)
          (isa <sig>
            (set sig-names names)
            (set sig-specs (ast-eval-specs specs nary? env))
            (set sig-nary? nary?)
-           (set sig-arity (- (fun-arity efun) (if nary? 1 0)))
-           (set sig-value (if value (ast-eval value env) <any>))))
+           (set sig-arity (if nary? (- (len specs) 1) (len specs)))
+           (set sig-value (if value (ast-eval value env) <any>))
+           (set sig-unification-vars '())))
     efun))
 
 (dm ast-eval ((e <ast-method>) (env <loc-env>))

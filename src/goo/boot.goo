@@ -34,7 +34,7 @@
         %peek-char %char-ready
         %object-class %object-class-setter
         %raw-alloc %object-of %clone
-        %slot-elt %slot-elt-setter
+        %slot-elt %slot-elt-setter %slot-dat-at
         %elt %elt-setter
         %slen %selt %selt-setter %%sfab %su %sb
         %vlen %velt %velt-setter %%vfab %vu
@@ -45,9 +45,10 @@
         %trace-on %trace-off
         %%apply %%mep-apply %next-methods %fapply
         %do-stack-frames 
-	%unexec
+        %unexec
         %build-runtime-modules
-
+        %loc-off %loc-off-setter %raw-call %check-call-types %location-of-end-of-vec
+        %sp-reg %sp-reg-setter %fp-reg %fp-reg-setter %unlink-stack
         %grid-open %grid-close %grid-move %grid-read %grid-write %grid-refresh
         )
 ))
@@ -57,7 +58,6 @@
 ;; Early definitions, so we at least know false != true
 (dv %false (%raw 0)) 
 (dv %true (%raw 1))
-(dv %check-types? (%raw 0))
 
 (dv %*used-symbols-too-early* (%raw 0))
 
@@ -111,14 +111,10 @@
 	(dv %true    (isa <log>))
 	(dv %false   (isa <log>))
 	(dc <chr> (<any>))
-	  (slot <chr> (%chr-val <int>))
 	(dc <num> (<any>))
 	(dc <int> (<num>))
-	  (slot <int> (%int-val <any>))
 	(dc <flo> (<num>))
-	  (slot <flo> (%flo-val <any>))
 	(dc <loc> (<any>))
-	  (slot <loc> (%loc-val <any>))
 	(dc <col> (<any>))
 	(dc <seq> (<col>))
 	(dc <lst> (<seq>))
@@ -127,9 +123,7 @@
 	  (slot <lst> (tail <lst>) nil)
 	(dc <flat> (<seq>))
 	(dc <vec> (<flat>))
-	  (slot <vec> (%%vec-dat <any>)) ;; TODO: SHOULD RENAME LOWLEVEL
 	(dc <str> (<flat>))
-	  (slot <str> (%%str-dat <any>)) ;; TODO: SHOULD RENAME LOWLEVEL
 	(dc <sym> (<any>))
 	  (slot <sym> (sym-name <str>))
 	(dc <type> (<any>))
@@ -160,14 +154,17 @@
 	  (slot <slot> (slot-type  <any>))
 	  (slot <slot> (slot-init  <fun>) (fun (x) nul-slot))
 	(dc <gen-cache> (<any>))
+	  (slot <gen-cache> (gen-cache-missable? <log>) #f)
+	  (slot <gen-cache> (gen-cache-arg-pos <int>) 0)
 	  (slot <gen-cache> (gen-cache-singletons <lst>) nil)
 	  (slot <gen-cache> (gen-cache-classes <lst>)    nil)
-        (dc <sig> (<any>))
+	(dc <sig> (<any>))
 	  (slot <sig> (sig-names <lst>) nil)
 	  (slot <sig> (sig-specs <lst>) nil)
 	  (slot <sig> (sig-nary? <log>) %false)
 	  (slot <sig> (sig-arity <int>) 0)
 	  (slot <sig> (sig-value <any>) <any>)
+	  (slot <sig> (sig-unification-vars <lst>) nil)
 	(dc <fun> (<any>))
 	  (slot <fun> (fun-code <any>)  %false)
 	  (slot <fun> (fun-name <any>)  %false)
@@ -176,7 +173,13 @@
 	  (slot <met> (fun-env <any>)   %false)
 	(dc <gen> (<fun>))
 	  (slot <gen> (fun-mets <lst>)  nil)
-	  (slot <gen> (fun-cache <any>) %false))))
+	  (slot <gen> (fun-cache <any>) %false)
+    (dc <opts> (<flat>))
+      (slot <opts> (opts-location <loc>) 0)
+      (slot <opts> (opts-count <int>) 0)
+    (dc <opts-vec> (<opts>))
+      (slot <opts-vec> (opts-vec-storage <vec>) nul)
+)))
 
 ;; RETURN CLASS DEFS FROM BOOT DEFS
 
@@ -217,6 +220,11 @@
 ;;;
 ;;; 1. CONSTRUCTION MACHINERY FOR BUILDING EARLY OBJECTS
 ;;;
+
+(dp %allocate-stack (num)
+  (let ((ret (%sp-reg)))
+    (set (%sp-reg) (%i+ (%sp-reg) (%i* (%raw 4) num)))
+    ret))
 
 ;; STRUCTURES ARE OBJECT TEMPLATES WITH 
 ;;   PRIMITIVES FOR ACCESSORS AND 
@@ -345,7 +353,7 @@
 ;;; MET BASICS
 
 (%define-structure % sig 
-   sig-names sig-specs sig-nary? sig-arity sig-value)
+   sig-names sig-specs sig-nary? sig-arity sig-value sig-unification-vars)
 
 (%define-structure % met 
    met-code met-name met-sig met-env)
@@ -354,7 +362,6 @@
 
 ;; NOW FALSE AND TRUE HAVE THEIR PERMANENT VALUES.
 
-(dv %check-types?       #f)  ;; READY FOR TYPE-CHECKING?
 (dv %symbols-ready?     #f)  ;; READY TO BUILD SYMBOLS?
 (dv %*start-running-at* nil)
 
@@ -368,15 +375,14 @@
 
 (dv $direct-object-class (%raw-alloc (%raw 4)))
 
-(dv $tag-msk (%raw 3))
+(dss ($tag-msk) `(%raw 3))
+(dss ($tag-len) `(%raw 2))
 
-(dv $tag-len (%raw 2))
+(dp %tag-bits (x) (%i& x ($tag-msk)))
 
-(dp %tag-bits (x) (%i& x $tag-msk))
+(dp %tag (x t) (%iv (%i<< x ($tag-len)) t))
 
-(dp %tag (x t) (%iv (%i<< x $tag-len) t))
-
-(dp %untag (x) (%i>> x $tag-len))
+(dp %untag (x) (%i>> x ($tag-len)))
 
 (dss ($adr-tag) `(%raw 0))
 
@@ -578,6 +584,10 @@
 
 ;; (%define-boxed-structure loc l)
 
+;;; 5.5. Make optional arg stuff
+(%define-structure % opts opts-location opts-count)
+(%define-structure % opts-vec opts-vec-location opts-vec-count opts-vec-vec)
+
 ;;;
 ;;; 12. MAKE SLOTS AND ACCESSORS
 ;;; 
@@ -639,9 +649,10 @@
 	(specs   (&listify (map (always '<any>) params))))
     `(seq (dv ,name 
 	    (%gen %early-dispatch ',name 
-	          (%sig '() ,specs #f ,(len params) <any>) '() #f))
+	          (%sig '() ,specs #f ,(len params) <any> '()) '() #f))
 	  (let ((accessor (fun (,@sig) ,@body)))
 	    (%add-met ,name accessor)
+        (set (%met-name accessor) ,name)
 	    accessor))))
 
 (dss (%define-getter ,name ,owner ,type)
@@ -715,7 +726,9 @@
 (dp @tail-setter ((z <lst>) (x <lst>)) (set (%tail x) z))
 
 (dp @= ((x <int>) (y <int>) => <log>)
-  (%bb (%i= (%iu x) (%iu y))))
+;; optimization based on knowing the tag bits for two ints are always the same
+  (%bb (%i= x y)))
+;;  (%bb (%i= (%iu x) (%iu y))))
 
 (dp @< ((x <int>) (y <int>) => <log>)
   (%bb (%i< (%iu x) (%iu y))))
@@ -738,6 +751,10 @@
 (df @rev! ((x <lst>) => <lst>) (%rev! x))
 
 (dp @len ((x <lst>) => <int>) (%ib (%%len x)))
+
+(dp @oelt ((x <opts>) (i <int>)) (%loc-off (%opts-location x) (%i- (%raw 0) (%iu i))))
+(dp @oelt-setter (z (x <opts>) (i <int>)) (set (%loc-off (%opts-location x) (%i- (%raw 0) (%iu i))) z))
+(dp @olen ((x <opts>) => <int>) (%opts-count x))
 
 (df @all? ((test <fun>) (c <lst>) => <log>)
   (rep fnd ((p c))
@@ -823,10 +840,17 @@
 (df @mem? ((c <lst>) (x <any>) => <log>)
   (not (@== (@find-key (fun (y) (@== x y)) c) nul)))
 
+;; added rev! since it was returning the list backwards. TODO: make it more
+;; efficient.
 (df @del-dups ((x <lst>) => <lst>)
-  (@reduce (fun (s e) (if (@mem? s e) s (@pair e s))) '() x))
+  (@rev! (@reduce (fun (s e) (if (@mem? s e) s (@pair e s))) '() x)))
 
-(df @lst ((objects ...)) objects)
+(df @lst-helper ((objects <opts>) (i <int>) (l <lst>))
+  (if (@== i -1)
+      l
+      (@lst-helper objects (@+ i -1) (@pair (@oelt objects i) l))))
+
+(df @lst ((objects ...)) (@lst-helper objects (@+ (@olen objects) -1) '()))
 
 (df @fun-names ((x <fun>) => <lst>) (%sig-names (%gen-sig x)))
 
@@ -837,6 +861,8 @@
 (df @fun-arity ((x <fun>) => <int>) (%sig-arity (%gen-sig x)))
 
 (df @fun-value ((x <fun>) => <any>) (%sig-value (%gen-sig x)))
+
+(df @fun-unification-vars ((x <fun>) => <lst>) (%sig-unification-vars (%gen-sig x)))
 
 (df @fun-mets ((x <fun>) => <lst>) (%gen-mets x))
 
@@ -908,8 +934,6 @@
                      (or now-same? same?) (@tail gms)))))
         g)))
 
-(dv <args> <lst>)
-
 (dp @class-in? (c cs => <log>)
   (if (%empty? cs)
       #f
@@ -926,11 +950,6 @@
 
 (dp @union-isa? (o u => <log>)
   (@any? (fun (t) (@isa? o t)) (%type-elts u)))
-
-(dp %isa? (o c => <log>)
-  (if (@== (%class-of c) <class>) ;; TODO: HACK
-      (@class-isa? o c)
-      (@isa? o c)))
 
 (dp @singleton-isa? (o t => <log>)
   ;; TODO: FIX UP TO DO PROPER ==
@@ -1075,14 +1094,14 @@
     (#t
      (order-specs-default t1 t2 arg))))
       
-(df order-mets ((m1 <met>) (m2 <met>) (args <args>) => <sym>)
+(df order-mets ((m1 <met>) (m2 <met>) (args <opts>) => <sym>)
   (let (((arity <int>) (@fun-arity m1)))
     (rep loop (((state <sym>) '=) ((idx <int>) 0))
       (if (@= idx arity)
 	  state
 	  (let ((m1spec (fun-spec m1 idx))
 		(m2spec (fun-spec m2 idx))
-		((cmp+typ <tup>) (order-specs m1spec m2spec (@elt args idx)))
+		((cmp+typ <tup>) (order-specs m1spec m2spec (@oelt args idx)))
 		((cmp <sym>) (@elt cmp+typ 0))
 		((idx <int>) (@+ idx 1)))
 	    (if (@== cmp '=)
@@ -1093,7 +1112,7 @@
 		    '<>)))))))
 
 (df sorted-app-mets-1
-      ((mets <lst>) (args <args>) (order-mets <fun>)
+      ((mets <lst>) (args <opts>) (order-mets <fun>)
        => (tup (ordered <lst>) (ambig <lst>)))
   (let (((ohead <lst>) (@pair #f '()))
 	((ahead <lst>) (@pair #f '())))
@@ -1134,17 +1153,21 @@
 	    (loop (@tail mets))))))
     (@tup (@tail ohead) (@tail ahead))))
 
-(df met-app? ((met <met>) (args <args>) => <log>)
-  (let (((n <int>) (@fun-arity met)))
-    (rep loop (((i <int>) 0))
-      (if (@= i n)
-	  #t
-	  (if (@isa? (@elt args i) (fun-spec met i))
-	      (loop (@+ i 1))
-	      #f)))))
+(dv met-app-unify (fun (x y) #f))
+
+(df met-app? ((met <met>) (args <opts>) => <log>)
+  (if (not (@empty? (@fun-unification-vars met)))
+      (met-app-unify met args)
+      (let (((n <int>) (@fun-arity met)))
+        (rep loop (((i <int>) 0))
+          (if (@= i n)
+              #t
+              (if (@isa? (@oelt args i) (fun-spec met i))
+                  (loop (@+ i 1))
+                  #f))))))
 
 (df sorted-app-mets
-      ((gf <gen>) (args <args>) => (tup (ordered <lst>) (ambig <lst>)))
+      ((gf <gen>) (args <opts>) => (tup (ordered <lst>) (ambig <lst>)))
   (let ((considered-mets
 	 (rep col ((ans '()) (ms (@fun-mets gf)))
 	   (if (@empty? ms)
@@ -1154,13 +1177,13 @@
 		 (col ans (@tail ms)))))))
     (sorted-app-mets-1 considered-mets args order-mets)))
 
-(df opt-args ((n <int>) (args <args>) => <args>)
-  (rep col (((i <int>) 0) ((l <args>) '()) ((p <args>) args))
-    (if (@= i n)
-	(if (@empty? l)
-	    (@lst p)
-	    (seq (set (@tail l) (@lst p)) args))
-	(col (@+ i 1) p (@tail p)))))
+; (df opt-args ((n <int>) (args <opts>) => <opts>)
+;   (rep col (((i <int>) 0) ((l <opts>) '()) ((p <opts>) args))
+;     (if (@= i n)
+; 	(if (@empty? l)
+; 	    (@lst p)
+; 	    (seq (set (@tail l) (@lst p)) args))
+; 	(col (@+ i 1) p (@tail p)))))
 
 (df @gen-cache-arg-pos (x)             (%gen-cache-arg-pos x))
 (df @gen-cache-arg-pos-setter (z x)    (set (%gen-cache-arg-pos x) z))
@@ -1171,14 +1194,14 @@
 
 ;; GIVEN MET/GEN AND ARGS FIND SLOT-OFFSET -- USING SLOT IN MET ENV
 
-(df method-accessor-offset ((gen <gen>) (met <met>) (args <lst>))
+(df method-accessor-offset ((gen <gen>) (met <met>) (args <opts>))
   (let ((slot  (%met-env met)) ;; TODO: THIS NEEDS TO BE IMPROVED
 	(slot? (and slot (@== (%class-of slot) <slot>)))
-	(n     (@len args)))
+	(n     (@olen args)))
     (and slot?
 	 (if (@= n 1) ;; getter?
-	     (slot-offset (%head args) gen)
-	     (slot-offset (%head (%tail args)) (%slot-getter slot))))))
+	     (slot-offset (@oelt args 0) gen)
+	     (slot-offset (@oelt args 1) (%slot-getter slot))))))
 
 (df @singleton-spec? (x)
   (@class-isa? x <singleton>))
@@ -1212,42 +1235,45 @@
   (@pick (fun (spec) (@subclass-spec? spec)) (@mets-specs-at mets pos)))
 
 (df gen-lookup-miss-1-using
-    (key (all-assocs <fun>) (all-assocs-setter <fun>) 
-     (gen <gen>) cache (mets <lst>) (sorted-mets <lst>) (i <int>) (args <lst>))
+  (key instance (all-assocs <fun>) (all-assocs-setter <fun>) 
+   (gen <gen>) cache (mets <lst>) (sorted-mets <lst>) (i <int>) (args <opts>))
   ;; (if (or (and cache (@< i (%gen-cache-arg-pos cache)))
   ;;         (@mets-unspecialized-at? mets i))
   ;;     (gen-lookup-miss-1 gen cache mets sorted-mets (@+ i 1) args)
-      (let ((cache (or cache (%gen-cache #t i nil nil))))
-	(rep loop ((assocs (all-assocs cache)))
-	  (if (@empty? assocs) ;; miss
-	      ;; could be a stale object
-	      (if (and (@== all-assocs @gen-cache-classes)
-		       (%class-forward key))
-		  (let ((arg (@elt args i)))
-		    (update-instance-for-changed-class arg)
-		    (set key (%class-of arg)) ; reset key to new class
-		    (loop (all-assocs cache))) ; restart search cause might hit
-		  (let ((val (gen-lookup-miss-1
-			      gen #f mets sorted-mets (@+ i 1) args)))
-		    (set (all-assocs cache)
-			 (@pair key (@pair val (all-assocs cache))))))
-	      (let ((k (@head assocs)))
-		(if (@== k key)
-                    (let ((v (@head (@tail assocs))))
-                      (gen-lookup-miss-1 gen v mets sorted-mets (@+ i 1) args))
-		    (loop (@tail (@tail assocs)))))))
-	cache))
+  (let ((cache (or cache (%gen-cache #t i nil nil))))
+    (rep loop ((assocs (all-assocs cache)))
+      (if (@empty? assocs) ;; miss
+          ;; could be a stale object
+          (if (and (@== all-assocs @gen-cache-classes)
+                   (%class-forward key))
+              (seq
+                (update-instance-for-changed-class instance)
+                (set key (%class-of instance)) ; reset key to new class
+                (loop (all-assocs cache))) ; restart search cause might hit
+              (let ((val (gen-lookup-miss-1
+                          gen #f mets sorted-mets (@+ i 1) args)))
+                (set (all-assocs cache)
+                     (@pair key (@pair val (all-assocs cache))))))
+          (let ((k (@head assocs)))
+            (if (@== k key)
+                (let ((v (@head (@tail assocs))))
+                  (gen-lookup-miss-1 gen v mets sorted-mets (@+ i 1) args))
+                (loop (@tail (@tail assocs)))))))
+    cache))
 
-;;; copy args with arg as i'th elt
-(df @specd-args ((args <lst>) (i <int>) (arg <any>) => <lst>)
-  (rep copy ((args args) (k 0) (r '()))
-    (if (@empty? args)
-        (@rev! r)
-        (copy (@tail args) (@+ k 1) 
-              (@pair (if (@== k i) arg (@head args)) r)))))
+;;; copy args with arg as i'th elt into a opts.
+(df @specd-args ((args <opts>) (i <int>) (arg <any>) => <opts>)
+  (let ((v (%vec (%iu (@olen args))))
+        (r (%opts-vec (%lb (%untag (%slot-dat-at v (%vlen v)))) (%ib (%vlen v)) v)))
+    (rep copy ((k 0))
+      (if (@== (@olen args) k)
+        r
+        (seq
+          (set (@oelt r k) (if (@== k i) arg (@oelt args k)))
+          (copy (@+ k 1)))))))
 
 (df ensure-singleton-cache
-    ((gen <gen>) cache (mets <lst>) (sorted-mets <lst>) (i <int>) (args <lst>))
+    ((gen <gen>) cache (mets <lst>) (sorted-mets <lst>) (i <int>) (args <opts>))
   (or cache 
       ;; prefill with singletons
       (let ((subclasses (@mets-subclasses-at mets i)))
@@ -1256,7 +1282,7 @@
               (if (@empty? singletons)
                   #f ;; no prefilling needed and no cache supplied
                   (let ((cache (%gen-cache #t i nil nil)))
-                    (set (%fun-cache gen) cache)
+;;???                    (set (%fun-cache gen) cache)
                     (rep loop ((singletons singletons))
                       (if (@empty? singletons)
                           cache
@@ -1264,47 +1290,44 @@
                                 (arg   (%type-object sing))
                                 (args  (@specd-args args i arg))
                                 (smets (choose-methods gen args))
-                                (mets  (@prune-mets-by-type-at mets sing i)))
-                            (gen-lookup-miss-1-using arg 
+                                (app-mets (@prune-mets-by-type-at mets sing i)))
+                            (gen-lookup-miss-1-using arg arg
                              @gen-cache-singletons @gen-cache-singletons-setter 
                              gen cache mets smets i args)
                             (loop (@tail singletons))))))))
             (%gen-cache #f i nil nil))))) ;; subclasses require singleton prec
 
 (df gen-lookup-miss-1
-    ((gen <gen>) ocache (mets <lst>) (sorted-mets <lst>) (i <int>) (args <lst>))
+    ((gen <gen>) ocache (mets <lst>) (sorted-mets <lst>) (i <int>) (args <opts>))
   (if (@= i (@fun-arity gen))
       (or (method-accessor-offset gen (@head sorted-mets) args) sorted-mets)
-      (let ((arg   (@elt args i))
+      (let ((arg   (@oelt args i))
             (cache (ensure-singleton-cache gen ocache mets sorted-mets i args))
             (sing? (@singleton-spec? (fun-spec (@head sorted-mets) i))))
 	(if (or (and sing? (@== ocache cache)) ;; sing args not seen?
                 (and cache (not (%gen-cache-missable? cache)))) ;; force sing?
             (let ((mets (@prune-mets-by-type-at mets (%singleton arg) i)))
               (gen-lookup-miss-1-using
-               arg @gen-cache-singletons @gen-cache-singletons-setter
+               arg arg @gen-cache-singletons @gen-cache-singletons-setter
                gen cache mets sorted-mets i args))
             (if sing? ;; sing arg doesn't belong in this cache
                 cache ;; already in cache by way of ensure-singleton-cache?
                 (let ((class (%class-of arg))
                       (app-mets (@prune-mets-by-type-at mets class i)))
                   (gen-lookup-miss-1-using
-                   class @gen-cache-classes @gen-cache-classes-setter
+                   class arg @gen-cache-classes @gen-cache-classes-setter
                    gen cache app-mets sorted-mets i args)))))))
 
-(df gen-lookup-miss ((gen <gen>) (args <lst>) => <any>) 
+(df gen-lookup-miss ((gen <gen>) (args <opts>) => <any>) 
   (let ((mets (choose-methods gen args))) ;; TODO: => (or <met> <gen-cache>)
     (gen-lookup-miss-1 gen (%fun-cache gen) (%gen-mets gen) mets 0 args)))
 
 (dp gen-lookup-1) ;; FORWARD DECL
 
-(dp gen-lookup ((gen <gen>) (args <lst>))
-  (let ((n (%sig-arity (%gen-sig gen)))
-	(c (or (%fun-cache gen)
+(dp gen-lookup ((gen <gen>) (args <opts>))
+  (let ((c (or (%fun-cache gen)
                (set (%fun-cache gen) (gen-lookup-miss gen args)))))
-    (gen-lookup-1 gen c 0 n args args)))
-
-(dv <int>-class <int>)
+    (gen-lookup-1 gen c args)))
 
 (dp slot-value-at (object (offset <int>) => <any>)
   (let ((val (%slot-elt object (%iu offset))))
@@ -1325,75 +1348,82 @@
 
 (dp gen-lookup-1-using
     (key (prev-assocs <lst>) (assocs <lst>) missable? (cache-offset <int>) 
-     (gen <gen>) cache (i <int>) (n <int>) (args <lst>) (all-args <lst>))
-  (if (@empty? assocs) ;; miss
-      (if missable?
-	  $missed-dispatch
-          (seq (set (%fun-cache gen) (gen-lookup-miss gen all-args))
-	       (gen-lookup gen all-args))) ;; restart lookup
-      (let ((k           (%head assocs))
-	    (tail-assocs (%tail assocs)))
-	(if (@== k key)
-	    (let ((v          (%head tail-assocs))
-		  (old-assocs (%slot-elt cache (%iu cache-offset))))
-	      (if (@== old-assocs assocs) ;; already at front?
-		  #f
-		  (let ((nxt-assocs (%tail tail-assocs)))
-                    ;; move assoc to front
-		    (set (%slot-elt cache (%iu cache-offset)) assocs)
-		    (set (%tail tail-assocs)                  old-assocs)
-		    (set (%tail (%tail prev-assocs))          nxt-assocs)))
-	      (gen-lookup-1 gen v (@+ i 1) n (%tail args) all-args))
-	    (gen-lookup-1-using
-	     key assocs (%tail tail-assocs) missable? cache-offset
-	     gen cache i n args all-args)))))
+     (gen <gen>) cache (args <opts>))
+    (if (@empty? assocs) ;; miss
+        (if missable?
+            $missed-dispatch
+            (seq (set (%fun-cache gen) (gen-lookup-miss gen args))
+                 (gen-lookup gen args))) ;; restart lookup
+        (let ((k           (%head assocs))
+              (tail-assocs (%tail assocs)))
+          (if (@== k key)
+              (let ((v          (%head tail-assocs))
+                    (old-assocs (%slot-elt cache (%iu cache-offset))))
+                (if (@== old-assocs assocs) ;; already at front?
+                    #f
+                    (let ((nxt-assocs (%tail tail-assocs)))
+                      ;; move assoc to front
+                      (set (%slot-elt cache (%iu cache-offset)) assocs)
+                      (set (%tail tail-assocs)                  old-assocs)
+                      (set (%tail (%tail prev-assocs))          nxt-assocs)))
+                (gen-lookup-1 gen v args))
+              (gen-lookup-1-using
+               key assocs (%tail tail-assocs) missable? cache-offset
+               gen cache args)))))
 
 ;; DISPATCH ARG STEP RUNNING BOTH SINGLETON AND CLASS DISPATCH
 ;; IF HIT THEN 
 ;;   IF LAST ARG THEN LEAF WITH INT MEANING SLOT-OFFSET ELSE METHOD
 ;;               ELSE RECURSE WITH NEXT ARG
 
-(dp gen-lookup-1 
-    ((gen <gen>) cache (i <int>) (n <int>) (args <lst>) (all-args <lst>))
-  (if (@= i n)
-      (if (@== (%class-of cache) <int>-class) ;; int?
-          (if (@= n 1) ;; getter?
-              (slot-value-at (%head all-args) cache)
-              (set (slot-value-at (%head (%tail all-args)) cache) 
-                   (%head all-args)))
-          (%%mep-apply (%head cache) (%tail cache) all-args))
-      ;; (if (@= i (%gen-cache-arg-pos cache))
-          (let ((arg (%head args))
-                (val (let ((assocs (%gen-cache-singletons cache)))
-                       ;; first look in singleton cache
-                       (gen-lookup-1-using
-                        arg assocs assocs (%gen-cache-missable? cache)
-                        $gen-cache-singletons-offset
-                        gen cache i n args all-args))))
+(dp gen-lookup-1 ((gen <gen>) cache (args <opts>))
+    (if (@== (%class-of cache) <gen-cache>)
+        (let ((arg (@oelt args (%gen-cache-arg-pos cache)))
+              (val (let ((assocs (%gen-cache-singletons cache)))
+                     ;; first look in singleton cache
+                     (gen-lookup-1-using
+                      arg assocs assocs (%gen-cache-missable? cache)
+                      $gen-cache-singletons-offset
+                      gen cache args))))
             (if (@== val $missed-dispatch)
                 (let ((assocs (%gen-cache-classes cache)))
                   ;; otherwise look in class cache
                   (gen-lookup-1-using
                    (%class-of arg) assocs assocs #f
-                   $gen-cache-classes-offset gen cache i n args all-args))
+                   $gen-cache-classes-offset gen cache args))
                 val))
-          ;; (gen-lookup-1 gen cache (@+ i 1) n (%tail args) all-args))
-          ))
+        cache))
 
 ;; TODO: CONDITIONS FOR THESE ERRORS
 
-(df choose-methods ((gen <gen>) (args <lst>) => <lst>)
+(df choose-methods ((gen <gen>) (args <opts>) => <lst>)
   (let ((ord-amb-mets   (sorted-app-mets gen args))
-	(sorted-mets    (@elt ord-amb-mets 0))
-	(ambiguous-mets (@elt ord-amb-mets 1)))
+        (sorted-mets    (@elt ord-amb-mets 0))
+        (ambiguous-mets (@elt ord-amb-mets 1)))
     (if (@< 0 (@len ambiguous-mets))
-	(error "Ambiguous Method Error when calling %= on %=" gen args)
-	(if (@empty? sorted-mets)
-	    (error "No Applicable Methods Error when calling %= on %=" gen args)
-	    sorted-mets))))
+        (error "Ambiguous Method Error when calling %= on %=" gen args)
+        (if (@empty? sorted-mets)
+            (error "No Applicable Methods Error when calling %= on %=" gen args)
+            sorted-mets))))
+
+;; FIXME: note the horrible hack in p2c.proto that makes it not generate
+;; an UNLINK_STACK at the end of this function.
+;; The way this works right now is not a long term solution.
 
 (df %dispatch ((args ...))
-  (gen-lookup (%fun-reg) args))
+  (let ((result (gen-lookup (%fun-reg) args)))
+    (if (@== (%class-of result) <int>) ;; int?
+        (let ((n (@olen args))
+              (res
+               (if (@= n 1) ;; getter?
+                   (slot-value-at (@oelt args 0) result)
+                   (set (slot-value-at (@oelt args 1) result)
+                        (@oelt args 0)))))
+          (%unlink-stack)
+          res)
+        (seq
+          (%unlink-stack)
+          (%raw-call (%head result) (%tail result))))))
 
 ;; READY TO REPLACE EARLY DISPATCHER WITH REAL DISPATCHER IN EARLY GEN'S
 
@@ -1409,24 +1439,6 @@
 
 (%patch-early-generics)
 
-(dv <opts> <lst>)
-
-;; TODO: NARY APPLY
-
-(df apply ((proc <fun>) (args <opts>))
-  (%%apply proc #f args))
-
-(df %apply-next-method (next-mets (args <opts>))
-  (if next-mets
-      (%%apply (%head next-mets) (%tail next-mets) args)
-      (error "No next methods")))
-
-(df %call-next-method (next-mets (args ...))
-  (%apply-next-method next-mets args))
-
-(df fapply (fproc (args <opts>))
-  (%fapply fproc args))
-
 ;; SIG TRAMPOLINES THROUGH FUN'S
 
 (dss (def-fun/sig-accessor ,name)
@@ -1440,6 +1452,7 @@
 (def-fun/sig-accessor nary?)
 (def-fun/sig-accessor arity)
 (def-fun/sig-accessor value)
+(def-fun/sig-accessor unification-vars)
 
 ;;; 
 ;;; 13. OBJECTS
@@ -1558,9 +1571,6 @@
 	(error "slot %s not found in %=" getter object)
 	(set (slot-value-at object offset) z))))
 
-;; IT IS NOW CRUCIAL THAT OBJECT HAS ITS VERY OWN CLASS SO THAT ITS CLASS
-;; CAN DEPART FROM ITS PARENTS.  THIS IS FOR COPY ON WRITE BEHAVIOR.
-
 (df %isa ((parents <lst>) (getters <lst>) (vals <lst>) => <any>)
   (let ((parent (%head parents))
         (object (%object-of parent (%iu (%class-slot-len parent)))))
@@ -1654,8 +1664,6 @@
   (%update-instance-for-changed-class object))
 
 (dv add-slot %slot)
-
-(set %check-types? #t)
 
 ;; USED FROM COMPILER TO BUILD GEN'S
 ;; TODO: NEED FUN-VALUE AS WELL
@@ -1918,6 +1926,8 @@
   %ib
   %iu
   %lu
+  %lb
+  %untag
 
 ;; repeated structures
   %sb
@@ -1934,9 +1944,7 @@
   %vnul
 
   add-slot
-  apply				;; %%apply
-  fapply                        ;; %fapply
-  %call-next-method
+  %allocate-stack
   *boot-macro-expanders*	;;var
   *boot-macro-names*		;;var
   *boot-macro-module-names*
@@ -1992,9 +2000,19 @@
   sig-nary?
   sig-arity
   sig-value
+  sig-unification-vars
   sorted-app-mets
   sym-name
   %symbols
   tail
   tail-setter
+
+  @oelt
+  @olen
+  @+
+  @<
+  %raw-call
+  %check-call-types
+  %loc-off %loc-off-setter
+  %sp-reg-setter %sp-reg
 )

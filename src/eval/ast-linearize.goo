@@ -18,7 +18,7 @@
 	(let ((x (getter o)))
 	  (when (isa? x <program>)
 	    ;; (format out "    UPDATING %=\n" x)
-	    (setter (apply g (pair x args)) o))))))
+	    (setter (apply g x args) o))))))
   o)
 
 ;;; BOXING
@@ -82,9 +82,6 @@
 				(set reference-binding binding))))))
 		  (loop (pair creator res) (tail bindings)))
 		(loop res (tail bindings))))))))
-
-(dm sexp->object (exp r)
-  (insert-box! (objectify exp r #f)))
 
 ;;; DYNAMIC-EXTENT ANALYSIS
 
@@ -556,6 +553,7 @@
   function-temporaries
   function-registers
   gather-temporaries!
+  insert-box!
   register-allocate!
   lift!
   <primitive-definition>
@@ -565,6 +563,5 @@
   reference-offset
   reference-self?
   <renamed-local-binding>
-  sexp->object
   <top-level-form>
   unconstrained-type?)

@@ -127,7 +127,7 @@
  ;; error, but it needs to be here.
  match-atom match-empty-list match-unquote match-sublist
  sexpr-signature-parameters
- %pair %next-methods %call-next-method %define-method %isa
+ %pair %next-methods %define-method %isa
  <handler-info>
  $default-handler-info
  <simple-handler-info>

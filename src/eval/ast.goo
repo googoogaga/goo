@@ -180,7 +180,7 @@
 	  (dm as ((p (t= <lst>))  (x ,class) => <lst>)
             (apply lst x))
 	  (dm as ((p (t= ,class)) (x <lst>) => <lst>)
-            (apply fabs (pair ,class x)))
+            (apply fabs ,class x))
 	  (df ,name (h t) 
             (isa ,class (set head h) (set tail t)))
 	  (dm empty ((e (t= ,class)) => ,class)
@@ -808,7 +808,7 @@
 	 functions bindings)
     (isa <locals>
 	 (set locals-bindings  bindings)
-	 (set locals-functions (apply fabs (pair <functions> functions)))
+	 (set locals-functions (apply fabs <functions> functions))
 	 (set locals-body      (objectify-sequential body new-r #t)))))
 
 (dm objectify-bind-exit (name body r tail? => <bind-exit>)
@@ -1708,6 +1708,8 @@
   binding-info-setter
   binding-value
   binding-value-setter
+  binding-dotted?
+  binding-dotted?-setter
   <bound?>
   bound?-reference
   <compile-time>

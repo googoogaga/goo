@@ -2,6 +2,50 @@
 
 (use boot)
 (use macros)
+;;; APPLY
+
+; (df napply ((proc <fun>) nexts (args ...))
+;   (if (== (len args) 1)
+;       (%%apply proc nexts (as <vec> (elt args 0)))
+;       (let (((ilen <int>) (- (len args) 1))
+;             ((lelt <seq>) (elt args ilen))
+;             ((tlen <int>) (+ ilen (len lelt)))
+;             ((out  <vec>) (fab <vec> tlen)))
+;         (rep loop ((i 0))
+;           (if (== i ilen)
+;               #f
+;               (seq
+;                 (set (elt out i) (elt args i))
+;                 (loop (+ i 1)))))
+;         (rep loop ((s (ini-state lelt)) (i ilen))
+;           (if (fin-state? lelt s)
+;               #f
+;               (seq (set (elt out i) (now-elt lelt s))
+;                    (loop (nxt-state lelt s) (+ i 1)))))
+;          (%%apply proc nexts out))))
+
+
+(df napply ((proc <fun>) nexts (args ...))
+  (let ((ilen (@+ (@olen args) -1))
+        (lelt (@oelt args ilen))
+        (tlen (@+ ilen (len lelt)))
+        (stackspace (%lb (%untag (%allocate-stack (%i+ (%raw 2) (%iu tlen))))))
+        (argend (%sp-reg)))
+    (rep loop1 ((i 0))
+      (let ((top (@+ tlen -1)))
+        (when (@< i ilen)
+          (set (%loc-off stackspace (%i- (%iu top) (%iu i)))
+               (@oelt args i))
+          (loop1 (@+ i 1)))))
+    (rep loop2 ((s (ini-state lelt)) (i (@+ 1 ilen)))
+      (unless (fin-state? lelt s)
+        (set (%loc-off stackspace (%i- (%iu tlen) (%iu i))) (now-elt lelt s))
+        (loop2 (nxt-state lelt s) (@+ i 1))))
+    (set (%loc-off stackspace (%iu tlen)) (%iu tlen))
+    (set (%loc-off stackspace (%i+ (%raw 1) (%iu tlen))) proc)
+    (set (%sp-reg) argend)
+    (%check-call-types)
+    (%raw-call proc nexts)))
 
 ;;; MACRO SUPPORT
 
@@ -50,7 +94,9 @@
 
 ;;; DYNAMIC BINDING
 
-(df t+ ((args ...)) (isa <union> (set type-elts args)))
+;; FIXME: should type-elts really be <lst> instead of <seq> and also
+;; fix compiler to automatically copy optionals.
+(df t+ ((args ...)) (isa <union> (set type-elts (as <lst> args))))
 
 (df t= (x) (isa <singleton> (set type-object x)))
 
@@ -414,7 +460,7 @@
   (if (empty? rest)
       default
       (if (= (len rest) 1)
-	  (head rest)
+	  (1st rest)
 	  (error "too many arguments: %=, %=" caller-name rest))))
 
 ;;  (mif (() rest)
@@ -531,11 +577,16 @@
         (rev! res)
         (con (add res (now-key c s)) (nxt-state c s)))))
 
-(dm do-key-vals ((fn <fun>) (key-vals <opts>) => (tup))
-  (rep rep (((key-vals <opts>) key-vals))
-    (unless (empty? key-vals)
-      (fn (head key-vals) (head (tail key-vals)))
-      (rep (tail (tail key-vals))))))
+(dm do-key-vals ((fn <fun>) (key-vals <seq>) => (tup))
+  (rep rep ((s (ini-state key-vals)))
+    (unless (fin-state? key-vals s)
+      (let ((key (now-elt key-vals s))
+            (nxts (nxt-state key-vals s))
+            (val (if (fin-state? key-vals s)
+                     #f
+                     (now-elt key-vals nxts))))
+        (fn key val)
+        (rep (nxt-state key-vals nxts))))))
 
 (dm len ((x <col>) => <int>)
   (rep count ((s (ini-state x)) (i 0))
@@ -797,30 +848,25 @@
   (reduce cat2 x ss))
 
 (dm cat! ((x <seq>) (more ...) => <seq>)
-  (apply cat (pair x more)))
+  (apply cat x more))
 
 (dm cat! ((x <lst>) (more ...) => <lst>)
-  ;; find first non-empty arg., to be destructively updated and returned
-  (rep find-result (((r <lst>) x) ((more <lst>) more))
-    (if (empty? more)
-	r
-	(if (empty? r)
-	    ;; skip empty arg prefix
-	    (find-result (as <lst> (head more)) (tail more)) 
-	    ;; p points into r (which is growing).  p is non-empty.
-	    (rep connect (((p <lst>) r) ((more <lst>) more))
-	      (if (empty? more)
-		  r
-		  ;; find next non-empty arg. to add
-		  (let ((x (as <lst> (head more))))
-		    (if (empty? x)
-			(connect p (tail more)) ;; skip empty arg
-			;; cdr to end of p and side-effect tail
-			(rep find-tail (((p <lst>) p))
-			  (if (empty? (tail p))
-			      (seq (set (tail p) x)         ;; DESTRUCTIVE UPDATE
-				   (connect x (tail more))) ;; connect next arg
-			      (find-tail (tail p))))))))))))
+  (let ((connect
+         (fun ((x <lst>) (y <lst>) => <lst>)
+           ;; connect x to y and return the last elem of the list
+           (if (empty? y)
+               x
+               (seq (set (tail x) y)
+                    (rep find-tail (((p <lst>) y))
+                      (if (empty? (tail p))
+                          p
+                          (find-tail (tail p))))))))
+        (result (lst #f))
+        (cur result))
+    (set cur (connect cur (as <lst> x)))
+    (for ((x more))
+      (set cur (connect cur (as <lst> x))))
+    (tail result)))
 
 (dm sub ((x <seq>) (from <int>) (below <int>) => <seq>)
   (rep con-x ((seq '()) ((i <int>) 0) (sta (ini-state x)))
@@ -876,7 +922,7 @@
 	       (isa c (set head (elt objects index)) (set tail result))))))
 
 (dm lst ((objects ...))
-  (apply fabs (pair <lst> objects)))
+  (apply fabs <lst> objects))
 
 (dv list lst)
 
@@ -976,6 +1022,20 @@
 
 (dm copy-state ((_ <flat>) (state <int>) => <int>) state)
 
+;;; OPTS
+(dm len ((x <opts>) => <int>)
+  (@olen x))
+
+(dm low-elt ((x <opts>) (i <int>) => <any>)
+  (@oelt x i))
+
+(dm elt ((x <opts>) (i <int>) => <any>)
+  (range-check x i)
+  (@oelt x i)) ;; TODO: LOW-ELT
+
+(dm to-str ((x <opts>) => <str>)
+  (cat "$$opts(" (vals-to-str x) ")"))
+
 ;;; VECTOR
 
 (dm empty ((c (t= <vec>)) => <vec>)
@@ -983,6 +1043,8 @@
 
 (df vec ((objects ...))
   (as <vec> objects))
+
+(dm as ((_ (t= <vec>)) (x <vec>) => <vec>) x)
 
 (dm fab ((x (t= <vec>)) (s <int>) => <vec>)
   (%vec (%iu s)))
@@ -1020,7 +1082,7 @@
     (isa <buf> (set buf-len s) (set buf-dat dat))))
 
 (dm buf ((elts ...) => <buf>)
-  (apply fabs (pair <buf> elts)))
+  (apply fabs <buf> elts))
 
 (dm len ((c <buf>) => <int>)
   (buf-len c))
@@ -1072,15 +1134,10 @@
 
 ;; TODO: HAVE THIS FALL OUT OF PROTOCOL
 (dm cat! ((x <buf>) (more ...) => <buf>)
-  (rep outer ((more more))
-    (if (empty? more)
-	x
-	(let ((s (head more)))
-          (rep inner ((sta (ini-state s)))
-            (if (fin-state? s sta)
-		(outer (tail more))
-		(seq (add! x (now-elt s sta))
-		     (inner (nxt-state s sta)))))))))
+  (for ((s more))
+    (for ((e s))
+      (add! x e)))
+  x)
 
 ;;; RANGE
 ;;;
@@ -1309,11 +1366,17 @@
 (dm compose ((fx <fun>) (fy <fun>) => <fun>)
   (fun ((args ...)) (fx (apply fy args))))
 
+;;FIXME:
+;; the let is to work around compiler bug:
+;;   it doens't do extent analysis of restargs like it should.
+
 (dm rcurry ((f <fun>) (curried ...) => <fun>)
-  (fun ((args ...)) (apply f (cat args curried))))     
+  (let ((savedcurried (as <vec> curried)))
+    (fun ((args ...)) (apply f (cat '() args savedcurried)))))
 
 (dm curry ((f <fun>) (curried ...) => <fun>)
-  (fun ((args ...)) (apply f (cat curried args))))     
+  (let ((savedcurried (as <vec> curried)))
+    (fun ((args ...)) (apply f (cat '() savedcurried args)))))
 
 (dm always (x => <fun>)
   (fun ((args ...)) x))
@@ -1332,7 +1395,7 @@
   (format-to-string "Anonymous handler for %s" cond-type))
 
 (dm build-condition-interactively
-  ((cond-type <condition>) in out => <condition>)
+  ((cond-type (t< <condition>)) in out => <condition>)
   (isa cond-type))
 
 (dc <simple-condition> (<condition>))
@@ -1340,11 +1403,11 @@
   (slot <simple-condition> (condition-arguments <lst>) '())
 
 (dm describe-condition ((c <simple-condition>) => <str>)
-  (apply format-to-string (pair (condition-message c)
-                                (condition-arguments c))))
+  (apply format-to-string (condition-message c)
+                          (condition-arguments c)))
 
 (dm build-condition-interactively
-  ((cond-type <simple-condition>) in out => <condition>)
+  ((cond-type (t< <simple-condition>)) in out => <condition>)
   (let ((cond (next-method cond-type in out)))
     (format out "Condition format string: ")
     (set (condition-message cond) (read in))
@@ -1409,8 +1472,9 @@
   (slot <simple-handler-info> (handler-info-arguments <str>) '())
 
 (dm describe-handler ((info <simple-handler-info>) condition-type => <str>)
-  (apply format-to-string (pair (handler-info-message info)
-                                (handler-info-arguments info))))
+  (apply format-to-string
+         (handler-info-message info)
+         (handler-info-arguments info)))
 
 (export
   <handler-info>
@@ -1512,7 +1576,7 @@
         #f
         (let ((handler (head handlers))
               (remaining (tail handlers)))
-          (when (and (isa? (handler-condition-type handler) type)
+          (when (and (subtype? (handler-condition-type handler) type)
                      (handler-active? handler))
             (f handler))
           (search remaining)))))
@@ -1789,7 +1853,7 @@
 (dv *debug-tables?* #f)
 
 (df trace (port msg (args ...))
-  (and *debug-tables?* (apply format (cat (lst port msg) args))))
+  (and *debug-tables?* (apply format port msg args))))
       
 
 (dc <tab> (<map>))
@@ -2342,6 +2406,7 @@
   max min
   modulo remainder
   mem?
+  napply
   neg neg?
   newline
   now-elt now-elt-setter

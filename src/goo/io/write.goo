@@ -46,8 +46,8 @@
       (write-string port "()")
       (write-list port x d recur)))
 
-(dm recurring-write ((port <output-port>) (x <vec>) (d <int>) (recur <fun>))
-  (write-vector port x d recur))
+(dm recurring-write ((port <output-port>) (x <flat>) (d <int>) (recur <fun>))
+  (write-flat port x d recur))
 
 (dm recurring-write ((port <output-port>) (x <map>) (d <int>) (recur <fun>))
   (write-map port x d recur))
@@ -126,8 +126,13 @@
        (isa? (tail x) <lst>)
        (empty? (tail (tail x)))))
 
-(dm write-vector ((port <output-port>) (x <vec>) (d <int>) (recur <fun>))
-  (write-string port "#(")
+(dm write-flat ((port <output-port>) (x <flat>) (d <int>) (recur <fun>))
+  (if (isa? x <vec>)
+      (write-string port "#(")
+      (seq
+        (write-string port "$$")
+        (display port (class-name (object-class x)))
+        (write-string port "(")))
   (let ((z (len x)))
     (when (> z 0)
       (recur (elt x 0) d)
@@ -281,7 +286,7 @@
 (df format-to-string ((message <str>) (arguments ...) => <str>)
   (call-with-string-output-port
    (fun (out)
-     (apply format `(,out ,message ,@arguments))
+     (apply format out message arguments)
      (port-contents out))))
 
 ;; (set *debug-tables?* #t)

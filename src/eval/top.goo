@@ -77,7 +77,7 @@
 (dm backtrace ()
   (let ((num 0))
     (do-stack-frames
-      (fun (f (args ...))
+      (fun (f args)
 	(unless (isa? f <gen>) 
 	  (format out "[%=] %= %=\n" num f args) (inc num))))))
 

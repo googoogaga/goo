@@ -2,13 +2,22 @@
 
 (use boot)
 
-;; TODO: TEMPORARY SOLUTION
-
+;; TODO: Fix next-method to do a normal call with a next-method instead of
+;;       apply, as apply is not necessary, and slow.
 (ds (next-method ,@args)
-  `(%call-next-method (%next-methods) ,@args))
+  `(let ((next-mets (%next-methods)))
+     (if next-mets
+         (napply (head next-mets) (tail next-mets) ,@args '())
+         (error "No next methods"))))
 
 (ds (apply-next-method ,args)
-  `(%apply-next-method (%next-methods) ,args))
+  `(let ((next-mets (%next-methods)))
+     (if next-mets
+         (napply (head next-mets) (tail next-mets) ,args)
+         (error "No next methods"))))
+
+(ds (apply ,f ,@args)
+  `(napply ,f #f ,@args))
 
 ;; TODO: GENERALIZED VERSION -- PROTOCOL + MULTIPLES
 
@@ -206,9 +215,11 @@
   pair
   tup
   var-name
-  var-type)
+  var-type
+  napply)
 
 (export
+  apply
   next-method
   apply-next-method
   collecting

@@ -1,5 +1,6 @@
 /* Copyright (c) 2001 Jonathan Bachrach */
 
+#include <time.h>
 #include <stdio.h>
 #include <string.h>
 #include <stdarg.h>
@@ -8,6 +9,11 @@
 #include <math.h>
 
 #define INLINE inline
+#ifdef IN_PRT_C
+#define STATIC_NOT_PRT_C 
+#else
+#define STATIC_NOT_PRT_C static
+#endif
 
 /* LOW LEVEL */
 
@@ -32,6 +38,8 @@ extern P YPbreak(char*);
 
 extern P YPfalse;
 extern P YPtrue;
+extern P YPopts(P loc, P len);
+extern P YPib(P i);
 
 /*
   Not used yet.
@@ -77,8 +85,6 @@ typedef struct _obj {
 
 #include "gc.h"
 
-extern void* malloc(size_t);
-
 extern P Ynul;
 extern P Ynul_slot;
 
@@ -87,13 +93,6 @@ extern P Ynul_slot;
 extern P YPobject_of (P class, P size);
 extern P YPclone (P x);
 extern P YPraw_alloc (P size);
-extern P YPelt (P v, P i);
-extern P YPelt_setter (P x, P v, P i);
-
-/*
-extern P YPslot_elt(P, P);
-extern P YPslot_elt_setter(P, P, P);
-*/
 
 #define YPslot_elt(x, i)           (((OBJECT)(x))->values[(PINT)(i)])
 #define YPslot_elt_setter(z, x, i) (((OBJECT)(x))->values[(PINT)(i)] = (z))
@@ -103,27 +102,6 @@ extern P YPslot_elt_setter(P, P, P);
 
 extern P FLOINT (PFLO x);
 extern P YPflo_bits (P x);
-
-/*
-
-typedef struct _vec {
-  PINT size;
-  P    values[1];
-} *PVEC, PVEC_DATA;
-
-extern P YPPvfab (P size, P fill);
-#define YPPvlen(x)              ((P)(((PVEC)(x))->size))
-#define YPPvelt(x, i)           (((PVEC)(x))->values[((PINT)(i))])
-#define YPPvelt_setter(z, x, i) (((PVEC)(x))->values[((PINT)(i))] = (z))
-
-typedef PCHR* PSTR;
-
-extern P YPPsfab (P size, P fill);
-#define YPPslen(x)              ((P)(strlen((PSTR)(x))))
-#define YPPselt(x, i)           ((P)(PINT)(((PSTR)(x))[((PINT)(i))]))
-#define YPPselt_setter(z, x, i) ((P)(PINT)(((PSTR)(x))[((PINT)(i))] = ((PCHR)(PINT)(z))))
-
-*/
 
 /* REP */
 
@@ -183,6 +161,16 @@ extern PSTR setenv(PSTR, PSTR, int);
 extern P YPos_name ();
 extern P YPos_binding_value (P name);
 extern P YPos_binding_value_setter (P value, P name);
+#define timeval_diff(a, b, result)                                            \
+  do {                                                                        \
+    (result)->tv_sec = (a)->tv_sec - (b)->tv_sec;                             \
+    (result)->tv_usec = (a)->tv_usec - (b)->tv_usec;                          \
+    if ((result)->tv_usec < 0) {                                              \
+      --(result)->tv_sec;                                                     \
+      (result)->tv_usec += 1000000;                                           \
+    }                                                                         \
+  } while (0)
+
 
 /* CLOSURES */
 
@@ -221,10 +209,6 @@ typedef P (*PFUN)(P, P);
 #define chr_tag  2
 #define loc_tag  3
 
-extern int tag_bits (P adr);
-extern long untag (P adr);
-extern long tag (P adr, int tag);
-
 /* #define IU(x) (YPslot_elt((x), (P)0)) */
 #define IU(x) (untag(x))
 
@@ -244,16 +228,25 @@ extern long tag (P adr, int tag);
 #define FUNSPECS(x) SIGSPECS(FUNSIG(x))
 #define FUNNARYP(x) SIGNARYP(FUNSIG(x))
 
-extern P* FUNENV (P fun);
-extern P* FUNENVSETTER (P* env, P fun);
+STATIC_NOT_PRT_C INLINE P* FUNENV (P fun) {
+  return (P*)YPslot_elt(fun, (P)FUNENVOFFSET);
+}
+
+STATIC_NOT_PRT_C INLINE P* FUNENVSETTER (P* env, P fun) {
+  return (P*)YPslot_elt_setter(env, fun, (P)FUNENVOFFSET);
+}
 
 #define ENVGET(e, i)       (((ENV)(e))->values[((PINT)(i))])
 #define ENVPUT(z, e, i)    (((ENV)(e))->values[((PINT)(i))] = ((P)(z)))
-#define FUNENVGET(f, i)    ENVGET(YPslot_elt((f), (P)FUNENVOFFSET), (i))
-#define FUNENVPUT(z, f, i) ENVPUT((z), YPslot_elt((f), (P)FUNENVOFFSET), (i))
+#define FUNENVGET(f, i)    ENVGET(FUNENV((f)), (i))
+#define FUNENVPUT(z, f, i) ENVPUT((z), FUNENV((f)), (i))
 
 #define YPfun_reg() (Pfun)
 #define YPnext_methods_reg() (Pnext_methods)
+#define YPsp_reg() (&stack_[sp])
+#define YPfp_reg() (&stack_[fp])
+#define YPsp_reg_setter(value) (sp = (P*)(value) - stack_)
+#define YPfp_reg_setter(value) (fp = (P*)(value) - stack_)
 
 #define FREEREF(x) (FUNENVGET(Pfun, (x)))
 
@@ -262,42 +255,146 @@ extern P FUNINIT (P fun, int n, ...);
 extern P FUNSHELL (int d, P x, int n);
 extern P FUNFAB (P x, int n, ...);
 
+/* TAG */
+
+STATIC_NOT_PRT_C INLINE int tag_bits (P adr) {
+  return (PADR)adr & tag_mask;
+}
+
+STATIC_NOT_PRT_C  INLINE long untag (P adr) {
+  return (PADR)adr >> 2;
+}
+
+STATIC_NOT_PRT_C  INLINE long tag (P adr, int tag) {
+  return (PADR)adr << 2 | tag;
+}
+
+STATIC_NOT_PRT_C INLINE P YPelt (P v, P i) {
+  return ((P*)v)[(int)i];
+}
+
+STATIC_NOT_PRT_C INLINE P YPelt_setter (P x, P v, P i) {
+  return ((P*)v)[(int)i] = x;
+}
+
+
 /* CALLS */
 
 extern P   Pfunction_;
 extern int Pargument_count_;
 extern P   Pnext_methods_;
 
+#define ON_STACK(a) do { \
+  int old_stack_allocp = stack_allocp; \
+  stack_allocp = 1; \
+  a; \
+  stack_allocp = old_stack_allocp; \
+} while(0)
+
 extern P* stack_;
 extern int sp, fp;
 
 #define PUSH(x)    (stack_[sp++] = (x))
 #define POP()      (stack_[--sp])
-
+#define DEC_STACK(n) (sp-=n)
+#define INC_STACK(n) (sp+=n)
 /* #define ARG(x)         P x = POP() */
-#define ARG(x, n)         P x = (stack_[fp - (n) - 2])
+/*
+STACK LAYOUT
+      arg2...n
+      arg1
+      arg0
+      arglen
+      fun obj
+fp->  prev fp
+      locals...
+*/
 
-extern P CALL0 (P fun);
-extern P CALL1 (P fun, P a1);
-extern P CALL2 (P fun, P a1, P a2);
-extern P CALL3 (P fun, P a1, P a2, P a3);
-extern P CALLN (P fun, int n, ...);
+#define LINK_STACK()      {stack_[sp] = (P)fp; fp = sp; sp++; }
+#define UNLINK_STACK()    {sp = fp; fp = (int)stack_[sp]; }
+#define YPunlink_stack (0);UNLINK_STACK
+#define ARGLEN()          (stack_[fp - 2])
+#define ARG(x, n)         x = (stack_[fp - (n) - 3])
+#define NARGS(x, n)       x = (opts_stackalloc((P)tag((P)untag((P)(stack_ + fp - (n) - 3)), loc_tag), \
+				      YPib((P)ARGLEN() - n)))
 
-extern P KCALL0 (P fun);
-extern P KCALL1 (P fun, P a1);
-extern P KCALL2 (P fun, P a1, P a2);
-extern P KCALL3 (P fun, P a1, P a2, P a3);
-extern P KCALLN (P fun, int n, ...);
+extern P YLoptsG;
+extern P YPcheck_call_types();
 
-extern P YPPapply (P fun, P next_mets, P args);
-extern P YPPmep_apply (P fun, P next_mets, P args);
-extern P YPfapply (P fproc, P args);
+STATIC_NOT_PRT_C  inline P opts_stackalloc(P loc, P len)
+{
+  OBJECT opts;
+  opts            = (OBJECT)(&stack_[sp]);
+  sp += 3;
+  opts->class     = YLoptsG;
+  opts->values[0] = loc;
+  opts->values[1] = len;
+  return opts;
+}
+
+
+STATIC_NOT_PRT_C  INLINE P CALL0 (int check, P fun) {
+  P   res;
+  PUSH(0);
+  PUSH(fun);
+  if(check)
+    YPcheck_call_types();
+  res = (FUNCODE(fun))(fun, YPfalse);
+  DEC_STACK(2);
+  return res;
+}
+
+STATIC_NOT_PRT_C  INLINE P CALL1 (int check, P fun, P a1) {
+  P   res;
+  PUSH(a1);
+  PUSH((P)1);
+  PUSH(fun);
+  if(check)
+    YPcheck_call_types();
+  res = (FUNCODE(fun))(fun, YPfalse);
+  DEC_STACK(3);
+  return res;
+}
+
+STATIC_NOT_PRT_C  INLINE P CALL2 (int check, P fun, P a1, P a2) {
+  P   res;
+  PUSH(a2);
+  PUSH(a1);
+  PUSH((P)2);
+  PUSH(fun);
+  if(check)
+    YPcheck_call_types();
+  res = (FUNCODE(fun))(fun, YPfalse);
+  DEC_STACK(4);
+  return res;
+}
+
+STATIC_NOT_PRT_C  INLINE P CALL3 (int check, P fun, P a1, P a2, P a3) {
+  P   res;
+  PUSH(a3);
+  PUSH(a2);
+  PUSH(a1);
+  PUSH((P)3);
+  PUSH(fun);
+  if(check)
+    YPcheck_call_types();
+  res = (FUNCODE(fun))(fun, YPfalse);
+  DEC_STACK(5);
+  return res;
+}
+
+
+STATIC_NOT_PRT_C  INLINE P YPraw_call(P fun, P next_mets)
+{
+  return (FUNCODE(fun))(fun, next_mets);
+}
+
+extern P CALLN (int check, P fun, int n, ...);
+
+extern P check_type(P,P);
+extern void check_fun_val_type(P, P);
 
 #define YPnext_methods() Pnext_methods
-
-extern P YPisaQ(P,P);
-extern void check_fun_val_type(P, P);
-extern P check_type(P, P);
 
 #define QRET(x) \
   { return (x); }
@@ -321,7 +418,8 @@ extern P unbound ();
 
 #define DEF(x, m, n)  extern P x; P x = PNUL;
 #define EXT(x, m, n)  extern P x;
-#define CHKREF(x)     (((x) == PNUL) ? unbound() : (x))
+#define CHKREF(x) x
+//#define CHKREF(x)     (((x) == PNUL) ? unbound() : (x))
 
 /* PRIVATE MODULE VARIABLES USED DIRECTLY BY THE C BACK END */
 
@@ -344,7 +442,7 @@ extern P YPflo (P);
 extern P YPsb (P);
 extern P YPPsym (P);
 extern P YPmacro (P,P,P);
-extern P YPsig (P,P,P,P,P);
+extern P YPsig (P,P,P,P,P,P);
 extern P YPgen (P,P,P,P,P);
 extern P YPmet (P,P,P,P);
 
@@ -366,7 +464,6 @@ extern P BOXFAB(P x);
 /* LOCATIVES */
 
 extern P YPlocative;
-extern P YPlb(P);
 
 /* SYMBOL TABLE */
 
@@ -375,8 +472,18 @@ extern P YPdo_runtime_bindings (P fun);
 
 /* LOCATIVES */
 
-extern P YPlocative_value (P loc);
-extern P YPlocative_value_setter (P val, P loc);
+STATIC_NOT_PRT_C  INLINE P YPlocative_value (P loc) {
+  P* ptr = (P*)((PADR)loc & ~tag_mask);
+  return *ptr;
+}
+
+STATIC_NOT_PRT_C  INLINE P YPlocative_value_setter (P val, P loc) {
+  P* ptr = (P*)((PADR)loc & ~tag_mask);
+  return *ptr = val;
+}
+
+#define YPloc_off(loc, off) (((P*)((PADR)(loc) & ~tag_mask))[(PINT)off])
+#define YPloc_off_setter(val, loc, off) (((P*)((PADR)(loc) & ~tag_mask))[(PINT)off] = val)
 
 /* APPS */
 
