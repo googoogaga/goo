@@ -921,10 +921,12 @@
   (new <unwind-protect>
        unwind-protect-protected-thunk
          (objectify
-          (sexpr-make-anonymous-method '() (lst protected-form)) r #f)
+          (sexpr-make-anonymous-method '() (lst protected-form))
+          r #f)
        unwind-protect-cleanup-thunk
          (objectify
-          (sexpr-make-anonymous-method '() cleanup-forms) r #f)))
+          (sexpr-make-anonymous-method '() cleanup-forms)
+          r #f)))
 
 (dm objectify-monitor (type info test handler body r tail? => <monitor>)
   (new <monitor>
@@ -1683,18 +1685,20 @@
   (def module     (new type module-name name))
   (def env        (fab-static-global-environment module loader #f))
   (def keepmod?   #f)
-  (def file       (module-name-to-relpath name))
-  (def src-file   (add-src-path (goo-filename file)))
+  (def modpath       (module-name-to-relpath name))
+  (def file (find-goo-file-in-path modpath *module-search-path*))
   (set-module-environments module env env)
-  (install-initial-bindings env loader)
-  (dlet ((*now-rt-env* env))
-    (fin
-      (seq
-        (load-in src-file env)
-        ;; Turn on foreign name support once the code has been loaded.
-        (set (environment-allows-foreign-names? env) #t)
-        (set keepmod? #t)
-        module)
+  (if (not file)
+      (error "Unable to find module %s" modpath))
+  (fin
+    (seq
+      (install-initial-bindings env loader)
+      (dlet ((*now-rt-env* env))
+        (load-in file env))
+      ;; Turn on foreign name support once the code has been loaded.
+      (set (environment-allows-foreign-names? env) #t)
+      (set keepmod? #t)
+      module)
         ;;; Tricky unwind handler.  Our module may have altered the the state
         ;;; of other modules, and so we need to back these changes out if we
         ;;; crash midway.  This would look much nicer if we had some kind of
@@ -1704,9 +1708,9 @@
         ;;; subtransaction.  But there may still be errors /executing/
         ;;; the code, and we choose to apply a module rollback if that code
         ;;; fails.  Is this the right thing?  Hmmm.
-      (unless keepmod?
-        (roll-back-transaction (module-transaction module))))))
-
+    (unless keepmod?
+      (roll-back-transaction (module-transaction module)))))
+      
 (dv *runtime-module-loader* (new <runtime-module-loader>))
 (df runtime-module-loader () *runtime-module-loader*)
 (df runtime-module (modname|<sym>)

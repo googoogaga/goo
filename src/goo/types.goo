@@ -23,12 +23,12 @@
  ;; 3.9.3 UNION
  <union>       ;; (dc <union> (<type>))
  type-elts     ;; (dg type-elts (x|<type> => <seq>))
- (df t+ ((args ...)))
+ (df t+ (args|...))
 
  ;; 3.9.3 PRODUCT
  (dc <product> (<type>))
  (dp type-elts (x|<product> => <tup>))
- (df t* ((args ...)))
+ (df t* (args|...))
 
  ;; 3.9.4 CLASSES
  <class>               ;; (dc <class> (<type>))

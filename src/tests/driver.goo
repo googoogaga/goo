@@ -130,7 +130,8 @@
 (dv *catch-test-errors* #t)
 
 (dm run-tests-in (tst => (tup <lst> <lst>))
-  (def errors '()) (warnings '())
+  (def errors '())
+  (def warnings '())
   (if *catch-test-errors*
       (esc break
         (try <condition>

@@ -121,9 +121,12 @@
         (dv %false   (new <log>))
         (dc <mag> (<any>))
         (dc <chr> (<mag>))
+;        (dc <prim-chr> (<chr>))
         (dc <num> (<mag>))
         (dc <int> (<num>))
+;        (dc <prim-int> (<int>))
         (dc <flo> (<num>))
+;        (dc <prim-flo> (<flo>))
         (dc <loc> (<any>))
         (dc <rep> (<any>))
         (dc <col> (<any>))
@@ -874,6 +877,12 @@
         res
         (red (combine res (@head c)) (@tail c)))))
 
+(df @rev ((x <lst>) => <lst>)
+  (rep loop ((l x) (r '()))
+    (if (@empty? l)
+        r
+        (loop (@tail l) (@pair (@head l) r)))))
+
 (df @cat2 (x|<lst> y|<lst> => <lst>)
   (%cat2 x y))
 
@@ -1243,30 +1252,41 @@
         (seq (set (@oelt r k) (if (@== k i) arg (@oelt args k)))
              (copy (@+ k 1))))))
 
+;; does the specified position require singleton precision always?
+(df requires-singleton-prec (mets pos)
+  (not (@empty?
+        (@pick
+         (fun (spec)
+           (not (or (@class-isa? spec <class>) 
+                    (and (@class-isa? spec <singleton>)
+                         (or 
+                          (not (@class-isa? (%type-object spec) <type>))
+                          (@class-isa? (%type-object spec) <class>))))))
+         (@mets-specs-at mets pos)))))
+
 (df ensure-singleton-cache
     (gen|<gen> cache mets|<lst> sorted-mets|<lst> i|<int> args|<opts>)
   (or cache 
       ;; prefill with singletons
-      (let ((subclasses (@mets-subclasses-at mets i)))
-        (if (@empty? subclasses)
-            (let ((singletons (@mets-singletons-at mets i)))
-              (if (@empty? singletons)
-                  #f ;; no prefilling needed and no cache supplied
-                  (let ((cache (%gen-cache #t i nil nil)))
-;;???                    (set (%fun-cache gen) cache)
-                    (rep loop ((singletons singletons))
-                      (if (@empty? singletons)
-                          cache
-                          (let ((sing  (@head singletons))
-                                (arg   (%type-object sing))
-                                (args  (@specd-args args i arg))
-                                (smets (choose-methods gen args))
-                                (app-mets (@prune-mets-by-type-at mets sing i)))
-                            (gen-lookup-miss-1-using arg arg
-                             @gen-cache-singletons @gen-cache-singletons-setter 
-                             gen cache mets smets i args)
-                            (loop (@tail singletons))))))))
-            (%gen-cache #f i nil nil))))) ;; subclasses require singleton prec
+      (if (requires-singleton-prec mets i)
+          (%gen-cache #f i nil nil)
+          (let ((singletons (@mets-singletons-at mets i)))
+            (if (@empty? singletons)
+                #f ;; no prefilling needed and no cache supplied
+                (let ((cache (%gen-cache #t i nil nil)))
+;;???                  (set (%fun-cache gen) cache)
+                  (rep loop ((singletons singletons))
+                    (if (@empty? singletons)
+                        cache
+                        (let ((sing  (@head singletons))
+                              (arg   (%type-object sing))
+                              (args  (@specd-args args i arg))
+                              (smets (choose-methods gen args))
+                              (app-mets (@prune-mets-by-type-at mets sing i)))
+                          (gen-lookup-miss-1-using arg arg
+                           @gen-cache-singletons @gen-cache-singletons-setter 
+                           gen cache mets smets i args)
+                          (loop (@tail singletons)))))))))))
 
 (df gen-lookup-miss-1
     (gen|<gen> ocache mets|<lst> sorted-mets|<lst> i|<int> args|<opts>)
@@ -1475,7 +1495,7 @@
 (df class-ordered-props (x|<class> => <props>)
   (def props
     (@del-dups
-     (@fold @cat2 '() (@map @class-direct-props (%class-ancestors x)))))
+     (@fold @cat2 '() (@map @class-direct-props (@rev (%class-ancestors x))))))
   (set (%class-prop-len x) (@len props))
   props)
 

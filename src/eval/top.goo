@@ -37,20 +37,20 @@
 (dm str-parse (s|<str> modname|<sym>)
   (str-parse-in s (runtime-environment modname)))
 
-(df ast-run (ast ct-env)
+(df %%bottom%%ast-run (ast ct-env)
   (ast-evaluate ast))
 
-(df g2c-run (ast ct-env)
+(df %%bottom%%g2c-run (ast ct-env)
   (g2c-eval ast ct-env))
 
 (df auto-run (ast ct-env)
   (if (ast-contains-fun? ast)
-      (g2c-run ast ct-env)
-      (ast-run ast ct-env)))
+      (%%bottom%%g2c-run ast ct-env)
+      (%%bottom%%ast-run ast ct-env)))
 
 (df auto-eval (form ct-env)
   (def ast (objectify-with-subtransaction form ct-env #f))
-  (auto-run ast ct-env))
+  (run ast ct-env))
 
 (ddv run auto-run)
 
@@ -68,6 +68,9 @@
 (dm str-eval (x|<str> modname|<sym>)
   (str-eval-in x (runtime-environment modname)))
 
+(df compiled-file? (name|<str>)
+  (ends-with name ".gooc"))
+
 (dm read-file (filename|<str> => <any>)
   (with-port (port (open <file-in-port> filename))
     (rep loop ((forms '()))
@@ -76,19 +79,26 @@
           (sexpr-sequence->begin (rev! forms))
           (loop (pair x forms))))))
 
-(dm load-in (filename|<str> ct-env) 
-  (def x (read-file filename))
-  (def o (objectify-with-subtransaction x ct-env #f))
-  (run o ct-env)
+(dm load-in (filename|<str> ct-env)
+  (if (compiled-file? filename)
+      (so-load filename)
+      (seq
+        (def x (read-file filename))
+        (def o (objectify-with-subtransaction x ct-env #f))
+        (run o ct-env)))
   ;; TODO - Hook me into the new module loader system in a useful way.
   ;; (report-undefined-global-bindings ct-env)
   )
 
-(dm load (filename|<str> modname|<sym>) 
+(dm load-file (filename|<str> modname|<sym>)
   (load-in filename (runtime-environment modname)))
 
-(dm load-from (name modname|<sym>)
-  (load (goo-filename name) modname))
+(dm load (name modname|<sym>)
+  (def realfile (find-goo-file-in-path name *module-search-path*))
+;  (msg out "Loading file %s\n" realfile)
+  (if (not realfile)
+      (error "File %s not found" name))
+  (load-file realfile modname))
 
 (dm prompt-for-command-expression (env level prompt)
   (msg out "%s %=%s" (module-name (find-environment-module env)) level prompt)
@@ -132,6 +142,19 @@
   (for-frames (num f args)
     (msg out "[%=] %=\n" num f)))
 
+(dm backtrace-short ()
+  (esc break
+    (def seen-top #f)
+    (for-frames (num f args)
+      (when seen-top
+        (if (and (not (= (fun-name f) #f))
+                 (= (sub (as <str> (fun-name f)) 0 10) "%%bottom%%"))
+            (break #f))
+        (msg out "[%=] %= %=\n" num f args))
+      (if (and (~= (fun-name f) #f)
+               (= (sub (as <str> (fun-name f)) 0 7) "%%top%%"))
+          (set seen-top #t)))))
+
 (dc <keyboard-interrupt> (<condition>))
 
 (df keyboard-interrupt ()
@@ -146,7 +169,7 @@
 
 ;;  Initialization and driver loop
 ;;  The prompt is handled a bit differently than in the notes
-(dm top-in (level top quit show-restarts? ct-env)
+(dm %%top%%top-in (level top quit show-restarts? ct-env)
   (def restarts #f)
   (esc blow
     (rep loop ()
@@ -157,7 +180,7 @@
                 (msg out "BREAK")
                 (msg out "ERROR: %s" (describe-condition c)))
             ;; (backtrace (env))
-            (top-in (+ level 1) top quit #t ct-env)
+            (%%top%%top-in (+ level 1) top quit #t ct-env)
             (continue #f))
           (try ((type <restart>)
                 (description "Return to interpreter level %d" level))
@@ -185,9 +208,9 @@
                    (def new-env (runtime-environment m))
                    (set ct-env new-env))
                   ((g2c-eval)
-                   (set run g2c-run))
+                   (set run %%bottom%%g2c-run))
                   ((ast-eval)
-                   (set run ast-run))
+                   (set run %%bottom%%ast-run))
                   ((auto-eval)
                    (set run auto-run))
                   ((bt)
@@ -211,7 +234,7 @@
       (fun (c r) (quit #f))
       (rep loop ()
         (esc top
-          (top-in 0 top quit #f (runtime-environment modname)))
+          (%%top%%top-in 0 top quit #f (runtime-environment modname)))
         (loop)))))
 
 (df save-image (image-name|<str>)
@@ -221,6 +244,7 @@
   eval
   auto-eval
   load
+  load-file
   parse-in
   read-file
   top

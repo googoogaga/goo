@@ -6,7 +6,7 @@
 ;;; This list of symbols should match those in goo/user.
 (export
   ;; Section 3.16: Top level.
-  load eval top
+  load eval top load-file
   do-stack-frames backtrace bt frame frame-var
 
   ;; Needs to be documented.

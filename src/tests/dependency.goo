@@ -2,8 +2,7 @@
 
 (use goo)
 (use tests/driver)
-
-(use dependency)
+(use eval/dependency)
 
 (test-group dep-types
   (test== (dependency-empty? $empty-dependency)      #t)

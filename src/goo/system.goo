@@ -66,31 +66,50 @@
             (sub filename 0 (+ i 1))
             (loop (- i 1))))))
 
+
+;need to make this depend on external configuration
 (dv *goo-root*
   (let ((env-root (os-val "GOO_ROOT")))
     (if (empty? env-root)
-        ;; Defaults to a path relative to the current working directory.
-        (cat (base-path (app-filename)) ".." *path-separator* "..")
+        "/usr/lib/goo/"
+        env-root)))
+
+(dv *module-search-path*
+  (lst (cat (os-val "HOME") *path-separator* ".goo" *path-separator* "mods")
+       (cat *goo-root* "/local/mods")
+       (cat *goo-root* "/mods")))
+
+(dv *goo-build-root*
+  (let ((env-root (os-val "GOO_BUILD_ROOT")))
+    (if (empty? env-root)
+        "."
         env-root)))
 
 (dm add-src-path (relpath => <str>)
-  (cat *goo-root* *path-separator* "src" *path-separator* relpath))
+  (cat *goo-build-root* *path-separator* "src" *path-separator* relpath))
+
+(dm add-goo-root-path (relpath => <str>)
+  (cat *goo-root* *path-separator* relpath))
 
 ;; TODO: GET THIS RIGHT ON WIN32
 (dm add-tmp-path (relpath => <str>)
   (cat *path-separator* "tmp" *path-separator* relpath))
 
 (dm add-build-path (builddir relpath => <str>)
-  (cat *goo-root* *path-separator* "c" *path-separator*
+  (cat *goo-build-root* *path-separator* "c" *path-separator*
        builddir *path-separator* relpath))
 
 (dv *goo-extension* ".goo")
+(dv *gooc-extension* ".gooc")
 (dv *c-extension*   ".c")
 (dv *obj-extension* ".o")
 (dv *exe-extension* "")
 
 (df goo-filename (name)
   (cat name *goo-extension*))
+
+(df gooc-filename (name)
+  (cat name *gooc-extension*))
 
 (df c-filename (name)
   (cat name *c-extension*))
@@ -104,11 +123,14 @@
 (export
   *path-separator*
   *goo-root*
-
+  *module-search-path*
+  *goo-build-root*
+  
   add-src-path
   add-build-path
   add-tmp-path
-
+  add-goo-root-path
+  
   *goo-extension*
   *c-extension*
   *obj-extension*
@@ -116,6 +138,7 @@
 
   c-filename
   goo-filename
+  gooc-filename
   exe-filename
   obj-filename
   )
@@ -146,11 +169,21 @@
 (df create-directory (filename|<str>)
   (%create-directory (%su filename)))
 
+(dl %compile)
+(dl %load)
+
+(df so-load (name)
+  (%load (%su name)))  
+
 (export
   file-mtime
   file-exists?
   file-type
-  create-directory)
+  create-directory
+  so-load
+  %load
+  %compile
+  )
 
 
 ;;;;=======================================================================
@@ -288,3 +321,26 @@
 (export
   parent-directory
   probe-directory)
+
+
+(df find-goo-file-in-path (fname|<str> search-paths|<col> => (t? <str>))
+  (esc return
+    (for ((path search-paths))
+      (def base-file (cat path *path-separator* fname))
+      (def goo-file (goo-filename base-file))
+      (def gooc-file (gooc-filename base-file))
+;      (msg out "Checking: %s %s: " goo-file gooc-file)
+      (def goo-found (file-exists? goo-file))
+      (def gooc-found (file-exists? gooc-file))
+;      (msg out "%s %s\n" goo-found gooc-found)
+      (when (and goo-found gooc-found)
+        (if (> (file-mtime goo-file) (file-mtime gooc-file))
+            (return goo-file)
+            (return gooc-file)))
+      (when gooc-found
+        (return gooc-file))
+      (when goo-found
+        (return goo-file)))
+    #f))
+
+(export find-goo-file-in-path)

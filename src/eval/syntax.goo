@@ -817,6 +817,7 @@
   sexpr-make-begin
   sexpr-fab-getter
   sexpr-make-macro-function
+  sexpr-make-method
   sexpr-fab-setter
   sexpr-fab-setter-name
   sexpr-method-body

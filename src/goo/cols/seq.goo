@@ -6,7 +6,7 @@
 (use goo/types)
 (use goo/cols/col)
 
-(df @t? ((x <type>) => <union>) 
+(df @t? (x|<type> => <union>) 
   (new <union> type-elts (@lst x (new <singleton> type-object #f))))
 
 ;;;;!! Interface
@@ -61,6 +61,10 @@
  ;; returns sequence with all duplicates removed.
  (dg del-dups (x|<seq> => <seq>))
 
+ ;; returns true if sequence s begins with sequence begin
+ (dg ends-with (s|<seq> end|<seq> => <log>))
+
+ (dg begins-with (s|<seq> begin|<seq> => <log>))
 
 ;; UNDOCUMENTED:
  (df range-check (x|<seq> i|<int>))
@@ -74,7 +78,7 @@
 ;;;;!! Implementation
 
 ;;;; Creation protocol
-(dm as ((d (t< <seq>)) s|<seq> => <seq>)
+(dm as (d|(t< <seq>) s|<seq> => <seq>)
   (fab-into (fab d (len s)) s))
 
 ;;;; Collection protocol
@@ -188,6 +192,12 @@
       (def nxts (nxt e))
       (def val  (and (not (fin? e)) (now e)))
       (fn key val) (rep (nxt e)))))
+
+(dm ends-with (s|<seq> end|<seq> => <log>)
+  (= (sub s (- (len s) (len end)) (len s)) end))
+
+(dm begins-with (s|<seq> begin|<seq> => <log>)
+  (= (sub s 0 (len begin)) begin))
 
 ;; from range.goo
 (need-implementation below)

@@ -17,8 +17,8 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.122")
-(dv *goo-date*    "MAR 24, 2002")
+(dv *goo-version* "0.124")
+(dv *goo-date*    "MAR 27, 2002")
 
 (msg out ";;; GOO\n")
 (msg out ";;; JONATHAN BACHRACH\n")
@@ -30,8 +30,8 @@
 ;; (msg out ";;; Loading Runtime Bindings...\n")
 (init-ast)
 ;; (msg out ";;; Loading System Patches...\n")
-(load (add-src-path "system-patches.goo") 'goo/user)
+(load "system-patches" 'goo/user)
 ;; (msg out ";;; Loading User Patches...\n")
-(load (add-src-path "user-patches.goo") 'goo/user)
+(load "user-patches" 'goo/user)
 ;; (msg out ";;; \n")
 (top 'goo/user)

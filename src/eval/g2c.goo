@@ -133,15 +133,9 @@
 (dm g2c-exp (exp env)
   (g2c-ast (objectify-with-subtransaction exp env #f) env))
 
-(dl %compile)
-(dl %load)
-
 (dm compile-load (name)
-  (%compile (%su name))
-  (%load (%su name)))
-
-(dm so-load (name)
-  (%load (%su name)))  
+  (%compile (%su (cat name *c-extension*)) (%su (cat name ".so")))
+  (%load (%su (cat name ".so"))))
 
 (dm g2c-eval (exp env)
   (def name (g2c-exp exp env))
@@ -531,7 +525,7 @@
 
 (dm generate-quotation (code-out x|<flo>)
   (msg* code-out "%s(FLOINT(%s))" 
-        (mangle-boot-name "%flo") (float-to-c-string x)))
+       (mangle-boot-name "%flo") (float-to-c-string x)))
 
 (dm generate-quotation (code-out x|<str>)
   (msg* code-out "%s((P)\"%s\")" 
