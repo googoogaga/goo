@@ -1,3 +1,8 @@
+=== 0.90cvs BUGS ===
+
+0<= (map (fun (c) "-") "abc")
+ERROR: No Applicable Methods Error when calling #{Gen low-elt-setter (<any> <any> <any>)} on ("-" "   " 0)
+
 === 0.82 BUGS ===
 
 0<= (dv <ptr> (isa <any>))
