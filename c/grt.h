@@ -155,7 +155,6 @@ extern P YPos_binding_value_setter (P value, P name);
 /* CLOSURES */
 
 typedef struct _env {
-  PINT mark;
   PINT size;
   P    values[1];
 } *ENV, ENV_DATA;
@@ -166,13 +165,15 @@ extern ENV envnul;
 typedef P (*PFUN)(P, P);
 
 #define FUNCODEOFFSET  0
-#define FUNSPECSOFFSET 1
-#define FUNNARYPOFFSET 2
-#define FUNARITYOFFSET 3
-#define FUNVALUEOFFSET 4
-#define FUNENVOFFSET   5
+#define FUNNAMEOFFSET  1
+#define FUNSIGOFFSET   2
+#define FUNENVOFFSET   3
 
-#define FUNCODE(fun) ((PFUN)YPslot_elt(fun, (P)FUNCODEOFFSET))
+#define SIGNAMESOFFSET 0
+#define SIGSPECSOFFSET 1
+#define SIGNARYPOFFSET 2
+#define SIGARITYOFFSET 3
+#define SIGVALUEOFFSET 4
 
 #define PAIRHEADOFFSET 0
 #define PAIRTAILOFFSET 1
@@ -195,10 +196,21 @@ extern long tag (P adr, int tag);
 /* #define IU(x) (YPslot_elt((x), (P)0)) */
 #define IU(x) (untag(x))
 
-#define FUNARITY(x) (PINT)(IU(YPslot_elt((x), (P)FUNARITYOFFSET)))
-#define FUNVALUE(x) YPslot_elt((x), (P)FUNVALUEOFFSET)
-#define FUNSPECS(x) (P)(YPslot_elt((x), (P)FUNSPECSOFFSET))
-#define FUNNARYP(fun) ((PLOG)(YPslot_elt((fun), (P)FUNNARYPOFFSET) != YPfalse))
+#define FUNCODE(fun) ((PFUN)YPslot_elt(fun, (P)FUNCODEOFFSET))
+#define FUNNAME(fun) ((PFUN)YPslot_elt(fun, (P)FUNNAMEOFFSET))
+#define FUNSIG(fun)  ((PFUN)YPslot_elt(fun, (P)FUNSIGOFFSET))
+
+#define SIGNAMES(x) (P)(YPslot_elt((x), (P)SIGNAMESOFFSET))
+#define SIGARITY(x) (PINT)(IU(YPslot_elt((x), (P)SIGARITYOFFSET)))
+#define SIGVALUE(x) YPslot_elt((x), (P)SIGVALUEOFFSET)
+#define SIGSPECS(x) (P)(YPslot_elt((x), (P)SIGSPECSOFFSET))
+#define SIGNARYP(x) ((PLOG)(YPslot_elt((x), (P)SIGNARYPOFFSET) != YPfalse))
+
+#define FUNNAMES(x) SIGNAMES(FUNSIG(x))
+#define FUNARITY(x) SIGARITY(FUNSIG(x))
+#define FUNVALUE(x) SIGVALUE(FUNSIG(x))
+#define FUNSPECS(x) SIGSPECS(FUNSIG(x))
+#define FUNNARYP(x) SIGNARYP(FUNSIG(x))
 
 extern P* FUNENV (P fun);
 extern P* FUNENVSETTER (P* env, P fun);

@@ -432,7 +432,6 @@ INLINE P ENVFAB (int n) {
   int snallocd = nallocd;
   ENV env = allocate(sizeof(ENV_DATA) + ((n - 1) * sizeof(P)));
   env_nallocd += nallocd - snallocd;
-  env->mark = 0x0f0f0f0f;
   env->size = n;
   return env;
 }
@@ -1011,7 +1010,8 @@ P FRAME_DEST (P frame)
 P FRAME_RETVAL (P frame)
   { return (((BIND_EXIT_FRAME) frame)->value); }
 
-extern P YPmet (P, P, P, P, P, P);
+extern P YPmet (P, P, P, P);
+extern P YPsig (P, P, P, P, P);
 
 P do_exit (P fun) {
   ARG(value, 0);
@@ -1026,7 +1026,9 @@ P with_exit (P fun) {
   P               exit;
   int old_stack_allocp = stack_allocp; stack_allocp = 1;
   frame = MAKE_BIND_EXIT_FRAME();
-  exit  = YPmet(&do_exit, YPpair(YLanyG, Ynil), YPfalse, YPib((P)1), YPfalse, FABENV(1, frame));
+  exit  = YPmet(&do_exit, YPfalse, 
+                YPsig(Ynil, YPpair(YLanyG, Ynil), YPfalse, YPib((P)1), YPfalse), 
+		FABENV(1, frame));
   stack_allocp = old_stack_allocp;
   if (!setjmp(frame->destination))
     return CALL1(fun, exit);
@@ -1258,7 +1260,7 @@ void print_kind (P adr, int prettyp, int depth) {
   } else if (strcmp(typename, "<met>") == 0) {
     ENV env; int j, n; 
     printf("(MET ");
-    print_kind(YPslot_elt(adr, (P)FUNSPECSOFFSET), 0, depth + 1);
+    print_kind(FUNSPECS(adr), 0, depth + 1);
     env = (ENV)YPslot_elt(adr, (P)FUNENVOFFSET);
     n   = env->size;
     if (n > 0) {
@@ -1280,7 +1282,7 @@ void print_kind (P adr, int prettyp, int depth) {
     printf(" 0x%lx)", adr);
   } else if (strcmp(typename, "<gen>") == 0) {
     printf("(GEN ");
-    print_kind(YPslot_elt(adr, (P)FUNSPECSOFFSET), 0, depth + 1);
+    print_kind(FUNSPECS(adr), 0, depth + 1);
     printf(" 0x%lx)", adr);
   } else if (strcmp(typename, "<file-output-port>") == 0) {
     printf("(OUT-PORT 0x%lx)", adr);
@@ -1343,7 +1345,6 @@ void desobj (P adr) {
       if (metp) {
 	int j;
 	ENV env = (ENV)YPslot_elt(adr, (P)FUNENVOFFSET);
-	printf("ENV MARK %lx\n", env->mark);
 	printf("ENV SIZE %d\n", env->size);
 	for (j = 0; j < env->size; j++, i++)
 	  desslot(i, ENVGET(env, j));
