@@ -313,12 +313,23 @@ P YPPsfab (P len, P fill) {
   
 P YPsb (P pstr) {
   PSTR str = (PSTR)pstr;
-  PINT i;
   PINT len = strlen(str);
   P obj   = allocate_atomic((2) * sizeof(P) + ((PINT)len + 1)*sizeof(PCHR));
   PSTR dat = (PSTR)YPrep_dat(obj);
   YPprop_elt_setter((P)len, obj, (P)REP_LEN_OFF);
   strcpy(dat, str);
+  YPobject_class_setter(YLstrG, obj);
+  return obj;
+}  
+
+P YPsb_with_len (P pstr, PINT len) {
+  PSTR str = (PSTR)pstr;
+  PINT i;
+  P obj   = allocate_atomic((2) * sizeof(P) + ((PINT)len + 1)*sizeof(PCHR));
+  PSTR dat = (PSTR)YPrep_dat(obj);
+  YPprop_elt_setter((P)len, obj, (P)REP_LEN_OFF);
+  memcpy(dat, str, len);
+  dat[len] = 0;
   YPobject_class_setter(YLstrG, obj);
   return obj;
 }  

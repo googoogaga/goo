@@ -38,6 +38,7 @@ typedef union {
 } INTFLO;
 
 extern P YPsb(P);
+extern P YPsb_with_len(P, PINT);
 extern P YPlb(P);
 extern P YPlu(P);
 
@@ -127,14 +128,6 @@ extern P YPPrfab (P size, P fill);
 #define YPrlen(x)              ((P)(YPprop_elt((x), (P)REP_LEN_OFF)))
 #define YPrelt(x, i)           ((P)(YPprop_elt((x), (P)(REP_DAT_OFF + (i)))))
 #define YPrelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (P)(REP_DAT_OFF + (i)))))
-
-/* VEC */
-
-extern P YPPvfab (P size, P fill);
-#define YPvu(x)                ((P)(YPrep_dat(x)))
-#define YPvlen(x)              ((P)(YPprop_elt((x), (PINT)REP_LEN_OFF)))
-#define YPvelt(x, i)           ((P)(YPprop_elt((x), (PINT)(REP_DAT_OFF + (i)))))
-#define YPvelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (PINT)(REP_DAT_OFF + (i)))))
 
 /* TUP */
 
