@@ -1,5 +1,83 @@
+NOW
+
+o fix gen sigs without varnames like +
+o fix ddv in listener
+x get vm to work with test suite
+x get pp to work with opts
+o fix reuse
+o integrate win32 patches
+o change over to to-doc and add pretty
+o finish arc essay
+o faster/smaller vm
+o compiler driver for vm and core
+o   perhaps c code and vm string calling vm-loader
+
+NK
+
+o rewrite in terms of to-doc with renderer
+n default to-str is (op port-to-str port (write port _))
+x pp paper and implementation
+o rewrite ast-print in terms of to-doc
+
+NJ
+
+x why doesn't runtime produce prop defaults correctly
+x   try experiment with new on low-level class
+o driver
+o   top n generics mod:var
+o   compile into same file
+o test optimizer against canonical methods
+x prop access inlining
+x   props at same offset for all subclasses
+dependency tracking
+  binding based
+    all bindings will be hit upon optimization
+    any change will trigger recompile
+      problem: what about adding parent or child?
+        doesn't change any dep directly
+      problem: what about multiple triggers?
+  interface / implementation
+  property  -- dependent -- qualification
+  macro     -- macro     -- none
+  body      -- inline    -- alpha conversion
+  ancestors -- subtype?  -- joint ancestors
+  ord-mets  -- nxt-mets  -- new joint met
+  children  -- dat-off   -- child changing dat-off
+  fun-val   -- fun-val   -- subtype?
+change props to be tup-based
+  change new to use gen-cache for inits
+change programs to be tup-based
+  add rep/tup walker
+change source to be tup-based 
+  maintain extent
+  keep tokens with origins and hygiene markers
+  backquote creates program fragments
+    only have comma which splices and lifts
+  need to-tok
+reconcile printing
+  default to-str calls (port-to-str port (write write _))
+    get rid of extra to-str functions
+need more abbreviations
+  shout perhaps is (say out ...) or perhaps pr or echo or sayo and
+    then msgo?
+figure out body abbreviation
+  ({1 2 3}) == (seq 1 2 3) or
+  (do 1 2 3) with (all 1 2 3) or (each 1 2 3) being old do
+
+done
+
+propagate inline info
+  add prop to fun-info
+  add fab-met-inlined to runtime and change g2c to produce it
+inline
+  not
+  ensure-fresh-object
+
+
 NEW
 
+o change name of property to dat and dd and dl back to dp
+o vm running with test suite
 x low-level compilation driver
 x   compile from text
 x   compile from right module

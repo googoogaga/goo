@@ -1,3 +1,44 @@
+=== 0.153 ===
+
+summary
+
+added
+
+  exp to be (op pow $e _)
+  enum enum => enum
+  lst*
+
+fixed
+
+  peek to correctly return EOF when appropriate
+
+changed
+
+  ds syntax is like other binding definitions (ds when (...) ...)
+
+=== 0.152 ===
+
+summary
+
+added
+
+  inlining adjectives for df and dm and propagation to runtime
+  prop access typing and optimizing
+  known call typing and optimizing
+  pretty printer
+  inline adjectives to a bunch of high frequency methods that need em
+
+fixed 
+
+  sequentialize to be proper tail recursive
+  vm-dup to dup correct top of stack
+  nary mets in vm
+  saved and restored pc in vm-run
+  some time accessors to be side-effectable
+
+changed
+  = on <num> <num> to use contagious-call
+
 === 0.151 ===
 
 summary

@@ -1,0 +1,23 @@
+cvs diff > diff-xxx.txt
+add notes to changes.txt
+cd doc
+  change goo.tex
+  pdflatex goo
+  hyperlatex goo
+change date and version in eval/main.goo
+cvs commit src txt c doc
+release.bash version any dev
+cd $goo
+  run make
+  test it
+cp tar file to pc
+  xcopy /q/s gc 
+  run make
+  test it
+cd doc
+  cp goo.pdf ~/www/goo/goo-vxx.pdf
+  cp -r manual ~/www/manual.xx/
+  change ~/www/goo.htm to point to these files
+send mail to googoogaga announcing new version
+  send change list
+  say where it is available
