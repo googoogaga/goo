@@ -726,8 +726,7 @@ typedef struct _bind_exit_frame {
 } *BIND_EXIT_FRAME, BIND_EXIT_FRAME_DATA;
 
 typedef struct _unwind_protect_frame {
-  jmp_buf                       destination;
-  struct _bind_exit_frame*      ultimate_destination;
+  P cleanup_fun;
   struct _unwind_protect_frame* previous_unwind_protect_frame;
 } *UNWIND_PROTECT_FRAME, UNWIND_PROTECT_FRAME_DATA;
 
@@ -735,39 +734,6 @@ UNWIND_PROTECT_FRAME_DATA Ptop_unwind_protect_frame_data;
 UNWIND_PROTECT_FRAME Ptop_unwind_protect_frame 
   = &Ptop_unwind_protect_frame_data;
 UNWIND_PROTECT_FRAME Pcurrent_unwind_protect_frame;
-
-void nlx_step (BIND_EXIT_FRAME ultimate_destination) {
-  /* handled all unwind protect frames presently in force? */
-  int osp = sp;
-  if (Pcurrent_unwind_protect_frame == 
-      ultimate_destination->present_unwind_protect_frame) {
-    /* invalidate current frame */
-    /* Pcurrent_unwind_protect_frame->ultimate_destination = NULL; */
-    sp = ultimate_destination->sp;    
-    fp = ultimate_destination->fp;    
-    longjmp(ultimate_destination->destination, 1);
-  } else {
-    UNWIND_PROTECT_FRAME next_frame = Pcurrent_unwind_protect_frame;
-    /* pop current unwind protect frame */
-    Pcurrent_unwind_protect_frame = next_frame->previous_unwind_protect_frame;
-    /* register ultimate destination of non-local exit in cupf */
-    Pcurrent_unwind_protect_frame->ultimate_destination = ultimate_destination;
-    /* do cleanup step in next unwind protect frame */
-    longjmp(next_frame->destination, 1);
-  }
-}
-
-void FALL_THROUGH_UNWIND (P argument) {
-  Pcurrent_unwind_protect_frame
-      = Pcurrent_unwind_protect_frame->previous_unwind_protect_frame;
-//  Pcurrent_unwind_protect_frame->ultimate_destination = NULL;
-}
-
-void CONTINUE_UNWIND () {
-  if (Pcurrent_unwind_protect_frame->ultimate_destination) { /* nlx? */
-    nlx_step(Pcurrent_unwind_protect_frame->ultimate_destination);
-  }
-}
 
 void print_frame_count () {
   int i;
@@ -777,58 +743,46 @@ void print_frame_count () {
   printf("FRAME COUNT = %d\n", i);
 }
 
-P NLX (BIND_EXIT_FRAME target, P argument) {
-  target->value = argument;
-  nlx_step(target);
-  return(PNUL);	/* Keeps some compilers happy -- Won't actually get here */
+extern P YPmet (P, P, P, P, P, P);
+extern P YPsig (P, P, P, P, P, P);
+
+P do_exit (P fun) {
+  P value;
+  BIND_EXIT_FRAME frame = (BIND_EXIT_FRAME)FUNENVGET(fun, 0);
+  LINK_STACK()
+  ARG(value, 0);
+  UNLINK_STACK()
+  
+  // handle all unwinds. If any unwind handler calls a non-local exit
+  // itself, it may longjump out of here.
+  while(Pcurrent_unwind_protect_frame != frame->present_unwind_protect_frame)
+  {
+	  UNWIND_PROTECT_FRAME upf = Pcurrent_unwind_protect_frame;
+	  Pcurrent_unwind_protect_frame
+		  = Pcurrent_unwind_protect_frame->previous_unwind_protect_frame;
+	  CALL0(1, upf->cleanup_fun);
+  }
+  // do the jump
+  frame->value = value;
+  sp = frame->sp;
+  fp = frame->fp;
+  longjmp(frame->destination, 1);
+  return(PNUL); /* NEVER RETURNS BUT KEEPS COMPILER HAPPY */
 }
 
-unsigned long nlx_nallocd = 0;
 
 P MAKE_BIND_EXIT_FRAME () {
-  int snallocd = nallocd;
   int osp = sp, ofp = fp;
   BIND_EXIT_FRAME frame
     = (BIND_EXIT_FRAME)stack_allocate(sizeof(BIND_EXIT_FRAME_DATA));
-  nlx_nallocd += nallocd - snallocd;
   frame->sp = osp;
   frame->fp = ofp;
   frame->present_unwind_protect_frame = Pcurrent_unwind_protect_frame;
   return((P)frame);
 }
 
-P MAKE_UNWIND_FRAME () {
-  int snallocd = nallocd;
-  UNWIND_PROTECT_FRAME frame 
-    = (UNWIND_PROTECT_FRAME)stack_allocate(sizeof(UNWIND_PROTECT_FRAME_DATA));
-  nlx_nallocd += nallocd - snallocd;
-  /* print_frame_count(); */
-  frame->previous_unwind_protect_frame = Pcurrent_unwind_protect_frame;
-  Pcurrent_unwind_protect_frame = frame;
-  frame->ultimate_destination = (BIND_EXIT_FRAME)0;
-  return((P)frame);
-}
 
-P FRAME_DEST (P frame)
-  { return((P)(((BIND_EXIT_FRAME)frame)->destination)); }
-  
-P FRAME_RETVAL (P frame)
-  { return (((BIND_EXIT_FRAME) frame)->value); }
-
-extern P YPmet (P, P, P, P, P, P);
-extern P YPsig (P, P, P, P, P, P);
-
-P do_exit (P fun) {
-  P value;
-  P frame = FUNENVGET(fun, 0);
-  LINK_STACK()
-  ARG(value, 0);
-  UNLINK_STACK()
-  
-  NLX(frame, value);
-  return(PNUL); /* NEVER RETURNS BUT KEEPS COMPILER HAPPY */
-}
-
+// creates non-local exit label
 P with_exit (P fun) {
   BIND_EXIT_FRAME frame;
   P               exit;
@@ -845,23 +799,22 @@ P with_exit (P fun) {
     return frame->value;
 }
 
+// creates finally handler
+
 P with_cleanup (P body_fun, P cleanup_fun) {
-  UNWIND_PROTECT_FRAME frame = MAKE_UNWIND_FRAME();
   P value = YPfalse;
-  P ultimate_destination;
-  if (!setjmp(frame->destination)) {
-    value = CALL0(1, body_fun);
-    FALL_THROUGH_UNWIND(value);
-  }
+  UNWIND_PROTECT_FRAME frame 
+    = (UNWIND_PROTECT_FRAME)stack_allocate(sizeof(UNWIND_PROTECT_FRAME_DATA));
+  /* print_frame_count(); */
+  frame->previous_unwind_protect_frame = Pcurrent_unwind_protect_frame;
+  frame->cleanup_fun = cleanup_fun;
   
-  ultimate_destination = Pcurrent_unwind_protect_frame->ultimate_destination;
+  Pcurrent_unwind_protect_frame = frame;
+  value = CALL0(1, body_fun);
+  Pcurrent_unwind_protect_frame
+      = Pcurrent_unwind_protect_frame->previous_unwind_protect_frame;
+  
   CALL0(1, cleanup_fun);
-  // if the cleanup function falls off the end,
-  // continue going to original ultimate destination.
-  // else, go wherever the cleanup function jumped out to.
-  if(Pcurrent_unwind_protect_frame->ultimate_destination == NULL)
-	  Pcurrent_unwind_protect_frame->ultimate_destination = ultimate_destination;
-  CONTINUE_UNWIND();
   return value;
 }
 
@@ -1179,7 +1132,6 @@ void YPinit_world(int argc, char* argv[]) {
   stack_  = (P*)allocate(MAX_STACK_SIZE * sizeof(P));
   envnul  = ENVFAB(0);
   Pcurrent_unwind_protect_frame = Ptop_unwind_protect_frame;
-  Ptop_unwind_protect_frame->ultimate_destination = (BIND_EXIT_FRAME)0;
   setup_keyboard_interrupts();
   need_init = 0;
 }
