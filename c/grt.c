@@ -865,7 +865,7 @@ char* type (P adr) {
 	  return (char*)YPsu(class_name);
       }
     case int_tag:
-      return "<int>";
+      return "<prim-int>";
     case chr_tag:
       return "<chr>";
     case loc_tag:
@@ -908,7 +908,7 @@ void print_kind (P adr, int prettyp, int depth) {
   default:
     break;
   }
-  if (strcmp(typename, "<int>") == 0) {
+  if (strcmp(typename, "<prim-int>") == 0) {
     printf("%ld", (PINT)YPprop_elt(adr, (P)0));
   } else if (strcmp(typename, "<chr>") == 0) {
     printf("%c", (char)(PINT)YPprop_elt(adr, (P)0));
@@ -1044,7 +1044,7 @@ void desobj (P adr) {
     printf("PNUL\n");
   } else {
     char* typename = type(adr);
-    if ((strcmp(typename, "<int>") == 0)|
+    if ((strcmp(typename, "<prim-int>") == 0)|
 	(strcmp(typename, "<chr>") == 0)|
 	(strcmp(typename, "<loc>") == 0)|
 	(strcmp(typename, "<flo>") == 0)|
