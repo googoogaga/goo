@@ -462,8 +462,10 @@
           (dl (,untag-name inline) (x) (,puntag x))
           (set (%elt $direct-object-class (%raw ,tag)) ,class-name))))
 
-(%define-tagged-structure fixnum %tag %untag           i 1) ;; INTEGERS
+(%define-tagged-structure fixnum %tag %untag        i 1) ;; INTEGERS
 (dl %int (x) (%ib x)) ;; still need %int to work.
+(dl (@int? inline) (x)
+  (%bb (%i= (%tag-bits x) (%raw 1))))
 
 (%define-tagged-structure chr %tag %untag           c 2) ;; CHARACTERS
 
@@ -1429,7 +1431,8 @@
                (gen-lookup gen args))) ;; restart lookup
       (if (@== (%telt assocs i) key)
           (gen-lookup-1 gen (%telt assocs (%i+ i (%raw 1))) args)
-          (gen-lookup-1-using key (%i+ i (%raw 2)) len assocs missable? gen args))))
+          (gen-lookup-1-using
+           key (%i+ i (%raw 2)) len assocs missable? gen args))))
 
 ;; DISPATCH ARG STEP RUNNING BOTH SINGLETON AND CLASS DISPATCH
 ;; IF HIT THEN 
@@ -1470,7 +1473,7 @@
 
 (df %dispatch (args|...)
   (let ((result (gen-lookup (%fun-reg) args)))
-    (if (@== (%class-of result) <fixnum>) ;; int?
+    (if (@int? result)
         (let ((res
                (if (@= (@olen args) 1) ;; getter?
                    (prop-value-at (@oelt args 0) result)
@@ -2327,5 +2330,6 @@
   %@class-of %@subclass?
   %fab-dyn-var %dyn-var-val %dyn-var-val-setter
   @not ;; hygiene
+  $direct-object-class ;; hygiene/inlining
   @opts-as-lst ;; booting
 )

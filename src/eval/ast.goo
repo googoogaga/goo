@@ -255,15 +255,20 @@
   (dp function-temporaries (<ast-embodied-function> => <any>)     '())
   (dp function-registers (<ast-embodied-function> => <vec>)       (fab <vec> 0))
   (dp function-data-refs (<ast-embodied-function> => <vec>)       (fab <vec> 0))
-  (dp function-self-recursive? (<ast-embodied-function> => <any>) #f)
+  (dp function-loop (<ast-embodied-function> => <any>)            #f)
+  ;; TODO: DEPRECATE
   (dp function-source (<ast-embodied-function> => <any>)          #f)
   (dp function-frame-len (<ast-embodied-function> => <any>)       #f)
 
 (def-programs free-environment)
 
 (dc <ast-method> (<ast-embodied-function>))
+  (dp function-ref-count (<ast-method> => <int>) 0)
   (dp function-free (<ast-method> => <free-environment>)
     (empty <free-environment>))
+
+(dm incf-ref-count (x) x)
+(dm incf-ref-count (x|<ast-method>) (incf (function-ref-count x)))
 
 (dm function-kind (x|<ast-method>) "MET")
 
@@ -281,6 +286,11 @@
   (dp alternative-consequent (<alternative> => <any>))
   (dp alternative-alternant (<alternative> => <any>))
 
+(dc <loop> (<computed-program>))
+  (dp loop-bindings (<loop> => <any>))
+  (dp loop-body (<loop> => <any>))
+  (dp loop-continue (<loop> => <any>))
+
 (def-programs sequential)
 
 (dc <constant> (<passive-program>))
@@ -294,6 +304,11 @@
 (dc <application> (<computed-program>))
   (dp application-arguments (<application> => <any>))
   (dp application-tail? (<application> => <any>) #f)
+
+(dc <loop-application> (<application>))
+  (dp application-loop (<loop-application> => <loop>))
+
+(dm application-tail? (x|<loop-application> => <log>) #t)
 
 (dc <regular-application> (<application>))
   (dp application-function (<regular-application> => <any>))
@@ -324,6 +339,7 @@
 
 (dc <bind-exit> (<computed-program>))
   (dp bind-exit-main-fun (<bind-exit> => <any>))
+  (dp bind-exit-light? (<bind-exit> => <log>) #f)
 
 (dc <unwind-protect> (<computed-program>))
   (dp unwind-protect-protected-thunk (<unwind-protect> => <any>))
@@ -344,7 +360,8 @@
     ;; (msg out "  PROP %=\n" prop)
     (def getter (prop-getter prop))
     (def setter (prop-setter prop))
-    (unless (== getter binding-value) ;; TODO: HACK
+    ;; TODO: HACK
+    (unless (or (== getter binding-value) (== getter application-loop)) 
       (when (prop-bound? o getter)
         (def x (getter o))
         (when (isa? x <program>)
@@ -355,7 +372,8 @@
 (dm ast-walk (g o args|...)
   (for ((prop (object-props o)))
     (def getter (prop-getter prop))
-    (unless (== getter binding-value) ;; TODO: HACK
+    ;; TODO: HACK
+    (unless (or (== getter binding-value) (== getter application-loop)) 
       (when (prop-bound? o getter)
         (def x (getter o))
         (when (isa? x <program>)
@@ -844,19 +862,21 @@
            "(fun %s %s)" sig (if (isa? body <lst>) (pair 'seq body) body)))
      r)))
 
-(dm objectify-function (sig body line r tail? => <ast-method>)
+(dm objectify-function-using (met sig body r tail? => <ast-method>)
   ;; Allocate the method up front so we can log dependencies against it.
-  (def method (new <ast-method> program-line line))
-  (with-dependent method
+  (with-dependent met
     (def signature (objectify-signature sig r))
     (def new-r     (r-extend* r (signature-bindings signature)))
-    (def b         (objectify-sequential body new-r #t))
-    (set (function-debug-name method) (objectify-quotation #f r))
-    (set (function-signature method)  signature)
-    (set (function-body method)       b)
-    (set (function-source method)
-         (objectify-function-source sig body r))
-    method))
+    (def body      (objectify-sequential body new-r #t))
+    (set (function-debug-name met) (objectify-quotation #f r))
+    (set (function-signature met)  signature)
+    (set (function-body met)       body)
+    (set (function-source met)     (objectify-function-source sig body r))
+    met))
+
+(dm objectify-function (sig body line r tail? => <ast-method>)
+  (objectify-function-using 
+   (new <ast-method> program-line line) sig body r tail?))
     
 (dv $sexpr-optionals-tag       '...)
 (dv $sexpr-optionals-type-name '<opts>)
@@ -908,6 +928,7 @@
 
 (dm objectify-binding (n b|<local-binding> r => <local-reference>)
   (def (tup i j) (compute-local-reference-offsets b r))
+  (incf-ref-count (binding-value b))
   (new <local-reference>
     reference-binding      b
     reference-frame-number i
@@ -992,22 +1013,26 @@
 (def-programs functions)
 
 (dm objectify-locals (names sigs bodies body r tail? => <locals>)
-  (def bindings       (map (fun (n) (new <local-binding> 
-                                      binding-name n binding-type (ftype r)))
-                           names))
-  (def new-r          (r-extend* r bindings))
-  (def function-forms (map2 sexpr-make-anonymous-method sigs bodies))
-  (def functions      (map (rcurry objectify new-r #f) function-forms))
-  ;; TODO: CIRCULARITIES IN AST
+  (def vars  (map (fun (n) 
+                    (new <local-binding> binding-name n binding-type (ftype r)))
+                  names))
+  (def new-r (r-extend* r vars))
+  (def mets  (map2 (fun (sig body) 
+                     (def line (or (line-of sig) (line-of body)))
+                     (new <ast-method> program-line line))
+                   sigs bodies))
+  (for ((sig sigs) (body bodies) (met mets) (var vars))
+    ;; TODO: CIRCULARITIES IN AST
+    (set (binding-value var) met)
+    (objectify-function-using met sig body new-r #f))
   (do2 (fun (f b) 
          (set (function-binding f) b)
          (set (function-debug-name f) 
-              (objectify-quotation (binding-name b) r))
-         (set (binding-value b) f)) 
-       functions bindings)
+              (objectify-quotation (binding-name b) r)))
+       mets vars)
   (new <locals>
-    locals-bindings  bindings
-    locals-functions (app fabs <functions> functions)
+    locals-bindings  vars
+    locals-functions (app fabs <functions> mets)
     locals-body      (objectify-sequential body new-r #t)))
 
 (dm objectify-bind-exit (name body line r tail? => <bind-exit>)
@@ -2100,6 +2125,10 @@
   alternative-alternant
   alternative-condition
   alternative-consequent
+  <loop>
+  loop-body     loop-body-setter
+  loop-bindings loop-bindings-setter
+  loop-continue loop-continue-setter
   <application>
   application-arguments
   application-binding
@@ -2107,6 +2136,8 @@
   application-known?
   application-known?-setter
   application-tail?
+  <loop-application>
+  application-loop
   <fab-list>
   <arguments>
   <assignment>
@@ -2121,13 +2152,13 @@
   <ast-macro-definition>
   <free-environment>
   free-environment
+  <ast-embodied-function>
   <ast-method>
+  function-ref-count function-ref-count-setter
   function-free 
   function-free-setter
   function-index
   function-index-setter
-  function-self-recursive?
-  function-self-recursive?-setter
   function-source
   function-source-setter
   function-frame-len
@@ -2142,6 +2173,7 @@
   <ast-primitive-definition>
   <bind-exit>
   bind-exit-main-fun
+  bind-exit-light?
   <binding>
   <module-binding>
   module-binding
@@ -2222,6 +2254,7 @@
   function-debug-name-setter
   function-nary?
   function-value
+  function-loop function-loop-setter
   <global-assignment>
   <global-box>
   global-box-value
@@ -2294,5 +2327,7 @@
   unwind-protect-cleanup-thunk
   unwind-protect-protected-thunk
   ast-walk ast-walk!
-  ast-error)
+  ast-error
+  process-closed-application
+  )
 

@@ -285,6 +285,14 @@
       (ast-eval (alternative-consequent e) env)
       (ast-eval (alternative-alternant e) env)))
 
+(dm ast-eval (e|<loop> env|<loc-env>)
+  (esc return
+    (rep loop ()
+      (esc continue
+        (set (loop-continue e) continue)
+        (return (ast-eval (loop-body e) env)))
+      (loop))))
+
 (dm ast-eval (e|<sequential> env|<loc-env>)
   (rep eval ((e e))
     (def nxt (tail e))
@@ -303,6 +311,13 @@
   (def f    (ast-eval (application-function e) env))
   (def args (ast-eval (application-arguments e) env))
   (app f args))
+
+(dm ast-eval (e|<loop-application> env|<loc-env>)
+  (def loop (application-loop e))
+  (def args (ast-eval (application-arguments e) env))
+  (for ((binding (loop-bindings loop)) (arg args))
+    (set (env-binding-value env (binding-name binding)) arg))
+  ((loop-continue loop) #f))
 
 (dm ast-eval (e|<predefined-application> env|<loc-env>)
   (def b (application-binding e))

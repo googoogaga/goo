@@ -6,6 +6,7 @@
 (use eval/ast)
 (use eval/top)
 (use eval/g2c)
+
 ;; (use eval/g2m)
 ;; (use eval/vm)
 
@@ -29,8 +30,8 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.147")
-(dv *goo-date*    "SEP 05, 2002")
+(dv *goo-version* "0.148")
+(dv *goo-date*    "SEP 06, 2002")
 
 (post ";;; GOO\n")
 (post ";;; JONATHAN BACHRACH\n")

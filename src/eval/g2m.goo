@@ -209,6 +209,19 @@
         (flatten (rev! (pair (asm x (head e) need?) res)))
         (emit (pair (asm x (head e) #f) res) (tail e)))))
 
+(dm asm (x|<g2m> e|<loop> need?|<log>)
+  (def lab (nxt-lab x))
+  (set (loop-continue e) lab)
+  (tack `(,lab)
+        (asm x (loop-body e) need?)))
+
+(dm asm (x|<g2m> e|<loop-call> need?|<log>)
+  (def loop (application-loop e))
+  (tack (asm x (application-arguments e) #t)
+        (map (fun (b) `(VM-STO ,(binding-index b))) 
+             (rev (loop-bindings loop)))
+        `((VM-JMP ,(loop-continue loop)))))
+
 (dm asm (x|<g2m> e|<regular-application> need?|<log>)
   (tack (asm x (application-function e) #t)
         (asm x (application-arguments e) #t)

@@ -85,35 +85,102 @@
 (dm unconstrained-type? (o|<module-binding-reference> => <log>)
   (unconstrained-type? (reference-binding o)))
 
-(dm do-do-analysis! (o|<program>)
-  (ast-walk do-analysis! o))
+(dm do-do-call-analysis! (o|<program> r t f s funs)
+  (ast-walk! do-call-analysis! o r t f s funs))
 
-(dm do-analysis! (o|<program>)
-  (do-do-analysis! o))
+(dm do-call-analysis! (o|<program> r t f s funs)
+  (do-do-call-analysis! o r t f s funs))
 
-(dm do-analysis! (o|<local-reference>)
-  (do-do-analysis! o)
+(df reopt-top! (s t)
+  (unless (or (not t) (mem? s t)) (add! s t)))
+
+(dm do-call-analysis! (o|<local-reference> r t f s funs)
   (unless (reference-called-function? o)
     (set (binding-dynamic-extent? (reference-binding o)) #f))
+  (def fun? (binding-value (reference-binding o)))
+  (if (and fun? (mem? funs fun?)) 
+      (if (= (function-ref-count fun?) 1)
+          (seq (reopt-top! s t) 
+               (decf (function-ref-count fun?))
+               fun?)
+          o)
+      o))
+
+(dm do-call-analysis! (o|<ast-embodied-function> r t f s funs)
+  (do-call-analysis! (function-signature o) r t f s funs)
+  (do-call-analysis! (function-body o) r t o s funs)
   o)
 
-(dm do-analysis! (o|<regular-application>)
-  (do-do-analysis! o)
-  (if (isa? (application-function o) <local-reference>)
-      (let ((met (binding-value (reference-binding (application-function o)))))
-        (if (and (isa? met <ast-function>)
-                 (all? (fun (x) (unconstrained-type? (binding-type x)))
-                       (function-bindings met))
-                 (unconstrained-type? (function-value met))
-                 (not (function-nary? met))
-                 (= (len (application-arguments o))
-                    (len (function-bindings met))))
-            (set (application-known? o) #t))))
-  o)
+(dm ensure-loop (f|<ast-embodied-function> => <loop>)
+  (def loop (or/set (function-loop f)
+              (new <loop> 
+                loop-bindings (function-bindings f)
+                loop-body     (function-body f))))
+  (set (function-body f) loop)
+  loop)
 
-(dm analyze-ast (o)
-  (do-analysis! o))
+(dm do-call-analysis! (o|<predefined-application> r t f s funs)
+  (do-do-call-analysis! o r t f s funs)
+  (def var (application-binding o))
+  (if (and (isa? f <ast-primitive>)
+           (application-tail? o)
+           (== var (function-binding f)))
+      (let ((loop (ensure-loop f)))
+        (new <loop-application>
+          application-loop      loop
+          application-arguments (application-arguments o)))
+      o))
 
+(dm do-call-analysis! (o|<regular-application> r t f s funs)
+  (do-do-call-analysis! o r t f s funs)
+  (def ref (application-function o))
+  (case-by ref isa?
+    ((<local-reference>)
+     (let ((callee (binding-value (reference-binding ref))))
+       (if (and (== callee f) (application-tail? o) (not (function-nary? f)))
+           (let ((loop (ensure-loop f)))
+             (decf (function-ref-count f))
+             (reopt-top! s t) 
+             (new <loop-application>
+               application-loop      loop
+               application-arguments (application-arguments o)))
+           (if (and (isa? f <ast-function>)
+                    (all? (fun (x) (unconstrained-type? (binding-type x)))
+                          (function-bindings f))
+                    (unconstrained-type? (function-value f))
+                    (not (function-nary? f))
+                    (= (len (application-arguments o))
+                       (len (function-bindings f))))
+               (seq (set (application-known? o) #t) o)
+               o))))
+    ((<ast-embodied-function>)
+     (reopt-top! s t) 
+     (process-closed-application
+      ref (application-arguments o) r (application-tail? o)))
+    (#t o)))
+
+(dm do-call-analysis! (o|<locals> r t f s funs)
+  (def single?  (= (len (locals-functions o)) 1))
+  (def new-funs (if single? (pair (1st (locals-functions o)) funs) funs))
+  (def res      (do-do-call-analysis! o r t f s new-funs))
+  (if single?
+      (if (= (function-ref-count (1st new-funs)) 0)
+          (seq (reopt-top! s t) 
+               (set (locals-functions o) '())
+               (set (locals-bindings o)  '())
+               (locals-body o))
+          res)
+      res))
+
+(dm analyze-calls (o r)
+  (def s (fab <vec> 0)) ;; reopts
+  (def res 
+    (if (isa? o <sequential>)
+        (map (fun (x) (do-call-analysis! x r x #f s '())) o)
+        (do-call-analysis! o r #f #f s '())))
+  (if (empty? s) ;; no more reopts
+      res
+      (seq (do (fun (e) (analyze-calls e r)) s) res)))
 
 ;;; FLATTENING ENVIRONMENTS
 
@@ -134,9 +201,9 @@
       (let ((offset (adjoin-free-binding! flat-fun o)))
         (new <free-reference> 
           reference-binding b
-          reference-offset offset
+          reference-offset  offset
           reference-self?
-          (== (reference-binding o) (function-binding flat-fun))))))
+            (== (reference-binding o) (function-binding flat-fun))))))
 
 (dm adjoin-free-binding! (flat-fun|<ast-method> ref => <int>)
   (rep check ((i|<int> 0) (free* (function-free flat-fun)))
@@ -376,6 +443,15 @@
   (set (fix-let-body o) (collect-temporaries! (fix-let-body o) flat-fun new-r))
   o)
 
+(dm collect-temporaries! (o|<loop> flat-fun r)
+  (set (loop-bindings o)
+       (map (fun (b) 
+              (def nb (assocq b r))
+              (if nb (assoc-value nb) b))
+            (loop-bindings o)))
+  (set (loop-body o) (collect-temporaries! (loop-body o) flat-fun r))
+  o)
+
 (dm collect-temporaries! (o|<locals> flat-fun r)
   (def new-bindings (map new-renamed-binding (locals-bindings o)))
   (def new-r (prepend-renamings (locals-bindings o) new-bindings r))
@@ -472,8 +548,7 @@
     #f))
 
 (export
-  analyze-ast
-  ;; analyze-calls
+  analyze-calls
   ;; analyze-dynamic-extent
   <box-creation>
   box-form

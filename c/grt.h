@@ -387,7 +387,7 @@ EXTTVAR(goo_thread);
 #define CREG(x)      (REGSCREF()->x)
 #define REGSET(x, v) (regs->x = (v))
 
-#define MAX_STACK_SIZE 50000
+#define MAX_STACK_SIZE 70000
 
 #define YPfun_reg()            (Pfun)
 #define YPnext_methods_reg()   (Pnext_methods)
@@ -487,10 +487,10 @@ STATIC_NOT_PRT_C  INLINE P opts_stackalloc(REGS regs, P loc, P len)
 {
   OBJECT opts;
   opts            = (OBJECT)(REG(sp));
-  REGSET(sp, REG(sp) + 3);               // sizeof OBJECT in P's
   opts->class     = YLoptsG;
   opts->values[0] = loc;
   opts->values[1] = len;
+  REGSET(sp, REG(sp) + 3);               // sizeof OBJECT in P's
   return opts;
 }
 

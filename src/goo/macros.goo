@@ -7,14 +7,12 @@
 ;; TODO: Fix next-method to do a normal call with a next-method instead of
 ;;       apply, as apply is not necessary, and slow.
 
-;; (ct-also
 (df @checked-next-methods (met nxt-mets args|...)
   (if nxt-mets 
       (if (@== nxt-mets '())
           (no-next-methods-error met args)
           nxt-mets)
       (no-next-methods-error met args)))
-;; )
 
 (ds (sup ,@args)
   `(let ((next-mets (@checked-next-methods (%fun-reg) (%next-methods) ,@args)))
@@ -109,6 +107,11 @@
   (let (((tup g-decls g-place) (lift-place-subforms place)))
     `(let (,@g-decls (_ ,g-place))
        (set ,g-place ,call))))
+
+(ds (or/set ,place ,value)
+  (let (((tup g-decls g-place) (lift-place-subforms place)))
+    `(let (,@g-decls (_ ,g-place))
+       (or ,g-place (set ,g-place ,value)))))
 
 (ds (unless ,test ,@body)
   `(if (not ,test) (seq ,@body)))
@@ -305,6 +308,7 @@
   opf
   swapf
   rotf
+  or/set
   unless
   when
   or
