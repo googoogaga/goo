@@ -2,7 +2,7 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Thu Sep  5 11:03:41 2002 -->
+ -- on Emacs 21.2.1, Thu Jan 16 12:31:09 2003 -->
 <head>
 <title><i>GOO&#32;Manual -- Classes</title>
 
@@ -108,11 +108,16 @@ functions are called with a single argument, the object under construction.
 <tr><td colspan="1" align="LEFT">
 <A NAME="21">&nbsp;</A><tt>DP</tt> </td><td colspan="1" align="LEFT"> <tt>(DP ,name (,oname|,owner =&gt; ,type) [,@init])</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>add's a property to <tt>,owner</tt> with getter named
-       <tt>,name</tt>, setter named <tt>,name &#35;&#35; "-setter"</tt>, 
+</td><td colspan="1" align="LEFT"> <i>add's an immutable property to <tt>,owner</tt> with getter named
+       <tt>,name</tt>,
        type <tt>,type</tt>, and optionally initial 
   value <tt>,init</tt>.  The initial value function is evaluated 
   lazily when prop's value is first requested.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="22">&nbsp;</A><tt>DP!</tt> </td><td colspan="1" align="LEFT"> <tt>(DP! ,name (,oname|,owner =&gt; ,type) [,@init])</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>same as <tt>DP</tt> but mutable 
+       with setter named <tt>,name &#35;&#35; "-setter"</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 

@@ -53,9 +53,9 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\T\title{{\Huge \goo\ Reference Manual v43 }}
+\T\title{{\Huge \goo\ Reference Manual v44 }}
 \T\author{{\huge Jonathan Bachrach} \\ {\Large MIT AI Lab}}
-\W\title{{\huge \goo\ Reference Manual v43 }}
+\W\title{{\huge \goo\ Reference Manual v44 }}
 \W\author{{\Large Jonathan Bachrach} \\ {\Large MIT AI Lab}}
 \date{\today}
 %\date{October 31, 1995}
@@ -205,9 +205,12 @@ imported bindings.  Furthermore, no cycles can occur in the module use
 heterarchy.
 
 \begin{defs}
+\form{D.}{(D. ,var ,form)}
+  \doc{defines a global constant named \kode{(var-name ,var)} with an 
+  initial value \kode{,form} (cf. Dylan's \kode{DEFINE CONSTANT}).}
 \form{DV}{(DV ,var ,form)}
   \doc{defines a global variable named \kode{(var-name ,var)} with an 
-  initial value \kode{,form} (cf. Scheme's \kode{DEFINE}).}
+  initial value \kode{,form} (cf. Dylan's \kode{DEFINE VARIABLE}).}
 \form{DEF}{(DEF ,var ,val)}
   \doc{locally binds \kode{,var} to \kode{,val} and evaluates
   remainder of current body in the context of that binding.}
@@ -254,6 +257,8 @@ function calls, conditional execution, and nonlocal control flow.
   form (cf. Scheme's \kode{BEGIN})}
 \formcont{(SEQ)}
   \doc{returns false}
+\form{\{ ... \}}{\{ ,@body \}}
+  \doc{\kode{SEQ} abbreviation $\equiv$ \kode{(SEQ ,@body)}.}
 \form{IF}{(IF ,test ,then [ ,else ])}
   \doc{evaluates either \kode{,then} if \kode{,test} is non-false
   otherwise evaluates \kode{,else} (cf. Scheme's \kode{IF}).  The
@@ -483,12 +488,14 @@ functions are called with a single argument, the object under construction.
   value for the prop and gets called lazily with the new instance as
   the argument.}
 \form{DP}{(DP ,name (,oname|,owner => ,type) [,@init])}
-  \doc{add's a property to \kode{,owner} with getter named
-       \kode{,name}, setter named \kode{,name \#\# "-setter"}, 
-       % \kode{(fab-setter-name ,name)}, 
+  \doc{add's an immutable property to \kode{,owner} with getter named
+       \kode{,name},
        type \kode{,type}, and optionally initial 
   value \kode{,init}.  The initial value function is evaluated 
   lazily when prop's value is first requested.}
+\form{DP!}{(DP! ,name (,oname|,owner => ,type) [,@init])}
+  \doc{same as \kode{DP} but mutable 
+       with setter named \kode{,name \#\# "-setter"}} 
 \end{defs}
 
 \section{Functions}
@@ -557,11 +564,11 @@ functions are instances of \kode{<gen>} and methods are instances of
 \end{ex}
 }
 }
-\form{\{ ... \}}{\{ [ ,sig '.' ] ,@body\}}
-  \doc{\kode{FUN} abbreviation $\equiv$ \kode{(fun ,sig ,@body)} where
-  \kode{,sig} defaults to \kode{()}.  
+\form{\{ ... \}}{\{ [ ,@sig '$\backslash$' ] ,@body \}}
+  \doc{\kode{FUN} abbreviation $\equiv$ \kode{(fun (,@sig) ,@body)}.  
   This is particularly useful for lightweight thunks
-  (e.g., \kode{\{(+ x 1)\}} $\equiv$ \kode{(fun () (+ x 1))}).}
+  (e.g., \kode{\{(+ x 1)\}} $\equiv$ \kode{(fun () (+ x 1))}).  N.B. this
+  is an experimental syntax and might change in the future.}
 \end{defs}
 
 where
@@ -707,12 +714,13 @@ required to use \kode{gensym} to avoid name collisions.
 (MATCH '(1 2) ((,a ,b) (lst a b))) $\rightarrow$ (1 2) \newline
 (MATCH '(1 2) ((,a ,@b) (lst a b))) $\rightarrow$ (1 (2))
 \end{ex}}
-\form{DS}{(DS ,pattern ,@body)}
+\form{DS}{(DS ,name (,pattern) ,@body)}
   \doc{defines a macro matching pattern ,pattern and expanding according to
-  \kode{,@body}. The pattern matching occurs as in \kode{MIF} and makes available
-  pattern variables during the evaluation of \kode{(SEQ ,@body)}.  For example,
+  \kode{,@body}. The pattern matching occurs as in \kode{MIF} and
+  makes available pattern variables during the evaluation 
+  of \kode{(SEQ ,@body)}.  For example,
 \begin{ex}
-(DS (unless ,test ,@body)\snl 
+(DS unless (,test ,@body)\snl 
   `(if (not ,test) (seq ,@body)))
 \end{ex}
   defines the \kode{when} macro in \goo.}
@@ -748,8 +756,7 @@ All objects are derived from \kode{<any>}.
 \class{<any>}{<any>}
 \generic{as}{x|<any> y|<any> => <any>}
   \doc{coerces y to an instance of x.}
-% \generic{object-parents}{x|<any> => <lst>}
-% \generic{object-prop}{x|<any> => <lst>}
+% \generic{parents-of}{x|<any> => <lst>}
 \generic{class-of}{x|<any> => <class>}
   \doc{returns concrete class of \kode{x}.}
 \generic{==}{x|<any> y|<any> => <log>}
@@ -898,6 +905,8 @@ interior \goo\ object data.
   \doc{returns remainder after dividing \kode{x} by \kode{y}.}
 \generic{pow}{x|<num> e|<num> => <num>}
   \doc{returns \kode{x} raised to the \kode{e} power.} 
+\generic{exp}{x|<num> => <num>}
+  \doc{$\equiv$ \kode{(pow \$e x)}}
 \generic{sqrt}{x|<num> => <num>}
   \doc{returns the square root of \kode{x}.} 
 \generic{pos?}{x|<num> => <log>}
@@ -1014,9 +1023,9 @@ Collections can be almost entirely defined in terms of an enumeration class.
 \generic{col-res-type}{x|<col> => <type>}
   \doc{appropriate instantiable type for creating collection results,
        where the default is \kode{(class-of x)}.}
-\generic{empty?}{x|<col> => <log>}
+\generic{nul?}{x|<col> => <log>}
   \doc{$\equiv$ \kode{(= (len x) 0)}}
-\generic{empty}{x|(t< <col>) => <col>}
+\generic{nul}{x|(t< <col>) => <col>}
   \doc{returns collection specific unique empty value.}
 % \generic{default}{x|<col> => <any>}
 %   \doc{return default element value.}
@@ -1101,18 +1110,18 @@ place, the \kode{!} suffixed functions will be deprecated.}.
 
 \begin{defs}
 \class{<col!>}{<any>}
-\generic{elt-setter}{v|<any> x|<col> k|<any>}
+\generic{elt-setter}{v|<any> x|<col!> k|<any>}
   \doc{sets collection \kode{x}'s element associated with key
        \kode{k} to \kode{v}.}
 \generic{into}{x|<col!> y|<col> => <col!>}
   \doc{replaces elements of \kode{x} with elements of \kode{y}.}
-\generic{fill!}{x|<col!> y|<any> => <col!>}
-  \doc{fills \kode{x} with \kode{y}'s.}
-\generic{add!}{x|<col!> y|<any => <col!>}
-  \doc{adds \kode{y} to \kode{x}.}
 \generic{elt!}{x|<col!> y|<any default|<fun> => <any>}
   \doc{$\equiv$ \kode{(or (elt-or c k \#f) (set (elt c k) (default)))} but
   uses unique default key for \kode{elt-or} instead of false.}
+\generic{fill!}{x|<col!> y|<any> => <col!>}
+  \doc{fills \kode{x} with \kode{y}'s.}
+\generic{add!}{x|<seq!> y|<any => <seq!>}
+  \doc{adds \kode{y} to \kode{x}.}
 \generic{del!}{x|<col!> key|<any> => <col!>}
   \doc{removes \kode{key} from \kode{x}.}
 \generic{zap!}{x|<col!> => <col!>}
@@ -1134,7 +1143,7 @@ enumeration.
 
 \begin{defs}
 \class{<enum>}{<any>}
-\generic{enum}{x|<col> => <enum>}
+\generic{enum}{x|<any> => <enum>}
   \doc{returns initial enum for iterating over \kode{x}.}
 \generic{fin?}{x|<enum> => <log>}
   \doc{returns true iff no more elements exist from given enum \kode{x}.}
@@ -1146,6 +1155,8 @@ enumeration.
   \doc{sets current element given enum \kode{x} to \kode{v}.}
 \generic{now-key}{x|<enum> => <any>}
   \doc{returns current key given enum \kode{x}.}
+\method{enum}{x|<enum> => <enum>}
+  \doc{returns x allowing enumerators to be enumerated.}
 % \generic{1st-state}{x|<col> => <any>}
 %   \doc{returns initial iteration state.}
 % \generic{fin-state?}{x|<col> state|<any> => <log>}
@@ -1379,6 +1390,8 @@ list.  Lists might be deprecated in future releases of \goo.
 \generic{lst}{elts|... => <lst>}
   \doc{returns list of arguments.}
 \alias{list}{lst}
+\generic{lst*}{elts|... => <lst>}
+  \doc{returns list of arguments with last argument tacked onto end.}
 \instance{nil}{<lst>}
   \doc{aka \kode{()}.}
 \generic{pair}{x|<any> y|<lst> => <lst>}
@@ -1721,7 +1734,7 @@ Ports represent character-oriented input/output devices.
 \generic{newline}{x|<out-port>}
   \doc{outputs a newline sequence.}
 \generic{say}{x|<out-port> args|...}
-  \doc{$\equiv$ \kode{(do (op say x \_) args)}}
+  \doc{$\equiv$ \kode{(do (op puts x (to-str \_)) args)}}
 \end{defs}
 
 \subsubsection{File Ports}
@@ -2389,13 +2402,13 @@ the \goo\ implementation of this algorithm:
          (lst c)) 
        (remaining-lists|<lst> 
          (add (map class-ancestors parents) parents)))
-    (if (all? empty? remaining-lists)
+    (if (all? nul? remaining-lists)
         (rev! partial-cpl)
         (loc ((candidate (c) 
                 (loc ((tail? (l|<lst>) (mem? (tail l) c)))
                   (and (not (any? tail? remaining-lists)) c)))
               (candidate-at-head (l|<lst>)
-                (and (not (empty? l)) (candidate (head l)))))
+                (and (not (nul? l)) (candidate (head l)))))
           (def next (any? candidate-at-head remaining-lists))
           (if next
               (loc ((del-next (l|<lst>)

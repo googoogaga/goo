@@ -2,7 +2,7 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Thu Sep  5 11:03:41 2002 -->
+ -- on Emacs 21.2.1, Thu Jan 16 12:31:10 2003 -->
 <head>
 <title><i>GOO&#32;Manual -- Numbers</title>
 
@@ -69,43 +69,47 @@
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns <tt>x</tt> raised to the <tt>e</tt> power.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="15">&nbsp;</A><tt>sqrt</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="15">&nbsp;</A><tt>exp</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(pow &#36;e x)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="16">&nbsp;</A><tt>sqrt</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns the square root of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="16">&nbsp;</A><tt>pos?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="17">&nbsp;</A><tt>pos?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(&gt; x 0)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="17">&nbsp;</A><tt>zero?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="18">&nbsp;</A><tt>zero?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(= x 0)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="18">&nbsp;</A><tt>neg?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="19">&nbsp;</A><tt>neg?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(&lt; x 0)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="19">&nbsp;</A><tt>neg</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="20">&nbsp;</A><tt>neg</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(- 0 x)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="20">&nbsp;</A><tt>abs</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="21">&nbsp;</A><tt>abs</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(if (neg? x) (neg x) x)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="21">&nbsp;</A><tt>num-to-str-base</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; b|&lt;int&gt; =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="22">&nbsp;</A><tt>num-to-str-base</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; b|&lt;int&gt; =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns string representation of <tt>x</tt> in base <tt>b</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="22">&nbsp;</A><tt>num-to-str</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="23">&nbsp;</A><tt>num-to-str</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i>equiv</i> <tt>(num-to-str-base x 10)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="23">&nbsp;</A><tt>str-to-num</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;str&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="24">&nbsp;</A><tt>str-to-num</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;str&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns closest number corresponding to string <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="24">&nbsp;</A><tt>INCF</tt> </td><td colspan="1" align="LEFT"> <tt>(INCF ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="25">&nbsp;</A><tt>INCF</tt> </td><td colspan="1" align="LEFT"> <tt>(INCF ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SET ,name (+ ,name 1))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
@@ -113,7 +117,7 @@
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SET (,name ,@rest) (+ (,name ,@rest) 1))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="25">&nbsp;</A><tt>DECF</tt> </td><td colspan="1" align="LEFT"> <tt>(DECF ,name) </tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="26">&nbsp;</A><tt>DECF</tt> </td><td colspan="1" align="LEFT"> <tt>(DECF ,name) </tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SET ,name (+ ,name 1))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
@@ -121,97 +125,97 @@
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SET (,name ,@rest) (+ (,name ,@rest) 1))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="26">&nbsp;</A><tt>&#36;e</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;flo&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>I</tt> </td></tr>
+<A NAME="27">&nbsp;</A><tt>&#36;e</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;flo&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>I</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="27">&nbsp;</A><tt>&#36;pi</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;flo&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>I</tt> </td></tr>
+<A NAME="28">&nbsp;</A><tt>&#36;pi</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;flo&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>I</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="28">&nbsp;</A><tt>sqrt</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="29">&nbsp;</A><tt>sqrt</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="29">&nbsp;</A><tt>log</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="30">&nbsp;</A><tt>log</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="30">&nbsp;</A><tt>logn</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; b|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="31">&nbsp;</A><tt>logn</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; b|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="31">&nbsp;</A><tt>sin</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="32">&nbsp;</A><tt>sin</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="32">&nbsp;</A><tt>cos</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="33">&nbsp;</A><tt>cos</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="33">&nbsp;</A><tt>tan</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="34">&nbsp;</A><tt>tan</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="34">&nbsp;</A><tt>asin</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="35">&nbsp;</A><tt>asin</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="35">&nbsp;</A><tt>acos</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="36">&nbsp;</A><tt>acos</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="36">&nbsp;</A><tt>atan</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="37">&nbsp;</A><tt>atan</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="37">&nbsp;</A><tt>atan2</tt> </td><td colspan="1" align="LEFT"> <tt>(y|&lt;num&gt; x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="38">&nbsp;</A><tt>atan2</tt> </td><td colspan="1" align="LEFT"> <tt>(y|&lt;num&gt; x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="38">&nbsp;</A><tt>sinh</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="39">&nbsp;</A><tt>sinh</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="39">&nbsp;</A><tt>cosh</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="40">&nbsp;</A><tt>cosh</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="40">&nbsp;</A><tt>tanh</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="41">&nbsp;</A><tt>tanh</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;num&gt; =&gt; &lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 
-<h3><A NAME="41">Integers</a></h3>
+<h3><A NAME="42">Integers</a></h3>
 <p><i>GOO&#32;currently represents integers as 30 bit fixnums.
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="42">&nbsp;</A><tt>&lt;int&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="43">&nbsp;</A><tt>&lt;int&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="43">&nbsp;</A><tt>|</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; y|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="44">&nbsp;</A><tt>|</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; y|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns the logical inclusive or of its arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="44">&nbsp;</A><tt>&#38;</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; y|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="45">&nbsp;</A><tt>&#38;</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; y|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns the logical and or of its arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="45">&nbsp;</A><tt>^</tt> </td><td colspan="1" align="LEFT"> <tt>((x|&lt;int&gt; y|&lt;int&gt; =&gt; &lt;int&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="46">&nbsp;</A><tt>^</tt> </td><td colspan="1" align="LEFT"> <tt>((x|&lt;int&gt; y|&lt;int&gt; =&gt; &lt;int&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(| (&#38; x (~ y)) (&#38; (~ x) y))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="46">&nbsp;</A><tt>~</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="47">&nbsp;</A><tt>~</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns the logical complement of its argument.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="47">&nbsp;</A><tt>bit?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; n|&lt;int&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="48">&nbsp;</A><tt>bit?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; n|&lt;int&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns true iff <tt>n</tt>th bit is 1.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="48">&nbsp;</A><tt>even?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="49">&nbsp;</A><tt>even?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="49">&nbsp;</A><tt>odd?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="50">&nbsp;</A><tt>odd?</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="50">&nbsp;</A><tt>gcd</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; y|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="51">&nbsp;</A><tt>gcd</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; y|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>greatest common denominator.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="51">&nbsp;</A><tt>lcm</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; y|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="52">&nbsp;</A><tt>lcm</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; y|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>least common multiple.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="52">&nbsp;</A><tt>&lt;&lt;</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; n|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="53">&nbsp;</A><tt>&lt;&lt;</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; n|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns <tt>n</tt> bit shift left of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="53">&nbsp;</A><tt>&gt;&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; n|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="54">&nbsp;</A><tt>&gt;&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; n|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns signed <tt>n</tt> bit shift right of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="54">&nbsp;</A><tt>&gt;&gt;&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; n|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="55">&nbsp;</A><tt>&gt;&gt;&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;int&gt; n|&lt;int&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns unsigned <tt>n</tt> bit shift right of <tt>x</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 
-<h3><A NAME="55">Floats</a></h3>
+<h3><A NAME="56">Floats</a></h3>
 <p><i>GOO&#32;currently only supports single-precision floating point numbers.
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="56">&nbsp;</A><tt>&lt;flo&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="57">&nbsp;</A><tt>&lt;flo&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;num&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="57">&nbsp;</A><tt>flo-bits</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;flo&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="58">&nbsp;</A><tt>flo-bits</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;flo&gt; =&gt; &lt;int&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns bit representation as an integer.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">

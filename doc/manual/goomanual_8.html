@@ -2,7 +2,7 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Thu Sep  5 11:03:40 2002 -->
+ -- on Emacs 21.2.1, Thu Jan 16 12:31:09 2003 -->
 <head>
 <title><i>GOO&#32;Manual -- Program Control</title>
 
@@ -23,13 +23,17 @@ function calls, conditional execution, and nonlocal control flow.
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns false</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="2">&nbsp;</A><tt>IF</tt> </td><td colspan="1" align="LEFT"> <tt>(IF ,test ,then [ ,else ])</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="2">&nbsp;</A><tt>&#123; ... &#125;</tt> </td><td colspan="1" align="LEFT"> <tt>&#123; ,@body &#125;</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i><tt>SEQ</tt> abbreviation <i> == </i> <tt>(SEQ ,@body)</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="3">&nbsp;</A><tt>IF</tt> </td><td colspan="1" align="LEFT"> <tt>(IF ,test ,then [ ,else ])</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>evaluates either <tt>,then</tt> if <tt>,test</tt> is non-false
   otherwise evaluates <tt>,else</tt> (cf. Scheme's <tt>IF</tt>).  The
   <tt>,else</tt> expression defaults to false.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="3">&nbsp;</A><tt>AND</tt> </td><td colspan="1" align="LEFT"> <tt>(AND ,form ,@forms)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="4">&nbsp;</A><tt>AND</tt> </td><td colspan="1" align="LEFT"> <tt>(AND ,form ,@forms)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(IF ,form (AND ,@FORMS))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
@@ -37,7 +41,7 @@ function calls, conditional execution, and nonlocal control flow.
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>,form</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="4">&nbsp;</A><tt>OR</tt> </td><td colspan="1" align="LEFT"> <tt>(OR ,form ,@forms)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="5">&nbsp;</A><tt>OR</tt> </td><td colspan="1" align="LEFT"> <tt>(OR ,form ,@forms)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SEQ (DEF x ,form) (IF x x (OR ,@FORMS)))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
@@ -45,21 +49,21 @@ function calls, conditional execution, and nonlocal control flow.
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>,form</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="5">&nbsp;</A><tt>UNLESS</tt> </td><td colspan="1" align="LEFT"> <tt>(UNLESS ,test ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="6">&nbsp;</A><tt>UNLESS</tt> </td><td colspan="1" align="LEFT"> <tt>(UNLESS ,test ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(IF (NOT ,test) (SEQ ,@body))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="6">&nbsp;</A><tt>WHEN</tt> </td><td colspan="1" align="LEFT"> <tt>(WHEN ,test ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="7">&nbsp;</A><tt>WHEN</tt> </td><td colspan="1" align="LEFT"> <tt>(WHEN ,test ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(IF ,test (SEQ ,@body))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="7">&nbsp;</A><tt>COND</tt> </td><td colspan="1" align="LEFT"> <tt>(COND (,test ,@body) ...)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="8">&nbsp;</A><tt>COND</tt> </td><td colspan="1" align="LEFT"> <tt>(COND (,test ,@body) ...)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>evaluates <tt>(SEQ ,@body)</tt> of first clause 
   whose <tt>,test</tt> evaluates to
   non-false (cf. Dylan's <tt>CASE</tt> and Scheme's <tt>COND</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="8">&nbsp;</A><tt>CASE[-BY]</tt> </td><td colspan="1" align="LEFT"> <tt>(CASE[-BY] ,value [ ,test ]((,@keys) ,@body) ...)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="9">&nbsp;</A><tt>CASE[-BY]</tt> </td><td colspan="1" align="LEFT"> <tt>(CASE[-BY] ,value [ ,test ]((,@keys) ,@body) ...)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>evaluates <tt>,value</tt> and then evaluates <tt>(SEQ ,@body)</tt>
   of first clause for which <tt>(,test ,value ,key)</tt> returns non-false
@@ -67,33 +71,33 @@ function calls, conditional execution, and nonlocal control flow.
   key is evaluated, thus symbols must be quoted.  The default
   <tt>,test</tt> for the <tt>CASE</tt> form is <tt>==</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="9">&nbsp;</A><tt>OPF</tt> </td><td colspan="1" align="LEFT"> <tt>(OPF ,place ,expr)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="10">&nbsp;</A><tt>OPF</tt> </td><td colspan="1" align="LEFT"> <tt>(OPF ,place ,expr)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SEQ (DEF &#95; ,place) (SET ,place ,expr))</tt>, where
   <tt>,place</tt> is evaluated only once.  For example, 
   <tt>(OPF x (+ &#95; 1))</tt> <i> == </i> <tt>(SET x (+ x 1))</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="10">&nbsp;</A><tt>SWAPF</tt> </td><td colspan="1" align="LEFT"> <tt>(SWAPF ,x ,y)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="11">&nbsp;</A><tt>SWAPF</tt> </td><td colspan="1" align="LEFT"> <tt>(SWAPF ,x ,y)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SEQ (DEF tmp ,x) (SET ,x ,y) (SET ,y tmp))</tt>,
   where <tt>,x</tt> and <tt>,y</tt> are evaluated only once.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="11">&nbsp;</A><tt>ROTF</tt> </td><td colspan="1" align="LEFT"> <tt>(ROTF ,x ,y ,@places)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="12">&nbsp;</A><tt>ROTF</tt> </td><td colspan="1" align="LEFT"> <tt>(ROTF ,x ,y ,@places)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SET (TUP ,x ,y ,@places) (TUP ,y ,@places ,x))</tt>
   where <tt>,x</tt>, <tt>,y</tt>, and <tt>,@places)</tt> are evaluated only
   once and <tt>(SET (TUP ...) val)</tt> stands for parallel assignment.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="12">&nbsp;</A><tt><i>call</i></tt> </td><td colspan="1" align="LEFT"> <tt>(,f ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="13">&nbsp;</A><tt><i>call</i></tt> </td><td colspan="1" align="LEFT"> <tt>(,f ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>evaluates <tt>,f</tt> and then <tt>,@args</tt> in left to right
   order and then calls <tt>,f</tt> with the evaluated arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="13">&nbsp;</A><tt>REP</tt> </td><td colspan="1" align="LEFT"> <tt>(REP ,name ((,var ,init) ...) ,@body) </tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="14">&nbsp;</A><tt>REP</tt> </td><td colspan="1" align="LEFT"> <tt>(REP ,name ((,var ,init) ...) ,@body) </tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>defines a recursive loop (cf., Dylan's <tt>ITERATE</tt> or Scheme's <tt>(LET ,var ...)</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="14">&nbsp;</A><tt>ESC</tt> </td><td colspan="1" align="LEFT"> <tt>(ESC ,name ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="15">&nbsp;</A><tt>ESC</tt> </td><td colspan="1" align="LEFT"> <tt>(ESC ,name ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>evaluates <tt>(SEQ ,@body)</tt> with an exit
   function of a single parameter, <tt>x</tt>, bound to
@@ -104,7 +108,7 @@ function calls, conditional execution, and nonlocal control flow.
   after the execution of the creating <tt>ESC</tt> form (i.e., no upward
   continuations).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="15">&nbsp;</A><tt>FIN</tt> </td><td colspan="1" align="LEFT"> <tt>(FIN ,protected ,@cleanups)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="16">&nbsp;</A><tt>FIN</tt> </td><td colspan="1" align="LEFT"> <tt>(FIN ,protected ,@cleanups)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>ensures that <tt>(SEQ ,@cleanups)</tt> is evaluated whether
   or not an <tt>ESC</tt> upwards exit is taken
@@ -113,7 +117,7 @@ function calls, conditional execution, and nonlocal control flow.
   <tt>UNWIND-PROTECT</tt>).  The result of a <tt>FIN</tt> form is the
   result of evaluating its protected form.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="16">&nbsp;</A><tt>ASSERT</tt> </td><td colspan="1" align="LEFT"> <tt>(ASSERT ,test ,message ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="17">&nbsp;</A><tt>ASSERT</tt> </td><td colspan="1" align="LEFT"> <tt>(ASSERT ,test ,message ,@args)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(UNLESS ,test (ERROR ,message ,@args))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">

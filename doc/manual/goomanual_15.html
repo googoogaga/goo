@@ -2,7 +2,7 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Thu Sep  5 11:03:41 2002 -->
+ -- on Emacs 21.2.1, Thu Jan 16 12:31:09 2003 -->
 <head>
 <title><i>GOO&#32;Manual -- Functions</title>
 
@@ -72,12 +72,12 @@ functions are instances of <tt>&lt;gen&gt;</tt> and methods are instances of
 </font>
 </i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="9">&nbsp;</A><tt>&#123; ... &#125;</tt> </td><td colspan="1" align="LEFT"> <tt>&#123; [ ,sig '.' ] ,@body&#125;</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="9">&nbsp;</A><tt>&#123; ... &#125;</tt> </td><td colspan="1" align="LEFT"> <tt>&#123; [ ,@sig '<i>\</i>' ] ,@body &#125;</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i><tt>FUN</tt> abbreviation <i> == </i> <tt>(fun ,sig ,@body)</tt> where
-  <tt>,sig</tt> defaults to <tt>()</tt>.  
+</td><td colspan="1" align="LEFT"> <i><tt>FUN</tt> abbreviation <i> == </i> <tt>(fun (,@sig) ,@body)</tt>.  
   This is particularly useful for lightweight thunks
-  (e.g., <tt>&#123;(+ x 1)&#125;</tt> <i> == </i> <tt>(fun () (+ x 1))</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+  (e.g., <tt>&#123;(+ x 1)&#125;</tt> <i> == </i> <tt>(fun () (+ x 1))</tt>).  N.B. this
+  is an experimental syntax and might change in the future.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 

@@ -2,7 +2,7 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Thu Sep  5 11:03:42 2002 -->
+ -- on Emacs 21.2.1, Thu Jan 16 12:31:10 2003 -->
 <head>
 <title><i>GOO&#32;Manual -- Sequences</title>
 
@@ -217,75 +217,79 @@ list.  Lists might be deprecated in future releases of <i>GOO.
 <tr><td colspan="1" align="LEFT">
 <A NAME="51">&nbsp;</A><tt>list</tt> </td><td colspan="1" align="LEFT"> <tt>lst</tt> </td><td colspan="1" align="RIGHT"> <tt>A</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="52">&nbsp;</A><tt>nil</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;lst&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>I</tt> </td></tr>
+<A NAME="52">&nbsp;</A><tt>lst*</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>returns list of arguments with last argument tacked onto end.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="53">&nbsp;</A><tt>nil</tt> </td><td colspan="1" align="LEFT"> <tt>&lt;lst&gt;</tt> </td><td colspan="1" align="RIGHT"> <tt>I</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>aka <tt>()</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="53">&nbsp;</A><tt>pair</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;any&gt; y|&lt;lst&gt; =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="54">&nbsp;</A><tt>pair</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;any&gt; y|&lt;lst&gt; =&gt; &lt;lst&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns new list with <tt>x</tt> as head and <tt>y</tt> as tail.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 
-<h3><A NAME="54">Zips</a></h3>
+<h3><A NAME="55">Zips</a></h3>
 <p>A zip is a sequence of tuples of sucessive elements of sequences.  A
 zip has the length of its shortest constituent sequence.
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="55">&nbsp;</A><tt>&lt;zip&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="56">&nbsp;</A><tt>&lt;zip&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="56">&nbsp;</A><tt>zip</tt> </td><td colspan="1" align="LEFT"> <tt>(cs|(...&#32;&lt;seq&gt;) =&gt; &lt;zip&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="57">&nbsp;</A><tt>zip</tt> </td><td colspan="1" align="LEFT"> <tt>(cs|(...&#32;&lt;seq&gt;) =&gt; &lt;zip&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns a zip over sequences <tt>cs</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="57">&nbsp;</A><tt>unzip</tt> </td><td colspan="1" align="LEFT"> <tt>(z|&lt;zip&gt; =&gt; &lt;tup&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="58">&nbsp;</A><tt>unzip</tt> </td><td colspan="1" align="LEFT"> <tt>(z|&lt;zip&gt; =&gt; &lt;tup&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns a tuple of <tt>z</tt>'s constituent sequences.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 
-<h3><A NAME="58">Flat Sequences</a></h3>
+<h3><A NAME="59">Flat Sequences</a></h3>
 <p>Flats represents sequences with constant access time.  Flat enum provides
 an enum implementation of all but <tt>now</tt> and <tt>now-setter</tt>.
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="59">&nbsp;</A><tt>&lt;flat&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="60">&nbsp;</A><tt>&lt;flat&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;seq&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="60">&nbsp;</A><tt>&lt;flat-enum&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;enum&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="61">&nbsp;</A><tt>&lt;flat-enum&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;enum&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="61">&nbsp;</A><tt>&lt;tup&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="62">&nbsp;</A><tt>&lt;tup&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>Tuples are immutable flat sequences and represents multiple values in
   <i>GOO.</i></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="62">&nbsp;</A><tt>tup</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;tup&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="63">&nbsp;</A><tt>tup</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;tup&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>creates a tuple with elements being <tt>elts</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="63">&nbsp;</A><tt>&lt;vec&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="64">&nbsp;</A><tt>&lt;vec&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;seq!&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>Stretchy vectors resize when needed.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="64">&nbsp;</A><tt>vec</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;sec&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="65">&nbsp;</A><tt>vec</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;sec&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns new vector with elements <tt>elts</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 
-<h3><A NAME="65">Strings</a></h3>
+<h3><A NAME="66">Strings</a></h3>
 
 <p><i>GOO&#32;currently implements ASCII strings.
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="66">&nbsp;</A><tt>&lt;str&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;mag&gt; &lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
+<A NAME="67">&nbsp;</A><tt>&lt;str&gt;</tt> </td><td colspan="1" align="LEFT"> <tt>(&lt;flat&gt; &lt;mag&gt; &lt;seq.&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>C</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="67">&nbsp;</A><tt>str</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="68">&nbsp;</A><tt>str</tt> </td><td colspan="1" align="LEFT"> <tt>(elts|... =&gt; &lt;str&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>returns new string with elements <tt>elts</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="68">&nbsp;</A><tt>case-insensitive-string-hash</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;tab&gt; =&gt; (tup hash|&lt;any&gt; gc-state|&lt;any&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="69">&nbsp;</A><tt>case-insensitive-string-hash</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;tab&gt; =&gt; (tup hash|&lt;any&gt; gc-state|&lt;any&gt;))</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="69">&nbsp;</A><tt>case-insensitive-string-equal</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;str&gt; y|&lt;str&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
+<A NAME="70">&nbsp;</A><tt>case-insensitive-string-equal</tt> </td><td colspan="1" align="LEFT"> <tt>(x|&lt;str&gt; y|&lt;str&gt; =&gt; &lt;log&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>G</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td></tr></table>
 

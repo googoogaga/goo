@@ -2,7 +2,7 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Thu Sep  5 11:03:41 2002 -->
+ -- on Emacs 21.2.1, Thu Jan 16 12:31:09 2003 -->
 <head>
 <title><i>GOO&#32;Manual -- Macros</title>
 
@@ -43,13 +43,14 @@ required to use <tt>gensym</tt> to avoid name collisions.
 (MATCH '(1 2) ((,a ,@b) (lst a b))) $ --&gt; $ (1 (2))
 </pre></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="5">&nbsp;</A><tt>DS</tt> </td><td colspan="1" align="LEFT"> <tt>(DS ,pattern ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="5">&nbsp;</A><tt>DS</tt> </td><td colspan="1" align="LEFT"> <tt>(DS ,name (,pattern) ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>defines a macro matching pattern ,pattern and expanding according to
-  <tt>,@body</tt>. The pattern matching occurs as in <tt>MIF</tt> and makes available
-  pattern variables during the evaluation of <tt>(SEQ ,@body)</tt>.  For example,
+  <tt>,@body</tt>. The pattern matching occurs as in <tt>MIF</tt> and
+  makes available pattern variables during the evaluation 
+  of <tt>(SEQ ,@body)</tt>.  For example,
 <pre>
-(DS (unless ,test ,@body) 
+(DS unless (,test ,@body) 
   `(if (not ,test) (seq ,@body)))
 </pre>
   defines the <tt>when</tt> macro in <i>GOO.</i></i> </td><td colspan="1" align="RIGHT"> </td></tr>

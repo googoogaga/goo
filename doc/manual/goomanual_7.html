@@ -2,7 +2,7 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Thu Sep  5 11:03:40 2002 -->
+ -- on Emacs 21.2.1, Thu Jan 16 12:31:09 2003 -->
 <head>
 <title><i>GOO&#32;Manual -- Namespaces and Bindings</title>
 
@@ -23,12 +23,17 @@ imported bindings.  Furthermore, no cycles can occur in the module use
 heterarchy.
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="1">&nbsp;</A><tt>DV</tt> </td><td colspan="1" align="LEFT"> <tt>(DV ,var ,form)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="1">&nbsp;</A><tt>D.</tt> </td><td colspan="1" align="LEFT"> <tt>(D. ,var ,form)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<tr><td colspan="1" align="LEFT">
+</td><td colspan="1" align="LEFT"> <i>defines a global constant named <tt>(var-name ,var)</tt> with an 
+  initial value <tt>,form</tt> (cf. Dylan's <tt>DEFINE CONSTANT</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+<tr><td colspan="1" align="LEFT">
+<A NAME="2">&nbsp;</A><tt>DV</tt> </td><td colspan="1" align="LEFT"> <tt>(DV ,var ,form)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>defines a global variable named <tt>(var-name ,var)</tt> with an 
-  initial value <tt>,form</tt> (cf. Scheme's <tt>DEFINE</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
+  initial value <tt>,form</tt> (cf. Dylan's <tt>DEFINE VARIABLE</tt>).</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="2">&nbsp;</A><tt>DEF</tt> </td><td colspan="1" align="LEFT"> <tt>(DEF ,var ,val)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="3">&nbsp;</A><tt>DEF</tt> </td><td colspan="1" align="LEFT"> <tt>(DEF ,var ,val)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>locally binds <tt>,var</tt> to <tt>,val</tt> and evaluates
   remainder of current body in the context of that binding.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
@@ -39,7 +44,7 @@ heterarchy.
        a <tt>DEF</tt> binding. For example
         <tt>(DEF (TUP x y) (TUP 1 2))</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="3">&nbsp;</A><tt>LET</tt> </td><td colspan="1" align="LEFT"> <tt>(LET ((,var ,val) ...) ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="4">&nbsp;</A><tt>LET</tt> </td><td colspan="1" align="LEFT"> <tt>(LET ((,var ,val) ...) ,@body)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(SEQ (DEF ,var ,val) ... ,@body)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
@@ -48,7 +53,7 @@ heterarchy.
 <p>where
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="4">&nbsp;</A><tt>,var</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> ,name | (,name ,type)</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
+<A NAME="5">&nbsp;</A><tt>,var</tt> </td><td colspan="1" align="LEFT"> <tt><i> == </i> ,name | (,name ,type)</tt> </td><td colspan="1" align="RIGHT"> <tt>L</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>with <tt>,name | ,type</tt> <i> == </i> <tt>(,name ,type)</tt> within lists.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
@@ -56,7 +61,7 @@ heterarchy.
 
 <table border><tr><td colspan="1" align="LEFT">
 
-<A NAME="5">&nbsp;</A><tt>SET</tt> </td><td colspan="1" align="LEFT"> <tt>(SET ,name ,form) </tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="6">&nbsp;</A><tt>SET</tt> </td><td colspan="1" align="LEFT"> <tt>(SET ,name ,form) </tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>sets <tt>,name</tt> binding to value of evaluating <tt>,form</tt>
   (cf. Scheme's <tt>SET!</tt>)</i> </td><td colspan="1" align="RIGHT"> </td></tr>
@@ -65,18 +70,18 @@ heterarchy.
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i><i> == </i> <tt>(,name &#35;&#35; -setter ,form ,@args)</tt></i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="6">&nbsp;</A><tt>USE</tt> </td><td colspan="1" align="LEFT"> <tt>(USE ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="7">&nbsp;</A><tt>USE</tt> </td><td colspan="1" align="LEFT"> <tt>(USE ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>loads the module <tt>,name</tt> (if it hasn't been loaded
   already) and aliases
   all the exported bindings into the current namespace.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="7">&nbsp;</A><tt>EXPORT</tt> </td><td colspan="1" align="LEFT"> <tt>(EXPORT ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="8">&nbsp;</A><tt>EXPORT</tt> </td><td colspan="1" align="LEFT"> <tt>(EXPORT ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>makes the binding <tt>,name</tt> available to code which uses 
        this module in the future.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
-<A NAME="8">&nbsp;</A><tt>USE/EXPORT</tt> </td><td colspan="1" align="LEFT"> <tt>(USE/EXPORT ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
+<A NAME="9">&nbsp;</A><tt>USE/EXPORT</tt> </td><td colspan="1" align="LEFT"> <tt>(USE/EXPORT ,name)</tt> </td><td colspan="1" align="RIGHT"> <tt>S</tt> </td></tr>
 <tr><td colspan="1" align="LEFT">
 </td><td colspan="1" align="LEFT"> <i>same as <tt>USE</tt> plus reexports all imported bindings.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
 <tr><td colspan="1" align="LEFT">
