@@ -1,0 +1,16 @@
+(use goo)
+
+(parsevm
+ (block test0 #f
+        ;; Env
+        (
+         (age 0)
+         )
+        ;; Init
+        (
+         )
+        ;; Tick
+        (
+         )
+        )
+ )

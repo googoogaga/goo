@@ -1,0 +1,101 @@
+(use goo)
+(use goo/random)
+
+(use demos/simumote/vm/instructions)
+(use demos/simumote/vm/vmsysfunctions)
+(use demos/simumote/vm/vm)
+(use demos/simumote/simcode/round)
+
+(use demos/simumote/motes)
+(use demos/simumote/simumote)
+
+(use samurui/samurui)
+(use samurui/intrinsic)
+
+;; (use demos/simumote/simcode/test1)
+
+;; LOAD THIS GUY, then type (go-simumote) to run!
+
+;; life rules
+
+;; neighbhors < 2 => die
+;; neighbors  > 3 => die
+;; neighbors  = 3 and empty => born
+
+(parsevm 
+ (block lifer-main #f
+        ;; State
+        (
+         (alive #f)
+         (now-neighbors 0)
+         (next-neighbors 0)
+         )
+        
+        ;; init
+        (
+         (schedule-me (+ 3 (random 2)))
+         )
+        
+        ;; per-tick
+        (
+         (set now-neighbors next-neighbors)
+         (set next-neighbors 0)
+         
+         (if alive
+             ;; Alive
+             (when (or (< now-neighbors 2)
+                       (> now-neighbors 3))
+               (set alive #f))
+             ;; Dead
+             (when (or (== now-neighbors 3)
+                       (>= (random 10) 9))
+               (set alive #t))
+             )
+         
+         (when alive
+           (broadcast-child 'life-neighbor)
+           )
+         
+         (schedule-me (+ 3 (random 2)))
+         )
+        )
+
+ (block life-neighbor lifer-main
+        ;; no new vars, just inherit.
+        (
+         )
+        ;; init
+        (
+         (set next-neighbors (+ 1 next-neighbors))
+         )
+        ;; tick
+        (
+         )
+        )
+ )
+
+;; Distribute code blocks!
+(give-all-motes-instance (cur-round *app*) (motes (motes *app*)) (elt $vm-blocks 'lifer-main))
+(give-all-motes-instance (cur-round *app*) (motes (motes *app*)) (elt $vm-blocks 'life-neighbor))
+
+(dv $alive-color #f)
+(dv $dead-color #f)
+
+(df init-colors ()
+  (unless $alive-color
+    (set $alive-color (color 64 255 64))
+    (set $dead-color (color 255 64 64))
+    )
+  )
+
+(dm map-color (renderer|<visi-intrinsic> mote|<mote> => <gui-color>)
+  (init-colors)
+  (def rblock (mote-find-block-instance mote (elt $vm-blocks 'lifer-main)))
+  (if (and rblock (unwrap (env-lookup (run-state rblock) 'alive)))
+      $alive-color
+      $dead-color)
+  )
+
+(export
+  go-simumote
+  )

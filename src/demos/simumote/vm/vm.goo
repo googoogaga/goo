@@ -1,0 +1,332 @@
+(use goo)
+
+(use samurui/samurui) ;; for visi-col
+
+(use demos/simumote/vm/instructions)
+
+;; Globally unique label
+(dc <sm-label> (<any>))
+
+(dc <sm-code-block> (<any>))
+(dp! block-name  (<sm-code-block> => <str>))
+(dp! block-label (<sm-code-block> => (t? <sm-label>)) #f)
+(dp! block-env (<sm-code-block> => <vm-env>))
+(dp! block-init-func  (<sm-code-block> => <vm-seq>))
+(dp! block-tick-func  (<sm-code-block> => <vm-seq>))
+(dp! block-parent (<sm-code-block> => (t? <sm-code-block>)) #f) ;; In an implementation we would 
+  ;; actually be keying based off the label.  We can do this on write-out though.
+
+(dc <sm-run-block> (<any>))
+(dp! run-block (<sm-run-block> => <sm-code-block>))
+(dp! run-state (<sm-run-block> => (t? <vm-env>)) #f)
+(dp! run-ticks (<sm-run-block> => (t? <int>)) #f)
+
+(dv $vm-blocks (fab <tab> 0))
+
+;; `defvm block' creates:
+;; - A class <state-NAME> that holds the state for the code block.
+;; - An object that holds the code block and related info.
+;; - A function that takes the state, and processes it, attached to <block-NAME>
+
+
+;; (block NAME PARENT (env) (init) (tick))
+;;    0     1    2      3      4     5
+
+(dm consume-block (nlist|<list> => <vm-ast-node>)
+  (def block (new <sm-code-block>))
+  (set (block-name block) (as <str> (elt nlist 1)))
+  (post "--- Parsing Block %=\n" (block-name block))
+  ;; Lookup the parent (if any)
+  (when (elt nlist 2) 
+    (set (block-parent block) (elt $vm-blocks (elt nlist 2))))
+  ;; Consume the rest
+  (set (block-env block) (consume-env-def (elt nlist 3)))
+  (set (block-init-func block) (consume-seq (elt nlist 4)))
+  (set (block-tick-func block) (consume-seq (elt nlist 5)))
+  ;; Register us in the block database
+  (set (elt $vm-blocks (elt nlist 1)) block)
+  (post "/-- Done Parsing Block %=\n" (block-name block))
+  ;; (post " (Blocks: %=)\n" $vm-blocks)
+  $vm-ast-false
+  )
+
+(reg-handler 'block consume-block)
+
+(ds (parsevm ,@body)
+  `(consume-top-level (quote ,body))
+  )
+
+(dm clone-run-block (rblock|<sm-run-block> => <sm-run-block>)
+  (def nblock (new <sm-run-block>))
+  (set (run-block nblock) (run-block rblock))
+  (set (run-state nblock) (clone-env (run-state rblock)))
+  ;; leave ticks blank
+  nblock
+  )
+
+;; !!
+;; Types of transmission
+;; - Propagate the current block with current state.
+;; - Propagate the current block with specified state. (Requires additional instructions)
+;; - Queue a given block to be transmitted with current state.
+;; - Queue a given block to be transmitted with specified state. (Add'l instructions)
+
+;; !!
+;; Additional block meta-data issues
+;; - Check if the given block is resident
+;; - Make a given block sticky; if it is here, flag it important, otherwise, make space
+;;    for it, and flag it sticky when it gets here.
+;; - Make a given block unsticky.
+;; - Kill a given block.
+
+;; !!
+;; Execution techniques
+;; - Call the given resident block, with the following parameter overwriting the given var/slot.
+
+;; !! 
+;; Code hunk propagation should then look thusly.
+;; - Delivery block has a list of booleans corresponding to all the code blocks it is
+;;    carrying around (which are stored as constants).
+;; - Delivery block has two modes: scatter, and gather.
+;; - If the delivery block is in gather mode, it makes sure everyone is present, setting 
+;;    all of the present bits as appropriate. If everyone is not present, it broadcasts
+;;    itself, toggling into scatter mode for whoever receives it.
+;; - If the delivery block is in scatter mode and it arrives, it checks if any of the 
+;;    blocks flagged as missing are on the mote it arrives on.  If they are, it queues 
+;;    them up, followed by itself.
+;; - Source and target mote id's might be good?
+
+;; !!
+;; Perhaps there should be two varieties of opcodes, those which innately behave based
+;;  on the group/cluster id/color values, and those which are ignorant of them.  This
+;;  would allow clustering and what not to operate on a local basis.
+;; The mobile code model is ok, but it needs to be augmented by the 'state' blocks, 
+;;  which the mobile blocks can hack into.
+
+;; Rationale vis-a-vis tuples and what not:
+;; (tup STRING1 STRING2) - Node whose label is STRING1 and whose value is STRING2
+;; (tup STRING) - Node whose label is STRING, no value
+;; (tup OBJ STRING) - Node OBJ, whose label is STRING, no value. Perhaps OBJ should be col of children?
+;; (tup OBJ STRING1 STRING2) - Same as above, but with a "value"
+
+(dc <vm-block-visi-col> (<visi-col>))
+(dp! root-node (<vm-block-visi-col> => <any>))
+
+(dm vm-block-visi-col (root|<any>)
+  (def nvc (new <vm-block-visi-col>))
+  (set (root-node nvc) root)
+  nvc
+  )
+
+(dm node-label (c|<vm-block-visi-col> node|<any> => <str>)
+  (to-str node)
+  )
+
+(dm node-label (c|<vm-block-visi-col> node|<vm-value> => <str>)
+  (to-str (unwrap node))
+  )
+
+(dm node-label (c|<vm-block-visi-col> node|<vm-env> => <str>)
+  "Environment"
+  )
+
+(dm node-label (c|<vm-block-visi-col> node|<sm-run-block> => <str>)
+  (cat "RunBlock: " (block-name (run-block node)))
+  )
+
+(dm node-label (c|<vm-block-visi-col> node|<sm-code-block> => <str>)
+  (cat "Block: " (block-name node))
+  )
+
+(dm node-label (c|<vm-block-visi-col> node|<vec> => <str>)
+  "Root?"
+  )
+
+(dm node-label (c|<vm-block-visi-col> node|<tup> => <str>)
+  (cond
+    ;; (tup STRING1:LABEL STRING2:VALUE)
+    ((and (= (len node) 2)
+          (isa? (1st node) <str>))
+     (1st node))
+    ;; (tup STRING1:LABEL)
+    ((and (= (len node) 1)
+          (isa? (1st node) <str>))
+     (1st node))
+    ;; (tup OBJ:NODE STRING:LABEL)
+    ((= (len node) 2)
+     (2nd node))
+    ;; (tup COL:NODE STRING1:LABEL STRING2:VALUE)
+    ((and (= (len node) 3)
+          (isa? (1st node) <col>))
+     (2nd node))
+    (#t
+     (post "Don't know what to do with: %=\n" node)
+     "blank...")
+    )
+  )
+
+;; This is a singleton visi-col.  Merely an adapter.  No state.
+(dm get-start-node (vc|<vm-block-visi-col> => <any>)
+  (root-node vc)
+  )
+
+(d. $vm-visi-axes (tup 'implicit 'value))
+
+(dm node-axes (vc|<vm-block-visi-col> => <col>)
+  $vm-visi-axes
+  )
+
+(dm node-out-edges (vc|<vm-block-visi-col> axis|<any> node|<vec> => <col>)
+  (case axis
+    (('implicit)
+     node)
+    (('value)
+     (tup))
+    ))
+
+(dm node-out-edges (vc|<vm-block-visi-col> axis|<any> node|<tup> => <col>)
+  (case axis
+    (('implicit)
+     (cond
+       ;; (tup STRING1:LABEL STRING2:VALUE)
+       ((and (= (len node) 2)
+             (isa? (1st node) <str>))
+        (tup))
+       ;; (tup STRING1:LABEL)
+       ((and (= (len node) 1)
+             (isa? (1st node) <str>))
+        (tup))
+       ;; (tup COL:NODE STRING:LABEL)
+       ((and (= (len node) 2)
+             (isa? (1st node) <col>))
+        (1st node))
+       ;; (tup OBJ:ANY STRING:LABEL)
+       ((= (len node) 2)
+        (tup (1st node)))
+              
+       ;; (tup COL:NODE STRING1:LABEL STRING2:VALUE)
+       ((and (= (len node) 3)
+             (isa? (1st node) <col>))
+        (1st node))
+       (#t
+        (post "Don't know how to get implicit out edge for: %=\n" node)
+        (tup))
+       )
+     )
+    (('value)
+     (cond
+       ;; (tup STRING1:LABEL STRING2:VALUE)
+       ((and (= (len node) 2)
+             (isa? (1st node) <str>))
+        (tup (2nd node)))
+       ;; (tup STRING1:LABEL)
+       ((and (= (len node) 1)
+             (isa? (1st node) <str>))
+        (tup))
+       ;; (tup OBJ:NODE STRING:LABEL)
+       ((= (len node) 2)
+        (tup))
+       ;; (tup OBJ:NODE STRING1:LABEL STRING2:VALUE)
+       ((and (= (len node) 3)
+             (isa? (1st node) <col>))
+        (tup (3rd node)))
+       (#t
+        (post "Don't know how to get value out edge for: %=\n" node)
+        (tup))
+       )
+     )
+    )
+  )
+
+(dm node-out-edges (vc|<vm-block-visi-col> axis|<any> node|<sm-run-block> => <col>)
+  (case axis
+    (('implicit)
+     (tup
+      (run-block node)
+      (run-state node)
+      (tup "Ticks" (run-ticks node))
+      )
+     )
+    (('value)
+     (tup))
+    )
+  )
+
+(dm node-out-edges (vc|<vm-block-visi-col> axis|<any> node|<sm-code-block> => <col>)
+  (case axis
+    (('implicit)
+     (tup
+      (if (block-parent node)
+          (tup (cat "Parent: " (block-name (block-parent node))))
+          (tup "No Parent"))
+      (tup (block-env node) "Default Env")
+      ;; MORE
+      )
+     )
+    (('value)
+     (tup))
+    )
+  )
+
+(dm node-out-edges (vc|<vm-block-visi-col> axis|<any> node|<vm-env> => <col>)
+  (case axis
+    (('implicit)
+     (map (fun (x)
+            (tup (tup)
+                 (as <str> (1st x))
+                 (to-str (2nd x))) ;; it should be a value... to-str it now, rather than end up with inadvertant multi-dispatch behavior later.
+            )
+          (items (env-bindings node)))
+     )
+    (('value)
+     (tup)
+     )
+    )
+  )
+
+;; class
+(export
+  <sm-label>
+  <sm-code-block>
+  <sm-run-block>
+  <vm-block-visi-col>
+  )
+
+;; props
+(export
+  block-name
+  block-name-setter
+  block-label
+  block-label-setter
+  block-env
+  block-env-setter
+  block-init-func
+  block-init-func-setter
+  block-tick-func
+  block-tick-func-setter
+  block-parent
+  block-parent-setter
+
+  run-block
+  run-block-setter
+  run-state
+  run-state-setter
+  run-ticks
+  run-ticks-setter
+ )
+
+;; macro
+(export
+  parsevm
+  clone-run-block
+  )
+
+;; funcs
+(export
+  vm-block-visi-col
+  )
+
+;; vars
+(export
+  $vm-blocks
+  )

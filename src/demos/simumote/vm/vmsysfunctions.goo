@@ -1,0 +1,63 @@
+(use goo)
+(use goo/random)
+
+(use demos/simumote/vm/instructions)
+
+(ds (defsf ,name ,params ,@body)
+  `(set (elt (env-bindings $vm-sys-env) ,name)
+        (make-sys-fun (fun ,params ,@body)))
+  )
+
+(defsf 'random (env|<vm-env> high-non-inclusive|<vm-int>)
+       (def high (unwrap high-non-inclusive))
+       (random high)
+       )
+
+;; List crap
+(defsf 'mem? (env|<vm-env> l|<vm-list> e|<vm-value>)
+       (mem? (val l) e)
+       )
+
+(defsf 'add! (env|<vm-env> l|<vm-list> e|<vm-value>)
+       (add! (val l) e)
+       #t
+       )
+
+(defsf 'del! (env|<vm-env> l|<vm-list> e|<vm-value>)
+       (del! (val l) e)
+       #t
+       )
+
+(defsf 'zap! (env|<vm-env> l|<vm-list>)
+       (zap! (val l))
+       #t
+       )
+
+(defsf 'intersect! (env|<vm-env> vl1|<vm-list> vl2|<vm-list>)
+       ;; All the bad naming of C
+       ;; All the power of LISP.
+       (def nl (vec))
+       (def l1 (val vl1))
+       (def l2 (val vl2))
+       (do (fun (x)
+             (when (mem? l2 x)
+               (add! nl x))
+             )
+           l1)
+       (set (val vl1) nl)
+       (not (empty? nl))
+       )
+
+(defsf 'intersect (env|<vm-env> vl1|<vm-list> vl2|<vm-list>)
+       ;; All the bad naming of C
+       ;; All the power of LISP.
+       (def nl (vec))
+       (def l1 (val vl1))
+       (def l2 (val vl2))
+       (do (fun (x)
+             (when (mem? l2 x)
+               (add! nl x))
+             )
+           l1)
+       nl
+       )

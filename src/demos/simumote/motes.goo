@@ -1,0 +1,137 @@
+(use goo)
+
+(use goo/random)
+
+(use samurui/samurui) ;; for <visi-col>
+
+(dv $mote-comm-radius 0.1)
+
+(dc <mote-ensemble> (<visi-col>)) ;; forward
+
+(dc <mote> (<any>))
+
+(dp! mote-x (<mote> => <flo>) 0.0)
+(dp! mote-y (<mote> => <flo>) 0.0)
+
+(dp! mote-id (<mote> => <int>))
+
+(dp! mote-run-blocks (<mote> => <vec>) (vec))
+
+;; Construct the given number of motes
+(dm make-motes (num-motes|<int> => <col>)
+  (packing
+      (rep loop ((cur-mote 0))
+        (when (< cur-mote num-motes)
+          (def mote (new <mote>))
+          (set (mote-id mote) cur-mote)
+          (pack mote)
+          (loop (+ 1 cur-mote))
+          )
+        )
+      )
+  )
+
+;; Randomly distribute the motes across the unit plane.
+(dm distribute-motes (me|<mote-ensemble>)
+  (do (fun (mote)
+        (set (mote-x mote) (random-unit))
+        (set (mote-y mote) (random-unit))
+        )
+      (motes me)
+      )
+  )
+
+;; Find all the motes within a given radius of a given mote
+(dm motes-within-radius (motes|<col> mote|<mote> radius|<flo> => <col>)
+  (def mx (mote-x mote))
+  (def my (mote-y mote))
+  (packing
+      (do (fun (other-mote)
+            (def ox (mote-x other-mote))
+            (def oy (mote-y other-mote))
+            (def dx (- ox mx))
+            (def dy (- oy my))
+            
+            (when (< (sqrt (+ (* dx dx) (* dy dy))) radius)
+              (pack other-mote)
+              )
+            )
+          motes
+          )
+      )
+  )
+
+;; Collection Abstraction -----
+;; forwarded dc for <mote-ensemble>
+ (dp! root-node (<mote-ensemble> => <sym>) (gensym))
+ (dp! motes (<mote-ensemble> => <col>))
+
+(dm mote-ensemble (existing-motes|<col> => <mote-ensemble>)
+  (def me (new <mote-ensemble>))
+  (set (motes me) existing-motes)
+  me
+  )
+
+(dm get-start-node (me|<mote-ensemble> => <any>)
+  (root-node me)
+  )
+
+(dm node-label (me|<mote-ensemble> node)
+  "mote"
+  )
+
+(dm node-axes (me|<mote-ensemble> => <col>)
+  (vec "motes" "x" "y")
+  )
+
+(dm node-out-edges (me|<mote-ensemble> axis node => <col>)
+  (case-by axis =
+    (("motes")
+     (if (== (root-node me) node)
+         (motes me)
+         (vec)
+         )
+     )
+    (("x")
+     (vec (mote-x node))
+     )
+    (("y")
+     (vec (mote-y node))
+     )
+    (#t
+     (post "ERR: Mote ensemble out-edges request for axis '%='\n" axis)
+     (tup))
+    )
+  )
+
+(dm node-in-edges (me|<mote-ensemble> axis node => <col>)
+  #f
+  )
+
+(export
+  <mote>
+  <mote-ensemble>
+
+  mote-ensemble
+
+  mote-x
+  mote-x-setter
+
+  mote-y
+  mote-y-setter
+
+  mote-id
+  mote-id-setter
+
+  mote-run-blocks
+  mote-run-blocks-setter
+
+  make-motes
+  distribute-motes
+
+  motes
+  motes-setter
+
+  motes-within-radius
+  $mote-comm-radius
+  )

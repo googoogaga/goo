@@ -1,0 +1,66 @@
+(use goo)
+
+;; Group formation code
+
+;; Meta-data for visualization purposes:
+;; - Group ID
+
+;; This basically ammounts to the following:
+;; - Find out all of the symmetric communication links.
+;; - Given this graph, find the largest clique including the magic center point.
+;; - Subtract these nodes 
+
+;; What is needed:
+;; - A list construct.
+
+;; Sketch
+;; - Stage 1
+;;  - Everyone lists everyone they can hear.
+;;  - Steady-state list thinging.
+;; - Stage 2 (Base)
+;;  - Injection node asserts it is in charge.
+;;  [ Cycle Begin ]
+;;  - Injection node says its clique is tentatively made up of itself and the people it can hear.
+;;  - Everyone in that tentative clique reports back the number of people it can hear who are in that clique. (and maybe even the people...)
+;;  - The injection node intersects the person with the maximum number with its own list (and marks that guy as having been intersected)
+;;  [ Cycle End ]
+;;  - The cycle repeats itself.  Eventually there should be a clique of mutually hearing people hearing.
+;; - Stage 2.5 (Onwards to induction)
+;;  - The clique is told to let their neighbors know that it's time to let the next people form a clique.
+;;  - The people, thusly informed perform a leader election based on maximal id or other arbitrary symmetry breaking.
+;;  - REPEAT Stage 2, where injection node is replaced with whoever this leader is.
+
+;; Special Cases:
+;;  - Perhaps, a lower bound should be established, so that if someone's presence would form a cell of 2 or something, that loser should just be dropped.
+
+(parsevm
+ (block cell-state #f
+        ;; State
+        (
+         (cell-id 0)
+         (nodes-i-hear ())
+         )
+
+        ;; Init
+        (
+         )
+
+        ;; Tick
+        (
+         )
+        )
+
+ (block cell-meet-neighbors cell-state
+        ;; State
+        (
+         )
+
+        ;; Init
+        (
+         )
+
+        ;; Tick
+        (
+         )
+        )
+ )

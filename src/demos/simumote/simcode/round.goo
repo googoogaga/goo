@@ -1,0 +1,251 @@
+(use goo)
+
+(use demos/simumote/motes)
+(use demos/simumote/vm/instructions)
+(use demos/simumote/vm/vm)
+
+;; Round abstraction.  Basically going with the standard distributed computing model
+;;  more or less.  Every mote has an in-queue and an out-queue.  During each round, 
+;;  motes process their in-queue, and leave things in their out-queue. In-between
+;;  each round, we transfer from out-queues to in-queues, killing off collided
+;;  messages with whatever degree of zest and accuracy we desire.
+
+;; The round-env provides the relevant symbols to provide broadcast/etc.
+(dv $round-env (new <vm-env>))
+
+(dv $current-mote #f)
+(dv $currently-executing-rblock #f)
+(dv $current-out-queue #f)
+
+(ds (defrf ,name ,params ,@body)
+  `(set (elt (env-bindings $round-env) ,name)
+        (make-sys-fun (fun ,params ,@body)))
+  )
+
+;; --- Broadcast Related ---
+
+(defrf 'broadcast-child (env|<vm-env> symname|<vm-symbol>)
+       (def instance (mote-find-block-instance $current-mote (elt $vm-blocks (sym symname))))
+       (if instance
+         (add! $current-out-queue instance)
+         (post "Crap, couldn't find instance of %= to broadcast-child\n" (sym symname)))
+       #t
+       )
+
+(defrf 'broadcast-me (env|<vm-env>)
+       (add! $current-out-queue (clone-run-block $currently-executing-rblock))
+       #t
+       )
+
+;; --- Scheduling ---
+
+(defrf 'schedule-me (env|<vm-env> ticks|<vm-int>)
+       (set (run-ticks $currently-executing-rblock)
+            (unwrap ticks))
+       #t
+       )
+
+;; --- Block Information ---
+(defrf 'block-present? (env|<vm-env> symname|<vm-symbol>)
+       (def instance (mote-find-block-instance $current-mote (elt $vm-blocks (sym symname))))
+       (if instance #t #f)
+       )
+
+;; --- Mote Identity ---
+
+(defrt 'mote-id (env|<vm-env>)
+       (mote-id $current-mote)
+       )
+
+(dc <round> (<any>))
+(dp! in-queues (<round> => <tab>) (fab <tab> 0))
+(dp! out-queues (<round> => <tab>) (fab <tab> 0))
+
+;; Process the old-round to make a new one.
+(dm transition-round (old-round|<round> motes|<mote-ensemble> => <round>)
+  (def new-round (new <round>))
+
+  ;; Message transmission and collisions should be simulated.
+  ;; For now, things just do the standard circular distance shite.
+  (do (fun (mote-queue-tuple)
+        (when (>= (len mote-queue-tuple) 2)
+          (def mote (1st mote-queue-tuple))
+          (def out-queue (2nd mote-queue-tuple))
+          
+          (do (fun (other-mote)
+                (def in-queue (or (elt-or (in-queues new-round) other-mote #f)
+                                  (set (elt (in-queues new-round) other-mote) (vec))))
+                (cat! in-queue out-queue)
+                )
+              (motes-within-radius (motes motes) mote $mote-comm-radius)
+              )
+          )
+        )
+      (out-queues old-round)
+      )
+
+  new-round
+  )
+
+(dm process-round (round|<round> da-motes|<mote-ensemble>)
+  (process-inputs round)
+  (process-ticks round (motes da-motes))
+  )
+
+(dm mote-find-block-instance (mote|<mote> block|<sm-code-block> => (t? <sm-run-block>))
+  (esc found-it
+    (do (fun (cur-run-block)
+          (when (= (run-block cur-run-block) block)
+            (found-it cur-run-block))
+          )
+        (mote-run-blocks mote)
+        )
+    )
+  )
+
+(dm give-all-motes-instance (round|<round> motes|<col> block|<sm-code-block>)
+  (do (fun (mote)
+        (def in-queue (or (elt-or (in-queues round) mote #f)
+                          (set (elt (in-queues round) mote) (vec))))
+
+        (def rblock (new <sm-run-block>))
+        (set (run-block rblock) block)
+        (set (run-state rblock) (clone-env (block-env block)))
+
+        (add! in-queue rblock)
+        )
+      motes)
+  )
+
+(dm process-inputs (round|<round>)
+  ;; When processing the incoming code blocks:
+  ;; - Check if the block is enclosed; if so:
+  ;;  - Make sure the parent code block is present
+  ;;  - Grab the parent's state block too, to pass in on the call
+  ;; - Call into the block.
+
+  (do (fun (mote-queue-tuple)
+        (def mote (1st mote-queue-tuple))
+        (def in-queue (2nd mote-queue-tuple))
+        
+        (set $current-mote mote)
+
+        (def out-queue (vec))
+
+        (set $current-out-queue out-queue)
+
+        ;; Input is a run-block
+        (do (fun (rblock)
+              (def block (run-block rblock))
+              ;; Set up relevant globals
+              (set $currently-executing-rblock rblock)
+
+              ;; Does the block have a parent?
+              (if (block-parent block)
+                  ;; Parent
+                  (seq
+                    ;; We have a parent, locate an instance in our mote
+                    (def parent-rblock (mote-find-block-instance $current-mote (block-parent block)))
+                    ;; Only do something if we find the parent
+                    (when parent-rblock
+                      ;; Link our rblock's state into the parent's state
+                      (set (run-state rblock) (run-state parent-rblock))
+                      ;; Call
+                      (def my-env (chain-envs (vec $vm-sys-env $round-env (run-state parent-rblock) (run-state rblock))))
+                      (execute-node my-env (block-init-func block))
+                      )
+                    )
+                  ;; No Parent
+                  (seq
+                    (def my-env (chain-envs (vec $vm-sys-env $round-env (run-state rblock))))
+                    (execute-node my-env (block-init-func block))
+                    )
+                  )
+
+              ;; Put them in the to-proc list if they've got ticks...
+              (add! (mote-run-blocks mote) rblock)
+              )
+            in-queue)
+
+        ;; Save the output queue
+        (set (elt (out-queues round) mote) out-queue)
+        )
+      (items (in-queues round))
+      )
+  )
+
+;; Tick-processing works on the following premise:
+;; - All motes have a list of code-blocks that have requested to be executed again
+;;    in so many rounds.  We just fulfill this request.
+(dm process-ticks (round|<round> motes|<col>)
+  (do (fun (mote)
+        (set $current-mote mote)
+        (do (fun (rblock)
+              (when (run-ticks rblock)
+                (decf (run-ticks rblock))
+                (when (zero? (run-ticks rblock))
+                  (def out-queue (or (elt-or (out-queues round) mote #f)
+                                     (set (elt (out-queues round) mote) (vec))))
+
+                  (set $currently-executing-rblock rblock)
+                  (set $current-out-queue out-queue)
+                  
+                  (def block (run-block rblock))
+                  (if (block-parent block)
+                      ;; Parent
+                      (seq
+                    ;; We have a parent, locate an instance in our mote
+                        (def parent-rblock (mote-find-block-instance $current-mote (block-parent block)))
+                        ;; Only do something if we find the parent
+                        (when parent-rblock
+                          ;; Link our rblock's state into the parent's state
+                          (set (run-state rblock) (run-state parent-rblock))
+                      ;; Call
+                          (def my-env (chain-envs (vec $vm-sys-env $round-env (run-state parent-rblock) (run-state rblock))))
+                          (execute-node my-env (block-tick-func block))
+                          )
+                        )
+                      ;; No Parent
+                      (seq
+                        (def my-env (chain-envs (vec $vm-sys-env $round-env (run-state rblock))))
+                        (execute-node my-env (block-tick-func block))
+                        )
+                      )
+                  )
+                )
+              )
+            (mote-run-blocks mote)
+            )
+        )
+      motes
+      )
+  )
+
+;; There are several ways that the tick mechanism could work.
+;; 1] Every block actually has an init segment and a tick-segment.  The init segment
+;;     handles the on-arrival code, and then also schedules the tick-segment.
+;; 2] There is only one segment, but we pass in a variable that indicates what 
+;;     behavior is desired to be exercised.  As in #1, init requests a tick.
+;; 3] Passive data mechanism where an attribute on the packet says how many ticks
+;;     until it is executed.
+
+(export
+  <round>
+  )
+
+(export
+  in-queues
+  in-queues-setter
+
+  out-queues
+  out-queues-setter
+  )
+
+(export
+  transition-round
+  process-round
+  mote-find-block-instance
+  give-all-motes-instance
+  process-inputs
+  process-ticks
+  )

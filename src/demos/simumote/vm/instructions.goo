@@ -1,0 +1,634 @@
+(use goo)
+
+;; ---------- Framework ---------
+
+(dc <vm-ast-node> (<any>))
+
+(dc <vm-env> (<any>))
+(dp! env-parent (<vm-env> => (t? <vm-env>)) #f)
+(dp! env-bindings (<vm-env> => <tab>) (fab <tab> 0))
+
+(dv $vm-sys-env (new <vm-env>))
+
+(dc <vm-value> (<any>))
+
+;; --- Processing and Stuff ---
+
+(dg execute-node (env|<vm-env> node|<vm-ast-node> => <vm-value>))
+
+(dv $symbol-to-handler (fab <tab> 0))
+
+(dm reg-handler (sym|<sym> handler|<fun>)
+  (set (elt $symbol-to-handler sym) handler)
+  )
+
+;;----- Values -----
+
+(dc <vm-int> (<vm-value>))
+(dp! val (<vm-int> => <int>))
+
+(dc <vm-bool> (<vm-value>))
+(dp! val (<vm-bool> => <log>))
+
+(d. $vm-true (seq (def v (new <vm-bool>)) (set (val v) #t) v))
+(d. $vm-false (seq (def v (new <vm-bool>)) (set (val v) #f) v))
+
+(dm vm-true? (bval|<vm-int> => <log>)
+  (~= (val bval) 0)
+  )
+
+(dm vm-true? (bval|<vm-bool> => <log>)
+  (val bval))
+
+(dm vm-false? (bval|<vm-bool> => <log>)
+  (not (val bval)))
+
+(dm wrap-value (ival|<int> => <vm-int>)
+  (def nint (new <vm-int>))
+  (set (val nint) ival)
+  nint
+  )
+
+(dm wrap-value (bval|<log> => <vm-bool>)
+  (if bval $vm-true $vm-false)
+  )
+
+(dm unwrap (vmval|<vm-int> => <int>)
+  (val vmval)
+  )
+
+(dm unwrap (vmval|<vm-bool> => <log>)
+  (val vmval)
+  )
+
+(dm to-str (vmval|<vm-value> => <str>)
+  (to-str (unwrap vmval)))
+
+(dm == (v1|<vm-value> v2|<vm-value>)
+  (= (val v1) (val v2)))
+
+;; ----- List (definition) -----
+(dc <vm-list> (<vm-value>))
+(dp! val (<vm-list> => <col>))
+
+;; For mutable collections, it just wraps.
+;; For immutable collections, it copies the contents
+(dm wrap-value (cval|<col> => <vm-list>)
+  (def nlist (new <vm-list>))
+  (if (isa? cval <col!>)     
+      (set (val nlist) cval)
+      (set (val nlist) (cat! (vec) cval)))
+  nlist
+  )
+
+(dm unwrap (lval|<vm-list> => <col>)
+  (val lval)
+  )
+
+;; ---------- Implementation ----------
+(dg consume-node (node|<any> => <vm-ast-node>))
+
+;; ----- Fundamentals -----
+(dc <vm-seq> (<vm-ast-node>))
+(dp! nodes (<vm-seq> => <col>) (vec))
+
+(d. $null-vm-seq (new <vm-seq>))
+
+(dm execute-node (env|<vm-env> node|<vm-seq> => <vm-value>)
+  (def rval $vm-false)
+  (do (fun (x) 
+        (set rval (execute-node env x)))
+      (nodes node))
+  $vm-false
+  )
+
+(dm consume-seq (node|<list> => <vm-ast-node>)
+  (if (= (len node) 0)
+      $null-vm-seq
+      (seq
+        (def nseq (new <vm-seq>))
+        (def snode (if (= 'seq (1st node)) (tail node) node))
+        (set (nodes nseq)
+             (map consume-node snode))
+        nseq
+        )
+      )
+  )
+
+(reg-handler 'seq consume-seq)
+
+;; --- Immediate ---
+(dc <vm-immediate> (<vm-ast-node>))
+(dp! immed-val (<vm-immediate> => <vm-value>))
+
+(dm immedify (val|<vm-value> => <vm-immediate>)
+  (def nimmed (new <vm-immediate>))
+  (set (immed-val nimmed) val)
+  nimmed
+  )
+
+(dm execute-node (env|<vm-env> node|<vm-immediate> => <vm-value>)
+  (immed-val node))
+
+(d. $vm-ast-true (immedify $vm-true))
+(d. $vm-ast-false (immedify $vm-false))
+
+;; --- Bindings & Environment ---
+(dc <vm-binding> (<vm-ast-node>))
+(dp! binding-sym (<vm-binding> => <sym>))
+
+(dm new-binding (sym|<sym> => <vm-binding>)
+  (def binding (new <vm-binding>))
+  (set (binding-sym binding) sym)
+  binding
+  )
+
+(dm execute-node (env|<vm-env> binding|<vm-binding> => <vm-value>)
+  (env-lookup env binding)
+  )
+
+(dm env-lookup (env|<vm-env> binding|<vm-binding>)
+  (or (elt-or (env-bindings env) (binding-sym binding) #f)
+      (and (env-parent env)
+           (env-lookup (env-parent env) binding))
+      (seq
+        (post "Lookup failing on binding: %=\n" binding)
+        $vm-ast-false))
+  )
+
+(dm env-lookup (env|<vm-env> sym|<sym>)
+  (or (elt-or (env-bindings env) sym #f)
+      (and (env-parent env)
+           (env-lookup (env-parent env) binding)))
+  )
+
+(dm env-find-binding (env|<vm-env> binding|<vm-binding>)
+  (or (and (elt-or (env-bindings env) (binding-sym binding) #f)
+           env)
+      (and (env-parent env)
+           (env-lookup (env-parent env) binding)
+           (env-parent env)))
+  )
+
+(dm env-set (env|<vm-env> binding|<vm-binding> value|<vm-value>)
+  ;; Use the current env if we can't find it in an existing env.
+  (set (elt (env-bindings (or (env-find-binding env binding) env))
+            (binding-sym binding))
+       value)
+  )
+
+(dm clone-env (env|<vm-env> => <vm-env>)
+  (def nenv (new <vm-env>))
+  (set (env-parent nenv) (env-parent env))
+  (set (env-bindings nenv) (dup (env-bindings env)))
+  nenv
+  )
+
+;; ----- Symbols ------
+(dc <vm-symbol> (<vm-ast-node> <vm-value>))
+(dp! sym (<vm-symbol> => <sym>))
+
+(dm consume-sym (nlist|<list> => <vm-ast-node>)
+  (def nsym (new <vm-symbol>))
+  (set (sym nsym) (2nd nlist))
+  nsym
+  )
+
+;; self-evaluative! muahahah
+(dm execute-node (env|<vm-env> node|<vm-symbol> => <vm-value>)
+  node
+  )
+
+(reg-handler 'quote consume-sym)
+
+;; This function takes a collection of environments from top to bottom,
+;;  and chains them accordingly via the parent relationship.  No cloning
+;;  occurs, just mutation.
+(dm chain-envs (envs|<col> => <vm-env>)
+  ;; this would be better done with 'loop' perhaps, but I'm lazy.
+  (def last-env #f)
+  (do (fun (cur-env)
+        (set (env-parent cur-env) last-env)
+        (set last-env cur-env)
+        )
+      envs)
+  last-env
+  )
+
+;; ----- Equivalence / Comparison -----
+(dc <vm-comparison-node> (<vm-ast-node>))
+(dp! operator (<vm-comparison-node> => <any>))
+(dp! op-left (<vm-comparison-node> => <vm-ast-node>))
+(dp! op-right (<vm-comparison-node> => <vm-ast-node>))
+
+(dm consume-comparison (nlist|<list> => <vm-comparison-node>)
+  (def ncomp (new <vm-comparison-node>))
+  (set (operator ncomp)
+       (case (1st nlist)
+         (('<) <)
+         (('>) >)
+         (('>=) >=)
+         (('<=) <=)
+         (('= '==) =)))
+  (set (op-left ncomp) (consume-node (2nd nlist)))
+  (set (op-right ncomp) (consume-node (3rd nlist)))
+  ncomp
+  )
+
+(dm execute-node (env|<vm-env> node|<vm-comparison-node> => <vm-value>)
+  (if ((operator node)
+       (unwrap (execute-node env (op-left node)))
+       (unwrap (execute-node env (op-right node))))
+      $vm-true
+      $vm-false)
+  )
+
+(reg-handler '< consume-comparison)
+(reg-handler '> consume-comparison)
+(reg-handler '>= consume-comparison)
+(reg-handler '<= consume-comparison)
+(reg-handler '= consume-comparison)
+(reg-handler '== consume-comparison)
+
+;; ----- Math -----
+
+(dc <vm-math-node> (<vm-ast-node>))
+(dp! operands (<vm-math-node> => <col>))
+(dp! operator (<vm-math-node> => <any>))
+
+(dm execute-node (env|<vm-env> node|<vm-math-node> => <vm-value>)
+  (def retval (fold+ (operator node) (map unwrap (map (fun (x) (execute-node env x)) (operands node)))))
+  (def retobj (new <vm-int>))
+  (set (val retobj) retval)
+  retobj
+  )
+
+(dm consume-math (nlist|<list> => <vm-math-node>)
+  (def nmath (new <vm-math-node>))
+  (set (operator nmath)
+       (case (1st nlist)
+         (('+) +)
+         (('-) -)
+         (('/) /)
+         (('*) *)))
+  (set (operands nmath) 
+       (map consume-node (tail nlist)))
+  nmath
+  )
+
+(reg-handler '+ consume-math)
+(reg-handler '- consume-math)
+(reg-handler '/ consume-math)
+(reg-handler '* consume-math)
+
+;; ----- Logic -----
+(dc <vm-logic-node> (<vm-ast-node>))
+(dp! operands (<vm-logic-node> => <col>))
+(dp! operator (<vm-logic-node> => <any>))
+
+(dm execute-node (env|<vm-env> node|<vm-logic-node> => <vm-value>)
+  (case (operator node)
+    (('or)
+     (esc got-true
+       (do (fun (x)
+             (def result (execute-node env x))
+             (when (not (vm-false? result))
+               (got-true result))
+             )
+           (operands node)
+           )
+       $vm-false
+       )
+     )
+    (('and)
+     (esc got-false
+       (do (fun (x)
+             (def result (execute-node env x))
+             (when (vm-false? result)
+               (got-false result))
+             )
+           (operands node)
+           )
+       $vm-true
+       )
+     )
+    )
+  )
+
+(dm consume-logic (nlist|<list> => <vm-logic-node>)
+  (def nlogic (new <vm-logic-node>))
+  (set (operator nlogic) (head nlist))
+  (set (operands nlogic) 
+       (map consume-node (tail nlist)))
+  nlogic
+  )
+
+(reg-handler 'or consume-logic)
+(reg-handler 'and consume-logic)
+
+;; ----- Control Flow ------
+(dc <vm-if-node> (<vm-ast-node>))
+(dp! test-node (<vm-if-node> => <vm-ast-node>))
+(dp! true-case (<vm-if-node> => <vm-ast-node>))
+(dp! false-case (<vm-if-node> => <vm-ast-node>))
+
+(dm execute-node (env|<vm-env> node|<vm-if-node> => <vm-value>)
+  (if (vm-true? (execute-node env (test-node node)))
+      (execute-node env (true-case node))
+      (execute-node env (false-case node)))
+  )
+
+;; IF test-node true-case false-case
+;; 0     1          2         3
+(dm consume-if (nlist|<list> => <vm-if-node>)
+  (def new-if (new <vm-if-node>))
+  (set (test-node new-if) (consume-node (elt nlist 1)))
+  (set (true-case new-if) (consume-node (elt nlist 2)))
+  (set (false-case new-if) (consume-node (elt nlist 3)))
+  new-if
+  )
+
+;; WHEN test-node true-case
+;;  0       1         2
+(dm consume-when (nlist|<list> => <vm-if-node>)
+  (def new-if (new <vm-if-node>))
+  (set (test-node new-if) (consume-node (2nd nlist)))
+  (set (true-case new-if) (consume-seq (tail (tail nlist))))
+  (set (false-case new-if) $null-vm-seq)
+  new-if
+  )
+
+;; UNLESS test-node false-case
+;;   0        1         2 
+(dm consume-unless (nlist|<list> => <vm-if-node>)
+  (def new-if (new <vm-if-node>))
+  (set (test-node new-if) (consume-node (head (tail nlist))))
+  (set (true-case new-if) $null-vm-seq)
+  (set (false-case new-if) (consume-seq (tail (tail nlist))))
+  new-if
+  )
+
+(reg-handler 'if consume-if)
+(reg-handler 'when consume-when)
+(reg-handler 'unless consume-unless)
+
+;; ----- Env Manip -----
+(dc <vm-set-node> (<vm-ast-node>))
+(dp! binding-name (<vm-set-node> => <vm-binding>))
+(dp! binding-node (<vm-set-node> => <vm-ast-node>))
+
+(dm execute-node (env|<vm-env> node|<vm-set-node> => <vm-value>)
+  (def val (execute-node env (binding-node node)))
+  (env-set env
+           (binding-name node)
+           (execute-node env (binding-node node)))
+  val
+  )
+
+;; SET binding-name binding-node
+;;  0        1           2
+(dm consume-set (nlist|<list> => <vm-set-node>)
+  (def nset (new <vm-set-node>))
+  (set (binding-name nset) (new-binding (2nd nlist)))
+  (set (binding-node nset) (consume-node (3rd nlist)))
+  nset
+  )
+
+(reg-handler 'set consume-set)
+
+;; ----- Functions ------
+
+(dc <vm-fun> (<vm-value>))
+
+(dc <vm-sys-fun> (<vm-fun>))
+(dp! sys-fun (<vm-sys-fun> => <fun>))
+
+(dc <vm-user-fun> (<vm-fun>))
+(dp! user-fun (<vm-user-fun> => <vm-seq>))
+
+(dm make-sys-fun (some-fun|<fun> => <vm-sys-fun>)
+  (def nfun (new <vm-sys-fun>))
+  (set (sys-fun nfun) some-fun)
+  nfun
+  )
+
+;; DOES _NOT_ evaluate args.  They are assumed to be vm-values!!!
+(dm invoke-fun (env|<vm-env> func|<vm-sys-fun> args|<col> => <vm-value>)
+  (def modargs (vec env))
+  (cat! modargs args)
+  (wrap-value (app (sys-fun func) modargs))
+  )
+
+;; DOES _NOT_ evaluate args.  They are assumed to be vm-values!!!
+(dm invoke-fun (env|<vm-env> func|<vm-user-fun> args|<col> => <vm-value>)
+  ;; tocode todo fixme
+  )
+
+;; ----- Applications -----
+
+(dc <vm-fun-appl> (<vm-ast-node>))
+(dp! fun-binding (<vm-fun-appl> => <vm-binding>))
+(dp! fun-args (<vm-fun-appl> => <col>))
+
+(dm execute-node (env|<vm-env> node|<vm-fun-appl> => <vm-value>)
+  (def args (map (fun (x) (execute-node env x)) (fun-args node)))
+  (def da-fun (env-lookup env (fun-binding node)))
+  (invoke-fun env da-fun args)
+  )
+
+(dm consume-appl (nlist|<list> => <vm-ast-node>)
+  (def nappl (new <vm-fun-appl>))
+  (set (fun-binding nappl) (new-binding (head nlist)))
+  (set (fun-args nappl) (map consume-node (tail nlist)))
+  nappl
+  )
+
+;; -------- Constructicons --------
+
+(dm consume-node (node|<int> => <vm-ast-node>)
+  (def nint (new <vm-int>))
+  (set (val nint) node)
+  (immedify nint)
+  )
+
+(dm consume-node (node|<log> => <vm-ast-node>)
+  (def nlog (new <vm-bool>))
+  (set (val nlog) node)
+  (immedify nlog)
+  )
+
+(dm consume-node (node|<sym> => <vm-ast-node>)
+  (new-binding node)
+  )
+
+(dm consume-node (nlist|<list> => <vm-ast-node>)
+  (def fsym (1st nlist))
+  (def handler (elt-or $symbol-to-handler fsym #f))
+  (if handler
+      (handler nlist)
+      (seq
+        (post "Unable to find handler for %=, assuming application\n" fsym)
+        (consume-appl nlist)
+        )
+      )
+  )
+
+;; Just consume-node on everything! it's fun!
+(dm consume-top-level (snode|<list>)
+  (do (fun (x) (consume-node x))
+      snode)
+  )
+
+(dm consume-env-def (node|<list> => <vm-env>)
+  (def env (new <vm-env>))
+  (do (fun (x)
+        (set (elt (env-bindings env) (1st x)) (wrap-value (2nd x)))
+        )
+      node)
+  env
+  )
+
+(dm consume-code (node|<list> => <vm-ast-node>)
+  
+  )
+
+
+;; Mumblings:
+
+;; Messages are just blocks too.
+;; State is like a data segment, or alternatively init code that creates an env.
+;;  or maybe a data segment but in the scheme frame model
+
+;; Perhaps messages are like lambda's that float around.  If the goal is a count 
+;;  of neighbors for example, we can think of the main code block having a 'neighbors' field.
+;;  The message block is created, and inherits this value into its space.  So when we send
+;;  our message, it consists of the code (increment neighbors), which goes over to all 
+;;  the neighbors.  They receive it, and the code #1: finds the block if it is present;
+;;  if not, it probably dies I guess.  #2: it increments the value.
+
+;; The question is of course whether it's appropriate to try and create another crazy metaphor 
+;;  here, especially when the behaviors are going to pretty obviously be quite consistent, and 
+;;  to actually implement them via code would just be a waste.  The only reason for it would
+;;  be if it greatly reduced the implementation complexity while not making debugging harder, 
+;;  but I don't really see that right now.  Plus, this crazy metaphor is a departure from the
+;;  experience I've already 
+
+(export
+  <vm-ast-node>
+
+  <vm-env>
+
+  <vm-value>
+  <vm-int>
+  <vm-bool>
+
+  <vm-seq>
+  
+  <vm-immediate>
+  <vm-binding>
+  <vm-symbol>
+
+  <vm-comparison-node>
+  <vm-math-node>
+  <vm-if-node>
+  <vm-set-node>
+
+  <vm-fun>
+  <vm-sys-fun>
+  <vm-user-fun>
+  )
+
+(export
+  env-parent
+  env-parent-setter
+
+  env-bindings
+  env-bindings-setter
+
+  val
+  val-setter
+
+  immed-val
+  immed-val-setter
+
+  binding-sym
+  binding-sym-setter
+
+  operands
+  operands-setter
+
+  operator
+  operator-setter
+
+  op-left
+  op-left-setter
+
+  op-right
+  op-right-setter
+
+  test-node
+  test-node-setter
+
+  true-case
+  true-case-setter
+
+  false-case
+  false-case-setter
+
+  binding-name
+  binding-name-setter
+
+  binding-node
+  binding-node-setter
+
+  sys-fun
+  sys-fun-setter
+
+  user-fun
+  user-fun-setter
+
+  sym
+  sym-setter
+  )
+
+(export
+;;  $symbol-to-handler
+  $vm-sys-env
+  $vm-true
+  $vm-false
+  $null-vm-seq
+  $vm-ast-true
+  $vm-ast-false
+  
+ )
+
+(export
+  execute-node
+  reg-handler
+  consume-node
+  consume-seq
+  new-binding
+  env-lookup
+  env-find-binding
+  env-set
+  clone-env
+  chain-envs
+  consume-comparison
+  consume-math
+  consume-if
+  consume-when
+  consume-unless
+  consume-set
+  consume-top-level
+  consume-env-def
+  consume-code
+  consume-appl
+  consume-sym
+  invoke-fun
+  wrap-value
+  unwrap
+  immedify
+  make-sys-fun
+  vm-true?
+  vm-false?
+  )

@@ -1,0 +1,87 @@
+(use goo)
+
+(use samurui/samurui)
+
+(use samurui/extrinsic)
+
+(use demos/simumote/motes)
+(use demos/simumote/vm/vm)
+(use demos/simumote/simcode/round)
+
+;; Main program
+
+(dc <simumote> (<any>))
+
+(dp! motes (<simumote> => <mote-ensemble>))
+(dp! cur-round (<simumote> => <round>))
+
+;;; Create the App
+(dv *app* (new <simumote>))
+
+;; Create the motes
+(set (motes *app*) (mote-ensemble (make-motes 100)))
+(distribute-motes (motes *app*))
+
+;; Create the first round.
+(set (cur-round *app*) (new <round>))
+
+;; ----- Interface Actions -----
+
+(iaction <simumote> advance-round app "Advance Round"
+         (process-round (cur-round app) (motes app))
+         (set (cur-round app) (transition-round (cur-round app) (motes app)))
+         )
+
+;; ----- Interface Models -----
+
+(iview <sm-run-block>
+       
+       )
+
+;; So how do we do this.  Ideally (coerce mote-run-blocks #SYMBOL#) would do it for us, but the potential bitch is that this is all inert data which can't be
+ ;; resolved in this context unless we escape it.  Escape we shall I guess.
+
+(df coerce-run-blocks-to-visi (rblocks)
+  (post "Coercing: %=\n" rblocks)
+  (visi-reversablize (vm-block-visi-col rblocks))
+  )
+
+(df nop-setter (x)
+  )
+
+(iview <mote>
+       (attr (coerce mote-run-blocks ,<visi-col> ,coerce-run-blocks-to-visi ,nop-setter)
+             fill
+             scroll
+             (prop-axes value))
+       )
+
+(iview <simumote>
+       (attr (panes
+              (master bob (attr motes fill extrinsic (fundamental motes) (x x) (y y)))
+              (slave bob)
+              )
+             fill)
+       advance-round
+       )
+       
+
+;; ----- App Go -----
+(df go-simumote ()
+  ;; Initialize all the code-block-states for all the motes
+
+  (samurui-init)
+  
+  (present *app*)
+  
+  (samurui-go)
+  )
+
+(export
+  go-simumote
+  motes
+  motes-setter
+  cur-round
+  cur-round-setter
+  *app*
+  )
