@@ -22,6 +22,29 @@ cp -p ../../C/prt.h .
 cp -p ../../C/proto.c .
 cp -p ../../C/Makefile .
 cd ..
+mkdir EMULATOR
+cd EMULATOR
+cp -p ../../EMULATOR/proto.hdp .
+cp -p ../../EMULATOR/library.dylan .
+cp -p ../../EMULATOR/environment.dylan .
+cp -p ../../EMULATOR/syntax.dylan .
+cp -p ../../EMULATOR/runtime.dylan .
+cp -p ../../EMULATOR/objects.dylan .
+cp -p ../../EMULATOR/boot.dylan .
+cp -p ../../EMULATOR/functions.dylan .
+cp -p ../../EMULATOR/gen-cache.dylan .
+cp -p ../../EMULATOR/ascii.dylan .
+cp -p ../../EMULATOR/read.dylan .
+cp -p ../../EMULATOR/write.dylan .
+cp -p ../../EMULATOR/top.dylan .
+cp -p ../../EMULATOR/tests.dylan .
+cp -p ../../EMULATOR/ast.dylan .
+cp -p ../../EMULATOR/ast-print.dylan .
+cp -p ../../EMULATOR/ast-eval.dylan .
+cp -p ../../EMULATOR/ast-linearize.dylan .
+cp -p ../../EMULATOR/p2c.dylan .
+cp -p ../../EMULATOR/do-boot.dylan .
+cd ..
 mkdir SRC
 cd SRC
 cp -p ../../SRC/macros.proto .
