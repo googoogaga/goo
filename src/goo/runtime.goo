@@ -29,7 +29,7 @@
   (let ((ilen (@+ (@olen args) -1))
         (lelt (@oelt args ilen))
         (tlen (@+ ilen (len lelt)))
-        (stackspace (%lb (%untag (%allocate-stack (%i+ (%raw 2) (%iu tlen))))))
+        (stackspace (%lb (%allocate-stack (%i+ (%raw 2) (%iu tlen)))))
         (argend (%sp-reg)))
     (rep loop1 ((i 0))
       (let ((top (@+ tlen -1)))
@@ -549,6 +549,12 @@
 (dm empty? ((c <col>) => <log>)
   (= (len c) 0))
 
+;; TODO: BETTER TO USE DEFAULT
+;; TODO: INVERT THIS WITH ELT SO THAT NUL IS NEVER NEEDED
+(dm elt-or ((c <col>) key default => <any>) 
+  (let ((val (elt c key)))
+    (if (== val nul) default val)))
+
 (dm empty ((c (t< <col>)) => <col>)
   (fab c 0))
 
@@ -577,7 +583,7 @@
         (rev! res)
         (con (add res (now-key c s)) (nxt-state c s)))))
 
-(dm do-key-vals ((fn <fun>) (key-vals <seq>) => (tup))
+(dm do-key-vals ((fn <fun>) (key-vals <seq>))
   (rep rep ((s (ini-state key-vals)))
     (unless (fin-state? key-vals s)
       (let ((key (now-elt key-vals s))
@@ -632,13 +638,13 @@
         (and (test (now-elt x sx) (now-elt y sy)) 
 	     (fnd (nxt-state x sx) (nxt-state y sy))))))
 
-(dm reduce ((combine <fun>) init (c <col>) => <col>)
+(dm reduce ((combine <fun>) init (c <col>) => <any>)
   (rep red ((res init) (state (ini-state c)))
     (if (fin-state? c state)
         res
         (red (combine res (now-elt c state)) (nxt-state c state)))))
   
-(dm reduce+ ((combine <fun>) (c <col>) => <col>)
+(dm reduce+ ((combine <fun>) (c <col>) => <any>)
   (let ((state (ini-state c))
         (init  (now-elt c state)))
     (rep red ((res init) (state (nxt-state c state)))
@@ -763,6 +769,9 @@
   (when (or (< i 0) (>= i (len x)))
     (range-error x i)))
 
+(df range-check? ((x <seq>) (i <int>))
+  (and (>= i 0) (< i (len x))))
+
 (dm 1st ((x <seq>) => <any>) (elt x 0))
 
 (dm 2nd ((x <seq>) => <any>) (elt x 1))
@@ -809,7 +818,7 @@
 	      (find (nxt-state dst ds) (+ i 1))))
 	;; Don't know if dst is stretchy so we have to create a new one
 	(let ((new-len (+ (- dst-len del-len) src-len))
-	      (ndst    (fab dst new-len)))
+	      (ndst    (fab (object-class dst) new-len)))
 	  (rep copy ((nds (ini-state ndst)) (ds (ini-state dst)) (i 0))
 	    (if (= i from)
 		(rep insert ((nds nds) (ss (ini-state src)))
@@ -1059,8 +1068,9 @@
   (set (%velt x (%iu i)) z))
 
 (dm elt ((x <vec>) (i <int>) => <any>)
-  (range-check x i)
-  (%velt x (%iu i))) ;; TODO: LOW-ELT
+  (if (range-check? x i)
+      (%velt x (%iu i)) ;; TODO: LOW-ELT
+      nul))
 
 (dm elt-setter (z (x <vec>) (i <int>))
   (range-check x i)
@@ -1112,8 +1122,9 @@
   (set (low-elt (buf-dat x) i) z))
 
 (dm elt ((c <buf>) (i <int>) => <any>)
-  (range-check c i)
-  (low-elt c i))
+  (if (range-check? c i)
+      (low-elt c i)
+      nul))
 
 (dm elt-setter (z (c <buf>) (i <int>))
   (when (< i 0) (range-error c i))
@@ -1269,9 +1280,10 @@
 (dm low-elt-setter ((z <chr>) (x <str>) (i <int>))
   (set (%selt x (%iu i)) (%cu z)))
 
-(dm elt ((x <str>) (i <int>) => <chr>)
-  (range-check x i)
-  (%cb (%selt x (%iu i)))) ;; TODO: USE LOW-ELT
+(dm elt ((x <str>) (i <int>) => <any>) ;; TODO: TIGHTEN RET TYPE
+  (if (range-check? x i)
+      (%cb (%selt x (%iu i))) ;; TODO: USE LOW-ELT
+      nul)) 
 
 (dm elt-setter ((z <chr>) (x <str>) (i <int>))
   (range-check x i)
@@ -1716,7 +1728,7 @@
   (%cb (%peek-char (port-handle port))))
 
 (dm char-ready? ((port <file-input-port>) => <log>)
-  (%char-ready? (port-handle port)))
+  (%bb (%char-ready? (port-handle port))))
 
 (dm newline ((port <output-port>)) 
   (write-char port #\newline))
@@ -2169,8 +2181,8 @@
   (let ((vector (%vector table))
 	((tup new-n-buckets new-bucket-depth)
 	 (choose-table-geometry
-	  (elt (floor (* (* (%n-buckets vector) (%bucket-depth vector))
-			 (table-growth-factor table))) 0)))
+	  (1st (floor (* (* (%n-buckets vector) (%bucket-depth vector))
+                         (table-growth-factor table))))))
 	(new-vector
 	 (fab-table-vector
            (* new-n-buckets (* new-bucket-depth 2))
@@ -2209,7 +2221,7 @@
 	      ((< capacity 250000) 16)
 	      (#t                  32))))
        (do (fun ((p <int>))
-	     (when (> p (elt (ceiling/ capacity depth) 0))
+	     (when (> p (1st (ceiling/ capacity depth)))
 	       (return (tup (+ p 2) depth))))
 	   *twin-primes*)
        (error "Not enough primes to compute new table size"))))
@@ -2301,7 +2313,7 @@
 (dm table-protocol ((_ <str-tab>) => (tup (equal-fun <fun>) (hash-fun <fun>)))
   (tup case-insensitive-string-equal case-insensitive-string-hash))
 
-(dv symbols (fab <str-tab> 3000))
+(dv symbols (fab <str-tab> 10000))
 
 (dp booted-fab-sym-using (name given-sym)
   (let ((sym (elt symbols name)))
@@ -2365,7 +2377,7 @@
   del-dups
   del-key del-keys
   do do2 do3 do-keyed
-  elt elt-setter
+  elt elt-setter elt-or low-elt low-elt-setter
   empty empty?
   eof-object eof-object?
   error <error> <simple-error>
@@ -2402,8 +2414,9 @@
   make-sym
   map map2 map-keyed
   <map>
+  fab-map
   match-atom match-empty-list match-sublist match-unquote
-  max min
+  max min 
   modulo remainder
   mem?
   napply

@@ -135,6 +135,7 @@ extern P Yerror;
 extern P Yfile_opening_error;
 extern P YPopen_input_file (P name);
 extern P YPopen_output_file (P name);
+extern P YPinput_availableQ (P s);
 extern P YPclose_input_port (P s);
 extern P YPclose_output_port (P s);
 extern P YPnewline (P s);
@@ -540,6 +541,18 @@ struct _MODULE_INFO {
 extern MODULE_INFO *proto_toplevel_module_info;
 
 /* Building the runtime environment. */
+extern P YPprocess_module(
+  /* (mod_info <loc>) */
+  P mod_info,
+
+  /* ((mod <module>) (name <str>)
+      (from-mod <module>) (original-name <str>) => <any>) */
+  P import_fun,
+
+  /* ((mod <module>) (name <str>) (as-name <str>) => <any>) */
+  P export_fun
+);
+
 extern P YPbuild_runtime_modules(
   /* ((modname <str>) => <module>) */
   P create_module_fun,
@@ -547,16 +560,10 @@ extern P YPbuild_runtime_modules(
   /* ((mod <module>) (uses <module>) => <any>) */
   P use_module_fun,    
 
-  /* ((mod <module>) (name <str>)
-      (from-mod <module>) (original-name <str>) => <any>) */
-  P import_fun,
-
   /* ((mod <module>) (name <str>) (loc <loc>) => <any>) */
   P runtime_binding_fun,    
 
   /* ((mod <module>) (name <str>) => <any>) */
-  P other_binding_fun,    
+  P other_binding_fun
 
-  /* ((mod <module>) (name <str>) (as-name <str>) => <any>) */
-  P export_fun
 );

@@ -1,9 +1,1 @@
-;(use p2c)
 (df test () (set p2c:*p2c-app* (p2c:p2c-def-app "p2c-test" 'main)))
-
-;(df p2c-module ((loader <p2c-module-loader>) (module <sym>)=> #f)
-;  (remove-modules-by-name! loader (lst module))
-;  (let ((mod (probe-module loader module)))
-;    (format out "Searching for undefined global bindings.\n")
-;   (do-module-loader-modules report-undefined-global-bindings loader)
-;    #f))

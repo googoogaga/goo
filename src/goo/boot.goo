@@ -25,7 +25,7 @@
         %c= %c<
         %create-directory
         %current-output-port %current-input-port
-        %open-input-file %open-output-file
+        %open-input-file %open-output-file 
         %close-output-port %close-input-port
         %write-char %write-string %file-mtime
         %file-type %file-exists?
@@ -46,10 +46,9 @@
         %%apply %%mep-apply %next-methods %fapply
         %do-stack-frames 
         %unexec
-        %build-runtime-modules
+        %build-runtime-modules %process-module
         %loc-off %loc-off-setter %raw-call %check-call-types %location-of-end-of-vec
         %sp-reg %sp-reg-setter %fp-reg %fp-reg-setter %unlink-stack
-        %grid-open %grid-close %grid-move %grid-read %grid-write %grid-refresh
         )
 ))
 
@@ -386,6 +385,10 @@
 
 (dss ($adr-tag) `(%raw 0))
 
+(dp %tag-into (x t) (%tag (%untag x) t))
+
+(dp %untag-into (x) (%tag (%untag x) ($adr-tag)))
+
 (dp %indirect-object? (x) (%i= (%tag-bits x) ($adr-tag)))
 
 (dp %class-of (x)
@@ -399,21 +402,27 @@
 ;;   DEFINES TAG/FAB AND UNTAG OPS
 ;;   DEFINES TAG2CLASS ENTRY FOR MAP
 
-(dss (%define-tagged-structure ,name ,code ,tag)
+(dss (%define-tagged-structure ,name ,ptag ,puntag ,code ,tag)
   (let ((class-name (make-sym "<" name ">"))
 	(fab-name   (make-sym "%" name))
 	(tag-name   (make-sym "%" code "b"))
 	(untag-name (make-sym "%" code "u")))
-    `(seq (dp ,tag-name (x) (%tag x (%raw ,tag)))
+    `(seq (dp ,tag-name (x) (,ptag x (%raw ,tag)))
 	  (dp ,fab-name (x) (,tag-name x))
-	  (dp ,untag-name (x) (%untag x))
+	  (dp ,untag-name (x) (,puntag x))
 	  (set (%elt $direct-object-class (%raw ,tag)) ,class-name))))
 
-(%define-tagged-structure int i 1) ;; INTEGERS
+(%define-tagged-structure int %tag %untag           i 1) ;; INTEGERS
 
-(%define-tagged-structure chr c 2) ;; CHARACTERS
+(%define-tagged-structure chr %tag %untag           c 2) ;; CHARACTERS
 
-(%define-tagged-structure loc l 3) ;; LOCATIVES
+(%define-tagged-structure loc %tag-into %untag-into l 3) ;; LOCATIVES
+
+(dv $num-int-bits (%ib (%i- (%iu 32) ($tag-len))))
+(dv $max-int 
+  (%ib (%i- (%i<< (%iu 1) (%i- (%iu $num-int-bits) (%iu 1))) (%iu 1))))
+(dv $min-int
+  (%ib (%i<< (%iu 1) (%i- (%iu $num-int-bits) (%iu 1)))))
 
 ;;; 
 ;;;  9. SETUP REPEATED OBJECTS
@@ -1264,7 +1273,7 @@
 ;;; copy args with arg as i'th elt into a opts.
 (df @specd-args ((args <opts>) (i <int>) (arg <any>) => <opts>)
   (let ((v (%vec (%iu (@olen args))))
-        (r (%opts-vec (%lb (%untag (%slot-dat-at v (%vlen v)))) (%ib (%vlen v)) v)))
+        (r (%opts-vec (%lb (%slot-dat-at v (%vlen v))) (%ib (%vlen v)) v)))
     (rep copy ((k 0))
       (if (@== (@olen args) k)
         r
@@ -1736,17 +1745,6 @@
 	(set *boot-macro-expanders* (@pair expander *boot-macro-expanders*)))))
 
 ;;;
-;;; 14A. CURSES
-;;;
-
-(df grid-open () (%grid-open))
-(df grid-close () (%grid-close))
-(df grid-move (x y) (%grid-move (%iu x) (%iu y)))
-(df grid-read () (%cb (%grid-read)))
-(df grid-write (c) (%grid-write (%cu c)))
-(df grid-refresh () (%grid-refresh))
-
-;;;
 ;;; 15. EXPORTS
 ;;;
 
@@ -1826,7 +1824,7 @@
   %app-filename
   %bb
   %binding-name
-  %build-runtime-modules
+  %build-runtime-modules %process-module
   %c<
   %c=
   %char-ready?
@@ -1881,12 +1879,6 @@
   %read-char
   %write-char
   %write-string
-
-  ;; %grid-open
-  ;; %grid-close
-  ;; %grid-move
-  ;; %grid-write
-  ;; %grid-refresh
 )
 
 ;; Regular exports.
@@ -1925,8 +1917,10 @@
   %fu
   %ib
   %iu
-  %lu
   %lb
+  %lu
+  $max-int
+  $min-int
   %untag
 
 ;; repeated structures

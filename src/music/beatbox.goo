@@ -1,0 +1,511 @@
+(use proto)
+(use boot)
+(use midi)
+(use win32-midi)
+(use threads)
+(use timer)
+(use event)
+(use random)
+(use read)
+(use write)
+(use rhythms)
+(use instruments)
+
+;;; NOTE
+
+;;; TODO: SWITCH TO INT REP SO THAT TONE/PITCH CAN BOTH BE PACKED
+
+(dv <note>     <chr>)
+(dv <tone-key> <chr>)
+(dv <pitch>    <int>)
+(dv <velocity> <flo>)
+(dm note-tone-key ((note <note>) => <tone-key>)
+  (as <chr> note))
+(dm note-velocity ((note <note>) => <velocity>)
+  1.0)
+(dm midi-as-velocity ((x <velocity>) => <midi-velocity>)
+  (1st (truncate (* x $midi-max-velocity))))
+(dm note-midi-velocity ((note <note>) => <midi-velocity>)
+  (midi-as-velocity (note-velocity note)))
+(df fab-note ((key <tone-key>) (velocity <midi-velocity>))
+  key)
+
+;;; TRACK
+
+(dv <track-vec> <str>)
+
+(df mod+ ((i <int>) (j <int>) (n <int>))
+  (modulo (+ i j) n))
+
+(dm file-out ((port <port>) (x <track-vec>))
+  (display port x))
+
+(dm file-in ((port <port>) (x <track-vec>))
+  (set (sub x 0 (len x)) (as <str> (read port))))
+
+(dm mvec-clear ((x <track-vec>))
+  (fill x $zero-tone-key))
+
+(dm mvec-into ((d <track-vec>) (s <track-vec>))
+  (set (sub d 0 (len s)) s))
+
+(dm mvec-merge-into ((d <track-vec>) (s1 <track-vec>) (s2 <track-vec>))
+  (let ((len (min (len d) (min (len s1) (len s2)))))
+    (for ((i (from-below 0 (len s1))))
+      (set (elt d i) (elt (if (> (random 100) 50) s1 s2) i)))
+    d))
+
+(dm mvec-rot ((d <track-vec>) (n <int>))
+  (let ((len (len d)))
+    (for ((i (from-below 0 (len d))))
+      (set (elt d i) (elt d (mod+ i n len))))
+    d))
+
+(dm nelt ((keys <seq>) (i <int>))
+  (elt keys i))
+
+(dm nelt-slow ((keys <col>) (i <int>))
+  (let ((res #f))
+    (for ((key keys) (k (from-to 0 i)))
+      (when (== i k) (set res key)))
+    res))
+
+(dm nelt ((keys <col>) (i <int>))
+  (nelt-slow keys i))
+
+(dm nelt ((keys <range>) (i <int>))
+  (nelt-slow keys i))
+
+(df random-elt ((x <col>))
+  (nelt x (random (- (len x) 1))))
+
+(df random-tone-key ((tones <col>) => <tone-key>)
+  (tone-key (random-elt tones)))
+
+(dm mvec-mutate ((x <track-vec>) (p <int>) (tones <col>))
+  (for ((i (from-below 0 (len x))) (e x))
+    (set (elt x i) 
+         (if (> (random 100) p)
+             e
+             (random-tone-key tones)))))
+
+;;; TRACK
+
+(dc <track> (<flat>))
+  (slot <track> track-name)
+  (slot <track> (track-instrument <instrument>))
+  (slot <track> (track-pattern <pattern>))
+  (slot <track> (track-now <int>) 0)
+  (slot <track> (track-vecs <vec>))
+
+(dc <op> (<any>))
+(dc <mimic> (<op>))     (dv $mimic (isa <mimic>))
+(dc <rotate> (<op>))    (dv $rotate (isa <rotate>))
+(dc <template> (<op>))  (dv $template (isa <template>))
+(dc <syncopate> (<op>)) (dv $syncopate (isa <syncopate>))
+
+(dm track-op ((dst <track>) (src <track>) (op <mimic>))
+  (mvec-into (track-now-vec dst) (track-now-vec src))
+  (set (track-instrument dst) (track-instrument src))
+  (let ((tones (instrument-tone-map (track-instrument src))))
+    (mvec-mutate (track-now-vec dst) 25 tones)))
+
+(dm track-op ((dst <track>) (src <track>) (op <rotate>))
+  (mvec-into (track-now-vec dst) (track-now-vec src))
+  (let ((amount (random (1st (truncate/ (len (track-now-vec dst)))))))
+    (mvec-rot (track-now-vec dst) amount))
+  (set (track-instrument dst) (track-instrument src)))
+
+(dm track-op ((dst <track>) (src <track>) (op <template>))
+  (let ((tpat (track-pattern dst))
+        (temp (choose-pattern #f (pattern-time tpat) (pattern-kind tpat) #f)))
+    (track-into dst temp)
+    (set (track-instrument dst) (find-instrument (pattern-instrument temp)))))
+
+(dm track-op ((dst <track>) (src <track>) (op <syncopate>))
+  (let ((dst-vec (track-now-vec dst))
+        (src-vec (track-now-vec src))
+        (prev-i #f) (prev-note #f) (note-1-i #f) (note-n-i #f)
+        (tones (instrument-tone-map (track-instrument src))))
+    (mvec-clear dst-vec)
+    (for ((note src-vec) (i (from 0)))
+      (unless (== (note-tone-key note) $zero-tone-key)
+        (unless note-1-i
+          (set note-1-i i))
+        (set note-n-i i)
+        (when (and prev-i (> (- i prev-i) 1) (> (random 10) 2))
+          (set (elt dst-vec (mod+ i (1st (truncate/ prev-i 2)) (len dst-vec)))
+               (random-tone-key tones)))
+        ;; (when (> (random 10) 6)
+        ;;   (set (elt dst-vec i) (elt src-vec i)))
+        (set prev-i i)
+        (set prev-note note)))
+    (when (and note-1-i note-n-i (not (= note-n-i note-1-i)) (> (random 10) 2))
+      (let ((last-sync-i
+             (modulo (1st (truncate/ (+ note-n-i note-1-i) 2)) (len dst-vec))))
+        (unless (or (== last-sync-i note-1-i) (== last-sync-i note-n-i))
+          (set (elt dst-vec last-sync-i) (random-tone-key tones))))))
+  (set (track-instrument dst) (track-instrument src)))
+
+(dm track-char->pitch ((track <track>) (tone <tone-key>) => <int>)
+  (let ((inst (track-instrument track)))
+    (tone-pitch (elt-or (instrument-tone-map inst) tone $zero-tone))))
+
+(dm track-pitch->tone ((track <track>) (pitch <pitch>) => <tone>)
+  (let ((inst (track-instrument track)))
+    (lab return
+      (for ((tone (instrument-tone-map inst)))
+        (when (= (tone-pitch tone) pitch) (return tone)))
+      $zero-tone)))
+
+(dm fab ((t (t< <track>)) (len <int>) => <track>)
+  (let ((m (isa <track>)))
+    (set (track-vecs m) 
+         (vec (fab <track-vec> len) (fab <track-vec> len)))
+    ;; (set (track-bufs m) 
+    ;;      (vec (fab <beats>) (fab <beats>)))
+    m))
+
+(dm file-in ((port <port>) (x <track>))
+  (file-in port (track-now-vec x)) 
+  x)
+
+;; TODO: WRITE OUT TONE MAP
+(dm file-out ((port <port>) (x <track>))
+  (file-out port (track-now-vec x)))
+
+(dm track-now-vec ((m <track>) => <track-vec>)
+  (elt (track-vecs m) (track-now m)))
+
+(dm track-old-vec ((m <track>) => <track-vec>)
+  (let ((old (modulo (+ (track-now m) 1) 2)))
+    (elt (track-vecs m) old)))
+
+(dm len ((x <track>) => <int>)
+  (len (track-now-vec x)))
+
+(dm len-setter ((n <int>) (x <track>))
+  (set (track-vecs x)
+       (map (fun (ov) 
+              (let ((nv (mvec-clear (fab <track-vec> n))))
+                (set (sub nv 0 (min (len ov) (len nv))) ov)
+                nv))
+            (track-vecs x))))
+
+(dm elt ((c <track>) (i <int>) => <note>)
+  (elt (track-now-vec c) i))
+
+(dm elt-setter ((z <note>) (c <track>) (i <int>))
+  (set (elt (track-now-vec c) i) z))
+
+(dm track-clear ((m <track>))
+  (do mvec-clear (track-vecs m)))
+
+(dm track-flip ((m <track>))
+  (mvec-clear (track-old-vec m))
+  (set (track-now m) (modulo (+ (track-now m) 1) 2)))
+
+(dm track-note! ((m <track>) (i <int>) (n <note>))
+  (set (elt m i) n))
+
+(dm track-into ((t <track>) (v <track-vec>))
+  (mvec-into (track-now-vec t) v))
+
+(dm track-into ((t <track>) (pat <pattern>))
+  (set (track-instrument t) (find-instrument (pattern-instrument pat)))
+  (set (track-pattern t)    pat)
+  (track-into t (pattern-value pat)))
+
+;;; SONG
+
+(dc <song> (<any>))
+  ;; TODO: MOVE TO TRACK 
+  ;; TODO: BUILD INVERTIBLE MAP
+  (slot <song> (song-tracks <buf>)          (fab <buf> 0))
+  (slot <song> (%song-len <int>))
+
+(dm file-out ((port <port>) (x <song>))
+  (format port "%d\n" (len (song-tracks x)))
+  (do (fun (t) (file-out port t) (newline port)) (song-tracks x)))
+
+(dm file-in ((port <port>) (x <song>))
+  (let ((n (read port)))
+    (rep loop ((i 0) (len 0))
+      (if (>= i n)
+          (seq (set (%song-len x) len) x)
+          (let ((t (song-add-track x)))
+            (file-in port t)
+            (loop (+ i 1) (max len (len t))))))))
+
+(dm song-out ((x <song>) (filename <str>))
+  (call-with-output-file filename (fun (port) (file-out port x))))
+
+(dm song-in ((filename <str>))
+  (let ((x (fab <song> 0)))
+    (call-with-input-file filename (fun (port) (file-in port x)))))
+
+(dm fab ((t (t< <song>)) (len <int>) => <song>)
+  (let ((x (isa <song> (set %song-len len))))
+    x))
+
+(dm song-len ((s <song>) => <int>)
+  (%song-len s))
+
+(dm song-len-setter ((n <int>) (s <song>))
+  (do (fun (t) (set (len t) n)) (song-tracks s))
+  (set (%song-len s) n))
+
+(dm song-add-track ((s <song>) => <track>)
+  (let ((t (fab <track> (song-len s))))
+    (add! (song-tracks s) t)
+    t))
+
+(dm song-into ((s <song>) (pats <seq>))
+  (let ((num-beats  
+         (reduce max 0 (map (fun (pat) (len (pattern-value pat))) pats)))
+        (num-tracks
+         (len (song-tracks s))))
+    (set (song-len s) num-beats)
+    (for ((i (from-below num-tracks (len pats))))
+      (song-add-track s))
+    (do2 track-into (song-tracks s) pats)))
+
+;;; PLAYER
+
+(dc <player> (<any>))
+  (slot <player> (player-out-device <midi-device>) (default-midi-device))
+  (slot <player> (player-in-devices <seq>)         (midi-in-devices))
+  (slot <player> (player-channel <midi-channel>)   (fab-midi-channel 9))
+  (slot <player> (player-song <song>))
+  (slot <player> (player-track-num <int>) 0)
+  (slot <player> (player-pos <int>)    0)
+  (slot <player> (player-song-len <int>) 0)
+  (slot <player> (%player-tempo <int>) 120)
+  (slot <player> (player-timer <timer>))
+  (slot <player> (player-state <sym>) 'stopped)
+  (slot <player> (player-mode <sym>) 'demo)
+  (slot <player> (player-update-times <buf>) (fab <buf> 0))
+
+(dm player-track ((x <player>) => <track>)
+  (elt (song-tracks (player-song x)) (player-track-num x)))
+
+(dm tempo->period ((tempo <int>) => <int>)
+  (1st (truncate/ 60000 tempo)))
+
+;; TEMPO IS BASED ON 4 BEATS / MEASURE
+;; TODO: UPDATE WHEN HAVE MORE COMPLICATED SONGS
+(dm song-tempo->period ((s <song>) (tempo <int>) => <int>)
+  (let ((base-period (tempo->period tempo))
+        (len         (if (= (song-len s) 0) 4 (song-len s))))
+    (1st (truncate/ base-period (1st (truncate/ len 4))))))
+
+(dm fab-player ((s <song>) => <player>)
+  (let ((x (isa <player> 
+             (set player-song s) (set player-song-len (song-len s)))))
+    (set (player-timer x) 
+         (isa <timer> 
+           (set timer-period   (song-tempo->period s (player-tempo x)))
+           ;; (set timer-callback (fun (t) (player-callback x)))
+           (set timer-event?   #t)
+           ))
+    x))
+
+(dv player-tempo %player-tempo)
+(dm player-tempo-setter ((n <int>) (x <player>))
+  (set (timer-period (player-timer x)) (song-tempo->period (player-song x) n))
+  (set (%player-tempo x) n))
+
+(ds (modf ,place ,max)
+  `(opf ,place (mod+ _ 1 ,max)))
+
+(df play-raw-note (x pitch velocity)
+  ;; (format out "PLAYING %d %d\n" pitch velocity)
+  (unless (== pitch 0)
+    (midi-on  (player-out-device x) (player-channel x) pitch velocity)
+    (midi-off (player-out-device x) (player-channel x) pitch velocity))
+  )
+
+(dm play-note ((x <player>) (note <note>) (map-tone-key <fun>))
+  (play-raw-note
+   x (map-tone-key (note-tone-key note)) (note-midi-velocity note)))
+
+(df recorder-callback (x chan type kind time d1 d2)
+  (when (== kind 'long-note-on)
+    (play-raw-note x d1 d2)
+    (let ((song  (player-song x)) 
+          (track (player-track x))
+	  (key   (select d1
+                   ((45) #\B)
+                   ((36) #\T)
+                   ((48) #\S)
+                   (#t   #\+)))
+          (note  (fab-note key d2)) 
+          (i     (player-pos x)))
+      ;; (play-note x note (fun (k) (track-char->pitch-map track k)))
+      (when (== (player-state player) 'playing)
+        ;; (format out "FOUND %d %d %s\n" i d1 (track-now-vec track))
+        (track-note! track i note)
+        (beatview-store-beats (player-track-num x) (track-now-vec track))
+        ))))
+
+(df fab-recorder-callback ((x <player>))
+  (fun (dev chan type kind time d1 d2)
+    (recorder-callback x chan type kind time d1 d2)))
+
+(dm player-callback ((x <player>))
+  (let ((s (player-song x)))
+    (for ((t (song-tracks s)))
+      (play-note x (elt t (player-pos x)) (fun (k) (track-char->pitch t k))))
+    (unless (== (song-len s) 0)
+      (modf (player-pos x) (song-len s)))))
+
+(dm player-poll ((x <player>))
+  (timer-poll (player-timer x)))
+
+(dm player-start-recording ((x <player>))
+  ;; (when (== (player-state x) 'playing)
+    (do start-midi-in-device (player-in-devices x)))
+  ;; )
+
+(dm player-stop-recording ((x <player>))
+  ;; (when (== (player-state x) 'playing)
+    (do stop-midi-in-device (player-in-devices x)))
+  ;; )
+
+(dv $max-update-time 6)
+
+(dm player-start ((x <player>))
+  (open-midi-out-device (player-out-device x))
+  (let ((callback (fab-recorder-callback x)))
+    (do (fun (d) (open-midi-in-device d callback)) (player-in-devices x)))
+  (set (player-update-times x) (fab <buf> (len (song-tracks (player-song x)))))
+  (let ((nt (len (player-update-times x))))
+    (for ((i (from-below 0 nt)))
+      (set (elt (player-update-times x) i)
+           (if (or (= i 0) (= i (- nt 1)))
+               -1
+               (random $max-update-time))))
+    (set (player-track-num x) (- nt 1)))
+  (set (player-state x) 'playing)
+  (unless (== (player-song-len x) (song-len (player-song x)))
+    (set (player-song-len x) (song-len (player-song x)))
+    (set (player-tempo x) (player-tempo x))) ;; reset timer period
+  (timer-start (player-timer x))
+  (player-start-recording x))
+
+(dm player-stop ((x <player>))
+  (player-stop-recording x)
+  (close-midi-out-device (player-out-device x))
+  (do close-midi-in-device (player-in-devices x))
+  (set (player-state x) 'stopped)
+  (timer-stop (player-timer x))
+  (set (player-pos x) 0))
+
+(dm player-pause ((x <player>))
+  (set (player-state x) 'paused)
+  (timer-stop (player-timer x)))
+
+(df player-dispatcher ((x <player>) (max <int>)) 
+  (for ((i (from-below 0 max))) (player-poll x)))
+
+;;; PATTERNS
+
+;;; TEST SETUP
+
+(dv song (fab <song> 20))
+
+(dv player (fab-player song))
+
+(df test ()
+  (let ((ts (lst (choose-1st-pattern 'pulse  4 'pulse 'metronome)
+                 (choose-1st-pattern 'koukou 4 'bass  'djundjun)
+                 (choose-pattern     'koukou 4 'acc   'djembe)
+                 (choose-pattern     #f      4 'clave 'clave)
+                 ;; (choose-1st-pattern 'empty  4 'pulse 'metronome)
+                 (choose-pattern     'koukou 4 'acc   'djembe)
+                 )))
+    (song-into song ts)
+    ;; (song-in "\\jrb\\proto\\102\\SRC\\mandiani.rtm")
+    ;; (song-out song "\\jrb\\proto\\102\\SRC\\md.rtm")
+    ))
+
+(dv *beatview-ready?* #f)
+
+(df ensure-beatview-ready ()
+  (unless *beatview-ready?*
+    (beatview-init)
+    (set *beatview-ready?* #t)))
+
+(dv $ops (lst $mimic $template $syncopate $rotate))
+
+(dm player-run ((player <player>) (max <int>))
+  (fin (lab ret
+         (let ((song (player-song player))
+               (nt (len (song-tracks song))))
+           (player-start player)
+           (ensure-beatview-ready)
+           (beatview-sync player)
+           (set (beatview-pos) (player-pos player))
+           (do (fun (i) 
+                 (when (and (not (== i 0)) (== (modulo i (song-len song)) 0))
+                   (track-clear (player-track player))
+                   (beatview-store-beats
+                    (player-track-num player)
+                    (track-now-vec (player-track player)))
+                   (do (fun (ti)
+                         (when (== (elt (player-update-times player) ti) 0)
+                           (set (elt (player-update-times player) ti)
+                                (+ (random $max-update-time) 1))
+                           (let ((op   (random-elt $ops))
+                                 (spos (random-elt (from-below 1 nt)))
+                                 (src  (elt (song-tracks song) spos))
+                                 (dst  (elt (song-tracks song) ti)))
+                             (format out "OP %s SPOS %d DPOS %d %s => "
+                                     op spos ti (track-now-vec dst))
+                             (track-op dst src op)
+                             (format out "%s\n" (track-now-vec dst))
+                             (force-output out)
+                             (beatview-store-beats ti (track-now-vec dst))
+                             ))
+                         (dec (elt (player-update-times player) ti)))
+                       (from-below 
+                        1 (- (len (player-update-times player)) 1))))
+                 (let ((res (wait (player-timer player) 1000)))
+                   (player-callback player))
+                 (beatview-step)
+                 ;; (when (char-ready? in)
+                 ;;   (ret #t))
+                 (when (== (player-state player) 'stopping)
+                   (ret #t)))
+               (from-below 0 max))))
+       (player-stop player)))
+
+;;; BEATVIEW
+
+(dp %beatview-pos-setter)
+(dp %beatview-store-beats)
+(dp %beatview-store-beat)
+(dp %beatview-init)
+(dp %beatview-step)
+
+(df beatview-pos-setter (pos) 
+  (set (%beatview-pos) (%iu pos)) #f)
+(df beatview-init ()
+  (%beatview-init) #f)
+(df beatview-step ()
+  (%beatview-step) #f)
+(df beatview-store-beats (i vs)
+  (%beatview-store-beats (%iu i) (%su vs)) #f)
+(df beatview-store-beat (i j v)
+  (%beatview-store-beat (%iu i) (%iu j) (%cu v)) #f)
+
+(df beatview-cycle ((n <int>))
+  (for ((j (from-below 0 n)))
+    (do (fun (i) (beatview-step)) (from-below 0 16))))
+
+(df beatview-sync ((player <player>))
+  (let ((song (player-song player)))
+    (for ((track (song-tracks song)) (i (from 0)))
+      (format out "T %s\n" (track-now-vec track))
+      (beatview-store-beats i (track-now-vec track)))))
+

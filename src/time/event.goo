@@ -1,0 +1,42 @@
+(use proto)
+(use boot)
+(use threads)
+
+(dp %event-create)
+(dp %event-signal)
+(dp %event-pulse)
+(dp %event-reset)
+(dp %event-kill)
+(dp %event-wait)
+
+(dc <event> (<any>))
+  (slot <event> (event-name (false-or <sym>)) #f)
+  (slot <event> event-handle)
+
+(df fab-event ((name <sym>))
+  (let ((event (isa <event> (set event-name name))))
+    (set (event-handle event) (%lb (%event-create (%su (as <str> name)))))
+    event))
+
+(dm event-signal ((e <event>))
+  (%event-signal (%lu (event-handle e))))
+
+(dm event-kill ((e <event>))
+  (%event-kill (%lu (event-handle e))))
+
+(dm event-reset ((e <event>))
+  (%event-reset (%lu (event-handle e))))
+
+(dm wait ((e <event>) (n <int>) => <log>)
+  (%bb (%event-wait (%lu (event-handle e)) (%iu n))))
+
+(export
+  <event>
+  event-name
+  event-handle
+  fab-event
+  event-signal
+  event-kill
+  event-reset
+  wait)
+  

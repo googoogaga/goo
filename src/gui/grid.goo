@@ -1,0 +1,16 @@
+(use proto)
+(use boot)
+
+(dp %grid-open)
+(dp %grid-close)
+(dp %grid-move)
+(dp %grid-write)
+(dp %grid-refresh)
+
+(df grid-open () (%grid-open))
+(df grid-close () (%grid-close))
+(df grid-move (x y) (%grid-move (%iu x) (%iu y)))
+(df grid-read () (%cb (%grid-read)))
+(df grid-write (c) (%grid-write (%cu c)))
+(df grid-refresh () (%grid-refresh))
+

@@ -175,11 +175,13 @@
       (for ((i (from 0)) (spec (fun-specs x)) (first? (first-then #t #f)))
         (unless first? (write-char port #\space))
 	(if (empty? names)
-	    (write port spec)
-	    (format port "(%s %=)" (as <str> (elt names i)) spec))))
+	    (write-type port spec)
+	    (seq (format port "(%s " (as <str> (elt names i)))
+                 (write-type port spec)
+                 (write-char port #\))))))
     (let ((value (fun-value x)))
       (unless (or (not value) (== value <any>))
-	(format port " => %=" value)))
+	(format port " => ") (write-type port value)))
     (write-char port #\))))
 
 (dm write-fun-guts ((port <output-port>) (x <fun>) (name <str>) (recur <fun>))
@@ -214,14 +216,23 @@
 (dm recurring-write 
     ((port <output-port>) (x <subclass>) (d <int>) (recur <fun>))
   (write-string port "#{T< ")
-  (recur (type-class x) d)
+  (write-type port (type-class x))
   (write-string port "}"))
 
 (dm recurring-write 
     ((port <output-port>) (x <union>) (d <int>) (recur <fun>))
-  (write-string port "#{T+ ")
-  (recur (type-class x) d)
+  (write-string port "#{T+")
+  (do (fun (t) (write-char port #\space) (write-type port t)) (type-elts x))
   (write-string port "}"))
+
+(dm recurring-write-type ((port <output-port>) (x <class>) (d <int>) (recur <fun>))
+  (write-string port (as <str> (class-name x))))
+
+(dm recurring-write-type ((port <output-port>) x (d <int>) (recur <fun>))
+  (recurring-write port x d recur))
+
+(dm write-type ((port <output-port>) x)
+  (recurring-write-type port x 0 recurring-write))
 
 (dm recurring-write ((port <output-port>) (x <slot>) (d <int>) (recur <fun>))
   (write-string port "#{Slot ")

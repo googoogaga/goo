@@ -2,7 +2,9 @@
 
 #define IN_PRT_C
 #include "prt.h"
+#if !defined(MSWIN32)
 #include <sys/resource.h>
+#endif
 
 extern P Ynil;
 
@@ -264,7 +266,11 @@ INLINE P YPclose_output_port (P s) {
 }
 
 INLINE P YPnewline (P s) { 
-  fputc('\n', (FILE*)s); return YPfalse; 
+  fputc('\n', (FILE*)s); 
+#ifdef WIN32  
+  if ((FILE*)s == stdout) fflush(stdout);
+#endif
+  return YPfalse; 
 }
 
 INLINE P YPforce_output (P s) { 
@@ -280,6 +286,9 @@ INLINE P YPwrite_string (P s, P x) {
     fputs("NULL", (FILE*)s);
   else
     fputs((PSTR)x, (FILE*)s);
+#ifdef WIN32  
+  if ((FILE*)s == stdout) fflush(stdout);
+#endif
   return YPfalse; 
 }
 
@@ -292,7 +301,16 @@ INLINE P YPpeek_char (P s) {
 }
 
 INLINE P YPchar_readyQ (P s) { 
-  return YPtrue; /* TODO: NYI */
+  int    res;
+#ifdef WIN32
+  fd_set rfds;
+  FD_ZERO(&rfds);
+  FD_SET(fileno((FILE*)s), &rfds);
+  res = select(1, &rfds, NULL, NULL, NULL);
+#else
+  res = 1;
+#endif
+  return((P)res);
 } 
 
 #define MAXSTRSIZ 1000
@@ -1065,6 +1083,7 @@ void YPinit_world(int argc, char* argv[]) {
   }
   /* GC_enable_incremental(); */
 
+  GC_init();
   stack_  = (P*)allocate(MAX_STACK_SIZE * sizeof(P));
   envnul  = ENVFAB(0);
   Pcurrent_unwind_protect_frame = Ptop_unwind_protect_frame;
@@ -1162,41 +1181,15 @@ P YPgrid_refresh () {
   return YPfalse; 
 }
 
-extern P YPlb(P);
+P YPprocess_module(
+    P mod_info,
+    P import_fun,
+    P export_fun) {
 
-static void process_runtime_module(
-  MODULE_INFO *module_info,
-  P create_module_fun,
-  P use_module_fun,    
-  P import_fun,
-  P runtime_binding_fun,    
-  P other_binding_fun,    
-  P export_fun)
-{
-  P modobj;
-  USE_INFO *use_info;
+  MODULE_INFO *module_info = (MODULE_INFO*)(tag((P)untag(mod_info), 0));
+  P modobj = module_info->module_object;
   IMPORT_INFO *import_info;
-  BINDING_INFO *binding_info;
   EXPORT_INFO *export_info;
-
-  /* Don't initialize ourself more than once. */
-  if (module_info->module_object)
-    return;
-  
-  /* Create our own module object. */
-  module_info->module_object =
-    CALL1(1, create_module_fun, YPsb(module_info->module_name));
-  modobj = module_info->module_object;
-
-  /* Recursively initialize all the modules we depend upon, and mark
-  ** them as used. */
-  for (use_info = module_info->uses; use_info->module_info; use_info++) {
-    process_runtime_module(use_info->module_info,
-			   create_module_fun, use_module_fun,
-			   import_fun, runtime_binding_fun,
-			   other_binding_fun, export_fun);
-    CALL2(1, use_module_fun, modobj, use_info->module_info->module_object);
-  }
 
   /* Import bindings into this module. */
   for (import_info = module_info->imports;
@@ -1208,20 +1201,6 @@ static void process_runtime_module(
 	  import_info->module_info->module_object,
 	  YPsb(import_info->original_name));
   }
-  
-  /* Define bindings in this module. */
-  for (binding_info = module_info->bindings;
-       binding_info->variable_name;
-       binding_info++)
-  {
-    if (binding_info->location)
-      CALL3(1, runtime_binding_fun, modobj,
-	    YPsb(binding_info->variable_name),
-	    YPlb((P)untag((P)binding_info->location)));
-    else
-      CALL2(1, other_binding_fun, modobj,
-	    YPsb(binding_info->variable_name));
-  }
 
   /* Export bindings from this module. */
   for (export_info = module_info->exports;
@@ -1232,19 +1211,59 @@ static void process_runtime_module(
 	  YPsb(export_info->variable_name),
 	  YPsb(export_info->exported_as));
   }
+  return PNUL;
+}  
+
+static void process_runtime_module_shell
+    (MODULE_INFO *module_info, P create_module_fun, P use_module_fun,
+     P runtime_binding_fun, P other_binding_fun)
+{
+  P modobj;
+  USE_INFO *use_info;
+  BINDING_INFO *binding_info;
+
+  /* Don't initialize ourself more than once. */
+  if (module_info->module_object)
+    return;
+  
+  /* Create our own module object. */
+  module_info->module_object =
+    CALL2(1, create_module_fun, YPsb(module_info->module_name),
+	  (P)YPlb(module_info));
+  modobj = module_info->module_object;
+
+  /* Recursively initialize all the modules we depend upon, and mark
+  ** them as used. */
+  for (use_info = module_info->uses; use_info->module_info; use_info++) {
+    process_runtime_module_shell
+      (use_info->module_info, create_module_fun, use_module_fun,
+       runtime_binding_fun, other_binding_fun);
+    CALL2(1, use_module_fun, modobj, use_info->module_info->module_object);
+  }
+
+  /* Define bindings in this module. */
+  for (binding_info = module_info->bindings;
+       binding_info->variable_name;
+       binding_info++)
+  {
+    if (binding_info->location)
+      CALL3(1, runtime_binding_fun, modobj,
+	    YPsb(binding_info->variable_name),
+	    (P)YPlb((P)binding_info->location));
+    else
+      CALL2(1, other_binding_fun, modobj,
+	    YPsb(binding_info->variable_name));
+  }
 }
 
 P YPbuild_runtime_modules(
-  P create_module_fun,
-  P use_module_fun,    
-  P import_fun,
-  P runtime_binding_fun,    
-  P other_binding_fun,    
-  P export_fun)
+    P create_module_fun, 
+    P use_module_fun,
+    P runtime_binding_fun,    
+    P other_binding_fun)
 {
-  process_runtime_module(proto_toplevel_module_info,
-			 create_module_fun, use_module_fun,
-			 import_fun, runtime_binding_fun,
-			 other_binding_fun, export_fun);
+  process_runtime_module_shell
+    (proto_toplevel_module_info, create_module_fun, use_module_fun,
+     runtime_binding_fun, other_binding_fun);
   return YPfalse;
 }

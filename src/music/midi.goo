@@ -1,0 +1,196 @@
+(use proto)
+
+;;;; MIDI status codes
+
+(dv $midi-off              (*  8 16)) ;; #x80
+(dv $midi-on               (*  9 16)) ;; #x90
+(dv $midi-key-pressure     (* 10 16)) ;; #xA0
+(dv $midi-parameter        (* 11 16)) ;; #xB0
+(dv $midi-patch            (* 12 16)) ;; #xC0
+(dv $midi-channel-pressure (* 13 16)) ;; #xD0
+(dv $midi-pitch-bend       (* 14 16)) ;; #xE0
+
+;;;; MIDI pitch values
+
+(dv $midi-min-pitch      0)
+(dv $midi-middle-c-pitch 60)
+(dv $midi-max-pitch      127)
+
+(dv <midi-pitch> <int>)
+
+;;;; MIDI velocity values
+
+(dv $midi-min-velocity 0)
+(dv $midi-max-velocity 127)
+
+(dv <midi-velocity> <int>)
+
+;;;; MIDI instruments
+
+(dc <midi-instrument> (<any>))
+  (slot <midi-instrument> (midi-name <str>))
+  (slot <midi-instrument> (midi-number <int>))
+
+;;;; MIDI channels
+
+(dc <midi-channel> (<any>))
+
+(dg fab-midi-channel ((num <int>) => <midi-channel>))
+
+(dm midi-percussion-channel () (fab-midi-channel 9))
+
+(ds (def-midi-family ,family (,start) ,@names)
+  (let ((num-tab (make-sym family "-by-nums"))
+        (nam-tab (make-sym family "-by-nams"))
+        (acc     (make-sym "find-midi-" family)))
+    `(seq (dv ,num-tab (fab <tab> 8))
+          (dv ,nam-tab (fab <tab> 8))
+          (for ((str '(,@names)) (num (from ,start)))
+            (let ((nam (as <sym> str))
+                  (inst (isa <midi-instrument> 
+                          (set midi-name nam) (set midi-number num))))
+              (set (elt ,nam-tab nam) inst)
+              (set (elt ,num-tab num) inst)))
+          (dm ,acc ((nam <str>)) (,acc (as <sym> nam)))
+          (dm ,acc ((nam <sym>)) (elt-or ,nam-tab nam #f))
+          (dm ,acc ((num <int>)) (elt-or ,num-tab num #f)))))
+
+(def-midi-family percussion (35)
+  "Acoustic Bass Drum" 
+  "Bass Drum 1"        
+  "Side Stick"         
+  "Acoustic Snare"     
+  "Hand Clap"          
+  "Electric Snare"     
+  "Low Floor Tom"      
+  "Closed Hi-Hat"      
+  "High Floor Tom"     
+  "Pedal Hi-Hat"       
+  "Low Tom"            
+  "Open Hi-Hat"        
+  "Low-Mid Tom"        
+  "Hi-Mid Tom"         
+  "Crash Cymbal 1"     
+  "High Tom"           
+  "Ride Cymbal 1"      
+  "Chinese Cymbal"     
+  "Ride Bell"          
+  "Tambourine"         
+  "Splash Cymbal"      
+  "Cowbell"            
+  "Crash Cymbal 2"     
+  "Vibraslap"
+  "Ride Cymbal 2"
+  "Hi Bongo"
+  "Low Bongo"
+  "Mute Hi Conga"
+  "Open Hi Conga"
+  "Low Conga"
+  "High Timbale"
+  "Low Timbale"
+  "High Agogo"
+  "Low Agogo"
+  "Cabasa"
+  "Maracas"
+  "Short Whistle"
+  "Long Whistle"
+  "Short Guiro"
+  "Long Guiro"
+  "Claves"
+  "Hi Wood Block"
+  "Low Wood Block"
+  "Mute Cuica"
+  "Open Cuica"
+  "Mute Triangle"
+  "Open Triangle")
+
+;;;; MIDI devices
+
+(dc <midi-device> (<any>))
+
+(dg fab-midi-device ((num <int>) => <midi-device>))
+
+(dg default-midi-device (=> <midi-device>))
+
+(dg open-midi-out-device ((md <midi-device>)))
+
+(dg reset-midi-out-device ((md <midi-device>)))
+
+(dg close-midi-out-device ((md <midi-device>)))
+
+(dm do-with-open-midi-out-device ((md <midi-device>) (f <fun>))
+  (fin (seq (open-midi-out-device md) (f)) (close-midi-out-device md)))
+       
+(ds (with-open-midi-out-device (?md) ,@body)
+  `(do-with-open-midi-out-device ?md (fun () ,@body)))
+
+(dg send-midi-message 
+  ((md <midi-device>) (stat <int>) (chan <int>) (x <int>) (y <int>)))
+
+(dm midi-on
+    ((md <midi-device>) (mc <midi-channel>) 
+     (pitch <midi-pitch>) (velocity <midi-velocity>))
+  (send-midi-message md $midi-on (midi-number mc) pitch velocity))
+
+(dm midi-off
+    ((md <midi-device>) (mc <midi-channel>)
+     (pitch <midi-pitch>) (velocity <midi-velocity>))
+  (send-midi-message md $midi-off (midi-number mc) pitch 0))
+
+(dm midi-select-instrument
+    ((md <midi-device>) (mc <midi-channel>) (mv <midi-instrument>))
+  (send-midi-message md $midi-patch (midi-number mc) (midi-number mv) 0))
+
+(dg midi-in-devices (=> <seq>))
+
+(dg open-midi-in-device ((md <midi-device>) (callback <fun>)))
+
+(dg start-midi-in-device ((md <midi-device>)))
+
+(dg reset-midi-in-device ((md <midi-device>)))
+
+(dg stop-midi-in-device ((md <midi-device>)))
+
+(dg close-midi-in-device ((md <midi-device>)))
+
+(export
+  $midi-off
+  $midi-on
+  $midi-key-pressure 
+  $midi-parameter
+  $midi-patch
+  $midi-channel-pressure
+  $midi-pitch-bend
+  $midi-min-pitch
+  $midi-middle-c-pitch
+  $midi-max-pitch
+  <midi-pitch>
+  $midi-min-velocity
+  $midi-max-velocity
+  <midi-velocity>
+  <midi-instrument>
+  midi-name
+  midi-number
+  <midi-channel>
+  fab-midi-channel
+  <midi-device>
+  fab-midi-device
+  default-midi-device
+  open-midi-out-device
+  do-with-open-midi-out-device ;; TODO: HYGIENE
+  with-open-midi-out-device
+  reset-midi-out-device
+  close-midi-out-device
+  send-midi-message
+  midi-select-instrument
+  midi-on
+  midi-off
+  open-midi-in-device
+  close-midi-in-device
+  midi-in-devices
+  start-midi-in-device
+  reset-midi-in-device
+  stop-midi-in-device
+  find-midi-percussion
+  midi-percussion-channel
+  )

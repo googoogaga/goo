@@ -1,0 +1,76 @@
+;;;; Originally by Kevin Mitchell and Seth LaForge
+;;;; A 29-bit parallel LFSR seeded by simple LCG, based on Sedgewick.
+
+(use proto)
+(use boot)
+(use timer)
+
+(df default-random-seed (=> <int>)
+  (%ib (%timer-system-time)))
+
+(dv $recent-size 54)
+
+(dc <random> (<any>))
+  (slot <random> (recent <vec>) (fill (fab <vec> $recent-size) 0))
+  (slot <random> (recent-index <int>) 0)
+
+;; 16 bits (almost) of lame-o pseudo-randomness
+;; Taken from Table 16.1, Applied Cryptography 2nd ed.
+(df lcg-rand ((prev <int>) => <int>)
+  (modulo (+ (* prev 171) 11213) 53125))
+
+(dm fab-random-from ((seed <int>) => <random>)
+  (let ((r    (isa <random>))
+        (a    (recent r)))
+    ;; Ensure that there's at least one 1 in each LFSR:
+    (set (elt a 0) $max-int)
+    (rep loop ((j 1) (prev (modulo (abs seed) 32768)))
+      (when (< j $recent-size)
+        (let ((v1 (lcg-rand prev))
+              (v2 (lcg-rand v1)))
+          ;; Fill a[j] with 29 random bits as LFSR seed.
+          (set (elt a j)
+               (+ (modulo v1 32768) (* (modulo v2 16384) 32768)))
+          (loop (+ j 1) v2))))
+    ;; Make sure the history is full of our stuff to deal with bad seed:
+    (for ((j (from-to 0 (* 4 $recent-size))))
+      (random-29 r))
+    r))
+
+(dm fab-random (=> <random>)
+  (fab-random-from (default-random-seed)))
+
+(df random-29 ((r <random>) => <int>)
+  (let (((ri <int>) (modulo (+ (recent-index r) 1) $recent-size))
+        (a (recent r)))
+    (set (recent-index r) ri)
+    (loc ((tap ((bit <int>) => <int>)
+            (elt a (modulo (+ ri (- $recent-size bit)) $recent-size))))
+      ;; We're using primitive polynomial x^54 + x^8 + x^6 + x^3 + x^0, 
+      ;; so we tap bits 54, 8, 6, and 3.  Bits in recent are
+      ;; stored in reverse order, so the index of bit n is 
+      ;; (ri - n) % 54 = (ri + (54 - n)) % 54.
+      (set (elt a ri) 
+           (logxor (logxor (tap 54) (tap 8)) (logxor (tap 6) (tap 3)))))))
+
+(dv $default-random (fab-random))
+
+(dm random ((range <int>) => <int>)
+  (random-using range $default-random))
+
+(dm random-using ((range <int>) (r <random>) => <int>)
+  (if (= range 0)
+      0
+      (let ((M     $max-int)
+            (limit (- M (modulo (+ (- M range) 1) range))))
+        (loc ((find-good-value (=> <int>)
+                (let ((value (random-29 r)))
+                  (if (<= value limit)
+                      value
+                      (find-good-value)))))
+          (modulo (find-good-value) range)))))
+
+(export
+  fab-random
+  random
+  random-using)

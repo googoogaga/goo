@@ -1,0 +1,162 @@
+(use proto)
+(use boot)
+(use midi)
+
+(dp %midi-out-open)
+(dp %midi-out-reset)
+(dp %midi-out-send)
+(dp %midi-out-close) 
+(dp %midi-in-register-callback)
+(dp %midi-in-open)
+(dp %midi-in-close)
+(dp %midi-in-find-max-device-id)
+(dp %midi-in-start)
+(dp %midi-in-stop)
+(dp %midi-in-reset)
+(dp %midi-error-text) 
+
+(dv <handle> <loc>)
+
+(dv $max-devices 16)
+
+(dv *midi-devices* (fab <vec> $max-devices))
+
+(df id->midi-device (id)
+  (%velt *midi-devices* (%iu id)))
+
+(dc <win32-midi-device> (<midi-device>))
+  (slot <win32-midi-device> (midi-id <int>))
+  (slot <win32-midi-device> (midi-out-open? <log>) #f)
+  (slot <win32-midi-device> (midi-out-handle <handle>))
+  (slot <win32-midi-device> (midi-in-open? <log>) #f)
+  (slot <win32-midi-device> (midi-in-callback <fun>))
+  (slot <win32-midi-device> (midi-in-handle <handle>))
+
+(ds (nul-or ,@rest)
+  (mif ((,x ,@rest) rest)
+       (mif (() rest)
+	    x
+	    `(let ((tmp ,x))
+	       (if (nul? tmp) (nul-or ,@rest) tmp)))
+       #f))
+
+(dm fab-midi-device ((id <int>) => <win32-midi-device>)
+  (nul-or (elt *midi-devices* id)
+          (set (elt *midi-devices* id)
+               (isa <win32-midi-device> (set midi-id id)))))
+
+(dc <win32-midi-channel> (<midi-channel>))
+  (slot <win32-midi-channel> (midi-number <int>))
+
+(dm fab-midi-channel ((num <int>) => <midi-channel>)
+  (isa <win32-midi-channel> (set midi-number num)))
+
+(dv $midi-mapper -1)
+
+(dv $midi-mapper-device (fab-midi-device (as <int> $midi-mapper)))
+
+(dm default-midi-device (=> <win32-midi-device>)
+  $midi-mapper-device)
+
+(dm open-midi-out-device ((md <win32-midi-device>))
+  (when (midi-out-open? md)
+    (error "The MIDI device %= cannot be opened because it is already open" md))
+  (let ((out-handle (%lb (%midi-out-open (%iu (midi-id md))))))
+    (set (midi-out-handle md) out-handle)
+    (set (midi-out-open? md)  #t))
+  md)
+
+(dm reset-midi-out-device ((md <win32-midi-device>))
+  (unless (midi-out-open? md)
+    (error "The MIDI device %= cannot be reset because it is not open" md))
+  (%midi-out-reset (%lu (midi-out-handle md)))
+  md)
+
+(dm ensure-midi-out-device-open ((md <win32-midi-device>))
+  (unless (midi-out-open? md)
+    (error "The MIDI device %= cannot be used because it is not open" md)))
+
+(dm close-midi-out-device ((md <win32-midi-device>))
+  (ensure-midi-out-device-open md)
+  (set (midi-out-open? md)  #f)
+  (%midi-out-close (%lu (midi-out-handle md)))
+  #f)
+
+(dm midi-error-string ((id <int>) => <str>)
+  ;; (%sb (%midi-error-text id))
+  "")
+
+(dm send-midi-message
+    ((md <win32-midi-device>) (stat <int>) (chan <int>) (x <int>) (y <int>))
+  (ensure-midi-out-device-open md)
+  (let ((code 
+	(%ib (%midi-out-send 
+	       (%lu (midi-out-handle md)) 
+               (%iu stat) (%iu chan) (%iu x) (%iu y)))))
+    (unless (= code 0)
+      (error "Failed to open midi device %=: %s" md (midi-error-string code)))))
+
+;;; MIDI INPUT
+
+;; (dv $mim-base 961) ;; 0x3C1
+;; 
+;; (dv $midi-in-types
+;;   #(open close data long-data error long-error))
+;; 
+;; (df int->midi-in-type ((x <int>) => <sym>)
+;;   (elt-or $midi-in-types (- x $mim-base) 'unknown))
+;; 
+;; (dv $midi-in-kinds
+;;   #(note-on long-note-on poly-after-touch control-change 
+;;     after-touch pitch-bend))
+;; 
+;; (df int->midi-in-kind ((i <int>) => <sym>)
+;;   (elt-or $midi-in-kinds i 'unknown))
+
+(df std-midi-in-callback (id chan type kind time d1 d2)
+  (let ((dev  (id->midi-device id))
+        ;; (type (int->midi-in-type msg))
+        ;; (kind (int->midi-in-kind stat))
+        )
+    (unless (== kind 'unknown)
+      ((midi-in-callback dev) dev chan type kind time d1 d2))))
+
+(dm open-midi-in-device ((md <win32-midi-device>) (callback <fun>))
+  (when (midi-in-open? md)
+    (error "The MIDI device %= cannot be opened because it is already open" md))
+  (%midi-in-register-callback std-midi-in-callback)
+  (let ((in-handle (%lb (%midi-in-open (%iu (midi-id md))))))
+    (set (midi-in-handle md)   in-handle)
+    (set (midi-in-callback md) callback)
+    (set (midi-in-open? md)    #t))
+  md)
+
+(dm ensure-midi-in-device-open ((md <win32-midi-device>))
+  (unless (midi-in-open? md)
+    (error "The MIDI device %= cannot be used because it is not open" md)))
+
+(dm midi-in-devices (=> <lst>)
+  (let ((max-device (%ib (%midi-in-find-max-device-id))))
+    (collecting ()
+      (do (fun (id) (collect (fab-midi-device id)))
+          (from-below 0 max-device)))))
+
+(dm start-midi-in-device ((md <win32-midi-device>))
+  (ensure-midi-in-device-open md)
+  (%midi-in-start (%lu (midi-in-handle md))))
+
+(dm reset-midi-in-device ((md <win32-midi-device>))
+  (ensure-midi-in-device-open md)
+  (%midi-in-reset (%lu (midi-in-handle md))))
+
+(dm stop-midi-in-device ((md <win32-midi-device>))
+  (ensure-midi-in-device-open md)
+  (%midi-in-stop (%lu (midi-in-handle md))))
+
+(dm close-midi-in-device ((md <win32-midi-device>))
+  (ensure-midi-in-device-open md)
+  (set (midi-in-open? md)  #f)
+  (set (midi-in-callback md) identity)
+  (%midi-in-close (%lu (midi-in-handle md)))
+  #f)
+

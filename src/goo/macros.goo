@@ -86,6 +86,11 @@
        (set ,g-place ,new-col)
        ,val)))
 
+(ds (opf ,place ,call)
+  (let (((tup g-decls g-place) (lift-place-subforms place)))
+    `(let (,@g-decls (_ ,g-place))
+       (set ,g-place ,call))))
+
 (ds (unless ,test ,@body)
   `(if (not ,test) (seq ,@body)))
 
@@ -229,6 +234,7 @@
   dec
   pushf
   popf
+  opf
   unless
   when
   or

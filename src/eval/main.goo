@@ -5,14 +5,15 @@
 (use ast)
 (use top)
 (use p2c)
+;; (use beatbox)
 ;; (use p2m)
 (use proto/system)
 
 ;; Make sure the proto/user module gets compiled into our image.
 (use proto/user)
 
-(dv *proto-version* "0.103")
-(dv *proto-date*    "SEP 25, 2001")
+(dv *proto-version* "0.104")
+(dv *proto-date*    "OCT 10, 2001")
 
 (format out ";;; \n")
 (format out ";;; PROTO\n")

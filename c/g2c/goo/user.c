@@ -5,294 +5,303 @@
 
 /* MODULE ENVIRONMENT: proto/user */
 
-EXT(YruntimeYoddQ,"runtime","odd?");
-EXT(YruntimeYcurrent_gc_state,"runtime","current-gc-state");
+EXT(YruntimeYadd,"runtime","add");
+EXT(YruntimeYaddX,"runtime","add!");
+EXT(YruntimeYflo_bits,"runtime","flo-bits");
+EXT(YwriteYdisplay,"write","display");
+EXT(YruntimeYlsh,"runtime","lsh");
+EXT(YruntimeYfab_map,"runtime","fab-map");
+EXT(YruntimeYmax,"runtime","max");
+EXT(YmacrosYmatch_unquote,"macros","match-unquote");
+EXT(YruntimeYopen_output_file,"runtime","open-output-file");
 EXT(Yslot_owner,"boot","slot-owner");
-EXT(YtopYload,"top","load");
-EXT(YmacrosYmatch_sublist,"macros","match-sublist");
+EXT(YPslot,"boot","%slot");
+EXT(YruntimeYT,"runtime","*");
+EXT(YruntimeYlocative_value,"runtime","locative-value");
+EXT(YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
+EXT(YruntimeYabs,"runtime","abs");
 EXT(YLlogG,"boot","<log>");
+EXT(YruntimeYtruncateS,"runtime","truncate/");
 EXT(YLslotG,"boot","<slot>");
-EXT(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
-EXT(YruntimeYfabs,"runtime","fabs");
+EXT(YruntimeYaddress_of,"runtime","address-of");
+EXT(YruntimeYfrom_above,"runtime","from-above");
+EXT(YruntimeYtable_protocol,"runtime","table-protocol");
 EXT(YruntimeYpos,"runtime","pos");
-EXT(YruntimeYneg,"runtime","neg");
-EXT(YruntimeYmake_handler,"runtime","make-handler");
-EXT(YruntimeYpush,"runtime","push");
-EXT(YruntimeYas_uppercase,"runtime","as-uppercase");
-EXT(YruntimeYfrom_below,"runtime","from-below");
+EXT(YruntimeYdefault,"runtime","default");
+EXT(YruntimeYfloor,"runtime","floor");
 EXT(Yclass_direct_parents,"boot","class-direct-parents");
-EXT(YruntimeYclose_input_port,"runtime","close-input-port");
+EXT(YruntimeYempty,"runtime","empty");
+EXT(YDmin_int,"boot","$min-int");
 EXT(Ynot,"boot","not");
+EXT(YruntimeYmodulo,"runtime","modulo");
 EXT(Yslot_value,"boot","slot-value");
 EXT(YLanyG,"boot","<any>");
-EXT(YruntimeYfrom_below_by,"runtime","from-below-by");
-EXT(YLunionG,"boot","<union>");
-EXT(YruntimeYwrite_string,"runtime","write-string");
-EXT(Ymay_isaQ,"boot","may-isa?");
-EXT(YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
-EXT(Yfun_arity,"boot","fun-arity");
-EXT(YruntimeYpop_lastX,"runtime","pop-last!");
-EXT(YruntimeYfin_stateQ,"runtime","fin-state?");
-EXT(YruntimeYsub_setter,"runtime","sub-setter");
-EXT(YruntimeYto_digit,"runtime","to-digit");
-EXT(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
-EXT(YruntimeYLfile_portG,"runtime","<file-port>");
-EXT(YLsubclassG,"boot","<subclass>");
-EXT(YwriteYwrite_to_string,"write","write-to-string");
-EXT(YmacrosYcat,"macros","cat");
-EXT(YruntimeYLinput_portG,"runtime","<input-port>");
-EXT(YreadYread_from_string,"read","read-from-string");
-EXT(YtopYbacktrace,"top","backtrace");
-EXT(YmacrosYemptyQ,"macros","empty?");
-EXT(YruntimeYbuf,"runtime","buf");
-EXT(YruntimeYport_index,"runtime","port-index");
-EXT(Yslot_type,"boot","slot-type");
-EXT(YruntimeYread,"runtime","read");
-EXT(YruntimeYceilingS,"runtime","ceiling/");
-EXT(YruntimeYformat,"runtime","format");
-EXT(Yhandler_info_message,"boot","handler-info-message");
-EXT(YruntimeYrevX,"runtime","rev!");
-EXT(YruntimeYlast,"runtime","last");
-EXT(YLsingletonG,"boot","<singleton>");
-EXT(YruntimeYfloorS,"runtime","floor/");
-EXT(YmacrosYmatch_atom,"macros","match-atom");
-EXT(Ytail,"boot","tail");
-EXT(YruntimeYlsh,"runtime","lsh");
-EXT(YmacrosYgensym,"macros","gensym");
-EXT(YruntimeYash,"runtime","ash");
-EXT(YruntimeYnum_to_str,"runtime","num-to-str");
-EXT(Yclass_slots,"boot","class-slots");
-EXT(YruntimeYflo_bits,"runtime","flo-bits");
-EXT(YruntimeYrcurry,"runtime","rcurry");
-EXT(YruntimeYroundS,"runtime","round/");
-EXT(YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
-EXT(Ysorted_app_mets,"boot","sorted-app-mets");
-EXT(YruntimeYLstring_output_portG,"runtime","<string-output-port>");
-EXT(YruntimeYrev,"runtime","rev");
-EXT(YruntimeYabs,"runtime","abs");
-EXT(YruntimeYLportG,"runtime","<port>");
-EXT(YruntimeYdo2,"runtime","do2");
-EXT(Yfun_naryQ,"boot","fun-nary?");
-EXT(Ynil,"boot","nil");
-EXT(YruntimeYpush_lastX,"runtime","push-last!");
-EXT(YruntimeYT,"runtime","*");
-EXT(YruntimeYLoutput_portG,"runtime","<output-port>");
-EXT(YruntimeYtruncateS,"runtime","truncate/");
-EXT(YruntimeYLlistG,"runtime","<list>");
-EXT(YmacrosYmatch_unquote,"macros","match-unquote");
-EXT(YruntimeYmax,"runtime","max");
-EXT(YruntimeYLerrorG,"runtime","<error>");
-EXT(YtopYdo_stack_frames,"top","do-stack-frames");
-EXT(Ytype_elts,"boot","type-elts");
-EXT(YruntimeYcompose,"runtime","compose");
-EXT(YruntimeYopen_output_file,"runtime","open-output-file");
-EXT(YruntimeYapp_args,"runtime","app-args");
-EXT(YruntimeYwrite_char,"runtime","write-char");
-EXT(YruntimeYdefault,"runtime","default");
-EXT(YruntimeYaddress_of,"runtime","address-of");
-EXT(YruntimeYport_contents,"runtime","port-contents");
-EXT(YPdefine_method,"boot","%define-method");
-EXT(YruntimeYcall_with_output_file,"runtime","call-with-output-file");
-EXT(YruntimeYfloor,"runtime","floor");
-EXT(YruntimeYcat2,"runtime","cat2");
-EXT(YruntimeYmodulo,"runtime","modulo");
-EXT(YruntimeYLstring_input_portG,"runtime","<string-input-port>");
-EXT(YruntimeYcatX,"runtime","cat!");
-EXT(YLoptsG,"boot","<opts>");
-EXT(YruntimeYapp_filename,"runtime","app-filename");
-EXT(Yclass_name,"boot","class-name");
 EXT(YruntimeYLassocsG,"runtime","<assocs>");
-EXT(YisaQ,"boot","isa?");
-EXT(YruntimeYempty,"runtime","empty");
-EXT(Ymet_appQ,"boot","met-app?");
-EXT(YruntimeYA,"runtime","+");
-EXT(YLtypeG,"boot","<type>");
-EXT(YruntimeYLsimple_errorG,"runtime","<simple-error>");
-EXT(YLclassG,"boot","<class>");
-EXT(YruntimeYLrangeG,"runtime","<range>");
-EXT(YruntimeYremainder,"runtime","remainder");
-EXT(YruntimeYadd,"runtime","add");
+EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
+EXT(YruntimeYfrom,"runtime","from");
+EXT(YLunionG,"boot","<union>");
+EXT(YruntimeYalways,"runtime","always");
 EXT(YruntimeYfind_key,"runtime","find-key");
-EXT(YruntimeYelt,"runtime","elt");
 EXT(YruntimeYreduceA,"runtime","reduce+");
-EXT(YruntimeYcurry,"runtime","curry");
-EXT(YwriteYdisplay,"write","display");
-EXT(Yobject_parents,"boot","object-parents");
-EXT(YsyntaxYeval,"syntax","eval");
+EXT(YruntimeYout,"runtime","out");
+EXT(Yerror,"boot","error");
+EXT(Ymay_isaQ,"boot","may-isa?");
+EXT(YmacrosYmap,"macros","map");
+EXT(Yfun_arity,"boot","fun-arity");
+EXT(YruntimeYelt_or,"runtime","elt-or");
+EXT(YruntimeYelt,"runtime","elt");
 EXT(YruntimeYLE,"runtime","<=");
+EXT(YLcolG,"boot","<col>");
 EXT(YruntimeYelt_setter,"runtime","elt-setter");
+EXT(YruntimeYremainder,"runtime","remainder");
+EXT(YruntimeYassocs_test,"runtime","assocs-test");
+EXT(YLsubclassG,"boot","<subclass>");
+EXT(YruntimeYnulQ,"runtime","nul?");
+EXT(YruntimeYport_index,"runtime","port-index");
+EXT(YruntimeYmap2,"runtime","map2");
 EXT(YruntimeYlogior,"runtime","logior");
 EXT(YruntimeYlowercaseQ,"runtime","lowercase?");
-EXT(YruntimeYE,"runtime","=");
-EXT(Yfun_specs,"boot","fun-specs");
-EXT(YruntimeYnulQ,"runtime","nul?");
-EXT(YruntimeYLfile_input_portG,"runtime","<file-input-port>");
-EXT(YLsymG,"boot","<sym>");
-EXT(YruntimeYLtabG,"runtime","<tab>");
-EXT(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
-EXT(YruntimeYassocs_test,"runtime","assocs-test");
-EXT(YruntimeYfrom_to_by,"runtime","from-to-by");
-EXT(YmacrosYmap,"macros","map");
 EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
-EXT(YruntimeYpop,"runtime","pop");
-EXT(YruntimeYmap2,"runtime","map2");
-EXT(Yslot_setter,"boot","slot-setter");
-EXT(YruntimeYposQ,"runtime","pos?");
-EXT(YruntimeYlogxor,"runtime","logxor");
-EXT(YruntimeYfrom_to,"runtime","from-to");
+EXT(Yslot_type,"boot","slot-type");
+EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
+EXT(YruntimeYcall_with_output_file,"runtime","call-with-output-file");
 EXT(YruntimeYNE,"runtime","~=");
-EXT(YLgenG,"boot","<gen>");
-EXT(YruntimeYcopy_state,"runtime","copy-state");
-EXT(Yobject_slots,"boot","object-slots");
-EXT(YruntimeYfrom,"runtime","from");
-EXT(YLstrG,"boot","<str>");
-EXT(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
+EXT(YLsingletonG,"boot","<singleton>");
+EXT(YruntimeYLstr_tabG,"runtime","<str-tab>");
+EXT(YruntimeY1st,"runtime","1st");
+EXT(Ytail,"boot","tail");
+EXT(YruntimeYposQ,"runtime","pos?");
+EXT(YruntimeYLtabG,"runtime","<tab>");
+EXT(YruntimeYlogxor,"runtime","logxor");
+EXT(YLtupG,"boot","<tup>");
 EXT(YmacrosYEE,"macros","==");
-EXT(YtopYtop,"top","top");
-EXT(YmacrosYtup,"macros","tup");
-EXT(YruntimeYlogand,"runtime","logand");
-EXT(YruntimeYlocative_value,"runtime","locative-value");
+EXT(YruntimeYreduce,"runtime","reduce");
+EXT(YreadYread_from_string,"read","read-from-string");
+EXT(YruntimeYLfile_input_portG,"runtime","<file-input-port>");
+EXT(YruntimeYport_contents,"runtime","port-contents");
+EXT(YruntimeYnewline,"runtime","newline");
+EXT(YruntimeYLstring_output_portG,"runtime","<string-output-port>");
 EXT(YruntimeYfalse_or,"runtime","false-or");
+EXT(Yclass_slots,"boot","class-slots");
+EXT(Ysorted_app_mets,"boot","sorted-app-mets");
+EXT(YruntimeYid_hash,"runtime","id-hash");
+EXT(YruntimeYlogand,"runtime","logand");
+EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
+EXT(YruntimeYread,"runtime","read");
+EXT(YruntimeYLstring_input_portG,"runtime","<string-input-port>");
+EXT(YruntimeYLhandlerG,"runtime","<handler>");
+EXT(YruntimeYas,"runtime","as");
+EXT(Yfun_naryQ,"boot","fun-nary?");
+EXT(YruntimeYcurrent_gc_state,"runtime","current-gc-state");
+EXT(YruntimeYpick,"runtime","pick");
+EXT(YruntimeYtL,"runtime","t<");
+EXT(YruntimeYlognot,"runtime","lognot");
+EXT(YruntimeYforce_output,"runtime","force-output");
+EXT(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
+EXT(YruntimeYLinput_portG,"runtime","<input-port>");
+EXT(Ytype_elts,"boot","type-elts");
+EXT(YruntimeYTprint_baseT,"runtime","*print-base*");
+EXT(YruntimeYdel_dups,"runtime","del-dups");
+EXT(YruntimeYLhandler_infoG,"runtime","<handler-info>");
+EXT(YruntimeYceiling,"runtime","ceiling");
+EXT(YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
+EXT(YPdefine_method,"boot","%define-method");
+EXT(Yadd_slot,"boot","add-slot");
+EXT(YwriteYwriteln,"write","writeln");
+EXT(YruntimeYLbufG,"runtime","<buf>");
+EXT(YtopYtop,"top","top");
+EXT(YLoptsG,"boot","<opts>");
+EXT(YruntimeYpush,"runtime","push");
+EXT(Yclass_name,"boot","class-name");
+EXT(YisaQ,"boot","isa?");
+EXT(YruntimeYtE,"runtime","t=");
+EXT(YruntimeYmap_keyed,"runtime","map-keyed");
+EXT(Ymet_appQ,"boot","met-app?");
+EXT(YruntimeYwrite_char,"runtime","write-char");
+EXT(YLtypeG,"boot","<type>");
+EXT(YruntimeYnxt_state,"runtime","nxt-state");
+EXT(YLclassG,"boot","<class>");
+EXT(YruntimeYuppercaseQ,"runtime","uppercase?");
+EXT(YruntimeY2nd,"runtime","2nd");
+EXT(YruntimeYidentity,"runtime","identity");
+EXT(YruntimeYdo_keyed,"runtime","do-keyed");
+EXT(YruntimeYzeroQ,"runtime","zero?");
+EXT(Yobject_parents,"boot","object-parents");
+EXT(YruntimeYnow_key,"runtime","now-key");
+EXT(YruntimeYmemQ,"runtime","mem?");
+EXT(YsyntaxYsexpr_signature_parameters,"syntax","sexpr-signature-parameters");
+EXT(YruntimeYGE,"runtime",">=");
+EXT(YruntimeYE,"runtime","=");
+EXT(YruntimeYhandler_function,"runtime","handler-function");
+EXT(YruntimeYfrom_below,"runtime","from-below");
+EXT(YruntimeYtA,"runtime","t+");
+EXT(Yfun_specs,"boot","fun-specs");
+EXT(YruntimeYsig,"runtime","sig");
+EXT(YLsymG,"boot","<sym>");
+EXT(YruntimeYfrom_below_by,"runtime","from-below-by");
+EXT(YruntimeYnow_elt,"runtime","now-elt");
+EXT(YruntimeYdel,"runtime","del");
+EXT(YruntimeYalphabeticQ,"runtime","alphabetic?");
+EXT(YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
+EXT(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
+EXT(Yslot_setter,"boot","slot-setter");
+EXT(YruntimeYLmapG,"runtime","<map>");
+EXT(YruntimeYvec,"runtime","vec");
+EXT(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
+EXT(YruntimeYrevX,"runtime","rev!");
+EXT(YLgenG,"boot","<gen>");
+EXT(Yobject_slots,"boot","object-slots");
+EXT(YmacrosYmake_setter_name,"macros","make-setter-name");
+EXT(YruntimeYNEE,"runtime","~==");
+EXT(YLstrG,"boot","<str>");
+EXT(YruntimeYsub,"runtime","sub");
+EXT(Ylst,"boot","lst");
 EXT(Yfun_name,"boot","fun-name");
 EXT(Yclass_parents,"boot","class-parents");
 EXT(Yfind_setter,"boot","find-setter");
-EXT(YruntimeYdel_keys,"runtime","del-keys");
-EXT(YruntimeYreduce,"runtime","reduce");
-EXT(YruntimeYstr,"runtime","str");
-EXT(YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
+EXT(YruntimeYround,"runtime","round");
+EXT(YruntimeYbuf,"runtime","buf");
+EXT(YruntimeYLconditionG,"runtime","<condition>");
+EXT(YruntimeYfin_stateQ,"runtime","fin-state?");
+EXT(YruntimeYpop_lastX,"runtime","pop-last!");
+EXT(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
 EXT(YLvecG,"boot","<vec>");
+EXT(YruntimeYlogbitQ,"runtime","logbit?");
 EXT(Ytype_class,"boot","type-class");
-EXT(YruntimeYlognot,"runtime","lognot");
-EXT(Ylst,"boot","lst");
-EXT(YruntimeY1st,"runtime","1st");
+EXT(YruntimeYkeys,"runtime","keys");
+EXT(YruntimeYdefault_handler,"runtime","default-handler");
+EXT(Ynul,"boot","nul");
+EXT(YruntimeYlen,"runtime","len");
+EXT(YruntimeYini_state,"runtime","ini-state");
 EXT(Ygen_add_met,"boot","gen-add-met");
-EXT(YruntimeYas,"runtime","as");
-EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
-EXT(YruntimeYfrom_above_by,"runtime","from-above-by");
-EXT(YruntimeYalways,"runtime","always");
-EXT(YruntimeYtL,"runtime","t<");
-EXT(YruntimeYceiling,"runtime","ceiling");
+EXT(YruntimeYcondition_message,"runtime","condition-message");
+EXT(YruntimeYevenQ,"runtime","even?");
+EXT(YruntimeYpush_lastX,"runtime","push-last!");
+EXT(YruntimeYlow_elt_setter,"runtime","low-elt-setter");
+EXT(YtopYbacktrace,"top","backtrace");
+EXT(YruntimeYchar_readyQ,"runtime","char-ready?");
 EXT(YLflatG,"boot","<flat>");
 EXT(YLmetG,"boot","<met>");
-EXT(YruntimeYout,"runtime","out");
 EXT(Yfun_names,"boot","fun-names");
+EXT(YmacrosYvar_type,"macros","var-type");
 EXT(YruntimeYdo,"runtime","do");
-EXT(YruntimeYnewline,"runtime","newline");
+EXT(YruntimeY3rd,"runtime","3rd");
+EXT(YruntimeYopen_input_file,"runtime","open-input-file");
+EXT(YruntimeYas_lowercase,"runtime","as-lowercase");
 EXT(YruntimeYfab,"runtime","fab");
-EXT(YruntimeYtable_growth_factor,"runtime","table-growth-factor");
-EXT(YruntimeYforce_output,"runtime","force-output");
-EXT(YruntimeYchar_readyQ,"runtime","char-ready?");
-EXT(YruntimeYLstepG,"runtime","<step>");
-EXT(YruntimeYuppercaseQ,"runtime","uppercase?");
+EXT(YruntimeYclose_output_port,"runtime","close-output-port");
+EXT(YruntimeYnegQ,"runtime","neg?");
+EXT(YruntimeYmake_handler,"runtime","make-handler");
+EXT(YruntimeYstr,"runtime","str");
+EXT(YruntimeYstr_to_num,"runtime","str-to-num");
+EXT(YruntimeYanyQ,"runtime","any?");
+EXT(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
+EXT(YruntimeYto_str,"runtime","to-str");
 EXT(Yfind_getter,"boot","find-getter");
-EXT(YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
-EXT(YruntimeYdel_key,"runtime","del-key");
-EXT(YruntimeYtE,"runtime","t=");
-EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
-EXT(YruntimeYzeroQ,"runtime","zero?");
+EXT(YruntimeYfill,"runtime","fill");
+EXT(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
+EXT(YwriteYwrite_to_string,"write","write-to-string");
+EXT(YmacrosYmake_sym,"macros","make-sym");
+EXT(YruntimeYA,"runtime","+");
 EXT(YLlstG,"boot","<lst>");
-EXT(YruntimeYnxt_state,"runtime","nxt-state");
+EXT(YruntimeYnumericQ,"runtime","numeric?");
 EXT(Yfun_mets,"boot","fun-mets");
-EXT(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
+EXT(YruntimeYfrom_to_by,"runtime","from-to-by");
 EXT(YLfunG,"boot","<fun>");
-EXT(YruntimeYdel_dups,"runtime","del-dups");
-EXT(YruntimeYpick,"runtime","pick");
-EXT(YruntimeYdo_keyed,"runtime","do-keyed");
-EXT(YruntimeYmap_keyed,"runtime","map-keyed");
-EXT(YmacrosYpair,"macros","pair");
-EXT(YruntimeYnow_key,"runtime","now-key");
-EXT(YruntimeYalphabeticQ,"runtime","alphabetic?");
+EXT(YruntimeYalter,"runtime","alter");
+EXT(YtopYload,"top","load");
+EXT(YmacrosYvar_name,"macros","var-name");
+EXT(YDmax_int,"boot","$max-int");
 EXT(YLseqG,"boot","<seq>");
-EXT(YruntimeYGE,"runtime",">=");
-EXT(YruntimeY_,"runtime","-");
-EXT(YruntimeYtA,"runtime","t+");
-EXT(YruntimeYnow_elt,"runtime","now-elt");
-EXT(YruntimeYread_char,"runtime","read-char");
-EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
-EXT(YruntimeYmemQ,"runtime","mem?");
-EXT(Yslot_getter,"boot","slot-getter");
-EXT(YruntimeYLhandlerG,"runtime","<handler>");
-EXT(YruntimeYLfile_output_portG,"runtime","<file-output-port>");
+EXT(YwriteYwrite,"write","write");
 EXT(YruntimeYpeek_char,"runtime","peek-char");
+EXT(YruntimeYmin,"runtime","min");
+EXT(YsyntaxYeval,"syntax","eval");
+EXT(YruntimeYtable_growth_factor,"runtime","table-growth-factor");
+EXT(YruntimeYsub_setter,"runtime","sub-setter");
+EXT(YruntimeYLfile_output_portG,"runtime","<file-output-port>");
+EXT(YruntimeYtruncate,"runtime","truncate");
+EXT(Yhandler_info_message,"boot","handler-info-message");
+EXT(YruntimeYS,"runtime","/");
+EXT(YruntimeYpop,"runtime","pop");
+EXT(Yslot_getter,"boot","slot-getter");
+EXT(YmacrosYmatch_sublist,"macros","match-sublist");
 EXT(YruntimeYG,"runtime",">");
 EXT(YruntimeYallQ,"runtime","all?");
-EXT(YLcolG,"boot","<col>");
-EXT(YruntimeY2nd,"runtime","2nd");
-EXT(YruntimeYopen_input_file,"runtime","open-input-file");
-EXT(YmacrosYmake_setter_name,"macros","make-setter-name");
+EXT(YruntimeYdel_keys,"runtime","del-keys");
+EXT(YmacrosYcat,"macros","cat");
+EXT(YruntimeYLrangeG,"runtime","<range>");
+EXT(YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
+EXT(YruntimeYoddQ,"runtime","odd?");
+EXT(YruntimeYread_char,"runtime","read-char");
+EXT(YruntimeYLlistG,"runtime","<list>");
 EXT(YruntimeYLstring_portG,"runtime","<string-port>");
-EXT(YruntimeYNEE,"runtime","~==");
-EXT(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
-EXT(YruntimeYround,"runtime","round");
-EXT(YruntimeYfrom_by,"runtime","from-by");
-EXT(YruntimeYLhandler_infoG,"runtime","<handler-info>");
-EXT(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
-EXT(YruntimeYlogbitQ,"runtime","logbit?");
+EXT(YruntimeYfirst_then,"runtime","first-then");
+EXT(YmacrosYtup,"macros","tup");
+EXT(Ynil,"boot","nil");
+EXT(YruntimeYrcurry,"runtime","rcurry");
 EXT(Yclass_direct_slots,"boot","class-direct-slots");
-EXT(YruntimeYeof_objectQ,"runtime","eof-object?");
-EXT(YruntimeYtable_protocol,"runtime","table-protocol");
-EXT(Ynul,"boot","nul");
+EXT(YruntimeYLportG,"runtime","<port>");
+EXT(YruntimeYfabs,"runtime","fabs");
+EXT(YruntimeYlow_elt,"runtime","low-elt");
+EXT(YruntimeYlast,"runtime","last");
 EXT(YruntimeYL,"runtime","<");
 EXT(YLlocG,"boot","<loc>");
 EXT(Yfab_class,"boot","fab-class");
-EXT(YwriteYwrite,"write","write");
-EXT(YruntimeYfirst_then,"runtime","first-then");
-EXT(YwriteYwriteln,"write","writeln");
-EXT(YruntimeYdel,"runtime","del");
-EXT(YruntimeYevenQ,"runtime","even?");
+EXT(YruntimeYformat,"runtime","format");
+EXT(YruntimeYneg,"runtime","neg");
 EXT(YruntimeYlist,"runtime","list");
+EXT(YruntimeYfrom_to,"runtime","from-to");
+EXT(YruntimeYcopy_state,"runtime","copy-state");
 EXT(Ytype_object,"boot","type-object");
-EXT(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
-EXT(YruntimeYini_state,"runtime","ini-state");
+EXT(YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
+EXT(YruntimeYcompose,"runtime","compose");
+EXT(YruntimeYeof_objectQ,"runtime","eof-object?");
+EXT(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
+EXT(YruntimeYapp_args,"runtime","app-args");
 EXT(YPisa,"boot","%isa");
 EXT(YLfloG,"boot","<flo>");
-EXT(YruntimeYfrom_above,"runtime","from-above");
-EXT(YLtupG,"boot","<tup>");
-EXT(YruntimeYas_lowercase,"runtime","as-lowercase");
-EXT(Yerror,"boot","error");
+EXT(YruntimeYLerrorG,"runtime","<error>");
 EXT(Yhead,"boot","head");
-EXT(YruntimeYnegQ,"runtime","neg?");
-EXT(YruntimeYlen,"runtime","len");
-EXT(YruntimeYLmapG,"runtime","<map>");
-EXT(YruntimeYidentity,"runtime","identity");
-EXT(YmacrosYvar_type,"macros","var-type");
-EXT(YruntimeYstr_to_num,"runtime","str-to-num");
-EXT(YruntimeYclose_output_port,"runtime","close-output-port");
-EXT(YruntimeYsub,"runtime","sub");
-EXT(YsyntaxYsexpr_signature_parameters,"syntax","sexpr-signature-parameters");
+EXT(YruntimeYas_uppercase,"runtime","as-uppercase");
+EXT(YruntimeYrev,"runtime","rev");
+EXT(YruntimeYdel_key,"runtime","del-key");
+EXT(YruntimeYapp_filename,"runtime","app-filename");
+EXT(YruntimeYto_digit,"runtime","to-digit");
 EXT(Yslot_init,"boot","slot-init");
+EXT(YruntimeYLfile_portG,"runtime","<file-port>");
 EXT(YLintG,"boot","<int>");
-EXT(YruntimeYhandler_function,"runtime","handler-function");
-EXT(YruntimeYnumericQ,"runtime","numeric?");
-EXT(YruntimeYsig,"runtime","sig");
-EXT(YruntimeYto_str,"runtime","to-str");
+EXT(YruntimeYnow_elt_setter,"runtime","now-elt-setter");
+EXT(YruntimeYclose_input_port,"runtime","close-input-port");
+EXT(YruntimeYLsimple_errorG,"runtime","<simple-error>");
 EXT(YruntimeYin,"runtime","in");
-EXT(YmacrosYmake_sym,"macros","make-sym");
-EXT(YruntimeYanyQ,"runtime","any?");
+EXT(YmacrosYemptyQ,"macros","empty?");
+EXT(YmacrosYmatch_atom,"macros","match-atom");
+EXT(YruntimeYLoutput_portG,"runtime","<output-port>");
+EXT(YruntimeYwrite_string,"runtime","write-string");
+EXT(YruntimeYcurry,"runtime","curry");
+EXT(YruntimeYcat2,"runtime","cat2");
+EXT(YruntimeYfloorS,"runtime","floor/");
+EXT(YmacrosYgensym,"macros","gensym");
+EXT(YtopYdo_stack_frames,"top","do-stack-frames");
 EXT(YLnumG,"boot","<num>");
 EXT(Yclass_direct_children,"boot","class-direct-children");
-EXT(YruntimeYTprint_baseT,"runtime","*print-base*");
-EXT(YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
-EXT(YruntimeYfill,"runtime","fill");
+EXT(YruntimeYceilingS,"runtime","ceiling/");
+EXT(YruntimeYfrom_above_by,"runtime","from-above-by");
+EXT(YruntimeYdo2,"runtime","do2");
 EXT(Yfun_value,"boot","fun-value");
-EXT(YruntimeYLbufG,"runtime","<buf>");
-EXT(YruntimeYLstr_tabG,"runtime","<str-tab>");
+EXT(YruntimeYfrom_by,"runtime","from-by");
+EXT(YruntimeYcatX,"runtime","cat!");
+EXT(YruntimeYash,"runtime","ash");
+EXT(YruntimeY_,"runtime","-");
+EXT(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
+EXT(YruntimeYnum_to_str,"runtime","num-to-str");
+EXT(YmacrosYpair,"macros","pair");
 EXT(YsubtypeQ,"boot","subtype?");
-EXT(YmacrosYvar_name,"macros","var-name");
-EXT(YruntimeYS,"runtime","/");
-EXT(YruntimeYid_hash,"runtime","id-hash");
-EXT(YruntimeYalter,"runtime","alter");
+EXT(YruntimeYLstepG,"runtime","<step>");
 EXT(Yslot_value_setter,"boot","slot-value-setter");
 EXT(YLchrG,"boot","<chr>");
-EXT(YruntimeYdefault_handler,"runtime","default-handler");
-EXT(YruntimeY3rd,"runtime","3rd");
-EXT(YruntimeYLconditionG,"runtime","<condition>");
-EXT(YruntimeYtruncate,"runtime","truncate");
-EXT(YruntimeYmin,"runtime","min");
-EXT(Yadd_slot,"boot","add-slot");
-EXT(YruntimeYvec,"runtime","vec");
-EXT(YruntimeYnow_elt_setter,"runtime","now-elt-setter");
-EXT(YruntimeYcondition_message,"runtime","condition-message");
+EXT(YruntimeYroundS,"runtime","round/");
 
 /* FORWARD QUOTATIONS: */
 
@@ -315,11 +324,11 @@ loop:
 extern MODULE_INFO module_info_proto;
 extern MODULE_INFO module_info_protoSeval;
 extern MODULE_INFO module_info_runtime;
-extern MODULE_INFO module_info_boot;
-extern MODULE_INFO module_info_top;
-extern MODULE_INFO module_info_macros;
 extern MODULE_INFO module_info_write;
+extern MODULE_INFO module_info_macros;
+extern MODULE_INFO module_info_boot;
 extern MODULE_INFO module_info_read;
+extern MODULE_INFO module_info_top;
 extern MODULE_INFO module_info_syntax;
 
 static USE_INFO use_infos[] = {
@@ -329,340 +338,352 @@ static USE_INFO use_infos[] = {
 };
 
 static IMPORT_INFO import_infos[] = {
-  {"odd?", &module_info_runtime, "odd?"},
-  {"current-gc-state", &module_info_runtime, "current-gc-state"},
+  {"add", &module_info_runtime, "add"},
+  {"add!", &module_info_runtime, "add!"},
+  {"flo-bits", &module_info_runtime, "flo-bits"},
+  {"display", &module_info_write, "display"},
+  {"lsh", &module_info_runtime, "lsh"},
+  {"fab-map", &module_info_runtime, "fab-map"},
+  {"case", &module_info_macros, "case"},
+  {"max", &module_info_runtime, "max"},
+  {"match-unquote", &module_info_macros, "match-unquote"},
+  {"open-output-file", &module_info_runtime, "open-output-file"},
+  {"set", &module_info_boot, "set"},
   {"slot-owner", &module_info_boot, "slot-owner"},
-  {"load", &module_info_top, "load"},
-  {"and", &module_info_macros, "and"},
-  {"match-sublist", &module_info_macros, "match-sublist"},
+  {"%slot", &module_info_boot, "%slot"},
+  {"*", &module_info_runtime, "*"},
+  {"locative-value", &module_info_runtime, "locative-value"},
+  {"export", &module_info_boot, "export"},
+  {"table-growth-threshold", &module_info_runtime, "table-growth-threshold"},
+  {"abs", &module_info_runtime, "abs"},
   {"<log>", &module_info_boot, "<log>"},
+  {"truncate/", &module_info_runtime, "truncate/"},
   {"<slot>", &module_info_boot, "<slot>"},
-  {"call-with-string-input-port", &module_info_runtime, "call-with-string-input-port"},
-  {"fabs", &module_info_runtime, "fabs"},
-  {"%next-methods", &module_info_boot, "%next-methods"},
-  {"ct", &module_info_boot, "ct"},
+  {"address-of", &module_info_runtime, "address-of"},
+  {"from-above", &module_info_runtime, "from-above"},
+  {"table-protocol", &module_info_runtime, "table-protocol"},
   {"pos", &module_info_runtime, "pos"},
-  {"neg", &module_info_runtime, "neg"},
-  {"make-handler", &module_info_runtime, "make-handler"},
-  {"push", &module_info_runtime, "push"},
-  {"as-uppercase", &module_info_runtime, "as-uppercase"},
-  {"quasiquote", &module_info_boot, "quasiquote"},
-  {"from-below", &module_info_runtime, "from-below"},
+  {"dec", &module_info_macros, "dec"},
+  {"collect", &module_info_macros, "collect"},
+  {"default", &module_info_runtime, "default"},
+  {"floor", &module_info_runtime, "floor"},
+  {"when", &module_info_macros, "when"},
   {"class-direct-parents", &module_info_boot, "class-direct-parents"},
-  {"close-input-port", &module_info_runtime, "close-input-port"},
+  {"empty", &module_info_runtime, "empty"},
+  {"need-implementation", &module_info_macros, "need-implementation"},
+  {"$min-int", &module_info_boot, "$min-int"},
   {"not", &module_info_boot, "not"},
+  {"modulo", &module_info_runtime, "modulo"},
   {"slot-value", &module_info_boot, "slot-value"},
   {"<any>", &module_info_boot, "<any>"},
-  {"from-below-by", &module_info_runtime, "from-below-by"},
+  {"<assocs>", &module_info_runtime, "<assocs>"},
+  {"condition-arguments", &module_info_runtime, "condition-arguments"},
+  {"from", &module_info_runtime, "from"},
   {"<union>", &module_info_boot, "<union>"},
-  {"write-string", &module_info_runtime, "write-string"},
+  {"always", &module_info_runtime, "always"},
+  {"find-key", &module_info_runtime, "find-key"},
+  {"reduce+", &module_info_runtime, "reduce+"},
+  {"out", &module_info_runtime, "out"},
+  {"error", &module_info_boot, "error"},
+  {"may-isa?", &module_info_boot, "may-isa?"},
+  {"apply", &module_info_macros, "apply"},
+  {"map", &module_info_macros, "map"},
+  {"fun-arity", &module_info_boot, "fun-arity"},
+  {"elt-or", &module_info_runtime, "elt-or"},
+  {"elt", &module_info_runtime, "elt"},
+  {"<=", &module_info_runtime, "<="},
+  {"<col>", &module_info_boot, "<col>"},
+  {"elt-setter", &module_info_runtime, "elt-setter"},
+  {"remainder", &module_info_runtime, "remainder"},
+  {"assocs-test", &module_info_runtime, "assocs-test"},
+  {"<subclass>", &module_info_boot, "<subclass>"},
+  {"nul?", &module_info_runtime, "nul?"},
+  {"port-index", &module_info_runtime, "port-index"},
+  {"quote", &module_info_boot, "quote"},
+  {"map2", &module_info_runtime, "map2"},
+  {"logior", &module_info_runtime, "logior"},
+  {"fun", &module_info_boot, "fun"},
+  {"lowercase?", &module_info_runtime, "lowercase?"},
+  {"match-empty-list", &module_info_macros, "match-empty-list"},
+  {"slot-type", &module_info_boot, "slot-type"},
+  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
+  {"call-with-output-file", &module_info_runtime, "call-with-output-file"},
+  {"~=", &module_info_runtime, "~="},
+  {"<singleton>", &module_info_boot, "<singleton>"},
+  {"dg", &module_info_boot, "dg"},
+  {"<str-tab>", &module_info_runtime, "<str-tab>"},
+  {"1st", &module_info_runtime, "1st"},
+  {"tail", &module_info_boot, "tail"},
+  {"pos?", &module_info_runtime, "pos?"},
+  {"<tab>", &module_info_runtime, "<tab>"},
+  {"logxor", &module_info_runtime, "logxor"},
+  {"<tup>", &module_info_boot, "<tup>"},
+  {"==", &module_info_macros, "=="},
+  {"reduce", &module_info_runtime, "reduce"},
+  {"read-from-string", &module_info_read, "read-from-string"},
+  {"<file-input-port>", &module_info_runtime, "<file-input-port>"},
+  {"opf", &module_info_macros, "opf"},
+  {"port-contents", &module_info_runtime, "port-contents"},
+  {"newline", &module_info_runtime, "newline"},
+  {"<string-output-port>", &module_info_runtime, "<string-output-port>"},
+  {"false-or", &module_info_runtime, "false-or"},
+  {"class-slots", &module_info_boot, "class-slots"},
+  {"sorted-app-mets", &module_info_boot, "sorted-app-mets"},
+  {"id-hash", &module_info_runtime, "id-hash"},
+  {"logand", &module_info_runtime, "logand"},
+  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
+  {"read", &module_info_runtime, "read"},
+  {"<string-input-port>", &module_info_runtime, "<string-input-port>"},
+  {"<handler>", &module_info_runtime, "<handler>"},
+  {"as", &module_info_runtime, "as"},
+  {"fun-nary?", &module_info_boot, "fun-nary?"},
+  {"current-gc-state", &module_info_runtime, "current-gc-state"},
+  {"pick", &module_info_runtime, "pick"},
+  {"if", &module_info_boot, "if"},
+  {"t<", &module_info_runtime, "t<"},
+  {"lognot", &module_info_runtime, "lognot"},
+  {"force-output", &module_info_runtime, "force-output"},
+  {"handler-matches?", &module_info_runtime, "handler-matches?"},
+  {"<input-port>", &module_info_runtime, "<input-port>"},
+  {"type-elts", &module_info_boot, "type-elts"},
+  {"*print-base*", &module_info_runtime, "*print-base*"},
+  {"del-dups", &module_info_runtime, "del-dups"},
+  {"<handler-info>", &module_info_runtime, "<handler-info>"},
+  {"ceiling", &module_info_runtime, "ceiling"},
+  {"%pair", &module_info_boot, "%pair"},
+  {"case-insensitive-string-equal", &module_info_runtime, "case-insensitive-string-equal"},
+  {"%define-method", &module_info_boot, "%define-method"},
+  {"add-slot", &module_info_boot, "add-slot"},
+  {"%next-methods", &module_info_boot, "%next-methods"},
+  {"writeln", &module_info_write, "writeln"},
+  {"<buf>", &module_info_runtime, "<buf>"},
+  {"top", &module_info_top, "top"},
+  {"<opts>", &module_info_boot, "<opts>"},
+  {"push", &module_info_runtime, "push"},
+  {"class-name", &module_info_boot, "class-name"},
+  {"isa?", &module_info_boot, "isa?"},
+  {"select", &module_info_macros, "select"},
+  {"t=", &module_info_runtime, "t="},
+  {"use", &module_info_boot, "use"},
+  {"map-keyed", &module_info_runtime, "map-keyed"},
+  {"isa", &module_info_boot, "isa"},
+  {"met-app?", &module_info_boot, "met-app?"},
+  {"write-char", &module_info_runtime, "write-char"},
+  {"<type>", &module_info_boot, "<type>"},
+  {"nxt-state", &module_info_runtime, "nxt-state"},
+  {"<class>", &module_info_boot, "<class>"},
+  {"uppercase?", &module_info_runtime, "uppercase?"},
   {"let", &module_info_boot, "let"},
   {"pushf", &module_info_macros, "pushf"},
-  {"may-isa?", &module_info_boot, "may-isa?"},
-  {"case-insensitive-string-equal", &module_info_runtime, "case-insensitive-string-equal"},
-  {"fun-arity", &module_info_boot, "fun-arity"},
-  {"pop-last!", &module_info_runtime, "pop-last!"},
-  {"fin-state?", &module_info_runtime, "fin-state?"},
-  {"sub-setter", &module_info_runtime, "sub-setter"},
-  {"loc", &module_info_boot, "loc"},
+  {"2nd", &module_info_runtime, "2nd"},
   {"ct-also", &module_info_boot, "ct-also"},
-  {"to-digit", &module_info_runtime, "to-digit"},
-  {"<serious-condition>", &module_info_runtime, "<serious-condition>"},
-  {"<file-port>", &module_info_runtime, "<file-port>"},
-  {"<subclass>", &module_info_boot, "<subclass>"},
-  {"write-to-string", &module_info_write, "write-to-string"},
-  {"cat", &module_info_macros, "cat"},
-  {"<input-port>", &module_info_runtime, "<input-port>"},
-  {"dg", &module_info_boot, "dg"},
-  {"next-method", &module_info_macros, "next-method"},
-  {"read-from-string", &module_info_read, "read-from-string"},
-  {"backtrace", &module_info_top, "backtrace"},
-  {"fun", &module_info_boot, "fun"},
-  {"empty?", &module_info_macros, "empty?"},
-  {"buf", &module_info_runtime, "buf"},
-  {"port-index", &module_info_runtime, "port-index"},
-  {"slot-type", &module_info_boot, "slot-type"},
-  {"read", &module_info_runtime, "read"},
-  {"ceiling/", &module_info_runtime, "ceiling/"},
-  {"format", &module_info_runtime, "format"},
-  {"handler-info-message", &module_info_boot, "handler-info-message"},
-  {"rev!", &module_info_runtime, "rev!"},
-  {"last", &module_info_runtime, "last"},
-  {"<singleton>", &module_info_boot, "<singleton>"},
-  {"floor/", &module_info_runtime, "floor/"},
-  {"match-atom", &module_info_macros, "match-atom"},
-  {"tail", &module_info_boot, "tail"},
-  {"lsh", &module_info_runtime, "lsh"},
-  {"gensym", &module_info_macros, "gensym"},
-  {"ash", &module_info_runtime, "ash"},
-  {"num-to-str", &module_info_runtime, "num-to-str"},
-  {"class-slots", &module_info_boot, "class-slots"},
-  {"flo-bits", &module_info_runtime, "flo-bits"},
-  {"rcurry", &module_info_runtime, "rcurry"},
-  {"round/", &module_info_runtime, "round/"},
-  {"case-insensitive-string-hash", &module_info_runtime, "case-insensitive-string-hash"},
-  {"sorted-app-mets", &module_info_boot, "sorted-app-mets"},
-  {"<string-output-port>", &module_info_runtime, "<string-output-port>"},
-  {"rev", &module_info_runtime, "rev"},
-  {"use", &module_info_boot, "use"},
-  {"abs", &module_info_runtime, "abs"},
-  {"bound?", &module_info_boot, "bound?"},
-  {"<port>", &module_info_runtime, "<port>"},
-  {"for", &module_info_macros, "for"},
-  {"do2", &module_info_runtime, "do2"},
-  {"fun-nary?", &module_info_boot, "fun-nary?"},
-  {"nil", &module_info_boot, "nil"},
-  {"push-last!", &module_info_runtime, "push-last!"},
-  {"*", &module_info_runtime, "*"},
-  {"<output-port>", &module_info_runtime, "<output-port>"},
-  {"truncate/", &module_info_runtime, "truncate/"},
-  {"case", &module_info_macros, "case"},
-  {"<list>", &module_info_runtime, "<list>"},
-  {"match-unquote", &module_info_macros, "match-unquote"},
-  {"max", &module_info_runtime, "max"},
-  {"<error>", &module_info_runtime, "<error>"},
-  {"do-stack-frames", &module_info_top, "do-stack-frames"},
-  {"type-elts", &module_info_boot, "type-elts"},
-  {"compose", &module_info_runtime, "compose"},
-  {"export", &module_info_boot, "export"},
-  {"open-output-file", &module_info_runtime, "open-output-file"},
-  {"app-args", &module_info_runtime, "app-args"},
-  {"write-char", &module_info_runtime, "write-char"},
-  {"default", &module_info_runtime, "default"},
-  {"address-of", &module_info_runtime, "address-of"},
-  {"port-contents", &module_info_runtime, "port-contents"},
-  {"%define-method", &module_info_boot, "%define-method"},
-  {"call-with-output-file", &module_info_runtime, "call-with-output-file"},
-  {"floor", &module_info_runtime, "floor"},
-  {"cat2", &module_info_runtime, "cat2"},
-  {"modulo", &module_info_runtime, "modulo"},
-  {"collecting", &module_info_macros, "collecting"},
-  {"<string-input-port>", &module_info_runtime, "<string-input-port>"},
-  {"cat!", &module_info_runtime, "cat!"},
-  {"<opts>", &module_info_boot, "<opts>"},
-  {"app-filename", &module_info_runtime, "app-filename"},
-  {"class-name", &module_info_boot, "class-name"},
-  {"when", &module_info_macros, "when"},
-  {"need-implementation", &module_info_macros, "need-implementation"},
-  {"<assocs>", &module_info_runtime, "<assocs>"},
-  {"isa?", &module_info_boot, "isa?"},
-  {"empty", &module_info_runtime, "empty"},
-  {"met-app?", &module_info_boot, "met-app?"},
-  {"+", &module_info_runtime, "+"},
-  {"<type>", &module_info_boot, "<type>"},
-  {"<simple-error>", &module_info_runtime, "<simple-error>"},
-  {"<class>", &module_info_boot, "<class>"},
-  {"<range>", &module_info_runtime, "<range>"},
-  {"remainder", &module_info_runtime, "remainder"},
-  {"add", &module_info_runtime, "add"},
-  {"find-key", &module_info_runtime, "find-key"},
-  {"elt", &module_info_runtime, "elt"},
-  {"reduce+", &module_info_runtime, "reduce+"},
-  {"curry", &module_info_runtime, "curry"},
-  {"display", &module_info_write, "display"},
+  {"identity", &module_info_runtime, "identity"},
+  {"do-keyed", &module_info_runtime, "do-keyed"},
+  {"zero?", &module_info_runtime, "zero?"},
   {"object-parents", &module_info_boot, "object-parents"},
-  {"eval", &module_info_syntax, "eval"},
-  {"<=", &module_info_runtime, "<="},
-  {"elt-setter", &module_info_runtime, "elt-setter"},
-  {"logior", &module_info_runtime, "logior"},
-  {"lowercase?", &module_info_runtime, "lowercase?"},
-  {"%pair", &module_info_boot, "%pair"},
+  {"now-key", &module_info_runtime, "now-key"},
+  {"fin", &module_info_boot, "fin"},
+  {"mem?", &module_info_runtime, "mem?"},
+  {"sexpr-signature-parameters", &module_info_syntax, "sexpr-signature-parameters"},
+  {">=", &module_info_runtime, ">="},
   {"=", &module_info_runtime, "="},
+  {"handler-function", &module_info_runtime, "handler-function"},
+  {"from-below", &module_info_runtime, "from-below"},
+  {"t+", &module_info_runtime, "t+"},
   {"fun-specs", &module_info_boot, "fun-specs"},
-  {"nul?", &module_info_runtime, "nul?"},
-  {"<file-input-port>", &module_info_runtime, "<file-input-port>"},
+  {"sig", &module_info_runtime, "sig"},
   {"<sym>", &module_info_boot, "<sym>"},
-  {"<tab>", &module_info_runtime, "<tab>"},
-  {"locative-value-setter", &module_info_runtime, "locative-value-setter"},
-  {"assocs-test", &module_info_runtime, "assocs-test"},
-  {"from-to-by", &module_info_runtime, "from-to-by"},
-  {"map", &module_info_macros, "map"},
-  {"match-empty-list", &module_info_macros, "match-empty-list"},
-  {"pop", &module_info_runtime, "pop"},
-  {"map2", &module_info_runtime, "map2"},
+  {"from-below-by", &module_info_runtime, "from-below-by"},
+  {"next-method", &module_info_macros, "next-method"},
+  {"now-elt", &module_info_runtime, "now-elt"},
+  {"del", &module_info_runtime, "del"},
+  {"alphabetic?", &module_info_runtime, "alphabetic?"},
+  {"case-insensitive-string-hash", &module_info_runtime, "case-insensitive-string-hash"},
+  {"$default-handler-info", &module_info_runtime, "$default-handler-info"},
   {"slot-setter", &module_info_boot, "slot-setter"},
-  {"pos?", &module_info_runtime, "pos?"},
-  {"logxor", &module_info_runtime, "logxor"},
-  {"from-to", &module_info_runtime, "from-to"},
-  {"inc", &module_info_macros, "inc"},
-  {"~=", &module_info_runtime, "~="},
+  {"<map>", &module_info_runtime, "<map>"},
+  {"vec", &module_info_runtime, "vec"},
+  {"call-with-input-file", &module_info_runtime, "call-with-input-file"},
+  {"rev!", &module_info_runtime, "rev!"},
   {"<gen>", &module_info_boot, "<gen>"},
-  {"copy-state", &module_info_runtime, "copy-state"},
   {"object-slots", &module_info_boot, "object-slots"},
-  {"from", &module_info_runtime, "from"},
+  {"make-setter-name", &module_info_macros, "make-setter-name"},
+  {"quasiquote", &module_info_boot, "quasiquote"},
+  {"~==", &module_info_runtime, "~=="},
   {"<str>", &module_info_boot, "<str>"},
-  {"<simple-condition>", &module_info_runtime, "<simple-condition>"},
-  {"==", &module_info_macros, "=="},
-  {"dc", &module_info_boot, "dc"},
-  {"top", &module_info_top, "top"},
-  {"tup", &module_info_macros, "tup"},
-  {"logand", &module_info_runtime, "logand"},
-  {"locative-value", &module_info_runtime, "locative-value"},
-  {"false-or", &module_info_runtime, "false-or"},
+  {"sub", &module_info_runtime, "sub"},
+  {"lst", &module_info_boot, "lst"},
+  {"assert", &module_info_macros, "assert"},
   {"fun-name", &module_info_boot, "fun-name"},
   {"class-parents", &module_info_boot, "class-parents"},
   {"find-setter", &module_info_boot, "find-setter"},
-  {"del-keys", &module_info_runtime, "del-keys"},
-  {"reduce", &module_info_runtime, "reduce"},
-  {"str", &module_info_runtime, "str"},
-  {"table-shrink-threshold", &module_info_runtime, "table-shrink-threshold"},
+  {"round", &module_info_runtime, "round"},
+  {"buf", &module_info_runtime, "buf"},
+  {"<condition>", &module_info_runtime, "<condition>"},
+  {"fin-state?", &module_info_runtime, "fin-state?"},
+  {"pop-last!", &module_info_runtime, "pop-last!"},
+  {"<simple-condition>", &module_info_runtime, "<simple-condition>"},
   {"<vec>", &module_info_boot, "<vec>"},
+  {"logbit?", &module_info_runtime, "logbit?"},
   {"type-class", &module_info_boot, "type-class"},
-  {"lognot", &module_info_runtime, "lognot"},
-  {"popf", &module_info_macros, "popf"},
-  {"lst", &module_info_boot, "lst"},
-  {"1st", &module_info_runtime, "1st"},
+  {"keys", &module_info_runtime, "keys"},
+  {"default-handler", &module_info_runtime, "default-handler"},
+  {"nul", &module_info_boot, "nul"},
+  {"len", &module_info_runtime, "len"},
+  {"ini-state", &module_info_runtime, "ini-state"},
+  {"dlet", &module_info_macros, "dlet"},
+  {"collected", &module_info_macros, "collected"},
   {"gen-add-met", &module_info_boot, "gen-add-met"},
-  {"as", &module_info_runtime, "as"},
-  {"condition-arguments", &module_info_runtime, "condition-arguments"},
-  {"from-above-by", &module_info_runtime, "from-above-by"},
-  {"always", &module_info_runtime, "always"},
-  {"t<", &module_info_runtime, "t<"},
-  {"ceiling", &module_info_runtime, "ceiling"},
+  {"or", &module_info_macros, "or"},
+  {"condition-message", &module_info_runtime, "condition-message"},
+  {"even?", &module_info_runtime, "even?"},
+  {"push-last!", &module_info_runtime, "push-last!"},
+  {"low-elt-setter", &module_info_runtime, "low-elt-setter"},
+  {"backtrace", &module_info_top, "backtrace"},
+  {"char-ready?", &module_info_runtime, "char-ready?"},
   {"<flat>", &module_info_boot, "<flat>"},
   {"<met>", &module_info_boot, "<met>"},
-  {"out", &module_info_runtime, "out"},
   {"fun-names", &module_info_boot, "fun-names"},
+  {"var-type", &module_info_macros, "var-type"},
   {"do", &module_info_runtime, "do"},
-  {"newline", &module_info_runtime, "newline"},
+  {"seq", &module_info_boot, "seq"},
+  {"try", &module_info_boot, "try"},
+  {"3rd", &module_info_runtime, "3rd"},
+  {"open-input-file", &module_info_runtime, "open-input-file"},
+  {"as-lowercase", &module_info_runtime, "as-lowercase"},
   {"fab", &module_info_runtime, "fab"},
-  {"table-growth-factor", &module_info_runtime, "table-growth-factor"},
-  {"force-output", &module_info_runtime, "force-output"},
-  {"char-ready?", &module_info_runtime, "char-ready?"},
-  {"<step>", &module_info_runtime, "<step>"},
-  {"uppercase?", &module_info_runtime, "uppercase?"},
+  {"close-output-port", &module_info_runtime, "close-output-port"},
+  {"neg?", &module_info_runtime, "neg?"},
+  {"make-handler", &module_info_runtime, "make-handler"},
+  {"collecting", &module_info_macros, "collecting"},
+  {"str", &module_info_runtime, "str"},
+  {"str-to-num", &module_info_runtime, "str-to-num"},
+  {"any?", &module_info_runtime, "any?"},
+  {"dm", &module_info_boot, "dm"},
+  {"rep", &module_info_boot, "rep"},
+  {"call-with-string-output-port", &module_info_runtime, "call-with-string-output-port"},
+  {"to-str", &module_info_runtime, "to-str"},
   {"find-getter", &module_info_boot, "find-getter"},
-  {"$permanent-hash-state", &module_info_runtime, "$permanent-hash-state"},
-  {"isa", &module_info_boot, "isa"},
-  {"del-key", &module_info_runtime, "del-key"},
-  {"lab", &module_info_boot, "lab"},
-  {"t=", &module_info_runtime, "t="},
-  {"select", &module_info_macros, "select"},
-  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
-  {"zero?", &module_info_runtime, "zero?"},
+  {"fill", &module_info_runtime, "fill"},
+  {"<serious-condition>", &module_info_runtime, "<serious-condition>"},
+  {"write-to-string", &module_info_write, "write-to-string"},
+  {"make-sym", &module_info_macros, "make-sym"},
+  {"unless", &module_info_macros, "unless"},
+  {"+", &module_info_runtime, "+"},
   {"<lst>", &module_info_boot, "<lst>"},
-  {"nxt-state", &module_info_runtime, "nxt-state"},
+  {"numeric?", &module_info_runtime, "numeric?"},
+  {"loc", &module_info_boot, "loc"},
   {"fun-mets", &module_info_boot, "fun-mets"},
-  {"call-with-input-file", &module_info_runtime, "call-with-input-file"},
+  {"from-to-by", &module_info_runtime, "from-to-by"},
+  {"dv", &module_info_boot, "dv"},
   {"<fun>", &module_info_boot, "<fun>"},
-  {"del-dups", &module_info_runtime, "del-dups"},
-  {"pick", &module_info_runtime, "pick"},
-  {"do-keyed", &module_info_runtime, "do-keyed"},
-  {"map-keyed", &module_info_runtime, "map-keyed"},
-  {"pair", &module_info_macros, "pair"},
-  {"now-key", &module_info_runtime, "now-key"},
-  {"fin", &module_info_boot, "fin"},
-  {"alphabetic?", &module_info_runtime, "alphabetic?"},
+  {"mif", &module_info_boot, "mif"},
+  {"alter", &module_info_runtime, "alter"},
+  {"load", &module_info_top, "load"},
+  {"var-name", &module_info_macros, "var-name"},
+  {"$max-int", &module_info_boot, "$max-int"},
   {"<seq>", &module_info_boot, "<seq>"},
-  {">=", &module_info_runtime, ">="},
-  {"-", &module_info_runtime, "-"},
-  {"t+", &module_info_runtime, "t+"},
-  {"now-elt", &module_info_runtime, "now-elt"},
-  {"read-char", &module_info_runtime, "read-char"},
-  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
-  {"mem?", &module_info_runtime, "mem?"},
-  {"slot-getter", &module_info_boot, "slot-getter"},
-  {"set", &module_info_boot, "set"},
-  {"<handler>", &module_info_runtime, "<handler>"},
-  {"<file-output-port>", &module_info_runtime, "<file-output-port>"},
+  {"write", &module_info_write, "write"},
   {"peek-char", &module_info_runtime, "peek-char"},
+  {"min", &module_info_runtime, "min"},
+  {"eval", &module_info_syntax, "eval"},
+  {"table-growth-factor", &module_info_runtime, "table-growth-factor"},
+  {"sub-setter", &module_info_runtime, "sub-setter"},
+  {"<file-output-port>", &module_info_runtime, "<file-output-port>"},
+  {"truncate", &module_info_runtime, "truncate"},
+  {"handler-info-message", &module_info_boot, "handler-info-message"},
+  {"/", &module_info_runtime, "/"},
+  {"pop", &module_info_runtime, "pop"},
+  {"slot-getter", &module_info_boot, "slot-getter"},
+  {"match-sublist", &module_info_macros, "match-sublist"},
+  {"inc", &module_info_macros, "inc"},
   {">", &module_info_runtime, ">"},
   {"all?", &module_info_runtime, "all?"},
-  {"<col>", &module_info_boot, "<col>"},
-  {"2nd", &module_info_runtime, "2nd"},
-  {"open-input-file", &module_info_runtime, "open-input-file"},
-  {"make-setter-name", &module_info_macros, "make-setter-name"},
+  {"del-keys", &module_info_runtime, "del-keys"},
+  {"cat", &module_info_macros, "cat"},
+  {"<range>", &module_info_runtime, "<range>"},
+  {"table-shrink-threshold", &module_info_runtime, "table-shrink-threshold"},
+  {"odd?", &module_info_runtime, "odd?"},
+  {"read-char", &module_info_runtime, "read-char"},
+  {"<list>", &module_info_runtime, "<list>"},
+  {"and", &module_info_macros, "and"},
   {"<string-port>", &module_info_runtime, "<string-port>"},
-  {"~==", &module_info_runtime, "~=="},
-  {"handler-matches?", &module_info_runtime, "handler-matches?"},
-  {"round", &module_info_runtime, "round"},
-  {"macro-expand", &module_info_boot, "macro-expand"},
-  {"from-by", &module_info_runtime, "from-by"},
-  {"df", &module_info_boot, "df"},
-  {"<handler-info>", &module_info_runtime, "<handler-info>"},
-  {"call-with-string-output-port", &module_info_runtime, "call-with-string-output-port"},
-  {"logbit?", &module_info_runtime, "logbit?"},
-  {"assert", &module_info_macros, "assert"},
+  {"first-then", &module_info_runtime, "first-then"},
+  {"tup", &module_info_macros, "tup"},
+  {"nil", &module_info_boot, "nil"},
+  {"rcurry", &module_info_runtime, "rcurry"},
   {"class-direct-slots", &module_info_boot, "class-direct-slots"},
-  {"eof-object?", &module_info_runtime, "eof-object?"},
-  {"table-protocol", &module_info_runtime, "table-protocol"},
-  {"nul", &module_info_boot, "nul"},
+  {"<port>", &module_info_runtime, "<port>"},
+  {"fabs", &module_info_runtime, "fabs"},
+  {"low-elt", &module_info_runtime, "low-elt"},
+  {"last", &module_info_runtime, "last"},
   {"<", &module_info_runtime, "<"},
   {"<loc>", &module_info_boot, "<loc>"},
   {"fab-class", &module_info_boot, "fab-class"},
-  {"write", &module_info_write, "write"},
-  {"dec", &module_info_macros, "dec"},
-  {"first-then", &module_info_runtime, "first-then"},
-  {"writeln", &module_info_write, "writeln"},
-  {"del", &module_info_runtime, "del"},
-  {"even?", &module_info_runtime, "even?"},
+  {"format", &module_info_runtime, "format"},
+  {"lab", &module_info_boot, "lab"},
+  {"neg", &module_info_runtime, "neg"},
   {"list", &module_info_runtime, "list"},
+  {"dc", &module_info_boot, "dc"},
+  {"from-to", &module_info_runtime, "from-to"},
+  {"copy-state", &module_info_runtime, "copy-state"},
   {"type-object", &module_info_boot, "type-object"},
-  {"$default-handler-info", &module_info_runtime, "$default-handler-info"},
-  {"ini-state", &module_info_runtime, "ini-state"},
-  {"dlet", &module_info_macros, "dlet"},
-  {"apply", &module_info_macros, "apply"},
-  {"or", &module_info_macros, "or"},
-  {"mif", &module_info_boot, "mif"},
+  {"$permanent-hash-state", &module_info_runtime, "$permanent-hash-state"},
+  {"popf", &module_info_macros, "popf"},
+  {"compose", &module_info_runtime, "compose"},
+  {"eof-object?", &module_info_runtime, "eof-object?"},
+  {"call-with-string-input-port", &module_info_runtime, "call-with-string-input-port"},
+  {"app-args", &module_info_runtime, "app-args"},
   {"%isa", &module_info_boot, "%isa"},
   {"<flo>", &module_info_boot, "<flo>"},
-  {"from-above", &module_info_runtime, "from-above"},
-  {"<tup>", &module_info_boot, "<tup>"},
-  {"as-lowercase", &module_info_runtime, "as-lowercase"},
-  {"error", &module_info_boot, "error"},
+  {"<error>", &module_info_runtime, "<error>"},
+  {"macro-expand", &module_info_boot, "macro-expand"},
   {"head", &module_info_boot, "head"},
-  {"neg?", &module_info_runtime, "neg?"},
-  {"len", &module_info_runtime, "len"},
-  {"<map>", &module_info_runtime, "<map>"},
-  {"identity", &module_info_runtime, "identity"},
+  {"as-uppercase", &module_info_runtime, "as-uppercase"},
+  {"rev", &module_info_runtime, "rev"},
+  {"del-key", &module_info_runtime, "del-key"},
   {"ds", &module_info_boot, "ds"},
-  {"var-type", &module_info_macros, "var-type"},
-  {"str-to-num", &module_info_runtime, "str-to-num"},
-  {"seq", &module_info_boot, "seq"},
-  {"quote", &module_info_boot, "quote"},
-  {"close-output-port", &module_info_runtime, "close-output-port"},
-  {"sub", &module_info_runtime, "sub"},
-  {"sexpr-signature-parameters", &module_info_syntax, "sexpr-signature-parameters"},
+  {"app-filename", &module_info_runtime, "app-filename"},
+  {"to-digit", &module_info_runtime, "to-digit"},
   {"slot-init", &module_info_boot, "slot-init"},
+  {"<file-port>", &module_info_runtime, "<file-port>"},
   {"<int>", &module_info_boot, "<int>"},
-  {"handler-function", &module_info_runtime, "handler-function"},
-  {"dm", &module_info_boot, "dm"},
-  {"numeric?", &module_info_runtime, "numeric?"},
-  {"rep", &module_info_boot, "rep"},
-  {"sig", &module_info_runtime, "sig"},
-  {"to-str", &module_info_runtime, "to-str"},
+  {"now-elt-setter", &module_info_runtime, "now-elt-setter"},
+  {"close-input-port", &module_info_runtime, "close-input-port"},
+  {"<simple-error>", &module_info_runtime, "<simple-error>"},
   {"in", &module_info_runtime, "in"},
-  {"make-sym", &module_info_macros, "make-sym"},
-  {"unless", &module_info_macros, "unless"},
-  {"any?", &module_info_runtime, "any?"},
+  {"empty?", &module_info_macros, "empty?"},
+  {"match-atom", &module_info_macros, "match-atom"},
+  {"<output-port>", &module_info_runtime, "<output-port>"},
+  {"write-string", &module_info_runtime, "write-string"},
+  {"curry", &module_info_runtime, "curry"},
+  {"cat2", &module_info_runtime, "cat2"},
+  {"floor/", &module_info_runtime, "floor/"},
+  {"gensym", &module_info_macros, "gensym"},
+  {"bound?", &module_info_boot, "bound?"},
+  {"do-stack-frames", &module_info_top, "do-stack-frames"},
   {"<num>", &module_info_boot, "<num>"},
   {"class-direct-children", &module_info_boot, "class-direct-children"},
-  {"*print-base*", &module_info_runtime, "*print-base*"},
-  {"table-growth-threshold", &module_info_runtime, "table-growth-threshold"},
-  {"dv", &module_info_boot, "dv"},
-  {"fill", &module_info_runtime, "fill"},
+  {"ceiling/", &module_info_runtime, "ceiling/"},
+  {"from-above-by", &module_info_runtime, "from-above-by"},
+  {"do2", &module_info_runtime, "do2"},
   {"fun-value", &module_info_boot, "fun-value"},
-  {"try", &module_info_boot, "try"},
+  {"from-by", &module_info_runtime, "from-by"},
+  {"cat!", &module_info_runtime, "cat!"},
   {"slot", &module_info_boot, "slot"},
-  {"<buf>", &module_info_runtime, "<buf>"},
-  {"<str-tab>", &module_info_runtime, "<str-tab>"},
+  {"ash", &module_info_runtime, "ash"},
+  {"-", &module_info_runtime, "-"},
+  {"locative-value-setter", &module_info_runtime, "locative-value-setter"},
+  {"num-to-str", &module_info_runtime, "num-to-str"},
+  {"ct", &module_info_boot, "ct"},
+  {"pair", &module_info_macros, "pair"},
   {"subtype?", &module_info_boot, "subtype?"},
-  {"var-name", &module_info_macros, "var-name"},
-  {"/", &module_info_runtime, "/"},
-  {"id-hash", &module_info_runtime, "id-hash"},
-  {"alter", &module_info_runtime, "alter"},
+  {"df", &module_info_boot, "df"},
+  {"<step>", &module_info_runtime, "<step>"},
   {"slot-value-setter", &module_info_boot, "slot-value-setter"},
   {"<chr>", &module_info_boot, "<chr>"},
-  {"default-handler", &module_info_runtime, "default-handler"},
-  {"3rd", &module_info_runtime, "3rd"},
-  {"<condition>", &module_info_runtime, "<condition>"},
-  {"truncate", &module_info_runtime, "truncate"},
-  {"min", &module_info_runtime, "min"},
-  {"if", &module_info_boot, "if"},
-  {"add-slot", &module_info_boot, "add-slot"},
-  {"vec", &module_info_runtime, "vec"},
-  {"now-elt-setter", &module_info_runtime, "now-elt-setter"},
-  {"condition-message", &module_info_runtime, "condition-message"},
+  {"for", &module_info_macros, "for"},
+  {"round/", &module_info_runtime, "round/"},
   {NULL,NULL,NULL}
 };
 

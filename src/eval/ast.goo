@@ -550,7 +550,7 @@
 	      (format out "  => ") (write out exp) (format out "\n"))
 	    exp)))
     ;; (format out "DEFMAC %=\n" name)
-    (let ((env     (or env-or-false (runtime-environment modname)))
+    (let ((env     (or env-or-false (runtime-core-environment modname)))
           (binding (ast-define-binding env name #f 'macro)))
       (set (binding-handler binding) expand)
       binding)))
@@ -1215,7 +1215,14 @@
   (slot <module> (module-target-environment <static-global-environment>))
   (slot <module> (module-syntax-environment <static-global-environment>))
   ;; The bindings exported by this module.
-  (slot <module> (module-exports <tab>) (fab <tab> 1000))
+  (slot <module> (%module-exports <tab>) (fab <tab> 1000))
+  (slot <module> (module-data-processed? <log>) #t)
+  (slot <module> module-runtime-data            #f)
+
+(dv module-exports-setter %module-exports-setter)
+(dm module-exports ((x <module>) => <tab>)
+  (ensure-module-data x)
+  (%module-exports x))
 
 (export
   <module>
@@ -1495,17 +1502,23 @@
 (df runtime-module ((modname <sym>))
   (probe-module (runtime-module-loader) modname))
 (df runtime-environment ((modname <sym>))
+  (let ((module (runtime-module modname)))
+    (ensure-module-data module)
+    (module-target-environment module)))
+(df runtime-core-environment ((modname <sym>))
   (module-target-environment (runtime-module modname)))
 
 ;;; RELOADER METHODS FOR %BUILD-RUNTIME-MODULES
 ;;; These are called to reload modules which were compiled into our runtime.
 
-(df reloader-do-create-module ((modname <str>) => <module>)
+(df reloader-do-create-module ((modname <str>) data => <module>)
   (let ((loader (runtime-module-loader))
         (type   (module-loader-module-type loader))
         (mod    (isa type (set module-name (as <sym> modname))))
         (env    (fab-static-global-environment mod loader #t)))
+    (set (module-data-processed? mod) #f)
     (set-module-environments mod env env)
+    (set (module-runtime-data mod) data)
     (register-module! loader mod)
     mod))
 
@@ -1522,6 +1535,17 @@
       (error "Can't find %s from %s for %s\n"
              original-name (module-name from-mod) (module-name mod)))
     (insert-global! binding (module-target-environment mod))))
+
+(df process-module-data ((module <module>))
+  (%process-module 
+   (module-runtime-data module) 
+   reloader-do-import reloader-do-export))
+
+(df ensure-module-data ((module <module>))
+  (unless (module-data-processed? module)
+    ;; TODO: DETECT CIRCULARITIES?
+    (set (module-data-processed? module) #t)
+    (process-module-data module)))
 
 (df reloader-do-runtime-binding ((mod <module>) (name <str>) (loc <loc>))
   (let ((binding (isa <module-binding>
@@ -1547,14 +1571,15 @@
 (df reloader-do-export ((mod <module>) (name <str>) (as-name <str>))
   (let ((binding (find-binding (as <sym> name)
                                (module-target-environment mod))))
-    (when (not binding)
-      (error "Can't find %s in %s\n" name (module-name mod)))
-    (export-binding! mod (as <sym> as-name) binding)))
+    (if binding
+        (export-binding! mod (as <sym> as-name) binding)
+        (error "Can't find %s in %s\n" name (module-name mod)))))
+
 
 (df reload-modules ()
-  (%build-runtime-modules reloader-do-create-module reloader-do-use-module
-                          reloader-do-import reloader-do-runtime-binding
-                          reloader-do-other-binding reloader-do-export))
+  (%build-runtime-modules 
+   reloader-do-create-module reloader-do-use-module
+   reloader-do-runtime-binding reloader-do-other-binding))
 
 ;;; Change the type of the magic bindings in an environment, and install
 ;;; the right handlers.  We only need to do this for the boot environment,
