@@ -293,7 +293,8 @@
 (dm extract! 
     ((o <constant>) (form <top-level-form>) (result <flattened-program>))
   (let ((value (constant-value o)))
-    (if (or (== value #f) (== value #t) (== value '()))
+    (if (or (== value #f) (== value #t) (== value '()) 
+	    (isa? value <int>) (isa? value <chr>))
 	o
 	(let ((qb*   (program-quotations result))
 	      (index (len qb*))
@@ -374,39 +375,47 @@
     (set (form-definitions form)      (pair definition (form-definitions form)))
     new-index))
 
+(dm split-program (o (max-count <int>))
+  (lst o))
+
+(dm split-program ((o <sequential>) (max-count <int>))
+  (rep loop ((forms '()) (s o))
+    (rep inner ((res '()) (es s) (count 0))
+      (case ((empty? es)
+	     (rev! (pair (sequentialize (rev! res)) forms)))
+	    ((= count max-count)
+	     (loop (pair (sequentialize (rev! res)) forms) es))
+	    (#T 
+	      (inner (pair (head es) res) (tail es) (+ count 1)))))))
+
 (dm closurize-main! 
-    ((o <flattened-program>) r => <flattened-program>)
-  (let ((index
-	 (len (program-definitions o)))
-	(name
-	 '*---MAIN---*) ;; TODO: MAKE THIS HIDDEN
-	(binding
-	 (ast-define-binding r name (fun () (isa <predefined-binding>))))
-	(defn
-	 (isa <primitive-definition>
-	   (set function-name     binding)
-           (set function-bindings '())
-	   (set function-body     (program-form o))
-	   (set function-index    index)))
-	(call
-	 (isa <predefined-application> 
-           (set application-binding   binding)
-	   ;; (set application-function  
-	   ;;      (isa <closure-creation> 
-           ;;        (set function-index        index)
-	   ;;        (set function-bindings     '())
-	   ;;        (set closure-creation-free (empty <free-environment>))))
-	   (set application-arguments (empty <arguments>))
-	   (set application-tail?     #f)
-	   )))
-    ;; TODO: reverse definitions in forms
-    (set (program-definitions o)
-	 (rev! (pair defn (program-definitions o))))
-    (set (program-form o)
-	 (isa <top-level-form> 
-	   (set form-program call)
-	   (set form-definitions (lst defn))))
-    o))
+    ((o <flattened-program>) r max-count => <flattened-program>)
+  (let ((forms      (split-program (program-form o) max-count))
+	(base-index (len (program-definitions o)))) ;; TODO: HACK INTERFACE
+    (rep loop ((calls '()) (defns (program-definitions o)) (i 0) (forms forms))
+      (if (empty? forms)
+	  (seq (set (program-definitions o) (rev! defns))
+	       (set (program-form o)
+		    (isa <top-level-form>
+		         (set form-program     (sequentialize (rev! calls)))
+			 (set form-definitions (rev! defns))))
+	       o)
+	  (let ((name
+		 (make-sym "---main-" i "---"))
+		(binding
+		 (ast-define-binding r name (fun () (isa <predefined-binding>))))
+		(defn
+		 (isa <primitive-definition>
+		   (set function-name     binding)
+		   (set function-bindings '())
+		   (set function-body     (head forms))
+		   (set function-index    (+ base-index i))))
+		(call
+		 (isa <predefined-application> 
+		   (set application-binding   binding)
+		   (set application-arguments (empty <arguments>))
+		   (set application-tail?     #f))))
+	    (loop (pair call calls) (pair defn defns) (+ i 1) (tail forms)))))))
 
 ;; (def f (fun (n k) (if (= n 0) (k 1) (f (- n 1) (fun (r) (k (* n r)))))))
 

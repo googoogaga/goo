@@ -100,7 +100,7 @@ P YPdo_stack_frames (P fun) {
       return CALL1(Yunknown_function_error, f);
     }
     args = YPpair(f, args);
-    YPPapply(fun, args);
+    YPPapply(fun, YPfalse, args);
     xfp = nfp;
   }
   return YPfalse;
@@ -568,14 +568,14 @@ P CALL0 (P fun) {
       PUSH(Ynil);
     CHECK_ARITY(naryp,0,arity);
     PUSH(fun); 
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, YPfalse);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
     PUSH(Ynil);
     CHECK_ARITY(naryp,0,arity);
     LINK_STACK(fun);
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, YPfalse);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
@@ -602,7 +602,7 @@ P CALL1 (P fun, P a1) {
     }
     CHECK_ARITY(naryp,1,arity);
     LINK_STACK(fun); 
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, YPfalse);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
@@ -611,7 +611,7 @@ P CALL1 (P fun, P a1) {
     PUSH(arg);
     CHECK_ARITY(naryp,1,arity);
     LINK_STACK(fun); 
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, YPfalse);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
@@ -644,7 +644,7 @@ P CALL2 (P fun, P a1, P a2) {
     }
     CHECK_ARITY(naryp,2,arity);
     LINK_STACK(fun); 
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, YPfalse);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
@@ -654,7 +654,7 @@ P CALL2 (P fun, P a1, P a2) {
     PUSH(arg);
     CHECK_ARITY(naryp,2,arity);
     LINK_STACK(fun); 
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, YPfalse);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
@@ -693,7 +693,7 @@ P CALL3 (P fun, P a1, P a2, P a3) {
     }
     CHECK_ARITY(naryp,3,arity);
     LINK_STACK(fun); 
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, YPfalse);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
@@ -704,7 +704,7 @@ P CALL3 (P fun, P a1, P a2, P a3) {
     PUSH(arg);
     CHECK_ARITY(naryp,3,arity);
     LINK_STACK(fun); 
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, YPfalse);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
@@ -740,7 +740,7 @@ P CALLN (P fun, int n, ...) {
     CHECK_ARITY(naryp,n,arity);
     va_end(ap);
     LINK_STACK(fun); 
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, YPfalse);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
@@ -755,7 +755,7 @@ P CALLN (P fun, int n, ...) {
     PUSH(arg);
     CHECK_ARITY(naryp,n,arity);
     LINK_STACK(fun); 
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, YPfalse);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
@@ -769,7 +769,7 @@ P KCALL0 (P fun) {
   int osp = sp, ofp = fp;
   P   res;
   LINK_STACK(fun);
-  res = (FUNCODE(fun))(fun);
+  res = (FUNCODE(fun))(fun, YPfalse);
   UNLINK_STACK(osp, ofp);
   return res;
 }
@@ -779,7 +779,7 @@ P KCALL1 (P fun, P a1) {
   P   res;
   PUSH(a1);
   LINK_STACK(fun); 
-  res = (FUNCODE(fun))(fun);
+  res = (FUNCODE(fun))(fun, YPfalse);
   UNLINK_STACK(osp, ofp);
   return res;
 }
@@ -789,7 +789,7 @@ P KCALL2 (P fun, P a1, P a2) {
   P   res;
   PUSH(a1); PUSH(a2);
   LINK_STACK(fun); 
-  res = (FUNCODE(fun))(fun);
+  res = (FUNCODE(fun))(fun, YPfalse);
   UNLINK_STACK(osp, ofp);
   return res;
 }
@@ -799,7 +799,7 @@ P KCALL3 (P fun, P a1, P a2, P a3) {
   P   res;
   PUSH(a1); PUSH(a2); PUSH(a3);
   LINK_STACK(fun); 
-  res = (FUNCODE(fun))(fun);
+  res = (FUNCODE(fun))(fun, YPfalse);
   UNLINK_STACK(osp, ofp);
   return res;
 }
@@ -812,7 +812,7 @@ P KCALLN (P fun, int n, ...) {
     PUSH(va_arg(ap, P));
   va_end(ap);
   LINK_STACK(fun); 
-  res = (FUNCODE(fun))(fun);
+  res = (FUNCODE(fun))(fun, YPfalse);
   UNLINK_STACK(osp, ofp);
   return res;
 }
@@ -822,7 +822,7 @@ P KCALLN (P fun, int n, ...) {
 
 extern P YPPlen(P);
 
-P YPPapply (P fun, P args) {
+P YPPapply (P fun, P next_mets, P args) {
   int i, j;
   int osp    = sp, ofp = fp;
   int n      = (int)YPPlen(args);
@@ -851,7 +851,7 @@ P YPPapply (P fun, P args) {
       PUSH(opts);
     } 
     LINK_STACK(fun); 
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, next_mets);
   } else if (traits == YLgenG_traits) {
     int arity = FUNARITY(fun);
     int naryp = FUNNARYP(fun);
@@ -864,7 +864,7 @@ P YPPapply (P fun, P args) {
     }
     PUSH(args);
     LINK_STACK(fun); 
-    res = (FUNCODE(fun))(fun);
+    res = (FUNCODE(fun))(fun, next_mets);
   } else {
     res = CALL1(Yunknown_function_error, fun);
   }
@@ -872,9 +872,9 @@ P YPPapply (P fun, P args) {
   return res;
 }
 
-P YPPmep_apply (P fun, P args) {
+P YPPmep_apply (P fun, P next_mets, P args) {
   int i, j;
-  int osp    = sp, ofp = fp;
+  int osp   = sp, ofp = fp;
   int arity = FUNARITY(fun);
   P   specs = FUNSPECS(fun);
   int naryp = FUNNARYP(fun);
@@ -895,7 +895,7 @@ P YPPmep_apply (P fun, P args) {
     PUSH(opts);
   } 
   LINK_STACK(fun); 
-  res = (FUNCODE(fun))(fun);
+  res = (FUNCODE(fun))(fun, next_mets);
   UNLINK_STACK(osp, ofp);
   return res;
 }
@@ -1173,13 +1173,17 @@ void prtobj (P adr) {
   }
 }
 
-extern void print_kind(P, int);
+extern void print_kind(P, int, int);
 
 void print (P adr) {
-  print_kind(adr, 0);
+  print_kind(adr, 0, 0);
 }
 
-void print_kind (P adr, int prettyp) {
+int max_depth  = 3;
+int max_length = 10;
+
+void print_kind (P adr, int prettyp, int depth) {
+  if (depth < max_depth) {
   char* typename = type(adr);
   char* name     = sym(adr);
   int   classp   = is_class(adr);
@@ -1209,7 +1213,7 @@ void print_kind (P adr, int prettyp) {
   }
   if (classp) {
     if (prettyp)
-      print(YPobject_traits(adr));
+      print_kind(YPobject_traits(adr), 0, depth);
     /* DO NOTHING FOR NOW */
   } else if (strcmp(typename, "<int>") == 0) {
     printf("%d", (int)YPslot_elt(adr, (P)0));
@@ -1230,7 +1234,11 @@ void print_kind (P adr, int prettyp) {
     printf("("); 
     for (ptr = adr, j = 0; ptr != Ynil; ptr = YPslot_elt(ptr, (P)1), j++) {
       if (j != 0) printf(" ");
-      print(YPslot_elt(ptr, (P)0)); 
+      if (j < max_length) {
+        print_kind(YPslot_elt(ptr, (P)0), 0, depth + 1); 
+      } else {
+	printf("..."); break;
+      }
     }
     printf(")");
   } else if (strcmp(typename, "<vec>") == 0) {
@@ -1240,13 +1248,17 @@ void print_kind (P adr, int prettyp) {
     printf("#("); 
     for (j = 0; j < n; j++) {
       if (j != 0) printf(" ");
-      print(YPPvelt(v, j)); 
+      if (j < max_length) {
+	print_kind(YPPvelt(v, j), 0, depth + 1); 
+      } else {
+	printf("..."); break;
+      }
     }
     printf(")");
   } else if (strcmp(typename, "<met>") == 0) {
     ENV env; int j, n; 
     printf("(MET ");
-    print(YPslot_elt(adr, (P)FUNSPECSOFFSET));
+    print_kind(YPslot_elt(adr, (P)FUNSPECSOFFSET), 0, depth + 1);
     env = (ENV)YPslot_elt(adr, (P)FUNENVOFFSET);
     n   = env->size;
     if (n > 0) {
@@ -1254,17 +1266,21 @@ void print_kind (P adr, int prettyp) {
       for (j = 0; j < n; j++) {
 	P val = ENVGET(env, j);
 	if (j != 0) printf(" ");
-	if (val == adr)
-	  printf("SELF");
-	else
-	  print(val);
+	if (j < max_length) {
+	  if (val == adr)
+	    printf("SELF");
+	  else
+	    print_kind(val, 0, depth + 1);
+	} else {
+	  printf("..."); break;
+	}
       }
       printf("]");
     }
     printf(" 0x%lx)", adr);
   } else if (strcmp(typename, "<gen>") == 0) {
     printf("(GEN ");
-    print(YPslot_elt(adr, (P)FUNSPECSOFFSET));
+    print_kind(YPslot_elt(adr, (P)FUNSPECSOFFSET), 0, depth + 1);
     printf(" 0x%lx)", adr);
   } else if (strcmp(typename, "<file-output-port>") == 0) {
     printf("(OUT-PORT 0x%lx)", adr);
@@ -1277,14 +1293,21 @@ void print_kind (P adr, int prettyp) {
     int below = MIN(size, 10);
     printf("(%s", typename);
     for (i = 0; i < below; i++) {
-      printf(" "); print(YPslot_elt(adr, (P)i));
+      printf(" "); 
+      if (i < max_length) {
+	print_kind(YPslot_elt(adr, (P)i), 0, depth + 1);
+      } else {
+	printf("..."); break;
+      }
     }
     printf(" 0x%lx)", adr);
+  }} else {
+    printf("<>");
   }
 }
 
 void println (P adr) {
-  print_kind(adr, 1); printf("\n");
+  print_kind(adr, 1, 0); printf("\n");
 }
 
 void desslot (int i, P adr) {
@@ -1344,7 +1367,7 @@ void des (P adr) {
     desobj(adr);
 }
 
-void regsym (P* adr, char *str) {
+P regsym (P* adr, char *str) {
   int i = symoff(*adr);
   if (i == -1 || (strcmp(symstrs[i],str) != 0)) 
     i = nsyms++;
@@ -1352,6 +1375,7 @@ void regsym (P* adr, char *str) {
     YPbreak("REGSYM: SYM OVERFLOW");
   symstrs[i] = str;
   symadrs[i] = adr;
+  return PNUL;
 }
 
 extern P YPlocative;

@@ -1,5 +1,26 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
+(ds (next-method ,@args)
+  `(%call-next-method (%next-methods) ,@args))
+
+(ds (apply-next-method ,args)
+  `(%apply-next-method (%next-methods) ,args))
+
+;; TODO: GENERALIZED VERSION
+
+(ds (collecting () ,@body)
+  (let ((name 'collector-))
+    `(let ((,name '()))
+       ,@body
+       (collected ,name))))
+
+(ds (collect ,value)
+  (let ((name 'collector-))
+    `(set ,name (pair ,value ,name))))
+  
+(ds (collected ,name)
+  `(rev! ,name))
+
 ;; TODO: GENERALIZED VERSION
 
 (ds (inc ,x ,@amount)

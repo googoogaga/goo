@@ -495,7 +495,7 @@
 (dm fab ((c <col>) (s <int>) => bot)
   (nyi-error))
 
-(dm as ((p <col>) (x <col>) => <lst>)
+(dm as ((p <col>) (x <col>) => <col>)
   (into (fab p (len x)) x 0 (len x)))
 
 (dm do-key-vals ((fn <fun>) (key-vals <opts>) => (tup))
@@ -864,6 +864,7 @@
 	  (set (tail l) r)
 	  (loop t l)))))
 
+;; TODO: CHANGE ORDER OF ARGS LIKE MEM?
 (dm assq (x (l <lst>) => <any>)
   (if (empty? l)
       #f
@@ -917,7 +918,7 @@
   %vnul)
 
 (df vec ((objects ...))
-  (alter (fab <vec> (len objects)) objects))
+  (as <vec> objects))
 
 (dm fabs ((c <vec>) (objects ...))
   (apply vec objects))

@@ -163,7 +163,7 @@ typedef struct _env {
 extern ENV envnul;
 #define ENVNUL     (envnul)
 
-typedef P (*PFUN)(P);
+typedef P (*PFUN)(P, P);
 
 #define FUNCODEOFFSET  0
 #define FUNSPECSOFFSET 1
@@ -209,6 +209,7 @@ extern P* FUNENVSETTER (P* env, P fun);
 #define FUNENVPUT(z, f, i) ENVPUT((z), YPslot_elt((f), (P)FUNENVOFFSET), (i))
 
 #define YPfun_reg() (Pfun)
+#define YPnext_methods_reg() (Pnext_methods)
 
 #define FREEREF(x) (FUNENVGET(Pfun, (x)))
 
@@ -244,9 +245,11 @@ extern P KCALL2 (P fun, P a1, P a2);
 extern P KCALL3 (P fun, P a1, P a2, P a3);
 extern P KCALLN (P fun, int n, ...);
 
-extern P YPPapply (P fun, P args);
-extern P YPPmep_apply (P fun, P args);
+extern P YPPapply (P fun, P next_mets, P args);
+extern P YPPmep_apply (P fun, P next_mets, P args);
 extern P YPfapply (P fproc, P args);
+
+#define YPnext_methods() Pnext_methods
 
 extern P YPisaQ(P,P);
 extern void check_fun_val_type(P, P);
@@ -273,12 +276,13 @@ extern P with_cleanup (P body_fun, P cleanup_fun);
 extern P unbound ();
 
 #define DEF(x, n)  P x = PNUL;
+#define EXT(x, n)  P x = PNUL;
 #define CHKREF(x)  (((x) == PNUL) ? unbound() : (x))
 
 /* FUNCTIONS */
 
-#define FUNFOR(x)         extern P x; extern P x##I(P)
-#define LOCFOR(x)         P x; extern P x##I(P)
+#define FUNFOR(x)         extern P x; extern P x##I(P, P)
+#define LOCFOR(x)         P x; extern P x##I(P, P)
 
 /* BOXES */
 
@@ -287,7 +291,7 @@ extern P BOXFAB(P x);
 
 /* FUNCTION CODE */
 
-#define FUNCODEDEF(x)  P x##I (P Pfun)
+#define FUNCODEDEF(x)  P x##I (P Pfun, P Pnext_methods)
 #define FUNCODEREF(x)  (&(x##I))
 
 /* LOCATIVES */
@@ -297,7 +301,7 @@ extern P YPlb(P);
 
 /* SYMBOL TABLE */
 
-extern void regsym (P* adr, char *str);
+extern P regsym (P* adr, char *str);
 extern P YPdo_runtime_bindings (P fun);
 
 /* LOCATIVES */

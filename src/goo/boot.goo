@@ -378,7 +378,10 @@
 ;;; MAKE GENERIC'S
 
 (%define-structure % gen-cache 
-   gen-cache-singletons gen-cache-classes)
+   gen-cache-arg-pos gen-cache-singletons gen-cache-classes)
+
+(dv $gen-cache-singletons-offset 1) ;; TODO: USED IN CACHE UPDATE
+(dv $gen-cache-classes-offset    2)
 
 (%define-structure % gen 
    gen-code gen-specs gen-nary? gen-arity gen-value gen-mets fun-cache)
@@ -405,7 +408,7 @@
 
 (df %early-dispatch ((args ...))
   (let ((gen (%fun-reg)))
-    (%%apply (%head (%gen-mets gen)) args)))
+    (%%apply (%head (%gen-mets gen)) #f args)))
 
 (dv *early-generics* '())
 
@@ -586,6 +589,8 @@
 
 (df not ((x <any>) => <log>) (%bb (%eq? x #f)))
 
+(dp @not ((x <any>) => <log>) (%bb (%eq? x #f)))
+
 (dp @empty? ((x <lst>) => <log>) (%empty? x))
 
 (df @@empty? ((x <lst>) => <log>) (%empty? x))
@@ -729,11 +734,11 @@
 (dv <args> <lst>)
 
 (dp %%isa? (o1 o2 ps => <log>)
-  (if (@empty? ps)
+  (if (%empty? ps)
       #f
-      (if (@== (@head ps) o2)
+      (if (@== (%head ps) o2)
 	  #t
-	  (%%isa? o1 o2 (@tail ps)))))
+	  (%%isa? o1 o2 (%tail ps)))))
 
 (dp %object-parents (x => <parents>)
   (%traits-parents (%traits-of x)))
@@ -859,27 +864,37 @@
 	    (seq (set (@tail l) (@lst p)) args))
 	(col (@+ i 1) p (@tail p)))))
 
+(df @gen-cache-arg-pos (x) (%gen-cache-arg-pos x))
+(df @gen-cache-arg-pos-setter (z x) (set (%gen-cache-arg-pos x) z))
 (df @gen-cache-singletons (x) (%gen-cache-singletons x))
 (df @gen-cache-singletons-setter (z x) (set (%gen-cache-singletons x) z))
 (df @gen-cache-classes (x) (%gen-cache-classes x))
 (df @gen-cache-classes-setter (z x) (set (%gen-cache-classes x) z))
 
+(df gen-unspecialized-at? ((gen <gen>) (pos <int>) => <log>)
+  (@all? (fun (met) (@= (fun-spec met pos) <any>)) (%gen-mets gen)))
+
 (df gen-lookup-miss-1-using
     (key (all-assocs <fun>) (all-assocs-setter <fun>) 
-     (gen <gen>) cache (met <met>)
+     (gen <gen>) cache (met <met>) (mets <lst>)
      (i <int>) (n <int>) 
      (args <lst>) (specs <lst>))
-  (let ((cache (or cache (%gen-cache nil nil))))
-    (rep loop ((assocs (all-assocs cache)))
-      (if (@empty? assocs) ;; miss
-	  (let ((val (gen-lookup-miss-1 gen #f met (@+ i 1) n args specs)))
-	    (set (all-assocs cache) (@pair key (@pair val (all-assocs cache)))))
-	  (let ((k (@head assocs))
-		(v (@head (@tail assocs))))
-	    (if (@== k key)
-		(gen-lookup-miss-1 gen v met (@+ i 1) n args specs)
-		(loop (@tail (@tail assocs)))))))
-    cache))
+  (if (or (and cache (@< i (%gen-cache-arg-pos cache)))
+	  (gen-unspecialized-at? gen i))
+      (gen-lookup-miss-1 gen cache met mets (@+ i 1) n args specs)
+      (let ((cache (or cache (%gen-cache i nil nil))))
+	(rep loop ((assocs (all-assocs cache)))
+	  (if (@empty? assocs) ;; miss
+	      (let ((val (gen-lookup-miss-1
+			  gen #f met mets (@+ i 1) n args specs)))
+		(set (all-assocs cache)
+		     (@pair key (@pair val (all-assocs cache)))))
+	      (let ((k (@head assocs))
+		    (v (@head (@tail assocs))))
+		(if (@== k key)
+		    (gen-lookup-miss-1 gen v met mets (@+ i 1) n args specs)
+		    (loop (@tail (@tail assocs)))))))
+	cache)))
 
 (df singleton-spec? (x)
   (not (@== (%traits-owner (%traits-of x)) x)))
@@ -896,20 +911,19 @@
 	     (slot-offset (%head (%tail args)) (%slot-getter slot))))))
 
 (df gen-lookup-miss-1
-    ((gen <gen>) cache (met <met>)
+    ((gen <gen>) cache (met <met>) (mets <lst>)
      (i <int>) (n <int>) (args <lst>) (specs <lst>))
   (if (@= i n)
-      (let ((offset (method-accessor-offset gen met args)))
-	(or offset met))
+      (or (method-accessor-offset gen met args) mets)
       (let ((spec (@elt specs i)))
 	(if (singleton-spec? spec)
 	    (gen-lookup-miss-1-using
 	     spec @gen-cache-singletons @gen-cache-singletons-setter
-	     gen cache met i n args specs)
+	     gen cache met mets i n args specs)
 	    (gen-lookup-miss-1-using
 	     (%traits-of (@elt args i)) 
 	     @gen-cache-classes @gen-cache-classes-setter
-	     gen cache met i n args specs)))))
+	     gen cache met mets i n args specs)))))
 
 (dp gen-lookup-1) ;; FORWARD DECL
 
@@ -917,27 +931,6 @@
   (let ((n (%gen-arity gen))
 	(c (%fun-cache gen)))
     (gen-lookup-1 gen c 0 n args args)))
-
-(dv $missed-dispatch (%pair nil nil))
-
-(dp gen-lookup-1-using
-    (key (assocs <lst>) missable? (gen <gen>) cache
-     (i <int>) (n <int>) (args <lst>) (all-args <lst>))
-  ;; (rep loop ((assocs assocs))
-    (if (@empty? assocs) ;; miss
-	(if missable?
-	    $missed-dispatch
-	    (seq (set (%fun-cache gen) (gen-lookup-miss gen all-args))
-		 (gen-lookup gen all-args)))
-	(let ((k (%head assocs))
-	      (v (%head (%tail assocs))))
-	  (if (@== k key)
-	      (gen-lookup-1 gen v (@+ i 1) n (%tail args) all-args)
-	      (gen-lookup-1-using
-	       key (%tail (%tail assocs)) missable? 
-	       gen cache i n args all-args)))))
-     ;;  (loop (@tail (@tail assocs))))))
-     ;; ))
 
 (dv <int>-traits (%traits-of <int>))
 
@@ -952,6 +945,32 @@
 (dp slot-value-at-setter (z object (offset <int>))
   (set (%slot-elt object (%iu offset)) z))
 
+(dv $missed-dispatch (%pair nil nil))
+
+(dp gen-lookup-1-using
+    (key (prev-assocs <lst>) (assocs <lst>) missable? (cache-offset <int>) 
+     (gen <gen>) cache (i <int>) (n <int>) (args <lst>) (all-args <lst>))
+  (if (@empty? assocs) ;; miss
+      (if missable?
+	  $missed-dispatch
+	  (seq (set (%fun-cache gen) (gen-lookup-miss gen all-args))
+	       (gen-lookup gen all-args)))
+      (let ((k           (%head assocs))
+	    (tail-assocs (%tail assocs)))
+	(if (@== k key)
+	    (let ((v          (%head tail-assocs))
+		  (old-assocs (%slot-elt cache (%iu cache-offset))))
+	      (if (@== old-assocs assocs) ;; already at front?
+		  #f
+		  (let ((nxt-assocs (%tail tail-assocs)))
+		    (set (%slot-elt cache (%iu cache-offset)) assocs)
+		    (set (%tail tail-assocs)                  old-assocs)
+		    (set (%tail (%tail prev-assocs))          nxt-assocs)))
+	      (gen-lookup-1 gen v (@+ i 1) n (%tail args) all-args))
+	    (gen-lookup-1-using
+	     key assocs (%tail tail-assocs) missable? cache-offset
+	     gen cache i n args all-args)))))
+
 (dp gen-lookup-1 
       ((gen <gen>) cache (i <int>) (n <int>) (args <lst>) (all-args <lst>))
   (if cache
@@ -961,20 +980,24 @@
 		  (slot-value-at (%head all-args) cache)
 		  (set (slot-value-at (%head (%tail all-args)) cache) 
 		       (%head all-args)))
-	      (%%mep-apply cache all-args))
-	  (let ((arg (%head args))
-		(val (gen-lookup-1-using
-		      arg (%gen-cache-singletons cache) 
-		      #t gen cache i n args all-args)))
-	    (if (@== val $missed-dispatch)
-		(gen-lookup-1-using
-		 (%traits-of arg) (%gen-cache-classes cache) 
-		 #f gen cache i n args all-args)
-		val)))
+	      (%%mep-apply (%head cache) (%tail cache) all-args))
+	  (if (@= i (%gen-cache-arg-pos cache))
+	      (let ((arg (%head args))
+		    (val (let ((assocs (%gen-cache-singletons cache)))
+			   (gen-lookup-1-using
+			    arg assocs assocs #t $gen-cache-singletons-offset
+			    gen cache i n args all-args))))
+		(if (@== val $missed-dispatch)
+		    (let ((assocs (%gen-cache-classes cache)))
+		      (gen-lookup-1-using
+		       (%traits-of arg) assocs assocs #f
+		       $gen-cache-classes-offset gen cache i n args all-args))
+		    val))
+	      (gen-lookup-1 gen cache (@+ i 1) n (%tail args) all-args)))
       (seq (set (%fun-cache gen) (gen-lookup-miss gen all-args))
 	   (gen-lookup gen all-args))))
 
-(df choose-method ((gen <gen>) (args <lst>))
+(df choose-methods ((gen <gen>) (args <lst>) => <lst>)
   (let ((ord-amb-mets   (sorted-app-mets gen args))
 	(sorted-mets    (@elt ord-amb-mets 0))
 	(ambiguous-mets (@elt ord-amb-mets 1)))
@@ -983,7 +1006,7 @@
 	(if (@empty? sorted-mets)
 	    (error "No Applicable Methods Error when calling %= on %="
 		   gen args)
-	    (@head sorted-mets)))))
+	    sorted-mets))))
 
 (df met< ((m1 <met>) (m2 <met>) => <log>)
   (if (@== m1 m2)
@@ -1002,12 +1025,14 @@
 	  (loop (if singleton-app? (@pair m res) res) (@tail mets))))))
 
 (df gen-lookup-miss ((gen <gen>) (args <lst>) => <any>) 
-  (let ((met (choose-method gen args)) ;; TODO: => (or <met> <gen-cache>)
+  (let ((mets  (choose-methods gen args)) ;; TODO: => (or <met> <gen-cache>)
+	(met   (@head mets))
 	(specs (@fun-specs met))
-	(n (@fun-arity gen))
-	(cache (gen-lookup-miss-1 gen (%fun-cache gen) met 0 n args specs))
+	(n     (@fun-arity gen))
+	(cache (gen-lookup-miss-1 gen (%fun-cache gen) met mets 0 n args specs))
 	(app-singleton-mets (find-app-singleton-mets gen met)))
-    (@do (fun (m) (gen-lookup-miss-1 gen cache m 0 n args (@fun-specs m)))
+    (@do (fun (m) 
+	   (gen-lookup-miss-1 gen cache m mets 0 n args (@fun-specs m)))
 	 app-singleton-mets)
     cache))
 
@@ -1036,7 +1061,15 @@
 (dv <opts> <lst>)
 
 (df apply ((proc <fun>) (args <opts>))
-  (%%apply proc args))
+  (%%apply proc #f args))
+
+(df %apply-next-method (next-mets (args <opts>))
+  (if next-mets
+      (%%apply (%head next-mets) (%tail next-mets) args)
+      (error "No next methods")))
+
+(df %call-next-method (next-mets (args ...))
+  (%apply-next-method next-mets args))
 
 (df fapply (fproc (args <opts>))
   (%fapply fproc args))

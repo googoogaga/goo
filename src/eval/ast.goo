@@ -46,6 +46,8 @@
   (slot <local-binding> binding-dynamic-extent? #t)
   (slot <local-binding> binding-dotted?         #f)
 
+;; (dv <next-methods-binding> (isa <binding>))
+
 ;;; descriptions
 
 (dv <description> (isa <any>))
@@ -87,6 +89,8 @@
   (slot <local-reference> (reference-frame-number <int>))
   (slot <local-reference> (reference-frame-offset <int>))
 
+;; (dv <next-methods-reference> (isa <real-reference>))
+
 (dv <global-reference> (isa <real-reference>))
 
 (dv <runtime-reference> (isa <real-reference>))
@@ -122,6 +126,7 @@
 (dv <ast-function> (isa <program>))
   (slot <ast-function> function-name #f)
   (slot <ast-function> function-bindings)
+;;  (slot <ast-function> function-next-methods-binding)
   (slot <ast-function> function-nary? #f)
   (slot <ast-function> function-value #f)
 
@@ -245,6 +250,7 @@
 (dv <static-global-environment> (isa <static-environment>))
   (slot <static-global-environment> environment-next-index -1)
   (slot <static-global-environment> environment-redefinitions (fab <tab> 100))
+  (slot <static-global-environment> environment-imports (fab <tab> 100))
 
 (dv <static-predefined-global-environment> (isa <static-global-environment>))
 
@@ -266,7 +272,9 @@
 ;;;; CONVERT TO AST FORM
 
 (dm objectify ((e <lst>) (r <static-environment>) tail? => <any>)
-  (objectify-list (objectify (head e) r #f) e r tail?))
+  (if (isa? e <program>) ;; TODO: HACK FOR <PROGRAMS>
+      e
+      (objectify-list (objectify (head e) r #f) e r tail?)))
 
 (dm objectify-list
     ((f <any>) (e <lst>) (r <static-environment>) tail? => <any>)
@@ -571,7 +579,8 @@
 
 ;; TODO: MULTIPLE VALUES
 
-(dm objectify-signature (sig r => (tup (bindings <lst>) (nary? <log>) (value <any>)))
+(dm objectify-signature
+    (sig r => (tup (bindings <lst>) (nary? <log>) (value <any>)))
   (rep col ((params (sexpr-signature-parameters sig)) (nary? #f) (bindings '()))
     (if (empty? params)
 	(let ((sexpr-value (sexpr-signature-value sig))
@@ -612,6 +621,10 @@
       (set reference-binding b)
       (set reference-frame-number i)
       (set reference-frame-offset j))))
+
+;; (dm objectify-binding 
+;;     (n (b <next-methods-binding>) r => <next-methods-reference>)
+;;   (isa <next-methods-reference> (set reference-binding b)))
 
 (dm objectify-binding (n (b <global-binding>) r => <global-reference>)
   (isa <global-reference> (set reference-binding b)))
@@ -777,18 +790,26 @@
 	    (head bindings)
 	    (loop (tail bindings))))))
 
-;; TODO: (FALSE-OR <BINDING>)
+;; TODO: => FALSE-OR <BINDING>
+
+(dm find-parent-binding (name (r <static-empty-environment>) => <any>)
+  #f)
+
+(dm find-parent-binding (name (r <static-global-environment>) => <any>) 
+  (let ((binding (elt (environment-bindings r) name)))
+    (if (== binding nul)
+	(find-parent-binding name (environment-next r))
+	binding)))
+
+(dm find-binding (name (r <static-empty-environment>) => <any>)
+  #f)
 
 (dm find-binding (name (r <static-global-environment>) => <any>) 
   (let ((binding (elt (environment-bindings r) name)))
     (if (== binding nul)
-	(find-binding name (environment-next r))
+	(let ((binding (find-parent-binding name (environment-next r))))
+	  (and binding (set (elt (environment-imports r) name) binding)))
 	binding)))
-
-;; TODO: (FALSE-OR <BINDING>)
-
-(dm find-binding (name (r <static-empty-environment>) => <any>)
-  #f)
 
 ;; TODO: CLEANUP
 
@@ -1085,6 +1106,7 @@
 
 (define-primitive %%apply ())
 (define-primitive %%mep-apply ())
+(define-primitive %next-methods ())
 (define-primitive %fapply ())
 
 (define-primitive %do-runtime-bindings ())

@@ -198,8 +198,8 @@
   (lab return
     (let (((tup test-function hash-function) (table-protocol table))
 	  ((tup (hash <int>) state) (hash-function key))
-	  (vector (%vector table))
-	  (n-buckets (%n-buckets vector))
+	  (vector       (%vector table))
+	  (n-buckets    (%n-buckets vector))
 	  (bucket-depth (%bucket-depth vector))
 	  ((tup bucket-index bucket-offset)
 	   (hash-moduli 
@@ -248,7 +248,7 @@
       (let (((tup test-function hash-function) (table-protocol table))
 	    ((tup (hash <int>) state) (hash-function key))
 	    (bucket-depth (%bucket-depth vector))
-	    (n-buckets (%n-buckets vector))
+	    (n-buckets    (%n-buckets vector))
 	    ((tup bucket-index bucket-offset)
 	     (hash-moduli 
 	      hash (%primary-modulus vector) (%secondary-modulus vector))))
@@ -301,8 +301,8 @@
   (lab return
     (let (((tup test-function hash-function) (table-protocol table))
 	  ((tup (hash <int>) state) (hash-function key))
-	  (vector (%vector table))
-	  (n-buckets (%n-buckets vector))
+	  (vector       (%vector table))
+	  (n-buckets    (%n-buckets vector))
 	  (bucket-depth (%bucket-depth vector))
 	  ((tup bucket-index bucket-offset)
 	   (hash-moduli
@@ -337,8 +337,8 @@
       (error "The table is totally full this shouldn't happen"))))
 
 (dm do-keyed ((function <fun>) (table <tab>) => <any>) ;; TODO: => (tup)
-  (let ((vector (%vector table))
-	(n-buckets (%n-buckets vector))
+  (let ((vector       (%vector table))
+	(n-buckets    (%n-buckets vector))
 	(bucket-depth (%bucket-depth vector)))
     (rep outer (((b <int>) 0))
       (when (< b n-buckets)
@@ -353,8 +353,8 @@
 	(outer (+ b 1))))))
 
 (dm do ((function <fun>) (table <tab>) => <any>) ;; TODO: => (tup)
-  (let ((vector (%vector table))
-	(n-buckets (%n-buckets vector))
+  (let ((vector       (%vector table))
+	(n-buckets    (%n-buckets vector))
 	(bucket-depth (%bucket-depth vector)))
     (rep outer (((b <int>) 0))
       (when (< b n-buckets)
@@ -403,11 +403,11 @@
 	  #f))))
 
 (dm nxt-state ((table <tab>) (state <tab-state>) => <any>)
-  (let ((vector (%vector state))
-	(n-buckets (%n-buckets vector))
+  (let ((vector       (%vector state))
+	(n-buckets    (%n-buckets vector))
 	(bucket-depth (%bucket-depth vector))
-	(bucket (%bucket state))
-	(index (%index state)))
+	(bucket       (%bucket state))
+	(index        (%index state)))
     (inc index)
     (when (= index bucket-depth)
       (inc bucket)
@@ -444,8 +444,8 @@
 (dm now-elt-setter
     (value (table <tab>) (state <tab-state>) => <any>)
   (let ((vector (%vector state))
-	(index (%index state))
-	(depth (%bucket-depth vector)))
+	(index  (%index state))
+	(depth  (%bucket-depth vector)))
     (set (elt vector (+ index (+ depth (* (%bucket state) (* depth 2)))))
 	 value)))
 
@@ -454,14 +454,14 @@
   (isa <tab-state>
     (set %vector (%vector state))
     (set %bucket (%bucket state))
-    (set %index (%index state))))  
+    (set %index  (%index state))))  
 
 ;;; Internal functions
 
 (dm grow-table ((table <tab>) => <tab>)
   (let ((vec (%vector table)))
     (trace out "GROWING TABLE %= OF %=\n"
-	   (%count table) (* (%n-buckets vec) (%bucket-depth vec))))
+  	      (%count table) (* (%n-buckets vec) (%bucket-depth vec))))
   (let ((vector (%vector table))
 	((tup new-n-buckets new-bucket-depth)
 	 (choose-table-geometry
@@ -516,13 +516,13 @@
       (lab return
 	(let (((tup test-function hash-function) (table-protocol table))
 	      ((tup (hash <int>) state) (hash-function k))
-	      (new-n-buckets (%n-buckets new-vector))
-	      (new-bucket-depth (%bucket-depth new-vector))
-	      (new-primary-modulus (%primary-modulus new-vector))
+	      (new-n-buckets         (%n-buckets new-vector))
+	      (new-bucket-depth      (%bucket-depth new-vector))
+	      (new-primary-modulus   (%primary-modulus new-vector))
 	      (new-secondary-modulus (%secondary-modulus new-vector))
 	      ((tup new-bucket-index new-bucket-offset)
 	       (hash-moduli hash new-primary-modulus new-secondary-modulus)))
-	  (trace out "VISITING (%= %=)\n" k v)
+	  ;; (trace out "VISITING (%= %=)\n" k v)
 	  ;; Search each bucket
 	  (rep outer (((probes <int>) 0))
 	    (when (< probes new-n-buckets)
@@ -531,7 +531,7 @@
 		  (when (< i new-bucket-depth)
 		    (let ((this-key (elt new-vector index)))
 		      (when (== this-key $empty-cell-marker)
-			(trace out "COPYING TO (%= %=) %=\n" k v index)
+			;; (trace out "COPYING TO (%= %=) %=\n" k v index)
 			(set (elt new-vector index) k)
 			(set (elt new-vector (+ index new-bucket-depth)) v)
 			(return #f))
