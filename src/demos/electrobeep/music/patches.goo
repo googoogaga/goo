@@ -2,8 +2,8 @@
 
 
 (dc <midi-patch> (<any>))
-(dp patch-num (<midi-patch> => <int>))
-(dp patch-name (<midi-patch> => <str>))
+(dp! patch-num (<midi-patch> => <int>))
+(dp! patch-name (<midi-patch> => <str>))
 
 (dm midipatch (user-num|<int> name|<str> => <midi-patch>)
   (def patch (new <midi-patch>))
@@ -13,8 +13,8 @@
   )
 
 (dc <midi-patch-group> (<any>))
-(dp group-name (<midi-patch-group> => <str>))
-(dp group-children (<midi-patch-group> => <str-tab>) (fab <str-tab> 0))
+(dp! group-name (<midi-patch-group> => <str>))
+(dp! group-children (<midi-patch-group> => <str-tab>) (fab <str-tab> 0))
 
 (dm midigroup (name|<str> children|... => <midi-patch-group>)
   (def group (new <midi-patch-group>))

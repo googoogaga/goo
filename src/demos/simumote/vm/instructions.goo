@@ -4,13 +4,15 @@
 
 (dc <vm-ast-node> (<any>))
 
-(dc <vm-env> (<any>))
+(dc <vm-value> (<any>))
+
+(dc <vm-env> (<vm-value>)) ;; the value is a kludge. hee hee! I'm a horrible coder!
 (dp! env-parent (<vm-env> => (t? <vm-env>)) #f)
 (dp! env-bindings (<vm-env> => <tab>) (fab <tab> 0))
 
 (dv $vm-sys-env (new <vm-env>))
 
-(dc <vm-value> (<any>))
+
 
 ;; --- Processing and Stuff ---
 
@@ -61,11 +63,43 @@
   (val vmval)
   )
 
+;; The base types are immutable. So just return them.
+(dm clone-var (vmval|<vm-value> => <vm-value>)
+  vmval
+  )
+
 (dm to-str (vmval|<vm-value> => <str>)
   (to-str (unwrap vmval)))
 
-(dm == (v1|<vm-value> v2|<vm-value>)
+(dm = (v1|<vm-value> v2|<vm-value> => <log>)
   (= (val v1) (val v2)))
+
+;;(dm == (v1|<vm-value> v2|<vm-value>)
+;;  (= (val v1) (val v2)))
+
+(dc <vm-val-env> (<vm-value>))
+(dp! val (<vm-bool> => <vm-env>))
+
+(dm wrap-env (env|<vm-env> => <vm-val-env>)
+  (def venv (new <vm-val-env>))
+  (set (val venv) env)
+  venv
+  )
+
+;; ----- Indirect Reference -----
+;; Indirect references are used in indirect looping constructs over the contents
+;;  of a collection.  They are basically references to existing slots in a 
+;;  collection.  As such, reads return the value of the slot in the collection.
+;;  Writes overwrite the value at the given slot in the collection.
+;; Because these are overloaded into the standard environment implementation,
+;;  their implementation requires that the environment must be made aware on 
+;;  writes.  Thanks to the existing use of getters to determine the value of
+;;  wrapped values, no extra code is actually required on reads.
+(dc <vm-indirect-ref> (<vm-value>))
+
+(dm is-indirect-ref? (vmval|<vm-value> => <log>)
+  (isa? vmval <vm-indirect-ref>)
+  )
 
 ;; ----- List (definition) -----
 (dc <vm-list> (<vm-value>))
@@ -85,6 +119,36 @@
   (val lval)
   )
 
+(dm clone-var (vmval|<vm-list> => <vm-value>)
+  (def nlist (new <vm-list>))
+  (set (val nlist) (dup (val vmval)))
+  nlist
+  )
+
+;;(dm to-str (vml|<vm-list> => <str>)
+;;  "(list)"
+;;  )
+
+(dc <vm-indirect-list-ref> (<vm-indirect-ref>))
+(dp! ref-list (<vm-indirect-list-ref> => <vm-list>))
+(dp! ref-index (<vm-indirect-list-ref> => <any>))
+
+(dm fab-indirect-elt (vml|<vm-list> index|<any> => <vm-indirect-list-ref>)
+  (def nref (new <vm-indirect-list-ref>))
+  (set (ref-list nref) vml)
+  (set (ref-index nref) index)
+  nref
+  )
+
+(dm indirect-set (iref|<vm-indirect-list-ref> new-val|<any>)
+  (set (elt (val (ref-list iref)) (ref-index iref)) new-val)
+  new-val
+  )
+
+(dm indirect-get (iref|<vm-indirect-list-ref> => <vm-value>)
+  (elt (val (ref-list iref)) (ref-index iref))
+  )
+
 ;; ---------- Implementation ----------
 (dg consume-node (node|<any> => <vm-ast-node>))
 
@@ -99,7 +163,7 @@
   (do (fun (x) 
         (set rval (execute-node env x)))
       (nodes node))
-  $vm-false
+  rval
   )
 
 (dm consume-seq (node|<list> => <vm-ast-node>)
@@ -121,19 +185,48 @@
 (dc <vm-immediate> (<vm-ast-node>))
 (dp! immed-val (<vm-immediate> => <vm-value>))
 
-(dm immedify (val|<vm-value> => <vm-immediate>)
+(dm immedify (mval|<vm-value> => <vm-immediate>)
   (def nimmed (new <vm-immediate>))
-  (set (immed-val nimmed) val)
+  (set (immed-val nimmed) mval)
   nimmed
   )
 
 (dm execute-node (env|<vm-env> node|<vm-immediate> => <vm-value>)
   (immed-val node))
 
+;; A bit of a hack, but allows a reasonable normalization.
+(dm wrap-value (immval|<vm-immediate> => <vm-value>)
+  (immed-val immval)
+  )
+
 (d. $vm-ast-true (immedify $vm-true))
 (d. $vm-ast-false (immedify $vm-false))
 
+;; ----- Constants ------
+(dv $constant-table (fab <tab> 0))
+
+(dm consume-constant (nlist|<list> => <vm-ast-node>)
+  (def mval (wrap-value (3rd nlist)))
+  (set (elt $constant-table (2nd nlist)) mval)
+  $vm-ast-true
+  )
+
+(dm is-constant (sym|<sym> => <log>)
+  (and (elt-or $constant-table sym #f) 
+       #t)
+  )
+
+(dm get-constant-val (sym|<sym> => <vm-value>)
+  (elt $constant-table sym)
+  )
+
+(reg-handler 'defconst consume-constant)
+
 ;; --- Bindings & Environment ---
+;; All of this code is a bit of a horrible kludge.  The original design was
+;;  a bit of a kludge, and then I tacked on indirect references and 
+;;  nested references.  Now this is just horrible.  So horrible.  Oh the
+;;  humanity!
 (dc <vm-binding> (<vm-ast-node>))
 (dp! binding-sym (<vm-binding> => <sym>))
 
@@ -143,44 +236,127 @@
   binding
   )
 
-(dm execute-node (env|<vm-env> binding|<vm-binding> => <vm-value>)
-  (env-lookup env binding)
+(dm is-nested-ref? (binding|<vm-binding>)
+  (def sb (as <str> (binding-sym binding)))
+  (mem? sb (1st ":"))
   )
 
-(dm env-lookup (env|<vm-env> binding|<vm-binding>)
-  (or (elt-or (env-bindings env) (binding-sym binding) #f)
+(dm nested-ref-head (binding|<vm-binding> => <vm-binding>)
+  (def sb (as <str> (binding-sym binding)))
+  (def sb-head (1st (split sb (1st ":"))))
+  (new-binding (as <sym> sb-head))
+  )
+
+(dm nested-ref-tail (binding|<vm-binding> => <vm-binding>)
+  (def sb (as <str> (binding-sym binding)))
+  (def sb-split (split sb (1st ":")))
+  (def sb-tail (join (sub sb-split 1 (len sb-split)) ":"))
+  (new-binding (as <sym> sb-tail))
+  )
+
+;; This fucking shimmies up the chain.  Dammit.
+(dm local-env-lookup (env|<vm-env> binding|<vm-binding>)
+  (or (and (mem? (keys (env-bindings env)) (binding-sym binding)) ;; Can't use elt-or as the value stored may be equivalent to false.  Oops.
+           (elt (env-bindings env) (binding-sym binding)))
       (and (env-parent env)
-           (env-lookup (env-parent env) binding))
+           (local-env-lookup (env-parent env) binding))
       (seq
         (post "Lookup failing on binding: %=\n" binding)
         $vm-ast-false))
   )
 
-(dm env-lookup (env|<vm-env> sym|<sym>)
-  (or (elt-or (env-bindings env) sym #f)
-      (and (env-parent env)
-           (env-lookup (env-parent env) binding)))
+(dm nested-env-lookup (env|<vm-env> binding|<vm-binding> => <vm-value>)
+  (if (is-nested-ref? binding)
+      (seq
+        (def n-head (nested-ref-head binding))
+        (def n-tail (nested-ref-tail binding))
+
+        (def head-resolved-to-env (local-env-lookup env n-head))
+        (if (~= head-resolved-to-env $vm-ast-false)
+            (nested-env-lookup head-resolved-to-env n-tail)
+            $vm-ast-false)
+        )
+      (local-env-lookup env binding))
   )
 
-(dm env-find-binding (env|<vm-env> binding|<vm-binding>)
+;; from here on out are the world visible functions. they have been amended
+;;  to support the nested functionality via the above helper functions.
+
+(dm execute-node (env|<vm-env> binding|<vm-binding> => <vm-value>)
+  (def boundval (nested-env-lookup env binding))
+  (if (is-indirect-ref? boundval)
+      (indirect-get boundval)
+      boundval)
+  )
+
+(dm env-lookup (env|<vm-env> binding|<vm-binding>)
+  (nested-env-lookup env binding)
+  )
+
+(dm env-lookup (env|<vm-env> sym|<sym>)
+  (nested-env-lookup env (new-binding sym))
+  )
+
+;; Returns the env containing the thing.  local version...
+(dm local-env-find-binding (env|<vm-env> binding|<vm-binding>)
   (or (and (elt-or (env-bindings env) (binding-sym binding) #f)
            env)
       (and (env-parent env)
-           (env-lookup (env-parent env) binding)
-           (env-parent env)))
+           (local-env-find-binding (env-parent env) binding))
+      (seq
+        (post "Lookup failing on binding: %=\n" binding)
+        $vm-ast-false))
   )
 
+;; Returns the first environment holding the requested binding
+;;  or false if the binding can not be found in the given 
+;;  environment chain.
+(dm env-find-binding (env|<vm-env> binding|<vm-binding> => (t? <vm-env>))
+  ;; This part just basically recurses down until we reach the traditional
+  ;;  base case.  Not too bad.
+  (if (is-nested-ref? binding)
+      (seq
+        (def n-head (nested-ref-head binding))
+        (def n-tail (nested-ref-tail binding))
+
+        (def head-resolved-to-env (local-env-lookup env n-head))
+        (if (~== head-resolved-to-env $vm-ast-false)
+            (env-find-binding head-resolved-to-env n-tail)
+            (seq 
+              (post "Unable to find binding %=\n" (binding-sym binding))
+              #f))
+        )
+
+      (local-env-find-binding env binding)
+      )
+  )
+
+;; Setting in to non-existant nested variables should fail quite horribly.
+;; Specifically, if we have a:b and a is valid, but b is not, KABOOM!
 (dm env-set (env|<vm-env> binding|<vm-binding> value|<vm-value>)
   ;; Use the current env if we can't find it in an existing env.
-  (set (elt (env-bindings (or (env-find-binding env binding) env))
-            (binding-sym binding))
-       value)
+  (def env-to-use (or (env-find-binding env binding) env))
+  (def bindings (env-bindings env-to-use))
+  (def cur-binding (elt-or bindings (binding-sym binding) #f))
+  (if (and cur-binding (is-indirect-ref? cur-binding))
+      ;; Handle indirect ref
+      (indirect-set cur-binding value)
+      ;; Handle normal variable
+      (set (elt bindings
+                (binding-sym binding))
+           value)
+      )
   )
 
 (dm clone-env (env|<vm-env> => <vm-env>)
   (def nenv (new <vm-env>))
   (set (env-parent nenv) (env-parent env))
-  (set (env-bindings nenv) (dup (env-bindings env)))
+;;  (set (env-bindings nenv) (dup (env-bindings env)))
+  (for ((key-val-tup (items (env-bindings env))))
+    (def the-key (1st key-val-tup))
+    (def the-val (2nd key-val-tup))
+    (set (elt (env-bindings nenv) the-key) (clone-var the-val))
+    )
   nenv
   )
 
@@ -200,6 +376,19 @@
   )
 
 (reg-handler 'quote consume-sym)
+
+(dv $vm-symbol-table-mapping (fab <tab> 0))
+(dv $vm-symbol-high-val 0) ;; 0 will not actually be assigned!
+
+(dm val (vmsym|<vm-symbol> => <int>)
+  (elt! $vm-symbol-table-mapping (sym vmsym)
+        (fun ()
+          (incf $vm-symbol-high-val)))
+  )
+
+(dm unwrap (vmval|<vm-symbol> => <int>)
+  (val vmval)
+  )
 
 ;; This function takes a collection of environments from top to bottom,
 ;;  and chains them accordingly via the parent relationship.  No cloning
@@ -312,6 +501,10 @@
        $vm-true
        )
      )
+    (('not)
+     (def result (execute-node env (1st (operands node))))
+     (wrap-value (not (vm-true? result)))
+     )
     )
   )
 
@@ -325,6 +518,7 @@
 
 (reg-handler 'or consume-logic)
 (reg-handler 'and consume-logic)
+(reg-handler 'not consume-logic)
 
 ;; ----- Control Flow ------
 (dc <vm-if-node> (<vm-ast-node>))
@@ -354,7 +548,7 @@
   (def new-if (new <vm-if-node>))
   (set (test-node new-if) (consume-node (2nd nlist)))
   (set (true-case new-if) (consume-seq (tail (tail nlist))))
-  (set (false-case new-if) $null-vm-seq)
+  (set (false-case new-if) $null-vm-seq) ;; an empty sequence implicitly returns #f!
   new-if
   )
 
@@ -372,6 +566,43 @@
 (reg-handler 'when consume-when)
 (reg-handler 'unless consume-unless)
 
+(dc <vm-case-node> (<vm-ast-node>))
+(dp! case-var (<vm-case-node> => <vm-ast-node>))
+(dp! case-cases (<vm-case-node> => <col>) (vec))
+
+;; CASE variable
+;;  (match1 code...)
+;;  (match2 code...)
+;; WHERE match1 _may_ be a list? maybe? hm. don't know. maybe.
+(dm consume-case (nlist|<list> => <vm-case-node>)
+  (def new-case (new <vm-case-node>))
+  (set (case-var new-case) (consume-node (2nd nlist)))
+  (do (fun (case-pair)
+        (add! (case-cases new-case)
+              (tup (consume-var-val (1st case-pair))
+                   (consume-seq (tail case-pair))))
+        )
+      (tail (tail nlist)))
+  new-case
+  )
+
+(dm execute-node (env|<vm-env> cnode|<vm-case-node> => <vm-value>)
+  (def comp-value (execute-node env (case-var cnode)))
+  (def chosen-case 
+    (esc found-it 
+      (for ((case-tup (case-cases cnode)))
+        (if (= comp-value (1st case-tup))
+            (found-it (2nd case-tup))))
+      )
+    )
+  (if chosen-case
+    (execute-node env chosen-case)
+    $vm-false
+    )
+  )
+
+(reg-handler 'case consume-case)
+
 ;; ----- Env Manip -----
 (dc <vm-set-node> (<vm-ast-node>))
 (dp! binding-name (<vm-set-node> => <vm-binding>))
@@ -379,9 +610,12 @@
 
 (dm execute-node (env|<vm-env> node|<vm-set-node> => <vm-value>)
   (def val (execute-node env (binding-node node)))
+  ;; Clone it if it's a list!
+  (when (isa? val <vm-list>)
+    (set val (clone-var val)))
   (env-set env
            (binding-name node)
-           (execute-node env (binding-node node)))
+           val)
   val
   )
 
@@ -395,6 +629,30 @@
   )
 
 (reg-handler 'set consume-set)
+
+(dc <vm-def-node> (<vm-set-node>))
+
+(dm execute-node (env|<vm-env> node|<vm-def-node> => <vm-value>)
+  (def val (execute-node env (binding-node node)))
+  ;; Clone it if it's a list!
+  (when (isa? val <vm-list>)
+    (set val (clone-var val)))
+
+  (set (elt (env-bindings env) (binding-name node))
+       val)
+  val
+  )
+
+;; DEF binding-name binding-node
+;;  0        1           2
+(dm consume-def (nlist|<list> => <vm-set-node>)
+  (def ndef (new <vm-def-node>))
+  (set (binding-name ndef) (new-binding (2nd nlist)))
+  (set (binding-node ndef) (consume-node (3rd nlist)))
+  ndef
+  )
+
+(reg-handler 'def consume-def)
 
 ;; ----- Functions ------
 
@@ -443,6 +701,56 @@
   nappl
   )
 
+;; ----- Looping Constructs ------
+(dc <vm-for-node> (<vm-ast-node>))
+(dp! is-find (<vm-for-node> => <log>) #f)
+(dp! collection-pairs (<vm-for-node> => <vec>))
+(dp! body-code (<vm-for-node> => <vm-seq>))
+
+;;  0                1                   2...
+;; FOR (VARPAIR1 VARPAIR2 ... VARPAIRN) BODY...
+;;  where VARPAIR = (BINDING_NAME COLLECTION_NAME)
+(dm consume-for (nlist|<list> => <vm-for-node>)
+  (def nfor (new <vm-for-node>))
+  ;; Mark whether it's a find or not
+  (set (is-find nfor) (= (1st nlist) 'find))
+  (set (collection-pairs nfor) (2nd nlist))
+  (set (body-code nfor) (consume-seq (tail (tail nlist))))
+  nfor
+  )
+
+(dm execute-node (env|<vm-env> node|<vm-for-node> => <vm-value>)
+  ;; Create our own environment, chaining it to the current env
+  (def our-env (new <vm-env>))
+  (set (env-parent our-env) env)
+  
+  ;; Find all the collections in the environment passed to us.
+  (def our-cols 
+    (map (fun (varpair)
+           (env-lookup env (2nd varpair)))
+         (collection-pairs node)))
+
+  (esc found-it
+    ;; Iterate over the range of the first collection
+    (for ((index (range 0 < (len (1st our-cols)))))
+      ;; Iterate over the collections, creating the indirect references and
+      ;;  setting them in our created env.
+      (for ((cur-col our-cols) (varpair (collection-pairs node)))
+        (env-set our-env (1st varpair) (fab-indirect-elt cur-col index)))
+
+      ;; Execute the body
+      (def rval (execute-node our-env (body-code node)))
+      (when (and (is-find node)
+                 (vm-true? rval))
+        (found-it rval))
+      )
+    ;; Didn't find it or we were just doing a plain for.
+    (found-it $vm-false)
+    )
+  )
+
+(reg-handler 'for  consume-for)
+(reg-handler 'find consume-for)
 ;; -------- Constructicons --------
 
 (dm consume-node (node|<int> => <vm-ast-node>)
@@ -458,7 +766,10 @@
   )
 
 (dm consume-node (node|<sym> => <vm-ast-node>)
-  (new-binding node)
+  (if (is-constant node)
+      (immedify (get-constant-val node))
+      (new-binding node)
+      )
   )
 
 (dm consume-node (nlist|<list> => <vm-ast-node>)
@@ -479,19 +790,32 @@
       snode)
   )
 
+(dm consume-var-val (node|<any> => <vm-value>)
+  (wrap-value (consume-node node))
+  )
+
+(dm consume-var-val (node|<list> => <vm-value>)
+  (consume-list-def node)
+  )
+
+(dm consume-list-def (node|<list> => <vm-list>)
+  (def nwl (new <vm-list>))
+  (def l (fab <vec> 0))
+  (set (val nwl) l)
+  (for ((snode node))
+    (add! l (wrap-value (consume-node snode)))
+    )
+  nwl
+  )
+
 (dm consume-env-def (node|<list> => <vm-env>)
   (def env (new <vm-env>))
-  (do (fun (x)
-        (set (elt (env-bindings env) (1st x)) (wrap-value (2nd x)))
+  (do (fun (x)        
+        (set (elt (env-bindings env) (1st x)) (consume-var-val (2nd x)))
         )
       node)
   env
   )
-
-(dm consume-code (node|<list> => <vm-ast-node>)
-  
-  )
-
 
 ;; Mumblings:
 
@@ -521,6 +845,7 @@
   <vm-value>
   <vm-int>
   <vm-bool>
+  <vm-list>
 
   <vm-seq>
   
@@ -621,7 +946,6 @@
   consume-set
   consume-top-level
   consume-env-def
-  consume-code
   consume-appl
   consume-sym
   invoke-fun

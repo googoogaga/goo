@@ -1,1 +1,115 @@
 ;; Ideally the magical code to propagate code throughout the network
+
+;; todo:
+;; - a:b syntax
+;; o for construct
+;; o find construct (for, but stops when non-false value received)
+;; o indirection support for lists
+;; o do symbol magic... either need to be transformed to integers, or at least seem that way from a runtime perspective...
+;; o make sure when returns false on false test...
+;; o call function
+;; o def syntax?
+;; o make sure all parents present
+
+(parsevm
+ 
+ ;; Semantics:
+ ;; You can only be a sender once you have all of the capsules locally.
+ ;; In this way, our boolean state array can do double-duty:
+ ;;  When we are a sender, it indicates what we still need to send.
+ ;;  When we are a receiver, it indicates what we have yet to receive.
+
+ (defconst STATE_INACTIVE 0)
+ (defconst STATE_SENDER   1)
+ (defconst STATE_RECEIVER 2)
+
+ (defconst SEND_TICK_MIN 3)
+ (defconst SEND_TICK_MAX 5)
+
+ (defconst RECV_TICK_MIN 10)
+ (defconst RECV_TICK_MAX 15)
+
+ (templ codecast #f
+        ;; State
+        (
+         (payload ())
+         (checklist ())
+         (state STATE_SENDER)
+         )
+
+        (init
+         ;; Receiver:
+         (when (= state STATE_RECEIVER)
+           ;; Take Inventory
+           (call inventory)
+
+           ;; Start tick to indicate our state a ways in the future
+           (schedule-me (random-range RECV_TICK_MIN RECV_TICK_MAX))
+           )
+         )
+
+        (inventory
+         ;; Inventory
+         (fori ((capsule payload) (present checklist))
+               (set present (block-present? capsule))
+               )
+
+         ;; See if we should transition to SENDER...
+         (when (find ((present checklist))
+                     (not present))
+           (set state STATE_SENDER))
+         )
+
+        (tick
+         ;; Sender: (more frequently)
+         (when (= state STATE_SENDER)
+           ;; Find someone we haven't sent yet, and send them.
+           (def nextcapsule (findi ((tosend checklist) (capsule payload))
+                                   (when tosend
+                                     (set tosend #f)
+                                     capsule)))
+           (if nextcapsule
+               (broadcast nextcapsule)
+               (set state STATE_INACTIVE))
+
+           (schedule-me (random-range SEND_TICK_MIN SEND_TICK_MAX))
+           )
+
+         ;; Receiver: (less frequently)
+         (when (= state STATE_RECEIVER)
+           ;; Take inventory some more.
+           (call inventory)
+           )
+
+         ;; (may no longer be receiver...)
+         (when (= state STATE_RECEIVER)
+           ;; Broadcast ourselves to provide an update of what is still required.
+           (broadcast-me)
+
+           (schedule-me (random-range RECV_TICK_MIN RECV_TICK_MAX))
+           )
+         )
+
+        (collide
+         ;; Sender:
+         (when (and (= me.state STATE_SENDER)
+                    (= other.state STATE_RECEIVER))
+           ;; Use this to update the state of things we need to send.
+           (fori ((tosend me:checklist) (received me:checklist))
+                 (set tosend (or tosend received))
+                 )
+           )
+
+          ;; Receiver:
+          ;; We can safely ignore new instances of ourself.
+          
+          ;; We always keep ourselves...
+          me
+         )
+
+        (packup
+         (when (= state STATE_SENDER)
+           (set state STATE_RECEIVER))
+        )
+
+ )

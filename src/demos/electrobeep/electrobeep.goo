@@ -22,18 +22,18 @@
 
 ;; -- Tracks --
 (dc <electro-track> (<any>))
-(iprop <electro-track> patch <midi-patch> "Patch")
+(dp! patch (<electro-track> => <midi-patch>))
 
 (dc <electro-drum-track> (<electro-track>))
-(iprop <electro-drum-track> beats <col> "Beats")
+(dp! beats (<electro-drum-track> => <col>))
 
 (dc <electro-piano-track> (<electro-track>))
-(iprop <electro-piano-track> notes <col> "Notes")
+(dp! notes (<electro-piano-track> => <col>))
 
 ;; -- Pattern --
 (dc <electro-pattern> (<any>))
-(iprop <electro-pattern> tracks <col> "Tracks")
-(iprop <electro-pattern> name <str> "Track Name")
+(dp! tracks (<electro-pattern> => <col>))
+(dp! name (<electro-pattern> => <str>))
 
 (dm to-str (pat|<electro-pattern> => <str>)
   (name pat)
@@ -41,8 +41,8 @@
 
 ;; -- Song --
 (dc <electro-song> (<any>))
-(iprop <electro-song> patterns <col> "Patterns")
-(iprop <electro-song> pattern-triggerings <col> "Pattern Triggerings")
+(dp! patterns (<electro-song> => <col>))
+(dp! pattern-triggerings (<electro-song> => <col>))
 
 (dm hobar-item-payload (track|<electro-drum-track>)
   (beats track)

@@ -11,8 +11,7 @@
 (dp! block-name  (<sm-code-block> => <str>))
 (dp! block-label (<sm-code-block> => (t? <sm-label>)) #f)
 (dp! block-env (<sm-code-block> => <vm-env>))
-(dp! block-init-func  (<sm-code-block> => <vm-seq>))
-(dp! block-tick-func  (<sm-code-block> => <vm-seq>))
+(dp! block-funcs  (<sm-code-block> => <tab>) (fab <tab> 0))
 (dp! block-parent (<sm-code-block> => (t? <sm-code-block>)) #f) ;; In an implementation we would 
   ;; actually be keying based off the label.  We can do this on write-out though.
 
@@ -29,8 +28,8 @@
 ;; - A function that takes the state, and processes it, attached to <block-NAME>
 
 
-;; (block NAME PARENT (env) (init) (tick))
-;;    0     1    2      3      4     5
+;; (block NAME PARENT (env) [repeated (block-name BODY...)]
+;;    0     1    2      3               4+
 
 (dm consume-block (nlist|<list> => <vm-ast-node>)
   (def block (new <sm-code-block>))
@@ -39,10 +38,14 @@
   ;; Lookup the parent (if any)
   (when (elt nlist 2) 
     (set (block-parent block) (elt $vm-blocks (elt nlist 2))))
-  ;; Consume the rest
+  ;; Consume the env setup
   (set (block-env block) (consume-env-def (elt nlist 3)))
-  (set (block-init-func block) (consume-seq (elt nlist 4)))
-  (set (block-tick-func block) (consume-seq (elt nlist 5)))
+  ;; Process the remainder as named blocks
+  (do (fun (lblock)
+        (def funcname (1st lblock))
+        (set (elt (block-funcs block) funcname) (consume-seq (tail lblock)))
+        )
+      (tail (tail (tail (tail nlist))))) ;; [1:], [2:], [3:], [4:]
   ;; Register us in the block database
   (set (elt $vm-blocks (elt nlist 1)) block)
   (post "/-- Done Parsing Block %=\n" (block-name block))
@@ -54,6 +57,13 @@
 
 (ds (parsevm ,@body)
   `(consume-top-level (quote ,body))
+  )
+
+(dm block-get-func (block|<sm-code-block> func-name|<sym> => <vm-seq>)
+  (unless (elt-or (block-funcs block) func-name #f)
+    ;;(post "Warning: could not find function %=\n" func-name)
+    )
+  (elt-or (block-funcs block) func-name $null-vm-seq)
   )
 
 (dm clone-run-block (rblock|<sm-run-block> => <sm-run-block>)
@@ -300,10 +310,8 @@
   block-label-setter
   block-env
   block-env-setter
-  block-init-func
-  block-init-func-setter
-  block-tick-func
-  block-tick-func-setter
+  block-funcs
+  block-funcs-setter
   block-parent
   block-parent-setter
 
@@ -319,6 +327,7 @@
 (export
   parsevm
   clone-run-block
+  block-get-func
   )
 
 ;; funcs

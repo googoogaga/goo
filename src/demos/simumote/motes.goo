@@ -31,14 +31,34 @@
       )
   )
 
+(df random-not-in-list (maxval|<int> used-vals|<col> => <int>)
+  (def val (random maxval))
+  (if (mem? used-vals val)
+      (random-not-in-list maxval used-vals)
+      val)
+  )
+
 ;; Randomly distribute the motes across the unit plane.
 (dm distribute-motes (me|<mote-ensemble>)
-  (do (fun (mote)
-        (set (mote-x mote) (random-unit))
-        (set (mote-y mote) (random-unit))
-        )
-      (motes me)
-      )
+;;   (do (fun (mote)
+;;         (set (mote-x mote) (random-unit))
+;;         (set (mote-y mote) (random-unit))
+;;         )
+;;       (motes me)
+;;       )
+  ;; New version! Yay!
+  (def columns 50)
+  (def rows 50)
+  (def spots-used (vec))
+  (def squares (* columns rows))
+  (for ((mote (motes me)))
+    (def square-num (random-not-in-list squares spots-used))
+    (add! spots-used square-num)
+    (def column (mod square-num columns))
+    (def row (div square-num columns))
+    (set (mote-x mote) (/ (as <flo> column) (as <flo> columns)))
+    (set (mote-y mote) (/ (as <flo> row) (as <flo> rows)))
+    )
   )
 
 ;; Find all the motes within a given radius of a given mote
@@ -47,18 +67,20 @@
   (def my (mote-y mote))
   (packing
       (do (fun (other-mote)
-            (def ox (mote-x other-mote))
-            (def oy (mote-y other-mote))
-            (def dx (- ox mx))
-            (def dy (- oy my))
-            
-            (when (< (sqrt (+ (* dx dx) (* dy dy))) radius)
-              (pack other-mote)
+            (unless (== mote other-mote)
+              (def ox (mote-x other-mote))
+              (def oy (mote-y other-mote))
+              (def dx (- ox mx))
+              (def dy (- oy my))
+              
+              (when (<= (sqrt (+ (* dx dx) (* dy dy))) radius)
+                (pack other-mote)
+                )
               )
             )
           motes
           )
-      )
+    )
   )
 
 ;; Collection Abstraction -----

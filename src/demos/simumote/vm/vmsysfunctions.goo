@@ -13,9 +13,27 @@
        (random high)
        )
 
+(defsf 'random-range (env|<vm-env> low|<vm-int> high|<vm-int>)
+       (def span (- (unwrap high) (unwrap low)))
+       (+ (unwrap low) (random (+ 1 span)))
+       )
+;; Debuggy crap
+
+(defsf 'print-num (env|<vm-env> num|<vm-int>)
+       (post "Number: %=\n" (unwrap num))
+       )
+
 ;; List crap
 (defsf 'mem? (env|<vm-env> l|<vm-list> e|<vm-value>)
        (mem? (val l) e)
+       )
+
+(defsf 'len (env|<vm-env> l|<vm-list>)
+       (len (val l))
+       )
+
+(defsf 'empty? (env|<vm-env> l|<vm-list>)
+       (empty? (val l))
        )
 
 (defsf 'add! (env|<vm-env> l|<vm-list> e|<vm-value>)
@@ -24,13 +42,47 @@
        )
 
 (defsf 'del! (env|<vm-env> l|<vm-list> e|<vm-value>)
-       (del! (val l) e)
+       (set (val l)
+            (packing 
+                (for ((v (val l)))
+                  (when (~= v e)
+                    (pack v))
+                  )))
        #t
        )
 
 (defsf 'zap! (env|<vm-env> l|<vm-list>)
        (zap! (val l))
        #t
+       )
+
+(defsf 'elt (env|<vm-env> l|<vm-list> index|<vm-value>)
+       (elt (val l) (unwrap index))
+       )
+
+(defsf 'elt-setter (env|<vm-env> newval|<vm-value> l|<vm-list> index|<vm-value>)
+       (set (elt (val l) (unwrap index)) (unwrap newval))
+       #t
+       )
+
+(defsf 'min-elt (env|<vm-env> l|<vm-list>)
+       (def s-val #f)
+       (for ((c-val (val l)))
+         (def cu-val (unwrap c-val))
+         (set s-val (or (and s-val (min s-val cu-val))
+                        cu-val))
+         )
+       s-val
+       )
+
+(defsf 'max-elt (env|<vm-env> l|<vm-list>)
+       (def s-val #f)
+       (for ((c-val (val l)))
+         (def cu-val (unwrap c-val))
+         (set s-val (or (and s-val (max s-val cu-val))
+                        cu-val))
+         )
+       s-val
        )
 
 (defsf 'intersect! (env|<vm-env> vl1|<vm-list> vl2|<vm-list>)
@@ -40,7 +92,7 @@
        (def l1 (val vl1))
        (def l2 (val vl2))
        (do (fun (x)
-             (when (mem? l2 x)
+             (when (any? (fun (y) (= x y)) l2)
                (add! nl x))
              )
            l1)
@@ -55,7 +107,7 @@
        (def l1 (val vl1))
        (def l2 (val vl2))
        (do (fun (x)
-             (when (mem? l2 x)
+             (when (any? (fun (y) (= x y)) l2)
                (add! nl x))
              )
            l1)

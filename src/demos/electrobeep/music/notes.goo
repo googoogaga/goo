@@ -1,9 +1,9 @@
 (use goo)
 
 (dc <midi-note> (<any>))
-(dp note-num (<midi-note> => (t? <int>)) 60)
-(dp velocity (<midi-note> => <int>) 64)
-(dp duration (<midi-note> => <int>) 32)
+(dp! note-num (<midi-note> => (t? <int>)) 60)
+(dp! velocity (<midi-note> => <int>) 64)
+(dp! duration (<midi-note> => <int>) 32)
 
 (dm to-str (note|<midi-note>)
   (cat 

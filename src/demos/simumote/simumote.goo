@@ -5,6 +5,7 @@
 (use samurui/extrinsic)
 
 (use demos/simumote/motes)
+(use demos/simumote/vm/instructions)
 (use demos/simumote/vm/vm)
 (use demos/simumote/simcode/round)
 
@@ -18,8 +19,10 @@
 ;;; Create the App
 (dv *app* (new <simumote>))
 
+(dv $num-motes 200)
+
 ;; Create the motes
-(set (motes *app*) (mote-ensemble (make-motes 100)))
+(set (motes *app*) (mote-ensemble (make-motes $num-motes)))
 (distribute-motes (motes *app*))
 
 ;; Create the first round.
@@ -30,6 +33,13 @@
 (iaction <simumote> advance-round app "Advance Round"
          (process-round (cur-round app) (motes app))
          (set (cur-round app) (transition-round (cur-round app) (motes app)))
+         )
+
+(iaction <simumote> advance-five app "Advance 5"
+         (for ((i (range 0 < 5)))
+           (process-round (cur-round app) (motes app))
+           (set (cur-round app) (transition-round (cur-round app) (motes app)))           
+           )
          )
 
 ;; ----- Interface Models -----
@@ -50,6 +60,7 @@
   )
 
 (iview <mote>
+       (coerce mote-id ,<str> ,to-str ,nop-setter)
        (attr (coerce mote-run-blocks ,<visi-col> ,coerce-run-blocks-to-visi ,nop-setter)
              fill
              scroll
@@ -58,14 +69,22 @@
 
 (iview <simumote>
        (attr (panes
-              (master bob (attr motes fill extrinsic (fundamental motes) (x x) (y y)))
+              (master bob (attr motes
+                                fill extrinsic
+                                (fundamental motes) (x x) (y y)
+                                (pre-overlays
+                                 (circle (radius ,$mote-comm-radius))
+                                 )
+                                ))
               (slave bob)
               )
              fill)
-       advance-round
+       (columns
+        advance-round
+        advance-five
+        )
        )
        
-
 ;; ----- App Go -----
 (df go-simumote ()
   ;; Initialize all the code-block-states for all the motes
@@ -77,6 +96,30 @@
   (samurui-go)
   )
 
+;; ----- Helpers -------
+
+
+;; Distribute code blocks!
+(dm give-all (block-name|<sym>)
+  (give-all-motes-instance (cur-round *app*) (motes (motes *app*)) (elt $vm-blocks block-name))
+  )
+
+(dm give-all (block-names|<col>)
+  (do give-all block-names)
+  )
+
+(dv $main-rblock-name #f)
+
+(df gimme-main-rblock (mote|<mote> => (t? <sm-run-block>))
+  (mote-find-block-instance mote (elt $vm-blocks $main-rblock-name))
+  )
+
+(df lookup-var (rblock|(t? <sm-run-block>) varname|<sym> notfound|<any> => <any>)
+  (if rblock
+      (unwrap (env-lookup (run-state rblock) varname))
+      notfound)
+  )
+
 (export
   go-simumote
   motes
@@ -84,4 +127,10 @@
   cur-round
   cur-round-setter
   *app*
+  $num-motes
+
+  give-all
+  $main-rblock-name
+  gimme-main-rblock
+  lookup-var
   )

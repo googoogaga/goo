@@ -11,7 +11,16 @@
 ;; - Subtract these nodes 
 
 ;; What is needed:
-;; - A list construct.
+;; x A list construct.
+;; - State mutation for sending...
+;; x Case
+;; x random-range
+;; x defconst
+;; x Add collision to block
+;; x Add packup to block
+;; - Add collision logic usage
+;; - Add packup logic usage
+;; x add schedule-other
 
 ;; Sketch
 ;; - Stage 1
@@ -21,46 +30,215 @@
 ;;  - Injection node asserts it is in charge.
 ;;  [ Cycle Begin ]
 ;;  - Injection node says its clique is tentatively made up of itself and the people it can hear.
-;;  - Everyone in that tentative clique reports back the number of people it can hear who are in that clique. (and maybe even the people...)
-;;  - The injection node intersects the person with the maximum number with its own list (and marks that guy as having been intersected)
+
+;;  - Everyone in that tentative clique reports back the number of
+;;  people it can hear who are in that clique. (and maybe even the
+;;  people...)
+
+;;  - The injection node intersects the person with the maximum number
+;;  with its own list (and marks that guy as having been intersected)
+
 ;;  [ Cycle End ]
-;;  - The cycle repeats itself.  Eventually there should be a clique of mutually hearing people hearing.
+
+;;  - The cycle repeats itself.  Eventually there should be a clique
+;;  of mutually hearing people hearing.
+
 ;; - Stage 2.5 (Onwards to induction)
-;;  - The clique is told to let their neighbors know that it's time to let the next people form a clique.
-;;  - The people, thusly informed perform a leader election based on maximal id or other arbitrary symmetry breaking.
+
+;;  - The clique is told to let their neighbors know that it's time to
+;;  let the next people form a clique.
+
+;;  - The people, thusly informed perform a leader election based on
+;;  maximal id or other arbitrary symmetry breaking.
+
 ;;  - REPEAT Stage 2, where injection node is replaced with whoever this leader is.
 
 ;; Special Cases:
-;;  - Perhaps, a lower bound should be established, so that if someone's presence would form a cell of 2 or something, that loser should just be dropped.
+
+;;  - Perhaps, a lower bound should be established, so that if
+;;  someone's presence would form a cell of 2 or something, that loser
+;;  should just be dropped.
 
 (parsevm
+ (defconst MEETING_NEIGHBORS        0)
+ (defconst LONELY                   1)
+ (defconst COMPETING_FOR_LEADERSHIP 2)
+ (defconst PROBATIONARY             3)
+ (defconst CELL_LEADER              4)
+ (defconst BELONG_TO_A_CELL         5)
+ ;; 0 meeting neighbors
+ ;; 1 neighbors met, passive
+ ;; 2 neighbors met, competing for leadership spot
+ ;; 3 neighbors met, under consideration for current cell
+ ;; 4 neigbhors met, leader of current cell election
+ ;; 5 happily established in cell
+
+
+ ;; ====== State Block. Initial home for code (gets refactored...)
  (block cell-state #f
         ;; State
         (
          (cell-id 0)
          (nodes-i-hear ())
+         (state 0)
+         (best-candidate-hears ())
+         (best-candidate 0)
          )
 
-        ;; Init
-        (
+        (init
+         (schedule-me (random-range 3 5))
          )
 
-        ;; Tick
-        (
+        (tick
+         (case state
+           (MEETING_NEIGHBORS
+            (broadcast-child 'cell-meet-neighbors)
+            )
+           (LONELY
+            )
+           (COMPETING_FOR_LEADERSHIP
+            )
+           (PROBATIONARY
+            )
+           (CELL_LEADER
+            )
+           (BELONG_TO_A_CELL
+            )
+           )
+         
+         (schedule-me (random-range 3 5))
+         )
+
+        (collision
+         )
+
+        (packup
          )
         )
 
+ ;; ===== Meet Neighbors
  (block cell-meet-neighbors cell-state
         ;; State
         (
+         (node-im-from 0)
          )
 
+        (init
+         (add! nodes-i-hear node-im-from)
+         )
+
+        (tick
+         )
+
+        (collision
+         )
+
+        (packup
+         (set node-im-from (mote-id))
+         )
+        )
+
+;; ===== Prep for Leadership Competition
+;; This is a standard broadcast suppression w/flow rules and payload...
+ (block cell-leadership-prep cell-state
+        ;; State
+        (
+         (target-cell-id 0)
+         )
+
+        (init
+         (case state
+           ;; If we're part of an existing cell, definitely relay it.
+           (BELONG_TO_CELL
+            (random-resend-me)
+            )
+           ;; If we're not part of a cell, become part of the leadership competition
+           (LONELY
+            (set state COMPETING_FOR_LEADERSHIP)
+            (schedule-other 'cell-leadership-competition (random-range 3 5))
+            )
+           )
+         )
+
+        (tick
+         )
+
+        (collision
+         )
+
+        (packup
+         )
+        )
+
+;; ===== Leadership Competition
+;; The methedology for this is basically your standard consensus mechanism.
+;; In order to contend with packet loss we do not only broadcast on delta's.
+;; However, in order to keep the number of transmissions reasonable, we 
+;;  assign delta's a much higher outgoing priority, as it were.
+ (block cell-leadership-competition cell-state
+        ;; State
+        (
+         (target-cell-id 0) ;; partialish
+         (highest-node-id 0)
+         )
         ;; Init
         (
+         (schedule-me (random-range 3 5))
+         )        
+        ;; Tick
+        (
+         (broadcast-me)
          )
+        ;; Collision me, other?
+        (
+         (if (>= me.highest-node-id other.highest-node-id)
+             me ;; I am better/equal! Keep me! Me me me! (maintain current countdown)
+             other ;; He is better! (Let countdown be reset too...)
+             )
+         )
+        ;; Packup
+        ()
+        )
 
+;; ===== Consideration Report...
+ (block cell-share-phone-book cell-state
+        ;; State
+        (
+         (phone-book ())
+         (node-im-from 0)
+         )
+        ;; Init
+        (
+         (when (= state CELL_LEADER)
+           (when (> (len phone-book) 
+                    (len best-candidate-hears))
+             (set best-candidate-hears phone-book)
+             (set best-candidate node-im-from))
+           )
+         )
         ;; Tick
         (
          )
+        ;; Collision
+        ()
+        ;; Packup
+        (
+         (set phone-book nodes-i-hear)
+         (set node-im-from (mote-id))
+         )
         )
+
+ (block prototype #f
+        ;; State
+        ()
+        ;; Init
+        ()
+        ;; Tick
+        ()
+        ;; Collision
+        ()
+        ;; Packup
+        ()
+        )
+
  )

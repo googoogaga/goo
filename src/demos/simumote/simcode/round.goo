@@ -1,5 +1,7 @@
 (use goo)
 
+(use goo/random)
+
 (use demos/simumote/motes)
 (use demos/simumote/vm/instructions)
 (use demos/simumote/vm/vm)
@@ -24,11 +26,11 @@
 
 ;; --- Broadcast Related ---
 
-(defrf 'broadcast-child (env|<vm-env> symname|<vm-symbol>)
+(defrf 'broadcast (env|<vm-env> symname|<vm-symbol>)
        (def instance (mote-find-block-instance $current-mote (elt $vm-blocks (sym symname))))
        (if instance
-         (add! $current-out-queue instance)
-         (post "Crap, couldn't find instance of %= to broadcast-child\n" (sym symname)))
+         (add! $current-out-queue (clone-run-block instance))
+         (post "Crap, couldn't find instance of %= to broadcast\n" (sym symname)))
        #t
        )
 
@@ -45,15 +47,51 @@
        #t
        )
 
+(defrf 'me-scheduled? (env|<vm-env>)
+       (and (run-ticks $currently-executing-rblock)
+            #t)
+       )
+
+(defrf 'schedule-other (env|<vm-env> symname|<vm-symbol> ticks|<vm-int>)
+       (def instance (mote-find-block-instance $current-mote (elt $vm-blocks (sym symname))))
+       (if instance
+           (set (run-ticks instance) (unwrap ticks))
+           (post "Crap, couldn't find instance of %= to schedule-other\n" (sym symname)))
+       #t
+       )
+
 ;; --- Block Information ---
 (defrf 'block-present? (env|<vm-env> symname|<vm-symbol>)
        (def instance (mote-find-block-instance $current-mote (elt $vm-blocks (sym symname))))
        (if instance #t #f)
        )
 
+;; --- Call ---
+(defrf 'call (env|<vm-env> funcname|<vm-symbol>)
+       ;; No need to save any of these values because their values won't actually change. (Same value)
+       (exec-block-on-mote $currently-executing-rblock (sym funcname) $current-mote $current-out-queue #f)
+       )
+
+;; --- Call-Other ---
+(defrf 'call-other (env|<vm-env> capsulename|<vm-symbol> funcname|<vm-symbol>)
+       (def oth-rblock (mote-find-block-instance-by-name $current-mote (sym capsulename)))
+       
+       (when oth-rblock
+         ;; Save the current rblock... (all others stay the same) (exec-block... does the mutation)
+         (def saved-rblock $currently-executing-rblock)
+
+         (exec-block-on-mote oth-rblock (sym funcname) $current-mote $current-out-queue #f)
+         
+         ;; Restore the current rblock
+         (set $currently-executing-rblock saved-rblock)
+         )
+       (and oth-rblock #t)
+       )
+
+
 ;; --- Mote Identity ---
 
-(defrt 'mote-id (env|<vm-env>)
+(defrf 'mote-id (env|<vm-env>)
        (mote-id $current-mote)
        )
 
@@ -62,34 +100,60 @@
 (dp! out-queues (<round> => <tab>) (fab <tab> 0))
 
 ;; Process the old-round to make a new one.
-(dm transition-round (old-round|<round> motes|<mote-ensemble> => <round>)
+(dm transition-round (old-round|<round> mote-ensemble|<mote-ensemble> => <round>)
   (def new-round (new <round>))
 
   ;; Message transmission and collisions should be simulated.
-  ;; For now, things just do the standard circular distance shite.
+  ;; For now, things just do the standard circular distance
   (do (fun (mote-queue-tuple)
         (when (>= (len mote-queue-tuple) 2)
           (def mote (1st mote-queue-tuple))
           (def out-queue (2nd mote-queue-tuple))
           
           (do (fun (other-mote)
-                (def in-queue (or (elt-or (in-queues new-round) other-mote #f)
-                                  (set (elt (in-queues new-round) other-mote) (vec))))
-                (cat! in-queue out-queue)
+                (def in-queue (elt! (in-queues new-round) other-mote
+                                    (fun () (vec))))
+
+                (for ((rblock out-queue))
+                  (add! in-queue (clone-run-block rblock)))
                 )
-              (motes-within-radius (motes motes) mote $mote-comm-radius)
+
+              (motes-within-radius (motes mote-ensemble) mote $mote-comm-radius)
               )
           )
         )
-      (out-queues old-round)
+      (items (out-queues old-round))
       )
 
   new-round
   )
 
 (dm process-round (round|<round> da-motes|<mote-ensemble>)
+  (post "<<<<< Round\n")
+  (post "::: Inputs\n")
   (process-inputs round)
+  (post "::: Ticks\n")
   (process-ticks round (motes da-motes))
+  (post "::: Packups\n")
+  (process-outgoing-packups round)
+  (post ">>>>> Round\n")
+  )
+
+(dm process-outgoing-packups (round|<round>)
+  ;; Iterate over the out-queues
+  (do (fun (mote-queue-tuple)
+        (when (>= (len mote-queue-tuple) 2)
+          (def mote (1st mote-queue-tuple))
+          (def out-queue (2nd mote-queue-tuple))
+          
+          (do (fun (rblock)
+                (exec-block-on-mote rblock 'packup mote out-queue #f)
+                )
+              out-queue)
+          )
+        )
+      (items (out-queues round))
+      )
   )
 
 (dm mote-find-block-instance (mote|<mote> block|<sm-code-block> => (t? <sm-run-block>))
@@ -103,18 +167,64 @@
     )
   )
 
+(dm mote-find-block-instance-by-name (mote|<mote> block-name|<sym> => (t? <sm-run-block>))
+  ;; Look up the block from its name
+  (def the-block (elt $vm-blocks block-name))
+  (mote-find-block-instance mote the-block)
+  )
+
+;; Returns a list containing the runblock parents of the given run block...
+;; Order is most ancient ancestor to immediate parent
+(dm mote-find-parent-rblock-closure (mote|<mote> rblock|<sm-run-block> => <col>)
+  (rep loop ((parents (tup)) (cur-rblock rblock))
+    (if cur-rblock
+        (loop (cat (tup (run-state cur-rblock)) parents)
+              (and (block-parent (run-block cur-rblock))
+                   (mote-find-block-instance mote (block-parent (run-block cur-rblock)))))
+        parents
+        )
+    )
+  )
+
+(dm mote-all-rblock-parents-present? (mote|<mote> rblock|<sm-run-block> => <log>)
+  (rep loop ((cur-rblock rblock))
+    (if cur-rblock
+        (seq
+          (def parent-block (block-parent (run-block cur-rblock)))
+          (if parent-block
+              (seq
+                (def parent-rblock 
+                  (mote-find-block-instance mote parent-block))
+                (when parent-rblock
+                  (loop parent-rblock)))
+              #t)
+          )
+        #t
+        )
+    )
+  )
+
 (dm give-all-motes-instance (round|<round> motes|<col> block|<sm-code-block>)
   (do (fun (mote)
-        (def in-queue (or (elt-or (in-queues round) mote #f)
-                          (set (elt (in-queues round) mote) (vec))))
-
-        (def rblock (new <sm-run-block>))
-        (set (run-block rblock) block)
-        (set (run-state rblock) (clone-env (block-env block)))
-
-        (add! in-queue rblock)
+        (give-mote-instance round mote block)
         )
       motes)
+  )
+
+(dm give-random-mote-instance (round|<round> motes|<col> block|<sm-code-block>)
+  (def random-mote (elt motes (random (len motes))))
+  (give-mote-instance round random-mote block)
+  )
+
+(dm give-mote-instance (round|<round> mote|<mote> block|<sm-code-block>)
+  (def in-queue (or (elt-or (in-queues round) mote #f)
+                    (set (elt (in-queues round) mote) (vec))))
+  
+  (def rblock (new <sm-run-block>))
+  (set (run-block rblock) block)
+  (set (run-state rblock) (clone-env (block-env block)))
+  
+  (add! in-queue rblock)
   )
 
 (dm process-inputs (round|<round>)
@@ -136,34 +246,52 @@
 
         ;; Input is a run-block
         (do (fun (rblock)
-              (def block (run-block rblock))
-              ;; Set up relevant globals
-              (set $currently-executing-rblock rblock)
+              ;; Check if it's a collision...
+              ;; [in case of collision, we must execute the 'collide function.
+              ;;  this requires slightly special semantics.]
+              (def other-guy (mote-find-block-instance $current-mote (run-block rblock)))
+              (if other-guy
+                  (seq
+                    ;; Collision!
+                    (def my-env (run-state rblock))
+                    (def oth-env (run-state other-guy))
+                    
+                    (def winner
+                      (if (block-has-func-named? rblock 'collide)
+                          ;; Has a collide function, bring it.
+                          (seq
+                            (def coll-result 
+                              (exec-block-on-mote rblock 'collide mote out-queue
+                                                  `((me ,my-env) (other ,oth-env))))
+                            (if (== coll-result my-env)
+                                rblock
+                                other-guy)
+                            )
+                          ;; No collide function, we win!
+                          rblock
+                          ))
 
-              ;; Does the block have a parent?
-              (if (block-parent block)
-                  ;; Parent
-                  (seq
-                    ;; We have a parent, locate an instance in our mote
-                    (def parent-rblock (mote-find-block-instance $current-mote (block-parent block)))
-                    ;; Only do something if we find the parent
-                    (when parent-rblock
-                      ;; Link our rblock's state into the parent's state
-                      (set (run-state rblock) (run-state parent-rblock))
-                      ;; Call
-                      (def my-env (chain-envs (vec $vm-sys-env $round-env (run-state parent-rblock) (run-state rblock))))
-                      (execute-node my-env (block-init-func block))
+                    ;; New guy won?
+                    (when (== winner rblock)
+                      ;; Kill other guy (del-vals! currently is equivalent to del-vals, so
+                      ;;  I must use my little ugly work-around here.)
+                      (set (mote-run-blocks mote) (del-vals (mote-run-blocks mote) other-guy))
+                      
+                      ;; Run init!
+                      (exec-block-on-mote rblock 'init mote out-queue #f)
+                      
+                      ;; Add to run-blocks
+                      (add! (mote-run-blocks mote) rblock)
                       )
+                    ;; (If old guy won, nothing is to be done.)
                     )
-                  ;; No Parent
                   (seq
-                    (def my-env (chain-envs (vec $vm-sys-env $round-env (run-state rblock))))
-                    (execute-node my-env (block-init-func block))
+                    ;; Not a collision!
+                    (exec-block-on-mote rblock 'init mote out-queue #f)
+                    
+                    (add! (mote-run-blocks mote) rblock)
                     )
                   )
-
-              ;; Put them in the to-proc list if they've got ticks...
-              (add! (mote-run-blocks mote) rblock)
               )
             in-queue)
 
@@ -171,6 +299,61 @@
         (set (elt (out-queues round) mote) out-queue)
         )
       (items (in-queues round))
+      )
+  )
+
+
+(dm populate-env (env|<vm-env> population|(t? <col>))
+  (when population
+    (do (fun (sym-pair)
+          (set (elt (env-bindings env) (1st sym-pair)) (2nd sym-pair))
+          )
+        population)
+    )
+  )
+
+(dm block-has-func-named? (block|<sm-code-block> func-sym-name|<sym> => <log>)
+  (and (elt-or (block-funcs block) func-sym-name #f) #t)
+  )
+
+(dm block-has-func-named? (rblock|<sm-run-block> func-sym-name|<sym> => <log>)
+  (and (elt-or (block-funcs (run-block rblock)) func-sym-name #f) #t)
+  )
+
+(dm exec-block-on-mote (rblock func-sym-name mote out-queue local-vars)
+  (def block (run-block rblock))
+  
+  ;; Set up relevant globals
+  (set $current-mote mote)
+  (set $current-out-queue out-queue)
+  (set $currently-executing-rblock rblock)
+
+  ;; Does the block have a parent?
+  (if (block-parent block)
+      ;; Parent
+      (seq
+        ;; We have a parent, make sure all ancestors are present!
+        (when (mote-all-rblock-parents-present? $current-mote rblock)
+          ;; Configure environment chain.
+          ;; (system round (parents...) rblock local-for-defs)
+          (def local-env (new <vm-env>))
+          (populate-env local-env local-vars)
+
+          (def my-env (chain-envs (cat (tup $vm-sys-env $round-env)
+                                       (mote-find-parent-rblock-closure $current-mote rblock)
+                                       (tup local-env))))
+          ;; Call
+          (execute-node my-env (block-get-func block func-sym-name))
+          )
+        )
+      ;; No Parent
+      (seq
+        (def local-env (new <vm-env>))
+        (populate-env local-env local-vars)
+
+        (def my-env (chain-envs (vec $vm-sys-env $round-env (run-state rblock) local-env)))
+        (execute-node my-env (block-get-func block func-sym-name))
+        )
       )
   )
 
@@ -183,34 +366,17 @@
         (do (fun (rblock)
               (when (run-ticks rblock)
                 (decf (run-ticks rblock))
-                (when (zero? (run-ticks rblock))
+                (when (<= (run-ticks rblock) 0)
+                  ;; Set ticks to #f now then. It can change if desired.
+                  (set (run-ticks rblock) #f)
+
                   (def out-queue (or (elt-or (out-queues round) mote #f)
                                      (set (elt (out-queues round) mote) (vec))))
 
                   (set $currently-executing-rblock rblock)
                   (set $current-out-queue out-queue)
                   
-                  (def block (run-block rblock))
-                  (if (block-parent block)
-                      ;; Parent
-                      (seq
-                    ;; We have a parent, locate an instance in our mote
-                        (def parent-rblock (mote-find-block-instance $current-mote (block-parent block)))
-                        ;; Only do something if we find the parent
-                        (when parent-rblock
-                          ;; Link our rblock's state into the parent's state
-                          (set (run-state rblock) (run-state parent-rblock))
-                      ;; Call
-                          (def my-env (chain-envs (vec $vm-sys-env $round-env (run-state parent-rblock) (run-state rblock))))
-                          (execute-node my-env (block-tick-func block))
-                          )
-                        )
-                      ;; No Parent
-                      (seq
-                        (def my-env (chain-envs (vec $vm-sys-env $round-env (run-state rblock))))
-                        (execute-node my-env (block-tick-func block))
-                        )
-                      )
+                  (exec-block-on-mote rblock 'tick mote out-queue #f)
                   )
                 )
               )
@@ -246,6 +412,7 @@
   process-round
   mote-find-block-instance
   give-all-motes-instance
+  give-random-mote-instance
   process-inputs
   process-ticks
   )
