@@ -1042,6 +1042,33 @@
        (use-mod name))))
   (new <constant> constant-value #f))
 
+(dm insert-and-mangle-global! (binding mangle-prefix|<str> r)
+  (def r|<static-global-environment> (find-static-global-environment r))
+  (set (elt (environment-bindings r) (as <sym> (cat mangle-prefix (as <str> (binding-name binding))))) binding))
+
+(df import-and-mangle-global! (b|<module-binding> mangle-prefix|<str> env|<static-global-environment>)
+  (def existing (find-binding (as <sym> (cat mangle-prefix (as <str> (binding-name b)))) env))
+  (unless (or (== existing #f) (== existing b))
+    (msg out "warning: '%s' from %s clobbers local binding.\n"
+         (cat mangle-prefix (as <str> (binding-name b))) (binding-module-name b)))
+  (insert-and-mangle-global! b mangle-prefix env)
+  #f)
+
+(dm objectify-use-mangle-module (name mangler r tail? => <program>)
+  (def env (find-static-global-environment r))
+  (def module (find-environment-module r))
+  (def loader (environment-module-loader env))
+  (def used-module (probe-module loader name))
+  (def str-mangler (as <str> mangler))
+  (push! (environment-uses-modules env) used-module)
+  
+  (do (fun (b) 
+        (import-and-mangle-global! b str-mangler env))
+      (module-exports used-module))
+
+  (new <constant> constant-value #f)
+  )
+
 (dm expand-bind-list (pat var fail => <any>)
   (error "Expected Pattern List %=\n" pat))
 
@@ -1354,6 +1381,11 @@
 
 (define-magic-binding use-module (x r tail?)
   (objectify-use-module (2nd x) r tail?))
+
+(dv $sexpr-use-mangle-module-tag 'use/mangle)
+
+(define-magic-binding use-mangle-module (x r tail?)
+  (objectify-use-mangle-module (2nd x) (3rd x) r tail?))
 
 (dv $sexpr-use/export-module-tag 'use/export)
 

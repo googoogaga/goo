@@ -2021,6 +2021,7 @@
 (export
   use
   use/export
+  use/mangle
   export
   mif
   macro-expand
