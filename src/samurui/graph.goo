@@ -2,7 +2,7 @@
 
 (use goo)
 (use samurui/samurui)
-(use samurui/gtkbinding)
+(use samurui/gtk.swig)
 (use samurui/badge)
 (use samurui/gtkcallbacks)
 

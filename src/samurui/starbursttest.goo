@@ -1,6 +1,6 @@
 (use goo)
 (use samurui/samurui)
-(use samurui/gtkbinding)
+(use samurui/gtk.swig)
 (use samurui/starburst)
 
 (dc <simple-app> (<any>))

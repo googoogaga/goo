@@ -2,7 +2,7 @@
 (use goo)
 
 (use samurui/samurui)
-(use samurui/gtkbinding)
+(use samurui/gtk.swig)
 
 ;; Badges are containers.  Badges hold badge-lines... (Brilliant, no?)
 

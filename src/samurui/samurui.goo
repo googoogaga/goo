@@ -2,9 +2,7 @@
 (use goo/system)
 (use goo/boot)
 
-(use samurui/autogtk)
-(use samurui/gtkbinding)
-
+(use samurui/gtk.swig)
 (use samurui/gtkcallbacks)
 
 (dv gtk_true 1)

@@ -1,7 +1,6 @@
 (use goo)
 
-(use samurui/autogtk)
-(use samurui/gtkbinding)
+(use samurui/gtk.swig)
 
 (dv goo-callbacks (vec))
 (dv goo-callback-data (vec))

@@ -1,0 +1,7259 @@
+(use goo)
+(use goo/boot)
+
+
+(seq
+(dv G_SIGNAL_RUN_FIRST #f)
+(export G_SIGNAL_RUN_FIRST)
+
+(dv G_SIGNAL_RUN_LAST #f)
+(export G_SIGNAL_RUN_LAST)
+
+(dv G_SIGNAL_RUN_CLEANUP #f)
+(export G_SIGNAL_RUN_CLEANUP)
+
+(dv G_SIGNAL_NO_RECURSE #f)
+(export G_SIGNAL_NO_RECURSE)
+
+(dv G_SIGNAL_DETAILED #f)
+(export G_SIGNAL_DETAILED)
+
+(dv G_SIGNAL_ACTION #f)
+(export G_SIGNAL_ACTION)
+
+(dv G_SIGNAL_NO_HOOKS #f)
+(export G_SIGNAL_NO_HOOKS)
+
+(dv G_CONNECT_AFTER #f)
+(export G_CONNECT_AFTER)
+
+(dv G_CONNECT_SWAPPED #f)
+(export G_CONNECT_SWAPPED)
+
+(dv G_SIGNAL_MATCH_ID #f)
+(export G_SIGNAL_MATCH_ID)
+
+(dv G_SIGNAL_MATCH_DETAIL #f)
+(export G_SIGNAL_MATCH_DETAIL)
+
+(dv G_SIGNAL_MATCH_CLOSURE #f)
+(export G_SIGNAL_MATCH_CLOSURE)
+
+(dv G_SIGNAL_MATCH_FUNC #f)
+(export G_SIGNAL_MATCH_FUNC)
+
+(dv G_SIGNAL_MATCH_DATA #f)
+(export G_SIGNAL_MATCH_DATA)
+
+(dv G_SIGNAL_MATCH_UNBLOCKED #f)
+(export G_SIGNAL_MATCH_UNBLOCKED)
+
+(dv g_signal_connect_data #f)
+(export g_signal_connect_data)
+
+(dv g_signal_connect #f)
+(export g_signal_connect)
+
+(dv g_object_class_install_property #f)
+(export g_object_class_install_property)
+
+(dv g_object_class_find_property #f)
+(export g_object_class_find_property)
+
+(dv g_object_class_list_properties #f)
+(export g_object_class_list_properties)
+
+(dv g_object_newv #f)
+(export g_object_newv)
+
+(dv g_object_set #f)
+(export g_object_set)
+
+(dv g_object_get #f)
+(export g_object_get)
+
+(dv g_object_connect #f)
+(export g_object_connect)
+
+(dv g_object_disconnect #f)
+(export g_object_disconnect)
+
+(dv g_object_set_property #f)
+(export g_object_set_property)
+
+(dv g_object_get_property #f)
+(export g_object_get_property)
+
+(dv g_object_freeze_notify #f)
+(export g_object_freeze_notify)
+
+(dv g_object_notify #f)
+(export g_object_notify)
+
+(dv g_object_thaw_notify #f)
+(export g_object_thaw_notify)
+
+(dv g_object_ref #f)
+(export g_object_ref)
+
+(dv g_object_unref #f)
+(export g_object_unref)
+
+(dv g_object_add_weak_pointer #f)
+(export g_object_add_weak_pointer)
+
+(dv g_object_remove_weak_pointer #f)
+(export g_object_remove_weak_pointer)
+
+(dv g_object_get_data #f)
+(export g_object_get_data)
+
+(dv g_object_set_data #f)
+(export g_object_set_data)
+
+(dv g_object_set_data_full #f)
+(export g_object_set_data_full)
+
+(dv g_object_steal_data #f)
+(export g_object_steal_data)
+
+(dv g_object_watch_closure #f)
+(export g_object_watch_closure)
+
+(dv g_cclosure_new_object #f)
+(export g_cclosure_new_object)
+
+(dv g_cclosure_new_object_swap #f)
+(export g_cclosure_new_object_swap)
+
+(dv g_closure_new_object #f)
+(export g_closure_new_object)
+
+(dv g_value_set_object #f)
+(export g_value_set_object)
+
+(dv g_value_get_object #f)
+(export g_value_get_object)
+
+(dv g_value_dup_object #f)
+(export g_value_dup_object)
+
+(dv g_signal_connect_object #f)
+(export g_signal_connect_object)
+
+(dv GDK_LSB_FIRST #f)
+(export GDK_LSB_FIRST)
+
+(dv GDK_MSB_FIRST #f)
+(export GDK_MSB_FIRST)
+
+(dv GDK_SHIFT_MASK #f)
+(export GDK_SHIFT_MASK)
+
+(dv GDK_LOCK_MASK #f)
+(export GDK_LOCK_MASK)
+
+(dv GDK_CONTROL_MASK #f)
+(export GDK_CONTROL_MASK)
+
+(dv GDK_MOD1_MASK #f)
+(export GDK_MOD1_MASK)
+
+(dv GDK_MOD2_MASK #f)
+(export GDK_MOD2_MASK)
+
+(dv GDK_MOD3_MASK #f)
+(export GDK_MOD3_MASK)
+
+(dv GDK_MOD4_MASK #f)
+(export GDK_MOD4_MASK)
+
+(dv GDK_MOD5_MASK #f)
+(export GDK_MOD5_MASK)
+
+(dv GDK_BUTTON1_MASK #f)
+(export GDK_BUTTON1_MASK)
+
+(dv GDK_BUTTON2_MASK #f)
+(export GDK_BUTTON2_MASK)
+
+(dv GDK_BUTTON3_MASK #f)
+(export GDK_BUTTON3_MASK)
+
+(dv GDK_BUTTON4_MASK #f)
+(export GDK_BUTTON4_MASK)
+
+(dv GDK_BUTTON5_MASK #f)
+(export GDK_BUTTON5_MASK)
+
+(dv GDK_RELEASE_MASK #f)
+(export GDK_RELEASE_MASK)
+
+(dv GDK_MODIFIER_MASK #f)
+(export GDK_MODIFIER_MASK)
+
+(dv GDK_INPUT_READ #f)
+(export GDK_INPUT_READ)
+
+(dv GDK_INPUT_WRITE #f)
+(export GDK_INPUT_WRITE)
+
+(dv GDK_INPUT_EXCEPTION #f)
+(export GDK_INPUT_EXCEPTION)
+
+(dv GDK_OK #f)
+(export GDK_OK)
+
+(dv GDK_ERROR #f)
+(export GDK_ERROR)
+
+(dv GDK_ERROR_PARAM #f)
+(export GDK_ERROR_PARAM)
+
+(dv GDK_ERROR_FILE #f)
+(export GDK_ERROR_FILE)
+
+(dv GDK_ERROR_MEM #f)
+(export GDK_ERROR_MEM)
+
+(dv GDK_GRAB_SUCCESS #f)
+(export GDK_GRAB_SUCCESS)
+
+(dv GDK_GRAB_ALREADY_GRABBED #f)
+(export GDK_GRAB_ALREADY_GRABBED)
+
+(dv GDK_GRAB_INVALID_TIME #f)
+(export GDK_GRAB_INVALID_TIME)
+
+(dv GDK_GRAB_NOT_VIEWABLE #f)
+(export GDK_GRAB_NOT_VIEWABLE)
+
+(dv GDK_GRAB_FROZEN #f)
+(export GDK_GRAB_FROZEN)
+
+(dv _GdkRectangle_x_set #f)
+(export _GdkRectangle_x_set)
+
+(dv _GdkRectangle_x_get #f)
+(export _GdkRectangle_x_get)
+
+(dv _GdkRectangle_y_set #f)
+(export _GdkRectangle_y_set)
+
+(dv _GdkRectangle_y_get #f)
+(export _GdkRectangle_y_get)
+
+(dv _GdkRectangle_width_set #f)
+(export _GdkRectangle_width_set)
+
+(dv _GdkRectangle_width_get #f)
+(export _GdkRectangle_width_get)
+
+(dv _GdkRectangle_height_set #f)
+(export _GdkRectangle_height_set)
+
+(dv _GdkRectangle_height_get #f)
+(export _GdkRectangle_height_get)
+
+(dv new__GdkRectangle #f)
+(export new__GdkRectangle)
+
+(dv delete__GdkRectangle #f)
+(export delete__GdkRectangle)
+
+(dv gdk_rgb_find_color #f)
+(export gdk_rgb_find_color)
+
+(dv GDK_RGB_DITHER_NONE #f)
+(export GDK_RGB_DITHER_NONE)
+
+(dv GDK_RGB_DITHER_NORMAL #f)
+(export GDK_RGB_DITHER_NORMAL)
+
+(dv GDK_RGB_DITHER_MAX #f)
+(export GDK_RGB_DITHER_MAX)
+
+(dv gdk_draw_rgb_image #f)
+(export gdk_draw_rgb_image)
+
+(dv gdk_draw_rgb_image_dithalign #f)
+(export gdk_draw_rgb_image_dithalign)
+
+(dv gdk_draw_rgb_32_image #f)
+(export gdk_draw_rgb_32_image)
+
+(dv gdk_draw_rgb_32_image_dithalign #f)
+(export gdk_draw_rgb_32_image_dithalign)
+
+(dv gdk_draw_gray_image #f)
+(export gdk_draw_gray_image)
+
+(dv gdk_draw_indexed_image #f)
+(export gdk_draw_indexed_image)
+
+(dv gdk_rgb_cmap_new #f)
+(export gdk_rgb_cmap_new)
+
+(dv gdk_rgb_cmap_free #f)
+(export gdk_rgb_cmap_free)
+
+(dv gdk_rgb_ditherable #f)
+(export gdk_rgb_ditherable)
+
+)
+
+(seq
+(dv gdk_rgb_set_verbose #f)
+(export gdk_rgb_set_verbose)
+
+(dv gdk_rgb_set_install #f)
+(export gdk_rgb_set_install)
+
+(dv gdk_rgb_set_min_colors #f)
+(export gdk_rgb_set_min_colors)
+
+(dv gdk_rgb_get_colormap #f)
+(export gdk_rgb_get_colormap)
+
+(dv gdk_rgb_get_visual #f)
+(export gdk_rgb_get_visual)
+
+(dv GDK_EXTENSION_EVENTS_NONE #f)
+(export GDK_EXTENSION_EVENTS_NONE)
+
+(dv GDK_EXTENSION_EVENTS_ALL #f)
+(export GDK_EXTENSION_EVENTS_ALL)
+
+(dv GDK_EXTENSION_EVENTS_CURSOR #f)
+(export GDK_EXTENSION_EVENTS_CURSOR)
+
+(dv GDK_SOURCE_MOUSE #f)
+(export GDK_SOURCE_MOUSE)
+
+(dv GDK_SOURCE_PEN #f)
+(export GDK_SOURCE_PEN)
+
+(dv GDK_SOURCE_ERASER #f)
+(export GDK_SOURCE_ERASER)
+
+(dv GDK_SOURCE_CURSOR #f)
+(export GDK_SOURCE_CURSOR)
+
+(dv GDK_MODE_DISABLED #f)
+(export GDK_MODE_DISABLED)
+
+(dv GDK_MODE_SCREEN #f)
+(export GDK_MODE_SCREEN)
+
+(dv GDK_MODE_WINDOW #f)
+(export GDK_MODE_WINDOW)
+
+(dv GDK_AXIS_IGNORE #f)
+(export GDK_AXIS_IGNORE)
+
+(dv GDK_AXIS_X #f)
+(export GDK_AXIS_X)
+
+(dv GDK_AXIS_Y #f)
+(export GDK_AXIS_Y)
+
+(dv GDK_AXIS_PRESSURE #f)
+(export GDK_AXIS_PRESSURE)
+
+(dv GDK_AXIS_XTILT #f)
+(export GDK_AXIS_XTILT)
+
+(dv GDK_AXIS_YTILT #f)
+(export GDK_AXIS_YTILT)
+
+(dv GDK_AXIS_WHEEL #f)
+(export GDK_AXIS_WHEEL)
+
+(dv GDK_AXIS_LAST #f)
+(export GDK_AXIS_LAST)
+
+(dv gdk_device_get_type #f)
+(export gdk_device_get_type)
+
+(dv gdk_devices_list #f)
+(export gdk_devices_list)
+
+(dv gdk_device_set_source #f)
+(export gdk_device_set_source)
+
+(dv gdk_device_set_mode #f)
+(export gdk_device_set_mode)
+
+(dv gdk_device_set_key #f)
+(export gdk_device_set_key)
+
+(dv gdk_device_set_axis_use #f)
+(export gdk_device_set_axis_use)
+
+(dv gdk_device_get_state #f)
+(export gdk_device_get_state)
+
+(dv gdk_device_get_history #f)
+(export gdk_device_get_history)
+
+(dv gdk_device_free_history #f)
+(export gdk_device_free_history)
+
+(dv gdk_device_get_axis #f)
+(export gdk_device_get_axis)
+
+(dv gdk_input_set_extension_events #f)
+(export gdk_input_set_extension_events)
+
+(dv gdk_device_get_core_pointer #f)
+(export gdk_device_get_core_pointer)
+
+(dv GTK_ANCHOR_CENTER #f)
+(export GTK_ANCHOR_CENTER)
+
+(dv GTK_ANCHOR_NORTH #f)
+(export GTK_ANCHOR_NORTH)
+
+(dv GTK_ANCHOR_NORTH_WEST #f)
+(export GTK_ANCHOR_NORTH_WEST)
+
+(dv GTK_ANCHOR_NORTH_EAST #f)
+(export GTK_ANCHOR_NORTH_EAST)
+
+(dv GTK_ANCHOR_SOUTH #f)
+(export GTK_ANCHOR_SOUTH)
+
+(dv GTK_ANCHOR_SOUTH_WEST #f)
+(export GTK_ANCHOR_SOUTH_WEST)
+
+(dv GTK_ANCHOR_SOUTH_EAST #f)
+(export GTK_ANCHOR_SOUTH_EAST)
+
+(dv GTK_ANCHOR_WEST #f)
+(export GTK_ANCHOR_WEST)
+
+(dv GTK_ANCHOR_EAST #f)
+(export GTK_ANCHOR_EAST)
+
+(dv GTK_ANCHOR_N #f)
+(export GTK_ANCHOR_N)
+
+(dv GTK_ANCHOR_NW #f)
+(export GTK_ANCHOR_NW)
+
+(dv GTK_ANCHOR_NE #f)
+(export GTK_ANCHOR_NE)
+
+(dv GTK_ANCHOR_S #f)
+(export GTK_ANCHOR_S)
+
+(dv GTK_ANCHOR_SW #f)
+(export GTK_ANCHOR_SW)
+
+(dv GTK_ANCHOR_SE #f)
+(export GTK_ANCHOR_SE)
+
+(dv GTK_ANCHOR_W #f)
+(export GTK_ANCHOR_W)
+
+(dv GTK_ANCHOR_E #f)
+(export GTK_ANCHOR_E)
+
+(dv GTK_ARROW_UP #f)
+(export GTK_ARROW_UP)
+
+(dv GTK_ARROW_DOWN #f)
+(export GTK_ARROW_DOWN)
+
+(dv GTK_ARROW_LEFT #f)
+(export GTK_ARROW_LEFT)
+
+(dv GTK_ARROW_RIGHT #f)
+(export GTK_ARROW_RIGHT)
+
+(dv GTK_EXPAND #f)
+(export GTK_EXPAND)
+
+(dv GTK_SHRINK #f)
+(export GTK_SHRINK)
+
+(dv GTK_FILL #f)
+(export GTK_FILL)
+
+(dv GTK_BUTTONBOX_DEFAULT_STYLE #f)
+(export GTK_BUTTONBOX_DEFAULT_STYLE)
+
+(dv GTK_BUTTONBOX_SPREAD #f)
+(export GTK_BUTTONBOX_SPREAD)
+
+(dv GTK_BUTTONBOX_EDGE #f)
+(export GTK_BUTTONBOX_EDGE)
+
+(dv GTK_BUTTONBOX_START #f)
+(export GTK_BUTTONBOX_START)
+
+(dv GTK_BUTTONBOX_END #f)
+(export GTK_BUTTONBOX_END)
+
+(dv GTK_CURVE_TYPE_LINEAR #f)
+(export GTK_CURVE_TYPE_LINEAR)
+
+(dv GTK_CURVE_TYPE_SPLINE #f)
+(export GTK_CURVE_TYPE_SPLINE)
+
+(dv GTK_CURVE_TYPE_FREE #f)
+(export GTK_CURVE_TYPE_FREE)
+
+(dv GTK_DELETE_CHARS #f)
+(export GTK_DELETE_CHARS)
+
+(dv GTK_DELETE_WORD_ENDS #f)
+(export GTK_DELETE_WORD_ENDS)
+
+(dv GTK_DELETE_WORDS #f)
+(export GTK_DELETE_WORDS)
+
+(dv GTK_DELETE_DISPLAY_LINES #f)
+(export GTK_DELETE_DISPLAY_LINES)
+
+(dv GTK_DELETE_DISPLAY_LINE_ENDS #f)
+(export GTK_DELETE_DISPLAY_LINE_ENDS)
+
+(dv GTK_DELETE_PARAGRAPH_ENDS #f)
+(export GTK_DELETE_PARAGRAPH_ENDS)
+
+(dv GTK_DELETE_PARAGRAPHS #f)
+(export GTK_DELETE_PARAGRAPHS)
+
+(dv GTK_DELETE_WHITESPACE #f)
+(export GTK_DELETE_WHITESPACE)
+
+(dv GTK_DIR_TAB_FORWARD #f)
+(export GTK_DIR_TAB_FORWARD)
+
+(dv GTK_DIR_TAB_BACKWARD #f)
+(export GTK_DIR_TAB_BACKWARD)
+
+(dv GTK_DIR_UP #f)
+(export GTK_DIR_UP)
+
+(dv GTK_DIR_DOWN #f)
+(export GTK_DIR_DOWN)
+
+(dv GTK_DIR_LEFT #f)
+(export GTK_DIR_LEFT)
+
+(dv GTK_DIR_RIGHT #f)
+(export GTK_DIR_RIGHT)
+
+(dv GTK_EXPANDER_COLLAPSED #f)
+(export GTK_EXPANDER_COLLAPSED)
+
+(dv GTK_EXPANDER_SEMI_COLLAPSED #f)
+(export GTK_EXPANDER_SEMI_COLLAPSED)
+
+(dv GTK_EXPANDER_SEMI_EXPANDED #f)
+(export GTK_EXPANDER_SEMI_EXPANDED)
+
+(dv GTK_EXPANDER_EXPANDED #f)
+(export GTK_EXPANDER_EXPANDED)
+
+(dv GTK_ICON_SIZE_INVALID #f)
+(export GTK_ICON_SIZE_INVALID)
+
+(dv GTK_ICON_SIZE_MENU #f)
+(export GTK_ICON_SIZE_MENU)
+
+(dv GTK_ICON_SIZE_SMALL_TOOLBAR #f)
+(export GTK_ICON_SIZE_SMALL_TOOLBAR)
+
+(dv GTK_ICON_SIZE_LARGE_TOOLBAR #f)
+(export GTK_ICON_SIZE_LARGE_TOOLBAR)
+
+(dv GTK_ICON_SIZE_BUTTON #f)
+(export GTK_ICON_SIZE_BUTTON)
+
+(dv GTK_ICON_SIZE_DND #f)
+(export GTK_ICON_SIZE_DND)
+
+(dv GTK_ICON_SIZE_DIALOG #f)
+(export GTK_ICON_SIZE_DIALOG)
+
+(dv GTK_SIDE_TOP #f)
+(export GTK_SIDE_TOP)
+
+(dv GTK_SIDE_BOTTOM #f)
+(export GTK_SIDE_BOTTOM)
+
+(dv GTK_SIDE_LEFT #f)
+(export GTK_SIDE_LEFT)
+
+(dv GTK_SIDE_RIGHT #f)
+(export GTK_SIDE_RIGHT)
+
+(dv GTK_TEXT_DIR_NONE #f)
+(export GTK_TEXT_DIR_NONE)
+
+(dv GTK_TEXT_DIR_LTR #f)
+(export GTK_TEXT_DIR_LTR)
+
+(dv GTK_TEXT_DIR_RTL #f)
+(export GTK_TEXT_DIR_RTL)
+
+(dv GTK_JUSTIFY_LEFT #f)
+(export GTK_JUSTIFY_LEFT)
+
+)
+
+(seq
+(dv GTK_JUSTIFY_RIGHT #f)
+(export GTK_JUSTIFY_RIGHT)
+
+(dv GTK_JUSTIFY_CENTER #f)
+(export GTK_JUSTIFY_CENTER)
+
+(dv GTK_JUSTIFY_FILL #f)
+(export GTK_JUSTIFY_FILL)
+
+(dv GTK_MATCH_ALL #f)
+(export GTK_MATCH_ALL)
+
+(dv GTK_MATCH_ALL_TAIL #f)
+(export GTK_MATCH_ALL_TAIL)
+
+(dv GTK_MATCH_HEAD #f)
+(export GTK_MATCH_HEAD)
+
+(dv GTK_MATCH_TAIL #f)
+(export GTK_MATCH_TAIL)
+
+(dv GTK_MATCH_EXACT #f)
+(export GTK_MATCH_EXACT)
+
+(dv GTK_MATCH_LAST #f)
+(export GTK_MATCH_LAST)
+
+(dv GTK_MENU_DIR_PARENT #f)
+(export GTK_MENU_DIR_PARENT)
+
+(dv GTK_MENU_DIR_CHILD #f)
+(export GTK_MENU_DIR_CHILD)
+
+(dv GTK_MENU_DIR_NEXT #f)
+(export GTK_MENU_DIR_NEXT)
+
+(dv GTK_MENU_DIR_PREV #f)
+(export GTK_MENU_DIR_PREV)
+
+(dv GTK_PIXELS #f)
+(export GTK_PIXELS)
+
+(dv GTK_INCHES #f)
+(export GTK_INCHES)
+
+(dv GTK_CENTIMETERS #f)
+(export GTK_CENTIMETERS)
+
+(dv GTK_MOVEMENT_LOGICAL_POSITIONS #f)
+(export GTK_MOVEMENT_LOGICAL_POSITIONS)
+
+(dv GTK_MOVEMENT_VISUAL_POSITIONS #f)
+(export GTK_MOVEMENT_VISUAL_POSITIONS)
+
+(dv GTK_MOVEMENT_WORDS #f)
+(export GTK_MOVEMENT_WORDS)
+
+(dv GTK_MOVEMENT_DISPLAY_LINES #f)
+(export GTK_MOVEMENT_DISPLAY_LINES)
+
+(dv GTK_MOVEMENT_DISPLAY_LINE_ENDS #f)
+(export GTK_MOVEMENT_DISPLAY_LINE_ENDS)
+
+(dv GTK_MOVEMENT_PARAGRAPHS #f)
+(export GTK_MOVEMENT_PARAGRAPHS)
+
+(dv GTK_MOVEMENT_PARAGRAPH_ENDS #f)
+(export GTK_MOVEMENT_PARAGRAPH_ENDS)
+
+(dv GTK_MOVEMENT_PAGES #f)
+(export GTK_MOVEMENT_PAGES)
+
+(dv GTK_MOVEMENT_BUFFER_ENDS #f)
+(export GTK_MOVEMENT_BUFFER_ENDS)
+
+(dv GTK_ORIENTATION_HORIZONTAL #f)
+(export GTK_ORIENTATION_HORIZONTAL)
+
+(dv GTK_ORIENTATION_VERTICAL #f)
+(export GTK_ORIENTATION_VERTICAL)
+
+(dv GTK_CORNER_TOP_LEFT #f)
+(export GTK_CORNER_TOP_LEFT)
+
+(dv GTK_CORNER_BOTTOM_LEFT #f)
+(export GTK_CORNER_BOTTOM_LEFT)
+
+(dv GTK_CORNER_TOP_RIGHT #f)
+(export GTK_CORNER_TOP_RIGHT)
+
+(dv GTK_CORNER_BOTTOM_RIGHT #f)
+(export GTK_CORNER_BOTTOM_RIGHT)
+
+(dv GTK_PACK_START #f)
+(export GTK_PACK_START)
+
+(dv GTK_PACK_END #f)
+(export GTK_PACK_END)
+
+(dv GTK_PATH_PRIO_LOWEST #f)
+(export GTK_PATH_PRIO_LOWEST)
+
+(dv GTK_PATH_PRIO_GTK #f)
+(export GTK_PATH_PRIO_GTK)
+
+(dv GTK_PATH_PRIO_APPLICATION #f)
+(export GTK_PATH_PRIO_APPLICATION)
+
+(dv GTK_PATH_PRIO_THEME #f)
+(export GTK_PATH_PRIO_THEME)
+
+(dv GTK_PATH_PRIO_RC #f)
+(export GTK_PATH_PRIO_RC)
+
+(dv GTK_PATH_PRIO_HIGHEST #f)
+(export GTK_PATH_PRIO_HIGHEST)
+
+(dv GTK_PATH_WIDGET #f)
+(export GTK_PATH_WIDGET)
+
+(dv GTK_PATH_WIDGET_CLASS #f)
+(export GTK_PATH_WIDGET_CLASS)
+
+(dv GTK_PATH_CLASS #f)
+(export GTK_PATH_CLASS)
+
+(dv GTK_POLICY_ALWAYS #f)
+(export GTK_POLICY_ALWAYS)
+
+(dv GTK_POLICY_AUTOMATIC #f)
+(export GTK_POLICY_AUTOMATIC)
+
+(dv GTK_POLICY_NEVER #f)
+(export GTK_POLICY_NEVER)
+
+(dv GTK_POS_LEFT #f)
+(export GTK_POS_LEFT)
+
+(dv GTK_POS_RIGHT #f)
+(export GTK_POS_RIGHT)
+
+(dv GTK_POS_TOP #f)
+(export GTK_POS_TOP)
+
+(dv GTK_POS_BOTTOM #f)
+(export GTK_POS_BOTTOM)
+
+(dv GTK_PREVIEW_COLOR #f)
+(export GTK_PREVIEW_COLOR)
+
+(dv GTK_PREVIEW_GRAYSCALE #f)
+(export GTK_PREVIEW_GRAYSCALE)
+
+(dv GTK_RELIEF_NORMAL #f)
+(export GTK_RELIEF_NORMAL)
+
+(dv GTK_RELIEF_HALF #f)
+(export GTK_RELIEF_HALF)
+
+(dv GTK_RELIEF_NONE #f)
+(export GTK_RELIEF_NONE)
+
+(dv GTK_RESIZE_PARENT #f)
+(export GTK_RESIZE_PARENT)
+
+(dv GTK_RESIZE_QUEUE #f)
+(export GTK_RESIZE_QUEUE)
+
+(dv GTK_RESIZE_IMMEDIATE #f)
+(export GTK_RESIZE_IMMEDIATE)
+
+(dv GTK_RUN_FIRST #f)
+(export GTK_RUN_FIRST)
+
+(dv GTK_RUN_LAST #f)
+(export GTK_RUN_LAST)
+
+(dv GTK_RUN_BOTH #f)
+(export GTK_RUN_BOTH)
+
+(dv GTK_RUN_NO_RECURSE #f)
+(export GTK_RUN_NO_RECURSE)
+
+(dv GTK_RUN_ACTION #f)
+(export GTK_RUN_ACTION)
+
+(dv GTK_RUN_NO_HOOKS #f)
+(export GTK_RUN_NO_HOOKS)
+
+(dv GTK_SCROLL_NONE #f)
+(export GTK_SCROLL_NONE)
+
+(dv GTK_SCROLL_JUMP #f)
+(export GTK_SCROLL_JUMP)
+
+(dv GTK_SCROLL_STEP_BACKWARD #f)
+(export GTK_SCROLL_STEP_BACKWARD)
+
+(dv GTK_SCROLL_STEP_FORWARD #f)
+(export GTK_SCROLL_STEP_FORWARD)
+
+(dv GTK_SCROLL_PAGE_BACKWARD #f)
+(export GTK_SCROLL_PAGE_BACKWARD)
+
+(dv GTK_SCROLL_PAGE_FORWARD #f)
+(export GTK_SCROLL_PAGE_FORWARD)
+
+(dv GTK_SCROLL_STEP_UP #f)
+(export GTK_SCROLL_STEP_UP)
+
+(dv GTK_SCROLL_STEP_DOWN #f)
+(export GTK_SCROLL_STEP_DOWN)
+
+(dv GTK_SCROLL_PAGE_UP #f)
+(export GTK_SCROLL_PAGE_UP)
+
+(dv GTK_SCROLL_PAGE_DOWN #f)
+(export GTK_SCROLL_PAGE_DOWN)
+
+(dv GTK_SCROLL_STEP_LEFT #f)
+(export GTK_SCROLL_STEP_LEFT)
+
+(dv GTK_SCROLL_STEP_RIGHT #f)
+(export GTK_SCROLL_STEP_RIGHT)
+
+(dv GTK_SCROLL_PAGE_LEFT #f)
+(export GTK_SCROLL_PAGE_LEFT)
+
+(dv GTK_SCROLL_PAGE_RIGHT #f)
+(export GTK_SCROLL_PAGE_RIGHT)
+
+(dv GTK_SCROLL_START #f)
+(export GTK_SCROLL_START)
+
+(dv GTK_SCROLL_END #f)
+(export GTK_SCROLL_END)
+
+(dv GTK_SELECTION_NONE #f)
+(export GTK_SELECTION_NONE)
+
+(dv GTK_SELECTION_SINGLE #f)
+(export GTK_SELECTION_SINGLE)
+
+(dv GTK_SELECTION_BROWSE #f)
+(export GTK_SELECTION_BROWSE)
+
+(dv GTK_SELECTION_MULTIPLE #f)
+(export GTK_SELECTION_MULTIPLE)
+
+(dv GTK_SELECTION_EXTENDED #f)
+(export GTK_SELECTION_EXTENDED)
+
+(dv GTK_SHADOW_NONE #f)
+(export GTK_SHADOW_NONE)
+
+(dv GTK_SHADOW_IN #f)
+(export GTK_SHADOW_IN)
+
+(dv GTK_SHADOW_OUT #f)
+(export GTK_SHADOW_OUT)
+
+(dv GTK_SHADOW_ETCHED_IN #f)
+(export GTK_SHADOW_ETCHED_IN)
+
+(dv GTK_SHADOW_ETCHED_OUT #f)
+(export GTK_SHADOW_ETCHED_OUT)
+
+(dv GTK_STATE_NORMAL #f)
+(export GTK_STATE_NORMAL)
+
+(dv GTK_STATE_ACTIVE #f)
+(export GTK_STATE_ACTIVE)
+
+(dv GTK_STATE_PRELIGHT #f)
+(export GTK_STATE_PRELIGHT)
+
+(dv GTK_STATE_SELECTED #f)
+(export GTK_STATE_SELECTED)
+
+(dv GTK_STATE_INSENSITIVE #f)
+(export GTK_STATE_INSENSITIVE)
+
+(dv GTK_DIRECTION_LEFT #f)
+(export GTK_DIRECTION_LEFT)
+
+(dv GTK_DIRECTION_RIGHT #f)
+(export GTK_DIRECTION_RIGHT)
+
+(dv GTK_TOP_BOTTOM #f)
+(export GTK_TOP_BOTTOM)
+
+(dv GTK_LEFT_RIGHT #f)
+(export GTK_LEFT_RIGHT)
+
+(dv GTK_TOOLBAR_ICONS #f)
+(export GTK_TOOLBAR_ICONS)
+
+(dv GTK_TOOLBAR_TEXT #f)
+(export GTK_TOOLBAR_TEXT)
+
+)
+
+(seq
+(dv GTK_TOOLBAR_BOTH #f)
+(export GTK_TOOLBAR_BOTH)
+
+(dv GTK_TOOLBAR_BOTH_HORIZ #f)
+(export GTK_TOOLBAR_BOTH_HORIZ)
+
+(dv GTK_UPDATE_CONTINUOUS #f)
+(export GTK_UPDATE_CONTINUOUS)
+
+(dv GTK_UPDATE_DISCONTINUOUS #f)
+(export GTK_UPDATE_DISCONTINUOUS)
+
+(dv GTK_UPDATE_DELAYED #f)
+(export GTK_UPDATE_DELAYED)
+
+(dv GTK_VISIBILITY_NONE #f)
+(export GTK_VISIBILITY_NONE)
+
+(dv GTK_VISIBILITY_PARTIAL #f)
+(export GTK_VISIBILITY_PARTIAL)
+
+(dv GTK_VISIBILITY_FULL #f)
+(export GTK_VISIBILITY_FULL)
+
+(dv GTK_WIN_POS_NONE #f)
+(export GTK_WIN_POS_NONE)
+
+(dv GTK_WIN_POS_CENTER #f)
+(export GTK_WIN_POS_CENTER)
+
+(dv GTK_WIN_POS_MOUSE #f)
+(export GTK_WIN_POS_MOUSE)
+
+(dv GTK_WIN_POS_CENTER_ALWAYS #f)
+(export GTK_WIN_POS_CENTER_ALWAYS)
+
+(dv GTK_WIN_POS_CENTER_ON_PARENT #f)
+(export GTK_WIN_POS_CENTER_ON_PARENT)
+
+(dv GTK_WINDOW_TOPLEVEL #f)
+(export GTK_WINDOW_TOPLEVEL)
+
+(dv GTK_WINDOW_POPUP #f)
+(export GTK_WINDOW_POPUP)
+
+(dv GTK_WRAP_NONE #f)
+(export GTK_WRAP_NONE)
+
+(dv GTK_WRAP_CHAR #f)
+(export GTK_WRAP_CHAR)
+
+(dv GTK_WRAP_WORD #f)
+(export GTK_WRAP_WORD)
+
+(dv GTK_SORT_ASCENDING #f)
+(export GTK_SORT_ASCENDING)
+
+(dv GTK_SORT_DESCENDING #f)
+(export GTK_SORT_DESCENDING)
+
+(dv goo_createCallback #f)
+(export goo_createCallback)
+
+(dv goo_destroyCallback #f)
+(export goo_destroyCallback)
+
+(dv gtk_getGtkFunctionCallback #f)
+(export gtk_getGtkFunctionCallback)
+
+(dv gtk_getGtkCallback #f)
+(export gtk_getGtkCallback)
+
+(dv gtk_getEventCallback #f)
+(export gtk_getEventCallback)
+
+(dv gtk_getBoolEventCallback #f)
+(export gtk_getBoolEventCallback)
+
+(dv gtk_signal_lookup #f)
+(export gtk_signal_lookup)
+
+(dv gtk_signal_name #f)
+(export gtk_signal_name)
+
+(dv gtk_signal_emit_stop #f)
+(export gtk_signal_emit_stop)
+
+(dv gtk_signal_connect #f)
+(export gtk_signal_connect)
+
+(dv gtk_signal_connect_after #f)
+(export gtk_signal_connect_after)
+
+(dv gtk_signal_connect_object #f)
+(export gtk_signal_connect_object)
+
+(dv gtk_signal_connect_object_after #f)
+(export gtk_signal_connect_object_after)
+
+(dv gtk_signal_disconnect #f)
+(export gtk_signal_disconnect)
+
+(dv gtk_signal_handler_block #f)
+(export gtk_signal_handler_block)
+
+(dv gtk_signal_handler_unblock #f)
+(export gtk_signal_handler_unblock)
+
+(dv gtk_signal_disconnect_by_func #f)
+(export gtk_signal_disconnect_by_func)
+
+(dv gtk_signal_disconnect_by_data #f)
+(export gtk_signal_disconnect_by_data)
+
+(dv gtk_signal_handler_block_by_func #f)
+(export gtk_signal_handler_block_by_func)
+
+(dv gtk_signal_handler_block_by_data #f)
+(export gtk_signal_handler_block_by_data)
+
+(dv gtk_signal_handler_unblock_by_func #f)
+(export gtk_signal_handler_unblock_by_func)
+
+(dv gtk_signal_handler_unblock_by_data #f)
+(export gtk_signal_handler_unblock_by_data)
+
+(dv gtk_signal_handler_pending #f)
+(export gtk_signal_handler_pending)
+
+(dv gtk_signal_handler_pending_by_func #f)
+(export gtk_signal_handler_pending_by_func)
+
+(dv gtk_signal_newv #f)
+(export gtk_signal_newv)
+
+(dv gtk_signal_emit_stop_by_name #f)
+(export gtk_signal_emit_stop_by_name)
+
+(dv gtk_signal_connect_object_while_alive #f)
+(export gtk_signal_connect_object_while_alive)
+
+(dv gtk_signal_connect_while_alive #f)
+(export gtk_signal_connect_while_alive)
+
+(dv gtk_signal_connect_full #f)
+(export gtk_signal_connect_full)
+
+(dv gtk_signal_emitv #f)
+(export gtk_signal_emitv)
+
+(dv gtk_signal_emitv_by_name #f)
+(export gtk_signal_emitv_by_name)
+
+(dv gtk_signal_compat_matched #f)
+(export gtk_signal_compat_matched)
+
+(dv GTK_ACCEL_VISIBLE #f)
+(export GTK_ACCEL_VISIBLE)
+
+(dv GTK_ACCEL_LOCKED #f)
+(export GTK_ACCEL_LOCKED)
+
+(dv GTK_ACCEL_MASK #f)
+(export GTK_ACCEL_MASK)
+
+(dv gtk_accel_group_lock #f)
+(export gtk_accel_group_lock)
+
+(dv gtk_accel_group_unlock #f)
+(export gtk_accel_group_unlock)
+
+(dv gtk_accel_group_connect #f)
+(export gtk_accel_group_connect)
+
+(dv gtk_accel_group_connect_by_path #f)
+(export gtk_accel_group_connect_by_path)
+
+(dv gtk_accel_group_disconnect #f)
+(export gtk_accel_group_disconnect)
+
+(dv gtk_accel_group_disconnect_key #f)
+(export gtk_accel_group_disconnect_key)
+
+(dv _gtk_accel_group_attach #f)
+(export _gtk_accel_group_attach)
+
+(dv _gtk_accel_group_detach #f)
+(export _gtk_accel_group_detach)
+
+(dv gtk_accel_groups_activate #f)
+(export gtk_accel_groups_activate)
+
+(dv gtk_accel_groups_from_object #f)
+(export gtk_accel_groups_from_object)
+
+(dv gtk_accel_group_find #f)
+(export gtk_accel_group_find)
+
+(dv gtk_accel_group_from_accel_closure #f)
+(export gtk_accel_group_from_accel_closure)
+
+(dv gtk_accelerator_valid #f)
+(export gtk_accelerator_valid)
+
+(dv gtk_accelerator_parse #f)
+(export gtk_accelerator_parse)
+
+(dv gtk_accelerator_name #f)
+(export gtk_accelerator_name)
+
+(dv gtk_accelerator_set_default_mod_mask #f)
+(export gtk_accelerator_set_default_mod_mask)
+
+(dv gtk_accelerator_get_default_mod_mask #f)
+(export gtk_accelerator_get_default_mod_mask)
+
+(dv _GtkWidget_object_set #f)
+(export _GtkWidget_object_set)
+
+(dv _GtkWidget_object_get #f)
+(export _GtkWidget_object_get)
+
+(dv _GtkWidget_private_flags_set #f)
+(export _GtkWidget_private_flags_set)
+
+(dv _GtkWidget_private_flags_get #f)
+(export _GtkWidget_private_flags_get)
+
+(dv _GtkWidget_state_set #f)
+(export _GtkWidget_state_set)
+
+(dv _GtkWidget_state_get #f)
+(export _GtkWidget_state_get)
+
+(dv _GtkWidget_saved_state_set #f)
+(export _GtkWidget_saved_state_set)
+
+(dv _GtkWidget_saved_state_get #f)
+(export _GtkWidget_saved_state_get)
+
+(dv _GtkWidget_name_set #f)
+(export _GtkWidget_name_set)
+
+(dv _GtkWidget_name_get #f)
+(export _GtkWidget_name_get)
+
+(dv _GtkWidget_style_set #f)
+(export _GtkWidget_style_set)
+
+(dv _GtkWidget_style_get #f)
+(export _GtkWidget_style_get)
+
+(dv _GtkWidget_requisition_set #f)
+(export _GtkWidget_requisition_set)
+
+(dv _GtkWidget_requisition_get #f)
+(export _GtkWidget_requisition_get)
+
+(dv _GtkWidget_allocation_set #f)
+(export _GtkWidget_allocation_set)
+
+(dv _GtkWidget_allocation_get #f)
+(export _GtkWidget_allocation_get)
+
+(dv _GtkWidget_window_set #f)
+(export _GtkWidget_window_set)
+
+(dv _GtkWidget_window_get #f)
+(export _GtkWidget_window_get)
+
+(dv _GtkWidget_parent_set #f)
+(export _GtkWidget_parent_set)
+
+(dv _GtkWidget_parent_get #f)
+(export _GtkWidget_parent_get)
+
+(dv new__GtkWidget #f)
+(export new__GtkWidget)
+
+(dv delete__GtkWidget #f)
+(export delete__GtkWidget)
+
+(dv gtk_widget_new #f)
+(export gtk_widget_new)
+
+(dv gtk_widget_ref #f)
+(export gtk_widget_ref)
+
+(dv gtk_widget_unref #f)
+(export gtk_widget_unref)
+
+(dv gtk_widget_destroy #f)
+(export gtk_widget_destroy)
+
+(dv gtk_widget_destroyed #f)
+(export gtk_widget_destroyed)
+
+(dv gtk_widget_unparent #f)
+(export gtk_widget_unparent)
+
+)
+
+(seq
+(dv gtk_widget_show #f)
+(export gtk_widget_show)
+
+(dv gtk_widget_show_now #f)
+(export gtk_widget_show_now)
+
+(dv gtk_widget_hide #f)
+(export gtk_widget_hide)
+
+(dv gtk_widget_show_all #f)
+(export gtk_widget_show_all)
+
+(dv gtk_widget_hide_all #f)
+(export gtk_widget_hide_all)
+
+(dv gtk_widget_map #f)
+(export gtk_widget_map)
+
+(dv gtk_widget_unmap #f)
+(export gtk_widget_unmap)
+
+(dv gtk_widget_realize #f)
+(export gtk_widget_realize)
+
+(dv gtk_widget_unrealize #f)
+(export gtk_widget_unrealize)
+
+(dv gtk_widget_queue_draw #f)
+(export gtk_widget_queue_draw)
+
+(dv gtk_widget_queue_draw_area #f)
+(export gtk_widget_queue_draw_area)
+
+(dv gtk_widget_queue_resize #f)
+(export gtk_widget_queue_resize)
+
+(dv gtk_widget_size_request #f)
+(export gtk_widget_size_request)
+
+(dv gtk_widget_size_allocate #f)
+(export gtk_widget_size_allocate)
+
+(dv gtk_widget_get_child_requisition #f)
+(export gtk_widget_get_child_requisition)
+
+(dv gtk_widget_add_accelerator #f)
+(export gtk_widget_add_accelerator)
+
+(dv gtk_widget_remove_accelerator #f)
+(export gtk_widget_remove_accelerator)
+
+(dv gtk_widget_list_accel_closures #f)
+(export gtk_widget_list_accel_closures)
+
+(dv gtk_widget_mnemonic_activate #f)
+(export gtk_widget_mnemonic_activate)
+
+(dv gtk_widget_event #f)
+(export gtk_widget_event)
+
+(dv gtk_widget_send_expose #f)
+(export gtk_widget_send_expose)
+
+(dv gtk_widget_activate #f)
+(export gtk_widget_activate)
+
+(dv gtk_widget_set_scroll_adjustments #f)
+(export gtk_widget_set_scroll_adjustments)
+
+(dv gtk_widget_reparent #f)
+(export gtk_widget_reparent)
+
+(dv gtk_widget_intersect #f)
+(export gtk_widget_intersect)
+
+(dv gtk_widget_region_intersect #f)
+(export gtk_widget_region_intersect)
+
+(dv gtk_widget_freeze_child_notify #f)
+(export gtk_widget_freeze_child_notify)
+
+(dv gtk_widget_child_notify #f)
+(export gtk_widget_child_notify)
+
+(dv gtk_widget_thaw_child_notify #f)
+(export gtk_widget_thaw_child_notify)
+
+(dv gtk_widget_is_focus #f)
+(export gtk_widget_is_focus)
+
+(dv gtk_widget_grab_focus #f)
+(export gtk_widget_grab_focus)
+
+(dv gtk_widget_grab_default #f)
+(export gtk_widget_grab_default)
+
+(dv gtk_widget_set_name #f)
+(export gtk_widget_set_name)
+
+(dv gtk_widget_set_state #f)
+(export gtk_widget_set_state)
+
+(dv gtk_widget_set_sensitive #f)
+(export gtk_widget_set_sensitive)
+
+(dv gtk_widget_set_app_paintable #f)
+(export gtk_widget_set_app_paintable)
+
+(dv gtk_widget_set_double_buffered #f)
+(export gtk_widget_set_double_buffered)
+
+(dv gtk_widget_set_redraw_on_allocate #f)
+(export gtk_widget_set_redraw_on_allocate)
+
+(dv gtk_widget_set_parent #f)
+(export gtk_widget_set_parent)
+
+(dv gtk_widget_set_parent_window #f)
+(export gtk_widget_set_parent_window)
+
+(dv gtk_widget_set_child_visible #f)
+(export gtk_widget_set_child_visible)
+
+(dv gtk_widget_get_child_visible #f)
+(export gtk_widget_get_child_visible)
+
+(dv gtk_widget_get_parent #f)
+(export gtk_widget_get_parent)
+
+(dv gtk_widget_get_parent_window #f)
+(export gtk_widget_get_parent_window)
+
+(dv gtk_widget_child_focus #f)
+(export gtk_widget_child_focus)
+
+(dv gtk_widget_set_size_request #f)
+(export gtk_widget_set_size_request)
+
+(dv gtk_widget_get_size_request #f)
+(export gtk_widget_get_size_request)
+
+(dv gtk_widget_set_events #f)
+(export gtk_widget_set_events)
+
+(dv gtk_widget_add_events #f)
+(export gtk_widget_add_events)
+
+(dv gtk_widget_set_extension_events #f)
+(export gtk_widget_set_extension_events)
+
+(dv gtk_widget_get_extension_events #f)
+(export gtk_widget_get_extension_events)
+
+(dv gtk_widget_get_toplevel #f)
+(export gtk_widget_get_toplevel)
+
+(dv gtk_widget_get_ancestor #f)
+(export gtk_widget_get_ancestor)
+
+(dv gtk_widget_get_colormap #f)
+(export gtk_widget_get_colormap)
+
+(dv gtk_widget_get_visual #f)
+(export gtk_widget_get_visual)
+
+(dv gtk_widget_get_settings #f)
+(export gtk_widget_get_settings)
+
+(dv gtk_widget_get_accessible #f)
+(export gtk_widget_get_accessible)
+
+(dv gtk_widget_set_colormap #f)
+(export gtk_widget_set_colormap)
+
+(dv gtk_widget_get_events #f)
+(export gtk_widget_get_events)
+
+(dv gtk_widget_get_pointer #f)
+(export gtk_widget_get_pointer)
+
+(dv gtk_widget_is_ancestor #f)
+(export gtk_widget_is_ancestor)
+
+(dv gtk_widget_translate_coordinates #f)
+(export gtk_widget_translate_coordinates)
+
+(dv gtk_widget_hide_on_delete #f)
+(export gtk_widget_hide_on_delete)
+
+(dv gtk_widget_set_style #f)
+(export gtk_widget_set_style)
+
+(dv gtk_widget_ensure_style #f)
+(export gtk_widget_ensure_style)
+
+(dv gtk_widget_get_style #f)
+(export gtk_widget_get_style)
+
+(dv gtk_widget_modify_style #f)
+(export gtk_widget_modify_style)
+
+(dv gtk_widget_get_modifier_style #f)
+(export gtk_widget_get_modifier_style)
+
+(dv gtk_widget_modify_fg #f)
+(export gtk_widget_modify_fg)
+
+(dv gtk_widget_modify_bg #f)
+(export gtk_widget_modify_bg)
+
+(dv gtk_widget_modify_text #f)
+(export gtk_widget_modify_text)
+
+(dv gtk_widget_modify_base #f)
+(export gtk_widget_modify_base)
+
+(dv gtk_widget_modify_font #f)
+(export gtk_widget_modify_font)
+
+(dv gtk_widget_create_pango_context #f)
+(export gtk_widget_create_pango_context)
+
+(dv gtk_widget_get_pango_context #f)
+(export gtk_widget_get_pango_context)
+
+(dv gtk_widget_create_pango_layout #f)
+(export gtk_widget_create_pango_layout)
+
+(dv gtk_widget_render_icon #f)
+(export gtk_widget_render_icon)
+
+(dv gtk_widget_set_composite_name #f)
+(export gtk_widget_set_composite_name)
+
+(dv gtk_widget_get_composite_name #f)
+(export gtk_widget_get_composite_name)
+
+(dv gtk_widget_reset_rc_styles #f)
+(export gtk_widget_reset_rc_styles)
+
+(dv gtk_widget_push_colormap #f)
+(export gtk_widget_push_colormap)
+
+(dv gtk_widget_push_composite_child #f)
+(export gtk_widget_push_composite_child)
+
+(dv gtk_widget_pop_composite_child #f)
+(export gtk_widget_pop_composite_child)
+
+(dv gtk_widget_pop_colormap #f)
+(export gtk_widget_pop_colormap)
+
+(dv gtk_widget_class_install_style_property #f)
+(export gtk_widget_class_install_style_property)
+
+(dv gtk_widget_style_get_property #f)
+(export gtk_widget_style_get_property)
+
+(dv gtk_widget_set_default_colormap #f)
+(export gtk_widget_set_default_colormap)
+
+(dv gtk_widget_get_default_style #f)
+(export gtk_widget_get_default_style)
+
+(dv gtk_widget_get_default_colormap #f)
+(export gtk_widget_get_default_colormap)
+
+(dv gtk_widget_get_default_visual #f)
+(export gtk_widget_get_default_visual)
+
+(dv gtk_widget_set_direction #f)
+(export gtk_widget_set_direction)
+
+(dv gtk_widget_get_direction #f)
+(export gtk_widget_get_direction)
+
+(dv gtk_widget_set_default_direction #f)
+(export gtk_widget_set_default_direction)
+
+(dv gtk_widget_get_default_direction #f)
+(export gtk_widget_get_default_direction)
+
+(dv gtk_widget_shape_combine_mask #f)
+(export gtk_widget_shape_combine_mask)
+
+(dv gtk_widget_reset_shapes #f)
+(export gtk_widget_reset_shapes)
+
+(dv gtk_widget_path #f)
+(export gtk_widget_path)
+
+(dv gtk_widget_class_path #f)
+(export gtk_widget_class_path)
+
+(dv gtk_requisition_copy #f)
+(export gtk_requisition_copy)
+
+(dv gtk_requisition_free #f)
+(export gtk_requisition_free)
+
+)
+
+(seq
+(dv _GdkColor_pixel_set #f)
+(export _GdkColor_pixel_set)
+
+(dv _GdkColor_pixel_get #f)
+(export _GdkColor_pixel_get)
+
+(dv _GdkColor_red_set #f)
+(export _GdkColor_red_set)
+
+(dv _GdkColor_red_get #f)
+(export _GdkColor_red_get)
+
+(dv _GdkColor_green_set #f)
+(export _GdkColor_green_set)
+
+(dv _GdkColor_green_get #f)
+(export _GdkColor_green_get)
+
+(dv _GdkColor_blue_set #f)
+(export _GdkColor_blue_set)
+
+(dv _GdkColor_blue_get #f)
+(export _GdkColor_blue_get)
+
+(dv new__GdkColor #f)
+(export new__GdkColor)
+
+(dv delete__GdkColor #f)
+(export delete__GdkColor)
+
+(dv gdk_colormap_new #f)
+(export gdk_colormap_new)
+
+(dv gdk_colormap_get_system #f)
+(export gdk_colormap_get_system)
+
+(dv gdk_colormap_alloc_colors #f)
+(export gdk_colormap_alloc_colors)
+
+(dv gdk_colormap_alloc_color #f)
+(export gdk_colormap_alloc_color)
+
+(dv gdk_colormap_free_colors #f)
+(export gdk_colormap_free_colors)
+
+(dv gdk_colormap_query_color #f)
+(export gdk_colormap_query_color)
+
+(dv gdk_colormap_get_visual #f)
+(export gdk_colormap_get_visual)
+
+(dv gdk_color_copy #f)
+(export gdk_color_copy)
+
+(dv gdk_color_free #f)
+(export gdk_color_free)
+
+(dv gdk_color_parse #f)
+(export gdk_color_parse)
+
+(dv gdk_color_hash #f)
+(export gdk_color_hash)
+
+(dv gdk_color_equal #f)
+(export gdk_color_equal)
+
+(dv gdk_color_get_type #f)
+(export gdk_color_get_type)
+
+(dv gdk_drawable_get_size #f)
+(export gdk_drawable_get_size)
+
+(dv gdk_drawable_set_colormap #f)
+(export gdk_drawable_set_colormap)
+
+(dv gdk_drawable_get_colormap #f)
+(export gdk_drawable_get_colormap)
+
+(dv gdk_drawable_get_visual #f)
+(export gdk_drawable_get_visual)
+
+(dv gdk_drawable_get_depth #f)
+(export gdk_drawable_get_depth)
+
+(dv gdk_draw_point #f)
+(export gdk_draw_point)
+
+(dv gdk_draw_line #f)
+(export gdk_draw_line)
+
+(dv gdk_draw_rectangle #f)
+(export gdk_draw_rectangle)
+
+(dv gdk_draw_arc #f)
+(export gdk_draw_arc)
+
+(dv gdk_draw_polygon #f)
+(export gdk_draw_polygon)
+
+(dv gdk_draw_drawable #f)
+(export gdk_draw_drawable)
+
+(dv gdk_draw_image #f)
+(export gdk_draw_image)
+
+(dv gdk_draw_points #f)
+(export gdk_draw_points)
+
+(dv gdk_draw_segments #f)
+(export gdk_draw_segments)
+
+(dv gdk_draw_lines #f)
+(export gdk_draw_lines)
+
+(dv gdk_draw_glyphs #f)
+(export gdk_draw_glyphs)
+
+(dv gdk_draw_layout_line #f)
+(export gdk_draw_layout_line)
+
+(dv gdk_draw_layout #f)
+(export gdk_draw_layout)
+
+(dv gdk_draw_layout_line_with_colors #f)
+(export gdk_draw_layout_line_with_colors)
+
+(dv gdk_draw_layout_with_colors #f)
+(export gdk_draw_layout_with_colors)
+
+(dv gdk_drawable_get_image #f)
+(export gdk_drawable_get_image)
+
+(dv gdk_drawable_get_clip_region #f)
+(export gdk_drawable_get_clip_region)
+
+(dv gdk_drawable_get_visible_region #f)
+(export gdk_drawable_get_visible_region)
+
+(dv gdk_draw_string #f)
+(export gdk_draw_string)
+
+(dv gdk_draw_text #f)
+(export gdk_draw_text)
+
+(dv gdk_draw_text_wc #f)
+(export gdk_draw_text_wc)
+
+(dv GDK_FONT_FONT #f)
+(export GDK_FONT_FONT)
+
+(dv GDK_FONT_FONTSET #f)
+(export GDK_FONT_FONTSET)
+
+(dv _GdkFont_type_set #f)
+(export _GdkFont_type_set)
+
+(dv _GdkFont_type_get #f)
+(export _GdkFont_type_get)
+
+(dv _GdkFont_ascent_set #f)
+(export _GdkFont_ascent_set)
+
+(dv _GdkFont_ascent_get #f)
+(export _GdkFont_ascent_get)
+
+(dv _GdkFont_descent_set #f)
+(export _GdkFont_descent_set)
+
+(dv _GdkFont_descent_get #f)
+(export _GdkFont_descent_get)
+
+(dv new__GdkFont #f)
+(export new__GdkFont)
+
+(dv delete__GdkFont #f)
+(export delete__GdkFont)
+
+(dv gdk_font_get_type #f)
+(export gdk_font_get_type)
+
+(dv gdk_font_load #f)
+(export gdk_font_load)
+
+(dv gdk_fontset_load #f)
+(export gdk_fontset_load)
+
+(dv gdk_font_from_description #f)
+(export gdk_font_from_description)
+
+(dv gdk_font_ref #f)
+(export gdk_font_ref)
+
+(dv gdk_font_unref #f)
+(export gdk_font_unref)
+
+(dv gdk_font_id #f)
+(export gdk_font_id)
+
+(dv gdk_font_equal #f)
+(export gdk_font_equal)
+
+(dv gdk_string_width #f)
+(export gdk_string_width)
+
+(dv gdk_text_width #f)
+(export gdk_text_width)
+
+(dv gdk_text_width_wc #f)
+(export gdk_text_width_wc)
+
+(dv gdk_char_width #f)
+(export gdk_char_width)
+
+(dv gdk_char_width_wc #f)
+(export gdk_char_width_wc)
+
+(dv gdk_string_measure #f)
+(export gdk_string_measure)
+
+(dv gdk_text_measure #f)
+(export gdk_text_measure)
+
+(dv gdk_char_measure #f)
+(export gdk_char_measure)
+
+(dv gdk_string_height #f)
+(export gdk_string_height)
+
+(dv gdk_text_height #f)
+(export gdk_text_height)
+
+(dv gdk_char_height #f)
+(export gdk_char_height)
+
+(dv gdk_text_extents #f)
+(export gdk_text_extents)
+
+(dv gdk_text_extents_wc #f)
+(export gdk_text_extents_wc)
+
+(dv gdk_string_extents #f)
+(export gdk_string_extents)
+
+(dv GDK_FILTER_CONTINUE #f)
+(export GDK_FILTER_CONTINUE)
+
+(dv GDK_FILTER_TRANSLATE #f)
+(export GDK_FILTER_TRANSLATE)
+
+(dv GDK_FILTER_REMOVE #f)
+(export GDK_FILTER_REMOVE)
+
+(dv GDK_NOTHING #f)
+(export GDK_NOTHING)
+
+(dv GDK_DELETE #f)
+(export GDK_DELETE)
+
+(dv GDK_DESTROY #f)
+(export GDK_DESTROY)
+
+(dv GDK_EXPOSE #f)
+(export GDK_EXPOSE)
+
+(dv GDK_MOTION_NOTIFY #f)
+(export GDK_MOTION_NOTIFY)
+
+(dv GDK_BUTTON_PRESS #f)
+(export GDK_BUTTON_PRESS)
+
+(dv GDK_2BUTTON_PRESS #f)
+(export GDK_2BUTTON_PRESS)
+
+(dv GDK_3BUTTON_PRESS #f)
+(export GDK_3BUTTON_PRESS)
+
+(dv GDK_BUTTON_RELEASE #f)
+(export GDK_BUTTON_RELEASE)
+
+(dv GDK_KEY_PRESS #f)
+(export GDK_KEY_PRESS)
+
+(dv GDK_KEY_RELEASE #f)
+(export GDK_KEY_RELEASE)
+
+(dv GDK_ENTER_NOTIFY #f)
+(export GDK_ENTER_NOTIFY)
+
+(dv GDK_LEAVE_NOTIFY #f)
+(export GDK_LEAVE_NOTIFY)
+
+(dv GDK_FOCUS_CHANGE #f)
+(export GDK_FOCUS_CHANGE)
+
+(dv GDK_CONFIGURE #f)
+(export GDK_CONFIGURE)
+
+(dv GDK_MAP #f)
+(export GDK_MAP)
+
+)
+
+(seq
+(dv GDK_UNMAP #f)
+(export GDK_UNMAP)
+
+(dv GDK_PROPERTY_NOTIFY #f)
+(export GDK_PROPERTY_NOTIFY)
+
+(dv GDK_SELECTION_CLEAR #f)
+(export GDK_SELECTION_CLEAR)
+
+(dv GDK_SELECTION_REQUEST #f)
+(export GDK_SELECTION_REQUEST)
+
+(dv GDK_SELECTION_NOTIFY #f)
+(export GDK_SELECTION_NOTIFY)
+
+(dv GDK_PROXIMITY_IN #f)
+(export GDK_PROXIMITY_IN)
+
+(dv GDK_PROXIMITY_OUT #f)
+(export GDK_PROXIMITY_OUT)
+
+(dv GDK_DRAG_ENTER #f)
+(export GDK_DRAG_ENTER)
+
+(dv GDK_DRAG_LEAVE #f)
+(export GDK_DRAG_LEAVE)
+
+(dv GDK_DRAG_MOTION #f)
+(export GDK_DRAG_MOTION)
+
+(dv GDK_DRAG_STATUS #f)
+(export GDK_DRAG_STATUS)
+
+(dv GDK_DROP_START #f)
+(export GDK_DROP_START)
+
+(dv GDK_DROP_FINISHED #f)
+(export GDK_DROP_FINISHED)
+
+(dv GDK_CLIENT_EVENT #f)
+(export GDK_CLIENT_EVENT)
+
+(dv GDK_VISIBILITY_NOTIFY #f)
+(export GDK_VISIBILITY_NOTIFY)
+
+(dv GDK_NO_EXPOSE #f)
+(export GDK_NO_EXPOSE)
+
+(dv GDK_SCROLL #f)
+(export GDK_SCROLL)
+
+(dv GDK_WINDOW_STATE #f)
+(export GDK_WINDOW_STATE)
+
+(dv GDK_SETTING #f)
+(export GDK_SETTING)
+
+(dv GDK_EXPOSURE_MASK #f)
+(export GDK_EXPOSURE_MASK)
+
+(dv GDK_POINTER_MOTION_MASK #f)
+(export GDK_POINTER_MOTION_MASK)
+
+(dv GDK_POINTER_MOTION_HINT_MASK #f)
+(export GDK_POINTER_MOTION_HINT_MASK)
+
+(dv GDK_BUTTON_MOTION_MASK #f)
+(export GDK_BUTTON_MOTION_MASK)
+
+(dv GDK_BUTTON1_MOTION_MASK #f)
+(export GDK_BUTTON1_MOTION_MASK)
+
+(dv GDK_BUTTON2_MOTION_MASK #f)
+(export GDK_BUTTON2_MOTION_MASK)
+
+(dv GDK_BUTTON3_MOTION_MASK #f)
+(export GDK_BUTTON3_MOTION_MASK)
+
+(dv GDK_BUTTON_PRESS_MASK #f)
+(export GDK_BUTTON_PRESS_MASK)
+
+(dv GDK_BUTTON_RELEASE_MASK #f)
+(export GDK_BUTTON_RELEASE_MASK)
+
+(dv GDK_KEY_PRESS_MASK #f)
+(export GDK_KEY_PRESS_MASK)
+
+(dv GDK_KEY_RELEASE_MASK #f)
+(export GDK_KEY_RELEASE_MASK)
+
+(dv GDK_ENTER_NOTIFY_MASK #f)
+(export GDK_ENTER_NOTIFY_MASK)
+
+(dv GDK_LEAVE_NOTIFY_MASK #f)
+(export GDK_LEAVE_NOTIFY_MASK)
+
+(dv GDK_FOCUS_CHANGE_MASK #f)
+(export GDK_FOCUS_CHANGE_MASK)
+
+(dv GDK_STRUCTURE_MASK #f)
+(export GDK_STRUCTURE_MASK)
+
+(dv GDK_PROPERTY_CHANGE_MASK #f)
+(export GDK_PROPERTY_CHANGE_MASK)
+
+(dv GDK_VISIBILITY_NOTIFY_MASK #f)
+(export GDK_VISIBILITY_NOTIFY_MASK)
+
+(dv GDK_PROXIMITY_IN_MASK #f)
+(export GDK_PROXIMITY_IN_MASK)
+
+(dv GDK_PROXIMITY_OUT_MASK #f)
+(export GDK_PROXIMITY_OUT_MASK)
+
+(dv GDK_SUBSTRUCTURE_MASK #f)
+(export GDK_SUBSTRUCTURE_MASK)
+
+(dv GDK_SCROLL_MASK #f)
+(export GDK_SCROLL_MASK)
+
+(dv GDK_ALL_EVENTS_MASK #f)
+(export GDK_ALL_EVENTS_MASK)
+
+(dv GDK_VISIBILITY_UNOBSCURED #f)
+(export GDK_VISIBILITY_UNOBSCURED)
+
+(dv GDK_VISIBILITY_PARTIAL #f)
+(export GDK_VISIBILITY_PARTIAL)
+
+(dv GDK_VISIBILITY_FULLY_OBSCURED #f)
+(export GDK_VISIBILITY_FULLY_OBSCURED)
+
+(dv GDK_SCROLL_UP #f)
+(export GDK_SCROLL_UP)
+
+(dv GDK_SCROLL_DOWN #f)
+(export GDK_SCROLL_DOWN)
+
+(dv GDK_SCROLL_LEFT #f)
+(export GDK_SCROLL_LEFT)
+
+(dv GDK_SCROLL_RIGHT #f)
+(export GDK_SCROLL_RIGHT)
+
+(dv GDK_NOTIFY_ANCESTOR #f)
+(export GDK_NOTIFY_ANCESTOR)
+
+(dv GDK_NOTIFY_VIRTUAL #f)
+(export GDK_NOTIFY_VIRTUAL)
+
+(dv GDK_NOTIFY_INFERIOR #f)
+(export GDK_NOTIFY_INFERIOR)
+
+(dv GDK_NOTIFY_NONLINEAR #f)
+(export GDK_NOTIFY_NONLINEAR)
+
+(dv GDK_NOTIFY_NONLINEAR_VIRTUAL #f)
+(export GDK_NOTIFY_NONLINEAR_VIRTUAL)
+
+(dv GDK_NOTIFY_UNKNOWN #f)
+(export GDK_NOTIFY_UNKNOWN)
+
+(dv GDK_CROSSING_NORMAL #f)
+(export GDK_CROSSING_NORMAL)
+
+(dv GDK_CROSSING_GRAB #f)
+(export GDK_CROSSING_GRAB)
+
+(dv GDK_CROSSING_UNGRAB #f)
+(export GDK_CROSSING_UNGRAB)
+
+(dv GDK_PROPERTY_NEW_VALUE #f)
+(export GDK_PROPERTY_NEW_VALUE)
+
+(dv GDK_PROPERTY_DELETE #f)
+(export GDK_PROPERTY_DELETE)
+
+(dv GDK_WINDOW_STATE_WITHDRAWN #f)
+(export GDK_WINDOW_STATE_WITHDRAWN)
+
+(dv GDK_WINDOW_STATE_ICONIFIED #f)
+(export GDK_WINDOW_STATE_ICONIFIED)
+
+(dv GDK_WINDOW_STATE_MAXIMIZED #f)
+(export GDK_WINDOW_STATE_MAXIMIZED)
+
+(dv GDK_WINDOW_STATE_STICKY #f)
+(export GDK_WINDOW_STATE_STICKY)
+
+(dv GDK_SETTING_ACTION_NEW #f)
+(export GDK_SETTING_ACTION_NEW)
+
+(dv GDK_SETTING_ACTION_CHANGED #f)
+(export GDK_SETTING_ACTION_CHANGED)
+
+(dv GDK_SETTING_ACTION_DELETED #f)
+(export GDK_SETTING_ACTION_DELETED)
+
+(dv _GdkEventAny_type_set #f)
+(export _GdkEventAny_type_set)
+
+(dv _GdkEventAny_type_get #f)
+(export _GdkEventAny_type_get)
+
+(dv _GdkEventAny_window_set #f)
+(export _GdkEventAny_window_set)
+
+(dv _GdkEventAny_window_get #f)
+(export _GdkEventAny_window_get)
+
+(dv _GdkEventAny_send_event_set #f)
+(export _GdkEventAny_send_event_set)
+
+(dv _GdkEventAny_send_event_get #f)
+(export _GdkEventAny_send_event_get)
+
+(dv new__GdkEventAny #f)
+(export new__GdkEventAny)
+
+(dv delete__GdkEventAny #f)
+(export delete__GdkEventAny)
+
+(dv _GdkEventExpose_type_set #f)
+(export _GdkEventExpose_type_set)
+
+(dv _GdkEventExpose_type_get #f)
+(export _GdkEventExpose_type_get)
+
+(dv _GdkEventExpose_window_set #f)
+(export _GdkEventExpose_window_set)
+
+(dv _GdkEventExpose_window_get #f)
+(export _GdkEventExpose_window_get)
+
+(dv _GdkEventExpose_send_event_set #f)
+(export _GdkEventExpose_send_event_set)
+
+(dv _GdkEventExpose_send_event_get #f)
+(export _GdkEventExpose_send_event_get)
+
+(dv _GdkEventExpose_area_set #f)
+(export _GdkEventExpose_area_set)
+
+(dv _GdkEventExpose_area_get #f)
+(export _GdkEventExpose_area_get)
+
+(dv _GdkEventExpose_region_set #f)
+(export _GdkEventExpose_region_set)
+
+(dv _GdkEventExpose_region_get #f)
+(export _GdkEventExpose_region_get)
+
+(dv _GdkEventExpose_count_set #f)
+(export _GdkEventExpose_count_set)
+
+(dv _GdkEventExpose_count_get #f)
+(export _GdkEventExpose_count_get)
+
+(dv new__GdkEventExpose #f)
+(export new__GdkEventExpose)
+
+(dv delete__GdkEventExpose #f)
+(export delete__GdkEventExpose)
+
+(dv _GdkEventVisibility_type_set #f)
+(export _GdkEventVisibility_type_set)
+
+(dv _GdkEventVisibility_type_get #f)
+(export _GdkEventVisibility_type_get)
+
+(dv _GdkEventVisibility_window_set #f)
+(export _GdkEventVisibility_window_set)
+
+(dv _GdkEventVisibility_window_get #f)
+(export _GdkEventVisibility_window_get)
+
+(dv _GdkEventVisibility_send_event_set #f)
+(export _GdkEventVisibility_send_event_set)
+
+(dv _GdkEventVisibility_send_event_get #f)
+(export _GdkEventVisibility_send_event_get)
+
+(dv _GdkEventVisibility_state_set #f)
+(export _GdkEventVisibility_state_set)
+
+(dv _GdkEventVisibility_state_get #f)
+(export _GdkEventVisibility_state_get)
+
+(dv new__GdkEventVisibility #f)
+(export new__GdkEventVisibility)
+
+(dv delete__GdkEventVisibility #f)
+(export delete__GdkEventVisibility)
+
+(dv _GdkEventMotion_type_set #f)
+(export _GdkEventMotion_type_set)
+
+(dv _GdkEventMotion_type_get #f)
+(export _GdkEventMotion_type_get)
+
+)
+
+(seq
+(dv _GdkEventMotion_window_set #f)
+(export _GdkEventMotion_window_set)
+
+(dv _GdkEventMotion_window_get #f)
+(export _GdkEventMotion_window_get)
+
+(dv _GdkEventMotion_send_event_set #f)
+(export _GdkEventMotion_send_event_set)
+
+(dv _GdkEventMotion_send_event_get #f)
+(export _GdkEventMotion_send_event_get)
+
+(dv _GdkEventMotion_time_set #f)
+(export _GdkEventMotion_time_set)
+
+(dv _GdkEventMotion_time_get #f)
+(export _GdkEventMotion_time_get)
+
+(dv _GdkEventMotion_x_set #f)
+(export _GdkEventMotion_x_set)
+
+(dv _GdkEventMotion_x_get #f)
+(export _GdkEventMotion_x_get)
+
+(dv _GdkEventMotion_y_set #f)
+(export _GdkEventMotion_y_set)
+
+(dv _GdkEventMotion_y_get #f)
+(export _GdkEventMotion_y_get)
+
+(dv _GdkEventMotion_axes_set #f)
+(export _GdkEventMotion_axes_set)
+
+(dv _GdkEventMotion_axes_get #f)
+(export _GdkEventMotion_axes_get)
+
+(dv _GdkEventMotion_state_set #f)
+(export _GdkEventMotion_state_set)
+
+(dv _GdkEventMotion_state_get #f)
+(export _GdkEventMotion_state_get)
+
+(dv _GdkEventMotion_is_hint_set #f)
+(export _GdkEventMotion_is_hint_set)
+
+(dv _GdkEventMotion_is_hint_get #f)
+(export _GdkEventMotion_is_hint_get)
+
+(dv _GdkEventMotion_device_set #f)
+(export _GdkEventMotion_device_set)
+
+(dv _GdkEventMotion_device_get #f)
+(export _GdkEventMotion_device_get)
+
+(dv _GdkEventMotion_x_root_set #f)
+(export _GdkEventMotion_x_root_set)
+
+(dv _GdkEventMotion_x_root_get #f)
+(export _GdkEventMotion_x_root_get)
+
+(dv _GdkEventMotion_y_root_set #f)
+(export _GdkEventMotion_y_root_set)
+
+(dv _GdkEventMotion_y_root_get #f)
+(export _GdkEventMotion_y_root_get)
+
+(dv new__GdkEventMotion #f)
+(export new__GdkEventMotion)
+
+(dv delete__GdkEventMotion #f)
+(export delete__GdkEventMotion)
+
+(dv _GdkEventButton_type_set #f)
+(export _GdkEventButton_type_set)
+
+(dv _GdkEventButton_type_get #f)
+(export _GdkEventButton_type_get)
+
+(dv _GdkEventButton_window_set #f)
+(export _GdkEventButton_window_set)
+
+(dv _GdkEventButton_window_get #f)
+(export _GdkEventButton_window_get)
+
+(dv _GdkEventButton_send_event_set #f)
+(export _GdkEventButton_send_event_set)
+
+(dv _GdkEventButton_send_event_get #f)
+(export _GdkEventButton_send_event_get)
+
+(dv _GdkEventButton_time_set #f)
+(export _GdkEventButton_time_set)
+
+(dv _GdkEventButton_time_get #f)
+(export _GdkEventButton_time_get)
+
+(dv _GdkEventButton_x_set #f)
+(export _GdkEventButton_x_set)
+
+(dv _GdkEventButton_x_get #f)
+(export _GdkEventButton_x_get)
+
+(dv _GdkEventButton_y_set #f)
+(export _GdkEventButton_y_set)
+
+(dv _GdkEventButton_y_get #f)
+(export _GdkEventButton_y_get)
+
+(dv _GdkEventButton_axes_set #f)
+(export _GdkEventButton_axes_set)
+
+(dv _GdkEventButton_axes_get #f)
+(export _GdkEventButton_axes_get)
+
+(dv _GdkEventButton_state_set #f)
+(export _GdkEventButton_state_set)
+
+(dv _GdkEventButton_state_get #f)
+(export _GdkEventButton_state_get)
+
+(dv _GdkEventButton_button_set #f)
+(export _GdkEventButton_button_set)
+
+(dv _GdkEventButton_button_get #f)
+(export _GdkEventButton_button_get)
+
+(dv _GdkEventButton_device_set #f)
+(export _GdkEventButton_device_set)
+
+(dv _GdkEventButton_device_get #f)
+(export _GdkEventButton_device_get)
+
+(dv _GdkEventButton_x_root_set #f)
+(export _GdkEventButton_x_root_set)
+
+(dv _GdkEventButton_x_root_get #f)
+(export _GdkEventButton_x_root_get)
+
+(dv _GdkEventButton_y_root_set #f)
+(export _GdkEventButton_y_root_set)
+
+(dv _GdkEventButton_y_root_get #f)
+(export _GdkEventButton_y_root_get)
+
+(dv new__GdkEventButton #f)
+(export new__GdkEventButton)
+
+(dv delete__GdkEventButton #f)
+(export delete__GdkEventButton)
+
+(dv _GdkEventScroll_type_set #f)
+(export _GdkEventScroll_type_set)
+
+(dv _GdkEventScroll_type_get #f)
+(export _GdkEventScroll_type_get)
+
+(dv _GdkEventScroll_window_set #f)
+(export _GdkEventScroll_window_set)
+
+(dv _GdkEventScroll_window_get #f)
+(export _GdkEventScroll_window_get)
+
+(dv _GdkEventScroll_send_event_set #f)
+(export _GdkEventScroll_send_event_set)
+
+(dv _GdkEventScroll_send_event_get #f)
+(export _GdkEventScroll_send_event_get)
+
+(dv _GdkEventScroll_time_set #f)
+(export _GdkEventScroll_time_set)
+
+(dv _GdkEventScroll_time_get #f)
+(export _GdkEventScroll_time_get)
+
+(dv _GdkEventScroll_x_set #f)
+(export _GdkEventScroll_x_set)
+
+(dv _GdkEventScroll_x_get #f)
+(export _GdkEventScroll_x_get)
+
+(dv _GdkEventScroll_y_set #f)
+(export _GdkEventScroll_y_set)
+
+(dv _GdkEventScroll_y_get #f)
+(export _GdkEventScroll_y_get)
+
+(dv _GdkEventScroll_state_set #f)
+(export _GdkEventScroll_state_set)
+
+(dv _GdkEventScroll_state_get #f)
+(export _GdkEventScroll_state_get)
+
+(dv _GdkEventScroll_direction_set #f)
+(export _GdkEventScroll_direction_set)
+
+(dv _GdkEventScroll_direction_get #f)
+(export _GdkEventScroll_direction_get)
+
+(dv _GdkEventScroll_device_set #f)
+(export _GdkEventScroll_device_set)
+
+(dv _GdkEventScroll_device_get #f)
+(export _GdkEventScroll_device_get)
+
+(dv _GdkEventScroll_x_root_set #f)
+(export _GdkEventScroll_x_root_set)
+
+(dv _GdkEventScroll_x_root_get #f)
+(export _GdkEventScroll_x_root_get)
+
+(dv _GdkEventScroll_y_root_set #f)
+(export _GdkEventScroll_y_root_set)
+
+(dv _GdkEventScroll_y_root_get #f)
+(export _GdkEventScroll_y_root_get)
+
+(dv new__GdkEventScroll #f)
+(export new__GdkEventScroll)
+
+(dv delete__GdkEventScroll #f)
+(export delete__GdkEventScroll)
+
+(dv _GdkEventKey_type_set #f)
+(export _GdkEventKey_type_set)
+
+(dv _GdkEventKey_type_get #f)
+(export _GdkEventKey_type_get)
+
+(dv _GdkEventKey_window_set #f)
+(export _GdkEventKey_window_set)
+
+(dv _GdkEventKey_window_get #f)
+(export _GdkEventKey_window_get)
+
+(dv _GdkEventKey_send_event_set #f)
+(export _GdkEventKey_send_event_set)
+
+(dv _GdkEventKey_send_event_get #f)
+(export _GdkEventKey_send_event_get)
+
+(dv _GdkEventKey_time_set #f)
+(export _GdkEventKey_time_set)
+
+(dv _GdkEventKey_time_get #f)
+(export _GdkEventKey_time_get)
+
+(dv _GdkEventKey_state_set #f)
+(export _GdkEventKey_state_set)
+
+(dv _GdkEventKey_state_get #f)
+(export _GdkEventKey_state_get)
+
+(dv _GdkEventKey_keyval_set #f)
+(export _GdkEventKey_keyval_set)
+
+(dv _GdkEventKey_keyval_get #f)
+(export _GdkEventKey_keyval_get)
+
+(dv _GdkEventKey_length_set #f)
+(export _GdkEventKey_length_set)
+
+(dv _GdkEventKey_length_get #f)
+(export _GdkEventKey_length_get)
+
+(dv _GdkEventKey_string_set #f)
+(export _GdkEventKey_string_set)
+
+(dv _GdkEventKey_string_get #f)
+(export _GdkEventKey_string_get)
+
+(dv _GdkEventKey_hardware_keycode_set #f)
+(export _GdkEventKey_hardware_keycode_set)
+
+(dv _GdkEventKey_hardware_keycode_get #f)
+(export _GdkEventKey_hardware_keycode_get)
+
+(dv _GdkEventKey_group_set #f)
+(export _GdkEventKey_group_set)
+
+(dv _GdkEventKey_group_get #f)
+(export _GdkEventKey_group_get)
+
+(dv new__GdkEventKey #f)
+(export new__GdkEventKey)
+
+(dv delete__GdkEventKey #f)
+(export delete__GdkEventKey)
+
+(dv _GdkEventCrossing_type_set #f)
+(export _GdkEventCrossing_type_set)
+
+(dv _GdkEventCrossing_type_get #f)
+(export _GdkEventCrossing_type_get)
+
+(dv _GdkEventCrossing_window_set #f)
+(export _GdkEventCrossing_window_set)
+
+(dv _GdkEventCrossing_window_get #f)
+(export _GdkEventCrossing_window_get)
+
+)
+
+(seq
+(dv _GdkEventCrossing_send_event_set #f)
+(export _GdkEventCrossing_send_event_set)
+
+(dv _GdkEventCrossing_send_event_get #f)
+(export _GdkEventCrossing_send_event_get)
+
+(dv _GdkEventCrossing_subwindow_set #f)
+(export _GdkEventCrossing_subwindow_set)
+
+(dv _GdkEventCrossing_subwindow_get #f)
+(export _GdkEventCrossing_subwindow_get)
+
+(dv _GdkEventCrossing_time_set #f)
+(export _GdkEventCrossing_time_set)
+
+(dv _GdkEventCrossing_time_get #f)
+(export _GdkEventCrossing_time_get)
+
+(dv _GdkEventCrossing_x_set #f)
+(export _GdkEventCrossing_x_set)
+
+(dv _GdkEventCrossing_x_get #f)
+(export _GdkEventCrossing_x_get)
+
+(dv _GdkEventCrossing_y_set #f)
+(export _GdkEventCrossing_y_set)
+
+(dv _GdkEventCrossing_y_get #f)
+(export _GdkEventCrossing_y_get)
+
+(dv _GdkEventCrossing_x_root_set #f)
+(export _GdkEventCrossing_x_root_set)
+
+(dv _GdkEventCrossing_x_root_get #f)
+(export _GdkEventCrossing_x_root_get)
+
+(dv _GdkEventCrossing_y_root_set #f)
+(export _GdkEventCrossing_y_root_set)
+
+(dv _GdkEventCrossing_y_root_get #f)
+(export _GdkEventCrossing_y_root_get)
+
+(dv _GdkEventCrossing_mode_set #f)
+(export _GdkEventCrossing_mode_set)
+
+(dv _GdkEventCrossing_mode_get #f)
+(export _GdkEventCrossing_mode_get)
+
+(dv _GdkEventCrossing_detail_set #f)
+(export _GdkEventCrossing_detail_set)
+
+(dv _GdkEventCrossing_detail_get #f)
+(export _GdkEventCrossing_detail_get)
+
+(dv _GdkEventCrossing_focus_set #f)
+(export _GdkEventCrossing_focus_set)
+
+(dv _GdkEventCrossing_focus_get #f)
+(export _GdkEventCrossing_focus_get)
+
+(dv _GdkEventCrossing_state_set #f)
+(export _GdkEventCrossing_state_set)
+
+(dv _GdkEventCrossing_state_get #f)
+(export _GdkEventCrossing_state_get)
+
+(dv new__GdkEventCrossing #f)
+(export new__GdkEventCrossing)
+
+(dv delete__GdkEventCrossing #f)
+(export delete__GdkEventCrossing)
+
+(dv _GdkEventFocus_type_set #f)
+(export _GdkEventFocus_type_set)
+
+(dv _GdkEventFocus_type_get #f)
+(export _GdkEventFocus_type_get)
+
+(dv _GdkEventFocus_window_set #f)
+(export _GdkEventFocus_window_set)
+
+(dv _GdkEventFocus_window_get #f)
+(export _GdkEventFocus_window_get)
+
+(dv _GdkEventFocus_send_event_set #f)
+(export _GdkEventFocus_send_event_set)
+
+(dv _GdkEventFocus_send_event_get #f)
+(export _GdkEventFocus_send_event_get)
+
+(dv _GdkEventFocus_in_set #f)
+(export _GdkEventFocus_in_set)
+
+(dv _GdkEventFocus_in_get #f)
+(export _GdkEventFocus_in_get)
+
+(dv new__GdkEventFocus #f)
+(export new__GdkEventFocus)
+
+(dv delete__GdkEventFocus #f)
+(export delete__GdkEventFocus)
+
+(dv _GdkEventConfigure_type_set #f)
+(export _GdkEventConfigure_type_set)
+
+(dv _GdkEventConfigure_type_get #f)
+(export _GdkEventConfigure_type_get)
+
+(dv _GdkEventConfigure_window_set #f)
+(export _GdkEventConfigure_window_set)
+
+(dv _GdkEventConfigure_window_get #f)
+(export _GdkEventConfigure_window_get)
+
+(dv _GdkEventConfigure_send_event_set #f)
+(export _GdkEventConfigure_send_event_set)
+
+(dv _GdkEventConfigure_send_event_get #f)
+(export _GdkEventConfigure_send_event_get)
+
+(dv _GdkEventConfigure_x_set #f)
+(export _GdkEventConfigure_x_set)
+
+(dv _GdkEventConfigure_x_get #f)
+(export _GdkEventConfigure_x_get)
+
+(dv _GdkEventConfigure_y_set #f)
+(export _GdkEventConfigure_y_set)
+
+(dv _GdkEventConfigure_y_get #f)
+(export _GdkEventConfigure_y_get)
+
+(dv _GdkEventConfigure_width_set #f)
+(export _GdkEventConfigure_width_set)
+
+(dv _GdkEventConfigure_width_get #f)
+(export _GdkEventConfigure_width_get)
+
+(dv _GdkEventConfigure_height_set #f)
+(export _GdkEventConfigure_height_set)
+
+(dv _GdkEventConfigure_height_get #f)
+(export _GdkEventConfigure_height_get)
+
+(dv new__GdkEventConfigure #f)
+(export new__GdkEventConfigure)
+
+(dv delete__GdkEventConfigure #f)
+(export delete__GdkEventConfigure)
+
+(dv _GdkEventProperty_type_set #f)
+(export _GdkEventProperty_type_set)
+
+(dv _GdkEventProperty_type_get #f)
+(export _GdkEventProperty_type_get)
+
+(dv _GdkEventProperty_window_set #f)
+(export _GdkEventProperty_window_set)
+
+(dv _GdkEventProperty_window_get #f)
+(export _GdkEventProperty_window_get)
+
+(dv _GdkEventProperty_send_event_set #f)
+(export _GdkEventProperty_send_event_set)
+
+(dv _GdkEventProperty_send_event_get #f)
+(export _GdkEventProperty_send_event_get)
+
+(dv _GdkEventProperty_atom_set #f)
+(export _GdkEventProperty_atom_set)
+
+(dv _GdkEventProperty_atom_get #f)
+(export _GdkEventProperty_atom_get)
+
+(dv _GdkEventProperty_time_set #f)
+(export _GdkEventProperty_time_set)
+
+(dv _GdkEventProperty_time_get #f)
+(export _GdkEventProperty_time_get)
+
+(dv _GdkEventProperty_state_set #f)
+(export _GdkEventProperty_state_set)
+
+(dv _GdkEventProperty_state_get #f)
+(export _GdkEventProperty_state_get)
+
+(dv new__GdkEventProperty #f)
+(export new__GdkEventProperty)
+
+(dv delete__GdkEventProperty #f)
+(export delete__GdkEventProperty)
+
+(dv _GdkEventSelection_type_set #f)
+(export _GdkEventSelection_type_set)
+
+(dv _GdkEventSelection_type_get #f)
+(export _GdkEventSelection_type_get)
+
+(dv _GdkEventSelection_window_set #f)
+(export _GdkEventSelection_window_set)
+
+(dv _GdkEventSelection_window_get #f)
+(export _GdkEventSelection_window_get)
+
+(dv _GdkEventSelection_send_event_set #f)
+(export _GdkEventSelection_send_event_set)
+
+(dv _GdkEventSelection_send_event_get #f)
+(export _GdkEventSelection_send_event_get)
+
+(dv _GdkEventSelection_selection_set #f)
+(export _GdkEventSelection_selection_set)
+
+(dv _GdkEventSelection_selection_get #f)
+(export _GdkEventSelection_selection_get)
+
+(dv _GdkEventSelection_target_set #f)
+(export _GdkEventSelection_target_set)
+
+(dv _GdkEventSelection_target_get #f)
+(export _GdkEventSelection_target_get)
+
+(dv _GdkEventSelection_property_set #f)
+(export _GdkEventSelection_property_set)
+
+(dv _GdkEventSelection_property_get #f)
+(export _GdkEventSelection_property_get)
+
+(dv _GdkEventSelection_time_set #f)
+(export _GdkEventSelection_time_set)
+
+(dv _GdkEventSelection_time_get #f)
+(export _GdkEventSelection_time_get)
+
+(dv _GdkEventSelection_requestor_set #f)
+(export _GdkEventSelection_requestor_set)
+
+(dv _GdkEventSelection_requestor_get #f)
+(export _GdkEventSelection_requestor_get)
+
+(dv new__GdkEventSelection #f)
+(export new__GdkEventSelection)
+
+(dv delete__GdkEventSelection #f)
+(export delete__GdkEventSelection)
+
+(dv _GdkEventProximity_type_set #f)
+(export _GdkEventProximity_type_set)
+
+(dv _GdkEventProximity_type_get #f)
+(export _GdkEventProximity_type_get)
+
+(dv _GdkEventProximity_window_set #f)
+(export _GdkEventProximity_window_set)
+
+(dv _GdkEventProximity_window_get #f)
+(export _GdkEventProximity_window_get)
+
+(dv _GdkEventProximity_send_event_set #f)
+(export _GdkEventProximity_send_event_set)
+
+(dv _GdkEventProximity_send_event_get #f)
+(export _GdkEventProximity_send_event_get)
+
+(dv _GdkEventProximity_time_set #f)
+(export _GdkEventProximity_time_set)
+
+(dv _GdkEventProximity_time_get #f)
+(export _GdkEventProximity_time_get)
+
+(dv _GdkEventProximity_device_set #f)
+(export _GdkEventProximity_device_set)
+
+(dv _GdkEventProximity_device_get #f)
+(export _GdkEventProximity_device_get)
+
+(dv new__GdkEventProximity #f)
+(export new__GdkEventProximity)
+
+(dv delete__GdkEventProximity #f)
+(export delete__GdkEventProximity)
+
+(dv _GdkEventClient_type_set #f)
+(export _GdkEventClient_type_set)
+
+(dv _GdkEventClient_type_get #f)
+(export _GdkEventClient_type_get)
+
+(dv _GdkEventClient_window_set #f)
+(export _GdkEventClient_window_set)
+
+(dv _GdkEventClient_window_get #f)
+(export _GdkEventClient_window_get)
+
+(dv _GdkEventClient_send_event_set #f)
+(export _GdkEventClient_send_event_set)
+
+(dv _GdkEventClient_send_event_get #f)
+(export _GdkEventClient_send_event_get)
+
+)
+
+(seq
+(dv _GdkEventClient_message_type_set #f)
+(export _GdkEventClient_message_type_set)
+
+(dv _GdkEventClient_message_type_get #f)
+(export _GdkEventClient_message_type_get)
+
+(dv _GdkEventClient_data_format_set #f)
+(export _GdkEventClient_data_format_set)
+
+(dv _GdkEventClient_data_format_get #f)
+(export _GdkEventClient_data_format_get)
+
+(dv _GdkEventClient_data_get #f)
+(export _GdkEventClient_data_get)
+
+(dv new__GdkEventClient #f)
+(export new__GdkEventClient)
+
+(dv delete__GdkEventClient #f)
+(export delete__GdkEventClient)
+
+(dv _GdkEventClient_data_b_set #f)
+(export _GdkEventClient_data_b_set)
+
+(dv _GdkEventClient_data_b_get #f)
+(export _GdkEventClient_data_b_get)
+
+(dv _GdkEventClient_data_s_set #f)
+(export _GdkEventClient_data_s_set)
+
+(dv _GdkEventClient_data_s_get #f)
+(export _GdkEventClient_data_s_get)
+
+(dv _GdkEventClient_data_l_set #f)
+(export _GdkEventClient_data_l_set)
+
+(dv _GdkEventClient_data_l_get #f)
+(export _GdkEventClient_data_l_get)
+
+(dv new__GdkEventClient_data #f)
+(export new__GdkEventClient_data)
+
+(dv delete__GdkEventClient_data #f)
+(export delete__GdkEventClient_data)
+
+(dv _GdkEventSetting_type_set #f)
+(export _GdkEventSetting_type_set)
+
+(dv _GdkEventSetting_type_get #f)
+(export _GdkEventSetting_type_get)
+
+(dv _GdkEventSetting_window_set #f)
+(export _GdkEventSetting_window_set)
+
+(dv _GdkEventSetting_window_get #f)
+(export _GdkEventSetting_window_get)
+
+(dv _GdkEventSetting_send_event_set #f)
+(export _GdkEventSetting_send_event_set)
+
+(dv _GdkEventSetting_send_event_get #f)
+(export _GdkEventSetting_send_event_get)
+
+(dv _GdkEventSetting_action_set #f)
+(export _GdkEventSetting_action_set)
+
+(dv _GdkEventSetting_action_get #f)
+(export _GdkEventSetting_action_get)
+
+(dv _GdkEventSetting_name_set #f)
+(export _GdkEventSetting_name_set)
+
+(dv _GdkEventSetting_name_get #f)
+(export _GdkEventSetting_name_get)
+
+(dv new__GdkEventSetting #f)
+(export new__GdkEventSetting)
+
+(dv delete__GdkEventSetting #f)
+(export delete__GdkEventSetting)
+
+(dv _GdkEventWindowState_type_set #f)
+(export _GdkEventWindowState_type_set)
+
+(dv _GdkEventWindowState_type_get #f)
+(export _GdkEventWindowState_type_get)
+
+(dv _GdkEventWindowState_window_set #f)
+(export _GdkEventWindowState_window_set)
+
+(dv _GdkEventWindowState_window_get #f)
+(export _GdkEventWindowState_window_get)
+
+(dv _GdkEventWindowState_send_event_set #f)
+(export _GdkEventWindowState_send_event_set)
+
+(dv _GdkEventWindowState_send_event_get #f)
+(export _GdkEventWindowState_send_event_get)
+
+(dv _GdkEventWindowState_changed_mask_set #f)
+(export _GdkEventWindowState_changed_mask_set)
+
+(dv _GdkEventWindowState_changed_mask_get #f)
+(export _GdkEventWindowState_changed_mask_get)
+
+(dv _GdkEventWindowState_new_window_state_set #f)
+(export _GdkEventWindowState_new_window_state_set)
+
+(dv _GdkEventWindowState_new_window_state_get #f)
+(export _GdkEventWindowState_new_window_state_get)
+
+(dv new__GdkEventWindowState #f)
+(export new__GdkEventWindowState)
+
+(dv delete__GdkEventWindowState #f)
+(export delete__GdkEventWindowState)
+
+(dv _GdkEventDND_type_set #f)
+(export _GdkEventDND_type_set)
+
+(dv _GdkEventDND_type_get #f)
+(export _GdkEventDND_type_get)
+
+(dv _GdkEventDND_window_set #f)
+(export _GdkEventDND_window_set)
+
+(dv _GdkEventDND_window_get #f)
+(export _GdkEventDND_window_get)
+
+(dv _GdkEventDND_send_event_set #f)
+(export _GdkEventDND_send_event_set)
+
+(dv _GdkEventDND_send_event_get #f)
+(export _GdkEventDND_send_event_get)
+
+(dv _GdkEventDND_context_set #f)
+(export _GdkEventDND_context_set)
+
+(dv _GdkEventDND_context_get #f)
+(export _GdkEventDND_context_get)
+
+(dv _GdkEventDND_time_set #f)
+(export _GdkEventDND_time_set)
+
+(dv _GdkEventDND_time_get #f)
+(export _GdkEventDND_time_get)
+
+(dv _GdkEventDND_x_root_set #f)
+(export _GdkEventDND_x_root_set)
+
+(dv _GdkEventDND_x_root_get #f)
+(export _GdkEventDND_x_root_get)
+
+(dv _GdkEventDND_y_root_set #f)
+(export _GdkEventDND_y_root_set)
+
+(dv _GdkEventDND_y_root_get #f)
+(export _GdkEventDND_y_root_get)
+
+(dv new__GdkEventDND #f)
+(export new__GdkEventDND)
+
+(dv delete__GdkEventDND #f)
+(export delete__GdkEventDND)
+
+(dv gdk_event_get_type #f)
+(export gdk_event_get_type)
+
+(dv gdk_events_pending #f)
+(export gdk_events_pending)
+
+(dv gdk_event_get #f)
+(export gdk_event_get)
+
+(dv gdk_event_peek #f)
+(export gdk_event_peek)
+
+(dv gdk_event_get_graphics_expose #f)
+(export gdk_event_get_graphics_expose)
+
+(dv gdk_event_put #f)
+(export gdk_event_put)
+
+(dv gdk_event_copy #f)
+(export gdk_event_copy)
+
+(dv gdk_event_free #f)
+(export gdk_event_free)
+
+(dv gdk_event_get_time #f)
+(export gdk_event_get_time)
+
+(dv gdk_event_get_state #f)
+(export gdk_event_get_state)
+
+(dv gdk_event_get_coords #f)
+(export gdk_event_get_coords)
+
+(dv gdk_event_get_root_coords #f)
+(export gdk_event_get_root_coords)
+
+(dv gdk_event_get_axis #f)
+(export gdk_event_get_axis)
+
+(dv gdk_event_handler_set #f)
+(export gdk_event_handler_set)
+
+(dv gdk_set_show_events #f)
+(export gdk_set_show_events)
+
+(dv gdk_get_show_events #f)
+(export gdk_get_show_events)
+
+(dv gdk_add_client_message_filter #f)
+(export gdk_add_client_message_filter)
+
+(dv gdk_setting_get #f)
+(export gdk_setting_get)
+
+(dv GDK_CAP_NOT_LAST #f)
+(export GDK_CAP_NOT_LAST)
+
+(dv GDK_CAP_BUTT #f)
+(export GDK_CAP_BUTT)
+
+(dv GDK_CAP_ROUND #f)
+(export GDK_CAP_ROUND)
+
+(dv GDK_CAP_PROJECTING #f)
+(export GDK_CAP_PROJECTING)
+
+(dv GDK_SOLID #f)
+(export GDK_SOLID)
+
+(dv GDK_TILED #f)
+(export GDK_TILED)
+
+(dv GDK_STIPPLED #f)
+(export GDK_STIPPLED)
+
+(dv GDK_OPAQUE_STIPPLED #f)
+(export GDK_OPAQUE_STIPPLED)
+
+(dv GDK_COPY #f)
+(export GDK_COPY)
+
+(dv GDK_INVERT #f)
+(export GDK_INVERT)
+
+(dv GDK_XOR #f)
+(export GDK_XOR)
+
+(dv GDK_CLEAR #f)
+(export GDK_CLEAR)
+
+(dv GDK_AND #f)
+(export GDK_AND)
+
+(dv GDK_AND_REVERSE #f)
+(export GDK_AND_REVERSE)
+
+(dv GDK_AND_INVERT #f)
+(export GDK_AND_INVERT)
+
+(dv GDK_NOOP #f)
+(export GDK_NOOP)
+
+(dv GDK_OR #f)
+(export GDK_OR)
+
+(dv GDK_EQUIV #f)
+(export GDK_EQUIV)
+
+(dv GDK_OR_REVERSE #f)
+(export GDK_OR_REVERSE)
+
+(dv GDK_COPY_INVERT #f)
+(export GDK_COPY_INVERT)
+
+(dv GDK_OR_INVERT #f)
+(export GDK_OR_INVERT)
+
+(dv GDK_NAND #f)
+(export GDK_NAND)
+
+(dv GDK_NOR #f)
+(export GDK_NOR)
+
+(dv GDK_SET #f)
+(export GDK_SET)
+
+(dv GDK_JOIN_MITER #f)
+(export GDK_JOIN_MITER)
+
+(dv GDK_JOIN_ROUND #f)
+(export GDK_JOIN_ROUND)
+
+(dv GDK_JOIN_BEVEL #f)
+(export GDK_JOIN_BEVEL)
+
+)
+
+(seq
+(dv GDK_LINE_SOLID #f)
+(export GDK_LINE_SOLID)
+
+(dv GDK_LINE_ON_OFF_DASH #f)
+(export GDK_LINE_ON_OFF_DASH)
+
+(dv GDK_LINE_DOUBLE_DASH #f)
+(export GDK_LINE_DOUBLE_DASH)
+
+(dv GDK_CLIP_BY_CHILDREN #f)
+(export GDK_CLIP_BY_CHILDREN)
+
+(dv GDK_INCLUDE_INFERIORS #f)
+(export GDK_INCLUDE_INFERIORS)
+
+(dv GDK_GC_FOREGROUND #f)
+(export GDK_GC_FOREGROUND)
+
+(dv GDK_GC_BACKGROUND #f)
+(export GDK_GC_BACKGROUND)
+
+(dv GDK_GC_FONT #f)
+(export GDK_GC_FONT)
+
+(dv GDK_GC_FUNCTION #f)
+(export GDK_GC_FUNCTION)
+
+(dv GDK_GC_FILL #f)
+(export GDK_GC_FILL)
+
+(dv GDK_GC_TILE #f)
+(export GDK_GC_TILE)
+
+(dv GDK_GC_STIPPLE #f)
+(export GDK_GC_STIPPLE)
+
+(dv GDK_GC_CLIP_MASK #f)
+(export GDK_GC_CLIP_MASK)
+
+(dv GDK_GC_SUBWINDOW #f)
+(export GDK_GC_SUBWINDOW)
+
+(dv GDK_GC_TS_X_ORIGIN #f)
+(export GDK_GC_TS_X_ORIGIN)
+
+(dv GDK_GC_TS_Y_ORIGIN #f)
+(export GDK_GC_TS_Y_ORIGIN)
+
+(dv GDK_GC_CLIP_X_ORIGIN #f)
+(export GDK_GC_CLIP_X_ORIGIN)
+
+(dv GDK_GC_CLIP_Y_ORIGIN #f)
+(export GDK_GC_CLIP_Y_ORIGIN)
+
+(dv GDK_GC_EXPOSURES #f)
+(export GDK_GC_EXPOSURES)
+
+(dv GDK_GC_LINE_WIDTH #f)
+(export GDK_GC_LINE_WIDTH)
+
+(dv GDK_GC_LINE_STYLE #f)
+(export GDK_GC_LINE_STYLE)
+
+(dv GDK_GC_CAP_STYLE #f)
+(export GDK_GC_CAP_STYLE)
+
+(dv GDK_GC_JOIN_STYLE #f)
+(export GDK_GC_JOIN_STYLE)
+
+(dv gdk_gc_get_type #f)
+(export gdk_gc_get_type)
+
+(dv gdk_gc_new #f)
+(export gdk_gc_new)
+
+(dv gdk_gc_new_with_values #f)
+(export gdk_gc_new_with_values)
+
+(dv gdk_gc_get_values #f)
+(export gdk_gc_get_values)
+
+(dv gdk_gc_set_values #f)
+(export gdk_gc_set_values)
+
+(dv gdk_gc_set_foreground #f)
+(export gdk_gc_set_foreground)
+
+(dv gdk_gc_set_background #f)
+(export gdk_gc_set_background)
+
+(dv gdk_gc_set_function #f)
+(export gdk_gc_set_function)
+
+(dv gdk_gc_set_fill #f)
+(export gdk_gc_set_fill)
+
+(dv gdk_gc_set_tile #f)
+(export gdk_gc_set_tile)
+
+(dv gdk_gc_set_stipple #f)
+(export gdk_gc_set_stipple)
+
+(dv gdk_gc_set_ts_origin #f)
+(export gdk_gc_set_ts_origin)
+
+(dv gdk_gc_set_clip_origin #f)
+(export gdk_gc_set_clip_origin)
+
+(dv gdk_gc_set_clip_mask #f)
+(export gdk_gc_set_clip_mask)
+
+(dv gdk_gc_set_clip_rectangle #f)
+(export gdk_gc_set_clip_rectangle)
+
+(dv gdk_gc_set_clip_region #f)
+(export gdk_gc_set_clip_region)
+
+(dv gdk_gc_set_subwindow #f)
+(export gdk_gc_set_subwindow)
+
+(dv gdk_gc_set_exposures #f)
+(export gdk_gc_set_exposures)
+
+(dv gdk_gc_set_line_attributes #f)
+(export gdk_gc_set_line_attributes)
+
+(dv gdk_gc_set_dashes #f)
+(export gdk_gc_set_dashes)
+
+(dv gdk_gc_offset #f)
+(export gdk_gc_offset)
+
+(dv gdk_gc_copy #f)
+(export gdk_gc_copy)
+
+(dv gdk_gc_set_colormap #f)
+(export gdk_gc_set_colormap)
+
+(dv gdk_gc_get_colormap #f)
+(export gdk_gc_get_colormap)
+
+(dv gdk_gc_set_rgb_fg_color #f)
+(export gdk_gc_set_rgb_fg_color)
+
+(dv gdk_gc_set_rgb_bg_color #f)
+(export gdk_gc_set_rgb_bg_color)
+
+(dv GDK_IMAGE_NORMAL #f)
+(export GDK_IMAGE_NORMAL)
+
+(dv GDK_IMAGE_SHARED #f)
+(export GDK_IMAGE_SHARED)
+
+(dv GDK_IMAGE_FASTEST #f)
+(export GDK_IMAGE_FASTEST)
+
+(dv gdk_image_new #f)
+(export gdk_image_new)
+
+(dv gdk_image_put_pixel #f)
+(export gdk_image_put_pixel)
+
+(dv gdk_image_get_pixel #f)
+(export gdk_image_get_pixel)
+
+(dv gdk_image_set_colormap #f)
+(export gdk_image_set_colormap)
+
+(dv gdk_image_get_colormap #f)
+(export gdk_image_get_colormap)
+
+(dv gdk_set_locale #f)
+(export gdk_set_locale)
+
+(dv gdk_get_program_class #f)
+(export gdk_get_program_class)
+
+(dv gdk_set_program_class #f)
+(export gdk_set_program_class)
+
+(dv gdk_error_trap_push #f)
+(export gdk_error_trap_push)
+
+(dv gdk_error_trap_pop #f)
+(export gdk_error_trap_pop)
+
+(dv gdk_get_display #f)
+(export gdk_get_display)
+
+(dv gdk_pointer_grab #f)
+(export gdk_pointer_grab)
+
+(dv gdk_pointer_ungrab #f)
+(export gdk_pointer_ungrab)
+
+(dv gdk_keyboard_grab #f)
+(export gdk_keyboard_grab)
+
+(dv gdk_keyboard_ungrab #f)
+(export gdk_keyboard_ungrab)
+
+(dv gdk_pointer_is_grabbed #f)
+(export gdk_pointer_is_grabbed)
+
+(dv gdk_screen_width #f)
+(export gdk_screen_width)
+
+(dv gdk_screen_height #f)
+(export gdk_screen_height)
+
+(dv gdk_screen_width_mm #f)
+(export gdk_screen_width_mm)
+
+(dv gdk_screen_height_mm #f)
+(export gdk_screen_height_mm)
+
+(dv gdk_flush #f)
+(export gdk_flush)
+
+(dv gdk_beep #f)
+(export gdk_beep)
+
+(dv gdk_set_double_click_time #f)
+(export gdk_set_double_click_time)
+
+(dv gdk_rectangle_intersect #f)
+(export gdk_rectangle_intersect)
+
+(dv gdk_rectangle_union #f)
+(export gdk_rectangle_union)
+
+(dv gdk_rectangle_get_type #f)
+(export gdk_rectangle_get_type)
+
+(dv gdk_wcstombs #f)
+(export gdk_wcstombs)
+
+(dv gdk_mbstowcs #f)
+(export gdk_mbstowcs)
+
+(dv gdk_event_send_clientmessage_toall #f)
+(export gdk_event_send_clientmessage_toall)
+
+(dv gdk_event_send_client_message #f)
+(export gdk_event_send_client_message)
+
+(dv gdk_threads_enter #f)
+(export gdk_threads_enter)
+
+(dv gdk_threads_leave #f)
+(export gdk_threads_leave)
+
+(dv gdk_threads_init #f)
+(export gdk_threads_init)
+
+(dv gdk_pixbuf_render_threshold_alpha #f)
+(export gdk_pixbuf_render_threshold_alpha)
+
+(dv gdk_pixbuf_render_to_drawable #f)
+(export gdk_pixbuf_render_to_drawable)
+
+(dv gdk_pixbuf_render_to_drawable_alpha #f)
+(export gdk_pixbuf_render_to_drawable_alpha)
+
+(dv gdk_pixbuf_render_pixmap_and_mask_for_colormap #f)
+(export gdk_pixbuf_render_pixmap_and_mask_for_colormap)
+
+(dv gdk_pixbuf_render_pixmap_and_mask #f)
+(export gdk_pixbuf_render_pixmap_and_mask)
+
+(dv gdk_pixbuf_get_from_drawable #f)
+(export gdk_pixbuf_get_from_drawable)
+
+(dv gdk_pixbuf_get_from_image #f)
+(export gdk_pixbuf_get_from_image)
+
+(dv gdk_pixmap_new #f)
+(export gdk_pixmap_new)
+
+(dv gdk_bitmap_create_from_data #f)
+(export gdk_bitmap_create_from_data)
+
+(dv gdk_pixmap_create_from_data #f)
+(export gdk_pixmap_create_from_data)
+
+(dv gdk_pixmap_create_from_xpm #f)
+(export gdk_pixmap_create_from_xpm)
+
+(dv gdk_pixmap_colormap_create_from_xpm #f)
+(export gdk_pixmap_colormap_create_from_xpm)
+
+(dv gdk_pixmap_create_from_xpm_d #f)
+(export gdk_pixmap_create_from_xpm_d)
+
+(dv gdk_pixmap_colormap_create_from_xpm_d #f)
+(export gdk_pixmap_colormap_create_from_xpm_d)
+
+(dv gdk_pixmap_foreign_new #f)
+(export gdk_pixmap_foreign_new)
+
+)
+
+(seq
+(dv gdk_pixmap_lookup #f)
+(export gdk_pixmap_lookup)
+
+(dv GDK_VISUAL_STATIC_GRAY #f)
+(export GDK_VISUAL_STATIC_GRAY)
+
+(dv GDK_VISUAL_GRAYSCALE #f)
+(export GDK_VISUAL_GRAYSCALE)
+
+(dv GDK_VISUAL_STATIC_COLOR #f)
+(export GDK_VISUAL_STATIC_COLOR)
+
+(dv GDK_VISUAL_PSEUDO_COLOR #f)
+(export GDK_VISUAL_PSEUDO_COLOR)
+
+(dv GDK_VISUAL_TRUE_COLOR #f)
+(export GDK_VISUAL_TRUE_COLOR)
+
+(dv GDK_VISUAL_DIRECT_COLOR #f)
+(export GDK_VISUAL_DIRECT_COLOR)
+
+(dv gdk_visual_get_type #f)
+(export gdk_visual_get_type)
+
+(dv gdk_visual_get_best_depth #f)
+(export gdk_visual_get_best_depth)
+
+(dv gdk_visual_get_best_type #f)
+(export gdk_visual_get_best_type)
+
+(dv gdk_visual_get_system #f)
+(export gdk_visual_get_system)
+
+(dv gdk_visual_get_best #f)
+(export gdk_visual_get_best)
+
+(dv gdk_visual_get_best_with_depth #f)
+(export gdk_visual_get_best_with_depth)
+
+(dv gdk_visual_get_best_with_type #f)
+(export gdk_visual_get_best_with_type)
+
+(dv gdk_visual_get_best_with_both #f)
+(export gdk_visual_get_best_with_both)
+
+(dv gdk_query_depths #f)
+(export gdk_query_depths)
+
+(dv gdk_query_visual_types #f)
+(export gdk_query_visual_types)
+
+(dv gdk_list_visuals #f)
+(export gdk_list_visuals)
+
+(dv GDK_INPUT_OUTPUT #f)
+(export GDK_INPUT_OUTPUT)
+
+(dv GDK_INPUT_ONLY #f)
+(export GDK_INPUT_ONLY)
+
+(dv GDK_WINDOW_ROOT #f)
+(export GDK_WINDOW_ROOT)
+
+(dv GDK_WINDOW_TOPLEVEL #f)
+(export GDK_WINDOW_TOPLEVEL)
+
+(dv GDK_WINDOW_CHILD #f)
+(export GDK_WINDOW_CHILD)
+
+(dv GDK_WINDOW_DIALOG #f)
+(export GDK_WINDOW_DIALOG)
+
+(dv GDK_WINDOW_TEMP #f)
+(export GDK_WINDOW_TEMP)
+
+(dv GDK_WINDOW_FOREIGN #f)
+(export GDK_WINDOW_FOREIGN)
+
+(dv GDK_WA_TITLE #f)
+(export GDK_WA_TITLE)
+
+(dv GDK_WA_X #f)
+(export GDK_WA_X)
+
+(dv GDK_WA_Y #f)
+(export GDK_WA_Y)
+
+(dv GDK_WA_CURSOR #f)
+(export GDK_WA_CURSOR)
+
+(dv GDK_WA_COLORMAP #f)
+(export GDK_WA_COLORMAP)
+
+(dv GDK_WA_VISUAL #f)
+(export GDK_WA_VISUAL)
+
+(dv GDK_WA_WMCLASS #f)
+(export GDK_WA_WMCLASS)
+
+(dv GDK_WA_NOREDIR #f)
+(export GDK_WA_NOREDIR)
+
+(dv GDK_HINT_POS #f)
+(export GDK_HINT_POS)
+
+(dv GDK_HINT_MIN_SIZE #f)
+(export GDK_HINT_MIN_SIZE)
+
+(dv GDK_HINT_MAX_SIZE #f)
+(export GDK_HINT_MAX_SIZE)
+
+(dv GDK_HINT_BASE_SIZE #f)
+(export GDK_HINT_BASE_SIZE)
+
+(dv GDK_HINT_ASPECT #f)
+(export GDK_HINT_ASPECT)
+
+(dv GDK_HINT_RESIZE_INC #f)
+(export GDK_HINT_RESIZE_INC)
+
+(dv GDK_HINT_WIN_GRAVITY #f)
+(export GDK_HINT_WIN_GRAVITY)
+
+(dv GDK_HINT_USER_POS #f)
+(export GDK_HINT_USER_POS)
+
+(dv GDK_HINT_USER_SIZE #f)
+(export GDK_HINT_USER_SIZE)
+
+(dv GDK_WINDOW_TYPE_HINT_NORMAL #f)
+(export GDK_WINDOW_TYPE_HINT_NORMAL)
+
+(dv GDK_WINDOW_TYPE_HINT_DIALOG #f)
+(export GDK_WINDOW_TYPE_HINT_DIALOG)
+
+(dv GDK_WINDOW_TYPE_HINT_MENU #f)
+(export GDK_WINDOW_TYPE_HINT_MENU)
+
+(dv GDK_WINDOW_TYPE_HINT_TOOLBAR #f)
+(export GDK_WINDOW_TYPE_HINT_TOOLBAR)
+
+(dv GDK_DECOR_ALL #f)
+(export GDK_DECOR_ALL)
+
+(dv GDK_DECOR_BORDER #f)
+(export GDK_DECOR_BORDER)
+
+(dv GDK_DECOR_RESIZEH #f)
+(export GDK_DECOR_RESIZEH)
+
+(dv GDK_DECOR_TITLE #f)
+(export GDK_DECOR_TITLE)
+
+(dv GDK_DECOR_MENU #f)
+(export GDK_DECOR_MENU)
+
+(dv GDK_DECOR_MINIMIZE #f)
+(export GDK_DECOR_MINIMIZE)
+
+(dv GDK_DECOR_MAXIMIZE #f)
+(export GDK_DECOR_MAXIMIZE)
+
+(dv GDK_FUNC_ALL #f)
+(export GDK_FUNC_ALL)
+
+(dv GDK_FUNC_RESIZE #f)
+(export GDK_FUNC_RESIZE)
+
+(dv GDK_FUNC_MOVE #f)
+(export GDK_FUNC_MOVE)
+
+(dv GDK_FUNC_MINIMIZE #f)
+(export GDK_FUNC_MINIMIZE)
+
+(dv GDK_FUNC_MAXIMIZE #f)
+(export GDK_FUNC_MAXIMIZE)
+
+(dv GDK_FUNC_CLOSE #f)
+(export GDK_FUNC_CLOSE)
+
+(dv GDK_GRAVITY_NORTH_WEST #f)
+(export GDK_GRAVITY_NORTH_WEST)
+
+(dv GDK_GRAVITY_NORTH #f)
+(export GDK_GRAVITY_NORTH)
+
+(dv GDK_GRAVITY_NORTH_EAST #f)
+(export GDK_GRAVITY_NORTH_EAST)
+
+(dv GDK_GRAVITY_WEST #f)
+(export GDK_GRAVITY_WEST)
+
+(dv GDK_GRAVITY_CENTER #f)
+(export GDK_GRAVITY_CENTER)
+
+(dv GDK_GRAVITY_EAST #f)
+(export GDK_GRAVITY_EAST)
+
+(dv GDK_GRAVITY_SOUTH_WEST #f)
+(export GDK_GRAVITY_SOUTH_WEST)
+
+(dv GDK_GRAVITY_SOUTH #f)
+(export GDK_GRAVITY_SOUTH)
+
+(dv GDK_GRAVITY_SOUTH_EAST #f)
+(export GDK_GRAVITY_SOUTH_EAST)
+
+(dv GDK_GRAVITY_STATIC #f)
+(export GDK_GRAVITY_STATIC)
+
+(dv GDK_WINDOW_EDGE_NORTH_WEST #f)
+(export GDK_WINDOW_EDGE_NORTH_WEST)
+
+(dv GDK_WINDOW_EDGE_NORTH #f)
+(export GDK_WINDOW_EDGE_NORTH)
+
+(dv GDK_WINDOW_EDGE_NORTH_EAST #f)
+(export GDK_WINDOW_EDGE_NORTH_EAST)
+
+(dv GDK_WINDOW_EDGE_WEST #f)
+(export GDK_WINDOW_EDGE_WEST)
+
+(dv GDK_WINDOW_EDGE_EAST #f)
+(export GDK_WINDOW_EDGE_EAST)
+
+(dv GDK_WINDOW_EDGE_SOUTH_WEST #f)
+(export GDK_WINDOW_EDGE_SOUTH_WEST)
+
+(dv GDK_WINDOW_EDGE_SOUTH #f)
+(export GDK_WINDOW_EDGE_SOUTH)
+
+(dv GDK_WINDOW_EDGE_SOUTH_EAST #f)
+(export GDK_WINDOW_EDGE_SOUTH_EAST)
+
+(dv gdk_window_new #f)
+(export gdk_window_new)
+
+(dv gdk_window_destroy #f)
+(export gdk_window_destroy)
+
+(dv gdk_window_get_window_type #f)
+(export gdk_window_get_window_type)
+
+(dv gdk_window_at_pointer #f)
+(export gdk_window_at_pointer)
+
+(dv gdk_window_show #f)
+(export gdk_window_show)
+
+(dv gdk_window_hide #f)
+(export gdk_window_hide)
+
+(dv gdk_window_withdraw #f)
+(export gdk_window_withdraw)
+
+(dv gdk_window_show_unraised #f)
+(export gdk_window_show_unraised)
+
+(dv gdk_window_move #f)
+(export gdk_window_move)
+
+(dv gdk_window_resize #f)
+(export gdk_window_resize)
+
+(dv gdk_window_move_resize #f)
+(export gdk_window_move_resize)
+
+(dv gdk_window_reparent #f)
+(export gdk_window_reparent)
+
+(dv gdk_window_clear #f)
+(export gdk_window_clear)
+
+(dv gdk_window_clear_area #f)
+(export gdk_window_clear_area)
+
+(dv gdk_window_clear_area_e #f)
+(export gdk_window_clear_area_e)
+
+(dv gdk_window_raise #f)
+(export gdk_window_raise)
+
+(dv gdk_window_lower #f)
+(export gdk_window_lower)
+
+(dv gdk_window_focus #f)
+(export gdk_window_focus)
+
+(dv gdk_window_set_user_data #f)
+(export gdk_window_set_user_data)
+
+(dv gdk_window_set_override_redirect #f)
+(export gdk_window_set_override_redirect)
+
+(dv gdk_window_add_filter #f)
+(export gdk_window_add_filter)
+
+(dv gdk_window_remove_filter #f)
+(export gdk_window_remove_filter)
+
+)
+
+(seq
+(dv gdk_window_scroll #f)
+(export gdk_window_scroll)
+
+(dv gdk_window_shape_combine_mask #f)
+(export gdk_window_shape_combine_mask)
+
+(dv gdk_window_shape_combine_region #f)
+(export gdk_window_shape_combine_region)
+
+(dv gdk_window_set_child_shapes #f)
+(export gdk_window_set_child_shapes)
+
+(dv gdk_window_merge_child_shapes #f)
+(export gdk_window_merge_child_shapes)
+
+(dv gdk_window_is_visible #f)
+(export gdk_window_is_visible)
+
+(dv gdk_window_is_viewable #f)
+(export gdk_window_is_viewable)
+
+(dv gdk_window_get_state #f)
+(export gdk_window_get_state)
+
+(dv gdk_window_set_static_gravities #f)
+(export gdk_window_set_static_gravities)
+
+(dv gdk_window_foreign_new #f)
+(export gdk_window_foreign_new)
+
+(dv gdk_window_lookup #f)
+(export gdk_window_lookup)
+
+(dv gdk_window_set_type_hint #f)
+(export gdk_window_set_type_hint)
+
+(dv gdk_window_set_modal_hint #f)
+(export gdk_window_set_modal_hint)
+
+(dv gdk_window_set_geometry_hints #f)
+(export gdk_window_set_geometry_hints)
+
+(dv gdk_set_sm_client_id #f)
+(export gdk_set_sm_client_id)
+
+(dv gdk_window_begin_paint_rect #f)
+(export gdk_window_begin_paint_rect)
+
+(dv gdk_window_begin_paint_region #f)
+(export gdk_window_begin_paint_region)
+
+(dv gdk_window_end_paint #f)
+(export gdk_window_end_paint)
+
+(dv gdk_window_set_title #f)
+(export gdk_window_set_title)
+
+(dv gdk_window_set_role #f)
+(export gdk_window_set_role)
+
+(dv gdk_window_set_transient_for #f)
+(export gdk_window_set_transient_for)
+
+(dv gdk_window_set_background #f)
+(export gdk_window_set_background)
+
+(dv gdk_window_set_back_pixmap #f)
+(export gdk_window_set_back_pixmap)
+
+(dv gdk_window_set_cursor #f)
+(export gdk_window_set_cursor)
+
+(dv gdk_window_get_user_data #f)
+(export gdk_window_get_user_data)
+
+(dv gdk_window_get_geometry #f)
+(export gdk_window_get_geometry)
+
+(dv gdk_window_get_position #f)
+(export gdk_window_get_position)
+
+(dv gdk_window_get_origin #f)
+(export gdk_window_get_origin)
+
+(dv gdk_window_get_root_origin #f)
+(export gdk_window_get_root_origin)
+
+(dv gdk_window_get_frame_extents #f)
+(export gdk_window_get_frame_extents)
+
+(dv gdk_window_get_pointer #f)
+(export gdk_window_get_pointer)
+
+(dv gdk_window_get_parent #f)
+(export gdk_window_get_parent)
+
+(dv gdk_window_get_toplevel #f)
+(export gdk_window_get_toplevel)
+
+(dv gdk_window_get_children #f)
+(export gdk_window_get_children)
+
+(dv gdk_window_peek_children #f)
+(export gdk_window_peek_children)
+
+(dv gdk_window_get_events #f)
+(export gdk_window_get_events)
+
+(dv gdk_window_set_events #f)
+(export gdk_window_set_events)
+
+(dv gdk_window_set_icon_list #f)
+(export gdk_window_set_icon_list)
+
+(dv gdk_window_set_icon #f)
+(export gdk_window_set_icon)
+
+(dv gdk_window_set_icon_name #f)
+(export gdk_window_set_icon_name)
+
+(dv gdk_window_set_group #f)
+(export gdk_window_set_group)
+
+(dv gdk_window_set_decorations #f)
+(export gdk_window_set_decorations)
+
+(dv gdk_window_get_decorations #f)
+(export gdk_window_get_decorations)
+
+(dv gdk_window_set_functions #f)
+(export gdk_window_set_functions)
+
+(dv gdk_window_get_toplevels #f)
+(export gdk_window_get_toplevels)
+
+(dv gdk_window_iconify #f)
+(export gdk_window_iconify)
+
+(dv gdk_window_deiconify #f)
+(export gdk_window_deiconify)
+
+(dv gdk_window_stick #f)
+(export gdk_window_stick)
+
+(dv gdk_window_unstick #f)
+(export gdk_window_unstick)
+
+(dv gdk_window_maximize #f)
+(export gdk_window_maximize)
+
+(dv gdk_window_unmaximize #f)
+(export gdk_window_unmaximize)
+
+(dv gdk_window_register_dnd #f)
+(export gdk_window_register_dnd)
+
+(dv gdk_window_begin_resize_drag #f)
+(export gdk_window_begin_resize_drag)
+
+(dv gdk_window_begin_move_drag #f)
+(export gdk_window_begin_move_drag)
+
+(dv gdk_window_invalidate_rect #f)
+(export gdk_window_invalidate_rect)
+
+(dv gdk_window_invalidate_region #f)
+(export gdk_window_invalidate_region)
+
+(dv gdk_window_invalidate_maybe_recurse #f)
+(export gdk_window_invalidate_maybe_recurse)
+
+(dv gdk_window_get_update_area #f)
+(export gdk_window_get_update_area)
+
+(dv gdk_window_freeze_updates #f)
+(export gdk_window_freeze_updates)
+
+(dv gdk_window_thaw_updates #f)
+(export gdk_window_thaw_updates)
+
+(dv gdk_window_process_all_updates #f)
+(export gdk_window_process_all_updates)
+
+(dv gdk_window_process_updates #f)
+(export gdk_window_process_updates)
+
+(dv gdk_window_set_debug_updates #f)
+(export gdk_window_set_debug_updates)
+
+(dv gdk_window_constrain_size #f)
+(export gdk_window_constrain_size)
+
+(dv gdk_window_get_internal_paint_info #f)
+(export gdk_window_get_internal_paint_info)
+
+(dv gdk_set_pointer_hooks #f)
+(export gdk_set_pointer_hooks)
+
+(dv gdk_get_default_root_window #f)
+(export gdk_get_default_root_window)
+
+(dv gtk_accel_label_new #f)
+(export gtk_accel_label_new)
+
+(dv gtk_accel_label_get_accel_widget #f)
+(export gtk_accel_label_get_accel_widget)
+
+(dv gtk_accel_label_get_accel_width #f)
+(export gtk_accel_label_get_accel_width)
+
+(dv gtk_accel_label_set_accel_widget #f)
+(export gtk_accel_label_set_accel_widget)
+
+(dv gtk_accel_label_set_accel_closure #f)
+(export gtk_accel_label_set_accel_closure)
+
+(dv gtk_accel_label_refetch #f)
+(export gtk_accel_label_refetch)
+
+(dv gtk_adjustment_new #f)
+(export gtk_adjustment_new)
+
+(dv gtk_adjustment_changed #f)
+(export gtk_adjustment_changed)
+
+(dv gtk_adjustment_value_changed #f)
+(export gtk_adjustment_value_changed)
+
+(dv gtk_adjustment_clamp_page #f)
+(export gtk_adjustment_clamp_page)
+
+(dv gtk_adjustment_get_value #f)
+(export gtk_adjustment_get_value)
+
+(dv gtk_adjustment_set_value #f)
+(export gtk_adjustment_set_value)
+
+(dv gtk_alignment_new #f)
+(export gtk_alignment_new)
+
+(dv gtk_alignment_set #f)
+(export gtk_alignment_set)
+
+(dv gtk_arrow_new #f)
+(export gtk_arrow_new)
+
+(dv gtk_arrow_set #f)
+(export gtk_arrow_set)
+
+(dv gtk_aspect_frame_new #f)
+(export gtk_aspect_frame_new)
+
+(dv gtk_aspect_frame_set #f)
+(export gtk_aspect_frame_set)
+
+(dv gtk_bin_get_child #f)
+(export gtk_bin_get_child)
+
+(dv gtk_button_box_get_layout #f)
+(export gtk_button_box_get_layout)
+
+(dv gtk_button_box_set_layout #f)
+(export gtk_button_box_set_layout)
+
+(dv gtk_button_box_set_child_secondary #f)
+(export gtk_button_box_set_child_secondary)
+
+(dv gtk_box_pack_start #f)
+(export gtk_box_pack_start)
+
+(dv gtk_box_pack_end #f)
+(export gtk_box_pack_end)
+
+(dv gtk_box_pack_start_defaults #f)
+(export gtk_box_pack_start_defaults)
+
+(dv gtk_box_pack_end_defaults #f)
+(export gtk_box_pack_end_defaults)
+
+(dv gtk_box_set_homogeneous #f)
+(export gtk_box_set_homogeneous)
+
+(dv gtk_box_get_homogeneous #f)
+(export gtk_box_get_homogeneous)
+
+(dv gtk_box_set_spacing #f)
+(export gtk_box_set_spacing)
+
+(dv gtk_box_get_spacing #f)
+(export gtk_box_get_spacing)
+
+(dv gtk_box_reorder_child #f)
+(export gtk_box_reorder_child)
+
+(dv gtk_box_query_child_packing #f)
+(export gtk_box_query_child_packing)
+
+(dv gtk_box_set_child_packing #f)
+(export gtk_box_set_child_packing)
+
+)
+
+(seq
+(dv gtk_button_get_type #f)
+(export gtk_button_get_type)
+
+(dv gtk_button_new #f)
+(export gtk_button_new)
+
+(dv gtk_button_new_with_label #f)
+(export gtk_button_new_with_label)
+
+(dv gtk_button_new_from_stock #f)
+(export gtk_button_new_from_stock)
+
+(dv gtk_button_new_with_mnemonic #f)
+(export gtk_button_new_with_mnemonic)
+
+(dv gtk_button_pressed #f)
+(export gtk_button_pressed)
+
+(dv gtk_button_released #f)
+(export gtk_button_released)
+
+(dv gtk_button_clicked #f)
+(export gtk_button_clicked)
+
+(dv gtk_button_enter #f)
+(export gtk_button_enter)
+
+(dv gtk_button_leave #f)
+(export gtk_button_leave)
+
+(dv gtk_button_set_relief #f)
+(export gtk_button_set_relief)
+
+(dv gtk_button_get_relief #f)
+(export gtk_button_get_relief)
+
+(dv gtk_button_set_label #f)
+(export gtk_button_set_label)
+
+(dv gtk_button_get_label #f)
+(export gtk_button_get_label)
+
+(dv gtk_button_set_use_underline #f)
+(export gtk_button_set_use_underline)
+
+(dv gtk_button_get_use_underline #f)
+(export gtk_button_get_use_underline)
+
+(dv gtk_button_set_use_stock #f)
+(export gtk_button_set_use_stock)
+
+(dv gtk_button_get_use_stock #f)
+(export gtk_button_get_use_stock)
+
+(dv GTK_CALENDAR_SHOW_HEADING #f)
+(export GTK_CALENDAR_SHOW_HEADING)
+
+(dv GTK_CALENDAR_SHOW_DAY_NAMES #f)
+(export GTK_CALENDAR_SHOW_DAY_NAMES)
+
+(dv GTK_CALENDAR_NO_MONTH_CHANGE #f)
+(export GTK_CALENDAR_NO_MONTH_CHANGE)
+
+(dv GTK_CALENDAR_SHOW_WEEK_NUMBERS #f)
+(export GTK_CALENDAR_SHOW_WEEK_NUMBERS)
+
+(dv GTK_CALENDAR_WEEK_START_MONDAY #f)
+(export GTK_CALENDAR_WEEK_START_MONDAY)
+
+(dv gtk_calendar_new #f)
+(export gtk_calendar_new)
+
+(dv gtk_calendar_select_month #f)
+(export gtk_calendar_select_month)
+
+(dv gtk_calendar_select_day #f)
+(export gtk_calendar_select_day)
+
+(dv gtk_calendar_mark_day #f)
+(export gtk_calendar_mark_day)
+
+(dv gtk_calendar_unmark_day #f)
+(export gtk_calendar_unmark_day)
+
+(dv gtk_calendar_clear_marks #f)
+(export gtk_calendar_clear_marks)
+
+(dv gtk_calendar_display_options #f)
+(export gtk_calendar_display_options)
+
+(dv gtk_calendar_get_date #f)
+(export gtk_calendar_get_date)
+
+(dv gtk_calendar_freeze #f)
+(export gtk_calendar_freeze)
+
+(dv gtk_calendar_thaw #f)
+(export gtk_calendar_thaw)
+
+(dv gtk_cell_renderer_text_get_type #f)
+(export gtk_cell_renderer_text_get_type)
+
+(dv gtk_cell_renderer_text_new #f)
+(export gtk_cell_renderer_text_new)
+
+(dv gtk_cell_renderer_text_set_fixed_height_from_font #f)
+(export gtk_cell_renderer_text_set_fixed_height_from_font)
+
+(dv gtk_check_button_new #f)
+(export gtk_check_button_new)
+
+(dv gtk_check_button_new_with_label #f)
+(export gtk_check_button_new_with_label)
+
+(dv gtk_check_button_new_with_mnemonic #f)
+(export gtk_check_button_new_with_mnemonic)
+
+(dv _gtk_check_button_get_props #f)
+(export _gtk_check_button_get_props)
+
+(dv gtk_check_menu_item_new #f)
+(export gtk_check_menu_item_new)
+
+(dv gtk_check_menu_item_new_with_label #f)
+(export gtk_check_menu_item_new_with_label)
+
+(dv gtk_check_menu_item_new_with_mnemonic #f)
+(export gtk_check_menu_item_new_with_mnemonic)
+
+(dv gtk_check_menu_item_set_active #f)
+(export gtk_check_menu_item_set_active)
+
+(dv gtk_check_menu_item_get_active #f)
+(export gtk_check_menu_item_get_active)
+
+(dv gtk_check_menu_item_toggled #f)
+(export gtk_check_menu_item_toggled)
+
+(dv gtk_check_menu_item_set_inconsistent #f)
+(export gtk_check_menu_item_set_inconsistent)
+
+(dv gtk_check_menu_item_get_inconsistent #f)
+(export gtk_check_menu_item_get_inconsistent)
+
+(dv GTK_CLIST_IN_DRAG #f)
+(export GTK_CLIST_IN_DRAG)
+
+(dv GTK_CLIST_ROW_HEIGHT_SET #f)
+(export GTK_CLIST_ROW_HEIGHT_SET)
+
+(dv GTK_CLIST_SHOW_TITLES #f)
+(export GTK_CLIST_SHOW_TITLES)
+
+(dv GTK_CLIST_ADD_MODE #f)
+(export GTK_CLIST_ADD_MODE)
+
+(dv GTK_CLIST_AUTO_SORT #f)
+(export GTK_CLIST_AUTO_SORT)
+
+(dv GTK_CLIST_AUTO_RESIZE_BLOCKED #f)
+(export GTK_CLIST_AUTO_RESIZE_BLOCKED)
+
+(dv GTK_CLIST_REORDERABLE #f)
+(export GTK_CLIST_REORDERABLE)
+
+(dv GTK_CLIST_USE_DRAG_ICONS #f)
+(export GTK_CLIST_USE_DRAG_ICONS)
+
+(dv GTK_CLIST_DRAW_DRAG_LINE #f)
+(export GTK_CLIST_DRAW_DRAG_LINE)
+
+(dv GTK_CLIST_DRAW_DRAG_RECT #f)
+(export GTK_CLIST_DRAW_DRAG_RECT)
+
+(dv GTK_CELL_EMPTY #f)
+(export GTK_CELL_EMPTY)
+
+(dv GTK_CELL_TEXT #f)
+(export GTK_CELL_TEXT)
+
+(dv GTK_CELL_PIXMAP #f)
+(export GTK_CELL_PIXMAP)
+
+(dv GTK_CELL_PIXTEXT #f)
+(export GTK_CELL_PIXTEXT)
+
+(dv GTK_CELL_WIDGET #f)
+(export GTK_CELL_WIDGET)
+
+(dv GTK_CLIST_DRAG_NONE #f)
+(export GTK_CLIST_DRAG_NONE)
+
+(dv GTK_CLIST_DRAG_BEFORE #f)
+(export GTK_CLIST_DRAG_BEFORE)
+
+(dv GTK_CLIST_DRAG_INTO #f)
+(export GTK_CLIST_DRAG_INTO)
+
+(dv GTK_CLIST_DRAG_AFTER #f)
+(export GTK_CLIST_DRAG_AFTER)
+
+(dv GTK_BUTTON_IGNORED #f)
+(export GTK_BUTTON_IGNORED)
+
+(dv GTK_BUTTON_SELECTS #f)
+(export GTK_BUTTON_SELECTS)
+
+(dv GTK_BUTTON_DRAGS #f)
+(export GTK_BUTTON_DRAGS)
+
+(dv GTK_BUTTON_EXPANDS #f)
+(export GTK_BUTTON_EXPANDS)
+
+(dv gtk_clist_new #f)
+(export gtk_clist_new)
+
+(dv gtk_clist_new_with_titles #f)
+(export gtk_clist_new_with_titles)
+
+(dv gtk_clist_set_hadjustment #f)
+(export gtk_clist_set_hadjustment)
+
+(dv gtk_clist_set_vadjustment #f)
+(export gtk_clist_set_vadjustment)
+
+(dv gtk_clist_get_hadjustment #f)
+(export gtk_clist_get_hadjustment)
+
+(dv gtk_clist_get_vadjustment #f)
+(export gtk_clist_get_vadjustment)
+
+(dv gtk_clist_set_shadow_type #f)
+(export gtk_clist_set_shadow_type)
+
+(dv gtk_clist_set_selection_mode #f)
+(export gtk_clist_set_selection_mode)
+
+(dv gtk_clist_set_reorderable #f)
+(export gtk_clist_set_reorderable)
+
+(dv gtk_clist_set_use_drag_icons #f)
+(export gtk_clist_set_use_drag_icons)
+
+(dv gtk_clist_set_button_actions #f)
+(export gtk_clist_set_button_actions)
+
+(dv gtk_clist_freeze #f)
+(export gtk_clist_freeze)
+
+(dv gtk_clist_thaw #f)
+(export gtk_clist_thaw)
+
+(dv gtk_clist_column_titles_show #f)
+(export gtk_clist_column_titles_show)
+
+(dv gtk_clist_column_titles_hide #f)
+(export gtk_clist_column_titles_hide)
+
+(dv gtk_clist_column_title_active #f)
+(export gtk_clist_column_title_active)
+
+(dv gtk_clist_column_title_passive #f)
+(export gtk_clist_column_title_passive)
+
+(dv gtk_clist_column_titles_active #f)
+(export gtk_clist_column_titles_active)
+
+(dv gtk_clist_column_titles_passive #f)
+(export gtk_clist_column_titles_passive)
+
+(dv gtk_clist_set_column_title #f)
+(export gtk_clist_set_column_title)
+
+(dv gtk_clist_get_column_title #f)
+(export gtk_clist_get_column_title)
+
+(dv gtk_clist_set_column_widget #f)
+(export gtk_clist_set_column_widget)
+
+(dv gtk_clist_get_column_widget #f)
+(export gtk_clist_get_column_widget)
+
+(dv gtk_clist_set_column_justification #f)
+(export gtk_clist_set_column_justification)
+
+(dv gtk_clist_set_column_visibility #f)
+(export gtk_clist_set_column_visibility)
+
+(dv gtk_clist_set_column_resizeable #f)
+(export gtk_clist_set_column_resizeable)
+
+(dv gtk_clist_set_column_auto_resize #f)
+(export gtk_clist_set_column_auto_resize)
+
+(dv gtk_clist_columns_autosize #f)
+(export gtk_clist_columns_autosize)
+
+(dv gtk_clist_optimal_column_width #f)
+(export gtk_clist_optimal_column_width)
+
+)
+
+(seq
+(dv gtk_clist_set_column_width #f)
+(export gtk_clist_set_column_width)
+
+(dv gtk_clist_set_column_min_width #f)
+(export gtk_clist_set_column_min_width)
+
+(dv gtk_clist_set_column_max_width #f)
+(export gtk_clist_set_column_max_width)
+
+(dv gtk_clist_set_row_height #f)
+(export gtk_clist_set_row_height)
+
+(dv gtk_clist_moveto #f)
+(export gtk_clist_moveto)
+
+(dv gtk_clist_row_is_visible #f)
+(export gtk_clist_row_is_visible)
+
+(dv gtk_clist_get_cell_type #f)
+(export gtk_clist_get_cell_type)
+
+(dv gtk_clist_set_text #f)
+(export gtk_clist_set_text)
+
+(dv gtk_clist_get_text #f)
+(export gtk_clist_get_text)
+
+(dv gtk_clist_set_pixmap #f)
+(export gtk_clist_set_pixmap)
+
+(dv gtk_clist_get_pixmap #f)
+(export gtk_clist_get_pixmap)
+
+(dv gtk_clist_set_pixtext #f)
+(export gtk_clist_set_pixtext)
+
+(dv gtk_clist_get_pixtext #f)
+(export gtk_clist_get_pixtext)
+
+(dv gtk_clist_set_foreground #f)
+(export gtk_clist_set_foreground)
+
+(dv gtk_clist_set_background #f)
+(export gtk_clist_set_background)
+
+(dv gtk_clist_set_cell_style #f)
+(export gtk_clist_set_cell_style)
+
+(dv gtk_clist_get_cell_style #f)
+(export gtk_clist_get_cell_style)
+
+(dv gtk_clist_set_row_style #f)
+(export gtk_clist_set_row_style)
+
+(dv gtk_clist_get_row_style #f)
+(export gtk_clist_get_row_style)
+
+(dv gtk_clist_set_shift #f)
+(export gtk_clist_set_shift)
+
+(dv gtk_clist_set_selectable #f)
+(export gtk_clist_set_selectable)
+
+(dv gtk_clist_get_selectable #f)
+(export gtk_clist_get_selectable)
+
+(dv gtk_clist_prepend #f)
+(export gtk_clist_prepend)
+
+(dv gtk_clist_append #f)
+(export gtk_clist_append)
+
+(dv gtk_clist_insert #f)
+(export gtk_clist_insert)
+
+(dv gtk_clist_remove #f)
+(export gtk_clist_remove)
+
+(dv gtk_clist_set_row_data #f)
+(export gtk_clist_set_row_data)
+
+(dv gtk_clist_set_row_data_full #f)
+(export gtk_clist_set_row_data_full)
+
+(dv gtk_clist_get_row_data #f)
+(export gtk_clist_get_row_data)
+
+(dv gtk_clist_find_row_from_data #f)
+(export gtk_clist_find_row_from_data)
+
+(dv gtk_clist_select_row #f)
+(export gtk_clist_select_row)
+
+(dv gtk_clist_unselect_row #f)
+(export gtk_clist_unselect_row)
+
+(dv gtk_clist_undo_selection #f)
+(export gtk_clist_undo_selection)
+
+(dv gtk_clist_clear #f)
+(export gtk_clist_clear)
+
+(dv gtk_clist_get_selection_info #f)
+(export gtk_clist_get_selection_info)
+
+(dv gtk_clist_select_all #f)
+(export gtk_clist_select_all)
+
+(dv gtk_clist_unselect_all #f)
+(export gtk_clist_unselect_all)
+
+(dv gtk_clist_swap_rows #f)
+(export gtk_clist_swap_rows)
+
+(dv gtk_clist_row_move #f)
+(export gtk_clist_row_move)
+
+(dv gtk_clist_set_compare_func #f)
+(export gtk_clist_set_compare_func)
+
+(dv gtk_clist_set_sort_column #f)
+(export gtk_clist_set_sort_column)
+
+(dv gtk_clist_set_sort_type #f)
+(export gtk_clist_set_sort_type)
+
+(dv gtk_clist_sort #f)
+(export gtk_clist_sort)
+
+(dv gtk_clist_set_auto_sort #f)
+(export gtk_clist_set_auto_sort)
+
+(dv gtk_color_selection_new #f)
+(export gtk_color_selection_new)
+
+(dv gtk_color_selection_get_has_opacity_control #f)
+(export gtk_color_selection_get_has_opacity_control)
+
+(dv gtk_color_selection_set_has_opacity_control #f)
+(export gtk_color_selection_set_has_opacity_control)
+
+(dv gtk_color_selection_get_has_palette #f)
+(export gtk_color_selection_get_has_palette)
+
+(dv gtk_color_selection_set_has_palette #f)
+(export gtk_color_selection_set_has_palette)
+
+(dv gtk_color_selection_set_current_color #f)
+(export gtk_color_selection_set_current_color)
+
+(dv gtk_color_selection_set_current_alpha #f)
+(export gtk_color_selection_set_current_alpha)
+
+(dv gtk_color_selection_get_current_color #f)
+(export gtk_color_selection_get_current_color)
+
+(dv gtk_color_selection_get_current_alpha #f)
+(export gtk_color_selection_get_current_alpha)
+
+(dv gtk_color_selection_set_previous_color #f)
+(export gtk_color_selection_set_previous_color)
+
+(dv gtk_color_selection_set_previous_alpha #f)
+(export gtk_color_selection_set_previous_alpha)
+
+(dv gtk_color_selection_get_previous_color #f)
+(export gtk_color_selection_get_previous_color)
+
+(dv gtk_color_selection_get_previous_alpha #f)
+(export gtk_color_selection_get_previous_alpha)
+
+(dv gtk_color_selection_is_adjusting #f)
+(export gtk_color_selection_is_adjusting)
+
+(dv gtk_color_selection_palette_from_string #f)
+(export gtk_color_selection_palette_from_string)
+
+(dv gtk_color_selection_palette_to_string #f)
+(export gtk_color_selection_palette_to_string)
+
+(dv gtk_color_selection_set_change_palette_hook #f)
+(export gtk_color_selection_set_change_palette_hook)
+
+(dv gtk_color_selection_dialog_new #f)
+(export gtk_color_selection_dialog_new)
+
+(dv gtk_combo_new #f)
+(export gtk_combo_new)
+
+(dv gtk_combo_set_value_in_list #f)
+(export gtk_combo_set_value_in_list)
+
+(dv gtk_combo_set_use_arrows #f)
+(export gtk_combo_set_use_arrows)
+
+(dv gtk_combo_set_use_arrows_always #f)
+(export gtk_combo_set_use_arrows_always)
+
+(dv gtk_combo_set_case_sensitive #f)
+(export gtk_combo_set_case_sensitive)
+
+(dv gtk_combo_set_item_string #f)
+(export gtk_combo_set_item_string)
+
+(dv gtk_combo_set_popdown_strings #f)
+(export gtk_combo_set_popdown_strings)
+
+(dv gtk_combo_disable_activate #f)
+(export gtk_combo_disable_activate)
+
+(dv gtk_container_get_type #f)
+(export gtk_container_get_type)
+
+(dv gtk_container_set_border_width #f)
+(export gtk_container_set_border_width)
+
+(dv gtk_container_get_border_width #f)
+(export gtk_container_get_border_width)
+
+(dv gtk_container_add #f)
+(export gtk_container_add)
+
+(dv gtk_container_remove #f)
+(export gtk_container_remove)
+
+(dv gtk_container_set_resize_mode #f)
+(export gtk_container_set_resize_mode)
+
+(dv gtk_container_get_resize_mode #f)
+(export gtk_container_get_resize_mode)
+
+(dv gtk_container_check_resize #f)
+(export gtk_container_check_resize)
+
+(dv gtk_container_foreach #f)
+(export gtk_container_foreach)
+
+(dv GTK_CTREE_POS_BEFORE #f)
+(export GTK_CTREE_POS_BEFORE)
+
+(dv GTK_CTREE_POS_AS_CHILD #f)
+(export GTK_CTREE_POS_AS_CHILD)
+
+(dv GTK_CTREE_POS_AFTER #f)
+(export GTK_CTREE_POS_AFTER)
+
+(dv GTK_CTREE_LINES_NONE #f)
+(export GTK_CTREE_LINES_NONE)
+
+(dv GTK_CTREE_LINES_SOLID #f)
+(export GTK_CTREE_LINES_SOLID)
+
+(dv GTK_CTREE_LINES_DOTTED #f)
+(export GTK_CTREE_LINES_DOTTED)
+
+(dv GTK_CTREE_LINES_TABBED #f)
+(export GTK_CTREE_LINES_TABBED)
+
+(dv GTK_CTREE_EXPANDER_NONE #f)
+(export GTK_CTREE_EXPANDER_NONE)
+
+(dv GTK_CTREE_EXPANDER_SQUARE #f)
+(export GTK_CTREE_EXPANDER_SQUARE)
+
+(dv GTK_CTREE_EXPANDER_TRIANGLE #f)
+(export GTK_CTREE_EXPANDER_TRIANGLE)
+
+(dv GTK_CTREE_EXPANDER_CIRCULAR #f)
+(export GTK_CTREE_EXPANDER_CIRCULAR)
+
+(dv GTK_CTREE_EXPANSION_EXPAND #f)
+(export GTK_CTREE_EXPANSION_EXPAND)
+
+(dv GTK_CTREE_EXPANSION_EXPAND_RECURSIVE #f)
+(export GTK_CTREE_EXPANSION_EXPAND_RECURSIVE)
+
+(dv GTK_CTREE_EXPANSION_COLLAPSE #f)
+(export GTK_CTREE_EXPANSION_COLLAPSE)
+
+(dv GTK_CTREE_EXPANSION_COLLAPSE_RECURSIVE #f)
+(export GTK_CTREE_EXPANSION_COLLAPSE_RECURSIVE)
+
+(dv GTK_CTREE_EXPANSION_TOGGLE #f)
+(export GTK_CTREE_EXPANSION_TOGGLE)
+
+(dv GTK_CTREE_EXPANSION_TOGGLE_RECURSIVE #f)
+(export GTK_CTREE_EXPANSION_TOGGLE_RECURSIVE)
+
+(dv gtk_ctree_new_with_titles #f)
+(export gtk_ctree_new_with_titles)
+
+(dv gtk_ctree_new #f)
+(export gtk_ctree_new)
+
+(dv gtk_ctree_insert_node #f)
+(export gtk_ctree_insert_node)
+
+(dv gtk_ctree_remove_node #f)
+(export gtk_ctree_remove_node)
+
+)
+
+(seq
+(dv gtk_ctree_insert_gnode #f)
+(export gtk_ctree_insert_gnode)
+
+(dv gtk_ctree_export_to_gnode #f)
+(export gtk_ctree_export_to_gnode)
+
+(dv gtk_ctree_post_recursive #f)
+(export gtk_ctree_post_recursive)
+
+(dv gtk_ctree_post_recursive_to_depth #f)
+(export gtk_ctree_post_recursive_to_depth)
+
+(dv gtk_ctree_pre_recursive #f)
+(export gtk_ctree_pre_recursive)
+
+(dv gtk_ctree_pre_recursive_to_depth #f)
+(export gtk_ctree_pre_recursive_to_depth)
+
+(dv gtk_ctree_is_viewable #f)
+(export gtk_ctree_is_viewable)
+
+(dv gtk_ctree_last #f)
+(export gtk_ctree_last)
+
+(dv gtk_ctree_find_node_ptr #f)
+(export gtk_ctree_find_node_ptr)
+
+(dv gtk_ctree_node_nth #f)
+(export gtk_ctree_node_nth)
+
+(dv gtk_ctree_find #f)
+(export gtk_ctree_find)
+
+(dv gtk_ctree_is_ancestor #f)
+(export gtk_ctree_is_ancestor)
+
+(dv gtk_ctree_find_by_row_data #f)
+(export gtk_ctree_find_by_row_data)
+
+(dv gtk_ctree_find_all_by_row_data #f)
+(export gtk_ctree_find_all_by_row_data)
+
+(dv gtk_ctree_find_by_row_data_custom #f)
+(export gtk_ctree_find_by_row_data_custom)
+
+(dv gtk_ctree_find_all_by_row_data_custom #f)
+(export gtk_ctree_find_all_by_row_data_custom)
+
+(dv gtk_ctree_is_hot_spot #f)
+(export gtk_ctree_is_hot_spot)
+
+(dv gtk_ctree_move #f)
+(export gtk_ctree_move)
+
+(dv gtk_ctree_expand #f)
+(export gtk_ctree_expand)
+
+(dv gtk_ctree_expand_recursive #f)
+(export gtk_ctree_expand_recursive)
+
+(dv gtk_ctree_expand_to_depth #f)
+(export gtk_ctree_expand_to_depth)
+
+(dv gtk_ctree_collapse #f)
+(export gtk_ctree_collapse)
+
+(dv gtk_ctree_collapse_recursive #f)
+(export gtk_ctree_collapse_recursive)
+
+(dv gtk_ctree_collapse_to_depth #f)
+(export gtk_ctree_collapse_to_depth)
+
+(dv gtk_ctree_toggle_expansion #f)
+(export gtk_ctree_toggle_expansion)
+
+(dv gtk_ctree_toggle_expansion_recursive #f)
+(export gtk_ctree_toggle_expansion_recursive)
+
+(dv gtk_ctree_select #f)
+(export gtk_ctree_select)
+
+(dv gtk_ctree_select_recursive #f)
+(export gtk_ctree_select_recursive)
+
+(dv gtk_ctree_unselect #f)
+(export gtk_ctree_unselect)
+
+(dv gtk_ctree_unselect_recursive #f)
+(export gtk_ctree_unselect_recursive)
+
+(dv gtk_ctree_real_select_recursive #f)
+(export gtk_ctree_real_select_recursive)
+
+(dv gtk_ctree_node_set_text #f)
+(export gtk_ctree_node_set_text)
+
+(dv gtk_ctree_node_set_pixmap #f)
+(export gtk_ctree_node_set_pixmap)
+
+(dv gtk_ctree_node_set_pixtext #f)
+(export gtk_ctree_node_set_pixtext)
+
+(dv gtk_ctree_set_node_info #f)
+(export gtk_ctree_set_node_info)
+
+(dv gtk_ctree_node_set_shift #f)
+(export gtk_ctree_node_set_shift)
+
+(dv gtk_ctree_node_set_selectable #f)
+(export gtk_ctree_node_set_selectable)
+
+(dv gtk_ctree_node_get_selectable #f)
+(export gtk_ctree_node_get_selectable)
+
+(dv gtk_ctree_node_get_cell_type #f)
+(export gtk_ctree_node_get_cell_type)
+
+(dv gtk_ctree_node_get_text #f)
+(export gtk_ctree_node_get_text)
+
+(dv gtk_ctree_node_get_pixmap #f)
+(export gtk_ctree_node_get_pixmap)
+
+(dv gtk_ctree_node_get_pixtext #f)
+(export gtk_ctree_node_get_pixtext)
+
+(dv gtk_ctree_get_node_info #f)
+(export gtk_ctree_get_node_info)
+
+(dv gtk_ctree_node_set_row_style #f)
+(export gtk_ctree_node_set_row_style)
+
+(dv gtk_ctree_node_get_row_style #f)
+(export gtk_ctree_node_get_row_style)
+
+(dv gtk_ctree_node_set_cell_style #f)
+(export gtk_ctree_node_set_cell_style)
+
+(dv gtk_ctree_node_get_cell_style #f)
+(export gtk_ctree_node_get_cell_style)
+
+(dv gtk_ctree_node_set_foreground #f)
+(export gtk_ctree_node_set_foreground)
+
+(dv gtk_ctree_node_set_background #f)
+(export gtk_ctree_node_set_background)
+
+(dv gtk_ctree_node_set_row_data #f)
+(export gtk_ctree_node_set_row_data)
+
+(dv gtk_ctree_node_set_row_data_full #f)
+(export gtk_ctree_node_set_row_data_full)
+
+(dv gtk_ctree_node_get_row_data #f)
+(export gtk_ctree_node_get_row_data)
+
+(dv gtk_ctree_node_moveto #f)
+(export gtk_ctree_node_moveto)
+
+(dv gtk_ctree_node_is_visible #f)
+(export gtk_ctree_node_is_visible)
+
+(dv gtk_ctree_set_indent #f)
+(export gtk_ctree_set_indent)
+
+(dv gtk_ctree_set_spacing #f)
+(export gtk_ctree_set_spacing)
+
+(dv gtk_ctree_set_show_stub #f)
+(export gtk_ctree_set_show_stub)
+
+(dv gtk_ctree_set_line_style #f)
+(export gtk_ctree_set_line_style)
+
+(dv gtk_ctree_set_expander_style #f)
+(export gtk_ctree_set_expander_style)
+
+(dv gtk_ctree_set_drag_compare_func #f)
+(export gtk_ctree_set_drag_compare_func)
+
+(dv gtk_ctree_sort_node #f)
+(export gtk_ctree_sort_node)
+
+(dv gtk_ctree_sort_recursive #f)
+(export gtk_ctree_sort_recursive)
+
+(dv gtk_curve_new #f)
+(export gtk_curve_new)
+
+(dv gtk_curve_reset #f)
+(export gtk_curve_reset)
+
+(dv gtk_curve_set_gamma #f)
+(export gtk_curve_set_gamma)
+
+(dv gtk_curve_set_range #f)
+(export gtk_curve_set_range)
+
+(dv gtk_curve_get_vector #f)
+(export gtk_curve_get_vector)
+
+(dv gtk_curve_set_vector #f)
+(export gtk_curve_set_vector)
+
+(dv gtk_curve_set_curve_type #f)
+(export gtk_curve_set_curve_type)
+
+(dv GTK_DIALOG_MODAL #f)
+(export GTK_DIALOG_MODAL)
+
+(dv GTK_DIALOG_DESTROY_WITH_PARENT #f)
+(export GTK_DIALOG_DESTROY_WITH_PARENT)
+
+(dv GTK_DIALOG_NO_SEPARATOR #f)
+(export GTK_DIALOG_NO_SEPARATOR)
+
+(dv GTK_RESPONSE_NONE #f)
+(export GTK_RESPONSE_NONE)
+
+(dv GTK_RESPONSE_REJECT #f)
+(export GTK_RESPONSE_REJECT)
+
+(dv GTK_RESPONSE_ACCEPT #f)
+(export GTK_RESPONSE_ACCEPT)
+
+(dv GTK_RESPONSE_DELETE_EVENT #f)
+(export GTK_RESPONSE_DELETE_EVENT)
+
+(dv GTK_RESPONSE_OK #f)
+(export GTK_RESPONSE_OK)
+
+(dv GTK_RESPONSE_CANCEL #f)
+(export GTK_RESPONSE_CANCEL)
+
+(dv GTK_RESPONSE_CLOSE #f)
+(export GTK_RESPONSE_CLOSE)
+
+(dv GTK_RESPONSE_YES #f)
+(export GTK_RESPONSE_YES)
+
+(dv GTK_RESPONSE_NO #f)
+(export GTK_RESPONSE_NO)
+
+(dv GTK_RESPONSE_APPLY #f)
+(export GTK_RESPONSE_APPLY)
+
+(dv GTK_RESPONSE_HELP #f)
+(export GTK_RESPONSE_HELP)
+
+(dv gtk_dialog_new #f)
+(export gtk_dialog_new)
+
+(dv gtk_dialog_new_with_buttons #f)
+(export gtk_dialog_new_with_buttons)
+
+(dv gtk_dialog_add_action_widget #f)
+(export gtk_dialog_add_action_widget)
+
+(dv gtk_dialog_add_button #f)
+(export gtk_dialog_add_button)
+
+(dv gtk_dialog_add_buttons #f)
+(export gtk_dialog_add_buttons)
+
+(dv gtk_dialog_set_response_sensitive #f)
+(export gtk_dialog_set_response_sensitive)
+
+(dv gtk_dialog_set_default_response #f)
+(export gtk_dialog_set_default_response)
+
+(dv gtk_dialog_set_has_separator #f)
+(export gtk_dialog_set_has_separator)
+
+(dv gtk_dialog_get_has_separator #f)
+(export gtk_dialog_get_has_separator)
+
+(dv gtk_dialog_response #f)
+(export gtk_dialog_response)
+
+(dv gtk_dialog_run #f)
+(export gtk_dialog_run)
+
+(dv gtk_drawing_area_new #f)
+(export gtk_drawing_area_new)
+
+(dv gtk_editable_select_region #f)
+(export gtk_editable_select_region)
+
+(dv gtk_editable_get_selection_bounds #f)
+(export gtk_editable_get_selection_bounds)
+
+(dv gtk_editable_insert_text #f)
+(export gtk_editable_insert_text)
+
+(dv gtk_editable_delete_text #f)
+(export gtk_editable_delete_text)
+
+(dv gtk_editable_get_chars #f)
+(export gtk_editable_get_chars)
+
+)
+
+(seq
+(dv gtk_editable_cut_clipboard #f)
+(export gtk_editable_cut_clipboard)
+
+(dv gtk_editable_copy_clipboard #f)
+(export gtk_editable_copy_clipboard)
+
+(dv gtk_editable_paste_clipboard #f)
+(export gtk_editable_paste_clipboard)
+
+(dv gtk_editable_delete_selection #f)
+(export gtk_editable_delete_selection)
+
+(dv gtk_editable_set_position #f)
+(export gtk_editable_set_position)
+
+(dv gtk_editable_get_position #f)
+(export gtk_editable_get_position)
+
+(dv gtk_editable_set_editable #f)
+(export gtk_editable_set_editable)
+
+(dv gtk_editable_get_editable #f)
+(export gtk_editable_get_editable)
+
+(dv gtk_entry_new #f)
+(export gtk_entry_new)
+
+(dv gtk_entry_set_visibility #f)
+(export gtk_entry_set_visibility)
+
+(dv gtk_entry_get_visibility #f)
+(export gtk_entry_get_visibility)
+
+(dv gtk_entry_set_invisible_char #f)
+(export gtk_entry_set_invisible_char)
+
+(dv gtk_entry_get_invisible_char #f)
+(export gtk_entry_get_invisible_char)
+
+(dv gtk_entry_set_has_frame #f)
+(export gtk_entry_set_has_frame)
+
+(dv gtk_entry_get_has_frame #f)
+(export gtk_entry_get_has_frame)
+
+(dv gtk_entry_set_max_length #f)
+(export gtk_entry_set_max_length)
+
+(dv gtk_entry_get_max_length #f)
+(export gtk_entry_get_max_length)
+
+(dv gtk_entry_set_activates_default #f)
+(export gtk_entry_set_activates_default)
+
+(dv gtk_entry_get_activates_default #f)
+(export gtk_entry_get_activates_default)
+
+(dv gtk_entry_set_width_chars #f)
+(export gtk_entry_set_width_chars)
+
+(dv gtk_entry_get_width_chars #f)
+(export gtk_entry_get_width_chars)
+
+(dv gtk_entry_set_text #f)
+(export gtk_entry_set_text)
+
+(dv gtk_entry_get_text #f)
+(export gtk_entry_get_text)
+
+(dv gtk_entry_get_layout #f)
+(export gtk_entry_get_layout)
+
+(dv gtk_entry_get_layout_offsets #f)
+(export gtk_entry_get_layout_offsets)
+
+(dv gtk_event_box_new #f)
+(export gtk_event_box_new)
+
+(dv gtk_file_selection_new #f)
+(export gtk_file_selection_new)
+
+(dv gtk_file_selection_set_filename #f)
+(export gtk_file_selection_set_filename)
+
+(dv gtk_file_selection_get_filename #f)
+(export gtk_file_selection_get_filename)
+
+(dv gtk_file_selection_complete #f)
+(export gtk_file_selection_complete)
+
+(dv gtk_file_selection_show_fileop_buttons #f)
+(export gtk_file_selection_show_fileop_buttons)
+
+(dv gtk_file_selection_hide_fileop_buttons #f)
+(export gtk_file_selection_hide_fileop_buttons)
+
+(dv gtk_fixed_new #f)
+(export gtk_fixed_new)
+
+(dv gtk_fixed_put #f)
+(export gtk_fixed_put)
+
+(dv gtk_fixed_move #f)
+(export gtk_fixed_move)
+
+(dv gtk_fixed_set_has_window #f)
+(export gtk_fixed_set_has_window)
+
+(dv gtk_fixed_get_has_window #f)
+(export gtk_fixed_get_has_window)
+
+(dv gtk_font_selection_new #f)
+(export gtk_font_selection_new)
+
+(dv gtk_font_selection_get_font_name #f)
+(export gtk_font_selection_get_font_name)
+
+(dv gtk_font_selection_set_font_name #f)
+(export gtk_font_selection_set_font_name)
+
+(dv gtk_font_selection_get_preview_text #f)
+(export gtk_font_selection_get_preview_text)
+
+(dv gtk_font_selection_set_preview_text #f)
+(export gtk_font_selection_set_preview_text)
+
+(dv gtk_font_selection_dialog_get_type #f)
+(export gtk_font_selection_dialog_get_type)
+
+(dv gtk_font_selection_dialog_new #f)
+(export gtk_font_selection_dialog_new)
+
+(dv gtk_font_selection_dialog_get_font_name #f)
+(export gtk_font_selection_dialog_get_font_name)
+
+(dv gtk_font_selection_dialog_set_font_name #f)
+(export gtk_font_selection_dialog_set_font_name)
+
+(dv gtk_font_selection_dialog_set_preview_text #f)
+(export gtk_font_selection_dialog_set_preview_text)
+
+(dv gtk_frame_new #f)
+(export gtk_frame_new)
+
+(dv gtk_frame_set_label #f)
+(export gtk_frame_set_label)
+
+(dv gtk_frame_set_label_widget #f)
+(export gtk_frame_set_label_widget)
+
+(dv gtk_frame_get_label_widget #f)
+(export gtk_frame_get_label_widget)
+
+(dv gtk_frame_set_label_align #f)
+(export gtk_frame_set_label_align)
+
+(dv gtk_frame_get_label_align #f)
+(export gtk_frame_get_label_align)
+
+(dv gtk_frame_set_shadow_type #f)
+(export gtk_frame_set_shadow_type)
+
+(dv gtk_frame_get_shadow_type #f)
+(export gtk_frame_get_shadow_type)
+
+(dv gtk_gamma_curve_new #f)
+(export gtk_gamma_curve_new)
+
+(dv gtk_handle_box_new #f)
+(export gtk_handle_box_new)
+
+(dv gtk_handle_box_set_shadow_type #f)
+(export gtk_handle_box_set_shadow_type)
+
+(dv gtk_handle_box_get_shadow_type #f)
+(export gtk_handle_box_get_shadow_type)
+
+(dv gtk_handle_box_set_handle_position #f)
+(export gtk_handle_box_set_handle_position)
+
+(dv gtk_handle_box_get_handle_position #f)
+(export gtk_handle_box_get_handle_position)
+
+(dv gtk_handle_box_set_snap_edge #f)
+(export gtk_handle_box_set_snap_edge)
+
+(dv gtk_handle_box_get_snap_edge #f)
+(export gtk_handle_box_get_snap_edge)
+
+(dv gtk_hbutton_box_new #f)
+(export gtk_hbutton_box_new)
+
+(dv gtk_hbox_new #f)
+(export gtk_hbox_new)
+
+(dv gtk_hpaned_new #f)
+(export gtk_hpaned_new)
+
+(dv gtk_hruler_new #f)
+(export gtk_hruler_new)
+
+(dv gtk_hscale_new #f)
+(export gtk_hscale_new)
+
+(dv gtk_hscale_new_with_range #f)
+(export gtk_hscale_new_with_range)
+
+(dv gtk_hscrollbar_new #f)
+(export gtk_hscrollbar_new)
+
+(dv GTK_IMAGE_EMPTY #f)
+(export GTK_IMAGE_EMPTY)
+
+(dv GTK_IMAGE_PIXMAP #f)
+(export GTK_IMAGE_PIXMAP)
+
+(dv GTK_IMAGE_IMAGE #f)
+(export GTK_IMAGE_IMAGE)
+
+(dv GTK_IMAGE_PIXBUF #f)
+(export GTK_IMAGE_PIXBUF)
+
+(dv GTK_IMAGE_STOCK #f)
+(export GTK_IMAGE_STOCK)
+
+(dv GTK_IMAGE_ICON_SET #f)
+(export GTK_IMAGE_ICON_SET)
+
+(dv GTK_IMAGE_ANIMATION #f)
+(export GTK_IMAGE_ANIMATION)
+
+(dv gtk_image_new #f)
+(export gtk_image_new)
+
+(dv gtk_image_new_from_pixmap #f)
+(export gtk_image_new_from_pixmap)
+
+(dv gtk_image_new_from_image #f)
+(export gtk_image_new_from_image)
+
+(dv gtk_image_new_from_file #f)
+(export gtk_image_new_from_file)
+
+(dv gtk_image_new_from_pixbuf #f)
+(export gtk_image_new_from_pixbuf)
+
+(dv gtk_image_new_from_stock #f)
+(export gtk_image_new_from_stock)
+
+(dv gtk_image_new_from_icon_set #f)
+(export gtk_image_new_from_icon_set)
+
+(dv gtk_image_new_from_animation #f)
+(export gtk_image_new_from_animation)
+
+(dv gtk_image_set_from_pixmap #f)
+(export gtk_image_set_from_pixmap)
+
+(dv gtk_image_set_from_image #f)
+(export gtk_image_set_from_image)
+
+(dv gtk_image_set_from_file #f)
+(export gtk_image_set_from_file)
+
+(dv gtk_image_set_from_pixbuf #f)
+(export gtk_image_set_from_pixbuf)
+
+(dv gtk_image_set_from_stock #f)
+(export gtk_image_set_from_stock)
+
+(dv gtk_image_set_from_icon_set #f)
+(export gtk_image_set_from_icon_set)
+
+(dv gtk_image_set_from_animation #f)
+(export gtk_image_set_from_animation)
+
+(dv gtk_image_get_storage_type #f)
+(export gtk_image_get_storage_type)
+
+(dv gtk_image_get_pixmap #f)
+(export gtk_image_get_pixmap)
+
+(dv gtk_image_get_image #f)
+(export gtk_image_get_image)
+
+(dv gtk_image_get_pixbuf #f)
+(export gtk_image_get_pixbuf)
+
+(dv gtk_image_get_stock #f)
+(export gtk_image_get_stock)
+
+(dv gtk_image_get_icon_set #f)
+(export gtk_image_get_icon_set)
+
+(dv gtk_image_get_animation #f)
+(export gtk_image_get_animation)
+
+(dv gtk_input_dialog_new #f)
+(export gtk_input_dialog_new)
+
+)
+
+(seq
+(dv gtk_item_select #f)
+(export gtk_item_select)
+
+(dv gtk_item_deselect #f)
+(export gtk_item_deselect)
+
+(dv gtk_item_toggle #f)
+(export gtk_item_toggle)
+
+(dv gtk_item_factory_new #f)
+(export gtk_item_factory_new)
+
+(dv gtk_item_factory_construct #f)
+(export gtk_item_factory_construct)
+
+(dv gtk_item_factory_add_foreign #f)
+(export gtk_item_factory_add_foreign)
+
+(dv gtk_item_factory_from_widget #f)
+(export gtk_item_factory_from_widget)
+
+(dv gtk_item_factory_path_from_widget #f)
+(export gtk_item_factory_path_from_widget)
+
+(dv gtk_item_factory_get_item #f)
+(export gtk_item_factory_get_item)
+
+(dv gtk_item_factory_get_widget #f)
+(export gtk_item_factory_get_widget)
+
+(dv gtk_item_factory_get_widget_by_action #f)
+(export gtk_item_factory_get_widget_by_action)
+
+(dv gtk_item_factory_get_item_by_action #f)
+(export gtk_item_factory_get_item_by_action)
+
+(dv gtk_item_factory_create_item #f)
+(export gtk_item_factory_create_item)
+
+(dv gtk_item_factory_create_items #f)
+(export gtk_item_factory_create_items)
+
+(dv gtk_item_factory_delete_item #f)
+(export gtk_item_factory_delete_item)
+
+(dv gtk_item_factory_delete_entry #f)
+(export gtk_item_factory_delete_entry)
+
+(dv gtk_item_factory_delete_entries #f)
+(export gtk_item_factory_delete_entries)
+
+(dv gtk_item_factory_popup #f)
+(export gtk_item_factory_popup)
+
+(dv gtk_item_factory_popup_with_data #f)
+(export gtk_item_factory_popup_with_data)
+
+(dv gtk_item_factory_popup_data #f)
+(export gtk_item_factory_popup_data)
+
+(dv gtk_item_factory_popup_data_from_widget #f)
+(export gtk_item_factory_popup_data_from_widget)
+
+(dv gtk_item_factory_set_translate_func #f)
+(export gtk_item_factory_set_translate_func)
+
+(dv gtk_label_new #f)
+(export gtk_label_new)
+
+(dv gtk_label_new_with_mnemonic #f)
+(export gtk_label_new_with_mnemonic)
+
+(dv gtk_label_set_text #f)
+(export gtk_label_set_text)
+
+(dv gtk_label_set_attributes #f)
+(export gtk_label_set_attributes)
+
+(dv gtk_label_get_attributes #f)
+(export gtk_label_get_attributes)
+
+(dv gtk_label_set_label #f)
+(export gtk_label_set_label)
+
+(dv gtk_label_set_markup #f)
+(export gtk_label_set_markup)
+
+(dv gtk_label_set_use_markup #f)
+(export gtk_label_set_use_markup)
+
+(dv gtk_label_get_use_markup #f)
+(export gtk_label_get_use_markup)
+
+(dv gtk_label_set_use_underline #f)
+(export gtk_label_set_use_underline)
+
+(dv gtk_label_get_use_underline #f)
+(export gtk_label_get_use_underline)
+
+(dv gtk_label_set_markup_with_mnemonic #f)
+(export gtk_label_set_markup_with_mnemonic)
+
+(dv gtk_label_get_mnemonic_keyval #f)
+(export gtk_label_get_mnemonic_keyval)
+
+(dv gtk_label_set_mnemonic_widget #f)
+(export gtk_label_set_mnemonic_widget)
+
+(dv gtk_label_get_mnemonic_widget #f)
+(export gtk_label_get_mnemonic_widget)
+
+(dv gtk_label_set_text_with_mnemonic #f)
+(export gtk_label_set_text_with_mnemonic)
+
+(dv gtk_label_set_justify #f)
+(export gtk_label_set_justify)
+
+(dv gtk_label_get_justify #f)
+(export gtk_label_get_justify)
+
+(dv gtk_label_set_pattern #f)
+(export gtk_label_set_pattern)
+
+(dv gtk_label_set_line_wrap #f)
+(export gtk_label_set_line_wrap)
+
+(dv gtk_label_get_line_wrap #f)
+(export gtk_label_get_line_wrap)
+
+(dv gtk_label_set_selectable #f)
+(export gtk_label_set_selectable)
+
+(dv gtk_label_get_selectable #f)
+(export gtk_label_get_selectable)
+
+(dv gtk_label_select_region #f)
+(export gtk_label_select_region)
+
+(dv gtk_label_get_selection_bounds #f)
+(export gtk_label_get_selection_bounds)
+
+(dv gtk_label_get_layout #f)
+(export gtk_label_get_layout)
+
+(dv gtk_label_get_layout_offsets #f)
+(export gtk_label_get_layout_offsets)
+
+(dv gtk_layout_new #f)
+(export gtk_layout_new)
+
+(dv gtk_layout_put #f)
+(export gtk_layout_put)
+
+(dv gtk_layout_move #f)
+(export gtk_layout_move)
+
+(dv gtk_layout_set_size #f)
+(export gtk_layout_set_size)
+
+(dv gtk_layout_get_size #f)
+(export gtk_layout_get_size)
+
+(dv gtk_layout_get_hadjustment #f)
+(export gtk_layout_get_hadjustment)
+
+(dv gtk_layout_get_vadjustment #f)
+(export gtk_layout_get_vadjustment)
+
+(dv gtk_layout_set_hadjustment #f)
+(export gtk_layout_set_hadjustment)
+
+(dv gtk_layout_set_vadjustment #f)
+(export gtk_layout_set_vadjustment)
+
+(dv gtk_list_new #f)
+(export gtk_list_new)
+
+(dv gtk_list_insert_items #f)
+(export gtk_list_insert_items)
+
+(dv gtk_list_append_items #f)
+(export gtk_list_append_items)
+
+(dv gtk_list_prepend_items #f)
+(export gtk_list_prepend_items)
+
+(dv gtk_list_remove_items #f)
+(export gtk_list_remove_items)
+
+(dv gtk_list_remove_items_no_unref #f)
+(export gtk_list_remove_items_no_unref)
+
+(dv gtk_list_clear_items #f)
+(export gtk_list_clear_items)
+
+(dv gtk_list_select_item #f)
+(export gtk_list_select_item)
+
+(dv gtk_list_unselect_item #f)
+(export gtk_list_unselect_item)
+
+(dv gtk_list_select_child #f)
+(export gtk_list_select_child)
+
+(dv gtk_list_unselect_child #f)
+(export gtk_list_unselect_child)
+
+(dv gtk_list_child_position #f)
+(export gtk_list_child_position)
+
+(dv gtk_list_set_selection_mode #f)
+(export gtk_list_set_selection_mode)
+
+(dv gtk_list_extend_selection #f)
+(export gtk_list_extend_selection)
+
+(dv gtk_list_start_selection #f)
+(export gtk_list_start_selection)
+
+(dv gtk_list_end_selection #f)
+(export gtk_list_end_selection)
+
+(dv gtk_list_select_all #f)
+(export gtk_list_select_all)
+
+(dv gtk_list_unselect_all #f)
+(export gtk_list_unselect_all)
+
+(dv gtk_list_scroll_horizontal #f)
+(export gtk_list_scroll_horizontal)
+
+(dv gtk_list_scroll_vertical #f)
+(export gtk_list_scroll_vertical)
+
+(dv gtk_list_toggle_add_mode #f)
+(export gtk_list_toggle_add_mode)
+
+(dv gtk_list_toggle_focus_row #f)
+(export gtk_list_toggle_focus_row)
+
+(dv gtk_list_toggle_row #f)
+(export gtk_list_toggle_row)
+
+(dv gtk_list_undo_selection #f)
+(export gtk_list_undo_selection)
+
+(dv gtk_list_end_drag_selection #f)
+(export gtk_list_end_drag_selection)
+
+(dv gtk_list_item_new #f)
+(export gtk_list_item_new)
+
+(dv gtk_list_item_new_with_label #f)
+(export gtk_list_item_new_with_label)
+
+(dv gtk_list_item_select #f)
+(export gtk_list_item_select)
+
+(dv gtk_list_item_deselect #f)
+(export gtk_list_item_deselect)
+
+(dv gtk_init #f)
+(export gtk_init)
+
+(dv gtk_init_easy #f)
+(export gtk_init_easy)
+
+(dv gtk_main #f)
+(export gtk_main)
+
+(dv gtk_main_level #f)
+(export gtk_main_level)
+
+(dv gtk_main_quit #f)
+(export gtk_main_quit)
+
+(dv gtk_main_iteration #f)
+(export gtk_main_iteration)
+
+(dv gtk_main_iteration_do #f)
+(export gtk_main_iteration_do)
+
+(dv gtk_grab_add #f)
+(export gtk_grab_add)
+
+(dv gtk_grab_get_current #f)
+(export gtk_grab_get_current)
+
+(dv gtk_grab_remove #f)
+(export gtk_grab_remove)
+
+(dv gtk_init_add #f)
+(export gtk_init_add)
+
+(dv gtk_quit_add_destroy #f)
+(export gtk_quit_add_destroy)
+
+(dv gtk_quit_add #f)
+(export gtk_quit_add)
+
+)
+
+(seq
+(dv gtk_quit_add_full #f)
+(export gtk_quit_add_full)
+
+(dv gtk_quit_remove #f)
+(export gtk_quit_remove)
+
+(dv gtk_quit_remove_by_data #f)
+(export gtk_quit_remove_by_data)
+
+(dv gtk_timeout_add #f)
+(export gtk_timeout_add)
+
+(dv gtk_timeout_add_full #f)
+(export gtk_timeout_add_full)
+
+(dv gtk_timeout_remove #f)
+(export gtk_timeout_remove)
+
+(dv gtk_idle_add #f)
+(export gtk_idle_add)
+
+(dv gtk_idle_add_priority #f)
+(export gtk_idle_add_priority)
+
+(dv gtk_idle_add_full #f)
+(export gtk_idle_add_full)
+
+(dv gtk_idle_remove #f)
+(export gtk_idle_remove)
+
+(dv gtk_idle_remove_by_data #f)
+(export gtk_idle_remove_by_data)
+
+(dv gtk_input_add_full #f)
+(export gtk_input_add_full)
+
+(dv gtk_input_remove #f)
+(export gtk_input_remove)
+
+(dv gtk_get_current_event #f)
+(export gtk_get_current_event)
+
+(dv gtk_get_current_event_time #f)
+(export gtk_get_current_event_time)
+
+(dv gtk_get_current_event_state #f)
+(export gtk_get_current_event_state)
+
+(dv gtk_get_event_widget #f)
+(export gtk_get_event_widget)
+
+(dv gtk_menu_new #f)
+(export gtk_menu_new)
+
+(dv gtk_menu_popup #f)
+(export gtk_menu_popup)
+
+(dv gtk_menu_reposition #f)
+(export gtk_menu_reposition)
+
+(dv gtk_menu_popdown #f)
+(export gtk_menu_popdown)
+
+(dv gtk_menu_get_active #f)
+(export gtk_menu_get_active)
+
+(dv gtk_menu_set_active #f)
+(export gtk_menu_set_active)
+
+(dv gtk_menu_set_accel_group #f)
+(export gtk_menu_set_accel_group)
+
+(dv gtk_menu_get_accel_group #f)
+(export gtk_menu_get_accel_group)
+
+(dv gtk_menu_set_accel_path #f)
+(export gtk_menu_set_accel_path)
+
+(dv gtk_menu_attach_to_widget #f)
+(export gtk_menu_attach_to_widget)
+
+(dv gtk_menu_detach #f)
+(export gtk_menu_detach)
+
+(dv gtk_menu_get_attach_widget #f)
+(export gtk_menu_get_attach_widget)
+
+(dv gtk_menu_set_tearoff_state #f)
+(export gtk_menu_set_tearoff_state)
+
+(dv gtk_menu_get_tearoff_state #f)
+(export gtk_menu_get_tearoff_state)
+
+(dv gtk_menu_set_title #f)
+(export gtk_menu_set_title)
+
+(dv gtk_menu_reorder_child #f)
+(export gtk_menu_reorder_child)
+
+(dv gtk_menu_bar_new #f)
+(export gtk_menu_bar_new)
+
+(dv gtk_menu_item_new #f)
+(export gtk_menu_item_new)
+
+(dv gtk_menu_item_new_with_label #f)
+(export gtk_menu_item_new_with_label)
+
+(dv gtk_menu_item_new_with_mnemonic #f)
+(export gtk_menu_item_new_with_mnemonic)
+
+(dv gtk_menu_item_set_submenu #f)
+(export gtk_menu_item_set_submenu)
+
+(dv gtk_menu_item_get_submenu #f)
+(export gtk_menu_item_get_submenu)
+
+(dv gtk_menu_item_remove_submenu #f)
+(export gtk_menu_item_remove_submenu)
+
+(dv _gtk_menu_item_set_placement #f)
+(export _gtk_menu_item_set_placement)
+
+(dv gtk_menu_item_select #f)
+(export gtk_menu_item_select)
+
+(dv gtk_menu_item_deselect #f)
+(export gtk_menu_item_deselect)
+
+(dv gtk_menu_item_activate #f)
+(export gtk_menu_item_activate)
+
+(dv gtk_menu_item_toggle_size_request #f)
+(export gtk_menu_item_toggle_size_request)
+
+(dv gtk_menu_item_toggle_size_allocate #f)
+(export gtk_menu_item_toggle_size_allocate)
+
+(dv gtk_menu_item_set_right_justified #f)
+(export gtk_menu_item_set_right_justified)
+
+(dv gtk_menu_item_get_right_justified #f)
+(export gtk_menu_item_get_right_justified)
+
+(dv gtk_menu_item_set_accel_path #f)
+(export gtk_menu_item_set_accel_path)
+
+(dv gtk_menu_shell_append #f)
+(export gtk_menu_shell_append)
+
+(dv gtk_menu_shell_prepend #f)
+(export gtk_menu_shell_prepend)
+
+(dv gtk_menu_shell_insert #f)
+(export gtk_menu_shell_insert)
+
+(dv gtk_menu_shell_deactivate #f)
+(export gtk_menu_shell_deactivate)
+
+(dv gtk_menu_shell_select_item #f)
+(export gtk_menu_shell_select_item)
+
+(dv gtk_menu_shell_deselect #f)
+(export gtk_menu_shell_deselect)
+
+(dv gtk_menu_shell_activate_item #f)
+(export gtk_menu_shell_activate_item)
+
+(dv gtk_misc_get_type #f)
+(export gtk_misc_get_type)
+
+(dv gtk_misc_set_alignment #f)
+(export gtk_misc_set_alignment)
+
+(dv gtk_misc_get_alignment #f)
+(export gtk_misc_get_alignment)
+
+(dv gtk_misc_set_padding #f)
+(export gtk_misc_set_padding)
+
+(dv gtk_misc_get_padding #f)
+(export gtk_misc_get_padding)
+
+(dv gtk_notebook_new #f)
+(export gtk_notebook_new)
+
+(dv gtk_notebook_append_page #f)
+(export gtk_notebook_append_page)
+
+(dv gtk_notebook_append_page_menu #f)
+(export gtk_notebook_append_page_menu)
+
+(dv gtk_notebook_prepend_page #f)
+(export gtk_notebook_prepend_page)
+
+(dv gtk_notebook_prepend_page_menu #f)
+(export gtk_notebook_prepend_page_menu)
+
+(dv gtk_notebook_insert_page #f)
+(export gtk_notebook_insert_page)
+
+(dv gtk_notebook_insert_page_menu #f)
+(export gtk_notebook_insert_page_menu)
+
+(dv gtk_notebook_remove_page #f)
+(export gtk_notebook_remove_page)
+
+(dv gtk_notebook_get_current_page #f)
+(export gtk_notebook_get_current_page)
+
+(dv gtk_notebook_get_nth_page #f)
+(export gtk_notebook_get_nth_page)
+
+(dv gtk_notebook_page_num #f)
+(export gtk_notebook_page_num)
+
+(dv gtk_notebook_set_current_page #f)
+(export gtk_notebook_set_current_page)
+
+(dv gtk_notebook_next_page #f)
+(export gtk_notebook_next_page)
+
+(dv gtk_notebook_prev_page #f)
+(export gtk_notebook_prev_page)
+
+(dv gtk_notebook_set_show_border #f)
+(export gtk_notebook_set_show_border)
+
+(dv gtk_notebook_get_show_border #f)
+(export gtk_notebook_get_show_border)
+
+(dv gtk_notebook_set_show_tabs #f)
+(export gtk_notebook_set_show_tabs)
+
+(dv gtk_notebook_get_show_tabs #f)
+(export gtk_notebook_get_show_tabs)
+
+(dv gtk_notebook_set_tab_pos #f)
+(export gtk_notebook_set_tab_pos)
+
+(dv gtk_notebook_get_tab_pos #f)
+(export gtk_notebook_get_tab_pos)
+
+(dv gtk_notebook_set_homogeneous_tabs #f)
+(export gtk_notebook_set_homogeneous_tabs)
+
+(dv gtk_notebook_set_tab_border #f)
+(export gtk_notebook_set_tab_border)
+
+(dv gtk_notebook_set_tab_hborder #f)
+(export gtk_notebook_set_tab_hborder)
+
+(dv gtk_notebook_set_tab_vborder #f)
+(export gtk_notebook_set_tab_vborder)
+
+(dv gtk_notebook_set_scrollable #f)
+(export gtk_notebook_set_scrollable)
+
+(dv gtk_notebook_get_scrollable #f)
+(export gtk_notebook_get_scrollable)
+
+(dv gtk_notebook_popup_enable #f)
+(export gtk_notebook_popup_enable)
+
+(dv gtk_notebook_popup_disable #f)
+(export gtk_notebook_popup_disable)
+
+(dv gtk_notebook_get_tab_label #f)
+(export gtk_notebook_get_tab_label)
+
+(dv gtk_notebook_set_tab_label #f)
+(export gtk_notebook_set_tab_label)
+
+(dv gtk_notebook_set_tab_label_text #f)
+(export gtk_notebook_set_tab_label_text)
+
+(dv gtk_notebook_set_menu_label #f)
+(export gtk_notebook_set_menu_label)
+
+(dv gtk_notebook_set_menu_label_text #f)
+(export gtk_notebook_set_menu_label_text)
+
+(dv gtk_notebook_set_tab_label_packing #f)
+(export gtk_notebook_set_tab_label_packing)
+
+(dv gtk_notebook_reorder_child #f)
+(export gtk_notebook_reorder_child)
+
+(dv gtk_option_menu_new #f)
+(export gtk_option_menu_new)
+
+(dv gtk_option_menu_get_menu #f)
+(export gtk_option_menu_get_menu)
+
+(dv gtk_option_menu_set_menu #f)
+(export gtk_option_menu_set_menu)
+
+(dv gtk_option_menu_remove_menu #f)
+(export gtk_option_menu_remove_menu)
+
+)
+
+(seq
+(dv gtk_option_menu_get_history #f)
+(export gtk_option_menu_get_history)
+
+(dv gtk_option_menu_set_history #f)
+(export gtk_option_menu_set_history)
+
+(dv gtk_paned_add1 #f)
+(export gtk_paned_add1)
+
+(dv gtk_paned_add2 #f)
+(export gtk_paned_add2)
+
+(dv gtk_paned_pack1 #f)
+(export gtk_paned_pack1)
+
+(dv gtk_paned_pack2 #f)
+(export gtk_paned_pack2)
+
+(dv gtk_paned_get_position #f)
+(export gtk_paned_get_position)
+
+(dv gtk_paned_set_position #f)
+(export gtk_paned_set_position)
+
+(dv gtk_pixmap_new #f)
+(export gtk_pixmap_new)
+
+(dv gtk_pixmap_set #f)
+(export gtk_pixmap_set)
+
+(dv gtk_pixmap_get #f)
+(export gtk_pixmap_get)
+
+(dv gtk_pixmap_set_build_insensitive #f)
+(export gtk_pixmap_set_build_insensitive)
+
+(dv gtk_plug_construct #f)
+(export gtk_plug_construct)
+
+(dv gtk_plug_new #f)
+(export gtk_plug_new)
+
+(dv gtk_plug_get_id #f)
+(export gtk_plug_get_id)
+
+(dv gtk_preview_uninit #f)
+(export gtk_preview_uninit)
+
+(dv gtk_preview_new #f)
+(export gtk_preview_new)
+
+(dv gtk_preview_size #f)
+(export gtk_preview_size)
+
+(dv gtk_preview_put #f)
+(export gtk_preview_put)
+
+(dv gtk_preview_draw_row #f)
+(export gtk_preview_draw_row)
+
+(dv gtk_preview_set_expand #f)
+(export gtk_preview_set_expand)
+
+(dv gtk_preview_set_gamma #f)
+(export gtk_preview_set_gamma)
+
+(dv gtk_preview_set_color_cube #f)
+(export gtk_preview_set_color_cube)
+
+(dv gtk_preview_set_install_cmap #f)
+(export gtk_preview_set_install_cmap)
+
+(dv gtk_preview_set_reserved #f)
+(export gtk_preview_set_reserved)
+
+(dv gtk_preview_set_dither #f)
+(export gtk_preview_set_dither)
+
+(dv gtk_progress_set_show_text #f)
+(export gtk_progress_set_show_text)
+
+(dv gtk_progress_set_text_alignment #f)
+(export gtk_progress_set_text_alignment)
+
+(dv gtk_progress_set_format_string #f)
+(export gtk_progress_set_format_string)
+
+(dv gtk_progress_set_adjustment #f)
+(export gtk_progress_set_adjustment)
+
+(dv gtk_progress_configure #f)
+(export gtk_progress_configure)
+
+(dv gtk_progress_set_percentage #f)
+(export gtk_progress_set_percentage)
+
+(dv gtk_progress_set_value #f)
+(export gtk_progress_set_value)
+
+(dv gtk_progress_get_value #f)
+(export gtk_progress_get_value)
+
+(dv gtk_progress_set_activity_mode #f)
+(export gtk_progress_set_activity_mode)
+
+(dv gtk_progress_get_current_text #f)
+(export gtk_progress_get_current_text)
+
+(dv gtk_progress_get_text_from_value #f)
+(export gtk_progress_get_text_from_value)
+
+(dv gtk_progress_get_current_percentage #f)
+(export gtk_progress_get_current_percentage)
+
+(dv gtk_progress_get_percentage_from_value #f)
+(export gtk_progress_get_percentage_from_value)
+
+(dv GTK_PROGRESS_CONTINUOUS #f)
+(export GTK_PROGRESS_CONTINUOUS)
+
+(dv GTK_PROGRESS_DISCRETE #f)
+(export GTK_PROGRESS_DISCRETE)
+
+(dv GTK_PROGRESS_LEFT_TO_RIGHT #f)
+(export GTK_PROGRESS_LEFT_TO_RIGHT)
+
+(dv GTK_PROGRESS_RIGHT_TO_LEFT #f)
+(export GTK_PROGRESS_RIGHT_TO_LEFT)
+
+(dv GTK_PROGRESS_BOTTOM_TO_TOP #f)
+(export GTK_PROGRESS_BOTTOM_TO_TOP)
+
+(dv GTK_PROGRESS_TOP_TO_BOTTOM #f)
+(export GTK_PROGRESS_TOP_TO_BOTTOM)
+
+(dv gtk_progress_bar_new #f)
+(export gtk_progress_bar_new)
+
+(dv gtk_progress_bar_pulse #f)
+(export gtk_progress_bar_pulse)
+
+(dv gtk_progress_bar_set_text #f)
+(export gtk_progress_bar_set_text)
+
+(dv gtk_progress_bar_set_fraction #f)
+(export gtk_progress_bar_set_fraction)
+
+(dv gtk_progress_bar_set_pulse_step #f)
+(export gtk_progress_bar_set_pulse_step)
+
+(dv gtk_progress_bar_set_orientation #f)
+(export gtk_progress_bar_set_orientation)
+
+(dv gtk_progress_bar_get_fraction #f)
+(export gtk_progress_bar_get_fraction)
+
+(dv gtk_progress_bar_get_pulse_step #f)
+(export gtk_progress_bar_get_pulse_step)
+
+(dv gtk_progress_bar_get_orientation #f)
+(export gtk_progress_bar_get_orientation)
+
+(dv gtk_radio_button_new #f)
+(export gtk_radio_button_new)
+
+(dv gtk_radio_button_new_from_widget #f)
+(export gtk_radio_button_new_from_widget)
+
+(dv gtk_radio_button_new_with_label #f)
+(export gtk_radio_button_new_with_label)
+
+(dv gtk_radio_button_new_with_label_from_widget #f)
+(export gtk_radio_button_new_with_label_from_widget)
+
+(dv gtk_radio_button_new_with_mnemonic #f)
+(export gtk_radio_button_new_with_mnemonic)
+
+(dv gtk_radio_button_new_with_mnemonic_from_widget #f)
+(export gtk_radio_button_new_with_mnemonic_from_widget)
+
+(dv gtk_radio_button_get_group #f)
+(export gtk_radio_button_get_group)
+
+(dv gtk_radio_button_set_group #f)
+(export gtk_radio_button_set_group)
+
+(dv gtk_radio_menu_item_new #f)
+(export gtk_radio_menu_item_new)
+
+(dv gtk_radio_menu_item_new_with_label #f)
+(export gtk_radio_menu_item_new_with_label)
+
+(dv gtk_radio_menu_item_new_with_mnemonic #f)
+(export gtk_radio_menu_item_new_with_mnemonic)
+
+(dv gtk_radio_menu_item_get_group #f)
+(export gtk_radio_menu_item_get_group)
+
+(dv gtk_radio_menu_item_set_group #f)
+(export gtk_radio_menu_item_set_group)
+
+(dv gtk_range_set_update_policy #f)
+(export gtk_range_set_update_policy)
+
+(dv gtk_range_get_update_policy #f)
+(export gtk_range_get_update_policy)
+
+(dv gtk_range_set_adjustment #f)
+(export gtk_range_set_adjustment)
+
+(dv gtk_range_get_adjustment #f)
+(export gtk_range_get_adjustment)
+
+(dv gtk_range_set_inverted #f)
+(export gtk_range_set_inverted)
+
+(dv gtk_range_get_inverted #f)
+(export gtk_range_get_inverted)
+
+(dv gtk_range_set_increments #f)
+(export gtk_range_set_increments)
+
+(dv gtk_range_set_range #f)
+(export gtk_range_set_range)
+
+(dv gtk_range_set_value #f)
+(export gtk_range_set_value)
+
+(dv gtk_range_get_value #f)
+(export gtk_range_get_value)
+
+(dv gtk_ruler_set_metric #f)
+(export gtk_ruler_set_metric)
+
+(dv gtk_ruler_set_range #f)
+(export gtk_ruler_set_range)
+
+(dv gtk_ruler_draw_ticks #f)
+(export gtk_ruler_draw_ticks)
+
+(dv gtk_ruler_draw_pos #f)
+(export gtk_ruler_draw_pos)
+
+(dv gtk_ruler_get_metric #f)
+(export gtk_ruler_get_metric)
+
+(dv gtk_ruler_get_range #f)
+(export gtk_ruler_get_range)
+
+(dv gtk_scale_set_digits #f)
+(export gtk_scale_set_digits)
+
+(dv gtk_scale_get_digits #f)
+(export gtk_scale_get_digits)
+
+(dv gtk_scale_set_draw_value #f)
+(export gtk_scale_set_draw_value)
+
+(dv gtk_scale_get_draw_value #f)
+(export gtk_scale_get_draw_value)
+
+(dv gtk_scale_set_value_pos #f)
+(export gtk_scale_set_value_pos)
+
+(dv gtk_scale_get_value_pos #f)
+(export gtk_scale_get_value_pos)
+
+(dv _gtk_scale_get_value_size #f)
+(export _gtk_scale_get_value_size)
+
+(dv _gtk_scale_format_value #f)
+(export _gtk_scale_format_value)
+
+(dv gtk_scrolled_window_new #f)
+(export gtk_scrolled_window_new)
+
+(dv gtk_scrolled_window_set_hadjustment #f)
+(export gtk_scrolled_window_set_hadjustment)
+
+(dv gtk_scrolled_window_set_vadjustment #f)
+(export gtk_scrolled_window_set_vadjustment)
+
+(dv gtk_scrolled_window_get_hadjustment #f)
+(export gtk_scrolled_window_get_hadjustment)
+
+(dv gtk_scrolled_window_get_vadjustment #f)
+(export gtk_scrolled_window_get_vadjustment)
+
+(dv gtk_scrolled_window_set_policy #f)
+(export gtk_scrolled_window_set_policy)
+
+(dv gtk_scrolled_window_get_policy #f)
+(export gtk_scrolled_window_get_policy)
+
+(dv gtk_scrolled_window_set_placement #f)
+(export gtk_scrolled_window_set_placement)
+
+(dv gtk_scrolled_window_get_placement #f)
+(export gtk_scrolled_window_get_placement)
+
+)
+
+(seq
+(dv gtk_scrolled_window_set_shadow_type #f)
+(export gtk_scrolled_window_set_shadow_type)
+
+(dv gtk_scrolled_window_get_shadow_type #f)
+(export gtk_scrolled_window_get_shadow_type)
+
+(dv gtk_scrolled_window_add_with_viewport #f)
+(export gtk_scrolled_window_add_with_viewport)
+
+(dv gtk_socket_new #f)
+(export gtk_socket_new)
+
+(dv gtk_socket_add_id #f)
+(export gtk_socket_add_id)
+
+(dv gtk_socket_get_id #f)
+(export gtk_socket_get_id)
+
+(dv GTK_UPDATE_ALWAYS #f)
+(export GTK_UPDATE_ALWAYS)
+
+(dv GTK_UPDATE_IF_VALID #f)
+(export GTK_UPDATE_IF_VALID)
+
+(dv GTK_SPIN_STEP_FORWARD #f)
+(export GTK_SPIN_STEP_FORWARD)
+
+(dv GTK_SPIN_STEP_BACKWARD #f)
+(export GTK_SPIN_STEP_BACKWARD)
+
+(dv GTK_SPIN_PAGE_FORWARD #f)
+(export GTK_SPIN_PAGE_FORWARD)
+
+(dv GTK_SPIN_PAGE_BACKWARD #f)
+(export GTK_SPIN_PAGE_BACKWARD)
+
+(dv GTK_SPIN_HOME #f)
+(export GTK_SPIN_HOME)
+
+(dv GTK_SPIN_END #f)
+(export GTK_SPIN_END)
+
+(dv GTK_SPIN_USER_DEFINED #f)
+(export GTK_SPIN_USER_DEFINED)
+
+(dv gtk_spin_button_configure #f)
+(export gtk_spin_button_configure)
+
+(dv gtk_spin_button_new #f)
+(export gtk_spin_button_new)
+
+(dv gtk_spin_button_new_with_range #f)
+(export gtk_spin_button_new_with_range)
+
+(dv gtk_spin_button_set_adjustment #f)
+(export gtk_spin_button_set_adjustment)
+
+(dv gtk_spin_button_get_adjustment #f)
+(export gtk_spin_button_get_adjustment)
+
+(dv gtk_spin_button_set_digits #f)
+(export gtk_spin_button_set_digits)
+
+(dv gtk_spin_button_get_digits #f)
+(export gtk_spin_button_get_digits)
+
+(dv gtk_spin_button_set_increments #f)
+(export gtk_spin_button_set_increments)
+
+(dv gtk_spin_button_get_increments #f)
+(export gtk_spin_button_get_increments)
+
+(dv gtk_spin_button_set_range #f)
+(export gtk_spin_button_set_range)
+
+(dv gtk_spin_button_get_range #f)
+(export gtk_spin_button_get_range)
+
+(dv gtk_spin_button_get_value #f)
+(export gtk_spin_button_get_value)
+
+(dv gtk_spin_button_get_value_as_int #f)
+(export gtk_spin_button_get_value_as_int)
+
+(dv gtk_spin_button_set_value #f)
+(export gtk_spin_button_set_value)
+
+(dv gtk_spin_button_set_update_policy #f)
+(export gtk_spin_button_set_update_policy)
+
+(dv gtk_spin_button_get_update_policy #f)
+(export gtk_spin_button_get_update_policy)
+
+(dv gtk_spin_button_set_numeric #f)
+(export gtk_spin_button_set_numeric)
+
+(dv gtk_spin_button_get_numeric #f)
+(export gtk_spin_button_get_numeric)
+
+(dv gtk_spin_button_spin #f)
+(export gtk_spin_button_spin)
+
+(dv gtk_spin_button_set_wrap #f)
+(export gtk_spin_button_set_wrap)
+
+(dv gtk_spin_button_get_wrap #f)
+(export gtk_spin_button_get_wrap)
+
+(dv gtk_spin_button_set_snap_to_ticks #f)
+(export gtk_spin_button_set_snap_to_ticks)
+
+(dv gtk_spin_button_get_snap_to_ticks #f)
+(export gtk_spin_button_get_snap_to_ticks)
+
+(dv gtk_spin_button_update #f)
+(export gtk_spin_button_update)
+
+(dv gtk_statusbar_new #f)
+(export gtk_statusbar_new)
+
+(dv gtk_statusbar_get_context_id #f)
+(export gtk_statusbar_get_context_id)
+
+(dv gtk_statusbar_push #f)
+(export gtk_statusbar_push)
+
+(dv gtk_statusbar_pop #f)
+(export gtk_statusbar_pop)
+
+(dv gtk_statusbar_remove #f)
+(export gtk_statusbar_remove)
+
+(dv gtk_statusbar_set_has_resize_grip #f)
+(export gtk_statusbar_set_has_resize_grip)
+
+(dv gtk_statusbar_get_has_resize_grip #f)
+(export gtk_statusbar_get_has_resize_grip)
+
+(dv _GtkStyle_parent_instance_set #f)
+(export _GtkStyle_parent_instance_set)
+
+(dv _GtkStyle_parent_instance_get #f)
+(export _GtkStyle_parent_instance_get)
+
+(dv _GtkStyle_fg_get #f)
+(export _GtkStyle_fg_get)
+
+(dv _GtkStyle_bg_get #f)
+(export _GtkStyle_bg_get)
+
+(dv _GtkStyle_light_get #f)
+(export _GtkStyle_light_get)
+
+(dv _GtkStyle_dark_get #f)
+(export _GtkStyle_dark_get)
+
+(dv _GtkStyle_mid_get #f)
+(export _GtkStyle_mid_get)
+
+(dv _GtkStyle_text_get #f)
+(export _GtkStyle_text_get)
+
+(dv _GtkStyle_base_get #f)
+(export _GtkStyle_base_get)
+
+(dv _GtkStyle_text_aa_get #f)
+(export _GtkStyle_text_aa_get)
+
+(dv _GtkStyle_black_set #f)
+(export _GtkStyle_black_set)
+
+(dv _GtkStyle_black_get #f)
+(export _GtkStyle_black_get)
+
+(dv _GtkStyle_white_set #f)
+(export _GtkStyle_white_set)
+
+(dv _GtkStyle_white_get #f)
+(export _GtkStyle_white_get)
+
+(dv _GtkStyle_font_desc_set #f)
+(export _GtkStyle_font_desc_set)
+
+(dv _GtkStyle_font_desc_get #f)
+(export _GtkStyle_font_desc_get)
+
+(dv _GtkStyle_xthickness_set #f)
+(export _GtkStyle_xthickness_set)
+
+(dv _GtkStyle_xthickness_get #f)
+(export _GtkStyle_xthickness_get)
+
+(dv _GtkStyle_ythickness_set #f)
+(export _GtkStyle_ythickness_set)
+
+(dv _GtkStyle_ythickness_get #f)
+(export _GtkStyle_ythickness_get)
+
+(dv _GtkStyle_fg_gc_get #f)
+(export _GtkStyle_fg_gc_get)
+
+(dv _GtkStyle_bg_gc_get #f)
+(export _GtkStyle_bg_gc_get)
+
+(dv _GtkStyle_light_gc_get #f)
+(export _GtkStyle_light_gc_get)
+
+(dv _GtkStyle_dark_gc_get #f)
+(export _GtkStyle_dark_gc_get)
+
+(dv _GtkStyle_mid_gc_get #f)
+(export _GtkStyle_mid_gc_get)
+
+(dv _GtkStyle_text_gc_get #f)
+(export _GtkStyle_text_gc_get)
+
+(dv _GtkStyle_base_gc_get #f)
+(export _GtkStyle_base_gc_get)
+
+(dv _GtkStyle_text_aa_gc_get #f)
+(export _GtkStyle_text_aa_gc_get)
+
+(dv _GtkStyle_black_gc_set #f)
+(export _GtkStyle_black_gc_set)
+
+(dv _GtkStyle_black_gc_get #f)
+(export _GtkStyle_black_gc_get)
+
+(dv _GtkStyle_white_gc_set #f)
+(export _GtkStyle_white_gc_set)
+
+(dv _GtkStyle_white_gc_get #f)
+(export _GtkStyle_white_gc_get)
+
+(dv _GtkStyle_bg_pixmap_get #f)
+(export _GtkStyle_bg_pixmap_get)
+
+(dv new__GtkStyle #f)
+(export new__GtkStyle)
+
+(dv delete__GtkStyle #f)
+(export delete__GtkStyle)
+
+(dv gtk_style_new #f)
+(export gtk_style_new)
+
+(dv gtk_style_copy #f)
+(export gtk_style_copy)
+
+(dv gtk_style_attach #f)
+(export gtk_style_attach)
+
+(dv gtk_style_detach #f)
+(export gtk_style_detach)
+
+(dv gtk_style_set_background #f)
+(export gtk_style_set_background)
+
+(dv gtk_style_apply_default_background #f)
+(export gtk_style_apply_default_background)
+
+(dv gtk_style_lookup_icon_set #f)
+(export gtk_style_lookup_icon_set)
+
+(dv gtk_style_render_icon #f)
+(export gtk_style_render_icon)
+
+(dv gtk_paint_hline #f)
+(export gtk_paint_hline)
+
+(dv gtk_paint_vline #f)
+(export gtk_paint_vline)
+
+(dv gtk_paint_shadow #f)
+(export gtk_paint_shadow)
+
+(dv gtk_paint_polygon #f)
+(export gtk_paint_polygon)
+
+(dv gtk_paint_arrow #f)
+(export gtk_paint_arrow)
+
+(dv gtk_paint_diamond #f)
+(export gtk_paint_diamond)
+
+(dv gtk_paint_box #f)
+(export gtk_paint_box)
+
+(dv gtk_paint_flat_box #f)
+(export gtk_paint_flat_box)
+
+(dv gtk_paint_check #f)
+(export gtk_paint_check)
+
+(dv gtk_paint_option #f)
+(export gtk_paint_option)
+
+(dv gtk_paint_tab #f)
+(export gtk_paint_tab)
+
+)
+
+(seq
+(dv gtk_paint_shadow_gap #f)
+(export gtk_paint_shadow_gap)
+
+(dv gtk_paint_box_gap #f)
+(export gtk_paint_box_gap)
+
+(dv gtk_paint_extension #f)
+(export gtk_paint_extension)
+
+(dv gtk_paint_focus #f)
+(export gtk_paint_focus)
+
+(dv gtk_paint_slider #f)
+(export gtk_paint_slider)
+
+(dv gtk_paint_handle #f)
+(export gtk_paint_handle)
+
+(dv gtk_paint_expander #f)
+(export gtk_paint_expander)
+
+(dv gtk_paint_layout #f)
+(export gtk_paint_layout)
+
+(dv gtk_paint_resize_grip #f)
+(export gtk_paint_resize_grip)
+
+(dv gtk_border_copy #f)
+(export gtk_border_copy)
+
+(dv gtk_border_free #f)
+(export gtk_border_free)
+
+(dv gtk_table_new #f)
+(export gtk_table_new)
+
+(dv gtk_table_resize #f)
+(export gtk_table_resize)
+
+(dv gtk_table_attach #f)
+(export gtk_table_attach)
+
+(dv gtk_table_attach_defaults #f)
+(export gtk_table_attach_defaults)
+
+(dv gtk_table_set_row_spacing #f)
+(export gtk_table_set_row_spacing)
+
+(dv gtk_table_get_row_spacing #f)
+(export gtk_table_get_row_spacing)
+
+(dv gtk_table_set_col_spacing #f)
+(export gtk_table_set_col_spacing)
+
+(dv gtk_table_get_col_spacing #f)
+(export gtk_table_get_col_spacing)
+
+(dv gtk_table_set_row_spacings #f)
+(export gtk_table_set_row_spacings)
+
+(dv gtk_table_get_default_row_spacing #f)
+(export gtk_table_get_default_row_spacing)
+
+(dv gtk_table_set_col_spacings #f)
+(export gtk_table_set_col_spacings)
+
+(dv gtk_table_get_default_col_spacing #f)
+(export gtk_table_get_default_col_spacing)
+
+(dv gtk_table_set_homogeneous #f)
+(export gtk_table_set_homogeneous)
+
+(dv gtk_table_get_homogeneous #f)
+(export gtk_table_get_homogeneous)
+
+(dv gtk_tearoff_menu_item_new #f)
+(export gtk_tearoff_menu_item_new)
+
+(dv gtk_text_new #f)
+(export gtk_text_new)
+
+(dv gtk_text_set_editable #f)
+(export gtk_text_set_editable)
+
+(dv gtk_text_set_word_wrap #f)
+(export gtk_text_set_word_wrap)
+
+(dv gtk_text_set_line_wrap #f)
+(export gtk_text_set_line_wrap)
+
+(dv gtk_text_set_adjustments #f)
+(export gtk_text_set_adjustments)
+
+(dv gtk_text_set_point #f)
+(export gtk_text_set_point)
+
+(dv gtk_text_get_point #f)
+(export gtk_text_get_point)
+
+(dv gtk_text_get_length #f)
+(export gtk_text_get_length)
+
+(dv gtk_text_freeze #f)
+(export gtk_text_freeze)
+
+(dv gtk_text_thaw #f)
+(export gtk_text_thaw)
+
+(dv gtk_text_insert #f)
+(export gtk_text_insert)
+
+(dv gtk_text_backward_delete #f)
+(export gtk_text_backward_delete)
+
+(dv gtk_text_forward_delete #f)
+(export gtk_text_forward_delete)
+
+(dv gtk_tips_query_new #f)
+(export gtk_tips_query_new)
+
+(dv gtk_tips_query_start_query #f)
+(export gtk_tips_query_start_query)
+
+(dv gtk_tips_query_stop_query #f)
+(export gtk_tips_query_stop_query)
+
+(dv gtk_tips_query_set_caller #f)
+(export gtk_tips_query_set_caller)
+
+(dv gtk_tips_query_set_labels #f)
+(export gtk_tips_query_set_labels)
+
+(dv gtk_toggle_button_new #f)
+(export gtk_toggle_button_new)
+
+(dv gtk_toggle_button_new_with_label #f)
+(export gtk_toggle_button_new_with_label)
+
+(dv gtk_toggle_button_new_with_mnemonic #f)
+(export gtk_toggle_button_new_with_mnemonic)
+
+(dv gtk_toggle_button_set_mode #f)
+(export gtk_toggle_button_set_mode)
+
+(dv gtk_toggle_button_get_mode #f)
+(export gtk_toggle_button_get_mode)
+
+(dv gtk_toggle_button_set_active #f)
+(export gtk_toggle_button_set_active)
+
+(dv gtk_toggle_button_get_active #f)
+(export gtk_toggle_button_get_active)
+
+(dv gtk_toggle_button_toggled #f)
+(export gtk_toggle_button_toggled)
+
+(dv gtk_toggle_button_set_inconsistent #f)
+(export gtk_toggle_button_set_inconsistent)
+
+(dv gtk_toggle_button_get_inconsistent #f)
+(export gtk_toggle_button_get_inconsistent)
+
+(dv GTK_TOOLBAR_CHILD_SPACE #f)
+(export GTK_TOOLBAR_CHILD_SPACE)
+
+(dv GTK_TOOLBAR_CHILD_BUTTON #f)
+(export GTK_TOOLBAR_CHILD_BUTTON)
+
+(dv GTK_TOOLBAR_CHILD_TOGGLEBUTTON #f)
+(export GTK_TOOLBAR_CHILD_TOGGLEBUTTON)
+
+(dv GTK_TOOLBAR_CHILD_RADIOBUTTON #f)
+(export GTK_TOOLBAR_CHILD_RADIOBUTTON)
+
+(dv GTK_TOOLBAR_CHILD_WIDGET #f)
+(export GTK_TOOLBAR_CHILD_WIDGET)
+
+(dv GTK_TOOLBAR_SPACE_EMPTY #f)
+(export GTK_TOOLBAR_SPACE_EMPTY)
+
+(dv GTK_TOOLBAR_SPACE_LINE #f)
+(export GTK_TOOLBAR_SPACE_LINE)
+
+(dv gtk_toolbar_new #f)
+(export gtk_toolbar_new)
+
+(dv gtk_toolbar_append_item #f)
+(export gtk_toolbar_append_item)
+
+(dv gtk_toolbar_prepend_item #f)
+(export gtk_toolbar_prepend_item)
+
+(dv gtk_toolbar_insert_item #f)
+(export gtk_toolbar_insert_item)
+
+(dv gtk_toolbar_insert_stock #f)
+(export gtk_toolbar_insert_stock)
+
+(dv gtk_toolbar_append_space #f)
+(export gtk_toolbar_append_space)
+
+(dv gtk_toolbar_prepend_space #f)
+(export gtk_toolbar_prepend_space)
+
+(dv gtk_toolbar_insert_space #f)
+(export gtk_toolbar_insert_space)
+
+(dv gtk_toolbar_remove_space #f)
+(export gtk_toolbar_remove_space)
+
+(dv gtk_toolbar_append_element #f)
+(export gtk_toolbar_append_element)
+
+(dv gtk_toolbar_prepend_element #f)
+(export gtk_toolbar_prepend_element)
+
+(dv gtk_toolbar_insert_element #f)
+(export gtk_toolbar_insert_element)
+
+(dv gtk_toolbar_append_widget #f)
+(export gtk_toolbar_append_widget)
+
+(dv gtk_toolbar_prepend_widget #f)
+(export gtk_toolbar_prepend_widget)
+
+(dv gtk_toolbar_insert_widget #f)
+(export gtk_toolbar_insert_widget)
+
+(dv gtk_toolbar_set_orientation #f)
+(export gtk_toolbar_set_orientation)
+
+(dv gtk_toolbar_set_style #f)
+(export gtk_toolbar_set_style)
+
+(dv gtk_toolbar_set_icon_size #f)
+(export gtk_toolbar_set_icon_size)
+
+(dv gtk_toolbar_set_tooltips #f)
+(export gtk_toolbar_set_tooltips)
+
+(dv gtk_toolbar_unset_style #f)
+(export gtk_toolbar_unset_style)
+
+(dv gtk_toolbar_unset_icon_size #f)
+(export gtk_toolbar_unset_icon_size)
+
+(dv gtk_toolbar_get_orientation #f)
+(export gtk_toolbar_get_orientation)
+
+(dv gtk_toolbar_get_style #f)
+(export gtk_toolbar_get_style)
+
+(dv gtk_toolbar_get_icon_size #f)
+(export gtk_toolbar_get_icon_size)
+
+(dv gtk_toolbar_get_tooltips #f)
+(export gtk_toolbar_get_tooltips)
+
+(dv gtk_tooltips_new #f)
+(export gtk_tooltips_new)
+
+(dv gtk_tooltips_enable #f)
+(export gtk_tooltips_enable)
+
+(dv gtk_tooltips_disable #f)
+(export gtk_tooltips_disable)
+
+(dv gtk_tooltips_set_tip #f)
+(export gtk_tooltips_set_tip)
+
+(dv gtk_tooltips_data_get #f)
+(export gtk_tooltips_data_get)
+
+(dv gtk_tooltips_force_window #f)
+(export gtk_tooltips_force_window)
+
+(dv GTK_TREE_VIEW_LINE #f)
+(export GTK_TREE_VIEW_LINE)
+
+(dv GTK_TREE_VIEW_ITEM #f)
+(export GTK_TREE_VIEW_ITEM)
+
+(dv gtk_tree_new #f)
+(export gtk_tree_new)
+
+(dv gtk_tree_append #f)
+(export gtk_tree_append)
+
+(dv gtk_tree_prepend #f)
+(export gtk_tree_prepend)
+
+(dv gtk_tree_insert #f)
+(export gtk_tree_insert)
+
+(dv gtk_tree_remove_items #f)
+(export gtk_tree_remove_items)
+
+(dv gtk_tree_clear_items #f)
+(export gtk_tree_clear_items)
+
+)
+
+(seq
+(dv gtk_tree_select_item #f)
+(export gtk_tree_select_item)
+
+(dv gtk_tree_unselect_item #f)
+(export gtk_tree_unselect_item)
+
+(dv gtk_tree_select_child #f)
+(export gtk_tree_select_child)
+
+(dv gtk_tree_unselect_child #f)
+(export gtk_tree_unselect_child)
+
+(dv gtk_tree_child_position #f)
+(export gtk_tree_child_position)
+
+(dv gtk_tree_set_selection_mode #f)
+(export gtk_tree_set_selection_mode)
+
+(dv gtk_tree_set_view_mode #f)
+(export gtk_tree_set_view_mode)
+
+(dv gtk_tree_set_view_lines #f)
+(export gtk_tree_set_view_lines)
+
+(dv gtk_tree_item_new #f)
+(export gtk_tree_item_new)
+
+(dv gtk_tree_item_new_with_label #f)
+(export gtk_tree_item_new_with_label)
+
+(dv gtk_tree_item_set_subtree #f)
+(export gtk_tree_item_set_subtree)
+
+(dv gtk_tree_item_remove_subtree #f)
+(export gtk_tree_item_remove_subtree)
+
+(dv gtk_tree_item_select #f)
+(export gtk_tree_item_select)
+
+(dv gtk_tree_item_deselect #f)
+(export gtk_tree_item_deselect)
+
+(dv gtk_tree_item_expand #f)
+(export gtk_tree_item_expand)
+
+(dv gtk_tree_item_collapse #f)
+(export gtk_tree_item_collapse)
+
+(dv gtk_tree_selection_get_type #f)
+(export gtk_tree_selection_get_type)
+
+(dv gtk_tree_selection_set_mode #f)
+(export gtk_tree_selection_set_mode)
+
+(dv gtk_tree_selection_get_mode #f)
+(export gtk_tree_selection_get_mode)
+
+(dv gtk_tree_selection_set_select_function #f)
+(export gtk_tree_selection_set_select_function)
+
+(dv gtk_tree_selection_get_user_data #f)
+(export gtk_tree_selection_get_user_data)
+
+(dv gtk_tree_selection_get_tree_view #f)
+(export gtk_tree_selection_get_tree_view)
+
+(dv gtk_tree_selection_get_selected #f)
+(export gtk_tree_selection_get_selected)
+
+(dv gtk_tree_selection_selected_foreach #f)
+(export gtk_tree_selection_selected_foreach)
+
+(dv gtk_tree_selection_select_path #f)
+(export gtk_tree_selection_select_path)
+
+(dv gtk_tree_selection_unselect_path #f)
+(export gtk_tree_selection_unselect_path)
+
+(dv gtk_tree_selection_select_iter #f)
+(export gtk_tree_selection_select_iter)
+
+(dv gtk_tree_selection_unselect_iter #f)
+(export gtk_tree_selection_unselect_iter)
+
+(dv gtk_tree_selection_path_is_selected #f)
+(export gtk_tree_selection_path_is_selected)
+
+(dv gtk_tree_selection_iter_is_selected #f)
+(export gtk_tree_selection_iter_is_selected)
+
+(dv gtk_tree_selection_select_all #f)
+(export gtk_tree_selection_select_all)
+
+(dv gtk_tree_selection_unselect_all #f)
+(export gtk_tree_selection_unselect_all)
+
+(dv gtk_tree_selection_select_range #f)
+(export gtk_tree_selection_select_range)
+
+(dv GTK_TREE_VIEW_DROP_BEFORE #f)
+(export GTK_TREE_VIEW_DROP_BEFORE)
+
+(dv GTK_TREE_VIEW_DROP_AFTER #f)
+(export GTK_TREE_VIEW_DROP_AFTER)
+
+(dv GTK_TREE_VIEW_DROP_INTO_OR_BEFORE #f)
+(export GTK_TREE_VIEW_DROP_INTO_OR_BEFORE)
+
+(dv GTK_TREE_VIEW_DROP_INTO_OR_AFTER #f)
+(export GTK_TREE_VIEW_DROP_INTO_OR_AFTER)
+
+(dv _GtkTreeView_parent_set #f)
+(export _GtkTreeView_parent_set)
+
+(dv _GtkTreeView_parent_get #f)
+(export _GtkTreeView_parent_get)
+
+(dv _GtkTreeView_priv_set #f)
+(export _GtkTreeView_priv_set)
+
+(dv _GtkTreeView_priv_get #f)
+(export _GtkTreeView_priv_get)
+
+(dv new__GtkTreeView #f)
+(export new__GtkTreeView)
+
+(dv delete__GtkTreeView #f)
+(export delete__GtkTreeView)
+
+(dv _GtkTreeViewClass_parent_class_set #f)
+(export _GtkTreeViewClass_parent_class_set)
+
+(dv _GtkTreeViewClass_parent_class_get #f)
+(export _GtkTreeViewClass_parent_class_get)
+
+(dv _GtkTreeViewClass_set_scroll_adjustments_set #f)
+(export _GtkTreeViewClass_set_scroll_adjustments_set)
+
+(dv _GtkTreeViewClass_set_scroll_adjustments_get #f)
+(export _GtkTreeViewClass_set_scroll_adjustments_get)
+
+(dv _GtkTreeViewClass_row_activated_set #f)
+(export _GtkTreeViewClass_row_activated_set)
+
+(dv _GtkTreeViewClass_row_activated_get #f)
+(export _GtkTreeViewClass_row_activated_get)
+
+(dv _GtkTreeViewClass_row_expanded_set #f)
+(export _GtkTreeViewClass_row_expanded_set)
+
+(dv _GtkTreeViewClass_row_expanded_get #f)
+(export _GtkTreeViewClass_row_expanded_get)
+
+(dv _GtkTreeViewClass_row_collapsed_set #f)
+(export _GtkTreeViewClass_row_collapsed_set)
+
+(dv _GtkTreeViewClass_row_collapsed_get #f)
+(export _GtkTreeViewClass_row_collapsed_get)
+
+(dv _GtkTreeViewClass_columns_changed_set #f)
+(export _GtkTreeViewClass_columns_changed_set)
+
+(dv _GtkTreeViewClass_columns_changed_get #f)
+(export _GtkTreeViewClass_columns_changed_get)
+
+(dv _GtkTreeViewClass_cursor_changed_set #f)
+(export _GtkTreeViewClass_cursor_changed_set)
+
+(dv _GtkTreeViewClass_cursor_changed_get #f)
+(export _GtkTreeViewClass_cursor_changed_get)
+
+(dv _GtkTreeViewClass_unselect_all_set #f)
+(export _GtkTreeViewClass_unselect_all_set)
+
+(dv _GtkTreeViewClass_unselect_all_get #f)
+(export _GtkTreeViewClass_unselect_all_get)
+
+(dv _GtkTreeViewClass_select_cursor_row_set #f)
+(export _GtkTreeViewClass_select_cursor_row_set)
+
+(dv _GtkTreeViewClass_select_cursor_row_get #f)
+(export _GtkTreeViewClass_select_cursor_row_get)
+
+(dv _GtkTreeViewClass_toggle_cursor_row_set #f)
+(export _GtkTreeViewClass_toggle_cursor_row_set)
+
+(dv _GtkTreeViewClass_toggle_cursor_row_get #f)
+(export _GtkTreeViewClass_toggle_cursor_row_get)
+
+(dv _GtkTreeViewClass_expand_collapse_cursor_row_set #f)
+(export _GtkTreeViewClass_expand_collapse_cursor_row_set)
+
+(dv _GtkTreeViewClass_expand_collapse_cursor_row_get #f)
+(export _GtkTreeViewClass_expand_collapse_cursor_row_get)
+
+(dv _GtkTreeViewClass_select_cursor_parent_set #f)
+(export _GtkTreeViewClass_select_cursor_parent_set)
+
+(dv _GtkTreeViewClass_select_cursor_parent_get #f)
+(export _GtkTreeViewClass_select_cursor_parent_get)
+
+(dv _GtkTreeViewClass_start_interactive_search_set #f)
+(export _GtkTreeViewClass_start_interactive_search_set)
+
+(dv _GtkTreeViewClass_start_interactive_search_get #f)
+(export _GtkTreeViewClass_start_interactive_search_get)
+
+(dv _GtkTreeViewClass__gtk_reserved0_set #f)
+(export _GtkTreeViewClass__gtk_reserved0_set)
+
+(dv _GtkTreeViewClass__gtk_reserved0_get #f)
+(export _GtkTreeViewClass__gtk_reserved0_get)
+
+(dv _GtkTreeViewClass__gtk_reserved1_set #f)
+(export _GtkTreeViewClass__gtk_reserved1_set)
+
+(dv _GtkTreeViewClass__gtk_reserved1_get #f)
+(export _GtkTreeViewClass__gtk_reserved1_get)
+
+(dv _GtkTreeViewClass__gtk_reserved2_set #f)
+(export _GtkTreeViewClass__gtk_reserved2_set)
+
+(dv _GtkTreeViewClass__gtk_reserved2_get #f)
+(export _GtkTreeViewClass__gtk_reserved2_get)
+
+(dv _GtkTreeViewClass__gtk_reserved3_set #f)
+(export _GtkTreeViewClass__gtk_reserved3_set)
+
+(dv _GtkTreeViewClass__gtk_reserved3_get #f)
+(export _GtkTreeViewClass__gtk_reserved3_get)
+
+(dv _GtkTreeViewClass__gtk_reserved4_set #f)
+(export _GtkTreeViewClass__gtk_reserved4_set)
+
+(dv _GtkTreeViewClass__gtk_reserved4_get #f)
+(export _GtkTreeViewClass__gtk_reserved4_get)
+
+(dv new__GtkTreeViewClass #f)
+(export new__GtkTreeViewClass)
+
+(dv delete__GtkTreeViewClass #f)
+(export delete__GtkTreeViewClass)
+
+(dv gtk_tree_view_get_type #f)
+(export gtk_tree_view_get_type)
+
+(dv gtk_tree_view_new #f)
+(export gtk_tree_view_new)
+
+(dv gtk_tree_view_new_with_model #f)
+(export gtk_tree_view_new_with_model)
+
+(dv gtk_tree_view_get_model #f)
+(export gtk_tree_view_get_model)
+
+(dv gtk_tree_view_set_model #f)
+(export gtk_tree_view_set_model)
+
+(dv gtk_tree_view_get_selection #f)
+(export gtk_tree_view_get_selection)
+
+(dv gtk_tree_view_get_hadjustment #f)
+(export gtk_tree_view_get_hadjustment)
+
+(dv gtk_tree_view_set_hadjustment #f)
+(export gtk_tree_view_set_hadjustment)
+
+(dv gtk_tree_view_get_vadjustment #f)
+(export gtk_tree_view_get_vadjustment)
+
+(dv gtk_tree_view_set_vadjustment #f)
+(export gtk_tree_view_set_vadjustment)
+
+(dv gtk_tree_view_get_headers_visible #f)
+(export gtk_tree_view_get_headers_visible)
+
+(dv gtk_tree_view_set_headers_visible #f)
+(export gtk_tree_view_set_headers_visible)
+
+(dv gtk_tree_view_columns_autosize #f)
+(export gtk_tree_view_columns_autosize)
+
+(dv gtk_tree_view_set_headers_clickable #f)
+(export gtk_tree_view_set_headers_clickable)
+
+(dv gtk_tree_view_set_rules_hint #f)
+(export gtk_tree_view_set_rules_hint)
+
+(dv gtk_tree_view_get_rules_hint #f)
+(export gtk_tree_view_get_rules_hint)
+
+(dv gtk_tree_view_append_column #f)
+(export gtk_tree_view_append_column)
+
+(dv gtk_tree_view_remove_column #f)
+(export gtk_tree_view_remove_column)
+
+(dv gtk_tree_view_insert_column #f)
+(export gtk_tree_view_insert_column)
+
+)
+
+(seq
+(dv gtk_tree_view_insert_column_with_attributes #f)
+(export gtk_tree_view_insert_column_with_attributes)
+
+(dv gtk_tree_view_get_column #f)
+(export gtk_tree_view_get_column)
+
+(dv gtk_tree_view_get_columns #f)
+(export gtk_tree_view_get_columns)
+
+(dv gtk_tree_view_move_column_after #f)
+(export gtk_tree_view_move_column_after)
+
+(dv gtk_tree_view_set_expander_column #f)
+(export gtk_tree_view_set_expander_column)
+
+(dv gtk_tree_view_get_expander_column #f)
+(export gtk_tree_view_get_expander_column)
+
+(dv gtk_tree_view_set_column_drag_function #f)
+(export gtk_tree_view_set_column_drag_function)
+
+(dv gtk_tree_view_scroll_to_point #f)
+(export gtk_tree_view_scroll_to_point)
+
+(dv gtk_tree_view_scroll_to_cell #f)
+(export gtk_tree_view_scroll_to_cell)
+
+(dv gtk_tree_view_row_activated #f)
+(export gtk_tree_view_row_activated)
+
+(dv gtk_tree_view_expand_all #f)
+(export gtk_tree_view_expand_all)
+
+(dv gtk_tree_view_collapse_all #f)
+(export gtk_tree_view_collapse_all)
+
+(dv gtk_tree_view_expand_row #f)
+(export gtk_tree_view_expand_row)
+
+(dv gtk_tree_view_collapse_row #f)
+(export gtk_tree_view_collapse_row)
+
+(dv gtk_tree_view_map_expanded_rows #f)
+(export gtk_tree_view_map_expanded_rows)
+
+(dv gtk_tree_view_row_expanded #f)
+(export gtk_tree_view_row_expanded)
+
+(dv gtk_tree_view_set_reorderable #f)
+(export gtk_tree_view_set_reorderable)
+
+(dv gtk_tree_view_get_reorderable #f)
+(export gtk_tree_view_get_reorderable)
+
+(dv gtk_tree_view_set_cursor #f)
+(export gtk_tree_view_set_cursor)
+
+(dv gtk_tree_view_get_cursor #f)
+(export gtk_tree_view_get_cursor)
+
+(dv gtk_tree_view_get_bin_window #f)
+(export gtk_tree_view_get_bin_window)
+
+(dv gtk_tree_view_get_path_at_pos #f)
+(export gtk_tree_view_get_path_at_pos)
+
+(dv gtk_tree_view_get_cell_area #f)
+(export gtk_tree_view_get_cell_area)
+
+(dv gtk_tree_view_get_background_area #f)
+(export gtk_tree_view_get_background_area)
+
+(dv gtk_tree_view_get_visible_rect #f)
+(export gtk_tree_view_get_visible_rect)
+
+(dv gtk_tree_view_widget_to_tree_coords #f)
+(export gtk_tree_view_widget_to_tree_coords)
+
+(dv gtk_tree_view_tree_to_widget_coords #f)
+(export gtk_tree_view_tree_to_widget_coords)
+
+(dv gtk_tree_view_set_drag_dest_row #f)
+(export gtk_tree_view_set_drag_dest_row)
+
+(dv gtk_tree_view_get_drag_dest_row #f)
+(export gtk_tree_view_get_drag_dest_row)
+
+(dv gtk_tree_view_get_dest_row_at_pos #f)
+(export gtk_tree_view_get_dest_row_at_pos)
+
+(dv gtk_tree_view_create_row_drag_icon #f)
+(export gtk_tree_view_create_row_drag_icon)
+
+(dv gtk_tree_view_get_search_column #f)
+(export gtk_tree_view_get_search_column)
+
+(dv gtk_tree_view_set_search_column #f)
+(export gtk_tree_view_set_search_column)
+
+(dv gtk_tree_view_get_search_equal_func #f)
+(export gtk_tree_view_get_search_equal_func)
+
+(dv gtk_tree_view_set_search_equal_func #f)
+(export gtk_tree_view_set_search_equal_func)
+
+(dv GTK_TREE_VIEW_COLUMN_GROW_ONLY #f)
+(export GTK_TREE_VIEW_COLUMN_GROW_ONLY)
+
+(dv GTK_TREE_VIEW_COLUMN_AUTOSIZE #f)
+(export GTK_TREE_VIEW_COLUMN_AUTOSIZE)
+
+(dv GTK_TREE_VIEW_COLUMN_FIXED #f)
+(export GTK_TREE_VIEW_COLUMN_FIXED)
+
+(dv gtk_tree_view_column_get_type #f)
+(export gtk_tree_view_column_get_type)
+
+(dv gtk_tree_view_column_new #f)
+(export gtk_tree_view_column_new)
+
+(dv gtk_tree_view_column_new_with_attributes #f)
+(export gtk_tree_view_column_new_with_attributes)
+
+(dv gtk_tree_view_column_pack_start #f)
+(export gtk_tree_view_column_pack_start)
+
+(dv gtk_tree_view_column_pack_end #f)
+(export gtk_tree_view_column_pack_end)
+
+(dv gtk_tree_view_column_clear #f)
+(export gtk_tree_view_column_clear)
+
+(dv gtk_tree_view_column_get_cell_renderers #f)
+(export gtk_tree_view_column_get_cell_renderers)
+
+(dv gtk_tree_view_column_add_attribute #f)
+(export gtk_tree_view_column_add_attribute)
+
+(dv gtk_tree_view_column_set_attributes #f)
+(export gtk_tree_view_column_set_attributes)
+
+(dv gtk_tree_view_column_set_cell_data_func #f)
+(export gtk_tree_view_column_set_cell_data_func)
+
+(dv gtk_tree_view_column_clear_attributes #f)
+(export gtk_tree_view_column_clear_attributes)
+
+(dv gtk_tree_view_column_set_spacing #f)
+(export gtk_tree_view_column_set_spacing)
+
+(dv gtk_tree_view_column_get_spacing #f)
+(export gtk_tree_view_column_get_spacing)
+
+(dv gtk_tree_view_column_set_visible #f)
+(export gtk_tree_view_column_set_visible)
+
+(dv gtk_tree_view_column_get_visible #f)
+(export gtk_tree_view_column_get_visible)
+
+(dv gtk_tree_view_column_set_resizable #f)
+(export gtk_tree_view_column_set_resizable)
+
+(dv gtk_tree_view_column_get_resizable #f)
+(export gtk_tree_view_column_get_resizable)
+
+(dv gtk_tree_view_column_set_sizing #f)
+(export gtk_tree_view_column_set_sizing)
+
+(dv gtk_tree_view_column_get_sizing #f)
+(export gtk_tree_view_column_get_sizing)
+
+(dv gtk_tree_view_column_get_width #f)
+(export gtk_tree_view_column_get_width)
+
+(dv gtk_tree_view_column_get_fixed_width #f)
+(export gtk_tree_view_column_get_fixed_width)
+
+(dv gtk_tree_view_column_set_fixed_width #f)
+(export gtk_tree_view_column_set_fixed_width)
+
+(dv gtk_tree_view_column_set_min_width #f)
+(export gtk_tree_view_column_set_min_width)
+
+(dv gtk_tree_view_column_get_min_width #f)
+(export gtk_tree_view_column_get_min_width)
+
+(dv gtk_tree_view_column_set_max_width #f)
+(export gtk_tree_view_column_set_max_width)
+
+(dv gtk_tree_view_column_get_max_width #f)
+(export gtk_tree_view_column_get_max_width)
+
+(dv gtk_tree_view_column_clicked #f)
+(export gtk_tree_view_column_clicked)
+
+(dv gtk_tree_view_column_set_title #f)
+(export gtk_tree_view_column_set_title)
+
+(dv gtk_tree_view_column_set_clickable #f)
+(export gtk_tree_view_column_set_clickable)
+
+(dv gtk_tree_view_column_get_clickable #f)
+(export gtk_tree_view_column_get_clickable)
+
+(dv gtk_tree_view_column_set_widget #f)
+(export gtk_tree_view_column_set_widget)
+
+(dv gtk_tree_view_column_get_widget #f)
+(export gtk_tree_view_column_get_widget)
+
+(dv gtk_tree_view_column_set_alignment #f)
+(export gtk_tree_view_column_set_alignment)
+
+(dv gtk_tree_view_column_get_alignment #f)
+(export gtk_tree_view_column_get_alignment)
+
+(dv gtk_tree_view_column_set_reorderable #f)
+(export gtk_tree_view_column_set_reorderable)
+
+(dv gtk_tree_view_column_get_reorderable #f)
+(export gtk_tree_view_column_get_reorderable)
+
+(dv gtk_tree_view_column_set_sort_column_id #f)
+(export gtk_tree_view_column_set_sort_column_id)
+
+(dv gtk_tree_view_column_get_sort_column_id #f)
+(export gtk_tree_view_column_get_sort_column_id)
+
+(dv gtk_tree_view_column_set_sort_indicator #f)
+(export gtk_tree_view_column_set_sort_indicator)
+
+(dv gtk_tree_view_column_get_sort_indicator #f)
+(export gtk_tree_view_column_get_sort_indicator)
+
+(dv gtk_tree_view_column_set_sort_order #f)
+(export gtk_tree_view_column_set_sort_order)
+
+(dv gtk_tree_view_column_get_sort_order #f)
+(export gtk_tree_view_column_get_sort_order)
+
+(dv gtk_tree_view_column_cell_set_cell_data #f)
+(export gtk_tree_view_column_cell_set_cell_data)
+
+(dv gtk_tree_view_column_cell_get_size #f)
+(export gtk_tree_view_column_cell_get_size)
+
+(dv gtk_tree_view_column_cell_is_visible #f)
+(export gtk_tree_view_column_cell_is_visible)
+
+(dv gtk_vbutton_box_new #f)
+(export gtk_vbutton_box_new)
+
+(dv gtk_vbox_new #f)
+(export gtk_vbox_new)
+
+(dv gtk_viewport_new #f)
+(export gtk_viewport_new)
+
+(dv gtk_viewport_get_hadjustment #f)
+(export gtk_viewport_get_hadjustment)
+
+(dv gtk_viewport_get_vadjustment #f)
+(export gtk_viewport_get_vadjustment)
+
+(dv gtk_viewport_set_hadjustment #f)
+(export gtk_viewport_set_hadjustment)
+
+(dv gtk_viewport_set_vadjustment #f)
+(export gtk_viewport_set_vadjustment)
+
+(dv gtk_viewport_set_shadow_type #f)
+(export gtk_viewport_set_shadow_type)
+
+(dv gtk_viewport_get_shadow_type #f)
+(export gtk_viewport_get_shadow_type)
+
+(dv gtk_vscrollbar_new #f)
+(export gtk_vscrollbar_new)
+
+(dv gtk_vseparator_new #f)
+(export gtk_vseparator_new)
+
+(dv gtk_window_new #f)
+(export gtk_window_new)
+
+)
+(dl init_me)
+(init_me)

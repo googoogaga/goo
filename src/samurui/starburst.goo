@@ -1,8 +1,7 @@
 
 (use goo)
 (use samurui/samurui)
-(use samurui/autogtk)
-(use samurui/gtkbinding)
+(use samurui/gtk.swig)
 (use samurui/gtkcallbacks)
 
 (idrawmodel <visi-col> <visi-sb>)

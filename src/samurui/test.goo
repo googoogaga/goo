@@ -1,4 +1,7 @@
-; (load "/home/ai2/sombrero/cvs/goo/src/goouitest.goo" 'goo/user)
+(use goo)
+(use samurui/samurui)
+(use samurui/gtk)
+
 ; ------- Simulation App Singelton
 
 ; Drawing Areas
@@ -7,88 +10,7 @@
 (idrawmodel <happy-dummy> <happy-draw>)
 
 (dc <simapp> (<any>))
-
-(msg out "Init'ed class\n")
-
-(iprop <simapp> buildings <col> "Buildings")
-(iprop <simapp> people <col> "SimPeeps")
-(iprop <simapp> town-name <str> "Town Name")
-(iprop <simapp> scribble <happy-dummy> "Scribbler")
-
-(msg out "Properties set\n")
-
-(iaction <simapp> run-tick me  "Run simulation for one tick"
-  ; Whoo! Go functional languages!
-  (do tick (buildings me))
-  (do tick (people me))
-)
-
-(msg out "action done\n")
-
-; ------- Simulation Object Stuff
-(dc <simobj> (<any>))
-  (dp name (<simobj> => <any>))
-
-(dc <building> (<simobj>))
-  (dp floors (<building> => <any>))
-  (dp length (<building> => <any>))
-  (dp width (<building> => <any>))
-
-(dc <company> (<simobj>))
-  (dp office (<company> => <building>))
-  (dp employees (<company> => <col>))
-  (dp cash (<company> => <int>))
-
-(dc <person> (<simobj>))
-  (dp age (<person> => <int>)) ; constraints?
-  (dp employer (<person> => <company>))
-  (dp cash (<person> => <int>))
-  (dp salary (<person> => <int>))
-
-
-(dm tick ((nadie <any>))
-  ;; base case: do nothing.
-)
-
-; --- Peeps
-(dm earn ((dude <person>) (moolah <int>))
-  (set (cash dude) (+ (cash dude) moolah))
-)
-
-(dm spend ((dude <person>) (moolah <int>))
-  (set (cash dude) (- (cash dude) moolah))
-)
-
-(dm tick ((dude <person>))
-  (spend dude 10) ;; the fool ate food!
-  )
-
-; --- Corps
-
-; we want to differentiate from people (and have a different slot type)
- ; presumably because of tax issues or something.
-(dm earn ((corp <company>) (moolah <int>))
-  (set (cash corp) (+ (cash corp) moolah))
-)
-
-(dm spend ((corp <company>) (moolah <int>))
-  (set (cash corp) (- (cash corp) moolah))
-)
-
-(dm pay ((corp <company>) (dude <person>))
-  (spend corp (salary dude))
-  (earn dude (salary dude))
-  )
-
-(dm tick ((corp <company>))
-  (earn corp 100) ; income!
-  ; pay employees
-  (do (fun ((dude <person>))
-        (pay corp dude))
-      (employees corp)
-      )
-  )
-
+(iprop <simapp> scribble <happy-dummy> "Scribble")
 
 (dv c_red (color 255 0 0))
 (dv c_lred (color 128 0 0))
@@ -102,7 +24,7 @@
                    (tup c_lgreen c_green)
                    (tup c_lblue c_blue)))
 
-(dm mouse-click ((widget <happy-draw>) (x <int>) (y <int>) (button <int>))
+(dm mouse-press ((widget <happy-draw>) (x <int>) (y <int>) (button <int>) (time <int>))
   (case button
     ; Draw boxes!
     ((1)
@@ -118,16 +40,15 @@
     ; Write text confirmation number: 121749
     ((2)
      (def my-str "Goo!")
-     (def my-font (font font-lucida))
+     (def my-font (get-default-samurui-font))
      (def ax x)
-     (def ay (- y (_GdkFont_ascent_get (handle my-font))))
+     (def ay (- y (font-ascent my-font)))
      (def inv-rect (rect ax 
                          ay
-                         (gdk_string_width (handle my-font) my-str)
-                         (gdk_string_height (handle my-font) my-str)))
+                         (string-width my-font my-str)
+                         (string-height my-font my-str)))
      (draw-string widget my-font x y my-str (1st (elt my_colors cur_color)))
      (invalidate widget inv-rect)
-     (free my-font)
      )
     ; Change colors
     ((3)
@@ -139,6 +60,8 @@
     )
   )
 
+(dm mouse-release ((widget <happy-draw>) (x <int>) (y <int>) (button <int>) (time <int>)))
+
 (dm mouse-move ((widget <happy-draw>) (x <int>) (y <int>) (state <int>))
   (when (not (= (& state GDK_BUTTON1_MASK) 0))
     (mouse-click widget x y 1)
@@ -149,19 +72,13 @@
 
 (imodel <simapp>
         "Magic Scribble"
-        scribble
+        (attr scribble fill)
 )
-
-(msg out "-------------- Initing GTK ----------------\n")
 
 (gtk_init_easy)
 
 (dv simhat (new <simapp>))
-(set (buildings simhat) (fab <vec> 5))
-(set (people simhat) (fab <vec> 5))
-(set (town-name simhat) "Simania")
 (set (scribble simhat) (new <happy-dummy>))
 
-(msg out "--------------- Presenting ----------------\n")
-
 (present simhat)
+(gtk_main)
