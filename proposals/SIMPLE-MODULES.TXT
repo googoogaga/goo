@@ -59,15 +59,15 @@ Module names have a one-to-one mapping with (relative) file names:
 Modules are found by searching the directories found in the environment
 variable PROTO_PATH.
 
-By default, all modules except 'proto' and 'proto.boot' are treated as if
+By default, all modules except 'proto' and 'proto/boot' are treated as if
 they began with the form '(use proto)'.  'proto' is treated as if it began
-with the form '(use proto.boot)', and 'proto.boot' is probably magic.
+with the form '(use proto/boot)', and 'proto/boot' is probably magic.
 
 EXAMPLES:
 
   (export foo)
 
-  (use p2c.syntax)
+  (use p2c/syntax)
   (use p2c)
 
 QUESTIONS:
