@@ -1,25 +1,8 @@
-COMPILER = cc
-COPTIONS = -g -O
-SRC_DIR  = C:/jrb/ai/proto/C
-
-# OBJECTS = $(SRC_DIR)/proto.obj
-
-all:  proto.exe
-
-proto.exe: prt.obj proto.obj
-	$(COMPILER) $(COPTIONS) -o proto.exe prt.obj proto.obj gc.a
-
-prt.obj: prt.h prt.c
-	$(COMPILER) -c $(COPTIONS) -o prt.obj prt.c
-
-proto.obj: prt.h proto.c
-	$(COMPILER) -c $(COPTIONS) -o proto.obj proto.c
-
-# Remove all class files from the project directory. 
-clean: 
-	rm *.obj proto.exe
+all:
+	(cd p2c; $(MAKE))
 
 # Create installation
-install: 
-	cp proto.exe ../BIN/proto.exe
+install: all
+	cp p2c/p2c ../BIN/p2c
 
+.PHONY: all install
