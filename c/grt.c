@@ -1313,19 +1313,20 @@ P YPprocess_module(
   for (import_info = module_info->imports;
        import_info->variable_name;
        import_info++) {
-    CALL4(0, import_fun, modobj,
-	  YPsb(import_info->variable_name),
+    P name      = YPsb(import_info->variable_name);
+    P orig_name = import_info->original_name;
+    CALL4(0, import_fun, modobj, name,
 	  import_info->module_info->module_object,
-	  YPsb(import_info->original_name));
+	  (orig_name == NULL) ? name : YPsb(orig_name));
   }
 
   /* Export bindings from this module. */
   for (export_info = module_info->exports;
        export_info->variable_name;
        export_info++) {
-    CALL3(0, export_fun, modobj,
-	  YPsb(export_info->variable_name),
-	  YPsb(export_info->exported_as));
+    P name   = YPsb(export_info->variable_name);
+    P exp_as = export_info->exported_as;
+    CALL3(0, export_fun, modobj, name, (exp_as == NULL) ? name : YPsb(exp_as));
   }
   return PNUL;
 }  
