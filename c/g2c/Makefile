@@ -10,7 +10,6 @@ OBJS = \
 	cols/pipe.o \
 	goo/cols/opts.o \
 	goo/cols/rep.o \
-	eval/main.o \
 	goo/system.o \
 	goo/conditions.o \
 	goo/cols/map.o \
@@ -50,6 +49,7 @@ OBJS = \
 	goo/packer.o \
 	goo/cols/seq.o \
 	eval/top.o \
+	eval/main.o \
 	goo/app.o \
 	goo/cols/lst.o \
 	goo/cols/colx.o \

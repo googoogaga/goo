@@ -735,18 +735,18 @@ EXT(YgooSmathYtan,"goo/math","tan");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_8);
-DEFLIT(lit_5);
-DEFLIT(lit_1);
 DEFLIT(lit_3);
-DEFLIT(lit_6);
-DEFLIT(lit_4);
-DEFLIT(lit_10);
 DEFLIT(lit_11);
+DEFLIT(lit_5);
+DEFLIT(lit_4);
 DEFLIT(lit_0);
-DEFLIT(lit_2);
+DEFLIT(lit_1);
+DEFLIT(lit_10);
 DEFLIT(lit_7);
+DEFLIT(lit_6);
 DEFLIT(lit_9);
+DEFLIT(lit_8);
+DEFLIT(lit_2);
 
 /* FUNCTIONS: */
 
@@ -755,16 +755,16 @@ extern P YevalSmainY___main_0___ ();
 /* FUNCTION CODES: */
 
 P YevalSmainY___main_0___() {
-  P tmpF3797;
-  P fileF3796;
-  P tmpF3795;
-  P fileF3794;
+  P tmpF3801;
+  P fileF3800;
+  P tmpF3799;
+  P fileF3798;
   P T0,T1,T2,T3,T4,T5,T6,T7,T8,T9;
 DEFCREGS();
 loop:
-  lit_0 = YPsb((P)"0.142");
+  lit_0 = YPsb((P)"0.143");
   VARSET(YevalSmainYTgoo_versionT,LITREF(lit_0));
-  lit_1 = YPsb((P)"AUG 16, 2002");
+  lit_1 = YPsb((P)"AUG 23, 2002");
   VARSET(YevalSmainYTgoo_dateT,LITREF(lit_1));
   lit_2 = YPsb((P)";;; GOO\n");
   XCALL2(1,VARREF(YgooSconditionsYmsg),VARREF(YgooSioSportYout),LITREF(lit_2));
@@ -784,10 +784,10 @@ loop:
   lit_9 = YPsb((P)"init");
   lit_10 = YPPsym((P)"goo/user");
   T0 = XCALL2(1,VARREF(YgooSsystemYfind_goo_file_at),LITREF(lit_9),VARREF(YgooSsystemYTgoo_rootT));
-  fileF3794 = T0;
-  tmpF3795 = fileF3794;
-  if (tmpF3795 != YPfalse) {
-    T3 = XCALL2(1,VARREF(YevalStopYload_file),fileF3794,LITREF(lit_10));
+  fileF3798 = T0;
+  tmpF3799 = fileF3798;
+  if (tmpF3799 != YPfalse) {
+    T3 = XCALL2(1,VARREF(YevalStopYload_file),fileF3798,LITREF(lit_10));
     T2 = T3;
   } else {
     T2 = YPfalse;
@@ -795,10 +795,10 @@ loop:
   T1 = T2;
   lit_11 = YPsb((P)"init");
   T4 = XCALL2(1,VARREF(YgooSsystemYfind_goo_file_at),LITREF(lit_11),VARREF(YgooSsystemYTgoo_personal_rootT));
-  fileF3796 = T4;
-  tmpF3797 = fileF3796;
-  if (tmpF3797 != YPfalse) {
-    T7 = XCALL2(1,VARREF(YevalStopYload_file),fileF3796,LITREF(lit_10));
+  fileF3800 = T4;
+  tmpF3801 = fileF3800;
+  if (tmpF3801 != YPfalse) {
+    T7 = XCALL2(1,VARREF(YevalStopYload_file),fileF3800,LITREF(lit_10));
     T6 = T7;
   } else {
     T6 = YPfalse;
