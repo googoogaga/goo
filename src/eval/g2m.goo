@@ -1,175 +1,44 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
+(use goo)
 (use goo/boot)
-(use goo/macros)
-(use goo/packer)
-(use goo/runtime)
-(use goo/io/write)
 (use eval/syntax)
 (use eval/ast)
 (use eval/top)
 (use eval/ast-linearize)
 
-;;; TODO
-;;; --- NOW ---
-;;; TURN SPECIALS INTO CALLS -- HOW NARY'S?
-;;; CREATE CODE
-;;; --- LATER ---
-;;; MACRO DEFN
-;;; SHARE LITS
-;;; REDUCE NUMBER OF UNUSED REG'S
-;;; WHAT TO DO WITH PRIMS
-;;; MAKE LINEARIZATION MORE AUTOMATIC ESP WRT ASM/REF
-;;; (MET TOP () ((MET MAIN () ,@code)))
-;;; --- DONE ---
-;;; TURN ON FUNCTION-DEBUG-NAME
-;;; NUMBER ARGS
-;;; NUMBER LOCS
-;;; CREATE DATA-REF-VEC WITH QUOTES AND BINDINGS
-;;; CLEAN UP TOP-LEVEL TO BE CALLABLE -- E.G., RET
-;;; NARY? ARITY NEED TO BE CONSTANTS
-;;; 
+(dm frame! (o)
+  (frame-mets! o #f 1))
 
-;;;; ASM-LINEARIZATION
+(dm frame-mets! (o|<program> met index)
+  (ast-walk frame-mets! o met index))
 
-;;; CLOSURIZE MAIN
+(dm frame-mets! (o|<ast-method> met index)
+  (set (function-frame-len o) 0)
+  (frame-mets! (function-body o) o 1))
 
-(ds (watch (,@args) ,@exp)
-  `(seq (msg out "%= [%=] => " '(seq ,@exp) (lst ,@args))
-        (def r (seq ,@exp))
-        (msg out "%=\n" r)
-        r))
+(dm frame-mets! (o|<fix-let> met index)
+  (rep assign ((bindings (enum (fix-let-bindings o))) (index index))
+    (if (fin? bindings)
+        (seq (when (> index (function-frame-len met))
+               (set (function-frame-len met) index))
+             (frame-mets! (fix-let-arguments o) met index)
+             (frame-mets! (fix-let-types o) met index)
+             (frame-mets! (fix-let-body o) met index))
+        (seq (set (binding-index (now bindings)) index)
+             (assign (nxt bindings) (+ index 1))))))
 
-(ddv *watch-depth* 0)
-
-(dm watch-msg (port msg args|...)
-  (for ((i (below *watch-depth*)))
-    (puts out "  "))
-  (app msg (pair port (pair msg args))))
-
-(ds (dm-watch ,name (,@sig) ,@body)
-  (let ((params (sexpr-signature-parameters sig))
-        (names  (map (fun (x) (if (isa? x <lst>) (1st x) x)) params)))
-    `(dm ,name (,@sig)
-       (dlet ((*watch-depth* (+ *watch-depth* 1)))
-         (watch-msg out "WATCH %= <= %=\n" '(,name ,@sig) (lst ,@names))
-         (def r (seq ,@body))
-         (watch-msg out "WATCH %= => %=\n" '(,name ,@sig) r)
-         r))))
-
-;;; COLLECTING QUOTATIONS AND GLOBAL-BINDING REFS
-
-(ddv *top-met* #f)
-
-(dm asm-extract! (o|<program> f|<ast-function>)
-  (update-walk! asm-extract! o f))
-
-;; (dm asm-extract! (o|<immediate-constant> f|<ast-function>)
-;;   o)
-
-(dm asm-extract! (o|<raw-constant> f|<ast-function>)
-  o)
-
-(dm asm-lookup-data-ref 
-    (f|<ast-function> key value-thunk|<fun> value-index|<fun> => <int>)
-  ;; (msg out "INSERTING %= INTO %=\n" key (cv (function-debug-name f)))
-  (def index (+ (len (function-data-refs f)) (len (function-temporaries f))))
-  (when (isa? (function-data-refs f) <tab>) (set (function-data-refs f) '()))
-  (pushf (function-data-refs f) (value-thunk index))
-  index)
-
-;;   (let ((qb*   (function-data-refs f))
-;;         (probe (elt qb* key)))
-;;     (if (== probe nul)
-;;         (let ((index (len qb*)))
-;;           (set (elt qb* key) (value-thunk index))
-;;           index)
-;;         (value-index probe)))
-
-(dc <link-reference> (<reference>))
-  (dp reference-index (<link-reference> => <any>))
-  (dp constant-value (<link-reference> => <any>))
-
-(dm asm-extract! (o|<constant> f|<ast-function>)
-  (def value (constant-value o))
-  (def index (asm-lookup-data-ref 
-              f (constant-value o) 
-              (fun (index) (set (constant-index o) index) o) constant-index))
-  (new <link-reference>
-    reference-index index
-    constant-value  (constant-value o)))
-
-(dc <cell-link> (<computed-program>))
-  (dp cell-binding (<cell-link> => <any>))
-  (dp cell-index (<cell-link> => <int>))
-
-(dc <cell-reference> (<reference>))
-  (dp reference-index (<cell-reference> => <any>))
-  (dp reference-binding (<cell-reference> => <any>))
-
-(dm unconstrained-type? (o|<cell-reference> => <log>)
-  (unconstrained-type? (reference-binding o)))
-
-(dc <cell-assignment> (<assignment>))
-  (dp assignment-index (<cell-assignment> => <any>))
-
-(dm asm-extract! (o|<module-binding-reference> f|<ast-function>)
-  (def binding (reference-binding o))
-  (def index   (asm-lookup-data-ref
-                f binding
-                (fun (index) 
-                  (new <cell-link>
-                    cell-binding binding cell-index index))
-                cell-index))
-  (new <cell-reference>
-    reference-index index reference-binding binding))
-
-(dm asm-extract! (o|<global-assignment> f|<ast-function>)
-  (def binding (assignment-binding o))
-  (def index   (asm-lookup-data-ref
-                f binding
-                (fun (index) 
-                  (new <cell-link>
-                    cell-binding binding cell-index index))
-                cell-index))
-  (set (assignment-form o) (asm-extract! (assignment-form o) f))
-  (new <cell-assignment> 
-    assignment-index index
-    assignment-form  (assignment-form o)))
-
-(dm cv (x|<constant>) (constant-value x))
-(dm cv (x|<program>) #f)
-(dm met-name (x|<ast-function>) (cv (function-debug-name x)))
-
-(dm asm-extract! (o|<ast-method> f|<ast-function>)
-  (set (function-data-refs o)  '())
-  (set (function-debug-name o) (asm-extract! (function-debug-name o) f))
-  (set (function-signature o)  (asm-extract! (function-signature o) *top-met*))
-  (set (function-body o)       (asm-extract! (function-body o) o))
-  (def free          (function-free o))
-  (def free-bindings (map reference-binding free))
-  (def index         
-      (asm-lookup-data-ref 
-       f o (fun (index) (set (function-index o) index) o) function-index))
-  (set (function-free o) free-bindings)
-  (def r (new <closure-creation> 
-           closure-creation-index index
-           closure-creation-free  free))
-  r)
-
-(dm asm-extract! (o|<ast-primitive-definition> f|<ast-function>)
-  (def prim (assignment-form o))
-  (set (function-body prim) (asm-extract! (function-body prim) prim))
-  (asm-extract! (new <constant> constant-value #f) f))
-
-(dm asm-gather-temporaries! (o|<program> def|<ast-function>)
-  (collect-temporaries! def def '())
-  o)
-
-(dm asm-register-allocate! (top-met|<ast-function> main-met|<ast-function>)
-  (dlet ((*register-passive?* #t))
-    (collect-registers! top-met top-met #t))
-  top-met)
+(dm frame-mets! (o|<locals> met index)
+  (rep assign ((bindings (enum (locals-bindings o)))
+               (functions (enum (locals-functions o)))
+               (index index))
+    (if (fin? bindings)
+        (seq (when (> index (function-frame-len met))
+               (set (function-frame-len met) index))
+             (frame-mets! (locals-body o) met index))
+        (seq (set (binding-index (now bindings)) index)
+             (frame-mets! (now functions) met 1)
+             (assign (nxt bindings) (nxt functions) (+ index 1))))))
 
 (dm asm-closurize-main! (o|<program> r)
   (loc ((fab-empty-method (name body)
@@ -178,420 +47,254 @@
             function-debug-name (objectify-quotation name 4)
             function-signature  sig
             function-body       body)))
-    (def name     (cat-sym "---main---"))
+    (def name     (cat-sym "_main_"))
     (def main-met (fab-empty-method name o))
     (def call
         (new <regular-application> 
           application-function  main-met
           application-arguments (empty <arguments>)
           application-tail?     #f))
-    (def top-met (fab-empty-method 'top call))
-    (tup top-met main-met)))
-
-(dm asm-extract-things! (o r)
-  (def (tup top-met main-met) 
-    (asm-closurize-main! (sequentialize (flatten-seqs o)) r))
-  (dlet ((*top-met* top-met))
-    (set (function-body top-met)
-         (asm-extract! (function-body top-met) top-met)))
-  (tup (function-body top-met) top-met main-met))
-
-(dm collect-temporaries! (o|<ast-method> flat-fun r)
-  (sup o o '())
-  (do (fun (ref)
-        (when (isa? ref <ast-method>) (collect-temporaries! ref ref '())))
-      (function-data-refs o)))
+    call))
 
 ;;; DRIVER
 
-(dm asm-compute-ast (exp ct-env)
-  (objectify exp ct-env #f))
+(dm asm-compute-program (exp env)
+  (def ast (objectify-with-subtransaction exp env #f))
+  (def box (insert-box! ast))
+  (def dyn (analyze-ast box))
+  (def lft (lift! dyn))
+  (def top (asm-closurize-main! lft env))
+  (frame! top)
+  top)
 
-(dm asm-compute-program (e env)
-  (def ast (asm-compute-ast e env))
-  (def obj (sexp->object ast env))
-  (def (tup prg top-met main-met) (asm-extract-things! obj env))
-  (def dyn (analyze-dynamic-extent prg))
-  (def cal (analyze-calls dyn))
-  (def lft (lift! cal))
-  (asm-gather-temporaries! lft top-met)
-  (asm-register-allocate!  top-met main-met)
-  (tup lft top-met main-met))
+(dv <ord-tab> <tab>)
 
-(ddv *asm-fun* #f) 
+(dc <g2m> (<any>))
+  (dp g2m-vars    (<g2m> => <ord-tab>) (fab <ord-tab> 0))
+  (dp g2m-lits    (<g2m> => <ord-tab>) (fab <ord-tab> 0))
+  (dp g2m-nxt-lab (<g2m> => <int>)     -1)
 
 (dm asm-exp (e)
-  (def env (runtime-environment))
-  (def (tup prg top-met main-met) (asm-compute-program e env))
-  (asm-all prg top-met))
+  (def g2m (new <g2m>))
+  (def env (runtime-environment 'goo/user))
+  (def ast (asm-compute-program e env))
+  (asm-all g2m ast))
+
+(dm nxt-lab (x|<g2m> => <sym>)
+  (cat-sym "L" (incf (g2m-nxt-lab x))))
+
+(dm ord-tab-to-seq (x|<ord-tab> => <lst>)
+  (def v (fab <vec> (len x)))
+  (for (((tup y i) x)) (set (elt v i) y))
+  (as <lst> v))
+
+(dm asm-all (x|<g2m> p|<program>)
+  (def ops (asm x p #t))
+  (loc ((var-path (b) (lst (binding-module-name b) (binding-name b))))
+    (lst (ord-tab-to-seq (g2m-lits x))
+         (map var-path (ord-tab-to-seq (g2m-vars x)))
+         ops)))
 
 (dm out-code (out code)
   (msg out "(%=\n" (head code))
   (do (fun (e) (msg out "  %=\n" e)) (tail code))
   (msg out ")\n"))
 
-(dm asm-all (x|<program> f|<ast-function>)
-  (dlet ((*top-met* f))
-    `(DEF-MAIN-CODE ,@(asm-main f))))
-
 ;;; EMISSION
-
-(ddv *data-refs?* #f) ;; USE DATA-REF VECTOR?
-
-(ds (asm-rhs (,dst ,e) ,@body)
-  `(let ((,dst (program-register ,e))
-         (exp (seq ,@body)))
-     `(,exp)))
-
-(ds (asm-used-rhs (,dst ,e) ,@body)
-  `(if (program-register ,e)
-       (asm-rhs (,dst ,e) ,@body)
-       '()))
-
-;;; REFERENCES TO PROGRAMS
-
-(dm asm-ref (e|<program>)
-  (program-register e))
-
-(dm asm-ref (e|<sequential>)
-  (asm-ref (last e)))
-
-(dm asm-ref-binding (e|<program> v|<local-binding>) 
-  (binding-index v))
-
-(dm asm-ref-binding (e|<program> v|<module-binding>) 
-  (program-register e))
-
-(dm asm-ref (e|<reference>)
-  (asm-ref-binding e (reference-binding e)))
-
-(dm top-data-ref (index|<int>)
-  (asm-ref (elt (function-data-refs *top-met*) index)))
-
-(dm asm-ref (e|<link-reference>)
-  (if *data-refs?*
-      (program-register e)
-      (top-data-ref (reference-index e))))
-
-;; STATEMENTS
-
-(dg asm (e|<program>))
-
-(dm asm (e|<passive-program>) '())
-
-(dm asm-binding (e|<program> v|<local-binding>) 
-  '())
-
-;; TODO: REMOVE
-(dm asm-binding (e|<program> v|<module-binding>)
-  (msg out "BOGUS VAR %=\n" e)
-  (asm-used-rhs (d e) 
-    `(VM-VAR ,d ,(binding-module-name v) ,(binding-name v))))
-
-(dm asm (e|<reference>)
-  (asm-binding e (reference-binding e)))
-
-(dm asm (e|<cell-reference>)
-  (asm-used-rhs (d e) 
-    (if *data-refs?*
-        `(VM-VAR-GET ,d ,(reference-index e))
-        `(VM-VAR-REG ,d ,(top-data-ref (reference-index e))))))
-
-(dm asm-lit-ref (e|<program> index|<int>)
-  (if *data-refs?*
-      (asm-used-rhs (d e) `(VM-LIT-GET ,d ,index))
-      '()))
-
-(dm asm (e|<link-reference>)
-  (asm-lit-ref e (reference-index e)))
-
-(dm asm (e|<free-reference>)
-  (asm-used-rhs (d e) `(VM-ENV-GET ,d ,(reference-offset e))))
-
-(dm asm (e|<constant>)
-  (asm-used-rhs (d e) `(VM-LIT ,d ,(constant-value e))))
-
-(dm asm (e|<cell-link>)
-  (def b (cell-binding e))
-  (asm-used-rhs (d e)
-    `(VM-VAR ,d ,(binding-module-name b) ,(binding-name b))))
-
-;; TODO: RESOLVE VAR REF'S FOR BELOW THREE
-
-(dm asm (e|<cell-assignment>)
-  (cat! (asm (assignment-form e))
-        (asm-rhs (dst e)
-          `(VM-VAR-PUT ,dst ,(assignment-index e) 
-                       ,(asm-ref (assignment-form e))))))
-
-(dm asm (e|<definition>)
-  (cat! (let ((binding (assignment-binding e)))
-          `((VM-VAR-FAB ,(binding-module-name binding)
-                        ,(binding-name binding))))
-        (sup e)))
-
-(dm asm (e|<bound?>)
-  (asm-used-rhs (dst e)
-    `(VM-VAR-GET?
-      ,dst ,(reference-index (bound?-reference e)))))
-
-(dm asm (e|<box-read>)
-  (cat! (asm (box-reference e))
-        (asm-used-rhs (dst e)
-          `(VM-BOX-GET ,dst ,(asm-ref (box-reference e))))))
-
-(dm asm (e|<box-write>)
-  (cat! (asm (box-form e))
-        (asm (box-reference e))
-        (asm-rhs (dst e)
-          `(VM-BOX-PUT 
-            ,dst ,(asm-ref (box-form e)) ,(asm-ref (box-reference e))))))
-
-;; TODO: FIX REF
-
-(dm asm (e|<box-creation>)
-  (asm-rhs (dst e)
-    `(VM-BOX-FAB ,dst ,(reference-binding (box-reference (box-reference e))))))
-
-(dm asm (e|<alternative>)
-  (def con (cat! (asm (alternative-consequent e))
-                 (asm-used-rhs (dst e) 
-                  `(VM-STO ,dst ,(asm-ref (alternative-consequent e))))))
-  (def alt (cat! (asm (alternative-alternant e))
-                 (asm-used-rhs (dst e) 
-                  `(VM-STO ,dst ,(asm-ref (alternative-alternant e))))))
-  (cat! (asm (alternative-condition e))
-        `((VM-JMP-NOT
-           ,(asm-ref (alternative-condition e)) ,(+ (len con) 1)))
-        con
-        `((VM-JMP ,(len alt)))
-        alt))
 
 (dv <code> <lst>)
 
+;; STATEMENTS
+
+(dm asm-need (need?|<log> x|<code> => <code>)
+  (if need?
+      x
+      (tack x '((VM-POP)))))
+
+(dm asm-if (need?|<log> x|<code> => <code>)
+  (if need? x '()))
+
+(dg asm (x|<g2m> e|<program> need?|<log>))
+
+(dm asm (x|<g2m> e|<passive-program> need?|<log>) '())
+
+(dm asm (x|<g2m> e|<free-reference> need?|<log>)
+  (asm-if need? `((VM-ENV-GET (+ ,(reference-offset e) 1)))))
+
+(dv tack cat)
+
+(dm tack+need (need?|<log> codes|... => <code>)
+  (asm-need need? (app tack codes)))
+
+(dm get-var-ref (x|<g2m> e|<any> => <int>)
+  (def vars (g2m-vars x))
+  (or (elt-or vars e #f) (set (elt vars e) (len vars))))
+
+(dm asm (x|<g2m> e|<module-binding-reference> need?|<log>)
+  (def idx (get-var-ref x (reference-binding e)))
+  (asm-if need? `((VM-VAR-GET ,idx))))
+
+(dm get-lit-ref (x|<g2m> e|<any> => <int>)
+  (def lits (g2m-lits x))
+  (or (elt-or lits e #f) (set (elt lits e) (len lits))))
+
+(dm asm (x|<g2m> e|<constant> need?|<log>)
+  (def idx (get-lit-ref x (constant-value e)))
+  (asm-if need? `((VM-LIT ,idx))))
+
+(dm asm (x|<g2m> e|<global-assignment> need?|<log>)
+  (def idx (get-var-ref x (assignment-binding e)))
+  (tack+need need? (asm x (assignment-form e)) `((VM-VAR-PUT ,idx))))
+
+(dm asm (x|<g2m> e|<definition> need?|<log>)
+  (def idx (get-var-ref x e))
+  (tack+need need? `((VM-VAR-FAB ,idx)) (sup x e)))
+
+(dm asm (x|<g2m> e|<bound?> need?|<log>)
+  (def idx (get-var-ref x (reference-binding (bound?-reference e))))
+  (asm-if need? `((VM-VAR-GET? ,idx))))
+
+(dm asm (x|<g2m> e|<reference> need?|<log>)
+  (asm-if need? `((VM-LOC-GET ,(binding-index (reference-binding e))))))
+
+(dm asm (x|<g2m> e|<box-read> need?|<log>)
+  (asm-if need?
+   `((VM-BOX-GET ,(binding-index (reference-binding (box-reference e)))))))
+
+(dm asm (x|<g2m> e|<box-write> need?|<log>)
+  (tack+need need?
+   (asm x (box-form e) #t)
+   `((VM-BOX-PUT ,(binding-index (reference-binding (box-reference e)))))))
+
+(dm asm (x|<g2m> e|<box-creation> need?|<log>)
+  (def binding (reference-binding (box-reference (box-reference e))))
+  (asm-if need? `(VM-BOX-FAB ,(binding-index binding))))
+
+(dm asm (x|<g2m> e|<alternative> need?|<log>)
+  (def l1 (nxt-lab x))
+  (def l2 (nxt-lab x))
+  (tack (asm x (alternative-condition e) #t)
+        `((VM-JMP-NOT ,l1))
+        (asm x (alternative-consequent e) need?)
+        `((VM-JMP ,l2))
+        `(,l1)
+        (asm x (alternative-alternant e) need?)
+        `(,l2)))
+
 (dm flatten (args|<code> => <code>) 
-  (fold cat! (empty <code>) args))
+  (fold tack (empty <code>) args))
 
-(dm asm (e|<programs>)
-  (flatten (as <lst> (map asm e))))
+(dm asm (x|<g2m> e|<arguments> need?|<log>)
+  (flatten (as <lst> (map (fun (y) (asm x y #t)) e))))
 
-(dm asm (e|<regular-application>)
-  (cat! (asm (application-function e))
-        (asm (application-arguments e))
-        (map (fun (x) `(VM-PUSH ,(asm-ref x))) (application-arguments e))
-        (asm-rhs (dst e)
-          `(VM-CALL ,dst ,(asm-ref (application-function e)) 
-                    ,(len (application-arguments e))))))
+(dm asm (x|<g2m> e|<free-environment> need?|<log>)
+  (flatten (as <lst> (map (fun (y) (asm x y #t)) e))))
 
-(dm asm (e|<fix-let>)
-  (cat! (flatten
+(dm asm (x|<g2m> e|<sequential> need?|<log>)
+  (rep emit ((res '()) (e e))
+    (if (empty? (tail e))
+        (flatten (rev! (pair (asm x (head e) need?) res)))
+        (emit (pair (asm x (head e) #f) res) (tail e)))))
+
+(dm asm (x|<g2m> e|<regular-application> need?|<log>)
+  (tack (asm x (application-function e) #t)
+        (asm x (application-arguments e) #t)
+        (asm-need need? `((VM-APP ,(len (application-arguments e)))))))
+
+(dm asm (x|<g2m> e|<fix-let> need?|<log>)
+  (tack (flatten
           (packing ()
             (for ((binding (fix-let-bindings e)) (type (fix-let-types e))
                   (init (fix-let-arguments e)))
-              (pack (asm init))
+              (pack (asm x init #t))
               (unless (or (not type) (unconstrained-type? type))
-                (pack (asm type))
-                (pack `((VM-TYP-CHK ,(asm-ref init) ,(asm-ref type)))))
-              (pack `((VM-STO ,(binding-index binding) ,(asm-ref init)))))))
-        (asm (fix-let-body e))
-        (asm-used-rhs (dst e) `(VM-STO ,dst ,(asm-ref (fix-let-body e))))))
+                (pack `((VM-DUP)))
+                (pack (asm x type #t))
+                (pack `((VM-TYP-CHK))))
+              (pack `((VM-LOC-PUT ,(binding-index binding)))))))
+        (asm x (fix-let-body e) need?)))
 
-(dm asm (e|<locals>)
-  (cat! (flatten (map2 (fun (binding init)
-                         (cat! (funshell-asm binding init #f)
-                               `((VM-STO ,(binding-index binding) 
-                                         ,(asm-ref init)))))
+(dm asm (x|<g2m> e|<bind-exit> need?|<log>)
+  (tack (asm x (bind-exit-main-fun e) #t)
+        (asm-need need? `((VM-ESC)))))
+
+(dm asm (x|<g2m> e|<unwind-protect> need?|<log>)
+  (tack (asm x (unwind-protect-protected-thunk e) #t)
+        (asm x (unwind-protect-cleanup-thunk e) #t)
+        (asm-need need? `((VM-FIN)))))
+
+(dm asm (x|<g2m> e|<monitor> need?|<log>)
+  (tack (asm x (monitor-type e) #t)
+        (asm x (monitor-info e) #t)
+        (asm x (monitor-test e) #t)
+        (asm x (monitor-handler e) #t)
+        (asm x (monitor-main-thunk e) #t)
+        (asm-need need? `((VM-TRY)))))
+
+(dm asm-fun (x|<g2m> e|<ast-method> fab-op|<sym> need?|<log>)
+  (def l1 (nxt-lab x))
+  (def l2 (nxt-lab x))
+  (def n  (len (function-free e)))
+  (tack (asm x (function-free e) #t)
+        `((,fab-op ,n ,l1))
+        `((VM-JMP ,l2))
+        `(,l1)
+        (asm-code x e)
+        `(,l2)))
+
+(dm asm-fun-shell (x|<g2m> e|<ast-function> need?|<log>)
+  (tack (asm x (function-debug-name e) #t) 
+        (asm x (function-signature e)  #t)))
+                               
+(dm asm (x|<g2m> e|<ast-method> need?|<log>)
+  (tack (asm-fun-shell x e need?)
+        (asm-fun x e 'VM-FUN-FAB+INI need?)))
+
+(dm asm (x|<g2m> e|<ast-signature> need?|<log>)
+  (tack (flatten (map (fun (y) (asm x y #t)) (signature-specs e)))
+        (asm x (signature-value e) #t)
+        (asm x (signature-names e) #t)
+        (asm-need need?
+         `((VM-SIG-FAB 
+            ,(constant-value (signature-arity e))
+            ,(if (constant-value (signature-nary? e)) 1 0))))))
+
+(dm asm (x|<g2m> e|<ast-generic> need?|<log>)
+  (tack (asm-fun-shell x e need?)
+        (asm-need need? `((VM-GEN-FAB)))))
+
+(dm asm (x|<g2m> e|<locals> need?|<log>)
+  (tack (flatten (map2 (fun (b f)
+                         (def dyn? (binding-dynamic-extent? b))
+                         (tack (asm-fun-shell x f need?)
+                               `((,(if dyn? 'VM-FUN-FAB-DYN 'VM-FUN-FAB)))
+                               `((VM-LOC-PUT ,(binding-index b)))))
                        (locals-bindings e) (locals-functions e)))
-        (flatten (map2 (fun (binding init) (funinit-asm binding init))
+        (flatten (map2 (fun (b f) 
+                         (tack `((VM-LOC-GET ,(binding-index b)))
+                               (asm-fun x f 'VM-FUN-INI #t)))
                        (locals-bindings e) (locals-functions e)))
-        (asm (locals-body e))
-        (asm-used-rhs (dst e) `(VM-STO ,dst ,(asm-ref (locals-body e))))))
+        (asm x (locals-body e) need?)))
 
-;; TODO: FLATTEN BELOW
-(dm asm (e|<bind-exit>)
-  (cat! (asm (bind-exit-main-fun e))
-        (asm-rhs (dst e) 
-          `(VM-WITH-EXIT ,dst ,(asm-ref (bind-exit-main-fun e))))))
-
-(dm asm (e|<unwind-protect>)
-  (cat! (asm (unwind-protect-protected-thunk e))
-        (asm (unwind-protect-cleanup-thunk e))
-        (asm-rhs (dst e)
-          `(VM-WITH-CLEANUP ,dst
-            ,(asm-ref (unwind-protect-protected-thunk e))  
-            ,(asm-ref (unwind-protect-cleanup-thunk e))))))
-
-(dm asm (e|<monitor>)
-  (cat! (asm (monitor-type e))
-        (asm (monitor-info e))
-        (asm (monitor-test e))
-        (asm (monitor-handler e))
-        (asm (monitor-main-thunk e))
-        (asm-rhs (dst e)
-          `(VM-WITH-MONITOR ,dst
-            ,(asm-ref (monitor-type e))
-            ,(asm-ref (monitor-info e))
-            ,(asm-ref (monitor-test e))
-            ,(asm-ref (monitor-handler e))
-            ,(asm-ref (monitor-main-thunk e))))))
-
-(dm asm (e|<closure-creation>)
-  (def n (len (closure-creation-free e)))
-  (if (== n 0)
-      (asm-lit-ref e (closure-creation-index e))
-      (cat! (asm (closure-creation-free e))
-            (asm-rhs (dst e)
-              `(VM-FUN-FAB ,dst ,(closure-creation-index e) ,n
-                           ,@(map asm-ref (closure-creation-free e)))))))
-
-(dm funshell-asm (b|<binding> e|<closure-creation>)
-  (def n (len (closure-creation-free e)))
-  (asm-rhs (dst e)
-    (if (== n 0)
-        `(VM-LIT-GET   ,dst ,(closure-creation-index e))
-        `(VM-FUN-SHELL ,dst ,(if (binding-dynamic-extent? b) 1 0)
-                       ,(closure-creation-index e)
-                       ,n))))
-
-;; TODO: BINDING??? SHOULD USE SOME INDEX
-(dm funinit-asm (b|<binding> e|<closure-creation>)
-  (def n (len (closure-creation-free e)))
-  (if (== n 0)
-      '()
-      (cat! (asm (closure-creation-free e))
-            `((VM-FUN-INIT 
-               ,b ,n ,@(map asm-ref (closure-creation-free e)))))))
-
-;; TODO: HACK -- THIS SHOULD BE CORRECTED EARLIER
-(dm real-signature-specs (sig)
-  (def types (signature-specs sig))
-  (if (constant-value (signature-nary? sig))
-      (sub types 0 (- (len types) 1))
-      types))
-
-;; TODO: FIX ASM-QUOTATIONS
-
-(dm asm (e|<ast-signature>)
-  (def specs (real-signature-specs e))
-  (cat! (flatten (map asm specs))
-        (asm (signature-value e))
-        (asm (signature-arity e))
-        (asm (signature-nary? e))
-        (flatten (map asm (signature-names e)))
-        (asm-rhs (dst e)
-          `(VM-SIG-FAB ,dst
-            ,(asm-ref (signature-value e))
-            ,(asm-ref (signature-arity e))
-            ,(asm-ref (signature-nary? e))
-            ,@(map asm-ref (signature-names e))
-            ,@(map asm-ref specs)))))
-
-(dm asm (e|<ast-generic>)
-  (cat! (asm (function-debug-name e)) 
-        (asm (function-signature e))
-        (asm-rhs (dst e)
-          `(VM-GEN-FAB ,dst ,(asm-ref (function-debug-name e))
-                       ,(asm-ref (function-signature e))))))
-
-(dm asm (e|<ast-method>)
-  (asm-closure-structure e))
-
-;;; FUNCTION DEFINITIONS
-
-(dm asm-functions (definitions)
-  (flatten 
-   (rev! (packing ()
-           (do (fun (def) 
-                 (unless (isa? def <ast-primitive>)
-                   (pack (asm-closure-structure def))))
-               definitions)))))
-
-(dm asm-frame-len (defn|<ast-function>)
-  (+ (len (function-registers defn))
-     (len (function-temporaries defn))))
-
-(dm asm-body (def|<ast-function>)
-  `(,@(asm (function-body def))
-    ,@(asm-return def)))
-
-(dm asm-code (def|<ast-function>)
-  (dlet ((*data-refs?* #t))
-    `(CODE (VM-ENV-LNK ,(asm-frame-len def))
-           ,@(asm-body def))))
-
-(df asm-prep-fun (defn)
-  (set (function-data-refs defn) (rev! (function-data-refs defn)))
-  ;; temporaries are first in frame
-  (def tmps (function-temporaries defn))
-  (for ((tmp tmps) (i (from 0)))
-    (set (binding-index tmp) i))
-  ;; registers start after temporaries in frame
-  (for ((reg (function-registers defn)) (i (from (len tmps))))
-    (set (program-register reg) i))
-  ;; parameters start below frame pointer
-  (for ((bnd (function-bindings defn)) (i (from 1)))
-    (set (binding-index bnd) (neg i))))
-
-(ds (with-asm-fun (,defn) ,@body)
-  (let ((d (gensym)))
-    `(let ((,d ,defn))
-       (asm-prep-fun ,d)
-       (dlet ((*asm-fun* ,d)) ,@body))))
-
-(dm asm-closure-structure (defn)
-  ;; (msg out "REFS %= %=\n" (met-name defn) (function-data-refs defn))
-  (with-asm-fun (defn)
-    (def refs (function-data-refs defn))
-    (cat! (asm (function-debug-name defn))
-          (asm (function-signature defn))
-          (flatten (map asm refs))
-          (asm-rhs (dst defn)
-            `(VM-MET-FAB ,dst 
-               ,(asm-ref (function-debug-name defn))
-               ,(asm-ref (function-signature defn))
-               ,@(map asm-ref refs)
-               ,(asm-code defn)
-               )))))
-
-(dm asm-main (defn)
-  (with-asm-fun (defn)
-    `((VM-ENV-LNK ,(asm-frame-len defn))
-      ,@(flatten (map asm (function-data-refs defn)))
-      ,@(asm-body defn))))
-
-(dm asm-return (defn)
-  (def type (function-value defn))
-  (def body (function-body defn))
-  (cat! (if (or (not type) (unconstrained-type? type)) 
-            '()
-            (cat! (asm type)
-                  `((VM-TYP-CHK ,(asm-ref body) ,(asm-ref type)))))
-        `((VM-RET ,(asm-ref body)))))
+(dm asm-code (x|<g2m> def|<ast-function>)
+  (for ((bnd (function-bindings def)) (i (from 1)))
+    (set (binding-index bnd) (neg i)))
+  `((VM-ENV-LNK ,(function-frame-len def)) 
+    ,@(asm x (function-body def) #t)
+    ,@(if (unconstrained-type? (function-value def)) 
+          `((VM-RET))
+          `((VM-RET-CHK)))))
 
 ;; TODO: BINDING-NAME ... PERHAPS TWO STEPS
-(dm asm (e|<ast-macro-definition>)
-  (cat! (asm (assignment-form e) #f)
-        (asm-rhs (dst e)
-          `(VM-MACRO-FAB ,dst
-            ,(binding-name (assignment-binding e))
-            ,(asm-ref (assignment-form e))))))
-
-;; TODO: APPLICATION BINDING IS INCORRECT
-
-(dm asm (e|<predefined-application>)
-  (def args (as <lst> (application-arguments e)))
-  (cat! ;; (asm (application-binding e))
-   (asm (application-arguments e))
-   (map (fun (x) `(VM-PUSH ,(asm-ref x))) args)
-   (asm-rhs (dst e)
-     `((VM-PRE-CALL 
-        ,dst 
-        ;; ,(asm-ref (application-binding e))
-        )))))
-
-;; TODO: BROKEN
-;; (df close-type (t) (fun ((x t)) x))
+(dm asm (x|<g2m> e|<ast-macro-definition> need?|<log>)
+  (tack (asm x (assignment-form e) #f)
+        `((VM-MAC-FAB ,(binding-name (assignment-binding e))))))
 
 (export
+  asm-exp
   )
 
+#/
+(set goo/io/write:*max-print-length*  100)
+(set goo/io/write:*max-print-depth*  8)
+/#
