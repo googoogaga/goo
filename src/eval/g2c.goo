@@ -21,7 +21,8 @@
 (use strings)
 (use proto/system)
 
-(dv *definitions* #f) ;; TODO: thread variable
+(ddv *definitions*      #f)
+(ddv *dynamic-linking?* #f)
 
 
 ;;;;=======================================================================
@@ -115,6 +116,34 @@
     (generate-makefile loader)
     #f))
 
+(dv *tmp-file-counter* -1)
+
+(dm p2c-exp (exp modnam)
+  (let ((env      (runtime-environment modnam))
+        (mod      (environment-module env))
+        (name     (format-to-string 
+                   "exp-%d-%d" (process-id) (inc *tmp-file-counter*)))
+        (file     (add-tmp-path name))
+        (out-file (c-filename file))
+        (ast      (objectify exp env #f))
+        (prg      (compute-program ast env)))
+    (call-with-output-file
+     out-file
+     (fun (out-port)
+       (dlet ((*dynamic-linking?* #t)
+              (*definitions*      (program-definitions prg))) 
+         (generate-c-module out-port ast prg mod))))
+    file))
+
+(dp %compile-load)
+
+(dm compile-load (name)
+  (%compile-load (%su name)))
+
+(dm p2c-eval (exp modnam)
+  (let ((name (p2c-exp exp modnam)))
+    (compile-load name)))
+
 ;;; Backwards compatibility for users: Build p2c itself.
 (dv *p2c-app* (p2c-def-app "p2c" 'main))
 (dm p2c-top () (p2c-build-app *p2c-app*))
@@ -144,7 +173,7 @@
     ;; (format out "FLT %=\n" flt)
     (gather-temporaries! flt)
     ;; (format out "TMP %=\n" flt)
-    (register-allocate! flt)
+    (register-allocate! flt #f)
     ;; (format out "REG %=\n" flt)
     ;; (format out "\n\n%=\n\n" prg)
     prg)))
@@ -155,7 +184,8 @@
   (generate-quotation-forwards code-out (program-quotations prg))
   (generate-function-forwards code-out (program-definitions prg))
   (generate-function-bodies code-out (program-definitions prg))
-  (generate-module-info code-out mod)
+  (unless *dynamic-linking?*
+    (generate-module-info code-out mod))
   (generate-module-init code-out mod (program-form prg)) 
   (generate-trailer code-out)
   prg)
@@ -191,7 +221,7 @@
         loader)
        (format code-out "\t%s\n\n" (obj-filename init-name))
        (format code-out "%s: $(C_OBJS_DD) $(OBJS)\n" exe-name)
-       (format code-out "\t$(CC) -o %s $(C_OBJS_DD) $(LIBS) $(OBJS)\n\n"
+       (format code-out "\t$(CC) -Wl,--export-dynamic -o %s $(C_OBJS_DD) $(LIBS) $(OBJS)\n\n"
                exe-name sep sep)
        (format code-out "clean:\n\trm -f %s $(OBJS)\n"
                exe-name sep)))))
@@ -207,9 +237,11 @@
   (write code-out e)) 
 
 (dm generate-header (code-out e)
-  (format code-out "/* PROTO 2 C $REVISION: 0.2 $ \n")
+  (format code-out "/* PROTO 2 C $REVISION: 0.107 $ \n")
   ;; (when pp (pp e code-out))
-  (format code-out "  */\n\n#include \"prt.h\"\n"))
+  (format code-out "  */\n\n#include \"prt.h\"\n")
+  (when *dynamic-linking?*
+    (format code-out "#include \"dlprt.h\"\n")))
 
 (dm generate-trailer (code-out)
   (format code-out "\n/* END OF GENERATED CODE. */\n"))
@@ -231,13 +263,14 @@
    (module-target-environment mod)))
 
 (dm generate-global-binding (code-out imported? gb)
-  (when (== (binding-kind gb) 'global)
-    (let ((name (binding-name gb)))
-      (format code-out "%s(%s,\"%s\",\"%s\");\n" 
-              (if imported? "EXT" "DEF")
-              (mangle-module-binding gb)
-              (mangle-string-literal (binding-module-name gb))
-              (mangle-string-literal name)))))
+  (let ((kind (binding-kind gb)))
+    (when (or (== kind 'global) (== kind 'runtime))
+      (let ((name (binding-name gb)))
+        (format code-out "%s(%s,\"%s\",\"%s\");\n" 
+                (if imported? "EXT" "DEF")
+                (mangle-module-binding gb)
+                (mangle-string-literal (binding-module-name gb))
+                (mangle-string-literal name))))))
 
 ;;;; NAME MANGLING
 
@@ -553,7 +586,8 @@
   (binding->c v code-out))
 
 (dm reference->c ((v <module-binding>) code-out)
-  (write-string code-out "CHKREF")
+  (write-string 
+   code-out (if (== (binding-kind v) 'quotation) "LITREF" "VARREF"))
   (between-parentheses (code-out)
     (binding->c v code-out)))
 
@@ -591,8 +625,11 @@
 (dm to-c ((e <global-assignment>) f d code-out)
   (to-c (assignment-form e) f d code-out)
   (with-expression (e d code-out)
+    (write-string code-out "VARSET(")
     (binding->c (assignment-binding e) code-out)
-    (write-string code-out " = ") (gen-ref (assignment-form e) code-out)))
+    (write-string code-out ",") 
+    (gen-ref (assignment-form e) code-out)
+    (write-string code-out ")")))
 
 (dm to-c ((e <bound?>) f d code-out)
   (with-used-expression (e d code-out)
@@ -660,7 +697,7 @@
 (dm to-c ((e <regular-application>) f d code-out)
   (let ((function (application-function e)))
     (if (and (application-tail? e) 
-	     (isa? f <flat-function>)
+	     (isa? f <ast-method>)
 	     (not (function-nary? f))
 	     (isa? function <free-reference>)
 	     (reference-self? function))
@@ -745,7 +782,7 @@
 (dm to-c ((e <predefined-application>) f d code-out)
   (let ((binding (application-binding e)))
     (if (and (application-tail? e) 
-	     (isa? f <primitive-definition>)
+	     (isa? f <ast-primitive>)
 	     (== binding (function-binding f)))
 	(generate-self-recursive-call e f d code-out)
         (seq 
@@ -798,10 +835,6 @@
           (for ((x (closure-creation-free e)))
             (write-char code-out #\,) (gen-ref x code-out)))))))
 
-(dm signature-arity ((e <ast-signature>))
-  (let ((specs (signature-specs e)))
-    (if (signature-nary? e) (- (len specs) 1) (len specs))))
-
 (dm to-c ((e <ast-macro-definition>) f d code-out)
   (to-c (assignment-form e) #f d code-out)
   (with-expression (e d code-out)
@@ -829,7 +862,7 @@
 (dm generate-function-specs (code-out sig)
   ;; TODO: HACK -- THIS SHOULD BE CORRECTED EARLIER
   (let ((types (signature-specs sig))
-        (specs (if (signature-nary? sig)
+        (specs (if (constant-value (signature-nary? sig))
 		   (sub types 0 (- (len types) 1))
 		   types)))
     (gen-fab-list code-out specs)))
@@ -842,8 +875,8 @@
     (between-parentheses-comma-separated (code-out)
       (gen-fab-list code-out (signature-names e))
       (generate-function-specs code-out e)
-      (generate-quotation code-out (signature-nary? e))
-      (generate-quotation code-out (signature-arity e))
+      (gen-ref (signature-nary? e) code-out)
+      (gen-ref (signature-arity e) code-out)
       (gen-ref (signature-value e) code-out)
       (write-string code-out (mangle-boot-name "nil")))))
 
@@ -866,8 +899,9 @@
   (for ((def definitions))
     (generate-function-forward code-out def)))
 
-(dm generate-function-forward (code-out (defn <primitive-definition>))
-  (format code-out "extern P %s (" 
+(dm generate-function-forward (code-out (defn <ast-primitive>))
+  (format code-out "%s P %s (" 
+          (if *dynamic-linking?* "static" "extern")
 	  (mangle-module-binding (function-binding defn)))
   (for-commas code-out ((i (from-below 0 (len (function-bindings defn)))))
     (write-string code-out "P"))
@@ -900,7 +934,7 @@
 
 (dm generate-functions (definitions f d code-out)
   (do (fun (def) 
-	(unless (isa? def <primitive-definition>)
+	(unless (isa? def <ast-primitive>)
 	  (generate-closure-structure def f d code-out)))
       (rev definitions)))
 
@@ -913,7 +947,9 @@
       (generate-function-body-reference code-out definition)
       (gen-ref (function-debug-name definition) code-out)
       (gen-ref (function-signature definition) code-out)
-      (write-string code-out "ENVNUL"))))
+      (write-string code-out "ENVNUL")
+      (write-string code-out "PNUL")
+      (gen-ref (function-source definition) code-out))))
 
 (dm generate-function-body-reference (code-out definition)
   (write-string code-out "FUNCODEREF(")
@@ -931,7 +967,7 @@
       (for-commas code-out ((b bindings) (i (from 1)))
         (format code-out "a%d" i)))))
 
-(dm generate-return ((defn <primitive-definition>) d code-out)
+(dm generate-return ((defn <ast-primitive>) d code-out)
   (with-statement (d code-out)
     (write-string code-out "return ") (gen-ref (function-body defn) code-out)))
 
@@ -942,7 +978,7 @@
     (write-string code-out "RET")
     (between-parentheses (code-out) (gen-ref (function-body defn) code-out))))
 
-(dm primitive-inlinable? ((e <primitive-definition>))
+(dm primitive-inlinable? ((e <ast-primitive>))
   (let ((binding (function-binding e)))
     ;; TODO: ADD FUNCTION ADJECTIVES
     (mem? '(
@@ -962,8 +998,10 @@
 	    )
  	   (binding-name binding))))
 
-(dm generate-function-code (code-out (e <primitive-definition>))
-  (format code-out "\n%sP " (if (primitive-inlinable? e) "INLINE " ""))
+(dm generate-function-code (code-out (e <ast-primitive>))
+  (format code-out "\n%s%sP " 
+          (if *dynamic-linking?* "static " "")
+          (if (primitive-inlinable? e) "INLINE " ""))
   (binding->c (function-binding e) code-out)
   (between-parentheses (code-out)
     (for-commas code-out ((binding (function-bindings e)))
@@ -1126,26 +1164,29 @@
   (cat "void " (module-init-name name) " (void)"))
 
 (dm generate-module-init (code-out mod form)
-  (let ((name       (module-name mod))
+  (let ((name       (if *dynamic-linking?* "dl" (module-name mod)))
         (init-decl  (module-init-decl name))
         (env        (module-target-environment mod))
         (uses       (environment-uses-modules env))
         (uses-names (map module-name uses)))
-    (write-string code-out "\n/* MODULES USED: */\n\n")
-    (for ((n uses-names))
-      (format code-out "extern %s;\n" (module-init-decl n)))
+    (unless *dynamic-linking?*
+      (write-string code-out "\n/* MODULES USED: */\n\n")
+      (for ((n uses-names))
+        (format code-out "extern %s;\n" (module-init-decl n))))
     (write-string code-out "\n/* EXPRESSION: */\n\n")
     (format code-out "extern %s;\n\n" init-decl)
     (format code-out "%s {\n" init-decl)
     (write-string code-out "  static int need_init = 1;\n")
     (write-string code-out "  if (!need_init) return;\n\n")
     (write-string code-out "  need_init = 0;\n")
-    (for ((n uses-names))
-      (format code-out "  %s();\n" (module-init-name n)))
-    (write-string code-out "\n")
+    (unless *dynamic-linking?*
+      (for ((n uses-names))
+        (format code-out "  %s();\n" (module-init-name n)))
+      (write-string code-out "\n"))
     (to-c form #f 1 code-out)
-    (write-string code-out "\n")    
-    (write-string code-out "  YPprint_cpu_usage(__FILE__);\n");
+    (write-string code-out "\n")
+    (unless *dynamic-linking?*
+      (write-string code-out "  YPprint_cpu_usage(__FILE__);\n"))
     (write-string code-out "}\n")))
 
 (dm generate-main (code-out mod)
@@ -1166,4 +1207,6 @@
   p2c-def-app
   p2c-build-app
   p2c-top
-  p2c-clean)
+  p2c-clean
+  p2c-exp
+  p2c-eval)

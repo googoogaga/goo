@@ -8,6 +8,7 @@
 (use syntax)
 (use strings)
 (use proto/system) ; Needed by runtime module loader.
+(use write)
 
 ;;; TODO: MOVE TYPE OUT OF SIGNATURE
 
@@ -22,10 +23,11 @@
 
 ;;; programs
 
+(dv <bot> (lst 'bot))
+
 (dc <program> (<any>))
   (slot <program> program-type)
-
-(dm program-register ((x <program>)) #f) ;; TODO: REMOVE
+  (slot <program> (program-register <any>) #f) ;; TODO: FALSE-OR INT
 
 (dc <computed-program> (<program>))
   (slot <computed-program> (program-register <any>) #f) ;; TODO: FALSE-OR INT
@@ -39,6 +41,7 @@
 (dc <binding> (<any>))
   (slot <binding> (binding-name <binding-name>))
   (slot <binding> (binding-type <program>))
+  (slot <binding> binding-inferred-type <bot>)
 
 ;; Global boxes are used by the interpreter to store the values of
 ;; global variables.
@@ -66,6 +69,7 @@
   (slot <local-binding> binding-mutable?        #f)
   (slot <local-binding> binding-dynamic-extent? #t)
   (slot <local-binding> binding-dotted?         #f)
+  (slot <local-binding> binding-index           #f)
 
 ;; (dc <next-methods-binding> (<binding>))
 
@@ -92,9 +96,11 @@
 
 ;; (dc <next-methods-reference> (<real-reference>))
 
-(dc <global-reference> (<real-reference>))
+(dc <module-binding-reference> (<real-reference>))
 
-(dc <runtime-reference> (<real-reference>))
+(dc <global-reference> (<module-binding-reference>))
+
+(dc <runtime-reference> (<module-binding-reference>))
 
 (dc <predefined-reference> (<real-reference>))
 
@@ -114,6 +120,8 @@
 
 (dc <definition> (<global-assignment>))
 
+;;; TODO: THE FOLLOWING DEFS AREN'T REALLY USED -- PERHAPS ZAP
+
 (dc <variable-definition> (<definition>))
 
 (dc <ast-generic-definition> (<definition>))
@@ -131,10 +139,11 @@
   (slot <ast-signature> signature-names    '())
   (slot <ast-signature> signature-specs    '())
   (slot <ast-signature> signature-nary?    #f)
+  (slot <ast-signature> signature-arity    #f)
   (slot <ast-signature> signature-value    #f)
 
 (dc <ast-function> (<computed-program>))
-  (slot <ast-function> function-binding #f)
+  (slot <ast-function> function-binding    #f)
   (slot <ast-function> function-debug-name #f)
   ;;  (slot <ast-function> function-next-methods-binding)
   (slot <ast-function> function-signature)
@@ -144,18 +153,50 @@
 (df function-specs ((x <ast-function>)) 
   (signature-specs (function-signature x)))
 (df function-nary? ((x <ast-function>))
-  (signature-nary? (function-signature x)))
+  (constant-value (signature-nary? (function-signature x))))
 (df function-value ((x <ast-function>))
   (signature-value (function-signature x)))
 
 (dm function-kind ((x <ast-function>)) "FUN")
 
-(dc <ast-method> (<ast-function>))
-  (slot <ast-method> function-body)
+(dc <programs> (<passive-program>))
+
+(dm as-lst ((e <programs>) => <lst>)
+  (rep loop ((res '()) (e e))
+    (if (empty? e) (rev! res) (loop (pair (head e) res) (tail e)))))
+
+(ds (def-list ,name (,@supers))
+  (let ((class  (make-sym "<" name ">"))
+	($empty (make-sym "$" name "-empty")))
+    `(seq (dc ,class (<lst> ,@supers))
+	  (dv ,$empty (isa ,class (set head #f) (set tail #f)))
+	  (dm as ((p (t= ,class)) (x ,class) => <lst>) x)
+	  (dm as ((p (t= <lst>))  (x ,class) => <lst>) (as-lst x))
+	  (dm as ((p (t= ,class)) (x <lst>) => <lst>)
+            (apply fabs ,class x))
+	  (df ,name (h t) (isa ,class (set head h) (set tail t)))
+	  (dm empty ((e (t= ,class)) => ,class) ,$empty))))
+
+(ds (def-programs ,name) `(def-list ,name (<programs>)))
+
+(dc <ast-embodied-function> (<ast-function>))
+  (slot <ast-embodied-function> function-body            #f)
+  (slot <ast-embodied-function> function-index           0)
+  (slot <ast-embodied-function> function-temporaries     '())
+  (slot <ast-embodied-function> function-registers       '())
+  (slot <ast-embodied-function> function-data-refs       '())
+  (slot <ast-embodied-function> function-self-recursive? #f)
+  (slot <ast-embodied-function> function-source          #f)
+
+(def-programs free-environment)
+
+(dc <ast-method> (<ast-embodied-function>))
+  (slot <ast-method> (function-free <free-environment>)
+	(empty <free-environment>))
 
 (dm function-kind ((x <ast-method>)) "MET")
 
-(dc <ast-primitive> (<ast-method>))
+(dc <ast-primitive> (<ast-embodied-function>))
 
 (dm function-kind ((x <ast-primitive>)) "PRM")
 
@@ -168,32 +209,15 @@
   (slot <alternative> alternative-consequent)
   (slot <alternative> alternative-alternant)
 
-(dc <programs> (<passive-program>))
-
-(ds (def-list ,name (,@supers))
-  (let ((class  (make-sym "<" name ">"))
-	($empty (make-sym "$" name "-empty")))
-    `(seq (dc ,class (<lst> ,@supers))
-	  (dv ,$empty (isa ,class (set head #f) (set tail #f)))
-	  (dm as ((p (t= ,class)) (x ,class) => <lst>)
-            x)
-	  (dm as ((p (t= <lst>))  (x ,class) => <lst>)
-            (apply lst x))
-	  (dm as ((p (t= ,class)) (x <lst>) => <lst>)
-            (apply fabs ,class x))
-	  (df ,name (h t) 
-            (isa ,class (set head h) (set tail t)))
-	  (dm empty ((e (t= ,class)) => ,class)
-            ,$empty))))
-
-(ds (def-programs ,name) `(def-list ,name (<programs>)))
-
 (def-programs sequential)
 
 (dc <constant> (<passive-program>))
   (slot <constant> constant-value)
+  (slot <constant> constant-index)
 
 (dc <raw-constant> (<constant>))
+
+(dc <immediate-constant> (<constant>))
 
 (dc <application> (<computed-program>))
   (slot <application> application-arguments)
@@ -202,6 +226,9 @@
 (dc <regular-application> (<application>))
   (slot <regular-application> application-function)
   (slot <regular-application> application-known? #f)
+
+(dc <method-application> (<regular-application>))
+  (slot <method-application> application-next-methods)
 
 (dc <predefined-application> (<application>))
   (slot <predefined-application> application-binding)
@@ -215,12 +242,6 @@
 (def-programs fab-list)
 
 (def-programs arguments)
-
-(dm as ((c <lst>) (e <arguments>) => <lst>)
-  (rep loop ((res '()) (e e))
-    (if (empty? e)
-	(rev! res)
-	(loop (arguments res e)))))
 
 (dc <locals> (<computed-program>))
   (slot <locals> locals-bindings)
@@ -322,6 +343,12 @@
 
 (dm objectify-quotation (value r => <constant>)
   (isa <constant> (set constant-value value)))
+
+(dm objectify-quotation ((value <int>) r => <immediate-constant>)
+  (isa <immediate-constant> (set constant-value value)))
+
+(dm objectify-quotation ((value <chr>) r => <immediate-constant>)
+  (isa <immediate-constant> (set constant-value value)))
 
 (dm objectify-raw (value r => <raw-constant>)
   (isa <raw-constant> (set constant-value value)))
@@ -655,6 +682,17 @@
 ;;; in objectify-bindings-list. 
 ;;; all bindings are considered immutable at the beginning.
 
+(ddv *record-source?* #f)
+
+(dm objectify-function-source (sig body r => <constant>)
+  (dlet ((*max-print-depth*  $max-int)
+         (*max-print-length* $max-int))
+    (objectify-quotation
+     (and *record-source?*
+          (format-to-string "(fun %s %s)" 
+                            sig (if (isa? body <lst>) (pair 'seq body) body)))
+     r)))
+
 (dm objectify-function (sig body r tail? => <ast-method>)
   (let ((signature (objectify-signature sig r))
         (new-r     (r-extend* r (signature-bindings signature)))
@@ -662,7 +700,8 @@
     (isa <ast-method> 
          (set function-debug-name (objectify-quotation #f r))
 	 (set function-signature  signature)
-	 (set function-body       b))))
+	 (set function-body       b)
+         (set function-source     (objectify-function-source sig body r)))))
 
 (dv $sexpr-optionals-tag       '...)
 (dv $sexpr-optionals-type-name '<opts>)
@@ -673,12 +712,14 @@
               (names (empty <fab-list>)) (types (empty <fab-list>)))
       (if (empty? params)
           (let ((sexpr-value (sexpr-signature-value sig))
-                (value (objectify (or sexpr-value (default-type r)) r #f)))
+                (value (objectify (or sexpr-value (default-type r)) r #f))
+                (arity (- (len names) (if nary? 1 0))))
             (isa <ast-signature>
               (set signature-bindings (rev! bindings))
               (set signature-names    (rev! names))
               (set signature-specs    (rev! types))
-              (set signature-nary?    nary?)
+              (set signature-nary?    (objectify nary? r #f))
+              (set signature-arity    (objectify arity r #f))
               (set signature-value    value)))
           (let ((param   (head params))
                 (sname   (sexpr-variable-name param))
@@ -1562,7 +1603,7 @@
 ;;; their types using ast-define-binding.
 (df reloader-do-other-binding ((mod <module>) (name <str>))
   (let ((binding (isa <module-binding>
-                   (set binding-kind        'global)
+                   (set binding-kind        'predefined) ;; HACK: JB
                    (set binding-module-name (module-name mod))
                    (set binding-name        (as <sym> name))
                    (set binding-free?       #t))))
@@ -1703,14 +1744,33 @@
   application-tail?
   <fab-list>
   <arguments>
+  <assignment>
   assignment-binding
   assignment-form
+  assignment-form-setter
   assignment-reference
   ast-define-binding
+  find-binding
   <ast-function>
   <ast-generic>
   <ast-macro-definition>
+  <free-environment>
+  free-environment
   <ast-method>
+  function-free 
+  function-free-setter
+  function-index
+  function-index-setter
+  function-self-recursive?
+  function-self-recursive?-setter
+  function-source
+  function-source-setter
+  function-temporaries
+  function-temporaries-setter
+  function-registers
+  function-registers-setter
+  function-data-refs
+  function-data-refs-setter
   <ast-primitive>
   <ast-primitive-definition>
   <bind-exit>
@@ -1721,6 +1781,8 @@
   binding-kind
   binding-dynamic-extent?
   binding-dynamic-extent?-setter
+  binding-index
+  binding-index-setter
   binding-global-box
   binding-global-box-setter
   binding-locative
@@ -1729,6 +1791,8 @@
   binding-name
   binding-type
   binding-type-setter
+  binding-inferred-type
+  binding-inferred-type-setter
   binding-info
   binding-info-setter
   binding-value
@@ -1740,7 +1804,10 @@
   <compile-time>
   compile-time-program
   <constant>
+  <immediate-constant>
   constant-value
+  constant-index
+  constant-index-setter
   <definition>
   def-list
   def-programs
@@ -1766,6 +1833,8 @@
   signature-specs-setter
   signature-nary?
   signature-nary?-setter
+  signature-arity
+  signature-arity-setter
   signature-value
   signature-value-setter
   find-environment-module
@@ -1783,6 +1852,7 @@
   <global-box>
   global-box-value
   global-box-value-setter
+  <module-binding-reference>
   <global-reference>
   init-ast
   <local-assignment>
@@ -1806,12 +1876,17 @@
   monitor-type
   objectify
   objectify-quotation
+  objectify-signature
   <predefined-application>
+  <bot>
   <program>
+  program-type
+  program-type-setter
   <computed-program>
   <passive-program>
   program-register program-register-setter
   <programs>
+  as-lst
   $proto-boot-module-name
   $proto-runtime-module-name
   <raw-constant>
@@ -1830,6 +1905,8 @@
   <sequential>
   sequentialize
   <static-global-environment>
+  environment-module
   <unwind-protect>
   unwind-protect-cleanup-thunk
   unwind-protect-protected-thunk)
+

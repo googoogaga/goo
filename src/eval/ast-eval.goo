@@ -356,3 +356,45 @@
 (export
   ast-evaluate
   init-environment-for-eval)
+
+;;; DYNAMIC LOADING SUPPORT
+
+(dp %dlvar-nam)
+(dp %dlvar-mod)
+(dp %dlvar)
+(dp %dlvar-setter)
+
+(dp %define-binding (raw-mod raw-nam)
+  (let ((e (runtime-environment (%%sym raw-mod))))
+    (ast-define-binding e (%%sym raw-nam) #f 'global)))
+
+(dp %lookup-binding (raw-mod raw-nam)
+  (let ((e (runtime-environment (%%sym raw-mod))))
+    (find-binding (%%sym raw-nam) e)))
+
+(dp %ensure-binding (raw-mod raw-nam)
+  (or (%lookup-binding raw-mod raw-nam)
+      (%define-binding raw-mod raw-nam)))
+
+(dp %dlvar-binding (dlvar)
+  (let ((b (%dlvar dlvar))) 
+    (if (@== b (%iu 0))
+        (set (%dlvar dlvar) 
+             (%ensure-binding (%dlvar-mod dlvar) (%dlvar-nam dlvar)))
+        b)))
+
+(dp %binding-value (dlvar)
+  (let ((binding (%dlvar-binding dlvar)))
+    (if (== (binding-kind binding) 'runtime)
+        (env-runtime-value (binding-locative binding))
+        (env-global-binding-value binding))))
+
+(dp %binding-value-setter (val dlvar)
+  (let ((binding (%dlvar-binding dlvar)))
+    (if (== (binding-kind binding) 'runtime)
+        (set (env-runtime-value (binding-locative binding)) val)
+        (set (env-global-binding-value binding) val))))
+
+(export
+  %binding-value
+  %binding-value-setter)

@@ -419,8 +419,11 @@ extern P unbound ();
 
 #define DEF(x, m, n)  extern P x; P x = PNUL;
 #define EXT(x, m, n)  extern P x;
-#define CHKREF(x) x
+#define LITREF(x) x
+#define VARREF(x) x
+#define VARSET(x, v) x = v
 //#define CHKREF(x)     (((x) == PNUL) ? unbound() : (x))
+#define CHKREF VARREF
 
 /* PRIVATE MODULE VARIABLES USED DIRECTLY BY THE C BACK END */
 
@@ -445,7 +448,7 @@ extern P YPPsym (P);
 extern P YPmacro (P,P,P);
 extern P YPsig (P,P,P,P,P,P);
 extern P YPgen (P,P,P,P,P);
-extern P YPmet (P,P,P,P);
+extern P YPmet (P,P,P,P,P,P);
 
 /* FUNCTIONS */
 
@@ -567,3 +570,26 @@ extern P YPbuild_runtime_modules(
   P other_binding_fun
 
 );
+
+extern P Yast_evalYPbinding_value(P x);
+extern P Yast_evalYPbinding_value_setter(P v, P x);
+
+typedef struct {
+  PSTR  var_name;    
+  PSTR  mod_name;    
+  P     binding;    
+} DLVAR_DAT, *DLVAR;
+
+STATIC_NOT_PRT_C INLINE P Yast_evalYPdlvar_nam(P x) { 
+  return (((DLVAR)(x))->var_name); 
+}
+STATIC_NOT_PRT_C INLINE P Yast_evalYPdlvar_mod(P x) {
+  return (((DLVAR)(x))->mod_name);
+}
+STATIC_NOT_PRT_C INLINE P Yast_evalYPdlvar(P x) {
+  return (((DLVAR)(x))->binding);
+}
+STATIC_NOT_PRT_C INLINE P Yast_evalYPdlvar_setter(P v, P x) {
+  return ((((DLVAR)(x))->binding)=(v));
+}
+

@@ -2,18 +2,21 @@
 
 (use proto)
 (use proto/eval)
+(use proto/system)
 (use ast)
 (use top)
 (use p2c)
 ;; (use beatbox)
 ;; (use p2m)
-(use proto/system)
+;; (use typist)
+;; (use optimize)
+;; (use ast-print)
 
 ;; Make sure the proto/user module gets compiled into our image.
 (use proto/user)
 
-(dv *proto-version* "0.104")
-(dv *proto-date*    "OCT 10, 2001")
+(dv *proto-version* "0.106")
+(dv *proto-date*    "OCT 25, 2001")
 
 (format out ";;; \n")
 (format out ";;; PROTO\n")

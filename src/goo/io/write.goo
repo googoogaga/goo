@@ -7,9 +7,9 @@
 (use runtime)
 (use read)
 
-(dv *max-print-depth*  4)
+(ddv *max-print-depth*  4)
 
-(dv *max-print-length* 12)
+(ddv *max-print-length* 12)
 
 (dm as-binding-name (name) 
   (as <str> name))
@@ -308,4 +308,6 @@
   display
   write
   writeln
-  write-to-string)
+  write-to-string
+  *max-print-length*
+  *max-print-depth*)

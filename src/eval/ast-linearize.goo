@@ -124,9 +124,11 @@
 (dm do-call-upgrades! ((o <program>))
   (do-do-call-upgrades! o))
 
-(dm unconstrained-type? ((o <program>) => <log>)
-  (and (isa? o <global-reference>) 
-       (== (binding-name (reference-binding o)) '<any>)))
+(dm unconstrained-type? ((b <module-binding>) => <log>)
+  (and (== (binding-module-name b) 'boot) (== (binding-name b) '<any>)))
+
+(dm unconstrained-type? ((o <module-binding-reference>) => <log>)
+  (unconstrained-type? (reference-binding o)))
 
 (dm do-call-upgrades! ((o <regular-application>))
   (do-do-call-upgrades! o)
@@ -145,13 +147,7 @@
 (dm analyze-calls (o)
   (do-call-upgrades! o))
 
-;;; FLATTENING
-
-(def-programs free-environment)
-
-(dc <flat-function> (<ast-method>))
-  (slot <flat-function> (function-free <free-environment>)
-	(empty <free-environment>))
+;;; FLATTENING ENVIRONMENTS
 
 (dc <free-reference> (<real-reference>))
   (slot <free-reference> (reference-offset (false-or <int>))) 
@@ -174,7 +170,7 @@
 	    (set reference-self?
 		 (== (reference-binding o) (function-binding flat-fun))))))))
 
-(dm adjoin-free-binding! ((flat-fun <flat-function>) ref => <int>)
+(dm adjoin-free-binding! ((flat-fun <ast-method>) ref => <int>)
   (rep check (((i <int>) 0) (free* (function-free flat-fun)))
     (if (empty? free*)
 	(let ((new-env (free-environment ref (empty <free-environment>))))
@@ -194,8 +190,7 @@
 (dm lift-procedures! ((o <fix-let>) flat-fun bindings)
   (set (fix-let-arguments o)
        (lift-procedures! (fix-let-arguments o) flat-fun bindings))
-  (let ((new-bindings
-	 (cat (fix-let-bindings o) bindings)))
+  (let ((new-bindings (cat (fix-let-bindings o) bindings)))
     (set (fix-let-body o)
 	 (lift-procedures! (fix-let-body o) flat-fun new-bindings))
     o))
@@ -217,24 +212,12 @@
 (dm lift-procedures! ((o <ast-generic>) flat-fun bindings)
   o)
 
-(dm lift-procedures! ((o <ast-function>) flat-fun bindings)
-  (let ((local-bindings 
-	 (function-bindings o))
-	(body           
-	 (function-body o))
-	(new-fun        
-	 (isa <flat-function> 
-	   (set function-binding    (function-binding o))
-	   (set function-debug-name (function-debug-name o))
-           (set function-signature  (function-signature o))
-	   (set function-body       body)
-	   (set function-free       (empty <free-environment>)))))
-    (set (function-body new-fun)
-	 (lift-procedures! body new-fun local-bindings))
-    (let ((free* (function-free new-fun)))
-      (set (function-free new-fun) 
-	   (lift-procedures! free* flat-fun bindings)))
-    new-fun))
+(dm lift-procedures! ((o <ast-method>) flat-fun bindings)
+  (set (function-body o)
+       (lift-procedures! (function-body o) o (function-bindings o)))
+  (set (function-free o) 
+       (lift-procedures! (function-free o) flat-fun bindings))
+  o)
 
 ;;; COLLECTING QUOTATIONS AND FUNCTIONS
 
@@ -248,20 +231,8 @@
   (slot <top-level-form> form-quotations '())
   (slot <top-level-form> form-definitions '())
 
-(dc <function-definition> (<flat-function>))
-  (slot <function-definition> function-index)
-  (slot <function-definition> function-temporaries '())
-  (slot <function-definition> function-registers '())
-  (slot <function-definition> function-self-recursive? #f)
-
-(dc <primitive-definition> (<ast-primitive>))
-  (slot <primitive-definition> function-temporaries '())
-  (slot <primitive-definition> function-registers '())
-  (slot <primitive-definition> function-self-recursive? #f)
-
 (dc <closure-creation> (<computed-program>))
   (slot <closure-creation> closure-creation-index)
-  (slot <closure-creation> closure-creation-bindings)
   (slot <closure-creation> closure-creation-free)
 
 (dm flatten-seqs (o)
@@ -280,7 +251,7 @@
   (map (fun (x) (isa <top-level-form> (set form-program x))) programs))
 
 (dm extract-things! (o)
-  (let ((forms (as-top-level-forms (flatten-seqs o)))
+  (let ((forms  (as-top-level-forms (flatten-seqs o)))
 	(result (isa <flattened-program>)))
     (set (program-form result)
 	 (sequentialize
@@ -306,7 +277,7 @@
                           (set binding-kind 'quotation)
                           (set binding-name index) (set binding-info value))))
                 (set (elt qb* value) qb)
-                (set (form-quotations form) (pair qb (form-quotations form)))
+                (pushf (form-quotations form) qb)
                 (isa <global-reference> (set reference-binding qb))))))))
 
 (dm extract! 
@@ -314,63 +285,42 @@
   o)
 
 (dm extract! 
-    ((o <flat-function>) 
+    ((o <ast-method>) 
      (form <top-level-form>) (result <flattened-program>))
   (set (function-debug-name o)
        (extract! (function-debug-name o) form result))
   (set (function-signature o)
        (extract! (function-signature o) form result))
-  (let ((new-body   (extract! (function-body o) form result))
-	(debug-name (function-debug-name o))
-	(binding    (function-binding o))
-        (signature  (function-signature o)))
-    (do (fun (binding)
-	  (set (binding-type binding) 
-	       (extract! (binding-type binding) form result)))
-	(function-bindings o))
-    (let ((free-bindings 
-           (map reference-binding (function-free o)))
-	  (index
-	   (adjoin-definition!
-	    form result debug-name binding signature new-body free-bindings)))
-      (isa <closure-creation> 
-	(set closure-creation-index    index)
-	(set closure-creation-bindings (function-bindings o))
-	(set closure-creation-free     (function-free o))))))
+  (set (function-body o) (extract! (function-body o) form result))
+  (do (fun (binding)
+        (set (binding-type binding) 
+             (extract! (binding-type binding) form result)))
+      (function-bindings o))
+  (let ((free          (function-free o))
+        (free-bindings (map reference-binding free))
+        (index         (adjoin-definition! form result o)))
+    (set (function-index o) index)
+    (set (function-free o)  free-bindings)
+    (isa <closure-creation> 
+      (set closure-creation-index index)
+      (set closure-creation-free  free))))
 
 (dm extract! 
     ((o <ast-primitive-definition>) 
      (form <top-level-form>) (result <flattened-program>))
-  (let ((p    (assignment-form o))
-	(body (extract! (function-body p) form result))
-	(definition
-	 (isa <primitive-definition> 
-	   (set function-binding    (function-binding p))
-	   (set function-debug-name (function-debug-name p))
-           (set function-signature  (function-signature p))
-	   (set function-body       body))))
-    (set (program-definitions result)
-	 (pair definition (program-definitions result)))
+  (let ((prim (assignment-form o)))
+    (set (function-body prim) (extract! (function-body prim) form result))
+    (pushf (program-definitions result) prim)
     (extract! (isa <constant> (set constant-value #f)) form result)))
 
 (dm adjoin-definition! 
-    ((form <top-level-form>) (result <flattened-program>)
-     debug-name binding signature body free)
-  (let ((definitions
-	 (program-definitions result))
-	(new-index
-	 (len definitions))
-	(definition
-	 (isa <function-definition> 
-	   (set function-binding    binding)
-	   (set function-debug-name debug-name)
-           (set function-signature  signature)
-           (set function-body       body)
-	   (set function-free       free)
-	   (set function-index      new-index))))
-    (set (program-definitions result) (pair definition definitions))
-    (set (form-definitions form)      (pair definition (form-definitions form)))
+    ((form <top-level-form>) (result <flattened-program>) x)
+  (let ((new-index (len (program-definitions result))))
+    (pushf (program-definitions result) x)
+    (pushf (form-definitions form)      x)
     new-index))
+
+;;; CLOSURIZE MAIN
 
 (dm split-program (o (max-count <int>))
   (lst o))
@@ -402,10 +352,10 @@
 		(binding
 		 (ast-define-binding r name #f 'predefined))
 		(defn
-		 (isa <primitive-definition>
+		 (isa <ast-primitive>
 		   (set function-binding    binding)
 		   (set function-debug-name (objectify-quotation name 4))
-                   (set function-signature  (isa <ast-signature>))
+                   (set function-signature  (objectify-signature '() r))
 		   (set function-body       (head forms))))
 		(call
 		 (isa <predefined-application> 
@@ -415,6 +365,9 @@
 	    (loop (pair call calls) (pair defn defns) (+ i 1) (tail forms)))))))
 
 ;; (def f (fun (n k) (if (= n 0) (k 1) (f (- n 1) (fun (r) (k (* n r)))))))
+
+;;; GATHER-TEMPORARIES -- PULLS ALL FIX-LET ARGS UP TO ENCLOSING FUN
+;;;   FLAT-FUN IS ENCLOSING FUN AND R IS ENVIRONMENT FOR NEW AST
 
 (dm gather-temporaries! ((o <program>))
   (set (program-definitions o)
@@ -472,7 +425,7 @@
 (dc <renamed-local-binding> (<local-binding>))
   (slot <renamed-local-binding> binding-index)
 
-(dv *renaming-bindings-counter* 0)
+(ddv *renaming-bindings-counter* 0)
 
 (dm new-renamed-binding ((binding <local-binding>))
   (set *renaming-bindings-counter* (+ *renaming-bindings-counter* 1))
@@ -484,17 +437,18 @@
 
 ;;; REGISTER ALLOCATION
 
-(dm register-allocate! ((o <program>))
-  (do (fun (def) (collect-registers! def #f #t)) (program-definitions o))
+(dv *register-passive?* #f) ;; FORCES ALL LOADS THROUGH REGISTERS (E.G., RISC)
+
+(dm register-allocate! ((o <program>) (register-passive? <log>))
+  (dlet ((*register-passive?* register-passive?))
+    (do (fun (def) (collect-registers! def #f #t)) (program-definitions o)))
   o)
 
-(dm allocate-register ((o <computed-program>) flat-fun val?)
+(dm allocate-register ((o <program>) flat-fun val?)
   (when (and val? flat-fun (not (program-register o)))
     ;; TODO: INEFFICIENT
-    (set (program-register o) 
-         (len (function-registers flat-fun)))
-    (set (function-registers flat-fun)
-         (pair o (function-registers flat-fun)))))
+    (set (program-register o) (len (function-registers flat-fun)))
+    (pushf (function-registers flat-fun) o)))
 
 (dm collect-registers! ((o <computed-program>) flat-fun val?)
   (allocate-register o flat-fun val?)
@@ -509,6 +463,8 @@
           (loop next-x)))))
 
 (dm collect-registers! ((o <passive-program>) flat-fun val?)
+  (when *register-passive?* 
+    (allocate-register o flat-fun val?))
   (update-walk! collect-registers! o flat-fun #t))
 
 (dm collect-registers! ((o <top-level-form>) flat-fun val?)
@@ -517,20 +473,21 @@
   (collect-registers! (form-program o) flat-fun val?)
   o)
 
-(dm collect-registers! ((o <flat-function>) flat-fun val?)
+(dm collect-registers! ((o <ast-method>) flat-fun val?)
   (allocate-register o flat-fun val?)
   (collect-registers! (function-signature o) flat-fun #t)
+  (do (rcurry collect-registers! flat-fun #t) (function-data-refs o))
+  (collect-registers! (function-debug-name o) o #t)
   (collect-registers! (function-body o) o #t)
   o)
 
-(dm collect-registers! ((o <primitive-definition>) flat-fun val?)
+(dm collect-registers! ((o <ast-primitive>) flat-fun val?)
   (collect-registers! (function-body o) o #t)
   o)
 
 (export
   analyze-calls
   analyze-dynamic-extent
-  binding-index
   <box-creation>
   box-form
   <box-read>
@@ -541,22 +498,14 @@
   closure-creation-index
   closurize-main!
   extract-things!
-  <flat-function>
   form-definitions
   form-program
   form-quotations
-  <free-environment>
   <free-reference>
-  function-index
-  function-self-recursive?
-  function-self-recursive?-setter
-  function-temporaries
-  function-registers
   gather-temporaries!
   insert-box!
   register-allocate!
   lift!
-  <primitive-definition>
   program-definitions
   program-form
   program-quotations
@@ -564,4 +513,10 @@
   reference-self?
   <renamed-local-binding>
   <top-level-form>
-  unconstrained-type?)
+  unconstrained-type?
+  update-walk!
+  flatten-seqs
+  *register-passive?*
+  collect-temporaries!
+  collect-registers!
+)

@@ -1,0 +1,123 @@
+(use proto)
+(use boot)
+(use ast)
+
+(dc <type>       (<any>))
+
+(dc <prototype>  (<type>))
+  (slot <prototype> prototype-value)
+
+(dc <type-union> (<lst> <type>))
+
+(df prototype (x) (isa <prototype> (set prototype-value x)))
+
+(dm subtype? ((x <prototype>) (y <prototype>))
+  (isa? x y))
+
+(dm subtype? ((x <prototype>) (y <type-union>))
+  (any? (fun (t) (isa? x t)) y))
+
+(dm subtype? ((x <type-union>) (y <prototype>))
+  (any? (fun (t) (isa? t y)) x))
+
+(dm subtype? ((x <type-union>) (y <type-union>))
+  (any? (fun (t) (subtype? t y)) x))
+
+(dm type-union ((x <type>) (y <type>) => <type-union>)
+  (case
+    ((subtype? x y) y)
+    ((subtype? y x) x)
+    ((isa? x <type-union>) 
+     (if (isa? y <type-union>)
+         (cat x y)
+         (pair y x)))
+    (#t 
+     (if (isa? y <type-union>)
+         (pair x y)
+         (lst x y)))))
+
+(dm type-infer-check (inferred-type type)
+  ;; (format out "IT %= T %=\n" inferred-type type)
+  (if (isa? inferred-type type) 
+      inferred-type
+      type))
+
+(dm type-infer ((x <program>))
+  (let ((type (program-type x)))
+    (if (== type <bot>) 
+        (set (program-type x) (do-type-infer x))
+        type)))
+
+(dm do-type-infer ((x <program>))
+  (error "NYI"))
+
+(df class-of (x)
+  (traits-owner (object-traits x)))
+
+(dm do-type-infer ((x <constant>))
+  (prototype (class-of (constant-value x))))
+
+(dm do-type-infer ((x <assignment>))
+  (type-infer (assignment-form x)))
+
+(dm type-infer-binding ((x <binding>))
+  ;; TODO: PRETTY LIMITED
+  (prototype <any>))
+
+(dm type-infer-binding ((x <local-binding>))
+  ;; (format out "LB %=" x)
+  (if (binding-mutable? x)
+      (prototype <any>)
+      (type-infer-check (type-infer (binding-type x))
+                        (binding-inferred-type x))))
+
+(dm do-type-infer ((x <real-reference>))
+  (type-infer-binding (reference-binding x)))
+
+(dm do-type-infer ((x <bound?>))
+  (prototype <log>))
+
+(dm do-type-infer ((x <definition>))
+  (prototype #f))
+
+(dm do-type-infer ((x <ast-method>))
+  (type-infer (function-body x))
+  ;; TODO: TIGHTEN UP
+  (prototype <met>))
+
+(dm do-type-infer ((x <ast-generic>))
+  (prototype <gen>))
+
+(dm do-type-infer ((x <alternative>))
+  (type-union (type-infer (alternative-consequent x))
+              (type-infer (alternative-alternant x))))
+
+(dm do-type-infer ((x <sequential>))
+  (type-infer (last x)))
+
+(dm do-type-infer ((x <fix-let>))
+  (for ((binding (fix-let-bindings x))
+        (type    (fix-let-types x))
+        (arg     (fix-let-arguments x)))
+    (unless (binding-mutable? binding)
+      (set (binding-inferred-type binding) (type-infer arg))))
+  (type-infer (fix-let-body x)))
+
+(dm do-type-infer ((x <locals>))
+  (type-infer (locals-body x)))
+
+;; TODO: the following are incomplete
+
+(dm do-type-infer ((x <regular-application>))
+  (prototype <any>))
+
+(dm do-type-infer ((x <bind-exit>))
+  (prototype <any>))
+
+(dm do-type-infer ((x <unwind-protect>))
+  (prototype <any>))
+
+(dm do-type-infer ((x <monitor>))
+  (prototype <any>))
+
+(export type-infer)

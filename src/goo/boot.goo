@@ -38,9 +38,10 @@
         %elt %elt-setter
         %slen %selt %selt-setter %%sfab %su %sb
         %vlen %velt %velt-setter %%vfab %vu
+        %fab-code-refs %code-ref
         %app-filename %app-args
         %locative-value %locative-value-setter %invoke-debugger
-        %os-name %os-binding-value %os-binding-value-setter
+        %os-name %os-binding-value %os-binding-value-setter        
         %break %binding-name %fun-reg
         %trace-on %trace-off
         %%apply %%mep-apply %next-methods %fapply
@@ -170,6 +171,8 @@
 	  (slot <fun> (fun-sig <sig>))
 	(dc <met> (<fun>))
 	  (slot <met> (fun-env <any>)   %false)
+	  (slot <met> (fun-refs <any>)  %false)
+	  (slot <met> (fun-src <any>)   %false)
 	(dc <gen> (<fun>))
 	  (slot <gen> (fun-mets <lst>)  nil)
 	  (slot <gen> (fun-cache <any>) %false)
@@ -355,7 +358,9 @@
    sig-names sig-specs sig-nary? sig-arity sig-value sig-unification-vars)
 
 (%define-structure % met 
-   met-code met-name met-sig met-env)
+   met-code met-name met-sig met-env 
+   met-refs met-src
+   )
 
 (dv %met-slot-len (%raw 4))
 
@@ -1879,6 +1884,7 @@
   %read-char
   %write-char
   %write-string
+  %%sym
 )
 
 ;; Regular exports.
@@ -2005,6 +2011,7 @@
   @olen
   @+
   @<
+  @==
   %raw-call
   %check-call-types
   %loc-off %loc-off-setter

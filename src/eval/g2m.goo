@@ -1,0 +1,594 @@
+(use boot)
+(use macros)
+(use runtime)
+(use write)
+(use syntax)
+(use ast)
+(use top)
+(use ast-linearize)
+
+;;; TODO
+;;; --- NOW ---
+;;; TURN SPECIALS INTO CALLS -- HOW NARY'S?
+;;; CREATE CODE
+;;; --- LATER ---
+;;; MACRO DEFN
+;;; SHARE LITS
+;;; REDUCE NUMBER OF UNUSED REG'S
+;;; WHAT TO DO WITH PRIMS
+;;; MAKE LINEARIZATION MORE AUTOMATIC ESP WRT ASM/REF
+;;; (MET TOP () ((MET MAIN () ,@code)))
+;;; --- DONE ---
+;;; TURN ON FUNCTION-DEBUG-NAME
+;;; NUMBER ARGS
+;;; NUMBER LOCS
+;;; CREATE DATA-REF-VEC WITH QUOTES AND BINDINGS
+;;; CLEAN UP TOP-LEVEL TO BE CALLABLE -- E.G., RET
+;;; NARY? ARITY NEED TO BE CONSTANTS
+;;; 
+
+;;;; ASM-LINEARIZATION
+
+;;; CLOSURIZE MAIN
+
+(ds (watch (,@args) ,@exp)
+  `(seq (format out "%= [%=] => " '(seq ,@exp) (lst ,@args))
+        (let ((r (seq ,@exp)))
+          (format out "%=\n" r)
+          r)))
+
+(ddv *watch-depth* 0)
+
+(dm watch-format (port msg (args ...))
+  (for ((i (from-below 0 *watch-depth*)))
+    (write-string out "  "))
+  (apply format (pair port (pair msg args))))
+
+(ds (dm-watch ,name (,@sig) ,@body)
+  (let ((params (sexpr-signature-parameters sig))
+        (names  (map (fun (x) (if (isa? x <lst>) (1st x) x)) params)))
+    `(dm ,name (,@sig)
+       (dlet ((*watch-depth* (+ *watch-depth* 1)))
+         (watch-format out "WATCH %= <= %=\n" '(,name ,@sig) (lst ,@names))
+         (let ((r (seq ,@body)))
+           (watch-format out "WATCH %= => %=\n" '(,name ,@sig) r)
+           r)))))
+
+;;; COLLECTING QUOTATIONS AND GLOBAL-BINDING REFS
+
+(ddv *top-met* #f)
+
+(dm asm-extract! ((o <program>) (f <ast-function>))
+  (update-walk! asm-extract! o f))
+
+;; (dm asm-extract! ((o <immediate-constant>) (f <ast-function>))
+;;   o)
+
+(dm asm-extract! ((o <raw-constant>) (f <ast-function>))
+  o)
+
+(dm asm-lookup-data-ref 
+    ((f <ast-function>) key (value-thunk <fun>) (value-index <fun>) => <int>)
+  ;; (format out "INSERTING %= INTO %=\n" key (cv (function-debug-name f)))
+  (let ((index (+ (len (function-data-refs f)) (len (function-temporaries f)))))
+    (when (isa? (function-data-refs f) <tab>) (set (function-data-refs f) '()))
+    (pushf (function-data-refs f) (value-thunk index))
+    index))
+
+;;   (let ((qb*   (function-data-refs f))
+;;         (probe (elt qb* key)))
+;;     (if (== probe nul)
+;;         (let ((index (len qb*)))
+;;           (set (elt qb* key) (value-thunk index))
+;;           index)
+;;         (value-index probe)))
+
+(dc <link-reference> (<reference>))
+  (slot <link-reference> reference-index)
+  (slot <link-reference> constant-value)
+
+(dm asm-extract! ((o <constant>) (f <ast-function>))
+  (let ((value (constant-value o))
+        (index (asm-lookup-data-ref 
+                f (constant-value o) 
+                (fun (index) (set (constant-index o) index) o) constant-index)))
+    (isa <link-reference>
+      (set reference-index index)
+      (set constant-value  (constant-value o)))))
+
+(dc <cell-link> (<computed-program>))
+  (slot <cell-link> cell-binding)
+  (slot <cell-link> (cell-index <int>))
+
+(dc <cell-reference> (<reference>))
+  (slot <cell-reference> reference-index)
+  (slot <cell-reference> reference-binding)
+
+(dm unconstrained-type? ((o <cell-reference>) => <log>)
+  (unconstrained-type? (reference-binding o)))
+
+(dc <cell-assignment> (<assignment>))
+  (slot <cell-assignment> assignment-index)
+
+(dm asm-extract! ((o <module-binding-reference>) (f <ast-function>))
+  (let ((binding (reference-binding o))
+        (index   (asm-lookup-data-ref
+                  f binding
+                  (fun (index) 
+                    (isa <cell-link>
+                      (set cell-binding binding) (set cell-index index)))
+                  cell-index)))
+    (isa <cell-reference>
+      (set reference-index index) (set reference-binding binding))))
+
+(dm asm-extract! ((o <global-assignment>) (f <ast-function>))
+  (let ((binding (assignment-binding o))
+        (index   (asm-lookup-data-ref
+                  f binding
+                  (fun (index) 
+                    (isa <cell-link>
+                      (set cell-binding binding) (set cell-index index)))
+                  cell-index)))
+    (set (assignment-form o) (asm-extract! (assignment-form o) f))
+    (isa <cell-assignment> 
+      (set assignment-index index)
+      (set assignment-form  (assignment-form o)))))
+
+(dm cv ((x <constant>)) (constant-value x))
+(dm cv ((x <program>)) #f)
+(dm met-name ((x <ast-function>)) (cv (function-debug-name x)))
+
+(dm asm-extract! ((o <ast-method>) (f <ast-function>))
+  (set (function-data-refs o)  '())
+  (set (function-debug-name o) (asm-extract! (function-debug-name o) f))
+  (set (function-signature o)  (asm-extract! (function-signature o) *top-met*))
+  (set (function-body o)       (asm-extract! (function-body o) o))
+  (let ((free          (function-free o))
+        (free-bindings (map reference-binding free))
+        (index         
+         (asm-lookup-data-ref 
+          f o (fun (index) (set (function-index o) index) o) function-index)))
+    (set (function-free o) free-bindings)
+    (let ((r (isa <closure-creation> 
+      (set closure-creation-index index)
+      (set closure-creation-free  free))))
+      r)))
+
+(dm asm-extract! ((o <ast-primitive-definition>) (f <ast-function>))
+  (let ((prim (assignment-form o)))
+    (set (function-body prim) (asm-extract! (function-body prim) prim))
+    (asm-extract! (isa <constant> (set constant-value #f)) f)))
+
+(dm asm-gather-temporaries! ((o <program>) (def <ast-function>))
+  (collect-temporaries! def def '())
+  o)
+
+(dm asm-register-allocate! ((top-met <ast-function>) (main-met <ast-function>))
+  (dlet ((*register-passive?* #t))
+    (collect-registers! top-met top-met #t))
+  top-met)
+
+(dm asm-closurize-main! ((o <program>) r)
+  (loc ((fab-empty-method (name body)
+          (let ((sig (objectify-signature '() r)))
+            (isa <ast-method>
+              (set function-debug-name (objectify-quotation name 4))
+              (set function-signature  sig)
+              (set function-body       body)))))
+    (let ((name     (make-sym "---main---"))
+          (main-met (fab-empty-method name o))
+          (call
+           (isa <regular-application> 
+             (set application-function  main-met)
+             (set application-arguments (empty <arguments>))
+             (set application-tail?     #f)))
+          (top-met (fab-empty-method 'top call)))
+      (tup top-met main-met))))
+
+(dm asm-extract-things! (o r)
+  (let (((tup top-met main-met) 
+         (asm-closurize-main! (sequentialize (flatten-seqs o)) r)))
+    (dlet ((*top-met* top-met))
+      (set (function-body top-met)
+           (asm-extract! (function-body top-met) top-met)))
+    (tup (function-body top-met) top-met main-met)))
+
+(dm collect-temporaries! ((o <ast-method>) flat-fun r)
+  (next-method o o '())
+  (do (fun (ref)
+        (when (isa? ref <ast-method>) (collect-temporaries! ref ref '())))
+      (function-data-refs o)))
+
+;;; DRIVER
+
+(dm asm-compute-ast (exp ct-env)
+  (objectify exp ct-env #f))
+
+(dm asm-compute-program (e env)
+  (let ((ast (asm-compute-ast e env))
+        (obj (sexp->object ast env))
+        ((tup prg top-met main-met) (asm-extract-things! obj env))
+	(dyn (analyze-dynamic-extent prg))
+	(cal (analyze-calls dyn))
+	(lft (lift! cal)))
+    (asm-gather-temporaries! lft top-met)
+    (asm-register-allocate!  top-met main-met)
+    (tup lft top-met main-met)))
+
+(ddv *asm-fun* #f) 
+
+(dm asm-exp (e)
+  (let ((env (runtime-environment))
+        ((tup prg top-met main-met) (asm-compute-program e env)))
+    (asm-all prg top-met)))
+
+(dm out-code (out code)
+  (format out "(%=\n" (head code))
+  (do (fun (e) (format out "  %=\n" e)) (tail code))
+  (format out ")\n"))
+
+(dm asm-all ((x <program>) (f <ast-function>))
+  (dlet ((*top-met* f))
+    `(DEF-MAIN-CODE ,@(asm-main f))))
+
+;;; EMISSION
+
+(ddv *data-refs?* #f) ;; USE DATA-REF VECTOR?
+
+(ds (asm-rhs (,dst ,e) ,@body)
+  `(let ((,dst (program-register ,e))
+         (exp (seq ,@body)))
+     `(,exp)))
+
+(ds (asm-used-rhs (,dst ,e) ,@body)
+  `(if (program-register ,e)
+       (asm-rhs (,dst ,e) ,@body)
+       '()))
+
+;;; REFERENCES TO PROGRAMS
+
+(dm asm-ref ((e <program>))
+  (program-register e))
+
+(dm asm-ref ((e <sequential>))
+  (asm-ref (last e)))
+
+(dm asm-ref-binding ((e <program>) (v <local-binding>)) 
+  (binding-index v))
+
+(dm asm-ref-binding ((e <program>) (v <module-binding>)) 
+  (program-register e))
+
+(dm asm-ref ((e <reference>))
+  (asm-ref-binding e (reference-binding e)))
+
+(dm top-data-ref ((index <int>))
+  (asm-ref (elt (function-data-refs *top-met*) index)))
+
+(dm asm-ref ((e <link-reference>))
+  (if *data-refs?*
+      (program-register e)
+      (top-data-ref (reference-index e))))
+
+;; STATEMENTS
+
+(dg asm ((e <program>)))
+
+(dm asm ((e <passive-program>)) '())
+
+(dm asm-binding ((e <program>) (v <local-binding>)) 
+  '())
+
+;; TODO: REMOVE
+(dm asm-binding ((e <program>) (v <module-binding>))
+  (format out "BOGUS VAR %=\n" e)
+  (asm-used-rhs (d e) 
+    `(VM-VAR ,d ,(binding-module-name v) ,(binding-name v))))
+
+(dm asm ((e <reference>))
+  (asm-binding e (reference-binding e)))
+
+(dm asm ((e <cell-reference>))
+  (asm-used-rhs (d e) 
+    (if *data-refs?*
+        `(VM-VAR-GET ,d ,(reference-index e))
+        `(VM-VAR-REG ,d ,(top-data-ref (reference-index e))))))
+
+(dm asm-lit-ref ((e <program>) (index <int>))
+  (if *data-refs?*
+      (asm-used-rhs (d e) `(VM-LIT-GET ,d ,index))
+      '()))
+
+(dm asm ((e <link-reference>))
+  (asm-lit-ref e (reference-index e)))
+
+(dm asm ((e <free-reference>))
+  (asm-used-rhs (d e) `(VM-ENV-GET ,d ,(reference-offset e))))
+
+(dm asm ((e <constant>))
+  (asm-used-rhs (d e) `(VM-LIT ,d ,(constant-value e))))
+
+(dm asm ((e <cell-link>))
+  (let ((b (cell-binding e)))
+    (asm-used-rhs (d e)
+      `(VM-VAR ,d ,(binding-module-name b) ,(binding-name b)))))
+
+;; TODO: RESOLVE VAR REF'S FOR BELOW THREE
+
+(dm asm ((e <cell-assignment>))
+  (cat! (asm (assignment-form e))
+        (asm-rhs (dst e)
+          `(VM-VAR-PUT ,dst ,(assignment-index e) 
+                       ,(asm-ref (assignment-form e))))))
+
+(dm asm ((e <definition>))
+  (cat! (let ((binding (assignment-binding e)))
+          `((VM-VAR-FAB ,(binding-module-name binding)
+                        ,(binding-name binding))))
+        (next-method e)))
+
+(dm asm ((e <bound?>))
+  (asm-used-rhs (dst e)
+    `(VM-VAR-GET?
+      ,dst ,(reference-index (bound?-reference e)))))
+
+(dm asm ((e <box-read>))
+  (cat! (asm (box-reference e))
+        (asm-used-rhs (dst e)
+          `(VM-BOX-GET ,dst ,(asm-ref (box-reference e))))))
+
+(dm asm ((e <box-write>))
+  (cat! (asm (box-form e))
+        (asm (box-reference e))
+        (asm-rhs (dst e)
+          `(VM-BOX-PUT 
+            ,dst ,(asm-ref (box-form e)) ,(asm-ref (box-reference e))))))
+
+;; TODO: FIX REF
+
+(dm asm ((e <box-creation>))
+  (asm-rhs (dst e)
+    `(VM-BOX-FAB ,dst ,(reference-binding (box-reference (box-reference e))))))
+
+(dm asm ((e <alternative>))
+  (let ((con (cat! (asm (alternative-consequent e))
+                   (asm-used-rhs (dst e) 
+                     `(VM-STO ,dst ,(asm-ref (alternative-consequent e))))))
+        (alt (cat! (asm (alternative-alternant e))
+                   (asm-used-rhs (dst e) 
+                     `(VM-STO ,dst ,(asm-ref (alternative-alternant e)))))))
+    (cat! (asm (alternative-condition e))
+          `((VM-JMP-NOT
+             ,(asm-ref (alternative-condition e)) ,(+ (len con) 1)))
+          con
+          `((VM-JMP ,(len alt)))
+          alt)))
+
+(dv <code> <lst>)
+
+(dm flatten ((args <code>) => <code>) 
+  (reduce cat! (empty <code>) args))
+
+(dm asm ((e <programs>))
+  (flatten (as <lst> (map asm e))))
+
+(dm asm ((e <regular-application>))
+  (cat! (asm (application-function e))
+        (asm (application-arguments e))
+        (map (fun (x) `(VM-PUSH ,(asm-ref x))) (application-arguments e))
+        (asm-rhs (dst e)
+          `(VM-CALL ,dst ,(asm-ref (application-function e)) 
+                    ,(len (application-arguments e))))))
+
+(dm asm ((e <fix-let>))
+  (cat! (flatten
+          (collecting ()
+            (for ((binding (fix-let-bindings e)) (type (fix-let-types e))
+                  (init (fix-let-arguments e)))
+              (collect (asm init))
+              (unless (or (not type) (unconstrained-type? type))
+                (collect (asm type))
+                (collect `((VM-TYP-CHK ,(asm-ref init) ,(asm-ref type)))))
+              (collect `((VM-STO ,(binding-index binding) ,(asm-ref init)))))))
+        (asm (fix-let-body e))
+        (asm-used-rhs (dst e) `(VM-STO ,dst ,(asm-ref (fix-let-body e))))))
+
+(dm asm ((e <locals>))
+  (cat! (flatten (map2 (fun (binding init)
+                         (cat! (funshell-asm binding init #f)
+                               `((VM-STO ,(binding-index binding) 
+                                         ,(asm-ref init)))))
+                       (locals-bindings e) (locals-functions e)))
+        (flatten (map2 (fun (binding init) (funinit-asm binding init))
+                       (locals-bindings e) (locals-functions e)))
+        (asm (locals-body e))
+        (asm-used-rhs (dst e) `(VM-STO ,dst ,(asm-ref (locals-body e))))))
+
+;; TODO: FLATTEN BELOW
+(dm asm ((e <bind-exit>))
+  (cat! (asm (bind-exit-main-fun e))
+        (asm-rhs (dst e) 
+          `(VM-WITH-EXIT ,dst ,(asm-ref (bind-exit-main-fun e))))))
+
+(dm asm ((e <unwind-protect>))
+  (cat! (asm (unwind-protect-protected-thunk e))
+        (asm (unwind-protect-cleanup-thunk e))
+        (asm-rhs (dst e)
+          `(VM-WITH-CLEANUP ,dst
+            ,(asm-ref (unwind-protect-protected-thunk e))  
+            ,(asm-ref (unwind-protect-cleanup-thunk e))))))
+
+(dm asm ((e <monitor>))
+  (cat! (asm (monitor-type e))
+        (asm (monitor-info e))
+        (asm (monitor-test e))
+        (asm (monitor-handler e))
+        (asm (monitor-main-thunk e))
+        (asm-rhs (dst e)
+          `(VM-WITH-MONITOR ,dst
+            ,(asm-ref (monitor-type e))
+            ,(asm-ref (monitor-info e))
+            ,(asm-ref (monitor-test e))
+            ,(asm-ref (monitor-handler e))
+            ,(asm-ref (monitor-main-thunk e))))))
+
+(dm asm ((e <closure-creation>))
+  (let ((n (len (closure-creation-free e))))
+    (if (== n 0)
+        (asm-lit-ref e (closure-creation-index e))
+        (cat! (asm (closure-creation-free e))
+              (asm-rhs (dst e)
+                `(VM-FUN-FAB ,dst ,(closure-creation-index e) ,n
+                             ,@(map asm-ref (closure-creation-free e))))))))
+
+(dm funshell-asm ((b <binding>) (e <closure-creation>))
+  (let ((n (len (closure-creation-free e))))
+    (asm-rhs (dst e)
+      (if (== n 0)
+          `(VM-LIT-GET   ,dst ,(closure-creation-index e))
+	  `(VM-FUN-SHELL ,dst ,(if (binding-dynamic-extent? b) 1 0)
+                         ,(closure-creation-index e)
+                         ,n)))))
+
+;; TODO: BINDING??? SHOULD USE SOME INDEX
+(dm funinit-asm ((b <binding>) (e <closure-creation>))
+  (let ((n (len (closure-creation-free e))))
+    (if (== n 0)
+        '()
+        (cat! (asm (closure-creation-free e))
+              `((VM-FUN-INIT 
+                 ,b ,n ,@(map asm-ref (closure-creation-free e))))))))
+
+;; TODO: HACK -- THIS SHOULD BE CORRECTED EARLIER
+(dm real-signature-specs (sig)
+  (let ((types (signature-specs sig)))
+    (if (constant-value (signature-nary? sig))
+        (sub types 0 (- (len types) 1))
+        types)))
+
+;; TODO: FIX ASM-QUOTATIONS
+
+(dm asm ((e <ast-signature>))
+  (let ((specs (real-signature-specs e)))
+  (cat! (flatten (map asm specs))
+        (asm (signature-value e))
+        (asm (signature-arity e))
+        (asm (signature-nary? e))
+        (flatten (map asm (signature-names e)))
+        (asm-rhs (dst e)
+          `(VM-SIG-FAB ,dst
+            ,(asm-ref (signature-value e))
+            ,(asm-ref (signature-arity e))
+            ,(asm-ref (signature-nary? e))
+            ,@(map asm-ref (signature-names e))
+            ,@(map asm-ref specs))))))
+
+(dm asm ((e <ast-generic>))
+  (cat! (asm (function-debug-name e)) 
+        (asm (function-signature e))
+        (asm-rhs (dst e)
+          `(VM-GEN-FAB ,dst ,(asm-ref (function-debug-name e))
+                       ,(asm-ref (function-signature e))))))
+
+(dm asm ((e <ast-method>))
+  (asm-closure-structure e))
+
+;;; FUNCTION DEFINITIONS
+
+(dm asm-functions (definitions)
+  (flatten 
+   (rev! (collecting ()
+           (do (fun (def) 
+                 (unless (isa? def <ast-primitive>)
+                   (collect (asm-closure-structure def))))
+               definitions)))))
+
+(dm asm-frame-len ((defn <ast-function>))
+  (+ (len (function-registers defn))
+     (len (function-temporaries defn))))
+
+(dm asm-body ((def <ast-function>))
+  `(,@(asm (function-body def))
+    ,@(asm-return def)))
+
+(dm asm-code ((def <ast-function>))
+  (dlet ((*data-refs?* #t))
+    `(CODE (VM-ENV-LNK ,(asm-frame-len def))
+           ,@(asm-body def))))
+
+(df asm-prep-fun (defn)
+  (set (function-data-refs defn) (rev! (function-data-refs defn)))
+  ;; temporaries are first in frame
+  (let ((tmps (function-temporaries defn)))
+    (for ((tmp tmps) (i (from 0)))
+      (set (binding-index tmp) i))
+    ;; registers start after temporaries in frame
+    (for ((reg (function-registers defn)) (i (from (len tmps))))
+      (set (program-register reg) i))
+    ;; parameters start below frame pointer
+    (for ((bnd (function-bindings defn)) (i (from 1)))
+      (set (binding-index bnd) (neg i)))))
+
+(ds (with-asm-fun (,defn) ,@body)
+  (let ((d (gensym)))
+    `(let ((,d ,defn))
+       (asm-prep-fun ,d)
+       (dlet ((*asm-fun* ,d)) ,@body))))
+
+(dm asm-closure-structure (defn)
+  ;; (format out "REFS %= %=\n" (met-name defn) (function-data-refs defn))
+  (with-asm-fun (defn)
+    (let ((refs (function-data-refs defn)))
+      (cat! (asm (function-debug-name defn))
+            (asm (function-signature defn))
+            (flatten (map asm refs))
+            (asm-rhs (dst defn)
+              `(VM-MET-FAB ,dst
+                           ,(asm-ref (function-debug-name defn))
+                           ,(asm-ref (function-signature defn))
+                           ,@(map asm-ref refs)
+                           ,(asm-code defn)
+                           ))))))
+
+(dm asm-main (defn)
+  (with-asm-fun (defn)
+    `((VM-ENV-LNK ,(asm-frame-len defn))
+      ,@(flatten (map asm (function-data-refs defn)))
+      ,@(asm-body defn))))
+
+(dm asm-return (defn)
+  (let ((type (function-value defn))
+        (body (function-body defn)))
+    (cat! (if (or (not type) (unconstrained-type? type)) 
+              '()
+              (cat! (asm type)
+                    `((VM-TYP-CHK ,(asm-ref body) ,(asm-ref type)))))
+          `((VM-RET ,(asm-ref body))))))
+
+;; TODO: BINDING-NAME ... PERHAPS TWO STEPS
+(dm asm ((e <ast-macro-definition>))
+  (cat! (asm (assignment-form e) #f)
+        (asm-rhs (dst e)
+          `(VM-MACRO-FAB ,dst
+            ,(binding-name (assignment-binding e))
+            ,(asm-ref (assignment-form e))))))
+
+;; TODO: APPLICATION BINDING IS INCORRECT
+
+(dm asm ((e <predefined-application>))
+  (let ((args (as <lst> (application-arguments e))))
+    (cat! ;; (asm (application-binding e))
+          (asm (application-arguments e))
+          (map (fun (x) `(VM-PUSH ,(asm-ref x))) args)
+          (asm-rhs (dst e)
+            `((VM-PRE-CALL 
+               ,dst 
+               ;; ,(asm-ref (application-binding e))
+               ))))))
+
+;; TODO: BROKEN
+;; (df close-type (t) (fun ((x t)) x))
+
+(export
+  )
+

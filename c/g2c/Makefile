@@ -4,27 +4,27 @@ C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 	$(CC) -I.. -c -g -O -o $@ $<
 
 OBJS = \
-	proto.o \
-	proto/system.o \
-	read.o \
-	ast-eval.o \
-	top.o \
-	runtime.o \
-	ast.o \
-	strings.o \
-	ast-linearize.o \
 	main.o \
-	proto/eval.o \
+	ast-eval.o \
+	proto.o \
+	read.o \
 	write.o \
-	boot.o \
+	runtime.o \
+	ast-linearize.o \
 	p2c.o \
-	syntax.o \
-	proto/user.o \
 	macros.o \
+	boot.o \
+	syntax.o \
+	strings.o \
+	proto/user.o \
+	top.o \
+	proto/system.o \
+	proto/eval.o \
+	ast.o \
 	p2c-init.o
 
 p2c: $(C_OBJS_DD) $(OBJS)
-	$(CC) -o p2c $(C_OBJS_DD) $(LIBS) $(OBJS)
+	$(CC) -Wl,--export-dynamic -o p2c $(C_OBJS_DD) $(LIBS) $(OBJS)
 
 clean:
 	rm -f p2c $(OBJS)

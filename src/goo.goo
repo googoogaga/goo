@@ -13,7 +13,7 @@
 
  ;; Section 1.2/2.2: Macros.
  DF TRY REP MIF AND OR SELECT CASE INC DEC UNLESS WHEN ASSERT
- FOR COLLECTING COLLECT PUSHF POPF OPF
+ FOR COLLECTING COLLECT PUSHF POPF OPF SWAPF
  COLLECTED ;; TODO: HYGIENE
  
  ;; Section 1.3: Read macros.
@@ -55,7 +55,8 @@
  <loc> locative-value locative-value-setter address-of
  
  ;; Section 3.7: Collections.
- <col> len elt elt-or elt-setter empty? empty default fab fabs fill alter any?
+ <col> len len-setter elt elt-setter low-elt low-elt-setter
+ empty? empty default fab fabs fill alter any?
  all? reduce reduce+ find-key del-key del-keys do do2 map map2 do-keyed
  map-keyed mem? keys
  ;; 3.7.1: Iteration protocol.
@@ -141,6 +142,11 @@
  need-implementation bound? dlet t+ t= t< false-or
  describe-condition
  )
+
+;; TODO: TEMPORARY
+(export 
+  any2?
+  all2?)
 
 ;; TODO: HYGIENE
 (export

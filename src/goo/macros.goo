@@ -58,8 +58,6 @@
 
   )
            
-;; TODO: GENERALIZED VERSION
-
 (ds (inc ,place ,@amount)
   (let (((tup g-decls g-place) (lift-place-subforms place))
         (amount (mif ((,amount) amount) amount 1)))
@@ -76,6 +74,14 @@
   (let (((tup g-decls g-place) (lift-place-subforms place)))
     `(let (,@g-decls)
        (set ,g-place (push ,g-place ,value)))))
+
+(ds (swapf ,x ,y)
+  (let (((tup xg-decls xg-place) (lift-place-subforms x))
+        ((tup yg-decls yg-place) (lift-place-subforms y))
+        (tmp (gensym)))
+    `(let (,@xg-decls ,@yg-decls (,tmp ,xg-place))
+       (set ,xg-place ,yg-place)
+       (set ,yg-place ,tmp))))
 
 (ds (popf ,place)
   (let (((tup g-decls g-place) (lift-place-subforms place))
@@ -166,6 +172,9 @@
 		    	  nows)
 		    (pair `(nxt-state ,exp-tmp ,state) nexts))))))))
 
+(ds (ddv ,binding ,exp)
+  `(dv ,binding ,exp))
+
 (ds (dlet ,bindings ,@body)
   (mif (() bindings)
     `(seq ,@body)
@@ -235,6 +244,7 @@
   pushf
   popf
   opf
+  swapf
   unless
   when
   or
@@ -243,6 +253,7 @@
   select
   assert
   for
+  ddv
   dlet
   def-fun-var
   need-implementation)

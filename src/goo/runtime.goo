@@ -543,6 +543,10 @@
 
 ;;; TODO: NEED TEST ARGS AND NOT-FOUND HANDLERS
 
+(dm elt-or ((c <col>) (k <any>) (default <fun>) => <any>)
+  (let ((x (elt c k)))
+    (if (== x nul) (default) x)))
+
 (dm fabs ((c (t< <col>)) (objects ...))
   (alter (fab c (len objects)) objects))
 
@@ -2339,10 +2343,17 @@
   format
   format-to-string)
 
+;; TODO: TEMPORARY EXPORTS
 (export
-  1st 2nd 3rd
+  all2?
+  any2?)
+
+(export
   = ~= + - * / == ~== <= >= > <
   abs
+  1st 2nd 3rd
+  elt-or
+  keys
   add! add
   address-of
   all?

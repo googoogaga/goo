@@ -1,3 +1,3 @@
 C_OBJS = prt.o gc.a unexelf.o # midi.o threads.o timer.o 
-LIBS = -lncurses # -lwinmm
+LIBS = -lncurses -ldl # -lwinmm
 

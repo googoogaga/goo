@@ -732,7 +732,7 @@ P FRAME_DEST (P frame)
 P FRAME_RETVAL (P frame)
   { return (((BIND_EXIT_FRAME) frame)->value); }
 
-extern P YPmet (P, P, P, P);
+extern P YPmet (P, P, P, P, P, P);
 extern P YPsig (P, P, P, P, P, P);
 
 P do_exit (P fun) {
@@ -753,7 +753,7 @@ P with_exit (P fun) {
   frame = MAKE_BIND_EXIT_FRAME();
   exit  = YPmet(&do_exit, YPfalse, 
                 YPsig(Ynil, YPpair(YLanyG, Ynil), YPfalse, YPib((P)1), YPfalse, Ynil), 
-		FABENV(1, frame));
+		FABENV(1, frame), Ynul, YPfalse);
   stack_allocp = old_stack_allocp;
   if (!setjmp(frame->destination))
     return CALL1(1, fun, exit);
@@ -1266,4 +1266,40 @@ P YPbuild_runtime_modules(
     (proto_toplevel_module_info, create_module_fun, use_module_fun,
      runtime_binding_fun, other_binding_fun);
   return YPfalse;
+}
+
+#include <dlfcn.h>
+
+#define CGEN_CC "cc -c -g -fPIC -I.. -o "
+#define CGEN_LD "cc -shared -o "
+
+typedef P (*PLD)();
+
+P Yp2cYPcompile_load (P name) {
+  char  buf[256];
+  void* mod;
+  PLD   load;
+  P     res;
+  sprintf(buf, "%s %s.o %s.c", CGEN_CC, name, name);
+  // printf("EXECUTING %s\n", buf);
+  system(buf);
+  sprintf(buf, "%s %s.so %s.o", CGEN_LD, name, name);
+  // printf("EXECUTING %s\n", buf);
+  system(buf);
+  sprintf(buf, "%s.so", name);
+  // printf("LOADING   %s\n", buf);
+  mod = dlopen(buf, RTLD_NOW);
+  if (mod == NULL)
+    printf("FAILED TO LOAD %s BECAUSE %s\n", name, dlerror());
+  else {
+    load = (PLD)dlsym(mod, "load_module_dl");
+    res = load();
+    // dlclose(mod);
+  }
+  return res;
+}
+
+/* TODO: GET THIS WORKING ON WINDOWS */
+P YprotoSsystemYPpid () {
+  return (P)getpid();
 }

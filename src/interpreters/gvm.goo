@@ -1,0 +1,200 @@
+;;; TODO
+;;; 
+;;; SUPPORT PRIMITIVES
+;;;   %fun-init, %fun-shell, %fun-fab, 
+;;;   %with-exit, %with-cleanup, %with-monitor
+;;; ARG TYPE PARSING AND SUPPORT (E.G., LIT, REG, REF, ...)
+;;; DST REG WRITING AND DECODING
+;;; FIG HOW TO INTEROP WITH C ESP WRT STACK
+;;; ---
+;;; 4 BIT ENCODING?
+
+(dm run ()
+  (op-run (fetch-byte)))
+
+(dm fetch-byte ()
+  (let ((byte (elt *code* *pc*))) (inc *pc*) byte))
+
+(dm fetch-bytes ((n <int>))
+  (collecting ()
+    (for ((from-below 0 n))
+      (collect (fetch-byte)))))
+
+(dm instruction-size ((code <vec>) (pc <int>))
+  (op-len (elt code pc)))
+
+(dm instruction-decode ((code <vec>) (pc <int>))
+  (loc ((fetch-byte ()
+          (let ((byte (elt code pc))) (inc pc) byte))
+        (fetch-bytes (n) 
+          (collecting () (for ((from-below 0 n)) (collect (fetch-byte))))))
+    (op-decode (fetch-byte))))
+
+;; TODO: MCASE
+(ct (df decode-arg (arg)
+      (mcase arg
+        ((LIT ,arg)    `(,arg (fetch-byte)))
+        ((REF ,arg)    `(,arg (vm-ref-val (fetch-byte))))
+        ((... ,n ,arg) `(,arg (fetch-bytes (vm-reg-val (fetch-byte)))))
+        (,arg          `(,arg (vm-reg-val (fetch-byte)))))))
+
+(ds (decode-clause ,iname (,@args))
+  (let ((dst     (fetch-byte))
+        (clauses (map decode-arg args)))
+    `(let ,clauses (lst ',iname ,dst ,@args))))
+
+(ds (run-clause (,@args) ,@body)
+  (let ((clauses (map decode-arg args)))
+    `(let ((dst (fetch-byte))
+           ,@clauses)
+       (set (vm-reg-val dst) (seq ,@body)))))
+
+;; TODO: FIX FOR NARY CASE
+(ds (len-clause ,@args)
+  (+ (len args) 1))
+
+(ds (def-op ,name (,@args) ,n ,@body)
+  `(seq (dm op-run ((opcode ,n))
+          (run-clause ,args ,@body))
+	(dm op-len ((opcode ,n) (code <vec>) (pc <int>))
+          (len-clause ,@args))
+        (dm op-decode ((opcode ,n) (code <vec>) (pc <int>))
+          (decode-clause ,name ,args))))
+
+(dm disassemble (code)
+  (collecting ()
+    (rep loop ((pc 0))
+      (unless (>= pc (len code))
+	(collect (instruction-decode code pc))
+	(loop (+ pc (instruction-size code pc)))))))
+
+(ddv *fun*  #f)
+(ddv *pc*   0)
+(dv <stk> <vec>)
+
+(ddv *stack*       (fab <stk> 100))
+(ddv *stack-index* 0)
+
+(dm stack-push (v)
+  (set (elt *stack* *stack-index*) v)
+  (inc *stack-index*))
+
+(dm stack-pop ()
+  (dec *stack-index*)
+  (elt *stack* *stack-index*) )
+
+(dv quotation-fetch ((i <int>))
+  (elt *constants* i) )
+
+;;; OPS
+
+(def-op STO (s)
+  (reg-val s))
+
+(def-op PUSH (x)
+  (stack-push x))
+
+(def-op POP ()
+  (stack-pop))
+
+;;; DATA-REF OPS
+
+(def-op LIT ((LIT x))
+  x)
+
+(def-op LIT-GET ((REF x))
+  x)
+
+(def-op VAR-FAB ((LIT mod-name) (LIT var-name))
+  (%fab-cell mod-name var-name))
+
+(def-op VAR ((LIT mod-name) (LIT var-name))
+  (%fab-cell mod-name var-name))
+
+(def-op VAR-GET ((REF x))
+  (%cell-val x))
+
+(def-op VAR-REG (x) ;; ???
+  (%cell-val x))
+
+(def-op VAR-PUT (v (REF x))
+  (set (%cell-val x) v))
+
+(def-op VAR-GET? ((REF x))
+  (cell-bound? x))
+
+;;; ENV REF OPS
+
+(def-op ENV-GET (x)
+  (%env-get x))
+
+(def-op BOX-FAB (x)
+  (%box-fab x))
+
+(def-op BOX-GET (x)
+  (%box-val x))
+
+(def-op BOX-PUT (v x)
+  (set (%box-val x) v))
+
+;;; CONTROL FLOW OPS
+
+(def-op JMP (offset)
+  (inc *pc* offset))
+
+(def-op JMP-NOT (x offset)
+  (unless x (inc *pc* offset)))
+
+(def-op ENV-LNK (len)
+  )
+
+(def-op ENV-UN-LNK ()
+  )
+
+(def-op PRE-CALL (n)
+  (invoke *fun* n))
+
+(def-op REG-CALL (n)
+  (invoke *fun* n))
+
+(def-op MET-CALL (n nm)
+  (met-invoke *fun* n nm))
+
+(def-op RET (x)
+  )
+
+;;; PROTO OPS
+
+(def-op TYP-CHK (x type)
+  )
+
+(def-op WITH-EXIT (main-thunk)
+  (%with-exit main-thunk))
+
+(def-op WITH-CLEANUP (protected cleanup)
+  (%with-cleanup protected cleanup))
+
+(def-op WITH-MONITOR (type info test handler main)
+  (%with-monitor type info test handler main))
+
+(def-op FUN-FAB (fun (... n free))
+  (%fun-fab fun free))
+
+(def-op FUN-SHELL (dynamic-extent? fun n)
+  (%fun-shell dynamic-extent? fun n))
+
+(def-op FUN-INIT (fun (... n free))
+  (%fun-init free))
+
+(def-op SIG-FAB (value arity nary? names specs)
+  (%sig names specs nary? arity value))
+
+(def-op GEN-FAB (name signature)
+  (%gen %dispatch name signature '() #f))
+
+(def-op MET-FAB (name signature (... n-refs refs) (... n-code code))
+  (%met %invoke-vm name signature (fab-refs code refs)))
+
+;; (def-op MAC-FAB ()
+;;   )
+

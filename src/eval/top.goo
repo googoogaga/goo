@@ -10,6 +10,8 @@
 (use ast-eval)
 (use proto/system)
 
+(dg p2c-eval (exp modname))
+
 (dm parse-in ((s <str>) ct-env)
   (objectify (read-from-string s) ct-env #f))
 
@@ -96,48 +98,55 @@
 ;;  Initialization and driver loop
 ;;  The prompt is handled a bit differently than in the notes
 (dm top-in (level top quit show-restarts? ct-env)
-  (let ((restarts #f))
-    (lab blow
-      (rep loop ()
-        (lab continue
-          (try <condition>
-            (fun (c r)
-              (if (isa? c <keyboard-interrupt>)
-                  (format out "BREAK")
-                  (format out "ERROR: %s" (describe-condition c)))
-              ;; (backtrace (env))
-              (top-in (+ level 1) top quit #t ct-env)
-              (continue #f))
-            (try ((type <restart>)
-                  (description "Return to interpreter level %d" level))
-              (fun (c r) (continue #f))
-              (newline out)
-              (when show-restarts?
-                (format out "Type (restart N) to restart execution:\n")
-                (set restarts (list-handlers <restart> out))
-                (set show-restarts? #f))
-              (let ((form (prompt-for-command-expression ct-env level "<= ")))
-                (case
-                  ((or (= form '(quit)) (= form (eof-object)))
-                   (quit #f))
-                  ((= form '(up))
-                   (blow #f))
-                  ((= form '(top))
-                   (top #f))
-                  ((= form '(handlers))
-                   (list-handlers <condition> out))
-                  ((= form '(restarts))
-                   (list-handlers <restart> out))
-                  ((mif ((restart ,n) form) #t #f)
-                   (do-restart restarts (2nd form)))
-                  ((mif ((in-mod ,m) form) #t #f)
-                   (let ((new-env (runtime-environment (2nd form))))
-                     (set ct-env new-env)))
-                  (#t
-                   (let ((ast    (objectify form ct-env #f))
-                         (result (ast-evaluate ast)))
-                     (print-result-expression ct-env level "=> " result))))))))
-        (loop)))))
+  (loc ((ast-run (form)
+          (ast-evaluate (objectify form ct-env #f)))
+        (p2c-run (form)
+          (p2c-eval form (module-name (environment-module ct-env)))))
+    (let ((restarts #f)
+          (eval     ast-run))
+      (lab blow
+        (rep loop ()
+          (lab continue
+            (try <condition>
+              (fun (c r)
+                (if (isa? c <keyboard-interrupt>)
+                    (format out "BREAK")
+                    (format out "ERROR: %s" (describe-condition c)))
+                ;; (backtrace (env))
+                (top-in (+ level 1) top quit #t ct-env)
+                (continue #f))
+              (try ((type <restart>)
+                    (description "Return to interpreter level %d" level))
+                (fun (c r) (continue #f))
+                (newline out)
+                (when show-restarts?
+                  (format out "Type (restart N) to restart execution:\n")
+                  (set restarts (list-handlers <restart> out))
+                  (set show-restarts? #f))
+                (let ((form
+                       (prompt-for-command-expression ct-env level "<= ")))
+                  (case
+                    ((or (= form '(quit)) (= form (eof-object)))
+                     (quit #f))
+                    ((= form '(up))
+                     (blow #f))
+                    ((= form '(handlers))
+                     (list-handlers <condition> out))
+                    ((= form '(restarts))
+                     (list-handlers <restart> out))
+                    ((mif ((restart ,n) form) #t #f)
+                     (do-restart restarts (2nd form)))
+                    ((mif ((in-mod ,m) form) #t #f)
+                     (let ((new-env (runtime-environment (2nd form))))
+                       (set ct-env new-env)))
+                    ((= form '(p2c-eval))
+                     (set eval p2c-run))
+                    ((= form '(ast-eval))
+                     (set eval ast-run))
+                    (#t
+                     (print-result-expression
+                      ct-env level "=> " (eval form))))))))
+          (loop))))))
 
 (dm top ((modname <sym>))
   (lab quit
@@ -160,4 +169,5 @@
   top
   do-stack-frames
   backtrace
-  save-image)
+  save-image
+  p2c-eval)
