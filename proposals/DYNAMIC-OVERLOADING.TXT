@@ -1,0 +1,93 @@
+ISSUE: MODULE SYSTEM
+
+REVISION HISTORY:
+
+STATUS: OPEN
+
+RELATED ISSUES: namespaces
+
+CATEGORY: addition
+
+PROBLEM DESCRIPTION:
+
+orthogonal module style design creates the potential for many name
+conflicts and congruence errors.  the result is that users are
+force to use long names which is both inconvenient and unnatural.
+
+PRINCIPLES:
+
+make things convenient.
+
+make things simple.
+
+renaming should be supported.
+
+prevent namespace violations.
+
+all objects should be first-class.
+
+all objects should be name-free.
+
+support incremental development.
+
+add as few names as possible.
+
+avoid redundant information.
+
+PROPOSAL:
+
+combine namespace lookup with object-orientation.  all object access
+is forced through message sends.  a message send returns a function to
+which the remaining arguments are applied.  a function can have
+multiple overloading methods.  of the available methods, the most
+applicable method is chosen based on an unbiased sort of the
+applicable methods' specializers.  top level bindings must now be
+associated with a given class.
+
+EXAMPLES:
+
+(dv <math> (isa <any>))
+  (slot <math> pi 3.14)
+
+(pi <math>)
+
+(dv <point> (isa <any>))
+  (slot <point> x 0)
+  (slot <point> y 0)
+
+(dv <rectangle> (isa <any>))
+  (slot <rectangle> x 0)
+  (slot <rectangle> y 0)
+  (slot <rectangle> w 0)
+  (slot <rectangle> h 0)
+
+(dm scale ([r <rectangle>] [p <point>] => <rectangle>)
+  (isa <rectangle> x (x r) y (y r) w (* (x p) (w r)) h (* (y p) (h r))))
+
+QUESTIONS:
+
+does pi example look weird?
+
+renaming?
+
+is there a way to simulate this with an orthogonal namespace
+mechanism?
+
+are things artificially associated with classes?
+
+how do macros work?
+
+RATIONALE:
+
+COST TO IMPLEMENTORS:
+
+COST TO USERS:
+
+PERFORMANCE IMPACT:
+
+DOCUMENTATION IMPACT:
+
+IMPLEMENTATION NOTES:
+
+FUTURE FEATURES:
+

@@ -1,0 +1,56 @@
+ISSUE: definition names
+
+REVISION HISTORY:
+
+STATUS: OPEN
+
+RELATED ISSUES:
+
+CATEGORY: change
+
+PROBLEM DESCRIPTION:
+
+current definition special form names are unpronouncable as words.
+also the definition doesn't look like the usage.
+
+PRINCIPLES:
+
+names should be pronouncable words.
+
+definitions should look like their usage.
+
+PROPOSAL:
+
+(DG f (...))        -> (DEF f (GEN (...)))
+(DF f (...) ...)    -> (DEF f (FUN (...)))
+(DM f (...) ...)    -> (DEF (f ...) ...)
+(DV x ,v)           -> (DEF x ,v)
+(DV (TUP x ...) ,v) -> (DEF (TUP x ...) ,v)
+(DS (f ...) ...)    -> (DEF `(f ...) ...)
+
+(LOC ((f (...) ...) ...) ...) -> (LOC (((f ...) ...) ...) ...)
+
+EXAMPLES:
+
+QUESTIONS:
+
+does LOC has too many parentheses?
+
+can one get into trouble with a free floating GEN?
+
+does this jive with object-oriented namespaces?
+
+RATIONALE:
+
+COST TO IMPLEMENTORS:
+
+COST TO USERS:
+
+PERFORMANCE IMPACT:
+
+DOCUMENTATION IMPACT:
+
+IMPLEMENTATION NOTES:
+
+FUTURE FEATURES:
+

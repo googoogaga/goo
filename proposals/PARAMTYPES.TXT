@@ -1,0 +1,99 @@
+ISSUE: PARAMETERIZED TYPES
+
+REVISION HISTORY:
+
+STATUS: OPEN
+
+RELATED ISSUES:
+
+CATEGORY: addition
+
+PROBLEM DESCRIPTION:
+
+PRINCIPLES:
+
+support high performance.
+
+identify as many errors as possible as soon as possible.
+
+minimize complexity.
+
+all types are first-class objects.
+
+fit into prototype-based framework.
+
+PROPOSAL:
+
+RATIONALE:
+
+COST TO IMPLEMENTORS:
+
+COST TO USERS:
+
+PERFORMANCE IMPACT:
+
+DOCUMENTATION IMPACT:
+
+IMPLEMENTATION NOTES:
+
+FUTURE FEATURES:
+
+(dv <vec> (isa <seq>))
+  (slot <vec> vec-elt-type <any>)
+  (slot (x <vec>) (vec-data (vec-elt-type x) *))
+
+(dm elt ((s [vec vec-elt-type ?type]) => ?type) ...)
+(dm elt-setter ((v ?type) (s [vec vec-elt-type ?type])) ...)
+
+(dv <stack> (isa <seq>))
+  (slot <stack> stack-elt-type <any>)
+  (slot <stack> (stack-top <int>))
+  (slot (x <stack>) (stack-data [vec vec-elt-type (stack-elt-type x)]))
+
+(dm push ((s [<stack> stack-elt-type ?type]) (v ?type)) ...)
+
+(dm pop  ((s [<stack> stack-elt-type ?type]) => ?type) ...)
+
+(dv <int-stack> [<seq> stack-elt-type <int>])
+
+(dv int-stack (isa <int-stack>))
+
+;;;
+;;; NOTES
+;;;
+;;; [,proto ,getter ,value ...] is a template
+;;; ?,name is a pattern variable used in unification
+;;; 
+;;; NEED
+;;; 
+;;; way to uniquify templates
+;;; repeated slots
+;;; 
+
+I had something a bit more concise in mind. Maybe:
+
+(dv [<vec> ?T] (isa [<seq> ?T]))
+  (slot [<vec> ?T] (vec-data ?T *))
+
+(dm elt ((s [<vec> ?T]) => ?T) ...)
+(dm elt-setter ((v ?T) (s [<vec> ?T])) ...)
+
+(dv [<stack> ?T])
+  (slot [<stack> ?T] (stack-top <int>))
+  (slot [<stack> ?T] (stack-data [<vec> ?T])) ;; Second ?T here is a ref
+
+(dm push ((s [<stack> ?T]) (v ?T)) ...)
+
+(dm pop ((s [<stack> ?T]) => ?T) ...)
+
+(dv <int-stack> [<stack> <int>])
+
+(dv int-stack (isa <int-stack>))
+
+I guess it would be implemented the same way as yours, but more behind
+the scenes? Maybe yours is better because its more explicit and you 
+don't have the compilation of tracking the type parameters 
+positionally. I wonder if subtyping works without any explicit 
+annotation of which slots are the type parameters though?
+
+

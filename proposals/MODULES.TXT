@@ -1,0 +1,99 @@
+ISSUE: MODULE SYSTEM
+
+REVISION HISTORY:
+
+STATUS: OPEN
+
+RELATED ISSUES:
+
+CATEGORY: addition
+
+PROBLEM DESCRIPTION:
+
+currently proto has a flat namespace which makes extending it
+difficult because of potential name conflicts.
+
+PRINCIPLES:
+
+namespaces are separate from object-orientation.
+
+all operations should be elemental.
+
+renaming should be supported.
+
+prevent namespace violations.
+
+all objects should be first-class.
+
+all objects should be name-free.
+
+support incremental development.
+
+add as few names as possible.
+
+avoid redundant information.
+
+PROPOSAL:
+
+proto programs are composed of one or more modules.  modules are
+mappings from names to bindings and are used to resolve free
+variables.  each binding has a unique home module.  modules are
+first-class.  module name mapping is based on the notion of composable
+filters.  filters are constructed using a composition of set
+operations and renaming.
+
+module-spec:
+  (module ,import-spec ...)
+import-spec:
+  (or      ,import-spec ...)
+  (and     ,import-spec ...)
+  (not     ,import-spec)
+  (include ,import-spec ,name ...)
+  (rename  ,import-spec (,old-name ,new-name) ...)
+  (prefix  ,import-spec ,name)
+  ,module
+export-spec:
+  (export ,name [,new-name])
+in-spec:
+  (in-module ,module)
+
+EXAMPLES:
+
+(dv network-hello-module (module sockets-module))
+
+(in-module (module sockets-module))
+
+(module (or proto sockets))
+
+(module (not proto object-slots))
+
+(module (rename proto (+ p+)))
+
+QUESTIONS:
+
+what about libraries?
+  don't want to redundant configuration system.
+too complicated?
+  no renaming?
+  no aliasing?
+  can we reuse an already defined mechanism?
+how does bootstrapping work?
+  what is the namespace for namespaces?
+should modules be first-class?
+  will there be dire performance implications?
+should import be
+
+RATIONALE:
+
+COST TO IMPLEMENTORS:
+
+COST TO USERS:
+
+PERFORMANCE IMPACT:
+
+DOCUMENTATION IMPACT:
+
+IMPLEMENTATION NOTES:
+
+FUTURE FEATURES:
+

@@ -1,0 +1,45 @@
+ISSUE: LITERALS
+
+REVISION HISTORY:
+
+STATUS: OPEN
+
+RELATED ISSUES:
+
+CATEGORY: addition
+
+PROBLEM DESCRIPTION:
+
+there is no general literal format.
+
+generalize backquote.
+
+PRINCIPLES:
+
+support high performance.
+
+identify as many errors as possible as soon as possible.
+
+minimize complexity.
+
+all types are first-class objects.
+
+fit into prototype-based framework.
+
+PROPOSAL:
+
+RATIONALE:
+
+COST TO IMPLEMENTORS:
+
+COST TO USERS:
+
+PERFORMANCE IMPACT:
+
+DOCUMENTATION IMPACT:
+
+IMPLEMENTATION NOTES:
+
+FUTURE FEATURES:
+
+
