@@ -253,17 +253,31 @@ P YPPROP_ELT_SETTER (P z, P x, P i) {
   return YPprop_elt_setter(z, x, i);
 }
 
-/* VEC */
+/* REP */
 
-extern P YLvecG;
+extern P YLrepG;
 
-P YPPvfab (P len, P fill) {
+P YPPrfab (P len, P fill) {
   int i;
   P obj = allocate(((int)len + 2) * sizeof(P));
   YPprop_elt_setter(len, obj, (P)REP_LEN_OFF);
   for (i = 0; i < (int)len; i++)
     YPprop_elt_setter(fill, obj, (P)(i + REP_DAT_OFF));
-  YPobject_class_setter(YLvecG, obj);
+  YPobject_class_setter(YLrepG, obj);
+  return obj;
+}
+  
+/* TUP */
+
+extern P YLtupG;
+
+P YPPtfab (P len, P fill) {
+  int i;
+  P obj = allocate(((int)len + 2) * sizeof(P));
+  YPprop_elt_setter(len, obj, (P)REP_LEN_OFF);
+  for (i = 0; i < (int)len; i++)
+    YPprop_elt_setter(fill, obj, (P)(i + REP_DAT_OFF));
+  YPobject_class_setter(YLtupG, obj);
   return obj;
 }
   
@@ -962,14 +976,14 @@ void print_kind (P adr, int prettyp, int depth) {
       }
     }
     printf(")");
-  } else if (strcmp(typename, "<vec>") == 0) {
+  } else if (strcmp(typename, "<tup>") == 0) {
     int j, n;
-    n = (PINT)YPvlen(adr);
+    n = (PINT)YPtlen(adr);
     printf("#("); 
     for (j = 0; j < n; j++) {
       if (j != 0) printf(" ");
       if (j < max_length) {
-	print_kind(YPvelt(adr, j), 0, depth + 1); 
+	print_kind(YPtelt(adr, j), 0, depth + 1); 
       } else {
 	printf("..."); break;
       }

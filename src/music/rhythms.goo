@@ -9,7 +9,7 @@
   (dp pattern-instrument (x|<pattern> => <sym>))
   (dp pattern-value (x|<pattern> => <str>))
 
-(dv $patterns (fab <buf> 0))
+(dv $patterns (fab <vec> 0))
 
 (dm register-pattern (time rhythm kind part instrument value)
   (def pat (new <pattern>

@@ -1,0 +1,55 @@
+(use goo/boot)
+(use goo/macros)
+(use goo/types)
+(use goo/math)
+(use goo/cols/col)
+(use goo/cols/seq)
+(use goo/cols/flat)
+
+;; 3.7.6.1 REPEATED'S
+
+;;;;!! Interface
+(exported
+ ;; Defined in boot
+ <rep>
+ rep-len
+ rep-fab
+ rep-fill!
+ rep-into!
+ rep-nul
+ rep-elt
+ rep-elt-setter
+)
+
+(df rep-nul () %rnul)
+
+(df rep-len (x|<rep> => <int>)
+  (%ib (%rlen x)))
+
+(df rep-fill! (x|<rep> val => <rep>)
+  (def s (rep-len x))
+  (rep fill ((i 0))
+    (when (< i s)
+      (set (rep-elt x i) val)
+      (fill (+ i 1))))
+  x)
+
+(df rep-into! (d|<rep> s|<rep> => <rep>)
+  (def l (rep-len d))
+  (rep into ((i 0))
+    (when (< i l)
+      (set (rep-elt d i) (rep-elt s i))
+      (into (+ i 1))))
+  d)
+
+(df rep-fab (s|<int> fill => <rep>)
+  (rep-fill! (if (== s 0) %rnul (%rep (%iu s))) fill))
+
+(df rep-elt (x|<rep> i|<int> => <any>)
+  (%relt x (%iu i)))
+  
+(df rep-elt-setter (z x|<rep> i|<int>)
+  (set (%relt x (%iu i)) z))
+  
+
+

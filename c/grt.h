@@ -110,6 +110,14 @@ extern P YPflo_bits (P x);
 
 #define YPrep_dat(x)            (YPprop_dat_at((x), (P)REP_DAT_OFF))
 
+/* REP */
+
+extern P YPPrfab (P size, P fill);
+#define YPru(x)                ((P)(YPrep_dat(x)))
+#define YPrlen(x)              ((P)(YPprop_elt((x), (P)REP_LEN_OFF)))
+#define YPrelt(x, i)           ((P)(YPprop_elt((x), (P)(REP_DAT_OFF + (i)))))
+#define YPrelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (P)(REP_DAT_OFF + (i)))))
+
 /* VEC */
 
 extern P YPPvfab (P size, P fill);
@@ -117,6 +125,14 @@ extern P YPPvfab (P size, P fill);
 #define YPvlen(x)              ((P)(YPprop_elt((x), (P)REP_LEN_OFF)))
 #define YPvelt(x, i)           ((P)(YPprop_elt((x), (P)(REP_DAT_OFF + (i)))))
 #define YPvelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (P)(REP_DAT_OFF + (i)))))
+
+/* TUP */
+
+extern P YPPtfab (P size, P fill);
+#define YPtu(x)                ((P)(YPrep_dat(x)))
+#define YPtlen(x)              ((P)(YPprop_elt((x), (P)REP_LEN_OFF)))
+#define YPtelt(x, i)           ((P)(YPprop_elt((x), (P)(REP_DAT_OFF + (i)))))
+#define YPtelt_setter(z, x, i) ((P)(YPprop_elt_setter((z), (x), (P)(REP_DAT_OFF + (i)))))
 
 /* STR */
 

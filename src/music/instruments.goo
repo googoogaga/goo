@@ -28,7 +28,7 @@
 
 ;;; INSTRUMENTS
 
-(dv $instruments (fab <buf> 0))
+(dv $instruments (fab <vec> 0))
 
 (dm register-instrument (name version tones)
   (def tone-map (fab <tone-map> (len tones)))

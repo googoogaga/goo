@@ -1,53 +1,110 @@
 (use goo/boot)
 (use goo/macros)
+(use goo/math)
 (use goo/types)
 (use goo/cols/col)
+(use goo/cols/colx)
 (use goo/cols/seq)
+(use goo/cols/seqx)
+(use goo/cols/lst)
 (use goo/cols/flat)
+(use goo/cols/rep)
 
-;; 3.7.6.1 VECTORS
+;; 3.7.6.3 STRETCHY-VECTOR
 
 ;;;;!! Interface
 (exported
- ;; Defined in boot
- <vec>
- (df vec (args|...))
-)
+ (dc <vec> (<flat> <seq!>))
+ 
+ (dg vec (elts|... => <vec>))
+ ;; pushes element onto end of stretchy vector
+ (dg push-last! (c|<vec> x|<any> => <vec>))
+ 
+ ;; pops element from end of stretchy vector
+ (dg pop-last! (c|<vec> => <any>))
+ )
+ 
 
 ;;;;!! Implementation
-
-(dm as ((_ (t= <vec>)) x|<vec> => <vec>) x)
-
-(df vec (objects|...) (as <vec> objects))
+  (dp vec-len (x|<vec> => <int>) 0)
+  (dp vec-dat (x|<vec> => <rep>) (rep-nul))
 
 ;;;; Collection protocol
-(dm len (x|<vec> => <int>)
-  (%ib (%vlen x)))
 
-(dm elt-or (x|<vec> i|<int> default => <any>)
-  (if (range-check? x i)
-      (%velt x (%iu i)) ;; TODO: LOW-ELT
+(dm len (c|<vec> => <int>)
+  (vec-len c))
+
+(dm elt-or (c|<vec> i|<int> default => <any>)
+  (if (range-check? c i)
+      (low-elt c i)
       default))
 
-;; (dm elt-setter (z x|<vec> i|<int>)
-;;   (range-check x i)
-;;   (set (%velt x (%iu i)) z)) ;; TODO: LOW-ELT
+(dm elt-setter (z c|<vec> i|<int>)
+  (when (< i 0) (range-error c i))
+  (set (low-elt c i) z))
 
-(dm empty ((c (t= <vec>)) => <vec>)
-  %vnul)
+(dm empty ((c (t= <vec>)) => <vec>) (new <vec>))
 
-(dm fab ((x (t= <vec>)) s|<int> => <vec>)
-  (if (== s 0) %vnul (%vec (%iu s))))
+(dm fab ((c (t= <vec>)) s|<int> => <vec>)
+  (def dat (rep-fab (power-of-two-ceiling s) #f))
+  (new <vec> vec-len s vec-dat dat))
+
+;;;; Sequence protocol
+
+;; TODO: HAVE THIS FALL OUT OF PROTOCOL
+(dm cat! (x|<vec> more|... => <vec>)
+  (for ((s more))
+    (for ((e s))
+      (add! x e)))
+  x)
+
+(dm vec (elts|... => <vec>)
+  (app fabs <vec> elts))
+
+(dm push-last! (c|<vec> x => <vec>)
+  (add! c x))
+
+(dm pop-last! (c|<vec> => <any>)
+  (def new-len (- (len c) 1))
+  (def x       (low-elt c new-len))
+  (set (len c) new-len)
+  x)
 
 
-;;;; Misc stuff
+;; TODO: QUESTIONABLE SYNTAX
+(dm to-str (x|<vec> => <str>) 
+  (cat "#[" (vals-to-str x) "]"))
 
-(dm to-str (x|<vec> => <str>)
-  (cat "#(" (vals-to-str x) ")"))
 
-;;;; Undocumented
+(dm add! (c|<vec> x => <vec>)
+  (set (low-elt c (len c)) x)
+  c)
+
+(dm len/fill-setter (new-len|<int> c|<vec> default)
+  (def dat (vec-dat c))
+  (if (> new-len (rep-len dat))
+      (let ((new-data (rep-fab (power-of-two-ceiling new-len) default)))
+        (rep-into! new-data dat)
+        (set (vec-len c) new-len)
+        (set (vec-dat c) new-data))
+      (if (< new-len (len c))
+          (let ((old-len (len c)))
+            (set (vec-len c) new-len)
+            (rep fill ((i|<int> new-len))
+              (and (< i old-len)
+                   (set (rep-elt dat i) default)
+                   (fill (+ i 1)))))
+          (set (vec-len c) new-len))))
+
+(dm len-setter (new-len|<int> c|<vec>)
+  (set (len/fill c (elt-default c)) new-len))
+
+(dm zap! (c|<vec> => <vec>) (set (len c) 0) c)
+
 (dm low-elt (x|<vec> i|<int> => <any>)
-  (%velt x (%iu i)))
+  (rep-elt (vec-dat x) i))
 
 (dm low-elt-setter (z x|<vec> i|<int>)
-  (set (%velt x (%iu i)) z))
+  (when (>= i (len x))
+    (set (len x) (+ i 1)))
+  (set (rep-elt (vec-dat x) i) z))

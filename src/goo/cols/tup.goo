@@ -1,0 +1,53 @@
+(use goo/boot)
+(use goo/macros)
+(use goo/types)
+(use goo/cols/col)
+(use goo/cols/seq)
+(use goo/cols/flat)
+
+;; 3.7.6.1 TUPLES
+
+;;;;!! Interface
+(exported
+ ;; Defined in boot
+ <tup>
+ (df tup (args|...))
+)
+
+;;;;!! Implementation
+
+(dm as ((_ (t= <tup>)) x|<tup> => <tup>) x)
+
+(df tup (objects|...) (as <tup> objects))
+
+;;;; Collection protocol
+(dm len (x|<tup> => <int>)
+  (%ib (%tlen x)))
+
+(dm elt-or (x|<tup> i|<int> default => <any>)
+  (if (range-check? x i)
+      (%telt x (%iu i)) ;; TODO: LOW-ELT
+      default))
+
+;; (dm elt-setter (z x|<tup> i|<int>)
+;;   (range-check x i)
+;;   (set (%telt x (%iu i)) z)) ;; TODO: LOW-ELT
+
+(dm empty (c|(t= <tup>) => <tup>)
+  %tnul)
+
+(dm fab (x|(t= <tup>) s|<int> => <tup>)
+  (if (== s 0) %tnul (%tup (%iu s))))
+
+
+;;;; Misc stuff
+
+(dm to-str (x|<tup> => <str>)
+  (cat "#(" (vals-to-str x) ")"))
+
+;;;; Undocumented
+(dm low-elt (x|<tup> i|<int> => <any>)
+  (%telt x (%iu i)))
+
+(dm low-elt-setter (z x|<tup> i|<int>)
+  (set (%telt x (%iu i)) z))

@@ -10,7 +10,7 @@
   (dg zip (e|... => <zip>))
   (dg unzip (z|<zip> => <tup>)))
 
-(dp zip-dat (x|<zip> => <vec>) #())
+(dp zip-dat (x|<zip> => <tup>) #())
 
 (dm zip (e|... => <zip>)
   (new <zip> zip-dat (as <tup> e)))

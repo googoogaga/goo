@@ -8,7 +8,8 @@
 (use goo/cols/seq)
 (use goo/cols/seqx)
 (use goo/cols/flat)
-(use goo/cols/vec)
+(use goo/cols/rep)
+(use goo/cols/tup)
 (use goo/cols/lst)
 (use goo/cols/str)
 
@@ -39,7 +40,7 @@
   (dp %n-buckets (x|<tab-vec> => <int>))
   (dp %bucket-depth (x|<tab-vec> => <int>))
   ;; The actual table data representation
-  (dp %data (x|<tab-vec> => <vec>))
+  (dp %data (x|<tab-vec> => <rep>))
   ;; GC state
   (dp %gc-state (x|<tab-vec> => <any>))
 
@@ -64,7 +65,7 @@
 
 
 (dv *twin-primes*
-  (as <vec>
+  (as <tup>
     '(3 5 11 17 29 41 47 59 71 101 107 137 149 167 179 191 197 227 239
       269 281 311 347 419 431 461 521 569 599 617 641 659 809 839 881 1019
       1049 1091 1151 1229 1277 1319 1367 1427 1481 1607 1667 1721 1787 1871
@@ -102,25 +103,19 @@
            %bucket-depth bucket-depth
            %primary-modulus primary-modulus
            %secondary-modulus secondary-modulus))
-  (set (%data v) (fab <vec> size))
-  (@fill! v fill-value)
+  (set (%data v) (rep-fab size fill-value))
   v)
 
 (df @fill! (x|<tab-vec> fill)
-  (def len (@@len x))
-  (rep loop ((i 0)) (when (< i len) (set (@elt x i) fill) (loop (+ i 1)))))
-
-(dm @@len (vector|<tab-vec> => <int>)
-  (len (%data vector)))
+  (rep-fill! (%data x) fill))
 
 (dm @elt (vector|<tab-vec> index|<int> => <any>)
   ;; (elt (%data vector) index)
-  (%velt (%data vector) (%iu index)))
+  (%relt (%data vector) (%iu index)))
 
 (dm @elt-setter (new-value vector|<tab-vec> index|<int> => <any>)
   ;; (set (elt (%data vector) index) new-value)
-  (set (%velt (%data vector) (%iu index)) new-value)
-  )
+  (set (%relt (%data vector) (%iu index)) new-value))
 
 (dm clr! (vector|<tab-vec> fill-value)
   (@fill! vector fill-value)
@@ -320,7 +315,7 @@
           (inner (+ i 1))))
       (outer (+ b 1)))))
 
-(dm do (function|<fun> table|<tab> => <any>) ;; TODO: => (tup)
+(dm do (function|<fun> table|<tab>)
   (def vector    (%vector table))
   (def n-buckets (%n-buckets vector))
   (def depth     (%bucket-depth vector))

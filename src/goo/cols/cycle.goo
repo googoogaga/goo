@@ -10,10 +10,10 @@
  (dc <cycle> (<seq>))
  (dg cycle (e|... => <cycle>)))
 
-(dp cycle-elts (x|<cycle> => <vec>))
+(dp cycle-elts (x|<cycle> => <tup>))
 
 (dm cycle (e|... => <cycle>)
-  (new <cycle> cycle-elts (as <vec> e)))
+  (new <cycle> cycle-elts (as <tup> e)))
  
 (dc <cycle-enum> (<enum>))
 (dp %key (x|<cycle-enum> => <int>) 0)

@@ -313,11 +313,11 @@
   ;; (assq <any> <lst> => <any>) 
   )
 
-(def-concrete-protocol-tests (x|<buf>)
+(def-concrete-protocol-tests (x|<vec>)
   (sup x)
-  ;; (add! <buf> <any> => <any>) 
-  ;; (pop  <buf> => <any>) 
-  ;; (len-setter <int> <buf>) 
+  ;; (add! <vec> <any> => <any>) 
+  ;; (pop  <vec> => <any>) 
+  ;; (len-setter <int> <vec>) 
   )
 
 (def-protocol-tests (x|<range>) ;; TODO: concrete

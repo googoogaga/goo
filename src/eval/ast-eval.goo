@@ -43,12 +43,12 @@
   (dp env-parent (x|<loc-env> => <any>)   #f)
   (dp env-function (x|<loc-env> => <any>) #f)
   (dp env-names (x|<loc-env> =>  <lst>)   '())
-  (dp env-values (x|<loc-env> => <buf>)   )
+  (dp env-values (x|<loc-env> => <vec>)   )
 
 (dv $nul-loc-env (new <loc-env>))
 
 (dm env-frame! (env|<loc-env> function names|<lst> args|<lst> => <loc-env>)
-  (def values (as <buf> args))
+  (def values (as <vec> args))
   (new <loc-env>
     env-parent   env
     env-function function
@@ -111,7 +111,7 @@
               (type (if spec (ast-eval spec env) <any>)))
           (loop (pair type res) (tail specs) (+ i 1))))))
 
-(dv *stack* (fab <buf> 0))
+(dv *stack* (fab <vec> 0))
 
 ;;; Check to make sure we have a legal number of arguments, and arrange
 ;;; them in the fashion required by our argument list.

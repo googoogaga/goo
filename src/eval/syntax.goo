@@ -14,7 +14,8 @@
       (== exp #t)
       (== exp #f)
       (isa? exp <str>)
-      (isa? exp <vec>)))
+      (isa? exp <vec>)
+      (isa? exp <tup>)))
 
 ;;  Our prompt (viz., "EVAL==> ") is a string.
 ;;  Variables

@@ -10,7 +10,8 @@
 (use goo/cols/seq)
 (use goo/cols/opts)
 (use goo/cols/lst)
-(use goo/cols/buf)
+(use goo/cols/tup)
+(use goo/cols/vec)
 (use goo/cols/tab)
 (use goo/io/port)
 
@@ -18,11 +19,11 @@
 
 ; (df napp (proc|<fun> nexts args|...)
 ;   (if (== (len args) 1)
-;       (%%apply proc nexts (as <vec> (elt args 0)))
+;       (%%apply proc nexts (as <tup> (elt args 0)))
 ;       (let ((ilen|<int> (- (len args) 1))
 ;             (lelt|<seq> (elt args ilen))
 ;             (tlen|<int> (+ ilen (len lelt)))
-;             (out|<vec>  (fab <vec> tlen)))
+;             (out|<tup>  (fab <tup> tlen)))
 ;         (rep loop ((i 0))
 ;           (if (== i ilen)
 ;               #f
@@ -94,11 +95,11 @@
 ;;   it doens't do extent analysis of restargs like it should.
 
 (dm rcurry (f|<fun> curried|... => <fun>)
-  (def savedcurried (as <vec> curried))
+  (def savedcurried (as <tup> curried))
   (fun ((args ...)) (app f (cat '() args savedcurried))))
 
 (dm curry (f|<fun> curried|... => <fun>)
-  (def savedcurried (as <vec> curried))
+  (def savedcurried (as <tup> curried))
   (fun ((args ...)) (app f (cat '() savedcurried args))))
 
 (dm always (x => <fun>)
@@ -324,9 +325,9 @@
 ;;; from 1) and return a sequence of those handlers in the same order
 ;;; (indexed from zero).  This allows us to keep track of which handlers
 ;;; correspond to which user-visible numbers.
-(df list-handlers ((type (t< <condition>)) out => <buf>)
+(df list-handlers ((type (t< <condition>)) out => <vec>)
   (def i          1)
-  (def applicable (fab <buf> 0))
+  (def applicable (fab <vec> 0))
   (do-handlers-of-type type
     (fun (handler)
       (format out "%d. %s.\n" i
@@ -449,7 +450,6 @@
   app-args app-filename
   as
   ascii-limit ascii-whitespaces
-  buf <buf>
   ceil ceiling/
   describe-condition
   port-contents
@@ -555,7 +555,6 @@
   tup
   t+ t= t< t?
   var-name var-type
-  vec
   %with-monitor
   put puts
   zero?

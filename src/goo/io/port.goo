@@ -6,7 +6,7 @@
 (use goo/cols/colx)
 (use goo/cols/seq)
 (use goo/cols/seqx)
-(use goo/cols/buf)
+(use goo/cols/vec)
 
 (exported
  (dc <port> (<any>))
@@ -115,7 +115,7 @@
 ;; VERY INEFFICIENT
 
 (dm open ((t (t= <str-out-port>)) dat|<str> => <str-out-port>)
-  (new <str-out-port> port-guts (as <buf> dat)))
+  (new <str-out-port> port-guts (as <vec> dat)))
 
 ;; TODO: EOF OBJECT MUST BE A CHR
 

@@ -299,15 +299,15 @@
 
 ;;; MANGLING
 
-(dv *mangle-buffer* (new <buf>))
+(dv *mangle-buffer* (new <vec>))
 
 (dv $mangles-data
-  (vec #(#\- #\_) #(#\! #\X) #(#\$ #\D) #(#\% #\P) #(#\* #\T) 
+  (tup #(#\- #\_) #(#\! #\X) #(#\$ #\D) #(#\% #\P) #(#\* #\T) 
        #(#\/ #\S) #(#\< #\L) #(#\> #\G) #(#\? #\Q) #(#\+ #\A)
        #(#\& #\B) #(#\^ #\C) #(#\_ #\U) #(#\@ #\O) #(#\= #\E)
        #(#\~ #\N) #(#\| #\K) #(#\. #\I)))
 
-(df char-buffer-as-string (buffer|<buf> => <str>)
+(df char-buffer-as-string (buffer|<vec> => <str>)
   (def buffer-size|<int> (len buffer))
   (def string|<str>      (fab <str> buffer-size))
   ;; without-bounds-checks
@@ -317,14 +317,14 @@
   string)
 
 (dv $c-escapes
-  (let ((vec (fill (fab <buf> ascii-limit) #f)))
+  (let ((vec (fill (fab <vec> ascii-limit) #f)))
     (set (elt vec (as <int> #\tab)) "\\t")
     (set (elt vec (as <int> #\page)) "\\f")
     (set (elt vec (as <int> #\return)) "\\r")
     (set (elt vec (as <int> #\newline)) "\\n")
     (set (elt vec (as <int> #\")) "\\\"")
     (set (elt vec (as <int> #\\)) "\\\\")
-    vec))
+    (as <tup> vec)))
 
 (dm mangle-string-literal (str|<str> => <str>)
   (set (len *mangle-buffer*) 0)
@@ -350,15 +350,15 @@
         (def (tup quotient|<int> remainder|<int>) (trunc/ number 10))
         (def digit|<chr> (elt $number-characters remainder))
         (if (= quotient 0)
-            (let ((result|<buf> (fab <buf> index)))
+            (let ((result|<vec> (fab <vec> index)))
               (set (elt result 0) digit)
               result)
-            (let ((result|<buf> (process-integer quotient (+ index 1))))
+            (let ((result|<vec> (process-integer quotient (+ index 1))))
               (set (elt result (- (len result) index)) digit)
               result)))))
 
 (dv $name-mangler-table
-  (let ((table (fab <buf> (+ $max-character-code 1))))
+  (let ((table (fab <vec> (+ $max-character-code 1))))
     ;; fill with default manglings
     (for ((i (range $min-character-code <= $max-character-code)))
       (set (elt table i)
@@ -375,10 +375,10 @@
 
 ;;; Name mangler
 
-(df mangler-reset (buffer|<buf>)
+(df mangler-reset (buffer|<vec>)
   (set (len buffer) 0))
 
-(df mangle-name-into (buf|<buf> name|<str>)
+(df mangle-name-into (buf|<vec> name|<str>)
   (for ((c name))
     (add! buf (elt $name-mangler-table (as <int> (to-lower c))))))
 
@@ -538,6 +538,14 @@
 (dm generate-quotation (code-out x|<vec>)
   ;; TODO: TIE TOGETHER
   (msg code-out "CALLN(1, %s, %s" (mangle-boot-name "vec") (len x))
+  (for ((e x))
+    (puts code-out ", ")
+    (generate-quotation code-out e))
+  (puts code-out ")"))
+
+(dm generate-quotation (code-out x|<tup>)
+  ;; TODO: TIE TOGETHER
+  (msg code-out "CALLN(1, %s, %s" (mangle-boot-name "tup") (len x))
   (for ((e x))
     (puts code-out ", ")
     (generate-quotation code-out e))

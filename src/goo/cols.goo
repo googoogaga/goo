@@ -4,7 +4,6 @@
 ;;; COLLECTION
 (use/export goo/cols/opts)
 (use/export goo/cols/assoc)
-(use/export goo/cols/buf)
 (use/export goo/cols/col)
 (use/export goo/cols/colx)
 (use/export goo/cols/flat)
@@ -16,7 +15,9 @@
 (use/export goo/cols/step)
 (use/export goo/cols/str)
 (use/export goo/cols/tab)
+(use/export goo/cols/rep)
 (use/export goo/cols/vec)
+(use/export goo/cols/tup)
 (use/export goo/cols/zip)
 (use/export goo/cols/cycle)
 

@@ -6,7 +6,7 @@
 (use goo/cols/colx)
 (use goo/cols/seq)
 (use goo/cols/lst)
-(use goo/cols/buf)
+(use goo/cols/vec)
 
 (exported
  (dg str (objects|...))
@@ -62,9 +62,9 @@
 
 (dv ascii-limit 128)
 
-(dv (ascii-chars <buf>)
+(dv (ascii-chars <vec>)
   (let ((ascii-chars
-         (fill! (fab <buf> ascii-limit) #f))
+         (fill! (fab <vec> ascii-limit) #f))
         (init
          (fun (i s)
            (rep loop ((i i) (j 0))
@@ -94,7 +94,7 @@
   (let ((end259 (len ascii-chars)))
     (rep loop ((i 0) (least #f) (greatest #f))
       (if (= i end259)
-          (let ((v (fill! (fab <buf> (+ (- greatest least) 1)) #f)))
+          (let ((v (fill! (fab <vec> (+ (- greatest least) 1)) #f)))
             (rep loop ((i 0))
               (if (= i end259)
                   (lst least v)

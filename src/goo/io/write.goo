@@ -132,7 +132,7 @@
        (empty? (tail (tail x)))))
 
 (dm write-flat (port|<out-port> x|<flat> d|<int> recur|<fun>)
-  (if (isa? x <vec>)
+  (if (isa? x <tup>)
       (puts port "#(")
       (seq
         (puts port "$$")
@@ -308,7 +308,7 @@
   (def found-percent?  #f)
   (def arg-index|<int> 0)
   (def num-args        (len args))
-  (def chars           (fab <buf> 0))
+  (def chars           (fab <vec> 0))
   (def port            (gensym))
   (def exprs
     (packing
@@ -346,11 +346,11 @@
           "Incomplete format directive in \"%s\"" message)
   `(let ((,port ,port-expr)) ,@exprs))))
 
-(ds (msg ,port ,message ,@args)
-  (pe-format port message args))
-
 ;; (ds (msg ,port ,message ,@args)
-;;   `(format ,port ,message ,@args))
+;;   (pe-format port message args))
+
+(ds (msg ,port ,message ,@args)
+  `(format ,port ,message ,@args))
 
 (df format-to-string (message|<str> arguments|... => <str>)
   (with-port (port (open <str-out-port> "")) 

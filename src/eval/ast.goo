@@ -322,8 +322,8 @@
   ;; use by this environment.
   (dp environment-module-loader (x|<static-global-environment> => <any>)) ;<module-loader>
   ;; The modules used by this environment.
-  (dp environment-uses-modules (x|<static-global-environment> => <buf>)
-        (fab <buf> 0))
+  (dp environment-uses-modules (x|<static-global-environment> => <vec>)
+        (fab <vec> 0))
   ;; Does this environment allow cross-module resolution of symbols
   ;; of the form 'foo::bar'?
   (dp environment-allows-foreign-names? (x|<static-global-environment> => <log>)

@@ -2,7 +2,7 @@
 (use goo/runtime)
 
 (dc <priority-queue> (<col>))
-  (dp queue-data (x|<priority-queue> => <buf>) (fab <buf> 0))
+  (dp queue-data (x|<priority-queue> => <vec>) (fab <vec> 0))
   (dp queue-test (x|<priority-queue> => <fun>) <)
   (dp queue-key (x|<priority-queue> =>  <fun>) (op _))
 

@@ -41,7 +41,8 @@
         %prop-elt %prop-elt-setter %prop-dat-at
         %elt %elt-setter
         %slen %selt %selt-setter %%sfab %su %sb
-        %vlen %velt %velt-setter %%vfab %vu
+        %rlen %relt %relt-setter %%rfab %ru
+        %tlen %telt %telt-setter %%tfab %tu
         %fab-code-refs %code-ref
         %app-filename %app-args
         %loc-val %loc-val-setter %invoke-debugger
@@ -123,6 +124,7 @@
         (dc <int> (<num>))
         (dc <flo> (<num>))
         (dc <loc> (<any>))
+        (dc <rep> (<any>))
         (dc <col> (<any>))
         (dc <col.> (<col>))
         (dc <col!> (<col>))
@@ -134,7 +136,7 @@
           (dp head (x|<lst> => <any>) nil)
           (dp tail (x|<lst> => <lst>) nil)
         (dc <flat> (<seq>))
-        (dc <vec> (<flat> <seq.>))
+        (dc <tup> (<flat> <seq.>))
         (dc <str> (<flat> <seq.>))
         (dc <sym> (<any>))
           (dp sym-name (x|<sym> => <str>))
@@ -154,7 +156,7 @@
           (dp class-mets (x|<class> => <lst>)            nil)
           (dp class-forward (x|<class> => <any>)         #f)
           (dp class-id (x|<class> => <int>)              -1)
-          (dp class-row (x|<class> => <vec>)             nul)
+          (dp class-row (x|<class> => <tup>)             nul)
         (dc <singleton> (<type>))
           (dp type-object (x|<singleton> => <any>))
         (dc <subclass> (<type>))
@@ -190,13 +192,13 @@
         (dc <gen> (<fun>))
           (dp fun-mets (x|<gen> => <lst>)  nil)
           (dp fun-cache (x|<gen> => <any>) %false)
-          (dp gen-refs (x|<gen> => <vec>)  nul)
+          (dp gen-refs (x|<gen> => <tup>)  nul)
           (dp gen-src (x|<gen> => <any>)   %false)
     (dc <opts> (<flat> <seq.>))
       (dp opts-location (x|<opts> => <loc>) 0)
       (dp opts-count (x|<opts> => <int>) 0)
-    (dc <opts-vec> (<opts>))
-      (dp opts-vec-storage (x|<opts-vec> => <vec>) nul)
+    (dc <opts-tup> (<opts>))
+      (dp opts-tup-storage (x|<opts-tup> => <tup>) nul)
 )))
 
 ;; RETURN CLASS DEFS FROM BOOT DEFS
@@ -467,7 +469,9 @@
 
 (%define-repeated-structure str <chr> s (%cu #\Space))
 
-(%define-repeated-structure vec <any> v nul) 
+(%define-repeated-structure tup <any> t nul) 
+
+(%define-repeated-structure rep <any> r nul) 
 
 ;; can't use rep yet because symbols aren't real
 (dl %str-eq?-loop (s1 s2 len i)
@@ -627,7 +631,7 @@
 
 ;;; 5.5. Make optional arg stuff
 (%define-structure % opts opts-location opts-count)
-(%define-structure % opts-vec opts-vec-location opts-vec-count opts-vec-vec)
+(%define-structure % opts-tup opts-tup-location opts-tup-count opts-tup-tup)
 
 ;;;
 ;;; 12. MAKE PROPS AND ACCESSORS
@@ -895,21 +899,19 @@
 
 (df @lst (objects|...) (@lst-helper objects (@+ (@olen objects) -1) '()))
 
-(df @velt (x|<vec> i|<int> => <any>)
-  (%velt x (%iu i)))
+(df @telt (x|<tup> i|<int> => <any>)
+  (%telt x (%iu i)))
 
-(df @velt-setter (z x|<vec> i|<int>)
-  (set (%velt x (%iu i)) z))
+(df @telt-setter (z x|<tup> i|<int>)
+  (set (%telt x (%iu i)) z))
 
-(df @vec (objects|...)
-  (def v (%vec (%iu (@olen objects))))
+(df @tup (objects|...)
+  (def v (%tup (%iu (@olen objects))))
   (rep copy ((k (@+ (@olen objects) -1)))
     (if (@= k -1)
         v
-        (seq
-          (set (@velt v k) (@oelt objects k))
-          (copy (@+ k -1))))))
-
+        (seq (set (@telt v k) (@oelt objects k))
+             (copy (@+ k -1))))))
 
 (df @fun-names (x|<fun> => <lst>) (%sig-names (%gen-sig x)))
 
@@ -1029,10 +1031,7 @@
                   #f
                   (find (@tail ps))))))))
 
-(dv <tup> <vec>)
-(dv @tup  @vec)
-(dv tup   @vec)
-(dv @telt @velt)
+(dv tup   @tup)
 
 ;; TODO: DEF SUBTYPE METHODS
 
@@ -1231,8 +1230,8 @@
 
 ;;; copy args with arg as i'th elt into a opts.
 (df @specd-args (args|<opts> i|<int> arg|<any> => <opts>)
-  (def v (%vec (%iu (@olen args))))
-  (def r (%opts-vec (%lb (%prop-dat-at v (%vlen v))) (%ib (%vlen v)) v))
+  (def v (%tup (%iu (@olen args))))
+  (def r (%opts-tup (%lb (%prop-dat-at v (%tlen v))) (%ib (%tlen v)) v))
   (rep copy ((k 0))
     (if (@== (@olen args) k)
         r
@@ -1872,7 +1871,7 @@
   type-error
   wrong-number-arguments-error
   keyboard-interrupt
-  vec
+  tup
   %with-monitor
 )
 
@@ -2031,7 +2030,7 @@
   <str>
   <sym>
   <tup>
-  <vec>
+  <rep>
 
 ;; tagged structures
   %cb
@@ -2054,11 +2053,16 @@
   %snul
   %str
   %su
-  %vec
-  %velt
-  %velt-setter
-  %vlen
-  %vnul
+  %tup
+  %telt
+  %telt-setter
+  %tlen
+  %tnul
+  %rep
+  %relt
+  %relt-setter
+  %rlen
+  %rnul
 
   add-prop
   %allocate-stack
@@ -2141,6 +2145,5 @@
   %check-call-types
   %loc-off %loc-off-setter
   %sp-reg-setter %sp-reg
-  tup
   *report-prop-unbound-errors?*
 )

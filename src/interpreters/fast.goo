@@ -166,10 +166,10 @@
   (slot <env> (env-next <env>))
 
 (dv <frame> (isa <env>))
-  (slot <frame> (env-arguments <vec>))
+  (slot <frame> (env-arguments <tup>))
 
 (dm allocate-frame ((size <int>) => <frame>)
-  (isa <frame> (set env-arguments (fab <vec> size))))
+  (isa <frame> (set env-arguments (fab <tup> size))))
 
 (dm frame-length ((frame <frame>) => <int>)
   (len (env-arguments frame)))
