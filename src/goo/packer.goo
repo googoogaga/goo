@@ -45,7 +45,7 @@
     (() 
      `(seq ,@body))
     (((,name ,type) ,@rest)
-     `(packing-with (,name (packer-fab ,type))
+     `(packing-with ((,name (packer-fab ,type)))
         (packing-in (,@rest) ,@body)))
     ((,name ,@rest)
      `(packing-in ((,name <lst>) ,@rest) ,@body))))

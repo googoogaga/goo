@@ -22,9 +22,6 @@
  
  ;; pops element from end of stretchy vector
  (dg pop-last! (c|<buf> => <any>))
-
- (dg len/fill-setter (new-len|<int> c|<buf> default))
- (dg len-setter (new-len|<int> c|<buf>))
  )
  
 
@@ -103,6 +100,8 @@
 
 (dm len-setter (new-len|<int> c|<buf>)
   (set (len/fill c (elt-default c)) new-len))
+
+(dm zap! (c|<buf> => <buf>) (set (len c) 0) c)
 
 (dm low-elt (x|<buf> i|<int> => <any>)
   (low-elt (buf-dat x) i))

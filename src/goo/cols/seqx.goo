@@ -17,14 +17,14 @@
  (dg sub-setter (dst|<seq> src|<seq> from|<int> below|<int>))
 
  ;; inserts e into x below index before
- (dg ins! (x|<seq> e|<any> before|<int> => <seq>))
+ (dg ins! (x|<seq!> e|<any> before|<int> => <seq!>))
 
  (dg alter (dst|<seq> src|<seq> from|<int> below|<int> => <seq>)))
 
-(dm cat! (x|<seq> more|... => <seq>)
+(dm cat! (x|<seq!> more|... => <seq!>)
   (app cat x more))
 
-(dm ins! (x|<seq> v|<any> before|<int> => <seq>)
+(dm ins! (x|<seq!> v|<any> before|<int> => <seq!>)
   (ins x v before))
 
 (dm into (dst|<seq> src|<seq> => <seq>)

@@ -10,6 +10,7 @@
 (use goo/cols)
 (use goo/runtime)
 (use goo/io/read)
+(use goo/packer)
 
 (ddv *max-print-depth*  4)
 
@@ -286,16 +287,70 @@
                      ((#\S) (display port (arg c <any>)))
                      ((#\=) (write port (arg c <any>)))
                      ((#\%) (put port #\%))
-                     (#t
-                       (error "Invalid format directive '%s' in \"%s\""
-                              c message)))
+                     (#t    (error "Invalid format directive '%s' in \"%s\""
+                                   c message)))
                    (set found-percent? #f))
               (if (== c #\%)
                   (set found-percent? #t)
                   (put port c))))
         message))
   (assert (not found-percent?)
-          "Incomplete format directive in \"%s\"" message)))
+          "Incomplete format directive in \"%s\"" message))
+
+;;; PARTIAL EVALUATOR FOR FORMAT 
+;;; TODO: SHOULD GO AWAY WHEN REAL PARTIAL EVALUATION IS WORKING
+
+(ct-also (seq
+(dm pe-format (port-expr message args|<lst>)
+  `(format ,port-expr ,message ,@args))
+
+(dm pe-format (port-expr message|<str> args|<lst>)
+  (def found-percent?  #f)
+  (def arg-index|<int> 0)
+  (def num-args        (len args))
+  (def chars           (fab <buf> 0))
+  (def port            (gensym))
+  (def exprs
+    (packing
+     (loc ((maybe-pack-chars ()
+             (unless (empty? chars)
+               (pack `(puts ,port ,(as <str> chars)))
+               (zap! chars)))
+           (arg (char|<chr> => <any>)
+             (maybe-pack-chars)
+             (def current-index arg-index)
+             (set arg-index (+ arg-index 1))
+             (assert (< current-index num-args)
+                     "Too few arguments for format string %=: %=" message args)
+             (elt args current-index)))
+       (do (fun ((c <chr>))
+             (if found-percent?
+                 (seq (case (to-upper c)
+                        ((#\D) (pack `(puts ,port (num-to-str ,(arg c)))))
+                        ((#\B) (pack `(puts ,port (num-to-str ,(arg c) 2))))
+                        ((#\O) (pack `(puts ,port (num-to-str ,(arg c) 8))))
+                        ((#\X) (pack `(puts ,port (num-to-str ,(arg c) 16))))
+                        ((#\C) (pack `(put ,port ,(arg c <chr>))))
+                        ((#\S) (pack `(display ,port ,(arg c))))
+                        ((#\=) (pack `(write ,port ,(arg c))))
+                        ((#\%) (add! chars #\%))
+                        (#t    (error "Invalid format directive '%s' in \"%s\""
+                                      c message)))
+                      (set found-percent? #f))
+                 (if (== c #\%)
+                     (set found-percent? #t)
+                     (add! chars c))))
+           message)
+       (maybe-pack-chars))))
+  (assert (not found-percent?) 
+          "Incomplete format directive in \"%s\"" message)
+  `(let ((,port ,port-expr)) ,@exprs))))
+
+(ds (msg ,port ,message ,@args)
+  (pe-format port message args))
+
+;; (ds (msg ,port ,message ,@args)
+;;   `(format ,port ,message ,@args))
 
 (df format-to-string (message|<str> arguments|... => <str>)
   (with-port (port (open <str-out-port> "")) 
@@ -316,7 +371,7 @@
 ;; (set *debug-tables?* #t)
 
 (export
-  format
+  format pe-format msg
   format-to-string
   display
   write

@@ -1493,12 +1493,12 @@
   ;; XXX - If an error occurs, we currently neglect to mark
   ;; the environment-implements bindings of the half-created
   ;; module as free.
-  (format out "\n%s[Loading module %s..." indent name) (force-out out)
+  (format out "%s[Loading module %s...\n" indent name) 
   (def mod (seq (pushf (module-loader-stack loader) name)
                 (fin (load-module loader name)
                      (popf (module-loader-stack loader)))))
   (register-module! loader mod)
-  (format out "]")
+  (format out "%s]\n" indent)
   mod)
 
 ;;; Create a <module-loader> subclass and override this method.  It should

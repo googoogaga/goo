@@ -20,6 +20,8 @@
  DF TRY REP MIF AND OR CASE CASE-BY COND MATCH UNLESS WHEN ASSERT
  FOR WHILE UNTIL COLLECTING COLLECT OPF PUSHF POPF INCF DECF SWAPF
  OP PUB EXPORTED
+ PACKING-WITH PACKING-IN PACKING PACK-IN PACK PACKED
+ <PACKER> PACKER PACKER-FAB PACKER-ADD PACKER-RES
  COLLECTED ;; TODO: HYGIENE
  RENEW     ;; TODO: TEMPORARY
 
@@ -64,8 +66,8 @@
  <col> len elt elt-or  elts low-elt
  empty? empty elt-default elt-type key-type key-test fab fabs fill into any?
  all? fold fold+ find find-or del zap do do2 map map2 do-keyed
- map-keyed mem? keys items
- <col!> del! add!
+ map-keyed mem? keys items zap
+ <col!> del! add! zap! fill!
  elt-setter low-elt-setter len-setter len/fill-setter 
  ;; 3.7.1: Iteration protocol.
  <enum> enum fin? nxt now now-setter now-key

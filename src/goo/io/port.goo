@@ -9,8 +9,6 @@
 (use goo/cols/buf)
 
 (exported
-;;; PORTS
-
  (dc <port> (<any>))
  
  (dg open ((t (t< <port>)) name|<str> => <port>))
@@ -29,8 +27,6 @@
  (dg put (port|<out-port> c|<chr>))
  (dg puts (port|<out-port> s|<str>))
  
-;;; FILE PORTS
-
  (dc <file-port> (<port>)))
 
 (dp port-handle (x|<port> => <any>))
@@ -52,7 +48,8 @@
  (dg port-contents (port|<str-port> => <str>))
  (dc <str-in-port> (<str-port> <in-port>))
  (dp port-index (x|<str-in-port> => <int>) 0)
- (dc <str-out-port> (<str-port> <out-port>)))
+ (dc <str-out-port> (<str-port> <out-port>))
+ port2str)
 
 (dm gets (port|<in-port> => <str>)
   (rep loop ((res '()) (c (get port)))
@@ -143,6 +140,6 @@
 (dm puts (port|<str-out-port> s|<str>)
   (set (port-guts port) (cat! (port-guts port) s)))
 
-(ds (with-port-to-string (,name) ,@body)
+(ds (port2str ,name ,@body)
   `(let ((,name (open <str-out-port> "")))
      ,@body (port-contents ,name)))

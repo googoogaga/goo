@@ -4,14 +4,16 @@
 (use goo/math)
 (use goo/cols/col)
 
-(pub dg add! (c|<col> x => <col>))
-(pub dg del! (c|<col> x => <col>))
-(pub dg zap! (c|<col> => <col>))
-(pub dg into (x|<col> y|<col> => <col>))
+(pub dg add! (c|<col!> x => <col!>))
+(pub dg del! (c|<col!> x => <col!>))
+(pub dg zap! (c|<col!> => <col!>))
+(pub dg len-setter (new-len|<int> c|<col!>))
+(pub dg len/fill-setter (new-len|<int> c|<col!> default))
 
-(dm add! (c|<col> x => <col>)
+(dm add! (c|<col!> x => <col!>)
   (add c x))
 
+;; TODO: TIGHTEN TO COL!
 (dm into (dst|<col> src|<col> => <col>)
   (rep in ((ss (enum src)))
     (if (fin? ss)
@@ -19,3 +21,10 @@
         (seq (set (elt dst (now ss)) (now ss))
              (in (nxt ss))))))
 
+;; TODO: TIGHTEN TO COL!
+(dm fill! (dst|<col> val => <col>)
+  (rep in ((ds (enum dst)))
+    (if (fin? ds)
+        dst
+        (seq (set (now ds)  val)
+             (in (nxt ds))))))

@@ -254,7 +254,7 @@
     ;; Table totally full???  That's not right
     (error "The table is totally full this shouldn't happen")))
 
-(dm del! (table|<tab> key => <col>)
+(dm del! (table|<tab> key => <tab>)
   (esc return
     (def test-function (tab-test table))
     (def hash-function (tab-hash table))

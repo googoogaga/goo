@@ -21,6 +21,9 @@
  (dg fab ((t (t< <col>)) s|<int> => <col>))
  (dg fabs ((x (t< <col>)) elts|... => <col>))
  (dg fill (x|<col> val|<any> => <col>))
+ (dg fill! (c|<col> x => <col>))
+ (dg into (x|<col> y|<col> => <col>)) ;; TODO: TIGHTEN TO COL!
+
  any? ;; (dg any? (f|<fun> x|<col> => <log>)) ;; in types
  (dg all? (f|<fun> x|<col> => <log>))
  (dg fold (combine|<fun> init|<any> x|<col> => <col>))
@@ -93,11 +96,7 @@
   (into (fab c (len objects)) objects))
 
 (dm fill (dst|<col> val => <col>)
-  (rep in ((ds (enum dst)))
-    (if (fin? ds)
-        dst
-        (seq (set (now ds)  val)
-             (in (nxt ds))))))
+  (fill! (as-copy dst dst) val))
 
 ;; TODO: FLUSH OUT BETTER
 (dm dup (x|<col> => <col>)
@@ -239,5 +238,5 @@
   (if (== val $elt-default) (range-error) val))
 
 ;; get this from list.goo
-(need-implementation add <tab> into)
+(need-implementation add <tab> into fill!)
 
