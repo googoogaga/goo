@@ -1,5 +1,14 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
+(use boot)
+(use macros)
+(use runtime)
+(use read)
+(use write)
+(use syntax)
+(use ast)
+(use ast-eval)
+
 (dm os-name (=> <str>)
   (%sb (%os-name)))
 
@@ -71,6 +80,7 @@
   (let ((x (read-file filename))
 	(o (objectify x ct-env #f)))
     (ast-evaluate o)
+    ;; TODO - Hook me into the new module loader system in a useful way.
     ;; (report-undefined-global-bindings ct-env)
     ))
 
@@ -141,3 +151,14 @@
   (lab quit
     (top-in 0 quit (runtime-environment))))
 
+(export
+  c-filename
+  eval
+  load
+  parse-in
+  *path-separator*
+  proto-filename
+  *proto-root*
+  read-file
+  src-filename
+  top)

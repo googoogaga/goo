@@ -1,6 +1,11 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 
+(use boot)
+(use macros)
+(use runtime)
+(use ast)
+
 ;;; ENV
 
 ;;; Global binding box support.  Right now, we allocate storage boxes for
@@ -322,3 +327,7 @@
 (df init-environment-for-eval ((env <static-global-environment>))
   (let ((b (ast-define-binding env '%pair #f (fun () (isa <global-binding>)))))
     (set (env-global-binding-value b) pair)))
+
+(export
+  ast-evaluate
+  init-environment-for-eval)

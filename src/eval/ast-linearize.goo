@@ -1,6 +1,11 @@
 ;;; Copyright (c) 2001 Jonathan Bachrach
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 
+(use boot)
+(use macros)
+(use runtime)
+(use ast)
+
 ;;; WALKER
 
 (dm update-walk! (g o (args ...))
@@ -486,3 +491,41 @@
        (set binding-type            (binding-type binding))
        (set binding-dynamic-extent? (binding-dynamic-extent? binding))
        (set binding-index           *renaming-bindings-counter*)))
+
+(export
+  analyze-calls
+  analyze-dynamic-extent
+  binding-index
+  <box-creation>
+  box-form
+  <box-read>
+  box-reference
+  <box-write>
+  <closure-creation>
+  closure-creation-free
+  closure-creation-index
+  closurize-main!
+  extract-things!
+  <flat-function>
+  form-definitions
+  form-program
+  form-quotations
+  <free-environment>
+  <free-reference>
+  function-index
+  function-self-recursive?
+  function-self-recursive?-setter
+  function-temporaries
+  gather-temporaries!
+  lift!
+  <primitive-definition>
+  program-definitions
+  program-form
+  program-quotations
+  <quotation-binding>
+  reference-offset
+  reference-self?
+  <renamed-local-binding>
+  sexp->object
+  <top-level-form>
+  unconstrained-type?)

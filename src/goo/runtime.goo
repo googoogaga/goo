@@ -1,5 +1,8 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
+(use boot)
+(use macros)
+
 ;;; MACRO SUPPORT
 
 (df match-empty-list ((x <lst>) (fail <fun>))
@@ -2048,3 +2051,84 @@
 
 (set fab-sym booted-fab-sym)
 
+(need-implementation
+  format)
+
+(export
+  1st 2nd 3rd
+  = + - == ~== <= >= > <
+  add! add
+  all?
+  alphabetic?
+  always
+  any?
+  app-filename
+  as
+  as-lowercase as-uppercase
+  ascii-limit ascii-whitespaces
+  assoc assoc-value assocq assq assqn
+  <buf>
+  call-with-input-file call-with-output-file
+  call-with-string-input-port call-with-string-output-port
+  cat cat2 cat!
+  char->ascii
+  compose
+  <condition> condition-arguments condition-message
+  curry
+  del-dups
+  do do2
+  elt elt-setter
+  empty empty?
+  eof-object eof-object?
+  error
+  fab fabs
+  fill
+  fin-state?
+  first-then
+  force-output
+  from from-below from-to
+  gensym
+  in
+  ini-state
+  <input-port>
+  last
+  len len-setter
+  locative-value locative-value-setter
+  lst
+  make-setter-name
+  make-sym
+  map map2
+  <map>
+  match-atom match-empty-list match-sublist match-unquote
+  mem?
+  neg
+  newline
+  now-elt
+  now-key
+  num-to-str
+  numeric?
+  nxt-state
+  out
+  <output-port>
+  pair
+  peek-char
+  <port>
+  pos
+  rcurry
+  read-char
+  rev!
+  rev
+  sig
+  <simple-condition>
+  str-to-num
+  sub
+  <tab>
+  to-str
+  truncate/
+  tup
+  type-or
+  var-name var-type
+  vec
+  %with-monitor
+  write-char write-string
+  )

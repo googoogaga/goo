@@ -38,7 +38,7 @@
 	(dv <loc> (isa <any>))
 	  (slot <loc> (%loc-val <any>))
 	(dv <col> (isa <any>))
-	(dv <bag> (isa <col>))
+	(dv <bag> (isa <col>)) ;; TODO: Gets redefined in runtime.proto???
 	(dv <seq> (isa <col>))
 	(dv <lst> (isa <seq>))
 	(dv nil (isa <lst>))
@@ -1438,3 +1438,200 @@
 	(set *boot-macro-names*     (@pair name     *boot-macro-names*))
 	(set *boot-macro-expanders* (@pair expander *boot-macro-expanders*)))))
 
+;;;
+;;; 15. EXPORTS
+;;;
+
+;; Some functions are called directly from prt.c.  For now, we generate
+;; artificial free bindings for these symbols in the boot module--and
+;; export them--so that other modules will define them under the
+;; correct C names.  Please feel free to redesign this if you wish.
+;; TODO - It might be worth dumping (mangle-runtime-name ...) in
+;; p2c.proto and using this mechanism instead.
+(dss (force-names-into-boot-module ,@names)
+  (if (empty? names)
+      #f
+      `(seq (if #f ,(head names))
+            (export ,(head names))
+            (force-names-into-boot-module ,@(tail names)))))
+
+(force-names-into-boot-module
+  unknown-function-error
+  file-opening-error
+  type-error
+  wrong-number-arguments-error
+  keyboard-interrupt)  
+
+;; Forward references.
+;; TODO - These would normally be defined using need-implementation, but we
+;; haven't defined that yet.
+(export
+  %%macro
+  error
+  len)
+
+;; Compiler magic.
+(export
+  use
+  export
+  mif
+  macro-expand
+  quasiquote
+  dp
+  ct
+  slot
+  isa
+  try
+  fin
+  lab
+  rep
+  loc
+  let
+  bound?
+  fun
+  df
+  dg
+  dm
+  dss
+  ds
+  dv
+  set
+  quote
+  %raw
+  seq
+  if)
+
+;; Primitives used in other modules.
+(export
+  %app-args
+  %app-filename
+  %bb
+  %binding-name
+  %c<
+  %c=
+  %char-ready?
+  %close-input-port
+  %close-output-port
+  %current-input-port
+  %current-output-port
+  %do-runtime-bindings
+  %do-stack-frames
+  %eof-object
+  %eq?
+  %f*
+  %f+
+  %f-
+  %f/
+  %f<
+  %f=
+  %fi2f
+  %flo-bits
+  %force-output
+  %ft
+  %i!
+  %i&
+  %i*
+  %i+
+  %i-
+  %i<
+  %i<<
+  %i<<<
+  %i=
+  %i>>
+  %i>>>
+  %i?
+  %i^
+  %im
+  %invoke-debugger
+  %it/
+  %iv
+  %locative-value
+  %locative-value-setter
+  %next-methods
+  %open-input-file
+  %open-output-file
+  %os-binding-value
+  %os-binding-value-setter
+  %os-name
+  %pair
+  %peek-char
+  %read-char
+  %write-char
+  %write-string)
+
+;; Regular exports.
+(export
+  @@==
+  <any>
+  apply
+  <bag>
+  *boot-macro-expanders*
+  *boot-macro-names*
+  %cb
+  <chr>
+  <col>
+  %cu
+  %define-method
+  fab-gen
+  fab-sym
+  %fb
+  <flat>
+  <flo>
+  %fu
+  <fun>
+  fun-arity
+  fun-name
+  fun-name-setter
+  fun-names
+  fun-sig-setter
+  fun-specs
+  fun-value
+  <gen>
+  head
+  head-setter
+  %ib
+  <int>
+  %isa
+  isa?
+  %iu
+  <loc>
+  <log>
+  <lst>
+  %lu
+  *macros-ok?*
+  <met>
+  not
+  nul
+  <num>
+  object-parents
+  object-slots
+  <opts>
+  %sb
+  %selt
+  %selt-setter
+  <seq>
+  %sig
+  %slen
+  %slot
+  <slot>
+  slot-getter
+  slot-value
+  slot-value-setter
+  %snul
+  %str
+  <str>
+  %su
+  %sym
+  <sym>
+  %sym-nam
+  sym-name
+  %symbols
+  tail
+  tail-setter
+  <tup>
+  %vec
+  <vec>
+  %velt
+  %velt-setter
+  %vlen
+  %vnul)

@@ -1,5 +1,13 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
+(use boot)
+(use macros)
+(use runtime)
+(use write)
+(use ast)
+(use top)
+(use p2c)
+
 (dv *proto-version* "0.92")
 (dv *proto-date*    "JUL 06, 2001")
 

@@ -1,74 +1,132 @@
+;;;; p2c.proto - Proto-to-C compiler
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
+;;;;
+;;;; General notes on this file:
+;;;;
+;;;; It is unlikely that the any format specifier other than %s should ever
+;;;; be used to output C code. There is no guarantee that the proto formatted
+;;;; output is equivilent to C formatted output.
+;;;;
+;;;; All mentions of %= have been excised, %d seems relatively harmless and
+;;;; remains at the moment.
 
-;; It is unlikely that the any format specifier other than %s should ever
-;; be used to output C code. There is no guarantee that the proto formatted
-;; output is equivilent to C formatted output.
+(use boot)
+(use macros)
+(use runtime)
+(use write)
+(use ast)
+(use top)
+(use ast-linearize)
 
-;; All mentions of %= have been excised, %d seems relatively harmless and
-;; remains at the moment.
 
-(ds (with-native ,@body) ;; TODO: TEMPORARY
-  `(seq ,@body))
+;;;;=======================================================================
+;;;;  String Hacking
+;;;;=======================================================================
+;;;;  TODO - Refactor this code into a strings module as soon as we
+;;;;  switch to a new top-level compilation driver.
 
+;;; Build a string containing the specified number of spaces.
+(df string-repeat (str n)
+  (if (<= n 0)
+      ""
+      (cat str (string-repeat str (- n 1)))))
+
+;;; Split 'str' apart on occurrences of 'sep' (similar to Perl).
+(df string-split ((str <str>) (sep <chr>) => <lst>)
+  (let ((match (pos str sep)))
+    (if (== nul match)
+	(lst str)
+	(pair (sub str 0 match)
+	      (string-split (sub str (+ match 1) (len str)) sep)))))
+
+;;; Join each string in 'strs' with 'sep' (similar to Perl).
+(df string-join ((strs <lst>) (sep <str>) => <str>)
+  (case
+    ((empty? strs) "")
+    ((empty? (tail strs)) (head strs))
+    (#t (cat (head strs) sep (string-join (tail strs) sep)))))
+
+;;; Map a function over each element of a string.
+;;; TODO - Fix regular 'map' to work on strings.
+(df map-str ((f <fun>) (s <str>) => <str>)
+  (as <str> (map f (as <lst> s))))
+
+
+;;;;=======================================================================
+;;;;  Module Loading
+;;;;=======================================================================
+;;;;  We subclass the module loader and add our own code for locating and
+;;;;  processing modules.
+
+;;; Convert a module name to a relative path name.
+;;;   foo/bar => "foo/bar" or "foo\\bar", etc.
+;;; TODO - Where should this live?  Merge with proto-filename?
+(df module-name-to-relpath ((name <sym>) => <str>)
+  (let ((namestr (map-str as-lowercase (sym-name name))))
+    (string-join (string-split namestr #\/) *path-separator*)))	 
+
+(dv <p2c-module-loader> (isa <module-loader>))
+  (slot <p2c-module-loader> (collected-ast <lst>) '())
+  (slot <p2c-module-loader> (load-depth <int>) 0)
+
+;;; TODO - Refactor into <module-loader>.
+(df module-loader-begin-module ((loader <p2c-module-loader>) (name <sym>))
+  (format out "%s[Loading module %s...\n"
+          (string-repeat "  " (load-depth loader))
+          name)
+  (inc (load-depth loader)))
+
+(df module-loader-end-module ((loader <p2c-module-loader>) (name <sym>))
+  (dec (load-depth loader))
+  (format out "%s]\n" (string-repeat "  " (load-depth loader))))
+
+(dm load-module ((loader <p2c-module-loader>) (name <sym>) => <module>)
+  (module-loader-begin-module loader name)
+  (let ((mod  (fab-p2c-module loader name))
+        (env  (module-target-environment mod))
+        (file (module-name-to-relpath name))
+        (ast  (compute-ast file env)))
+    (module-loader-end-module loader name)
+    (set (collected-ast loader)
+         (pair ast (collected-ast loader)))
+    mod))
+
+
+;;;;=======================================================================
+;;;;  Compiler Drivers
+;;;;=======================================================================
+;;;;  The new module-based compiler drivers.
+
+;;; The basename to use for our output C file.
 (dv *c-out-name* "proto")
 
+;;; Given a file name and an environment, compute an ast in that
+;;; environment.
 (dm compute-ast (filename ct-env)
   (let ((in-name (proto-filename filename))
 	(x       (read-file in-name)))
-    (with-native (objectify x ct-env #f))))
+    (objectify x ct-env #f)))
 
-(dm p2c-file-in (in-filename out-filename ct-env prg)
-  (let ((out-name (c-filename out-filename)) 
-	(ast      (or prg (compute-ast in-filename ct-env))))
-    (call-with-output-file
-     out-name
-     (fun (out-port) (compile->c-in ast ct-env out-port)))
-    #f))
+;;; Compile a module to C, along with any supporting modules.
+(df p2c-module (name)
+  (let ((loader (isa <p2c-module-loader>)))
+    (find-module loader name)
+    (let ((out-name (c-filename *c-out-name*))) ;; filename
+      (call-with-output-file
+       out-name
+       (fun (out-port)
+         (let ((ast (sequentialize (rev (collected-ast loader)))))
+           (compile->c-in ast loader out-port))))))
+  #f)
 
-(dm p2c-file (filename)
-  (p2c-file-in filename filename (fab-target-environment) #f))
+;;; Backwards compatibility for users: Build p2c itself.
+(dm p2c-top () (p2c-module 'main))
 
-(dm p2c-files-in (filenames ct-env prg)
-  (let ((out-name (c-filename *c-out-name*))) ;; filename
-    (call-with-output-file
-     out-name
-     (fun (out-port)
-       (let ((ast (or prg
-	              (sequentialize 
-                        (collecting ()
- 		          (for ((filename filenames))
-		            (collect (compute-ast filename ct-env))))))))
-	 (compile->c-in ast ct-env out-port))))
-    #f))
-
-(dm p2c-files (filenames)
-  (p2c-files-in filenames (fab-target-environment) #f))
-
-(dv $boot-files
-  '("boot" "macros" "runtime"
-    "read" "write" "syntax" 
-    "ast" "ast-eval" "ast-linearize" "p2c" 
-    "top" "main"))
-
-(dm p2c-top () (p2c-files $boot-files))
-
-(dm p2c-top-sep () 
-  (do (fun (filename) (p2c-file filename)) $boot-files))
-
-(dm p2c-str-in (s ct-env)
-  (let ((ast    (parse-in s ct-env)))
-    ;; format-out("SXP %=\n" sxp)
-    (compile->c ast ct-env)
-    #f))
-
-(dm p2c-str (s)
-  (p2c-str-in s (fab-target-environment)))
-
-(dv *definitions* #f) ;; TODO: thread variable
-
-(dm compute-program (e ct-env)
-  (let ((obj (sexp->object e ct-env))
+;;; Given an ast 'e', prepare it for compilation to C.  Store any
+;;; new global bindings into the environment 'scratch-env'.
+(dm compute-program (e scratch-env)
+  (let ((obj (sexp->object e scratch-env))
 	;; (format out "OBJ %=\n" obj)
 	(dyn (analyze-dynamic-extent obj))
 	;; (format out "DYN %=\n" dyn)
@@ -78,25 +136,29 @@
 	;; (format out "LFT %=\n" lft)
         (prg (extract-things! lft)))
     ;; (format out "EXT %=\n" prg)
-    (let ((flt (closurize-main! prg ct-env 64)))
+    (let ((flt (closurize-main! prg scratch-env 64)))
     ;; (format out "FLT %=\n" flt)
     (gather-temporaries! flt)
     ;; (format out "TMP %=\n" flt)
     ;; (format out "\n\n%=\n\n" prg)
-    (report-undefined-global-bindings ct-env)
     prg)))
 
-(dm compile->c-in (e ct-env out)
-  (let ((prg (compute-program e ct-env)))
+(dv *definitions* #f) ;; TODO: thread variable
+
+(dm compile->c-in (e loader code-out)
+  (format out "Analyzing program.\n")
+  (let ((scratch-mod (fab-p2c-module loader (as <sym> "---main---")))
+        (scratch-env (module-target-environment scratch-mod))
+        (prg (compute-program e scratch-env)))
+    (format out "Searching for undefined bindings.\n")
+    (do-module-loader-modules report-undefined-global-bindings loader)
+    (format out "Generating C code.\n")
     (dlet ((*definitions* (program-definitions prg))) 
-      (generate-c-program out e prg ct-env))))
+      (generate-c-program code-out e prg loader))))
 
-(dm compile->c (e ct-env)
-  (compile->c-in e ct-env out))
-
-(dm generate-c-program (out e prg ct-env)
+(dm generate-c-program (out e prg loader)
   (generate-header out e)
-  (generate-global-environment out ct-env)
+  (generate-global-environment out loader)
   (generate-quotation-forwards out (program-quotations prg))
   (generate-function-forwards out (program-definitions prg))
   (generate-function-bodies out (program-definitions prg))
@@ -128,16 +190,23 @@
 
 ;;; gb* is a list of instances of global-binding.
 
-(dm generate-global-environment (out env)
-  (format out "\n/* GLOBAL ENVIRONMENT: */\n\n")
-  ;; TODO: TAKE ENV AS ARG
-  (do-static-global-bindings (curry generate-global-binding out #f) env))
+(dm generate-global-environment (out loader)
+  (do-module-loader-modules
+   (fun (mod)
+     (format out "\n/* MODULE ENVIRONMENT: %s */\n\n" (module-name mod))
+     (do-static-global-bindings
+      (fun (binding)
+        (when (binding-native-to? binding mod)
+          (generate-global-binding out #f binding)))
+      (module-target-environment mod)))
+   loader))
 
 (dm generate-global-binding (out imported? gb)
   (let ((name (binding-name gb)))
-    (format out "%s(%s,\"%s\");\n" 
+    (format out "%s(%s,\"%s\",\"%s\");\n" 
 	    (if imported? "EXT" "DEF")
 	    (mangle-module-binding gb)
+            (mangle-string-literal (as <str> (binding-module-name gb)))
 	    (mangle-string-literal (as <str> name)))))
 
 (dm generate-global-binding (out imported? (gb <predefined-binding>)))
@@ -299,12 +368,13 @@
   (mangle-raw-into mangler $local-suffix)
   (mangler-as-string mangler))
  
-(dm mangle-name-globally ((mangler <mangler>) (modname <module-name>) name
+(dm mangle-name-globally ((mangler <mangler>) (modname <sym>) name
 			  => <str>)
   (mangler-reset mangler)
   ;; Keep internal names as short as possible.
-  (unless (== modname $internal-module-name)
-      (mangle-name-into (module-name-string modname)))
+  (unless (== modname $proto-boot-module-name)
+    (mangle-raw-into mangler $module-marker)
+    (mangle-name-into mangler (as <str> modname)))
   (mangle-raw-into mangler $module-marker)
   (mangle-name-into mangler name)
   (mangler-as-string mangler))
@@ -317,18 +387,22 @@
 ;; TODO: would like initialization to happen more invisibly
 (dv *mangler* (initialize-mangler-table (isa <simple-mangler>)))
 
-(dm mangle-global-name ((modname <module-name>) (name <str>) => <str>)
+(dm mangle-global-name ((modname <sym>) (name <str>) => <str>)
   (mangle-name-globally *mangler* modname name))
 
-(dm mangle-global-name ((modname <module-name>) (name <sym>) => <str>)
+(dm mangle-global-name ((modname <sym>) (name <sym>) => <str>)
   (mangle-global-name modname (as <str> name)))
 
-;; Internal names go into the module proto/internal.
-(dm mangle-internal-name (name => <str>)
-  (mangle-global-name $internal-module-name name))
+;; Mangle a name which is defined in boot.proto.
+(dm mangle-boot-name (name => <str>)
+  (mangle-global-name $proto-boot-module-name name))
+
+;; Mangle a name which is defined in boot.proto.
+(dm mangle-runtime-name (name => <str>)
+  (mangle-global-name $proto-runtime-module-name name))
 
 (dm mangle-module-binding ((binding <module-binding>) => <str>)
-  (mangle-global-name (module-name (binding-module binding))
+  (mangle-global-name (binding-module-name binding)
 		      (binding-name binding)))
 
 (dm mangle-local-name ((name <str>) => <str>)
@@ -376,26 +450,26 @@
     (format out ";\n  ")))
 
 (dm false-name ()
-  (mangle-internal-name "%false"))
+  (mangle-boot-name "%false"))
 
 (dm generate-quotation (out (qb <log>))
-  (format out "%s" (mangle-internal-name (if qb "%true" "%false"))))
+  (format out "%s" (mangle-boot-name (if qb "%true" "%false"))))
 
 (dm generate-quotation (out (qb '()))
-  (format out (mangle-internal-name "nil")))
+  (format out (mangle-boot-name "nil")))
 
 (dm generate-quotation (out (qb <lst>))
-  (format out "%s(" (mangle-internal-name "%pair"))
+  (format out "%s(" (mangle-boot-name "%pair"))
   (generate-quotation out (head qb))
   (format out ", ")
   (generate-quotation out (tail qb))
   (format out ")"))
 
 (dm generate-quotation (out (x <int>))
-  (format out "%s((P)%d)" (mangle-internal-name "%int") x))
+  (format out "%s((P)%d)" (mangle-boot-name "%int") x))
 
 (dm generate-quotation (out (x <chr>))
-  (format out "%s((P)%d)" (mangle-internal-name "%chr") (as <int> x)))
+  (format out "%s((P)%d)" (mangle-boot-name "%chr") (as <int> x)))
 
 (dm float-to-c-string ((o <flo>) => <str>)
   (let ((s (num-to-str o)))
@@ -414,16 +488,16 @@
 
 (dm generate-quotation (out (x <flo>))
   (format out "%s(FLOINT(%s))" 
-	  (mangle-internal-name "%flo") (float-to-c-string x)))
+	  (mangle-boot-name "%flo") (float-to-c-string x)))
 
 (dm generate-quotation (out (x <str>))
   (format out "%s((P)\"%s\")"
-	  (mangle-internal-name "%sb")
+	  (mangle-boot-name "%sb")
 	  (mangle-string-literal x)))
 
 (dm generate-quotation (out (x <vec>))
   ;; TODO: TIE TOGETHER
-  (format out "CALLN(%s, %s" (mangle-internal-name "vec") (len x))
+  (format out "CALLN(%s, %s" (mangle-runtime-name "vec") (len x))
   (for ((e x))
     (format out ", ")
     (generate-quotation out e))
@@ -431,7 +505,7 @@
 
 (dm generate-quotation (out (x <sym>))
   (format out "%s((P)\"%s\")"
-	  (mangle-internal-name "%%sym")
+	  (mangle-boot-name "%%sym")
 	  (mangle-string-literal (as <str> x))))
 
 
@@ -495,18 +569,22 @@
     (format out "%d" (reference-offset e))))
 
 (dm to-c ((e <global-assignment>) f out)
-  (between-parentheses (out)
+  (let ((binding (assignment-binding e)))
     (between-parentheses (out)
-      (binding->c (assignment-binding e) out)
+      (between-parentheses (out)
+      (binding->c binding out)
       (format out " = ")
       (to-c (assignment-form e) f out))
     (when (isa? e <definition>)
-      (format out ", ")
-      (between-parentheses (out)
-	(format out "regsym(&")
-	(binding->c (assignment-binding e) out)
-	(format out ", \"%s\")"
-		(mangle-string-literal (as <str> (binding-name (assignment-binding e)))))))))
+      (let ((modstr (as <str> (binding-module-name binding)))
+            (namestr (as <str> (binding-name binding))))
+        (format out ", ")
+        (between-parentheses (out)
+          (format out "regsym(&")
+          (binding->c binding out)
+          (format out ",\"%s\",\"%s\")"
+                  (mangle-string-literal modstr)
+                  (mangle-string-literal namestr))))))))
 
 (dm to-c ((e <raw-constant>) f out)
   (format out "(P)%s" (constant-value e)))
@@ -629,7 +707,7 @@
     (to-c (unwind-protect-cleanup-thunk e) f out)))
 
 (dm to-c ((e <monitor>) f out)
-  (format out (mangle-internal-name "%with-monitor"))
+  (format out (mangle-runtime-name "%with-monitor"))
   (between-parentheses (out)
     (to-c (monitor-handler e) f out)
     (format out ", ")
@@ -729,14 +807,14 @@
     (if (function-nary? e) (- (len specs) 1) (len specs))))
 
 (dm to-c ((e <ast-macro-definition>) f out)
-  (format out "%s" (mangle-internal-name "%macro"))
+  (format out "%s" (mangle-boot-name "%macro"))
   (between-parentheses (out)
     (generate-quotation out (binding-name (assignment-binding e)))
     (format out ",")
     (to-c (assignment-form e) #f out)))
 
 (dm generate-signature (out e)
-  (format out "%s" (mangle-internal-name "%sig"))
+  (format out "%s" (mangle-boot-name "%sig"))
   (between-parentheses (out)
     (generate-function-names out e)
     (format out ",")
@@ -759,7 +837,7 @@
 ;;   (binding->c name out))
 
 (dm to-c ((e <ast-generic>) f out)
-  (format out "%s" (mangle-internal-name "%gen"))
+  (format out "%s" (mangle-boot-name "%gen"))
   (between-parentheses (out)
     (format out "(P)YPgen_code((P)CHKREF(YPdispatch))") ;; TODO: HACK!!!
     (format out ",")
@@ -767,9 +845,9 @@
     (format out ",")
     (generate-signature out e)
     (format out ",")
-    (format out (mangle-internal-name "nil"))
+    (format out (mangle-boot-name "nil"))
     (format out ",")
-    (format out (mangle-internal-name "%false"))))
+    (format out (mangle-boot-name "%false"))))
 
 (dm to-c ((e <free-environment>) f out)
   (unless (empty? e)
@@ -829,7 +907,7 @@
 
 (dm generate-closure-structure (out definition)
   (generate-function-name out definition)
-  (format out " = %s" (mangle-internal-name "%met"))
+  (format out " = %s" (mangle-boot-name "%met"))
   (between-parentheses (out)
     (generate-function-body-reference out definition)
     (format out ",")
@@ -846,8 +924,8 @@
 
 (dm out-list-builder ((f <fun>) out (elts <lst>))
   (if (empty? elts)
-      (format out "%s" (mangle-internal-name "nil"))
-      (seq (format out "%s" (mangle-internal-name "%pair"))
+      (format out "%s" (mangle-boot-name "nil"))
+      (seq (format out "%s" (mangle-boot-name "%pair"))
 	   (between-parentheses (out)
 	     (f (head elts))
 	     (format out ",")
@@ -985,11 +1063,15 @@
 
 (dm generate-main (out form)
   (format out "\n/* EXPRESSION: */\nint main(int argc, char* argv[]) {\n")
-  (format out "  %s(argc, argv);\n" (mangle-internal-name "%init-world"))
-  ;; (format out "  %s" (mangle-internal-name "print-out"))
+  (format out "  %s(argc, argv);\n" (mangle-boot-name "%init-world"))
+  ;; (format out "  %s" (mangle-boot-name "print-out"))
   (format out "  ")
   (between-parentheses (out)
     (to-c form #f out))
   ;; format(out ";\n  exit(0)")
   (format out ";\n  return(0)")
   (format out ";\n}\n"))
+
+(export
+  p2c-module
+  p2c-top)

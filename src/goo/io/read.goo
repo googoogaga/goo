@@ -12,6 +12,10 @@
 ;;     (define (make-immutable! x) x)
 ;;   signal (only for use by reading-error; easily excised)
 
+(use boot)
+(use macros)
+(use runtime)
+
 ;; READ
 
 (dm read ((port <input-port>) => <any>)
@@ -292,3 +296,7 @@
 
 (dm make-immutable! (x) x)
 
+(export
+  $char-long-names
+  read
+  read-from-string)

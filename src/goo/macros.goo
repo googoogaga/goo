@@ -1,5 +1,7 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
+(use boot)
+
 ;; TODO: TEMPORARY SOLUTION
 
 (ds (next-method ,@args)
@@ -128,3 +130,56 @@
 	  (dm ,nam (=> ,typ) ,vnam)
  	  (dm ,(make-setter-name nam) ((z ,typ)) (set ,vnam z)))))
 
+;; This macro allows you to declare "forward" references between modules.
+;; It may or may not remain part of the language in the long run, but we
+;; need it to modularize the existing code base.
+;; TODO - Move this macro into boot.proto along with AND, OR, WHEN, UNLESS.
+(ds (need-implementation ,@names)
+  (if (empty? names)
+      #f
+      `(seq (export ,(head names))
+            (need-implementation ,@(tail names)))))
+
+
+;;;;=======================================================================
+;;;;  Public API
+;;;;=======================================================================
+
+;;; These bindings are defined in the runtime module.
+(need-implementation
+  ==
+  cat
+  empty?
+  error
+  gensym
+  lst
+  make-setter-name
+  make-sym
+  map
+  match-atom
+  match-empty-list
+  match-sublist
+  match-unquote
+  pair
+  var-name
+  var-type)
+
+(export
+  next-method
+  apply-next-method
+  collecting
+  collect
+  collected
+  inc
+  dec
+  unless
+  when
+  or
+  and
+  case
+  select
+  assert
+  for
+  dlet
+  def-fun-var
+  need-implementation)

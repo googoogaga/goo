@@ -1,5 +1,9 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
+(use boot)
+(use macros)
+(use runtime)
+
 ;;  Self-evaluating entities
 (dm sexpr-self-evaluating? (exp => <log>)
   (or (isa? exp <num>)
@@ -630,3 +634,88 @@
 	       (sexpr-sequence->begin (sexpr-method-body exp)) #f))
 	(func (sexpr-make-anonymous-method (lst 'exp) (lst mif))))
     func))
+
+(need-implementation
+  eval)
+
+(export
+  sexpr-assignment-value
+  sexpr-assignment-variable
+  $sexpr-begin-tag
+  $sexpr-bind-exit-tag
+  sexpr-bind-pattern-variables
+  sexpr-block-body
+  sexpr-block-name
+  $sexpr-define-function-tag
+  $sexpr-define-generic-tag
+  $sexpr-define-method-tag
+  $sexpr-define-syntax-tag
+  $sexpr-define-tag
+  sexpr-definition-value
+  sexpr-definition-variable
+  sexpr-expand-backquote
+  sexpr-forward-primitive?
+  sexpr-function-body
+  sexpr-function-definition-value
+  sexpr-function-definition-variable
+  sexpr-function-signature
+  sexpr-if-else
+  $sexpr-if-tag
+  sexpr-if-test
+  sexpr-if-then
+  sexpr-isa-init-slots
+  sexpr-isa-init-values
+  sexpr-isa-parents
+  sexpr-isa-slot-inits
+  $sexpr-isa-tag
+  sexpr-iterate->loc
+  $sexpr-iterate-tag
+  sexpr-let->combination
+  $sexpr-let-tag
+  sexpr-loc-bound-bodies
+  sexpr-loc-bound-names
+  sexpr-loc-bound-signatures
+  sexpr-loc-raw-body
+  $sexpr-locals-tag
+  $sexpr-macro-expand-tag
+  sexpr-make-anonymous-method
+  sexpr-make-application
+  sexpr-make-begin
+  sexpr-make-getter
+  sexpr-make-macro-function
+  sexpr-make-setter
+  sexpr-make-setter-name
+  sexpr-method-body
+  sexpr-method-signature
+  $sexpr-method-tag
+  sexpr-monitor-body
+  sexpr-monitor-handler
+  $sexpr-monitor-tag
+  sexpr-operands
+  sexpr-operator
+  $sexpr-quasiquote-tag
+  $sexpr-quote-tag
+  sexpr-sequence->begin
+  $sexpr-set-tag
+  sexpr-signature-parameters
+  sexpr-signature-value
+  sexpr-slot-init
+  sexpr-slot-object
+  $sexpr-slot-tag
+  sexpr-slot-variable
+  sexpr-syntax-definition-value
+  sexpr-syntax-definition-variable
+  sexpr-syntax-if-else
+  sexpr-syntax-if-pattern
+  $sexpr-syntax-if-tag
+  sexpr-syntax-if-then
+  sexpr-syntax-if-value
+  sexpr-text-of-quotation
+  sexpr-unquote?
+  sexpr-unquote-splicing?
+  sexpr-unwind-protect-cleanup-forms
+  sexpr-unwind-protect-protected-form
+  $sexpr-unwind-protect-tag
+  sexpr-variable?
+  sexpr-variable-name
+  sexpr-variable-type)
