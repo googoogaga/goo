@@ -155,8 +155,6 @@
 ;;           (,bucket-offset (+ (mod hash (%secondary-modulus vector)) 1)))
 ;;          ,@body))
 
-(df mod- (i d m) (let ((i (- i d))) (if (< i 0) (+ i m) i)))
-
 (dm elt-or (table|<tab> key default => <any>)
   (def test-function (key-test table))
   (def vector        (%vector table))
@@ -189,16 +187,16 @@
 (dm elt-setter (value table|<tab> key => <any>)
   ;; (trace out "PUT COUNT %= val %=\n" (%count table) value)
   (def vector (%vector table))
-  (if (> (%count table)
-           (* (* (%n-buckets vector) (%bucket-depth vector))
-              (tab-growth-threshold table)))
-        ;; Grow the table if it's too full
-        (set vector (%vector (grow-table table)))
-        (if (> (+ (%count table) (%vacated vector)) 
-               (* (* (%n-buckets vector) (%bucket-depth vector))
-                  (tab-growth-threshold table))) 
-            ;; Rehash when there are too many vacated elements
-            (set vector (%vector (rehash-table table)))))
+  (if (>= (%count table)
+          (* (* (%n-buckets vector) (%bucket-depth vector))
+             (tab-growth-threshold table)))
+      ;; Grow the table if it's too full
+      (set vector (%vector (grow-table table)))
+      (if (> (+ (%count table) (%vacated vector)) 
+             (* (* (%n-buckets vector) (%bucket-depth vector))
+                (tab-growth-threshold table))) 
+          ;; Rehash when there are too many vacated elements
+          (set vector (%vector (rehash-table table)))))
   (def test-function (key-test table))
   (def bucket-depth  (%bucket-depth vector))
   (def n-buckets     (%n-buckets vector))
@@ -439,7 +437,7 @@
         ((< capacity 250000) 16)
         (#t                  32)))
     (do (fun ((p <int>))
-          (when (> p (1st (ceiling/ capacity depth)))
+          (when (> p (1st (ceil/ capacity depth)))
             (return (tup (+ p 2) depth))))
         *twin-primes*)
     (error "Not enough primes to compute new table size")))

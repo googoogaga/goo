@@ -40,6 +40,14 @@
 (dm env-runtime-value-setter (v x|<loc>)
   (set (loc-val x) v))
 
+;;; <dynamic-binding>s don't need boxes--they already have storage space
+;;; allocated in the thread local storage.
+(dm env-dynamic-value (x|<loc> => <any>)
+  (%dyn-var-val (loc-val x)))
+
+(dm env-dynamic-value-setter (v x|<loc>)
+  (set (%dyn-var-val (loc-val x)) v) v)
+
 (dc <loc-env> (<any>))
   (dp env-parent (<loc-env> => <any>)   #f)
   (dp env-function (<loc-env> => <any>) #f)
@@ -112,8 +120,6 @@
               (type (if spec (ast-eval spec env) <any>)))
           (loop (pair type res) (tail specs) (+ i 1))))))
 
-(dv *stack* (fab <vec> 0))
-
 ;;; Check to make sure we have a legal number of arguments, and arrange
 ;;; them in the fashion required by our argument list.
 ;;; TODO - There's probably another one of these functions hiding somewhere
@@ -141,10 +147,7 @@
        (env-frame! ;; TODO: SLOW HACK
         ,env ,f (cat2 ,names (lst '%next-methods))
         (cat2 args (lst nms))))
-     ;; (push! *stack* frame)
-     (,body frame)
-     ;; (pop! *stack*)
-     ))
+     (,body frame)))
 
 ;; TODO -- CLEAN UP BELOW
 (dm as-fun-name (x|<fun> => <any>)            
@@ -210,6 +213,9 @@
 (dm ast-eval (e|<global-reference> env|<loc-env>)
   (env-global-binding-value (reference-binding e)))
 
+(dm ast-eval (e|<dynamic-reference> env|<loc-env>)
+  (env-dynamic-value (binding-locative (reference-binding e))))
+
 (dm ast-eval (e|<runtime-reference> env|<loc-env>)
   (env-runtime-value (binding-locative (reference-binding e))))
 
@@ -235,6 +241,10 @@
   (def value (ast-eval (assignment-form e) env))
   (set (env-runtime-value (binding-locative (assignment-binding e))) value))
 
+(dm ast-eval (e|<dynamic-assignment> env|<loc-env>)
+  (def value (ast-eval (assignment-form e) env))
+  (set (env-dynamic-value (binding-locative (assignment-binding e))) value))
+
 (dm ast-eval (e|<local-assignment> env|<loc-env>)
   (def value (ast-eval (assignment-form e) env))
   (set (env-local-reference-value env (assignment-reference e)) value))
@@ -243,6 +253,8 @@
   (case (binding-kind b)
     (('runtime) (set (env-runtime-value (binding-locative b)) v))
     (('global)  (set (env-global-binding-value b) v))
+    (('dynamic) (set (binding-locative b) (%lb (%fab-dyn-var)))
+                (set (env-dynamic-value (binding-locative b)) v))
     (#t         (error "Defining invalid binding kind %=" (binding-kind b)))))
 
 (dm ast-eval (e|<definition> env|<loc-env>)
@@ -385,15 +397,17 @@
 
 (dl %binding-value (dlvar)
   (def binding (%dlvar-binding dlvar))
-  (if (== (binding-kind binding) 'runtime)
-      (env-runtime-value (binding-locative binding))
-      (env-global-binding-value binding)))
+  (case (binding-kind binding)
+    (('runtime) (env-runtime-value (binding-locative binding)))
+    (('dynamic) (env-dynamic-value (binding-locative binding)))
+    (#t         (env-global-binding-value binding))))
 
 (dl %binding-value-setter (val dlvar)
   (def binding (%dlvar-binding dlvar))
-  (if (== (binding-kind binding) 'runtime)
-      (set (env-runtime-value (binding-locative binding)) val)
-      (set (env-global-binding-value binding) val)))
+  (case (binding-kind binding)
+    (('runtime) (set (env-runtime-value (binding-locative binding)) val))
+    (('dynamic) (set (env-dynamic-value (binding-locative binding)) val))
+    (#t         (set (env-global-binding-value binding) val))))
 
 (export
   %binding-bound?

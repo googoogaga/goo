@@ -15,8 +15,9 @@
 (export
  ;; Section 1.1/2.1: Special forms.
  IF SEQ SET FUN LET DEF LOC ESC FIN DV DM DG DP DC MACRO-EXPAND
- SUP QUOTE
+ SUP APP-SUP QUOTE
  CT CT-ALSO DS USE EXPORT 
+ DDV
 
  ;; Section 1.2/2.2: Macros.
  DF TRY REP MIF AND OR CASE CASE-BY COND MATCH UNLESS WHEN ASSERT
@@ -57,8 +58,8 @@
  
  ;; Section 3.6: Numbers.
  ;; Not included: gcd, lcm (which seem to be missing).
- <num> + 1+ - 1- * / floor ceil round trunc floor/ ceiling/ round/
- trunc/ mod rem pos? zero? neg? neg abs *print-base*
+ <num> + 1+ - 1- * / floor ceil round trunc floor/ ceil/ round/
+ trunc/ mod mod+ modincf rem div pos? zero? neg? neg abs *print-base*
  num-to-str num-to-str-base str-to-num
  log logn pow sqrt isqrt sin cos tan asin acos atan atan2 sinh cosh tanh $pi $e
  <int> #| ^ & ~ bit? even? odd? << >> >>> $max-int $min-int

@@ -3,14 +3,6 @@
 ;;;;
 ;;;; g2c - Goo-to-C compiler
 ;;;;
-;;;; General notes on this file:
-;;;;
-;;;; It is unlikely that the any format specifier other than %s should ever
-;;;; be used to output C code. There is no guarantee that the goo formatted
-;;;; output is equivalent to C formatted output.
-;;;;
-;;;; All mentions of %= have been excised, %d seems relatively harmless and
-;;;; remains at the moment.
 
 (use goo)
 (use goo/boot)
@@ -55,8 +47,8 @@
   (def env      (module-target-environment mod))
   (def file     (module-name-to-relpath name))
   (def src-file (add-src-path (goo-filename file)))
-  (def out-file (add-build-path (module-loader-appname loader)
-                                (c-filename file)))
+  (def appname  (module-loader-appname loader))
+  (def out-file (add-build-path appname (c-filename file)))
   (set (module-src-file mod) src-file)
   (set (module-mtime mod) (file-mtime src-file))
   ;; (msg* out "Computing ast for %s.\n" name)
@@ -68,8 +60,12 @@
   ;; (msg* out "Generating C code for %s.\n" name)
   (probe-directory (parent-directory out-file))
   (with-port (out-port (open <file-out-port> out-file))
-             (dlet ((*definitions* (program-definitions prg))) 
-               (generate-c-module out-port ast prg mod)))
+    (dlet ((*definitions* (program-definitions prg))) 
+      (generate-c-module out-port ast prg mod)))
+  (do (fun (name)  ;; copy c files
+        (def file (module-name-to-relpath name))
+        (file-copy (add-src-path file) (add-build-path appname file)))
+      (module-uses-c-files mod))
   (%print-cpu-usage (%su "EMIT"))
   ;;; No need to call roll-back-transaction here--we can
   ;;; rely on the compilation subtransaction to do all
@@ -226,12 +222,16 @@
   (with-port (code-out (open <file-out-port> out-name))
     (msg* code-out "C_OBJS_DD = $(patsubst %%,..%s%%,$(C_OBJS))\n" sep)
     (msg* code-out "%s%s: ..%sgrt.h\n" *c-extension* *obj-extension* sep)
-    (msg* code-out "\t$(CC) $(CFLAGS) -I.. -DDEFAULT_GOO_ROOT=\\\"$(GOO_ROOT)\\\" -c -o $@ $<\n\n")
+    (msg* code-out "\t$(CC) -I.. -DDEFAULT_GOO_ROOT=\\\"$(GOO_ROOT)\\\" -c $(C_FLAGS) -o $@ $<\n\n")
     (msg* code-out "OBJS = \\\n")
     (do-module-loader-modules
      (fun (mod)
-       (msg* code-out "\t%s \\\n"
-             (obj-filename (module-name-to-relpath (module-name mod)))))
+       (loc ((put-obj (name)
+               (msg* code-out "\t%s \\\n" 
+                     (obj-filename (module-name-to-relpath name)))))
+         (put-obj (module-name mod)) 
+         (do (fun (name) (put-obj (as <sym> (sub name 0 (- (len name) 2))))) 
+             (map (fun (n) (as <str> n)) (module-uses-c-files mod)))))
      loader)
     (msg* code-out "\t%s\n\n" (obj-filename init-name))
     (msg* code-out "%s: $(C_OBJS_DD) $(OBJS)\n" exe-name)
@@ -276,8 +276,9 @@
 
 (dm generate-global-binding (code-out imported? gb)
   (def kind (binding-kind gb))
-  (when (or (== kind 'global) (== kind 'runtime))
+  (when (or (== kind 'global) (== kind 'runtime)  (== kind 'dynamic))
     (def name (binding-name gb))
+    (puts code-out (case kind (('runtime)  "RTV") (('dynamic) "DYN") (#t "")))
     (msg* code-out "%s(%s,\"%s\",\"%s\");\n" 
           (if imported? "EXT" "DEF")
           (mangle-binding gb)
@@ -583,7 +584,7 @@
 
 (dm generate-quotation (code-out x|<vec>)
   ;; TODO: TIE TOGETHER
-  (msg* code-out "CALLN(1, %s, %s" (mangle-boot-name "vec") (len x))
+  (msg* code-out "XCALLN(1, %s, %s" (mangle-boot-name "vec") (len x))
   (for ((e x))
     (puts code-out ", ")
     (generate-quotation code-out e))
@@ -591,7 +592,7 @@
 
 (dm generate-quotation (code-out x|<tup>)
   ;; TODO: TIE TOGETHER
-  (msg* code-out "CALLN(1, %s, %s" (mangle-boot-name "tup") (len x))
+  (msg* code-out "XCALLN(1, %s, %s" (mangle-boot-name "tup") (len x))
   (for ((e x))
     (puts code-out ", ")
     (generate-quotation code-out e))
@@ -632,8 +633,12 @@
   (binding->c v code-out))
 
 (dm reference->c (v|<module-binding> code-out)
-  (puts 
-   code-out (if (== (binding-kind v) 'quotation) "LITREF" "VARREF"))
+  (puts code-out 
+        (case (binding-kind v)
+          (('quotation) "LITREF")
+          (('runtime)   "RTVREF")
+          (('dynamic)   "DYNREF")
+          (#t           "VARREF")))
   (between-parentheses (code-out)
     (binding->c v code-out)))
 
@@ -671,14 +676,20 @@
 (dm to-c (e|<global-assignment> f d code-out)
   (to-c (assignment-form e) f d code-out)
   (with-expression (e d code-out)
-    (puts code-out "VARSET(")
+    (puts code-out
+          (case (binding-kind (assignment-binding e))
+            (('runtime) "RTVSET(")
+            (('dynamic) 
+             (if (isa? e <dynamic-definition>) "DYNDEFSET(" "DYNSET("))
+            (#t         "VARSET(")))
     (binding->c (assignment-binding e) code-out)
     (puts code-out ",") 
     (gen-ref (assignment-form e) code-out)
     (puts code-out ")")))
 
 (dm to-c (e|<bound?> f d code-out)
-  (with-used-expression (e d code-out)
+  (with-used-expression (e d code-out) ;; TODO: FIX FOR DYN
+    (when (isa? (bound?-reference e) <runtime-reference>) (puts code-out "RTV"))
     (puts code-out "BOUNDP")
     (between-parentheses (code-out)
       (binding->c (reference-binding (bound?-reference e)) code-out))))
@@ -753,7 +764,9 @@
         (for ((arg (application-arguments e)))
           (to-c arg f d code-out))
         (with-expression (e d code-out)
-          (msg* code-out "CALL%s" (if (> n $number-call-templates) "N" n))
+          (msg* code-out "%sCALL%s" 
+                (if (or (not f) (isa? f <ast-primitive>)) "X" "")
+                (if (> n $number-call-templates) "N" n))
           (between-parentheses (code-out)
             (puts code-out (if (application-known? e) "0," "1,") )
             (gen-ref (application-function e) code-out)
@@ -769,9 +782,9 @@
   (for ((binding (fix-let-bindings e))
         (type    (fix-let-types e))
         (init    (fix-let-arguments e)))
-    (to-c init #f d code-out)
+    (to-c init f d code-out)
     (unless (unconstrained-type? type)
-      (to-c type #f d code-out)
+      (to-c type f d code-out)
       (with-statement (d code-out)
         (puts code-out "check_type")
         (between-parentheses-comma-separated (code-out)
@@ -1029,15 +1042,14 @@
 (dm primitive-inlinable? (e|<ast-primitive>)
   (def binding (function-binding e))
   ;; TODO: ADD FUNCTION ADJECTIVES
-  (mem? '(
-          %tag-bits %tag %untag %class-of
+  (mem? '(%tag-bits %tag %untag %class-of
           %int %ib %iu
           %chr %cb %cu
           %loc %lb %lu
           %empty? %head %tail
           @empty? @head @tail
           @== @= @+ @<
-          %new
+          %new %class-id %class-row
           %gen-cache-arg-pos %gen-cache-singletons
           %gen-cache-classes %gen-cache-missable?
           %class-type-cache %class-type-cache-setter
@@ -1062,6 +1074,7 @@
   (generate-local-temporaries (function-temporaries e) code-out)
   (generate-registers (function-registers e) code-out)
   (generate-shadow-args (function-bindings e) code-out)
+  (puts code-out "DEFCREGS();\n")
   (puts code-out "loop:\n")
   (to-c (function-body e) e 1 code-out)
   (generate-return e 1 code-out)
@@ -1190,14 +1203,14 @@
   (do-static-global-bindings
    (fun (binding)
      (when (binding-native-to? binding mod)
-       (if (== (binding-kind binding) 'global)
-           (msg* code-out "  {\"%s\", &%s},\n"
-                 (mangle-string-literal (binding-name binding))
-                 (mangle-binding binding))
-           (msg* code-out "  {\"%s\", NULL},\n"
-                 (mangle-string-literal (binding-name binding))))))
+       (msg* code-out "  {\"%s\", "
+             (mangle-string-literal (binding-name binding)))
+       (case (binding-kind binding)
+         (('global)  (msg* code-out "CVAR, &%s},\n" (mangle-binding binding)))
+         (('dynamic) (msg* code-out "DVAR, &%s},\n" (mangle-binding binding)))
+         (#t         (puts code-out "PVAR, NULL},\n")))))
    (module-target-environment mod))
-  (puts code-out "  {NULL, NULL}\n};\n")
+  (puts code-out "  {NULL, NVAR, NULL}\n};\n")
 
   ;;(msg* out "Dumping exports...\n")
   (puts code-out "\nstatic EXPORT_INFO export_infos[] = {\n")

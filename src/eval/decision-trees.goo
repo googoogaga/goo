@@ -56,7 +56,7 @@
 (dm build-decision-tree (g|<gen>)
   (def refs   (fab <vec> 0))
   (def code   (build-decision-tree* g 0 (len (fun-specs g)) refs (fun-mets g)))
-  (def dname  (cat-sym (fun-name g) "-dispatch"))
+  (def dname  (cat-sym "d-" (fun-name g) "-dispatch"))
   (def dfun   `(df ,dname (args|...) 
                  (let ((g (%fun-reg)) (refs (%gen-refs g))) ,code)))
   (def dpatch `(set (%gen-code ,(fun-name g)) (%met-code ,dname)))
@@ -64,10 +64,27 @@
   (set (gen-refs g) (as <tup> refs))
   top)
 
+(ds (type-case ,val ,@cases)
+  (loc ((do-type-case (val cases)
+          (if (empty? cases)
+              #f
+              (mif ((,cond ,@body) (head cases))
+                   (if (== cond #t)
+                       `(seq ,@body)
+                       (mif ((,@values) cond)
+                            `(if (or ,@(map (fun (x) `(%@subclass? ,val ,x)) values))
+                                 (seq ,@body)
+                                 ,(do-type-case val (tail cases)))
+                            (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))
+                   (error "CASE: SYNTAX ERROR BAD CASE" (head cases))))))
+    (let ((val-var (gensym)))
+      `(let ((,val-var (%@class-of ,val)))
+         ,(do-type-case val-var cases)))))
+
 (dm build-decision-tree* (g|<gen> i|<int> n|<int> refs|<vec> mets|<lst>)
   (loc ((gen-ref (x) 
           (def i (or (pos refs x) (seq (add! refs x) (- (len refs) 1))))
-          `(%velt refs (%iu ,i))))
+          `(%telt refs (%iu ,i))))
     (if (< i n)
         (loc ((test (x y) (subtype?  (fun-spec x i) (fun-spec y i))))
           (def ordered-mets (priority-order test mets))
@@ -85,19 +102,28 @@
                       (unless (empty? mets)
                         (pack (code-gen-case (head mets) mets))
                         (loop (tail mets)))))))
-            `(case-by (@oelt args ,i) @isa?
+            `(type-case (@oelt args ,i) 
                ,@(code-gen-cases ordered-mets)
-               (#t (no-app-met ,(gen-ref g) args))))))
-    `(seq (%unlink-stack)
-          (%raw-call ,(gen-ref (head mets)) ,(gen-ref (tail mets))))))
+               (#t (no-app-met ,(gen-ref g) args)))))
+        `(%raw-met-call ,(gen-ref (head mets)) ,(gen-ref (tail mets))))))
 
 (dm foo ((x <num>)) (tup x)) 
 (dm foo ((x <flo>)) (lst x))
 (dm foo ((x <int>)) x)
 
-;; (seq (set write:*max-print-depth* 100) (set write:*max-print-length* 100))
+;; (seq (set goo/io/write:*max-print-depth* 100) (set goo/io/write:*max-print-length* 1000))
 
 (dv d (build-decision-tree foo))
+
+(ds (def-tree ,gen) (build-decision-tree gen))
+
+(df time (n) (let ((x 0)) (for ((i (below n))) (set x (+ x i))) x))
+
+(df d-+-dispatch ((args ...)) (let ((g (%fun-reg)) (refs (%gen-refs g))) (type-case (@oelt args 0) (((%telt refs (%iu 0))) (type-case (@oelt args 1) (((%telt refs (%iu 0))) (%raw-met-call (%telt refs (%iu 1)) (%telt refs (%iu 2)))) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (((%telt refs (%iu 7))) (type-case (@oelt args 1) (((%telt refs (%iu 7))) (%raw-met-call (%telt refs (%iu 8)) (%telt refs (%iu 9)))) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (((%telt refs (%iu 3))) (type-case (@oelt args 1) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (#t (no-app-met (%telt refs (%iu 6)) args)))))
+
+;;; (f 2000000)
+;;; (build-decision-tree +)
+;;; (seq (df d-+-dispatch ((args ...)) (let ((g (%fun-reg)) (refs (%gen-refs g))) (type-case (@oelt args 0) (((%telt refs (%iu 0))) (type-case (@oelt args 1) (((%telt refs (%iu 0))) (%raw-met-call (%telt refs (%iu 1)) (%telt refs (%iu 2)))) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (((%telt refs (%iu 7))) (type-case (@oelt args 1) (((%telt refs (%iu 7))) (%raw-met-call (%telt refs (%iu 8)) (%telt refs (%iu 9)))) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (((%telt refs (%iu 3))) (type-case (@oelt args 1) (((%telt refs (%iu 3))) (%raw-met-call (%telt refs (%iu 4)) (%telt refs (%iu 5)))) (#t (no-app-met (%telt refs (%iu 6)) args)))) (#t (no-app-met (%telt refs (%iu 6)) args))))) (set (%gen-code +) (%met-code d-+-dispatch)) #t)
 
 ;;; (auto-eval d (runtime-environment 'goo/user))
     

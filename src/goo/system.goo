@@ -9,8 +9,16 @@
 
 (use goo)
 (use goo/cols/str)
-(use goo/boot) ; Need filesystem primitives.
+(use goo/boot)     ; Need filesystem primitives.
+(use goo/io/port)  ; File-copy
 
+;;;;=======================================================================
+;;;;  Time Interface
+;;;;=======================================================================
+
+(df time () (%ib (%time)))
+
+(export time)
 
 ;;;;=======================================================================
 ;;;;  Operating System Interface
@@ -186,6 +194,15 @@
 (df create-directory (filename|<str>)
   (%create-directory (%su filename)))
 
+(dm file-copy (src|<str> dst|<str>)
+  (with-port (src-port (open <file-in-port> src))
+  (with-port (dst-port (open <file-out-port> dst))
+    (rep loop ()
+      (let ((c (get src-port)))
+        (unless (eof-object? c)
+          (put dst-port c)
+          (loop)))))))
+
 (dl %compile)
 (dl %load)
 
@@ -196,6 +213,7 @@
   file-mtime
   file-exists?
   file-type
+  file-copy
   create-directory
   so-load
   %load

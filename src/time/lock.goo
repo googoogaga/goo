@@ -1,0 +1,49 @@
+;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
+(use goo)
+(use goo/boot)
+(use time/threads)
+(use time/%lock.c)
+
+(dl %lock-create)
+(dl %lock-lock)
+(dl %lock-unlock)
+(dl %lock-try-lock)
+(dl %lock-destroy)
+
+(dc <lock> (<any>))
+  (dp lock-name (<lock> => (t? <sym>)) #f)
+  (dp lock-state (<lock> => (t+ <sym> <thread>)))
+  (dp lock-handle (<lock> => <loc>))
+
+(dm lock-lock (lock|<lock>) 
+  (%lock-lock (%lu (lock-handle lock)))
+  (set (lock-state lock) (thread-current)))
+
+(dm lock-unlock (lock|<lock>) 
+  (%lock-unlock (%lu (lock-handle lock)))
+  (set (lock-state lock) 'abandoned))
+
+(dm lock-destroy (lock|<lock>) 
+  (%lock-destroy (%lu (lock-handle lock)))
+  (set (lock-state lock) 'destroyed))
+
+(dm new (x|(t< <lock>) args|... => <lock>)
+  (def l (app-sup x args))
+  (set (lock-handle l) (%lb (%lock-create)))
+  l)
+
+(ds (with-lock ,lock ,@body)
+  (let ((lock-name (gensym)))
+    `(let ((,lock-name ,lock))
+       (fin (seq (lock-lock ,lock-name) ,@body) (lock-unlock ,lock-name)))))
+
+
+(export 
+  <lock>
+  lock-lock
+  lock-unlock
+  lock-handle
+  lock-destroy
+  lock-state
+  with-lock)

@@ -133,6 +133,8 @@
 
 (dc <runtime-reference> (<module-binding-reference>))
 
+(dc <dynamic-reference> (<module-binding-reference>))
+
 (dc <predefined-reference> (<real-reference>))
 
 (dc <static-module-binding-reference> (<module-binding-reference>))
@@ -155,11 +157,15 @@
 
 (dc <runtime-assignment> (<global-assignment>))
 
+(dc <dynamic-assignment> (<global-assignment>))
+
 (dc <definition> (<global-assignment>))
 
 ;;; TODO: THE FOLLOWING DEFS AREN'T REALLY USED -- PERHAPS ZAP
 
 (dc <variable-definition> (<definition>))
+
+(dc <dynamic-definition> (<variable-definition>))
 
 (dc <ast-generic-definition> (<definition>))
 
@@ -198,11 +204,13 @@
 
 (df function-display-name (f|<ast-function>)
   (def b (function-binding f))
-  (if b
-      (if (isa? b <sym>)
-          (as <str> b)
-          (msg-to-str "%s:%s" (binding-module-name b) (binding-name b)))
-      "anonymous function"))
+  (case-by b isa?
+    ((<sym>) 
+     (as <str> b))
+    ((<module-binding>) 
+     (msg-to-str "%s:%s" (binding-module-name b) (binding-name b)))
+    (#t 
+     "anonymous function")))
 
 (dm invalidate-dependent (dependent|<ast-function>
                           dependable|<dependable>
@@ -565,6 +573,12 @@
    assignment-form    val))
 
 (dm objectify-assignment-using 
+    (ref|<dynamic-reference> val|<program> => <global-assignment>)
+ (new <dynamic-assignment> 
+   assignment-binding (reference-binding ref)
+   assignment-form    val))
+
+(dm objectify-assignment-using 
     (ref|<runtime-reference> val|<program> => <runtime-assignment>)
  (new <runtime-assignment> 
    assignment-binding (reference-binding ref)
@@ -633,16 +647,22 @@
 
 (dv *macro-tracing?* #f)
 
-(dm objectify-definition (var e r => <any>)
+(dm objectify-definition (type kind var e r => <any>)
   (def name
     (sexpr-variable-name var))
   (def binding 
-    (ast-define-binding r name #f 'global))
+    (ast-define-binding r name #f kind))
   (def defn
-    (new <definition> 
+    (new type
       assignment-binding binding
       assignment-form (objectify e r #f)))
   defn)
+
+(dm objectify-variable-definition (var e r => <any>)
+  (objectify-definition <variable-definition> 'global var e r))
+
+(dm objectify-dynamic-definition (var e r => <any>)
+  (objectify-definition <dynamic-definition> 'dynamic var e r))
 
 (df %%macro (modname name expander env-or-false => <module-binding>)
     ;; (msg out "DEFMACRO ") (writeln out sep-expander)
@@ -848,6 +868,7 @@
     (('global)     <global-reference>)
     (('predefined) <predefined-reference>)
     (('runtime)    <runtime-reference>)
+    (('dynamic)    <dynamic-reference>)
     (('macro)      <macro-reference>)
     (('magic)      <magic-reference>)
     (#t            (error "Unknown binding-kind %=" (binding-kind b)))))
@@ -1001,10 +1022,12 @@
 
 (dm objectify-use-module (name r tail? => <program>)
   (def env (find-static-global-environment r))
-  (def loader (environment-module-loader env))
-  (def used-module (probe-module loader name))
-  (push! (environment-uses-modules env) used-module)
-  (do (fun (b) (import-global! b env)) (module-exports used-module))
+  (if (suffix? (as <str> name) ".c")
+      (push! (module-uses-c-files (environment-module env)) name)
+      (let ((loader (environment-module-loader env))
+            (used-module (probe-module loader name)))
+        (push! (environment-uses-modules env) used-module)
+        (do (fun (b) (import-global! b env)) (module-exports used-module))))
   (new <constant> constant-value #f))
 
 (dm expand-bind-list (pat var fail => <any>)
@@ -1163,7 +1186,13 @@
     (sexpr-assignment-variable x) (sexpr-assignment-value x) r tail?))
 
 (define-magic-binding define (x r tail?)
-  (objectify-definition
+  (objectify-variable-definition
+    (sexpr-definition-variable x) (sexpr-definition-value x) r))
+
+(dv $sexpr-define-dynamic-tag 'ddv)
+
+(define-magic-binding define-dynamic (x r tail?)
+  (objectify-dynamic-definition
     (sexpr-definition-variable x) (sexpr-definition-value x) r))
 
 (define-magic-binding define-syntax (x r tail?)
@@ -1236,7 +1265,7 @@
 
 (define-magic-binding define-class (x r tail?)
   (def name (sexpr-definition-variable x))
-  (objectify-definition
+  (objectify-definition <variable-definition> 'global
    name `(fab-class ',name ,(pairize (sexpr-define-class-parents x))) r))
  
 (define-magic-binding prop (x r tail?)
@@ -1284,11 +1313,12 @@
   (objectify (sexpr-expand-backquote x) r tail?))
 
 (dm ast-macro-expand (x r tail?)
-  (def m (objectify (head x) r tail?))
-  (if (and (isa? m <module-binding>) (== (binding-kind m) 'macro))
-      (let ((res ((binding-handler m) x r tail?)))
-        ;; (msg out "EXPANSION ") (write out res) (msg out "\n")
-        res)
+  (def ast (objectify (head x) r tail?))
+  (if (isa? ast <macro-reference>)
+      (let ((mac (reference-binding ast))
+            (res ((binding-handler mac) x r tail?)))
+              ;; (msg out "EXPANSION ") (write out res) (msg out "\n")
+              res)
       #f))
 
 (define-magic-binding macro-expand (x r tail?)
@@ -1460,6 +1490,7 @@
   (dp module-data-processed? (<module> => <log>)     #t)
   (dp module-runtime-data (<module> => <any>)        #f)
   (dp module-transaction (<module> => <transaction>) (new <transaction>))
+  (dp module-uses-c-files (<module> => <vec>)        (fab <vec> 0))
 
 (dv module-exports-setter %module-exports-setter)
 (dm module-exports (x|<module> => <tab>)
@@ -1789,6 +1820,15 @@
                  binding-locative loc))
   (insert-global! binding (module-target-environment mod)))
 
+(df reloader-do-dynamic-binding (mod|<module> name|<str> loc|<loc>)
+  (def binding (new <module-binding>
+                 binding-kind     'dynamic
+                 binding-module   mod
+                 binding-name     (as <sym> name)
+                 binding-free?    #f
+                 binding-locative loc))
+  (insert-global! binding (module-target-environment mod)))
+
 ;;; We create all non-runtime bindings with type 'global', so we have
 ;;; something to export and import while rebuilding the module structure.
 ;;; Later on, we'll need to update these bindings and change
@@ -1811,7 +1851,8 @@
 (df reload-modules ()
   (%build-runtime-modules 
    reloader-do-create-module reloader-do-use-module
-   reloader-do-runtime-binding reloader-do-other-binding))
+   reloader-do-runtime-binding reloader-do-other-binding
+   reloader-do-dynamic-binding))
 
 ;;; Change the type of the magic bindings in an environment, and install
 ;;; the right handlers.  We only need to do this for the boot environment,
@@ -1975,7 +2016,7 @@
   binding-index-setter
   binding-global-box
   binding-global-box-setter
-  binding-locative
+  binding-locative binding-locative-setter
   binding-module-name
   binding-module
   binding-mutable?
@@ -2000,6 +2041,7 @@
   constant-index
   constant-index-setter
   <definition>
+  <dynamic-definition>
   def-list
   def-programs
   do-static-global-bindings
@@ -2047,6 +2089,7 @@
   <module-binding-reference>
   <static-module-binding-reference>
   <global-reference>
+  <dynamic-reference>
   <magic-reference>
   <macro-reference>
   init-ast
@@ -2065,6 +2108,7 @@
   module-mangled-name module-mangled-name-setter
   module-mangled-string-name module-mangled-string-name-setter
   module-exports
+  module-uses-c-files
   <monitor>
   monitor-handler
   monitor-info
@@ -2095,6 +2139,7 @@
   <regular-application>
   report-undefined-global-bindings
   <runtime-assignment>
+  <dynamic-assignment>
   runtime-environment
   unchecked-runtime-environment
   <runtime-reference>

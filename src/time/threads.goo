@@ -2,44 +2,72 @@
 
 (use goo)
 (use goo/boot)
+(use time/%threads.c)
 
 (dl %thread-create)
 (dl %thread-yield)
 (dl %thread-priority)
 (dl %thread-priority-setter)
 (dl %thread-detach)
+(dl %thread-join)
 (dl %thread-current)
+(dl %thread-goo-thread)
 (dl %thread-sleep)
 
 (dc <thread> (<any>))
   (dp thread-name (<thread> => (t? <sym>)) #f)
-  (dp thread-function (<thread> => <fun>))
   (dp thread-priority (<thread> => <int>) 0)
-  (dp hread-handle (<thread> =>)
+  (dp thread-function (<thread> => <fun>) (fun ()))
+  (dp thread-handle (<thread> => <loc>))
 
 (dm thread-yield () (%thread-yield))
 
-(dm thread-detatch () (%thread-detach))
+(df main-thread-key ())
 
-(dm fab-thread (name|<sym> priority|<int> function|<fun> => <thread>)
-  (def h (%lb (%thread-create function)))
-  (def t (new <thread> 
-           thread-handle h thread-name name thread-priority priority
-           thread-function function))
-  (set (%thread-priority h) (%iu priority))
+(dm new (x|(t< <thread>) args|... => <thread>)
+  (def t (app-sup x args))
+  (unless (== (thread-function t) main-thread-key)
+    (def h (%lb (%thread-create (tup (thread-function t) t))))
+    (set (thread-handle t) h)
+    (set (%thread-priority h) (%iu (thread-priority t))))
   t)
 
-(dm sleep (msecs|<int>)
-  (%thread-sleep (%iu msecs)))
+(new <thread> 
+     thread-name     'main
+     thread-function main-thread-key
+     thread-handle   (%lb (%thread-current)))
 
-;; (dg thread-current (=> <thread>))
-;; (dg thread-join (t|<thread> ts|...))
+(ds (spawn ,@body)
+  `(new <thread> thread-function (fun () ,@body)))
+
+(dm sleep (secs|<flo>)
+  (%thread-sleep (%fu secs)))
+
+(dm thread-current (=> <thread>)
+  (%thread-goo-thread (%lb (%thread-current)))) 
+
+(dm thread-join (t|<thread>)
+  (%thread-join (%lu (thread-handle t))))
+
+(df test-thread-1 ()
+  (spawn (for ((i (below 3000))) (post "%d\n" i))))
+
+(df test-thread-2 ()
+  (spawn (for ((i (below 100))) (post "%d\n" i) (sleep 1.0))))
+
+;; (df all-threads () (as <tup> (map 2nd (items *threads*))))
 
 (export 
   <thread>
   thread-name
+  thread-current
   thread-function
   thread-priority
+  ;; thread-detach
   thread-yield
-  fab-thread
-  sleep)
+  ;; all-threads
+  spawn
+  sleep
+  test-thread-1
+  test-thread-2
+  )

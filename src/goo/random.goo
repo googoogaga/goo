@@ -4,15 +4,14 @@
 
 (use goo)
 (use goo/boot)
-(use time/timer)
+(use goo/system)
 
-(df default-random-seed (=> <int>)
-  (%ib (%timer-system-time)))
+(df default-random-seed (=> <int>) (time))
 
 (dv $recent-size 54)
 
 (dc <random> (<any>))
-  (dp recent (<random> => <tup>) (fill (fab <tup> $recent-size) 0))
+  (dp recent (<random> => <vec>) (fill (fab <vec> $recent-size) 0))
   (dp recent-index (<random> => <int>) 0)
 
 ;; 16 bits (almost) of lame-o pseudo-randomness
@@ -33,7 +32,7 @@
       (set (elt a j) (+ (mod v1 32768) (* (mod v2 16384) 32768)))
       (loop (+ j 1) v2)))
   ;; Make sure the history is full of our stuff to deal with bad seed:
-  (for ((j (from-to 0 (* 4 $recent-size))))
+  (for ((j (range 0 <= (* 4 $recent-size))))
     (random-29 r))
   r)
 
@@ -69,7 +68,16 @@
                     (find-good-value))))
           (mod (find-good-value) range)))))
 
+(dm random-unit (=> <flo>)
+  (random-unit-using $default-random))
+
+(dm random-unit-using (r|<random> => <flo>)
+  (def max 1000000)
+  (/ (as <flo> (random-using (+ max 1) r)) (as <flo> max)))
+
 (export
   fab-random
   random
-  random-using)
+  random-using
+  random-unit
+  random-unit-using)

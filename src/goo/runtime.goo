@@ -293,6 +293,9 @@
 (df wrong-number-arguments-error (fun|<fun> n|<int>)
   (error "%= CALLED WITH %= ARGUMENTS EXPECTED %=" fun n (fun-arity fun)))
 
+;; (df unknown-function-error (fun|<fun> #/ args|<seq> /#)
+;;   (error "UNKNOWN FUNCTION %= CALLED ON %=" fun args))
+
 (df unknown-function-error (fun|<fun>)
   (error "UNKNOWN FUNCTION %= CALLED" fun))
 

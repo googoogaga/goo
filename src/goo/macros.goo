@@ -12,10 +12,10 @@
          (napp (head next-mets) (tail next-mets) ,@args '())
          (error "No next methods"))))
 
-(ds (app-sup ,args)
+(ds (app-sup ,@args)
   `(let ((next-mets (%next-methods)))
      (if next-mets
-         (napp (head next-mets) (tail next-mets) ,args)
+         (napp (head next-mets) (tail next-mets) ,@args)
          (error "No next methods"))))
 
 (ds (app ,f ,@args)
@@ -236,9 +236,6 @@
   `(rep _loop ()
      (unless ,test ,@body (_loop))))
 
-(ds (ddv ,binding ,exp)
-  `(dv ,binding ,exp))
-
 (ds (dlet ,bindings ,@body)
   (mif (() bindings)
     `(seq ,@body)
@@ -346,7 +343,6 @@
   assert
   for
   while until
-  ddv
   dlet
   def-fun-var
   need-implementation

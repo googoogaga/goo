@@ -42,7 +42,7 @@
 (dm empty ((c (t= <vec>)) => <vec>) (new <vec>))
 
 (dm fab ((c (t= <vec>)) s|<int> => <vec>)
-  (def dat (rep-fab (power-of-two-ceiling s) #f))
+  (def dat (rep-fab (power-of-two-ceil s) #f))
   (new <vec> vec-len s vec-dat dat))
 
 ;;;; Sequence protocol
@@ -78,7 +78,7 @@
 (dm len/fill-setter (new-len|<int> c|<vec> default)
   (def dat (vec-dat c))
   (if (> new-len (rep-len dat))
-      (let ((new-data (rep-fab (power-of-two-ceiling new-len) default)))
+      (let ((new-data (rep-fab (power-of-two-ceil new-len) default)))
         (rep-into! new-data dat)
         (set (vec-len c) new-len)
         (set (vec-dat c) new-data))

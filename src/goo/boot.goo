@@ -33,6 +33,7 @@
         %close-out-port %close-in-port
         %put %puts %file-mtime
         %file-type %file-exists?
+        %time
         %force-out %ready?
         %get %newline %eof-object %eof-object
         %peek %ready
@@ -53,9 +54,10 @@
         %do-stack-frames 
         %unexec
         %build-runtime-modules %process-module
-        %loc-off %loc-off-setter %raw-call %check-call-types
-        %sp-reg %sp-reg-setter %fp-reg %fp-reg-setter %unlink-stack
-        %new
+        %loc-off %loc-off-setter %raw-call %raw-met-call %check-call-types
+        %def-regs %sp-reg %sp-reg-setter %fp-reg %fp-reg-setter %unlink-stack
+        %new %@class-of %@subclass?
+        %fab-dyn-var %dyn-var-val %dyn-var-val-setter
         )
 ))
 
@@ -251,6 +253,7 @@
 ;;;
 
 (dl %allocate-stack (num)
+  (%def-regs)
   (def ret (%sp-reg))
   (set (%sp-reg) (%i+ (%sp-reg) (%i* (%raw 4) num)))
   ret)
@@ -1332,7 +1335,6 @@
             (if (@empty? singletons)
                 #f ;; no prefilling needed and no cache supplied
                 (let ((cache (%gen-cache #t i $nul-assocs $nul-assocs (%raw 0))))
-                  ;;??? (set (%fun-cache gen) cache)
                   (rep loop ((singletons singletons))
                     (if (@empty? singletons)
                         cache
@@ -1348,24 +1350,29 @@
 
 (df gen-lookup-miss-1
     (gen|<gen> ocache mets|<lst> sorted-mets|<lst> i|<int> args|<opts>)
-  (if (@= i (@fun-arity gen))
-      (or (method-accessor-offset gen (@head sorted-mets) args) sorted-mets)
-      (let ((arg   (@oelt args i))
-            (cache (ensure-singleton-cache gen ocache mets sorted-mets i args))
-            (sing? (@singleton-spec? (fun-spec (@head sorted-mets) i))))
-        (if (or (and sing? (@== ocache cache));; sing args not seen?
-                (and cache (not (%gen-cache-missable? cache))));; force sing?
-            (let ((mets (@prune-mets-by-type-at mets (%singleton arg) i)))
-              (gen-lookup-miss-1-using
-               arg arg @gen-cache-singletons @gen-cache-singletons-setter
-               gen cache mets sorted-mets i args))
-            (if sing? ;; sing arg doesn't belong in this cache
-                cache ;; already in cache by way of ensure-singleton-cache?
-                (let ((class (%class-of arg))
-                      (app-mets (@prune-mets-by-type-at mets class i)))
-                  (gen-lookup-miss-1-using
-                   class arg @gen-cache-classes @gen-cache-classes-setter
-                   gen cache app-mets sorted-mets i args)))))))
+  (cond ((@= i (@fun-arity gen))
+         (or (method-accessor-offset gen (@head sorted-mets) args) sorted-mets))
+        ((or (and ocache (@< i (%gen-cache-arg-pos ocache)))
+             (@mets-unspecialized-at? mets i))
+         (gen-lookup-miss-1 gen ocache mets sorted-mets (@+ i 1) args))
+        (#t
+         (let ((arg   (@oelt args i))
+               (cache (ensure-singleton-cache 
+                       gen ocache mets sorted-mets i args))
+               (sing? (@singleton-spec? (fun-spec (@head sorted-mets) i))))
+           (if (or (and sing? (@== ocache cache)) ;; sing args not seen?
+                   (and cache (not (%gen-cache-missable? cache)))) ;; force sng?
+               (let ((mets (@prune-mets-by-type-at mets (%singleton arg) i)))
+                 (gen-lookup-miss-1-using
+                  arg arg @gen-cache-singletons @gen-cache-singletons-setter
+                  gen cache mets sorted-mets i args))
+               (if sing? ;; sing arg doesn't belong in this cache
+                   cache ;; already in cache by way of ensure-singleton-cache?
+                   (let ((class (%class-of arg))
+                         (app-mets (@prune-mets-by-type-at mets class i)))
+                     (gen-lookup-miss-1-using
+                      class arg @gen-cache-classes @gen-cache-classes-setter
+                      gen cache app-mets sorted-mets i args))))))))
 
 (df gen-lookup-miss (gen|<gen> args|<opts> => <any>) 
   (def mets (choose-methods gen args)) ;; TODO: => (or <met> <gen-cache>)
@@ -1461,10 +1468,7 @@
                         (@oelt args 0)))))
           (%unlink-stack)
           res)
-        (let ((m (%head result))) 
-          (%unlink-stack) 
-          (set (%loc-off (%sp-reg) (%raw -1)) m) ;; replace gen w/ met on stack
-          (%raw-call m (%tail result))))))
+        (%raw-met-call (%head result) (%tail result)))))
 
 ;; READY TO REPLACE EARLY DISPATCHER WITH REAL DISPATCHER IN EARLY GEN'S
 
@@ -2043,7 +2047,9 @@
   quote
   %raw
   seq
-  if)
+  if
+  ddv
+  )
 
 ;; Primitives used in other modules.
 (export
@@ -2111,6 +2117,7 @@
   %put
   %puts
   %%sym
+  %time
   ;;; FOR DECISION TREE CODE
   %gen-refs 
   %gen-code %gen-code-setter
@@ -2205,6 +2212,7 @@
   fun-sig-setter
   fun-specs
   fun-val
+  fun-cache
   gen-add-met
   head
   head-setter
@@ -2262,9 +2270,12 @@
   @+
   @<
   @==
-  %raw-call
+  %raw-call %raw-met-call
   %check-call-types
   %loc-off %loc-off-setter
   %sp-reg-setter %sp-reg
   *report-prop-unbound-errors?*
+  %class-of @subclass?
+  %@class-of %@subclass?
+  %fab-dyn-var %dyn-var-val %dyn-var-val-setter
 )

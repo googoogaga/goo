@@ -64,7 +64,7 @@
 
 (dv ascii-limit 128)
 
-(dv (ascii-chars <vec>)
+(dv ascii-chars|<vec>
   (let ((ascii-chars
          (fill! (fab <vec> ascii-limit) #f))
         (init
@@ -117,6 +117,23 @@
 
 (dv ascii-whitespaces '(32 10 9 12 13))
 
+(dv ascii-digits|<vec>
+  (let ((chars (fill! (fab <vec> ascii-limit) #f)))
+    (rep loop ((i (char->ascii #\0)) (x 0))
+      (unless (> x 9) (set (elt chars i) x) (loop (+ i 1) (+ x 1))))
+    (rep loop ((i (char->ascii #\a)) (x 10))
+      (unless (> x 15) (set (elt chars i) x) (loop (+ i 1) (+ x 1))))
+    (rep loop ((i (char->ascii #\A)) (x 10))
+      (unless (> x 15) (set (elt chars i) x) (loop (+ i 1) (+ x 1))))
+    chars))
+
+(dm to-digit-base (digit|<chr> => (t? <int>))
+  (elt ascii-digits (char->ascii digit)))
+
+(dm digit-base? (x|<chr> radix|<int> => (t? <int>))
+  (let ((dig (to-digit-base x)))
+    (and dig (< dig radix) dig)))
+
 (dm str-to-num (string|<str> => (t? <num>)) ;; S48
   (def s 1)
   (def d 0)
@@ -139,38 +156,40 @@
                   (if seen-decimal-point?
                       (error "string->number: Two decimal points: %="
                              string)
-                      (seq
-                        (set seen-decimal-point? #t)
-                        (set i (+ i 1))
-                        (if (>= i length) (fail!!))
-                        (set char (elt string i)))))
-              (if (not (digit? char)) (fail!!))
-              (set d (to-digit (elt string i)))
+                      (seq (set seen-decimal-point? #t)
+                           (set i (+ i 1))
+                           (if (>= i length) (fail!!))
+                           (set char (elt string i)))))
+              (set d (digit-base? char radix))
+              (unless d (fail!!))
               (set i (+ i 1))
               (if seen-decimal-point?
                   (set scale (* scale radix)))
               #t)))
         (looking-at-alpha? ()
-          (if (and (< i length) 
-                   (alpha? (elt string i)))
-              #t
-              #f)))
+          (and (< i length) 
+               (alpha? (elt string i)))))
     ;; Now we get to use all this matching machinery
     (and (or (match #\+)
-         (and (match #\-) (set s -1))
-         #t)
-     (and (match-digit! d) (set n d))
-     (rep loop ()
-       (if (and (match-digit! d) (set n (+ (* n radix) d)))
-           (loop)
-           #t))
-     (= i length) ;; consumed all chars
-     (let ((f (* (as <flo> s) (/ (as <flo> n) (as <flo> scale)))))
-       (if seen-decimal-point? f (trunc f))))))
+             (and (match #\-) (set s -1))
+             (if (match #\#) 
+                 (or (and (match #\b) (set radix 2))
+                     (and (match #\o) (set radix 8))
+                     (and (match #\d) (set radix 10))
+                     (and (match #\x) (set radix 16)))
+                 #t))
+         (and (match-digit! d) (set n d))
+         (rep loop ()
+           (if (and (match-digit! d) (set n (+ (* n radix) d)))
+               (loop)
+               #t))
+         (= i length) ;; consumed all chars
+         (let ((f (* (as <flo> s) (/ (as <flo> n) (as <flo> scale)))))
+           (if seen-decimal-point? f (trunc f))))))
 
 (dv $digit-to-char "0123456789abcdefghijklmnopqrstuvwxyz")
 
-(dv *print-base* 10)
+(ddv *print-base* 10)
 
 (dv epsilon 0.000001)
 

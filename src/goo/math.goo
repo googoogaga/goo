@@ -86,6 +86,9 @@
       (as <chr> (+ (as <int> x) (- (as <int> #\A) (as <int> #\a))))
       x))
 
+(dm to-digit (digit|<chr> => <int>)
+  (- (char->ascii digit) (char->ascii #\0)))
+
 (dm to-str (x|<chr> => <str>)
   (fabs <str> x))
 
@@ -95,9 +98,6 @@
 
 (dm digit? (x|<chr> => <log>)
   (and (<= #\0 x) (<= x #\9)))
-
-(dm to-digit (digit|<chr> => <int>)
-  (- (char->ascii digit) (char->ascii #\0)))
 
 (dm eof-object? (x => <log>) 
   #f)
@@ -149,7 +149,7 @@
   (elt (contagious-call floor/ x 1) 0))
 
 (dm ceil (x|<num> => <int>)
-  (elt (contagious-call ceiling/ x 1) 0))
+  (elt (contagious-call ceil/ x 1) 0))
 
 (dm round (x|<num> => <int>)
   (elt (contagious-call round/ x 1) 0))
@@ -172,7 +172,7 @@
       (tup (- integer 1) (+ remainder divisor))
       (tup integer remainder)))
 
-(dm ceiling/ (real|<num> divisor|<num> => (tup x|<int> rem|<num>))
+(dm ceil/ (real|<num> divisor|<num> => (tup x|<int> rem|<num>))
   (def (tup (integer <int>) (remainder <num>)) (trunc/ real divisor))
   (if (and (not (zero? remainder))
            (if (neg? divisor)
@@ -200,9 +200,24 @@
 (dm trunc/ (real|<num> divisor|<num> => (tup x|<int> rem|<num>))
   (contagious-call trunc/ real divisor))
 
+(dm div (x|<num> y|<num> => <num>)
+  (%telt (trunc/ x y) (%iu 0)))
+
 (dm mod (real|<num> divisor|<num> => <num>)
   (def (tup _ (remainder <num>)) (floor/ real divisor))
   remainder)
+
+(dm mod+ (i|<num> j|<num> n|<num>)
+  (mod (+ i j) n))
+
+(dm mod- (i|<num> j|<num> n|<num>)
+  (mod (- i j) n))
+
+(ds (modincf ,place ,max)
+  `(opf ,place (mod+ _ 1 ,max)))
+
+(ds (moddecf ,place ,max)
+  `(opf ,place (mod- _ 1 ,max)))
 
 (dm rem (real|<num> divisor|<num> => <num>)
   (def (tup _ (remainder <num>)) (trunc/ real divisor))
@@ -326,7 +341,7 @@
 (dm << (x|<int> a|<int> => <int>)
   (%ib (%i<< (%iu x) (%iu a))))
 
-(dm power-of-two-ceiling (x|<int> => <int>)
+(dm power-of-two-ceil (x|<int> => <int>)
   (rep search ((po2|<int> 1))
     (if (> po2 x)
         po2
@@ -444,14 +459,14 @@
   contagious-type
   contagious-call
   + 1+ - 1- * / floor ceil round trunc
-  floor/ ceiling/ round/ trunc/
-  mod rem
+  floor/ ceil/ round/ trunc/ div
+  mod mod+ mod- modincf moddecf rem
   pos? zero? neg? neg abs
   #| ^ & ~ bit?
   even?
   odd?
   << >> >>>
-  power-of-two-ceiling
+  power-of-two-ceil
   flo-bits
   log logn pow
   sqrt isqrt

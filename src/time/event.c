@@ -21,7 +21,7 @@ P YeventYPevent_signal (P handle) {
   return (P)SetEvent((HANDLE)handle);
 }
 
-P YeventYPevent_kill (P handle) {
+P YeventYPevent_destroy (P handle) {
   return (P)CloseHandle((HANDLE)handle);
 }
 

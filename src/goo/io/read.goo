@@ -292,7 +292,7 @@
           (or (str-to-num string)
               (reading-error port "unsupported number syntax" string)))))
   (do (fun (c) (define-sharp-macro c number-sharp-macro))
-      '(#\b #\o #\d #\x #\i #\e)))
+      '(#\b #\o #\d #\x #/ #\i #\e /#)))
 
 ;; Tokens
 

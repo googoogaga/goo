@@ -176,7 +176,7 @@
   ;; round (x|<num> => <int>)
   ;; trunc (x|<num> => <int>)
   ;; floor/ (real|<num> divisor|<num> => (tup <int> rem|<num>))
-  ;; ceiling/ (real|<num> divisor|<num> => (tup <int> rem|<num>))
+  ;; ceil/ (real|<num> divisor|<num> => (tup <int> rem|<num>))
   ;; round/ (real|<num> divisor|<num> => (tup <int> rem|<num>))
   ;; trunc/ (real|<num> divisor|<num> => (tup <int> rem|<num>))
   ;; modulo (real|<num> divisor|<num> => <num>)

@@ -3,7 +3,7 @@
 (use goo)
 (use goo/boot)
 (use time/event)
-(use goo/threads)
+(use time/threads)
 
 (dl %timer-create)
 (dl %timer-kill)

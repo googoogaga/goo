@@ -6,8 +6,13 @@
 (use eval/ast)
 (use eval/top)
 (use eval/g2c)
-;; (use tests)
+(use time/threads)
+(use time/lock)
+(use time/event)
+(use cols/pipe)
+(use goo/random)
 ;; (use eval/decision-trees)
+;; (use tests)
 ;; (use tests)
 ;; (use beatbox)
 ;; (use eval/g2m)
@@ -18,8 +23,8 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.133")
-(dv *goo-date*    "MAY 17, 2002")
+(dv *goo-version* "0.138")
+(dv *goo-date*    "JUL 03, 2002")
 
 (msg out ";;; GOO\n")
 (msg out ";;; JONATHAN BACHRACH\n")
