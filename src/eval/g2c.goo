@@ -30,11 +30,11 @@
 ;;;;  We subclass the module loader and add our own code for locating and
 ;;;;  processing modules.
 
-(dv <p2c-module-loader> (isa <module-loader>))
+(dc <p2c-module-loader> (<module-loader>))
   (slot <p2c-module-loader> (module-loader-appname <str>))
   (slot <p2c-module-loader> (module-loader-app-modname <sym>))
 
-(dv <p2c-module> (isa <module>))
+(dc <p2c-module> (<module>))
   (slot <p2c-module> (module-src-file <str>))
   (slot <p2c-module> (module-mtime <flo>))
 
@@ -267,13 +267,13 @@
        #(#\& #\B) #(#\^ #\C) #(#\_ #\U) #(#\@ #\O) #(#\= #\E)
        #(#\~ #\N)))
 
-(dv <abstract-mangler> (isa <any>))
+(dc <abstract-mangler> (<any>))
   (slot <abstract-mangler> mangler-buffer (isa <buf>))
   (slot <abstract-mangler> mangler-table  (fab <vec> (+ $max-character-code 1)))
 
-(dv <mangler> (isa <abstract-mangler>))
+(dc <mangler> (<abstract-mangler>))
 
-(dv <simple-mangler> (isa <mangler>))
+(dc <simple-mangler> (<mangler>))
 
 ;; Guarantee instantiability of the <MANGLER> class.
 

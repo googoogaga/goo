@@ -128,11 +128,11 @@
 ;;; FUNCTION REDEF
 
 (ds (def-protocol-tests ((,var ,name)) ,@tests)
-  `(dm test-object ((,var ,name)) (let ((group-name ',name)) ,@tests)))
+  `(dm test-object ((,var (t< ,name))) (let ((group-name ',name)) ,@tests)))
 
 (ds (def-concrete-protocol-tests ((,var ,name)) ,@tests)
   `(seq (def-protocol-tests ((,var ,name)) ,@tests)
-	(test-group ,name (test-object ,name))))
+        (test-group ,name (test-object ,name)))))
 
 (def-protocol-tests ((x <any>))
   ;; (to-str <any> => <str>)
@@ -222,10 +222,10 @@
   (next-method x)
   )
 
-(dm elt-type ((x <col>) => <any>) <any>)
-(dm elt-type ((x <str>) => <any>) <chr>)
-(dm as-elt ((c <col>) x) (as (elt-type c) x))
-(dm fabsex ((type <col>) (ints ...))
+(dm elt-type ((x (t< <col>)) => <any>) <any>)
+(dm elt-type ((x (t< <str>)) => <any>) <chr>)
+(dm as-elt ((c (t< <col>)) x) (as (elt-type c) x))
+(dm fabsex ((type (t< <col>)) (ints ...))
   (let ((et (elt-type type)))
     (apply fabs (pair type (map (fun (x) (as et x)) ints)))))
 (dm int-plus (x y) (+ (as <int> x) (as <int> y)))
@@ -273,7 +273,7 @@
 
 ;;(def-protocol-tests ((x <bag>))
 ;;  (next-method x)
-  ;; add followed by mem?
+;;   add followed by mem?
 ;;  )
 
 (def-protocol-tests ((x <map>))
@@ -334,10 +334,9 @@
   ;;
   )
 
-;;(def-protocol-tests ((x <assoc>))
-;;  (next-method x)
-  ;;
-;;  )
+;; (def-protocol-tests ((x <assoc>))
+;;   (next-method x)
+;;   )
 
 (def-concrete-protocol-tests ((x <str>))
   (next-method x)

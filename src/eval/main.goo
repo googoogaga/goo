@@ -11,7 +11,7 @@
 ;; Make sure the proto/user module gets compiled into our image.
 (use proto/user)
 
-(dv *proto-version* "0.100")
+(dv *proto-version* "0.101")
 (dv *proto-date*    "AUG 28, 2001")
 
 (format out ";;; \n")

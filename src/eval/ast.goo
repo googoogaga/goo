@@ -22,30 +22,30 @@
 
 ;;; programs
 
-(dv <program> (isa <any>))
+(dc <program> (<any>))
   (slot <program> program-type)
 
 (dm program-register ((x <program>)) #f) ;; TODO: REMOVE
 
-(dv <computed-program> (isa <program>))
+(dc <computed-program> (<program>))
   (slot <computed-program> (program-register <any>) #f) ;; TODO: FALSE-OR INT
 
-(dv <passive-program> (isa <program>))
+(dc <passive-program> (<program>))
 
 ;;; bindings are not programs! they represent bindings.
 
 (dv <binding-name> <any>) ;; (type-union <sym> <int>)
 
-(dv <binding> (isa <any>))
+(dc <binding> (<any>))
   (slot <binding> (binding-name <binding-name>))
   (slot <binding> (binding-type <program>))
 
 ;; Global boxes are used by the interpreter to store the values of
 ;; global variables.
-(dv <global-box> (isa <any>))
+(dc <global-box> (<any>))
   (slot <global-box> global-box-value nul)
 
-(dv <module-binding> (isa <binding>))
+(dc <module-binding> (<binding>))
   ;; The name of the module in which this binding is defined.
   (slot <module-binding> binding-kind          'global)
   (slot <module-binding> (binding-module-name  <sym>))
@@ -61,79 +61,79 @@
 (dv binding-handler           binding-info)
 (dv binding-handler-setter    binding-info-setter)
 
-(dv <local-binding> (isa <binding>))
+(dc <local-binding> (<binding>))
   (slot <local-binding> binding-value           #f)
   (slot <local-binding> binding-mutable?        #f)
   (slot <local-binding> binding-dynamic-extent? #t)
   (slot <local-binding> binding-dotted?         #f)
 
-;; (dv <next-methods-binding> (isa <binding>))
+;; (dc <next-methods-binding> (<binding>))
 
 ;;; compile-time
 
-(dv <compile-time> (isa <computed-program>))
+(dc <compile-time> (<computed-program>))
   (slot <compile-time> compile-time-program)
 
 ;;; references are programs.
 
-(dv <reference> (isa <passive-program>))
+(dc <reference> (<passive-program>))
 
 ;;; special category of bindings
 
 ;; DEAL WITH INITIALIZE
 
-(dv <real-reference> (isa <reference>))
+(dc <real-reference> (<reference>))
   (slot <real-reference> reference-binding)
 
-(dv <local-reference> (isa <real-reference>))
+(dc <local-reference> (<real-reference>))
   (slot <local-reference> reference-called-function? #f)
   (slot <local-reference> (reference-frame-number <int>))
   (slot <local-reference> (reference-frame-offset <int>))
 
-;; (dv <next-methods-reference> (isa <real-reference>))
+;; (dc <next-methods-reference> (<real-reference>))
 
-(dv <global-reference> (isa <real-reference>))
+(dc <global-reference> (<real-reference>))
 
-(dv <runtime-reference> (isa <real-reference>))
+(dc <runtime-reference> (<real-reference>))
 
-(dv <predefined-reference> (isa <real-reference>))
+(dc <predefined-reference> (<real-reference>))
 
-(dv <bound?> (isa <computed-program>))
+(dc <bound?> (<computed-program>))
   (slot <bound?> bound?-reference)
 
-(dv <assignment> (isa <computed-program>))
+(dc <assignment> (<computed-program>))
   (slot <assignment> assignment-form)
 
-(dv <local-assignment> (isa <assignment>))
+(dc <local-assignment> (<assignment>))
   (slot <local-assignment> assignment-reference)
 
-(dv <global-assignment> (isa <assignment>))
+(dc <global-assignment> (<assignment>))
   (slot <global-assignment> assignment-binding)
 
-(dv <runtime-assignment> (isa <global-assignment>))
+(dc <runtime-assignment> (<global-assignment>))
 
-(dv <definition> (isa <global-assignment>))
+(dc <definition> (<global-assignment>))
 
-(dv <variable-definition> (isa <definition>))
+(dc <variable-definition> (<definition>))
 
-(dv <ast-generic-definition> (isa <definition>))
+(dc <ast-generic-definition> (<definition>))
 
-(dv <ast-function-definition> (isa <definition>))
+(dc <ast-function-definition> (<definition>))
 
-(dv <ast-method-definition> (isa <definition>))
+(dc <ast-method-definition> (<definition>))
 
-(dv <ast-primitive-definition> (isa <definition>))
+(dc <ast-primitive-definition> (<definition>))
 
-(dv <ast-macro-definition> (isa <definition>))
+(dc <ast-macro-definition> (<definition>))
 
-(dv <ast-signature> (isa <computed-program>))
+(dc <ast-signature> (<computed-program>))
   (slot <ast-signature> signature-bindings '())
   (slot <ast-signature> signature-names    '())
   (slot <ast-signature> signature-specs    '())
   (slot <ast-signature> signature-nary?    #f)
   (slot <ast-signature> signature-value    #f)
 
-(dv <ast-function> (isa <computed-program>))
+(dc <ast-function> (<computed-program>))
   (slot <ast-function> function-binding #f)
   (slot <ast-function> function-debug-name #f)
   ;;  (slot <ast-function> function-next-methods-binding)
@@ -150,58 +150,63 @@
 
 (dm function-kind ((x <ast-function>)) "FUN")
 
-(dv <ast-method> (isa <ast-function>))
+(dc <ast-method> (<ast-function>))
   (slot <ast-method> function-body)
 
 (dm function-kind ((x <ast-method>)) "MET")
 
-(dv <ast-primitive> (isa <ast-method>))
+(dc <ast-primitive> (<ast-method>))
 
 (dm function-kind ((x <ast-primitive>)) "PRM")
 
-(dv <ast-generic> (isa <ast-function>))
+(dc <ast-generic> (<ast-function>))
 
 (dm function-kind ((x <ast-generic>)) "GEN")
 
-(dv <alternative> (isa <computed-program>))
+(dc <alternative> (<computed-program>))
   (slot <alternative> alternative-condition)
   (slot <alternative> alternative-consequent)
   (slot <alternative> alternative-alternant)
 
-(dv <programs> (isa <passive-program>))
+(dc <programs> (<passive-program>))
 
 (ds (def-list ,name (,@supers))
   (let ((class  (make-sym "<" name ">"))
 	($empty (make-sym "$" name "-empty")))
-    `(seq (dv ,class (isa (<lst> ,@supers)))
+    `(seq (dc ,class (<lst> ,@supers))
 	  (dv ,$empty (isa ,class (set head #f) (set tail #f)))
-	  (dm as ((p ,class) (x ,class) => <lst>) x)
-	  (dm as ((p <lst>)  (x ,class) => <lst>) (apply lst x))
-	  (dm as ((p ,class) (x <lst>) => <lst>) (apply fabs (pair ,class x)))
-	  (df ,name (h t) (isa ,class (set head h) (set tail t)))
-	  (dm empty ((e ,class) => ,class) ,$empty))))
+	  (dm as ((p (t= ,class)) (x ,class) => <lst>)
+            x)
+	  (dm as ((p (t= <lst>))  (x ,class) => <lst>)
+            (apply lst x))
+	  (dm as ((p (t= ,class)) (x <lst>) => <lst>)
+            (apply fabs (pair ,class x)))
+	  (df ,name (h t) 
+            (isa ,class (set head h) (set tail t)))
+	  (dm empty ((e (t= ,class)) => ,class)
+            ,$empty))))
 
 (ds (def-programs ,name) `(def-list ,name (<programs>)))
 
 (def-programs sequential)
 
-(dv <constant> (isa <passive-program>))
+(dc <constant> (<passive-program>))
   (slot <constant> constant-value)
 
-(dv <raw-constant> (isa <constant>))
+(dc <raw-constant> (<constant>))
 
-(dv <application> (isa <computed-program>))
+(dc <application> (<computed-program>))
   (slot <application> application-arguments)
   (slot <application> application-tail? #f)
 
-(dv <regular-application> (isa <application>))
+(dc <regular-application> (<application>))
   (slot <regular-application> application-function)
   (slot <regular-application> application-known? #f)
 
-(dv <predefined-application> (isa <application>))
+(dc <predefined-application> (<application>))
   (slot <predefined-application> application-binding)
 
-(dv <fix-let> (isa <computed-program>))
+(dc <fix-let> (<computed-program>))
   (slot <fix-let> fix-let-bindings)
   (slot <fix-let> fix-let-types)
   (slot <fix-let> fix-let-arguments)
@@ -217,19 +222,19 @@
 	(rev! res)
 	(loop (arguments res e)))))
 
-(dv <locals> (isa <computed-program>))
+(dc <locals> (<computed-program>))
   (slot <locals> locals-bindings)
   (slot <locals> locals-functions)
   (slot <locals> locals-body)
 
-(dv <bind-exit> (isa <computed-program>))
+(dc <bind-exit> (<computed-program>))
   (slot <bind-exit> bind-exit-main-fun)
 
-(dv <unwind-protect> (isa <computed-program>))
+(dc <unwind-protect> (<computed-program>))
   (slot <unwind-protect> unwind-protect-protected-thunk)
   (slot <unwind-protect> unwind-protect-cleanup-thunk)
 
-(dv <monitor> (isa <computed-program>))
+(dc <monitor> (<computed-program>))
   (slot <monitor> monitor-type)
   (slot <monitor> monitor-info)
   (slot <monitor> monitor-test)
@@ -238,11 +243,11 @@
 
 ;;; ENVIRONMENT
 
-(dv <static-environment> (isa <any>))
+(dc <static-environment> (<any>))
   (slot <static-environment> environment-next #f)
   (slot <static-environment> (environment-bindings <col>))
 
-(dv <static-global-environment> (isa <static-environment>))
+(dc <static-global-environment> (<static-environment>))
   ;; The module associated with this environment.
   (slot <static-global-environment> environment-module) ;<module>
   ;; The module-loader which should be used to load new modules for
@@ -259,11 +264,11 @@
   (slot <static-global-environment> (environment-allows-foreign-names? <log>)
         #f)
 
-(dv <static-empty-environment> (isa <static-environment>))
+(dc <static-empty-environment> (<static-environment>))
 
-(dv $empty-static-environment (isa <static-empty-environment>))
+(dc $empty-static-environment (<static-empty-environment>))
 
-(dv <static-local-environment> (isa <static-environment>))
+(dc <static-local-environment> (<static-environment>))
 
 ;; Given an object, try to find a global binding which contains it.
 ;; Used by the writer.
@@ -1191,7 +1196,7 @@
 ;;;;    1. A module loader for the running image's listener.
 ;;;;    2. A module loader for each program being compiled.
 
-(dv <module-loader> (isa <any>))
+(dc <module-loader> (<any>))
   ;; A map from module names (represented as symbols) to
   ;; <module> objects.
   (slot <module-loader> (module-loader-modules <tab>) (fab <tab> 1000))
@@ -1201,7 +1206,7 @@
 
 (export <module-loader>)
 
-(dv <module> (isa <any>))
+(dc <module> (<any>))
   (slot <module> (module-name <sym>))
   ;; The environments associated with this module.
   (slot <module> (module-target-environment <static-global-environment>))
@@ -1455,7 +1460,7 @@
 ;;;;  amount of tweaking to set up macros, magic bindings, and other
 ;;;;  stuff correctly.
 
-(dv <runtime-module-loader> (isa <module-loader>))
+(dc <runtime-module-loader> (<module-loader>))
 
 ;;; This is called if somebody tries to load a module at runtime which
 ;;; hadn't been built into the image.

@@ -23,14 +23,14 @@
 
 ;;; BOXING
 
-(dv <box-read> (isa <computed-program>))
+(dc <box-read> (<computed-program>))
   (slot <box-read> box-reference)
 
-(dv <box-write> (isa <computed-program>))
+(dc <box-write> (<computed-program>))
   (slot <box-write> box-reference)
   (slot <box-write> box-form)
 
-(dv <box-creation> (isa <computed-program>))
+(dc <box-creation> (<computed-program>))
   (slot <box-creation> box-reference)
 
 (dm insert-box! ((o <program>))
@@ -152,12 +152,12 @@
 
 (def-programs free-environment)
 
-(dv <flat-function> (isa <ast-method>))
+(dc <flat-function> (<ast-method>))
   (slot <flat-function> (function-free <free-environment>)
 	(empty <free-environment>))
 
-(dv <free-reference> (isa <real-reference>))
-  (slot <free-reference> (reference-offset (type-or <int> #f)))
+(dc <free-reference> (<real-reference>))
+  (slot <free-reference> (reference-offset (false-or <int>))) 
   (slot <free-reference> (reference-self? <log>))
 
 (dm lift! (o)
@@ -241,28 +241,28 @@
 
 ;;; COLLECTING QUOTATIONS AND FUNCTIONS
 
-(dv <flattened-program> (isa <computed-program>))
-  (slot <flattened-program> (program-form (type-or <program> #f)))
+(dc <flattened-program> (<computed-program>))
+  (slot <flattened-program> (program-form (false-or <program>)))
   (slot <flattened-program> program-quotations (fab <tab> 40))
   (slot <flattened-program> program-definitions '())
 
-(dv <top-level-form> (isa <computed-program>))
+(dc <top-level-form> (<computed-program>))
   (slot <top-level-form> (form-program <program>))
   (slot <top-level-form> form-quotations '())
   (slot <top-level-form> form-definitions '())
 
-(dv <function-definition> (isa <flat-function>))
+(dc <function-definition> (<flat-function>))
   (slot <function-definition> function-index)
   (slot <function-definition> function-temporaries '())
   (slot <function-definition> function-registers '())
   (slot <function-definition> function-self-recursive? #f)
 
-(dv <primitive-definition> (isa <ast-primitive>))
+(dc <primitive-definition> (<ast-primitive>))
   (slot <primitive-definition> function-temporaries '())
   (slot <primitive-definition> function-registers '())
   (slot <primitive-definition> function-self-recursive? #f)
 
-(dv <closure-creation> (isa <computed-program>))
+(dc <closure-creation> (<computed-program>))
   (slot <closure-creation> closure-creation-index)
   (slot <closure-creation> closure-creation-bindings)
   (slot <closure-creation> closure-creation-free)
@@ -472,7 +472,7 @@
 	    (adjoin temps (tail bindings))
 	    (adjoin (pair (head bindings) temps) (tail bindings))))))
 
-(dv <renamed-local-binding> (isa <local-binding>))
+(dc <renamed-local-binding> (<local-binding>))
   (slot <renamed-local-binding> binding-index)
 
 (dv *renaming-bindings-counter* 0)

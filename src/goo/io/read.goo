@@ -41,7 +41,7 @@
 	    (reading-error port (tail form))
 	    form))))
 
-(dv <reader-token> (isa <any>))
+(dc <reader-token> (<any>))
   (slot <reader-token> (token-message <str>))
 
 (dm make-reader-token (message => <any>)

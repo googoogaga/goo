@@ -5,1258 +5,1268 @@
 
 /* MODULE ENVIRONMENT: ast */
 
-DEF(YastYast_evaluate,"ast","ast-evaluate");
-EXT(YruntimeYlocative_value,"runtime","locative-value");
-DEF(YastYenvironment_module,"ast","environment-module");
-DEF(YastYinit_environment_for_eval,"ast","init-environment-for-eval");
-DEF(YastYDsexpr_compile_time_tag,"ast","$sexpr-compile-time-tag");
-DEF(YastYbinding_value_setter,"ast","binding-value-setter");
-DEF(YastYfunction_body_setter,"ast","function-body-setter");
-DEF(YastYspecial_use_module,"ast","special-use-module");
-EXT(YsyntaxYsexpr_variable_name,"syntax","sexpr-variable-name");
-EXT(YsyntaxYsexpr_make_getter,"syntax","sexpr-make-getter");
-DEF(YastYcompile_time_program,"ast","compile-time-program");
-EXT(YsyntaxYsexpr_forward_primitiveQ,"syntax","sexpr-forward-primitive?");
-DEF(YastYmonitor_info,"ast","monitor-info");
-EXT(YruntimeYelt_setter,"runtime","elt-setter");
-DEF(YastYprogram_type,"ast","program-type");
-DEF(YastYspecial_unwind_protect,"ast","special-unwind-protect");
-DEF(YastYLdefinitionG,"ast","<definition>");
-EXT(YruntimeYport_contents,"runtime","port-contents");
-EXT(YruntimeYremainder,"runtime","remainder");
-EXT(YLlstG,"boot","<lst>");
-EXT(YLsigG,"boot","<sig>");
-DEF(YastYast_macro_expand,"ast","ast-macro-expand");
-DEF(YastYsignature_naryQ,"ast","signature-nary?");
-DEF(YastYDsexpr_use_module_tag,"ast","$sexpr-use-module-tag");
-DEF(YastYenvironment_module_loader_setter,"ast","environment-module-loader-setter");
-EXT(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
-EXT(YruntimeYascii_whitespaces,"runtime","ascii-whitespaces");
-EXT(YsyntaxYsexpr_unwind_protect_cleanup_forms,"syntax","sexpr-unwind-protect-cleanup-forms");
-DEF(YastYLcomputed_programG,"ast","<computed-program>");
-EXT(YruntimeYassq,"runtime","assq");
-DEF(YastYLvariable_definitionG,"ast","<variable-definition>");
-EXT(YruntimeYceilingS,"runtime","ceiling/");
-EXT(YruntimeYE,"runtime","=");
-DEF(YastYinit_p2c_boot_environment,"ast","init-p2c-boot-environment");
-DEF(YastYconstant_value_setter,"ast","constant-value-setter");
-EXT(Yslot_init,"boot","slot-init");
-DEF(YastYassignment_binding,"ast","assignment-binding");
-DEF(YastYbinding_kind_setter,"ast","binding-kind-setter");
-EXT(YsyntaxYDsexpr_set_tag,"syntax","$sexpr-set-tag");
-DEF(YastYobjectify_bind_exit,"ast","objectify-bind-exit");
-EXT(YTrestarts_okQT,"boot","*restarts-ok?*");
-DEF(YastYmonitor_test_setter,"ast","monitor-test-setter");
-DEF(YastYmodule_target_environment,"ast","module-target-environment");
-EXT(YmacrosYmap,"macros","map");
-EXT(YruntimeYrcurry,"runtime","rcurry");
-EXT(YsyntaxYsexpr_method_signature,"syntax","sexpr-method-signature");
-DEF(YastYobjectify_boundQ,"ast","objectify-bound?");
-DEF(YastYLast_primitiveG,"ast","<ast-primitive>");
-DEF(YastYLmonitorG,"ast","<monitor>");
-DEF(YastYmodule_name_setter,"ast","module-name-setter");
-DEF(YastYfunction_debug_name_setter,"ast","function-debug-name-setter");
-DEF(YastYboundQ_reference,"ast","bound?-reference");
-EXT(YruntimeY2nd,"runtime","2nd");
-DEF(YastYDsexpr_optionals_type_name,"ast","$sexpr-optionals-type-name");
-EXT(YruntimeYLoutput_portG,"runtime","<output-port>");
-DEF(YastYregister_moduleX,"ast","register-module!");
-EXT(YsyntaxYsexpr_expand_backquote,"syntax","sexpr-expand-backquote");
-DEF(YastYmodule_exports_setter,"ast","module-exports-setter");
-EXT(Yfapply,"boot","fapply");
-EXT(YmacrosYvar_name,"macros","var-name");
-DEF(YastYLstatic_empty_environmentG,"ast","<static-empty-environment>");
-DEF(YastYobjectify_assignment,"ast","objectify-assignment");
-EXT(YLvecG,"boot","<vec>");
-EXT(YsyntaxYsexpr_syntax_definition_value,"syntax","sexpr-syntax-definition-value");
-EXT(YsyntaxYsexpr_loc_bound_signatures,"syntax","sexpr-loc-bound-signatures");
-DEF(YastYlocals_functions_setter,"ast","locals-functions-setter");
-DEF(YastYdefault_type,"ast","default-type");
-EXT(YsyntaxYsexpr_assignment_value,"syntax","sexpr-assignment-value");
-EXT(YprotoSsystemYTc_extensionT,"proto/system","*c-extension*");
-DEF(YastYDsexpr_define_primitive_tag,"ast","$sexpr-define-primitive-tag");
-EXT(YLintG,"boot","<int>");
-DEF(YastYalternative_condition,"ast","alternative-condition");
-DEF(YastYobjectify_sequential,"ast","objectify-sequential");
-DEF(YastYLbinding_nameG,"ast","<binding-name>");
-EXT(YLlogG,"boot","<log>");
-EXT(YruntimeYdo2,"runtime","do2");
-EXT(YruntimeYini_state,"runtime","ini-state");
-EXT(YsyntaxYDsexpr_define_generic_tag,"syntax","$sexpr-define-generic-tag");
-DEF(YastYlocals_functions,"ast","locals-functions");
-DEF(YastYspecial_method,"ast","special-method");
-DEF(YastYLprogramG,"ast","<program>");
-DEF(YastYapplication_binding,"ast","application-binding");
-DEF(YastYinstall_magic_bindings,"ast","install-magic-bindings");
-EXT(YruntimeYcompose,"runtime","compose");
-DEF(YastYsignature_value_setter,"ast","signature-value-setter");
-EXT(Yfun_arity,"boot","fun-arity");
-EXT(YruntimeYround,"runtime","round");
-EXT(YobjectL,"boot","object<");
-EXT(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
-EXT(YsyntaxYsexpr_isa_init_values,"syntax","sexpr-isa-init-values");
-DEF(YastYload_and_register_module,"ast","load-and-register-module");
-EXT(YruntimeYfrom_below,"runtime","from-below");
-EXT(YruntimeYLstring_input_portG,"runtime","<string-input-port>");
-EXT(YruntimeYtype_or,"runtime","type-or");
-EXT(YsyntaxYDsexpr_slot_tag,"syntax","$sexpr-slot-tag");
-DEF(YastYbind_exit_main_fun_setter,"ast","bind-exit-main-fun-setter");
-DEF(YastYprobe_module,"ast","probe-module");
-EXT(YsyntaxYDsexpr_monitor_tag,"syntax","$sexpr-monitor-tag");
-DEF(YastYLruntime_referenceG,"ast","<runtime-reference>");
-EXT(YruntimeYto_digit,"runtime","to-digit");
-EXT(YprotoSsystemYexe_filename,"proto/system","exe-filename");
-DEF(YastYfunction_naryQ,"ast","function-nary?");
-EXT(YruntimeYchar_readyQ,"runtime","char-ready?");
-EXT(YsyntaxYsexpr_sequence_Gbegin,"syntax","sexpr-sequence->begin");
-EXT(Ysorted_app_mets,"boot","sorted-app-mets");
-EXT(YsyntaxYsexpr_assignment_variable,"syntax","sexpr-assignment-variable");
-EXT(YruntimeYas_uppercase,"runtime","as-uppercase");
-DEF(YastYDempty_static_environment,"ast","$empty-static-environment");
-EXT(Yfun_name,"boot","fun-name");
-DEF(YastYLcompile_timeG,"ast","<compile-time>");
-EXT(YruntimeYL,"runtime","<");
-EXT(Yunknown_function_error,"boot","unknown-function-error");
-EXT(Yfab_sym,"boot","fab-sym");
-EXT(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
-EXT(YsyntaxYsexpr_isa_slot_inits,"syntax","sexpr-isa-slot-inits");
-EXT(YruntimeYcopy_state,"runtime","copy-state");
-DEF(YastYDsexpr_define_static_syntax_tag,"ast","$sexpr-define-static-syntax-tag");
-EXT(Yslot_setter,"boot","slot-setter");
-EXT(YruntimeYceiling,"runtime","ceiling");
-EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
-DEF(YastYalternative_alternant,"ast","alternative-alternant");
-EXT(YruntimeYPwith_monitor,"runtime","%with-monitor");
-EXT(YsyntaxYsexpr_block_body,"syntax","sexpr-block-body");
-EXT(YruntimeYeof_objectQ,"runtime","eof-object?");
-DEF(YastYenvironment_uses_modules_setter,"ast","environment-uses-modules-setter");
-EXT(YruntimeYLassocsG,"runtime","<assocs>");
-EXT(Yfab_gen,"boot","fab-gen");
-EXT(YruntimeYcatX,"runtime","cat!");
-EXT(YsyntaxYDsexpr_macro_expand_tag,"syntax","$sexpr-macro-expand-tag");
-EXT(YruntimeYkeys,"runtime","keys");
-EXT(YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
-EXT(YruntimeYdefault_handler_description,"runtime","default-handler-description");
-EXT(YsyntaxYsexpr_slot_init,"syntax","sexpr-slot-init");
-DEF(YastYmodule_binding,"ast","module-binding");
-EXT(YruntimeYposQ,"runtime","pos?");
-EXT(YruntimeYLbufG,"runtime","<buf>");
-DEF(YastYLraw_constantG,"ast","<raw-constant>");
-EXT(YLcolG,"boot","<col>");
-EXT(YprotoSsystemYfile_type,"proto/system","file-type");
-EXT(YruntimeYpop_lastX,"runtime","pop-last!");
-DEF(YastYalternative_condition_setter,"ast","alternative-condition-setter");
-DEF(YastYbinding_type_setter,"ast","binding-type-setter");
-DEF(YastYfix_let_body_setter,"ast","fix-let-body-setter");
-EXT(YPsymbols,"boot","%symbols");
-EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
-DEF(YastYspecial_bind_exit,"ast","special-bind-exit");
-EXT(YsyntaxYDsexpr_begin_tag,"syntax","$sexpr-begin-tag");
-DEF(YastYLalternativeG,"ast","<alternative>");
-EXT(YruntimeYfin_stateQ,"runtime","fin-state?");
-EXT(YstringsYstring_split,"strings","string-split");
-DEF(YastYlocals_bindings,"ast","locals-bindings");
-DEF(YastYobjectify_syntax_definition,"ast","objectify-syntax-definition");
-DEF(YastYTmagic_bindingsT,"ast","*magic-bindings*");
-EXT(YruntimeYlist_handlers,"runtime","list-handlers");
-EXT(YruntimeYNEE,"runtime","~==");
-EXT(YruntimeYLinput_portG,"runtime","<input-port>");
-DEF(YastYmodule_syntax_environment_setter,"ast","module-syntax-environment-setter");
-DEF(YastYcompute_transitive_users,"ast","compute-transitive-users");
-EXT(YprotoSsystemYobj_filename,"proto/system","obj-filename");
-EXT(Yerror,"boot","error");
-DEF(YastYalternative_consequent_setter,"ast","alternative-consequent-setter");
-EXT(YwriteYenv_object_name,"write","env-object-name");
-EXT(YsyntaxYsexpr_syntax_definition_variable,"syntax","sexpr-syntax-definition-variable");
-EXT(YmacrosYpair,"macros","pair");
-DEF(YastYexpand_bind_list,"ast","expand-bind-list");
-DEF(YastYassignment_form_setter,"ast","assignment-form-setter");
-EXT(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
-EXT(YsyntaxYDsexpr_bind_exit_tag,"syntax","$sexpr-bind-exit-tag");
-EXT(Ysig_value,"boot","sig-value");
-DEF(YastYspecial_macro_expand,"ast","special-macro-expand");
-EXT(YmacrosYtup,"macros","tup");
-DEF(YastYapplication_function,"ast","application-function");
-EXT(YruntimeYLsimple_errorG,"runtime","<simple-error>");
-DEF(YastYmonitor_info_setter,"ast","monitor-info-setter");
-EXT(YruntimeYash,"runtime","ash");
-DEF(YastYset_module_environments,"ast","set-module-environments");
-EXT(YruntimeYport_index,"runtime","port-index");
-EXT(YruntimeYassocq,"runtime","assocq");
-EXT(YruntimeYLportG,"runtime","<port>");
-DEF(YastYreloader_do_other_binding,"ast","reloader-do-other-binding");
-EXT(Yfun_name_setter,"boot","fun-name-setter");
-DEF(YastYsignature_naryQ_setter,"ast","signature-nary?-setter");
-EXT(YruntimeYG,"runtime",">");
-DEF(YastYlocals_bindings_setter,"ast","locals-bindings-setter");
-DEF(YastYmodule_loader_modules,"ast","module-loader-modules");
-EXT(YruntimeYGE,"runtime",">=");
-DEF(YastYsequential,"ast","sequential");
-EXT(YLmetG,"boot","<met>");
-EXT(Yslot_owner,"boot","slot-owner");
-EXT(YruntimeYTprint_baseT,"runtime","*print-base*");
-EXT(YruntimeYsub,"runtime","sub");
-DEF(YastYenvironment_bindings,"ast","environment-bindings");
-EXT(YPvnul,"boot","%vnul");
-DEF(YastYremove_module_internalX,"ast","remove-module-internal!");
-EXT(YruntimeYLhandler_infoG,"runtime","<handler-info>");
-DEF(YastYprogram_register_setter,"ast","program-register-setter");
-EXT(YLoptsG,"boot","<opts>");
-DEF(YastYDsexpr_compile_time_also_tag,"ast","$sexpr-compile-time-also-tag");
-DEF(YastYLsequentialG,"ast","<sequential>");
-DEF(YastYDsexpr_Praw_tag,"ast","$sexpr-%raw-tag");
-EXT(YsyntaxYsexpr_function_definition_variable,"syntax","sexpr-function-definition-variable");
-DEF(YastYexpand_syntax_if,"ast","expand-syntax-if");
-EXT(YwriteYdisplay,"write","display");
-EXT(YruntimeYfrom_by,"runtime","from-by");
-DEF(YastYDsequential_empty,"ast","$sequential-empty");
-DEF(YastYinit_p2c_regular_environment,"ast","init-p2c-regular-environment");
-EXT(YsyntaxYsexpr_method_body,"syntax","sexpr-method-body");
-EXT(YsyntaxYDsexpr_syntax_if_tag,"syntax","$sexpr-syntax-if-tag");
-DEF(YastYLast_generic_definitionG,"ast","<ast-generic-definition>");
-EXT(YruntimeYidentity,"runtime","identity");
-DEF(YastYbinding_freeQ,"ast","binding-free?");
-DEF(YastYcompute_local_reference_offsets,"ast","compute-local-reference-offsets");
-DEF(YastYDarguments_empty,"ast","$arguments-empty");
-DEF(YastYLboundQG,"ast","<bound?>");
-EXT(YmacrosYmake_sym,"macros","make-sym");
-EXT(YsyntaxYsexpr_slot_variable,"syntax","sexpr-slot-variable");
-DEF(YastYobjectify_function_definition,"ast","objectify-function-definition");
-EXT(YruntimeYLincongruent_method_errorG,"runtime","<incongruent-method-error>");
-EXT(YruntimeYlogbitQ,"runtime","logbit?");
-DEF(YastYLregular_applicationG,"ast","<regular-application>");
-EXT(YruntimeYlsh,"runtime","lsh");
-DEF(YastYreference_called_functionQ_setter,"ast","reference-called-function?-setter");
-EXT(YruntimeYmemQ,"runtime","mem?");
-DEF(YastYmonitor_main_thunk_setter,"ast","monitor-main-thunk-setter");
-EXT(YruntimeYclose_output_port,"runtime","close-output-port");
-DEF(YastYdo_static_global_bindings,"ast","do-static-global-bindings");
-DEF(YastYmodule_loader_module_type,"ast","module-loader-module-type");
-EXT(YruntimeYfloor,"runtime","floor");
-DEF(YastYLast_functionG,"ast","<ast-function>");
-EXT(Ymet_appQ,"boot","met-app?");
-DEF(YastYreference_called_functionQ,"ast","reference-called-function?");
-EXT(YruntimeYfind_key,"runtime","find-key");
-EXT(YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
-EXT(YsyntaxYsexpr_make_macro_function,"syntax","sexpr-make-macro-function");
-EXT(Ytail,"boot","tail");
-DEF(YastYDfab_list_empty,"ast","$fab-list-empty");
-EXT(YruntimeYpush_lastX,"runtime","push-last!");
-DEF(YastYenvironment_module_loader,"ast","environment-module-loader");
-DEF(YastYobjectify_export,"ast","objectify-export");
-EXT(YruntimeYfill,"runtime","fill");
-EXT(Ysig_naryQ,"boot","sig-nary?");
-EXT(YruntimeYadd,"runtime","add");
-EXT(YLflatG,"boot","<flat>");
-EXT(YruntimeYpop,"runtime","pop");
-EXT(YstringsYstring_repeat,"strings","string-repeat");
-DEF(YastYspecial_locals,"ast","special-locals");
-EXT(YruntimeYalter,"runtime","alter");
-EXT(YruntimeYpush,"runtime","push");
-DEF(YastYapplication_binding_setter,"ast","application-binding-setter");
-DEF(YastYassignment_form,"ast","assignment-form");
-DEF(YastYunwind_protect_protected_thunk_setter,"ast","unwind-protect-protected-thunk-setter");
-EXT(YsyntaxYDsexpr_define_tag,"syntax","$sexpr-define-tag");
-DEF(YastYobjectify_monitor,"ast","objectify-monitor");
-DEF(YastYenvironment_module_setter,"ast","environment-module-setter");
-EXT(YruntimeYfab,"runtime","fab");
-DEF(YastYbinding_mutableQ,"ast","binding-mutable?");
-DEF(YastYLfunctionsG,"ast","<functions>");
-EXT(YruntimeYmodulo,"runtime","modulo");
-DEF(YastYarguments,"ast","arguments");
-EXT(YruntimeYdescribe_condition,"runtime","describe-condition");
-EXT(YsyntaxYsexpr_if_else,"syntax","sexpr-if-else");
-DEF(YastYenvironment_uses_modules,"ast","environment-uses-modules");
-DEF(YastYspecial_define_function,"ast","special-define-function");
-EXT(YsyntaxYsexpr_variableQ,"syntax","sexpr-variable?");
-EXT(YruntimeYcurry,"runtime","curry");
-DEF(YastYLpredefined_referenceG,"ast","<predefined-reference>");
-DEF(YastYobjectify_list,"ast","objectify-list");
-DEF(YastYspecial_define_generic,"ast","special-define-generic");
-EXT(YruntimeYid_hash,"runtime","id-hash");
-EXT(YruntimeYtruncate,"runtime","truncate");
-DEF(YastYsignature_value,"ast","signature-value");
-EXT(YruntimeYbuild_condition_for_handler_interactively,"runtime","build-condition-for-handler-interactively");
-DEF(YastYfind_static_global_environment,"ast","find-static-global-environment");
-EXT(Ylst,"boot","lst");
-DEF(YastYfix_let_arguments,"ast","fix-let-arguments");
-DEF(YastYLruntime_module_loaderG,"ast","<runtime-module-loader>");
-EXT(YruntimeYassoc,"runtime","assoc");
-DEF(YastYupdate_binding_kind,"ast","update-binding-kind");
-DEF(YastYobjectify_alternative,"ast","objectify-alternative");
-EXT(YruntimeYnow_key,"runtime","now-key");
-DEF(YastYLast_macro_definitionG,"ast","<ast-macro-definition>");
-EXT(YruntimeYempty,"runtime","empty");
-DEF(YastYdo_module_loader_modules,"ast","do-module-loader-modules");
-EXT(YsyntaxYsexpr_unquoteQ,"syntax","sexpr-unquote?");
-DEF(YastYexpand_pattern,"ast","expand-pattern");
-EXT(Yfun_naryQ,"boot","fun-nary?");
-EXT(YLstrG,"boot","<str>");
-DEF(YastYbinding_name,"ast","binding-name");
-DEF(YastYbinding_mutableQ_setter,"ast","binding-mutable?-setter");
-DEF(YastYobjectify_compile_time,"ast","objectify-compile-time");
-DEF(YastYprogram_type_setter,"ast","program-type-setter");
-DEF(YastYLbind_exitG,"ast","<bind-exit>");
-DEF(YastYglobal_box_value_setter,"ast","global-box-value-setter");
-DEF(YastYobjectify_generic_definition,"ast","objectify-generic-definition");
-DEF(YastYspecial_iterate,"ast","special-iterate");
-DEF(YastYinit_ast,"ast","init-ast");
-EXT(YruntimeYallQ,"runtime","all?");
-DEF(YastYspecial_boundQ,"ast","special-bound?");
-EXT(YsyntaxYsexpr_isa_init_slots,"syntax","sexpr-isa-init-slots");
-EXT(YruntimeYlogior,"runtime","logior");
-EXT(YruntimeYdel_keys,"runtime","del-keys");
-EXT(YruntimeYfrom_above,"runtime","from-above");
-DEF(YastYspecial_quasiquote,"ast","special-quasiquote");
-DEF(YastYsignature_names_setter,"ast","signature-names-setter");
-DEF(YastYobjectify_foreign_reference,"ast","objectify-foreign-reference");
-EXT(YruntimeYdefault,"runtime","default");
-EXT(Yfile_opening_error,"boot","file-opening-error");
-DEF(YastYmonitor_test,"ast","monitor-test");
-DEF(YastYLconstantG,"ast","<constant>");
-DEF(YastYenvironment_bindings_setter,"ast","environment-bindings-setter");
-EXT(YruntimeYanyQ,"runtime","any?");
-EXT(YsyntaxYsexpr_operands,"syntax","sexpr-operands");
-EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
-DEF(YastYLast_genericG,"ast","<ast-generic>");
-DEF(YastYapplication_knownQ,"ast","application-known?");
-EXT(YruntimeYevenQ,"runtime","even?");
-DEF(YastYLfab_listG,"ast","<fab-list>");
-EXT(Ytail_setter,"boot","tail-setter");
-DEF(YastYLprogramsG,"ast","<programs>");
-EXT(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
-DEF(YastYspecial_compile_time,"ast","special-compile-time");
-EXT(YruntimeYfloorS,"runtime","floor/");
-EXT(YprotoSsystemYadd_src_path,"proto/system","add-src-path");
-DEF(YastYbinding_handler,"ast","binding-handler");
-DEF(YastYfab_syntax_environment,"ast","fab-syntax-environment");
-EXT(YLreplace_generic_restartG,"boot","<replace-generic-restart>");
-EXT(YsyntaxYsexpr_definition_variable,"syntax","sexpr-definition-variable");
-EXT(Ysig_names,"boot","sig-names");
-DEF(YastYruntime_environment,"ast","runtime-environment");
-EXT(YruntimeYhandler_function,"runtime","handler-function");
-EXT(YruntimeYLconditionG,"runtime","<condition>");
-EXT(YPisa,"boot","%isa");
-EXT(YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
-DEF(YastYbinding_dynamic_extentQ,"ast","binding-dynamic-extent?");
-DEF(YastYdo_named_static_global_bindings,"ast","do-named-static-global-bindings");
-EXT(YLtupG,"boot","<tup>");
-EXT(YruntimeYchar_Gascii,"runtime","char->ascii");
-EXT(YruntimeYneg,"runtime","neg");
-EXT(YruntimeYdo,"runtime","do");
-EXT(YruntimeYaddX,"runtime","add!");
-EXT(YruntimeYcondition_message,"runtime","condition-message");
-EXT(YisaQ,"boot","isa?");
-EXT(YmacrosYmatch_sublist,"macros","match-sublist");
-EXT(Yapply,"boot","apply");
-DEF(YastYsignature_specs_setter,"ast","signature-specs-setter");
-EXT(YruntimeYassocs_test,"runtime","assocs-test");
-DEF(YastYalternative_alternant_setter,"ast","alternative-alternant-setter");
-DEF(YastYbinding_kind,"ast","binding-kind");
-DEF(YastYexpand_bind_listT,"ast","expand-bind-list*");
-EXT(YsyntaxYsexpr_function_definition_value,"syntax","sexpr-function-definition-value");
-DEF(YastYapplication_arguments_setter,"ast","application-arguments-setter");
-EXT(Yobject_parents,"boot","object-parents");
-DEF(YastYspecial_define,"ast","special-define");
-EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
-DEF(YastYreference_binding,"ast","reference-binding");
-EXT(YruntimeYnow_elt,"runtime","now-elt");
-DEF(YastYexpand_bind_element,"ast","expand-bind-element");
-DEF(YastYobjectify_use_module,"ast","objectify-use-module");
-EXT(YruntimeY_,"runtime","-");
-EXT(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
-DEF(YastYfab_subset_environment,"ast","fab-subset-environment");
-DEF(YastYspecial_syntax_if,"ast","special-syntax-if");
-EXT(YruntimeYLstring_portG,"runtime","<string-port>");
-DEF(YastYunwind_protect_cleanup_thunk_setter,"ast","unwind-protect-cleanup-thunk-setter");
-EXT(YruntimeYclose_input_port,"runtime","close-input-port");
-EXT(YsyntaxYsexpr_loc_bound_names,"syntax","sexpr-loc-bound-names");
-EXT(YprotoSsystemYadd_build_path,"proto/system","add-build-path");
-DEF(YastYfind_environment_module,"ast","find-environment-module");
-EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
-EXT(YprotoSsystemYproto_filename,"proto/system","proto-filename");
-DEF(YastYobjectify_assignment_using,"ast","objectify-assignment-using");
-DEF(YastYLmodule_bindingG,"ast","<module-binding>");
-DEF(YastYspecial_define_method,"ast","special-define-method");
-EXT(YruntimeYcurrent_gc_state,"runtime","current-gc-state");
-DEF(YastYLlocal_referenceG,"ast","<local-reference>");
-DEF(YastYfunctions,"ast","functions");
-EXT(YruntimeYLerrorG,"runtime","<error>");
-DEF(YastYDproto_boot_module_name,"ast","$proto-boot-module-name");
-DEF(YastYLast_method_definitionG,"ast","<ast-method-definition>");
-DEF(YastYLpredefined_applicationG,"ast","<predefined-application>");
-DEF(YastYLpassive_programG,"ast","<passive-program>");
-DEF(YastYinit_runtime,"ast","init-runtime");
-DEF(YastYbinding_info,"ast","binding-info");
-DEF(YastYspecial_define_syntax,"ast","special-define-syntax");
-DEF(YastYmonitor_main_thunk,"ast","monitor-main-thunk");
-DEF(YastYconvert2arguments,"ast","convert2arguments");
-EXT(YsyntaxYDsexpr_define_method_tag,"syntax","$sexpr-define-method-tag");
-EXT(YmacrosYEE,"macros","==");
-DEF(YastYapplication_tailQ,"ast","application-tail?");
-EXT(YLlocG,"boot","<loc>");
-EXT(YruntimeYtruncateS,"runtime","truncate/");
-EXT(YruntimeYdefault_handler,"runtime","default-handler");
-EXT(YprotoSsystemYTproto_extensionT,"proto/system","*proto-extension*");
-EXT(Yfun_mets,"boot","fun-mets");
-EXT(YruntimeYvec,"runtime","vec");
-DEF(YastYDproto_runtime_module_name,"ast","$proto-runtime-module-name");
-DEF(YastYbinding_handler_setter,"ast","binding-handler-setter");
-DEF(YastYfunction_value,"ast","function-value");
-EXT(YruntimeYlen_setter,"runtime","len-setter");
 DEF(YastYftype,"ast","ftype");
-EXT(YruntimeYLrangeG,"runtime","<range>");
-EXT(YruntimeYwrite_char,"runtime","write-char");
-DEF(YastYprocess_nary_closed_application,"ast","process-nary-closed-application");
-DEF(YastYDfunctions_empty,"ast","$functions-empty");
-EXT(YruntimeY3rd,"runtime","3rd");
-EXT(YsyntaxYsexpr_syntax_if_value,"syntax","sexpr-syntax-if-value");
-DEF(YastYforeign_nameQ,"ast","foreign-name?");
-DEF(YastYobjectify_unwind_protect,"ast","objectify-unwind-protect");
-EXT(YruntimeYdo_keyed,"runtime","do-keyed");
-EXT(Ynot,"boot","not");
-DEF(YastYinstall_interpreter_hacks,"ast","install-interpreter-hacks");
-DEF(YastYreload_modules,"ast","reload-modules");
+DEF(YastYinit_ast,"ast","init-ast");
+DEF(YastYdo_module_loader_modules,"ast","do-module-loader-modules");
+DEF(YastYbind_exit_main_fun_setter,"ast","bind-exit-main-fun-setter");
 EXT(YruntimeYlogxor,"runtime","logxor");
 EXT(YruntimeYdel_dups,"runtime","del-dups");
-DEF(YastYpairize,"ast","pairize");
-DEF(YastYobjectify_primitive_definition,"ast","objectify-primitive-definition");
-DEF(YastYbinding_locative_setter,"ast","binding-locative-setter");
-EXT(YruntimeYas,"runtime","as");
-DEF(YastYspecial_monitor,"ast","special-monitor");
-EXT(Yincongruent_method_error,"boot","incongruent-method-error");
-DEF(YastYapplication_knownQ_setter,"ast","application-known?-setter");
-DEF(YastYspecial_isa,"ast","special-isa");
-EXT(YsyntaxYDsexpr_locals_tag,"syntax","$sexpr-locals-tag");
-DEF(YastYsignature_bindings,"ast","signature-bindings");
-EXT(YLanyG,"boot","<any>");
-DEF(YastYenvironment_next,"ast","environment-next");
-EXT(YLfunG,"boot","<fun>");
-EXT(YruntimeYnxt_state,"runtime","nxt-state");
-EXT(YruntimeYNE,"runtime","~=");
-DEF(YastYLstatic_environmentG,"ast","<static-environment>");
-EXT(YprotoSsystemYlabel_components,"proto/system","label-components");
-DEF(YastYLglobal_assignmentG,"ast","<global-assignment>");
-EXT(YruntimeYapp_args,"runtime","app-args");
-EXT(YruntimeYS,"runtime","/");
-EXT(YsyntaxYsexpr_if_then,"syntax","sexpr-if-then");
-EXT(YruntimeYreduceA,"runtime","reduce+");
-DEF(YastYLreal_referenceG,"ast","<real-reference>");
-DEF(YastYLglobal_boxG,"ast","<global-box>");
-DEF(YastYfind_syntax_environment,"ast","find-syntax-environment");
-DEF(YastYLmoduleG,"ast","<module>");
-EXT(YsyntaxYsexpr_text_of_quotation,"syntax","sexpr-text-of-quotation");
-EXT(YruntimeYformat_to_string,"runtime","format-to-string");
-EXT(YruntimeYfabs,"runtime","fabs");
-DEF(YastYLfix_letG,"ast","<fix-let>");
-DEF(YastYassignment_reference_setter,"ast","assignment-reference-setter");
-DEF(YastYsignature_names,"ast","signature-names");
-EXT(YruntimeYrev,"runtime","rev");
-DEF(YastYunwind_protect_protected_thunk,"ast","unwind-protect-protected-thunk");
-DEF(YastYDsexpr_optionals_tag,"ast","$sexpr-optionals-tag");
-EXT(YruntimeYLlistG,"runtime","<list>");
-EXT(YruntimeYmax,"runtime","max");
-EXT(Ygen_add_met,"boot","gen-add-met");
-EXT(Yobject_slots,"boot","object-slots");
-EXT(YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
+EXT(YLlocG,"boot","<loc>");
+EXT(YprotoSsystemYhierarchical_components,"proto/system","hierarchical-components");
+DEF(YastYcompile_time_program_setter,"ast","compile-time-program-setter");
 EXT(YruntimeYpeek_char,"runtime","peek-char");
-DEF(YastYlocals_body,"ast","locals-body");
+EXT(YruntimeYDpermanent_hash_state,"runtime","$permanent-hash-state");
+EXT(YLseqG,"boot","<seq>");
+EXT(YsyntaxYsexpr_sequence_Gbegin,"syntax","sexpr-sequence->begin");
+EXT(YprotoSsystemYparent_directory,"proto/system","parent-directory");
+DEF(YastYDsexpr_optionals_tag,"ast","$sexpr-optionals-tag");
+DEF(YastYDsequential_empty,"ast","$sequential-empty");
+DEF(YastYbinding_info,"ast","binding-info");
+EXT(YsyntaxYsexpr_function_body,"syntax","sexpr-function-body");
+DEF(YastYenvironment_bindings,"ast","environment-bindings");
+DEF(YastYprogram_register_setter,"ast","program-register-setter");
+DEF(YastYapplication_function_setter,"ast","application-function-setter");
+DEF(YastYLcomputed_programG,"ast","<computed-program>");
+DEF(YastYdo_named_static_global_bindings,"ast","do-named-static-global-bindings");
+EXT(YsyntaxYsexpr_make_begin,"syntax","sexpr-make-begin");
+EXT(YprotoSsystemYTproto_extensionT,"proto/system","*proto-extension*");
+EXT(YruntimeYS,"runtime","/");
+EXT(YruntimeYreduceA,"runtime","reduce+");
+DEF(YastYLunwind_protectG,"ast","<unwind-protect>");
+EXT(YsyntaxYDsexpr_define_class_tag,"syntax","$sexpr-define-class-tag");
+EXT(YprotoSsystemYprobe_directory,"proto/system","probe-directory");
+EXT(YsyntaxYDsexpr_iterate_tag,"syntax","$sexpr-iterate-tag");
+EXT(YruntimeYfrom_below,"runtime","from-below");
+EXT(YruntimeYLhandler_infoG,"runtime","<handler-info>");
+DEF(YastYspecial_compile_time_also,"ast","special-compile-time-also");
+EXT(YruntimeYfabs,"runtime","fabs");
+DEF(YastYassignment_form_setter,"ast","assignment-form-setter");
+DEF(YastYunwind_protect_protected_thunk,"ast","unwind-protect-protected-thunk");
+DEF(YastYenvironment_implements,"ast","environment-implements");
+DEF(YastYmodule_syntax_environment_setter,"ast","module-syntax-environment-setter");
+EXT(YprotoSsystemYTobj_extensionT,"proto/system","*obj-extension*");
+DEF(YastYLcompile_timeG,"ast","<compile-time>");
+EXT(YruntimeYroundS,"runtime","round/");
+DEF(YastYset_module_environments,"ast","set-module-environments");
+DEF(YastYlocals_bindings,"ast","locals-bindings");
 EXT(YprotoSsystemYTpath_separatorT,"proto/system","*path-separator*");
-DEF(YastYinsert_globalsX,"ast","insert-globals!");
-DEF(YastYfunction_specs,"ast","function-specs");
-EXT(YPsnul,"boot","%snul");
-EXT(YLsymG,"boot","<sym>");
-EXT(YruntimeYLE,"runtime","<=");
-DEF(YastYLlocal_bindingG,"ast","<local-binding>");
-DEF(YastYbinding_locative,"ast","binding-locative");
-DEF(YastYLassignmentG,"ast","<assignment>");
+DEF(YastYbinding_dynamic_extentQ,"ast","binding-dynamic-extent?");
+EXT(YsyntaxYsexpr_function_definition_value,"syntax","sexpr-function-definition-value");
+EXT(YTrestarts_okQT,"boot","*restarts-ok?*");
+EXT(YruntimeYE,"runtime","=");
+EXT(Yslot_init,"boot","slot-init");
+DEF(YastYLpredefined_referenceG,"ast","<predefined-reference>");
+DEF(YastYfunction_binding,"ast","function-binding");
+DEF(YastYimport_globalX,"ast","import-global!");
+DEF(YastYbinding_handler_setter,"ast","binding-handler-setter");
+DEF(YastYLargumentsG,"ast","<arguments>");
+EXT(YruntimeYrev,"runtime","rev");
+EXT(YmacrosYpair,"macros","pair");
+EXT(YruntimeYrcurry,"runtime","rcurry");
+DEF(YastYLast_primitiveG,"ast","<ast-primitive>");
+DEF(YastYobjectify_alternative,"ast","objectify-alternative");
+DEF(YastYenvironment_next_setter,"ast","environment-next-setter");
 EXT(YruntimeYzeroQ,"runtime","zero?");
-EXT(Yslot_type,"boot","slot-type");
-DEF(YastYbinding_value,"ast","binding-value");
-DEF(YastYLast_signatureG,"ast","<ast-signature>");
-EXT(YsyntaxYsexpr_make_setter_name,"syntax","sexpr-make-setter-name");
-EXT(YruntimeYuppercaseQ,"runtime","uppercase?");
+DEF(YastYobjectify_boundQ,"ast","objectify-bound?");
+DEF(YastYobjectify_generic_definition,"ast","objectify-generic-definition");
+EXT(Yincongruent_method_error,"boot","incongruent-method-error");
+EXT(YLtraitsG,"boot","<traits>");
+EXT(YsyntaxYsexpr_variable_name,"syntax","sexpr-variable-name");
+EXT(YsyntaxYsexpr_method_signature,"syntax","sexpr-method-signature");
+DEF(YastYspecial_define_static_syntax,"ast","special-define-static-syntax");
+EXT(YruntimeYLassocsG,"runtime","<assocs>");
+EXT(Yhandler_info_message,"boot","handler-info-message");
+EXT(Yfapply,"boot","fapply");
+EXT(YmacrosYvar_name,"macros","var-name");
 EXT(YruntimeYmap2,"runtime","map2");
+DEF(YastYobjectify_bind_exit,"ast","objectify-bind-exit");
+DEF(YastYfunction_body_setter,"ast","function-body-setter");
+DEF(YastYalternative_alternant,"ast","alternative-alternant");
+DEF(YastYmonitor_type_setter,"ast","monitor-type-setter");
+EXT(YsyntaxYDsexpr_define_tag,"syntax","$sexpr-define-tag");
+DEF(YastYapplication_binding_setter,"ast","application-binding-setter");
+EXT(YruntimeYdo3,"runtime","do3");
+DEF(YastYfunction_specs,"ast","function-specs");
+EXT(YwriteYwrite,"write","write");
+EXT(YruntimeYreduce,"runtime","reduce");
+EXT(YLsigG,"boot","<sig>");
+EXT(YruntimeYini_state,"runtime","ini-state");
+DEF(YastYDproto_boot_module_name,"ast","$proto-boot-module-name");
+EXT(YprotoSsystemYos_binding_value,"proto/system","os-binding-value");
+DEF(YastYDproto_runtime_module_name,"ast","$proto-runtime-module-name");
+DEF(YastYsequential,"ast","sequential");
+DEF(YastYmonitor_handler,"ast","monitor-handler");
+EXT(Yfun_arity,"boot","fun-arity");
+EXT(YruntimeYport_index,"runtime","port-index");
+EXT(YsyntaxYDsexpr_isa_tag,"syntax","$sexpr-isa-tag");
+EXT(YsyntaxYsexpr_bind_pattern_variables,"syntax","sexpr-bind-pattern-variables");
+EXT(YobjectL,"boot","object<");
+EXT(YsyntaxYDsexpr_define_syntax_tag,"syntax","$sexpr-define-syntax-tag");
+EXT(YstringsYstring_split,"strings","string-split");
+DEF(YastYassignment_form,"ast","assignment-form");
+DEF(YastYenvironment_module,"ast","environment-module");
+DEF(YastYreload_macros,"ast","reload-macros");
+EXT(YTboot_macro_expandersT,"boot","*boot-macro-expanders*");
+EXT(YruntimeYtA,"runtime","t+");
+EXT(YruntimeYfrom,"runtime","from");
+EXT(YruntimeYapp_filename,"runtime","app-filename");
+EXT(YruntimeYnow_elt_setter,"runtime","now-elt-setter");
+EXT(YruntimeYcompose,"runtime","compose");
+EXT(YsyntaxYeval,"syntax","eval");
+EXT(YsyntaxYsexpr_define_classQ,"syntax","sexpr-define-class?");
 EXT(YsyntaxYDsexpr_let_tag,"syntax","$sexpr-let-tag");
 DEF(YastYlocals_body_setter,"ast","locals-body-setter");
-DEF(YastYbinding_global_box,"ast","binding-global-box");
-EXT(YprotoSsystemYfile_mtime,"proto/system","file-mtime");
-EXT(YsyntaxYsexpr_make_anonymous_method,"syntax","sexpr-make-anonymous-method");
-EXT(Yfun_specs,"boot","fun-specs");
-DEF(YastYspecial_define_primitive,"ast","special-define-primitive");
-EXT(YruntimeYA,"runtime","+");
-EXT(YruntimeYaddress_of,"runtime","address-of");
-EXT(YruntimeYpos,"runtime","pos");
-EXT(YsyntaxYsexpr_let_Gcombination,"syntax","sexpr-let->combination");
-DEF(YastYLlocalsG,"ast","<locals>");
-DEF(YastYspecial_compile_time_also,"ast","special-compile-time-also");
-EXT(YsyntaxYDsexpr_if_tag,"syntax","$sexpr-if-tag");
-EXT(YruntimeYreduce,"runtime","reduce");
-DEF(YastYload_module,"ast","load-module");
-DEF(YastYfix_let_types,"ast","fix-let-types");
-DEF(YastYmodule_syntax_environment,"ast","module-syntax-environment");
-EXT(Yfind_setter,"boot","find-setter");
-DEF(YastYfunction_bindings,"ast","function-bindings");
-DEF(YastYmodule_loader_modules_setter,"ast","module-loader-modules-setter");
-EXT(YruntimeYdo3,"runtime","do3");
-EXT(YsyntaxYsexpr_loc_bound_bodies,"syntax","sexpr-loc-bound-bodies");
-EXT(YmacrosYvar_type,"macros","var-type");
-DEF(YastYmonitor_handler_setter,"ast","monitor-handler-setter");
-EXT(YsyntaxYDsexpr_define_syntax_tag,"syntax","$sexpr-define-syntax-tag");
-DEF(YastYobjectify_binding,"ast","objectify-binding");
-DEF(YastYreloader_do_import,"ast","reloader-do-import");
-DEF(YastYmonitor_type_setter,"ast","monitor-type-setter");
-DEF(YastYLruntime_assignmentG,"ast","<runtime-assignment>");
-DEF(YastYfix_let_bindings_setter,"ast","fix-let-bindings-setter");
-EXT(YPPmacro,"boot","%%macro");
-EXT(YprotoSsystemYos_binding_value_setter,"proto/system","os-binding-value-setter");
-EXT(YruntimeYopen_input_file,"runtime","open-input-file");
-DEF(YastYreference_frame_offset,"ast","reference-frame-offset");
-EXT(YruntimeYfrom,"runtime","from");
-DEF(YastYbinding_dynamic_extentQ_setter,"ast","binding-dynamic-extent?-setter");
-EXT(YsyntaxYDsexpr_unwind_protect_tag,"syntax","$sexpr-unwind-protect-tag");
-DEF(YastYinsert_globalX,"ast","insert-global!");
-DEF(YastYreport_undefined_global_bindings,"ast","report-undefined-global-bindings");
-DEF(YastYfunction_binding,"ast","function-binding");
-EXT(YwriteYwriteln,"write","writeln");
-DEF(YastYenvironment_implements_setter,"ast","environment-implements-setter");
-EXT(YsyntaxYsexpr_function_signature,"syntax","sexpr-function-signature");
-EXT(YruntimeYeof_object,"runtime","eof-object");
-EXT(YruntimeYLhandlerG,"runtime","<handler>");
+DEF(YastYenvironment_allows_foreign_namesQ_setter,"ast","environment-allows-foreign-names?-setter");
+EXT(YsyntaxYDsexpr_quasiquote_tag,"syntax","$sexpr-quasiquote-tag");
+DEF(YastYLsequentialG,"ast","<sequential>");
+DEF(YastYLbinding_nameG,"ast","<binding-name>");
+EXT(Ysorted_app_mets,"boot","sorted-app-mets");
 EXT(YruntimeY1st,"runtime","1st");
-EXT(YsyntaxYDsexpr_method_tag,"syntax","$sexpr-method-tag");
-EXT(YsyntaxYsexpr_variable_type,"syntax","sexpr-variable-type");
-EXT(YprotoSsystemYTproto_rootT,"proto/system","*proto-root*");
-DEF(YastYfix_let_bindings,"ast","fix-let-bindings");
-EXT(YLchrG,"boot","<chr>");
-EXT(YruntimeYforce_output,"runtime","force-output");
-DEF(YastYunwind_protect_cleanup_thunk,"ast","unwind-protect-cleanup-thunk");
-EXT(YsyntaxYsexpr_block_name,"syntax","sexpr-block-name");
-DEF(YastYload_in,"ast","load-in");
-DEF(YastYreference_frame_number,"ast","reference-frame-number");
-EXT(Ysym_name,"boot","sym-name");
+DEF(YastYLglobal_assignmentG,"ast","<global-assignment>");
+DEF(YastYspecial_macro_expand,"ast","special-macro-expand");
+EXT(Yfun_name,"boot","fun-name");
+EXT(YruntimeYL,"runtime","<");
+EXT(Yfab_sym,"boot","fab-sym");
+DEF(YastYreference_called_functionQ_setter,"ast","reference-called-function?-setter");
+DEF(YastYspecial_export,"ast","special-export");
+EXT(YsyntaxYsexpr_loc_raw_body,"syntax","sexpr-loc-raw-body");
+EXT(Yslot_setter,"boot","slot-setter");
+EXT(YmacrosYmatch_empty_list,"macros","match-empty-list");
+EXT(YruntimeYLstring_portG,"runtime","<string-port>");
+EXT(YsyntaxYsexpr_if_test,"syntax","sexpr-if-test");
+EXT(YPsymbols,"boot","%symbols");
+DEF(YastYfix_let_types,"ast","fix-let-types");
+EXT(YruntimeYas,"runtime","as");
+EXT(YprotoSsystemYfile_existsQ,"proto/system","file-exists?");
+EXT(YPsnul,"boot","%snul");
+EXT(Yfab_gen,"boot","fab-gen");
+EXT(YwriteYenv_object_name,"write","env-object-name");
+EXT(YruntimeYassqn,"runtime","assqn");
+EXT(YruntimeYdefault_handler_description,"runtime","default-handler-description");
+EXT(YruntimeYuppercaseQ,"runtime","uppercase?");
+EXT(YsyntaxYsexpr_slot_variable,"syntax","sexpr-slot-variable");
+EXT(YruntimeYlogand,"runtime","logand");
+DEF(YastYmodule_exports,"ast","module-exports");
+EXT(YruntimeYNE,"runtime","~=");
+DEF(YastYobjectify_monitor,"ast","objectify-monitor");
+DEF(YastYmodule_exports_setter,"ast","module-exports-setter");
+EXT(YruntimeYstr,"runtime","str");
+DEF(YastYspecial_syntax_if,"ast","special-syntax-if");
+EXT(YsyntaxYsexpr_variableQ,"syntax","sexpr-variable?");
+EXT(YprotoSsystemYexe_filename,"proto/system","exe-filename");
+DEF(YastYspecial_monitor,"ast","special-monitor");
+DEF(YastYLvariable_definitionG,"ast","<variable-definition>");
+DEF(YastYLast_function_definitionG,"ast","<ast-function-definition>");
+DEF(YastYsignature_specs,"ast","signature-specs");
+EXT(YruntimeYpush,"runtime","push");
+EXT(YruntimeYsig,"runtime","sig");
+EXT(YprotoSsystemYcomponents_to_pathname,"proto/system","components-to-pathname");
+DEF(YastYast_define_binding,"ast","ast-define-binding");
+EXT(YLcolG,"boot","<col>");
+EXT(YruntimeYLserious_conditionG,"runtime","<serious-condition>");
+DEF(YastYdefault_type,"ast","default-type");
+EXT(YruntimeYlist_handlers,"runtime","list-handlers");
+EXT(YruntimeYfin_stateQ,"runtime","fin-state?");
 EXT(YwriteYwrite_to_string,"write","write-to-string");
+DEF(YastYLfab_listG,"ast","<fab-list>");
+EXT(YruntimeYmax,"runtime","max");
+EXT(YprotoSsystemYTproto_rootT,"proto/system","*proto-root*");
+DEF(YastYassignment_binding,"ast","assignment-binding");
+EXT(YstringsYmap_str,"strings","map-str");
+DEF(YastYsignature_bindings_setter,"ast","signature-bindings-setter");
+DEF(YastYreloader_do_use_module,"ast","reloader-do-use-module");
+EXT(YruntimeYceilingS,"runtime","ceiling/");
+DEF(YastYDsexpr_define_primitive_tag,"ast","$sexpr-define-primitive-tag");
+EXT(YLreplace_generic_restartG,"boot","<replace-generic-restart>");
+EXT(YmacrosYcat,"macros","cat");
+EXT(YruntimeYopen_input_file,"runtime","open-input-file");
+DEF(YastYexport_bindingX,"ast","export-binding!");
+EXT(Yerror,"boot","error");
+DEF(YastYmodule_target_environment,"ast","module-target-environment");
+EXT(YsyntaxYsexpr_isa_init_slots,"syntax","sexpr-isa-init-slots");
+DEF(YastYDfunctions_empty,"ast","$functions-empty");
+EXT(YruntimeYopen_output_file,"runtime","open-output-file");
+DEF(YastYprobe_module,"ast","probe-module");
+EXT(YruntimeYLE,"runtime","<=");
+DEF(YastYenvironment_implements_setter,"ast","environment-implements-setter");
+EXT(Ysig_value,"boot","sig-value");
+EXT(YsyntaxYDsexpr_begin_tag,"syntax","$sexpr-begin-tag");
+DEF(YastYobjectify_application,"ast","objectify-application");
+EXT(YruntimeYid_hash,"runtime","id-hash");
+EXT(YmacrosYtup,"macros","tup");
+EXT(YruntimeYfrom_above,"runtime","from-above");
+EXT(YLvecG,"boot","<vec>");
+EXT(YruntimeYformat,"runtime","format");
+DEF(YastYLfunctionsG,"ast","<functions>");
+EXT(YruntimeYpick,"runtime","pick");
+EXT(YruntimeYpop_lastX,"runtime","pop-last!");
+DEF(YastYLruntime_assignmentG,"ast","<runtime-assignment>");
+DEF(YastYdo_static_global_bindings,"ast","do-static-global-bindings");
+DEF(YastYobjectify_method_definition,"ast","objectify-method-definition");
+EXT(Yfun_name_setter,"boot","fun-name-setter");
+EXT(YruntimeYG,"runtime",">");
+EXT(YruntimeYLconditionG,"runtime","<condition>");
+EXT(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
+DEF(YastYinit_p2c_boot_environment,"ast","init-p2c-boot-environment");
+EXT(YruntimeYmap_keyed,"runtime","map-keyed");
+EXT(Yslot_owner,"boot","slot-owner");
+EXT(YTmacros_okQT,"boot","*macros-ok?*");
+EXT(YwriteYdisplay,"write","display");
+DEF(YastYfunction_bindings,"ast","function-bindings");
+EXT(YsyntaxYsexpr_syntax_if_value,"syntax","sexpr-syntax-if-value");
+EXT(YruntimeYfloor,"runtime","floor");
+EXT(YprotoSsystemYlabel_components,"proto/system","label-components");
+DEF(YastYload_in,"ast","load-in");
+DEF(YastYDsexpr_compile_time_also_tag,"ast","$sexpr-compile-time-also-tag");
+EXT(YruntimeYidentity,"runtime","identity");
+EXT(Ynil,"boot","nil");
+DEF(YastYmagic_bindings,"ast","magic-bindings");
+DEF(YastYbinding_locative,"ast","binding-locative");
+EXT(YmacrosYmake_sym,"macros","make-sym");
+EXT(YruntimeYnewline,"runtime","newline");
+EXT(YruntimeYaddress_of,"runtime","address-of");
+EXT(YsyntaxYsexpr_define_class_parents,"syntax","sexpr-define-class-parents");
+DEF(YastYspecial_unwind_protect,"ast","special-unwind-protect");
+DEF(YastYbinding_handler,"ast","binding-handler");
+DEF(YastYmonitor_main_thunk,"ast","monitor-main-thunk");
+DEF(YastYLast_methodG,"ast","<ast-method>");
+DEF(YastYobjectify_compile_time,"ast","objectify-compile-time");
+EXT(YruntimeYLstring_output_portG,"runtime","<string-output-port>");
+EXT(Ytype_error,"boot","type-error");
+DEF(YastYspecial_set,"ast","special-set");
+EXT(YLslotG,"boot","<slot>");
+EXT(YruntimeYcase_insensitive_string_equal,"runtime","case-insensitive-string-equal");
+EXT(YruntimeYoddQ,"runtime","odd?");
+DEF(YastYspecial_use_module,"ast","special-use-module");
+EXT(YruntimeYcall_with_string_input_port,"runtime","call-with-string-input-port");
+EXT(YsyntaxYsexpr_if_else,"syntax","sexpr-if-else");
+EXT(Ymet_appQ,"boot","met-app?");
+DEF(YastYDsexpr_export_tag,"ast","$sexpr-export-tag");
+DEF(YastYbinding_freeQ_setter,"ast","binding-free?-setter");
+DEF(YastYinit_runtime,"ast","init-runtime");
+EXT(YruntimeYmake_handler,"runtime","make-handler");
+DEF(YastYsignature_value_setter,"ast","signature-value-setter");
+DEF(YastYenvironment_module_loader,"ast","environment-module-loader");
+EXT(YruntimeYfrom_by,"runtime","from-by");
+DEF(YastYreference_binding,"ast","reference-binding");
+EXT(YruntimeYcat2,"runtime","cat2");
+EXT(YruntimeYabs,"runtime","abs");
+EXT(YruntimeYassocq,"runtime","assocq");
+EXT(Ytail,"boot","tail");
+EXT(YsyntaxYsexpr_syntax_if_else,"syntax","sexpr-syntax-if-else");
+DEF(YastYast_macro_expand,"ast","ast-macro-expand");
+DEF(YastYforeign_nameQ,"ast","foreign-name?");
+DEF(YastYDsexpr_define_static_syntax_tag,"ast","$sexpr-define-static-syntax-tag");
+DEF(YastYbinding_global_box_setter,"ast","binding-global-box-setter");
+EXT(YruntimeYchar_Gascii,"runtime","char->ascii");
+DEF(YastYinstall_interpreter_hacks,"ast","install-interpreter-hacks");
+EXT(Ysig_naryQ,"boot","sig-nary?");
+DEF(YastYDfab_list_empty,"ast","$fab-list-empty");
+DEF(YastYenvironment_uses_modules,"ast","environment-uses-modules");
+EXT(YLsymG,"boot","<sym>");
+EXT(YruntimeYpop,"runtime","pop");
+EXT(YruntimeYalphabeticQ,"runtime","alphabetic?");
+EXT(YruntimeYstr_to_num,"runtime","str-to-num");
+EXT(YruntimeYlognot,"runtime","lognot");
+EXT(YruntimeYtable_protocol,"runtime","table-protocol");
+DEF(YastYcompile_time_program,"ast","compile-time-program");
+DEF(YastYfab_list,"ast","fab-list");
+EXT(YruntimeYlist,"runtime","list");
+EXT(YruntimeYround,"runtime","round");
+EXT(YruntimeYT,"runtime","*");
+DEF(YastYTruntime_module_loaderT,"ast","*runtime-module-loader*");
+EXT(YruntimeYfab,"runtime","fab");
+EXT(YruntimeYelt,"runtime","elt");
+DEF(YastYexpand_bind_listT,"ast","expand-bind-list*");
+EXT(YruntimeYmodulo,"runtime","modulo");
+DEF(YastYreloader_do_export,"ast","reloader-do-export");
+EXT(YruntimeYnum_to_str,"runtime","num-to-str");
+DEF(YastYsignature_bindings,"ast","signature-bindings");
+DEF(YastYLassignmentG,"ast","<assignment>");
+EXT(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
+EXT(YruntimeYcurrent_gc_state,"runtime","current-gc-state");
+DEF(YastYreload_modules,"ast","reload-modules");
+EXT(YLtupG,"boot","<tup>");
+EXT(YsyntaxYDsexpr_monitor_tag,"syntax","$sexpr-monitor-tag");
+EXT(YLsimple_handler_infoG,"boot","<simple-handler-info>");
+EXT(YTboot_macro_module_namesT,"boot","*boot-macro-module-names*");
+EXT(YsyntaxYDsexpr_macro_expand_tag,"syntax","$sexpr-macro-expand-tag");
+EXT(YruntimeYdescribe_condition,"runtime","describe-condition");
+EXT(YruntimeYnow_key,"runtime","now-key");
+EXT(YruntimeYas_uppercase,"runtime","as-uppercase");
+EXT(YruntimeYpush_lastX,"runtime","push-last!");
+EXT(YruntimeYcurry,"runtime","curry");
+DEF(YastYapplication_arguments,"ast","application-arguments");
+EXT(Yfun_naryQ,"boot","fun-nary?");
+EXT(YruntimeYTprint_baseT,"runtime","*print-base*");
+DEF(YastYbinding_dottedQ,"ast","binding-dotted?");
+DEF(YastYLlocalsG,"ast","<locals>");
+EXT(YruntimeYceiling,"runtime","ceiling");
+EXT(YruntimeYdel,"runtime","del");
+DEF(YastYfind_environment_module,"ast","find-environment-module");
+EXT(YruntimeYLincongruent_method_errorG,"runtime","<incongruent-method-error>");
+DEF(YastYenvironment_module_setter,"ast","environment-module-setter");
+DEF(YastYLmodule_bindingG,"ast","<module-binding>");
+EXT(YsyntaxYsexpr_syntax_definition_value,"syntax","sexpr-syntax-definition-value");
+EXT(YprotoSsystemYos_name,"proto/system","os-name");
+DEF(YastYbinding_mutableQ,"ast","binding-mutable?");
+EXT(YruntimeYlast,"runtime","last");
+EXT(YruntimeYLtabG,"runtime","<tab>");
+DEF(YastYspecial_isa,"ast","special-isa");
+DEF(YastYmodule_loader_module_type,"ast","module-loader-module-type");
+EXT(YsyntaxYsexpr_syntax_definition_variable,"syntax","sexpr-syntax-definition-variable");
+DEF(YastYobjectify_list,"ast","objectify-list");
+EXT(YruntimeYsub_setter,"runtime","sub-setter");
+DEF(YastYreloader_do_runtime_binding,"ast","reloader-do-runtime-binding");
+EXT(YruntimeYtable_growth_factor,"runtime","table-growth-factor");
+DEF(YastYobjectify_assignment,"ast","objectify-assignment");
+EXT(Ynul,"boot","nul");
+EXT(YruntimeYLstepG,"runtime","<step>");
+EXT(YprotoSsystemYcomponents_parent_directory,"proto/system","components-parent-directory");
+DEF(YastYLast_method_definitionG,"ast","<ast-method-definition>");
+DEF(YastYreference_called_functionQ,"ast","reference-called-function?");
+DEF(YastYobjectify_locals,"ast","objectify-locals");
+DEF(YastYsyntax_environment_excluded_bindings,"ast","syntax-environment-excluded-bindings");
+EXT(YsyntaxYsexpr_syntax_if_then,"syntax","sexpr-syntax-if-then");
+EXT(Ytail_setter,"boot","tail-setter");
+EXT(YprotoSsystemYos_binding_value_setter,"proto/system","os-binding-value-setter");
+DEF(YastYbinding_kind_setter,"ast","binding-kind-setter");
+EXT(YsyntaxYDsexpr_define_function_tag,"syntax","$sexpr-define-function-tag");
+EXT(YruntimeYwrite_string,"runtime","write-string");
+EXT(YsyntaxYDsexpr_if_tag,"syntax","$sexpr-if-tag");
+EXT(YruntimeYLportG,"runtime","<port>");
+DEF(YastYfind_static_global_environment,"ast","find-static-global-environment");
+DEF(YastYLfix_letG,"ast","<fix-let>");
+EXT(YsyntaxYsexpr_if_then,"syntax","sexpr-if-then");
+DEF(YastYLprogramG,"ast","<program>");
+EXT(Ysig_names,"boot","sig-names");
+EXT(YLlogG,"boot","<log>");
+DEF(YastYmonitor_test_setter,"ast","monitor-test-setter");
+DEF(YastYunwind_protect_cleanup_thunk_setter,"ast","unwind-protect-cleanup-thunk-setter");
+DEF(YastYenvironment_bindings_setter,"ast","environment-bindings-setter");
+EXT(YPisa,"boot","%isa");
+DEF(YastYobjectify_foreign_reference,"ast","objectify-foreign-reference");
+DEF(YastYobjectify_unwind_protect,"ast","objectify-unwind-protect");
+EXT(YsyntaxYDsexpr_method_tag,"syntax","$sexpr-method-tag");
+EXT(YruntimeYLrangeG,"runtime","<range>");
+EXT(YruntimeYlen,"runtime","len");
+EXT(YruntimeYread_char,"runtime","read-char");
+EXT(YruntimeYdo,"runtime","do");
+EXT(YmacrosYemptyQ,"macros","empty?");
+DEF(YastYLapplicationG,"ast","<application>");
+EXT(YruntimeYbuf,"runtime","buf");
+EXT(YisaQ,"boot","isa?");
+DEF(YastYLbind_exitG,"ast","<bind-exit>");
+EXT(YmacrosYmatch_sublist,"macros","match-sublist");
+DEF(YastYfix_let_arguments_setter,"ast","fix-let-arguments-setter");
+DEF(YastYfab_subset_environment,"ast","fab-subset-environment");
+EXT(Yapply,"boot","apply");
+DEF(YastYobjectify_function_definition,"ast","objectify-function-definition");
+EXT(YprotoSsystemYobj_filename,"proto/system","obj-filename");
+EXT(YruntimeYlowercaseQ,"runtime","lowercase?");
+EXT(YsyntaxYsexpr_block_body,"syntax","sexpr-block-body");
+DEF(YastYLboundQG,"ast","<bound?>");
+DEF(YastYDsexpr_boundQ_tag,"ast","$sexpr-bound?-tag");
+EXT(YruntimeYLlistG,"runtime","<list>");
+EXT(YruntimeYcondition_message,"runtime","condition-message");
+EXT(YruntimeYdescribe_handler,"runtime","describe-handler");
+DEF(YastYarguments,"ast","arguments");
+DEF(YastYmonitor_test,"ast","monitor-test");
+DEF(YastYbinding_native_toQ,"ast","binding-native-to?");
+DEF(YastYLmonitorG,"ast","<monitor>");
+DEF(YastYspecial_slot,"ast","special-slot");
+EXT(YruntimeYflo_bits,"runtime","flo-bits");
+DEF(YastYobjectify_primitive_definition,"ast","objectify-primitive-definition");
+EXT(YsyntaxYsexpr_make_anonymous_method,"syntax","sexpr-make-anonymous-method");
+EXT(YruntimeYassoc,"runtime","assoc");
+EXT(YruntimeYcase_insensitive_string_hash,"runtime","case-insensitive-string-hash");
+DEF(YastYexpand_bind_list,"ast","expand-bind-list");
+EXT(Yobject_parents,"boot","object-parents");
+EXT(YruntimeYcondition_arguments,"runtime","condition-arguments");
+DEF(YastYbinding_module_name,"ast","binding-module-name");
+DEF(YastYspecial_define_syntax,"ast","special-define-syntax");
+EXT(YruntimeYnow_elt,"runtime","now-elt");
+DEF(YastYinstall_magic_bindings,"ast","install-magic-bindings");
+DEF(YastYbinding_freeQ,"ast","binding-free?");
+EXT(YruntimeY_,"runtime","-");
+DEF(YastYmonitor_main_thunk_setter,"ast","monitor-main-thunk-setter");
+EXT(YruntimeYdel_key,"runtime","del-key");
+DEF(YastYexpand_bind_element,"ast","expand-bind-element");
+EXT(YsyntaxYsexpr_make_setter_name,"syntax","sexpr-make-setter-name");
+EXT(Yunknown_function_error,"boot","unknown-function-error");
+EXT(YsyntaxYsexpr_operator,"syntax","sexpr-operator");
+DEF(YastYfix_let_bindings_setter,"ast","fix-let-bindings-setter");
+EXT(YruntimeYnegQ,"runtime","neg?");
+DEF(YastYLast_primitive_definitionG,"ast","<ast-primitive-definition>");
+DEF(YastYobjectify_sequential,"ast","objectify-sequential");
+EXT(YruntimeYlocative_value,"runtime","locative-value");
+DEF(YastYprogram_type_setter,"ast","program-type-setter");
+DEF(YastYmonitor_type,"ast","monitor-type");
+DEF(YastYLglobal_referenceG,"ast","<global-reference>");
+EXT(YLgenG,"boot","<gen>");
+DEF(YastYspecial_quasiquote,"ast","special-quasiquote");
+DEF(YastYfab_p2c_module,"ast","fab-p2c-module");
+EXT(YprotoSsystemYpathname_to_components,"proto/system","pathname-to-components");
+DEF(YastYLast_macro_definitionG,"ast","<ast-macro-definition>");
+DEF(YastYDsexpr_Praw_tag,"ast","$sexpr-%raw-tag");
+DEF(YastYspecial_define_function,"ast","special-define-function");
+EXT(YruntimeYread,"runtime","read");
+EXT(YruntimeYremainder,"runtime","remainder");
+DEF(YastYmodule_loader_modules_setter,"ast","module-loader-modules-setter");
+DEF(YastYalternative_condition,"ast","alternative-condition");
+DEF(YastYalternative_alternant_setter,"ast","alternative-alternant-setter");
+DEF(YastYfix_let_body,"ast","fix-let-body");
+EXT(YmacrosYEE,"macros","==");
+EXT(YruntimeYdefault_handler,"runtime","default-handler");
+EXT(YruntimeYto_str,"runtime","to-str");
+EXT(YruntimeYeof_objectQ,"runtime","eof-object?");
+DEF(YastYsignature_names,"ast","signature-names");
+DEF(YastYfree_implemented_foreign_bindings,"ast","free-implemented-foreign-bindings");
+EXT(Yfun_mets,"boot","fun-mets");
+DEF(YastYmonitor_info,"ast","monitor-info");
+EXT(YsyntaxYDsexpr_locals_tag,"syntax","$sexpr-locals-tag");
+DEF(YastYbinding_dynamic_extentQ_setter,"ast","binding-dynamic-extent?-setter");
+DEF(YastYinsert_globalX,"ast","insert-global!");
+EXT(YruntimeYwrite_char,"runtime","write-char");
+DEF(YastYobjectify_free_global_reference,"ast","objectify-free-global-reference");
+DEF(YastYapplication_function,"ast","application-function");
+DEF(YastYfix_let_body_setter,"ast","fix-let-body-setter");
+EXT(YruntimeYelt_setter,"runtime","elt-setter");
+EXT(YprotoSsystemYcreate_directory,"proto/system","create-directory");
+DEF(YastYspecial_define_method,"ast","special-define-method");
+EXT(YsyntaxYDsexpr_set_tag,"syntax","$sexpr-set-tag");
+EXT(YruntimeYassq,"runtime","assq");
+EXT(YruntimeYnumericQ,"runtime","numeric?");
+EXT(YruntimeYport_contents,"runtime","port-contents");
+EXT(YsyntaxYDsexpr_slot_tag,"syntax","$sexpr-slot-tag");
+DEF(YastYLalternativeG,"ast","<alternative>");
+DEF(YastYsignature_specs_setter,"ast","signature-specs-setter");
+DEF(YastYfunction_debug_name_setter,"ast","function-debug-name-setter");
+EXT(YruntimeYas_lowercase,"runtime","as-lowercase");
+EXT(Ynot,"boot","not");
+DEF(YastYfunction_binding_setter,"ast","function-binding-setter");
+EXT(YLchrG,"boot","<chr>");
+DEF(YastYapplication_knownQ,"ast","application-known?");
+EXT(YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
+EXT(YruntimeYfrom_to_by,"runtime","from-to-by");
+EXT(YmacrosYmap,"macros","map");
+DEF(YastYsequentialize,"ast","sequentialize");
+EXT(YsyntaxYsexpr_isa_init_values,"syntax","sexpr-isa-init-values");
+DEF(YastYlocals_functions,"ast","locals-functions");
+DEF(YastYobjectify_signature,"ast","objectify-signature");
+EXT(YruntimeYclose_output_port,"runtime","close-output-port");
+DEF(YastYspecial_define,"ast","special-define");
+EXT(YsyntaxYsexpr_loc_bound_bodies,"syntax","sexpr-loc-bound-bodies");
+DEF(YastYreference_frame_number_setter,"ast","reference-frame-number-setter");
+DEF(YastYfunction_body,"ast","function-body");
+DEF(YastYfix_let_types_setter,"ast","fix-let-types-setter");
+EXT(YruntimeY2nd,"runtime","2nd");
+EXT(YruntimeYmin,"runtime","min");
+EXT(YsyntaxYDsexpr_syntax_if_tag,"syntax","$sexpr-syntax-if-tag");
+DEF(YastYlocals_body,"ast","locals-body");
+EXT(YLanyG,"boot","<any>");
+EXT(YsyntaxYsexpr_make_getter,"syntax","sexpr-make-getter");
+EXT(YruntimeYnxt_state,"runtime","nxt-state");
+DEF(YastYbinding_reference_prototype,"ast","binding-reference-prototype");
+DEF(YastYupdate_binding_kind,"ast","update-binding-kind");
+DEF(YastYbinding_name,"ast","binding-name");
+EXT(YsyntaxYsexpr_definition_variable,"syntax","sexpr-definition-variable");
+DEF(YastYLdefinitionG,"ast","<definition>");
+DEF(YastYlocals_bindings_setter,"ast","locals-bindings-setter");
+DEF(YastYruntime_environment,"ast","runtime-environment");
+DEF(YastYruntime_module,"ast","runtime-module");
+EXT(YruntimeYbuild_condition_for_handler_interactively,"runtime","build-condition-for-handler-interactively");
+DEF(YastYconvert2arguments,"ast","convert2arguments");
+DEF(YastYobjectify_syntax_definition,"ast","objectify-syntax-definition");
+EXT(YruntimeYtruncate,"runtime","truncate");
+EXT(YruntimeYlen_setter,"runtime","len-setter");
+EXT(YsyntaxYsexpr_unwind_protect_protected_form,"syntax","sexpr-unwind-protect-protected-form");
+DEF(YastYDempty_static_environment,"ast","$empty-static-environment");
+EXT(Yobject_slots,"boot","object-slots");
+EXT(Ygen_add_met,"boot","gen-add-met");
+DEF(YastYprocess_closed_application,"ast","process-closed-application");
+EXT(YLoptsG,"boot","<opts>");
+EXT(YruntimeYchar_readyQ,"runtime","char-ready?");
+DEF(YastYspecial_if,"ast","special-if");
+DEF(YastYinit_environment_for_eval,"ast","init-environment-for-eval");
+DEF(YastYmodule_loader_modules,"ast","module-loader-modules");
+DEF(YastYLpredefined_applicationG,"ast","<predefined-application>");
+DEF(YastYbinding_mutableQ_setter,"ast","binding-mutable?-setter");
+EXT(YruntimeYnulQ,"runtime","nul?");
+EXT(YruntimeYfloorS,"runtime","floor/");
+EXT(YruntimeYLerrorG,"runtime","<error>");
+DEF(YastYreference_binding_setter,"ast","reference-binding-setter");
+EXT(YsyntaxYsexpr_unquoteQ,"syntax","sexpr-unquote?");
+DEF(YastYfunction_naryQ,"ast","function-nary?");
+EXT(YsyntaxYDsexpr_quote_tag,"syntax","$sexpr-quote-tag");
+DEF(YastYsignature_names_setter,"ast","signature-names-setter");
+EXT(Yslot_type,"boot","slot-type");
+EXT(YruntimeYdo2,"runtime","do2");
+DEF(YastYobjectify_binding,"ast","objectify-binding");
+DEF(YastYreference_frame_offset,"ast","reference-frame-offset");
+DEF(YastYLast_genericG,"ast","<ast-generic>");
+DEF(YastYsignature_naryQ_setter,"ast","signature-nary?-setter");
+DEF(YastYLmoduleG,"ast","<module>");
+EXT(Yfun_specs,"boot","fun-specs");
+DEF(YastYbinding_locative_setter,"ast","binding-locative-setter");
+EXT(YruntimeYA,"runtime","+");
+DEF(YastYfunction_signature_setter,"ast","function-signature-setter");
+DEF(YastYpairize,"ast","pairize");
+DEF(YastYLstatic_empty_environmentG,"ast","<static-empty-environment>");
+EXT(YLintG,"boot","<int>");
+DEF(YastYspecial_bind_exit,"ast","special-bind-exit");
+DEF(YastYfab_static_global_environment,"ast","fab-static-global-environment");
+DEF(YastYTmagic_bindingsT,"ast","*magic-bindings*");
+DEF(YastYmodule_loader_stack,"ast","module-loader-stack");
+EXT(YruntimeYpos,"runtime","pos");
+EXT(YruntimeYcatX,"runtime","cat!");
+EXT(YruntimeYkeys,"runtime","keys");
+EXT(YsyntaxYsexpr_block_name,"syntax","sexpr-block-name");
+EXT(YsyntaxYsexpr_isa_parents,"syntax","sexpr-isa-parents");
+DEF(YastYregister_magic_binding,"ast","register-magic-binding");
+EXT(Yfind_setter,"boot","find-setter");
+DEF(YastYobjectify_assignment_using,"ast","objectify-assignment-using");
+DEF(YastYLconstantG,"ast","<constant>");
+EXT(YmacrosYvar_type,"macros","var-type");
+DEF(YastYload_module,"ast","load-module");
+EXT(YruntimeYposQ,"runtime","pos?");
+DEF(YastYunwind_protect_protected_thunk_setter,"ast","unwind-protect-protected-thunk-setter");
+DEF(YastYmodule_target_environment_setter,"ast","module-target-environment-setter");
+DEF(YastYbinding_global_box,"ast","binding-global-box");
+DEF(YastYbinding_value,"ast","binding-value");
+DEF(YastYreloader_do_other_binding,"ast","reloader-do-other-binding");
+DEF(YastYfunction_signature,"ast","function-signature");
+DEF(YastYapplication_knownQ_setter,"ast","application-known?-setter");
+DEF(YastYspecial_iterate,"ast","special-iterate");
+EXT(YprotoSsystemYproto_filename,"proto/system","proto-filename");
+EXT(YLnumG,"boot","<num>");
+DEF(YastYobjectify_use_module,"ast","objectify-use-module");
+DEF(YastYsignature_naryQ,"ast","signature-nary?");
+DEF(YastYprogram_register,"ast","program-register");
+EXT(YruntimeYLrestartG,"runtime","<restart>");
+DEF(YastYglobal_box_value,"ast","global-box-value");
+EXT(Ywrong_number_arguments_error,"boot","wrong-number-arguments-error");
+DEF(YastYobjectify_function,"ast","objectify-function");
+DEF(YastYbinding_value_setter,"ast","binding-value-setter");
+EXT(YLstrG,"boot","<str>");
+DEF(YastYmodule_binding,"ast","module-binding");
+EXT(YruntimeYLfile_portG,"runtime","<file-port>");
+EXT(YstringsYstring_repeat,"strings","string-repeat");
+EXT(YruntimeYPwith_monitor,"runtime","%with-monitor");
+DEF(YastYload_and_register_module,"ast","load-and-register-module");
+EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
+DEF(YastYunwind_protect_cleanup_thunk,"ast","unwind-protect-cleanup-thunk");
+DEF(YastYobjectify_quotation,"ast","objectify-quotation");
+EXT(YsyntaxYsexpr_assignment_variable,"syntax","sexpr-assignment-variable");
+EXT(YsyntaxYsexpr_forward_primitiveQ,"syntax","sexpr-forward-primitive?");
+DEF(YastYremove_module_internalX,"ast","remove-module-internal!");
+DEF(YastYapplication_tailQ,"ast","application-tail?");
+DEF(YastYapplication_binding,"ast","application-binding");
+EXT(Ysym_name,"boot","sym-name");
+DEF(YastYspecial_begin,"ast","special-begin");
+EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
+DEF(YastYfab_syntax_environment,"ast","fab-syntax-environment");
 EXT(Yfun_sig_setter,"boot","fun-sig-setter");
 EXT(YmacrosYmake_setter_name,"macros","make-setter-name");
-EXT(YsyntaxYsexpr_isa_parents,"syntax","sexpr-isa-parents");
 EXT(YPdefine_method,"boot","%define-method");
-DEF(YastYobjectify_free_global_reference,"ast","objectify-free-global-reference");
+EXT(YruntimeYassoc_value,"runtime","assoc-value");
+DEF(YastYalternative_consequent_setter,"ast","alternative-consequent-setter");
+DEF(YastYLregular_applicationG,"ast","<regular-application>");
 EXT(YmacrosYgensym,"macros","gensym");
-EXT(YsyntaxYDsexpr_quasiquote_tag,"syntax","$sexpr-quasiquote-tag");
-EXT(YsyntaxYsexpr_make_setter,"syntax","sexpr-make-setter");
-EXT(YruntimeYassqn,"runtime","assqn");
-DEF(YastYmodule_loader_stack,"ast","module-loader-stack");
+EXT(YruntimeYash,"runtime","ash");
+EXT(YruntimeYto_digit,"runtime","to-digit");
+DEF(YastYinstall_initial_bindings,"ast","install-initial-bindings");
 EXT(Yslot_getter,"boot","slot-getter");
 EXT(Yobject_direct_parents,"boot","object-direct-parents");
-DEF(YastYbinding_module_name,"ast","binding-module-name");
 EXT(Yslot_value_setter,"boot","slot-value-setter");
-DEF(YastYmagic_bindings,"ast","magic-bindings");
-EXT(YruntimeYlogand,"runtime","logand");
-EXT(YruntimeYtable_protocol,"runtime","table-protocol");
-EXT(YsyntaxYsexpr_monitor_expand,"syntax","sexpr-monitor-expand");
-EXT(YsyntaxYsexpr_loc_raw_body,"syntax","sexpr-loc-raw-body");
-DEF(YastYmodule_target_environment_setter,"ast","module-target-environment-setter");
-EXT(YmacrosYmatch_atom,"macros","match-atom");
-DEF(YastYLapplicationG,"ast","<application>");
-DEF(YastYsignature_bindings_setter,"ast","signature-bindings-setter");
-DEF(YastYruntime_module_loader,"ast","runtime-module-loader");
-DEF(YastYreference_frame_number_setter,"ast","reference-frame-number-setter");
-EXT(Yhandler_info_message,"boot","handler-info-message");
-DEF(YastYregister_magic_binding,"ast","register-magic-binding");
-EXT(YruntimeYcall_with_output_file,"runtime","call-with-output-file");
-EXT(YprotoSsystemYcomponents_parent_directory,"proto/system","components-parent-directory");
-DEF(YastYobjectify_raw,"ast","objectify-raw");
-EXT(YsyntaxYDsexpr_isa_tag,"syntax","$sexpr-isa-tag");
-EXT(YruntimeYapp_filename,"runtime","app-filename");
-EXT(YruntimeYchoose_handler,"runtime","choose-handler");
-EXT(YprotoSsystemYcomponents_to_pathname,"proto/system","components-to-pathname");
-EXT(YruntimeYT,"runtime","*");
-DEF(YastYspecial_begin,"ast","special-begin");
-EXT(YruntimeYalways,"runtime","always");
-DEF(YastYfab_list,"ast","fab-list");
-EXT(YmacrosYcat,"macros","cat");
-EXT(YsyntaxYsexpr_bind_pattern_variables,"syntax","sexpr-bind-pattern-variables");
-DEF(YastYfunction_signature_setter,"ast","function-signature-setter");
-EXT(YLnumG,"boot","<num>");
-EXT(YruntimeYdescribe_handler,"runtime","describe-handler");
-EXT(YsyntaxYsexpr_unquote_splicingQ,"syntax","sexpr-unquote-splicing?");
-DEF(YastYobjectify_locals,"ast","objectify-locals");
-EXT(YprotoSsystemYc_filename,"proto/system","c-filename");
-DEF(YastYTruntime_module_loaderT,"ast","*runtime-module-loader*");
-EXT(YprotoSsystemYpathname_to_components,"proto/system","pathname-to-components");
-EXT(YprotoSsystemYfile_existsQ,"proto/system","file-exists?");
-DEF(YastYruntime_module,"ast","runtime-module");
-EXT(YruntimeYstr,"runtime","str");
-DEF(YastYbind_exit_main_fun,"ast","bind-exit-main-fun");
-EXT(YruntimeYLstring_output_portG,"runtime","<string-output-port>");
-EXT(YsyntaxYDsexpr_quote_tag,"syntax","$sexpr-quote-tag");
-EXT(YprotoSsystemYos_name,"proto/system","os-name");
-DEF(YastYobjectify_quotation,"ast","objectify-quotation");
-DEF(YastYmonitor_type,"ast","monitor-type");
-EXT(YruntimeYalphabeticQ,"runtime","alphabetic?");
-DEF(YastYreloader_do_use_module,"ast","reloader-do-use-module");
-DEF(YastYimport_globalX,"ast","import-global!");
-EXT(YsyntaxYsexpr_slot_object,"syntax","sexpr-slot-object");
-EXT(YruntimeYpick,"runtime","pick");
-EXT(YruntimeYfrom_to_by,"runtime","from-to-by");
-EXT(YTmacros_okQT,"boot","*macros-ok?*");
-EXT(YruntimeYassoc_value,"runtime","assoc-value");
-EXT(Ysig_arity,"boot","sig-arity");
-DEF(YastYobjectify_definition,"ast","objectify-definition");
-EXT(YruntimeYin,"runtime","in");
-DEF(YastYmodule_name,"ast","module-name");
-EXT(YruntimeYmap_keyed,"runtime","map-keyed");
-EXT(YsyntaxYsexpr_iterate_Gloc,"syntax","sexpr-iterate->loc");
-DEF(YastYbinding_dottedQ,"ast","binding-dotted?");
-DEF(YastYobjectify_error,"ast","objectify-error");
-DEF(YastYcompile_time_program_setter,"ast","compile-time-program-setter");
-EXT(YruntimeYcall_with_input_file,"runtime","call-with-input-file");
-DEF(YastYsignature_specs,"ast","signature-specs");
-DEF(YastYLargumentsG,"ast","<arguments>");
-EXT(YruntimeYopen_output_file,"runtime","open-output-file");
-DEF(YastYreference_binding_setter,"ast","reference-binding-setter");
-EXT(YruntimeYout,"runtime","out");
-DEF(YastYobjectify_application,"ast","objectify-application");
-EXT(Ykeyboard_interrupt,"boot","keyboard-interrupt");
-EXT(YprotoSsystemYos_binding_value,"proto/system","os-binding-value");
-EXT(YprotoSsystemYparent_directory,"proto/system","parent-directory");
-DEF(YastYreference_frame_offset_setter,"ast","reference-frame-offset-setter");
-EXT(YsyntaxYsexpr_operator,"syntax","sexpr-operator");
-EXT(YsyntaxYsexpr_syntax_if_pattern,"syntax","sexpr-syntax-if-pattern");
-DEF(YastYbinding_reference_prototype,"ast","binding-reference-prototype");
-DEF(YastYspecial_export,"ast","special-export");
-DEF(YastYfunction_signature,"ast","function-signature");
-DEF(YastYspecial_quote,"ast","special-quote");
-DEF(YastYfix_let_arguments_setter,"ast","fix-let-arguments-setter");
-EXT(YruntimeYoddQ,"runtime","odd?");
-EXT(YruntimeYnow_elt_setter,"runtime","now-elt-setter");
-EXT(Ynil,"boot","nil");
-DEF(YastYspecial_let,"ast","special-let");
-DEF(YastYmodule_loader_stack_setter,"ast","module-loader-stack-setter");
-DEF(YastYLstatic_local_environmentG,"ast","<static-local-environment>");
-EXT(YLseqG,"boot","<seq>");
-DEF(YastYbinding_global_box_setter,"ast","binding-global-box-setter");
-DEF(YastYassignment_binding_setter,"ast","assignment-binding-setter");
-DEF(YastYfind_binding,"ast","find-binding");
-DEF(YastYfunction_body,"ast","function-body");
-DEF(YastYreloader_do_runtime_binding,"ast","reloader-do-runtime-binding");
-EXT(YprotoSsystemYcomponents_last,"proto/system","components-last");
-DEF(YastYsyntax_environment_excluded_bindings,"ast","syntax-environment-excluded-bindings");
-DEF(YastYenvironment_allows_foreign_namesQ_setter,"ast","environment-allows-foreign-names?-setter");
-EXT(Yfind_getter,"boot","find-getter");
-EXT(YruntimeYroundS,"runtime","round/");
-EXT(Yobject_direct_slots,"boot","object-direct-slots");
-EXT(YruntimeYabs,"runtime","abs");
-EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
-DEF(YastYfunction_kind,"ast","function-kind");
-EXT(YruntimeYcat2,"runtime","cat2");
+EXT(YstringsYstring_join,"strings","string-join");
+EXT(YruntimeYLfile_input_portG,"runtime","<file-input-port>");
+DEF(YastYLmodule_loaderG,"ast","<module-loader>");
+EXT(YruntimeYascii_whitespaces,"runtime","ascii-whitespaces");
+EXT(YruntimeYvec,"runtime","vec");
+DEF(YastYmodule_syntax_environment,"ast","module-syntax-environment");
 DEF(YastYbinding_module_name_setter,"ast","binding-module-name-setter");
-DEF(YastYast_define_binding,"ast","ast-define-binding");
-EXT(YLgenG,"boot","<gen>");
-EXT(YsyntaxYDsexpr_define_function_tag,"syntax","$sexpr-define-function-tag");
-EXT(YsyntaxYsexpr_signature_value,"syntax","sexpr-signature-value");
-DEF(YastYspecial_slot,"ast","special-slot");
-DEF(YastYenvironment_implements,"ast","environment-implements");
-DEF(YastYspecial_define_static_syntax,"ast","special-define-static-syntax");
-DEF(YastYbinding_type,"ast","binding-type");
-DEF(YastYfix_let_types_setter,"ast","fix-let-types-setter");
-EXT(YruntimeYlocative_value_setter,"runtime","locative-value-setter");
+DEF(YastYapplication_arguments_setter,"ast","application-arguments-setter");
+EXT(YmacrosYmatch_atom,"macros","match-atom");
+EXT(YruntimeYtruncateS,"runtime","truncate/");
+DEF(YastYalternative_condition_setter,"ast","alternative-condition-setter");
+DEF(YastYmodule_name_to_relpath,"ast","module-name-to-relpath");
+EXT(YruntimeYfalse_or,"runtime","false-or");
+DEF(YastYremove_modules_by_nameX,"ast","remove-modules-by-name!");
+EXT(YruntimeYchoose_handler,"runtime","choose-handler");
+EXT(YsyntaxYsexpr_make_application,"syntax","sexpr-make-application");
+DEF(YastYbind_exit_main_fun,"ast","bind-exit-main-fun");
+DEF(YastYreference_frame_offset_setter,"ast","reference-frame-offset-setter");
+DEF(YastYspecial_quote,"ast","special-quote");
+DEF(YastYfind_syntax_environment,"ast","find-syntax-environment");
+DEF(YastYfunction_debug_name,"ast","function-debug-name");
+EXT(YruntimeYalways,"runtime","always");
+DEF(YastYprocess_nary_closed_application,"ast","process-nary-closed-application");
 DEF(YastYLstatic_global_environmentG,"ast","<static-global-environment>");
-EXT(YPslot,"boot","%slot");
+EXT(YwriteYwriteln,"write","writeln");
+EXT(YruntimeYsub,"runtime","sub");
+DEF(YastYLruntime_module_loaderG,"ast","<runtime-module-loader>");
+DEF(YastYLlocal_referenceG,"ast","<local-reference>");
+DEF(YastYassignment_binding_setter,"ast","assignment-binding-setter");
+EXT(YsyntaxYsexpr_make_macro_function,"syntax","sexpr-make-macro-function");
+DEF(YastYLglobal_boxG,"ast","<global-box>");
+DEF(YastYLreal_referenceG,"ast","<real-reference>");
+DEF(YastYexpand_pattern,"ast","expand-pattern");
+EXT(YruntimeYtable_growth_threshold,"runtime","table-growth-threshold");
+DEF(YastYenvironment_next,"ast","environment-next");
+EXT(YruntimeYlogbitQ,"runtime","logbit?");
+DEF(YastYfix_let_arguments,"ast","fix-let-arguments");
+DEF(YastYcompute_local_reference_offsets,"ast","compute-local-reference-offsets");
 DEF(YastYspecial_Praw,"ast","special-%raw");
-EXT(YruntimeYstr_to_num,"runtime","str-to-num");
-DEF(YastYbinding_name_setter,"ast","binding-name-setter");
-EXT(YsyntaxYsexpr_syntax_if_then,"syntax","sexpr-syntax-if-then");
-EXT(Yhead,"boot","head");
-EXT(YruntimeYlognot,"runtime","lognot");
-EXT(YsyntaxYsexpr_syntax_if_else,"syntax","sexpr-syntax-if-else");
+EXT(YruntimeYlsh,"runtime","lsh");
+EXT(YsyntaxYsexpr_isa_slot_inits,"syntax","sexpr-isa-slot-inits");
+EXT(YprotoSsystemYTc_extensionT,"proto/system","*c-extension*");
+DEF(YastYbinding_type,"ast","binding-type");
+EXT(YruntimeYmemQ,"runtime","mem?");
+DEF(YastYconstant_value,"ast","constant-value");
+DEF(YastYmodule_name,"ast","module-name");
+DEF(YastYDsexpr_use_module_tag,"ast","$sexpr-use-module-tag");
+DEF(YastYbinding_kind,"ast","binding-kind");
+DEF(YastYLpassive_programG,"ast","<passive-program>");
+DEF(YastYruntime_module_loader,"ast","runtime-module-loader");
+EXT(YruntimeYfind_key,"runtime","find-key");
+EXT(Ysig_arity,"boot","sig-arity");
+DEF(YastYobjectify_symbol,"ast","objectify-symbol");
+DEF(YastYframe_bindings,"ast","frame-bindings");
+EXT(YruntimeYin,"runtime","in");
+EXT(YwriteYobject_name,"write","object-name");
+DEF(YastYmodule_name_setter,"ast","module-name-setter");
 DEF(YastYLlocal_assignmentG,"ast","<local-assignment>");
-EXT(Yslot_value,"boot","slot-value");
-EXT(YTboot_macro_namesT,"boot","*boot-macro-names*");
-EXT(YruntimeYascii_limit,"runtime","ascii-limit");
+DEF(YastYspecial_let,"ast","special-let");
+EXT(YruntimeYfill,"runtime","fill");
+DEF(YastYapplication_tailQ_setter,"ast","application-tail?-setter");
+EXT(YsyntaxYsexpr_operands,"syntax","sexpr-operands");
+EXT(YruntimeYalter,"runtime","alter");
+EXT(YruntimeYout,"runtime","out");
+DEF(YastYLast_signatureG,"ast","<ast-signature>");
+DEF(YastYr_extendT,"ast","r-extend*");
+DEF(YastYassignment_reference_setter,"ast","assignment-reference-setter");
+DEF(YastYenvironment_module_loader_setter,"ast","environment-module-loader-setter");
+EXT(Yfile_opening_error,"boot","file-opening-error");
+EXT(YruntimeYfrom_below_by,"runtime","from-below-by");
+EXT(YruntimeYLoutput_portG,"runtime","<output-port>");
+EXT(YsyntaxYsexpr_make_setter,"syntax","sexpr-make-setter");
+DEF(YastYbinding_type_setter,"ast","binding-type-setter");
+DEF(YastYlocals_functions_setter,"ast","locals-functions-setter");
+DEF(YastYreference_frame_number,"ast","reference-frame-number");
+EXT(YsyntaxYsexpr_definition_value,"syntax","sexpr-definition-value");
+DEF(YastYreloader_do_create_module,"ast","reloader-do-create-module");
+EXT(YruntimeYadd,"runtime","add");
+DEF(YastYinit_p2c_regular_environment,"ast","init-p2c-regular-environment");
+EXT(YruntimeYcall_with_string_output_port,"runtime","call-with-string-output-port");
+EXT(YsyntaxYsexpr_slot_init,"syntax","sexpr-slot-init");
+DEF(YastYfunctions,"ast","functions");
+DEF(YastYcompute_transitive_users,"ast","compute-transitive-users");
+EXT(YruntimeYLbufG,"runtime","<buf>");
+EXT(YsyntaxYsexpr_text_of_quotation,"syntax","sexpr-text-of-quotation");
+EXT(YsyntaxYsexpr_expand_backquote,"syntax","sexpr-expand-backquote");
+EXT(YruntimeYLinput_portG,"runtime","<input-port>");
+DEF(YastYspecial_compile_time,"ast","special-compile-time");
+DEF(YastYprogram_type,"ast","program-type");
+DEF(YastYreport_undefined_global_bindings,"ast","report-undefined-global-bindings");
+EXT(Ylst,"boot","lst");
+EXT(YsyntaxYsexpr_variable_type,"syntax","sexpr-variable-type");
+EXT(YsyntaxYDsexpr_unwind_protect_tag,"syntax","$sexpr-unwind-protect-tag");
+DEF(YastYfind_binding,"ast","find-binding");
+EXT(YsyntaxYsexpr_method_body,"syntax","sexpr-method-body");
+EXT(YsyntaxYDsexpr_define_method_tag,"syntax","$sexpr-define-method-tag");
+EXT(Yfind_getter,"boot","find-getter");
+EXT(Yobject_direct_slots,"boot","object-direct-slots");
+EXT(YruntimeYNEE,"runtime","~==");
+DEF(YastYLprogramsG,"ast","<programs>");
+EXT(YsyntaxYsexpr_unwind_protect_cleanup_forms,"syntax","sexpr-unwind-protect-cleanup-forms");
+DEF(YastYalternative_consequent,"ast","alternative-consequent");
+EXT(YruntimeYempty,"runtime","empty");
+DEF(YastYspecial_boundQ,"ast","special-bound?");
+DEF(YastYfunction_kind,"ast","function-kind");
+EXT(YruntimeYLsimple_errorG,"runtime","<simple-error>");
+EXT(YsyntaxYsexpr_unquote_splicingQ,"syntax","sexpr-unquote-splicing?");
+DEF(YastYast_evaluate,"ast","ast-evaluate");
+EXT(YsyntaxYsexpr_slot_object,"syntax","sexpr-slot-object");
+DEF(YastYmonitor_info_setter,"ast","monitor-info-setter");
+EXT(YsyntaxYsexpr_signature_value,"syntax","sexpr-signature-value");
+EXT(YLmetG,"boot","<met>");
+DEF(YastYbinding_dottedQ_setter,"ast","binding-dotted?-setter");
+EXT(YruntimeYallQ,"runtime","all?");
+EXT(YprotoSsystemYcomponents_last,"proto/system","components-last");
+DEF(YastYenvironment_allows_foreign_namesQ,"ast","environment-allows-foreign-names?");
+DEF(YastYobjectify_error,"ast","objectify-error");
+DEF(YastYbinding_info_setter,"ast","binding-info-setter");
+EXT(YruntimeYtL,"runtime","t<");
+DEF(YastYregister_moduleX,"ast","register-module!");
+EXT(YruntimeYlogior,"runtime","logior");
+DEF(YastYassignment_reference,"ast","assignment-reference");
+DEF(YastYobjectify_definition,"ast","objectify-definition");
+EXT(YPslot,"boot","%slot");
+EXT(YruntimeYLstring_input_portG,"runtime","<string-input-port>");
+EXT(Yhead,"boot","head");
 EXT(YprotoSsystemYcomponents_basename,"proto/system","components-basename");
-DEF(YastYreloader_do_export,"ast","reloader-do-export");
-EXT(YsyntaxYDsexpr_iterate_tag,"syntax","$sexpr-iterate-tag");
-EXT(YruntimeYsig,"runtime","sig");
+EXT(YruntimeYcall_with_output_file,"runtime","call-with-output-file");
+EXT(YruntimeYdefault,"runtime","default");
+EXT(Yslot_value,"boot","slot-value");
+DEF(YastYsignature_value,"ast","signature-value");
+EXT(YruntimeYanyQ,"runtime","any?");
 EXT(Yfun_value,"boot","fun-value");
+DEF(YastYLbindingG,"ast","<binding>");
 EXT(Ysig_specs,"boot","sig-specs");
 EXT(Yfun_names,"boot","fun-names");
-EXT(YruntimeYelt,"runtime","elt");
-EXT(YruntimeYfirst_then,"runtime","first-then");
-DEF(YastYLglobal_referenceG,"ast","<global-reference>");
+EXT(YruntimeYformat_to_string,"runtime","format-to-string");
+EXT(YruntimeYevenQ,"runtime","even?");
+EXT(YruntimeYGE,"runtime",">=");
 EXT(YmacrosYmatch_unquote,"macros","match-unquote");
-EXT(YruntimeYto_str,"runtime","to-str");
-DEF(YastYspecial_if,"ast","special-if");
-EXT(YsyntaxYsexpr_function_body,"syntax","sexpr-function-body");
-DEF(YastYbinding_info_setter,"ast","binding-info-setter");
-EXT(YruntimeYnum_to_str,"runtime","num-to-str");
-DEF(YastYboundQ_reference_setter,"ast","bound?-reference-setter");
 EXT(YruntimeYLmapG,"runtime","<map>");
-EXT(Yadd_slot,"boot","add-slot");
-EXT(YruntimeYread,"runtime","read");
-EXT(YsyntaxYsexpr_if_test,"syntax","sexpr-if-test");
-DEF(YastYconstant_value,"ast","constant-value");
-EXT(YruntimeYwrite_string,"runtime","write-string");
-EXT(YruntimeYLtabG,"runtime","<tab>");
-EXT(YprotoSsystemYprobe_directory,"proto/system","probe-directory");
-DEF(YastYfree_implemented_foreign_bindings,"ast","free-implemented-foreign-bindings");
-EXT(YruntimeYfrom_above_by,"runtime","from-above-by");
+DEF(YastYLast_generic_definitionG,"ast","<ast-generic-definition>");
+DEF(YastYspecial_define_generic,"ast","special-define-generic");
 EXT(YruntimeYbuild_condition_interactively,"runtime","build-condition-interactively");
-EXT(YruntimeYLrestartG,"runtime","<restart>");
-EXT(YTboot_macro_module_namesT,"boot","*boot-macro-module-names*");
-EXT(YruntimeYLstr_tabG,"runtime","<str-tab>");
-DEF(YastYobjectify_symbol,"ast","objectify-symbol");
-EXT(YstringsYmap_str,"strings","map-str");
-DEF(YastYassignment_reference,"ast","assignment-reference");
-DEF(YastYbinding_freeQ_setter,"ast","binding-free?-setter");
-DEF(YastYr_extendT,"ast","r-extend*");
-EXT(YruntimeYtable_growth_factor,"runtime","table-growth-factor");
-DEF(YastYobjectify_signature,"ast","objectify-signature");
-DEF(YastYTmacro_tracingQT,"ast","*macro-tracing?*");
-EXT(YruntimeYfrom_below_by,"runtime","from-below-by");
-EXT(YruntimeYdel_key,"runtime","del-key");
-EXT(YruntimeYdel,"runtime","del");
-DEF(YastYfunction_binding_setter,"ast","function-binding-setter");
-EXT(YsyntaxYeval,"syntax","eval");
-DEF(YastYmonitor_handler,"ast","monitor-handler");
-DEF(YastYbinding_dottedQ_setter,"ast","binding-dotted?-setter");
-DEF(YastYbinding_native_toQ,"ast","binding-native-to?");
-EXT(YruntimeYLfile_portG,"runtime","<file-port>");
-DEF(YastYspecial_set,"ast","special-set");
-EXT(YsyntaxYsexpr_unwind_protect_protected_form,"syntax","sexpr-unwind-protect-protected-form");
-DEF(YastYglobal_box_value,"ast","global-box-value");
-EXT(YruntimeYfrom_to,"runtime","from-to");
-EXT(YruntimeYlast,"runtime","last");
-DEF(YastYenvironment_next_setter,"ast","environment-next-setter");
-EXT(YwriteYobject_name,"write","object-name");
-DEF(YastYapplication_function_setter,"ast","application-function-setter");
-DEF(YastYobjectify_method_definition,"ast","objectify-method-definition");
-DEF(YastYmodule_exports,"ast","module-exports");
-EXT(YsyntaxYsexpr_definition_value,"syntax","sexpr-definition-value");
-EXT(YruntimeYLstepG,"runtime","<step>");
-EXT(YruntimeYmin,"runtime","min");
-DEF(YastYsequentialize,"ast","sequentialize");
-EXT(YruntimeYformat,"runtime","format");
-EXT(YruntimeYsub_setter,"runtime","sub-setter");
-DEF(YastYLbindingG,"ast","<binding>");
-DEF(YastYalternative_consequent,"ast","alternative-consequent");
-EXT(Ytype_error,"boot","type-error");
-EXT(YsyntaxYsexpr_make_begin,"syntax","sexpr-make-begin");
-DEF(YastYDsexpr_boundQ_tag,"ast","$sexpr-bound?-tag");
-DEF(YastYprogram_register,"ast","program-register");
-DEF(YastYLreferenceG,"ast","<reference>");
-EXT(YruntimeYflo_bits,"runtime","flo-bits");
-DEF(YastYfab_p2c_module,"ast","fab-p2c-module");
-DEF(YastYapplication_arguments,"ast","application-arguments");
-DEF(YastYfix_let_body,"ast","fix-let-body");
-EXT(YruntimeYmake_handler,"runtime","make-handler");
-EXT(YstringsYstring_join,"strings","string-join");
-EXT(YwriteYwrite,"write","write");
-DEF(YastYmodule_name_to_relpath,"ast","module-name-to-relpath");
-DEF(YastYobjectify,"ast","objectify");
-EXT(Yhead_setter,"boot","head-setter");
-EXT(YLtraitsG,"boot","<traits>");
-DEF(YastYreload_macros,"ast","reload-macros");
-EXT(YLslotG,"boot","<slot>");
-EXT(YruntimeYnumericQ,"runtime","numeric?");
-EXT(YprotoSsystemYhierarchical_components,"proto/system","hierarchical-components");
-DEF(YastYobjectify_function,"ast","objectify-function");
-EXT(YruntimeYlen,"runtime","len");
-EXT(Ynul,"boot","nul");
-EXT(YmacrosYemptyQ,"macros","empty?");
-DEF(YastYfab_static_global_environment,"ast","fab-static-global-environment");
-DEF(YastYapplication_tailQ_setter,"ast","application-tail?-setter");
-EXT(YPcall_next_method,"boot","%call-next-method");
-EXT(YruntimeYas_lowercase,"runtime","as-lowercase");
-EXT(YruntimeYrevX,"runtime","rev!");
-EXT(YruntimeYLfile_input_portG,"runtime","<file-input-port>");
-EXT(YruntimeYnulQ,"runtime","nul?");
-EXT(YruntimeYlowercaseQ,"runtime","lowercase?");
-DEF(YastYfunction_debug_name,"ast","function-debug-name");
-EXT(YsyntaxYsexpr_make_application,"syntax","sexpr-make-application");
-EXT(YruntimeYtable_shrink_threshold,"runtime","table-shrink-threshold");
+EXT(YsyntaxYsexpr_function_signature,"syntax","sexpr-function-signature");
+EXT(YprotoSsystemYadd_src_path,"proto/system","add-src-path");
+DEF(YastYobjectify_raw,"ast","objectify-raw");
+DEF(YastYexpand_syntax_if,"ast","expand-syntax-if");
+DEF(YastYfunction_value,"ast","function-value");
+EXT(YPvnul,"boot","%vnul");
+DEF(YastYspecial_locals,"ast","special-locals");
+EXT(Yhandler_info_arguments,"boot","handler-info-arguments");
+EXT(YruntimeYaddX,"runtime","add!");
 EXT(YruntimeYLfile_output_portG,"runtime","<file-output-port>");
-EXT(YprotoSsystemYcreate_directory,"proto/system","create-directory");
-DEF(YastYremove_modules_by_nameX,"ast","remove-modules-by-name!");
-DEF(YastYexport_bindingX,"ast","export-binding!");
-DEF(YastYinstall_initial_bindings,"ast","install-initial-bindings");
-DEF(YastYframe_bindings,"ast","frame-bindings");
-DEF(YastYprocess_closed_application,"ast","process-closed-application");
-EXT(YruntimeYread_char,"runtime","read-char");
-DEF(YastYreloader_do_create_module,"ast","reloader-do-create-module");
-DEF(YastYLmodule_loaderG,"ast","<module-loader>");
+EXT(YsyntaxYsexpr_function_definition_variable,"syntax","sexpr-function-definition-variable");
+EXT(YprotoSsystemYfile_mtime,"proto/system","file-mtime");
 EXT(YLfloG,"boot","<flo>");
-DEF(YastYLast_function_definitionG,"ast","<ast-function-definition>");
-EXT(YruntimeYbuf,"runtime","buf");
-DEF(YastYLast_primitive_definitionG,"ast","<ast-primitive-definition>");
-EXT(YprotoSsystemYTobj_extensionT,"proto/system","*obj-extension*");
-DEF(YastYLunwind_protectG,"ast","<unwind-protect>");
-DEF(YastYDsexpr_export_tag,"ast","$sexpr-export-tag");
+EXT(YruntimeYfirst_then,"runtime","first-then");
 EXT(YprotoSsystemYTexe_extensionT,"proto/system","*exe-extension*");
+DEF(YastYspecial_define_class,"ast","special-define-class");
+EXT(YprotoSsystemYfile_type,"proto/system","file-type");
+EXT(YruntimeYassocs_test,"runtime","assocs-test");
+EXT(YruntimeYneg,"runtime","neg");
+DEF(YastYLreferenceG,"ast","<reference>");
+EXT(YsyntaxYsexpr_syntax_if_pattern,"syntax","sexpr-syntax-if-pattern");
+EXT(YruntimeYdel_keys,"runtime","del-keys");
+EXT(YLflatG,"boot","<flat>");
+DEF(YastYspecial_define_primitive,"ast","special-define-primitive");
+DEF(YastYLruntime_referenceG,"ast","<runtime-reference>");
+EXT(YsyntaxYsexpr_assignment_value,"syntax","sexpr-assignment-value");
+EXT(YruntimeYcopy_state,"runtime","copy-state");
+EXT(YruntimeYhandler_function,"runtime","handler-function");
+DEF(YastYglobal_box_value_setter,"ast","global-box-value-setter");
+DEF(YastYenvironment_uses_modules_setter,"ast","environment-uses-modules-setter");
+EXT(YruntimeYDdefault_handler_info,"runtime","$default-handler-info");
+EXT(YsyntaxYsexpr_iterate_Gloc,"syntax","sexpr-iterate->loc");
+DEF(YastYDarguments_empty,"ast","$arguments-empty");
+DEF(YastYLast_functionG,"ast","<ast-function>");
+EXT(YruntimeYLhandlerG,"runtime","<handler>");
+DEF(YastYLraw_constantG,"ast","<raw-constant>");
+EXT(Yadd_slot,"boot","add-slot");
+EXT(YruntimeYclose_input_port,"runtime","close-input-port");
+EXT(YruntimeYeof_object,"runtime","eof-object");
+EXT(YruntimeYforce_output,"runtime","force-output");
+DEF(YastYobjectify_export,"ast","objectify-export");
+DEF(YastYconstant_value_setter,"ast","constant-value-setter");
+EXT(YruntimeYapp_args,"runtime","app-args");
+DEF(YastYfix_let_bindings,"ast","fix-let-bindings");
+EXT(YruntimeYhandler_matchesQ,"runtime","handler-matches?");
 EXT(YsyntaxYsexpr_signature_parameters,"syntax","sexpr-signature-parameters");
-EXT(YruntimeYlist,"runtime","list");
+EXT(YLlstG,"boot","<lst>");
+DEF(YastYLstatic_environmentG,"ast","<static-environment>");
+DEF(YastYobjectify,"ast","objectify");
+DEF(YastYTmacro_tracingQT,"ast","*macro-tracing?*");
+EXT(YprotoSsystemYadd_build_path,"proto/system","add-build-path");
+EXT(YsyntaxYDsexpr_bind_exit_tag,"syntax","$sexpr-bind-exit-tag");
+EXT(Yhead_setter,"boot","head-setter");
+DEF(YastYLstatic_local_environmentG,"ast","<static-local-environment>");
+DEF(YastYLlocal_bindingG,"ast","<local-binding>");
+DEF(YastYDsexpr_compile_time_tag,"ast","$sexpr-compile-time-tag");
+EXT(YruntimeYLsimple_conditionG,"runtime","<simple-condition>");
+EXT(YPPmacro,"boot","%%macro");
+DEF(YastYDsexpr_optionals_type_name,"ast","$sexpr-optionals-type-name");
+EXT(YsyntaxYDsexpr_define_generic_tag,"syntax","$sexpr-define-generic-tag");
+DEF(YastYmodule_loader_stack_setter,"ast","module-loader-stack-setter");
+EXT(YruntimeYfrom_above_by,"runtime","from-above-by");
+DEF(YastYinsert_globalsX,"ast","insert-globals!");
+DEF(YastYboundQ_reference,"ast","bound?-reference");
+EXT(YruntimeYascii_limit,"runtime","ascii-limit");
+EXT(YPcall_next_method,"boot","%call-next-method");
+EXT(YruntimeYrevX,"runtime","rev!");
+EXT(YsyntaxYsexpr_monitor_expand,"syntax","sexpr-monitor-expand");
+EXT(YLfunG,"boot","<fun>");
+EXT(YruntimeYtE,"runtime","t=");
+DEF(YastYreloader_do_import,"ast","reloader-do-import");
+DEF(YastYspecial_method,"ast","special-method");
+EXT(YprotoSsystemYc_filename,"proto/system","c-filename");
 EXT(YruntimeYinvoke_handler_interactively,"runtime","invoke-handler-interactively");
-DEF(YastYLast_methodG,"ast","<ast-method>");
-EXT(YruntimeYnewline,"runtime","newline");
-DEF(YastYenvironment_allows_foreign_namesQ,"ast","environment-allows-foreign-names?");
-EXT(YruntimeYnegQ,"runtime","neg?");
+EXT(YruntimeYfrom_to,"runtime","from-to");
+EXT(YruntimeY3rd,"runtime","3rd");
+EXT(YsyntaxYsexpr_let_Gcombination,"syntax","sexpr-let->combination");
+EXT(YruntimeYLstr_tabG,"runtime","<str-tab>");
+DEF(YastYbinding_name_setter,"ast","binding-name-setter");
+EXT(YsyntaxYsexpr_loc_bound_signatures,"syntax","sexpr-loc-bound-signatures");
+EXT(YsyntaxYsexpr_loc_bound_names,"syntax","sexpr-loc-bound-names");
+DEF(YastYmonitor_handler_setter,"ast","monitor-handler-setter");
+EXT(YruntimeYdo_keyed,"runtime","do-keyed");
+DEF(YastYboundQ_reference_setter,"ast","bound?-reference-setter");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_50);
-DEFLIT(lit_348);
-DEFLIT(lit_171);
-DEFLIT(lit_424);
-DEFLIT(lit_28);
-DEFLIT(lit_76);
-DEFLIT(lit_35);
-DEFLIT(lit_159);
-DEFLIT(lit_220);
-DEFLIT(lit_102);
-DEFLIT(lit_369);
-DEFLIT(lit_243);
-DEFLIT(lit_59);
-DEFLIT(lit_154);
-DEFLIT(lit_174);
-DEFLIT(lit_238);
-DEFLIT(lit_188);
-DEFLIT(lit_237);
-DEFLIT(lit_434);
-DEFLIT(lit_122);
-DEFLIT(lit_51);
-DEFLIT(lit_19);
-DEFLIT(lit_142);
-DEFLIT(lit_404);
-DEFLIT(lit_304);
-DEFLIT(lit_317);
-DEFLIT(lit_99);
-DEFLIT(lit_162);
-DEFLIT(lit_381);
-DEFLIT(lit_231);
-DEFLIT(lit_368);
-DEFLIT(lit_194);
-DEFLIT(lit_227);
-DEFLIT(lit_216);
-DEFLIT(lit_380);
-DEFLIT(lit_66);
-DEFLIT(lit_45);
-DEFLIT(lit_394);
-DEFLIT(lit_386);
-DEFLIT(lit_385);
-DEFLIT(lit_215);
-DEFLIT(lit_367);
-DEFLIT(lit_176);
-DEFLIT(lit_371);
-DEFLIT(lit_271);
-DEFLIT(lit_250);
-DEFLIT(lit_202);
-DEFLIT(lit_342);
-DEFLIT(lit_147);
-DEFLIT(lit_74);
-DEFLIT(lit_234);
-DEFLIT(lit_131);
-DEFLIT(lit_441);
-DEFLIT(lit_402);
-DEFLIT(lit_62);
-DEFLIT(lit_320);
-DEFLIT(lit_301);
-DEFLIT(lit_133);
-DEFLIT(lit_397);
-DEFLIT(lit_254);
-DEFLIT(lit_388);
-DEFLIT(lit_245);
-DEFLIT(lit_396);
-DEFLIT(lit_199);
-DEFLIT(lit_311);
-DEFLIT(lit_366);
-DEFLIT(lit_354);
-DEFLIT(lit_272);
-DEFLIT(lit_403);
-DEFLIT(lit_116);
-DEFLIT(lit_109);
-DEFLIT(lit_224);
-DEFLIT(lit_307);
-DEFLIT(lit_152);
-DEFLIT(lit_84);
-DEFLIT(lit_400);
-DEFLIT(lit_355);
-DEFLIT(lit_139);
-DEFLIT(lit_241);
-DEFLIT(lit_81);
-DEFLIT(lit_15);
-DEFLIT(lit_184);
-DEFLIT(lit_140);
-DEFLIT(lit_106);
-DEFLIT(lit_309);
-DEFLIT(lit_391);
-DEFLIT(lit_325);
-DEFLIT(lit_212);
-DEFLIT(lit_89);
-DEFLIT(lit_409);
-DEFLIT(lit_83);
-DEFLIT(lit_364);
-DEFLIT(lit_78);
-DEFLIT(lit_303);
-DEFLIT(lit_210);
-DEFLIT(lit_71);
-DEFLIT(lit_86);
-DEFLIT(lit_107);
-DEFLIT(lit_127);
-DEFLIT(lit_356);
-DEFLIT(lit_433);
-DEFLIT(lit_213);
-DEFLIT(lit_295);
-DEFLIT(lit_265);
-DEFLIT(lit_436);
-DEFLIT(lit_260);
-DEFLIT(lit_372);
-DEFLIT(lit_60);
-DEFLIT(lit_146);
-DEFLIT(lit_375);
-DEFLIT(lit_120);
-DEFLIT(lit_236);
-DEFLIT(lit_169);
-DEFLIT(lit_259);
-DEFLIT(lit_11);
-DEFLIT(lit_253);
-DEFLIT(lit_319);
-DEFLIT(lit_232);
-DEFLIT(lit_450);
-DEFLIT(lit_408);
-DEFLIT(lit_126);
-DEFLIT(lit_23);
-DEFLIT(lit_261);
-DEFLIT(lit_0);
-DEFLIT(lit_249);
-DEFLIT(lit_240);
-DEFLIT(lit_88);
-DEFLIT(lit_347);
-DEFLIT(lit_160);
-DEFLIT(lit_40);
-DEFLIT(lit_13);
-DEFLIT(lit_351);
-DEFLIT(lit_322);
-DEFLIT(lit_255);
-DEFLIT(lit_393);
-DEFLIT(lit_440);
-DEFLIT(lit_229);
-DEFLIT(lit_39);
-DEFLIT(lit_447);
-DEFLIT(lit_98);
-DEFLIT(lit_93);
-DEFLIT(lit_173);
-DEFLIT(lit_294);
-DEFLIT(lit_225);
-DEFLIT(lit_112);
-DEFLIT(lit_410);
-DEFLIT(lit_132);
-DEFLIT(lit_47);
-DEFLIT(lit_419);
-DEFLIT(lit_289);
-DEFLIT(lit_144);
-DEFLIT(lit_29);
-DEFLIT(lit_3);
-DEFLIT(lit_453);
-DEFLIT(lit_175);
-DEFLIT(lit_172);
-DEFLIT(lit_219);
-DEFLIT(lit_335);
-DEFLIT(lit_186);
-DEFLIT(lit_61);
-DEFLIT(lit_326);
-DEFLIT(lit_145);
-DEFLIT(lit_137);
-DEFLIT(lit_285);
-DEFLIT(lit_344);
-DEFLIT(lit_90);
-DEFLIT(lit_316);
-DEFLIT(lit_119);
-DEFLIT(lit_12);
-DEFLIT(lit_30);
-DEFLIT(lit_7);
-DEFLIT(lit_17);
-DEFLIT(lit_246);
-DEFLIT(lit_201);
-DEFLIT(lit_91);
-DEFLIT(lit_451);
-DEFLIT(lit_389);
-DEFLIT(lit_275);
-DEFLIT(lit_449);
-DEFLIT(lit_296);
-DEFLIT(lit_338);
-DEFLIT(lit_421);
-DEFLIT(lit_161);
-DEFLIT(lit_79);
-DEFLIT(lit_170);
-DEFLIT(lit_117);
-DEFLIT(lit_129);
-DEFLIT(lit_362);
-DEFLIT(lit_274);
-DEFLIT(lit_446);
-DEFLIT(lit_239);
-DEFLIT(lit_204);
-DEFLIT(lit_423);
-DEFLIT(lit_358);
-DEFLIT(lit_31);
-DEFLIT(lit_115);
-DEFLIT(lit_280);
-DEFLIT(lit_452);
-DEFLIT(lit_318);
-DEFLIT(lit_314);
-DEFLIT(lit_101);
-DEFLIT(lit_350);
-DEFLIT(lit_85);
-DEFLIT(lit_18);
-DEFLIT(lit_334);
-DEFLIT(lit_310);
-DEFLIT(lit_293);
-DEFLIT(lit_124);
-DEFLIT(lit_353);
-DEFLIT(lit_270);
-DEFLIT(lit_37);
-DEFLIT(lit_312);
-DEFLIT(lit_302);
-DEFLIT(lit_401);
-DEFLIT(lit_156);
-DEFLIT(lit_328);
-DEFLIT(lit_38);
-DEFLIT(lit_217);
-DEFLIT(lit_336);
-DEFLIT(lit_4);
 DEFLIT(lit_281);
-DEFLIT(lit_190);
-DEFLIT(lit_444);
-DEFLIT(lit_25);
-DEFLIT(lit_343);
-DEFLIT(lit_165);
-DEFLIT(lit_214);
-DEFLIT(lit_292);
-DEFLIT(lit_125);
-DEFLIT(lit_1);
-DEFLIT(lit_63);
-DEFLIT(lit_209);
-DEFLIT(lit_166);
-DEFLIT(lit_72);
-DEFLIT(lit_439);
-DEFLIT(lit_279);
-DEFLIT(lit_329);
-DEFLIT(lit_286);
-DEFLIT(lit_97);
-DEFLIT(lit_445);
-DEFLIT(lit_443);
-DEFLIT(lit_197);
-DEFLIT(lit_192);
-DEFLIT(lit_357);
-DEFLIT(lit_430);
-DEFLIT(lit_242);
-DEFLIT(lit_185);
-DEFLIT(lit_104);
-DEFLIT(lit_324);
-DEFLIT(lit_53);
-DEFLIT(lit_167);
-DEFLIT(lit_65);
-DEFLIT(lit_108);
-DEFLIT(lit_308);
-DEFLIT(lit_306);
-DEFLIT(lit_383);
-DEFLIT(lit_100);
-DEFLIT(lit_55);
-DEFLIT(lit_399);
-DEFLIT(lit_153);
-DEFLIT(lit_379);
-DEFLIT(lit_9);
-DEFLIT(lit_149);
-DEFLIT(lit_77);
-DEFLIT(lit_413);
-DEFLIT(lit_70);
-DEFLIT(lit_341);
-DEFLIT(lit_339);
-DEFLIT(lit_27);
-DEFLIT(lit_384);
-DEFLIT(lit_432);
-DEFLIT(lit_256);
-DEFLIT(lit_150);
-DEFLIT(lit_287);
-DEFLIT(lit_297);
-DEFLIT(lit_382);
-DEFLIT(lit_340);
-DEFLIT(lit_105);
-DEFLIT(lit_305);
-DEFLIT(lit_277);
-DEFLIT(lit_268);
-DEFLIT(lit_198);
+DEFLIT(lit_210);
+DEFLIT(lit_394);
+DEFLIT(lit_154);
+DEFLIT(lit_348);
+DEFLIT(lit_371);
 DEFLIT(lit_36);
-DEFLIT(lit_405);
-DEFLIT(lit_69);
-DEFLIT(lit_376);
-DEFLIT(lit_164);
-DEFLIT(lit_111);
-DEFLIT(lit_349);
-DEFLIT(lit_266);
-DEFLIT(lit_398);
-DEFLIT(lit_431);
-DEFLIT(lit_158);
-DEFLIT(lit_134);
-DEFLIT(lit_230);
-DEFLIT(lit_43);
-DEFLIT(lit_32);
-DEFLIT(lit_95);
-DEFLIT(lit_110);
-DEFLIT(lit_407);
-DEFLIT(lit_226);
-DEFLIT(lit_178);
-DEFLIT(lit_5);
-DEFLIT(lit_262);
-DEFLIT(lit_196);
-DEFLIT(lit_337);
-DEFLIT(lit_195);
+DEFLIT(lit_174);
+DEFLIT(lit_208);
+DEFLIT(lit_448);
+DEFLIT(lit_25);
+DEFLIT(lit_171);
+DEFLIT(lit_130);
+DEFLIT(lit_231);
+DEFLIT(lit_383);
+DEFLIT(lit_105);
+DEFLIT(lit_300);
+DEFLIT(lit_67);
+DEFLIT(lit_360);
+DEFLIT(lit_101);
+DEFLIT(lit_48);
+DEFLIT(lit_357);
 DEFLIT(lit_155);
+DEFLIT(lit_179);
+DEFLIT(lit_350);
+DEFLIT(lit_390);
+DEFLIT(lit_47);
+DEFLIT(lit_147);
+DEFLIT(lit_31);
+DEFLIT(lit_299);
 DEFLIT(lit_41);
-DEFLIT(lit_290);
+DEFLIT(lit_233);
+DEFLIT(lit_144);
+DEFLIT(lit_301);
+DEFLIT(lit_306);
+DEFLIT(lit_100);
+DEFLIT(lit_438);
+DEFLIT(lit_170);
+DEFLIT(lit_196);
 DEFLIT(lit_248);
+DEFLIT(lit_354);
+DEFLIT(lit_414);
+DEFLIT(lit_292);
+DEFLIT(lit_114);
+DEFLIT(lit_403);
+DEFLIT(lit_77);
+DEFLIT(lit_76);
+DEFLIT(lit_160);
+DEFLIT(lit_134);
+DEFLIT(lit_191);
+DEFLIT(lit_70);
+DEFLIT(lit_252);
+DEFLIT(lit_349);
+DEFLIT(lit_235);
+DEFLIT(lit_122);
+DEFLIT(lit_285);
+DEFLIT(lit_165);
+DEFLIT(lit_221);
+DEFLIT(lit_110);
+DEFLIT(lit_173);
+DEFLIT(lit_64);
+DEFLIT(lit_282);
+DEFLIT(lit_96);
+DEFLIT(lit_247);
+DEFLIT(lit_433);
+DEFLIT(lit_375);
+DEFLIT(lit_128);
+DEFLIT(lit_11);
+DEFLIT(lit_152);
+DEFLIT(lit_313);
+DEFLIT(lit_330);
+DEFLIT(lit_60);
+DEFLIT(lit_118);
+DEFLIT(lit_79);
+DEFLIT(lit_309);
+DEFLIT(lit_137);
+DEFLIT(lit_78);
+DEFLIT(lit_75);
+DEFLIT(lit_183);
+DEFLIT(lit_319);
+DEFLIT(lit_455);
+DEFLIT(lit_388);
+DEFLIT(lit_291);
+DEFLIT(lit_99);
+DEFLIT(lit_454);
+DEFLIT(lit_215);
+DEFLIT(lit_57);
+DEFLIT(lit_246);
+DEFLIT(lit_107);
+DEFLIT(lit_226);
+DEFLIT(lit_109);
 DEFLIT(lit_273);
-DEFLIT(lit_207);
-DEFLIT(lit_370);
-DEFLIT(lit_377);
+DEFLIT(lit_387);
+DEFLIT(lit_80);
+DEFLIT(lit_51);
+DEFLIT(lit_72);
+DEFLIT(lit_432);
+DEFLIT(lit_90);
+DEFLIT(lit_190);
+DEFLIT(lit_406);
+DEFLIT(lit_384);
+DEFLIT(lit_294);
+DEFLIT(lit_399);
+DEFLIT(lit_214);
+DEFLIT(lit_93);
+DEFLIT(lit_30);
+DEFLIT(lit_138);
+DEFLIT(lit_262);
+DEFLIT(lit_398);
+DEFLIT(lit_358);
+DEFLIT(lit_323);
+DEFLIT(lit_389);
+DEFLIT(lit_435);
+DEFLIT(lit_69);
+DEFLIT(lit_341);
+DEFLIT(lit_393);
+DEFLIT(lit_297);
+DEFLIT(lit_334);
+DEFLIT(lit_113);
+DEFLIT(lit_249);
+DEFLIT(lit_421);
+DEFLIT(lit_88);
+DEFLIT(lit_356);
+DEFLIT(lit_311);
+DEFLIT(lit_337);
+DEFLIT(lit_336);
+DEFLIT(lit_24);
+DEFLIT(lit_62);
+DEFLIT(lit_175);
+DEFLIT(lit_194);
+DEFLIT(lit_391);
+DEFLIT(lit_94);
+DEFLIT(lit_372);
+DEFLIT(lit_446);
+DEFLIT(lit_447);
+DEFLIT(lit_216);
+DEFLIT(lit_1);
+DEFLIT(lit_177);
+DEFLIT(lit_86);
+DEFLIT(lit_410);
+DEFLIT(lit_167);
+DEFLIT(lit_265);
+DEFLIT(lit_35);
+DEFLIT(lit_143);
+DEFLIT(lit_238);
+DEFLIT(lit_146);
+DEFLIT(lit_133);
+DEFLIT(lit_332);
+DEFLIT(lit_355);
+DEFLIT(lit_440);
+DEFLIT(lit_441);
+DEFLIT(lit_53);
+DEFLIT(lit_184);
+DEFLIT(lit_443);
+DEFLIT(lit_45);
+DEFLIT(lit_181);
+DEFLIT(lit_164);
+DEFLIT(lit_342);
+DEFLIT(lit_125);
+DEFLIT(lit_33);
+DEFLIT(lit_369);
+DEFLIT(lit_401);
+DEFLIT(lit_92);
+DEFLIT(lit_339);
+DEFLIT(lit_338);
+DEFLIT(lit_140);
+DEFLIT(lit_420);
+DEFLIT(lit_396);
+DEFLIT(lit_188);
+DEFLIT(lit_261);
+DEFLIT(lit_217);
+DEFLIT(lit_142);
+DEFLIT(lit_284);
+DEFLIT(lit_0);
+DEFLIT(lit_19);
+DEFLIT(lit_212);
+DEFLIT(lit_328);
+DEFLIT(lit_269);
+DEFLIT(lit_211);
+DEFLIT(lit_172);
+DEFLIT(lit_68);
+DEFLIT(lit_326);
+DEFLIT(lit_108);
+DEFLIT(lit_117);
+DEFLIT(lit_161);
+DEFLIT(lit_382);
+DEFLIT(lit_224);
+DEFLIT(lit_186);
+DEFLIT(lit_320);
+DEFLIT(lit_316);
+DEFLIT(lit_425);
+DEFLIT(lit_102);
+DEFLIT(lit_257);
+DEFLIT(lit_426);
+DEFLIT(lit_3);
+DEFLIT(lit_163);
+DEFLIT(lit_409);
+DEFLIT(lit_244);
+DEFLIT(lit_295);
+DEFLIT(lit_305);
 DEFLIT(lit_411);
 DEFLIT(lit_21);
-DEFLIT(lit_332);
-DEFLIT(lit_148);
-DEFLIT(lit_283);
-DEFLIT(lit_80);
-DEFLIT(lit_313);
-DEFLIT(lit_222);
-DEFLIT(lit_54);
-DEFLIT(lit_42);
-DEFLIT(lit_331);
-DEFLIT(lit_193);
-DEFLIT(lit_438);
-DEFLIT(lit_182);
-DEFLIT(lit_68);
-DEFLIT(lit_282);
-DEFLIT(lit_426);
-DEFLIT(lit_151);
-DEFLIT(lit_92);
-DEFLIT(lit_157);
-DEFLIT(lit_298);
-DEFLIT(lit_429);
-DEFLIT(lit_321);
-DEFLIT(lit_299);
-DEFLIT(lit_191);
-DEFLIT(lit_228);
-DEFLIT(lit_103);
-DEFLIT(lit_390);
-DEFLIT(lit_87);
-DEFLIT(lit_8);
-DEFLIT(lit_33);
-DEFLIT(lit_2);
-DEFLIT(lit_235);
-DEFLIT(lit_352);
-DEFLIT(lit_57);
-DEFLIT(lit_20);
-DEFLIT(lit_203);
-DEFLIT(lit_6);
-DEFLIT(lit_44);
-DEFLIT(lit_221);
-DEFLIT(lit_269);
-DEFLIT(lit_67);
-DEFLIT(lit_138);
-DEFLIT(lit_333);
-DEFLIT(lit_276);
-DEFLIT(lit_189);
-DEFLIT(lit_378);
-DEFLIT(lit_56);
-DEFLIT(lit_206);
-DEFLIT(lit_52);
-DEFLIT(lit_75);
-DEFLIT(lit_345);
-DEFLIT(lit_180);
-DEFLIT(lit_267);
-DEFLIT(lit_187);
-DEFLIT(lit_359);
-DEFLIT(lit_73);
-DEFLIT(lit_22);
-DEFLIT(lit_223);
-DEFLIT(lit_365);
-DEFLIT(lit_114);
-DEFLIT(lit_177);
-DEFLIT(lit_422);
-DEFLIT(lit_258);
-DEFLIT(lit_136);
-DEFLIT(lit_360);
-DEFLIT(lit_130);
-DEFLIT(lit_135);
-DEFLIT(lit_96);
-DEFLIT(lit_361);
-DEFLIT(lit_437);
-DEFLIT(lit_244);
-DEFLIT(lit_387);
-DEFLIT(lit_233);
-DEFLIT(lit_48);
-DEFLIT(lit_315);
-DEFLIT(lit_26);
-DEFLIT(lit_46);
-DEFLIT(lit_252);
-DEFLIT(lit_121);
-DEFLIT(lit_414);
-DEFLIT(lit_218);
-DEFLIT(lit_395);
-DEFLIT(lit_278);
-DEFLIT(lit_49);
-DEFLIT(lit_24);
-DEFLIT(lit_323);
-DEFLIT(lit_346);
-DEFLIT(lit_113);
-DEFLIT(lit_128);
-DEFLIT(lit_64);
-DEFLIT(lit_363);
-DEFLIT(lit_163);
-DEFLIT(lit_34);
-DEFLIT(lit_406);
-DEFLIT(lit_300);
-DEFLIT(lit_16);
+DEFLIT(lit_444);
+DEFLIT(lit_436);
+DEFLIT(lit_23);
 DEFLIT(lit_168);
-DEFLIT(lit_392);
-DEFLIT(lit_247);
-DEFLIT(lit_416);
-DEFLIT(lit_200);
-DEFLIT(lit_82);
-DEFLIT(lit_264);
-DEFLIT(lit_10);
-DEFLIT(lit_448);
-DEFLIT(lit_14);
-DEFLIT(lit_208);
-DEFLIT(lit_123);
-DEFLIT(lit_327);
-DEFLIT(lit_427);
-DEFLIT(lit_417);
-DEFLIT(lit_183);
-DEFLIT(lit_425);
-DEFLIT(lit_442);
-DEFLIT(lit_435);
-DEFLIT(lit_415);
-DEFLIT(lit_251);
-DEFLIT(lit_58);
-DEFLIT(lit_420);
-DEFLIT(lit_291);
+DEFLIT(lit_314);
+DEFLIT(lit_98);
+DEFLIT(lit_136);
+DEFLIT(lit_407);
+DEFLIT(lit_204);
+DEFLIT(lit_335);
+DEFLIT(lit_159);
+DEFLIT(lit_451);
+DEFLIT(lit_237);
+DEFLIT(lit_253);
+DEFLIT(lit_368);
+DEFLIT(lit_85);
 DEFLIT(lit_141);
-DEFLIT(lit_94);
-DEFLIT(lit_181);
-DEFLIT(lit_374);
-DEFLIT(lit_257);
-DEFLIT(lit_118);
-DEFLIT(lit_418);
-DEFLIT(lit_330);
+DEFLIT(lit_55);
+DEFLIT(lit_417);
+DEFLIT(lit_32);
+DEFLIT(lit_275);
+DEFLIT(lit_129);
+DEFLIT(lit_289);
+DEFLIT(lit_187);
+DEFLIT(lit_202);
+DEFLIT(lit_364);
+DEFLIT(lit_58);
+DEFLIT(lit_66);
+DEFLIT(lit_2);
+DEFLIT(lit_131);
+DEFLIT(lit_63);
+DEFLIT(lit_149);
+DEFLIT(lit_42);
+DEFLIT(lit_151);
+DEFLIT(lit_274);
+DEFLIT(lit_279);
+DEFLIT(lit_271);
+DEFLIT(lit_222);
+DEFLIT(lit_12);
+DEFLIT(lit_84);
+DEFLIT(lit_200);
+DEFLIT(lit_310);
+DEFLIT(lit_429);
+DEFLIT(lit_241);
+DEFLIT(lit_120);
+DEFLIT(lit_258);
+DEFLIT(lit_207);
+DEFLIT(lit_255);
+DEFLIT(lit_8);
+DEFLIT(lit_404);
+DEFLIT(lit_9);
+DEFLIT(lit_278);
+DEFLIT(lit_378);
+DEFLIT(lit_343);
+DEFLIT(lit_38);
+DEFLIT(lit_71);
+DEFLIT(lit_201);
+DEFLIT(lit_56);
+DEFLIT(lit_379);
+DEFLIT(lit_199);
+DEFLIT(lit_268);
+DEFLIT(lit_43);
+DEFLIT(lit_427);
+DEFLIT(lit_256);
 DEFLIT(lit_205);
-DEFLIT(lit_428);
-DEFLIT(lit_211);
-DEFLIT(lit_284);
-DEFLIT(lit_143);
-DEFLIT(lit_373);
+DEFLIT(lit_192);
+DEFLIT(lit_340);
+DEFLIT(lit_359);
+DEFLIT(lit_307);
+DEFLIT(lit_29);
+DEFLIT(lit_380);
+DEFLIT(lit_7);
+DEFLIT(lit_270);
+DEFLIT(lit_276);
+DEFLIT(lit_333);
+DEFLIT(lit_219);
+DEFLIT(lit_405);
+DEFLIT(lit_442);
+DEFLIT(lit_116);
+DEFLIT(lit_385);
+DEFLIT(lit_27);
+DEFLIT(lit_286);
+DEFLIT(lit_439);
+DEFLIT(lit_228);
+DEFLIT(lit_415);
+DEFLIT(lit_366);
+DEFLIT(lit_367);
+DEFLIT(lit_361);
+DEFLIT(lit_304);
+DEFLIT(lit_59);
+DEFLIT(lit_10);
+DEFLIT(lit_16);
+DEFLIT(lit_28);
+DEFLIT(lit_322);
+DEFLIT(lit_40);
+DEFLIT(lit_402);
+DEFLIT(lit_264);
+DEFLIT(lit_408);
+DEFLIT(lit_374);
+DEFLIT(lit_400);
+DEFLIT(lit_424);
+DEFLIT(lit_157);
+DEFLIT(lit_49);
+DEFLIT(lit_227);
+DEFLIT(lit_127);
+DEFLIT(lit_220);
+DEFLIT(lit_449);
+DEFLIT(lit_308);
+DEFLIT(lit_347);
+DEFLIT(lit_225);
+DEFLIT(lit_83);
+DEFLIT(lit_20);
+DEFLIT(lit_452);
+DEFLIT(lit_302);
+DEFLIT(lit_386);
+DEFLIT(lit_126);
+DEFLIT(lit_298);
+DEFLIT(lit_315);
+DEFLIT(lit_81);
+DEFLIT(lit_236);
+DEFLIT(lit_419);
+DEFLIT(lit_413);
+DEFLIT(lit_153);
+DEFLIT(lit_4);
+DEFLIT(lit_44);
+DEFLIT(lit_329);
+DEFLIT(lit_65);
+DEFLIT(lit_209);
+DEFLIT(lit_345);
+DEFLIT(lit_115);
+DEFLIT(lit_418);
+DEFLIT(lit_52);
+DEFLIT(lit_318);
+DEFLIT(lit_169);
+DEFLIT(lit_139);
 DEFLIT(lit_263);
+DEFLIT(lit_376);
+DEFLIT(lit_213);
+DEFLIT(lit_14);
+DEFLIT(lit_193);
+DEFLIT(lit_6);
+DEFLIT(lit_203);
+DEFLIT(lit_18);
+DEFLIT(lit_373);
+DEFLIT(lit_416);
+DEFLIT(lit_428);
+DEFLIT(lit_223);
+DEFLIT(lit_344);
+DEFLIT(lit_280);
+DEFLIT(lit_185);
+DEFLIT(lit_104);
+DEFLIT(lit_423);
+DEFLIT(lit_87);
+DEFLIT(lit_346);
+DEFLIT(lit_54);
 DEFLIT(lit_412);
-DEFLIT(lit_179);
+DEFLIT(lit_365);
+DEFLIT(lit_377);
+DEFLIT(lit_245);
+DEFLIT(lit_325);
+DEFLIT(lit_176);
+DEFLIT(lit_353);
+DEFLIT(lit_15);
+DEFLIT(lit_150);
+DEFLIT(lit_229);
+DEFLIT(lit_290);
+DEFLIT(lit_234);
+DEFLIT(lit_431);
+DEFLIT(lit_453);
+DEFLIT(lit_260);
+DEFLIT(lit_283);
+DEFLIT(lit_272);
+DEFLIT(lit_395);
+DEFLIT(lit_5);
+DEFLIT(lit_106);
+DEFLIT(lit_331);
+DEFLIT(lit_182);
+DEFLIT(lit_37);
+DEFLIT(lit_119);
+DEFLIT(lit_82);
+DEFLIT(lit_91);
+DEFLIT(lit_132);
+DEFLIT(lit_324);
+DEFLIT(lit_73);
+DEFLIT(lit_189);
+DEFLIT(lit_162);
+DEFLIT(lit_34);
+DEFLIT(lit_26);
+DEFLIT(lit_250);
+DEFLIT(lit_50);
+DEFLIT(lit_397);
+DEFLIT(lit_148);
+DEFLIT(lit_430);
+DEFLIT(lit_230);
+DEFLIT(lit_363);
 DEFLIT(lit_288);
+DEFLIT(lit_97);
+DEFLIT(lit_267);
+DEFLIT(lit_61);
+DEFLIT(lit_180);
+DEFLIT(lit_240);
+DEFLIT(lit_287);
+DEFLIT(lit_156);
+DEFLIT(lit_317);
+DEFLIT(lit_22);
+DEFLIT(lit_456);
+DEFLIT(lit_111);
+DEFLIT(lit_352);
+DEFLIT(lit_158);
+DEFLIT(lit_195);
+DEFLIT(lit_303);
+DEFLIT(lit_321);
+DEFLIT(lit_243);
+DEFLIT(lit_46);
+DEFLIT(lit_74);
+DEFLIT(lit_123);
+DEFLIT(lit_242);
+DEFLIT(lit_239);
+DEFLIT(lit_121);
+DEFLIT(lit_206);
+DEFLIT(lit_445);
+DEFLIT(lit_17);
+DEFLIT(lit_197);
+DEFLIT(lit_362);
+DEFLIT(lit_39);
+DEFLIT(lit_437);
+DEFLIT(lit_266);
+DEFLIT(lit_296);
+DEFLIT(lit_124);
+DEFLIT(lit_370);
+DEFLIT(lit_135);
+DEFLIT(lit_103);
+DEFLIT(lit_218);
+DEFLIT(lit_277);
+DEFLIT(lit_178);
+DEFLIT(lit_112);
+DEFLIT(lit_450);
+DEFLIT(lit_232);
+DEFLIT(lit_251);
+DEFLIT(lit_381);
+DEFLIT(lit_327);
+DEFLIT(lit_293);
+DEFLIT(lit_351);
+DEFLIT(lit_95);
+DEFLIT(lit_89);
+DEFLIT(lit_434);
+DEFLIT(lit_198);
+DEFLIT(lit_259);
+DEFLIT(lit_392);
+DEFLIT(lit_312);
+DEFLIT(lit_422);
+DEFLIT(lit_13);
+DEFLIT(lit_166);
+DEFLIT(lit_254);
+DEFLIT(lit_145);
 
 /* FUNCTIONS: */
 
@@ -1372,10 +1382,10 @@ LOCFOR(fun_108);
 LOCFOR(fun_109);
 LOCFOR(fun_110);
 LOCFOR(fun_111);
-LOCFOR(fun_x_1240_112);
+LOCFOR(fun_x_1242_112);
 LOCFOR(fun_113);
 LOCFOR(fun_114);
-LOCFOR(fun_x_1244_115);
+LOCFOR(fun_x_1246_115);
 LOCFOR(fun_116);
 LOCFOR(fun_117);
 LOCFOR(fun_118);
@@ -1586,7 +1596,7 @@ LOCFOR(fun_322);
 LOCFOR(fun_323);
 LOCFOR(fun_324);
 LOCFOR(fun_325);
-LOCFOR(fun_x_1255_326);
+LOCFOR(fun_x_1257_326);
 LOCFOR(fun_327);
 LOCFOR(fun_328);
 LOCFOR(fun_329);
@@ -1638,38 +1648,39 @@ LOCFOR(fun_374);
 LOCFOR(fun_375);
 LOCFOR(fun_376);
 LOCFOR(fun_377);
+LOCFOR(fun_378);
 FUNFOR(YastYset_module_environments);
-LOCFOR(fun_379);
+LOCFOR(fun_380);
 FUNFOR(YastYdo_module_loader_modules);
-LOCFOR(fun_381);
+LOCFOR(fun_382);
 FUNFOR(YastYregister_moduleX);
 FUNFOR(YastYprobe_module);
-LOCFOR(fun_384);
 LOCFOR(fun_385);
+LOCFOR(fun_386);
 FUNFOR(YastYload_and_register_module);
 FUNFOR(YastYexport_bindingX);
 FUNFOR(YastYbinding_native_toQ);
-LOCFOR(fun_389);
+LOCFOR(fun_390);
 FUNFOR(YastYreport_undefined_global_bindings);
-LOCFOR(fun_391);
 LOCFOR(fun_392);
 LOCFOR(fun_393);
-LOCFOR(fun_add_user_394);
+LOCFOR(fun_394);
+LOCFOR(fun_add_user_395);
 FUNFOR(YastYcompute_transitive_users);
-LOCFOR(fun_396);
+LOCFOR(fun_397);
 FUNFOR(YastYfree_implemented_foreign_bindings);
 FUNFOR(YastYremove_module_internalX);
-LOCFOR(fun_399);
+LOCFOR(fun_400);
 FUNFOR(YastYremove_modules_by_nameX);
 FUNFOR(YastYmodule_name_to_relpath);
-LOCFOR(fun_402);
+LOCFOR(fun_403);
 FUNFOR(YastYinstall_initial_bindings);
 FUNFOR(YastYfab_static_global_environment);
-LOCFOR(fun_405);
+LOCFOR(fun_406);
 FUNFOR(YastYfab_subset_environment);
-LOCFOR(fun_407);
 LOCFOR(fun_408);
 LOCFOR(fun_409);
+LOCFOR(fun_410);
 FUNFOR(YastYruntime_module_loader);
 FUNFOR(YastYruntime_module);
 FUNFOR(YastYruntime_environment);
@@ -1680,7 +1691,7 @@ FUNFOR(YastYreloader_do_runtime_binding);
 FUNFOR(YastYreloader_do_other_binding);
 FUNFOR(YastYreloader_do_export);
 FUNFOR(YastYreload_modules);
-LOCFOR(fun_420);
+LOCFOR(fun_421);
 FUNFOR(YastYinstall_magic_bindings);
 FUNFOR(YastYreload_macros);
 FUNFOR(YastYinstall_interpreter_hacks);
@@ -1690,9 +1701,9 @@ FUNFOR(YastYfab_p2c_module);
 FUNFOR(YastYinit_p2c_boot_environment);
 FUNFOR(YastYinit_p2c_regular_environment);
 FUNFOR(YastYinit_ast);
-LOCFOR(fun_loop_430);
+LOCFOR(fun_loop_431);
 FUNFOR(YastYdo_static_global_bindings);
-LOCFOR(fun_loop_432);
+LOCFOR(fun_loop_433);
 FUNFOR(YastYdo_named_static_global_bindings);
 extern P YastY___main_0___ ();
 extern P YastY___main_1___ ();
@@ -2675,7 +2686,7 @@ loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_x_1240_112) {
+FUNCODEDEF(fun_x_1242_112) {
   ARG(args_, 0);
   ARG(msg_, 1);
   P T0;
@@ -2687,196 +2698,206 @@ loop:
 
 FUNCODEDEF(fun_113) {
   ARG(return_, 0);
-  P x_1239F1243;
-  P x_1239F1242;
-  P x_1239F1241;
-  P x_1239F1240;
-  P x_1239F1239;
+  P x_1241F1243;
+  P x_1241F1242;
+  P x_1241F1241;
+  P x_1241F1240;
+  P x_1241F1239;
   P DemptyF1238;
   P classF1237;
   P supersF1236;
   P nameF1235;
-  P x_1239F1234;
-  P x_1240F1233;
-  P T155,T154,T153,T152,T151,T150,T149,T148,T147,T146,T145,T144,T143,T142,T141,T140;
-  P T139,T138,T137,T136,T135,T134,T133,T132,T131,T130,T129,T128,T127,T126,T125,T124;
-  P T123,T122,T121,T120,T119,T118,T117,T116,T115,T114,T113,T112,T111,T110,T109,T108;
-  P T107,T106,T105,T104,T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93,T92;
-  P T91,T90,T89,T88,T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77,T76;
-  P T75,T74,T73,T72,T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61,T60;
-  P T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44;
-  P T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28;
-  P T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12;
-  P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P x_1241F1234;
+  P x_1242F1233;
+  P T164,T163,T162,T161,T160,T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149;
+  P T148,T147,T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133;
+  P T132,T131,T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117;
+  P T116,T115,T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101;
+  P T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85;
+  P T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69;
+  P T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53;
+  P T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37;
+  P T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21;
+  P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
+  P T4,T3,T2,T1,T0;
   P a1;
 loop:
-  T155 = FUNSHELL(0,fun_x_1240_112,1);
-  x_1240F1233 = T155;
-  FUNINIT(x_1240F1233, 1,return_);
-  x_1239F1234 = FREEREF(0);
+  T164 = FUNSHELL(0,fun_x_1242_112,1);
+  x_1242F1233 = T164;
+  FUNINIT(x_1242F1233, 1,return_);
+  x_1241F1234 = FREEREF(0);
   nameF1235 = YPfalse;
   nameF1235 = BOXFAB(nameF1235);
   supersF1236 = YPfalse;
   supersF1236 = BOXFAB(supersF1236);
-  T18 = CALL2(CHKREF(YisaQ),x_1239F1234,CHKREF(YLlstG));
+  T18 = CALL2(CHKREF(YisaQ),x_1241F1234,CHKREF(YLlstG));
   if (T18 != YPfalse) {
-    T17 = CALL3(CHKREF(YmacrosYmatch_atom),x_1239F1234,CHKREF(lit_113),x_1240F1233);
-    x_1239F1239 = T17;
-    T15 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1239F1239,x_1240F1233);
+    T17 = CALL3(CHKREF(YmacrosYmatch_atom),x_1241F1234,CHKREF(lit_115),x_1242F1233);
+    x_1241F1239 = T17;
+    T15 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1241F1239,x_1242F1233);
     BOXVAL(nameF1235) = T15;
-    T16 = CALL1(CHKREF(Ytail),x_1239F1239);
-    x_1239F1240 = T16;
-    T13 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1239F1240,x_1240F1233);
-    x_1239F1241 = T13;
-    BOXVAL(supersF1236) = x_1239F1241;
-    x_1239F1242 = Ynil;
-    T12 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1239F1242,x_1240F1233);
+    T16 = CALL1(CHKREF(Ytail),x_1241F1239);
+    x_1241F1240 = T16;
+    T13 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1241F1240,x_1242F1233);
+    x_1241F1241 = T13;
+    BOXVAL(supersF1236) = x_1241F1241;
+    x_1241F1242 = Ynil;
+    T12 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1241F1242,x_1242F1233);
     T11 = T12;
-    T14 = CALL1(CHKREF(Ytail),x_1239F1240);
-    x_1239F1243 = T14;
-    T10 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1239F1243,x_1240F1233);
+    T14 = CALL1(CHKREF(Ytail),x_1241F1240);
+    x_1241F1243 = T14;
+    T10 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1241F1243,x_1242F1233);
     T9 = T10;
     T8 = T9;
     T7 = T8;
   } else {
-    T6 = CALL2(x_1240F1233,CHKREF(lit_112),x_1239F1234);
+    T6 = CALL2(x_1242F1233,CHKREF(lit_114),x_1241F1234);
   }
-  T154 = BOXVAL(nameF1235);
-  T153 = CALL3(CHKREF(YmacrosYmake_sym),CHKREF(lit_111),T154,CHKREF(lit_110));
-  classF1237 = T153;
-  T152 = BOXVAL(nameF1235);
-  T151 = CALL3(CHKREF(YmacrosYmake_sym),CHKREF(lit_109),T152,CHKREF(lit_108));
-  DemptyF1238 = T151;
+  T163 = BOXVAL(nameF1235);
+  T162 = CALL3(CHKREF(YmacrosYmake_sym),CHKREF(lit_113),T163,CHKREF(lit_112));
+  classF1237 = T162;
+  T161 = BOXVAL(nameF1235);
+  T160 = CALL3(CHKREF(YmacrosYmake_sym),CHKREF(lit_111),T161,CHKREF(lit_110));
+  DemptyF1238 = T160;
+  T159 = CALL1(CHKREF(Ylst),CHKREF(lit_109));
+  T158 = CALL1(CHKREF(Ylst),CHKREF(lit_108));
+  T157 = CALL1(CHKREF(Ylst),classF1237);
+  T156 = CALL1(CHKREF(Ylst),CHKREF(lit_103));
+  T155 = BOXVAL(supersF1236);
+  T154 = CALL3(CHKREF(YmacrosYcat),T156,T155,Ynil);
+  T153 = CALL1(CHKREF(Ylst),T154);
+  T152 = CALLN(CHKREF(YmacrosYcat),4,T158,T157,T153,Ynil);
+  T151 = CALL1(CHKREF(Ylst),T152);
   T150 = CALL1(CHKREF(Ylst),CHKREF(lit_107));
-  T149 = CALL1(CHKREF(Ylst),CHKREF(lit_106));
-  T148 = CALL1(CHKREF(Ylst),classF1237);
-  T147 = CALL1(CHKREF(Ylst),CHKREF(lit_97));
-  T146 = CALL1(CHKREF(Ylst),CHKREF(lit_102));
-  T145 = BOXVAL(supersF1236);
-  T144 = CALL3(CHKREF(YmacrosYcat),T146,T145,Ynil);
-  T143 = CALL1(CHKREF(Ylst),T144);
-  T142 = CALL3(CHKREF(YmacrosYcat),T147,T143,Ynil);
-  T141 = CALL1(CHKREF(Ylst),T142);
-  T140 = CALLN(CHKREF(YmacrosYcat),4,T149,T148,T141,Ynil);
-  T139 = CALL1(CHKREF(Ylst),T140);
-  T138 = CALL1(CHKREF(Ylst),CHKREF(lit_106));
-  T137 = CALL1(CHKREF(Ylst),DemptyF1238);
-  T136 = CALL1(CHKREF(Ylst),CHKREF(lit_97));
-  T135 = CALL1(CHKREF(Ylst),classF1237);
-  T134 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
-  T133 = CALL1(CHKREF(Ylst),CHKREF(lit_96));
-  T132 = CALL1(CHKREF(Ylst),YPfalse);
-  T131 = CALLN(CHKREF(YmacrosYcat),4,T134,T133,T132,Ynil);
-  T130 = CALL1(CHKREF(Ylst),T131);
-  T129 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
-  T128 = CALL1(CHKREF(Ylst),CHKREF(lit_93));
-  T127 = CALL1(CHKREF(Ylst),YPfalse);
-  T126 = CALLN(CHKREF(YmacrosYcat),4,T129,T128,T127,Ynil);
-  T125 = CALL1(CHKREF(Ylst),T126);
-  T124 = CALLN(CHKREF(YmacrosYcat),5,T136,T135,T130,T125,Ynil);
-  T123 = CALL1(CHKREF(Ylst),T124);
-  T122 = CALLN(CHKREF(YmacrosYcat),4,T138,T137,T123,Ynil);
-  T121 = CALL1(CHKREF(Ylst),T122);
-  T120 = CALL1(CHKREF(Ylst),CHKREF(lit_91));
-  T119 = CALL1(CHKREF(Ylst),CHKREF(lit_104));
+  T149 = CALL1(CHKREF(Ylst),DemptyF1238);
+  T148 = CALL1(CHKREF(Ylst),CHKREF(lit_98));
+  T147 = CALL1(CHKREF(Ylst),classF1237);
+  T146 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
+  T145 = CALL1(CHKREF(Ylst),CHKREF(lit_97));
+  T144 = CALL1(CHKREF(Ylst),YPfalse);
+  T143 = CALLN(CHKREF(YmacrosYcat),4,T146,T145,T144,Ynil);
+  T142 = CALL1(CHKREF(Ylst),T143);
+  T141 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
+  T140 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
+  T139 = CALL1(CHKREF(Ylst),YPfalse);
+  T138 = CALLN(CHKREF(YmacrosYcat),4,T141,T140,T139,Ynil);
+  T137 = CALL1(CHKREF(Ylst),T138);
+  T136 = CALLN(CHKREF(YmacrosYcat),5,T148,T147,T142,T137,Ynil);
+  T135 = CALL1(CHKREF(Ylst),T136);
+  T134 = CALLN(CHKREF(YmacrosYcat),4,T150,T149,T135,Ynil);
+  T133 = CALL1(CHKREF(Ylst),T134);
+  T132 = CALL1(CHKREF(Ylst),CHKREF(lit_92));
+  T131 = CALL1(CHKREF(Ylst),CHKREF(lit_105));
+  T130 = CALL1(CHKREF(Ylst),CHKREF(lit_104));
+  T129 = CALL1(CHKREF(Ylst),CHKREF(lit_89));
+  T128 = CALL1(CHKREF(Ylst),classF1237);
+  T127 = CALL3(CHKREF(YmacrosYcat),T129,T128,Ynil);
+  T126 = CALL1(CHKREF(Ylst),T127);
+  T125 = CALL3(CHKREF(YmacrosYcat),T130,T126,Ynil);
+  T124 = CALL1(CHKREF(Ylst),T125);
+  T123 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
+  T122 = CALL1(CHKREF(Ylst),classF1237);
+  T121 = CALL3(CHKREF(YmacrosYcat),T123,T122,Ynil);
+  T120 = CALL1(CHKREF(Ylst),T121);
+  T119 = CALL1(CHKREF(Ylst),CHKREF(lit_88));
   T118 = CALL1(CHKREF(Ylst),CHKREF(lit_103));
-  T117 = CALL1(CHKREF(Ylst),classF1237);
-  T116 = CALL3(CHKREF(YmacrosYcat),T118,T117,Ynil);
-  T115 = CALL1(CHKREF(Ylst),T116);
-  T114 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
-  T113 = CALL1(CHKREF(Ylst),classF1237);
-  T112 = CALL3(CHKREF(YmacrosYcat),T114,T113,Ynil);
-  T111 = CALL1(CHKREF(Ylst),T112);
-  T110 = CALL1(CHKREF(Ylst),CHKREF(lit_88));
-  T109 = CALL1(CHKREF(Ylst),CHKREF(lit_102));
-  T108 = CALLN(CHKREF(YmacrosYcat),5,T115,T111,T110,T109,Ynil);
-  T107 = CALL1(CHKREF(Ylst),T108);
-  T106 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
-  T105 = CALLN(CHKREF(YmacrosYcat),5,T120,T119,T107,T106,Ynil);
+  T117 = CALLN(CHKREF(YmacrosYcat),5,T124,T120,T119,T118,Ynil);
+  T116 = CALL1(CHKREF(Ylst),T117);
+  T115 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
+  T114 = CALLN(CHKREF(YmacrosYcat),5,T132,T131,T116,T115,Ynil);
+  T113 = CALL1(CHKREF(Ylst),T114);
+  T112 = CALL1(CHKREF(Ylst),CHKREF(lit_92));
+  T111 = CALL1(CHKREF(Ylst),CHKREF(lit_105));
+  T110 = CALL1(CHKREF(Ylst),CHKREF(lit_104));
+  T109 = CALL1(CHKREF(Ylst),CHKREF(lit_89));
+  T108 = CALL1(CHKREF(Ylst),CHKREF(lit_103));
+  T107 = CALL3(CHKREF(YmacrosYcat),T109,T108,Ynil);
+  T106 = CALL1(CHKREF(Ylst),T107);
+  T105 = CALL3(CHKREF(YmacrosYcat),T110,T106,Ynil);
   T104 = CALL1(CHKREF(Ylst),T105);
-  T103 = CALL1(CHKREF(Ylst),CHKREF(lit_91));
-  T102 = CALL1(CHKREF(Ylst),CHKREF(lit_104));
-  T101 = CALL1(CHKREF(Ylst),CHKREF(lit_103));
-  T100 = CALL1(CHKREF(Ylst),CHKREF(lit_102));
-  T99 = CALL3(CHKREF(YmacrosYcat),T101,T100,Ynil);
-  T98 = CALL1(CHKREF(Ylst),T99);
-  T97 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
-  T96 = CALL1(CHKREF(Ylst),classF1237);
-  T95 = CALL3(CHKREF(YmacrosYcat),T97,T96,Ynil);
-  T94 = CALL1(CHKREF(Ylst),T95);
-  T93 = CALL1(CHKREF(Ylst),CHKREF(lit_88));
-  T92 = CALL1(CHKREF(Ylst),CHKREF(lit_102));
-  T91 = CALLN(CHKREF(YmacrosYcat),5,T98,T94,T93,T92,Ynil);
-  T90 = CALL1(CHKREF(Ylst),T91);
-  T89 = CALL1(CHKREF(Ylst),CHKREF(lit_101));
-  T88 = CALL1(CHKREF(Ylst),CHKREF(lit_105));
-  T87 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
-  T86 = CALLN(CHKREF(YmacrosYcat),4,T89,T88,T87,Ynil);
-  T85 = CALL1(CHKREF(Ylst),T86);
-  T84 = CALLN(CHKREF(YmacrosYcat),5,T103,T102,T90,T85,Ynil);
-  T83 = CALL1(CHKREF(Ylst),T84);
-  T82 = CALL1(CHKREF(Ylst),CHKREF(lit_91));
-  T81 = CALL1(CHKREF(Ylst),CHKREF(lit_104));
-  T80 = CALL1(CHKREF(Ylst),CHKREF(lit_103));
-  T79 = CALL1(CHKREF(Ylst),classF1237);
-  T78 = CALL3(CHKREF(YmacrosYcat),T80,T79,Ynil);
-  T77 = CALL1(CHKREF(Ylst),T78);
-  T76 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
-  T75 = CALL1(CHKREF(Ylst),CHKREF(lit_102));
-  T74 = CALL3(CHKREF(YmacrosYcat),T76,T75,Ynil);
-  T73 = CALL1(CHKREF(Ylst),T74);
-  T72 = CALL1(CHKREF(Ylst),CHKREF(lit_88));
+  T103 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
+  T102 = CALL1(CHKREF(Ylst),classF1237);
+  T101 = CALL3(CHKREF(YmacrosYcat),T103,T102,Ynil);
+  T100 = CALL1(CHKREF(Ylst),T101);
+  T99 = CALL1(CHKREF(Ylst),CHKREF(lit_88));
+  T98 = CALL1(CHKREF(Ylst),CHKREF(lit_103));
+  T97 = CALLN(CHKREF(YmacrosYcat),5,T104,T100,T99,T98,Ynil);
+  T96 = CALL1(CHKREF(Ylst),T97);
+  T95 = CALL1(CHKREF(Ylst),CHKREF(lit_102));
+  T94 = CALL1(CHKREF(Ylst),CHKREF(lit_106));
+  T93 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
+  T92 = CALLN(CHKREF(YmacrosYcat),4,T95,T94,T93,Ynil);
+  T91 = CALL1(CHKREF(Ylst),T92);
+  T90 = CALLN(CHKREF(YmacrosYcat),5,T112,T111,T96,T91,Ynil);
+  T89 = CALL1(CHKREF(Ylst),T90);
+  T88 = CALL1(CHKREF(Ylst),CHKREF(lit_92));
+  T87 = CALL1(CHKREF(Ylst),CHKREF(lit_105));
+  T86 = CALL1(CHKREF(Ylst),CHKREF(lit_104));
+  T85 = CALL1(CHKREF(Ylst),CHKREF(lit_89));
+  T84 = CALL1(CHKREF(Ylst),classF1237);
+  T83 = CALL3(CHKREF(YmacrosYcat),T85,T84,Ynil);
+  T82 = CALL1(CHKREF(Ylst),T83);
+  T81 = CALL3(CHKREF(YmacrosYcat),T86,T82,Ynil);
+  T80 = CALL1(CHKREF(Ylst),T81);
+  T79 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
+  T78 = CALL1(CHKREF(Ylst),CHKREF(lit_103));
+  T77 = CALL3(CHKREF(YmacrosYcat),T79,T78,Ynil);
+  T76 = CALL1(CHKREF(Ylst),T77);
+  T75 = CALL1(CHKREF(Ylst),CHKREF(lit_88));
+  T74 = CALL1(CHKREF(Ylst),CHKREF(lit_103));
+  T73 = CALLN(CHKREF(YmacrosYcat),5,T80,T76,T75,T74,Ynil);
+  T72 = CALL1(CHKREF(Ylst),T73);
   T71 = CALL1(CHKREF(Ylst),CHKREF(lit_102));
-  T70 = CALLN(CHKREF(YmacrosYcat),5,T77,T73,T72,T71,Ynil);
-  T69 = CALL1(CHKREF(Ylst),T70);
-  T68 = CALL1(CHKREF(Ylst),CHKREF(lit_101));
-  T67 = CALL1(CHKREF(Ylst),CHKREF(lit_100));
-  T66 = CALL1(CHKREF(Ylst),CHKREF(lit_99));
-  T65 = CALL1(CHKREF(Ylst),classF1237);
-  T64 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
-  T63 = CALLN(CHKREF(YmacrosYcat),4,T66,T65,T64,Ynil);
-  T62 = CALL1(CHKREF(Ylst),T63);
-  T61 = CALLN(CHKREF(YmacrosYcat),4,T68,T67,T62,Ynil);
-  T60 = CALL1(CHKREF(Ylst),T61);
-  T59 = CALLN(CHKREF(YmacrosYcat),5,T82,T81,T69,T60,Ynil);
+  T70 = CALL1(CHKREF(Ylst),CHKREF(lit_101));
+  T69 = CALL1(CHKREF(Ylst),CHKREF(lit_100));
+  T68 = CALL1(CHKREF(Ylst),classF1237);
+  T67 = CALL1(CHKREF(Ylst),CHKREF(lit_9));
+  T66 = CALLN(CHKREF(YmacrosYcat),4,T69,T68,T67,Ynil);
+  T65 = CALL1(CHKREF(Ylst),T66);
+  T64 = CALLN(CHKREF(YmacrosYcat),4,T71,T70,T65,Ynil);
+  T63 = CALL1(CHKREF(Ylst),T64);
+  T62 = CALLN(CHKREF(YmacrosYcat),5,T88,T87,T72,T63,Ynil);
+  T61 = CALL1(CHKREF(Ylst),T62);
+  T60 = CALL1(CHKREF(Ylst),CHKREF(lit_99));
+  T59 = BOXVAL(nameF1235);
   T58 = CALL1(CHKREF(Ylst),T59);
-  T57 = CALL1(CHKREF(Ylst),CHKREF(lit_98));
-  T56 = BOXVAL(nameF1235);
-  T55 = CALL1(CHKREF(Ylst),T56);
-  T54 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
-  T53 = CALL1(CHKREF(Ylst),CHKREF(lit_92));
-  T52 = CALL3(CHKREF(YmacrosYcat),T54,T53,Ynil);
-  T51 = CALL1(CHKREF(Ylst),T52);
+  T57 = CALL1(CHKREF(Ylst),CHKREF(lit_96));
+  T56 = CALL1(CHKREF(Ylst),CHKREF(lit_93));
+  T55 = CALL3(CHKREF(YmacrosYcat),T57,T56,Ynil);
+  T54 = CALL1(CHKREF(Ylst),T55);
+  T53 = CALL1(CHKREF(Ylst),CHKREF(lit_98));
+  T52 = CALL1(CHKREF(Ylst),classF1237);
+  T51 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
   T50 = CALL1(CHKREF(Ylst),CHKREF(lit_97));
-  T49 = CALL1(CHKREF(Ylst),classF1237);
-  T48 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
-  T47 = CALL1(CHKREF(Ylst),CHKREF(lit_96));
+  T49 = CALL1(CHKREF(Ylst),CHKREF(lit_96));
+  T48 = CALLN(CHKREF(YmacrosYcat),4,T51,T50,T49,Ynil);
+  T47 = CALL1(CHKREF(Ylst),T48);
   T46 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
-  T45 = CALLN(CHKREF(YmacrosYcat),4,T48,T47,T46,Ynil);
-  T44 = CALL1(CHKREF(Ylst),T45);
-  T43 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
-  T42 = CALL1(CHKREF(Ylst),CHKREF(lit_93));
-  T41 = CALL1(CHKREF(Ylst),CHKREF(lit_92));
-  T40 = CALLN(CHKREF(YmacrosYcat),4,T43,T42,T41,Ynil);
-  T39 = CALL1(CHKREF(Ylst),T40);
-  T38 = CALLN(CHKREF(YmacrosYcat),5,T50,T49,T44,T39,Ynil);
-  T37 = CALL1(CHKREF(Ylst),T38);
-  T36 = CALLN(CHKREF(YmacrosYcat),5,T57,T55,T51,T37,Ynil);
-  T35 = CALL1(CHKREF(Ylst),T36);
-  T34 = CALL1(CHKREF(Ylst),CHKREF(lit_91));
-  T33 = CALL1(CHKREF(Ylst),CHKREF(lit_90));
-  T32 = CALL1(CHKREF(Ylst),CHKREF(lit_89));
-  T31 = CALL1(CHKREF(Ylst),classF1237);
-  T30 = CALL3(CHKREF(YmacrosYcat),T32,T31,Ynil);
+  T45 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
+  T44 = CALL1(CHKREF(Ylst),CHKREF(lit_93));
+  T43 = CALLN(CHKREF(YmacrosYcat),4,T46,T45,T44,Ynil);
+  T42 = CALL1(CHKREF(Ylst),T43);
+  T41 = CALLN(CHKREF(YmacrosYcat),5,T53,T52,T47,T42,Ynil);
+  T40 = CALL1(CHKREF(Ylst),T41);
+  T39 = CALLN(CHKREF(YmacrosYcat),5,T60,T58,T54,T40,Ynil);
+  T38 = CALL1(CHKREF(Ylst),T39);
+  T37 = CALL1(CHKREF(Ylst),CHKREF(lit_92));
+  T36 = CALL1(CHKREF(Ylst),CHKREF(lit_91));
+  T35 = CALL1(CHKREF(Ylst),CHKREF(lit_90));
+  T34 = CALL1(CHKREF(Ylst),CHKREF(lit_89));
+  T33 = CALL1(CHKREF(Ylst),classF1237);
+  T32 = CALL3(CHKREF(YmacrosYcat),T34,T33,Ynil);
+  T31 = CALL1(CHKREF(Ylst),T32);
+  T30 = CALL3(CHKREF(YmacrosYcat),T35,T31,Ynil);
   T29 = CALL1(CHKREF(Ylst),T30);
   T28 = CALL1(CHKREF(Ylst),CHKREF(lit_88));
   T27 = CALL1(CHKREF(Ylst),classF1237);
   T26 = CALLN(CHKREF(YmacrosYcat),4,T29,T28,T27,Ynil);
   T25 = CALL1(CHKREF(Ylst),T26);
   T24 = CALL1(CHKREF(Ylst),DemptyF1238);
-  T23 = CALLN(CHKREF(YmacrosYcat),5,T34,T33,T25,T24,Ynil);
+  T23 = CALLN(CHKREF(YmacrosYcat),5,T37,T36,T25,T24,Ynil);
   T22 = CALL1(CHKREF(Ylst),T23);
-  T21 = CALLN(CHKREF(YmacrosYcat),9,T150,T139,T121,T104,T83,T58,T35,T22,Ynil);
+  T21 = CALLN(CHKREF(YmacrosYcat),9,T159,T151,T133,T113,T89,T61,T38,T22,Ynil);
   T20 = T21;
   T19 = T20;
   T4 = T19;
@@ -2896,7 +2917,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_x_1244_115) {
+FUNCODEDEF(fun_x_1246_115) {
   ARG(args_, 0);
   ARG(msg_, 1);
   P T0;
@@ -2908,39 +2929,39 @@ loop:
 
 FUNCODEDEF(fun_116) {
   ARG(return_, 0);
-  P x_1243F1248;
-  P x_1243F1247;
+  P x_1245F1248;
+  P x_1245F1247;
   P nameF1246;
-  P x_1243F1245;
-  P x_1244F1244;
+  P x_1245F1245;
+  P x_1246F1244;
   P T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4;
   P T3,T2,T1,T0;
   P a1;
 loop:
-  T19 = FUNSHELL(0,fun_x_1244_115,1);
-  x_1244F1244 = T19;
-  FUNINIT(x_1244F1244, 1,return_);
-  x_1243F1245 = FREEREF(0);
+  T19 = FUNSHELL(0,fun_x_1246_115,1);
+  x_1246F1244 = T19;
+  FUNINIT(x_1246F1244, 1,return_);
+  x_1245F1245 = FREEREF(0);
   nameF1246 = YPfalse;
   nameF1246 = BOXFAB(nameF1246);
-  T11 = CALL2(CHKREF(YisaQ),x_1243F1245,CHKREF(YLlstG));
+  T11 = CALL2(CHKREF(YisaQ),x_1245F1245,CHKREF(YLlstG));
   if (T11 != YPfalse) {
-    T10 = CALL3(CHKREF(YmacrosYmatch_atom),x_1243F1245,CHKREF(lit_118),x_1244F1244);
-    x_1243F1247 = T10;
-    T8 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1243F1247,x_1244F1244);
+    T10 = CALL3(CHKREF(YmacrosYmatch_atom),x_1245F1245,CHKREF(lit_120),x_1246F1244);
+    x_1245F1247 = T10;
+    T8 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1245F1247,x_1246F1244);
     BOXVAL(nameF1246) = T8;
-    T9 = CALL1(CHKREF(Ytail),x_1243F1247);
-    x_1243F1248 = T9;
-    T7 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1243F1248,x_1244F1244);
+    T9 = CALL1(CHKREF(Ytail),x_1245F1247);
+    x_1245F1248 = T9;
+    T7 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1245F1248,x_1246F1244);
     T6 = T7;
     T5 = T6;
   } else {
-    T4 = CALL2(x_1244F1244,CHKREF(lit_112),x_1243F1245);
+    T4 = CALL2(x_1246F1244,CHKREF(lit_114),x_1245F1245);
   }
-  T18 = CALL1(CHKREF(Ylst),CHKREF(lit_113));
+  T18 = CALL1(CHKREF(Ylst),CHKREF(lit_115));
   T17 = BOXVAL(nameF1246);
   T16 = CALL1(CHKREF(Ylst),T17);
-  T15 = CALL1(CHKREF(Ylst),CHKREF(lit_117));
+  T15 = CALL1(CHKREF(Ylst),CHKREF(lit_119));
   T14 = CALL2(CHKREF(YmacrosYcat),T15,Ynil);
   T13 = CALL1(CHKREF(Ylst),T14);
   T12 = CALLN(CHKREF(YmacrosYcat),4,T18,T16,T13,Ynil);
@@ -3974,28 +3995,28 @@ FUNCODEDEF(fun_224) {
   ARG(r_, 1);
   ARG(e_, 2);
   ARG(f_, 3);
-  P x_1246F1253;
-  P x_1245F1252;
+  P x_1248F1253;
+  P x_1247F1252;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3,a4;
 loop:
   T12 = CALL1(CHKREF(YastYbinding_kind),f_);
-  x_1245F1252 = T12;
-  T11 = CALL2(CHKREF(YmacrosYEE),x_1245F1252,CHKREF(lit_190));
+  x_1247F1252 = T12;
+  T11 = CALL2(CHKREF(YmacrosYEE),x_1247F1252,CHKREF(lit_192));
   if (T11 != YPfalse) {
     T10 = CALL1(CHKREF(YastYbinding_handler),f_);
     T9 = CALL3(T10,e_,r_,tailQ_);
     T1 = T9;
   } else {
-    x_1246F1253 = x_1245F1252;
-    T8 = CALL2(CHKREF(YmacrosYEE),x_1246F1253,CHKREF(lit_189));
+    x_1248F1253 = x_1247F1252;
+    T8 = CALL2(CHKREF(YmacrosYEE),x_1248F1253,CHKREF(lit_191));
     if (T8 != YPfalse) {
       T7 = CALL1(CHKREF(YastYbinding_handler),f_);
       T6 = CALL3(T7,e_,r_,tailQ_);
       T5 = CALL3(CHKREF(YastYobjectify),T6,r_,tailQ_);
       T3 = T5;
     } else {
-      T4 = CALL2(CHKREF(Yerror),CHKREF(lit_188),f_);
+      T4 = CALL2(CHKREF(Yerror),CHKREF(lit_190),f_);
       T3 = T4;
     }
     T2 = T3;
@@ -4419,7 +4440,7 @@ loop:
       T5 = CALL3(CHKREF(YPisa),T17,T13,T6);
       T3 = T5;
     } else {
-      T4 = CALL3(CHKREF(YastYobjectify_error),CHKREF(lit_206),f_,eT_);
+      T4 = CALL3(CHKREF(YastYobjectify_error),CHKREF(lit_208),f_,eT_);
       T3 = T4;
     }
     T2 = T3;
@@ -4446,7 +4467,7 @@ loop:
   } else {
     T8 = CALL1(CHKREF(YmacrosYemptyQ),eT_);
     if (T8 != YPfalse) {
-      T7 = CALL3(CHKREF(YastYobjectify_error),CHKREF(lit_210),FREEREF(1),eT_);
+      T7 = CALL3(CHKREF(YastYobjectify_error),CHKREF(lit_212),FREEREF(1),eT_);
       T1 = T7;
     } else {
       T6 = CALL1(CHKREF(Yhead),eT_);
@@ -4468,13 +4489,13 @@ FUNCODEDEF(fun_pack_nary_args_247) {
 loop:
   T6 = CALL1(CHKREF(YmacrosYemptyQ),eT_);
   if (T6 != YPfalse) {
-    T5 = CALL2(CHKREF(Ylst),CHKREF(lit_213),Ynil);
+    T5 = CALL2(CHKREF(Ylst),CHKREF(lit_215),Ynil);
     T0 = T5;
   } else {
     T4 = CALL1(CHKREF(Yhead),eT_);
     T3 = CALL1(CHKREF(Ytail),eT_);
     T2 = KCALL1(FREEREF(0),T3);
-    T1 = CALL3(CHKREF(Ylst),CHKREF(lit_212),T4,T2);
+    T1 = CALL3(CHKREF(Ylst),CHKREF(lit_214),T4,T2);
     T0 = T1;
   }
   QRET(T0);
@@ -4563,7 +4584,7 @@ loop:
     T3 = CALL3(CHKREF(YastYobjectify),T4,r_,tailQ_);
     T1 = T3;
   } else {
-    T2 = CALL2(CHKREF(YastYobjectify_error),CHKREF(lit_216),e_);
+    T2 = CALL2(CHKREF(YastYobjectify_error),CHKREF(lit_218),e_);
     T1 = T2;
   }
   T0 = T1;
@@ -4642,11 +4663,20 @@ loop:
 FUNCODEDEF(YastYupdate_binding_kind) {
   ARG(new_kind_, 0);
   ARG(binding_, 1);
-  P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P tmpF1278;
+  P T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
-  T10 = CALL1(CHKREF(YastYbinding_kind),binding_);
-  T9 = CALL2(CHKREF(YruntimeYNEE),T10,CHKREF(lit_1));
+  T13 = CALL1(CHKREF(YastYbinding_kind),binding_);
+  T12 = CALL2(CHKREF(YruntimeYNEE),T13,CHKREF(lit_1));
+  tmpF1278 = T12;
+  if (tmpF1278 != YPfalse) {
+    T10 = tmpF1278;
+  } else {
+    T11 = CALL2(CHKREF(YmacrosYEE),new_kind_,CHKREF(lit_192));
+    T10 = T11;
+  }
+  T9 = T10;
   if (T9 != YPfalse) {
     T8 = CALL2(CHKREF(YastYbinding_kind_setter),new_kind_,binding_);
     T0 = T8;
@@ -4661,7 +4691,7 @@ loop:
       } else {
         if (YPtrue != YPfalse) {
           T5 = CALL1(CHKREF(YastYbinding_name),binding_);
-          T4 = CALL3(CHKREF(Yerror),CHKREF(lit_222),T5,new_kind_);
+          T4 = CALL3(CHKREF(Yerror),CHKREF(lit_224),T5,new_kind_);
           T3 = T4;
         } else {
           T3 = YPfalse;
@@ -4680,85 +4710,85 @@ FUNCODEDEF(fun_256) {
   ARG(defining_methodQ_, 1);
   ARG(name_, 2);
   ARG(r_, 3);
-  P bindingF1286;
-  P x_1247F1285;
-  P foreignQF1284;
-  P tmpF1283;
-  P bindingF1282;
-  P mod_nameF1281;
-  P modF1280;
-  P grF1279;
-  P existing_bindingF1278;
+  P bindingF1287;
+  P x_1249F1286;
+  P foreignQF1285;
+  P tmpF1284;
+  P bindingF1283;
+  P mod_nameF1282;
+  P modF1281;
+  P grF1280;
+  P existing_bindingF1279;
   P T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21;
   P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
   P T4,T3,T2,T1,T0;
   P a1,a2,a3,a4;
 loop:
   T36 = CALL2(CHKREF(YastYfind_binding),name_,r_);
-  existing_bindingF1278 = T36;
+  existing_bindingF1279 = T36;
   T35 = CALL1(CHKREF(YastYfind_static_global_environment),r_);
-  grF1279 = T35;
-  T34 = CALL1(CHKREF(YastYenvironment_module),grF1279);
-  modF1280 = T34;
-  if (existing_bindingF1278 != YPfalse) {
-    T33 = CALL2(CHKREF(YastYbinding_native_toQ),existing_bindingF1278,modF1280);
-    tmpF1283 = T33;
-    if (tmpF1283 != YPfalse) {
-      T32 = tmpF1283;
+  grF1280 = T35;
+  T34 = CALL1(CHKREF(YastYenvironment_module),grF1280);
+  modF1281 = T34;
+  if (existing_bindingF1279 != YPfalse) {
+    T33 = CALL2(CHKREF(YastYbinding_native_toQ),existing_bindingF1279,modF1281);
+    tmpF1284 = T33;
+    if (tmpF1284 != YPfalse) {
+      T32 = tmpF1284;
     } else {
       T32 = defining_methodQ_;
     }
     T31 = T32;
     T30 = CALL1(CHKREF(Ynot),T31);
-    foreignQF1284 = T30;
-    T29 = CALL1(CHKREF(YastYbinding_freeQ),existing_bindingF1278);
+    foreignQF1285 = T30;
+    T29 = CALL1(CHKREF(YastYbinding_freeQ),existing_bindingF1279);
     if (T29 != YPfalse) {
-      CALL2(CHKREF(YastYbinding_freeQ_setter),YPfalse,existing_bindingF1278);
-      if (foreignQF1284 != YPfalse) {
-        x_1247F1285 = grF1279;
-        T28 = CALL1(CHKREF(YastYenvironment_implements),x_1247F1285);
-        T27 = CALL2(CHKREF(YruntimeYpush),T28,existing_bindingF1278);
-        T26 = CALL2(CHKREF(YastYenvironment_implements_setter),T27,x_1247F1285);
+      CALL2(CHKREF(YastYbinding_freeQ_setter),YPfalse,existing_bindingF1279);
+      if (foreignQF1285 != YPfalse) {
+        x_1249F1286 = grF1280;
+        T28 = CALL1(CHKREF(YastYenvironment_implements),x_1249F1286);
+        T27 = CALL2(CHKREF(YruntimeYpush),T28,existing_bindingF1279);
+        T26 = CALL2(CHKREF(YastYenvironment_implements_setter),T27,x_1249F1286);
         T25 = T26;
         T24 = T25;
       } else {
         T24 = YPfalse;
       }
     } else {
-      if (foreignQF1284 != YPfalse) {
-        T23 = CALL1(CHKREF(YastYmodule_name),modF1280);
-        T22 = CALL1(CHKREF(YastYbinding_module_name),existing_bindingF1278);
-        T21 = CALLN(CHKREF(YruntimeYformat),5,CHKREF(YruntimeYout),CHKREF(lit_227),T23,name_,T22);
+      if (foreignQF1285 != YPfalse) {
+        T23 = CALL1(CHKREF(YastYmodule_name),modF1281);
+        T22 = CALL1(CHKREF(YastYbinding_module_name),existing_bindingF1279);
+        T21 = CALLN(CHKREF(YruntimeYformat),5,CHKREF(YruntimeYout),CHKREF(lit_229),T23,name_,T22);
         T20 = T21;
       } else {
         T20 = YPfalse;
       }
     }
-    CALL2(CHKREF(YastYupdate_binding_kind),existing_bindingF1278,kind_);
-    T19 = existing_bindingF1278;
+    CALL2(CHKREF(YastYupdate_binding_kind),existing_bindingF1279,kind_);
+    T19 = existing_bindingF1279;
     T4 = T19;
   } else {
     T18 = CALL1(CHKREF(YastYfind_environment_module),r_);
     T17 = CALL1(CHKREF(YastYmodule_name),T18);
-    mod_nameF1281 = T17;
+    mod_nameF1282 = T17;
     T16 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
     T15 = (P)YPpair(CHKREF(YastYbinding_module_name),Ynil);
     T14 = (P)YPpair(CHKREF(YastYbinding_freeQ),T15);
     T13 = (P)YPpair(CHKREF(YastYbinding_name),T14);
     T12 = (P)YPpair(CHKREF(YastYbinding_kind),T13);
-    T11 = (P)YPpair(mod_nameF1281,Ynil);
+    T11 = (P)YPpair(mod_nameF1282,Ynil);
     T10 = (P)YPpair(YPfalse,T11);
     T9 = (P)YPpair(name_,T10);
     T8 = (P)YPpair(kind_,T9);
     T7 = CALL3(CHKREF(YPisa),T16,T12,T8);
-    bindingF1282 = T7;
-    CALL2(CHKREF(YastYinsert_globalX),bindingF1282,grF1279);
-    T6 = bindingF1282;
+    bindingF1283 = T7;
+    CALL2(CHKREF(YastYinsert_globalX),bindingF1283,grF1280);
+    T6 = bindingF1283;
     T5 = T6;
     T4 = T5;
   }
-  bindingF1286 = T4;
-  T3 = bindingF1286;
+  bindingF1287 = T4;
+  T3 = bindingF1287;
   T2 = T3;
   T1 = T2;
   T0 = T1;
@@ -4769,25 +4799,25 @@ FUNCODEDEF(fun_257) {
   ARG(r_, 0);
   ARG(e_, 1);
   ARG(var_, 2);
-  P defnF1289;
-  P bindingF1288;
-  P nameF1287;
+  P defnF1290;
+  P bindingF1289;
+  P nameF1288;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T11 = CALL1(CHKREF(YsyntaxYsexpr_variable_name),var_);
-  nameF1287 = T11;
-  T10 = CALLN(CHKREF(YastYast_define_binding),4,r_,nameF1287,YPfalse,CHKREF(lit_20));
-  bindingF1288 = T10;
+  nameF1288 = T11;
+  T10 = CALLN(CHKREF(YastYast_define_binding),4,r_,nameF1288,YPfalse,CHKREF(lit_20));
+  bindingF1289 = T10;
   T9 = (P)YPpair(CHKREF(YastYLdefinitionG),Ynil);
   T8 = (P)YPpair(CHKREF(YastYassignment_form),Ynil);
   T7 = (P)YPpair(CHKREF(YastYassignment_binding),T8);
   T6 = CALL3(CHKREF(YastYobjectify),e_,r_,YPfalse);
   T5 = (P)YPpair(T6,Ynil);
-  T4 = (P)YPpair(bindingF1288,T5);
+  T4 = (P)YPpair(bindingF1289,T5);
   T3 = CALL3(CHKREF(YPisa),T9,T7,T4);
-  defnF1289 = T3;
-  T2 = defnF1289;
+  defnF1290 = T3;
+  T2 = defnF1290;
   T1 = T2;
   T0 = T1;
   QRET(T0);
@@ -4797,26 +4827,26 @@ FUNCODEDEF(fun_expand_258) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
-  P expF1290;
+  P expF1291;
   P T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   if (CHKREF(YastYTmacro_tracingQT) != YPfalse) {
-    CALL2(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),CHKREF(lit_238));
+    CALL2(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),CHKREF(lit_240));
     CALL2(CHKREF(YwriteYwrite),CHKREF(YruntimeYout),x_);
-    T0 = CALL2(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),CHKREF(lit_237));
+    T0 = CALL2(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),CHKREF(lit_239));
   } else {
   }
   T4 = CALL1(CHKREF(Ylst),x_);
   T3 = CALL2(CHKREF(Yapply),FREEREF(0),T4);
-  expF1290 = T3;
+  expF1291 = T3;
   if (CHKREF(YastYTmacro_tracingQT) != YPfalse) {
-    CALL2(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),CHKREF(lit_236));
-    CALL2(CHKREF(YwriteYwrite),CHKREF(YruntimeYout),expF1290);
-    T2 = CALL2(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),CHKREF(lit_235));
+    CALL2(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),CHKREF(lit_238));
+    CALL2(CHKREF(YwriteYwrite),CHKREF(YruntimeYout),expF1291);
+    T2 = CALL2(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),CHKREF(lit_237));
   } else {
   }
-  T1 = expF1290;
+  T1 = expF1291;
   QRET(T1);
 }
 
@@ -4825,29 +4855,29 @@ FUNCODEDEF(YPPmacro) {
   ARG(expander_, 1);
   ARG(name_, 2);
   ARG(modname_, 3);
-  P bindingF1294;
-  P envF1293;
-  P tmpF1292;
-  P expandF1291;
+  P bindingF1295;
+  P envF1294;
+  P tmpF1293;
+  P expandF1292;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3,a4;
 loop:
   T7 = FUNSHELL(0,fun_expand_258,1);
-  expandF1291 = T7;
-  FUNINIT(expandF1291, 1,expander_);
-  tmpF1292 = env_or_false_;
-  if (tmpF1292 != YPfalse) {
-    T5 = tmpF1292;
+  expandF1292 = T7;
+  FUNINIT(expandF1292, 1,expander_);
+  tmpF1293 = env_or_false_;
+  if (tmpF1293 != YPfalse) {
+    T5 = tmpF1293;
   } else {
     T6 = CALL1(CHKREF(YastYruntime_environment),modname_);
     T5 = T6;
   }
   T4 = T5;
-  envF1293 = T4;
-  T3 = CALLN(CHKREF(YastYast_define_binding),4,envF1293,name_,YPfalse,CHKREF(lit_189));
-  bindingF1294 = T3;
-  CALL2(CHKREF(YastYbinding_handler_setter),expandF1291,bindingF1294);
-  T2 = bindingF1294;
+  envF1294 = T4;
+  T3 = CALLN(CHKREF(YastYast_define_binding),4,envF1294,name_,YPfalse,CHKREF(lit_191));
+  bindingF1295 = T3;
+  CALL2(CHKREF(YastYbinding_handler_setter),expandF1292,bindingF1295);
+  T2 = bindingF1295;
   T1 = T2;
   T0 = T1;
   RET(T0);
@@ -4858,43 +4888,43 @@ FUNCODEDEF(fun_260) {
   ARG(r_, 1);
   ARG(e_, 2);
   ARG(name_, 3);
-  P bindingF1300;
-  P modnameF1299;
-  P expanderF1298;
-  P ast_expanderF1297;
-  P syntax_envF1296;
-  P sep_expanderF1295;
+  P bindingF1301;
+  P modnameF1300;
+  P expanderF1299;
+  P ast_expanderF1298;
+  P syntax_envF1297;
+  P sep_expanderF1296;
   P T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3,a4;
 loop:
   T25 = CALL1(CHKREF(YsyntaxYsexpr_make_macro_function),e_);
-  sep_expanderF1295 = T25;
+  sep_expanderF1296 = T25;
   T24 = CALL1(CHKREF(YastYfind_syntax_environment),r_);
-  syntax_envF1296 = T24;
-  T23 = CALL3(CHKREF(YastYobjectify),sep_expanderF1295,syntax_envF1296,YPfalse);
-  ast_expanderF1297 = T23;
-  T22 = CALL1(CHKREF(YastYast_evaluate),ast_expanderF1297);
-  expanderF1298 = T22;
+  syntax_envF1297 = T24;
+  T23 = CALL3(CHKREF(YastYobjectify),sep_expanderF1296,syntax_envF1297,YPfalse);
+  ast_expanderF1298 = T23;
+  T22 = CALL1(CHKREF(YastYast_evaluate),ast_expanderF1298);
+  expanderF1299 = T22;
   T21 = CALL1(CHKREF(YastYfind_environment_module),r_);
   T20 = CALL1(CHKREF(YastYmodule_name),T21);
-  modnameF1299 = T20;
+  modnameF1300 = T20;
   T19 = CALL1(CHKREF(YastYfind_static_global_environment),r_);
-  T18 = CALLN(CHKREF(YPPmacro),4,modnameF1299,name_,expanderF1298,T19);
-  bindingF1300 = T18;
+  T18 = CALLN(CHKREF(YPPmacro),4,modnameF1300,name_,expanderF1299,T19);
+  bindingF1301 = T18;
   T8 = CALL1(CHKREF(YastYfind_static_global_environment),r_);
-  T7 = CALL2(CHKREF(YruntimeYNEE),syntax_envF1296,T8);
+  T7 = CALL2(CHKREF(YruntimeYNEE),syntax_envF1297,T8);
   if (T7 != YPfalse) {
-    T6 = CALL2(CHKREF(YastYinsert_globalX),bindingF1300,syntax_envF1296);
+    T6 = CALL2(CHKREF(YastYinsert_globalX),bindingF1301,syntax_envF1297);
   } else {
   }
   if (rtQ_ != YPfalse) {
     T17 = (P)YPpair(CHKREF(YastYLast_macro_definitionG),Ynil);
     T16 = (P)YPpair(CHKREF(YastYassignment_form),Ynil);
     T15 = (P)YPpair(CHKREF(YastYassignment_binding),T16);
-    T14 = CALL3(CHKREF(YastYobjectify),sep_expanderF1295,r_,YPfalse);
+    T14 = CALL3(CHKREF(YastYobjectify),sep_expanderF1296,r_,YPfalse);
     T13 = (P)YPpair(T14,Ynil);
-    T12 = (P)YPpair(bindingF1300,T13);
+    T12 = (P)YPpair(bindingF1301,T13);
     T11 = CALL3(CHKREF(YPisa),T17,T15,T12);
     T9 = T11;
   } else {
@@ -4914,27 +4944,27 @@ FUNCODEDEF(fun_261) {
   ARG(r_, 0);
   ARG(e_, 1);
   ARG(name_, 2);
-  P defnF1303;
-  P fF1302;
-  P bindingF1301;
+  P defnF1304;
+  P fF1303;
+  P bindingF1302;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T11 = CALLN(CHKREF(YastYast_define_binding),4,r_,name_,YPfalse,CHKREF(lit_20));
-  bindingF1301 = T11;
+  bindingF1302 = T11;
   T10 = CALL3(CHKREF(YastYobjectify),e_,r_,YPfalse);
-  fF1302 = T10;
-  CALL2(CHKREF(YastYfunction_binding_setter),bindingF1301,fF1302);
+  fF1303 = T10;
+  CALL2(CHKREF(YastYfunction_binding_setter),bindingF1302,fF1303);
   T2 = CALL2(CHKREF(YastYobjectify_quotation),name_,r_);
-  CALL2(CHKREF(YastYfunction_debug_name_setter),T2,fF1302);
+  CALL2(CHKREF(YastYfunction_debug_name_setter),T2,fF1303);
   T9 = (P)YPpair(CHKREF(YastYLast_function_definitionG),Ynil);
   T8 = (P)YPpair(CHKREF(YastYassignment_form),Ynil);
   T7 = (P)YPpair(CHKREF(YastYassignment_binding),T8);
-  T6 = (P)YPpair(fF1302,Ynil);
-  T5 = (P)YPpair(bindingF1301,T6);
+  T6 = (P)YPpair(fF1303,Ynil);
+  T5 = (P)YPpair(bindingF1302,T6);
   T4 = CALL3(CHKREF(YPisa),T9,T7,T5);
-  defnF1303 = T4;
-  T3 = defnF1303;
+  defnF1304 = T4;
+  T3 = defnF1304;
   T1 = T3;
   T0 = T1;
   RET(T0);
@@ -4957,45 +4987,45 @@ FUNCODEDEF(fun_263) {
   ARG(body_, 1);
   ARG(sig_, 2);
   ARG(name_, 3);
-  P defnF1309;
-  P formF1308;
-  P bodyF1307;
-  P new_rF1306;
-  P signatureF1305;
-  P bindingF1304;
+  P defnF1310;
+  P formF1309;
+  P bodyF1308;
+  P new_rF1307;
+  P signatureF1306;
+  P bindingF1305;
   P T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3,a4;
 loop:
-  T27 = CALLN(CHKREF(YastYast_define_binding),4,r_,name_,YPfalse,CHKREF(lit_245));
-  bindingF1304 = T27;
+  T27 = CALLN(CHKREF(YastYast_define_binding),4,r_,name_,YPfalse,CHKREF(lit_247));
+  bindingF1305 = T27;
   T26 = CALL2(CHKREF(YastYobjectify_signature),sig_,r_);
-  signatureF1305 = T26;
-  T25 = CALL1(CHKREF(YastYsignature_bindings),signatureF1305);
+  signatureF1306 = T26;
+  T25 = CALL1(CHKREF(YastYsignature_bindings),signatureF1306);
   T24 = CALL2(CHKREF(YastYr_extendT),r_,T25);
-  new_rF1306 = T24;
-  T23 = CALL3(CHKREF(YastYobjectify_sequential),body_,new_rF1306,YPtrue);
-  bodyF1307 = T23;
+  new_rF1307 = T24;
+  T23 = CALL3(CHKREF(YastYobjectify_sequential),body_,new_rF1307,YPtrue);
+  bodyF1308 = T23;
   T22 = (P)YPpair(CHKREF(YastYLast_primitiveG),Ynil);
   T21 = (P)YPpair(CHKREF(YastYfunction_body),Ynil);
   T20 = (P)YPpair(CHKREF(YastYfunction_signature),T21);
   T19 = (P)YPpair(CHKREF(YastYfunction_debug_name),T20);
   T18 = (P)YPpair(CHKREF(YastYfunction_binding),T19);
   T17 = CALL2(CHKREF(YastYobjectify_quotation),name_,r_);
-  T16 = (P)YPpair(bodyF1307,Ynil);
-  T15 = (P)YPpair(signatureF1305,T16);
+  T16 = (P)YPpair(bodyF1308,Ynil);
+  T15 = (P)YPpair(signatureF1306,T16);
   T14 = (P)YPpair(T17,T15);
-  T13 = (P)YPpair(bindingF1304,T14);
+  T13 = (P)YPpair(bindingF1305,T14);
   T12 = CALL3(CHKREF(YPisa),T22,T18,T13);
-  formF1308 = T12;
+  formF1309 = T12;
   T11 = (P)YPpair(CHKREF(YastYLast_primitive_definitionG),Ynil);
   T10 = (P)YPpair(CHKREF(YastYassignment_form),Ynil);
   T9 = (P)YPpair(CHKREF(YastYassignment_binding),T10);
-  T8 = (P)YPpair(formF1308,Ynil);
-  T7 = (P)YPpair(bindingF1304,T8);
+  T8 = (P)YPpair(formF1309,Ynil);
+  T7 = (P)YPpair(bindingF1305,T8);
   T6 = CALL3(CHKREF(YPisa),T11,T9,T7);
-  defnF1309 = T6;
-  T5 = defnF1309;
+  defnF1310 = T6;
+  T5 = defnF1310;
   T4 = T5;
   T3 = T4;
   T2 = T3;
@@ -5008,36 +5038,36 @@ FUNCODEDEF(fun_264) {
   ARG(r_, 0);
   ARG(sig_, 1);
   ARG(name_, 2);
-  P defnF1313;
-  P formF1312;
-  P signatureF1311;
-  P bindingF1310;
+  P defnF1314;
+  P formF1313;
+  P signatureF1312;
+  P bindingF1311;
   P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
   P T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T20 = CALLN(CHKREF(YastYast_define_binding),4,r_,name_,YPfalse,CHKREF(lit_20));
-  bindingF1310 = T20;
+  bindingF1311 = T20;
   T19 = CALL2(CHKREF(YastYobjectify_signature),sig_,r_);
-  signatureF1311 = T19;
+  signatureF1312 = T19;
   T18 = (P)YPpair(CHKREF(YastYLast_genericG),Ynil);
   T17 = (P)YPpair(CHKREF(YastYfunction_signature),Ynil);
   T16 = (P)YPpair(CHKREF(YastYfunction_debug_name),T17);
   T15 = (P)YPpair(CHKREF(YastYfunction_binding),T16);
   T14 = CALL2(CHKREF(YastYobjectify_quotation),name_,r_);
-  T13 = (P)YPpair(signatureF1311,Ynil);
+  T13 = (P)YPpair(signatureF1312,Ynil);
   T12 = (P)YPpair(T14,T13);
-  T11 = (P)YPpair(bindingF1310,T12);
+  T11 = (P)YPpair(bindingF1311,T12);
   T10 = CALL3(CHKREF(YPisa),T18,T15,T11);
-  formF1312 = T10;
+  formF1313 = T10;
   T9 = (P)YPpair(CHKREF(YastYLast_generic_definitionG),Ynil);
   T8 = (P)YPpair(CHKREF(YastYassignment_form),Ynil);
   T7 = (P)YPpair(CHKREF(YastYassignment_binding),T8);
-  T6 = (P)YPpair(formF1312,Ynil);
-  T5 = (P)YPpair(bindingF1310,T6);
+  T6 = (P)YPpair(formF1313,Ynil);
+  T5 = (P)YPpair(bindingF1311,T6);
   T4 = CALL3(CHKREF(YPisa),T9,T7,T5);
-  defnF1313 = T4;
-  T3 = defnF1313;
+  defnF1314 = T4;
+  T3 = defnF1314;
   T2 = T3;
   T1 = T2;
   T0 = T1;
@@ -5048,37 +5078,37 @@ FUNCODEDEF(fun_265) {
   ARG(r_, 0);
   ARG(e_, 1);
   ARG(name_, 2);
-  P defnF1319;
-  P formF1318;
-  P callF1317;
-  P metF1316;
-  P genF1315;
-  P bindingF1314;
+  P defnF1320;
+  P formF1319;
+  P callF1318;
+  P metF1317;
+  P genF1316;
+  P bindingF1315;
   P T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3;
   P T2,T1,T0;
   P a1,a2,a3;
 loop:
   T18 = CALLN(CHKREF(YastYast_define_binding),4,r_,name_,YPtrue,CHKREF(lit_20));
-  bindingF1314 = T18;
-  T17 = CALL2(CHKREF(Ylst),CHKREF(lit_249),name_);
-  T16 = CALLN(CHKREF(Ylst),4,CHKREF(lit_250),T17,name_,YPfalse);
-  genF1315 = T16;
+  bindingF1315 = T18;
+  T17 = CALL2(CHKREF(Ylst),CHKREF(lit_251),name_);
+  T16 = CALLN(CHKREF(Ylst),4,CHKREF(lit_252),T17,name_,YPfalse);
+  genF1316 = T16;
   T15 = CALL3(CHKREF(YastYobjectify),e_,r_,YPfalse);
-  metF1316 = T15;
-  T14 = CALL3(CHKREF(Ylst),CHKREF(lit_248),genF1315,metF1316);
-  callF1317 = T14;
-  T13 = CALL3(CHKREF(YastYobjectify),callF1317,r_,YPfalse);
-  formF1318 = T13;
+  metF1317 = T15;
+  T14 = CALL3(CHKREF(Ylst),CHKREF(lit_250),genF1316,metF1317);
+  callF1318 = T14;
+  T13 = CALL3(CHKREF(YastYobjectify),callF1318,r_,YPfalse);
+  formF1319 = T13;
   T12 = (P)YPpair(CHKREF(YastYLast_method_definitionG),Ynil);
   T11 = (P)YPpair(CHKREF(YastYassignment_form),Ynil);
   T10 = (P)YPpair(CHKREF(YastYassignment_binding),T11);
-  T9 = (P)YPpair(formF1318,Ynil);
-  T8 = (P)YPpair(bindingF1314,T9);
+  T9 = (P)YPpair(formF1319,Ynil);
+  T8 = (P)YPpair(bindingF1315,T9);
   T7 = CALL3(CHKREF(YPisa),T12,T10,T8);
-  defnF1319 = T7;
+  defnF1320 = T7;
   T6 = CALL2(CHKREF(YastYobjectify_quotation),name_,r_);
-  CALL2(CHKREF(YastYfunction_debug_name_setter),T6,metF1316);
-  T5 = defnF1319;
+  CALL2(CHKREF(YastYfunction_debug_name_setter),T6,metF1317);
+  T5 = defnF1320;
   T4 = T5;
   T3 = T4;
   T2 = T3;
@@ -5092,26 +5122,26 @@ FUNCODEDEF(fun_266) {
   ARG(r_, 1);
   ARG(body_, 2);
   ARG(sig_, 3);
-  P bF1322;
-  P new_rF1321;
-  P signatureF1320;
+  P bF1323;
+  P new_rF1322;
+  P signatureF1321;
   P T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3,a4;
 loop:
   T15 = CALL2(CHKREF(YastYobjectify_signature),sig_,r_);
-  signatureF1320 = T15;
-  T14 = CALL1(CHKREF(YastYsignature_bindings),signatureF1320);
+  signatureF1321 = T15;
+  T14 = CALL1(CHKREF(YastYsignature_bindings),signatureF1321);
   T13 = CALL2(CHKREF(YastYr_extendT),r_,T14);
-  new_rF1321 = T13;
-  T12 = CALL3(CHKREF(YastYobjectify_sequential),body_,new_rF1321,YPtrue);
-  bF1322 = T12;
+  new_rF1322 = T13;
+  T12 = CALL3(CHKREF(YastYobjectify_sequential),body_,new_rF1322,YPtrue);
+  bF1323 = T12;
   T11 = (P)YPpair(CHKREF(YastYLast_methodG),Ynil);
   T10 = (P)YPpair(CHKREF(YastYfunction_body),Ynil);
   T9 = (P)YPpair(CHKREF(YastYfunction_signature),T10);
   T8 = (P)YPpair(CHKREF(YastYfunction_debug_name),T9);
   T7 = CALL2(CHKREF(YastYobjectify_quotation),YPfalse,r_);
-  T6 = (P)YPpair(bF1322,Ynil);
-  T5 = (P)YPpair(signatureF1320,T6);
+  T6 = (P)YPpair(bF1323,Ynil);
+  T5 = (P)YPpair(signatureF1321,T6);
   T4 = (P)YPpair(T7,T5);
   T3 = CALL3(CHKREF(YPisa),T11,T8,T4);
   T2 = T3;
@@ -5126,17 +5156,17 @@ FUNCODEDEF(fun_col_267) {
   ARG(bindings_, 2);
   ARG(naryQ_, 3);
   ARG(params_, 4);
-  P valueF1333;
-  P tmpF1332;
-  P sexpr_valueF1331;
-  P bindingF1330;
-  P nameF1329;
-  P typeF1328;
-  P stypeF1327;
-  P dottedQF1326;
-  P stypeF1325;
-  P snameF1324;
-  P paramF1323;
+  P valueF1334;
+  P tmpF1333;
+  P sexpr_valueF1332;
+  P bindingF1331;
+  P nameF1330;
+  P typeF1329;
+  P stypeF1328;
+  P dottedQF1327;
+  P stypeF1326;
+  P snameF1325;
+  P paramF1324;
   P T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46;
   P T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30;
   P T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14;
@@ -5146,17 +5176,17 @@ loop:
   T61 = CALL1(CHKREF(YmacrosYemptyQ),params_);
   if (T61 != YPfalse) {
     T60 = CALL1(CHKREF(YsyntaxYsexpr_signature_value),FREEREF(2));
-    sexpr_valueF1331 = T60;
-    tmpF1332 = sexpr_valueF1331;
-    if (tmpF1332 != YPfalse) {
-      T58 = tmpF1332;
+    sexpr_valueF1332 = T60;
+    tmpF1333 = sexpr_valueF1332;
+    if (tmpF1333 != YPfalse) {
+      T58 = tmpF1333;
     } else {
       T59 = CALL1(CHKREF(YastYdefault_type),FREEREF(0));
       T58 = T59;
     }
     T57 = T58;
     T56 = CALL3(CHKREF(YastYobjectify),T57,FREEREF(0),YPfalse);
-    valueF1333 = T56;
+    valueF1334 = T56;
     T55 = (P)YPpair(CHKREF(YastYLast_signatureG),Ynil);
     T54 = (P)YPpair(CHKREF(YastYsignature_value),Ynil);
     T53 = (P)YPpair(CHKREF(YastYsignature_naryQ),T54);
@@ -5166,7 +5196,7 @@ loop:
     T49 = CALL1(CHKREF(YruntimeYrevX),bindings_);
     T48 = CALL1(CHKREF(YruntimeYrevX),names_);
     T47 = CALL1(CHKREF(YruntimeYrevX),types_);
-    T46 = (P)YPpair(valueF1333,Ynil);
+    T46 = (P)YPpair(valueF1334,Ynil);
     T45 = (P)YPpair(naryQ_,T46);
     T44 = (P)YPpair(T47,T45);
     T43 = (P)YPpair(T48,T44);
@@ -5177,48 +5207,48 @@ loop:
     T0 = T39;
   } else {
     T38 = CALL1(CHKREF(Yhead),params_);
-    paramF1323 = T38;
-    T37 = CALL1(CHKREF(YsyntaxYsexpr_variable_name),paramF1323);
-    snameF1324 = T37;
-    T36 = CALL1(CHKREF(YsyntaxYsexpr_variable_type),paramF1323);
-    stypeF1325 = T36;
-    T35 = CALL2(CHKREF(YmacrosYEE),stypeF1325,CHKREF(YastYDsexpr_optionals_tag));
-    dottedQF1326 = T35;
-    if (dottedQF1326 != YPfalse) {
+    paramF1324 = T38;
+    T37 = CALL1(CHKREF(YsyntaxYsexpr_variable_name),paramF1324);
+    snameF1325 = T37;
+    T36 = CALL1(CHKREF(YsyntaxYsexpr_variable_type),paramF1324);
+    stypeF1326 = T36;
+    T35 = CALL2(CHKREF(YmacrosYEE),stypeF1326,CHKREF(YastYDsexpr_optionals_tag));
+    dottedQF1327 = T35;
+    if (dottedQF1327 != YPfalse) {
       T34 = CHKREF(YastYDsexpr_optionals_type_name);
     } else {
-      T34 = stypeF1325;
+      T34 = stypeF1326;
     }
-    stypeF1327 = T34;
-    T33 = CALL3(CHKREF(YastYobjectify),stypeF1327,FREEREF(0),YPfalse);
-    typeF1328 = T33;
-    T32 = CALL2(CHKREF(YastYobjectify_quotation),snameF1324,FREEREF(0));
-    nameF1329 = T32;
+    stypeF1328 = T34;
+    T33 = CALL3(CHKREF(YastYobjectify),stypeF1328,FREEREF(0),YPfalse);
+    typeF1329 = T33;
+    T32 = CALL2(CHKREF(YastYobjectify_quotation),snameF1325,FREEREF(0));
+    nameF1330 = T32;
     T31 = (P)YPpair(CHKREF(YastYLlocal_bindingG),Ynil);
     T30 = (P)YPpair(CHKREF(YastYbinding_dottedQ),Ynil);
     T29 = (P)YPpair(CHKREF(YastYbinding_type),T30);
     T28 = (P)YPpair(CHKREF(YastYbinding_name),T29);
-    T27 = (P)YPpair(dottedQF1326,Ynil);
-    T26 = (P)YPpair(typeF1328,T27);
-    T25 = (P)YPpair(snameF1324,T26);
+    T27 = (P)YPpair(dottedQF1327,Ynil);
+    T26 = (P)YPpair(typeF1329,T27);
+    T25 = (P)YPpair(snameF1325,T26);
     T24 = CALL3(CHKREF(YPisa),T31,T28,T25);
-    bindingF1330 = T24;
+    bindingF1331 = T24;
     T23 = CALL1(CHKREF(Ytail),params_);
-    T22 = CALL2(CHKREF(YmacrosYpair),bindingF1330,bindings_);
+    T22 = CALL2(CHKREF(YmacrosYpair),bindingF1331,bindings_);
     T21 = (P)YPpair(CHKREF(YastYLfab_listG),Ynil);
     T20 = (P)YPpair(CHKREF(Ytail),Ynil);
     T19 = (P)YPpair(CHKREF(Yhead),T20);
     T18 = (P)YPpair(names_,Ynil);
-    T17 = (P)YPpair(nameF1329,T18);
+    T17 = (P)YPpair(nameF1330,T18);
     T16 = CALL3(CHKREF(YPisa),T21,T19,T17);
     T15 = (P)YPpair(CHKREF(YastYLfab_listG),Ynil);
     T14 = (P)YPpair(CHKREF(Ytail),Ynil);
     T13 = (P)YPpair(CHKREF(Yhead),T14);
     T12 = (P)YPpair(types_,Ynil);
-    T11 = (P)YPpair(typeF1328,T12);
+    T11 = (P)YPpair(typeF1329,T12);
     T10 = CALL3(CHKREF(YPisa),T15,T13,T11);
     a1 = T23;
-    a2 = dottedQF1326;
+    a2 = dottedQF1327;
     a3 = T22;
     a4 = T16;
     a5 = T10;
@@ -5244,19 +5274,19 @@ loop:
 FUNCODEDEF(fun_268) {
   ARG(r_, 0);
   ARG(sig_, 1);
-  P colF1335;
-  P sexpr_paramsF1334;
+  P colF1336;
+  P sexpr_paramsF1335;
   P T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T6 = CALL1(CHKREF(YsyntaxYsexpr_signature_parameters),sig_);
-  sexpr_paramsF1334 = T6;
+  sexpr_paramsF1335 = T6;
   T5 = FUNSHELL(1,fun_col_267,3);
-  colF1335 = T5;
-  FUNINIT(colF1335, 3,r_,colF1335,sig_);
+  colF1336 = T5;
+  FUNINIT(colF1336, 3,r_,colF1336,sig_);
   T4 = CALL1(CHKREF(YruntimeYempty),CHKREF(YastYLfab_listG));
   T3 = CALL1(CHKREF(YruntimeYempty),CHKREF(YastYLfab_listG));
-  T2 = KCALLN(colF1335,5,sexpr_paramsF1334,YPfalse,Ynil,T4,T3);
+  T2 = KCALLN(colF1336,5,sexpr_paramsF1335,YPfalse,Ynil,T4,T3);
   T1 = T2;
   T0 = T1;
   RET(T0);
@@ -5298,22 +5328,22 @@ loop:
 FUNCODEDEF(fun_loop_270) {
   ARG(r_, 0);
   ARG(i_, 1);
-  P findF1336;
+  P findF1337;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T7 = CALL2(CHKREF(YisaQ),r_,CHKREF(YastYLstatic_local_environmentG));
   if (T7 != YPfalse) {
     T6 = FUNSHELL(1,fun_find_269,5);
-    findF1336 = T6;
-    FUNINIT(findF1336, 5,findF1336,i_,FREEREF(0),r_,FREEREF(1));
+    findF1337 = T6;
+    FUNINIT(findF1337, 5,findF1337,i_,FREEREF(0),r_,FREEREF(1));
     T5 = CALL1(CHKREF(YastYenvironment_bindings),r_);
-    T4 = KCALL2(findF1336,YPint((P)0),T5);
+    T4 = KCALL2(findF1337,YPint((P)0),T5);
     T3 = T4;
     T0 = T3;
   } else {
     T2 = CALL1(CHKREF(YastYbinding_name),FREEREF(0));
-    T1 = CALL3(CHKREF(Yerror),CHKREF(lit_263),T2,r_);
+    T1 = CALL3(CHKREF(Yerror),CHKREF(lit_265),T2,r_);
     T0 = T1;
   }
   QRET(T0);
@@ -5322,14 +5352,14 @@ loop:
 FUNCODEDEF(fun_271) {
   ARG(r_, 0);
   ARG(binding_, 1);
-  P loopF1337;
+  P loopF1338;
   P T2,T1,T0;
   P a1,a2;
 loop:
   T2 = FUNSHELL(1,fun_loop_270,2);
-  loopF1337 = T2;
-  FUNINIT(loopF1337, 2,binding_,loopF1337);
-  T1 = KCALL2(loopF1337,YPint((P)0),r_);
+  loopF1338 = T2;
+  FUNINIT(loopF1338, 2,binding_,loopF1338);
+  T1 = KCALL2(loopF1338,YPint((P)0),r_);
   T0 = T1;
   RET(T0);
 }
@@ -5338,31 +5368,31 @@ FUNCODEDEF(fun_272) {
   ARG(r_, 0);
   ARG(b_, 1);
   ARG(n_, 2);
-  P tup36F1342;
-  P jF1341;
-  P tup36F1340;
-  P iF1339;
-  P tup36F1338;
+  P tup36F1343;
+  P jF1342;
+  P tup36F1341;
+  P iF1340;
+  P tup36F1339;
   P T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2;
   P T1,T0;
   P a1,a2,a3;
 loop:
   T17 = CALL2(CHKREF(YastYcompute_local_reference_offsets),b_,r_);
-  tup36F1338 = T17;
-  T16 = CALL1(CHKREF(Yhead),tup36F1338);
-  iF1339 = T16;
-  T15 = CALL1(CHKREF(Ytail),tup36F1338);
-  tup36F1340 = T15;
-  T14 = CALL1(CHKREF(Yhead),tup36F1340);
-  jF1341 = T14;
-  T13 = CALL1(CHKREF(Ytail),tup36F1340);
-  tup36F1342 = T13;
+  tup36F1339 = T17;
+  T16 = CALL1(CHKREF(Yhead),tup36F1339);
+  iF1340 = T16;
+  T15 = CALL1(CHKREF(Ytail),tup36F1339);
+  tup36F1341 = T15;
+  T14 = CALL1(CHKREF(Yhead),tup36F1341);
+  jF1342 = T14;
+  T13 = CALL1(CHKREF(Ytail),tup36F1341);
+  tup36F1343 = T13;
   T12 = (P)YPpair(CHKREF(YastYLlocal_referenceG),Ynil);
   T11 = (P)YPpair(CHKREF(YastYreference_frame_offset),Ynil);
   T10 = (P)YPpair(CHKREF(YastYreference_frame_number),T11);
   T9 = (P)YPpair(CHKREF(YastYreference_binding),T10);
-  T8 = (P)YPpair(jF1341,Ynil);
-  T7 = (P)YPpair(iF1339,T8);
+  T8 = (P)YPpair(jF1342,Ynil);
+  T7 = (P)YPpair(iF1340,T8);
   T6 = (P)YPpair(b_,T7);
   T5 = CALL3(CHKREF(YPisa),T12,T9,T6);
   T4 = T5;
@@ -5375,30 +5405,30 @@ loop:
 
 FUNCODEDEF(fun_273) {
   ARG(b_, 0);
-  P x_1250F1345;
-  P x_1249F1344;
-  P x_1248F1343;
+  P x_1252F1346;
+  P x_1251F1345;
+  P x_1250F1344;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T11 = CALL1(CHKREF(YastYbinding_kind),b_);
-  x_1248F1343 = T11;
-  T10 = CALL2(CHKREF(YmacrosYEE),x_1248F1343,CHKREF(lit_20));
+  x_1250F1344 = T11;
+  T10 = CALL2(CHKREF(YmacrosYEE),x_1250F1344,CHKREF(lit_20));
   if (T10 != YPfalse) {
     T1 = CHKREF(YastYLglobal_referenceG);
   } else {
-    x_1249F1344 = x_1248F1343;
-    T9 = CALL2(CHKREF(YmacrosYEE),x_1249F1344,CHKREF(lit_245));
+    x_1251F1345 = x_1250F1344;
+    T9 = CALL2(CHKREF(YmacrosYEE),x_1251F1345,CHKREF(lit_247));
     if (T9 != YPfalse) {
       T3 = CHKREF(YastYLpredefined_referenceG);
     } else {
-      x_1250F1345 = x_1249F1344;
-      T8 = CALL2(CHKREF(YmacrosYEE),x_1250F1345,CHKREF(lit_1));
+      x_1252F1346 = x_1251F1345;
+      T8 = CALL2(CHKREF(YmacrosYEE),x_1252F1346,CHKREF(lit_1));
       if (T8 != YPfalse) {
         T5 = CHKREF(YastYLruntime_referenceG);
       } else {
         T7 = CALL1(CHKREF(YastYbinding_kind),b_);
-        T6 = CALL2(CHKREF(Yerror),CHKREF(lit_270),T7);
+        T6 = CALL2(CHKREF(Yerror),CHKREF(lit_272),T7);
         T5 = T6;
       }
       T4 = T5;
@@ -5415,20 +5445,20 @@ FUNCODEDEF(fun_274) {
   ARG(r_, 0);
   ARG(b_, 1);
   ARG(n_, 2);
-  P tmpF1348;
-  P LrefGF1347;
-  P x_1251F1346;
+  P tmpF1349;
+  P LrefGF1348;
+  P x_1253F1347;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T12 = CALL1(CHKREF(YastYbinding_kind),b_);
-  x_1251F1346 = T12;
-  T11 = CALL2(CHKREF(YmacrosYEE),x_1251F1346,CHKREF(lit_190));
-  tmpF1348 = T11;
-  if (tmpF1348 != YPfalse) {
-    T9 = tmpF1348;
+  x_1253F1347 = T12;
+  T11 = CALL2(CHKREF(YmacrosYEE),x_1253F1347,CHKREF(lit_192));
+  tmpF1349 = T11;
+  if (tmpF1349 != YPfalse) {
+    T9 = tmpF1349;
   } else {
-    T10 = CALL2(CHKREF(YmacrosYEE),x_1251F1346,CHKREF(lit_189));
+    T10 = CALL2(CHKREF(YmacrosYEE),x_1253F1347,CHKREF(lit_191));
     T9 = T10;
   }
   T8 = T9;
@@ -5436,8 +5466,8 @@ loop:
     T1 = b_;
   } else {
     T7 = CALL1(CHKREF(YastYbinding_reference_prototype),b_);
-    LrefGF1347 = T7;
-    T6 = (P)YPpair(LrefGF1347,Ynil);
+    LrefGF1348 = T7;
+    T6 = (P)YPpair(LrefGF1348,Ynil);
     T5 = (P)YPpair(CHKREF(YastYreference_binding),Ynil);
     T4 = (P)YPpair(b_,Ynil);
     T3 = CALL3(CHKREF(YPisa),T6,T5,T4);
@@ -5464,25 +5494,25 @@ FUNCODEDEF(fun_276) {
   P T0;
   P a1;
 loop:
-  T0 = CALL3(CHKREF(YastYobjectify),CHKREF(lit_272),r_,YPfalse);
+  T0 = CALL3(CHKREF(YastYobjectify),CHKREF(lit_274),r_,YPfalse);
   QRET(T0);
 }
 
 FUNCODEDEF(fun_277) {
   ARG(r_, 0);
   ARG(name_, 1);
-  P tmpF1351;
-  P bF1350;
-  P grF1349;
+  P tmpF1352;
+  P bF1351;
+  P grF1350;
   P T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T24 = CALL1(CHKREF(YastYfind_static_global_environment),r_);
-  grF1349 = T24;
-  T23 = CALL1(CHKREF(YastYenvironment_allows_foreign_namesQ),grF1349);
-  tmpF1351 = T23;
-  if (tmpF1351 != YPfalse) {
+  grF1350 = T24;
+  T23 = CALL1(CHKREF(YastYenvironment_allows_foreign_namesQ),grF1350);
+  tmpF1352 = T23;
+  if (tmpF1352 != YPfalse) {
     T22 = CALL1(CHKREF(YastYforeign_nameQ),name_);
     T21 = T22;
   } else {
@@ -5505,11 +5535,11 @@ loop:
     T9 = (P)YPpair(CHKREF(lit_20),T10);
     T8 = (P)YPpair(YPtrue,T9);
     T7 = CALL3(CHKREF(YPisa),T18,T14,T8);
-    bF1350 = T7;
-    CALL2(CHKREF(YastYinsert_globalX),bF1350,grF1349);
+    bF1351 = T7;
+    CALL2(CHKREF(YastYinsert_globalX),bF1351,grF1350);
     T6 = (P)YPpair(CHKREF(YastYLglobal_referenceG),Ynil);
     T5 = (P)YPpair(CHKREF(YastYreference_binding),Ynil);
-    T4 = (P)YPpair(bF1350,Ynil);
+    T4 = (P)YPpair(bF1351,Ynil);
     T3 = CALL3(CHKREF(YPisa),T6,T5,T4);
     T2 = T3;
     T1 = T2;
@@ -5533,34 +5563,34 @@ loop:
 FUNCODEDEF(fun_279) {
   ARG(r_, 0);
   ARG(name_, 1);
-  P tmpF1360;
-  P bindingF1359;
-  P modF1358;
-  P loaderF1357;
-  P grF1356;
-  P varnameF1355;
-  P modnameF1354;
-  P breakF1353;
-  P namestrF1352;
+  P tmpF1361;
+  P bindingF1360;
+  P modF1359;
+  P loaderF1358;
+  P grF1357;
+  P varnameF1356;
+  P modnameF1355;
+  P breakF1354;
+  P namestrF1353;
   P T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16;
   P T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T31 = CALL2(CHKREF(YruntimeYas),CHKREF(YLstrG),name_);
-  namestrF1352 = T31;
-  T30 = CALL2(CHKREF(YruntimeYpos),namestrF1352,YPchr((P)58));
-  breakF1353 = T30;
-  T29 = CALL3(CHKREF(YruntimeYsub),namestrF1352,YPint((P)0),breakF1353);
-  modnameF1354 = T29;
-  T28 = CALL2(CHKREF(YruntimeYA),YPint((P)1),breakF1353);
-  T27 = CALL1(CHKREF(YruntimeYlen),namestrF1352);
-  T26 = CALL3(CHKREF(YruntimeYsub),namestrF1352,T28,T27);
-  varnameF1355 = T26;
-  T11 = CALL1(CHKREF(YruntimeYlen),modnameF1354);
+  namestrF1353 = T31;
+  T30 = CALL2(CHKREF(YruntimeYpos),namestrF1353,YPchr((P)58));
+  breakF1354 = T30;
+  T29 = CALL3(CHKREF(YruntimeYsub),namestrF1353,YPint((P)0),breakF1354);
+  modnameF1355 = T29;
+  T28 = CALL2(CHKREF(YruntimeYA),YPint((P)1),breakF1354);
+  T27 = CALL1(CHKREF(YruntimeYlen),namestrF1353);
+  T26 = CALL3(CHKREF(YruntimeYsub),namestrF1353,T28,T27);
+  varnameF1356 = T26;
+  T11 = CALL1(CHKREF(YruntimeYlen),modnameF1355);
   T10 = CALL2(CHKREF(YruntimeYG),T11,YPint((P)0));
-  tmpF1360 = T10;
-  if (tmpF1360 != YPfalse) {
-    T9 = CALL1(CHKREF(YruntimeYlen),varnameF1355);
+  tmpF1361 = T10;
+  if (tmpF1361 != YPfalse) {
+    T9 = CALL1(CHKREF(YruntimeYlen),varnameF1356);
     T8 = CALL2(CHKREF(YruntimeYG),T9,YPint((P)0));
     T7 = T8;
   } else {
@@ -5569,26 +5599,26 @@ loop:
   T6 = T7;
   T5 = CALL1(CHKREF(Ynot),T6);
   if (T5 != YPfalse) {
-    T4 = CALL2(CHKREF(Yerror),CHKREF(lit_277),name_);
+    T4 = CALL2(CHKREF(Yerror),CHKREF(lit_279),name_);
   } else {
   }
   T25 = CALL1(CHKREF(YastYfind_static_global_environment),r_);
-  grF1356 = T25;
-  T24 = CALL1(CHKREF(YastYenvironment_module_loader),grF1356);
-  loaderF1357 = T24;
-  T23 = CALL2(CHKREF(YruntimeYas),CHKREF(YLsymG),modnameF1354);
-  T22 = CALL2(CHKREF(YastYprobe_module),loaderF1357,T23);
-  modF1358 = T22;
-  T21 = CALL2(CHKREF(YruntimeYas),CHKREF(YLsymG),varnameF1355);
-  T20 = CALL1(CHKREF(YastYmodule_target_environment),modF1358);
+  grF1357 = T25;
+  T24 = CALL1(CHKREF(YastYenvironment_module_loader),grF1357);
+  loaderF1358 = T24;
+  T23 = CALL2(CHKREF(YruntimeYas),CHKREF(YLsymG),modnameF1355);
+  T22 = CALL2(CHKREF(YastYprobe_module),loaderF1358,T23);
+  modF1359 = T22;
+  T21 = CALL2(CHKREF(YruntimeYas),CHKREF(YLsymG),varnameF1356);
+  T20 = CALL1(CHKREF(YastYmodule_target_environment),modF1359);
   T19 = CALL2(CHKREF(YastYfind_binding),T21,T20);
-  bindingF1359 = T19;
-  T17 = CALL1(CHKREF(Ynot),bindingF1359);
+  bindingF1360 = T19;
+  T17 = CALL1(CHKREF(Ynot),bindingF1360);
   if (T17 != YPfalse) {
-    T16 = CALL3(CHKREF(Yerror),CHKREF(lit_276),varnameF1355,modnameF1354);
+    T16 = CALL3(CHKREF(Yerror),CHKREF(lit_278),varnameF1356,modnameF1355);
   } else {
   }
-  T18 = CALL3(CHKREF(YastYobjectify_binding),name_,bindingF1359,r_);
+  T18 = CALL3(CHKREF(YastYobjectify_binding),name_,bindingF1360,r_);
   T15 = T18;
   T14 = T15;
   T13 = T14;
@@ -5616,7 +5646,7 @@ FUNCODEDEF(fun_281) {
   P T0;
   P a1;
 loop:
-  T0 = CALL3(CHKREF(YastYobjectify),CHKREF(lit_280),r_,YPfalse);
+  T0 = CALL3(CHKREF(YastYobjectify),CHKREF(lit_282),r_,YPfalse);
   QRET(T0);
 }
 
@@ -5707,36 +5737,36 @@ FUNCODEDEF(fun_289) {
   ARG(bodies_, 3);
   ARG(sigs_, 4);
   ARG(names_, 5);
-  P functionsF1364;
-  P function_formsF1363;
-  P new_rF1362;
-  P bindingsF1361;
+  P functionsF1365;
+  P function_formsF1364;
+  P new_rF1363;
+  P bindingsF1362;
   P T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6;
   P T5,T4,T3,T2,T1,T0;
   P a1,a2,a3,a4,a5,a6;
 loop:
   T21 = FUNFAB(fun_288,1,r_);
   T20 = CALL2(CHKREF(YmacrosYmap),T21,names_);
-  bindingsF1361 = T20;
-  T19 = CALL2(CHKREF(YastYr_extendT),r_,bindingsF1361);
-  new_rF1362 = T19;
+  bindingsF1362 = T20;
+  T19 = CALL2(CHKREF(YastYr_extendT),r_,bindingsF1362);
+  new_rF1363 = T19;
   T18 = CALL3(CHKREF(YruntimeYmap2),CHKREF(YsyntaxYsexpr_make_anonymous_method),sigs_,bodies_);
-  function_formsF1363 = T18;
-  T17 = CALL3(CHKREF(YruntimeYrcurry),CHKREF(YastYobjectify),new_rF1362,YPfalse);
-  T16 = CALL2(CHKREF(YmacrosYmap),T17,function_formsF1363);
-  functionsF1364 = T16;
+  function_formsF1364 = T18;
+  T17 = CALL3(CHKREF(YruntimeYrcurry),CHKREF(YastYobjectify),new_rF1363,YPfalse);
+  T16 = CALL2(CHKREF(YmacrosYmap),T17,function_formsF1364);
+  functionsF1365 = T16;
   T4 = FUNFAB(fun_287,1,r_);
-  CALL3(CHKREF(YruntimeYdo2),T4,functionsF1364,bindingsF1361);
+  CALL3(CHKREF(YruntimeYdo2),T4,functionsF1365,bindingsF1362);
   T15 = (P)YPpair(CHKREF(YastYLlocalsG),Ynil);
   T14 = (P)YPpair(CHKREF(YastYlocals_body),Ynil);
   T13 = (P)YPpair(CHKREF(YastYlocals_functions),T14);
   T12 = (P)YPpair(CHKREF(YastYlocals_bindings),T13);
-  T11 = CALL2(CHKREF(YmacrosYpair),CHKREF(YastYLfunctionsG),functionsF1364);
+  T11 = CALL2(CHKREF(YmacrosYpair),CHKREF(YastYLfunctionsG),functionsF1365);
   T10 = CALL2(CHKREF(Yapply),CHKREF(YruntimeYfabs),T11);
-  T9 = CALL3(CHKREF(YastYobjectify_sequential),body_,new_rF1362,YPtrue);
+  T9 = CALL3(CHKREF(YastYobjectify_sequential),body_,new_rF1363,YPtrue);
   T8 = (P)YPpair(T9,Ynil);
   T7 = (P)YPpair(T10,T8);
-  T6 = (P)YPpair(bindingsF1361,T7);
+  T6 = (P)YPpair(bindingsF1362,T7);
   T5 = CALL3(CHKREF(YPisa),T15,T12,T6);
   T3 = T5;
   T2 = T3;
@@ -5820,7 +5850,7 @@ loop:
 FUNCODEDEF(fun_293) {
   P T0;
 loop:
-  T0 = CALL2(CHKREF(Yerror),CHKREF(lit_296),FREEREF(0));
+  T0 = CALL2(CHKREF(Yerror),CHKREF(lit_298),FREEREF(0));
   QRET(T0);
 }
 
@@ -5849,7 +5879,7 @@ loop:
   T8 = (P)YPpair(CHKREF(Yhandler_info_message),T9);
   T7 = CALL1(CHKREF(Ylst),FREEREF(0));
   T6 = (P)YPpair(T7,Ynil);
-  T5 = (P)YPpair(CHKREF(lit_297),T6);
+  T5 = (P)YPpair(CHKREF(lit_299),T6);
   T4 = CALL3(CHKREF(YPisa),T10,T8,T5);
   T3 = fun_295;
   T2 = FUNFAB(fun_294,1,exit_);
@@ -5860,19 +5890,19 @@ loop:
 
 FUNCODEDEF(fun_297) {
   ARG(name_, 0);
-  P bindingF1365;
+  P bindingF1366;
   P T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T6 = CALL2(CHKREF(YastYfind_binding),name_,FREEREF(0));
-  bindingF1365 = T6;
-  T5 = CALL2(CHKREF(YmacrosYEE),bindingF1365,YPfalse);
+  bindingF1366 = T6;
+  T5 = CALL2(CHKREF(YmacrosYEE),bindingF1366,YPfalse);
   if (T5 != YPfalse) {
     T4 = FUNFAB(fun_296,1,name_);
     T3 = with_exit(T4);
     T1 = T3;
   } else {
-    T2 = CALL3(CHKREF(YastYexport_bindingX),FREEREF(1),name_,bindingF1365);
+    T2 = CALL3(CHKREF(YastYexport_bindingX),FREEREF(1),name_,bindingF1366);
     T1 = T2;
   }
   T0 = T1;
@@ -5883,23 +5913,23 @@ FUNCODEDEF(fun_298) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(names_, 2);
-  P moduleF1367;
-  P envF1366;
+  P moduleF1368;
+  P envF1367;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T8 = CALL1(CHKREF(YastYfind_static_global_environment),r_);
-  envF1366 = T8;
+  envF1367 = T8;
   T7 = CALL1(CHKREF(YastYfind_environment_module),r_);
-  moduleF1367 = T7;
-  T4 = CALL1(CHKREF(YastYmodule_target_environment),moduleF1367);
-  T3 = CALL2(CHKREF(YmacrosYEE),envF1366,T4);
+  moduleF1368 = T7;
+  T4 = CALL1(CHKREF(YastYmodule_target_environment),moduleF1368);
+  T3 = CALL2(CHKREF(YmacrosYEE),envF1367,T4);
   T2 = CALL1(CHKREF(Ynot),T3);
   if (T2 != YPfalse) {
-    T1 = CALL1(CHKREF(Yerror),CHKREF(lit_298));
+    T1 = CALL1(CHKREF(Yerror),CHKREF(lit_300));
   } else {
   }
-  T6 = FUNFAB(fun_297,2,envF1366,moduleF1367);
+  T6 = FUNFAB(fun_297,2,envF1367,moduleF1368);
   T5 = CALL2(CHKREF(YruntimeYdo),T6,names_);
   T0 = T5;
   T12 = (P)YPpair(CHKREF(YastYLconstantG),Ynil);
@@ -5912,20 +5942,20 @@ loop:
 FUNCODEDEF(YastYimport_globalX) {
   ARG(env_, 0);
   ARG(b_, 1);
-  P tmpF1369;
-  P existingF1368;
+  P tmpF1370;
+  P existingF1369;
   P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T10 = CALL1(CHKREF(YastYbinding_name),b_);
   T9 = CALL2(CHKREF(YastYfind_binding),T10,env_);
-  existingF1368 = T9;
-  T8 = CALL2(CHKREF(YmacrosYEE),existingF1368,YPfalse);
-  tmpF1369 = T8;
-  if (tmpF1369 != YPfalse) {
-    T6 = tmpF1369;
+  existingF1369 = T9;
+  T8 = CALL2(CHKREF(YmacrosYEE),existingF1369,YPfalse);
+  tmpF1370 = T8;
+  if (tmpF1370 != YPfalse) {
+    T6 = tmpF1370;
   } else {
-    T7 = CALL2(CHKREF(YmacrosYEE),existingF1368,b_);
+    T7 = CALL2(CHKREF(YmacrosYEE),existingF1369,b_);
     T6 = T7;
   }
   T5 = T6;
@@ -5933,7 +5963,7 @@ loop:
   if (T4 != YPfalse) {
     T3 = CALL1(CHKREF(YastYbinding_name),b_);
     T2 = CALL1(CHKREF(YastYbinding_module_name),b_);
-    T1 = CALLN(CHKREF(YruntimeYformat),4,CHKREF(YruntimeYout),CHKREF(lit_301),T3,T2);
+    T1 = CALLN(CHKREF(YruntimeYformat),4,CHKREF(YruntimeYout),CHKREF(lit_303),T3,T2);
     T0 = T1;
   } else {
     T0 = YPfalse;
@@ -5946,22 +5976,22 @@ FUNCODEDEF(fun_300) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(name_, 2);
-  P used_moduleF1372;
-  P loaderF1371;
-  P envF1370;
+  P used_moduleF1373;
+  P loaderF1372;
+  P envF1371;
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T8 = CALL1(CHKREF(YastYfind_static_global_environment),r_);
-  envF1370 = T8;
-  T7 = CALL1(CHKREF(YastYenvironment_module_loader),envF1370);
-  loaderF1371 = T7;
-  T6 = CALL2(CHKREF(YastYprobe_module),loaderF1371,name_);
-  used_moduleF1372 = T6;
-  T2 = CALL1(CHKREF(YastYenvironment_uses_modules),envF1370);
-  CALL2(CHKREF(YruntimeYpush_lastX),T2,used_moduleF1372);
-  T5 = CALL2(CHKREF(YruntimeYrcurry),CHKREF(YastYimport_globalX),envF1370);
-  T4 = CALL1(CHKREF(YastYmodule_exports),used_moduleF1372);
+  envF1371 = T8;
+  T7 = CALL1(CHKREF(YastYenvironment_module_loader),envF1371);
+  loaderF1372 = T7;
+  T6 = CALL2(CHKREF(YastYprobe_module),loaderF1372,name_);
+  used_moduleF1373 = T6;
+  T2 = CALL1(CHKREF(YastYenvironment_uses_modules),envF1371);
+  CALL2(CHKREF(YruntimeYpush_lastX),T2,used_moduleF1373);
+  T5 = CALL2(CHKREF(YruntimeYrcurry),CHKREF(YastYimport_globalX),envF1371);
+  T4 = CALL1(CHKREF(YastYmodule_exports),used_moduleF1373);
   T3 = CALL2(CHKREF(YruntimeYdo),T5,T4);
   T1 = T3;
   T0 = T1;
@@ -5979,7 +6009,7 @@ FUNCODEDEF(fun_301) {
   P T0;
   P a1,a2,a3;
 loop:
-  T0 = CALL2(CHKREF(Yerror),CHKREF(lit_306),pat_);
+  T0 = CALL2(CHKREF(Yerror),CHKREF(lit_308),pat_);
   QRET(T0);
 }
 
@@ -5990,7 +6020,7 @@ FUNCODEDEF(fun_302) {
   P T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
-  T3 = CALL1(CHKREF(Ylst),CHKREF(lit_307));
+  T3 = CALL1(CHKREF(Ylst),CHKREF(lit_309));
   T2 = CALL1(CHKREF(Ylst),var_);
   T1 = CALL1(CHKREF(Ylst),fail_);
   T0 = CALLN(CHKREF(YmacrosYcat),4,T3,T2,T1,Ynil);
@@ -6006,12 +6036,12 @@ FUNCODEDEF(fun_303) {
 loop:
   T7 = CALL1(CHKREF(YsyntaxYsexpr_unquoteQ),pat_);
   if (T7 != YPfalse) {
-    T6 = CALL2(CHKREF(Yerror),CHKREF(lit_309),pat_);
+    T6 = CALL2(CHKREF(Yerror),CHKREF(lit_311),pat_);
     T0 = T6;
   } else {
     T5 = CALL1(CHKREF(YsyntaxYsexpr_unquote_splicingQ),pat_);
     if (T5 != YPfalse) {
-      T4 = CALL2(CHKREF(Yerror),CHKREF(lit_308),pat_);
+      T4 = CALL2(CHKREF(Yerror),CHKREF(lit_310),pat_);
       T1 = T4;
     } else {
       if (YPtrue != YPfalse) {
@@ -6034,7 +6064,7 @@ FUNCODEDEF(fun_304) {
   P T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
-  T3 = CALL1(CHKREF(Ylst),CHKREF(lit_307));
+  T3 = CALL1(CHKREF(Ylst),CHKREF(lit_309));
   T2 = CALL1(CHKREF(Ylst),var_);
   T1 = CALL1(CHKREF(Ylst),fail_);
   T0 = CALLN(CHKREF(YmacrosYcat),4,T3,T2,T1,Ynil);
@@ -6048,7 +6078,7 @@ FUNCODEDEF(fun_305) {
   P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
-  T12 = CALL1(CHKREF(Ylst),CHKREF(lit_311));
+  T12 = CALL1(CHKREF(Ylst),CHKREF(lit_313));
   T11 = CALL1(CHKREF(Ylst),var_);
   T10 = CALL1(CHKREF(Yhead),pat_);
   T9 = CALL3(CHKREF(YastYexpand_bind_element),T10,var_,fail_);
@@ -6071,9 +6101,9 @@ FUNCODEDEF(fun_306) {
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
-  T7 = CALL1(CHKREF(Ylst),CHKREF(lit_313));
+  T7 = CALL1(CHKREF(Ylst),CHKREF(lit_315));
   T6 = CALL1(CHKREF(Ylst),var_);
-  T5 = CALL1(CHKREF(Ylst),CHKREF(lit_213));
+  T5 = CALL1(CHKREF(Ylst),CHKREF(lit_215));
   T4 = CALL1(CHKREF(Ylst),pat_);
   T3 = CALL3(CHKREF(YmacrosYcat),T5,T4,Ynil);
   T2 = CALL1(CHKREF(Ylst),T3);
@@ -6094,18 +6124,18 @@ FUNCODEDEF(fun_307) {
 loop:
   T53 = CALL1(CHKREF(YsyntaxYsexpr_unquoteQ),pat_);
   if (T53 != YPfalse) {
-    T52 = CALL1(CHKREF(Ylst),CHKREF(lit_107));
-    T51 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
+    T52 = CALL1(CHKREF(Ylst),CHKREF(lit_109));
+    T51 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
     T50 = CALL1(CHKREF(YruntimeY2nd),pat_);
     T49 = CALL1(CHKREF(Ylst),T50);
-    T48 = CALL1(CHKREF(Ylst),CHKREF(lit_315));
+    T48 = CALL1(CHKREF(Ylst),CHKREF(lit_317));
     T47 = CALL1(CHKREF(Ylst),var_);
     T46 = CALL1(CHKREF(Ylst),fail_);
     T45 = CALLN(CHKREF(YmacrosYcat),4,T48,T47,T46,Ynil);
     T44 = CALL1(CHKREF(Ylst),T45);
     T43 = CALLN(CHKREF(YmacrosYcat),4,T51,T49,T44,Ynil);
     T42 = CALL1(CHKREF(Ylst),T43);
-    T41 = CALL1(CHKREF(Ylst),CHKREF(lit_93));
+    T41 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
     T40 = CALL1(CHKREF(Ylst),var_);
     T39 = CALL3(CHKREF(YmacrosYcat),T41,T40,Ynil);
     T38 = CALL1(CHKREF(Ylst),T39);
@@ -6114,14 +6144,14 @@ loop:
   } else {
     T36 = CALL1(CHKREF(YsyntaxYsexpr_unquote_splicingQ),pat_);
     if (T36 != YPfalse) {
-      T35 = CALL1(CHKREF(Ylst),CHKREF(lit_107));
-      T34 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
+      T35 = CALL1(CHKREF(Ylst),CHKREF(lit_109));
+      T34 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
       T33 = CALL1(CHKREF(YruntimeY2nd),pat_);
       T32 = CALL1(CHKREF(Ylst),T33);
       T31 = CALL1(CHKREF(Ylst),var_);
       T30 = CALLN(CHKREF(YmacrosYcat),4,T34,T32,T31,Ynil);
       T29 = CALL1(CHKREF(Ylst),T30);
-      T28 = CALL1(CHKREF(Ylst),CHKREF(lit_213));
+      T28 = CALL1(CHKREF(Ylst),CHKREF(lit_215));
       T27 = CALL1(CHKREF(Ylst),Ynil);
       T26 = CALL3(CHKREF(YmacrosYcat),T28,T27,Ynil);
       T25 = CALL1(CHKREF(Ylst),T26);
@@ -6129,10 +6159,10 @@ loop:
       T1 = T24;
     } else {
       if (YPtrue != YPfalse) {
-        T23 = CALL1(CHKREF(Ylst),CHKREF(lit_107));
-        T22 = CALL1(CHKREF(Ylst),CHKREF(lit_311));
+        T23 = CALL1(CHKREF(Ylst),CHKREF(lit_109));
+        T22 = CALL1(CHKREF(Ylst),CHKREF(lit_313));
         T21 = CALL1(CHKREF(Ylst),var_);
-        T20 = CALL1(CHKREF(Ylst),CHKREF(lit_314));
+        T20 = CALL1(CHKREF(Ylst),CHKREF(lit_316));
         T19 = CALL1(CHKREF(Ylst),var_);
         T18 = CALL1(CHKREF(Ylst),fail_);
         T17 = CALLN(CHKREF(YmacrosYcat),4,T20,T19,T18,Ynil);
@@ -6145,7 +6175,7 @@ loop:
         T10 = CALL1(CHKREF(Ylst),T11);
         T9 = CALLN(CHKREF(YmacrosYcat),4,T22,T12,T10,Ynil);
         T8 = CALL1(CHKREF(Ylst),T9);
-        T7 = CALL1(CHKREF(Ylst),CHKREF(lit_93));
+        T7 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
         T6 = CALL1(CHKREF(Ylst),var_);
         T5 = CALL3(CHKREF(YmacrosYcat),T7,T6,Ynil);
         T4 = CALL1(CHKREF(Ylst),T5);
@@ -6168,16 +6198,16 @@ FUNCODEDEF(fun_308) {
   P T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
-  T13 = CALL1(CHKREF(Ylst),CHKREF(lit_250));
-  T12 = CALL1(CHKREF(Ylst),CHKREF(lit_318));
+  T13 = CALL1(CHKREF(Ylst),CHKREF(lit_252));
+  T12 = CALL1(CHKREF(Ylst),CHKREF(lit_320));
   T11 = CALL1(CHKREF(Ylst),var_);
-  T10 = CALL1(CHKREF(Ylst),CHKREF(lit_102));
+  T10 = CALL1(CHKREF(Ylst),CHKREF(lit_103));
   T9 = CALLN(CHKREF(YmacrosYcat),4,T12,T11,T10,Ynil);
   T8 = CALL1(CHKREF(Ylst),T9);
   T7 = CALL3(CHKREF(YastYexpand_bind_list),pat_,var_,fail_);
   T6 = CALL1(CHKREF(Ylst),T7);
   T5 = CALL1(CHKREF(Ylst),fail_);
-  T4 = CALL1(CHKREF(Ylst),CHKREF(lit_317));
+  T4 = CALL1(CHKREF(Ylst),CHKREF(lit_319));
   T3 = CALL1(CHKREF(Ylst),var_);
   T2 = CALLN(CHKREF(YmacrosYcat),4,T5,T4,T3,Ynil);
   T1 = CALL1(CHKREF(Ylst),T2);
@@ -6198,14 +6228,14 @@ loop:
 
 FUNCODEDEF(fun_310) {
   ARG(x_, 0);
-  P epatF1380;
-  P failF1379;
-  P varF1378;
-  P elseF1377;
-  P thenF1376;
-  P valueF1375;
-  P varsF1374;
-  P patF1373;
+  P epatF1381;
+  P failF1380;
+  P varF1379;
+  P elseF1378;
+  P thenF1377;
+  P valueF1376;
+  P varsF1375;
+  P patF1374;
   P T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42;
   P T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26;
   P T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10;
@@ -6213,56 +6243,56 @@ FUNCODEDEF(fun_310) {
   P a1;
 loop:
   T57 = CALL1(CHKREF(YsyntaxYsexpr_syntax_if_pattern),x_);
-  patF1373 = T57;
-  T56 = CALL1(CHKREF(YsyntaxYsexpr_bind_pattern_variables),patF1373);
-  varsF1374 = T56;
+  patF1374 = T57;
+  T56 = CALL1(CHKREF(YsyntaxYsexpr_bind_pattern_variables),patF1374);
+  varsF1375 = T56;
   T55 = CALL1(CHKREF(YsyntaxYsexpr_syntax_if_value),x_);
-  valueF1375 = T55;
+  valueF1376 = T55;
   T54 = CALL1(CHKREF(YsyntaxYsexpr_syntax_if_then),x_);
-  thenF1376 = T54;
+  thenF1377 = T54;
   T53 = CALL1(CHKREF(YsyntaxYsexpr_syntax_if_else),x_);
-  elseF1377 = T53;
+  elseF1378 = T53;
   T52 = CALL0(CHKREF(YmacrosYgensym));
-  varF1378 = T52;
+  varF1379 = T52;
   T51 = CALL0(CHKREF(YmacrosYgensym));
-  failF1379 = T51;
-  T50 = CALL3(CHKREF(YastYexpand_pattern),patF1373,varF1378,failF1379);
-  epatF1380 = T50;
-  T49 = CALL1(CHKREF(Ylst),CHKREF(lit_322));
+  failF1380 = T51;
+  T50 = CALL3(CHKREF(YastYexpand_pattern),patF1374,varF1379,failF1380);
+  epatF1381 = T50;
+  T49 = CALL1(CHKREF(Ylst),CHKREF(lit_324));
   T48 = CALL1(CHKREF(Ylst),CHKREF(lit_87));
-  T47 = CALL1(CHKREF(Ylst),CHKREF(lit_321));
-  T46 = CALL1(CHKREF(Ylst),failF1379);
-  T45 = CALL1(CHKREF(Ylst),CHKREF(lit_116));
-  T44 = CALL1(CHKREF(Ylst),CHKREF(lit_320));
+  T47 = CALL1(CHKREF(Ylst),CHKREF(lit_323));
+  T46 = CALL1(CHKREF(Ylst),failF1380);
+  T45 = CALL1(CHKREF(Ylst),CHKREF(lit_118));
+  T44 = CALL1(CHKREF(Ylst),CHKREF(lit_322));
   T43 = CALL3(CHKREF(YmacrosYcat),T45,T44,Ynil);
   T42 = CALL1(CHKREF(Ylst),T43);
-  T41 = CALL1(CHKREF(Ylst),CHKREF(lit_115));
-  T40 = CALL1(CHKREF(Ylst),CHKREF(lit_252));
+  T41 = CALL1(CHKREF(Ylst),CHKREF(lit_117));
+  T40 = CALL1(CHKREF(Ylst),CHKREF(lit_254));
   T39 = CALL3(CHKREF(YmacrosYcat),T41,T40,Ynil);
   T38 = CALL1(CHKREF(Ylst),T39);
   T37 = CALL3(CHKREF(YmacrosYcat),T42,T38,Ynil);
   T36 = CALL1(CHKREF(Ylst),T37);
   T35 = CALL1(CHKREF(Ylst),CHKREF(lit_87));
-  T34 = CALL1(CHKREF(Ylst),elseF1377);
+  T34 = CALL1(CHKREF(Ylst),elseF1378);
   T33 = CALL3(CHKREF(YmacrosYcat),T35,T34,Ynil);
   T32 = CALL1(CHKREF(Ylst),T33);
   T31 = CALLN(CHKREF(YmacrosYcat),4,T46,T36,T32,Ynil);
   T30 = CALL1(CHKREF(Ylst),T31);
   T29 = CALL2(CHKREF(YmacrosYcat),T30,Ynil);
   T28 = CALL1(CHKREF(Ylst),T29);
-  T27 = CALL1(CHKREF(Ylst),CHKREF(lit_311));
-  T26 = CALL1(CHKREF(Ylst),varF1378);
-  T25 = CALL1(CHKREF(Ylst),valueF1375);
+  T27 = CALL1(CHKREF(Ylst),CHKREF(lit_313));
+  T26 = CALL1(CHKREF(Ylst),varF1379);
+  T25 = CALL1(CHKREF(Ylst),valueF1376);
   T24 = CALL3(CHKREF(YmacrosYcat),T26,T25,Ynil);
   T23 = CALL1(CHKREF(Ylst),T24);
   T22 = CALL2(CHKREF(YmacrosYcat),T23,Ynil);
   T21 = CALL1(CHKREF(Ylst),T22);
-  T20 = CALL1(CHKREF(Ylst),CHKREF(lit_311));
+  T20 = CALL1(CHKREF(Ylst),CHKREF(lit_313));
   T19 = fun_309;
-  T18 = CALL2(CHKREF(YmacrosYmap),T19,varsF1374);
+  T18 = CALL2(CHKREF(YmacrosYmap),T19,varsF1375);
   T17 = CALL1(CHKREF(Ylst),T18);
-  T16 = CALL1(CHKREF(Ylst),epatF1380);
-  T15 = CALL1(CHKREF(Ylst),thenF1376);
+  T16 = CALL1(CHKREF(Ylst),epatF1381);
+  T15 = CALL1(CHKREF(Ylst),thenF1377);
   T14 = CALLN(CHKREF(YmacrosYcat),5,T20,T17,T16,T15,Ynil);
   T13 = CALL1(CHKREF(Ylst),T14);
   T12 = CALLN(CHKREF(YmacrosYcat),4,T27,T21,T13,Ynil);
@@ -6299,14 +6329,14 @@ loop:
 FUNCODEDEF(fun_312) {
   ARG(r_, 0);
   ARG(binding_, 1);
-  P rF1381;
+  P rF1382;
   P T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T4 = CALL1(CHKREF(YastYfind_static_global_environment),r_);
   check_type(T4,CHKREF(YastYLstatic_global_environmentG));
-  rF1381 = T4;
-  T3 = CALL1(CHKREF(YastYenvironment_bindings),rF1381);
+  rF1382 = T4;
+  T3 = CALL1(CHKREF(YastYenvironment_bindings),rF1382);
   T2 = CALL1(CHKREF(YastYbinding_name),binding_);
   T1 = CALL3(CHKREF(YruntimeYelt_setter),binding_,T3,T2);
   T0 = T1;
@@ -6402,15 +6432,15 @@ loop:
 FUNCODEDEF(fun_320) {
   ARG(r_, 0);
   ARG(name_, 1);
-  P loopF1382;
+  P loopF1383;
   P T3,T2,T1,T0;
   P a1,a2;
 loop:
   T3 = FUNSHELL(1,fun_loop_319,3);
-  loopF1382 = T3;
-  FUNINIT(loopF1382, 3,loopF1382,name_,r_);
+  loopF1383 = T3;
+  FUNINIT(loopF1383, 3,loopF1383,name_,r_);
   T2 = CALL1(CHKREF(YastYenvironment_bindings),r_);
-  T1 = KCALL1(loopF1382,T2);
+  T1 = KCALL1(loopF1383,T2);
   T0 = T1;
   QRET(T0);
 }
@@ -6426,20 +6456,20 @@ loop:
 FUNCODEDEF(fun_322) {
   ARG(r_, 0);
   ARG(name_, 1);
-  P bindingF1383;
+  P bindingF1384;
   P T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T6 = CALL1(CHKREF(YastYenvironment_bindings),r_);
   T5 = CALL2(CHKREF(YruntimeYelt),T6,name_);
-  bindingF1383 = T5;
-  T4 = CALL2(CHKREF(YmacrosYEE),bindingF1383,CHKREF(Ynul));
+  bindingF1384 = T5;
+  T4 = CALL2(CHKREF(YmacrosYEE),bindingF1384,CHKREF(Ynul));
   if (T4 != YPfalse) {
     T3 = CALL1(CHKREF(YastYenvironment_next),r_);
     T2 = CALL2(CHKREF(YastYfind_binding),name_,T3);
     T1 = T2;
   } else {
-    T1 = bindingF1383;
+    T1 = bindingF1384;
   }
   T0 = T1;
   QRET(T0);
@@ -6470,7 +6500,7 @@ loop:
   QRET(CHKREF(YastYTmagic_bindingsT));
 }
 
-FUNCODEDEF(fun_x_1255_326) {
+FUNCODEDEF(fun_x_1257_326) {
   ARG(args_, 0);
   ARG(msg_, 1);
   P T0;
@@ -6482,19 +6512,19 @@ loop:
 
 FUNCODEDEF(fun_327) {
   ARG(return_, 0);
-  P x_1254F1396;
-  P x_1254F1395;
-  P x_1254F1394;
-  P x_1254F1393;
-  P x_1254F1392;
-  P x_1254F1391;
-  P sexpr_nameF1390;
-  P special_nameF1389;
-  P bodyF1388;
-  P paramsF1387;
-  P nameF1386;
-  P x_1254F1385;
-  P x_1255F1384;
+  P x_1256F1397;
+  P x_1256F1396;
+  P x_1256F1395;
+  P x_1256F1394;
+  P x_1256F1393;
+  P x_1256F1392;
+  P sexpr_nameF1391;
+  P special_nameF1390;
+  P bodyF1389;
+  P paramsF1388;
+  P nameF1387;
+  P x_1256F1386;
+  P x_1257F1385;
   P T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68,T67,T66;
   P T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50;
   P T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34;
@@ -6503,83 +6533,83 @@ FUNCODEDEF(fun_327) {
   P T1,T0;
   P a1;
 loop:
-  T81 = FUNSHELL(0,fun_x_1255_326,1);
-  x_1255F1384 = T81;
-  FUNINIT(x_1255F1384, 1,return_);
-  x_1254F1385 = FREEREF(0);
-  nameF1386 = YPfalse;
-  nameF1386 = BOXFAB(nameF1386);
-  paramsF1387 = YPfalse;
-  paramsF1387 = BOXFAB(paramsF1387);
-  bodyF1388 = YPfalse;
-  bodyF1388 = BOXFAB(bodyF1388);
-  T21 = CALL2(CHKREF(YisaQ),x_1254F1385,CHKREF(YLlstG));
+  T81 = FUNSHELL(0,fun_x_1257_326,1);
+  x_1257F1385 = T81;
+  FUNINIT(x_1257F1385, 1,return_);
+  x_1256F1386 = FREEREF(0);
+  nameF1387 = YPfalse;
+  nameF1387 = BOXFAB(nameF1387);
+  paramsF1388 = YPfalse;
+  paramsF1388 = BOXFAB(paramsF1388);
+  bodyF1389 = YPfalse;
+  bodyF1389 = BOXFAB(bodyF1389);
+  T21 = CALL2(CHKREF(YisaQ),x_1256F1386,CHKREF(YLlstG));
   if (T21 != YPfalse) {
-    T20 = CALL3(CHKREF(YmacrosYmatch_atom),x_1254F1385,CHKREF(lit_340),x_1255F1384);
-    x_1254F1391 = T20;
-    T18 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1254F1391,x_1255F1384);
-    BOXVAL(nameF1386) = T18;
-    T19 = CALL1(CHKREF(Ytail),x_1254F1391);
-    x_1254F1392 = T19;
-    T16 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1254F1392,x_1255F1384);
-    x_1254F1393 = T16;
-    BOXVAL(paramsF1387) = x_1254F1393;
-    x_1254F1394 = Ynil;
-    T15 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1254F1394,x_1255F1384);
+    T20 = CALL3(CHKREF(YmacrosYmatch_atom),x_1256F1386,CHKREF(lit_342),x_1257F1385);
+    x_1256F1392 = T20;
+    T18 = CALL2(CHKREF(YmacrosYmatch_unquote),x_1256F1392,x_1257F1385);
+    BOXVAL(nameF1387) = T18;
+    T19 = CALL1(CHKREF(Ytail),x_1256F1392);
+    x_1256F1393 = T19;
+    T16 = CALL2(CHKREF(YmacrosYmatch_sublist),x_1256F1393,x_1257F1385);
+    x_1256F1394 = T16;
+    BOXVAL(paramsF1388) = x_1256F1394;
+    x_1256F1395 = Ynil;
+    T15 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1256F1395,x_1257F1385);
     T14 = T15;
-    T17 = CALL1(CHKREF(Ytail),x_1254F1392);
-    x_1254F1395 = T17;
-    BOXVAL(bodyF1388) = x_1254F1395;
-    x_1254F1396 = Ynil;
-    T13 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1254F1396,x_1255F1384);
+    T17 = CALL1(CHKREF(Ytail),x_1256F1393);
+    x_1256F1396 = T17;
+    BOXVAL(bodyF1389) = x_1256F1396;
+    x_1256F1397 = Ynil;
+    T13 = CALL2(CHKREF(YmacrosYmatch_empty_list),x_1256F1397,x_1257F1385);
     T12 = T13;
     T11 = T12;
     T10 = T11;
     T9 = T10;
   } else {
-    T8 = CALL2(x_1255F1384,CHKREF(lit_112),x_1254F1385);
+    T8 = CALL2(x_1257F1385,CHKREF(lit_114),x_1256F1386);
   }
-  T80 = BOXVAL(nameF1386);
-  T79 = CALL2(CHKREF(YmacrosYmake_sym),CHKREF(lit_339),T80);
-  special_nameF1389 = T79;
-  T78 = BOXVAL(nameF1386);
-  T77 = CALL3(CHKREF(YmacrosYmake_sym),CHKREF(lit_338),T78,CHKREF(lit_337));
-  sexpr_nameF1390 = T77;
-  T76 = CALL1(CHKREF(Ylst),CHKREF(lit_107));
-  T75 = CALL1(CHKREF(Ylst),CHKREF(lit_106));
-  T74 = CALL1(CHKREF(Ylst),special_nameF1389);
-  T73 = CALL1(CHKREF(Ylst),CHKREF(lit_97));
-  T72 = CALL1(CHKREF(Ylst),CHKREF(lit_336));
-  T71 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
+  T80 = BOXVAL(nameF1387);
+  T79 = CALL2(CHKREF(YmacrosYmake_sym),CHKREF(lit_341),T80);
+  special_nameF1390 = T79;
+  T78 = BOXVAL(nameF1387);
+  T77 = CALL3(CHKREF(YmacrosYmake_sym),CHKREF(lit_340),T78,CHKREF(lit_339));
+  sexpr_nameF1391 = T77;
+  T76 = CALL1(CHKREF(Ylst),CHKREF(lit_109));
+  T75 = CALL1(CHKREF(Ylst),CHKREF(lit_107));
+  T74 = CALL1(CHKREF(Ylst),special_nameF1390);
+  T73 = CALL1(CHKREF(Ylst),CHKREF(lit_98));
+  T72 = CALL1(CHKREF(Ylst),CHKREF(lit_338));
+  T71 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
   T70 = CALL1(CHKREF(Ylst),CHKREF(lit_18));
-  T69 = CALL1(CHKREF(Ylst),CHKREF(lit_213));
-  T68 = CALL1(CHKREF(Ylst),CHKREF(lit_190));
+  T69 = CALL1(CHKREF(Ylst),CHKREF(lit_215));
+  T68 = CALL1(CHKREF(Ylst),CHKREF(lit_192));
   T67 = CALL3(CHKREF(YmacrosYcat),T69,T68,Ynil);
   T66 = CALL1(CHKREF(Ylst),T67);
   T65 = CALLN(CHKREF(YmacrosYcat),4,T71,T70,T66,Ynil);
   T64 = CALL1(CHKREF(Ylst),T65);
-  T63 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
+  T63 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
   T62 = CALL1(CHKREF(Ylst),CHKREF(lit_12));
-  T61 = CALL1(CHKREF(Ylst),sexpr_nameF1390);
+  T61 = CALL1(CHKREF(Ylst),sexpr_nameF1391);
   T60 = CALLN(CHKREF(YmacrosYcat),4,T63,T62,T61,Ynil);
   T59 = CALL1(CHKREF(Ylst),T60);
-  T58 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
+  T58 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
   T57 = CALL1(CHKREF(Ylst),CHKREF(lit_21));
-  T56 = CALL1(CHKREF(Ylst),CHKREF(lit_335));
+  T56 = CALL1(CHKREF(Ylst),CHKREF(lit_337));
   T55 = CALLN(CHKREF(YmacrosYcat),4,T58,T57,T56,Ynil);
   T54 = CALL1(CHKREF(Ylst),T55);
-  T53 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
-  T52 = CALL1(CHKREF(Ylst),CHKREF(lit_334));
-  T51 = CALL1(CHKREF(Ylst),CHKREF(lit_333));
-  T50 = BOXVAL(paramsF1387);
+  T53 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
+  T52 = CALL1(CHKREF(Ylst),CHKREF(lit_336));
+  T51 = CALL1(CHKREF(Ylst),CHKREF(lit_335));
+  T50 = BOXVAL(paramsF1388);
   T49 = CALL2(CHKREF(YmacrosYcat),T50,Ynil);
   T48 = CALL1(CHKREF(Ylst),T49);
-  T47 = BOXVAL(bodyF1388);
+  T47 = BOXVAL(bodyF1389);
   T46 = CALLN(CHKREF(YmacrosYcat),4,T51,T48,T47,Ynil);
   T45 = CALL1(CHKREF(Ylst),T46);
   T44 = CALLN(CHKREF(YmacrosYcat),4,T53,T52,T45,Ynil);
   T43 = CALL1(CHKREF(Ylst),T44);
-  T42 = CALL1(CHKREF(Ylst),CHKREF(lit_94));
+  T42 = CALL1(CHKREF(Ylst),CHKREF(lit_95));
   T41 = CALL1(CHKREF(Ylst),CHKREF(lit_23));
   T40 = CALL1(CHKREF(Ylst),YPfalse);
   T39 = CALLN(CHKREF(YmacrosYcat),4,T42,T41,T40,Ynil);
@@ -6588,13 +6618,13 @@ loop:
   T36 = CALL1(CHKREF(Ylst),T37);
   T35 = CALLN(CHKREF(YmacrosYcat),4,T75,T74,T36,Ynil);
   T34 = CALL1(CHKREF(Ylst),T35);
-  T33 = CALL1(CHKREF(Ylst),CHKREF(lit_331));
-  T32 = CALL1(CHKREF(Ylst),CHKREF(lit_213));
-  T31 = BOXVAL(nameF1386);
+  T33 = CALL1(CHKREF(Ylst),CHKREF(lit_333));
+  T32 = CALL1(CHKREF(Ylst),CHKREF(lit_215));
+  T31 = BOXVAL(nameF1387);
   T30 = CALL1(CHKREF(Ylst),T31);
   T29 = CALL3(CHKREF(YmacrosYcat),T32,T30,Ynil);
   T28 = CALL1(CHKREF(Ylst),T29);
-  T27 = CALL1(CHKREF(Ylst),special_nameF1389);
+  T27 = CALL1(CHKREF(Ylst),special_nameF1390);
   T26 = CALLN(CHKREF(YmacrosYcat),4,T33,T28,T27,Ynil);
   T25 = CALL1(CHKREF(Ylst),T26);
   T24 = CALLN(CHKREF(YmacrosYcat),4,T76,T34,T25,Ynil);
@@ -6853,44 +6883,44 @@ FUNCODEDEF(fun_347) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
-  P tup37F1407;
-  P bodyF1406;
-  P tup37F1405;
-  P handlerF1404;
-  P tup37F1403;
-  P testF1402;
-  P tup37F1401;
-  P infoF1400;
-  P tup37F1399;
-  P typeF1398;
-  P tup37F1397;
+  P tup37F1408;
+  P bodyF1407;
+  P tup37F1406;
+  P handlerF1405;
+  P tup37F1404;
+  P testF1403;
+  P tup37F1402;
+  P infoF1401;
+  P tup37F1400;
+  P typeF1399;
+  P tup37F1398;
   P T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7;
   P T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T22 = CALL1(CHKREF(YsyntaxYsexpr_monitor_expand),x_);
-  tup37F1397 = T22;
-  T21 = CALL1(CHKREF(Yhead),tup37F1397);
-  typeF1398 = T21;
-  T20 = CALL1(CHKREF(Ytail),tup37F1397);
-  tup37F1399 = T20;
-  T19 = CALL1(CHKREF(Yhead),tup37F1399);
-  infoF1400 = T19;
-  T18 = CALL1(CHKREF(Ytail),tup37F1399);
-  tup37F1401 = T18;
-  T17 = CALL1(CHKREF(Yhead),tup37F1401);
-  testF1402 = T17;
-  T16 = CALL1(CHKREF(Ytail),tup37F1401);
-  tup37F1403 = T16;
-  T15 = CALL1(CHKREF(Yhead),tup37F1403);
-  handlerF1404 = T15;
-  T14 = CALL1(CHKREF(Ytail),tup37F1403);
-  tup37F1405 = T14;
-  T13 = CALL1(CHKREF(Yhead),tup37F1405);
-  bodyF1406 = T13;
-  T12 = CALL1(CHKREF(Ytail),tup37F1405);
-  tup37F1407 = T12;
-  T11 = CALLN(CHKREF(YastYobjectify_monitor),7,typeF1398,infoF1400,testF1402,handlerF1404,bodyF1406,r_,tailQ_);
+  tup37F1398 = T22;
+  T21 = CALL1(CHKREF(Yhead),tup37F1398);
+  typeF1399 = T21;
+  T20 = CALL1(CHKREF(Ytail),tup37F1398);
+  tup37F1400 = T20;
+  T19 = CALL1(CHKREF(Yhead),tup37F1400);
+  infoF1401 = T19;
+  T18 = CALL1(CHKREF(Ytail),tup37F1400);
+  tup37F1402 = T18;
+  T17 = CALL1(CHKREF(Yhead),tup37F1402);
+  testF1403 = T17;
+  T16 = CALL1(CHKREF(Ytail),tup37F1402);
+  tup37F1404 = T16;
+  T15 = CALL1(CHKREF(Yhead),tup37F1404);
+  handlerF1405 = T15;
+  T14 = CALL1(CHKREF(Ytail),tup37F1404);
+  tup37F1406 = T14;
+  T13 = CALL1(CHKREF(Yhead),tup37F1406);
+  bodyF1407 = T13;
+  T12 = CALL1(CHKREF(Ytail),tup37F1406);
+  tup37F1408 = T12;
+  T11 = CALLN(CHKREF(YastYobjectify_monitor),7,typeF1399,infoF1401,testF1403,handlerF1405,bodyF1407,r_,tailQ_);
   T10 = T11;
   T9 = T10;
   T8 = T9;
@@ -6912,13 +6942,13 @@ FUNCODEDEF(fun_348) {
 loop:
   T6 = CALL1(CHKREF(YmacrosYemptyQ),args_);
   if (T6 != YPfalse) {
-    T5 = CALL2(CHKREF(Ylst),CHKREF(lit_213),Ynil);
+    T5 = CALL2(CHKREF(Ylst),CHKREF(lit_215),Ynil);
     T0 = T5;
   } else {
     T4 = CALL1(CHKREF(Yhead),args_);
     T3 = CALL1(CHKREF(Ytail),args_);
     T2 = CALL1(CHKREF(YastYpairize),T3);
-    T1 = CALL3(CHKREF(Ylst),CHKREF(lit_212),T4,T2);
+    T1 = CALL3(CHKREF(Ylst),CHKREF(lit_214),T4,T2);
     T0 = T1;
   }
   QRET(T0);
@@ -6928,20 +6958,20 @@ FUNCODEDEF(fun_349) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
-  P slot_initsF1408;
+  P slot_initsF1409;
   P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T10 = CALL1(CHKREF(YsyntaxYsexpr_isa_slot_inits),x_);
-  slot_initsF1408 = T10;
+  slot_initsF1409 = T10;
   T9 = CALL1(CHKREF(YsyntaxYsexpr_isa_parents),x_);
   T8 = CALL1(CHKREF(YastYpairize),T9);
-  T7 = CALL1(CHKREF(YsyntaxYsexpr_isa_init_slots),slot_initsF1408);
+  T7 = CALL1(CHKREF(YsyntaxYsexpr_isa_init_slots),slot_initsF1409);
   T6 = CALL1(CHKREF(YastYpairize),T7);
-  T5 = CALL1(CHKREF(YsyntaxYsexpr_isa_init_values),slot_initsF1408);
+  T5 = CALL1(CHKREF(YsyntaxYsexpr_isa_init_values),slot_initsF1409);
   T4 = CALL1(CHKREF(YastYpairize),T5);
   T3 = CALL3(CHKREF(Ylst),T8,T6,T4);
-  T2 = CALL2(CHKREF(YsyntaxYsexpr_make_application),CHKREF(lit_358),T3);
+  T2 = CALL2(CHKREF(YsyntaxYsexpr_make_application),CHKREF(lit_360),T3);
   T1 = CALL3(CHKREF(YastYobjectify),T2,r_,tailQ_);
   T0 = T1;
   QRET(T0);
@@ -6951,39 +6981,15 @@ FUNCODEDEF(fun_350) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
-  P slot_typeF1412;
-  P setter_nameF1411;
-  P nameF1410;
-  P varF1409;
-  P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
-  P T4,T3,T2,T1,T0;
+  P T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
-  T20 = CALL1(CHKREF(YsyntaxYsexpr_slot_variable),x_);
-  varF1409 = T20;
-  T19 = CALL1(CHKREF(YsyntaxYsexpr_variable_name),varF1409);
-  nameF1410 = T19;
-  T18 = CALL1(CHKREF(YsyntaxYsexpr_make_setter_name),nameF1410);
-  setter_nameF1411 = T18;
-  T17 = CALL1(CHKREF(YsyntaxYsexpr_variable_type),varF1409);
-  slot_typeF1412 = T17;
-  T16 = CALL1(CHKREF(YsyntaxYsexpr_slot_object),x_);
-  T15 = CALL2(CHKREF(YsyntaxYsexpr_make_getter),nameF1410,T16);
-  T14 = CALL1(CHKREF(YsyntaxYsexpr_slot_object),x_);
-  T13 = CALL3(CHKREF(YsyntaxYsexpr_make_setter),nameF1410,T14,slot_typeF1412);
-  T12 = CALL1(CHKREF(YsyntaxYsexpr_slot_object),x_);
-  T11 = CALL1(CHKREF(YsyntaxYsexpr_slot_init),x_);
-  T10 = CALL1(CHKREF(Ylst),T11);
-  T9 = CALL2(CHKREF(YsyntaxYsexpr_make_anonymous_method),CHKREF(lit_359),T10);
-  T8 = CALLN(CHKREF(Ylst),5,T12,nameF1410,setter_nameF1411,slot_typeF1412,T9);
-  T7 = CALL2(CHKREF(YsyntaxYsexpr_make_application),CHKREF(lit_360),T8);
-  T6 = CALL3(CHKREF(Ylst),T15,T13,T7);
-  T5 = CALL1(CHKREF(YsyntaxYsexpr_make_begin),T6);
-  T4 = CALL3(CHKREF(YastYobjectify),T5,r_,tailQ_);
-  T3 = T4;
-  T2 = T3;
-  T1 = T2;
-  T0 = T1;
+  T5 = CALL1(CHKREF(YsyntaxYsexpr_definition_variable),x_);
+  T4 = CALL1(CHKREF(Ylst),CHKREF(lit_98));
+  T3 = CALL1(CHKREF(YsyntaxYsexpr_define_class_parents),x_);
+  T2 = CALL1(CHKREF(Ylst),T3);
+  T1 = CALL3(CHKREF(YmacrosYcat),T4,T2,Ynil);
+  T0 = CALL3(CHKREF(YastYobjectify_definition),T5,T1,r_);
   QRET(T0);
 }
 
@@ -6991,12 +6997,39 @@ FUNCODEDEF(fun_351) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
-  P T2,T1,T0;
+  P slot_typeF1413;
+  P setter_nameF1412;
+  P nameF1411;
+  P varF1410;
+  P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
+  P T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
-  T2 = CALL1(CHKREF(Ytail),x_);
-  T1 = CALL1(CHKREF(Yhead),T2);
-  T0 = CALLN(CHKREF(YastYobjectify_compile_time),4,T1,r_,tailQ_,YPfalse);
+  T20 = CALL1(CHKREF(YsyntaxYsexpr_slot_variable),x_);
+  varF1410 = T20;
+  T19 = CALL1(CHKREF(YsyntaxYsexpr_variable_name),varF1410);
+  nameF1411 = T19;
+  T18 = CALL1(CHKREF(YsyntaxYsexpr_make_setter_name),nameF1411);
+  setter_nameF1412 = T18;
+  T17 = CALL1(CHKREF(YsyntaxYsexpr_variable_type),varF1410);
+  slot_typeF1413 = T17;
+  T16 = CALL1(CHKREF(YsyntaxYsexpr_slot_object),x_);
+  T15 = CALL2(CHKREF(YsyntaxYsexpr_make_getter),nameF1411,T16);
+  T14 = CALL1(CHKREF(YsyntaxYsexpr_slot_object),x_);
+  T13 = CALL3(CHKREF(YsyntaxYsexpr_make_setter),nameF1411,T14,slot_typeF1413);
+  T12 = CALL1(CHKREF(YsyntaxYsexpr_slot_object),x_);
+  T11 = CALL1(CHKREF(YsyntaxYsexpr_slot_init),x_);
+  T10 = CALL1(CHKREF(Ylst),T11);
+  T9 = CALL2(CHKREF(YsyntaxYsexpr_make_anonymous_method),CHKREF(lit_362),T10);
+  T8 = CALLN(CHKREF(Ylst),5,T12,nameF1411,setter_nameF1412,slot_typeF1413,T9);
+  T7 = CALL2(CHKREF(YsyntaxYsexpr_make_application),CHKREF(lit_363),T8);
+  T6 = CALL3(CHKREF(Ylst),T15,T13,T7);
+  T5 = CALL1(CHKREF(YsyntaxYsexpr_make_begin),T6);
+  T4 = CALL3(CHKREF(YastYobjectify),T5,r_,tailQ_);
+  T3 = T4;
+  T2 = T3;
+  T1 = T2;
+  T0 = T1;
   QRET(T0);
 }
 
@@ -7009,11 +7042,24 @@ FUNCODEDEF(fun_352) {
 loop:
   T2 = CALL1(CHKREF(Ytail),x_);
   T1 = CALL1(CHKREF(Yhead),T2);
-  T0 = CALLN(CHKREF(YastYobjectify_compile_time),4,T1,r_,tailQ_,YPtrue);
+  T0 = CALLN(CHKREF(YastYobjectify_compile_time),4,T1,r_,tailQ_,YPfalse);
   QRET(T0);
 }
 
 FUNCODEDEF(fun_353) {
+  ARG(tailQ_, 0);
+  ARG(r_, 1);
+  ARG(x_, 2);
+  P T2,T1,T0;
+  P a1,a2,a3;
+loop:
+  T2 = CALL1(CHKREF(Ytail),x_);
+  T1 = CALL1(CHKREF(Yhead),T2);
+  T0 = CALLN(CHKREF(YastYobjectify_compile_time),4,T1,r_,tailQ_,YPtrue);
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_354) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
@@ -7023,7 +7069,7 @@ loop:
   T7 = CALL1(CHKREF(YsyntaxYsexpr_forward_primitiveQ),x_);
   if (T7 != YPfalse) {
     T5 = CALL1(CHKREF(YsyntaxYsexpr_function_definition_variable),x_);
-    CALLN(CHKREF(YastYast_define_binding),4,r_,T5,YPfalse,CHKREF(lit_245));
+    CALLN(CHKREF(YastYast_define_binding),4,r_,T5,YPfalse,CHKREF(lit_247));
     T6 = CALL3(CHKREF(YastYobjectify),YPfalse,r_,tailQ_);
     T0 = T6;
   } else {
@@ -7036,7 +7082,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_354) {
+FUNCODEDEF(fun_355) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
@@ -7048,34 +7094,34 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_355) {
+FUNCODEDEF(fun_356) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
-  P tmpF1415;
-  P resF1414;
-  P mF1413;
+  P tmpF1416;
+  P resF1415;
+  P mF1414;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T11 = CALL1(CHKREF(Yhead),x_);
   T10 = CALL3(CHKREF(YastYobjectify),T11,r_,tailQ_);
-  mF1413 = T10;
-  T9 = CALL2(CHKREF(YisaQ),mF1413,CHKREF(YastYLmodule_bindingG));
-  tmpF1415 = T9;
-  if (tmpF1415 != YPfalse) {
-    T8 = CALL1(CHKREF(YastYbinding_kind),mF1413);
-    T7 = CALL2(CHKREF(YmacrosYEE),T8,CHKREF(lit_190));
+  mF1414 = T10;
+  T9 = CALL2(CHKREF(YisaQ),mF1414,CHKREF(YastYLmodule_bindingG));
+  tmpF1416 = T9;
+  if (tmpF1416 != YPfalse) {
+    T8 = CALL1(CHKREF(YastYbinding_kind),mF1414);
+    T7 = CALL2(CHKREF(YmacrosYEE),T8,CHKREF(lit_192));
     T6 = T7;
   } else {
     T6 = YPfalse;
   }
   T5 = T6;
   if (T5 != YPfalse) {
-    T4 = CALL1(CHKREF(YastYbinding_handler),mF1413);
+    T4 = CALL1(CHKREF(YastYbinding_handler),mF1414);
     T3 = CALL3(T4,x_,r_,tailQ_);
-    resF1414 = T3;
-    T2 = resF1414;
+    resF1415 = T3;
+    T2 = resF1415;
     T1 = T2;
   } else {
     T1 = YPfalse;
@@ -7084,7 +7130,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_356) {
+FUNCODEDEF(fun_357) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
@@ -7097,7 +7143,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_357) {
+FUNCODEDEF(fun_358) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
@@ -7109,7 +7155,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_358) {
+FUNCODEDEF(fun_359) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
@@ -7121,7 +7167,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_359) {
+FUNCODEDEF(fun_360) {
   ARG(tailQ_, 0);
   ARG(r_, 1);
   ARG(x_, 2);
@@ -7133,7 +7179,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_360) {
+FUNCODEDEF(fun_361) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7142,7 +7188,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_361) {
+FUNCODEDEF(fun_362) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7152,7 +7198,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_362) {
+FUNCODEDEF(fun_363) {
   ARG(x_, 0);
   P T0;
   P a1;
@@ -7161,7 +7207,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_363) {
+FUNCODEDEF(fun_364) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7170,7 +7216,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_364) {
+FUNCODEDEF(fun_365) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7180,14 +7226,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_365) {
+FUNCODEDEF(fun_366) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(Ynil);
 }
 
-FUNCODEDEF(fun_366) {
+FUNCODEDEF(fun_367) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7196,7 +7242,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_367) {
+FUNCODEDEF(fun_368) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7206,14 +7252,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_368) {
+FUNCODEDEF(fun_369) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_369) {
+FUNCODEDEF(fun_370) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7222,7 +7268,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_370) {
+FUNCODEDEF(fun_371) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7232,14 +7278,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_371) {
+FUNCODEDEF(fun_372) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_372) {
+FUNCODEDEF(fun_373) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7248,7 +7294,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_373) {
+FUNCODEDEF(fun_374) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7258,14 +7304,14 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_374) {
+FUNCODEDEF(fun_375) {
   ARG(x_, 0);
   P a1;
 loop:
   QRET(CHKREF(Ynul));
 }
 
-FUNCODEDEF(fun_375) {
+FUNCODEDEF(fun_376) {
   ARG(Ux_, 0);
   P T0;
   P a1;
@@ -7274,7 +7320,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_376) {
+FUNCODEDEF(fun_377) {
   ARG(Ux_, 0);
   ARG(Uz_, 1);
   P T0;
@@ -7284,7 +7330,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_377) {
+FUNCODEDEF(fun_378) {
   ARG(x_, 0);
   P T0;
   P a1;
@@ -7305,7 +7351,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_379) {
+FUNCODEDEF(fun_380) {
   ARG(mod_, 0);
   P T0;
   P a1;
@@ -7320,13 +7366,13 @@ FUNCODEDEF(YastYdo_module_loader_modules) {
   P T2,T1,T0;
   P a1,a2;
 loop:
-  T2 = FUNFAB(fun_379,1,f_);
+  T2 = FUNFAB(fun_380,1,f_);
   T1 = CALL1(CHKREF(YastYmodule_loader_modules),loader_);
   T0 = CALL2(CHKREF(YruntimeYdo),T2,T1);
   QRET(T0);
 }
 
-FUNCODEDEF(fun_381) {
+FUNCODEDEF(fun_382) {
   ARG(loader_, 0);
   P a1;
 loop:
@@ -7348,47 +7394,47 @@ loop:
 FUNCODEDEF(YastYprobe_module) {
   ARG(name_, 0);
   ARG(module_loader_, 1);
-  P moduleF1416;
+  P moduleF1417;
   P T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T5 = CALL1(CHKREF(YastYmodule_loader_modules),module_loader_);
   T4 = CALL2(CHKREF(YruntimeYelt),T5,name_);
-  moduleF1416 = T4;
-  T3 = CALL2(CHKREF(YmacrosYEE),moduleF1416,CHKREF(Ynul));
+  moduleF1417 = T4;
+  T3 = CALL2(CHKREF(YmacrosYEE),moduleF1417,CHKREF(Ynul));
   if (T3 != YPfalse) {
     T2 = CALL2(CHKREF(YastYload_and_register_module),module_loader_,name_);
     T1 = T2;
   } else {
-    T1 = moduleF1416;
+    T1 = moduleF1417;
   }
   T0 = T1;
   RET(T0);
 }
 
-FUNCODEDEF(fun_384) {
-  P tup38F1422;
-  P x_1259F1421;
-  P tup38F1420;
-  P x_1258F1419;
-  P tup38F1418;
-  P x_1257F1417;
+FUNCODEDEF(fun_385) {
+  P tup38F1423;
+  P x_1261F1422;
+  P tup38F1421;
+  P x_1260F1420;
+  P tup38F1419;
+  P x_1259F1418;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
 loop:
-  x_1257F1417 = FREEREF(0);
-  T11 = CALL1(CHKREF(YastYmodule_loader_stack),x_1257F1417);
+  x_1259F1418 = FREEREF(0);
+  T11 = CALL1(CHKREF(YastYmodule_loader_stack),x_1259F1418);
   T10 = CALL1(CHKREF(YruntimeYpop),T11);
-  tup38F1418 = T10;
-  T9 = CALL1(CHKREF(Yhead),tup38F1418);
-  x_1258F1419 = T9;
-  T8 = CALL1(CHKREF(Ytail),tup38F1418);
-  tup38F1420 = T8;
-  T7 = CALL1(CHKREF(Yhead),tup38F1420);
-  x_1259F1421 = T7;
-  T6 = CALL1(CHKREF(Ytail),tup38F1420);
-  tup38F1422 = T6;
-  CALL2(CHKREF(YastYmodule_loader_stack_setter),x_1258F1419,x_1257F1417);
-  T5 = x_1259F1421;
+  tup38F1419 = T10;
+  T9 = CALL1(CHKREF(Yhead),tup38F1419);
+  x_1260F1420 = T9;
+  T8 = CALL1(CHKREF(Ytail),tup38F1419);
+  tup38F1421 = T8;
+  T7 = CALL1(CHKREF(Yhead),tup38F1421);
+  x_1261F1422 = T7;
+  T6 = CALL1(CHKREF(Ytail),tup38F1421);
+  tup38F1423 = T6;
+  CALL2(CHKREF(YastYmodule_loader_stack_setter),x_1260F1420,x_1259F1418);
+  T5 = x_1261F1422;
   T4 = T5;
   T3 = T4;
   T2 = T3;
@@ -7397,7 +7443,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_385) {
+FUNCODEDEF(fun_386) {
   P T0;
 loop:
   T0 = CALL2(CHKREF(YastYload_module),FREEREF(1),FREEREF(0));
@@ -7407,38 +7453,38 @@ loop:
 FUNCODEDEF(YastYload_and_register_module) {
   ARG(name_, 0);
   ARG(loader_, 1);
-  P modF1427;
-  P x_1256F1426;
-  P indentF1425;
-  P depthF1424;
-  P stackF1423;
+  P modF1428;
+  P x_1258F1427;
+  P indentF1426;
+  P depthF1425;
+  P stackF1424;
   P T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T15 = CALL1(CHKREF(YastYmodule_loader_stack),loader_);
-  stackF1423 = T15;
-  T14 = CALL1(CHKREF(YruntimeYlen),stackF1423);
-  depthF1424 = T14;
-  T13 = CALL2(CHKREF(YstringsYstring_repeat),CHKREF(lit_401),depthF1424);
-  indentF1425 = T13;
-  T5 = CALL2(CHKREF(YruntimeYmemQ),stackF1423,name_);
+  stackF1424 = T15;
+  T14 = CALL1(CHKREF(YruntimeYlen),stackF1424);
+  depthF1425 = T14;
+  T13 = CALL2(CHKREF(YstringsYstring_repeat),CHKREF(lit_404),depthF1425);
+  indentF1426 = T13;
+  T5 = CALL2(CHKREF(YruntimeYmemQ),stackF1424,name_);
   if (T5 != YPfalse) {
-    T4 = CALL1(CHKREF(Yhead),stackF1423);
-    T3 = CALL3(CHKREF(Yerror),CHKREF(lit_400),T4,name_);
+    T4 = CALL1(CHKREF(Yhead),stackF1424);
+    T3 = CALL3(CHKREF(Yerror),CHKREF(lit_403),T4,name_);
   } else {
   }
-  CALLN(CHKREF(YruntimeYformat),4,CHKREF(YruntimeYout),CHKREF(lit_399),indentF1425,name_);
-  x_1256F1426 = loader_;
-  T9 = CALL1(CHKREF(YastYmodule_loader_stack),x_1256F1426);
+  CALLN(CHKREF(YruntimeYformat),4,CHKREF(YruntimeYout),CHKREF(lit_402),indentF1426,name_);
+  x_1258F1427 = loader_;
+  T9 = CALL1(CHKREF(YastYmodule_loader_stack),x_1258F1427);
   T8 = CALL2(CHKREF(YruntimeYpush),T9,name_);
-  T7 = CALL2(CHKREF(YastYmodule_loader_stack_setter),T8,x_1256F1426);
-  T12 = FUNFAB(fun_385,2,name_,loader_);
-  T11 = FUNFAB(fun_384,1,loader_);
+  T7 = CALL2(CHKREF(YastYmodule_loader_stack_setter),T8,x_1258F1427);
+  T12 = FUNFAB(fun_386,2,name_,loader_);
+  T11 = FUNFAB(fun_385,1,loader_);
   T10 = with_cleanup(T12,T11);
-  modF1427 = T10;
-  CALL2(CHKREF(YastYregister_moduleX),loader_,modF1427);
-  CALL3(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),CHKREF(lit_398),indentF1425);
-  T6 = modF1427;
+  modF1428 = T10;
+  CALL2(CHKREF(YastYregister_moduleX),loader_,modF1428);
+  CALL3(CHKREF(YruntimeYformat),CHKREF(YruntimeYout),CHKREF(lit_401),indentF1426);
+  T6 = modF1428;
   T2 = T6;
   T1 = T2;
   T0 = T1;
@@ -7449,33 +7495,33 @@ FUNCODEDEF(YastYexport_bindingX) {
   ARG(binding_, 0);
   ARG(name_, 1);
   ARG(module_, 2);
-  P tmpF1430;
-  P existingF1429;
-  P exportsF1428;
+  P tmpF1431;
+  P existingF1430;
+  P exportsF1429;
   P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T9 = CALL1(CHKREF(YastYmodule_exports),module_);
-  exportsF1428 = T9;
-  T8 = CALL2(CHKREF(YruntimeYelt),exportsF1428,name_);
-  existingF1429 = T8;
-  T7 = CALL2(CHKREF(YmacrosYEE),existingF1429,CHKREF(Ynul));
-  tmpF1430 = T7;
-  if (tmpF1430 != YPfalse) {
-    T5 = tmpF1430;
+  exportsF1429 = T9;
+  T8 = CALL2(CHKREF(YruntimeYelt),exportsF1429,name_);
+  existingF1430 = T8;
+  T7 = CALL2(CHKREF(YmacrosYEE),existingF1430,CHKREF(Ynul));
+  tmpF1431 = T7;
+  if (tmpF1431 != YPfalse) {
+    T5 = tmpF1431;
   } else {
-    T6 = CALL2(CHKREF(YmacrosYEE),existingF1429,binding_);
+    T6 = CALL2(CHKREF(YmacrosYEE),existingF1430,binding_);
     T5 = T6;
   }
   T4 = T5;
   T3 = CALL1(CHKREF(Ynot),T4);
   if (T3 != YPfalse) {
-    T2 = CALLN(CHKREF(Yerror),5,CHKREF(lit_405),existingF1429,binding_,module_,name_);
+    T2 = CALLN(CHKREF(Yerror),5,CHKREF(lit_408),existingF1430,binding_,module_,name_);
     T1 = T2;
   } else {
     T1 = YPfalse;
   }
-  CALL3(CHKREF(YruntimeYelt_setter),binding_,exportsF1428,name_);
+  CALL3(CHKREF(YruntimeYelt_setter),binding_,exportsF1429,name_);
   T0 = YPfalse;
   QRET(T0);
 }
@@ -7492,15 +7538,15 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_389) {
+FUNCODEDEF(fun_390) {
   ARG(binding_, 0);
-  P tmpF1431;
+  P tmpF1432;
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T7 = CALL1(CHKREF(YastYbinding_freeQ),binding_);
-  tmpF1431 = T7;
-  if (tmpF1431 != YPfalse) {
+  tmpF1432 = T7;
+  if (tmpF1432 != YPfalse) {
     T6 = CALL2(CHKREF(YastYbinding_native_toQ),binding_,FREEREF(0));
     T5 = T6;
   } else {
@@ -7510,7 +7556,7 @@ loop:
   if (T4 != YPfalse) {
     T3 = CALL1(CHKREF(YastYmodule_name),FREEREF(0));
     T2 = CALL1(CHKREF(YastYbinding_name),binding_);
-    T1 = CALLN(CHKREF(YruntimeYformat),4,CHKREF(YruntimeYout),CHKREF(lit_408),T3,T2);
+    T1 = CALLN(CHKREF(YruntimeYformat),4,CHKREF(YruntimeYout),CHKREF(lit_411),T3,T2);
     T0 = T1;
   } else {
     T0 = YPfalse;
@@ -7523,13 +7569,13 @@ FUNCODEDEF(YastYreport_undefined_global_bindings) {
   P T2,T1,T0;
   P a1;
 loop:
-  T2 = FUNFAB(fun_389,1,mod_);
+  T2 = FUNFAB(fun_390,1,mod_);
   T1 = CALL1(CHKREF(YastYmodule_target_environment),mod_);
   T0 = CALL2(CHKREF(YastYdo_static_global_bindings),T2,T1);
   QRET(T0);
 }
 
-FUNCODEDEF(fun_391) {
+FUNCODEDEF(fun_392) {
   ARG(v_, 0);
   P T2,T1,T0;
   P a1;
@@ -7540,7 +7586,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_392) {
+FUNCODEDEF(fun_393) {
   ARG(uses_mod_, 0);
   P T4,T3,T2,T1,T0;
   P a1;
@@ -7557,19 +7603,19 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_393) {
+FUNCODEDEF(fun_394) {
   ARG(mod_, 0);
   P T3,T2,T1,T0;
   P a1;
 loop:
-  T3 = FUNFAB(fun_392,3,mod_,FREEREF(1),FREEREF(0));
+  T3 = FUNFAB(fun_393,3,mod_,FREEREF(1),FREEREF(0));
   T2 = CALL1(CHKREF(YastYmodule_target_environment),mod_);
   T1 = CALL1(CHKREF(YastYenvironment_uses_modules),T2);
   T0 = CALL2(CHKREF(YruntimeYdo),T3,T1);
   QRET(T0);
 }
 
-FUNCODEDEF(fun_add_user_394) {
+FUNCODEDEF(fun_add_user_395) {
   ARG(modname_, 0);
   P T4,T3,T2,T1,T0;
   P a1;
@@ -7578,7 +7624,7 @@ loop:
   T3 = CALL1(CHKREF(YruntimeYnulQ),T4);
   if (T3 != YPfalse) {
     CALL3(CHKREF(YruntimeYelt_setter),modname_,FREEREF(2),modname_);
-    T2 = FUNFAB(fun_393,2,modname_,FREEREF(1));
+    T2 = FUNFAB(fun_394,2,modname_,FREEREF(1));
     T1 = CALL2(CHKREF(YastYdo_module_loader_modules),T2,FREEREF(0));
     T0 = T1;
   } else {
@@ -7590,23 +7636,23 @@ loop:
 FUNCODEDEF(YastYcompute_transitive_users) {
   ARG(modnames_, 0);
   ARG(loader_, 1);
-  P collector_F1434;
-  P add_userF1433;
-  P usersF1432;
+  P collector_F1435;
+  P add_userF1434;
+  P usersF1433;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T8 = CALL2(CHKREF(YruntimeYfab),CHKREF(YruntimeYLtabG),YPint((P)100));
-  usersF1432 = T8;
-  T7 = FUNSHELL(0,fun_add_user_394,3);
-  add_userF1433 = T7;
-  FUNINIT(add_userF1433, 3,loader_,add_userF1433,usersF1432);
-  CALL2(CHKREF(YruntimeYdo),add_userF1433,modnames_);
-  collector_F1434 = Ynil;
-  collector_F1434 = BOXFAB(collector_F1434);
-  T4 = FUNFAB(fun_391,1,collector_F1434);
-  CALL2(CHKREF(YruntimeYdo),T4,usersF1432);
-  T6 = BOXVAL(collector_F1434);
+  usersF1433 = T8;
+  T7 = FUNSHELL(0,fun_add_user_395,3);
+  add_userF1434 = T7;
+  FUNINIT(add_userF1434, 3,loader_,add_userF1434,usersF1433);
+  CALL2(CHKREF(YruntimeYdo),add_userF1434,modnames_);
+  collector_F1435 = Ynil;
+  collector_F1435 = BOXFAB(collector_F1435);
+  T4 = FUNFAB(fun_392,1,collector_F1435);
+  CALL2(CHKREF(YruntimeYdo),T4,usersF1433);
+  T6 = BOXVAL(collector_F1435);
   T5 = CALL1(CHKREF(YruntimeYrevX),T6);
   T2 = T5;
   T1 = T2;
@@ -7614,7 +7660,7 @@ loop:
   RET(T0);
 }
 
-FUNCODEDEF(fun_396) {
+FUNCODEDEF(fun_397) {
   ARG(binding_, 0);
   P T0;
   P a1;
@@ -7628,7 +7674,7 @@ FUNCODEDEF(YastYfree_implemented_foreign_bindings) {
   P T3,T2,T1,T0;
   P a1;
 loop:
-  T3 = fun_396;
+  T3 = fun_397;
   T2 = CALL1(CHKREF(YastYmodule_target_environment),mod_);
   T1 = CALL1(CHKREF(YastYenvironment_implements),T2);
   T0 = CALL2(CHKREF(YruntimeYdo),T3,T1);
@@ -7648,16 +7694,16 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_399) {
+FUNCODEDEF(fun_400) {
   ARG(modname_, 0);
-  P modF1435;
+  P modF1436;
   P T3,T2,T1,T0;
   P a1;
 loop:
   T3 = CALL1(CHKREF(YastYmodule_loader_modules),FREEREF(0));
   T2 = CALL2(CHKREF(YruntimeYelt),T3,modname_);
-  modF1435 = T2;
-  T1 = CALL2(CHKREF(YastYremove_module_internalX),FREEREF(0),modF1435);
+  modF1436 = T2;
+  T1 = CALL2(CHKREF(YastYremove_module_internalX),FREEREF(0),modF1436);
   T0 = T1;
   QRET(T0);
 }
@@ -7665,33 +7711,33 @@ loop:
 FUNCODEDEF(YastYremove_modules_by_nameX) {
   ARG(modnames_, 0);
   ARG(loader_, 1);
-  P remove_namesF1436;
+  P remove_namesF1437;
   P T2,T1,T0;
   P a1,a2;
 loop:
   T2 = CALL2(CHKREF(YastYcompute_transitive_users),loader_,modnames_);
-  remove_namesF1436 = T2;
-  T1 = FUNFAB(fun_399,1,loader_);
-  T0 = CALL2(CHKREF(YruntimeYdo),T1,remove_namesF1436);
+  remove_namesF1437 = T2;
+  T1 = FUNFAB(fun_400,1,loader_);
+  T0 = CALL2(CHKREF(YruntimeYdo),T1,remove_namesF1437);
   QRET(YPfalse);
 }
 
 FUNCODEDEF(YastYmodule_name_to_relpath) {
   ARG(name_, 0);
-  P namestrF1437;
+  P namestrF1438;
   P T4,T3,T2,T1,T0;
   P a1;
 loop:
   T4 = CALL1(CHKREF(Ysym_name),name_);
   T3 = CALL2(CHKREF(YstringsYmap_str),CHKREF(YruntimeYas_lowercase),T4);
-  namestrF1437 = T3;
-  T2 = CALL2(CHKREF(YstringsYstring_split),namestrF1437,YPchr((P)47));
+  namestrF1438 = T3;
+  T2 = CALL2(CHKREF(YstringsYstring_split),namestrF1438,YPchr((P)47));
   T1 = CALL2(CHKREF(YstringsYstring_join),T2,CHKREF(YprotoSsystemYTpath_separatorT));
   T0 = T1;
   RET(T0);
 }
 
-FUNCODEDEF(fun_402) {
+FUNCODEDEF(fun_403) {
   ARG(name_, 0);
   P T1,T0;
   P a1;
@@ -7704,17 +7750,17 @@ loop:
 FUNCODEDEF(YastYinstall_initial_bindings) {
   ARG(loader_, 0);
   ARG(env_, 1);
-  P bootenvF1439;
-  P bootmodF1438;
+  P bootenvF1440;
+  P bootmodF1439;
   P T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T5 = CALL2(CHKREF(YastYprobe_module),loader_,CHKREF(YastYDproto_boot_module_name));
-  bootmodF1438 = T5;
-  T4 = CALL1(CHKREF(YastYmodule_target_environment),bootmodF1438);
-  bootenvF1439 = T4;
-  T3 = FUNFAB(fun_402,2,env_,bootenvF1439);
-  T2 = CALL2(CHKREF(YruntimeYdo),T3,CHKREF(lit_419));
+  bootmodF1439 = T5;
+  T4 = CALL1(CHKREF(YastYmodule_target_environment),bootmodF1439);
+  bootenvF1440 = T4;
+  T3 = FUNFAB(fun_403,2,env_,bootenvF1440);
+  T2 = CALL2(CHKREF(YruntimeYdo),T3,CHKREF(lit_422));
   T1 = T2;
   T0 = T1;
   QRET(T0);
@@ -7724,7 +7770,7 @@ FUNCODEDEF(YastYfab_static_global_environment) {
   ARG(allow_foreign_namesQ_, 0);
   ARG(module_loader_, 1);
   ARG(module_, 2);
-  P new_envF1440;
+  P new_envF1441;
   P T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
@@ -7741,12 +7787,12 @@ loop:
   T3 = (P)YPpair(module_loader_,T4);
   T2 = (P)YPpair(module_,T3);
   T1 = CALL3(CHKREF(YPisa),T13,T8,T2);
-  new_envF1440 = T1;
-  T0 = new_envF1440;
+  new_envF1441 = T1;
+  T0 = new_envF1441;
   RET(T0);
 }
 
-FUNCODEDEF(fun_405) {
+FUNCODEDEF(fun_406) {
   ARG(binding_, 0);
   ARG(name_, 1);
   P T3,T2,T1,T0;
@@ -7767,25 +7813,25 @@ FUNCODEDEF(YastYfab_subset_environment) {
   ARG(excluded_, 0);
   ARG(src_module_, 1);
   ARG(module_, 2);
-  P new_envF1442;
-  P loaderF1441;
+  P new_envF1443;
+  P loaderF1442;
   P T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T6 = CALL1(CHKREF(YastYmodule_target_environment),src_module_);
   T5 = CALL1(CHKREF(YastYenvironment_module_loader),T6);
-  loaderF1441 = T5;
-  T4 = CALL3(CHKREF(YastYfab_static_global_environment),module_,loaderF1441,YPfalse);
-  new_envF1442 = T4;
-  T3 = FUNFAB(fun_405,2,new_envF1442,excluded_);
+  loaderF1442 = T5;
+  T4 = CALL3(CHKREF(YastYfab_static_global_environment),module_,loaderF1442,YPfalse);
+  new_envF1443 = T4;
+  T3 = FUNFAB(fun_406,2,new_envF1443,excluded_);
   T2 = CALL1(CHKREF(YastYmodule_exports),src_module_);
   CALL2(CHKREF(YruntimeYdo_keyed),T3,T2);
-  T1 = new_envF1442;
+  T1 = new_envF1443;
   T0 = T1;
   RET(T0);
 }
 
-FUNCODEDEF(fun_407) {
+FUNCODEDEF(fun_408) {
   P T3,T2,T1,T0;
 loop:
   T3 = BOXVAL(FREEREF(1));
@@ -7799,7 +7845,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_408) {
+FUNCODEDEF(fun_409) {
 loop:
   CALL2(CHKREF(YastYload_in),FREEREF(3),FREEREF(2));
   CALL2(CHKREF(YastYenvironment_allows_foreign_namesQ_setter),YPtrue,FREEREF(2));
@@ -7807,39 +7853,39 @@ loop:
   QRET(FREEREF(0));
 }
 
-FUNCODEDEF(fun_409) {
+FUNCODEDEF(fun_410) {
   ARG(name_, 0);
   ARG(loader_, 1);
-  P src_fileF1448;
-  P fileF1447;
-  P keepmodQF1446;
-  P envF1445;
-  P moduleF1444;
-  P typeF1443;
+  P src_fileF1449;
+  P fileF1448;
+  P keepmodQF1447;
+  P envF1446;
+  P moduleF1445;
+  P typeF1444;
   P T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3;
   P T2,T1,T0;
   P a1,a2;
 loop:
   T18 = CALL1(CHKREF(YastYmodule_loader_module_type),loader_);
-  typeF1443 = T18;
-  T17 = (P)YPpair(typeF1443,Ynil);
+  typeF1444 = T18;
+  T17 = (P)YPpair(typeF1444,Ynil);
   T16 = (P)YPpair(CHKREF(YastYmodule_name),Ynil);
   T15 = (P)YPpair(name_,Ynil);
   T14 = CALL3(CHKREF(YPisa),T17,T16,T15);
-  moduleF1444 = T14;
-  T13 = CALL3(CHKREF(YastYfab_static_global_environment),moduleF1444,loader_,YPfalse);
-  envF1445 = T13;
-  keepmodQF1446 = YPfalse;
-  keepmodQF1446 = BOXFAB(keepmodQF1446);
+  moduleF1445 = T14;
+  T13 = CALL3(CHKREF(YastYfab_static_global_environment),moduleF1445,loader_,YPfalse);
+  envF1446 = T13;
+  keepmodQF1447 = YPfalse;
+  keepmodQF1447 = BOXFAB(keepmodQF1447);
   T12 = CALL1(CHKREF(YastYmodule_name_to_relpath),name_);
-  fileF1447 = T12;
-  T11 = CALL1(CHKREF(YprotoSsystemYproto_filename),fileF1447);
+  fileF1448 = T12;
+  T11 = CALL1(CHKREF(YprotoSsystemYproto_filename),fileF1448);
   T10 = CALL1(CHKREF(YprotoSsystemYadd_src_path),T11);
-  src_fileF1448 = T10;
-  CALL3(CHKREF(YastYset_module_environments),moduleF1444,envF1445,envF1445);
-  CALL2(CHKREF(YastYinstall_initial_bindings),envF1445,loader_);
-  T9 = FUNFAB(fun_408,4,moduleF1444,keepmodQF1446,envF1445,src_fileF1448);
-  T8 = FUNFAB(fun_407,2,moduleF1444,keepmodQF1446);
+  src_fileF1449 = T10;
+  CALL3(CHKREF(YastYset_module_environments),moduleF1445,envF1446,envF1446);
+  CALL2(CHKREF(YastYinstall_initial_bindings),envF1446,loader_);
+  T9 = FUNFAB(fun_409,4,moduleF1445,keepmodQF1447,envF1446,src_fileF1449);
+  T8 = FUNFAB(fun_408,2,moduleF1445,keepmodQF1447);
   T7 = with_cleanup(T9,T8);
   T6 = T7;
   T5 = T6;
@@ -7877,28 +7923,28 @@ loop:
 
 FUNCODEDEF(YastYreloader_do_create_module) {
   ARG(modname_, 0);
-  P envF1452;
-  P modF1451;
-  P typeF1450;
-  P loaderF1449;
+  P envF1453;
+  P modF1452;
+  P typeF1451;
+  P loaderF1450;
   P T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
   T11 = CALL0(CHKREF(YastYruntime_module_loader));
-  loaderF1449 = T11;
-  T10 = CALL1(CHKREF(YastYmodule_loader_module_type),loaderF1449);
-  typeF1450 = T10;
-  T9 = (P)YPpair(typeF1450,Ynil);
+  loaderF1450 = T11;
+  T10 = CALL1(CHKREF(YastYmodule_loader_module_type),loaderF1450);
+  typeF1451 = T10;
+  T9 = (P)YPpair(typeF1451,Ynil);
   T8 = (P)YPpair(CHKREF(YastYmodule_name),Ynil);
   T7 = CALL2(CHKREF(YruntimeYas),CHKREF(YLsymG),modname_);
   T6 = (P)YPpair(T7,Ynil);
   T5 = CALL3(CHKREF(YPisa),T9,T8,T6);
-  modF1451 = T5;
-  T4 = CALL3(CHKREF(YastYfab_static_global_environment),modF1451,loaderF1449,YPtrue);
-  envF1452 = T4;
-  CALL3(CHKREF(YastYset_module_environments),modF1451,envF1452,envF1452);
-  CALL2(CHKREF(YastYregister_moduleX),loaderF1449,modF1451);
-  T3 = modF1451;
+  modF1452 = T5;
+  T4 = CALL3(CHKREF(YastYfab_static_global_environment),modF1452,loaderF1450,YPtrue);
+  envF1453 = T4;
+  CALL3(CHKREF(YastYset_module_environments),modF1452,envF1453,envF1453);
+  CALL2(CHKREF(YastYregister_moduleX),loaderF1450,modF1452);
+  T3 = modF1452;
   T2 = T3;
   T1 = T2;
   T0 = T1;
@@ -7922,25 +7968,25 @@ FUNCODEDEF(YastYreloader_do_import) {
   ARG(from_mod_, 1);
   ARG(name_, 2);
   ARG(mod_, 3);
-  P bindingF1454;
-  P home_envF1453;
+  P bindingF1455;
+  P home_envF1454;
   P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3,a4;
 loop:
   T10 = CALL1(CHKREF(YastYmodule_target_environment),from_mod_);
-  home_envF1453 = T10;
+  home_envF1454 = T10;
   T9 = CALL2(CHKREF(YruntimeYas),CHKREF(YLsymG),original_name_);
-  T8 = CALL2(CHKREF(YastYfind_binding),T9,home_envF1453);
-  bindingF1454 = T8;
-  T5 = CALL1(CHKREF(Ynot),bindingF1454);
+  T8 = CALL2(CHKREF(YastYfind_binding),T9,home_envF1454);
+  bindingF1455 = T8;
+  T5 = CALL1(CHKREF(Ynot),bindingF1455);
   if (T5 != YPfalse) {
     T4 = CALL1(CHKREF(YastYmodule_name),from_mod_);
     T3 = CALL1(CHKREF(YastYmodule_name),mod_);
-    T2 = CALLN(CHKREF(Yerror),4,CHKREF(lit_434),original_name_,T4,T3);
+    T2 = CALLN(CHKREF(Yerror),4,CHKREF(lit_437),original_name_,T4,T3);
   } else {
   }
   T7 = CALL1(CHKREF(YastYmodule_target_environment),mod_);
-  T6 = CALL2(CHKREF(YastYinsert_globalX),bindingF1454,T7);
+  T6 = CALL2(CHKREF(YastYinsert_globalX),bindingF1455,T7);
   T1 = T6;
   T0 = T1;
   QRET(T0);
@@ -7950,7 +7996,7 @@ FUNCODEDEF(YastYreloader_do_runtime_binding) {
   ARG(loc_, 0);
   ARG(name_, 1);
   ARG(mod_, 2);
-  P bindingF1455;
+  P bindingF1456;
   P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
   P T0;
   P a1,a2,a3;
@@ -7969,9 +8015,9 @@ loop:
   T5 = (P)YPpair(T10,T6);
   T4 = (P)YPpair(CHKREF(lit_1),T5);
   T3 = CALL3(CHKREF(YPisa),T16,T11,T4);
-  bindingF1455 = T3;
+  bindingF1456 = T3;
   T2 = CALL1(CHKREF(YastYmodule_target_environment),mod_);
-  T1 = CALL2(CHKREF(YastYinsert_globalX),bindingF1455,T2);
+  T1 = CALL2(CHKREF(YastYinsert_globalX),bindingF1456,T2);
   T0 = T1;
   QRET(T0);
 }
@@ -7979,7 +8025,7 @@ loop:
 FUNCODEDEF(YastYreloader_do_other_binding) {
   ARG(name_, 0);
   ARG(mod_, 1);
-  P bindingF1456;
+  P bindingF1457;
   P T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
@@ -7995,9 +8041,9 @@ loop:
   T5 = (P)YPpair(T9,T6);
   T4 = (P)YPpair(CHKREF(lit_20),T5);
   T3 = CALL3(CHKREF(YPisa),T14,T10,T4);
-  bindingF1456 = T3;
+  bindingF1457 = T3;
   T2 = CALL1(CHKREF(YastYmodule_target_environment),mod_);
-  T1 = CALL2(CHKREF(YastYinsert_globalX),bindingF1456,T2);
+  T1 = CALL2(CHKREF(YastYinsert_globalX),bindingF1457,T2);
   T0 = T1;
   QRET(T0);
 }
@@ -8006,22 +8052,22 @@ FUNCODEDEF(YastYreloader_do_export) {
   ARG(as_name_, 0);
   ARG(name_, 1);
   ARG(mod_, 2);
-  P bindingF1457;
+  P bindingF1458;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
 loop:
   T8 = CALL2(CHKREF(YruntimeYas),CHKREF(YLsymG),name_);
   T7 = CALL1(CHKREF(YastYmodule_target_environment),mod_);
   T6 = CALL2(CHKREF(YastYfind_binding),T8,T7);
-  bindingF1457 = T6;
-  T3 = CALL1(CHKREF(Ynot),bindingF1457);
+  bindingF1458 = T6;
+  T3 = CALL1(CHKREF(Ynot),bindingF1458);
   if (T3 != YPfalse) {
     T2 = CALL1(CHKREF(YastYmodule_name),mod_);
-    T1 = CALL3(CHKREF(Yerror),CHKREF(lit_439),name_,T2);
+    T1 = CALL3(CHKREF(Yerror),CHKREF(lit_442),name_,T2);
   } else {
   }
   T5 = CALL2(CHKREF(YruntimeYas),CHKREF(YLsymG),as_name_);
-  T4 = CALL3(CHKREF(YastYexport_bindingX),mod_,T5,bindingF1457);
+  T4 = CALL3(CHKREF(YastYexport_bindingX),mod_,T5,bindingF1458);
   T0 = T4;
   QRET(T0);
 }
@@ -8033,17 +8079,17 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_420) {
+FUNCODEDEF(fun_421) {
   ARG(binding_, 0);
-  P cloneF1458;
+  P cloneF1459;
   P T4,T3,T2,T1,T0;
   P a1;
 loop:
   T4 = CALL1(CHKREF(YastYbinding_name),binding_);
-  T3 = CALLN(CHKREF(YastYast_define_binding),4,FREEREF(0),T4,YPfalse,CHKREF(lit_190));
-  cloneF1458 = T3;
+  T3 = CALLN(CHKREF(YastYast_define_binding),4,FREEREF(0),T4,YPfalse,CHKREF(lit_192));
+  cloneF1459 = T3;
   T2 = CALL1(CHKREF(YastYbinding_handler),binding_);
-  T1 = CALL2(CHKREF(YastYbinding_handler_setter),T2,cloneF1458);
+  T1 = CALL2(CHKREF(YastYbinding_handler_setter),T2,cloneF1459);
   T0 = T1;
   QRET(T0);
 }
@@ -8053,7 +8099,7 @@ FUNCODEDEF(YastYinstall_magic_bindings) {
   P T2,T1,T0;
   P a1;
 loop:
-  T2 = FUNFAB(fun_420,1,env_);
+  T2 = FUNFAB(fun_421,1,env_);
   T1 = CALL0(CHKREF(YastYmagic_bindings));
   T0 = CALL2(CHKREF(YruntimeYdo),T2,T1);
   QRET(T0);
@@ -8078,19 +8124,19 @@ loop:
 }
 
 FUNCODEDEF(YastYinit_runtime) {
-  P bootenvF1460;
-  P bootmodF1459;
+  P bootenvF1461;
+  P bootmodF1460;
   P T4,T3,T2,T1,T0;
 loop:
   CALL0(CHKREF(YastYreload_modules));
   T4 = CALL0(CHKREF(YastYruntime_module_loader));
   T3 = CALL2(CHKREF(YastYprobe_module),T4,CHKREF(YastYDproto_boot_module_name));
-  bootmodF1459 = T3;
-  T2 = CALL1(CHKREF(YastYmodule_target_environment),bootmodF1459);
-  bootenvF1460 = T2;
-  CALL1(CHKREF(YastYinstall_magic_bindings),bootenvF1460);
+  bootmodF1460 = T3;
+  T2 = CALL1(CHKREF(YastYmodule_target_environment),bootmodF1460);
+  bootenvF1461 = T2;
+  CALL1(CHKREF(YastYinstall_magic_bindings),bootenvF1461);
   CALL0(CHKREF(YastYreload_macros));
-  T1 = CALL1(CHKREF(YastYinstall_interpreter_hacks),bootenvF1460);
+  T1 = CALL1(CHKREF(YastYinstall_interpreter_hacks),bootenvF1461);
   T0 = T1;
   QRET(YPfalse);
 }
@@ -8100,7 +8146,7 @@ FUNCODEDEF(YastYfab_syntax_environment) {
   P T1,T0;
   P a1;
 loop:
-  T1 = CALL1(CHKREF(YastYruntime_module),CHKREF(lit_447));
+  T1 = CALL1(CHKREF(YastYruntime_module),CHKREF(lit_450));
   T0 = CALL3(CHKREF(YastYfab_subset_environment),module_,T1,CHKREF(YastYsyntax_environment_excluded_bindings));
   RET(T0);
 }
@@ -8108,32 +8154,32 @@ loop:
 FUNCODEDEF(YastYfab_p2c_module) {
   ARG(name_, 0);
   ARG(loader_, 1);
-  P target_envF1464;
-  P syntax_envF1463;
-  P moduleF1462;
-  P typeF1461;
+  P target_envF1465;
+  P syntax_envF1464;
+  P moduleF1463;
+  P typeF1462;
   P T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
   T13 = CALL1(CHKREF(YastYmodule_loader_module_type),loader_);
-  typeF1461 = T13;
-  T12 = (P)YPpair(typeF1461,Ynil);
+  typeF1462 = T13;
+  T12 = (P)YPpair(typeF1462,Ynil);
   T11 = (P)YPpair(CHKREF(YastYmodule_name),Ynil);
   T10 = (P)YPpair(name_,Ynil);
   T9 = CALL3(CHKREF(YPisa),T12,T11,T10);
-  moduleF1462 = T9;
-  T8 = CALL1(CHKREF(YastYfab_syntax_environment),moduleF1462);
-  syntax_envF1463 = T8;
-  T7 = CALL3(CHKREF(YastYfab_static_global_environment),moduleF1462,loader_,YPfalse);
-  target_envF1464 = T7;
-  CALL3(CHKREF(YastYset_module_environments),moduleF1462,syntax_envF1463,target_envF1464);
+  moduleF1463 = T9;
+  T8 = CALL1(CHKREF(YastYfab_syntax_environment),moduleF1463);
+  syntax_envF1464 = T8;
+  T7 = CALL3(CHKREF(YastYfab_static_global_environment),moduleF1463,loader_,YPfalse);
+  target_envF1465 = T7;
+  CALL3(CHKREF(YastYset_module_environments),moduleF1463,syntax_envF1464,target_envF1465);
   T6 = CALL2(CHKREF(YmacrosYEE),name_,CHKREF(YastYDproto_boot_module_name));
   if (T6 != YPfalse) {
-    T5 = CALL1(CHKREF(YastYinit_p2c_boot_environment),target_envF1464);
+    T5 = CALL1(CHKREF(YastYinit_p2c_boot_environment),target_envF1465);
   } else {
-    T4 = CALL2(CHKREF(YastYinit_p2c_regular_environment),target_envF1464,loader_);
+    T4 = CALL2(CHKREF(YastYinit_p2c_regular_environment),target_envF1465,loader_);
   }
-  T3 = moduleF1462;
+  T3 = moduleF1463;
   T2 = T3;
   T1 = T2;
   T0 = T1;
@@ -8167,7 +8213,7 @@ loop:
   QRET(T0);
 }
 
-FUNCODEDEF(fun_loop_430) {
+FUNCODEDEF(fun_loop_431) {
   ARG(env_, 0);
   P T5,T4,T3,T2,T1,T0;
   P a1;
@@ -8191,19 +8237,19 @@ loop:
 FUNCODEDEF(YastYdo_static_global_bindings) {
   ARG(env_, 0);
   ARG(f_, 1);
-  P loopF1465;
+  P loopF1466;
   P T2,T1,T0;
   P a1,a2;
 loop:
-  T2 = FUNSHELL(1,fun_loop_430,2);
-  loopF1465 = T2;
-  FUNINIT(loopF1465, 2,loopF1465,f_);
-  T1 = KCALL1(loopF1465,env_);
+  T2 = FUNSHELL(1,fun_loop_431,2);
+  loopF1466 = T2;
+  FUNINIT(loopF1466, 2,loopF1466,f_);
+  T1 = KCALL1(loopF1466,env_);
   T0 = T1;
   QRET(T0);
 }
 
-FUNCODEDEF(fun_loop_432) {
+FUNCODEDEF(fun_loop_433) {
   ARG(env_, 0);
   P T5,T4,T3,T2,T1,T0;
   P a1;
@@ -8227,14 +8273,14 @@ loop:
 FUNCODEDEF(YastYdo_named_static_global_bindings) {
   ARG(env_, 0);
   ARG(f_, 1);
-  P loopF1466;
+  P loopF1467;
   P T2,T1,T0;
   P a1,a2;
 loop:
-  T2 = FUNSHELL(1,fun_loop_432,2);
-  loopF1466 = T2;
-  FUNINIT(loopF1466, 2,loopF1466,f_);
-  T1 = KCALL1(loopF1466,env_);
+  T2 = FUNSHELL(1,fun_loop_433,2);
+  loopF1467 = T2;
+  FUNINIT(loopF1467, 2,loopF1467,f_);
+  T1 = KCALL1(loopF1467,env_);
   T0 = T1;
   QRET(T0);
 }
@@ -9264,21 +9310,22 @@ loop:
 }
 
 P YastY___main_2___() {
-  P T238,T237,T236,T235,T234,T233,T232,T231,T230,T229,T228,T227,T226,T225,T224,T223;
-  P T222,T221,T220,T219,T218,T217,T216,T215,T214,T213,T212,T211,T210,T209,T208,T207;
-  P T206,T205,T204,T203,T202,T201,T200,T199,T198,T197,T196,T195,T194,T193,T192,T191;
-  P T190,T189,T188,T187,T186,T185,T184,T183,T182,T181,T180,T179,T178,T177,T176,T175;
-  P T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164,T163,T162,T161,T160,T159;
-  P T158,T157,T156,T155,T154,T153,T152,T151,T150,T149,T148,T147,T146,T145,T144,T143;
-  P T142,T141,T140,T139,T138,T137,T136,T135,T134,T133,T132,T131,T130,T129,T128,T127;
-  P T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116,T115,T114,T113,T112,T111;
-  P T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100,T99,T98,T97,T96,T95;
-  P T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84,T83,T82,T81,T80,T79;
-  P T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68,T67,T66,T65,T64,T63;
-  P T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47;
-  P T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31;
-  P T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15;
-  P T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P T242,T241,T240,T239,T238,T237,T236,T235,T234,T233,T232,T231,T230,T229,T228,T227;
+  P T226,T225,T224,T223,T222,T221,T220,T219,T218,T217,T216,T215,T214,T213,T212,T211;
+  P T210,T209,T208,T207,T206,T205,T204,T203,T202,T201,T200,T199,T198,T197,T196,T195;
+  P T194,T193,T192,T191,T190,T189,T188,T187,T186,T185,T184,T183,T182,T181,T180,T179;
+  P T178,T177,T176,T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164,T163;
+  P T162,T161,T160,T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149,T148,T147;
+  P T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133,T132,T131;
+  P T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116,T115;
+  P T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100,T99;
+  P T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84,T83;
+  P T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68,T67;
+  P T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51;
+  P T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35;
+  P T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19;
+  P T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3;
+  P T2,T1,T0;
 loop:
   lit_64 = YPPsym((P)"function-binding-setter");
   T0 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLast_functionG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
@@ -9577,47 +9624,49 @@ loop:
   lit_86 = YPPsym((P)"exp");
   lit_87 = YPPsym((P)"return");
   lit_88 = YPPsym((P)"=>");
-  lit_89 = YPPsym((P)"e");
-  lit_90 = YPPsym((P)"empty");
-  lit_91 = YPPsym((P)"dm");
-  lit_92 = YPPsym((P)"t");
-  lit_93 = YPPsym((P)"tail");
-  lit_94 = YPPsym((P)"set");
-  lit_95 = YPPsym((P)"h");
-  lit_96 = YPPsym((P)"head");
-  lit_97 = YPPsym((P)"isa");
-  lit_98 = YPPsym((P)"df");
-  lit_99 = YPPsym((P)"pair");
-  lit_100 = YPPsym((P)"fabs");
-  lit_101 = YPPsym((P)"apply");
-  lit_102 = YPPsym((P)"<lst>");
-  lit_103 = YPPsym((P)"p");
-  lit_104 = YPPsym((P)"as");
-  lit_105 = YPPsym((P)"lst");
-  lit_106 = YPPsym((P)"dv");
-  lit_107 = YPPsym((P)"seq");
-  lit_108 = YPsb((P)"-empty");
-  lit_109 = YPsb((P)"$");
-  lit_110 = YPsb((P)">");
-  lit_111 = YPsb((P)"<");
-  lit_112 = YPsb((P)"Match Pattern Failure");
-  lit_113 = YPPsym((P)"def-list");
-  lit_114 = YPPsym((P)"x-1240");
-  lit_115 = YPPsym((P)"args");
-  lit_116 = YPPsym((P)"msg");
-  T119 = YPsig(YPPlist(2,CHKREF(lit_116),CHKREF(lit_115)),YPPlist(1,CHKREF(YLstrG)),YPtrue,YPint((P)1),CHKREF(YLanyG));
-  fun_x_1240_112 = YPmet(FUNCODEREF(fun_x_1240_112),CHKREF(lit_114),T119,ENVNUL);
+  lit_89 = YPPsym((P)"t=");
+  lit_90 = YPPsym((P)"e");
+  lit_91 = YPPsym((P)"empty");
+  lit_92 = YPPsym((P)"dm");
+  lit_93 = YPPsym((P)"t");
+  lit_94 = YPPsym((P)"tail");
+  lit_95 = YPPsym((P)"set");
+  lit_96 = YPPsym((P)"h");
+  lit_97 = YPPsym((P)"head");
+  lit_98 = YPPsym((P)"isa");
+  lit_99 = YPPsym((P)"df");
+  lit_100 = YPPsym((P)"pair");
+  lit_101 = YPPsym((P)"fabs");
+  lit_102 = YPPsym((P)"apply");
+  lit_103 = YPPsym((P)"<lst>");
+  lit_104 = YPPsym((P)"p");
+  lit_105 = YPPsym((P)"as");
+  lit_106 = YPPsym((P)"lst");
+  lit_107 = YPPsym((P)"dv");
+  lit_108 = YPPsym((P)"dc");
+  lit_109 = YPPsym((P)"seq");
+  lit_110 = YPsb((P)"-empty");
+  lit_111 = YPsb((P)"$");
+  lit_112 = YPsb((P)">");
+  lit_113 = YPsb((P)"<");
+  lit_114 = YPsb((P)"Match Pattern Failure");
+  lit_115 = YPPsym((P)"def-list");
+  lit_116 = YPPsym((P)"x-1242");
+  lit_117 = YPPsym((P)"args");
+  lit_118 = YPPsym((P)"msg");
+  T119 = YPsig(YPPlist(2,CHKREF(lit_118),CHKREF(lit_117)),YPPlist(1,CHKREF(YLstrG)),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_x_1242_112 = YPmet(FUNCODEREF(fun_x_1242_112),CHKREF(lit_116),T119,ENVNUL);
   T118 = YPsig(YPPlist(1,CHKREF(lit_87)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_113 = YPmet(FUNCODEREF(fun_113),YPfalse,T118,ENVNUL);
   T117 = YPsig(YPPlist(1,CHKREF(lit_86)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_114 = YPmet(FUNCODEREF(fun_114),YPfalse,T117,ENVNUL);
   T120 = fun_114;
   YPmacro(YPPsym((P)"ast"),YPPsym((P)"def-list"),T120);
-  lit_117 = YPPsym((P)"<programs>");
-  lit_118 = YPPsym((P)"def-programs");
-  lit_119 = YPPsym((P)"x-1244");
-  T123 = YPsig(YPPlist(2,CHKREF(lit_116),CHKREF(lit_115)),YPPlist(1,CHKREF(YLstrG)),YPtrue,YPint((P)1),CHKREF(YLanyG));
-  fun_x_1244_115 = YPmet(FUNCODEREF(fun_x_1244_115),CHKREF(lit_119),T123,ENVNUL);
+  lit_119 = YPPsym((P)"<programs>");
+  lit_120 = YPPsym((P)"def-programs");
+  lit_121 = YPPsym((P)"x-1246");
+  T123 = YPsig(YPPlist(2,CHKREF(lit_118),CHKREF(lit_117)),YPPlist(1,CHKREF(YLstrG)),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_x_1246_115 = YPmet(FUNCODEREF(fun_x_1246_115),CHKREF(lit_121),T123,ENVNUL);
   T122 = YPsig(YPPlist(1,CHKREF(lit_87)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_116 = YPmet(FUNCODEREF(fun_116),YPfalse,T122,ENVNUL);
   T121 = YPsig(YPPlist(1,CHKREF(lit_86)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
@@ -9637,277 +9686,282 @@ loop:
   T128 = CALL3(CHKREF(YPisa),T133,T131,T129);
   YastYDsequential_empty = T128;
   regsym(&YastYDsequential_empty,"ast","$sequential-empty");
-  T134 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YastYLsequentialG),CHKREF(YastYLsequentialG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_118 = YPmet(FUNCODEREF(fun_118),CHKREF(lit_104),T134,ENVNUL);
-  T138 = BOUNDP(YruntimeYas);
-  if (T138 != YPfalse) {
-    T137 = CHKREF(YruntimeYas);
+  T135 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLsequentialG));
+  T134 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T135,CHKREF(YastYLsequentialG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_118 = YPmet(FUNCODEREF(fun_118),CHKREF(lit_105),T134,ENVNUL);
+  T139 = BOUNDP(YruntimeYas);
+  if (T139 != YPfalse) {
+    T138 = CHKREF(YruntimeYas);
   } else {
-    T137 = YPfalse;
+    T138 = YPfalse;
   }
-  T136 = fun_118;
-  T135 = CALL2(CHKREF(YPdefine_method),T137,T136);
-  YruntimeYas = T135;
+  T137 = fun_118;
+  T136 = CALL2(CHKREF(YPdefine_method),T138,T137);
+  YruntimeYas = T136;
   regsym(&YruntimeYas,"runtime","as");
-  T139 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YLlstG),CHKREF(YastYLsequentialG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_119 = YPmet(FUNCODEREF(fun_119),CHKREF(lit_104),T139,ENVNUL);
-  T143 = BOUNDP(YruntimeYas);
-  if (T143 != YPfalse) {
-    T142 = CHKREF(YruntimeYas);
+  T141 = CALL1(CHKREF(YruntimeYtE),CHKREF(YLlstG));
+  T140 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T141,CHKREF(YastYLsequentialG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_119 = YPmet(FUNCODEREF(fun_119),CHKREF(lit_105),T140,ENVNUL);
+  T145 = BOUNDP(YruntimeYas);
+  if (T145 != YPfalse) {
+    T144 = CHKREF(YruntimeYas);
   } else {
-    T142 = YPfalse;
+    T144 = YPfalse;
   }
-  T141 = fun_119;
-  T140 = CALL2(CHKREF(YPdefine_method),T142,T141);
-  YruntimeYas = T140;
+  T143 = fun_119;
+  T142 = CALL2(CHKREF(YPdefine_method),T144,T143);
+  YruntimeYas = T142;
   regsym(&YruntimeYas,"runtime","as");
-  T144 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YastYLsequentialG),CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_120 = YPmet(FUNCODEREF(fun_120),CHKREF(lit_104),T144,ENVNUL);
-  T148 = BOUNDP(YruntimeYas);
-  if (T148 != YPfalse) {
-    T147 = CHKREF(YruntimeYas);
+  T147 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLsequentialG));
+  T146 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T147,CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_120 = YPmet(FUNCODEREF(fun_120),CHKREF(lit_105),T146,ENVNUL);
+  T151 = BOUNDP(YruntimeYas);
+  if (T151 != YPfalse) {
+    T150 = CHKREF(YruntimeYas);
   } else {
-    T147 = YPfalse;
+    T150 = YPfalse;
   }
-  T146 = fun_120;
-  T145 = CALL2(CHKREF(YPdefine_method),T147,T146);
-  YruntimeYas = T145;
+  T149 = fun_120;
+  T148 = CALL2(CHKREF(YPdefine_method),T150,T149);
+  YruntimeYas = T148;
   regsym(&YruntimeYas,"runtime","as");
-  lit_120 = YPPsym((P)"sequential");
-  T149 = YPsig(YPPlist(2,CHKREF(lit_95),CHKREF(lit_92)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYsequential = YPmet(FUNCODEREF(YastYsequential),CHKREF(lit_120),T149,ENVNUL);
-  T150 = YastYsequential;
-  YastYsequential = T150;
+  lit_122 = YPPsym((P)"sequential");
+  T152 = YPsig(YPPlist(2,CHKREF(lit_96),CHKREF(lit_93)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYsequential = YPmet(FUNCODEREF(YastYsequential),CHKREF(lit_122),T152,ENVNUL);
+  T153 = YastYsequential;
+  YastYsequential = T153;
   regsym(&YastYsequential,"ast","sequential");
-  T151 = YPsig(YPPlist(1,CHKREF(lit_89)),YPPlist(1,CHKREF(YastYLsequentialG)),YPfalse,YPint((P)1),CHKREF(YastYLsequentialG));
-  fun_122 = YPmet(FUNCODEREF(fun_122),CHKREF(lit_90),T151,ENVNUL);
-  T155 = BOUNDP(YruntimeYempty);
-  if (T155 != YPfalse) {
-    T154 = CHKREF(YruntimeYempty);
+  T155 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLsequentialG));
+  T154 = YPsig(YPPlist(1,CHKREF(lit_90)),YPPlist(1,T155),YPfalse,YPint((P)1),CHKREF(YastYLsequentialG));
+  fun_122 = YPmet(FUNCODEREF(fun_122),CHKREF(lit_91),T154,ENVNUL);
+  T159 = BOUNDP(YruntimeYempty);
+  if (T159 != YPfalse) {
+    T158 = CHKREF(YruntimeYempty);
   } else {
-    T154 = YPfalse;
+    T158 = YPfalse;
   }
-  T153 = fun_122;
-  T152 = CALL2(CHKREF(YPdefine_method),T154,T153);
-  YruntimeYempty = T152;
+  T157 = fun_122;
+  T156 = CALL2(CHKREF(YPdefine_method),T158,T157);
+  YruntimeYempty = T156;
   regsym(&YruntimeYempty,"runtime","empty");
-  T157 = (P)YPpair(CHKREF(YastYLpassive_programG),Ynil);
-  T156 = CALL3(CHKREF(YPisa),T157,Ynil,Ynil);
-  YastYLconstantG = T156;
+  T161 = (P)YPpair(CHKREF(YastYLpassive_programG),Ynil);
+  T160 = CALL3(CHKREF(YPisa),T161,Ynil,Ynil);
+  YastYLconstantG = T160;
   regsym(&YastYLconstantG,"ast","<constant>");
-  lit_121 = YPPsym((P)"constant-value");
-  T158 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLconstantG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_123 = YPmet(FUNCODEREF(fun_123),CHKREF(lit_121),T158,ENVNUL);
-  T162 = BOUNDP(YastYconstant_value);
-  if (T162 != YPfalse) {
-    T161 = CHKREF(YastYconstant_value);
+  lit_123 = YPPsym((P)"constant-value");
+  T162 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLconstantG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_123 = YPmet(FUNCODEREF(fun_123),CHKREF(lit_123),T162,ENVNUL);
+  T166 = BOUNDP(YastYconstant_value);
+  if (T166 != YPfalse) {
+    T165 = CHKREF(YastYconstant_value);
   } else {
-    T161 = YPfalse;
+    T165 = YPfalse;
   }
-  T160 = fun_123;
-  T159 = CALL2(CHKREF(YPdefine_method),T161,T160);
-  YastYconstant_value = T159;
+  T164 = fun_123;
+  T163 = CALL2(CHKREF(YPdefine_method),T165,T164);
+  YastYconstant_value = T163;
   regsym(&YastYconstant_value,"ast","constant-value");
-  lit_122 = YPPsym((P)"constant-value-setter");
-  T163 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLconstantG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_124 = YPmet(FUNCODEREF(fun_124),CHKREF(lit_122),T163,ENVNUL);
-  T167 = BOUNDP(YastYconstant_value_setter);
-  if (T167 != YPfalse) {
-    T166 = CHKREF(YastYconstant_value_setter);
+  lit_124 = YPPsym((P)"constant-value-setter");
+  T167 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLconstantG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_124 = YPmet(FUNCODEREF(fun_124),CHKREF(lit_124),T167,ENVNUL);
+  T171 = BOUNDP(YastYconstant_value_setter);
+  if (T171 != YPfalse) {
+    T170 = CHKREF(YastYconstant_value_setter);
   } else {
-    T166 = YPfalse;
+    T170 = YPfalse;
   }
-  T165 = fun_124;
-  T164 = CALL2(CHKREF(YPdefine_method),T166,T165);
-  YastYconstant_value_setter = T164;
+  T169 = fun_124;
+  T168 = CALL2(CHKREF(YPdefine_method),T170,T169);
+  YastYconstant_value_setter = T168;
   regsym(&YastYconstant_value_setter,"ast","constant-value-setter");
-  T168 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_125 = YPmet(FUNCODEREF(fun_125),YPfalse,T168,ENVNUL);
-  T169 = fun_125;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLconstantG),CHKREF(YastYconstant_value),CHKREF(YastYconstant_value_setter),CHKREF(YLanyG),T169);
-  T171 = (P)YPpair(CHKREF(YastYLconstantG),Ynil);
-  T170 = CALL3(CHKREF(YPisa),T171,Ynil,Ynil);
-  YastYLraw_constantG = T170;
+  T172 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_125 = YPmet(FUNCODEREF(fun_125),YPfalse,T172,ENVNUL);
+  T173 = fun_125;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLconstantG),CHKREF(YastYconstant_value),CHKREF(YastYconstant_value_setter),CHKREF(YLanyG),T173);
+  T175 = (P)YPpair(CHKREF(YastYLconstantG),Ynil);
+  T174 = CALL3(CHKREF(YPisa),T175,Ynil,Ynil);
+  YastYLraw_constantG = T174;
   regsym(&YastYLraw_constantG,"ast","<raw-constant>");
-  T173 = (P)YPpair(CHKREF(YastYLcomputed_programG),Ynil);
-  T172 = CALL3(CHKREF(YPisa),T173,Ynil,Ynil);
-  YastYLapplicationG = T172;
+  T177 = (P)YPpair(CHKREF(YastYLcomputed_programG),Ynil);
+  T176 = CALL3(CHKREF(YPisa),T177,Ynil,Ynil);
+  YastYLapplicationG = T176;
   regsym(&YastYLapplicationG,"ast","<application>");
-  lit_123 = YPPsym((P)"application-arguments");
-  T174 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLapplicationG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_126 = YPmet(FUNCODEREF(fun_126),CHKREF(lit_123),T174,ENVNUL);
-  T178 = BOUNDP(YastYapplication_arguments);
-  if (T178 != YPfalse) {
-    T177 = CHKREF(YastYapplication_arguments);
+  lit_125 = YPPsym((P)"application-arguments");
+  T178 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLapplicationG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_126 = YPmet(FUNCODEREF(fun_126),CHKREF(lit_125),T178,ENVNUL);
+  T182 = BOUNDP(YastYapplication_arguments);
+  if (T182 != YPfalse) {
+    T181 = CHKREF(YastYapplication_arguments);
   } else {
-    T177 = YPfalse;
+    T181 = YPfalse;
   }
-  T176 = fun_126;
-  T175 = CALL2(CHKREF(YPdefine_method),T177,T176);
-  YastYapplication_arguments = T175;
+  T180 = fun_126;
+  T179 = CALL2(CHKREF(YPdefine_method),T181,T180);
+  YastYapplication_arguments = T179;
   regsym(&YastYapplication_arguments,"ast","application-arguments");
-  lit_124 = YPPsym((P)"application-arguments-setter");
-  T179 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLapplicationG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_127 = YPmet(FUNCODEREF(fun_127),CHKREF(lit_124),T179,ENVNUL);
-  T183 = BOUNDP(YastYapplication_arguments_setter);
-  if (T183 != YPfalse) {
-    T182 = CHKREF(YastYapplication_arguments_setter);
+  lit_126 = YPPsym((P)"application-arguments-setter");
+  T183 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLapplicationG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_127 = YPmet(FUNCODEREF(fun_127),CHKREF(lit_126),T183,ENVNUL);
+  T187 = BOUNDP(YastYapplication_arguments_setter);
+  if (T187 != YPfalse) {
+    T186 = CHKREF(YastYapplication_arguments_setter);
   } else {
-    T182 = YPfalse;
+    T186 = YPfalse;
   }
-  T181 = fun_127;
-  T180 = CALL2(CHKREF(YPdefine_method),T182,T181);
-  YastYapplication_arguments_setter = T180;
+  T185 = fun_127;
+  T184 = CALL2(CHKREF(YPdefine_method),T186,T185);
+  YastYapplication_arguments_setter = T184;
   regsym(&YastYapplication_arguments_setter,"ast","application-arguments-setter");
-  T184 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_128 = YPmet(FUNCODEREF(fun_128),YPfalse,T184,ENVNUL);
-  T185 = fun_128;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLapplicationG),CHKREF(YastYapplication_arguments),CHKREF(YastYapplication_arguments_setter),CHKREF(YLanyG),T185);
-  lit_125 = YPPsym((P)"application-tail?");
-  T186 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLapplicationG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_129 = YPmet(FUNCODEREF(fun_129),CHKREF(lit_125),T186,ENVNUL);
-  T190 = BOUNDP(YastYapplication_tailQ);
-  if (T190 != YPfalse) {
-    T189 = CHKREF(YastYapplication_tailQ);
+  T188 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_128 = YPmet(FUNCODEREF(fun_128),YPfalse,T188,ENVNUL);
+  T189 = fun_128;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLapplicationG),CHKREF(YastYapplication_arguments),CHKREF(YastYapplication_arguments_setter),CHKREF(YLanyG),T189);
+  lit_127 = YPPsym((P)"application-tail?");
+  T190 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLapplicationG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_129 = YPmet(FUNCODEREF(fun_129),CHKREF(lit_127),T190,ENVNUL);
+  T194 = BOUNDP(YastYapplication_tailQ);
+  if (T194 != YPfalse) {
+    T193 = CHKREF(YastYapplication_tailQ);
   } else {
-    T189 = YPfalse;
+    T193 = YPfalse;
   }
-  T188 = fun_129;
-  T187 = CALL2(CHKREF(YPdefine_method),T189,T188);
-  YastYapplication_tailQ = T187;
+  T192 = fun_129;
+  T191 = CALL2(CHKREF(YPdefine_method),T193,T192);
+  YastYapplication_tailQ = T191;
   regsym(&YastYapplication_tailQ,"ast","application-tail?");
-  lit_126 = YPPsym((P)"application-tail?-setter");
-  T191 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLapplicationG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_130 = YPmet(FUNCODEREF(fun_130),CHKREF(lit_126),T191,ENVNUL);
-  T195 = BOUNDP(YastYapplication_tailQ_setter);
-  if (T195 != YPfalse) {
-    T194 = CHKREF(YastYapplication_tailQ_setter);
+  lit_128 = YPPsym((P)"application-tail?-setter");
+  T195 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLapplicationG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_130 = YPmet(FUNCODEREF(fun_130),CHKREF(lit_128),T195,ENVNUL);
+  T199 = BOUNDP(YastYapplication_tailQ_setter);
+  if (T199 != YPfalse) {
+    T198 = CHKREF(YastYapplication_tailQ_setter);
   } else {
-    T194 = YPfalse;
+    T198 = YPfalse;
   }
-  T193 = fun_130;
-  T192 = CALL2(CHKREF(YPdefine_method),T194,T193);
-  YastYapplication_tailQ_setter = T192;
+  T197 = fun_130;
+  T196 = CALL2(CHKREF(YPdefine_method),T198,T197);
+  YastYapplication_tailQ_setter = T196;
   regsym(&YastYapplication_tailQ_setter,"ast","application-tail?-setter");
-  T196 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_131 = YPmet(FUNCODEREF(fun_131),YPfalse,T196,ENVNUL);
-  T197 = fun_131;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLapplicationG),CHKREF(YastYapplication_tailQ),CHKREF(YastYapplication_tailQ_setter),CHKREF(YLanyG),T197);
-  T199 = (P)YPpair(CHKREF(YastYLapplicationG),Ynil);
-  T198 = CALL3(CHKREF(YPisa),T199,Ynil,Ynil);
-  YastYLregular_applicationG = T198;
+  T200 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_131 = YPmet(FUNCODEREF(fun_131),YPfalse,T200,ENVNUL);
+  T201 = fun_131;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLapplicationG),CHKREF(YastYapplication_tailQ),CHKREF(YastYapplication_tailQ_setter),CHKREF(YLanyG),T201);
+  T203 = (P)YPpair(CHKREF(YastYLapplicationG),Ynil);
+  T202 = CALL3(CHKREF(YPisa),T203,Ynil,Ynil);
+  YastYLregular_applicationG = T202;
   regsym(&YastYLregular_applicationG,"ast","<regular-application>");
-  lit_127 = YPPsym((P)"application-function");
-  T200 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLregular_applicationG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_132 = YPmet(FUNCODEREF(fun_132),CHKREF(lit_127),T200,ENVNUL);
-  T204 = BOUNDP(YastYapplication_function);
-  if (T204 != YPfalse) {
-    T203 = CHKREF(YastYapplication_function);
+  lit_129 = YPPsym((P)"application-function");
+  T204 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLregular_applicationG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_132 = YPmet(FUNCODEREF(fun_132),CHKREF(lit_129),T204,ENVNUL);
+  T208 = BOUNDP(YastYapplication_function);
+  if (T208 != YPfalse) {
+    T207 = CHKREF(YastYapplication_function);
   } else {
-    T203 = YPfalse;
+    T207 = YPfalse;
   }
-  T202 = fun_132;
-  T201 = CALL2(CHKREF(YPdefine_method),T203,T202);
-  YastYapplication_function = T201;
+  T206 = fun_132;
+  T205 = CALL2(CHKREF(YPdefine_method),T207,T206);
+  YastYapplication_function = T205;
   regsym(&YastYapplication_function,"ast","application-function");
-  lit_128 = YPPsym((P)"application-function-setter");
-  T205 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLregular_applicationG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_133 = YPmet(FUNCODEREF(fun_133),CHKREF(lit_128),T205,ENVNUL);
-  T209 = BOUNDP(YastYapplication_function_setter);
-  if (T209 != YPfalse) {
-    T208 = CHKREF(YastYapplication_function_setter);
+  lit_130 = YPPsym((P)"application-function-setter");
+  T209 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLregular_applicationG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_133 = YPmet(FUNCODEREF(fun_133),CHKREF(lit_130),T209,ENVNUL);
+  T213 = BOUNDP(YastYapplication_function_setter);
+  if (T213 != YPfalse) {
+    T212 = CHKREF(YastYapplication_function_setter);
   } else {
-    T208 = YPfalse;
+    T212 = YPfalse;
   }
-  T207 = fun_133;
-  T206 = CALL2(CHKREF(YPdefine_method),T208,T207);
-  YastYapplication_function_setter = T206;
+  T211 = fun_133;
+  T210 = CALL2(CHKREF(YPdefine_method),T212,T211);
+  YastYapplication_function_setter = T210;
   regsym(&YastYapplication_function_setter,"ast","application-function-setter");
-  T210 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_134 = YPmet(FUNCODEREF(fun_134),YPfalse,T210,ENVNUL);
-  T211 = fun_134;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLregular_applicationG),CHKREF(YastYapplication_function),CHKREF(YastYapplication_function_setter),CHKREF(YLanyG),T211);
-  lit_129 = YPPsym((P)"application-known?");
-  T212 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLregular_applicationG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_135 = YPmet(FUNCODEREF(fun_135),CHKREF(lit_129),T212,ENVNUL);
-  T216 = BOUNDP(YastYapplication_knownQ);
-  if (T216 != YPfalse) {
-    T215 = CHKREF(YastYapplication_knownQ);
+  T214 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_134 = YPmet(FUNCODEREF(fun_134),YPfalse,T214,ENVNUL);
+  T215 = fun_134;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLregular_applicationG),CHKREF(YastYapplication_function),CHKREF(YastYapplication_function_setter),CHKREF(YLanyG),T215);
+  lit_131 = YPPsym((P)"application-known?");
+  T216 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLregular_applicationG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_135 = YPmet(FUNCODEREF(fun_135),CHKREF(lit_131),T216,ENVNUL);
+  T220 = BOUNDP(YastYapplication_knownQ);
+  if (T220 != YPfalse) {
+    T219 = CHKREF(YastYapplication_knownQ);
   } else {
-    T215 = YPfalse;
+    T219 = YPfalse;
   }
-  T214 = fun_135;
-  T213 = CALL2(CHKREF(YPdefine_method),T215,T214);
-  YastYapplication_knownQ = T213;
+  T218 = fun_135;
+  T217 = CALL2(CHKREF(YPdefine_method),T219,T218);
+  YastYapplication_knownQ = T217;
   regsym(&YastYapplication_knownQ,"ast","application-known?");
-  lit_130 = YPPsym((P)"application-known?-setter");
-  T217 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLregular_applicationG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_136 = YPmet(FUNCODEREF(fun_136),CHKREF(lit_130),T217,ENVNUL);
-  T221 = BOUNDP(YastYapplication_knownQ_setter);
-  if (T221 != YPfalse) {
-    T220 = CHKREF(YastYapplication_knownQ_setter);
+  lit_132 = YPPsym((P)"application-known?-setter");
+  T221 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLregular_applicationG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_136 = YPmet(FUNCODEREF(fun_136),CHKREF(lit_132),T221,ENVNUL);
+  T225 = BOUNDP(YastYapplication_knownQ_setter);
+  if (T225 != YPfalse) {
+    T224 = CHKREF(YastYapplication_knownQ_setter);
   } else {
-    T220 = YPfalse;
+    T224 = YPfalse;
   }
-  T219 = fun_136;
-  T218 = CALL2(CHKREF(YPdefine_method),T220,T219);
-  YastYapplication_knownQ_setter = T218;
+  T223 = fun_136;
+  T222 = CALL2(CHKREF(YPdefine_method),T224,T223);
+  YastYapplication_knownQ_setter = T222;
   regsym(&YastYapplication_knownQ_setter,"ast","application-known?-setter");
-  T222 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_137 = YPmet(FUNCODEREF(fun_137),YPfalse,T222,ENVNUL);
-  T223 = fun_137;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLregular_applicationG),CHKREF(YastYapplication_knownQ),CHKREF(YastYapplication_knownQ_setter),CHKREF(YLanyG),T223);
-  T225 = (P)YPpair(CHKREF(YastYLapplicationG),Ynil);
-  T224 = CALL3(CHKREF(YPisa),T225,Ynil,Ynil);
-  YastYLpredefined_applicationG = T224;
+  T226 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_137 = YPmet(FUNCODEREF(fun_137),YPfalse,T226,ENVNUL);
+  T227 = fun_137;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLregular_applicationG),CHKREF(YastYapplication_knownQ),CHKREF(YastYapplication_knownQ_setter),CHKREF(YLanyG),T227);
+  T229 = (P)YPpair(CHKREF(YastYLapplicationG),Ynil);
+  T228 = CALL3(CHKREF(YPisa),T229,Ynil,Ynil);
+  YastYLpredefined_applicationG = T228;
   regsym(&YastYLpredefined_applicationG,"ast","<predefined-application>");
-  lit_131 = YPPsym((P)"application-binding");
-  T226 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLpredefined_applicationG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_138 = YPmet(FUNCODEREF(fun_138),CHKREF(lit_131),T226,ENVNUL);
-  T230 = BOUNDP(YastYapplication_binding);
-  if (T230 != YPfalse) {
-    T229 = CHKREF(YastYapplication_binding);
+  lit_133 = YPPsym((P)"application-binding");
+  T230 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLpredefined_applicationG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_138 = YPmet(FUNCODEREF(fun_138),CHKREF(lit_133),T230,ENVNUL);
+  T234 = BOUNDP(YastYapplication_binding);
+  if (T234 != YPfalse) {
+    T233 = CHKREF(YastYapplication_binding);
   } else {
-    T229 = YPfalse;
+    T233 = YPfalse;
   }
-  T228 = fun_138;
-  T227 = CALL2(CHKREF(YPdefine_method),T229,T228);
-  YastYapplication_binding = T227;
+  T232 = fun_138;
+  T231 = CALL2(CHKREF(YPdefine_method),T233,T232);
+  YastYapplication_binding = T231;
   regsym(&YastYapplication_binding,"ast","application-binding");
-  lit_132 = YPPsym((P)"application-binding-setter");
-  T233 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLpredefined_applicationG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  T232 = fun_139 = YPmet(FUNCODEREF(fun_139),CHKREF(lit_132),T233,ENVNUL);
-  T238 = BOUNDP(YastYapplication_binding_setter);
-  if (T238 != YPfalse) {
-    T237 = CHKREF(YastYapplication_binding_setter);
+  lit_134 = YPPsym((P)"application-binding-setter");
+  T237 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLpredefined_applicationG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  T236 = fun_139 = YPmet(FUNCODEREF(fun_139),CHKREF(lit_134),T237,ENVNUL);
+  T242 = BOUNDP(YastYapplication_binding_setter);
+  if (T242 != YPfalse) {
+    T241 = CHKREF(YastYapplication_binding_setter);
   } else {
-    T237 = YPfalse;
+    T241 = YPfalse;
   }
-  T236 = fun_139;
-  T235 = CALL2(CHKREF(YPdefine_method),T237,T236);
-  T234 = YastYapplication_binding_setter = T235;
+  T240 = fun_139;
+  T239 = CALL2(CHKREF(YPdefine_method),T241,T240);
+  T238 = YastYapplication_binding_setter = T239;
   regsym(&YastYapplication_binding_setter,"ast","application-binding-setter");
-  T231 = T234;
-  return T231;
+  T235 = T238;
+  return T235;
 }
 
 P YastY___main_3___() {
-  P T255,T254,T253,T252,T251,T250,T249,T248,T247,T246,T245,T244,T243,T242,T241,T240;
-  P T239,T238,T237,T236,T235,T234,T233,T232,T231,T230,T229,T228,T227,T226,T225,T224;
-  P T223,T222,T221,T220,T219,T218,T217,T216,T215,T214,T213,T212,T211,T210,T209,T208;
-  P T207,T206,T205,T204,T203,T202,T201,T200,T199,T198,T197,T196,T195,T194,T193,T192;
-  P T191,T190,T189,T188,T187,T186,T185,T184,T183,T182,T181,T180,T179,T178,T177,T176;
-  P T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164,T163,T162,T161,T160;
-  P T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149,T148,T147,T146,T145,T144;
-  P T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133,T132,T131,T130,T129,T128;
-  P T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116,T115,T114,T113,T112;
-  P T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100,T99,T98,T97,T96;
-  P T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84,T83,T82,T81,T80;
-  P T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68,T67,T66,T65,T64;
-  P T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48;
-  P T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32;
-  P T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16;
-  P T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P T263,T262,T261,T260,T259,T258,T257,T256,T255,T254,T253,T252,T251,T250,T249,T248;
+  P T247,T246,T245,T244,T243,T242,T241,T240,T239,T238,T237,T236,T235,T234,T233,T232;
+  P T231,T230,T229,T228,T227,T226,T225,T224,T223,T222,T221,T220,T219,T218,T217,T216;
+  P T215,T214,T213,T212,T211,T210,T209,T208,T207,T206,T205,T204,T203,T202,T201,T200;
+  P T199,T198,T197,T196,T195,T194,T193,T192,T191,T190,T189,T188,T187,T186,T185,T184;
+  P T183,T182,T181,T180,T179,T178,T177,T176,T175,T174,T173,T172,T171,T170,T169,T168;
+  P T167,T166,T165,T164,T163,T162,T161,T160,T159,T158,T157,T156,T155,T154,T153,T152;
+  P T151,T150,T149,T148,T147,T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136;
+  P T135,T134,T133,T132,T131,T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120;
+  P T119,T118,T117,T116,T115,T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104;
+  P T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88;
+  P T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72;
+  P T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56;
+  P T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40;
+  P T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24;
+  P T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8;
+  P T7,T6,T5,T4,T3,T2,T1,T0;
 loop:
   T0 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_140 = YPmet(FUNCODEREF(fun_140),YPfalse,T0,ENVNUL);
@@ -9917,9 +9971,9 @@ loop:
   T2 = CALL3(CHKREF(YPisa),T3,Ynil,Ynil);
   YastYLfix_letG = T2;
   regsym(&YastYLfix_letG,"ast","<fix-let>");
-  lit_133 = YPPsym((P)"fix-let-bindings");
+  lit_135 = YPPsym((P)"fix-let-bindings");
   T4 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLfix_letG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_141 = YPmet(FUNCODEREF(fun_141),CHKREF(lit_133),T4,ENVNUL);
+  fun_141 = YPmet(FUNCODEREF(fun_141),CHKREF(lit_135),T4,ENVNUL);
   T8 = BOUNDP(YastYfix_let_bindings);
   if (T8 != YPfalse) {
     T7 = CHKREF(YastYfix_let_bindings);
@@ -9930,9 +9984,9 @@ loop:
   T5 = CALL2(CHKREF(YPdefine_method),T7,T6);
   YastYfix_let_bindings = T5;
   regsym(&YastYfix_let_bindings,"ast","fix-let-bindings");
-  lit_134 = YPPsym((P)"fix-let-bindings-setter");
+  lit_136 = YPPsym((P)"fix-let-bindings-setter");
   T9 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLfix_letG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_142 = YPmet(FUNCODEREF(fun_142),CHKREF(lit_134),T9,ENVNUL);
+  fun_142 = YPmet(FUNCODEREF(fun_142),CHKREF(lit_136),T9,ENVNUL);
   T13 = BOUNDP(YastYfix_let_bindings_setter);
   if (T13 != YPfalse) {
     T12 = CHKREF(YastYfix_let_bindings_setter);
@@ -9947,9 +10001,9 @@ loop:
   fun_143 = YPmet(FUNCODEREF(fun_143),YPfalse,T14,ENVNUL);
   T15 = fun_143;
   CALLN(CHKREF(YPslot),5,CHKREF(YastYLfix_letG),CHKREF(YastYfix_let_bindings),CHKREF(YastYfix_let_bindings_setter),CHKREF(YLanyG),T15);
-  lit_135 = YPPsym((P)"fix-let-types");
+  lit_137 = YPPsym((P)"fix-let-types");
   T16 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLfix_letG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_144 = YPmet(FUNCODEREF(fun_144),CHKREF(lit_135),T16,ENVNUL);
+  fun_144 = YPmet(FUNCODEREF(fun_144),CHKREF(lit_137),T16,ENVNUL);
   T20 = BOUNDP(YastYfix_let_types);
   if (T20 != YPfalse) {
     T19 = CHKREF(YastYfix_let_types);
@@ -9960,9 +10014,9 @@ loop:
   T17 = CALL2(CHKREF(YPdefine_method),T19,T18);
   YastYfix_let_types = T17;
   regsym(&YastYfix_let_types,"ast","fix-let-types");
-  lit_136 = YPPsym((P)"fix-let-types-setter");
+  lit_138 = YPPsym((P)"fix-let-types-setter");
   T21 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLfix_letG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_145 = YPmet(FUNCODEREF(fun_145),CHKREF(lit_136),T21,ENVNUL);
+  fun_145 = YPmet(FUNCODEREF(fun_145),CHKREF(lit_138),T21,ENVNUL);
   T25 = BOUNDP(YastYfix_let_types_setter);
   if (T25 != YPfalse) {
     T24 = CHKREF(YastYfix_let_types_setter);
@@ -9977,9 +10031,9 @@ loop:
   fun_146 = YPmet(FUNCODEREF(fun_146),YPfalse,T26,ENVNUL);
   T27 = fun_146;
   CALLN(CHKREF(YPslot),5,CHKREF(YastYLfix_letG),CHKREF(YastYfix_let_types),CHKREF(YastYfix_let_types_setter),CHKREF(YLanyG),T27);
-  lit_137 = YPPsym((P)"fix-let-arguments");
+  lit_139 = YPPsym((P)"fix-let-arguments");
   T28 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLfix_letG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_147 = YPmet(FUNCODEREF(fun_147),CHKREF(lit_137),T28,ENVNUL);
+  fun_147 = YPmet(FUNCODEREF(fun_147),CHKREF(lit_139),T28,ENVNUL);
   T32 = BOUNDP(YastYfix_let_arguments);
   if (T32 != YPfalse) {
     T31 = CHKREF(YastYfix_let_arguments);
@@ -9990,9 +10044,9 @@ loop:
   T29 = CALL2(CHKREF(YPdefine_method),T31,T30);
   YastYfix_let_arguments = T29;
   regsym(&YastYfix_let_arguments,"ast","fix-let-arguments");
-  lit_138 = YPPsym((P)"fix-let-arguments-setter");
+  lit_140 = YPPsym((P)"fix-let-arguments-setter");
   T33 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLfix_letG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_148 = YPmet(FUNCODEREF(fun_148),CHKREF(lit_138),T33,ENVNUL);
+  fun_148 = YPmet(FUNCODEREF(fun_148),CHKREF(lit_140),T33,ENVNUL);
   T37 = BOUNDP(YastYfix_let_arguments_setter);
   if (T37 != YPfalse) {
     T36 = CHKREF(YastYfix_let_arguments_setter);
@@ -10007,9 +10061,9 @@ loop:
   fun_149 = YPmet(FUNCODEREF(fun_149),YPfalse,T38,ENVNUL);
   T39 = fun_149;
   CALLN(CHKREF(YPslot),5,CHKREF(YastYLfix_letG),CHKREF(YastYfix_let_arguments),CHKREF(YastYfix_let_arguments_setter),CHKREF(YLanyG),T39);
-  lit_139 = YPPsym((P)"fix-let-body");
+  lit_141 = YPPsym((P)"fix-let-body");
   T40 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLfix_letG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_150 = YPmet(FUNCODEREF(fun_150),CHKREF(lit_139),T40,ENVNUL);
+  fun_150 = YPmet(FUNCODEREF(fun_150),CHKREF(lit_141),T40,ENVNUL);
   T44 = BOUNDP(YastYfix_let_body);
   if (T44 != YPfalse) {
     T43 = CHKREF(YastYfix_let_body);
@@ -10020,9 +10074,9 @@ loop:
   T41 = CALL2(CHKREF(YPdefine_method),T43,T42);
   YastYfix_let_body = T41;
   regsym(&YastYfix_let_body,"ast","fix-let-body");
-  lit_140 = YPPsym((P)"fix-let-body-setter");
+  lit_142 = YPPsym((P)"fix-let-body-setter");
   T45 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLfix_letG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_151 = YPmet(FUNCODEREF(fun_151),CHKREF(lit_140),T45,ENVNUL);
+  fun_151 = YPmet(FUNCODEREF(fun_151),CHKREF(lit_142),T45,ENVNUL);
   T49 = BOUNDP(YastYfix_let_body_setter);
   if (T49 != YPfalse) {
     T48 = CHKREF(YastYfix_let_body_setter);
@@ -10050,474 +10104,482 @@ loop:
   T55 = CALL3(CHKREF(YPisa),T60,T58,T56);
   YastYDfab_list_empty = T55;
   regsym(&YastYDfab_list_empty,"ast","$fab-list-empty");
-  T61 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YastYLfab_listG),CHKREF(YastYLfab_listG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_153 = YPmet(FUNCODEREF(fun_153),CHKREF(lit_104),T61,ENVNUL);
-  T65 = BOUNDP(YruntimeYas);
-  if (T65 != YPfalse) {
-    T64 = CHKREF(YruntimeYas);
+  T62 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLfab_listG));
+  T61 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T62,CHKREF(YastYLfab_listG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_153 = YPmet(FUNCODEREF(fun_153),CHKREF(lit_105),T61,ENVNUL);
+  T66 = BOUNDP(YruntimeYas);
+  if (T66 != YPfalse) {
+    T65 = CHKREF(YruntimeYas);
   } else {
-    T64 = YPfalse;
+    T65 = YPfalse;
   }
-  T63 = fun_153;
-  T62 = CALL2(CHKREF(YPdefine_method),T64,T63);
-  YruntimeYas = T62;
+  T64 = fun_153;
+  T63 = CALL2(CHKREF(YPdefine_method),T65,T64);
+  YruntimeYas = T63;
   regsym(&YruntimeYas,"runtime","as");
-  T66 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YLlstG),CHKREF(YastYLfab_listG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_154 = YPmet(FUNCODEREF(fun_154),CHKREF(lit_104),T66,ENVNUL);
-  T70 = BOUNDP(YruntimeYas);
-  if (T70 != YPfalse) {
-    T69 = CHKREF(YruntimeYas);
+  T68 = CALL1(CHKREF(YruntimeYtE),CHKREF(YLlstG));
+  T67 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T68,CHKREF(YastYLfab_listG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_154 = YPmet(FUNCODEREF(fun_154),CHKREF(lit_105),T67,ENVNUL);
+  T72 = BOUNDP(YruntimeYas);
+  if (T72 != YPfalse) {
+    T71 = CHKREF(YruntimeYas);
   } else {
-    T69 = YPfalse;
+    T71 = YPfalse;
   }
-  T68 = fun_154;
-  T67 = CALL2(CHKREF(YPdefine_method),T69,T68);
-  YruntimeYas = T67;
+  T70 = fun_154;
+  T69 = CALL2(CHKREF(YPdefine_method),T71,T70);
+  YruntimeYas = T69;
   regsym(&YruntimeYas,"runtime","as");
-  T71 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YastYLfab_listG),CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_155 = YPmet(FUNCODEREF(fun_155),CHKREF(lit_104),T71,ENVNUL);
-  T75 = BOUNDP(YruntimeYas);
-  if (T75 != YPfalse) {
-    T74 = CHKREF(YruntimeYas);
+  T74 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLfab_listG));
+  T73 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T74,CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_155 = YPmet(FUNCODEREF(fun_155),CHKREF(lit_105),T73,ENVNUL);
+  T78 = BOUNDP(YruntimeYas);
+  if (T78 != YPfalse) {
+    T77 = CHKREF(YruntimeYas);
   } else {
-    T74 = YPfalse;
+    T77 = YPfalse;
   }
-  T73 = fun_155;
-  T72 = CALL2(CHKREF(YPdefine_method),T74,T73);
-  YruntimeYas = T72;
+  T76 = fun_155;
+  T75 = CALL2(CHKREF(YPdefine_method),T77,T76);
+  YruntimeYas = T75;
   regsym(&YruntimeYas,"runtime","as");
-  lit_141 = YPPsym((P)"fab-list");
-  T76 = YPsig(YPPlist(2,CHKREF(lit_95),CHKREF(lit_92)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYfab_list = YPmet(FUNCODEREF(YastYfab_list),CHKREF(lit_141),T76,ENVNUL);
-  T77 = YastYfab_list;
-  YastYfab_list = T77;
+  lit_143 = YPPsym((P)"fab-list");
+  T79 = YPsig(YPPlist(2,CHKREF(lit_96),CHKREF(lit_93)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYfab_list = YPmet(FUNCODEREF(YastYfab_list),CHKREF(lit_143),T79,ENVNUL);
+  T80 = YastYfab_list;
+  YastYfab_list = T80;
   regsym(&YastYfab_list,"ast","fab-list");
-  T78 = YPsig(YPPlist(1,CHKREF(lit_89)),YPPlist(1,CHKREF(YastYLfab_listG)),YPfalse,YPint((P)1),CHKREF(YastYLfab_listG));
-  fun_157 = YPmet(FUNCODEREF(fun_157),CHKREF(lit_90),T78,ENVNUL);
-  T82 = BOUNDP(YruntimeYempty);
-  if (T82 != YPfalse) {
-    T81 = CHKREF(YruntimeYempty);
+  T82 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLfab_listG));
+  T81 = YPsig(YPPlist(1,CHKREF(lit_90)),YPPlist(1,T82),YPfalse,YPint((P)1),CHKREF(YastYLfab_listG));
+  fun_157 = YPmet(FUNCODEREF(fun_157),CHKREF(lit_91),T81,ENVNUL);
+  T86 = BOUNDP(YruntimeYempty);
+  if (T86 != YPfalse) {
+    T85 = CHKREF(YruntimeYempty);
   } else {
-    T81 = YPfalse;
+    T85 = YPfalse;
   }
-  T80 = fun_157;
-  T79 = CALL2(CHKREF(YPdefine_method),T81,T80);
-  YruntimeYempty = T79;
+  T84 = fun_157;
+  T83 = CALL2(CHKREF(YPdefine_method),T85,T84);
+  YruntimeYempty = T83;
   regsym(&YruntimeYempty,"runtime","empty");
-  T85 = (P)YPpair(CHKREF(YastYLprogramsG),Ynil);
-  T84 = (P)YPpair(CHKREF(YLlstG),T85);
-  T83 = CALL3(CHKREF(YPisa),T84,Ynil,Ynil);
-  YastYLargumentsG = T83;
+  T89 = (P)YPpair(CHKREF(YastYLprogramsG),Ynil);
+  T88 = (P)YPpair(CHKREF(YLlstG),T89);
+  T87 = CALL3(CHKREF(YPisa),T88,Ynil,Ynil);
+  YastYLargumentsG = T87;
   regsym(&YastYLargumentsG,"ast","<arguments>");
-  T91 = (P)YPpair(CHKREF(YastYLargumentsG),Ynil);
-  T90 = (P)YPpair(CHKREF(Ytail),Ynil);
-  T89 = (P)YPpair(CHKREF(Yhead),T90);
-  T88 = (P)YPpair(YPfalse,Ynil);
-  T87 = (P)YPpair(YPfalse,T88);
-  T86 = CALL3(CHKREF(YPisa),T91,T89,T87);
-  YastYDarguments_empty = T86;
+  T95 = (P)YPpair(CHKREF(YastYLargumentsG),Ynil);
+  T94 = (P)YPpair(CHKREF(Ytail),Ynil);
+  T93 = (P)YPpair(CHKREF(Yhead),T94);
+  T92 = (P)YPpair(YPfalse,Ynil);
+  T91 = (P)YPpair(YPfalse,T92);
+  T90 = CALL3(CHKREF(YPisa),T95,T93,T91);
+  YastYDarguments_empty = T90;
   regsym(&YastYDarguments_empty,"ast","$arguments-empty");
-  T92 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YastYLargumentsG),CHKREF(YastYLargumentsG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_158 = YPmet(FUNCODEREF(fun_158),CHKREF(lit_104),T92,ENVNUL);
-  T96 = BOUNDP(YruntimeYas);
-  if (T96 != YPfalse) {
-    T95 = CHKREF(YruntimeYas);
-  } else {
-    T95 = YPfalse;
-  }
-  T94 = fun_158;
-  T93 = CALL2(CHKREF(YPdefine_method),T95,T94);
-  YruntimeYas = T93;
-  regsym(&YruntimeYas,"runtime","as");
-  T97 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YLlstG),CHKREF(YastYLargumentsG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_159 = YPmet(FUNCODEREF(fun_159),CHKREF(lit_104),T97,ENVNUL);
+  T97 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLargumentsG));
+  T96 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T97,CHKREF(YastYLargumentsG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_158 = YPmet(FUNCODEREF(fun_158),CHKREF(lit_105),T96,ENVNUL);
   T101 = BOUNDP(YruntimeYas);
   if (T101 != YPfalse) {
     T100 = CHKREF(YruntimeYas);
   } else {
     T100 = YPfalse;
   }
-  T99 = fun_159;
+  T99 = fun_158;
   T98 = CALL2(CHKREF(YPdefine_method),T100,T99);
   YruntimeYas = T98;
   regsym(&YruntimeYas,"runtime","as");
-  T102 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YastYLargumentsG),CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_160 = YPmet(FUNCODEREF(fun_160),CHKREF(lit_104),T102,ENVNUL);
-  T106 = BOUNDP(YruntimeYas);
-  if (T106 != YPfalse) {
-    T105 = CHKREF(YruntimeYas);
+  T103 = CALL1(CHKREF(YruntimeYtE),CHKREF(YLlstG));
+  T102 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T103,CHKREF(YastYLargumentsG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_159 = YPmet(FUNCODEREF(fun_159),CHKREF(lit_105),T102,ENVNUL);
+  T107 = BOUNDP(YruntimeYas);
+  if (T107 != YPfalse) {
+    T106 = CHKREF(YruntimeYas);
   } else {
-    T105 = YPfalse;
+    T106 = YPfalse;
   }
-  T104 = fun_160;
-  T103 = CALL2(CHKREF(YPdefine_method),T105,T104);
-  YruntimeYas = T103;
+  T105 = fun_159;
+  T104 = CALL2(CHKREF(YPdefine_method),T106,T105);
+  YruntimeYas = T104;
   regsym(&YruntimeYas,"runtime","as");
-  T107 = YPsig(YPPlist(2,CHKREF(lit_95),CHKREF(lit_92)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYarguments = YPmet(FUNCODEREF(YastYarguments),CHKREF(lit_3),T107,ENVNUL);
-  T108 = YastYarguments;
-  YastYarguments = T108;
-  regsym(&YastYarguments,"ast","arguments");
-  T109 = YPsig(YPPlist(1,CHKREF(lit_89)),YPPlist(1,CHKREF(YastYLargumentsG)),YPfalse,YPint((P)1),CHKREF(YastYLargumentsG));
-  fun_162 = YPmet(FUNCODEREF(fun_162),CHKREF(lit_90),T109,ENVNUL);
-  T113 = BOUNDP(YruntimeYempty);
+  T109 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLargumentsG));
+  T108 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T109,CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_160 = YPmet(FUNCODEREF(fun_160),CHKREF(lit_105),T108,ENVNUL);
+  T113 = BOUNDP(YruntimeYas);
   if (T113 != YPfalse) {
-    T112 = CHKREF(YruntimeYempty);
+    T112 = CHKREF(YruntimeYas);
   } else {
     T112 = YPfalse;
   }
-  T111 = fun_162;
+  T111 = fun_160;
   T110 = CALL2(CHKREF(YPdefine_method),T112,T111);
-  YruntimeYempty = T110;
-  regsym(&YruntimeYempty,"runtime","empty");
-  lit_142 = YPPsym((P)"c");
-  lit_143 = YPPsym((P)"loop");
-  lit_144 = YPPsym((P)"res");
-  T115 = YPsig(YPPlist(2,CHKREF(lit_144),CHKREF(lit_89)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_loop_163 = YPmet(FUNCODEREF(fun_loop_163),CHKREF(lit_143),T115,ENVNUL);
-  T114 = YPsig(YPPlist(2,CHKREF(lit_142),CHKREF(lit_89)),YPPlist(2,CHKREF(YLlstG),CHKREF(YastYLargumentsG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_164 = YPmet(FUNCODEREF(fun_164),CHKREF(lit_104),T114,ENVNUL);
-  T119 = BOUNDP(YruntimeYas);
-  if (T119 != YPfalse) {
-    T118 = CHKREF(YruntimeYas);
-  } else {
-    T118 = YPfalse;
-  }
-  T117 = fun_164;
-  T116 = CALL2(CHKREF(YPdefine_method),T118,T117);
-  YruntimeYas = T116;
+  YruntimeYas = T110;
   regsym(&YruntimeYas,"runtime","as");
-  T121 = (P)YPpair(CHKREF(YastYLcomputed_programG),Ynil);
-  T120 = CALL3(CHKREF(YPisa),T121,Ynil,Ynil);
-  YastYLlocalsG = T120;
+  T114 = YPsig(YPPlist(2,CHKREF(lit_96),CHKREF(lit_93)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYarguments = YPmet(FUNCODEREF(YastYarguments),CHKREF(lit_3),T114,ENVNUL);
+  T115 = YastYarguments;
+  YastYarguments = T115;
+  regsym(&YastYarguments,"ast","arguments");
+  T117 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLargumentsG));
+  T116 = YPsig(YPPlist(1,CHKREF(lit_90)),YPPlist(1,T117),YPfalse,YPint((P)1),CHKREF(YastYLargumentsG));
+  fun_162 = YPmet(FUNCODEREF(fun_162),CHKREF(lit_91),T116,ENVNUL);
+  T121 = BOUNDP(YruntimeYempty);
+  if (T121 != YPfalse) {
+    T120 = CHKREF(YruntimeYempty);
+  } else {
+    T120 = YPfalse;
+  }
+  T119 = fun_162;
+  T118 = CALL2(CHKREF(YPdefine_method),T120,T119);
+  YruntimeYempty = T118;
+  regsym(&YruntimeYempty,"runtime","empty");
+  lit_144 = YPPsym((P)"c");
+  lit_145 = YPPsym((P)"loop");
+  lit_146 = YPPsym((P)"res");
+  T123 = YPsig(YPPlist(2,CHKREF(lit_146),CHKREF(lit_90)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_loop_163 = YPmet(FUNCODEREF(fun_loop_163),CHKREF(lit_145),T123,ENVNUL);
+  T122 = YPsig(YPPlist(2,CHKREF(lit_144),CHKREF(lit_90)),YPPlist(2,CHKREF(YLlstG),CHKREF(YastYLargumentsG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_164 = YPmet(FUNCODEREF(fun_164),CHKREF(lit_105),T122,ENVNUL);
+  T127 = BOUNDP(YruntimeYas);
+  if (T127 != YPfalse) {
+    T126 = CHKREF(YruntimeYas);
+  } else {
+    T126 = YPfalse;
+  }
+  T125 = fun_164;
+  T124 = CALL2(CHKREF(YPdefine_method),T126,T125);
+  YruntimeYas = T124;
+  regsym(&YruntimeYas,"runtime","as");
+  T129 = (P)YPpair(CHKREF(YastYLcomputed_programG),Ynil);
+  T128 = CALL3(CHKREF(YPisa),T129,Ynil,Ynil);
+  YastYLlocalsG = T128;
   regsym(&YastYLlocalsG,"ast","<locals>");
-  lit_145 = YPPsym((P)"locals-bindings");
-  T122 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLlocalsG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_165 = YPmet(FUNCODEREF(fun_165),CHKREF(lit_145),T122,ENVNUL);
-  T126 = BOUNDP(YastYlocals_bindings);
-  if (T126 != YPfalse) {
-    T125 = CHKREF(YastYlocals_bindings);
+  lit_147 = YPPsym((P)"locals-bindings");
+  T130 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLlocalsG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_165 = YPmet(FUNCODEREF(fun_165),CHKREF(lit_147),T130,ENVNUL);
+  T134 = BOUNDP(YastYlocals_bindings);
+  if (T134 != YPfalse) {
+    T133 = CHKREF(YastYlocals_bindings);
   } else {
-    T125 = YPfalse;
+    T133 = YPfalse;
   }
-  T124 = fun_165;
-  T123 = CALL2(CHKREF(YPdefine_method),T125,T124);
-  YastYlocals_bindings = T123;
+  T132 = fun_165;
+  T131 = CALL2(CHKREF(YPdefine_method),T133,T132);
+  YastYlocals_bindings = T131;
   regsym(&YastYlocals_bindings,"ast","locals-bindings");
-  lit_146 = YPPsym((P)"locals-bindings-setter");
-  T127 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLlocalsG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_166 = YPmet(FUNCODEREF(fun_166),CHKREF(lit_146),T127,ENVNUL);
-  T131 = BOUNDP(YastYlocals_bindings_setter);
-  if (T131 != YPfalse) {
-    T130 = CHKREF(YastYlocals_bindings_setter);
+  lit_148 = YPPsym((P)"locals-bindings-setter");
+  T135 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLlocalsG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_166 = YPmet(FUNCODEREF(fun_166),CHKREF(lit_148),T135,ENVNUL);
+  T139 = BOUNDP(YastYlocals_bindings_setter);
+  if (T139 != YPfalse) {
+    T138 = CHKREF(YastYlocals_bindings_setter);
   } else {
-    T130 = YPfalse;
+    T138 = YPfalse;
   }
-  T129 = fun_166;
-  T128 = CALL2(CHKREF(YPdefine_method),T130,T129);
-  YastYlocals_bindings_setter = T128;
+  T137 = fun_166;
+  T136 = CALL2(CHKREF(YPdefine_method),T138,T137);
+  YastYlocals_bindings_setter = T136;
   regsym(&YastYlocals_bindings_setter,"ast","locals-bindings-setter");
-  T132 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_167 = YPmet(FUNCODEREF(fun_167),YPfalse,T132,ENVNUL);
-  T133 = fun_167;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLlocalsG),CHKREF(YastYlocals_bindings),CHKREF(YastYlocals_bindings_setter),CHKREF(YLanyG),T133);
-  lit_147 = YPPsym((P)"locals-functions");
-  T134 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLlocalsG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_168 = YPmet(FUNCODEREF(fun_168),CHKREF(lit_147),T134,ENVNUL);
-  T138 = BOUNDP(YastYlocals_functions);
-  if (T138 != YPfalse) {
-    T137 = CHKREF(YastYlocals_functions);
+  T140 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_167 = YPmet(FUNCODEREF(fun_167),YPfalse,T140,ENVNUL);
+  T141 = fun_167;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLlocalsG),CHKREF(YastYlocals_bindings),CHKREF(YastYlocals_bindings_setter),CHKREF(YLanyG),T141);
+  lit_149 = YPPsym((P)"locals-functions");
+  T142 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLlocalsG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_168 = YPmet(FUNCODEREF(fun_168),CHKREF(lit_149),T142,ENVNUL);
+  T146 = BOUNDP(YastYlocals_functions);
+  if (T146 != YPfalse) {
+    T145 = CHKREF(YastYlocals_functions);
   } else {
-    T137 = YPfalse;
+    T145 = YPfalse;
   }
-  T136 = fun_168;
-  T135 = CALL2(CHKREF(YPdefine_method),T137,T136);
-  YastYlocals_functions = T135;
+  T144 = fun_168;
+  T143 = CALL2(CHKREF(YPdefine_method),T145,T144);
+  YastYlocals_functions = T143;
   regsym(&YastYlocals_functions,"ast","locals-functions");
-  lit_148 = YPPsym((P)"locals-functions-setter");
-  T139 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLlocalsG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_169 = YPmet(FUNCODEREF(fun_169),CHKREF(lit_148),T139,ENVNUL);
-  T143 = BOUNDP(YastYlocals_functions_setter);
-  if (T143 != YPfalse) {
-    T142 = CHKREF(YastYlocals_functions_setter);
+  lit_150 = YPPsym((P)"locals-functions-setter");
+  T147 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLlocalsG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_169 = YPmet(FUNCODEREF(fun_169),CHKREF(lit_150),T147,ENVNUL);
+  T151 = BOUNDP(YastYlocals_functions_setter);
+  if (T151 != YPfalse) {
+    T150 = CHKREF(YastYlocals_functions_setter);
   } else {
-    T142 = YPfalse;
+    T150 = YPfalse;
   }
-  T141 = fun_169;
-  T140 = CALL2(CHKREF(YPdefine_method),T142,T141);
-  YastYlocals_functions_setter = T140;
+  T149 = fun_169;
+  T148 = CALL2(CHKREF(YPdefine_method),T150,T149);
+  YastYlocals_functions_setter = T148;
   regsym(&YastYlocals_functions_setter,"ast","locals-functions-setter");
-  T144 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_170 = YPmet(FUNCODEREF(fun_170),YPfalse,T144,ENVNUL);
-  T145 = fun_170;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLlocalsG),CHKREF(YastYlocals_functions),CHKREF(YastYlocals_functions_setter),CHKREF(YLanyG),T145);
-  lit_149 = YPPsym((P)"locals-body");
-  T146 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLlocalsG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_171 = YPmet(FUNCODEREF(fun_171),CHKREF(lit_149),T146,ENVNUL);
-  T150 = BOUNDP(YastYlocals_body);
-  if (T150 != YPfalse) {
-    T149 = CHKREF(YastYlocals_body);
+  T152 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_170 = YPmet(FUNCODEREF(fun_170),YPfalse,T152,ENVNUL);
+  T153 = fun_170;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLlocalsG),CHKREF(YastYlocals_functions),CHKREF(YastYlocals_functions_setter),CHKREF(YLanyG),T153);
+  lit_151 = YPPsym((P)"locals-body");
+  T154 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLlocalsG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_171 = YPmet(FUNCODEREF(fun_171),CHKREF(lit_151),T154,ENVNUL);
+  T158 = BOUNDP(YastYlocals_body);
+  if (T158 != YPfalse) {
+    T157 = CHKREF(YastYlocals_body);
   } else {
-    T149 = YPfalse;
+    T157 = YPfalse;
   }
-  T148 = fun_171;
-  T147 = CALL2(CHKREF(YPdefine_method),T149,T148);
-  YastYlocals_body = T147;
+  T156 = fun_171;
+  T155 = CALL2(CHKREF(YPdefine_method),T157,T156);
+  YastYlocals_body = T155;
   regsym(&YastYlocals_body,"ast","locals-body");
-  lit_150 = YPPsym((P)"locals-body-setter");
-  T151 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLlocalsG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_172 = YPmet(FUNCODEREF(fun_172),CHKREF(lit_150),T151,ENVNUL);
-  T155 = BOUNDP(YastYlocals_body_setter);
-  if (T155 != YPfalse) {
-    T154 = CHKREF(YastYlocals_body_setter);
+  lit_152 = YPPsym((P)"locals-body-setter");
+  T159 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLlocalsG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_172 = YPmet(FUNCODEREF(fun_172),CHKREF(lit_152),T159,ENVNUL);
+  T163 = BOUNDP(YastYlocals_body_setter);
+  if (T163 != YPfalse) {
+    T162 = CHKREF(YastYlocals_body_setter);
   } else {
-    T154 = YPfalse;
+    T162 = YPfalse;
   }
-  T153 = fun_172;
-  T152 = CALL2(CHKREF(YPdefine_method),T154,T153);
-  YastYlocals_body_setter = T152;
+  T161 = fun_172;
+  T160 = CALL2(CHKREF(YPdefine_method),T162,T161);
+  YastYlocals_body_setter = T160;
   regsym(&YastYlocals_body_setter,"ast","locals-body-setter");
-  T156 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_173 = YPmet(FUNCODEREF(fun_173),YPfalse,T156,ENVNUL);
-  T157 = fun_173;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLlocalsG),CHKREF(YastYlocals_body),CHKREF(YastYlocals_body_setter),CHKREF(YLanyG),T157);
-  T159 = (P)YPpair(CHKREF(YastYLcomputed_programG),Ynil);
-  T158 = CALL3(CHKREF(YPisa),T159,Ynil,Ynil);
-  YastYLbind_exitG = T158;
+  T164 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_173 = YPmet(FUNCODEREF(fun_173),YPfalse,T164,ENVNUL);
+  T165 = fun_173;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLlocalsG),CHKREF(YastYlocals_body),CHKREF(YastYlocals_body_setter),CHKREF(YLanyG),T165);
+  T167 = (P)YPpair(CHKREF(YastYLcomputed_programG),Ynil);
+  T166 = CALL3(CHKREF(YPisa),T167,Ynil,Ynil);
+  YastYLbind_exitG = T166;
   regsym(&YastYLbind_exitG,"ast","<bind-exit>");
-  lit_151 = YPPsym((P)"bind-exit-main-fun");
-  T160 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLbind_exitG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_174 = YPmet(FUNCODEREF(fun_174),CHKREF(lit_151),T160,ENVNUL);
-  T164 = BOUNDP(YastYbind_exit_main_fun);
-  if (T164 != YPfalse) {
-    T163 = CHKREF(YastYbind_exit_main_fun);
+  lit_153 = YPPsym((P)"bind-exit-main-fun");
+  T168 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLbind_exitG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_174 = YPmet(FUNCODEREF(fun_174),CHKREF(lit_153),T168,ENVNUL);
+  T172 = BOUNDP(YastYbind_exit_main_fun);
+  if (T172 != YPfalse) {
+    T171 = CHKREF(YastYbind_exit_main_fun);
   } else {
-    T163 = YPfalse;
+    T171 = YPfalse;
   }
-  T162 = fun_174;
-  T161 = CALL2(CHKREF(YPdefine_method),T163,T162);
-  YastYbind_exit_main_fun = T161;
+  T170 = fun_174;
+  T169 = CALL2(CHKREF(YPdefine_method),T171,T170);
+  YastYbind_exit_main_fun = T169;
   regsym(&YastYbind_exit_main_fun,"ast","bind-exit-main-fun");
-  lit_152 = YPPsym((P)"bind-exit-main-fun-setter");
-  T165 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLbind_exitG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_175 = YPmet(FUNCODEREF(fun_175),CHKREF(lit_152),T165,ENVNUL);
-  T169 = BOUNDP(YastYbind_exit_main_fun_setter);
-  if (T169 != YPfalse) {
-    T168 = CHKREF(YastYbind_exit_main_fun_setter);
+  lit_154 = YPPsym((P)"bind-exit-main-fun-setter");
+  T173 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLbind_exitG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_175 = YPmet(FUNCODEREF(fun_175),CHKREF(lit_154),T173,ENVNUL);
+  T177 = BOUNDP(YastYbind_exit_main_fun_setter);
+  if (T177 != YPfalse) {
+    T176 = CHKREF(YastYbind_exit_main_fun_setter);
   } else {
-    T168 = YPfalse;
+    T176 = YPfalse;
   }
-  T167 = fun_175;
-  T166 = CALL2(CHKREF(YPdefine_method),T168,T167);
-  YastYbind_exit_main_fun_setter = T166;
+  T175 = fun_175;
+  T174 = CALL2(CHKREF(YPdefine_method),T176,T175);
+  YastYbind_exit_main_fun_setter = T174;
   regsym(&YastYbind_exit_main_fun_setter,"ast","bind-exit-main-fun-setter");
-  T170 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_176 = YPmet(FUNCODEREF(fun_176),YPfalse,T170,ENVNUL);
-  T171 = fun_176;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLbind_exitG),CHKREF(YastYbind_exit_main_fun),CHKREF(YastYbind_exit_main_fun_setter),CHKREF(YLanyG),T171);
-  T173 = (P)YPpair(CHKREF(YastYLcomputed_programG),Ynil);
-  T172 = CALL3(CHKREF(YPisa),T173,Ynil,Ynil);
-  YastYLunwind_protectG = T172;
+  T178 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_176 = YPmet(FUNCODEREF(fun_176),YPfalse,T178,ENVNUL);
+  T179 = fun_176;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLbind_exitG),CHKREF(YastYbind_exit_main_fun),CHKREF(YastYbind_exit_main_fun_setter),CHKREF(YLanyG),T179);
+  T181 = (P)YPpair(CHKREF(YastYLcomputed_programG),Ynil);
+  T180 = CALL3(CHKREF(YPisa),T181,Ynil,Ynil);
+  YastYLunwind_protectG = T180;
   regsym(&YastYLunwind_protectG,"ast","<unwind-protect>");
-  lit_153 = YPPsym((P)"unwind-protect-protected-thunk");
-  T174 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLunwind_protectG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_177 = YPmet(FUNCODEREF(fun_177),CHKREF(lit_153),T174,ENVNUL);
-  T178 = BOUNDP(YastYunwind_protect_protected_thunk);
-  if (T178 != YPfalse) {
-    T177 = CHKREF(YastYunwind_protect_protected_thunk);
+  lit_155 = YPPsym((P)"unwind-protect-protected-thunk");
+  T182 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLunwind_protectG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_177 = YPmet(FUNCODEREF(fun_177),CHKREF(lit_155),T182,ENVNUL);
+  T186 = BOUNDP(YastYunwind_protect_protected_thunk);
+  if (T186 != YPfalse) {
+    T185 = CHKREF(YastYunwind_protect_protected_thunk);
   } else {
-    T177 = YPfalse;
+    T185 = YPfalse;
   }
-  T176 = fun_177;
-  T175 = CALL2(CHKREF(YPdefine_method),T177,T176);
-  YastYunwind_protect_protected_thunk = T175;
+  T184 = fun_177;
+  T183 = CALL2(CHKREF(YPdefine_method),T185,T184);
+  YastYunwind_protect_protected_thunk = T183;
   regsym(&YastYunwind_protect_protected_thunk,"ast","unwind-protect-protected-thunk");
-  lit_154 = YPPsym((P)"unwind-protect-protected-thunk-setter");
-  T179 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLunwind_protectG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_178 = YPmet(FUNCODEREF(fun_178),CHKREF(lit_154),T179,ENVNUL);
-  T183 = BOUNDP(YastYunwind_protect_protected_thunk_setter);
-  if (T183 != YPfalse) {
-    T182 = CHKREF(YastYunwind_protect_protected_thunk_setter);
+  lit_156 = YPPsym((P)"unwind-protect-protected-thunk-setter");
+  T187 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLunwind_protectG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_178 = YPmet(FUNCODEREF(fun_178),CHKREF(lit_156),T187,ENVNUL);
+  T191 = BOUNDP(YastYunwind_protect_protected_thunk_setter);
+  if (T191 != YPfalse) {
+    T190 = CHKREF(YastYunwind_protect_protected_thunk_setter);
   } else {
-    T182 = YPfalse;
+    T190 = YPfalse;
   }
-  T181 = fun_178;
-  T180 = CALL2(CHKREF(YPdefine_method),T182,T181);
-  YastYunwind_protect_protected_thunk_setter = T180;
+  T189 = fun_178;
+  T188 = CALL2(CHKREF(YPdefine_method),T190,T189);
+  YastYunwind_protect_protected_thunk_setter = T188;
   regsym(&YastYunwind_protect_protected_thunk_setter,"ast","unwind-protect-protected-thunk-setter");
-  T184 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_179 = YPmet(FUNCODEREF(fun_179),YPfalse,T184,ENVNUL);
-  T185 = fun_179;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLunwind_protectG),CHKREF(YastYunwind_protect_protected_thunk),CHKREF(YastYunwind_protect_protected_thunk_setter),CHKREF(YLanyG),T185);
-  lit_155 = YPPsym((P)"unwind-protect-cleanup-thunk");
-  T186 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLunwind_protectG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_180 = YPmet(FUNCODEREF(fun_180),CHKREF(lit_155),T186,ENVNUL);
-  T190 = BOUNDP(YastYunwind_protect_cleanup_thunk);
-  if (T190 != YPfalse) {
-    T189 = CHKREF(YastYunwind_protect_cleanup_thunk);
+  T192 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_179 = YPmet(FUNCODEREF(fun_179),YPfalse,T192,ENVNUL);
+  T193 = fun_179;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLunwind_protectG),CHKREF(YastYunwind_protect_protected_thunk),CHKREF(YastYunwind_protect_protected_thunk_setter),CHKREF(YLanyG),T193);
+  lit_157 = YPPsym((P)"unwind-protect-cleanup-thunk");
+  T194 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLunwind_protectG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_180 = YPmet(FUNCODEREF(fun_180),CHKREF(lit_157),T194,ENVNUL);
+  T198 = BOUNDP(YastYunwind_protect_cleanup_thunk);
+  if (T198 != YPfalse) {
+    T197 = CHKREF(YastYunwind_protect_cleanup_thunk);
   } else {
-    T189 = YPfalse;
+    T197 = YPfalse;
   }
-  T188 = fun_180;
-  T187 = CALL2(CHKREF(YPdefine_method),T189,T188);
-  YastYunwind_protect_cleanup_thunk = T187;
+  T196 = fun_180;
+  T195 = CALL2(CHKREF(YPdefine_method),T197,T196);
+  YastYunwind_protect_cleanup_thunk = T195;
   regsym(&YastYunwind_protect_cleanup_thunk,"ast","unwind-protect-cleanup-thunk");
-  lit_156 = YPPsym((P)"unwind-protect-cleanup-thunk-setter");
-  T191 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLunwind_protectG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_181 = YPmet(FUNCODEREF(fun_181),CHKREF(lit_156),T191,ENVNUL);
-  T195 = BOUNDP(YastYunwind_protect_cleanup_thunk_setter);
-  if (T195 != YPfalse) {
-    T194 = CHKREF(YastYunwind_protect_cleanup_thunk_setter);
+  lit_158 = YPPsym((P)"unwind-protect-cleanup-thunk-setter");
+  T199 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLunwind_protectG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_181 = YPmet(FUNCODEREF(fun_181),CHKREF(lit_158),T199,ENVNUL);
+  T203 = BOUNDP(YastYunwind_protect_cleanup_thunk_setter);
+  if (T203 != YPfalse) {
+    T202 = CHKREF(YastYunwind_protect_cleanup_thunk_setter);
   } else {
-    T194 = YPfalse;
+    T202 = YPfalse;
   }
-  T193 = fun_181;
-  T192 = CALL2(CHKREF(YPdefine_method),T194,T193);
-  YastYunwind_protect_cleanup_thunk_setter = T192;
+  T201 = fun_181;
+  T200 = CALL2(CHKREF(YPdefine_method),T202,T201);
+  YastYunwind_protect_cleanup_thunk_setter = T200;
   regsym(&YastYunwind_protect_cleanup_thunk_setter,"ast","unwind-protect-cleanup-thunk-setter");
-  T196 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_182 = YPmet(FUNCODEREF(fun_182),YPfalse,T196,ENVNUL);
-  T197 = fun_182;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLunwind_protectG),CHKREF(YastYunwind_protect_cleanup_thunk),CHKREF(YastYunwind_protect_cleanup_thunk_setter),CHKREF(YLanyG),T197);
-  T199 = (P)YPpair(CHKREF(YastYLcomputed_programG),Ynil);
-  T198 = CALL3(CHKREF(YPisa),T199,Ynil,Ynil);
-  YastYLmonitorG = T198;
+  T204 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_182 = YPmet(FUNCODEREF(fun_182),YPfalse,T204,ENVNUL);
+  T205 = fun_182;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLunwind_protectG),CHKREF(YastYunwind_protect_cleanup_thunk),CHKREF(YastYunwind_protect_cleanup_thunk_setter),CHKREF(YLanyG),T205);
+  T207 = (P)YPpair(CHKREF(YastYLcomputed_programG),Ynil);
+  T206 = CALL3(CHKREF(YPisa),T207,Ynil,Ynil);
+  YastYLmonitorG = T206;
   regsym(&YastYLmonitorG,"ast","<monitor>");
-  lit_157 = YPPsym((P)"monitor-type");
-  T200 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmonitorG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_183 = YPmet(FUNCODEREF(fun_183),CHKREF(lit_157),T200,ENVNUL);
-  T204 = BOUNDP(YastYmonitor_type);
-  if (T204 != YPfalse) {
-    T203 = CHKREF(YastYmonitor_type);
+  lit_159 = YPPsym((P)"monitor-type");
+  T208 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmonitorG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_183 = YPmet(FUNCODEREF(fun_183),CHKREF(lit_159),T208,ENVNUL);
+  T212 = BOUNDP(YastYmonitor_type);
+  if (T212 != YPfalse) {
+    T211 = CHKREF(YastYmonitor_type);
   } else {
-    T203 = YPfalse;
+    T211 = YPfalse;
   }
-  T202 = fun_183;
-  T201 = CALL2(CHKREF(YPdefine_method),T203,T202);
-  YastYmonitor_type = T201;
+  T210 = fun_183;
+  T209 = CALL2(CHKREF(YPdefine_method),T211,T210);
+  YastYmonitor_type = T209;
   regsym(&YastYmonitor_type,"ast","monitor-type");
-  lit_158 = YPPsym((P)"monitor-type-setter");
-  T205 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLmonitorG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_184 = YPmet(FUNCODEREF(fun_184),CHKREF(lit_158),T205,ENVNUL);
-  T209 = BOUNDP(YastYmonitor_type_setter);
-  if (T209 != YPfalse) {
-    T208 = CHKREF(YastYmonitor_type_setter);
+  lit_160 = YPPsym((P)"monitor-type-setter");
+  T213 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLmonitorG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_184 = YPmet(FUNCODEREF(fun_184),CHKREF(lit_160),T213,ENVNUL);
+  T217 = BOUNDP(YastYmonitor_type_setter);
+  if (T217 != YPfalse) {
+    T216 = CHKREF(YastYmonitor_type_setter);
   } else {
-    T208 = YPfalse;
+    T216 = YPfalse;
   }
-  T207 = fun_184;
-  T206 = CALL2(CHKREF(YPdefine_method),T208,T207);
-  YastYmonitor_type_setter = T206;
+  T215 = fun_184;
+  T214 = CALL2(CHKREF(YPdefine_method),T216,T215);
+  YastYmonitor_type_setter = T214;
   regsym(&YastYmonitor_type_setter,"ast","monitor-type-setter");
-  T210 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_185 = YPmet(FUNCODEREF(fun_185),YPfalse,T210,ENVNUL);
-  T211 = fun_185;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmonitorG),CHKREF(YastYmonitor_type),CHKREF(YastYmonitor_type_setter),CHKREF(YLanyG),T211);
-  lit_159 = YPPsym((P)"monitor-info");
-  T212 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmonitorG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_186 = YPmet(FUNCODEREF(fun_186),CHKREF(lit_159),T212,ENVNUL);
-  T216 = BOUNDP(YastYmonitor_info);
-  if (T216 != YPfalse) {
-    T215 = CHKREF(YastYmonitor_info);
+  T218 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_185 = YPmet(FUNCODEREF(fun_185),YPfalse,T218,ENVNUL);
+  T219 = fun_185;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmonitorG),CHKREF(YastYmonitor_type),CHKREF(YastYmonitor_type_setter),CHKREF(YLanyG),T219);
+  lit_161 = YPPsym((P)"monitor-info");
+  T220 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmonitorG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_186 = YPmet(FUNCODEREF(fun_186),CHKREF(lit_161),T220,ENVNUL);
+  T224 = BOUNDP(YastYmonitor_info);
+  if (T224 != YPfalse) {
+    T223 = CHKREF(YastYmonitor_info);
   } else {
-    T215 = YPfalse;
+    T223 = YPfalse;
   }
-  T214 = fun_186;
-  T213 = CALL2(CHKREF(YPdefine_method),T215,T214);
-  YastYmonitor_info = T213;
+  T222 = fun_186;
+  T221 = CALL2(CHKREF(YPdefine_method),T223,T222);
+  YastYmonitor_info = T221;
   regsym(&YastYmonitor_info,"ast","monitor-info");
-  lit_160 = YPPsym((P)"monitor-info-setter");
-  T217 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLmonitorG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_187 = YPmet(FUNCODEREF(fun_187),CHKREF(lit_160),T217,ENVNUL);
-  T221 = BOUNDP(YastYmonitor_info_setter);
-  if (T221 != YPfalse) {
-    T220 = CHKREF(YastYmonitor_info_setter);
+  lit_162 = YPPsym((P)"monitor-info-setter");
+  T225 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLmonitorG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_187 = YPmet(FUNCODEREF(fun_187),CHKREF(lit_162),T225,ENVNUL);
+  T229 = BOUNDP(YastYmonitor_info_setter);
+  if (T229 != YPfalse) {
+    T228 = CHKREF(YastYmonitor_info_setter);
   } else {
-    T220 = YPfalse;
+    T228 = YPfalse;
   }
-  T219 = fun_187;
-  T218 = CALL2(CHKREF(YPdefine_method),T220,T219);
-  YastYmonitor_info_setter = T218;
+  T227 = fun_187;
+  T226 = CALL2(CHKREF(YPdefine_method),T228,T227);
+  YastYmonitor_info_setter = T226;
   regsym(&YastYmonitor_info_setter,"ast","monitor-info-setter");
-  T222 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_188 = YPmet(FUNCODEREF(fun_188),YPfalse,T222,ENVNUL);
-  T223 = fun_188;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmonitorG),CHKREF(YastYmonitor_info),CHKREF(YastYmonitor_info_setter),CHKREF(YLanyG),T223);
-  lit_161 = YPPsym((P)"monitor-test");
-  T224 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmonitorG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_189 = YPmet(FUNCODEREF(fun_189),CHKREF(lit_161),T224,ENVNUL);
-  T228 = BOUNDP(YastYmonitor_test);
-  if (T228 != YPfalse) {
-    T227 = CHKREF(YastYmonitor_test);
+  T230 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_188 = YPmet(FUNCODEREF(fun_188),YPfalse,T230,ENVNUL);
+  T231 = fun_188;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmonitorG),CHKREF(YastYmonitor_info),CHKREF(YastYmonitor_info_setter),CHKREF(YLanyG),T231);
+  lit_163 = YPPsym((P)"monitor-test");
+  T232 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmonitorG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_189 = YPmet(FUNCODEREF(fun_189),CHKREF(lit_163),T232,ENVNUL);
+  T236 = BOUNDP(YastYmonitor_test);
+  if (T236 != YPfalse) {
+    T235 = CHKREF(YastYmonitor_test);
   } else {
-    T227 = YPfalse;
+    T235 = YPfalse;
   }
-  T226 = fun_189;
-  T225 = CALL2(CHKREF(YPdefine_method),T227,T226);
-  YastYmonitor_test = T225;
+  T234 = fun_189;
+  T233 = CALL2(CHKREF(YPdefine_method),T235,T234);
+  YastYmonitor_test = T233;
   regsym(&YastYmonitor_test,"ast","monitor-test");
-  lit_162 = YPPsym((P)"monitor-test-setter");
-  T229 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLmonitorG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_190 = YPmet(FUNCODEREF(fun_190),CHKREF(lit_162),T229,ENVNUL);
-  T233 = BOUNDP(YastYmonitor_test_setter);
-  if (T233 != YPfalse) {
-    T232 = CHKREF(YastYmonitor_test_setter);
+  lit_164 = YPPsym((P)"monitor-test-setter");
+  T237 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLmonitorG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_190 = YPmet(FUNCODEREF(fun_190),CHKREF(lit_164),T237,ENVNUL);
+  T241 = BOUNDP(YastYmonitor_test_setter);
+  if (T241 != YPfalse) {
+    T240 = CHKREF(YastYmonitor_test_setter);
   } else {
-    T232 = YPfalse;
+    T240 = YPfalse;
   }
-  T231 = fun_190;
-  T230 = CALL2(CHKREF(YPdefine_method),T232,T231);
-  YastYmonitor_test_setter = T230;
+  T239 = fun_190;
+  T238 = CALL2(CHKREF(YPdefine_method),T240,T239);
+  YastYmonitor_test_setter = T238;
   regsym(&YastYmonitor_test_setter,"ast","monitor-test-setter");
-  T234 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_191 = YPmet(FUNCODEREF(fun_191),YPfalse,T234,ENVNUL);
-  T235 = fun_191;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmonitorG),CHKREF(YastYmonitor_test),CHKREF(YastYmonitor_test_setter),CHKREF(YLanyG),T235);
-  lit_163 = YPPsym((P)"monitor-handler");
-  T236 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmonitorG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_192 = YPmet(FUNCODEREF(fun_192),CHKREF(lit_163),T236,ENVNUL);
-  T240 = BOUNDP(YastYmonitor_handler);
-  if (T240 != YPfalse) {
-    T239 = CHKREF(YastYmonitor_handler);
+  T242 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_191 = YPmet(FUNCODEREF(fun_191),YPfalse,T242,ENVNUL);
+  T243 = fun_191;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmonitorG),CHKREF(YastYmonitor_test),CHKREF(YastYmonitor_test_setter),CHKREF(YLanyG),T243);
+  lit_165 = YPPsym((P)"monitor-handler");
+  T244 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmonitorG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_192 = YPmet(FUNCODEREF(fun_192),CHKREF(lit_165),T244,ENVNUL);
+  T248 = BOUNDP(YastYmonitor_handler);
+  if (T248 != YPfalse) {
+    T247 = CHKREF(YastYmonitor_handler);
   } else {
-    T239 = YPfalse;
+    T247 = YPfalse;
   }
-  T238 = fun_192;
-  T237 = CALL2(CHKREF(YPdefine_method),T239,T238);
-  YastYmonitor_handler = T237;
+  T246 = fun_192;
+  T245 = CALL2(CHKREF(YPdefine_method),T247,T246);
+  YastYmonitor_handler = T245;
   regsym(&YastYmonitor_handler,"ast","monitor-handler");
-  lit_164 = YPPsym((P)"monitor-handler-setter");
-  T241 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLmonitorG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_193 = YPmet(FUNCODEREF(fun_193),CHKREF(lit_164),T241,ENVNUL);
-  T245 = BOUNDP(YastYmonitor_handler_setter);
-  if (T245 != YPfalse) {
-    T244 = CHKREF(YastYmonitor_handler_setter);
+  lit_166 = YPPsym((P)"monitor-handler-setter");
+  T249 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLmonitorG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_193 = YPmet(FUNCODEREF(fun_193),CHKREF(lit_166),T249,ENVNUL);
+  T253 = BOUNDP(YastYmonitor_handler_setter);
+  if (T253 != YPfalse) {
+    T252 = CHKREF(YastYmonitor_handler_setter);
   } else {
-    T244 = YPfalse;
+    T252 = YPfalse;
   }
-  T243 = fun_193;
-  T242 = CALL2(CHKREF(YPdefine_method),T244,T243);
-  YastYmonitor_handler_setter = T242;
+  T251 = fun_193;
+  T250 = CALL2(CHKREF(YPdefine_method),T252,T251);
+  YastYmonitor_handler_setter = T250;
   regsym(&YastYmonitor_handler_setter,"ast","monitor-handler-setter");
-  T246 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_194 = YPmet(FUNCODEREF(fun_194),YPfalse,T246,ENVNUL);
-  T247 = fun_194;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmonitorG),CHKREF(YastYmonitor_handler),CHKREF(YastYmonitor_handler_setter),CHKREF(YLanyG),T247);
-  lit_165 = YPPsym((P)"monitor-main-thunk");
-  T250 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmonitorG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  T249 = fun_195 = YPmet(FUNCODEREF(fun_195),CHKREF(lit_165),T250,ENVNUL);
-  T255 = BOUNDP(YastYmonitor_main_thunk);
-  if (T255 != YPfalse) {
-    T254 = CHKREF(YastYmonitor_main_thunk);
+  T254 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_194 = YPmet(FUNCODEREF(fun_194),YPfalse,T254,ENVNUL);
+  T255 = fun_194;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmonitorG),CHKREF(YastYmonitor_handler),CHKREF(YastYmonitor_handler_setter),CHKREF(YLanyG),T255);
+  lit_167 = YPPsym((P)"monitor-main-thunk");
+  T258 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmonitorG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  T257 = fun_195 = YPmet(FUNCODEREF(fun_195),CHKREF(lit_167),T258,ENVNUL);
+  T263 = BOUNDP(YastYmonitor_main_thunk);
+  if (T263 != YPfalse) {
+    T262 = CHKREF(YastYmonitor_main_thunk);
   } else {
-    T254 = YPfalse;
+    T262 = YPfalse;
   }
-  T253 = fun_195;
-  T252 = CALL2(CHKREF(YPdefine_method),T254,T253);
-  T251 = YastYmonitor_main_thunk = T252;
+  T261 = fun_195;
+  T260 = CALL2(CHKREF(YPdefine_method),T262,T261);
+  T259 = YastYmonitor_main_thunk = T260;
   regsym(&YastYmonitor_main_thunk,"ast","monitor-main-thunk");
-  T248 = T251;
-  return T248;
+  T256 = T259;
+  return T256;
 }
 
 P YastY___main_4___() {
@@ -10540,9 +10602,9 @@ P YastY___main_4___() {
   P T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8;
   P T7,T6,T5,T4,T3,T2,T1,T0;
 loop:
-  lit_166 = YPPsym((P)"monitor-main-thunk-setter");
+  lit_168 = YPPsym((P)"monitor-main-thunk-setter");
   T0 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLmonitorG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_196 = YPmet(FUNCODEREF(fun_196),CHKREF(lit_166),T0,ENVNUL);
+  fun_196 = YPmet(FUNCODEREF(fun_196),CHKREF(lit_168),T0,ENVNUL);
   T4 = BOUNDP(YastYmonitor_main_thunk_setter);
   if (T4 != YPfalse) {
     T3 = CHKREF(YastYmonitor_main_thunk_setter);
@@ -10561,9 +10623,9 @@ loop:
   T7 = CALL3(CHKREF(YPisa),T8,Ynil,Ynil);
   YastYLstatic_environmentG = T7;
   regsym(&YastYLstatic_environmentG,"ast","<static-environment>");
-  lit_167 = YPPsym((P)"environment-next");
+  lit_169 = YPPsym((P)"environment-next");
   T9 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLstatic_environmentG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_198 = YPmet(FUNCODEREF(fun_198),CHKREF(lit_167),T9,ENVNUL);
+  fun_198 = YPmet(FUNCODEREF(fun_198),CHKREF(lit_169),T9,ENVNUL);
   T13 = BOUNDP(YastYenvironment_next);
   if (T13 != YPfalse) {
     T12 = CHKREF(YastYenvironment_next);
@@ -10574,9 +10636,9 @@ loop:
   T10 = CALL2(CHKREF(YPdefine_method),T12,T11);
   YastYenvironment_next = T10;
   regsym(&YastYenvironment_next,"ast","environment-next");
-  lit_168 = YPPsym((P)"environment-next-setter");
+  lit_170 = YPPsym((P)"environment-next-setter");
   T14 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLstatic_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_199 = YPmet(FUNCODEREF(fun_199),CHKREF(lit_168),T14,ENVNUL);
+  fun_199 = YPmet(FUNCODEREF(fun_199),CHKREF(lit_170),T14,ENVNUL);
   T18 = BOUNDP(YastYenvironment_next_setter);
   if (T18 != YPfalse) {
     T17 = CHKREF(YastYenvironment_next_setter);
@@ -10591,9 +10653,9 @@ loop:
   fun_200 = YPmet(FUNCODEREF(fun_200),YPfalse,T19,ENVNUL);
   T20 = fun_200;
   CALLN(CHKREF(YPslot),5,CHKREF(YastYLstatic_environmentG),CHKREF(YastYenvironment_next),CHKREF(YastYenvironment_next_setter),CHKREF(YLanyG),T20);
-  lit_169 = YPPsym((P)"environment-bindings");
+  lit_171 = YPPsym((P)"environment-bindings");
   T21 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLstatic_environmentG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_201 = YPmet(FUNCODEREF(fun_201),CHKREF(lit_169),T21,ENVNUL);
+  fun_201 = YPmet(FUNCODEREF(fun_201),CHKREF(lit_171),T21,ENVNUL);
   T25 = BOUNDP(YastYenvironment_bindings);
   if (T25 != YPfalse) {
     T24 = CHKREF(YastYenvironment_bindings);
@@ -10604,9 +10666,9 @@ loop:
   T22 = CALL2(CHKREF(YPdefine_method),T24,T23);
   YastYenvironment_bindings = T22;
   regsym(&YastYenvironment_bindings,"ast","environment-bindings");
-  lit_170 = YPPsym((P)"environment-bindings-setter");
+  lit_172 = YPPsym((P)"environment-bindings-setter");
   T26 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLcolG),CHKREF(YastYLstatic_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_202 = YPmet(FUNCODEREF(fun_202),CHKREF(lit_170),T26,ENVNUL);
+  fun_202 = YPmet(FUNCODEREF(fun_202),CHKREF(lit_172),T26,ENVNUL);
   T30 = BOUNDP(YastYenvironment_bindings_setter);
   if (T30 != YPfalse) {
     T29 = CHKREF(YastYenvironment_bindings_setter);
@@ -10625,9 +10687,9 @@ loop:
   T33 = CALL3(CHKREF(YPisa),T34,Ynil,Ynil);
   YastYLstatic_global_environmentG = T33;
   regsym(&YastYLstatic_global_environmentG,"ast","<static-global-environment>");
-  lit_171 = YPPsym((P)"environment-module");
+  lit_173 = YPPsym((P)"environment-module");
   T35 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_204 = YPmet(FUNCODEREF(fun_204),CHKREF(lit_171),T35,ENVNUL);
+  fun_204 = YPmet(FUNCODEREF(fun_204),CHKREF(lit_173),T35,ENVNUL);
   T39 = BOUNDP(YastYenvironment_module);
   if (T39 != YPfalse) {
     T38 = CHKREF(YastYenvironment_module);
@@ -10638,9 +10700,9 @@ loop:
   T36 = CALL2(CHKREF(YPdefine_method),T38,T37);
   YastYenvironment_module = T36;
   regsym(&YastYenvironment_module,"ast","environment-module");
-  lit_172 = YPPsym((P)"environment-module-setter");
+  lit_174 = YPPsym((P)"environment-module-setter");
   T40 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_205 = YPmet(FUNCODEREF(fun_205),CHKREF(lit_172),T40,ENVNUL);
+  fun_205 = YPmet(FUNCODEREF(fun_205),CHKREF(lit_174),T40,ENVNUL);
   T44 = BOUNDP(YastYenvironment_module_setter);
   if (T44 != YPfalse) {
     T43 = CHKREF(YastYenvironment_module_setter);
@@ -10655,9 +10717,9 @@ loop:
   fun_206 = YPmet(FUNCODEREF(fun_206),YPfalse,T45,ENVNUL);
   T46 = fun_206;
   CALLN(CHKREF(YPslot),5,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYenvironment_module),CHKREF(YastYenvironment_module_setter),CHKREF(YLanyG),T46);
-  lit_173 = YPPsym((P)"environment-module-loader");
+  lit_175 = YPPsym((P)"environment-module-loader");
   T47 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_207 = YPmet(FUNCODEREF(fun_207),CHKREF(lit_173),T47,ENVNUL);
+  fun_207 = YPmet(FUNCODEREF(fun_207),CHKREF(lit_175),T47,ENVNUL);
   T51 = BOUNDP(YastYenvironment_module_loader);
   if (T51 != YPfalse) {
     T50 = CHKREF(YastYenvironment_module_loader);
@@ -10668,9 +10730,9 @@ loop:
   T48 = CALL2(CHKREF(YPdefine_method),T50,T49);
   YastYenvironment_module_loader = T48;
   regsym(&YastYenvironment_module_loader,"ast","environment-module-loader");
-  lit_174 = YPPsym((P)"environment-module-loader-setter");
+  lit_176 = YPPsym((P)"environment-module-loader-setter");
   T52 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_208 = YPmet(FUNCODEREF(fun_208),CHKREF(lit_174),T52,ENVNUL);
+  fun_208 = YPmet(FUNCODEREF(fun_208),CHKREF(lit_176),T52,ENVNUL);
   T56 = BOUNDP(YastYenvironment_module_loader_setter);
   if (T56 != YPfalse) {
     T55 = CHKREF(YastYenvironment_module_loader_setter);
@@ -10685,9 +10747,9 @@ loop:
   fun_209 = YPmet(FUNCODEREF(fun_209),YPfalse,T57,ENVNUL);
   T58 = fun_209;
   CALLN(CHKREF(YPslot),5,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYenvironment_module_loader),CHKREF(YastYenvironment_module_loader_setter),CHKREF(YLanyG),T58);
-  lit_175 = YPPsym((P)"environment-uses-modules");
+  lit_177 = YPPsym((P)"environment-uses-modules");
   T59 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_210 = YPmet(FUNCODEREF(fun_210),CHKREF(lit_175),T59,ENVNUL);
+  fun_210 = YPmet(FUNCODEREF(fun_210),CHKREF(lit_177),T59,ENVNUL);
   T63 = BOUNDP(YastYenvironment_uses_modules);
   if (T63 != YPfalse) {
     T62 = CHKREF(YastYenvironment_uses_modules);
@@ -10698,9 +10760,9 @@ loop:
   T60 = CALL2(CHKREF(YPdefine_method),T62,T61);
   YastYenvironment_uses_modules = T60;
   regsym(&YastYenvironment_uses_modules,"ast","environment-uses-modules");
-  lit_176 = YPPsym((P)"environment-uses-modules-setter");
+  lit_178 = YPPsym((P)"environment-uses-modules-setter");
   T64 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YruntimeYLbufG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_211 = YPmet(FUNCODEREF(fun_211),CHKREF(lit_176),T64,ENVNUL);
+  fun_211 = YPmet(FUNCODEREF(fun_211),CHKREF(lit_178),T64,ENVNUL);
   T68 = BOUNDP(YastYenvironment_uses_modules_setter);
   if (T68 != YPfalse) {
     T67 = CHKREF(YastYenvironment_uses_modules_setter);
@@ -10715,9 +10777,9 @@ loop:
   fun_212 = YPmet(FUNCODEREF(fun_212),YPfalse,T69,ENVNUL);
   T70 = fun_212;
   CALLN(CHKREF(YPslot),5,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYenvironment_uses_modules),CHKREF(YastYenvironment_uses_modules_setter),CHKREF(YruntimeYLbufG),T70);
-  lit_177 = YPPsym((P)"environment-implements");
+  lit_179 = YPPsym((P)"environment-implements");
   T71 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_213 = YPmet(FUNCODEREF(fun_213),CHKREF(lit_177),T71,ENVNUL);
+  fun_213 = YPmet(FUNCODEREF(fun_213),CHKREF(lit_179),T71,ENVNUL);
   T75 = BOUNDP(YastYenvironment_implements);
   if (T75 != YPfalse) {
     T74 = CHKREF(YastYenvironment_implements);
@@ -10728,9 +10790,9 @@ loop:
   T72 = CALL2(CHKREF(YPdefine_method),T74,T73);
   YastYenvironment_implements = T72;
   regsym(&YastYenvironment_implements,"ast","environment-implements");
-  lit_178 = YPPsym((P)"environment-implements-setter");
+  lit_180 = YPPsym((P)"environment-implements-setter");
   T76 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLlstG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_214 = YPmet(FUNCODEREF(fun_214),CHKREF(lit_178),T76,ENVNUL);
+  fun_214 = YPmet(FUNCODEREF(fun_214),CHKREF(lit_180),T76,ENVNUL);
   T80 = BOUNDP(YastYenvironment_implements_setter);
   if (T80 != YPfalse) {
     T79 = CHKREF(YastYenvironment_implements_setter);
@@ -10745,9 +10807,9 @@ loop:
   fun_215 = YPmet(FUNCODEREF(fun_215),YPfalse,T81,ENVNUL);
   T82 = fun_215;
   CALLN(CHKREF(YPslot),5,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYenvironment_implements),CHKREF(YastYenvironment_implements_setter),CHKREF(YLlstG),T82);
-  lit_179 = YPPsym((P)"environment-allows-foreign-names?");
+  lit_181 = YPPsym((P)"environment-allows-foreign-names?");
   T83 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_216 = YPmet(FUNCODEREF(fun_216),CHKREF(lit_179),T83,ENVNUL);
+  fun_216 = YPmet(FUNCODEREF(fun_216),CHKREF(lit_181),T83,ENVNUL);
   T87 = BOUNDP(YastYenvironment_allows_foreign_namesQ);
   if (T87 != YPfalse) {
     T86 = CHKREF(YastYenvironment_allows_foreign_namesQ);
@@ -10758,9 +10820,9 @@ loop:
   T84 = CALL2(CHKREF(YPdefine_method),T86,T85);
   YastYenvironment_allows_foreign_namesQ = T84;
   regsym(&YastYenvironment_allows_foreign_namesQ,"ast","environment-allows-foreign-names?");
-  lit_180 = YPPsym((P)"environment-allows-foreign-names?-setter");
+  lit_182 = YPPsym((P)"environment-allows-foreign-names?-setter");
   T88 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLlogG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_217 = YPmet(FUNCODEREF(fun_217),CHKREF(lit_180),T88,ENVNUL);
+  fun_217 = YPmet(FUNCODEREF(fun_217),CHKREF(lit_182),T88,ENVNUL);
   T92 = BOUNDP(YastYenvironment_allows_foreign_namesQ_setter);
   if (T92 != YPfalse) {
     T91 = CHKREF(YastYenvironment_allows_foreign_namesQ_setter);
@@ -10787,14 +10849,14 @@ loop:
   T99 = CALL3(CHKREF(YPisa),T100,Ynil,Ynil);
   YastYLstatic_local_environmentG = T99;
   regsym(&YastYLstatic_local_environmentG,"ast","<static-local-environment>");
-  lit_181 = YPPsym((P)"env-object-name");
-  lit_182 = YPPsym((P)"binding");
-  T103 = YPsig(YPPlist(1,CHKREF(lit_182)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  lit_183 = YPPsym((P)"env-object-name");
+  lit_184 = YPPsym((P)"binding");
+  T103 = YPsig(YPPlist(1,CHKREF(lit_184)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_219 = YPmet(FUNCODEREF(fun_219),YPfalse,T103,ENVNUL);
   T102 = YPsig(YPPlist(1,CHKREF(lit_87)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_220 = YPmet(FUNCODEREF(fun_220),YPfalse,T102,ENVNUL);
   T101 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_221 = YPmet(FUNCODEREF(fun_221),CHKREF(lit_181),T101,ENVNUL);
+  fun_221 = YPmet(FUNCODEREF(fun_221),CHKREF(lit_183),T101,ENVNUL);
   T107 = BOUNDP(YwriteYenv_object_name);
   if (T107 != YPfalse) {
     T106 = CHKREF(YwriteYenv_object_name);
@@ -10805,11 +10867,11 @@ loop:
   T104 = CALL2(CHKREF(YPdefine_method),T106,T105);
   YwriteYenv_object_name = T104;
   regsym(&YwriteYenv_object_name,"write","env-object-name");
-  lit_183 = YPPsym((P)"objectify");
-  lit_184 = YPPsym((P)"tail?");
-  lit_185 = YPPsym((P)"r");
-  T108 = YPsig(YPPlist(3,CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLlstG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_222 = YPmet(FUNCODEREF(fun_222),CHKREF(lit_183),T108,ENVNUL);
+  lit_185 = YPPsym((P)"objectify");
+  lit_186 = YPPsym((P)"tail?");
+  lit_187 = YPPsym((P)"r");
+  T108 = YPsig(YPPlist(3,CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLlstG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_222 = YPmet(FUNCODEREF(fun_222),CHKREF(lit_185),T108,ENVNUL);
   T112 = BOUNDP(YastYobjectify);
   if (T112 != YPfalse) {
     T111 = CHKREF(YastYobjectify);
@@ -10820,10 +10882,10 @@ loop:
   T109 = CALL2(CHKREF(YPdefine_method),T111,T110);
   YastYobjectify = T109;
   regsym(&YastYobjectify,"ast","objectify");
-  lit_186 = YPPsym((P)"objectify-list");
-  lit_187 = YPPsym((P)"f");
-  T113 = YPsig(YPPlist(4,CHKREF(lit_187),CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLlstG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YLanyG));
-  fun_223 = YPmet(FUNCODEREF(fun_223),CHKREF(lit_186),T113,ENVNUL);
+  lit_188 = YPPsym((P)"objectify-list");
+  lit_189 = YPPsym((P)"f");
+  T113 = YPsig(YPPlist(4,CHKREF(lit_189),CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLlstG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YLanyG));
+  fun_223 = YPmet(FUNCODEREF(fun_223),CHKREF(lit_188),T113,ENVNUL);
   T117 = BOUNDP(YastYobjectify_list);
   if (T117 != YPfalse) {
     T116 = CHKREF(YastYobjectify_list);
@@ -10834,11 +10896,11 @@ loop:
   T114 = CALL2(CHKREF(YPdefine_method),T116,T115);
   YastYobjectify_list = T114;
   regsym(&YastYobjectify_list,"ast","objectify-list");
-  lit_188 = YPsb((P)"Magic or Macro binding expected %=");
-  lit_189 = YPPsym((P)"macro");
-  lit_190 = YPPsym((P)"magic");
-  T118 = YPsig(YPPlist(4,CHKREF(lit_187),CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YastYLmodule_bindingG),CHKREF(YLlstG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YLanyG));
-  fun_224 = YPmet(FUNCODEREF(fun_224),CHKREF(lit_186),T118,ENVNUL);
+  lit_190 = YPsb((P)"Magic or Macro binding expected %=");
+  lit_191 = YPPsym((P)"macro");
+  lit_192 = YPPsym((P)"magic");
+  T118 = YPsig(YPPlist(4,CHKREF(lit_189),CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YastYLmodule_bindingG),CHKREF(YLlstG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YLanyG));
+  fun_224 = YPmet(FUNCODEREF(fun_224),CHKREF(lit_188),T118,ENVNUL);
   T122 = BOUNDP(YastYobjectify_list);
   if (T122 != YPfalse) {
     T121 = CHKREF(YastYobjectify_list);
@@ -10849,8 +10911,8 @@ loop:
   T119 = CALL2(CHKREF(YPdefine_method),T121,T120);
   YastYobjectify_list = T119;
   regsym(&YastYobjectify_list,"ast","objectify-list");
-  T123 = YPsig(YPPlist(3,CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLsymG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_225 = YPmet(FUNCODEREF(fun_225),CHKREF(lit_183),T123,ENVNUL);
+  T123 = YPsig(YPPlist(3,CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLsymG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_225 = YPmet(FUNCODEREF(fun_225),CHKREF(lit_185),T123,ENVNUL);
   T127 = BOUNDP(YastYobjectify);
   if (T127 != YPfalse) {
     T126 = CHKREF(YastYobjectify);
@@ -10861,8 +10923,8 @@ loop:
   T124 = CALL2(CHKREF(YPdefine_method),T126,T125);
   YastYobjectify = T124;
   regsym(&YastYobjectify,"ast","objectify");
-  T128 = YPsig(YPPlist(3,CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YastYLmodule_bindingG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_226 = YPmet(FUNCODEREF(fun_226),CHKREF(lit_183),T128,ENVNUL);
+  T128 = YPsig(YPPlist(3,CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YastYLmodule_bindingG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_226 = YPmet(FUNCODEREF(fun_226),CHKREF(lit_185),T128,ENVNUL);
   T132 = BOUNDP(YastYobjectify);
   if (T132 != YPfalse) {
     T131 = CHKREF(YastYobjectify);
@@ -10873,8 +10935,8 @@ loop:
   T129 = CALL2(CHKREF(YPdefine_method),T131,T130);
   YastYobjectify = T129;
   regsym(&YastYobjectify,"ast","objectify");
-  T133 = YPsig(YPPlist(3,CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YastYLprogramG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_227 = YPmet(FUNCODEREF(fun_227),CHKREF(lit_183),T133,ENVNUL);
+  T133 = YPsig(YPPlist(3,CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YastYLprogramG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_227 = YPmet(FUNCODEREF(fun_227),CHKREF(lit_185),T133,ENVNUL);
   T137 = BOUNDP(YastYobjectify);
   if (T137 != YPfalse) {
     T136 = CHKREF(YastYobjectify);
@@ -10885,8 +10947,8 @@ loop:
   T134 = CALL2(CHKREF(YPdefine_method),T136,T135);
   YastYobjectify = T134;
   regsym(&YastYobjectify,"ast","objectify");
-  T138 = YPsig(YPPlist(3,CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,Ynil,CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_228 = YPmet(FUNCODEREF(fun_228),CHKREF(lit_183),T138,ENVNUL);
+  T138 = YPsig(YPPlist(3,CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,Ynil,CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_228 = YPmet(FUNCODEREF(fun_228),CHKREF(lit_185),T138,ENVNUL);
   T142 = BOUNDP(YastYobjectify);
   if (T142 != YPfalse) {
     T141 = CHKREF(YastYobjectify);
@@ -10897,8 +10959,8 @@ loop:
   T139 = CALL2(CHKREF(YPdefine_method),T141,T140);
   YastYobjectify = T139;
   regsym(&YastYobjectify,"ast","objectify");
-  T143 = YPsig(YPPlist(3,CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_229 = YPmet(FUNCODEREF(fun_229),CHKREF(lit_183),T143,ENVNUL);
+  T143 = YPsig(YPPlist(3,CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_229 = YPmet(FUNCODEREF(fun_229),CHKREF(lit_185),T143,ENVNUL);
   T147 = BOUNDP(YastYobjectify);
   if (T147 != YPfalse) {
     T146 = CHKREF(YastYobjectify);
@@ -10909,10 +10971,10 @@ loop:
   T144 = CALL2(CHKREF(YPdefine_method),T146,T145);
   YastYobjectify = T144;
   regsym(&YastYobjectify,"ast","objectify");
-  lit_191 = YPPsym((P)"objectify-quotation");
-  lit_192 = YPPsym((P)"value");
-  T148 = YPsig(YPPlist(2,CHKREF(lit_192),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YastYLconstantG));
-  fun_230 = YPmet(FUNCODEREF(fun_230),CHKREF(lit_191),T148,ENVNUL);
+  lit_193 = YPPsym((P)"objectify-quotation");
+  lit_194 = YPPsym((P)"value");
+  T148 = YPsig(YPPlist(2,CHKREF(lit_194),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YastYLconstantG));
+  fun_230 = YPmet(FUNCODEREF(fun_230),CHKREF(lit_193),T148,ENVNUL);
   T152 = BOUNDP(YastYobjectify_quotation);
   if (T152 != YPfalse) {
     T151 = CHKREF(YastYobjectify_quotation);
@@ -10923,9 +10985,9 @@ loop:
   T149 = CALL2(CHKREF(YPdefine_method),T151,T150);
   YastYobjectify_quotation = T149;
   regsym(&YastYobjectify_quotation,"ast","objectify-quotation");
-  lit_193 = YPPsym((P)"objectify-raw");
-  T153 = YPsig(YPPlist(2,CHKREF(lit_192),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YastYLraw_constantG));
-  fun_231 = YPmet(FUNCODEREF(fun_231),CHKREF(lit_193),T153,ENVNUL);
+  lit_195 = YPPsym((P)"objectify-raw");
+  T153 = YPsig(YPPlist(2,CHKREF(lit_194),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YastYLraw_constantG));
+  fun_231 = YPmet(FUNCODEREF(fun_231),CHKREF(lit_195),T153,ENVNUL);
   T157 = BOUNDP(YastYobjectify_raw);
   if (T157 != YPfalse) {
     T156 = CHKREF(YastYobjectify_raw);
@@ -10936,9 +10998,9 @@ loop:
   T154 = CALL2(CHKREF(YPdefine_method),T156,T155);
   YastYobjectify_raw = T154;
   regsym(&YastYobjectify_raw,"ast","objectify-raw");
-  lit_194 = YPPsym((P)"objectify-bound?");
-  T158 = YPsig(YPPlist(3,CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLsymG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_232 = YPmet(FUNCODEREF(fun_232),CHKREF(lit_194),T158,ENVNUL);
+  lit_196 = YPPsym((P)"objectify-bound?");
+  T158 = YPsig(YPPlist(3,CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLsymG),CHKREF(YastYLstatic_environmentG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_232 = YPmet(FUNCODEREF(fun_232),CHKREF(lit_196),T158,ENVNUL);
   T162 = BOUNDP(YastYobjectify_boundQ);
   if (T162 != YPfalse) {
     T161 = CHKREF(YastYobjectify_boundQ);
@@ -10949,11 +11011,11 @@ loop:
   T159 = CALL2(CHKREF(YPdefine_method),T161,T160);
   YastYobjectify_boundQ = T159;
   regsym(&YastYobjectify_boundQ,"ast","objectify-bound?");
-  lit_195 = YPPsym((P)"objectify-compile-time");
-  lit_196 = YPPsym((P)"rt?");
-  lit_197 = YPPsym((P)"program");
-  T163 = YPsig(YPPlist(4,CHKREF(lit_197),CHKREF(lit_185),CHKREF(lit_184),CHKREF(lit_196)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLprogramG));
-  fun_233 = YPmet(FUNCODEREF(fun_233),CHKREF(lit_195),T163,ENVNUL);
+  lit_197 = YPPsym((P)"objectify-compile-time");
+  lit_198 = YPPsym((P)"rt?");
+  lit_199 = YPPsym((P)"program");
+  T163 = YPsig(YPPlist(4,CHKREF(lit_199),CHKREF(lit_187),CHKREF(lit_186),CHKREF(lit_198)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLprogramG));
+  fun_233 = YPmet(FUNCODEREF(fun_233),CHKREF(lit_197),T163,ENVNUL);
   T167 = BOUNDP(YastYobjectify_compile_time);
   if (T167 != YPfalse) {
     T166 = CHKREF(YastYobjectify_compile_time);
@@ -10964,10 +11026,10 @@ loop:
   T164 = CALL2(CHKREF(YPdefine_method),T166,T165);
   YastYobjectify_compile_time = T164;
   regsym(&YastYobjectify_compile_time,"ast","objectify-compile-time");
-  lit_198 = YPPsym((P)"objectify-alternative");
-  lit_199 = YPPsym((P)"a");
-  T168 = YPsig(YPPlist(5,CHKREF(lit_92),CHKREF(lit_142),CHKREF(lit_199),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(5,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)5),CHKREF(YastYLalternativeG));
-  fun_234 = YPmet(FUNCODEREF(fun_234),CHKREF(lit_198),T168,ENVNUL);
+  lit_200 = YPPsym((P)"objectify-alternative");
+  lit_201 = YPPsym((P)"a");
+  T168 = YPsig(YPPlist(5,CHKREF(lit_93),CHKREF(lit_144),CHKREF(lit_201),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(5,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)5),CHKREF(YastYLalternativeG));
+  fun_234 = YPmet(FUNCODEREF(fun_234),CHKREF(lit_200),T168,ENVNUL);
   T172 = BOUNDP(YastYobjectify_alternative);
   if (T172 != YPfalse) {
     T171 = CHKREF(YastYobjectify_alternative);
@@ -10978,12 +11040,12 @@ loop:
   T169 = CALL2(CHKREF(YPdefine_method),T171,T170);
   YastYobjectify_alternative = T169;
   regsym(&YastYobjectify_alternative,"ast","objectify-alternative");
-  lit_200 = YPPsym((P)"sequentialize");
-  lit_201 = YPPsym((P)"e*");
-  T174 = YPsig(YPPlist(1,CHKREF(lit_201)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_loop_235 = YPmet(FUNCODEREF(fun_loop_235),CHKREF(lit_143),T174,ENVNUL);
-  T173 = YPsig(YPPlist(1,CHKREF(lit_201)),YPPlist(1,CHKREF(YLlstG)),YPfalse,YPint((P)1),CHKREF(YastYLprogramG));
-  fun_236 = YPmet(FUNCODEREF(fun_236),CHKREF(lit_200),T173,ENVNUL);
+  lit_202 = YPPsym((P)"sequentialize");
+  lit_203 = YPPsym((P)"e*");
+  T174 = YPsig(YPPlist(1,CHKREF(lit_203)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_loop_235 = YPmet(FUNCODEREF(fun_loop_235),CHKREF(lit_145),T174,ENVNUL);
+  T173 = YPsig(YPPlist(1,CHKREF(lit_203)),YPPlist(1,CHKREF(YLlstG)),YPfalse,YPint((P)1),CHKREF(YastYLprogramG));
+  fun_236 = YPmet(FUNCODEREF(fun_236),CHKREF(lit_202),T173,ENVNUL);
   T178 = BOUNDP(YastYsequentialize);
   if (T178 != YPfalse) {
     T177 = CHKREF(YastYsequentialize);
@@ -10994,11 +11056,11 @@ loop:
   T175 = CALL2(CHKREF(YPdefine_method),T177,T176);
   YastYsequentialize = T175;
   regsym(&YastYsequentialize,"ast","sequentialize");
-  lit_202 = YPPsym((P)"objectify-sequential");
-  T180 = YPsig(YPPlist(2,CHKREF(lit_144),CHKREF(lit_201)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_loop_237 = YPmet(FUNCODEREF(fun_loop_237),CHKREF(lit_143),T180,ENVNUL);
-  T179 = YPsig(YPPlist(3,CHKREF(lit_201),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLprogramG));
-  fun_238 = YPmet(FUNCODEREF(fun_238),CHKREF(lit_202),T179,ENVNUL);
+  lit_204 = YPPsym((P)"objectify-sequential");
+  T180 = YPsig(YPPlist(2,CHKREF(lit_146),CHKREF(lit_203)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_loop_237 = YPmet(FUNCODEREF(fun_loop_237),CHKREF(lit_145),T180,ENVNUL);
+  T179 = YPsig(YPPlist(3,CHKREF(lit_203),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLprogramG));
+  fun_238 = YPmet(FUNCODEREF(fun_238),CHKREF(lit_204),T179,ENVNUL);
   T184 = BOUNDP(YastYobjectify_sequential);
   if (T184 != YPfalse) {
     T183 = CHKREF(YastYobjectify_sequential);
@@ -11009,12 +11071,12 @@ loop:
   T181 = CALL2(CHKREF(YPdefine_method),T183,T182);
   YastYobjectify_sequential = T181;
   regsym(&YastYobjectify_sequential,"ast","objectify-sequential");
-  lit_203 = YPPsym((P)"objectify-application");
-  lit_204 = YPPsym((P)"ff");
-  T186 = YPsig(YPPlist(1,CHKREF(lit_89)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  lit_205 = YPPsym((P)"objectify-application");
+  lit_206 = YPPsym((P)"ff");
+  T186 = YPsig(YPPlist(1,CHKREF(lit_90)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_239 = YPmet(FUNCODEREF(fun_239),YPfalse,T186,ENVNUL);
-  T185 = YPsig(YPPlist(4,CHKREF(lit_204),CHKREF(lit_201),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YastYLast_methodG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLprogramG));
-  fun_240 = YPmet(FUNCODEREF(fun_240),CHKREF(lit_203),T185,ENVNUL);
+  T185 = YPsig(YPPlist(4,CHKREF(lit_206),CHKREF(lit_203),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YastYLast_methodG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLprogramG));
+  fun_240 = YPmet(FUNCODEREF(fun_240),CHKREF(lit_205),T185,ENVNUL);
   T190 = BOUNDP(YastYobjectify_application);
   if (T190 != YPfalse) {
     T189 = CHKREF(YastYobjectify_application);
@@ -11025,10 +11087,10 @@ loop:
   T187 = CALL2(CHKREF(YPdefine_method),T189,T188);
   YastYobjectify_application = T187;
   regsym(&YastYobjectify_application,"ast","objectify-application");
-  T192 = YPsig(YPPlist(1,CHKREF(lit_89)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  T192 = YPsig(YPPlist(1,CHKREF(lit_90)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_241 = YPmet(FUNCODEREF(fun_241),YPfalse,T192,ENVNUL);
-  T191 = YPsig(YPPlist(4,CHKREF(lit_204),CHKREF(lit_201),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YastYLpredefined_referenceG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLprogramG));
-  fun_242 = YPmet(FUNCODEREF(fun_242),CHKREF(lit_203),T191,ENVNUL);
+  T191 = YPsig(YPPlist(4,CHKREF(lit_206),CHKREF(lit_203),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YastYLpredefined_referenceG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLprogramG));
+  fun_242 = YPmet(FUNCODEREF(fun_242),CHKREF(lit_205),T191,ENVNUL);
   T196 = BOUNDP(YastYobjectify_application);
   if (T196 != YPfalse) {
     T195 = CHKREF(YastYobjectify_application);
@@ -11039,10 +11101,10 @@ loop:
   T193 = CALL2(CHKREF(YPdefine_method),T195,T194);
   YastYobjectify_application = T193;
   regsym(&YastYobjectify_application,"ast","objectify-application");
-  T198 = YPsig(YPPlist(1,CHKREF(lit_89)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  T198 = YPsig(YPPlist(1,CHKREF(lit_90)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
   fun_243 = YPmet(FUNCODEREF(fun_243),YPfalse,T198,ENVNUL);
-  T197 = YPsig(YPPlist(4,CHKREF(lit_204),CHKREF(lit_201),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLprogramG));
-  fun_244 = YPmet(FUNCODEREF(fun_244),CHKREF(lit_203),T197,ENVNUL);
+  T197 = YPsig(YPPlist(4,CHKREF(lit_206),CHKREF(lit_203),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLprogramG));
+  fun_244 = YPmet(FUNCODEREF(fun_244),CHKREF(lit_205),T197,ENVNUL);
   T202 = BOUNDP(YastYobjectify_application);
   if (T202 != YPfalse) {
     T201 = CHKREF(YastYobjectify_application);
@@ -11053,10 +11115,10 @@ loop:
   T199 = CALL2(CHKREF(YPdefine_method),T201,T200);
   YastYobjectify_application = T199;
   regsym(&YastYobjectify_application,"ast","objectify-application");
-  lit_205 = YPPsym((P)"process-closed-application");
-  lit_206 = YPsb((P)"incorrect regular arity");
-  T203 = YPsig(YPPlist(4,CHKREF(lit_187),CHKREF(lit_201),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YastYLast_methodG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLfix_letG));
-  fun_245 = YPmet(FUNCODEREF(fun_245),CHKREF(lit_205),T203,ENVNUL);
+  lit_207 = YPPsym((P)"process-closed-application");
+  lit_208 = YPsb((P)"incorrect regular arity");
+  T203 = YPsig(YPPlist(4,CHKREF(lit_189),CHKREF(lit_203),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YastYLast_methodG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLfix_letG));
+  fun_245 = YPmet(FUNCODEREF(fun_245),CHKREF(lit_207),T203,ENVNUL);
   T207 = BOUNDP(YastYprocess_closed_application);
   if (T207 != YPfalse) {
     T206 = CHKREF(YastYprocess_closed_application);
@@ -11067,19 +11129,19 @@ loop:
   T204 = CALL2(CHKREF(YPdefine_method),T206,T205);
   YastYprocess_closed_application = T204;
   regsym(&YastYprocess_closed_application,"ast","process-closed-application");
-  lit_207 = YPPsym((P)"process-nary-closed-application");
-  lit_208 = YPPsym((P)"gather-arguments");
-  lit_209 = YPPsym((P)"v*");
-  lit_210 = YPsb((P)"incorrect dotted arity");
-  lit_211 = YPPsym((P)"pack-nary-args");
-  lit_212 = YPPsym((P)"%pair");
-  lit_213 = YPPsym((P)"quote");
-  T210 = YPsig(YPPlist(2,CHKREF(lit_201),CHKREF(lit_209)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_gather_arguments_246 = YPmet(FUNCODEREF(fun_gather_arguments_246),CHKREF(lit_208),T210,ENVNUL);
-  T209 = YPsig(YPPlist(1,CHKREF(lit_201)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_pack_nary_args_247 = YPmet(FUNCODEREF(fun_pack_nary_args_247),CHKREF(lit_211),T209,ENVNUL);
-  T208 = YPsig(YPPlist(4,CHKREF(lit_187),CHKREF(lit_201),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLfix_letG));
-  fun_248 = YPmet(FUNCODEREF(fun_248),CHKREF(lit_207),T208,ENVNUL);
+  lit_209 = YPPsym((P)"process-nary-closed-application");
+  lit_210 = YPPsym((P)"gather-arguments");
+  lit_211 = YPPsym((P)"v*");
+  lit_212 = YPsb((P)"incorrect dotted arity");
+  lit_213 = YPPsym((P)"pack-nary-args");
+  lit_214 = YPPsym((P)"%pair");
+  lit_215 = YPPsym((P)"quote");
+  T210 = YPsig(YPPlist(2,CHKREF(lit_203),CHKREF(lit_211)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_gather_arguments_246 = YPmet(FUNCODEREF(fun_gather_arguments_246),CHKREF(lit_210),T210,ENVNUL);
+  T209 = YPsig(YPPlist(1,CHKREF(lit_203)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_pack_nary_args_247 = YPmet(FUNCODEREF(fun_pack_nary_args_247),CHKREF(lit_213),T209,ENVNUL);
+  T208 = YPsig(YPPlist(4,CHKREF(lit_189),CHKREF(lit_203),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLfix_letG));
+  fun_248 = YPmet(FUNCODEREF(fun_248),CHKREF(lit_209),T208,ENVNUL);
   T214 = BOUNDP(YastYprocess_nary_closed_application);
   if (T214 != YPfalse) {
     T213 = CHKREF(YastYprocess_nary_closed_application);
@@ -11090,9 +11152,9 @@ loop:
   T211 = CALL2(CHKREF(YPdefine_method),T213,T212);
   YastYprocess_nary_closed_application = T211;
   regsym(&YastYprocess_nary_closed_application,"ast","process-nary-closed-application");
-  lit_214 = YPPsym((P)"convert2arguments");
-  T215 = YPsig(YPPlist(1,CHKREF(lit_201)),YPPlist(1,CHKREF(YLlstG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_249 = YPmet(FUNCODEREF(fun_249),CHKREF(lit_214),T215,ENVNUL);
+  lit_216 = YPPsym((P)"convert2arguments");
+  T215 = YPsig(YPPlist(1,CHKREF(lit_203)),YPPlist(1,CHKREF(YLlstG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_249 = YPmet(FUNCODEREF(fun_249),CHKREF(lit_216),T215,ENVNUL);
   T219 = BOUNDP(YastYconvert2arguments);
   if (T219 != YPfalse) {
     T218 = CHKREF(YastYconvert2arguments);
@@ -11103,10 +11165,10 @@ loop:
   T216 = CALL2(CHKREF(YPdefine_method),T218,T217);
   YastYconvert2arguments = T216;
   regsym(&YastYconvert2arguments,"ast","convert2arguments");
-  lit_215 = YPPsym((P)"objectify-assignment");
-  lit_216 = YPsb((P)"Unsupported Set!: %=");
-  T220 = YPsig(YPPlist(4,CHKREF(lit_182),CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLprogramG));
-  fun_250 = YPmet(FUNCODEREF(fun_250),CHKREF(lit_215),T220,ENVNUL);
+  lit_217 = YPPsym((P)"objectify-assignment");
+  lit_218 = YPsb((P)"Unsupported Set!: %=");
+  T220 = YPsig(YPPlist(4,CHKREF(lit_184),CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLprogramG));
+  fun_250 = YPmet(FUNCODEREF(fun_250),CHKREF(lit_217),T220,ENVNUL);
   T224 = BOUNDP(YastYobjectify_assignment);
   if (T224 != YPfalse) {
     T223 = CHKREF(YastYobjectify_assignment);
@@ -11117,8 +11179,8 @@ loop:
   T221 = CALL2(CHKREF(YPdefine_method),T223,T222);
   YastYobjectify_assignment = T221;
   regsym(&YastYobjectify_assignment,"ast","objectify-assignment");
-  T225 = YPsig(YPPlist(4,CHKREF(lit_182),CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YLsymG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLassignmentG));
-  fun_251 = YPmet(FUNCODEREF(fun_251),CHKREF(lit_215),T225,ENVNUL);
+  T225 = YPsig(YPPlist(4,CHKREF(lit_184),CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YLsymG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLassignmentG));
+  fun_251 = YPmet(FUNCODEREF(fun_251),CHKREF(lit_217),T225,ENVNUL);
   T229 = BOUNDP(YastYobjectify_assignment);
   if (T229 != YPfalse) {
     T228 = CHKREF(YastYobjectify_assignment);
@@ -11129,11 +11191,11 @@ loop:
   T226 = CALL2(CHKREF(YPdefine_method),T228,T227);
   YastYobjectify_assignment = T226;
   regsym(&YastYobjectify_assignment,"ast","objectify-assignment");
-  lit_217 = YPPsym((P)"objectify-assignment-using");
-  lit_218 = YPPsym((P)"val");
-  lit_219 = YPPsym((P)"ref");
-  T230 = YPsig(YPPlist(2,CHKREF(lit_219),CHKREF(lit_218)),YPPlist(2,CHKREF(YastYLlocal_referenceG),CHKREF(YastYLprogramG)),YPfalse,YPint((P)2),CHKREF(YastYLlocal_assignmentG));
-  fun_252 = YPmet(FUNCODEREF(fun_252),CHKREF(lit_217),T230,ENVNUL);
+  lit_219 = YPPsym((P)"objectify-assignment-using");
+  lit_220 = YPPsym((P)"val");
+  lit_221 = YPPsym((P)"ref");
+  T230 = YPsig(YPPlist(2,CHKREF(lit_221),CHKREF(lit_220)),YPPlist(2,CHKREF(YastYLlocal_referenceG),CHKREF(YastYLprogramG)),YPfalse,YPint((P)2),CHKREF(YastYLlocal_assignmentG));
+  fun_252 = YPmet(FUNCODEREF(fun_252),CHKREF(lit_219),T230,ENVNUL);
   T234 = BOUNDP(YastYobjectify_assignment_using);
   if (T234 != YPfalse) {
     T233 = CHKREF(YastYobjectify_assignment_using);
@@ -11144,8 +11206,8 @@ loop:
   T231 = CALL2(CHKREF(YPdefine_method),T233,T232);
   YastYobjectify_assignment_using = T231;
   regsym(&YastYobjectify_assignment_using,"ast","objectify-assignment-using");
-  T235 = YPsig(YPPlist(2,CHKREF(lit_219),CHKREF(lit_218)),YPPlist(2,CHKREF(YastYLglobal_referenceG),CHKREF(YastYLprogramG)),YPfalse,YPint((P)2),CHKREF(YastYLglobal_assignmentG));
-  fun_253 = YPmet(FUNCODEREF(fun_253),CHKREF(lit_217),T235,ENVNUL);
+  T235 = YPsig(YPPlist(2,CHKREF(lit_221),CHKREF(lit_220)),YPPlist(2,CHKREF(YastYLglobal_referenceG),CHKREF(YastYLprogramG)),YPfalse,YPint((P)2),CHKREF(YastYLglobal_assignmentG));
+  fun_253 = YPmet(FUNCODEREF(fun_253),CHKREF(lit_219),T235,ENVNUL);
   T239 = BOUNDP(YastYobjectify_assignment_using);
   if (T239 != YPfalse) {
     T238 = CHKREF(YastYobjectify_assignment_using);
@@ -11156,8 +11218,8 @@ loop:
   T236 = CALL2(CHKREF(YPdefine_method),T238,T237);
   YastYobjectify_assignment_using = T236;
   regsym(&YastYobjectify_assignment_using,"ast","objectify-assignment-using");
-  T240 = YPsig(YPPlist(2,CHKREF(lit_219),CHKREF(lit_218)),YPPlist(2,CHKREF(YastYLruntime_referenceG),CHKREF(YastYLprogramG)),YPfalse,YPint((P)2),CHKREF(YastYLruntime_assignmentG));
-  fun_254 = YPmet(FUNCODEREF(fun_254),CHKREF(lit_217),T240,ENVNUL);
+  T240 = YPsig(YPPlist(2,CHKREF(lit_221),CHKREF(lit_220)),YPPlist(2,CHKREF(YastYLruntime_referenceG),CHKREF(YastYLprogramG)),YPfalse,YPint((P)2),CHKREF(YastYLruntime_assignmentG));
+  fun_254 = YPmet(FUNCODEREF(fun_254),CHKREF(lit_219),T240,ENVNUL);
   T244 = BOUNDP(YastYobjectify_assignment_using);
   if (T244 != YPfalse) {
     T243 = CHKREF(YastYobjectify_assignment_using);
@@ -11168,21 +11230,21 @@ loop:
   T241 = CALL2(CHKREF(YPdefine_method),T243,T242);
   YastYobjectify_assignment_using = T241;
   regsym(&YastYobjectify_assignment_using,"ast","objectify-assignment-using");
-  lit_220 = YPPsym((P)"update-binding-kind");
-  lit_221 = YPPsym((P)"new-kind");
-  lit_222 = YPsb((P)"Cannot set type of runtime binding %s to %s.\n");
-  T245 = YPsig(YPPlist(2,CHKREF(lit_182),CHKREF(lit_221)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYupdate_binding_kind = YPmet(FUNCODEREF(YastYupdate_binding_kind),CHKREF(lit_220),T245,ENVNUL);
+  lit_222 = YPPsym((P)"update-binding-kind");
+  lit_223 = YPPsym((P)"new-kind");
+  lit_224 = YPsb((P)"Cannot set type of runtime binding %s to %s.\n");
+  T245 = YPsig(YPPlist(2,CHKREF(lit_184),CHKREF(lit_223)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYupdate_binding_kind = YPmet(FUNCODEREF(YastYupdate_binding_kind),CHKREF(lit_222),T245,ENVNUL);
   T246 = YastYupdate_binding_kind;
   YastYupdate_binding_kind = T246;
   regsym(&YastYupdate_binding_kind,"ast","update-binding-kind");
-  lit_223 = YPPsym((P)"ast-define-binding");
-  lit_224 = YPPsym((P)"kind");
-  lit_225 = YPPsym((P)"defining-method?");
-  lit_226 = YPPsym((P)"name");
-  lit_227 = YPsb((P)"%s: warning: '%s' clobbers binding from %s.\n");
-  T247 = YPsig(YPPlist(4,CHKREF(lit_185),CHKREF(lit_226),CHKREF(lit_225),CHKREF(lit_224)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YLanyG));
-  fun_256 = YPmet(FUNCODEREF(fun_256),CHKREF(lit_223),T247,ENVNUL);
+  lit_225 = YPPsym((P)"ast-define-binding");
+  lit_226 = YPPsym((P)"kind");
+  lit_227 = YPPsym((P)"defining-method?");
+  lit_228 = YPPsym((P)"name");
+  lit_229 = YPsb((P)"%s: warning: '%s' clobbers binding from %s.\n");
+  T247 = YPsig(YPPlist(4,CHKREF(lit_187),CHKREF(lit_228),CHKREF(lit_227),CHKREF(lit_226)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YLanyG));
+  fun_256 = YPmet(FUNCODEREF(fun_256),CHKREF(lit_225),T247,ENVNUL);
   T251 = BOUNDP(YastYast_define_binding);
   if (T251 != YPfalse) {
     T250 = CHKREF(YastYast_define_binding);
@@ -11195,10 +11257,10 @@ loop:
   regsym(&YastYast_define_binding,"ast","ast-define-binding");
   YastYTmacro_tracingQT = YPfalse;
   regsym(&YastYTmacro_tracingQT,"ast","*macro-tracing?*");
-  lit_228 = YPPsym((P)"objectify-definition");
-  lit_229 = YPPsym((P)"var");
-  T252 = YPsig(YPPlist(3,CHKREF(lit_229),CHKREF(lit_89),CHKREF(lit_185)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_257 = YPmet(FUNCODEREF(fun_257),CHKREF(lit_228),T252,ENVNUL);
+  lit_230 = YPPsym((P)"objectify-definition");
+  lit_231 = YPPsym((P)"var");
+  T252 = YPsig(YPPlist(3,CHKREF(lit_231),CHKREF(lit_90),CHKREF(lit_187)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_257 = YPmet(FUNCODEREF(fun_257),CHKREF(lit_230),T252,ENVNUL);
   T256 = BOUNDP(YastYobjectify_definition);
   if (T256 != YPfalse) {
     T255 = CHKREF(YastYobjectify_definition);
@@ -11209,25 +11271,25 @@ loop:
   T253 = CALL2(CHKREF(YPdefine_method),T255,T254);
   YastYobjectify_definition = T253;
   regsym(&YastYobjectify_definition,"ast","objectify-definition");
-  lit_230 = YPPsym((P)"%%macro");
-  lit_231 = YPPsym((P)"env-or-false");
-  lit_232 = YPPsym((P)"expander");
-  lit_233 = YPPsym((P)"modname");
-  lit_234 = YPPsym((P)"expand");
-  lit_235 = YPsb((P)"\n");
-  lit_236 = YPsb((P)"  => ");
+  lit_232 = YPPsym((P)"%%macro");
+  lit_233 = YPPsym((P)"env-or-false");
+  lit_234 = YPPsym((P)"expander");
+  lit_235 = YPPsym((P)"modname");
+  lit_236 = YPPsym((P)"expand");
   lit_237 = YPsb((P)"\n");
-  lit_238 = YPsb((P)"MACRO ");
-  T258 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_expand_258 = YPmet(FUNCODEREF(fun_expand_258),CHKREF(lit_234),T258,ENVNUL);
-  T257 = YPsig(YPPlist(4,CHKREF(lit_233),CHKREF(lit_226),CHKREF(lit_232),CHKREF(lit_231)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLmodule_bindingG));
-  YPPmacro = YPmet(FUNCODEREF(YPPmacro),CHKREF(lit_230),T257,ENVNUL);
+  lit_238 = YPsb((P)"  => ");
+  lit_239 = YPsb((P)"\n");
+  lit_240 = YPsb((P)"MACRO ");
+  T258 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_expand_258 = YPmet(FUNCODEREF(fun_expand_258),CHKREF(lit_236),T258,ENVNUL);
+  T257 = YPsig(YPPlist(4,CHKREF(lit_235),CHKREF(lit_228),CHKREF(lit_234),CHKREF(lit_233)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLmodule_bindingG));
+  YPPmacro = YPmet(FUNCODEREF(YPPmacro),CHKREF(lit_232),T257,ENVNUL);
   T259 = YPPmacro;
   YPPmacro = T259;
   regsym(&YPPmacro,"boot","%%macro");
-  lit_239 = YPPsym((P)"objectify-syntax-definition");
-  T260 = YPsig(YPPlist(4,CHKREF(lit_226),CHKREF(lit_89),CHKREF(lit_185),CHKREF(lit_196)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YLanyG));
-  fun_260 = YPmet(FUNCODEREF(fun_260),CHKREF(lit_239),T260,ENVNUL);
+  lit_241 = YPPsym((P)"objectify-syntax-definition");
+  T260 = YPsig(YPPlist(4,CHKREF(lit_228),CHKREF(lit_90),CHKREF(lit_187),CHKREF(lit_198)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YLanyG));
+  fun_260 = YPmet(FUNCODEREF(fun_260),CHKREF(lit_241),T260,ENVNUL);
   T264 = BOUNDP(YastYobjectify_syntax_definition);
   if (T264 != YPfalse) {
     T263 = CHKREF(YastYobjectify_syntax_definition);
@@ -11238,9 +11300,9 @@ loop:
   T261 = CALL2(CHKREF(YPdefine_method),T263,T262);
   YastYobjectify_syntax_definition = T261;
   regsym(&YastYobjectify_syntax_definition,"ast","objectify-syntax-definition");
-  lit_240 = YPPsym((P)"objectify-function-definition");
-  T265 = YPsig(YPPlist(3,CHKREF(lit_226),CHKREF(lit_89),CHKREF(lit_185)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLast_function_definitionG));
-  fun_261 = YPmet(FUNCODEREF(fun_261),CHKREF(lit_240),T265,ENVNUL);
+  lit_242 = YPPsym((P)"objectify-function-definition");
+  T265 = YPsig(YPPlist(3,CHKREF(lit_228),CHKREF(lit_90),CHKREF(lit_187)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLast_function_definitionG));
+  fun_261 = YPmet(FUNCODEREF(fun_261),CHKREF(lit_242),T265,ENVNUL);
   T269 = BOUNDP(YastYobjectify_function_definition);
   if (T269 != YPfalse) {
     T268 = CHKREF(YastYobjectify_function_definition);
@@ -11251,18 +11313,18 @@ loop:
   T266 = CALL2(CHKREF(YPdefine_method),T268,T267);
   YastYobjectify_function_definition = T266;
   regsym(&YastYobjectify_function_definition,"ast","objectify-function-definition");
-  lit_241 = YPPsym((P)"module-binding");
-  T270 = YPsig(YPPlist(1,CHKREF(lit_224)),YPPlist(1,CHKREF(YLsymG)),YPfalse,YPint((P)1),CHKREF(YastYLmodule_bindingG));
-  YastYmodule_binding = YPmet(FUNCODEREF(YastYmodule_binding),CHKREF(lit_241),T270,ENVNUL);
+  lit_243 = YPPsym((P)"module-binding");
+  T270 = YPsig(YPPlist(1,CHKREF(lit_226)),YPPlist(1,CHKREF(YLsymG)),YPfalse,YPint((P)1),CHKREF(YastYLmodule_bindingG));
+  YastYmodule_binding = YPmet(FUNCODEREF(YastYmodule_binding),CHKREF(lit_243),T270,ENVNUL);
   T271 = YastYmodule_binding;
   YastYmodule_binding = T271;
   regsym(&YastYmodule_binding,"ast","module-binding");
-  lit_242 = YPPsym((P)"objectify-primitive-definition");
-  lit_243 = YPPsym((P)"body");
-  lit_244 = YPPsym((P)"sig");
-  lit_245 = YPPsym((P)"predefined");
-  T274 = YPsig(YPPlist(4,CHKREF(lit_226),CHKREF(lit_244),CHKREF(lit_243),CHKREF(lit_185)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLast_primitive_definitionG));
-  T273 = fun_263 = YPmet(FUNCODEREF(fun_263),CHKREF(lit_242),T274,ENVNUL);
+  lit_244 = YPPsym((P)"objectify-primitive-definition");
+  lit_245 = YPPsym((P)"body");
+  lit_246 = YPPsym((P)"sig");
+  lit_247 = YPPsym((P)"predefined");
+  T274 = YPsig(YPPlist(4,CHKREF(lit_228),CHKREF(lit_246),CHKREF(lit_245),CHKREF(lit_187)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLast_primitive_definitionG));
+  T273 = fun_263 = YPmet(FUNCODEREF(fun_263),CHKREF(lit_244),T274,ENVNUL);
   T279 = BOUNDP(YastYobjectify_primitive_definition);
   if (T279 != YPfalse) {
     T278 = CHKREF(YastYobjectify_primitive_definition);
@@ -11278,30 +11340,31 @@ loop:
 }
 
 P YastY___main_5___() {
-  P T319,T318,T317,T316,T315,T314,T313,T312,T311,T310,T309,T308,T307,T306,T305,T304;
-  P T303,T302,T301,T300,T299,T298,T297,T296,T295,T294,T293,T292,T291,T290,T289,T288;
-  P T287,T286,T285,T284,T283,T282,T281,T280,T279,T278,T277,T276,T275,T274,T273,T272;
-  P T271,T270,T269,T268,T267,T266,T265,T264,T263,T262,T261,T260,T259,T258,T257,T256;
-  P T255,T254,T253,T252,T251,T250,T249,T248,T247,T246,T245,T244,T243,T242,T241,T240;
-  P T239,T238,T237,T236,T235,T234,T233,T232,T231,T230,T229,T228,T227,T226,T225,T224;
-  P T223,T222,T221,T220,T219,T218,T217,T216,T215,T214,T213,T212,T211,T210,T209,T208;
-  P T207,T206,T205,T204,T203,T202,T201,T200,T199,T198,T197,T196,T195,T194,T193,T192;
-  P T191,T190,T189,T188,T187,T186,T185,T184,T183,T182,T181,T180,T179,T178,T177,T176;
-  P T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164,T163,T162,T161,T160;
-  P T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149,T148,T147,T146,T145,T144;
-  P T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133,T132,T131,T130,T129,T128;
-  P T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116,T115,T114,T113,T112;
-  P T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100,T99,T98,T97,T96;
-  P T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84,T83,T82,T81,T80;
-  P T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68,T67,T66,T65,T64;
-  P T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48;
-  P T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32;
-  P T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16;
-  P T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P T323,T322,T321,T320,T319,T318,T317,T316,T315,T314,T313,T312,T311,T310,T309,T308;
+  P T307,T306,T305,T304,T303,T302,T301,T300,T299,T298,T297,T296,T295,T294,T293,T292;
+  P T291,T290,T289,T288,T287,T286,T285,T284,T283,T282,T281,T280,T279,T278,T277,T276;
+  P T275,T274,T273,T272,T271,T270,T269,T268,T267,T266,T265,T264,T263,T262,T261,T260;
+  P T259,T258,T257,T256,T255,T254,T253,T252,T251,T250,T249,T248,T247,T246,T245,T244;
+  P T243,T242,T241,T240,T239,T238,T237,T236,T235,T234,T233,T232,T231,T230,T229,T228;
+  P T227,T226,T225,T224,T223,T222,T221,T220,T219,T218,T217,T216,T215,T214,T213,T212;
+  P T211,T210,T209,T208,T207,T206,T205,T204,T203,T202,T201,T200,T199,T198,T197,T196;
+  P T195,T194,T193,T192,T191,T190,T189,T188,T187,T186,T185,T184,T183,T182,T181,T180;
+  P T179,T178,T177,T176,T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164;
+  P T163,T162,T161,T160,T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149,T148;
+  P T147,T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133,T132;
+  P T131,T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116;
+  P T115,T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100;
+  P T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84;
+  P T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68;
+  P T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52;
+  P T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36;
+  P T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20;
+  P T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4;
+  P T3,T2,T1,T0;
 loop:
-  lit_246 = YPPsym((P)"objectify-generic-definition");
-  T0 = YPsig(YPPlist(3,CHKREF(lit_226),CHKREF(lit_244),CHKREF(lit_185)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLast_generic_definitionG));
-  fun_264 = YPmet(FUNCODEREF(fun_264),CHKREF(lit_246),T0,ENVNUL);
+  lit_248 = YPPsym((P)"objectify-generic-definition");
+  T0 = YPsig(YPPlist(3,CHKREF(lit_228),CHKREF(lit_246),CHKREF(lit_187)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLast_generic_definitionG));
+  fun_264 = YPmet(FUNCODEREF(fun_264),CHKREF(lit_248),T0,ENVNUL);
   T4 = BOUNDP(YastYobjectify_generic_definition);
   if (T4 != YPfalse) {
     T3 = CHKREF(YastYobjectify_generic_definition);
@@ -11312,12 +11375,12 @@ loop:
   T1 = CALL2(CHKREF(YPdefine_method),T3,T2);
   YastYobjectify_generic_definition = T1;
   regsym(&YastYobjectify_generic_definition,"ast","objectify-generic-definition");
-  lit_247 = YPPsym((P)"objectify-method-definition");
-  lit_248 = YPPsym((P)"%define-method");
-  lit_249 = YPPsym((P)"bound?");
-  lit_250 = YPPsym((P)"if");
-  T5 = YPsig(YPPlist(3,CHKREF(lit_226),CHKREF(lit_89),CHKREF(lit_185)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLast_method_definitionG));
-  fun_265 = YPmet(FUNCODEREF(fun_265),CHKREF(lit_247),T5,ENVNUL);
+  lit_249 = YPPsym((P)"objectify-method-definition");
+  lit_250 = YPPsym((P)"%define-method");
+  lit_251 = YPPsym((P)"bound?");
+  lit_252 = YPPsym((P)"if");
+  T5 = YPsig(YPPlist(3,CHKREF(lit_228),CHKREF(lit_90),CHKREF(lit_187)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLast_method_definitionG));
+  fun_265 = YPmet(FUNCODEREF(fun_265),CHKREF(lit_249),T5,ENVNUL);
   T9 = BOUNDP(YastYobjectify_method_definition);
   if (T9 != YPfalse) {
     T8 = CHKREF(YastYobjectify_method_definition);
@@ -11328,9 +11391,9 @@ loop:
   T6 = CALL2(CHKREF(YPdefine_method),T8,T7);
   YastYobjectify_method_definition = T6;
   regsym(&YastYobjectify_method_definition,"ast","objectify-method-definition");
-  lit_251 = YPPsym((P)"objectify-function");
-  T10 = YPsig(YPPlist(4,CHKREF(lit_244),CHKREF(lit_243),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLast_methodG));
-  fun_266 = YPmet(FUNCODEREF(fun_266),CHKREF(lit_251),T10,ENVNUL);
+  lit_253 = YPPsym((P)"objectify-function");
+  T10 = YPsig(YPPlist(4,CHKREF(lit_246),CHKREF(lit_245),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLast_methodG));
+  fun_266 = YPmet(FUNCODEREF(fun_266),CHKREF(lit_253),T10,ENVNUL);
   T14 = BOUNDP(YastYobjectify_function);
   if (T14 != YPfalse) {
     T13 = CHKREF(YastYobjectify_function);
@@ -11341,23 +11404,23 @@ loop:
   T11 = CALL2(CHKREF(YPdefine_method),T13,T12);
   YastYobjectify_function = T11;
   regsym(&YastYobjectify_function,"ast","objectify-function");
-  lit_252 = YPPsym((P)"...");
-  YastYDsexpr_optionals_tag = CHKREF(lit_252);
+  lit_254 = YPPsym((P)"...");
+  YastYDsexpr_optionals_tag = CHKREF(lit_254);
   regsym(&YastYDsexpr_optionals_tag,"ast","$sexpr-optionals-tag");
-  lit_253 = YPPsym((P)"<opts>");
-  YastYDsexpr_optionals_type_name = CHKREF(lit_253);
+  lit_255 = YPPsym((P)"<opts>");
+  YastYDsexpr_optionals_type_name = CHKREF(lit_255);
   regsym(&YastYDsexpr_optionals_type_name,"ast","$sexpr-optionals-type-name");
-  lit_254 = YPPsym((P)"objectify-signature");
-  lit_255 = YPPsym((P)"col");
-  lit_256 = YPPsym((P)"types");
-  lit_257 = YPPsym((P)"names");
-  lit_258 = YPPsym((P)"bindings");
-  lit_259 = YPPsym((P)"nary?");
-  lit_260 = YPPsym((P)"params");
-  T16 = YPsig(YPPlist(5,CHKREF(lit_260),CHKREF(lit_259),CHKREF(lit_258),CHKREF(lit_257),CHKREF(lit_256)),YPPlist(5,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)5),CHKREF(YLanyG));
-  fun_col_267 = YPmet(FUNCODEREF(fun_col_267),CHKREF(lit_255),T16,ENVNUL);
-  T15 = YPsig(YPPlist(2,CHKREF(lit_244),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YastYLast_signatureG));
-  fun_268 = YPmet(FUNCODEREF(fun_268),CHKREF(lit_254),T15,ENVNUL);
+  lit_256 = YPPsym((P)"objectify-signature");
+  lit_257 = YPPsym((P)"col");
+  lit_258 = YPPsym((P)"types");
+  lit_259 = YPPsym((P)"names");
+  lit_260 = YPPsym((P)"bindings");
+  lit_261 = YPPsym((P)"nary?");
+  lit_262 = YPPsym((P)"params");
+  T16 = YPsig(YPPlist(5,CHKREF(lit_262),CHKREF(lit_261),CHKREF(lit_260),CHKREF(lit_259),CHKREF(lit_258)),YPPlist(5,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)5),CHKREF(YLanyG));
+  fun_col_267 = YPmet(FUNCODEREF(fun_col_267),CHKREF(lit_257),T16,ENVNUL);
+  T15 = YPsig(YPPlist(2,CHKREF(lit_246),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YastYLast_signatureG));
+  fun_268 = YPmet(FUNCODEREF(fun_268),CHKREF(lit_256),T15,ENVNUL);
   T20 = BOUNDP(YastYobjectify_signature);
   if (T20 != YPfalse) {
     T19 = CHKREF(YastYobjectify_signature);
@@ -11368,17 +11431,17 @@ loop:
   T17 = CALL2(CHKREF(YPdefine_method),T19,T18);
   YastYobjectify_signature = T17;
   regsym(&YastYobjectify_signature,"ast","objectify-signature");
-  lit_261 = YPPsym((P)"compute-local-reference-offsets");
-  lit_262 = YPPsym((P)"i");
-  lit_263 = YPsb((P)"DIDN'T FIND LOCAL BINDING %= IN %=");
-  lit_264 = YPPsym((P)"find");
-  lit_265 = YPPsym((P)"j");
-  T23 = YPsig(YPPlist(2,CHKREF(lit_265),CHKREF(lit_258)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_find_269 = YPmet(FUNCODEREF(fun_find_269),CHKREF(lit_264),T23,ENVNUL);
-  T22 = YPsig(YPPlist(2,CHKREF(lit_262),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_loop_270 = YPmet(FUNCODEREF(fun_loop_270),CHKREF(lit_143),T22,ENVNUL);
-  T21 = YPsig(YPPlist(2,CHKREF(lit_182),CHKREF(lit_185)),YPPlist(2,CHKREF(YastYLlocal_bindingG),CHKREF(YastYLstatic_local_environmentG)),YPfalse,YPint((P)2),CHKREF(YLtupG));
-  fun_271 = YPmet(FUNCODEREF(fun_271),CHKREF(lit_261),T21,ENVNUL);
+  lit_263 = YPPsym((P)"compute-local-reference-offsets");
+  lit_264 = YPPsym((P)"i");
+  lit_265 = YPsb((P)"DIDN'T FIND LOCAL BINDING %= IN %=");
+  lit_266 = YPPsym((P)"find");
+  lit_267 = YPPsym((P)"j");
+  T23 = YPsig(YPPlist(2,CHKREF(lit_267),CHKREF(lit_260)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_find_269 = YPmet(FUNCODEREF(fun_find_269),CHKREF(lit_266),T23,ENVNUL);
+  T22 = YPsig(YPPlist(2,CHKREF(lit_264),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_loop_270 = YPmet(FUNCODEREF(fun_loop_270),CHKREF(lit_145),T22,ENVNUL);
+  T21 = YPsig(YPPlist(2,CHKREF(lit_184),CHKREF(lit_187)),YPPlist(2,CHKREF(YastYLlocal_bindingG),CHKREF(YastYLstatic_local_environmentG)),YPfalse,YPint((P)2),CHKREF(YLtupG));
+  fun_271 = YPmet(FUNCODEREF(fun_271),CHKREF(lit_263),T21,ENVNUL);
   T27 = BOUNDP(YastYcompute_local_reference_offsets);
   if (T27 != YPfalse) {
     T26 = CHKREF(YastYcompute_local_reference_offsets);
@@ -11389,11 +11452,11 @@ loop:
   T24 = CALL2(CHKREF(YPdefine_method),T26,T25);
   YastYcompute_local_reference_offsets = T24;
   regsym(&YastYcompute_local_reference_offsets,"ast","compute-local-reference-offsets");
-  lit_266 = YPPsym((P)"objectify-binding");
-  lit_267 = YPPsym((P)"b");
-  lit_268 = YPPsym((P)"n");
-  T28 = YPsig(YPPlist(3,CHKREF(lit_268),CHKREF(lit_267),CHKREF(lit_185)),YPPlist(3,CHKREF(YLanyG),CHKREF(YastYLlocal_bindingG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLlocal_referenceG));
-  fun_272 = YPmet(FUNCODEREF(fun_272),CHKREF(lit_266),T28,ENVNUL);
+  lit_268 = YPPsym((P)"objectify-binding");
+  lit_269 = YPPsym((P)"b");
+  lit_270 = YPPsym((P)"n");
+  T28 = YPsig(YPPlist(3,CHKREF(lit_270),CHKREF(lit_269),CHKREF(lit_187)),YPPlist(3,CHKREF(YLanyG),CHKREF(YastYLlocal_bindingG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLlocal_referenceG));
+  fun_272 = YPmet(FUNCODEREF(fun_272),CHKREF(lit_268),T28,ENVNUL);
   T32 = BOUNDP(YastYobjectify_binding);
   if (T32 != YPfalse) {
     T31 = CHKREF(YastYobjectify_binding);
@@ -11404,10 +11467,10 @@ loop:
   T29 = CALL2(CHKREF(YPdefine_method),T31,T30);
   YastYobjectify_binding = T29;
   regsym(&YastYobjectify_binding,"ast","objectify-binding");
-  lit_269 = YPPsym((P)"binding-reference-prototype");
-  lit_270 = YPsb((P)"Unknown binding-kind %=");
-  T33 = YPsig(YPPlist(1,CHKREF(lit_267)),YPPlist(1,CHKREF(YastYLmodule_bindingG)),YPfalse,YPint((P)1),CHKREF(YastYLreferenceG));
-  fun_273 = YPmet(FUNCODEREF(fun_273),CHKREF(lit_269),T33,ENVNUL);
+  lit_271 = YPPsym((P)"binding-reference-prototype");
+  lit_272 = YPsb((P)"Unknown binding-kind %=");
+  T33 = YPsig(YPPlist(1,CHKREF(lit_269)),YPPlist(1,CHKREF(YastYLmodule_bindingG)),YPfalse,YPint((P)1),CHKREF(YastYLreferenceG));
+  fun_273 = YPmet(FUNCODEREF(fun_273),CHKREF(lit_271),T33,ENVNUL);
   T37 = BOUNDP(YastYbinding_reference_prototype);
   if (T37 != YPfalse) {
     T36 = CHKREF(YastYbinding_reference_prototype);
@@ -11418,8 +11481,8 @@ loop:
   T34 = CALL2(CHKREF(YPdefine_method),T36,T35);
   YastYbinding_reference_prototype = T34;
   regsym(&YastYbinding_reference_prototype,"ast","binding-reference-prototype");
-  T38 = YPsig(YPPlist(3,CHKREF(lit_268),CHKREF(lit_267),CHKREF(lit_185)),YPPlist(3,CHKREF(YLanyG),CHKREF(YastYLmodule_bindingG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_274 = YPmet(FUNCODEREF(fun_274),CHKREF(lit_266),T38,ENVNUL);
+  T38 = YPsig(YPPlist(3,CHKREF(lit_270),CHKREF(lit_269),CHKREF(lit_187)),YPPlist(3,CHKREF(YLanyG),CHKREF(YastYLmodule_bindingG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_274 = YPmet(FUNCODEREF(fun_274),CHKREF(lit_268),T38,ENVNUL);
   T42 = BOUNDP(YastYobjectify_binding);
   if (T42 != YPfalse) {
     T41 = CHKREF(YastYobjectify_binding);
@@ -11430,8 +11493,8 @@ loop:
   T39 = CALL2(CHKREF(YPdefine_method),T41,T40);
   YastYobjectify_binding = T39;
   regsym(&YastYobjectify_binding,"ast","objectify-binding");
-  T43 = YPsig(YPPlist(3,CHKREF(lit_268),CHKREF(lit_267),CHKREF(lit_185)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLreferenceG));
-  fun_275 = YPmet(FUNCODEREF(fun_275),CHKREF(lit_266),T43,ENVNUL);
+  T43 = YPsig(YPPlist(3,CHKREF(lit_270),CHKREF(lit_269),CHKREF(lit_187)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLreferenceG));
+  fun_275 = YPmet(FUNCODEREF(fun_275),CHKREF(lit_268),T43,ENVNUL);
   T47 = BOUNDP(YastYobjectify_binding);
   if (T47 != YPfalse) {
     T46 = CHKREF(YastYobjectify_binding);
@@ -11442,10 +11505,10 @@ loop:
   T44 = CALL2(CHKREF(YPdefine_method),T46,T45);
   YastYobjectify_binding = T44;
   regsym(&YastYobjectify_binding,"ast","objectify-binding");
-  lit_271 = YPPsym((P)"default-type");
-  lit_272 = YPPsym((P)"<any>");
-  T48 = YPsig(YPPlist(1,CHKREF(lit_185)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_276 = YPmet(FUNCODEREF(fun_276),CHKREF(lit_271),T48,ENVNUL);
+  lit_273 = YPPsym((P)"default-type");
+  lit_274 = YPPsym((P)"<any>");
+  T48 = YPsig(YPPlist(1,CHKREF(lit_187)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_276 = YPmet(FUNCODEREF(fun_276),CHKREF(lit_273),T48,ENVNUL);
   T52 = BOUNDP(YastYdefault_type);
   if (T52 != YPfalse) {
     T51 = CHKREF(YastYdefault_type);
@@ -11456,9 +11519,9 @@ loop:
   T49 = CALL2(CHKREF(YPdefine_method),T51,T50);
   YastYdefault_type = T49;
   regsym(&YastYdefault_type,"ast","default-type");
-  lit_273 = YPPsym((P)"objectify-free-global-reference");
-  T53 = YPsig(YPPlist(2,CHKREF(lit_226),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YastYLreferenceG));
-  fun_277 = YPmet(FUNCODEREF(fun_277),CHKREF(lit_273),T53,ENVNUL);
+  lit_275 = YPPsym((P)"objectify-free-global-reference");
+  T53 = YPsig(YPPlist(2,CHKREF(lit_228),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YastYLreferenceG));
+  fun_277 = YPmet(FUNCODEREF(fun_277),CHKREF(lit_275),T53,ENVNUL);
   T57 = BOUNDP(YastYobjectify_free_global_reference);
   if (T57 != YPfalse) {
     T56 = CHKREF(YastYobjectify_free_global_reference);
@@ -11469,17 +11532,17 @@ loop:
   T54 = CALL2(CHKREF(YPdefine_method),T56,T55);
   YastYobjectify_free_global_reference = T54;
   regsym(&YastYobjectify_free_global_reference,"ast","objectify-free-global-reference");
-  lit_274 = YPPsym((P)"foreign-name?");
-  T58 = YPsig(YPPlist(1,CHKREF(lit_226)),YPPlist(1,CHKREF(YLsymG)),YPfalse,YPint((P)1),CHKREF(YLlogG));
-  YastYforeign_nameQ = YPmet(FUNCODEREF(YastYforeign_nameQ),CHKREF(lit_274),T58,ENVNUL);
+  lit_276 = YPPsym((P)"foreign-name?");
+  T58 = YPsig(YPPlist(1,CHKREF(lit_228)),YPPlist(1,CHKREF(YLsymG)),YPfalse,YPint((P)1),CHKREF(YLlogG));
+  YastYforeign_nameQ = YPmet(FUNCODEREF(YastYforeign_nameQ),CHKREF(lit_276),T58,ENVNUL);
   T59 = YastYforeign_nameQ;
   YastYforeign_nameQ = T59;
   regsym(&YastYforeign_nameQ,"ast","foreign-name?");
-  lit_275 = YPPsym((P)"objectify-foreign-reference");
-  lit_276 = YPsb((P)"No binding %s in %s.\n");
-  lit_277 = YPsb((P)"Malformed foreign name %s.\n");
-  T60 = YPsig(YPPlist(2,CHKREF(lit_226),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YastYLreferenceG));
-  fun_279 = YPmet(FUNCODEREF(fun_279),CHKREF(lit_275),T60,ENVNUL);
+  lit_277 = YPPsym((P)"objectify-foreign-reference");
+  lit_278 = YPsb((P)"No binding %s in %s.\n");
+  lit_279 = YPsb((P)"Malformed foreign name %s.\n");
+  T60 = YPsig(YPPlist(2,CHKREF(lit_228),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YastYLreferenceG));
+  fun_279 = YPmet(FUNCODEREF(fun_279),CHKREF(lit_277),T60,ENVNUL);
   T64 = BOUNDP(YastYobjectify_foreign_reference);
   if (T64 != YPfalse) {
     T63 = CHKREF(YastYobjectify_foreign_reference);
@@ -11490,9 +11553,9 @@ loop:
   T61 = CALL2(CHKREF(YPdefine_method),T63,T62);
   YastYobjectify_foreign_reference = T61;
   regsym(&YastYobjectify_foreign_reference,"ast","objectify-foreign-reference");
-  lit_278 = YPPsym((P)"objectify-symbol");
-  T65 = YPsig(YPPlist(2,CHKREF(lit_226),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_280 = YPmet(FUNCODEREF(fun_280),CHKREF(lit_278),T65,ENVNUL);
+  lit_280 = YPPsym((P)"objectify-symbol");
+  T65 = YPsig(YPPlist(2,CHKREF(lit_228),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_280 = YPmet(FUNCODEREF(fun_280),CHKREF(lit_280),T65,ENVNUL);
   T69 = BOUNDP(YastYobjectify_symbol);
   if (T69 != YPfalse) {
     T68 = CHKREF(YastYobjectify_symbol);
@@ -11503,10 +11566,10 @@ loop:
   T66 = CALL2(CHKREF(YPdefine_method),T68,T67);
   YastYobjectify_symbol = T66;
   regsym(&YastYobjectify_symbol,"ast","objectify-symbol");
-  lit_279 = YPPsym((P)"ftype");
-  lit_280 = YPPsym((P)"<fun>");
-  T70 = YPsig(YPPlist(1,CHKREF(lit_185)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_281 = YPmet(FUNCODEREF(fun_281),CHKREF(lit_279),T70,ENVNUL);
+  lit_281 = YPPsym((P)"ftype");
+  lit_282 = YPPsym((P)"<fun>");
+  T70 = YPsig(YPPlist(1,CHKREF(lit_187)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_281 = YPmet(FUNCODEREF(fun_281),CHKREF(lit_281),T70,ENVNUL);
   T74 = BOUNDP(YastYftype);
   if (T74 != YPfalse) {
     T73 = CHKREF(YastYftype);
@@ -11530,598 +11593,602 @@ loop:
   T78 = CALL3(CHKREF(YPisa),T83,T81,T79);
   YastYDfunctions_empty = T78;
   regsym(&YastYDfunctions_empty,"ast","$functions-empty");
-  T84 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YastYLfunctionsG),CHKREF(YastYLfunctionsG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_282 = YPmet(FUNCODEREF(fun_282),CHKREF(lit_104),T84,ENVNUL);
-  T88 = BOUNDP(YruntimeYas);
-  if (T88 != YPfalse) {
-    T87 = CHKREF(YruntimeYas);
+  T85 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLfunctionsG));
+  T84 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T85,CHKREF(YastYLfunctionsG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_282 = YPmet(FUNCODEREF(fun_282),CHKREF(lit_105),T84,ENVNUL);
+  T89 = BOUNDP(YruntimeYas);
+  if (T89 != YPfalse) {
+    T88 = CHKREF(YruntimeYas);
   } else {
-    T87 = YPfalse;
+    T88 = YPfalse;
   }
-  T86 = fun_282;
-  T85 = CALL2(CHKREF(YPdefine_method),T87,T86);
-  YruntimeYas = T85;
+  T87 = fun_282;
+  T86 = CALL2(CHKREF(YPdefine_method),T88,T87);
+  YruntimeYas = T86;
   regsym(&YruntimeYas,"runtime","as");
-  T89 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YLlstG),CHKREF(YastYLfunctionsG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_283 = YPmet(FUNCODEREF(fun_283),CHKREF(lit_104),T89,ENVNUL);
-  T93 = BOUNDP(YruntimeYas);
-  if (T93 != YPfalse) {
-    T92 = CHKREF(YruntimeYas);
+  T91 = CALL1(CHKREF(YruntimeYtE),CHKREF(YLlstG));
+  T90 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T91,CHKREF(YastYLfunctionsG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_283 = YPmet(FUNCODEREF(fun_283),CHKREF(lit_105),T90,ENVNUL);
+  T95 = BOUNDP(YruntimeYas);
+  if (T95 != YPfalse) {
+    T94 = CHKREF(YruntimeYas);
   } else {
-    T92 = YPfalse;
+    T94 = YPfalse;
   }
-  T91 = fun_283;
-  T90 = CALL2(CHKREF(YPdefine_method),T92,T91);
-  YruntimeYas = T90;
+  T93 = fun_283;
+  T92 = CALL2(CHKREF(YPdefine_method),T94,T93);
+  YruntimeYas = T92;
   regsym(&YruntimeYas,"runtime","as");
-  T94 = YPsig(YPPlist(2,CHKREF(lit_103),CHKREF(lit_9)),YPPlist(2,CHKREF(YastYLfunctionsG),CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  fun_284 = YPmet(FUNCODEREF(fun_284),CHKREF(lit_104),T94,ENVNUL);
-  T98 = BOUNDP(YruntimeYas);
-  if (T98 != YPfalse) {
-    T97 = CHKREF(YruntimeYas);
+  T97 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLfunctionsG));
+  T96 = YPsig(YPPlist(2,CHKREF(lit_104),CHKREF(lit_9)),YPPlist(2,T97,CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  fun_284 = YPmet(FUNCODEREF(fun_284),CHKREF(lit_105),T96,ENVNUL);
+  T101 = BOUNDP(YruntimeYas);
+  if (T101 != YPfalse) {
+    T100 = CHKREF(YruntimeYas);
   } else {
-    T97 = YPfalse;
+    T100 = YPfalse;
   }
-  T96 = fun_284;
-  T95 = CALL2(CHKREF(YPdefine_method),T97,T96);
-  YruntimeYas = T95;
+  T99 = fun_284;
+  T98 = CALL2(CHKREF(YPdefine_method),T100,T99);
+  YruntimeYas = T98;
   regsym(&YruntimeYas,"runtime","as");
-  lit_281 = YPPsym((P)"functions");
-  T99 = YPsig(YPPlist(2,CHKREF(lit_95),CHKREF(lit_92)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYfunctions = YPmet(FUNCODEREF(YastYfunctions),CHKREF(lit_281),T99,ENVNUL);
-  T100 = YastYfunctions;
-  YastYfunctions = T100;
+  lit_283 = YPPsym((P)"functions");
+  T102 = YPsig(YPPlist(2,CHKREF(lit_96),CHKREF(lit_93)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYfunctions = YPmet(FUNCODEREF(YastYfunctions),CHKREF(lit_283),T102,ENVNUL);
+  T103 = YastYfunctions;
+  YastYfunctions = T103;
   regsym(&YastYfunctions,"ast","functions");
-  T101 = YPsig(YPPlist(1,CHKREF(lit_89)),YPPlist(1,CHKREF(YastYLfunctionsG)),YPfalse,YPint((P)1),CHKREF(YastYLfunctionsG));
-  fun_286 = YPmet(FUNCODEREF(fun_286),CHKREF(lit_90),T101,ENVNUL);
-  T105 = BOUNDP(YruntimeYempty);
-  if (T105 != YPfalse) {
-    T104 = CHKREF(YruntimeYempty);
+  T105 = CALL1(CHKREF(YruntimeYtE),CHKREF(YastYLfunctionsG));
+  T104 = YPsig(YPPlist(1,CHKREF(lit_90)),YPPlist(1,T105),YPfalse,YPint((P)1),CHKREF(YastYLfunctionsG));
+  fun_286 = YPmet(FUNCODEREF(fun_286),CHKREF(lit_91),T104,ENVNUL);
+  T109 = BOUNDP(YruntimeYempty);
+  if (T109 != YPfalse) {
+    T108 = CHKREF(YruntimeYempty);
   } else {
-    T104 = YPfalse;
+    T108 = YPfalse;
   }
-  T103 = fun_286;
-  T102 = CALL2(CHKREF(YPdefine_method),T104,T103);
-  YruntimeYempty = T102;
+  T107 = fun_286;
+  T106 = CALL2(CHKREF(YPdefine_method),T108,T107);
+  YruntimeYempty = T106;
   regsym(&YruntimeYempty,"runtime","empty");
-  lit_282 = YPPsym((P)"objectify-locals");
-  lit_283 = YPPsym((P)"bodies");
-  lit_284 = YPPsym((P)"sigs");
-  T108 = YPsig(YPPlist(2,CHKREF(lit_187),CHKREF(lit_267)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_287 = YPmet(FUNCODEREF(fun_287),YPfalse,T108,ENVNUL);
-  T107 = YPsig(YPPlist(1,CHKREF(lit_268)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_288 = YPmet(FUNCODEREF(fun_288),YPfalse,T107,ENVNUL);
-  T106 = YPsig(YPPlist(6,CHKREF(lit_257),CHKREF(lit_284),CHKREF(lit_283),CHKREF(lit_243),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(6,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)6),CHKREF(YastYLlocalsG));
-  fun_289 = YPmet(FUNCODEREF(fun_289),CHKREF(lit_282),T106,ENVNUL);
-  T112 = BOUNDP(YastYobjectify_locals);
-  if (T112 != YPfalse) {
-    T111 = CHKREF(YastYobjectify_locals);
+  lit_284 = YPPsym((P)"objectify-locals");
+  lit_285 = YPPsym((P)"bodies");
+  lit_286 = YPPsym((P)"sigs");
+  T112 = YPsig(YPPlist(2,CHKREF(lit_189),CHKREF(lit_269)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_287 = YPmet(FUNCODEREF(fun_287),YPfalse,T112,ENVNUL);
+  T111 = YPsig(YPPlist(1,CHKREF(lit_270)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_288 = YPmet(FUNCODEREF(fun_288),YPfalse,T111,ENVNUL);
+  T110 = YPsig(YPPlist(6,CHKREF(lit_259),CHKREF(lit_286),CHKREF(lit_285),CHKREF(lit_245),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(6,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)6),CHKREF(YastYLlocalsG));
+  fun_289 = YPmet(FUNCODEREF(fun_289),CHKREF(lit_284),T110,ENVNUL);
+  T116 = BOUNDP(YastYobjectify_locals);
+  if (T116 != YPfalse) {
+    T115 = CHKREF(YastYobjectify_locals);
   } else {
-    T111 = YPfalse;
+    T115 = YPfalse;
   }
-  T110 = fun_289;
-  T109 = CALL2(CHKREF(YPdefine_method),T111,T110);
-  YastYobjectify_locals = T109;
+  T114 = fun_289;
+  T113 = CALL2(CHKREF(YPdefine_method),T115,T114);
+  YastYobjectify_locals = T113;
   regsym(&YastYobjectify_locals,"ast","objectify-locals");
-  lit_285 = YPPsym((P)"objectify-bind-exit");
-  T113 = YPsig(YPPlist(4,CHKREF(lit_226),CHKREF(lit_243),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLbind_exitG));
-  fun_290 = YPmet(FUNCODEREF(fun_290),CHKREF(lit_285),T113,ENVNUL);
-  T117 = BOUNDP(YastYobjectify_bind_exit);
-  if (T117 != YPfalse) {
-    T116 = CHKREF(YastYobjectify_bind_exit);
+  lit_287 = YPPsym((P)"objectify-bind-exit");
+  T117 = YPsig(YPPlist(4,CHKREF(lit_228),CHKREF(lit_245),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLbind_exitG));
+  fun_290 = YPmet(FUNCODEREF(fun_290),CHKREF(lit_287),T117,ENVNUL);
+  T121 = BOUNDP(YastYobjectify_bind_exit);
+  if (T121 != YPfalse) {
+    T120 = CHKREF(YastYobjectify_bind_exit);
   } else {
-    T116 = YPfalse;
+    T120 = YPfalse;
   }
-  T115 = fun_290;
-  T114 = CALL2(CHKREF(YPdefine_method),T116,T115);
-  YastYobjectify_bind_exit = T114;
+  T119 = fun_290;
+  T118 = CALL2(CHKREF(YPdefine_method),T120,T119);
+  YastYobjectify_bind_exit = T118;
   regsym(&YastYobjectify_bind_exit,"ast","objectify-bind-exit");
-  lit_286 = YPPsym((P)"objectify-unwind-protect");
-  lit_287 = YPPsym((P)"cleanup-forms");
-  lit_288 = YPPsym((P)"protected-form");
-  T118 = YPsig(YPPlist(4,CHKREF(lit_288),CHKREF(lit_287),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLunwind_protectG));
-  fun_291 = YPmet(FUNCODEREF(fun_291),CHKREF(lit_286),T118,ENVNUL);
-  T122 = BOUNDP(YastYobjectify_unwind_protect);
-  if (T122 != YPfalse) {
-    T121 = CHKREF(YastYobjectify_unwind_protect);
+  lit_288 = YPPsym((P)"objectify-unwind-protect");
+  lit_289 = YPPsym((P)"cleanup-forms");
+  lit_290 = YPPsym((P)"protected-form");
+  T122 = YPsig(YPPlist(4,CHKREF(lit_290),CHKREF(lit_289),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(4,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)4),CHKREF(YastYLunwind_protectG));
+  fun_291 = YPmet(FUNCODEREF(fun_291),CHKREF(lit_288),T122,ENVNUL);
+  T126 = BOUNDP(YastYobjectify_unwind_protect);
+  if (T126 != YPfalse) {
+    T125 = CHKREF(YastYobjectify_unwind_protect);
   } else {
-    T121 = YPfalse;
+    T125 = YPfalse;
   }
-  T120 = fun_291;
-  T119 = CALL2(CHKREF(YPdefine_method),T121,T120);
-  YastYobjectify_unwind_protect = T119;
+  T124 = fun_291;
+  T123 = CALL2(CHKREF(YPdefine_method),T125,T124);
+  YastYobjectify_unwind_protect = T123;
   regsym(&YastYobjectify_unwind_protect,"ast","objectify-unwind-protect");
-  lit_289 = YPPsym((P)"objectify-monitor");
-  lit_290 = YPPsym((P)"handler");
-  lit_291 = YPPsym((P)"test");
-  lit_292 = YPPsym((P)"info");
-  lit_293 = YPPsym((P)"type");
-  T123 = YPsig(YPPlist(7,CHKREF(lit_293),CHKREF(lit_292),CHKREF(lit_291),CHKREF(lit_290),CHKREF(lit_243),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(7,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)7),CHKREF(YastYLmonitorG));
-  fun_292 = YPmet(FUNCODEREF(fun_292),CHKREF(lit_289),T123,ENVNUL);
-  T127 = BOUNDP(YastYobjectify_monitor);
-  if (T127 != YPfalse) {
-    T126 = CHKREF(YastYobjectify_monitor);
+  lit_291 = YPPsym((P)"objectify-monitor");
+  lit_292 = YPPsym((P)"handler");
+  lit_293 = YPPsym((P)"test");
+  lit_294 = YPPsym((P)"info");
+  lit_295 = YPPsym((P)"type");
+  T127 = YPsig(YPPlist(7,CHKREF(lit_295),CHKREF(lit_294),CHKREF(lit_293),CHKREF(lit_292),CHKREF(lit_245),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(7,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)7),CHKREF(YastYLmonitorG));
+  fun_292 = YPmet(FUNCODEREF(fun_292),CHKREF(lit_291),T127,ENVNUL);
+  T131 = BOUNDP(YastYobjectify_monitor);
+  if (T131 != YPfalse) {
+    T130 = CHKREF(YastYobjectify_monitor);
   } else {
-    T126 = YPfalse;
+    T130 = YPfalse;
   }
-  T125 = fun_292;
-  T124 = CALL2(CHKREF(YPdefine_method),T126,T125);
-  YastYobjectify_monitor = T124;
+  T129 = fun_292;
+  T128 = CALL2(CHKREF(YPdefine_method),T130,T129);
+  YastYobjectify_monitor = T128;
   regsym(&YastYobjectify_monitor,"ast","objectify-monitor");
-  lit_294 = YPPsym((P)"objectify-export");
-  lit_295 = YPPsym((P)"exit");
-  lit_296 = YPsb((P)"Can't export undefined binding %s.\n");
-  lit_297 = YPsb((P)"Continue without exporting %s");
-  lit_298 = YPsb((P)"Can only export bindings from target environment.\n");
-  T133 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_293 = YPmet(FUNCODEREF(fun_293),YPfalse,T133,ENVNUL);
-  T132 = YPsig(YPPlist(2,CHKREF(lit_142),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_294 = YPmet(FUNCODEREF(fun_294),YPfalse,T132,ENVNUL);
-  T131 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_295 = YPmet(FUNCODEREF(fun_295),YPfalse,T131,ENVNUL);
-  T130 = YPsig(YPPlist(1,CHKREF(lit_295)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_296 = YPmet(FUNCODEREF(fun_296),YPfalse,T130,ENVNUL);
-  T129 = YPsig(YPPlist(1,CHKREF(lit_226)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_297 = YPmet(FUNCODEREF(fun_297),YPfalse,T129,ENVNUL);
-  T128 = YPsig(YPPlist(3,CHKREF(lit_257),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLprogramG));
-  fun_298 = YPmet(FUNCODEREF(fun_298),CHKREF(lit_294),T128,ENVNUL);
-  T137 = BOUNDP(YastYobjectify_export);
-  if (T137 != YPfalse) {
-    T136 = CHKREF(YastYobjectify_export);
+  lit_296 = YPPsym((P)"objectify-export");
+  lit_297 = YPPsym((P)"exit");
+  lit_298 = YPsb((P)"Can't export undefined binding %s.\n");
+  lit_299 = YPsb((P)"Continue without exporting %s");
+  lit_300 = YPsb((P)"Can only export bindings from target environment.\n");
+  T137 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_293 = YPmet(FUNCODEREF(fun_293),YPfalse,T137,ENVNUL);
+  T136 = YPsig(YPPlist(2,CHKREF(lit_144),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_294 = YPmet(FUNCODEREF(fun_294),YPfalse,T136,ENVNUL);
+  T135 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_295 = YPmet(FUNCODEREF(fun_295),YPfalse,T135,ENVNUL);
+  T134 = YPsig(YPPlist(1,CHKREF(lit_297)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_296 = YPmet(FUNCODEREF(fun_296),YPfalse,T134,ENVNUL);
+  T133 = YPsig(YPPlist(1,CHKREF(lit_228)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_297 = YPmet(FUNCODEREF(fun_297),YPfalse,T133,ENVNUL);
+  T132 = YPsig(YPPlist(3,CHKREF(lit_259),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLprogramG));
+  fun_298 = YPmet(FUNCODEREF(fun_298),CHKREF(lit_296),T132,ENVNUL);
+  T141 = BOUNDP(YastYobjectify_export);
+  if (T141 != YPfalse) {
+    T140 = CHKREF(YastYobjectify_export);
   } else {
-    T136 = YPfalse;
+    T140 = YPfalse;
   }
-  T135 = fun_298;
-  T134 = CALL2(CHKREF(YPdefine_method),T136,T135);
-  YastYobjectify_export = T134;
+  T139 = fun_298;
+  T138 = CALL2(CHKREF(YPdefine_method),T140,T139);
+  YastYobjectify_export = T138;
   regsym(&YastYobjectify_export,"ast","objectify-export");
-  lit_299 = YPPsym((P)"import-global!");
-  lit_300 = YPPsym((P)"env");
-  lit_301 = YPsb((P)"warning: '%s' from %s clobbers local binding.\n");
-  T138 = YPsig(YPPlist(2,CHKREF(lit_267),CHKREF(lit_300)),YPPlist(2,CHKREF(YastYLmodule_bindingG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYimport_globalX = YPmet(FUNCODEREF(YastYimport_globalX),CHKREF(lit_299),T138,ENVNUL);
-  T139 = YastYimport_globalX;
-  YastYimport_globalX = T139;
+  lit_301 = YPPsym((P)"import-global!");
+  lit_302 = YPPsym((P)"env");
+  lit_303 = YPsb((P)"warning: '%s' from %s clobbers local binding.\n");
+  T142 = YPsig(YPPlist(2,CHKREF(lit_269),CHKREF(lit_302)),YPPlist(2,CHKREF(YastYLmodule_bindingG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYimport_globalX = YPmet(FUNCODEREF(YastYimport_globalX),CHKREF(lit_301),T142,ENVNUL);
+  T143 = YastYimport_globalX;
+  YastYimport_globalX = T143;
   regsym(&YastYimport_globalX,"ast","import-global!");
-  lit_302 = YPPsym((P)"objectify-use-module");
-  T140 = YPsig(YPPlist(3,CHKREF(lit_226),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLprogramG));
-  fun_300 = YPmet(FUNCODEREF(fun_300),CHKREF(lit_302),T140,ENVNUL);
-  T144 = BOUNDP(YastYobjectify_use_module);
-  if (T144 != YPfalse) {
-    T143 = CHKREF(YastYobjectify_use_module);
+  lit_304 = YPPsym((P)"objectify-use-module");
+  T144 = YPsig(YPPlist(3,CHKREF(lit_228),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YastYLprogramG));
+  fun_300 = YPmet(FUNCODEREF(fun_300),CHKREF(lit_304),T144,ENVNUL);
+  T148 = BOUNDP(YastYobjectify_use_module);
+  if (T148 != YPfalse) {
+    T147 = CHKREF(YastYobjectify_use_module);
   } else {
-    T143 = YPfalse;
+    T147 = YPfalse;
   }
-  T142 = fun_300;
-  T141 = CALL2(CHKREF(YPdefine_method),T143,T142);
-  YastYobjectify_use_module = T141;
+  T146 = fun_300;
+  T145 = CALL2(CHKREF(YPdefine_method),T147,T146);
+  YastYobjectify_use_module = T145;
   regsym(&YastYobjectify_use_module,"ast","objectify-use-module");
-  lit_303 = YPPsym((P)"expand-bind-list");
-  lit_304 = YPPsym((P)"fail");
-  lit_305 = YPPsym((P)"pat");
-  lit_306 = YPsb((P)"Expected Pattern List %=\n");
-  T145 = YPsig(YPPlist(3,CHKREF(lit_305),CHKREF(lit_229),CHKREF(lit_304)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_301 = YPmet(FUNCODEREF(fun_301),CHKREF(lit_303),T145,ENVNUL);
-  T149 = BOUNDP(YastYexpand_bind_list);
-  if (T149 != YPfalse) {
-    T148 = CHKREF(YastYexpand_bind_list);
+  lit_305 = YPPsym((P)"expand-bind-list");
+  lit_306 = YPPsym((P)"fail");
+  lit_307 = YPPsym((P)"pat");
+  lit_308 = YPsb((P)"Expected Pattern List %=\n");
+  T149 = YPsig(YPPlist(3,CHKREF(lit_307),CHKREF(lit_231),CHKREF(lit_306)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_301 = YPmet(FUNCODEREF(fun_301),CHKREF(lit_305),T149,ENVNUL);
+  T153 = BOUNDP(YastYexpand_bind_list);
+  if (T153 != YPfalse) {
+    T152 = CHKREF(YastYexpand_bind_list);
   } else {
-    T148 = YPfalse;
+    T152 = YPfalse;
   }
-  T147 = fun_301;
-  T146 = CALL2(CHKREF(YPdefine_method),T148,T147);
-  YastYexpand_bind_list = T146;
+  T151 = fun_301;
+  T150 = CALL2(CHKREF(YPdefine_method),T152,T151);
+  YastYexpand_bind_list = T150;
   regsym(&YastYexpand_bind_list,"ast","expand-bind-list");
-  lit_307 = YPPsym((P)"match-empty-list");
-  T150 = YPsig(YPPlist(3,CHKREF(lit_305),CHKREF(lit_229),CHKREF(lit_304)),YPPlist(3,Ynil,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLlstG));
-  fun_302 = YPmet(FUNCODEREF(fun_302),CHKREF(lit_303),T150,ENVNUL);
-  T154 = BOUNDP(YastYexpand_bind_list);
-  if (T154 != YPfalse) {
-    T153 = CHKREF(YastYexpand_bind_list);
+  lit_309 = YPPsym((P)"match-empty-list");
+  T154 = YPsig(YPPlist(3,CHKREF(lit_307),CHKREF(lit_231),CHKREF(lit_306)),YPPlist(3,Ynil,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLlstG));
+  fun_302 = YPmet(FUNCODEREF(fun_302),CHKREF(lit_305),T154,ENVNUL);
+  T158 = BOUNDP(YastYexpand_bind_list);
+  if (T158 != YPfalse) {
+    T157 = CHKREF(YastYexpand_bind_list);
   } else {
-    T153 = YPfalse;
+    T157 = YPfalse;
   }
-  T152 = fun_302;
-  T151 = CALL2(CHKREF(YPdefine_method),T153,T152);
-  YastYexpand_bind_list = T151;
+  T156 = fun_302;
+  T155 = CALL2(CHKREF(YPdefine_method),T157,T156);
+  YastYexpand_bind_list = T155;
   regsym(&YastYexpand_bind_list,"ast","expand-bind-list");
-  lit_308 = YPsb((P)"Unquote Splicing Unexpected Here %=\n");
-  lit_309 = YPsb((P)"Unquote Unexpected Here %=\n");
-  T155 = YPsig(YPPlist(3,CHKREF(lit_305),CHKREF(lit_229),CHKREF(lit_304)),YPPlist(3,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLlstG));
-  fun_303 = YPmet(FUNCODEREF(fun_303),CHKREF(lit_303),T155,ENVNUL);
-  T159 = BOUNDP(YastYexpand_bind_list);
-  if (T159 != YPfalse) {
-    T158 = CHKREF(YastYexpand_bind_list);
+  lit_310 = YPsb((P)"Unquote Splicing Unexpected Here %=\n");
+  lit_311 = YPsb((P)"Unquote Unexpected Here %=\n");
+  T159 = YPsig(YPPlist(3,CHKREF(lit_307),CHKREF(lit_231),CHKREF(lit_306)),YPPlist(3,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLlstG));
+  fun_303 = YPmet(FUNCODEREF(fun_303),CHKREF(lit_305),T159,ENVNUL);
+  T163 = BOUNDP(YastYexpand_bind_list);
+  if (T163 != YPfalse) {
+    T162 = CHKREF(YastYexpand_bind_list);
   } else {
-    T158 = YPfalse;
+    T162 = YPfalse;
   }
-  T157 = fun_303;
-  T156 = CALL2(CHKREF(YPdefine_method),T158,T157);
-  YastYexpand_bind_list = T156;
+  T161 = fun_303;
+  T160 = CALL2(CHKREF(YPdefine_method),T162,T161);
+  YastYexpand_bind_list = T160;
   regsym(&YastYexpand_bind_list,"ast","expand-bind-list");
-  lit_310 = YPPsym((P)"expand-bind-list*");
-  T160 = YPsig(YPPlist(3,CHKREF(lit_305),CHKREF(lit_229),CHKREF(lit_304)),YPPlist(3,Ynil,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_304 = YPmet(FUNCODEREF(fun_304),CHKREF(lit_310),T160,ENVNUL);
-  T164 = BOUNDP(YastYexpand_bind_listT);
-  if (T164 != YPfalse) {
-    T163 = CHKREF(YastYexpand_bind_listT);
+  lit_312 = YPPsym((P)"expand-bind-list*");
+  T164 = YPsig(YPPlist(3,CHKREF(lit_307),CHKREF(lit_231),CHKREF(lit_306)),YPPlist(3,Ynil,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_304 = YPmet(FUNCODEREF(fun_304),CHKREF(lit_312),T164,ENVNUL);
+  T168 = BOUNDP(YastYexpand_bind_listT);
+  if (T168 != YPfalse) {
+    T167 = CHKREF(YastYexpand_bind_listT);
   } else {
-    T163 = YPfalse;
+    T167 = YPfalse;
   }
-  T162 = fun_304;
-  T161 = CALL2(CHKREF(YPdefine_method),T163,T162);
-  YastYexpand_bind_listT = T161;
+  T166 = fun_304;
+  T165 = CALL2(CHKREF(YPdefine_method),T167,T166);
+  YastYexpand_bind_listT = T165;
   regsym(&YastYexpand_bind_listT,"ast","expand-bind-list*");
-  lit_311 = YPPsym((P)"let");
-  T165 = YPsig(YPPlist(3,CHKREF(lit_305),CHKREF(lit_229),CHKREF(lit_304)),YPPlist(3,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_305 = YPmet(FUNCODEREF(fun_305),CHKREF(lit_310),T165,ENVNUL);
-  T169 = BOUNDP(YastYexpand_bind_listT);
-  if (T169 != YPfalse) {
-    T168 = CHKREF(YastYexpand_bind_listT);
+  lit_313 = YPPsym((P)"let");
+  T169 = YPsig(YPPlist(3,CHKREF(lit_307),CHKREF(lit_231),CHKREF(lit_306)),YPPlist(3,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_305 = YPmet(FUNCODEREF(fun_305),CHKREF(lit_312),T169,ENVNUL);
+  T173 = BOUNDP(YastYexpand_bind_listT);
+  if (T173 != YPfalse) {
+    T172 = CHKREF(YastYexpand_bind_listT);
   } else {
-    T168 = YPfalse;
+    T172 = YPfalse;
   }
-  T167 = fun_305;
-  T166 = CALL2(CHKREF(YPdefine_method),T168,T167);
-  YastYexpand_bind_listT = T166;
+  T171 = fun_305;
+  T170 = CALL2(CHKREF(YPdefine_method),T172,T171);
+  YastYexpand_bind_listT = T170;
   regsym(&YastYexpand_bind_listT,"ast","expand-bind-list*");
-  lit_312 = YPPsym((P)"expand-bind-element");
-  lit_313 = YPPsym((P)"match-atom");
-  T170 = YPsig(YPPlist(3,CHKREF(lit_305),CHKREF(lit_229),CHKREF(lit_304)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_306 = YPmet(FUNCODEREF(fun_306),CHKREF(lit_312),T170,ENVNUL);
-  T174 = BOUNDP(YastYexpand_bind_element);
-  if (T174 != YPfalse) {
-    T173 = CHKREF(YastYexpand_bind_element);
+  lit_314 = YPPsym((P)"expand-bind-element");
+  lit_315 = YPPsym((P)"match-atom");
+  T174 = YPsig(YPPlist(3,CHKREF(lit_307),CHKREF(lit_231),CHKREF(lit_306)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_306 = YPmet(FUNCODEREF(fun_306),CHKREF(lit_314),T174,ENVNUL);
+  T178 = BOUNDP(YastYexpand_bind_element);
+  if (T178 != YPfalse) {
+    T177 = CHKREF(YastYexpand_bind_element);
   } else {
-    T173 = YPfalse;
+    T177 = YPfalse;
   }
-  T172 = fun_306;
-  T171 = CALL2(CHKREF(YPdefine_method),T173,T172);
-  YastYexpand_bind_element = T171;
+  T176 = fun_306;
+  T175 = CALL2(CHKREF(YPdefine_method),T177,T176);
+  YastYexpand_bind_element = T175;
   regsym(&YastYexpand_bind_element,"ast","expand-bind-element");
-  lit_314 = YPPsym((P)"match-sublist");
-  lit_315 = YPPsym((P)"match-unquote");
-  T175 = YPsig(YPPlist(3,CHKREF(lit_305),CHKREF(lit_229),CHKREF(lit_304)),YPPlist(3,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_307 = YPmet(FUNCODEREF(fun_307),CHKREF(lit_312),T175,ENVNUL);
-  T179 = BOUNDP(YastYexpand_bind_element);
-  if (T179 != YPfalse) {
-    T178 = CHKREF(YastYexpand_bind_element);
+  lit_316 = YPPsym((P)"match-sublist");
+  lit_317 = YPPsym((P)"match-unquote");
+  T179 = YPsig(YPPlist(3,CHKREF(lit_307),CHKREF(lit_231),CHKREF(lit_306)),YPPlist(3,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_307 = YPmet(FUNCODEREF(fun_307),CHKREF(lit_314),T179,ENVNUL);
+  T183 = BOUNDP(YastYexpand_bind_element);
+  if (T183 != YPfalse) {
+    T182 = CHKREF(YastYexpand_bind_element);
   } else {
-    T178 = YPfalse;
+    T182 = YPfalse;
   }
-  T177 = fun_307;
-  T176 = CALL2(CHKREF(YPdefine_method),T178,T177);
-  YastYexpand_bind_element = T176;
+  T181 = fun_307;
+  T180 = CALL2(CHKREF(YPdefine_method),T182,T181);
+  YastYexpand_bind_element = T180;
   regsym(&YastYexpand_bind_element,"ast","expand-bind-element");
-  lit_316 = YPPsym((P)"expand-pattern");
-  lit_317 = YPsb((P)"Match Pattern Failure");
-  lit_318 = YPPsym((P)"isa?");
-  T180 = YPsig(YPPlist(3,CHKREF(lit_305),CHKREF(lit_229),CHKREF(lit_304)),YPPlist(3,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_308 = YPmet(FUNCODEREF(fun_308),CHKREF(lit_316),T180,ENVNUL);
-  T184 = BOUNDP(YastYexpand_pattern);
-  if (T184 != YPfalse) {
-    T183 = CHKREF(YastYexpand_pattern);
+  lit_318 = YPPsym((P)"expand-pattern");
+  lit_319 = YPsb((P)"Match Pattern Failure");
+  lit_320 = YPPsym((P)"isa?");
+  T184 = YPsig(YPPlist(3,CHKREF(lit_307),CHKREF(lit_231),CHKREF(lit_306)),YPPlist(3,CHKREF(YLlstG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_308 = YPmet(FUNCODEREF(fun_308),CHKREF(lit_318),T184,ENVNUL);
+  T188 = BOUNDP(YastYexpand_pattern);
+  if (T188 != YPfalse) {
+    T187 = CHKREF(YastYexpand_pattern);
   } else {
-    T183 = YPfalse;
+    T187 = YPfalse;
   }
-  T182 = fun_308;
-  T181 = CALL2(CHKREF(YPdefine_method),T183,T182);
-  YastYexpand_pattern = T181;
+  T186 = fun_308;
+  T185 = CALL2(CHKREF(YPdefine_method),T187,T186);
+  YastYexpand_pattern = T185;
   regsym(&YastYexpand_pattern,"ast","expand-pattern");
-  lit_319 = YPPsym((P)"expand-syntax-if");
-  lit_320 = YPPsym((P)"<str>");
-  lit_321 = YPPsym((P)"loc");
-  lit_322 = YPPsym((P)"lab");
-  T186 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_309 = YPmet(FUNCODEREF(fun_309),YPfalse,T186,ENVNUL);
-  T185 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLlstG)),YPfalse,YPint((P)1),CHKREF(YLlstG));
-  fun_310 = YPmet(FUNCODEREF(fun_310),CHKREF(lit_319),T185,ENVNUL);
-  T190 = BOUNDP(YastYexpand_syntax_if);
-  if (T190 != YPfalse) {
-    T189 = CHKREF(YastYexpand_syntax_if);
+  lit_321 = YPPsym((P)"expand-syntax-if");
+  lit_322 = YPPsym((P)"<str>");
+  lit_323 = YPPsym((P)"loc");
+  lit_324 = YPPsym((P)"lab");
+  T190 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_309 = YPmet(FUNCODEREF(fun_309),YPfalse,T190,ENVNUL);
+  T189 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLlstG)),YPfalse,YPint((P)1),CHKREF(YLlstG));
+  fun_310 = YPmet(FUNCODEREF(fun_310),CHKREF(lit_321),T189,ENVNUL);
+  T194 = BOUNDP(YastYexpand_syntax_if);
+  if (T194 != YPfalse) {
+    T193 = CHKREF(YastYexpand_syntax_if);
   } else {
-    T189 = YPfalse;
+    T193 = YPfalse;
   }
-  T188 = fun_310;
-  T187 = CALL2(CHKREF(YPdefine_method),T189,T188);
-  YastYexpand_syntax_if = T187;
+  T192 = fun_310;
+  T191 = CALL2(CHKREF(YPdefine_method),T193,T192);
+  YastYexpand_syntax_if = T191;
   regsym(&YastYexpand_syntax_if,"ast","expand-syntax-if");
-  lit_323 = YPPsym((P)"r-extend*");
-  T191 = YPsig(YPPlist(2,CHKREF(lit_185),CHKREF(lit_258)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YastYLstatic_environmentG));
-  fun_311 = YPmet(FUNCODEREF(fun_311),CHKREF(lit_323),T191,ENVNUL);
-  T195 = BOUNDP(YastYr_extendT);
-  if (T195 != YPfalse) {
-    T194 = CHKREF(YastYr_extendT);
+  lit_325 = YPPsym((P)"r-extend*");
+  T195 = YPsig(YPPlist(2,CHKREF(lit_187),CHKREF(lit_260)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YastYLstatic_environmentG));
+  fun_311 = YPmet(FUNCODEREF(fun_311),CHKREF(lit_325),T195,ENVNUL);
+  T199 = BOUNDP(YastYr_extendT);
+  if (T199 != YPfalse) {
+    T198 = CHKREF(YastYr_extendT);
   } else {
-    T194 = YPfalse;
+    T198 = YPfalse;
   }
-  T193 = fun_311;
-  T192 = CALL2(CHKREF(YPdefine_method),T194,T193);
-  YastYr_extendT = T192;
+  T197 = fun_311;
+  T196 = CALL2(CHKREF(YPdefine_method),T198,T197);
+  YastYr_extendT = T196;
   regsym(&YastYr_extendT,"ast","r-extend*");
-  lit_324 = YPPsym((P)"insert-global!");
-  T196 = YPsig(YPPlist(2,CHKREF(lit_182),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_312 = YPmet(FUNCODEREF(fun_312),CHKREF(lit_324),T196,ENVNUL);
-  T200 = BOUNDP(YastYinsert_globalX);
-  if (T200 != YPfalse) {
-    T199 = CHKREF(YastYinsert_globalX);
+  lit_326 = YPPsym((P)"insert-global!");
+  T200 = YPsig(YPPlist(2,CHKREF(lit_184),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_312 = YPmet(FUNCODEREF(fun_312),CHKREF(lit_326),T200,ENVNUL);
+  T204 = BOUNDP(YastYinsert_globalX);
+  if (T204 != YPfalse) {
+    T203 = CHKREF(YastYinsert_globalX);
   } else {
-    T199 = YPfalse;
+    T203 = YPfalse;
   }
-  T198 = fun_312;
-  T197 = CALL2(CHKREF(YPdefine_method),T199,T198);
-  YastYinsert_globalX = T197;
+  T202 = fun_312;
+  T201 = CALL2(CHKREF(YPdefine_method),T203,T202);
+  YastYinsert_globalX = T201;
   regsym(&YastYinsert_globalX,"ast","insert-global!");
-  lit_325 = YPPsym((P)"insert-globals!");
-  T202 = YPsig(YPPlist(1,CHKREF(lit_267)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_313 = YPmet(FUNCODEREF(fun_313),YPfalse,T202,ENVNUL);
-  T201 = YPsig(YPPlist(2,CHKREF(lit_258),CHKREF(lit_185)),YPPlist(2,CHKREF(YLlstG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_314 = YPmet(FUNCODEREF(fun_314),CHKREF(lit_325),T201,ENVNUL);
-  T206 = BOUNDP(YastYinsert_globalsX);
-  if (T206 != YPfalse) {
-    T205 = CHKREF(YastYinsert_globalsX);
+  lit_327 = YPPsym((P)"insert-globals!");
+  T206 = YPsig(YPPlist(1,CHKREF(lit_269)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_313 = YPmet(FUNCODEREF(fun_313),YPfalse,T206,ENVNUL);
+  T205 = YPsig(YPPlist(2,CHKREF(lit_260),CHKREF(lit_187)),YPPlist(2,CHKREF(YLlstG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_314 = YPmet(FUNCODEREF(fun_314),CHKREF(lit_327),T205,ENVNUL);
+  T210 = BOUNDP(YastYinsert_globalsX);
+  if (T210 != YPfalse) {
+    T209 = CHKREF(YastYinsert_globalsX);
   } else {
-    T205 = YPfalse;
+    T209 = YPfalse;
   }
-  T204 = fun_314;
-  T203 = CALL2(CHKREF(YPdefine_method),T205,T204);
-  YastYinsert_globalsX = T203;
+  T208 = fun_314;
+  T207 = CALL2(CHKREF(YPdefine_method),T209,T208);
+  YastYinsert_globalsX = T207;
   regsym(&YastYinsert_globalsX,"ast","insert-globals!");
-  lit_326 = YPPsym((P)"find-static-global-environment");
-  T207 = YPsig(YPPlist(1,CHKREF(lit_185)),YPPlist(1,CHKREF(YastYLstatic_local_environmentG)),YPfalse,YPint((P)1),CHKREF(YastYLstatic_global_environmentG));
-  fun_315 = YPmet(FUNCODEREF(fun_315),CHKREF(lit_326),T207,ENVNUL);
-  T211 = BOUNDP(YastYfind_static_global_environment);
-  if (T211 != YPfalse) {
-    T210 = CHKREF(YastYfind_static_global_environment);
+  lit_328 = YPPsym((P)"find-static-global-environment");
+  T211 = YPsig(YPPlist(1,CHKREF(lit_187)),YPPlist(1,CHKREF(YastYLstatic_local_environmentG)),YPfalse,YPint((P)1),CHKREF(YastYLstatic_global_environmentG));
+  fun_315 = YPmet(FUNCODEREF(fun_315),CHKREF(lit_328),T211,ENVNUL);
+  T215 = BOUNDP(YastYfind_static_global_environment);
+  if (T215 != YPfalse) {
+    T214 = CHKREF(YastYfind_static_global_environment);
   } else {
-    T210 = YPfalse;
+    T214 = YPfalse;
   }
-  T209 = fun_315;
-  T208 = CALL2(CHKREF(YPdefine_method),T210,T209);
-  YastYfind_static_global_environment = T208;
+  T213 = fun_315;
+  T212 = CALL2(CHKREF(YPdefine_method),T214,T213);
+  YastYfind_static_global_environment = T212;
   regsym(&YastYfind_static_global_environment,"ast","find-static-global-environment");
-  T212 = YPsig(YPPlist(1,CHKREF(lit_185)),YPPlist(1,CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)1),CHKREF(YastYLstatic_global_environmentG));
-  fun_316 = YPmet(FUNCODEREF(fun_316),CHKREF(lit_326),T212,ENVNUL);
-  T216 = BOUNDP(YastYfind_static_global_environment);
-  if (T216 != YPfalse) {
-    T215 = CHKREF(YastYfind_static_global_environment);
+  T216 = YPsig(YPPlist(1,CHKREF(lit_187)),YPPlist(1,CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)1),CHKREF(YastYLstatic_global_environmentG));
+  fun_316 = YPmet(FUNCODEREF(fun_316),CHKREF(lit_328),T216,ENVNUL);
+  T220 = BOUNDP(YastYfind_static_global_environment);
+  if (T220 != YPfalse) {
+    T219 = CHKREF(YastYfind_static_global_environment);
   } else {
-    T215 = YPfalse;
+    T219 = YPfalse;
   }
-  T214 = fun_316;
-  T213 = CALL2(CHKREF(YPdefine_method),T215,T214);
-  YastYfind_static_global_environment = T213;
+  T218 = fun_316;
+  T217 = CALL2(CHKREF(YPdefine_method),T219,T218);
+  YastYfind_static_global_environment = T217;
   regsym(&YastYfind_static_global_environment,"ast","find-static-global-environment");
-  lit_327 = YPPsym((P)"find-syntax-environment");
-  T217 = YPsig(YPPlist(1,CHKREF(lit_185)),YPPlist(1,CHKREF(YastYLstatic_environmentG)),YPfalse,YPint((P)1),CHKREF(YastYLstatic_global_environmentG));
-  fun_317 = YPmet(FUNCODEREF(fun_317),CHKREF(lit_327),T217,ENVNUL);
-  T221 = BOUNDP(YastYfind_syntax_environment);
-  if (T221 != YPfalse) {
-    T220 = CHKREF(YastYfind_syntax_environment);
+  lit_329 = YPPsym((P)"find-syntax-environment");
+  T221 = YPsig(YPPlist(1,CHKREF(lit_187)),YPPlist(1,CHKREF(YastYLstatic_environmentG)),YPfalse,YPint((P)1),CHKREF(YastYLstatic_global_environmentG));
+  fun_317 = YPmet(FUNCODEREF(fun_317),CHKREF(lit_329),T221,ENVNUL);
+  T225 = BOUNDP(YastYfind_syntax_environment);
+  if (T225 != YPfalse) {
+    T224 = CHKREF(YastYfind_syntax_environment);
   } else {
-    T220 = YPfalse;
+    T224 = YPfalse;
   }
-  T219 = fun_317;
-  T218 = CALL2(CHKREF(YPdefine_method),T220,T219);
-  YastYfind_syntax_environment = T218;
+  T223 = fun_317;
+  T222 = CALL2(CHKREF(YPdefine_method),T224,T223);
+  YastYfind_syntax_environment = T222;
   regsym(&YastYfind_syntax_environment,"ast","find-syntax-environment");
-  lit_328 = YPPsym((P)"find-environment-module");
-  T222 = YPsig(YPPlist(1,CHKREF(lit_185)),YPPlist(1,CHKREF(YastYLstatic_environmentG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_318 = YPmet(FUNCODEREF(fun_318),CHKREF(lit_328),T222,ENVNUL);
-  T226 = BOUNDP(YastYfind_environment_module);
-  if (T226 != YPfalse) {
-    T225 = CHKREF(YastYfind_environment_module);
+  lit_330 = YPPsym((P)"find-environment-module");
+  T226 = YPsig(YPPlist(1,CHKREF(lit_187)),YPPlist(1,CHKREF(YastYLstatic_environmentG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_318 = YPmet(FUNCODEREF(fun_318),CHKREF(lit_330),T226,ENVNUL);
+  T230 = BOUNDP(YastYfind_environment_module);
+  if (T230 != YPfalse) {
+    T229 = CHKREF(YastYfind_environment_module);
   } else {
-    T225 = YPfalse;
+    T229 = YPfalse;
   }
-  T224 = fun_318;
-  T223 = CALL2(CHKREF(YPdefine_method),T225,T224);
-  YastYfind_environment_module = T223;
+  T228 = fun_318;
+  T227 = CALL2(CHKREF(YPdefine_method),T229,T228);
+  YastYfind_environment_module = T227;
   regsym(&YastYfind_environment_module,"ast","find-environment-module");
-  lit_329 = YPPsym((P)"find-binding");
-  T228 = YPsig(YPPlist(1,CHKREF(lit_258)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_loop_319 = YPmet(FUNCODEREF(fun_loop_319),CHKREF(lit_143),T228,ENVNUL);
-  T227 = YPsig(YPPlist(2,CHKREF(lit_226),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLstatic_local_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_320 = YPmet(FUNCODEREF(fun_320),CHKREF(lit_329),T227,ENVNUL);
-  T232 = BOUNDP(YastYfind_binding);
-  if (T232 != YPfalse) {
-    T231 = CHKREF(YastYfind_binding);
+  lit_331 = YPPsym((P)"find-binding");
+  T232 = YPsig(YPPlist(1,CHKREF(lit_260)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_loop_319 = YPmet(FUNCODEREF(fun_loop_319),CHKREF(lit_145),T232,ENVNUL);
+  T231 = YPsig(YPPlist(2,CHKREF(lit_228),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLstatic_local_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_320 = YPmet(FUNCODEREF(fun_320),CHKREF(lit_331),T231,ENVNUL);
+  T236 = BOUNDP(YastYfind_binding);
+  if (T236 != YPfalse) {
+    T235 = CHKREF(YastYfind_binding);
   } else {
-    T231 = YPfalse;
+    T235 = YPfalse;
   }
-  T230 = fun_320;
-  T229 = CALL2(CHKREF(YPdefine_method),T231,T230);
-  YastYfind_binding = T229;
+  T234 = fun_320;
+  T233 = CALL2(CHKREF(YPdefine_method),T235,T234);
+  YastYfind_binding = T233;
   regsym(&YastYfind_binding,"ast","find-binding");
-  T233 = YPsig(YPPlist(2,CHKREF(lit_226),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLstatic_empty_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_321 = YPmet(FUNCODEREF(fun_321),CHKREF(lit_329),T233,ENVNUL);
-  T237 = BOUNDP(YastYfind_binding);
-  if (T237 != YPfalse) {
-    T236 = CHKREF(YastYfind_binding);
+  T237 = YPsig(YPPlist(2,CHKREF(lit_228),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLstatic_empty_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_321 = YPmet(FUNCODEREF(fun_321),CHKREF(lit_331),T237,ENVNUL);
+  T241 = BOUNDP(YastYfind_binding);
+  if (T241 != YPfalse) {
+    T240 = CHKREF(YastYfind_binding);
   } else {
-    T236 = YPfalse;
+    T240 = YPfalse;
   }
-  T235 = fun_321;
-  T234 = CALL2(CHKREF(YPdefine_method),T236,T235);
-  YastYfind_binding = T234;
+  T239 = fun_321;
+  T238 = CALL2(CHKREF(YPdefine_method),T240,T239);
+  YastYfind_binding = T238;
   regsym(&YastYfind_binding,"ast","find-binding");
-  T238 = YPsig(YPPlist(2,CHKREF(lit_226),CHKREF(lit_185)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_322 = YPmet(FUNCODEREF(fun_322),CHKREF(lit_329),T238,ENVNUL);
-  T242 = BOUNDP(YastYfind_binding);
-  if (T242 != YPfalse) {
-    T241 = CHKREF(YastYfind_binding);
+  T242 = YPsig(YPPlist(2,CHKREF(lit_228),CHKREF(lit_187)),YPPlist(2,CHKREF(YLanyG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_322 = YPmet(FUNCODEREF(fun_322),CHKREF(lit_331),T242,ENVNUL);
+  T246 = BOUNDP(YastYfind_binding);
+  if (T246 != YPfalse) {
+    T245 = CHKREF(YastYfind_binding);
   } else {
-    T241 = YPfalse;
+    T245 = YPfalse;
   }
-  T240 = fun_322;
-  T239 = CALL2(CHKREF(YPdefine_method),T241,T240);
-  YastYfind_binding = T239;
+  T244 = fun_322;
+  T243 = CALL2(CHKREF(YPdefine_method),T245,T244);
+  YastYfind_binding = T243;
   regsym(&YastYfind_binding,"ast","find-binding");
-  lit_330 = YPPsym((P)"frame-bindings");
-  T243 = YPsig(YPPlist(1,CHKREF(lit_300)),YPPlist(1,CHKREF(YastYLstatic_environmentG)),YPfalse,YPint((P)1),CHKREF(YLcolG));
-  fun_323 = YPmet(FUNCODEREF(fun_323),CHKREF(lit_330),T243,ENVNUL);
-  T247 = BOUNDP(YastYframe_bindings);
-  if (T247 != YPfalse) {
-    T246 = CHKREF(YastYframe_bindings);
+  lit_332 = YPPsym((P)"frame-bindings");
+  T247 = YPsig(YPPlist(1,CHKREF(lit_302)),YPPlist(1,CHKREF(YastYLstatic_environmentG)),YPfalse,YPint((P)1),CHKREF(YLcolG));
+  fun_323 = YPmet(FUNCODEREF(fun_323),CHKREF(lit_332),T247,ENVNUL);
+  T251 = BOUNDP(YastYframe_bindings);
+  if (T251 != YPfalse) {
+    T250 = CHKREF(YastYframe_bindings);
   } else {
-    T246 = YPfalse;
+    T250 = YPfalse;
   }
-  T245 = fun_323;
-  T244 = CALL2(CHKREF(YPdefine_method),T246,T245);
-  YastYframe_bindings = T244;
+  T249 = fun_323;
+  T248 = CALL2(CHKREF(YPdefine_method),T250,T249);
+  YastYframe_bindings = T248;
   regsym(&YastYframe_bindings,"ast","frame-bindings");
   YastYTmagic_bindingsT = Ynil;
   regsym(&YastYTmagic_bindingsT,"ast","*magic-bindings*");
-  lit_331 = YPPsym((P)"register-magic-binding");
-  T248 = YPsig(YPPlist(2,CHKREF(lit_226),CHKREF(lit_192)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_324 = YPmet(FUNCODEREF(fun_324),CHKREF(lit_331),T248,ENVNUL);
-  T252 = BOUNDP(YastYregister_magic_binding);
-  if (T252 != YPfalse) {
-    T251 = CHKREF(YastYregister_magic_binding);
+  lit_333 = YPPsym((P)"register-magic-binding");
+  T252 = YPsig(YPPlist(2,CHKREF(lit_228),CHKREF(lit_194)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_324 = YPmet(FUNCODEREF(fun_324),CHKREF(lit_333),T252,ENVNUL);
+  T256 = BOUNDP(YastYregister_magic_binding);
+  if (T256 != YPfalse) {
+    T255 = CHKREF(YastYregister_magic_binding);
   } else {
-    T251 = YPfalse;
+    T255 = YPfalse;
   }
-  T250 = fun_324;
-  T249 = CALL2(CHKREF(YPdefine_method),T251,T250);
-  YastYregister_magic_binding = T249;
+  T254 = fun_324;
+  T253 = CALL2(CHKREF(YPdefine_method),T255,T254);
+  YastYregister_magic_binding = T253;
   regsym(&YastYregister_magic_binding,"ast","register-magic-binding");
-  lit_332 = YPPsym((P)"magic-bindings");
-  T253 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_325 = YPmet(FUNCODEREF(fun_325),CHKREF(lit_332),T253,ENVNUL);
-  T257 = BOUNDP(YastYmagic_bindings);
-  if (T257 != YPfalse) {
-    T256 = CHKREF(YastYmagic_bindings);
+  lit_334 = YPPsym((P)"magic-bindings");
+  T257 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_325 = YPmet(FUNCODEREF(fun_325),CHKREF(lit_334),T257,ENVNUL);
+  T261 = BOUNDP(YastYmagic_bindings);
+  if (T261 != YPfalse) {
+    T260 = CHKREF(YastYmagic_bindings);
   } else {
-    T256 = YPfalse;
+    T260 = YPfalse;
   }
-  T255 = fun_325;
-  T254 = CALL2(CHKREF(YPdefine_method),T256,T255);
-  YastYmagic_bindings = T254;
+  T259 = fun_325;
+  T258 = CALL2(CHKREF(YPdefine_method),T260,T259);
+  YastYmagic_bindings = T258;
   regsym(&YastYmagic_bindings,"ast","magic-bindings");
-  lit_333 = YPPsym((P)"fun");
-  lit_334 = YPPsym((P)"binding-handler");
-  lit_335 = YPPsym((P)"$proto-boot-module-name");
-  lit_336 = YPPsym((P)"<module-binding>");
-  lit_337 = YPsb((P)"-tag");
-  lit_338 = YPsb((P)"$sexpr-");
-  lit_339 = YPsb((P)"special-");
-  lit_340 = YPPsym((P)"define-magic-binding");
-  lit_341 = YPPsym((P)"x-1255");
-  T260 = YPsig(YPPlist(2,CHKREF(lit_116),CHKREF(lit_115)),YPPlist(1,CHKREF(YLstrG)),YPtrue,YPint((P)1),CHKREF(YLanyG));
-  fun_x_1255_326 = YPmet(FUNCODEREF(fun_x_1255_326),CHKREF(lit_341),T260,ENVNUL);
-  T259 = YPsig(YPPlist(1,CHKREF(lit_87)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_327 = YPmet(FUNCODEREF(fun_327),YPfalse,T259,ENVNUL);
-  T258 = YPsig(YPPlist(1,CHKREF(lit_86)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_328 = YPmet(FUNCODEREF(fun_328),YPfalse,T258,ENVNUL);
-  T261 = fun_328;
-  YPmacro(YPPsym((P)"ast"),YPPsym((P)"define-magic-binding"),T261);
-  T262 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_329 = YPmet(FUNCODEREF(fun_329),YPfalse,T262,ENVNUL);
-  T275 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
-  T274 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
-  T273 = (P)YPpair(CHKREF(YastYbinding_handler),T274);
-  T272 = (P)YPpair(CHKREF(YastYbinding_module_name),T273);
-  T271 = (P)YPpair(CHKREF(YastYbinding_name),T272);
-  T270 = (P)YPpair(CHKREF(YastYbinding_kind),T271);
-  T269 = fun_329;
-  T268 = (P)YPpair(YPfalse,Ynil);
-  T267 = (P)YPpair(T269,T268);
-  T266 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T267);
-  T265 = (P)YPpair(CHKREF(YsyntaxYDsexpr_if_tag),T266);
-  T264 = (P)YPpair(CHKREF(lit_190),T265);
-  T263 = CALL3(CHKREF(YPisa),T275,T270,T264);
-  YastYspecial_if = T263;
+  lit_335 = YPPsym((P)"fun");
+  lit_336 = YPPsym((P)"binding-handler");
+  lit_337 = YPPsym((P)"$proto-boot-module-name");
+  lit_338 = YPPsym((P)"<module-binding>");
+  lit_339 = YPsb((P)"-tag");
+  lit_340 = YPsb((P)"$sexpr-");
+  lit_341 = YPsb((P)"special-");
+  lit_342 = YPPsym((P)"define-magic-binding");
+  lit_343 = YPPsym((P)"x-1257");
+  T264 = YPsig(YPPlist(2,CHKREF(lit_118),CHKREF(lit_117)),YPPlist(1,CHKREF(YLstrG)),YPtrue,YPint((P)1),CHKREF(YLanyG));
+  fun_x_1257_326 = YPmet(FUNCODEREF(fun_x_1257_326),CHKREF(lit_343),T264,ENVNUL);
+  T263 = YPsig(YPPlist(1,CHKREF(lit_87)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_327 = YPmet(FUNCODEREF(fun_327),YPfalse,T263,ENVNUL);
+  T262 = YPsig(YPPlist(1,CHKREF(lit_86)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_328 = YPmet(FUNCODEREF(fun_328),YPfalse,T262,ENVNUL);
+  T265 = fun_328;
+  YPmacro(YPPsym((P)"ast"),YPPsym((P)"define-magic-binding"),T265);
+  T266 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_329 = YPmet(FUNCODEREF(fun_329),YPfalse,T266,ENVNUL);
+  T279 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
+  T278 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
+  T277 = (P)YPpair(CHKREF(YastYbinding_handler),T278);
+  T276 = (P)YPpair(CHKREF(YastYbinding_module_name),T277);
+  T275 = (P)YPpair(CHKREF(YastYbinding_name),T276);
+  T274 = (P)YPpair(CHKREF(YastYbinding_kind),T275);
+  T273 = fun_329;
+  T272 = (P)YPpair(YPfalse,Ynil);
+  T271 = (P)YPpair(T273,T272);
+  T270 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T271);
+  T269 = (P)YPpair(CHKREF(YsyntaxYDsexpr_if_tag),T270);
+  T268 = (P)YPpair(CHKREF(lit_192),T269);
+  T267 = CALL3(CHKREF(YPisa),T279,T274,T268);
+  YastYspecial_if = T267;
   regsym(&YastYspecial_if,"ast","special-if");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_250),CHKREF(YastYspecial_if));
-  T276 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_330 = YPmet(FUNCODEREF(fun_330),YPfalse,T276,ENVNUL);
-  T289 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
-  T288 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
-  T287 = (P)YPpair(CHKREF(YastYbinding_handler),T288);
-  T286 = (P)YPpair(CHKREF(YastYbinding_module_name),T287);
-  T285 = (P)YPpair(CHKREF(YastYbinding_name),T286);
-  T284 = (P)YPpair(CHKREF(YastYbinding_kind),T285);
-  T283 = fun_330;
-  T282 = (P)YPpair(YPfalse,Ynil);
-  T281 = (P)YPpair(T283,T282);
-  T280 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T281);
-  T279 = (P)YPpair(CHKREF(YsyntaxYDsexpr_begin_tag),T280);
-  T278 = (P)YPpair(CHKREF(lit_190),T279);
-  T277 = CALL3(CHKREF(YPisa),T289,T284,T278);
-  YastYspecial_begin = T277;
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_252),CHKREF(YastYspecial_if));
+  T280 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_330 = YPmet(FUNCODEREF(fun_330),YPfalse,T280,ENVNUL);
+  T293 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
+  T292 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
+  T291 = (P)YPpair(CHKREF(YastYbinding_handler),T292);
+  T290 = (P)YPpair(CHKREF(YastYbinding_module_name),T291);
+  T289 = (P)YPpair(CHKREF(YastYbinding_name),T290);
+  T288 = (P)YPpair(CHKREF(YastYbinding_kind),T289);
+  T287 = fun_330;
+  T286 = (P)YPpair(YPfalse,Ynil);
+  T285 = (P)YPpair(T287,T286);
+  T284 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T285);
+  T283 = (P)YPpair(CHKREF(YsyntaxYDsexpr_begin_tag),T284);
+  T282 = (P)YPpair(CHKREF(lit_192),T283);
+  T281 = CALL3(CHKREF(YPisa),T293,T288,T282);
+  YastYspecial_begin = T281;
   regsym(&YastYspecial_begin,"ast","special-begin");
-  lit_342 = YPPsym((P)"begin");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_342),CHKREF(YastYspecial_begin));
-  lit_343 = YPPsym((P)"%raw");
-  YastYDsexpr_Praw_tag = CHKREF(lit_343);
+  lit_344 = YPPsym((P)"begin");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_344),CHKREF(YastYspecial_begin));
+  lit_345 = YPPsym((P)"%raw");
+  YastYDsexpr_Praw_tag = CHKREF(lit_345);
   regsym(&YastYDsexpr_Praw_tag,"ast","$sexpr-%raw-tag");
-  T290 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_331 = YPmet(FUNCODEREF(fun_331),YPfalse,T290,ENVNUL);
-  T303 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
-  T302 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
-  T301 = (P)YPpair(CHKREF(YastYbinding_handler),T302);
-  T300 = (P)YPpair(CHKREF(YastYbinding_module_name),T301);
-  T299 = (P)YPpair(CHKREF(YastYbinding_name),T300);
-  T298 = (P)YPpair(CHKREF(YastYbinding_kind),T299);
-  T297 = fun_331;
-  T296 = (P)YPpair(YPfalse,Ynil);
-  T295 = (P)YPpair(T297,T296);
-  T294 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T295);
-  T293 = (P)YPpair(CHKREF(YastYDsexpr_Praw_tag),T294);
-  T292 = (P)YPpair(CHKREF(lit_190),T293);
-  T291 = CALL3(CHKREF(YPisa),T303,T298,T292);
-  YastYspecial_Praw = T291;
+  T294 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_331 = YPmet(FUNCODEREF(fun_331),YPfalse,T294,ENVNUL);
+  T307 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
+  T306 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
+  T305 = (P)YPpair(CHKREF(YastYbinding_handler),T306);
+  T304 = (P)YPpair(CHKREF(YastYbinding_module_name),T305);
+  T303 = (P)YPpair(CHKREF(YastYbinding_name),T304);
+  T302 = (P)YPpair(CHKREF(YastYbinding_kind),T303);
+  T301 = fun_331;
+  T300 = (P)YPpair(YPfalse,Ynil);
+  T299 = (P)YPpair(T301,T300);
+  T298 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T299);
+  T297 = (P)YPpair(CHKREF(YastYDsexpr_Praw_tag),T298);
+  T296 = (P)YPpair(CHKREF(lit_192),T297);
+  T295 = CALL3(CHKREF(YPisa),T307,T302,T296);
+  YastYspecial_Praw = T295;
   regsym(&YastYspecial_Praw,"ast","special-%raw");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_343),CHKREF(YastYspecial_Praw));
-  T304 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_332 = YPmet(FUNCODEREF(fun_332),YPfalse,T304,ENVNUL);
-  T317 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
-  T316 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
-  T315 = (P)YPpair(CHKREF(YastYbinding_handler),T316);
-  T314 = (P)YPpair(CHKREF(YastYbinding_module_name),T315);
-  T313 = (P)YPpair(CHKREF(YastYbinding_name),T314);
-  T312 = (P)YPpair(CHKREF(YastYbinding_kind),T313);
-  T311 = fun_332;
-  T310 = (P)YPpair(YPfalse,Ynil);
-  T309 = (P)YPpair(T311,T310);
-  T308 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T309);
-  T307 = (P)YPpair(CHKREF(YsyntaxYDsexpr_quote_tag),T308);
-  T306 = (P)YPpair(CHKREF(lit_190),T307);
-  T305 = CALL3(CHKREF(YPisa),T317,T312,T306);
-  YastYspecial_quote = T305;
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_345),CHKREF(YastYspecial_Praw));
+  T308 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_332 = YPmet(FUNCODEREF(fun_332),YPfalse,T308,ENVNUL);
+  T321 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
+  T320 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
+  T319 = (P)YPpair(CHKREF(YastYbinding_handler),T320);
+  T318 = (P)YPpair(CHKREF(YastYbinding_module_name),T319);
+  T317 = (P)YPpair(CHKREF(YastYbinding_name),T318);
+  T316 = (P)YPpair(CHKREF(YastYbinding_kind),T317);
+  T315 = fun_332;
+  T314 = (P)YPpair(YPfalse,Ynil);
+  T313 = (P)YPpair(T315,T314);
+  T312 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T313);
+  T311 = (P)YPpair(CHKREF(YsyntaxYDsexpr_quote_tag),T312);
+  T310 = (P)YPpair(CHKREF(lit_192),T311);
+  T309 = CALL3(CHKREF(YPisa),T321,T316,T310);
+  YastYspecial_quote = T309;
   regsym(&YastYspecial_quote,"ast","special-quote");
-  T319 = CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_213),CHKREF(YastYspecial_quote));
-  T318 = T319;
-  return T318;
+  T323 = CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_215),CHKREF(YastYspecial_quote));
+  T322 = T323;
+  return T322;
 }
 
 P YastY___main_6___() {
-  P T376,T375,T374,T373,T372,T371,T370,T369,T368,T367,T366,T365,T364,T363,T362,T361;
-  P T360,T359,T358,T357,T356,T355,T354,T353,T352,T351,T350,T349,T348,T347,T346,T345;
-  P T344,T343,T342,T341,T340,T339,T338,T337,T336,T335,T334,T333,T332,T331,T330,T329;
-  P T328,T327,T326,T325,T324,T323,T322,T321,T320,T319,T318,T317,T316,T315,T314,T313;
-  P T312,T311,T310,T309,T308,T307,T306,T305,T304,T303,T302,T301,T300,T299,T298,T297;
-  P T296,T295,T294,T293,T292,T291,T290,T289,T288,T287,T286,T285,T284,T283,T282,T281;
-  P T280,T279,T278,T277,T276,T275,T274,T273,T272,T271,T270,T269,T268,T267,T266,T265;
-  P T264,T263,T262,T261,T260,T259,T258,T257,T256,T255,T254,T253,T252,T251,T250,T249;
-  P T248,T247,T246,T245,T244,T243,T242,T241,T240,T239,T238,T237,T236,T235,T234,T233;
-  P T232,T231,T230,T229,T228,T227,T226,T225,T224,T223,T222,T221,T220,T219,T218,T217;
-  P T216,T215,T214,T213,T212,T211,T210,T209,T208,T207,T206,T205,T204,T203,T202,T201;
-  P T200,T199,T198,T197,T196,T195,T194,T193,T192,T191,T190,T189,T188,T187,T186,T185;
-  P T184,T183,T182,T181,T180,T179,T178,T177,T176,T175,T174,T173,T172,T171,T170,T169;
-  P T168,T167,T166,T165,T164,T163,T162,T161,T160,T159,T158,T157,T156,T155,T154,T153;
-  P T152,T151,T150,T149,T148,T147,T146,T145,T144,T143,T142,T141,T140,T139,T138,T137;
-  P T136,T135,T134,T133,T132,T131,T130,T129,T128,T127,T126,T125,T124,T123,T122,T121;
-  P T120,T119,T118,T117,T116,T115,T114,T113,T112,T111,T110,T109,T108,T107,T106,T105;
-  P T104,T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89;
-  P T88,T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73;
-  P T72,T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57;
-  P T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41;
-  P T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25;
-  P T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9;
-  P T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P T383,T382,T381,T380,T379,T378,T377,T376,T375,T374,T373,T372,T371,T370,T369,T368;
+  P T367,T366,T365,T364,T363,T362,T361,T360,T359,T358,T357,T356,T355,T354,T353,T352;
+  P T351,T350,T349,T348,T347,T346,T345,T344,T343,T342,T341,T340,T339,T338,T337,T336;
+  P T335,T334,T333,T332,T331,T330,T329,T328,T327,T326,T325,T324,T323,T322,T321,T320;
+  P T319,T318,T317,T316,T315,T314,T313,T312,T311,T310,T309,T308,T307,T306,T305,T304;
+  P T303,T302,T301,T300,T299,T298,T297,T296,T295,T294,T293,T292,T291,T290,T289,T288;
+  P T287,T286,T285,T284,T283,T282,T281,T280,T279,T278,T277,T276,T275,T274,T273,T272;
+  P T271,T270,T269,T268,T267,T266,T265,T264,T263,T262,T261,T260,T259,T258,T257,T256;
+  P T255,T254,T253,T252,T251,T250,T249,T248,T247,T246,T245,T244,T243,T242,T241,T240;
+  P T239,T238,T237,T236,T235,T234,T233,T232,T231,T230,T229,T228,T227,T226,T225,T224;
+  P T223,T222,T221,T220,T219,T218,T217,T216,T215,T214,T213,T212,T211,T210,T209,T208;
+  P T207,T206,T205,T204,T203,T202,T201,T200,T199,T198,T197,T196,T195,T194,T193,T192;
+  P T191,T190,T189,T188,T187,T186,T185,T184,T183,T182,T181,T180,T179,T178,T177,T176;
+  P T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164,T163,T162,T161,T160;
+  P T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149,T148,T147,T146,T145,T144;
+  P T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133,T132,T131,T130,T129,T128;
+  P T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116,T115,T114,T113,T112;
+  P T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100,T99,T98,T97,T96;
+  P T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84,T83,T82,T81,T80;
+  P T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68,T67,T66,T65,T64;
+  P T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48;
+  P T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32;
+  P T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16;
+  P T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
 loop:
-  T0 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  T0 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_333 = YPmet(FUNCODEREF(fun_333),YPfalse,T0,ENVNUL);
   T13 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T12 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12134,12 +12201,12 @@ loop:
   T5 = (P)YPpair(T7,T6);
   T4 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T5);
   T3 = (P)YPpair(CHKREF(YsyntaxYDsexpr_set_tag),T4);
-  T2 = (P)YPpair(CHKREF(lit_190),T3);
+  T2 = (P)YPpair(CHKREF(lit_192),T3);
   T1 = CALL3(CHKREF(YPisa),T13,T8,T2);
   YastYspecial_set = T1;
   regsym(&YastYspecial_set,"ast","special-set");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_94),CHKREF(YastYspecial_set));
-  T14 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_95),CHKREF(YastYspecial_set));
+  T14 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_334 = YPmet(FUNCODEREF(fun_334),YPfalse,T14,ENVNUL);
   T27 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T26 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12152,13 +12219,13 @@ loop:
   T19 = (P)YPpair(T21,T20);
   T18 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T19);
   T17 = (P)YPpair(CHKREF(YsyntaxYDsexpr_define_tag),T18);
-  T16 = (P)YPpair(CHKREF(lit_190),T17);
+  T16 = (P)YPpair(CHKREF(lit_192),T17);
   T15 = CALL3(CHKREF(YPisa),T27,T22,T16);
   YastYspecial_define = T15;
   regsym(&YastYspecial_define,"ast","special-define");
-  lit_344 = YPPsym((P)"define");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_344),CHKREF(YastYspecial_define));
-  T28 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  lit_346 = YPPsym((P)"define");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_346),CHKREF(YastYspecial_define));
+  T28 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_335 = YPmet(FUNCODEREF(fun_335),YPfalse,T28,ENVNUL);
   T41 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T40 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12171,16 +12238,16 @@ loop:
   T33 = (P)YPpair(T35,T34);
   T32 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T33);
   T31 = (P)YPpair(CHKREF(YsyntaxYDsexpr_define_syntax_tag),T32);
-  T30 = (P)YPpair(CHKREF(lit_190),T31);
+  T30 = (P)YPpair(CHKREF(lit_192),T31);
   T29 = CALL3(CHKREF(YPisa),T41,T36,T30);
   YastYspecial_define_syntax = T29;
   regsym(&YastYspecial_define_syntax,"ast","special-define-syntax");
-  lit_345 = YPPsym((P)"define-syntax");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_345),CHKREF(YastYspecial_define_syntax));
-  lit_346 = YPPsym((P)"dss");
-  YastYDsexpr_define_static_syntax_tag = CHKREF(lit_346);
+  lit_347 = YPPsym((P)"define-syntax");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_347),CHKREF(YastYspecial_define_syntax));
+  lit_348 = YPPsym((P)"dss");
+  YastYDsexpr_define_static_syntax_tag = CHKREF(lit_348);
   regsym(&YastYDsexpr_define_static_syntax_tag,"ast","$sexpr-define-static-syntax-tag");
-  T42 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  T42 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_336 = YPmet(FUNCODEREF(fun_336),YPfalse,T42,ENVNUL);
   T55 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T54 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12193,13 +12260,13 @@ loop:
   T47 = (P)YPpair(T49,T48);
   T46 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T47);
   T45 = (P)YPpair(CHKREF(YastYDsexpr_define_static_syntax_tag),T46);
-  T44 = (P)YPpair(CHKREF(lit_190),T45);
+  T44 = (P)YPpair(CHKREF(lit_192),T45);
   T43 = CALL3(CHKREF(YPisa),T55,T50,T44);
   YastYspecial_define_static_syntax = T43;
   regsym(&YastYspecial_define_static_syntax,"ast","special-define-static-syntax");
-  lit_347 = YPPsym((P)"define-static-syntax");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_347),CHKREF(YastYspecial_define_static_syntax));
-  T56 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  lit_349 = YPPsym((P)"define-static-syntax");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_349),CHKREF(YastYspecial_define_static_syntax));
+  T56 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_337 = YPmet(FUNCODEREF(fun_337),YPfalse,T56,ENVNUL);
   T69 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T68 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12212,13 +12279,13 @@ loop:
   T61 = (P)YPpair(T63,T62);
   T60 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T61);
   T59 = (P)YPpair(CHKREF(YsyntaxYDsexpr_define_method_tag),T60);
-  T58 = (P)YPpair(CHKREF(lit_190),T59);
+  T58 = (P)YPpair(CHKREF(lit_192),T59);
   T57 = CALL3(CHKREF(YPisa),T69,T64,T58);
   YastYspecial_define_method = T57;
   regsym(&YastYspecial_define_method,"ast","special-define-method");
-  lit_348 = YPPsym((P)"define-method");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_348),CHKREF(YastYspecial_define_method));
-  T70 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  lit_350 = YPPsym((P)"define-method");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_350),CHKREF(YastYspecial_define_method));
+  T70 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_338 = YPmet(FUNCODEREF(fun_338),YPfalse,T70,ENVNUL);
   T83 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T82 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12231,13 +12298,13 @@ loop:
   T75 = (P)YPpair(T77,T76);
   T74 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T75);
   T73 = (P)YPpair(CHKREF(YsyntaxYDsexpr_define_generic_tag),T74);
-  T72 = (P)YPpair(CHKREF(lit_190),T73);
+  T72 = (P)YPpair(CHKREF(lit_192),T73);
   T71 = CALL3(CHKREF(YPisa),T83,T78,T72);
   YastYspecial_define_generic = T71;
   regsym(&YastYspecial_define_generic,"ast","special-define-generic");
-  lit_349 = YPPsym((P)"define-generic");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_349),CHKREF(YastYspecial_define_generic));
-  T84 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  lit_351 = YPPsym((P)"define-generic");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_351),CHKREF(YastYspecial_define_generic));
+  T84 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_339 = YPmet(FUNCODEREF(fun_339),YPfalse,T84,ENVNUL);
   T97 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T96 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12250,13 +12317,13 @@ loop:
   T89 = (P)YPpair(T91,T90);
   T88 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T89);
   T87 = (P)YPpair(CHKREF(YsyntaxYDsexpr_define_function_tag),T88);
-  T86 = (P)YPpair(CHKREF(lit_190),T87);
+  T86 = (P)YPpair(CHKREF(lit_192),T87);
   T85 = CALL3(CHKREF(YPisa),T97,T92,T86);
   YastYspecial_define_function = T85;
   regsym(&YastYspecial_define_function,"ast","special-define-function");
-  lit_350 = YPPsym((P)"define-function");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_350),CHKREF(YastYspecial_define_function));
-  T98 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  lit_352 = YPPsym((P)"define-function");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_352),CHKREF(YastYspecial_define_function));
+  T98 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_340 = YPmet(FUNCODEREF(fun_340),YPfalse,T98,ENVNUL);
   T111 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T110 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12269,15 +12336,15 @@ loop:
   T103 = (P)YPpair(T105,T104);
   T102 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T103);
   T101 = (P)YPpair(CHKREF(YsyntaxYDsexpr_method_tag),T102);
-  T100 = (P)YPpair(CHKREF(lit_190),T101);
+  T100 = (P)YPpair(CHKREF(lit_192),T101);
   T99 = CALL3(CHKREF(YPisa),T111,T106,T100);
   YastYspecial_method = T99;
   regsym(&YastYspecial_method,"ast","special-method");
-  lit_351 = YPPsym((P)"method");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_351),CHKREF(YastYspecial_method));
-  YastYDsexpr_boundQ_tag = CHKREF(lit_249);
+  lit_353 = YPPsym((P)"method");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_353),CHKREF(YastYspecial_method));
+  YastYDsexpr_boundQ_tag = CHKREF(lit_251);
   regsym(&YastYDsexpr_boundQ_tag,"ast","$sexpr-bound?-tag");
-  T112 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  T112 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_341 = YPmet(FUNCODEREF(fun_341),YPfalse,T112,ENVNUL);
   T125 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T124 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12290,12 +12357,12 @@ loop:
   T117 = (P)YPpair(T119,T118);
   T116 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T117);
   T115 = (P)YPpair(CHKREF(YastYDsexpr_boundQ_tag),T116);
-  T114 = (P)YPpair(CHKREF(lit_190),T115);
+  T114 = (P)YPpair(CHKREF(lit_192),T115);
   T113 = CALL3(CHKREF(YPisa),T125,T120,T114);
   YastYspecial_boundQ = T113;
   regsym(&YastYspecial_boundQ,"ast","special-bound?");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_249),CHKREF(YastYspecial_boundQ));
-  T126 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_251),CHKREF(YastYspecial_boundQ));
+  T126 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_342 = YPmet(FUNCODEREF(fun_342),YPfalse,T126,ENVNUL);
   T139 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T138 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12308,12 +12375,12 @@ loop:
   T131 = (P)YPpair(T133,T132);
   T130 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T131);
   T129 = (P)YPpair(CHKREF(YsyntaxYDsexpr_let_tag),T130);
-  T128 = (P)YPpair(CHKREF(lit_190),T129);
+  T128 = (P)YPpair(CHKREF(lit_192),T129);
   T127 = CALL3(CHKREF(YPisa),T139,T134,T128);
   YastYspecial_let = T127;
   regsym(&YastYspecial_let,"ast","special-let");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_311),CHKREF(YastYspecial_let));
-  T140 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_313),CHKREF(YastYspecial_let));
+  T140 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_343 = YPmet(FUNCODEREF(fun_343),YPfalse,T140,ENVNUL);
   T153 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T152 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12326,13 +12393,13 @@ loop:
   T145 = (P)YPpair(T147,T146);
   T144 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T145);
   T143 = (P)YPpair(CHKREF(YsyntaxYDsexpr_locals_tag),T144);
-  T142 = (P)YPpair(CHKREF(lit_190),T143);
+  T142 = (P)YPpair(CHKREF(lit_192),T143);
   T141 = CALL3(CHKREF(YPisa),T153,T148,T142);
   YastYspecial_locals = T141;
   regsym(&YastYspecial_locals,"ast","special-locals");
-  lit_352 = YPPsym((P)"locals");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_352),CHKREF(YastYspecial_locals));
-  T154 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  lit_354 = YPPsym((P)"locals");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_354),CHKREF(YastYspecial_locals));
+  T154 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_344 = YPmet(FUNCODEREF(fun_344),YPfalse,T154,ENVNUL);
   T167 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T166 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12345,13 +12412,13 @@ loop:
   T159 = (P)YPpair(T161,T160);
   T158 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T159);
   T157 = (P)YPpair(CHKREF(YsyntaxYDsexpr_iterate_tag),T158);
-  T156 = (P)YPpair(CHKREF(lit_190),T157);
+  T156 = (P)YPpair(CHKREF(lit_192),T157);
   T155 = CALL3(CHKREF(YPisa),T167,T162,T156);
   YastYspecial_iterate = T155;
   regsym(&YastYspecial_iterate,"ast","special-iterate");
-  lit_353 = YPPsym((P)"iterate");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_353),CHKREF(YastYspecial_iterate));
-  T168 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  lit_355 = YPPsym((P)"iterate");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_355),CHKREF(YastYspecial_iterate));
+  T168 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_345 = YPmet(FUNCODEREF(fun_345),YPfalse,T168,ENVNUL);
   T181 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T180 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12364,13 +12431,13 @@ loop:
   T173 = (P)YPpair(T175,T174);
   T172 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T173);
   T171 = (P)YPpair(CHKREF(YsyntaxYDsexpr_bind_exit_tag),T172);
-  T170 = (P)YPpair(CHKREF(lit_190),T171);
+  T170 = (P)YPpair(CHKREF(lit_192),T171);
   T169 = CALL3(CHKREF(YPisa),T181,T176,T170);
   YastYspecial_bind_exit = T169;
   regsym(&YastYspecial_bind_exit,"ast","special-bind-exit");
-  lit_354 = YPPsym((P)"bind-exit");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_354),CHKREF(YastYspecial_bind_exit));
-  T182 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  lit_356 = YPPsym((P)"bind-exit");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_356),CHKREF(YastYspecial_bind_exit));
+  T182 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_346 = YPmet(FUNCODEREF(fun_346),YPfalse,T182,ENVNUL);
   T195 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T194 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12383,13 +12450,13 @@ loop:
   T187 = (P)YPpair(T189,T188);
   T186 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T187);
   T185 = (P)YPpair(CHKREF(YsyntaxYDsexpr_unwind_protect_tag),T186);
-  T184 = (P)YPpair(CHKREF(lit_190),T185);
+  T184 = (P)YPpair(CHKREF(lit_192),T185);
   T183 = CALL3(CHKREF(YPisa),T195,T190,T184);
   YastYspecial_unwind_protect = T183;
   regsym(&YastYspecial_unwind_protect,"ast","special-unwind-protect");
-  lit_355 = YPPsym((P)"unwind-protect");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_355),CHKREF(YastYspecial_unwind_protect));
-  T196 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  lit_357 = YPPsym((P)"unwind-protect");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_357),CHKREF(YastYspecial_unwind_protect));
+  T196 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_347 = YPmet(FUNCODEREF(fun_347),YPfalse,T196,ENVNUL);
   T209 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T208 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12402,15 +12469,15 @@ loop:
   T201 = (P)YPpair(T203,T202);
   T200 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T201);
   T199 = (P)YPpair(CHKREF(YsyntaxYDsexpr_monitor_tag),T200);
-  T198 = (P)YPpair(CHKREF(lit_190),T199);
+  T198 = (P)YPpair(CHKREF(lit_192),T199);
   T197 = CALL3(CHKREF(YPisa),T209,T204,T198);
   YastYspecial_monitor = T197;
   regsym(&YastYspecial_monitor,"ast","special-monitor");
-  lit_356 = YPPsym((P)"monitor");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_356),CHKREF(YastYspecial_monitor));
-  lit_357 = YPPsym((P)"pairize");
-  T210 = YPsig(YPPlist(1,CHKREF(lit_115)),YPPlist(1,CHKREF(YLlstG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_348 = YPmet(FUNCODEREF(fun_348),CHKREF(lit_357),T210,ENVNUL);
+  lit_358 = YPPsym((P)"monitor");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_358),CHKREF(YastYspecial_monitor));
+  lit_359 = YPPsym((P)"pairize");
+  T210 = YPsig(YPPlist(1,CHKREF(lit_117)),YPPlist(1,CHKREF(YLlstG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_348 = YPmet(FUNCODEREF(fun_348),CHKREF(lit_359),T210,ENVNUL);
   T214 = BOUNDP(YastYpairize);
   if (T214 != YPfalse) {
     T213 = CHKREF(YastYpairize);
@@ -12421,8 +12488,8 @@ loop:
   T211 = CALL2(CHKREF(YPdefine_method),T213,T212);
   YastYpairize = T211;
   regsym(&YastYpairize,"ast","pairize");
-  lit_358 = YPPsym((P)"%isa");
-  T215 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  lit_360 = YPPsym((P)"%isa");
+  T215 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_349 = YPmet(FUNCODEREF(fun_349),YPfalse,T215,ENVNUL);
   T228 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T227 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12435,14 +12502,12 @@ loop:
   T220 = (P)YPpair(T222,T221);
   T219 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T220);
   T218 = (P)YPpair(CHKREF(YsyntaxYDsexpr_isa_tag),T219);
-  T217 = (P)YPpair(CHKREF(lit_190),T218);
+  T217 = (P)YPpair(CHKREF(lit_192),T218);
   T216 = CALL3(CHKREF(YPisa),T228,T223,T217);
   YastYspecial_isa = T216;
   regsym(&YastYspecial_isa,"ast","special-isa");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_97),CHKREF(YastYspecial_isa));
-  lit_359 = YPPlist(1,YPPlist(2,YPPsym((P)"x"),YPPsym((P)"<any>")));
-  lit_360 = YPPsym((P)"%slot");
-  T229 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_98),CHKREF(YastYspecial_isa));
+  T229 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_350 = YPmet(FUNCODEREF(fun_350),YPfalse,T229,ENVNUL);
   T242 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T241 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12454,17 +12519,16 @@ loop:
   T235 = (P)YPpair(YPfalse,Ynil);
   T234 = (P)YPpair(T236,T235);
   T233 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T234);
-  T232 = (P)YPpair(CHKREF(YsyntaxYDsexpr_slot_tag),T233);
-  T231 = (P)YPpair(CHKREF(lit_190),T232);
+  T232 = (P)YPpair(CHKREF(YsyntaxYDsexpr_define_class_tag),T233);
+  T231 = (P)YPpair(CHKREF(lit_192),T232);
   T230 = CALL3(CHKREF(YPisa),T242,T237,T231);
-  YastYspecial_slot = T230;
-  regsym(&YastYspecial_slot,"ast","special-slot");
-  lit_361 = YPPsym((P)"slot");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_361),CHKREF(YastYspecial_slot));
-  lit_362 = YPPsym((P)"ct");
-  YastYDsexpr_compile_time_tag = CHKREF(lit_362);
-  regsym(&YastYDsexpr_compile_time_tag,"ast","$sexpr-compile-time-tag");
-  T243 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YastYspecial_define_class = T230;
+  regsym(&YastYspecial_define_class,"ast","special-define-class");
+  lit_361 = YPPsym((P)"define-class");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_361),CHKREF(YastYspecial_define_class));
+  lit_362 = YPPlist(1,YPPlist(2,YPPsym((P)"x"),YPPsym((P)"<any>")));
+  lit_363 = YPPsym((P)"%slot");
+  T243 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_351 = YPmet(FUNCODEREF(fun_351),YPfalse,T243,ENVNUL);
   T256 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T255 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12476,17 +12540,17 @@ loop:
   T249 = (P)YPpair(YPfalse,Ynil);
   T248 = (P)YPpair(T250,T249);
   T247 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T248);
-  T246 = (P)YPpair(CHKREF(YastYDsexpr_compile_time_tag),T247);
-  T245 = (P)YPpair(CHKREF(lit_190),T246);
+  T246 = (P)YPpair(CHKREF(YsyntaxYDsexpr_slot_tag),T247);
+  T245 = (P)YPpair(CHKREF(lit_192),T246);
   T244 = CALL3(CHKREF(YPisa),T256,T251,T245);
-  YastYspecial_compile_time = T244;
-  regsym(&YastYspecial_compile_time,"ast","special-compile-time");
-  lit_363 = YPPsym((P)"compile-time");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_363),CHKREF(YastYspecial_compile_time));
-  lit_364 = YPPsym((P)"ct-also");
-  YastYDsexpr_compile_time_also_tag = CHKREF(lit_364);
-  regsym(&YastYDsexpr_compile_time_also_tag,"ast","$sexpr-compile-time-also-tag");
-  T257 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YastYspecial_slot = T244;
+  regsym(&YastYspecial_slot,"ast","special-slot");
+  lit_364 = YPPsym((P)"slot");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_364),CHKREF(YastYspecial_slot));
+  lit_365 = YPPsym((P)"ct");
+  YastYDsexpr_compile_time_tag = CHKREF(lit_365);
+  regsym(&YastYDsexpr_compile_time_tag,"ast","$sexpr-compile-time-tag");
+  T257 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_352 = YPmet(FUNCODEREF(fun_352),YPfalse,T257,ENVNUL);
   T270 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T269 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12498,17 +12562,17 @@ loop:
   T263 = (P)YPpair(YPfalse,Ynil);
   T262 = (P)YPpair(T264,T263);
   T261 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T262);
-  T260 = (P)YPpair(CHKREF(YastYDsexpr_compile_time_also_tag),T261);
-  T259 = (P)YPpair(CHKREF(lit_190),T260);
+  T260 = (P)YPpair(CHKREF(YastYDsexpr_compile_time_tag),T261);
+  T259 = (P)YPpair(CHKREF(lit_192),T260);
   T258 = CALL3(CHKREF(YPisa),T270,T265,T259);
-  YastYspecial_compile_time_also = T258;
-  regsym(&YastYspecial_compile_time_also,"ast","special-compile-time-also");
-  lit_365 = YPPsym((P)"compile-time-also");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_365),CHKREF(YastYspecial_compile_time_also));
-  lit_366 = YPPsym((P)"dp");
-  YastYDsexpr_define_primitive_tag = CHKREF(lit_366);
-  regsym(&YastYDsexpr_define_primitive_tag,"ast","$sexpr-define-primitive-tag");
-  T271 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YastYspecial_compile_time = T258;
+  regsym(&YastYspecial_compile_time,"ast","special-compile-time");
+  lit_366 = YPPsym((P)"compile-time");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_366),CHKREF(YastYspecial_compile_time));
+  lit_367 = YPPsym((P)"ct-also");
+  YastYDsexpr_compile_time_also_tag = CHKREF(lit_367);
+  regsym(&YastYDsexpr_compile_time_also_tag,"ast","$sexpr-compile-time-also-tag");
+  T271 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_353 = YPmet(FUNCODEREF(fun_353),YPfalse,T271,ENVNUL);
   T284 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T283 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12520,14 +12584,17 @@ loop:
   T277 = (P)YPpair(YPfalse,Ynil);
   T276 = (P)YPpair(T278,T277);
   T275 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T276);
-  T274 = (P)YPpair(CHKREF(YastYDsexpr_define_primitive_tag),T275);
-  T273 = (P)YPpair(CHKREF(lit_190),T274);
+  T274 = (P)YPpair(CHKREF(YastYDsexpr_compile_time_also_tag),T275);
+  T273 = (P)YPpair(CHKREF(lit_192),T274);
   T272 = CALL3(CHKREF(YPisa),T284,T279,T273);
-  YastYspecial_define_primitive = T272;
-  regsym(&YastYspecial_define_primitive,"ast","special-define-primitive");
-  lit_367 = YPPsym((P)"define-primitive");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_367),CHKREF(YastYspecial_define_primitive));
-  T285 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YastYspecial_compile_time_also = T272;
+  regsym(&YastYspecial_compile_time_also,"ast","special-compile-time-also");
+  lit_368 = YPPsym((P)"compile-time-also");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_368),CHKREF(YastYspecial_compile_time_also));
+  lit_369 = YPPsym((P)"dp");
+  YastYDsexpr_define_primitive_tag = CHKREF(lit_369);
+  regsym(&YastYDsexpr_define_primitive_tag,"ast","$sexpr-define-primitive-tag");
+  T285 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_354 = YPmet(FUNCODEREF(fun_354),YPfalse,T285,ENVNUL);
   T298 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T297 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12539,46 +12606,46 @@ loop:
   T291 = (P)YPpair(YPfalse,Ynil);
   T290 = (P)YPpair(T292,T291);
   T289 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T290);
-  T288 = (P)YPpair(CHKREF(YsyntaxYDsexpr_quasiquote_tag),T289);
-  T287 = (P)YPpair(CHKREF(lit_190),T288);
+  T288 = (P)YPpair(CHKREF(YastYDsexpr_define_primitive_tag),T289);
+  T287 = (P)YPpair(CHKREF(lit_192),T288);
   T286 = CALL3(CHKREF(YPisa),T298,T293,T287);
-  YastYspecial_quasiquote = T286;
+  YastYspecial_define_primitive = T286;
+  regsym(&YastYspecial_define_primitive,"ast","special-define-primitive");
+  lit_370 = YPPsym((P)"define-primitive");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_370),CHKREF(YastYspecial_define_primitive));
+  T299 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_355 = YPmet(FUNCODEREF(fun_355),YPfalse,T299,ENVNUL);
+  T312 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
+  T311 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
+  T310 = (P)YPpair(CHKREF(YastYbinding_handler),T311);
+  T309 = (P)YPpair(CHKREF(YastYbinding_module_name),T310);
+  T308 = (P)YPpair(CHKREF(YastYbinding_name),T309);
+  T307 = (P)YPpair(CHKREF(YastYbinding_kind),T308);
+  T306 = fun_355;
+  T305 = (P)YPpair(YPfalse,Ynil);
+  T304 = (P)YPpair(T306,T305);
+  T303 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T304);
+  T302 = (P)YPpair(CHKREF(YsyntaxYDsexpr_quasiquote_tag),T303);
+  T301 = (P)YPpair(CHKREF(lit_192),T302);
+  T300 = CALL3(CHKREF(YPisa),T312,T307,T301);
+  YastYspecial_quasiquote = T300;
   regsym(&YastYspecial_quasiquote,"ast","special-quasiquote");
-  lit_368 = YPPsym((P)"quasiquote");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_368),CHKREF(YastYspecial_quasiquote));
-  lit_369 = YPPsym((P)"ast-macro-expand");
-  T299 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_355 = YPmet(FUNCODEREF(fun_355),CHKREF(lit_369),T299,ENVNUL);
-  T303 = BOUNDP(YastYast_macro_expand);
-  if (T303 != YPfalse) {
-    T302 = CHKREF(YastYast_macro_expand);
+  lit_371 = YPPsym((P)"quasiquote");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_371),CHKREF(YastYspecial_quasiquote));
+  lit_372 = YPPsym((P)"ast-macro-expand");
+  T313 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_356 = YPmet(FUNCODEREF(fun_356),CHKREF(lit_372),T313,ENVNUL);
+  T317 = BOUNDP(YastYast_macro_expand);
+  if (T317 != YPfalse) {
+    T316 = CHKREF(YastYast_macro_expand);
   } else {
-    T302 = YPfalse;
+    T316 = YPfalse;
   }
-  T301 = fun_355;
-  T300 = CALL2(CHKREF(YPdefine_method),T302,T301);
-  YastYast_macro_expand = T300;
+  T315 = fun_356;
+  T314 = CALL2(CHKREF(YPdefine_method),T316,T315);
+  YastYast_macro_expand = T314;
   regsym(&YastYast_macro_expand,"ast","ast-macro-expand");
-  T304 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  fun_356 = YPmet(FUNCODEREF(fun_356),YPfalse,T304,ENVNUL);
-  T317 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
-  T316 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
-  T315 = (P)YPpair(CHKREF(YastYbinding_handler),T316);
-  T314 = (P)YPpair(CHKREF(YastYbinding_module_name),T315);
-  T313 = (P)YPpair(CHKREF(YastYbinding_name),T314);
-  T312 = (P)YPpair(CHKREF(YastYbinding_kind),T313);
-  T311 = fun_356;
-  T310 = (P)YPpair(YPfalse,Ynil);
-  T309 = (P)YPpair(T311,T310);
-  T308 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T309);
-  T307 = (P)YPpair(CHKREF(YsyntaxYDsexpr_macro_expand_tag),T308);
-  T306 = (P)YPpair(CHKREF(lit_190),T307);
-  T305 = CALL3(CHKREF(YPisa),T317,T312,T306);
-  YastYspecial_macro_expand = T305;
-  regsym(&YastYspecial_macro_expand,"ast","special-macro-expand");
-  lit_370 = YPPsym((P)"macro-expand");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_370),CHKREF(YastYspecial_macro_expand));
-  T318 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  T318 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_357 = YPmet(FUNCODEREF(fun_357),YPfalse,T318,ENVNUL);
   T331 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T330 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12590,17 +12657,14 @@ loop:
   T324 = (P)YPpair(YPfalse,Ynil);
   T323 = (P)YPpair(T325,T324);
   T322 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T323);
-  T321 = (P)YPpair(CHKREF(YsyntaxYDsexpr_syntax_if_tag),T322);
-  T320 = (P)YPpair(CHKREF(lit_190),T321);
+  T321 = (P)YPpair(CHKREF(YsyntaxYDsexpr_macro_expand_tag),T322);
+  T320 = (P)YPpair(CHKREF(lit_192),T321);
   T319 = CALL3(CHKREF(YPisa),T331,T326,T320);
-  YastYspecial_syntax_if = T319;
-  regsym(&YastYspecial_syntax_if,"ast","special-syntax-if");
-  lit_371 = YPPsym((P)"syntax-if");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_371),CHKREF(YastYspecial_syntax_if));
-  lit_372 = YPPsym((P)"export");
-  YastYDsexpr_export_tag = CHKREF(lit_372);
-  regsym(&YastYDsexpr_export_tag,"ast","$sexpr-export-tag");
-  T332 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YastYspecial_macro_expand = T319;
+  regsym(&YastYspecial_macro_expand,"ast","special-macro-expand");
+  lit_373 = YPPsym((P)"macro-expand");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_373),CHKREF(YastYspecial_macro_expand));
+  T332 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_358 = YPmet(FUNCODEREF(fun_358),YPfalse,T332,ENVNUL);
   T345 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T344 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12612,16 +12676,17 @@ loop:
   T338 = (P)YPpair(YPfalse,Ynil);
   T337 = (P)YPpair(T339,T338);
   T336 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T337);
-  T335 = (P)YPpair(CHKREF(YastYDsexpr_export_tag),T336);
-  T334 = (P)YPpair(CHKREF(lit_190),T335);
+  T335 = (P)YPpair(CHKREF(YsyntaxYDsexpr_syntax_if_tag),T336);
+  T334 = (P)YPpair(CHKREF(lit_192),T335);
   T333 = CALL3(CHKREF(YPisa),T345,T340,T334);
-  YastYspecial_export = T333;
-  regsym(&YastYspecial_export,"ast","special-export");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_372),CHKREF(YastYspecial_export));
-  lit_373 = YPPsym((P)"use");
-  YastYDsexpr_use_module_tag = CHKREF(lit_373);
-  regsym(&YastYDsexpr_use_module_tag,"ast","$sexpr-use-module-tag");
-  T346 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_185),CHKREF(lit_184)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YastYspecial_syntax_if = T333;
+  regsym(&YastYspecial_syntax_if,"ast","special-syntax-if");
+  lit_374 = YPPsym((P)"syntax-if");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_374),CHKREF(YastYspecial_syntax_if));
+  lit_375 = YPPsym((P)"export");
+  YastYDsexpr_export_tag = CHKREF(lit_375);
+  regsym(&YastYDsexpr_export_tag,"ast","$sexpr-export-tag");
+  T346 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
   fun_359 = YPmet(FUNCODEREF(fun_359),YPfalse,T346,ENVNUL);
   T359 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
   T358 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
@@ -12633,562 +12698,582 @@ loop:
   T352 = (P)YPpair(YPfalse,Ynil);
   T351 = (P)YPpair(T353,T352);
   T350 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T351);
-  T349 = (P)YPpair(CHKREF(YastYDsexpr_use_module_tag),T350);
-  T348 = (P)YPpair(CHKREF(lit_190),T349);
+  T349 = (P)YPpair(CHKREF(YastYDsexpr_export_tag),T350);
+  T348 = (P)YPpair(CHKREF(lit_192),T349);
   T347 = CALL3(CHKREF(YPisa),T359,T354,T348);
-  YastYspecial_use_module = T347;
+  YastYspecial_export = T347;
+  regsym(&YastYspecial_export,"ast","special-export");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_375),CHKREF(YastYspecial_export));
+  lit_376 = YPPsym((P)"use");
+  YastYDsexpr_use_module_tag = CHKREF(lit_376);
+  regsym(&YastYDsexpr_use_module_tag,"ast","$sexpr-use-module-tag");
+  T360 = YPsig(YPPlist(3,CHKREF(lit_9),CHKREF(lit_187),CHKREF(lit_186)),YPPlist(3,CHKREF(YLanyG),CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  fun_360 = YPmet(FUNCODEREF(fun_360),YPfalse,T360,ENVNUL);
+  T373 = (P)YPpair(CHKREF(YastYLmodule_bindingG),Ynil);
+  T372 = (P)YPpair(CHKREF(YastYbinding_freeQ),Ynil);
+  T371 = (P)YPpair(CHKREF(YastYbinding_handler),T372);
+  T370 = (P)YPpair(CHKREF(YastYbinding_module_name),T371);
+  T369 = (P)YPpair(CHKREF(YastYbinding_name),T370);
+  T368 = (P)YPpair(CHKREF(YastYbinding_kind),T369);
+  T367 = fun_360;
+  T366 = (P)YPpair(YPfalse,Ynil);
+  T365 = (P)YPpair(T367,T366);
+  T364 = (P)YPpair(CHKREF(YastYDproto_boot_module_name),T365);
+  T363 = (P)YPpair(CHKREF(YastYDsexpr_use_module_tag),T364);
+  T362 = (P)YPpair(CHKREF(lit_192),T363);
+  T361 = CALL3(CHKREF(YPisa),T373,T368,T362);
+  YastYspecial_use_module = T361;
   regsym(&YastYspecial_use_module,"ast","special-use-module");
-  lit_374 = YPPsym((P)"use-module");
-  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_374),CHKREF(YastYspecial_use_module));
-  T361 = (P)YPpair(CHKREF(YLanyG),Ynil);
-  T360 = CALL3(CHKREF(YPisa),T361,Ynil,Ynil);
-  YastYLmodule_loaderG = T360;
+  lit_377 = YPPsym((P)"use-module");
+  CALL2(CHKREF(YastYregister_magic_binding),CHKREF(lit_377),CHKREF(YastYspecial_use_module));
+  T375 = (P)YPpair(CHKREF(YLanyG),Ynil);
+  T374 = CALL3(CHKREF(YPisa),T375,Ynil,Ynil);
+  YastYLmodule_loaderG = T374;
   regsym(&YastYLmodule_loaderG,"ast","<module-loader>");
-  lit_375 = YPPsym((P)"module-loader-modules");
-  T362 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_360 = YPmet(FUNCODEREF(fun_360),CHKREF(lit_375),T362,ENVNUL);
-  T366 = BOUNDP(YastYmodule_loader_modules);
-  if (T366 != YPfalse) {
-    T365 = CHKREF(YastYmodule_loader_modules);
+  lit_378 = YPPsym((P)"module-loader-modules");
+  T378 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  T377 = fun_361 = YPmet(FUNCODEREF(fun_361),CHKREF(lit_378),T378,ENVNUL);
+  T383 = BOUNDP(YastYmodule_loader_modules);
+  if (T383 != YPfalse) {
+    T382 = CHKREF(YastYmodule_loader_modules);
   } else {
-    T365 = YPfalse;
+    T382 = YPfalse;
   }
-  T364 = fun_360;
-  T363 = CALL2(CHKREF(YPdefine_method),T365,T364);
-  YastYmodule_loader_modules = T363;
+  T381 = fun_361;
+  T380 = CALL2(CHKREF(YPdefine_method),T382,T381);
+  T379 = YastYmodule_loader_modules = T380;
   regsym(&YastYmodule_loader_modules,"ast","module-loader-modules");
-  lit_376 = YPPsym((P)"module-loader-modules-setter");
-  T367 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YruntimeYLtabG),CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_361 = YPmet(FUNCODEREF(fun_361),CHKREF(lit_376),T367,ENVNUL);
-  T371 = BOUNDP(YastYmodule_loader_modules_setter);
-  if (T371 != YPfalse) {
-    T370 = CHKREF(YastYmodule_loader_modules_setter);
-  } else {
-    T370 = YPfalse;
-  }
-  T369 = fun_361;
-  T368 = CALL2(CHKREF(YPdefine_method),T370,T369);
-  YastYmodule_loader_modules_setter = T368;
-  regsym(&YastYmodule_loader_modules_setter,"ast","module-loader-modules-setter");
-  T374 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  T373 = fun_362 = YPmet(FUNCODEREF(fun_362),YPfalse,T374,ENVNUL);
-  T376 = fun_362;
-  T375 = CALLN(CHKREF(YPslot),5,CHKREF(YastYLmodule_loaderG),CHKREF(YastYmodule_loader_modules),CHKREF(YastYmodule_loader_modules_setter),CHKREF(YruntimeYLtabG),T376);
-  T372 = T375;
-  return T372;
+  T376 = T379;
+  return T376;
 }
 
 P YastY___main_7___() {
-  P T170,T169,T168,T167,T166,T165,T164,T163,T162,T161,T160,T159,T158,T157,T156,T155;
-  P T154,T153,T152,T151,T150,T149,T148,T147,T146,T145,T144,T143,T142,T141,T140,T139;
-  P T138,T137,T136,T135,T134,T133,T132,T131,T130,T129,T128,T127,T126,T125,T124,T123;
-  P T122,T121,T120,T119,T118,T117,T116,T115,T114,T113,T112,T111,T110,T109,T108,T107;
-  P T106,T105,T104,T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93,T92,T91;
-  P T90,T89,T88,T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77,T76,T75;
-  P T74,T73,T72,T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61,T60,T59;
-  P T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43;
-  P T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27;
-  P T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11;
-  P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P T176,T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164,T163,T162,T161;
+  P T160,T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149,T148,T147,T146,T145;
+  P T144,T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133,T132,T131,T130,T129;
+  P T128,T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116,T115,T114,T113;
+  P T112,T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100,T99,T98,T97;
+  P T96,T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84,T83,T82,T81;
+  P T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68,T67,T66,T65;
+  P T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49;
+  P T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33;
+  P T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17;
+  P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
+  P T0;
 loop:
-  lit_377 = YPPsym((P)"module-loader-stack");
-  T0 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_363 = YPmet(FUNCODEREF(fun_363),CHKREF(lit_377),T0,ENVNUL);
-  T4 = BOUNDP(YastYmodule_loader_stack);
+  lit_379 = YPPsym((P)"module-loader-modules-setter");
+  T0 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YruntimeYLtabG),CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_362 = YPmet(FUNCODEREF(fun_362),CHKREF(lit_379),T0,ENVNUL);
+  T4 = BOUNDP(YastYmodule_loader_modules_setter);
   if (T4 != YPfalse) {
-    T3 = CHKREF(YastYmodule_loader_stack);
+    T3 = CHKREF(YastYmodule_loader_modules_setter);
   } else {
     T3 = YPfalse;
   }
-  T2 = fun_363;
+  T2 = fun_362;
   T1 = CALL2(CHKREF(YPdefine_method),T3,T2);
-  YastYmodule_loader_stack = T1;
+  YastYmodule_loader_modules_setter = T1;
+  regsym(&YastYmodule_loader_modules_setter,"ast","module-loader-modules-setter");
+  T5 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_363 = YPmet(FUNCODEREF(fun_363),YPfalse,T5,ENVNUL);
+  T6 = fun_363;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmodule_loaderG),CHKREF(YastYmodule_loader_modules),CHKREF(YastYmodule_loader_modules_setter),CHKREF(YruntimeYLtabG),T6);
+  lit_380 = YPPsym((P)"module-loader-stack");
+  T7 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_364 = YPmet(FUNCODEREF(fun_364),CHKREF(lit_380),T7,ENVNUL);
+  T11 = BOUNDP(YastYmodule_loader_stack);
+  if (T11 != YPfalse) {
+    T10 = CHKREF(YastYmodule_loader_stack);
+  } else {
+    T10 = YPfalse;
+  }
+  T9 = fun_364;
+  T8 = CALL2(CHKREF(YPdefine_method),T10,T9);
+  YastYmodule_loader_stack = T8;
   regsym(&YastYmodule_loader_stack,"ast","module-loader-stack");
-  lit_378 = YPPsym((P)"module-loader-stack-setter");
-  T5 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLlstG),CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_364 = YPmet(FUNCODEREF(fun_364),CHKREF(lit_378),T5,ENVNUL);
-  T9 = BOUNDP(YastYmodule_loader_stack_setter);
-  if (T9 != YPfalse) {
-    T8 = CHKREF(YastYmodule_loader_stack_setter);
+  lit_381 = YPPsym((P)"module-loader-stack-setter");
+  T12 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLlstG),CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_365 = YPmet(FUNCODEREF(fun_365),CHKREF(lit_381),T12,ENVNUL);
+  T16 = BOUNDP(YastYmodule_loader_stack_setter);
+  if (T16 != YPfalse) {
+    T15 = CHKREF(YastYmodule_loader_stack_setter);
   } else {
-    T8 = YPfalse;
+    T15 = YPfalse;
   }
-  T7 = fun_364;
-  T6 = CALL2(CHKREF(YPdefine_method),T8,T7);
-  YastYmodule_loader_stack_setter = T6;
+  T14 = fun_365;
+  T13 = CALL2(CHKREF(YPdefine_method),T15,T14);
+  YastYmodule_loader_stack_setter = T13;
   regsym(&YastYmodule_loader_stack_setter,"ast","module-loader-stack-setter");
-  T10 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_365 = YPmet(FUNCODEREF(fun_365),YPfalse,T10,ENVNUL);
-  T11 = fun_365;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmodule_loaderG),CHKREF(YastYmodule_loader_stack),CHKREF(YastYmodule_loader_stack_setter),CHKREF(YLlstG),T11);
-  T13 = (P)YPpair(CHKREF(YLanyG),Ynil);
-  T12 = CALL3(CHKREF(YPisa),T13,Ynil,Ynil);
-  YastYLmoduleG = T12;
+  T17 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_366 = YPmet(FUNCODEREF(fun_366),YPfalse,T17,ENVNUL);
+  T18 = fun_366;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmodule_loaderG),CHKREF(YastYmodule_loader_stack),CHKREF(YastYmodule_loader_stack_setter),CHKREF(YLlstG),T18);
+  T20 = (P)YPpair(CHKREF(YLanyG),Ynil);
+  T19 = CALL3(CHKREF(YPisa),T20,Ynil,Ynil);
+  YastYLmoduleG = T19;
   regsym(&YastYLmoduleG,"ast","<module>");
-  lit_379 = YPPsym((P)"module-name");
-  T14 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_366 = YPmet(FUNCODEREF(fun_366),CHKREF(lit_379),T14,ENVNUL);
-  T18 = BOUNDP(YastYmodule_name);
-  if (T18 != YPfalse) {
-    T17 = CHKREF(YastYmodule_name);
+  lit_382 = YPPsym((P)"module-name");
+  T21 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_367 = YPmet(FUNCODEREF(fun_367),CHKREF(lit_382),T21,ENVNUL);
+  T25 = BOUNDP(YastYmodule_name);
+  if (T25 != YPfalse) {
+    T24 = CHKREF(YastYmodule_name);
   } else {
-    T17 = YPfalse;
+    T24 = YPfalse;
   }
-  T16 = fun_366;
-  T15 = CALL2(CHKREF(YPdefine_method),T17,T16);
-  YastYmodule_name = T15;
+  T23 = fun_367;
+  T22 = CALL2(CHKREF(YPdefine_method),T24,T23);
+  YastYmodule_name = T22;
   regsym(&YastYmodule_name,"ast","module-name");
-  lit_380 = YPPsym((P)"module-name-setter");
-  T19 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLsymG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_367 = YPmet(FUNCODEREF(fun_367),CHKREF(lit_380),T19,ENVNUL);
-  T23 = BOUNDP(YastYmodule_name_setter);
-  if (T23 != YPfalse) {
-    T22 = CHKREF(YastYmodule_name_setter);
-  } else {
-    T22 = YPfalse;
-  }
-  T21 = fun_367;
-  T20 = CALL2(CHKREF(YPdefine_method),T22,T21);
-  YastYmodule_name_setter = T20;
-  regsym(&YastYmodule_name_setter,"ast","module-name-setter");
-  T24 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_368 = YPmet(FUNCODEREF(fun_368),YPfalse,T24,ENVNUL);
-  T25 = fun_368;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmoduleG),CHKREF(YastYmodule_name),CHKREF(YastYmodule_name_setter),CHKREF(YLsymG),T25);
-  lit_381 = YPPsym((P)"module-target-environment");
-  T26 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_369 = YPmet(FUNCODEREF(fun_369),CHKREF(lit_381),T26,ENVNUL);
-  T30 = BOUNDP(YastYmodule_target_environment);
+  lit_383 = YPPsym((P)"module-name-setter");
+  T26 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YLsymG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_368 = YPmet(FUNCODEREF(fun_368),CHKREF(lit_383),T26,ENVNUL);
+  T30 = BOUNDP(YastYmodule_name_setter);
   if (T30 != YPfalse) {
-    T29 = CHKREF(YastYmodule_target_environment);
+    T29 = CHKREF(YastYmodule_name_setter);
   } else {
     T29 = YPfalse;
   }
-  T28 = fun_369;
+  T28 = fun_368;
   T27 = CALL2(CHKREF(YPdefine_method),T29,T28);
-  YastYmodule_target_environment = T27;
-  regsym(&YastYmodule_target_environment,"ast","module-target-environment");
-  lit_382 = YPPsym((P)"module-target-environment-setter");
-  T31 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_370 = YPmet(FUNCODEREF(fun_370),CHKREF(lit_382),T31,ENVNUL);
-  T35 = BOUNDP(YastYmodule_target_environment_setter);
-  if (T35 != YPfalse) {
-    T34 = CHKREF(YastYmodule_target_environment_setter);
+  YastYmodule_name_setter = T27;
+  regsym(&YastYmodule_name_setter,"ast","module-name-setter");
+  T31 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_369 = YPmet(FUNCODEREF(fun_369),YPfalse,T31,ENVNUL);
+  T32 = fun_369;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmoduleG),CHKREF(YastYmodule_name),CHKREF(YastYmodule_name_setter),CHKREF(YLsymG),T32);
+  lit_384 = YPPsym((P)"module-target-environment");
+  T33 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_370 = YPmet(FUNCODEREF(fun_370),CHKREF(lit_384),T33,ENVNUL);
+  T37 = BOUNDP(YastYmodule_target_environment);
+  if (T37 != YPfalse) {
+    T36 = CHKREF(YastYmodule_target_environment);
   } else {
-    T34 = YPfalse;
+    T36 = YPfalse;
   }
-  T33 = fun_370;
-  T32 = CALL2(CHKREF(YPdefine_method),T34,T33);
-  YastYmodule_target_environment_setter = T32;
-  regsym(&YastYmodule_target_environment_setter,"ast","module-target-environment-setter");
-  T36 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_371 = YPmet(FUNCODEREF(fun_371),YPfalse,T36,ENVNUL);
-  T37 = fun_371;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmoduleG),CHKREF(YastYmodule_target_environment),CHKREF(YastYmodule_target_environment_setter),CHKREF(YastYLstatic_global_environmentG),T37);
-  lit_383 = YPPsym((P)"module-syntax-environment");
-  T38 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_372 = YPmet(FUNCODEREF(fun_372),CHKREF(lit_383),T38,ENVNUL);
-  T42 = BOUNDP(YastYmodule_syntax_environment);
+  T35 = fun_370;
+  T34 = CALL2(CHKREF(YPdefine_method),T36,T35);
+  YastYmodule_target_environment = T34;
+  regsym(&YastYmodule_target_environment,"ast","module-target-environment");
+  lit_385 = YPPsym((P)"module-target-environment-setter");
+  T38 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_371 = YPmet(FUNCODEREF(fun_371),CHKREF(lit_385),T38,ENVNUL);
+  T42 = BOUNDP(YastYmodule_target_environment_setter);
   if (T42 != YPfalse) {
-    T41 = CHKREF(YastYmodule_syntax_environment);
+    T41 = CHKREF(YastYmodule_target_environment_setter);
   } else {
     T41 = YPfalse;
   }
-  T40 = fun_372;
+  T40 = fun_371;
   T39 = CALL2(CHKREF(YPdefine_method),T41,T40);
-  YastYmodule_syntax_environment = T39;
-  regsym(&YastYmodule_syntax_environment,"ast","module-syntax-environment");
-  lit_384 = YPPsym((P)"module-syntax-environment-setter");
-  T43 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_373 = YPmet(FUNCODEREF(fun_373),CHKREF(lit_384),T43,ENVNUL);
-  T47 = BOUNDP(YastYmodule_syntax_environment_setter);
-  if (T47 != YPfalse) {
-    T46 = CHKREF(YastYmodule_syntax_environment_setter);
+  YastYmodule_target_environment_setter = T39;
+  regsym(&YastYmodule_target_environment_setter,"ast","module-target-environment-setter");
+  T43 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_372 = YPmet(FUNCODEREF(fun_372),YPfalse,T43,ENVNUL);
+  T44 = fun_372;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmoduleG),CHKREF(YastYmodule_target_environment),CHKREF(YastYmodule_target_environment_setter),CHKREF(YastYLstatic_global_environmentG),T44);
+  lit_386 = YPPsym((P)"module-syntax-environment");
+  T45 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_373 = YPmet(FUNCODEREF(fun_373),CHKREF(lit_386),T45,ENVNUL);
+  T49 = BOUNDP(YastYmodule_syntax_environment);
+  if (T49 != YPfalse) {
+    T48 = CHKREF(YastYmodule_syntax_environment);
   } else {
-    T46 = YPfalse;
+    T48 = YPfalse;
   }
-  T45 = fun_373;
-  T44 = CALL2(CHKREF(YPdefine_method),T46,T45);
-  YastYmodule_syntax_environment_setter = T44;
-  regsym(&YastYmodule_syntax_environment_setter,"ast","module-syntax-environment-setter");
-  T48 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_374 = YPmet(FUNCODEREF(fun_374),YPfalse,T48,ENVNUL);
-  T49 = fun_374;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmoduleG),CHKREF(YastYmodule_syntax_environment),CHKREF(YastYmodule_syntax_environment_setter),CHKREF(YastYLstatic_global_environmentG),T49);
-  lit_385 = YPPsym((P)"module-exports");
-  T50 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_375 = YPmet(FUNCODEREF(fun_375),CHKREF(lit_385),T50,ENVNUL);
-  T54 = BOUNDP(YastYmodule_exports);
+  T47 = fun_373;
+  T46 = CALL2(CHKREF(YPdefine_method),T48,T47);
+  YastYmodule_syntax_environment = T46;
+  regsym(&YastYmodule_syntax_environment,"ast","module-syntax-environment");
+  lit_387 = YPPsym((P)"module-syntax-environment-setter");
+  T50 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_374 = YPmet(FUNCODEREF(fun_374),CHKREF(lit_387),T50,ENVNUL);
+  T54 = BOUNDP(YastYmodule_syntax_environment_setter);
   if (T54 != YPfalse) {
-    T53 = CHKREF(YastYmodule_exports);
+    T53 = CHKREF(YastYmodule_syntax_environment_setter);
   } else {
     T53 = YPfalse;
   }
-  T52 = fun_375;
+  T52 = fun_374;
   T51 = CALL2(CHKREF(YPdefine_method),T53,T52);
-  YastYmodule_exports = T51;
+  YastYmodule_syntax_environment_setter = T51;
+  regsym(&YastYmodule_syntax_environment_setter,"ast","module-syntax-environment-setter");
+  T55 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_375 = YPmet(FUNCODEREF(fun_375),YPfalse,T55,ENVNUL);
+  T56 = fun_375;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmoduleG),CHKREF(YastYmodule_syntax_environment),CHKREF(YastYmodule_syntax_environment_setter),CHKREF(YastYLstatic_global_environmentG),T56);
+  lit_388 = YPPsym((P)"module-exports");
+  T57 = YPsig(YPPlist(1,CHKREF(lit_6)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_376 = YPmet(FUNCODEREF(fun_376),CHKREF(lit_388),T57,ENVNUL);
+  T61 = BOUNDP(YastYmodule_exports);
+  if (T61 != YPfalse) {
+    T60 = CHKREF(YastYmodule_exports);
+  } else {
+    T60 = YPfalse;
+  }
+  T59 = fun_376;
+  T58 = CALL2(CHKREF(YPdefine_method),T60,T59);
+  YastYmodule_exports = T58;
   regsym(&YastYmodule_exports,"ast","module-exports");
-  lit_386 = YPPsym((P)"module-exports-setter");
-  T55 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YruntimeYLtabG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_376 = YPmet(FUNCODEREF(fun_376),CHKREF(lit_386),T55,ENVNUL);
-  T59 = BOUNDP(YastYmodule_exports_setter);
-  if (T59 != YPfalse) {
-    T58 = CHKREF(YastYmodule_exports_setter);
+  lit_389 = YPPsym((P)"module-exports-setter");
+  T62 = YPsig(YPPlist(2,CHKREF(lit_8),CHKREF(lit_6)),YPPlist(2,CHKREF(YruntimeYLtabG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_377 = YPmet(FUNCODEREF(fun_377),CHKREF(lit_389),T62,ENVNUL);
+  T66 = BOUNDP(YastYmodule_exports_setter);
+  if (T66 != YPfalse) {
+    T65 = CHKREF(YastYmodule_exports_setter);
   } else {
-    T58 = YPfalse;
+    T65 = YPfalse;
   }
-  T57 = fun_376;
-  T56 = CALL2(CHKREF(YPdefine_method),T58,T57);
-  YastYmodule_exports_setter = T56;
+  T64 = fun_377;
+  T63 = CALL2(CHKREF(YPdefine_method),T65,T64);
+  YastYmodule_exports_setter = T63;
   regsym(&YastYmodule_exports_setter,"ast","module-exports-setter");
-  T60 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_377 = YPmet(FUNCODEREF(fun_377),YPfalse,T60,ENVNUL);
-  T61 = fun_377;
-  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmoduleG),CHKREF(YastYmodule_exports),CHKREF(YastYmodule_exports_setter),CHKREF(YruntimeYLtabG),T61);
-  lit_387 = YPPsym((P)"set-module-environments");
-  lit_388 = YPPsym((P)"target-env");
-  lit_389 = YPPsym((P)"syntax-env");
-  lit_390 = YPPsym((P)"mod");
-  T62 = YPsig(YPPlist(3,CHKREF(lit_390),CHKREF(lit_389),CHKREF(lit_388)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  YastYset_module_environments = YPmet(FUNCODEREF(YastYset_module_environments),CHKREF(lit_387),T62,ENVNUL);
-  T63 = YastYset_module_environments;
-  YastYset_module_environments = T63;
+  T67 = YPsig(YPPlist(1,CHKREF(lit_9)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_378 = YPmet(FUNCODEREF(fun_378),YPfalse,T67,ENVNUL);
+  T68 = fun_378;
+  CALLN(CHKREF(YPslot),5,CHKREF(YastYLmoduleG),CHKREF(YastYmodule_exports),CHKREF(YastYmodule_exports_setter),CHKREF(YruntimeYLtabG),T68);
+  lit_390 = YPPsym((P)"set-module-environments");
+  lit_391 = YPPsym((P)"target-env");
+  lit_392 = YPPsym((P)"syntax-env");
+  lit_393 = YPPsym((P)"mod");
+  T69 = YPsig(YPPlist(3,CHKREF(lit_393),CHKREF(lit_392),CHKREF(lit_391)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YastYset_module_environments = YPmet(FUNCODEREF(YastYset_module_environments),CHKREF(lit_390),T69,ENVNUL);
+  T70 = YastYset_module_environments;
+  YastYset_module_environments = T70;
   regsym(&YastYset_module_environments,"ast","set-module-environments");
-  lit_391 = YPPsym((P)"do-module-loader-modules");
-  lit_392 = YPPsym((P)"loader");
-  T65 = YPsig(YPPlist(1,CHKREF(lit_390)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_379 = YPmet(FUNCODEREF(fun_379),YPfalse,T65,ENVNUL);
-  T64 = YPsig(YPPlist(2,CHKREF(lit_187),CHKREF(lit_392)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYdo_module_loader_modules = YPmet(FUNCODEREF(YastYdo_module_loader_modules),CHKREF(lit_391),T64,ENVNUL);
-  T66 = YastYdo_module_loader_modules;
-  YastYdo_module_loader_modules = T66;
+  lit_394 = YPPsym((P)"do-module-loader-modules");
+  lit_395 = YPPsym((P)"loader");
+  T72 = YPsig(YPPlist(1,CHKREF(lit_393)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_380 = YPmet(FUNCODEREF(fun_380),YPfalse,T72,ENVNUL);
+  T71 = YPsig(YPPlist(2,CHKREF(lit_189),CHKREF(lit_395)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYdo_module_loader_modules = YPmet(FUNCODEREF(YastYdo_module_loader_modules),CHKREF(lit_394),T71,ENVNUL);
+  T73 = YastYdo_module_loader_modules;
+  YastYdo_module_loader_modules = T73;
   regsym(&YastYdo_module_loader_modules,"ast","do-module-loader-modules");
-  lit_393 = YPPsym((P)"module-loader-module-type");
-  T67 = YPsig(YPPlist(1,CHKREF(lit_392)),YPPlist(1,CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)1),CHKREF(YastYLmoduleG));
-  fun_381 = YPmet(FUNCODEREF(fun_381),CHKREF(lit_393),T67,ENVNUL);
-  T71 = BOUNDP(YastYmodule_loader_module_type);
-  if (T71 != YPfalse) {
-    T70 = CHKREF(YastYmodule_loader_module_type);
+  lit_396 = YPPsym((P)"module-loader-module-type");
+  T74 = YPsig(YPPlist(1,CHKREF(lit_395)),YPPlist(1,CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)1),CHKREF(YastYLmoduleG));
+  fun_382 = YPmet(FUNCODEREF(fun_382),CHKREF(lit_396),T74,ENVNUL);
+  T78 = BOUNDP(YastYmodule_loader_module_type);
+  if (T78 != YPfalse) {
+    T77 = CHKREF(YastYmodule_loader_module_type);
   } else {
-    T70 = YPfalse;
+    T77 = YPfalse;
   }
-  T69 = fun_381;
-  T68 = CALL2(CHKREF(YPdefine_method),T70,T69);
-  YastYmodule_loader_module_type = T68;
+  T76 = fun_382;
+  T75 = CALL2(CHKREF(YPdefine_method),T77,T76);
+  YastYmodule_loader_module_type = T75;
   regsym(&YastYmodule_loader_module_type,"ast","module-loader-module-type");
-  lit_394 = YPPsym((P)"register-module!");
-  lit_395 = YPPsym((P)"module-loader");
-  T72 = YPsig(YPPlist(2,CHKREF(lit_395),CHKREF(lit_390)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YastYLmodule_loaderG));
-  YastYregister_moduleX = YPmet(FUNCODEREF(YastYregister_moduleX),CHKREF(lit_394),T72,ENVNUL);
-  T73 = YastYregister_moduleX;
-  YastYregister_moduleX = T73;
+  lit_397 = YPPsym((P)"register-module!");
+  lit_398 = YPPsym((P)"module-loader");
+  T79 = YPsig(YPPlist(2,CHKREF(lit_398),CHKREF(lit_393)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YastYLmodule_loaderG));
+  YastYregister_moduleX = YPmet(FUNCODEREF(YastYregister_moduleX),CHKREF(lit_397),T79,ENVNUL);
+  T80 = YastYregister_moduleX;
+  YastYregister_moduleX = T80;
   regsym(&YastYregister_moduleX,"ast","register-module!");
-  lit_396 = YPPsym((P)"probe-module");
-  T74 = YPsig(YPPlist(2,CHKREF(lit_395),CHKREF(lit_226)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLsymG)),YPfalse,YPint((P)2),CHKREF(YastYLmoduleG));
-  YastYprobe_module = YPmet(FUNCODEREF(YastYprobe_module),CHKREF(lit_396),T74,ENVNUL);
-  T75 = YastYprobe_module;
-  YastYprobe_module = T75;
+  lit_399 = YPPsym((P)"probe-module");
+  T81 = YPsig(YPPlist(2,CHKREF(lit_398),CHKREF(lit_228)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLsymG)),YPfalse,YPint((P)2),CHKREF(YastYLmoduleG));
+  YastYprobe_module = YPmet(FUNCODEREF(YastYprobe_module),CHKREF(lit_399),T81,ENVNUL);
+  T82 = YastYprobe_module;
+  YastYprobe_module = T82;
   regsym(&YastYprobe_module,"ast","probe-module");
-  lit_397 = YPPsym((P)"load-and-register-module");
-  lit_398 = YPsb((P)"%s]\n");
-  lit_399 = YPsb((P)"%s[Loading module %s...\n");
-  lit_400 = YPsb((P)"%s: error: Circular use of %s not allowed");
-  lit_401 = YPsb((P)"  ");
-  T78 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_384 = YPmet(FUNCODEREF(fun_384),YPfalse,T78,ENVNUL);
-  T77 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_385 = YPmet(FUNCODEREF(fun_385),YPfalse,T77,ENVNUL);
-  T76 = YPsig(YPPlist(2,CHKREF(lit_392),CHKREF(lit_226)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLsymG)),YPfalse,YPint((P)2),CHKREF(YastYLmoduleG));
-  YastYload_and_register_module = YPmet(FUNCODEREF(YastYload_and_register_module),CHKREF(lit_397),T76,ENVNUL);
-  T79 = YastYload_and_register_module;
-  YastYload_and_register_module = T79;
+  lit_400 = YPPsym((P)"load-and-register-module");
+  lit_401 = YPsb((P)"%s]\n");
+  lit_402 = YPsb((P)"%s[Loading module %s...\n");
+  lit_403 = YPsb((P)"%s: error: Circular use of %s not allowed");
+  lit_404 = YPsb((P)"  ");
+  T85 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_385 = YPmet(FUNCODEREF(fun_385),YPfalse,T85,ENVNUL);
+  T84 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_386 = YPmet(FUNCODEREF(fun_386),YPfalse,T84,ENVNUL);
+  T83 = YPsig(YPPlist(2,CHKREF(lit_395),CHKREF(lit_228)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLsymG)),YPfalse,YPint((P)2),CHKREF(YastYLmoduleG));
+  YastYload_and_register_module = YPmet(FUNCODEREF(YastYload_and_register_module),CHKREF(lit_400),T83,ENVNUL);
+  T86 = YastYload_and_register_module;
+  YastYload_and_register_module = T86;
   regsym(&YastYload_and_register_module,"ast","load-and-register-module");
-  lit_402 = YPPsym((P)"load-module");
-  T81 = YPsig(YPPlist(2,CHKREF(lit_392),CHKREF(lit_226)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLsymG)),YPfalse,YPint((P)2),CHKREF(YastYLmoduleG));
-  T80 = YPgen((P)YPgen_code((P)CHKREF(YPdispatch)),CHKREF(lit_402),T81,Ynil,YPfalse);
-  YastYload_module = T80;
+  lit_405 = YPPsym((P)"load-module");
+  T88 = YPsig(YPPlist(2,CHKREF(lit_395),CHKREF(lit_228)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLsymG)),YPfalse,YPint((P)2),CHKREF(YastYLmoduleG));
+  T87 = YPgen((P)YPgen_code((P)CHKREF(YPdispatch)),CHKREF(lit_405),T88,Ynil,YPfalse);
+  YastYload_module = T87;
   regsym(&YastYload_module,"ast","load-module");
-  lit_403 = YPPsym((P)"export-binding!");
-  lit_404 = YPPsym((P)"module");
-  lit_405 = YPsb((P)"Tried to export %= and %= from %= as %=");
-  T82 = YPsig(YPPlist(3,CHKREF(lit_404),CHKREF(lit_226),CHKREF(lit_182)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YastYLbinding_nameG),CHKREF(YastYLmodule_bindingG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  YastYexport_bindingX = YPmet(FUNCODEREF(YastYexport_bindingX),CHKREF(lit_403),T82,ENVNUL);
-  T83 = YastYexport_bindingX;
-  YastYexport_bindingX = T83;
+  lit_406 = YPPsym((P)"export-binding!");
+  lit_407 = YPPsym((P)"module");
+  lit_408 = YPsb((P)"Tried to export %= and %= from %= as %=");
+  T89 = YPsig(YPPlist(3,CHKREF(lit_407),CHKREF(lit_228),CHKREF(lit_184)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YastYLbinding_nameG),CHKREF(YastYLmodule_bindingG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YastYexport_bindingX = YPmet(FUNCODEREF(YastYexport_bindingX),CHKREF(lit_406),T89,ENVNUL);
+  T90 = YastYexport_bindingX;
+  YastYexport_bindingX = T90;
   regsym(&YastYexport_bindingX,"ast","export-binding!");
-  lit_406 = YPPsym((P)"binding-native-to?");
-  T84 = YPsig(YPPlist(2,CHKREF(lit_182),CHKREF(lit_404)),YPPlist(2,CHKREF(YastYLmodule_bindingG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLlogG));
-  YastYbinding_native_toQ = YPmet(FUNCODEREF(YastYbinding_native_toQ),CHKREF(lit_406),T84,ENVNUL);
-  T85 = YastYbinding_native_toQ;
-  YastYbinding_native_toQ = T85;
+  lit_409 = YPPsym((P)"binding-native-to?");
+  T91 = YPsig(YPPlist(2,CHKREF(lit_184),CHKREF(lit_407)),YPPlist(2,CHKREF(YastYLmodule_bindingG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLlogG));
+  YastYbinding_native_toQ = YPmet(FUNCODEREF(YastYbinding_native_toQ),CHKREF(lit_409),T91,ENVNUL);
+  T92 = YastYbinding_native_toQ;
+  YastYbinding_native_toQ = T92;
   regsym(&YastYbinding_native_toQ,"ast","binding-native-to?");
-  lit_407 = YPPsym((P)"report-undefined-global-bindings");
-  lit_408 = YPsb((P)"%s: warning: undefined binding '%s'.\n");
-  T87 = YPsig(YPPlist(1,CHKREF(lit_182)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_389 = YPmet(FUNCODEREF(fun_389),YPfalse,T87,ENVNUL);
-  T86 = YPsig(YPPlist(1,CHKREF(lit_390)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  YastYreport_undefined_global_bindings = YPmet(FUNCODEREF(YastYreport_undefined_global_bindings),CHKREF(lit_407),T86,ENVNUL);
-  T88 = YastYreport_undefined_global_bindings;
-  YastYreport_undefined_global_bindings = T88;
+  lit_410 = YPPsym((P)"report-undefined-global-bindings");
+  lit_411 = YPsb((P)"%s: warning: undefined binding '%s'.\n");
+  T94 = YPsig(YPPlist(1,CHKREF(lit_184)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_390 = YPmet(FUNCODEREF(fun_390),YPfalse,T94,ENVNUL);
+  T93 = YPsig(YPPlist(1,CHKREF(lit_393)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  YastYreport_undefined_global_bindings = YPmet(FUNCODEREF(YastYreport_undefined_global_bindings),CHKREF(lit_410),T93,ENVNUL);
+  T95 = YastYreport_undefined_global_bindings;
+  YastYreport_undefined_global_bindings = T95;
   regsym(&YastYreport_undefined_global_bindings,"ast","report-undefined-global-bindings");
-  lit_409 = YPPsym((P)"compute-transitive-users");
-  lit_410 = YPPsym((P)"modnames");
-  lit_411 = YPPsym((P)"v");
-  lit_412 = YPPsym((P)"add-user");
-  lit_413 = YPPsym((P)"uses-mod");
-  T93 = YPsig(YPPlist(1,CHKREF(lit_411)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_391 = YPmet(FUNCODEREF(fun_391),YPfalse,T93,ENVNUL);
-  T92 = YPsig(YPPlist(1,CHKREF(lit_413)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_392 = YPmet(FUNCODEREF(fun_392),YPfalse,T92,ENVNUL);
-  T91 = YPsig(YPPlist(1,CHKREF(lit_390)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_393 = YPmet(FUNCODEREF(fun_393),YPfalse,T91,ENVNUL);
-  T90 = YPsig(YPPlist(1,CHKREF(lit_233)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_add_user_394 = YPmet(FUNCODEREF(fun_add_user_394),CHKREF(lit_412),T90,ENVNUL);
-  T89 = YPsig(YPPlist(2,CHKREF(lit_392),CHKREF(lit_410)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
-  YastYcompute_transitive_users = YPmet(FUNCODEREF(YastYcompute_transitive_users),CHKREF(lit_409),T89,ENVNUL);
-  T94 = YastYcompute_transitive_users;
-  YastYcompute_transitive_users = T94;
+  lit_412 = YPPsym((P)"compute-transitive-users");
+  lit_413 = YPPsym((P)"modnames");
+  lit_414 = YPPsym((P)"v");
+  lit_415 = YPPsym((P)"add-user");
+  lit_416 = YPPsym((P)"uses-mod");
+  T100 = YPsig(YPPlist(1,CHKREF(lit_414)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_392 = YPmet(FUNCODEREF(fun_392),YPfalse,T100,ENVNUL);
+  T99 = YPsig(YPPlist(1,CHKREF(lit_416)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_393 = YPmet(FUNCODEREF(fun_393),YPfalse,T99,ENVNUL);
+  T98 = YPsig(YPPlist(1,CHKREF(lit_393)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_394 = YPmet(FUNCODEREF(fun_394),YPfalse,T98,ENVNUL);
+  T97 = YPsig(YPPlist(1,CHKREF(lit_235)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_add_user_395 = YPmet(FUNCODEREF(fun_add_user_395),CHKREF(lit_415),T97,ENVNUL);
+  T96 = YPsig(YPPlist(2,CHKREF(lit_395),CHKREF(lit_413)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLlstG));
+  YastYcompute_transitive_users = YPmet(FUNCODEREF(YastYcompute_transitive_users),CHKREF(lit_412),T96,ENVNUL);
+  T101 = YastYcompute_transitive_users;
+  YastYcompute_transitive_users = T101;
   regsym(&YastYcompute_transitive_users,"ast","compute-transitive-users");
-  lit_414 = YPPsym((P)"free-implemented-foreign-bindings");
-  T96 = YPsig(YPPlist(1,CHKREF(lit_182)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_396 = YPmet(FUNCODEREF(fun_396),YPfalse,T96,ENVNUL);
-  T95 = YPsig(YPPlist(1,CHKREF(lit_390)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  YastYfree_implemented_foreign_bindings = YPmet(FUNCODEREF(YastYfree_implemented_foreign_bindings),CHKREF(lit_414),T95,ENVNUL);
-  T97 = YastYfree_implemented_foreign_bindings;
-  YastYfree_implemented_foreign_bindings = T97;
+  lit_417 = YPPsym((P)"free-implemented-foreign-bindings");
+  T103 = YPsig(YPPlist(1,CHKREF(lit_184)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_397 = YPmet(FUNCODEREF(fun_397),YPfalse,T103,ENVNUL);
+  T102 = YPsig(YPPlist(1,CHKREF(lit_393)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  YastYfree_implemented_foreign_bindings = YPmet(FUNCODEREF(YastYfree_implemented_foreign_bindings),CHKREF(lit_417),T102,ENVNUL);
+  T104 = YastYfree_implemented_foreign_bindings;
+  YastYfree_implemented_foreign_bindings = T104;
   regsym(&YastYfree_implemented_foreign_bindings,"ast","free-implemented-foreign-bindings");
-  lit_415 = YPPsym((P)"remove-module-internal!");
-  T98 = YPsig(YPPlist(2,CHKREF(lit_392),CHKREF(lit_390)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYremove_module_internalX = YPmet(FUNCODEREF(YastYremove_module_internalX),CHKREF(lit_415),T98,ENVNUL);
-  T99 = YastYremove_module_internalX;
-  YastYremove_module_internalX = T99;
+  lit_418 = YPPsym((P)"remove-module-internal!");
+  T105 = YPsig(YPPlist(2,CHKREF(lit_395),CHKREF(lit_393)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYremove_module_internalX = YPmet(FUNCODEREF(YastYremove_module_internalX),CHKREF(lit_418),T105,ENVNUL);
+  T106 = YastYremove_module_internalX;
+  YastYremove_module_internalX = T106;
   regsym(&YastYremove_module_internalX,"ast","remove-module-internal!");
-  lit_416 = YPPsym((P)"remove-modules-by-name!");
-  T101 = YPsig(YPPlist(1,CHKREF(lit_233)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_399 = YPmet(FUNCODEREF(fun_399),YPfalse,T101,ENVNUL);
-  T100 = YPsig(YPPlist(2,CHKREF(lit_392),CHKREF(lit_410)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYremove_modules_by_nameX = YPmet(FUNCODEREF(YastYremove_modules_by_nameX),CHKREF(lit_416),T100,ENVNUL);
-  T102 = YastYremove_modules_by_nameX;
-  YastYremove_modules_by_nameX = T102;
+  lit_419 = YPPsym((P)"remove-modules-by-name!");
+  T108 = YPsig(YPPlist(1,CHKREF(lit_235)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_400 = YPmet(FUNCODEREF(fun_400),YPfalse,T108,ENVNUL);
+  T107 = YPsig(YPPlist(2,CHKREF(lit_395),CHKREF(lit_413)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLlstG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYremove_modules_by_nameX = YPmet(FUNCODEREF(YastYremove_modules_by_nameX),CHKREF(lit_419),T107,ENVNUL);
+  T109 = YastYremove_modules_by_nameX;
+  YastYremove_modules_by_nameX = T109;
   regsym(&YastYremove_modules_by_nameX,"ast","remove-modules-by-name!");
-  lit_417 = YPPsym((P)"module-name-to-relpath");
-  T103 = YPsig(YPPlist(1,CHKREF(lit_226)),YPPlist(1,CHKREF(YLsymG)),YPfalse,YPint((P)1),CHKREF(YLstrG));
-  YastYmodule_name_to_relpath = YPmet(FUNCODEREF(YastYmodule_name_to_relpath),CHKREF(lit_417),T103,ENVNUL);
-  T104 = YastYmodule_name_to_relpath;
-  YastYmodule_name_to_relpath = T104;
+  lit_420 = YPPsym((P)"module-name-to-relpath");
+  T110 = YPsig(YPPlist(1,CHKREF(lit_228)),YPPlist(1,CHKREF(YLsymG)),YPfalse,YPint((P)1),CHKREF(YLstrG));
+  YastYmodule_name_to_relpath = YPmet(FUNCODEREF(YastYmodule_name_to_relpath),CHKREF(lit_420),T110,ENVNUL);
+  T111 = YastYmodule_name_to_relpath;
+  YastYmodule_name_to_relpath = T111;
   regsym(&YastYmodule_name_to_relpath,"ast","module-name-to-relpath");
-  lit_418 = YPPsym((P)"install-initial-bindings");
-  lit_419 = YPPlist(2,YPPsym((P)"seq"),YPPsym((P)"use"));
-  T106 = YPsig(YPPlist(1,CHKREF(lit_226)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_402 = YPmet(FUNCODEREF(fun_402),YPfalse,T106,ENVNUL);
-  T105 = YPsig(YPPlist(2,CHKREF(lit_300),CHKREF(lit_392)),YPPlist(2,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYinstall_initial_bindings = YPmet(FUNCODEREF(YastYinstall_initial_bindings),CHKREF(lit_418),T105,ENVNUL);
-  T107 = YastYinstall_initial_bindings;
-  YastYinstall_initial_bindings = T107;
+  lit_421 = YPPsym((P)"install-initial-bindings");
+  lit_422 = YPPlist(2,YPPsym((P)"seq"),YPPsym((P)"use"));
+  T113 = YPsig(YPPlist(1,CHKREF(lit_228)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_403 = YPmet(FUNCODEREF(fun_403),YPfalse,T113,ENVNUL);
+  T112 = YPsig(YPPlist(2,CHKREF(lit_302),CHKREF(lit_395)),YPPlist(2,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYinstall_initial_bindings = YPmet(FUNCODEREF(YastYinstall_initial_bindings),CHKREF(lit_421),T112,ENVNUL);
+  T114 = YastYinstall_initial_bindings;
+  YastYinstall_initial_bindings = T114;
   regsym(&YastYinstall_initial_bindings,"ast","install-initial-bindings");
-  lit_420 = YPPsym((P)"fab-static-global-environment");
-  lit_421 = YPPsym((P)"allow-foreign-names?");
-  T108 = YPsig(YPPlist(3,CHKREF(lit_404),CHKREF(lit_395),CHKREF(lit_421)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YastYLmodule_loaderG),CHKREF(YLlogG)),YPfalse,YPint((P)3),CHKREF(YastYLstatic_global_environmentG));
-  YastYfab_static_global_environment = YPmet(FUNCODEREF(YastYfab_static_global_environment),CHKREF(lit_420),T108,ENVNUL);
-  T109 = YastYfab_static_global_environment;
-  YastYfab_static_global_environment = T109;
+  lit_423 = YPPsym((P)"fab-static-global-environment");
+  lit_424 = YPPsym((P)"allow-foreign-names?");
+  T115 = YPsig(YPPlist(3,CHKREF(lit_407),CHKREF(lit_398),CHKREF(lit_424)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YastYLmodule_loaderG),CHKREF(YLlogG)),YPfalse,YPint((P)3),CHKREF(YastYLstatic_global_environmentG));
+  YastYfab_static_global_environment = YPmet(FUNCODEREF(YastYfab_static_global_environment),CHKREF(lit_423),T115,ENVNUL);
+  T116 = YastYfab_static_global_environment;
+  YastYfab_static_global_environment = T116;
   regsym(&YastYfab_static_global_environment,"ast","fab-static-global-environment");
-  lit_422 = YPPsym((P)"fab-subset-environment");
-  lit_423 = YPPsym((P)"excluded");
-  lit_424 = YPPsym((P)"src-module");
-  T111 = YPsig(YPPlist(2,CHKREF(lit_226),CHKREF(lit_182)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  fun_405 = YPmet(FUNCODEREF(fun_405),YPfalse,T111,ENVNUL);
-  T110 = YPsig(YPPlist(3,CHKREF(lit_404),CHKREF(lit_424),CHKREF(lit_423)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YastYLmoduleG),CHKREF(YLcolG)),YPfalse,YPint((P)3),CHKREF(YastYLstatic_global_environmentG));
-  YastYfab_subset_environment = YPmet(FUNCODEREF(YastYfab_subset_environment),CHKREF(lit_422),T110,ENVNUL);
-  T112 = YastYfab_subset_environment;
-  YastYfab_subset_environment = T112;
+  lit_425 = YPPsym((P)"fab-subset-environment");
+  lit_426 = YPPsym((P)"excluded");
+  lit_427 = YPPsym((P)"src-module");
+  T118 = YPsig(YPPlist(2,CHKREF(lit_228),CHKREF(lit_184)),YPPlist(2,CHKREF(YLanyG),CHKREF(YLanyG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  fun_406 = YPmet(FUNCODEREF(fun_406),YPfalse,T118,ENVNUL);
+  T117 = YPsig(YPPlist(3,CHKREF(lit_407),CHKREF(lit_427),CHKREF(lit_426)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YastYLmoduleG),CHKREF(YLcolG)),YPfalse,YPint((P)3),CHKREF(YastYLstatic_global_environmentG));
+  YastYfab_subset_environment = YPmet(FUNCODEREF(YastYfab_subset_environment),CHKREF(lit_425),T117,ENVNUL);
+  T119 = YastYfab_subset_environment;
+  YastYfab_subset_environment = T119;
   regsym(&YastYfab_subset_environment,"ast","fab-subset-environment");
-  T114 = (P)YPpair(CHKREF(YastYLmodule_loaderG),Ynil);
-  T113 = CALL3(CHKREF(YPisa),T114,Ynil,Ynil);
-  YastYLruntime_module_loaderG = T113;
+  T121 = (P)YPpair(CHKREF(YastYLmodule_loaderG),Ynil);
+  T120 = CALL3(CHKREF(YPisa),T121,Ynil,Ynil);
+  YastYLruntime_module_loaderG = T120;
   regsym(&YastYLruntime_module_loaderG,"ast","<runtime-module-loader>");
-  T117 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_407 = YPmet(FUNCODEREF(fun_407),YPfalse,T117,ENVNUL);
-  T116 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  fun_408 = YPmet(FUNCODEREF(fun_408),YPfalse,T116,ENVNUL);
-  T115 = YPsig(YPPlist(2,CHKREF(lit_392),CHKREF(lit_226)),YPPlist(2,CHKREF(YastYLruntime_module_loaderG),CHKREF(YLsymG)),YPfalse,YPint((P)2),CHKREF(YastYLmoduleG));
-  fun_409 = YPmet(FUNCODEREF(fun_409),CHKREF(lit_402),T115,ENVNUL);
-  T121 = BOUNDP(YastYload_module);
-  if (T121 != YPfalse) {
-    T120 = CHKREF(YastYload_module);
-  } else {
-    T120 = YPfalse;
-  }
-  T119 = fun_409;
-  T118 = CALL2(CHKREF(YPdefine_method),T120,T119);
-  YastYload_module = T118;
-  regsym(&YastYload_module,"ast","load-module");
-  T123 = (P)YPpair(CHKREF(YastYLruntime_module_loaderG),Ynil);
-  T122 = CALL3(CHKREF(YPisa),T123,Ynil,Ynil);
-  YastYTruntime_module_loaderT = T122;
-  regsym(&YastYTruntime_module_loaderT,"ast","*runtime-module-loader*");
-  lit_425 = YPPsym((P)"runtime-module-loader");
   T124 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  YastYruntime_module_loader = YPmet(FUNCODEREF(YastYruntime_module_loader),CHKREF(lit_425),T124,ENVNUL);
-  T125 = YastYruntime_module_loader;
-  YastYruntime_module_loader = T125;
-  regsym(&YastYruntime_module_loader,"ast","runtime-module-loader");
-  lit_426 = YPPsym((P)"runtime-module");
-  T126 = YPsig(YPPlist(1,CHKREF(lit_233)),YPPlist(1,CHKREF(YLsymG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  YastYruntime_module = YPmet(FUNCODEREF(YastYruntime_module),CHKREF(lit_426),T126,ENVNUL);
-  T127 = YastYruntime_module;
-  YastYruntime_module = T127;
-  regsym(&YastYruntime_module,"ast","runtime-module");
-  lit_427 = YPPsym((P)"runtime-environment");
-  T128 = YPsig(YPPlist(1,CHKREF(lit_233)),YPPlist(1,CHKREF(YLsymG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  YastYruntime_environment = YPmet(FUNCODEREF(YastYruntime_environment),CHKREF(lit_427),T128,ENVNUL);
-  T129 = YastYruntime_environment;
-  YastYruntime_environment = T129;
-  regsym(&YastYruntime_environment,"ast","runtime-environment");
-  lit_428 = YPPsym((P)"reloader-do-create-module");
-  T130 = YPsig(YPPlist(1,CHKREF(lit_233)),YPPlist(1,CHKREF(YLstrG)),YPfalse,YPint((P)1),CHKREF(YastYLmoduleG));
-  YastYreloader_do_create_module = YPmet(FUNCODEREF(YastYreloader_do_create_module),CHKREF(lit_428),T130,ENVNUL);
-  T131 = YastYreloader_do_create_module;
-  YastYreloader_do_create_module = T131;
-  regsym(&YastYreloader_do_create_module,"ast","reloader-do-create-module");
-  lit_429 = YPPsym((P)"reloader-do-use-module");
-  lit_430 = YPPsym((P)"uses");
-  T132 = YPsig(YPPlist(2,CHKREF(lit_390),CHKREF(lit_430)),YPPlist(2,CHKREF(YastYLmoduleG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYreloader_do_use_module = YPmet(FUNCODEREF(YastYreloader_do_use_module),CHKREF(lit_429),T132,ENVNUL);
-  T133 = YastYreloader_do_use_module;
-  YastYreloader_do_use_module = T133;
-  regsym(&YastYreloader_do_use_module,"ast","reloader-do-use-module");
-  lit_431 = YPPsym((P)"reloader-do-import");
-  lit_432 = YPPsym((P)"original-name");
-  lit_433 = YPPsym((P)"from-mod");
-  lit_434 = YPsb((P)"Can't find %s from %s for %s\n");
-  T134 = YPsig(YPPlist(4,CHKREF(lit_390),CHKREF(lit_226),CHKREF(lit_433),CHKREF(lit_432)),YPPlist(4,CHKREF(YastYLmoduleG),CHKREF(YLstrG),CHKREF(YastYLmoduleG),CHKREF(YLstrG)),YPfalse,YPint((P)4),CHKREF(YLanyG));
-  YastYreloader_do_import = YPmet(FUNCODEREF(YastYreloader_do_import),CHKREF(lit_431),T134,ENVNUL);
-  T135 = YastYreloader_do_import;
-  YastYreloader_do_import = T135;
-  regsym(&YastYreloader_do_import,"ast","reloader-do-import");
-  lit_435 = YPPsym((P)"reloader-do-runtime-binding");
-  T136 = YPsig(YPPlist(3,CHKREF(lit_390),CHKREF(lit_226),CHKREF(lit_321)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YLstrG),CHKREF(YLlocG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  YastYreloader_do_runtime_binding = YPmet(FUNCODEREF(YastYreloader_do_runtime_binding),CHKREF(lit_435),T136,ENVNUL);
-  T137 = YastYreloader_do_runtime_binding;
-  YastYreloader_do_runtime_binding = T137;
-  regsym(&YastYreloader_do_runtime_binding,"ast","reloader-do-runtime-binding");
-  lit_436 = YPPsym((P)"reloader-do-other-binding");
-  T138 = YPsig(YPPlist(2,CHKREF(lit_390),CHKREF(lit_226)),YPPlist(2,CHKREF(YastYLmoduleG),CHKREF(YLstrG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYreloader_do_other_binding = YPmet(FUNCODEREF(YastYreloader_do_other_binding),CHKREF(lit_436),T138,ENVNUL);
-  T139 = YastYreloader_do_other_binding;
-  YastYreloader_do_other_binding = T139;
-  regsym(&YastYreloader_do_other_binding,"ast","reloader-do-other-binding");
-  lit_437 = YPPsym((P)"reloader-do-export");
-  lit_438 = YPPsym((P)"as-name");
-  lit_439 = YPsb((P)"Can't find %s in %s\n");
-  T140 = YPsig(YPPlist(3,CHKREF(lit_390),CHKREF(lit_226),CHKREF(lit_438)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YLstrG),CHKREF(YLstrG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
-  YastYreloader_do_export = YPmet(FUNCODEREF(YastYreloader_do_export),CHKREF(lit_437),T140,ENVNUL);
-  T141 = YastYreloader_do_export;
-  YastYreloader_do_export = T141;
-  regsym(&YastYreloader_do_export,"ast","reloader-do-export");
-  lit_440 = YPPsym((P)"reload-modules");
-  T142 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  YastYreload_modules = YPmet(FUNCODEREF(YastYreload_modules),CHKREF(lit_440),T142,ENVNUL);
-  T143 = YastYreload_modules;
-  YastYreload_modules = T143;
-  regsym(&YastYreload_modules,"ast","reload-modules");
-  lit_441 = YPPsym((P)"install-magic-bindings");
-  T145 = YPsig(YPPlist(1,CHKREF(lit_182)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_420 = YPmet(FUNCODEREF(fun_420),YPfalse,T145,ENVNUL);
-  T144 = YPsig(YPPlist(1,CHKREF(lit_300)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  YastYinstall_magic_bindings = YPmet(FUNCODEREF(YastYinstall_magic_bindings),CHKREF(lit_441),T144,ENVNUL);
-  T146 = YastYinstall_magic_bindings;
-  YastYinstall_magic_bindings = T146;
-  regsym(&YastYinstall_magic_bindings,"ast","install-magic-bindings");
-  lit_442 = YPPsym((P)"reload-macros");
-  T147 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  YastYreload_macros = YPmet(FUNCODEREF(YastYreload_macros),CHKREF(lit_442),T147,ENVNUL);
-  T148 = YastYreload_macros;
-  YastYreload_macros = T148;
-  regsym(&YastYreload_macros,"ast","reload-macros");
-  lit_443 = YPPsym((P)"install-interpreter-hacks");
-  T149 = YPsig(YPPlist(1,CHKREF(lit_300)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  YastYinstall_interpreter_hacks = YPmet(FUNCODEREF(YastYinstall_interpreter_hacks),CHKREF(lit_443),T149,ENVNUL);
-  T150 = YastYinstall_interpreter_hacks;
-  YastYinstall_interpreter_hacks = T150;
-  regsym(&YastYinstall_interpreter_hacks,"ast","install-interpreter-hacks");
-  lit_444 = YPPsym((P)"init-runtime");
-  T151 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  YastYinit_runtime = YPmet(FUNCODEREF(YastYinit_runtime),CHKREF(lit_444),T151,ENVNUL);
-  T152 = YastYinit_runtime;
-  YastYinit_runtime = T152;
-  regsym(&YastYinit_runtime,"ast","init-runtime");
-  lit_445 = YPPlist(5,YPPsym((P)"ct"),YPPsym((P)"ct-also"),YPPsym((P)"ds"),YPPsym((P)"use"),YPPsym((P)"export"));
-  YastYsyntax_environment_excluded_bindings = CHKREF(lit_445);
-  regsym(&YastYsyntax_environment_excluded_bindings,"ast","syntax-environment-excluded-bindings");
-  lit_446 = YPPsym((P)"fab-syntax-environment");
-  lit_447 = YPPsym((P)"proto");
-  T153 = YPsig(YPPlist(1,CHKREF(lit_404)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YastYLstatic_global_environmentG));
-  YastYfab_syntax_environment = YPmet(FUNCODEREF(YastYfab_syntax_environment),CHKREF(lit_446),T153,ENVNUL);
-  T154 = YastYfab_syntax_environment;
-  YastYfab_syntax_environment = T154;
-  regsym(&YastYfab_syntax_environment,"ast","fab-syntax-environment");
-  lit_448 = YPPsym((P)"fab-p2c-module");
-  T155 = YPsig(YPPlist(2,CHKREF(lit_392),CHKREF(lit_226)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLsymG)),YPfalse,YPint((P)2),CHKREF(YastYLmoduleG));
-  YastYfab_p2c_module = YPmet(FUNCODEREF(YastYfab_p2c_module),CHKREF(lit_448),T155,ENVNUL);
-  T156 = YastYfab_p2c_module;
-  YastYfab_p2c_module = T156;
-  regsym(&YastYfab_p2c_module,"ast","fab-p2c-module");
-  lit_449 = YPPsym((P)"init-p2c-boot-environment");
-  T157 = YPsig(YPPlist(1,CHKREF(lit_300)),YPPlist(1,CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  YastYinit_p2c_boot_environment = YPmet(FUNCODEREF(YastYinit_p2c_boot_environment),CHKREF(lit_449),T157,ENVNUL);
-  T158 = YastYinit_p2c_boot_environment;
-  YastYinit_p2c_boot_environment = T158;
-  regsym(&YastYinit_p2c_boot_environment,"ast","init-p2c-boot-environment");
-  lit_450 = YPPsym((P)"init-p2c-regular-environment");
-  T159 = YPsig(YPPlist(2,CHKREF(lit_300),CHKREF(lit_392)),YPPlist(2,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYinit_p2c_regular_environment = YPmet(FUNCODEREF(YastYinit_p2c_regular_environment),CHKREF(lit_450),T159,ENVNUL);
-  T160 = YastYinit_p2c_regular_environment;
-  YastYinit_p2c_regular_environment = T160;
-  regsym(&YastYinit_p2c_regular_environment,"ast","init-p2c-regular-environment");
-  lit_451 = YPPsym((P)"init-ast");
-  T161 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
-  YastYinit_ast = YPmet(FUNCODEREF(YastYinit_ast),CHKREF(lit_451),T161,ENVNUL);
-  T162 = YastYinit_ast;
-  YastYinit_ast = T162;
-  regsym(&YastYinit_ast,"ast","init-ast");
-  lit_452 = YPPsym((P)"do-static-global-bindings");
-  T164 = YPsig(YPPlist(1,CHKREF(lit_300)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_loop_430 = YPmet(FUNCODEREF(fun_loop_430),CHKREF(lit_143),T164,ENVNUL);
-  T163 = YPsig(YPPlist(2,CHKREF(lit_187),CHKREF(lit_300)),YPPlist(2,CHKREF(YLfunG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYdo_static_global_bindings = YPmet(FUNCODEREF(YastYdo_static_global_bindings),CHKREF(lit_452),T163,ENVNUL);
-  T165 = YastYdo_static_global_bindings;
-  YastYdo_static_global_bindings = T165;
-  regsym(&YastYdo_static_global_bindings,"ast","do-static-global-bindings");
-  lit_453 = YPPsym((P)"do-named-static-global-bindings");
-  T167 = YPsig(YPPlist(1,CHKREF(lit_300)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
-  fun_loop_432 = YPmet(FUNCODEREF(fun_loop_432),CHKREF(lit_143),T167,ENVNUL);
-  T166 = YPsig(YPPlist(2,CHKREF(lit_187),CHKREF(lit_300)),YPPlist(2,CHKREF(YLfunG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
-  YastYdo_named_static_global_bindings = YPmet(FUNCODEREF(YastYdo_named_static_global_bindings),CHKREF(lit_453),T166,ENVNUL);
-  T168 = YastYdo_named_static_global_bindings;
-  YastYdo_named_static_global_bindings = T168;
-  regsym(&YastYdo_named_static_global_bindings,"ast","do-named-static-global-bindings");
-  if (YPfalse != YPfalse) {
-    T170 = CHKREF(YastYast_evaluate);
+  fun_408 = YPmet(FUNCODEREF(fun_408),YPfalse,T124,ENVNUL);
+  T123 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  fun_409 = YPmet(FUNCODEREF(fun_409),YPfalse,T123,ENVNUL);
+  T122 = YPsig(YPPlist(2,CHKREF(lit_395),CHKREF(lit_228)),YPPlist(2,CHKREF(YastYLruntime_module_loaderG),CHKREF(YLsymG)),YPfalse,YPint((P)2),CHKREF(YastYLmoduleG));
+  fun_410 = YPmet(FUNCODEREF(fun_410),CHKREF(lit_405),T122,ENVNUL);
+  T128 = BOUNDP(YastYload_module);
+  if (T128 != YPfalse) {
+    T127 = CHKREF(YastYload_module);
   } else {
-    T170 = YPfalse;
+    T127 = YPfalse;
   }
-  T169 = T170;
-  return T169;
+  T126 = fun_410;
+  T125 = CALL2(CHKREF(YPdefine_method),T127,T126);
+  YastYload_module = T125;
+  regsym(&YastYload_module,"ast","load-module");
+  T130 = (P)YPpair(CHKREF(YastYLruntime_module_loaderG),Ynil);
+  T129 = CALL3(CHKREF(YPisa),T130,Ynil,Ynil);
+  YastYTruntime_module_loaderT = T129;
+  regsym(&YastYTruntime_module_loaderT,"ast","*runtime-module-loader*");
+  lit_428 = YPPsym((P)"runtime-module-loader");
+  T131 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  YastYruntime_module_loader = YPmet(FUNCODEREF(YastYruntime_module_loader),CHKREF(lit_428),T131,ENVNUL);
+  T132 = YastYruntime_module_loader;
+  YastYruntime_module_loader = T132;
+  regsym(&YastYruntime_module_loader,"ast","runtime-module-loader");
+  lit_429 = YPPsym((P)"runtime-module");
+  T133 = YPsig(YPPlist(1,CHKREF(lit_235)),YPPlist(1,CHKREF(YLsymG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  YastYruntime_module = YPmet(FUNCODEREF(YastYruntime_module),CHKREF(lit_429),T133,ENVNUL);
+  T134 = YastYruntime_module;
+  YastYruntime_module = T134;
+  regsym(&YastYruntime_module,"ast","runtime-module");
+  lit_430 = YPPsym((P)"runtime-environment");
+  T135 = YPsig(YPPlist(1,CHKREF(lit_235)),YPPlist(1,CHKREF(YLsymG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  YastYruntime_environment = YPmet(FUNCODEREF(YastYruntime_environment),CHKREF(lit_430),T135,ENVNUL);
+  T136 = YastYruntime_environment;
+  YastYruntime_environment = T136;
+  regsym(&YastYruntime_environment,"ast","runtime-environment");
+  lit_431 = YPPsym((P)"reloader-do-create-module");
+  T137 = YPsig(YPPlist(1,CHKREF(lit_235)),YPPlist(1,CHKREF(YLstrG)),YPfalse,YPint((P)1),CHKREF(YastYLmoduleG));
+  YastYreloader_do_create_module = YPmet(FUNCODEREF(YastYreloader_do_create_module),CHKREF(lit_431),T137,ENVNUL);
+  T138 = YastYreloader_do_create_module;
+  YastYreloader_do_create_module = T138;
+  regsym(&YastYreloader_do_create_module,"ast","reloader-do-create-module");
+  lit_432 = YPPsym((P)"reloader-do-use-module");
+  lit_433 = YPPsym((P)"uses");
+  T139 = YPsig(YPPlist(2,CHKREF(lit_393),CHKREF(lit_433)),YPPlist(2,CHKREF(YastYLmoduleG),CHKREF(YastYLmoduleG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYreloader_do_use_module = YPmet(FUNCODEREF(YastYreloader_do_use_module),CHKREF(lit_432),T139,ENVNUL);
+  T140 = YastYreloader_do_use_module;
+  YastYreloader_do_use_module = T140;
+  regsym(&YastYreloader_do_use_module,"ast","reloader-do-use-module");
+  lit_434 = YPPsym((P)"reloader-do-import");
+  lit_435 = YPPsym((P)"original-name");
+  lit_436 = YPPsym((P)"from-mod");
+  lit_437 = YPsb((P)"Can't find %s from %s for %s\n");
+  T141 = YPsig(YPPlist(4,CHKREF(lit_393),CHKREF(lit_228),CHKREF(lit_436),CHKREF(lit_435)),YPPlist(4,CHKREF(YastYLmoduleG),CHKREF(YLstrG),CHKREF(YastYLmoduleG),CHKREF(YLstrG)),YPfalse,YPint((P)4),CHKREF(YLanyG));
+  YastYreloader_do_import = YPmet(FUNCODEREF(YastYreloader_do_import),CHKREF(lit_434),T141,ENVNUL);
+  T142 = YastYreloader_do_import;
+  YastYreloader_do_import = T142;
+  regsym(&YastYreloader_do_import,"ast","reloader-do-import");
+  lit_438 = YPPsym((P)"reloader-do-runtime-binding");
+  T143 = YPsig(YPPlist(3,CHKREF(lit_393),CHKREF(lit_228),CHKREF(lit_323)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YLstrG),CHKREF(YLlocG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YastYreloader_do_runtime_binding = YPmet(FUNCODEREF(YastYreloader_do_runtime_binding),CHKREF(lit_438),T143,ENVNUL);
+  T144 = YastYreloader_do_runtime_binding;
+  YastYreloader_do_runtime_binding = T144;
+  regsym(&YastYreloader_do_runtime_binding,"ast","reloader-do-runtime-binding");
+  lit_439 = YPPsym((P)"reloader-do-other-binding");
+  T145 = YPsig(YPPlist(2,CHKREF(lit_393),CHKREF(lit_228)),YPPlist(2,CHKREF(YastYLmoduleG),CHKREF(YLstrG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYreloader_do_other_binding = YPmet(FUNCODEREF(YastYreloader_do_other_binding),CHKREF(lit_439),T145,ENVNUL);
+  T146 = YastYreloader_do_other_binding;
+  YastYreloader_do_other_binding = T146;
+  regsym(&YastYreloader_do_other_binding,"ast","reloader-do-other-binding");
+  lit_440 = YPPsym((P)"reloader-do-export");
+  lit_441 = YPPsym((P)"as-name");
+  lit_442 = YPsb((P)"Can't find %s in %s\n");
+  T147 = YPsig(YPPlist(3,CHKREF(lit_393),CHKREF(lit_228),CHKREF(lit_441)),YPPlist(3,CHKREF(YastYLmoduleG),CHKREF(YLstrG),CHKREF(YLstrG)),YPfalse,YPint((P)3),CHKREF(YLanyG));
+  YastYreloader_do_export = YPmet(FUNCODEREF(YastYreloader_do_export),CHKREF(lit_440),T147,ENVNUL);
+  T148 = YastYreloader_do_export;
+  YastYreloader_do_export = T148;
+  regsym(&YastYreloader_do_export,"ast","reloader-do-export");
+  lit_443 = YPPsym((P)"reload-modules");
+  T149 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  YastYreload_modules = YPmet(FUNCODEREF(YastYreload_modules),CHKREF(lit_443),T149,ENVNUL);
+  T150 = YastYreload_modules;
+  YastYreload_modules = T150;
+  regsym(&YastYreload_modules,"ast","reload-modules");
+  lit_444 = YPPsym((P)"install-magic-bindings");
+  T152 = YPsig(YPPlist(1,CHKREF(lit_184)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_421 = YPmet(FUNCODEREF(fun_421),YPfalse,T152,ENVNUL);
+  T151 = YPsig(YPPlist(1,CHKREF(lit_302)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  YastYinstall_magic_bindings = YPmet(FUNCODEREF(YastYinstall_magic_bindings),CHKREF(lit_444),T151,ENVNUL);
+  T153 = YastYinstall_magic_bindings;
+  YastYinstall_magic_bindings = T153;
+  regsym(&YastYinstall_magic_bindings,"ast","install-magic-bindings");
+  lit_445 = YPPsym((P)"reload-macros");
+  T154 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  YastYreload_macros = YPmet(FUNCODEREF(YastYreload_macros),CHKREF(lit_445),T154,ENVNUL);
+  T155 = YastYreload_macros;
+  YastYreload_macros = T155;
+  regsym(&YastYreload_macros,"ast","reload-macros");
+  lit_446 = YPPsym((P)"install-interpreter-hacks");
+  T156 = YPsig(YPPlist(1,CHKREF(lit_302)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  YastYinstall_interpreter_hacks = YPmet(FUNCODEREF(YastYinstall_interpreter_hacks),CHKREF(lit_446),T156,ENVNUL);
+  T157 = YastYinstall_interpreter_hacks;
+  YastYinstall_interpreter_hacks = T157;
+  regsym(&YastYinstall_interpreter_hacks,"ast","install-interpreter-hacks");
+  lit_447 = YPPsym((P)"init-runtime");
+  T158 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  YastYinit_runtime = YPmet(FUNCODEREF(YastYinit_runtime),CHKREF(lit_447),T158,ENVNUL);
+  T159 = YastYinit_runtime;
+  YastYinit_runtime = T159;
+  regsym(&YastYinit_runtime,"ast","init-runtime");
+  lit_448 = YPPlist(5,YPPsym((P)"ct"),YPPsym((P)"ct-also"),YPPsym((P)"ds"),YPPsym((P)"use"),YPPsym((P)"export"));
+  YastYsyntax_environment_excluded_bindings = CHKREF(lit_448);
+  regsym(&YastYsyntax_environment_excluded_bindings,"ast","syntax-environment-excluded-bindings");
+  lit_449 = YPPsym((P)"fab-syntax-environment");
+  lit_450 = YPPsym((P)"proto");
+  T160 = YPsig(YPPlist(1,CHKREF(lit_407)),YPPlist(1,CHKREF(YastYLmoduleG)),YPfalse,YPint((P)1),CHKREF(YastYLstatic_global_environmentG));
+  YastYfab_syntax_environment = YPmet(FUNCODEREF(YastYfab_syntax_environment),CHKREF(lit_449),T160,ENVNUL);
+  T161 = YastYfab_syntax_environment;
+  YastYfab_syntax_environment = T161;
+  regsym(&YastYfab_syntax_environment,"ast","fab-syntax-environment");
+  lit_451 = YPPsym((P)"fab-p2c-module");
+  T162 = YPsig(YPPlist(2,CHKREF(lit_395),CHKREF(lit_228)),YPPlist(2,CHKREF(YastYLmodule_loaderG),CHKREF(YLsymG)),YPfalse,YPint((P)2),CHKREF(YastYLmoduleG));
+  YastYfab_p2c_module = YPmet(FUNCODEREF(YastYfab_p2c_module),CHKREF(lit_451),T162,ENVNUL);
+  T163 = YastYfab_p2c_module;
+  YastYfab_p2c_module = T163;
+  regsym(&YastYfab_p2c_module,"ast","fab-p2c-module");
+  lit_452 = YPPsym((P)"init-p2c-boot-environment");
+  T164 = YPsig(YPPlist(1,CHKREF(lit_302)),YPPlist(1,CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  YastYinit_p2c_boot_environment = YPmet(FUNCODEREF(YastYinit_p2c_boot_environment),CHKREF(lit_452),T164,ENVNUL);
+  T165 = YastYinit_p2c_boot_environment;
+  YastYinit_p2c_boot_environment = T165;
+  regsym(&YastYinit_p2c_boot_environment,"ast","init-p2c-boot-environment");
+  lit_453 = YPPsym((P)"init-p2c-regular-environment");
+  T166 = YPsig(YPPlist(2,CHKREF(lit_302),CHKREF(lit_395)),YPPlist(2,CHKREF(YastYLstatic_global_environmentG),CHKREF(YastYLmodule_loaderG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYinit_p2c_regular_environment = YPmet(FUNCODEREF(YastYinit_p2c_regular_environment),CHKREF(lit_453),T166,ENVNUL);
+  T167 = YastYinit_p2c_regular_environment;
+  YastYinit_p2c_regular_environment = T167;
+  regsym(&YastYinit_p2c_regular_environment,"ast","init-p2c-regular-environment");
+  lit_454 = YPPsym((P)"init-ast");
+  T168 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),CHKREF(YLanyG));
+  YastYinit_ast = YPmet(FUNCODEREF(YastYinit_ast),CHKREF(lit_454),T168,ENVNUL);
+  T169 = YastYinit_ast;
+  YastYinit_ast = T169;
+  regsym(&YastYinit_ast,"ast","init-ast");
+  lit_455 = YPPsym((P)"do-static-global-bindings");
+  T174 = YPsig(YPPlist(1,CHKREF(lit_302)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  T173 = fun_loop_431 = YPmet(FUNCODEREF(fun_loop_431),CHKREF(lit_145),T174,ENVNUL);
+  T172 = YPsig(YPPlist(2,CHKREF(lit_189),CHKREF(lit_302)),YPPlist(2,CHKREF(YLfunG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  T171 = YastYdo_static_global_bindings = YPmet(FUNCODEREF(YastYdo_static_global_bindings),CHKREF(lit_455),T172,ENVNUL);
+  T176 = YastYdo_static_global_bindings;
+  T175 = YastYdo_static_global_bindings = T176;
+  regsym(&YastYdo_static_global_bindings,"ast","do-static-global-bindings");
+  T170 = T175;
+  return T170;
 }
 
 P YastY___main_8___() {
-  P T0;
+  P T3,T2,T1,T0;
 loop:
+  lit_456 = YPPsym((P)"do-named-static-global-bindings");
+  T1 = YPsig(YPPlist(1,CHKREF(lit_302)),YPPlist(1,CHKREF(YLanyG)),YPfalse,YPint((P)1),CHKREF(YLanyG));
+  fun_loop_433 = YPmet(FUNCODEREF(fun_loop_433),CHKREF(lit_145),T1,ENVNUL);
+  T0 = YPsig(YPPlist(2,CHKREF(lit_189),CHKREF(lit_302)),YPPlist(2,CHKREF(YLfunG),CHKREF(YastYLstatic_global_environmentG)),YPfalse,YPint((P)2),CHKREF(YLanyG));
+  YastYdo_named_static_global_bindings = YPmet(FUNCODEREF(YastYdo_named_static_global_bindings),CHKREF(lit_456),T0,ENVNUL);
+  T2 = YastYdo_named_static_global_bindings;
+  YastYdo_named_static_global_bindings = T2;
+  regsym(&YastYdo_named_static_global_bindings,"ast","do-named-static-global-bindings");
   if (YPfalse != YPfalse) {
   } else {
   }
   if (YPfalse != YPfalse) {
   } else {
   }
-  T0 = YPfalse;
-  return T0;
+  if (YPfalse != YPfalse) {
+  } else {
+  }
+  T3 = YPfalse;
+  return T3;
 }
 
 /* MODULE ENVIRONMENT INFORMATION */
@@ -13213,1107 +13298,1115 @@ static USE_INFO use_infos[] = {
 };
 
 static IMPORT_INFO import_infos[] = {
-  {"locative-value", &module_info_runtime, "locative-value"},
-  {"sexpr-variable-name", &module_info_syntax, "sexpr-variable-name"},
-  {"sexpr-make-getter", &module_info_syntax, "sexpr-make-getter"},
-  {"sexpr-forward-primitive?", &module_info_syntax, "sexpr-forward-primitive?"},
-  {"%vlen", &module_info_boot, "%vlen"},
-  {"elt-setter", &module_info_runtime, "elt-setter"},
-  {"port-contents", &module_info_runtime, "port-contents"},
-  {"remainder", &module_info_runtime, "remainder"},
-  {"<lst>", &module_info_boot, "<lst>"},
-  {"%i?", &module_info_boot, "%i?"},
-  {"<sig>", &module_info_boot, "<sig>"},
+  {"%fb", &module_info_boot, "%fb"},
+  {"dss", &module_info_boot, "dss"},
+  {"logxor", &module_info_runtime, "logxor"},
+  {"del-dups", &module_info_runtime, "del-dups"},
+  {"quasiquote", &module_info_boot, "quasiquote"},
+  {"<loc>", &module_info_boot, "<loc>"},
+  {"unless", &module_info_macros, "unless"},
+  {"hierarchical-components", &module_info_protoSsystem, "hierarchical-components"},
+  {"peek-char", &module_info_runtime, "peek-char"},
+  {"$permanent-hash-state", &module_info_runtime, "$permanent-hash-state"},
+  {"<seq>", &module_info_boot, "<seq>"},
+  {"sexpr-sequence->begin", &module_info_syntax, "sexpr-sequence->begin"},
+  {"parent-directory", &module_info_protoSsystem, "parent-directory"},
+  {"%file-exists?", &module_info_boot, "%file-exists?"},
+  {"sexpr-function-body", &module_info_syntax, "sexpr-function-body"},
+  {"sexpr-make-begin", &module_info_syntax, "sexpr-make-begin"},
+  {"*proto-extension*", &module_info_protoSsystem, "*proto-extension*"},
+  {"/", &module_info_runtime, "/"},
+  {"reduce+", &module_info_runtime, "reduce+"},
+  {"$sexpr-define-class-tag", &module_info_syntax, "$sexpr-define-class-tag"},
+  {"probe-directory", &module_info_protoSsystem, "probe-directory"},
+  {"$sexpr-iterate-tag", &module_info_syntax, "$sexpr-iterate-tag"},
+  {"from-below", &module_info_runtime, "from-below"},
+  {"<handler-info>", &module_info_runtime, "<handler-info>"},
   {"def-fun-var", &module_info_macros, "def-fun-var"},
-  {"%build-runtime-modules", &module_info_boot, "%build-runtime-modules"},
-  {"%i<<", &module_info_boot, "%i<<"},
-  {"call-with-string-output-port", &module_info_runtime, "call-with-string-output-port"},
-  {"ascii-whitespaces", &module_info_runtime, "ascii-whitespaces"},
-  {"%su", &module_info_boot, "%su"},
-  {"sexpr-unwind-protect-cleanup-forms", &module_info_syntax, "sexpr-unwind-protect-cleanup-forms"},
-  {"assq", &module_info_runtime, "assq"},
-  {"ceiling/", &module_info_runtime, "ceiling/"},
+  {"fabs", &module_info_runtime, "fabs"},
+  {"*obj-extension*", &module_info_protoSsystem, "*obj-extension*"},
+  {"%ft", &module_info_boot, "%ft"},
+  {"round/", &module_info_runtime, "round/"},
+  {"*path-separator*", &module_info_protoSsystem, "*path-separator*"},
+  {"%im", &module_info_boot, "%im"},
+  {"sexpr-function-definition-value", &module_info_syntax, "sexpr-function-definition-value"},
+  {"*restarts-ok?*", &module_info_boot, "*restarts-ok?*"},
   {"=", &module_info_runtime, "="},
   {"slot-init", &module_info_boot, "slot-init"},
-  {"$sexpr-set-tag", &module_info_syntax, "$sexpr-set-tag"},
+  {"rev", &module_info_runtime, "rev"},
   {"export", &module_info_boot, "export"},
-  {"*restarts-ok?*", &module_info_boot, "*restarts-ok?*"},
-  {"map", &module_info_macros, "map"},
+  {"pair", &module_info_macros, "pair"},
   {"rcurry", &module_info_runtime, "rcurry"},
-  {"quasiquote", &module_info_boot, "quasiquote"},
+  {"%f/", &module_info_boot, "%f/"},
+  {"zero?", &module_info_runtime, "zero?"},
+  {"incongruent-method-error", &module_info_boot, "incongruent-method-error"},
+  {"%os-binding-value", &module_info_boot, "%os-binding-value"},
+  {"<traits>", &module_info_boot, "<traits>"},
+  {"sexpr-variable-name", &module_info_syntax, "sexpr-variable-name"},
+  {"%peek-char", &module_info_boot, "%peek-char"},
   {"sexpr-method-signature", &module_info_syntax, "sexpr-method-signature"},
-  {"%i!", &module_info_boot, "%i!"},
-  {"2nd", &module_info_runtime, "2nd"},
-  {"<output-port>", &module_info_runtime, "<output-port>"},
-  {"%create-directory", &module_info_boot, "%create-directory"},
-  {"sexpr-expand-backquote", &module_info_syntax, "sexpr-expand-backquote"},
+  {"<assocs>", &module_info_runtime, "<assocs>"},
+  {"handler-info-message", &module_info_boot, "handler-info-message"},
   {"fapply", &module_info_boot, "fapply"},
   {"var-name", &module_info_macros, "var-name"},
-  {"%locative-value-setter", &module_info_boot, "%locative-value-setter"},
-  {"<vec>", &module_info_boot, "<vec>"},
-  {"sexpr-syntax-definition-value", &module_info_syntax, "sexpr-syntax-definition-value"},
-  {"sexpr-loc-bound-signatures", &module_info_syntax, "sexpr-loc-bound-signatures"},
-  {"sexpr-assignment-value", &module_info_syntax, "sexpr-assignment-value"},
-  {"*c-extension*", &module_info_protoSsystem, "*c-extension*"},
+  {"map2", &module_info_runtime, "map2"},
+  {"$sexpr-define-tag", &module_info_syntax, "$sexpr-define-tag"},
+  {"do3", &module_info_runtime, "do3"},
   {"if", &module_info_boot, "if"},
-  {"<int>", &module_info_boot, "<int>"},
-  {"<log>", &module_info_boot, "<log>"},
-  {"do2", &module_info_runtime, "do2"},
+  {"write", &module_info_write, "write"},
+  {"reduce", &module_info_runtime, "reduce"},
+  {"<sig>", &module_info_boot, "<sig>"},
   {"ini-state", &module_info_runtime, "ini-state"},
-  {"$sexpr-define-generic-tag", &module_info_syntax, "$sexpr-define-generic-tag"},
-  {"compose", &module_info_runtime, "compose"},
+  {"os-binding-value", &module_info_protoSsystem, "os-binding-value"},
+  {"%i^", &module_info_boot, "%i^"},
+  {"%locative-value-setter", &module_info_boot, "%locative-value-setter"},
   {"fun-arity", &module_info_boot, "fun-arity"},
-  {"or", &module_info_macros, "or"},
   {"assert", &module_info_macros, "assert"},
-  {"round", &module_info_runtime, "round"},
+  {"port-index", &module_info_runtime, "port-index"},
+  {"$sexpr-isa-tag", &module_info_syntax, "$sexpr-isa-tag"},
   {"when", &module_info_macros, "when"},
+  {"sexpr-bind-pattern-variables", &module_info_syntax, "sexpr-bind-pattern-variables"},
   {"object<", &module_info_boot, "object<"},
-  {"<simple-condition>", &module_info_runtime, "<simple-condition>"},
-  {"sexpr-isa-init-values", &module_info_syntax, "sexpr-isa-init-values"},
-  {"from-below", &module_info_runtime, "from-below"},
-  {"<string-input-port>", &module_info_runtime, "<string-input-port>"},
-  {"type-or", &module_info_runtime, "type-or"},
-  {"$sexpr-slot-tag", &module_info_syntax, "$sexpr-slot-tag"},
+  {"$sexpr-define-syntax-tag", &module_info_syntax, "$sexpr-define-syntax-tag"},
+  {"string-split", &module_info_strings, "string-split"},
+  {"%i!", &module_info_boot, "%i!"},
+  {"*boot-macro-expanders*", &module_info_boot, "*boot-macro-expanders*"},
+  {"t+", &module_info_runtime, "t+"},
+  {"from", &module_info_runtime, "from"},
+  {"app-filename", &module_info_runtime, "app-filename"},
+  {"now-elt-setter", &module_info_runtime, "now-elt-setter"},
   {"popf", &module_info_macros, "popf"},
-  {"try", &module_info_boot, "try"},
-  {"$sexpr-monitor-tag", &module_info_syntax, "$sexpr-monitor-tag"},
-  {"to-digit", &module_info_runtime, "to-digit"},
-  {"exe-filename", &module_info_protoSsystem, "exe-filename"},
+  {"compose", &module_info_runtime, "compose"},
+  {"eval", &module_info_syntax, "eval"},
+  {"sexpr-define-class?", &module_info_syntax, "sexpr-define-class?"},
+  {"$sexpr-let-tag", &module_info_syntax, "$sexpr-let-tag"},
   {"let", &module_info_boot, "let"},
-  {"dp", &module_info_boot, "dp"},
-  {"char-ready?", &module_info_runtime, "char-ready?"},
-  {"sexpr-sequence->begin", &module_info_syntax, "sexpr-sequence->begin"},
-  {"%selt-setter", &module_info_boot, "%selt-setter"},
+  {"$sexpr-quasiquote-tag", &module_info_syntax, "$sexpr-quasiquote-tag"},
+  {"%f=", &module_info_boot, "%f="},
+  {"%cb", &module_info_boot, "%cb"},
   {"sorted-app-mets", &module_info_boot, "sorted-app-mets"},
-  {"sexpr-assignment-variable", &module_info_syntax, "sexpr-assignment-variable"},
-  {"as-uppercase", &module_info_runtime, "as-uppercase"},
+  {"1st", &module_info_runtime, "1st"},
   {"fun-name", &module_info_boot, "fun-name"},
   {"<", &module_info_runtime, "<"},
-  {"unknown-function-error", &module_info_boot, "unknown-function-error"},
   {"fab-sym", &module_info_boot, "fab-sym"},
-  {"<serious-condition>", &module_info_runtime, "<serious-condition>"},
-  {"sexpr-isa-slot-inits", &module_info_syntax, "sexpr-isa-slot-inits"},
-  {"copy-state", &module_info_runtime, "copy-state"},
-  {"%lu", &module_info_boot, "%lu"},
+  {"sexpr-loc-raw-body", &module_info_syntax, "sexpr-loc-raw-body"},
   {"slot-setter", &module_info_boot, "slot-setter"},
-  {"ceiling", &module_info_runtime, "ceiling"},
+  {"%current-input-port", &module_info_boot, "%current-input-port"},
   {"match-empty-list", &module_info_macros, "match-empty-list"},
-  {"%with-monitor", &module_info_runtime, "%with-monitor"},
-  {"sexpr-block-body", &module_info_syntax, "sexpr-block-body"},
+  {"<string-port>", &module_info_runtime, "<string-port>"},
   {"need-implementation", &module_info_macros, "need-implementation"},
-  {"eof-object?", &module_info_runtime, "eof-object?"},
-  {"<assocs>", &module_info_runtime, "<assocs>"},
-  {"fab-gen", &module_info_boot, "fab-gen"},
-  {"cat!", &module_info_runtime, "cat!"},
-  {"$sexpr-macro-expand-tag", &module_info_syntax, "$sexpr-macro-expand-tag"},
-  {"keys", &module_info_runtime, "keys"},
-  {"table-growth-threshold", &module_info_runtime, "table-growth-threshold"},
-  {"%file-exists?", &module_info_boot, "%file-exists?"},
-  {"default-handler-description", &module_info_runtime, "default-handler-description"},
-  {"sexpr-slot-init", &module_info_syntax, "sexpr-slot-init"},
-  {"pos?", &module_info_runtime, "pos?"},
-  {"<buf>", &module_info_runtime, "<buf>"},
-  {"%current-output-port", &module_info_boot, "%current-output-port"},
-  {"<col>", &module_info_boot, "<col>"},
-  {"file-type", &module_info_protoSsystem, "file-type"},
-  {"pop-last!", &module_info_runtime, "pop-last!"},
+  {"sexpr-if-test", &module_info_syntax, "sexpr-if-test"},
   {"%symbols", &module_info_boot, "%symbols"},
-  {"dv", &module_info_boot, "dv"},
-  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
-  {"%f-", &module_info_boot, "%f-"},
-  {"$sexpr-begin-tag", &module_info_syntax, "$sexpr-begin-tag"},
-  {"%eof-object", &module_info_boot, "%eof-object"},
-  {"%fu", &module_info_boot, "%fu"},
-  {"fin-state?", &module_info_runtime, "fin-state?"},
-  {"string-split", &module_info_strings, "string-split"},
-  {"%pair", &module_info_boot, "%pair"},
-  {"list-handlers", &module_info_runtime, "list-handlers"},
-  {"%flo-bits", &module_info_boot, "%flo-bits"},
-  {"~==", &module_info_runtime, "~=="},
-  {"<input-port>", &module_info_runtime, "<input-port>"},
-  {"obj-filename", &module_info_protoSsystem, "obj-filename"},
-  {"error", &module_info_boot, "error"},
-  {"ct-also", &module_info_boot, "ct-also"},
+  {"%i*", &module_info_boot, "%i*"},
+  {"as", &module_info_runtime, "as"},
+  {"file-exists?", &module_info_protoSsystem, "file-exists?"},
+  {"%snul", &module_info_boot, "%snul"},
+  {"fab-gen", &module_info_boot, "fab-gen"},
+  {"%write-string", &module_info_boot, "%write-string"},
   {"env-object-name", &module_info_write, "env-object-name"},
-  {"sexpr-syntax-definition-variable", &module_info_syntax, "sexpr-syntax-definition-variable"},
-  {"pair", &module_info_macros, "pair"},
-  {"$default-handler-info", &module_info_runtime, "$default-handler-info"},
-  {"$sexpr-bind-exit-tag", &module_info_syntax, "$sexpr-bind-exit-tag"},
+  {"assqn", &module_info_runtime, "assqn"},
+  {"%slen", &module_info_boot, "%slen"},
+  {"%flo-bits", &module_info_boot, "%flo-bits"},
+  {"default-handler-description", &module_info_runtime, "default-handler-description"},
+  {"uppercase?", &module_info_runtime, "uppercase?"},
+  {"sexpr-slot-variable", &module_info_syntax, "sexpr-slot-variable"},
+  {"logand", &module_info_runtime, "logand"},
+  {"~=", &module_info_runtime, "~="},
+  {"df", &module_info_boot, "df"},
+  {"%current-output-port", &module_info_boot, "%current-output-port"},
+  {"str", &module_info_runtime, "str"},
+  {"sexpr-variable?", &module_info_syntax, "sexpr-variable?"},
+  {"exe-filename", &module_info_protoSsystem, "exe-filename"},
+  {"or", &module_info_macros, "or"},
+  {"push", &module_info_runtime, "push"},
+  {"sig", &module_info_runtime, "sig"},
+  {"dv", &module_info_boot, "dv"},
+  {"%write-char", &module_info_boot, "%write-char"},
+  {"components-to-pathname", &module_info_protoSsystem, "components-to-pathname"},
+  {"<col>", &module_info_boot, "<col>"},
+  {"<serious-condition>", &module_info_runtime, "<serious-condition>"},
+  {"%lu", &module_info_boot, "%lu"},
+  {"list-handlers", &module_info_runtime, "list-handlers"},
+  {"fin-state?", &module_info_runtime, "fin-state?"},
+  {"write-to-string", &module_info_write, "write-to-string"},
+  {"max", &module_info_runtime, "max"},
+  {"*proto-root*", &module_info_protoSsystem, "*proto-root*"},
+  {"map-str", &module_info_strings, "map-str"},
+  {"ceiling/", &module_info_runtime, "ceiling/"},
+  {"<replace-generic-restart>", &module_info_boot, "<replace-generic-restart>"},
+  {"%app-filename", &module_info_boot, "%app-filename"},
+  {"cat", &module_info_macros, "cat"},
+  {"open-input-file", &module_info_runtime, "open-input-file"},
+  {"error", &module_info_boot, "error"},
+  {"sexpr-isa-init-slots", &module_info_syntax, "sexpr-isa-init-slots"},
+  {"%do-runtime-bindings", &module_info_boot, "%do-runtime-bindings"},
+  {"%cu", &module_info_boot, "%cu"},
+  {"open-output-file", &module_info_runtime, "open-output-file"},
+  {"<=", &module_info_runtime, "<="},
+  {"%pair", &module_info_boot, "%pair"},
   {"sig-value", &module_info_boot, "sig-value"},
+  {"$sexpr-begin-tag", &module_info_syntax, "$sexpr-begin-tag"},
   {"seq", &module_info_boot, "seq"},
+  {"id-hash", &module_info_runtime, "id-hash"},
+  {"%read-char", &module_info_boot, "%read-char"},
   {"tup", &module_info_macros, "tup"},
-  {"%velt-setter", &module_info_boot, "%velt-setter"},
-  {"<simple-error>", &module_info_runtime, "<simple-error>"},
+  {"from-above", &module_info_runtime, "from-above"},
+  {"%sb", &module_info_boot, "%sb"},
+  {"<vec>", &module_info_boot, "<vec>"},
   {"pushf", &module_info_macros, "pushf"},
-  {"ash", &module_info_runtime, "ash"},
   {"quote", &module_info_boot, "quote"},
-  {"port-index", &module_info_runtime, "port-index"},
-  {"assocq", &module_info_runtime, "assocq"},
-  {"%f+", &module_info_boot, "%f+"},
+  {"format", &module_info_runtime, "format"},
   {"apply-next-method", &module_info_macros, "apply-next-method"},
-  {"<port>", &module_info_runtime, "<port>"},
+  {"pick", &module_info_runtime, "pick"},
+  {"pop-last!", &module_info_runtime, "pop-last!"},
+  {"%it/", &module_info_boot, "%it/"},
   {"fun-name-setter", &module_info_boot, "fun-name-setter"},
   {">", &module_info_runtime, ">"},
-  {">=", &module_info_runtime, ">="},
-  {"<met>", &module_info_boot, "<met>"},
-  {"slot-owner", &module_info_boot, "slot-owner"},
-  {"*print-base*", &module_info_runtime, "*print-base*"},
-  {"sub", &module_info_runtime, "sub"},
-  {"%vnul", &module_info_boot, "%vnul"},
-  {"<handler-info>", &module_info_runtime, "<handler-info>"},
-  {"<opts>", &module_info_boot, "<opts>"},
-  {"sexpr-function-definition-variable", &module_info_syntax, "sexpr-function-definition-variable"},
-  {"display", &module_info_write, "display"},
-  {"from-by", &module_info_runtime, "from-by"},
-  {"%eq?", &module_info_boot, "%eq?"},
-  {"%write-char", &module_info_boot, "%write-char"},
-  {"%str", &module_info_boot, "%str"},
-  {"sexpr-method-body", &module_info_syntax, "sexpr-method-body"},
-  {"$sexpr-syntax-if-tag", &module_info_syntax, "$sexpr-syntax-if-tag"},
-  {"dec", &module_info_macros, "dec"},
-  {"identity", &module_info_runtime, "identity"},
-  {"make-sym", &module_info_macros, "make-sym"},
-  {"bound?", &module_info_boot, "bound?"},
-  {"sexpr-slot-variable", &module_info_syntax, "sexpr-slot-variable"},
-  {"%write-string", &module_info_boot, "%write-string"},
-  {"<incongruent-method-error>", &module_info_runtime, "<incongruent-method-error>"},
-  {"logbit?", &module_info_runtime, "logbit?"},
-  {"%os-binding-value", &module_info_boot, "%os-binding-value"},
-  {"lsh", &module_info_runtime, "lsh"},
-  {"%i<<<", &module_info_boot, "%i<<<"},
-  {"mem?", &module_info_runtime, "mem?"},
-  {"lab", &module_info_boot, "lab"},
-  {"close-output-port", &module_info_runtime, "close-output-port"},
-  {"floor", &module_info_runtime, "floor"},
-  {"met-app?", &module_info_boot, "met-app?"},
-  {"find-key", &module_info_runtime, "find-key"},
-  {"df", &module_info_boot, "df"},
-  {"$permanent-hash-state", &module_info_runtime, "$permanent-hash-state"},
-  {"sexpr-make-macro-function", &module_info_syntax, "sexpr-make-macro-function"},
-  {"dg", &module_info_boot, "dg"},
-  {"tail", &module_info_boot, "tail"},
-  {"push-last!", &module_info_runtime, "push-last!"},
-  {"%i+", &module_info_boot, "%i+"},
-  {"fill", &module_info_runtime, "fill"},
-  {"sig-nary?", &module_info_boot, "sig-nary?"},
-  {"add", &module_info_runtime, "add"},
-  {"<flat>", &module_info_boot, "<flat>"},
-  {"pop", &module_info_runtime, "pop"},
-  {"string-repeat", &module_info_strings, "string-repeat"},
-  {"alter", &module_info_runtime, "alter"},
-  {"push", &module_info_runtime, "push"},
-  {"collected", &module_info_macros, "collected"},
-  {"$sexpr-define-tag", &module_info_syntax, "$sexpr-define-tag"},
-  {"fab", &module_info_runtime, "fab"},
-  {"modulo", &module_info_runtime, "modulo"},
-  {"describe-condition", &module_info_runtime, "describe-condition"},
-  {"sexpr-if-else", &module_info_syntax, "sexpr-if-else"},
-  {"%f/", &module_info_boot, "%f/"},
-  {"sexpr-variable?", &module_info_syntax, "sexpr-variable?"},
-  {"%cu", &module_info_boot, "%cu"},
-  {"curry", &module_info_runtime, "curry"},
-  {"%iu", &module_info_boot, "%iu"},
-  {"id-hash", &module_info_runtime, "id-hash"},
-  {"truncate", &module_info_runtime, "truncate"},
-  {"build-condition-for-handler-interactively", &module_info_runtime, "build-condition-for-handler-interactively"},
-  {"%i^", &module_info_boot, "%i^"},
-  {"lst", &module_info_boot, "lst"},
-  {"assoc", &module_info_runtime, "assoc"},
-  {"%vec", &module_info_boot, "%vec"},
-  {"now-key", &module_info_runtime, "now-key"},
-  {"next-method", &module_info_macros, "next-method"},
-  {"empty", &module_info_runtime, "empty"},
-  {"sexpr-unquote?", &module_info_syntax, "sexpr-unquote?"},
-  {"fun-nary?", &module_info_boot, "fun-nary?"},
-  {"<str>", &module_info_boot, "<str>"},
-  {"%i&", &module_info_boot, "%i&"},
-  {"all?", &module_info_runtime, "all?"},
-  {"%cb", &module_info_boot, "%cb"},
-  {"dm", &module_info_boot, "dm"},
-  {"sexpr-isa-init-slots", &module_info_syntax, "sexpr-isa-init-slots"},
-  {"logior", &module_info_runtime, "logior"},
-  {"del-keys", &module_info_runtime, "del-keys"},
-  {"from-above", &module_info_runtime, "from-above"},
-  {"%close-input-port", &module_info_boot, "%close-input-port"},
-  {"default", &module_info_runtime, "default"},
-  {"file-opening-error", &module_info_boot, "file-opening-error"},
-  {"any?", &module_info_runtime, "any?"},
-  {"sexpr-operands", &module_info_syntax, "sexpr-operands"},
-  {"wrong-number-arguments-error", &module_info_boot, "wrong-number-arguments-error"},
-  {"%i<", &module_info_boot, "%i<"},
-  {"even?", &module_info_runtime, "even?"},
-  {"tail-setter", &module_info_boot, "tail-setter"},
-  {"handler-matches?", &module_info_runtime, "handler-matches?"},
-  {"floor/", &module_info_runtime, "floor/"},
-  {"add-src-path", &module_info_protoSsystem, "add-src-path"},
-  {"%app-filename", &module_info_boot, "%app-filename"},
-  {"<replace-generic-restart>", &module_info_boot, "<replace-generic-restart>"},
-  {"sexpr-definition-variable", &module_info_syntax, "sexpr-definition-variable"},
-  {"%im", &module_info_boot, "%im"},
-  {"sig-names", &module_info_boot, "sig-names"},
-  {"handler-function", &module_info_runtime, "handler-function"},
+  {"loc", &module_info_boot, "loc"},
   {"<condition>", &module_info_runtime, "<condition>"},
-  {"%isa", &module_info_boot, "%isa"},
+  {"call-with-input-file", &module_info_runtime, "call-with-input-file"},
+  {"map-keyed", &module_info_runtime, "map-keyed"},
+  {"slot-owner", &module_info_boot, "slot-owner"},
+  {"*macros-ok?*", &module_info_boot, "*macros-ok?*"},
+  {"display", &module_info_write, "display"},
+  {"%close-output-port", &module_info_boot, "%close-output-port"},
+  {"%eof-object", &module_info_boot, "%eof-object"},
+  {"%i=", &module_info_boot, "%i="},
+  {"sexpr-syntax-if-value", &module_info_syntax, "sexpr-syntax-if-value"},
+  {"floor", &module_info_runtime, "floor"},
+  {"label-components", &module_info_protoSsystem, "label-components"},
+  {"identity", &module_info_runtime, "identity"},
+  {"dec", &module_info_macros, "dec"},
+  {"%ib", &module_info_boot, "%ib"},
+  {"nil", &module_info_boot, "nil"},
+  {"%c<", &module_info_boot, "%c<"},
+  {"make-sym", &module_info_macros, "make-sym"},
+  {"newline", &module_info_runtime, "newline"},
+  {"address-of", &module_info_runtime, "address-of"},
+  {"sexpr-define-class-parents", &module_info_syntax, "sexpr-define-class-parents"},
+  {"<string-output-port>", &module_info_runtime, "<string-output-port>"},
+  {"type-error", &module_info_boot, "type-error"},
+  {"<slot>", &module_info_boot, "<slot>"},
   {"case-insensitive-string-equal", &module_info_runtime, "case-insensitive-string-equal"},
-  {"<tup>", &module_info_boot, "<tup>"},
+  {"odd?", &module_info_runtime, "odd?"},
+  {"call-with-string-input-port", &module_info_runtime, "call-with-string-input-port"},
+  {"sexpr-if-else", &module_info_syntax, "sexpr-if-else"},
+  {"met-app?", &module_info_boot, "met-app?"},
+  {"make-handler", &module_info_runtime, "make-handler"},
+  {"from-by", &module_info_runtime, "from-by"},
+  {"cat2", &module_info_runtime, "cat2"},
+  {"abs", &module_info_runtime, "abs"},
+  {"assocq", &module_info_runtime, "assocq"},
+  {"tail", &module_info_boot, "tail"},
+  {"sexpr-syntax-if-else", &module_info_syntax, "sexpr-syntax-if-else"},
   {"char->ascii", &module_info_runtime, "char->ascii"},
-  {"neg", &module_info_runtime, "neg"},
+  {"%fu", &module_info_boot, "%fu"},
+  {"sig-nary?", &module_info_boot, "sig-nary?"},
+  {"<sym>", &module_info_boot, "<sym>"},
+  {"pop", &module_info_runtime, "pop"},
+  {"alphabetic?", &module_info_runtime, "alphabetic?"},
+  {"%i<<<", &module_info_boot, "%i<<<"},
+  {"str-to-num", &module_info_runtime, "str-to-num"},
+  {"collected", &module_info_macros, "collected"},
+  {"lognot", &module_info_runtime, "lognot"},
+  {"%f<", &module_info_boot, "%f<"},
+  {"table-protocol", &module_info_runtime, "table-protocol"},
+  {"list", &module_info_runtime, "list"},
+  {"round", &module_info_runtime, "round"},
+  {"*", &module_info_runtime, "*"},
+  {"fab", &module_info_runtime, "fab"},
+  {"elt", &module_info_runtime, "elt"},
+  {"modulo", &module_info_runtime, "modulo"},
+  {"num-to-str", &module_info_runtime, "num-to-str"},
+  {"locative-value-setter", &module_info_runtime, "locative-value-setter"},
+  {"current-gc-state", &module_info_runtime, "current-gc-state"},
+  {"<tup>", &module_info_boot, "<tup>"},
+  {"$sexpr-monitor-tag", &module_info_syntax, "$sexpr-monitor-tag"},
+  {"<simple-handler-info>", &module_info_boot, "<simple-handler-info>"},
+  {"*boot-macro-module-names*", &module_info_boot, "*boot-macro-module-names*"},
+  {"$sexpr-macro-expand-tag", &module_info_syntax, "$sexpr-macro-expand-tag"},
+  {"describe-condition", &module_info_runtime, "describe-condition"},
+  {"now-key", &module_info_runtime, "now-key"},
+  {"as-uppercase", &module_info_runtime, "as-uppercase"},
+  {"%build-runtime-modules", &module_info_boot, "%build-runtime-modules"},
+  {"next-method", &module_info_macros, "next-method"},
+  {"push-last!", &module_info_runtime, "push-last!"},
+  {"curry", &module_info_runtime, "curry"},
+  {"fun-nary?", &module_info_boot, "fun-nary?"},
+  {"%f*", &module_info_boot, "%f*"},
+  {"*print-base*", &module_info_runtime, "*print-base*"},
+  {"dp", &module_info_boot, "dp"},
+  {"ceiling", &module_info_runtime, "ceiling"},
+  {"del", &module_info_runtime, "del"},
+  {"%locative-value", &module_info_boot, "%locative-value"},
+  {"dm", &module_info_boot, "dm"},
+  {"<incongruent-method-error>", &module_info_runtime, "<incongruent-method-error>"},
+  {"%iu", &module_info_boot, "%iu"},
+  {"sexpr-syntax-definition-value", &module_info_syntax, "sexpr-syntax-definition-value"},
+  {"os-name", &module_info_protoSsystem, "os-name"},
+  {"last", &module_info_runtime, "last"},
+  {"<tab>", &module_info_runtime, "<tab>"},
+  {"sexpr-syntax-definition-variable", &module_info_syntax, "sexpr-syntax-definition-variable"},
+  {"sub-setter", &module_info_runtime, "sub-setter"},
+  {"table-growth-factor", &module_info_runtime, "table-growth-factor"},
+  {"nul", &module_info_boot, "nul"},
+  {"<step>", &module_info_runtime, "<step>"},
+  {"components-parent-directory", &module_info_protoSsystem, "components-parent-directory"},
+  {"sexpr-syntax-if-then", &module_info_syntax, "sexpr-syntax-if-then"},
+  {"tail-setter", &module_info_boot, "tail-setter"},
+  {"os-binding-value-setter", &module_info_protoSsystem, "os-binding-value-setter"},
+  {"$sexpr-define-function-tag", &module_info_syntax, "$sexpr-define-function-tag"},
+  {"write-string", &module_info_runtime, "write-string"},
+  {"$sexpr-if-tag", &module_info_syntax, "$sexpr-if-tag"},
+  {"<port>", &module_info_runtime, "<port>"},
+  {"sexpr-if-then", &module_info_syntax, "sexpr-if-then"},
+  {"sig-names", &module_info_boot, "sig-names"},
+  {"<log>", &module_info_boot, "<log>"},
+  {"mif", &module_info_boot, "mif"},
+  {"%isa", &module_info_boot, "%isa"},
+  {"dc", &module_info_boot, "dc"},
+  {"$sexpr-method-tag", &module_info_syntax, "$sexpr-method-tag"},
+  {"dg", &module_info_boot, "dg"},
+  {"<range>", &module_info_runtime, "<range>"},
+  {"len", &module_info_runtime, "len"},
+  {"read-char", &module_info_runtime, "read-char"},
   {"do", &module_info_runtime, "do"},
-  {"add!", &module_info_runtime, "add!"},
+  {"empty?", &module_info_macros, "empty?"},
+  {"buf", &module_info_runtime, "buf"},
   {"inc", &module_info_macros, "inc"},
-  {"condition-message", &module_info_runtime, "condition-message"},
   {"isa?", &module_info_boot, "isa?"},
   {"match-sublist", &module_info_macros, "match-sublist"},
+  {"%app-args", &module_info_boot, "%app-args"},
   {"apply", &module_info_boot, "apply"},
-  {"assocs-test", &module_info_runtime, "assocs-test"},
-  {"sexpr-function-definition-value", &module_info_syntax, "sexpr-function-definition-value"},
+  {"obj-filename", &module_info_protoSsystem, "obj-filename"},
+  {"lowercase?", &module_info_runtime, "lowercase?"},
+  {"sexpr-block-body", &module_info_syntax, "sexpr-block-body"},
+  {"<list>", &module_info_runtime, "<list>"},
+  {"condition-message", &module_info_runtime, "condition-message"},
+  {"describe-handler", &module_info_runtime, "describe-handler"},
+  {"flo-bits", &module_info_runtime, "flo-bits"},
+  {"sexpr-make-anonymous-method", &module_info_syntax, "sexpr-make-anonymous-method"},
+  {"assoc", &module_info_runtime, "assoc"},
+  {"case-insensitive-string-hash", &module_info_runtime, "case-insensitive-string-hash"},
   {"object-parents", &module_info_boot, "object-parents"},
   {"condition-arguments", &module_info_runtime, "condition-arguments"},
   {"now-elt", &module_info_runtime, "now-elt"},
   {"-", &module_info_runtime, "-"},
-  {"call-with-string-input-port", &module_info_runtime, "call-with-string-input-port"},
-  {"<string-port>", &module_info_runtime, "<string-port>"},
-  {"%ib", &module_info_boot, "%ib"},
-  {"close-input-port", &module_info_runtime, "close-input-port"},
-  {"sexpr-loc-bound-names", &module_info_syntax, "sexpr-loc-bound-names"},
-  {"%it/", &module_info_boot, "%it/"},
-  {"%do-runtime-bindings", &module_info_boot, "%do-runtime-bindings"},
-  {"add-build-path", &module_info_protoSsystem, "add-build-path"},
-  {"*boot-macro-expanders*", &module_info_boot, "*boot-macro-expanders*"},
-  {"proto-filename", &module_info_protoSsystem, "proto-filename"},
-  {"fun", &module_info_boot, "fun"},
-  {"current-gc-state", &module_info_runtime, "current-gc-state"},
-  {"<error>", &module_info_runtime, "<error>"},
-  {"%raw", &module_info_boot, "%raw"},
-  {"%ft", &module_info_boot, "%ft"},
-  {"$sexpr-define-method-tag", &module_info_syntax, "$sexpr-define-method-tag"},
-  {"==", &module_info_macros, "=="},
-  {"<loc>", &module_info_boot, "<loc>"},
-  {"truncate/", &module_info_runtime, "truncate/"},
-  {"default-handler", &module_info_runtime, "default-handler"},
-  {"*proto-extension*", &module_info_protoSsystem, "*proto-extension*"},
-  {"fun-mets", &module_info_boot, "fun-mets"},
-  {"vec", &module_info_runtime, "vec"},
-  {"%sb", &module_info_boot, "%sb"},
-  {"len-setter", &module_info_runtime, "len-setter"},
-  {"<range>", &module_info_runtime, "<range>"},
-  {"write-char", &module_info_runtime, "write-char"},
-  {"%locative-value", &module_info_boot, "%locative-value"},
-  {"3rd", &module_info_runtime, "3rd"},
-  {"sexpr-syntax-if-value", &module_info_syntax, "sexpr-syntax-if-value"},
-  {"%next-methods", &module_info_boot, "%next-methods"},
-  {"do-keyed", &module_info_runtime, "do-keyed"},
-  {"isa", &module_info_boot, "isa"},
-  {"not", &module_info_boot, "not"},
-  {"logxor", &module_info_runtime, "logxor"},
-  {"del-dups", &module_info_runtime, "del-dups"},
-  {"%read-char", &module_info_boot, "%read-char"},
-  {"as", &module_info_runtime, "as"},
-  {"%os-name", &module_info_boot, "%os-name"},
-  {"incongruent-method-error", &module_info_boot, "incongruent-method-error"},
-  {"$sexpr-locals-tag", &module_info_syntax, "$sexpr-locals-tag"},
-  {"<any>", &module_info_boot, "<any>"},
-  {"<fun>", &module_info_boot, "<fun>"},
-  {"nxt-state", &module_info_runtime, "nxt-state"},
-  {"~=", &module_info_runtime, "~="},
-  {"label-components", &module_info_protoSsystem, "label-components"},
-  {"app-args", &module_info_runtime, "app-args"},
-  {"/", &module_info_runtime, "/"},
-  {"sexpr-if-then", &module_info_syntax, "sexpr-if-then"},
-  {"reduce+", &module_info_runtime, "reduce+"},
-  {"%do-stack-frames", &module_info_boot, "%do-stack-frames"},
-  {"sexpr-text-of-quotation", &module_info_syntax, "sexpr-text-of-quotation"},
-  {"fin", &module_info_boot, "fin"},
-  {"format-to-string", &module_info_runtime, "format-to-string"},
-  {"fabs", &module_info_runtime, "fabs"},
-  {"rev", &module_info_runtime, "rev"},
-  {"<list>", &module_info_runtime, "<list>"},
-  {"%peek-char", &module_info_boot, "%peek-char"},
-  {"max", &module_info_runtime, "max"},
-  {"gen-add-met", &module_info_boot, "gen-add-met"},
-  {"object-slots", &module_info_boot, "object-slots"},
-  {"case-insensitive-string-hash", &module_info_runtime, "case-insensitive-string-hash"},
-  {"peek-char", &module_info_runtime, "peek-char"},
-  {"ds", &module_info_boot, "ds"},
-  {"*path-separator*", &module_info_protoSsystem, "*path-separator*"},
-  {"%snul", &module_info_boot, "%snul"},
-  {"<sym>", &module_info_boot, "<sym>"},
-  {"<=", &module_info_runtime, "<="},
-  {"zero?", &module_info_runtime, "zero?"},
-  {"slot-type", &module_info_boot, "slot-type"},
+  {"del-key", &module_info_runtime, "del-key"},
   {"sexpr-make-setter-name", &module_info_syntax, "sexpr-make-setter-name"},
-  {"uppercase?", &module_info_runtime, "uppercase?"},
-  {"map2", &module_info_runtime, "map2"},
-  {"$sexpr-let-tag", &module_info_syntax, "$sexpr-let-tag"},
-  {"file-mtime", &module_info_protoSsystem, "file-mtime"},
-  {"sexpr-make-anonymous-method", &module_info_syntax, "sexpr-make-anonymous-method"},
+  {"unknown-function-error", &module_info_boot, "unknown-function-error"},
+  {"sexpr-operator", &module_info_syntax, "sexpr-operator"},
+  {"macro-expand", &module_info_boot, "macro-expand"},
+  {"isa", &module_info_boot, "isa"},
+  {"neg?", &module_info_runtime, "neg?"},
+  {"%create-directory", &module_info_boot, "%create-directory"},
+  {"locative-value", &module_info_runtime, "locative-value"},
+  {"fun", &module_info_boot, "fun"},
+  {"<gen>", &module_info_boot, "<gen>"},
+  {"%do-stack-frames", &module_info_boot, "%do-stack-frames"},
+  {"pathname-to-components", &module_info_protoSsystem, "pathname-to-components"},
+  {"%i>>>", &module_info_boot, "%i>>>"},
+  {"read", &module_info_runtime, "read"},
+  {"remainder", &module_info_runtime, "remainder"},
+  {"==", &module_info_macros, "=="},
+  {"default-handler", &module_info_runtime, "default-handler"},
+  {"to-str", &module_info_runtime, "to-str"},
+  {"eof-object?", &module_info_runtime, "eof-object?"},
+  {"fun-mets", &module_info_boot, "fun-mets"},
+  {"$sexpr-locals-tag", &module_info_syntax, "$sexpr-locals-tag"},
+  {"%eq?", &module_info_boot, "%eq?"},
+  {"write-char", &module_info_runtime, "write-char"},
+  {"elt-setter", &module_info_runtime, "elt-setter"},
+  {"create-directory", &module_info_protoSsystem, "create-directory"},
+  {"$sexpr-set-tag", &module_info_syntax, "$sexpr-set-tag"},
+  {"assq", &module_info_runtime, "assq"},
+  {"numeric?", &module_info_runtime, "numeric?"},
+  {"%next-methods", &module_info_boot, "%next-methods"},
+  {"port-contents", &module_info_runtime, "port-contents"},
+  {"$sexpr-slot-tag", &module_info_syntax, "$sexpr-slot-tag"},
+  {"%i<", &module_info_boot, "%i<"},
+  {"as-lowercase", &module_info_runtime, "as-lowercase"},
+  {"not", &module_info_boot, "not"},
+  {"%i+", &module_info_boot, "%i+"},
+  {"try", &module_info_boot, "try"},
+  {"<chr>", &module_info_boot, "<chr>"},
+  {"table-shrink-threshold", &module_info_runtime, "table-shrink-threshold"},
+  {"from-to-by", &module_info_runtime, "from-to-by"},
+  {"map", &module_info_macros, "map"},
+  {"sexpr-isa-init-values", &module_info_syntax, "sexpr-isa-init-values"},
+  {"close-output-port", &module_info_runtime, "close-output-port"},
+  {"sexpr-loc-bound-bodies", &module_info_syntax, "sexpr-loc-bound-bodies"},
+  {"2nd", &module_info_runtime, "2nd"},
+  {"min", &module_info_runtime, "min"},
+  {"$sexpr-syntax-if-tag", &module_info_syntax, "$sexpr-syntax-if-tag"},
+  {"<any>", &module_info_boot, "<any>"},
+  {"sexpr-make-getter", &module_info_syntax, "sexpr-make-getter"},
+  {"nxt-state", &module_info_runtime, "nxt-state"},
+  {"sexpr-definition-variable", &module_info_syntax, "sexpr-definition-variable"},
+  {"fin", &module_info_boot, "fin"},
+  {"build-condition-for-handler-interactively", &module_info_runtime, "build-condition-for-handler-interactively"},
+  {"truncate", &module_info_runtime, "truncate"},
+  {"len-setter", &module_info_runtime, "len-setter"},
+  {"sexpr-unwind-protect-protected-form", &module_info_syntax, "sexpr-unwind-protect-protected-form"},
+  {"object-slots", &module_info_boot, "object-slots"},
+  {"gen-add-met", &module_info_boot, "gen-add-met"},
+  {"%close-input-port", &module_info_boot, "%close-input-port"},
+  {"<opts>", &module_info_boot, "<opts>"},
+  {"char-ready?", &module_info_runtime, "char-ready?"},
+  {"%char-ready?", &module_info_boot, "%char-ready?"},
+  {"ds", &module_info_boot, "ds"},
+  {"nul?", &module_info_runtime, "nul?"},
+  {"floor/", &module_info_runtime, "floor/"},
+  {"<error>", &module_info_runtime, "<error>"},
+  {"sexpr-unquote?", &module_info_syntax, "sexpr-unquote?"},
+  {"$sexpr-quote-tag", &module_info_syntax, "$sexpr-quote-tag"},
+  {"slot-type", &module_info_boot, "slot-type"},
+  {"do2", &module_info_runtime, "do2"},
   {"fun-specs", &module_info_boot, "fun-specs"},
   {"+", &module_info_runtime, "+"},
-  {"address-of", &module_info_runtime, "address-of"},
-  {"%velt", &module_info_boot, "%velt"},
   {"select", &module_info_macros, "select"},
-  {"%open-output-file", &module_info_boot, "%open-output-file"},
+  {"<int>", &module_info_boot, "<int>"},
+  {"%vec", &module_info_boot, "%vec"},
   {"pos", &module_info_runtime, "pos"},
-  {"sexpr-let->combination", &module_info_syntax, "sexpr-let->combination"},
-  {"$sexpr-if-tag", &module_info_syntax, "$sexpr-if-tag"},
-  {"reduce", &module_info_runtime, "reduce"},
-  {"find-setter", &module_info_boot, "find-setter"},
-  {"do3", &module_info_runtime, "do3"},
-  {"sexpr-loc-bound-bodies", &module_info_syntax, "sexpr-loc-bound-bodies"},
-  {"var-type", &module_info_macros, "var-type"},
-  {"%i-", &module_info_boot, "%i-"},
-  {"$sexpr-define-syntax-tag", &module_info_syntax, "$sexpr-define-syntax-tag"},
-  {"%%macro", &module_info_boot, "%%macro"},
-  {"os-binding-value-setter", &module_info_protoSsystem, "os-binding-value-setter"},
-  {"open-input-file", &module_info_runtime, "open-input-file"},
-  {"from", &module_info_runtime, "from"},
-  {"dlet", &module_info_macros, "dlet"},
-  {"$sexpr-unwind-protect-tag", &module_info_syntax, "$sexpr-unwind-protect-tag"},
-  {"%close-output-port", &module_info_boot, "%close-output-port"},
-  {"writeln", &module_info_write, "writeln"},
-  {"case", &module_info_macros, "case"},
-  {"%open-input-file", &module_info_boot, "%open-input-file"},
-  {"sexpr-function-signature", &module_info_syntax, "sexpr-function-signature"},
-  {"eof-object", &module_info_runtime, "eof-object"},
-  {"<handler>", &module_info_runtime, "<handler>"},
-  {"1st", &module_info_runtime, "1st"},
-  {"%os-binding-value-setter", &module_info_boot, "%os-binding-value-setter"},
-  {"$sexpr-method-tag", &module_info_syntax, "$sexpr-method-tag"},
-  {"sexpr-variable-type", &module_info_syntax, "sexpr-variable-type"},
-  {"*proto-root*", &module_info_protoSsystem, "*proto-root*"},
-  {"<chr>", &module_info_boot, "<chr>"},
-  {"%file-mtime", &module_info_boot, "%file-mtime"},
-  {"force-output", &module_info_runtime, "force-output"},
+  {"cat!", &module_info_runtime, "cat!"},
+  {"keys", &module_info_runtime, "keys"},
   {"sexpr-block-name", &module_info_syntax, "sexpr-block-name"},
+  {"sexpr-isa-parents", &module_info_syntax, "sexpr-isa-parents"},
+  {"find-setter", &module_info_boot, "find-setter"},
+  {"%open-output-file", &module_info_boot, "%open-output-file"},
+  {"var-type", &module_info_macros, "var-type"},
+  {"pos?", &module_info_runtime, "pos?"},
+  {"proto-filename", &module_info_protoSsystem, "proto-filename"},
+  {"<num>", &module_info_boot, "<num>"},
+  {"ct-also", &module_info_boot, "ct-also"},
+  {"%su", &module_info_boot, "%su"},
+  {"dlet", &module_info_macros, "dlet"},
+  {"<restart>", &module_info_runtime, "<restart>"},
+  {"wrong-number-arguments-error", &module_info_boot, "wrong-number-arguments-error"},
+  {"<str>", &module_info_boot, "<str>"},
+  {"case", &module_info_macros, "case"},
+  {"<file-port>", &module_info_runtime, "<file-port>"},
+  {"string-repeat", &module_info_strings, "string-repeat"},
+  {"%i>>", &module_info_boot, "%i>>"},
+  {"%with-monitor", &module_info_runtime, "%with-monitor"},
+  {"keyboard-interrupt", &module_info_boot, "keyboard-interrupt"},
+  {"sexpr-assignment-variable", &module_info_syntax, "sexpr-assignment-variable"},
+  {"sexpr-forward-primitive?", &module_info_syntax, "sexpr-forward-primitive?"},
   {"sym-name", &module_info_boot, "sym-name"},
-  {"write-to-string", &module_info_write, "write-to-string"},
+  {"%bb", &module_info_boot, "%bb"},
+  {"*boot-macro-names*", &module_info_boot, "*boot-macro-names*"},
   {"fun-sig-setter", &module_info_boot, "fun-sig-setter"},
   {"make-setter-name", &module_info_macros, "make-setter-name"},
-  {"sexpr-isa-parents", &module_info_syntax, "sexpr-isa-parents"},
   {"%define-method", &module_info_boot, "%define-method"},
+  {"assoc-value", &module_info_runtime, "assoc-value"},
   {"gensym", &module_info_macros, "gensym"},
-  {"$sexpr-quasiquote-tag", &module_info_syntax, "$sexpr-quasiquote-tag"},
-  {"sexpr-make-setter", &module_info_syntax, "sexpr-make-setter"},
-  {"assqn", &module_info_runtime, "assqn"},
+  {"ash", &module_info_runtime, "ash"},
+  {"to-digit", &module_info_runtime, "to-digit"},
   {"slot-getter", &module_info_boot, "slot-getter"},
   {"object-direct-parents", &module_info_boot, "object-direct-parents"},
   {"slot-value-setter", &module_info_boot, "slot-value-setter"},
-  {"logand", &module_info_runtime, "logand"},
-  {"table-protocol", &module_info_runtime, "table-protocol"},
-  {"sexpr-monitor-expand", &module_info_syntax, "sexpr-monitor-expand"},
-  {"sexpr-loc-raw-body", &module_info_syntax, "sexpr-loc-raw-body"},
+  {"%fi2f", &module_info_boot, "%fi2f"},
+  {"string-join", &module_info_strings, "string-join"},
+  {"<file-input-port>", &module_info_runtime, "<file-input-port>"},
+  {"ascii-whitespaces", &module_info_runtime, "ascii-whitespaces"},
+  {"vec", &module_info_runtime, "vec"},
+  {"%vlen", &module_info_boot, "%vlen"},
   {"match-atom", &module_info_macros, "match-atom"},
-  {"handler-info-message", &module_info_boot, "handler-info-message"},
-  {"call-with-output-file", &module_info_runtime, "call-with-output-file"},
-  {"components-parent-directory", &module_info_protoSsystem, "components-parent-directory"},
-  {"$sexpr-isa-tag", &module_info_syntax, "$sexpr-isa-tag"},
-  {"app-filename", &module_info_runtime, "app-filename"},
+  {"truncate/", &module_info_runtime, "truncate/"},
+  {"false-or", &module_info_runtime, "false-or"},
   {"choose-handler", &module_info_runtime, "choose-handler"},
-  {"components-to-pathname", &module_info_protoSsystem, "components-to-pathname"},
-  {"*", &module_info_runtime, "*"},
-  {"%i>>>", &module_info_boot, "%i>>>"},
+  {"sexpr-make-application", &module_info_syntax, "sexpr-make-application"},
   {"always", &module_info_runtime, "always"},
-  {"%char-ready?", &module_info_boot, "%char-ready?"},
-  {"cat", &module_info_macros, "cat"},
-  {"sexpr-bind-pattern-variables", &module_info_syntax, "sexpr-bind-pattern-variables"},
-  {"<num>", &module_info_boot, "<num>"},
-  {"describe-handler", &module_info_runtime, "describe-handler"},
-  {"sexpr-unquote-splicing?", &module_info_syntax, "sexpr-unquote-splicing?"},
-  {"c-filename", &module_info_protoSsystem, "c-filename"},
-  {"pathname-to-components", &module_info_protoSsystem, "pathname-to-components"},
-  {"file-exists?", &module_info_protoSsystem, "file-exists?"},
-  {"str", &module_info_runtime, "str"},
-  {"<string-output-port>", &module_info_runtime, "<string-output-port>"},
-  {"$sexpr-quote-tag", &module_info_syntax, "$sexpr-quote-tag"},
-  {"os-name", &module_info_protoSsystem, "os-name"},
-  {"alphabetic?", &module_info_runtime, "alphabetic?"},
-  {"loc", &module_info_boot, "loc"},
-  {"%i>>", &module_info_boot, "%i>>"},
-  {"sexpr-slot-object", &module_info_syntax, "sexpr-slot-object"},
-  {"pick", &module_info_runtime, "pick"},
-  {"from-to-by", &module_info_runtime, "from-to-by"},
-  {"*macros-ok?*", &module_info_boot, "*macros-ok?*"},
-  {"assoc-value", &module_info_runtime, "assoc-value"},
+  {"%raw", &module_info_boot, "%raw"},
+  {"writeln", &module_info_write, "writeln"},
+  {"sub", &module_info_runtime, "sub"},
+  {"%f-", &module_info_boot, "%f-"},
+  {"%f+", &module_info_boot, "%f+"},
+  {"sexpr-make-macro-function", &module_info_syntax, "sexpr-make-macro-function"},
+  {"table-growth-threshold", &module_info_runtime, "table-growth-threshold"},
+  {"logbit?", &module_info_runtime, "logbit?"},
+  {"%selt-setter", &module_info_boot, "%selt-setter"},
+  {"lsh", &module_info_runtime, "lsh"},
+  {"use", &module_info_boot, "use"},
+  {"%i&", &module_info_boot, "%i&"},
+  {"sexpr-isa-slot-inits", &module_info_syntax, "sexpr-isa-slot-inits"},
+  {"*c-extension*", &module_info_protoSsystem, "*c-extension*"},
+  {"mem?", &module_info_runtime, "mem?"},
+  {"find-key", &module_info_runtime, "find-key"},
   {"sig-arity", &module_info_boot, "sig-arity"},
   {"in", &module_info_runtime, "in"},
-  {"map-keyed", &module_info_runtime, "map-keyed"},
-  {"sexpr-iterate->loc", &module_info_syntax, "sexpr-iterate->loc"},
-  {"call-with-input-file", &module_info_runtime, "call-with-input-file"},
-  {"%app-args", &module_info_boot, "%app-args"},
-  {"open-output-file", &module_info_runtime, "open-output-file"},
-  {"out", &module_info_runtime, "out"},
-  {"%c=", &module_info_boot, "%c="},
-  {"keyboard-interrupt", &module_info_boot, "keyboard-interrupt"},
-  {"os-binding-value", &module_info_protoSsystem, "os-binding-value"},
-  {"parent-directory", &module_info_protoSsystem, "parent-directory"},
-  {"sexpr-operator", &module_info_syntax, "sexpr-operator"},
-  {"and", &module_info_macros, "and"},
-  {"sexpr-syntax-if-pattern", &module_info_syntax, "sexpr-syntax-if-pattern"},
+  {"object-name", &module_info_write, "object-name"},
+  {"%os-binding-value-setter", &module_info_boot, "%os-binding-value-setter"},
+  {"fill", &module_info_runtime, "fill"},
   {"ct", &module_info_boot, "ct"},
-  {"odd?", &module_info_runtime, "odd?"},
-  {"now-elt-setter", &module_info_runtime, "now-elt-setter"},
-  {"%binding-name", &module_info_boot, "%binding-name"},
-  {"nil", &module_info_boot, "nil"},
-  {"<seq>", &module_info_boot, "<seq>"},
+  {"sexpr-operands", &module_info_syntax, "sexpr-operands"},
+  {"alter", &module_info_runtime, "alter"},
+  {"out", &module_info_runtime, "out"},
+  {"%iv", &module_info_boot, "%iv"},
+  {"file-opening-error", &module_info_boot, "file-opening-error"},
+  {"from-below-by", &module_info_runtime, "from-below-by"},
+  {"<output-port>", &module_info_runtime, "<output-port>"},
+  {"sexpr-make-setter", &module_info_syntax, "sexpr-make-setter"},
+  {"and", &module_info_macros, "and"},
+  {"%velt-setter", &module_info_boot, "%velt-setter"},
+  {"sexpr-definition-value", &module_info_syntax, "sexpr-definition-value"},
+  {"%invoke-debugger", &module_info_boot, "%invoke-debugger"},
+  {"add", &module_info_runtime, "add"},
+  {"%selt", &module_info_boot, "%selt"},
+  {"call-with-string-output-port", &module_info_runtime, "call-with-string-output-port"},
+  {"sexpr-slot-init", &module_info_syntax, "sexpr-slot-init"},
+  {"<buf>", &module_info_runtime, "<buf>"},
+  {"sexpr-text-of-quotation", &module_info_syntax, "sexpr-text-of-quotation"},
+  {"sexpr-expand-backquote", &module_info_syntax, "sexpr-expand-backquote"},
+  {"<input-port>", &module_info_runtime, "<input-port>"},
   {"for", &module_info_macros, "for"},
-  {"components-last", &module_info_protoSsystem, "components-last"},
+  {"lst", &module_info_boot, "lst"},
+  {"sexpr-variable-type", &module_info_syntax, "sexpr-variable-type"},
+  {"$sexpr-unwind-protect-tag", &module_info_syntax, "$sexpr-unwind-protect-tag"},
+  {"sexpr-method-body", &module_info_syntax, "sexpr-method-body"},
+  {"$sexpr-define-method-tag", &module_info_syntax, "$sexpr-define-method-tag"},
   {"find-getter", &module_info_boot, "find-getter"},
-  {"round/", &module_info_runtime, "round/"},
   {"object-direct-slots", &module_info_boot, "object-direct-slots"},
-  {"mif", &module_info_boot, "mif"},
-  {"abs", &module_info_runtime, "abs"},
-  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
-  {"%i=", &module_info_boot, "%i="},
-  {"cat2", &module_info_runtime, "cat2"},
-  {"<gen>", &module_info_boot, "<gen>"},
-  {"$sexpr-define-function-tag", &module_info_syntax, "$sexpr-define-function-tag"},
+  {"~==", &module_info_runtime, "~=="},
+  {"sexpr-unwind-protect-cleanup-forms", &module_info_syntax, "sexpr-unwind-protect-cleanup-forms"},
+  {"empty", &module_info_runtime, "empty"},
+  {"lab", &module_info_boot, "lab"},
+  {"<simple-error>", &module_info_runtime, "<simple-error>"},
+  {"sexpr-unquote-splicing?", &module_info_syntax, "sexpr-unquote-splicing?"},
+  {"sexpr-slot-object", &module_info_syntax, "sexpr-slot-object"},
   {"sexpr-signature-value", &module_info_syntax, "sexpr-signature-value"},
-  {"%slen", &module_info_boot, "%slen"},
-  {"locative-value-setter", &module_info_runtime, "locative-value-setter"},
+  {"<met>", &module_info_boot, "<met>"},
+  {"all?", &module_info_runtime, "all?"},
+  {"components-last", &module_info_protoSsystem, "components-last"},
+  {"t<", &module_info_runtime, "t<"},
+  {"logior", &module_info_runtime, "logior"},
   {"%slot", &module_info_boot, "%slot"},
-  {"str-to-num", &module_info_runtime, "str-to-num"},
-  {"sexpr-syntax-if-then", &module_info_syntax, "sexpr-syntax-if-then"},
+  {"<string-input-port>", &module_info_runtime, "<string-input-port>"},
+  {"%i?", &module_info_boot, "%i?"},
+  {"%force-output", &module_info_boot, "%force-output"},
   {"head", &module_info_boot, "head"},
-  {"lognot", &module_info_runtime, "lognot"},
-  {"sexpr-syntax-if-else", &module_info_syntax, "sexpr-syntax-if-else"},
-  {"slot-value", &module_info_boot, "slot-value"},
-  {"*boot-macro-names*", &module_info_boot, "*boot-macro-names*"},
-  {"slot", &module_info_boot, "slot"},
-  {"ascii-limit", &module_info_runtime, "ascii-limit"},
   {"components-basename", &module_info_protoSsystem, "components-basename"},
-  {"$sexpr-iterate-tag", &module_info_syntax, "$sexpr-iterate-tag"},
-  {"sig", &module_info_runtime, "sig"},
+  {"call-with-output-file", &module_info_runtime, "call-with-output-file"},
+  {"default", &module_info_runtime, "default"},
+  {"slot-value", &module_info_boot, "slot-value"},
+  {"%open-input-file", &module_info_boot, "%open-input-file"},
+  {"slot", &module_info_boot, "slot"},
+  {"any?", &module_info_runtime, "any?"},
   {"fun-value", &module_info_boot, "fun-value"},
   {"sig-specs", &module_info_boot, "sig-specs"},
-  {"%current-input-port", &module_info_boot, "%current-input-port"},
   {"fun-names", &module_info_boot, "fun-names"},
-  {"elt", &module_info_runtime, "elt"},
-  {"first-then", &module_info_runtime, "first-then"},
-  {"%f*", &module_info_boot, "%f*"},
+  {"format-to-string", &module_info_runtime, "format-to-string"},
+  {"even?", &module_info_runtime, "even?"},
+  {">=", &module_info_runtime, ">="},
   {"match-unquote", &module_info_macros, "match-unquote"},
-  {"to-str", &module_info_runtime, "to-str"},
-  {"sexpr-function-body", &module_info_syntax, "sexpr-function-body"},
-  {"collect", &module_info_macros, "collect"},
-  {"num-to-str", &module_info_runtime, "num-to-str"},
+  {"%velt", &module_info_boot, "%velt"},
   {"<map>", &module_info_runtime, "<map>"},
-  {"add-slot", &module_info_boot, "add-slot"},
-  {"read", &module_info_runtime, "read"},
-  {"sexpr-if-test", &module_info_syntax, "sexpr-if-test"},
-  {"write-string", &module_info_runtime, "write-string"},
-  {"<tab>", &module_info_runtime, "<tab>"},
-  {"%f<", &module_info_boot, "%f<"},
-  {"probe-directory", &module_info_protoSsystem, "probe-directory"},
-  {"from-above-by", &module_info_runtime, "from-above-by"},
+  {"collect", &module_info_macros, "collect"},
+  {"%str", &module_info_boot, "%str"},
+  {"%i<<", &module_info_boot, "%i<<"},
   {"build-condition-interactively", &module_info_runtime, "build-condition-interactively"},
-  {"<restart>", &module_info_runtime, "<restart>"},
-  {"*boot-macro-module-names*", &module_info_boot, "*boot-macro-module-names*"},
-  {"<str-tab>", &module_info_runtime, "<str-tab>"},
-  {"map-str", &module_info_strings, "map-str"},
-  {"%file-type", &module_info_boot, "%file-type"},
-  {"%c<", &module_info_boot, "%c<"},
-  {"table-growth-factor", &module_info_runtime, "table-growth-factor"},
-  {"dss", &module_info_boot, "dss"},
-  {"from-below-by", &module_info_runtime, "from-below-by"},
-  {"macro-expand", &module_info_boot, "macro-expand"},
-  {"del-key", &module_info_runtime, "del-key"},
-  {"del", &module_info_runtime, "del"},
-  {"eval", &module_info_syntax, "eval"},
-  {"<file-port>", &module_info_runtime, "<file-port>"},
-  {"sexpr-unwind-protect-protected-form", &module_info_syntax, "sexpr-unwind-protect-protected-form"},
-  {"%fb", &module_info_boot, "%fb"},
-  {"from-to", &module_info_runtime, "from-to"},
-  {"%force-output", &module_info_boot, "%force-output"},
-  {"rep", &module_info_boot, "rep"},
-  {"last", &module_info_runtime, "last"},
-  {"%f=", &module_info_boot, "%f="},
-  {"object-name", &module_info_write, "object-name"},
-  {"%bb", &module_info_boot, "%bb"},
-  {"sexpr-definition-value", &module_info_syntax, "sexpr-definition-value"},
-  {"<step>", &module_info_runtime, "<step>"},
-  {"min", &module_info_runtime, "min"},
-  {"format", &module_info_runtime, "format"},
-  {"sub-setter", &module_info_runtime, "sub-setter"},
-  {"type-error", &module_info_boot, "type-error"},
-  {"sexpr-make-begin", &module_info_syntax, "sexpr-make-begin"},
-  {"%iv", &module_info_boot, "%iv"},
-  {"flo-bits", &module_info_runtime, "flo-bits"},
-  {"%fi2f", &module_info_boot, "%fi2f"},
-  {"use", &module_info_boot, "use"},
-  {"%i*", &module_info_boot, "%i*"},
-  {"make-handler", &module_info_runtime, "make-handler"},
-  {"string-join", &module_info_strings, "string-join"},
-  {"write", &module_info_write, "write"},
-  {"collecting", &module_info_macros, "collecting"},
-  {"head-setter", &module_info_boot, "head-setter"},
-  {"<traits>", &module_info_boot, "<traits>"},
-  {"<slot>", &module_info_boot, "<slot>"},
-  {"%invoke-debugger", &module_info_boot, "%invoke-debugger"},
-  {"numeric?", &module_info_runtime, "numeric?"},
-  {"hierarchical-components", &module_info_protoSsystem, "hierarchical-components"},
-  {"len", &module_info_runtime, "len"},
-  {"nul", &module_info_boot, "nul"},
-  {"empty?", &module_info_macros, "empty?"},
-  {"%call-next-method", &module_info_boot, "%call-next-method"},
-  {"as-lowercase", &module_info_runtime, "as-lowercase"},
-  {"rev!", &module_info_runtime, "rev!"},
-  {"<file-input-port>", &module_info_runtime, "<file-input-port>"},
-  {"set", &module_info_boot, "set"},
-  {"nul?", &module_info_runtime, "nul?"},
-  {"lowercase?", &module_info_runtime, "lowercase?"},
-  {"sexpr-make-application", &module_info_syntax, "sexpr-make-application"},
-  {"table-shrink-threshold", &module_info_runtime, "table-shrink-threshold"},
+  {"sexpr-function-signature", &module_info_syntax, "sexpr-function-signature"},
+  {"add-src-path", &module_info_protoSsystem, "add-src-path"},
+  {"%vnul", &module_info_boot, "%vnul"},
+  {"handler-info-arguments", &module_info_boot, "handler-info-arguments"},
+  {"add!", &module_info_runtime, "add!"},
   {"<file-output-port>", &module_info_runtime, "<file-output-port>"},
-  {"create-directory", &module_info_protoSsystem, "create-directory"},
-  {"%selt", &module_info_boot, "%selt"},
-  {"read-char", &module_info_runtime, "read-char"},
+  {"sexpr-function-definition-variable", &module_info_syntax, "sexpr-function-definition-variable"},
+  {"file-mtime", &module_info_protoSsystem, "file-mtime"},
   {"<flo>", &module_info_boot, "<flo>"},
-  {"buf", &module_info_runtime, "buf"},
-  {"*obj-extension*", &module_info_protoSsystem, "*obj-extension*"},
+  {"first-then", &module_info_runtime, "first-then"},
   {"*exe-extension*", &module_info_protoSsystem, "*exe-extension*"},
+  {"file-type", &module_info_protoSsystem, "file-type"},
+  {"assocs-test", &module_info_runtime, "assocs-test"},
+  {"neg", &module_info_runtime, "neg"},
+  {"sexpr-syntax-if-pattern", &module_info_syntax, "sexpr-syntax-if-pattern"},
+  {"del-keys", &module_info_runtime, "del-keys"},
+  {"<flat>", &module_info_boot, "<flat>"},
+  {"rep", &module_info_boot, "rep"},
+  {"sexpr-assignment-value", &module_info_syntax, "sexpr-assignment-value"},
+  {"copy-state", &module_info_runtime, "copy-state"},
+  {"handler-function", &module_info_runtime, "handler-function"},
+  {"$default-handler-info", &module_info_runtime, "$default-handler-info"},
+  {"sexpr-iterate->loc", &module_info_syntax, "sexpr-iterate->loc"},
+  {"<handler>", &module_info_runtime, "<handler>"},
+  {"add-slot", &module_info_boot, "add-slot"},
+  {"close-input-port", &module_info_runtime, "close-input-port"},
+  {"eof-object", &module_info_runtime, "eof-object"},
+  {"force-output", &module_info_runtime, "force-output"},
+  {"app-args", &module_info_runtime, "app-args"},
+  {"handler-matches?", &module_info_runtime, "handler-matches?"},
   {"sexpr-signature-parameters", &module_info_syntax, "sexpr-signature-parameters"},
-  {"list", &module_info_runtime, "list"},
+  {"<lst>", &module_info_boot, "<lst>"},
+  {"%i-", &module_info_boot, "%i-"},
+  {"%file-mtime", &module_info_boot, "%file-mtime"},
+  {"collecting", &module_info_macros, "collecting"},
+  {"add-build-path", &module_info_protoSsystem, "add-build-path"},
+  {"$sexpr-bind-exit-tag", &module_info_syntax, "$sexpr-bind-exit-tag"},
+  {"head-setter", &module_info_boot, "head-setter"},
+  {"<simple-condition>", &module_info_runtime, "<simple-condition>"},
+  {"%%macro", &module_info_boot, "%%macro"},
+  {"bound?", &module_info_boot, "bound?"},
+  {"$sexpr-define-generic-tag", &module_info_syntax, "$sexpr-define-generic-tag"},
+  {"from-above-by", &module_info_runtime, "from-above-by"},
+  {"%os-name", &module_info_boot, "%os-name"},
+  {"%binding-name", &module_info_boot, "%binding-name"},
+  {"ascii-limit", &module_info_runtime, "ascii-limit"},
+  {"%call-next-method", &module_info_boot, "%call-next-method"},
+  {"rev!", &module_info_runtime, "rev!"},
+  {"sexpr-monitor-expand", &module_info_syntax, "sexpr-monitor-expand"},
+  {"<fun>", &module_info_boot, "<fun>"},
+  {"set", &module_info_boot, "set"},
+  {"t=", &module_info_runtime, "t="},
+  {"%c=", &module_info_boot, "%c="},
+  {"c-filename", &module_info_protoSsystem, "c-filename"},
   {"invoke-handler-interactively", &module_info_runtime, "invoke-handler-interactively"},
-  {"newline", &module_info_runtime, "newline"},
-  {"neg?", &module_info_runtime, "neg?"},
-  {"unless", &module_info_macros, "unless"},
+  {"%file-type", &module_info_boot, "%file-type"},
+  {"from-to", &module_info_runtime, "from-to"},
+  {"3rd", &module_info_runtime, "3rd"},
+  {"sexpr-let->combination", &module_info_syntax, "sexpr-let->combination"},
+  {"<str-tab>", &module_info_runtime, "<str-tab>"},
+  {"sexpr-loc-bound-signatures", &module_info_syntax, "sexpr-loc-bound-signatures"},
+  {"sexpr-loc-bound-names", &module_info_syntax, "sexpr-loc-bound-names"},
+  {"do-keyed", &module_info_runtime, "do-keyed"},
   {NULL,NULL,NULL}
 };
 
 static BINDING_INFO binding_infos[] = {
-  {"ast-evaluate", &YastYast_evaluate},
-  {"environment-module", &YastYenvironment_module},
-  {"init-environment-for-eval", &YastYinit_environment_for_eval},
-  {"$sexpr-compile-time-tag", &YastYDsexpr_compile_time_tag},
-  {"binding-value-setter", &YastYbinding_value_setter},
-  {"function-body-setter", &YastYfunction_body_setter},
-  {"special-use-module", &YastYspecial_use_module},
-  {"compile-time-program", &YastYcompile_time_program},
-  {"monitor-info", &YastYmonitor_info},
-  {"program-type", &YastYprogram_type},
-  {"special-unwind-protect", &YastYspecial_unwind_protect},
-  {"<definition>", &YastYLdefinitionG},
-  {"ast-macro-expand", &YastYast_macro_expand},
-  {"signature-nary?", &YastYsignature_naryQ},
-  {"$sexpr-use-module-tag", &YastYDsexpr_use_module_tag},
-  {"environment-module-loader-setter", &YastYenvironment_module_loader_setter},
-  {"---main-1---", NULL},
-  {"<computed-program>", &YastYLcomputed_programG},
-  {"<variable-definition>", &YastYLvariable_definitionG},
-  {"init-p2c-boot-environment", &YastYinit_p2c_boot_environment},
-  {"constant-value-setter", &YastYconstant_value_setter},
-  {"assignment-binding", &YastYassignment_binding},
-  {"binding-kind-setter", &YastYbinding_kind_setter},
-  {"objectify-bind-exit", &YastYobjectify_bind_exit},
-  {"monitor-test-setter", &YastYmonitor_test_setter},
-  {"module-target-environment", &YastYmodule_target_environment},
-  {"objectify-bound?", &YastYobjectify_boundQ},
-  {"<ast-primitive>", &YastYLast_primitiveG},
-  {"<monitor>", &YastYLmonitorG},
-  {"module-name-setter", &YastYmodule_name_setter},
-  {"function-debug-name-setter", &YastYfunction_debug_name_setter},
-  {"bound?-reference", &YastYboundQ_reference},
-  {"$sexpr-optionals-type-name", &YastYDsexpr_optionals_type_name},
-  {"register-module!", &YastYregister_moduleX},
-  {"module-exports-setter", &YastYmodule_exports_setter},
-  {"<static-empty-environment>", &YastYLstatic_empty_environmentG},
-  {"objectify-assignment", &YastYobjectify_assignment},
-  {"locals-functions-setter", &YastYlocals_functions_setter},
-  {"default-type", &YastYdefault_type},
-  {"$sexpr-define-primitive-tag", &YastYDsexpr_define_primitive_tag},
-  {"alternative-condition", &YastYalternative_condition},
-  {"objectify-sequential", &YastYobjectify_sequential},
-  {"<binding-name>", &YastYLbinding_nameG},
-  {"locals-functions", &YastYlocals_functions},
-  {"special-method", &YastYspecial_method},
-  {"<program>", &YastYLprogramG},
-  {"application-binding", &YastYapplication_binding},
-  {"install-magic-bindings", &YastYinstall_magic_bindings},
-  {"signature-value-setter", &YastYsignature_value_setter},
-  {"load-and-register-module", &YastYload_and_register_module},
-  {"bind-exit-main-fun-setter", &YastYbind_exit_main_fun_setter},
-  {"probe-module", &YastYprobe_module},
-  {"<runtime-reference>", &YastYLruntime_referenceG},
-  {"function-nary?", &YastYfunction_naryQ},
-  {"---main-2---", NULL},
-  {"$empty-static-environment", &YastYDempty_static_environment},
-  {"<compile-time>", &YastYLcompile_timeG},
-  {"$sexpr-define-static-syntax-tag", &YastYDsexpr_define_static_syntax_tag},
-  {"alternative-alternant", &YastYalternative_alternant},
-  {"environment-uses-modules-setter", &YastYenvironment_uses_modules_setter},
-  {"module-binding", &YastYmodule_binding},
-  {"<raw-constant>", &YastYLraw_constantG},
-  {"alternative-condition-setter", &YastYalternative_condition_setter},
-  {"binding-type-setter", &YastYbinding_type_setter},
-  {"---main-5---", NULL},
-  {"fix-let-body-setter", &YastYfix_let_body_setter},
-  {"special-bind-exit", &YastYspecial_bind_exit},
-  {"<alternative>", &YastYLalternativeG},
-  {"locals-bindings", &YastYlocals_bindings},
-  {"objectify-syntax-definition", &YastYobjectify_syntax_definition},
-  {"*magic-bindings*", &YastYTmagic_bindingsT},
-  {"module-syntax-environment-setter", &YastYmodule_syntax_environment_setter},
-  {"compute-transitive-users", &YastYcompute_transitive_users},
-  {"alternative-consequent-setter", &YastYalternative_consequent_setter},
-  {"expand-bind-list", &YastYexpand_bind_list},
-  {"assignment-form-setter", &YastYassignment_form_setter},
-  {"special-macro-expand", &YastYspecial_macro_expand},
-  {"application-function", &YastYapplication_function},
-  {"monitor-info-setter", &YastYmonitor_info_setter},
-  {"set-module-environments", &YastYset_module_environments},
-  {"---main-8---", NULL},
-  {"reloader-do-other-binding", &YastYreloader_do_other_binding},
-  {"signature-nary?-setter", &YastYsignature_naryQ_setter},
-  {"locals-bindings-setter", &YastYlocals_bindings_setter},
-  {"module-loader-modules", &YastYmodule_loader_modules},
-  {"sequential", &YastYsequential},
-  {"environment-bindings", &YastYenvironment_bindings},
-  {"remove-module-internal!", &YastYremove_module_internalX},
-  {"program-register-setter", &YastYprogram_register_setter},
-  {"$sexpr-compile-time-also-tag", &YastYDsexpr_compile_time_also_tag},
-  {"<sequential>", &YastYLsequentialG},
-  {"$sexpr-%raw-tag", &YastYDsexpr_Praw_tag},
-  {"expand-syntax-if", &YastYexpand_syntax_if},
-  {"$sequential-empty", &YastYDsequential_empty},
-  {"init-p2c-regular-environment", &YastYinit_p2c_regular_environment},
-  {"<ast-generic-definition>", &YastYLast_generic_definitionG},
-  {"binding-free?", &YastYbinding_freeQ},
-  {"compute-local-reference-offsets", &YastYcompute_local_reference_offsets},
-  {"$arguments-empty", &YastYDarguments_empty},
-  {"<bound?>", &YastYLboundQG},
-  {"objectify-function-definition", &YastYobjectify_function_definition},
-  {"<regular-application>", &YastYLregular_applicationG},
-  {"reference-called-function?-setter", &YastYreference_called_functionQ_setter},
-  {"monitor-main-thunk-setter", &YastYmonitor_main_thunk_setter},
-  {"do-static-global-bindings", &YastYdo_static_global_bindings},
-  {"module-loader-module-type", &YastYmodule_loader_module_type},
-  {"<ast-function>", &YastYLast_functionG},
-  {"reference-called-function?", &YastYreference_called_functionQ},
-  {"---main-7---", NULL},
-  {"$fab-list-empty", &YastYDfab_list_empty},
-  {"environment-module-loader", &YastYenvironment_module_loader},
-  {"objectify-export", &YastYobjectify_export},
-  {"special-locals", &YastYspecial_locals},
-  {"application-binding-setter", &YastYapplication_binding_setter},
-  {"assignment-form", &YastYassignment_form},
-  {"unwind-protect-protected-thunk-setter", &YastYunwind_protect_protected_thunk_setter},
-  {"objectify-monitor", &YastYobjectify_monitor},
-  {"environment-module-setter", &YastYenvironment_module_setter},
-  {"binding-mutable?", &YastYbinding_mutableQ},
-  {"<functions>", &YastYLfunctionsG},
-  {"arguments", &YastYarguments},
-  {"environment-uses-modules", &YastYenvironment_uses_modules},
-  {"special-define-function", &YastYspecial_define_function},
-  {"<predefined-reference>", &YastYLpredefined_referenceG},
-  {"objectify-list", &YastYobjectify_list},
-  {"special-define-generic", &YastYspecial_define_generic},
-  {"signature-value", &YastYsignature_value},
-  {"find-static-global-environment", &YastYfind_static_global_environment},
-  {"fix-let-arguments", &YastYfix_let_arguments},
-  {"<runtime-module-loader>", &YastYLruntime_module_loaderG},
-  {"update-binding-kind", &YastYupdate_binding_kind},
-  {"objectify-alternative", &YastYobjectify_alternative},
-  {"<ast-macro-definition>", &YastYLast_macro_definitionG},
-  {"do-module-loader-modules", &YastYdo_module_loader_modules},
-  {"expand-pattern", &YastYexpand_pattern},
-  {"binding-name", &YastYbinding_name},
-  {"binding-mutable?-setter", &YastYbinding_mutableQ_setter},
-  {"objectify-compile-time", &YastYobjectify_compile_time},
-  {"program-type-setter", &YastYprogram_type_setter},
-  {"<bind-exit>", &YastYLbind_exitG},
-  {"global-box-value-setter", &YastYglobal_box_value_setter},
-  {"objectify-generic-definition", &YastYobjectify_generic_definition},
-  {"special-iterate", &YastYspecial_iterate},
-  {"init-ast", &YastYinit_ast},
-  {"special-bound?", &YastYspecial_boundQ},
-  {"special-quasiquote", &YastYspecial_quasiquote},
-  {"signature-names-setter", &YastYsignature_names_setter},
-  {"objectify-foreign-reference", &YastYobjectify_foreign_reference},
-  {"monitor-test", &YastYmonitor_test},
-  {"<constant>", &YastYLconstantG},
-  {"environment-bindings-setter", &YastYenvironment_bindings_setter},
-  {"<ast-generic>", &YastYLast_genericG},
-  {"application-known?", &YastYapplication_knownQ},
-  {"<fab-list>", &YastYLfab_listG},
-  {"<programs>", &YastYLprogramsG},
-  {"special-compile-time", &YastYspecial_compile_time},
-  {"binding-handler", &YastYbinding_handler},
-  {"fab-syntax-environment", &YastYfab_syntax_environment},
-  {"runtime-environment", &YastYruntime_environment},
-  {"binding-dynamic-extent?", &YastYbinding_dynamic_extentQ},
-  {"do-named-static-global-bindings", &YastYdo_named_static_global_bindings},
-  {"signature-specs-setter", &YastYsignature_specs_setter},
-  {"alternative-alternant-setter", &YastYalternative_alternant_setter},
-  {"binding-kind", &YastYbinding_kind},
-  {"expand-bind-list*", &YastYexpand_bind_listT},
-  {"application-arguments-setter", &YastYapplication_arguments_setter},
-  {"special-define", &YastYspecial_define},
-  {"reference-binding", &YastYreference_binding},
-  {"expand-bind-element", &YastYexpand_bind_element},
-  {"objectify-use-module", &YastYobjectify_use_module},
-  {"fab-subset-environment", &YastYfab_subset_environment},
-  {"special-syntax-if", &YastYspecial_syntax_if},
-  {"unwind-protect-cleanup-thunk-setter", &YastYunwind_protect_cleanup_thunk_setter},
-  {"---main-4---", NULL},
-  {"find-environment-module", &YastYfind_environment_module},
-  {"objectify-assignment-using", &YastYobjectify_assignment_using},
-  {"<module-binding>", &YastYLmodule_bindingG},
-  {"special-define-method", &YastYspecial_define_method},
-  {"<local-reference>", &YastYLlocal_referenceG},
-  {"---main-3---", NULL},
-  {"functions", &YastYfunctions},
-  {"$proto-boot-module-name", &YastYDproto_boot_module_name},
-  {"<ast-method-definition>", &YastYLast_method_definitionG},
-  {"<predefined-application>", &YastYLpredefined_applicationG},
-  {"<passive-program>", &YastYLpassive_programG},
-  {"init-runtime", &YastYinit_runtime},
-  {"binding-info", &YastYbinding_info},
-  {"special-define-syntax", &YastYspecial_define_syntax},
-  {"monitor-main-thunk", &YastYmonitor_main_thunk},
-  {"convert2arguments", &YastYconvert2arguments},
-  {"application-tail?", &YastYapplication_tailQ},
-  {"$proto-runtime-module-name", &YastYDproto_runtime_module_name},
-  {"binding-handler-setter", &YastYbinding_handler_setter},
-  {"function-value", &YastYfunction_value},
   {"ftype", &YastYftype},
-  {"process-nary-closed-application", &YastYprocess_nary_closed_application},
-  {"$functions-empty", &YastYDfunctions_empty},
-  {"foreign-name?", &YastYforeign_nameQ},
-  {"objectify-unwind-protect", &YastYobjectify_unwind_protect},
-  {"install-interpreter-hacks", &YastYinstall_interpreter_hacks},
-  {"reload-modules", &YastYreload_modules},
-  {"pairize", &YastYpairize},
-  {"objectify-primitive-definition", &YastYobjectify_primitive_definition},
-  {"binding-locative-setter", &YastYbinding_locative_setter},
-  {"special-monitor", &YastYspecial_monitor},
-  {"application-known?-setter", &YastYapplication_knownQ_setter},
-  {"special-isa", &YastYspecial_isa},
-  {"signature-bindings", &YastYsignature_bindings},
-  {"environment-next", &YastYenvironment_next},
-  {"<static-environment>", &YastYLstatic_environmentG},
-  {"<global-assignment>", &YastYLglobal_assignmentG},
-  {"<real-reference>", &YastYLreal_referenceG},
-  {"<global-box>", &YastYLglobal_boxG},
-  {"find-syntax-environment", &YastYfind_syntax_environment},
-  {"<module>", &YastYLmoduleG},
-  {"<fix-let>", &YastYLfix_letG},
-  {"assignment-reference-setter", &YastYassignment_reference_setter},
-  {"signature-names", &YastYsignature_names},
-  {"unwind-protect-protected-thunk", &YastYunwind_protect_protected_thunk},
+  {"init-ast", &YastYinit_ast},
+  {"do-module-loader-modules", &YastYdo_module_loader_modules},
+  {"bind-exit-main-fun-setter", &YastYbind_exit_main_fun_setter},
+  {"compile-time-program-setter", &YastYcompile_time_program_setter},
   {"$sexpr-optionals-tag", &YastYDsexpr_optionals_tag},
-  {"locals-body", &YastYlocals_body},
-  {"insert-globals!", &YastYinsert_globalsX},
-  {"function-specs", &YastYfunction_specs},
-  {"<local-binding>", &YastYLlocal_bindingG},
-  {"binding-locative", &YastYbinding_locative},
-  {"<assignment>", &YastYLassignmentG},
-  {"---main-6---", NULL},
-  {"binding-value", &YastYbinding_value},
-  {"<ast-signature>", &YastYLast_signatureG},
-  {"locals-body-setter", &YastYlocals_body_setter},
-  {"binding-global-box", &YastYbinding_global_box},
-  {"special-define-primitive", &YastYspecial_define_primitive},
-  {"define-magic-binding", NULL},
-  {"<locals>", &YastYLlocalsG},
+  {"$sequential-empty", &YastYDsequential_empty},
+  {"binding-info", &YastYbinding_info},
+  {"environment-bindings", &YastYenvironment_bindings},
+  {"program-register-setter", &YastYprogram_register_setter},
+  {"application-function-setter", &YastYapplication_function_setter},
+  {"<computed-program>", &YastYLcomputed_programG},
+  {"do-named-static-global-bindings", &YastYdo_named_static_global_bindings},
+  {"<unwind-protect>", &YastYLunwind_protectG},
   {"special-compile-time-also", &YastYspecial_compile_time_also},
-  {"load-module", &YastYload_module},
-  {"fix-let-types", &YastYfix_let_types},
-  {"module-syntax-environment", &YastYmodule_syntax_environment},
-  {"function-bindings", &YastYfunction_bindings},
-  {"module-loader-modules-setter", &YastYmodule_loader_modules_setter},
-  {"monitor-handler-setter", &YastYmonitor_handler_setter},
-  {"objectify-binding", &YastYobjectify_binding},
-  {"reloader-do-import", &YastYreloader_do_import},
+  {"assignment-form-setter", &YastYassignment_form_setter},
+  {"unwind-protect-protected-thunk", &YastYunwind_protect_protected_thunk},
+  {"environment-implements", &YastYenvironment_implements},
+  {"module-syntax-environment-setter", &YastYmodule_syntax_environment_setter},
+  {"<compile-time>", &YastYLcompile_timeG},
+  {"set-module-environments", &YastYset_module_environments},
+  {"locals-bindings", &YastYlocals_bindings},
+  {"binding-dynamic-extent?", &YastYbinding_dynamic_extentQ},
+  {"<predefined-reference>", &YastYLpredefined_referenceG},
+  {"function-binding", &YastYfunction_binding},
+  {"import-global!", &YastYimport_globalX},
+  {"binding-handler-setter", &YastYbinding_handler_setter},
+  {"<arguments>", &YastYLargumentsG},
+  {"<ast-primitive>", &YastYLast_primitiveG},
+  {"objectify-alternative", &YastYobjectify_alternative},
+  {"environment-next-setter", &YastYenvironment_next_setter},
+  {"objectify-bound?", &YastYobjectify_boundQ},
+  {"objectify-generic-definition", &YastYobjectify_generic_definition},
+  {"special-define-static-syntax", &YastYspecial_define_static_syntax},
+  {"objectify-bind-exit", &YastYobjectify_bind_exit},
+  {"function-body-setter", &YastYfunction_body_setter},
+  {"alternative-alternant", &YastYalternative_alternant},
   {"monitor-type-setter", &YastYmonitor_type_setter},
+  {"application-binding-setter", &YastYapplication_binding_setter},
+  {"function-specs", &YastYfunction_specs},
+  {"$proto-boot-module-name", &YastYDproto_boot_module_name},
+  {"$proto-runtime-module-name", &YastYDproto_runtime_module_name},
+  {"sequential", &YastYsequential},
+  {"monitor-handler", &YastYmonitor_handler},
+  {"assignment-form", &YastYassignment_form},
+  {"environment-module", &YastYenvironment_module},
+  {"reload-macros", &YastYreload_macros},
+  {"locals-body-setter", &YastYlocals_body_setter},
+  {"environment-allows-foreign-names?-setter", &YastYenvironment_allows_foreign_namesQ_setter},
+  {"<sequential>", &YastYLsequentialG},
+  {"<binding-name>", &YastYLbinding_nameG},
+  {"<global-assignment>", &YastYLglobal_assignmentG},
+  {"special-macro-expand", &YastYspecial_macro_expand},
+  {"reference-called-function?-setter", &YastYreference_called_functionQ_setter},
+  {"special-export", &YastYspecial_export},
+  {"fix-let-types", &YastYfix_let_types},
+  {"module-exports", &YastYmodule_exports},
+  {"objectify-monitor", &YastYobjectify_monitor},
+  {"module-exports-setter", &YastYmodule_exports_setter},
+  {"special-syntax-if", &YastYspecial_syntax_if},
+  {"special-monitor", &YastYspecial_monitor},
+  {"<variable-definition>", &YastYLvariable_definitionG},
+  {"<ast-function-definition>", &YastYLast_function_definitionG},
+  {"signature-specs", &YastYsignature_specs},
+  {"ast-define-binding", &YastYast_define_binding},
+  {"default-type", &YastYdefault_type},
+  {"<fab-list>", &YastYLfab_listG},
+  {"assignment-binding", &YastYassignment_binding},
+  {"signature-bindings-setter", &YastYsignature_bindings_setter},
+  {"reloader-do-use-module", &YastYreloader_do_use_module},
+  {"$sexpr-define-primitive-tag", &YastYDsexpr_define_primitive_tag},
+  {"export-binding!", &YastYexport_bindingX},
+  {"module-target-environment", &YastYmodule_target_environment},
+  {"$functions-empty", &YastYDfunctions_empty},
+  {"probe-module", &YastYprobe_module},
+  {"environment-implements-setter", &YastYenvironment_implements_setter},
+  {"objectify-application", &YastYobjectify_application},
+  {"<functions>", &YastYLfunctionsG},
   {"<runtime-assignment>", &YastYLruntime_assignmentG},
+  {"do-static-global-bindings", &YastYdo_static_global_bindings},
+  {"objectify-method-definition", &YastYobjectify_method_definition},
+  {"init-p2c-boot-environment", &YastYinit_p2c_boot_environment},
+  {"function-bindings", &YastYfunction_bindings},
+  {"load-in", &YastYload_in},
+  {"$sexpr-compile-time-also-tag", &YastYDsexpr_compile_time_also_tag},
+  {"magic-bindings", &YastYmagic_bindings},
+  {"binding-locative", &YastYbinding_locative},
+  {"special-unwind-protect", &YastYspecial_unwind_protect},
+  {"binding-handler", &YastYbinding_handler},
+  {"monitor-main-thunk", &YastYmonitor_main_thunk},
+  {"<ast-method>", &YastYLast_methodG},
+  {"objectify-compile-time", &YastYobjectify_compile_time},
+  {"special-set", &YastYspecial_set},
+  {"special-use-module", &YastYspecial_use_module},
+  {"$sexpr-export-tag", &YastYDsexpr_export_tag},
+  {"binding-free?-setter", &YastYbinding_freeQ_setter},
+  {"init-runtime", &YastYinit_runtime},
+  {"signature-value-setter", &YastYsignature_value_setter},
+  {"environment-module-loader", &YastYenvironment_module_loader},
+  {"reference-binding", &YastYreference_binding},
+  {"ast-macro-expand", &YastYast_macro_expand},
+  {"foreign-name?", &YastYforeign_nameQ},
+  {"$sexpr-define-static-syntax-tag", &YastYDsexpr_define_static_syntax_tag},
+  {"binding-global-box-setter", &YastYbinding_global_box_setter},
+  {"install-interpreter-hacks", &YastYinstall_interpreter_hacks},
+  {"$fab-list-empty", &YastYDfab_list_empty},
+  {"environment-uses-modules", &YastYenvironment_uses_modules},
+  {"compile-time-program", &YastYcompile_time_program},
+  {"fab-list", &YastYfab_list},
+  {"*runtime-module-loader*", &YastYTruntime_module_loaderT},
+  {"expand-bind-list*", &YastYexpand_bind_listT},
+  {"reloader-do-export", &YastYreloader_do_export},
+  {"signature-bindings", &YastYsignature_bindings},
+  {"<assignment>", &YastYLassignmentG},
+  {"reload-modules", &YastYreload_modules},
+  {"define-magic-binding", NULL},
+  {"application-arguments", &YastYapplication_arguments},
+  {"binding-dotted?", &YastYbinding_dottedQ},
+  {"<locals>", &YastYLlocalsG},
+  {"---main-8---", NULL},
+  {"find-environment-module", &YastYfind_environment_module},
+  {"environment-module-setter", &YastYenvironment_module_setter},
+  {"<module-binding>", &YastYLmodule_bindingG},
+  {"binding-mutable?", &YastYbinding_mutableQ},
+  {"special-isa", &YastYspecial_isa},
+  {"module-loader-module-type", &YastYmodule_loader_module_type},
+  {"objectify-list", &YastYobjectify_list},
+  {"reloader-do-runtime-binding", &YastYreloader_do_runtime_binding},
+  {"objectify-assignment", &YastYobjectify_assignment},
+  {"<ast-method-definition>", &YastYLast_method_definitionG},
+  {"reference-called-function?", &YastYreference_called_functionQ},
+  {"objectify-locals", &YastYobjectify_locals},
+  {"syntax-environment-excluded-bindings", &YastYsyntax_environment_excluded_bindings},
+  {"binding-kind-setter", &YastYbinding_kind_setter},
+  {"find-static-global-environment", &YastYfind_static_global_environment},
+  {"<fix-let>", &YastYLfix_letG},
+  {"<program>", &YastYLprogramG},
+  {"---main-4---", NULL},
+  {"monitor-test-setter", &YastYmonitor_test_setter},
+  {"unwind-protect-cleanup-thunk-setter", &YastYunwind_protect_cleanup_thunk_setter},
+  {"environment-bindings-setter", &YastYenvironment_bindings_setter},
+  {"objectify-foreign-reference", &YastYobjectify_foreign_reference},
+  {"objectify-unwind-protect", &YastYobjectify_unwind_protect},
+  {"<application>", &YastYLapplicationG},
+  {"<bind-exit>", &YastYLbind_exitG},
+  {"fix-let-arguments-setter", &YastYfix_let_arguments_setter},
+  {"fab-subset-environment", &YastYfab_subset_environment},
+  {"objectify-function-definition", &YastYobjectify_function_definition},
+  {"<bound?>", &YastYLboundQG},
+  {"$sexpr-bound?-tag", &YastYDsexpr_boundQ_tag},
+  {"arguments", &YastYarguments},
+  {"monitor-test", &YastYmonitor_test},
+  {"binding-native-to?", &YastYbinding_native_toQ},
+  {"<monitor>", &YastYLmonitorG},
+  {"special-slot", &YastYspecial_slot},
+  {"objectify-primitive-definition", &YastYobjectify_primitive_definition},
+  {"expand-bind-list", &YastYexpand_bind_list},
+  {"binding-module-name", &YastYbinding_module_name},
+  {"special-define-syntax", &YastYspecial_define_syntax},
+  {"install-magic-bindings", &YastYinstall_magic_bindings},
+  {"binding-free?", &YastYbinding_freeQ},
+  {"monitor-main-thunk-setter", &YastYmonitor_main_thunk_setter},
+  {"expand-bind-element", &YastYexpand_bind_element},
   {"fix-let-bindings-setter", &YastYfix_let_bindings_setter},
-  {"reference-frame-offset", &YastYreference_frame_offset},
+  {"<ast-primitive-definition>", &YastYLast_primitive_definitionG},
+  {"objectify-sequential", &YastYobjectify_sequential},
+  {"program-type-setter", &YastYprogram_type_setter},
+  {"monitor-type", &YastYmonitor_type},
+  {"<global-reference>", &YastYLglobal_referenceG},
+  {"---main-6---", NULL},
+  {"special-quasiquote", &YastYspecial_quasiquote},
+  {"fab-p2c-module", &YastYfab_p2c_module},
+  {"<ast-macro-definition>", &YastYLast_macro_definitionG},
+  {"$sexpr-%raw-tag", &YastYDsexpr_Praw_tag},
+  {"special-define-function", &YastYspecial_define_function},
+  {"module-loader-modules-setter", &YastYmodule_loader_modules_setter},
+  {"alternative-condition", &YastYalternative_condition},
+  {"alternative-alternant-setter", &YastYalternative_alternant_setter},
+  {"fix-let-body", &YastYfix_let_body},
+  {"signature-names", &YastYsignature_names},
+  {"free-implemented-foreign-bindings", &YastYfree_implemented_foreign_bindings},
+  {"monitor-info", &YastYmonitor_info},
   {"binding-dynamic-extent?-setter", &YastYbinding_dynamic_extentQ_setter},
   {"insert-global!", &YastYinsert_globalX},
-  {"report-undefined-global-bindings", &YastYreport_undefined_global_bindings},
-  {"function-binding", &YastYfunction_binding},
-  {"environment-implements-setter", &YastYenvironment_implements_setter},
-  {"fix-let-bindings", &YastYfix_let_bindings},
-  {"unwind-protect-cleanup-thunk", &YastYunwind_protect_cleanup_thunk},
-  {"load-in", &YastYload_in},
-  {"reference-frame-number", &YastYreference_frame_number},
   {"objectify-free-global-reference", &YastYobjectify_free_global_reference},
-  {"module-loader-stack", &YastYmodule_loader_stack},
-  {"binding-module-name", &YastYbinding_module_name},
-  {"magic-bindings", &YastYmagic_bindings},
-  {"module-target-environment-setter", &YastYmodule_target_environment_setter},
-  {"<application>", &YastYLapplicationG},
-  {"signature-bindings-setter", &YastYsignature_bindings_setter},
-  {"runtime-module-loader", &YastYruntime_module_loader},
-  {"reference-frame-number-setter", &YastYreference_frame_number_setter},
-  {"register-magic-binding", &YastYregister_magic_binding},
-  {"objectify-raw", &YastYobjectify_raw},
-  {"special-begin", &YastYspecial_begin},
-  {"fab-list", &YastYfab_list},
-  {"function-signature-setter", &YastYfunction_signature_setter},
-  {"objectify-locals", &YastYobjectify_locals},
-  {"*runtime-module-loader*", &YastYTruntime_module_loaderT},
-  {"runtime-module", &YastYruntime_module},
-  {"bind-exit-main-fun", &YastYbind_exit_main_fun},
-  {"objectify-quotation", &YastYobjectify_quotation},
-  {"monitor-type", &YastYmonitor_type},
-  {"reloader-do-use-module", &YastYreloader_do_use_module},
-  {"import-global!", &YastYimport_globalX},
-  {"---main-0---", NULL},
-  {"objectify-definition", &YastYobjectify_definition},
-  {"module-name", &YastYmodule_name},
-  {"binding-dotted?", &YastYbinding_dottedQ},
-  {"objectify-error", &YastYobjectify_error},
-  {"compile-time-program-setter", &YastYcompile_time_program_setter},
-  {"signature-specs", &YastYsignature_specs},
-  {"<arguments>", &YastYLargumentsG},
-  {"reference-binding-setter", &YastYreference_binding_setter},
-  {"objectify-application", &YastYobjectify_application},
-  {"reference-frame-offset-setter", &YastYreference_frame_offset_setter},
-  {"binding-reference-prototype", &YastYbinding_reference_prototype},
-  {"special-export", &YastYspecial_export},
-  {"function-signature", &YastYfunction_signature},
-  {"special-quote", &YastYspecial_quote},
-  {"fix-let-arguments-setter", &YastYfix_let_arguments_setter},
-  {"special-let", &YastYspecial_let},
-  {"module-loader-stack-setter", &YastYmodule_loader_stack_setter},
-  {"<static-local-environment>", &YastYLstatic_local_environmentG},
-  {"binding-global-box-setter", &YastYbinding_global_box_setter},
-  {"assignment-binding-setter", &YastYassignment_binding_setter},
-  {"find-binding", &YastYfind_binding},
-  {"function-body", &YastYfunction_body},
-  {"reloader-do-runtime-binding", &YastYreloader_do_runtime_binding},
-  {"syntax-environment-excluded-bindings", &YastYsyntax_environment_excluded_bindings},
-  {"environment-allows-foreign-names?-setter", &YastYenvironment_allows_foreign_namesQ_setter},
-  {"function-kind", &YastYfunction_kind},
-  {"binding-module-name-setter", &YastYbinding_module_name_setter},
-  {"ast-define-binding", &YastYast_define_binding},
-  {"special-slot", &YastYspecial_slot},
-  {"environment-implements", &YastYenvironment_implements},
-  {"special-define-static-syntax", &YastYspecial_define_static_syntax},
-  {"binding-type", &YastYbinding_type},
-  {"fix-let-types-setter", &YastYfix_let_types_setter},
-  {"<static-global-environment>", &YastYLstatic_global_environmentG},
-  {"special-%raw", &YastYspecial_Praw},
-  {"binding-name-setter", &YastYbinding_name_setter},
-  {"<local-assignment>", &YastYLlocal_assignmentG},
-  {"reloader-do-export", &YastYreloader_do_export},
-  {"<global-reference>", &YastYLglobal_referenceG},
-  {"special-if", &YastYspecial_if},
-  {"binding-info-setter", &YastYbinding_info_setter},
-  {"bound?-reference-setter", &YastYboundQ_reference_setter},
-  {"constant-value", &YastYconstant_value},
-  {"free-implemented-foreign-bindings", &YastYfree_implemented_foreign_bindings},
-  {"objectify-symbol", &YastYobjectify_symbol},
-  {"assignment-reference", &YastYassignment_reference},
-  {"binding-free?-setter", &YastYbinding_freeQ_setter},
-  {"r-extend*", &YastYr_extendT},
-  {"objectify-signature", &YastYobjectify_signature},
-  {"*macro-tracing?*", &YastYTmacro_tracingQT},
-  {"def-list", NULL},
+  {"application-function", &YastYapplication_function},
+  {"fix-let-body-setter", &YastYfix_let_body_setter},
+  {"special-define-method", &YastYspecial_define_method},
+  {"---main-1---", NULL},
+  {"<alternative>", &YastYLalternativeG},
+  {"signature-specs-setter", &YastYsignature_specs_setter},
+  {"function-debug-name-setter", &YastYfunction_debug_name_setter},
   {"function-binding-setter", &YastYfunction_binding_setter},
-  {"monitor-handler", &YastYmonitor_handler},
-  {"binding-dotted?-setter", &YastYbinding_dottedQ_setter},
-  {"binding-native-to?", &YastYbinding_native_toQ},
-  {"special-set", &YastYspecial_set},
-  {"global-box-value", &YastYglobal_box_value},
-  {"environment-next-setter", &YastYenvironment_next_setter},
-  {"application-function-setter", &YastYapplication_function_setter},
-  {"objectify-method-definition", &YastYobjectify_method_definition},
-  {"module-exports", &YastYmodule_exports},
+  {"application-known?", &YastYapplication_knownQ},
   {"sequentialize", &YastYsequentialize},
-  {"<binding>", &YastYLbindingG},
-  {"alternative-consequent", &YastYalternative_consequent},
-  {"$sexpr-bound?-tag", &YastYDsexpr_boundQ_tag},
-  {"program-register", &YastYprogram_register},
-  {"<reference>", &YastYLreferenceG},
-  {"fab-p2c-module", &YastYfab_p2c_module},
-  {"application-arguments", &YastYapplication_arguments},
-  {"fix-let-body", &YastYfix_let_body},
-  {"module-name-to-relpath", &YastYmodule_name_to_relpath},
-  {"objectify", &YastYobjectify},
-  {"reload-macros", &YastYreload_macros},
-  {"objectify-function", &YastYobjectify_function},
-  {"fab-static-global-environment", &YastYfab_static_global_environment},
-  {"application-tail?-setter", &YastYapplication_tailQ_setter},
-  {"function-debug-name", &YastYfunction_debug_name},
-  {"remove-modules-by-name!", &YastYremove_modules_by_nameX},
+  {"locals-functions", &YastYlocals_functions},
+  {"objectify-signature", &YastYobjectify_signature},
+  {"special-define", &YastYspecial_define},
+  {"reference-frame-number-setter", &YastYreference_frame_number_setter},
+  {"function-body", &YastYfunction_body},
+  {"fix-let-types-setter", &YastYfix_let_types_setter},
+  {"locals-body", &YastYlocals_body},
+  {"binding-reference-prototype", &YastYbinding_reference_prototype},
+  {"update-binding-kind", &YastYupdate_binding_kind},
+  {"binding-name", &YastYbinding_name},
+  {"<definition>", &YastYLdefinitionG},
+  {"locals-bindings-setter", &YastYlocals_bindings_setter},
+  {"runtime-environment", &YastYruntime_environment},
+  {"runtime-module", &YastYruntime_module},
+  {"convert2arguments", &YastYconvert2arguments},
+  {"objectify-syntax-definition", &YastYobjectify_syntax_definition},
   {"def-programs", NULL},
-  {"export-binding!", &YastYexport_bindingX},
-  {"install-initial-bindings", &YastYinstall_initial_bindings},
-  {"frame-bindings", &YastYframe_bindings},
+  {"$empty-static-environment", &YastYDempty_static_environment},
   {"process-closed-application", &YastYprocess_closed_application},
-  {"reloader-do-create-module", &YastYreloader_do_create_module},
+  {"special-if", &YastYspecial_if},
+  {"init-environment-for-eval", &YastYinit_environment_for_eval},
+  {"module-loader-modules", &YastYmodule_loader_modules},
+  {"<predefined-application>", &YastYLpredefined_applicationG},
+  {"binding-mutable?-setter", &YastYbinding_mutableQ_setter},
+  {"reference-binding-setter", &YastYreference_binding_setter},
+  {"function-nary?", &YastYfunction_naryQ},
+  {"signature-names-setter", &YastYsignature_names_setter},
+  {"objectify-binding", &YastYobjectify_binding},
+  {"reference-frame-offset", &YastYreference_frame_offset},
+  {"<ast-generic>", &YastYLast_genericG},
+  {"signature-nary?-setter", &YastYsignature_naryQ_setter},
+  {"<module>", &YastYLmoduleG},
+  {"binding-locative-setter", &YastYbinding_locative_setter},
+  {"function-signature-setter", &YastYfunction_signature_setter},
+  {"pairize", &YastYpairize},
+  {"<static-empty-environment>", &YastYLstatic_empty_environmentG},
+  {"special-bind-exit", &YastYspecial_bind_exit},
+  {"fab-static-global-environment", &YastYfab_static_global_environment},
+  {"*magic-bindings*", &YastYTmagic_bindingsT},
+  {"module-loader-stack", &YastYmodule_loader_stack},
+  {"register-magic-binding", &YastYregister_magic_binding},
+  {"objectify-assignment-using", &YastYobjectify_assignment_using},
+  {"<constant>", &YastYLconstantG},
+  {"load-module", &YastYload_module},
+  {"unwind-protect-protected-thunk-setter", &YastYunwind_protect_protected_thunk_setter},
+  {"module-target-environment-setter", &YastYmodule_target_environment_setter},
+  {"binding-global-box", &YastYbinding_global_box},
+  {"binding-value", &YastYbinding_value},
+  {"reloader-do-other-binding", &YastYreloader_do_other_binding},
+  {"function-signature", &YastYfunction_signature},
+  {"application-known?-setter", &YastYapplication_knownQ_setter},
+  {"special-iterate", &YastYspecial_iterate},
+  {"objectify-use-module", &YastYobjectify_use_module},
+  {"signature-nary?", &YastYsignature_naryQ},
+  {"program-register", &YastYprogram_register},
+  {"global-box-value", &YastYglobal_box_value},
+  {"objectify-function", &YastYobjectify_function},
+  {"binding-value-setter", &YastYbinding_value_setter},
+  {"module-binding", &YastYmodule_binding},
+  {"load-and-register-module", &YastYload_and_register_module},
+  {"unwind-protect-cleanup-thunk", &YastYunwind_protect_cleanup_thunk},
+  {"objectify-quotation", &YastYobjectify_quotation},
+  {"remove-module-internal!", &YastYremove_module_internalX},
+  {"application-tail?", &YastYapplication_tailQ},
+  {"application-binding", &YastYapplication_binding},
+  {"special-begin", &YastYspecial_begin},
+  {"fab-syntax-environment", &YastYfab_syntax_environment},
+  {"alternative-consequent-setter", &YastYalternative_consequent_setter},
+  {"<regular-application>", &YastYLregular_applicationG},
+  {"install-initial-bindings", &YastYinstall_initial_bindings},
+  {"---main-5---", NULL},
+  {"---main-7---", NULL},
   {"<module-loader>", &YastYLmodule_loaderG},
-  {"<ast-function-definition>", &YastYLast_function_definitionG},
-  {"<ast-primitive-definition>", &YastYLast_primitive_definitionG},
-  {"<unwind-protect>", &YastYLunwind_protectG},
-  {"$sexpr-export-tag", &YastYDsexpr_export_tag},
-  {"<ast-method>", &YastYLast_methodG},
+  {"module-syntax-environment", &YastYmodule_syntax_environment},
+  {"binding-module-name-setter", &YastYbinding_module_name_setter},
+  {"application-arguments-setter", &YastYapplication_arguments_setter},
+  {"alternative-condition-setter", &YastYalternative_condition_setter},
+  {"module-name-to-relpath", &YastYmodule_name_to_relpath},
+  {"remove-modules-by-name!", &YastYremove_modules_by_nameX},
+  {"---main-2---", NULL},
+  {"bind-exit-main-fun", &YastYbind_exit_main_fun},
+  {"reference-frame-offset-setter", &YastYreference_frame_offset_setter},
+  {"special-quote", &YastYspecial_quote},
+  {"find-syntax-environment", &YastYfind_syntax_environment},
+  {"---main-3---", NULL},
+  {"function-debug-name", &YastYfunction_debug_name},
+  {"process-nary-closed-application", &YastYprocess_nary_closed_application},
+  {"<static-global-environment>", &YastYLstatic_global_environmentG},
+  {"def-list", NULL},
+  {"<runtime-module-loader>", &YastYLruntime_module_loaderG},
+  {"<local-reference>", &YastYLlocal_referenceG},
+  {"assignment-binding-setter", &YastYassignment_binding_setter},
+  {"<global-box>", &YastYLglobal_boxG},
+  {"<real-reference>", &YastYLreal_referenceG},
+  {"expand-pattern", &YastYexpand_pattern},
+  {"environment-next", &YastYenvironment_next},
+  {"fix-let-arguments", &YastYfix_let_arguments},
+  {"compute-local-reference-offsets", &YastYcompute_local_reference_offsets},
+  {"special-%raw", &YastYspecial_Praw},
+  {"binding-type", &YastYbinding_type},
+  {"constant-value", &YastYconstant_value},
+  {"module-name", &YastYmodule_name},
+  {"$sexpr-use-module-tag", &YastYDsexpr_use_module_tag},
+  {"binding-kind", &YastYbinding_kind},
+  {"<passive-program>", &YastYLpassive_programG},
+  {"runtime-module-loader", &YastYruntime_module_loader},
+  {"objectify-symbol", &YastYobjectify_symbol},
+  {"frame-bindings", &YastYframe_bindings},
+  {"module-name-setter", &YastYmodule_name_setter},
+  {"<local-assignment>", &YastYLlocal_assignmentG},
+  {"special-let", &YastYspecial_let},
+  {"application-tail?-setter", &YastYapplication_tailQ_setter},
+  {"<ast-signature>", &YastYLast_signatureG},
+  {"r-extend*", &YastYr_extendT},
+  {"assignment-reference-setter", &YastYassignment_reference_setter},
+  {"environment-module-loader-setter", &YastYenvironment_module_loader_setter},
+  {"binding-type-setter", &YastYbinding_type_setter},
+  {"locals-functions-setter", &YastYlocals_functions_setter},
+  {"reference-frame-number", &YastYreference_frame_number},
+  {"reloader-do-create-module", &YastYreloader_do_create_module},
+  {"init-p2c-regular-environment", &YastYinit_p2c_regular_environment},
+  {"functions", &YastYfunctions},
+  {"compute-transitive-users", &YastYcompute_transitive_users},
+  {"special-compile-time", &YastYspecial_compile_time},
+  {"program-type", &YastYprogram_type},
+  {"report-undefined-global-bindings", &YastYreport_undefined_global_bindings},
+  {"find-binding", &YastYfind_binding},
+  {"<programs>", &YastYLprogramsG},
+  {"alternative-consequent", &YastYalternative_consequent},
+  {"special-bound?", &YastYspecial_boundQ},
+  {"function-kind", &YastYfunction_kind},
+  {"ast-evaluate", &YastYast_evaluate},
+  {"monitor-info-setter", &YastYmonitor_info_setter},
+  {"binding-dotted?-setter", &YastYbinding_dottedQ_setter},
   {"environment-allows-foreign-names?", &YastYenvironment_allows_foreign_namesQ},
+  {"objectify-error", &YastYobjectify_error},
+  {"binding-info-setter", &YastYbinding_info_setter},
+  {"register-module!", &YastYregister_moduleX},
+  {"assignment-reference", &YastYassignment_reference},
+  {"objectify-definition", &YastYobjectify_definition},
+  {"signature-value", &YastYsignature_value},
+  {"<binding>", &YastYLbindingG},
+  {"<ast-generic-definition>", &YastYLast_generic_definitionG},
+  {"special-define-generic", &YastYspecial_define_generic},
+  {"---main-0---", NULL},
+  {"objectify-raw", &YastYobjectify_raw},
+  {"expand-syntax-if", &YastYexpand_syntax_if},
+  {"function-value", &YastYfunction_value},
+  {"special-locals", &YastYspecial_locals},
+  {"special-define-class", &YastYspecial_define_class},
+  {"<reference>", &YastYLreferenceG},
+  {"special-define-primitive", &YastYspecial_define_primitive},
+  {"<runtime-reference>", &YastYLruntime_referenceG},
+  {"global-box-value-setter", &YastYglobal_box_value_setter},
+  {"environment-uses-modules-setter", &YastYenvironment_uses_modules_setter},
+  {"$arguments-empty", &YastYDarguments_empty},
+  {"<ast-function>", &YastYLast_functionG},
+  {"<raw-constant>", &YastYLraw_constantG},
+  {"objectify-export", &YastYobjectify_export},
+  {"constant-value-setter", &YastYconstant_value_setter},
+  {"fix-let-bindings", &YastYfix_let_bindings},
+  {"<static-environment>", &YastYLstatic_environmentG},
+  {"objectify", &YastYobjectify},
+  {"*macro-tracing?*", &YastYTmacro_tracingQT},
+  {"<static-local-environment>", &YastYLstatic_local_environmentG},
+  {"<local-binding>", &YastYLlocal_bindingG},
+  {"$sexpr-compile-time-tag", &YastYDsexpr_compile_time_tag},
+  {"$sexpr-optionals-type-name", &YastYDsexpr_optionals_type_name},
+  {"module-loader-stack-setter", &YastYmodule_loader_stack_setter},
+  {"insert-globals!", &YastYinsert_globalsX},
+  {"bound?-reference", &YastYboundQ_reference},
+  {"reloader-do-import", &YastYreloader_do_import},
+  {"special-method", &YastYspecial_method},
+  {"binding-name-setter", &YastYbinding_name_setter},
+  {"monitor-handler-setter", &YastYmonitor_handler_setter},
+  {"bound?-reference-setter", &YastYboundQ_reference_setter},
   {NULL, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"binding-value-setter", "binding-value-setter"},
-  {"function-body-setter", "function-body-setter"},
-  {"compile-time-program", "compile-time-program"},
-  {"monitor-info", "monitor-info"},
-  {"<definition>", "<definition>"},
-  {"signature-nary?", "signature-nary?"},
-  {"<computed-program>", "<computed-program>"},
-  {"assignment-binding", "assignment-binding"},
-  {"module-target-environment", "module-target-environment"},
-  {"<ast-primitive>", "<ast-primitive>"},
-  {"<monitor>", "<monitor>"},
-  {"function-debug-name-setter", "function-debug-name-setter"},
-  {"bound?-reference", "bound?-reference"},
-  {"module-exports", "module-exports"},
-  {"locals-functions-setter", "locals-functions-setter"},
-  {"<ast-function>", "<ast-function>"},
-  {"alternative-condition", "alternative-condition"},
-  {"locals-functions", "locals-functions"},
-  {"<program>", "<program>"},
-  {"application-binding", "application-binding"},
-  {"signature-value-setter", "signature-value-setter"},
-  {"<ast-primitive-definition>", "<ast-primitive-definition>"},
-  {"function-debug-name", "function-debug-name"},
-  {"probe-module", "probe-module"},
-  {"<runtime-reference>", "<runtime-reference>"},
-  {"function-nary?", "function-nary?"},
-  {"<compile-time>", "<compile-time>"},
-  {"alternative-alternant", "alternative-alternant"},
-  {"fix-let-body", "fix-let-body"},
-  {"<raw-constant>", "<raw-constant>"},
-  {"binding-type-setter", "binding-type-setter"},
-  {"fix-let-body-setter", "fix-let-body-setter"},
-  {"do-module-loader-modules", "do-module-loader-modules"},
-  {"<alternative>", "<alternative>"},
-  {"ast-evaluate", "ast-evaluate"},
-  {"locals-bindings", "locals-bindings"},
-  {"env-object-name", "env-object-name"},
-  {"application-function", "application-function"},
-  {"set-module-environments", "set-module-environments"},
-  {"signature-nary?-setter", "signature-nary?-setter"},
-  {"locals-bindings-setter", "locals-bindings-setter"},
-  {"program-register-setter", "program-register-setter"},
-  {"<sequential>", "<sequential>"},
-  {"<local-reference>", "<local-reference>"},
-  {"<bound?>", "<bound?>"},
-  {"<regular-application>", "<regular-application>"},
-  {"reference-called-function?-setter", "reference-called-function?-setter"},
-  {"module-loader-module-type", "module-loader-module-type"},
-  {"reference-called-function?", "reference-called-function?"},
-  {"<fab-list>", "<fab-list>"},
-  {"<binding>", "<binding>"},
-  {"assignment-form", "assignment-form"},
-  {"binding-mutable?", "binding-mutable?"},
-  {"do-named-static-global-bindings", "do-named-static-global-bindings"},
-  {"environment-uses-modules", "environment-uses-modules"},
-  {"init-environment-for-eval", "init-environment-for-eval"},
-  {"signature-value", "signature-value"},
-  {"module-binding", "module-binding"},
-  {"fix-let-arguments", "fix-let-arguments"},
-  {"<ast-macro-definition>", "<ast-macro-definition>"},
-  {"do-static-global-bindings", "do-static-global-bindings"},
   {"init-ast", "init-ast"},
-  {"binding-name", "binding-name"},
-  {"global-box-value-setter", "global-box-value-setter"},
-  {"signature-names-setter", "signature-names-setter"},
-  {"monitor-test", "monitor-test"},
-  {"<constant>", "<constant>"},
-  {"<programs>", "<programs>"},
-  {"<ast-generic>", "<ast-generic>"},
-  {"application-known?", "application-known?"},
-  {"runtime-environment", "runtime-environment"},
-  {"binding-dynamic-extent?", "binding-dynamic-extent?"},
-  {"signature-specs-setter", "signature-specs-setter"},
-  {"binding-kind", "binding-kind"},
-  {"reference-binding", "reference-binding"},
+  {"reference-frame-offset", "reference-frame-offset"},
+  {"binding-info", "binding-info"},
+  {"<computed-program>", "<computed-program>"},
+  {"<unwind-protect>", "<unwind-protect>"},
+  {"function-signature", "function-signature"},
+  {"unwind-protect-protected-thunk", "unwind-protect-protected-thunk"},
+  {"locals-bindings", "locals-bindings"},
+  {"module-name-to-relpath", "module-name-to-relpath"},
+  {"function-binding", "function-binding"},
+  {"<arguments>", "<arguments>"},
+  {"<ast-primitive>", "<ast-primitive>"},
+  {"function-body-setter", "function-body-setter"},
+  {"alternative-alternant", "alternative-alternant"},
+  {"module-name", "module-name"},
+  {"$proto-boot-module-name", "$proto-boot-module-name"},
+  {"set-module-environments", "set-module-environments"},
+  {"monitor-handler", "monitor-handler"},
+  {"load-in", "load-in"},
+  {"assignment-form", "assignment-form"},
+  {"program-register-setter", "program-register-setter"},
+  {"locals-body-setter", "locals-body-setter"},
+  {"<bind-exit>", "<bind-exit>"},
+  {"signature-nary?-setter", "signature-nary?-setter"},
+  {"<global-assignment>", "<global-assignment>"},
+  {"fix-let-types", "fix-let-types"},
+  {"function-body", "function-body"},
+  {"env-object-name", "env-object-name"},
+  {"module-exports", "module-exports"},
+  {"signature-specs", "signature-specs"},
+  {"<fab-list>", "<fab-list>"},
+  {"assignment-binding", "assignment-binding"},
+  {"signature-bindings-setter", "signature-bindings-setter"},
+  {"module-target-environment", "module-target-environment"},
+  {"probe-module", "probe-module"},
+  {"<local-binding>", "<local-binding>"},
+  {"fix-let-types-setter", "fix-let-types-setter"},
+  {"<runtime-assignment>", "<runtime-assignment>"},
+  {"do-static-global-bindings", "do-static-global-bindings"},
+  {"function-bindings", "function-bindings"},
+  {"remove-modules-by-name!", "remove-modules-by-name!"},
+  {"install-initial-bindings", "install-initial-bindings"},
+  {"<ast-method>", "<ast-method>"},
+  {"signature-value-setter", "signature-value-setter"},
+  {"<sequential>", "<sequential>"},
+  {"do-named-static-global-bindings", "do-named-static-global-bindings"},
+  {"binding-global-box-setter", "binding-global-box-setter"},
+  {"report-undefined-global-bindings", "report-undefined-global-bindings"},
+  {"compile-time-program", "compile-time-program"},
+  {"signature-bindings", "signature-bindings"},
+  {"bound?-reference", "bound?-reference"},
+  {"application-binding", "application-binding"},
+  {"monitor-main-thunk", "monitor-main-thunk"},
+  {"application-arguments", "application-arguments"},
+  {"<locals>", "<locals>"},
   {"find-environment-module", "find-environment-module"},
   {"<module-binding>", "<module-binding>"},
-  {"$proto-boot-module-name", "$proto-boot-module-name"},
+  {"binding-mutable?", "binding-mutable?"},
+  {"module-loader-module-type", "module-loader-module-type"},
+  {"fix-let-body-setter", "fix-let-body-setter"},
+  {"<fix-let>", "<fix-let>"},
+  {"<program>", "<program>"},
+  {"<module>", "<module>"},
+  {"monitor-info", "monitor-info"},
+  {"<application>", "<application>"},
+  {"fix-let-arguments-setter", "fix-let-arguments-setter"},
+  {"<bound?>", "<bound?>"},
+  {"monitor-test", "monitor-test"},
+  {"binding-native-to?", "binding-native-to?"},
+  {"<monitor>", "<monitor>"},
+  {"binding-module-name", "binding-module-name"},
+  {"fix-let-bindings-setter", "fix-let-bindings-setter"},
+  {"<ast-primitive-definition>", "<ast-primitive-definition>"},
+  {"monitor-type", "monitor-type"},
+  {"<global-reference>", "<global-reference>"},
+  {"fab-p2c-module", "fab-p2c-module"},
+  {"<ast-macro-definition>", "<ast-macro-definition>"},
+  {"alternative-condition", "alternative-condition"},
+  {"fix-let-body", "fix-let-body"},
+  {"signature-names", "signature-names"},
+  {"free-implemented-foreign-bindings", "free-implemented-foreign-bindings"},
+  {"binding-dynamic-extent?", "binding-dynamic-extent?"},
+  {"binding-dynamic-extent?-setter", "binding-dynamic-extent?-setter"},
+  {"application-function", "application-function"},
+  {"binding-locative", "binding-locative"},
+  {"<alternative>", "<alternative>"},
+  {"signature-specs-setter", "signature-specs-setter"},
+  {"function-debug-name-setter", "function-debug-name-setter"},
+  {"sequentialize", "sequentialize"},
+  {"application-known?", "application-known?"},
+  {"locals-functions", "locals-functions"},
+  {"locals-body", "locals-body"},
+  {"binding-name", "binding-name"},
+  {"<definition>", "<definition>"},
+  {"runtime-environment", "runtime-environment"},
+  {"def-programs", "def-programs"},
+  {"init-environment-for-eval", "init-environment-for-eval"},
   {"<predefined-application>", "<predefined-application>"},
-  {"<passive-program>", "<passive-program>"},
-  {"binding-info", "binding-info"},
-  {"monitor-main-thunk", "monitor-main-thunk"},
+  {"function-nary?", "function-nary?"},
+  {"signature-names-setter", "signature-names-setter"},
+  {"<ast-generic>", "<ast-generic>"},
+  {"program-register", "program-register"},
+  {"function-signature-setter", "function-signature-setter"},
+  {"<constant>", "<constant>"},
+  {"load-module", "load-module"},
+  {"binding-global-box", "binding-global-box"},
+  {"application-known?-setter", "application-known?-setter"},
+  {"signature-nary?", "signature-nary?"},
+  {"<ast-function>", "<ast-function>"},
+  {"global-box-value", "global-box-value"},
+  {"binding-value-setter", "binding-value-setter"},
+  {"module-binding", "module-binding"},
+  {"reference-called-function?-setter", "reference-called-function?-setter"},
+  {"objectify-quotation", "objectify-quotation"},
+  {"assignment-reference", "assignment-reference"},
   {"application-tail?", "application-tail?"},
+  {"binding-value", "binding-value"},
+  {"ast-define-binding", "ast-define-binding"},
+  {"unwind-protect-cleanup-thunk", "unwind-protect-cleanup-thunk"},
+  {"<module-loader>", "<module-loader>"},
+  {"module-syntax-environment", "module-syntax-environment"},
+  {"bind-exit-main-fun", "bind-exit-main-fun"},
+  {"function-debug-name", "function-debug-name"},
+  {"<static-global-environment>", "<static-global-environment>"},
+  {"def-list", "def-list"},
+  {"<local-reference>", "<local-reference>"},
+  {"<real-reference>", "<real-reference>"},
+  {"fix-let-arguments", "fix-let-arguments"},
+  {"binding-type", "binding-type"},
+  {"constant-value", "constant-value"},
+  {"binding-kind", "binding-kind"},
+  {"<passive-program>", "<passive-program>"},
+  {"<local-assignment>", "<local-assignment>"},
+  {"<ast-signature>", "<ast-signature>"},
+  {"binding-type-setter", "binding-type-setter"},
+  {"locals-functions-setter", "locals-functions-setter"},
+  {"reference-frame-number", "reference-frame-number"},
+  {"<compile-time>", "<compile-time>"},
+  {"reference-binding", "reference-binding"},
+  {"<programs>", "<programs>"},
+  {"alternative-consequent", "alternative-consequent"},
+  {"ast-evaluate", "ast-evaluate"},
+  {"do-module-loader-modules", "do-module-loader-modules"},
+  {"binding-info-setter", "binding-info-setter"},
+  {"locals-bindings-setter", "locals-bindings-setter"},
+  {"signature-value", "signature-value"},
+  {"<binding>", "<binding>"},
   {"$proto-runtime-module-name", "$proto-runtime-module-name"},
   {"function-value", "function-value"},
-  {"application-known?-setter", "application-known?-setter"},
-  {"signature-bindings", "signature-bindings"},
-  {"<global-assignment>", "<global-assignment>"},
-  {"<real-reference>", "<real-reference>"},
-  {"<global-box>", "<global-box>"},
-  {"<module>", "<module>"},
-  {"module-syntax-environment", "module-syntax-environment"},
-  {"<fix-let>", "<fix-let>"},
-  {"signature-names", "signature-names"},
-  {"unwind-protect-protected-thunk", "unwind-protect-protected-thunk"},
-  {"locals-body", "locals-body"},
-  {"<local-binding>", "<local-binding>"},
-  {"binding-locative", "binding-locative"},
-  {"binding-value", "binding-value"},
-  {"<ast-signature>", "<ast-signature>"},
-  {"locals-body-setter", "locals-body-setter"},
-  {"binding-global-box", "binding-global-box"},
-  {"objectify", "objectify"},
-  {"<bind-exit>", "<bind-exit>"},
-  {"<locals>", "<locals>"},
-  {"function-bindings", "function-bindings"},
-  {"fix-let-bindings-setter", "fix-let-bindings-setter"},
-  {"%%macro", "%%macro"},
-  {"reference-frame-offset", "reference-frame-offset"},
-  {"binding-dynamic-extent?-setter", "binding-dynamic-extent?-setter"},
-  {"report-undefined-global-bindings", "report-undefined-global-bindings"},
-  {"function-binding", "function-binding"},
-  {"load-module", "load-module"},
-  {"fix-let-bindings", "fix-let-bindings"},
-  {"unwind-protect-cleanup-thunk", "unwind-protect-cleanup-thunk"},
-  {"load-in", "load-in"},
-  {"reference-frame-number", "reference-frame-number"},
-  {"binding-module-name", "binding-module-name"},
-  {"<application>", "<application>"},
-  {"signature-bindings-setter", "signature-bindings-setter"},
-  {"<runtime-assignment>", "<runtime-assignment>"},
-  {"signature-specs", "signature-specs"},
   {"<reference>", "<reference>"},
-  {"function-signature-setter", "function-signature-setter"},
-  {"bind-exit-main-fun", "bind-exit-main-fun"},
-  {"monitor-type", "monitor-type"},
-  {"objectify-quotation", "objectify-quotation"},
-  {"<arguments>", "<arguments>"},
-  {"function-signature", "function-signature"},
-  {"fix-let-arguments-setter", "fix-let-arguments-setter"},
-  {"binding-global-box-setter", "binding-global-box-setter"},
-  {"function-body", "function-body"},
-  {"ast-define-binding", "ast-define-binding"},
-  {"binding-type", "binding-type"},
-  {"fix-let-types-setter", "fix-let-types-setter"},
-  {"<static-global-environment>", "<static-global-environment>"},
-  {"fix-let-types", "fix-let-types"},
-  {"<local-assignment>", "<local-assignment>"},
-  {"<global-reference>", "<global-reference>"},
-  {"module-name", "module-name"},
-  {"binding-info-setter", "binding-info-setter"},
-  {"constant-value", "constant-value"},
-  {"free-implemented-foreign-bindings", "free-implemented-foreign-bindings"},
-  {"assignment-reference", "assignment-reference"},
-  {"def-list", "def-list"},
-  {"monitor-handler", "monitor-handler"},
-  {"binding-native-to?", "binding-native-to?"},
-  {"global-box-value", "global-box-value"},
-  {"sequentialize", "sequentialize"},
-  {"alternative-consequent", "alternative-consequent"},
-  {"program-register", "program-register"},
-  {"fab-p2c-module", "fab-p2c-module"},
-  {"application-arguments", "application-arguments"},
-  {"module-name-to-relpath", "module-name-to-relpath"},
-  {"<ast-method>", "<ast-method>"},
-  {"remove-modules-by-name!", "remove-modules-by-name!"},
-  {"def-programs", "def-programs"},
-  {"install-initial-bindings", "install-initial-bindings"},
-  {"<module-loader>", "<module-loader>"},
-  {"<unwind-protect>", "<unwind-protect>"},
+  {"<runtime-reference>", "<runtime-reference>"},
+  {"<regular-application>", "<regular-application>"},
+  {"global-box-value-setter", "global-box-value-setter"},
+  {"<raw-constant>", "<raw-constant>"},
+  {"reference-called-function?", "reference-called-function?"},
+  {"fix-let-bindings", "fix-let-bindings"},
+  {"environment-uses-modules", "environment-uses-modules"},
+  {"objectify", "objectify"},
+  {"%%macro", "%%macro"},
+  {"<global-box>", "<global-box>"},
   {NULL, NULL}
 };
 

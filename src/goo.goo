@@ -126,5 +126,5 @@
  handler-info-arguments
 
  ;; Stuff which should be documented.
- need-implementation bound? dlet type-or tor t= t<
+ need-implementation bound? dlet t+ t= t< false-or
  )

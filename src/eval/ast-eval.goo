@@ -38,7 +38,7 @@
 (dm env-runtime-value-setter (v (x <loc>))
   (set (locative-value x) v))
 
-(dv <loc-env> (isa <any>))
+(dc <loc-env> (<any>))
   (slot <loc-env> env-parent         #f)
   (slot <loc-env> env-function       #f)
   (slot <loc-env> (env-names  <lst>) '())
@@ -240,7 +240,7 @@
     (env-define-binding! (assignment-binding e) value)
     #f))
 
-;; (dv <box> (isa <any>))
+;; (dc <box> (<any>))
 ;;   (slot <box> box-value)
 ;; 
 ;; (dm ast-eval ((e <box-read>) (env <loc-env>))

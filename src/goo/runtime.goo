@@ -50,13 +50,13 @@
 
 ;;; DYNAMIC BINDING
 
-(df tor ((args ...)) <any>) ;; TODO: FOR REAL -- WANT T|
-
-(dv type-or tor)            ;; TODO: DEPRECATE
+(df t+ ((args ...)) <any>)  ;; TODO: DEPRECATE
 
 (df t= (x) x)               ;; TODO: FOR REAL
 
 (df t< (x) x)               ;; TODO: FOR REAL
+
+(df false-or (x) (t+ x (t= #f)))
 
 ;;; nul
 
@@ -81,12 +81,12 @@
 
 ;;; BOTTOM
 
-(dv bot (isa <any>)) ;; todo: should be disjoint from <any>
+(dc <bot> (<any>)) ;; todo: should be disjoint from <any>
 
 ;;; BOOLEAN
 
-(dm to-str ((x #t) => <str>) "#t")
-(dm to-str ((x #f) => <str>) "#f")
+(dm to-str ((x (t= #t)) => <str>) "#t")
+(dm to-str ((x (t= #f)) => <str>) "#f")
 
 (dm as (type x => <any>)
   (if (isa? x type) 
@@ -122,10 +122,10 @@
 
 ;;; character
 
-(dm as ((_ <chr>) (i <int>) => <chr>)
+(dm as ((_ (t= <chr>)) (i <int>) => <chr>)
   (%cb (%iu i)))
 
-(dm as ((_ <int>) (c <chr>) => <int>)
+(dm as ((_ (t= <int>)) (c <chr>) => <int>)
   (%ib (%cu c)))
 
 (dm < ((x <chr>) (y <chr>) => <log>)
@@ -446,7 +446,7 @@
 (df flo-bits ((x <flo>) => <int>)
   (%ib (%flo-bits (%fu x))))
 
-(dm as ((_ <flo>) (x <int>) => <flo>)
+(dm as ((_ (t= <flo>)) (x <int>) => <flo>)
   (%fb (%fi2f (%iu x))))
 
 (dm == ((x <flo>) (y <flo>) => <log>)
@@ -500,16 +500,16 @@
 
 ;;; TODO: NEED TEST ARGS AND NOT-FOUND HANDLERS
 
-(dm fabs ((c <col>) (objects ...))
+(dm fabs ((c (t< <col>)) (objects ...))
   (alter (fab c (len objects)) objects))
 
 (dm empty? ((c <col>) => <log>)
   (= (len c) 0))
 
-(dm empty ((c <col>) => <col>)
+(dm empty ((c (t< <col>)) => <col>)
   (fab c 0))
 
-(dm default ((c <col>) => <col>)
+(dm default ((c (t< <col>)) => <any>)
   #f)
 
 (dm = ((c1 <col>) (c2 <col>) => <log>)
@@ -519,10 +519,10 @@
         (and (= (now-elt c1 s1)  (now-elt c2 s2))
              (eq (nxt-state c1 s1) (nxt-state c2 s2))))))
 
-(dm fab ((c <col>) (s <int>) => bot)
+(dm fab ((c <col>) (s <int>) => <bot>)
   (nyi-error))
 
-(dm as ((p <col>) (x <col>) => <col>)
+(dm as ((p (t< <col>)) (x <col>) => <col>)
   (into (fab p (len x)) x 0 (len x)))
 
 (dm keys ((c <col>) => <seq>)
@@ -651,7 +651,7 @@
 
 ;;; MAP
 
-(dv <map> (isa <col>))
+(dc <map> (<col>))
 
 (dm fab-map ((p <map>) (key-vals ...))
   (let ((x (fab p (1st (truncate/ (len key-vals) 2)))))
@@ -660,7 +660,7 @@
 
 ;;; ASSOCS
 
-(dv <assocs> (isa <map>))
+(dc <assocs> (<map>))
   (slot <assocs> (assocs-test <fun>) ==)
   (slot <assocs> (assocs-keys <lst>) '())
   (slot <assocs> (assocs-vals <lst>) '())
@@ -691,7 +691,7 @@
 
 ;;; SEQUENCE
 
-(dm as ((d <seq>) (s <seq>) => <seq>)
+(dm as ((d (t< <seq>)) (s <seq>) => <seq>)
   (alter (fab d (len s)) s))
 
 (dm keys ((d <seq>) => <seq>)
@@ -855,7 +855,7 @@
 (dm pair (h (t <lst>))
   (isa <lst> (set head h) (set tail t)))
 
-(dm empty ((c <lst>) => <lst>) '())
+(dm empty ((c (t= <lst>)) => <lst>) '())
 
 (dm empty? ((c <lst>) => <log>) (== c (empty c)))
 
@@ -866,9 +866,9 @@
 	res)))
 
 ;; TODO: DO THIS IN GENERAL FOR AS
-(dm as ((p <lst>) (x <lst>) => <lst>) x)
+(dm as ((p (t= <lst>)) (x <lst>) => <lst>) x)
 
-(dm fabs ((c <lst>) (objects ...))
+(dm fabs ((c (t< <lst>)) (objects ...))
   (rep build (((index <int>) (- (len objects) 1)) ((result <lst>) (empty c)))
     (if (< index 0)
         result
@@ -978,7 +978,7 @@
 
 ;;; VECTOR
 
-(dm empty ((c <vec>) => <vec>)
+(dm empty ((c (t= <vec>)) => <vec>)
   %vnul)
 
 (df vec ((objects ...))
@@ -1009,13 +1009,13 @@
 
 ;;; STRETCHY-VECTOR
 
-(dv <buf> (isa <flat>))
+(dc <buf> (<flat>))
   (slot <buf> (buf-len <int>) 0)
   (slot <buf> (buf-dat <vec>) #())
 
-(dm empty ((c <buf>) => <buf>) (isa <buf>))
+(dm empty ((c (t= <buf>)) => <buf>) (isa <buf>))
 
-(dm fab ((c <buf>) (s <int>) => <buf>)
+(dm fab ((c (t= <buf>)) (s <int>) => <buf>)
   (let ((dat (fab <vec> (power-of-two-ceiling s))))
     (isa <buf> (set buf-len s) (set buf-dat dat))))
 
@@ -1086,7 +1086,7 @@
 ;;;
 ;;; TODO: FEWER SLOTS
 
-(dv <range> (isa <seq>))
+(dc <range> (<seq>))
   (slot <range> (range-from  <num>) 0)
   (slot <range> (range-to    <num>))
   (slot <range> (range-below <num>))
@@ -1147,7 +1147,7 @@
 
 ;;; STEP
 
-(dv <step> (isa <seq>))
+(dc <step> (<seq>))
   (slot <step> step-first)
   (slot <step> step-then)
 
@@ -1171,7 +1171,7 @@
 
 ;;; ASSOC
 
-(dv <assoc>     (isa <any>))
+(dc <assoc> (<any>))
   (slot <assoc> assoc-key)
   (slot <assoc> assoc-value)
 (df assoc (x y => <assoc>)
@@ -1191,10 +1191,10 @@
 
 ;;; STRING
 
-(dm empty ((c <str>) => <str>)
+(dm empty ((c (t= <str>)) => <str>)
   %snul)
 
-(dm default ((c <col>) => <col>)
+(dm default ((c (t= <str>)) => <any>)
   #\space)
 
 (dm fab ((x <str>) (s <int>) => <str>)
@@ -1285,10 +1285,10 @@
 
 ;;; SYMBOL
 
-(dm as ((_ <str>) (s <sym>) => <str>)
+(dm as ((_ (t= <str>)) (s <sym>) => <str>)
   (sym-name s))
 
-(dm as ((_ <sym>) (s <str>) => <sym>)
+(dm as ((_ (t= <sym>)) (s <str>) => <sym>)
   (fab-sym s)
   ;; (let ((sym (elt symbols s)))
   ;;   (if (== sym nul)
@@ -1320,7 +1320,7 @@
 
 ;;; CONDITIONS
 
-(dv <condition> (isa <any>))
+(dc <condition> (<any>))
 
 (dm default-handler ((c <condition>))
   #f)
@@ -1335,7 +1335,7 @@
   ((cond-type <condition>) in out => <condition>)
   (isa cond-type))
 
-(dv <simple-condition> (isa <condition>))
+(dc <simple-condition> (<condition>))
   (slot <simple-condition> (condition-message <str>)   "")
   (slot <simple-condition> (condition-arguments <lst>) '())
 
@@ -1352,22 +1352,22 @@
     (set (condition-arguments cond) (read in))
     cond))
 
-(dv <serious-condition> (isa <condition>))
+(dc <serious-condition> (<condition>))
 
 (dm default-handler ((c <serious-condition>))
   (format out "%s\n" (describe-condition c))
   (%invoke-debugger c))
 
-(dv <error> (isa <serious-condition>))
+(dc <error> (<serious-condition>))
 
-(dv <simple-error> (isa (<error> <simple-condition>)))
+(dc <simple-error> (<error> <simple-condition>))
 
-(dv <restart> (isa <condition>))
+(dc <restart> (<condition>))
 
 (dm default-handler-description ((cond-type <restart>) => <str>)
   (format-to-string "Anonymous restart of type %s" cond-type))
 
-(dv <incongruent-method-error> (isa <error>))
+(dc <incongruent-method-error> (<error>))
   (slot <incongruent-method-error> (incongruent-method-error-generic <gen>))
   (slot <incongruent-method-error> (incongruent-method-error-method <met>))
 
@@ -1376,7 +1376,7 @@
                     (incongruent-method-error-method c)
                     (incongruent-method-error-generic c)))
 
-(dv <replace-generic-restart> (isa <restart>))
+(dc <replace-generic-restart> (<restart>))
 
 (dm default-handler-description ((cond-type <replace-generic-restart>)
                                  => <str>)
@@ -1393,7 +1393,7 @@
 ;;;; interactively.  This probably doesn't need to be an actual class;
 ;;;; a few well-chosen slots on <handler> might work better.
 
-(dv <handler-info> (isa <any>))
+(dc <handler-info> (<any>))
 
 (dm describe-handler ((info <handler-info>) condition-type => <str>)
   (default-handler-description condition-type))
@@ -1402,9 +1402,9 @@
   ((info <handler-info>) condition-type in out => <condition>)
   (build-condition-interactively condition-type in out))
 
-(dv $default-handler-info (isa <handler-info>))
+(dc $default-handler-info (<handler-info>))
 
-(dv <simple-handler-info> (isa <handler-info>))
+(dc <simple-handler-info> (<handler-info>))
   (slot <simple-handler-info> (handler-info-message <str>))
   (slot <simple-handler-info> (handler-info-arguments <str>) '())
 
@@ -1426,7 +1426,7 @@
 
 (dv *current-handlers* '())
 
-(dv <handler> (isa <any>))
+(dc <handler> (<any>))
   (slot <handler> (handler-condition-type <condition>))
   (slot <handler> (handler-info <handler-info>))
   (slot <handler> (handler-test <fun>))
@@ -1570,7 +1570,7 @@
 
 ;;; LOCATIVES
 
-;; (dv <loc> (isa <any>))
+;; (dc <loc> (<any>))
 ;;   (slot <loc> locative-dat)
 
 (df locative-value ((x <loc>) => <any>)
@@ -1587,20 +1587,20 @@
 
 ;;; PORTS
 
-(dv <port> (isa <any>))
+(dc <port> (<any>))
   (slot <port> port-handle)
 
-(dv <input-port> (isa <port>))
+(dc <input-port> (<port>))
 
-(dv <output-port> (isa <port>))
+(dc <output-port> (<port>))
 
 ;;; FILE PORTS
 
-(dv <file-port> (isa <port>))
+(dc <file-port> (<port>))
 
-(dv <file-input-port> (isa (<file-port> <input-port>)))
+(dc <file-input-port> (<file-port> <input-port>))
 
-(dv <file-output-port> (isa (<file-port> <output-port>)))
+(dc <file-output-port> (<file-port> <output-port>))
 
 (dm open-input-file ((filename <str>) => <file-input-port>)
   (isa <file-input-port>
@@ -1668,16 +1668,16 @@
 
 ;;; STRING-PORT IMPLEMENTATION
 
-(dv <string-port> (isa <port>))
+(dc <string-port> (<port>))
   (slot <string-port> (port-guts <seq>) "")
 
 (dm port-contents ((port <string-port>) => <str>)
   (as <str> (port-guts port)))
 
-(dv <string-input-port> (isa (<string-port> <input-port>)))
+(dc <string-input-port> (<string-port> <input-port>))
   (slot <string-input-port> (port-index <int>) 0)
 
-(dv <string-output-port> (isa (<string-port> <output-port>)))
+(dc <string-output-port> (<string-port> <output-port>))
 
 (dm call-with-string-input-port ((string <str>) (proc <fun>))
   (proc (isa <string-input-port> (set port-guts string))))
@@ -1745,7 +1745,7 @@
       711707 729557 747827 766541 785777 805499 825827 846749 868121 889871
       912449 935591 959207 983327)))
 
-(dv <simple-table-vector> (isa <any>))
+(dc <simple-table-vector> (<any>))
   ;; Number of filled and vacant elements
   (slot <simple-table-vector> (%vacated <int>) 0)
   ;; Modulus values for primary and secondary hash
@@ -1792,7 +1792,7 @@
   (and *debug-tables?* (apply format (cat (lst port msg) args))))
       
 
-(dv <tab> (isa <map>))
+(dc <tab> (<map>))
   ;; Factor to grow by
   (slot <tab> (table-growth-factor <flo>) 2.0)
   ;; When to grow or shrink (percentage of table size)
@@ -2012,7 +2012,7 @@
 (dm len ((table <tab>) => <int>)
   (%count table))
 
-(dv <tab-state> (isa <any>))
+(dc <tab-state> (<any>))
   (slot <tab-state> (%vector <simple-table-vector>))
   (slot <tab-state> (%bucket <int>) 0)
   (slot <tab-state> (%index <int>) 0)
@@ -2232,7 +2232,7 @@
 	      (and (or (== cx cy) (== (as-lowercase cx) (as-lowercase cy)))
 		   (loop (+ i 1)))))))))
 
-(dv <str-tab> (isa <tab>))
+(dc <str-tab> (<tab>))
 
 (dm table-protocol ((_ <str-tab>) => (tup (equal-fun <fun>) (hash-fun <fun>)))
   (tup case-insensitive-string-equal case-insensitive-string-hash))
@@ -2385,8 +2385,7 @@
   truncate
   truncate/
   tup
-  type-or
-  tor t= t<
+  t+ t= t< false-or
   var-name var-type
   vec
   %with-monitor

@@ -81,7 +81,7 @@
 	(unless (isa? f <gen>) 
 	  (format out "[%=] %= %=\n" num f args) (inc num))))))
 
-(dv <keyboard-interrupt> (isa <condition>))
+(dc <keyboard-interrupt> (<condition>))
 
 (df keyboard-interrupt ()
   (sig <keyboard-interrupt>))
