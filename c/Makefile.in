@@ -49,14 +49,14 @@ LD_FLAGS  += -Wl,--export-dynamic
 default: all
 
 gc: Makefile
-	ifeq ($(build_gc), yes)
-	  cd $(top_srcdir)/gc && $(MAKE) libgc.la
-	  rm -f gc
-	  ln -s -f $(top_srcdir)/gc/include gc
-	  ln -s -f $(top_srcdir)/gc/.libs/libgc.a gc.a;
-	else
-	  rm -f gc gc.a;
-	endif
+ifeq ($(build_gc), yes)
+	cd $(top_srcdir)/gc && $(MAKE) libgc.la
+	rm -f gc
+	ln -s -f $(top_srcdir)/gc/include gc
+	ln -s -f $(top_srcdir)/gc/.libs/libgc.a gc.a;
+else
+	rm -f gc gc.a;
+endif
 
 all: gc
 	(cd $(sub); $(MAKE))
