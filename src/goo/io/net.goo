@@ -1,0 +1,101 @@
+(use goo)
+
+(use goo/boot)
+(use goo/macros)
+(use goo/types)
+(use goo/math)
+
+(use goo/io/port)
+
+(use goo/io/%net.c)
+
+(dl %new-socket)
+(dl %connect-socket)
+(dl %listen-socket)
+(dl %accept-socket)
+(dl %read-socket-byte)
+(dl %peek-socket-byte)
+(dl %write-socket-byte)
+(dl %write-socket-string)
+(dl %close-socket)
+(dl %socket-connected)
+
+(dc <socket-port> (<port>))
+
+(dc <socket-in-port> (<in-port>))
+(dc <socket-out-port> (<out-port>))
+
+(dp in-port (<socket-port> => <socket-in-port>))
+(dp out-port (<socket-port> => <socket-out-port>))
+
+(dm connect-socket (host|<str> port|<int>)
+  (def sockfd (%new-socket))
+  (if (%connect-socket sockfd host port)
+      (seq
+        (def sock (new <socket-port>))
+        (def in-sock (new <socket-in-port>))
+        (def out-sock (new <socket-out-port>))
+        (set (port-handle in-sock) sockfd)
+        (set (port-handle out-sock) sockfd)
+        (set (in-port sock) in-sock)
+        (set (out-port sock) out-sock)
+        sock
+        )
+      (seq
+        (%close-socket sockfd)
+        #f
+        )
+      )
+  )
+
+(dm close (port|<socket-port>)
+  (%close-socket (port-handle (in-port port)))
+  )
+
+(dm get (port|<socket-in-port> => <chr>)
+  (def b (%read-socket-byte (port-handle port)))
+  (if b
+      b
+      (eof-object)
+      )
+  )
+
+(dm peek (port|<socket-in-port> => <chr>)
+  (def b (%peek-socket-byte (port-handle port)))
+  (if b
+      b
+      (eof-object)
+      )
+  )
+
+(dm put (port|<socket-out-port> c|<chr>)
+  (%write-socket-byte (port-handle port) c)
+  )
+
+(dm puts (port|<socket-out-port> s|<str>)
+  (%write-socket-string (port-handle port) s)
+  )
+
+;; Eh, we should select... but I'm too lazy right now
+(dm ready? (port|<socket-in-port> => <log>)
+  #t
+  )
+
+;; WHO ARE YOU TO DOUBT THE ALMIGHTY NAGLE?!
+(dm force-out (port|<socket-out-port>)
+  #f
+  )
+
+(dm eof? (port|<socket-in-port> => <log>)
+  (not (%socket-connected (port-handle port)))
+  )
+
+(export
+  <socket-port>
+  <socket-in-port>
+  <socket-out-port>
+  connect-socket
+  in-port
+  out-port
+  eof?
+  )

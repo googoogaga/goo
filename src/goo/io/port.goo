@@ -29,9 +29,10 @@
  (dg put (port|<out-port> c|<chr>))
  (dg puts (port|<out-port> s|<str>))
  
- (dc <file-port> (<port>)))
+ (dc <file-port> (<port>))
 
-(dp port-handle (<port> => <any>))
+ (dp port-handle (<port> => <any>))
+ )
 
 (dm close (port|<port>) #f)
 
