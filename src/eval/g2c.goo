@@ -52,10 +52,12 @@
     (set (module-src-file mod) src-file)
     (set (module-mtime mod) (file-mtime src-file))
     (fin
+      (seq
+      ;; (format out "Computing ast for %s.\n" name)
       (let ((ast      (compute-ast src-file env)))
-        ;;(format out "Computing program for %s.\n" name)
+        ;; (format out "Computing program for %s.\n" name)
         (let ((prg    (compute-program ast env)))
-          ;;(format out "Generating C code for %s.\n" name)
+          ;; (format out "Generating C code for %s.\n" name)
           (probe-directory (parent-directory out-file))
           (call-with-output-file
            out-file
@@ -63,7 +65,7 @@
              (dlet ((*definitions* (program-definitions prg))) 
                (generate-c-module out-port ast prg mod))))
           (set keepmod? #t)
-          mod))
+          mod)))
       ;;; Tricky unwind handler.  Our module may have altered the
       ;;; the state of other module's bindings, and so we need to
       ;;; back these changes out if we crash midway.  This would look
@@ -107,7 +109,7 @@
 (df p2c-build-app ((loader <p2c-module-loader>) => #f)
   (purge-outdated-modules loader)
   (let ((mod (probe-module loader (module-loader-app-modname loader))))
-    (format out "Searching for undefined global bindings.\n")
+    (write-string out "Searching for undefined global bindings.\n")
     (do-module-loader-modules report-undefined-global-bindings loader)
     (generate-c-application loader mod)
     (generate-makefile loader)
@@ -261,40 +263,25 @@
 
 ;;; MANGLING
 
+(dv *mangle-buffer* (isa <buf>))
+
 (dv $mangles-data
   (vec #(#\- #\_) #(#\! #\X) #(#\$ #\D) #(#\% #\P) #(#\* #\T) 
        #(#\/ #\S) #(#\< #\L) #(#\> #\G) #(#\? #\Q) #(#\+ #\A)
        #(#\& #\B) #(#\^ #\C) #(#\_ #\U) #(#\@ #\O) #(#\= #\E)
        #(#\~ #\N)))
 
-(dc <abstract-mangler> (<any>))
-  (slot <abstract-mangler> mangler-buffer (isa <buf>))
-  (slot <abstract-mangler> mangler-table  (fab <vec> (+ $max-character-code 1)))
-
-(dc <mangler> (<abstract-mangler>))
-
-(dc <simple-mangler> (<mangler>))
-
-;; Guarantee instantiability of the <MANGLER> class.
-
-(dm mangler-position ((mangler <mangler>) => <int>)
-  (len (mangler-buffer mangler)))
-
-(dm initialize-mangler-table ((mangler <mangler>) => <mangler>)
-  (let ((table (mangler-table mangler)))
-    ;; fill with default manglings
-    (for ((i (from-to $min-character-code $max-character-code)))
-      (set (elt table i)
-	   (cat $escape-separator (mangle-integer i) $escape-separator)))
-    ;; fill in special cases
-    (for ((mangle $mangles-data))
-      (set (elt table (as <int> (elt mangle 0))) (elt mangle 1)))
-    ;; fill C allowable versions
-    (for ((i (from-to (as <int> #\a) (as <int> #\z))))
-      (set (elt table i) (as <chr> i)))
-    (for ((i (from-to (as <int> #\0) (as <int> #\9))))
-      (set (elt table i) (as <chr> i))))
-  mangler)
+(df char-buffer-as-string
+    ((buffer <buf>) => <str>)
+    (let (((buffer-size <int>)
+           (len buffer))
+          ((string <str>)
+           (fab <str> buffer-size)))
+      ;; without-bounds-checks
+      (for (((i <int>) (from-below 0 buffer-size)))
+        (set (elt string i) (elt buffer i)))
+      ;; end without-bounds-checks
+      string))
 
 (dv $c-escapes
   (let ((vec (fill (fab <vec> ascii-limit) #f)))
@@ -307,15 +294,17 @@
     vec))
 
 (dm mangle-string-literal ((str <str>) => <str>)
+  (set (len *mangle-buffer*) 0)
   (let ((len (len str)))
-    (rep loop ((out "") (i 0))
+    (rep loop ((i 0))
 	 (if (= i len)
-	     out
-	     (let ((c (elt str i))
-		   (enc (elt $c-escapes (as <int> c))))
-		 (if (= enc #f)
-		     (loop (cat out (to-str c)) (+ i 1))
-		     (loop (cat out enc) (+ i 1))))))))
+	     (char-buffer-as-string *mangle-buffer*)
+         (let ((c (elt str i))
+               (enc (elt $c-escapes (as <int> c))))
+           (if (= enc #f)
+               (add! *mangle-buffer* c)
+               (cat! *mangle-buffer* enc))
+           (loop (+ i 1)))))))
 
 (dm mangle-string-literal ((sym <sym>) => <str>)
   (mangle-string-literal (sym-name sym)))
@@ -337,85 +326,59 @@
 	    (set (elt result (- (len result) index)) digit)
 	    result)))))
 
-(dm mangler-as-string-from
-    ((mangler <abstract-mangler>) (start <int>) => <str>)
-  ;; (if (= start 0)
-  ;;     (as <str> (mangler-buffer mangler))
-  ;;     (as <str> (sub-from (mangler-buffer mangler) start)))
-  (let (((buffer <buf>)
-	(mangler-buffer mangler))
-	((buffer-size <int>)
-	 (len buffer))
-	((string <str>)
-	 (fab <str> (- buffer-size start))))
-    ;; without-bounds-checks
-    (for (((i <int>) (from-below start buffer-size))
-	  ((j <int>) (from 0)))
-      (set (elt string j) (elt buffer i)))
-    ;; end without-bounds-checks
-    string))
+(dv $name-mangler-table
+  (let ((table (fab <vec> (+ $max-character-code 1))))
+    ;; fill with default manglings
+    (for ((i (from-to $min-character-code $max-character-code)))
+      (set (elt table i)
+           (cat $escape-separator (mangle-integer i) $escape-separator)))
+    ;; fill in special cases
+    (for ((mangle $mangles-data))
+      (set (elt table (as <int> (elt mangle 0))) (elt mangle 1)))
+    ;; fill C allowable versions
+    (for ((i (from-to (as <int> #\a) (as <int> #\z))))
+      (set (elt table i) (as <chr> i)))
+    (for ((i (from-to (as <int> #\0) (as <int> #\9))))
+      (set (elt table i) (as <chr> i)))
+    table))
 
-(dm mangler-as-string ((mangler <abstract-mangler>) => <str>)
-  (mangler-as-string-from mangler 0))
+;;; Name mangler
 
-;; The method for <mangler-with-options> is responsible for
-;; installing the prefixes and suffixes in the final string.
-;; (Is this the most efficient way? It certainly seems to be
-;; the cleanest).
+(df mangler-reset
+    ((buffer <buf>))
+  (set (len buffer) 0))
 
-(dm mangler-reset
-    ((mangler <abstract-mangler>) => <abstract-mangler>)
-  (set (len (mangler-buffer mangler))  0)
-  mangler)
-
-(dm mangle-raw-into ((mangler <abstract-mangler>) (name <chr>))
-  (add! (mangler-buffer mangler) name))
-
-(dm mangle-raw-into ((mangler <abstract-mangler>) (name <str>))
-  (cat! (mangler-buffer mangler) name))
-
-(dm mangle-raw-into ((mangler <abstract-mangler>) (name <sym>))
-  (cat! (mangler-buffer mangler) (as-lowercase (as <str> name))))
-
-(dm mangle-name-into ((mangler <mangler>) (name <str>))
+(df mangle-name-into ((buf <buf>) (name <str>))
   (for ((c name))
-    (mangle-raw-into mangler (elt (mangler-table mangler) (as <int> c)))))
+    (add! buf (elt $name-mangler-table (as <int> c)))))
 
-(dm mangle-name-into ((mangler <mangler>) name)
-  (mangle-name-into mangler (as-lowercase (as <str> name))))
+(dm mangle-raw-name ((name <str>) => <str>)
+  (mangler-reset *mangle-buffer*)
+  (mangle-name-into *mangle-buffer* name)
+  (char-buffer-as-string *mangle-buffer*))
 
-(dm mangle-name-raw ((mangler <mangler>) name => <str>)
-  (mangler-reset mangler)
-  (mangle-name-into mangler name)
-  (mangler-as-string mangler))
+(dm mangle-raw-name ((name <sym>) => <str>)
+  (mangle-raw-name (as <str> name)))
 
-(dm mangle-name-locally ((mangler <mangler>) name => <str>)
-  (mangler-reset mangler)
-  (mangle-name-into mangler name)
-  (mangle-raw-into mangler $local-suffix)
-  (mangler-as-string mangler))
- 
-(dm mangle-name-globally ((mangler <mangler>) (modname <sym>) name
-			  => <str>)
-  (mangler-reset mangler)
-  ;; Keep internal names as short as possible.
-  (unless (== modname $proto-boot-module-name)
-    (mangle-raw-into mangler $module-marker)
-    (mangle-name-into mangler (as <str> modname)))
-  (mangle-raw-into mangler $module-marker)
-  (mangle-name-into mangler name)
-  (mangler-as-string mangler))
- 
-(dm mangle-name-hygienically ((mangler <mangler>) name (marker <int>) => <str>)
-  (mangler-reset mangler)
-  (mangle-name-into mangler name)
-  (cat (mangler-as-string mangler) $hygiene-marker (mangle-integer marker)))
+(dm mangle-local-name ((name <str>) => <str>)
+  (mangler-reset *mangle-buffer*)
+  (mangle-name-into *mangle-buffer* name)
+  (add! *mangle-buffer* $local-marker)
+  (char-buffer-as-string *mangle-buffer*))
 
-;; TODO: would like initialization to happen more invisibly
-(dv *mangler* (initialize-mangler-table (isa <simple-mangler>)))
+(dm mangle-local-name ((name <sym>) => <str>)
+  (mangle-local-name (as <str> name)))
+
 
 (dm mangle-global-name ((modname <sym>) (name <str>) => <str>)
-  (mangle-name-globally *mangler* modname name))
+  (mangler-reset *mangle-buffer*)
+  ;; Keep internal names as short as possible.
+  (unless (== modname $proto-boot-module-name)
+    (add! *mangle-buffer* $module-marker)
+    (mangle-name-into *mangle-buffer* (as <str> modname)))
+  (add! *mangle-buffer* $module-marker)
+  (mangle-name-into *mangle-buffer* name)
+  (char-buffer-as-string *mangle-buffer*))
 
 (dm mangle-global-name ((modname <sym>) (name <sym>) => <str>)
   (mangle-global-name modname (as <str> name)))
@@ -434,20 +397,12 @@
   (mangle-global-name (binding-module-name binding)
 		      (binding-name binding)))
 
-(dm mangle-local-name ((name <str>) => <str>)
-  (mangle-name-locally *mangler* name))
-
-(dm mangle-local-name ((name <sym>) => <str>)
-  (mangle-local-name (as <str> name)))
-
-(dm mangle-raw-name ((name <str>) => <str>)
-  (mangle-name-raw *mangler* name))
-
-(dm mangle-raw-name ((name <sym>) => <str>)
-  (mangle-raw-name (as <str> name)))
-
 (dm mangle-local-marked-name ((name <str>) (marker <int>) => <str>)
-  (mangle-name-hygienically *mangler* name marker))
+  (mangler-reset *mangle-buffer*)
+  (mangle-name-into *mangle-buffer* name)
+  (add! *mangle-buffer* $hygiene-char)
+  (cat! *mangle-buffer* (mangle-integer marker))
+  (char-buffer-as-string *mangle-buffer*))
 
 (dm mangle-local-marked-name ((name <sym>) (marker <int>) => <str>)
   (mangle-local-marked-name (as <str> name) marker))
@@ -490,7 +445,7 @@
 (ds (with-statement (,d ,code-out) ,@body)
   `(seq (gen-depth ,d ,code-out)
 	,@body
-	(format ,code-out ";\n")))
+	(write-string ,code-out ";\n")))
 
 (ds (with-expression (,e ,d ,code-out) ,@body)
   `(with-statement (,d ,code-out)
@@ -518,10 +473,10 @@
   (mangle-boot-name "%false"))
 
 (dm generate-quotation (code-out (qb <log>))
-  (format code-out "%s" (mangle-boot-name (if qb "%true" "%false"))))
+  (write-string code-out (mangle-boot-name (if qb "%true" "%false"))))
 
 (dm generate-quotation (code-out (qb (t= '())))
-  (format code-out (mangle-boot-name "nil")))
+  (write-string code-out (mangle-boot-name "nil")))
 
 (dm generate-quotation (code-out (qb <lst>))
   (out-list-builder (fun (x) (generate-quotation code-out x)) code-out qb))
@@ -560,9 +515,9 @@
   ;; TODO: TIE TOGETHER
   (format code-out "CALLN(1, %s, %s" (mangle-runtime-name "vec") (len x))
   (for ((e x))
-    (format code-out ", ")
+    (write-string code-out ", ")
     (generate-quotation code-out e))
-  (format code-out ")"))
+  (write-string code-out ")"))
 
 (dm generate-quotation (code-out (x <sym>))
   (format code-out "%s((P)\"%s\")"
@@ -598,7 +553,7 @@
   (binding->c v code-out))
 
 (dm reference->c ((v <module-binding>) code-out)
-  (format code-out "CHKREF")
+  (write-string code-out "CHKREF")
   (between-parentheses (code-out)
     (binding->c v code-out)))
 
@@ -616,7 +571,7 @@
   (reference->c (reference-binding e) code-out))
 
 (dm gen-ref ((e <free-reference>) code-out)
-  (format code-out "FREEREF")
+  (write-string code-out "FREEREF")
   (between-parentheses (code-out)
     (format code-out "%d" (reference-offset e))))
 
@@ -641,7 +596,7 @@
 
 (dm to-c ((e <bound?>) f d code-out)
   (with-used-expression (e d code-out)
-    (format code-out "BOUNDP")
+    (write-string code-out "BOUNDP")
     (between-parentheses (code-out)
       (binding->c (reference-binding (bound?-reference e)) code-out))))
 
@@ -657,7 +612,7 @@
 (dm to-c ((e <box-write>) f d code-out)
   (to-c (box-form e) f d code-out)
   (with-expression (e d code-out)
-    (format code-out "BOXVAL")
+    (write-string code-out "BOXVAL")
     (between-parentheses (code-out) 
       (gen-ref (box-reference e) code-out))
     (write-string code-out " = ") (gen-ref (box-form e) code-out)))
@@ -666,7 +621,7 @@
   (with-expression (e d code-out)
     (let ((binding (reference-binding (box-reference (box-reference e)))))
       (binding->c binding code-out)
-      (format code-out " = BOXFAB")
+      (write-string code-out " = BOXFAB")
       (between-parentheses (code-out) (binding->c binding code-out)))))
 
 (dm to-c ((e <alternative>) f d code-out)
@@ -677,11 +632,11 @@
   (to-c (alternative-consequent e) f (+ d 1) code-out)
   (with-used-expression (e (+ d 1) code-out)
     (gen-ref (alternative-consequent e) code-out))
-  (gen-depth d code-out) (format code-out "} else {\n")
+  (gen-depth d code-out) (write-string code-out "} else {\n")
   (to-c (alternative-alternant e) f (+ d 1) code-out)
   (with-used-expression (e (+ d 1) code-out)
     (gen-ref (alternative-alternant e) code-out))
-  (gen-depth d code-out) (format code-out "}\n"))
+  (gen-depth d code-out) (write-string code-out "}\n"))
 
 (dm to-c ((e <sequential>) f d code-out)
   (do (fun (x) (to-c x f d code-out)) e))
@@ -735,7 +690,7 @@
     (unless (unconstrained-type? type)
       (to-c type #f d code-out)
       (with-statement (d code-out)
-        (format code-out "check_type")
+        (write-string code-out "check_type")
         (between-parentheses-comma-separated (code-out)
           (gen-ref init code-out) (gen-ref type code-out))))
     (with-statement (d code-out)
@@ -776,7 +731,7 @@
   (to-c (monitor-handler e) f d code-out)
   (to-c (monitor-main-thunk e) f d code-out)
   (with-expression (e d code-out)
-    (format code-out "CALLN")
+    (write-string code-out "CALLN")
     (between-parentheses-comma-separated (code-out)
       (write-string code-out "1")
       (write-string code-out (mangle-runtime-name "%with-monitor"))
@@ -811,7 +766,7 @@
           (generate-function-binding code-out f))
         (seq (do (fun (x) (to-c x f d code-out)) (closure-creation-free e))
              (with-expression (e d code-out)
-               (format code-out "FUNFAB")
+               (write-string code-out "FUNFAB")
                (between-parentheses (code-out)
                  (generate-function-binding code-out f)
                  (format code-out ",%d" n)
@@ -825,7 +780,7 @@
       (if (== n 0)
           (generate-function-binding code-out f)
           ;; (format code-out "fun_%s" (closure-creation-index e))
-	  (seq (format code-out "FUNSHELL")
+	  (seq (write-string code-out "FUNSHELL")
 	       (between-parentheses-comma-separated (code-out)
 		 (format code-out "%d" (if (binding-dynamic-extent? b) 1 0))
 		 (generate-function-binding code-out f)
@@ -836,7 +791,7 @@
     (unless (== n 0)
       (do (fun (x) (to-c x f d code-out)) (closure-creation-free e))
       (with-statement (d code-out)
-      	(format code-out "FUNINIT")
+      	(write-string code-out "FUNINIT")
 	(between-parentheses (code-out)
 	  (binding->c b code-out)
 	  (format code-out ", %s" n)
@@ -850,7 +805,7 @@
 (dm to-c ((e <ast-macro-definition>) f d code-out)
   (to-c (assignment-form e) #f d code-out)
   (with-expression (e d code-out)
-    (format code-out "%s" (mangle-boot-name "%macro"))
+    (write-string code-out (mangle-boot-name "%macro"))
     (between-parentheses-comma-separated (code-out)
       (generate-quotation code-out (binding-module-name (assignment-binding e)))
       (generate-quotation code-out (binding-name (assignment-binding e)))
@@ -858,9 +813,9 @@
 
 (dm out-list-builder ((f <fun>) code-out (elts <lst>))
   (if (empty? elts)
-      (format code-out "%s" (mangle-boot-name "nil"))
+      (write-string code-out (mangle-boot-name "nil"))
       (seq
-        (format code-out "%s" (mangle-boot-name "%%list"))
+        (write-string code-out (mangle-boot-name "%%list"))
         (between-parentheses (code-out)
           (format code-out "%d" (len elts))
           (for ((e elts))
@@ -883,31 +838,31 @@
   (do (fun (x) (to-c x f d code-out)) (signature-specs e))
   (to-c (signature-value e) f d code-out)
   (with-expression (e d code-out)
-    (format code-out "%s" (mangle-boot-name "%sig"))
+    (write-string code-out (mangle-boot-name "%sig"))
     (between-parentheses-comma-separated (code-out)
       (gen-fab-list code-out (signature-names e))
       (generate-function-specs code-out e)
       (generate-quotation code-out (signature-nary? e))
       (generate-quotation code-out (signature-arity e))
       (gen-ref (signature-value e) code-out)
-      (format code-out (mangle-boot-name "nil")))))
+      (write-string code-out (mangle-boot-name "nil")))))
 
 (dm to-c ((e <ast-generic>) f d code-out)
   (to-c (function-signature e) f d code-out)
   (with-expression (e d code-out)
-    (format code-out "%s" (mangle-boot-name "%gen"))
+    (write-string code-out (mangle-boot-name "%gen"))
     (between-parentheses-comma-separated (code-out)
-      (format code-out "(P)YPgen_code((P)CHKREF(YPdispatch))") ;; TODO: HACK!!!
+      (write-string code-out "(P)YPgen_code((P)CHKREF(YPdispatch))") ;; TODO: HACK!!!
       (gen-ref (function-debug-name e) code-out)
       (gen-ref (function-signature e) code-out)
-      (format code-out (mangle-boot-name "nil"))
-      (format code-out (mangle-boot-name "%false")))))
+      (write-string code-out (mangle-boot-name "nil"))
+      (write-string code-out (mangle-boot-name "%false")))))
 
 ;;;
 ;;; FUNCTION DEFINITIONS
 
 (dm generate-function-forwards (code-out definitions)
-  (format code-out "\n/* FUNCTIONS: */\n\n")
+  (write-string code-out "\n/* FUNCTIONS: */\n\n")
   (for ((def definitions))
     (generate-function-forward code-out def)))
 
@@ -915,14 +870,14 @@
   (format code-out "extern P %s (" 
 	  (mangle-module-binding (function-binding defn)))
   (for-commas code-out ((i (from-below 0 (len (function-bindings defn)))))
-    (format code-out "P"))
-  (format code-out ");\n"))
+    (write-string code-out "P"))
+  (write-string code-out ");\n"))
 
 (dm generate-function-binding (code-out defn)
   (let ((name (function-binding defn)))
     (if (and (isa? name <module-binding>) 
              (mem? '(global runtime) (binding-kind name)))
-	(format code-out "%s" (mangle-module-binding name))
+	(write-string code-out (mangle-module-binding name))
 	;; (format-out "UNNAMED %=\n" defn)
 	(if (== name #f)
 	    (format code-out "fun_%s" (function-index defn))
@@ -933,12 +888,12 @@
 
 (dm generate-function-forward (code-out defn)
   (let ((bound? (isa? (function-binding defn) <module-binding>)))
-    (format code-out (if bound?  "FUNFOR(" "LOCFOR("))
+    (write-string code-out (if bound?  "FUNFOR(" "LOCFOR("))
     (generate-function-binding code-out defn)
-    (format code-out ");\n")))
+    (write-string code-out ");\n")))
 
 (dm generate-function-bodies (code-out definitions)
-  (format code-out "\n/* FUNCTION CODES: */\n")
+  (write-string code-out "\n/* FUNCTION CODES: */\n")
   (do (fun (def) 
 	(generate-function-code code-out def))
       definitions))
@@ -958,12 +913,12 @@
       (generate-function-body-reference code-out definition)
       (gen-ref (function-debug-name definition) code-out)
       (gen-ref (function-signature definition) code-out)
-      (format code-out "ENVNUL"))))
+      (write-string code-out "ENVNUL"))))
 
 (dm generate-function-body-reference (code-out definition)
-  (format code-out "FUNCODEREF(")
+  (write-string code-out "FUNCODEREF(")
   (generate-function-binding code-out definition)
-  (format code-out ")"))
+  (write-string code-out ")"))
 
 ;; TODO: RIP THIS OUT AND USE REAL PARAMETERS
 ;; MAKE CALL SMART AND RESTIFY IF NEC
@@ -1012,22 +967,22 @@
   (binding->c (function-binding e) code-out)
   (between-parentheses (code-out)
     (for-commas code-out ((binding (function-bindings e)))
-      (format code-out "P ") (binding->c binding code-out)))
-  (format code-out " {\n")
+      (write-string code-out "P ") (binding->c binding code-out)))
+  (write-string code-out " {\n")
   (generate-local-temporaries (function-temporaries e) code-out)
   (generate-registers (function-registers e) code-out)
   (generate-shadow-args (function-bindings e) code-out)
   (write-string code-out "loop:\n")
   (to-c (function-body e) e 1 code-out)
   (generate-return e 1 code-out)
-  (format code-out "}\n"))
+  (write-string code-out "}\n"))
 
 (dm generate-function-code (code-out definition)
   (let ((offset 0)
         (bindings (function-bindings definition)))
-    (format code-out "\nFUNCODEDEF(")
+    (write-string code-out "\nFUNCODEDEF(")
     (generate-function-binding code-out definition)
-    (format code-out ") {\n")
+    (write-string code-out ") {\n")
     (unless (empty? bindings)
       (with-statement (1 code-out)
         (write-string code-out "P ")
@@ -1058,7 +1013,7 @@
                (== (binding-name (function-binding definition)) '%dispatch))
     (write-string code-out "UNLINK_STACK();\n"))
   (generate-return definition 1 code-out)
-  (format code-out "}\n"))
+  (write-string code-out "}\n"))
 
 (dm generate-local-temporaries (temps code-out)
   (for ((temp temps))
@@ -1112,16 +1067,16 @@
         (uses       (environment-uses-modules env))
         (uses-names (map module-name uses)))
     ;;(format out "Dumping module information...\n")
-    (format code-out "\n/* MODULE ENVIRONMENT INFORMATION */\n\n")
+    (write-string code-out "\n/* MODULE ENVIRONMENT INFORMATION */\n\n")
     (declare-imported-module-infos code-out mod)
 
-    (format code-out "\nstatic USE_INFO use_infos[] = {\n")
+    (write-string code-out "\nstatic USE_INFO use_infos[] = {\n")
     (for ((n uses-names))
       (format code-out "  {&%s},\n" (module-info-name n)))
-    (format code-out "  {NULL}\n};\n")
+    (write-string code-out "  {NULL}\n};\n")
 
     ;;(format out "Dumping imports...\n")
-    (format code-out "\nstatic IMPORT_INFO import_infos[] = {\n")
+    (write-string code-out "\nstatic IMPORT_INFO import_infos[] = {\n")
     (do-named-static-global-bindings
      (fun (local-name binding)
        (unless (binding-native-to? binding mod)
@@ -1130,10 +1085,10 @@
                  (module-info-name (binding-module-name binding))
                  (mangle-string-literal local-name))))
      (module-target-environment mod))
-    (format code-out "  {NULL,NULL,NULL}\n};\n")
+    (write-string code-out "  {NULL,NULL,NULL}\n};\n")
 
     ;;(format out "Dumping bindings...\n")
-    (format code-out "\nstatic BINDING_INFO binding_infos[] = {\n")
+    (write-string code-out "\nstatic BINDING_INFO binding_infos[] = {\n")
     (do-static-global-bindings
      (fun (binding)
        (when (binding-native-to? binding mod)
@@ -1144,25 +1099,25 @@
              (format code-out "  {\"%s\", NULL},\n"
                      (mangle-string-literal (binding-name binding))))))
      (module-target-environment mod))
-    (format code-out "  {NULL, NULL}\n};\n")
+    (write-string code-out "  {NULL, NULL}\n};\n")
 
     ;;(format out "Dumping exports...\n")
-    (format code-out "\nstatic EXPORT_INFO export_infos[] = {\n")
+    (write-string code-out "\nstatic EXPORT_INFO export_infos[] = {\n")
     (for (((tup exported-as binding) (module-exports mod)))
       (format code-out "  {\"%s\", \"%s\"},\n"
               (mangle-string-literal (binding-name binding))
               (mangle-string-literal exported-as)))
-    (format code-out "  {NULL, NULL}\n};\n")
+    (write-string code-out "  {NULL, NULL}\n};\n")
 
     (format code-out "\nextern MODULE_INFO %s;\n" info-name)
     (format code-out "MODULE_INFO %s = {\n" info-name)
     (format code-out "  \"%s\",\n" (mangle-string-literal name))
-    (format code-out "  NULL,\n")
-    (format code-out "  use_infos,\n")
-    (format code-out "  import_infos,\n")
-    (format code-out "  binding_infos,\n")
-    (format code-out "  export_infos,\n")
-    (format code-out "};\n")))
+    (write-string code-out "  NULL,\n")
+    (write-string code-out "  use_infos,\n")
+    (write-string code-out "  import_infos,\n")
+    (write-string code-out "  binding_infos,\n")
+    (write-string code-out "  export_infos,\n")
+    (write-string code-out "};\n")))
 
 (dm module-init-name (name)
   (cat "load_module_" (mangle-raw-name name)))
@@ -1176,35 +1131,35 @@
         (env        (module-target-environment mod))
         (uses       (environment-uses-modules env))
         (uses-names (map module-name uses)))
-    (format code-out "\n/* MODULES USED: */\n\n")
+    (write-string code-out "\n/* MODULES USED: */\n\n")
     (for ((n uses-names))
       (format code-out "extern %s;\n" (module-init-decl n)))
-    (format code-out "\n/* EXPRESSION: */\n\n")
+    (write-string code-out "\n/* EXPRESSION: */\n\n")
     (format code-out "extern %s;\n\n" init-decl)
     (format code-out "%s {\n" init-decl)
-    (format code-out "  static int need_init = 1;\n")
-    (format code-out "  if (!need_init) return;\n\n")
-    (format code-out "  need_init = 0;\n")
+    (write-string code-out "  static int need_init = 1;\n")
+    (write-string code-out "  if (!need_init) return;\n\n")
+    (write-string code-out "  need_init = 0;\n")
     (for ((n uses-names))
       (format code-out "  %s();\n" (module-init-name n)))
-    (format code-out "\n")
+    (write-string code-out "\n")
     (to-c form #f 1 code-out)
-    (format code-out "\n")    
-    (format code-out "  YPprint_cpu_usage(__FILE__);\n");
-    (format code-out "}\n")))
+    (write-string code-out "\n")    
+    (write-string code-out "  YPprint_cpu_usage(__FILE__);\n");
+    (write-string code-out "}\n")))
 
 (dm generate-main (code-out mod)
   (let ((name (module-name mod))
         (info-name (module-info-name name)))
-    (format code-out "\n/* APPLICATION: */\n\n")
+    (write-string code-out "\n/* APPLICATION: */\n\n")
     (format code-out "extern MODULE_INFO %s;\n" info-name)
     (format code-out "extern %s;\n\n" (module-init-decl name))
     (format code-out "MODULE_INFO *proto_toplevel_module_info = &%s;\n\n" info-name)
-    (format code-out "int main(int argc, char* argv[]) {\n")
+    (write-string code-out "int main(int argc, char* argv[]) {\n")
     (format code-out "  %s(argc, argv);\n" (mangle-boot-name "%init-world"))
     (format code-out "  %s();\n" (module-init-name name))
-    (format code-out "  return 0;\n")
-    (format code-out "}\n")
+    (write-string code-out "  return 0;\n")
+    (write-string code-out "}\n")
     ))
 
 (export
