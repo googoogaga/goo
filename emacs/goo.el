@@ -13,9 +13,11 @@
 
 (defvar proto-mode-syntax-table nil "")
 (if (not proto-mode-syntax-table)
-    (let ((i 0))
+    (let ((i     0)
+	  (table (copy-syntax-table lisp-mode-syntax-table)))
       ;; let's just use Lisp's syntax for now...
-      (setq proto-mode-syntax-table (copy-syntax-table lisp-mode-syntax-table))
+      (setq proto-mode-syntax-table table)
+      (modify-syntax-entry ?| "_   " table)
       (modify-syntax-entry ?- "w   " proto-mode-syntax-table)))
 
 (defvar proto-mode-abbrev-table nil "")
@@ -133,7 +135,7 @@ See `run-hooks'."
 (defconst proto-font-lock-keywords-1
   (eval-when-compile
     (list
-     '("(\\(dv\\|df\\|def\\sw*\\|dm\\|dg\\|dp\\)\\s-+\\(\\sw+\\)"
+     '("(\\(dv\\|df\\|def\\sw*\\|dm\\|dg\\|dp\\|dc\\|dl\\)\\s-+\\(\\sw+\\)"
        (1 font-lock-keyword-face)
        (2 font-lock-function-name-face nil t))
      '("^\\s-*(\\(dss?\\)" . 1)))
@@ -148,7 +150,7 @@ See `run-hooks'."
 	"(" (regexp-opt
 	     '("if" "seq" "set" "fun" "loc" "lab"
 	       "fin" "try" "sig" "isa" "slot" "ct" "expand"
-	       "quote" "rep" "ifm" "and" "or" "unless" "when"
+	       "quote" "rep" "mif" "and" "or" "unless" "when"
 	       "incf" "decf" "inc" "dec" "case" "select" "for" "let"
 	       "collecting" "collect" "use" "export" "need-implementation"
 	       "ct-also" "pushf" "popf" "dlet") t)
@@ -235,36 +237,46 @@ See `run-hooks'."
 (put 'fun 'proto-indent-function 1)
 (put 'loc 'proto-indent-function 1)
 (put 'let 'proto-indent-function 'proto-let-indent)
-(put 'blk 'proto-indent-function 1)
-(put 'itr 'proto-indent-function 'proto-let-indent)
-(put 'isa 'proto-indent-function 1)
-(put 'mon 'proto-indent-function 1)
-(put 'ct 'proto-indent-function 0)
+(put 'dlet 'proto-indent-function 'proto-let-indent)
+(put 'fin 'proto-indent-function 0)
+(put 'try 'proto-indent-function 1)
 (put 'unless 'proto-indent-function 1)
 (put 'when 'proto-indent-function 1)
-(put 'case 'proto-indent-function 0)
-(put 'select 'proto-indent-function 1)
+(put 'cond 'proto-indent-function 0)
+(put 'case 'proto-indent-function 1)
+(put 'case-by 'proto-indent-function 2)
+(put 'match 'proto-indent-function 2)
+(put 'ct 'proto-indent-function 0)
+(put 'ct-also 'proto-indent-function 0)
 (put 'seq 'proto-indent-function 0)
 (put 'for 'proto-indent-function 1)
 (put 'lab 'proto-indent-function 1)
+(put 'esc 'proto-indent-function 1)
 (put 'rep 'proto-indent-function 2)
 (put 'collecting 'proto-indent-function 1)
 (put 'use 'proto-indent-function 1)
 (put 'export 'proto-indent-function 0)
 (put 'need-implementation 'proto-indent-function 0)
-(put 'ct-also 'proto-indent-function 0)
-(put 'fin 'proto-indent-function 0)
-(put 'dlet 'proto-indent-function 1)
-(put 'try 'proto-indent-function 1)
+(put 'new 'proto-indent-function 1)
+;;; deprecated
+(put 'isa 'proto-indent-function 1)
+(put 'select 'proto-indent-function 1)
+(put 'blk 'proto-indent-function 1)
+(put 'itr 'proto-indent-function 'proto-let-indent)
+(put 'mon 'proto-indent-function 1)
 
 ;; defining forms:
-(put 'def 'proto-indent-function "define")
 (put 'dv 'proto-indent-function "define")
 (put 'df 'proto-indent-function "define")
+(put 'dp 'proto-indent-function "define")
+(put 'dl 'proto-indent-function "define")
 (put 'dm 'proto-indent-function "define")
 (put 'dg 'proto-indent-function "define")
 (put 'ds 'proto-indent-function "define")
 (put 'dss 'proto-indent-function "define")
+;;; deprecated
+(put 'def 'proto-indent-function "define")
+
 
 (setq auto-mode-alist
       (cons '("\\.proto\\'" . proto-mode)
