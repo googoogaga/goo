@@ -126,6 +126,7 @@ extern P YPPsfab (P size, P fill);
 
 /* IO */
 
+extern P Yerror;
 extern P Yfile_opening_error;
 extern P YPopen_input_file (P name);
 extern P YPopen_output_file (P name);
@@ -143,6 +144,7 @@ extern P YPeof_objectQ (P x);
 extern P YPeof_object ();
 extern PPORT YPcurrent_input_port (void);
 extern PPORT YPcurrent_output_port (void);
+extern P YPfile_mtime (P x);
 
 /* OS */
 
@@ -281,22 +283,44 @@ extern P with_cleanup (P body_fun, P cleanup_fun);
 
 /* LITERALS */
 
-#define EXTLIT(x)  extern P x;
-#define DEFLIT(x)  P x = PNUL;
+#define DEFLIT(x)  static P x = PNUL;
 
 /* GLOBAL VARIABLES */
 
 extern P unbound ();
 
-#define DEF(x, m, n)  P x = PNUL;
+#define DEF(x, m, n)  extern P x; P x = PNUL;
 #define EXT(x, m, n)  extern P x;
 #define CHKREF(x)     (((x) == PNUL) ? unbound() : (x))
+
+/* PRIVATE MODULE VARIABLES USED DIRECTLY BY THE C BACK END */
+
+EXT(YPfalse, "boot", "%false");
+EXT(YPtrue, "boot", "%true");
+EXT(Ynil, "boot", "nil");
+EXT(YruntimeYvec, "runtime", "vec");
+
+/* It is not clear who is generating code which uses this. */
+EXT(YPdispatch,"boot","%dispatch");
+
+/* PRIVATE MODULE PRIMITIVES USED DIRECTLY BY THE C BACK END */
+
+extern P YPpair (P,P);
+extern P YPint (P);
+extern P YPchr (P);
+extern P YPflo (P);
+extern P YPsb (P);
+extern P YPPsym (P);
+extern P YPmacro (P,P);
+extern P YPsig (P,P,P,P,P);
+extern P YPgen (P,P,P,P,P);
+extern P YPmet (P,P,P,P);
+extern P YruntimeYPwith_monitor (P,P);
 
 /* FUNCTIONS */
 
 #define FUNFOR(x)         extern P x; extern P x##I(P, P)
-#define LOCFOR(x)         P x; extern P x##I(P, P)
-#define EXTLOCFOR(x)      extern P x; extern P x##I(P, P)
+#define LOCFOR(x)         static P x; static P x##I(P, P)
 
 /* BOXES */
 
@@ -306,7 +330,6 @@ extern P BOXFAB(P x);
 /* FUNCTION CODE */
 
 #define FUNCODEDEF(x)  P x##I (P Pfun, P Pnext_methods)
-#define FUNCODEEXT(x)  extern P x##I (P Pfun, P Pnext_methods)
 #define FUNCODEREF(x)  (&(x##I))
 
 /* LOCATIVES */

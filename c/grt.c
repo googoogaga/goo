@@ -210,6 +210,19 @@ P YPobject_values_size(P x) {
 }
 */
 
+/* SUPPORT FUNCTIONS */
+
+/* This is a lot more correct than calling YPsb directly.
+** XXX - Fix uses of YPsb. */
+static P cstr_to_pstr (char *cstr) {
+  size_t buflen;
+  char *raw_pstr;
+  buflen = strlen(cstr) + 1;
+  raw_pstr = allocate(strlen(cstr));
+  strncpy(raw_pstr, cstr, buflen);
+  return YPsb(raw_pstr);
+}
+
 /* ARITHMETIC */
 
 INLINE P YPfE(P x, P y) {
@@ -384,6 +397,32 @@ INLINE P YPeof_object () { return (P)EOF; }
 INLINE PPORT YPcurrent_input_port (void) { return stdin; }
 
 INLINE PPORT YPcurrent_output_port (void) { return stdout; }
+
+/* TODO - Need Windows version. */
+/* TODO - Resolution is crummy because we use single floats. */
+#include <sys/stat.h>
+#include <unistd.h>
+#include <errno.h>
+#define PROTO_EPOCH (978307200) /* January 01, 2001 00:00:00 GMT */
+extern P Yerror;
+P YPfile_mtime (P name) {
+  struct stat buf;
+  int res;
+  INTFLO flo;
+  
+  res = stat((PSTR) name, &buf);
+  if (res == 0) {
+    flo.f = (PFLO) buf.st_mtime - PROTO_EPOCH;
+  } else {
+    CALL3(Yerror,
+	  cstr_to_pstr("%s: stat failed: %s"),
+	  cstr_to_pstr(name),
+	  cstr_to_pstr(strerror(errno)));
+    /* Not executed. */
+    flo.f = 0.0;
+  }
+  return (P) flo.i;
+}
 
 /* OS */
 
