@@ -34,7 +34,7 @@
   (set (lock-handle l) (%lb (%lock-create (%su (if n "" (as <str> n))))))
   l)
 
-(ds (with-lock ,lock ,@body)
+(ds with-lock (,lock ,@body)
   (let ((lock-name (gensym)))
     `(let ((,lock-name ,lock))
        (fin (seq (lock-lock ,lock-name) ,@body) (lock-unlock ,lock-name)))))

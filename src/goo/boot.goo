@@ -10,22 +10,22 @@
 ;;; Temporary, compile-time-only macros.  These are used by this file only--
 ;;; we never export them.  The real definitions live in macros.goo.
 
-(dss (unless ,test ,@body) `(if (@not ,test) (seq ,@body)))
+(dss unless (,test ,@body) `(if (@not ,test) (seq ,@body)))
 
-(dss (when ,test ,@body) `(if ,test (seq ,@body)))
+(dss when (,test ,@body) `(if ,test (seq ,@body)))
 
-(dss (or ,@rest)
+(dss or (,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest) x `(let ((tmp ,x)) (if tmp tmp (or ,@rest))))
        #f))
 
-(dss (and ,@rest)
+(dss and (,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest) x `(if ,x (and ,@rest) #f))
        #t))
 
 ;; Define the primitives whose code is in prt.c
-(dss (%define-primitives)
+(dss %define-primitives ()
   `(seq ,@(map (fun (name) `(dl ,name)) primitive-names)))
 
 (ct 
@@ -67,7 +67,7 @@
 
 (%define-primitives)
 
-;; (dss (poo) (error "POO")) (poo) ;; TRIGGER A COMPILER BLOWOUT
+;; (dss poo () (error "POO")) (poo) ;; TRIGGER A COMPILER BLOWOUT
 
 ;; (ct (dv cat-sym make-sym))
 
@@ -243,7 +243,7 @@
 
 ;; DEFINE ACCESSORS NAMED PROP-NAMES AT INCREASING OFFSETS
 
-(dss (%define-structure-accessors ,@prop-names)
+(dss %define-structure-accessors (,@prop-names)
   (loc ((getter (name offset) 
           `(dl (,(cat-sym "%" name) inline) (x)
              (%prop-elt x (%raw ,offset))))
@@ -259,7 +259,7 @@
 
 ;; DEFINE STRUCTURE BASE WITH PREFIX FOR CONSTRUCTOR NAME
 
-(dss (%define-structure ,prefix ,class-base-name ,@prop-names)
+(dss %define-structure (,prefix ,class-base-name ,@prop-names)
   (loc ((constructor (name inits)
           (def class-name (cat-sym "<" name ">"))
           `(dl ,(cat-sym prefix name) (,@prop-names) 
@@ -308,7 +308,7 @@
 
 ;;; BUILD CLASS SHELLS POINTING TO INCOMPLETE <CLASS>
 
-(dss (%class-shells)
+(dss %class-shells ()
   `(seq
      ,@(%map-boot-classes
         (fun (name parents)
@@ -319,7 +319,7 @@
 
 ;;; INITIALIZE CLASSES TO BE INSTANCES OF NOW REAL CLASS
 
-(dss (%reparent-class-shells)
+(dss %reparent-class-shells ()
   `(seq ,@(%map-boot-classes
             (fun (name parents)
               `(set (%object-class ,name) <class>)))))
@@ -337,7 +337,7 @@
 
 ;;; BUILD BASIC OBJECT HOLDERS
 
-(dss (%object-shells)
+(dss %object-shells ()
   `(seq ,@(%map-boot-objects 
             (fun (name class)
               `(seq (dv ,name (%object-of ,class (%raw 0)))
@@ -417,8 +417,8 @@
 
 (dv $direct-object-class (%raw-alloc (%raw 4)))
 
-(dss ($tag-msk) `(%raw 3))
-(dss ($tag-len) `(%raw 2))
+(dss $tag-msk () `(%raw 3))
+(dss $tag-len () `(%raw 2))
 
 (dl (%tag-bits inline) (x) (%i& x ($tag-msk)))
 
@@ -426,7 +426,7 @@
 
 (dl (%untag inline) (x) (%i>> x ($tag-len)))
 
-(dss ($adr-tag) `(%raw 0))
+(dss $adr-tag () `(%raw 0))
 
 (dl %tag-into (x t) (%tag (%untag x) t))
 
@@ -448,7 +448,7 @@
 ;;   DEFINES TAG/FAB AND UNTAG OPS
 ;;   DEFINES TAG2CLASS ENTRY FOR MAP
 
-(dss (%define-tagged-structure ,name ,ptag ,puntag ,code ,tag)
+(dss %define-tagged-structure (,name ,ptag ,puntag ,code ,tag)
   (let ((class-name (cat-sym "<" name ">"))
         (fab-name   (cat-sym "%" name))
         (tag-name   (cat-sym "%" code "b"))
@@ -479,7 +479,7 @@
 ;; DEF STRUCT'S WITH INDEXED ELEMENTS W/ DATA STORED IN DATA PROP
 ;;   DEFINING CONSTRUCTORS,ACCESSORS,LEN,BOX/UNBOX'ERS(FOR FFI),
 
-(dss (%define-repeated-structure ,name ,elt ,code ,init)
+(dss %define-repeated-structure (,name ,elt ,code ,init)
   (let ((class-name (cat-sym "<"  name ">"))
         (nul        (cat-sym "%"  code "nul"))
         (fab        (cat-sym "%"  name))
@@ -533,13 +533,13 @@
 
 ;; DEFINES SINGLE INHERITANCE HIERARCHY FROM TOP TO BOTTOM
 
-(dss (%pairize ,@elts)
+(dss %pairize (,@elts)
   (rep pairize ((elts elts))
     (if (nul? elts)
         '()
         `(%pair ,(head elts) ,(pairize (tail elts))))))
 
-(dss (%define-hierarchy)
+(dss %define-hierarchy ()
   `(seq ,@(%map-boot-classes
             (fun (name parents) 
               `(%define-parents ,name (%pairize ,@parents))))))
@@ -601,7 +601,7 @@
 ;;; 11. BOXED OBJECTS
 ;;; 
 
-(dss (%define-boxed-structure ,name ,code)
+(dss %define-boxed-structure (,name ,code)
   (let ((class-name (cat-sym "<" name ">"))
         (dat-name   (cat-sym name "-dat"))
         (fab-name   (cat-sym "%" name))
@@ -697,7 +697,7 @@
           '()
           (pair (head sig) (&params (tail sig))))))
 
-(dss (%define-accessor ,name (,@sig) ,@body)
+(dss %define-accessor (,name (,@sig) ,@body)
   (let ((params  (&params sig))
         (specs   (&listify (map (always '<any>) params))))
     `(seq (dv ,name 
@@ -711,11 +711,11 @@
             (set (%fun-info-inlineable? (%met-info accessor)) #t)
             accessor))))
 
-(dss (%define-getter ,name ,owner ,type)
+(dss %define-getter (,name ,owner ,type)
   `(%define-accessor ,name ((x ,owner) => ,type)
       (%prop-elt x (%prop-offset ,owner ,name))))
 
-(dss (%define-setter ,name ,owner ,type)
+(dss %define-setter (,name ,owner ,type)
   `(%define-accessor ,(cat-sym name "-setter") ((z ,type) (x ,owner))
      (set (%prop-elt x (%prop-offset ,owner ,name)) z)))
 
@@ -728,7 +728,7 @@
 ;; DEF GETTER/SETTER/PROPS FOR ALL BOOT CLASS PROPS
 ;; N.B. PROP METHODS CLOSE OVER PROP
 
-(dss (%define-props)
+(dss %define-props ()
   `(seq ,@(%map-boot-props 
             (fun (owner name setter? type init) 
               (def setter-name (and setter? (cat-sym name "-setter")))
@@ -762,7 +762,7 @@
   (set (%class-prop-len class)     (%ib (%%len (%class-props class))))
   class)
 
-(dss (%finalize-props)
+(dss %finalize-props ()
   `(seq ,@(%map-boot-classes
            (fun (name parent) `(%finalize-props! ',name ,name)))))
 
@@ -1008,7 +1008,7 @@
 (df %patch-early-generic (generic|<gen>)
   (set (%gen-code generic) (%met-code %dispatch)))
 
-(dss (%def-patch-early-generics)
+(dss %def-patch-early-generics ()
   `(dl %patch-early-generics ()
      ,@(%map-boot-props 
         (fun (owner name setter? type init) 
@@ -1066,7 +1066,7 @@
           res
           (type-error res type))))
 
-(dss (%stack-overflow-lim)
+(dss %stack-overflow-lim ()
   `(%i- (%max-stack-len) (%raw 1000)))
 
 (dl (%stack-check inline-c) (regs)
@@ -1149,7 +1149,7 @@
 ;; correct C names.  Please feel free to redesign this if you wish.
 ;; TODO - It might be worth dumping (mangle-runtime-name ...) in
 ;; g2c and using this mechanism instead.
-(dss (force-names-into-boot-module ,@names)
+(dss force-names-into-boot-module (,@names)
   (if (nul? names)
       #f
       `(seq (if #f ,(head names))

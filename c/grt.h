@@ -8,6 +8,7 @@
 #undef PINT
 #define NOGDI
 #define NOUSER
+#pragma warning (disable:4047)
 #include <windows.h>
 #undef PINT
 #undef WIN32
@@ -165,6 +166,7 @@ IMPORTEXPORT extern P YPPrfab (P size, P fill);
 
 /* TUP */
 
+IMPORTEXPORT extern P Ytup;
 IMPORTEXPORT extern P YPPtfab (P size, P fill);
 #define YPtu(x)                ((P)(YPrep_dat(x)))
 #define YPtlen(x)              ((P)(YPprop_elt((x), (PINT)REP_LEN_OFF)))
@@ -173,7 +175,9 @@ IMPORTEXPORT extern P YPPtfab (P size, P fill);
 
 /* STR */
 
+#if !defined(_MSC_VER)
 typedef PCHR* PSTR;
+#endif
 
 IMPORTEXPORT extern P YPPsfab (P size, P fill);
 IMPORTEXPORT extern P YPsb (P str);

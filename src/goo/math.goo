@@ -49,6 +49,7 @@
   moddecf
   (dg rem (<num> <num> => <num>))
   (dg pow (<num> <num> => <num>))
+  (dg exp (<num> => <num>))
   (dg pos? (<num> => <log>))
   (dg zero? (<num> => <log>))
   (dg neg? (<num> => <log>))
@@ -171,10 +172,10 @@
 (dm (mod- inline) (i|<num> j|<num> n|<num> => <num>)
   (mod (- i j) n))
 
-(ds (modincf ,place ,max)
+(ds modincf (,place ,max)
   `(opf ,place (mod+ _ 1 ,max)))
 
-(ds (moddecf ,place ,max)
+(ds moddecf (,place ,max)
   `(opf ,place (mod- _ 1 ,max)))
 
 (dm rem (real|<num> divisor|<num> => <num>)
@@ -183,6 +184,9 @@
 
 (dm pow (base|<num> n|<num> => <num>)
   (contagious-call pow base n))
+
+(dm (exp inline) (n|<num> => <num>)
+  (pow $e n))
 
 (dm (pos? inline) (x|<num> => <log>)
   (> x 0))
@@ -374,7 +378,7 @@
 
 ;; (ct (dv cat-sym make-sym))
 
-(ds (def-unary-trans ,name (,param) ,@prefix)
+(ds def-unary-trans (,name (,param) ,@prefix)
   (let ((%fp (cat-sym "%f" name)))
     `(seq (dg ,name ((,param <num>) => <num>))
           (dm ,name ((,param <int>) => <flo>) 

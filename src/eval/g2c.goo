@@ -14,7 +14,7 @@
 (use eval/ast)
 (use eval/top)
 (use eval/ast-linearize)
-(use eval/typist)
+;; (use eval/typist)
 (use eval/optimize)
 
 (ddv *definitions* #f)
@@ -217,7 +217,7 @@
     (generate-trailer out-port))
   #f)
 
-(ds (for-mods (,mod ,loader) ,@body)
+(ds for-mods ((,mod ,loader) ,@body)
   `(do-module-loader-modules (fun (,mod) ,@body) ,loader))
 
 (dm generate-makefile (loader|<module-loader>)
@@ -500,19 +500,19 @@
 
 ;;; EMISSION
 
-(ds (for-commas ,out-val (,@clauses) ,@body)
+(ds for-commas (,out-val (,@clauses) ,@body)
   (let ((out-var (gensym)))
     `(let ((,out-var ,out-val))
        (for (,@clauses (first? (first-then (op #t) (op #f))))
          (unless first? (put ,out-var #\,))
          ,@body))))
 
-(ds (between-parentheses (,out-val) ,@body)
+(ds between-parentheses ((,out-val) ,@body)
   (let ((out-var (gensym)))
     `(let ((,out-var ,out-val))
        (put ,out-var #\() ,@body (put ,out-var #\)))))
 
-(ds (between-parentheses-comma-separated (,out-val) ,@body)
+(ds between-parentheses-comma-separated ((,out-val) ,@body)
   (let ((out-var (gensym)))
     `(let ((,out-var ,out-val))
        (put ,out-var #\() 
@@ -533,17 +533,17 @@
   (for ((i (below d)))
     (puts out "  ")))
 
-(ds (with-statement (,d ,out) ,@body)
+(ds with-statement ((,d ,out) ,@body)
   `(seq (gen-depth ,d ,out)
         ,@body
         (puts ,out ";\n")))
 
-(ds (with-expression (,e ,d ,out) ,@body)
+(ds with-expression ((,e ,d ,out) ,@body)
   `(with-statement (,d ,out)
      (gen-result ,e ,d ,out)
      ,@body))
 
-(ds (with-used-expression (,e ,d ,out) ,@body)
+(ds with-used-expression ((,e ,d ,out) ,@body)
   `(when (program-register ,e)
      (with-expression (,e ,d ,out) ,@body)))
 

@@ -46,7 +46,7 @@
     thread-function main-thread-key
     thread-handle   (%lb (%thread-current))))
 
-(ds (spawn ,@body)
+(ds spawn (,@body)
   `(new <thread> thread-function (fun () ,@body)))
 
 (dm sleep (secs|<flo>)

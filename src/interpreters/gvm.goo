@@ -39,22 +39,22 @@
         ((... ,n ,arg) `(,arg (fetch-bytes (vm-reg-val (fetch-byte)))))
         (,arg          `(,arg (vm-reg-val (fetch-byte)))))))
 
-(ds (decode-clause ,iname (,@args))
+(ds decode-clause (,iname (,@args))
   (let ((dst     (fetch-byte))
         (clauses (map decode-arg args)))
     `(let ,clauses (lst ',iname ,dst ,@args))))
 
-(ds (run-clause (,@args) ,@body)
+(ds run-clause ((,@args) ,@body)
   (let ((clauses (map decode-arg args)))
     `(let ((dst (fetch-byte))
            ,@clauses)
        (set (vm-reg-val dst) (seq ,@body)))))
 
 ;; TODO: FIX FOR NARY CASE
-(ds (len-clause ,@args)
+(ds len-clause (,@args)
   (+ (len args) 1))
 
-(ds (def-op ,name (,@args) ,n ,@body)
+(ds def-op (,name (,@args) ,n ,@body)
   `(seq (dm op-run (opcode|(t= ,n))
           (run-clause ,args ,@body))
         (dm op-len (opcode|(t= ,n) code|<vec> pc|<int>)

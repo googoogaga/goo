@@ -125,12 +125,12 @@
 (dm do-stack-frames (fun)
   (%do-stack-frames fun))
 
-(ds (for-frames (,num ,f ,args) ,@body)
+(ds for-frames ((,num ,f ,args) ,@body)
   `(let ((,num 0))
      (do-stack-frames
       (fun (,f _args) (def ,args (rev _args)) ,@body (incf ,num)))))
 
-(ds (for-user-frames (,num ,f ,args) ,@body)
+(ds for-user-frames ((,num ,f ,args) ,@body)
   `(esc break
      (def _seen-top #f)
      (def _top-num  0)

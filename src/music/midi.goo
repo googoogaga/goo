@@ -41,7 +41,7 @@
 
 (dm midi-percussion-channel () (fab-midi-channel 9))
 
-(ds (def-midi-family ,family (,start) ,@names)
+(ds def-midi-family (,family (,start) ,@names)
   (let ((num-tab (cat-sym family "-by-nums"))
          (nam-tab (cat-sym family "-by-nams"))
          (acc     (cat-sym "find-midi-" family)))
@@ -123,7 +123,7 @@
 (dm do-with-open-midi-out-device (md|<midi-device> f|<fun>)
   (fin (seq (open-midi-out-device md) (f)) (close-midi-out-device md)))
        
-(ds (with-open-midi-out-device (?md) ,@body)
+(ds with-open-midi-out-device ((?md) ,@body)
   `(do-with-open-midi-out-device ?md (fun () ,@body)))
 
 (dg send-midi-message (md|<midi-device> stat|<int> chan|<int> x|<int> y|<int>))

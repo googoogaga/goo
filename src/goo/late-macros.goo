@@ -10,7 +10,7 @@
 (use goo/math)
 (use goo/cols)
 
-(ds (op ,f ,@args)
+(ds op (,f ,@args)
   (loc ((splice (y|<lst>)
           (map (fun (x) (if (== x '...) `(as <lst> _*) `(lst ,x))) y))
         (rest-op? (x => <log>)

@@ -59,7 +59,7 @@
 ;; (dm ast-write (out|<out-port> x|<predefined-reference> d|<int>)
 ;;   (msg out "PR^%s" (reference-binding x)))
 
-(ds (ast-between-parentheses-spaced (,out-val ,depth-val) ,@body)
+(ds ast-between-parentheses-spaced ((,out-val ,depth-val) ,@body)
   (let ((out-var (gensym)) (depth-var (gensym)))
     `(let ((,out-var ,out-val) (,depth-var (+ ,depth-val 1)))
        (put ,out-var #\() 
@@ -71,7 +71,7 @@
                (loop (tail body) #f))))
        (put ,out-var #\)))))
 
-(ds (ast-between-parentheses-spaced+typed (,out ,depth ,x) ,@body)
+(ds ast-between-parentheses-spaced+typed ((,out ,depth ,x) ,@body)
   `(seq (ast-between-parentheses-spaced (,out ,depth) ,@body) 
         (type-out ,out ,x)))
 

@@ -36,14 +36,14 @@
 (dm packer-fab (t|(t< <int>) => <packer>)
   (packer 0 + (fun (x) x)))
 
-(ds (packing-with (,@decls) ,@body)
+(ds packing-with ((,@decls) ,@body)
   (match decls
     (() 
      `(seq ,@body))
     (((,var ,pack) ,@rest)
      `(let ((,var ,pack)) (packing-with (,@rest) ,@body)))))
  
-(ds (packing-in (,@vars) ,@body)
+(ds packing-in ((,@vars) ,@body)
   (match vars
     (() 
      `(seq ,@body))
@@ -53,18 +53,18 @@
     ((,name ,@rest)
      `(packing-in ((,name <lst>) ,@rest) ,@body))))
  
-(ds (packing ,@body)
+(ds packing (,@body)
   `(packing-in ((packer- <lst>)) (seq ,@body (packed packer-))))
  
-(ds (packing-as ,type ,@body)
+(ds packing-as (,type ,@body)
   `(packing-in ((packer- ,type)) (seq ,@body (packed packer-))))
  
-(ds (pack-in ,pack ,value)
+(ds pack-in (,pack ,value)
   `(opf ,pack (packer-add _ ,value)))
   
-(ds (pack ,value)
+(ds pack (,value)
   `(pack-in packer- ,value))
   
-(ds (packed ,name)
+(ds packed (,name)
   `(packer-res ,name))
 

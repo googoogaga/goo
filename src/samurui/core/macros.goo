@@ -4,14 +4,14 @@
 ; --- User Macros 
 ; -- 
 
-(ds (iprop ,class ,binding ,type ,desc)
+(ds iprop (,class ,binding ,type ,desc)
   `(seq
      (dp! ,binding (,class => ,type))
      (add-property ,class (interface-property ,(as <str> binding) ,type ,binding ,(fab-setter-name binding) ,desc))
      )
   )
 
-(ds (ipropc ,class ,binding ,type ,desc ,constraint)
+(ds ipropc (,class ,binding ,type ,desc ,constraint)
   `(seq
      (dp! ,binding (,class => ,type))
      (def da-prop (interface-property ,(as <str> binding) ,type ,binding ,(fab-setter-name binding) ,desc))
@@ -20,20 +20,20 @@
      )
   )
 
-(ds (iaction ,class ,binding ,this-name ,desc ,@body)
+(ds iaction (,class ,binding ,this-name ,desc ,@body)
   `(seq
      (dm ,binding ((,this-name ,class)) ,@body)
      (add-action ,class (interface-action ,(as <str> binding) ,binding ,desc))
      )
   )
 
-(ds (imodel ,class ,@body)
+(ds imodel (,class ,@body)
   `(register-interface-model ,class (interface-model (fun (x attribs) 1)
                                                      (quote (,@body))))
   )
 
 
-(ds (iview ,class ,@body)
+(ds iview (,class ,@body)
   `(register-interface-model ,class (interface-model (fun (x attribs) 1)
                                                      (quote (,@body))))
   )
@@ -83,11 +83,11 @@
 ;; needed, but we'll considering it future-proofing) and the list of
 ;; updaters that should be added to as needed.
 
-(ds (idrawmodel ,assoc-class ,class ,@body)
+(ds idrawmodel (,assoc-class ,class ,@body)
   `(idrawmodel-ext ,assoc-class ,class (1) (,@body))
   )
 
-(ds (idrawmodel-ext ,assoc-class ,class (,@body-a) (,@body-b))
+(ds idrawmodel-ext (,assoc-class ,class (,@body-a) (,@body-b))
   `(seq
      (dc ,class (<interface-drawing-area>))
      (dp! drawmodel-model (,class => (t? ,assoc-class)) #f)

@@ -154,7 +154,7 @@
         n-buckets (- n-buckets 2)))
   table)
 
-;; (ds (with-hash ((tup ,bucket-index ,bucket-offset) (,table ,key)) ,@body)
+;; (ds with-hash (((tup ,bucket-index ,bucket-offset) (,table ,key)) ,@body)
 ;;   `(let ((test-function (key-test ,table))
 ;;           (hash-function (tab-hash ,table))
 ;;           ((hash <int>) (hash-function ,key))

@@ -23,7 +23,7 @@
              pattern-value      value))
   (add! $patterns pat))
 
-(ds (def-rhythm ,time ,name ,@patterns)
+(ds def-rhythm (,time ,name ,@patterns)
   (let ((pattern-inits
          (map (fun (pat)
                 (mif ((,kind ,part ,instrument ,value) pat) 

@@ -50,7 +50,7 @@
   (def top    `(seq ,dfun ,dpatch #t))
   top)
 
-(ds (type-case ,val ,@cases)
+(ds type-case (,val ,@cases)
   (loc ((do-type-case (val cases)
           (if (nul? cases)
               #f
@@ -98,7 +98,7 @@
 
 (dv d (build-decision-tree foo))
 
-(ds (def-tree ,gen) (build-decision-tree gen))
+(ds def-tree (,gen) (build-decision-tree gen))
 
 (df time (n) (let ((x 0)) (for ((i (below n))) (set x (+ x i))) x))
 

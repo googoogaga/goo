@@ -21,7 +21,7 @@
 ;;; encounter will automatically be assumed to be the resposibility of this
 ;;; object.
 (ddv *current-dependent* #f)
-(ds (with-dependent ,dependent ,@body)
+(ds with-dependent (,dependent ,@body)
   (let ((saved-dependent (gensym)))
     `(let ((,saved-dependent *current-dependent*))
        (set *current-dependent* ,dependent)
@@ -199,7 +199,7 @@
   (rep loop ((res '()) (e e))
     (if (nul? e) (rev! res) (loop (pair (head e) res) (tail e)))))
 
-(ds (def-programs ,name) `(def-list ,name (<programs>)))
+(ds def-programs (,name) `(def-list ,name (<programs>)))
 
 (dc <ast-embodied-function> (<ast-function>))
   (dp! function-body (<ast-embodied-function> => <any>)            #f)
@@ -697,6 +697,7 @@
 ;; XXX - This function has very ugly semantics, and I don't like it.
 (dm objectify-syntax-definition (name e r rt? => <any>)
   (def sep-expander (sexpr-make-macro-function name e))
+  ;; (post "%s %= ** %=\n" name e sep-expander)
   ;; Build a version of the macro for use in the target and syntax
   ;; environments.
   (def syntax-env   (find-syntax-environment r))
@@ -1178,7 +1179,7 @@
 (dm magic-bindings ()
   *magic-bindings*)
 
-(ds (define-magic-binding ,name (,@params) ,@body)
+(ds define-magic-binding (,name (,@params) ,@body)
   (let ((special-name (cat-sym "special-" name))
         (sexpr-name   (cat-sym "$sexpr-" name "-tag")))
     `(seq (dv ,special-name

@@ -1,6 +1,4 @@
 ;;;; Copyright 2002, Jonathan Bachrach.  See file TERMS.
-;;  Copyright (c) 1993, 1994 Richard Kelsey and Jonathan Rees. 
-;;  See file COPYING.
 
 (use goo/boot)
 (use goo/fun)
@@ -43,7 +41,7 @@
         (do-emit port x (+ d 1) recur))))
 
 (dm write-to-string (x => <str>)
-  (with-port (port (open <str-out-port> "")) (write port x)))
+  (port-to-str port (write port x)))
 
 (dm write (port|<out-port> x)
   (rep recur ((x x) (d -1))
@@ -378,12 +376,12 @@
           "Incomplete msg directive in \"%s\"" message)
   `(let ((,port ,port-expr)) ,@exprs))
 
-(ds (msg* ,port ,message ,@args)
+(ds msg* (,port ,message ,@args)
   (if (isa? message <str>)
       (pe-msg port message args)
       `(msg ,port ,message ,@args)))
 
-;; (ds (msg* ,port ,message ,@args)
+;; (ds msg* (,port ,message ,@args)
 ;;   `(msg ,port ,message ,@args))
 
 (df msg-to-str (message|<str> arguments|... => <str>)

@@ -138,7 +138,7 @@
           (arity-error f args)
           args)))
 
-(ds (ifun ,env ,f ,nary? ,arity ,names ,body)
+(ds ifun (,env ,f ,nary? ,arity ,names ,body)
   `(fun ((arg-vector ...))
      (def args  (arrange-arguments f nary? arity (as <lst> arg-vector)))
      (def nms   (%next-methods))

@@ -1,60 +1,58 @@
 (use goo)
+(use goo/class)
+(use goo/cols/lst)
 (use goo/io/write)
 
-(dc <doc> (<any>))
+(dm lst* (args|... => <lst>)
+  (def m (1- (len args)))
+  (rep cons ((i|<int> (1- m)) (r|<lst> [args m]))
+    (if (< i 0)
+        r
+        (cons (1- i) (new <lst> head [args i] tail r)))))
 
-(dc <doc-nil> (<doc>))
+(dc <rdoc> (<any>))
 
-(dc <doc-cons> (<doc>))
-  (dp doc-head (<doc-cons> => <doc>))
-  (dp doc-tail (<doc-cons> => <doc>))
+(d. <doc> (t+ <rdoc> <str>))
 
-(dc <doc-text> (<doc>))
-  (dp doc-text (<doc-text> => <str>))
+(def-list doc-cons (<rdoc>))
 
-(dc <doc-nest> (<doc>))
-  (dp doc-n (<doc-nest> => <int>))
-  (dp doc-nest (<doc-nest> => <doc>))
+(dc <doc-nest> (<rdoc>))
+  (dp  doc-n     (<doc-nest>  => <int>))
+  (dp! doc-nest  (<doc-nest>  => <doc>))
 
-(dc <doc-break> (<doc>))
+(dc <doc-break> (<rdoc>))
   (dp doc-break (<doc-break> => <str>))
 
-(dc <doc-group> (<doc>))
-  (dp doc-group (<doc-group> => <doc>))
+(dc <doc-group> (<rdoc>))
+  (dp! doc-group (<doc-group> => <doc>))
 
-(dv docnil         (new <doc-nil>))
+(dg to-doc (x => <doc>))
 
-(df text (x)       (new <doc-text>  doc-text  x))
+(export <doc> to-doc)
+
+(d. docnil         (nul <doc-cons>))
 
 (df nest (i x)     (new <doc-nest>  doc-n     i doc-nest x))
 
-(dv break          (new <doc-break> doc-break " "))
+(d. break          (new <doc-break> doc-break " "))
 
 (df break-with (s) (new <doc-break> doc-break s))
 
 (df group (d)      (new <doc-group> doc-group d))
 
-(df doc-em (x|...) 
-  (rep loop ((r docnil) (i (1- (len x))))
-    (if (< i 0)
-        r
-        (loop (new <doc-cons> doc-head [x i] doc-tail r) (- i 1)))))
-
-(dm doc-sep-em2 (x|<doc-nil> y|<doc> => <doc>)
-  y)
-(dm doc-sep-em2 (x|<doc> y|<doc-nil> => <doc>)
-  x)
-(dm doc-sep-em2 (x|<doc> y|<doc> => <doc>)
-  (doc-em x break y))
+(df doc-em (x|...) (app fabs <doc-cons> x))
 
 (df doc-sep-em (x|... => <doc>)
-  (fold+ doc-sep-em2 x))
+  (rep cons ((r docnil) (i (1- (len x))) (f? #t))
+    (if (< i 0)
+        r
+        (let ((nxt (if f? r (doc-cons break r))))
+          (cons (doc-cons [x i] nxt) (1- i) #f)))))
+
+(export nest break break-with group doc-em doc-sep-em)
 
 (dm binop (left|<str> op|<str> right|<str> => <doc>)
-  (group 
-   (nest 2 (doc-sep-em
-            (group (doc-sep-em (text left) (text op)))
-            (text right)))))
+  (group (nest 2 (doc-sep-em (group (doc-sep-em left op)) right))))
 
 (dc <sdoc> (<any>))
 
@@ -62,7 +60,7 @@
 
 (dc <stext> (<sdoc>))
   (dp sdoc-string (<stext> => <str>))
-  (dp sdoc-text (<stext> => <sdoc>))
+  (dp sdoc-text   (<stext> => <sdoc>))
 
 (dc <sline> (<sdoc>))
   (dp sdoc-n (<sline> => <int>))
@@ -81,75 +79,216 @@
 
 (dv <mode> <sym>)
 
-(dm fits? (w|<int> x|... => <log>)
-  (post "<= FITS? W%= X%=\n" w x)
-  (def res (and (>= w 0) (or (nul? x) (app fits-on? w x))))
-  (post "=> FITS? W%= X%= => %=\n" w x res)
-  res)
+(dm fits? (w|<int> x|<lst>)
+  (cond ((< w 0)  #f)
+        ((nul? x) #t)
+        (#t       (let ((x0 (head x))) 
+                    (fits-on? w [x0 0] [x0 1] [x0 2] (tail x))))))
 
-(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-nil> z|... => <log>)
-  (app fits? w z))
+(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-cons> r|<lst>)
+  (if (== d docnil)
+      (fits? w r)
+      (fits? w (lst* (tup i m (head d)) (tup i m (tail d)) r))))
 
-(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-cons> z|... => <log>)
-  (app fits? w i m (doc-head d) i m (doc-tail d) z))
+(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-nest> r|<lst>)
+  (fits? w (lst* (tup (+ i (doc-n d)) m (doc-nest d)) r)))
 
-(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-nest> z|... => <log>)
-  (app fits? w (+ i (doc-n d)) m (doc-nest d) z))
+(dm fits-on? (w|<int> i|<int> m|<mode> d|<str>      r|<lst>)
+  (fits? (- w (len d)) r))
 
-(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-text> z|... => <log>)
-  (app fits? (- w (len (doc-text d))) z))
-
-(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-break> z|... => <log>)
+(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-break> r|<lst>)
   (or (== m 'break)
-      (app fits? (- w (len (doc-break d))) z)))
+      (fits? (- w (len (doc-break d))) r)))
 
-(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-group> z|... => <log>)
-  (app fits? w i 'flat (doc-group d) z))
+(dm fits-on? (w|<int> i|<int> m|<mode> d|<doc-group> r|<lst>)
+  (fits? w (lst* (tup i 'flat (doc-group d)) r)))
 
-(dm format (w|<int> k|<int> x|... => <sdoc>)
-  (post "FORMAT W%= K%= X%=\n" w k x)
-  (if (nul? x) snil (app format-on w k x)))
+(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-cons> r|<lst> => <sdoc>)
+  (if (== d docnil)
+      (format w k r)
+      (format w k (lst* (tup i m (head d)) (tup i m (tail d)) r))))
 
-(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-nil> z|... => <sdoc>)
-  (app format w k z))
-
-(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-cons> z|... => <sdoc>)
-  (app format w k i m (doc-head d) i m (doc-tail d) z))
-
-(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-nest> z|... => <sdoc>)
-  (app format w k (+ i (doc-n d)) m (doc-nest d) z))
+(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-nest> r|<lst> => <sdoc>)
+  (format w k (pair (tup (+ i (doc-n d)) m (doc-nest d)) r)))
   
-(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-text> z|... => <sdoc>)
+(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<str> r|<lst> => <sdoc>)
   (new <stext> 
-    sdoc-string (doc-text d)
-    sdoc-text   (app format w (+ k (len (doc-text d))) z)))
+    sdoc-string d
+    sdoc-text   (format w (+ k (len d)) r)))
 
-(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-break> z|... => <sdoc>)
+(dm format-on 
+    (w|<int> k|<int> i|<int> m|<mode> d|<doc-break> r|<lst> => <sdoc>)
   (if (== m 'flat)
       (new <stext> 
         sdoc-string (doc-break d)
-        sdoc-text   (app format w (+ k (len (doc-break d))) z))
-      (new <sline> sdoc-n i sdoc-line (app format w i z))))
+        sdoc-text   (format w (+ k (len (doc-break d))) r))
+      (new <sline> sdoc-n i sdoc-line (format w i r))))
   
-(dm format-on (w|<int> k|<int> i|<int> m|<mode> d|<doc-group> z|... => <sdoc>)
-  (if (app fits? (- w k) i 'flat (doc-group d) z)
-      (app format w k i 'flat  (doc-group d) z)
-      (app format w k i 'break (doc-group d) z)))
+(dm format-on 
+    (w|<int> k|<int> i|<int> m|<mode> d|<doc-group> r|<lst> => <sdoc>)
+  (if (fits? (- w k) (pair (tup i 'flat (doc-group d)) r))
+      (format w k (pair (tup i 'flat (doc-group d)) r))
+      (format w k (pair (tup i 'break (doc-group d)) r))))
+
+(dm format (w|<int> k|<int> x|<lst> => <sdoc>)
+  (if (nul? x)
+      snil
+      (let ((x0 (head x))) (format-on w k [x0 0] [x0 1] [x0 2] (tail x)))))
 
 (dm pretty (p|<out-port> w|<int> d|<doc>)
-  (def sdoc (format w 0 0 'flat (group d)))
+  (def sdoc (format w 0 (lst (tup 0 'flat (group d)))))
   (def str  (sdoc-to-str sdoc))
   (msg p "%s\n" str))
+
+(export sdoc-to-str format pretty)
 
 (dv test  (binop "a" "==" "b"))
 (dv expr1 (binop "a" "<<" "2"))
 (dv expr2 (binop "a" "+"  "b"))
 
 (df ifthen (c e1 e2)
-  (group (doc-sep-em (group (nest 2 (doc-sep-em (text "if")   c)))
-                     (group (nest 2 (doc-sep-em (text "then") e1)))
-                     (group (nest 2 (doc-sep-em (text "else") e2))))))
+  (group (doc-sep-em (group (nest 2 (doc-sep-em "if"   c)))
+                     (group (nest 2 (doc-sep-em "then" e1)))
+                     (group (nest 2 (doc-sep-em "else" e2))))))
 
 (dv doc (ifthen test expr1 expr2))
 
 ;; (pretty out 100 doc)
+
+#/
+(dm write-to-string (x => <str>)
+  (port-to-str port (write port x)))
+
+(dm write (port|<out-port> x)
+  (pretty port $max-int (to-doc x)))
+
+(dm emit (out|<out-port> x|<any>)
+  (puts out (to-str x)))
+
+(dm writeln (port|<out-port> x)
+  (write port x) (newline port))
+
+(dm msg (port|<out-port> message|<str> arguments|...)
+  (def found-percent?       #f)
+  (def argument-index|<int> 0)
+  (def num-arguments        (len arguments))
+  (loc ((arg (char|<chr> class|<any> => <any>)
+          (def current-index argument-index)
+          (set argument-index (+ argument-index 1))
+          (assert (< current-index num-arguments)
+                  "Too few arguments for msg string %=: %="
+                  message arguments)
+          (def argument (elt arguments current-index))
+            (assert (or (== class <any>) (isa? argument class))
+              "Msg argument for directive '%%%c' not of class %t: %="
+              char class argument)
+            argument))
+    (do (fun ((c <chr>))
+          (if found-percent?
+              (seq (case (to-upper c)
+                     ((#\D) (puts port (num-to-str (arg c <num>))))
+                     ((#\B) (puts port (num-to-str (arg c <int>) 2)))
+                     ((#\O) (puts port (num-to-str (arg c <int>) 8)))
+                     ((#\X) (puts port (num-to-str (arg c <int>) 16)))
+                     ((#\C) (put port (arg c <chr>)))
+                     ((#\S) (emit port (arg c <any>)))
+                     ((#\=) (write port (arg c <any>)))
+                     ((#\T) (write port (arg c <type>)))
+                     ((#\%) (put port #\%))
+                     (#t    (error "Invalid msg directive '%s' in \"%s\""
+                                   c message)))
+                   (set found-percent? #f))
+              (if (== c #\%)
+                  (set found-percent? #t)
+                  (put port c))))
+        message))
+  (assert (not found-percent?)
+          "Incomplete msg directive in \"%s\"" message))
+
+(dm post (message|<str> arguments|...)
+  (app msg out message arguments))
+
+;;; PARTIAL EVALUATOR FOR MSG 
+;;; TODO: SHOULD GO AWAY WHEN REAL PARTIAL EVALUATION IS WORKING 
+;;; TODO: SHOULD PROBABLY BE CT-ALSO BUT THEN AST-EVAL KICKS IN
+
+(df pe-msg (port-expr message|<str> args|<lst>)
+  (def found-percent?  #f)
+  (def arg-index|<int> 0)
+  (def num-args        (len args))
+  (def chars           (fab <vec> 0))
+  (def port            (gensym))
+  (def exprs
+    (packing
+     (loc ((maybe-pack-chars ()
+             (unless (nul? chars)
+               (pack `(puts ,port ,(as <str> chars)))
+               (zap! chars)))
+           (arg (char|<chr> => <any>)
+             (maybe-pack-chars)
+             (def current-index arg-index)
+             (set arg-index (+ arg-index 1))
+             (assert (< current-index num-args)
+                     "Too few arguments for msg string %=: %=" message args)
+             (elt args current-index)))
+       (do (fun ((c <chr>))
+             (if found-percent?
+                 (seq (case (to-upper c)
+                        ((#\D) (pack `(puts ,port (num-to-str ,(arg c)))))
+                        ((#\B) (pack `(puts ,port (num-to-str ,(arg c) 2))))
+                        ((#\O) (pack `(puts ,port (num-to-str ,(arg c) 8))))
+                        ((#\X) (pack `(puts ,port (num-to-str ,(arg c) 16))))
+                        ((#\C) (pack `(put ,port ,(arg c <chr>))))
+                        ((#\S) (pack `(emit ,port ,(arg c))))
+                        ((#\=) (pack `(write ,port ,(arg c))))
+                        ((#\T) (pack `(write ,port ,(arg c))))
+                        ((#\%) (add! chars #\%))
+                        (#t    (error "Invalid msg directive '%s' in \"%s\""
+                                      c message)))
+                      (set found-percent? #f))
+                 (if (== c #\%)
+                     (set found-percent? #t)
+                     (add! chars c))))
+           message)
+       (maybe-pack-chars))))
+  (assert (not found-percent?) 
+          "Incomplete msg directive in \"%s\"" message)
+  `(let ((,port ,port-expr)) ,@exprs))
+
+(ds msg* (,port ,message ,@args)
+  (if (isa? message <str>)
+      (pe-msg port message args)
+      `(msg ,port ,message ,@args)))
+
+;; (ds msg* (,port ,message ,@args)
+;;   `(msg ,port ,message ,@args))
+
+(df msg-to-str (message|<str> arguments|... => <str>)
+  (with-port (port (open <str-out-port> "")) 
+    (app msg port message arguments)
+    (port-contents port)))
+
+(df say (port|<out-port> args|...)
+  ;; (puts port (fold cat "" (map to-str args)))
+  ;; (for ((arg args))
+  ;;   (puts port (to-str arg)))
+  ;; TODO: MOVE UPWARD WHEN COMPILER SMARTER
+  (def lim (len args))
+  (rep loop ((i 0))
+    (unless (== i lim)
+      (puts port (to-str (low-elt args i)))
+      (loop (+ i 1)))))
+
+;; (set *debug-tables?* #t)
+
+(export
+  msg pe-msg msg*
+  msg-to-str
+  write
+  writeln
+  post
+  write-to-string
+  *max-print-length*
+  *max-print-depth*
+  say)
+/#

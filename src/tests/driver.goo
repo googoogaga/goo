@@ -26,7 +26,7 @@
 
 (dg run-tests (group-name|<sym>))
 
-(ds (test-group ,name ,@tests)
+(ds test-group (,name ,@tests)
   (mif ((,name disabled) name)
     `(del-test ',name)
     `(seq (add-test ',name) 
@@ -91,27 +91,27 @@
   do-test-neq
   do-test-neqv)
 
-(ds (test ,input)
+(ds test (,input)
   `(do-test group-name 
             ,(to-str input)
             (fun () ,input)))
 
-(ds (test= ,input ,output)
+(ds test= (,input ,output)
   `(do-test-eqv group-name
                 ,(to-str input)
                 (fun () ,input) (fun () ,output)))
 
-(ds (test== ,input ,output)
+(ds test== (,input ,output)
   `(do-test-eq group-name
                ,(to-str input)
                (fun () ,input) (fun () ,output)))
 
-(ds (test~= ,input ,output)
+(ds test~= (,input ,output)
   `(do-test-neqv group-name
                 ,(to-str input)
                 (fun () ,input) (fun () ,output)))
 
-(ds (test~== ,input ,output)
+(ds test~== (,input ,output)
   `(do-test-neq group-name
                ,(to-str input)
                (fun () ,input) (fun () ,output)))

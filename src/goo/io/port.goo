@@ -99,7 +99,7 @@
 (dm close (port|<file-out-port>)
   (%close-out-port (port-handle port)))
 
-(ds (with-port (,name ,port) ,@body)
+(ds with-port ((,name ,port) ,@body)
   `(let ((,name #f))
      (fin (seq (set ,name ,port) ,@body)
           (and ,name (close ,name)))))
@@ -171,6 +171,6 @@
 (dm puts (port|<str-out-port> s|<str>)
   (set (port-guts port) (cat! (port-guts port) s)))
 
-(ds (port-to-str ,name ,@body)
+(ds port-to-str (,name ,@body)
   `(let ((,name (open <str-out-port> "")))
      ,@body (port-contents ,name)))

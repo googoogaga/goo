@@ -48,7 +48,7 @@
 
 ;; 3.7.1 ENUMERATION PROTOCOL
  (dc <enum> (<any>))
- (dg enum (x|<col> => <enum>))
+ (dg enum (x|<any> => <enum>))
  (dg fin? (e|<enum> => <log>))
  (dg nxt (e|<enum> => <enum>))
  (dg now (e|<enum> => <any>))
@@ -70,6 +70,8 @@
 )
 
 ;;;;!! Implementation
+(dm enum (x|<enum> => <enum>) x)
+
 ;;;; Creation protocol
 (dm as ((t (t< <col>)) x|<col> => <col>)
   (if (== (class-of x) t)

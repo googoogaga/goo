@@ -36,9 +36,6 @@
 
 (dv <track-vec> <str>)
 
-(df mod+ (i|<int> j|<int> n|<int>)
-  (mod (+ i j) n))
-
 (dm file-out (port|<port> x|<track-vec>)
   (emit port x))
 
@@ -101,10 +98,10 @@
   (dp track-vecs (<track> => <vec>))
 
 (dc <op> (<any>))
-(dc <mimic> (<op>))     (dv $mimic (new <mimic>))
-(dc <rotate> (<op>))    (dv $rotate (new <rotate>))
-(dc <template> (<op>))  (dv $template (new <template>))
-(dc <syncopate> (<op>)) (dv $syncopate (new <syncopate>))
+(dc <mimic> (<op>))     (d. $mimic (new <mimic>))
+(dc <rotate> (<op>))    (d. $rotate (new <rotate>))
+(dc <template> (<op>))  (d. $template (new <template>))
+(dc <syncopate> (<op>)) (d. $syncopate (new <syncopate>))
 
 (dm track-op (dst|<track> src|<track> op|<mimic>)
   (mvec-into (track-now-vec dst) (track-now-vec src))
@@ -316,9 +313,6 @@
   (set (timer-period (player-timer x)) (song-tempo->period (player-song x) n))
   (set (%player-tempo x) n))
 
-(ds (modf ,place ,max)
-  `(opf ,place (mod+ _ 1 ,max)))
-
 (df play-raw-note (x pitch velocity)
   ;; (msg out "PLAYING %d %d\n" pitch velocity)
   (unless (== pitch 0)
@@ -358,7 +352,7 @@
   (for ((t (song-tracks s)))
     (play-note x (elt t (player-pos x)) (fun (k) (track-char->pitch t k))))
   (unless (== (song-len s) 0)
-    (modf (player-pos x) (song-len s))))
+    (modincf (player-pos x) (song-len s))))
 
 (dm player-poll (x|<player>)
   (timer-poll (player-timer x)))

@@ -91,12 +91,13 @@
 
 (dv $sexpr-macro-tag 'mac)
 
-(dm sexpr-syntax-definition-variable (defn|<lst> => <any>)
-  (1st (head (tail defn))))
+(dm sexpr-syntax-definition-variable (defn|<lst> => <sym>)
+  (2nd defn))
 
 (dm sexpr-syntax-definition-value (defn => <any>)
-  (pair $sexpr-macro-tag  ;; (DEFINE (foo p ...) b...)
-        (pair (2nd defn) (tail (tail defn)))))
+  (def var (2nd defn))
+  ;; (ds foo (p ...) b...)
+  `(,$sexpr-macro-tag (,var ,@(3rd defn)) ,@(tail (tail (tail defn)))))
 
 (dv $sexpr-define-function-tag 'df)
 

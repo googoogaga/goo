@@ -5,16 +5,16 @@
 ;;; Temporary, compile-time-only macros.  These are used by this file only--
 ;;; we never export them.  The real definitions live in macros.goo.
 
-(dss (unless ,test ,@body) `(if (@not ,test) (seq ,@body)))
+(dss unless (,test ,@body) `(if (@not ,test) (seq ,@body)))
 
-(dss (when ,test ,@body) `(if ,test (seq ,@body)))
+(dss when (,test ,@body) `(if ,test (seq ,@body)))
 
-(dss (or ,@rest)
+(dss or (,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest) x `(let ((tmp ,x)) (if tmp tmp (or ,@rest))))
        #f))
 
-(dss (and ,@rest)
+(dss and (,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest) x `(if ,x (and ,@rest) #f))
        #t))
@@ -401,7 +401,7 @@
 
 (dl gen-lookup-1) ;; FORWARD DECL
 
-(dss (or-set ,place ,value)
+(dss or-set (,place ,value)
   `(or ,place (set ,place ,value)))
 
 ;; TODO: KEEP IN CHECK WITH GEN-LOOKUP-I THE INLINED BROTHER
@@ -488,7 +488,7 @@
 
 ;; SIG TRAMPOLINES THROUGH FUN'S
 
-(dss (def-fun/sig-accessor ,name)
+(dss def-fun/sig-accessor (,name)
   `(seq (df ,(cat-sym "fun-" name) (x)
           (,(cat-sym "sig-" name) (fun-sig x)))
         (df ,(cat-sym "fun-" name "-setter") (z x) 
@@ -500,7 +500,7 @@
 (def-fun/sig-accessor val)
 (def-fun/sig-accessor unification-vars)
 
-(dss (def-fun/info-accessor ,name)
+(dss def-fun/info-accessor (,name)
   `(seq (df ,(cat-sym "fun-" name) (x)
           (,(cat-sym "fun-info-" name) (fun-info x)))
         (df ,(cat-sym "fun-" name "-setter") (z x) 

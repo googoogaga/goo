@@ -98,7 +98,7 @@
   (incf (%vpc))
   op)
 
-(ds (def-vm-op ,name (,@args) ,opcode ,@body)
+(ds def-vm-op (,name (,@args) ,opcode ,@body)
   (let ((defs (map (fun (arg) `(def ,arg (vm-nxt-op))) args)))
     `(loc ((op () ,@defs 
             (trace "OP %= %= " ',name (lst ,@args))
@@ -110,7 +110,7 @@
        (set [*oplens*  ,opcode] ,(len args))
        (set [*opnames* ,opcode] ',name))))
 
-(ds (def-vm-push-op ,name (,@args) ,opcode ,@body)
+(ds def-vm-push-op (,name (,@args) ,opcode ,@body)
   `(def-vm-op ,name (,@args) ,opcode (vm-push (seq ,@body))))
 
 ;;;; INSTRUCTIONS

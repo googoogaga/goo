@@ -130,10 +130,10 @@
 ;;; DISPATCH
 ;;; FUNCTION REDEF
 
-(ds (def-protocol-tests ((,var ,name)) ,@tests)
+(ds def-protocol-tests (((,var ,name)) ,@tests)
   `(dm test-object (,var|(t< ,name)) (let ((group-name ',name)) ,@tests)))
 
-(ds (def-concrete-protocol-tests (,var|,name) ,@tests)
+(ds def-concrete-protocol-tests ((,var|,name) ,@tests)
   `(seq (def-protocol-tests (,var|,name) ,@tests)
         (test-group ,name (test-object ,name)))))
 

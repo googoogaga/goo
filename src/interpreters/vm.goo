@@ -138,7 +138,7 @@
             byte )))
     (instruction-decode-op (fetch-byte))))
 
-(ds (define-instruction ,name (,@args) ,n ,@body)
+(ds define-instruction (,name (,@args) ,n ,@body)
   `(seq
     (dm run-op ((opcode ,n))
       (run-clause ,@args ,@body))
@@ -149,7 +149,7 @@
 
 ;;; This uses the global fetch-byte function that increments *pc*.
 
-(ds (decode-clause ,iname (,@clauses))
+(ds decode-clause (,iname (,@clauses))
   (mif (() clauses)
        `(,iname)
        (mif ((,a) clauses)
@@ -158,7 +158,7 @@
                  `(let ((,a (fetch-byte)) (,b (fetch-byte))) (lst ',iname ,a ,b))
                  #f))))
 
-(ds (run-clause (,@clauses) ,@body)
+(ds run-clause ((,@clauses) ,@body)
   (mif (() clauses)
        `(seq ,@body)
        (mif ((,a) clauses)
@@ -167,7 +167,7 @@
                  `(let ((,a (fetch-byte)) (,b (fetch-byte))) ,@body)
                  #f))))
 
-(ds (size-clause ,@clauses)
+(ds size-clause (,@clauses)
   (mif (() clauses)
        1
        (mif ((,a) clauses)
@@ -741,7 +741,7 @@
 
 ;;;oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo
 
-(ds (define-primitive-0 ,name ,value)
+(ds define-primitive-0 (,name ,value)
   `(definitial name
      (loc ((arity+1 (+ 1 0))
              (behavior
@@ -753,7 +753,7 @@
          (description-extend! ',name `(function ,value))
          (make-primitive behavior) ) ) ) ) )
   
-(ds (define-primitive-1 ,name ,value)
+(ds define-primitive-1 (,name ,value)
   `(definitial name
      (loc ((arity+1 (+ 1 1))
              (behavior
@@ -766,7 +766,7 @@
          (description-extend! 'name `(function value a))
          (make-primitive behavior) ) ) ) ) )
   
-(ds (define-primitive-2 ,name ,value)
+(ds define-primitive-2 (,name ,value)
   `(definitial name
      (loc ((arity+1 (+ 2 1))
              (behavior
@@ -859,7 +859,7 @@
 
 ;;; Reserve some variables for future use in future chapters.
 
-(ds (define-reserved ,name)
+(ds define-reserved (,name)
   `(define-initial name
      (make-primitive
       (fun ()

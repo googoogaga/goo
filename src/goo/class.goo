@@ -6,16 +6,16 @@
 ;;; Temporary, compile-time-only macros.  These are used by this file only--
 ;;; we never export them.  The real definitions live in macros.goo.
 
-(dss (unless ,test ,@body) `(if (@not ,test) (seq ,@body)))
+(dss unless (,test ,@body) `(if (@not ,test) (seq ,@body)))
 
-(dss (when ,test ,@body) `(if ,test (seq ,@body)))
+(dss when (,test ,@body) `(if ,test (seq ,@body)))
 
-(dss (or ,@rest)
+(dss or (,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest) x `(let ((tmp ,x)) (if tmp tmp (or ,@rest))))
        #f))
 
-(dss (and ,@rest)
+(dss and (,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest) x `(if ,x (and ,@rest) #f))
        #t))

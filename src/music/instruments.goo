@@ -46,7 +46,7 @@
 
 (dv $zero-tone (fab-tone 'zero $zero-tone-key 0))
 
-(ds (def-instrument ,inst-name ,version ,@tones)
+(ds def-instrument (,inst-name ,version ,@tones)
   (let ((tone-inits
          (map (fun (tone) 
                 (mif ((,name ,key ,pitch) tone) 

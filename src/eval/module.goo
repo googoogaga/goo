@@ -281,7 +281,7 @@
           (roll-back-transaction *current-subtransaction*))
       (set *current-subtransaction* saved) }))
 
-(ds (with-subtransaction (,module) ,@body)
+(ds with-subtransaction ((,module) ,@body)
   `(call-with-subtransaction ,module (fun () ,@body)))
            
 (export

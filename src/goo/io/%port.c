@@ -62,7 +62,7 @@ P YgooSioSportYPget (P s) {
 }
 
 P YgooSioSportYPpeek (P s) { 
-  PCHR c = fgetc((FILE*)YPlu(s)); ungetc((int)c, (FILE*)YPlu(s)); return (P)(PINT)c; 
+  PINT c = fgetc((FILE*)YPlu(s)); ungetc(c, (FILE*)YPlu(s)); return (P)c; 
 }
 
 P YgooSioSportYPreadyQ (P s) { 

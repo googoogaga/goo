@@ -14,18 +14,18 @@
           nxt-mets)
       (no-next-methods-error met args)))
 
-(ds (sup ,@args)
+(ds sup (,@args)
   `(let ((next-mets (@checked-next-methods (%fun-reg) (%next-methods) ,@args)))
      (napp (head next-mets) (tail next-mets) ,@args '())))
 
-(ds (app-sup ,@args)
+(ds app-sup (,@args)
   `(let ((next-mets (@checked-next-methods (%fun-reg) (%next-methods) ,@args)))
      (napp (head next-mets) (tail next-mets) ,@args)))
 
-(ds (app ,f ,@args)
+(ds app (,f ,@args)
   `(napp ,f #f ,@args))
 
-(ds (renew ,x ,@prop-inits)
+(ds renew (,x ,@prop-inits)
   (let ((var  (gensym))
         (sets (rep loop ((sets '()) (inits prop-inits))
                 (if (nul? inits)
@@ -62,24 +62,24 @@
 
   )
            
-(ds (incf ,place ,@amount)
+(ds incf (,place ,@amount)
   (let (((tup g-decls g-place) (lift-place-subforms place))
         (amount (mif ((,amount) amount) amount 1)))
     `(let (,@g-decls)
        (set ,g-place (+ ,g-place ,amount)))))
 
-(ds (decf ,place ,@amount)
+(ds decf (,place ,@amount)
   (let (((tup g-decls g-place) (lift-place-subforms place))
         (amount (mif ((,amount) amount) amount 1)))
     `(let (,@g-decls)
        (set ,g-place (- ,g-place ,amount)))))
 
-(ds (pushf ,place ,value)
+(ds pushf (,place ,value)
   (let (((tup g-decls g-place) (lift-place-subforms place)))
     `(let (,@g-decls)
        (set ,g-place (push! ,g-place ,value)))))
 
-(ds (swapf ,x ,y)
+(ds swapf (,x ,y)
   (let (((tup xg-decls xg-place) (lift-place-subforms x))
         ((tup yg-decls yg-place) (lift-place-subforms y))
         (tmp (gensym)))
@@ -87,7 +87,7 @@
        (set ,xg-place ,yg-place)
        (set ,yg-place ,tmp))))
 
-(ds (rotf ,x ,y ,@zs)
+(ds rotf (,x ,y ,@zs)
   (let ((places `(,x ,y ,@zs))
         (tmps   (map (fun (x) (gensym)) places))
         (ps     (map lift-place-subforms places))
@@ -97,7 +97,7 @@
        ,@(map2 (fun (p t) `(set ,p ,t)) places (tail tmps))
        (set ,(last places) ,(1st tmps)))))
 
-(ds (popf ,place)
+(ds popf (,place)
   (let (((tup g-decls g-place) (lift-place-subforms place))
         (new-col (gensym))
         (val (gensym)))
@@ -106,23 +106,23 @@
        (set ,g-place ,new-col)
        ,val)))
 
-(ds (opf ,place ,call)
+(ds opf (,place ,call)
   (let (((tup g-decls g-place) (lift-place-subforms place)))
     `(let (,@g-decls (_ ,g-place))
        (set ,g-place ,call))))
 
-(ds (or/set ,place ,value)
+(ds or/set (,place ,value)
   (let (((tup g-decls g-place) (lift-place-subforms place)))
     `(let (,@g-decls (_ ,g-place))
        (or ,g-place (set ,g-place ,value)))))
 
-(ds (unless ,test ,@body)
+(ds unless (,test ,@body)
   `(if (not ,test) (seq ,@body)))
 
-(ds (when ,test ,@body)
+(ds when (,test ,@body)
   `(if ,test (seq ,@body)))
 
-(ds (or ,@rest)
+(ds or (,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest)
             x
@@ -130,14 +130,14 @@
                (if tmp tmp (or ,@rest))))
        #f))
 
-(ds (and ,@rest)
+(ds and (,@rest)
   (mif ((,x ,@rest) rest)
        (mif (() rest)
             x
             `(if ,x (and ,@rest) #f))
        #t))
 
-(ds (cond ,@cases)
+(ds cond (,@cases)
   (if (nul? cases)
       #f
       (mif ((,cond ,@body) (head cases))
@@ -160,15 +160,15 @@
                       (syntax-error "bad case %=" (head cases))))
              (syntax-error "bad case %=" (head cases))))))
 
-(ds (case-by ,val ,tst ,@cases)
+(ds case-by (,val ,tst ,@cases)
   (let ((val-var (gensym)) (tst-var (gensym)))
     `(let ((,val-var ,val) (,tst-var ,tst))
        ,(do-case-by val-var tst-var cases))))
 
-(ds (case ,val ,@cases)
+(ds case (,val ,@cases)
   `(case-by ,val == ,@cases))
 
-(ds (match ,exp ,@cases)
+(ds match (,exp ,@cases)
   (mif (() cases)
        `(syntax-error "failed to match.")
        (mif (((,pat ,@then) ,@rest) cases)
@@ -181,10 +181,10 @@
                           (match ,var ,@rest)))))
             (syntax-error "invalid match syntax."))))
 
-(ds (assert ,cond ,message ,@args)
+(ds assert (,cond ,message ,@args)
   `(if (not ,cond) (assert-error ,message ,@args)))
 
-(ds (for (,@clauses) ,@body)
+(ds for ((,@clauses) ,@body)
   (rep grok ((clauses clauses) (inits '()) (preds '()) (nows '()) (nexts '()))
     (if (nul? clauses)
         (let ((loop (gensym)))
@@ -204,15 +204,15 @@
                           nows)
                     (pair `(nxt ,state) nexts))))))))
 
-(ds (while ,test ,@body)
+(ds while (,test ,@body)
   `(rep _loop ()
      (when ,test ,@body (_loop))))
 
-(ds (until ,test ,@body)
+(ds until (,test ,@body)
   `(rep _loop ()
      (unless ,test ,@body (_loop))))
 
-(ds (dlet ,places ,@body)
+(ds dlet (,places ,@body)
   (match places
     (() 
      `(seq ,@body))
@@ -225,7 +225,7 @@
                (set ,g-place ,old-value)))))
     (#t (syntax-error "Bad dlet places %=" places))))
 
-(ds (def-fun-var ,var ,value)
+(ds def-fun-var (,var ,value)
   (let ((nam (var-name var))
         (typ (var-type var))
         (vnam (cat-sym "*" nam "*")))
@@ -233,7 +233,7 @@
           (dm ,nam (=> ,typ) ,vnam)
           (dm ,(fab-setter-name nam) ((z ,typ)) (set ,vnam z)))))
 
-(ds (without-prop-unbound-errors ,@body)
+(ds without-prop-unbound-errors (,@body)
   `(dlet ((*report-prop-unbound-errors?* #f))
      ,@body))
 
@@ -241,14 +241,14 @@
 ;; It may or may not remain part of the language in the long run, but we
 ;; need it to modularize the existing code base.
 ;; TODO - Move this macro into boot.goo along with AND, OR, WHEN, UNLESS.
-(ds (need-implementation ,@names)
+(ds need-implementation (,@names)
   (if (nul? names)
       #f
       `(seq (and #f ,(head names))
             (export ,(head names))
             (need-implementation ,@(tail names)))))
 
-(ds (pub ,@def)
+(ds pub (,@def)
   (let ((defs (match def
                 ;; ((dp ,name ,@rest)
                 ;;  `(,def (export ,name) (export ,(fab-setter-name name))))
@@ -272,7 +272,7 @@
                      '())))))
     `(seq ,@defs)))
 
-(ds (exported ,@defs)
+(ds exported (,@defs)
   `(seq ,@(map (fun (x) (def x (if (isa? x <lst>) x (lst x))) `(pub ,@x)) defs)))
 
 

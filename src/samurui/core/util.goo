@@ -74,7 +74,7 @@
     (msg out "\n"))
   )
 
-(ds (debugstr ,@body)
+(ds debugstr (,@body)
   `(msg out ,@body)
   )
 

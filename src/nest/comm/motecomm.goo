@@ -3,7 +3,7 @@
 (use nest/comm/autoezv24)
 (use nest/comm/libezv24)
 
-(ds (hex ,da-str)
+(ds hex (,da-str)
   (def num 0)
   (do (fun (d)
         (cond 
@@ -239,7 +239,7 @@
          )
   )
 
-(ds (my-pop! ,dude)
+(ds my-pop! (,dude)
   `(seq
      (def r (1st ,dude))
      (set ,dude (del! ,dude 0))

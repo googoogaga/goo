@@ -25,6 +25,7 @@
  ;; Alias for <lst>
  (dv <list> <lst>)
  (dg lst (elts|... => <lst>))
+ (dg lst* (elts|... => <lst>))
  
  ;; Alias for list
  (dv list lst)
@@ -76,6 +77,13 @@
         result
         (build (- index 1) 
                (new c head (elt objects index) tail result)))))
+
+(dm lst* (args|... => <lst>)
+  (def m (1- (len args)))
+  (rep cons ((i|<int> (1- m)) (r|<lst> [args m]))
+    (if (< i 0)
+        r
+        (cons (1- i) (new <lst> head [args i] tail r)))))
 
 ;;;; Iteration protocol for lists
 (dc <lst-enum> (<enum>))
@@ -178,7 +186,7 @@
           (assqn x (tail l) pos))))
 
 ;; (ct (dv cat-sym make-sym))
-(ds (def-list ,name (,@supers))
+(ds def-list (,name (,@supers))
   (let ((class  (cat-sym "<" name ">"))
         ($nul (cat-sym "$" name "-nul")))
     `(seq (dc ,class (<lst> ,@supers))

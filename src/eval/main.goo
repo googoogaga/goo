@@ -20,9 +20,10 @@
 (use time/threads)
 (use time/lock)
 (use time/event)
+(use goo/random)
+
 #/
 (use cols/pipe)
-(use goo/random)
 /#
 
 ;; (use samurui/samurui)
@@ -34,7 +35,7 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.152")
+(dv *goo-version* "0.153")
 (dv *goo-date*    "SEP 30, 2002")
 
 (post ";;; GOO\n")
