@@ -145,28 +145,22 @@
   (slot <alternative> alternative-consequent)
   (slot <alternative> alternative-alternant)
 
-(ds (def-list ,name (isa ,@supers))
+(dv <programs> (isa <program>))
+
+(ds (def-list ,name (,@supers))
   (let ((class  (make-sym "<" name ">"))
-	(head   (make-sym name "-head")) ;; COMPAT
-	(tail   (make-sym name "-tail")) ;; COMPAT
-	(head-setter (make-sym head "-setter")) ;; COMPAT
-	(tail-setter (make-sym tail "-setter")) ;; COMPAT
-	(empty  (make-sym "empty-" name)) ;; COMPAT
-	($empty (make-sym "$" empty))
-	(empty? (make-sym empty "?"))) ;; COMPAT
+	($empty (make-sym "$" name "-empty")))
     `(seq (dv ,class (isa (<lst> ,@supers)))
-	  (dv ,head head) ;; COMPAT
-	  (dv ,tail tail) ;; COMPAT
-	  (dv ,head-setter head-setter) ;; COMPAT
-	  (dv ,tail-setter tail-setter) ;; COMPAT
-	  (dv ,$empty (isa ,class (set ,head #f) (set ,tail #f)))
-	  ;; OLD MECHANISM
-	  (dm ,empty (=> ,class) ,$empty)
-	  (dm ,empty? ((e ,class) => <log>) (== e ,$empty))
-	  ;; NEW MECHANISM
+	  (dv ,$empty (isa ,class (set head #f) (set tail #f)))
+	  (dm as ((p ,class) (x ,class) => <lst>) x)
+	  (dm as ((p <lst>)  (x ,class) => <lst>) (apply lst x))
+	  (dm as ((p ,class) (x <lst>) => <lst>) (apply fabs (pair ,class x)))
+	  (df ,name (h t) (isa ,class (set head h) (set tail t)))
 	  (dm empty ((e ,class) => ,class) ,$empty))))
 
-(def-list sequential (isa <program>))
+(ds (def-programs ,name) `(def-list ,name (<programs>)))
+
+(def-programs sequential)
 
 (dv <constant> (isa <program>))
   (slot <constant> constant-value)
@@ -188,13 +182,13 @@
   (slot <fix-let> fix-let-arguments)
   (slot <fix-let> fix-let-body)
 
-(def-list arguments (isa <program>))
+(def-programs arguments)
 
 (dm as ((c <lst>) (e <arguments>) => <lst>)
   (rep loop ((res '()) (e e))
-    (if (empty-arguments? e)
+    (if (empty? e)
 	(rev! res)
-	(loop (pair (arguments-head e) res) (arguments-tail e)))))
+	(loop (arguments res e)))))
 
 (dv <locals> (isa <program>))
   (slot <locals> locals-bindings)
@@ -268,7 +262,6 @@
 	     (when (== (binding-index binding) index)
 	       (return (binding-name binding))))))))
 
-;;;;
 ;;;; CONVERT TO AST FORM
 
 (dm objectify ((e <lst>) (r <static-environment>) tail? => <any>)
@@ -329,10 +322,8 @@
 	  (head e*)
 	  (rep loop ((e* e*))
 	    (if (empty? e*)
-		(empty-sequential)
-		(isa <sequential> 
-		     (set sequential-head (head e*))
-		     (set sequential-tail (loop (tail e*)))))))))
+		(empty <sequential>)
+		(sequential (head e*) (loop (tail e*))))))))
 
 (dm objectify-sequential ((e* <lst>) r tail? => <program>)
   (let ((asts 
@@ -371,7 +362,7 @@
 	(b  (function-body f)))
     (if (function-nary? f)
 	(process-nary-closed-application f e* r tail?)
-	(if (= (number-of e*) (len (function-bindings f)))
+	(if (= (len e*) (len (function-bindings f)))
 	    (isa <fix-let> 
 		 (set fix-let-bindings  (function-bindings f))
 		 (set fix-let-arguments e*)
@@ -380,23 +371,17 @@
 
 (dm process-nary-closed-application (f e* r tail? => <fix-let>)
   (loc ((pack-nary-args (e*) ;; TODO: COULD BE SHARED WITH PAIRIZE
-	   (if (empty-arguments? e*)
+	   (if (empty? e*)
 	       (lst 'quote '())
-	       (lst '%pair (arguments-head e*) 
-		     (pack-nary-args (arguments-tail e*)))))
+	       (lst '%pair (head e*) (pack-nary-args (tail e*)))))
         (gather-arguments (e* v*)
 	  (if (binding-dotted? (head v*))
-	      (isa <arguments>
-		   (set arguments-head (objectify (pack-nary-args e*) r #f))
-		   (set arguments-tail (empty-arguments)))
-	      (if (empty-arguments? e*)
+	      (arguments (objectify (pack-nary-args e*) r #f) 
+			 (empty <arguments>))
+	      (if (empty? e*)
 		  (objectify-error "incorrect dotted arity" f e*)
-		  (isa <arguments> 
-		       (set arguments-head 
-			    (arguments-head e*))
-		       (set arguments-tail 
-			    (gather-arguments
-			     (arguments-tail e*) (tail v*))))))))
+		  (arguments 
+		   (head e*) (gather-arguments (tail e*) (tail v*)))))))
    (let ((v* (function-bindings f))
 	 (b  (function-body f))
 	 (o  (isa <fix-let> 
@@ -408,15 +393,8 @@
  
 (dm convert2arguments ((e* <lst>) => <any>)
   (if (empty? e*)
-      (empty-arguments)
-      (isa <arguments>
-	   (set arguments-head (head e*))
-	   (set arguments-tail (convert2arguments (tail e*))))))
-
-(dm number-of ((o <arguments>) => <int>)
-  (if (empty-arguments? o)
-      0
-      (+ 1 (number-of (arguments-tail o)))))
+      (empty <arguments>)
+      (arguments (head e*) (convert2arguments (tail e*)))))
 
 ;;; assignment on mutable local bindings are immediately
 ;;; processed. references to local mutable bindings must wait the
@@ -665,6 +643,8 @@
 (dm ftype (r)
   (objectify '<fun> r #f))
 
+(def-programs functions)
+
 (dm objectify-locals (names sigs bodies body r tail? => <locals>)
   (let ((bindings
 	 (map (fun (n) (isa <local-binding> 
@@ -674,14 +654,14 @@
 	 (r-extend* r bindings))
 	(function-forms
 	 (map2 sexpr-make-anonymous-method sigs bodies))
-	(functions
-	 (map (rcurry objectify new-r #f) function-forms)))
+	(functions 
+	  (map (rcurry objectify new-r #f) function-forms)))
     ;; TODO: CIRCULARITIES IN AST
     (do2 (fun (f b) (set (function-name f) b) (set (binding-value b) f)) 
 	 functions bindings)
     (isa <locals>
 	 (set locals-bindings  bindings)
-	 (set locals-functions functions)
+	 (set locals-functions (apply fabs (pair <functions> functions)))
 	 (set locals-body      (objectify-sequential body new-r #t)))))
 
 (dm objectify-bind-exit (name body r tail? => <bind-exit>)

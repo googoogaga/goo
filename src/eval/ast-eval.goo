@@ -243,18 +243,17 @@
 
 (dm ast-eval ((e <sequential>) (env <loc-env>))
   (rep eval ((e e))
-    (let ((nxt (sequential-tail e))
-	  (val (ast-eval (sequential-head e) env)))
-      (if (empty-sequential? nxt)
+    (let ((nxt (tail e))
+	  (val (ast-eval (head e) env)))
+      (if (empty? nxt)
 	  val
 	  (eval nxt)))))
 
 (dm ast-eval ((e <arguments>) (env <loc-env>))
   (rep eval ((res '()) (args e))
-    (if (empty-arguments? args)
+    (if (empty? args)
 	(rev! res)
-	(eval (pair (ast-eval (arguments-head args) env) res) 
-	      (arguments-tail args)))))
+	(eval (pair (ast-eval (head args) env) res) (tail args)))))
 
 (dm ast-eval ((e <regular-application>) (env <loc-env>))
   (let ((f    (ast-eval (application-function e) env))

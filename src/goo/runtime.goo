@@ -983,12 +983,12 @@
 	    (set (buf-len c) new-len)))))
 
 (dm low-elt ((x <buf>) (i <int>) => <any>)
-  (low-elt (buf-dat c) i))
+  (low-elt (buf-dat x) i))
 
 (dm low-elt-setter (z (x <buf>) (i <int>))
-  (when (>= i (len c))
-    (set (len c) (+ i 1)))
-  (set (low-elt (buf-dat c) i) v))
+  (when (>= i (len x))
+    (set (len x) (+ i 1)))
+  (set (low-elt (buf-dat x) i) z))
 
 (dm elt ((c <buf>) (i <int>) => <any>)
   (range-check c i)
@@ -1012,7 +1012,7 @@
     x))
 
 ;; TODO: HAVE THIS FALL OUT OF PROTOCOL
-(dm cat! ((x <buf>) (more ...) => <lst>)
+(dm cat! ((x <buf>) (more ...) => <buf>)
   (rep outer ((more more))
     (if (empty? more)
 	x

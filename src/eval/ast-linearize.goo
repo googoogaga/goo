@@ -94,11 +94,6 @@
       (set (reference-called-function? (application-function o)) #t))
   o)
 
-(dm do-call-references! ((o <locals>))
-  (do-do-call-references! o)
-  (do do-call-references! (locals-functions o))
-  o)
-
 (dm analyze-call-references (o)
   (do-call-references! o))
 
@@ -114,27 +109,17 @@
     (set (binding-dynamic-extent? (reference-binding o)) #f))
   o)
 
-(dm do-dynamic-extent! ((o <locals>))
-  (do-do-dynamic-extent! o)
-  (do do-dynamic-extent! (locals-functions o))
-  o)
-
 (dm analyze-dynamic-extent (o)
   (analyze-call-references o)
   (do-dynamic-extent! o))
 
 ;;; FLATTENING
 
-(def-list free-environment (isa <program>))
-
-(dm number-of ((o <free-environment>) => <int>)
-  (if (empty-free-environment? o)
-      0
-      (+ (number-of (free-environment-tail o)) 1)))
+(def-programs free-environment)
 
 (dv <flat-function> (isa <ast-method>))
   (slot <flat-function> (function-free <free-environment>)
-	$empty-free-environment)
+	(empty <free-environment>))
 
 (dv <free-reference> (isa <real-reference>))
   (slot <free-reference> (reference-offset (type-or <int> #f)))
@@ -159,23 +144,20 @@
 
 (dm adjoin-free-binding! ((flat-fun <flat-function>) ref => <int>)
   (rep check (((i <int>) 0) (free* (function-free flat-fun)))
-    (if (empty-free-environment? free*)
-	(let ((new-env
-	       (isa <free-environment> 
-		 (set free-environment-head ref)
-		 (set free-environment-tail (empty-free-environment)))))
-	  (if (empty-free-environment? (function-free flat-fun))
+    (if (empty? free*)
+	(let ((new-env (free-environment ref (empty <free-environment>))))
+	  (if (empty? (function-free flat-fun))
 	      (set (function-free flat-fun) new-env)
 	      (rep add ((free* (function-free flat-fun)))
-		(let ((tail (free-environment-tail free*)))
-		  (if (empty-free-environment? tail)
-		      (set (free-environment-tail free*) new-env)
+		(let ((tail (tail free*)))
+		  (if (empty? tail)
+		      (set (tail free*) new-env)
 		      (add tail)))))
 	  i)
 	(if (== (reference-binding ref)
-		(reference-binding (free-environment-head free*)))
+		(reference-binding (head free*)))
 	    i
-	    (check (+ i 1) (free-environment-tail free*))))))
+	    (check (+ i 1) (tail free*))))))
 
 (dm lift-procedures! ((o <fix-let>) flat-fun bindings)
   (set (fix-let-arguments o)
@@ -215,7 +197,7 @@
 	   (set function-nary?    (function-nary? o))
 	   (set function-value    (function-value o))
 	   (set function-body     body)
-	   (set function-free     (empty-free-environment)))))
+	   (set function-free     (empty <free-environment>)))))
     (set (function-body new-fun)
 	 (lift-procedures! body new-fun local-bindings))
     (let ((free* (function-free new-fun)))
@@ -257,11 +239,11 @@
 
 (dm flatten-seqs ((o <sequential>))
   (rep loop ((s o) (r '()))
-     (if (empty-sequential? s)
+     (if (empty? s)
 	 (rev! r)
-	 (rep inner ((ss (flatten-seqs (sequential-head s))) (r r))
+	 (rep inner ((ss (flatten-seqs (head s))) (r r))
            (if (empty? ss)
-	       (loop (sequential-tail s) r)
+	       (loop (tail s) r)
 	       (inner (tail ss) (pair (head ss) r)))))))
 
 (dm as-top-level-forms (programs)
@@ -278,13 +260,6 @@
 (dm extract! 
     ((o <program>) (form <top-level-form>) (result <flattened-program>))
   (update-walk! extract! o form result))
-
-(dm extract! 
-    ((o <locals>) (form <top-level-form>) (result <flattened-program>))
-  (set (locals-functions o)
-       (map (rcurry extract! form result) (locals-functions o)))
-  (extract! (locals-body o) form result)
-  o)
 
 (dm extract! 
     ((o <constant>) (form <top-level-form>) (result <flattened-program>))
@@ -317,10 +292,10 @@
 	bindings)
     (let ((free-bindings 
 	   (rep extract ((free (function-free o)))
-	     (if (empty-free-environment? free)
+	     (if (empty? free)
 		 '()
-		  (pair (reference-binding (free-environment-head free))
-			(extract (free-environment-tail free))))))
+		  (pair (reference-binding (head free))
+			(extract (tail free))))))
 	  (index
 	   (adjoin-definition!
 	    form result name bindings nary? value new-body free-bindings)))
@@ -391,8 +366,8 @@
 	   ;;      (isa <closure-creation> 
            ;;        (set function-index        index)
 	   ;;        (set function-bindings     '())
-	   ;;        (set closure-creation-free (empty-free-environment))))
-	   (set application-arguments (empty-arguments))
+	   ;;        (set closure-creation-free (empty <free-environment>))))
+	   (set application-arguments (empty <arguments>))
 	   (set application-tail?     #f)
 	   )))
     ;; TODO: reverse definitions in forms
