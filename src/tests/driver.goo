@@ -61,10 +61,13 @@
 (dm do-test-fn (group-name doc compare input-thunk output-thunk)
   (dlet ((*test-doc* doc))
     (when *test-trace?* (format out "  %s\n" doc))
-    (unless (compare (input-thunk) (output-thunk))
-      (sig (isa <test-warning> 
-	     (set condition-message (cat (as <str> group-name) ": " doc))
-	     (set condition-arguments '()))))))
+    (let ((input (input-thunk))
+          (output (output-thunk)))
+      (unless (compare input output)
+        (sig (isa <test-warning> 
+               (set condition-message
+                    (cat (as <str> group-name) ": " doc " was %=, not %="))
+               (set condition-arguments (list input output))))))))
 
 (dm do-test-eq (group-name doc input-thunk output-thunk)
   (do-test-fn group-name doc == input-thunk output-thunk))
@@ -72,12 +75,20 @@
 (dm do-test-eqv (group-name doc input-thunk output-thunk)
   (do-test-fn group-name doc = input-thunk output-thunk))
 
+(dm do-test-neq (group-name doc input-thunk output-thunk)
+  (do-test-fn group-name doc ~== input-thunk output-thunk))
+
+(dm do-test-neqv (group-name doc input-thunk output-thunk)
+  (do-test-fn group-name doc ~= input-thunk output-thunk))
+
 (export
   do-test
   <test-warning>
   do-test-fn
   do-test-eq
-  do-test-eqv)
+  do-test-eqv
+  do-test-neq
+  do-test-neqv)
 
 (ds (test ,input)
   `(do-test group-name 
@@ -94,26 +105,47 @@
 	       ,(to-str input)
 	       (fun () ,input) (fun () ,output)))
 
+(ds (test~= ,input ,output)
+  `(do-test-neqv group-name
+		,(to-str input)
+		(fun () ,input) (fun () ,output)))
+
+(ds (test~== ,input ,output)
+  `(do-test-neq group-name
+	       ,(to-str input)
+	       (fun () ,input) (fun () ,output)))
+
 (export
   test
   test=
-  test==)
+  test==
+  test~=
+  test~==)
 
 ;; (def `(out ,@objects)
 ;;   `(do write-string (lst ,@(map (fun (x) `(to-str ,x)) objects))))
 
+(dv *catch-test-errors* #t)
+
 (dm run-tests-in (tst => (tup <lst> <lst>))
   (let ((errors '()) (warnings '()))
-    (lab break
-      (try <condition>
-        (fun (condition resume)
-          (if (isa? condition <test-warning>)
-              (seq (pushf warnings (lst condition *test-doc*))
-                   (resume #f))
-              (seq (pushf errors (lst condition *test-doc*))
-                   (break #f))))
-	(tst)))
-      (tup errors warnings)))
+    (if *catch-test-errors*
+        (lab break
+          (try <condition>
+            (fun (condition resume)
+              (format out "Failure: %s\n"
+                      (describe-condition condition))
+              (if (isa? condition <test-warning>)
+                  (seq (pushf warnings (lst condition *test-doc*))
+                       (resume #f))
+                  (seq (pushf errors (lst condition *test-doc*))
+                       (break #f))))
+            (tst)))
+        (tst))
+    (tup errors warnings)))
+
+(dv *all-warnings* #f)
+(dv *all-errors* #f)
 
 (dm run-all-tests (=> <Int>)
   (newline out)
@@ -123,15 +155,20 @@
 	    (format out "Testing %=\n" tst)
 	    (let (((tup errors warnings) 
 		   (run-tests-in (fun () (run-tests tst)))))
-	      (do (fun (c) (format out "Warning: %=. Continuing...\n" c))
-		  warnings)
-	      (do (fun (c) (format out "Error: %=.\n" c))
-		  errors)
 	      (set all-warnings (cat! all-warnings warnings))
 	      (set all-errors   (cat! all-errors   errors)))))
 	*tests*)
-      (format out "Tautology completed with %= warnings and %= errors\n"
-	      (len all-warnings) (len all-errors))
-      (+ (len all-warnings) (len all-errors))))
+    (format out "WARNING AND ERROR SUMMARY\n")
+    (set *all-warnings* all-warnings)
+    (set *all-errors* all-errors)
+    (do (fun (c) (format out "Warning: %=. Continuing...\n"
+                         (describe-condition (head c))))
+        (rev all-warnings))
+    (do (fun (c) (format out "Error: %=.\n"
+                         (describe-condition (head c))))
+        (rev all-errors))
+    (format out "Tautology completed with %= warnings and %= errors\n"
+            (len all-warnings) (len all-errors))
+    (+ (len all-warnings) (len all-errors))))
 
 (export run-all-tests)
