@@ -1,6 +1,8 @@
 (use goo)
 (use goo/boot)
 
+(use samurui/gtk.swig.c)
+(use/library gtk-x11-2.0)
 
 (seq
 (dv G_SIGNAL_RUN_FIRST #f)

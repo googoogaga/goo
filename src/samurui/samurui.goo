@@ -3,6 +3,7 @@
 (use goo/boot)
 
 (use samurui/gtk.swig)
+(use samurui/treegoo.h)
 (use samurui/treegoo.c)
 
 (use samurui/gtkcallbacks)
@@ -125,7 +126,13 @@
   )
 
 (ds (imodel ,class ,@body)
-  `(register-interface-model ,class (interface-model (fun (x) 1)
+  `(register-interface-model ,class (interface-model (fun (x attribs) 1)
+                                                     (quote (,@body))))
+  )
+
+
+(ds (iview ,class ,@body)
+  `(register-interface-model ,class (interface-model (fun (x attribs) 1)
                                                      (quote (,@body))))
   )
 
@@ -139,53 +146,70 @@
 ;  which is specified as class.  If all you want to do is have a drawing widget or something equally
 ;  inane, you can happily have the associated class and the class be the same thing.
 
-; Oy, now how to bind the drawer dude into interface models.  The associativity clearly indicates that
-;  the place of the drawing area is analogous to that of the interface model.  Of course, so are button
-;  bindings and text bindings.  My initial thought was that those would be handled via the renderize
-;  generic protocol.  Basically there are two approaches then.  The first is the renderize protocol, where
-;  the idraw would also define a renderize method.  The problem is that we still need an inert class type 
-;  (such as a singelton) to dispatch on that.  The alternative is to extend the concept of the interface
-;  model.  If we re-evaluate the current implementation right now, we should consider the need to figure out
-;  which of the many possible interface models to use.  Possible methods include allowing the interface
-;  model to carry a heuristic function with it, or perhaps just an id so we can only use the right-click menu.
-;  More extensive tricks such as range-constraint and such could easily fit within the heuristic function model,
-;  which merely leads to pre-init'ing our interface model as opposed to trying to stuff the base-cases into
-;  pure-code form.
-; The current methedology uses a recursive recipe technique; We start out with the interface model in list form
-;  and then process each element using multi-method dispatch, which may quite possibly be another list.  Symbols
-;  are looked up against our registered properties and actions.
-; An alternative, hypothetical method is this.  Interface models consist of an evaluation function and either
-;  either a list or function for the model.  If the model is a list, we recursively process the list in the current
-;  style.  That is, strings are directly transformed to labels, special symbols such as 'columns' still work,
-;  and other symbols are looked up against our class information so that we can find a proper interface model for
-;  them.  In the case the model is a function, it is expected to be a factory method equivalent to our current
-;  renderize dude.  Specifically, it must return a gui object, and must take a class (not outrightly needed, but
-;  we'll considering it future-proofing) and the list of updaters that should be added to as needed.
+;; Oy, now how to bind the drawer dude into interface models.  The
+;; associativity clearly indicates that the place of the drawing area
+;; is analogous to that of the interface model.  Of course, so are
+;; button bindings and text bindings.  My initial thought was that
+;; those would be handled via the renderize generic protocol.
+;; Basically there are two approaches then.  The first is the renderize
+;; protocol, where the idraw would also define a renderize method.  The
+;; problem is that we still need an inert class type (such as a
+;; singelton) to dispatch on that.  The alternative is to extend the
+;; concept of the interface model.  If we re-evaluate the current
+;; implementation right now, we should consider the need to figure out
+;; which of the many possible interface models to use.  Possible
+;; methods include allowing the interface model to carry a heuristic
+;; function with it, or perhaps just an id so we can only use the
+;; right-click menu.  More extensive tricks such as range-constraint
+;; and such could easily fit within the heuristic function model, which
+;; merely leads to pre-init'ing our interface model as opposed to
+;; trying to stuff the base-cases into pure-code form.  The current
+;; methedology uses a recursive recipe technique; We start out with the
+;; interface model in list form and then process each element using
+;; multi-method dispatch, which may quite possibly be another list.
+;; Symbols are looked up against our registered properties and actions.
+;; An alternative, hypothetical method is this.  Interface models
+;; consist of an evaluation function and either either a list or
+;; function for the model.  If the model is a list, we recursively
+;; process the list in the current style.  That is, strings are
+;; directly transformed to labels, special symbols such as 'columns'
+;; still work, and other symbols are looked up against our class
+;; information so that we can find a proper interface model for them.
+;; In the case the model is a function, it is expected to be a factory
+;; method equivalent to our current renderize dude.  Specifically, it
+;; must return a gui object, and must take a class (not outrightly
+;; needed, but we'll considering it future-proofing) and the list of
+;; updaters that should be added to as needed.
 
 (ds (idrawmodel ,assoc-class ,class ,@body)
+  `(idrawmodel-ext ,assoc-class ,class (1) (,@body))
+  )
+
+(ds (idrawmodel-ext ,assoc-class ,class (,@body-a) (,@body-b))
   `(seq
      (dc ,class (<interface-drawing-area>))
-     (register-interface-model ,assoc-class (interface-model (fun (x) 1)
-                                                       (fun (info parent-class updaters)
-                                                         ; -- stolen from gui-imagebox fabber...
-                                                         ; need to ask how to piggy-back on someone else's fab...
-                                                         (let ((imagebox (new ,class)))
-                                                           (set (paintbox imagebox) (gui-paintbox))
-                                                           (set (canvas imagebox) (gui-canvas (paintbox imagebox)))
-                                                           ; make the paintbox handle the default handle we use...
-                                                           (set (handle imagebox) (handle (paintbox imagebox))) 
-                                                           ; Bind it
-                                                           (ad! updaters (bind imagebox info))
-
-                                                           ; User setup-code
-                                                           ,@body
-
-                                                           ; Events
-                                                           (hookify imagebox)
-                                                           imagebox
-                                                           )
-                                                         )
-                                                       )
+     (register-interface-model ,assoc-class (interface-model 
+                                             (fun (item attribs) ,@body-a)
+                                             (fun (info parent-class updaters)
+                                               ;; -- stolen from gui-imagebox fabber...
+                                               ;; need to ask how to piggy-back on someone else's fab...
+                                               (let ((imagebox (new ,class)))
+                                                 (set (paintbox imagebox) (gui-paintbox))
+                                                 (set (canvas imagebox) (gui-canvas (paintbox imagebox)))
+                                                 ;; make the paintbox handle the default handle we use...
+                                                 (set (handle imagebox) (handle (paintbox imagebox))) 
+                                                 ;; Bind it
+                                                 (ad! updaters (bind imagebox info))
+                                                 
+                                                 ;; User setup-code
+                                                 ,@body-b
+                                                 
+                                                 ;; Events
+                                                 (hookify imagebox)
+                                                 imagebox
+                                                 )
+                                               )
+                                             )
                                )
      )
   )
@@ -207,13 +231,13 @@
   )
          
 ; return an arbitrary model associated directly with the given class
-(dm get-interface-model ((class <class>) (info <interface-info>))
+(dm get-interface-model (class|<class> info|<interface-info> attribs|<col>)
   (let ((models (elt interface-models class))
         (best-score 0)
         (best-model #f))
     (do 
      (fun (model)
-       (let ((cur-score ((imodel-eval model) info)))
+       (let ((cur-score ((imodel-eval model) info attribs)))
          (if (> cur-score best-score)
              (seq
                (set best-score cur-score)
@@ -239,9 +263,9 @@
 ;  and then check them each out, but since there is nothing preventing someone from
 ;  copying an interface-model (or models) down from higher in the hierarchy, this seems
 ;  like the optimal solution.
-(dm find-interface-model ((class <class>) (info <interface-info>) => (t? <interface-model>))
+(dm find-interface-model (class|<class> info|<interface-info> attribs|<col> => (t? <interface-model>))
   (let ((first-class (find-first-class has-interface-model? class)))
-    (get-interface-model first-class info)
+    (get-interface-model first-class info attribs)
     )
   )
 
@@ -440,11 +464,26 @@
   (gtk_main_quit)
 )
 
+(dv *samurui-inited* #f)
+
+(df samurui-init ()
+  (unless *samurui-inited*
+    (gtk_init_easy)
+    (set *samurui-inited* #t)
+    )
+  )
+
+(df samurui-go ()
+  (samurui-init)
+  (gtk_main)
+  )
+
 (dm present (obj)
+  (samurui-init)
   (let ((window (gui-window))
         (kill-gtk-cb (goo_safeCreateCallback kill-gtk 0))
         (class (object-class obj))
-        (model (find-interface-model class root-interface))
+        (model (find-interface-model class root-interface (vec)))
         (updaters (fab <vec> 0))
         )
     ; set up the window for death on destroy
@@ -892,34 +931,34 @@
        )
   )
 
-(dm point-to-gdk (p|<gui-point> => <gdk-point>)
-  (gdk-point (point-x p) (point-y p)))
+;; (dm point-to-gdk (p|<gui-point> => <gdk-point>)
+;;   (gdk-point (point-x p) (point-y p)))
 
-(dm gdk-point ((x <int>) (y <int>) => <gdk-point>)
-  (let ((p (new <gui-point>))
-        (handle (new__GdkPoint)))
-    ; Set the handle
-    (set (handle p) handle)
-    (_GdkPoint_x_set handle x)
-    (_GdkPoint_y_set handle y)
-    p
-    )
-  )
+;; (dm gdk-point ((x <int>) (y <int>) => <gdk-point>)
+;;   (let ((p (new <gui-point>))
+;;         (handle (new__GdkPoint)))
+;;     ; Set the handle
+;;     (set (handle p) handle)
+;;     (_GdkPoint_x_set handle x)
+;;     (_GdkPoint_y_set handle y)
+;;     p
+;;     )
+;;   )
 
-(dm point-x ((p <gdk-point>) => <int>)
-  (_GdkPoint_x_get (handle p))
-  )
+;; (dm point-x ((p <gdk-point>) => <int>)
+;;   (_GdkPoint_x_get (handle p))
+;;   )
 
-(dm point-y ((p <gdk-point>) => <int>)
-  (_GdkPoint_y_get (handle p))
-  )
+;; (dm point-y ((p <gdk-point>) => <int>)
+;;   (_GdkPoint_y_get (handle p))
+;;   )
 
 (dm free (point|<gui-point>)
   )
 
-(dm free ((point <gdk-point>))
-  (delete__GdkPoint (handle point))
-  )
+;; (dm free ((point <gdk-point>))
+;;   (delete__GdkPoint (handle point))
+;;   )
 
 (dc <gui-circle-flo> (<any>))
  (dp circle-p (<gui-circle-flo> => <gui-point-flo>))
@@ -1285,8 +1324,9 @@
 ; Font abstraction stuff...
 (dc <gui-font> (<gui>))
 
-;;(dv font-lucida "-*-lucida-medium-r-normal-*-14-*-*-*-p-*-*-1")
-(dv font-lucida "-*-lucida-medium-r-normal-*-16-*-*-*-p-*-*-1")
+(dv font-lucida "-*-lucida-medium-r-normal-*-14-*-*-*-p-*-*-1")
+;; Um, so 16 point isn't available on my x-win32
+;;(dv font-lucida "-*-lucida-medium-r-normal-*-16-*-*-*-p-*-*-1")
 
 (dm font (name|<str> => <gui-font>)
   (def da-font (new <gui-font>))
@@ -1958,11 +1998,15 @@
 
 (dc <gui-treeview-model> (<gui>))
 
+(dc <gui-master> (<any>))
+ (dp slaves (<gui-master> => <col>) (vec))
+
 (dc <gui-treeview> (<gui-widget>))
  (dp collection (<gui-treeview> => <visi-col>))
  (dp axis (<gui-treeview> => <any>) "implicit")
  (dp prop-axes (<gui-treeview> => <col>) (fab <vec> 0))
  (dp model (<gui-treeview> => <gui-treeview-model>))
+ (dp tv-master (<gui-treeview> => (t? <gui-master>)) #f)
 
 (dm gui-treeview (=> <gui-treeview>)
   (def gtv (new <gui-treeview>))
@@ -1987,6 +2031,12 @@
 (dm free (gtv|<gui-treeview>)
   (free (model gtv))
   (g_object_unref (handle gtv)) ; should set to NULL...
+  )
+
+(dg bind-master (obj|<any> master|<gui-master>))
+
+(dm bind-master (tv|<gui-treeview> master|<gui-master>)
+  (set (tv-master tv) master)
   )
 
 ; Constructs a binding
@@ -2179,7 +2229,13 @@
   (let ((payload (imodel-payload model)))
     (if (isa? payload <fun>)
         (payload info class updaters)
-        (renderize payload class updaters masters)
+        ;; Okay, it's an interface-model *list*
+        (if (= info root-interface)
+            (renderize payload class updaters masters (vec)) ;; Base case. Top-level.
+            ;; This is special; it means that we're embedding an interface-model inside another
+             ;; interface-model.  As such, this calls for an updater attached to the parent that
+             ;; will update this interface model as it changes.
+            (renderize payload (type info) updaters masters (vec)))
         )
     )
   )
@@ -2230,7 +2286,7 @@
   (cond 
     ;; First time
     ((not (slave-inited slave))
-     (def model (find-interface-model (object-class new-obj) root-interface))
+     (def model (find-interface-model (object-class new-obj) root-interface (vec)))
      (set (slave-updaters slave) (vec))
      (set (active-container slave) 
           (renderize-model model root-interface (object-class new-obj) (slave-updaters slave) (fab <str-tab> 0)))
@@ -2281,7 +2337,7 @@
      ;; Do we need to free? or will the remove have implicitly unref'd down to 0 and free?     
 
      ;; Get us a new interface-model and what not
-     (def model (find-interface-model (object-class new-obj) root-interface))
+     (def model (find-interface-model (object-class new-obj) root-interface (vec)))
      (set (slave-updaters slave) (vec))
      (set (active-container slave) 
           (renderize-model model root-interface (object-class new-obj) (slave-updaters slave) (fab <str-tab> 0)))
@@ -2303,9 +2359,6 @@
     )
   )
 
-(dc <gui-master> (<any>))
- (dp slaves (<gui-master> => <col>) (vec))
-
 (dm master-update-slaves (master|<gui-master> new-obj|<any>)
   (do (fun (slave)
         (update-slave slave new-obj))
@@ -2313,11 +2366,9 @@
       )
   )
 
-(dg bind-master (obj|<any> master|<gui-master>))
-
-(dm renderize ((model-list <lst>) (class <class>) (updaters <col>) (masters <tab>))
+(dm renderize ((model-list <lst>) (class <class>) (updaters <col>) (masters <tab>) (attribs <col>))
   (let ((renderize-this (fun (thing)
-                          (renderize thing class updaters masters)
+                          (renderize thing class updaters masters attribs)
                           )
                         ))    
     (cond
@@ -2336,7 +2387,7 @@
        (def master (new <gui-master>))
        (set (elt masters m-name) master)
        ;; Renderize the third param. (Can be a list of just a node.)
-       (def gui-obj (renderize (3rd model-list) class updaters masters))
+       (def gui-obj (renderize (3rd model-list) class updaters masters attribs))
        (bind-master gui-obj master)
        gui-obj
        )
@@ -2352,8 +2403,11 @@
  
       ;; Attr
       ((= (1st model-list) 'attr)
-       (def my-comp (renderize (elt model-list 1) class updaters masters))
-       (set (attrs my-comp) (tail (tail model-list)))
+       (def da-attrs (tail (tail model-list)))
+       (def my-comp (renderize (elt model-list 1) class updaters masters da-attrs))
+       (if my-comp
+           (set (attrs my-comp) da-attrs)
+           (post "Warning: component returned when renderizing %= was #f.\n" model-list))
        my-comp
        )
 
@@ -2369,7 +2423,10 @@
     )
   )
 
-(dm renderize ((act <interface-action>) (class <class>) (updaters <col>) (masters <tab>))
+;; The action renderizer needs to be imbued with an implicit 'refresh' of the object in question
+ ;; after the action has taken places, as we are possibly altering data structures that don't
+ ;; don't auto-notify when changes are made.
+(dm renderize ((act <interface-action>) (class <class>) (updaters <col>) (masters <tab>) (attribs <col>))
   (let ((button (gui-button (description act))))
     (let ((cur-obj #f))
       (connect button (fun (x) ((method act) cur-obj)) 0)
@@ -2393,26 +2450,25 @@
     )
   )
 
-(dm renderize ((text <str>) (class <class>) (updaters <col>) (masters <tab>))
+(dm renderize ((text <str>) (class <class>) (updaters <col>) (masters <tab>) (attribs <col>))
   (gui-label text)
   )
 
-(dm renderize ((sym <sym>) (class <class>) (updaters <col>) (masters <tab>))
+(dm renderize ((sym <sym>) (class <class>) (updaters <col>) (masters <tab>) (attribs <col>))
   (let ((name (as <str> sym)))
-;    (msg out "Find-action was: %=\n" (find-action class name))
-;    (msg out "Find-property was: %=\n" (find-property class name))
-;    (msg out "Was attempting to renderize the symbol %= (name %=)\n" sym name)
+    ;; If it's an action, get an interface-action object and renderize on it.
     (cond ((find-action class name)
-           (renderize (find-action class name) class updaters masters))
+           (renderize (find-action class name) class updaters masters attribs))
+          ;; If it's a property, defer the model renderizing to renderize-model.
           ((find-property class name)
            (let ((info (find-property class name)))
-             (renderize-model (find-interface-model (type info) info) info class updaters masters)))
+             (renderize-model (find-interface-model (type info) info attribs) info class updaters masters)))
           )
     )
   )
 
 (register-interface-model <str> (interface-model 
-                                 (fun (x) 1)
+                                 (fun (item attribs) 1)
                                  (fun (info class updaters)
                                    (let ((textbox (gui-textbox))
                                          (textbox-updater (bind textbox info)))
@@ -2425,7 +2481,7 @@
 
 
 (register-interface-model <num> (interface-model 
-                                 (fun (x) 1)
+                                 (fun (item attribs) 1)
                                  (fun (info class updaters)
                                    (let ((spinbox (gui-spinbutton (to-adjustment (constraint info))))
                                          (spinbox-updater (bind spinbox info)))
@@ -2438,7 +2494,7 @@
 
 
 (register-interface-model <log> (interface-model 
-                                 (fun (x) 1)
+                                 (fun (item attribs) 1)
                                  (fun (info class updaters)
                                    (let ((checkbox (gui-check-button (description info)))
                                          (checkbox-updater (bind checkbox info)))
@@ -2450,7 +2506,7 @@
                           )
 
 (register-interface-model <col> (interface-model
-                                 (fun (x) 1)
+                                 (fun (item attribs) 1)
                                  (fun (info class updaters)
                                    (def my-gtv (gui-treeview))
                                    (def gtv-updater (bind my-gtv info))
@@ -2597,8 +2653,8 @@
   shrink!
   point
   point-in-rect
-  point-to-gdk
-  gdk-point
+;;  point-to-gdk
+;;  gdk-point
   point-x
   point-y
   circle
@@ -2742,12 +2798,16 @@
   )
 
 (export 
+  samurui-init
+  samurui-go
   debugstr
   iprop
   ipropc
   iaction
   imodel
+  iview
   idrawmodel
+  idrawmodel-ext
   )
 
 (export

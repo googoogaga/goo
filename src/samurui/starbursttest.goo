@@ -77,7 +77,8 @@
                ) fill)
         )
 
-(gtk_init_easy)
+(samurui-init)
 
 (present my-app)
-(gtk_main)
+
+(samurui-go)

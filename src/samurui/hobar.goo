@@ -26,7 +26,17 @@
 ;;  - E-mail Client
 ;;    - Thread history navigation
 
-(idrawmodel <col> <hobar-pimp>)
+(idrawmodel-ext <col> <hobar-pimp>
+                ;; Fitness evaluation
+                (
+                 (if (mem? attribs 'hobar)
+                     100
+                     1)
+                 )
+                ;; Init Magic
+                (
+                 )
+                )
 
 (dp wrapped (<hobar-pimp> => <col>))
 (dp bars (<hobar-pimp> => <col>) (vec))
@@ -58,7 +68,7 @@
 
 ;; ......:::::: Pimp
 
-(dm bind (pimp|<hobar-pimp> getter|<fun> setter|<fun> => (tup <fun> <fun> <fun>))
+(dm bind (pimp|<hobar-pimp> info|<interface-info> => (tup <fun> <fun> <fun>))
   (tup
    ;; -- Rebinder --
    (fun (new-obj)

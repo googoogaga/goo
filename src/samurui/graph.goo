@@ -508,7 +508,7 @@
   (update-draw-positions fdg)
 
   ;; Clear background
-  (draw-rect fdg (rect 0 0 (gui-width fdg) (gui-width fdg)) #t c_background)
+  (draw-rect fdg (rect 0 0 (gui-width fdg) (gui-height fdg)) #t c_background)
 
   ;; Pre-Paint
 ;;  (do (fun (node)
