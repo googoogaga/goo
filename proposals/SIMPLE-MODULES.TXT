@@ -25,7 +25,7 @@ PROPOSAL:
 
 Add two special forms to the language:
 
-  (export ,binding)
+  (export ,binding...)
 
     Export 'binding' from the current module.  (Should we allow exports
     of currently undefined bindings?)  'binding' must be a top-level
@@ -40,7 +40,7 @@ Add two special forms to the language:
     This form may also bind the module name to some sort of first-class
     module object for the purposes of introspection.
 
-  (use ,module ...)
+  (use ,module ???)
 
     Room for extension: Renaming, prefixing, filtering, whatever.
 
@@ -48,13 +48,13 @@ Modules names are hierarchic in form.  All modules names beginning with a
 first component of 'proto' are reserved:
 
   proto      - The core proto library.
-  proto.user - The module associated with the listener.
-  proto.boot - The magic internal bootstrapping module.
+  proto/user - The module associated with the listener.
+  proto/boot - The magic internal bootstrapping module.
 
 Module names have a one-to-one mapping with (relative) file names:
 
   proto      => "proto.py"
-  proto.user => "proto/user.py"
+  proto/user => "proto/user.py"
 
 Modules are found by searching the directories found in the environment
 variable PROTO_PATH.
@@ -83,6 +83,8 @@ PERFORMANCE IMPACT:
 DOCUMENTATION IMPACT:
 
 IMPLEMENTATION NOTES:
+
+See SRC/world.proto for now.
 
 FUTURE FEATURES:
 
