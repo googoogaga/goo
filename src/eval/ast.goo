@@ -1099,133 +1099,6 @@
 (define-magic-binding use-module (x r tail?)
   (objectify-use-module (2nd x) r tail?))
 
-(dv *primitives* '())
-
-(dm primitives ()
-  *primitives*)
-
-(dm register-primitive (value)
-  (set *primitives* (pair value *primitives*)))
-
-(df fab-primitive (name (params ...))
-  (isa <module-binding>
-    (set binding-kind        'predefined)
-    (set binding-name        name)
-    (set binding-module-name $proto-boot-module-name)))
-
-(ds (define-primitive ,name (,@params))
-  `(let ((binding (fab-primitive ',name))) (register-primitive binding)))
-
-(define-primitive %eq? ())
-(define-primitive %bb ())
-(define-primitive %i= ())
-(define-primitive %i< ())
-(define-primitive %i+ ())
-(define-primitive %i- ())
-(define-primitive %i* ())
-(define-primitive %im ())
-(define-primitive %ir ())
-(define-primitive %it/ ())
-(define-primitive %iv ())
-(define-primitive %i^ ())
-(define-primitive %i& ())
-(define-primitive %i! ())
-(define-primitive %i? ())
-(define-primitive %i<< ())
-(define-primitive %i>> ())
-(define-primitive %i<<< ())
-(define-primitive %i>>> ())
-(define-primitive %fi2f ())
-(define-primitive %f= ())
-(define-primitive %f< ())
-(define-primitive %f+ ())
-(define-primitive %f* ())
-(define-primitive %f- ())
-(define-primitive %f/ ())
-(define-primitive %ft ())
-(define-primitive %ft/ ())
-(define-primitive %ff ())
-(define-primitive %fc ())
-(define-primitive %flo-bits ())
-(define-primitive %c= ())
-(define-primitive %c< ())
-(define-primitive %current-output-port ())
-(define-primitive %current-input-port ())
-(define-primitive %open-input-file ())
-(define-primitive %open-output-file ())
-(define-primitive %close-output-port ())
-(define-primitive %close-input-port ())
-(define-primitive %write-char ())
-(define-primitive %write-string ())
-(define-primitive %file-mtime ())
-(define-primitive %force-output ())
-(define-primitive %char-ready? ())
-(define-primitive %read-char ())
-(define-primitive %newline ())
-(define-primitive %eof-object ())
-(define-primitive %eof-object ())
-(define-primitive %peek-char ())
-(define-primitive %char-ready ())
-(define-primitive %object-traits ())
-(define-primitive %object-traits-setter ())
-(define-primitive %object-values ())
-(define-primitive %object-values-setter ())
-(define-primitive %raw-alloc ())
-(define-primitive %make-object ())
-(define-primitive %clone ())
-(define-primitive %slot-elt ())
-(define-primitive %slot-elt-setter ())
-(define-primitive %make-object-values ())
-(define-primitive %install-object-values ())
-(define-primitive %adjust-object-values-size ())
-(define-primitive %elt ())
-(define-primitive %elt-setter ())
-(define-primitive %%slen ())
-(define-primitive %%selt ())
-(define-primitive %%selt-setter ())
-(define-primitive %%sfab ())
-(define-primitive %%vlen ())
-(define-primitive %%velt ())
-(define-primitive %%velt-setter ())
-(define-primitive %%vfab ())
-
-(define-primitive %app-filename ())
-(define-primitive %app-args ())
-
-(define-primitive %locative-value ())
-(define-primitive %locative-value-setter ())
-(define-primitive %invoke-debugger ())
-
-(define-primitive %os-name ())
-(define-primitive %os-binding-value ())
-(define-primitive %os-binding-value-setter ())
-
-(define-primitive %break ())
-(define-primitive %binding-name ())
-(define-primitive %fun-reg ())
-
-(define-primitive %trace-on ())
-(define-primitive %trace-off ())
-
-(define-primitive %%apply ())
-(define-primitive %%mep-apply ())
-(define-primitive %next-methods ())
-(define-primitive %fapply ())
-
-(define-primitive %do-runtime-bindings ())
-(define-primitive %do-stack-frames ())
-
-(define-primitive %pair ())
-
-;;; CURSES
-
-(define-primitive %grid-open ())
-(define-primitive %grid-close ())
-(define-primitive %grid-move ())
-(define-primitive %grid-read ())
-(define-primitive %grid-write ())
-(define-primitive %grid-refresh ())
-
 ;;;;=======================================================================
 ;;;;  Module Loaders & Modules
 ;;;;=======================================================================
@@ -1675,10 +1548,10 @@
 (export fab-p2c-module)
 
 (df init-p2c-boot-environment ((env <static-global-environment>))
-  ;; Copy in just our macros and our primitives, since everything else
+  ;; Copy in just our macros, since everything else
   ;; must be defined by the program being compiled.  And don't bother
   ;; to call 'init-environment-for-eval'--this is a compile-only environment.
-  (insert-globals! (cat (magic-bindings) (primitives)) env)
+  (insert-globals! (magic-bindings) env)
   
   ;; boot.proto uses these macros *before* defining them, so we'll
   ;; need to install temporary copies in the boot environment.
@@ -1781,9 +1654,13 @@
   fix-let-body-setter
   <ast-signature>
   signature-names
+  signature-names-setter
   signature-specs
+  signature-specs-setter
   signature-nary?
+  signature-nary?-setter
   signature-value
+  signature-value-setter
   function-signature
   function-bindings
   function-body
