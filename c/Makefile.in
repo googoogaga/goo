@@ -77,6 +77,9 @@ endif
 	$(INSTALL_DATA) grt.h $(GOO_LIB)
 	$(INSTALL_DATA) config.h $(GOO_LIB)
 	$(INSTALL_DATA) dlgrt.h $(GOO_LIB)
+ifeq ($(build_gc), yes)
+	cd $(top_srcdir)/gc/include/ && find . -name \*.h -exec $(INSTALL_DATA) -D {} $(GOO_LIB)/gc/{} \;
+endif
 
 clean:
 	rm -f grt.o unexelf.o gc gc.a gc-stamp
