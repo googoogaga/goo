@@ -607,6 +607,8 @@ P CALLN (int check, P fun, int n, ...) {
   va_end(ap);
   PUSH((P)n);
   PUSH(fun);
+  if(check)
+    YPcheck_call_types();
   res = (FUNCODE(fun))(fun, YPfalse);
   DEC_STACK(n+2);
   return res;
@@ -644,7 +646,6 @@ typedef struct _bind_exit_frame {
 
 typedef struct _unwind_protect_frame {
   jmp_buf                       destination;
-  P	                        value;
   struct _bind_exit_frame*      ultimate_destination;
   struct _unwind_protect_frame* previous_unwind_protect_frame;
 } *UNWIND_PROTECT_FRAME, UNWIND_PROTECT_FRAME_DATA;
@@ -675,22 +676,15 @@ void nlx_step (BIND_EXIT_FRAME ultimate_destination) {
   }
 }
 
-P FALL_THROUGH_UNWIND (P argument) {
-  Pcurrent_unwind_protect_frame->value = argument;
-  Pcurrent_unwind_protect_frame->ultimate_destination = NULL;
-  return(PNUL);			/* Keeps some compilers happy */
+void FALL_THROUGH_UNWIND (P argument) {
+  Pcurrent_unwind_protect_frame
+      = Pcurrent_unwind_protect_frame->previous_unwind_protect_frame;
+//  Pcurrent_unwind_protect_frame->ultimate_destination = NULL;
 }
 
-P CONTINUE_UNWIND () {
+void CONTINUE_UNWIND () {
   if (Pcurrent_unwind_protect_frame->ultimate_destination) { /* nlx? */
     nlx_step(Pcurrent_unwind_protect_frame->ultimate_destination);
-    return(YPfalse);     /* Keeps some compilers happy */
-  } else {
-    P value = Pcurrent_unwind_protect_frame->value;
-    /* pop current unwind protect frame */
-    Pcurrent_unwind_protect_frame
-      = Pcurrent_unwind_protect_frame->previous_unwind_protect_frame;
-    return(value);
   }
 }
 
@@ -758,10 +752,11 @@ P with_exit (P fun) {
   BIND_EXIT_FRAME frame;
   P               exit;
   int old_stack_allocp = stack_allocp; stack_allocp = 1;
+
   frame = MAKE_BIND_EXIT_FRAME();
-  exit  = YPmet(&do_exit, YPfalse, 
-                YPsig(Ynil, YPpair(YLanyG, Ynil), YPfalse, YPib((P)1), YPfalse, Ynil), 
-		FABENV(1, frame), Ynul, YPfalse);
+  exit  = YPmet(&do_exit, YPfalse,
+				YPsig(Ynil, YPpair(YLanyG, Ynil), YPfalse, YPib((P)1), YPfalse, Ynil),
+				FABENV(1, frame), Ynul, YPfalse);
   stack_allocp = old_stack_allocp;
   if (!setjmp(frame->destination))
     return CALL1(1, fun, exit);
@@ -772,11 +767,19 @@ P with_exit (P fun) {
 P with_cleanup (P body_fun, P cleanup_fun) {
   UNWIND_PROTECT_FRAME frame = MAKE_UNWIND_FRAME();
   P value = YPfalse;
+  P ultimate_destination;
   if (!setjmp(frame->destination)) {
     value = CALL0(1, body_fun);
     FALL_THROUGH_UNWIND(value);
   }
+  
+  ultimate_destination = Pcurrent_unwind_protect_frame->ultimate_destination;
   CALL0(1, cleanup_fun);
+  // if the cleanup function falls off the end,
+  // continue going to original ultimate destination.
+  // else, go wherever the cleanup function jumped out to.
+  if(Pcurrent_unwind_protect_frame->ultimate_destination == NULL)
+	  Pcurrent_unwind_protect_frame->ultimate_destination = ultimate_destination;
   CONTINUE_UNWIND();
   return value;
 }
@@ -1112,13 +1115,15 @@ P YPunexec(P name)
 
 P YPprint_cpu_usage(char *file)
 {
-  struct rusage usage;
+	return;
+/*  struct rusage usage;
   getrusage(RUSAGE_SELF, &usage);
   printf("%20s %d.%06.6d %d.%06.6d\n", file,
 	 usage.ru_utime.tv_sec, usage.ru_utime.tv_usec,
 	 usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
   return YPfalse;
   //  return YPpair(YPib(usage.ru_utime), YPpair(YPib(*(void**)&usage.ru_stime), Ynil));
+*/
 }
 
 struct timeval get_rusage()
