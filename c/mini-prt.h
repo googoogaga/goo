@@ -1,3 +1,5 @@
+//// Copyright 2002, Jonathan Bachrach.  See file TERMS.
+
 typedef void*          P;
 #define PNUL (P)0
 extern P Yerror;

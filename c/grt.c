@@ -326,57 +326,57 @@ P YPopen_in_file (P name) {
   FILE* fd = fopen((PSTR)name, "r"); 
   if (fd == NULL)
     CALL1(1, Yfile_opening_error, YPsb((PSTR)name));
-  return (P)fd;
+  return (P)YPlb(fd);
 }
 
 P YPopen_out_file (P name) { 
   FILE* fd = fopen((PSTR)name, "w"); 
   if (fd == NULL)
     CALL1(1, Yfile_opening_error, YPsb((PSTR)name));
-  return (P)fd;
+  return (P)YPlb(fd);
 }
 
 INLINE P YPclose_in_port (P s) { 
-  fclose((FILE*)s); return YPfalse; 
+  fclose((FILE*)YPlu(s)); return YPfalse; 
 }
 
 INLINE P YPclose_out_port (P s) { 
-  fclose((FILE*)s); return YPfalse; 
+  fclose((FILE*)YPlu(s)); return YPfalse; 
 }
 
 INLINE P YPnewline (P s) { 
-  fputc('\n', (FILE*)s); 
+  fputc('\n', (FILE*)YPlu(s)); 
 #ifdef WIN32  
-  if ((FILE*)s == stdout) fflush(stdout);
+  if ((FILE*)YPlu(s) == stdout) fflush(stdout);
 #endif
   return YPfalse; 
 }
 
 INLINE P YPforce_out (P s) { 
-  fflush((FILE*)s); return YPfalse; 
+  fflush((FILE*)YPlu(s)); return YPfalse; 
 }
 
 INLINE P YPput (P s, P x) { 
-  fputc((PCHR)(int)x, (FILE*)s); return YPfalse; 
+  fputc((PCHR)(int)x, (FILE*)YPlu(s)); return YPfalse; 
 }
 
 INLINE P YPputs (P s, P x) { 
   if(x==NULL)
-    fputs("NULL", (FILE*)s);
+    fputs("NULL", (FILE*)YPlu(s));
   else
-    fputs((PSTR)x, (FILE*)s);
+    fputs((PSTR)x, (FILE*)YPlu(s));
 #ifdef WIN32  
-  if ((FILE*)s == stdout) fflush(stdout);
+  if ((FILE*)YPlu(s) == stdout) fflush(stdout);
 #endif
   return YPfalse; 
 }
 
 INLINE P YPget (P s) { 
-  return (P)fgetc((FILE*)s); 
+  return (P)fgetc((FILE*)YPlu(s)); 
 }
 
 INLINE P YPpeek (P s) { 
-  PCHR c = fgetc((FILE*)s); ungetc((int)c, (FILE*)s); return (P)(PINT)c; 
+  PCHR c = fgetc((FILE*)YPlu(s)); ungetc((int)c, (FILE*)YPlu(s)); return (P)(PINT)c; 
 }
 
 INLINE P YPreadyQ (P s) { 
@@ -384,7 +384,7 @@ INLINE P YPreadyQ (P s) {
 #ifdef WIN32
   fd_set rfds;
   FD_ZERO(&rfds);
-  FD_SET(fileno((FILE*)s), &rfds);
+  FD_SET(fileno((FILE*)YPlu(s)), &rfds);
   res = select(1, &rfds, NULL, NULL, NULL);
 #else
   res = 1;
@@ -397,7 +397,7 @@ char strbuf[MAXSTRSIZ];
 
 PSTR YPgets (FILE* s) { 
   char *str;
-  fgets(strbuf, MAXSTRSIZ, s); 
+  fgets(strbuf, MAXSTRSIZ, (FILE*)YPlu(s)); 
   str = (char*)allocate(strlen(strbuf) + 1);
   strcpy(str, strbuf);
   return str;
@@ -407,9 +407,9 @@ INLINE P YPeof_objectQ (P x) { return (P)((PCHR)(PINT)x == EOF); }
 
 INLINE P YPeof_object () { return (P)EOF; }
 
-INLINE PPORT YPcurrent_in_port (void) { return stdin; }
+INLINE PPORT YPcurrent_in_port (void) { return (PPORT)YPlb(stdin); }
 
-INLINE PPORT YPcurrent_out_port (void) { return stdout; }
+INLINE PPORT YPcurrent_out_port (void) { return (PPORT)YPlb(stdout); }
 
 /* TODO - Need Windows versions of the following functions. */
 
@@ -611,14 +611,14 @@ extern P YLanyG;
 extern P YLclassG;
 extern P Ytype_error;
 extern P YOclass_isaQ(P, P);
-extern P YOisaQ;
+extern P YisaQ;
+extern P YPclasses_readyQ;
 
-INLINE void CHECK_TYPE(P res, P type)
-{
-  if (type != YLanyG) {
-    if (((YPobject_class(type) == YLclassG) ?
-         YOclass_isaQ(res, type) :
-         CALL2(0, YOisaQ, res, type)) == YPfalse)
+INLINE void CHECK_TYPE(P res, P type) {
+  if (type != YLanyG && YPclasses_readyQ != YPfalse) {
+    if ((YPobject_class(type) == YLclassG
+	 ? YOclass_isaQ(res, type) : CALL2(0, YisaQ, res, type))
+	== YPfalse)
       CALL2(1, Ytype_error, res, type);
   }
 }
@@ -640,8 +640,7 @@ extern P YLgenG;
 extern P YPtraits_owner(P);
 extern P YPvnul;
 
-P YPcheck_call_types()
-{
+P YPcheck_call_types() {
   P fun = stack_[sp - 1];
   P traits = PNUL;
   if(fun != 0 && (tag_bits(fun)) == adr_tag)
@@ -671,7 +670,7 @@ P YPcheck_call_types()
       exit(1);
     }
   } else {
-	  CALL1(0, Yunknown_function_error, fun);
+    CALL1(0, Yunknown_function_error, fun);
   }
   return Ynil;
 }
@@ -790,8 +789,9 @@ P with_exit (P fun) {
 
   frame = MAKE_BIND_EXIT_FRAME();
   exit  = YPmet(&do_exit, YPfalse,
-				YPsig(Ynil, YPpair(YLanyG, Ynil), YPfalse, YPib((P)1), YPfalse, Ynil),
-				FABENV(1, frame), Ynul, YPfalse);
+		YPsig(Ynil, YPpair(YLanyG, Ynil), 
+		      YPfalse, YPib((P)1), YPfalse, Ynil),
+		FABENV(1, frame), Ynul, YPfalse);
   stack_allocp = old_stack_allocp;
   if (!setjmp(frame->destination))
     return CALL1(1, fun, exit);
@@ -1146,12 +1146,12 @@ P YPunexec(P name)
   return YPfalse;
 }
 
-P YPprint_cpu_usage(char *file)
+P YevalSg2cYPprint_cpu_usage(char *message)
 {
 	return;
 /*  struct rusage usage;
   getrusage(RUSAGE_SELF, &usage);
-  printf("%20s %d.%06.6d %d.%06.6d\n", file,
+  printf("%20s %d.%06.6d %d.%06.6d\n", message,
 	 usage.ru_utime.tv_sec, usage.ru_utime.tv_usec,
 	 usage.ru_stime.tv_sec, usage.ru_stime.tv_usec);
   return YPfalse;
@@ -1240,9 +1240,8 @@ P YPprocess_module(
   /* Import bindings into this module. */
   for (import_info = module_info->imports;
        import_info->variable_name;
-       import_info++)
-  {
-    CALLN(1, import_fun, 4, modobj,
+       import_info++) {
+    CALL4(0, import_fun, modobj,
 	  YPsb(import_info->variable_name),
 	  import_info->module_info->module_object,
 	  YPsb(import_info->original_name));
@@ -1251,9 +1250,8 @@ P YPprocess_module(
   /* Export bindings from this module. */
   for (export_info = module_info->exports;
        export_info->variable_name;
-       export_info++)
-  {
-    CALL3(1, export_fun, modobj,
+       export_info++) {
+    CALL3(0, export_fun, modobj,
 	  YPsb(export_info->variable_name),
 	  YPsb(export_info->exported_as));
   }
@@ -1274,7 +1272,7 @@ static void process_runtime_module_shell
   
   /* Create our own module object. */
   module_info->module_object =
-    CALL2(1, create_module_fun, YPsb(module_info->module_name),
+    CALL2(0, create_module_fun, YPsb(module_info->module_name),
 	  (P)YPlb(module_info));
   modobj = module_info->module_object;
 
@@ -1284,7 +1282,7 @@ static void process_runtime_module_shell
     process_runtime_module_shell
       (use_info->module_info, create_module_fun, use_module_fun,
        runtime_binding_fun, other_binding_fun);
-    CALL2(1, use_module_fun, modobj, use_info->module_info->module_object);
+    CALL2(0, use_module_fun, modobj, use_info->module_info->module_object);
   }
 
   /* Define bindings in this module. */
@@ -1293,11 +1291,11 @@ static void process_runtime_module_shell
        binding_info++)
   {
     if (binding_info->location)
-      CALL3(1, runtime_binding_fun, modobj,
+      CALL3(0, runtime_binding_fun, modobj,
 	    YPsb(binding_info->variable_name),
 	    (P)YPlb((P)binding_info->location));
     else
-      CALL2(1, other_binding_fun, modobj,
+      CALL2(0, other_binding_fun, modobj,
 	    YPsb(binding_info->variable_name));
   }
 }
