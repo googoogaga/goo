@@ -1,4 +1,7 @@
-; (load "/home/ai2/sombrero/cvs/goo/src/goouitest2.goo" 'goo/user)
+(use goo)
+
+(use samurui/samurui)
+(use samurui/gtk.swig)
 
 (dc <simple-app> (<any>))
 
@@ -41,7 +44,7 @@
 
 (imodel <simple-app>
         "Tree View Hopefully"
-        tree-nodes
+        (attr tree-nodes fill scroll)
         ;;(columns
         ;; (master bob tree-nodes)
         ;; (slave bob)

@@ -7254,6 +7254,12 @@
 (dv gtk_window_new #f)
 (export gtk_window_new)
 
+(dv gtk_tree_goo_new #f)
+(export gtk_tree_goo_new)
+
+(dv gtk_tree_goo_refresh #f)
+(export gtk_tree_goo_refresh)
+
 )
 (dl init_me)
 (init_me)

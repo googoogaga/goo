@@ -3,6 +3,8 @@
 (use goo/boot)
 
 (use samurui/gtk.swig)
+(use samurui/treegoo.c)
+
 (use samurui/gtkcallbacks)
 
 (dv gtk_true 1)
@@ -521,6 +523,14 @@
     )
   )
 
+(dc <gui-scrolled-window> (<gui-container>))
+
+(dm gui-scrolled-window ( => <gui-scrolled-window>)
+  (def win (new <gui-scrolled-window>))
+  (set (handle win) (gtk_scrolled_window_new NULL NULL))
+  win
+  )
+
 (dc <gui-frame> (<gui-container>))
 
 (dm gui-frame (label|<str> => <gui-frame>)
@@ -577,10 +587,31 @@
   (add! (children container) item)
   )
 
+(dm ad-opt! (container|<gui-container> item|<gui> opt|(t? <col>))
+  (def scroll (when opt (mem? opt 'scroll)))
+  ;; Support scrolling by throwing the item in a scrollwindow which gets placed in the dude.
+  (if scroll
+      (seq
+        (def scroll-win (gui-scrolled-window))
+        (ad! scroll-win item)
+        (ad! container scroll-win)
+        )
+      (seq
+        (ad! container item)
+        )
+      )
+  )
+
 (dm ad-opt! (container|<gui-box> item|<gui> opt|(t? <col>))
   (def fill (when opt (mem? opt 'fill))) ; default to false
+  (def scroll (when opt (mem? opt 'scroll)))
   (debugstr "Adding with options %= which I think means fill: %= (%=)\n" opt fill (log-to-gtk fill))
   (debugstr "Adding %= to gui-box %=.\n" item container)
+  (when scroll
+    (def scroll-win (gui-scrolled-window))
+    (ad! scroll-win item)    
+    (set item scroll-win)
+    )
   (gtk_box_pack_start (handle container) (handle item) (log-to-gtk fill) (log-to-gtk fill) 8)
   (add! (children container) item)
   )
@@ -2041,13 +2072,13 @@
 
 (dm gtk-tv-iter-has-child (gtv|<gui-treeview> node => <log>)
   (def has-child (< 0 (len (node-out-edges (collection gtv) (axis gtv) node))))
-  (msg out "%= has child: %=\n" node has-child)
+;;  (msg out "%= has child: %=\n" (address-of node) has-child)
   has-child
   )
 
 (dm gtk-tv-iter-n-children (gtv|<gui-treeview> node => <int>)
   (def num-kids (len (node-out-edges (collection gtv) (axis gtv) node)))
-  (msg out "Reporting %= kids\n" num-kids)
+;;  (msg out "Reporting %= kids for node %=\n" num-kids (address-of node))
   num-kids
   )
 
@@ -2068,7 +2099,7 @@
   (def edges (node-out-edges (collection gtv) (axis gtv) parent))
   (if (>= n (len edges))
       (seq
-        (msg out "I am saying there is no next (%= of %=)\n" n (len edges))
+;;        (msg out "I am saying there is no next (%= of %=)\n" n (len edges))
         #f
         )
       (elt edges n)
@@ -2079,12 +2110,23 @@
   (def da-parent (node-in-edges (collection gtv) (axis gtv) node))
   (if (and da-parent 
            (< 0 (len da-parent)))
-      (1st da-parent)
-      #f)
+      (seq
+;;        (post ":D Node %= has parent %=\n" (address-of node) (address-of (1st da-parent)))
+        (1st da-parent)
+        )
+      (seq
+;;        (post ":[ Node %= has no parent.\n" (address-of node))
+        #f)
+      )
   )
 
 (dm gtk-tv-iter-has-parent (gtv|<gui-treeview> node => <log>)
-  (~= 0 (len (node-in-edges (collection gtv) (axis gtv) node)))
+  (def retval (~= 0 (len (node-in-edges (collection gtv) (axis gtv) node))))
+;;  (if retval
+;;      (post ":D Node %= has a parent.\n" node)
+;;      (post ":[ Node %= has no parent.\n" node)
+;;      )
+  retval
   )
 
 (dm gtk-tv-node-pos-in-parent (gtv|<gui-treeview> node parent => <int>)
@@ -2407,16 +2449,17 @@
                                  )
                           )
 
-;(register-interface-model <col> (interface-model
-;                                 (fun (x) 1)
-;                                 (fun (info class updaters)
-;                                   (def my-gtv (gui-treeview))
-;                                   (def gtv-updater (bind my-gtv info)))
-;                                   (ad! updaters gtv-updater)
-;                                   my-gtv
-;                                   )
-;                                 )
-;                          )
+(register-interface-model <col> (interface-model
+                                 (fun (x) 1)
+                                 (fun (info class updaters)
+                                   (def my-gtv (gui-treeview))
+                                   (def gtv-updater (bind my-gtv info))
+                                   (ad! updaters gtv-updater)
+                                   my-gtv
+                                   )
+                                 )
+                          )
+
 
 ;;;;;;; EXPORTS
 (export

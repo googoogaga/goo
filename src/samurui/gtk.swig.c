@@ -12,7 +12,7 @@
 /* Implementation : GOO */
 
 #include "grt.h"
-extern void load_module_dl (void);
+static void load_module_dl (void);
 
 
 EXT(YLanyG,"goo/boot","<any>");
@@ -28,7 +28,7 @@ EXT(YLtupG, "goo/boot", "<tup>");
 
 extern P YOisaQ;
 
-P multi_argout(P outsofar, P curout)
+static P multi_argout(P outsofar, P curout)
 {
   P newvec;
   int masked;
@@ -891,7 +891,7 @@ EXT(YsamuruiSgtkYgtkUtreeUviewUcolumnUautosize,"samurui/gtk","GTK_TREE_VIEW_COLU
 EXT(YsamuruiSgtkYgtkUtreeUviewUcolumnUfixed,"samurui/gtk","GTK_TREE_VIEW_COLUMN_FIXED");
 
 
-//#include "treegoo.h"
+#include "treegoo.h"
 
 
 EXT(YsamuruiSgtkYgUsignalUconnectUdata,"samurui/gtk","g_signal_connect_data");
@@ -3317,7 +3317,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUsignalUname)
     result = (gchar *)gtk_signal_name(arg1);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -4669,7 +4676,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUacceleratorUname)
     result = (gchar *)gtk_accelerator_name(arg1,(GdkModifierType )arg2);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -4985,7 +4999,14 @@ FUNCODEDEF(YsamuruiSgtkYUgtkwidgetUnameUget)
     result = (gchar *) (arg1->name);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -7749,7 +7770,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUwidgetUgetUcompositeUname)
     result = (gchar *)gtk_widget_get_composite_name(arg1);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -14324,7 +14352,14 @@ FUNCODEDEF(YsamuruiSgtkYUgdkeventkeyUstringUget)
     result = (gchar *) (arg1->string);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -17926,7 +17961,14 @@ FUNCODEDEF(YsamuruiSgtkYUgdkeventsettingUnameUget)
     result = (char *) (arg1->name);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -20159,7 +20201,14 @@ FUNCODEDEF(YsamuruiSgtkYgdkUsetUlocale)
     result = (gchar *)gdk_set_locale();
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -20178,7 +20227,14 @@ FUNCODEDEF(YsamuruiSgtkYgdkUgetUprogramUclass)
     result = (char *)gdk_get_program_class();
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -20258,7 +20314,14 @@ FUNCODEDEF(YsamuruiSgtkYgdkUgetUdisplay)
     result = (gchar *)gdk_get_display();
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -20659,7 +20722,14 @@ FUNCODEDEF(YsamuruiSgtkYgdkUwcstombs)
     result = (gchar *)gdk_wcstombs(arg1);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -25987,7 +26057,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUbuttonUgetUlabel)
     result = (gchar *)gtk_button_get_label(arg1);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -27341,7 +27418,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUclistUgetUcolumnUtitle)
     result = (gchar *)gtk_clist_get_column_title(arg1,arg2);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -29581,7 +29665,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUcolorUselectionUpaletteUtoUstring)
     result = (gchar *)gtk_color_selection_palette_to_string(arg1,arg2);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -33303,7 +33394,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUeditableUgetUchars)
     result = (gchar *)gtk_editable_get_chars(arg1,arg2,arg3);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -33904,7 +34002,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUentryUgetUtext)
     result = (gchar *)gtk_entry_get_text(arg1);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -34072,7 +34177,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUfileUselectionUgetUfilename)
     result = (gchar *)gtk_file_selection_get_filename(arg1);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -34344,7 +34456,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUfontUselectionUgetUfontUname)
     result = (gchar *)gtk_font_selection_get_font_name(arg1);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -34399,7 +34518,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUfontUselectionUgetUpreviewUtext)
     result = (gchar *)gtk_font_selection_get_preview_text(arg1);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -34497,7 +34623,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUfontUselectionUdialogUgetUfontUname)
     result = (gchar *)gtk_font_selection_dialog_get_font_name(arg1);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -36065,7 +36198,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUitemUfactoryUpathUfromUwidget)
     result = (gchar *)gtk_item_factory_path_from_widget(arg1);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -42699,7 +42839,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUprogressUgetUcurrentUtext)
     result = (gchar *)gtk_progress_get_current_text(arg1);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -42729,7 +42876,14 @@ FUNCODEDEF(YsamuruiSgtkYgtkUprogressUgetUtextUfromUvalue)
     result = (gchar *)gtk_progress_get_text_from_value(arg1,arg2);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -44097,7 +44251,14 @@ FUNCODEDEF(YsamuruiSgtkYUgtkUscaleUformatUvalue)
     result = (gchar *)_gtk_scale_format_value(arg1,arg2);
     
     {
-        retval = (P)YPsb((P)result);
+        if(result == NULL)
+        {
+            retval = (P)YPsb((P)"");
+        }
+        else
+        {
+            retval = (P)YPsb((P)result);
+        }
     }
     UNLINK_STACK();
     QRET(retval);
@@ -56180,6 +56341,55 @@ FUNCODEDEF(YsamuruiSgtkYgtkUwindowUnew)
 }
 
 
+EXT(YsamuruiSgtkYgtkUtreeUgooUnew,"samurui/gtk","gtk_tree_goo_new");
+FUNFOR(YsamuruiSgtkYgtkUtreeUgooUnew);
+
+FUNCODEDEF(YsamuruiSgtkYgtkUtreeUgooUnew)
+{
+    P gtv_;
+    P arg1 ;
+    GtkTreeGoo *result;
+    P retval = (P)YPib((P)0);
+    
+    LINK_STACK();
+    ARG(gtv_, 0);
+    {
+        arg1 = gtv_;
+    }
+    result = (GtkTreeGoo *)gtk_tree_goo_new(arg1);
+    
+    {
+        retval = (P)YPlb((P)result);
+    }
+    UNLINK_STACK();
+    QRET(retval);
+}
+
+
+EXT(YsamuruiSgtkYgtkUtreeUgooUrefresh,"samurui/gtk","gtk_tree_goo_refresh");
+FUNFOR(YsamuruiSgtkYgtkUtreeUgooUrefresh);
+
+FUNCODEDEF(YsamuruiSgtkYgtkUtreeUgooUrefresh)
+{
+    P tree_goo_;
+    GtkTreeGoo *arg1 ;
+    P retval = (P)YPib((P)0);
+    
+    LINK_STACK();
+    ARG(tree_goo_, 0);
+    {
+        arg1 = (GtkTreeGoo *)YPlu(tree_goo_);
+    }
+    gtk_tree_goo_refresh(arg1);
+    
+    {
+        // do nothing! it's a void!
+    }
+    UNLINK_STACK();
+    QRET(retval);
+}
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -56190,7 +56400,7 @@ P YsamuruiSgtkYinitUme(void) {
     load_module_dl();
 }
 
-extern void
+static void
 load_module_dl (void)
 {
     DEFCREGS();
@@ -73424,6 +73634,22 @@ load_module_dl (void)
         methodSig = YPsig(YPPlist(1,LITREF(lit_arg_0) ), YPPlist(1,VARREF(YLintG) ), YPfalse, YPint((P)1), VARREF(YLtupG), Ynil);
         methodDef = YPmet(FUNCODEREF(YsamuruiSgtkYgtkUwindowUnew), LITREF(methodName), methodSig, ENVNUL, PNUL, YPfalse);
         VARSET(YsamuruiSgtkYgtkUwindowUnew, methodDef);
+    }
+    {
+        P methodSig, methodDef;
+        P methodName = YPPsym((P)"gtk_tree_goo_new");
+        P lit_arg_0 = YPPsym((P)"gtv");
+        methodSig = YPsig(YPPlist(1,LITREF(lit_arg_0) ), YPPlist(1,VARREF(YLanyG) ), YPfalse, YPint((P)1), VARREF(YLtupG), Ynil);
+        methodDef = YPmet(FUNCODEREF(YsamuruiSgtkYgtkUtreeUgooUnew), LITREF(methodName), methodSig, ENVNUL, PNUL, YPfalse);
+        VARSET(YsamuruiSgtkYgtkUtreeUgooUnew, methodDef);
+    }
+    {
+        P methodSig, methodDef;
+        P methodName = YPPsym((P)"gtk_tree_goo_refresh");
+        P lit_arg_0 = YPPsym((P)"tree_goo");
+        methodSig = YPsig(YPPlist(1,LITREF(lit_arg_0) ), YPPlist(1,VARREF(YLlocG) ), YPfalse, YPint((P)1), VARREF(YLtupG), Ynil);
+        methodDef = YPmet(FUNCODEREF(YsamuruiSgtkYgtkUtreeUgooUrefresh), LITREF(methodName), methodSig, ENVNUL, PNUL, YPfalse);
+        VARSET(YsamuruiSgtkYgtkUtreeUgooUrefresh, methodDef);
     }
 }
 
