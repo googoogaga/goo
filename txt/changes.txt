@@ -1028,7 +1028,7 @@ summary
 
   sped up for threads
 
-=== 0.137 ===
+=== 0.138 ===
 
 summary
 
@@ -1057,4 +1057,58 @@ changed
   changed app-sup to allow any number of args.
   ceiling/ to ceil/
 
+=== 0.139 ===
 
+summary
+
+  more threads patches and configuration changes
+
+fixed
+
+  setup handlers for new threads
+
+=== 0.140 ===
+
+summary
+
+  swig support 
+
+added
+
+  swig hook to module loader
+
+=== 0.142 ===
+
+summary
+
+  lots of bug fixes
+
+fixed
+
+  exported <restart>
+  ins to work properly
+  cleaned up %threads.c
+  documented object-class
+  rep-into! to not bomb on 
+  df's are redefineable in g2c-eval
+  use *.swig to only include .c once
+  ds now doesn't return the module binding
+  macros failing to match cause macro-error
+  pick now no longer reverses order of sequences
+
+added
+
+  rotf
+  $ $$ $$$
+  use/include
+  use/library
+  default add method
+  grt.c printing case for <rep>'s
+  GOO_EVAL_MODE environment variable
+  inlining adjectives and inlining for primitives
+  <fixnum>'s as separate class setting stage for <bignum>'s 
+
+fixed
+
+  PCHR to be unsigned char
+  <prim-int> to <fixnum>

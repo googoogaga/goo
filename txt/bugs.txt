@@ -1,3 +1,73 @@
+=== 0.143 BUGS ===
+
+*-setter too long
+
+default values should be (x 0)
+
+trunc/ should return one value
+
+change do-keyed to do-items (or do-map?) and doc
+
+rotf instead of swapf?
+
+---
+
+collection writing 101 doc
+
+need stack overflow check
+
+condition hierarchy, 
+  range error, unbound binding
+*, **, ... for previous values
+
+goo/user 0<= (dc <a> (<any>))
+goo/user 0=> #f
+goo/user 0<= (dp aa (<a> => <int>) 5)
+goo/user 0=> #{Prop #{Gen aa (<any>)}}
+goo/user 0<= (dc <b> (<a>))
+goo/user 0=> #f
+goo/user 0<= (dp aa (<b> => <int>) 6)
+goo/user 0=> #{Prop #{Gen aa (<any>)}}
+goo/user 0<= (dv x (new <b>))
+goo/user 0=> #f
+goo/user 0<= x
+goo/user 0=> #{<a> aa: 5 aa: 5}
+
+tie to-str and write together
+
+ds like df 
+
+document object-class
+
+add GOOPATH
+
+1) When I unsuccessfully try to load a module (it has a syntax or
+runtime error), I cannot attempt loading it again:
+
+goo/user 1<= test:foo
+ERROR: test: error: Circular use of test not allowed
+
+2) There's no `reload' functionality (that I've found) that will let me
+reload a module that's changed on disk, even if the initial load _was_
+successful.
+
+3) REPL. I'm writing a tutorial for goo based on the Python tutorial,
+and since I'm including snippets of REPL usage, it's become painfully
+obvious how annoying the REPL prompts are. (a) Output and Input prefixes
+should not be so similar. How about leaving out the current-module name,
+and just have "=>" or somesuch?  (b) there should be continuation
+prompts. 
+
+4) Can I have an option to turn off the annoying ("1. Return to
+interpreter level N."*stacklevel) messages?
+
+goo/user 0<= 48637761
+goo/user 0=> 48637760
+
+(new <map>) ;; causes recursive printing error
+
+fix recursive printing errors
+
 === 0.133 BUGS ===
 
 === 0.131 BUGS ===
