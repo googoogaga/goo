@@ -1,3 +1,79 @@
+SO YOU WANT TO WRITE A NEW DYNAMIC LANGUAGE?
+
+but your language P doesn't exist to write it in?
+
+start by write an interpreter in D.
+  can experiment with P very easily
+
+great but 
+  it will only run on machines that D runs on and
+  it will never be faster than an interpreter
+
+you also need to write the runtime and libraries
+  you want to experiment with P so you can 
+    leverage D as much as possible such as 
+      debugger interactor objects ...
+    meaning that you write a bunch of P's runtime in D
+
+so you write a cross compiler P->C
+  but you still don't have a full system written in P
+
+so you rewrite your runtime in P
+  but you now are in C and can't assume anything so
+  you decide to build all runtime objects by hand so
+  you can't depend on anything that hasn't been built yet
+
+so now you get back to writing P->C
+  still want to write P->C in D because of 
+    speed, debuggability and interactivity
+  you port enough of your P system to have a P implementation including
+    c-runtime, object system, libraries, io, interpreter
+
+but unfortunately you've got P->C still in D
+  finally port P->C to P and 
+  ensure that it can P-P->C => P-D->C => C which can in turn compile P-P->C
+
+BOOT NOTES
+
+FULL DYLAN SIMULATION
+  READ/WRITE
+  INTERPRETER
+
+BOOTSTRAP GOALS
+  PORTABILITY
+  ONE IMPLEMENTATION
+
+PARTIAL DYLAN SIMULATION
+
+strategy
+  simulate object-system in dylan
+  use ffi approach to talk between worlds
+  advantage:    simpler boot -- more reuse
+  disadvantage: seam and putting off real boot
+
+import/export
+  importers-by-object
+  importers-by-owner
+
+environment
+  binding-definer
+    defines binding in environment with initial value
+  function-definer
+    same where value is a function
+
+symbols
+  keep track of symbols and boot later
+
+slots and accessors
+
+object definitions
+  bunch of macros which define 
+
+proto-apply
+  distinguishes between primitives and proto objects
+  uses import/export to call primitives  
+
+
 HYBRID INITIAL BOOT
 
 x %%field-value, %%field-value-setter

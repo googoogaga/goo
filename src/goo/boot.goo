@@ -91,6 +91,7 @@
 	  (slot <fun> (fun-specs <lst>) nil)
 	  (slot <fun> (fun-nary? <log>) %false)
 	  (slot <fun> (fun-arity <int>) 0)
+	  (slot <fun> (fun-value <any>) <any>)
 	(dv <met> (isa <fun>))
 	  (slot <met> (fun-env <any>)   %false)
 	(dv <gen> (isa <fun>))
@@ -195,7 +196,7 @@
 ;;; MET BASICS
 
 (%define-structure % met ;; met-names
-   met-code met-specs met-nary? met-arity met-env)
+   met-code met-specs met-nary? met-arity met-value met-env)
 
 (dv %fun-nary? %met-nary?) ;; need this for interpreter
 (dv %fun-specs %met-specs) ;; need this for interpreter
@@ -384,7 +385,7 @@
    gen-cache-singletons gen-cache-classes)
 
 (%define-structure % gen 
-   gen-code gen-specs gen-nary? gen-arity gen-mets fun-cache)
+   gen-code gen-specs gen-nary? gen-arity gen-value gen-mets fun-cache)
 
 (df %slot-offset (owner getter)
   (rep loop ((i (%raw 0)) (slots (%traits-slots (%object-traits owner))))
@@ -422,7 +423,7 @@
   (let ((params  (sexpr-signature-parameters sig))
 	(gen-sig (&pairize (map (always '<any>) params)))
 	(arity   (len params)))
-    `(seq (dv ,name (%gen %early-dispatch ,gen-sig #f ,arity '() #f))
+    `(seq (dv ,name (%gen %early-dispatch ,gen-sig #f ,arity <any> '() #f))
 	  (let ((accessor (fun (,@sig) ,@body)))
 	    (%add-met ,name accessor)
 	    (%register-early-generic ,name)
@@ -683,6 +684,8 @@
 
 (df @fun-arity ((x <fun>) => <int>) (%gen-arity x))
 
+(df @fun-value ((x <fun>) => <any>) (%gen-value x))
+
 (df @fun-mets ((x <fun>) => <lst>) (%gen-mets x))
 
 (df @fun-mets-setter ((z <lst>) (x <fun>)) (set (%gen-mets x) z))
@@ -712,7 +715,7 @@
 ;;   (slot <gen> (fun-mets <mets>) '())
 
 (df fab-gen ((specs <lst>) (nary? <log>) (mets <lst>) => <gen>)
-  (%gen (%gen-code %dispatch) specs nary? (len specs) mets #f))
+  (%gen (%gen-code %dispatch) specs nary? (len specs) <any> mets #f))
 
 (df fun-same-met? ((x <met>) (y <met>) => <log>)
   (@all2? @@== (@fun-specs x) (@fun-specs y)))
@@ -1021,7 +1024,7 @@
 
 (df gen-from-met ((x <met>) => <gen>)
   (let ((specs (@map (fun (x) <any>) (@fun-specs x))))
-    (%gen (%gen-code %dispatch) specs (@fun-nary? x) (@len specs) '() #f)))
+    (%gen (%gen-code %dispatch) specs (@fun-nary? x) (@len specs) <any> '() #f)))
 
 (df %define-method (gen (met <met>) => <gen>)
   (let ((gen (or gen (gen-from-met met))))

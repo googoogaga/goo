@@ -247,6 +247,33 @@ fixes:
 
   svec -> buf
 
+  #() now reads
+
+  redefinition of macros works
+
+  inverse symbol looking now works for interpreter defined bindings
+
 adds:
 
   tail call analysis in ast
+
+0.84
+
+summary:
+
+fixes:
+
+  minimizes number of files
+
+  ENVNUL
+
+adds:
+
+  split proto.c into prt.c and prt.h
+
+  stack allocation
+  
+  data stack
+
+  backtrace
+

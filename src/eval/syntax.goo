@@ -1,7 +1,5 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-;;  Syntax definitions for Chapter 4 codes
-
 ;;  Self-evaluating entities
 (dm sexpr-self-evaluating? (exp => <log>)
   (or (isa? exp <num>)
@@ -346,9 +344,6 @@
 	(ovalues            (sexpr-let-values let-exp))
 	(body               (sexpr-let-body let-exp))
 	((tup names values) (sexpr-let-names+values onames ovalues)))
-    ;; (format out "VARS %=\n" names)
-    ;; (format out "VALS %=\n" values)
-    ;; (pair (lst $sexpr-method-tag names body) values)
     (rep col ((names names) (values values))
       (if (empty? names)
 	  body

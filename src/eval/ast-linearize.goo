@@ -1,14 +1,6 @@
 ;;; Copyright (c) 2001 Jonathan Bachrach
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 
-;; (seq (load "/home/ai/jrb/proto/SRC/for.proto") (load "/home/ai/jrb/proto/SRC/range.proto") (load "/home/ai/jrb/proto/SRC/ast-linearize.proto") (load "/home/ai/jrb/proto/SRC/p2c.proto"))
-;; (sexp->object '(lst) (ct-env))
-;; (sexp->object '(let ((x 1)) (set x 2) x) (ct-env))
-;; (lift! (objectify '(fun (x) x) (ct-env)))
-;; (lift! (objectify '(fun (x) (fun () x)) (ct-env)))
-;; (lift! (objectify '(loc ((f () (g)) (g () (f))) (f)) (ct-env)))
-;; (extract-things! (objectify '(+ 1 2) (ct-env)))
-
 ;;; WALKER
 
 (dm update-walk! (g o (args ...))
@@ -86,6 +78,49 @@
 
 (dm sexp->object (exp r)
   (insert-box! (objectify exp r #f)))
+
+;;; DYNAMIC-EXTENT ANALYSIS
+
+(dm do-do-call-references! ((o <program>))
+  (update-walk! do-call-references! o))
+
+(dm do-call-references! ((o <program>))
+  (do-do-call-references! o))
+
+(dm do-call-references! ((o <regular-application>))
+  (do-do-call-references! o)
+  (if (isa? (application-function o) <local-reference>)
+      (set (reference-called-function? (application-function o)) #t))
+  o)
+
+(dm do-call-references! ((o <locals>))
+  (do-do-call-references! o)
+  (do do-call-references! (locals-functions o))
+  o)
+
+(dm analyze-call-references (o)
+  (do-call-references! o))
+
+(dm do-do-dynamic-extent! ((o <program>))
+  (update-walk! do-dynamic-extent! o))
+
+(dm do-dynamic-extent! ((o <program>))
+  (do-do-dynamic-extent! o))
+
+(dm do-dynamic-extent! ((o <local-reference>))
+  (do-do-dynamic-extent! o)
+  (unless (reference-called-function? o)
+    (set (binding-dynamic-extent? (reference-binding o)) #f))
+  o)
+
+(dm do-dynamic-extent! ((o <locals>))
+  (do-do-dynamic-extent! o)
+  (do do-dynamic-extent! (locals-functions o))
+  o)
+
+(dm analyze-dynamic-extent (o)
+  (analyze-call-references o)
+  (do-dynamic-extent! o))
 
 ;;; FLATTENING
 
@@ -189,6 +224,7 @@
 	   (set function-name     (function-name o))
 	   (set function-bindings local-bindings)
 	   (set function-nary?    (function-nary? o))
+	   (set function-value    (function-value o))
 	   (set function-body     body)
 	   (set function-free     (empty-free-environment)))))
     (set (function-body new-fun)
@@ -284,7 +320,8 @@
   (let ((new-body (extract! (function-body o) form result))
 	(name     (function-name o))
 	(bindings (function-bindings o))
-	(nary?    (function-nary? o)))
+	(nary?    (function-nary? o))
+	(value    (function-value o)))
     (do (fun (binding)
 	  (set (binding-type binding) 
 	       (extract! (binding-type binding) form result)))
@@ -297,7 +334,7 @@
 			(extract (free-environment-tail free))))))
 	  (index
 	   (adjoin-definition!
-	    form result name bindings nary? new-body free-bindings)))
+	    form result name bindings nary? value new-body free-bindings)))
       (isa <closure-creation> 
 	(set closure-creation-index    index)
 	(set closure-creation-bindings bindings)
@@ -325,7 +362,7 @@
 
 (dm adjoin-definition! 
     ((form <top-level-form>) (result <flattened-program>) 
-     name bindings nary? body free)
+     name bindings nary? value body free)
   (let ((definitions
 	 (program-definitions result))
 	(new-index
@@ -335,6 +372,7 @@
 	   (set function-name     name)
 	   (set function-bindings bindings)
 	   (set function-nary?    nary?)
+	   (set function-value    value)
            (set function-body     body)
 	   (set function-free     free)
 	   (set function-index    new-index))))
@@ -441,49 +479,8 @@
 
 (dm new-renamed-binding ((binding <local-binding>))
   (set *renaming-bindings-counter* (+ *renaming-bindings-counter* 1))
-  (isa <renamed-local-binding> 
-       (set binding-name  (binding-name binding))
-       (set binding-type  (binding-type binding))
-       (set binding-index *renaming-bindings-counter*)))
-
-;; (dm print-object ((x <free-environment>) (s <stream>) => ())
-;;   (print-object-list
-;;     x s "(" ")" #t 
-;;     empty-free-environment? free-environment-head free-environment-tail))
-;; 
-;; (dm print-object ((x <closure-creation>) (s <stream>) => ())
-;;   (format s "CC-%=(B %= F %=)" 
-;;             (closure-creation-index x) (closure-creation-bindings x) (closure-creation-free x)))
-;; 
-;; (dm print-object ((x <quotation-binding>) (s <stream>) => ())
-;;   (format s "QB(%= %=)" (binding-name x) (binding-value x)))
-;; 
-;; (dm print-object ((x <top-level-form>) (s <stream>) => ())
-;;   (format s "FRM(PG %= QS %= DS %=)" 
-;;           (form-program x) (form-quotations x) (form-definitions x)))
-;; 
-;; (dm print-object ((x <flattened-program>) (s <stream>) => ())
-;;   (format s "PG(FM %=\n   QS %=\n   DS %=)" 
-;;           (program-form x) (program-quotations x) (program-definitions x)))
-;; 
-;; (dm print-object ((x <free-reference>) (s <stream>) => ())
-;;   (format s "FR^%s" (reference-binding x)))
-;; 
-;; (dm print-object ((x <box-creation>) (s <stream>) => ())
-;;   (format s "BC(%=)" (box-reference x)))
-;; 
-;; (dm print-object ((x <box-read>) (s <stream>) => ())
-;;   (format s "BR(%=)" (box-reference x)))
-;; 
-;; (dm print-object ((x <box-write>) (s <stream>) => ())
-;;   (format s "BW(%= %=)" (box-reference x) (box-form x)))
-;; 
-;; (dm function-kind ((x <function-definition>))
-;;   (format-to-string "FD-%=" (function-index x)))
-;; 
-;; (dm function-kind ((x <flat-function>))
-;;   "FFN")
-;; 
-;; (dm function-kind ((x <primitive-definition>))
-;;   ;; (format-to-string "PD-%=" (function-name x)))
-
+  (isa <renamed-local-binding>      ;; TODO: SHOULD USE CLONING
+       (set binding-name            (binding-name binding))
+       (set binding-type            (binding-type binding))
+       (set binding-dynamic-extent? (binding-dynamic-extent? binding))
+       (set binding-index           *renaming-bindings-counter*)))

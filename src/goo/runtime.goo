@@ -255,6 +255,57 @@
 (dm to-str ((x <num>) => <str>)
   (num-to-str x))
 
+(dm str-to-num ((string <str>) => <any>) ;; (false-or <num>) ;; S48
+  (let ((s 1)
+	(d 0)
+	(n 0)
+	(i 0)
+	(scale 1)
+	(length (len string))
+	(seen-decimal-point? #f)
+	(radix 10))
+    (loc ((match (char)
+	    (if (and (< i length) (= (elt string i) char))
+		(seq (set i (+ i 1)) #t)
+		#f))
+	  (match-digit! (_)
+	    (lab return
+	      (loc ((fail!! () (return #f)))
+		(if (>= i length) (fail!!))
+		(let ((char (elt string i)))
+		  (if (= char #\.)
+		      (if seen-decimal-point?
+			  (error "string->number: Two decimal points: %="
+				 string)
+			  (seq
+			   (set seen-decimal-point? #t)
+			   (set i (+ i 1))
+			   (if (>= i length) (fail!!))
+			   (set char (elt string i)))))
+		  (if (not (numeric? char)) (fail!!))
+		  (set d (to-digit (elt string i)))
+		  (set i (+ i 1))
+		  (if seen-decimal-point?
+		      (set scale (* scale radix)))
+		  #t))))
+	  (looking-at-alphabetic? ()
+	    (if (and (< i length) 
+		     (alphabetic? (elt string i)))
+		#t
+		#f)))
+  ;; Now we get to use all this matching machinery
+  (and (or (match #\+)
+	   (and (match #\-) (set s -1))
+	   #t)
+       (and (match-digit! d) (set n d))
+       (rep loop ()
+	 (if (and (match-digit! d) (set n (+ (* n radix) d)))
+	     (loop)
+	     #t))
+       (= i length) ;; consumed all chars
+       (let ((f (* (as <flo> s) (/ (as <flo> n) (as <flo> scale)))))
+	 (if seen-decimal-point? f (1st (truncate f))))))))
+
 ;;; <int>
 
 ;; (dv <int> (isa <num>))
@@ -1109,7 +1160,9 @@
 (dm to-str ((x <sym>) => <str>)
   (sym-name x))
 
-;;; functional 
+;;;
+;;; FUNCTIONAL 
+;;;
 
 (dm identity (x) x)
 
@@ -1224,3 +1277,131 @@
 (df app-filename () (%app-filename))
 
 (df app-args () (%app-args))
+
+;;;
+;;; PORTS
+;;;
+
+(dv <port> (isa <any>))
+  (slot <port> port-handle)
+
+(dv <input-port> (isa <port>))
+
+(dv <output-port> (isa <port>))
+
+;;; FILE PORTS
+
+(dv <file-port> (isa <port>))
+
+(dv <file-input-port> (isa (<file-port> <input-port>)))
+
+(dv <file-output-port> (isa (<file-port> <output-port>)))
+
+(dm open-input-file ((filename <str>) => <file-input-port>)
+  (isa <file-input-port>
+       (set port-handle (%open-input-file (%su filename)))))
+
+(dm file-opening-error ((filename <str>))
+  (error "Cannot open file named %=" filename))
+
+(dm open-output-file ((filename <str>) => <file-output-port>)
+  (isa <file-output-port>
+       (set port-handle (%open-output-file (%su filename)))))
+
+(dm close-input-port ((port <file-input-port>))
+  (%close-input-port (port-handle port)))
+
+(dm close-output-port ((port <file-output-port>))
+  (%close-output-port (port-handle port)))
+
+(dm call-with-input-file ((string <str>) (proc <fun>))
+  (let ((port #f))
+    (fin (seq (set port (open-input-file string))
+	      (proc port))
+	 (and port (close-input-port port)))))
+       
+
+(dm call-with-output-file ((string <str>) (proc <fun>))
+  (let ((port #f))
+    (fin (seq (set port (open-output-file string))
+	      (proc port))
+	 (and port (close-output-port port)))))
+
+(dv in (isa <file-input-port> (set port-handle (%current-input-port))))
+
+(dv out (isa <file-output-port> (set port-handle (%current-output-port))))
+
+(dm eof-object? (x => <log>) 
+  #f)
+
+(dm eof-object? ((x <chr>) => <log>)
+  (%bb (%eq? (%cu x) (%eof-object))))
+
+(dm eof-object (=> <chr>)
+  (%cb (%eof-object)))
+
+(dm read-char ((port <file-input-port>) => <chr>)
+  (%cb (%read-char (port-handle port))))
+
+(dm peek-char ((port <file-input-port>) => <chr>)
+  (%cb (%peek-char (port-handle port))))
+
+(dm char-ready? ((port <file-input-port>) => <log>)
+  (%char-ready? (port-handle port)))
+
+(dm newline ((port <output-port>)) 
+  (write-char port #\newline))
+
+(dm force-output ((port <file-output-port>))
+  (%force-output (port-handle port)))
+
+(dm write-char ((port <file-output-port>) (c <chr>))
+  (%write-char (port-handle port) (%cu c)))
+
+(dm write-string ((port <file-output-port>) (s <str>))
+  (%write-string (port-handle port) (%su s)))
+
+;;; STRING-PORT IMPLEMENTATION
+
+(dv <string-port> (isa <port>))
+  (slot <string-port> (port-guts <seq>) "")
+
+(dm port-contents ((port <string-port>) => <str>)
+  (as <str> (port-guts port)))
+
+(dv <string-input-port> (isa (<string-port> <input-port>)))
+  (slot <string-input-port> (port-index <int>) 0)
+
+(dv <string-output-port> (isa (<string-port> <output-port>)))
+
+(dm call-with-string-input-port ((string <str>) (proc <fun>))
+  (proc (isa <string-input-port> (set port-guts string))))
+
+;; VERY INEFFICIENT
+
+(dm call-with-string-output-port ((proc <fun>))
+  (proc (isa <string-output-port>)))
+
+;; TODO: EOF OBJECT MUST BE A CHR
+
+(dm peek-char ((port <string-input-port>) => <chr>)
+  (if (>= (port-index port) (len (port-guts port)))
+      (eof-object)
+      (elt (port-guts port) (port-index port))))
+
+(dm read-char ((port <string-input-port>) => <chr>)
+  (if (>= (port-index port) (len (port-guts port)))
+      (eof-object)
+      (let ((res (elt (port-guts port) (port-index port))))
+	(inc (port-index port))
+	res)))
+
+(dm char-ready? ((port <string-input-port>) => <log>)
+  #t)
+
+(dm write-char ((port <string-output-port>) (c <chr>))
+  (set (port-guts port) (add (port-guts port) c)))
+
+(dm write-string ((port <string-output-port>) (s <str>))
+  (set (port-guts port) (cat (port-guts port) s)))
+

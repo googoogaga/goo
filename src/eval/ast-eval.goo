@@ -1,15 +1,85 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 
-;; CURRENT ENVIRONMENT
-;; TODO: DYNAMIC BINDING
-;; 
-;; (dv *env* $nul-loc-env)
-;; 
-;; (env env () *env*)
-;; 
-;; (ds (with-env ,new-env ,@body)
-;;   `(seq (dlet ((*env* ,new-env)) ,@body)))
+;;; ENV
+
+(dv <glo-env> (isa <any>))
+  ;; (slot <glo-env> (env-names  <vec>) #())
+  (slot <glo-env> (env-values <vec>))
+
+(dv $min-glo-env-size 10000)
+
+(dm fab-glo-env ()
+  (isa <glo-env>
+    (set env-values (fill (fab <vec> $min-glo-env-size) nul))))
+
+(dm env-global-value ((env <glo-env>) (i <int>))
+  (elt (env-values env) i))
+
+(dm env-global-index ((env <glo-env>) (x <any>) => <any>)
+  (rep loop ((i 0))
+    (and (< i (len (env-values env)))
+ 	 (if (== x (elt (env-values env) i))
+	     i
+	     (loop (+ i 1))))))
+
+(dm env-global-value-setter (v (env <glo-env>) (i <int>))
+  (set (elt (env-values env) i) v))
+
+(dm env-define-global-binding! ((env <glo-env>) (i <int>) v)
+  (set (elt (env-values env) i) v))
+
+(dm env-runtime-value ((x <loc>))
+  (locative-value x))
+
+(dm env-runtime-value-setter (v (x <loc>))
+  (set (locative-value x) v))
+
+(dv <loc-env> (isa <any>))
+  (slot <loc-env> env-parent   #f)
+  (slot <loc-env> env-function #f)
+  (slot <loc-env> (env-names  <lst>))
+  (slot <loc-env> (env-values <vec>))
+
+(dv $nul-loc-env (isa <loc-env>))
+
+(dm env-frame! 
+    ((env <loc-env>) function (names <lst>) (args <lst>) => <loc-env>)
+  (let ((values (as <vec> args)))
+    (isa <loc-env>
+      (set env-parent   env)
+      (set env-function function)
+      (set env-values   values)
+      (set env-names    names))))
+
+(dm env-local-value ((env <loc-env>) (i <int>) (j <int>))
+  (if (= i 0)
+      (elt (env-values env) j)
+      (env-local-value (env-parent env) (- i 1) j)))
+
+(dm env-local-value-setter (v (env <loc-env>) (i <int>) (j <int>))
+  (if (= i 0)
+      (set (elt (env-values env) j) v)
+      (set (env-local-value (env-parent env) (- i 1) j) v)))
+
+;; TODO: SHOULD GO AWAY SOON
+(dm env-binding-value ((env <loc-env>) (name <sym>) => <any>)
+  (rep loop ((names (env-names env)) (i 0))
+    (if (empty? names)
+	(env-binding-value (env-parent env) name)
+	(if (== name (head names))
+	    (elt (env-values env) i)
+	    (loop (tail names) (+ i 1))))))
+
+(dm env-binding-value-setter (v (env <loc-env>) (name <sym>))
+  (rep loop ((names (env-names env)) (i 0))
+    (if (empty? names)
+	(set (env-binding-value (env-parent env) name) v)
+	(if (== name (head names))
+	    (set (elt (env-values env) i) v)
+	    (loop (tail names) (+ i 1))))))
+
+;;; EVAL
 
 (dm ast-eval-in ((e <program>) (env <loc-env>))
   (ast-eval e env))

@@ -42,6 +42,7 @@
 
 (dv <local-binding> (isa <binding>))
   (slot <local-binding> binding-mutable? #f)
+  (slot <local-binding> binding-dynamic-extent? #t)
   (slot <local-binding> binding-dotted?  #f)
 
 ;;; descriptions
@@ -79,6 +80,7 @@
   (slot <real-reference> reference-binding)
 
 (dv <local-reference> (isa <real-reference>))
+  (slot <local-reference> reference-called-function? #f)
   (slot <local-reference> (reference-frame-number <int>))
   (slot <local-reference> (reference-frame-offset <int>))
 
@@ -118,6 +120,7 @@
   (slot <ast-function> function-name #f)
   (slot <ast-function> function-bindings)
   (slot <ast-function> function-nary? #f)
+  (slot <ast-function> function-value #f)
 
 (dm function-kind ((x <ast-function>)) "FUN")
 

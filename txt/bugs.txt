@@ -1,3 +1,30 @@
+=== 0.82 BUGS ===
+
+0<= (dv <ptr> (isa <any>))
+0=> #f
+0<= (str-eval "<ptr>")
+0=> "#{<any>}"
+0<= (slot <ptr> ptr-value)
+0=> #{<slot> slot-owner: #{#f #f: nul} slot-getter: #{Gen (<any>)} slot-setter: #{Gen (<any> <any>)} slot-type: <any> slot-init: #{Met (<any>)}}
+0<= (str-eval "<ptr>")
+ERROR: No Applicable Methods Error when calling #{Gen add (<seq> <any>)} on ("#{" #\#)
+
+running the following
+
+        (seq (dv <a> (isa <any>))
+             (dv a (isa <a>))
+             (slot <a> ax)
+             a)
+
+gives a seg fault on the last command.  I don't know why.
+
+0<= 0=> #f
+0<= 0=> #f
+0<= 0=> #{<slot> slot-owner: #{#f #f: nul} slot-getter: #{Gen (<any>)} slot-setter: #{Gen (<any> <any>)} slot-type: <any> slot-init: #{Met (<any>)}}
+0<= 0=> #{<slot> slot-owner: #{#f #f: nul #f: nul} slot-getter: #{Gen (<any>)} slot-setter: #{Gen (<any> <any>)} slot-type: <any> slot-init: #{Met (<any>)}}
+0<= 
+Process proto segmentation fault
+
 === 0.70 FIXES ===
 
 In trying to tune my test script to handle errors that might be
