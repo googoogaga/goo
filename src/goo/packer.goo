@@ -1,36 +1,54 @@
 (use boot)
 (use macros)
+(use runtime)
 (use proto/types)
 (use proto/math)
 (use proto/collections/collection)
 (use proto/collections/sequence)
 
-(exports
-  <accum>
-  (dg accum (t|<type> => <accum>))
+(exported
+  (dc <accum> (<any>))
+  (dg accumer (init add|<fun> res|<fun> => <accum>))
+  (dg accum-fab (t|<type> => <accum>))
   (dg accum-add (a|<accum> x => <accum>))
   (dg accum-res (a|<accum> => <any>))
   accuming-with accuming-in accuming accum-in accum accumed)
 
-;; (dc <accum> (<any>))
-(dv <accum> <any>)
+(dc <sim-accum> (<accum>))
+(dp accum-value (<sim-accum> => <any>))
+(dp accum-adder (<sim-accum> => <fun>))
+(dp accum-reser (<sim-accum> => <fun>) identity)
 
-;;; TODO: EASIER TO USE
+(dm accumer (init add|<fun> res|<fun> => <sim-accum>)
+  (new <sim-accum> accum-value init accum-adder add accum-reser res))
 
-(dv <lst-accum> <lst>)
-(dm accum-fab ((t (t= <lst>)) => <lst-accum>)
-  '())
-(dm accum-add (a|<lst-accum> x => <lst-accum>)
-  (pair x a))
-(dm accum-res (a|<lst-accum> => <any>)
-  (rev! a))
+(dm accum-add (a|<sim-accum> x => <sim-accum>)
+  (renew a accum-value ((accum-adder a) x (accum-value a))))
+(dm accum-res (a|<sim-accum> => <any>)
+  ((accum-reser a) (accum-value a)))
 
-(ds (accuming-with (,var ,accum) ,@body)
-  `(let ((,var ,accum)) ,@body))
+(dm accum-fab ((t (t< <seq>)) => <accum>)
+  (accumer '() pair (fun (x) (as t (rev! x)))))
+
+(dm accum-fab ((t (t= <int>)) => <accum>)
+  (accumer 0 + identity))
+
+(ds (accuming-with (,@decls) ,@body)
+  (match decls
+    (() 
+     `(seq ,@body))
+    (((,var ,accum) ,@rest)
+     `(let ((,var ,accum)) (accuming-with (,@rest) ,@body)))))
  
-(ds (accuming-in ((,name ,type)) ,@body)
-  `(accuming-with ((,name ,type) (accum-fab ,type))
-     ,@body))
+(ds (accuming-in (,@vars) ,@body)
+  (match vars
+    (() 
+     `(seq ,@body))
+    (((,name ,type) ,@rest)
+     `(accuming-with (,name (accum-fab ,type))
+        (accuming-in (,@rest) ,@body)))
+    ((,name ,@rest)
+     `(accuming-in ((,name <lst>) ,@rest) ,@body))))
  
 (ds (accuming ,@body)
   `(accuming-in ((accum- <lst>)) (seq ,@body (accumed accum-))))

@@ -6,12 +6,11 @@
 (use proto/collections/sequence)
 
 (exported
-  <zip>
+  (dc <zip> (<seq>))
   (dg zip (e|... => <zip>))
   (dg unzip (z|<zip> => <tup>)))
 
-(dc <zip> (<seq>))
-(dp zip-dat (x|<zip> => <vec>) #[])
+(dp zip-dat (x|<zip> => <vec>) #())
 
 (dm zip (e|... => <zip>)
   (new <zip> zip-dat (as <tup> e)))
@@ -34,5 +33,5 @@
   (map now (%enums e)))
 (dm now-setter (v|<zip> e|<zip-enum>)
   (for ((ve v) (ee (%enums e))) (set (now ee) (now ve))))
-(dm now-at (e|<zip-enum> => <zip>)
-  (map now-at (%enums e)))
+(dm now-key (e|<zip-enum> => <zip>)
+  (map now-key (%enums e)))

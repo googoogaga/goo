@@ -27,5 +27,5 @@
 (dm nxt (e|<cycle-enum> => <cycle-enum>)  
   (renew e %key (mod (+ (%key e) 1) (%len e)) ;; %dat (%dat e)
          ))
-(dm now (e|<lst-enum> => <any>)         
+(dm now (e|<cycle-enum> => <any>)         
   (elt (cycle-elts (%dat e)) (%key e)))

@@ -1015,7 +1015,7 @@
   (and (isa? binding <module-binding>)
        (let ((name (as <str> (binding-name binding))))
          (or (= name "%dispatch") 
-             (= (find name "-dispatch") 
+             (= (finds name "-dispatch") 
                 (- (len name) (len "-dispatch"))))))) ;; suffix?
 
 (dm generate-function-code (code-out definition)

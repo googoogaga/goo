@@ -4,6 +4,7 @@
 (use proto/math)
 (use runtime)
 (use proto/collections)
+(use proto/accumulators)
 (use write)
 (use read)
 (use syntax)
