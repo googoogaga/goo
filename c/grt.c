@@ -4,9 +4,11 @@
 #define WIN32
 #endif
 
-#define IN_PRT_C
+#define IN_GRT_C
 #include "grt.h"
 #if !defined(MSWIN32)
+#include <sys/types.h>
+#include <sys/time.h>
 #include <sys/resource.h>
 #endif
 
@@ -43,12 +45,6 @@ P YPinvoke_debugger(P condition) {
 
 /* STACK */
 
-#define MAX_STACK_SIZE 100000
-
-P* stack_;
-PINT sp = 0;
-PINT fp = 0;
-
 extern P YLmetG;
 extern P YLgenG;
 extern P YLlstG;
@@ -57,15 +53,16 @@ extern P Yunknown_function_error;
 
 // FIXME: gives args backwards. Rewrite in goo.
 P YPdo_stack_frames (P fun) {
-  PINT xfp = fp;
-  while (xfp > 0) {
-    PINT nfp    = (PINT)stack_[xfp];
-    P   args   = Ynil;
-    P   f      = stack_[--xfp];
-    PINT numargs= (PINT)stack_[--xfp];
+  DEFREGS();
+  P* xfp = REG(fp);
+  while (xfp != REG(stack)) {
+    P*  nfp     = *xfp;
+    P   args    = Ynil;
+    P   f       = *(--xfp); 
+    PINT numargs = (PINT)(*(--xfp));
     PINT i;
     for (i = 0; i < numargs; i++)
-      args = YPpair(stack_[--xfp], args);
+      args = YPpair(*(--xfp), args);
     CALL2(1, fun, f, args);
     xfp = nfp;
   }
@@ -74,33 +71,46 @@ P YPdo_stack_frames (P fun) {
 
 /* OBJECT */
 
-int stack_allocp = 0;
 unsigned long nallocd  = 0; /* BYTES TOTAL ALLOCATED */
 unsigned long nsallocd = 0; /* BYTES STACK ALLOCATED */
 
-int any_stack_allocp = 0;
+int any_stack_allocp = 1;
 
-INLINE P allocate (unsigned long size) {
+INLINE P _allocate (unsigned long size, int atomicp) {
   nallocd += size;
   if (size > 100000000)
     YPbreak("ALLOCATE: BAD SIZE");
-  if (any_stack_allocp && stack_allocp) {
-    P res = &stack_[sp];
-    PINT nwords = ((size - 1) / sizeof(P)) + 1;
-    nsallocd  += size;
-    sp        += nwords;
-    /* bzero(res, size); */
-    return res;
-  } else {
+  if (any_stack_allocp) {
+    DEFREGS();
+    if (REG(stack_allocp)) {
+      P res      = (P)REG(sp);
+      PINT nwords = ((size - 1) / sizeof(P)) + 1;
+      nsallocd  += size;
+      REGSET(sp, REG(sp)+nwords);
+      /* bzero(res, size); */
+      return res;
+    }
+  } 
+  if (atomicp)
+    return((P)GC_malloc_atomic((size_t)size));
+  else
     return((P)GC_malloc((size_t)size));
-  }
 }  
 
+INLINE P allocate (unsigned long size) {
+  return _allocate(size, 0);
+}
+
+INLINE P allocate_atomic (unsigned long size) {
+  return _allocate(size, 1);
+}
+
 INLINE P stack_allocate (unsigned long size) {
+  DEFREGS();
   P res;
-  int old_stack_allocp = stack_allocp; stack_allocp = 1;
+  int old_stack_allocp = REG(stack_allocp); REGSET(stack_allocp, 1);
   res = allocate(size);
-  stack_allocp = old_stack_allocp;
+  REGSET(stack_allocp, old_stack_allocp);
   return res;
 }
 
@@ -174,7 +184,7 @@ INLINE P YPft(P x) {
 }
 INLINE P YPfpow(P x, P n) {
   INTFLO iz, ix, in; ix.i = (PINT)x; in.i = (PINT)n; 
-  iz.f = (float)pow((double)ix.f, (double)(PINT)in.f);
+  iz.f = (float)pow((double)ix.f, (double)in.f);
   return (P)iz.i;
 }
 INLINE P YPflog(P x) {
@@ -291,7 +301,7 @@ extern P YLstrG;
 
 P YPPsfab (P len, P fill) {
   PINT i;
-  P obj = allocate((2) * sizeof(P) + ((PINT)len + 1)*sizeof(PCHR));
+  P obj = allocate_atomic((2) * sizeof(P) + ((PINT)len + 1)*sizeof(PCHR));
   PSTR str = (PSTR)YPrep_dat(obj);
   YPprop_elt_setter(len, obj, (P)REP_LEN_OFF);
   for (i = 0; i < (PINT)len; i++)
@@ -303,8 +313,9 @@ P YPPsfab (P len, P fill) {
   
 P YPsb (P pstr) {
   PSTR str = (PSTR)pstr;
+  PINT i;
   PINT len = strlen(str);
-  P obj   = allocate((2) * sizeof(P) + (len + 1)*sizeof(PCHR));
+  P obj   = allocate_atomic((2) * sizeof(P) + ((PINT)len + 1)*sizeof(PCHR));
   PSTR dat = (PSTR)YPrep_dat(obj);
   YPprop_elt_setter((P)len, obj, (P)REP_LEN_OFF);
   strcpy(dat, str);
@@ -318,7 +329,7 @@ static P cstr_to_pstr (char *cstr) {
   size_t buflen;
   char *raw_pstr;
   buflen = strlen(cstr) + 1;
-  raw_pstr = allocate(strlen(cstr));
+  raw_pstr = allocate_atomic(strlen(cstr));
   strncpy(raw_pstr, cstr, buflen);
   return YPsb(raw_pstr);
 }
@@ -328,14 +339,14 @@ static P cstr_to_pstr (char *cstr) {
 P YPopen_in_file (P name) { 
   FILE* fd = fopen((PSTR)name, "r"); 
   if (fd == NULL)
-    CALL1(1, Yfile_opening_error, YPsb((PSTR)name));
+    XXCALL1(1, Yfile_opening_error, YPsb((PSTR)name));
   return (P)YPlb(fd);
 }
 
 P YPopen_out_file (P name) { 
   FILE* fd = fopen((PSTR)name, "w"); 
   if (fd == NULL)
-    CALL1(1, Yfile_opening_error, YPsb((PSTR)name));
+    XXCALL1(1, Yfile_opening_error, YPsb((PSTR)name));
   return (P)YPlb(fd);
 }
 
@@ -405,7 +416,7 @@ char strbuf[MAXSTRSIZ];
 PSTR YPgets (FILE* s) { 
   char *str;
   fgets(strbuf, MAXSTRSIZ, (FILE*)YPlu(s)); 
-  str = (char*)allocate(strlen(strbuf) + 1);
+  str = (char*)allocate_atomic(strlen(strbuf) + 1);
   strcpy(str, strbuf);
   return str;
 }
@@ -428,11 +439,11 @@ extern P Yfab_sym;
 extern P Yerror;
 
 static void unix_error (char *command, char *filename) {
-  CALLN(1, Yerror, 4,
-	YPsb("%s: %s failed: %s.\n"),
-	YPsb(command),
-	YPsb(filename),
-	YPsb(strerror(errno)));
+  XXCALL4(1, Yerror,
+	  YPsb("%s: %s failed: %s.\n"),
+	  YPsb(command),
+	  YPsb(filename),
+	  YPsb(strerror(errno)));
 }
 
 /* TODO - Resolution is crummy because we use single floats. */
@@ -473,15 +484,15 @@ P YPfile_type (P name) {
   res = stat((PSTR) name, &buf);
   if (res == 0) {
     if (S_ISREG(buf.st_mode))
-      return CALL1(1, Yfab_sym, YPsb("file"));
+      return XXCALL1(1, Yfab_sym, YPsb("file"));
     else if (S_ISDIR(buf.st_mode))
-      return CALL1(1, Yfab_sym, YPsb("directory"));
+      return XXCALL1(1, Yfab_sym, YPsb("directory"));
     else
-      return CALL1(1, Yfab_sym, YPsb("unknown"));
+      return XXCALL1(1, Yfab_sym, YPsb("unknown"));
   } else {
     unix_error("stat", name);
     /* Not executed. */
-    return CALL1(1, Yfab_sym, YPsb("unknown"));
+    return XXCALL1(1, Yfab_sym, YPsb("unknown"));
   }
 }
 
@@ -564,14 +575,15 @@ extern P YPib(P);
 extern P YPclass_prop_len_setter(P, P); /* TODO: TEMP */
 
 INLINE P FUNSHELL (int d, P x, int n) {
+  DEFREGS();
   P   fun;
-  unsigned long snallocd = nallocd;
-  int old_stack_allocp = stack_allocp; stack_allocp = d;
+  unsigned int snallocd = nallocd;
+  int old_stack_allocp = REG(stack_allocp); REGSET(stack_allocp, d);
   YPclass_prop_len_setter(YPib((P)4), YLmetG);
   fun = YPclone(x);
   fun_nallocd += nallocd - snallocd;
   FUNENVSETTER(ENVFAB(n), fun);
-  stack_allocp = old_stack_allocp;
+  REGSET(stack_allocp, old_stack_allocp);
   return fun;
 }
 
@@ -593,13 +605,13 @@ P FUNFAB (P x, int n, ...) {
 
 /* CALLS */
 
-INLINE OBJECT STACK_PAIR(P h, P t) {
-  OBJECT pair     = (OBJECT)stack_allocate(3 * sizeof(P));
-  pair->class     = YLlstG;
-  YPprop_elt_setter(h, pair, (P)0);
-  YPprop_elt_setter(t, pair, (P)1);
-  return pair;
-}
+// INLINE OBJECT STACK_PAIR(P h, P t) {
+//   OBJECT pair     = (OBJECT)stack_allocate(3 * sizeof(P));
+//   pair->class     = YLlstG;
+//   YPprop_elt_setter(h, pair, (P)0);
+//   YPprop_elt_setter(t, pair, (P)1);
+//   return pair;
+// }
 
 extern P YPib(P);
 extern P Ywrong_number_arguments_error;
@@ -607,10 +619,10 @@ extern P Ywrong_number_arguments_error;
 INLINE void CHECK_ARITY (P fun, PLOG naryp, PINT n, PINT arity) {
   if (naryp) { 
     if (n < arity) 
-      CALL2(1, Ywrong_number_arguments_error, fun, YPib((P)n)); 
+      XXCALL2(1, Ywrong_number_arguments_error, fun, YPib((P)n)); 
   } else { 
     if (n != arity) 
-      CALL2(1, Ywrong_number_arguments_error, fun, YPib((P)n)); 
+      XXCALL2(1, Ywrong_number_arguments_error, fun, YPib((P)n)); 
   }
 }
 
@@ -621,7 +633,7 @@ extern P YOclass_isaQ(P, P);
 extern P YisaQ;
 extern P YPclasses_readyQ;
 
-INLINE void CHECK_TYPE(P res, P type) {
+INLINE void CHECK_TYPE(REGS regs, P res, P type) {
   if (type != YLanyG && YPclasses_readyQ != YPfalse) {
     if ((YPobject_class(type) == YLclassG
 	 ? YOclass_isaQ(res, type) : CALL2(0, YisaQ, res, type))
@@ -630,13 +642,13 @@ INLINE void CHECK_TYPE(P res, P type) {
   }
 }
 
-void check_fun_val_type (P res, P fun) {
+void check_fun_val_type (REGS regs, P res, P fun) {
   P t = FUNVALUE(fun); 
-  CHECK_TYPE(res, t);
+  CHECK_TYPE(regs, res, t);
 }
 
-P check_type (P res, P type) {
-  CHECK_TYPE(res, type);
+P _check_type (REGS regs, P res, P type) {
+  CHECK_TYPE(regs, res, type);
   return(res);
 }
 
@@ -647,25 +659,25 @@ extern P YLgenG;
 extern P YPtraits_owner(P);
 extern P YPvnul;
 
-P YPcheck_call_types() {
-  P fun = stack_[sp - 1];
+P _YPcheck_call_types(REGS regs) {
+  P fun    = REG(sp)[-1];
   P traits = PNUL;
   if(fun != 0 && (tag_bits(fun)) == adr_tag)
     traits = YPobject_class(fun);
   
   if (traits == YLmetG) {
-    PINT n    = (PINT)stack_[sp - 2];
+    PINT n     = (int)REG(sp)[-2];
     PINT arity = FUNARITY(fun);
     PLOG naryp = FUNNARYP(fun);
-    P    specs = FUNSPECS(fun);
-    int  i;
+    P   specs = FUNSPECS(fun);
+    int i;
     
     CHECK_ARITY(fun,naryp,n,arity);
     for(i = 0; specs != Ynil; i++, specs = Ptail(specs)) {
-      CHECK_TYPE(stack_[sp - 3 - i], Phead(specs));
+      CHECK_TYPE(regs, REG(sp)[- 3 - i], Phead(specs));
     }
   } else if (traits == YLgenG) {
-    PINT n     = (PINT)stack_[sp - 2];
+    PINT n     = (int)REG(sp)[- 2];
     PINT arity = FUNARITY(fun);
     PLOG naryp = FUNNARYP(fun);
     CHECK_ARITY(fun,naryp,n,arity);
@@ -682,21 +694,21 @@ P YPcheck_call_types() {
   return Ynil;
 }
 
-P CALLN (int check, P fun, int n, ...) {
+P _CALLN (REGS regs, int check, P fun, int n, ...) {
   int i;
   P   res;
   va_list ap; va_start(ap, n);
   INC_STACK(n);
   
   for (i = 0; i < n; i++)
-    stack_[sp - i - 1] = va_arg(ap, P);
+    REG(sp)[- i - 1] = va_arg(ap, P);
 
   va_end(ap);
   PUSH((P)(PINT)n);
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(fun, YPfalse);
+  res = (FUNCODE(fun))(regs);
   DEC_STACK(n+2);
   return res;
 }
@@ -711,7 +723,7 @@ P YPPapply (P fun, P nextmets, P cvec) {
   INC_STACK(n);
   
   for (i = 0; i < n; i++)
-    stack_[sp - i - 1] = arr[i];
+    REG(sp)[- i - 1] = arr[i];
 
   PUSH((P)n);
   PUSH(fun);
@@ -723,28 +735,11 @@ P YPPapply (P fun, P nextmets, P cvec) {
 
 /* NLX */
 
-typedef struct _bind_exit_frame {
-  jmp_buf		        destination;
-  int                           sp;
-  int                           fp;
-  P			        value;
-  struct _unwind_protect_frame* present_unwind_protect_frame;
-} *BIND_EXIT_FRAME, BIND_EXIT_FRAME_DATA;
-
-typedef struct _unwind_protect_frame {
-  P cleanup_fun;
-  struct _unwind_protect_frame* previous_unwind_protect_frame;
-} *UNWIND_PROTECT_FRAME, UNWIND_PROTECT_FRAME_DATA;
-
-UNWIND_PROTECT_FRAME_DATA Ptop_unwind_protect_frame_data;
-UNWIND_PROTECT_FRAME Ptop_unwind_protect_frame 
-  = &Ptop_unwind_protect_frame_data;
-UNWIND_PROTECT_FRAME Pcurrent_unwind_protect_frame;
-
 void print_frame_count () {
+  DEFREGS();
   int i;
-  UNWIND_PROTECT_FRAME ptr = Pcurrent_unwind_protect_frame;
-  for (i = 0; ptr != Ptop_unwind_protect_frame; i++)
+  UNWIND_PROTECT_FRAME ptr = REG(current_unwind_protect_frame);
+  for (i = 0; ptr != REG(top_unwind_protect_frame); i++)
     ptr = ptr->previous_unwind_protect_frame;
   printf("FRAME COUNT = %d\n", i);
 }
@@ -752,54 +747,56 @@ void print_frame_count () {
 extern P YPmet (P, P, P, P, P, P);
 extern P YPsig (P, P, P, P, P, P);
 
-P do_exit (P fun) {
+P do_exit (REGS regs) {
   P value;
-  BIND_EXIT_FRAME frame = (BIND_EXIT_FRAME)FUNENVGET(fun, 0);
+  BIND_EXIT_FRAME frame = (BIND_EXIT_FRAME)FUNENVGET(FUNREG(), 0);
   LINK_STACK()
   ARG(value, 0);
   UNLINK_STACK()
   
   // handle all unwinds. If any unwind handler calls a non-local exit
   // itself, it may longjump out of here.
-  while(Pcurrent_unwind_protect_frame != frame->present_unwind_protect_frame)
-  {
-	  UNWIND_PROTECT_FRAME upf = Pcurrent_unwind_protect_frame;
-	  Pcurrent_unwind_protect_frame
-		  = Pcurrent_unwind_protect_frame->previous_unwind_protect_frame;
-	  CALL0(1, upf->cleanup_fun);
+  while (REG(current_unwind_protect_frame) 
+	  != frame->present_unwind_protect_frame) {
+    UNWIND_PROTECT_FRAME upf = REG(current_unwind_protect_frame);
+    REGSET(current_unwind_protect_frame,
+	   REG(current_unwind_protect_frame)->previous_unwind_protect_frame);
+    CALL0(1, upf->cleanup_fun);
   }
   // do the jump
   frame->value = value;
-  sp = frame->sp;
-  fp = frame->fp;
+  REGSET(sp, frame->sp);
+  REGSET(fp, frame->fp);
   longjmp(frame->destination, 1);
   return(PNUL); /* NEVER RETURNS BUT KEEPS COMPILER HAPPY */
 }
 
 
 P MAKE_BIND_EXIT_FRAME () {
-  PINT osp = sp, ofp = fp;
+  DEFREGS();
+  P *osp = REG(sp), *ofp = REG(fp);
   BIND_EXIT_FRAME frame
     = (BIND_EXIT_FRAME)stack_allocate(sizeof(BIND_EXIT_FRAME_DATA));
   frame->sp = osp;
   frame->fp = ofp;
-  frame->present_unwind_protect_frame = Pcurrent_unwind_protect_frame;
+  frame->present_unwind_protect_frame = REG(current_unwind_protect_frame);
   return((P)frame);
 }
 
 
 // creates non-local exit label
 P with_exit (P fun) {
+  DEFREGS();
   BIND_EXIT_FRAME frame;
   P               exit;
-  int old_stack_allocp = stack_allocp; stack_allocp = 1;
+  int old_stack_allocp = REG(stack_allocp); REGSET(stack_allocp, 1);
 
   frame = MAKE_BIND_EXIT_FRAME();
   exit  = YPmet(&do_exit, YPfalse,
 		YPsig(Ynil, YPpair(YLanyG, Ynil), 
 		      YPfalse, YPib((P)1), YPfalse, Ynil),
 		FABENV(1, frame), Ynul, YPfalse);
-  stack_allocp = old_stack_allocp;
+  REGSET(stack_allocp, old_stack_allocp);
   if (!setjmp(frame->destination))
     return CALL1(1, fun, exit);
   else
@@ -809,17 +806,18 @@ P with_exit (P fun) {
 // creates finally handler
 
 P with_cleanup (P body_fun, P cleanup_fun) {
+  DEFREGS();
   P value = YPfalse;
   UNWIND_PROTECT_FRAME frame 
     = (UNWIND_PROTECT_FRAME)stack_allocate(sizeof(UNWIND_PROTECT_FRAME_DATA));
   /* print_frame_count(); */
-  frame->previous_unwind_protect_frame = Pcurrent_unwind_protect_frame;
-  frame->cleanup_fun = cleanup_fun;
+  frame->previous_unwind_protect_frame = REG(current_unwind_protect_frame);
+  frame->cleanup_fun                   = cleanup_fun;
   
-  Pcurrent_unwind_protect_frame = frame;
+  REGSET(current_unwind_protect_frame, frame);
   value = CALL0(1, body_fun);
-  Pcurrent_unwind_protect_frame
-      = Pcurrent_unwind_protect_frame->previous_unwind_protect_frame;
+  REGSET(current_unwind_protect_frame,
+	 REG(current_unwind_protect_frame)->previous_unwind_protect_frame);
   
   CALL0(1, cleanup_fun);
   return value;
@@ -951,6 +949,21 @@ void print_kind (P adr, int prettyp, int depth) {
       }
     }
     printf(")");
+  } else if (strcmp(typename, "<opts>") == 0) {
+    OBJECT p = (OBJECT)adr;
+    int j, n;
+    P* v = (P*)YPtag(YPuntag(p->values[0]), 0); // TODO: USE ALIASES
+    n = (PINT)YPuntag(p->values[1]);
+    printf("#<"); 
+    for (j = 0; j < n; j++) {
+      if (j != 0) printf(" ");
+      if (j < max_length) {
+	print_kind(v[j], 0, depth + 1); 
+      } else {
+	printf("..."); break;
+      }
+    }
+    printf(">");
   } else if (strcmp(typename, "<met>") == 0) {
     ENV env; int j, n; 
     printf("(MET ");
@@ -1079,12 +1092,24 @@ void des (P adr) {
 extern P Ykeyboard_interrupt;
 void setup_keyboard_interrupts (void);
 
+#ifdef PTHREADS
+extern pthread_t main_thread;
+#endif
+
 void keyboard_interrupt (int value) {
   sigset_t set;
+  sigemptyset(&set);
   sigaddset(&set, SIGINT);
   sigprocmask(SIG_UNBLOCK, &set, NULL);
 
-  CALL0(1, Ykeyboard_interrupt);
+#ifdef PTHREADS
+  if (pthread_self() == main_thread)
+#endif 
+    XXCALL0(1, Ykeyboard_interrupt);
+#ifdef PTHREADS
+  else
+    pthread_kill(main_thread, SIGINT);
+#endif 
 }
 
 void setup_keyboard_interrupts (void) {
@@ -1113,45 +1138,13 @@ P YPapp_args () {
   return args;
 }
 
-/* OVERALL INITIALIZATION */
-
-void* _DYNAMIC;
-
-extern P YPTstart_running_atT;
-
-void YPinit_world(int argc, char* argv[]) {
-  static int need_init = 1;
-  Pargc   = argc;
-  Pargv   = argv;
-  if(!need_init)
-  {
-/*
-    stdin = fdopen(0, "r");
-    stdout = fdopen(1, "a");
-    setvbuf(stdout, NULL, _IOLBF, 0);
-    stderr = fdopen(2, "a");
-    setvbuf(stderr, NULL, _IONBF, 0);
-*/
-    CALL0(1, YPTstart_running_atT);
-    exit(0);
-  }
-  /* GC_enable_incremental(); */
-
-  GC_INIT();
-  stack_  = (P*)allocate(MAX_STACK_SIZE * sizeof(P));
-  envnul  = ENVFAB(0);
-  Pcurrent_unwind_protect_frame = Ptop_unwind_protect_frame;
-  setup_keyboard_interrupts();
-  need_init = 0;
-}
-
 #ifdef WIN32
 #define NO_UNEXEC
 #endif
 
 P YPunexec(P name) {
 #ifdef NO_UNEXEC
-  CALL1(1, Yerror, "Cannot unexec.");
+  XXCALL1(1, Yerror, YPsb("Cannot unexec."));
 #else
   unexec((char *)name, YPsu(YPapp_filename()), 0, 0, 0);
 #endif
@@ -1243,6 +1236,7 @@ P YPprocess_module(
     P import_fun,
     P export_fun) {
 
+  DEFREGS();
   MODULE_INFO *module_info = (MODULE_INFO*)(tag((P)untag(mod_info), 0));
   P modobj = module_info->module_object;
   IMPORT_INFO *import_info;
@@ -1271,8 +1265,8 @@ P YPprocess_module(
 
 static void process_runtime_module_shell
     (MODULE_INFO *module_info, P create_module_fun, P use_module_fun,
-     P runtime_binding_fun, P other_binding_fun)
-{
+     P runtime_binding_fun, P other_binding_fun, P dynamic_binding_fun) {
+  DEFREGS();
   P modobj;
   USE_INFO *use_info;
   BINDING_INFO *binding_info;
@@ -1292,7 +1286,7 @@ static void process_runtime_module_shell
   for (use_info = module_info->uses; use_info->module_info; use_info++) {
     process_runtime_module_shell
       (use_info->module_info, create_module_fun, use_module_fun,
-       runtime_binding_fun, other_binding_fun);
+       runtime_binding_fun, other_binding_fun, dynamic_binding_fun);
     CALL2(0, use_module_fun, modobj, use_info->module_info->module_object);
   }
 
@@ -1301,13 +1295,35 @@ static void process_runtime_module_shell
        binding_info->variable_name;
        binding_info++)
   {
-    if (binding_info->location)
+    switch (binding_info->kind) {
+    case DVAR: 
+      CALL3(0, dynamic_binding_fun, modobj,
+	    YPsb(binding_info->variable_name), 
+	    (P)YPlb((P)binding_info->location));
+      break;
+    case PVAR:
+      CALL2(0, other_binding_fun, modobj,
+	    YPsb(binding_info->variable_name));
+      break;
+    case CVAR:
+      CALL3(0, runtime_binding_fun, modobj,
+	    YPsb(binding_info->variable_name),
+	    (P)YPlb((P)binding_info->location));
+      break;
+    }
+    /*
+    if (binding_info->location == DYNNUL) {
+      DEFDYNVAR(key); 
+      CALL3(0, dynamic_binding_fun, modobj,
+	    YPsb(binding_info->variable_name), (P)YPlb(key));
+    } else if (binding_info->location)
       CALL3(0, runtime_binding_fun, modobj,
 	    YPsb(binding_info->variable_name),
 	    (P)YPlb((P)binding_info->location));
     else
       CALL2(0, other_binding_fun, modobj,
 	    YPsb(binding_info->variable_name));
+    */
   }
 }
 
@@ -1315,12 +1331,19 @@ P YPbuild_runtime_modules(
     P create_module_fun, 
     P use_module_fun,
     P runtime_binding_fun,    
-    P other_binding_fun)
+    P other_binding_fun,
+    P dynamic_binding_fun)
 {
   process_runtime_module_shell
     (goo_toplevel_module_info, create_module_fun, use_module_fun,
-     runtime_binding_fun, other_binding_fun);
+     runtime_binding_fun, other_binding_fun, dynamic_binding_fun);
   return YPfalse;
+}
+
+P YPfab_dyn_var() {
+  T* key = (T*)allocate(sizeof(T));
+  DYNFAB(key);
+  return (P)key;
 }
 
 #include <dlfcn.h>
@@ -1331,7 +1354,7 @@ extern P YgooSsystemYTgoo_rootT;
 P YgooSsystemYPcompile (P cfile, P sofile) {
   char  buf[4096];
   int pid;
-  char *v[] = {"cc", "-shared",  "-g", "-fPIC",  buf, "-o", sofile, cfile, NULL};
+  char *v[] = {"cc", "-shared",  "-g", "-O", "-fPIC",  buf, "-o", sofile, cfile, NULL};
 
   sprintf(buf, "-I%s/lib", YPsu(YgooSsystemYTgoo_rootT));
   //  printf("EXECUTING %s\n", buf);
@@ -1339,7 +1362,7 @@ P YgooSsystemYPcompile (P cfile, P sofile) {
   if (pid == 0) // child
     execvp("cc", v);
   else if (pid < 0)
-    CALL1(1, Yerror, "Cannot exec compiler.");
+    XXCALL1(1, Yerror, YPsb("Cannot exec compiler."));
   else {
     int status;
     // parent
@@ -1360,7 +1383,7 @@ P YgooSsystemYPload(P name) {
   P     res;
 
   // printf("LOADING   %s\n", name);
-  mod = dlopen(name, RTLD_NOW);
+  mod = dlopen(name, RTLD_NOW | RTLD_GLOBAL);
   if (mod == NULL)
     printf("FAILED TO LOAD %s BECAUSE %s\n", name, dlerror());
   else {
@@ -1386,3 +1409,96 @@ P YevalSg2cYPload(P name) {
 P YgooSsystemYPpid () {
   return (PINT)getpid();
 }
+
+/* OVERALL INITIALIZATION */
+
+void* _DYNAMIC;
+
+extern P YPTstart_running_atT;
+
+DEFTVAR(goo_thread);
+DEFTVAR(tregs);
+REGS main_regs = (REGS)0;
+#ifdef PTHREADS
+pthread_t main_thread = (pthread_t)0;
+#endif
+
+#define MAX_DYNVARS 256
+int dynvar_key = 0; 
+
+// NO LOCK NEEDED BECAUSE DDV OCCURS ON ONE THREAD ONLY
+// TODO: PROPAGATE NEW VAR VALS TO EXISTING THREADS
+// TODO: EXTEND WHEN OVERFLOW
+
+P DYNFAB(P v) {
+  int* key = (int*)v; 
+  *key = dynvar_key++;
+  if (dynvar_key > MAX_DYNVARS)
+    XXCALL1(1, Yerror, YPsb("TOO MANY DYNAMIC VARIABLES."));
+  return (P)*key;
+}
+
+REGS YPfab_regs() {
+  REGS regs;
+  int  old_any_stack_allocp = any_stack_allocp;
+  any_stack_allocp = 0;
+  regs = (REGS)allocate(sizeof(REGS_DATA));
+  REGSET(stack, (P*)allocate(MAX_STACK_SIZE * sizeof(P)));
+  REGSET(fp, REG(stack));
+  REGSET(sp, REG(stack));
+  REGSET(top_unwind_protect_frame, allocate(sizeof(UNWIND_PROTECT_FRAME_DATA)));
+  REGSET(current_unwind_protect_frame, REG(top_unwind_protect_frame));
+  REGSET(stack_allocp, 0);
+  REGSET(dynvars, YPPtfab((P)MAX_DYNVARS, YPfalse));
+  if (main_regs != (REGS)0) {
+    int i;
+    P vars     = REG(dynvars);
+    P mainvars = main_regs->dynvars;
+    for (i = 0; i < dynvar_key; i++)
+      YPtelt_setter(YPtelt(mainvars, i), vars, i);
+  }
+  any_stack_allocp = old_any_stack_allocp;
+  return regs;
+}
+
+void YPinit_world(int argc, char* argv[]) {
+  static int need_init = 1;
+  Pargc   = argc;
+  Pargv   = argv;
+  if(!need_init)
+  {
+    /*
+    stdin = fdopen(0, "r");
+    stdout = fdopen(1, "a");
+    setvbuf(stdout, NULL, _IOLBF, 0);
+    stderr = fdopen(2, "a");
+    setvbuf(stderr, NULL, _IONBF, 0);
+    */
+    XXCALL0(1, YPTstart_running_atT); // TODO: WHAT IS THIS FOR?
+    exit(0);
+  }
+  // GC_enable_incremental();
+
+  GC_init();
+#ifdef PTHREADS_SPECIFIC
+  pthread_key_create(&tregs, NULL);
+  pthread_key_create(&goo_thread, NULL);
+#endif
+  main_regs = YPfab_regs();
+  REGSSET(main_regs);
+  envnul  = ENVFAB(0);
+#ifdef PTHREADS
+  main_thread = pthread_self();
+#endif
+  setup_keyboard_interrupts();
+  need_init = 0;
+}
+
+extern time_t time(time_t *t);
+
+P YPtime () {
+  time_t tv;
+  tv = time(NULL);
+  return((P)(tv - GOO_EPOCH));
+}
+

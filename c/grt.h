@@ -1,12 +1,24 @@
 //// Copyright 2002, Jonathan Bachrach.  See file TERMS.
 
+#ifndef IN_GRT
+#define IN_GRT
+
+#define PTHREADS          1
+#ifdef PTHREADS
+#define PTHREADS_SPECIFIC 1
+// #define TLC
+#endif
+
 #include <time.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <string.h>
 #include <setjmp.h>
-
 #include <math.h>
+#ifdef PTHREADS
+#include <pthread.h>
+#include "gc.h"
+#endif
 
 #define INLINE inline
 #ifdef IN_PRT_C
@@ -73,7 +85,9 @@ extern P YPib(P i);
 #define YPcE(x, y)    (((PCHR)(PINT)(x)) == ((PCHR)(PINT)(y)))
 #define YPcL(x, y)    (((PCHR)(PINT)(x)) <  ((PCHR)(PINT)(y)))
 
-#define BOUNDP(x)      (((x) == PNUL) ? YPfalse : YPtrue)
+#define RTVBOUNDP(x)   (((x) == PNUL) ? YPfalse : YPtrue)
+#define BOUNDP(x)      RTVBOUNDP(x)
+#define DYNNUL         ((P)1)
 
 /* OBJ */
 
@@ -200,7 +214,35 @@ typedef struct _env {
 extern ENV envnul;
 #define ENVNUL     (envnul)
 
-typedef P (*PFUN)(P, P);
+typedef struct _bind_exit_frame {
+  jmp_buf		        destination;
+  P*                            sp;
+  P*                            fp;
+  P			        value;
+  struct _unwind_protect_frame* present_unwind_protect_frame;
+} *BIND_EXIT_FRAME, BIND_EXIT_FRAME_DATA;
+
+typedef struct _unwind_protect_frame {
+  P cleanup_fun;
+  struct _unwind_protect_frame* previous_unwind_protect_frame;
+} *UNWIND_PROTECT_FRAME, UNWIND_PROTECT_FRAME_DATA;
+
+// GOO REGISTERS
+
+typedef struct {
+  P*  stack;
+  P*  sp;
+  P*  fp;
+  P   next_methods;
+  int stack_allocp;
+  UNWIND_PROTECT_FRAME current_unwind_protect_frame;
+  UNWIND_PROTECT_FRAME top_unwind_protect_frame;
+  P   dynvars;
+} *REGS, REGS_DATA;
+
+// GOO FUNCTIONS
+
+typedef P (*PFUN)(REGS);
 
 #define FUNCODEOFFSET  0
 #define FUNNAMEOFFSET  1
@@ -259,12 +301,53 @@ STATIC_NOT_PRT_C INLINE P* FUNENVSETTER (P* env, P fun) {
 #define FUNENVGET(f, i)    ENVGET(FUNENV((f)), (i))
 #define FUNENVPUT(z, f, i) ENVPUT((z), FUNENV((f)), (i))
 
-#define YPfun_reg() (Pfun)
-#define YPnext_methods_reg() (Pnext_methods)
-#define YPsp_reg() (&stack_[sp])
-#define YPfp_reg() (&stack_[fp])
-#define YPsp_reg_setter(value) (sp = (P*)(value) - stack_)
-#define YPfp_reg_setter(value) (fp = (P*)(value) - stack_)
+// THREAD LOCAL VARIABLE SUPPORT
+
+#ifdef PTHREADS_SPECIFIC
+#define THREAD 
+typedef pthread_key_t T;
+#define TREF(x)    ((P*)pthread_getspecific(x))
+#define TSET(x, v) pthread_setspecific(x, v)
+#else
+#ifdef TLC
+#define THREAD __thread
+#else
+#define THREAD 
+#endif
+typedef P* T;
+#define TREF(x)    (x)
+#define TSET(x, v) (x = (v))
+#endif
+
+#define DEFTVAR(v)   THREAD T v
+#define EXTTVAR(v)   extern THREAD T v
+
+// GOO REGISTERS
+
+extern REGS YPfab_regs();
+EXTTVAR(tregs);
+EXTTVAR(goo_thread);
+
+#define Pregs()      TREF(tregs)
+#define REGSREF()    ((REGS)(TREF(tregs)))
+#define REGSCREF()   (regs?regs:regs=REGSREF())
+#define REGSSET(v)   TSET(tregs, (v))
+#define DEFREGS()    REGS regs = REGSREF()
+#define DEFCREGS()   REGS regs = (REGS)0
+#define YPdef_regs() regs = REGSREF()
+
+#define REG(x)       (regs->x)
+#define CREG(x)      (REGSCREF()->x)
+#define REGSET(x, v) (regs->x = (v))
+
+#define MAX_STACK_SIZE 100000
+
+#define YPfun_reg()            (Pfun)
+#define YPnext_methods_reg()   (Pnext_methods)
+#define YPsp_reg()             (REG(sp))
+#define YPfp_reg()             (REG(fp))
+#define YPsp_reg_setter(value) (REGSET(sp, value))
+#define YPfp_reg_setter(value) (REGSET(fp, value))
 
 #define FREEREF(x) (FUNENVGET(Pfun, (x)))
 
@@ -298,24 +381,17 @@ STATIC_NOT_PRT_C INLINE P YPelt_setter (P x, P v, P i) {
 
 /* CALLS */
 
-extern P   Pfunction_;
-extern int Pargument_count_;
-extern P   Pnext_methods_;
-
 #define ON_STACK(a) do { \
-  int old_stack_allocp = stack_allocp; \
-  stack_allocp = 1; \
+  int old_stack_allocp = REG(stack_allocp); \
+  REGSET(stack_allocp, 1); \
   a; \
-  stack_allocp = old_stack_allocp; \
+  REGSET(stack_allocp, old_stack_allocp); \
 } while(0)
 
-extern P* stack_;
-extern PINT sp, fp;
-
-#define PUSH(x)    (stack_[sp++] = (x))
-#define POP()      (stack_[--sp])
-#define DEC_STACK(n) (sp-=n)
-#define INC_STACK(n) (sp+=n)
+#define PUSH(x)      (*(REG(sp)) = (x), REGSET(sp, REG(sp)+1))
+#define POP()        (REGSET(sp, REG(sp)-1), *(REG(sp)))
+#define DEC_STACK(n) (REGSET(sp, REG(sp)-(n)))
+#define INC_STACK(n) (REGSET(sp, REG(sp)+(n)))
 /* #define ARG(x)         P x = POP() */
 /*
 STACK LAYOUT
@@ -328,109 +404,55 @@ fp->  prev fp
       locals...
 */
 
-#define LINK_STACK()      {stack_[sp] = (P)fp; fp = sp; sp++; }
-#define UNLINK_STACK()    {sp = fp; fp = (PINT)stack_[sp]; }
+#define FUNREG()          *(REG(sp)-1)
+#define LINK_STACK()      P Pfun = FUNREG(); P Pnext_methods = REG(next_methods); *REG(sp) = REG(fp); REGSET(fp, REG(sp)); REGSET(sp, REG(sp)+1); 
+#define UNLINK_STACK()    {REGSET(sp, REG(fp));  REGSET(fp, *REG(sp)); }
 #define YPunlink_stack (0);UNLINK_STACK
-#define ARGLEN()          (stack_[fp - 2])
-#define ARG(x, n)         x = (stack_[fp - (n) - 3])
-#define NARGS(x, n)       x = (opts_stackalloc((P)tag((P)untag((P)(stack_ + fp - (n) - 3)), loc_tag), \
-				      YPib((P)ARGLEN() - n)))
+#define ARGLEN()          (REG(fp)[-2])
+#define ARG(x, n)         x = (REG(fp)[- (n) - 3])
+#define NARGS(x, n)       x = (opts_stackalloc(regs, (P)tag((P)untag(REG(fp) - (n) - 3), loc_tag), \
+				      YPib((P)ARGLEN() - (n))))
 
 extern P YLoptsG;
-extern P YPcheck_call_types();
+extern P _YPcheck_call_types(REGS);
 
-STATIC_NOT_PRT_C  inline P opts_stackalloc(P loc, P len)
+#define YPcheck_call_types() _YPcheck_call_types(regs)
+
+STATIC_NOT_PRT_C  inline P opts_stackalloc(REGS regs, P loc, P len)
 {
   OBJECT opts;
-  opts            = (OBJECT)(&stack_[sp]);
-  sp += 3;
+  opts            = (OBJECT)(REG(sp));
+  REGSET(sp, REG(sp) + 3);               // sizeof OBJECT in P's
   opts->class     = YLoptsG;
   opts->values[0] = loc;
   opts->values[1] = len;
   return opts;
 }
 
-/*
-#define CALL0(check, zfun) ({\
-  P zz_res, zz_fun = zfun; \
-  PUSH(0); \
-  PUSH(zz_fun); \
-  if(check) \
-   YPcheck_call_types(); \
-  zz_res = (FUNCODE(zz_fun))(zz_fun, YPfalse); \
-  DEC_STACK(2); \
-  zz_res; \
-})
-
-#define CALL1(check, zfun, za1) ({\
-  P zz_res, zz_fun=zfun, zz_a1 = za1; \
-  PUSH(zz_a1); \
-  PUSH((P)1); \
-  PUSH(zz_fun); \
-  if(check) \
-   YPcheck_call_types(); \
-  zz_res = (FUNCODE(zz_fun))(zz_fun, YPfalse); \
-  DEC_STACK(3); \
-  zz_res; \
-})
-
-#define CALL2(check, zfun, za1, za2) ({\
-  P zz_res, zz_fun=zfun, zz_a1=za1, zz_a2=za2; \
-  PUSH(zz_a2); \
-  PUSH(zz_a1); \
-  PUSH((P)2); \
-  PUSH(zz_fun); \
-  if(check) \
-   YPcheck_call_types(); \
-  zz_res = (FUNCODE(zz_fun))(zz_fun, YPfalse); \
-  DEC_STACK(4); \
-  zz_res; \
-})
-
-#define CALL3(check, zfun, za1, za2, za3) ({\
-  P zz_res, zz_fun=zfun, zz_a1=za1, zz_a2=za2, zz_a3=za3; \
-  PUSH(zz_a3); \
-  PUSH(zz_a2); \
-  PUSH(zz_a1); \
-  PUSH((P)3); \
-  PUSH(zz_fun); \
-  if(check) \
-   YPcheck_call_types(); \
-  zz_res = (FUNCODE(zz_fun))(zz_fun, YPfalse); \
-  DEC_STACK(5); \
-  zz_res; \
-})
-
-#define YPraw_call(zfun, znext_mets) ({ \
-  P zz_fun=zfun, zz_next_mets = znext_mets; \
-  (FUNCODE(zz_fun))(zz_fun, zz_next_mets); \
-})
-*/
-
-STATIC_NOT_PRT_C  INLINE P CALL0 (int check, P fun) {
+STATIC_NOT_PRT_C  INLINE P _CALL0 (REGS regs, int check, P fun) {
   P   res;
   PUSH(0);
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(fun, YPfalse);
+  res = (FUNCODE(fun))(regs);
   DEC_STACK(2);
   return res;
 }
 
-STATIC_NOT_PRT_C  INLINE P CALL1 (int check, P fun, P a1) {
+STATIC_NOT_PRT_C  INLINE P _CALL1 (REGS regs, int check, P fun, P a1) {
   P   res;
   PUSH(a1);
   PUSH((P)1);
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(fun, YPfalse);
+  res = (FUNCODE(fun))(regs);
   DEC_STACK(3);
   return res;
 }
 
-STATIC_NOT_PRT_C  INLINE P CALL2 (int check, P fun, P a1, P a2) {
+STATIC_NOT_PRT_C  INLINE P _CALL2 (REGS regs, int check, P fun, P a1, P a2) {
   P   res;
   PUSH(a2);
   PUSH(a1);
@@ -438,12 +460,13 @@ STATIC_NOT_PRT_C  INLINE P CALL2 (int check, P fun, P a1, P a2) {
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(fun, YPfalse);
+  res = (FUNCODE(fun))(regs);
   DEC_STACK(4);
   return res;
 }
 
-STATIC_NOT_PRT_C  INLINE P CALL3 (int check, P fun, P a1, P a2, P a3) {
+STATIC_NOT_PRT_C  INLINE P _CALL3
+    (REGS regs, int check, P fun, P a1, P a2, P a3) {
   P   res;
   PUSH(a3);
   PUSH(a2);
@@ -452,12 +475,13 @@ STATIC_NOT_PRT_C  INLINE P CALL3 (int check, P fun, P a1, P a2, P a3) {
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(fun, YPfalse);
+  res = (FUNCODE(fun))(regs);
   DEC_STACK(5);
   return res;
 }
 
-STATIC_NOT_PRT_C  INLINE P CALL4 (int check, P fun, P a1, P a2, P a3, P a4) {
+STATIC_NOT_PRT_C  INLINE P _CALL4
+    (REGS regs, int check, P fun, P a1, P a2, P a3, P a4) {
   P   res;
   PUSH(a4);
   PUSH(a3);
@@ -467,13 +491,13 @@ STATIC_NOT_PRT_C  INLINE P CALL4 (int check, P fun, P a1, P a2, P a3, P a4) {
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(fun, YPfalse);
+  res = (FUNCODE(fun))(regs);
   DEC_STACK(6);
   return res;
 }
 
-STATIC_NOT_PRT_C INLINE P CALL5
-   (int check, P fun, P a1, P a2, P a3, P a4, P a5) {
+STATIC_NOT_PRT_C INLINE P _CALL5
+    (REGS regs, int check, P fun, P a1, P a2, P a3, P a4, P a5) {
   P   res;
   PUSH(a5);
   PUSH(a4);
@@ -484,20 +508,61 @@ STATIC_NOT_PRT_C INLINE P CALL5
   PUSH(fun);
   if(check)
     YPcheck_call_types();
-  res = (FUNCODE(fun))(fun, YPfalse);
+  res = (FUNCODE(fun))(regs);
   DEC_STACK(7);
   return res;
 }
 
 
-STATIC_NOT_PRT_C  INLINE P YPraw_call(P fun, P next_mets) {
-  return (FUNCODE(fun))(fun, next_mets);
+STATIC_NOT_PRT_C  INLINE P _YPraw_call(REGS regs, P fun, P next_mets) {
+  REGSET(next_methods, next_mets);
+  return (FUNCODE(fun))(regs);
 }
 
-extern P CALLN (int check, P fun, int n, ...);
+STATIC_NOT_PRT_C  INLINE P _YPraw_met_call(REGS regs, P fun, P next_mets) {
+  YPunlink_stack(); 
+  *(REG(sp)-1) = fun;
+  return _YPraw_call(regs, fun, next_mets);
+}
 
-extern P check_type(P,P);
-extern void check_fun_val_type(P, P);
+#define YPraw_met_call(_fun, _next_mets) _YPraw_met_call(regs, _fun, _next_mets)
+
+extern P _CALLN (REGS regs, int check, P fun, int n, ...);
+
+#define CALL0(_chk, _fun) \
+  _CALL0(regs, _chk, _fun)
+#define CALL1(_chk, _fun, _a0) \
+  _CALL1(regs, _chk, _fun, _a0)
+#define CALL2(_chk, _fun, _a0, _a1) \
+  _CALL2(regs, _chk, _fun, _a0, _a1)
+#define CALL3(_chk, _fun, _a0, _a1, _a2) \
+  _CALL3(regs, _chk, _fun, _a0, _a1, _a2)
+#define CALL4(_chk, _fun, _a0, _a1, _a2, _a3) \
+  _CALL4(regs, _chk, _fun, _a0, _a1, _a2, _a3)
+#define CALL5(_chk, _fun, _a0, _a1, _a2, _a3, _a4) \
+  _CALL5(regs, _chk, _fun, _a0, _a1, _a2, _a3, _a4)
+#define YPraw_call(_fun, _next_mets) _YPraw_call(regs, _fun, _next_mets)
+#define CALLN(...) _CALLN(regs, __VA_ARGS__)
+#define XCALL0(...) _CALL0(REGSCREF(), __VA_ARGS__)
+#define XCALL1(...) _CALL1(REGSCREF(), __VA_ARGS__)
+#define XCALL2(...) _CALL2(REGSCREF(), __VA_ARGS__)
+#define XCALL3(...) _CALL3(REGSCREF(), __VA_ARGS__)
+#define XCALL4(...) _CALL4(REGSCREF(), __VA_ARGS__)
+#define XCALL5(...) _CALL5(REGSCREF(), __VA_ARGS__)
+#define XCALLN(...) _CALLN(REGSCREF(), __VA_ARGS__)
+#define XXCALL0(...) _CALL0(REGSREF(), __VA_ARGS__)
+#define XXCALL1(...) _CALL1(REGSREF(), __VA_ARGS__)
+#define XXCALL2(...) _CALL2(REGSREF(), __VA_ARGS__)
+#define XXCALL3(...) _CALL3(REGSREF(), __VA_ARGS__)
+#define XXCALL4(...) _CALL4(REGSREF(), __VA_ARGS__)
+#define XXCALL5(...) _CALL5(REGSREF(), __VA_ARGS__)
+#define XXCALLN(...) _CALLN(REGSREF(), __VA_ARGS__)
+#define XXCALLN(...) _CALLN(REGSREF(), __VA_ARGS__)
+
+extern P _check_type(REGS, P,P);
+extern void check_fun_val_type(REGS, P, P);
+
+#define check_type(x, t) _check_type(regs, x, t)
 
 #define YPnext_methods() Pnext_methods
 
@@ -505,11 +570,11 @@ extern void check_fun_val_type(P, P);
   { return (x); }
 
 #define RET(x) \
-  { check_fun_val_type((x), Pfun); return (x); }
+  { check_fun_val_type(regs, (x), Pfun); return (x); }
 
 /* NON-LOCAL EXITS */
 
-extern P do_exit (P fun);
+extern P do_exit (REGS regs );
 extern P with_exit (P fun);
 extern P with_cleanup (P body_fun, P cleanup_fun);
 
@@ -521,13 +586,35 @@ extern P with_cleanup (P body_fun, P cleanup_fun);
 
 extern P unbound ();
 
-#define DEF(x, m, n)  extern P x; P x = PNUL;
-#define EXT(x, m, n)  extern P x;
 #define LITREF(x) x
-#define VARREF(x) x
-#define VARSET(x, v) x = v
-//#define CHKREF(x)     (((x) == PNUL) ? unbound() : (x))
-#define CHKREF VARREF
+
+// RTV'S ARE RUNTIME VARIABLES IMPLEMENTED IN TERMS OF C VARIABLES
+
+#define RTVDEF(x, m, n)  extern P x; P x = PNUL;
+#define RTVEXT(x, m, n)  extern P x;
+#define RTVREF(x)        x
+#define RTVSET(x, v)     x = v
+#define RTVCHKREF        RTVVARREF
+//#define RTVCHKREF(x)     (((x) == PNUL) ? unbound() : (x))
+
+extern P DYNFAB(P v);
+#define DYNDEF(x, m, n)     extern P x; P x = PNUL;
+#define DYNEXT(x, m, n)     extern P x;
+#define DYNREF(x)           YPtelt(CREG(dynvars), x)
+#define DYNSET(x, v)        YPtelt_setter(v, CREG(dynvars), x)
+#define DYNDEFSET(x, v)     DYNFAB(&x); DYNSET(x, v);
+#define YPdyn_var_val(x)           DYNREF(x)
+#define YPdyn_var_val_setter(v, x) DYNSET(x, v)
+
+extern P YPfab_dyn_var();
+
+// RTV'S ARE THE DEFAULT EXCEPT IN DYNAMIC COMPILATION ALA dlgrt.h
+
+#define DEF(x, m, n)  RTVDEF(x, m, n)
+#define EXT(x, m, n)  RTVEXT(x, m, n)
+#define VARREF(x)     RTVREF(x)
+#define VARSET(x, v)  RTVSET(x, v)
+#define CHKREF        RTVCHKREF(x)
 
 /* PRIVATE MODULE VARIABLES USED DIRECTLY BY THE C BACK END */
 
@@ -556,8 +643,8 @@ extern P YPmet (P,P,P,P,P,P);
 
 /* FUNCTIONS */
 
-#define FUNFOR(x)         extern P x; extern P x##I(P, P)
-#define LOCFOR(x)         static P x; static P x##I(P, P)
+#define FUNFOR(x)         extern P x; extern P x##I(REGS)
+#define LOCFOR(x)         static P x; static P x##I(REGS)
 
 /* BOXES */
 
@@ -566,7 +653,7 @@ extern P BOXFAB(P x);
 
 /* FUNCTION CODE */
 
-#define FUNCODEDEF(x)  P x##I (P Pfun, P Pnext_methods)
+#define FUNCODEDEF(x)  P x##I (REGS regs)
 #define FUNCODEREF(x)  (&(x##I))
 
 /* SYMBOL TABLE */
@@ -598,15 +685,6 @@ extern P YPapp_args ();
 
 extern void YPinit_world(int argc, char* argv[]);
 
-/* CURSES */
-
-extern P YPgrid_open ();
-extern P YPgrid_close ();
-extern P YPgrid_move (P x, P y);
-extern P YPgrid_read ();
-extern P YPgrid_write (P c);
-extern P YPgrid_refresh ();
-
 /* MODULE ENVIRONMENT INFORMATION */
 
 typedef struct _MODULE_INFO MODULE_INFO;
@@ -621,9 +699,17 @@ typedef struct {
   char         *original_name;  /* The original name in that module */
 } IMPORT_INFO;
 
+// BINDING KINDS
+
+#define DVAR 0 // DYNAMIC 
+#define CVAR 1 // C OR RUNTIME
+#define PVAR 2 // PREDEFINED
+#define NVAR 3 // NIL
+
 typedef struct {
-  char         *variable_name;  /* The binding's name in this module */
-  P            *location;       /* The storage location or NULL */
+  char         *variable_name;  // The binding's name in this module
+  char         kind;            // The binding's kind 
+  P            *location;       // The storage location or NULL 
 } BINDING_INFO;
 
 typedef struct {
@@ -667,7 +753,10 @@ extern P YPbuild_runtime_modules(
   P runtime_binding_fun,    
 
   /* ((mod <module>) (name <str>) => <any>) */
-  P other_binding_fun
+  P other_binding_fun,
+
+  /* ((mod <module>) (name <str>) (loc <loc>) => <any>) */
+  P dynamic_binding_fun
 
 );
 
@@ -694,3 +783,7 @@ STATIC_NOT_PRT_C INLINE P YevalSast_evalYPdlvar_setter(P v, P x) {
 }
 
 #define YgooSsystemYPdefault_goo_root() DEFAULT_GOO_ROOT
+
+extern P YPtime ();
+
+#endif
