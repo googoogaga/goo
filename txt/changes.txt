@@ -647,3 +647,30 @@ fixes
 
   improved ast-print to really work
   signature slots are now properly converted to programs
+
+=== 0.107 ===
+
+summary
+
+disabled ambiguous method errors
+split subtype/isa? into methods
+
+=== 0.108 ===
+
+summary
+
+  some general improvements for dynamic compilation including auto mode.
+
+adds
+
+  (auto-eval) for turning on automatic dynamic compilation
+
+changes
+
+  top comes up in auto mode detecting when dynamic compilation would
+  be beneficial (by looking for <ast-method>'s in ast).
+
+fixes
+
+  treatment of BOUNDP in dynamic compilation mode.
+  printing of nul.
