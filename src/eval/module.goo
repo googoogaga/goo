@@ -335,6 +335,7 @@
   (dp! module-transaction (<module> => <transaction>) (new <transaction>))
   (dp module-referenced-bindings (<module> => <tab>) (fab <tab> 0))
   (dp module-uses-c-files (<module> => <vec>)        (fab <vec> 0))
+  (dp module-c-forms (<module> => <vec>)             (fab <vec> 0))
   (dp module-uses-c-includes (<module> => <vec>)     (fab <vec> 0))
   (dp module-uses-c-libraries (<module> => <vec>)    (fab <vec> 0))
 
@@ -541,6 +542,7 @@
   module-uses-c-files
   module-uses-c-includes
   module-uses-c-libraries
+  module-c-forms
   module-transaction
   register-referenced-binding
   zap-referenced-bindings!

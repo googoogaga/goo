@@ -1,6 +1,7 @@
 (use goo/boot)
 (use goo/fun)
 (use goo/class)
+(use goo/types)
 
 ;; (dc <loc> (<any>))
 ;;   (dp loc-dat (<loc> => <any>))
@@ -12,3 +13,22 @@
   (set (%loc-val x) z))
 
 (export loc-val loc-val-setter)
+
+(dg as-c (x))
+
+(dm as-c (x) x)
+(dm as-c (x|<int>) (%iu x))
+(dm as-c (x|<flo>) (%fu x))
+(dm as-c (x|<chr>) (%cu x))
+(dm as-c (x|<loc>) (%lu x))
+(dm as-c (x|<str>) (%su x))
+
+(dg as-goo (t|<type>     x) x)
+(dm as-goo (t|(t< <int>) x) (%ib x))
+(dm as-goo (t|(t< <flo>) x) (%fb x))
+(dm as-goo (t|(t< <chr>) x) (%cb x))
+(dm as-goo (t|(t< <loc>) x) (%lb x))
+(dm as-goo (t|(t< <str>) x) (%sb x))
+
+(export as-c as-goo)
+

@@ -137,7 +137,25 @@ extern P YgooSsystemYTgoo_rootT;
 
 //#include "libtcc.h"
 
-P YgooSsystemYPcompile (P cfile, P sofile) {
+static int split_args (char *s, int i, char** a) {
+  for (;;) {
+    // find beginning of arg
+    for (;;) {
+      if (*s == NULL)   return i;
+      if (!isspace(*s)) break;
+      *s++ = NULL; // terminate arg
+    }
+    a[i++] = s;
+    // find end of arg
+    for (;;) {
+      if (*s == NULL)   return i;
+      if (isspace(*s))  break;
+      s++;
+    }
+  }
+}
+
+P YgooSsystemYPcompile (P cfile, P sofile, P incs, P libs) {
 #if defined(_MSC_VER)
   char* command = (char*)allocate(1024);
   strcpy(command, "cl /O2 /D MSVC_THREAD /D WITH_THREADS /D BUILD_DLL");
@@ -151,12 +169,28 @@ P YgooSsystemYPcompile (P cfile, P sofile) {
   system(command);
   return YPtrue;
 #else
-  char  buf[4096];
-  int pid;
-  char *v[] = {"cc", "-shared",  "-g", "-O", "-fPIC",  buf, "-o", sofile, cfile, NULL};
+  char  rbuf[4096];
+  char  lbuf[4096];
+  char  ibuf[4096];
+  int   i, j;
+  int   pid;
+  char *bv[] = {"cc", "-shared",  "-g", "-O", "-fPIC",  rbuf, "-o", sofile, cfile, NULL};
+  char *v[100], *lptr;
 
-  sprintf(buf, "-I%s/lib", YPsu(YgooSsystemYTgoo_rootT));
-  //  printf("EXECUTING %s\n", buf);
+  sprintf(rbuf, "-I%s/lib", YPsu(YgooSsystemYTgoo_rootT));
+  // printf("INCS %s\n", incs);
+  // printf("LIBS %s\n", libs);
+  strcpy(lbuf, libs);
+  strcpy(ibuf, incs);
+  for (i = 0; bv[i] != NULL; i++)
+    v[i] = bv[i];
+  j = i;
+  i = split_args(ibuf, i, v);
+  i = split_args(lbuf, i, v);
+  // for (; j < i; j++)
+  //   printf("ARG[%d] = %s\n", j, v[j]);
+  v[i++] = NULL;
+  // printf("EXECUTING %s %s %d\n", ibuf, v[i-2], i);
   pid = fork();
   if (pid == 0) // child
     execvp("cc", v);
@@ -173,7 +207,7 @@ P YgooSsystemYPcompile (P cfile, P sofile) {
 	return YPtrue;
     } while(1);
     return YPfalse;
-	}
+  }
 
 /* TCC compiler code
   TCCState *s;

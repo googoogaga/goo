@@ -30,7 +30,7 @@
 
 (ct 
   (dv primitive-names
-    '(%eq? %bb
+    '(%eq? %bb %bu
       %i= %i< %i+ %i- %i* %im %ir %it/ %iv %i^ %i& %i! %i?
       %i<< %i>> %i<<< %i>>>
       %eof-object %eof-object?
@@ -1207,6 +1207,8 @@
 
 ;; Compiler magic.
 (export
+  c-ment
+  c-expr
   use
   use/export
   use/mangle
@@ -1251,6 +1253,7 @@
   %app-args
   %app-filename
   %bb
+  %bu
   %binding-name
   %build-runtime-modules %process-module
   %c<

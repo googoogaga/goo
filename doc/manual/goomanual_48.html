@@ -2,61 +2,31 @@
 <html>
 <!-- XML file produced from file: goo.tex --
  -- using Hyperlatex v 2.5 (c) Otfried Cheong--
- -- on Emacs 21.2.1, Thu Jan 16 12:31:12 2003 -->
+ -- on Emacs 21.2.1, Mon Oct 20 18:37:47 2003 -->
 <head>
-<title><i>GOO&#32;Manual -- Debugger</title>
+<title><i>GOO&#32;Manual -- Development</title>
 
 </head><body>
 <table width="100%" cellpadding=0 cellspacing=2><tr>
-  <td bgcolor="#99ccff"><a HREF="goomanual_49.html"><img alt="Emacs Support" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_46.html"><img alt="Usage" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_47.html"><img alt="Development" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Debugger</b></td></tr></table>
-<h2>Debugger</h2>
-<p>A keyboard interrupt or any error enters the user into the debugger
-which provides a superset of the commands available at top-level.
-The following are debugger specific commands:
-<table border><tr><td colspan="1" align="LEFT">
-
-<A NAME="1">&nbsp;</A><tt>,up</tt> </td><td colspan="1" align="LEFT"> <tt></tt> </td><td colspan="1" align="RIGHT"> <tt>K</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>goes up one level.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="2">&nbsp;</A><tt>,top</tt> </td><td colspan="1" align="LEFT"> <tt></tt> </td><td colspan="1" align="RIGHT"> <tt>K</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>goes to top level.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="3">&nbsp;</A><tt>,restarts</tt> </td><td colspan="1" align="LEFT"> <tt></tt> </td><td colspan="1" align="RIGHT"> <tt>K</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>lists available restarts</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="4">&nbsp;</A><tt>,restart</tt> </td><td colspan="1" align="LEFT"> <tt>,n</tt> </td><td colspan="1" align="RIGHT"> <tt>K</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>chooses available restart.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="5">&nbsp;</A><tt>,handlers</tt> </td><td colspan="1" align="LEFT"> <tt>,n</tt> </td><td colspan="1" align="RIGHT"> <tt>K</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>shows available handlers.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="6">&nbsp;</A><tt>,backtrace</tt> </td><td colspan="1" align="LEFT"> <tt></tt> </td><td colspan="1" align="RIGHT"> <tt>K</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>prints out called functions and their arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="7">&nbsp;</A><tt>,bt</tt> </td><td colspan="1" align="LEFT"> <tt></tt> </td><td colspan="1" align="RIGHT"> <tt>K</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>prints out called functions.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="8">&nbsp;</A><tt>,frame</tt> </td><td colspan="1" align="LEFT"> <tt>,n</tt> </td><td colspan="1" align="RIGHT"> <tt>K</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>prints out <tt>n</tt><i>th</i> called function and its arguments.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="9">&nbsp;</A><tt>,frame-var</tt> </td><td colspan="1" align="LEFT"> <tt>,n ,name</tt> </td><td colspan="1" align="RIGHT"> <tt>K</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>prints out <tt>n</tt><i>th</i> called function's parameter <tt>name</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-<A NAME="10">&nbsp;</A><tt>frame-var</tt> </td><td colspan="1" align="LEFT"> <tt>(n|&lt;int&gt; name|&lt;sym&gt;)</tt> </td><td colspan="1" align="RIGHT"> <tt>F</tt> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td><td colspan="1" align="LEFT"> <i>returns <tt>n</tt><i>th</i> called function's parameter <tt>name</tt>.</i> </td><td colspan="1" align="RIGHT"> </td></tr>
-<tr><td colspan="1" align="LEFT">
-</td></tr></table>
-
+  <td bgcolor="#99ccff"><a HREF="goomanual_49.html"><img alt="Debugger" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_47.html"><img alt="Usage" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td align="center" bgcolor="#99ccff" width="100%"><b>Development</b></td></tr></table>
+<h2>Development</h2>
+<p>To batch compile <i>GOO&#32;to C:
+<pre>
+goo/user 0&lt;= (use eval/g2c)
+goo/user 0=&gt; #f
+goo/user 0&lt;= (g2c-goo)
+</pre>
+<p>To then compile the C:
+<pre>
+cd ${GOO_ROOT}/c
+make
+</pre>
+<p>To run the test suites:
+<pre>
+goo/user 0&lt;= (use tests)
+goo/user 0=&gt; #f
+goo/user 0&lt;= (run-all-tests)
+</pre>
 <HR >
 <table width="100%" cellpadding=0 cellspacing=2><tr>
-  <td bgcolor="#99ccff"><a HREF="goomanual_49.html"><img alt="Emacs Support" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_46.html"><img alt="Usage" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_47.html"><img alt="Development" border=0 src="previous.gif"></a></td><td align="center" bgcolor="#99ccff" width="100%"><b>Debugger</b></td></tr></table></body></html>
+  <td bgcolor="#99ccff"><a HREF="goomanual_49.html"><img alt="Debugger" border=0 src="next.gif"></a></td><td bgcolor="#99ccff"><a HREF="goomanual_47.html"><img alt="Usage" border=0 src="up.gif"></a></td><td bgcolor="#99ccff"><img alt="" src="blank.gif"></td><td align="center" bgcolor="#99ccff" width="100%"><b>Development</b></td></tr></table></body></html>

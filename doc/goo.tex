@@ -53,9 +53,9 @@
 
 \T\sloppy    % Tells TeX not to worry too much about line breaks.
 
-\T\title{{\Huge \goo\ Reference Manual v44 }}
+\T\title{{\Huge \goo\ Reference Manual v45 }}
 \T\author{{\huge Jonathan Bachrach} \\ {\Large MIT AI Lab}}
-\W\title{{\huge \goo\ Reference Manual v44 }}
+\W\title{{\huge \goo\ Reference Manual v45 }}
 \W\author{{\Large Jonathan Bachrach} \\ {\Large MIT AI Lab}}
 \date{\today}
 %\date{October 31, 1995}
@@ -676,7 +676,7 @@ generics.
   arguments must be supplied.}
 \end{defs}
 
-\subsection{Macros}
+\section{Macros}
 
 Macros provide a facility for extending the base syntax of \goo.  The
 design is based on quasiquote code templates and a simple list pattern
@@ -1981,6 +1981,78 @@ run in one thread.
 % \method{dequeue-or!}{pipe|<pipe> default => <any>}
 %   \doc{Removes and returns element from \code{pipe} or returns
 %   \code{default} if \kode{pipe} is empty.}
+\end{defs}
+
+\section{C Interface}
+
+A simple mechanism (available through the \kode{goo/x} module) is
+provided to inline C code directly into \goo, escaping back into \goo\
+when necessary, and relying on C for its type system instead of having
+to mirror it in \goo.  On the downside, there is no static checking,
+and errors can occur during C compilation.
+
+\begin{defs}
+\form{\#" ... "\#}{Liberal String}
+  \doc{Allows for the easy specification of strings (especially C code
+  snippets) with special character escaping turned off.}
+\form{C-MENT}{(C-MENT ,c-snippet [,goo-form ,c-snippet]*)}
+  \doc{Specifies a C statement formed as the
+  concatenation of c-snippets and \goo\ forms~\footnote{Currently,
+  embedded \goo\ loops are unsupported}.  
+  The \goo\ forms are evaluated at runtime as embedded C expressions in the
+  lexical context of the \kode{c-ment} expression.
+  If specified at top level, then the \kode{c-ment} form 
+  will be evaluated prior to the
+  evaluation of non \kode{c-ment} top level forms.
+}
+\form{C-EXPR}{(C-EXPR ,c-snippet [,goo-form ,c-snippet]*)}
+  \doc{Same as \kode{c-ment} but specifies a value producing C
+  expression instead.}
+\generic{to-c}{x}
+  \doc{user extensible protocol for converting a \goo\ object to a C
+  value.  Methods are provided for \kode{<int>}, \kode{<flo>},
+  \kode{<str>}, \kode{<chr>}, \kode{<log>}, and \kode{<loc>}.}
+\form{\#\{ ... \}}{Inlined C Statement}
+  \doc{Shorthand for \kode{c-ment} allowing \goo\ forms to be
+  specified with a \kode{\$} prefix and the conversion of \goo\
+  objects into C values specified with a
+  \kode{\@} prefix, with \kode{\@x} $\equiv$ \kode{(to-c \$x)}.
+For example,
+\begin{ex}
+(df f (x) \#\{ printf("Got \%lx\\n", \$x); \})
+\end{ex}
+prints out the \goo\ value \kode{\$x}.  
+A callback can be defined at top level as follows:
+\begin{ex}
+\#\{ int gl\_idle(int x) \{ \$(gl-idle); \} \}
+\end{ex}
+C headers can be included similarly:
+\begin{ex}
+\#\{ \#include "GL.h" \}
+\end{ex}
+C expressions can be nested within embedded \goo\ expressions as follows:
+\begin{ex}
+\#\{ int gl\_idle(int x) \{ \$(gl-idle \#ei\{ x \}); \} \}
+\end{ex}
+in order to access lexical apparent C variables etc.
+}
+\form{\#ec\{ ... \}}{Inlined C Expression}
+  \doc{Similar shorthand for \kode{c-expr} also allowing a single
+  character code \kode{c} for specifying the conversion of C values back to
+  \goo\ objects.  The valid codes are \kode{i} for \kode{<int>}, 
+  \kode{f} for \kode{<flo>}, \kode{s} for \kode{<str>}, 
+  \kode{c} for \kode{<chr>}, \kode{b} for \kode{<log>}, 
+  \kode{l} for \kode{<loc>}, \kode{g} for none.
+For example, 
+\begin{ex}
+(d.\ \$gl-line-loop \#ei\{ GL\_LINE\_LOOP \})
+\end{ex}
+defines a top-level OpenGL constant.
+}
+\form{USE/LIBRARY}{(USE/LIBRARY ,name)}
+  \doc{adds \kode{,name} to list of libraries to be linked against.}
+\form{USE/INCLUDE}{(USE/INCLUDE ,name)}
+  \doc{adds \kode{,name} to include directory search path.}
 \end{defs}
 
 \section{Compiler}

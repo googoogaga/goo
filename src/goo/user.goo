@@ -2,3 +2,4 @@
 
 (use goo)
 (use goo/eval)
+(use goo/x)

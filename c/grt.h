@@ -89,6 +89,7 @@ IMPORTEXPORT extern P YPib(P i);
 #define YPEE(x, y)    ((x) == (y))
 #define YPeqQ(x, y)   ((x) == (y))
 #define YPbb(x)       (((x) == 0) ? YPfalse : YPtrue)
+#define YPbu(x)       ((x) == YPfalse)
 #define YPiE(x, y)    (((PINT)(x)) == ((PINT)(y)))
 #define YPiL(x, y)    (((PINT)(x)) <  ((PINT)(y)))
 #define YPiA(x, y)    (((PINT)(x)) +  ((PINT)(y)))
@@ -626,6 +627,24 @@ IMPORTEXPORT extern P _CALLN (REGS regs, int check, P fun, int n, ...);
 #define XXCALL4(...) _CALL4(REGSREF(), __VA_ARGS__)
 #define XXCALL5(...) _CALL5(REGSREF(), __VA_ARGS__)
 #define XXCALLN(...) _CALLN(REGSREF(), __VA_ARGS__)
+#else
+IMPORTEXPORT EXTTVAR(msc_calln_regs);
+IMPORTEXPORT extern P _MSC_CALLN (int check, P fun, int n, ...);
+#define CALLN (TSET(msc_calln_regs, regs),_MSC_CALLN)
+#define XCALL0(check, fun) _CALL0(REGSCREF(), check, fun)
+#define XCALL1(check, fun, a1) _CALL1(REGSCREF(), check, fun, a1)
+#define XCALL2(check, fun, a1, a2) _CALL2(REGSCREF(), check, fun, a1, a2)
+#define XCALL3(check, fun, a1, a2, a3) _CALL3(REGSCREF(), check, fun, a1, a2, a3)
+#define XCALL4(check, fun, a1, a2, a3, a4) _CALL4(REGSCREF(), check, fun, a1, a2, a3, a4)
+#define XCALL5(check, fun, a1, a2, a3, a4, a5) _CALL5(REGSCREF(), check, fun, a1, a2, a3, a4, a5)
+#define XCALLN (TSET(msc_calln_regs, REGSCREF()),_MSC_CALLN)
+#define XXCALL0(check, fun) _CALL0(REGSREF(), check, fun)
+#define XXCALL1(check, fun, a1) _CALL1(REGSREF(), check, fun, a1)
+#define XXCALL2(check, fun, a1, a2) _CALL2(REGSREF(), check, fun, a1, a2)
+#define XXCALL3(check, fun, a1, a2, a3) _CALL3(REGSREF(), check, fun, a1, a2, a3)
+#define XXCALL4(check, fun, a1, a2, a3, a4) _CALL4(REGSREF(), check, fun, a1, a2, a3, a4)
+#define XXCALL5(check, fun, a1, a2, a3, a4, a5) _CALL5(REGSREF(), check, fun, a1, a2, a3, a4, a5)
+#define XXCALLN (TSET(msc_calln_regs,REGSREF()),_MSC_CALLN)
 #endif
 
 IMPORTEXPORT extern P YPcheck_type(P,P,P);

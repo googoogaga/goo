@@ -335,6 +335,30 @@ P _CALLN (REGS regs, int check, P fun, int n, ...) {
   return res;
 }
 
+#if defined(_MSC_VER)
+DEFTVAR(msc_calln_regs);
+
+P _MSC_CALLN (int check, P fun, int n, ...) {
+  REGS regs = (REGS)TREF(msc_calln_regs);
+  int i;
+  P   res;
+  va_list ap; va_start(ap, n);
+  INC_STACK(n);
+  
+  for (i = 0; i < n; i++)
+    REG(sp)[- i - 1] = va_arg(ap, P);
+
+  va_end(ap);
+  PUSH((P)(PINT)n);
+  PUSH(fun);
+  if(check)
+    YPcheck_call_types();
+  res = FUNCALL(fun);
+  DEC_STACK(n+2);
+  return res;
+}
+#endif
+
 /* NLX */
 
 void print_frame_count () {
@@ -1029,8 +1053,9 @@ void YPinit_world(int argc, char* argv[]) {
   pthread_key_create(&tregs, NULL);
   pthread_key_create(&goo_thread, NULL);
 #elif defined(MSVC_THREAD)
-  tregs = TlsAlloc();
-  goo_thread = TlsAlloc();
+  tregs          = TlsAlloc();
+  goo_thread     = TlsAlloc();
+  msc_calln_regs = TlsAlloc();
 #endif
 #endif
   main_regs = YPfab_regs();
@@ -1042,5 +1067,3 @@ void YPinit_world(int argc, char* argv[]) {
   setup_keyboard_interrupts();
   need_init = 0;
 }
-
-

@@ -6,7 +6,7 @@
 static PSTR _mod = PNUL;
 
 static P sloc (int line) {
-  if (_mod == PNUL) _mod = YPsb((P)"g2c");
+  if (_mod == PNUL) _mod = YPPsym((P)"eval/main");
   return YPsrc_loc(YPib((P)line), _mod);
 }
 

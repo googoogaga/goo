@@ -223,22 +223,22 @@
   (rep loop ((l '()) (i 0))
     (def c (get port))
     (if (eof-object? c)
-          (reading-error port "end of file within a string")
-          (if (= c #\\)
-              (let ((c (get port)))
-                (if (eof-object? c)
-                    (reading-error port "end of file within a string")
-                    (if (or (= c #\\) (= c #\"))
-                        (loop (pair c l) (+ i 1))
-                        (let ((ec (elt $string-escape-chars (as <int> c))))
-                          (if ec
-                              (loop (pair ec l) (+ i 1))
-                              (reading-error
-                               port "invalid escaped character in string" 
-                               c))))))
-              (if (= c #\")
-                  (reverse-list->string l i)
-                  (loop (pair c l) (+ i 1)))))))
+	(reading-error port "end of file within a string")
+	(if (= c #\\)
+	    (let ((c (get port)))
+	      (if (eof-object? c)
+		  (reading-error port "end of file within a string")
+		  (if (or (= c #\\) (= c #\"))
+		      (loop (pair c l) (+ i 1))
+		      (let ((ec (elt $string-escape-chars (as <int> c))))
+			(if ec
+			    (loop (pair ec l) (+ i 1))
+			    (reading-error
+			     port "invalid escaped character in string" 
+			     c))))))
+	    (if (= c #\")
+		(reverse-list->string l i)
+		(loop (pair c l) (+ i 1)))))))
 
 (set-standard-read-macro!
   #\" #t read-string-literal)
@@ -286,6 +286,62 @@
 
 (define-sharp-macro #\/
   (fun (c port) (gobble-nested-comment port) (sub-read port)))
+
+(df read-long-string-literal (c port|<port>)
+  (get port) ;; skip double quote
+  (rep loop ((l '()) (i 0) (q? #f))
+    (def c (get port))
+    (if (eof-object? c)
+        (reading-error port "end of file within a long string")
+	(case c
+	  ((#\") (loop (pair c l) (+ i 1) #t))
+	  ((#\#) (if q? (reverse-list->string (tail l) (- i 1))
+	                (loop (pair c l) (+ i 1) #f)))
+	  (#t    (loop (pair c l) (+ i 1) #f))))))
+
+(define-sharp-macro #\" read-long-string-literal)
+
+(dm parse-c-inline (s|<str>)
+  (def port (open <str-in-port> s))
+  (def buf  (fab <vec> 0))
+  (rep loop ((str '()) (res '()))
+    (def c (get port))
+    (if (eof-object? c)
+	(rev! (add res (as <str> (rev! str))))
+        (case c
+          ((#\$ #\@) 
+           (def val (if (= c #\$) (read port) `(to-c ,(read port))))
+           (loop '() (add (add res (as <str> (rev! str))) val)))
+          (#t
+           (loop (add str c) res))))))
+
+(df read-c-inline-literal (start end form port|<port>)
+  (get port) ;; skip curly
+  (rep loop ((l '()) (i 0) (d 1))
+    (def c (get port))
+    (if (eof-object? c)
+        (reading-error port "end of file within c-inline")
+	(case c
+	  ((start) (loop (pair c l) (+ i 1) (+ d 1)))
+	  ((end)   (if (= d 1) 
+                       `(,form ,@(parse-c-inline (reverse-list->string l i)))
+                       (loop (pair c l) (+ i 1) (- d 1))))
+	  (#t       (loop (pair c l) (+ i 1) d))))))
+
+(df read-c-statement-literal (c port|<port>) 
+  (read-c-inline-literal #\{ #\} 'c-ment port))
+
+(define-sharp-macro #\{ read-c-statement-literal)
+
+(df read-c-expression-literal (ce port|<port>)
+  (get port)
+  (def c (get port))
+  (def inline (read-c-inline-literal #\{ #\} 'c-expr port))
+  (if (= c #\g)
+      inline
+      `(,(cat-sym '% (fabs <str> c) 'b) ,inline)))
+
+(define-sharp-macro #\e read-c-expression-literal)
 
 ;; TODO: ASSQ
 

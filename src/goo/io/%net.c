@@ -2,14 +2,20 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#if !defined(_MSC_VER)
 #include <unistd.h>
 #include <netdb.h>
+#else
+#include <winsock.h>
+#endif
 #include <fcntl.h>
 #include <errno.h>
+#if !defined(_MSC_VER)
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
+#endif
 
 #define my_package YgooSioSnetYP
 
@@ -30,10 +36,39 @@ EXT(YgooSioSnetYsocket_eof,"goo/io/net","socket-eof");
 EXT(YgooStypesYlen, "goo/types", "len");
 EXT(YgooSmacrosYelt, "goo/macros", "elt");
 
+#if defined(_MSC_VER)
+int win32_start_sockets()
+{
+  static int sockets_started = 0;
+
+  if(!sockets_started)
+  {
+    WSADATA data;
+	if(WSAStartup(MAKEWORD(1, 1), &data) != 0)
+	{
+      return 0;
+    }
+
+    
+    sockets_started = 1;
+   
+  }
+  return 1;
+}
+
+#endif
+
 GOOFUNC(new_socket) ()
 {
   int sock;
  
+#if defined(_MSC_VER)
+  if(!win32_start_sockets())
+  {
+    return YPfalse;
+  }
+#endif
+
   sock = socket(AF_INET, SOCK_STREAM, 0); // default protocol.
 
   if (sock < 0)
@@ -245,7 +280,11 @@ GOOFUNC(write_socket_string) (P sockfd, P str)
 
 GOOFUNC(close_socket) (P sockfd)
 {
+#if defined(_MSC_VER)
+  closesocket(sockUnwrap(sockfd));
+#else
   close(sockUnwrap(sockfd));
+#endif
 
   return YPtrue;
 }
@@ -255,6 +294,9 @@ GOOFUNC(make_non_blocking) (P sockfd)
   int opts;
   int sock = sockUnwrap(sockfd);
 
+#if defined(_MSC_VER)
+  return YPfalse;
+#else
   opts = fcntl(sock, F_GETFL);
   if(opts < 0)
     {
@@ -269,6 +311,7 @@ GOOFUNC(make_non_blocking) (P sockfd)
     }
 
   return YPtrue;
+#endif
 }
 
 #define YPtlen(a)        (int)YPiu(XCALL1(1, VARREF(YgooStypesYlen), a))

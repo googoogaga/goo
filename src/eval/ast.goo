@@ -288,6 +288,13 @@
   (dp! locals-functions (<locals> => <any>))
   (dp! locals-body (<locals> => <any>))
 
+(def-programs inline-refs)
+
+(dc <c-inline> (<computed-program>))
+  (dp! c-inline-refs (<c-inline> => <inline-refs>))
+  (dp! c-inline-strs (<c-inline> => <lst>))
+  (dp! c-inline-expr? (<c-inline> => <log>) #t)
+
 (dc <bind-exit> (<computed-program>))
   (dp! bind-exit-main-fun (<bind-exit> => <any>))
   (dp! bind-exit-light? (<bind-exit> => <log>) #t)
@@ -1004,6 +1011,32 @@
     monitor-handler    (objectify handler r #f)
     monitor-main-thunk (objectify body r #f)))
 
+(dm objectify-refs (e*|<lst> r => <any>)
+  (if (nul? e*)
+      (nul <inline-refs>)
+      (inline-refs (objectify (head e*) r #f) (objectify-refs (tail e*) r))))
+
+(dm split-c-inline-vals (vals|<lst>)
+  (rep loop ((vals (tail vals)) (strs (lst (1st vals))) (refs '()))
+    (if (nul? vals)
+        (tup (rev! strs) (rev! refs))
+        (loop (tail (tail vals)) 
+              (add strs (2nd vals)) (add refs (1st vals))))))
+
+(dm objectify-c-expr (x expr? r tail? => <program>)
+  (let (((tup strs ref-strs) (split-c-inline-vals x))
+	(refs                (objectify-refs ref-strs r)))
+     (new <c-inline> 
+       c-inline-refs refs c-inline-strs strs c-inline-expr? expr?)))
+
+(dm objectify-c-inline (x r tail? => <program>)
+  (def res (objectify-c-expr x #f r tail?))
+  (if (isa? (environment-next r) <static-nul-environment>)
+      (let ((module (find-environment-module r)))
+        (push! (module-c-forms module) res)
+        (objectify-quotation #f r))
+      res))
+
 (dm objectify-export (names r tail? => <program>)
   (def env (find-static-global-environment r))
   (def module (find-environment-module r))
@@ -1403,6 +1436,16 @@
 (define-magic-binding use/export-module (x r tail?)
   (objectify-use/export-module (2nd x) r tail?))
 
+(dv $sexpr-c-ment-tag 'c-ment)
+
+(define-magic-binding c-ment (x r tail?)
+  (objectify-c-inline (tail x) r tail?))
+
+(dv $sexpr-c-expr-tag 'c-expr)
+
+(define-magic-binding c-expr (x r tail?)
+  (objectify-c-expr (tail x) #t r tail?))
+
 ;;;;=======================================================================
 ;;;;  Set Up Initial Environments for Objectification
 ;;;;=======================================================================
@@ -1735,4 +1778,8 @@
   ast-error
   process-closed-application
   ast-contains-fun?
+  <c-inline>
+    c-inline-refs
+    c-inline-strs
+    c-inline-expr?
   )

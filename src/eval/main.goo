@@ -7,6 +7,10 @@
 (use eval/top)
 (use eval/g2c)
 
+;; (use tgx)
+
+(use gl)
+
 #/
 (use goo/io/pretty)
 (use eval/ast-print)
@@ -35,12 +39,12 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.153")
-(dv *goo-date*    "JAN 16, 2003")
+(dv *goo-version* "0.154")
+(dv *goo-date*    "OCT 09, 2003")
 
 (post ";;; GOO\n")
 (post ";;; JONATHAN BACHRACH\n")
-(post ";;; MIT AI Lab\n")
+(post ";;; MIT CSAIL\n")
 (post ";;; %s\n" *goo-date*)
 (post ";;; \n")
 (post ";;; VERSION = %s\n" *goo-version*)
