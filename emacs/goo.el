@@ -18,7 +18,8 @@
       ;; let's just use Lisp's syntax for now...
       (setq goo-mode-syntax-table table)
       (modify-syntax-entry ?| "_   " table)
-      (modify-syntax-entry ?- "w   " goo-mode-syntax-table)))
+      ;; (modify-syntax-entry ?- "w   " goo-mode-syntax-table)
+      ))
 
 (defvar goo-mode-abbrev-table nil "")
 (define-abbrev-table 'goo-mode-abbrev-table ())
