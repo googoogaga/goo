@@ -1,0 +1,78 @@
+(use goo)
+
+(use goo/random)
+
+(use samurui/samurui)
+(use samurui/gtk.swig)
+(use samurui/gtkcallbacks)
+
+(dc <happy-dummy> (<any>))
+
+(df tick-dummy (dummy)
+  (def p (elt cur-points (random 4)))
+  (set (point-x p) (+ (point-x p) (- (random 3) 1)))
+  (set (point-y p) (+ (point-y p) (- (random 3) 1)))
+  (repaint-widget dummy)
+  )
+
+(idrawmodel <happy-dummy> <happy-draw>
+            (gtk_idle_add (gtk_getGtkFunctionCallback)
+                          (goo_safeCreateCallback tick-dummy imagebox))
+            )
+
+(dc <simapp> (<any>))
+(dp! scribble (<simapp> => <happy-dummy>))
+
+(dv c_red (color 255 0 0))
+(dv c_lred (color 128 0 0))
+
+(dv cur-x 0)
+(dv cur-y 0)
+
+(dv cur-points (tup (point -5 -5)
+                    (point  5 -5)
+                    (point  5  5)
+                    (point -5  5)))
+
+(dm mouse-press ((widget <happy-draw>) (x <int>) (y <int>) (button <int>) (time <int>))
+  )
+
+(dm mouse-release ((widget <happy-draw>) (x <int>) (y <int>) (button <int>) (time <int>))
+  )
+
+(dm mouse-move ((widget <happy-draw>) (x <int>) (y <int>) (state <int>))
+  (set cur-x x)
+  (set cur-y y)
+  )
+
+(dm transform-points-by-point (points|<tup> mod-point|<point> => <tup>)
+  (map (fun (p)
+         (point (+ (point-x p) (point-x mod-point))
+                (+ (point-y p) (point-y mod-point))))
+       points)
+  )
+
+(dm repaint-widget (widget|<happy-draw>)
+  (def rel-points (transform-points-by-point cur-points (point cur-x cur-y)))
+  
+  (blank widget)
+
+  (draw-polygon widget rel-points #t c_red)
+  (draw-polygon widget rel-points #f c_lred)
+  (invalidate-all widget)
+  )
+
+; -------- Interface Models
+
+(imodel <simapp>
+        "Magic Scribble"
+        (attr scribble fill)
+)
+
+(samurui-init)
+
+(dv simhat (new <simapp>))
+(set (scribble simhat) (new <happy-dummy>))
+
+(present simhat)
+(samurui-go)

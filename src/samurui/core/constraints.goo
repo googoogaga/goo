@@ -11,17 +11,17 @@
 
 (dc <int-constraint> (<numeric-constraint>))
 
-(dp lbound (<int-constraint> => <int>))
-(dp ubound (<int-constraint> => <int>))
-(dp small-increment (<int-constraint> => <int>) 1)
-(dp large-increment (<int-constraint> => <int>) 10)
+(dp! lbound (<int-constraint> => <int>))
+(dp! ubound (<int-constraint> => <int>))
+(dp! small-increment (<int-constraint> => <int>) 1)
+(dp! large-increment (<int-constraint> => <int>) 10)
 
 (dc <flo-constraint> (<numeric-constraint>))
 
-(dp lbound (<flo-constraint> => <flo>))
-(dp ubound (<flo-constraint> => <flo>))
-(dp small-increment (<flo-constraint> => <flo>) 1.0)
-(dp large-increment (<flo-constraint> => <flo>) 10.0)
+(dp! lbound (<flo-constraint> => <flo>))
+(dp! ubound (<flo-constraint> => <flo>))
+(dp! small-increment (<flo-constraint> => <flo>) 1.0)
+(dp! large-increment (<flo-constraint> => <flo>) 10.0)
 
 (dm num-constraint (low|<int> high|<int> => <int-constraint>)
   (def constraint (new <int-constraint>))

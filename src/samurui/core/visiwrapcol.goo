@@ -5,8 +5,8 @@
 ;; visi-wrap
 
 (dc <visi-wrap-col> (<visi-col>))
- (dp wrapped (<visi-wrap-col> => <col>))
- (dp parent-hash (<visi-wrap-col> => <tab>) (fab <tab> 0))
+ (dp! wrapped (<visi-wrap-col> => <col>))
+ (dp! parent-hash (<visi-wrap-col> => <tab>) (fab <tab> 0))
 
 (dm visi-wrap-col (to-wrap|<col> => <visi-wrap-col>)
   (def vwc (new <visi-wrap-col>))

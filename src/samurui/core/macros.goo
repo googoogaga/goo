@@ -6,14 +6,14 @@
 
 (ds (iprop ,class ,binding ,type ,desc)
   `(seq
-     (dp ,binding (,class => ,type))
+     (dp! ,binding (,class => ,type))
      (add-property ,class (interface-property ,(as <str> binding) ,type ,binding ,(fab-setter-name binding) ,desc))
      )
   )
 
 (ds (ipropc ,class ,binding ,type ,desc ,constraint)
   `(seq
-     (dp ,binding (,class => ,type))
+     (dp! ,binding (,class => ,type))
      (def da-prop (interface-property ,(as <str> binding) ,type ,binding ,(fab-setter-name binding) ,desc))
      (set (constraint da-prop) ,constraint)
      (add-property ,class da-prop)

@@ -12,14 +12,14 @@
 ;; -- GUI Wrapper 
 
 (dc <gui> (<any>))
-  (dp handle (<gui> => <loc>))
+  (dp! handle (<gui> => <loc>))
 
 ; -
 ; -- Limited GUI Wrappers
 ; -
 
 (dc <gui-widget> (<gui>))
- (dp attrs (<gui-widget> => (t? <col>)) #f)
+ (dp! attrs (<gui-widget> => (t? <col>)) #f)
 
 (dm free (gui-obj|<gui>)
   (unless (= (handle gui-obj) NULL)
@@ -42,7 +42,7 @@
 ; -- Containers
 
 (dc <gui-container> (<gui-widget>))
-  (dp children (<gui-container> => <vec>) (fab <vec> 0))
+  (dp! children (<gui-container> => <vec>) (fab <vec> 0))
 
 (dm free (container|<gui-container>)
   ;; Kill off the kids
@@ -185,7 +185,7 @@
   ) 
 
 (dc <gui-adjustment> (<gui>))
-(dp constraint (<gui-adjustment> => <numeric-constraint>))
+(dp! constraint (<gui-adjustment> => <numeric-constraint>))
 
 (dm to-adjustment (constraint|<numeric-constraint> => <gui-adjustment>)
   (def adj (new <gui-adjustment>))

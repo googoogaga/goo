@@ -1,0 +1,49 @@
+(use goo)
+
+(use samurui/samurui)
+
+;; Intrinsic rendering... color, shape, size, (texture, transparentcy), etc.
+
+
+;; Lightweight object drawing protocol.
+
+(dc <lightweight-renderer> (<any>))
+
+(dg draw-lightweight (canvas|<any> at-point|<point> renderer|<lightweight-renderer> item|<any>))
+
+(dg get-lightweight-dimensions (renderer|<lightweight-renderer> item|<any> => <rect>))
+
+(dc <visi-intrinsic> (<lightweight-renderer>))
+
+(dv $pretty-blue #f)
+
+(dm map-color (renderer|<visi-intrinsic> item|<any> => <color>)
+  (unless $pretty-blue
+    (set $pretty-blue (color 0 16 192))
+    )
+  $pretty-blue
+  )
+
+(dm draw-lightweight (canvas|<any> at-point|<point> renderer|<visi-intrinsic> item|<any>)
+  (draw-ellipse canvas
+                (rect-around (point-x at-point)
+                             (point-y at-point)
+                             4 4)
+                #t
+                (map-color renderer item))
+  )
+
+(dm get-lightweight-dimensions (renderer|<visi-intrinsic> item|<any> => <rect>)
+  (rect 0 0 8 8)
+  )
+
+;; Mapping Techniques:
+
+;; Explicit set mapping -- each unique value mapped to a unique shape/color
+;; Range mapping -- for numeric values, map a given percentage in the range to a given 
+;;   swath of color-space, or parametric shape morphing, etc.
+;; Derived values... decorated?  Statistical analyses of a set, colorize based on deviation, etc.
+
+;; Specialized heuristics, possibly based on consuming James's quantities?
+;;  -- since the dimensions are explicit, we can tell when we're talking about temperature,
+;;   speed, etc.

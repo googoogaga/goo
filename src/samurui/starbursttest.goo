@@ -16,7 +16,7 @@
   o
   )
 
-(dm to-str (h|<str-hold>)
+(dm to-str (h|<str-hold> => <str>)
   (da-str h)
   )
 
@@ -30,7 +30,7 @@
   o
   )
 
-(dm to-str (h|<int-hold>)
+(dm to-str (h|<int-hold> => <str>)
   (to-str (da-int h))
   )
 

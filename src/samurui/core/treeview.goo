@@ -9,18 +9,18 @@
 (use samurui/core/masterslave)
 (use samurui/core/visicol)
 
-(use samurui/visiwrapcol)
+(use samurui/core/visiwrapcol)
 
 (use samurui/gtkcallbacks)
 
 (dc <gui-treeview-model> (<gui>))
 
 (dc <gui-treeview> (<gui-widget>))
- (dp collection (<gui-treeview> => <visi-col>))
- (dp axis (<gui-treeview> => <any>) "implicit")
- (dp prop-axes (<gui-treeview> => <col>) (fab <vec> 0))
- (dp model (<gui-treeview> => <gui-treeview-model>))
- (dp tv-master (<gui-treeview> => (t? <gui-master>)) #f)
+ (dp! collection (<gui-treeview> => <visi-col>))
+ (dp! axis (<gui-treeview> => <any>) "implicit")
+ (dp! prop-axes (<gui-treeview> => <col>) (fab <vec> 0))
+ (dp! model (<gui-treeview> => <gui-treeview-model>))
+ (dp! tv-master (<gui-treeview> => (t? <gui-master>)) #f)
 
 (dm gui-treeview (=> <gui-treeview>)
   (def gtv (new <gui-treeview>))

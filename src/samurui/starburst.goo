@@ -4,11 +4,11 @@
 (use samurui/gtkcallbacks)
 
 (idrawmodel <visi-col> <visi-sb>)
- (dp wrapped (<visi-sb> => (t? <visi-col>)) #f)
- (dp current-root (<visi-sb> => <any>))
- (dp navigation-stack (<visi-sb> => <col>) (vec))
- (dp axis (<visi-sb> => <any>) "implicit")
- (dp sb-master (<visi-sb> => (t? <gui-master>)) #f)
+ (dp! wrapped (<visi-sb> => (t? <visi-col>)) #f)
+ (dp! current-root (<visi-sb> => <any>))
+ (dp! navigation-stack (<visi-sb> => <col>) (vec))
+ (dp! axis (<visi-sb> => <any>) "implicit")
+ (dp! sb-master (<visi-sb> => (t? <gui-master>)) #f)
 
 (dv *up-node* (gensym))
 

@@ -14,9 +14,9 @@
 (dv root-interface (new <interface-info>))
 
 (dc <interface-action> (<interface-info>))
-  (dp name (<interface-action> => <str>))
-  (dp method (<interface-action> => <any>))
-  (dp description (<interface-action> => <any>))
+  (dp! name (<interface-action> => <str>))
+  (dp! method (<interface-action> => <any>))
+  (dp! description (<interface-action> => <any>))
 
 (dm interface-action (new-name new-method new-description => <interface-action>)
   (let ((action (new <interface-action>)))
@@ -28,12 +28,12 @@
   )
 
 (dc <interface-property> (<interface-info>))
-  (dp name (<interface-property> => <any>))
-  (dp type (<interface-property> => <class>))
-  (dp getter (<interface-property> => <any>))
-  (dp setter (<interface-property> => <any>))
-  (dp description (<interface-property> => <any>))
-  (dp constraint (<interface-property> => (t? <interface-constraint>)) #f)
+  (dp! name (<interface-property> => <any>))
+  (dp! type (<interface-property> => <class>))
+  (dp! getter (<interface-property> => <any>))
+  (dp! setter (<interface-property> => <any>))
+  (dp! description (<interface-property> => <any>))
+  (dp! constraint (<interface-property> => (t? <interface-constraint>)) #f)
 
 (dm interface-property (new-name new-type new-getter new-setter new-description => <interface-property>)
   (let ((property (new <interface-property>)))
@@ -45,12 +45,27 @@
     property)
   )
 
+;; This seems like a bad approach.  Better approaches include:
+;; - Just directly using the <prop> class, but pester Jonathan to add support for the
+;;    required meta-data. (eventual goal)
+;; - Proxy / decorate / yadda-yadda. (Halfway.)
+;; - Just rename the generics for this to overlap the other dude?
+(dm prop-to-interface-prop (prop => <interface-property>)
+  (def new-prop (new <interface-property>))
+  (set (name new-prop) (as <str> (fun-name (prop-getter prop))))
+  (set (type new-prop) (prop-type prop))
+  (set (getter new-prop) (prop-getter prop))
+  (set (setter new-prop) (prop-setter prop))
+  (set (description new-prop) "Native Property")
+  new-prop
+  )
+
 ; Maps class of object to a vector of potential interface-models
 (dv interface-models (fab <tab> 0))
 
 (dc <interface-class-info> (<any>))
-  (dp properties (<interface-class-info> => <str-tab>))
-  (dp actions (<interface-class-info> => <str-tab>))
+  (dp! properties (<interface-class-info> => <str-tab>))
+  (dp! actions (<interface-class-info> => <str-tab>))
 
 (dm interface-class-info ( => <interface-class-info>)
   (let ((info (new <interface-class-info>)))
@@ -187,9 +202,24 @@
     )
   )
 
-
-(dm find-property ((class <class>) (name <str>) => <any>) ; should be (false-or <interface-property>)
-  (elt-or (get-all-properties class) name #f)
+(dm find-property ((class <class>) (name <str>) => (t? <interface-property>))
+  (or (elt-or (get-all-properties class) name #f)
+      (seq ;; I like this way more than let...
+        (def native-prop (esc found-it
+                           (do (fun (cur-prop)
+                                 (when (= name (as <str> (fun-name (prop-getter cur-prop))))
+                                   (found-it cur-prop)
+                                   )
+                                 )
+                               (class-props class))
+                           ))
+        (when native-prop
+          (def new-prop (prop-to-interface-prop native-prop))
+          (add-property class new-prop)
+          new-prop
+          )
+        )
+      )
   )
 
 (export

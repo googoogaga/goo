@@ -3,10 +3,10 @@
 (dc <rectangle> (<any>))
 
 (dc <gui-rect> (<rectangle>))
- (dp rect-x (<gui-rect> => <int>))
- (dp rect-y (<gui-rect> => <int>))
- (dp rect-w (<gui-rect> => <int>))
- (dp rect-h (<gui-rect> => <int>))
+ (dp! rect-x (<gui-rect> => <int>))
+ (dp! rect-y (<gui-rect> => <int>))
+ (dp! rect-w (<gui-rect> => <int>))
+ (dp! rect-h (<gui-rect> => <int>))
 
 (dm rect (x|<int> y|<int> w|<int> h|<int> => <gui-rect>)
   (def r (new <gui-rect>))
@@ -43,12 +43,12 @@
 (dc <point> (<any>))
 
 (dc <gui-point> (<point>))
- (dp point-x (<gui-point> => <int>))
- (dp point-y (<gui-point> => <int>))
+ (dp! point-x (<gui-point> => <int>))
+ (dp! point-y (<gui-point> => <int>))
 
 (dc <gui-point-flo> (<point>))
- (dp point-x (<gui-point-flo> => <flo>))
- (dp point-y (<gui-point-flo> => <flo>))
+ (dp! point-x (<gui-point-flo> => <flo>))
+ (dp! point-y (<gui-point-flo> => <flo>))
 
 
 (dm point (x|<int> y|<int> => <gui-point>)
@@ -75,8 +75,8 @@
 
 
 (dc <gui-circle-flo> (<any>))
- (dp circle-p (<gui-circle-flo> => <gui-point-flo>))
- (dp circle-r (<gui-circle-flo> => <flo>))
+ (dp! circle-p (<gui-circle-flo> => <gui-point-flo>))
+ (dp! circle-r (<gui-circle-flo> => <flo>))
 
 (dm circle (x|<flo> y|<flo> r|<flo> => <gui-circle-flo>)
   (def c (new <gui-circle-flo>))
@@ -86,8 +86,8 @@
   )
 
 (dc <gui-line> (<any>))
- (dp line-p1 (<gui-line> => <gui-point>))
- (dp line-p2 (<gui-line> => <gui-point>))
+ (dp! line-p1 (<gui-line> => <gui-point>))
+ (dp! line-p2 (<gui-line> => <gui-point>))
 
 (dm line (p1|<gui-point> p2|<gui-point> => <gui-line>)
   (def l (new <gui-line>))
@@ -97,8 +97,8 @@
   )
 
 (dc <gui-line-flo> (<any>))
- (dp line-p1 (<gui-line-flo> => <gui-point-flo>))
- (dp line-p2 (<gui-line-flo> => <gui-point-flo>))
+ (dp! line-p1 (<gui-line-flo> => <gui-point-flo>))
+ (dp! line-p2 (<gui-line-flo> => <gui-point-flo>))
 
 (dm line (p1|<gui-point-flo> p2|<gui-point-flo> => <gui-line-flo>)
   (def l (new <gui-line-flo>))

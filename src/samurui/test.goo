@@ -63,8 +63,8 @@
 (dm mouse-release ((widget <happy-draw>) (x <int>) (y <int>) (button <int>) (time <int>)))
 
 (dm mouse-move ((widget <happy-draw>) (x <int>) (y <int>) (state <int>))
-  (when (not (= (& state GDK_BUTTON1_MASK) 0))
-    (mouse-click widget x y 1)
+  (unless (= (& state GDK_BUTTON1_MASK) 0)
+    (mouse-press widget x y 1)
     )
   )
 
@@ -75,10 +75,10 @@
         (attr scribble fill)
 )
 
-(gtk_init_easy)
+(samurui-init)
 
 (dv simhat (new <simapp>))
 (set (scribble simhat) (new <happy-dummy>))
 
 (present simhat)
-(gtk_main)
+(samurui-go)

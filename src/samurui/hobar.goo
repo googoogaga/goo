@@ -38,16 +38,16 @@
                  )
                 )
 
-(dp wrapped (<hobar-pimp> => <col>))
-(dp bars (<hobar-pimp> => <col>) (vec))
-(dp scale (<hobar-pimp> => <int>) 16)
-(dp badge-space (<hobar-pimp> => <int>) 0)
-(dp scroll-offset (<hobar-pimp> => <int>) 0)
+(dp! wrapped (<hobar-pimp> => <col>))
+(dp! bars (<hobar-pimp> => <col>) (vec))
+(dp! scale (<hobar-pimp> => <int>) 16)
+(dp! badge-space (<hobar-pimp> => <int>) 0)
+(dp! scroll-offset (<hobar-pimp> => <int>) 0)
 
 (dc <hobar> (<any>))
-(dp pimp   (<hobar> => <hobar-pimp>))
-(dp height (<hobar> => <int>) 32)
-(dp item   (<hobar> => <any>))
+(dp! pimp   (<hobar> => <hobar-pimp>))
+(dp! height (<hobar> => <int>) 32)
+(dp! item   (<hobar> => <any>))
 
 (dg fab-ho (pimp|<hobar-pimp> item|<any> example-item|<any> => <hobar>))
 

@@ -5,7 +5,7 @@
 (use samurui/core/gtkwrapping)
 
 (dc <gui-master> (<any>))
- (dp slaves (<gui-master> => <col>) (vec))
+ (dp! slaves (<gui-master> => <col>) (vec))
 
 (dg bind-master (obj|<any> master|<gui-master> => <log>))
 
@@ -48,21 +48,21 @@
 ;; To provide the master to the instantiated master block, we will define a bind-master generic.
 
 (dc <gui-slave> (<any>))
- (dp slave-inited (<gui-slave> => <log>) #f)
- (dp slave-updaters (<gui-slave> => <col>))
- (dp placeholder (<gui-slave> => <gui-container>))
- (dp active-container (<gui-slave> => <gui-container>))
- (dp slave-object (<gui-slave> => <any>) #f)
+ (dp! slave-inited (<gui-slave> => <log>) #f)
+ (dp! slave-updaters (<gui-slave> => <col>))
+ (dp! placeholder (<gui-slave> => <gui-container>))
+ (dp! active-container (<gui-slave> => <gui-container>))
+ (dp! slave-object (<gui-slave> => <any>) #f)
 
 
 (dm update-slave (slave|<gui-slave> new-obj|<any>)
   (cond 
     ;; First time
     ((not (slave-inited slave))
-     (def model (find-interface-model (object-class new-obj) root-interface (vec)))
+     (def model (find-interface-model (class-of new-obj) root-interface (vec)))
      (set (slave-updaters slave) (vec))
      (set (active-container slave)
-          (renderize-model model root-interface (object-class new-obj) (slave-updaters slave) (fab <str-tab> 0)))
+          (renderize-model model root-interface (class-of new-obj) (slave-updaters slave) (fab <str-tab> 0)))
      (ad-opt! (placeholder slave) (active-container slave) (attrs (placeholder slave)))
      (show-all (placeholder slave))
      (set (slave-inited slave) #t)
@@ -81,8 +81,8 @@
 
     ;; Different object, same interface
     ((and (slave-object slave)
-          (= (object-class (slave-object slave))
-             (object-class new-obj)))
+          (= (class-of (slave-object slave))
+             (class-of new-obj)))
      ;; Just rebind and refresh
      (do (fun (cur-updater)
            ;; Rebind
@@ -110,10 +110,10 @@
      ;; Do we need to free? or will the remove have implicitly unref'd down to 0 and free?     
 
      ;; Get us a new interface-model and what not
-     (def model (find-interface-model (object-class new-obj) root-interface (vec)))
+     (def model (find-interface-model (class-of new-obj) root-interface (vec)))
      (set (slave-updaters slave) (vec))
      (set (active-container slave) 
-          (renderize-model model root-interface (object-class new-obj) (slave-updaters slave) (fab <str-tab> 0)))
+          (renderize-model model root-interface (class-of new-obj) (slave-updaters slave) (fab <str-tab> 0)))
      (ad! (placeholder slave) (active-container slave))
      (show-all (placeholder slave))
      (set (slave-inited slave) #t)

@@ -14,7 +14,7 @@
   o
   )
 
-(dm to-str (h|<str-hold>)
+(dm to-str (h|<str-hold> => <str>)
   (da-str h)
   )
 

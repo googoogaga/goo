@@ -1,0 +1,104 @@
+(use goo)
+
+(use samurui/samurui)
+
+(use samurui/intrinsic) ;; for the lightweight stuff, should be refactored out
+
+;; Extrinsic rendering... mapping properties of an object into cartesian space.
+;;  -- although, ideally, the coordinate space should be transformable, but
+;;   let's leave that up to decorating lenses... 
+
+;; Extrinsic gets a rendering surface.
+
+(idrawmodel <visi-col> <visi-extrinsic>)
+
+(dp! ext-fundamental-axis (<visi-extrinsic> => <any>) #f)
+(dp! ext-root-node (<visi-extrinsic> => <any>) #f)
+
+(dp! ext-x-axis (<visi-extrinsic> => <any>) #f)
+(dp! ext-y-axis (<visi-extrinsic> => <any>) #f)
+
+(dp! ext-x-min (<visi-extrinsic> => <flo>) 0.0)
+(dp! ext-x-max (<visi-extrinsic> => <flo>) 0.0)
+(dp! ext-y-min (<visi-extrinsic> => <flo>) 1.0)
+(dp! ext-y-max (<visi-extrinsic> => <flo>) 1.0)
+
+(dp! ext-lenses (<visi-extrinsic> => <col>) (vec))
+
+(dp! ext-wrapped (<visi-extrinsic> => (t? <visi-col>)) #f)
+(dp! ext-master (<visi-extrinsic> => (t? <gui-master>)) #f)
+
+(dp! ext-item-renderer (<visi-extrinsic> => (t? <lightweight-renderer>)) #f)
+
+
+(dm method-fold (methods initial-data)
+  (def cur-val initial-data)
+  (do (fun (method)
+        (set cur-val (method cur-val))
+        )
+      methods)
+  cur-val
+  )
+
+(dm repaint-widget (ext|<visi-extrinsic>)
+  (def renderer (ext-item-renderer renderer))
+
+  (do (fun (item)
+        ;; Get the point from the visi-col
+        (def init-point (point (1st (node-out-edges (ext-wrapped ext) 
+                                                    (ext-x-axis ext)
+                                                    item))
+                               (1st (node-out-edges (ext-wrapped ext)
+                                                    (ext-y-axis ext)
+                                                    item))))
+
+        ;; Transform with global lenses
+        (def actual-point (method-fold (ext-lenses ext) init-point))
+
+        ;; Render
+        (draw-lightweight ext actual-point renderer item)
+        )
+      (node-out-edges (ext-wrapped ext) (ext-fundamental-axis) (ext-root-node ext))
+      )
+  )
+
+
+(dm bind (ext|<visi-extrinsic> info|<interface-info> => (tup <fun> <fun> <fun>))
+  (tup
+   ;; -- Rebinder --
+   (fun (new-obj)
+     ;; Detach from current if applicable
+     (when (wrapped ext)
+       ;; um... nop for now
+       )
+     
+     ;; 
+     (set (ext-wrapped ext) ((getter info) new-obj))
+
+     (set (ext-root-node ext) (get-start-node (ext-wrapped ext)))
+     )
+
+   ;; -- Refresher --
+   (fun ()
+     )
+
+   ;; -- Free / Cleanup --
+   (fun ()
+     )
+   )
+  )
+
+(dm bind-master (ext|<visi-extrinsic> master|<gui-master> => <log>)
+  (set (ext-master sb) master)
+  #t
+  )
+
+(dm mouse-press (widget|<visi-extrinsic> x|<int> y|<int> button|<int> time|<int>)
+  )
+
+(dm mouse-release (widget|<visi-extrinsic> x|<int> y|<int> button|<int> time|<int>)
+  )
+
+(dm mouse-move (widget|<visi-extrinsic> x|<int> y|<int> state|<int>)
+  )
+

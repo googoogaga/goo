@@ -26,6 +26,14 @@
 (use samurui/core/visiwrapcol)
 (use samurui/core/treeview)
 
+(use/include /usr/include/gtk-2.0)
+(use/include /usr/lib/gtk-2.0/include)
+(use/include /usr/include/atk-1.0)
+(use/include /usr/include/pango-1.0)
+(use/include /usr/X11R6/include)
+(use/include /usr/include/freetyp2)
+(use/include /usr/include/glib-2.0)
+(use/include /usr/lig/glib-2.0/include)
 
 ; ----
 
@@ -71,7 +79,7 @@
   (samurui-init)
   (let ((window (gui-window))
         (kill-gtk-cb (goo_safeCreateCallback kill-gtk 0))
-        (class (object-class obj))
+        (class (class-of obj))
         (model (find-interface-model class root-interface (vec)))
         (updaters (fab <vec> 0))
         )
@@ -513,7 +521,9 @@
 ;;  point-to-gdk
 ;;  gdk-point
   point-x
+  point-x-setter
   point-y
+  point-y-setter
   circle
   circle-p
   circle-p-setter
@@ -553,6 +563,8 @@
   draw-blit
   draw-rect
   draw-arc
+  draw-ellipse
+  draw-polygon
   draw-line
   draw-string
   draw-string-ul

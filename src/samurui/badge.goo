@@ -7,11 +7,11 @@
 ;; Badges are containers.  Badges hold badge-lines... (Brilliant, no?)
 
 (dc <badge> (<any>))
- (dp badge-offset-x (<badge> => <int>) 0)
- (dp badge-offset-y (<badge> => <int>) 0)
- (dp badge-lines (<badge> => <col>) (vec))
- (dp badge-max-width (<badge> => <int>) 100)
- (dp badge-color (<badge> => (t? <gui-color>)) #f)
+ (dp! badge-offset-x (<badge> => <int>) 0)
+ (dp! badge-offset-y (<badge> => <int>) 0)
+ (dp! badge-lines (<badge> => <col>) (vec))
+ (dp! badge-max-width (<badge> => <int>) 100)
+ (dp! badge-color (<badge> => (t? <gui-color>)) #f)
 
 (dc <badge-line> (<any>))
 
@@ -19,12 +19,12 @@
  
 
 (dc <bar-badge-line> (<badge-line>))
- (dp bar-axis-source (<bar-badge-line> => <any>))
- (dp bar-max-val (<bar-badge-line> => <int>) 100)
- (dp bar-min-val (<bar-badge-line> => <int>) 0)
- (dp bar-height (<bar-badge-line> => <int>) 10)
-;; (dp bar-show-label (<bar-badge-line> => <log> #f))
- (dp bar-color (<bar-badge-line> => (t? <gui-color>)) #f)
+ (dp! bar-axis-source (<bar-badge-line> => <any>))
+ (dp! bar-max-val (<bar-badge-line> => <int>) 100)
+ (dp! bar-min-val (<bar-badge-line> => <int>) 0)
+ (dp! bar-height (<bar-badge-line> => <int>) 10)
+;; (dp! bar-show-label (<bar-badge-line> => <log> #f))
+ (dp! bar-color (<bar-badge-line> => (t? <gui-color>)) #f)
 
 
 (dm suggest-badge (vcol|<visi-col> => (t? <badge>))
@@ -91,8 +91,8 @@
   )
 
 (dc <label-badge-line> (<badge-line>))
- (dp label-text-stream (<label-badge-line> => <col>) (vec))
- (dp label-color (<label-badge-line> => (t? <gui-color>)) #f)
+ (dp! label-text-stream (<label-badge-line> => <col>) (vec))
+ (dp! label-color (<label-badge-line> => (t? <gui-color>)) #f)
 
 (dm label-badge (label-text|<str> c|<gui-color>)
   (def lab (new <label-badge-line>))

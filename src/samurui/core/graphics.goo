@@ -22,10 +22,10 @@
 (dc <gdk-colormap> (<gui>))
 
 (dc <gdk-gc> (<gui>))
- (dp colormap (<gdk-gc> => <gdk-colormap>))
+ (dp! colormap (<gdk-gc> => <gdk-colormap>))
 
 ; <gui-drawable> slots
- (dp gc (<gui-drawable> => (t? <gdk-gc>)) #f)
+ (dp! gc (<gui-drawable> => (t? <gdk-gc>)) #f)
 
 
 (dc <gui-paintbox> (<gui-drawable>))
@@ -137,7 +137,7 @@
   )
 
 (dc <gui-color> (<gui>))
- (dp realized-into (<gui-color> => <any>) #f) ; <gdk-colormap> as type
+ (dp! realized-into (<gui-color> => <any>) #f) ; <gdk-colormap> as type
 
 ; r, g, b range from 0 to 255
 (dm color ((r <int>) (g <int>) (b <int>) => <gui-color>)
@@ -256,8 +256,8 @@
 ;  there is a GTK signature that gets mixed in... I'll wait a bit longer before refactoring
 ;  though, as I'm sure I'll learn more.
 (dc <gui-imagebox> (<gui-drawable>))
- (dp paintbox (<gui-imagebox> => <gui-paintbox>))
- (dp canvas (<gui-imagebox> => <gui-canvas>))
+ (dp! paintbox (<gui-imagebox> => <gui-paintbox>))
+ (dp! canvas (<gui-imagebox> => <gui-canvas>))
 
 (dc <interface-drawing-area> (<gui-imagebox>))
 
@@ -405,6 +405,17 @@
     )
   )
 
+(dm draw-polygon (canvas|<gui-drawable> points|<tup> filled|<log> color|<gui-color>)
+  (let ((gc (get-gc canvas)))
+    ;; Set the color
+    (set (fg gc) color)  
+    (gdk_draw_polygon (drawable-handle canvas)
+                      (handle gc)
+                      (log-to-gtk filled)
+                      points)
+    )
+  )
+
 (dm draw-arc ((canvas <gui-drawable>) (rect <gui-rect>) (ang1 <flo>) (ang2 <flo>) (filled <log>) (color <gui-color>))
   (draw-arc canvas rect (round (* 64.0 ang1)) (round (* 64.0 ang2)) filled color)
   )
@@ -424,6 +435,10 @@
                   ang1
                   (- ang2 ang1))
     )
+  )
+
+(dm draw-ellipse (canvas|<gui-drawable> rect|<gui-rect> filled|<log> color|<gui-color>)
+  (draw-arc canvas rect 0 (* 64 360) filled color)
   )
 
 (dm draw-line (canvas|<gui-drawable> x1|<int> y1|<int> x2|<int> y2|<int> color|<gui-color>)
@@ -558,7 +573,9 @@
   drawable-handle
   draw-blit
   draw-rect
+  draw-polygon
   draw-arc
+  draw-ellipse
   draw-line
   draw-string
   draw-string-ul

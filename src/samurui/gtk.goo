@@ -152,6 +152,9 @@
 (dv GDK_BUTTON3_MASK #f)
 (export GDK_BUTTON3_MASK)
 
+)
+
+(seq
 (dv GDK_BUTTON4_MASK #f)
 (export GDK_BUTTON4_MASK)
 
@@ -455,6 +458,9 @@
 (dv GTK_BUTTONBOX_DEFAULT_STYLE #f)
 (export GTK_BUTTONBOX_DEFAULT_STYLE)
 
+)
+
+(seq
 (dv GTK_BUTTONBOX_SPREAD #f)
 (export GTK_BUTTONBOX_SPREAD)
 
@@ -758,6 +764,9 @@
 (dv GTK_RUN_BOTH #f)
 (export GTK_RUN_BOTH)
 
+)
+
+(seq
 (dv GTK_RUN_NO_RECURSE #f)
 (export GTK_RUN_NO_RECURSE)
 
@@ -1061,6 +1070,9 @@
 (dv gtk_accel_group_unlock #f)
 (export gtk_accel_group_unlock)
 
+)
+
+(seq
 (dv gtk_accel_group_connect #f)
 (export gtk_accel_group_connect)
 
@@ -1364,6 +1376,9 @@
 (dv gtk_widget_get_accessible #f)
 (export gtk_widget_get_accessible)
 
+)
+
+(seq
 (dv gtk_widget_set_colormap #f)
 (export gtk_widget_set_colormap)
 
@@ -1667,6 +1682,9 @@
 (dv _GdkFont_descent_get #f)
 (export _GdkFont_descent_get)
 
+)
+
+(seq
 (dv new__GdkFont #f)
 (export new__GdkFont)
 
@@ -1970,6 +1988,9 @@
 (dv GDK_CROSSING_UNGRAB #f)
 (export GDK_CROSSING_UNGRAB)
 
+)
+
+(seq
 (dv GDK_PROPERTY_NEW_VALUE #f)
 (export GDK_PROPERTY_NEW_VALUE)
 
@@ -2273,6 +2294,9 @@
 (dv _GdkEventScroll_time_set #f)
 (export _GdkEventScroll_time_set)
 
+)
+
+(seq
 (dv _GdkEventScroll_time_get #f)
 (export _GdkEventScroll_time_get)
 
@@ -2576,6 +2600,9 @@
 (dv _GdkEventProperty_atom_set #f)
 (export _GdkEventProperty_atom_set)
 
+)
+
+(seq
 (dv _GdkEventProperty_atom_get #f)
 (export _GdkEventProperty_atom_get)
 
@@ -2879,6 +2906,9 @@
 (dv gdk_events_pending #f)
 (export gdk_events_pending)
 
+)
+
+(seq
 (dv gdk_event_get #f)
 (export gdk_event_get)
 
@@ -3182,6 +3212,9 @@
 (dv gdk_image_get_colormap #f)
 (export gdk_image_get_colormap)
 
+)
+
+(seq
 (dv gdk_set_locale #f)
 (export gdk_set_locale)
 
@@ -3485,6 +3518,9 @@
 (dv GDK_FUNC_MOVE #f)
 (export GDK_FUNC_MOVE)
 
+)
+
+(seq
 (dv GDK_FUNC_MINIMIZE #f)
 (export GDK_FUNC_MINIMIZE)
 
@@ -3788,6 +3824,9 @@
 (dv gdk_window_invalidate_maybe_recurse #f)
 (export gdk_window_invalidate_maybe_recurse)
 
+)
+
+(seq
 (dv gdk_window_get_update_area #f)
 (export gdk_window_get_update_area)
 
@@ -4091,6 +4130,9 @@
 (dv GTK_CLIST_DRAW_DRAG_LINE #f)
 (export GTK_CLIST_DRAW_DRAG_LINE)
 
+)
+
+(seq
 (dv GTK_CLIST_DRAW_DRAG_RECT #f)
 (export GTK_CLIST_DRAW_DRAG_RECT)
 
@@ -4394,6 +4436,9 @@
 (dv gtk_color_selection_get_previous_alpha #f)
 (export gtk_color_selection_get_previous_alpha)
 
+)
+
+(seq
 (dv gtk_color_selection_is_adjusting #f)
 (export gtk_color_selection_is_adjusting)
 
@@ -4697,6 +4742,9 @@
 (dv gtk_ctree_set_show_stub #f)
 (export gtk_ctree_set_show_stub)
 
+)
+
+(seq
 (dv gtk_ctree_set_line_style #f)
 (export gtk_ctree_set_line_style)
 
@@ -5000,6 +5048,9 @@
 (dv gtk_handle_box_new #f)
 (export gtk_handle_box_new)
 
+)
+
+(seq
 (dv gtk_handle_box_set_shadow_type #f)
 (export gtk_handle_box_set_shadow_type)
 
@@ -5303,6 +5354,9 @@
 (dv gtk_layout_get_hadjustment #f)
 (export gtk_layout_get_hadjustment)
 
+)
+
+(seq
 (dv gtk_layout_get_vadjustment #f)
 (export gtk_layout_get_vadjustment)
 
@@ -5606,6 +5660,9 @@
 (dv gtk_menu_shell_select_item #f)
 (export gtk_menu_shell_select_item)
 
+)
+
+(seq
 (dv gtk_menu_shell_deselect #f)
 (export gtk_menu_shell_deselect)
 
@@ -5909,6 +5966,9 @@
 (dv gtk_progress_bar_set_pulse_step #f)
 (export gtk_progress_bar_set_pulse_step)
 
+)
+
+(seq
 (dv gtk_progress_bar_set_orientation #f)
 (export gtk_progress_bar_set_orientation)
 
@@ -6212,6 +6272,9 @@
 (dv _GtkStyle_fg_get #f)
 (export _GtkStyle_fg_get)
 
+)
+
+(seq
 (dv _GtkStyle_bg_get #f)
 (export _GtkStyle_bg_get)
 
@@ -6515,6 +6578,9 @@
 (dv gtk_text_buffer_get_mark #f)
 (export gtk_text_buffer_get_mark)
 
+)
+
+(seq
 (dv gtk_text_buffer_move_mark_by_name #f)
 (export gtk_text_buffer_move_mark_by_name)
 
@@ -6818,6 +6884,9 @@
 (dv gtk_toggle_button_get_mode #f)
 (export gtk_toggle_button_get_mode)
 
+)
+
+(seq
 (dv gtk_toggle_button_set_active #f)
 (export gtk_toggle_button_set_active)
 
@@ -7121,6 +7190,9 @@
 (dv gtk_tree_view_set_headers_visible #f)
 (export gtk_tree_view_set_headers_visible)
 
+)
+
+(seq
 (dv gtk_tree_view_columns_autosize #f)
 (export gtk_tree_view_columns_autosize)
 

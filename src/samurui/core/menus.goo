@@ -15,9 +15,9 @@
 
 (dm gimme-menu (obj)
   (set *selected-menu-object* obj)
-  (or (elt-or *cached-menus* (object-class obj) #f)
+  (or (elt-or *cached-menus* (class-of obj) #f)
       (seq
-        (def da-actions (get-all-actions (object-class obj)))
+        (def da-actions (get-all-actions (class-of obj)))
         
         (def da-menu (gui-menu))
         
@@ -33,7 +33,7 @@
               )
             da-actions)
         
-        (set (elt *cached-menus* (object-class obj)) da-menu)
+        (set (elt *cached-menus* (class-of obj)) da-menu)
 
         ;;(show-all da-menu)
         
