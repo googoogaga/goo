@@ -126,10 +126,10 @@ See `run-hooks'."
 (defconst proto-font-lock-keywords-1
   (eval-when-compile
     (list
-     '("\\((dv\\|(df\\|(def\\|(dm\\|dg\\)\\s-+\\(\\sw+\\)"
+     '("(\\(dv\\|df\\|def\\sw*\\|dm\\|dg\\|dp\\)\\s-+\\(\\sw+\\)"
        (1 font-lock-keyword-face)
        (2 font-lock-function-name-face nil t))
-     '("^\\s-*(\\(ds\\)" . 1)))
+     '("^\\s-*(\\(dss?\\)" . 1)))
   "Subdued expressions to highlight in Proto modes.")
 
 (defconst proto-font-lock-keywords-2
@@ -144,6 +144,7 @@ See `run-hooks'."
 	       "quote" "rep" "ifm" "and" "or" "unless" "when"
 	       "inc" "dec" "case" "select" "for" "let") t)
 	"\\>") 1)
+      '("\\(#t\\|#f\\|=>\\)" . font-lock-keyword-face)
       ;; David Fox <fox@graphics.cs.nyu.edu> for SOS/STklos class specifiers.
       '("\\<<\\sw+>\\>" . font-lock-type-face))))
   "Gaudy expressions to highlight in Proto modes.")
