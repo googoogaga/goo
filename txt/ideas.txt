@@ -1,0 +1,11 @@
+new idea for return format
+general principle definition should look like use
+sexpr parsing should be based on first name of list and list substructure
+
+(def (f (x <int>)) ...)
+(def (g (ret <int>) (x <int>)) ...)
+(def (h (x <int>)) => <int> ...)
+(def (set <int> (h (x <int>))) ...)
+(def (set (tup <int> <flo>) (t (x <int>))) ...)
+(def (set (tup (d <int>) (r <flo>)) (r (x <int>))) ...)
+

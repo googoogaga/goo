@@ -267,6 +267,10 @@ fixes:
 
   ENVNUL
 
+  make simple-table-vector use faster vector ops
+
+  inlines @empty?
+
 adds:
 
   split proto.c into prt.c and prt.h
@@ -277,3 +281,6 @@ adds:
 
   backtrace
 
+  return type checking
+
+  range checking on sequences
