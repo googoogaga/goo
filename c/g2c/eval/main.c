@@ -846,7 +846,7 @@ P YevalSmainY___main_0___() {
 DEFCREGS();
   lit_0 = YPsb((P)"0.153");
   VARSET(YevalSmainYTgoo_versionT,LITREF(lit_0));
-  lit_1 = YPsb((P)"SEP 30, 2002");
+  lit_1 = YPsb((P)"JAN 16, 2003");
   VARSET(YevalSmainYTgoo_dateT,LITREF(lit_1));
   lit_2 = YPsb((P)";;; GOO\n");
   XCALL1(1,VARREF(YgooSioSwriteYpost),LITREF(lit_2));

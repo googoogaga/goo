@@ -36,7 +36,7 @@
 (use goo/user)
 
 (dv *goo-version* "0.153")
-(dv *goo-date*    "SEP 30, 2002")
+(dv *goo-date*    "JAN 16, 2003")
 
 (post ";;; GOO\n")
 (post ";;; JONATHAN BACHRACH\n")
