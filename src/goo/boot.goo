@@ -124,16 +124,18 @@
         (dc <flo> (<num>))
         (dc <loc> (<any>))
         (dc <col> (<any>))
+        (dc <col.> (<col>))
         (dc <col!> (<col>))
         (dc <seq> (<col>))
+        (dc <seq.> (<seq> <col.>))
         (dc <seq!> (<seq> <col!>))
         (dc <lst> (<seq!>))
         (dv nil (new <lst>))
           (dp head (x|<lst> => <any>) nil)
           (dp tail (x|<lst> => <lst>) nil)
         (dc <flat> (<seq>))
-        (dc <vec> (<flat>))
-        (dc <str> (<flat>))
+        (dc <vec> (<flat> <seq.>))
+        (dc <str> (<flat> <seq.>))
         (dc <sym> (<any>))
           (dp sym-name (x|<sym> => <str>))
         (dc <type> (<any>))
@@ -190,7 +192,7 @@
           (dp fun-cache (x|<gen> => <any>) %false)
           (dp gen-refs (x|<gen> => <vec>)  nul)
           (dp gen-src (x|<gen> => <any>)   %false)
-    (dc <opts> (<flat>))
+    (dc <opts> (<flat> <seq.>))
       (dp opts-location (x|<opts> => <loc>) 0)
       (dp opts-count (x|<opts> => <int>) 0)
     (dc <opts-vec> (<opts>))
@@ -2006,8 +2008,7 @@
   <any>
   <mag>
   <chr>
-  <col>
-  <col!>
+  <col> <col.> <col!>
   <flat>
   <flo>
   <fun>
@@ -2024,8 +2025,7 @@
   <subclass>
   <singleton>
   <union>
-  <seq>
-  <seq!>
+  <seq> <seq.> <seq!>
   <sig>
   <prop>
   <str>

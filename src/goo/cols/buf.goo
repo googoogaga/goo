@@ -85,8 +85,8 @@
   (def dat (buf-dat c))
   (if (> new-len (len dat))
       (let ((new-data
-              (fill (fab <vec> (power-of-two-ceiling new-len)) default)))
-        (into new-data dat)
+              (low-fill! (fab <vec> (power-of-two-ceiling new-len)) default)))
+        (low-into new-data dat)
         (set (buf-len c) new-len)
         (set (buf-dat c) new-data))
       (if (< new-len (len c))

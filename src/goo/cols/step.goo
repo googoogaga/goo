@@ -8,16 +8,16 @@
 ;;;;!! Interface
 (exported
  (dc <step> (<seq>))
- (dg first-then (first|<any> then|<any>))
+ (dg first-then (first|<fun> then|<fun>))
 )
 
 ;;;;!! Implementation
 
-(dp step-first (x|<step> => <any>))
-(dp step-then (x|<step> => <any>))
+(dp step-first (x|<step> => <fun>))
+(dp step-then (x|<step> => <fun>))
 
 ;;;; Collection iteration protocol
-(dm first-then (first then => <step>)
+(dm first-then (first|<fun> then|<fun> => <step>)
   (new <step> step-first first step-then then))
 
 (dc <step-enum> (<enum>))
@@ -31,4 +31,4 @@
   (renew e %first? #f ;; %dat (%dat e)
          ))
 (dm now (e|<step-enum> => <any>)
-  (if (%first? e) (step-first (%dat e)) (step-then (%dat e))))
+  (if (%first? e) ((step-first (%dat e))) ((step-then (%dat e)))))

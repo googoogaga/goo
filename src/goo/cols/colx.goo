@@ -4,27 +4,33 @@
 (use goo/math)
 (use goo/cols/col)
 
+(pub dg elt-setter (v|<any> x|<col!> (k <any>)))
+(pub dg into (x|<col!> y|<col> => <col>)) 
 (pub dg add! (c|<col!> x => <col!>))
 (pub dg del! (c|<col!> x => <col!>))
 (pub dg zap! (c|<col!> => <col!>))
 (pub dg len-setter (new-len|<int> c|<col!>))
 (pub dg len/fill-setter (new-len|<int> c|<col!> default))
+(pub dg fill! (c|<col!> x => <col!>))
 
+;; NEEDED FOR LOW-INTO
+(dm low-elt-setter (value c|<col!> key => <any>)
+  (set (elt c key) value))
+
+;; TODO: REMOVE
 (dm add! (c|<col!> x => <col!>)
   (add c x))
 
-;; TODO: TIGHTEN TO COL!
-(dm into (dst|<col> src|<col> => <col>)
-  (rep in ((ss (enum src)))
-    (if (fin? ss)
-        dst
-        (seq (set (elt dst (now ss)) (now ss))
-             (in (nxt ss))))))
-
-;; TODO: TIGHTEN TO COL!
-(dm fill! (dst|<col> val => <col>)
+(dm fill! (dst|<col!> val => <col!>)
   (rep in ((ds (enum dst)))
     (if (fin? ds)
         dst
         (seq (set (now ds)  val)
              (in (nxt ds))))))
+
+(dm into (dst|<col!> src|<col> => <col!>)
+  (rep in ((ss (enum src)))
+    (if (fin? ss)
+        dst
+        (seq (set (elt dst (now-key ss)) (now ss))
+             (in (nxt ss))))))

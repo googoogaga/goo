@@ -29,9 +29,9 @@
       (%velt x (%iu i)) ;; TODO: LOW-ELT
       default))
 
-(dm elt-setter (z x|<vec> i|<int>)
-  (range-check x i)
-  (set (%velt x (%iu i)) z)) ;; TODO: LOW-ELT
+;; (dm elt-setter (z x|<vec> i|<int>)
+;;   (range-check x i)
+;;   (set (%velt x (%iu i)) z)) ;; TODO: LOW-ELT
 
 (dm empty ((c (t= <vec>)) => <vec>)
   %vnul)

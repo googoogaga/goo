@@ -6,6 +6,7 @@
 (use goo/types)
 (use goo/app)
 (use goo/cols/col)
+(use goo/cols/colx)
 (use goo/cols/seq)
 (use goo/cols/opts)
 (use goo/cols/lst)

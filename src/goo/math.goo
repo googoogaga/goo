@@ -368,7 +368,7 @@
 (ds (def-unary-trans ,name (,param) ,@prefix)
   (let ((%fp (cat-sym "%f" name)))
     `(seq (dg ,name ((,param <num>) => <num>))
-          (dm ,name ((,param <int>) => <int>) 
+          (dm ,name ((,param <int>) => <flo>) 
             ,@prefix (,name (as <flo> ,param)))
           (dm ,name ((,param <flo>) => <flo>)
             ,@prefix (%fb (,%fp (%fu ,param)))))))

@@ -10,7 +10,7 @@
 ;;;;!! Interface
 (exported
  ;; defined in boot
- <seq>
+ <seq> <seq.>
  
  ;; == (elt x 0)
  (dg 1st (x|<seq> => <any>))
@@ -73,7 +73,7 @@
 
 ;;;; Creation protocol
 (dm as ((d (t< <seq>)) s|<seq> => <seq>)
-  (into (fab d (len s)) s))
+  (low-into (fab d (len s)) s))
 
 ;;;; Collection protocol
 

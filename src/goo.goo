@@ -58,12 +58,13 @@
  <num> + 1+ - 1- * / floor ceil round trunc floor/ ceiling/ round/
  trunc/ mod rem pos? zero? neg? neg abs *print-base*
  num-to-str num-to-str-base str-to-num
+ log logn pow sqrt isqrt sin cos tan asin acos atan atan2 sinh cosh tanh $pi $e
  <int> #| ^ & ~ bit? even? odd? << >> >>> $max-int $min-int
  <flo> flo-bits
  <loc> loc-val loc-val-setter address-of
  
  ;; Section 3.7: Collections.
- <col> len elt elt-or  elts low-elt
+ <col> <col.> len elt elt-or  elts low-elt
  empty? empty elt-default elt-type key-type key-test fab fabs fill into any?
  all? fold fold+ find find-or del zap do do2 map map2 do-keyed
  map-keyed mem? keys items zap
@@ -78,7 +79,7 @@
  <str-tab> case-insensitive-string-hash case-insensitive-string-equal
  <set>
  ;; 3.7.3: Sequences.
- <seq> add 1st 2nd 3rd last pos find rev cat cat2 sub 
+ <seq> <seq.> add 1st 2nd 3rd last pos find rev cat cat2 sub 
  pick reject del-vals del-dups
  <seq!>  add! rev! cat! sub-setter
  ;; 3.7.4 Tuples.

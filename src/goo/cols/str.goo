@@ -3,8 +3,10 @@
 (use goo/types)
 (use goo/math)
 (use goo/cols/col)
+(use goo/cols/colx)
 (use goo/cols/seq)
 (use goo/cols/lst)
+(use goo/cols/buf)
 
 (exported
  (dg str (objects|...))
@@ -46,9 +48,9 @@
       (%cb (%selt x (%iu i))) ;; TODO: USE LOW-ELT
       default)) 
 
-(dm elt-setter (z|<chr> x|<str> i|<int>)
-  (range-check x i)
-  (set (%selt x (%iu i)) (%cu z))) ;; TODO: USE LOW-ELT
+;; (dm elt-setter (z|<chr> x|<str> i|<int>)
+;;   (range-check x i)
+;;   (set (%selt x (%iu i)) (%cu z))) ;; TODO: USE LOW-ELT
 
 (dm to-str (x|<str> => <str>)
   x)
@@ -60,9 +62,9 @@
 
 (dv ascii-limit 128)
 
-(dv (ascii-chars <vec>)
+(dv (ascii-chars <buf>)
   (let ((ascii-chars
-         (fill (fab <vec> ascii-limit) #f))
+         (fill! (fab <buf> ascii-limit) #f))
         (init
          (fun (i s)
            (rep loop ((i i) (j 0))
@@ -92,7 +94,7 @@
   (let ((end259 (len ascii-chars)))
     (rep loop ((i 0) (least #f) (greatest #f))
       (if (= i end259)
-          (let ((v (fill (fab <vec> (+ (- greatest least) 1)) #f)))
+          (let ((v (fill! (fab <buf> (+ (- greatest least) 1)) #f)))
             (rep loop ((i 0))
               (if (= i end259)
                   (lst least v)

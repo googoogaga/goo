@@ -5,10 +5,10 @@
 
 (exported
  <col>
+ <col.>
  len ;; (dg len (x|<col> => <int>)) ;; in types
  (dg elt (x|<col> k|<any> => <any>))
  (dg elt-or (x|<col> k|<any> default|<any> => <any>))
- (dg elt-setter (v|<any> x|<col> (k <any>)))
  (dg elt-type (x|<col> => <type>))
  (dg elt-default (x|<col> => <any>))
  (dg key-type (x|<col> => <type>))
@@ -21,8 +21,6 @@
  (dg fab ((t (t< <col>)) s|<int> => <col>))
  (dg fabs ((x (t< <col>)) elts|... => <col>))
  (dg fill (x|<col> val|<any> => <col>))
- (dg fill! (c|<col> x => <col>))
- (dg into (x|<col> y|<col> => <col>)) ;; TODO: TIGHTEN TO COL!
 
  any? ;; (dg any? (f|<fun> x|<col> => <log>)) ;; in types
  (dg all? (f|<fun> x|<col> => <log>))
@@ -57,6 +55,8 @@
  all2? ;; (dg all2? (test|<fun> x|<col> y|<col> => <log>)) ;; in types
 
 ;; Undocumented
+ (dg low-into (x|<col> y|<col> => <col>)) 
+ (dg low-fill! (x|<col> y => <col>)) 
  (dg range-error ())
  (dg low-elt (x|<col> k|<any> => <any>))
  (dg low-elt-setter (v|<any> x|<col> k|<any>))
@@ -65,7 +65,7 @@
 ;;;;!! Implementation
 ;;;; Creation protocol
 (dm as ((p (t< <col>)) x|<col> => <col>)
-  (into (fab p (len x)) x))
+  (low-into (fab p (len x)) x))
 
 ;;;; Collection protocol default implementation
 
@@ -92,20 +92,29 @@
 
 ;; required: fab
 
-(dm fabs ((c (t< <col>)) objects|... => <col>)
-  (into (fab c (len objects)) objects))
+(dm low-into (dst|<col> src|<col> => <col>)
+  (rep in ((ss (enum src)))
+    (if (fin? ss)
+        dst
+        (seq (set (low-elt dst (now-key ss)) (now ss))
+             (in (nxt ss))))))
+
+(dm fabs (c|(t< <col>) objects|... => <col>)
+  (low-into (fab c (len objects)) objects))
+
+(dm low-fill! (dst|<col> src => <col>)
+  (rep in ((ds (enum dst)))
+    (if (fin? ds)
+        dst
+        (seq (set (low-elt dst (now-key ds)) src)
+             (in (nxt ds))))))
 
 (dm fill (dst|<col> val => <col>)
-  (fill! (as-copy dst dst) val))
+  (low-fill! (fab (object-class dst) (len dst)) val))
 
 ;; TODO: FLUSH OUT BETTER
 (dm dup (x|<col> => <col>)
   (as-copy x x))
-
-(dm elts (x|<col> keys|<seq> => <col>)
-  (def res (fab <tab> (len keys)))
-  (do (fun (k) (set (elt res k) (elt x k))) keys)
-  (as-copy x res))
 
 (dm any? (test|<fun> c|<col> => <log>)
   (rep fnd ((e (enum c)))
@@ -238,5 +247,5 @@
   (if (== val $elt-default) (range-error) val))
 
 ;; get this from list.goo
-(need-implementation add <tab> into fill!)
+(need-implementation add <tab> into)
 

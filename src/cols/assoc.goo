@@ -11,7 +11,7 @@
 
 ;;;;!! Interface
 (exported
- (dc <assocs> (<map>))
+ (dc <assocs> (<map> <col!>))
    (dp assocs-test (x|<assocs> => <fun>) ==)
 )
 

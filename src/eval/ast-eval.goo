@@ -43,12 +43,12 @@
   (dp env-parent (x|<loc-env> => <any>)   #f)
   (dp env-function (x|<loc-env> => <any>) #f)
   (dp env-names (x|<loc-env> =>  <lst>)   '())
-  (dp env-values (x|<loc-env> => <vec>)   '())
+  (dp env-values (x|<loc-env> => <buf>)   )
 
 (dv $nul-loc-env (new <loc-env>))
 
 (dm env-frame! (env|<loc-env> function names|<lst> args|<lst> => <loc-env>)
-  (def values (as <vec> args))
+  (def values (as <buf> args))
   (new <loc-env>
     env-parent   env
     env-function function

@@ -8,18 +8,18 @@
 
 (exported
  ;; returns destructively reversed sequence.
- (dg rev! (x|<seq> => <seq>))
+ (dg rev! (x|<seq!> => <seq!>))
  ;; returns destructively concatenated sequences.
- (dg cat! (x|<seq> more|... => <seq>))
+ (dg cat! (x|<seq!> more|... => <seq!>))
 
  ;; replaces subsequence in range between from and below of dst with
  ;; contents of src.
- (dg sub-setter (dst|<seq> src|<seq> from|<int> below|<int>))
+ (dg sub-setter (dst|<seq!> src|<seq> from|<int> below|<int>))
 
  ;; inserts e into x below index before
  (dg ins! (x|<seq!> e|<any> before|<int> => <seq!>))
 
- (dg alter (dst|<seq> src|<seq> from|<int> below|<int> => <seq>)))
+ (dg alter (dst|<seq!> src|<seq> from|<int> below|<int> => <seq!>)))
 
 (dm cat! (x|<seq!> more|... => <seq!>)
   (app cat x more))
@@ -27,14 +27,14 @@
 (dm ins! (x|<seq!> v|<any> before|<int> => <seq!>)
   (ins x v before))
 
-(dm into (dst|<seq> src|<seq> => <seq>)
+(dm into (dst|<seq!> src|<seq> => <seq!>)
   (rep in ((ed (enum dst)) (es (enum src)))
     (if (or (fin? es) (fin? ed))
         dst
         (seq (set (now ed) (now es))
              (in (nxt ed) (nxt es))))))
 
-(dm sub-setter (src|<seq> dst|<seq> from|<int> below|<int> => <seq>)
+(dm sub-setter (src|<seq!> dst|<seq> from|<int> below|<int> => <seq!>)
   (def dst-len|<int> (len dst))
   (def src-len|<int> (len src))
   (def del-len|<int> (- below from))
@@ -67,7 +67,7 @@
                    (copy (nxt nd) (nxt d) (+ i 1))))))))
 
 ;; TODO: DEPRECATED
-(dm alter (dst|<seq> src|<seq> from|<int> below|<int> => <seq>)
+(dm alter (dst|<seq!> src|<seq> from|<int> below|<int> => <seq!>)
   (rep in ((d (enum dst)) (s (enum src)))
     (if (or (fin? d) (fin? s))
         dst

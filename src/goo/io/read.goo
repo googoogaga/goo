@@ -71,10 +71,10 @@
       ((elt *read-dispatch-vector* (char->ascii c)) c port)))
 
 (dv *read-dispatch-vector* 
-  (fill (fab <vec> ascii-limit)
-        (fun (c port) (reading-error port "illegal character read" c))))
+  (fill! (fab <buf> ascii-limit)
+	 (fun (c port) (reading-error port "illegal character read" c))))
 
-(dv *read-terminating?-vector* (fill (fab <vec> ascii-limit) #t))
+(dv *read-terminating?-vector* (fill! (fab <buf> ascii-limit) #t))
 
 (dm set-standard-syntax! (char|<chr> terminating? reader)
   (set (elt *read-dispatch-vector* (char->ascii char)) reader)
@@ -161,7 +161,7 @@
     (lst keyword (sub-read-carefully port))))
 
 (dv $string-escape-chars
-  (let ((vec (fill (fab <vec> ascii-limit) #f)))
+  (let ((vec (fill! (fab <buf> ascii-limit) #f)))
     (set (elt vec (as <int> #\t)) #\tab)
     (set (elt vec (as <int> #\f)) #\page)
     (set (elt vec (as <int> #\r)) #\return)

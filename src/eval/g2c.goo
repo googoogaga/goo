@@ -305,19 +305,19 @@
   (vec #(#\- #\_) #(#\! #\X) #(#\$ #\D) #(#\% #\P) #(#\* #\T) 
        #(#\/ #\S) #(#\< #\L) #(#\> #\G) #(#\? #\Q) #(#\+ #\A)
        #(#\& #\B) #(#\^ #\C) #(#\_ #\U) #(#\@ #\O) #(#\= #\E)
-       #(#\~ #\N) #(#\| #\K)))
+       #(#\~ #\N) #(#\| #\K) #(#\. #\I)))
 
 (df char-buffer-as-string (buffer|<buf> => <str>)
   (def buffer-size|<int> (len buffer))
   (def string|<str>      (fab <str> buffer-size))
   ;; without-bounds-checks
   (for (((i <int>) (below buffer-size)))
-    (set (elt string i) (elt buffer i)))
+    (set (low-elt string i) (elt buffer i)))
   ;; end without-bounds-checks
   string)
 
 (dv $c-escapes
-  (let ((vec (fill (fab <vec> ascii-limit) #f)))
+  (let ((vec (fill (fab <buf> ascii-limit) #f)))
     (set (elt vec (as <int> #\tab)) "\\t")
     (set (elt vec (as <int> #\page)) "\\f")
     (set (elt vec (as <int> #\return)) "\\r")
@@ -345,19 +345,20 @@
 (dv ($number-characters <str>) "0123456789")
 
 (dm mangle-integer (number|<int> => <str>)
-  (rep process-integer (((number <int>) number) ((index <int>) 1))
-    (def (tup quotient|<int> remainder|<int>) (trunc/ number 10))
-    (def digit|<chr> (elt $number-characters remainder))
-    (if (= quotient 0)
-        (let ((result|<str> (fab <str> index)))
-          (set (elt result 0) digit)
-          result)
-        (let ((result|<str> (process-integer quotient (+ index 1))))
-          (set (elt result (- (len result) index)) digit)
-          result))))
+  (as <str>
+      (rep process-integer (((number <int>) number) ((index <int>) 1))
+        (def (tup quotient|<int> remainder|<int>) (trunc/ number 10))
+        (def digit|<chr> (elt $number-characters remainder))
+        (if (= quotient 0)
+            (let ((result|<buf> (fab <buf> index)))
+              (set (elt result 0) digit)
+              result)
+            (let ((result|<buf> (process-integer quotient (+ index 1))))
+              (set (elt result (- (len result) index)) digit)
+              result)))))
 
 (dv $name-mangler-table
-  (let ((table (fab <vec> (+ $max-character-code 1))))
+  (let ((table (fab <buf> (+ $max-character-code 1))))
     ;; fill with default manglings
     (for ((i (range $min-character-code <= $max-character-code)))
       (set (elt table i)
@@ -436,7 +437,7 @@
 (ds (for-commas ,out-val (,@clauses) ,@body)
   (let ((out-var (gensym)))
     `(let ((,out-var ,out-val))
-       (for (,@clauses (first? (first-then #t #f)))
+       (for (,@clauses (first? (first-then (op #t) (op #f))))
          (unless first? (put ,out-var #\,))
          ,@body))))
 

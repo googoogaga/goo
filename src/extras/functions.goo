@@ -22,7 +22,7 @@
 ;;   (dp fun-mets (x|<gen> => <mets>) '())
 
 (df fab-gen (n|<int> mets|<mets> => <gen>)
-  (def specs (fill (fab <specs> n) <any>))
+  (def specs (fill! (fab <specs> n) <any>))
   (isa <gen> (set fun-specs specs) (set fun-mets mets)))
 
 (df fun-same-met? (x|<met> y|<met> => <log>)

@@ -29,7 +29,7 @@
  (dp tab-growth-threshold (x|<tab> => <flo>) 0.8)
  (dp tab-shrink-threshold (x|<tab> => <flo>) 0.5)
 )
-(dc <tab-vec> (<col>))
+(dc <tab-vec> (<seq!>))
   ;; Number of filled and vacant elements
   (dp %vacated (x|<tab-vec> => <int>) 0)
   ;; Modulus values for primary and secondary hash
@@ -102,8 +102,16 @@
            %bucket-depth bucket-depth
            %primary-modulus primary-modulus
            %secondary-modulus secondary-modulus))
-  (set (%data v) (fill (fab <vec> size) fill-value))
+  (set (%data v) (fab <vec> size))
+  (@fill! v fill-value)
   v)
+
+(df @fill! (x|<tab-vec> fill)
+  (def len (@@len x))
+  (rep loop ((i 0)) (when (< i len) (set (@elt x i) fill) (loop (+ i 1)))))
+
+(dm @@len (vector|<tab-vec> => <int>)
+  (len (%data vector)))
 
 (dm @elt (vector|<tab-vec> index|<int> => <any>)
   ;; (elt (%data vector) index)
@@ -115,7 +123,7 @@
   )
 
 (dm clr! (vector|<tab-vec> fill-value)
-  (fill (%data vector) fill-value)
+  (@fill! vector fill-value)
   (set (%vacated vector) 0))
 
 (dv *debug-tables?* #f)
@@ -551,4 +559,9 @@
 
 (dm mem? (c|<set> x => <log>)
   (elt-or c x #f))
+
+(dm elts (x|<col> keys|<seq> => <col>)
+  (def res (fab <tab> (len keys)))
+  (do (fun (k) (set (elt res k) (elt x k))) keys)
+  (as-copy x res))
 
