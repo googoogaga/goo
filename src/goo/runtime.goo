@@ -770,7 +770,7 @@
           (con (if (test e) (add seq e) seq) (nxt-state x sta))))))
 
 (dm del-dups ((x <seq>) => <seq>)
-  (as x (reduce (fun (s e) (if (mem? s e) s (add s e))) '() x)))
+  (as x (rev! (reduce (fun (s e) (if (mem? s e) s (pair e s))) '() x))))
 
 (dm del ((s <seq>) x => <seq>)
   (pick (fun (e) (~== e x)) s))

@@ -368,29 +368,15 @@
 	    (objectify-error "incorrect regular arity" f e*)))))
 
 (dm process-nary-closed-application (f e* r tail? => <fix-let>)
-  (loc ((pack-dotted-arguments (e*)
+  (loc ((pack-nary-args (e*) ;; TODO: COULD BE SHARED WITH PAIRIZE
 	   (if (empty-argument-list? e*)
-	       (isa <constant> (set constant-value '()))
-	       (isa <regular-application> ;; <predefined-application>
-		    (set application-function
-			 (objectify-symbol '%pair r))
-		    (set application-arguments
-			 (isa <argument-list>
-			      (set arguments-head
-				   (arguments-head e*))
-			      (set arguments-tail
-				   (isa <argument-list> 
-					(set arguments-head
-					     (pack-dotted-arguments 
-					       (arguments-tail e*)))
-					(set arguments-tail
-					     (empty-argument-list))))))
-		    (set application-tail?
-			 #f))))
+	       (lst 'quote '())
+	       (lst '%pair (arguments-head e*) 
+		     (pack-nary-args (arguments-tail e*)))))
         (gather-arguments (e* v*)
 	  (if (binding-dotted? (head v*))
 	      (isa <argument-list>
-		   (set arguments-head (pack-dotted-arguments e*))
+		   (set arguments-head (objectify (pack-nary-args e*) r #f))
 		   (set arguments-tail (empty-argument-list)))
 	      (if (empty-argument-list? e*)
 		  (objectify-error "incorrect dotted arity" f e*)
@@ -1131,7 +1117,7 @@
      => <static-global-environment>)
   (isa type 
     (set environment-next next)
-    (set environment-bindings (fab <tab> 1000))))
+    (set environment-bindings (fab <tab> 2000))))
 
 (df init-static-global-environment 
     ( => (tup (sys-env <static-environment>) (user-env <static-environment>)))

@@ -464,11 +464,12 @@
 	   (%count table) (* (%n-buckets vec) (%bucket-depth vec))))
   (let ((vector (%vector table))
 	((tup new-n-buckets new-bucket-depth)
-	 (choose-table-geometry (* (%n-buckets vector) (%bucket-depth vector))))
+	 (choose-table-geometry
+	  (elt (floor (* (* (%n-buckets vector) (%bucket-depth vector))
+			 (table-growth-factor table))) 0)))
 	(new-vector
 	 (fab-table-vector
-           (elt (floor (* new-n-buckets
-			  (* new-bucket-depth (table-growth-factor table)))) 0)
+           (* new-n-buckets (* new-bucket-depth 2))
            $empty-cell-marker
 	   new-n-buckets new-bucket-depth new-n-buckets (- new-n-buckets 2))))
     (trace out "OLD DATA %=\n" (%data (%vector table)))
