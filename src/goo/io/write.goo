@@ -54,7 +54,7 @@
       (write-list port x d recur)))
 
 (dm recurring-write (port|<out-port> x|<flat> d|<int> recur|<fun>)
-  (def prefix (cat "$$" (as <str> (class-name (object-class x))) "("))
+  (def prefix (cat "$$" (as <str> (class-name (class-of x))) "("))
   (write-flat port prefix x ")" d recur))
 
 (dm recurring-write (port|<out-port> x|<tup> d|<int> recur|<fun>)
@@ -157,7 +157,7 @@
 
 (dm write-map (port|<out-port> x|<map> d|<int> recur|<fun>)
   (puts port "#<")
-  (emit port (class-name (object-class x)))
+  (emit port (class-name (class-of x)))
   (esc blow
     (for (((tup key val) x) (i (from 0)))
       (when (>= i *max-print-length*)
@@ -207,6 +207,9 @@
 
 (dm recurring-write (port|<out-port> x|<met> d|<int> recur|<fun>)
   (write-fun-guts port x "Met" recur))
+
+(dm recurring-write (port|<out-port> x|<src-loc> d|<int> recur|<fun>)
+  (msg out "<SRC-LOC %= %s>" (src-loc-line x) (src-loc-file x)))
 
 (dm recurring-write (port|<out-port> x|<class> d|<int> recur|<fun>)
   (puts port "#{Class ")
@@ -260,7 +263,7 @@
 
 (dm recurring-write (port|<out-port> x d|<int> recur|<fun>)
   (puts port "#{")
-  (emit port (class-name (object-class x)))
+  (emit port (class-name (class-of x)))
   (esc blow
     (without-prop-unbound-errors
       (for ((prop (object-props x)) (i (from 0)))
@@ -291,7 +294,7 @@
                   message arguments)
           (def argument (elt arguments current-index))
             (assert (or (== class <any>) (isa? argument class))
-              "Msg argument for directive '%%%c' not of class %s: %="
+              "Msg argument for directive '%%%c' not of class %t: %="
               char class argument)
             argument))
     (do (fun ((c <chr>))
@@ -304,6 +307,7 @@
                      ((#\C) (put port (arg c <chr>)))
                      ((#\S) (emit port (arg c <any>)))
                      ((#\=) (write port (arg c <any>)))
+                     ((#\T) (write-type port (arg c <any>)))
                      ((#\%) (put port #\%))
                      (#t    (error "Invalid msg directive '%s' in \"%s\""
                                    c message)))
@@ -354,6 +358,7 @@
                         ((#\C) (pack `(put ,port ,(arg c <chr>))))
                         ((#\S) (pack `(emit ,port ,(arg c))))
                         ((#\=) (pack `(write ,port ,(arg c))))
+                        ((#\T) (pack `(write-type ,port ,(arg c))))
                         ((#\%) (add! chars #\%))
                         (#t    (error "Invalid msg directive '%s' in \"%s\""
                                       c message)))
@@ -396,6 +401,7 @@
   msg-to-str
   emit
   write
+  write-type
   writeln
   post
   write-to-string

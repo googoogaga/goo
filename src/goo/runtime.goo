@@ -40,17 +40,17 @@
 ;;; MACRO SUPPORT
 
 (df match-empty-list (x|<lst> fail|<fun>)
-  (if (== x '())
-      '()
+  (if (empty? x)
+      x
       (fail "Match Empty Failure of %=" x)))
 
 (df match-unquote (x|<lst> fail|<fun>)
-  (if (== x '())
+  (if (empty? x)
       (fail "Match Failure Empty List on Unquote")
       (head x)))
 
 (df match-atom (x|<lst> pat fail|<fun>)
-  (if (== x '())
+  (if (empty? x)
       (fail "Match Failure Empty List on %=" pat)
       (let ((exp (head x)))
         (if (== exp pat)

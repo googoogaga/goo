@@ -65,12 +65,12 @@
 ;;;;!! Implementation
 ;;;; Creation protocol
 (dm as ((t (t< <col>)) x|<col> => <col>)
-  (if (== (object-class x) t)
+  (if (== (class-of x) t)
       x
       (fab-into (fab t (len x)) x)))
 
 (dm dup (x|<col> => <col>)
-  (fab-into (fab (object-class x) (len x)) x))
+  (fab-into (fab (class-of x) (len x)) x))
 
 ;; no need to duplicate immutable collections
 (dm dup (x|<col.> => <col.>)
@@ -162,7 +162,7 @@
 ;;; (dm del (x|<col> key|<any> => <col>) ...)
 
 (dm zap (x|<col> => <col>)
-  (empty (object-class x)))
+  (empty (class-of x)))
 
 (dm do (f|<fun> c|<col>)
   (rep lop ((e (enum c)))
@@ -205,7 +205,7 @@
   (any? (fun (y) (== y x)) c))
 
 (dm col-res-type (c|<col> => <type>)
-  (object-class c))
+  (class-of c))
 
 ;;;; Undocumented
 

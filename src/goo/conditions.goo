@@ -232,7 +232,7 @@
   (sig (new <type-error> type-error-value arg type-error-type type)))
 
 (dm describe-condition (c|<type-error> => <str>)
-  (msg-to-str "Type check failure on %= expected %=."
+  (msg-to-str "Type check failure on %= expected %t."
               (type-error-value c) (type-error-type c)))
 
 (dc <unknown-function-error> (<type-error> <call-error>))
@@ -328,7 +328,9 @@
 (dc <stack-overflow> (<error>))
 
 (df stack-overflow-error ()
-  (error (new <stack-overflow>)))
+  (sig (new <stack-overflow>)))
+
+(dm describe-condition (c|<stack-overflow> => <str>) "Stack overflow.")
 
 (dc <internal-error> (<simple-error>))
 
@@ -415,7 +417,7 @@
   (sig (new <as-error> type-error-type type type-error-value value)))
 
 (dm describe-condition (c|<as-error> => <str>)
-  (msg-to-str "No AS method for type %= and value %=."
+  (msg-to-str "No AS method for type %t and value %=."
               (type-error-type c) (type-error-value c)))
 
 (dc <arithmetic-error> (<simple-error>))

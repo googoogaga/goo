@@ -8,10 +8,10 @@
 ;;;; TODO
 ;;;; 
 ;;;; get esc to work
-;;;; dynamic variables
 ;;;; next methods
 ;;;; rest variables
 ;;;; run multiple vm-evals with persistence
+;;;; dynamic variables
 ;;;; ---
 ;;;; use underlying g2c stack
 ;;;; customize instructions

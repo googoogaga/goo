@@ -136,14 +136,20 @@
          (set _top-num  num)
          (set _seen-top #t)))))
 
+(dm msg-src-loc (f)
+  (when (isa? f <met>)
+    (def sl (fun-src f))
+    (when (isa? sl <src-loc>)
+      (msg out " %s:%d" (src-loc-file sl) (src-loc-line sl)))))
+
 (dm backtrace ()
   (for-user-frames (num f args)
-    (msg out "[%=] %= %=\n" num f args)))
+    (msg out "[%=] %= %=" num f args) (msg-src-loc f) (newline out)))
 
 (dm frame (n|<int>)
   (for-user-frames (num f args)
     (when (== n num)
-      (msg out "[%=] %= %=\n" num f args))))
+      (msg out "[%=] %= %=" num f args) (msg-src-loc f) (newline out))))
 
 (dm frame-var (n|<int> name|<sym>)
   (esc ret
@@ -152,9 +158,10 @@
         (ret (elt args (pos (fun-names f) name)))))
     nul))
 
+
 (dm bt ()
   (for-user-frames (num f args)
-    (msg out "[%=] %=\n" num f)))
+    (msg out "[%=] %=" num f) (msg-src-loc f) (newline out)))
 
 (df do-restart (restarts n)
   (unless restarts

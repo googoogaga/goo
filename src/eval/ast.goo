@@ -5,6 +5,8 @@
 (use goo)
 (use goo/boot)
 (use goo/system)
+(use goo/cols/lst)
+(use goo/io/read)
 (use eval/syntax)
 (use eval/dependency)
 
@@ -46,6 +48,7 @@
 
 (dc <program> (<any>))
   (dp program-type (<program> => <any>))
+  (dp program-line (<program> => (t? <int>)) #f)
   (dp program-register (<program> => <any>) #f) ;; TODO: T? INT
 
 (dc <computed-program> (<program>))
@@ -235,15 +238,6 @@
 (dm as-lst (e|<programs> => <lst>)
   (rep loop ((res '()) (e e))
     (if (empty? e) (rev! res) (loop (pair (head e) res) (tail e)))))
-
-;; (ct (dv cat-sym make-sym))
-(ds (def-list ,name (,@supers))
-  (let ((class  (cat-sym "<" name ">"))
-        ($empty (cat-sym "$" name "-empty")))
-    `(seq (dc ,class (<lst> ,@supers))
-          (dv ,$empty (new ,class))
-          (df ,name (h t) (new ,class head h tail t))
-          (dm empty ((e (t= ,class)) => ,class) ,$empty))))
 
 (ds (def-programs ,name) `(def-list ,name (<programs>)))
 
@@ -716,12 +710,12 @@
 (df %%macro (modname name expander env-or-false => <module-binding>)
     ;; (msg out "DEFMACRO ") (writeln out sep-expander)
     (loc ((expand (x r tail?)
-                  (when *macro-tracing?*
-                    (msg out "MACRO ") (write out x) (msg out "\n"))
-                  (def exp (app expander (lst x)))
-                  (when *macro-tracing?*
-                    (msg out "  => ") (write out exp) (msg out "\n"))
-                  exp))
+            (when *macro-tracing?*
+              (msg out "MACRO ") (write out x) (msg out "\n"))
+            (def exp (line-list-of x (expander x)))
+            (when *macro-tracing?*
+              (msg out "  => ") (write out exp) (msg out "\n"))
+            exp))
       ;; (msg out "DEFMAC %=\n" name)
       (def env     (or env-or-false (unchecked-runtime-environment modname)))
       (def binding (ast-define-binding env name #f 'macro))
@@ -841,9 +835,9 @@
            "(fun %s %s)" sig (if (isa? body <lst>) (pair 'seq body) body)))
      r)))
 
-(dm objectify-function (sig body r tail? => <ast-method>)
+(dm objectify-function (sig body line r tail? => <ast-method>)
   ;; Allocate the method up front so we can log dependencies against it.
-  (def method (new <ast-method>))
+  (def method (new <ast-method> program-line line))
   (with-dependent method
     (def signature (objectify-signature sig r))
     (def new-r     (r-extend* r (signature-bindings signature)))
@@ -1007,17 +1001,18 @@
     locals-functions (app fabs <functions> functions)
     locals-body      (objectify-sequential body new-r #t)))
 
-(dm objectify-bind-exit (name body r tail? => <bind-exit>)
+(dm objectify-bind-exit (name body line r tail? => <bind-exit>)
   (new <bind-exit>
        bind-exit-main-fun 
-        (objectify (sexpr-make-anonymous-method (lst name) body) r #f)))
+        (objectify 
+         (sexpr-make-anonymous-method (line-list line name) body) r #f)))
 
 (dm objectify-unwind-protect
-    (protected-form cleanup-forms r tail? => <unwind-protect>)
+    (protected-form cleanup-forms line r tail? => <unwind-protect>)
   (new <unwind-protect>
        unwind-protect-protected-thunk
          (objectify
-          (sexpr-make-anonymous-method '() (lst protected-form))
+          (sexpr-make-anonymous-method '() (line-list line protected-form))
           r #f)
        unwind-protect-cleanup-thunk
          (objectify
@@ -1328,7 +1323,8 @@
     (sexpr-function-definition-value x) r))
 
 (define-magic-binding method (x r tail?)
-  (objectify-function (sexpr-method-signature x) (sexpr-method-body x) r tail?))
+  (objectify-function 
+   (sexpr-method-signature x) (sexpr-method-body x) (line-of x) r tail?))
 
 (dv $sexpr-bound?-tag 'bound?)
 
@@ -1353,13 +1349,14 @@
   (objectify (sexpr-iterate->loc x) r tail?))
 
 (define-magic-binding bind-exit (x r tail?)
-  (objectify-bind-exit (sexpr-block-name x) (sexpr-block-body x) r tail?))
+  (objectify-bind-exit 
+   (sexpr-block-name x) (sexpr-block-body x) (line-of x) r tail?))
 
 (define-magic-binding unwind-protect (x r tail?)
   (objectify-unwind-protect
     (sexpr-unwind-protect-protected-form x) 
     (sexpr-unwind-protect-cleanup-forms x)
-    r tail?))
+    (line-of x) r tail?))
 
 (define-magic-binding monitor (x r tail?)
   (def (tup type info test handler body) (sexpr-monitor-expand x))
@@ -1381,17 +1378,18 @@
   (def owner       (sexpr-prop-owner x))
   (def setter-name (sexpr-fab-setter-name name))
   (def type        (sexpr-prop-type x))
+  (def line        (line-of x))
   (objectify
    (sexpr-make-begin
-    (lst (sexpr-fab-getter name owner)
-         (sexpr-fab-setter name owner type)
+    (lst (sexpr-fab-getter name owner line)
+         (sexpr-fab-setter name owner type line)
          (sexpr-make-application
           '%prop
           (lst owner
                name setter-name type
                (if (sexpr-prop-init? x)
                    (sexpr-make-anonymous-method
-                    `((,var <any>)) (lst (sexpr-prop-init x)))
+                    `((,var <any>)) (line-list line (sexpr-prop-init x)))
                    '%prop-unbound-error)))))
    r tail?))
                             
@@ -2254,6 +2252,7 @@
   <program>
   program-type
   program-type-setter
+  program-line
   <computed-program>
   <passive-program>
   program-register program-register-setter

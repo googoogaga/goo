@@ -6,7 +6,7 @@
 (use goo/types)
 
 (dm to-str (x|<any> => <str>)
-  (cat "{ obj(" (to-str (class-name (object-class x))) ") }"))
+  (cat "{ obj(" (to-str (class-name (class-of x))) ") }"))
 
 (df address-of (x => <fixnum>)
   ;; treat pointer as integer

@@ -32,7 +32,7 @@
  quasiquote
  
  ;; Section 3.1: Any.
- <any> as new object-class clone
+ <any> as new object-class class-of clone
  
  ;; Section ?.?: Type.
  <type>
@@ -72,7 +72,7 @@
  empty? empty elt-default elt-type key-type key-test fab fabs fill any?
  all? fold fold+ find find-or del zap do do2 do3 map map2 do-keyed
  map-keyed mem? keys items zap find find-or 
- <col!> del! add! zap! fill! into
+ <col!> del! elt! add! zap! fill! into
  elt-setter low-elt-setter len-setter len/fill-setter 
  <range-error> range-error-collection range-error-key
  ;; 3.7.1: Iteration protocol.

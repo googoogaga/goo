@@ -3,6 +3,13 @@
 
 #include "grt.h"
 
+static PSTR _mod = PNUL;
+
+static P sloc (int line) {
+  if (_mod == PNUL) _mod = YPsb((P)"g2c");
+  return YPsrc_loc(YPib((P)line), _mod);
+}
+
 /* APPLICATION: */
 
 extern MODULE_INFO module_info_evalSmain;

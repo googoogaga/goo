@@ -309,7 +309,7 @@
 ;;; Build a sequence containing the specified number of cat'd sequences.
 (dm repeat (s|<seq> n|<int> => <seq>)
   (if (<= n 0)
-      (empty (object-class s))
+      (empty (class-of s))
       (cat2 s (repeat s (- n 1)))))
 
 ;;; Split 'str' apart on occurrences of 'sep' (similar to Perl).
@@ -324,7 +324,7 @@
 ;;; Join each sequence in 'ss' with 'sep' (similar to Perl).
 (dm join (ss|<seq> sep|<seq> => <seq>)
   (if (empty? ss)
-      (empty (object-class sep))
+      (empty (class-of sep))
       (fold (fun (x y) (cat x sep y)) (elt ss 0) (sub ss 1 (len ss)))))
 
 ;; from range.goo

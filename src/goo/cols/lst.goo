@@ -28,7 +28,7 @@
 ;; undocumented
  (dg assqn (x l|<lst> pos|<int> => <any>))
  (dg assq (x l|<lst> => <any>))
-
+ def-list
 )
 
 ;;;;!! Implementation
@@ -54,7 +54,7 @@
             (set (head x) z)
             (fnd (+ count 1) (tail x))))))
 
-(dm empty? (c|<lst> => <log>) (== c (empty (object-class c))))
+(dm empty? (c|<lst> => <log>) (== c (empty (class-of c))))
 
 (dm empty ((c (t= <lst>)) => <lst>) '())
 
@@ -97,7 +97,7 @@
     (if (empty? x) (head px) (fnd (tail x) x))))
 
 (dm rev! (c|<lst> => <lst>)
-  (rep loop ((l c) (r (empty (object-class c))))
+  (rep loop ((l c) (r (empty (class-of c))))
     (if (empty? l)
         r
         (let ((t (tail l)))
@@ -170,4 +170,41 @@
       (if (== x (elt (head l) pos))
           (head l)
           (assqn x (tail l) pos))))
+
+;; (ct (dv cat-sym make-sym))
+(ds (def-list ,name (,@supers))
+  (let ((class  (cat-sym "<" name ">"))
+        ($empty (cat-sym "$" name "-empty")))
+    `(seq (dc ,class (<lst> ,@supers))
+          (dv ,$empty (new ,class))
+          (df ,name (h t) (new ,class head h tail t))
+          (dm empty ((e (t= ,class)) => ,class) ,$empty))))
+
+(dm line-of (x) #f)
+
+(dc <line> (<mag>))
+  (dp line-of (<line> => (t? <int>)) #f)
+
+(def-list line-pah (<line>))
+
+(dv <line-list> <line-pah>)
+
+(df line-pair (h t l) (new <line-list> head h tail t line-of l))
+
+(df line-list (l elts|...) 
+  (rep fab ((r (empty <line-list>)) (i (- (len elts) 1)))
+    (if (< i 0)
+        r
+        (fab (line-pair (elt elts i) r l) (- i 1)))))
+
+(dm line-list-of (ctx|<lst> src|<lst> => <lst>)
+  (rep copy ((l (line-of ctx)) (src src))
+    (if (and (isa? src <lst>) (not (empty? src)))
+        (let ((h (head src)) (t (tail src)))
+          (line-pair (copy (or (line-of h) l) h) (copy (or (line-of t) l) t) l))
+        src)))
+
+(dm line-list-of (ctx src => <any>) src)
+
+(export <line> line-of <line-list> line-pair line-list line-list-of)
 

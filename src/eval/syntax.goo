@@ -2,6 +2,7 @@
 
 (use goo)
 (use goo/boot)
+(use goo/cols/lst)
 
 ;;  Self-evaluating entities
 (dm sexpr-self-evaluating? (exp => <log>)
@@ -161,8 +162,9 @@
 
 ;; (df foo (x ...) form ...)
 (dm sexpr-function-definition-value (defn => <any>)
-  (pair $sexpr-method-tag 
-        (pair (3rd defn) (tail (tail (tail defn))))))
+  (line-pair $sexpr-method-tag 
+             (pair (3rd defn) (tail (tail (tail defn))))
+             (line-of defn)))
 
 ;;  METHOD -- (METHOD (p...) b...)
 
@@ -185,10 +187,12 @@
 
 (dm sexpr-make-anonymous-method 
     (parameters|<lst> body|<lst> => <lst>)
-  (cat (lst $sexpr-method-tag) (lst parameters) body))
+  (line-list-of (if (isa? parameters <line-list>) parameters body)
+    (cat (lst $sexpr-method-tag) (lst parameters) body)))
 
 (dm sexpr-make-method (name parameters|<lst> body|<lst> => <lst>)
-  (cat (lst $sexpr-define-method-tag name parameters) body))
+  (line-list-of (if (isa? parameters <line-list>) parameters body)
+    (cat (lst $sexpr-define-method-tag name parameters) body)))
 
 ;;  IF CONDITIONALS
 
@@ -489,9 +493,10 @@
   (def sig   (sexpr-iterate-signature rep-exp))
   (def body  (sexpr-iterate-body rep-exp))
   (def inits (sexpr-iterate-inits rep-exp))
-  (lst $sexpr-locals-tag
-       (lst (cat (lst name sig) body))
-       (cat (lst name) inits)))
+  (line-list-of rep-exp
+    (lst $sexpr-locals-tag
+         (lst (cat (lst name sig) body))
+         (cat (lst name) inits))))
 
 ;;  ISA
 
@@ -555,19 +560,19 @@
 (dm sexpr-prop-init (exp|<lst> => <any>)
   (elt exp 3))
 
-(dm sexpr-fab-getter (name type => <lst>)
+(dm sexpr-fab-getter (name type line => <lst>)
   (sexpr-make-method 
-   name (lst (lst '_x type)) 
+   name (line-list line (lst '_x type)) 
    (lst (lst 'prop-value '_x name))))
 
-(dm sexpr-fab-setter (name type prop-type => <lst>)
+(dm sexpr-fab-setter (name type prop-type line => <lst>)
   (sexpr-make-method
     (sexpr-fab-setter-name name)
-    (lst (lst '_z prop-type) (lst '_x type))
+    (line-list line (lst '_z prop-type) (lst '_x type))
     (lst (lst 'prop-value-setter '_z '_x name))))
 
 (dm sexpr-fab-setter-name (name => <sym>)
-  (as <sym> (cat (as <str> name) "-setter")))
+  (cat-sym name "-setter"))
 
 ;; BACKQUOTE
 
@@ -613,7 +618,7 @@
   (sexpr-tagged-list? x $sexpr-quasiquote-tag))
 
 (dm sexpr-atom? (x => <log>)
-  (or (not (isa? x <lst>)) (== x '())))
+  (or (not (isa? x <lst>)) (empty? x)))
 
 (dm nreconc (x|<lst> y|<lst> => <lst>)
   (cat! (rev! x) y))

@@ -646,6 +646,7 @@ extern P YPmacro (P,P,P);
 extern P YPsig (P,P,P,P,P,P);
 extern P YPgen (P,P,P,P,P,P,P);
 extern P YPmet (P,P,P,P,P,P);
+extern P YPsrc_loc (P,P);
 
 /* FUNCTIONS */
 

@@ -69,7 +69,7 @@
             (find (nxt d) (+ i 1))))
       ;; Don't know if dst is stretchy so we have to create a new one
       (let ((new-len (+ (- dst-len del-len) src-len))
-            (ndst    (fab (object-class dst) new-len)))
+            (ndst    (fab (class-of dst) new-len)))
         (rep copy ((nd (enum ndst)) (d (enum dst)) (i 0))
           (if (= i from)
               (rep insert ((nd nd) (s (enum src)))

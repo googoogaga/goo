@@ -17,7 +17,7 @@
  (dg close (x|<port>))
  with-port
  (dc <in-port> (<port>))
- (dp port-line (<in-port> => <int>) 0)
+ (dp port-line (<in-port> => <int>) 1)
  (dg get (port|<in-port> => <chr>))
  (dg gets (port|<in-port>) => <str>)
  (dg peek (port|<in-port> => <chr>))
@@ -52,7 +52,7 @@
  (dc <str-in-port> (<str-port> <in-port>))
  (dp port-index (<str-in-port> => <int>) 0)
  (dc <str-out-port> (<str-port> <out-port>))
- port2str)
+ port-to-str)
 
 (dm gets (port|<in-port> => <str>)
   (rep loop ((res '()) (c (get port)))
@@ -140,6 +140,6 @@
 (dm puts (port|<str-out-port> s|<str>)
   (set (port-guts port) (cat! (port-guts port) s)))
 
-(ds (port2str ,name ,@body)
+(ds (port-to-str ,name ,@body)
   `(let ((,name (open <str-out-port> "")))
      ,@body (port-contents ,name)))

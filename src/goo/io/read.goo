@@ -19,6 +19,7 @@
 (use goo/math)
 (use goo/io/port)
 (use goo/cols)
+(use goo/cols/lst)
 
 ;; READ
 
@@ -97,9 +98,8 @@
   (rep loop ((c (flush-whitespace port)))    
     (if (== c endchar)
         (seq (get port) (rev retlist))
-        (seq
-          (opf retlist (pair (read port) _))
-          (loop (flush-whitespace port))))))
+        (seq (opf retlist (pair (read port) _))
+             (loop (flush-whitespace port))))))
 
 (df sub-read-constituent (c port)
   ;; (put out #\h) (newline out)
@@ -130,23 +130,29 @@
 (df sub-read-list-eof-error (port|<port>)
   (reading-error port "end of file inside list -- unbalanced parentheses"))
 
-(dm sub-read-list (c|<chr> port|<port> => <any>)
+(dm sub-read-list (c|<chr> p|<port> => <any>)
   ;; (put out #\d) (newline out)
-  (def form (sub-read port))
-  (cond ((eof-object? form)     (sub-read-list-eof-error port))
+  (def line (port-line p))
+  (def form (sub-read p))
+  (cond ((eof-object? form)     (sub-read-list-eof-error p))
         ((== form $close-paren) '())
         (#t
-         (rep read-next ((c|<chr> c) (prev form) (form (sub-read port)))
+         (rep read-next 
+             ((c|<chr> c) (prev form) (line line) (form (sub-read p)))
            (def prev (if (== prev $vert-proxy) $vert-sym prev))
            (cond ((eof-object? form)
-                  (sub-read-list-eof-error port))
+                  (sub-read-list-eof-error p))
                  ((== form $close-paren) 
-                  (lst prev))
+                  (line-list line prev))
                  ((== form $vert-sym)    
-                  (let ((next (sub-read-carefully port)))
-                    (pair (lst prev next) (sub-read-list c port))))
+                  (let ((next (sub-read-carefully p)))
+                    (line-pair (line-pair prev (line-list line next) line) 
+                               (sub-read-list c p)
+                               line)))
                  (#t
-                  (pair prev (read-next c form (sub-read port)))))))))
+                  (line-pair prev
+                             (read-next c form (port-line p) (sub-read p))
+                             line)))))))
 
 (dm sub-read-seq (c|<chr> e port|<port> => <any>)
   (def form (sub-read port))

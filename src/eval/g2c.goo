@@ -192,7 +192,7 @@
   prg)
 
 (dm generate-c-module (code-out e prg mod)
-  (generate-header code-out e)
+  (generate-header code-out (module-name mod))
   (generate-global-environment code-out mod)
   (generate-quotation-forwards code-out (program-quotations prg))
   (generate-function-forwards code-out (program-definitions prg))
@@ -206,9 +206,9 @@
 (dm generate-c-application (loader|<module-loader> mod|<module>)
   (def appname   (module-loader-appname loader))
   (def init-name (cat appname "-init"))
-  (def out-name (add-build-path appname (c-filename init-name)))
+  (def out-name  (add-build-path appname (c-filename init-name)))
   (with-port (out-port (open <file-out-port> out-name))
-    (generate-header out-port #f)
+    (generate-header out-port appname)
     (generate-main out-port mod)
     (generate-trailer out-port))
   #f)
@@ -255,12 +255,22 @@
   ;; (print e out pretty?: #t) ;; TODO: PRETTY?
   (write code-out e)) 
 
-(dm generate-header (code-out e)
+(dv $now-mod-var-name "_mod")
+
+(dm generate-header (code-out modname)
+  (def modvar $now-mod-var-name)
   (msg* code-out "/* GOO 2 C $REVISION: 0.120 $ \n")
-  ;; (when pp (pp e code-out))
   (msg* code-out "  */\n\n#include \"grt.h\"\n")
   (when *dynamic-linking?*
-    (msg* code-out "#include \"dlgrt.h\"\n")))
+    (msg* code-out "#include \"dlgrt.h\"\n"))
+  (msg* code-out "\nstatic PSTR %s = PNUL;\n" modvar)
+  (msg* code-out "\nstatic P sloc (int line) {\n")
+  (msg* code-out "  if (%s == PNUL) %s = " modvar modvar)
+  (generate-quotation code-out modname) (msg* code-out ";\n")
+  (msg* code-out "  return %s(%s((P)line), %s);\n" 
+        (mangle-boot-name "%src-loc") (mangle-boot-name "%ib") modvar)
+  (msg* code-out "}\n")
+  )
 
 (dm generate-trailer (code-out)
   (msg* code-out "\n/* END OF GENERATED CODE. */\n"))
@@ -1017,7 +1027,10 @@
       (gen-ref (function-signature definition) code-out)
       (puts code-out "ENVNUL")
       (puts code-out "PNUL")
-      (gen-ref (function-source definition) code-out))))
+      (if (program-line definition)
+          (msg* code-out "sloc(%d)" (program-line definition))
+          (gen-ref (function-source definition) code-out))
+      )))
 
 (dm generate-function-body-reference (code-out definition)
   (puts code-out "FUNCODEREF(")

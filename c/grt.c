@@ -592,7 +592,7 @@ INLINE P FUNSHELL (int d, P x, int n) {
   P   fun;
   unsigned int snallocd = nallocd;
   int old_stack_allocp = REG(stack_allocp); REGSET(stack_allocp, d);
-  YPclass_prop_len_setter(YPib((P)4), YLmetG);
+  YPclass_prop_len_setter(YPib((P)6), YLmetG);
   fun = YPclone(x);
   fun_nallocd += nallocd - snallocd;
   FUNENVSETTER(ENVFAB(n), fun);
@@ -605,7 +605,7 @@ P FUNFAB (P x, int n, ...) {
   va_list ap; 
   unsigned long snallocd = nallocd;
   P   fun;
-  YPclass_prop_len_setter(YPib((P)4), YLmetG);
+  YPclass_prop_len_setter(YPib((P)6), YLmetG);
   fun = YPclone(x);
   FUNENVSETTER(ENVFAB(n), fun);
   fun_nallocd += nallocd - snallocd;

@@ -9,6 +9,7 @@
 (pub dg elt-setter (v|<any> x|<col!> (k <any>)))
 (pub dg into (x|<col!> y|<col> => <col>)) 
 (pub dg add! (c|<col!> x => <col!>))
+(pub dg elt! (c|<col!> k f|<fun>))
 (pub dg del! (c|<col!> x => <col!>))
 (pub dg zap! (c|<col!> => <col!>))
 (pub dg len-setter (new-len|<int> c|<col!>))
@@ -25,6 +26,12 @@
 
 ;; TODO: REMOVE PERHAPS?
 (dm add! (c|<col!> x => <col!>) (add c x))
+
+(dv $not-found '("not found"))
+
+(dm elt! (c|<col!> k f|<fun>) 
+  (def x (elt-or c k $not-found)) 
+  (if (== x $not-found) (set (elt c k) (f)) x))
 
 (dm del! (c|<col!> x => <col!>) (del c x))
 
