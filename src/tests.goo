@@ -1,0 +1,522 @@
+;; (%trace-on)
+;; (%trace-off)
+
+;; (load "/home/ai/jrb/proto/SRC/TESTS/tests.proto")
+;; (run-all-tests)
+
+;;; BUGS
+;;;
+;;; 1. need element-type and generator therein (fabs <str> 0 1)
+;;; 2. fab <range> 2 causes nyi which should be a real condition
+;;; 3. warnings shouldn't result in failure
+;;; 4. need way to debug object system and retest with undef?
+;;; 5. need split to debug <map>'s
+
+(use proto)
+
+(dv *tests* '())
+
+(dm add-test (name)
+  (set *tests* (del-dups (cat *tests* (lst name)))))
+
+(dm del-test (name)
+  (set *tests* (del *tests* name)))
+
+(ds (test-group ,name ,@tests)
+  (mif ((,name disabled) name)
+    `(del-test ',name)
+    `(seq (add-test ',name) 
+	(dm run-tests ((group-name ',name))
+	     ,@tests))))
+
+(dv *test-trace?* #t)
+
+(dv *test-doc*    #f)
+
+(dm do-test (group-name doc input-thunk)
+  (dlet ((*test-doc* doc))
+    (when *test-trace?* (format out "  %s\n" doc))
+    (input-thunk)))
+
+(dv <test-warning> (isa <simple-condition>))
+
+(dm recurring-write
+    ((port <output-port>) (x <test-warning>) (d <int>) (recur <fun>))
+  (write port (condition-message x)))
+
+(dm recurring-write
+    ((port <output-port>) (x <simple-condition>) (d <int>) (recur <fun>))
+  (apply format 
+    (cat (lst port (condition-message x)) (condition-arguments x))))
+
+(dm do-test-fn (group-name doc compare input-thunk output-thunk)
+  (dlet ((*test-doc* doc))
+    (when *test-trace?* (format out "  %s\n" doc))
+    (unless (compare (input-thunk) (output-thunk))
+      (sig (isa <test-warning> 
+	     (set condition-message (cat (as <str> group-name) ": " doc))
+	     (set condition-arguments '()))))))
+
+(dm do-test-eq (group-name doc input-thunk output-thunk)
+  (do-test-fn group-name doc == input-thunk output-thunk))
+
+(dm do-test-eqv (group-name doc input-thunk output-thunk)
+  (do-test-fn group-name doc = input-thunk output-thunk))
+
+(ds (test ,input)
+  `(do-test group-name 
+	    ,(to-str input)
+	    (fun () ,input)))
+
+(ds (test= ,input ,output)
+  `(do-test-eqv group-name
+		,(to-str input)
+		(fun () ,input) (fun () ,output)))
+
+(ds (test== ,input ,output)
+  `(do-test-eq group-name
+	       ,(to-str input)
+	       (fun () ,input) (fun () ,output)))
+
+;; (def `(out ,@objects)
+;;   `(do write-string (lst ,@(map (fun (x) `(to-str ,x)) objects))))
+
+(dm run-tests-in (tst => (tup <lst> <lst>))
+  (let ((errors '()) (warnings '()))
+    (lab break
+      (try ((condition resume)
+	    (if (isa? condition <test-warning>)
+		(seq (pushf warnings (lst condition *test-doc*))
+		     (resume #f))
+		(seq (pushf errors (lst condition *test-doc*))
+		     (break #f))))
+	(tst)))
+      (tup errors warnings)))
+
+(dm run-all-tests (=> <Int>)
+  (newline out)
+  (let ((all-warnings '()) (all-errors '()))
+    (do (fun (tst)
+          (when tst
+	    (format out "Testing %=\n" tst)
+	    (let (((tup errors warnings) 
+		   (run-tests-in (fun () (run-tests tst)))))
+	      (do (fun (c) (format out "Warning: %=. Continuing...\n" c))
+		  warnings)
+	      (do (fun (c) (format out "Error: %=.\n" c))
+		  errors)
+	      (set all-warnings (cat! all-warnings warnings))
+	      (set all-errors   (cat! all-errors   errors)))))
+	*tests*)
+      (format out "Tautology completed with %= warnings and %= errors\n"
+	      (len all-warnings) (len all-errors))
+      (+ (len all-warnings) (len all-errors))))
+
+(export run-all-tests)
+
+(test-group slf
+  (test== 1    1)
+  (test== #t   #t)
+  (test== #f   #f)
+  (test== 'a   'a)
+  (test=  '(a) '(a)))
+
+(dv $no-value #f)
+
+(test-group var
+  (test= (dv x 1)  $no-value)
+  (test= x         1)
+  (test= (set x 2) 2)
+  (test= x         2))
+
+(test-group ifc
+  (test= (if #t 1 2) 1)
+  (test= (if #f 1 2) 2)
+  (test= (if #t 3)   3)
+  (test= (if #f 4)   #f))
+
+(test-group fun
+  (test  (fun (x) x))
+  (test= ((fun (x) x) 2)             2)
+  (test  (fun ((x ...)) x))
+  (test= ((fun ((x ...)) x) 1 2 3)   '(1 2 3))
+  (test  (fun (x (y ...)) y))
+  (test= ((fun (x (y ...)) y) 1 2 3) '(2 3)))
+
+(test-group beg
+  (test= (seq)     #f)
+  (test= (seq 2)   2)
+  (test= (seq 2 3) 3))
+
+(test-group lut
+  (test= (let ((a 1)) a)       1)
+  (test= (let ((a 2) (b a)) a) 2))
+
+(test-group app
+  (test= (+ 1 2)         3)
+  (test= ((fun (x) x) 2) 2))
+
+(test-group iterate
+  (test= (rep sum ((s 0) (i 5)) (if (< i 0) s (sum (+ s 1) (- i 1)))) 6))
+
+(test-group locals
+  (test= (loc ((f (x) (g x)) (g (y) y)) (f 1)) 1))
+
+(test-group bind-exit
+  (test= (lab ret (ret 1))                   1)
+  (test= (lab ret 2)                         2)
+  (test= (lab ret ((fun (x r) (r x)) 3 ret)) 3))
+
+
+(test-group protect
+  (test= (fin 1 2)                                         1)
+  (test= (let ((x 1)) (lab ret (fin (ret 1) (set x 2))) x) 2)
+  (test= (let ((x 1)) (lab ret (fin      1  (set x 2))) x) 2))
+
+;; (test-group isa 
+;;   (test (isa <Any>))
+;;   (test (isa (<Any>)))
+;;   (test (dv Pti (isa <Any>)))
+;;   (test (dv Pti2 (isa Pti)))
+;;   (test (dv A (isa <Any>)))
+;;   (test (dv B (isa <Any>)))
+;;   (test (dv C (isa A)))
+;;   (test (dv D (isa C)))
+;;   (test (dv E (isa C)))
+;;   (test (dv I (isa B)))
+;;   (test (dv J (isa (A B))))
+;;   (test= (isa? C A) #t)
+;;   (test= (isa? C B) #f)
+;;   (test= (isa? D C) #t)
+;;   (test= (isa? E C) #t)
+;;   (test= (isa? I B) #t)
+;;   (test= (isa? J A) #t)
+;;   (test= (isa? J B) #t)
+;;   (test= (isa? J C) #f))
+;; 
+;; (test-group dis
+;;   ;; (unset f)
+;;   (test (dm (f (x A)) 'a))
+;;   (test (dm (f (x B)) 'b))
+;;   (test (dm (f (x C)) 'c))
+;;   ;; (test (dv (f (x D)) 'd))
+;;   ;; (test (dv (f (x E)) 'e))
+;;   ;; (test (dv (f (x F)) 'f))
+;;   (test= (f A)               a)
+;;   (test= (f B)               b)
+;;   (test= (f C)               c)
+;;   (test= (f D)               c)
+;;   (test= (f E)               c)
+;;   (test= (f I)               b)
+;;   ;; (test= (f J)               ambiguous)
+;;   )
+;; 
+;; (test-group slt
+;;   ;; (unset x) (unset x-setter)
+;;   ;; (unset y) (unset y-setter)
+;;   ;; (unset Pt) (unset p)
+;;   (test   (dv Pt (isa <Any>)))
+;;   (test   (slot Pt x))
+;;   (test== (x Pt)             Nul)
+;;   (test== (set (x Pt) Pt)    Pt)
+;;   (test== (x Pt)             Pt)
+;;   (test   (slot Pt y Pt))
+;;   (test   (y Pt)             Pt)
+;;   (test   (dv p (isa Pt)))
+;;   (test== (x p)              Pt)
+;;   (test== (y p)              Pt))
+
+;; (test-group cnd ...)
+
+;;; DISPATCH
+;;; FUNCTION REDEF
+
+(ds (def-protocol-tests ((,var ,name)) ,@tests)
+  `(dm test-object ((,var ,name)) (let ((group-name ',name)) ,@tests)))
+
+(ds (def-concrete-protocol-tests ((,var ,name)) ,@tests)
+  `(seq (def-protocol-tests ((,var ,name)) ,@tests)
+	(test-group ,name (test-object ,name))))
+
+(def-protocol-tests ((x <any>))
+  ;; (to-str <any> => <str>)
+  )
+
+(def-concrete-protocol-tests ((x <chr>))
+  (next-method x)
+  ;; lowercase? ((x <chr>) => <log>)
+  ;; uppercase? ((x <chr>) => <log>)
+  ;; as-lowercase ((x <chr>) => <chr>)
+  ;; as-uppercase ((x <chr>) => <chr>)
+  ;; alphabetic? ((x <chr>) => <log>)
+  ;; numeric? ((x <chr>) => <log>)
+  ;; to-digit ((digit <chr>) => <int>)
+  ;; ascii->char ((n <int>) => <chr>)
+  ;; char->integer ((char <chr>) => <int>)
+  ;; integer->char ((n <int>) => <chr>)
+  ;; char->ascii ((char <chr>) => <int>)
+  )
+
+(def-protocol-tests ((x <num>))
+  (next-method x)
+  (test== (pos?  (as x 1))  #t)
+  (test== (pos?  (as x 0))  #f)
+  (test== (pos?  (as x -1)) #f)
+  (test== (neg?  (as x 1))  #f)
+  (test== (neg?  (as x 0))  #f)
+  (test== (neg?  (as x -1)) #t)
+  (test== (zero? (as x 1))  #f)
+  (test== (zero? (as x 0))  #t)
+  (test== (zero? (as x -1)) #f)
+  ;; < ((x <num>) (y <num>) => <log>)
+  ;; + ((x <num>) (y <num>) => <num>)
+  ;; - ((x <num>) (y <num>) => <num>)
+  ;; * ((x <num>) (y <num>) => <num>)
+  ;; floor ((x <num>) => (tup <int> (rem <num>)))
+  ;; ceiling ((x <num>) => (tup <int> (rem <num>)))
+  ;; round ((x <num>) => (tup <int> (rem <num>)))
+  ;; truncate ((x <num>) => (tup <int> (rem <num>)))
+  ;; floor/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
+  ;; ceiling/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
+  ;; round/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
+  ;; truncate/ ((real <num>) (divisor <num>) => (tup <int> (remainder <num>)))
+  ;; modulo ((real <num>) (divisor <num>) => <num>)
+  ;; remainder ((real <num>) (divisor <num>) => <num>)
+  ;; neg ((x <num>) => <num>)
+  ;; abs ((x <num>) => <num>)
+  ;; to-str ((x <num>) => <str>)
+  )
+
+(def-concrete-protocol-tests ((x <int>))
+  (next-method x)
+  (test= (logior 1 2)  3)
+  (test= (logior 1 1)  1)
+  (test= (logior 1 0)  1)
+  (test= (logxor 1 2)  3)
+  (test= (logxor 1 1)  0)
+  (test= (logxor 1 0)  1)
+  (test= (logand 1 2)  0)
+  (test= (logand 1 1)  1)
+  (test= (logand 1 0)  0)
+  (test= (lognot 1)    0)
+  (test= (lognot 0)    1)
+  (test= (lognot 2)    0)
+  (test= (logbit? 5 0) 1)
+  (test= (logbit? 5 1) 0)
+  (test= (logbit? 5 2) 1)
+  (test= (even? 0)     #t)
+  (test= (even? 1)     #f)
+  (test= (even? -1)    #f)
+  (test= (even? -2)    #t)
+  (test= (odd? 0)      #f)
+  (test= (odd? 1)      #t)
+  (test= (odd? -1)     #t)
+  (test= (odd? -2)     #f)
+  (test= (ash 1 2)     4)
+  (test= (ash 2 2)     8)
+  (test= (ash -1 2)    -4)
+  (test= (ash 1 -2)    0)
+  (test= (lsh 1 2)     4)
+  (test= (lsh 2 2)     8)
+  (test= (lsh -1 2)    -4)
+  (test= (lsh 1 -2)    0)
+  )
+
+(def-concrete-protocol-tests ((x <flo>))
+  (next-method x)
+  )
+
+(dm elt-type ((x <col>) => <any>) <any>)
+(dm elt-type ((x <str>) => <any>) <chr>)
+(dm as-elt ((c <col>) x) (as (elt-type c) x))
+(dm fabsex ((type <col>) (ints ...))
+  (let ((et (elt-type type)))
+    (apply fabs (pair type (map (fun (x) (as et x)) ints)))))
+(dm int-plus (x y) (+ (as <int> x) (as <int> y)))
+
+(def-protocol-tests ((x <col>))
+  (next-method x)
+  ;; (default <col> => <any>)
+  (test   (fab x 0))
+  (test== (empty? (fab x 0))  #t)
+  (test   (empty x))
+  (test=  (len (empty x)) 0)
+  (test=  (empty x) (fab x 0))
+  (test=  (len (fab x 0))     0)
+  (test=  (fabsex x 1 2) (fabsex x 1 2))
+  (test   (fab x 5))
+  (test== (any? (fun (e) (= e (as-elt x 1))) (empty x))  #f)
+  (test== (any? (fun (e) (= e (as-elt x 1))) (fabsex x 1)) #t)
+  (test== (any? (fun (e) (= e (as-elt x 1))) (fabsex x 2)) #f)
+  (test== (any? (fun (e) (= e (as-elt x 1))) (fabsex x 1 1 1)) #t)
+  (test== (any? (fun (e) (= e (as-elt x 1))) (fabsex x 1 2 3)) #t)
+  (test== (any? (fun (e) (= e (as-elt x 1))) (fabsex x 3 2 4)) #f)
+  (test== (all? (fun (e) (= e (as-elt x 1))) (empty x))  #t)
+  (test== (all? (fun (e) (= e (as-elt x 1))) (fabsex x 1)) #t)
+  (test== (all? (fun (e) (= e (as-elt x 1))) (fabsex x 2)) #f)
+  (test== (all? (fun (e) (= e (as-elt x 1))) (fabsex x 1 1 1)) #t)
+  (test== (all? (fun (e) (= e (as-elt x 1))) (fabsex x 1 2 3)) #f)
+  (test== (all? (fun (e) (= e (as-elt x 1))) (fabsex x 3 2 4)) #f)
+  (test=  (reduce int-plus 0 (empty x))   0)
+  (test=  (reduce int-plus 0 (fabsex x 1))     1)
+  (test=  (reduce int-plus 0 (fabsex x 1 2))   3)
+  (test=  (reduce int-plus 0 (fabsex x 1 2 3)) 6)
+  ;; (test=  (reduce+ + (empty x))      0) ;TODO: CONDITION
+  (test=  (reduce+ int-plus (fabsex x 1))     (as-elt x 1))
+  (test=  (reduce+ int-plus (fabsex x 1 2))   3)
+  (test=  (reduce+ int-plus (fabsex x 1 2 3)) 6)
+  ;; find-key (<fun> <col>)
+  ;; map (<fun> <col>)
+  ;; do (<fun> <col>)
+  ;; map-keyed (<fun> <col>)
+  ;; do-keyed (<fun> <col>)
+  ;; mem? (<col> <any>)
+  ;; fip
+  ;; what about len-setter?
+  )
+
+;;(def-protocol-tests ((x <bag>))
+;;  (next-method x)
+  ;; add followed by mem?
+;;  )
+
+(def-protocol-tests ((x <map>))
+  (next-method x)
+  ;; elts of non pos int keys
+  ;; fab-map
+  ;; del-keys
+  )
+
+(def-concrete-protocol-tests ((x <tab>))
+  (next-method x)
+  ;; perhaps hashing functions
+  ;; str hashing
+  )
+
+(def-protocol-tests ((x <seq>))
+  (next-method x)
+  (test=  (fill (fab x 4) (as-elt x 1)) (fabsex x 1 1 1 1))
+  (test=  (alter (fabsex x 1 2) (fabsex x 2 3)) (fabsex x 2 3))
+  ;; (1st <seq>)
+  ;; (2nd <seq>)
+  ;; (3rd <seq>)
+  ;; (last <seq>)
+  ;; (add <seq> <any>)
+  ;; (add! <seq> <any>)
+  ;; (push <seq> <any>)
+  ;; (pos <seq> <any>)
+  ;; (rev <seq>)
+  ;; (rev! <seq>)
+  ;; (cat <seq> ...)
+  ;; (cat! <seq> ...)
+  ;; (sub <seq> <int> <int>)
+  ;; (sub-setter <seq> <seq> <int> <int>)
+  ;; (del-dups <seq>)
+  ;; (del <seq> <any>)
+  ;; (vals-to-str <seq>)
+  )
+
+(def-concrete-protocol-tests ((x <lst>))
+  (next-method x)
+  ;; (assq <any> <lst> => <any>) 
+  )
+
+(def-concrete-protocol-tests ((x <buf>))
+  (next-method x)
+  ;; (add! <buf> <any> => <any>) 
+  ;; (pop  <buf> => <any>) 
+  ;; (len-setter <int> <buf>) 
+  )
+
+(def-protocol-tests ((x <range>)) ;; TODO: concrete
+  (next-method x)
+  ;;
+  )
+
+(def-protocol-tests ((x <step>)) ;; TODO: concrete
+  (next-method x)
+  ;;
+  )
+
+;;(def-protocol-tests ((x <assoc>))
+;;  (next-method x)
+  ;;
+;;  )
+
+(def-concrete-protocol-tests ((x <str>))
+  (next-method x)
+  ;; <
+  )
+
+(def-concrete-protocol-tests ((x <sym>))
+  (next-method x)
+  ;; 
+  )
+
+(def-protocol-tests ((x <condition>)) ;; TODO: concrete
+  (next-method x)
+  ;; 
+  )
+
+(def-concrete-protocol-tests ((x <loc>)) ;; TODO: concrete
+  (next-method x)
+  ;; 
+  )
+
+(def-protocol-tests ((x <port>))
+  (next-method x)
+  ;; eof-object? ((x <chr>) => <log>)
+  ;; 
+  )
+
+(def-protocol-tests ((x <output-port>))
+  (next-method x)
+  ;; newline ((port <output-port>)) 
+  ;; force-output ((port <output-port>))
+  ;; write-char ((port <output-port>) (c <chr>))
+  ;; write-string ((port <output-port>) (s <str>))
+  )
+
+(def-protocol-tests ((x <input-port>))
+  (next-method x)
+  ;; read-char ((port <input-port>) => <chr>)
+  ;; peek-char ((port <input-port>) => <chr>)
+  ;; char-ready? ((port <input-port>) => <log>)
+  )
+
+(def-protocol-tests ((x <file-input-port>)) ;; TODO: concrete
+  (next-method x)
+  ;; open-input-file ((filename <str>) => <file-input-port>)
+  ;; file-opening-error ((filename <str>))
+  ;; close-input-port ((port <file-input-port>))
+  ;; call-with-input-file ((string <str>) (proc <fun>))
+  )
+
+(def-protocol-tests ((x <file-output-port>)) ;; TODO: concrete
+  (next-method x)
+  ;; open-output-file ((filename <str>) => <file-output-port>)
+  ;; close-output-port ((port <file-output-port>))
+  ;; call-with-output-file ((string <str>) (proc <fun>))
+  )
+
+(def-protocol-tests ((x <string-input-port>)) ;; TODO: concrete
+  (next-method x)
+  ;; port-contents ((port <string-port>) => <str>)
+  ;; call-with-string-input-port ((string <str>) (proc <fun>))
+  )
+
+(def-protocol-tests ((x <string-output-port>)) ;; TODO: concrete
+  (next-method x)
+  ;; call-with-string-output-port ((proc <fun>))
+  )
+
+(def-concrete-protocol-tests ((x <fun>))
+  (next-method x)
+  ;; identity (x) x)
+  ;; compose ((fx <fun>) (fy <fun>) => <fun>)
+  ;; rcurry ((f <fun>) (curried ...) => <fun>)
+  ;; curry ((f <fun>) (curried ...) => <fun>)
+  ;; always (x => <fun>)
+  ;; 
+  )
+
