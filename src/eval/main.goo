@@ -1,15 +1,17 @@
 ;;;; Copyright (c) 2001 Jonathan Bachrach
 
-(use boot)
-(use macros)
-(use runtime)
-(use write)
+(use proto)
+(use proto/eval)
 (use ast)
 (use top)
 (use p2c)
 ;; (use p2m)
+(use proto/system)
 
-(dv *proto-version* "0.98")
+;; Make sure the proto/user module gets compiled into our image.
+(use proto/user)
+
+(dv *proto-version* "0.99")
 (dv *proto-date*    "AUG 10, 2001")
 
 (format out ";;; \n")
@@ -24,8 +26,8 @@
 (format out ";;; Loading Runtime Bindings...\n")
 (init-ast)
 (format out ";;; Loading System Patches...\n")
-(load (add-src-path "system-patches.proto"))
+(load (add-src-path "system-patches.proto") 'proto/user)
 (format out ";;; Loading User Patches...\n")
-(load (add-src-path "user-patches.proto"))
+(load (add-src-path "user-patches.proto") 'proto/user)
 (format out ";;; \n")
-(top)
+(top 'proto/user)

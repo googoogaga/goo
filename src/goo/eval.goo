@@ -1,0 +1,8 @@
+(use proto)
+(use top)
+
+;;; This list of symbols should match those in proto/user.
+(export
+  ;; Section 3.16: Top level.
+  load eval top
+  do-stack-frames backtrace)

@@ -1,0 +1,272 @@
+;;;;;======================================================================
+;;;;;  System Interface
+;;;;;======================================================================
+;;;;;  Basic routines for manipulating the operating system and file
+;;;;;  system.  For inspiration as to what should go in here, consider the
+;;;;;  Dylan 'system' library or the less complicated parts of Common
+;;;;;  LISP.
+
+(use proto)
+(use strings)
+(use boot) ; Need filesystem primitives.
+
+
+;;;;=======================================================================
+;;;;  Operating System Interface
+;;;;=======================================================================
+
+;;; Return the name of the operating system in use.
+(dm os-name (=> <str>)
+  (%sb (%os-name)))
+
+;;; Get the value of an environment variable, or the local equivalent.
+(dm os-binding-value ((s <str>) => <str>)
+  (%sb (%os-binding-value (%su s))))
+
+;;; Set the value of an environment variable, or the local equivalent.
+(dm os-binding-value-setter ((v <str>) (s <str>) => <str>)
+  (set (%os-binding-value (%su s)) (%su v))
+  v)
+
+(export
+  os-name
+  os-binding-value
+  os-binding-value-setter)
+
+
+;;;;=======================================================================
+;;;;  Basic Filename Support
+;;;;=======================================================================
+;;;;  This is a really whimpy, simple cousin of Common LISP's pathnames
+;;;;  and Dylan's locators.
+
+(dv *path-separator*
+  (case
+    ((= (os-name) "linux") "/")
+    ((= (os-name) "win32") "\\")
+    (#t "/")))
+
+(dm base-path ((filename <str>) => <str>)
+  (rep loop ((i (- (len filename) 1)))
+    (if (< i 0)
+	""
+	(if (= (elt filename i) (elt *path-separator* 0))
+	    (sub filename 0 (+ i 1))
+	    (loop (- i 1))))))
+
+(dv *proto-root*
+  (let ((env-root (os-binding-value "PROTO_ROOT")))
+    (if (empty? env-root)
+        ;; Defaults to a path relative to the current working directory.
+        (cat (base-path (app-filename)) ".." *path-separator* "..")
+        env-root)))
+
+(dm add-src-path (relpath => <str>)
+  (cat *proto-root* *path-separator* "SRC" *path-separator* relpath))
+
+(dm add-build-path (builddir relpath => <str>)
+  (cat *proto-root* *path-separator* "C" *path-separator*
+       builddir *path-separator* relpath))
+
+(dv *proto-extension* ".proto")
+(dv *c-extension* ".c")
+(dv *obj-extension* ".o")
+(dv *exe-extension* "")
+
+(df proto-filename (name)
+  (cat name *proto-extension*))
+
+(df c-filename (name)
+  (cat name *c-extension*))
+
+(df obj-filename (name)
+  (cat name *obj-extension*))
+
+(df exe-filename (name)
+  (cat name *exe-extension*))
+
+(export
+  *path-separator*
+  *proto-root*
+
+  add-src-path
+  add-build-path
+
+  *proto-extension*
+  *c-extension*
+  *obj-extension*
+  *exe-extension*
+
+  c-filename
+  proto-filename
+  exe-filename
+  obj-filename)
+
+
+;;;;=======================================================================
+;;;;  Low-level Filesystem Functions
+;;;;=======================================================================
+;;;;  These functions all rely on C primitives in prt.c.
+
+;;; Return the last modification time of a file in seconds (relative to the
+;;; Proto epoch) as a floating point number.
+(dm file-mtime ((filename <str>) => <flo>)
+  (%fb (%file-mtime (%su filename))))
+
+;;; Return true if and only if a file (or a directory, etc.) exists with
+;;; the given name.
+(df file-exists? ((filename <str>) => <log>)
+  (%file-exists? (%su filename)))
+
+;;; Return 'file, 'directory or some other symbol, depending on the type
+;;; of the file.
+(df file-type ((filename <str>) => <sym>)
+  (%file-type (%su filename)))
+
+;;; Create a directory with the given name.  The parent directory must
+;;; already exist, and must contain no item with the given name.
+(df create-directory ((filename <str>) => #f)
+  (%create-directory (%su filename)))
+
+(export
+  file-mtime
+  file-exists?
+  file-type
+  create-directory)
+
+
+;;;;=======================================================================
+;;;;  Pathname Component Functions
+;;;;=======================================================================
+;;;;  Slightly *less* whimpy versions of Common LISP pathnames and
+;;;;  Dylan locators.  These allow you to work with hierarchical,
+;;;;  structured pathnames in a reasonably portable fashion.
+
+;;; Given a pathname, split it into a list of individual directories, etc.
+;;; Three special values are returned as symbols:
+;;;   root -> This path starts in the root directory
+;;;   up -> Go up a directory
+;;;   current -> Remain in the current directory
+;;; Volume labels, drive letters, and other non-path information should
+;;; be stored in a single tagged list at the head.  For example:
+;;;   C:\a\c.txt -> ((drive "C:") root "a" "c.txt")
+;;; 
+;;; Note that the hierarchical portion of this pathname (everything but the
+;;; label) must be non-empty at all times.
+;;;
+;;; Please port this code to other platforms as needed.
+;;; TODO - Unix version should handle '//' in the middle of pathnames
+;;; by reducing it to a single slash, as does the kernel.
+(df pathname-to-components ((pathname <str>) => <lst>)
+  (when (empty? pathname)
+    (error "Can't convert empty an pathname to components.\n"))
+  (when (== (last pathname) (elt *path-separator* 0))
+    (set pathname (sub pathname 0 (- (len pathname) 1))))
+  (map (fun (component)
+         (case
+           ((= component "") 'root)
+           ((= component "..") 'up)
+           ((= component ".") 'current)
+           (#t component)))
+       (string-split pathname (elt *path-separator* 0))))
+
+;;; Reassemble components created by the above function.
+(df components-to-pathname ((components <lst>) => <str>)
+  (when (empty? components)
+    (error "Can't convert empty components to a pathname.\n"))
+  (string-join (map (fun (component)
+                      (case
+                        ((== component 'root) "")
+                        ((== component 'up) "..")
+                        ((== component 'current) ".")
+                        (#t component)))
+                    components)
+               *path-separator*))
+
+;;; Get any leading directory label.
+(df label-components ((components <lst>) => <lst>)
+  (if (isa? (head components) <lst>)
+      (lst (head components))
+      '()))
+
+;;; Get rid of any leading directory label, etc.
+(df hierarchical-components ((components <lst>) => <lst>)
+  (let ((result (if (isa? (head components) <lst>)
+                    (tail components)
+                    components)))
+    (when (empty? result)
+      (error "Hierarchical portion of %= must not be empty.\n" components))
+    result))
+
+;;; Return the last item in a list of components.
+(df components-last ((components <lst>) => <any>)
+  (let ((last (elt components (- (len components) 1))))
+    (when (isa? last <lst>)
+      (error "No filename in %=.\n" components))
+    last))
+
+;;; Return all but the last item of a bunch of components.
+;;; Do some magic to handle cases like 'foo.txt' => './'
+;;; If you call this function enough times, you are eventually
+;;; guaranteed to get components list ending in root, up or current.
+;;; Requires the last item to be a string.
+(df components-basename ((components <lst>) => <lst>)
+  (let ((label (label-components components))
+        (hier  (hierarchical-components components))
+        (count (len hier))
+        (last  (components-last hier)))
+    (unless (isa? last <str>)
+      (error "Can't compute basename of %=\n." components))
+    (if (== count 1)
+        (cat label '(current))
+        (cat label (sub hier 0 (- count 1))))))
+
+;;; Calculate the parent directory of a pathname.
+(df components-parent-directory ((components <lst>) => <lst>)
+  (let ((last (components-last components)))
+    (case
+      ((isa? last <str>) (components-basename components))
+      ((== last 'root) (error "Can't calculate parent of root directory"))
+      (#t (cat components '(up))))))
+
+(export
+  pathname-to-components
+  components-to-pathname
+  label-components
+  hierarchical-components
+  components-last
+  components-basename
+  components-parent-directory)
+
+
+;;;;=======================================================================
+;;;;  High-level Functions
+;;;;=======================================================================
+;;;;  These operate directly on filenames.
+
+;;; Find the parent directory of the current filename.
+(df parent-directory ((name <str>) => <str>)
+  (let ((components (pathname-to-components name)))
+    (components-to-pathname (components-parent-directory components))))
+
+;;; Make sure that the named directory exists.
+(df probe-directory ((name <str>) => #f)
+  (let ((components (pathname-to-components name))
+        (label      (label-components components))
+        (hier       (hierarchical-components components)))
+    (rep ensure ((c hier))
+      (let ((n (components-to-pathname (cat label c))))
+        (case
+          ((file-exists? n)
+           (unless (== (file-type n) 'directory)
+             (error "%s is not a directory.\n" n)))
+          ((isa? (components-last c) <str>)
+           (ensure (components-basename c))
+           (create-directory n))
+          (#t
+           (error "Don't know how to create the directory %s.\n" n)))))
+    #f))
+
+(export
+  parent-directory
+  probe-directory)

@@ -23,10 +23,12 @@
         %i<< %i>> %i<<< %i>>>
         %fi2f %f= %f< %f+ %f* %f- %f/ %ft %ft/ %ff %fc %flo-bits
         %c= %c<
+        %create-directory
         %current-output-port %current-input-port
         %open-input-file %open-output-file
         %close-output-port %close-input-port
         %write-char %write-string %file-mtime
+        %file-type %file-exists?
         %force-output %char-ready?
         %read-char %newline %eof-object %eof-object
         %peek-char %char-ready
@@ -43,8 +45,9 @@
         %break %binding-name %fun-reg
         %trace-on %trace-off
         %%apply %%mep-apply %next-methods %fapply
-        %do-runtime-bindings %do-stack-frames
+        %do-stack-frames %do-runtime-bindings
 	%unexec
+        %build-runtime-modules
 
         %grid-open %grid-close %grid-move %grid-read %grid-write %grid-refresh
         )
@@ -58,6 +61,31 @@
 (dv %check-types? (%raw 0))
 
 (dv %*used-symbols-too-early* (%raw 0))
+
+;;; Temporary, compile-time-only macros.  These are used by this file only--
+;;; we never export them.  The real definitions live in macros.proto.
+
+(dss (unless ,test ,@body)
+  `(if (not ,test) (seq ,@body)))
+
+(dss (when ,test ,@body)
+  `(if ,test (seq ,@body)))
+
+(dss (or ,@rest)
+  (mif ((,x ,@rest) rest)
+       (mif (() rest)
+	    x
+	    `(let ((tmp ,x))
+	       (if tmp tmp (or ,@rest))))
+       #f))
+
+(dss (and ,@rest)
+  (mif ((,x ,@rest) rest)
+       (mif (() rest)
+	    x
+	    `(let ((tmp ,x))
+	       (if tmp (and ,@rest) #f)))
+       #t))
 
 ;;;
 ;;; BOOT OBJECTS
@@ -833,32 +861,49 @@
        (@== (@fun-nary? x) (@fun-nary? y))
        (@all2? isa? (@fun-specs x) (@fun-specs y))))
 
-;; TODO: NEED RESTART FOR CHANGING GEN TO FIX INCONGRUENCIES 
+(dv *restarts-ok?* #f)
 
+;;; Add a method to a generic function.  Note that this function might
+;;; *create* a new generic function, and add the method to that instead.
+;;; Return the generic function to which the method was added.
 (df gen-add-met ((g <gen>) (m <met>) => <gen>)
   (set (%fun-cache g) #f)
-  (unless (fun-congruent? m g)
-    (error "Method %= Incongruent with Generic %=" m g))
-  ;; DEP TRACK MET/GEN IN ALL REAL SPECS -- USED FOR REDEFINITION
-  (rep lop ((specs (@fun-specs m)))
-    (unless (@empty? specs)
-      (let ((spec (@head specs)))
-	(unless (or (singleton-spec? spec) (@== spec <any>))
-	  (let ((spec-traits (%object-traits spec)))
- 	    (set (%traits-gens spec-traits)
-	         (@add-new (%traits-gens spec-traits) g))
- 	    (set (%traits-mets spec-traits)
-	         (@add-new (%traits-mets spec-traits) m)))
-	  (lop (@tail specs))))))
-  ;; ACTUALLY PERFORM ADDITION KEEPING TRACK OF IT BEING A REPLACEMENT OR NOT
-  (rep col ((mets '()) (same? #f) ((gms <mets>) (@fun-mets g)))
-    (if (@empty? gms)
-	(set (%gen-mets g) (@rev! (if same? mets (@add mets m))))
-	(let ((gm          (@head gms))
-	      (now-same?   (fun-same-met? gm m)))
-	  (col (@add mets (if now-same? m gm)) 
-	       (or now-same? same?) (@tail gms)))))
-  g)
+  (if (not (fun-congruent? m g))
+      ;; Raise a method congruency error.  If restarts have been set up,
+      ;; install an appropriate restart handler.  Note that we don't install
+      ;; the handler until *after* the error for performance reasons.
+      (if *restarts-ok?*
+          (lab return
+            (try ((type <replace-generic-restart>)
+                  (description
+                   "Replace %= with an empty generic congruent with %=" g m))
+              (fun (c r)
+                (return (gen-add-met (gen-from-met m) m)))
+              (incongruent-method-error g m)))
+          (incongruent-method-error g m))
+      
+      ;; DEP TRACK MET/GEN IN ALL REAL SPECS -- USED FOR REDEFINITION
+      (seq
+        (rep lop ((specs (@fun-specs m)))
+          (unless (@empty? specs)
+            (let ((spec (@head specs)))
+              (unless (or (singleton-spec? spec) (@== spec <any>))
+                (let ((spec-traits (%object-traits spec)))
+                  (set (%traits-gens spec-traits)
+                       (@add-new (%traits-gens spec-traits) g))
+                  (set (%traits-mets spec-traits)
+                       (@add-new (%traits-mets spec-traits) m)))
+                (lop (@tail specs))))))
+        ;; ACTUALLY PERFORM ADDITION KEEPING TRACK OF IT BEING A REPLACEMENT
+        ;; OR NOT
+        (rep col ((mets '()) (same? #f) ((gms <mets>) (@fun-mets g)))
+          (if (@empty? gms)
+              (set (%gen-mets g) (@rev! (if same? mets (@add mets m))))
+              (let ((gm          (@head gms))
+                    (now-same?   (fun-same-met? gm m)))
+                (col (@add mets (if now-same? m gm)) 
+                     (or now-same? same?) (@tail gms)))))
+        g)))
 
 (dv <args> <lst>)
 
@@ -1494,10 +1539,7 @@
 ;; CALLED FROM COMPILER/INTERPRETER
 
 (df %define-method (gen (met <met>) => <gen>)
-  (let ((gen (or gen (gen-from-met met))))
-    (gen-add-met gen met)
-    gen))
-
+  (gen-add-met (or gen (gen-from-met met)) met))
 
 (df unexec ((name <str>) (fun <fun>))
   (set %*start-running-at* fun)
@@ -1507,14 +1549,17 @@
 ;;; 14. MACROS
 ;;; 
 
-(dv *boot-macro-names*     '())
-(dv *boot-macro-expanders* '())
-(dv *macros-ok?*           #f)  ;; ENOUGH OF WORLD BOOTED TO DEFINE MACROS?
+(dv *boot-macro-module-names* '())
+(dv *boot-macro-names*        '())
+(dv *boot-macro-expanders*    '())
+(dv *macros-ok?*              #f)  ;; ENOUGH OF WORLD BOOTED TO DEFINE MACROS?
 
-(dp %macro (name expander)
+(dp %macro (modname name expander)
   (if *macros-ok?*
-      (%%macro name expander) ;; DEFINED IN AST.PROTO
+      (%%macro modname name expander #f) ;; DEFINED IN AST.PROTO
       (seq ;; REMEMBER NAMES/EXPANDERS FOR LATER INSTALLATION
+	(set *boot-macro-module-names*
+             (@pair modname *boot-macro-module-names*))
 	(set *boot-macro-names*     (@pair name     *boot-macro-names*))
 	(set *boot-macro-expanders* (@pair expander *boot-macro-expanders*)))))
 
@@ -1559,7 +1604,15 @@
 ;; haven't defined that yet.
 (export
   %%macro
-  error)
+  error
+  incongruent-method-error
+
+  ;; Required for the incongruent-method-error restart.
+  <replace-generic-restart>
+  <simple-handler-info>
+  handler-info-message
+  handler-info-arguments
+  lst)
 
 ;; Compiler magic.
 (export
@@ -1599,11 +1652,13 @@
   %app-filename
   %bb
   %binding-name
+  %build-runtime-modules
   %c<
   %c=
   %char-ready?
   %close-input-port
   %close-output-port
+  %create-directory
   %current-input-port
   %current-output-port
   %do-runtime-bindings
@@ -1617,7 +1672,9 @@
   %f<
   %f=
   %fi2f
+  %file-exists?
   %file-mtime
+  %file-type
   %flo-bits
   %force-output
   %ft
@@ -1707,31 +1764,47 @@
   %vlen
   %vnul
 
+  add-slot
   apply				;; %%apply
   fapply                        ;; %fapply
   %call-next-method
   *boot-macro-expanders*	;;var
   *boot-macro-names*		;;var
+  *boot-macro-module-names*
   %define-method		
   fab-gen
   fab-sym
+  find-getter
+  find-setter
   fun-arity
   fun-name
   fun-name-setter
   fun-names
+  fun-nary?
+  fun-mets
   fun-sig-setter
   fun-specs
   fun-value
+  gen-add-met
   head
   head-setter
   %isa
   isa?
   *macros-ok?*
+  met-app?
+  nil
   not
   nul
+  object<
+  object-direct-parents
+  object-direct-slots
   object-parents
   object-slots
+  *restarts-ok?*
   %slot
+  slot-owner
+  slot-type
+  slot-init
   slot-value        ;; TODO: remove this when it can be called directly w/o being exported
   slot-value-setter ;; me too
   slot-getter
@@ -1741,6 +1814,7 @@
   sig-nary?
   sig-arity
   sig-value
+  sorted-app-mets
   sym-name
   %symbols
   tail

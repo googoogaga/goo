@@ -179,7 +179,8 @@
 (ds (need-implementation ,@names)
   (if (empty? names)
       #f
-      `(seq (export ,(head names))
+      `(seq (when #f ,(head names))
+            (export ,(head names))
             (need-implementation ,@(tail names)))))
 
 

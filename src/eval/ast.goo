@@ -7,6 +7,7 @@
 (use write)
 (use syntax)
 (use strings)
+(use proto/system) ; Needed by runtime module loader.
 
 ;;; TODO: MOVE TYPE OUT OF SIGNATURE
 
@@ -253,6 +254,10 @@
   ;; Forward references from other modules which are resolved by this
   ;; module.
   (slot <static-global-environment> (environment-implements <lst>) '())
+  ;; Does this environment allow cross-module resolution of symbols
+  ;; of the form 'foo::bar'?
+  (slot <static-global-environment> (environment-allows-foreign-names? <log>)
+        #f)
 
 (dv <static-empty-environment> (isa <static-environment>))
 
@@ -264,6 +269,7 @@
 ;; Used by the writer.
 ;; TODO - This will only work in the runtime environment, not any of the
 ;; various syntax environments.
+;; XXX - This is now horrendously broken.
 (dm env-object-name (x => <any>)
   (lab return
     (do-static-global-bindings
@@ -272,7 +278,7 @@
                   (binding-global-box binding)
 		  (== x (global-box-value (binding-global-box binding))))
 	 (return (binding-name binding))))
-     (runtime-environment))
+     (runtime-environment 'boot))
     #f))
 
 
@@ -463,6 +469,23 @@
    (set assignment-binding (reference-binding ref))
    (set assignment-form    val)))
 
+;;; TODO - Attempt to change the binding kind on the fly.  This
+;;; only works up to a point.  To fix this, make 'runtime and 'global
+;;; bindings a single binding type, and parameterize the storage
+;;; used by that type at runtime.
+;;; Rationale: calling ast-define-binding one or more times with
+;;; various combinations of binding-kinds must never be able to
+;;; transform a 'runtime binding into a 'global binding, and thereby
+;;; confuse the compiler about where binding values are stored.
+(df update-binding-kind (binding new-kind)
+  (if (~== (binding-kind binding) 'runtime)
+      (set (binding-kind binding) new-kind)
+      (case
+        ((== new-kind 'runtime) #t) ; We're already the correct type.
+        ((== new-kind 'global) #t)  ; We're an acceptably close type.
+        (#t (error "Cannot set type of runtime binding %s to %s.\n"
+                   (binding-name binding) new-kind)))))
+
 (dm ast-define-binding (r name defining-method? kind => <any>)
   (let ((existing-binding (find-binding name r))
 	(gr (find-static-global-environment r))
@@ -486,6 +509,7 @@
                              (module-name mod)
                              name
                              (binding-module-name existing-binding))))
+               (update-binding-kind existing-binding kind)
                existing-binding)
              (let ((mod-name (module-name (find-environment-module r)))
                    (binding 
@@ -511,7 +535,7 @@
 	   (set assignment-form (objectify e r #f)))))
     defn))
 
-(df %%macro (name expander r => <module-binding>)
+(df %%macro (modname name expander env-or-false => <module-binding>)
   ;; (format out "DEFMACRO ") (writeln out sep-expander)
   (loc ((expand (x r tail?)
 	  (when *macro-tracing?*
@@ -521,7 +545,8 @@
 	      (format out "  => ") (write out exp) (format out "\n"))
 	    exp)))
     ;; (format out "DEFMAC %=\n" name)
-    (let ((binding (ast-define-binding r name #f 'macro)))
+    (let ((env     (or env-or-false (runtime-environment modname)))
+          (binding (ast-define-binding env name #f 'macro)))
       (set (binding-handler binding) expand)
       binding)))
 
@@ -544,7 +569,9 @@
 	(expander     (ast-evaluate ast-expander))
 
 	;; Install it into the target environment.
-	(binding (%%macro name expander r)))
+        (modname (module-name (find-environment-module r)))
+	(binding (%%macro modname name expander
+                          (find-static-global-environment r))))
 
     ;; If the syntax and current environments are different (i.e., we're
     ;; compiling code), then install it in the syntax environment, too.
@@ -709,16 +736,42 @@
 (dm default-type (r) 
   (objectify '<Any> r #f))
 
-(dm objectify-free-global-reference (name r => <global-reference>)
-  (let ((gr (find-static-global-environment r))
-	(b (isa <module-binding>
-             (set binding-free? #t)
-             (set binding-kind  'global)
-	     (set binding-name  name)
-             (set binding-module-name
-                  (module-name (find-environment-module r))))))
-    (insert-global! b gr)
-    (isa <global-reference> (set reference-binding b))))
+;;; Handle variables which get used before we define them.
+;;; TODO - Decide if this is the best place to handle foreign names.
+(dm objectify-free-global-reference (name r => <reference>)
+  (let ((gr (find-static-global-environment r)))
+    (if (and (environment-allows-foreign-names? gr)
+             (foreign-name? name))
+        (objectify-foreign-reference name r)
+        (let ((b (isa <module-binding>
+                   (set binding-free? #t)
+                   (set binding-kind  'global)
+                   (set binding-name  name)
+                   (set binding-module-name
+                        (module-name (find-environment-module r))))))
+          (insert-global! b gr)
+          (isa <global-reference> (set reference-binding b))))))
+
+;;; Does this name have the form 'foo:bar'?
+(df foreign-name? ((name <sym>) => <log>)
+  (not (nul? (pos (as <str> name) #\:))))
+
+;;; Turn 'foo:bar' into a reference to 'bar' in the 'foo' module.
+(dm objectify-foreign-reference (name r => <reference>)
+  (let ((namestr (as <str> name))
+        (break   (pos namestr #\:))
+        (modname (sub namestr 0 break))
+        (varname (sub namestr (+ 1 break) (len namestr))))
+    (unless (and (> (len modname) 0) (> (len varname) 0))
+      (error "Malformed foreign name %s.\n" name))
+    (let ((gr      (find-static-global-environment r))
+          (loader  (environment-module-loader gr))
+          (mod     (probe-module loader (as <sym> modname)))
+          (binding (find-binding (as <sym> varname)
+                                 (module-target-environment mod))))
+      (unless binding
+        (error "No binding %s in %s.\n" varname modname))
+      (objectify-binding name binding r))))
 
 (dm objectify-symbol (name r => <any>)
   (objectify-binding name (find-binding name r) r))
@@ -781,11 +834,17 @@
       ;; The user tried to export bindings from a syntax environment.
       ;; (This shouldn't happen, because we don't provide 'export'.)
       (error "Can only export bindings from target environment.\n"))
-    (for ((name names))
-      (let ((binding (find-binding name env)))
-        (if (== binding #f)
-            (error "Can't export undefined binding %s.\n" name)
-            (export-binding! module name binding)))))
+    (do
+     (fun (name)
+       (let ((binding (find-binding name env)))
+         (if (== binding #f)
+             (lab exit
+               (try ((type <restart>)
+                     (description "Continue without exporting %s" name))
+                 (fun (c r) (exit #f))
+                 (error "Can't export undefined binding %s.\n" name)))
+             (export-binding! module name binding))))
+     names))
   (isa <constant> (set constant-value #f)))
 
 ;;; This works like 'insert-global!', but it's more careful about clobbering.
@@ -1110,6 +1169,7 @@
 (define-magic-binding use-module (x r tail?)
   (objectify-use-module (2nd x) r tail?))
 
+
 ;;;;=======================================================================
 ;;;;  Module Loaders & Modules
 ;;;;=======================================================================
@@ -1265,15 +1325,19 @@
       (collecting ()
         (do (fun (v) (collect v)) users)))))
 
+;;; Mark foreign bindings implemented by this module as free.
+;;; This is a an artifact of the way need-implementation works, and we
+;;; should probably redesign things to avoid this.
+(df free-implemented-foreign-bindings ((mod <module>))
+  (do
+   (fun (binding) (set (binding-free? binding) #t))
+   (environment-implements (module-target-environment mod))))
+
 ;;; Remove a single module object from the loader.
 ;;; This should not be called externally, because it does not bother to
 ;;; remove other modules which use this one.
 (df remove-module-internal! ((loader <module-loader>) (mod <module>))
-  ;; If this module defined any foreign bindings, set them back to free.
-  (do
-   (fun (binding) (set (binding-free? binding) #t))
-   (environment-implements (module-target-environment mod)))
-  ;; Remove it from our list of modules.
+  (free-implemented-foreign-bindings mod)
   (del-key (module-loader-modules loader) (module-name mod)))
 
 ;;; Unload all the named modules, and all the modules which use them.
@@ -1286,6 +1350,22 @@
      remove-names))
   #f)
 
+;;; Convert a module name to a relative path name.
+;;;   foo/bar => "foo/bar" or "foo\\bar", etc.
+(df module-name-to-relpath ((name <sym>) => <str>)
+  (let ((namestr (map-str as-lowercase (sym-name name))))
+    (string-join (string-split namestr #\/) *path-separator*)))	 
+
+;;; Copy the binding for 'use' into the module, so it can ask for more
+;;; bindings as needed.  Copy 'seq', too, because the top-level of the
+;;; file gets wrapped in it.
+(df install-initial-bindings ((env <static-global-environment>)
+                              (loader <module-loader>))
+  (let ((bootmod (probe-module loader $proto-boot-module-name))
+        (bootenv (module-target-environment bootmod)))
+    (do (fun (name) (insert-global! (find-binding name bootenv) env))
+        '(SEQ USE))))
+
 (export
   set-module-environments
   module-loader-module-type
@@ -1294,7 +1374,10 @@
   load-module
   binding-native-to?
   report-undefined-global-bindings
-  remove-modules-by-name!)
+  free-implemented-foreign-bindings
+  remove-modules-by-name!
+  module-name-to-relpath
+  install-initial-bindings)
 
 
 ;;;;=======================================================================
@@ -1329,227 +1412,195 @@
 (df fab-static-global-environment 
   ((module <module>)
    (module-loader <module-loader>)
+   (allow-foreign-names? <log>)
    => <static-global-environment>)
   (let ((new-env (isa <static-global-environment>
                    (set environment-module module)
                    (set environment-module-loader module-loader)
 		   (set environment-next $empty-static-environment)
+                   (set environment-allows-foreign-names? allow-foreign-names?)
 		   (set environment-bindings (fab <tab> 2000)))))
     new-env))
 
-;; Copy the bindings specified by 'names' from 'src-env' to 'dst-env'.
-(df copy-environment-bindings ((dst-env <static-global-environment>)
-			       (src-env <static-global-environment>)
-			       (names <col>)
-			       => <static-global-environment>)
-  (for ((name names))
-    (let ((binding (find-binding name src-env)))
-      (if binding
-	  (insert-global! binding dst-env)
-	  (error "Can't find binding '%=' for copy.\n" name))))
-  dst-env)
-
 ;; Given an environment and a list of symbols, return a new environment
-;; containing only those bindings in the original environment named by
-;; the symbols.
-(dm fab-subset-environment ((module <module>)
-                            (old-env <static-global-environment>)
-			    (subset <col>)
+;; containing all the bindings in the original environment that are *not*
+;; named by a symbol in 'excluded'.
+(df fab-subset-environment ((module <module>)
+                            (src-module <module>)
+			    (excluded <col>)
 			    => <static-global-environment>)
-  (let ((new-env
-	 (fab-static-global-environment module
-                                        (environment-module-loader old-env))))
-    (copy-environment-bindings new-env old-env subset)
+  (let ((loader
+         (environment-module-loader (module-target-environment src-module)))
+        (new-env
+	 (fab-static-global-environment module loader #f)))
+    (do-keyed
+     (fun (name binding)
+       (unless (mem? excluded name)
+         ;; TODO - Renaming: Honor name.
+         (insert-global! binding new-env)))
+     (module-exports src-module))
     new-env))
 
-;;; RUNTIME SETUP
-;;; TODO - We smash everything into one top-level module for now.
 
-(dv *runtime-environment* nul)
-(dv *runtime-module* nul)
-(dv *runtime-module-loader* nul)
+;;;;=======================================================================
+;;;;  Runtime Setup
+;;;;=======================================================================
+;;;;  Recover information about the modules and bindings that were built
+;;;;  into our image.  This mostly involves calling build-runtime-modules
+;;;;  and passing it an appropriate set of functions, then doing a small
+;;;;  amount of tweaking to set up macros, magic bindings, and other
+;;;;  stuff correctly.
 
-(df runtime-environment () *runtime-environment*)
-(df runtime-module () *runtime-module*)
+(dv <runtime-module-loader> (isa <module-loader>))
+
+;;; This is called if somebody tries to load a module at runtime which
+;;; hadn't been built into the image.
+(dm load-module ((loader <runtime-module-loader>) (name <sym>) => <module>)
+  (let ((type       (module-loader-module-type loader))
+        (module     (isa type (set module-name name)))
+	(env        (fab-static-global-environment module loader #f))
+        (keepmod?   #f)
+        (file       (module-name-to-relpath name))
+        (src-file   (add-src-path (proto-filename file))))
+    (set-module-environments module env env)
+    (install-initial-bindings env loader)
+    (fin
+      (seq
+        (load-in src-file env)
+        ;; Turn on foreign name support once the code has been loaded.
+        (set (environment-allows-foreign-names? env) #t)
+        (set keepmod? #t)
+        module)
+      ;;; Tricky unwind handler.  Our module may have altered the
+      ;;; the state of other module's bindings, and so we need to
+      ;;; back these changes out if we crash midway.  This would look
+      ;;; much nicer if we had some kind of try/catch/rethrow construct.
+      (unless keepmod?
+        (free-implemented-foreign-bindings module)))))
+
+(dv *runtime-module-loader* (isa <runtime-module-loader>))
 (df runtime-module-loader () *runtime-module-loader*)
+(df runtime-module ((modname <sym>))
+  (probe-module (runtime-module-loader) modname))
+(df runtime-environment ((modname <sym>))
+  (module-target-environment (runtime-module modname)))
 
-;; Create the runtime environment for the current image.  This is used
-;; to run code typed into the listener, to process 'eval' calls, and so on.
+;;; RELOADER METHODS FOR %BUILD-RUNTIME-MODULES
+;;; These are called to reload modules which were compiled into our runtime.
+
+(df reloader-do-create-module ((modname <str>) => <module>)
+  (let ((loader (runtime-module-loader))
+        (type   (module-loader-module-type loader))
+        (mod    (isa type (set module-name (as <sym> modname))))
+        (env    (fab-static-global-environment mod loader #t)))
+    (set-module-environments mod env env)
+    (register-module! loader mod)
+    mod))
+
+(df reloader-do-use-module ((mod <module>) (uses <module>))
+  (push-last! (environment-uses-modules (module-target-environment mod))
+              uses))
+
+(df reloader-do-import ((mod <module>) (name <str>)
+                        (from-mod <module>) (original-name <str>))
+  (let ((home-env (module-target-environment from-mod))
+        (binding  (find-binding (as <sym> original-name) home-env)))
+    ;; TODO - Add support for using 'name'.
+    (when (not binding)
+      (error "Can't find %s from %s for %s\n"
+             original-name (module-name from-mod) (module-name mod)))
+    (insert-global! binding (module-target-environment mod))))
+
+(df reloader-do-runtime-binding ((mod <module>) (name <str>) (loc <loc>))
+  (let ((binding (isa <module-binding>
+                   (set binding-kind        'runtime)
+                   (set binding-module-name (module-name mod))
+                   (set binding-name        (as <sym> name))
+                   (set binding-free?       #f)
+                   (set binding-locative    loc))))
+    (insert-global! binding (module-target-environment mod))))
+
+;;; We create all non-runtime bindings with type 'global', so we have
+;;; something to export and import while rebuilding the module structure.
+;;; Later on, we'll need to update these bindings and change
+;;; their types using ast-define-binding.
+(df reloader-do-other-binding ((mod <module>) (name <str>))
+  (let ((binding (isa <module-binding>
+                   (set binding-kind        'global)
+                   (set binding-module-name (module-name mod))
+                   (set binding-name        (as <sym> name))
+                   (set binding-free?       #t))))
+    (insert-global! binding (module-target-environment mod))))
+
+(df reloader-do-export ((mod <module>) (name <str>) (as-name <str>))
+  (let ((binding (find-binding (as <sym> name)
+                               (module-target-environment mod))))
+    (when (not binding)
+      (error "Can't find %s in %s\n" name (module-name mod)))
+    (export-binding! mod (as <sym> as-name) binding)))
+
+(df reload-modules ()
+  (%build-runtime-modules reloader-do-create-module reloader-do-use-module
+                          reloader-do-import reloader-do-runtime-binding
+                          reloader-do-other-binding reloader-do-export))
+
+;;; Change the type of the magic bindings in an environment, and install
+;;; the right handlers.  We only need to do this for the boot environment,
+;;; because all the other modules have already imported these same binding
+;;; objects, as described in reloader-do-other-binding.
+(df install-magic-bindings (env)
+  (do
+   (fun (binding)
+     (let ((clone (ast-define-binding env (binding-name binding) #f 'magic)))
+       (set (binding-handler clone) (binding-handler binding))))
+   (magic-bindings)))
+
+;;; Reload the macros, and change their appropriate binding types.
+(df reload-macros ()
+  (do3 (rcurry %%macro #f)
+       *boot-macro-module-names*
+       *boot-macro-names*
+       *boot-macro-expanders*)
+  (set *macros-ok?* #t))
+
+(df install-interpreter-hacks (env)
+  (init-environment-for-eval env))
+
 (df init-runtime ()
-  (let ((rt-loader (isa <module-loader>))
-        (type      (module-loader-module-type rt-loader))
-        (rt-module (isa type (set module-name $proto-boot-module-name)))
-        (rt-env (fab-static-global-environment rt-module rt-loader)))
-    (set-module-environments rt-module rt-env rt-env)
+  (reload-modules)
+  (let ((bootmod (probe-module (runtime-module-loader)
+                               $proto-boot-module-name))
+        (bootenv (module-target-environment bootmod)))
+    ;; We need to make a bunch of changes to bindings the boot module,
+    ;; which will affect all the modules that use those bindings.
+    (install-magic-bindings bootenv)
+    (reload-macros)
+    (install-interpreter-hacks bootenv))
+  #f)
 
-    ;; First, we need to get all the bindings which were built into our
-    ;; image by the compiler, and copy them into our new environment.
-    (%do-runtime-bindings
-     (fun (mod name loc)
-       (let ((binding
-	      (isa <module-binding>
-                (set binding-kind        'runtime)
-                (set binding-module-name (as <sym> mod))
-		(set binding-name        (as <sym> name))
-		(set binding-locative    loc))))
-	 (insert-global! binding rt-env))))
-    
-    ;; Next, we need to copy all our magic bindings into this environment.
-    (insert-globals! (magic-bindings) rt-env)
-    
-    ;; Ask the interpreter to do any setup it will require.
-    (init-environment-for-eval rt-env)
 
-    ;; Up until this point, we haven't been able to define any macros in our
-    ;; image.  Process the backlog now.
-    (do2 (rcurry %%macro rt-env)
-	 *boot-macro-names* *boot-macro-expanders*)
-    (set *macros-ok?* #t)
-
-    (set *runtime-module-loader* rt-loader)
-    (set *runtime-module* rt-module)
-    (set *runtime-environment* rt-env)
-    #f))
-
-;;; CREATING SYNTAX ENVIRONMENTS
+;;;;=======================================================================
+;;;;  p2c Environments 
+;;;;=======================================================================
+;;;;  TODO - Figure out what APIs we should export to allow this code to
+;;;;  live in p2c.proto.
 
 ;; These bindings are initially available in CT and DS forms.
 ;; The section numbers refer to DOC/DOC.TXT.
-(dv syntax-environment-bindings
-  '(;; Section 1.1/2.1: Special forms.
-    ;; Not included: CT, CT-ALSO, DS, USE, EXPORT
-    IF SEQ SET FUN LET LOC LAB FIN DV DM DG ISA SLOT MACRO-EXPAND
-    NEXT-METHOD QUOTE
-
-    ;; Section 1.2/2.2: Macros.
-    DF TRY REP MIF AND OR SELECT CASE INC DEC UNLESS WHEN ASSERT
-    FOR COLLECTING PUSHF POPF
-
-    ;; Section 1.3: Read macros.
-    quasiquote
-
-    ;; Section 3.1: Any.
-    <any> as
-
-    ;; Section 3.2: Comparables.
-    == = < ~= ~== > <= >= min max isa? object< object-direct-slots
-    object-direct-parents object-slots object-parents object-name
-
-    ;; Section 3.3: Null.
-    nul nul?
-
-    ;; Section 3.4: Booleans.
-    <log> not
-
-    ;; Section 3.5: Characters.
-    <chr> lowercase? uppercase? as-lowercase as-uppercase alphabetic?
-    numeric? to-digit eof-object?
-
-    ;; Section 3.6: Numbers.
-    ;; Not included: gcd, lcm (which seem to be missing).
-    <num> + - * / floor ceiling round truncate floor/ ceiling/ round/
-    truncate/ modulo remainder pos? zero? neg? neg abs *print-base*
-    num-to-str str-to-num
-    <int> logior logxor logand lognot logbit? even? odd? ash lsh
-    <flo> flo-bits
-    <loc> locative-value locative-value-setter address-of
-
-    ;; Section 3.7: Collections.
-    <col> len elt elt-setter empty? empty default fab fabs fill alter any?
-    all? reduce reduce+ find-key del-key del-keys do do2 map map2 do-keyed
-    map-keyed mem?
-    ;; 3.7.1: Iteration protocol.
-    ini-state fin-state? nxt-state now-elt now-elt-setter now-key copy-state
-    ;; 3.7.2: Maps.
-    <map> <assocs> assocs-test
-    <tab> table-growth-factor table-growth-threshold table-shrink-threshold
-    table-protocol $permanent-hash-state current-gc-state id-hash
-    <str-tab> case-insensitive-string-hash case-insensitive-string-equal
-    ;; 3.7.3: Sequences.
-    <seq> add 1st 2nd 3rd last pos rev rev! cat cat! cat2 sub sub-setter
-    pick del del-dups
-    ;; 3.7.4 Tuples.
-    <tup> tup
-    ;; 3.7.5 (the first one): Lists.
-    <lst> <list> head tail lst list pair nil push pop
-    ;; 3.7.5 (the second one): Optionals.
-    <opts>
-    ;; 3.7.6 (the first one): Flat sequences.
-    <flat> <vec> vec <str> str to-str <buf> buf push-last! pop-last!
-    ;; 3.7.6 (the second one):  Ranges.
-    <range> from from-by from-to from-to-by from-below from-below-by
-    from-above from-above-by
-    ;; 3.7.7: Steps.
-    <step> first-then
-
-    ;; Section 3.8: Symbols.
-    <sym> as make-sym gensym make-setter-name var-name var-type
-
-    ;; Section 3.9: Slots.
-    <slot> slot-owner slot-getter slot-setter slot-type slot-init
-    slot-value slot-value-setter find-getter find-setter add-slot
-
-    ;; Section 3.10: Functions.
-    <fun> fun-name fun-names fun-specs fun-nary? fun-arity fun-value
-    identity compose curry rcurry always apply
-    <gen> fun-mets gen-add-met sorted-app-mets
-    <met> met-app?
-
-    ;; Section 3.11: Conditions.
-    <condition> default-handler sig <simple-condition> condition-message
-    condition-arguments <serious-condition> <error> error <simple-error>
-    <handler> handler-function make-handler handler-matches?
-
-    ;; Section 3.12: Ports.
-    <port> <input-port> read-char peek-char char-ready?
-    <output-port> newline force-output write-char write-string
-    <file-port> <file-input-port> open-input-file close-input-port
-    call-with-input-file in
-    <file-output-port> open-output-file close-output-port
-    call-with-output-file out
-    <string-port> port-contents <string-input-port> port-index
-    call-with-string-input-port <string-output-port>
-    call-with-string-output-port
-
-    ;; Section 3.13: Input.
-    read read-from-string read-file
-
-    ;; Section 3.14: Output.
-    write display writeln write-to-string format 
-
-    ;; Section 3.15: System.
-    app-filename app-args
-
-    ;; Section 3.16: Top level.
-    ;; Not included: load eval top.
-    ;; Most of these functions have built-in assumptions about which
-    ;; environment to use.  Rather than make them work in syntax
-    ;; environments, we simply disallow them.
-    do-stack-frames backtrace
-
-    ;; Undocumented stuff.  This was all found by a process of trial and
-    ;; error, but it needs to be here.
-    match-atom match-empty-list match-unquote match-sublist
-    sexpr-signature-parameters
-    ))
+(dv syntax-environment-excluded-bindings
+  '(CT CT-ALSO DS USE EXPORT))
 
 ;; Create a new syntax environment for processing macros.
 (df fab-syntax-environment ((module <module>) => <static-global-environment>)
-  (let ((syn-env (fab-subset-environment module
-                                         (runtime-environment)
-					 syntax-environment-bindings)))
-    (init-environment-for-eval syn-env)
-    syn-env))
-
-;;; P2C ENVIRONMENTS
-;;; TODO - Figure out what APIs we should export to allow this code to
-;;; live in p2c.proto.
+  (fab-subset-environment module
+                          (runtime-module 'proto)
+                          syntax-environment-excluded-bindings))
 
 (df fab-p2c-module ((loader <module-loader>) (name <sym>) => <module>)
   (let ((type       (module-loader-module-type loader))
         (module     (isa type (set module-name name)))
         (syntax-env (fab-syntax-environment module))
-	(target-env (fab-static-global-environment module loader)))
+	(target-env (fab-static-global-environment module loader #f)))
     (set-module-environments module syntax-env target-env)
     (if (== name $proto-boot-module-name)
         (init-p2c-boot-environment target-env)
@@ -1562,23 +1613,16 @@
   ;; Copy in just our macros, since everything else
   ;; must be defined by the program being compiled.  And don't bother
   ;; to call 'init-environment-for-eval'--this is a compile-only environment.
-  (insert-globals! (magic-bindings) env)
-  
-  ;; boot.proto uses these macros *before* defining them, so we'll
-  ;; need to install temporary copies in the boot environment.
-  ;; TODO - Clean up this mess.
-  (copy-environment-bindings env (runtime-environment) '(UNLESS WHEN OR AND)))
+  (insert-globals! (magic-bindings) env))
   
 (df init-p2c-regular-environment ((env <static-global-environment>)
-                                     (loader <module-loader>))
-  ;; Copy the binding for 'use' into the module, so it can ask for more
-  ;; bindings as needed.  Copy 'seq', too, because the top-level of the
-  ;; file gets wrapped in it.
-  (let ((bootmod (probe-module loader $proto-boot-module-name))
-        (bootenv (module-target-environment bootmod)))
-    (copy-environment-bindings env bootenv '(SEQ USE))))
+                                  (loader <module-loader>))
+  (install-initial-bindings env loader))
 
-;;; OTHER ENVIRONMENT CODE
+
+;;;;=======================================================================
+;;;;  Other Environment Code
+;;;;=======================================================================
 
 (df init-ast ()
   (init-runtime))
@@ -1590,6 +1634,14 @@
       (do f (frame-bindings env))
       (loop (environment-next env)))))
 
+;; As above, but also supply the local name of the bindings.
+(df do-named-static-global-bindings ((f <fun>)
+                                     (env <static-global-environment>))
+  (rep loop ((env env))
+    (unless (isa? env <static-empty-environment>)
+      (do-keyed f (frame-bindings env))
+      (loop (environment-next env)))))
+
 
 ;;;;=======================================================================
 ;;;;  Public API
@@ -1597,7 +1649,8 @@
 
 (need-implementation
   ast-evaluate
-  init-environment-for-eval)
+  init-environment-for-eval
+  load-in)
 
 (export
   <alternative>
@@ -1653,6 +1706,7 @@
   def-list
   def-programs
   do-static-global-bindings
+  do-named-static-global-bindings
   env-object-name
   environment-uses-modules
   <fix-let>
@@ -1675,6 +1729,7 @@
   signature-nary?-setter
   signature-value
   signature-value-setter
+  find-environment-module
   function-signature
   function-signature-setter
   function-bindings
@@ -1703,6 +1758,7 @@
   locals-functions-setter
   %%macro
   module-name
+  module-exports
   <monitor>
   monitor-handler
   monitor-info

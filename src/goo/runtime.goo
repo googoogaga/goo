@@ -621,6 +621,12 @@
       (f (now-elt x sx) (now-elt y sy))
       (lop (nxt-state x sx) (nxt-state y sy)))))
 
+(dm do3 ((f <fun>) (x <col>) (y <col>) (z <col>))
+  (rep lop ((sx (ini-state x)) (sy (ini-state y)) (sz (ini-state z)))
+    (unless (or (fin-state? x sx) (fin-state? y sy) (fin-state? z sz))
+      (f (now-elt x sx) (now-elt y sy) (now-elt z sz))
+      (lop (nxt-state x sx) (nxt-state y sy) (nxt-state z sz)))))
+
 (dm map-keyed ((f <fun>) (c <col>) => <col>)
   (rep con ((res '()) (s (ini-state c)))
     (if (fin-state? c s)
@@ -1313,6 +1319,9 @@
 (dm default-handler ((c <condition>))
   #f)
 
+(dm describe-condition ((c <condition>) => <str>)
+  (format-to-string "Anonymous condition %=" c))
+
 (dm default-handler-description ((cond-type <condition>) => <str>)
   (format-to-string "Anonymous handler for %s" cond-type))
 
@@ -1323,6 +1332,10 @@
 (dv <simple-condition> (isa <condition>))
   (slot <simple-condition> (condition-message <str>)   "")
   (slot <simple-condition> (condition-arguments <lst>) '())
+
+(dm describe-condition ((c <simple-condition>) => <str>)
+  (apply format-to-string (pair (condition-message c)
+                                (condition-arguments c))))
 
 (dm build-condition-interactively
   ((cond-type <simple-condition>) in out => <condition>)
@@ -1336,8 +1349,7 @@
 (dv <serious-condition> (isa <condition>))
 
 (dm default-handler ((c <serious-condition>))
-  (when (isa? c <simple-condition>)
-    (apply (curry format out (condition-message c)) (condition-arguments c)))  
+  (format out "%s\n" (describe-condition c))
   (%invoke-debugger c))
 
 (dv <error> (isa <serious-condition>))
@@ -1349,8 +1361,24 @@
 (dm default-handler-description ((cond-type <restart>) => <str>)
   (format-to-string "Anonymous restart of type %s" cond-type))
 
+(dv <incongruent-method-error> (isa <error>))
+  (slot <incongruent-method-error> (incongruent-method-error-generic <gen>))
+  (slot <incongruent-method-error> (incongruent-method-error-method <met>))
+
+(dm describe-condition ((c <incongruent-method-error>) => <str>)
+  (format-to-string "Method %= incongruent with generic %=.\n"
+                    (incongruent-method-error-method c)
+                    (incongruent-method-error-generic c)))
+
+(dv <replace-generic-restart> (isa <restart>))
+
+(dm default-handler-description ((cond-type <replace-generic-restart>)
+                                 => <str>)
+  "Replace the generic function with an empty, congruent one")
+
 (export
   <restart>
+  <replace-generic-restart>
   default-handler-description
   build-condition-interactively)
 
@@ -1448,7 +1476,7 @@
 ;; (df error ((message <str>) (args ...))
 ;;   (%break (%su message)))
 
-(dm error ((c <simple-error>) (args ...))
+(dm error ((c <error>) (args ...))
   (sig c))
 
 (dm error ((c <str>) (args ...))
@@ -1463,6 +1491,11 @@
 
 (df type-error (arg type)
   (error "TYPE ERROR %= SHOULD BE A %=" arg type))
+
+(df incongruent-method-error ((gen <gen>) (met <met>) => #f)
+  (error (isa <incongruent-method-error>
+           (set incongruent-method-error-generic gen)
+           (set incongruent-method-error-method met))))
 
 ;;; INTERACTIVE HANDLER MUNGING
 
@@ -1514,19 +1547,19 @@
 
 ;;; Chose a handler matching 'type', and call it interactively.
 (df choose-handler ((type <condition>) in out => <any>)
-  (lab return
-    (try ((type <restart>)
-          (description "Exit CHOOSE-HANDLER"))
-      (fun (c r) (return #f))
-      (let ((handlers (list-handlers type out)))
-        (format out "Please pick a handler: ")
-        (let ((n (- (read in) 1)))
-          (when (or (< n 0) (>= n (len handlers)))
-            (error "No such handler %d" n))
-          (invoke-handler-interactively (elt handlers n) in out))))))
+  (let ((handlers (list-handlers type out)))
+    (format out "Please pick a handler: ")
+    (let ((n (- (read in) 1)))
+      (when (or (< n 0) (>= n (len handlers)))
+        (error "No such handler %d" n))
+      (invoke-handler-interactively (elt handlers n) in out))))
+
+;;; Enable some low-level restarts, now that it's safe to do so.
+(set *restarts-ok?* #t)
 
 (export
   list-handlers
+  invoke-handler-interactively
   choose-handler)
 
 ;;; LOCATIVES
@@ -1626,11 +1659,6 @@
 
 (dm write-string ((port <file-output-port>) (s <str>))
   (%write-string (port-handle port) (%su s)))
-
-;;; Other file-related functions.
-
-(dm file-mtime ((filename <str>) => <flo>)
-  (%fb (%file-mtime (%su filename))))
 
 ;;; STRING-PORT IMPLEMENTATION
 
@@ -2231,81 +2259,124 @@
 
 (export
   1st 2nd 3rd
-  = + - == ~== <= >= > <
-  keys
+  = ~= + - * / == ~== <= >= > <
+  abs
   add! add
+  address-of
   all?
   alphabetic?
+  alter
   always
   any?
-  app-filename
+  app-args app-filename
   as
+  ash lsh
   as-lowercase as-uppercase
   ascii-limit ascii-whitespaces
-  assoc assoc-value assocq assq assqn
-  <buf>
+  <assocs> assocs-test assoc assoc-value assocq assq assqn
+  buf <buf>
   call-with-input-file call-with-output-file
   call-with-string-input-port call-with-string-output-port
+  ceiling ceiling/
+  describe-condition
   port-contents
+  case-insensitive-string-hash
+  case-insensitive-string-equal
   cat cat2 cat!
   char->ascii
+  char-ready?
   compose
   <condition> condition-arguments condition-message
+  current-gc-state
   curry
+  default
+  default-handler
+  del
   del-dups
   del-key del-keys
-  do do2
+  do do2 do3 do-keyed
   elt elt-setter
   empty empty?
   eof-object eof-object?
-  error
+  error <error> <simple-error>
+  even?
   fab fabs
-  file-mtime
+  <file-port> <file-input-port> open-input-file close-input-port
+  <file-output-port> open-output-file close-output-port
   fill
   fin-state?
   first-then
+  find-key
+  flo-bits
+  floor floor/
   force-output
-  from from-below from-to
+  from from-below from-to from-by from-to-by from-below-by from-above
+  from-above from-above-by
   gensym
+  <handler> handler-function make-handler handler-matches?
+  id-hash
+  identity
   in
-  ini-state
+  <incongruent-method-error>
+  ini-state copy-state
   <input-port>
+  keys
   last
   len len-setter
+  list <list>
   locative-value locative-value-setter
+  logior logxor logand lognot logbit?
+  lowercase? uppercase?
   lst
   make-setter-name
   make-sym
-  map map2
+  map map2 map-keyed
   <map>
   match-atom match-empty-list match-sublist match-unquote
+  max min
+  modulo remainder
   mem?
-  neg
+  neg neg?
   newline
-  now-elt
+  now-elt now-elt-setter
   now-key
   nul?
   num-to-str
   numeric?
   nxt-state
+  odd?
   out
   <output-port>
   pair
+  pick
   peek-char
-  <port>
-  pos
+  $permanent-hash-state
+  <port> port-index
+  pos pos?
   pop pop-last! push push-last!
-  reduce reduce+
+  *print-base*
+  <range>
   rcurry
   read-char
+  reduce reduce+
   rev!
   rev
+  round round/
+  <serious-condition>
   sig
   <simple-condition>
+  <step>
+  str
+  <str-tab>
   str-to-num
-  sub
+  <string-port> <string-input-port> <string-output-port>
+  sub sub-setter
   <tab>
+  table-growth-factor table-growth-threshold table-shrink-threshold
+  table-protocol
+  to-digit
   to-str
+  truncate
   truncate/
   tup
   type-or
@@ -2313,4 +2384,5 @@
   vec
   %with-monitor
   write-char write-string
+  zero?
   )

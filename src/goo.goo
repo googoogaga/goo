@@ -1,0 +1,125 @@
+(use boot)
+(use macros)
+(use runtime)
+(use write)
+(use read)
+(use syntax)
+
+(export
+ ;; Section 1.1/2.1: Special forms.
+ IF SEQ SET FUN LET LOC LAB FIN DV DM DG ISA SLOT MACRO-EXPAND
+ NEXT-METHOD QUOTE
+ CT CT-ALSO DS USE EXPORT 
+
+ ;; Section 1.2/2.2: Macros.
+ DF TRY REP MIF AND OR SELECT CASE INC DEC UNLESS WHEN ASSERT
+ FOR COLLECTING PUSHF POPF
+ 
+ ;; Section 1.3: Read macros.
+ quasiquote
+ 
+ ;; Section 3.1: Any.
+ <any> as
+ 
+ ;; Section 3.2: Comparables.
+ == = < ~= ~== > <= >= min max isa? object< object-direct-slots
+ object-direct-parents object-slots object-parents object-name
+ 
+ ;; Section 3.3: Null.
+ nul nul?
+ 
+ ;; Section 3.4: Booleans.
+ <log> not
+ 
+ ;; Section 3.5: Characters.
+ <chr> lowercase? uppercase? as-lowercase as-uppercase alphabetic?
+ numeric? to-digit eof-object?
+ 
+ ;; Section 3.6: Numbers.
+ ;; Not included: gcd, lcm (which seem to be missing).
+ <num> + - * / floor ceiling round truncate floor/ ceiling/ round/
+ truncate/ modulo remainder pos? zero? neg? neg abs *print-base*
+ num-to-str str-to-num
+ <int> logior logxor logand lognot logbit? even? odd? ash lsh
+ <flo> flo-bits
+ <loc> locative-value locative-value-setter address-of
+ 
+ ;; Section 3.7: Collections.
+ <col> len elt elt-setter empty? empty default fab fabs fill alter any?
+ all? reduce reduce+ find-key del-key del-keys do do2 map map2 do-keyed
+ map-keyed mem?
+ ;; 3.7.1: Iteration protocol.
+ ini-state fin-state? nxt-state now-elt now-elt-setter now-key copy-state
+ ;; 3.7.2: Maps.
+ <map> <assocs> assocs-test
+ <tab> table-growth-factor table-growth-threshold table-shrink-threshold
+ table-protocol $permanent-hash-state current-gc-state id-hash
+ <str-tab> case-insensitive-string-hash case-insensitive-string-equal
+ ;; 3.7.3: Sequences.
+ <seq> add 1st 2nd 3rd last pos rev rev! cat cat! cat2 sub sub-setter
+ pick del del-dups
+ ;; 3.7.4 Tuples.
+ <tup> tup
+ ;; 3.7.5 (the first one): Lists.
+ <lst> <list> head tail lst list pair nil push pop
+ ;; 3.7.5 (the second one): Optionals.
+ <opts>
+ ;; 3.7.6 (the first one): Flat sequences.
+ <flat> <vec> vec <str> str to-str <buf> buf push-last! pop-last!
+ ;; 3.7.6 (the second one):  Ranges.
+ <range> from from-by from-to from-to-by from-below from-below-by
+ from-above from-above-by
+ ;; 3.7.7: Steps.
+ <step> first-then
+ 
+ ;; Section 3.8: Symbols.
+ <sym> as make-sym gensym make-setter-name var-name var-type
+
+ ;; Section 3.9: Slots.
+ <slot> slot-owner slot-getter slot-setter slot-type slot-init
+ slot-value slot-value-setter find-getter find-setter add-slot
+
+ ;; Section 3.10: Functions.
+ <fun> fun-name fun-names fun-specs fun-nary? fun-arity fun-value
+ identity compose curry rcurry always apply
+ <gen> fun-mets gen-add-met sorted-app-mets
+ <met> met-app?
+
+ ;; Section 3.11: Conditions.
+ <condition> default-handler sig <simple-condition> condition-message
+ condition-arguments <serious-condition> <error> error <simple-error>
+ <handler> handler-function make-handler handler-matches?
+
+ ;; Section 3.12: Ports.
+ <port> <input-port> read-char peek-char char-ready?
+ <output-port> newline force-output write-char write-string
+ <file-port> <file-input-port> open-input-file close-input-port
+ call-with-input-file in
+ <file-output-port> open-output-file close-output-port
+ call-with-output-file out
+ <string-port> port-contents <string-input-port> port-index
+ call-with-string-input-port <string-output-port>
+ call-with-string-output-port
+
+ ;; Section 3.13: Input.
+ read read-from-string
+ ;; TODO - Defined in top, where we can't export it: read-file
+
+ ;; Section 3.14: Output.
+ write display writeln write-to-string format 
+
+ ;; Section 3.15: System.
+ app-filename app-args
+
+ ;; Section 3.16: Top level.
+ ;; See proto/eval.
+
+ ;; Undocumented stuff.  This was all found by a process of trial and
+ ;; error, but it needs to be here.
+ match-atom match-empty-list match-unquote match-sublist
+ sexpr-signature-parameters
+ %pair %next-methods %define-method
+
+ ;; Stuff which should be documented.
+ need-implementation
+ )

@@ -300,6 +300,7 @@
   format
   format-to-string
   display
+  object-name
   write
   writeln
   write-to-string)

@@ -550,7 +550,7 @@
 (dv *bq-quote*       'bq-quote)
 
 (df sexpr-expand-backquote ((x <lst>) => <lst>)
-  (eval (sexpr-build-backquote-expander x)))
+  (eval (sexpr-build-backquote-expander x) 'proto))
 
 (dm sexpr-build-backquote-expander ((x <lst>) => <lst>)
   (let ((raw-result (bq-process x))

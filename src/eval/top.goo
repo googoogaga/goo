@@ -8,67 +8,33 @@
 (use syntax)
 (use ast)
 (use ast-eval)
-
-(dm os-name (=> <str>)
-  (%sb (%os-name)))
-
-(dm os-binding-value ((s <str>) => <str>)
-  (%sb (%os-binding-value (%su s))))
-
-(dm os-binding-value-setter ((v <str>) (s <str>) => <str>)
-  (set (%os-binding-value (%su s)) (%su v))
-  v)
-
-(dv *path-separator*
-  (case
-    ((= (os-name) "linux") "/")
-    ((= (os-name) "win32") "\\")
-    (#t "/")))
-
-(dm base-path ((filename <str>) => <str>)
-  (rep loop ((i (- (len filename) 1)))
-    (if (< i 0)
-	""
-	(if (= (elt filename i) (elt *path-separator* 0))
-	    (sub filename 0 (+ i 1))
-	    (loop (- i 1))))))
-
-(dv *proto-root*
-  (let ((env-root (os-binding-value "PROTO_ROOT")))
-    (if (empty? env-root)
-        ;; Defaults to a path relative to the current working directory.
-        (cat (base-path (app-filename)) ".." *path-separator* "..")
-        env-root)))
-
-(dm add-src-path (relpath => <str>)
-  (cat *proto-root* *path-separator* "SRC" *path-separator* relpath))
-
-(dm add-build-path (builddir relpath => <str>)
-  (cat *proto-root* *path-separator* "C" *path-separator*
-       builddir *path-separator* relpath))
+(use proto/system)
 
 (dm parse-in ((s <str>) ct-env)
   (objectify (read-from-string s) ct-env #f))
 
-(dm parse ((s <str>)) (parse-in s (runtime-environment)))
+(dm parse ((s <str>) (modname <sym>))
+  (parse-in s (runtime-environment modname)))
 
 (dm str-parse-in ((s <str>) ct-env)
   (format out "%=\n" (parse-in s ct-env)))
 
-(dm str-parse ((s <str>)) (str-parse-in s (runtime-environment)))
+(dm str-parse ((s <str>) (modname <sym>))
+  (str-parse-in s (runtime-environment modname)))
 
 (dm eval-in ((x <any>) ct-env)
   (let ((o (objectify x ct-env #f))
 	(e (ast-evaluate o)))
     e))
 
-(dm eval ((x <any>)) (eval-in x (runtime-environment)))
+(dm eval ((x <any>) (modname <sym>))
+  (eval-in x (runtime-environment modname)))
 
 (dm str-eval-in ((x <str>) ct-env => <any>)
   (write-to-string (eval-in (read-from-string x) ct-env)))
 
-(dm str-eval ((x <str>))
-  (str-eval-in x (runtime-environment)))
+(dm str-eval ((x <str>) (modname <sym>))
+  (str-eval-in x (runtime-environment modname)))
 
 (dm read-file ((filename <str>) => <any>)
   (call-with-input-file
@@ -88,33 +54,22 @@
     ;; (report-undefined-global-bindings ct-env)
     ))
 
-(dm load ((filename <str>)) 
-  (load-in filename (runtime-environment)))
+(dm load ((filename <str>) (modname <sym>)) 
+  (load-in filename (runtime-environment modname)))
 
-(dv *proto-extension* ".proto")
-(dv *c-extension* ".c")
-(dv *obj-extension* ".o")
-(dv *exe-extension* "")
+(dm load-from (name (modname <sym>))
+  (load (proto-filename name) modname))
 
-(df proto-filename (name)
-  (cat name *proto-extension*))
-
-(df c-filename (name)
-  (cat name *c-extension*))
-
-(df obj-filename (name)
-  (cat name *obj-extension*))
-
-(df exe-filename (name)
-  (cat name *exe-extension*))
-
-(dm load-from (name)
-  (load (proto-filename name)))
-
-(dm prompt-for-command-expression (level prompt)
-  (format out "%=%s" level prompt)
+(dm prompt-for-command-expression (env level prompt)
+  (format out "%s %=%s"
+          (module-name (find-environment-module env)) level prompt)
   (force-output out)
   (read in))
+
+(dm print-result-expression (env level label result)
+  (format out "%s %=%s"
+           (module-name (find-environment-module env)) level label)
+  (write out result))
 
 (dm do-stack-frames (fun)
   (%do-stack-frames fun))
@@ -131,74 +86,74 @@
 (df keyboard-interrupt ()
   (sig <keyboard-interrupt>))
 
+(df do-restart (restarts n)
+  (unless restarts
+    (error "No restarts available.\n"))
+  (unless (and (> n 0) (<= n (len restarts)))
+    (error "No restart #%d.\n"))
+  (invoke-handler-interactively (elt restarts (- n 1)) in out))
+
 ;;  Initialization and driver loop
 ;;  The prompt is handled a bit differently than in the notes
-(dm top-in (level top quit ct-env)
-  (lab blow
-    (rep loop ()
-      (lab continue
-	(try <condition>
-          (fun (c r)
-            (if (isa? c <keyboard-interrupt>)
-                (format out "BREAK")
-                (seq
-                  (format out "ERROR: ")
-                  (when (isa? c <simple-condition>)
-                    (apply (curry format out (condition-message c))
-                           (condition-arguments c)))))
-            ;; (backtrace (env))
-            (top-in (+ level 1) top quit ct-env)
-            (continue #f))
-          (try ((type <restart>)
-                (description "Return to interpreter level %d" level))
-            (fun (c r) (continue #f))
-            (newline out)
-            (let ((form (prompt-for-command-expression level "<= ")))
-              (case
-                ((or (= form '(quit)) (= form (eof-object)))
-                 (quit #f))
-                ((= form '(up))
-                 (blow #f))
-                ((= form '(top))
-                 (top #f))
-                ((= form '(restart))
-                 (choose-handler <restart> in out))
-                ((= form '(handlers))
-                 (list-handlers <condition> out))
-                (#t (let ((ast    (objectify form ct-env #f))
-                          (result (ast-evaluate ast)))
-                      (format out "%==> " level) 
-                      (write out result))))))))
-      (loop))))
+(dm top-in (level top quit show-restarts? ct-env)
+  (let ((restarts #f))
+    (lab blow
+      (rep loop ()
+        (lab continue
+          (try <condition>
+            (fun (c r)
+              (if (isa? c <keyboard-interrupt>)
+                  (format out "BREAK")
+                  (format out "ERROR: %s" (describe-condition c)))
+              ;; (backtrace (env))
+              (top-in (+ level 1) top quit #t ct-env)
+              (continue #f))
+            (try ((type <restart>)
+                  (description "Return to interpreter level %d" level))
+              (fun (c r) (continue #f))
+              (newline out)
+              (when show-restarts?
+                (format out "Type (restart N) to restart execution:\n")
+                (set restarts (list-handlers <restart> out))
+                (set show-restarts? #f))
+              (let ((form (prompt-for-command-expression ct-env level "<= ")))
+                (case
+                  ((or (= form '(quit)) (= form (eof-object)))
+                   (quit #f))
+                  ((= form '(up))
+                   (blow #f))
+                  ((= form '(top))
+                   (top #f))
+                  ((= form '(handlers))
+                   (list-handlers <condition> out))
+                  ((= form '(restarts))
+                   (list-handlers <restart> out))
+                  ((mif ((restart ,n) form) #t #f)
+                   (do-restart restarts (2nd form)))
+                  ((mif ((in-mod ,m) form) #t #f)
+                   (let ((new-env (runtime-environment (2nd form))))
+                     (set ct-env new-env)))
+                  (#t
+                   (let ((ast    (objectify form ct-env #f))
+                         (result (ast-evaluate ast)))
+                     (print-result-expression ct-env level "=> " result))))))))
+        (loop)))))
 
-(dm top ()
+(dm top ((modname <sym>))
   (lab quit
     (try ((type <restart>)
           (description "Exit the top-level interpreter"))
       (fun (c r) (quit #f))
       (rep loop ()
         (lab top
-          (top-in 0 top quit (runtime-environment)))
+          (top-in 0 top quit #f (runtime-environment modname)))
         (loop)))))
 
 (export
-  add-src-path
-  add-build-path
-
-  *proto-extension*
-  *c-extension*
-  *obj-extension*
-  *exe-extension*
-
-  c-filename
-  proto-filename
-  exe-filename
-  obj-filename
-
   eval
   load
   parse-in
-  *path-separator*
-  *proto-root*
   read-file
-  top)
+  top
+  do-stack-frames
+  backtrace)

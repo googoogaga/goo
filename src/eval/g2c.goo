@@ -19,12 +19,7 @@
 (use top)
 (use ast-linearize)
 (use strings)
-
-;;; Convert a module name to a relative path name.
-;;;   foo/bar => "foo/bar" or "foo\\bar", etc.
-(df module-name-to-relpath ((name <sym>) => <str>)
-  (let ((namestr (map-str as-lowercase (sym-name name))))
-    (string-join (string-split namestr #\/) *path-separator*)))	 
+(use proto/system)
 
 (dv *definitions* #f) ;; TODO: thread variable
 
@@ -48,6 +43,7 @@
 
 (dm load-module ((loader <p2c-module-loader>) (name <sym>) => <module>)
   (let ((mod      (fab-p2c-module loader name))
+        (keepmod? #f)
         (env      (module-target-environment mod))
         (file     (module-name-to-relpath name))
         (src-file (add-src-path (proto-filename file)))
@@ -55,16 +51,25 @@
                                   (c-filename file))))
     (set (module-src-file mod) src-file)
     (set (module-mtime mod) (file-mtime src-file))
-    (let ((ast      (compute-ast src-file env)))
-      ;;(format out "Computing program for %s.\n" name)
-      (let ((prg    (compute-program ast env)))
-        ;;(format out "Generating C code for %s.\n" name)
-        (call-with-output-file
-         out-file
-         (fun (out-port)
-           (dlet ((*definitions* (program-definitions prg))) 
-             (generate-c-module out-port ast prg mod))))
-        mod))))
+    (fin
+      (let ((ast      (compute-ast src-file env)))
+        ;;(format out "Computing program for %s.\n" name)
+        (let ((prg    (compute-program ast env)))
+          ;;(format out "Generating C code for %s.\n" name)
+          (probe-directory (parent-directory out-file))
+          (call-with-output-file
+           out-file
+           (fun (out-port)
+             (dlet ((*definitions* (program-definitions prg))) 
+               (generate-c-module out-port ast prg mod))))
+          (set keepmod? #t)
+          mod))
+      ;;; Tricky unwind handler.  Our module may have altered the
+      ;;; the state of other module's bindings, and so we need to
+      ;;; back these changes out if we crash midway.  This would look
+      ;;; much nicer if we had some kind of try/catch/rethrow construct.
+      (unless keepmod?
+        (free-implemented-foreign-bindings mod)))))
 
 (df module-up-to-date? ((mod <p2c-module>) => <log>)
   (>= (module-mtime mod) (file-mtime (module-src-file mod))))
@@ -111,6 +116,9 @@
 ;;; Backwards compatibility for users: Build p2c itself.
 (dv *p2c-app* (p2c-def-app "p2c" 'main))
 (dm p2c-top () (p2c-build-app *p2c-app*))
+(dm p2c-clean ()
+  (set *p2c-app* (p2c-def-app "p2c" 'main))
+  #f)
 
 ;;; Given a file name and an environment, compute an ast in that
 ;;; environment.
@@ -145,6 +153,7 @@
   (generate-quotation-forwards out (program-quotations prg))
   (generate-function-forwards out (program-definitions prg))
   (generate-function-bodies out (program-definitions prg))
+  (generate-module-info out mod)
   (generate-module-init out mod (program-form prg)) 
   (generate-trailer out)
   prg)
@@ -197,7 +206,7 @@
 
 (dm generate-header (out e)
   (format out "/* PROTO 2 C $REVISION: 0.2 $ \n")
-  ;; (pp e out)
+  ;; (when pp (pp e out))
   (format out "  */\n\n#include \"prt.h\"\n"))
 
 (dm generate-trailer (out)
@@ -225,8 +234,8 @@
       (format out "%s(%s,\"%s\",\"%s\");\n" 
               (if imported? "EXT" "DEF")
               (mangle-module-binding gb)
-              (mangle-string-literal (as <str> (binding-module-name gb)))
-              (mangle-string-literal (as <str> name))))))
+              (mangle-string-literal (binding-module-name gb))
+              (mangle-string-literal name)))))
 
 ;;;; NAME MANGLING
 
@@ -307,6 +316,9 @@
 		 (if (= enc #f)
 		     (loop (cat out (to-str c)) (+ i 1))
 		     (loop (cat out enc) (+ i 1))))))))
+
+(dm mangle-string-literal ((sym <sym>) => <str>)
+  (mangle-string-literal (sym-name sym)))
 
 (dv ($number-characters <str>) "0123456789")
 
@@ -555,7 +567,7 @@
 (dm generate-quotation (out (x <sym>))
   (format out "%s((P)\"%s\")"
 	  (mangle-boot-name "%%sym")
-	  (mangle-string-literal (as <str> x))))
+	  (mangle-string-literal x)))
 
 ;;;
 ;;; CONVERT AN EXPRESSION TO C
@@ -851,6 +863,7 @@
   (with-expression (e d out)
     (format out "%s" (mangle-boot-name "%macro"))
     (between-parentheses-comma-separated (out)
+      (generate-quotation out (binding-module-name (assignment-binding e)))
       (generate-quotation out (binding-name (assignment-binding e)))
       (gen-ref (assignment-form e) out))))
 
@@ -1058,6 +1071,93 @@
                  (gen-ref (head regs) out)
                  (next-reg (tail regs) (+ i 1))))))))
 
+(dm module-info-name (name)
+  (cat "module_info_" (mangle-raw-name name)))
+
+;;; TODO - Remove.
+(dv dout out)
+
+;;; Declare module info objects for each of the modules we use, and each
+;;; of the modules which originally defines one of our bindings.  (There're
+;;; occasionally small differences between these two sets.)
+(df declare-imported-module-infos (out mod)
+  (let ((seen (fab <tab> 50))
+        (env (module-target-environment mod)))
+    (loc ((maybe-declare (modname)
+            (when (nul? (elt seen modname))
+              (set (elt seen modname) #t)
+              (format out "extern MODULE_INFO %s;\n"
+                      (module-info-name modname)))))
+      (do maybe-declare (map module-name (environment-uses-modules env)))
+      (do-static-global-bindings
+       (fun (binding)
+         (let ((home-mod (binding-module-name binding)))
+           (unless (binding-native-to? binding mod)
+             (maybe-declare home-mod))))
+       (module-target-environment mod)))))
+
+;;; Output a record describing this module and its environment.
+;;; This routine is effectively serializing compiler data structures,
+;;; so we keep it simple at the price of performance.
+(df generate-module-info (out mod)
+  (let ((name       (module-name mod))
+        (info-name  (module-info-name name))
+        (env        (module-target-environment mod))
+        (uses       (environment-uses-modules env))
+        (uses-names (map module-name uses)))
+    ;;(format dout "Dumping module information...\n")
+    (format out "\n/* MODULE ENVIRONMENT INFORMATION */\n\n")
+    (declare-imported-module-infos out mod)
+
+    (format out "\nstatic USE_INFO use_infos[] = {\n")
+    (for ((n uses-names))
+      (format out "  {&%s},\n" (module-info-name n)))
+    (format out "  {NULL}\n};\n")
+
+    ;;(format dout "Dumping imports...\n")
+    (format out "\nstatic IMPORT_INFO import_infos[] = {\n")
+    (do-named-static-global-bindings
+     (fun (local-name binding)
+       (unless (binding-native-to? binding mod)
+         (format out "  {\"%s\", &%s, \"%s\"},\n"
+                 (mangle-string-literal (binding-name binding))
+                 (module-info-name (binding-module-name binding))
+                 (mangle-string-literal local-name))))
+     (module-target-environment mod))
+    (format out "  {NULL,NULL,NULL}\n};\n")
+
+    ;;(format dout "Dumping bindings...\n")
+    (format out "\nstatic BINDING_INFO binding_infos[] = {\n")
+    (do-static-global-bindings
+     (fun (binding)
+       (when (binding-native-to? binding mod)
+         (if (== (binding-kind binding) 'global)
+             (format out "  {\"%s\", &%s},\n"
+                     (mangle-string-literal (binding-name binding))
+                     (mangle-module-binding binding))
+             (format out "  {\"%s\", NULL},\n"
+                     (mangle-string-literal (binding-name binding))))))
+     (module-target-environment mod))
+    (format out "  {NULL, NULL}\n};\n")
+
+    ;;(format dout "Dumping exports...\n")
+    (format out "\nstatic EXPORT_INFO export_infos[] = {\n")
+    (for (((tup exported-as binding) (module-exports mod)))
+      (format out "  {\"%s\", \"%s\"},\n"
+              (mangle-string-literal (binding-name binding))
+              (mangle-string-literal exported-as)))
+    (format out "  {NULL, NULL}\n};\n")
+
+    (format out "\nextern MODULE_INFO %s;\n" info-name)
+    (format out "MODULE_INFO %s = {\n" info-name)
+    (format out "  \"%s\",\n" (mangle-string-literal name))
+    (format out "  NULL,\n")
+    (format out "  use_infos,\n")
+    (format out "  import_infos,\n")
+    (format out "  binding_infos,\n")
+    (format out "  export_infos,\n")
+    (format out "};\n")))
+
 (dm module-init-name (name)
   (cat "load_module_" (mangle-raw-name name)))
 
@@ -1088,15 +1188,21 @@
     (format out "}\n")))
 
 (dm generate-main (out mod)
-  (format out "\n/* APPLICATION: */\n\n")
-  (format out "extern %s;\n\n" (module-init-decl (module-name mod)))
-  (format out "int main(int argc, char* argv[]) {\n")
-  (format out "  %s(argc, argv);\n" (mangle-boot-name "%init-world"))
-  (format out "  %s();\n" (module-init-name (module-name mod)))
-  (format out "  return 0;\n")
-  (format out "}\n"))
+  (let ((name (module-name mod))
+        (info-name (module-info-name name)))
+    (format out "\n/* APPLICATION: */\n\n")
+    (format out "extern MODULE_INFO %s;\n" info-name)
+    (format out "extern %s;\n\n" (module-init-decl name))
+    (format out "MODULE_INFO *proto_toplevel_module_info = &%s;\n\n" info-name)
+    (format out "int main(int argc, char* argv[]) {\n")
+    (format out "  %s(argc, argv);\n" (mangle-boot-name "%init-world"))
+    (format out "  %s();\n" (module-init-name name))
+    (format out "  return 0;\n")
+    (format out "}\n")
+    ))
 
 (export
   p2c-def-app
   p2c-build-app
-  p2c-top)
+  p2c-top
+  p2c-clean)
