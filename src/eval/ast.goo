@@ -193,7 +193,9 @@
 (df function-display-name (f|<ast-function>)
   (def b (function-binding f))
   (if b
-      (msg-to-str "%s:%s" (binding-module-name b) (binding-name b))
+      (if (isa? b <sym>)
+          (as <str> b)
+          (msg-to-str "%s:%s" (binding-module-name b) (binding-name b)))
       "anonymous function"))
 
 (dm invalidate-dependent (dependent|<ast-function>
