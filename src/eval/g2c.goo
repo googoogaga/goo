@@ -224,10 +224,9 @@
   (def sep       *path-separator*)
   (def out-name  (add-build-path appname "Makefile"))
   (with-port (code-out (open <file-out-port> out-name))
-    (msg* code-out "include ..%sMake.inc\n" sep)
     (msg* code-out "C_OBJS_DD = $(patsubst %%,..%s%%,$(C_OBJS))\n" sep)
     (msg* code-out "%s%s: ..%sgrt.h\n" *c-extension* *obj-extension* sep)
-    (msg* code-out "\t$(CC) -I.. -DDEFAULT_GOO_ROOT=\\\"$(GOO_ROOT)\\\" -c -g -O -o $@ $<\n\n")
+    (msg* code-out "\t$(CC) $(CFLAGS) -I.. -DDEFAULT_GOO_ROOT=\\\"$(GOO_ROOT)\\\" -c -o $@ $<\n\n")
     (msg* code-out "OBJS = \\\n")
     (do-module-loader-modules
      (fun (mod)
@@ -236,7 +235,7 @@
      loader)
     (msg* code-out "\t%s\n\n" (obj-filename init-name))
     (msg* code-out "%s: $(C_OBJS_DD) $(OBJS)\n" exe-name)
-    (msg* code-out "\t$(CC) $(LD_OPTS) -o %s $(C_OBJS_DD) $(OBJS) $(LIBS)\n\n"
+    (msg* code-out "\t$(CC) $(LD_FLAGS) -o %s $(C_OBJS_DD) $(OBJS) $(LIBS)\n\n"
          exe-name sep sep)
     (msg* code-out "clean:\n\trm -f %s $(OBJS)\n" exe-name sep)))
 

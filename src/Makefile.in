@@ -1,0 +1,51 @@
+## generic autoconf stuff
+SHELL = /bin/sh
+VPATH = @srcdir@
+
+subdirs = @subdirs@
+top_srcdir = @top_srcdir@
+srcdir = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+datadir = @datadir@
+bindir = $(exec_prefix)/bin
+infodir = $(prefix)/info
+libdir = $(prefix)/lib/goo/
+mandir = $(prefix)/man/man1
+exe_suffix=@exe_suffix@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM=@INSTALL_PROGRAM@
+INSTALL_SCRIPT=@INSTALL_PROGRAM@
+INSTALL_DATA=@INSTALL_DATA@
+
+## end autoconf
+
+GOO_LIB = $(libdir)/lib
+GOO_MODS = $(libdir)/mods
+GOO_DOC = $(datadir)/doc/goo/
+
+
+DEF='/^(d\w+[ \t]+(?\([^ \t()]+\)/\1/'
+ETAGS=etags --language=none --regex=$(DEF)
+
+all:
+
+install: all
+	$(top_srcdir)/mkinstalldirs $(GOO_MODS)
+	cp -r src/* $(GOO_MODS)/ ## should possibly use install?
+
+clean:
+
+distclean: clean
+	rm -f TAGS Makefile
+
+tags: local-tags
+
+local-tags:
+	$(ETAGS) *.goo
+
+all-tags:
+	find . -name \*.goo | $(ETAGS) -
+
+.PHONY: all tags local-tags all-tags

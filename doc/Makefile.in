@@ -1,0 +1,33 @@
+## generic autoconf stuff
+SHELL = /bin/sh
+VPATH = @srcdir@
+
+subdirs = @subdirs@
+top_srcdir = @top_srcdir@
+srcdir = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+datadir = @datadir@
+bindir = $(exec_prefix)/bin
+infodir = $(prefix)/info
+libdir = $(prefix)/lib/goo/
+mandir = $(prefix)/man/man1
+exe_suffix=@exe_suffix@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM=@INSTALL_PROGRAM@
+INSTALL_SCRIPT=@INSTALL_PROGRAM@
+INSTALL_DATA=@INSTALL_DATA@
+
+## end autoconf
+
+all:
+
+install: all
+	$(top_srcdir)/mkinstalldirs $(GOO_DOC)
+	$(INSTALL_DATA) goo.pdf $(GOO_DOC)/
+
+clean:
+
+distclean: clean
+	rm -f Makefile

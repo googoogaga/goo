@@ -1,0 +1,33 @@
+# Generated automatically from Makefile.in by configure.
+## generic autoconf stuff
+SHELL = /bin/sh
+
+subdirs = @subdirs@
+top_srcdir = ..
+srcdir = .
+prefix = /usr/local
+exec_prefix = ${prefix}
+datadir = ${prefix}/share
+bindir = $(exec_prefix)/bin
+infodir = $(prefix)/info
+libdir = $(prefix)/lib/goo/
+mandir = $(prefix)/man/man1
+exe_suffix=
+
+INSTALL = /usr/bin/install -c
+INSTALL_PROGRAM=${INSTALL}
+INSTALL_SCRIPT=${INSTALL}
+INSTALL_DATA=${INSTALL} -m 644
+
+## end autoconf
+
+all:
+
+install: all
+
+clean:
+
+distclean: clean
+	rm -f Makefile
+
+.PHONY: all install clean distclean

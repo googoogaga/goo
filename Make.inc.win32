@@ -1,9 +1,0 @@
-EXE      = .exe
-TARGET   = win32
-INSTALL  = real-install
-PREFIX   = /cygdrive/c/progra~1/goo
-GOO_ROOT = $(PREFIX)
-GOO_BIN  = $(PREFIX)/bin
-GOO_LIB  = $(GOO_ROOT)/lib
-GOO_MODS = $(GOO_ROOT)/mods
-GOO_DOC  = $(PREFIX)/doc

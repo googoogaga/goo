@@ -1,7 +1,6 @@
-include ../Make.inc
 C_OBJS_DD = $(patsubst %,../%,$(C_OBJS))
 .c.o: ../grt.h
-	$(CC) -I.. -DDEFAULT_GOO_ROOT=\"$(GOO_ROOT)\" -c -g -O -o $@ $<
+	$(CC) $(CFLAGS) -I.. -DDEFAULT_GOO_ROOT=\"$(GOO_ROOT)\" -c -o $@ $<
 
 OBJS = \
 	goo/system.o \
@@ -48,7 +47,7 @@ OBJS = \
 	g2c-init.o
 
 g2c: $(C_OBJS_DD) $(OBJS)
-	$(CC) $(LD_OPTS) -o g2c $(C_OBJS_DD) $(LIBS) $(OBJS)
+	$(CC) $(LD_FLAGS) -o g2c $(C_OBJS_DD) $(OBJS) $(LIBS)
 
 clean:
 	rm -f g2c $(OBJS)

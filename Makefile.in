@@ -1,0 +1,49 @@
+## generic autoconf stuff
+SHELL = /bin/sh
+VPATH = @srcdir@
+
+subdirs = @subdirs@
+top_srcdir = @top_srcdir@
+srcdir = @srcdir@
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+datadir = @datadir@
+bindir = $(exec_prefix)/bin
+infodir = $(prefix)/info
+libdir = $(prefix)/lib/goo/
+mandir = $(prefix)/man/man1
+exe_suffix=@exe_suffix@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM=@INSTALL_PROGRAM@
+INSTALL_SCRIPT=@INSTALL_PROGRAM@
+INSTALL_DATA=@INSTALL_DATA@
+
+# end generic autoconf stuff
+
+subdirs = c src doc emacs
+
+all:
+	@for dir in ${subdirs}; do \
+	  (cd $$dir && $(MAKE) all) \
+	  || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+
+install: all
+	@for dir in ${subdirs}; do \
+	  (cd $$dir && $(MAKE) install) \
+	  || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+clean:
+	/bin/rm -f *~
+	@for dir in ${subdirs}; do \
+	  (cd $$dir && $(MAKE) clean) \
+	  || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+
+distclean: clean
+	/bin/rm -f Makefile config.h config.status config.cache config.log
+	@for dir in ${subdirs}; do \
+	  (cd $$dir && $(MAKE) distclean) \
+	  || case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"

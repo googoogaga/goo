@@ -2416,9 +2416,6 @@ loop:
   BOXVAL(FREEREF(0)) = T0;
   T1 = BOXVAL(FREEREF(0));
   x_3248F8058 = T1;
-  CALL2(1,VARREF(YgooSioSportYputs),x_3248F8058,LITREF(lit_68));
-  CALL2(1,VARREF(YgooSioSwriteYemit),x_3248F8058,FREEREF(2));
-  T2 = CALL2(1,VARREF(YgooSioSportYputs),x_3248F8058,LITREF(lit_69));
   T3 = BOXVAL(FREEREF(0));
   x_3249F8059 = T3;
   CALL2(1,VARREF(YgooSioSportYputs),x_3249F8059,LITREF(lit_70));
@@ -8619,15 +8616,15 @@ loop:
   lit_71 = YPsb((P)"%,$(C_OBJS))\n");
   lit_72 = YPsb((P)": ..");
   lit_73 = YPsb((P)"grt.h\n");
-  lit_74 = YPsb((P)"\t$(CC) -I.. -DDEFAULT_GOO_ROOT=\\\"$(GOO_ROOT)\\\" -c -g -O -o $@ $<\n\n");
+  lit_74 = YPsb((P)"\t$(CC) $(CFLAGS) -I.. -DDEFAULT_GOO_ROOT=\\\"$(GOO_ROOT)\\\" -c -o $@ $<\n\n");
   lit_75 = YPsb((P)"OBJS = \\\n");
   lit_76 = YPsb((P)"\t");
   lit_77 = YPsb((P)" \\\n");
   lit_78 = YPsb((P)"\t");
   lit_79 = YPsb((P)"\n\n");
   lit_80 = YPsb((P)": $(C_OBJS_DD) $(OBJS)\n");
-  lit_81 = YPsb((P)"\t$(CC) $(LD_OPTS) -o ");
-  lit_82 = YPsb((P)" $(C_OBJS_DD) $(LIBS) $(OBJS)\n\n");
+  lit_81 = YPsb((P)"\t$(CC) $(LD_FLAGS) -o ");
+  lit_82 = YPsb((P)" $(C_OBJS_DD) $(OBJS) $(LIBS)\n\n");
   lit_83 = YPsb((P)"clean:\n\trm -f ");
   lit_84 = YPsb((P)" $(OBJS)\n");
   T137 = YPsig(YPPlist(1,LITREF(lit_20)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
