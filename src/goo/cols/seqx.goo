@@ -24,13 +24,28 @@
  ;; inserts e into x below index before
  (dg ins! (x|<seq!> e|<any> before|<int> => <seq!>))
 
- (dg alter (dst|<seq!> src|<seq> from|<int> below|<int> => <seq!>)))
+ ;; returns sequence with all v's deleted from x.
+ (dg del-vals! (x|<seq!> v|<any>  => <seq!>))
 
-(dm cat! (x|<seq!> more|... => <seq!>)
-  (app cat x more))
+ ;; returns sequence with all duplicates removed.
+ (dg del-dups! (x|<seq!> => <seq!>))
 
-(dm ins! (x|<seq!> v|<any> before|<int> => <seq!>)
-  (ins x v before))
+ (dg sort! (x|<seq!> => <seq!>))
+ (dg sort-by! (x|<seq!> test|<fun> => <seq!>))
+
+ ;; deprecated
+ (dg alter (dst|<seq!> src|<seq> from|<int> below|<int> => <seq!>))
+
+)
+
+;; TODO: REMOVE PERHAPS?
+(dm rev! (x|<seq!> => <seq!>) (rev x))
+(dm cat! (x|<seq!> more|... => <seq!>) (app cat more))
+(dm push! (l|<seq!> x|<any> => <seq!>) (push l x))
+(dm pop! (l|<seq!> => (tup new-col|<seq!> value)) (pop l))
+(dm ins! (x|<seq!> v|<any> before|<int> => <seq!>) (ins x v before))
+(dm del-vals! (x|<seq!> v|<any>  => <seq!>) (del-vals x v))
+(dm del-dups! (x|<seq!> => <seq!>) (del-dups x))
 
 (dm into (dst|<seq!> src|<seq> => <seq!>)
   (rep in ((ed (enum dst)) (es (enum src)))
@@ -70,6 +85,12 @@
                          (insert (nxt nd) (nxt s)))))
               (seq (set (now nd) (now d))
                    (copy (nxt nd) (nxt d) (+ i 1))))))))
+
+(dm sort! (items|<seq!> => <seq!>)
+  (sort-by! items <))
+
+(dm sort-by! (items|<seq!> test|<fun> => <seq!>)
+  (as-copy items (sort-by! (as <lst> items) test)))
 
 ;; TODO: DEPRECATED
 (dm alter (dst|<seq!> src|<seq> from|<int> below|<int> => <seq!>)

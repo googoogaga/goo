@@ -11,7 +11,7 @@
 ;;; x WALK ALL BINDINGS
 ;;; x NEED LITERALS VECTOR IN GEN -- METS, NXT-METS, TYPES
 ;;; x NEXT-METHODS TRACKING
-;;; o DEPENDENCY TRACKING
+;;; x DEPENDENCY TRACKING
 ;;;     just use current system
 ;;; o FAST ISA?
 ;;;     bit matrix algorithm
@@ -24,9 +24,16 @@
 ;;;       t+ -- code gen
 ;;; o COMMON SUBEXPRESSION ELIMINATION
 ;;;     hoist object-class
+;;; o CONSTANT FOLDING
+;;;     remove tests against <any>
+;;; o INLINING
+;;;     inline prop access
 ;;; o DYNAMIC COMPILATION
 ;;;     compile expression as in top
 ;;;     circumvent module system
+;;; o OPTIMIZE ISA?
+;;;     leaf classes
+;;;     tag checks
 
 (df walk-bindings (fun|<fun> mod|<sym>)
   (walk-bindings* 
@@ -66,24 +73,23 @@
           (def ordered-mets (priority-order test mets))
           (loc ((filter (mets type pos)
                   (priority-order test 
-                    (pick (fun (met) (subtype? type (fun-spec met pos))) 
-                          mets)))
-                  (code-gen-case (m mets)
-                    (def type (fun-spec m i))
-                    `((,(gen-ref type))
-                      ,(build-decision-tree*
-                        g (+ i 1) n refs (filter mets type i))))
-                  (code-gen-cases (mets)
-                    (packing ()
-                      (rep loop ((mets mets))
-                        (unless (empty? mets)
-                          (pack (code-gen-case (head mets) mets))
-                          (loop (tail mets)))))))
-              `(case-by (@oelt args ,i) @isa?
-                 ,@(code-gen-cases ordered-mets)
-                 (#t (no-app-met ,(gen-ref g) args))))))
-        `(seq (%unlink-stack)
-              (%raw-call ,(gen-ref (head mets)) ,(gen-ref (tail mets))))))
+                    (pick (fun (met) (subtype? type (fun-spec met pos))) mets)))
+                (code-gen-case (m mets)
+                  (def type (fun-spec m i))
+                  `((,(gen-ref type))
+                    ,(build-decision-tree*
+                      g (+ i 1) n refs (filter mets type i))))
+                (code-gen-cases (mets)
+                  (packing ()
+                    (rep loop ((mets mets))
+                      (unless (empty? mets)
+                        (pack (code-gen-case (head mets) mets))
+                        (loop (tail mets)))))))
+            `(case-by (@oelt args ,i) @isa?
+               ,@(code-gen-cases ordered-mets)
+               (#t (no-app-met ,(gen-ref g) args))))))
+    `(seq (%unlink-stack)
+          (%raw-call ,(gen-ref (head mets)) ,(gen-ref (tail mets))))))
 
 (dm foo ((x <num>)) (tup x)) 
 (dm foo ((x <flo>)) (lst x))

@@ -71,17 +71,17 @@
 
 (def <simple-table-vector> (isa <any>))
   ;; Number of filled and vacant elements
-  (dp %vacated (x|<simple-table-vector> => <int>) 0)
+  (dp %vacated (<simple-table-vector> => <int>) 0)
   ;; Modulus values for primary and secondary hash
-  (dp %primary-modulus (x|<simple-table-vector> => <int>))
-  (dp %secondary-modulus (x|<simple-table-vector> => <int>))
+  (dp %primary-modulus (<simple-table-vector> => <int>))
+  (dp %secondary-modulus (<simple-table-vector> => <int>))
   ;; Number of buckets and number of elements in each bucket
-  (dp %n-buckets (x|<simple-table-vector> => <int>))
-  (dp %bucket-depth (x|<simple-table-vector> => <int>))
+  (dp %n-buckets (<simple-table-vector> => <int>))
+  (dp %bucket-depth (<simple-table-vector> => <int>))
   ;; The actual table data representation
-  (dp %data (x|<simple-table-vector> => <simple-object-vector>))
+  (dp %data (<simple-table-vector> => <simple-object-vector>))
   ;; GC state
-  (dp gc-state (x|<simple-table-vector> =>)
+  (dp gc-state (<simple-table-vector> =>)
 
 ;; TODO: SIZE FILL N-BUCKETS BUCKET-DEPTH PRIMARY-MODULUS SECONDARY-MODULUS
 (def fab-table-vector 
@@ -114,12 +114,12 @@
 
 (def <simple-table> (isa <col>))
   ;; Factor to grow by
-  (dp table-growth-factor (x|<simple-table> => <flo>) 2.0)
+  (dp table-growth-factor (<simple-table> => <flo>) 2.0)
   ;; When to grow or shrink (percentage of table size)
-  (dp table-growth-threshold (x|<simple-table> => <flo>) 0.8)
-  (dp table-shrink-threshold (x|<simple-table> => <flo>) 0.5)
-  (dp %count (x|<simple-table> => <int>) 0)
-  (dp %vector (x|<simple-table> => <simple-table-vector>))
+  (dp table-growth-threshold (<simple-table> => <flo>) 0.8)
+  (dp table-shrink-threshold (<simple-table> => <flo>) 0.5)
+  (dp %count (<simple-table> => <int>) 0)
+  (dp %vector (<simple-table> => <simple-table-vector>))
 
 (dg hash-protocol (x|<simple-table> => test-fun|<fun> hash-fun|<fun>))
 

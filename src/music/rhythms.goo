@@ -4,12 +4,12 @@
 (use goo/random)
 
 (dc <pattern> (<any>))
-  (dp pattern-time (x|<pattern> => <int>))
-  (dp pattern-rhythm (x|<pattern> => <sym>))
-  (dp pattern-kind (x|<pattern> => <sym>))
-  (dp pattern-part (x|<pattern> => <int>))
-  (dp pattern-instrument (x|<pattern> => <sym>))
-  (dp pattern-value (x|<pattern> => <str>))
+  (dp pattern-time (<pattern> => <int>))
+  (dp pattern-rhythm (<pattern> => <sym>))
+  (dp pattern-kind (<pattern> => <sym>))
+  (dp pattern-part (<pattern> => <int>))
+  (dp pattern-instrument (<pattern> => <sym>))
+  (dp pattern-value (<pattern> => <str>))
 
 (dv $patterns (fab <vec> 0))
 

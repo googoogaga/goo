@@ -94,11 +94,11 @@
 ;;; May be depended-upon by a <dependent>.
 (dc <dependable> (<any>))
   ;; A table keyed by <dependent>, containing <dependency-type> values.
-  (dp dependents (x|<dependable> => <tab>) (fab <tab> 4))
+  (dp dependents (<dependable> => <tab>) (fab <tab> 4))
 
 ;;; May depend upon a <dependable>.
 (dc <dependent> (<any>))
-  (dp depends-on (x|<dependent> => <tab>) (fab <tab> 20))
+  (dp depends-on (<dependent> => <tab>) (fab <tab> 20))
 
 ;;; Log a dependency, together with any type information.
 (df log-dependency (dependable|<dependable>

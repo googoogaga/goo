@@ -28,27 +28,27 @@
  (dc <tab> (<map> <col!>))
  (dv <set> <tab>)
  ;; Factor to grow by
- (dp tab-growth-factor (x|<tab> => <flo>) 2.0)
+ (dp tab-growth-factor (<tab> => <flo>) 2.0)
  ;; When to grow or shrink (percentage of table size)
- (dp tab-growth-threshold (x|<tab> => <flo>) 0.8)
- (dp tab-shrink-threshold (x|<tab> => <flo>) 0.5)
+ (dp tab-growth-threshold (<tab> => <flo>) 0.8)
+ (dp tab-shrink-threshold (<tab> => <flo>) 0.5)
 )
 (dc <tab-vec> (<seq!>))
   ;; Number of filled and vacant elements
-  (dp %vacated (x|<tab-vec> => <int>) 0)
+  (dp %vacated (<tab-vec> => <int>) 0)
   ;; Modulus values for primary and secondary hash
-  (dp %primary-modulus (x|<tab-vec> => <int>))
-  (dp %secondary-modulus (x|<tab-vec> => <int>))
+  (dp %primary-modulus (<tab-vec> => <int>))
+  (dp %secondary-modulus (<tab-vec> => <int>))
   ;; Number of buckets and number of elements in each bucket
-  (dp %n-buckets (x|<tab-vec> => <int>))
-  (dp %bucket-depth (x|<tab-vec> => <int>))
+  (dp %n-buckets (<tab-vec> => <int>))
+  (dp %bucket-depth (<tab-vec> => <int>))
   ;; The actual table data representation
-  (dp %data (x|<tab-vec> => <rep>))
+  (dp %data (<tab-vec> => <rep>))
   ;; GC state
-  ;; (dp %gc-state (x|<tab-vec> => <any>))
+  ;; (dp %gc-state (<tab-vec> => <any>))
 
-(dp %count (x|<tab> => <int>) 0)
-(dp %vector (x|<tab> => <tab-vec>))
+(dp %count (<tab> => <int>) 0)
+(dp %vector (<tab> => <tab-vec>))
 
 (exported
  (dg tab-hash (x|<tab> => <fun>))
@@ -245,6 +245,9 @@
         ;; Table totally full???  That's not right
         (error "The table is totally full this shouldn't happen"))))
 
+(dm del (x|<tab> key => <tab>)
+  (del! (dup x) key))
+
 (dm del! (table|<tab> key => <tab>)
   (def test-function (key-test table))
   (def vector        (%vector table))
@@ -323,10 +326,10 @@
   (%count table))
 
 (dc <tab-enum> (<enum>))
-(dp @vec  (x|<tab-enum> => <tab-vec>))
-(dp @buc  (x|<tab-enum> => <int>))
-(dp @idx  (x|<tab-enum> => <int>))
-(dp @fin? (x|<tab-enum> => <log>) #f)
+(dp @vec  (<tab-enum> => <tab-vec>))
+(dp @buc  (<tab-enum> => <int>))
+(dp @idx  (<tab-enum> => <int>))
+(dp @fin? (<tab-enum> => <log>) #f)
 (dv $fin-enum (new <tab-enum> @fin? #t))
 
 (dm enum (table|<tab> => <tab-enum>)
@@ -530,7 +533,7 @@
   (set (elt c x) #t))
 
 (dm mem? (c|<set> x => <log>)
-  (elt-or c x #f))
+  (and (elt-or c x #f) #t))
 
 (dm elts (x|<col> keys|<seq> => <col>)
   (def res (fab <tab> (len keys)))

@@ -3,12 +3,12 @@
 (def <body>  <any>)
 
 ;; (def <fun> (isa <any>))
-;;   (dp fun-body (x|<fun> => <body>))
-;;   (dp fun-specs (x|<fun> => <specs>))
-;;   (dp fun-opts? (x|<fun> => <log>) #f)
+;;   (dp fun-body (<fun> => <body>))
+;;   (dp fun-specs (<fun> => <specs>))
+;;   (dp fun-opts? (<fun> => <log>) #f)
 
 ;; (def <met> (isa <fun>))
-;;   (dp fun-env (x|<met> => <env>))
+;;   (dp fun-env (<met> => <env>))
 
 (df fun-nreq (x|<fun> => <int>)
   (len (fun-specs x)))
@@ -19,7 +19,7 @@
 (def <mets> <lst>)
 
 ;; (def <gen> (isa <fun>))
-;;   (dp fun-mets (x|<gen> => <mets>) '())
+;;   (dp fun-mets (<gen> => <mets>) '())
 
 (df fab-gen (n|<int> mets|<mets> => <gen>)
   (def specs (fill! (fab <specs> n) <any>))

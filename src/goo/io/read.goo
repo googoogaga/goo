@@ -46,7 +46,7 @@
           form)))
 
 (dc <reader-token> (<any>))
-  (dp token-message (x|<reader-token> => <str>))
+  (dp token-message (<reader-token> => <str>))
 
 (dm make-reader-token (message => <any>)
   (new <reader-token> token-message message))

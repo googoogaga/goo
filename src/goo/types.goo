@@ -27,7 +27,7 @@
 
  ;; 3.9.3 PRODUCT
  (dc <product> (<type>))
- (dp type-elts (x|<product> => <tup>))
+ (dp type-elts (<product> => <tup>))
  (df t* (args|...))
 
  ;; 3.9.4 CLASSES

@@ -17,7 +17,7 @@
  (dg close (x|<port>))
  with-port
  (dc <in-port> (<port>))
- (dp port-line (x|<in-port> => <int>) 0)
+ (dp port-line (<in-port> => <int>) 0)
  (dg get (port|<in-port> => <chr>))
  (dg gets (port|<in-port>) => <str>)
  (dg peek (port|<in-port> => <chr>))
@@ -31,7 +31,7 @@
  
  (dc <file-port> (<port>)))
 
-(dp port-handle (x|<port> => <any>))
+(dp port-handle (<port> => <any>))
 
 (dm close (port|<port>) #f)
 
@@ -44,12 +44,12 @@
 
  (dc <str-port> (<port>)))
 
-(dp port-guts (x|<str-port> => <seq>) "")
+(dp port-guts (<str-port> => <seq>) "")
 
 (exported
  (dg port-contents (port|<str-port> => <str>))
  (dc <str-in-port> (<str-port> <in-port>))
- (dp port-index (x|<str-in-port> => <int>) 0)
+ (dp port-index (<str-in-port> => <int>) 0)
  (dc <str-out-port> (<str-port> <out-port>))
  port2str)
 

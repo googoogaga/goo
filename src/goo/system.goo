@@ -66,12 +66,13 @@
             (sub filename 0 (+ i 1))
             (loop (- i 1))))))
 
+(dl %default-goo-root)
 
 ;need to make this depend on external configuration
 (dv *goo-root*
   (let ((env-root (os-val "GOO_ROOT")))
     (if (empty? env-root)
-        "/usr/lib/goo/"
+        (%sb (%default-goo-root))
         env-root)))
 
 (dv *module-search-path*

@@ -7,7 +7,7 @@
 (dc <type>       (<any>))
 
 (dc <prototype>  (<type>))
-  (dp prototype-value (x|<prototype> => <any>))
+  (dp prototype-value (<prototype> => <any>))
 
 (dc <type-union> (<lst> <type>))
 

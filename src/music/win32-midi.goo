@@ -27,12 +27,12 @@
   (%velt *midi-devices* (%iu id)))
 
 (dc <win32-midi-device> (<midi-device>))
-  (dp midi-id (x|<win32-midi-device> => <int>))
-  (dp midi-out-open? (x|<win32-midi-device> => <log>) #f)
-  (dp midi-out-handle (x|<win32-midi-device> => <handle>))
-  (dp midi-in-open? (x|<win32-midi-device> => <log>) #f)
-  (dp midi-in-callback (x|<win32-midi-device> => <fun>))
-  (dp midi-in-handle (x|<win32-midi-device> => <handle>))
+  (dp midi-id (<win32-midi-device> => <int>))
+  (dp midi-out-open? (<win32-midi-device> => <log>) #f)
+  (dp midi-out-handle (<win32-midi-device> => <handle>))
+  (dp midi-in-open? (<win32-midi-device> => <log>) #f)
+  (dp midi-in-callback (<win32-midi-device> => <fun>))
+  (dp midi-in-handle (<win32-midi-device> => <handle>))
 
 (dm fab-midi-device (id|<int> => <win32-midi-device>)
   (or (elt-or *midi-devices* id #f)
@@ -40,7 +40,7 @@
            (new <win32-midi-device> midi-id id))))
 
 (dc <win32-midi-channel> (<midi-channel>))
-  (dp midi-number (x|<win32-midi-channel> => <int>))
+  (dp midi-number (<win32-midi-channel> => <int>))
 
 (dm fab-midi-channel (num|<int> => <midi-channel>)
   (new <win32-midi-channel> midi-number num))

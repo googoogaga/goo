@@ -26,8 +26,8 @@
 
  any? ;; (dg any? (f|<fun> x|<col> => <log>)) ;; in types
  (dg all? (f|<fun> x|<col> => <log>))
- (dg fold (combine|<fun> init|<any> x|<col> => <col>))
- (dg fold+ (combine|<fun> x|<col> => <col>))
+ (dg fold (combine|<fun> init|<any> x|<col> => <any>))
+ (dg fold+ (combine|<fun> x|<col> => <any>))
  (dg find-or (f|<fun> x|<col> default => <any>))
  (dg find (f|<fun> x|<col> => <any>))
  (dg del (x|<col> key|<any> => <col>))
@@ -129,13 +129,13 @@
     (or (fin? e)
         (and (test (now e)) (fnd (nxt e))))))
 
-(dm fold (combine|<fun> init c|<col> => <col>)
+(dm fold (combine|<fun> init c|<col> => <any>)
   (rep red ((res init) (e (enum c)))
     (if (fin? e)
         res
         (red (combine res (now e)) (nxt e)))))
 
-(dm fold+ (combine|<fun> c|<col> => <col>)
+(dm fold+ (combine|<fun> c|<col> => <any>)
   (def e    (enum c))
   (def init (now e))
   (rep red ((res init) (e (nxt e)))
@@ -159,9 +159,10 @@
   (def val (find-or f c $elt-default))
   (if (== val $elt-default) (range-error) val))
 
-;; required: del
+;;; (dm del (x|<col> key|<any> => <col>) ...)
 
-;; required: zap
+(dm zap (x|<col> => <col>)
+  (empty (object-class x)))
 
 (dm do (f|<fun> c|<col>)
   (rep lop ((e (enum c)))

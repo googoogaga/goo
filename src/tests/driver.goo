@@ -155,10 +155,9 @@
   (do (fun (tst)
         (when tst
           (msg out "Testing %=\n" tst)
-          (let (((tup errors warnings) 
-                  (run-tests-in (fun () (run-tests tst)))))
-                (set all-warnings (cat! all-warnings warnings))
-                (set all-errors   (cat! all-errors   errors)))))
+          (def (tup errors warnings) (run-tests-in (fun () (run-tests tst))))
+          (set all-warnings (cat! all-warnings warnings))
+          (set all-errors   (cat! all-errors   errors))))
       *tests*)
   (msg out "WARNING AND ERROR SUMMARY\n")
   (set *all-warnings* all-warnings)

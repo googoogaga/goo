@@ -4,11 +4,11 @@
 (def <props>   <lst>)
 
 ;; (def <traits> (isa <any>))
-;;   (dp proto-direct-parents (x|<traits> => <parents>) (empty <parents>))
-;;   (dp proto-direct-props (x|<traits> => <props>)     (empty <props>))
-;;   (dp proto-parents (x|<traits> => <parents>)        (empty <parents>))
-;;   (dp proto-props (x|<traits> => <props>)            (empty <props>))
-;;   (dp proto-owner (x|<traits> => <any>))
+;;   (dp proto-direct-parents (<traits> => <parents>) (empty <parents>))
+;;   (dp proto-direct-props (<traits> => <props>)     (empty <props>))
+;;   (dp proto-parents (<traits> => <parents>)        (empty <parents>))
+;;   (dp proto-props (<traits> => <props>)            (empty <props>))
+;;   (dp proto-owner (<traits> => <any>))
 
 (df traits-ordered-parents (o|<traits> => <parents>)
   (puts "in pop") (newline)
@@ -76,10 +76,10 @@
 ;;; props
 
 ;; (def <prop> (isa <any>))
-;;   (dp prop-name (x|<prop> => <sym>))
-;;   (dp prop-owner (x|<prop> => <any>))
-;;   (dp prop-init (x|<prop> => <fun>) (fun (x) nul))
-;;   (dp prop-type (x|<prop> => <any>))
+;;   (dp prop-name (<prop> => <sym>))
+;;   (dp prop-owner (<prop> => <any>))
+;;   (dp prop-init (<prop> => <fun>) (fun (x) nul))
+;;   (dp prop-type (<prop> => <any>))
 
 (df prop-offset (object name|<sym> => <int>)
   (def props (proto-props object))

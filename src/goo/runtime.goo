@@ -127,8 +127,8 @@
   (new cond-type))
 
 (dc <simple-condition> (<condition>))
-  (dp condition-message (x|<simple-condition> => <str>)   "")
-  (dp condition-arguments (x|<simple-condition> => <lst>) '())
+  (dp condition-message (<simple-condition> => <str>)   "")
+  (dp condition-arguments (<simple-condition> => <lst>) '())
 
 (dm describe-condition (c|<simple-condition> => <str>)
   (app msg-to-str (condition-message c) (condition-arguments c)))
@@ -172,8 +172,8 @@
   (msg-to-str "Anonymous restart of type %s" cond-type))
 
 (dc <incongruent-method-error> (<error>))
-  (dp incongruent-method-error-generic (x|<incongruent-method-error> => <gen>))
-  (dp incongruent-method-error-method (x|<incongruent-method-error> => <met>))
+  (dp incongruent-method-error-generic (<incongruent-method-error> => <gen>))
+  (dp incongruent-method-error-method (<incongruent-method-error> => <met>))
 
 (dm describe-condition (c|<incongruent-method-error> => <str>)
   (msg-to-str "Method %= incongruent with generic %=.\n"
@@ -209,8 +209,8 @@
 (dv $default-handler-info (new <handler-info>))
 
 (dc <simple-handler-info> (<handler-info>))
-  (dp handler-info-message (x|<simple-handler-info> => <str>))
-  (dp handler-info-arguments (x|<simple-handler-info> => <lst>) '())
+  (dp handler-info-message (<simple-handler-info> => <str>))
+  (dp handler-info-arguments (<simple-handler-info> => <lst>) '())
 
 (dm describe-handler (info|<simple-handler-info> condition-type => <str>)
   (app msg-to-str (handler-info-message info) (handler-info-arguments info)))
@@ -230,10 +230,10 @@
 (dv *current-handlers* '())
 
 (dc <handler> (<any>))
-  (dp handler-condition-type (x|<handler> => (t< <condition>)))
-  (dp handler-info (x|<handler> => <handler-info>))
-  (dp handler-test (x|<handler> => <fun>))
-  (dp handler-function (x|<handler> => <fun>))
+  (dp handler-condition-type (<handler> => (t< <condition>)))
+  (dp handler-info (<handler> => <handler-info>))
+  (dp handler-test (<handler> => <fun>))
+  (dp handler-function (<handler> => <fun>))
 
 (df fab-handler
     (type|(t< <condition>) info|<handler-info> test|<fun> f|<fun> => <handler>)
@@ -372,7 +372,7 @@
 ;;; LOCATIVES
 
 ;; (dc <loc> (<any>))
-;;   (dp loc-dat (x|<loc> => <any>))
+;;   (dp loc-dat (<loc> => <any>))
 
 (df loc-val (x|<loc> => <any>)
   (%loc-val x))

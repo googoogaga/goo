@@ -43,11 +43,11 @@
 (dv ast-<bot> (lst 'bot))
 
 (dc <program> (<any>))
-  (dp program-type (x|<program> => <any>))
-  (dp program-register (x|<program> => <any>) #f) ;; TODO: T? INT
+  (dp program-type (<program> => <any>))
+  (dp program-register (<program> => <any>) #f) ;; TODO: T? INT
 
 (dc <computed-program> (<program>))
-  (dp program-register (x|<computed-program> => <any>) #f) ;; TODO: T? INT
+  (dp program-register (<computed-program> => <any>) #f) ;; TODO: T? INT
 
 (dc <passive-program> (<program>))
 
@@ -56,21 +56,26 @@
 (dv <binding-name> <any>) ;; (type-union <sym> <int>)
 
 (dc <binding> (<any>))
-  (dp binding-name (x|<binding> => <binding-name>))
-  (dp binding-type (x|<binding> => <program>))
-  (dp binding-inferred-type (x|<binding> => <any>) ast-<bot>)
+  (dp binding-name (<binding> => <binding-name>))
+  (dp binding-mangled-name (<binding> => (t? <str>)) #f)
+  (dp binding-type (<binding> => <program>))
+  (dp binding-inferred-type (<binding> => <any>) ast-<bot>)
 
 ;; Global boxes are used by the interpreter to store the values of
 ;; global variables.
 (dc <global-box> (<any>))
-  (dp global-box-value (x|<global-box> => <any>) nul)
+  (dp global-box-value (<global-box> => <any>) nul)
 
 (dc <module-binding> (<binding> <dependable>))
   ;; The name of the module in which this binding is defined.
-  (dp binding-kind (x|<module-binding> => <any>) 'global)
-  (dp binding-module-name (x|<module-binding> => <sym>))
-  (dp binding-free? (x|<module-binding> => <log>) #f)
-  (dp binding-info (x|<module-binding> => <any>)  #f)
+  (dp binding-kind (<module-binding> => <any>) 'global)
+  (dp binding-module (<module-binding> => <any>) #f) ;; (t? <module>))
+  (dp binding-free? (<module-binding> => <log>) #f)
+  (dp binding-info (<module-binding> => <any>)  #f)
+
+(dm binding-module-name (b|<module-binding> => <sym>)
+  (def mod (binding-module b))
+  (if mod (module-name mod) $goo-boot-module-name))
 
 ;; TODO: GET RID OF ALIASES OR MAKE SEPARATE INFO OBJECT
 
@@ -91,18 +96,18 @@
   (binding-handler macro-binding))
 
 (dc <local-binding> (<binding>))
-  (dp binding-value (x|<local-binding> => <any>)           #f)
-  (dp binding-mutable? (x|<local-binding> => <any>)        #f)
-  (dp binding-dynamic-extent? (x|<local-binding> => <any>) #t)
-  (dp binding-dotted? (x|<local-binding> => <any>)         #f)
-  (dp binding-index (x|<local-binding> => <any>)           #f)
+  (dp binding-value (<local-binding> => <any>)           #f)
+  (dp binding-mutable? (<local-binding> => <any>)        #f)
+  (dp binding-dynamic-extent? (<local-binding> => <any>) #t)
+  (dp binding-dotted? (<local-binding> => <any>)         #f)
+  (dp binding-index (<local-binding> => <any>)           #f)
 
 ;; (dc <next-methods-binding> (<binding>))
 
 ;;; compile-time
 
 (dc <compile-time> (<computed-program>))
-  (dp compile-time-program (x|<compile-time> => <any>))
+  (dp compile-time-program (<compile-time> => <any>))
 
 ;;; references are programs.
 
@@ -113,12 +118,12 @@
 ;; DEAL WITH INITIALIZE
 
 (dc <real-reference> (<reference>))
-  (dp reference-binding (x|<real-reference> => <any>))
+  (dp reference-binding (<real-reference> => <any>))
 
 (dc <local-reference> (<real-reference>))
-  (dp reference-called-function? (x|<local-reference> => <any>) #f)
-  (dp reference-frame-number (x|<local-reference> => <int>))
-  (dp reference-frame-offset (x|<local-reference> => <int>))
+  (dp reference-called-function? (<local-reference> => <any>) #f)
+  (dp reference-frame-number (<local-reference> => <int>))
+  (dp reference-frame-offset (<local-reference> => <int>))
 
 ;; (dc <next-methods-reference> (<real-reference>))
 
@@ -131,16 +136,16 @@
 (dc <predefined-reference> (<real-reference>))
 
 (dc <bound?> (<computed-program>))
-  (dp bound?-reference (x|<bound?> => <any>))
+  (dp bound?-reference (<bound?> => <any>))
 
 (dc <assignment> (<computed-program>))
-  (dp assignment-form (x|<assignment> => <any>))
+  (dp assignment-form (<assignment> => <any>))
 
 (dc <local-assignment> (<assignment>))
-  (dp assignment-reference (x|<local-assignment> => <any>))
+  (dp assignment-reference (<local-assignment> => <any>))
 
 (dc <global-assignment> (<assignment>))
-  (dp assignment-binding (x|<global-assignment> => <any>))
+  (dp assignment-binding (<global-assignment> => <any>))
 
 (dc <runtime-assignment> (<global-assignment>))
 
@@ -161,18 +166,18 @@
 (dc <ast-macro-definition> (<definition>))
 
 (dc <ast-signature> (<computed-program>))
-  (dp signature-bindings (x|<ast-signature> => <any>) '())
-  (dp signature-names (x|<ast-signature> => <any>)    '())
-  (dp signature-specs (x|<ast-signature> => <any>)    '())
-  (dp signature-nary? (x|<ast-signature> => <any>)    #f)
-  (dp signature-arity (x|<ast-signature> => <any>)    #f)
-  (dp signature-value (x|<ast-signature> => <any>)    #f)
+  (dp signature-bindings (<ast-signature> => <any>) '())
+  (dp signature-names (<ast-signature> => <any>)    '())
+  (dp signature-specs (<ast-signature> => <any>)    '())
+  (dp signature-nary? (<ast-signature> => <any>)    #f)
+  (dp signature-arity (<ast-signature> => <any>)    #f)
+  (dp signature-value (<ast-signature> => <any>)    #f)
 
 (dc <ast-function> (<computed-program> <dependent>))
-  (dp function-binding (x|<ast-function> => <any>)    #f)
-  (dp function-debug-name (x|<ast-function> => <any>) #f)
-  ;;  (dp function-next-methods-binding (x|<ast-function> => <any>))
-  (dp function-signature (x|<ast-function> => <any>))
+  (dp function-binding (<ast-function> => <any>)    #f)
+  (dp function-debug-name (<ast-function> => <any>) #f)
+  ;;  (dp function-next-methods-binding (<ast-function> => <any>))
+  (dp function-signature (<ast-function> => <any>))
 
 (df function-bindings (x|<ast-function>) 
   (signature-bindings (function-signature x)))
@@ -228,18 +233,18 @@
 (ds (def-programs ,name) `(def-list ,name (<programs>)))
 
 (dc <ast-embodied-function> (<ast-function>))
-  (dp function-body (x|<ast-embodied-function> => <any>)            #f)
-  (dp function-index (x|<ast-embodied-function> => <any>)           0)
-  (dp function-temporaries (x|<ast-embodied-function> => <any>)     '())
-  (dp function-registers (x|<ast-embodied-function> => <any>)       '())
-  (dp function-data-refs (x|<ast-embodied-function> => <any>)       '())
-  (dp function-self-recursive? (x|<ast-embodied-function> => <any>) #f)
-  (dp function-source (x|<ast-embodied-function> => <any>)          #f)
+  (dp function-body (<ast-embodied-function> => <any>)            #f)
+  (dp function-index (<ast-embodied-function> => <any>)           0)
+  (dp function-temporaries (<ast-embodied-function> => <any>)     '())
+  (dp function-registers (<ast-embodied-function> => <any>)       '())
+  (dp function-data-refs (<ast-embodied-function> => <any>)       '())
+  (dp function-self-recursive? (<ast-embodied-function> => <any>) #f)
+  (dp function-source (<ast-embodied-function> => <any>)          #f)
 
 (def-programs free-environment)
 
 (dc <ast-method> (<ast-embodied-function>))
-  (dp function-free (x|<ast-method> => <free-environment>)
+  (dp function-free (<ast-method> => <free-environment>)
     (empty <free-environment>))
 
 (dm function-kind (x|<ast-method>) "MET")
@@ -253,81 +258,81 @@
 (dm function-kind (x|<ast-generic>) "GEN")
 
 (dc <alternative> (<computed-program>))
-  (dp alternative-condition (x|<alternative> => <any>))
-  (dp alternative-consequent (x|<alternative> => <any>))
-  (dp alternative-alternant (x|<alternative> => <any>))
+  (dp alternative-condition (<alternative> => <any>))
+  (dp alternative-consequent (<alternative> => <any>))
+  (dp alternative-alternant (<alternative> => <any>))
 
 (def-programs sequential)
 
 (dc <constant> (<passive-program>))
-  (dp constant-value (x|<constant> => <any>))
-  (dp constant-index (x|<constant> => <any>))
+  (dp constant-value (<constant> => <any>))
+  (dp constant-index (<constant> => <any>))
 
 (dc <raw-constant> (<constant>))
 
 (dc <immediate-constant> (<constant>))
 
 (dc <application> (<computed-program>))
-  (dp application-arguments (x|<application> => <any>))
-  (dp application-tail? (x|<application> => <any>) #f)
+  (dp application-arguments (<application> => <any>))
+  (dp application-tail? (<application> => <any>) #f)
 
 (dc <regular-application> (<application>))
-  (dp application-function (x|<regular-application> => <any>))
-  (dp application-known? (x|<regular-application> => <any>) #f)
+  (dp application-function (<regular-application> => <any>))
+  (dp application-known? (<regular-application> => <any>) #f)
 
 (dc <method-application> (<regular-application>))
-  (dp application-next-methods (x|<method-application> => <any>))
+  (dp application-next-methods (<method-application> => <any>))
 
 (dc <predefined-application> (<application>))
-  (dp application-binding (x|<predefined-application> => <any>))
+  (dp application-binding (<predefined-application> => <any>))
 
 (dc <fix-let> (<computed-program>))
-  (dp fix-let-bindings (x|<fix-let> => <any>))
-  (dp fix-let-types (x|<fix-let> => <any>))
-  (dp fix-let-arguments (x|<fix-let> => <any>))
-  (dp fix-let-body (x|<fix-let> => <any>))
+  (dp fix-let-bindings (<fix-let> => <any>))
+  (dp fix-let-types (<fix-let> => <any>))
+  (dp fix-let-arguments (<fix-let> => <any>))
+  (dp fix-let-body (<fix-let> => <any>))
 
 (def-programs fab-list)
 
 (def-programs arguments)
 
 (dc <locals> (<computed-program>))
-  (dp locals-bindings (x|<locals> => <any>))
-  (dp locals-functions (x|<locals> => <any>))
-  (dp locals-body (x|<locals> => <any>))
+  (dp locals-bindings (<locals> => <any>))
+  (dp locals-functions (<locals> => <any>))
+  (dp locals-body (<locals> => <any>))
 
 (dc <bind-exit> (<computed-program>))
-  (dp bind-exit-main-fun (x|<bind-exit> => <any>))
+  (dp bind-exit-main-fun (<bind-exit> => <any>))
 
 (dc <unwind-protect> (<computed-program>))
-  (dp unwind-protect-protected-thunk (x|<unwind-protect> => <any>))
-  (dp unwind-protect-cleanup-thunk (x|<unwind-protect> => <any>))
+  (dp unwind-protect-protected-thunk (<unwind-protect> => <any>))
+  (dp unwind-protect-cleanup-thunk (<unwind-protect> => <any>))
 
 (dc <monitor> (<computed-program>))
-  (dp monitor-type (x|<monitor> => <any>))
-  (dp monitor-info (x|<monitor> => <any>))
-  (dp monitor-test (x|<monitor> => <any>))
-  (dp monitor-handler (x|<monitor> => <any>))
-  (dp monitor-main-thunk (x|<monitor> => <any>))
+  (dp monitor-type (<monitor> => <any>))
+  (dp monitor-info (<monitor> => <any>))
+  (dp monitor-test (<monitor> => <any>))
+  (dp monitor-handler (<monitor> => <any>))
+  (dp monitor-main-thunk (<monitor> => <any>))
 
 ;;; ENVIRONMENT
 
 (dc <static-environment> (<any>))
-  (dp environment-next (x|<static-environment> => <any>) #f)
-  (dp environment-bindings (x|<static-environment> => <col>))
+  (dp environment-next (<static-environment> => <any>) #f)
+  (dp environment-bindings (<static-environment> => <col>))
 
 (dc <static-global-environment> (<static-environment>))
   ;; The module associated with this environment.
-  (dp environment-module (x|<static-global-environment> => <any>)) ;<module>
+  (dp environment-module (<static-global-environment> => <any>)) ;<module>
   ;; The module-loader which should be used to load new modules for
   ;; use by this environment.
-  (dp environment-module-loader (x|<static-global-environment> => <any>)) ;<module-loader>
+  (dp environment-module-loader (<static-global-environment> => <any>)) ;<module-loader>
   ;; The modules used by this environment.
-  (dp environment-uses-modules (x|<static-global-environment> => <vec>)
+  (dp environment-uses-modules (<static-global-environment> => <vec>)
         (fab <vec> 0))
   ;; Does this environment allow cross-module resolution of symbols
   ;; of the form 'foo::bar'?
-  (dp environment-allows-foreign-names? (x|<static-global-environment> => <log>)
+  (dp environment-allows-foreign-names? (<static-global-environment> => <log>)
         #f)
 
 (dc <static-empty-environment> (<static-environment>))
@@ -495,21 +500,24 @@
            (if (empty? e*)
                (lst 'quote '())
                (lst '%pair (head e*) (pack-nary-args (tail e*)))))
-        (gather-arguments (e* v*)
-          (if (binding-dotted? (head v*))
-              (arguments (objectify (pack-nary-args e*) r #f) 
-                         (empty <arguments>))
+        (pack-args (e* v* t*)
+          (def var (head v*))
+          (if (binding-dotted? var)
+              (let ((lst-type (objectify '<lst> r #f)))
+                (set (binding-dotted? var) #f)
+                (set (binding-type var)    lst-type)
+                (set (head t*)             lst-type)
+                (arguments 
+                 (objectify (pack-nary-args e*) r #f) (empty <arguments>)))
               (if (empty? e*)
                   (objectify-error "incorrect dotted arity" f e*)
-                  (arguments 
-                   (head e*) (gather-arguments (tail e*) (tail v*)))))))
+                  (arguments (head e*) (pack-args (tail e*) (tail v*) (tail t*)))))))
    (def v* (function-bindings f))
    (def o  (new <fix-let> 
              fix-let-bindings  v*
              fix-let-types     (function-specs f)
-             fix-let-arguments (gather-arguments e* v*)
+             fix-let-arguments (pack-args e* v* (function-specs f))
              fix-let-body      (function-body f)))
-   (set (binding-dotted? (last v*)) #f)
    o))
  
 (dm convert2arguments (e*|<lst> => <any>)
@@ -601,13 +609,13 @@
           (invalidate-dependents existing-binding $all-dependency-types)
           (update-binding-kind existing-binding kind)
           existing-binding)
-        (let ((mod-name (module-name (find-environment-module r)))
+        (let ((mod (find-environment-module r))
               (binding 
                (new <module-binding> 
-                 binding-kind        kind
-                 binding-name        name
-                 binding-free?       #f
-                 binding-module-name mod-name)))
+                 binding-kind   kind
+                 binding-name   name
+                 binding-free?  #f
+                 binding-module mod)))
           (insert-global! binding gr)
           binding)))
     binding)
@@ -853,11 +861,10 @@
            (foreign-name? name))
       (objectify-foreign-reference name r)
       (let ((b (new <module-binding>
-                  binding-free? #t
-                  binding-kind  'global
-                  binding-name  name
-                  binding-module-name
-                  (module-name (find-environment-module r)))))
+                  binding-free?  #t
+                  binding-kind   'global
+                  binding-name   name
+                  binding-module (find-environment-module r))))
         (insert-global! b gr)
         (new <global-reference> reference-binding b))))
 
@@ -1113,11 +1120,11 @@
         (sexpr-name   (cat-sym "$sexpr-" name "-tag")))
     `(seq (dv ,special-name
             (new <module-binding>
-              binding-kind        'magic
-              binding-name        ,sexpr-name
-              binding-module-name $goo-boot-module-name
-              binding-handler     (fun (,@params) ,@body)
-              binding-free?       #f))
+              binding-kind    'magic
+              binding-name    ,sexpr-name
+              binding-module  #f
+              binding-handler (fun (,@params) ,@body)
+              binding-free?   #f))
           (register-magic-binding ',name ,special-name))))
 
 (define-magic-binding if (x r tail?)
@@ -1332,8 +1339,8 @@
 ;;;;  compilation fails, it is rolled back.
 
 (dc <transaction> (<any>))
-  (dp transaction-implemented-bindings (x|<transaction> => <tab>) (fab <tab> 10))
-  (dp transaction-dependents (x|<transaction> => <tab>) (fab <tab> 10))
+  (dp transaction-implemented-bindings (<transaction> => <tab>) (fab <tab> 10))
+  (dp transaction-dependents (<transaction> => <tab>) (fab <tab> 10))
 
 (dv *current-subtransaction* #f)
 
@@ -1428,23 +1435,25 @@
 (dc <module-loader> (<any>))
   ;; A map from module names (represented as symbols) to
   ;; <module> objects.
-  (dp module-loader-modules (x|<module-loader> => <tab>) (fab <tab> 1000))
+  (dp module-loader-modules (<module-loader> => <tab>) (fab <tab> 1000))
   ;; A stack of all the names of modules currently being loaded.
   ;; We use this to catch circular dependencies.
-  (dp module-loader-stack (x|<module-loader> => <lst>) '())
+  (dp module-loader-stack (<module-loader> => <lst>) '())
 
 (export <module-loader>)
 
 (dc <module> (<any>))
-  (dp module-name (x|<module> => <sym>))
+  (dp module-name (<module> => <sym>))
+  (dp module-mangled-name (<module> => (t? <str>)) #f)
+  (dp module-mangled-string-name (<module> => (t? <str>)) #f)
   ;; The environments associated with this module.
-  (dp module-target-environment (x|<module> => <static-global-environment>))
-  (dp module-syntax-environment (x|<module> => <static-global-environment>))
+  (dp module-target-environment (<module> => <static-global-environment>))
+  (dp module-syntax-environment (<module> => <static-global-environment>))
   ;; The bindings exported by this module.
-  (dp %module-exports (x|<module> => <tab>)            (fab <tab> 1000))
-  (dp module-data-processed? (x|<module> => <log>)     #t)
-  (dp module-runtime-data (x|<module> => <any>)        #f)
-  (dp module-transaction (x|<module> => <transaction>) (new <transaction>))
+  (dp %module-exports (<module> => <tab>)            (fab <tab> 1000))
+  (dp module-data-processed? (<module> => <log>)     #t)
+  (dp module-runtime-data (<module> => <any>)        #f)
+  (dp module-transaction (<module> => <transaction>) (new <transaction>))
 
 (dv module-exports-setter %module-exports-setter)
 (dm module-exports (x|<module> => <tab>)
@@ -1767,11 +1776,11 @@
 
 (df reloader-do-runtime-binding (mod|<module> name|<str> loc|<loc>)
   (def binding (new <module-binding>
-                 binding-kind        'runtime
-                 binding-module-name (module-name mod)
-                 binding-name        (as <sym> name)
-                 binding-free?       #f
-                 binding-locative    loc))
+                 binding-kind     'runtime
+                 binding-module   mod
+                 binding-name     (as <sym> name)
+                 binding-free?    #f
+                 binding-locative loc))
   (insert-global! binding (module-target-environment mod)))
 
 ;;; We create all non-runtime bindings with type 'global', so we have
@@ -1780,10 +1789,10 @@
 ;;; their types using ast-define-binding.
 (df reloader-do-other-binding (mod|<module> name|<str>)
   (def binding (new <module-binding>
-                 binding-kind        'predefined;; HACK: JB
-                 binding-module-name (module-name mod)
-                 binding-name        (as <sym> name)
-                 binding-free?       #t))
+                 binding-kind   'predefined;; HACK: JB
+                 binding-module mod
+                 binding-name   (as <sym> name)
+                 binding-free?  #t))
   (insert-global! binding (module-target-environment mod)))
 
 (df reloader-do-export (mod|<module> name|<str> as-name|<str>)
@@ -1953,6 +1962,7 @@
   <module-binding>
   module-binding
   binding-kind
+  binding-mangled-name binding-mangled-name-setter
   binding-dynamic-extent?
   binding-dynamic-extent?-setter
   binding-index
@@ -1961,6 +1971,7 @@
   binding-global-box-setter
   binding-locative
   binding-module-name
+  binding-module
   binding-mutable?
   binding-name
   binding-type
@@ -2042,6 +2053,8 @@
   locals-functions-setter
   %%macro
   module-name
+  module-mangled-name module-mangled-name-setter
+  module-mangled-string-name module-mangled-string-name-setter
   module-exports
   <monitor>
   monitor-handler

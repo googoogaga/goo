@@ -20,10 +20,10 @@
 )
 
 ;; TODO: FEWER PROPS
-(dp range-from (x|<range> =>  <num>)     0)
-(dp range-in?  (x|<range> =>  <fun>)     <) 
-(dp range-lim  (x|<range> => (t? <num>)) #f) 
-(dp range-nxt  (x|<range> => <fun>)      1+) 
+(dp range-from (<range> =>  <num>)     0)
+(dp range-in?  (<range> =>  <fun>)     <) 
+(dp range-lim  (<range> => (t? <num>)) #f) 
+(dp range-nxt  (<range> => <fun>)      1+) 
 
 (dm fab ((c (t= <range>)) s|<int> => <range>)
   (range 0 < s 1+))
@@ -44,8 +44,8 @@
   (as <lst> x))
 
 (dc <range-enum> (<enum>))
-(dp %dat (x|<range-enum> => <range>))
-(dp %val (x|<range-enum> => <num>))
+(dp %dat (<range-enum> => <range>))
+(dp %val (<range-enum> => <num>))
 
 (dm enum (x|<range> => <range-enum>) 
   (new <range-enum> %dat x %val (range-from x)))

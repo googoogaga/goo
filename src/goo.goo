@@ -65,11 +65,11 @@
  <loc> loc-val loc-val-setter address-of
  
  ;; Section 3.7: Collections.
- <col> <col.> len elt elt-or  elts low-elt
- empty? empty elt-default elt-type key-type key-test fab fabs fill into any?
+ <col> <col.> len elt elt-or elts low-elt dup as-copy
+ empty? empty elt-default elt-type key-type key-test fab fabs fill any?
  all? fold fold+ find find-or del zap do do2 map map2 do-keyed
- map-keyed mem? keys items zap
- <col!> del! add! zap! fill!
+ map-keyed mem? keys items zap find find-or 
+ <col!> del! add! zap! fill! into
  elt-setter low-elt-setter len-setter len/fill-setter 
  ;; 3.7.1: Iteration protocol.
  <enum> enum fin? nxt now now-setter now-key
@@ -80,9 +80,9 @@
  <str-tab> case-insensitive-string-hash case-insensitive-string-equal
  <set>
  ;; 3.7.3: Sequences.
- <seq> <seq.> add 1st 2nd 3rd last pos find rev cat cat2 sub 
- pick reject del-vals del-dups
- <seq!>  add! rev! cat! sub-setter
+ <seq> <seq.> add 1st 2nd 3rd last pos rev cat cat2 sub push pop
+ pick reject ins del-vals del-dups finds sort sort-by
+ <seq!>  add! rev! cat! sub-setter push! pop! del-vals! del-dups! sort! sort-by!
  ;; 3.7.4 Tuples.
  <tup> tup
  ;; 3.7.5 (the first one): Lists.
@@ -96,6 +96,8 @@
  <range> range range-by from below
  ;; 3.7.7: Steps.
  <step> first-then
+ <zip> zip unzip
+ <cycle> cycle
  
  ;; Section 3.8: Symbols.
  <sym> as cat-sym gensym fab-setter-name var-name var-type

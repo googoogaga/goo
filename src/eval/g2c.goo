@@ -37,12 +37,12 @@
 ;;;;  processing modules.
 
 (dc <g2c-module-loader> (<module-loader>))
-  (dp module-loader-appname (x|<g2c-module-loader> => <str>))
-  (dp module-loader-app-modname (x|<g2c-module-loader> => <sym>))
+  (dp module-loader-appname (<g2c-module-loader> => <str>))
+  (dp module-loader-app-modname (<g2c-module-loader> => <sym>))
 
 (dc <g2c-module> (<module>))
-  (dp module-src-file (x|<g2c-module> => <str>))
-  (dp module-mtime (x|<g2c-module> => <flo>))
+  (dp module-src-file (<g2c-module> => <str>))
+  (dp module-mtime (<g2c-module> => <flo>))
 
 (dm module-loader-module-type (loader|<g2c-module-loader> => <type>)
   <g2c-module>)
@@ -265,7 +265,7 @@
     (def name (binding-name gb))
     (msg* code-out "%s(%s,\"%s\",\"%s\");\n" 
           (if imported? "EXT" "DEF")
-          (mangle-module-binding gb)
+          (mangle-binding gb)
           (mangle-string-literal (binding-module-name gb))
           (mangle-string-literal name))))
 
@@ -328,7 +328,7 @@
   (rep loop ((i 0))
     (if (= i len)
         (char-buffer-as-string *mangle-buffer*)
-        (let ((c (elt str i))
+        (let ((c   (elt str i))
               (enc (elt $c-escapes (as <int> c))))
           (if (= enc #f)
               (add! *mangle-buffer* c)
@@ -376,7 +376,8 @@
 
 (df mangle-name-into (buf|<vec> name|<str>)
   (for ((c name))
-    (add! buf (elt $name-mangler-table (as <int> (to-lower c))))))
+    (add! buf (elt $name-mangler-table (as <int> (to-lower c)))))
+  buf)
 
 (dm mangle-raw-name (name|<str> => <str>)
   (mangler-reset *mangle-buffer*)
@@ -395,38 +396,72 @@
 (dm mangle-local-name (name|<sym> => <str>)
   (mangle-local-name (as <str> name)))
 
+;; TODO: ONCE-ONLY
+;; TODO: MOVE TO MACROS
+(ds (or/set ,place ,value)
+  `(or ,place (set ,place ,value)))
 
-(dm mangle-global-name (modname|<sym> name|<str> => <str>)
+;; TODO: GO AWAY
+(df buf-cat2! (buf|<vec> name|<str>)
+  (def len (len name))
+  (rep loop ((i 0))
+    (when (< i len)
+      (add! buf (low-elt name i))
+      (loop (+ i 1)))))
+
+(dm mangle-module-into (buf|<vec> mod|<module>)
+  (let ((name (or/set (module-mangled-name mod)
+                      (char-buffer-as-string 
+                       (mangle-name-into
+                        (fab <vec> 0) (as <str> (module-name mod)))))))
+    (buf-cat2! buf name)))
+
+(dm mangle-global-name (mod name|<str> => <str>)
   (mangler-reset *mangle-buffer*)
   ;; Keep internal names as short as possible.
-  (unless (== modname $goo-boot-module-name)
+  (unless (or (== mod $goo-boot-module-name) 
+              (== (module-name mod) $goo-boot-module-name))
     (add! *mangle-buffer* $module-marker)
-    (mangle-name-into *mangle-buffer* (as <str> modname)))
+    (mangle-module-into *mangle-buffer* mod))
   (add! *mangle-buffer* $module-marker)
   (mangle-name-into *mangle-buffer* name)
   (char-buffer-as-string *mangle-buffer*))
 
-(dm mangle-global-name (modname|<sym> name|<sym> => <str>)
-  (mangle-global-name modname (as <str> name)))
+(dm mangle-global-name (mod name|<sym> => <str>)
+  (mangle-global-name mod (as <str> name)))
 
 ;; Mangle a name which is defined in boot.goo.
 ;; Be sure to provide a matching EXT declaration in grt.h.
-(dm mangle-boot-name (name => <str>)
+(df mangle-boot-name (name)
   (mangle-global-name $goo-boot-module-name name))
 
-(dm mangle-module-binding (binding|<module-binding> => <str>)
-  (mangle-global-name (binding-module-name binding)
-                      (binding-name binding)))
+(df mangle-quotation-name (name|<int>)
+  (mangler-reset *mangle-buffer*)
+  (buf-cat2! *mangle-buffer* "lit_")
+  (buf-cat2! *mangle-buffer* (mangle-integer name))
+  (char-buffer-as-string *mangle-buffer*))
 
-(dm mangle-local-marked-name (name|<str> marker|<int> => <str>)
+(dm mangle-binding (binding|<module-binding>)
+  (or/set (binding-mangled-name binding)
+          (if (== (binding-kind binding) 'quotation)
+              (mangle-quotation-name (binding-name binding))
+              (mangle-global-name (binding-module binding) (binding-name binding)))))
+
+(df mangle-local-marked-name (name|<str> marker|<int>)
   (mangler-reset *mangle-buffer*)
   (mangle-name-into *mangle-buffer* name)
   (add! *mangle-buffer* $hygiene-char)
-  (cat! *mangle-buffer* (mangle-integer marker))
+  (buf-cat2! *mangle-buffer* (mangle-integer marker))
   (char-buffer-as-string *mangle-buffer*))
 
-(dm mangle-local-marked-name (name|<sym> marker|<int> => <str>)
-  (mangle-local-marked-name (as <str> name) marker))
+(dm mangle-binding (binding|<local-binding>)
+  (or/set (binding-mangled-name binding)
+          (mangle-local-name (binding-name binding))))
+
+(dm mangle-binding (binding|<renamed-local-binding>)
+  (or/set (binding-mangled-name binding)
+          (mangle-local-marked-name 
+           (as <str> (binding-name binding)) (binding-index binding))))
 
 ;;; EMISSION
 
@@ -556,21 +591,23 @@
 
 ;;; GENERATE THE NAME USED IN C FOR A BINDING.
 
-(dg binding->c (binding code-out))
+(df binding->c (binding code-out)
+  (puts code-out (mangle-binding binding)))
 
-(dm binding->c (binding|<module-binding> code-out)
-  (if (== (binding-kind binding) 'quotation)
-      (msg* code-out "lit_%s" (binding-name binding))
-      (puts code-out (mangle-module-binding binding))))
-
-(dm binding->c (binding|<local-binding> code-out)
-  (puts code-out (mangle-local-name (binding-name binding))))
-
-;; TODO: USE MANGLER FOR THIS
-(dm binding->c (binding|<renamed-local-binding> code-out)
-  (puts code-out
-    (mangle-local-marked-name 
-     (binding-name binding) (binding-index binding))))
+;; (dm binding->c (binding|<module-binding> code-out)
+;;   (if (== (binding-kind binding) 'quotation)
+;;       (msg* code-out "lit_%s" (binding-name binding))
+;;       (puts code-out (mangle-module-binding binding))))
+;; 
+;; (dm binding->c (binding|<local-binding> code-out)
+;;   (puts code-out (mangle-local-name (binding-name binding))))
+;; 
+;; (dm binding->c (binding|<renamed-local-binding> code-out)
+;;   (puts code-out
+;;     (mangle-local-marked-name (binding-name binding) (binding-index binding))))
+;; 
+;; (dm binding->c (binding|<local-binding> code-out)
+;;   (puts code-out (mangle-local-binding binding)))
 
 ;;; WORKS FOR LOCAL- GLOBAL- PREDEFINED- REFERENCES EXCEPT FOR FREE-REFERENCES.
 
@@ -784,7 +821,7 @@
         (for ((arg (application-arguments e)))
           (to-c arg f d code-out))
         (with-expression (e d code-out)
-          (msg* code-out "(P)%s" (mangle-module-binding (application-binding e)))
+          (msg* code-out "(P)%s" (mangle-binding (application-binding e)))
           (between-parentheses (code-out)
             (for-commas code-out ((arg (application-arguments e)))
               (gen-ref arg code-out)))))))
@@ -898,7 +935,7 @@
 (dm generate-function-forward (code-out defn|<ast-primitive>)
   (msg* code-out "%s P %s (" 
         (if *dynamic-linking?* "static" "extern")
-        (mangle-module-binding (function-binding defn)))
+        (mangle-binding (function-binding defn)))
   (for-commas code-out ((i (below (len (function-bindings defn)))))
     (puts code-out "P"))
   (puts code-out ");\n"))
@@ -907,7 +944,7 @@
   (def name (function-binding defn))
   (if (and (isa? name <module-binding>) 
            (mem? '(global runtime) (binding-kind name)))
-      (puts code-out (mangle-module-binding name))
+      (puts code-out (mangle-binding name))
       ;; (msg-out "UNNAMED %=\n" defn)
       (if (== name #f)
           (msg* code-out "fun_%s" (function-index defn))
@@ -1138,7 +1175,7 @@
        (if (== (binding-kind binding) 'global)
            (msg* code-out "  {\"%s\", &%s},\n"
                  (mangle-string-literal (binding-name binding))
-                 (mangle-module-binding binding))
+                 (mangle-binding binding))
            (msg* code-out "  {\"%s\", NULL},\n"
                  (mangle-string-literal (binding-name binding))))))
    (module-target-environment mod))

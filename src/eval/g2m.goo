@@ -87,8 +87,8 @@
 ;;         (value-index probe)))
 
 (dc <link-reference> (<reference>))
-  (dp reference-index (x|<link-reference> => <any>))
-  (dp constant-value (x|<link-reference> => <any>))
+  (dp reference-index (<link-reference> => <any>))
+  (dp constant-value (<link-reference> => <any>))
 
 (dm asm-extract! (o|<constant> f|<ast-function>)
   (def value (constant-value o))
@@ -100,18 +100,18 @@
     constant-value  (constant-value o)))
 
 (dc <cell-link> (<computed-program>))
-  (dp cell-binding (x|<cell-link> => <any>))
-  (dp cell-index (x|<cell-link> => <int>))
+  (dp cell-binding (<cell-link> => <any>))
+  (dp cell-index (<cell-link> => <int>))
 
 (dc <cell-reference> (<reference>))
-  (dp reference-index (x|<cell-reference> => <any>))
-  (dp reference-binding (x|<cell-reference> => <any>))
+  (dp reference-index (<cell-reference> => <any>))
+  (dp reference-binding (<cell-reference> => <any>))
 
 (dm unconstrained-type? (o|<cell-reference> => <log>)
   (unconstrained-type? (reference-binding o)))
 
 (dc <cell-assignment> (<assignment>))
-  (dp assignment-index (x|<cell-assignment> => <any>))
+  (dp assignment-index (<cell-assignment> => <any>))
 
 (dm asm-extract! (o|<module-binding-reference> f|<ast-function>)
   (def binding (reference-binding o))

@@ -226,6 +226,11 @@
   (do (fun (t) (put port #\space) (write-type port t)) (type-elts x))
   (puts port "}"))
 
+(dm recurring-write (port|<out-port> x|<product> d|<int> recur|<fun>)
+  (puts port "#{T*")
+  (do (fun (t) (put port #\space) (write-type port t)) (type-elts x))
+  (puts port "}"))
+
 (dm recurring-write-type (port|<out-port> x|<class> d|<int> recur|<fun>)
   (puts port (as <str> (class-name x))))
 

@@ -15,16 +15,16 @@
 
 ;;;;!! Implementation
 
-(dp step-first (x|<step> => <fun>))
-(dp step-then (x|<step> => <fun>))
+(dp step-first (<step> => <fun>))
+(dp step-then (<step> => <fun>))
 
 ;;;; Collection iteration protocol
 (dm first-then (first|<fun> then|<fun> => <step>)
   (new <step> step-first first step-then then))
 
 (dc <step-enum> (<enum>))
-(dp %dat (x|<step-enum> => <step>))
-(dp %first? (x|<step-enum> => <log>) #t)
+(dp %dat (<step-enum> => <step>))
+(dp %first? (<step-enum> => <log>) #t)
 (dm enum (x|<step> => <step-enum>) 
   (new <step-enum> %dat x))
 (dm fin? (e|<step-enum> => <log>)

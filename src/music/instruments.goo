@@ -12,10 +12,10 @@
 (dv $percussion-channel 9)
 
 (dc <tone> (<any>))
-  (dp tone-name (x|<tone> => <sym>))
-  (dp tone-key (x|<tone> => <chr>))
-  (dp tone-channel (x|<tone> => <int>) $percussion-channel)
-  (dp tone-pitch (x|<tone> => <int>))
+  (dp tone-name (<tone> => <sym>))
+  (dp tone-key (<tone> => <chr>))
+  (dp tone-channel (<tone> => <int>) $percussion-channel)
+  (dp tone-pitch (<tone> => <int>))
 
 (dv $zero-tone-key #\+)
 (dv $std-tone-map
@@ -24,9 +24,9 @@
 ;;; INSTRUMENT
 
 (dc <instrument> (<any>))
-  (dp instrument-name (x|<instrument> => <sym>))
-  (dp instrument-version (x|<instrument> => <int>))
-  (dp instrument-tone-map (x|<instrument> => <tone-map>) $std-tone-map)
+  (dp instrument-name (<instrument> => <sym>))
+  (dp instrument-version (<instrument> => <int>))
+  (dp instrument-tone-map (<instrument> => <tone-map>) $std-tone-map)
 
 ;;; INSTRUMENTS
 

@@ -19,12 +19,16 @@
 ;; NEEDED FOR FAB-INTO
 (dm fab-elt-setter (value c|<col!> key => <any>)
   (set (elt c key) value))
+
 (dm low-elt-setter (value c|<col!> key => <any>)
   (set (elt c key) value))
 
-;; TODO: REMOVE
-(dm add! (c|<col!> x => <col!>)
-  (add c x))
+;; TODO: REMOVE PERHAPS?
+(dm add! (c|<col!> x => <col!>) (add c x))
+
+(dm del! (c|<col!> x => <col!>) (del c x))
+
+(dm zap! (c|<col!> => <col!>) (zap c))
 
 (dm fill! (dst|<col!> val => <col!>)
   (rep in ((ds (enum dst)))

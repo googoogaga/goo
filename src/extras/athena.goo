@@ -11,14 +11,14 @@
 (dv *tab* (fab <tab> 100))
 
 (dc <param> (<any>))
-(dp param-name (x|<param> => <sym>))
-(dp param-binding (x|<param> => <sym>))
+(dp param-name (<param> => <sym>))
+(dp param-binding (<param> => <sym>))
 
 (dc <sort> (<any>))
-(dp sort-name (x|<sort> => <sym>))
-(dp sort-params (x|<sort> => <lst>) '())
-(dp sort-objs (x|<sort> => <lst>) '())
-(dp sort-lams (x|<sort> => <lst>) '())
+(dp sort-name (<sort> => <sym>))
+(dp sort-params (<sort> => <lst>) '())
+(dp sort-objs (<sort> => <lst>) '())
+(dp sort-lams (<sort> => <lst>) '())
 
 (dc <polysort> (<sort>))
 
@@ -44,17 +44,17 @@
              (reg-sort ,spec))))
 
 (dc <spec> (<any>))
-(dp spec-params (x|<spec> => <lst>))
-(dp spec-polys (x|<spec> => <lst>))
-(dp spec-value (x|<spec> =>  <sort>))
+(dp spec-params (<spec> => <lst>))
+(dp spec-polys (<spec> => <lst>))
+(dp spec-value (<spec> =>  <sort>))
 
 (dm fab-spec (polys|<lst> params|<lst> val|<sort> => <spec>)
   (new <spec> 
     spec-polys polys spec-params params spec-value val))
 
 (dc <lam> (<any>))
-(dp lam-name (x|<lam> => <sym>))
-(dp lam-spec (x|<lam> => <spec>))
+(dp lam-name (<lam> => <sym>))
+(dp lam-spec (<lam> => <spec>))
 
 (dm fab-lam (name|<sym> polys|<lst> params|<lst> val|<sort>)
   (def spec (fab-spec polys params val))
@@ -64,8 +64,8 @@
   (set (elt *tab* (lam-name lam)) lam))
 
 (dc <obj> (<any>))
-(dp obj-name (x|<obj> => <sym>))
-(dp obj-sort (x|<obj> => <sort>))
+(dp obj-name (<obj> => <sym>))
+(dp obj-sort (<obj> => <sort>))
 
 (dm reg-obj (obj|<obj>)
   (set (elt *tab* (obj-name obj)) obj))

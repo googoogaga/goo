@@ -6,6 +6,7 @@
 (use eval/ast)
 (use eval/top)
 (use eval/g2c)
+;; (use tests)
 ;; (use eval/decision-trees)
 ;; (use tests)
 ;; (use beatbox)
@@ -17,7 +18,7 @@
 ;; Make sure the goo/user module gets compiled into our image.
 (use goo/user)
 
-(dv *goo-version* "0.124")
+(dv *goo-version* "0.125")
 (dv *goo-date*    "MAR 27, 2002")
 
 (msg out ";;; GOO\n")

@@ -12,8 +12,8 @@
 (dl %event-wait)
 
 (dc <event> (<any>))
-  (dp event-name (x|<event> => (t? <sym>)) #f)
-  (dp vent-handle (x|<event> =>)
+  (dp event-name (<event> => (t? <sym>)) #f)
+  (dp vent-handle (<event> =>)
 
 (df fab-event (name|<sym>)
   (def event (new <event> event-name name))

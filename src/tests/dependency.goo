@@ -16,9 +16,9 @@
             #t)))
 
 (dc <test-dependent> (<dependent>))
-  (dp last-invalidation (x|<test-dependent> => <dependency-type>)
+  (dp last-invalidation (<test-dependent> => <dependency-type>)
     $empty-dependency)
-  (dp invalidation-count (x|<test-dependent> => <int>) 
+  (dp invalidation-count (<test-dependent> => <int>) 
     0)
 
 (dm invalidate-dependent

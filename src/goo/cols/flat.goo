@@ -18,8 +18,8 @@
 ;;;;!! Implementation
 
 (dc <flat-enum> (<enum>))
-(dp %dat (x|<flat-enum> => <flat>))
-(dp %key (x|<flat-enum> => <int>) 0)
+(dp %dat (<flat-enum> => <flat>))
+(dp %key (<flat-enum> => <int>) 0)
 (dm enum (x|<flat> => <flat-enum>) 
   (new <flat-enum> %dat x))
 (dm fin? (e|<flat-enum> => <log>)       

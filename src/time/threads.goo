@@ -12,10 +12,10 @@
 (dl %thread-sleep)
 
 (dc <thread> (<any>))
-  (dp thread-name (x|<thread> => (t? <sym>)) #f)
-  (dp thread-function (x|<thread> => <fun>))
-  (dp thread-priority (x|<thread> => <int>) 0)
-  (dp hread-handle (x|<thread> =>)
+  (dp thread-name (<thread> => (t? <sym>)) #f)
+  (dp thread-function (<thread> => <fun>))
+  (dp thread-priority (<thread> => <int>) 0)
+  (dp hread-handle (<thread> =>)
 
 (dm thread-yield () (%thread-yield))
 

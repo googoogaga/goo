@@ -94,11 +94,11 @@
 ;;; TRACK
 
 (dc <track> (<flat>))
-  (dp rack-name (x|<track> =>)
-  (dp track-instrument (x|<track> => <instrument>))
-  (dp track-pattern (x|<track> => <pattern>))
-  (dp track-now (x|<track> => <int>) 0)
-  (dp track-vecs (x|<track> => <vec>))
+  (dp track-name (<track> => <any>)
+  (dp track-instrument (<track> => <instrument>))
+  (dp track-pattern (<track> => <pattern>))
+  (dp track-now (<track> => <int>) 0)
+  (dp track-vecs (<track> => <vec>))
 
 (dc <op> (<any>))
 (dc <mimic> (<op>))     (dv $mimic (new <mimic>))
@@ -223,8 +223,8 @@
 (dc <song> (<any>))
   ;; TODO: MOVE TO TRACK 
   ;; TODO: BUILD INVERTIBLE MAP
-  (dp song-tracks (x|<song> => <vec>) (fab <vec> 0))
-  (dp %song-len (x|<song> => <int>))
+  (dp song-tracks (<song> => <vec>) (fab <vec> 0))
+  (dp %song-len (<song> => <int>))
 
 (dm file-out (port|<port> x|<song>)
   (msg port "%d\n" (len (song-tracks x)))
@@ -275,18 +275,18 @@
 ;;; PLAYER
 
 (dc <player> (<any>))
-  (dp player-out-device (x|<player> => <midi-device>) (default-midi-device))
-  (dp player-in-devices (x|<player> => <seq>)         (midi-in-devices))
-  (dp player-channel (x|<player> => <midi-channel>)   (fab-midi-channel 9))
-  (dp player-song (x|<player> => <song>))
-  (dp player-track-num (x|<player> => <int>) 0)
-  (dp player-pos (x|<player> => <int>)    0)
-  (dp player-song-len (x|<player> => <int>) 0)
-  (dp %player-tempo (x|<player> => <int>) 120)
-  (dp player-timer (x|<player> => <timer>))
-  (dp player-state (x|<player> => <sym>) 'stopped)
-  (dp player-mode (x|<player> => <sym>) 'demo)
-  (dp player-update-times (x|<player> => <vec>) (fab <vec> 0))
+  (dp player-out-device (<player> => <midi-device>) (default-midi-device))
+  (dp player-in-devices (<player> => <seq>)         (midi-in-devices))
+  (dp player-channel (<player> => <midi-channel>)   (fab-midi-channel 9))
+  (dp player-song (<player> => <song>))
+  (dp player-track-num (<player> => <int>) 0)
+  (dp player-pos (<player> => <int>)    0)
+  (dp player-song-len (<player> => <int>) 0)
+  (dp %player-tempo (<player> => <int>) 120)
+  (dp player-timer (<player> => <timer>))
+  (dp player-state (<player> => <sym>) 'stopped)
+  (dp player-mode (<player> => <sym>) 'demo)
+  (dp player-update-times (<player> => <vec>) (fab <vec> 0))
 
 (dm player-track (x|<player> => <track>)
   (elt (song-tracks (player-song x)) (player-track-num x)))

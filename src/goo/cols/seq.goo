@@ -41,6 +41,10 @@
  ;; returns two sequences concatenated.
  (dg cat2 (x|<seq> y|<seq> => <seq>))
 
+ ;; push/pops elements nondestructively
+ (dg push (l|<seq> x|<any> => <seq>))
+ (dg pop (l|<seq> => (tup new-col|<seq> value)))
+
  ;; subsequence of x between from and below.
  (dg sub (x|<seq> from|<int> below|<int> => <seq>))
 
@@ -60,6 +64,10 @@
 
  ;; returns sequence with all duplicates removed.
  (dg del-dups (x|<seq> => <seq>))
+
+ ;; sorts a sequence
+ (dg sort (x|<seq> => <seq>))
+ (dg sort-by (x|<seq> test|<fun> => <seq>))
 
  ;; returns true if sequence s begins with sequence begin
  (dg ends-with (s|<seq> end|<seq> => <log>))
@@ -137,6 +145,11 @@
         (con-x (if (if (>= i from) (< i below)) (add seq (now e)) seq)
                (+ i 1) (nxt e)))))
 
+(dm push (l|<seq> x|<any> => <seq>)
+  (ins l x 0))
+
+(dm pop (l|<seq> => (tup new-col|<seq> value))
+  (tup (sub l 1 (len l)) (elt l 0)))
 
 (dm pick (test|<fun> x|<seq> => <seq>)
   (rep con ((seq '()) (e (enum x)))
@@ -147,6 +160,9 @@
 
 (dm reject (test|<fun> x|<seq> => <seq>)
   (pick (fun (x) (not (test x))) x))
+
+(dm del (x|<seq> key|<int> => <seq>) 
+  (cat (sub x 0 key) (sub x (+ key 1) (len x))))
 
 (dm del-vals (s|<seq> x => <seq>)
   (reject (fun (e) (== e x)) s))
@@ -161,6 +177,27 @@
         (if (= i before)
             (copy (pair v r) (+ i 1) e)
             (copy (pair (now e) r) (+ i 1) (nxt e))))))
+
+;; TODO: PERHAPS THIS SHOULD BE THE AS <SEQ> <MAP> MET INSTEAD
+(dm elts (x|<seq> keys|<seq> => <seq>)
+  (rep copy ((r '()) (e (enum x)) (i 0) (keys (enum (sort keys))))
+    (cond ((fin? keys)
+           (as-copy x (rev! r)))
+          ((fin? e)
+           (range-error x i))
+          (#t 
+           (let ((key (now keys)))
+             (cond ((= i key)
+                    (copy (pair (now e) r) (nxt e) (+ i 1) (nxt keys)))
+                   ((isa? key <int>)
+                    (copy r                (nxt e) (+ i 1) keys))
+                   (#t
+                    (range-error x key))))))))
+
+(dm sort (x|<seq> => <seq>) (sort-by x <))
+
+(dm sort-by (x|<seq> test|<fun> => <seq>)
+  (sort-by! (dup x) test))
 
 ;;;; Undocumented
 
@@ -200,4 +237,4 @@
   (= (sub s 0 (len begin)) begin))
 
 ;; from range.goo
-(need-implementation below)
+(need-implementation below sort-by!)

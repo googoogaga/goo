@@ -564,7 +564,7 @@
 
 ;;  PROP
 
-;; (dp point-x (x|<point> => <int>) 0)
+;; (dp point-x (<point> => <int>) 0)
 
 (dv $sexpr-prop-tag 'dp)
 

@@ -4,9 +4,9 @@
 (use goo/runtime)
 
 (dc <priority-queue> (<col>))
-  (dp queue-data (x|<priority-queue> => <vec>) (fab <vec> 0))
-  (dp queue-test (x|<priority-queue> => <fun>) <)
-  (dp queue-key (x|<priority-queue> =>  <fun>) (op _))
+  (dp queue-data (<priority-queue> => <vec>) (fab <vec> 0))
+  (dp queue-test (<priority-queue> => <fun>) <)
+  (dp queue-key (<priority-queue> =>  <fun>) (op _))
 
 (dm ref (q|<priority-queue> i|<int> => <any>)
   (elt (queue-data q) (- i 1)))

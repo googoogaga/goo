@@ -78,8 +78,8 @@
 
 ;;;; Iteration protocol for lists
 (dc <lst-enum> (<enum>))
-(dp %dat (x|<lst-enum> => <lst>))
-(dp %key (x|<lst-enum> => <int>) 0)
+(dp %dat (<lst-enum> => <lst>))
+(dp %key (<lst-enum> => <int>) 0)
 (dm enum (x|<lst> => <lst-enum>)
   (new <lst-enum> %dat x))
 (dm fin? (e|<lst-enum> => <log>)
@@ -120,7 +120,7 @@
                          p
                          (find-tail (tail p))))))))
     (def result (lst #f))
-    (def cur result)
+    (def cur result) ;; TODO: MERGE WITH NEXT LINE?
     (set cur (connect cur (as <lst> x)))
     (for ((x more))
       (set cur (connect cur (as <lst> x))))
@@ -138,6 +138,34 @@
 
 (dm pop! (c|<lst> => (tup new-c|<lst> value))
   (tup (tail c) (head c)))
+
+;;; TODO: BUBBLE SORT YUCK!
+(dm sort-by! (items|<lst> test|<fun> => <lst>)
+  (rep loop ((tmp #f))
+    (if (== tmp (head items))
+        items
+        (rep bub ((tmp (head items)) (prev items) (next (tail items)))
+          (if (empty? next)
+              (loop tmp)
+              (bub (if (test (head next) (head prev))
+                       (let ((tmp (head prev)))
+                         (set (head prev) (head next))
+                         (set (head next) tmp))
+                       tmp)
+                   (tail prev) (tail next)))))))
+
+;; (dm sort-by! (items|<lst> test|<fun> => <lst>)
+;;   (def tmp #f)
+;;   (until (== tmp (head items))
+;;     (set tmp (head items))
+;;     (rep loop ((prev items) (next (tail items)))
+;;       (unless (empty? next)
+;;         (when (test (head next) (head prev))
+;;           (set tmp (head prev))
+;;           (set (head prev) (head next))
+;;           (set (head next) tmp))
+;;         (loop (tail prev) (tail next)))))
+;;   items)
 
 ;;;; Misc other stuff
 (dm to-str (x|<lst> => <str>)

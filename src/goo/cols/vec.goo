@@ -22,8 +22,8 @@
  
 
 ;;;;!! Implementation
-  (dp vec-len (x|<vec> => <int>) 0)
-  (dp vec-dat (x|<vec> => <rep>) (rep-nul))
+  (dp vec-len (<vec> => <int>) 0)
+  (dp vec-dat (<vec> => <rep>) (rep-nul))
 
 ;;;; Collection protocol
 

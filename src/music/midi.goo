@@ -30,8 +30,8 @@
 ;;;; MIDI instruments
 
 (dc <midi-instrument> (<any>))
-  (dp midi-name (x|<midi-instrument> => <str>))
-  (dp midi-number (x|<midi-instrument> => <int>))
+  (dp midi-name (<midi-instrument> => <str>))
+  (dp midi-number (<midi-instrument> => <int>))
 
 ;;;; MIDI channels
 

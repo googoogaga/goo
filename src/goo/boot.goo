@@ -137,72 +137,72 @@
         (dc <seq!> (<seq> <col!>))
         (dc <lst> (<seq!>))
         (dv nil (new <lst>))
-          (dp head (x|<lst> => <any>) nil)
-          (dp tail (x|<lst> => <lst>) nil)
+          (dp head (<lst> => <any>) nil)
+          (dp tail (<lst> => <lst>) nil)
         (dc <flat> (<seq>))
         (dc <tup> (<flat> <seq.>))
         (dc <str> (<flat> <seq.> <mag>))
         (dc <sym> (<mag>))
-          (dp sym-name (x|<sym> => <str>))
+          (dp sym-name (<sym> => <str>))
         (dc <type> (<any>))
         (dc <class> (<type>))
-          (dp class-prop-len (x|<class> => <int>)        0)
-          (dp class-name (x|<class> => <sym>))
-          (dp class-parents (x|<class> => <lst>)         nil)
-          (dp class-direct-props (x|<class> => <lst>)    nil)
-          (dp class-ancestors (x|<class> => <lst>)       nil)
-          (dp class-props (x|<class> => <lst>)           nil)
-          (dp class-descendents (x|<class> => <lst>)     nil)
+          (dp class-prop-len (<class> => <int>)        0)
+          (dp class-name (<class> => <sym>))
+          (dp class-parents (<class> => <lst>)         nil)
+          (dp class-direct-props (<class> => <lst>)    nil)
+          (dp class-ancestors (<class> => <lst>)       nil)
+          (dp class-props (<class> => <lst>)           nil)
+          (dp class-descendents (<class> => <lst>)     nil)
           ;; ULTIMATELY NEED GENS TO BE FLUSHED DURING CLASS REDEF
           ;; KEEP BOTH GENS/METS CAUSE NO MET->GEN MAP
           ;; WANT TO PRUNE OUT UNNECESSARY GENS BASED ON ACTUAL METS
-          (dp class-gens (x|<class> => <lst>)            nil)
-          (dp class-mets (x|<class> => <lst>)            nil)
-          (dp class-forward (x|<class> => <any>)         #f)
-          (dp class-id (x|<class> => <int>)              -1)
-          (dp class-row (x|<class> => <tup>)             nul)
+          (dp class-gens (<class> => <lst>)            nil)
+          (dp class-mets (<class> => <lst>)            nil)
+          (dp class-forward (<class> => <any>)         #f)
+          (dp class-id (<class> => <int>)              -1)
+          (dp class-row (<class> => <tup>)             nul)
         (dc <singleton> (<type>))
-          (dp type-object (x|<singleton> => <any>))
+          (dp type-object (<singleton> => <any>))
         (dc <subclass> (<type>))
-          (dp type-class (x|<subclass> => <class>))
+          (dp type-class (<subclass> => <class>))
         (dc <union> (<type>))
-          (dp type-elts (x|<union> => <lst>)             nil)
+          (dp type-elts (<union> => <lst>)             nil)
         (dc <prop> (<any>))
-          (dp prop-owner (x|<prop> => <any>))
-          (dp prop-getter (x|<prop> => <fun>))
-          (dp prop-setter (x|<prop> => <fun>))
-          (dp prop-type (x|<prop> =>  <type>))
-          (dp prop-init (x|<prop> =>  <fun>) (fun (x) nul-prop))
+          (dp prop-owner (<prop> => <any>))
+          (dp prop-getter (<prop> => <fun>))
+          (dp prop-setter (<prop> => <fun>))
+          (dp prop-type (<prop> =>  <type>))
+          (dp prop-init (<prop> =>  <fun>) (fun (x) nul-prop))
         (dc <gen-cache> (<any>))
-          (dp gen-cache-missable? (x|<gen-cache> => <log>)  #f)
-          (dp gen-cache-arg-pos (x|<gen-cache> => <int>)    0)
-          (dp gen-cache-singletons (x|<gen-cache> => <lst>) nil)
-          (dp gen-cache-classes (x|<gen-cache> => <lst>)    nil)
+          (dp gen-cache-missable? (<gen-cache> => <log>)  #f)
+          (dp gen-cache-arg-pos (<gen-cache> => <int>)    0)
+          (dp gen-cache-singletons (<gen-cache> => <lst>) nil)
+          (dp gen-cache-classes (<gen-cache> => <lst>)    nil)
         (dc <sig> (<any>))
-          (dp sig-names (x|<sig> => <lst>) nil)
-          (dp sig-specs (x|<sig> => <lst>) nil)
-          (dp sig-nary? (x|<sig> => <log>) %false)
-          (dp sig-arity (x|<sig> => <int>) 0)
-          (dp sig-val   (x|<sig> => <any>) <any>)
-          (dp sig-unification-vars (x|<sig> => <lst>) nil)
+          (dp sig-names (<sig> => <lst>) nil)
+          (dp sig-specs (<sig> => <lst>) nil)
+          (dp sig-nary? (<sig> => <log>) %false)
+          (dp sig-arity (<sig> => <int>) 0)
+          (dp sig-val   (<sig> => <any>) <any>)
+          (dp sig-unification-vars (<sig> => <lst>) nil)
         (dc <fun> (<any>))
-          (dp fun-code (x|<fun> => <any>)  %false)
-          (dp fun-name (x|<fun> => <any>)  %false)
-          (dp fun-sig (x|<fun> => <sig>))
+          (dp fun-code (<fun> => <any>)  %false)
+          (dp fun-name (<fun> => <any>)  %false)
+          (dp fun-sig (<fun> => <sig>))
         (dc <met> (<fun>))
-          (dp fun-env (x|<met> => <any>)   %false)
-          (dp fun-refs (x|<met> => <any>)  %false)
-          (dp fun-src (x|<met> => <any>)   %false)
+          (dp fun-env (<met> => <any>)   %false)
+          (dp fun-refs (<met> => <any>)  %false)
+          (dp fun-src (<met> => <any>)   %false)
         (dc <gen> (<fun>))
-          (dp fun-mets (x|<gen> => <lst>)  nil)
-          (dp fun-cache (x|<gen> => <any>) %false)
-          (dp gen-refs (x|<gen> => <tup>)  nul)
-          (dp gen-src (x|<gen> => <any>)   %false)
+          (dp fun-mets (<gen> => <lst>)  nil)
+          (dp fun-cache (<gen> => <any>) %false)
+          (dp gen-refs (<gen> => <tup>)  nul)
+          (dp gen-src (<gen> => <any>)   %false)
     (dc <opts> (<flat> <seq.>))
-      (dp opts-location (x|<opts> => <loc>) 0)
-      (dp opts-count (x|<opts> => <int>) 0)
+      (dp opts-location (<opts> => <loc>) 0)
+      (dp opts-count (<opts> => <int>) 0)
     (dc <opts-tup> (<opts>))
-      (dp opts-tup-storage (x|<opts-tup> => <tup>) nul)
+      (dp opts-tup-storage (<opts-tup> => <tup>) nul)
 )))
 
 ;; RETURN CLASS DEFS FROM BOOT DEFS
@@ -233,7 +233,7 @@
       (rep loop ((res '()) (defs (%boot-defs)))
         (if (empty? defs)
             (rev! res)
-            (loop (mif ((dp ,name ((x ,owner) => ,type) ,@maybe-init)
+            (loop (mif ((dp ,name (,owner => ,type) ,@maybe-init)
                         (head defs))
                        (let ((init (if (empty? maybe-init) 
                                        'nul-prop 
@@ -907,6 +907,9 @@
       l
       (@lst-helper objects (@+ i -1) (@pair (@oelt objects i) l))))
 
+(df @opts-as-lst (x|<opts> => <lst>)
+  (@lst-helper x (@+ (@olen x) -1) '()))
+
 (df @lst (objects|...) (@lst-helper objects (@+ (@olen objects) -1) '()))
 
 (dl @telt (x|<tup> i|<int> => <any>)
@@ -1147,8 +1150,7 @@
                   (loop (@+ i 1))
                   #f))))))
 
-(df ord-app-mets
-      (gf|<gen> args|<opts> => (tup ordered|<lst> ambig|<lst>))
+(df ord-app-mets* (gf|<gen> args|<opts> => (tup ordered|<lst> ambig|<lst>))
   (def considered-mets
     (rep col ((ans '()) (ms (@fun-mets gf)))
       (if (@empty? ms)
@@ -1158,13 +1160,16 @@
             (col ans (@tail ms))))))
   (ord-app-mets-1 considered-mets args order-mets))
 
-; (df opt-args (n|<int> args|<opts> => <opts>)
-;   (rep col ((i|<int> 0) (l|<opts> '()) (p|<opts> args))
-;     (if (@= i n)
-;       (if (@empty? l)
-;           (@lst p)
-;           (seq (set (@tail l) (@lst p)) args))
-;       (col (@+ i 1) p (@tail p)))))
+(df ord-app-mets (gf|<gen> args|... => (tup ordered|<lst> ambig|<lst>))
+  (ord-app-mets* gf args))
+
+;; (df opt-args (n|<int> args|<opts> => <opts>)
+;;   (rep col ((i|<int> 0) (l|<opts> '()) (p|<opts> args))
+;;     (if (@= i n)
+;;       (if (@empty? l)
+;;           (@lst p)
+;;           (seq (set (@tail l) (@lst p)) args))
+;;       (col (@+ i 1) p (@tail p)))))
 
 (df @gen-cache-arg-pos (x)             (%gen-cache-arg-pos x))
 (df @gen-cache-arg-pos-setter (z x)    (set (%gen-cache-arg-pos x) z))
@@ -1254,15 +1259,19 @@
 
 ;; does the specified position require singleton precision always?
 (df requires-singleton-prec (mets pos)
-  (not (@empty?
-        (@pick
-         (fun (spec)
-           (not (or (@class-isa? spec <class>) 
-                    (and (@class-isa? spec <singleton>)
-                         (or 
-                          (not (@class-isa? (%type-object spec) <type>))
-                          (@class-isa? (%type-object spec) <class>))))))
-         (@mets-specs-at mets pos)))))
+  (not (@empty? (@mets-subclasses-at mets pos))))
+
+;; TODO: SHOULD BE USING @MAY-ISA? 
+;;
+;;   (not (@empty?
+;;         (@pick
+;;          (fun (spec)
+;;            (not (or (@class-isa? spec <class>) 
+;;                     (and (@class-isa? spec <singleton>)
+;;                          (or 
+;;                           (not (@class-isa? (%type-object spec) <type>))
+;;                           (@class-isa? (%type-object spec) <class>))))))
+;;          (@mets-specs-at mets pos)))))
 
 (df ensure-singleton-cache
     (gen|<gen> cache mets|<lst> sorted-mets|<lst> i|<int> args|<opts>)
@@ -1395,13 +1404,14 @@
 ;; TODO: CONDITIONS FOR THESE ERRORS
 
 (df choose-methods (gen|<gen> args|<opts> => <lst>)
-  (def ord-amb-mets   (ord-app-mets gen args))
+  (def ord-amb-mets   (ord-app-mets* gen args))
   (def sorted-mets    (@telt ord-amb-mets 0))
   (def ambiguous-mets (@telt ord-amb-mets 1))
   ;;    (if (@< 0 (@len ambiguous-mets))
   ;;        (error "Ambiguous Method Error when calling %= on %=" gen args)
   (if (@empty? sorted-mets)
-      (error "No applicable methods error when calling %= on %=" gen args)
+      (error "No applicable methods error when calling %= on %=" 
+             gen (@opts-as-lst args))
       sorted-mets))
 
 ;; FIXME: note the horrible hack in g2c that makes it not generate
@@ -1418,8 +1428,10 @@
                         (@oelt args 0)))))
           (%unlink-stack)
           res)
-        (seq (%unlink-stack)
-             (%raw-call (%head result) (%tail result))))))
+        (let ((m (%head result))) 
+          (%unlink-stack) 
+          (set (%loc-off (%sp-reg) (%raw -1)) m) ;; replace gen w/ met on stack
+          (%raw-call m (%tail result))))))
 
 ;; READY TO REPLACE EARLY DISPATCHER WITH REAL DISPATCHER IN EARLY GEN'S
 

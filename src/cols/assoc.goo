@@ -14,12 +14,12 @@
 ;;;;!! Interface
 (exported
  (dc <assocs> (<map> <col!>))
-   (dp assocs-test (x|<assocs> => <fun>) ==)
+   (dp assocs-test (<assocs> => <fun>) ==)
 )
 
 ;;;;!! Implementation
-  (dp assocs-keys (x|<assocs> => <lst>) '())
-  (dp assocs-vals (x|<assocs> => <lst>) '())
+  (dp assocs-keys (<assocs> => <lst>) '())
+  (dp assocs-vals (<assocs> => <lst>) '())
 
 ;;;; Collection protocol
 (dm len (x|<assocs> => <int>)

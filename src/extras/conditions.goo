@@ -3,7 +3,7 @@
 (def *current-handlers* '())
 
 (def <handler> (isa <any>))
-  (dp handler-function (x|<handler> => <fun>))
+  (dp handler-function (<handler> => <fun>))
 
 (dm default-handler (c|<condition>)
   #f)

@@ -41,10 +41,10 @@
   (set (loc-val x) v))
 
 (dc <loc-env> (<any>))
-  (dp env-parent (x|<loc-env> => <any>)   #f)
-  (dp env-function (x|<loc-env> => <any>) #f)
-  (dp env-names (x|<loc-env> =>  <lst>)   '())
-  (dp env-values (x|<loc-env> => <rep>)   )
+  (dp env-parent (<loc-env> => <any>)   #f)
+  (dp env-function (<loc-env> => <any>) #f)
+  (dp env-names (<loc-env> =>  <lst>)   '())
+  (dp env-values (<loc-env> => <rep>)   )
 
 (dv $nul-loc-env (new <loc-env>))
 
@@ -249,7 +249,7 @@
   #f)
 
 ;; (dc <box> (<any>))
-;;   (dp box-value (x|<box> => <any>))
+;;   (dp box-value (<box> => <any>))
 ;; 
 ;; (dm ast-eval (e|<box-read> env|<loc-env>)
 ;;   (box-value (ast-eval (box-reference e) env)))

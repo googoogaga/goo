@@ -12,15 +12,15 @@
  (dc <cycle> (<seq>))
  (dg cycle (e|... => <cycle>)))
 
-(dp cycle-elts (x|<cycle> => <tup>))
+(dp cycle-elts (<cycle> => <tup>))
 
 (dm cycle (e|... => <cycle>)
   (new <cycle> cycle-elts (as <tup> e)))
  
 (dc <cycle-enum> (<enum>))
-(dp %key (x|<cycle-enum> => <int>) 0)
-(dp %len (x|<cycle-enum> => <int>))
-(dp %dat (x|<cycle-enum> => <cycle>))
+(dp %key (<cycle-enum> => <int>) 0)
+(dp %len (<cycle-enum> => <int>))
+(dp %dat (<cycle-enum> => <cycle>))
 (dm enum (x|<cycle> => <cycle-enum>) 
   (new <cycle-enum> %dat x %len (len x)))
 (dm fin? (e|<cycle-enum> => <log>)       
