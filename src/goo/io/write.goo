@@ -303,6 +303,9 @@
   (assert (not found-percent?)
           "Incomplete msg directive in \"%s\"" message))
 
+(dm post (message|<str> arguments|...)
+  (app msg out message arguments))
+
 ;;; PARTIAL EVALUATOR FOR MSG 
 ;;; TODO: SHOULD GO AWAY WHEN REAL PARTIAL EVALUATION IS WORKING
 
@@ -382,6 +385,7 @@
   display
   write
   writeln
+  post
   write-to-string
   recurring-write
   *max-print-length*

@@ -106,7 +106,7 @@
 (dm always (x => <fun>)
   (fun ((args ...)) x))
 
-(dm spread (x => <fun>)
+(dm zipped (x => <fun>)
   (fun ((t <tup>)) (app x t)))
 
 ;;; CONDITIONS
@@ -425,7 +425,7 @@
   rcurry
   curry
   always
-  spread
+  zipped
   loc-val
   loc-val-setter
   app-filename

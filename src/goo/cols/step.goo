@@ -5,15 +5,18 @@
 (use goo/math)
 (use goo/cols/col)
 (use goo/cols/seq)
-;; 3.7.7 STEP (really should be "Impulse" or something..)
 
 ;;;;!! Interface
 (exported
  (dc <step> (<seq>))
  (dg first-then (first|<fun> then|<fun>))
+ (dc <each> (<seq>))
+ (dg each (f|<fun>))
 )
 
 ;;;;!! Implementation
+
+;;;; STEP
 
 (dp step-first (<step> => <fun>))
 (dp step-then (<step> => <fun>))
@@ -27,10 +30,22 @@
 (dp %first? (<step-enum> => <log>) #t)
 (dm enum (x|<step> => <step-enum>) 
   (new <step-enum> %dat x))
-(dm fin? (e|<step-enum> => <log>)
-  #f)
+(dm fin? (e|<step-enum> => <log>) #f)
 (dm nxt (e|<step-enum> => <step-enum>)
   (renew e %first? #f ;; %dat (%dat e)
          ))
 (dm now (e|<step-enum> => <any>)
   (if (%first? e) ((step-first (%dat e))) ((step-then (%dat e)))))
+
+;;;; EACH 
+
+(dp each-fun (<each> => <fun>))
+
+(dc <each-enum> (<enum>))
+(dp %dat (<each-enum> => <each>))
+(dm enum (x|<each> => <each-enum>) 
+  (new <each-enum> %dat x))
+(dm fin? (e|<each-enum> => <log>) #f)
+(dm nxt (e|<each-enum> => <each-enum>) e)
+(dm now (e|<each-enum> => <any>)
+  ((each-fun (%dat e))))

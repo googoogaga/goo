@@ -81,7 +81,8 @@
 (dv *goo-personal-root* (fab-path (os-val "HOME") ".goo"))
 
 (dv *module-search-path*
-  (lst (fab-path *goo-personal-root* "mods")
+  (lst "" ; absolute path
+       (fab-path *goo-personal-root* "mods")
        (fab-path *goo-root* "local" "mods")
        (fab-path *goo-root* "mods")))
 

@@ -52,7 +52,9 @@
   (def ast (objectify-with-subtransaction form ct-env #f))
   (run ast ct-env))
 
-(ddv run auto-run)
+(dv $g2c-eval? (= (os-name) "linux"))
+
+(ddv run (if $g2c-eval? auto-run %%bottom%%ast-run))
 
 (dm eval-in (x ct-env)
   (def o (objectify-with-subtransaction x ct-env #f))
@@ -106,7 +108,7 @@
   (if (and (isa? form <lst>) (== (head form) 'unquote))
       (let ((arg-str (gets in))
             (args    (read-from-string (cat "(" arg-str ")"))))
-        (pair (2nd form) args))
+        (pair (cat-sym "cmd_" (2nd form)) args))
       form))
 
 (dm print-result-expression (env level label result)
@@ -121,38 +123,40 @@
      (do-stack-frames
       (fun (,f _args) (def ,args (rev _args)) ,@body (incf ,num)))))
 
+(ds (for-user-frames (,num ,f ,args) ,@body)
+  `(esc break
+     (def _seen-top #f)
+     (def _top-num  0)
+     (for-frames (_num ,f ,args)
+       (def _name (if (fun-name ,f) (as <str> (fun-name ,f)) ""))
+       (def ,num (- _num _top-num))
+       (when _seen-top
+         (when (prefix? _name "%%bottom%%")
+           (break #f))
+         ,@body)
+       (when (prefix? _name "%%top%%")
+         (set _top-num  num)
+         (set _seen-top #t)))))
+
 (dm backtrace ()
-  (for-frames (num f args)
+  (for-user-frames (num f args)
     (msg out "[%=] %= %=\n" num f args)))
 
 (dm frame (n|<int>)
-  (for-frames (num f args)
+  (for-user-frames (num f args)
     (when (== n num)
       (msg out "[%=] %= %=\n" num f args))))
 
 (dm frame-var (n|<int> name|<sym>)
   (esc ret
-    (for-frames (num f args)
+    (for-user-frames (num f args)
       (when (== n num) 
         (ret (elt args (pos (fun-names f) name)))))
     nul))
 
 (dm bt ()
-  (for-frames (num f args)
+  (for-user-frames (num f args)
     (msg out "[%=] %=\n" num f)))
-
-(dm backtrace-short ()
-  (esc break
-    (def seen-top #f)
-    (for-frames (num f args)
-      (when seen-top
-        (if (and (not (= (fun-name f) #f))
-                 (= (sub (as <str> (fun-name f)) 0 10) "%%bottom%%"))
-            (break #f))
-        (msg out "[%=] %= %=\n" num f args))
-      (if (and (~= (fun-name f) #f)
-               (= (sub (as <str> (fun-name f)) 0 7) "%%top%%"))
-          (set seen-top #t)))))
 
 (dc <keyboard-interrupt> (<condition>))
 
@@ -193,33 +197,34 @@
             (if (= form (eof-object))
                 (quit #f)
                 (match form
-                  ((quit) 
+                  ((cmd_quit) 
                    (quit #f))
-                  ((up)
+                  ((cmd_up)
                    (blow #f))
-                  ((handlers)
+                  ((cmd_handlers)
                    (list-handlers <condition> out))
-                  ((restarts)
+                  ((cmd_restarts)
                    (list-handlers <restart> out))
-                  ((restart ,n)
+                  ((cmd_restart ,n)
                    (do-restart restarts n))
-                  ((in ,m)
+                  ((cmd_in ,m)
                    (def new-env (runtime-environment m))
                    (set ct-env new-env))
-                  ((g2c-eval)
-                   (set run %%bottom%%g2c-run))
-                  ((ast-eval)
+                  ((cmd_g2c-eval)
+                   (when $g2c-eval? (set run %%bottom%%g2c-run)))
+                  ((cmd_ast-eval)
                    (set run %%bottom%%ast-run))
-                  ((auto-eval)
-                   (set run auto-run))
-                  ((bt)
+                  ((cmd_auto-eval)
+                   (when $g2c-eval? (set run auto-run)))
+                  ((cmd_bt)
                    (bt))
-                  ((backtrace)
+                  ((cmd_backtrace)
                    (backtrace))
-                  ((frame ,n)
+                  ((cmd_frame ,n)
                    (frame n))
-                  ((frame-var ,n ,name)
-                   (frame-var n name))
+                  ((cmd_frame-var ,n ,name)
+                   (print-result-expression
+                    ct-env level "=> " (frame-var n name)))
                   (#t 
                    (def res (auto-eval form ct-env))
                    (print-result-expression

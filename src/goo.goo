@@ -97,6 +97,7 @@
  <range> range range-by from below
  ;; 3.7.7: Steps.
  <step> first-then
+ <each> each
  <zip> zip unzip
  <cycle> cycle
  
@@ -132,7 +133,7 @@
  ;; TODO - Defined in top, where we can't export it: read-file
 
  ;; Section 3.14: Output.
- write display writeln write-to-string msg say
+ write display writeln write-to-string msg post say
 
  ;; Section 3.15: System.
  app-filename app-args

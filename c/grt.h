@@ -62,7 +62,7 @@ extern P YPib(P i);
 #define YPiv(x, y)    (((PINT)(x)) |  ((PINT)(y)))
 #define YPiC(x, y)    (((PINT)(x)) ^  ((PINT)(y)))
 #define YPiB(x, y)    (((PINT)(x)) &  ((PINT)(y)))
-#define YPiX(x)       (!((PINT)(x)))
+#define YPiX(x)       (~((PINT)(x)))
 #define YPiQ(x, y)    (((PINT)(x) >> ((PINT)(y))) & 1)
 #define YPiLL(x, y)   (((PINT)(x)) << ((PINT)(y)))
 #define YPiGG(x, y)   (((PINT)(x)) >> ((PINT)(y)))
