@@ -1,3 +1,6 @@
+;;;; Copyright (c) 2001 Jonathan Bachrach
+;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
+
 ;; CURRENT ENVIRONMENT
 ;; TODO: DYNAMIC BINDING
 ;; 
@@ -300,6 +303,10 @@
 (df rt-env () *rt-env*)
 
 (df rt-env-setter (env) (set *rt-env* env))
+
+(df rt-boot-env () (rt-env))
+
+(df rt-boot-env-setter (env) (set (rt-env) env))
 
 (df ast-read-eval (x) (ast-eval-in (objectify x (ct-env)) (rt-env)))
 

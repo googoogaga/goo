@@ -1,3 +1,5 @@
+;;;; Copyright (c) 2001 Jonathan Bachrach
+
 ;;  Syntax definitions for Chapter 4 codes
 
 ;;  Self-evaluating entities
@@ -106,6 +108,9 @@
 ;; (df foo (x ...) form ...)
 (dm sexpr-function-definition-variable ((defn <lst>) => <any>)
   (2nd defn))
+
+(dm sexpr-forward-primitive? ((defn <lst>) => <log>)
+  (= (len defn) 2))
 
 (dm sexpr-signature-parameters ((signature <lst>) => <lst>)
   (let ((values-spec-index (pos signature '=>)))
@@ -284,7 +289,10 @@
   (as <sym> (cat (as <str> prefix)
 		 (num-to-str (sexpr-new-unique-name-counter!)))))
 
-;;  LET -- (let ((var val) ...) form ...)
+;;  LET -- (let ((var value) ...) form ...)
+;;         var:        simple-var | (tup tup-var ...)
+;;         tup-var:    simple-var | (name "...")
+;;         simple-var: name | (name type)
 
 (dv $sexpr-let-tag 'let)
 
@@ -300,16 +308,52 @@
 (dm sexpr-let-body ((let-exp <lst>) => <any>)
   (sexpr-sequence->begin (tail (tail let-exp))))
 
+(dm sexpr-let-names+values
+    ((names <lst>) (vals <lst>) => ((names <lst>) (values <lst>)))
+  (rep loop ((rnames '()) (rvalues '()) (names names) (vals vals))
+    (if (empty? names)
+	(tup (rev! rnames) (rev! rvalues))
+	(let ((name  (head names))
+	      (value (head vals)))
+	  (if (and (isa? name <lst>) (== (head name) 'tup))
+	      (let ((tupname
+		     (sexpr-unique-name "tup"))
+		    ((tup rtnames rtvalues)
+		     (rep inner
+		         ((rtnames (lst tupname)) (rtvalues (lst value))
+			  (index 0) (tnames (tail name)))
+		       (if (empty? tnames)
+			   (tup rtnames rtvalues)
+			   (let ((name (head tnames)))
+			     (if (and (isa? name <lst>) 
+				      (== (head (tail name)) '...))
+				 (inner (pair (lst (head name) '<lst>)
+					      rtnames)
+					(pair tupname rtvalues)
+					(+ index 1) (tail tnames))
+				 (inner (pair tupname (pair name rtnames))
+					(pair (lst 'tail tupname)
+					      (pair (lst 'head tupname)
+						    rtvalues))
+					(+ index 1) (tail tnames))))))))
+		(loop (cat rtnames rnames) (cat rtvalues rvalues)
+		      (tail names) (tail vals)))
+	      (loop (pair name rnames) (pair value rvalues)
+		    (tail names) (tail vals)))))))
+
 (dm sexpr-let->combination ((let-exp <lst>) => <any>)
-  (let ((names  (sexpr-let-bound-variables let-exp))
-	(values (sexpr-let-values let-exp))
-	(body   (sexpr-let-body let-exp)))
+  (let ((onames             (sexpr-let-bound-variables let-exp))
+	(ovalues            (sexpr-let-values let-exp))
+	(body               (sexpr-let-body let-exp))
+	((tup names values) (sexpr-let-names+values onames ovalues)))
+    ;; (format out "VARS %=\n" names)
+    ;; (format out "VALS %=\n" values)
     ;; (pair (lst $sexpr-method-tag names body) values)
     (rep col ((names names) (values values))
       (if (empty? names)
 	  body
 	  (pair (lst $sexpr-method-tag (lst (head names))
-		      (col (tail names) (tail values)))
+		     (col (tail names) (tail values)))
 		(lst (head values)))))))
 
 ;;  LOC -- (loc ((?var (?param ...) ?body) ...) ?body)
@@ -523,7 +567,7 @@
 	((== x *bq-nconc*)  'cat!)
 	((== x *bq-list**)  'list*)
 	((== x *bq-quote*)  'quote)
-	((sexpr-atom? x)   x)
+	((sexpr-atom? x)    x)
 	((== (head x) *bq-clobberable*)
 	 (bq-remove-tokens (head (tail x))))
 	((and (== (head x) *bq-list**)

@@ -1,7 +1,0 @@
-(dv <opts> <lst>)
-
-(df sym-name (x) (%export (%sym-dat x)))
-
-(dm apply ((fn <fun>) (args <opts>))
-  (%apply fn (%import-opts args)))
-

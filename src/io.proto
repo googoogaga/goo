@@ -1,4 +1,6 @@
-;;; ports
+;;;; Copyright (c) 2001 Jonathan Bachrach
+
+;;; PORTS
 
 (dv <port> (isa <any>))
   (slot <port> port-handle)
@@ -49,7 +51,10 @@
 
 (dv out (isa <file-output-port> (set port-handle (%current-output-port))))
 
-(dm eof-object? (x => <log>)
+(dm eof-object? (x => <log>) 
+  #f)
+
+(dm eof-object? ((x <chr>) => <log>)
   (%bb (%eq? (%cu x) (%eof-object))))
 
 (dm eof-object (=> <chr>)

@@ -1,5 +1,7 @@
-(dv *proto-version* "0.74")
-(dv *proto-date*    "MAR 09, 2001")
+;;;; Copyright (c) 2001 Jonathan Bachrach
+
+(dv *proto-version* "0.82")
+(dv *proto-date*    "MAY 09, 2001")
 
 (format out ";;; \n")
 (format out ";;; PROTO\n")
@@ -15,5 +17,7 @@
 (init-ast-eval)
 (format out ";;; Loading Macros...\n")
 (load (src-filename "macros.proto"))
+(format out ";;; Loading Patches...\n")
+(load (src-filename "patches.proto"))
 (format out ";;; \n")
 (top)

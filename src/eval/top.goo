@@ -1,3 +1,5 @@
+;;;; Copyright (c) 2001 Jonathan Bachrach
+
 (dm os-name (=> <str>)
   (%sb (%os-name)))
 

@@ -1,3 +1,4 @@
+;;;; Copyright (c) 2001 Jonathan Bachrach
 ;;;; BASED ON Lisp In Small Pieces by Christian Queinnec
 
 (dm objectify-error ((message <str>) (arguments ...))
@@ -6,6 +7,8 @@
 ;;; programs
 
 (dv <program> (isa <any>))
+  (slot <program> (program-register <int>))
+  (slot <program> program-type)
 
 ;;; bindings are not programs! they represent bindings.
 
@@ -17,6 +20,14 @@
 
 (dm binding-free? ((x <binding>) => <log>)
   #f)
+
+;; TODO: RECONSIDER FOLLOWING?
+
+(dm binding-free?-setter ((_ <log>) (x <binding>))
+  _)
+
+(dm binding-index-setter ((_ <int>) (x <binding>))
+  _)
 
 (dv <global-binding> (isa <binding>))
   (slot <global-binding> (binding-free? <log>) #t)
@@ -147,6 +158,7 @@
 
 (dv <application> (isa <program>))
   (slot <application> application-arguments)
+  (slot <application> application-tail? #f)
 
 (dv <regular-application> (isa <application>))
   (slot <regular-application> application-function)
@@ -231,6 +243,7 @@
 
 (dv <static-global-environment> (isa <static-environment>))
   (slot <static-global-environment> environment-next-index -1)
+  (slot <static-global-environment> environment-redefinitions (fab <tab> 100))
 
 (dv <static-predefined-global-environment> (isa <static-global-environment>))
 
@@ -426,15 +439,17 @@
 
 (dm ast-define-binding (r name make-binding => <any>)
   (let ((existing-binding (find-binding name r))
+	(gr (find-static-global-environment r))
 	(binding
 	 (if existing-binding
 	     (seq (if (binding-free? existing-binding)
 		      (set (binding-free? existing-binding) #f)
 		      ;; (format out "REDEF %s\n" name)
 		      )
+		  (set (elt (environment-redefinitions gr) name) 
+		       existing-binding)
 		  existing-binding)
-	     (let ((binding (make-binding))
-		   (gr (find-static-global-environment r)))
+	     (let ((binding (make-binding)))
 	       (set (binding-name binding) name)
 	       (set (binding-free? binding) #f)
 	       (set (binding-index binding) (inc (environment-next-index gr)))
@@ -762,8 +777,11 @@
 (dm find-binding (name (r <static-empty-environment>) => <any>)
   #f)
 
-(dm frame-bindings ((env <static-environment>) => <lst>)
-  (as <lst> (map identity (environment-bindings env))))
+;; TODO: CLEANUP
+
+(dm frame-bindings ((env <static-environment>) => <col>)
+  ;; (as <lst> (map identity (environment-bindings env)))
+  (environment-bindings env))
 
 (df report-undefined-global-bindings (env)
   (let ((env (find-static-global-environment env)))
@@ -909,10 +927,15 @@
 (dv $sexpr-define-primitive-tag 'dp)
 
 (define-magic-binding define-primitive (x r)
-  (objectify-primitive-definition
-    (sexpr-function-definition-variable x) 
-    (sexpr-function-parameters x)
-    (sexpr-function-body x) r))
+  (if (sexpr-forward-primitive? x)
+      (seq (ast-define-binding
+	    r (sexpr-function-definition-variable x) 
+	    (fun () (isa <predefined-binding>)))
+	   (objectify #f r))
+      (objectify-primitive-definition
+       (sexpr-function-definition-variable x) 
+       (sexpr-function-parameters x)
+       (sexpr-function-body x) r)))
 
 (define-magic-binding quasiquote (x r)
   (let ((bq-ast    (objectify (sexpr-expand-backquote x) r))
@@ -950,85 +973,130 @@
 (dm primitives ()
   *primitives*)
 
-;; (dm register-primitive (name value)
-;;   (set *primitives* (add *primitives* value)))
-;; 
-;; (ds (define-primitive ,name (,@params))
-;;   `(let ((binding
-;; 	  (isa <magic-binding> (set binding-name ',name) (set binding-free? #f))))
-;;      (register-primitive binding)))
-;; 
-;; (define-primitive %eq? ())
-;; (define-primitive %bb ())
-;; (define-primitive %i= ())
-;; (define-primitive %i< ())
-;; (define-primitive %i+ ())
-;; (define-primitive %i- ())
-;; (define-primitive %i* ())
-;; (define-primitive %im ())
-;; (define-primitive %ir ())
-;; (define-primitive %it/ ())
-;; (define-primitive %iv ())
-;; (define-primitive %i^ ())
-;; (define-primitive %i& ())
-;; (define-primitive %i! ())
-;; (define-primitive %i? ())
-;; (define-primitive %i<< ())
-;; (define-primitive %i>> ())
-;; (define-primitive %i<<< ())
-;; (define-primitive %i>>> ())
-;; (define-primitive %fi2f ())
-;; (define-primitive %f= ())
-;; (define-primitive %f< ())
-;; (define-primitive %f+ ())
-;; (define-primitive %f* ())
-;; (define-primitive %f- ())
-;; (define-primitive %f/ ())
-;; (define-primitive %ft ())
-;; (define-primitive %ft/ ())
-;; (define-primitive %ff ())
-;; (define-primitive %fc ())
-;; (define-primitive %c= ())
-;; (define-primitive %c< ())
-;; (define-primitive %current-output-port ())
-;; (define-primitive %current-input-port ())
-;; (define-primitive %open-input-file ())
-;; (define-primitive %open-output-file ())
-;; (define-primitive %close-output-port ())
-;; (define-primitive %close-input-port ())
-;; (define-primitive %write-char ())
-;; (define-primitive %write-string ())
-;; (define-primitive %read-char ())
-;; (define-primitive %newline ())
-;; (define-primitive %eof-object ())
-;; (define-primitive %eof-object ())
-;; (define-primitive %peek-char ())
-;; (define-primitive %char-ready ())
-;; (define-primitive %object-traits ())
-;; (define-primitive %object-traits-setter ())
-;; (define-primitive %object-values ())
-;; (define-primitive %object-values-setter ())
-;; (define-primitive %make-object ())
-;; (define-primitive %slot-elt ())
-;; (define-primitive %slot-elt-setter ())
-;; (define-primitive %make-object-values ())
-;; (define-primitive %install-object-values ())
-;; (define-primitive %adjust-object-values-size ())
-;; (define-primitive %%slen ())
-;; (define-primitive %%selt ())
-;; (define-primitive %%selt-setter ())
-;; (define-primitive %%sfab ())
-;; (define-primitive %%vlen ())
-;; (define-primitive %%velt ())
-;; (define-primitive %%velt-setter ())
-;; (define-primitive %%vfab ())
-;; 
-;; (define-primitive %break ())
-;; (define-primitive %binding-name ())
-;; (define-primitive %fun-reg ())
-;; (define-primitive %trace-on ())
-;; (define-primitive %trace-off ())
-;; (define-primitive %%apply ())
+(dm register-primitive (value)
+  (set *primitives* (pair value *primitives*)))
+
+(ds (define-primitive ,name (,@params))
+  `(let ((binding
+	  (isa <predefined-binding> (set binding-name ',name))))
+	  ;; (isa <magic-binding> (set binding-name ',name) (set binding-free? #f))
+     (register-primitive binding)))
+
+(define-primitive %eq? ())
+(define-primitive %bb ())
+(define-primitive %i= ())
+(define-primitive %i< ())
+(define-primitive %i+ ())
+(define-primitive %i- ())
+(define-primitive %i* ())
+(define-primitive %im ())
+(define-primitive %ir ())
+(define-primitive %it/ ())
+(define-primitive %iv ())
+(define-primitive %i^ ())
+(define-primitive %i& ())
+(define-primitive %i! ())
+(define-primitive %i? ())
+(define-primitive %i<< ())
+(define-primitive %i>> ())
+(define-primitive %i<<< ())
+(define-primitive %i>>> ())
+(define-primitive %fi2f ())
+(define-primitive %f= ())
+(define-primitive %f< ())
+(define-primitive %f+ ())
+(define-primitive %f* ())
+(define-primitive %f- ())
+(define-primitive %f/ ())
+(define-primitive %ft ())
+(define-primitive %ft/ ())
+(define-primitive %ff ())
+(define-primitive %fc ())
+(define-primitive %flo-bits ())
+(define-primitive %c= ())
+(define-primitive %c< ())
+(define-primitive %current-output-port ())
+(define-primitive %current-input-port ())
+(define-primitive %open-input-file ())
+(define-primitive %open-output-file ())
+(define-primitive %close-output-port ())
+(define-primitive %close-input-port ())
+(define-primitive %write-char ())
+(define-primitive %write-string ())
+(define-primitive %force-output ())
+(define-primitive %char-ready? ())
+(define-primitive %read-char ())
+(define-primitive %newline ())
+(define-primitive %eof-object ())
+(define-primitive %eof-object ())
+(define-primitive %peek-char ())
+(define-primitive %char-ready ())
+(define-primitive %object-traits ())
+(define-primitive %object-traits-setter ())
+(define-primitive %object-values ())
+(define-primitive %object-values-setter ())
+(define-primitive %raw-alloc ())
+(define-primitive %make-object ())
+(define-primitive %slot-elt ())
+(define-primitive %slot-elt-setter ())
+(define-primitive %make-object-values ())
+(define-primitive %install-object-values ())
+(define-primitive %adjust-object-values-size ())
+(define-primitive %elt ())
+(define-primitive %elt-setter ())
+(define-primitive %%slen ())
+(define-primitive %%selt ())
+(define-primitive %%selt-setter ())
+(define-primitive %%sfab ())
+(define-primitive %%vlen ())
+(define-primitive %%velt ())
+(define-primitive %%velt-setter ())
+(define-primitive %%vfab ())
+
+(define-primitive %app-filename ())
+(define-primitive %app-args ())
+
+(define-primitive %locative-value ())
+(define-primitive %locative-value-setter ())
+(define-primitive %invoke-debugger ())
+
+(define-primitive %os-name ())
+(define-primitive %os-binding-value ())
+(define-primitive %os-binding-value-setter ())
+
+(define-primitive %break ())
+(define-primitive %binding-name ())
+(define-primitive %fun-reg ())
+
+(define-primitive %trace-on ())
+(define-primitive %trace-off ())
+
+(define-primitive %%apply ())
+(define-primitive %%mep-apply ())
+(define-primitive %fapply ())
+
+(define-primitive %do-runtime-bindings ())
+(define-primitive %slot-value ())
+(define-primitive %slot-value-setter ())
+
+(dv *boot-bindings* '())
+
+(dm boot-bindings ()
+  *boot-bindings*)
+
+(dm register-boot-binding (value)
+  (set *boot-bindings* (pair value *boot-bindings*)))
+
+(ds (define-boot-binding ,name)
+  `(let ((binding
+	  (isa <predefined-binding> (set binding-name ',name))))
+     (register-boot-binding binding)))
+
+(define-boot-binding lst)
+(define-boot-binding cat)
+(define-boot-binding cat!)
+(define-boot-binding <any>)
+(define-boot-binding empty?)
 
 ;;; SETUP INITIAL CT ENVIRONMENT
 
@@ -1052,7 +1120,7 @@
     (set environment-bindings (fab <tab> 1000))))
 
 (df init-static-global-environment 
-    (=> (tup (sys-env <static-environment>) (user-env <static-environment>)))
+    ( => (tup (sys-env <static-environment>) (user-env <static-environment>)))
   (let ((rt-env
 	 (fab-static-global-environment
 	  <static-predefined-global-environment> $empty-static-environment))
@@ -1066,6 +1134,12 @@
     (insert-globals! (cat (magic-bindings) (primitives)) sys-env)
     (tup sys-env user-env)))
 
+(df reset-static-global-environment
+    ((env <static-global-environment>) => <static-global-environment>)
+  (del-keys (environment-bindings env))
+  (del-keys (environment-redefinitions env))
+  env)
+
 (dv *static-predefined-global-environment*      $empty-static-environment)
 (dv *static-global-environment*                 $empty-static-environment)
 
@@ -1073,15 +1147,15 @@
 (dv *static-global-boot-environment*            $empty-static-environment)
 
 (df init-ast ()
-  (let (((tup sys-env usr-env) (init-static-global-environment)))
-    (set *static-predefined-global-environment* sys-env)
-    (set *static-global-environment* usr-env))
-  ;; (let (((tup sys-env usr-env) (init-static-global-environment)))
-  ;;   (set *static-predefined-global-boot-environment* sys-env)
-  ;;   (set *static-global-boot-environment* usr-env))
-  )
+  (let (((tup sys-env      usr-env)      (init-static-global-environment))
+	;; ((tup sys-boot-env usr-boot-env) (init-static-global-environment))
+	   )
+    (set *static-predefined-global-environment*      sys-env)
+    (set *static-global-environment*                 usr-env)
+    (set *static-predefined-global-boot-environment* sys-env)
+    (set *static-global-boot-environment*            usr-env)))
 
-(df ct-env () *static-global-environment*)
+(df ct-env ()      *static-global-environment*)
 (df ct-boot-env () *static-global-boot-environment*)
 
 (df do-static-global-bindings ((f <fun>) env)

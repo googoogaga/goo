@@ -1,3 +1,5 @@
+;;;; Copyright (c) 2001 Jonathan Bachrach
+
 ;;; MACRO SUPPORT
 
 (dm make-sym ((x ...)  => <sym>)
@@ -40,6 +42,8 @@
 		      (dlet (,@rest) ,@body))
 		 (set ,name ,old-value))))
        (error "DLET: SYNTAX ERROR BAD BINDINGS" bindings))))
+
+(df type-or ((args ...)) <any>) ;; TODO: FOR REAL
 
 ;;; <any>
 
@@ -117,13 +121,13 @@
 (dm == ((x <chr>) (y <chr>) => <log>)
   (%bb (%c= (%cu x) (%cu y))))
 
-(dm lowercase?( (x <chr>) => <log>)
+(dm lowercase? ((x <chr>) => <log>)
   (let ((code (as <int> x)))
     (if (>= code (as <int> #\a))
         (<= code (as <int> #\z))
         #f)))
 
-(dm uppercase?( (x <chr>) => <log>)
+(dm uppercase? ((x <chr>) => <log>)
   (let ((code (as <int> x)))
     (if (>= code (as <int> #\A))
         (<= code (as <int> #\Z))
@@ -361,7 +365,7 @@
 (dm num-to-str ((num <int>) (radix-option ...) => <str>)
   (let ((radix
 	 (decode-radix-option radix-option *print-base* 'num-to-str))
-        (s (if (< num 0) -1 +1))
+        (s (if (< num 0) -1 1))
         (digit-list
          (rep loop ((digit-list '()) (num (* num s)))
            (if (= num 0)
@@ -437,7 +441,7 @@
 
 ;;; todo: need test args and not-found handlers
 
-(dm empty?( (c <col>) => <log>)
+(dm empty? ((c <col>) => <log>)
   (= (len c) 0))
 
 (dm empty ((c <col>) => <col>)
@@ -457,8 +461,8 @@
   (nyi-error))
 
 (dm as ((p <col>) (x <col>) => <lst>)
-  (into (fab p (len x)) x))
-        
+  (into (fab p (len x)) x 0 (len x)))
+
 (dm do-key-vals ((fn <fun>) (key-vals <opts>) => ())
   (rep rep (((key-vals <opts>) key-vals))
     (unless (empty? key-vals)
@@ -775,7 +779,7 @@
 (dm add ((c <lst>) x => <lst>)
   (pair x c))
 
-(dm rev!( (c <lst>) => <lst>)
+(dm rev! ((c <lst>) => <lst>)
   (rep loop ((l c) (r '()))
     (if (== l '())
 	r
@@ -799,7 +803,7 @@
 (dm ini-state ((c <lst>) => <lst>)
   c)
 
-(dm fin-state?( (_ <lst>) (state <lst>) => <log>)
+(dm fin-state? ((_ <lst>) (state <lst>) => <log>)
   (== state '()))
 
 (dm nxt-state ((_ <lst>) (state <lst>) => <lst>)
@@ -833,7 +837,7 @@
 (dm ini-state ((c <flat>) => <int>)
   0)
 
-(dm fin-state?( (c <flat>) (state <int>) => <log>)
+(dm fin-state? ((c <flat>) (state <int>) => <log>)
   (== state (len c)))
 
 (dm nxt-state ((_ <flat>) (state <int>) => <int>)
@@ -921,7 +925,7 @@
 
 (dm elt-setter (v (c <svec>) (i <int>))
   (when (>= i (len c))
-    (set (len c) i))
+    (set (len c) (+ i 1)))
   (set (elt (svec-dat c) i) v))
 
 (dm add! ((c <svec>) x => <svec>)
@@ -936,6 +940,117 @@
 	(x (elt c new-len)))
     (set (len c) new-len)
     x))
+
+;; TODO: HAVE THIS FALL OUT OF PROTOCOL
+(dm cat! ((x <svec>) (more ...) => <lst>)
+  (rep outer ((more more))
+    (if (empty? more)
+	x
+	(let ((s (head more)))
+          (rep inner ((sta (ini-state s)))
+            (if (fin-state? s sta)
+		(outer (tail more))
+		(seq (add! x (now-elt s sta))
+		     (inner (nxt-state s sta)))))))))
+
+;;; RANGE
+;;;
+;;; TODO: FEWER SLOTS
+
+(dv <range> (isa <seq>))
+  (slot <range> (range-from <num>) 0)
+  (slot <range> (range-to <num>))
+  (slot <range> (range-below <num>))
+  (slot <range> (range-above <num>))
+  (slot <range> (range-by <num>)   1)
+
+(dm from ((from <num>) => <range>)
+  (isa <range> (set range-from from)))
+
+(dm from-by ((from <num>) (by <num>) => <range>)
+  (isa <range> (set range-from from)  (set range-by by)))
+
+(dm from-to ((from <num>) (to <num>) => <range>)
+  (isa <range> (set range-from from) (set range-to to)))
+
+(dm from-to-by ((from <num>) (to <num>) (by <num>) => <range>)
+  (isa <range> (set range-from from) (set range-to to)  (set range-by by)))
+
+(dm from-below ((from <num>) (below <num>) => <range>)
+  (isa <range> (set range-from from) (set range-below below)))
+
+(dm from-below-by ((from <num>) (below <num>) (by <num>) => <range>)
+  (isa <range> (set range-from from) (set range-below below) (set range-by by)))
+
+(dm from-above ((from <num>) (above <num>) => <range>)
+  (isa <range> (set range-from from) (set range-above above)))
+
+(dm from-above-by ((from <num>) (above <num>) (by <num>) => <range>)
+  (isa <range> (set range-from from) (set range-above above) (set range-by by)))
+
+(dm ini-state ((c <range>) => <num>)
+  (range-from c))
+
+(dm fin-state? ((c <range>) (state <num>) => <log>)
+  (if (neg? (range-by c))
+      (if (== (range-to c) nul) 
+	  (if (== (range-above c) nul)
+	      #f
+	      (<= state (range-above c)))
+	  (< state (range-to c)))
+      (if (== (range-to c) nul) 
+	  (if (== (range-below c) nul)
+	      #f
+	      (>= state (range-below c)))
+	  (> state (range-to c)))))
+
+(dm nxt-state ((c <range>) (state <num>) => <num>)
+  (+ state (range-by c)))
+
+(dm now-elt ((c <range>) (state <num>) => _)
+  state)
+
+(dm copy-state ((_ <range>) (state <num>) => <num>)
+  state)
+
+;;; STEP
+
+(dv <step> (isa <seq>))
+  (slot <step> step-from)
+  (slot <step> step-then)
+
+(dm first-then (from then => <step>)
+  (isa <step> (set step-from from) (set step-then then)))
+
+(dm ini-state ((c <step>) => <log>)
+  #t)
+
+(dm fin-state? ((c <step>) (state <log>) => <log>)
+  #f)
+
+(dm nxt-state ((c <step>) (state <log>) => <log>)
+  #f)
+
+(dm now-elt ((c <step>) (state <log>) => _)
+  (if state (step-from c) (step-then c)))
+
+(dm copy-state ((_ <step>) (state <log>) => <log>)
+  state)
+
+;;; ASSOC
+
+(dv <assoc>     (isa <any>))
+  (slot <assoc> assoc-key)
+  (slot <assoc> assoc-value)
+(df assoc (x y => <assoc>)
+  (isa <assoc> (set assoc-key x) (set assoc-value y)))
+
+(dm assocq (x (l <lst>) => <any>)
+  (if (empty? l)
+      #f
+      (if (== x (assoc-key (head l)))
+	  (head l)
+	  (assocq x (tail l)))))
 
 ;; TODO: QUESTIONABLE SYNTAX
 (dm to-str ((x <svec>) => <str>) 

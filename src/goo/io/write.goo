@@ -1,13 +1,6 @@
 ;;  -*- Mode: Scheme; Syntax: Scheme; Package: Scheme; -*-
 ;;  Copyright (c) 1993, 1994 Richard Kelsey and Jonathan Rees.  See file COPYING.
-;;  This is file write.scm.
-;;  WRITE
-;;  To use this with some Scheme other than Scheme 48, do the following:
-;;   1. Copy the definition of output-port-option from port.scm
-;;   2. Define write-string as appropriate (as a write-char loop)
-;;   3. (define (disclose x) #f)
-
-;; WRITE
+;;  Copyright (c) 2001 Jonathan Bachrach
 
 (dm as-binding-name (name) 
   (as <str> name))

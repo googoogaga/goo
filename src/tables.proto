@@ -1,5 +1,7 @@
 ;; Module:    simple-tables
 ;; Author:    Scott McKay & John Dunning & Jonathan Bachrach
+;; Copyright: (c) 2001 Jonathan Bachrach
+
 
 ;;; Simple hash-table implementation
 
@@ -102,8 +104,8 @@
 (dm elt-setter (new-value (vector <simple-table-vector>) (index <int>) => <any>)
   (set (elt (%data vector) index) new-value))
 
-(dm clr! ((vector <simple-table-vector>) fill)
-  (fill (%data vector) fill)
+(dm clr! ((vector <simple-table-vector>) fill-value)
+  (fill (%data vector) fill-value)
   (set (%vacated vector) 0))
 
 ;;;
@@ -290,7 +292,7 @@
       ;; Table totally full???  That's not right
       (error "The table is totally full this shouldn't happen"))))
 
-(dm do ((function <fun>) (table <tab>) => ())
+(dm do-keyed ((function <fun>) (table <tab>) => ())
   (let ((vector (%vector table))
 	(n-buckets (%n-buckets vector))
 	(bucket-depth (%bucket-depth vector)))
@@ -303,6 +305,22 @@
 			  (== key $vacated-cell-marker))
 		(let ((index (+ i (+ (* b (* bucket-depth 2)) bucket-depth))))
 		  (function key (elt vector index)))))
+	    (inner (+ i 1))))
+	(outer (+ b 1))))))
+
+(dm do ((function <fun>) (table <tab>) => ())
+  (let ((vector (%vector table))
+	(n-buckets (%n-buckets vector))
+	(bucket-depth (%bucket-depth vector)))
+    (rep outer (((b <int>) 0))
+      (when (< b n-buckets)
+	(rep inner (((i <int>) 0))
+	  (when (< i bucket-depth)
+	    (let ((key (elt vector (+ i (* b (* bucket-depth 2))))))
+	      (unless (or (== key $empty-cell-marker) 
+			  (== key $vacated-cell-marker))
+		(let ((index (+ i (+ (* b (* bucket-depth 2)) bucket-depth))))
+		  (function (elt vector index)))))
 	    (inner (+ i 1))))
 	(outer (+ b 1))))))
 
@@ -351,9 +369,9 @@
       (inc bucket)
       (set index 0))
     (lab return
-      (rep outer ((b 0))
+      (rep outer ((b bucket))
 	(when (< b n-buckets)
-	  (rep inner ((i 0))
+	  (rep inner ((i index))
 	    (when (< i bucket-depth)
 	      (let ((key (elt vector (+ i (* b (* bucket-depth 2))))))
 		(unless (or (== key $empty-cell-marker)
@@ -361,11 +379,11 @@
 		  (set (%bucket state) b)
 		  (set (%index state) i)
 		  (return state))
-		    (inner (+ i 1)))))
-	      (outer (+ b 1))))
-	  #f)))
+		(inner (+ i 1)))))
+	  (outer (+ b 1))))
+      #f)))
 
-(dm fin-state? ((table <tab>) (state <tab-state>) => <log>)
+(dm fin-state? ((table <tab>) state => <log>)
   (not state))
 
 (dm now-key ((table <tab>) (state <tab-state>) => <any>)
@@ -448,7 +466,7 @@
        (error "Not enough primes to compute new table size"))))
 
 (dm copy-to-new-vector ((table <tab>) new-vector => ())
-  (do
+  (do-keyed
     (fun (k v)
       (lab return
 	(let (((tup test-function hash-function) (table-protocol table))

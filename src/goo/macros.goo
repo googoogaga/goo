@@ -1,3 +1,5 @@
+;;;; Copyright (c) 2001 Jonathan Bachrach
+
 ;; TODO: GENERALIZED VERSION
 
 (ds (inc ,x ,@amount)
@@ -58,4 +60,22 @@
 (ds (assert ,cond ,message ,@args)
   `(if (not ,cond) (error ,message ,@args)))
 
-
+(ds (for (,@clauses) ,@body)
+  (rep grok ((clauses clauses) 
+	     (exps '()) (inits '()) (preds '()) (nows '()) (nexts '()))
+    (if (empty? clauses)
+	(let ((loop (gensym)))
+	  `(let ,exps
+	     (rep ,loop ,inits
+	       (unless (or ,@preds)
+		 (let ,nows ,@body (,loop ,@nexts))))))
+        (let ((clause (head clauses)))
+	  (mif ((,var ,exp) clause)
+	    (let ((state (gensym))
+		  (exp-tmp (gensym)))
+	      (grok (tail clauses)
+		    (pair `(,exp-tmp ,exp) exps)
+		    (pair `(,state (ini-state ,exp-tmp)) inits)
+		    (pair `(fin-state? ,exp-tmp ,state) preds)
+		    (pair `(,var (now-elt ,exp-tmp ,state)) nows)
+		    (pair `(nxt-state ,exp-tmp ,state) nexts))))))))

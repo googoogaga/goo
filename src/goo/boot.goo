@@ -1,5 +1,5 @@
-;;;
-;;; JONATHAN BACHRACH
+;;;; Copyright (c) 2001 Jonathan Bachrach
+
 ;;;
 ;;; TODO
 ;;; 
@@ -389,7 +389,7 @@
 (df %slot-offset (owner getter)
   (rep loop ((i (%raw 0)) (slots (%traits-slots (%object-traits owner))))
     (if (%empty? slots)
-	(%raw -1)
+	(%iu -1)
 	(let ((slot (%head slots)))
 	  (if (%bb (%eq? (%slot-getter slot) getter))
 	      i
@@ -1042,6 +1042,9 @@
 
 (df apply ((proc <fun>) (args <opts>))
   (%%apply proc args))
+
+(df fapply (fproc (args <opts>))
+  (%fapply fproc args))
 
 ;;; 
 ;;; 13. OBJECTS
