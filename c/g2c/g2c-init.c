@@ -5,14 +5,14 @@
 
 /* APPLICATION: */
 
-extern MODULE_INFO module_info_compilerSmain;
-extern void load_module_compilerSmain (void);
+extern MODULE_INFO module_info_x8rSmain;
+extern void load_module_x8rSmain (void);
 
-MODULE_INFO *goo_toplevel_module_info = &module_info_compilerSmain;
+MODULE_INFO *goo_toplevel_module_info = &module_info_x8rSmain;
 
 int main(int argc, char* argv[]) {
   YPinit_world(argc, argv);
-  load_module_compilerSmain();
+  load_module_x8rSmain();
   return 0;
 }
 

@@ -125,8 +125,8 @@
 
 ;;; Clobber all dependents of 'dependable' which rely on any of the
 ;;; bits in 'invalid-dtype'.
-(df invalidate-dependents (dependable|<dependable>
-                           invalid-dtype|<dependency-type> => #f)
+(df invalidate-dependents
+    (dependable|<dependable> invalid-dtype|<dependency-type>)
   (do-keyed
    (fun (dependent dependendent-dtype)
      (def intersection (dependency-and invalid-dtype dependendent-dtype))
@@ -135,7 +135,7 @@
    (dependents dependable)))
 
 ;;; Remove a dependent from everything it depends upon.
-(df detach-dependent (dependent|<dependent> => #f)
+(df detach-dependent (dependent|<dependent>)
   (do-keyed
    (fun (dependable junk)
      (unless (del (dependents dependable) dependent)

@@ -2,10 +2,10 @@
 (use goo/macros)
 (use goo/runtime)
 (use goo/io/write)
-(use compiler/syntax)
-(use compiler/ast)
-(use compiler/top)
-(use compiler/ast-linearize)
+(use x8r/syntax)
+(use x8r/ast)
+(use x8r/top)
+(use x8r/ast-linearize)
 
 ;;; TODO
 ;;; --- NOW ---

@@ -44,7 +44,7 @@
  (dg now-key (e|<enum> => <any>))
 
 ;; Deprecated
- (dg do-keyed (f|<fun> x|<col> => (tup)))
+ (dg do-keyed (f|<fun> x|<col>))
  (dg map-keyed (f|<fun> x|<col> => <col>))
  (dg do2 (f|<fun> x|<col> y|<col> => (tup)))
  (dg do3 (f|<fun> x|<col> y|<col> z|<col>))

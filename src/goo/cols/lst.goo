@@ -2,10 +2,10 @@
 (use goo/macros)
 (use goo/types)
 (use goo/math)
-(use goo/collections/collection)
-(use goo/collections/collectionx)
-(use goo/collections/sequence)
-(use goo/collections/sequencex)
+(use goo/cols/col)
+(use goo/cols/colx)
+(use goo/cols/seq)
+(use goo/cols/seqx)
 
 ;; 3.7.5 LISTS
 

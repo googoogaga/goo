@@ -7,7 +7,7 @@
 (use goo/types)
 (use goo/math)
 (use goo/io/port)
-(use goo/collections)
+(use goo/cols)
 (use goo/runtime)
 (use goo/io/read)
 

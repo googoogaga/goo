@@ -5,7 +5,7 @@
 (use goo/macros)
 (use goo/runtime)
 (use goo)
-(use compiler/ast)
+(use x8r/ast)
 
 ;;; ENV
 

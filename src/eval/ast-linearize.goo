@@ -4,10 +4,10 @@
 (use goo/boot)
 (use goo/macros)
 (use goo/runtime)
-(use compiler/ast)
+(use x8r/ast)
 (use goo/types)
 (use goo/math)
-(use goo/collections)
+(use goo/cols)
 
 ;;; this is moved from runtime
 ;;; this doesn't deserve to be part of goo AFAICT, but its used here.

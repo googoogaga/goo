@@ -1,6 +1,6 @@
 (use goo/boot)
 (use goo/macros)
-(use goo/collections/collection)
+(use goo/cols/col)
 
 (df napp (proc|<fun> nexts args|...)
   (def ilen       (@+ (@olen args) -1))

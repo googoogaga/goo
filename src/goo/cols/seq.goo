@@ -2,7 +2,7 @@
 (use goo/macros)
 (use goo/math)
 (use goo/types)
-(use goo/collections/collection)
+(use goo/cols/col)
 
 (df @t? ((x <type>) => <union>) 
   (new <union> type-elts (@lst x (new <singleton> type-object #f))))

@@ -5,7 +5,7 @@
 (use goo/runtime)
 (use goo/math)
 (use goo/types)
-(use goo/collections)
+(use goo/cols)
 
 ;;  Self-evaluating entities
 (dm sexpr-self-evaluating? (exp => <log>)

@@ -6,15 +6,15 @@
 (use goo/macros)
 (use goo/runtime)
 (use goo/io/write)
-(use compiler/syntax)
-(use goo/collections/string)
+(use x8r/syntax)
+(use goo/cols/str)
 (use goo/system) ; Needed by runtime module loader.
 (use goo/io/write)
 (use goo/types)
 (use goo/math)
-(use goo/collections)
+(use goo/cols)
 (use goo/io/port)
-(use compiler/dependency)
+(use x8r/dependency)
 
 ;;; TODO: MOVE TYPE OUT OF SIGNATURE
 

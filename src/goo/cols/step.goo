@@ -1,8 +1,8 @@
 (use goo/boot)
 (use goo/macros)
 (use goo/math)
-(use goo/collections/collection)
-(use goo/collections/sequence)
+(use goo/cols/col)
+(use goo/cols/seq)
 ;; 3.7.7 STEP (really should be "Impulse" or something..)
 
 ;;;;!! Interface

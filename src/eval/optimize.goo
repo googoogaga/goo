@@ -1,6 +1,6 @@
 (use goo)
 (use goo/runtime)
-(use compiler/ast)
+(use x8r/ast)
 
 (dv <arg-seq> <lst>)
 (dv <met-seq> <lst>)

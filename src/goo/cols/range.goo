@@ -3,8 +3,8 @@
 (use goo/runtime)
 (use goo/types)
 (use goo/math)
-(use goo/collections/collection)
-(use goo/collections/sequence)
+(use goo/cols/col)
+(use goo/cols/seq)
 ;; 3.7.6 RANGES
 
 ;;;;!! Interface

@@ -1,5 +1,5 @@
 (use goo)
-(use compiler/top)
+(use x8r/top)
 
 ;;; This list of symbols should match those in goo/user.
 (export

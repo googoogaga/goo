@@ -3,11 +3,11 @@
 (use goo/types)
 (use goo/math)
 (use goo/runtime)
-(use goo/collections)
-(use goo/accumulator)
+(use goo/cols)
+(use goo/packer)
 (use goo/io/write)
 (use goo/io/read)
-(use compiler/syntax)
+(use x8r/syntax)
 (use goo/io/port)
 
 (export

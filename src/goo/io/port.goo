@@ -2,11 +2,11 @@
 (use goo/macros)
 (use goo/math)
 (use goo/types)
-(use goo/collections/collection)
-(use goo/collections/collectionx)
-(use goo/collections/sequence)
-(use goo/collections/sequencex)
-(use goo/collections/buffer)
+(use goo/cols/col)
+(use goo/cols/colx)
+(use goo/cols/seq)
+(use goo/cols/seqx)
+(use goo/cols/buf)
 
 (exported
 ;;; PORTS

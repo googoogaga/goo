@@ -1,6 +1,6 @@
 (use goo/boot)
 (use goo/macros)
-(use goo/magnitude)
+(use goo/mag)
 (use goo/types)
 
 ;;; DYNAMIC BINDING

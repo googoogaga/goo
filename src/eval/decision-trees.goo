@@ -1,9 +1,9 @@
 (use goo/boot)
 (use goo)
 (use goo/runtime)
-(use collections/priority-queue)
-(use compiler/ast)
-(use compiler/top)
+(use cols/priority-queue)
+(use x8r/ast)
+(use x8r/top)
 
 ;;; TODO:
 ;;; x WALK ALL BINDINGS

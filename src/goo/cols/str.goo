@@ -2,9 +2,9 @@
 (use goo/macros)
 (use goo/types)
 (use goo/math)
-(use goo/collections/collection)
-(use goo/collections/sequence)
-(use goo/collections/list)
+(use goo/cols/col)
+(use goo/cols/seq)
+(use goo/cols/lst)
 
 (exported
  (dg str (objects|...))

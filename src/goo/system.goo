@@ -7,7 +7,7 @@
 ;;;;;  LISP.
 
 (use goo)
-(use goo/collections/string)
+(use goo/cols/str)
 (use goo/boot) ; Need filesystem primitives.
 
 

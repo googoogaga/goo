@@ -2,10 +2,10 @@
 (use goo/macros)
 (use goo/types)
 (use goo/math)
-(use goo/collections/collection)
-(use goo/collections/map)
-(use goo/collections/sequence)
-(use goo/collections/list)
+(use goo/cols/col)
+(use goo/cols/map)
+(use goo/cols/seq)
+(use goo/cols/lst)
 
 ;; 3.7.2.1 ASSOCIATIONS
 

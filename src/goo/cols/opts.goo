@@ -2,9 +2,9 @@
 (use goo/macros)
 (use goo/math)
 (use goo/types)
-(use goo/collections/collection)
-(use goo/collections/sequence)
-(use goo/collections/flat)
+(use goo/cols/col)
+(use goo/cols/seq)
+(use goo/cols/flat)
 
 ;; 3.7.5 OPTIONALS
 

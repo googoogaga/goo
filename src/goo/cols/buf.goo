@@ -2,13 +2,13 @@
 (use goo/macros)
 (use goo/math)
 (use goo/types)
-(use goo/collections/collection)
-(use goo/collections/collectionx)
-(use goo/collections/sequence)
-(use goo/collections/sequencex)
-(use goo/collections/list)
-(use goo/collections/flat)
-(use goo/collections/vector)
+(use goo/cols/col)
+(use goo/cols/colx)
+(use goo/cols/seq)
+(use goo/cols/seqx)
+(use goo/cols/lst)
+(use goo/cols/flat)
+(use goo/cols/vec)
 
 ;; 3.7.6.3 STRETCHY-VECTOR
 

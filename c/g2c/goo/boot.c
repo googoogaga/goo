@@ -3,683 +3,690 @@
 
 #include "grt.h"
 
-/* MODULE ENVIRONMENT: runtime/boot */
+/* MODULE ENVIRONMENT: goo/boot */
 
-DEF(Ysig_naryQ,"runtime/boot","sig-nary?");
-DEF(YLintG,"runtime/boot","<int>");
-DEF(YLstrG,"runtime/boot","<str>");
-DEF(Yfun_arity,"runtime/boot","fun-arity");
-DEF(YTboot_macro_module_namesT,"runtime/boot","*boot-macro-module-names*");
-DEF(YOallQ,"runtime/boot","@all?");
-DEF(Yclass_id,"runtime/boot","class-id");
-DEF(YPprop,"runtime/boot","%prop");
-DEF(Ysig_unification_vars_setter,"runtime/boot","sig-unification-vars-setter");
-DEF(YOtup,"runtime/boot","@tup");
-DEF(YPearly_dispatch,"runtime/boot","%early-dispatch");
-DEF(Yopts_vec_storage,"runtime/boot","opts-vec-storage");
-DEF(Ytype_class_setter,"runtime/boot","type-class-setter");
-DEF(YPisa,"runtime/boot","%isa");
-DEF(Ytup,"runtime/boot","tup");
-DEF(Yclass_prop_len_setter,"runtime/boot","class-prop-len-setter");
-DEF(Ysig_unification_vars,"runtime/boot","sig-unification-vars");
-DEF(YLmagG,"runtime/boot","<mag>");
-DEF(YDgen_cache_singletons_offset,"runtime/boot","$gen-cache-singletons-offset");
-DEF(Ytype_class,"runtime/boot","type-class");
-DEF(Yunexec,"runtime/boot","unexec");
-DEF(Yfun_sig_setter,"runtime/boot","fun-sig-setter");
-DEF(YLunionG,"runtime/boot","<union>");
-DEF(Yprop_getter_setter,"runtime/boot","prop-getter-setter");
-DEF(Yone_nil,"runtime/boot","one-nil");
-DEF(Yclass_prop_len,"runtime/boot","class-prop-len");
-DEF(YOrevX,"runtime/boot","@rev!");
-DEF(Ykeyboard_interrupt,"runtime/boot","keyboard-interrupt");
-DEF(Yclass_direct_props_setter,"runtime/boot","class-direct-props-setter");
-DEF(YOgen_cache_singletons_setter,"runtime/boot","@gen-cache-singletons-setter");
-DEF(Yhead,"runtime/boot","head");
-DEF(Yfun_sig,"runtime/boot","fun-sig");
-DEF(YOvelt_setter,"runtime/boot","@velt-setter");
-DEF(YLnumG,"runtime/boot","<num>");
-DEF(YLvecG,"runtime/boot","<vec>");
-DEF(Yprop_getter,"runtime/boot","prop-getter");
-DEF(YOanyQ,"runtime/boot","@any?");
-DEF(Yfun_spec,"runtime/boot","fun-spec");
-DEF(Yprop_init_setter,"runtime/boot","prop-init-setter");
-DEF(Ywrong_number_arguments_error,"runtime/boot","wrong-number-arguments-error");
-DEF(YDmissed_dispatch,"runtime/boot","$missed-dispatch");
-DEF(Yhandler_info_arguments,"runtime/boot","handler-info-arguments");
-DEF(YOprune_mets_by_type_at,"runtime/boot","@prune-mets-by-type-at");
-DEF(Yclass_direct_props,"runtime/boot","class-direct-props");
-DEF(Yfun_src_setter,"runtime/boot","fun-src-setter");
-DEF(YLmetG,"runtime/boot","<met>");
-DEF(Yclass_descendents_setter,"runtime/boot","class-descendents-setter");
-DEF(YOcat2,"runtime/boot","@cat2");
-DEF(YPfalse,"runtime/boot","%false");
-DEF(YOtype_equalQ,"runtime/boot","@type-equal?");
-DEF(YTboot_macro_expandersT,"runtime/boot","*boot-macro-expanders*");
-DEF(Yprop_init,"runtime/boot","prop-init");
-DEF(YOgen_cache_singletons,"runtime/boot","@gen-cache-singletons");
-DEF(Yorder_mets,"runtime/boot","order-mets");
-DEF(Yfun_naryQ,"runtime/boot","fun-nary?");
-DEF(YPdefine_method,"runtime/boot","%define-method");
-DEF(YOOemptyQ,"runtime/boot","@@empty?");
-DEF(YLsubclassG,"runtime/boot","<subclass>");
-DEF(Ygen_cache_singletons_setter,"runtime/boot","gen-cache-singletons-setter");
-DEF(YTmacros_okQT,"runtime/boot","*macros-ok?*");
-DEF(Yfun_src,"runtime/boot","fun-src");
-DEF(Yclass_descendents,"runtime/boot","class-descendents");
-DEF(Ygen_refs_setter,"runtime/boot","gen-refs-setter");
-DEF(YOvelt,"runtime/boot","@velt");
-DEF(YOfun_mets_setter,"runtime/boot","@fun-mets-setter");
-DEF(YLchrG,"runtime/boot","<chr>");
-DEF(YLflatG,"runtime/boot","<flat>");
-DEF(Ygen_cache_singletons,"runtime/boot","gen-cache-singletons");
-DEF(YDnum_int_bits,"runtime/boot","$num-int-bits");
-DEF(Ysig_specs_setter,"runtime/boot","sig-specs-setter");
-DEF(YPmet_prop_len,"runtime/boot","%met-prop-len");
-DEF(YsubtypeQ,"runtime/boot","subtype?");
-DEF(Ygen_refs,"runtime/boot","gen-refs");
-DEF(Ynot,"runtime/boot","not");
-DEF(Yclass_forward,"runtime/boot","class-forward");
-DEF(Yclass_forward_setter,"runtime/boot","class-forward-setter");
-DEF(YLbodyG,"runtime/boot","<body>");
-DEF(YOtelt,"runtime/boot","@telt");
-DEF(Yclass_ordered_parents,"runtime/boot","class-ordered-parents");
-DEF(Yopts_count_setter,"runtime/boot","opts-count-setter");
-DEF(Ygen_lookup_miss_1,"runtime/boot","gen-lookup-miss-1");
-DEF(YLpropsG,"runtime/boot","<props>");
-DEF(YOgen_cache_arg_pos_setter,"runtime/boot","@gen-cache-arg-pos-setter");
-DEF(Yfun_specs_setter,"runtime/boot","fun-specs-setter");
-DEF(YDmin_int,"runtime/boot","$min-int");
-DEF(Yfab_sym,"runtime/boot","fab-sym");
-DEF(Ylst,"runtime/boot","lst");
-DEF(Ysig_specs,"runtime/boot","sig-specs");
-DEF(YOalter,"runtime/boot","@alter");
-DEF(Ysig_val_setter,"runtime/boot","sig-val-setter");
-DEF(YOfun_mets,"runtime/boot","@fun-mets");
-DEF(YLsingletonG,"runtime/boot","<singleton>");
-DEF(Yopts_count,"runtime/boot","opts-count");
-DEF(YOorder_specs,"runtime/boot","@order-specs");
-DEF(Yforward_class,"runtime/boot","forward-class");
-DEF(YLfunG,"runtime/boot","<fun>");
-DEF(YOfill,"runtime/boot","@fill");
-DEF(Yorder_specs,"runtime/boot","order-specs");
-DEF(Yprop_boundQ,"runtime/boot","prop-bound?");
-DEF(YOmets_unspecialized_atQ,"runtime/boot","@mets-unspecialized-at?");
-DEF(YPsymbols_readyQ,"runtime/boot","%symbols-ready?");
-DEF(Ysym_name_setter,"runtime/boot","sym-name-setter");
-DEF(Ysig_val,"runtime/boot","sig-val");
-DEF(YLlstG,"runtime/boot","<lst>");
-DEF(Yfab_class,"runtime/boot","fab-class");
-DEF(YLlogG,"runtime/boot","<log>");
-DEF(YOgen_cache_arg_pos,"runtime/boot","@gen-cache-arg-pos");
-DEF(Yfun_specs,"runtime/boot","fun-specs");
-DEF(Ytype_object,"runtime/boot","type-object");
-DEF(Ymet_app_unify,"runtime/boot","met-app-unify");
-DEF(YPTused_symbols_too_earlyT,"runtime/boot","%*used-symbols-too-early*");
-DEF(Yadd_prop,"runtime/boot","add-prop");
-DEF(Yprop_owner_setter,"runtime/boot","prop-owner-setter");
-DEF(YOOEE,"runtime/boot","@@==");
-DEF(Yfile_opening_error,"runtime/boot","file-opening-error");
-DEF(YOfun_unification_vars,"runtime/boot","@fun-unification-vars");
-DEF(Ysym_name,"runtime/boot","sym-name");
-DEF(YTboot_macro_namesT,"runtime/boot","*boot-macro-names*");
-DEF(Ynil,"runtime/boot","nil");
-DEF(Yclass_parents_setter,"runtime/boot","class-parents-setter");
-DEF(Yfun_name,"runtime/boot","fun-name");
-DEF(Ygen_lookup_miss_1_using,"runtime/boot","gen-lookup-miss-1-using");
-DEF(YPTstart_running_atT,"runtime/boot","%*start-running-at*");
-DEF(YOprecise_specQ,"runtime/boot","@precise-spec?");
-DEF(YOunion_specQ,"runtime/boot","@union-spec?");
-DEF(YLtupG,"runtime/boot","<tup>");
-DEF(Yobject_class,"runtime/boot","object-class");
-DEF(YPprop_offset,"runtime/boot","%prop-offset");
-DEF(Yprop_owner,"runtime/boot","prop-owner");
-DEF(Yfun_refs_setter,"runtime/boot","fun-refs-setter");
-DEF(Ydel_class,"runtime/boot","del-class");
-DEF(Yprop_type_setter,"runtime/boot","prop-type-setter");
-DEF(Yprop_value,"runtime/boot","prop-value");
-DEF(Yclass_parents,"runtime/boot","class-parents");
-DEF(YOdo,"runtime/boot","@do");
-DEF(Yrefab_class,"runtime/boot","refab-class");
-DEF(Yfun_naryQ_setter,"runtime/boot","fun-nary?-setter");
-DEF(Yclass_props_setter,"runtime/boot","class-props-setter");
-DEF(Ygen_cache_arg_pos_setter,"runtime/boot","gen-cache-arg-pos-setter");
-DEF(Yfun_refs,"runtime/boot","fun-refs");
-DEF(Yfun_names_setter,"runtime/boot","fun-names-setter");
-DEF(YLseqG,"runtime/boot","<seq>");
-DEF(YLanyG,"runtime/boot","<any>");
-DEF(Yprop_type,"runtime/boot","prop-type");
-DEF(Yincongruent_method_error,"runtime/boot","incongruent-method-error");
-DEF(YPwith_monitor,"runtime/boot","%with-monitor");
-DEF(Yhandler_info_message,"runtime/boot","handler-info-message");
-DEF(YOlst_helper,"runtime/boot","@lst-helper");
-DEF(Yclass_props,"runtime/boot","class-props");
-DEF(Ygen_cache_arg_pos,"runtime/boot","gen-cache-arg-pos");
-DEF(Yclass_ordered_props,"runtime/boot","class-ordered-props");
-DEF(Yfun_cache_setter,"runtime/boot","fun-cache-setter");
-DEF(Yclass_mets_setter,"runtime/boot","class-mets-setter");
-DEF(YPprop_unbound_error,"runtime/boot","%prop-unbound-error");
-DEF(Yvec,"runtime/boot","vec");
-DEF(Yfun_unification_vars_setter,"runtime/boot","fun-unification-vars-setter");
-DEF(YLsigG,"runtime/boot","<sig>");
-DEF(YLenvG,"runtime/boot","<env>");
-DEF(YOfold,"runtime/boot","@fold");
-DEF(Yfun_names,"runtime/boot","fun-names");
-DEF(YLopts_vecG,"runtime/boot","<opts-vec>");
-DEF(Yfind_setter,"runtime/boot","find-setter");
-DEF(YOmets_subclasses_at,"runtime/boot","@mets-subclasses-at");
-DEF(Ysig_names_setter,"runtime/boot","sig-names-setter");
-DEF(Yfun_cache,"runtime/boot","fun-cache");
-DEF(Yclass_mets,"runtime/boot","class-mets");
-DEF(YOsubclass_specQ,"runtime/boot","@subclass-spec?");
-DEF(YTreport_prop_unbound_errorsQT,"runtime/boot","*report-prop-unbound-errors?*");
-DEF(YLmetsG,"runtime/boot","<mets>");
-DEF(Yopts_location_setter,"runtime/boot","opts-location-setter");
-DEF(YDgetter_not_found,"runtime/boot","$getter-not-found");
-DEF(YOall2Q,"runtime/boot","@all2?");
-DEF(Yensure_singleton_cache,"runtime/boot","ensure-singleton-cache");
-DEF(YOclass_direct_props,"runtime/boot","@class-direct-props");
-DEF(YLreplace_generic_restartG,"runtime/boot","<replace-generic-restart>");
-DEF(YLcolG,"runtime/boot","<col>");
-DEF(YLclassG,"runtime/boot","<class>");
-DEF(Ysig_names,"runtime/boot","sig-names");
-DEF(YPfinalize_propsX,"runtime/boot","%finalize-props!");
-DEF(Yfun_unification_vars,"runtime/boot","fun-unification-vars");
-DEF(YLparentsG,"runtime/boot","<parents>");
-DEF(Yfab_gen,"runtime/boot","fab-gen");
-DEF(Yobject_props,"runtime/boot","object-props");
-DEF(Ysig_arity_setter,"runtime/boot","sig-arity-setter");
-DEF(YOfun_naryQ,"runtime/boot","@fun-nary?");
-DEF(Yfun_same_metQ,"runtime/boot","fun-same-met?");
-DEF(Yopts_location,"runtime/boot","opts-location");
-DEF(Yclass_row_setter,"runtime/boot","class-row-setter");
-DEF(YPadd_prop,"runtime/boot","%add-prop");
-DEF(YPtrue,"runtime/boot","%true");
-DEF(YOpick,"runtime/boot","@pick");
-DEF(YOclassL,"runtime/boot","@class<");
-DEF(YOelt,"runtime/boot","@elt");
-DEF(Yerror,"runtime/boot","error");
-DEF(Yfun_arity_setter,"runtime/boot","fun-arity-setter");
-DEF(YOsingleton_specQ,"runtime/boot","@singleton-spec?");
-DEF(Ytail_setter,"runtime/boot","tail-setter");
-DEF(Ysig_arity,"runtime/boot","sig-arity");
-DEF(YPpatch_early_generic,"runtime/boot","%patch-early-generic");
-DEF(Yclass_row,"runtime/boot","class-row");
-DEF(Yfun_code_setter,"runtime/boot","fun-code-setter");
-DEF(YPsymbols,"runtime/boot","%symbols");
-DEF(YPcollect_direct_props,"runtime/boot","%collect-direct-props");
-DEF(Ytype_elts_setter,"runtime/boot","type-elts-setter");
-DEF(Yord_app_mets_1,"runtime/boot","ord-app-mets-1");
-DEF(Yupdate_instance_for_changed_class,"runtime/boot","update-instance-for-changed-class");
-DEF(YLoptsG,"runtime/boot","<opts>");
-DEF(YOfun_specs,"runtime/boot","@fun-specs");
-DEF(YOdel_dups,"runtime/boot","@del-dups");
-DEF(Ytail,"runtime/boot","tail");
-DEF(YOorder_specs_class,"runtime/boot","@order-specs-class");
-DEF(Ytype_error,"runtime/boot","type-error");
-DEF(Yclass_name_setter,"runtime/boot","class-name-setter");
-DEF(Yord_app_mets,"runtime/boot","ord-app-mets");
-DEF(Yfun_val_setter,"runtime/boot","fun-val-setter");
-DEF(Yfun_code,"runtime/boot","fun-code");
-DEF(YLgen_cacheG,"runtime/boot","<gen-cache>");
-DEF(YOfun_names,"runtime/boot","@fun-names");
-DEF(YLlocG,"runtime/boot","<loc>");
-DEF(Yfun_congruentQ,"runtime/boot","fun-congruent?");
-DEF(Ytype_elts,"runtime/boot","type-elts");
-DEF(Yfun_env_setter,"runtime/boot","fun-env-setter");
-DEF(YPdispatch,"runtime/boot","%dispatch");
-DEF(YTrestarts_okQT,"runtime/boot","*restarts-ok?*");
-DEF(YPPmacro,"runtime/boot","%%macro");
-DEF(Yprop_setter_setter,"runtime/boot","prop-setter-setter");
-DEF(Yprop_value_setter,"runtime/boot","prop-value-setter");
-DEF(Yfind_getter,"runtime/boot","find-getter");
-DEF(YOdo_children,"runtime/boot","@do-children");
-DEF(Ygen_from_met,"runtime/boot","gen-from-met");
-DEF(YOspecd_args,"runtime/boot","@specd-args");
-DEF(Yfun_val,"runtime/boot","fun-val");
-DEF(YOmets_singletons_at,"runtime/boot","@mets-singletons-at");
-DEF(Yprop_offset,"runtime/boot","prop-offset");
-DEF(Yclass_name,"runtime/boot","class-name");
-DEF(YDdirect_object_class,"runtime/boot","$direct-object-class");
-DEF(YDmax_int,"runtime/boot","$max-int");
-DEF(Ymay_isaQ,"runtime/boot","may-isa?");
-DEF(Yclass_ancestors_setter,"runtime/boot","class-ancestors-setter");
-DEF(YLtypeG,"runtime/boot","<type>");
-DEF(YOclass_ancestors,"runtime/boot","@class-ancestors");
-DEF(Yfun_env,"runtime/boot","fun-env");
-DEF(Ygen_add_met,"runtime/boot","gen-add-met");
-DEF(Yfun_mets,"runtime/boot","fun-mets");
-DEF(Yfun_mets_setter,"runtime/boot","fun-mets-setter");
-DEF(Ymethod_accessor_offset,"runtime/boot","method-accessor-offset");
-DEF(Yprop_setter,"runtime/boot","prop-setter");
-DEF(YOfab,"runtime/boot","@fab");
-DEF(YOgen_cache_classes,"runtime/boot","@gen-cache-classes");
-DEF(Yfun_name_setter,"runtime/boot","fun-name-setter");
-DEF(YOmay_isaQ,"runtime/boot","@may-isa?");
-DEF(Yunknown_function_error,"runtime/boot","unknown-function-error");
-DEF(YOfun_arity,"runtime/boot","@fun-arity");
-DEF(YOfun_val,"runtime/boot","@fun-val");
-DEF(YOisaQ,"runtime/boot","@isa?");
-DEF(Yclass_ancestors,"runtime/boot","class-ancestors");
-DEF(YDgen_cache_classes_offset,"runtime/boot","$gen-cache-classes-offset");
-DEF(Ytype_object_setter,"runtime/boot","type-object-setter");
-DEF(Ygen_cache_missableQ,"runtime/boot","gen-cache-missable?");
-DEF(Yclass_gens_setter,"runtime/boot","class-gens-setter");
-DEF(Yensure_fresh_object,"runtime/boot","ensure-fresh-object");
-DEF(YOmemQ,"runtime/boot","@mem?");
-DEF(YOfind,"runtime/boot","@find");
-DEF(YLsimple_handler_infoG,"runtime/boot","<simple-handler-info>");
-DEF(YOlst,"runtime/boot","@lst");
-DEF(Yhead_setter,"runtime/boot","head-setter");
-DEF(Ychoose_methods,"runtime/boot","choose-methods");
-DEF(YLfloG,"runtime/boot","<flo>");
-DEF(YLsymG,"runtime/boot","<sym>");
-DEF(Ymet_appQ,"runtime/boot","met-app?");
-DEF(Ynew,"runtime/boot","new");
-DEF(Yobject_parents,"runtime/boot","object-parents");
-DEF(Ygen_cache_classes_setter,"runtime/boot","gen-cache-classes-setter");
-DEF(YPadd_met,"runtime/boot","%add-met");
-DEF(Yclass_gens,"runtime/boot","class-gens");
-DEF(Ygen_cache_missableQ_setter,"runtime/boot","gen-cache-missable?-setter");
-DEF(YPsnul,"runtime/boot","%snul");
-DEF(Ygen_src_setter,"runtime/boot","gen-src-setter");
-DEF(YOmets_specs_at,"runtime/boot","@mets-specs-at");
-DEF(YOgen_cache_classes_setter,"runtime/boot","@gen-cache-classes-setter");
-DEF(Ynul,"runtime/boot","nul");
-DEF(Ynul_prop,"runtime/boot","nul-prop");
-DEF(YLpropG,"runtime/boot","<prop>");
-DEF(Ygen_cache_classes,"runtime/boot","gen-cache-classes");
-DEF(YOsubtypeQ,"runtime/boot","@subtype?");
-DEF(YLgenG,"runtime/boot","<gen>");
-DEF(Ysig_naryQ_setter,"runtime/boot","sig-nary?-setter");
-DEF(Ygen_src,"runtime/boot","gen-src");
-DEF(Yclass_id_setter,"runtime/boot","class-id-setter");
-DEF(YOvec,"runtime/boot","@vec");
-DEF(YisaQ,"runtime/boot","isa?");
-DEF(YLspecsG,"runtime/boot","<specs>");
-DEF(Yopts_vec_storage_setter,"runtime/boot","opts-vec-storage-setter");
-DEF(YOmap,"runtime/boot","@map");
-DEF(YPvnul,"runtime/boot","%vnul");
-DEF(Ygen_lookup_miss,"runtime/boot","gen-lookup-miss");
+DEF(Yprop_owner_setter,"goo/boot","prop-owner-setter");
+DEF(YOfun_naryQ,"goo/boot","@fun-nary?");
+DEF(Ysym_name,"goo/boot","sym-name");
+DEF(YOclass_direct_props,"goo/boot","@class-direct-props");
+DEF(YLseqG,"goo/boot","<seq>");
+DEF(Yclass_parents_setter,"goo/boot","class-parents-setter");
+DEF(YOpick,"goo/boot","@pick");
+DEF(YDmax_int,"goo/boot","$max-int");
+DEF(YOclassL,"goo/boot","@class<");
+DEF(YOelt,"goo/boot","@elt");
+DEF(Yfun_name,"goo/boot","fun-name");
+DEF(YOsingleton_specQ,"goo/boot","@singleton-spec?");
+DEF(Yfun_unification_vars_setter,"goo/boot","fun-unification-vars-setter");
+DEF(Yprop_owner,"goo/boot","prop-owner");
+DEF(YPprop_offset,"goo/boot","%prop-offset");
+DEF(Yprop_type_setter,"goo/boot","prop-type-setter");
+DEF(YPpatch_early_generic,"goo/boot","%patch-early-generic");
+DEF(Yclass_parents,"goo/boot","class-parents");
+DEF(Yord_app_mets_1,"goo/boot","ord-app-mets-1");
+DEF(Yupdate_instance_for_changed_class,"goo/boot","update-instance-for-changed-class");
+DEF(YLoptsG,"goo/boot","<opts>");
+DEF(Yfind_getter,"goo/boot","find-getter");
+DEF(YOfun_specs,"goo/boot","@fun-specs");
+DEF(Yfun_refs_setter,"goo/boot","fun-refs-setter");
+DEF(YOdel_dups,"goo/boot","@del-dups");
+DEF(Yclass_props_setter,"goo/boot","class-props-setter");
+DEF(YOorder_specs_class,"goo/boot","@order-specs-class");
+DEF(Ytype_error,"goo/boot","type-error");
+DEF(YLtypeG,"goo/boot","<type>");
+DEF(Yord_app_mets,"goo/boot","ord-app-mets");
+DEF(Yfun_val_setter,"goo/boot","fun-val-setter");
+DEF(YLanyG,"goo/boot","<any>");
+DEF(Yprop_type,"goo/boot","prop-type");
+DEF(YLgen_cacheG,"goo/boot","<gen-cache>");
+DEF(Ygen_cache_arg_pos_setter,"goo/boot","gen-cache-arg-pos-setter");
+DEF(YPdispatch,"goo/boot","%dispatch");
+DEF(YPsymbols_readyQ,"goo/boot","%symbols-ready?");
+DEF(Yfun_refs,"goo/boot","fun-refs");
+DEF(Yclass_props,"goo/boot","class-props");
+DEF(YOspecd_args,"goo/boot","@specd-args");
+DEF(Yfun_cache_setter,"goo/boot","fun-cache-setter");
+DEF(YOmets_singletons_at,"goo/boot","@mets-singletons-at");
+DEF(Yprop_offset,"goo/boot","prop-offset");
+DEF(YTreport_prop_unbound_errorsQT,"goo/boot","*report-prop-unbound-errors?*");
+DEF(YLmagG,"goo/boot","<mag>");
+DEF(YLcolXG,"goo/boot","<col!>");
+DEF(YPTstart_running_atT,"goo/boot","%*start-running-at*");
+DEF(YOfun_names,"goo/boot","@fun-names");
+DEF(YDgetter_not_found,"goo/boot","$getter-not-found");
+DEF(Ykeyboard_interrupt,"goo/boot","keyboard-interrupt");
+DEF(Ygen_cache_arg_pos,"goo/boot","gen-cache-arg-pos");
+DEF(Yunknown_function_error,"goo/boot","unknown-function-error");
+DEF(Ygen_add_met,"goo/boot","gen-add-met");
+DEF(Ymethod_accessor_offset,"goo/boot","method-accessor-offset");
+DEF(Ysig_names_setter,"goo/boot","sig-names-setter");
+DEF(YOfab,"goo/boot","@fab");
+DEF(Yfun_cache,"goo/boot","fun-cache");
+DEF(Yclass_mets_setter,"goo/boot","class-mets-setter");
+DEF(YOmay_isaQ,"goo/boot","@may-isa?");
+DEF(Yopts_location_setter,"goo/boot","opts-location-setter");
+DEF(YPadd_met,"goo/boot","%add-met");
+DEF(Yensure_fresh_object,"goo/boot","ensure-fresh-object");
+DEF(YOmemQ,"goo/boot","@mem?");
+DEF(Ysig_names,"goo/boot","sig-names");
+DEF(YLsimple_handler_infoG,"goo/boot","<simple-handler-info>");
+DEF(YPfinalize_propsX,"goo/boot","%finalize-props!");
+DEF(Ychoose_methods,"goo/boot","choose-methods");
+DEF(Yclass_mets,"goo/boot","class-mets");
+DEF(YLsymG,"goo/boot","<sym>");
+DEF(Ysig_arity_setter,"goo/boot","sig-arity-setter");
+DEF(Ymet_appQ,"goo/boot","met-app?");
+DEF(Yopts_location,"goo/boot","opts-location");
+DEF(Yclass_row_setter,"goo/boot","class-row-setter");
+DEF(YOisaQ,"goo/boot","@isa?");
+DEF(YOtup,"goo/boot","@tup");
+DEF(YLcolG,"goo/boot","<col>");
+DEF(Yhandler_info_arguments,"goo/boot","handler-info-arguments");
+DEF(Ytail_setter,"goo/boot","tail-setter");
+DEF(Yfun_congruentQ,"goo/boot","fun-congruent?");
+DEF(YOmets_specs_at,"goo/boot","@mets-specs-at");
+DEF(YOgen_cache_classes_setter,"goo/boot","@gen-cache-classes-setter");
+DEF(Ysig_arity,"goo/boot","sig-arity");
+DEF(Yfun_arity_setter,"goo/boot","fun-arity-setter");
+DEF(Yfab_gen,"goo/boot","fab-gen");
+DEF(Yclass_row,"goo/boot","class-row");
+DEF(YLpropG,"goo/boot","<prop>");
+DEF(Yfun_code_setter,"goo/boot","fun-code-setter");
+DEF(Yobject_parents,"goo/boot","object-parents");
+DEF(Yadd_prop,"goo/boot","add-prop");
+DEF(YOsubtypeQ,"goo/boot","@subtype?");
+DEF(YPcollect_direct_props,"goo/boot","%collect-direct-props");
+DEF(Ytype_elts_setter,"goo/boot","type-elts-setter");
+DEF(YLgenG,"goo/boot","<gen>");
+DEF(Yorder_specs,"goo/boot","order-specs");
+DEF(Ytail,"goo/boot","tail");
+DEF(YLpropsG,"goo/boot","<props>");
+DEF(Yclass_name_setter,"goo/boot","class-name-setter");
+DEF(YOmap,"goo/boot","@map");
+DEF(Ywrong_number_arguments_error,"goo/boot","wrong-number-arguments-error");
+DEF(Yfun_code,"goo/boot","fun-code");
+DEF(Ygen_lookup_miss,"goo/boot","gen-lookup-miss");
+DEF(Ytype_elts,"goo/boot","type-elts");
+DEF(YLstrG,"goo/boot","<str>");
+DEF(YOgen_cache_classes,"goo/boot","@gen-cache-classes");
+DEF(YLtupG,"goo/boot","<tup>");
+DEF(Yfun_arity,"goo/boot","fun-arity");
+DEF(Yprop_setter_setter,"goo/boot","prop-setter-setter");
+DEF(YPvnul,"goo/boot","%vnul");
+DEF(YPprop,"goo/boot","%prop");
+DEF(YDnum_int_bits,"goo/boot","$num-int-bits");
+DEF(YOall2Q,"goo/boot","@all2?");
+DEF(YOvec,"goo/boot","@vec");
+DEF(Yobject_props,"goo/boot","object-props");
+DEF(YLbodyG,"goo/boot","<body>");
+DEF(YPisa,"goo/boot","%isa");
+DEF(Yfun_same_metQ,"goo/boot","fun-same-met?");
+DEF(YLlocG,"goo/boot","<loc>");
+DEF(YOtelt,"goo/boot","@telt");
+DEF(YOfind,"goo/boot","@find");
+DEF(Yprop_setter,"goo/boot","prop-setter");
+DEF(YTrestarts_okQT,"goo/boot","*restarts-ok?*");
+DEF(YLunionG,"goo/boot","<union>");
+DEF(Yfun_env,"goo/boot","fun-env");
+DEF(Yclass_ancestors,"goo/boot","class-ancestors");
+DEF(Yfun_mets_setter,"goo/boot","fun-mets-setter");
+DEF(Ymay_isaQ,"goo/boot","may-isa?");
+DEF(YOgen_cache_singletons_setter,"goo/boot","@gen-cache-singletons-setter");
+DEF(YLenvG,"goo/boot","<env>");
+DEF(Yfun_naryQ_setter,"goo/boot","fun-nary?-setter");
+DEF(YPfalse,"goo/boot","%false");
+DEF(Ygen_cache_missableQ,"goo/boot","gen-cache-missable?");
+DEF(YLvecG,"goo/boot","<vec>");
+DEF(YOanyQ,"goo/boot","@any?");
+DEF(Yfun_spec,"goo/boot","fun-spec");
+DEF(Yfun_mets,"goo/boot","fun-mets");
+DEF(Yclass_gens,"goo/boot","class-gens");
+DEF(YPsymbols,"goo/boot","%symbols");
+DEF(Ygen_src_setter,"goo/boot","gen-src-setter");
+DEF(YPtrue,"goo/boot","%true");
+DEF(YOprune_mets_by_type_at,"goo/boot","@prune-mets-by-type-at");
+DEF(YLfloG,"goo/boot","<flo>");
+DEF(YDmin_int,"goo/boot","$min-int");
+DEF(YLmetG,"goo/boot","<met>");
+DEF(YOvelt_setter,"goo/boot","@velt-setter");
+DEF(Yrefab_class,"goo/boot","refab-class");
+DEF(YOcat2,"goo/boot","@cat2");
+DEF(Ygen_cache_classes,"goo/boot","gen-cache-classes");
+DEF(YOtype_equalQ,"goo/boot","@type-equal?");
+DEF(Ynew,"goo/boot","new");
+DEF(YLmetsG,"goo/boot","<mets>");
+DEF(YOgen_cache_singletons,"goo/boot","@gen-cache-singletons");
+DEF(Ysig_naryQ_setter,"goo/boot","sig-nary?-setter");
+DEF(Yfun_naryQ,"goo/boot","fun-nary?");
+DEF(Ynil,"goo/boot","nil");
+DEF(Ygen_src,"goo/boot","gen-src");
+DEF(Yclass_id_setter,"goo/boot","class-id-setter");
+DEF(YLsubclassG,"goo/boot","<subclass>");
+DEF(Yfun_specs_setter,"goo/boot","fun-specs-setter");
+DEF(Yopts_vec_storage_setter,"goo/boot","opts-vec-storage-setter");
+DEF(Yorder_mets,"goo/boot","order-mets");
+DEF(YOdo_children,"goo/boot","@do-children");
+DEF(Yprop_value_setter,"goo/boot","prop-value-setter");
+DEF(Ysig_naryQ,"goo/boot","sig-nary?");
+DEF(YLintG,"goo/boot","<int>");
+DEF(YTmacros_okQT,"goo/boot","*macros-ok?*");
+DEF(YisaQ,"goo/boot","isa?");
+DEF(YOfun_mets_setter,"goo/boot","@fun-mets-setter");
+DEF(Yclass_id,"goo/boot","class-id");
+DEF(Ysig_unification_vars_setter,"goo/boot","sig-unification-vars-setter");
+DEF(YLflatG,"goo/boot","<flat>");
+DEF(Yfun_specs,"goo/boot","fun-specs");
+DEF(Yopts_vec_storage,"goo/boot","opts-vec-storage");
+DEF(Yfun_val,"goo/boot","fun-val");
+DEF(YLopts_vecG,"goo/boot","<opts-vec>");
+DEF(Ytype_class_setter,"goo/boot","type-class-setter");
+DEF(Ylst,"goo/boot","lst");
+DEF(Ynot,"goo/boot","not");
+DEF(YDdirect_object_class,"goo/boot","$direct-object-class");
+DEF(Yfun_env_setter,"goo/boot","fun-env-setter");
+DEF(YOvelt,"goo/boot","@velt");
+DEF(Yclass_ordered_ancestors,"goo/boot","class-ordered-ancestors");
+DEF(Yclass_prop_len_setter,"goo/boot","class-prop-len-setter");
+DEF(Ygen_lookup_miss_1,"goo/boot","gen-lookup-miss-1");
+DEF(Ygen_cache_missableQ_setter,"goo/boot","gen-cache-missable?-setter");
+DEF(Ygen_cache_classes_setter,"goo/boot","gen-cache-classes-setter");
+DEF(Ysig_unification_vars,"goo/boot","sig-unification-vars");
+DEF(YOgen_cache_arg_pos_setter,"goo/boot","@gen-cache-arg-pos-setter");
+DEF(YTboot_macro_expandersT,"goo/boot","*boot-macro-expanders*");
+DEF(Yone_nil,"goo/boot","one-nil");
+DEF(YLreplace_generic_restartG,"goo/boot","<replace-generic-restart>");
+DEF(Yhead_setter,"goo/boot","head-setter");
+DEF(Yclass_gens_setter,"goo/boot","class-gens-setter");
+DEF(Yfun_sig_setter,"goo/boot","fun-sig-setter");
+DEF(Ytype_class,"goo/boot","type-class");
+DEF(YLparentsG,"goo/boot","<parents>");
+DEF(YOalter,"goo/boot","@alter");
+DEF(Yprop_getter_setter,"goo/boot","prop-getter-setter");
+DEF(YOfun_mets,"goo/boot","@fun-mets");
+DEF(YLsingletonG,"goo/boot","<singleton>");
+DEF(YDgen_cache_singletons_offset,"goo/boot","$gen-cache-singletons-offset");
+DEF(YPearly_dispatch,"goo/boot","%early-dispatch");
+DEF(Yvec,"goo/boot","vec");
+DEF(Yclass_prop_len,"goo/boot","class-prop-len");
+DEF(Yclass_name,"goo/boot","class-name");
+DEF(Yclass_ancestors_setter,"goo/boot","class-ancestors-setter");
+DEF(Yforward_class,"goo/boot","forward-class");
+DEF(YLfunG,"goo/boot","<fun>");
+DEF(Yclass_direct_props_setter,"goo/boot","class-direct-props-setter");
+DEF(Ytup,"goo/boot","tup");
+DEF(YOfill,"goo/boot","@fill");
+DEF(Yhead,"goo/boot","head");
+DEF(Yfun_sig,"goo/boot","fun-sig");
+DEF(Yprop_boundQ,"goo/boot","prop-bound?");
+DEF(YOmets_unspecialized_atQ,"goo/boot","@mets-unspecialized-at?");
+DEF(YTboot_macro_module_namesT,"goo/boot","*boot-macro-module-names*");
+DEF(YOlst,"goo/boot","@lst");
+DEF(YOclass_ancestors,"goo/boot","@class-ancestors");
+DEF(YLnumG,"goo/boot","<num>");
+DEF(Yprop_getter,"goo/boot","prop-getter");
+DEF(YOorder_specs,"goo/boot","@order-specs");
+DEF(Yunexec,"goo/boot","unexec");
+DEF(YTboot_macro_namesT,"goo/boot","*boot-macro-names*");
+DEF(YOgen_cache_arg_pos,"goo/boot","@gen-cache-arg-pos");
+DEF(Yprop_init_setter,"goo/boot","prop-init-setter");
+DEF(Yclass_direct_props,"goo/boot","class-direct-props");
+DEF(YOOEE,"goo/boot","@@==");
+DEF(YPsnul,"goo/boot","%snul");
+DEF(YOfun_unification_vars,"goo/boot","@fun-unification-vars");
+DEF(Yfun_src_setter,"goo/boot","fun-src-setter");
+DEF(Yclass_descendents_setter,"goo/boot","class-descendents-setter");
+DEF(YLlstG,"goo/boot","<lst>");
+DEF(YOallQ,"goo/boot","@all?");
+DEF(Yfab_class,"goo/boot","fab-class");
+DEF(Yprop_init,"goo/boot","prop-init");
+DEF(YTearly_classesT,"goo/boot","*early-classes*");
+DEF(YPPmacro,"goo/boot","%%macro");
+DEF(YOprecise_specQ,"goo/boot","@precise-spec?");
+DEF(YPTused_symbols_too_earlyT,"goo/boot","%*used-symbols-too-early*");
+DEF(Yobject_class,"goo/boot","object-class");
+DEF(Ygen_cache_singletons_setter,"goo/boot","gen-cache-singletons-setter");
+DEF(Yfun_src,"goo/boot","fun-src");
+DEF(Yclass_descendents,"goo/boot","class-descendents");
+DEF(YDmissed_dispatch,"goo/boot","$missed-dispatch");
+DEF(Ygen_refs_setter,"goo/boot","gen-refs-setter");
+DEF(Yprop_value,"goo/boot","prop-value");
+DEF(YPmet_prop_len,"goo/boot","%met-prop-len");
+DEF(YOdo,"goo/boot","@do");
+DEF(YLspecsG,"goo/boot","<specs>");
+DEF(Ygen_lookup_miss_1_using,"goo/boot","gen-lookup-miss-1-using");
+DEF(YOfun_val,"goo/boot","@fun-val");
+DEF(YPwith_monitor,"goo/boot","%with-monitor");
+DEF(YLchrG,"goo/boot","<chr>");
+DEF(Ygen_cache_singletons,"goo/boot","gen-cache-singletons");
+DEF(Yfun_names_setter,"goo/boot","fun-names-setter");
+DEF(YPdefine_method,"goo/boot","%define-method");
+DEF(Ydel_class,"goo/boot","del-class");
+DEF(Ysig_specs_setter,"goo/boot","sig-specs-setter");
+DEF(Ygen_refs,"goo/boot","gen-refs");
+DEF(YOrevX,"goo/boot","@rev!");
+DEF(Yclass_forward_setter,"goo/boot","class-forward-setter");
+DEF(YOunion_specQ,"goo/boot","@union-spec?");
+DEF(Yopts_count_setter,"goo/boot","opts-count-setter");
+DEF(YLseqXG,"goo/boot","<seq!>");
+DEF(YDgen_cache_classes_offset,"goo/boot","$gen-cache-classes-offset");
+DEF(Ynul,"goo/boot","nul");
+DEF(YPprop_unbound_error,"goo/boot","%prop-unbound-error");
+DEF(Ysig_specs,"goo/boot","sig-specs");
+DEF(Yfab_sym,"goo/boot","fab-sym");
+DEF(YLsigG,"goo/boot","<sig>");
+DEF(YOfun_arity,"goo/boot","@fun-arity");
+DEF(Yclass_forward,"goo/boot","class-forward");
+DEF(Ysig_val_setter,"goo/boot","sig-val-setter");
+DEF(YOlst_helper,"goo/boot","@lst-helper");
+DEF(YOfold,"goo/boot","@fold");
+DEF(YsubtypeQ,"goo/boot","subtype?");
+DEF(Yfun_names,"goo/boot","fun-names");
+DEF(Yopts_count,"goo/boot","opts-count");
+DEF(Yfind_setter,"goo/boot","find-setter");
+DEF(Ytype_object_setter,"goo/boot","type-object-setter");
+DEF(Yhandler_info_message,"goo/boot","handler-info-message");
+DEF(Yclass_ordered_props,"goo/boot","class-ordered-props");
+DEF(Yincongruent_method_error,"goo/boot","incongruent-method-error");
+DEF(Yfile_opening_error,"goo/boot","file-opening-error");
+DEF(YOsubclass_specQ,"goo/boot","@subclass-spec?");
+DEF(Ysym_name_setter,"goo/boot","sym-name-setter");
+DEF(Ymet_app_unify,"goo/boot","met-app-unify");
+DEF(Ygen_from_met,"goo/boot","gen-from-met");
+DEF(Yensure_singleton_cache,"goo/boot","ensure-singleton-cache");
+DEF(YPadd_prop,"goo/boot","%add-prop");
+DEF(YOOemptyQ,"goo/boot","@@empty?");
+DEF(Ysig_val,"goo/boot","sig-val");
+DEF(YLlogG,"goo/boot","<log>");
+DEF(Ytype_object,"goo/boot","type-object");
+DEF(YOmets_subclasses_at,"goo/boot","@mets-subclasses-at");
+DEF(Yfun_name_setter,"goo/boot","fun-name-setter");
+DEF(YLclassG,"goo/boot","<class>");
+DEF(Yerror,"goo/boot","error");
+DEF(Yfun_unification_vars,"goo/boot","fun-unification-vars");
+DEF(Ynul_prop,"goo/boot","nul-prop");
+DEF(Ypatch_early_classes,"goo/boot","patch-early-classes");
 
 /* FORWARD QUOTATIONS: */
 
-DEFLIT(lit_6);
-DEFLIT(lit_14);
-DEFLIT(lit_87);
-DEFLIT(lit_127);
-DEFLIT(lit_135);
-DEFLIT(lit_319);
-DEFLIT(lit_245);
-DEFLIT(lit_374);
-DEFLIT(lit_305);
-DEFLIT(lit_365);
-DEFLIT(lit_154);
-DEFLIT(lit_356);
-DEFLIT(lit_94);
-DEFLIT(lit_19);
-DEFLIT(lit_62);
-DEFLIT(lit_345);
-DEFLIT(lit_186);
-DEFLIT(lit_7);
-DEFLIT(lit_213);
-DEFLIT(lit_93);
-DEFLIT(lit_244);
-DEFLIT(lit_373);
-DEFLIT(lit_29);
-DEFLIT(lit_364);
-DEFLIT(lit_100);
-DEFLIT(lit_141);
-DEFLIT(lit_330);
-DEFLIT(lit_68);
-DEFLIT(lit_238);
-DEFLIT(lit_70);
-DEFLIT(lit_275);
-DEFLIT(lit_35);
-DEFLIT(lit_153);
-DEFLIT(lit_42);
-DEFLIT(lit_264);
-DEFLIT(lit_163);
-DEFLIT(lit_304);
-DEFLIT(lit_232);
-DEFLIT(lit_99);
-DEFLIT(lit_286);
-DEFLIT(lit_194);
-DEFLIT(lit_126);
-DEFLIT(lit_134);
-DEFLIT(lit_243);
-DEFLIT(lit_9);
-DEFLIT(lit_176);
-DEFLIT(lit_21);
-DEFLIT(lit_167);
-DEFLIT(lit_343);
-DEFLIT(lit_206);
-DEFLIT(lit_225);
-DEFLIT(lit_138);
-DEFLIT(lit_74);
-DEFLIT(lit_316);
-DEFLIT(lit_274);
-DEFLIT(lit_41);
-DEFLIT(lit_106);
-DEFLIT(lit_146);
-DEFLIT(lit_48);
-DEFLIT(lit_185);
-DEFLIT(lit_231);
-DEFLIT(lit_285);
-DEFLIT(lit_73);
-DEFLIT(lit_263);
-DEFLIT(lit_315);
-DEFLIT(lit_18);
-DEFLIT(lit_10);
-DEFLIT(lit_303);
-DEFLIT(lit_363);
-DEFLIT(lit_152);
-DEFLIT(lit_140);
-DEFLIT(lit_80);
-DEFLIT(lit_105);
-DEFLIT(lit_47);
-DEFLIT(lit_112);
-DEFLIT(lit_291);
-DEFLIT(lit_354);
-DEFLIT(lit_284);
-DEFLIT(lit_193);
-DEFLIT(lit_314);
-DEFLIT(lit_27);
-DEFLIT(lit_219);
-DEFLIT(lit_342);
-DEFLIT(lit_125);
-DEFLIT(lit_79);
-DEFLIT(lit_17);
-DEFLIT(lit_174);
-DEFLIT(lit_230);
-DEFLIT(lit_86);
-DEFLIT(lit_328);
-DEFLIT(lit_368);
-DEFLIT(lit_111);
-DEFLIT(lit_151);
-DEFLIT(lit_53);
-DEFLIT(lit_313);
-DEFLIT(lit_118);
-DEFLIT(lit_290);
-DEFLIT(lit_283);
-DEFLIT(lit_273);
-DEFLIT(lit_262);
-DEFLIT(lit_302);
-DEFLIT(lit_362);
-DEFLIT(lit_218);
-DEFLIT(lit_85);
-DEFLIT(lit_192);
-DEFLIT(lit_16);
-DEFLIT(lit_173);
-DEFLIT(lit_92);
-DEFLIT(lit_204);
-DEFLIT(lit_139);
-DEFLIT(lit_327);
-DEFLIT(lit_241);
-DEFLIT(lit_255);
-DEFLIT(lit_60);
-DEFLIT(lit_353);
-DEFLIT(lit_145);
-DEFLIT(lit_228);
-DEFLIT(lit_165);
-DEFLIT(lit_371);
-DEFLIT(lit_340);
-DEFLIT(lit_272);
-DEFLIT(lit_312);
-DEFLIT(lit_28);
-DEFLIT(lit_217);
-DEFLIT(lit_91);
-DEFLIT(lit_132);
-DEFLIT(lit_326);
-DEFLIT(lit_124);
-DEFLIT(lit_261);
-DEFLIT(lit_15);
-DEFLIT(lit_34);
-DEFLIT(lit_301);
-DEFLIT(lit_59);
-DEFLIT(lit_98);
-DEFLIT(lit_281);
-DEFLIT(lit_184);
 DEFLIT(lit_66);
-DEFLIT(lit_254);
-DEFLIT(lit_150);
-DEFLIT(lit_203);
-DEFLIT(lit_33);
-DEFLIT(lit_227);
-DEFLIT(lit_40);
-DEFLIT(lit_166);
-DEFLIT(lit_97);
-DEFLIT(lit_216);
-DEFLIT(lit_280);
-DEFLIT(lit_271);
-DEFLIT(lit_311);
-DEFLIT(lit_296);
-DEFLIT(lit_104);
-DEFLIT(lit_325);
-DEFLIT(lit_72);
-DEFLIT(lit_183);
-DEFLIT(lit_253);
-DEFLIT(lit_2);
-DEFLIT(lit_338);
-DEFLIT(lit_39);
-DEFLIT(lit_240);
-DEFLIT(lit_161);
-DEFLIT(lit_226);
+DEFLIT(lit_180);
 DEFLIT(lit_202);
-DEFLIT(lit_78);
-DEFLIT(lit_103);
-DEFLIT(lit_215);
-DEFLIT(lit_131);
-DEFLIT(lit_123);
-DEFLIT(lit_317);
-DEFLIT(lit_361);
-DEFLIT(lit_351);
-DEFLIT(lit_270);
-DEFLIT(lit_190);
-DEFLIT(lit_182);
-DEFLIT(lit_252);
-DEFLIT(lit_175);
-DEFLIT(lit_45);
-DEFLIT(lit_77);
-DEFLIT(lit_324);
-DEFLIT(lit_239);
-DEFLIT(lit_160);
-DEFLIT(lit_110);
-DEFLIT(lit_164);
-DEFLIT(lit_52);
-DEFLIT(lit_336);
-DEFLIT(lit_260);
-DEFLIT(lit_310);
-DEFLIT(lit_337);
-DEFLIT(lit_289);
-DEFLIT(lit_214);
-DEFLIT(lit_144);
-DEFLIT(lit_201);
-DEFLIT(lit_67);
-DEFLIT(lit_3);
-DEFLIT(lit_181);
+DEFLIT(lit_347);
+DEFLIT(lit_300);
+DEFLIT(lit_33);
+DEFLIT(lit_1);
+DEFLIT(lit_325);
+DEFLIT(lit_132);
+DEFLIT(lit_40);
 DEFLIT(lit_251);
+DEFLIT(lit_173);
+DEFLIT(lit_225);
+DEFLIT(lit_164);
+DEFLIT(lit_97);
+DEFLIT(lit_270);
+DEFLIT(lit_260);
+DEFLIT(lit_374);
+DEFLIT(lit_258);
+DEFLIT(lit_65);
+DEFLIT(lit_213);
+DEFLIT(lit_162);
+DEFLIT(lit_14);
+DEFLIT(lit_72);
 DEFLIT(lit_299);
-DEFLIT(lit_360);
-DEFLIT(lit_149);
-DEFLIT(lit_350);
-DEFLIT(lit_279);
-DEFLIT(lit_84);
-DEFLIT(lit_293);
-DEFLIT(lit_109);
-DEFLIT(lit_51);
-DEFLIT(lit_269);
-DEFLIT(lit_26);
-DEFLIT(lit_116);
-DEFLIT(lit_159);
-DEFLIT(lit_224);
-DEFLIT(lit_288);
-DEFLIT(lit_119);
-DEFLIT(lit_323);
-DEFLIT(lit_349);
-DEFLIT(lit_259);
-DEFLIT(lit_13);
+DEFLIT(lit_239);
+DEFLIT(lit_39);
 DEFLIT(lit_250);
+DEFLIT(lit_360);
+DEFLIT(lit_150);
+DEFLIT(lit_350);
+DEFLIT(lit_280);
+DEFLIT(lit_201);
+DEFLIT(lit_104);
+DEFLIT(lit_190);
+DEFLIT(lit_46);
+DEFLIT(lit_238);
+DEFLIT(lit_139);
+DEFLIT(lit_259);
+DEFLIT(lit_310);
+DEFLIT(lit_123);
+DEFLIT(lit_337);
 DEFLIT(lit_212);
-DEFLIT(lit_130);
-DEFLIT(lit_83);
-DEFLIT(lit_122);
-DEFLIT(lit_309);
-DEFLIT(lit_359);
-DEFLIT(lit_90);
+DEFLIT(lit_145);
+DEFLIT(lit_324);
+DEFLIT(lit_182);
+DEFLIT(lit_297);
+DEFLIT(lit_103);
+DEFLIT(lit_45);
+DEFLIT(lit_84);
+DEFLIT(lit_224);
+DEFLIT(lit_289);
+DEFLIT(lit_23);
+DEFLIT(lit_110);
+DEFLIT(lit_279);
+DEFLIT(lit_336);
+DEFLIT(lit_131);
 DEFLIT(lit_200);
-DEFLIT(lit_207);
-DEFLIT(lit_115);
-DEFLIT(lit_298);
-DEFLIT(lit_58);
-DEFLIT(lit_177);
-DEFLIT(lit_189);
-DEFLIT(lit_25);
+DEFLIT(lit_77);
+DEFLIT(lit_364);
+DEFLIT(lit_211);
+DEFLIT(lit_269);
+DEFLIT(lit_309);
+DEFLIT(lit_181);
+DEFLIT(lit_109);
+DEFLIT(lit_78);
+DEFLIT(lit_52);
 DEFLIT(lit_237);
+DEFLIT(lit_223);
+DEFLIT(lit_116);
+DEFLIT(lit_296);
+DEFLIT(lit_22);
+DEFLIT(lit_172);
+DEFLIT(lit_335);
+DEFLIT(lit_189);
+DEFLIT(lit_83);
+DEFLIT(lit_13);
+DEFLIT(lit_122);
+DEFLIT(lit_295);
+DEFLIT(lit_363);
+DEFLIT(lit_51);
+DEFLIT(lit_138);
+DEFLIT(lit_90);
+DEFLIT(lit_0);
+DEFLIT(lit_115);
+DEFLIT(lit_163);
+DEFLIT(lit_58);
+DEFLIT(lit_199);
+DEFLIT(lit_365);
+DEFLIT(lit_222);
+DEFLIT(lit_231);
+DEFLIT(lit_20);
+DEFLIT(lit_323);
+DEFLIT(lit_130);
 DEFLIT(lit_249);
 DEFLIT(lit_171);
-DEFLIT(lit_223);
-DEFLIT(lit_162);
-DEFLIT(lit_322);
-DEFLIT(lit_268);
-DEFLIT(lit_55);
-DEFLIT(lit_258);
 DEFLIT(lit_32);
-DEFLIT(lit_12);
-DEFLIT(lit_211);
-DEFLIT(lit_89);
-DEFLIT(lit_4);
-DEFLIT(lit_1);
-DEFLIT(lit_297);
-DEFLIT(lit_57);
-DEFLIT(lit_96);
-DEFLIT(lit_121);
-DEFLIT(lit_369);
-DEFLIT(lit_64);
-DEFLIT(lit_248);
-DEFLIT(lit_358);
-DEFLIT(lit_148);
-DEFLIT(lit_348);
-DEFLIT(lit_178);
-DEFLIT(lit_278);
-DEFLIT(lit_335);
-DEFLIT(lit_188);
-DEFLIT(lit_31);
-DEFLIT(lit_236);
-DEFLIT(lit_137);
-DEFLIT(lit_38);
-DEFLIT(lit_257);
-DEFLIT(lit_308);
-DEFLIT(lit_11);
-DEFLIT(lit_95);
+DEFLIT(lit_240);
 DEFLIT(lit_210);
-DEFLIT(lit_143);
-DEFLIT(lit_198);
-DEFLIT(lit_129);
-DEFLIT(lit_180);
-DEFLIT(lit_63);
-DEFLIT(lit_295);
-DEFLIT(lit_195);
-DEFLIT(lit_339);
-DEFLIT(lit_24);
-DEFLIT(lit_347);
-DEFLIT(lit_222);
-DEFLIT(lit_287);
-DEFLIT(lit_277);
+DEFLIT(lit_278);
+DEFLIT(lit_268);
+DEFLIT(lit_89);
+DEFLIT(lit_308);
+DEFLIT(lit_12);
+DEFLIT(lit_362);
+DEFLIT(lit_57);
+DEFLIT(lit_144);
 DEFLIT(lit_334);
-DEFLIT(lit_37);
-DEFLIT(lit_372);
-DEFLIT(lit_133);
-DEFLIT(lit_44);
-DEFLIT(lit_76);
-DEFLIT(lit_300);
-DEFLIT(lit_318);
-DEFLIT(lit_329);
-DEFLIT(lit_158);
-DEFLIT(lit_101);
-DEFLIT(lit_209);
-DEFLIT(lit_107);
-DEFLIT(lit_5);
-DEFLIT(lit_267);
-DEFLIT(lit_117);
-DEFLIT(lit_69);
-DEFLIT(lit_307);
-DEFLIT(lit_367);
-DEFLIT(lit_157);
-DEFLIT(lit_265);
-DEFLIT(lit_282);
-DEFLIT(lit_341);
-DEFLIT(lit_229);
-DEFLIT(lit_23);
-DEFLIT(lit_235);
-DEFLIT(lit_205);
-DEFLIT(lit_221);
-DEFLIT(lit_233);
-DEFLIT(lit_242);
-DEFLIT(lit_54);
-DEFLIT(lit_43);
-DEFLIT(lit_61);
-DEFLIT(lit_65);
-DEFLIT(lit_71);
-DEFLIT(lit_75);
+DEFLIT(lit_346);
+DEFLIT(lit_236);
+DEFLIT(lit_121);
+DEFLIT(lit_359);
+DEFLIT(lit_64);
+DEFLIT(lit_149);
+DEFLIT(lit_370);
+DEFLIT(lit_198);
+DEFLIT(lit_322);
+DEFLIT(lit_31);
+DEFLIT(lit_215);
+DEFLIT(lit_19);
+DEFLIT(lit_21);
+DEFLIT(lit_38);
+DEFLIT(lit_248);
 DEFLIT(lit_170);
-DEFLIT(lit_108);
-DEFLIT(lit_50);
-DEFLIT(lit_333);
-DEFLIT(lit_172);
-DEFLIT(lit_187);
-DEFLIT(lit_179);
+DEFLIT(lit_241);
+DEFLIT(lit_348);
+DEFLIT(lit_372);
+DEFLIT(lit_95);
 DEFLIT(lit_191);
-DEFLIT(lit_30);
-DEFLIT(lit_197);
-DEFLIT(lit_36);
-DEFLIT(lit_46);
-DEFLIT(lit_128);
-DEFLIT(lit_136);
-DEFLIT(lit_247);
-DEFLIT(lit_256);
-DEFLIT(lit_344);
-DEFLIT(lit_366);
-DEFLIT(lit_156);
-DEFLIT(lit_332);
-DEFLIT(lit_82);
-DEFLIT(lit_22);
-DEFLIT(lit_220);
-DEFLIT(lit_49);
-DEFLIT(lit_196);
+DEFLIT(lit_11);
+DEFLIT(lit_226);
+DEFLIT(lit_63);
+DEFLIT(lit_267);
 DEFLIT(lit_321);
+DEFLIT(lit_307);
+DEFLIT(lit_70);
+DEFLIT(lit_358);
+DEFLIT(lit_161);
+DEFLIT(lit_333);
+DEFLIT(lit_37);
+DEFLIT(lit_209);
+DEFLIT(lit_92);
 DEFLIT(lit_102);
-DEFLIT(lit_352);
-DEFLIT(lit_114);
-DEFLIT(lit_169);
-DEFLIT(lit_208);
-DEFLIT(lit_276);
-DEFLIT(lit_266);
-DEFLIT(lit_306);
-DEFLIT(lit_8);
-DEFLIT(lit_294);
-DEFLIT(lit_142);
-DEFLIT(lit_81);
+DEFLIT(lit_44);
+DEFLIT(lit_129);
+DEFLIT(lit_371);
+DEFLIT(lit_247);
+DEFLIT(lit_272);
+DEFLIT(lit_320);
+DEFLIT(lit_235);
+DEFLIT(lit_69);
+DEFLIT(lit_179);
+DEFLIT(lit_76);
+DEFLIT(lit_143);
+DEFLIT(lit_101);
+DEFLIT(lit_43);
+DEFLIT(lit_108);
+DEFLIT(lit_277);
+DEFLIT(lit_319);
 DEFLIT(lit_246);
 DEFLIT(lit_375);
-DEFLIT(lit_234);
-DEFLIT(lit_155);
+DEFLIT(lit_342);
+DEFLIT(lit_266);
+DEFLIT(lit_306);
+DEFLIT(lit_9);
+DEFLIT(lit_75);
+DEFLIT(lit_184);
+DEFLIT(lit_332);
+DEFLIT(lit_136);
+DEFLIT(lit_178);
+DEFLIT(lit_169);
+DEFLIT(lit_18);
+DEFLIT(lit_107);
+DEFLIT(lit_50);
+DEFLIT(lit_318);
+DEFLIT(lit_232);
+DEFLIT(lit_114);
+DEFLIT(lit_276);
+DEFLIT(lit_128);
+DEFLIT(lit_285);
 DEFLIT(lit_357);
-DEFLIT(lit_147);
-DEFLIT(lit_370);
-DEFLIT(lit_88);
-DEFLIT(lit_199);
-DEFLIT(lit_320);
-DEFLIT(lit_20);
+DEFLIT(lit_148);
+DEFLIT(lit_376);
+DEFLIT(lit_196);
+DEFLIT(lit_187);
+DEFLIT(lit_81);
+DEFLIT(lit_8);
+DEFLIT(lit_369);
+DEFLIT(lit_265);
+DEFLIT(lit_317);
+DEFLIT(lit_177);
 DEFLIT(lit_113);
 DEFLIT(lit_56);
-DEFLIT(lit_331);
-DEFLIT(lit_0);
+DEFLIT(lit_142);
 DEFLIT(lit_120);
-DEFLIT(lit_168);
-DEFLIT(lit_346);
-DEFLIT(lit_355);
+DEFLIT(lit_344);
+DEFLIT(lit_345);
+DEFLIT(lit_354);
+DEFLIT(lit_373);
+DEFLIT(lit_244);
+DEFLIT(lit_293);
+DEFLIT(lit_356);
+DEFLIT(lit_287);
+DEFLIT(lit_349);
+DEFLIT(lit_316);
+DEFLIT(lit_127);
+DEFLIT(lit_378);
+DEFLIT(lit_3);
+DEFLIT(lit_30);
+DEFLIT(lit_207);
+DEFLIT(lit_55);
+DEFLIT(lit_94);
+DEFLIT(lit_135);
+DEFLIT(lit_288);
+DEFLIT(lit_343);
+DEFLIT(lit_302);
+DEFLIT(lit_312);
+DEFLIT(lit_341);
+DEFLIT(lit_275);
+DEFLIT(lit_377);
+DEFLIT(lit_153);
+DEFLIT(lit_242);
+DEFLIT(lit_286);
+DEFLIT(lit_264);
+DEFLIT(lit_195);
+DEFLIT(lit_124);
+DEFLIT(lit_315);
+DEFLIT(lit_68);
+DEFLIT(lit_36);
+DEFLIT(lit_331);
 DEFLIT(lit_292);
+DEFLIT(lit_192);
+DEFLIT(lit_79);
+DEFLIT(lit_197);
+DEFLIT(lit_82);
+DEFLIT(lit_208);
+DEFLIT(lit_88);
+DEFLIT(lit_93);
+DEFLIT(lit_96);
+DEFLIT(lit_234);
+DEFLIT(lit_304);
+DEFLIT(lit_7);
+DEFLIT(lit_368);
+DEFLIT(lit_220);
+DEFLIT(lit_61);
+DEFLIT(lit_100);
+DEFLIT(lit_67);
+DEFLIT(lit_330);
+DEFLIT(lit_71);
+DEFLIT(lit_165);
+DEFLIT(lit_175);
+DEFLIT(lit_176);
+DEFLIT(lit_188);
+DEFLIT(lit_206);
+DEFLIT(lit_141);
+DEFLIT(lit_35);
+DEFLIT(lit_257);
+DEFLIT(lit_41);
+DEFLIT(lit_355);
+DEFLIT(lit_49);
+DEFLIT(lit_147);
+DEFLIT(lit_168);
+DEFLIT(lit_42);
+DEFLIT(lit_221);
+DEFLIT(lit_230);
+DEFLIT(lit_167);
+DEFLIT(lit_28);
+DEFLIT(lit_87);
+DEFLIT(lit_157);
+DEFLIT(lit_99);
+DEFLIT(lit_274);
+DEFLIT(lit_194);
+DEFLIT(lit_314);
+DEFLIT(lit_158);
+DEFLIT(lit_126);
+DEFLIT(lit_6);
+DEFLIT(lit_243);
+DEFLIT(lit_367);
+DEFLIT(lit_219);
+DEFLIT(lit_329);
+DEFLIT(lit_263);
+DEFLIT(lit_74);
+DEFLIT(lit_303);
+DEFLIT(lit_29);
+DEFLIT(lit_284);
+DEFLIT(lit_245);
+DEFLIT(lit_186);
+DEFLIT(lit_339);
+DEFLIT(lit_256);
+DEFLIT(lit_152);
+DEFLIT(lit_159);
+DEFLIT(lit_205);
+DEFLIT(lit_106);
+DEFLIT(lit_48);
+DEFLIT(lit_134);
+DEFLIT(lit_229);
+DEFLIT(lit_156);
+DEFLIT(lit_233);
+DEFLIT(lit_328);
+DEFLIT(lit_73);
+DEFLIT(lit_5);
+DEFLIT(lit_218);
+DEFLIT(lit_283);
+DEFLIT(lit_273);
+DEFLIT(lit_313);
+DEFLIT(lit_80);
+DEFLIT(lit_105);
+DEFLIT(lit_119);
+DEFLIT(lit_47);
+DEFLIT(lit_10);
+DEFLIT(lit_185);
+DEFLIT(lit_255);
+DEFLIT(lit_112);
+DEFLIT(lit_160);
+DEFLIT(lit_340);
+DEFLIT(lit_174);
+DEFLIT(lit_228);
+DEFLIT(lit_27);
+DEFLIT(lit_282);
+DEFLIT(lit_204);
+DEFLIT(lit_125);
+DEFLIT(lit_298);
+DEFLIT(lit_351);
+DEFLIT(lit_366);
+DEFLIT(lit_217);
+DEFLIT(lit_327);
+DEFLIT(lit_86);
+DEFLIT(lit_17);
+DEFLIT(lit_137);
+DEFLIT(lit_353);
+DEFLIT(lit_111);
+DEFLIT(lit_155);
+DEFLIT(lit_54);
+DEFLIT(lit_62);
+DEFLIT(lit_193);
+DEFLIT(lit_294);
+DEFLIT(lit_254);
+DEFLIT(lit_118);
+DEFLIT(lit_133);
+DEFLIT(lit_227);
+DEFLIT(lit_166);
+DEFLIT(lit_26);
+DEFLIT(lit_338);
+DEFLIT(lit_262);
+DEFLIT(lit_85);
+DEFLIT(lit_4);
+DEFLIT(lit_291);
+DEFLIT(lit_216);
+DEFLIT(lit_146);
+DEFLIT(lit_203);
+DEFLIT(lit_53);
+DEFLIT(lit_2);
+DEFLIT(lit_24);
+DEFLIT(lit_183);
+DEFLIT(lit_16);
+DEFLIT(lit_253);
+DEFLIT(lit_301);
+DEFLIT(lit_117);
+DEFLIT(lit_151);
+DEFLIT(lit_352);
+DEFLIT(lit_60);
+DEFLIT(lit_326);
+DEFLIT(lit_305);
+DEFLIT(lit_271);
+DEFLIT(lit_34);
+DEFLIT(lit_290);
+DEFLIT(lit_25);
+DEFLIT(lit_154);
+DEFLIT(lit_91);
+DEFLIT(lit_261);
+DEFLIT(lit_252);
+DEFLIT(lit_214);
+DEFLIT(lit_59);
+DEFLIT(lit_281);
+DEFLIT(lit_98);
+DEFLIT(lit_140);
+DEFLIT(lit_311);
+DEFLIT(lit_15);
+DEFLIT(lit_361);
 
 /* FUNCTIONS: */
 
@@ -774,8 +781,8 @@ extern P YPvecX (P);
 extern P YPvec (P);
 extern P YPstr_eqQ_loop (P,P,P,P);
 extern P YPstr_eqQ (P,P);
-extern P YPcompute_parents (P);
-extern P YPdefine_parent (P,P);
+extern P YPcompute_ancestors (P);
+extern P YPdefine_parents (P,P);
 extern P YPPsym (P);
 extern P YPsym_nam_setter (P,P);
 extern P YPsym_nam (P);
@@ -1146,7 +1153,7 @@ LOCFOR(fun_unconstrained_class_459);
 LOCFOR(fun_unconstrained_class_in_parents_460);
 LOCFOR(fun_remove_next_461);
 LOCFOR(fun_merge_lists_462);
-FUNFOR(Yclass_ordered_parents);
+FUNFOR(Yclass_ordered_ancestors);
 FUNFOR(YOclass_direct_props);
 FUNFOR(Yclass_ordered_props);
 FUNFOR(Ydel_class);
@@ -1177,21 +1184,21 @@ LOCFOR(fun_490);
 FUNFOR(YPprop);
 extern P YPupdate_instance_for_changed_class (P);
 FUNFOR(Yupdate_instance_for_changed_class);
-FUNFOR(Yfab_gen);
+LOCFOR(fun_494);
 LOCFOR(fun_495);
+FUNFOR(Ypatch_early_classes);
+FUNFOR(Yfab_gen);
+LOCFOR(fun_498);
 FUNFOR(Ygen_from_met);
 FUNFOR(YPdefine_method);
 FUNFOR(Yunexec);
-LOCFOR(fun_loop_499);
-LOCFOR(fun_new_500);
-LOCFOR(fun_501);
-LOCFOR(fun_subtypeQ_502);
-LOCFOR(fun_503);
-LOCFOR(fun_subtypeQ_504);
-LOCFOR(fun_505);
-LOCFOR(fun_subtypeQ_506);
+LOCFOR(fun_loop_502);
+LOCFOR(fun_new_503);
+LOCFOR(fun_504);
+LOCFOR(fun_subtypeQ_505);
+LOCFOR(fun_506);
 LOCFOR(fun_subtypeQ_507);
-LOCFOR(fun_subtypeQ_508);
+LOCFOR(fun_508);
 LOCFOR(fun_subtypeQ_509);
 LOCFOR(fun_subtypeQ_510);
 LOCFOR(fun_subtypeQ_511);
@@ -1199,23 +1206,26 @@ LOCFOR(fun_subtypeQ_512);
 LOCFOR(fun_subtypeQ_513);
 LOCFOR(fun_subtypeQ_514);
 LOCFOR(fun_subtypeQ_515);
-LOCFOR(fun_isaQ_516);
-LOCFOR(fun_isaQ_517);
-LOCFOR(fun_isaQ_518);
-LOCFOR(fun_519);
+LOCFOR(fun_subtypeQ_516);
+LOCFOR(fun_subtypeQ_517);
+LOCFOR(fun_subtypeQ_518);
+LOCFOR(fun_isaQ_519);
 LOCFOR(fun_isaQ_520);
-LOCFOR(fun_order_specs_521);
-LOCFOR(fun_order_specs_522);
-LOCFOR(fun_order_specs_523);
+LOCFOR(fun_isaQ_521);
+LOCFOR(fun_522);
+LOCFOR(fun_isaQ_523);
 LOCFOR(fun_order_specs_524);
 LOCFOR(fun_order_specs_525);
 LOCFOR(fun_order_specs_526);
 LOCFOR(fun_order_specs_527);
-LOCFOR(fun_may_isaQ_528);
-LOCFOR(fun_may_isaQ_529);
-LOCFOR(fun_may_isaQ_530);
-LOCFOR(fun_loop_531);
+LOCFOR(fun_order_specs_528);
+LOCFOR(fun_order_specs_529);
+LOCFOR(fun_order_specs_530);
+LOCFOR(fun_may_isaQ_531);
 LOCFOR(fun_may_isaQ_532);
+LOCFOR(fun_may_isaQ_533);
+LOCFOR(fun_loop_534);
+LOCFOR(fun_may_isaQ_535);
 extern P YPmacro (P,P,P);
 extern P Y___main_0___ ();
 extern P Y___main_1___ ();
@@ -2110,7 +2120,7 @@ loop:
   return T0;
 }
 
-P YPcompute_parents(P parent_) {
+P YPcompute_ancestors(P parent_) {
   P T7,T6,T5,T4,T3,T2,T1,T0;
   P a1;
 loop:
@@ -2122,28 +2132,32 @@ loop:
   } else {
     T7 = (P)YPclass_parents(parent_);
     T6 = (P)YPhead(T7);
-    T5 = (P)YPcompute_parents(T6);
+    T5 = (P)YPcompute_ancestors(T6);
     T4 = (P)YPpair(parent_,T5);
     T0 = T4;
   }
   return T0;
 }
 
-P YPdefine_parent(P class_,P direct_parent_) {
-  P T5,T4,T3,T2,T1,T0;
+P YPdefine_parents(P class_,P parents_) {
+  P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2;
 loop:
+  T0 = (P)YPpair(class_,VARREF(YTearly_classesT));
+  VARSET(YTearly_classesT,T0);
   (P)YPclass_prop_len_setter(YPint((P)0),class_);
   (P)YPclass_forward_setter(YPfalse,class_);
-  T0 = (P)YPpair(direct_parent_,VARREF(Ynil));
-  (P)YPclass_parents_setter(T0,class_);
-  T2 = (P)YPcompute_parents(direct_parent_);
+  (P)YPclass_parents_setter(parents_,class_);
+  T3 = (P)YPhead(parents_);
+  T2 = (P)YPcompute_ancestors(T3);
   T1 = (P)YPpair(class_,T2);
   (P)YPclass_ancestors_setter(T1,class_);
-  T5 = (P)YPclass_descendents(direct_parent_);
-  T4 = (P)YPpair(class_,T5);
-  T3 = (P)YPclass_descendents_setter(T4,direct_parent_);
-  return T3;
+  T7 = (P)YPhead(parents_);
+  T6 = (P)YPclass_descendents(T7);
+  T5 = (P)YPpair(class_,T6);
+  T8 = (P)YPhead(parents_);
+  T4 = (P)YPclass_descendents_setter(T5,T8);
+  return T4;
 }
 
 P YPPsym(P raw_str_) {
@@ -5915,7 +5929,7 @@ LINK_STACK();
   ARG(return_, 0);
 loop:
   T2 = CALL2(1,VARREF(Ylst),FREEREF(0),FREEREF(1));
-  T1 = CALLN(1,VARREF(Ynew),5,VARREF(YLsimple_handler_infoG),VARREF(Yhandler_info_message),LITREF(lit_213),VARREF(Yhandler_info_arguments),T2);
+  T1 = CALLN(1,VARREF(Ynew),5,VARREF(YLsimple_handler_infoG),VARREF(Yhandler_info_message),LITREF(lit_215),VARREF(Yhandler_info_arguments),T2);
   T3 = fun_371;
   T4 = FUNFAB(fun_372,2,return_,FREEREF(1));
   T5 = FUNFAB(fun_373,2,FREEREF(0),FREEREF(1));
@@ -6176,7 +6190,7 @@ LINK_STACK();
 loop:
   T1 = (P)YOemptyQ(ps_);
   if (T1 != YPfalse) {
-    T2 = CALLN(1,VARREF(Yerror),5,LITREF(lit_229),LITREF(lit_230),FREEREF(0),FREEREF(1),FREEREF(2));
+    T2 = CALLN(1,VARREF(Yerror),5,LITREF(lit_231),LITREF(lit_232),FREEREF(0),FREEREF(1),FREEREF(2));
     T0 = T2;
   } else {
     T4 = (P)YOhead(ps_);
@@ -6348,16 +6362,16 @@ LINK_STACK();
 loop:
   T1 = (P)YOEE(t1_,t2_);
   if (T1 != YPfalse) {
-    T2 = CALL2(1,VARREF(YOtup),LITREF(lit_238),t1_);
+    T2 = CALL2(1,VARREF(YOtup),LITREF(lit_240),t1_);
     T0 = T2;
   } else {
     T5 = (P)YPclass_of(arg_);
     T4 = CALL3(1,VARREF(YOclassL),t1_,t2_,T5);
     if (T4 != YPfalse) {
-      T6 = CALL2(1,VARREF(YOtup),LITREF(lit_239),t1_);
+      T6 = CALL2(1,VARREF(YOtup),LITREF(lit_241),t1_);
       T3 = T6;
     } else {
-      T7 = CALL2(1,VARREF(YOtup),LITREF(lit_240),t2_);
+      T7 = CALL2(1,VARREF(YOtup),LITREF(lit_242),t2_);
       T3 = T7;
     }
     T0 = T3;
@@ -6432,7 +6446,7 @@ loop:
     T12 = (P)YOA(idx_,YPint((P)1));
     check_type(T12,VARREF(YLintG));
     idxF78 = T12;
-    T14 = (P)YOEE(cmpF77,LITREF(lit_238));
+    T14 = (P)YOEE(cmpF77,LITREF(lit_240));
     if (T14 != YPfalse) {
       a1 = state_;
       a2 = idxF78;
@@ -6441,11 +6455,11 @@ loop:
       goto loop;
       T13 = T15;
     } else {
-      T19 = (P)YOEE(cmpF77,LITREF(lit_247));
+      T19 = (P)YOEE(cmpF77,LITREF(lit_249));
       T18 = CALL1(1,VARREF(Ynot),T19);
       tmpF79 = T18;
       if (tmpF79 != YPfalse) {
-        T22 = (P)YOEE(state_,LITREF(lit_238));
+        T22 = (P)YOEE(state_,LITREF(lit_240));
         tmpF80 = T22;
         if (tmpF80 != YPfalse) {
           T23 = tmpF80;
@@ -6467,7 +6481,7 @@ loop:
         goto loop;
         T16 = T25;
       } else {
-        T16 = LITREF(lit_247);
+        T16 = LITREF(lit_249);
       }
       T13 = T16;
     }
@@ -6499,7 +6513,7 @@ loop:
   T3 = FUNSHELL(1,fun_loop_390,5);
   loopF82 = T3;
   FUNINIT(loopF82, 5,arityF81,m1_,m2_,args_,loopF82);
-  T4 = CALL2(1,loopF82,LITREF(lit_238),YPint((P)0));
+  T4 = CALL2(1,loopF82,LITREF(lit_240),YPint((P)0));
   T2 = T4;
   T0 = T2;
 UNLINK_STACK();
@@ -6570,7 +6584,7 @@ loop:
   } else {
     T5 = (P)YOhead(l_);
     T4 = CALL3(1,FREEREF(0),FREEREF(1),T5,FREEREF(2));
-    T3 = (P)YOEE(T4,LITREF(lit_239));
+    T3 = (P)YOEE(T4,LITREF(lit_241));
     if (T3 != YPfalse) {
       T7 = (P)YOtail(l_);
       a1 = T7;
@@ -6654,12 +6668,12 @@ loop:
     T5 = (P)YOhead(osub_);
     T4 = CALL3(1,FREEREF(1),FREEREF(2),T5,FREEREF(3));
     indicF88 = T4;
-    T7 = (P)YOEE(indicF88,LITREF(lit_239));
+    T7 = (P)YOEE(indicF88,LITREF(lit_241));
     if (T7 != YPfalse) {
       T8 = CALL1(1,FREEREF(0),oprev_);
       T6 = T8;
     } else {
-      T10 = (P)YOEE(indicF88,LITREF(lit_240));
+      T10 = (P)YOEE(indicF88,LITREF(lit_242));
       if (T10 != YPfalse) {
         T12 = (P)YOtail(osub_);
         a1 = osub_;
@@ -7846,7 +7860,7 @@ loop:
   ambiguous_metsF159 = T5;
   T7 = (P)YOemptyQ(sorted_metsF158);
   if (T7 != YPfalse) {
-    T8 = CALL3(1,VARREF(Yerror),LITREF(lit_294),gen_,args_);
+    T8 = CALL3(1,VARREF(Yerror),LITREF(lit_296),gen_,args_);
     T6 = T8;
   } else {
     T6 = sorted_metsF158;
@@ -7927,7 +7941,7 @@ loop:
     T14 = T16;
     T6 = T14;
   } else {
-    T30 = CALL3(1,VARREF(Yerror),LITREF(lit_296),fF161,args_);
+    T30 = CALL3(1,VARREF(Yerror),LITREF(lit_298),fF161,args_);
     T6 = T30;
   }
   T4 = T6;
@@ -8281,7 +8295,7 @@ loop:
       T9 = T11;
       T8 = T9;
     } else {
-      T14 = CALL1(1,VARREF(Yerror),LITREF(lit_322));
+      T14 = CALL1(1,VARREF(Yerror),LITREF(lit_324));
       T8 = T14;
     }
     T6 = T8;
@@ -8292,7 +8306,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(Yclass_ordered_parents) {
+FUNCODEDEF(Yclass_ordered_ancestors) {
   P c_;
   P parentsF177;
   P merge_listsF176;
@@ -8393,7 +8407,7 @@ loop:
   T6 = FUNFAB(fun_467,1,xF179);
   T7 = (P)YPclass_parents(xF179);
   CALL2(1,VARREF(YOdo),T6,T7);
-  T8 = CALL1(1,VARREF(Yclass_ordered_parents),xF179);
+  T8 = CALL1(1,VARREF(Yclass_ordered_ancestors),xF179);
   (P)YPclass_ancestors_setter(T8,xF179);
   T9 = CALL1(1,VARREF(Yclass_ordered_props),xF179);
   (P)YPclass_props_setter(T9,xF179);
@@ -8525,7 +8539,7 @@ LINK_STACK();
   ARG(x_, 0);
 loop:
   if (VARREF(YTreport_prop_unbound_errorsQT) != YPfalse) {
-    T1 = CALL1(1,VARREF(Yerror),LITREF(lit_337));
+    T1 = CALL1(1,VARREF(Yerror),LITREF(lit_339));
     T0 = T1;
   } else {
     T0 = VARREF(Ynul);
@@ -8548,7 +8562,7 @@ loop:
   offsetF182 = T1;
   T3 = (P)YOE(offsetF182,VARREF(YDgetter_not_found));
   if (T3 != YPfalse) {
-    T4 = CALL3(1,VARREF(Yerror),LITREF(lit_339),getter_,object_);
+    T4 = CALL3(1,VARREF(Yerror),LITREF(lit_341),getter_,object_);
     T2 = T4;
   } else {
     T5 = (P)Yprop_value_at(object_,offsetF182);
@@ -8573,7 +8587,7 @@ loop:
   offsetF183 = T1;
   T3 = (P)YOE(offsetF183,VARREF(YDgetter_not_found));
   if (T3 != YPfalse) {
-    T4 = CALL3(1,VARREF(Yerror),LITREF(lit_341),getter_,object_);
+    T4 = CALL3(1,VARREF(Yerror),LITREF(lit_343),getter_,object_);
     T2 = T4;
   } else {
     T5 = (P)Yprop_bound_atQ(object_,offsetF183);
@@ -8595,7 +8609,7 @@ LINK_STACK();
 loop:
   T1 = (P)YOemptyQ(props_);
   if (T1 != YPfalse) {
-    T2 = CALL3(1,VARREF(Yerror),LITREF(lit_343),FREEREF(0),FREEREF(1));
+    T2 = CALL3(1,VARREF(Yerror),LITREF(lit_345),FREEREF(0),FREEREF(1));
     T0 = T2;
   } else {
     T4 = (P)YOhead(props_);
@@ -8609,7 +8623,7 @@ loop:
         T11 = (P)Yprop_value_at_setter(FREEREF(2),FREEREF(1),i_);
         T8 = T11;
       } else {
-        T12 = CALL1(1,VARREF(Yerror),LITREF(lit_344));
+        T12 = CALL1(1,VARREF(Yerror),LITREF(lit_346));
         T8 = T12;
       }
       T5 = T8;
@@ -8723,7 +8737,7 @@ LINK_STACK();
 loop:
   T1 = (P)YOemptyQ(mets_);
   if (T1 != YPfalse) {
-    T2 = CALL1(1,VARREF(Yerror),LITREF(lit_349));
+    T2 = CALL1(1,VARREF(Yerror),LITREF(lit_351));
     T0 = T2;
   } else {
     T4 = (P)YOhead(mets_);
@@ -8776,7 +8790,7 @@ LINK_STACK();
 loop:
   T1 = (P)YOemptyQ(mets_);
   if (T1 != YPfalse) {
-    T2 = CALL1(1,VARREF(Yerror),LITREF(lit_352));
+    T2 = CALL1(1,VARREF(Yerror),LITREF(lit_354));
     T0 = T2;
   } else {
     T4 = (P)YOhead(mets_);
@@ -8989,6 +9003,49 @@ UNLINK_STACK();
   QRET(T0);
 }
 
+FUNCODEDEF(fun_494) {
+  P parent_;
+  P T2,T1,T0;
+  P a1;
+LINK_STACK();
+  ARG(parent_, 0);
+loop:
+  T2 = (P)YPclass_descendents(parent_);
+  T1 = (P)YOadd_new(T2,FREEREF(0));
+  T0 = (P)YPclass_descendents_setter(T1,parent_);
+UNLINK_STACK();
+  QRET(T0);
+}
+
+FUNCODEDEF(fun_495) {
+  P x_;
+  P T3,T2,T1,T0;
+  P a1;
+LINK_STACK();
+  ARG(x_, 0);
+loop:
+  T0 = CALL1(1,VARREF(Yclass_ordered_ancestors),x_);
+  (P)YPclass_ancestors_setter(T0,x_);
+  T2 = FUNFAB(fun_494,1,x_);
+  T3 = (P)YPclass_parents(x_);
+  T1 = CALL2(1,VARREF(YOdo),T2,T3);
+UNLINK_STACK();
+  QRET(T1);
+}
+
+FUNCODEDEF(Ypatch_early_classes) {
+  P T3,T2,T1,T0;
+LINK_STACK();
+loop:
+  T0 = CALL1(1,VARREF(YOrevX),VARREF(YTearly_classesT));
+  VARSET(YTearly_classesT,T0);
+  T2 = fun_495;
+  T3 = (P)YOtail(VARREF(YTearly_classesT));
+  T1 = CALL2(1,VARREF(YOdo),T2,T3);
+UNLINK_STACK();
+  QRET(T1);
+}
+
 FUNCODEDEF(Yfab_gen) {
   P name_,names_,specs_,naryQ_,mets_;
   P T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6;
@@ -9027,7 +9084,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_495) {
+FUNCODEDEF(fun_498) {
   P x_;
   P a1;
 LINK_STACK();
@@ -9045,7 +9102,7 @@ FUNCODEDEF(Ygen_from_met) {
 LINK_STACK();
   ARG(x_, 0);
 loop:
-  T2 = fun_495;
+  T2 = fun_498;
   T3 = CALL1(1,VARREF(YOfun_specs),x_);
   T1 = CALL2(1,VARREF(YOmap),T2,T3);
   specsF201 = T1;
@@ -9094,7 +9151,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_loop_499) {
+FUNCODEDEF(fun_loop_502) {
   P i_;
   P valF204;
   P getterF203;
@@ -9125,7 +9182,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_new_500) {
+FUNCODEDEF(fun_new_503) {
   P parent_,inits_;
   P loopF207;
   P numF206;
@@ -9142,7 +9199,7 @@ loop:
   objectF205 = T1;
   T5 = (P)YOolen(inits_);
   numF206 = T5;
-  T6 = FUNSHELL(1,fun_loop_499,4);
+  T6 = FUNSHELL(1,fun_loop_502,4);
   loopF207 = T6;
   FUNINIT(loopF207, 4,numF206,inits_,objectF205,loopF207);
   T7 = CALL1(0,loopF207,YPint((P)0));
@@ -9152,7 +9209,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_501) {
+FUNCODEDEF(fun_504) {
   P t_;
   P T0;
   P a1;
@@ -9164,7 +9221,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_subtypeQ_502) {
+FUNCODEDEF(fun_subtypeQ_505) {
   P t1_,t2_;
   P T2,T1,T0;
   P a1,a2;
@@ -9172,14 +9229,14 @@ LINK_STACK();
   ARG(t1_, 0);
   ARG(t2_, 1);
 loop:
-  T1 = FUNFAB(fun_501,1,t2_);
+  T1 = FUNFAB(fun_504,1,t2_);
   T2 = (P)YPtype_elts(t1_);
   T0 = CALL2(1,VARREF(YOallQ),T1,T2);
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_503) {
+FUNCODEDEF(fun_506) {
   P t_;
   P T0;
   P a1;
@@ -9191,7 +9248,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_subtypeQ_504) {
+FUNCODEDEF(fun_subtypeQ_507) {
   P t1_,t2_;
   P T2,T1,T0;
   P a1,a2;
@@ -9199,14 +9256,14 @@ LINK_STACK();
   ARG(t1_, 0);
   ARG(t2_, 1);
 loop:
-  T1 = FUNFAB(fun_503,1,t1_);
+  T1 = FUNFAB(fun_506,1,t1_);
   T2 = (P)YPtype_elts(t2_);
   T0 = CALL2(1,VARREF(YOanyQ),T1,T2);
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_505) {
+FUNCODEDEF(fun_508) {
   P t_;
   P T0;
   P a1;
@@ -9218,7 +9275,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_subtypeQ_506) {
+FUNCODEDEF(fun_subtypeQ_509) {
   P t1_,t2_;
   P T2,T1,T0;
   P a1,a2;
@@ -9226,14 +9283,14 @@ LINK_STACK();
   ARG(t1_, 0);
   ARG(t2_, 1);
 loop:
-  T1 = FUNFAB(fun_505,1,t2_);
+  T1 = FUNFAB(fun_508,1,t2_);
   T2 = (P)YPtype_elts(t1_);
   T0 = CALL2(1,VARREF(YOallQ),T1,T2);
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_subtypeQ_507) {
+FUNCODEDEF(fun_subtypeQ_510) {
   P t1_,t2_;
   P T0;
   P a1,a2;
@@ -9246,7 +9303,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_subtypeQ_508) {
+FUNCODEDEF(fun_subtypeQ_511) {
   P t1_,t2_;
   P T1,T0;
   P a1,a2;
@@ -9260,7 +9317,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_subtypeQ_509) {
+FUNCODEDEF(fun_subtypeQ_512) {
   P t1_,t2_;
   P T0;
   P a1,a2;
@@ -9273,7 +9330,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_subtypeQ_510) {
+FUNCODEDEF(fun_subtypeQ_513) {
   P t1_,t2_;
   P a1,a2;
 LINK_STACK();
@@ -9284,7 +9341,7 @@ UNLINK_STACK();
   RET(YPfalse);
 }
 
-FUNCODEDEF(fun_subtypeQ_511) {
+FUNCODEDEF(fun_subtypeQ_514) {
   P t1_,t2_;
   P T1,T0;
   P a1,a2;
@@ -9298,7 +9355,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_subtypeQ_512) {
+FUNCODEDEF(fun_subtypeQ_515) {
   P t1_,t2_;
   P a1,a2;
 LINK_STACK();
@@ -9309,7 +9366,7 @@ UNLINK_STACK();
   RET(YPfalse);
 }
 
-FUNCODEDEF(fun_subtypeQ_513) {
+FUNCODEDEF(fun_subtypeQ_516) {
   P t1_,t2_;
   P tmpF208;
   P T4,T3,T2,T1,T0;
@@ -9332,7 +9389,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_subtypeQ_514) {
+FUNCODEDEF(fun_subtypeQ_517) {
   P t1_,t2_;
   P T2,T1,T0;
   P a1,a2;
@@ -9347,7 +9404,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_subtypeQ_515) {
+FUNCODEDEF(fun_subtypeQ_518) {
   P t1_,t2_;
   P tmpF209;
   P T6,T5,T4,T3,T2,T1,T0;
@@ -9372,7 +9429,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_isaQ_516) {
+FUNCODEDEF(fun_isaQ_519) {
   P o_,t_;
   P T0;
   P a1,a2;
@@ -9385,7 +9442,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_isaQ_517) {
+FUNCODEDEF(fun_isaQ_520) {
   P o_,t_;
   P T0;
   P a1,a2;
@@ -9398,7 +9455,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_isaQ_518) {
+FUNCODEDEF(fun_isaQ_521) {
   P o_,t_;
   P tmpF210;
   P T4,T3,T2,T1,T0;
@@ -9421,7 +9478,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_519) {
+FUNCODEDEF(fun_522) {
   P t_;
   P T0;
   P a1;
@@ -9433,7 +9490,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_isaQ_520) {
+FUNCODEDEF(fun_isaQ_523) {
   P o_,u_;
   P T2,T1,T0;
   P a1,a2;
@@ -9441,14 +9498,14 @@ LINK_STACK();
   ARG(o_, 0);
   ARG(u_, 1);
 loop:
-  T1 = FUNFAB(fun_519,1,o_);
+  T1 = FUNFAB(fun_522,1,o_);
   T2 = (P)YPtype_elts(u_);
   T0 = CALL2(1,VARREF(YOanyQ),T1,T2);
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_order_specs_521) {
+FUNCODEDEF(fun_order_specs_524) {
   P t1_,t2_,arg_;
   P T0;
   P a1,a2,a3;
@@ -9457,12 +9514,12 @@ LINK_STACK();
   ARG(t2_, 1);
   ARG(arg_, 2);
 loop:
-  T0 = CALL2(1,VARREF(YOtup),LITREF(lit_238),t1_);
+  T0 = CALL2(1,VARREF(YOtup),LITREF(lit_240),t1_);
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_order_specs_522) {
+FUNCODEDEF(fun_order_specs_525) {
   P t1_,t2_,arg_;
   P T0;
   P a1,a2,a3;
@@ -9471,12 +9528,12 @@ LINK_STACK();
   ARG(t2_, 1);
   ARG(arg_, 2);
 loop:
-  T0 = CALL2(1,VARREF(YOtup),LITREF(lit_239),t1_);
+  T0 = CALL2(1,VARREF(YOtup),LITREF(lit_241),t1_);
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_order_specs_523) {
+FUNCODEDEF(fun_order_specs_526) {
   P t1_,t2_,arg_;
   P c2F212;
   P c1F211;
@@ -9493,16 +9550,16 @@ loop:
   c2F212 = T3;
   T5 = (P)YOEE(c1F211,c2F212);
   if (T5 != YPfalse) {
-    T6 = CALL2(1,VARREF(YOtup),LITREF(lit_238),t1_);
+    T6 = CALL2(1,VARREF(YOtup),LITREF(lit_240),t1_);
     T4 = T6;
   } else {
     T8 = CALL3(1,VARREF(YOclassL),c1F211,c2F212,arg_);
     if (T8 != YPfalse) {
-      T9 = CALL2(1,VARREF(YOtup),LITREF(lit_239),t1_);
+      T9 = CALL2(1,VARREF(YOtup),LITREF(lit_241),t1_);
       T7 = T9;
     } else {
       if (YPtrue != YPfalse) {
-        T11 = CALL2(1,VARREF(YOtup),LITREF(lit_240),t2_);
+        T11 = CALL2(1,VARREF(YOtup),LITREF(lit_242),t2_);
         T10 = T11;
       } else {
         T10 = YPfalse;
@@ -9517,7 +9574,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_order_specs_524) {
+FUNCODEDEF(fun_order_specs_527) {
   P t1_,t2_,arg_;
   P T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
@@ -9533,18 +9590,18 @@ loop:
       T5 = CALL3(1,VARREF(Yorder_specs),VARREF(YLclassG),t2_,arg_);
       T3 = T5;
     } else {
-      T3 = LITREF(lit_239);
+      T3 = LITREF(lit_241);
     }
     T1 = T3;
   } else {
-    T1 = LITREF(lit_247);
+    T1 = LITREF(lit_249);
   }
   T0 = CALL2(1,VARREF(YOtup),T1,t1_);
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_order_specs_525) {
+FUNCODEDEF(fun_order_specs_528) {
   P t1_,t2_,arg_;
   P T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
@@ -9560,18 +9617,18 @@ loop:
       T5 = CALL3(1,VARREF(Yorder_specs),t1_,VARREF(YLclassG),arg_);
       T3 = T5;
     } else {
-      T3 = LITREF(lit_240);
+      T3 = LITREF(lit_242);
     }
     T1 = T3;
   } else {
-    T1 = LITREF(lit_247);
+    T1 = LITREF(lit_249);
   }
   T0 = CALL2(1,VARREF(YOtup),T1,t2_);
 UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_order_specs_526) {
+FUNCODEDEF(fun_order_specs_529) {
   P t1_,t2_,arg_;
   P T0;
   P a1,a2,a3;
@@ -9585,7 +9642,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_order_specs_527) {
+FUNCODEDEF(fun_order_specs_530) {
   P t1_,t2_,arg_;
   P T8,T7,T6,T5,T4,T3,T2,T1,T0;
   P a1,a2,a3;
@@ -9598,19 +9655,19 @@ loop:
   if (T1 != YPfalse) {
     T4 = CALL2(1,VARREF(YOsubtypeQ),t2_,t1_);
     if (T4 != YPfalse) {
-      T3 = LITREF(lit_238);
+      T3 = LITREF(lit_240);
     } else {
-      T3 = LITREF(lit_239);
+      T3 = LITREF(lit_241);
     }
     T2 = CALL2(1,VARREF(YOtup),T3,t1_);
     T0 = T2;
   } else {
     T6 = CALL2(1,VARREF(YOsubtypeQ),t2_,t1_);
     if (T6 != YPfalse) {
-      T7 = CALL2(1,VARREF(YOtup),LITREF(lit_240),t2_);
+      T7 = CALL2(1,VARREF(YOtup),LITREF(lit_242),t2_);
       T5 = T7;
     } else {
-      T8 = CALL2(1,VARREF(YOtup),LITREF(lit_247),VARREF(YLanyG));
+      T8 = CALL2(1,VARREF(YOtup),LITREF(lit_249),VARREF(YLanyG));
       T5 = T8;
     }
     T0 = T5;
@@ -9619,7 +9676,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_may_isaQ_528) {
+FUNCODEDEF(fun_may_isaQ_531) {
   P c_,t_;
   P T3,T2,T1,T0;
   P a1,a2;
@@ -9639,7 +9696,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_may_isaQ_529) {
+FUNCODEDEF(fun_may_isaQ_532) {
   P c_,t_;
   P T3,T2,T1,T0;
   P a1,a2;
@@ -9655,7 +9712,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_may_isaQ_530) {
+FUNCODEDEF(fun_may_isaQ_533) {
   P c_,t_;
   P tmpF214;
   P classQF213;
@@ -9682,7 +9739,7 @@ UNLINK_STACK();
   RET(T0);
 }
 
-FUNCODEDEF(fun_loop_531) {
+FUNCODEDEF(fun_loop_534) {
   P someQ_,allQ_,elts_;
   P tmpF219;
   P tmpF218;
@@ -9739,7 +9796,7 @@ UNLINK_STACK();
   QRET(T0);
 }
 
-FUNCODEDEF(fun_may_isaQ_532) {
+FUNCODEDEF(fun_may_isaQ_535) {
   P c_,t_;
   P loopF220;
   P T3,T2,T1,T0;
@@ -9748,7 +9805,7 @@ LINK_STACK();
   ARG(c_, 0);
   ARG(t_, 1);
 loop:
-  T1 = FUNSHELL(1,fun_loop_531,2);
+  T1 = FUNSHELL(1,fun_loop_534,2);
   loopF220 = T1;
   FUNINIT(loopF220, 2,c_,loopF220);
   T3 = (P)YPtype_elts(t_);
@@ -9822,50 +9879,55 @@ loop:
   T10 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
   VARSET(YLcolG,T10);
   T11 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLseqG,T11);
+  VARSET(YLcolXG,T11);
   T12 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLlstG,T12);
+  VARSET(YLseqG,T12);
   T13 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLflatG,T13);
+  VARSET(YLseqXG,T13);
   T14 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLvecG,T14);
+  VARSET(YLlstG,T14);
   T15 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLstrG,T15);
+  VARSET(YLflatG,T15);
   T16 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLsymG,T16);
+  VARSET(YLvecG,T16);
   T17 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLtypeG,T17);
+  VARSET(YLstrG,T17);
   T18 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLclassG,T18);
+  VARSET(YLsymG,T18);
   T21 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  T20 = VARSET(YLsingletonG,T21);
+  T20 = VARSET(YLtypeG,T21);
   T19 = T20;
   return T19;
 }
 
 P Y___main_3___() {
-  P T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2;
+  P T1,T0;
 loop:
   T0 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLsubclassG,T0);
+  VARSET(YLclassG,T0);
   T1 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLunionG,T1);
+  VARSET(YLsingletonG,T1);
   T2 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLpropG,T2);
+  VARSET(YLsubclassG,T2);
   T3 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLgen_cacheG,T3);
+  VARSET(YLunionG,T3);
   T4 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLsigG,T4);
+  VARSET(YLpropG,T4);
   T5 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLfunG,T5);
+  VARSET(YLgen_cacheG,T5);
   T6 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLmetG,T6);
+  VARSET(YLsigG,T6);
   T7 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLgenG,T7);
+  VARSET(YLfunG,T7);
   T8 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLoptsG,T8);
+  VARSET(YLmetG,T8);
   T9 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
-  VARSET(YLopts_vecG,T9);
+  VARSET(YLgenG,T9);
+  T10 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
+  VARSET(YLoptsG,T10);
+  T11 = (P)YPclass(VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),VARREF(Ynil),YPint((P)-1),VARREF(Ynil));
+  VARSET(YLopts_vecG,T11);
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLanyG));
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLlogG));
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLchrG));
@@ -9874,7 +9936,9 @@ loop:
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLfloG));
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLlocG));
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLcolG));
+  (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLcolXG));
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLseqG));
+  (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLseqXG));
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLlstG));
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLflatG));
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLvecG));
@@ -9894,26 +9958,26 @@ loop:
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLoptsG));
   (P)YPobject_class_setter(VARREF(YLclassG),VARREF(YLopts_vecG));
   (P)YPobject_class_setter(VARREF(YLlstG),VARREF(Ynil));
-  T10 = (P)YPobject_of(VARREF(YLanyG),(P)0);
-  VARSET(Ynul,T10);
-  T11 = (P)YPobject_of(VARREF(YLanyG),(P)0);
-  VARSET(Ynul_prop,T11);
-  T12 = (P)YPobject_of(VARREF(YLlogG),(P)0);
-  VARSET(YPtrue,T12);
-  T13 = (P)YPobject_of(VARREF(YLlogG),(P)0);
-  VARSET(YPfalse,T13);
-  T14 = (P)YPobject_of(VARREF(YLlstG),(P)0);
-  VARSET(Ynil,T14);
+  T12 = (P)YPobject_of(VARREF(YLanyG),(P)0);
+  VARSET(Ynul,T12);
+  T13 = (P)YPobject_of(VARREF(YLanyG),(P)0);
+  VARSET(Ynul_prop,T13);
+  T14 = (P)YPobject_of(VARREF(YLlogG),(P)0);
+  VARSET(YPtrue,T14);
+  T15 = (P)YPobject_of(VARREF(YLlogG),(P)0);
+  VARSET(YPfalse,T15);
+  T16 = (P)YPobject_of(VARREF(YLlstG),(P)0);
+  VARSET(Ynil,T16);
   VARSET(Ynil,VARREF(Yone_nil));
   (P)YPhead_setter(VARREF(Ynil),VARREF(Ynil));
   (P)YPtail_setter(VARREF(Ynil),VARREF(Ynil));
-  T15 = YPfalse;
-  return T15;
+  T17 = YPfalse;
+  return T17;
 }
 
 P Y___main_4___() {
-  P T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6;
-  P T5,T4,T3,T2,T1,T0;
+  P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
+  P T4,T3,T2,T1,T0;
 loop:
   VARSET(YPmet_prop_len,(P)4);
   VARSET(YPsymbols_readyQ,YPfalse);
@@ -9947,132 +10011,126 @@ loop:
   VARSET(YPsnul,T18);
   T19 = (P)YPvecX((P)0);
   VARSET(YPvnul,T19);
-  (P)YPdefine_parent(VARREF(YLanyG),VARREF(YLanyG));
-  (P)YPdefine_parent(VARREF(YLlogG),VARREF(YLanyG));
-  (P)YPdefine_parent(VARREF(YLchrG),VARREF(YLanyG));
-  T21 = (P)YPdefine_parent(VARREF(YLnumG),VARREF(YLanyG));
-  T20 = T21;
+  VARSET(YTearly_classesT,VARREF(Ynil));
+  T20 = YPfalse;
   return T20;
 }
 
 P Y___main_5___() {
-  P T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1;
-  P T0;
+  P T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31;
+  P T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15;
+  P T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
 loop:
-  (P)YPdefine_parent(VARREF(YLintG),VARREF(YLnumG));
-  (P)YPdefine_parent(VARREF(YLfloG),VARREF(YLnumG));
-  (P)YPdefine_parent(VARREF(YLlocG),VARREF(YLanyG));
-  (P)YPdefine_parent(VARREF(YLcolG),VARREF(YLanyG));
-  (P)YPdefine_parent(VARREF(YLseqG),VARREF(YLcolG));
-  (P)YPdefine_parent(VARREF(YLlstG),VARREF(YLseqG));
-  (P)YPdefine_parent(VARREF(YLflatG),VARREF(YLseqG));
-  (P)YPdefine_parent(VARREF(YLvecG),VARREF(YLflatG));
-  (P)YPdefine_parent(VARREF(YLstrG),VARREF(YLflatG));
-  (P)YPdefine_parent(VARREF(YLsymG),VARREF(YLanyG));
-  (P)YPdefine_parent(VARREF(YLtypeG),VARREF(YLanyG));
-  (P)YPdefine_parent(VARREF(YLclassG),VARREF(YLtypeG));
-  (P)YPdefine_parent(VARREF(YLsingletonG),VARREF(YLtypeG));
-  (P)YPdefine_parent(VARREF(YLsubclassG),VARREF(YLtypeG));
-  (P)YPdefine_parent(VARREF(YLunionG),VARREF(YLtypeG));
-  (P)YPdefine_parent(VARREF(YLpropG),VARREF(YLanyG));
-  (P)YPdefine_parent(VARREF(YLgen_cacheG),VARREF(YLanyG));
-  (P)YPdefine_parent(VARREF(YLsigG),VARREF(YLanyG));
-  (P)YPdefine_parent(VARREF(YLfunG),VARREF(YLanyG));
-  (P)YPdefine_parent(VARREF(YLmetG),VARREF(YLfunG));
-  (P)YPdefine_parent(VARREF(YLgenG),VARREF(YLfunG));
-  (P)YPdefine_parent(VARREF(YLoptsG),VARREF(YLflatG));
-  (P)YPdefine_parent(VARREF(YLopts_vecG),VARREF(YLoptsG));
-  T0 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  (P)YPclass_ancestors_setter(T0,VARREF(YLanyG));
+  T0 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLanyG),T0);
+  T1 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLlogG),T1);
+  T2 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLchrG),T2);
+  T3 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLnumG),T3);
+  T4 = (P)YPpair(VARREF(YLnumG),Ynil);
+  (P)YPdefine_parents(VARREF(YLintG),T4);
+  T5 = (P)YPpair(VARREF(YLnumG),Ynil);
+  (P)YPdefine_parents(VARREF(YLfloG),T5);
+  T6 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLlocG),T6);
+  T7 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLcolG),T7);
+  T8 = (P)YPpair(VARREF(YLcolG),Ynil);
+  (P)YPdefine_parents(VARREF(YLcolXG),T8);
+  T9 = (P)YPpair(VARREF(YLcolG),Ynil);
+  (P)YPdefine_parents(VARREF(YLseqG),T9);
+  T11 = (P)YPpair(VARREF(YLcolXG),Ynil);
+  T10 = (P)YPpair(VARREF(YLseqG),T11);
+  (P)YPdefine_parents(VARREF(YLseqXG),T10);
+  T12 = (P)YPpair(VARREF(YLseqXG),Ynil);
+  (P)YPdefine_parents(VARREF(YLlstG),T12);
+  T13 = (P)YPpair(VARREF(YLseqG),Ynil);
+  (P)YPdefine_parents(VARREF(YLflatG),T13);
+  T14 = (P)YPpair(VARREF(YLflatG),Ynil);
+  (P)YPdefine_parents(VARREF(YLvecG),T14);
+  T15 = (P)YPpair(VARREF(YLflatG),Ynil);
+  (P)YPdefine_parents(VARREF(YLstrG),T15);
+  T16 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLsymG),T16);
+  T17 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLtypeG),T17);
+  T18 = (P)YPpair(VARREF(YLtypeG),Ynil);
+  (P)YPdefine_parents(VARREF(YLclassG),T18);
+  T19 = (P)YPpair(VARREF(YLtypeG),Ynil);
+  (P)YPdefine_parents(VARREF(YLsingletonG),T19);
+  T20 = (P)YPpair(VARREF(YLtypeG),Ynil);
+  (P)YPdefine_parents(VARREF(YLsubclassG),T20);
+  T21 = (P)YPpair(VARREF(YLtypeG),Ynil);
+  (P)YPdefine_parents(VARREF(YLunionG),T21);
+  T22 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLpropG),T22);
+  T23 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLgen_cacheG),T23);
+  T24 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLsigG),T24);
+  T25 = (P)YPpair(VARREF(YLanyG),Ynil);
+  (P)YPdefine_parents(VARREF(YLfunG),T25);
+  T26 = (P)YPpair(VARREF(YLfunG),Ynil);
+  (P)YPdefine_parents(VARREF(YLmetG),T26);
+  T27 = (P)YPpair(VARREF(YLfunG),Ynil);
+  (P)YPdefine_parents(VARREF(YLgenG),T27);
+  T28 = (P)YPpair(VARREF(YLflatG),Ynil);
+  (P)YPdefine_parents(VARREF(YLoptsG),T28);
+  T29 = (P)YPpair(VARREF(YLoptsG),Ynil);
+  (P)YPdefine_parents(VARREF(YLopts_vecG),T29);
+  T30 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  (P)YPclass_ancestors_setter(T30,VARREF(YLanyG));
   VARSET(YPsymbols,VARREF(Ynil));
   lit_0 = YPsb((P)"Warning: symbols were created in the boot image before the symbol-creation was setup. (Probably from a df or rep)\n");
-  T2 = (P)YPeqQ(VARREF(YPTused_symbols_too_earlyT),YPtrue);
-  T1 = (P)YPbb(T2);
-  if (T1 != YPfalse) {
-    T4 = (P)YPcurrent_out_port();
-    T5 = (P)YPsu(LITREF(lit_0));
-    T3 = (P)YPputs(T4,T5);
+  T32 = (P)YPeqQ(VARREF(YPTused_symbols_too_earlyT),YPtrue);
+  T31 = (P)YPbb(T32);
+  if (T31 != YPfalse) {
+    T34 = (P)YPcurrent_out_port();
+    T35 = (P)YPsu(LITREF(lit_0));
+    T33 = (P)YPputs(T34,T35);
   } else {
   }
   lit_1 = YPPsym((P)"name");
   lit_2 = YPPsym((P)"lookup");
   lit_3 = YPPsym((P)"s");
-  T7 = YPsig(YPPlist(1,LITREF(lit_3)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_lookup_97 = YPmet(FUNCODEREF(fun_lookup_97),LITREF(lit_2),T7,ENVNUL,PNUL,YPfalse);
-  T6 = YPsig(YPPlist(1,LITREF(lit_1)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_98 = YPmet(FUNCODEREF(fun_98),YPfalse,T6,ENVNUL,PNUL,YPfalse);
-  T8 = fun_98;
-  VARSET(Yfab_sym,T8);
+  T37 = YPsig(YPPlist(1,LITREF(lit_3)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_lookup_97 = YPmet(FUNCODEREF(fun_lookup_97),LITREF(lit_2),T37,ENVNUL,PNUL,YPfalse);
+  T36 = YPsig(YPPlist(1,LITREF(lit_1)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_98 = YPmet(FUNCODEREF(fun_98),YPfalse,T36,ENVNUL,PNUL,YPfalse);
+  T38 = fun_98;
+  VARSET(Yfab_sym,T38);
   VARSET(YPsymbols_readyQ,YPtrue);
   lit_4 = YPPsym((P)"fab-sym");
-  T10 = YPsig(YPPlist(1,LITREF(lit_3)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_lookup_99 = YPmet(FUNCODEREF(fun_lookup_99),LITREF(lit_2),T10,ENVNUL,PNUL,YPfalse);
-  T9 = YPsig(YPPlist(1,LITREF(lit_1)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yfab_sym = YPmet(FUNCODEREF(Yfab_sym),LITREF(lit_4),T9,ENVNUL,PNUL,YPfalse);
-  T11 = Yfab_sym;
-  VARSET(Yfab_sym,T11);
-  T12 = (P)YPib(VARREF(YPmet_prop_len));
-  (P)YPclass_prop_len_setter(T12,VARREF(YLmetG));
+  T40 = YPsig(YPPlist(1,LITREF(lit_3)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_lookup_99 = YPmet(FUNCODEREF(fun_lookup_99),LITREF(lit_2),T40,ENVNUL,PNUL,YPfalse);
+  T39 = YPsig(YPPlist(1,LITREF(lit_1)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  Yfab_sym = YPmet(FUNCODEREF(Yfab_sym),LITREF(lit_4),T39,ENVNUL,PNUL,YPfalse);
+  T41 = Yfab_sym;
+  VARSET(Yfab_sym,T41);
+  T42 = (P)YPib(VARREF(YPmet_prop_len));
+  (P)YPclass_prop_len_setter(T42,VARREF(YLmetG));
   lit_5 = YPPsym((P)"loop");
   lit_6 = YPPsym((P)"l");
   lit_7 = YPPsym((P)"r");
-  T13 = YPsig(YPPlist(2,LITREF(lit_6),LITREF(lit_7)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_loop_101 = YPmet(FUNCODEREF(fun_loop_101),LITREF(lit_5),T13,ENVNUL,PNUL,YPfalse);
+  T43 = YPsig(YPPlist(2,LITREF(lit_6),LITREF(lit_7)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_loop_101 = YPmet(FUNCODEREF(fun_loop_101),LITREF(lit_5),T43,ENVNUL,PNUL,YPfalse);
   lit_8 = YPPsym((P)"colx");
   lit_9 = YPPsym((P)"lx");
   lit_10 = YPPsym((P)"x");
   lit_11 = YPPsym((P)"coly");
   lit_12 = YPPsym((P)"lxy");
   lit_13 = YPPsym((P)"y");
-  T15 = YPsig(YPPlist(2,LITREF(lit_12),LITREF(lit_13)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_coly_103 = YPmet(FUNCODEREF(fun_coly_103),LITREF(lit_11),T15,ENVNUL,PNUL,YPfalse);
-  T14 = YPsig(YPPlist(2,LITREF(lit_9),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_colx_104 = YPmet(FUNCODEREF(fun_colx_104),LITREF(lit_8),T14,ENVNUL,PNUL,YPfalse);
-  T16 = YPfalse;
-  return T16;
+  T45 = YPsig(YPPlist(2,LITREF(lit_12),LITREF(lit_13)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_coly_103 = YPmet(FUNCODEREF(fun_coly_103),LITREF(lit_11),T45,ENVNUL,PNUL,YPfalse);
+  T44 = YPsig(YPPlist(2,LITREF(lit_9),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_colx_104 = YPmet(FUNCODEREF(fun_colx_104),LITREF(lit_8),T44,ENVNUL,PNUL,YPfalse);
+  T46 = YPfalse;
+  return T46;
 }
 
 P Y___main_6___() {
-  P propF360;
-  P setterF359;
-  P accessorF358;
-  P getterF357;
-  P accessorF356;
-  P propF355;
-  P setterF354;
-  P accessorF353;
-  P getterF352;
-  P accessorF351;
-  P propF350;
-  P setterF349;
-  P accessorF348;
-  P getterF347;
-  P accessorF346;
-  P propF345;
-  P setterF344;
-  P accessorF343;
-  P getterF342;
-  P accessorF341;
-  P propF340;
-  P setterF339;
-  P accessorF338;
-  P getterF337;
-  P accessorF336;
-  P propF335;
-  P setterF334;
-  P accessorF333;
-  P getterF332;
-  P accessorF331;
-  P propF330;
-  P setterF329;
-  P accessorF328;
-  P getterF327;
-  P accessorF326;
-  P propF325;
-  P setterF324;
-  P accessorF323;
-  P getterF322;
-  P accessorF321;
   P propF320;
   P setterF319;
   P accessorF318;
@@ -10173,41 +10231,31 @@ P Y___main_6___() {
   P accessorF223;
   P getterF222;
   P accessorF221;
-  P T546,T545,T544,T543,T542,T541,T540,T539,T538,T537,T536,T535,T534,T533,T532,T531;
-  P T530,T529,T528,T527,T526,T525,T524,T523,T522,T521,T520,T519,T518,T517,T516,T515;
-  P T514,T513,T512,T511,T510,T509,T508,T507,T506,T505,T504,T503,T502,T501,T500,T499;
-  P T498,T497,T496,T495,T494,T493,T492,T491,T490,T489,T488,T487,T486,T485,T484,T483;
-  P T482,T481,T480,T479,T478,T477,T476,T475,T474,T473,T472,T471,T470,T469,T468,T467;
-  P T466,T465,T464,T463,T462,T461,T460,T459,T458,T457,T456,T455,T454,T453,T452,T451;
-  P T450,T449,T448,T447,T446,T445,T444,T443,T442,T441,T440,T439,T438,T437,T436,T435;
-  P T434,T433,T432,T431,T430,T429,T428,T427,T426,T425,T424,T423,T422,T421,T420,T419;
-  P T418,T417,T416,T415,T414,T413,T412,T411,T410,T409,T408,T407,T406,T405,T404,T403;
-  P T402,T401,T400,T399,T398,T397,T396,T395,T394,T393,T392,T391,T390,T389,T388,T387;
-  P T386,T385,T384,T383,T382,T381,T380,T379,T378,T377,T376,T375,T374,T373,T372,T371;
-  P T370,T369,T368,T367,T366,T365,T364,T363,T362,T361,T360,T359,T358,T357,T356,T355;
-  P T354,T353,T352,T351,T350,T349,T348,T347,T346,T345,T344,T343,T342,T341,T340,T339;
-  P T338,T337,T336,T335,T334,T333,T332,T331,T330,T329,T328,T327,T326,T325,T324,T323;
-  P T322,T321,T320,T319,T318,T317,T316,T315,T314,T313,T312,T311,T310,T309,T308,T307;
-  P T306,T305,T304,T303,T302,T301,T300,T299,T298,T297,T296,T295,T294,T293,T292,T291;
-  P T290,T289,T288,T287,T286,T285,T284,T283,T282,T281,T280,T279,T278,T277,T276,T275;
-  P T274,T273,T272,T271,T270,T269,T268,T267,T266,T265,T264,T263,T262,T261,T260,T259;
-  P T258,T257,T256,T255,T254,T253,T252,T251,T250,T249,T248,T247,T246,T245,T244,T243;
-  P T242,T241,T240,T239,T238,T237,T236,T235,T234,T233,T232,T231,T230,T229,T228,T227;
-  P T226,T225,T224,T223,T222,T221,T220,T219,T218,T217,T216,T215,T214,T213,T212,T211;
-  P T210,T209,T208,T207,T206,T205,T204,T203,T202,T201,T200,T199,T198,T197,T196,T195;
-  P T194,T193,T192,T191,T190,T189,T188,T187,T186,T185,T184,T183,T182,T181,T180,T179;
-  P T178,T177,T176,T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164,T163;
-  P T162,T161,T160,T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149,T148,T147;
-  P T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133,T132,T131;
-  P T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116,T115;
-  P T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100,T99;
-  P T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84,T83;
-  P T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68,T67;
-  P T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51;
-  P T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35;
-  P T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19;
-  P T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3;
-  P T2,T1,T0;
+  P T393,T392,T391,T390,T389,T388,T387,T386,T385,T384,T383,T382,T381,T380,T379,T378;
+  P T377,T376,T375,T374,T373,T372,T371,T370,T369,T368,T367,T366,T365,T364,T363,T362;
+  P T361,T360,T359,T358,T357,T356,T355,T354,T353,T352,T351,T350,T349,T348,T347,T346;
+  P T345,T344,T343,T342,T341,T340,T339,T338,T337,T336,T335,T334,T333,T332,T331,T330;
+  P T329,T328,T327,T326,T325,T324,T323,T322,T321,T320,T319,T318,T317,T316,T315,T314;
+  P T313,T312,T311,T310,T309,T308,T307,T306,T305,T304,T303,T302,T301,T300,T299,T298;
+  P T297,T296,T295,T294,T293,T292,T291,T290,T289,T288,T287,T286,T285,T284,T283,T282;
+  P T281,T280,T279,T278,T277,T276,T275,T274,T273,T272,T271,T270,T269,T268,T267,T266;
+  P T265,T264,T263,T262,T261,T260,T259,T258,T257,T256,T255,T254,T253,T252,T251,T250;
+  P T249,T248,T247,T246,T245,T244,T243,T242,T241,T240,T239,T238,T237,T236,T235,T234;
+  P T233,T232,T231,T230,T229,T228,T227,T226,T225,T224,T223,T222,T221,T220,T219,T218;
+  P T217,T216,T215,T214,T213,T212,T211,T210,T209,T208,T207,T206,T205,T204,T203,T202;
+  P T201,T200,T199,T198,T197,T196,T195,T194,T193,T192,T191,T190,T189,T188,T187,T186;
+  P T185,T184,T183,T182,T181,T180,T179,T178,T177,T176,T175,T174,T173,T172,T171,T170;
+  P T169,T168,T167,T166,T165,T164,T163,T162,T161,T160,T159,T158,T157,T156,T155,T154;
+  P T153,T152,T151,T150,T149,T148,T147,T146,T145,T144,T143,T142,T141,T140,T139,T138;
+  P T137,T136,T135,T134,T133,T132,T131,T130,T129,T128,T127,T126,T125,T124,T123,T122;
+  P T121,T120,T119,T118,T117,T116,T115,T114,T113,T112,T111,T110,T109,T108,T107,T106;
+  P T105,T104,T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90;
+  P T89,T88,T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74;
+  P T73,T72,T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58;
+  P T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42;
+  P T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26;
+  P T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10;
+  P T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
 loop:
   VARSET(YDgen_cache_singletons_offset,YPint((P)2));
   VARSET(YDgen_cache_classes_offset,YPint((P)3));
@@ -10949,342 +10997,44 @@ loop:
   T359 = T366;
   lit_67 = YPPsym((P)"prop-getter");
   lit_68 = YPPsym((P)"prop-getter-setter");
-  T372 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLpropG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_220 = YPmet(FUNCODEREF(fun_220),YPfalse,T372,ENVNUL,PNUL,YPfalse);
-  T371 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLpropG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_221 = YPmet(FUNCODEREF(fun_221),YPfalse,T371,ENVNUL,PNUL,YPfalse);
-  T370 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_222 = YPmet(FUNCODEREF(fun_222),YPfalse,T370,ENVNUL,PNUL,YPfalse);
-  T375 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T374 = (P)YPsig(Ynil,T375,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T373 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_67),T374,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yprop_getter,T373);
-  T377 = fun_220;
-  accessorF316 = T377;
+  T376 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLpropG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T375 = fun_220 = YPmet(FUNCODEREF(fun_220),YPfalse,T376,ENVNUL,PNUL,YPfalse);
+  T374 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLpropG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T373 = fun_221 = YPmet(FUNCODEREF(fun_221),YPfalse,T374,ENVNUL,PNUL,YPfalse);
+  T372 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T371 = fun_222 = YPmet(FUNCODEREF(fun_222),YPfalse,T372,ENVNUL,PNUL,YPfalse);
+  T380 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T379 = (P)YPsig(Ynil,T380,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T378 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_67),T379,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yprop_getter,T378);
+  T382 = fun_220;
+  accessorF316 = T382;
   CALL2(1,VARREF(YPadd_met),VARREF(Yprop_getter),accessorF316);
   (P)YPmet_name_setter(VARREF(Yprop_getter),accessorF316);
-  T376 = accessorF316;
-  getterF317 = T376;
-  T382 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T381 = (P)YPpair(VARREF(YLanyG),T382);
-  T380 = (P)YPsig(Ynil,T381,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T379 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_68),T380,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yprop_getter_setter,T379);
-  T384 = fun_221;
-  accessorF318 = T384;
+  T381 = accessorF316;
+  getterF317 = T381;
+  T387 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T386 = (P)YPpair(VARREF(YLanyG),T387);
+  T385 = (P)YPsig(Ynil,T386,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T384 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_68),T385,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yprop_getter_setter,T384);
+  T389 = fun_221;
+  accessorF318 = T389;
   CALL2(1,VARREF(YPadd_met),VARREF(Yprop_getter_setter),accessorF318);
   (P)YPmet_name_setter(VARREF(Yprop_getter_setter),accessorF318);
-  T383 = accessorF318;
-  setterF319 = T383;
-  T387 = fun_222;
-  T386 = (P)YPPprop(VARREF(YLpropG),VARREF(Yprop_getter),VARREF(Yprop_getter_setter),VARREF(YLfunG),T387);
-  propF320 = T386;
+  T388 = accessorF318;
+  setterF319 = T388;
+  T392 = fun_222;
+  T391 = (P)YPPprop(VARREF(YLpropG),VARREF(Yprop_getter),VARREF(Yprop_getter_setter),VARREF(YLfunG),T392);
+  propF320 = T391;
   (P)YPmet_env_setter(propF320,getterF317);
   (P)YPmet_env_setter(propF320,setterF319);
-  T388 = CALL2(1,VARREF(YPadd_prop),VARREF(YLpropG),propF320);
-  T385 = T388;
-  T378 = T385;
-  lit_69 = YPPsym((P)"prop-setter");
-  lit_70 = YPPsym((P)"prop-setter-setter");
-  T391 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLpropG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_223 = YPmet(FUNCODEREF(fun_223),YPfalse,T391,ENVNUL,PNUL,YPfalse);
-  T390 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLpropG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_224 = YPmet(FUNCODEREF(fun_224),YPfalse,T390,ENVNUL,PNUL,YPfalse);
-  T389 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_225 = YPmet(FUNCODEREF(fun_225),YPfalse,T389,ENVNUL,PNUL,YPfalse);
-  T394 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T393 = (P)YPsig(Ynil,T394,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T392 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_69),T393,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yprop_setter,T392);
-  T396 = fun_223;
-  accessorF321 = T396;
-  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_setter),accessorF321);
-  (P)YPmet_name_setter(VARREF(Yprop_setter),accessorF321);
-  T395 = accessorF321;
-  getterF322 = T395;
-  T401 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T400 = (P)YPpair(VARREF(YLanyG),T401);
-  T399 = (P)YPsig(Ynil,T400,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T398 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_70),T399,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yprop_setter_setter,T398);
-  T403 = fun_224;
-  accessorF323 = T403;
-  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_setter_setter),accessorF323);
-  (P)YPmet_name_setter(VARREF(Yprop_setter_setter),accessorF323);
-  T402 = accessorF323;
-  setterF324 = T402;
-  T406 = fun_225;
-  T405 = (P)YPPprop(VARREF(YLpropG),VARREF(Yprop_setter),VARREF(Yprop_setter_setter),VARREF(YLfunG),T406);
-  propF325 = T405;
-  (P)YPmet_env_setter(propF325,getterF322);
-  (P)YPmet_env_setter(propF325,setterF324);
-  T407 = CALL2(1,VARREF(YPadd_prop),VARREF(YLpropG),propF325);
-  T404 = T407;
-  T397 = T404;
-  lit_71 = YPPsym((P)"prop-type");
-  lit_72 = YPPsym((P)"prop-type-setter");
-  T410 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLpropG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_226 = YPmet(FUNCODEREF(fun_226),YPfalse,T410,ENVNUL,PNUL,YPfalse);
-  T409 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLtypeG),VARREF(YLpropG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_227 = YPmet(FUNCODEREF(fun_227),YPfalse,T409,ENVNUL,PNUL,YPfalse);
-  T408 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_228 = YPmet(FUNCODEREF(fun_228),YPfalse,T408,ENVNUL,PNUL,YPfalse);
-  T413 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T412 = (P)YPsig(Ynil,T413,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T411 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_71),T412,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yprop_type,T411);
-  T415 = fun_226;
-  accessorF326 = T415;
-  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_type),accessorF326);
-  (P)YPmet_name_setter(VARREF(Yprop_type),accessorF326);
-  T414 = accessorF326;
-  getterF327 = T414;
-  T420 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T419 = (P)YPpair(VARREF(YLanyG),T420);
-  T418 = (P)YPsig(Ynil,T419,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T417 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_72),T418,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yprop_type_setter,T417);
-  T422 = fun_227;
-  accessorF328 = T422;
-  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_type_setter),accessorF328);
-  (P)YPmet_name_setter(VARREF(Yprop_type_setter),accessorF328);
-  T421 = accessorF328;
-  setterF329 = T421;
-  T425 = fun_228;
-  T424 = (P)YPPprop(VARREF(YLpropG),VARREF(Yprop_type),VARREF(Yprop_type_setter),VARREF(YLtypeG),T425);
-  propF330 = T424;
-  (P)YPmet_env_setter(propF330,getterF327);
-  (P)YPmet_env_setter(propF330,setterF329);
-  T426 = CALL2(1,VARREF(YPadd_prop),VARREF(YLpropG),propF330);
-  T423 = T426;
-  T416 = T423;
-  lit_73 = YPPsym((P)"prop-init");
-  lit_74 = YPPsym((P)"prop-init-setter");
-  T430 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLpropG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_229 = YPmet(FUNCODEREF(fun_229),YPfalse,T430,ENVNUL,PNUL,YPfalse);
-  T429 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLpropG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_230 = YPmet(FUNCODEREF(fun_230),YPfalse,T429,ENVNUL,PNUL,YPfalse);
-  T428 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_231 = YPmet(FUNCODEREF(fun_231),YPfalse,T428,ENVNUL,PNUL,YPfalse);
-  T427 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_232 = YPmet(FUNCODEREF(fun_232),YPfalse,T427,ENVNUL,PNUL,YPfalse);
-  T433 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T432 = (P)YPsig(Ynil,T433,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T431 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_73),T432,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yprop_init,T431);
-  T435 = fun_229;
-  accessorF331 = T435;
-  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_init),accessorF331);
-  (P)YPmet_name_setter(VARREF(Yprop_init),accessorF331);
-  T434 = accessorF331;
-  getterF332 = T434;
-  T440 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T439 = (P)YPpair(VARREF(YLanyG),T440);
-  T438 = (P)YPsig(Ynil,T439,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T437 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_74),T438,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yprop_init_setter,T437);
-  T442 = fun_230;
-  accessorF333 = T442;
-  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_init_setter),accessorF333);
-  (P)YPmet_name_setter(VARREF(Yprop_init_setter),accessorF333);
-  T441 = accessorF333;
-  setterF334 = T441;
-  T445 = fun_232;
-  T444 = (P)YPPprop(VARREF(YLpropG),VARREF(Yprop_init),VARREF(Yprop_init_setter),VARREF(YLfunG),T445);
-  propF335 = T444;
-  (P)YPmet_env_setter(propF335,getterF332);
-  (P)YPmet_env_setter(propF335,setterF334);
-  T446 = CALL2(1,VARREF(YPadd_prop),VARREF(YLpropG),propF335);
-  T443 = T446;
-  T436 = T443;
-  lit_75 = YPPsym((P)"gen-cache-missable?");
-  lit_76 = YPPsym((P)"gen-cache-missable?-setter");
-  T449 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgen_cacheG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_233 = YPmet(FUNCODEREF(fun_233),YPfalse,T449,ENVNUL,PNUL,YPfalse);
-  T448 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlogG),VARREF(YLgen_cacheG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_234 = YPmet(FUNCODEREF(fun_234),YPfalse,T448,ENVNUL,PNUL,YPfalse);
-  T447 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_235 = YPmet(FUNCODEREF(fun_235),YPfalse,T447,ENVNUL,PNUL,YPfalse);
-  T452 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T451 = (P)YPsig(Ynil,T452,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T450 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_75),T451,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_cache_missableQ,T450);
-  T454 = fun_233;
-  accessorF336 = T454;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_missableQ),accessorF336);
-  (P)YPmet_name_setter(VARREF(Ygen_cache_missableQ),accessorF336);
-  T453 = accessorF336;
-  getterF337 = T453;
-  T459 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T458 = (P)YPpair(VARREF(YLanyG),T459);
-  T457 = (P)YPsig(Ynil,T458,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T456 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_76),T457,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_cache_missableQ_setter,T456);
-  T461 = fun_234;
-  accessorF338 = T461;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_missableQ_setter),accessorF338);
-  (P)YPmet_name_setter(VARREF(Ygen_cache_missableQ_setter),accessorF338);
-  T460 = accessorF338;
-  setterF339 = T460;
-  T464 = fun_235;
-  T463 = (P)YPPprop(VARREF(YLgen_cacheG),VARREF(Ygen_cache_missableQ),VARREF(Ygen_cache_missableQ_setter),VARREF(YLlogG),T464);
-  propF340 = T463;
-  (P)YPmet_env_setter(propF340,getterF337);
-  (P)YPmet_env_setter(propF340,setterF339);
-  T465 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgen_cacheG),propF340);
-  T462 = T465;
-  T455 = T462;
-  lit_77 = YPPsym((P)"gen-cache-arg-pos");
-  lit_78 = YPPsym((P)"gen-cache-arg-pos-setter");
-  T468 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgen_cacheG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_236 = YPmet(FUNCODEREF(fun_236),YPfalse,T468,ENVNUL,PNUL,YPfalse);
-  T467 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLintG),VARREF(YLgen_cacheG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_237 = YPmet(FUNCODEREF(fun_237),YPfalse,T467,ENVNUL,PNUL,YPfalse);
-  T466 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_238 = YPmet(FUNCODEREF(fun_238),YPfalse,T466,ENVNUL,PNUL,YPfalse);
-  T471 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T470 = (P)YPsig(Ynil,T471,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T469 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_77),T470,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_cache_arg_pos,T469);
-  T473 = fun_236;
-  accessorF341 = T473;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_arg_pos),accessorF341);
-  (P)YPmet_name_setter(VARREF(Ygen_cache_arg_pos),accessorF341);
-  T472 = accessorF341;
-  getterF342 = T472;
-  T478 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T477 = (P)YPpair(VARREF(YLanyG),T478);
-  T476 = (P)YPsig(Ynil,T477,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T475 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_78),T476,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_cache_arg_pos_setter,T475);
-  T480 = fun_237;
-  accessorF343 = T480;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_arg_pos_setter),accessorF343);
-  (P)YPmet_name_setter(VARREF(Ygen_cache_arg_pos_setter),accessorF343);
-  T479 = accessorF343;
-  setterF344 = T479;
-  T483 = fun_238;
-  T482 = (P)YPPprop(VARREF(YLgen_cacheG),VARREF(Ygen_cache_arg_pos),VARREF(Ygen_cache_arg_pos_setter),VARREF(YLintG),T483);
-  propF345 = T482;
-  (P)YPmet_env_setter(propF345,getterF342);
-  (P)YPmet_env_setter(propF345,setterF344);
-  T484 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgen_cacheG),propF345);
-  T481 = T484;
-  T474 = T481;
-  lit_79 = YPPsym((P)"gen-cache-singletons");
-  lit_80 = YPPsym((P)"gen-cache-singletons-setter");
-  T487 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgen_cacheG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_239 = YPmet(FUNCODEREF(fun_239),YPfalse,T487,ENVNUL,PNUL,YPfalse);
-  T486 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLgen_cacheG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_240 = YPmet(FUNCODEREF(fun_240),YPfalse,T486,ENVNUL,PNUL,YPfalse);
-  T485 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_241 = YPmet(FUNCODEREF(fun_241),YPfalse,T485,ENVNUL,PNUL,YPfalse);
-  T490 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T489 = (P)YPsig(Ynil,T490,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T488 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_79),T489,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_cache_singletons,T488);
-  T492 = fun_239;
-  accessorF346 = T492;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_singletons),accessorF346);
-  (P)YPmet_name_setter(VARREF(Ygen_cache_singletons),accessorF346);
-  T491 = accessorF346;
-  getterF347 = T491;
-  T497 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T496 = (P)YPpair(VARREF(YLanyG),T497);
-  T495 = (P)YPsig(Ynil,T496,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T494 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_80),T495,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_cache_singletons_setter,T494);
-  T499 = fun_240;
-  accessorF348 = T499;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_singletons_setter),accessorF348);
-  (P)YPmet_name_setter(VARREF(Ygen_cache_singletons_setter),accessorF348);
-  T498 = accessorF348;
-  setterF349 = T498;
-  T502 = fun_241;
-  T501 = (P)YPPprop(VARREF(YLgen_cacheG),VARREF(Ygen_cache_singletons),VARREF(Ygen_cache_singletons_setter),VARREF(YLlstG),T502);
-  propF350 = T501;
-  (P)YPmet_env_setter(propF350,getterF347);
-  (P)YPmet_env_setter(propF350,setterF349);
-  T503 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgen_cacheG),propF350);
-  T500 = T503;
-  T493 = T500;
-  lit_81 = YPPsym((P)"gen-cache-classes");
-  lit_82 = YPPsym((P)"gen-cache-classes-setter");
-  T506 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgen_cacheG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_242 = YPmet(FUNCODEREF(fun_242),YPfalse,T506,ENVNUL,PNUL,YPfalse);
-  T505 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLgen_cacheG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_243 = YPmet(FUNCODEREF(fun_243),YPfalse,T505,ENVNUL,PNUL,YPfalse);
-  T504 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_244 = YPmet(FUNCODEREF(fun_244),YPfalse,T504,ENVNUL,PNUL,YPfalse);
-  T509 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T508 = (P)YPsig(Ynil,T509,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T507 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_81),T508,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_cache_classes,T507);
-  T511 = fun_242;
-  accessorF351 = T511;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_classes),accessorF351);
-  (P)YPmet_name_setter(VARREF(Ygen_cache_classes),accessorF351);
-  T510 = accessorF351;
-  getterF352 = T510;
-  T516 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T515 = (P)YPpair(VARREF(YLanyG),T516);
-  T514 = (P)YPsig(Ynil,T515,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T513 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_82),T514,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_cache_classes_setter,T513);
-  T518 = fun_243;
-  accessorF353 = T518;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_classes_setter),accessorF353);
-  (P)YPmet_name_setter(VARREF(Ygen_cache_classes_setter),accessorF353);
-  T517 = accessorF353;
-  setterF354 = T517;
-  T521 = fun_244;
-  T520 = (P)YPPprop(VARREF(YLgen_cacheG),VARREF(Ygen_cache_classes),VARREF(Ygen_cache_classes_setter),VARREF(YLlstG),T521);
-  propF355 = T520;
-  (P)YPmet_env_setter(propF355,getterF352);
-  (P)YPmet_env_setter(propF355,setterF354);
-  T522 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgen_cacheG),propF355);
-  T519 = T522;
-  T512 = T519;
-  lit_83 = YPPsym((P)"sig-names");
-  lit_84 = YPPsym((P)"sig-names-setter");
-  T529 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T528 = fun_245 = YPmet(FUNCODEREF(fun_245),YPfalse,T529,ENVNUL,PNUL,YPfalse);
-  T527 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T526 = fun_246 = YPmet(FUNCODEREF(fun_246),YPfalse,T527,ENVNUL,PNUL,YPfalse);
-  T525 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T524 = fun_247 = YPmet(FUNCODEREF(fun_247),YPfalse,T525,ENVNUL,PNUL,YPfalse);
-  T533 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T532 = (P)YPsig(Ynil,T533,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T531 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_83),T532,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_names,T531);
-  T535 = fun_245;
-  accessorF356 = T535;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_names),accessorF356);
-  (P)YPmet_name_setter(VARREF(Ysig_names),accessorF356);
-  T534 = accessorF356;
-  getterF357 = T534;
-  T540 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T539 = (P)YPpair(VARREF(YLanyG),T540);
-  T538 = (P)YPsig(Ynil,T539,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T537 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_84),T538,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_names_setter,T537);
-  T542 = fun_246;
-  accessorF358 = T542;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_names_setter),accessorF358);
-  (P)YPmet_name_setter(VARREF(Ysig_names_setter),accessorF358);
-  T541 = accessorF358;
-  setterF359 = T541;
-  T545 = fun_247;
-  T544 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_names),VARREF(Ysig_names_setter),VARREF(YLlstG),T545);
-  propF360 = T544;
-  (P)YPmet_env_setter(propF360,getterF357);
-  (P)YPmet_env_setter(propF360,setterF359);
-  T546 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF360);
-  T543 = T546;
-  T536 = T543;
-  T530 = T536;
-  T523 = T530;
-  return T523;
+  T393 = CALL2(1,VARREF(YPadd_prop),VARREF(YLpropG),propF320);
+  T390 = T393;
+  T383 = T390;
+  T377 = T383;
+  T370 = T377;
+  return T370;
 }
 
 P Y___main_7___() {
@@ -11378,706 +11128,1053 @@ P Y___main_7___() {
   P accessorF363;
   P getterF362;
   P accessorF361;
-  P T354,T353,T352,T351,T350,T349,T348,T347,T346,T345,T344,T343,T342,T341,T340,T339;
-  P T338,T337,T336,T335,T334,T333,T332,T331,T330,T329,T328,T327,T326,T325,T324,T323;
-  P T322,T321,T320,T319,T318,T317,T316,T315,T314,T313,T312,T311,T310,T309,T308,T307;
-  P T306,T305,T304,T303,T302,T301,T300,T299,T298,T297,T296,T295,T294,T293,T292,T291;
-  P T290,T289,T288,T287,T286,T285,T284,T283,T282,T281,T280,T279,T278,T277,T276,T275;
-  P T274,T273,T272,T271,T270,T269,T268,T267,T266,T265,T264,T263,T262,T261,T260,T259;
-  P T258,T257,T256,T255,T254,T253,T252,T251,T250,T249,T248,T247,T246,T245,T244,T243;
-  P T242,T241,T240,T239,T238,T237,T236,T235,T234,T233,T232,T231,T230,T229,T228,T227;
-  P T226,T225,T224,T223,T222,T221,T220,T219,T218,T217,T216,T215,T214,T213,T212,T211;
-  P T210,T209,T208,T207,T206,T205,T204,T203,T202,T201,T200,T199,T198,T197,T196,T195;
-  P T194,T193,T192,T191,T190,T189,T188,T187,T186,T185,T184,T183,T182,T181,T180,T179;
-  P T178,T177,T176,T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164,T163;
-  P T162,T161,T160,T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149,T148,T147;
-  P T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133,T132,T131;
-  P T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116,T115;
-  P T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100,T99;
-  P T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84,T83;
-  P T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68,T67;
-  P T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51;
-  P T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35;
-  P T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19;
-  P T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3;
-  P T2,T1,T0;
+  P propF360;
+  P setterF359;
+  P accessorF358;
+  P getterF357;
+  P accessorF356;
+  P propF355;
+  P setterF354;
+  P accessorF353;
+  P getterF352;
+  P accessorF351;
+  P propF350;
+  P setterF349;
+  P accessorF348;
+  P getterF347;
+  P accessorF346;
+  P propF345;
+  P setterF344;
+  P accessorF343;
+  P getterF342;
+  P accessorF341;
+  P propF340;
+  P setterF339;
+  P accessorF338;
+  P getterF337;
+  P accessorF336;
+  P propF335;
+  P setterF334;
+  P accessorF333;
+  P getterF332;
+  P accessorF331;
+  P propF330;
+  P setterF329;
+  P accessorF328;
+  P getterF327;
+  P accessorF326;
+  P propF325;
+  P setterF324;
+  P accessorF323;
+  P getterF322;
+  P accessorF321;
+  P T499,T498,T497,T496,T495,T494,T493,T492,T491,T490,T489,T488,T487,T486,T485,T484;
+  P T483,T482,T481,T480,T479,T478,T477,T476,T475,T474,T473,T472,T471,T470,T469,T468;
+  P T467,T466,T465,T464,T463,T462,T461,T460,T459,T458,T457,T456,T455,T454,T453,T452;
+  P T451,T450,T449,T448,T447,T446,T445,T444,T443,T442,T441,T440,T439,T438,T437,T436;
+  P T435,T434,T433,T432,T431,T430,T429,T428,T427,T426,T425,T424,T423,T422,T421,T420;
+  P T419,T418,T417,T416,T415,T414,T413,T412,T411,T410,T409,T408,T407,T406,T405,T404;
+  P T403,T402,T401,T400,T399,T398,T397,T396,T395,T394,T393,T392,T391,T390,T389,T388;
+  P T387,T386,T385,T384,T383,T382,T381,T380,T379,T378,T377,T376,T375,T374,T373,T372;
+  P T371,T370,T369,T368,T367,T366,T365,T364,T363,T362,T361,T360,T359,T358,T357,T356;
+  P T355,T354,T353,T352,T351,T350,T349,T348,T347,T346,T345,T344,T343,T342,T341,T340;
+  P T339,T338,T337,T336,T335,T334,T333,T332,T331,T330,T329,T328,T327,T326,T325,T324;
+  P T323,T322,T321,T320,T319,T318,T317,T316,T315,T314,T313,T312,T311,T310,T309,T308;
+  P T307,T306,T305,T304,T303,T302,T301,T300,T299,T298,T297,T296,T295,T294,T293,T292;
+  P T291,T290,T289,T288,T287,T286,T285,T284,T283,T282,T281,T280,T279,T278,T277,T276;
+  P T275,T274,T273,T272,T271,T270,T269,T268,T267,T266,T265,T264,T263,T262,T261,T260;
+  P T259,T258,T257,T256,T255,T254,T253,T252,T251,T250,T249,T248,T247,T246,T245,T244;
+  P T243,T242,T241,T240,T239,T238,T237,T236,T235,T234,T233,T232,T231,T230,T229,T228;
+  P T227,T226,T225,T224,T223,T222,T221,T220,T219,T218,T217,T216,T215,T214,T213,T212;
+  P T211,T210,T209,T208,T207,T206,T205,T204,T203,T202,T201,T200,T199,T198,T197,T196;
+  P T195,T194,T193,T192,T191,T190,T189,T188,T187,T186,T185,T184,T183,T182,T181,T180;
+  P T179,T178,T177,T176,T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164;
+  P T163,T162,T161,T160,T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149,T148;
+  P T147,T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133,T132;
+  P T131,T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116;
+  P T115,T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100;
+  P T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84;
+  P T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68;
+  P T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52;
+  P T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36;
+  P T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20;
+  P T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4;
+  P T3,T2,T1,T0;
 loop:
-  lit_85 = YPPsym((P)"sig-specs");
-  lit_86 = YPPsym((P)"sig-specs-setter");
-  T2 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_248 = YPmet(FUNCODEREF(fun_248),YPfalse,T2,ENVNUL,PNUL,YPfalse);
-  T1 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_249 = YPmet(FUNCODEREF(fun_249),YPfalse,T1,ENVNUL,PNUL,YPfalse);
+  lit_69 = YPPsym((P)"prop-setter");
+  lit_70 = YPPsym((P)"prop-setter-setter");
+  T2 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLpropG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_223 = YPmet(FUNCODEREF(fun_223),YPfalse,T2,ENVNUL,PNUL,YPfalse);
+  T1 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLpropG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_224 = YPmet(FUNCODEREF(fun_224),YPfalse,T1,ENVNUL,PNUL,YPfalse);
   T0 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_250 = YPmet(FUNCODEREF(fun_250),YPfalse,T0,ENVNUL,PNUL,YPfalse);
+  fun_225 = YPmet(FUNCODEREF(fun_225),YPfalse,T0,ENVNUL,PNUL,YPfalse);
   T5 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
   T4 = (P)YPsig(Ynil,T5,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T3 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_85),T4,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_specs,T3);
-  T7 = fun_248;
-  accessorF361 = T7;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_specs),accessorF361);
-  (P)YPmet_name_setter(VARREF(Ysig_specs),accessorF361);
-  T6 = accessorF361;
-  getterF362 = T6;
+  T3 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_69),T4,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yprop_setter,T3);
+  T7 = fun_223;
+  accessorF321 = T7;
+  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_setter),accessorF321);
+  (P)YPmet_name_setter(VARREF(Yprop_setter),accessorF321);
+  T6 = accessorF321;
+  getterF322 = T6;
   T12 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
   T11 = (P)YPpair(VARREF(YLanyG),T12);
   T10 = (P)YPsig(Ynil,T11,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T9 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_86),T10,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_specs_setter,T9);
-  T14 = fun_249;
-  accessorF363 = T14;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_specs_setter),accessorF363);
-  (P)YPmet_name_setter(VARREF(Ysig_specs_setter),accessorF363);
-  T13 = accessorF363;
-  setterF364 = T13;
-  T17 = fun_250;
-  T16 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_specs),VARREF(Ysig_specs_setter),VARREF(YLlstG),T17);
-  propF365 = T16;
-  (P)YPmet_env_setter(propF365,getterF362);
-  (P)YPmet_env_setter(propF365,setterF364);
-  T18 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF365);
+  T9 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_70),T10,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yprop_setter_setter,T9);
+  T14 = fun_224;
+  accessorF323 = T14;
+  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_setter_setter),accessorF323);
+  (P)YPmet_name_setter(VARREF(Yprop_setter_setter),accessorF323);
+  T13 = accessorF323;
+  setterF324 = T13;
+  T17 = fun_225;
+  T16 = (P)YPPprop(VARREF(YLpropG),VARREF(Yprop_setter),VARREF(Yprop_setter_setter),VARREF(YLfunG),T17);
+  propF325 = T16;
+  (P)YPmet_env_setter(propF325,getterF322);
+  (P)YPmet_env_setter(propF325,setterF324);
+  T18 = CALL2(1,VARREF(YPadd_prop),VARREF(YLpropG),propF325);
   T15 = T18;
   T8 = T15;
-  lit_87 = YPPsym((P)"sig-nary?");
-  lit_88 = YPPsym((P)"sig-nary?-setter");
-  T21 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_251 = YPmet(FUNCODEREF(fun_251),YPfalse,T21,ENVNUL,PNUL,YPfalse);
-  T20 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlogG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_252 = YPmet(FUNCODEREF(fun_252),YPfalse,T20,ENVNUL,PNUL,YPfalse);
+  lit_71 = YPPsym((P)"prop-type");
+  lit_72 = YPPsym((P)"prop-type-setter");
+  T21 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLpropG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_226 = YPmet(FUNCODEREF(fun_226),YPfalse,T21,ENVNUL,PNUL,YPfalse);
+  T20 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLtypeG),VARREF(YLpropG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_227 = YPmet(FUNCODEREF(fun_227),YPfalse,T20,ENVNUL,PNUL,YPfalse);
   T19 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_253 = YPmet(FUNCODEREF(fun_253),YPfalse,T19,ENVNUL,PNUL,YPfalse);
+  fun_228 = YPmet(FUNCODEREF(fun_228),YPfalse,T19,ENVNUL,PNUL,YPfalse);
   T24 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
   T23 = (P)YPsig(Ynil,T24,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T22 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_87),T23,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_naryQ,T22);
-  T26 = fun_251;
-  accessorF366 = T26;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_naryQ),accessorF366);
-  (P)YPmet_name_setter(VARREF(Ysig_naryQ),accessorF366);
-  T25 = accessorF366;
-  getterF367 = T25;
+  T22 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_71),T23,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yprop_type,T22);
+  T26 = fun_226;
+  accessorF326 = T26;
+  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_type),accessorF326);
+  (P)YPmet_name_setter(VARREF(Yprop_type),accessorF326);
+  T25 = accessorF326;
+  getterF327 = T25;
   T31 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
   T30 = (P)YPpair(VARREF(YLanyG),T31);
   T29 = (P)YPsig(Ynil,T30,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T28 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_88),T29,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_naryQ_setter,T28);
-  T33 = fun_252;
-  accessorF368 = T33;
-  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_naryQ_setter),accessorF368);
-  (P)YPmet_name_setter(VARREF(Ysig_naryQ_setter),accessorF368);
-  T32 = accessorF368;
-  setterF369 = T32;
-  T36 = fun_253;
-  T35 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_naryQ),VARREF(Ysig_naryQ_setter),VARREF(YLlogG),T36);
-  propF370 = T35;
-  (P)YPmet_env_setter(propF370,getterF367);
-  (P)YPmet_env_setter(propF370,setterF369);
-  T37 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF370);
+  T28 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_72),T29,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yprop_type_setter,T28);
+  T33 = fun_227;
+  accessorF328 = T33;
+  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_type_setter),accessorF328);
+  (P)YPmet_name_setter(VARREF(Yprop_type_setter),accessorF328);
+  T32 = accessorF328;
+  setterF329 = T32;
+  T36 = fun_228;
+  T35 = (P)YPPprop(VARREF(YLpropG),VARREF(Yprop_type),VARREF(Yprop_type_setter),VARREF(YLtypeG),T36);
+  propF330 = T35;
+  (P)YPmet_env_setter(propF330,getterF327);
+  (P)YPmet_env_setter(propF330,setterF329);
+  T37 = CALL2(1,VARREF(YPadd_prop),VARREF(YLpropG),propF330);
   T34 = T37;
   T27 = T34;
+  lit_73 = YPPsym((P)"prop-init");
+  lit_74 = YPPsym((P)"prop-init-setter");
+  T41 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLpropG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_229 = YPmet(FUNCODEREF(fun_229),YPfalse,T41,ENVNUL,PNUL,YPfalse);
+  T40 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLpropG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_230 = YPmet(FUNCODEREF(fun_230),YPfalse,T40,ENVNUL,PNUL,YPfalse);
+  T39 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_231 = YPmet(FUNCODEREF(fun_231),YPfalse,T39,ENVNUL,PNUL,YPfalse);
+  T38 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_232 = YPmet(FUNCODEREF(fun_232),YPfalse,T38,ENVNUL,PNUL,YPfalse);
+  T44 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T43 = (P)YPsig(Ynil,T44,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T42 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_73),T43,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yprop_init,T42);
+  T46 = fun_229;
+  accessorF331 = T46;
+  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_init),accessorF331);
+  (P)YPmet_name_setter(VARREF(Yprop_init),accessorF331);
+  T45 = accessorF331;
+  getterF332 = T45;
+  T51 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T50 = (P)YPpair(VARREF(YLanyG),T51);
+  T49 = (P)YPsig(Ynil,T50,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T48 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_74),T49,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yprop_init_setter,T48);
+  T53 = fun_230;
+  accessorF333 = T53;
+  CALL2(1,VARREF(YPadd_met),VARREF(Yprop_init_setter),accessorF333);
+  (P)YPmet_name_setter(VARREF(Yprop_init_setter),accessorF333);
+  T52 = accessorF333;
+  setterF334 = T52;
+  T56 = fun_232;
+  T55 = (P)YPPprop(VARREF(YLpropG),VARREF(Yprop_init),VARREF(Yprop_init_setter),VARREF(YLfunG),T56);
+  propF335 = T55;
+  (P)YPmet_env_setter(propF335,getterF332);
+  (P)YPmet_env_setter(propF335,setterF334);
+  T57 = CALL2(1,VARREF(YPadd_prop),VARREF(YLpropG),propF335);
+  T54 = T57;
+  T47 = T54;
+  lit_75 = YPPsym((P)"gen-cache-missable?");
+  lit_76 = YPPsym((P)"gen-cache-missable?-setter");
+  T60 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgen_cacheG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_233 = YPmet(FUNCODEREF(fun_233),YPfalse,T60,ENVNUL,PNUL,YPfalse);
+  T59 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlogG),VARREF(YLgen_cacheG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_234 = YPmet(FUNCODEREF(fun_234),YPfalse,T59,ENVNUL,PNUL,YPfalse);
+  T58 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_235 = YPmet(FUNCODEREF(fun_235),YPfalse,T58,ENVNUL,PNUL,YPfalse);
+  T63 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T62 = (P)YPsig(Ynil,T63,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T61 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_75),T62,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_cache_missableQ,T61);
+  T65 = fun_233;
+  accessorF336 = T65;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_missableQ),accessorF336);
+  (P)YPmet_name_setter(VARREF(Ygen_cache_missableQ),accessorF336);
+  T64 = accessorF336;
+  getterF337 = T64;
+  T70 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T69 = (P)YPpair(VARREF(YLanyG),T70);
+  T68 = (P)YPsig(Ynil,T69,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T67 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_76),T68,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_cache_missableQ_setter,T67);
+  T72 = fun_234;
+  accessorF338 = T72;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_missableQ_setter),accessorF338);
+  (P)YPmet_name_setter(VARREF(Ygen_cache_missableQ_setter),accessorF338);
+  T71 = accessorF338;
+  setterF339 = T71;
+  T75 = fun_235;
+  T74 = (P)YPPprop(VARREF(YLgen_cacheG),VARREF(Ygen_cache_missableQ),VARREF(Ygen_cache_missableQ_setter),VARREF(YLlogG),T75);
+  propF340 = T74;
+  (P)YPmet_env_setter(propF340,getterF337);
+  (P)YPmet_env_setter(propF340,setterF339);
+  T76 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgen_cacheG),propF340);
+  T73 = T76;
+  T66 = T73;
+  lit_77 = YPPsym((P)"gen-cache-arg-pos");
+  lit_78 = YPPsym((P)"gen-cache-arg-pos-setter");
+  T79 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgen_cacheG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_236 = YPmet(FUNCODEREF(fun_236),YPfalse,T79,ENVNUL,PNUL,YPfalse);
+  T78 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLintG),VARREF(YLgen_cacheG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_237 = YPmet(FUNCODEREF(fun_237),YPfalse,T78,ENVNUL,PNUL,YPfalse);
+  T77 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_238 = YPmet(FUNCODEREF(fun_238),YPfalse,T77,ENVNUL,PNUL,YPfalse);
+  T82 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T81 = (P)YPsig(Ynil,T82,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T80 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_77),T81,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_cache_arg_pos,T80);
+  T84 = fun_236;
+  accessorF341 = T84;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_arg_pos),accessorF341);
+  (P)YPmet_name_setter(VARREF(Ygen_cache_arg_pos),accessorF341);
+  T83 = accessorF341;
+  getterF342 = T83;
+  T89 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T88 = (P)YPpair(VARREF(YLanyG),T89);
+  T87 = (P)YPsig(Ynil,T88,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T86 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_78),T87,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_cache_arg_pos_setter,T86);
+  T91 = fun_237;
+  accessorF343 = T91;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_arg_pos_setter),accessorF343);
+  (P)YPmet_name_setter(VARREF(Ygen_cache_arg_pos_setter),accessorF343);
+  T90 = accessorF343;
+  setterF344 = T90;
+  T94 = fun_238;
+  T93 = (P)YPPprop(VARREF(YLgen_cacheG),VARREF(Ygen_cache_arg_pos),VARREF(Ygen_cache_arg_pos_setter),VARREF(YLintG),T94);
+  propF345 = T93;
+  (P)YPmet_env_setter(propF345,getterF342);
+  (P)YPmet_env_setter(propF345,setterF344);
+  T95 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgen_cacheG),propF345);
+  T92 = T95;
+  T85 = T92;
+  lit_79 = YPPsym((P)"gen-cache-singletons");
+  lit_80 = YPPsym((P)"gen-cache-singletons-setter");
+  T98 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgen_cacheG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_239 = YPmet(FUNCODEREF(fun_239),YPfalse,T98,ENVNUL,PNUL,YPfalse);
+  T97 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLgen_cacheG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_240 = YPmet(FUNCODEREF(fun_240),YPfalse,T97,ENVNUL,PNUL,YPfalse);
+  T96 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_241 = YPmet(FUNCODEREF(fun_241),YPfalse,T96,ENVNUL,PNUL,YPfalse);
+  T101 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T100 = (P)YPsig(Ynil,T101,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T99 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_79),T100,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_cache_singletons,T99);
+  T103 = fun_239;
+  accessorF346 = T103;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_singletons),accessorF346);
+  (P)YPmet_name_setter(VARREF(Ygen_cache_singletons),accessorF346);
+  T102 = accessorF346;
+  getterF347 = T102;
+  T108 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T107 = (P)YPpair(VARREF(YLanyG),T108);
+  T106 = (P)YPsig(Ynil,T107,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T105 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_80),T106,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_cache_singletons_setter,T105);
+  T110 = fun_240;
+  accessorF348 = T110;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_singletons_setter),accessorF348);
+  (P)YPmet_name_setter(VARREF(Ygen_cache_singletons_setter),accessorF348);
+  T109 = accessorF348;
+  setterF349 = T109;
+  T113 = fun_241;
+  T112 = (P)YPPprop(VARREF(YLgen_cacheG),VARREF(Ygen_cache_singletons),VARREF(Ygen_cache_singletons_setter),VARREF(YLlstG),T113);
+  propF350 = T112;
+  (P)YPmet_env_setter(propF350,getterF347);
+  (P)YPmet_env_setter(propF350,setterF349);
+  T114 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgen_cacheG),propF350);
+  T111 = T114;
+  T104 = T111;
+  lit_81 = YPPsym((P)"gen-cache-classes");
+  lit_82 = YPPsym((P)"gen-cache-classes-setter");
+  T117 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgen_cacheG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_242 = YPmet(FUNCODEREF(fun_242),YPfalse,T117,ENVNUL,PNUL,YPfalse);
+  T116 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLgen_cacheG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_243 = YPmet(FUNCODEREF(fun_243),YPfalse,T116,ENVNUL,PNUL,YPfalse);
+  T115 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_244 = YPmet(FUNCODEREF(fun_244),YPfalse,T115,ENVNUL,PNUL,YPfalse);
+  T120 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T119 = (P)YPsig(Ynil,T120,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T118 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_81),T119,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_cache_classes,T118);
+  T122 = fun_242;
+  accessorF351 = T122;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_classes),accessorF351);
+  (P)YPmet_name_setter(VARREF(Ygen_cache_classes),accessorF351);
+  T121 = accessorF351;
+  getterF352 = T121;
+  T127 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T126 = (P)YPpair(VARREF(YLanyG),T127);
+  T125 = (P)YPsig(Ynil,T126,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T124 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_82),T125,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_cache_classes_setter,T124);
+  T129 = fun_243;
+  accessorF353 = T129;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ygen_cache_classes_setter),accessorF353);
+  (P)YPmet_name_setter(VARREF(Ygen_cache_classes_setter),accessorF353);
+  T128 = accessorF353;
+  setterF354 = T128;
+  T132 = fun_244;
+  T131 = (P)YPPprop(VARREF(YLgen_cacheG),VARREF(Ygen_cache_classes),VARREF(Ygen_cache_classes_setter),VARREF(YLlstG),T132);
+  propF355 = T131;
+  (P)YPmet_env_setter(propF355,getterF352);
+  (P)YPmet_env_setter(propF355,setterF354);
+  T133 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgen_cacheG),propF355);
+  T130 = T133;
+  T123 = T130;
+  lit_83 = YPPsym((P)"sig-names");
+  lit_84 = YPPsym((P)"sig-names-setter");
+  T136 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_245 = YPmet(FUNCODEREF(fun_245),YPfalse,T136,ENVNUL,PNUL,YPfalse);
+  T135 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_246 = YPmet(FUNCODEREF(fun_246),YPfalse,T135,ENVNUL,PNUL,YPfalse);
+  T134 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_247 = YPmet(FUNCODEREF(fun_247),YPfalse,T134,ENVNUL,PNUL,YPfalse);
+  T139 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T138 = (P)YPsig(Ynil,T139,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T137 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_83),T138,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_names,T137);
+  T141 = fun_245;
+  accessorF356 = T141;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_names),accessorF356);
+  (P)YPmet_name_setter(VARREF(Ysig_names),accessorF356);
+  T140 = accessorF356;
+  getterF357 = T140;
+  T146 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T145 = (P)YPpair(VARREF(YLanyG),T146);
+  T144 = (P)YPsig(Ynil,T145,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T143 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_84),T144,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_names_setter,T143);
+  T148 = fun_246;
+  accessorF358 = T148;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_names_setter),accessorF358);
+  (P)YPmet_name_setter(VARREF(Ysig_names_setter),accessorF358);
+  T147 = accessorF358;
+  setterF359 = T147;
+  T151 = fun_247;
+  T150 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_names),VARREF(Ysig_names_setter),VARREF(YLlstG),T151);
+  propF360 = T150;
+  (P)YPmet_env_setter(propF360,getterF357);
+  (P)YPmet_env_setter(propF360,setterF359);
+  T152 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF360);
+  T149 = T152;
+  T142 = T149;
+  lit_85 = YPPsym((P)"sig-specs");
+  lit_86 = YPPsym((P)"sig-specs-setter");
+  T155 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_248 = YPmet(FUNCODEREF(fun_248),YPfalse,T155,ENVNUL,PNUL,YPfalse);
+  T154 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_249 = YPmet(FUNCODEREF(fun_249),YPfalse,T154,ENVNUL,PNUL,YPfalse);
+  T153 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_250 = YPmet(FUNCODEREF(fun_250),YPfalse,T153,ENVNUL,PNUL,YPfalse);
+  T158 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T157 = (P)YPsig(Ynil,T158,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T156 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_85),T157,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_specs,T156);
+  T160 = fun_248;
+  accessorF361 = T160;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_specs),accessorF361);
+  (P)YPmet_name_setter(VARREF(Ysig_specs),accessorF361);
+  T159 = accessorF361;
+  getterF362 = T159;
+  T165 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T164 = (P)YPpair(VARREF(YLanyG),T165);
+  T163 = (P)YPsig(Ynil,T164,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T162 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_86),T163,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_specs_setter,T162);
+  T167 = fun_249;
+  accessorF363 = T167;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_specs_setter),accessorF363);
+  (P)YPmet_name_setter(VARREF(Ysig_specs_setter),accessorF363);
+  T166 = accessorF363;
+  setterF364 = T166;
+  T170 = fun_250;
+  T169 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_specs),VARREF(Ysig_specs_setter),VARREF(YLlstG),T170);
+  propF365 = T169;
+  (P)YPmet_env_setter(propF365,getterF362);
+  (P)YPmet_env_setter(propF365,setterF364);
+  T171 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF365);
+  T168 = T171;
+  T161 = T168;
+  lit_87 = YPPsym((P)"sig-nary?");
+  lit_88 = YPPsym((P)"sig-nary?-setter");
+  T174 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_251 = YPmet(FUNCODEREF(fun_251),YPfalse,T174,ENVNUL,PNUL,YPfalse);
+  T173 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlogG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_252 = YPmet(FUNCODEREF(fun_252),YPfalse,T173,ENVNUL,PNUL,YPfalse);
+  T172 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_253 = YPmet(FUNCODEREF(fun_253),YPfalse,T172,ENVNUL,PNUL,YPfalse);
+  T177 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T176 = (P)YPsig(Ynil,T177,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T175 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_87),T176,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_naryQ,T175);
+  T179 = fun_251;
+  accessorF366 = T179;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_naryQ),accessorF366);
+  (P)YPmet_name_setter(VARREF(Ysig_naryQ),accessorF366);
+  T178 = accessorF366;
+  getterF367 = T178;
+  T184 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T183 = (P)YPpair(VARREF(YLanyG),T184);
+  T182 = (P)YPsig(Ynil,T183,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T181 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_88),T182,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_naryQ_setter,T181);
+  T186 = fun_252;
+  accessorF368 = T186;
+  CALL2(1,VARREF(YPadd_met),VARREF(Ysig_naryQ_setter),accessorF368);
+  (P)YPmet_name_setter(VARREF(Ysig_naryQ_setter),accessorF368);
+  T185 = accessorF368;
+  setterF369 = T185;
+  T189 = fun_253;
+  T188 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_naryQ),VARREF(Ysig_naryQ_setter),VARREF(YLlogG),T189);
+  propF370 = T188;
+  (P)YPmet_env_setter(propF370,getterF367);
+  (P)YPmet_env_setter(propF370,setterF369);
+  T190 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF370);
+  T187 = T190;
+  T180 = T187;
   lit_89 = YPPsym((P)"sig-arity");
   lit_90 = YPPsym((P)"sig-arity-setter");
-  T40 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_254 = YPmet(FUNCODEREF(fun_254),YPfalse,T40,ENVNUL,PNUL,YPfalse);
-  T39 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLintG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_255 = YPmet(FUNCODEREF(fun_255),YPfalse,T39,ENVNUL,PNUL,YPfalse);
-  T38 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_256 = YPmet(FUNCODEREF(fun_256),YPfalse,T38,ENVNUL,PNUL,YPfalse);
-  T43 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T42 = (P)YPsig(Ynil,T43,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T41 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_89),T42,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_arity,T41);
-  T45 = fun_254;
-  accessorF371 = T45;
+  T193 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_254 = YPmet(FUNCODEREF(fun_254),YPfalse,T193,ENVNUL,PNUL,YPfalse);
+  T192 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLintG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_255 = YPmet(FUNCODEREF(fun_255),YPfalse,T192,ENVNUL,PNUL,YPfalse);
+  T191 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_256 = YPmet(FUNCODEREF(fun_256),YPfalse,T191,ENVNUL,PNUL,YPfalse);
+  T196 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T195 = (P)YPsig(Ynil,T196,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T194 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_89),T195,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_arity,T194);
+  T198 = fun_254;
+  accessorF371 = T198;
   CALL2(1,VARREF(YPadd_met),VARREF(Ysig_arity),accessorF371);
   (P)YPmet_name_setter(VARREF(Ysig_arity),accessorF371);
-  T44 = accessorF371;
-  getterF372 = T44;
-  T50 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T49 = (P)YPpair(VARREF(YLanyG),T50);
-  T48 = (P)YPsig(Ynil,T49,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T47 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_90),T48,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_arity_setter,T47);
-  T52 = fun_255;
-  accessorF373 = T52;
+  T197 = accessorF371;
+  getterF372 = T197;
+  T203 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T202 = (P)YPpair(VARREF(YLanyG),T203);
+  T201 = (P)YPsig(Ynil,T202,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T200 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_90),T201,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_arity_setter,T200);
+  T205 = fun_255;
+  accessorF373 = T205;
   CALL2(1,VARREF(YPadd_met),VARREF(Ysig_arity_setter),accessorF373);
   (P)YPmet_name_setter(VARREF(Ysig_arity_setter),accessorF373);
-  T51 = accessorF373;
-  setterF374 = T51;
-  T55 = fun_256;
-  T54 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_arity),VARREF(Ysig_arity_setter),VARREF(YLintG),T55);
-  propF375 = T54;
+  T204 = accessorF373;
+  setterF374 = T204;
+  T208 = fun_256;
+  T207 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_arity),VARREF(Ysig_arity_setter),VARREF(YLintG),T208);
+  propF375 = T207;
   (P)YPmet_env_setter(propF375,getterF372);
   (P)YPmet_env_setter(propF375,setterF374);
-  T56 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF375);
-  T53 = T56;
-  T46 = T53;
+  T209 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF375);
+  T206 = T209;
+  T199 = T206;
   lit_91 = YPPsym((P)"sig-val");
   lit_92 = YPPsym((P)"sig-val-setter");
-  T59 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_257 = YPmet(FUNCODEREF(fun_257),YPfalse,T59,ENVNUL,PNUL,YPfalse);
-  T58 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_258 = YPmet(FUNCODEREF(fun_258),YPfalse,T58,ENVNUL,PNUL,YPfalse);
-  T57 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_259 = YPmet(FUNCODEREF(fun_259),YPfalse,T57,ENVNUL,PNUL,YPfalse);
-  T62 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T61 = (P)YPsig(Ynil,T62,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T60 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_91),T61,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_val,T60);
-  T64 = fun_257;
-  accessorF376 = T64;
+  T212 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_257 = YPmet(FUNCODEREF(fun_257),YPfalse,T212,ENVNUL,PNUL,YPfalse);
+  T211 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_258 = YPmet(FUNCODEREF(fun_258),YPfalse,T211,ENVNUL,PNUL,YPfalse);
+  T210 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_259 = YPmet(FUNCODEREF(fun_259),YPfalse,T210,ENVNUL,PNUL,YPfalse);
+  T215 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T214 = (P)YPsig(Ynil,T215,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T213 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_91),T214,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_val,T213);
+  T217 = fun_257;
+  accessorF376 = T217;
   CALL2(1,VARREF(YPadd_met),VARREF(Ysig_val),accessorF376);
   (P)YPmet_name_setter(VARREF(Ysig_val),accessorF376);
-  T63 = accessorF376;
-  getterF377 = T63;
-  T69 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T68 = (P)YPpair(VARREF(YLanyG),T69);
-  T67 = (P)YPsig(Ynil,T68,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T66 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_92),T67,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_val_setter,T66);
-  T71 = fun_258;
-  accessorF378 = T71;
+  T216 = accessorF376;
+  getterF377 = T216;
+  T222 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T221 = (P)YPpair(VARREF(YLanyG),T222);
+  T220 = (P)YPsig(Ynil,T221,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T219 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_92),T220,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_val_setter,T219);
+  T224 = fun_258;
+  accessorF378 = T224;
   CALL2(1,VARREF(YPadd_met),VARREF(Ysig_val_setter),accessorF378);
   (P)YPmet_name_setter(VARREF(Ysig_val_setter),accessorF378);
-  T70 = accessorF378;
-  setterF379 = T70;
-  T74 = fun_259;
-  T73 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_val),VARREF(Ysig_val_setter),VARREF(YLanyG),T74);
-  propF380 = T73;
+  T223 = accessorF378;
+  setterF379 = T223;
+  T227 = fun_259;
+  T226 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_val),VARREF(Ysig_val_setter),VARREF(YLanyG),T227);
+  propF380 = T226;
   (P)YPmet_env_setter(propF380,getterF377);
   (P)YPmet_env_setter(propF380,setterF379);
-  T75 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF380);
-  T72 = T75;
-  T65 = T72;
+  T228 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF380);
+  T225 = T228;
+  T218 = T225;
   lit_93 = YPPsym((P)"sig-unification-vars");
   lit_94 = YPPsym((P)"sig-unification-vars-setter");
-  T78 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_260 = YPmet(FUNCODEREF(fun_260),YPfalse,T78,ENVNUL,PNUL,YPfalse);
-  T77 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_261 = YPmet(FUNCODEREF(fun_261),YPfalse,T77,ENVNUL,PNUL,YPfalse);
-  T76 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_262 = YPmet(FUNCODEREF(fun_262),YPfalse,T76,ENVNUL,PNUL,YPfalse);
-  T81 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T80 = (P)YPsig(Ynil,T81,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T79 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_93),T80,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_unification_vars,T79);
-  T83 = fun_260;
-  accessorF381 = T83;
+  T231 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLsigG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_260 = YPmet(FUNCODEREF(fun_260),YPfalse,T231,ENVNUL,PNUL,YPfalse);
+  T230 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLsigG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_261 = YPmet(FUNCODEREF(fun_261),YPfalse,T230,ENVNUL,PNUL,YPfalse);
+  T229 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_262 = YPmet(FUNCODEREF(fun_262),YPfalse,T229,ENVNUL,PNUL,YPfalse);
+  T234 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T233 = (P)YPsig(Ynil,T234,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T232 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_93),T233,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_unification_vars,T232);
+  T236 = fun_260;
+  accessorF381 = T236;
   CALL2(1,VARREF(YPadd_met),VARREF(Ysig_unification_vars),accessorF381);
   (P)YPmet_name_setter(VARREF(Ysig_unification_vars),accessorF381);
-  T82 = accessorF381;
-  getterF382 = T82;
-  T88 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T87 = (P)YPpair(VARREF(YLanyG),T88);
-  T86 = (P)YPsig(Ynil,T87,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T85 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_94),T86,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ysig_unification_vars_setter,T85);
-  T90 = fun_261;
-  accessorF383 = T90;
+  T235 = accessorF381;
+  getterF382 = T235;
+  T241 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T240 = (P)YPpair(VARREF(YLanyG),T241);
+  T239 = (P)YPsig(Ynil,T240,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T238 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_94),T239,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ysig_unification_vars_setter,T238);
+  T243 = fun_261;
+  accessorF383 = T243;
   CALL2(1,VARREF(YPadd_met),VARREF(Ysig_unification_vars_setter),accessorF383);
   (P)YPmet_name_setter(VARREF(Ysig_unification_vars_setter),accessorF383);
-  T89 = accessorF383;
-  setterF384 = T89;
-  T93 = fun_262;
-  T92 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_unification_vars),VARREF(Ysig_unification_vars_setter),VARREF(YLlstG),T93);
-  propF385 = T92;
+  T242 = accessorF383;
+  setterF384 = T242;
+  T246 = fun_262;
+  T245 = (P)YPPprop(VARREF(YLsigG),VARREF(Ysig_unification_vars),VARREF(Ysig_unification_vars_setter),VARREF(YLlstG),T246);
+  propF385 = T245;
   (P)YPmet_env_setter(propF385,getterF382);
   (P)YPmet_env_setter(propF385,setterF384);
-  T94 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF385);
-  T91 = T94;
-  T84 = T91;
+  T247 = CALL2(1,VARREF(YPadd_prop),VARREF(YLsigG),propF385);
+  T244 = T247;
+  T237 = T244;
   lit_95 = YPPsym((P)"fun-code");
   lit_96 = YPPsym((P)"fun-code-setter");
-  T97 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_263 = YPmet(FUNCODEREF(fun_263),YPfalse,T97,ENVNUL,PNUL,YPfalse);
-  T96 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_264 = YPmet(FUNCODEREF(fun_264),YPfalse,T96,ENVNUL,PNUL,YPfalse);
-  T95 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_265 = YPmet(FUNCODEREF(fun_265),YPfalse,T95,ENVNUL,PNUL,YPfalse);
-  T100 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T99 = (P)YPsig(Ynil,T100,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T98 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_95),T99,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_code,T98);
-  T102 = fun_263;
-  accessorF386 = T102;
+  T250 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_263 = YPmet(FUNCODEREF(fun_263),YPfalse,T250,ENVNUL,PNUL,YPfalse);
+  T249 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_264 = YPmet(FUNCODEREF(fun_264),YPfalse,T249,ENVNUL,PNUL,YPfalse);
+  T248 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_265 = YPmet(FUNCODEREF(fun_265),YPfalse,T248,ENVNUL,PNUL,YPfalse);
+  T253 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T252 = (P)YPsig(Ynil,T253,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T251 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_95),T252,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_code,T251);
+  T255 = fun_263;
+  accessorF386 = T255;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_code),accessorF386);
   (P)YPmet_name_setter(VARREF(Yfun_code),accessorF386);
-  T101 = accessorF386;
-  getterF387 = T101;
-  T107 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T106 = (P)YPpair(VARREF(YLanyG),T107);
-  T105 = (P)YPsig(Ynil,T106,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T104 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_96),T105,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_code_setter,T104);
-  T109 = fun_264;
-  accessorF388 = T109;
+  T254 = accessorF386;
+  getterF387 = T254;
+  T260 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T259 = (P)YPpair(VARREF(YLanyG),T260);
+  T258 = (P)YPsig(Ynil,T259,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T257 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_96),T258,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_code_setter,T257);
+  T262 = fun_264;
+  accessorF388 = T262;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_code_setter),accessorF388);
   (P)YPmet_name_setter(VARREF(Yfun_code_setter),accessorF388);
-  T108 = accessorF388;
-  setterF389 = T108;
-  T112 = fun_265;
-  T111 = (P)YPPprop(VARREF(YLfunG),VARREF(Yfun_code),VARREF(Yfun_code_setter),VARREF(YLanyG),T112);
-  propF390 = T111;
+  T261 = accessorF388;
+  setterF389 = T261;
+  T265 = fun_265;
+  T264 = (P)YPPprop(VARREF(YLfunG),VARREF(Yfun_code),VARREF(Yfun_code_setter),VARREF(YLanyG),T265);
+  propF390 = T264;
   (P)YPmet_env_setter(propF390,getterF387);
   (P)YPmet_env_setter(propF390,setterF389);
-  T113 = CALL2(1,VARREF(YPadd_prop),VARREF(YLfunG),propF390);
-  T110 = T113;
-  T103 = T110;
+  T266 = CALL2(1,VARREF(YPadd_prop),VARREF(YLfunG),propF390);
+  T263 = T266;
+  T256 = T263;
   lit_97 = YPPsym((P)"fun-name");
   lit_98 = YPPsym((P)"fun-name-setter");
-  T116 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_266 = YPmet(FUNCODEREF(fun_266),YPfalse,T116,ENVNUL,PNUL,YPfalse);
-  T115 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_267 = YPmet(FUNCODEREF(fun_267),YPfalse,T115,ENVNUL,PNUL,YPfalse);
-  T114 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_268 = YPmet(FUNCODEREF(fun_268),YPfalse,T114,ENVNUL,PNUL,YPfalse);
-  T119 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T118 = (P)YPsig(Ynil,T119,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T117 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_97),T118,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_name,T117);
-  T121 = fun_266;
-  accessorF391 = T121;
+  T269 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_266 = YPmet(FUNCODEREF(fun_266),YPfalse,T269,ENVNUL,PNUL,YPfalse);
+  T268 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_267 = YPmet(FUNCODEREF(fun_267),YPfalse,T268,ENVNUL,PNUL,YPfalse);
+  T267 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_268 = YPmet(FUNCODEREF(fun_268),YPfalse,T267,ENVNUL,PNUL,YPfalse);
+  T272 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T271 = (P)YPsig(Ynil,T272,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T270 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_97),T271,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_name,T270);
+  T274 = fun_266;
+  accessorF391 = T274;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_name),accessorF391);
   (P)YPmet_name_setter(VARREF(Yfun_name),accessorF391);
-  T120 = accessorF391;
-  getterF392 = T120;
-  T126 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T125 = (P)YPpair(VARREF(YLanyG),T126);
-  T124 = (P)YPsig(Ynil,T125,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T123 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_98),T124,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_name_setter,T123);
-  T128 = fun_267;
-  accessorF393 = T128;
+  T273 = accessorF391;
+  getterF392 = T273;
+  T279 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T278 = (P)YPpair(VARREF(YLanyG),T279);
+  T277 = (P)YPsig(Ynil,T278,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T276 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_98),T277,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_name_setter,T276);
+  T281 = fun_267;
+  accessorF393 = T281;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_name_setter),accessorF393);
   (P)YPmet_name_setter(VARREF(Yfun_name_setter),accessorF393);
-  T127 = accessorF393;
-  setterF394 = T127;
-  T131 = fun_268;
-  T130 = (P)YPPprop(VARREF(YLfunG),VARREF(Yfun_name),VARREF(Yfun_name_setter),VARREF(YLanyG),T131);
-  propF395 = T130;
+  T280 = accessorF393;
+  setterF394 = T280;
+  T284 = fun_268;
+  T283 = (P)YPPprop(VARREF(YLfunG),VARREF(Yfun_name),VARREF(Yfun_name_setter),VARREF(YLanyG),T284);
+  propF395 = T283;
   (P)YPmet_env_setter(propF395,getterF392);
   (P)YPmet_env_setter(propF395,setterF394);
-  T132 = CALL2(1,VARREF(YPadd_prop),VARREF(YLfunG),propF395);
-  T129 = T132;
-  T122 = T129;
+  T285 = CALL2(1,VARREF(YPadd_prop),VARREF(YLfunG),propF395);
+  T282 = T285;
+  T275 = T282;
   lit_99 = YPPsym((P)"fun-sig");
   lit_100 = YPPsym((P)"fun-sig-setter");
-  T135 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_269 = YPmet(FUNCODEREF(fun_269),YPfalse,T135,ENVNUL,PNUL,YPfalse);
-  T134 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLsigG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_270 = YPmet(FUNCODEREF(fun_270),YPfalse,T134,ENVNUL,PNUL,YPfalse);
-  T133 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_271 = YPmet(FUNCODEREF(fun_271),YPfalse,T133,ENVNUL,PNUL,YPfalse);
-  T138 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T137 = (P)YPsig(Ynil,T138,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T136 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_99),T137,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_sig,T136);
-  T140 = fun_269;
-  accessorF396 = T140;
+  T288 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_269 = YPmet(FUNCODEREF(fun_269),YPfalse,T288,ENVNUL,PNUL,YPfalse);
+  T287 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLsigG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_270 = YPmet(FUNCODEREF(fun_270),YPfalse,T287,ENVNUL,PNUL,YPfalse);
+  T286 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_271 = YPmet(FUNCODEREF(fun_271),YPfalse,T286,ENVNUL,PNUL,YPfalse);
+  T291 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T290 = (P)YPsig(Ynil,T291,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T289 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_99),T290,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_sig,T289);
+  T293 = fun_269;
+  accessorF396 = T293;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_sig),accessorF396);
   (P)YPmet_name_setter(VARREF(Yfun_sig),accessorF396);
-  T139 = accessorF396;
-  getterF397 = T139;
-  T145 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T144 = (P)YPpair(VARREF(YLanyG),T145);
-  T143 = (P)YPsig(Ynil,T144,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T142 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_100),T143,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_sig_setter,T142);
-  T147 = fun_270;
-  accessorF398 = T147;
+  T292 = accessorF396;
+  getterF397 = T292;
+  T298 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T297 = (P)YPpair(VARREF(YLanyG),T298);
+  T296 = (P)YPsig(Ynil,T297,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T295 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_100),T296,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_sig_setter,T295);
+  T300 = fun_270;
+  accessorF398 = T300;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_sig_setter),accessorF398);
   (P)YPmet_name_setter(VARREF(Yfun_sig_setter),accessorF398);
-  T146 = accessorF398;
-  setterF399 = T146;
-  T150 = fun_271;
-  T149 = (P)YPPprop(VARREF(YLfunG),VARREF(Yfun_sig),VARREF(Yfun_sig_setter),VARREF(YLsigG),T150);
-  propF400 = T149;
+  T299 = accessorF398;
+  setterF399 = T299;
+  T303 = fun_271;
+  T302 = (P)YPPprop(VARREF(YLfunG),VARREF(Yfun_sig),VARREF(Yfun_sig_setter),VARREF(YLsigG),T303);
+  propF400 = T302;
   (P)YPmet_env_setter(propF400,getterF397);
   (P)YPmet_env_setter(propF400,setterF399);
-  T151 = CALL2(1,VARREF(YPadd_prop),VARREF(YLfunG),propF400);
-  T148 = T151;
-  T141 = T148;
+  T304 = CALL2(1,VARREF(YPadd_prop),VARREF(YLfunG),propF400);
+  T301 = T304;
+  T294 = T301;
   lit_101 = YPPsym((P)"fun-env");
   lit_102 = YPPsym((P)"fun-env-setter");
-  T154 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLmetG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_272 = YPmet(FUNCODEREF(fun_272),YPfalse,T154,ENVNUL,PNUL,YPfalse);
-  T153 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_273 = YPmet(FUNCODEREF(fun_273),YPfalse,T153,ENVNUL,PNUL,YPfalse);
-  T152 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_274 = YPmet(FUNCODEREF(fun_274),YPfalse,T152,ENVNUL,PNUL,YPfalse);
-  T157 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T156 = (P)YPsig(Ynil,T157,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T155 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_101),T156,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_env,T155);
-  T159 = fun_272;
-  accessorF401 = T159;
+  T307 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLmetG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_272 = YPmet(FUNCODEREF(fun_272),YPfalse,T307,ENVNUL,PNUL,YPfalse);
+  T306 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_273 = YPmet(FUNCODEREF(fun_273),YPfalse,T306,ENVNUL,PNUL,YPfalse);
+  T305 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_274 = YPmet(FUNCODEREF(fun_274),YPfalse,T305,ENVNUL,PNUL,YPfalse);
+  T310 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T309 = (P)YPsig(Ynil,T310,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T308 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_101),T309,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_env,T308);
+  T312 = fun_272;
+  accessorF401 = T312;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_env),accessorF401);
   (P)YPmet_name_setter(VARREF(Yfun_env),accessorF401);
-  T158 = accessorF401;
-  getterF402 = T158;
-  T164 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T163 = (P)YPpair(VARREF(YLanyG),T164);
-  T162 = (P)YPsig(Ynil,T163,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T161 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_102),T162,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_env_setter,T161);
-  T166 = fun_273;
-  accessorF403 = T166;
+  T311 = accessorF401;
+  getterF402 = T311;
+  T317 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T316 = (P)YPpair(VARREF(YLanyG),T317);
+  T315 = (P)YPsig(Ynil,T316,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T314 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_102),T315,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_env_setter,T314);
+  T319 = fun_273;
+  accessorF403 = T319;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_env_setter),accessorF403);
   (P)YPmet_name_setter(VARREF(Yfun_env_setter),accessorF403);
-  T165 = accessorF403;
-  setterF404 = T165;
-  T169 = fun_274;
-  T168 = (P)YPPprop(VARREF(YLmetG),VARREF(Yfun_env),VARREF(Yfun_env_setter),VARREF(YLanyG),T169);
-  propF405 = T168;
+  T318 = accessorF403;
+  setterF404 = T318;
+  T322 = fun_274;
+  T321 = (P)YPPprop(VARREF(YLmetG),VARREF(Yfun_env),VARREF(Yfun_env_setter),VARREF(YLanyG),T322);
+  propF405 = T321;
   (P)YPmet_env_setter(propF405,getterF402);
   (P)YPmet_env_setter(propF405,setterF404);
-  T170 = CALL2(1,VARREF(YPadd_prop),VARREF(YLmetG),propF405);
-  T167 = T170;
-  T160 = T167;
+  T323 = CALL2(1,VARREF(YPadd_prop),VARREF(YLmetG),propF405);
+  T320 = T323;
+  T313 = T320;
   lit_103 = YPPsym((P)"fun-refs");
   lit_104 = YPPsym((P)"fun-refs-setter");
-  T173 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLmetG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_275 = YPmet(FUNCODEREF(fun_275),YPfalse,T173,ENVNUL,PNUL,YPfalse);
-  T172 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_276 = YPmet(FUNCODEREF(fun_276),YPfalse,T172,ENVNUL,PNUL,YPfalse);
-  T171 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_277 = YPmet(FUNCODEREF(fun_277),YPfalse,T171,ENVNUL,PNUL,YPfalse);
-  T176 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T175 = (P)YPsig(Ynil,T176,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T174 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_103),T175,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_refs,T174);
-  T178 = fun_275;
-  accessorF406 = T178;
+  T326 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLmetG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_275 = YPmet(FUNCODEREF(fun_275),YPfalse,T326,ENVNUL,PNUL,YPfalse);
+  T325 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_276 = YPmet(FUNCODEREF(fun_276),YPfalse,T325,ENVNUL,PNUL,YPfalse);
+  T324 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_277 = YPmet(FUNCODEREF(fun_277),YPfalse,T324,ENVNUL,PNUL,YPfalse);
+  T329 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T328 = (P)YPsig(Ynil,T329,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T327 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_103),T328,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_refs,T327);
+  T331 = fun_275;
+  accessorF406 = T331;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_refs),accessorF406);
   (P)YPmet_name_setter(VARREF(Yfun_refs),accessorF406);
-  T177 = accessorF406;
-  getterF407 = T177;
-  T183 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T182 = (P)YPpair(VARREF(YLanyG),T183);
-  T181 = (P)YPsig(Ynil,T182,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T180 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_104),T181,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_refs_setter,T180);
-  T185 = fun_276;
-  accessorF408 = T185;
+  T330 = accessorF406;
+  getterF407 = T330;
+  T336 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T335 = (P)YPpair(VARREF(YLanyG),T336);
+  T334 = (P)YPsig(Ynil,T335,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T333 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_104),T334,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_refs_setter,T333);
+  T338 = fun_276;
+  accessorF408 = T338;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_refs_setter),accessorF408);
   (P)YPmet_name_setter(VARREF(Yfun_refs_setter),accessorF408);
-  T184 = accessorF408;
-  setterF409 = T184;
-  T188 = fun_277;
-  T187 = (P)YPPprop(VARREF(YLmetG),VARREF(Yfun_refs),VARREF(Yfun_refs_setter),VARREF(YLanyG),T188);
-  propF410 = T187;
+  T337 = accessorF408;
+  setterF409 = T337;
+  T341 = fun_277;
+  T340 = (P)YPPprop(VARREF(YLmetG),VARREF(Yfun_refs),VARREF(Yfun_refs_setter),VARREF(YLanyG),T341);
+  propF410 = T340;
   (P)YPmet_env_setter(propF410,getterF407);
   (P)YPmet_env_setter(propF410,setterF409);
-  T189 = CALL2(1,VARREF(YPadd_prop),VARREF(YLmetG),propF410);
-  T186 = T189;
-  T179 = T186;
+  T342 = CALL2(1,VARREF(YPadd_prop),VARREF(YLmetG),propF410);
+  T339 = T342;
+  T332 = T339;
   lit_105 = YPPsym((P)"fun-src");
   lit_106 = YPPsym((P)"fun-src-setter");
-  T192 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLmetG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_278 = YPmet(FUNCODEREF(fun_278),YPfalse,T192,ENVNUL,PNUL,YPfalse);
-  T191 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_279 = YPmet(FUNCODEREF(fun_279),YPfalse,T191,ENVNUL,PNUL,YPfalse);
-  T190 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_280 = YPmet(FUNCODEREF(fun_280),YPfalse,T190,ENVNUL,PNUL,YPfalse);
-  T195 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T194 = (P)YPsig(Ynil,T195,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T193 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_105),T194,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_src,T193);
-  T197 = fun_278;
-  accessorF411 = T197;
+  T345 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLmetG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_278 = YPmet(FUNCODEREF(fun_278),YPfalse,T345,ENVNUL,PNUL,YPfalse);
+  T344 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_279 = YPmet(FUNCODEREF(fun_279),YPfalse,T344,ENVNUL,PNUL,YPfalse);
+  T343 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_280 = YPmet(FUNCODEREF(fun_280),YPfalse,T343,ENVNUL,PNUL,YPfalse);
+  T348 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T347 = (P)YPsig(Ynil,T348,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T346 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_105),T347,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_src,T346);
+  T350 = fun_278;
+  accessorF411 = T350;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_src),accessorF411);
   (P)YPmet_name_setter(VARREF(Yfun_src),accessorF411);
-  T196 = accessorF411;
-  getterF412 = T196;
-  T202 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T201 = (P)YPpair(VARREF(YLanyG),T202);
-  T200 = (P)YPsig(Ynil,T201,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T199 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_106),T200,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_src_setter,T199);
-  T204 = fun_279;
-  accessorF413 = T204;
+  T349 = accessorF411;
+  getterF412 = T349;
+  T355 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T354 = (P)YPpair(VARREF(YLanyG),T355);
+  T353 = (P)YPsig(Ynil,T354,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T352 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_106),T353,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_src_setter,T352);
+  T357 = fun_279;
+  accessorF413 = T357;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_src_setter),accessorF413);
   (P)YPmet_name_setter(VARREF(Yfun_src_setter),accessorF413);
-  T203 = accessorF413;
-  setterF414 = T203;
-  T207 = fun_280;
-  T206 = (P)YPPprop(VARREF(YLmetG),VARREF(Yfun_src),VARREF(Yfun_src_setter),VARREF(YLanyG),T207);
-  propF415 = T206;
+  T356 = accessorF413;
+  setterF414 = T356;
+  T360 = fun_280;
+  T359 = (P)YPPprop(VARREF(YLmetG),VARREF(Yfun_src),VARREF(Yfun_src_setter),VARREF(YLanyG),T360);
+  propF415 = T359;
   (P)YPmet_env_setter(propF415,getterF412);
   (P)YPmet_env_setter(propF415,setterF414);
-  T208 = CALL2(1,VARREF(YPadd_prop),VARREF(YLmetG),propF415);
-  T205 = T208;
-  T198 = T205;
+  T361 = CALL2(1,VARREF(YPadd_prop),VARREF(YLmetG),propF415);
+  T358 = T361;
+  T351 = T358;
   lit_107 = YPPsym((P)"fun-mets");
   lit_108 = YPPsym((P)"fun-mets-setter");
-  T211 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgenG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_281 = YPmet(FUNCODEREF(fun_281),YPfalse,T211,ENVNUL,PNUL,YPfalse);
-  T210 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLgenG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_282 = YPmet(FUNCODEREF(fun_282),YPfalse,T210,ENVNUL,PNUL,YPfalse);
-  T209 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_283 = YPmet(FUNCODEREF(fun_283),YPfalse,T209,ENVNUL,PNUL,YPfalse);
-  T214 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T213 = (P)YPsig(Ynil,T214,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T212 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_107),T213,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_mets,T212);
-  T216 = fun_281;
-  accessorF416 = T216;
+  T364 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgenG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_281 = YPmet(FUNCODEREF(fun_281),YPfalse,T364,ENVNUL,PNUL,YPfalse);
+  T363 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLgenG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_282 = YPmet(FUNCODEREF(fun_282),YPfalse,T363,ENVNUL,PNUL,YPfalse);
+  T362 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_283 = YPmet(FUNCODEREF(fun_283),YPfalse,T362,ENVNUL,PNUL,YPfalse);
+  T367 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T366 = (P)YPsig(Ynil,T367,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T365 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_107),T366,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_mets,T365);
+  T369 = fun_281;
+  accessorF416 = T369;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_mets),accessorF416);
   (P)YPmet_name_setter(VARREF(Yfun_mets),accessorF416);
-  T215 = accessorF416;
-  getterF417 = T215;
-  T221 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T220 = (P)YPpair(VARREF(YLanyG),T221);
-  T219 = (P)YPsig(Ynil,T220,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T218 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_108),T219,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_mets_setter,T218);
-  T223 = fun_282;
-  accessorF418 = T223;
+  T368 = accessorF416;
+  getterF417 = T368;
+  T374 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T373 = (P)YPpair(VARREF(YLanyG),T374);
+  T372 = (P)YPsig(Ynil,T373,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T371 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_108),T372,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_mets_setter,T371);
+  T376 = fun_282;
+  accessorF418 = T376;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_mets_setter),accessorF418);
   (P)YPmet_name_setter(VARREF(Yfun_mets_setter),accessorF418);
-  T222 = accessorF418;
-  setterF419 = T222;
-  T226 = fun_283;
-  T225 = (P)YPPprop(VARREF(YLgenG),VARREF(Yfun_mets),VARREF(Yfun_mets_setter),VARREF(YLlstG),T226);
-  propF420 = T225;
+  T375 = accessorF418;
+  setterF419 = T375;
+  T379 = fun_283;
+  T378 = (P)YPPprop(VARREF(YLgenG),VARREF(Yfun_mets),VARREF(Yfun_mets_setter),VARREF(YLlstG),T379);
+  propF420 = T378;
   (P)YPmet_env_setter(propF420,getterF417);
   (P)YPmet_env_setter(propF420,setterF419);
-  T227 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgenG),propF420);
-  T224 = T227;
-  T217 = T224;
+  T380 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgenG),propF420);
+  T377 = T380;
+  T370 = T377;
   lit_109 = YPPsym((P)"fun-cache");
   lit_110 = YPPsym((P)"fun-cache-setter");
-  T230 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgenG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_284 = YPmet(FUNCODEREF(fun_284),YPfalse,T230,ENVNUL,PNUL,YPfalse);
-  T229 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLgenG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_285 = YPmet(FUNCODEREF(fun_285),YPfalse,T229,ENVNUL,PNUL,YPfalse);
-  T228 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_286 = YPmet(FUNCODEREF(fun_286),YPfalse,T228,ENVNUL,PNUL,YPfalse);
-  T233 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T232 = (P)YPsig(Ynil,T233,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T231 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_109),T232,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_cache,T231);
-  T235 = fun_284;
-  accessorF421 = T235;
+  T383 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgenG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_284 = YPmet(FUNCODEREF(fun_284),YPfalse,T383,ENVNUL,PNUL,YPfalse);
+  T382 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLgenG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_285 = YPmet(FUNCODEREF(fun_285),YPfalse,T382,ENVNUL,PNUL,YPfalse);
+  T381 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_286 = YPmet(FUNCODEREF(fun_286),YPfalse,T381,ENVNUL,PNUL,YPfalse);
+  T386 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T385 = (P)YPsig(Ynil,T386,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T384 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_109),T385,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_cache,T384);
+  T388 = fun_284;
+  accessorF421 = T388;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_cache),accessorF421);
   (P)YPmet_name_setter(VARREF(Yfun_cache),accessorF421);
-  T234 = accessorF421;
-  getterF422 = T234;
-  T240 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T239 = (P)YPpair(VARREF(YLanyG),T240);
-  T238 = (P)YPsig(Ynil,T239,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T237 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_110),T238,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yfun_cache_setter,T237);
-  T242 = fun_285;
-  accessorF423 = T242;
+  T387 = accessorF421;
+  getterF422 = T387;
+  T393 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T392 = (P)YPpair(VARREF(YLanyG),T393);
+  T391 = (P)YPsig(Ynil,T392,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T390 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_110),T391,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yfun_cache_setter,T390);
+  T395 = fun_285;
+  accessorF423 = T395;
   CALL2(1,VARREF(YPadd_met),VARREF(Yfun_cache_setter),accessorF423);
   (P)YPmet_name_setter(VARREF(Yfun_cache_setter),accessorF423);
-  T241 = accessorF423;
-  setterF424 = T241;
-  T245 = fun_286;
-  T244 = (P)YPPprop(VARREF(YLgenG),VARREF(Yfun_cache),VARREF(Yfun_cache_setter),VARREF(YLanyG),T245);
-  propF425 = T244;
+  T394 = accessorF423;
+  setterF424 = T394;
+  T398 = fun_286;
+  T397 = (P)YPPprop(VARREF(YLgenG),VARREF(Yfun_cache),VARREF(Yfun_cache_setter),VARREF(YLanyG),T398);
+  propF425 = T397;
   (P)YPmet_env_setter(propF425,getterF422);
   (P)YPmet_env_setter(propF425,setterF424);
-  T246 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgenG),propF425);
-  T243 = T246;
-  T236 = T243;
+  T399 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgenG),propF425);
+  T396 = T399;
+  T389 = T396;
   lit_111 = YPPsym((P)"gen-refs");
   lit_112 = YPPsym((P)"gen-refs-setter");
-  T249 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgenG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_287 = YPmet(FUNCODEREF(fun_287),YPfalse,T249,ENVNUL,PNUL,YPfalse);
-  T248 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLvecG),VARREF(YLgenG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_288 = YPmet(FUNCODEREF(fun_288),YPfalse,T248,ENVNUL,PNUL,YPfalse);
-  T247 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_289 = YPmet(FUNCODEREF(fun_289),YPfalse,T247,ENVNUL,PNUL,YPfalse);
-  T252 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T251 = (P)YPsig(Ynil,T252,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T250 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_111),T251,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_refs,T250);
-  T254 = fun_287;
-  accessorF426 = T254;
+  T402 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgenG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_287 = YPmet(FUNCODEREF(fun_287),YPfalse,T402,ENVNUL,PNUL,YPfalse);
+  T401 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLvecG),VARREF(YLgenG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_288 = YPmet(FUNCODEREF(fun_288),YPfalse,T401,ENVNUL,PNUL,YPfalse);
+  T400 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_289 = YPmet(FUNCODEREF(fun_289),YPfalse,T400,ENVNUL,PNUL,YPfalse);
+  T405 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T404 = (P)YPsig(Ynil,T405,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T403 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_111),T404,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_refs,T403);
+  T407 = fun_287;
+  accessorF426 = T407;
   CALL2(1,VARREF(YPadd_met),VARREF(Ygen_refs),accessorF426);
   (P)YPmet_name_setter(VARREF(Ygen_refs),accessorF426);
-  T253 = accessorF426;
-  getterF427 = T253;
-  T259 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T258 = (P)YPpair(VARREF(YLanyG),T259);
-  T257 = (P)YPsig(Ynil,T258,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T256 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_112),T257,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_refs_setter,T256);
-  T261 = fun_288;
-  accessorF428 = T261;
+  T406 = accessorF426;
+  getterF427 = T406;
+  T412 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T411 = (P)YPpair(VARREF(YLanyG),T412);
+  T410 = (P)YPsig(Ynil,T411,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T409 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_112),T410,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_refs_setter,T409);
+  T414 = fun_288;
+  accessorF428 = T414;
   CALL2(1,VARREF(YPadd_met),VARREF(Ygen_refs_setter),accessorF428);
   (P)YPmet_name_setter(VARREF(Ygen_refs_setter),accessorF428);
-  T260 = accessorF428;
-  setterF429 = T260;
-  T264 = fun_289;
-  T263 = (P)YPPprop(VARREF(YLgenG),VARREF(Ygen_refs),VARREF(Ygen_refs_setter),VARREF(YLvecG),T264);
-  propF430 = T263;
+  T413 = accessorF428;
+  setterF429 = T413;
+  T417 = fun_289;
+  T416 = (P)YPPprop(VARREF(YLgenG),VARREF(Ygen_refs),VARREF(Ygen_refs_setter),VARREF(YLvecG),T417);
+  propF430 = T416;
   (P)YPmet_env_setter(propF430,getterF427);
   (P)YPmet_env_setter(propF430,setterF429);
-  T265 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgenG),propF430);
-  T262 = T265;
-  T255 = T262;
+  T418 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgenG),propF430);
+  T415 = T418;
+  T408 = T415;
   lit_113 = YPPsym((P)"gen-src");
   lit_114 = YPPsym((P)"gen-src-setter");
-  T268 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgenG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_290 = YPmet(FUNCODEREF(fun_290),YPfalse,T268,ENVNUL,PNUL,YPfalse);
-  T267 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLgenG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_291 = YPmet(FUNCODEREF(fun_291),YPfalse,T267,ENVNUL,PNUL,YPfalse);
-  T266 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_292 = YPmet(FUNCODEREF(fun_292),YPfalse,T266,ENVNUL,PNUL,YPfalse);
-  T271 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T270 = (P)YPsig(Ynil,T271,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T269 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_113),T270,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_src,T269);
-  T273 = fun_290;
-  accessorF431 = T273;
+  T421 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLgenG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_290 = YPmet(FUNCODEREF(fun_290),YPfalse,T421,ENVNUL,PNUL,YPfalse);
+  T420 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLgenG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_291 = YPmet(FUNCODEREF(fun_291),YPfalse,T420,ENVNUL,PNUL,YPfalse);
+  T419 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_292 = YPmet(FUNCODEREF(fun_292),YPfalse,T419,ENVNUL,PNUL,YPfalse);
+  T424 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T423 = (P)YPsig(Ynil,T424,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T422 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_113),T423,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_src,T422);
+  T426 = fun_290;
+  accessorF431 = T426;
   CALL2(1,VARREF(YPadd_met),VARREF(Ygen_src),accessorF431);
   (P)YPmet_name_setter(VARREF(Ygen_src),accessorF431);
-  T272 = accessorF431;
-  getterF432 = T272;
-  T278 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T277 = (P)YPpair(VARREF(YLanyG),T278);
-  T276 = (P)YPsig(Ynil,T277,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T275 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_114),T276,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ygen_src_setter,T275);
-  T280 = fun_291;
-  accessorF433 = T280;
+  T425 = accessorF431;
+  getterF432 = T425;
+  T431 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T430 = (P)YPpair(VARREF(YLanyG),T431);
+  T429 = (P)YPsig(Ynil,T430,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T428 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_114),T429,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ygen_src_setter,T428);
+  T433 = fun_291;
+  accessorF433 = T433;
   CALL2(1,VARREF(YPadd_met),VARREF(Ygen_src_setter),accessorF433);
   (P)YPmet_name_setter(VARREF(Ygen_src_setter),accessorF433);
-  T279 = accessorF433;
-  setterF434 = T279;
-  T283 = fun_292;
-  T282 = (P)YPPprop(VARREF(YLgenG),VARREF(Ygen_src),VARREF(Ygen_src_setter),VARREF(YLanyG),T283);
-  propF435 = T282;
+  T432 = accessorF433;
+  setterF434 = T432;
+  T436 = fun_292;
+  T435 = (P)YPPprop(VARREF(YLgenG),VARREF(Ygen_src),VARREF(Ygen_src_setter),VARREF(YLanyG),T436);
+  propF435 = T435;
   (P)YPmet_env_setter(propF435,getterF432);
   (P)YPmet_env_setter(propF435,setterF434);
-  T284 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgenG),propF435);
-  T281 = T284;
-  T274 = T281;
+  T437 = CALL2(1,VARREF(YPadd_prop),VARREF(YLgenG),propF435);
+  T434 = T437;
+  T427 = T434;
   lit_115 = YPPsym((P)"opts-location");
   lit_116 = YPPsym((P)"opts-location-setter");
-  T287 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLoptsG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_293 = YPmet(FUNCODEREF(fun_293),YPfalse,T287,ENVNUL,PNUL,YPfalse);
-  T286 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlocG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_294 = YPmet(FUNCODEREF(fun_294),YPfalse,T286,ENVNUL,PNUL,YPfalse);
-  T285 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_295 = YPmet(FUNCODEREF(fun_295),YPfalse,T285,ENVNUL,PNUL,YPfalse);
-  T290 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T289 = (P)YPsig(Ynil,T290,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T288 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_115),T289,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yopts_location,T288);
-  T292 = fun_293;
-  accessorF436 = T292;
+  T440 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLoptsG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_293 = YPmet(FUNCODEREF(fun_293),YPfalse,T440,ENVNUL,PNUL,YPfalse);
+  T439 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlocG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_294 = YPmet(FUNCODEREF(fun_294),YPfalse,T439,ENVNUL,PNUL,YPfalse);
+  T438 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_295 = YPmet(FUNCODEREF(fun_295),YPfalse,T438,ENVNUL,PNUL,YPfalse);
+  T443 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T442 = (P)YPsig(Ynil,T443,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T441 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_115),T442,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yopts_location,T441);
+  T445 = fun_293;
+  accessorF436 = T445;
   CALL2(1,VARREF(YPadd_met),VARREF(Yopts_location),accessorF436);
   (P)YPmet_name_setter(VARREF(Yopts_location),accessorF436);
-  T291 = accessorF436;
-  getterF437 = T291;
-  T297 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T296 = (P)YPpair(VARREF(YLanyG),T297);
-  T295 = (P)YPsig(Ynil,T296,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T294 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_116),T295,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yopts_location_setter,T294);
-  T299 = fun_294;
-  accessorF438 = T299;
+  T444 = accessorF436;
+  getterF437 = T444;
+  T450 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T449 = (P)YPpair(VARREF(YLanyG),T450);
+  T448 = (P)YPsig(Ynil,T449,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T447 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_116),T448,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yopts_location_setter,T447);
+  T452 = fun_294;
+  accessorF438 = T452;
   CALL2(1,VARREF(YPadd_met),VARREF(Yopts_location_setter),accessorF438);
   (P)YPmet_name_setter(VARREF(Yopts_location_setter),accessorF438);
-  T298 = accessorF438;
-  setterF439 = T298;
-  T302 = fun_295;
-  T301 = (P)YPPprop(VARREF(YLoptsG),VARREF(Yopts_location),VARREF(Yopts_location_setter),VARREF(YLlocG),T302);
-  propF440 = T301;
+  T451 = accessorF438;
+  setterF439 = T451;
+  T455 = fun_295;
+  T454 = (P)YPPprop(VARREF(YLoptsG),VARREF(Yopts_location),VARREF(Yopts_location_setter),VARREF(YLlocG),T455);
+  propF440 = T454;
   (P)YPmet_env_setter(propF440,getterF437);
   (P)YPmet_env_setter(propF440,setterF439);
-  T303 = CALL2(1,VARREF(YPadd_prop),VARREF(YLoptsG),propF440);
-  T300 = T303;
-  T293 = T300;
+  T456 = CALL2(1,VARREF(YPadd_prop),VARREF(YLoptsG),propF440);
+  T453 = T456;
+  T446 = T453;
   lit_117 = YPPsym((P)"opts-count");
   lit_118 = YPPsym((P)"opts-count-setter");
-  T306 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLoptsG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_296 = YPmet(FUNCODEREF(fun_296),YPfalse,T306,ENVNUL,PNUL,YPfalse);
-  T305 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLintG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_297 = YPmet(FUNCODEREF(fun_297),YPfalse,T305,ENVNUL,PNUL,YPfalse);
-  T304 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_298 = YPmet(FUNCODEREF(fun_298),YPfalse,T304,ENVNUL,PNUL,YPfalse);
-  T309 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T308 = (P)YPsig(Ynil,T309,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T307 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_117),T308,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yopts_count,T307);
-  T311 = fun_296;
-  accessorF441 = T311;
+  T459 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLoptsG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_296 = YPmet(FUNCODEREF(fun_296),YPfalse,T459,ENVNUL,PNUL,YPfalse);
+  T458 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLintG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_297 = YPmet(FUNCODEREF(fun_297),YPfalse,T458,ENVNUL,PNUL,YPfalse);
+  T457 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_298 = YPmet(FUNCODEREF(fun_298),YPfalse,T457,ENVNUL,PNUL,YPfalse);
+  T462 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T461 = (P)YPsig(Ynil,T462,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T460 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_117),T461,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yopts_count,T460);
+  T464 = fun_296;
+  accessorF441 = T464;
   CALL2(1,VARREF(YPadd_met),VARREF(Yopts_count),accessorF441);
   (P)YPmet_name_setter(VARREF(Yopts_count),accessorF441);
-  T310 = accessorF441;
-  getterF442 = T310;
-  T316 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T315 = (P)YPpair(VARREF(YLanyG),T316);
-  T314 = (P)YPsig(Ynil,T315,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T313 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_118),T314,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yopts_count_setter,T313);
-  T318 = fun_297;
-  accessorF443 = T318;
+  T463 = accessorF441;
+  getterF442 = T463;
+  T469 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T468 = (P)YPpair(VARREF(YLanyG),T469);
+  T467 = (P)YPsig(Ynil,T468,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T466 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_118),T467,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yopts_count_setter,T466);
+  T471 = fun_297;
+  accessorF443 = T471;
   CALL2(1,VARREF(YPadd_met),VARREF(Yopts_count_setter),accessorF443);
   (P)YPmet_name_setter(VARREF(Yopts_count_setter),accessorF443);
-  T317 = accessorF443;
-  setterF444 = T317;
-  T321 = fun_298;
-  T320 = (P)YPPprop(VARREF(YLoptsG),VARREF(Yopts_count),VARREF(Yopts_count_setter),VARREF(YLintG),T321);
-  propF445 = T320;
+  T470 = accessorF443;
+  setterF444 = T470;
+  T474 = fun_298;
+  T473 = (P)YPPprop(VARREF(YLoptsG),VARREF(Yopts_count),VARREF(Yopts_count_setter),VARREF(YLintG),T474);
+  propF445 = T473;
   (P)YPmet_env_setter(propF445,getterF442);
   (P)YPmet_env_setter(propF445,setterF444);
-  T322 = CALL2(1,VARREF(YPadd_prop),VARREF(YLoptsG),propF445);
-  T319 = T322;
-  T312 = T319;
+  T475 = CALL2(1,VARREF(YPadd_prop),VARREF(YLoptsG),propF445);
+  T472 = T475;
+  T465 = T472;
   lit_119 = YPPsym((P)"opts-vec-storage");
   lit_120 = YPPsym((P)"opts-vec-storage-setter");
-  T325 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLopts_vecG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_299 = YPmet(FUNCODEREF(fun_299),YPfalse,T325,ENVNUL,PNUL,YPfalse);
-  T324 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLvecG),VARREF(YLopts_vecG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_300 = YPmet(FUNCODEREF(fun_300),YPfalse,T324,ENVNUL,PNUL,YPfalse);
-  T323 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_301 = YPmet(FUNCODEREF(fun_301),YPfalse,T323,ENVNUL,PNUL,YPfalse);
-  T328 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T327 = (P)YPsig(Ynil,T328,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  T326 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_119),T327,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yopts_vec_storage,T326);
-  T330 = fun_299;
-  accessorF446 = T330;
+  T478 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLopts_vecG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_299 = YPmet(FUNCODEREF(fun_299),YPfalse,T478,ENVNUL,PNUL,YPfalse);
+  T477 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLvecG),VARREF(YLopts_vecG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_300 = YPmet(FUNCODEREF(fun_300),YPfalse,T477,ENVNUL,PNUL,YPfalse);
+  T476 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_301 = YPmet(FUNCODEREF(fun_301),YPfalse,T476,ENVNUL,PNUL,YPfalse);
+  T481 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T480 = (P)YPsig(Ynil,T481,YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  T479 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_119),T480,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yopts_vec_storage,T479);
+  T483 = fun_299;
+  accessorF446 = T483;
   CALL2(1,VARREF(YPadd_met),VARREF(Yopts_vec_storage),accessorF446);
   (P)YPmet_name_setter(VARREF(Yopts_vec_storage),accessorF446);
-  T329 = accessorF446;
-  getterF447 = T329;
-  T335 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
-  T334 = (P)YPpair(VARREF(YLanyG),T335);
-  T333 = (P)YPsig(Ynil,T334,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T332 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_120),T333,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yopts_vec_storage_setter,T332);
-  T337 = fun_300;
-  accessorF448 = T337;
+  T482 = accessorF446;
+  getterF447 = T482;
+  T488 = (P)YPpair(VARREF(YLanyG),VARREF(Ynil));
+  T487 = (P)YPpair(VARREF(YLanyG),T488);
+  T486 = (P)YPsig(Ynil,T487,YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  T485 = (P)YPgen(VARREF(YPearly_dispatch),LITREF(lit_120),T486,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yopts_vec_storage_setter,T485);
+  T490 = fun_300;
+  accessorF448 = T490;
   CALL2(1,VARREF(YPadd_met),VARREF(Yopts_vec_storage_setter),accessorF448);
   (P)YPmet_name_setter(VARREF(Yopts_vec_storage_setter),accessorF448);
-  T336 = accessorF448;
-  setterF449 = T336;
-  T340 = fun_301;
-  T339 = (P)YPPprop(VARREF(YLopts_vecG),VARREF(Yopts_vec_storage),VARREF(Yopts_vec_storage_setter),VARREF(YLvecG),T340);
-  propF450 = T339;
+  T489 = accessorF448;
+  setterF449 = T489;
+  T493 = fun_301;
+  T492 = (P)YPPprop(VARREF(YLopts_vecG),VARREF(Yopts_vec_storage),VARREF(Yopts_vec_storage_setter),VARREF(YLvecG),T493);
+  propF450 = T492;
   (P)YPmet_env_setter(propF450,getterF447);
   (P)YPmet_env_setter(propF450,setterF449);
-  T341 = CALL2(1,VARREF(YPadd_prop),VARREF(YLopts_vecG),propF450);
-  T338 = T341;
-  T331 = T338;
+  T494 = CALL2(1,VARREF(YPadd_prop),VARREF(YLopts_vecG),propF450);
+  T491 = T494;
+  T484 = T491;
   lit_121 = YPPsym((P)"%collect-direct-props");
-  T342 = YPsig(YPPlist(1,LITREF(lit_26)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YPcollect_direct_props = YPmet(FUNCODEREF(YPcollect_direct_props),LITREF(lit_121),T342,ENVNUL,PNUL,YPfalse);
-  T343 = YPcollect_direct_props;
-  VARSET(YPcollect_direct_props,T343);
+  T495 = YPsig(YPPlist(1,LITREF(lit_26)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YPcollect_direct_props = YPmet(FUNCODEREF(YPcollect_direct_props),LITREF(lit_121),T495,ENVNUL,PNUL,YPfalse);
+  T496 = YPcollect_direct_props;
+  VARSET(YPcollect_direct_props,T496);
   lit_122 = YPPsym((P)"%finalize-props!");
-  T344 = YPsig(YPPlist(2,LITREF(lit_1),LITREF(lit_26)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YPfinalize_propsX = YPmet(FUNCODEREF(YPfinalize_propsX),LITREF(lit_122),T344,ENVNUL,PNUL,YPfalse);
-  T345 = YPfinalize_propsX;
-  VARSET(YPfinalize_propsX,T345);
+  T497 = YPsig(YPPlist(2,LITREF(lit_1),LITREF(lit_26)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YPfinalize_propsX = YPmet(FUNCODEREF(YPfinalize_propsX),LITREF(lit_122),T497,ENVNUL,PNUL,YPfalse);
+  T498 = YPfinalize_propsX;
+  VARSET(YPfinalize_propsX,T498);
   lit_123 = YPPsym((P)"<any>");
   CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_123),VARREF(YLanyG));
   lit_124 = YPPsym((P)"<log>");
@@ -12094,596 +12191,601 @@ loop:
   CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_129),VARREF(YLlocG));
   lit_130 = YPPsym((P)"<col>");
   CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_130),VARREF(YLcolG));
-  lit_131 = YPPsym((P)"<seq>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_131),VARREF(YLseqG));
-  lit_132 = YPPsym((P)"<lst>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_132),VARREF(YLlstG));
-  lit_133 = YPPsym((P)"<flat>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_133),VARREF(YLflatG));
-  lit_134 = YPPsym((P)"<vec>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_134),VARREF(YLvecG));
-  lit_135 = YPPsym((P)"<str>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_135),VARREF(YLstrG));
-  lit_136 = YPPsym((P)"<sym>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_136),VARREF(YLsymG));
-  lit_137 = YPPsym((P)"<type>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_137),VARREF(YLtypeG));
-  lit_138 = YPPsym((P)"<class>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_138),VARREF(YLclassG));
-  lit_139 = YPPsym((P)"<singleton>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_139),VARREF(YLsingletonG));
-  lit_140 = YPPsym((P)"<subclass>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_140),VARREF(YLsubclassG));
-  lit_141 = YPPsym((P)"<union>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_141),VARREF(YLunionG));
-  lit_142 = YPPsym((P)"<prop>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_142),VARREF(YLpropG));
-  lit_143 = YPPsym((P)"<gen-cache>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_143),VARREF(YLgen_cacheG));
-  lit_144 = YPPsym((P)"<sig>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_144),VARREF(YLsigG));
-  lit_145 = YPPsym((P)"<fun>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_145),VARREF(YLfunG));
-  lit_146 = YPPsym((P)"<met>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_146),VARREF(YLmetG));
-  lit_147 = YPPsym((P)"<gen>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_147),VARREF(YLgenG));
-  lit_148 = YPPsym((P)"<opts>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_148),VARREF(YLoptsG));
-  lit_149 = YPPsym((P)"<opts-vec>");
-  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_149),VARREF(YLopts_vecG));
-  lit_150 = YPPsym((P)"@@==");
-  T346 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_13)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  YOOEE = YPmet(FUNCODEREF(YOOEE),LITREF(lit_150),T346,ENVNUL,PNUL,YPfalse);
-  T347 = YOOEE;
-  VARSET(YOOEE,T347);
-  lit_151 = YPPsym((P)"not");
-  T348 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLlogG),Ynil);
-  Ynot = YPmet(FUNCODEREF(Ynot),LITREF(lit_151),T348,ENVNUL,PNUL,YPfalse);
-  T349 = Ynot;
-  VARSET(Ynot,T349);
-  lit_152 = YPPsym((P)"@@empty?");
-  T350 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLlogG),Ynil);
-  YOOemptyQ = YPmet(FUNCODEREF(YOOemptyQ),LITREF(lit_152),T350,ENVNUL,PNUL,YPfalse);
-  T351 = YOOemptyQ;
-  VARSET(YOOemptyQ,T351);
-  lit_153 = YPPsym((P)"@rev!");
-  T352 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLlstG),Ynil);
-  YOrevX = YPmet(FUNCODEREF(YOrevX),LITREF(lit_153),T352,ENVNUL,PNUL,YPfalse);
-  T353 = YOrevX;
-  VARSET(YOrevX,T353);
-  T354 = YPfalse;
-  return T354;
+  lit_131 = YPPsym((P)"<col!>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_131),VARREF(YLcolXG));
+  lit_132 = YPPsym((P)"<seq>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_132),VARREF(YLseqG));
+  lit_133 = YPPsym((P)"<seq!>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_133),VARREF(YLseqXG));
+  lit_134 = YPPsym((P)"<lst>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_134),VARREF(YLlstG));
+  lit_135 = YPPsym((P)"<flat>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_135),VARREF(YLflatG));
+  lit_136 = YPPsym((P)"<vec>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_136),VARREF(YLvecG));
+  lit_137 = YPPsym((P)"<str>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_137),VARREF(YLstrG));
+  lit_138 = YPPsym((P)"<sym>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_138),VARREF(YLsymG));
+  lit_139 = YPPsym((P)"<type>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_139),VARREF(YLtypeG));
+  lit_140 = YPPsym((P)"<class>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_140),VARREF(YLclassG));
+  lit_141 = YPPsym((P)"<singleton>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_141),VARREF(YLsingletonG));
+  lit_142 = YPPsym((P)"<subclass>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_142),VARREF(YLsubclassG));
+  lit_143 = YPPsym((P)"<union>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_143),VARREF(YLunionG));
+  lit_144 = YPPsym((P)"<prop>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_144),VARREF(YLpropG));
+  lit_145 = YPPsym((P)"<gen-cache>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_145),VARREF(YLgen_cacheG));
+  lit_146 = YPPsym((P)"<sig>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_146),VARREF(YLsigG));
+  lit_147 = YPPsym((P)"<fun>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_147),VARREF(YLfunG));
+  lit_148 = YPPsym((P)"<met>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_148),VARREF(YLmetG));
+  lit_149 = YPPsym((P)"<gen>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_149),VARREF(YLgenG));
+  lit_150 = YPPsym((P)"<opts>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_150),VARREF(YLoptsG));
+  lit_151 = YPPsym((P)"<opts-vec>");
+  CALL2(1,VARREF(YPfinalize_propsX),LITREF(lit_151),VARREF(YLopts_vecG));
+  T499 = YPfalse;
+  return T499;
 }
 
 P Y___main_8___() {
-  P T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116,T115,T114,T113,T112,T111;
-  P T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100,T99,T98,T97,T96,T95;
-  P T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84,T83,T82,T81,T80,T79;
-  P T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68,T67,T66,T65,T64,T63;
-  P T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47;
-  P T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31;
-  P T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15;
-  P T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
+  P T104,T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89;
+  P T88,T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73;
+  P T72,T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57;
+  P T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41;
+  P T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25;
+  P T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9;
+  P T8,T7,T6,T5,T4,T3,T2,T1,T0;
 loop:
-  lit_154 = YPPsym((P)"@all?");
-  lit_155 = YPPsym((P)"test");
-  lit_156 = YPPsym((P)"c");
-  lit_157 = YPPsym((P)"fnd");
-  lit_158 = YPPsym((P)"p");
-  T1 = YPsig(YPPlist(1,LITREF(lit_158)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_fnd_322 = YPmet(FUNCODEREF(fun_fnd_322),LITREF(lit_157),T1,ENVNUL,PNUL,YPfalse);
-  T0 = YPsig(YPPlist(2,LITREF(lit_155),LITREF(lit_156)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  YOallQ = YPmet(FUNCODEREF(YOallQ),LITREF(lit_154),T0,ENVNUL,PNUL,YPfalse);
-  T2 = YOallQ;
-  VARSET(YOallQ,T2);
-  lit_159 = YPPsym((P)"@all2?");
-  lit_160 = YPPsym((P)"px");
-  lit_161 = YPPsym((P)"py");
-  T4 = YPsig(YPPlist(2,LITREF(lit_160),LITREF(lit_161)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_fnd_324 = YPmet(FUNCODEREF(fun_fnd_324),LITREF(lit_157),T4,ENVNUL,PNUL,YPfalse);
-  T3 = YPsig(YPPlist(3,LITREF(lit_155),LITREF(lit_10),LITREF(lit_13)),YPPlist(3,VARREF(YLfunG),VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)3),VARREF(YLlogG),Ynil);
-  YOall2Q = YPmet(FUNCODEREF(YOall2Q),LITREF(lit_159),T3,ENVNUL,PNUL,YPfalse);
-  T5 = YOall2Q;
-  VARSET(YOall2Q,T5);
-  lit_162 = YPPsym((P)"@elt");
-  lit_163 = YPPsym((P)"key");
-  lit_164 = YPPsym((P)"count");
-  T7 = YPsig(YPPlist(2,LITREF(lit_164),LITREF(lit_10)),YPPlist(2,VARREF(YLintG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_fnd_326 = YPmet(FUNCODEREF(fun_fnd_326),LITREF(lit_157),T7,ENVNUL,PNUL,YPfalse);
-  T6 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_163)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YOelt = YPmet(FUNCODEREF(YOelt),LITREF(lit_162),T6,ENVNUL,PNUL,YPfalse);
-  T8 = YOelt;
-  VARSET(YOelt,T8);
-  lit_165 = YPPsym((P)"@fill");
-  lit_166 = YPPsym((P)"f");
-  T10 = YPsig(YPPlist(1,LITREF(lit_158)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_loop_328 = YPmet(FUNCODEREF(fun_loop_328),LITREF(lit_5),T10,ENVNUL,PNUL,YPfalse);
-  T9 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_166)),YPPlist(2,VARREF(YLlstG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
-  YOfill = YPmet(FUNCODEREF(YOfill),LITREF(lit_165),T9,ENVNUL,PNUL,YPfalse);
-  T11 = YOfill;
-  VARSET(YOfill,T11);
-  lit_167 = YPPsym((P)"@any?");
-  T13 = YPsig(YPPlist(1,LITREF(lit_158)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_fnd_330 = YPmet(FUNCODEREF(fun_fnd_330),LITREF(lit_157),T13,ENVNUL,PNUL,YPfalse);
-  T12 = YPsig(YPPlist(2,LITREF(lit_155),LITREF(lit_156)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YOanyQ = YPmet(FUNCODEREF(YOanyQ),LITREF(lit_167),T12,ENVNUL,PNUL,YPfalse);
-  T14 = YOanyQ;
-  VARSET(YOanyQ,T14);
-  lit_168 = YPPsym((P)"@map");
-  lit_169 = YPPsym((P)"do");
-  lit_170 = YPPsym((P)"res");
-  T16 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_170)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_do_335 = YPmet(FUNCODEREF(fun_do_335),LITREF(lit_169),T16,ENVNUL,PNUL,YPfalse);
-  T15 = YPsig(YPPlist(2,LITREF(lit_166),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
-  YOmap = YPmet(FUNCODEREF(YOmap),LITREF(lit_168),T15,ENVNUL,PNUL,YPfalse);
-  T17 = YOmap;
-  VARSET(YOmap,T17);
-  lit_171 = YPPsym((P)"@pick");
-  T19 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_170)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_do_337 = YPmet(FUNCODEREF(fun_do_337),LITREF(lit_169),T19,ENVNUL,PNUL,YPfalse);
-  T18 = YPsig(YPPlist(2,LITREF(lit_166),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
-  YOpick = YPmet(FUNCODEREF(YOpick),LITREF(lit_171),T18,ENVNUL,PNUL,YPfalse);
-  T20 = YOpick;
-  VARSET(YOpick,T20);
-  lit_172 = YPPsym((P)"@do");
-  T22 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_do_339 = YPmet(FUNCODEREF(fun_do_339),LITREF(lit_169),T22,ENVNUL,PNUL,YPfalse);
-  T21 = YPsig(YPPlist(2,LITREF(lit_166),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YOdo = YPmet(FUNCODEREF(YOdo),LITREF(lit_172),T21,ENVNUL,PNUL,YPfalse);
-  T23 = YOdo;
-  VARSET(YOdo,T23);
-  lit_173 = YPPsym((P)"@alter");
-  lit_174 = YPPsym((P)"dst");
-  lit_175 = YPPsym((P)"src");
-  lit_176 = YPPsym((P)"in");
-  lit_177 = YPPsym((P)"ds");
-  lit_178 = YPPsym((P)"ss");
-  T25 = YPsig(YPPlist(2,LITREF(lit_177),LITREF(lit_178)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_in_341 = YPmet(FUNCODEREF(fun_in_341),LITREF(lit_176),T25,ENVNUL,PNUL,YPfalse);
-  T24 = YPsig(YPPlist(2,LITREF(lit_174),LITREF(lit_175)),YPPlist(2,VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
-  YOalter = YPmet(FUNCODEREF(YOalter),LITREF(lit_173),T24,ENVNUL,PNUL,YPfalse);
-  T26 = YOalter;
-  VARSET(YOalter,T26);
-  lit_179 = YPPsym((P)"@fab");
-  lit_180 = YPPsym((P)"fab");
-  T28 = YPsig(YPPlist(2,LITREF(lit_17),LITREF(lit_170)),YPPlist(2,VARREF(YLintG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_fab_343 = YPmet(FUNCODEREF(fun_fab_343),LITREF(lit_180),T28,ENVNUL,PNUL,YPfalse);
-  T27 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_3)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
-  YOfab = YPmet(FUNCODEREF(YOfab),LITREF(lit_179),T27,ENVNUL,PNUL,YPfalse);
-  T29 = YOfab;
-  VARSET(YOfab,T29);
-  lit_181 = YPPsym((P)"@fold");
-  lit_182 = YPPsym((P)"combine");
-  lit_183 = YPPsym((P)"init");
-  lit_184 = YPPsym((P)"red");
-  T31 = YPsig(YPPlist(2,LITREF(lit_170),LITREF(lit_156)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_red_345 = YPmet(FUNCODEREF(fun_red_345),LITREF(lit_184),T31,ENVNUL,PNUL,YPfalse);
-  T30 = YPsig(YPPlist(3,LITREF(lit_182),LITREF(lit_183),LITREF(lit_156)),YPPlist(3,VARREF(YLfunG),VARREF(YLanyG),VARREF(YLlstG)),YPfalse,YPint((P)3),VARREF(YLlstG),Ynil);
-  YOfold = YPmet(FUNCODEREF(YOfold),LITREF(lit_181),T30,ENVNUL,PNUL,YPfalse);
-  T32 = YOfold;
-  VARSET(YOfold,T32);
-  lit_185 = YPPsym((P)"@cat2");
-  T33 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_13)),YPPlist(2,VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
-  YOcat2 = YPmet(FUNCODEREF(YOcat2),LITREF(lit_185),T33,ENVNUL,PNUL,YPfalse);
-  T34 = YOcat2;
-  VARSET(YOcat2,T34);
-  lit_186 = YPPsym((P)"@find");
-  T36 = YPsig(YPPlist(2,LITREF(lit_156),LITREF(lit_17)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_fnd_348 = YPmet(FUNCODEREF(fun_fnd_348),LITREF(lit_157),T36,ENVNUL,PNUL,YPfalse);
-  T35 = YPsig(YPPlist(2,LITREF(lit_166),LITREF(lit_156)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YOfind = YPmet(FUNCODEREF(YOfind),LITREF(lit_186),T35,ENVNUL,PNUL,YPfalse);
-  T37 = YOfind;
-  VARSET(YOfind,T37);
-  lit_187 = YPPsym((P)"@mem?");
-  T39 = YPsig(YPPlist(1,LITREF(lit_13)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_350 = YPmet(FUNCODEREF(fun_350),YPfalse,T39,ENVNUL,PNUL,YPfalse);
-  T38 = YPsig(YPPlist(2,LITREF(lit_156),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  YOmemQ = YPmet(FUNCODEREF(YOmemQ),LITREF(lit_187),T38,ENVNUL,PNUL,YPfalse);
-  T40 = YOmemQ;
-  VARSET(YOmemQ,T40);
-  lit_188 = YPPsym((P)"@del-dups");
-  lit_189 = YPPsym((P)"e");
-  T42 = YPsig(YPPlist(2,LITREF(lit_3),LITREF(lit_189)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_352 = YPmet(FUNCODEREF(fun_352),YPfalse,T42,ENVNUL,PNUL,YPfalse);
-  T41 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLlstG),Ynil);
-  YOdel_dups = YPmet(FUNCODEREF(YOdel_dups),LITREF(lit_188),T41,ENVNUL,PNUL,YPfalse);
-  T43 = YOdel_dups;
-  VARSET(YOdel_dups,T43);
-  lit_190 = YPPsym((P)"@lst-helper");
-  lit_191 = YPPsym((P)"objects");
-  T44 = YPsig(YPPlist(3,LITREF(lit_191),LITREF(lit_17),LITREF(lit_6)),YPPlist(3,VARREF(YLoptsG),VARREF(YLintG),VARREF(YLlstG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  YOlst_helper = YPmet(FUNCODEREF(YOlst_helper),LITREF(lit_190),T44,ENVNUL,PNUL,YPfalse);
-  T45 = YOlst_helper;
-  VARSET(YOlst_helper,T45);
-  lit_192 = YPPsym((P)"@lst");
-  T46 = YPsig(YPPlist(1,LITREF(lit_191)),Ynil,YPtrue,YPint((P)0),VARREF(YLanyG),Ynil);
-  YOlst = YPmet(FUNCODEREF(YOlst),LITREF(lit_192),T46,ENVNUL,PNUL,YPfalse);
-  T47 = YOlst;
-  VARSET(YOlst,T47);
-  lit_193 = YPPsym((P)"@velt");
-  T48 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_17)),YPPlist(2,VARREF(YLvecG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YOvelt = YPmet(FUNCODEREF(YOvelt),LITREF(lit_193),T48,ENVNUL,PNUL,YPfalse);
-  T49 = YOvelt;
-  VARSET(YOvelt,T49);
-  lit_194 = YPPsym((P)"@velt-setter");
-  T50 = YPsig(YPPlist(3,LITREF(lit_30),LITREF(lit_10),LITREF(lit_17)),YPPlist(3,VARREF(YLanyG),VARREF(YLvecG),VARREF(YLintG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  YOvelt_setter = YPmet(FUNCODEREF(YOvelt_setter),LITREF(lit_194),T50,ENVNUL,PNUL,YPfalse);
-  T51 = YOvelt_setter;
-  VARSET(YOvelt_setter,T51);
-  lit_195 = YPPsym((P)"@vec");
-  lit_196 = YPPsym((P)"copy");
-  lit_197 = YPPsym((P)"k");
-  T53 = YPsig(YPPlist(1,LITREF(lit_197)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_copy_358 = YPmet(FUNCODEREF(fun_copy_358),LITREF(lit_196),T53,ENVNUL,PNUL,YPfalse);
-  T52 = YPsig(YPPlist(1,LITREF(lit_191)),Ynil,YPtrue,YPint((P)0),VARREF(YLanyG),Ynil);
-  YOvec = YPmet(FUNCODEREF(YOvec),LITREF(lit_195),T52,ENVNUL,PNUL,YPfalse);
-  T54 = YOvec;
-  VARSET(YOvec,T54);
-  lit_198 = YPPsym((P)"@fun-names");
-  T55 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLlstG),Ynil);
-  YOfun_names = YPmet(FUNCODEREF(YOfun_names),LITREF(lit_198),T55,ENVNUL,PNUL,YPfalse);
-  T56 = YOfun_names;
-  VARSET(YOfun_names,T56);
-  lit_199 = YPPsym((P)"@fun-specs");
-  T57 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLlstG),Ynil);
-  YOfun_specs = YPmet(FUNCODEREF(YOfun_specs),LITREF(lit_199),T57,ENVNUL,PNUL,YPfalse);
-  T58 = YOfun_specs;
-  VARSET(YOfun_specs,T58);
-  lit_200 = YPPsym((P)"@fun-nary?");
-  T59 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLlogG),Ynil);
-  YOfun_naryQ = YPmet(FUNCODEREF(YOfun_naryQ),LITREF(lit_200),T59,ENVNUL,PNUL,YPfalse);
-  T60 = YOfun_naryQ;
-  VARSET(YOfun_naryQ,T60);
-  lit_201 = YPPsym((P)"@fun-arity");
-  T61 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLintG),Ynil);
-  YOfun_arity = YPmet(FUNCODEREF(YOfun_arity),LITREF(lit_201),T61,ENVNUL,PNUL,YPfalse);
-  T62 = YOfun_arity;
-  VARSET(YOfun_arity,T62);
-  lit_202 = YPPsym((P)"@fun-val");
-  T63 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YOfun_val = YPmet(FUNCODEREF(YOfun_val),LITREF(lit_202),T63,ENVNUL,PNUL,YPfalse);
-  T64 = YOfun_val;
-  VARSET(YOfun_val,T64);
-  lit_203 = YPPsym((P)"@fun-unification-vars");
+  lit_152 = YPPsym((P)"@@==");
+  T0 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_13)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  YOOEE = YPmet(FUNCODEREF(YOOEE),LITREF(lit_152),T0,ENVNUL,PNUL,YPfalse);
+  T1 = YOOEE;
+  VARSET(YOOEE,T1);
+  lit_153 = YPPsym((P)"not");
+  T2 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLlogG),Ynil);
+  Ynot = YPmet(FUNCODEREF(Ynot),LITREF(lit_153),T2,ENVNUL,PNUL,YPfalse);
+  T3 = Ynot;
+  VARSET(Ynot,T3);
+  lit_154 = YPPsym((P)"@@empty?");
+  T4 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLlogG),Ynil);
+  YOOemptyQ = YPmet(FUNCODEREF(YOOemptyQ),LITREF(lit_154),T4,ENVNUL,PNUL,YPfalse);
+  T5 = YOOemptyQ;
+  VARSET(YOOemptyQ,T5);
+  lit_155 = YPPsym((P)"@rev!");
+  T6 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLlstG),Ynil);
+  YOrevX = YPmet(FUNCODEREF(YOrevX),LITREF(lit_155),T6,ENVNUL,PNUL,YPfalse);
+  T7 = YOrevX;
+  VARSET(YOrevX,T7);
+  lit_156 = YPPsym((P)"@all?");
+  lit_157 = YPPsym((P)"test");
+  lit_158 = YPPsym((P)"c");
+  lit_159 = YPPsym((P)"fnd");
+  lit_160 = YPPsym((P)"p");
+  T9 = YPsig(YPPlist(1,LITREF(lit_160)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_fnd_322 = YPmet(FUNCODEREF(fun_fnd_322),LITREF(lit_159),T9,ENVNUL,PNUL,YPfalse);
+  T8 = YPsig(YPPlist(2,LITREF(lit_157),LITREF(lit_158)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  YOallQ = YPmet(FUNCODEREF(YOallQ),LITREF(lit_156),T8,ENVNUL,PNUL,YPfalse);
+  T10 = YOallQ;
+  VARSET(YOallQ,T10);
+  lit_161 = YPPsym((P)"@all2?");
+  lit_162 = YPPsym((P)"px");
+  lit_163 = YPPsym((P)"py");
+  T12 = YPsig(YPPlist(2,LITREF(lit_162),LITREF(lit_163)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_fnd_324 = YPmet(FUNCODEREF(fun_fnd_324),LITREF(lit_159),T12,ENVNUL,PNUL,YPfalse);
+  T11 = YPsig(YPPlist(3,LITREF(lit_157),LITREF(lit_10),LITREF(lit_13)),YPPlist(3,VARREF(YLfunG),VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)3),VARREF(YLlogG),Ynil);
+  YOall2Q = YPmet(FUNCODEREF(YOall2Q),LITREF(lit_161),T11,ENVNUL,PNUL,YPfalse);
+  T13 = YOall2Q;
+  VARSET(YOall2Q,T13);
+  lit_164 = YPPsym((P)"@elt");
+  lit_165 = YPPsym((P)"key");
+  lit_166 = YPPsym((P)"count");
+  T15 = YPsig(YPPlist(2,LITREF(lit_166),LITREF(lit_10)),YPPlist(2,VARREF(YLintG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_fnd_326 = YPmet(FUNCODEREF(fun_fnd_326),LITREF(lit_159),T15,ENVNUL,PNUL,YPfalse);
+  T14 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_165)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YOelt = YPmet(FUNCODEREF(YOelt),LITREF(lit_164),T14,ENVNUL,PNUL,YPfalse);
+  T16 = YOelt;
+  VARSET(YOelt,T16);
+  lit_167 = YPPsym((P)"@fill");
+  lit_168 = YPPsym((P)"f");
+  T18 = YPsig(YPPlist(1,LITREF(lit_160)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_loop_328 = YPmet(FUNCODEREF(fun_loop_328),LITREF(lit_5),T18,ENVNUL,PNUL,YPfalse);
+  T17 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_168)),YPPlist(2,VARREF(YLlstG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
+  YOfill = YPmet(FUNCODEREF(YOfill),LITREF(lit_167),T17,ENVNUL,PNUL,YPfalse);
+  T19 = YOfill;
+  VARSET(YOfill,T19);
+  lit_169 = YPPsym((P)"@any?");
+  T21 = YPsig(YPPlist(1,LITREF(lit_160)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_fnd_330 = YPmet(FUNCODEREF(fun_fnd_330),LITREF(lit_159),T21,ENVNUL,PNUL,YPfalse);
+  T20 = YPsig(YPPlist(2,LITREF(lit_157),LITREF(lit_158)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YOanyQ = YPmet(FUNCODEREF(YOanyQ),LITREF(lit_169),T20,ENVNUL,PNUL,YPfalse);
+  T22 = YOanyQ;
+  VARSET(YOanyQ,T22);
+  lit_170 = YPPsym((P)"@map");
+  lit_171 = YPPsym((P)"do");
+  lit_172 = YPPsym((P)"res");
+  T24 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_172)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_do_335 = YPmet(FUNCODEREF(fun_do_335),LITREF(lit_171),T24,ENVNUL,PNUL,YPfalse);
+  T23 = YPsig(YPPlist(2,LITREF(lit_168),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
+  YOmap = YPmet(FUNCODEREF(YOmap),LITREF(lit_170),T23,ENVNUL,PNUL,YPfalse);
+  T25 = YOmap;
+  VARSET(YOmap,T25);
+  lit_173 = YPPsym((P)"@pick");
+  T27 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_172)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_do_337 = YPmet(FUNCODEREF(fun_do_337),LITREF(lit_171),T27,ENVNUL,PNUL,YPfalse);
+  T26 = YPsig(YPPlist(2,LITREF(lit_168),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
+  YOpick = YPmet(FUNCODEREF(YOpick),LITREF(lit_173),T26,ENVNUL,PNUL,YPfalse);
+  T28 = YOpick;
+  VARSET(YOpick,T28);
+  lit_174 = YPPsym((P)"@do");
+  T30 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_do_339 = YPmet(FUNCODEREF(fun_do_339),LITREF(lit_171),T30,ENVNUL,PNUL,YPfalse);
+  T29 = YPsig(YPPlist(2,LITREF(lit_168),LITREF(lit_10)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YOdo = YPmet(FUNCODEREF(YOdo),LITREF(lit_174),T29,ENVNUL,PNUL,YPfalse);
+  T31 = YOdo;
+  VARSET(YOdo,T31);
+  lit_175 = YPPsym((P)"@alter");
+  lit_176 = YPPsym((P)"dst");
+  lit_177 = YPPsym((P)"src");
+  lit_178 = YPPsym((P)"in");
+  lit_179 = YPPsym((P)"ds");
+  lit_180 = YPPsym((P)"ss");
+  T33 = YPsig(YPPlist(2,LITREF(lit_179),LITREF(lit_180)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_in_341 = YPmet(FUNCODEREF(fun_in_341),LITREF(lit_178),T33,ENVNUL,PNUL,YPfalse);
+  T32 = YPsig(YPPlist(2,LITREF(lit_176),LITREF(lit_177)),YPPlist(2,VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
+  YOalter = YPmet(FUNCODEREF(YOalter),LITREF(lit_175),T32,ENVNUL,PNUL,YPfalse);
+  T34 = YOalter;
+  VARSET(YOalter,T34);
+  lit_181 = YPPsym((P)"@fab");
+  lit_182 = YPPsym((P)"fab");
+  T36 = YPsig(YPPlist(2,LITREF(lit_17),LITREF(lit_172)),YPPlist(2,VARREF(YLintG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_fab_343 = YPmet(FUNCODEREF(fun_fab_343),LITREF(lit_182),T36,ENVNUL,PNUL,YPfalse);
+  T35 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_3)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
+  YOfab = YPmet(FUNCODEREF(YOfab),LITREF(lit_181),T35,ENVNUL,PNUL,YPfalse);
+  T37 = YOfab;
+  VARSET(YOfab,T37);
+  lit_183 = YPPsym((P)"@fold");
+  lit_184 = YPPsym((P)"combine");
+  lit_185 = YPPsym((P)"init");
+  lit_186 = YPPsym((P)"red");
+  T39 = YPsig(YPPlist(2,LITREF(lit_172),LITREF(lit_158)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_red_345 = YPmet(FUNCODEREF(fun_red_345),LITREF(lit_186),T39,ENVNUL,PNUL,YPfalse);
+  T38 = YPsig(YPPlist(3,LITREF(lit_184),LITREF(lit_185),LITREF(lit_158)),YPPlist(3,VARREF(YLfunG),VARREF(YLanyG),VARREF(YLlstG)),YPfalse,YPint((P)3),VARREF(YLlstG),Ynil);
+  YOfold = YPmet(FUNCODEREF(YOfold),LITREF(lit_183),T38,ENVNUL,PNUL,YPfalse);
+  T40 = YOfold;
+  VARSET(YOfold,T40);
+  lit_187 = YPPsym((P)"@cat2");
+  T41 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_13)),YPPlist(2,VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
+  YOcat2 = YPmet(FUNCODEREF(YOcat2),LITREF(lit_187),T41,ENVNUL,PNUL,YPfalse);
+  T42 = YOcat2;
+  VARSET(YOcat2,T42);
+  lit_188 = YPPsym((P)"@find");
+  T44 = YPsig(YPPlist(2,LITREF(lit_158),LITREF(lit_17)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_fnd_348 = YPmet(FUNCODEREF(fun_fnd_348),LITREF(lit_159),T44,ENVNUL,PNUL,YPfalse);
+  T43 = YPsig(YPPlist(2,LITREF(lit_168),LITREF(lit_158)),YPPlist(2,VARREF(YLfunG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YOfind = YPmet(FUNCODEREF(YOfind),LITREF(lit_188),T43,ENVNUL,PNUL,YPfalse);
+  T45 = YOfind;
+  VARSET(YOfind,T45);
+  lit_189 = YPPsym((P)"@mem?");
+  T47 = YPsig(YPPlist(1,LITREF(lit_13)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_350 = YPmet(FUNCODEREF(fun_350),YPfalse,T47,ENVNUL,PNUL,YPfalse);
+  T46 = YPsig(YPPlist(2,LITREF(lit_158),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  YOmemQ = YPmet(FUNCODEREF(YOmemQ),LITREF(lit_189),T46,ENVNUL,PNUL,YPfalse);
+  T48 = YOmemQ;
+  VARSET(YOmemQ,T48);
+  lit_190 = YPPsym((P)"@del-dups");
+  lit_191 = YPPsym((P)"e");
+  T50 = YPsig(YPPlist(2,LITREF(lit_3),LITREF(lit_191)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_352 = YPmet(FUNCODEREF(fun_352),YPfalse,T50,ENVNUL,PNUL,YPfalse);
+  T49 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLlstG),Ynil);
+  YOdel_dups = YPmet(FUNCODEREF(YOdel_dups),LITREF(lit_190),T49,ENVNUL,PNUL,YPfalse);
+  T51 = YOdel_dups;
+  VARSET(YOdel_dups,T51);
+  lit_192 = YPPsym((P)"@lst-helper");
+  lit_193 = YPPsym((P)"objects");
+  T52 = YPsig(YPPlist(3,LITREF(lit_193),LITREF(lit_17),LITREF(lit_6)),YPPlist(3,VARREF(YLoptsG),VARREF(YLintG),VARREF(YLlstG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  YOlst_helper = YPmet(FUNCODEREF(YOlst_helper),LITREF(lit_192),T52,ENVNUL,PNUL,YPfalse);
+  T53 = YOlst_helper;
+  VARSET(YOlst_helper,T53);
+  lit_194 = YPPsym((P)"@lst");
+  T54 = YPsig(YPPlist(1,LITREF(lit_193)),Ynil,YPtrue,YPint((P)0),VARREF(YLanyG),Ynil);
+  YOlst = YPmet(FUNCODEREF(YOlst),LITREF(lit_194),T54,ENVNUL,PNUL,YPfalse);
+  T55 = YOlst;
+  VARSET(YOlst,T55);
+  lit_195 = YPPsym((P)"@velt");
+  T56 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_17)),YPPlist(2,VARREF(YLvecG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YOvelt = YPmet(FUNCODEREF(YOvelt),LITREF(lit_195),T56,ENVNUL,PNUL,YPfalse);
+  T57 = YOvelt;
+  VARSET(YOvelt,T57);
+  lit_196 = YPPsym((P)"@velt-setter");
+  T58 = YPsig(YPPlist(3,LITREF(lit_30),LITREF(lit_10),LITREF(lit_17)),YPPlist(3,VARREF(YLanyG),VARREF(YLvecG),VARREF(YLintG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  YOvelt_setter = YPmet(FUNCODEREF(YOvelt_setter),LITREF(lit_196),T58,ENVNUL,PNUL,YPfalse);
+  T59 = YOvelt_setter;
+  VARSET(YOvelt_setter,T59);
+  lit_197 = YPPsym((P)"@vec");
+  lit_198 = YPPsym((P)"copy");
+  lit_199 = YPPsym((P)"k");
+  T61 = YPsig(YPPlist(1,LITREF(lit_199)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_copy_358 = YPmet(FUNCODEREF(fun_copy_358),LITREF(lit_198),T61,ENVNUL,PNUL,YPfalse);
+  T60 = YPsig(YPPlist(1,LITREF(lit_193)),Ynil,YPtrue,YPint((P)0),VARREF(YLanyG),Ynil);
+  YOvec = YPmet(FUNCODEREF(YOvec),LITREF(lit_197),T60,ENVNUL,PNUL,YPfalse);
+  T62 = YOvec;
+  VARSET(YOvec,T62);
+  lit_200 = YPPsym((P)"@fun-names");
+  T63 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLlstG),Ynil);
+  YOfun_names = YPmet(FUNCODEREF(YOfun_names),LITREF(lit_200),T63,ENVNUL,PNUL,YPfalse);
+  T64 = YOfun_names;
+  VARSET(YOfun_names,T64);
+  lit_201 = YPPsym((P)"@fun-specs");
   T65 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLlstG),Ynil);
-  YOfun_unification_vars = YPmet(FUNCODEREF(YOfun_unification_vars),LITREF(lit_203),T65,ENVNUL,PNUL,YPfalse);
-  T66 = YOfun_unification_vars;
-  VARSET(YOfun_unification_vars,T66);
-  lit_204 = YPPsym((P)"@fun-mets");
-  T67 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLlstG),Ynil);
-  YOfun_mets = YPmet(FUNCODEREF(YOfun_mets),LITREF(lit_204),T67,ENVNUL,PNUL,YPfalse);
-  T68 = YOfun_mets;
-  VARSET(YOfun_mets,T68);
-  lit_205 = YPPsym((P)"@fun-mets-setter");
-  T69 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YOfun_mets_setter = YPmet(FUNCODEREF(YOfun_mets_setter),LITREF(lit_205),T69,ENVNUL,PNUL,YPfalse);
-  T70 = YOfun_mets_setter;
-  VARSET(YOfun_mets_setter,T70);
+  YOfun_specs = YPmet(FUNCODEREF(YOfun_specs),LITREF(lit_201),T65,ENVNUL,PNUL,YPfalse);
+  T66 = YOfun_specs;
+  VARSET(YOfun_specs,T66);
+  lit_202 = YPPsym((P)"@fun-nary?");
+  T67 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLlogG),Ynil);
+  YOfun_naryQ = YPmet(FUNCODEREF(YOfun_naryQ),LITREF(lit_202),T67,ENVNUL,PNUL,YPfalse);
+  T68 = YOfun_naryQ;
+  VARSET(YOfun_naryQ,T68);
+  lit_203 = YPPsym((P)"@fun-arity");
+  T69 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLintG),Ynil);
+  YOfun_arity = YPmet(FUNCODEREF(YOfun_arity),LITREF(lit_203),T69,ENVNUL,PNUL,YPfalse);
+  T70 = YOfun_arity;
+  VARSET(YOfun_arity,T70);
+  lit_204 = YPPsym((P)"@fun-val");
+  T71 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YOfun_val = YPmet(FUNCODEREF(YOfun_val),LITREF(lit_204),T71,ENVNUL,PNUL,YPfalse);
+  T72 = YOfun_val;
+  VARSET(YOfun_val,T72);
+  lit_205 = YPPsym((P)"@fun-unification-vars");
+  T73 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLlstG),Ynil);
+  YOfun_unification_vars = YPmet(FUNCODEREF(YOfun_unification_vars),LITREF(lit_205),T73,ENVNUL,PNUL,YPfalse);
+  T74 = YOfun_unification_vars;
+  VARSET(YOfun_unification_vars,T74);
+  lit_206 = YPPsym((P)"@fun-mets");
+  T75 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLfunG)),YPfalse,YPint((P)1),VARREF(YLlstG),Ynil);
+  YOfun_mets = YPmet(FUNCODEREF(YOfun_mets),LITREF(lit_206),T75,ENVNUL,PNUL,YPfalse);
+  T76 = YOfun_mets;
+  VARSET(YOfun_mets,T76);
+  lit_207 = YPPsym((P)"@fun-mets-setter");
+  T77 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLlstG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YOfun_mets_setter = YPmet(FUNCODEREF(YOfun_mets_setter),LITREF(lit_207),T77,ENVNUL,PNUL,YPfalse);
+  T78 = YOfun_mets_setter;
+  VARSET(YOfun_mets_setter,T78);
   VARSET(YLenvG,VARREF(YLanyG));
   VARSET(YLspecsG,VARREF(YLlstG));
   VARSET(YLbodyG,VARREF(YLanyG));
-  lit_206 = YPPsym((P)"fun-spec");
-  T71 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_17)),YPPlist(2,VARREF(YLmetG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yfun_spec = YPmet(FUNCODEREF(Yfun_spec),LITREF(lit_206),T71,ENVNUL,PNUL,YPfalse);
-  T72 = Yfun_spec;
-  VARSET(Yfun_spec,T72);
+  lit_208 = YPPsym((P)"fun-spec");
+  T79 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_17)),YPPlist(2,VARREF(YLmetG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  Yfun_spec = YPmet(FUNCODEREF(Yfun_spec),LITREF(lit_208),T79,ENVNUL,PNUL,YPfalse);
+  T80 = Yfun_spec;
+  VARSET(Yfun_spec,T80);
   VARSET(YLmetsG,VARREF(YLlstG));
-  lit_207 = YPPsym((P)"fun-same-met?");
-  T73 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_13)),YPPlist(2,VARREF(YLmetG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  Yfun_same_metQ = YPmet(FUNCODEREF(Yfun_same_metQ),LITREF(lit_207),T73,ENVNUL,PNUL,YPfalse);
-  T74 = Yfun_same_metQ;
-  VARSET(Yfun_same_metQ,T74);
-  lit_208 = YPPsym((P)"fun-congruent?");
-  T75 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_13)),YPPlist(2,VARREF(YLfunG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  Yfun_congruentQ = YPmet(FUNCODEREF(Yfun_congruentQ),LITREF(lit_208),T75,ENVNUL,PNUL,YPfalse);
-  T76 = Yfun_congruentQ;
-  VARSET(Yfun_congruentQ,T76);
+  lit_209 = YPPsym((P)"fun-same-met?");
+  T81 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_13)),YPPlist(2,VARREF(YLmetG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  Yfun_same_metQ = YPmet(FUNCODEREF(Yfun_same_metQ),LITREF(lit_209),T81,ENVNUL,PNUL,YPfalse);
+  T82 = Yfun_same_metQ;
+  VARSET(Yfun_same_metQ,T82);
+  lit_210 = YPPsym((P)"fun-congruent?");
+  T83 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_13)),YPPlist(2,VARREF(YLfunG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  Yfun_congruentQ = YPmet(FUNCODEREF(Yfun_congruentQ),LITREF(lit_210),T83,ENVNUL,PNUL,YPfalse);
+  T84 = Yfun_congruentQ;
+  VARSET(Yfun_congruentQ,T84);
   VARSET(YTrestarts_okQT,YPfalse);
-  lit_209 = YPPsym((P)"gen-add-met");
-  lit_210 = YPPsym((P)"g");
-  lit_211 = YPPsym((P)"m");
-  lit_212 = YPPsym((P)"return");
-  lit_213 = YPsb((P)"Replace %= with an empty generic congruent with %=");
-  lit_214 = YPPsym((P)"lop");
-  lit_215 = YPPsym((P)"specs");
-  lit_216 = YPPsym((P)"col");
-  lit_217 = YPPsym((P)"mets");
-  lit_218 = YPPsym((P)"same?");
-  lit_219 = YPPsym((P)"gms");
-  T83 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
-  fun_371 = YPmet(FUNCODEREF(fun_371),YPfalse,T83,ENVNUL,PNUL,YPfalse);
-  T82 = YPsig(YPPlist(2,LITREF(lit_156),LITREF(lit_7)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_372 = YPmet(FUNCODEREF(fun_372),YPfalse,T82,ENVNUL,PNUL,YPfalse);
-  T81 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
-  fun_373 = YPmet(FUNCODEREF(fun_373),YPfalse,T81,ENVNUL,PNUL,YPfalse);
-  T80 = YPsig(YPPlist(1,LITREF(lit_212)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_374 = YPmet(FUNCODEREF(fun_374),YPfalse,T80,ENVNUL,PNUL,YPfalse);
-  T79 = YPsig(YPPlist(1,LITREF(lit_215)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_lop_375 = YPmet(FUNCODEREF(fun_lop_375),LITREF(lit_214),T79,ENVNUL,PNUL,YPfalse);
-  T78 = YPsig(YPPlist(3,LITREF(lit_217),LITREF(lit_218),LITREF(lit_219)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLmetsG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  fun_col_376 = YPmet(FUNCODEREF(fun_col_376),LITREF(lit_216),T78,ENVNUL,PNUL,YPfalse);
-  T77 = YPsig(YPPlist(2,LITREF(lit_210),LITREF(lit_211)),YPPlist(2,VARREF(YLgenG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLgenG),Ynil);
-  Ygen_add_met = YPmet(FUNCODEREF(Ygen_add_met),LITREF(lit_209),T77,ENVNUL,PNUL,YPfalse);
-  T84 = Ygen_add_met;
-  VARSET(Ygen_add_met,T84);
-  lit_220 = YPPsym((P)"@isa?");
-  lit_221 = YPPsym((P)"o");
-  lit_222 = YPPsym((P)"t");
-  T85 = YPsig(YPPlist(2,LITREF(lit_221),LITREF(lit_222)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  YOisaQ = YPmet(FUNCODEREF(YOisaQ),LITREF(lit_220),T85,ENVNUL,PNUL,YPfalse);
-  T86 = YOisaQ;
-  VARSET(YOisaQ,T86);
-  lit_223 = YPPsym((P)"@class<");
-  lit_224 = YPPsym((P)"c1");
-  lit_225 = YPPsym((P)"c2");
-  lit_226 = YPPsym((P)"wrt");
-  lit_227 = YPPsym((P)"find");
-  lit_228 = YPPsym((P)"ps");
-  lit_229 = YPsb((P)"can't order specializers - arg/reference object %= is ");
-  lit_230 = YPsb((P)"neither %= nor %=");
-  T88 = YPsig(YPPlist(1,LITREF(lit_228)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_find_383 = YPmet(FUNCODEREF(fun_find_383),LITREF(lit_227),T88,ENVNUL,PNUL,YPfalse);
-  T87 = YPsig(YPPlist(3,LITREF(lit_224),LITREF(lit_225),LITREF(lit_226)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLlogG),Ynil);
-  YOclassL = YPmet(FUNCODEREF(YOclassL),LITREF(lit_223),T87,ENVNUL,PNUL,YPfalse);
-  T89 = YOclassL;
-  VARSET(YOclassL,T89);
+  lit_211 = YPPsym((P)"gen-add-met");
+  lit_212 = YPPsym((P)"g");
+  lit_213 = YPPsym((P)"m");
+  lit_214 = YPPsym((P)"return");
+  lit_215 = YPsb((P)"Replace %= with an empty generic congruent with %=");
+  lit_216 = YPPsym((P)"lop");
+  lit_217 = YPPsym((P)"specs");
+  lit_218 = YPPsym((P)"col");
+  lit_219 = YPPsym((P)"mets");
+  lit_220 = YPPsym((P)"same?");
+  lit_221 = YPPsym((P)"gms");
+  T91 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
+  fun_371 = YPmet(FUNCODEREF(fun_371),YPfalse,T91,ENVNUL,PNUL,YPfalse);
+  T90 = YPsig(YPPlist(2,LITREF(lit_158),LITREF(lit_7)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_372 = YPmet(FUNCODEREF(fun_372),YPfalse,T90,ENVNUL,PNUL,YPfalse);
+  T89 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
+  fun_373 = YPmet(FUNCODEREF(fun_373),YPfalse,T89,ENVNUL,PNUL,YPfalse);
+  T88 = YPsig(YPPlist(1,LITREF(lit_214)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_374 = YPmet(FUNCODEREF(fun_374),YPfalse,T88,ENVNUL,PNUL,YPfalse);
+  T87 = YPsig(YPPlist(1,LITREF(lit_217)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_lop_375 = YPmet(FUNCODEREF(fun_lop_375),LITREF(lit_216),T87,ENVNUL,PNUL,YPfalse);
+  T86 = YPsig(YPPlist(3,LITREF(lit_219),LITREF(lit_220),LITREF(lit_221)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLmetsG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  fun_col_376 = YPmet(FUNCODEREF(fun_col_376),LITREF(lit_218),T86,ENVNUL,PNUL,YPfalse);
+  T85 = YPsig(YPPlist(2,LITREF(lit_212),LITREF(lit_213)),YPPlist(2,VARREF(YLgenG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLgenG),Ynil);
+  Ygen_add_met = YPmet(FUNCODEREF(Ygen_add_met),LITREF(lit_211),T85,ENVNUL,PNUL,YPfalse);
+  T92 = Ygen_add_met;
+  VARSET(Ygen_add_met,T92);
+  lit_222 = YPPsym((P)"@isa?");
+  lit_223 = YPPsym((P)"o");
+  lit_224 = YPPsym((P)"t");
+  T93 = YPsig(YPPlist(2,LITREF(lit_223),LITREF(lit_224)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  YOisaQ = YPmet(FUNCODEREF(YOisaQ),LITREF(lit_222),T93,ENVNUL,PNUL,YPfalse);
+  T94 = YOisaQ;
+  VARSET(YOisaQ,T94);
+  lit_225 = YPPsym((P)"@class<");
+  lit_226 = YPPsym((P)"c1");
+  lit_227 = YPPsym((P)"c2");
+  lit_228 = YPPsym((P)"wrt");
+  lit_229 = YPPsym((P)"find");
+  lit_230 = YPPsym((P)"ps");
+  lit_231 = YPsb((P)"can't order specializers - arg/reference object %= is ");
+  lit_232 = YPsb((P)"neither %= nor %=");
+  T96 = YPsig(YPPlist(1,LITREF(lit_230)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_find_383 = YPmet(FUNCODEREF(fun_find_383),LITREF(lit_229),T96,ENVNUL,PNUL,YPfalse);
+  T95 = YPsig(YPPlist(3,LITREF(lit_226),LITREF(lit_227),LITREF(lit_228)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLlogG),Ynil);
+  YOclassL = YPmet(FUNCODEREF(YOclassL),LITREF(lit_225),T95,ENVNUL,PNUL,YPfalse);
+  T97 = YOclassL;
+  VARSET(YOclassL,T97);
   VARSET(YLtupG,VARREF(YLvecG));
   VARSET(YOtup,VARREF(YOvec));
   VARSET(Ytup,VARREF(YOvec));
   VARSET(YOtelt,VARREF(YOvelt));
-  lit_231 = YPPsym((P)"@type-equal?");
-  lit_232 = YPPsym((P)"t1");
-  lit_233 = YPPsym((P)"t2");
-  T90 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  YOtype_equalQ = YPmet(FUNCODEREF(YOtype_equalQ),LITREF(lit_231),T90,ENVNUL,PNUL,YPfalse);
-  T91 = YOtype_equalQ;
-  VARSET(YOtype_equalQ,T91);
-  lit_234 = YPPsym((P)"@subtype?");
-  T92 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  YOsubtypeQ = YPmet(FUNCODEREF(YOsubtypeQ),LITREF(lit_234),T92,ENVNUL,PNUL,YPfalse);
-  T93 = YOsubtypeQ;
-  VARSET(YOsubtypeQ,T93);
-  lit_235 = YPPsym((P)"@may-isa?");
-  T94 = YPsig(YPPlist(2,LITREF(lit_156),LITREF(lit_222)),YPPlist(2,VARREF(YLclassG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
-  YOmay_isaQ = YPmet(FUNCODEREF(YOmay_isaQ),LITREF(lit_235),T94,ENVNUL,PNUL,YPfalse);
-  T95 = YOmay_isaQ;
-  VARSET(YOmay_isaQ,T95);
-  lit_236 = YPPsym((P)"@order-specs-class");
-  lit_237 = YPPsym((P)"arg");
-  lit_238 = YPPsym((P)"=");
-  lit_239 = YPPsym((P)"<");
-  lit_240 = YPPsym((P)">");
-  T96 = YPsig(YPPlist(3,LITREF(lit_232),LITREF(lit_233),LITREF(lit_237)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  YOorder_specs_class = YPmet(FUNCODEREF(YOorder_specs_class),LITREF(lit_236),T96,ENVNUL,PNUL,YPfalse);
-  T97 = YOorder_specs_class;
-  VARSET(YOorder_specs_class,T97);
-  lit_241 = YPPsym((P)"@order-specs");
-  T98 = YPsig(YPPlist(3,LITREF(lit_232),LITREF(lit_233),LITREF(lit_237)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  YOorder_specs = YPmet(FUNCODEREF(YOorder_specs),LITREF(lit_241),T98,ENVNUL,PNUL,YPfalse);
-  T99 = YOorder_specs;
-  VARSET(YOorder_specs,T99);
-  lit_242 = YPPsym((P)"order-mets");
-  lit_243 = YPPsym((P)"m1");
-  lit_244 = YPPsym((P)"m2");
-  lit_245 = YPPsym((P)"state");
-  lit_246 = YPPsym((P)"idx");
-  lit_247 = YPPsym((P)"<>");
-  T101 = YPsig(YPPlist(2,LITREF(lit_245),LITREF(lit_246)),YPPlist(2,VARREF(YLsymG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_loop_390 = YPmet(FUNCODEREF(fun_loop_390),LITREF(lit_5),T101,ENVNUL,PNUL,YPfalse);
-  T100 = YPsig(YPPlist(3,LITREF(lit_243),LITREF(lit_244),LITREF(lit_20)),YPPlist(3,VARREF(YLmetG),VARREF(YLmetG),VARREF(YLoptsG)),YPfalse,YPint((P)3),VARREF(YLsymG),Ynil);
-  Yorder_mets = YPmet(FUNCODEREF(Yorder_mets),LITREF(lit_242),T100,ENVNUL,PNUL,YPfalse);
-  T102 = Yorder_mets;
-  VARSET(Yorder_mets,T102);
-  lit_248 = YPPsym((P)"ord-app-mets-1");
-  lit_249 = YPPsym((P)"make-ambiguous");
-  lit_250 = YPPsym((P)"headed-list");
-  lit_251 = YPPsym((P)"precedes-all?");
-  lit_252 = YPPsym((P)"check-subsequent-ambiguities");
-  lit_253 = YPPsym((P)"oprev");
-  lit_254 = YPPsym((P)"insert");
-  lit_255 = YPPsym((P)"osub");
-  T110 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_loop_392 = YPmet(FUNCODEREF(fun_loop_392),LITREF(lit_5),T110,ENVNUL,PNUL,YPfalse);
-  T109 = YPsig(YPPlist(1,LITREF(lit_250)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_make_ambiguous_393 = YPmet(FUNCODEREF(fun_make_ambiguous_393),LITREF(lit_249),T109,ENVNUL,PNUL,YPfalse);
-  T108 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_loop_394 = YPmet(FUNCODEREF(fun_loop_394),LITREF(lit_5),T108,ENVNUL,PNUL,YPfalse);
-  T107 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_precedes_allQ_395 = YPmet(FUNCODEREF(fun_precedes_allQ_395),LITREF(lit_251),T107,ENVNUL,PNUL,YPfalse);
-  T106 = YPsig(YPPlist(1,LITREF(lit_253)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_check_subsequent_ambiguities_396 = YPmet(FUNCODEREF(fun_check_subsequent_ambiguities_396),LITREF(lit_252),T106,ENVNUL,PNUL,YPfalse);
-  T105 = YPsig(YPPlist(2,LITREF(lit_253),LITREF(lit_255)),YPPlist(2,VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_insert_397 = YPmet(FUNCODEREF(fun_insert_397),LITREF(lit_254),T105,ENVNUL,PNUL,YPfalse);
-  T104 = YPsig(YPPlist(1,LITREF(lit_217)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_loop_398 = YPmet(FUNCODEREF(fun_loop_398),LITREF(lit_5),T104,ENVNUL,PNUL,YPfalse);
-  T103 = YPsig(YPPlist(3,LITREF(lit_217),LITREF(lit_20),LITREF(lit_242)),YPPlist(3,VARREF(YLlstG),VARREF(YLoptsG),VARREF(YLfunG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
-  Yord_app_mets_1 = YPmet(FUNCODEREF(Yord_app_mets_1),LITREF(lit_248),T103,ENVNUL,PNUL,YPfalse);
-  T111 = Yord_app_mets_1;
-  VARSET(Yord_app_mets_1,T111);
-  T112 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_13)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_400 = YPmet(FUNCODEREF(fun_400),YPfalse,T112,ENVNUL,PNUL,YPfalse);
-  T113 = fun_400;
-  VARSET(Ymet_app_unify,T113);
-  lit_256 = YPPsym((P)"met-app?");
-  T115 = YPsig(YPPlist(1,LITREF(lit_17)),YPPlist(1,VARREF(YLintG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_loop_401 = YPmet(FUNCODEREF(fun_loop_401),LITREF(lit_5),T115,ENVNUL,PNUL,YPfalse);
-  T114 = YPsig(YPPlist(2,LITREF(lit_24),LITREF(lit_20)),YPPlist(2,VARREF(YLmetG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  Ymet_appQ = YPmet(FUNCODEREF(Ymet_appQ),LITREF(lit_256),T114,ENVNUL,PNUL,YPfalse);
-  T116 = Ymet_appQ;
-  VARSET(Ymet_appQ,T116);
-  lit_257 = YPPsym((P)"ord-app-mets");
-  lit_258 = YPPsym((P)"gf");
-  lit_259 = YPPsym((P)"ans");
-  lit_260 = YPPsym((P)"ms");
-  T118 = YPsig(YPPlist(2,LITREF(lit_259),LITREF(lit_260)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_col_403 = YPmet(FUNCODEREF(fun_col_403),LITREF(lit_216),T118,ENVNUL,PNUL,YPfalse);
-  T117 = YPsig(YPPlist(2,LITREF(lit_258),LITREF(lit_20)),YPPlist(2,VARREF(YLgenG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
-  Yord_app_mets = YPmet(FUNCODEREF(Yord_app_mets),LITREF(lit_257),T117,ENVNUL,PNUL,YPfalse);
-  T119 = Yord_app_mets;
-  VARSET(Yord_app_mets,T119);
-  lit_261 = YPPsym((P)"@gen-cache-arg-pos");
-  T120 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YOgen_cache_arg_pos = YPmet(FUNCODEREF(YOgen_cache_arg_pos),LITREF(lit_261),T120,ENVNUL,PNUL,YPfalse);
-  T121 = YOgen_cache_arg_pos;
-  VARSET(YOgen_cache_arg_pos,T121);
-  lit_262 = YPPsym((P)"@gen-cache-arg-pos-setter");
-  T124 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T123 = YOgen_cache_arg_pos_setter = YPmet(FUNCODEREF(YOgen_cache_arg_pos_setter),LITREF(lit_262),T124,ENVNUL,PNUL,YPfalse);
-  T126 = YOgen_cache_arg_pos_setter;
-  T125 = VARSET(YOgen_cache_arg_pos_setter,T126);
-  T122 = T125;
-  return T122;
+  lit_233 = YPPsym((P)"@type-equal?");
+  lit_234 = YPPsym((P)"t1");
+  lit_235 = YPPsym((P)"t2");
+  T98 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  YOtype_equalQ = YPmet(FUNCODEREF(YOtype_equalQ),LITREF(lit_233),T98,ENVNUL,PNUL,YPfalse);
+  T99 = YOtype_equalQ;
+  VARSET(YOtype_equalQ,T99);
+  lit_236 = YPPsym((P)"@subtype?");
+  T102 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  T101 = YOsubtypeQ = YPmet(FUNCODEREF(YOsubtypeQ),LITREF(lit_236),T102,ENVNUL,PNUL,YPfalse);
+  T104 = YOsubtypeQ;
+  T103 = VARSET(YOsubtypeQ,T104);
+  T100 = T103;
+  return T100;
 }
 
 P Y___main_9___() {
-  P T54,T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39;
-  P T38,T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23;
-  P T22,T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7;
-  P T6,T5,T4,T3,T2,T1,T0;
+  P T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69;
+  P T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53;
+  P T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37;
+  P T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21;
+  P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
+  P T4,T3,T2,T1,T0;
 loop:
-  lit_263 = YPPsym((P)"@gen-cache-singletons");
-  T0 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YOgen_cache_singletons = YPmet(FUNCODEREF(YOgen_cache_singletons),LITREF(lit_263),T0,ENVNUL,PNUL,YPfalse);
-  T1 = YOgen_cache_singletons;
-  VARSET(YOgen_cache_singletons,T1);
-  lit_264 = YPPsym((P)"@gen-cache-singletons-setter");
-  T2 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YOgen_cache_singletons_setter = YPmet(FUNCODEREF(YOgen_cache_singletons_setter),LITREF(lit_264),T2,ENVNUL,PNUL,YPfalse);
-  T3 = YOgen_cache_singletons_setter;
-  VARSET(YOgen_cache_singletons_setter,T3);
-  lit_265 = YPPsym((P)"@gen-cache-classes");
-  T4 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YOgen_cache_classes = YPmet(FUNCODEREF(YOgen_cache_classes),LITREF(lit_265),T4,ENVNUL,PNUL,YPfalse);
-  T5 = YOgen_cache_classes;
-  VARSET(YOgen_cache_classes,T5);
-  lit_266 = YPPsym((P)"@gen-cache-classes-setter");
-  T6 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YOgen_cache_classes_setter = YPmet(FUNCODEREF(YOgen_cache_classes_setter),LITREF(lit_266),T6,ENVNUL,PNUL,YPfalse);
-  T7 = YOgen_cache_classes_setter;
-  VARSET(YOgen_cache_classes_setter,T7);
-  lit_267 = YPPsym((P)"method-accessor-offset");
-  T8 = YPsig(YPPlist(3,LITREF(lit_23),LITREF(lit_24),LITREF(lit_20)),YPPlist(3,VARREF(YLgenG),VARREF(YLmetG),VARREF(YLoptsG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  Ymethod_accessor_offset = YPmet(FUNCODEREF(Ymethod_accessor_offset),LITREF(lit_267),T8,ENVNUL,PNUL,YPfalse);
-  T9 = Ymethod_accessor_offset;
-  VARSET(Ymethod_accessor_offset,T9);
-  lit_268 = YPPsym((P)"@singleton-spec?");
-  T10 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YOsingleton_specQ = YPmet(FUNCODEREF(YOsingleton_specQ),LITREF(lit_268),T10,ENVNUL,PNUL,YPfalse);
-  T11 = YOsingleton_specQ;
-  VARSET(YOsingleton_specQ,T11);
-  lit_269 = YPPsym((P)"@subclass-spec?");
-  T12 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YOsubclass_specQ = YPmet(FUNCODEREF(YOsubclass_specQ),LITREF(lit_269),T12,ENVNUL,PNUL,YPfalse);
-  T13 = YOsubclass_specQ;
-  VARSET(YOsubclass_specQ,T13);
-  lit_270 = YPPsym((P)"@union-spec?");
-  T14 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YOunion_specQ = YPmet(FUNCODEREF(YOunion_specQ),LITREF(lit_270),T14,ENVNUL,PNUL,YPfalse);
-  T15 = YOunion_specQ;
-  VARSET(YOunion_specQ,T15);
-  lit_271 = YPPsym((P)"@precise-spec?");
-  T16 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YOprecise_specQ = YPmet(FUNCODEREF(YOprecise_specQ),LITREF(lit_271),T16,ENVNUL,PNUL,YPfalse);
-  T17 = YOprecise_specQ;
-  VARSET(YOprecise_specQ,T17);
-  lit_272 = YPPsym((P)"@mets-unspecialized-at?");
-  lit_273 = YPPsym((P)"pos");
-  T19 = YPsig(YPPlist(1,LITREF(lit_24)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_416 = YPmet(FUNCODEREF(fun_416),YPfalse,T19,ENVNUL,PNUL,YPfalse);
-  T18 = YPsig(YPPlist(2,LITREF(lit_217),LITREF(lit_273)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  YOmets_unspecialized_atQ = YPmet(FUNCODEREF(YOmets_unspecialized_atQ),LITREF(lit_272),T18,ENVNUL,PNUL,YPfalse);
-  T20 = YOmets_unspecialized_atQ;
-  VARSET(YOmets_unspecialized_atQ,T20);
-  lit_274 = YPPsym((P)"@prune-mets-by-type-at");
-  lit_275 = YPPsym((P)"type");
-  T22 = YPsig(YPPlist(1,LITREF(lit_24)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_418 = YPmet(FUNCODEREF(fun_418),YPfalse,T22,ENVNUL,PNUL,YPfalse);
-  T21 = YPsig(YPPlist(3,LITREF(lit_217),LITREF(lit_275),LITREF(lit_273)),YPPlist(3,VARREF(YLlstG),VARREF(YLtypeG),VARREF(YLintG)),YPfalse,YPint((P)3),VARREF(YLmetsG),Ynil);
-  YOprune_mets_by_type_at = YPmet(FUNCODEREF(YOprune_mets_by_type_at),LITREF(lit_274),T21,ENVNUL,PNUL,YPfalse);
-  T23 = YOprune_mets_by_type_at;
-  VARSET(YOprune_mets_by_type_at,T23);
-  lit_276 = YPPsym((P)"@mets-specs-at");
-  T25 = YPsig(YPPlist(1,LITREF(lit_24)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_420 = YPmet(FUNCODEREF(fun_420),YPfalse,T25,ENVNUL,PNUL,YPfalse);
-  T24 = YPsig(YPPlist(2,LITREF(lit_217),LITREF(lit_273)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
-  YOmets_specs_at = YPmet(FUNCODEREF(YOmets_specs_at),LITREF(lit_276),T24,ENVNUL,PNUL,YPfalse);
-  T26 = YOmets_specs_at;
-  VARSET(YOmets_specs_at,T26);
-  lit_277 = YPPsym((P)"@mets-singletons-at");
-  lit_278 = YPPsym((P)"spec");
-  T28 = YPsig(YPPlist(1,LITREF(lit_278)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_422 = YPmet(FUNCODEREF(fun_422),YPfalse,T28,ENVNUL,PNUL,YPfalse);
-  T27 = YPsig(YPPlist(2,LITREF(lit_217),LITREF(lit_273)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
-  YOmets_singletons_at = YPmet(FUNCODEREF(YOmets_singletons_at),LITREF(lit_277),T27,ENVNUL,PNUL,YPfalse);
-  T29 = YOmets_singletons_at;
-  VARSET(YOmets_singletons_at,T29);
-  lit_279 = YPPsym((P)"@mets-subclasses-at");
-  T31 = YPsig(YPPlist(1,LITREF(lit_278)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_424 = YPmet(FUNCODEREF(fun_424),YPfalse,T31,ENVNUL,PNUL,YPfalse);
-  T30 = YPsig(YPPlist(2,LITREF(lit_217),LITREF(lit_273)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
-  YOmets_subclasses_at = YPmet(FUNCODEREF(YOmets_subclasses_at),LITREF(lit_279),T30,ENVNUL,PNUL,YPfalse);
-  T32 = YOmets_subclasses_at;
-  VARSET(YOmets_subclasses_at,T32);
-  lit_280 = YPPsym((P)"gen-lookup-miss-1-using");
-  lit_281 = YPPsym((P)"instance");
-  lit_282 = YPPsym((P)"all-assocs");
-  lit_283 = YPPsym((P)"all-assocs-setter");
-  lit_284 = YPPsym((P)"cache");
-  lit_285 = YPPsym((P)"sorted-mets");
-  lit_286 = YPPsym((P)"assocs");
-  T34 = YPsig(YPPlist(1,LITREF(lit_286)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_loop_426 = YPmet(FUNCODEREF(fun_loop_426),LITREF(lit_5),T34,ENVNUL,PNUL,YPfalse);
-  T33 = YPsig(YPPlist(10,LITREF(lit_163),LITREF(lit_281),LITREF(lit_282),LITREF(lit_283),LITREF(lit_23),LITREF(lit_284),LITREF(lit_217),LITREF(lit_285),LITREF(lit_17),LITREF(lit_20)),YPPlist(10,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLfunG),VARREF(YLfunG),VARREF(YLgenG),VARREF(YLanyG),VARREF(YLlstG),VARREF(YLlstG),VARREF(YLintG),VARREF(YLoptsG)),YPfalse,YPint((P)10),VARREF(YLanyG),Ynil);
-  Ygen_lookup_miss_1_using = YPmet(FUNCODEREF(Ygen_lookup_miss_1_using),LITREF(lit_280),T33,ENVNUL,PNUL,YPfalse);
-  T35 = Ygen_lookup_miss_1_using;
-  VARSET(Ygen_lookup_miss_1_using,T35);
-  lit_287 = YPPsym((P)"@specd-args");
-  T37 = YPsig(YPPlist(1,LITREF(lit_197)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_copy_428 = YPmet(FUNCODEREF(fun_copy_428),LITREF(lit_196),T37,ENVNUL,PNUL,YPfalse);
-  T36 = YPsig(YPPlist(3,LITREF(lit_20),LITREF(lit_17),LITREF(lit_237)),YPPlist(3,VARREF(YLoptsG),VARREF(YLintG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLoptsG),Ynil);
-  YOspecd_args = YPmet(FUNCODEREF(YOspecd_args),LITREF(lit_287),T36,ENVNUL,PNUL,YPfalse);
-  T38 = YOspecd_args;
-  VARSET(YOspecd_args,T38);
-  lit_288 = YPPsym((P)"ensure-singleton-cache");
-  lit_289 = YPPsym((P)"singletons");
-  T40 = YPsig(YPPlist(1,LITREF(lit_289)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_loop_430 = YPmet(FUNCODEREF(fun_loop_430),LITREF(lit_5),T40,ENVNUL,PNUL,YPfalse);
-  T39 = YPsig(YPPlist(6,LITREF(lit_23),LITREF(lit_284),LITREF(lit_217),LITREF(lit_285),LITREF(lit_17),LITREF(lit_20)),YPPlist(6,VARREF(YLgenG),VARREF(YLanyG),VARREF(YLlstG),VARREF(YLlstG),VARREF(YLintG),VARREF(YLoptsG)),YPfalse,YPint((P)6),VARREF(YLanyG),Ynil);
-  Yensure_singleton_cache = YPmet(FUNCODEREF(Yensure_singleton_cache),LITREF(lit_288),T39,ENVNUL,PNUL,YPfalse);
-  T41 = Yensure_singleton_cache;
-  VARSET(Yensure_singleton_cache,T41);
-  lit_290 = YPPsym((P)"gen-lookup-miss-1");
-  lit_291 = YPPsym((P)"ocache");
-  T42 = YPsig(YPPlist(6,LITREF(lit_23),LITREF(lit_291),LITREF(lit_217),LITREF(lit_285),LITREF(lit_17),LITREF(lit_20)),YPPlist(6,VARREF(YLgenG),VARREF(YLanyG),VARREF(YLlstG),VARREF(YLlstG),VARREF(YLintG),VARREF(YLoptsG)),YPfalse,YPint((P)6),VARREF(YLanyG),Ynil);
-  Ygen_lookup_miss_1 = YPmet(FUNCODEREF(Ygen_lookup_miss_1),LITREF(lit_290),T42,ENVNUL,PNUL,YPfalse);
-  T43 = Ygen_lookup_miss_1;
-  VARSET(Ygen_lookup_miss_1,T43);
-  lit_292 = YPPsym((P)"gen-lookup-miss");
-  T44 = YPsig(YPPlist(2,LITREF(lit_23),LITREF(lit_20)),YPPlist(2,VARREF(YLgenG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Ygen_lookup_miss = YPmet(FUNCODEREF(Ygen_lookup_miss),LITREF(lit_292),T44,ENVNUL,PNUL,YPfalse);
-  T45 = Ygen_lookup_miss;
-  VARSET(Ygen_lookup_miss,T45);
-  T46 = (P)YPpair(VARREF(Ynil),VARREF(Ynil));
-  VARSET(YDmissed_dispatch,T46);
-  lit_293 = YPPsym((P)"choose-methods");
-  lit_294 = YPsb((P)"No Applicable Methods Error when calling %= on %=");
-  T47 = YPsig(YPPlist(2,LITREF(lit_23),LITREF(lit_20)),YPPlist(2,VARREF(YLgenG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
-  Ychoose_methods = YPmet(FUNCODEREF(Ychoose_methods),LITREF(lit_293),T47,ENVNUL,PNUL,YPfalse);
-  T48 = Ychoose_methods;
-  VARSET(Ychoose_methods,T48);
-  lit_295 = YPPsym((P)"%dispatch");
-  lit_296 = YPsb((P)"Wrong number of args when calling %= on %=");
-  T49 = YPsig(YPPlist(1,LITREF(lit_20)),Ynil,YPtrue,YPint((P)0),VARREF(YLanyG),Ynil);
-  YPdispatch = YPmet(FUNCODEREF(YPdispatch),LITREF(lit_295),T49,ENVNUL,PNUL,YPfalse);
-  T50 = YPdispatch;
-  VARSET(YPdispatch,T50);
-  lit_297 = YPPsym((P)"%patch-early-generic");
-  lit_298 = YPPsym((P)"generic");
-  T51 = YPsig(YPPlist(1,LITREF(lit_298)),YPPlist(1,VARREF(YLgenG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YPpatch_early_generic = YPmet(FUNCODEREF(YPpatch_early_generic),LITREF(lit_297),T51,ENVNUL,PNUL,YPfalse);
-  T52 = YPpatch_early_generic;
-  VARSET(YPpatch_early_generic,T52);
+  lit_237 = YPPsym((P)"@may-isa?");
+  T0 = YPsig(YPPlist(2,LITREF(lit_158),LITREF(lit_224)),YPPlist(2,VARREF(YLclassG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
+  YOmay_isaQ = YPmet(FUNCODEREF(YOmay_isaQ),LITREF(lit_237),T0,ENVNUL,PNUL,YPfalse);
+  T1 = YOmay_isaQ;
+  VARSET(YOmay_isaQ,T1);
+  lit_238 = YPPsym((P)"@order-specs-class");
+  lit_239 = YPPsym((P)"arg");
+  lit_240 = YPPsym((P)"=");
+  lit_241 = YPPsym((P)"<");
+  lit_242 = YPPsym((P)">");
+  T2 = YPsig(YPPlist(3,LITREF(lit_234),LITREF(lit_235),LITREF(lit_239)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  YOorder_specs_class = YPmet(FUNCODEREF(YOorder_specs_class),LITREF(lit_238),T2,ENVNUL,PNUL,YPfalse);
+  T3 = YOorder_specs_class;
+  VARSET(YOorder_specs_class,T3);
+  lit_243 = YPPsym((P)"@order-specs");
+  T4 = YPsig(YPPlist(3,LITREF(lit_234),LITREF(lit_235),LITREF(lit_239)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  YOorder_specs = YPmet(FUNCODEREF(YOorder_specs),LITREF(lit_243),T4,ENVNUL,PNUL,YPfalse);
+  T5 = YOorder_specs;
+  VARSET(YOorder_specs,T5);
+  lit_244 = YPPsym((P)"order-mets");
+  lit_245 = YPPsym((P)"m1");
+  lit_246 = YPPsym((P)"m2");
+  lit_247 = YPPsym((P)"state");
+  lit_248 = YPPsym((P)"idx");
+  lit_249 = YPPsym((P)"<>");
+  T7 = YPsig(YPPlist(2,LITREF(lit_247),LITREF(lit_248)),YPPlist(2,VARREF(YLsymG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_loop_390 = YPmet(FUNCODEREF(fun_loop_390),LITREF(lit_5),T7,ENVNUL,PNUL,YPfalse);
+  T6 = YPsig(YPPlist(3,LITREF(lit_245),LITREF(lit_246),LITREF(lit_20)),YPPlist(3,VARREF(YLmetG),VARREF(YLmetG),VARREF(YLoptsG)),YPfalse,YPint((P)3),VARREF(YLsymG),Ynil);
+  Yorder_mets = YPmet(FUNCODEREF(Yorder_mets),LITREF(lit_244),T6,ENVNUL,PNUL,YPfalse);
+  T8 = Yorder_mets;
+  VARSET(Yorder_mets,T8);
+  lit_250 = YPPsym((P)"ord-app-mets-1");
+  lit_251 = YPPsym((P)"make-ambiguous");
+  lit_252 = YPPsym((P)"headed-list");
+  lit_253 = YPPsym((P)"precedes-all?");
+  lit_254 = YPPsym((P)"check-subsequent-ambiguities");
+  lit_255 = YPPsym((P)"oprev");
+  lit_256 = YPPsym((P)"insert");
+  lit_257 = YPPsym((P)"osub");
+  T16 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_loop_392 = YPmet(FUNCODEREF(fun_loop_392),LITREF(lit_5),T16,ENVNUL,PNUL,YPfalse);
+  T15 = YPsig(YPPlist(1,LITREF(lit_252)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_make_ambiguous_393 = YPmet(FUNCODEREF(fun_make_ambiguous_393),LITREF(lit_251),T15,ENVNUL,PNUL,YPfalse);
+  T14 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_loop_394 = YPmet(FUNCODEREF(fun_loop_394),LITREF(lit_5),T14,ENVNUL,PNUL,YPfalse);
+  T13 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_precedes_allQ_395 = YPmet(FUNCODEREF(fun_precedes_allQ_395),LITREF(lit_253),T13,ENVNUL,PNUL,YPfalse);
+  T12 = YPsig(YPPlist(1,LITREF(lit_255)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_check_subsequent_ambiguities_396 = YPmet(FUNCODEREF(fun_check_subsequent_ambiguities_396),LITREF(lit_254),T12,ENVNUL,PNUL,YPfalse);
+  T11 = YPsig(YPPlist(2,LITREF(lit_255),LITREF(lit_257)),YPPlist(2,VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_insert_397 = YPmet(FUNCODEREF(fun_insert_397),LITREF(lit_256),T11,ENVNUL,PNUL,YPfalse);
+  T10 = YPsig(YPPlist(1,LITREF(lit_219)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_loop_398 = YPmet(FUNCODEREF(fun_loop_398),LITREF(lit_5),T10,ENVNUL,PNUL,YPfalse);
+  T9 = YPsig(YPPlist(3,LITREF(lit_219),LITREF(lit_20),LITREF(lit_244)),YPPlist(3,VARREF(YLlstG),VARREF(YLoptsG),VARREF(YLfunG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
+  Yord_app_mets_1 = YPmet(FUNCODEREF(Yord_app_mets_1),LITREF(lit_250),T9,ENVNUL,PNUL,YPfalse);
+  T17 = Yord_app_mets_1;
+  VARSET(Yord_app_mets_1,T17);
+  T18 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_13)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_400 = YPmet(FUNCODEREF(fun_400),YPfalse,T18,ENVNUL,PNUL,YPfalse);
+  T19 = fun_400;
+  VARSET(Ymet_app_unify,T19);
+  lit_258 = YPPsym((P)"met-app?");
+  T21 = YPsig(YPPlist(1,LITREF(lit_17)),YPPlist(1,VARREF(YLintG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_loop_401 = YPmet(FUNCODEREF(fun_loop_401),LITREF(lit_5),T21,ENVNUL,PNUL,YPfalse);
+  T20 = YPsig(YPPlist(2,LITREF(lit_24),LITREF(lit_20)),YPPlist(2,VARREF(YLmetG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  Ymet_appQ = YPmet(FUNCODEREF(Ymet_appQ),LITREF(lit_258),T20,ENVNUL,PNUL,YPfalse);
+  T22 = Ymet_appQ;
+  VARSET(Ymet_appQ,T22);
+  lit_259 = YPPsym((P)"ord-app-mets");
+  lit_260 = YPPsym((P)"gf");
+  lit_261 = YPPsym((P)"ans");
+  lit_262 = YPPsym((P)"ms");
+  T24 = YPsig(YPPlist(2,LITREF(lit_261),LITREF(lit_262)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_col_403 = YPmet(FUNCODEREF(fun_col_403),LITREF(lit_218),T24,ENVNUL,PNUL,YPfalse);
+  T23 = YPsig(YPPlist(2,LITREF(lit_260),LITREF(lit_20)),YPPlist(2,VARREF(YLgenG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
+  Yord_app_mets = YPmet(FUNCODEREF(Yord_app_mets),LITREF(lit_259),T23,ENVNUL,PNUL,YPfalse);
+  T25 = Yord_app_mets;
+  VARSET(Yord_app_mets,T25);
+  lit_263 = YPPsym((P)"@gen-cache-arg-pos");
+  T26 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YOgen_cache_arg_pos = YPmet(FUNCODEREF(YOgen_cache_arg_pos),LITREF(lit_263),T26,ENVNUL,PNUL,YPfalse);
+  T27 = YOgen_cache_arg_pos;
+  VARSET(YOgen_cache_arg_pos,T27);
+  lit_264 = YPPsym((P)"@gen-cache-arg-pos-setter");
+  T28 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YOgen_cache_arg_pos_setter = YPmet(FUNCODEREF(YOgen_cache_arg_pos_setter),LITREF(lit_264),T28,ENVNUL,PNUL,YPfalse);
+  T29 = YOgen_cache_arg_pos_setter;
+  VARSET(YOgen_cache_arg_pos_setter,T29);
+  lit_265 = YPPsym((P)"@gen-cache-singletons");
+  T30 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YOgen_cache_singletons = YPmet(FUNCODEREF(YOgen_cache_singletons),LITREF(lit_265),T30,ENVNUL,PNUL,YPfalse);
+  T31 = YOgen_cache_singletons;
+  VARSET(YOgen_cache_singletons,T31);
+  lit_266 = YPPsym((P)"@gen-cache-singletons-setter");
+  T32 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YOgen_cache_singletons_setter = YPmet(FUNCODEREF(YOgen_cache_singletons_setter),LITREF(lit_266),T32,ENVNUL,PNUL,YPfalse);
+  T33 = YOgen_cache_singletons_setter;
+  VARSET(YOgen_cache_singletons_setter,T33);
+  lit_267 = YPPsym((P)"@gen-cache-classes");
+  T34 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YOgen_cache_classes = YPmet(FUNCODEREF(YOgen_cache_classes),LITREF(lit_267),T34,ENVNUL,PNUL,YPfalse);
+  T35 = YOgen_cache_classes;
+  VARSET(YOgen_cache_classes,T35);
+  lit_268 = YPPsym((P)"@gen-cache-classes-setter");
+  T36 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YOgen_cache_classes_setter = YPmet(FUNCODEREF(YOgen_cache_classes_setter),LITREF(lit_268),T36,ENVNUL,PNUL,YPfalse);
+  T37 = YOgen_cache_classes_setter;
+  VARSET(YOgen_cache_classes_setter,T37);
+  lit_269 = YPPsym((P)"method-accessor-offset");
+  T38 = YPsig(YPPlist(3,LITREF(lit_23),LITREF(lit_24),LITREF(lit_20)),YPPlist(3,VARREF(YLgenG),VARREF(YLmetG),VARREF(YLoptsG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  Ymethod_accessor_offset = YPmet(FUNCODEREF(Ymethod_accessor_offset),LITREF(lit_269),T38,ENVNUL,PNUL,YPfalse);
+  T39 = Ymethod_accessor_offset;
+  VARSET(Ymethod_accessor_offset,T39);
+  lit_270 = YPPsym((P)"@singleton-spec?");
+  T40 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YOsingleton_specQ = YPmet(FUNCODEREF(YOsingleton_specQ),LITREF(lit_270),T40,ENVNUL,PNUL,YPfalse);
+  T41 = YOsingleton_specQ;
+  VARSET(YOsingleton_specQ,T41);
+  lit_271 = YPPsym((P)"@subclass-spec?");
+  T42 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YOsubclass_specQ = YPmet(FUNCODEREF(YOsubclass_specQ),LITREF(lit_271),T42,ENVNUL,PNUL,YPfalse);
+  T43 = YOsubclass_specQ;
+  VARSET(YOsubclass_specQ,T43);
+  lit_272 = YPPsym((P)"@union-spec?");
+  T44 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YOunion_specQ = YPmet(FUNCODEREF(YOunion_specQ),LITREF(lit_272),T44,ENVNUL,PNUL,YPfalse);
+  T45 = YOunion_specQ;
+  VARSET(YOunion_specQ,T45);
+  lit_273 = YPPsym((P)"@precise-spec?");
+  T46 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YOprecise_specQ = YPmet(FUNCODEREF(YOprecise_specQ),LITREF(lit_273),T46,ENVNUL,PNUL,YPfalse);
+  T47 = YOprecise_specQ;
+  VARSET(YOprecise_specQ,T47);
+  lit_274 = YPPsym((P)"@mets-unspecialized-at?");
+  lit_275 = YPPsym((P)"pos");
+  T49 = YPsig(YPPlist(1,LITREF(lit_24)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_416 = YPmet(FUNCODEREF(fun_416),YPfalse,T49,ENVNUL,PNUL,YPfalse);
+  T48 = YPsig(YPPlist(2,LITREF(lit_219),LITREF(lit_275)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  YOmets_unspecialized_atQ = YPmet(FUNCODEREF(YOmets_unspecialized_atQ),LITREF(lit_274),T48,ENVNUL,PNUL,YPfalse);
+  T50 = YOmets_unspecialized_atQ;
+  VARSET(YOmets_unspecialized_atQ,T50);
+  lit_276 = YPPsym((P)"@prune-mets-by-type-at");
+  lit_277 = YPPsym((P)"type");
+  T52 = YPsig(YPPlist(1,LITREF(lit_24)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_418 = YPmet(FUNCODEREF(fun_418),YPfalse,T52,ENVNUL,PNUL,YPfalse);
+  T51 = YPsig(YPPlist(3,LITREF(lit_219),LITREF(lit_277),LITREF(lit_275)),YPPlist(3,VARREF(YLlstG),VARREF(YLtypeG),VARREF(YLintG)),YPfalse,YPint((P)3),VARREF(YLmetsG),Ynil);
+  YOprune_mets_by_type_at = YPmet(FUNCODEREF(YOprune_mets_by_type_at),LITREF(lit_276),T51,ENVNUL,PNUL,YPfalse);
+  T53 = YOprune_mets_by_type_at;
+  VARSET(YOprune_mets_by_type_at,T53);
+  lit_278 = YPPsym((P)"@mets-specs-at");
+  T55 = YPsig(YPPlist(1,LITREF(lit_24)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_420 = YPmet(FUNCODEREF(fun_420),YPfalse,T55,ENVNUL,PNUL,YPfalse);
+  T54 = YPsig(YPPlist(2,LITREF(lit_219),LITREF(lit_275)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
+  YOmets_specs_at = YPmet(FUNCODEREF(YOmets_specs_at),LITREF(lit_278),T54,ENVNUL,PNUL,YPfalse);
+  T56 = YOmets_specs_at;
+  VARSET(YOmets_specs_at,T56);
+  lit_279 = YPPsym((P)"@mets-singletons-at");
+  lit_280 = YPPsym((P)"spec");
+  T58 = YPsig(YPPlist(1,LITREF(lit_280)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_422 = YPmet(FUNCODEREF(fun_422),YPfalse,T58,ENVNUL,PNUL,YPfalse);
+  T57 = YPsig(YPPlist(2,LITREF(lit_219),LITREF(lit_275)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
+  YOmets_singletons_at = YPmet(FUNCODEREF(YOmets_singletons_at),LITREF(lit_279),T57,ENVNUL,PNUL,YPfalse);
+  T59 = YOmets_singletons_at;
+  VARSET(YOmets_singletons_at,T59);
+  lit_281 = YPPsym((P)"@mets-subclasses-at");
+  T61 = YPsig(YPPlist(1,LITREF(lit_280)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_424 = YPmet(FUNCODEREF(fun_424),YPfalse,T61,ENVNUL,PNUL,YPfalse);
+  T60 = YPsig(YPPlist(2,LITREF(lit_219),LITREF(lit_275)),YPPlist(2,VARREF(YLlstG),VARREF(YLintG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
+  YOmets_subclasses_at = YPmet(FUNCODEREF(YOmets_subclasses_at),LITREF(lit_281),T60,ENVNUL,PNUL,YPfalse);
+  T62 = YOmets_subclasses_at;
+  VARSET(YOmets_subclasses_at,T62);
+  lit_282 = YPPsym((P)"gen-lookup-miss-1-using");
+  lit_283 = YPPsym((P)"instance");
+  lit_284 = YPPsym((P)"all-assocs");
+  lit_285 = YPPsym((P)"all-assocs-setter");
+  lit_286 = YPPsym((P)"cache");
+  lit_287 = YPPsym((P)"sorted-mets");
+  lit_288 = YPPsym((P)"assocs");
+  T64 = YPsig(YPPlist(1,LITREF(lit_288)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_loop_426 = YPmet(FUNCODEREF(fun_loop_426),LITREF(lit_5),T64,ENVNUL,PNUL,YPfalse);
+  T63 = YPsig(YPPlist(10,LITREF(lit_165),LITREF(lit_283),LITREF(lit_284),LITREF(lit_285),LITREF(lit_23),LITREF(lit_286),LITREF(lit_219),LITREF(lit_287),LITREF(lit_17),LITREF(lit_20)),YPPlist(10,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLfunG),VARREF(YLfunG),VARREF(YLgenG),VARREF(YLanyG),VARREF(YLlstG),VARREF(YLlstG),VARREF(YLintG),VARREF(YLoptsG)),YPfalse,YPint((P)10),VARREF(YLanyG),Ynil);
+  Ygen_lookup_miss_1_using = YPmet(FUNCODEREF(Ygen_lookup_miss_1_using),LITREF(lit_282),T63,ENVNUL,PNUL,YPfalse);
+  T65 = Ygen_lookup_miss_1_using;
+  VARSET(Ygen_lookup_miss_1_using,T65);
+  lit_289 = YPPsym((P)"@specd-args");
+  T67 = YPsig(YPPlist(1,LITREF(lit_199)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_copy_428 = YPmet(FUNCODEREF(fun_copy_428),LITREF(lit_198),T67,ENVNUL,PNUL,YPfalse);
+  T66 = YPsig(YPPlist(3,LITREF(lit_20),LITREF(lit_17),LITREF(lit_239)),YPPlist(3,VARREF(YLoptsG),VARREF(YLintG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLoptsG),Ynil);
+  YOspecd_args = YPmet(FUNCODEREF(YOspecd_args),LITREF(lit_289),T66,ENVNUL,PNUL,YPfalse);
+  T68 = YOspecd_args;
+  VARSET(YOspecd_args,T68);
+  lit_290 = YPPsym((P)"ensure-singleton-cache");
+  lit_291 = YPPsym((P)"singletons");
+  T70 = YPsig(YPPlist(1,LITREF(lit_291)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_loop_430 = YPmet(FUNCODEREF(fun_loop_430),LITREF(lit_5),T70,ENVNUL,PNUL,YPfalse);
+  T69 = YPsig(YPPlist(6,LITREF(lit_23),LITREF(lit_286),LITREF(lit_219),LITREF(lit_287),LITREF(lit_17),LITREF(lit_20)),YPPlist(6,VARREF(YLgenG),VARREF(YLanyG),VARREF(YLlstG),VARREF(YLlstG),VARREF(YLintG),VARREF(YLoptsG)),YPfalse,YPint((P)6),VARREF(YLanyG),Ynil);
+  Yensure_singleton_cache = YPmet(FUNCODEREF(Yensure_singleton_cache),LITREF(lit_290),T69,ENVNUL,PNUL,YPfalse);
+  T71 = Yensure_singleton_cache;
+  VARSET(Yensure_singleton_cache,T71);
+  lit_292 = YPPsym((P)"gen-lookup-miss-1");
+  lit_293 = YPPsym((P)"ocache");
+  T72 = YPsig(YPPlist(6,LITREF(lit_23),LITREF(lit_293),LITREF(lit_219),LITREF(lit_287),LITREF(lit_17),LITREF(lit_20)),YPPlist(6,VARREF(YLgenG),VARREF(YLanyG),VARREF(YLlstG),VARREF(YLlstG),VARREF(YLintG),VARREF(YLoptsG)),YPfalse,YPint((P)6),VARREF(YLanyG),Ynil);
+  Ygen_lookup_miss_1 = YPmet(FUNCODEREF(Ygen_lookup_miss_1),LITREF(lit_292),T72,ENVNUL,PNUL,YPfalse);
+  T73 = Ygen_lookup_miss_1;
+  VARSET(Ygen_lookup_miss_1,T73);
+  lit_294 = YPPsym((P)"gen-lookup-miss");
+  T74 = YPsig(YPPlist(2,LITREF(lit_23),LITREF(lit_20)),YPPlist(2,VARREF(YLgenG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  Ygen_lookup_miss = YPmet(FUNCODEREF(Ygen_lookup_miss),LITREF(lit_294),T74,ENVNUL,PNUL,YPfalse);
+  T75 = Ygen_lookup_miss;
+  VARSET(Ygen_lookup_miss,T75);
+  T76 = (P)YPpair(VARREF(Ynil),VARREF(Ynil));
+  VARSET(YDmissed_dispatch,T76);
+  lit_295 = YPPsym((P)"choose-methods");
+  lit_296 = YPsb((P)"No Applicable Methods Error when calling %= on %=");
+  T77 = YPsig(YPPlist(2,LITREF(lit_23),LITREF(lit_20)),YPPlist(2,VARREF(YLgenG),VARREF(YLoptsG)),YPfalse,YPint((P)2),VARREF(YLlstG),Ynil);
+  Ychoose_methods = YPmet(FUNCODEREF(Ychoose_methods),LITREF(lit_295),T77,ENVNUL,PNUL,YPfalse);
+  T78 = Ychoose_methods;
+  VARSET(Ychoose_methods,T78);
+  lit_297 = YPPsym((P)"%dispatch");
+  lit_298 = YPsb((P)"Wrong number of args when calling %= on %=");
+  T79 = YPsig(YPPlist(1,LITREF(lit_20)),Ynil,YPtrue,YPint((P)0),VARREF(YLanyG),Ynil);
+  YPdispatch = YPmet(FUNCODEREF(YPdispatch),LITREF(lit_297),T79,ENVNUL,PNUL,YPfalse);
+  T80 = YPdispatch;
+  VARSET(YPdispatch,T80);
+  lit_299 = YPPsym((P)"%patch-early-generic");
+  lit_300 = YPPsym((P)"generic");
+  T81 = YPsig(YPPlist(1,LITREF(lit_300)),YPPlist(1,VARREF(YLgenG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YPpatch_early_generic = YPmet(FUNCODEREF(YPpatch_early_generic),LITREF(lit_299),T81,ENVNUL,PNUL,YPfalse);
+  T82 = YPpatch_early_generic;
+  VARSET(YPpatch_early_generic,T82);
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yhead));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yhead_setter));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Ytail));
@@ -12706,7 +12808,14 @@ loop:
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yclass_descendents_setter));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yclass_gens));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yclass_gens_setter));
-  CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yclass_mets));
+  T84 = CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yclass_mets));
+  T83 = T84;
+  return T83;
+}
+
+P Y___main_10___() {
+  P T1,T0;
+loop:
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yclass_mets_setter));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yclass_forward));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yclass_forward_setter));
@@ -12716,14 +12825,7 @@ loop:
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yclass_row_setter));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Ytype_object));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Ytype_object_setter));
-  T54 = CALL1(1,VARREF(YPpatch_early_generic),VARREF(Ytype_class));
-  T53 = T54;
-  return T53;
-}
-
-P Y___main_10___() {
-  P T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
-loop:
+  CALL1(1,VARREF(YPpatch_early_generic),VARREF(Ytype_class));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Ytype_class_setter));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Ytype_elts));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Ytype_elts_setter));
@@ -12777,419 +12879,394 @@ loop:
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Ygen_refs_setter));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Ygen_src));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Ygen_src_setter));
-  CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yopts_location));
+  T1 = CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yopts_location));
+  T0 = T1;
+  return T0;
+}
+
+P Y___main_11___() {
+  P T148,T147,T146,T145,T144,T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133;
+  P T132,T131,T130,T129,T128,T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117;
+  P T116,T115,T114,T113,T112,T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101;
+  P T100,T99,T98,T97,T96,T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85;
+  P T84,T83,T82,T81,T80,T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69;
+  P T68,T67,T66,T65,T64,T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53;
+  P T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37;
+  P T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21;
+  P T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5;
+  P T4,T3,T2,T1,T0;
+loop:
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yopts_location_setter));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yopts_count));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yopts_count_setter));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yopts_vec_storage));
   CALL1(1,VARREF(YPpatch_early_generic),VARREF(Yopts_vec_storage_setter));
-  lit_299 = YPPsym((P)"fun-names");
+  lit_301 = YPPsym((P)"fun-names");
   T0 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yfun_names = YPmet(FUNCODEREF(Yfun_names),LITREF(lit_299),T0,ENVNUL,PNUL,YPfalse);
+  Yfun_names = YPmet(FUNCODEREF(Yfun_names),LITREF(lit_301),T0,ENVNUL,PNUL,YPfalse);
   T1 = Yfun_names;
   VARSET(Yfun_names,T1);
-  lit_300 = YPPsym((P)"fun-names-setter");
+  lit_302 = YPPsym((P)"fun-names-setter");
   T2 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yfun_names_setter = YPmet(FUNCODEREF(Yfun_names_setter),LITREF(lit_300),T2,ENVNUL,PNUL,YPfalse);
+  Yfun_names_setter = YPmet(FUNCODEREF(Yfun_names_setter),LITREF(lit_302),T2,ENVNUL,PNUL,YPfalse);
   T3 = Yfun_names_setter;
   VARSET(Yfun_names_setter,T3);
-  lit_301 = YPPsym((P)"fun-specs");
+  lit_303 = YPPsym((P)"fun-specs");
   T4 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yfun_specs = YPmet(FUNCODEREF(Yfun_specs),LITREF(lit_301),T4,ENVNUL,PNUL,YPfalse);
+  Yfun_specs = YPmet(FUNCODEREF(Yfun_specs),LITREF(lit_303),T4,ENVNUL,PNUL,YPfalse);
   T5 = Yfun_specs;
   VARSET(Yfun_specs,T5);
-  lit_302 = YPPsym((P)"fun-specs-setter");
-  T8 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  T7 = Yfun_specs_setter = YPmet(FUNCODEREF(Yfun_specs_setter),LITREF(lit_302),T8,ENVNUL,PNUL,YPfalse);
-  T10 = Yfun_specs_setter;
-  T9 = VARSET(Yfun_specs_setter,T10);
-  T6 = T9;
-  return T6;
-}
-
-P Y___main_11___() {
-  P T191,T190,T189,T188,T187,T186,T185,T184,T183,T182,T181,T180,T179,T178,T177,T176;
-  P T175,T174,T173,T172,T171,T170,T169,T168,T167,T166,T165,T164,T163,T162,T161,T160;
-  P T159,T158,T157,T156,T155,T154,T153,T152,T151,T150,T149,T148,T147,T146,T145,T144;
-  P T143,T142,T141,T140,T139,T138,T137,T136,T135,T134,T133,T132,T131,T130,T129,T128;
-  P T127,T126,T125,T124,T123,T122,T121,T120,T119,T118,T117,T116,T115,T114,T113,T112;
-  P T111,T110,T109,T108,T107,T106,T105,T104,T103,T102,T101,T100,T99,T98,T97,T96;
-  P T95,T94,T93,T92,T91,T90,T89,T88,T87,T86,T85,T84,T83,T82,T81,T80;
-  P T79,T78,T77,T76,T75,T74,T73,T72,T71,T70,T69,T68,T67,T66,T65,T64;
-  P T63,T62,T61,T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48;
-  P T47,T46,T45,T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32;
-  P T31,T30,T29,T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16;
-  P T15,T14,T13,T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
-loop:
-  lit_303 = YPPsym((P)"fun-nary?");
-  T0 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yfun_naryQ = YPmet(FUNCODEREF(Yfun_naryQ),LITREF(lit_303),T0,ENVNUL,PNUL,YPfalse);
-  T1 = Yfun_naryQ;
-  VARSET(Yfun_naryQ,T1);
-  lit_304 = YPPsym((P)"fun-nary?-setter");
-  T2 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yfun_naryQ_setter = YPmet(FUNCODEREF(Yfun_naryQ_setter),LITREF(lit_304),T2,ENVNUL,PNUL,YPfalse);
-  T3 = Yfun_naryQ_setter;
-  VARSET(Yfun_naryQ_setter,T3);
-  lit_305 = YPPsym((P)"fun-arity");
-  T4 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yfun_arity = YPmet(FUNCODEREF(Yfun_arity),LITREF(lit_305),T4,ENVNUL,PNUL,YPfalse);
-  T5 = Yfun_arity;
-  VARSET(Yfun_arity,T5);
-  lit_306 = YPPsym((P)"fun-arity-setter");
+  lit_304 = YPPsym((P)"fun-specs-setter");
   T6 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yfun_arity_setter = YPmet(FUNCODEREF(Yfun_arity_setter),LITREF(lit_306),T6,ENVNUL,PNUL,YPfalse);
-  T7 = Yfun_arity_setter;
-  VARSET(Yfun_arity_setter,T7);
-  lit_307 = YPPsym((P)"fun-val");
+  Yfun_specs_setter = YPmet(FUNCODEREF(Yfun_specs_setter),LITREF(lit_304),T6,ENVNUL,PNUL,YPfalse);
+  T7 = Yfun_specs_setter;
+  VARSET(Yfun_specs_setter,T7);
+  lit_305 = YPPsym((P)"fun-nary?");
   T8 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yfun_val = YPmet(FUNCODEREF(Yfun_val),LITREF(lit_307),T8,ENVNUL,PNUL,YPfalse);
-  T9 = Yfun_val;
-  VARSET(Yfun_val,T9);
-  lit_308 = YPPsym((P)"fun-val-setter");
+  Yfun_naryQ = YPmet(FUNCODEREF(Yfun_naryQ),LITREF(lit_305),T8,ENVNUL,PNUL,YPfalse);
+  T9 = Yfun_naryQ;
+  VARSET(Yfun_naryQ,T9);
+  lit_306 = YPPsym((P)"fun-nary?-setter");
   T10 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yfun_val_setter = YPmet(FUNCODEREF(Yfun_val_setter),LITREF(lit_308),T10,ENVNUL,PNUL,YPfalse);
-  T11 = Yfun_val_setter;
-  VARSET(Yfun_val_setter,T11);
-  lit_309 = YPPsym((P)"fun-unification-vars");
+  Yfun_naryQ_setter = YPmet(FUNCODEREF(Yfun_naryQ_setter),LITREF(lit_306),T10,ENVNUL,PNUL,YPfalse);
+  T11 = Yfun_naryQ_setter;
+  VARSET(Yfun_naryQ_setter,T11);
+  lit_307 = YPPsym((P)"fun-arity");
   T12 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yfun_unification_vars = YPmet(FUNCODEREF(Yfun_unification_vars),LITREF(lit_309),T12,ENVNUL,PNUL,YPfalse);
-  T13 = Yfun_unification_vars;
-  VARSET(Yfun_unification_vars,T13);
-  lit_310 = YPPsym((P)"fun-unification-vars-setter");
+  Yfun_arity = YPmet(FUNCODEREF(Yfun_arity),LITREF(lit_307),T12,ENVNUL,PNUL,YPfalse);
+  T13 = Yfun_arity;
+  VARSET(Yfun_arity,T13);
+  lit_308 = YPPsym((P)"fun-arity-setter");
   T14 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yfun_unification_vars_setter = YPmet(FUNCODEREF(Yfun_unification_vars_setter),LITREF(lit_310),T14,ENVNUL,PNUL,YPfalse);
-  T15 = Yfun_unification_vars_setter;
-  VARSET(Yfun_unification_vars_setter,T15);
+  Yfun_arity_setter = YPmet(FUNCODEREF(Yfun_arity_setter),LITREF(lit_308),T14,ENVNUL,PNUL,YPfalse);
+  T15 = Yfun_arity_setter;
+  VARSET(Yfun_arity_setter,T15);
+  lit_309 = YPPsym((P)"fun-val");
+  T16 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  Yfun_val = YPmet(FUNCODEREF(Yfun_val),LITREF(lit_309),T16,ENVNUL,PNUL,YPfalse);
+  T17 = Yfun_val;
+  VARSET(Yfun_val,T17);
+  lit_310 = YPPsym((P)"fun-val-setter");
+  T18 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  Yfun_val_setter = YPmet(FUNCODEREF(Yfun_val_setter),LITREF(lit_310),T18,ENVNUL,PNUL,YPfalse);
+  T19 = Yfun_val_setter;
+  VARSET(Yfun_val_setter,T19);
+  lit_311 = YPPsym((P)"fun-unification-vars");
+  T20 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  Yfun_unification_vars = YPmet(FUNCODEREF(Yfun_unification_vars),LITREF(lit_311),T20,ENVNUL,PNUL,YPfalse);
+  T21 = Yfun_unification_vars;
+  VARSET(Yfun_unification_vars,T21);
+  lit_312 = YPPsym((P)"fun-unification-vars-setter");
+  T22 = YPsig(YPPlist(2,LITREF(lit_30),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  Yfun_unification_vars_setter = YPmet(FUNCODEREF(Yfun_unification_vars_setter),LITREF(lit_312),T22,ENVNUL,PNUL,YPfalse);
+  T23 = Yfun_unification_vars_setter;
+  VARSET(Yfun_unification_vars_setter,T23);
   VARSET(YLparentsG,VARREF(YLlstG));
   VARSET(YLpropsG,VARREF(YLlstG));
-  lit_311 = YPPsym((P)"object-class");
-  T16 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yobject_class = YPmet(FUNCODEREF(Yobject_class),LITREF(lit_311),T16,ENVNUL,PNUL,YPfalse);
-  T17 = Yobject_class;
-  VARSET(Yobject_class,T17);
-  lit_312 = YPPsym((P)"@class-ancestors");
-  T18 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YOclass_ancestors = YPmet(FUNCODEREF(YOclass_ancestors),LITREF(lit_312),T18,ENVNUL,PNUL,YPfalse);
-  T19 = YOclass_ancestors;
-  VARSET(YOclass_ancestors,T19);
-  lit_313 = YPPsym((P)"class-ordered-parents");
-  lit_314 = YPPsym((P)"merge-lists");
-  lit_315 = YPPsym((P)"partial-cpl");
-  lit_316 = YPPsym((P)"remaining-lists");
-  lit_317 = YPPsym((P)"unconstrained-class");
-  lit_318 = YPPsym((P)"p-in-and-unconstrained-in?");
-  lit_319 = YPPsym((P)"p-unconstrained-in?");
-  lit_320 = YPPsym((P)"unconstrained-class-in-parents");
-  lit_321 = YPPsym((P)"remove-next");
-  lit_322 = YPsb((P)"inconsistent precedence graph");
-  T26 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_p_in_and_unconstrained_inQ_457 = YPmet(FUNCODEREF(fun_p_in_and_unconstrained_inQ_457),LITREF(lit_318),T26,ENVNUL,PNUL,YPfalse);
-  T25 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_p_unconstrained_inQ_458 = YPmet(FUNCODEREF(fun_p_unconstrained_inQ_458),LITREF(lit_319),T25,ENVNUL,PNUL,YPfalse);
-  T24 = YPsig(YPPlist(1,LITREF(lit_158)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_unconstrained_class_459 = YPmet(FUNCODEREF(fun_unconstrained_class_459),LITREF(lit_317),T24,ENVNUL,PNUL,YPfalse);
-  T23 = YPsig(YPPlist(1,LITREF(lit_156)),YPPlist(1,VARREF(YLclassG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_unconstrained_class_in_parents_460 = YPmet(FUNCODEREF(fun_unconstrained_class_in_parents_460),LITREF(lit_320),T23,ENVNUL,PNUL,YPfalse);
-  T22 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_remove_next_461 = YPmet(FUNCODEREF(fun_remove_next_461),LITREF(lit_321),T22,ENVNUL,PNUL,YPfalse);
-  T21 = YPsig(YPPlist(2,LITREF(lit_315),LITREF(lit_316)),YPPlist(2,VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_merge_lists_462 = YPmet(FUNCODEREF(fun_merge_lists_462),LITREF(lit_314),T21,ENVNUL,PNUL,YPfalse);
-  T20 = YPsig(YPPlist(1,LITREF(lit_156)),YPPlist(1,VARREF(YLclassG)),YPfalse,YPint((P)1),VARREF(YLparentsG),Ynil);
-  Yclass_ordered_parents = YPmet(FUNCODEREF(Yclass_ordered_parents),LITREF(lit_313),T20,ENVNUL,PNUL,YPfalse);
-  T27 = Yclass_ordered_parents;
-  VARSET(Yclass_ordered_parents,T27);
-  lit_323 = YPPsym((P)"@class-direct-props");
-  T28 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YOclass_direct_props = YPmet(FUNCODEREF(YOclass_direct_props),LITREF(lit_323),T28,ENVNUL,PNUL,YPfalse);
-  T29 = YOclass_direct_props;
-  VARSET(YOclass_direct_props,T29);
-  lit_324 = YPPsym((P)"class-ordered-props");
-  T30 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLclassG)),YPfalse,YPint((P)1),VARREF(YLpropsG),Ynil);
-  Yclass_ordered_props = YPmet(FUNCODEREF(Yclass_ordered_props),LITREF(lit_324),T30,ENVNUL,PNUL,YPfalse);
-  T31 = Yclass_ordered_props;
-  VARSET(Yclass_ordered_props,T31);
-  lit_325 = YPPsym((P)"del-class");
-  T32 = YPsig(YPPlist(1,LITREF(lit_26)),YPPlist(1,VARREF(YLclassG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Ydel_class = YPmet(FUNCODEREF(Ydel_class),LITREF(lit_325),T32,ENVNUL,PNUL,YPfalse);
-  T33 = Ydel_class;
-  VARSET(Ydel_class,T33);
-  lit_326 = YPPsym((P)"fab-class");
-  lit_327 = YPPsym((P)"parents");
-  lit_328 = YPPsym((P)"parent");
-  T35 = YPsig(YPPlist(1,LITREF(lit_328)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_467 = YPmet(FUNCODEREF(fun_467),YPfalse,T35,ENVNUL,PNUL,YPfalse);
-  T34 = YPsig(YPPlist(2,LITREF(lit_1),LITREF(lit_327)),YPPlist(2,VARREF(YLsymG),VARREF(YLparentsG)),YPfalse,YPint((P)2),VARREF(YLclassG),Ynil);
-  Yfab_class = YPmet(FUNCODEREF(Yfab_class),LITREF(lit_326),T34,ENVNUL,PNUL,YPfalse);
-  T36 = Yfab_class;
-  VARSET(Yfab_class,T36);
-  lit_329 = YPPsym((P)"refab-class");
-  lit_330 = YPPsym((P)"old-class");
-  T37 = YPsig(YPPlist(2,LITREF(lit_330),LITREF(lit_327)),YPPlist(2,VARREF(YLclassG),VARREF(YLparentsG)),YPfalse,YPint((P)2),VARREF(YLclassG),Ynil);
-  Yrefab_class = YPmet(FUNCODEREF(Yrefab_class),LITREF(lit_329),T37,ENVNUL,PNUL,YPfalse);
-  T38 = Yrefab_class;
-  VARSET(Yrefab_class,T38);
-  lit_331 = YPPsym((P)"object-props");
-  T39 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yobject_props = YPmet(FUNCODEREF(Yobject_props),LITREF(lit_331),T39,ENVNUL,PNUL,YPfalse);
-  T40 = Yobject_props;
-  VARSET(Yobject_props,T40);
-  lit_332 = YPPsym((P)"object-parents");
-  T41 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yobject_parents = YPmet(FUNCODEREF(Yobject_parents),LITREF(lit_332),T41,ENVNUL,PNUL,YPfalse);
-  T42 = Yobject_parents;
-  VARSET(Yobject_parents,T42);
+  lit_313 = YPPsym((P)"object-class");
+  T24 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  Yobject_class = YPmet(FUNCODEREF(Yobject_class),LITREF(lit_313),T24,ENVNUL,PNUL,YPfalse);
+  T25 = Yobject_class;
+  VARSET(Yobject_class,T25);
+  lit_314 = YPPsym((P)"@class-ancestors");
+  T26 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YOclass_ancestors = YPmet(FUNCODEREF(YOclass_ancestors),LITREF(lit_314),T26,ENVNUL,PNUL,YPfalse);
+  T27 = YOclass_ancestors;
+  VARSET(YOclass_ancestors,T27);
+  lit_315 = YPPsym((P)"class-ordered-ancestors");
+  lit_316 = YPPsym((P)"merge-lists");
+  lit_317 = YPPsym((P)"partial-cpl");
+  lit_318 = YPPsym((P)"remaining-lists");
+  lit_319 = YPPsym((P)"unconstrained-class");
+  lit_320 = YPPsym((P)"p-in-and-unconstrained-in?");
+  lit_321 = YPPsym((P)"p-unconstrained-in?");
+  lit_322 = YPPsym((P)"unconstrained-class-in-parents");
+  lit_323 = YPPsym((P)"remove-next");
+  lit_324 = YPsb((P)"inconsistent precedence graph");
+  T34 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_p_in_and_unconstrained_inQ_457 = YPmet(FUNCODEREF(fun_p_in_and_unconstrained_inQ_457),LITREF(lit_320),T34,ENVNUL,PNUL,YPfalse);
+  T33 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_p_unconstrained_inQ_458 = YPmet(FUNCODEREF(fun_p_unconstrained_inQ_458),LITREF(lit_321),T33,ENVNUL,PNUL,YPfalse);
+  T32 = YPsig(YPPlist(1,LITREF(lit_160)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_unconstrained_class_459 = YPmet(FUNCODEREF(fun_unconstrained_class_459),LITREF(lit_319),T32,ENVNUL,PNUL,YPfalse);
+  T31 = YPsig(YPPlist(1,LITREF(lit_158)),YPPlist(1,VARREF(YLclassG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_unconstrained_class_in_parents_460 = YPmet(FUNCODEREF(fun_unconstrained_class_in_parents_460),LITREF(lit_322),T31,ENVNUL,PNUL,YPfalse);
+  T30 = YPsig(YPPlist(1,LITREF(lit_6)),YPPlist(1,VARREF(YLlstG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_remove_next_461 = YPmet(FUNCODEREF(fun_remove_next_461),LITREF(lit_323),T30,ENVNUL,PNUL,YPfalse);
+  T29 = YPsig(YPPlist(2,LITREF(lit_317),LITREF(lit_318)),YPPlist(2,VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_merge_lists_462 = YPmet(FUNCODEREF(fun_merge_lists_462),LITREF(lit_316),T29,ENVNUL,PNUL,YPfalse);
+  T28 = YPsig(YPPlist(1,LITREF(lit_158)),YPPlist(1,VARREF(YLclassG)),YPfalse,YPint((P)1),VARREF(YLparentsG),Ynil);
+  Yclass_ordered_ancestors = YPmet(FUNCODEREF(Yclass_ordered_ancestors),LITREF(lit_315),T28,ENVNUL,PNUL,YPfalse);
+  T35 = Yclass_ordered_ancestors;
+  VARSET(Yclass_ordered_ancestors,T35);
+  lit_325 = YPPsym((P)"@class-direct-props");
+  T36 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YOclass_direct_props = YPmet(FUNCODEREF(YOclass_direct_props),LITREF(lit_325),T36,ENVNUL,PNUL,YPfalse);
+  T37 = YOclass_direct_props;
+  VARSET(YOclass_direct_props,T37);
+  lit_326 = YPPsym((P)"class-ordered-props");
+  T38 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLclassG)),YPfalse,YPint((P)1),VARREF(YLpropsG),Ynil);
+  Yclass_ordered_props = YPmet(FUNCODEREF(Yclass_ordered_props),LITREF(lit_326),T38,ENVNUL,PNUL,YPfalse);
+  T39 = Yclass_ordered_props;
+  VARSET(Yclass_ordered_props,T39);
+  lit_327 = YPPsym((P)"del-class");
+  T40 = YPsig(YPPlist(1,LITREF(lit_26)),YPPlist(1,VARREF(YLclassG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  Ydel_class = YPmet(FUNCODEREF(Ydel_class),LITREF(lit_327),T40,ENVNUL,PNUL,YPfalse);
+  T41 = Ydel_class;
+  VARSET(Ydel_class,T41);
+  lit_328 = YPPsym((P)"fab-class");
+  lit_329 = YPPsym((P)"parents");
+  lit_330 = YPPsym((P)"parent");
+  T43 = YPsig(YPPlist(1,LITREF(lit_330)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_467 = YPmet(FUNCODEREF(fun_467),YPfalse,T43,ENVNUL,PNUL,YPfalse);
+  T42 = YPsig(YPPlist(2,LITREF(lit_1),LITREF(lit_329)),YPPlist(2,VARREF(YLsymG),VARREF(YLparentsG)),YPfalse,YPint((P)2),VARREF(YLclassG),Ynil);
+  Yfab_class = YPmet(FUNCODEREF(Yfab_class),LITREF(lit_328),T42,ENVNUL,PNUL,YPfalse);
+  T44 = Yfab_class;
+  VARSET(Yfab_class,T44);
+  lit_331 = YPPsym((P)"refab-class");
+  lit_332 = YPPsym((P)"old-class");
+  T45 = YPsig(YPPlist(2,LITREF(lit_332),LITREF(lit_329)),YPPlist(2,VARREF(YLclassG),VARREF(YLparentsG)),YPfalse,YPint((P)2),VARREF(YLclassG),Ynil);
+  Yrefab_class = YPmet(FUNCODEREF(Yrefab_class),LITREF(lit_331),T45,ENVNUL,PNUL,YPfalse);
+  T46 = Yrefab_class;
+  VARSET(Yrefab_class,T46);
+  lit_333 = YPPsym((P)"object-props");
+  T47 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  Yobject_props = YPmet(FUNCODEREF(Yobject_props),LITREF(lit_333),T47,ENVNUL,PNUL,YPfalse);
+  T48 = Yobject_props;
+  VARSET(Yobject_props,T48);
+  lit_334 = YPPsym((P)"object-parents");
+  T49 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  Yobject_parents = YPmet(FUNCODEREF(Yobject_parents),LITREF(lit_334),T49,ENVNUL,PNUL,YPfalse);
+  T50 = Yobject_parents;
+  VARSET(Yobject_parents,T50);
   VARSET(YDgetter_not_found,YPint((P)-1));
-  lit_333 = YPPsym((P)"ensure-fresh-object");
-  T43 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yensure_fresh_object = YPmet(FUNCODEREF(Yensure_fresh_object),LITREF(lit_333),T43,ENVNUL,PNUL,YPfalse);
-  T44 = Yensure_fresh_object;
-  VARSET(Yensure_fresh_object,T44);
-  lit_334 = YPPsym((P)"prop-offset");
-  lit_335 = YPPsym((P)"object");
-  T46 = YPsig(YPPlist(2,LITREF(lit_17),LITREF(lit_18)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_loop_473 = YPmet(FUNCODEREF(fun_loop_473),LITREF(lit_5),T46,ENVNUL,PNUL,YPfalse);
-  T45 = YPsig(YPPlist(2,LITREF(lit_335),LITREF(lit_16)),YPPlist(2,VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLintG),Ynil);
-  Yprop_offset = YPmet(FUNCODEREF(Yprop_offset),LITREF(lit_334),T45,ENVNUL,PNUL,YPfalse);
-  T47 = Yprop_offset;
-  VARSET(Yprop_offset,T47);
+  lit_335 = YPPsym((P)"ensure-fresh-object");
+  T51 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  Yensure_fresh_object = YPmet(FUNCODEREF(Yensure_fresh_object),LITREF(lit_335),T51,ENVNUL,PNUL,YPfalse);
+  T52 = Yensure_fresh_object;
+  VARSET(Yensure_fresh_object,T52);
+  lit_336 = YPPsym((P)"prop-offset");
+  lit_337 = YPPsym((P)"object");
+  T54 = YPsig(YPPlist(2,LITREF(lit_17),LITREF(lit_18)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_loop_473 = YPmet(FUNCODEREF(fun_loop_473),LITREF(lit_5),T54,ENVNUL,PNUL,YPfalse);
+  T53 = YPsig(YPPlist(2,LITREF(lit_337),LITREF(lit_16)),YPPlist(2,VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLintG),Ynil);
+  Yprop_offset = YPmet(FUNCODEREF(Yprop_offset),LITREF(lit_336),T53,ENVNUL,PNUL,YPfalse);
+  T55 = Yprop_offset;
+  VARSET(Yprop_offset,T55);
   VARSET(YTreport_prop_unbound_errorsQT,YPtrue);
-  lit_336 = YPPsym((P)"%prop-unbound-error");
-  lit_337 = YPsb((P)"property unbound");
-  T48 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  YPprop_unbound_error = YPmet(FUNCODEREF(YPprop_unbound_error),LITREF(lit_336),T48,ENVNUL,PNUL,YPfalse);
-  T49 = YPprop_unbound_error;
-  VARSET(YPprop_unbound_error,T49);
-  lit_338 = YPPsym((P)"prop-value");
-  lit_339 = YPsb((P)"prop %s not found in %=");
-  T50 = YPsig(YPPlist(2,LITREF(lit_335),LITREF(lit_16)),YPPlist(2,VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yprop_value = YPmet(FUNCODEREF(Yprop_value),LITREF(lit_338),T50,ENVNUL,PNUL,YPfalse);
-  T51 = Yprop_value;
-  VARSET(Yprop_value,T51);
-  lit_340 = YPPsym((P)"prop-bound?");
+  lit_338 = YPPsym((P)"%prop-unbound-error");
+  lit_339 = YPsb((P)"property unbound");
+  T56 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  YPprop_unbound_error = YPmet(FUNCODEREF(YPprop_unbound_error),LITREF(lit_338),T56,ENVNUL,PNUL,YPfalse);
+  T57 = YPprop_unbound_error;
+  VARSET(YPprop_unbound_error,T57);
+  lit_340 = YPPsym((P)"prop-value");
   lit_341 = YPsb((P)"prop %s not found in %=");
-  T52 = YPsig(YPPlist(2,LITREF(lit_335),LITREF(lit_16)),YPPlist(2,VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  Yprop_boundQ = YPmet(FUNCODEREF(Yprop_boundQ),LITREF(lit_340),T52,ENVNUL,PNUL,YPfalse);
-  T53 = Yprop_boundQ;
-  VARSET(Yprop_boundQ,T53);
-  lit_342 = YPPsym((P)"prop-value-setter");
+  T58 = YPsig(YPPlist(2,LITREF(lit_337),LITREF(lit_16)),YPPlist(2,VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  Yprop_value = YPmet(FUNCODEREF(Yprop_value),LITREF(lit_340),T58,ENVNUL,PNUL,YPfalse);
+  T59 = Yprop_value;
+  VARSET(Yprop_value,T59);
+  lit_342 = YPPsym((P)"prop-bound?");
   lit_343 = YPsb((P)"prop %s not found in %=");
-  lit_344 = YPsb((P)"Prop type error");
-  T55 = YPsig(YPPlist(2,LITREF(lit_17),LITREF(lit_18)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_loop_478 = YPmet(FUNCODEREF(fun_loop_478),LITREF(lit_5),T55,ENVNUL,PNUL,YPfalse);
-  T54 = YPsig(YPPlist(3,LITREF(lit_30),LITREF(lit_335),LITREF(lit_16)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  Yprop_value_setter = YPmet(FUNCODEREF(Yprop_value_setter),LITREF(lit_342),T54,ENVNUL,PNUL,YPfalse);
-  T56 = Yprop_value_setter;
-  VARSET(Yprop_value_setter,T56);
-  lit_345 = YPPsym((P)"%isa");
-  lit_346 = YPPsym((P)"getters");
-  lit_347 = YPPsym((P)"vals");
-  T58 = YPsig(YPPlist(2,LITREF(lit_346),LITREF(lit_347)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  fun_loop_480 = YPmet(FUNCODEREF(fun_loop_480),LITREF(lit_5),T58,ENVNUL,PNUL,YPfalse);
-  T57 = YPsig(YPPlist(3,LITREF(lit_328),LITREF(lit_346),LITREF(lit_347)),YPPlist(3,VARREF(YLclassG),VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  YPisa = YPmet(FUNCODEREF(YPisa),LITREF(lit_345),T57,ENVNUL,PNUL,YPfalse);
-  T59 = YPisa;
-  VARSET(YPisa,T59);
-  lit_348 = YPPsym((P)"find-getter");
-  lit_349 = YPsb((P)"COULDN'T FIND GETTER");
-  T61 = YPsig(YPPlist(1,LITREF(lit_217)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_loop_482 = YPmet(FUNCODEREF(fun_loop_482),LITREF(lit_5),T61,ENVNUL,PNUL,YPfalse);
-  T60 = YPsig(YPPlist(2,LITREF(lit_15),LITREF(lit_16)),YPPlist(2,VARREF(YLclassG),VARREF(YLgenG)),YPfalse,YPint((P)2),VARREF(YLmetG),Ynil);
-  Yfind_getter = YPmet(FUNCODEREF(Yfind_getter),LITREF(lit_348),T60,ENVNUL,PNUL,YPfalse);
-  T62 = Yfind_getter;
-  VARSET(Yfind_getter,T62);
-  lit_350 = YPPsym((P)"find-setter");
-  lit_351 = YPPsym((P)"zetter");
-  lit_352 = YPsb((P)"COULDN'T FIND SETTER");
-  T64 = YPsig(YPPlist(1,LITREF(lit_217)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_loop_484 = YPmet(FUNCODEREF(fun_loop_484),LITREF(lit_5),T64,ENVNUL,PNUL,YPfalse);
-  T63 = YPsig(YPPlist(3,LITREF(lit_15),LITREF(lit_275),LITREF(lit_351)),YPPlist(3,VARREF(YLclassG),VARREF(YLanyG),VARREF(YLgenG)),YPfalse,YPint((P)3),VARREF(YLmetG),Ynil);
-  Yfind_setter = YPmet(FUNCODEREF(Yfind_setter),LITREF(lit_350),T63,ENVNUL,PNUL,YPfalse);
-  T65 = Yfind_setter;
-  VARSET(Yfind_setter,T65);
-  lit_353 = YPPsym((P)"forward-class");
-  T67 = YPsig(YPPlist(1,LITREF(lit_210)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_486 = YPmet(FUNCODEREF(fun_486),YPfalse,T67,ENVNUL,PNUL,YPfalse);
-  T66 = YPsig(YPPlist(1,LITREF(lit_330)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yforward_class = YPmet(FUNCODEREF(Yforward_class),LITREF(lit_353),T66,ENVNUL,PNUL,YPfalse);
-  T68 = Yforward_class;
-  VARSET(Yforward_class,T68);
-  lit_354 = YPPsym((P)"@do-children");
-  lit_355 = YPPsym((P)"visit");
-  T70 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_visit_488 = YPmet(FUNCODEREF(fun_visit_488),LITREF(lit_355),T70,ENVNUL,PNUL,YPfalse);
-  T69 = YPsig(YPPlist(2,LITREF(lit_166),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  YOdo_children = YPmet(FUNCODEREF(YOdo_children),LITREF(lit_354),T69,ENVNUL,PNUL,YPfalse);
-  T71 = YOdo_children;
-  VARSET(YOdo_children,T71);
-  lit_356 = YPPsym((P)"%prop");
-  lit_357 = YPPsym((P)"setter");
-  T73 = YPsig(YPPlist(1,LITREF(lit_27)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_490 = YPmet(FUNCODEREF(fun_490),YPfalse,T73,ENVNUL,PNUL,YPfalse);
-  T72 = YPsig(YPPlist(5,LITREF(lit_15),LITREF(lit_16),LITREF(lit_357),LITREF(lit_275),LITREF(lit_183)),YPPlist(5,VARREF(YLclassG),VARREF(YLgenG),VARREF(YLgenG),VARREF(YLtypeG),VARREF(YLfunG)),YPfalse,YPint((P)5),VARREF(YLanyG),Ynil);
-  YPprop = YPmet(FUNCODEREF(YPprop),LITREF(lit_356),T72,ENVNUL,PNUL,YPfalse);
-  T74 = YPprop;
-  VARSET(YPprop,T74);
-  lit_358 = YPPsym((P)"update-instance-for-changed-class");
-  T75 = YPsig(YPPlist(1,LITREF(lit_335)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  Yupdate_instance_for_changed_class = YPmet(FUNCODEREF(Yupdate_instance_for_changed_class),LITREF(lit_358),T75,ENVNUL,PNUL,YPfalse);
-  T76 = Yupdate_instance_for_changed_class;
-  VARSET(Yupdate_instance_for_changed_class,T76);
+  T60 = YPsig(YPPlist(2,LITREF(lit_337),LITREF(lit_16)),YPPlist(2,VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  Yprop_boundQ = YPmet(FUNCODEREF(Yprop_boundQ),LITREF(lit_342),T60,ENVNUL,PNUL,YPfalse);
+  T61 = Yprop_boundQ;
+  VARSET(Yprop_boundQ,T61);
+  lit_344 = YPPsym((P)"prop-value-setter");
+  lit_345 = YPsb((P)"prop %s not found in %=");
+  lit_346 = YPsb((P)"Prop type error");
+  T63 = YPsig(YPPlist(2,LITREF(lit_17),LITREF(lit_18)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_loop_478 = YPmet(FUNCODEREF(fun_loop_478),LITREF(lit_5),T63,ENVNUL,PNUL,YPfalse);
+  T62 = YPsig(YPPlist(3,LITREF(lit_30),LITREF(lit_337),LITREF(lit_16)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLfunG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  Yprop_value_setter = YPmet(FUNCODEREF(Yprop_value_setter),LITREF(lit_344),T62,ENVNUL,PNUL,YPfalse);
+  T64 = Yprop_value_setter;
+  VARSET(Yprop_value_setter,T64);
+  lit_347 = YPPsym((P)"%isa");
+  lit_348 = YPPsym((P)"getters");
+  lit_349 = YPPsym((P)"vals");
+  T66 = YPsig(YPPlist(2,LITREF(lit_348),LITREF(lit_349)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  fun_loop_480 = YPmet(FUNCODEREF(fun_loop_480),LITREF(lit_5),T66,ENVNUL,PNUL,YPfalse);
+  T65 = YPsig(YPPlist(3,LITREF(lit_330),LITREF(lit_348),LITREF(lit_349)),YPPlist(3,VARREF(YLclassG),VARREF(YLlstG),VARREF(YLlstG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  YPisa = YPmet(FUNCODEREF(YPisa),LITREF(lit_347),T65,ENVNUL,PNUL,YPfalse);
+  T67 = YPisa;
+  VARSET(YPisa,T67);
+  lit_350 = YPPsym((P)"find-getter");
+  lit_351 = YPsb((P)"COULDN'T FIND GETTER");
+  T69 = YPsig(YPPlist(1,LITREF(lit_219)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_loop_482 = YPmet(FUNCODEREF(fun_loop_482),LITREF(lit_5),T69,ENVNUL,PNUL,YPfalse);
+  T68 = YPsig(YPPlist(2,LITREF(lit_15),LITREF(lit_16)),YPPlist(2,VARREF(YLclassG),VARREF(YLgenG)),YPfalse,YPint((P)2),VARREF(YLmetG),Ynil);
+  Yfind_getter = YPmet(FUNCODEREF(Yfind_getter),LITREF(lit_350),T68,ENVNUL,PNUL,YPfalse);
+  T70 = Yfind_getter;
+  VARSET(Yfind_getter,T70);
+  lit_352 = YPPsym((P)"find-setter");
+  lit_353 = YPPsym((P)"zetter");
+  lit_354 = YPsb((P)"COULDN'T FIND SETTER");
+  T72 = YPsig(YPPlist(1,LITREF(lit_219)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_loop_484 = YPmet(FUNCODEREF(fun_loop_484),LITREF(lit_5),T72,ENVNUL,PNUL,YPfalse);
+  T71 = YPsig(YPPlist(3,LITREF(lit_15),LITREF(lit_277),LITREF(lit_353)),YPPlist(3,VARREF(YLclassG),VARREF(YLanyG),VARREF(YLgenG)),YPfalse,YPint((P)3),VARREF(YLmetG),Ynil);
+  Yfind_setter = YPmet(FUNCODEREF(Yfind_setter),LITREF(lit_352),T71,ENVNUL,PNUL,YPfalse);
+  T73 = Yfind_setter;
+  VARSET(Yfind_setter,T73);
+  lit_355 = YPPsym((P)"forward-class");
+  T75 = YPsig(YPPlist(1,LITREF(lit_212)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_486 = YPmet(FUNCODEREF(fun_486),YPfalse,T75,ENVNUL,PNUL,YPfalse);
+  T74 = YPsig(YPPlist(1,LITREF(lit_332)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  Yforward_class = YPmet(FUNCODEREF(Yforward_class),LITREF(lit_355),T74,ENVNUL,PNUL,YPfalse);
+  T76 = Yforward_class;
+  VARSET(Yforward_class,T76);
+  lit_356 = YPPsym((P)"@do-children");
+  lit_357 = YPPsym((P)"visit");
+  T78 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_visit_488 = YPmet(FUNCODEREF(fun_visit_488),LITREF(lit_357),T78,ENVNUL,PNUL,YPfalse);
+  T77 = YPsig(YPPlist(2,LITREF(lit_168),LITREF(lit_10)),YPPlist(2,VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  YOdo_children = YPmet(FUNCODEREF(YOdo_children),LITREF(lit_356),T77,ENVNUL,PNUL,YPfalse);
+  T79 = YOdo_children;
+  VARSET(YOdo_children,T79);
+  lit_358 = YPPsym((P)"%prop");
+  lit_359 = YPPsym((P)"setter");
+  T81 = YPsig(YPPlist(1,LITREF(lit_27)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_490 = YPmet(FUNCODEREF(fun_490),YPfalse,T81,ENVNUL,PNUL,YPfalse);
+  T80 = YPsig(YPPlist(5,LITREF(lit_15),LITREF(lit_16),LITREF(lit_359),LITREF(lit_277),LITREF(lit_185)),YPPlist(5,VARREF(YLclassG),VARREF(YLgenG),VARREF(YLgenG),VARREF(YLtypeG),VARREF(YLfunG)),YPfalse,YPint((P)5),VARREF(YLanyG),Ynil);
+  YPprop = YPmet(FUNCODEREF(YPprop),LITREF(lit_358),T80,ENVNUL,PNUL,YPfalse);
+  T82 = YPprop;
+  VARSET(YPprop,T82);
+  lit_360 = YPPsym((P)"update-instance-for-changed-class");
+  T83 = YPsig(YPPlist(1,LITREF(lit_337)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  Yupdate_instance_for_changed_class = YPmet(FUNCODEREF(Yupdate_instance_for_changed_class),LITREF(lit_360),T83,ENVNUL,PNUL,YPfalse);
+  T84 = Yupdate_instance_for_changed_class;
+  VARSET(Yupdate_instance_for_changed_class,T84);
   VARSET(Yadd_prop,VARREF(YPprop));
-  lit_359 = YPPsym((P)"fab-gen");
-  lit_360 = YPPsym((P)"names");
-  lit_361 = YPPsym((P)"nary?");
-  T77 = YPsig(YPPlist(5,LITREF(lit_1),LITREF(lit_360),LITREF(lit_215),LITREF(lit_361),LITREF(lit_217)),YPPlist(5,VARREF(YLanyG),VARREF(YLlstG),VARREF(YLlstG),VARREF(YLlogG),VARREF(YLlstG)),YPfalse,YPint((P)5),VARREF(YLgenG),Ynil);
-  Yfab_gen = YPmet(FUNCODEREF(Yfab_gen),LITREF(lit_359),T77,ENVNUL,PNUL,YPfalse);
-  T78 = Yfab_gen;
-  VARSET(Yfab_gen,T78);
-  lit_362 = YPPsym((P)"gen-from-met");
-  T80 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_495 = YPmet(FUNCODEREF(fun_495),YPfalse,T80,ENVNUL,PNUL,YPfalse);
-  T79 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLmetG)),YPfalse,YPint((P)1),VARREF(YLgenG),Ynil);
-  Ygen_from_met = YPmet(FUNCODEREF(Ygen_from_met),LITREF(lit_362),T79,ENVNUL,PNUL,YPfalse);
-  T81 = Ygen_from_met;
-  VARSET(Ygen_from_met,T81);
-  lit_363 = YPPsym((P)"%define-method");
-  T82 = YPsig(YPPlist(2,LITREF(lit_23),LITREF(lit_24)),YPPlist(2,VARREF(YLanyG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLgenG),Ynil);
-  YPdefine_method = YPmet(FUNCODEREF(YPdefine_method),LITREF(lit_363),T82,ENVNUL,PNUL,YPfalse);
-  T83 = YPdefine_method;
-  VARSET(YPdefine_method,T83);
-  lit_364 = YPPsym((P)"unexec");
-  lit_365 = YPPsym((P)"fun");
-  T84 = YPsig(YPPlist(2,LITREF(lit_1),LITREF(lit_365)),YPPlist(2,VARREF(YLstrG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
-  Yunexec = YPmet(FUNCODEREF(Yunexec),LITREF(lit_364),T84,ENVNUL,PNUL,YPfalse);
-  T85 = Yunexec;
-  VARSET(Yunexec,T85);
-  lit_366 = YPPsym((P)"new");
-  lit_367 = YPPsym((P)"inits");
-  T87 = YPsig(YPPlist(2,LITREF(lit_328),LITREF(lit_367)),YPPlist(1,VARREF(YLtypeG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  T86 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_366),T87,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ynew,T86);
-  T89 = YPsig(YPPlist(1,LITREF(lit_17)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_loop_499 = YPmet(FUNCODEREF(fun_loop_499),LITREF(lit_5),T89,ENVNUL,PNUL,YPfalse);
-  T88 = YPsig(YPPlist(2,LITREF(lit_328),LITREF(lit_367)),YPPlist(1,VARREF(YLclassG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_new_500 = YPmet(FUNCODEREF(fun_new_500),LITREF(lit_366),T88,ENVNUL,PNUL,YPfalse);
-  T92 = BOUNDP(Ynew);
-  if (T92 != YPfalse) {
-    T91 = VARREF(Ynew);
+  lit_361 = YPPsym((P)"patch-early-classes");
+  T87 = YPsig(YPPlist(1,LITREF(lit_330)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_494 = YPmet(FUNCODEREF(fun_494),YPfalse,T87,ENVNUL,PNUL,YPfalse);
+  T86 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_495 = YPmet(FUNCODEREF(fun_495),YPfalse,T86,ENVNUL,PNUL,YPfalse);
+  T85 = YPsig(Ynil,Ynil,YPfalse,YPint((P)0),VARREF(YLanyG),Ynil);
+  Ypatch_early_classes = YPmet(FUNCODEREF(Ypatch_early_classes),LITREF(lit_361),T85,ENVNUL,PNUL,YPfalse);
+  T88 = Ypatch_early_classes;
+  VARSET(Ypatch_early_classes,T88);
+  CALL0(1,VARREF(Ypatch_early_classes));
+  lit_362 = YPPsym((P)"fab-gen");
+  lit_363 = YPPsym((P)"names");
+  lit_364 = YPPsym((P)"nary?");
+  T89 = YPsig(YPPlist(5,LITREF(lit_1),LITREF(lit_363),LITREF(lit_217),LITREF(lit_364),LITREF(lit_219)),YPPlist(5,VARREF(YLanyG),VARREF(YLlstG),VARREF(YLlstG),VARREF(YLlogG),VARREF(YLlstG)),YPfalse,YPint((P)5),VARREF(YLgenG),Ynil);
+  Yfab_gen = YPmet(FUNCODEREF(Yfab_gen),LITREF(lit_362),T89,ENVNUL,PNUL,YPfalse);
+  T90 = Yfab_gen;
+  VARSET(Yfab_gen,T90);
+  lit_365 = YPPsym((P)"gen-from-met");
+  T92 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_498 = YPmet(FUNCODEREF(fun_498),YPfalse,T92,ENVNUL,PNUL,YPfalse);
+  T91 = YPsig(YPPlist(1,LITREF(lit_10)),YPPlist(1,VARREF(YLmetG)),YPfalse,YPint((P)1),VARREF(YLgenG),Ynil);
+  Ygen_from_met = YPmet(FUNCODEREF(Ygen_from_met),LITREF(lit_365),T91,ENVNUL,PNUL,YPfalse);
+  T93 = Ygen_from_met;
+  VARSET(Ygen_from_met,T93);
+  lit_366 = YPPsym((P)"%define-method");
+  T94 = YPsig(YPPlist(2,LITREF(lit_23),LITREF(lit_24)),YPPlist(2,VARREF(YLanyG),VARREF(YLmetG)),YPfalse,YPint((P)2),VARREF(YLgenG),Ynil);
+  YPdefine_method = YPmet(FUNCODEREF(YPdefine_method),LITREF(lit_366),T94,ENVNUL,PNUL,YPfalse);
+  T95 = YPdefine_method;
+  VARSET(YPdefine_method,T95);
+  lit_367 = YPPsym((P)"unexec");
+  lit_368 = YPPsym((P)"fun");
+  T96 = YPsig(YPPlist(2,LITREF(lit_1),LITREF(lit_368)),YPPlist(2,VARREF(YLstrG),VARREF(YLfunG)),YPfalse,YPint((P)2),VARREF(YLanyG),Ynil);
+  Yunexec = YPmet(FUNCODEREF(Yunexec),LITREF(lit_367),T96,ENVNUL,PNUL,YPfalse);
+  T97 = Yunexec;
+  VARSET(Yunexec,T97);
+  lit_369 = YPPsym((P)"new");
+  lit_370 = YPPsym((P)"inits");
+  T99 = YPsig(YPPlist(2,LITREF(lit_330),LITREF(lit_370)),YPPlist(1,VARREF(YLtypeG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
+  T98 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_369),T99,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ynew,T98);
+  T101 = YPsig(YPPlist(1,LITREF(lit_17)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_loop_502 = YPmet(FUNCODEREF(fun_loop_502),LITREF(lit_5),T101,ENVNUL,PNUL,YPfalse);
+  T100 = YPsig(YPPlist(2,LITREF(lit_330),LITREF(lit_370)),YPPlist(1,VARREF(YLclassG)),YPtrue,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_new_503 = YPmet(FUNCODEREF(fun_new_503),LITREF(lit_369),T100,ENVNUL,PNUL,YPfalse);
+  T104 = BOUNDP(Ynew);
+  if (T104 != YPfalse) {
+    T103 = VARREF(Ynew);
   } else {
-    T91 = YPfalse;
+    T103 = YPfalse;
   }
-  T93 = fun_new_500;
-  T90 = CALL2(1,VARREF(YPdefine_method),T91,T93);
-  VARSET(Ynew,T90);
-  lit_368 = YPPsym((P)"subtype?");
-  T95 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLtypeG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  T94 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_368),T95,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YsubtypeQ,T94);
-  T97 = YPsig(YPPlist(1,LITREF(lit_222)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_501 = YPmet(FUNCODEREF(fun_501),YPfalse,T97,ENVNUL,PNUL,YPfalse);
-  T96 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLunionG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_502 = YPmet(FUNCODEREF(fun_subtypeQ_502),LITREF(lit_368),T96,ENVNUL,PNUL,YPfalse);
-  T100 = BOUNDP(YsubtypeQ);
-  if (T100 != YPfalse) {
-    T99 = VARREF(YsubtypeQ);
-  } else {
-    T99 = YPfalse;
-  }
-  T101 = fun_subtypeQ_502;
-  T98 = CALL2(1,VARREF(YPdefine_method),T99,T101);
-  VARSET(YsubtypeQ,T98);
-  T103 = YPsig(YPPlist(1,LITREF(lit_222)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_503 = YPmet(FUNCODEREF(fun_503),YPfalse,T103,ENVNUL,PNUL,YPfalse);
-  T102 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLtypeG),VARREF(YLunionG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_504 = YPmet(FUNCODEREF(fun_subtypeQ_504),LITREF(lit_368),T102,ENVNUL,PNUL,YPfalse);
-  T106 = BOUNDP(YsubtypeQ);
-  if (T106 != YPfalse) {
-    T105 = VARREF(YsubtypeQ);
-  } else {
-    T105 = YPfalse;
-  }
-  T107 = fun_subtypeQ_504;
-  T104 = CALL2(1,VARREF(YPdefine_method),T105,T107);
-  VARSET(YsubtypeQ,T104);
-  T109 = YPsig(YPPlist(1,LITREF(lit_222)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_505 = YPmet(FUNCODEREF(fun_505),YPfalse,T109,ENVNUL,PNUL,YPfalse);
-  T108 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLunionG),VARREF(YLunionG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_506 = YPmet(FUNCODEREF(fun_subtypeQ_506),LITREF(lit_368),T108,ENVNUL,PNUL,YPfalse);
+  T105 = fun_new_503;
+  T102 = CALL2(1,VARREF(YPdefine_method),T103,T105);
+  VARSET(Ynew,T102);
+  lit_371 = YPPsym((P)"subtype?");
+  T107 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLtypeG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  T106 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_371),T107,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(YsubtypeQ,T106);
+  T109 = YPsig(YPPlist(1,LITREF(lit_224)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_504 = YPmet(FUNCODEREF(fun_504),YPfalse,T109,ENVNUL,PNUL,YPfalse);
+  T108 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLunionG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_subtypeQ_505 = YPmet(FUNCODEREF(fun_subtypeQ_505),LITREF(lit_371),T108,ENVNUL,PNUL,YPfalse);
   T112 = BOUNDP(YsubtypeQ);
   if (T112 != YPfalse) {
     T111 = VARREF(YsubtypeQ);
   } else {
     T111 = YPfalse;
   }
-  T113 = fun_subtypeQ_506;
+  T113 = fun_subtypeQ_505;
   T110 = CALL2(1,VARREF(YPdefine_method),T111,T113);
   VARSET(YsubtypeQ,T110);
-  T114 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLclassG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_507 = YPmet(FUNCODEREF(fun_subtypeQ_507),LITREF(lit_368),T114,ENVNUL,PNUL,YPfalse);
-  T117 = BOUNDP(YsubtypeQ);
-  if (T117 != YPfalse) {
-    T116 = VARREF(YsubtypeQ);
+  T115 = YPsig(YPPlist(1,LITREF(lit_224)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_506 = YPmet(FUNCODEREF(fun_506),YPfalse,T115,ENVNUL,PNUL,YPfalse);
+  T114 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLtypeG),VARREF(YLunionG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_subtypeQ_507 = YPmet(FUNCODEREF(fun_subtypeQ_507),LITREF(lit_371),T114,ENVNUL,PNUL,YPfalse);
+  T118 = BOUNDP(YsubtypeQ);
+  if (T118 != YPfalse) {
+    T117 = VARREF(YsubtypeQ);
   } else {
-    T116 = YPfalse;
+    T117 = YPfalse;
   }
-  T118 = fun_subtypeQ_507;
-  T115 = CALL2(1,VARREF(YPdefine_method),T116,T118);
-  VARSET(YsubtypeQ,T115);
-  T119 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLsingletonG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_508 = YPmet(FUNCODEREF(fun_subtypeQ_508),LITREF(lit_368),T119,ENVNUL,PNUL,YPfalse);
-  T122 = BOUNDP(YsubtypeQ);
-  if (T122 != YPfalse) {
-    T121 = VARREF(YsubtypeQ);
+  T119 = fun_subtypeQ_507;
+  T116 = CALL2(1,VARREF(YPdefine_method),T117,T119);
+  VARSET(YsubtypeQ,T116);
+  T121 = YPsig(YPPlist(1,LITREF(lit_224)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_508 = YPmet(FUNCODEREF(fun_508),YPfalse,T121,ENVNUL,PNUL,YPfalse);
+  T120 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLunionG),VARREF(YLunionG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_subtypeQ_509 = YPmet(FUNCODEREF(fun_subtypeQ_509),LITREF(lit_371),T120,ENVNUL,PNUL,YPfalse);
+  T124 = BOUNDP(YsubtypeQ);
+  if (T124 != YPfalse) {
+    T123 = VARREF(YsubtypeQ);
   } else {
-    T121 = YPfalse;
+    T123 = YPfalse;
   }
-  T123 = fun_subtypeQ_508;
-  T120 = CALL2(1,VARREF(YPdefine_method),T121,T123);
-  VARSET(YsubtypeQ,T120);
-  T124 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLsubclassG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_509 = YPmet(FUNCODEREF(fun_subtypeQ_509),LITREF(lit_368),T124,ENVNUL,PNUL,YPfalse);
-  T127 = BOUNDP(YsubtypeQ);
-  if (T127 != YPfalse) {
-    T126 = VARREF(YsubtypeQ);
+  T125 = fun_subtypeQ_509;
+  T122 = CALL2(1,VARREF(YPdefine_method),T123,T125);
+  VARSET(YsubtypeQ,T122);
+  T126 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLclassG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_subtypeQ_510 = YPmet(FUNCODEREF(fun_subtypeQ_510),LITREF(lit_371),T126,ENVNUL,PNUL,YPfalse);
+  T129 = BOUNDP(YsubtypeQ);
+  if (T129 != YPfalse) {
+    T128 = VARREF(YsubtypeQ);
   } else {
-    T126 = YPfalse;
+    T128 = YPfalse;
   }
-  T128 = fun_subtypeQ_509;
-  T125 = CALL2(1,VARREF(YPdefine_method),T126,T128);
-  VARSET(YsubtypeQ,T125);
-  T129 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLclassG),VARREF(YLsingletonG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_510 = YPmet(FUNCODEREF(fun_subtypeQ_510),LITREF(lit_368),T129,ENVNUL,PNUL,YPfalse);
-  T132 = BOUNDP(YsubtypeQ);
-  if (T132 != YPfalse) {
-    T131 = VARREF(YsubtypeQ);
+  T130 = fun_subtypeQ_510;
+  T127 = CALL2(1,VARREF(YPdefine_method),T128,T130);
+  VARSET(YsubtypeQ,T127);
+  T131 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLsingletonG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_subtypeQ_511 = YPmet(FUNCODEREF(fun_subtypeQ_511),LITREF(lit_371),T131,ENVNUL,PNUL,YPfalse);
+  T134 = BOUNDP(YsubtypeQ);
+  if (T134 != YPfalse) {
+    T133 = VARREF(YsubtypeQ);
   } else {
-    T131 = YPfalse;
+    T133 = YPfalse;
   }
-  T133 = fun_subtypeQ_510;
-  T130 = CALL2(1,VARREF(YPdefine_method),T131,T133);
-  VARSET(YsubtypeQ,T130);
-  T134 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLsingletonG),VARREF(YLsingletonG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_511 = YPmet(FUNCODEREF(fun_subtypeQ_511),LITREF(lit_368),T134,ENVNUL,PNUL,YPfalse);
-  T137 = BOUNDP(YsubtypeQ);
-  if (T137 != YPfalse) {
-    T136 = VARREF(YsubtypeQ);
+  T135 = fun_subtypeQ_511;
+  T132 = CALL2(1,VARREF(YPdefine_method),T133,T135);
+  VARSET(YsubtypeQ,T132);
+  T136 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLsubclassG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_subtypeQ_512 = YPmet(FUNCODEREF(fun_subtypeQ_512),LITREF(lit_371),T136,ENVNUL,PNUL,YPfalse);
+  T139 = BOUNDP(YsubtypeQ);
+  if (T139 != YPfalse) {
+    T138 = VARREF(YsubtypeQ);
   } else {
-    T136 = YPfalse;
+    T138 = YPfalse;
   }
-  T138 = fun_subtypeQ_511;
-  T135 = CALL2(1,VARREF(YPdefine_method),T136,T138);
-  VARSET(YsubtypeQ,T135);
-  T139 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLsubclassG),VARREF(YLsingletonG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_512 = YPmet(FUNCODEREF(fun_subtypeQ_512),LITREF(lit_368),T139,ENVNUL,PNUL,YPfalse);
-  T142 = BOUNDP(YsubtypeQ);
-  if (T142 != YPfalse) {
-    T141 = VARREF(YsubtypeQ);
-  } else {
-    T141 = YPfalse;
-  }
-  T143 = fun_subtypeQ_512;
-  T140 = CALL2(1,VARREF(YPdefine_method),T141,T143);
-  VARSET(YsubtypeQ,T140);
-  T144 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLclassG),VARREF(YLsubclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_513 = YPmet(FUNCODEREF(fun_subtypeQ_513),LITREF(lit_368),T144,ENVNUL,PNUL,YPfalse);
+  T140 = fun_subtypeQ_512;
+  T137 = CALL2(1,VARREF(YPdefine_method),T138,T140);
+  VARSET(YsubtypeQ,T137);
+  T143 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLclassG),VARREF(YLsingletonG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  T142 = fun_subtypeQ_513 = YPmet(FUNCODEREF(fun_subtypeQ_513),LITREF(lit_371),T143,ENVNUL,PNUL,YPfalse);
   T147 = BOUNDP(YsubtypeQ);
   if (T147 != YPfalse) {
     T146 = VARREF(YsubtypeQ);
@@ -13198,224 +13275,260 @@ loop:
   }
   T148 = fun_subtypeQ_513;
   T145 = CALL2(1,VARREF(YPdefine_method),T146,T148);
-  VARSET(YsubtypeQ,T145);
-  T149 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLsubclassG),VARREF(YLsubclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_514 = YPmet(FUNCODEREF(fun_subtypeQ_514),LITREF(lit_368),T149,ENVNUL,PNUL,YPfalse);
-  T152 = BOUNDP(YsubtypeQ);
-  if (T152 != YPfalse) {
-    T151 = VARREF(YsubtypeQ);
-  } else {
-    T151 = YPfalse;
-  }
-  T153 = fun_subtypeQ_514;
-  T150 = CALL2(1,VARREF(YPdefine_method),T151,T153);
-  VARSET(YsubtypeQ,T150);
-  T154 = YPsig(YPPlist(2,LITREF(lit_232),LITREF(lit_233)),YPPlist(2,VARREF(YLsingletonG),VARREF(YLsubclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_subtypeQ_515 = YPmet(FUNCODEREF(fun_subtypeQ_515),LITREF(lit_368),T154,ENVNUL,PNUL,YPfalse);
-  T157 = BOUNDP(YsubtypeQ);
-  if (T157 != YPfalse) {
-    T156 = VARREF(YsubtypeQ);
-  } else {
-    T156 = YPfalse;
-  }
-  T158 = fun_subtypeQ_515;
-  T155 = CALL2(1,VARREF(YPdefine_method),T156,T158);
-  VARSET(YsubtypeQ,T155);
-  lit_369 = YPPsym((P)"isa?");
-  T160 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_222)),YPPlist(2,VARREF(YLanyG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  T159 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_369),T160,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(YisaQ,T159);
-  T161 = YPsig(YPPlist(2,LITREF(lit_221),LITREF(lit_222)),YPPlist(2,VARREF(YLanyG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_isaQ_516 = YPmet(FUNCODEREF(fun_isaQ_516),LITREF(lit_369),T161,ENVNUL,PNUL,YPfalse);
-  T164 = BOUNDP(YisaQ);
-  if (T164 != YPfalse) {
-    T163 = VARREF(YisaQ);
-  } else {
-    T163 = YPfalse;
-  }
-  T165 = fun_isaQ_516;
-  T162 = CALL2(1,VARREF(YPdefine_method),T163,T165);
-  VARSET(YisaQ,T162);
-  T166 = YPsig(YPPlist(2,LITREF(lit_221),LITREF(lit_222)),YPPlist(2,VARREF(YLanyG),VARREF(YLsingletonG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_isaQ_517 = YPmet(FUNCODEREF(fun_isaQ_517),LITREF(lit_369),T166,ENVNUL,PNUL,YPfalse);
-  T169 = BOUNDP(YisaQ);
-  if (T169 != YPfalse) {
-    T168 = VARREF(YisaQ);
-  } else {
-    T168 = YPfalse;
-  }
-  T170 = fun_isaQ_517;
-  T167 = CALL2(1,VARREF(YPdefine_method),T168,T170);
-  VARSET(YisaQ,T167);
-  T171 = YPsig(YPPlist(2,LITREF(lit_221),LITREF(lit_222)),YPPlist(2,VARREF(YLanyG),VARREF(YLsubclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_isaQ_518 = YPmet(FUNCODEREF(fun_isaQ_518),LITREF(lit_369),T171,ENVNUL,PNUL,YPfalse);
-  T174 = BOUNDP(YisaQ);
-  if (T174 != YPfalse) {
-    T173 = VARREF(YisaQ);
-  } else {
-    T173 = YPfalse;
-  }
-  T175 = fun_isaQ_518;
-  T172 = CALL2(1,VARREF(YPdefine_method),T173,T175);
-  VARSET(YisaQ,T172);
-  lit_370 = YPPsym((P)"u");
-  T177 = YPsig(YPPlist(1,LITREF(lit_222)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
-  fun_519 = YPmet(FUNCODEREF(fun_519),YPfalse,T177,ENVNUL,PNUL,YPfalse);
-  T176 = YPsig(YPPlist(2,LITREF(lit_221),LITREF(lit_370)),YPPlist(2,VARREF(YLanyG),VARREF(YLunionG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
-  fun_isaQ_520 = YPmet(FUNCODEREF(fun_isaQ_520),LITREF(lit_369),T176,ENVNUL,PNUL,YPfalse);
-  T180 = BOUNDP(YisaQ);
-  if (T180 != YPfalse) {
-    T179 = VARREF(YisaQ);
-  } else {
-    T179 = YPfalse;
-  }
-  T181 = fun_isaQ_520;
-  T178 = CALL2(1,VARREF(YPdefine_method),T179,T181);
-  VARSET(YisaQ,T178);
-  lit_371 = YPPsym((P)"order-specs");
-  T183 = YPsig(YPPlist(3,LITREF(lit_232),LITREF(lit_233),LITREF(lit_237)),YPPlist(3,VARREF(YLtypeG),VARREF(YLtypeG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
-  T182 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_371),T183,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Yorder_specs,T182);
-  T186 = YPsig(YPPlist(3,LITREF(lit_232),LITREF(lit_233),LITREF(lit_237)),YPPlist(3,VARREF(YLsingletonG),VARREF(YLsingletonG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
-  T185 = fun_order_specs_521 = YPmet(FUNCODEREF(fun_order_specs_521),LITREF(lit_371),T186,ENVNUL,PNUL,YPfalse);
-  T190 = BOUNDP(Yorder_specs);
-  if (T190 != YPfalse) {
-    T189 = VARREF(Yorder_specs);
-  } else {
-    T189 = YPfalse;
-  }
-  T191 = fun_order_specs_521;
-  T188 = CALL2(1,VARREF(YPdefine_method),T189,T191);
-  T187 = VARSET(Yorder_specs,T188);
-  T184 = T187;
-  return T184;
+  T144 = VARSET(YsubtypeQ,T145);
+  T141 = T144;
+  return T141;
 }
 
 P Y___main_12___() {
-  P T53,T52,T51,T50,T49,T48,T47,T46,T45,T44,T43,T42,T41,T40,T39,T38;
-  P T37,T36,T35,T34,T33,T32,T31,T30,T29,T28,T27,T26,T25,T24,T23,T22;
-  P T21,T20,T19,T18,T17,T16,T15,T14,T13,T12,T11,T10,T9,T8,T7,T6;
-  P T5,T4,T3,T2,T1,T0;
+  P T108,T107,T106,T105,T104,T103,T102,T101,T100,T99,T98,T97,T96,T95,T94,T93;
+  P T92,T91,T90,T89,T88,T87,T86,T85,T84,T83,T82,T81,T80,T79,T78,T77;
+  P T76,T75,T74,T73,T72,T71,T70,T69,T68,T67,T66,T65,T64,T63,T62,T61;
+  P T60,T59,T58,T57,T56,T55,T54,T53,T52,T51,T50,T49,T48,T47,T46,T45;
+  P T44,T43,T42,T41,T40,T39,T38,T37,T36,T35,T34,T33,T32,T31,T30,T29;
+  P T28,T27,T26,T25,T24,T23,T22,T21,T20,T19,T18,T17,T16,T15,T14,T13;
+  P T12,T11,T10,T9,T8,T7,T6,T5,T4,T3,T2,T1,T0;
 loop:
-  T0 = YPsig(YPPlist(3,LITREF(lit_232),LITREF(lit_233),LITREF(lit_237)),YPPlist(3,VARREF(YLsingletonG),VARREF(YLtypeG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
-  fun_order_specs_522 = YPmet(FUNCODEREF(fun_order_specs_522),LITREF(lit_371),T0,ENVNUL,PNUL,YPfalse);
-  T3 = BOUNDP(Yorder_specs);
+  T0 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLsingletonG),VARREF(YLsingletonG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_subtypeQ_514 = YPmet(FUNCODEREF(fun_subtypeQ_514),LITREF(lit_371),T0,ENVNUL,PNUL,YPfalse);
+  T3 = BOUNDP(YsubtypeQ);
   if (T3 != YPfalse) {
-    T2 = VARREF(Yorder_specs);
+    T2 = VARREF(YsubtypeQ);
   } else {
     T2 = YPfalse;
   }
-  T4 = fun_order_specs_522;
+  T4 = fun_subtypeQ_514;
   T1 = CALL2(1,VARREF(YPdefine_method),T2,T4);
-  VARSET(Yorder_specs,T1);
-  T5 = YPsig(YPPlist(3,LITREF(lit_232),LITREF(lit_233),LITREF(lit_237)),YPPlist(3,VARREF(YLsubclassG),VARREF(YLsubclassG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
-  fun_order_specs_523 = YPmet(FUNCODEREF(fun_order_specs_523),LITREF(lit_371),T5,ENVNUL,PNUL,YPfalse);
-  T8 = BOUNDP(Yorder_specs);
+  VARSET(YsubtypeQ,T1);
+  T5 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLsubclassG),VARREF(YLsingletonG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_subtypeQ_515 = YPmet(FUNCODEREF(fun_subtypeQ_515),LITREF(lit_371),T5,ENVNUL,PNUL,YPfalse);
+  T8 = BOUNDP(YsubtypeQ);
   if (T8 != YPfalse) {
-    T7 = VARREF(Yorder_specs);
+    T7 = VARREF(YsubtypeQ);
   } else {
     T7 = YPfalse;
   }
-  T9 = fun_order_specs_523;
+  T9 = fun_subtypeQ_515;
   T6 = CALL2(1,VARREF(YPdefine_method),T7,T9);
-  VARSET(Yorder_specs,T6);
-  T10 = YPsig(YPPlist(3,LITREF(lit_232),LITREF(lit_233),LITREF(lit_237)),YPPlist(3,VARREF(YLsubclassG),VARREF(YLclassG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
-  fun_order_specs_524 = YPmet(FUNCODEREF(fun_order_specs_524),LITREF(lit_371),T10,ENVNUL,PNUL,YPfalse);
-  T13 = BOUNDP(Yorder_specs);
+  VARSET(YsubtypeQ,T6);
+  T10 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLclassG),VARREF(YLsubclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_subtypeQ_516 = YPmet(FUNCODEREF(fun_subtypeQ_516),LITREF(lit_371),T10,ENVNUL,PNUL,YPfalse);
+  T13 = BOUNDP(YsubtypeQ);
   if (T13 != YPfalse) {
-    T12 = VARREF(Yorder_specs);
+    T12 = VARREF(YsubtypeQ);
   } else {
     T12 = YPfalse;
   }
-  T14 = fun_order_specs_524;
+  T14 = fun_subtypeQ_516;
   T11 = CALL2(1,VARREF(YPdefine_method),T12,T14);
-  VARSET(Yorder_specs,T11);
-  T15 = YPsig(YPPlist(3,LITREF(lit_232),LITREF(lit_233),LITREF(lit_237)),YPPlist(3,VARREF(YLclassG),VARREF(YLsubclassG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
-  fun_order_specs_525 = YPmet(FUNCODEREF(fun_order_specs_525),LITREF(lit_371),T15,ENVNUL,PNUL,YPfalse);
-  T18 = BOUNDP(Yorder_specs);
+  VARSET(YsubtypeQ,T11);
+  T15 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLsubclassG),VARREF(YLsubclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_subtypeQ_517 = YPmet(FUNCODEREF(fun_subtypeQ_517),LITREF(lit_371),T15,ENVNUL,PNUL,YPfalse);
+  T18 = BOUNDP(YsubtypeQ);
   if (T18 != YPfalse) {
-    T17 = VARREF(Yorder_specs);
+    T17 = VARREF(YsubtypeQ);
   } else {
     T17 = YPfalse;
   }
-  T19 = fun_order_specs_525;
+  T19 = fun_subtypeQ_517;
   T16 = CALL2(1,VARREF(YPdefine_method),T17,T19);
-  VARSET(Yorder_specs,T16);
-  T20 = YPsig(YPPlist(3,LITREF(lit_232),LITREF(lit_233),LITREF(lit_237)),YPPlist(3,VARREF(YLclassG),VARREF(YLclassG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
-  fun_order_specs_526 = YPmet(FUNCODEREF(fun_order_specs_526),LITREF(lit_371),T20,ENVNUL,PNUL,YPfalse);
-  T23 = BOUNDP(Yorder_specs);
+  VARSET(YsubtypeQ,T16);
+  T20 = YPsig(YPPlist(2,LITREF(lit_234),LITREF(lit_235)),YPPlist(2,VARREF(YLsingletonG),VARREF(YLsubclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_subtypeQ_518 = YPmet(FUNCODEREF(fun_subtypeQ_518),LITREF(lit_371),T20,ENVNUL,PNUL,YPfalse);
+  T23 = BOUNDP(YsubtypeQ);
   if (T23 != YPfalse) {
-    T22 = VARREF(Yorder_specs);
+    T22 = VARREF(YsubtypeQ);
   } else {
     T22 = YPfalse;
   }
-  T24 = fun_order_specs_526;
+  T24 = fun_subtypeQ_518;
   T21 = CALL2(1,VARREF(YPdefine_method),T22,T24);
-  VARSET(Yorder_specs,T21);
-  T25 = YPsig(YPPlist(3,LITREF(lit_232),LITREF(lit_233),LITREF(lit_237)),YPPlist(3,VARREF(YLtypeG),VARREF(YLtypeG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
-  fun_order_specs_527 = YPmet(FUNCODEREF(fun_order_specs_527),LITREF(lit_371),T25,ENVNUL,PNUL,YPfalse);
-  T28 = BOUNDP(Yorder_specs);
-  if (T28 != YPfalse) {
-    T27 = VARREF(Yorder_specs);
+  VARSET(YsubtypeQ,T21);
+  lit_372 = YPPsym((P)"isa?");
+  T26 = YPsig(YPPlist(2,LITREF(lit_10),LITREF(lit_224)),YPPlist(2,VARREF(YLanyG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  T25 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_372),T26,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(YisaQ,T25);
+  T27 = YPsig(YPPlist(2,LITREF(lit_223),LITREF(lit_224)),YPPlist(2,VARREF(YLanyG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_isaQ_519 = YPmet(FUNCODEREF(fun_isaQ_519),LITREF(lit_372),T27,ENVNUL,PNUL,YPfalse);
+  T30 = BOUNDP(YisaQ);
+  if (T30 != YPfalse) {
+    T29 = VARREF(YisaQ);
   } else {
-    T27 = YPfalse;
+    T29 = YPfalse;
   }
-  T29 = fun_order_specs_527;
-  T26 = CALL2(1,VARREF(YPdefine_method),T27,T29);
-  VARSET(Yorder_specs,T26);
-  lit_372 = YPPsym((P)"may-isa?");
-  T31 = YPsig(YPPlist(2,LITREF(lit_156),LITREF(lit_222)),YPPlist(2,VARREF(YLclassG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
-  T30 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_372),T31,Ynil,YPfalse,YPfalse,YPfalse);
-  VARSET(Ymay_isaQ,T30);
-  T32 = YPsig(YPPlist(2,LITREF(lit_156),LITREF(lit_222)),YPPlist(2,VARREF(YLclassG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
-  fun_may_isaQ_528 = YPmet(FUNCODEREF(fun_may_isaQ_528),LITREF(lit_372),T32,ENVNUL,PNUL,YPfalse);
-  T35 = BOUNDP(Ymay_isaQ);
+  T31 = fun_isaQ_519;
+  T28 = CALL2(1,VARREF(YPdefine_method),T29,T31);
+  VARSET(YisaQ,T28);
+  T32 = YPsig(YPPlist(2,LITREF(lit_223),LITREF(lit_224)),YPPlist(2,VARREF(YLanyG),VARREF(YLsingletonG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_isaQ_520 = YPmet(FUNCODEREF(fun_isaQ_520),LITREF(lit_372),T32,ENVNUL,PNUL,YPfalse);
+  T35 = BOUNDP(YisaQ);
   if (T35 != YPfalse) {
-    T34 = VARREF(Ymay_isaQ);
+    T34 = VARREF(YisaQ);
   } else {
     T34 = YPfalse;
   }
-  T36 = fun_may_isaQ_528;
+  T36 = fun_isaQ_520;
   T33 = CALL2(1,VARREF(YPdefine_method),T34,T36);
-  VARSET(Ymay_isaQ,T33);
-  T37 = YPsig(YPPlist(2,LITREF(lit_156),LITREF(lit_222)),YPPlist(2,VARREF(YLclassG),VARREF(YLsingletonG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
-  fun_may_isaQ_529 = YPmet(FUNCODEREF(fun_may_isaQ_529),LITREF(lit_372),T37,ENVNUL,PNUL,YPfalse);
-  T40 = BOUNDP(Ymay_isaQ);
+  VARSET(YisaQ,T33);
+  T37 = YPsig(YPPlist(2,LITREF(lit_223),LITREF(lit_224)),YPPlist(2,VARREF(YLanyG),VARREF(YLsubclassG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_isaQ_521 = YPmet(FUNCODEREF(fun_isaQ_521),LITREF(lit_372),T37,ENVNUL,PNUL,YPfalse);
+  T40 = BOUNDP(YisaQ);
   if (T40 != YPfalse) {
-    T39 = VARREF(Ymay_isaQ);
+    T39 = VARREF(YisaQ);
   } else {
     T39 = YPfalse;
   }
-  T41 = fun_may_isaQ_529;
+  T41 = fun_isaQ_521;
   T38 = CALL2(1,VARREF(YPdefine_method),T39,T41);
-  VARSET(Ymay_isaQ,T38);
-  T42 = YPsig(YPPlist(2,LITREF(lit_156),LITREF(lit_222)),YPPlist(2,VARREF(YLclassG),VARREF(YLsubclassG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
-  fun_may_isaQ_530 = YPmet(FUNCODEREF(fun_may_isaQ_530),LITREF(lit_372),T42,ENVNUL,PNUL,YPfalse);
-  T45 = BOUNDP(Ymay_isaQ);
-  if (T45 != YPfalse) {
-    T44 = VARREF(Ymay_isaQ);
+  VARSET(YisaQ,T38);
+  lit_373 = YPPsym((P)"u");
+  T43 = YPsig(YPPlist(1,LITREF(lit_224)),YPPlist(1,VARREF(YLanyG)),YPfalse,YPint((P)1),VARREF(YLanyG),Ynil);
+  fun_522 = YPmet(FUNCODEREF(fun_522),YPfalse,T43,ENVNUL,PNUL,YPfalse);
+  T42 = YPsig(YPPlist(2,LITREF(lit_223),LITREF(lit_373)),YPPlist(2,VARREF(YLanyG),VARREF(YLunionG)),YPfalse,YPint((P)2),VARREF(YLlogG),Ynil);
+  fun_isaQ_523 = YPmet(FUNCODEREF(fun_isaQ_523),LITREF(lit_372),T42,ENVNUL,PNUL,YPfalse);
+  T46 = BOUNDP(YisaQ);
+  if (T46 != YPfalse) {
+    T45 = VARREF(YisaQ);
   } else {
-    T44 = YPfalse;
+    T45 = YPfalse;
   }
-  T46 = fun_may_isaQ_530;
-  T43 = CALL2(1,VARREF(YPdefine_method),T44,T46);
-  VARSET(Ymay_isaQ,T43);
-  lit_373 = YPPsym((P)"some?");
-  lit_374 = YPPsym((P)"all?");
-  lit_375 = YPPsym((P)"elts");
-  T48 = YPsig(YPPlist(3,LITREF(lit_373),LITREF(lit_374),LITREF(lit_375)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
-  fun_loop_531 = YPmet(FUNCODEREF(fun_loop_531),LITREF(lit_5),T48,ENVNUL,PNUL,YPfalse);
-  T47 = YPsig(YPPlist(2,LITREF(lit_156),LITREF(lit_222)),YPPlist(2,VARREF(YLclassG),VARREF(YLunionG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
-  fun_may_isaQ_532 = YPmet(FUNCODEREF(fun_may_isaQ_532),LITREF(lit_372),T47,ENVNUL,PNUL,YPfalse);
-  T51 = BOUNDP(Ymay_isaQ);
-  if (T51 != YPfalse) {
-    T50 = VARREF(Ymay_isaQ);
+  T47 = fun_isaQ_523;
+  T44 = CALL2(1,VARREF(YPdefine_method),T45,T47);
+  VARSET(YisaQ,T44);
+  lit_374 = YPPsym((P)"order-specs");
+  T49 = YPsig(YPPlist(3,LITREF(lit_234),LITREF(lit_235),LITREF(lit_239)),YPPlist(3,VARREF(YLtypeG),VARREF(YLtypeG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
+  T48 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_374),T49,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Yorder_specs,T48);
+  T50 = YPsig(YPPlist(3,LITREF(lit_234),LITREF(lit_235),LITREF(lit_239)),YPPlist(3,VARREF(YLsingletonG),VARREF(YLsingletonG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
+  fun_order_specs_524 = YPmet(FUNCODEREF(fun_order_specs_524),LITREF(lit_374),T50,ENVNUL,PNUL,YPfalse);
+  T53 = BOUNDP(Yorder_specs);
+  if (T53 != YPfalse) {
+    T52 = VARREF(Yorder_specs);
   } else {
-    T50 = YPfalse;
+    T52 = YPfalse;
   }
-  T52 = fun_may_isaQ_532;
-  T49 = CALL2(1,VARREF(YPdefine_method),T50,T52);
-  VARSET(Ymay_isaQ,T49);
+  T54 = fun_order_specs_524;
+  T51 = CALL2(1,VARREF(YPdefine_method),T52,T54);
+  VARSET(Yorder_specs,T51);
+  T55 = YPsig(YPPlist(3,LITREF(lit_234),LITREF(lit_235),LITREF(lit_239)),YPPlist(3,VARREF(YLsingletonG),VARREF(YLtypeG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
+  fun_order_specs_525 = YPmet(FUNCODEREF(fun_order_specs_525),LITREF(lit_374),T55,ENVNUL,PNUL,YPfalse);
+  T58 = BOUNDP(Yorder_specs);
+  if (T58 != YPfalse) {
+    T57 = VARREF(Yorder_specs);
+  } else {
+    T57 = YPfalse;
+  }
+  T59 = fun_order_specs_525;
+  T56 = CALL2(1,VARREF(YPdefine_method),T57,T59);
+  VARSET(Yorder_specs,T56);
+  T60 = YPsig(YPPlist(3,LITREF(lit_234),LITREF(lit_235),LITREF(lit_239)),YPPlist(3,VARREF(YLsubclassG),VARREF(YLsubclassG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
+  fun_order_specs_526 = YPmet(FUNCODEREF(fun_order_specs_526),LITREF(lit_374),T60,ENVNUL,PNUL,YPfalse);
+  T63 = BOUNDP(Yorder_specs);
+  if (T63 != YPfalse) {
+    T62 = VARREF(Yorder_specs);
+  } else {
+    T62 = YPfalse;
+  }
+  T64 = fun_order_specs_526;
+  T61 = CALL2(1,VARREF(YPdefine_method),T62,T64);
+  VARSET(Yorder_specs,T61);
+  T65 = YPsig(YPPlist(3,LITREF(lit_234),LITREF(lit_235),LITREF(lit_239)),YPPlist(3,VARREF(YLsubclassG),VARREF(YLclassG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
+  fun_order_specs_527 = YPmet(FUNCODEREF(fun_order_specs_527),LITREF(lit_374),T65,ENVNUL,PNUL,YPfalse);
+  T68 = BOUNDP(Yorder_specs);
+  if (T68 != YPfalse) {
+    T67 = VARREF(Yorder_specs);
+  } else {
+    T67 = YPfalse;
+  }
+  T69 = fun_order_specs_527;
+  T66 = CALL2(1,VARREF(YPdefine_method),T67,T69);
+  VARSET(Yorder_specs,T66);
+  T70 = YPsig(YPPlist(3,LITREF(lit_234),LITREF(lit_235),LITREF(lit_239)),YPPlist(3,VARREF(YLclassG),VARREF(YLsubclassG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
+  fun_order_specs_528 = YPmet(FUNCODEREF(fun_order_specs_528),LITREF(lit_374),T70,ENVNUL,PNUL,YPfalse);
+  T73 = BOUNDP(Yorder_specs);
+  if (T73 != YPfalse) {
+    T72 = VARREF(Yorder_specs);
+  } else {
+    T72 = YPfalse;
+  }
+  T74 = fun_order_specs_528;
+  T71 = CALL2(1,VARREF(YPdefine_method),T72,T74);
+  VARSET(Yorder_specs,T71);
+  T75 = YPsig(YPPlist(3,LITREF(lit_234),LITREF(lit_235),LITREF(lit_239)),YPPlist(3,VARREF(YLclassG),VARREF(YLclassG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
+  fun_order_specs_529 = YPmet(FUNCODEREF(fun_order_specs_529),LITREF(lit_374),T75,ENVNUL,PNUL,YPfalse);
+  T78 = BOUNDP(Yorder_specs);
+  if (T78 != YPfalse) {
+    T77 = VARREF(Yorder_specs);
+  } else {
+    T77 = YPfalse;
+  }
+  T79 = fun_order_specs_529;
+  T76 = CALL2(1,VARREF(YPdefine_method),T77,T79);
+  VARSET(Yorder_specs,T76);
+  T80 = YPsig(YPPlist(3,LITREF(lit_234),LITREF(lit_235),LITREF(lit_239)),YPPlist(3,VARREF(YLtypeG),VARREF(YLtypeG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLtupG),Ynil);
+  fun_order_specs_530 = YPmet(FUNCODEREF(fun_order_specs_530),LITREF(lit_374),T80,ENVNUL,PNUL,YPfalse);
+  T83 = BOUNDP(Yorder_specs);
+  if (T83 != YPfalse) {
+    T82 = VARREF(Yorder_specs);
+  } else {
+    T82 = YPfalse;
+  }
+  T84 = fun_order_specs_530;
+  T81 = CALL2(1,VARREF(YPdefine_method),T82,T84);
+  VARSET(Yorder_specs,T81);
+  lit_375 = YPPsym((P)"may-isa?");
+  T86 = YPsig(YPPlist(2,LITREF(lit_158),LITREF(lit_224)),YPPlist(2,VARREF(YLclassG),VARREF(YLtypeG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
+  T85 = YPgen((P)YPgen_code((P)YPdispatch),LITREF(lit_375),T86,Ynil,YPfalse,YPfalse,YPfalse);
+  VARSET(Ymay_isaQ,T85);
+  T87 = YPsig(YPPlist(2,LITREF(lit_158),LITREF(lit_224)),YPPlist(2,VARREF(YLclassG),VARREF(YLclassG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
+  fun_may_isaQ_531 = YPmet(FUNCODEREF(fun_may_isaQ_531),LITREF(lit_375),T87,ENVNUL,PNUL,YPfalse);
+  T90 = BOUNDP(Ymay_isaQ);
+  if (T90 != YPfalse) {
+    T89 = VARREF(Ymay_isaQ);
+  } else {
+    T89 = YPfalse;
+  }
+  T91 = fun_may_isaQ_531;
+  T88 = CALL2(1,VARREF(YPdefine_method),T89,T91);
+  VARSET(Ymay_isaQ,T88);
+  T92 = YPsig(YPPlist(2,LITREF(lit_158),LITREF(lit_224)),YPPlist(2,VARREF(YLclassG),VARREF(YLsingletonG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
+  fun_may_isaQ_532 = YPmet(FUNCODEREF(fun_may_isaQ_532),LITREF(lit_375),T92,ENVNUL,PNUL,YPfalse);
+  T95 = BOUNDP(Ymay_isaQ);
+  if (T95 != YPfalse) {
+    T94 = VARREF(Ymay_isaQ);
+  } else {
+    T94 = YPfalse;
+  }
+  T96 = fun_may_isaQ_532;
+  T93 = CALL2(1,VARREF(YPdefine_method),T94,T96);
+  VARSET(Ymay_isaQ,T93);
+  T97 = YPsig(YPPlist(2,LITREF(lit_158),LITREF(lit_224)),YPPlist(2,VARREF(YLclassG),VARREF(YLsubclassG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
+  fun_may_isaQ_533 = YPmet(FUNCODEREF(fun_may_isaQ_533),LITREF(lit_375),T97,ENVNUL,PNUL,YPfalse);
+  T100 = BOUNDP(Ymay_isaQ);
+  if (T100 != YPfalse) {
+    T99 = VARREF(Ymay_isaQ);
+  } else {
+    T99 = YPfalse;
+  }
+  T101 = fun_may_isaQ_533;
+  T98 = CALL2(1,VARREF(YPdefine_method),T99,T101);
+  VARSET(Ymay_isaQ,T98);
+  lit_376 = YPPsym((P)"some?");
+  lit_377 = YPPsym((P)"all?");
+  lit_378 = YPPsym((P)"elts");
+  T103 = YPsig(YPPlist(3,LITREF(lit_376),LITREF(lit_377),LITREF(lit_378)),YPPlist(3,VARREF(YLanyG),VARREF(YLanyG),VARREF(YLanyG)),YPfalse,YPint((P)3),VARREF(YLanyG),Ynil);
+  fun_loop_534 = YPmet(FUNCODEREF(fun_loop_534),LITREF(lit_5),T103,ENVNUL,PNUL,YPfalse);
+  T102 = YPsig(YPPlist(2,LITREF(lit_158),LITREF(lit_224)),YPPlist(2,VARREF(YLclassG),VARREF(YLunionG)),YPfalse,YPint((P)2),VARREF(YLtupG),Ynil);
+  fun_may_isaQ_535 = YPmet(FUNCODEREF(fun_may_isaQ_535),LITREF(lit_375),T102,ENVNUL,PNUL,YPfalse);
+  T106 = BOUNDP(Ymay_isaQ);
+  if (T106 != YPfalse) {
+    T105 = VARREF(Ymay_isaQ);
+  } else {
+    T105 = YPfalse;
+  }
+  T107 = fun_may_isaQ_535;
+  T104 = CALL2(1,VARREF(YPdefine_method),T105,T107);
+  VARSET(Ymay_isaQ,T104);
   VARSET(YTboot_macro_module_namesT,Ynil);
   VARSET(YTboot_macro_namesT,Ynil);
   VARSET(YTboot_macro_expandersT,Ynil);
@@ -13445,8 +13558,8 @@ loop:
   if (YPfalse != YPfalse) {
   } else {
   }
-  T53 = YPfalse;
-  return T53;
+  T108 = YPfalse;
+  return T108;
 }
 
 /* MODULE ENVIRONMENT INFORMATION */
@@ -13461,949 +13574,957 @@ static IMPORT_INFO import_infos[] = {
 };
 
 static BINDING_INFO binding_infos[] = {
-  {"set", NULL},
-  {"sig-nary?", &Ysig_naryQ},
-  {"<int>", &YLintG},
-  {"%app-filename", NULL},
-  {"<str>", &YLstrG},
-  {"%loc-off-setter", NULL},
-  {"%%sym", NULL},
-  {"%vec", NULL},
-  {"fun-arity", &Yfun_arity},
-  {"fun", NULL},
-  {"*boot-macro-module-names*", &YTboot_macro_module_namesT},
-  {"%fi2f", NULL},
-  {"@all?", &YOallQ},
-  {"class-id", &Yclass_id},
-  {"%prop", &YPprop},
-  {"sig-unification-vars-setter", &Ysig_unification_vars_setter},
-  {"@tup", &YOtup},
-  {"%fp-reg", NULL},
-  {"%early-dispatch", &YPearly_dispatch},
-  {"opts-vec-storage", &Yopts_vec_storage},
-  {"type-class-setter", &Ytype_class_setter},
-  {"%gen-mets-setter", NULL},
-  {"%isa", &YPisa},
-  {"%bb", NULL},
-  {"%prop-init", NULL},
-  {"%eof-object", NULL},
-  {"%gen-refs-setter", NULL},
-  {"try", NULL},
-  {"%met-sig-setter", NULL},
-  {"tup", &Ytup},
-  {"gen-lookup-1-using", NULL},
-  {"%met-refs", NULL},
-  {"%ready?", NULL},
-  {"%binding-name", NULL},
-  {"%i<", NULL},
-  {"%pair", NULL},
-  {"%gen-cache-classes", NULL},
-  {"class-prop-len-setter", &Yclass_prop_len_setter},
-  {"@head-setter", NULL},
-  {"dp", NULL},
-  {"sig-unification-vars", &Ysig_unification_vars},
-  {"<mag>", &YLmagG},
-  {"%define-props", NULL},
-  {"%class", NULL},
-  {"%sig-names", NULL},
-  {"%i+", NULL},
-  {"@empty?", NULL},
-  {"ds", NULL},
-  {"$gen-cache-singletons-offset", &YDgen_cache_singletons_offset},
-  {"type-class", &Ytype_class},
-  {"unexec", &Yunexec},
-  {"%opts-count-setter", NULL},
-  {"fun-sig-setter", &Yfun_sig_setter},
-  {"%cu", NULL},
-  {"<union>", &YLunionG},
-  {"prop-getter-setter", &Yprop_getter_setter},
-  {"%build-runtime-modules", NULL},
-  {"%class-gens", NULL},
-  {"one-nil", &Yone_nil},
-  {"%object-of", NULL},
-  {"%f*", NULL},
-  {"%facos", NULL},
-  {"class-prop-len", &Yclass_prop_len},
-  {"def-object-class-accessor", NULL},
-  {"@rev!", &YOrevX},
-  {"loc", NULL},
-  {"%met-code-setter", NULL},
-  {"$tag-len", NULL},
-  {"@+", NULL},
-  {"force-names-into-boot-module", NULL},
-  {"keyboard-interrupt", &Ykeyboard_interrupt},
-  {"class-direct-props-setter", &Yclass_direct_props_setter},
-  {"@len", NULL},
-  {"@gen-cache-singletons-setter", &YOgen_cache_singletons_setter},
-  {"%class-props-setter", NULL},
-  {"head", &Yhead},
-  {"fun-sig", &Yfun_sig},
-  {"%flog", NULL},
-  {"%%sfab", NULL},
-  {"when", NULL},
-  {"@velt-setter", &YOvelt_setter},
-  {"<num>", &YLnumG},
-  {"<vec>", &YLvecG},
-  {"prop-getter", &Yprop_getter},
-  {"%prop-init-setter", NULL},
-  {"%unexec", NULL},
-  {"%indirect-object?", NULL},
-  {"@any?", &YOanyQ},
-  {"%prop-setter-setter", NULL},
-  {"fun-spec", &Yfun_spec},
-  {"prop-init-setter", &Yprop_init_setter},
-  {"%os-val", NULL},
-  {"%class-parents", NULL},
-  {"%flo", NULL},
-  {"wrong-number-arguments-error", &Ywrong_number_arguments_error},
-  {"$missed-dispatch", &YDmissed_dispatch},
-  {"%ready", NULL},
-  {"handler-info-arguments", &Yhandler_info_arguments},
-  {"@prune-mets-by-type-at", &YOprune_mets_by_type_at},
-  {"class-direct-props", &Yclass_direct_props},
-  {"%prop-type-setter", NULL},
-  {"%file-exists?", NULL},
-  {"%define-parent", NULL},
-  {"mif", NULL},
-  {"export", NULL},
-  {"fun-src-setter", &Yfun_src_setter},
-  {"<met>", &YLmetG},
-  {"class-descendents-setter", &Yclass_descendents_setter},
-  {"@cat2", &YOcat2},
-  {"---main-0---", NULL},
-  {"%false", &YPfalse},
-  {"%class-id", NULL},
-  {"@type-equal?", &YOtype_equalQ},
-  {"%fatan2", NULL},
-  {"%opts", NULL},
-  {"---main-1---", NULL},
-  {"*boot-macro-expanders*", &YTboot_macro_expandersT},
-  {"%lu", NULL},
-  {"%str!", NULL},
-  {"prop-init", &Yprop_init},
-  {"@gen-cache-singletons", &YOgen_cache_singletons},
-  {"%puts", NULL},
-  {"order-mets", &Yorder_mets},
-  {"fun-nary?", &Yfun_naryQ},
-  {"%define-method", &YPdefine_method},
-  {"%iu", NULL},
-  {"@@empty?", &YOOemptyQ},
-  {"%fu", NULL},
-  {"<subclass>", &YLsubclassG},
-  {"%sig-val", NULL},
-  {"gen-cache-singletons-setter", &Ygen_cache_singletons_setter},
-  {"prop-value-at", NULL},
-  {"*macros-ok?*", &YTmacros_okQT},
-  {"%f/", NULL},
-  {"fun-src", &Yfun_src},
-  {"%fcos", NULL},
-  {"class-descendents", &Yclass_descendents},
-  {"%class-gens-setter", NULL},
-  {"%%prop", NULL},
-  {"%i<<<", NULL},
-  {"%sig", NULL},
-  {"%class-of", NULL},
-  {"gen-refs-setter", &Ygen_refs_setter},
-  {"@tail-setter", NULL},
-  {"dl", NULL},
-  {"%class-row", NULL},
-  {"@subclass?", NULL},
-  {"%met-sig", NULL},
-  {"%fsqrt", NULL},
-  {"fin", NULL},
-  {"%file-mtime", NULL},
-  {"@velt", &YOvelt},
-  {"dc", NULL},
-  {"%check-call-types", NULL},
-  {"%type-elts-setter", NULL},
-  {"@fun-mets-setter", &YOfun_mets_setter},
-  {"---main-8---", NULL},
-  {"%unlink-stack", NULL},
-  {"%gen-cache-missable?", NULL},
-  {"<chr>", &YLchrG},
-  {"<flat>", &YLflatG},
-  {"gen-cache-singletons", &Ygen_cache_singletons},
-  {"%object-shells", NULL},
-  {"%sig-val-setter", NULL},
-  {"%file-type", NULL},
-  {"%gen-name-setter", NULL},
-  {"%met-refs-setter", NULL},
-  {"%sig-nary?-setter", NULL},
-  {"%fb", NULL},
-  {"$num-int-bits", &YDnum_int_bits},
-  {"sig-specs-setter", &Ysig_specs_setter},
-  {"---main-9---", NULL},
-  {"@head", NULL},
-  {"%met-prop-len", &YPmet_prop_len},
-  {"subtype?", &YsubtypeQ},
-  {"%raw-alloc", NULL},
-  {"gen-refs", &Ygen_refs},
-  {"%str-eq?-loop", NULL},
-  {"not", &Ynot},
-  {"class-forward", &Yclass_forward},
-  {"class-forward-setter", &Yclass_forward_setter},
-  {"ct", NULL},
-  {"%gen-src", NULL},
-  {"<body>", &YLbodyG},
-  {"@telt", &YOtelt},
-  {"%put", NULL},
-  {"%loc-val", NULL},
-  {"class-ordered-parents", &Yclass_ordered_parents},
-  {"opts-count-setter", &Yopts_count_setter},
-  {"gen-lookup-miss-1", &Ygen_lookup_miss_1},
-  {"<props>", &YLpropsG},
-  {"%sig-arity", NULL},
-  {"@gen-cache-arg-pos-setter", &YOgen_cache_arg_pos_setter},
-  {"%opts-count", NULL},
-  {"%opts-vec-vec-setter", NULL},
-  {"@class-isa?", NULL},
-  {"@pair", NULL},
-  {"fun-specs-setter", &Yfun_specs_setter},
-  {"$min-int", &YDmin_int},
-  {"fab-sym", &Yfab_sym},
-  {"%%len", NULL},
-  {"lst", &Ylst},
-  {"%trace-on", NULL},
-  {"sig-specs", &Ysig_specs},
-  {"%code-ref", NULL},
-  {"%do-stack-frames", NULL},
-  {"%allocate-stack", NULL},
-  {"@alter", &YOalter},
-  {"%sb", NULL},
-  {"%prop-setter", NULL},
-  {"sig-val-setter", &Ysig_val_setter},
-  {"@fun-mets", &YOfun_mets},
-  {"<singleton>", &YLsingletonG},
-  {"%sig-unification-vars", NULL},
-  {"%class-props", NULL},
-  {"%met-code", NULL},
-  {"%subclass", NULL},
-  {"opts-count", &Yopts_count},
-  {"@order-specs", &YOorder_specs},
-  {"%ftanh", NULL},
-  {"%type-object-setter", NULL},
-  {"forward-class", &Yforward_class},
-  {"<fun>", &YLfunG},
-  {"%define-structure-accessors", NULL},
-  {"@<", NULL},
-  {"%fsinh", NULL},
-  {"%vec!", NULL},
-  {"%define-accessor", NULL},
-  {"---main-4---", NULL},
-  {"$adr-tag", NULL},
-  {"%define-getter", NULL},
-  {"@fill", &YOfill},
-  {"%sig-names-setter", NULL},
-  {"order-specs", &Yorder_specs},
-  {"%prop-owner", NULL},
-  {"prop-bound?", &Yprop_boundQ},
-  {"@mets-unspecialized-at?", &YOmets_unspecialized_atQ},
-  {"%symbols-ready?", &YPsymbols_readyQ},
-  {"%flo-dat-setter", NULL},
-  {"%ft/", NULL},
-  {"sym-name-setter", &Ysym_name_setter},
-  {"dg", NULL},
-  {"%define-setter", NULL},
-  {"%%apply", NULL},
-  {"%met-name", NULL},
-  {"%gen-code-setter", NULL},
-  {"sig-val", &Ysig_val},
-  {"<lst>", &YLlstG},
-  {"%met", NULL},
-  {"%define-boxed-structure", NULL},
-  {"%fatan", NULL},
-  {"fab-class", &Yfab_class},
-  {"<log>", &YLlogG},
-  {"@gen-cache-arg-pos", &YOgen_cache_arg_pos},
-  {"fun-specs", &Yfun_specs},
-  {"type-object", &Ytype_object},
-  {"dss", NULL},
-  {"%prop-type", NULL},
-  {"%velt-setter", NULL},
-  {"%%vfab", NULL},
-  {"met-app-unify", &Ymet_app_unify},
-  {"quote", NULL},
-  {"%union", NULL},
-  {"%*used-symbols-too-early*", &YPTused_symbols_too_earlyT},
-  {"add-prop", &Yadd_prop},
   {"prop-owner-setter", &Yprop_owner_setter},
-  {"@class-in?", NULL},
-  {"@@==", &YOOEE},
-  {"file-opening-error", &Yfile_opening_error},
-  {"@fun-unification-vars", &YOfun_unification_vars},
-  {"%opts-vec-count", NULL},
-  {"%class-prop-len", NULL},
-  {"%i-", NULL},
-  {"sym-name", &Ysym_name},
-  {"%prop-owner-setter", NULL},
-  {"*boot-macro-names*", &YTboot_macro_namesT},
-  {"nil", &Ynil},
-  {"%finalize-props", NULL},
-  {"$tag-msk", NULL},
-  {"%empty?", NULL},
-  {"class-parents-setter", &Yclass_parents_setter},
-  {"%str", NULL},
-  {"%prop-getter", NULL},
-  {"fun-name", &Yfun_name},
-  {"dm", NULL},
-  {"gen-lookup-miss-1-using", &Ygen_lookup_miss_1_using},
-  {"%*start-running-at*", &YPTstart_running_atT},
-  {"@precise-spec?", &YOprecise_specQ},
-  {"---main-11---", NULL},
-  {"@union-spec?", &YOunion_specQ},
-  {"<tup>", &YLtupG},
-  {"@singleton-isa?", NULL},
-  {"object-class", &Yobject_class},
-  {"%prop-offset", &YPprop_offset},
-  {"prop-owner", &Yprop_owner},
-  {"fun-refs-setter", &Yfun_refs_setter},
-  {"%i&", NULL},
-  {"%im", NULL},
-  {"del-class", &Ydel_class},
-  {"prop-type-setter", &Yprop_type_setter},
-  {"%prop-elt", NULL},
-  {"%raw-call", NULL},
-  {"%trace-off", NULL},
-  {"---main-2---", NULL},
-  {"%f<", NULL},
-  {"---main-7---", NULL},
-  {"prop-value", &Yprop_value},
-  {"class-parents", &Yclass_parents},
-  {"@oelt", NULL},
-  {"%class-forward-setter", NULL},
-  {"%sig-nary?", NULL},
-  {"@do", &YOdo},
-  {"refab-class", &Yrefab_class},
-  {"%f=", NULL},
-  {"fun-nary?-setter", &Yfun_naryQ_setter},
-  {"%open-out-file", NULL},
-  {"class-props-setter", &Yclass_props_setter},
-  {"gen-cache-arg-pos-setter", &Ygen_cache_arg_pos_setter},
-  {"%rev!", NULL},
-  {"@tail", NULL},
-  {"@not", NULL},
-  {"df", NULL},
-  {"%met-name-setter", NULL},
-  {"fun-refs", &Yfun_refs},
-  {"fun-names-setter", &Yfun_names_setter},
-  {"%chr", NULL},
-  {"%class-forward", NULL},
-  {"%tag-into", NULL},
-  {"<seq>", &YLseqG},
-  {"<any>", &YLanyG},
-  {"prop-type", &Yprop_type},
-  {"incongruent-method-error", &Yincongruent_method_error},
-  {"%fcosh", NULL},
-  {"%with-monitor", &YPwith_monitor},
-  {"handler-info-message", &Yhandler_info_message},
-  {"%sym", NULL},
-  {"rep", NULL},
-  {"%elt", NULL},
-  {"@lst-helper", &YOlst_helper},
-  {"%get", NULL},
-  {"def-fun/sig-accessor", NULL},
-  {"%opts-vec-vec", NULL},
-  {"%int", NULL},
-  {"%object-class-setter", NULL},
-  {"class-props", &Yclass_props},
-  {"%loc-val-setter", NULL},
-  {"gen-cache-arg-pos", &Ygen_cache_arg_pos},
-  {"%class-mets-setter", NULL},
-  {"class-ordered-props", &Yclass_ordered_props},
-  {"%c=", NULL},
-  {"%prop-elt-setter", NULL},
-  {"fun-cache-setter", &Yfun_cache_setter},
-  {"%gen-cache-classes-setter", NULL},
-  {"class-mets-setter", &Yclass_mets_setter},
-  {"%prop-unbound-error", &YPprop_unbound_error},
-  {"%str-eq?", NULL},
-  {"vec", &Yvec},
-  {"prop-value-at-setter", NULL},
-  {"fun-unification-vars-setter", &Yfun_unification_vars_setter},
-  {"<sig>", &YLsigG},
-  {"%tail-setter", NULL},
-  {"%gen-cache-arg-pos", NULL},
-  {"---main-10---", NULL},
-  {"<env>", &YLenvG},
-  {"%i*", NULL},
-  {"%singleton", NULL},
-  {"@fold", &YOfold},
-  {"fun-names", &Yfun_names},
-  {"%compute-parents", NULL},
-  {"<opts-vec>", &YLopts_vecG},
-  {"%fun-cache", NULL},
-  {"find-setter", &Yfind_setter},
-  {"%sig-unification-vars-setter", NULL},
-  {"@mets-subclasses-at", &YOmets_subclasses_at},
-  {"if", NULL},
-  {"sig-names-setter", &Ysig_names_setter},
-  {"%prop-getter-setter", NULL},
-  {"%met-env", NULL},
-  {"%elt-setter", NULL},
-  {"use", NULL},
-  {"%fun-reg", NULL},
-  {"%class-name", NULL},
-  {"fun-cache", &Yfun_cache},
-  {"gen-lookup-1", NULL},
-  {"%gen-sig-setter", NULL},
-  {"class-mets", &Yclass_mets},
-  {"%loc", NULL},
-  {"%open-in-file", NULL},
-  {"@subclass-spec?", &YOsubclass_specQ},
-  {"*report-prop-unbound-errors?*", &YTreport_prop_unbound_errorsQT},
-  {"<mets>", &YLmetsG},
-  {"opts-location-setter", &Yopts_location_setter},
-  {"$getter-not-found", &YDgetter_not_found},
-  {"@all2?", &YOall2Q},
-  {"ensure-singleton-cache", &Yensure_singleton_cache},
-  {"isa", NULL},
-  {"%%mep-apply", NULL},
-  {"or", NULL},
-  {"macro-expand", NULL},
-  {"%head", NULL},
-  {"%i^", NULL},
-  {"@class-direct-props", &YOclass_direct_props},
-  {"%it/", NULL},
-  {"%ir", NULL},
-  {"<replace-generic-restart>", &YLreplace_generic_restartG},
+  {"---main-5---", NULL},
   {"%macro", NULL},
-  {"%type-class-setter", NULL},
-  {"esc", NULL},
-  {"<col>", &YLcolG},
-  {"<class>", &YLclassG},
-  {"sig-names", &Ysig_names},
-  {"%finalize-props!", &YPfinalize_propsX},
-  {"%gen-sig", NULL},
-  {"fun-unification-vars", &Yfun_unification_vars},
-  {"<parents>", &YLparentsG},
-  {"%current-in-port", NULL},
-  {"fab-gen", &Yfab_gen},
-  {"%head-setter", NULL},
-  {"object-props", &Yobject_props},
-  {"---main-6---", NULL},
-  {"sig-arity-setter", &Ysig_arity_setter},
+  {"%prop-setter", NULL},
   {"@fun-nary?", &YOfun_naryQ},
-  {"%next-methods", NULL},
-  {"fun-same-met?", &Yfun_same_metQ},
-  {"opts-location", &Yopts_location},
-  {"%gen-refs", NULL},
-  {"class-row-setter", &Yclass_row_setter},
-  {"%loc-off", NULL},
-  {"%gen-cache-singletons-setter", NULL},
-  {"%add-prop", &YPadd_prop},
-  {"def", NULL},
-  {"%true", &YPtrue},
+  {"@empty?", NULL},
+  {"%newline", NULL},
+  {"sym-name", &Ysym_name},
+  {"export", NULL},
+  {"%class-of", NULL},
+  {"%object-of", NULL},
+  {"@class-direct-props", &YOclass_direct_props},
+  {"<seq>", &YLseqG},
+  {"class-parents-setter", &Yclass_parents_setter},
+  {"%ft/", NULL},
   {"@pick", &YOpick},
+  {"prop-value-at-setter", NULL},
+  {"$max-int", &YDmax_int},
   {"@class<", &YOclassL},
-  {"%prop-dat-at", NULL},
   {"@elt", &YOelt},
-  {"error", &Yerror},
-  {"fun-arity-setter", &Yfun_arity_setter},
-  {"%class-shells", NULL},
-  {"%type-object", NULL},
-  {"@singleton-spec?", &YOsingleton_specQ},
-  {"%i>>>", NULL},
-  {"tail-setter", &Ytail_setter},
-  {"%opts-location-setter", NULL},
-  {"%close-in-port", NULL},
-  {"%sig-arity-setter", NULL},
-  {"sig-arity", &Ysig_arity},
-  {"---main-3---", NULL},
-  {"seq", NULL},
-  {"%selt", NULL},
-  {"%patch-early-generic", &YPpatch_early_generic},
-  {"class-row", &Yclass_row},
-  {"%met-env-setter", NULL},
-  {"fun-code-setter", &Yfun_code_setter},
-  {"and", NULL},
-  {"%symbols", &YPsymbols},
-  {"%class-ancestors-setter", NULL},
-  {"%opts-location", NULL},
-  {"%fab-code-refs", NULL},
-  {"%collect-direct-props", &YPcollect_direct_props},
-  {"%tag", NULL},
-  {"type-elts-setter", &Ytype_elts_setter},
-  {"%class-row-setter", NULL},
-  {"ord-app-mets-1", &Yord_app_mets_1},
-  {"%invoke-debugger", NULL},
-  {"update-instance-for-changed-class", &Yupdate_instance_for_changed_class},
-  {"ct-also", NULL},
-  {"<opts>", &YLoptsG},
-  {"%class-descendents", NULL},
-  {"%opts-vec-location", NULL},
-  {"@fun-specs", &YOfun_specs},
+  {"%class-gens", NULL},
   {"%close-out-port", NULL},
+  {"fun-name", &Yfun_name},
+  {"@singleton-spec?", &YOsingleton_specQ},
+  {"fun-unification-vars-setter", &Yfun_unification_vars_setter},
+  {"%opts-vec-location-setter", NULL},
+  {"%i*", NULL},
+  {"%eof-object", NULL},
+  {"%prop-init-setter", NULL},
+  {"%i+", NULL},
+  {"dg", NULL},
+  {"prop-owner", &Yprop_owner},
+  {"$tag-msk", NULL},
+  {"%im", NULL},
+  {"@subclass?", NULL},
+  {"quote", NULL},
+  {"gen-lookup", NULL},
+  {"@olen", NULL},
+  {"use/export", NULL},
+  {"%prop-offset", &YPprop_offset},
+  {"prop-type-setter", &Yprop_type_setter},
+  {"%patch-early-generic", &YPpatch_early_generic},
+  {"bound?", NULL},
+  {"%prop-dat-at", NULL},
+  {"@singleton-isa?", NULL},
+  {"class-parents", &Yclass_parents},
+  {"ord-app-mets-1", &Yord_app_mets_1},
+  {"%selt", NULL},
+  {"update-instance-for-changed-class", &Yupdate_instance_for_changed_class},
+  {"%peek", NULL},
+  {"<opts>", &YLoptsG},
+  {"find-getter", &Yfind_getter},
+  {"try", NULL},
+  {"@fun-specs", &YOfun_specs},
+  {"fun-refs-setter", &Yfun_refs_setter},
+  {"%head", NULL},
   {"@del-dups", &YOdel_dups},
-  {"tail", &Ytail},
+  {"%define-accessor", NULL},
+  {"class-props-setter", &Yclass_props_setter},
+  {"%%apply", NULL},
   {"@order-specs-class", &YOorder_specs_class},
   {"type-error", &Ytype_error},
-  {"%class-id-setter", NULL},
-  {"%met-src-setter", NULL},
-  {"@add", NULL},
-  {"%velt", NULL},
-  {"%os-name", NULL},
-  {"%gen-cache-singletons", NULL},
-  {"let", NULL},
-  {"%class-direct-props-setter", NULL},
-  {"class-name-setter", &Yclass_name_setter},
-  {"%flo-dat", NULL},
+  {"%define-props", NULL},
+  {"%class-forward-setter", NULL},
+  {"<type>", &YLtypeG},
+  {"%f-", NULL},
   {"ord-app-mets", &Yord_app_mets},
   {"fun-val-setter", &Yfun_val_setter},
-  {"%class-mets", NULL},
-  {"fun-code", &Yfun_code},
-  {"%class-direct-props", NULL},
-  {"<gen-cache>", &YLgen_cacheG},
-  {"@fun-names", &YOfun_names},
-  {"---main-5---", NULL},
-  {"<loc>", &YLlocG},
-  {"@oelt-setter", NULL},
-  {"fun-congruent?", &Yfun_congruentQ},
-  {"@==", NULL},
-  {"type-elts", &Ytype_elts},
-  {"fun-env-setter", &Yfun_env_setter},
-  {"%dispatch", &YPdispatch},
-  {"%tag-bits", NULL},
-  {"%gen-name", NULL},
-  {"%gen-mets", NULL},
-  {"*restarts-ok?*", &YTrestarts_okQT},
-  {"%%macro", &YPPmacro},
-  {"%class-descendents-setter", NULL},
-  {"prop-setter-setter", &Yprop_setter_setter},
-  {"%class-ancestors", NULL},
-  {"prop-value-setter", &Yprop_value_setter},
-  {"%gen-cache", NULL},
-  {"find-getter", &Yfind_getter},
-  {"@do-children", &YOdo_children},
-  {"%update-instance-for-changed-class", NULL},
-  {"gen-from-met", &Ygen_from_met},
-  {"@specd-args", &YOspecd_args},
-  {"fun-val", &Yfun_val},
-  {"%raw", NULL},
-  {"@mets-singletons-at", &YOmets_singletons_at},
-  {"%reparent-class-shells", NULL},
-  {"prop-offset", &Yprop_offset},
-  {"%selt-setter", NULL},
-  {"unless", NULL},
-  {"class-name", &Yclass_name},
-  {"%f+", NULL},
-  {"%cb", NULL},
-  {"$direct-object-class", &YDdirect_object_class},
-  {"$max-int", &YDmax_int},
-  {"%create-directory", NULL},
-  {"%iv", NULL},
-  {"%sp-reg", NULL},
-  {"may-isa?", &Ymay_isaQ},
-  {"%object-class", NULL},
-  {"%i!", NULL},
-  {"class-ancestors-setter", &Yclass_ancestors_setter},
-  {"---main-12---", NULL},
-  {"<type>", &YLtypeG},
-  {"%fun-cache-setter", NULL},
-  {"%tail", NULL},
-  {"%sym-nam-setter", NULL},
-  {"@class-ancestors", &YOclass_ancestors},
-  {"%f-", NULL},
-  {"gen-lookup", NULL},
-  {"%fasin", NULL},
-  {"fun-env", &Yfun_env},
-  {"gen-add-met", &Ygen_add_met},
-  {"%sig-specs", NULL},
-  {"fun-mets", &Yfun_mets},
-  {"fun-mets-setter", &Yfun_mets_setter},
-  {"method-accessor-offset", &Ymethod_accessor_offset},
-  {"%lst", NULL},
-  {"prop-setter", &Yprop_setter},
-  {"%class-name-setter", NULL},
-  {"@fab", &YOfab},
-  {"@gen-cache-classes", &YOgen_cache_classes},
-  {"%ft", NULL},
-  {"%clone", NULL},
-  {"%app-args", NULL},
-  {"fun-name-setter", &Yfun_name_setter},
-  {"@may-isa?", &YOmay_isaQ},
-  {"unknown-function-error", &Yunknown_function_error},
-  {"@fun-arity", &YOfun_arity},
-  {"@fun-val", &YOfun_val},
-  {"@isa?", &YOisaQ},
-  {"prop-bound-at?", NULL},
-  {"bound?", NULL},
-  {"%lb", NULL},
-  {"class-ancestors", &Yclass_ancestors},
-  {"$gen-cache-classes-offset", &YDgen_cache_classes_offset},
-  {"type-object-setter", &Ytype_object_setter},
-  {"%eq?", NULL},
-  {"%sp-reg-setter", NULL},
-  {"%i>>", NULL},
-  {"%gen", NULL},
-  {"%gen-src-setter", NULL},
-  {"%slen", NULL},
-  {"gen-cache-missable?", &Ygen_cache_missableQ},
-  {"%ib", NULL},
-  {"cond", NULL},
-  {"%define-repeated-structure", NULL},
-  {"@add-new", NULL},
-  {"class-gens-setter", &Yclass_gens_setter},
-  {"%force-out", NULL},
-  {"%gen-cache-arg-pos-setter", NULL},
-  {"ensure-fresh-object", &Yensure_fresh_object},
-  {"%define-hierarchy", NULL},
-  {"@mem?", &YOmemQ},
-  {"@find", &YOfind},
-  {"<simple-handler-info>", &YLsimple_handler_infoG},
-  {"%define-structure", NULL},
-  {"%untag-into", NULL},
-  {"@lst", &YOlst},
-  {"head-setter", &Yhead_setter},
-  {"%os-val-setter", NULL},
-  {"choose-methods", &Ychoose_methods},
-  {"%peek", NULL},
-  {"%class-parents-setter", NULL},
-  {"<flo>", &YLfloG},
-  {"<sym>", &YLsymG},
-  {"%fc", NULL},
-  {"%current-out-port", NULL},
-  {"met-app?", &Ymet_appQ},
-  {"new", &Ynew},
-  {"%fpow", NULL},
-  {"%gen-code", NULL},
   {"%flo-bits", NULL},
-  {"%su", NULL},
-  {"@=", NULL},
-  {"%define-tagged-structure", NULL},
-  {"%type-class", NULL},
-  {"object-parents", &Yobject_parents},
-  {"%opts-vec", NULL},
-  {"gen-cache-classes-setter", &Ygen_cache_classes_setter},
-  {"%add-met", &YPadd_met},
-  {"%fp-reg-setter", NULL},
-  {"%cat2", NULL},
-  {"class-gens", &Yclass_gens},
-  {"gen-cache-missable?-setter", &Ygen_cache_missableQ_setter},
-  {"%snul", &YPsnul},
+  {"<any>", &YLanyG},
+  {"prop-type", &Yprop_type},
+  {"%define-structure-accessors", NULL},
+  {"---main-0---", NULL},
+  {"<gen-cache>", &YLgen_cacheG},
+  {"%subclass", NULL},
+  {"%unlink-stack", NULL},
+  {"gen-cache-arg-pos-setter", &Ygen_cache_arg_pos_setter},
+  {"%dispatch", &YPdispatch},
+  {"%symbols-ready?", &YPsymbols_readyQ},
+  {"fun-refs", &Yfun_refs},
+  {"%compute-ancestors", NULL},
+  {"class-props", &Yclass_props},
+  {"%type-object", NULL},
+  {"%opts-vec-vec", NULL},
+  {"@specd-args", &YOspecd_args},
+  {"fun-cache-setter", &Yfun_cache_setter},
+  {"prop-bound-at?", NULL},
+  {"@mets-singletons-at", &YOmets_singletons_at},
+  {"prop-offset", &Yprop_offset},
+  {"*report-prop-unbound-errors?*", &YTreport_prop_unbound_errorsQT},
+  {"%class-parents-setter", NULL},
+  {"<mag>", &YLmagG},
+  {"%object-class-setter", NULL},
+  {"<col!>", &YLcolXG},
+  {"%*start-running-at*", &YPTstart_running_atT},
+  {"%sym-nam-setter", NULL},
+  {"@<", NULL},
+  {"%opts-location-setter", NULL},
+  {"---main-9---", NULL},
+  {"@fun-names", &YOfun_names},
+  {"%class-id-setter", NULL},
+  {"%opts", NULL},
+  {"$getter-not-found", &YDgetter_not_found},
+  {"$tag-len", NULL},
+  {"keyboard-interrupt", &Ykeyboard_interrupt},
+  {"%raw-call", NULL},
+  {"gen-cache-arg-pos", &Ygen_cache_arg_pos},
+  {"%it/", NULL},
+  {"unknown-function-error", &Yunknown_function_error},
+  {"%elt", NULL},
+  {"gen-add-met", &Ygen_add_met},
+  {"%tag-bits", NULL},
+  {"method-accessor-offset", &Ymethod_accessor_offset},
+  {"%fun-cache", NULL},
+  {"sig-names-setter", &Ysig_names_setter},
+  {"@fab", &YOfab},
+  {"%i<", NULL},
   {"%type-elts", NULL},
-  {"%fapply", NULL},
-  {"%i<<", NULL},
-  {"gen-src-setter", &Ygen_src_setter},
-  {"%process-module", NULL},
-  {"%define-primitives", NULL},
-  {"%i=", NULL},
+  {"%met-src-setter", NULL},
+  {"fun-cache", &Yfun_cache},
+  {"class-mets-setter", &Yclass_mets_setter},
+  {"%opts-vec-location", NULL},
+  {"%flo", NULL},
   {"%ftan", NULL},
-  {"@mets-specs-at", &YOmets_specs_at},
-  {"%met-src", NULL},
-  {"@gen-cache-classes-setter", &YOgen_cache_classes_setter},
-  {"%class-prop-len-setter", NULL},
-  {"nul", &Ynul},
-  {"%gen-cache-missable?-setter", NULL},
-  {"%sig-specs-setter", NULL},
+  {"dp", NULL},
+  {"@may-isa?", &YOmay_isaQ},
+  {"opts-location-setter", &Yopts_location_setter},
+  {"%add-met", &YPadd_met},
+  {"%selt-setter", NULL},
+  {"%type-elts-setter", NULL},
+  {"%c=", NULL},
+  {"%velt", NULL},
+  {"%current-out-port", NULL},
+  {"%cb", NULL},
+  {"%gen", NULL},
+  {"ensure-fresh-object", &Yensure_fresh_object},
+  {"%pairize", NULL},
+  {"%check-call-types", NULL},
+  {"@mem?", &YOmemQ},
+  {"sig-names", &Ysig_names},
+  {"<simple-handler-info>", &YLsimple_handler_infoG},
+  {"%finalize-props!", &YPfinalize_propsX},
+  {"choose-methods", &Ychoose_methods},
   {"%ff", NULL},
-  {"nul-prop", &Ynul_prop},
-  {"<prop>", &YLpropG},
-  {"%patch-early-generics", NULL},
-  {"gen-cache-classes", &Ygen_cache_classes},
-  {"%untag", NULL},
-  {"@subtype?", &YOsubtypeQ},
-  {"%sym-nam", NULL},
-  {"%opts-vec-location-setter", NULL},
+  {"%fp-reg-setter", NULL},
+  {"%prop-type", NULL},
+  {"or", NULL},
+  {"@class-isa?", NULL},
+  {"class-mets", &Yclass_mets},
+  {"<sym>", &YLsymG},
+  {"$adr-tag", NULL},
+  {"%gen-cache-classes-setter", NULL},
+  {"sig-arity-setter", &Ysig_arity_setter},
+  {"if", NULL},
+  {"met-app?", &Ymet_appQ},
+  {"%gen-sig-setter", NULL},
+  {"opts-location", &Yopts_location},
+  {"class-row-setter", &Yclass_row_setter},
+  {"loc", NULL},
+  {"%met-name", NULL},
+  {"%sig-names", NULL},
+  {"%create-directory", NULL},
+  {"%sig-unification-vars", NULL},
+  {"@isa?", &YOisaQ},
+  {"@tup", &YOtup},
+  {"%class-id", NULL},
   {"%opts-vec-count-setter", NULL},
   {"quasiquote", NULL},
-  {"<gen>", &YLgenG},
-  {"sig-nary?-setter", &Ysig_naryQ_setter},
-  {"%fsin", NULL},
-  {"gen-src", &Ygen_src},
-  {"%vu", NULL},
-  {"class-id-setter", &Yclass_id_setter},
-  {"%i?", NULL},
-  {"@vec", &YOvec},
-  {"isa?", &YisaQ},
-  {"%c<", NULL},
-  {"@olen", NULL},
-  {"<specs>", &YLspecsG},
-  {"opts-vec-storage-setter", &Yopts_vec_storage_setter},
-  {"@map", &YOmap},
+  {"%loc-val", NULL},
+  {"<col>", &YLcolG},
+  {"%met", NULL},
+  {"handler-info-arguments", &Yhandler_info_arguments},
+  {"%gen-src", NULL},
+  {"%gen-mets", NULL},
+  {"tail-setter", &Ytail_setter},
+  {"fun-congruent?", &Yfun_congruentQ},
+  {"@mets-specs-at", &YOmets_specs_at},
+  {"@gen-cache-classes-setter", &YOgen_cache_classes_setter},
+  {"sig-arity", &Ysig_arity},
+  {"mif", NULL},
+  {"---main-4---", NULL},
+  {"fun-arity-setter", &Yfun_arity_setter},
+  {"@oelt-setter", NULL},
+  {"%get", NULL},
+  {"%elt-setter", NULL},
+  {"fab-gen", &Yfab_gen},
+  {"%prop-owner-setter", NULL},
+  {"class-row", &Yclass_row},
+  {"<prop>", &YLpropG},
+  {"@head-setter", NULL},
+  {"fun-code-setter", &Yfun_code_setter},
+  {"object-parents", &Yobject_parents},
+  {"@add", NULL},
+  {"---main-8---", NULL},
   {"%vlen", NULL},
-  {"dv", NULL},
-  {"use/export", NULL},
-  {"%break", NULL},
-  {"%vnul", &YPvnul},
-  {"%newline", NULL},
+  {"%next-methods", NULL},
+  {"add-prop", &Yadd_prop},
+  {"%fsinh", NULL},
+  {"@subtype?", &YOsubtypeQ},
+  {"%collect-direct-props", &YPcollect_direct_props},
+  {"type-elts-setter", &Ytype_elts_setter},
+  {"<gen>", &YLgenG},
+  {"%sig-arity-setter", NULL},
+  {"order-specs", &Yorder_specs},
+  {"%loc-off-setter", NULL},
+  {"%fu", NULL},
+  {"tail", &Ytail},
+  {"<props>", &YLpropsG},
+  {"%f*", NULL},
+  {"%empty?", NULL},
+  {"%object-shells", NULL},
+  {"%gen-cache-missable?-setter", NULL},
+  {"%vec", NULL},
+  {"%opts-count", NULL},
+  {"class-name-setter", &Yclass_name_setter},
+  {"@map", &YOmap},
+  {"wrong-number-arguments-error", &Ywrong_number_arguments_error},
+  {"@len", NULL},
+  {"%%prop", NULL},
+  {"%met-sig", NULL},
+  {"fun-code", &Yfun_code},
+  {"%facos", NULL},
   {"gen-lookup-miss", &Ygen_lookup_miss},
+  {"type-elts", &Ytype_elts},
+  {"%class-prop-len", NULL},
+  {"%ready", NULL},
+  {"seq", NULL},
+  {"%cat2", NULL},
+  {"<str>", &YLstrG},
+  {"@gen-cache-classes", &YOgen_cache_classes},
+  {"<tup>", &YLtupG},
+  {"@+", NULL},
+  {"%class-props", NULL},
+  {"fun-arity", &Yfun_arity},
+  {"prop-setter-setter", &Yprop_setter_setter},
+  {"%vnul", &YPvnul},
+  {"%prop", &YPprop},
+  {"and", NULL},
+  {"$num-int-bits", &YDnum_int_bits},
+  {"@all2?", &YOall2Q},
+  {"@add-new", NULL},
+  {"@vec", &YOvec},
+  {"object-props", &Yobject_props},
+  {"fin", NULL},
+  {"<body>", &YLbodyG},
+  {"%chr", NULL},
+  {"%fb", NULL},
+  {"%isa", &YPisa},
+  {"fun-same-met?", &Yfun_same_metQ},
+  {"%fi2f", NULL},
+  {"%gen-name-setter", NULL},
+  {"%%mep-apply", NULL},
+  {"%class-ancestors", NULL},
+  {"---main-11---", NULL},
+  {"%sig", NULL},
+  {"let", NULL},
+  {"%met-sig-setter", NULL},
+  {"<loc>", &YLlocG},
+  {"%str!", NULL},
+  {"%define-primitives", NULL},
+  {"%app-args", NULL},
+  {"%fasin", NULL},
+  {"%int", NULL},
+  {"@telt", &YOtelt},
+  {"@find", &YOfind},
+  {"%i=", NULL},
+  {"%class-name-setter", NULL},
+  {"%prop-init", NULL},
+  {"%fapply", NULL},
+  {"prop-setter", &Yprop_setter},
+  {"%trace-off", NULL},
+  {"%class-mets", NULL},
+  {"ds", NULL},
+  {"%loc-val-setter", NULL},
+  {"%class", NULL},
+  {"*restarts-ok?*", &YTrestarts_okQT},
+  {"%i^", NULL},
+  {"%sig-specs-setter", NULL},
+  {"<union>", &YLunionG},
+  {"force-names-into-boot-module", NULL},
+  {"%str-eq?", NULL},
+  {"%class-forward", NULL},
+  {"fun-env", &Yfun_env},
+  {"%union", NULL},
+  {"class-ancestors", &Yclass_ancestors},
+  {"%tail-setter", NULL},
+  {"%fun-cache-setter", NULL},
+  {"%met-name-setter", NULL},
+  {"%met-refs-setter", NULL},
+  {"@not", NULL},
+  {"fun-mets-setter", &Yfun_mets_setter},
+  {"@==", NULL},
+  {"unless", NULL},
+  {"%file-type", NULL},
+  {"%gen-cache", NULL},
+  {"%su", NULL},
+  {"%define-hierarchy", NULL},
+  {"%lst", NULL},
+  {"%sig-arity", NULL},
+  {"may-isa?", &Ymay_isaQ},
+  {"%force-out", NULL},
+  {"%process-module", NULL},
+  {"%type-object-setter", NULL},
+  {"---main-1---", NULL},
+  {"%unexec", NULL},
+  {"@class-in?", NULL},
+  {"@gen-cache-singletons-setter", &YOgen_cache_singletons_setter},
+  {"<env>", &YLenvG},
+  {"fun-nary?-setter", &Yfun_naryQ_setter},
+  {"%false", &YPfalse},
+  {"gen-cache-missable?", &Ygen_cache_missableQ},
+  {"%prop-getter-setter", NULL},
+  {"def-object-class-accessor", NULL},
+  {"dss", NULL},
+  {"%i-", NULL},
+  {"%type-class", NULL},
+  {"<vec>", &YLvecG},
+  {"%eq?", NULL},
+  {"%open-in-file", NULL},
+  {"%class-name", NULL},
+  {"@any?", &YOanyQ},
+  {"%%len", NULL},
+  {"fun-spec", &Yfun_spec},
+  {"fun-mets", &Yfun_mets},
+  {"esc", NULL},
+  {"%loc", NULL},
+  {"class-gens", &Yclass_gens},
+  {"%code-ref", NULL},
+  {"%symbols", &YPsymbols},
+  {"dc", NULL},
+  {"gen-src-setter", &Ygen_src_setter},
+  {"%class-shells", NULL},
+  {"%sig-val-setter", NULL},
+  {"%true", &YPtrue},
+  {"@prune-mets-by-type-at", &YOprune_mets_by_type_at},
+  {"%object-class", NULL},
+  {"%class-ancestors-setter", NULL},
+  {"<flo>", &YLfloG},
+  {"cond", NULL},
+  {"%sig-nary?-setter", NULL},
+  {"$min-int", &YDmin_int},
+  {"<met>", &YLmetG},
+  {"%untag", NULL},
+  {"@velt-setter", &YOvelt_setter},
+  {"refab-class", &Yrefab_class},
+  {"%prop-setter-setter", NULL},
+  {"%singleton", NULL},
+  {"@cat2", &YOcat2},
+  {"%met-code-setter", NULL},
+  {"gen-cache-classes", &Ygen_cache_classes},
+  {"macro-expand", NULL},
+  {"@type-equal?", &YOtype_equalQ},
+  {"%fatan2", NULL},
+  {"new", &Ynew},
+  {"%fpow", NULL},
+  {"%fc", NULL},
+  {"%flog", NULL},
+  {"%sig-nary?", NULL},
+  {"<mets>", &YLmetsG},
+  {"@gen-cache-singletons", &YOgen_cache_singletons},
+  {"sig-nary?-setter", &Ysig_naryQ_setter},
+  {"%iv", NULL},
+  {"fun-nary?", &Yfun_naryQ},
+  {"%trace-on", NULL},
+  {"nil", &Ynil},
+  {"gen-src", &Ygen_src},
+  {"%sym", NULL},
+  {"class-id-setter", &Yclass_id_setter},
+  {"<subclass>", &YLsubclassG},
+  {"%do-stack-frames", NULL},
+  {"%close-in-port", NULL},
+  {"%vec!", NULL},
+  {"df", NULL},
+  {"fun-specs-setter", &Yfun_specs_setter},
+  {"opts-vec-storage-setter", &Yopts_vec_storage_setter},
+  {"%%sfab", NULL},
+  {"%define-parents", NULL},
+  {"%gen-mets-setter", NULL},
+  {"%puts", NULL},
+  {"%sig-names-setter", NULL},
+  {"%fsqrt", NULL},
+  {"%tail", NULL},
+  {"%class-row", NULL},
+  {"%iu", NULL},
+  {"%prop-type-setter", NULL},
+  {"def", NULL},
+  {"prop-value-at", NULL},
+  {"%class-parents", NULL},
+  {"order-mets", &Yorder_mets},
+  {"@do-children", &YOdo_children},
+  {"prop-value-setter", &Yprop_value_setter},
+  {"---main-12---", NULL},
+  {"%i!", NULL},
+  {"%raw-alloc", NULL},
+  {"%sp-reg", NULL},
+  {"%sig-unification-vars-setter", NULL},
+  {"sig-nary?", &Ysig_naryQ},
+  {"dv", NULL},
+  {"<int>", &YLintG},
+  {"%str", NULL},
+  {"*macros-ok?*", &YTmacros_okQT},
+  {"%met-refs", NULL},
+  {"gen-lookup-1", NULL},
+  {"isa?", &YisaQ},
+  {"%gen-src-setter", NULL},
+  {"@fun-mets-setter", &YOfun_mets_setter},
+  {"%head-setter", NULL},
+  {"class-id", &Yclass_id},
+  {"sig-unification-vars-setter", &Ysig_unification_vars_setter},
+  {"%opts-location", NULL},
+  {"<flat>", &YLflatG},
+  {"use", NULL},
+  {"fun-specs", &Yfun_specs},
+  {"opts-vec-storage", &Yopts_vec_storage},
+  {"fun-val", &Yfun_val},
+  {"<opts-vec>", &YLopts_vecG},
+  {"set", NULL},
+  {"type-class-setter", &Ytype_class_setter},
+  {"dl", NULL},
+  {"%tag-into", NULL},
+  {"%cu", NULL},
+  {"%file-exists?", NULL},
+  {"%f/", NULL},
+  {"%f<", NULL},
+  {"lst", &Ylst},
+  {"not", &Ynot},
+  {"%velt-setter", NULL},
+  {"$direct-object-class", &YDdirect_object_class},
+  {"fun-env-setter", &Yfun_env_setter},
+  {"@pair", NULL},
+  {"---main-10---", NULL},
+  {"rep", NULL},
+  {"%tag", NULL},
+  {"%opts-vec-vec-setter", NULL},
+  {"@velt", &YOvelt},
+  {"%gen-cache-singletons-setter", NULL},
+  {"%define-boxed-structure", NULL},
+  {"class-ordered-ancestors", &Yclass_ordered_ancestors},
+  {"%ready?", NULL},
+  {"class-prop-len-setter", &Yclass_prop_len_setter},
+  {"%fcosh", NULL},
+  {"%prop-owner", NULL},
+  {"gen-lookup-miss-1", &Ygen_lookup_miss_1},
+  {"gen-cache-missable?-setter", &Ygen_cache_missableQ_setter},
+  {"%fp-reg", NULL},
+  {"gen-cache-classes-setter", &Ygen_cache_classes_setter},
+  {"%sb", NULL},
+  {"sig-unification-vars", &Ysig_unification_vars},
+  {"%ft", NULL},
+  {"@gen-cache-arg-pos-setter", &YOgen_cache_arg_pos_setter},
+  {"*boot-macro-expanders*", &YTboot_macro_expandersT},
+  {"one-nil", &Yone_nil},
+  {"<replace-generic-restart>", &YLreplace_generic_restartG},
+  {"fun", NULL},
+  {"%c<", NULL},
+  {"head-setter", &Yhead_setter},
+  {"%fsin", NULL},
+  {"class-gens-setter", &Yclass_gens_setter},
+  {"dm", NULL},
+  {"fun-sig-setter", &Yfun_sig_setter},
+  {"%opts-vec", NULL},
+  {"type-class", &Ytype_class},
+  {"%gen-code-setter", NULL},
+  {"<parents>", &YLparentsG},
+  {"%%sym", NULL},
+  {"%gen-cache-singletons", NULL},
+  {"%pair", NULL},
+  {"@alter", &YOalter},
+  {"prop-getter-setter", &Yprop_getter_setter},
+  {"%f+", NULL},
+  {"%str-eq?-loop", NULL},
+  {"@fun-mets", &YOfun_mets},
+  {"<singleton>", &YLsingletonG},
+  {"$gen-cache-singletons-offset", &YDgen_cache_singletons_offset},
+  {"%early-dispatch", &YPearly_dispatch},
+  {"%loc-off", NULL},
+  {"vec", &Yvec},
+  {"class-prop-len", &Yclass_prop_len},
+  {"class-name", &Yclass_name},
+  {"class-ancestors-setter", &Yclass_ancestors_setter},
+  {"forward-class", &Yforward_class},
+  {"<fun>", &YLfunG},
+  {"%gen-name", NULL},
+  {"%put", NULL},
+  {"class-direct-props-setter", &Yclass_direct_props_setter},
+  {"tup", &Ytup},
+  {"%vu", NULL},
+  {"@fill", &YOfill},
+  {"head", &Yhead},
+  {"fun-sig", &Yfun_sig},
+  {"prop-bound?", &Yprop_boundQ},
+  {"@mets-unspecialized-at?", &YOmets_unspecialized_atQ},
+  {"*boot-macro-module-names*", &YTboot_macro_module_namesT},
+  {"@lst", &YOlst},
+  {"%os-name", NULL},
+  {"@class-ancestors", &YOclass_ancestors},
+  {"%gen-refs-setter", NULL},
+  {"<num>", &YLnumG},
+  {"%current-in-port", NULL},
+  {"prop-getter", &Yprop_getter},
+  {"@order-specs", &YOorder_specs},
+  {"%gen-refs", NULL},
+  {"unexec", &Yunexec},
+  {"%class-gens-setter", NULL},
+  {"%met-env", NULL},
+  {"*boot-macro-names*", &YTboot_macro_namesT},
+  {"%update-instance-for-changed-class", NULL},
+  {"ct-also", NULL},
+  {"%fab-code-refs", NULL},
+  {"@gen-cache-arg-pos", &YOgen_cache_arg_pos},
+  {"%class-descendents", NULL},
+  {"%met-code", NULL},
+  {"prop-init-setter", &Yprop_init_setter},
+  {"%finalize-props", NULL},
+  {"%i<<<", NULL},
+  {"%define-setter", NULL},
+  {"%opts-count-setter", NULL},
+  {"%gen-cache-arg-pos-setter", NULL},
+  {"%flo-dat", NULL},
+  {"%fcos", NULL},
+  {"class-direct-props", &Yclass_direct_props},
+  {"---main-7---", NULL},
+  {"%i?", NULL},
+  {"%lu", NULL},
+  {"@@==", &YOOEE},
+  {"%snul", &YPsnul},
+  {"%gen-cache-missable?", NULL},
+  {"@fun-unification-vars", &YOfun_unification_vars},
+  {"fun-src-setter", &Yfun_src_setter},
+  {"class-descendents-setter", &Yclass_descendents_setter},
+  {"<lst>", &YLlstG},
+  {"%prop-getter", NULL},
+  {"%i>>>", NULL},
+  {"%indirect-object?", NULL},
+  {"@all?", &YOallQ},
+  {"%class-props-setter", NULL},
+  {"fab-class", &Yfab_class},
+  {"prop-init", &Yprop_init},
+  {"%class-row-setter", NULL},
+  {"*early-classes*", &YTearly_classesT},
+  {"%gen-cache-arg-pos", NULL},
+  {"%%macro", &YPPmacro},
+  {"when", NULL},
+  {"%define-getter", NULL},
+  {"@precise-spec?", &YOprecise_specQ},
+  {"%*used-symbols-too-early*", &YPTused_symbols_too_earlyT},
+  {"object-class", &Yobject_class},
+  {"@oelt", NULL},
+  {"gen-cache-singletons-setter", &Ygen_cache_singletons_setter},
+  {"@tail-setter", NULL},
+  {"isa", NULL},
+  {"fun-src", &Yfun_src},
+  {"---main-6---", NULL},
+  {"class-descendents", &Yclass_descendents},
+  {"$missed-dispatch", &YDmissed_dispatch},
+  {"%i<<", NULL},
+  {"%ir", NULL},
+  {"%gen-sig", NULL},
+  {"gen-refs-setter", &Ygen_refs_setter},
+  {"---main-3---", NULL},
+  {"prop-value", &Yprop_value},
+  {"%define-structure", NULL},
+  {"%met-prop-len", &YPmet_prop_len},
+  {"@do", &YOdo},
+  {"%gen-code", NULL},
+  {"<specs>", &YLspecsG},
+  {"def-fun/sig-accessor", NULL},
+  {"gen-lookup-miss-1-using", &Ygen_lookup_miss_1_using},
+  {"@fun-val", &YOfun_val},
+  {"%with-monitor", &YPwith_monitor},
+  {"%i&", NULL},
+  {"%lb", NULL},
+  {"%break", NULL},
+  {"<chr>", &YLchrG},
+  {"gen-cache-singletons", &Ygen_cache_singletons},
+  {"fun-names-setter", &Yfun_names_setter},
+  {"%raw", NULL},
+  {"%f=", NULL},
+  {"%define-method", &YPdefine_method},
+  {"%met-src", NULL},
+  {"del-class", &Ydel_class},
+  {"sig-specs-setter", &Ysig_specs_setter},
+  {"%gen-cache-classes", NULL},
+  {"%fun-reg", NULL},
+  {"gen-refs", &Ygen_refs},
+  {"%define-repeated-structure", NULL},
+  {"@rev!", &YOrevX},
+  {"class-forward-setter", &Yclass_forward_setter},
+  {"%clone", NULL},
+  {"@union-spec?", &YOunion_specQ},
+  {"%i>>", NULL},
+  {"%ib", NULL},
+  {"%prop-elt", NULL},
+  {"opts-count-setter", &Yopts_count_setter},
+  {"%sig-specs", NULL},
+  {"%opts-vec-count", NULL},
+  {"%fatan", NULL},
+  {"ct", NULL},
+  {"<seq!>", &YLseqXG},
+  {"%prop-elt-setter", NULL},
+  {"%class-descendents-setter", NULL},
+  {"%met-env-setter", NULL},
+  {"$gen-cache-classes-offset", &YDgen_cache_classes_offset},
+  {"---main-2---", NULL},
+  {"nul", &Ynul},
+  {"%patch-early-generics", NULL},
+  {"%prop-unbound-error", &YPprop_unbound_error},
+  {"%open-out-file", NULL},
+  {"%class-direct-props-setter", NULL},
+  {"%build-runtime-modules", NULL},
+  {"@=", NULL},
+  {"%sp-reg-setter", NULL},
+  {"sig-specs", &Ysig_specs},
+  {"%sig-val", NULL},
+  {"%class-mets-setter", NULL},
+  {"fab-sym", &Yfab_sym},
+  {"@head", NULL},
+  {"<sig>", &YLsigG},
+  {"@fun-arity", &YOfun_arity},
+  {"%os-val", NULL},
+  {"class-forward", &Yclass_forward},
+  {"sig-val-setter", &Ysig_val_setter},
+  {"@lst-helper", &YOlst_helper},
+  {"@fold", &YOfold},
+  {"subtype?", &YsubtypeQ},
+  {"fun-names", &Yfun_names},
+  {"opts-count", &Yopts_count},
+  {"%binding-name", NULL},
+  {"%class-direct-props", NULL},
+  {"find-setter", &Yfind_setter},
+  {"type-object-setter", &Ytype_object_setter},
+  {"%invoke-debugger", NULL},
+  {"handler-info-message", &Yhandler_info_message},
+  {"class-ordered-props", &Yclass_ordered_props},
+  {"%slen", NULL},
+  {"%allocate-stack", NULL},
+  {"%file-mtime", NULL},
+  {"%untag-into", NULL},
+  {"incongruent-method-error", &Yincongruent_method_error},
+  {"file-opening-error", &Yfile_opening_error},
+  {"%class-prop-len-setter", NULL},
+  {"@subclass-spec?", &YOsubclass_specQ},
+  {"%define-tagged-structure", NULL},
+  {"%sym-nam", NULL},
+  {"%app-filename", NULL},
+  {"%bb", NULL},
+  {"sym-name-setter", &Ysym_name_setter},
+  {"%flo-dat-setter", NULL},
+  {"met-app-unify", &Ymet_app_unify},
+  {"gen-from-met", &Ygen_from_met},
+  {"ensure-singleton-cache", &Yensure_singleton_cache},
+  {"%add-prop", &YPadd_prop},
+  {"%os-val-setter", NULL},
+  {"@@empty?", &YOOemptyQ},
+  {"sig-val", &Ysig_val},
+  {"%type-class-setter", NULL},
+  {"<log>", &YLlogG},
+  {"%%vfab", NULL},
+  {"%rev!", NULL},
+  {"gen-lookup-1-using", NULL},
+  {"type-object", &Ytype_object},
+  {"@tail", NULL},
+  {"@mets-subclasses-at", &YOmets_subclasses_at},
+  {"%ftanh", NULL},
+  {"fun-name-setter", &Yfun_name_setter},
+  {"<class>", &YLclassG},
+  {"%reparent-class-shells", NULL},
+  {"error", &Yerror},
+  {"fun-unification-vars", &Yfun_unification_vars},
+  {"nul-prop", &Ynul_prop},
+  {"patch-early-classes", &Ypatch_early_classes},
   {NULL, NULL}
 };
 
 static EXPORT_INFO export_infos[] = {
-  {"fab-sym", "fab-sym"},
-  {"set", "set"},
-  {"sig-nary?", "sig-nary?"},
-  {"<int>", "<int>"},
-  {"%app-filename", "%app-filename"},
-  {"%loc-off-setter", "%loc-off-setter"},
-  {"%%sym", "%%sym"},
-  {"%vec", "%vec"},
-  {"fun", "fun"},
-  {"*boot-macro-module-names*", "*boot-macro-module-names*"},
-  {"%fi2f", "%fi2f"},
-  {"%prop", "%prop"},
-  {"fun-names", "fun-names"},
-  {"%isa", "%isa"},
-  {"%bb", "%bb"},
-  {"%eof-object", "%eof-object"},
-  {"try", "try"},
-  {"tup", "tup"},
-  {"%binding-name", "%binding-name"},
-  {"%i<", "%i<"},
-  {"%pair", "%pair"},
-  {"dp", "dp"},
-  {"sig-unification-vars", "sig-unification-vars"},
-  {"<mag>", "<mag>"},
-  {"%i+", "%i+"},
-  {"ds", "ds"},
-  {"type-class", "type-class"},
-  {"fun-sig-setter", "fun-sig-setter"},
-  {"%cu", "%cu"},
-  {"<union>", "<union>"},
-  {"%build-runtime-modules", "%build-runtime-modules"},
-  {"%f*", "%f*"},
-  {"%facos", "%facos"},
-  {"loc", "loc"},
-  {"@+", "@+"},
-  {"keyboard-interrupt", "keyboard-interrupt"},
-  {"@len", "@len"},
-  {"head", "head"},
-  {"%flog", "%flog"},
-  {"<num>", "<num>"},
-  {"<vec>", "<vec>"},
-  {"prop-getter", "prop-getter"},
-  {"%os-val", "%os-val"},
-  {"wrong-number-arguments-error", "wrong-number-arguments-error"},
-  {"handler-info-arguments", "handler-info-arguments"},
-  {"class-direct-props", "class-direct-props"},
-  {"%file-exists?", "%file-exists?"},
-  {"mif", "mif"},
-  {"%su", "%su"},
-  {"export", "export"},
-  {"<met>", "<met>"},
-  {"%fatan2", "%fatan2"},
-  {"%lu", "%lu"},
-  {"prop-init", "prop-init"},
-  {"%puts", "%puts"},
-  {"%gen-src", "%gen-src"},
-  {"fun-nary?", "fun-nary?"},
-  {"%define-method", "%define-method"},
-  {"%iu", "%iu"},
-  {"%fu", "%fu"},
-  {"<subclass>", "<subclass>"},
-  {"*macros-ok?*", "*macros-ok?*"},
-  {"%f/", "%f/"},
-  {"%ready?", "%ready?"},
-  {"%fcos", "%fcos"},
-  {"%i<<<", "%i<<<"},
-  {"gen-refs-setter", "gen-refs-setter"},
-  {"dl", "dl"},
-  {"%fsqrt", "%fsqrt"},
-  {"fin", "fin"},
-  {"%file-mtime", "%file-mtime"},
-  {"dc", "dc"},
-  {"%check-call-types", "%check-call-types"},
-  {"prop-value-setter", "prop-value-setter"},
-  {"%unlink-stack", "%unlink-stack"},
-  {"<chr>", "<chr>"},
-  {"<flat>", "<flat>"},
-  {"%file-type", "%file-type"},
-  {"%fb", "%fb"},
-  {"<singleton>", "<singleton>"},
-  {"subtype?", "subtype?"},
-  {"gen-refs", "gen-refs"},
-  {"not", "not"},
-  {"<replace-generic-restart>", "<replace-generic-restart>"},
-  {"ct", "ct"},
-  {"%loc-val", "%loc-val"},
-  {"$min-int", "$min-int"},
-  {"lst", "lst"},
-  {"sig-specs", "sig-specs"},
-  {"%do-stack-frames", "%do-stack-frames"},
-  {"%allocate-stack", "%allocate-stack"},
-  {"%sb", "%sb"},
-  {"error", "error"},
-  {"%met-code", "%met-code"},
-  {"%ftanh", "%ftanh"},
-  {"<fun>", "<fun>"},
-  {"@<", "@<"},
-  {"%fsinh", "%fsinh"},
-  {"%sp-reg-setter", "%sp-reg-setter"},
-  {"*boot-macro-expanders*", "*boot-macro-expanders*"},
-  {"prop-bound?", "prop-bound?"},
-  {"dg", "dg"},
-  {"%gen-code-setter", "%gen-code-setter"},
-  {"sig-val", "sig-val"},
-  {"<lst>", "<lst>"},
-  {"fab-class", "fab-class"},
-  {"<log>", "<log>"},
-  {"fun-specs", "fun-specs"},
-  {"type-object", "type-object"},
-  {"dss", "dss"},
-  {"%velt-setter", "%velt-setter"},
-  {"quote", "quote"},
-  {"add-prop", "add-prop"},
-  {"file-opening-error", "file-opening-error"},
-  {"%put", "%put"},
-  {"%i-", "%i-"},
-  {"*boot-macro-names*", "*boot-macro-names*"},
-  {"nil", "nil"},
-  {"%str", "%str"},
-  {"fun-name", "fun-name"},
-  {"dm", "dm"},
-  {"<tup>", "<tup>"},
-  {"object-class", "object-class"},
-  {"prop-owner", "prop-owner"},
-  {"%i&", "%i&"},
-  {"%im", "%im"},
-  {"%raw-call", "%raw-call"},
-  {"%f<", "%f<"},
-  {"prop-value", "prop-value"},
-  {"class-parents", "class-parents"},
-  {"%f=", "%f="},
-  {"%open-out-file", "%open-out-file"},
-  {"unexec", "unexec"},
-  {"df", "df"},
-  {"<seq>", "<seq>"},
-  {"<any>", "<any>"},
-  {"incongruent-method-error", "incongruent-method-error"},
-  {"%fcosh", "%fcosh"},
-  {"%with-monitor", "%with-monitor"},
-  {"rep", "rep"},
-  {"%get", "%get"},
-  {"class-descendents", "class-descendents"},
-  {"class-props", "class-props"},
-  {"%loc-val-setter", "%loc-val-setter"},
-  {"%c=", "%c="},
-  {"%prop-unbound-error", "%prop-unbound-error"},
-  {"vec", "vec"},
-  {"<sig>", "<sig>"},
-  {"%i*", "%i*"},
-  {"%velt", "%velt"},
-  {"handler-info-message", "handler-info-message"},
-  {"find-setter", "find-setter"},
-  {"if", "if"},
-  {"use", "use"},
-  {"%fun-reg", "%fun-reg"},
-  {"%open-in-file", "%open-in-file"},
-  {"@all2?", "@all2?"},
-  {"isa", "isa"},
-  {"macro-expand", "macro-expand"},
-  {"%i^", "%i^"},
-  {"%it/", "%it/"},
-  {"esc", "esc"},
-  {"<class>", "<class>"},
-  {"%current-in-port", "%current-in-port"},
-  {"object-props", "object-props"},
-  {"%next-methods", "%next-methods"},
-  {"%gen-refs", "%gen-refs"},
-  {"%loc-off", "%loc-off"},
-  {"def", "def"},
-  {"%i>>>", "%i>>>"},
-  {"tail-setter", "tail-setter"},
-  {"%close-in-port", "%close-in-port"},
-  {"sig-arity", "sig-arity"},
-  {"seq", "seq"},
-  {"%selt", "%selt"},
-  {"%symbols", "%symbols"},
-  {"%invoke-debugger", "%invoke-debugger"},
-  {"ct-also", "ct-also"},
-  {"find-getter", "find-getter"},
-  {"%close-out-port", "%close-out-port"},
-  {"tail", "tail"},
-  {"type-error", "type-error"},
-  {"%os-name", "%os-name"},
-  {"let", "let"},
-  {"ord-app-mets", "ord-app-mets"},
-  {"%cb", "%cb"},
-  {"<loc>", "<loc>"},
-  {"@==", "@=="},
-  {"type-elts", "type-elts"},
-  {"*report-prop-unbound-errors?*", "*report-prop-unbound-errors?*"},
-  {"*restarts-ok?*", "*restarts-ok?*"},
-  {"%%macro", "%%macro"},
-  {"%sp-reg", "%sp-reg"},
-  {"fab-gen", "fab-gen"},
-  {"%raw", "%raw"},
-  {"%selt-setter", "%selt-setter"},
-  {"class-name", "class-name"},
-  {"%f+", "%f+"},
-  {"$max-int", "$max-int"},
-  {"%create-directory", "%create-directory"},
-  {"%iv", "%iv"},
-  {"may-isa?", "may-isa?"},
-  {"%i!", "%i!"},
-  {"<str>", "<str>"},
-  {"<type>", "<type>"},
-  {"fun-arity", "fun-arity"},
-  {"<gen>", "<gen>"},
-  {"<opts>", "<opts>"},
-  {"%f-", "%f-"},
-  {"%fasin", "%fasin"},
-  {"gen-add-met", "gen-add-met"},
-  {"fun-mets", "fun-mets"},
-  {"prop-setter", "prop-setter"},
-  {"fun-val", "fun-val"},
-  {"<col>", "<col>"},
-  {"%ft", "%ft"},
-  {"%app-args", "%app-args"},
-  {"sig-names", "sig-names"},
-  {"fun-name-setter", "fun-name-setter"},
-  {"unknown-function-error", "unknown-function-error"},
-  {"bound?", "bound?"},
-  {"%lb", "%lb"},
-  {"class-ancestors", "class-ancestors"},
-  {"%eq?", "%eq?"},
-  {"%i>>", "%i>>"},
-  {"prop-type", "prop-type"},
-  {"%slen", "%slen"},
-  {"%ib", "%ib"},
-  {"@oelt", "@oelt"},
-  {"%force-out", "%force-out"},
-  {"%fatan", "%fatan"},
-  {"<simple-handler-info>", "<simple-handler-info>"},
-  {"@lst", "@lst"},
-  {"head-setter", "head-setter"},
-  {"%os-val-setter", "%os-val-setter"},
   {"sym-name", "sym-name"},
-  {"%peek", "%peek"},
-  {"<flo>", "<flo>"},
-  {"<sym>", "<sym>"},
-  {"%current-out-port", "%current-out-port"},
-  {"met-app?", "met-app?"},
-  {"new", "new"},
-  {"%fpow", "%fpow"},
-  {"%gen-code", "%gen-code"},
-  {"%flo-bits", "%flo-bits"},
-  {"%i=", "%i="},
-  {"object-parents", "object-parents"},
-  {"@isa?", "@isa?"},
-  {"%snul", "%snul"},
-  {"%i<<", "%i<<"},
-  {"gen-src-setter", "gen-src-setter"},
-  {"%process-module", "%process-module"},
-  {"%ftan", "%ftan"},
-  {"nul", "nul"},
-  {"<prop>", "<prop>"},
-  {"%untag", "%untag"},
-  {"quasiquote", "quasiquote"},
-  {"%fsin", "%fsin"},
-  {"gen-src", "gen-src"},
-  {"%i?", "%i?"},
-  {"isa?", "isa?"},
-  {"%c<", "%c<"},
+  {"export", "export"},
+  {"<seq>", "<seq>"},
+  {"$max-int", "$max-int"},
+  {"%close-out-port", "%close-out-port"},
+  {"%i*", "%i*"},
+  {"%eof-object", "%eof-object"},
+  {"%i+", "%i+"},
+  {"dg", "dg"},
+  {"prop-owner", "prop-owner"},
+  {"%im", "%im"},
+  {"quote", "quote"},
   {"@olen", "@olen"},
-  {"%vlen", "%vlen"},
-  {"dv", "dv"},
   {"use/export", "use/export"},
+  {"bound?", "bound?"},
+  {"unexec", "unexec"},
+  {"class-parents", "class-parents"},
+  {"%selt", "%selt"},
+  {"%peek", "%peek"},
+  {"find-getter", "find-getter"},
+  {"try", "try"},
+  {"type-error", "type-error"},
+  {"<type>", "<type>"},
+  {"%f-", "%f-"},
+  {"ord-app-mets", "ord-app-mets"},
+  {"%flo-bits", "%flo-bits"},
+  {"<any>", "<any>"},
+  {"%allocate-stack", "%allocate-stack"},
+  {"%unlink-stack", "%unlink-stack"},
+  {"class-props", "class-props"},
+  {"*boot-macro-expanders*", "*boot-macro-expanders*"},
+  {"*report-prop-unbound-errors?*", "*report-prop-unbound-errors?*"},
+  {"<mag>", "<mag>"},
+  {"<col!>", "<col!>"},
+  {"@<", "@<"},
+  {"keyboard-interrupt", "keyboard-interrupt"},
+  {"%raw-call", "%raw-call"},
+  {"%it/", "%it/"},
+  {"unknown-function-error", "unknown-function-error"},
+  {"gen-add-met", "gen-add-met"},
+  {"fun-val", "fun-val"},
+  {"%i<", "%i<"},
+  {"%ftan", "%ftan"},
+  {"dp", "dp"},
+  {"%selt-setter", "%selt-setter"},
+  {"%c=", "%c="},
+  {"%current-out-port", "%current-out-port"},
+  {"%cb", "%cb"},
+  {"%check-call-types", "%check-call-types"},
+  {"sig-names", "sig-names"},
+  {"<simple-handler-info>", "<simple-handler-info>"},
+  {"%loc-val", "%loc-val"},
+  {"<sym>", "<sym>"},
+  {"if", "if"},
+  {"met-app?", "met-app?"},
+  {"fun-specs", "fun-specs"},
+  {"new", "new"},
+  {"loc", "loc"},
+  {"%create-directory", "%create-directory"},
+  {"@isa?", "@isa?"},
+  {"quasiquote", "quasiquote"},
+  {"<col>", "<col>"},
+  {"handler-info-arguments", "handler-info-arguments"},
+  {"%gen-src", "%gen-src"},
+  {"tail-setter", "tail-setter"},
+  {"sig-arity", "sig-arity"},
+  {"mif", "mif"},
+  {"%get", "%get"},
+  {"fab-gen", "fab-gen"},
+  {"<prop>", "<prop>"},
+  {"object-parents", "object-parents"},
+  {"%velt", "%velt"},
+  {"%next-methods", "%next-methods"},
+  {"add-prop", "add-prop"},
+  {"%fsinh", "%fsinh"},
+  {"<gen>", "<gen>"},
+  {"%loc-off-setter", "%loc-off-setter"},
+  {"%fu", "%fu"},
+  {"tail", "tail"},
+  {"%f*", "%f*"},
+  {"%vec", "%vec"},
+  {"fun-name-setter", "fun-name-setter"},
+  {"wrong-number-arguments-error", "wrong-number-arguments-error"},
+  {"@len", "@len"},
+  {"%facos", "%facos"},
+  {"type-elts", "type-elts"},
+  {"seq", "seq"},
+  {"<str>", "<str>"},
+  {"<tup>", "<tup>"},
+  {"@+", "@+"},
+  {"fun-arity", "fun-arity"},
   {"%vnul", "%vnul"},
+  {"%prop", "%prop"},
+  {"@all2?", "@all2?"},
+  {"object-props", "object-props"},
+  {"fin", "fin"},
+  {"%fb", "%fb"},
+  {"%isa", "%isa"},
+  {"%fi2f", "%fi2f"},
+  {"let", "let"},
+  {"<loc>", "<loc>"},
+  {"subtype?", "subtype?"},
+  {"%app-args", "%app-args"},
+  {"%fasin", "%fasin"},
+  {"%i=", "%i="},
+  {"prop-setter", "prop-setter"},
+  {"ds", "ds"},
+  {"%loc-val-setter", "%loc-val-setter"},
+  {"*restarts-ok?*", "*restarts-ok?*"},
+  {"%i^", "%i^"},
+  {"<union>", "<union>"},
+  {"class-ancestors", "class-ancestors"},
+  {"@==", "@=="},
+  {"%file-type", "%file-type"},
+  {"%su", "%su"},
+  {"may-isa?", "may-isa?"},
+  {"%process-module", "%process-module"},
+  {"dss", "dss"},
+  {"%i-", "%i-"},
+  {"<vec>", "<vec>"},
+  {"%eq?", "%eq?"},
+  {"@any?", "@any?"},
+  {"fun-mets", "fun-mets"},
+  {"esc", "esc"},
+  {"%symbols", "%symbols"},
+  {"dc", "dc"},
+  {"gen-src-setter", "gen-src-setter"},
+  {"<flo>", "<flo>"},
+  {"$min-int", "$min-int"},
+  {"<met>", "<met>"},
+  {"%untag", "%untag"},
+  {"macro-expand", "macro-expand"},
+  {"%fatan2", "%fatan2"},
+  {"%fpow", "%fpow"},
+  {"%flog", "%flog"},
+  {"%open-in-file", "%open-in-file"},
+  {"%iv", "%iv"},
+  {"fun-nary?", "fun-nary?"},
+  {"nil", "nil"},
+  {"gen-src", "gen-src"},
+  {"<subclass>", "<subclass>"},
+  {"%do-stack-frames", "%do-stack-frames"},
+  {"%close-in-port", "%close-in-port"},
+  {"df", "df"},
+  {"%puts", "%puts"},
+  {"%fsqrt", "%fsqrt"},
+  {"%iu", "%iu"},
+  {"def", "def"},
+  {"*macros-ok?*", "*macros-ok?*"},
+  {"%i!", "%i!"},
+  {"%sp-reg", "%sp-reg"},
+  {"sig-nary?", "sig-nary?"},
+  {"dv", "dv"},
+  {"%str", "%str"},
+  {"isa?", "isa?"},
+  {"prop-value-setter", "prop-value-setter"},
+  {"<flat>", "<flat>"},
+  {"<seq!>", "<seq!>"},
+  {"use", "use"},
+  {"<opts>", "<opts>"},
+  {"set", "set"},
+  {"dl", "dl"},
+  {"%cu", "%cu"},
+  {"%file-exists?", "%file-exists?"},
+  {"%f/", "%f/"},
+  {"lst", "lst"},
+  {"not", "not"},
+  {"%velt-setter", "%velt-setter"},
+  {"rep", "rep"},
+  {"<int>", "<int>"},
+  {"%ready?", "%ready?"},
+  {"%fcosh", "%fcosh"},
+  {"%sb", "%sb"},
+  {"sig-unification-vars", "sig-unification-vars"},
+  {"fun-name", "fun-name"},
+  {"%ft", "%ft"},
+  {"<replace-generic-restart>", "<replace-generic-restart>"},
+  {"fun", "fun"},
+  {"%c<", "%c<"},
+  {"%fsin", "%fsin"},
+  {"dm", "dm"},
+  {"fun-sig-setter", "fun-sig-setter"},
+  {"type-class", "type-class"},
+  {"%gen-code-setter", "%gen-code-setter"},
+  {"prop-type", "prop-type"},
+  {"%%sym", "%%sym"},
+  {"%pair", "%pair"},
+  {"%f+", "%f+"},
+  {"<singleton>", "<singleton>"},
+  {"vec", "vec"},
+  {"head-setter", "head-setter"},
+  {"class-name", "class-name"},
+  {"<fun>", "<fun>"},
+  {"%put", "%put"},
+  {"tup", "tup"},
+  {"head", "head"},
+  {"prop-bound?", "prop-bound?"},
+  {"*boot-macro-module-names*", "*boot-macro-module-names*"},
+  {"@lst", "@lst"},
+  {"%os-name", "%os-name"},
+  {"<num>", "<num>"},
+  {"%current-in-port", "%current-in-port"},
+  {"prop-getter", "prop-getter"},
+  {"%gen-refs", "%gen-refs"},
+  {"*boot-macro-names*", "*boot-macro-names*"},
+  {"ct-also", "ct-also"},
+  {"%met-code", "%met-code"},
+  {"%i<<<", "%i<<<"},
+  {"%loc-off", "%loc-off"},
+  {"%fcos", "%fcos"},
+  {"class-direct-props", "class-direct-props"},
+  {"%i?", "%i?"},
+  {"%lu", "%lu"},
+  {"%snul", "%snul"},
+  {"<lst>", "<lst>"},
+  {"%i>>>", "%i>>>"},
+  {"fab-class", "fab-class"},
+  {"prop-init", "prop-init"},
+  {"%%macro", "%%macro"},
+  {"object-class", "object-class"},
+  {"@oelt", "@oelt"},
+  {"isa", "isa"},
+  {"class-descendents", "class-descendents"},
+  {"%i<<", "%i<<"},
+  {"gen-refs-setter", "gen-refs-setter"},
+  {"prop-value", "prop-value"},
+  {"%gen-code", "%gen-code"},
+  {"%vlen", "%vlen"},
+  {"%with-monitor", "%with-monitor"},
+  {"%i&", "%i&"},
+  {"%lb", "%lb"},
+  {"<chr>", "<chr>"},
+  {"%raw", "%raw"},
+  {"%f=", "%f="},
+  {"%fun-reg", "%fun-reg"},
+  {"gen-refs", "gen-refs"},
+  {"%i>>", "%i>>"},
+  {"%ib", "%ib"},
+  {"%fatan", "%fatan"},
+  {"ct", "ct"},
+  {"%f<", "%f<"},
+  {"nul", "nul"},
+  {"%prop-unbound-error", "%prop-unbound-error"},
+  {"%open-out-file", "%open-out-file"},
+  {"%build-runtime-modules", "%build-runtime-modules"},
+  {"sig-specs", "sig-specs"},
+  {"fab-sym", "fab-sym"},
+  {"<sig>", "<sig>"},
+  {"%os-val", "%os-val"},
+  {"fun-names", "fun-names"},
+  {"%binding-name", "%binding-name"},
+  {"find-setter", "find-setter"},
+  {"%define-method", "%define-method"},
+  {"%invoke-debugger", "%invoke-debugger"},
+  {"handler-info-message", "handler-info-message"},
+  {"%slen", "%slen"},
+  {"%file-mtime", "%file-mtime"},
+  {"incongruent-method-error", "incongruent-method-error"},
+  {"file-opening-error", "file-opening-error"},
+  {"%app-filename", "%app-filename"},
+  {"%force-out", "%force-out"},
+  {"%bb", "%bb"},
+  {"%os-val-setter", "%os-val-setter"},
+  {"sig-val", "sig-val"},
+  {"<log>", "<log>"},
+  {"type-object", "type-object"},
+  {"%ftanh", "%ftanh"},
+  {"<class>", "<class>"},
+  {"%sp-reg-setter", "%sp-reg-setter"},
+  {"error", "error"},
   {NULL, NULL}
 };
 
-extern MODULE_INFO module_info_runtimeSboot;
-MODULE_INFO module_info_runtimeSboot = {
-  "runtime/boot",
+extern MODULE_INFO module_info_gooSboot;
+MODULE_INFO module_info_gooSboot = {
+  "goo/boot",
   NULL,
   use_infos,
   import_infos,
@@ -14416,9 +14537,9 @@ MODULE_INFO module_info_runtimeSboot = {
 
 /* EXPRESSION: */
 
-extern void load_module_runtimeSboot (void);
+extern void load_module_gooSboot (void);
 
-void load_module_runtimeSboot (void) {
+void load_module_gooSboot (void) {
   static int need_init = 1;
   if (!need_init) return;
 

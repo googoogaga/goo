@@ -2,7 +2,7 @@
 (use goo/macros)
 (use goo/types)
 (use goo/math)
-(use goo/collections/collection)
+(use goo/cols/col)
 
 (pub dg add! (c|<col> x => <col>))
 (pub dg into (x|<col> y|<col> => <col>))

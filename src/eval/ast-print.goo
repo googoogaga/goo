@@ -2,8 +2,8 @@
 
 (use goo)
 (use goo/io/write)
-(use compiler/ast)
-(use compiler/ast-linearize)
+(use x8r/ast)
+(use x8r/ast-linearize)
 
 (dv <out-port> <out-port>)
 
